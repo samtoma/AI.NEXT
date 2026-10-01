@@ -461,6 +461,42 @@ class Workflow(unittest.TestCase):
         self.assertEqual([(f["sources"], f["kind"], f["step"]) for f in out["flags"]], [(["stub"], "final_answer", 1)])
         self.assertEqual(out["verdicts"]["consistent"], 1)         # the agent said consistent; the free rule still flags
 
+    def test_two_passes_are_unioned_and_a_flag_both_raised_says_so(self):
+        """The whole-book configuration: two independent blind passes, flags unioned (like S0b's two readings)."""
+        argsB = W.build_args(Book(), bundle(), 8, self.tmp / "sw-B", batch=3, order="shuffled", order_seed=3, pass_id="B")[0]
+        runA = dict(run_stub(self.args, self.responses, self.tmp)["result"], pass_id="A")
+        labB = f"SW:check:b001:{argsB['solutions'][0]}+2"
+        respB = {labB: {"results": [
+            {"solution_id": A1, "verdict": "flagged", "flags": [{"step": 1, "quote": "x", "kind": "arithmetic", "why": "pass B only"}]},
+            {"solution_id": A2, "verdict": "flagged", "flags": [{"step": 2, "quote": "q", "kind": "other", "why": "also here"}]},
+            {"solution_id": A3, "verdict": "unclear", "note": "needs an earlier part"}]}}
+        runB = run_stub(argsB, respB, self.tmp)["result"]
+        self.assertEqual((runB["pass_id"], runB["order"]), ("B", "shuffled"))
+        out = W.collect([self.args, argsB], [runA, runB])
+        self.assertEqual(out["passes"], ["A", "B"])
+        self.assertEqual(out["single_pass_ids"], [])
+        by = {(f["solution_id"], f["step"]): f for f in out["flags"]}
+        self.assertEqual(by[(A2, 2)]["passes"], ["A", "B"])                  # both raised it: the strongest kind of flag
+        self.assertEqual(by[(A2, 2)]["also_kinds"], ["other"])               # B called it "other", A "arithmetic"
+        self.assertEqual(by[(A2, 1)]["passes"], ["A"])
+        self.assertEqual(by[(A1, 1)]["passes"], ["B"])                       # a flag only one pass raised is kept
+        self.assertEqual(by[(A3, 1)]["passes"], ["A"])
+        self.assertEqual(out["verdicts"], {"consistent": 0, "flagged": 3, "unclear": 0})   # A3: A flagged, B unclear → flagged
+        self.assertEqual(sorted(out["checked_ids"]), sorted([A1, A2, A3]))
+        # a pass that never answered a solution leaves it single-pass, still checked
+        runB2 = dict(runB, results=[x for x in runB["results"] if x["solution_id"] != A1])
+        self.assertEqual(W.collect([self.args, argsB], [runA, runB2])["single_pass_ids"], [A1])
+        # the pre-check's flag is merged once, however many passes' args name it
+        pre = [f for f in out["flags"] if "numeric" in f["sources"]]
+        self.assertEqual([(f["solution_id"], f["step"]) for f in pre], [(A2, 2)])
+
+    def test_the_parts_of_one_pass_are_not_two_passes(self):
+        a1, a2 = W.build_args(Book(), bundle(), 8, self.tmp / "sw-parts", max_per_run=2, batch=2)
+        r1 = {"stage": "SW", "results": [{"solution_id": s, "verdict": "consistent"} for s in a1["solutions"]]}
+        r2 = {"stage": "SW", "results": [{"solution_id": s, "verdict": "consistent"} for s in a2["solutions"]]}
+        out = W.collect([a1, a2], [r1, r2])
+        self.assertEqual((out["passes"], out["single_pass_ids"], out["solutions"]), (["A"], [], 3))
+
     def test_collect_refuses_a_step_the_solution_does_not_have(self):
         self.responses[L1] = {"results": [{"solution_id": A1, "verdict": "flagged", "flags": [
             {"step": 9, "quote": "x", "kind": "other", "why": "no such step"}]}, {"solution_id": A2, "verdict": "consistent"}]}
@@ -515,6 +551,34 @@ class Calibrate(unittest.TestCase):
         out = W.calibrate(self.truth(), self.rep([("r1", 2)], checked=["r1", "c1"]))
         self.assertEqual(out["summary"]["real_solutions"], 1)
         self.assertEqual(sorted(out["not_run"]), ["e1", "f1", "r2"])
+
+    def test_the_agents_recall_is_reported_apart_from_the_free_checks_and_per_pass(self):
+        flags = [{"solution_id": "r1", "step": 2, "kind": "other", "why": "w", "sources": ["agent"], "passes": ["A", "B"]},
+                 {"solution_id": "r2", "step": 1, "kind": "final_answer", "why": "w", "sources": ["stub"], "passes": []},
+                 {"solution_id": "e1", "step": 1, "kind": "label", "why": "w", "sources": ["agent"], "passes": ["B"]}]
+        out = W.calibrate(self.truth(), {"prompts_version": "sw-v3", "flags": flags, "unclear": []})
+        sm = out["summary"]
+        self.assertEqual((sm["real_recall_solution"], sm["real_recall_agents_only"]), (1.0, 0.5))
+        self.assertEqual(sm["missed_real_by_agents"], ["r2"])
+        self.assertEqual(sm["real_recall_by_pass"], {"A": 1, "B": 1})
+
+    def test_a_multi_part_defect_counts_as_found_when_an_agent_says_unclear(self):
+        out = W.calibrate(self.truth(), self.rep([("r1", 2), ("r2", 1)], unclear=["e1"]))
+        self.assertEqual(out["summary"]["elsewhere_caught"], "0/1")
+        self.assertEqual(out["summary"]["elsewhere_solutions_flagged_or_unclear"], "1/1")
+
+    def test_injected_defects_are_scored_by_operator_on_the_agents_flags_alone(self):
+        mut = {"mutants": [{"id": "m1", "base": "b1", "operator": "label", "kind": "label", "step": 2},
+                           {"id": "m2", "base": "b2", "operator": "label", "kind": "label", "step": 1},
+                           {"id": "m3", "base": "b3", "operator": "sign", "kind": "sign", "step": 1},
+                           {"id": "m4", "base": "b4", "operator": "stem_label", "kind": "label", "step": None}]}
+        flags = [{"solution_id": "m1", "step": 2, "kind": "label", "why": "w", "sources": ["agent"], "passes": ["A"]},
+                 {"solution_id": "m2", "step": 1, "kind": "arithmetic", "why": "w", "sources": ["numeric"], "passes": []},   # a free flag is not recall
+                 {"solution_id": "m4", "step": 3, "kind": "label", "why": "w", "sources": ["agent"], "passes": ["B"]}]
+        mu = W.calibrate(self.truth(), self.rep([]) | {"flags": flags}, mut)["summary"]["mutants"]
+        self.assertEqual((mu["total"], mu["caught_by_agents"], mu["recall"]), (4, 2, 0.5))
+        self.assertEqual(mu["by_operator"], {"label": "1/2", "sign": "0/1", "stem_label": "1/1"})
+        self.assertEqual((mu["by_pass"], mu["missed"]), ({"A": 1, "B": 1}, ["m2", "m3"]))
 
     @unittest.skipUnless(TRUTH_FILE.exists() and SW_V1_FLAGS.exists(), "the Chapter 8 calibration files")
     def test_the_chapter_8_truth_is_exactly_the_sw_v1_flags_classified(self):

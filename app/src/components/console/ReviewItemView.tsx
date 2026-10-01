@@ -19,15 +19,23 @@ import { displayStem, hasFigurePlaceholder } from "@/lib/question-figures";
 import { ANSWER_ONLY_CARD_NOTE, choiceOptions, isAnswerOnly, lessSpecificKeys } from "@/lib/question-flags";
 import { GATE_LABEL } from "@/lib/review-gate-records";
 import {
-  DECISION_LABEL,
   KIND_LABEL,
   KIND_SCOPE,
   REASON_LABEL,
+  decisionLabel,
   type FigurePayload,
   type QuestionPayload,
   type ReviewItemPayload,
   type TextStep,
 } from "@/lib/review-gate";
+import {
+  CLASS_LABEL,
+  FLAG_KIND_LABEL,
+  WHERE_LABEL,
+  type FlagClass,
+  type WorkingFlagItemPayload,
+  type WorkingFlagPayload,
+} from "@/lib/review-gate-working";
 import type { WidgetOutcome } from "@/lib/widget-predicates";
 
 /**
@@ -85,6 +93,7 @@ function ItemHeader({ item }: { item: ReviewItemPayload }) {
             <Chip tone="attention">{REASON_LABEL[r.code]}</Chip>
           </span>
         ))}
+        {item.workingFlag ? <ClassChips flags={item.workingFlag.flags} /> : null}
       </div>
       <p className="mt-2 text-[13px] text-ink">
         <span className="font-semibold">{item.courseLabel}</span>
@@ -220,6 +229,8 @@ function StudentSide({ item }: { item: ReviewItemPayload }) {
       );
     case "gate_decision":
       return item.gate ? <GateDecided gate={item.gate} /> : <Missing />;
+    case "working_flag":
+      return item.workingFlag ? <FlaggedSolution item={item} wf={item.workingFlag} /> : <Missing />;
     case "figure_stand_in":
       return item.figure ? (
         <>
@@ -303,7 +314,16 @@ function FigureView({ f }: { f: FigurePayload }) {
   );
 }
 
-function QuestionCard({ q, claim }: { q: QuestionPayload; claim?: ReviewItemPayload["claim"] }) {
+function QuestionCard({
+  q,
+  claim,
+  working,
+}: {
+  q: QuestionPayload;
+  claim?: ReviewItemPayload["claim"];
+  /** the worked solution, drawn by the caller (a flagged working highlights its steps) in place of the plain list */
+  working?: React.ReactNode;
+}) {
   const [outcome, setOutcome] = useState<WidgetOutcome | null>(null);
   const [round, setRound] = useState(0);
   const options = q.questionType === "mcq" ? choiceOptions(q.choices) : null;
@@ -419,7 +439,14 @@ function QuestionCard({ q, claim }: { q: QuestionPayload; claim?: ReviewItemPayl
           </div>
         )}
       </div>
-      {answerOnly ? (
+      {working ? (
+        <div className="border-t border-line-soft">
+          <p className="px-3.5 pt-2.5 font-mono text-[0.72rem] uppercase tracking-[0.14em] text-[color:var(--play-text-muted)]">
+            here&apos;s how to solve it — the worked solution (v{q.solutionVersion})
+          </p>
+          {working}
+        </div>
+      ) : answerOnly ? (
         <p className="border-t border-line-soft px-3.5 py-2 text-[0.85rem] text-ink-soft">{ANSWER_ONLY_CARD_NOTE}</p>
       ) : q.solution.length > 0 ? (
         <div className="border-t border-line-soft">
@@ -430,6 +457,215 @@ function QuestionCard({ q, claim }: { q: QuestionPayload; claim?: ReviewItemPayl
         </div>
       ) : null}
     </div>
+  );
+}
+
+/* ------------------------------------------------- a flagged working */
+
+const CLASS_TONE: Record<FlagClass, "attention" | "neutral"> = {
+  REAL: "attention",
+  "REAL-BUT-ELSEWHERE": "attention",
+  FALSE: "neutral",
+};
+
+/** The calibration's class of each flag, counted — so a false alarm reads as one from the header. */
+function ClassChips({ flags }: { flags: WorkingFlagPayload[] }) {
+  const counts = new Map<FlagClass, number>();
+  for (const f of flags) if (f.calibration) counts.set(f.calibration.verdict, (counts.get(f.calibration.verdict) ?? 0) + 1);
+  if (counts.size === 0) return null;
+  return (
+    <>
+      {[...counts.entries()].map(([verdict, n]) => (
+        <span key={verdict} title={`The calibration run's classification: ${CLASS_LABEL[verdict]}`}>
+          <Chip tone={CLASS_TONE[verdict]}>
+            {verdict === "FALSE" ? "calibration: false alarm" : `calibration: ${verdict.toLowerCase()}`}
+            {n > 1 ? ` ×${n}` : ""}
+          </Chip>
+        </span>
+      ))}
+    </>
+  );
+}
+
+/**
+ * The flagged solution as a student is taught it: the question (or the worked
+ * example's problem) and the book's numbered working, the flagged steps
+ * highlighted. What the checker found about them is on the right.
+ */
+function FlaggedSolution({ item, wf }: { item: ReviewItemPayload; wf: WorkingFlagItemPayload }) {
+  const blamesQuestion = wf.flags.some((f) => f.where !== "working");
+  return (
+    <>
+      {blamesQuestion ? (
+        <p className="mb-2 rounded-md border border-gold/50 bg-gold-wash px-3 py-2 text-[12.5px] text-ink" role="note">
+          <span className="font-semibold">Read the question too.</span>{" "}
+          {wf.flags.every((f) => f.where === "question")
+            ? "The checker puts the fault in the question text (a stem misprint), not in a step of the working."
+            : "For at least one flag the checker puts the fault in the question text, or cannot tell whether it is the step or the question."}
+        </p>
+      ) : null}
+      {item.question ? (
+        <QuestionCard q={item.question} working={<FlaggedSteps wf={wf} />} />
+      ) : (
+        <div className={cx(STICKER_PANEL, "overflow-hidden")}>
+          <div className={cx(HONEY_BAND, "px-3.5 py-2")}>
+            <span className="font-mono text-[0.72rem] uppercase tracking-[0.16em] text-accent-deep">
+              worked example{wf.sourcePage != null ? ` · book p.${wf.sourcePage}` : ""}
+            </span>
+          </div>
+          {wf.problem ? (
+            <p className="tex-block px-3.5 pt-3 text-[1rem] text-ink">
+              <TeX text={displayStem(wf.problem)} />
+            </p>
+          ) : null}
+          <FlaggedSteps wf={wf} />
+        </div>
+      )}
+    </>
+  );
+}
+
+/** The numbered working, one row per step, a flagged step outlined, tinted and labelled (never colour alone). */
+function FlaggedSteps({ wf }: { wf: WorkingFlagItemPayload }) {
+  if (wf.steps.length === 0) return <p className="px-3.5 py-3 text-[0.9rem] text-ink-soft">No steps.</p>;
+  const flagged = new Map<number, WorkingFlagPayload[]>();
+  for (const f of wf.flags) flagged.set(f.step, [...(flagged.get(f.step) ?? []), f]);
+  return (
+    <ol className="grid gap-1.5 px-3.5 py-3 font-read" aria-label="The working, numbered as the checker read it">
+      {wf.steps.map((s) => {
+        const fs = flagged.get(s.n);
+        return (
+          <li
+            key={s.n}
+            id={`working-step-${s.n}`}
+            className={cx(
+              "flex items-start gap-2.5 rounded-[var(--play-radius-sm)] px-2 py-1.5 text-[1rem] text-ink",
+              fs ? "border border-gold/50 bg-gold-wash" : "border border-transparent"
+            )}
+          >
+            <span className="mt-1 flex size-6 shrink-0 items-center justify-center rounded-full bg-[var(--play-inactive-fill)] font-mono text-[0.72rem] font-medium text-[color:var(--play-text-muted)]">
+              {s.n}
+            </span>
+            <div className="min-w-0 flex-1">
+              {s.text ? <TeX text={s.text} /> : <span className="text-ink-soft">(empty step)</span>}
+              {fs ? (
+                <p className="mt-1">
+                  <Chip tone="attention">⚑ flagged · {[...new Set(fs.map((f) => FLAG_KIND_LABEL[f.kind] ?? f.kind))].join(", ")}</Chip>
+                </p>
+              ) : null}
+            </div>
+          </li>
+        );
+      })}
+    </ol>
+  );
+}
+
+/** What the checker found, flag by flag, and where the finding comes from. */
+function WorkingFlagFindings({ item, wf }: { item: ReviewItemPayload; wf: WorkingFlagItemPayload }) {
+  const cal = wf.calibration;
+  const mismatched = cal?.promptsVersion != null && wf.promptsVersion != null && cal.promptsVersion !== wf.promptsVersion;
+  return (
+    <>
+      <ul className="grid gap-2.5">
+        {wf.flags.map((f, i) => (
+          <li key={`${f.step}-${i}`} className="rounded-md border border-line bg-card px-3 py-2.5 text-[12.5px] text-ink">
+            <p className="flex flex-wrap items-center gap-1.5">
+              <a href={`#working-step-${f.step}`} className="font-semibold underline">
+                Step {f.step}
+              </a>
+              <Chip>{FLAG_KIND_LABEL[f.kind] ?? f.kind}</Chip>
+              <Chip tone={f.where === "working" ? "neutral" : "attention"}>{WHERE_LABEL[f.where]}</Chip>
+              {f.sources.map((s) => (
+                <Chip key={s}>{s}</Chip>
+              ))}
+              {f.calibration ? (
+                <span title={CLASS_LABEL[f.calibration.verdict]}>
+                  <Chip tone={CLASS_TONE[f.calibration.verdict]}>
+                    {f.calibration.verdict === "FALSE" ? "calibration: false alarm" : `calibration: ${f.calibration.verdict.toLowerCase()}`}
+                  </Chip>
+                </span>
+              ) : null}
+            </p>
+            <dl className="mt-1.5 grid gap-1">
+              <div>
+                <dt className="font-mono text-[10px] uppercase tracking-[0.1em] text-ink-faint">Quoted</dt>
+                <dd className="break-words font-mono text-[12px]" dir="ltr">
+                  {f.quote || "—"}
+                </dd>
+              </div>
+              {f.expected ? (
+                <div>
+                  <dt className="font-mono text-[10px] uppercase tracking-[0.1em] text-ink-faint">Expected</dt>
+                  <dd className="break-words" dir="ltr">
+                    {f.expected}
+                  </dd>
+                </div>
+              ) : null}
+              <div>
+                <dt className="font-mono text-[10px] uppercase tracking-[0.1em] text-ink-faint">Why</dt>
+                <dd className="break-words">{f.why || "—"}</dd>
+              </div>
+              {f.numeric ? (
+                <div>
+                  <dt className="font-mono text-[10px] uppercase tracking-[0.1em] text-ink-faint">Numeric pre-check</dt>
+                  <dd className="break-words font-mono text-[12px]" dir="ltr">
+                    {[f.numeric.left, f.numeric.relation, f.numeric.right].filter(Boolean).join(" ")}
+                    {f.numeric.why ? <span className="font-sans text-ink-soft"> — {f.numeric.why}</span> : null}
+                  </dd>
+                </div>
+              ) : null}
+            </dl>
+            {f.calibration ? (
+              <p className="mt-1.5 rounded bg-paper-deep px-2 py-1.5 text-ink-soft">
+                <span className="font-semibold text-ink">{CLASS_LABEL[f.calibration.verdict]}.</span>{" "}
+                {f.calibration.evidence || "No evidence recorded."}
+              </p>
+            ) : null}
+            {!f.quoteFound ? (
+              <p className="mt-1.5 rounded border border-gold/50 bg-gold-wash px-2 py-1.5 text-ink">
+                The quoted text is not in step {f.step} as it reads now — a correction may have landed, or the checker misquoted. If the
+                step is right, say “Not an error”.
+              </p>
+            ) : null}
+          </li>
+        ))}
+      </ul>
+      <dl className="mt-3">
+        <Fact label="Students">see it as the book prints it — nothing was corrected, and no decision here changes it</Fact>
+        <Fact label="Checker">
+          prompts {wf.promptsVersion ?? "unrecorded"}
+          {wf.runs.length > 0 ? (
+            <div className="font-mono text-[11px] text-ink-soft">run {wf.runs.map((r) => (r.length > 24 ? `${r.slice(0, 12)}…` : r)).join(", ")}</div>
+          ) : null}
+        </Fact>
+        <Fact label="Chapter">{wf.chapter != null ? `chapter ${wf.chapter} · ${wf.book}` : wf.book}</Fact>
+        <Fact label="Read from">
+          <span className="font-mono text-[11px]">{wf.source}</span>
+        </Fact>
+        <Fact label="Calibration">
+          {cal ? (
+            <>
+              classified {cal.classifiedOn ?? "—"}
+              {cal.classifiedBy ? ` by ${cal.classifiedBy.split(",")[0]}` : ""}
+              <div className="text-ink-soft">
+                of {cal.sourceRun ?? "an earlier run"}
+                {mismatched ? ` — a run of ${cal.promptsVersion}; this flag is from ${wf.promptsVersion}` : ""}
+              </div>
+              <div className="font-mono text-[11px] text-ink-faint">{cal.source}</div>
+              <div className="text-ink-faint">A classification is evidence, never a review: only your decision closes this item.</div>
+            </>
+          ) : (
+            "none on record for this chapter"
+          )}
+        </Fact>
+      </dl>
+      {item.question ? (
+        <div className="mt-3">
+          <QuestionFacts q={item.question} />
+        </div>
+      ) : null}
+    </>
   );
 }
 
@@ -577,6 +813,8 @@ function SourceSide({ item }: { item: ReviewItemPayload }) {
       ) : null;
     case "gate_decision":
       return item.gate ? <GateChecks gate={item.gate} /> : null;
+    case "working_flag":
+      return item.workingFlag ? <WorkingFlagFindings item={item} wf={item.workingFlag} /> : null;
     case "prerequisite_link":
       return item.link ? (
         <dl>
@@ -728,7 +966,7 @@ function History({ item }: { item: ReviewItemPayload }) {
       <ul className="grid gap-1.5 text-[12.5px] text-ink">
         {item.history.map((h, i) => (
           <li key={i} className="rounded-md bg-paper-deep px-2.5 py-1.5">
-            <span className="font-semibold">{DECISION_LABEL[h.decision]}</span> by {h.operatorName} ·{" "}
+            <span className="font-semibold">{decisionLabel(item.kind, h.decision)}</span> by {h.operatorName} ·{" "}
             <span className="text-ink-faint">{h.decidedAt.slice(0, 16).replace("T", " ")} UTC</span>
             {h.current ? null : <span className="text-ink-faint"> · on an earlier version</span>}
             {h.note ? <p className="mt-0.5 whitespace-pre-wrap text-ink-soft">{h.note}</p> : null}
