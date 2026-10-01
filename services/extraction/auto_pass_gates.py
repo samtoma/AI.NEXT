@@ -541,7 +541,8 @@ def g2_recommend_main(a, book) -> int:
         if a.gate == "g2-recommend-args":
             skip = set((json.loads(a.only_missing.read_text()).get("items") or {})) if a.only_missing else None
             info = G.prepare(book, ch, lesson_runs, g2_path, a.embed, batch=a.batch, verify_batch=a.verify_batch, model=a.model,
-                             effort=a.effort, max_batches=a.max_batches, args_out=a.args_out, skip_keys=skip)
+                             effort=a.effort, max_batches=a.max_batches, args_out=a.args_out, skip_keys=skip,
+                             preview_identity=True)
             est = info["estimate"]
             if not info["items"]:
                 print(f"G2 recommendation (ch{t}): nothing owes a recommendation"
@@ -551,6 +552,12 @@ def g2_recommend_main(a, book) -> int:
                   f"{info['by_state'].get('excluded', 0)} excluded for typing) in {info['parts']} run(s); "
                   f"{est['recommend_agents']} recommending + up to {est['verify_agents_max']} verifying agents, "
                   f"≈ ${est['usd_low']:.0f}–{est['usd_high']:.0f} (modelled)")
+            ip = info.get("identity_preview") or {}
+            if "equal" in ip:
+                print(f"  the app's own marker, on the typed key of the {len(ip['equal']) + len(ip['different']) + len(ip['unreadable'])} item(s) "
+                      f"whose stem is 'Simplify / Expand / Factorise: …' ({ip['not_an_identity']} are not): equal to the stem's expression "
+                      f"{len(ip['equal'])}, NOT equal {len(ip['different'])} (a book error or a damaged stem), unreadable {len(ip['unreadable'])}"
+                      " — no model, deterministic; a recommendation to put a NOT-equal item live is held")
             for c in info["copies"]:
                 print(f"  copy: {_hr(c['script'])} ({c['bytes']} bytes) — run it with Workflow scriptPath and NO args")
             if not info["copies"]:

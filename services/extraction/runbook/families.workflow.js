@@ -81,9 +81,13 @@ export const meta = {
  */
 
 const ARGS = typeof args === 'string' ? (args ? JSON.parse(args) : {}) : (args || {})
-const PROMPTS_VERSION = 's6-v5'   // v2: packet by reference; v3: by-ref shards unclipped; v4: book questions name their figure images
+const PROMPTS_VERSION = 's6-v6'   // v2: packet by reference; v3: by-ref shards unclipped; v4: book questions name their figure images
                                   // v5: revise mode names its inputs: the spec, the reasons and the parent's figure images only;
                                   //     the blind solver writes values without names (it wrote "x = [0, 8]", "H = (3, 1)")
+                                  // v6: the AUTHOR (and revise) prompt names what Chapter 1's pipeline fixes were for: marker.answer is
+                                  //     PLAIN maths (the book's \dot / \overline for a recurring decimal, written as the stem asks),
+                                  //     marker.form "decimal", "distinct_by_choices" for an mcq whose stem never changes, and the slug
+                                  //     rule (the first six letters unique within an objective). The grade prompts are unchanged.
 const need = (cond, msg) => { if (!cond) throw new Error(msg) }
 need(ARGS.mode === 'author' || ARGS.mode === 'grade', 'args.mode must be "author" or "grade" (see the header of this script)')
 need(ARGS.book && ARGS.book.book, 'args.book must be the book config (generate_questions.py --author-args writes it)')
@@ -114,7 +118,7 @@ const loTailOf = (lo) => String(lo).replace(/^lo:/, '')
 const FORMAT_RULES = `THE FAMILY SPEC (format "ainext.family/1"). One JSON object per family:
 {
   "format": "ainext.family/1",
-  "id": "tpl:<objective tail>:<slug>",        e.g. tpl:g10m4s2-1-1:balance (lower case, digits, hyphens)
+  "id": "tpl:<objective tail>:<slug>",        e.g. tpl:g10m4s2-1-1:balance (lower case, digits, hyphens; see SLUG below)
   "kind": "family" | "authored",              authored = a one-off with no sampled params
   "lo_id": "<the objective>",
   "parent_question_id": "<a book question OF THIS objective, from the list given>",
@@ -136,9 +140,10 @@ const FORMAT_RULES = `THE FAMILY SPEC (format "ainext.family/1"). One JSON objec
   "solution": ["template", …],                          one idea per step, computed like the stem
   "choices": {"correct": "template", "distractors": [   mcq only; at least three
        {"text": "template", "misconception_id": "mc:<objective tail>:<slug>" | null}, …]},
+  "distinct_by_choices": true,                         mcq only, optional: see DUPLICATES below
   "marker": {"kind": "expression"|"equation"|"values"|"interval"|"coordinates"|"surd"|"recurring",
              "answer": "PLAIN maths template, e.g. (x + {=p})*(x - {=q})",
-             "form": null|"factorised"|"expanded"|"simplest"|{"subject": "x"},
+             "form": null|"factorised"|"expanded"|"simplest"|"decimal"|{"subject": "x"},
              "variables": ["x"], "tolerance": null},    expression only
   "proposed_misconceptions": [{"id": "mc:<objective tail>:<slug>", "label": "…", "description": "…"}],
   "notes": "for the human reviewer"
@@ -153,7 +158,35 @@ round sqrt isqrt is_square gcd lcm floor ceil numerator denominator is_int sum l
 list reversed; constant pi. Nothing else exists: no attributes, no imports, no other calls.
 A NUMERIC answer that is not a whole number must be formatted by you, e.g. fixed(x, 2); say in the
 stem how to round. A PLAIN marker answer uses * for multiplication, ** or ^ for powers, sqrt(),
-[a, b] for several values, (a, b) for coordinates, interval(lo, hi, closed_lo, closed_hi).`
+[a, b] for several values, (a, b) for coordinates, interval(lo, hi, closed_lo, closed_hi).
+
+THE MARKER ANSWER IS PLAIN MATHS, NEVER LaTeX: no \\frac, no \\sqrt, no $…$, no \\times. The engine parses it,
+compares it with a blind solver's answer, and itself prints the LaTeX key the student sees. The one LaTeX it
+reads there is the book's recurring-decimal notation, for kind "recurring": a dot over the first and the last
+digit of the repeating block (0.8\\dot{3}, 9.2\\dot{8}\\dot{7}, 0.\\dot{1}4285\\dot{7}) or a bar over the whole block
+(0.1\\overline{045}). Write it as the stem asks for it: a stem that says "using a bar" gets the bar form, one that
+says "using dot notation" gets the dots, and the key is printed in that notation. Write the digits with holes,
+e.g. 0.{=q1}\\dot{{=q2}}\\dot{{=q3}} (the first mark opens its own braces). A recurring answer is an exact repeating
+decimal; a plain fraction such as {=n}/{=d} is also read and is printed with dots. A decimal that stops (0.75)
+is not recurring: use kind "expression" for it.
+
+FORM says what the stem asks the student to write: "factorised", "expanded", "simplest" (a fraction in lowest
+terms), {"subject": "x"} (make x the subject; kind "equation"), or "decimal". Set "decimal" whenever the stem asks
+for a number "in decimal form" or "as a decimal" (kinds "recurring", "expression", "values"): without it the
+marker also accepts a fraction for a recurring decimal, so a fraction would be marked correct for "write it as a
+decimal". Leave form null when the stem asks for no particular form.
+
+DUPLICATES. Two instances of a family with the same stem are one question and the second is dropped. An mcq whose
+stem is the same sentence every time ("Exactly one of the following numbers is irrational. Which one?") and whose
+OPTIONS carry the variation would therefore give ONE item for the whole family. For such an mcq set
+"distinct_by_choices": true: the stem together with the set of options then tells instances apart. Draw enough
+different option sets for ten instances. Leave the key out when the stem has {=…} holes that tell instances apart,
+and never put it on a numeric or expression family (the check refuses it).
+
+SLUG. Item ids read q:<objective tail>:g001-<the first SIX LETTERS of the slug>. Within one objective the first
+six letters of every family's slug must differ from every other family's, the ones listed as existing here
+included, or their item ids collide and the check refuses both. which-rational and which-irrational collide;
+rational-pick and irrational-pick do not. Lower case, digits and hyphens only.`
 
 const AUTHOR_RULES = `RULES (the instances reach students after only a sampled review, ADR-0008 / ADR-0019):
 - Stay inside THIS objective and the book's own method, vocabulary and notation. The book questions
@@ -168,7 +201,11 @@ const AUTHOR_RULES = `RULES (the instances reach students after only a sampled r
 - ANSWER TYPE: "numeric" for a number; "expression" (with marker) for an algebraic expression, an
   equation, several values, an interval, coordinates, a surd or a recurring decimal; "mcq" ONLY where
   a choice is natural (a classification, a comparison) or where every distractor is a specific,
-  diagnosable error. Never use mcq to dodge typing.
+  diagnosable error. Never use mcq to dodge typing. An mcq whose stem does not change between instances
+  (the options carry the variation) sets "distinct_by_choices": true (DUPLICATES above).
+- A stem that asks for a number "in decimal form" sets marker.form "decimal"; a recurring-decimal answer is
+  written in the notation the stem asks for (THE MARKER ANSWER above).
+- A family's slug differs from its siblings' in its first six letters (SLUG above).
 - DISTRACTORS name an error of THIS objective: an id from the list given, or a new id you declare in
   proposed_misconceptions (mc:<objective tail>:<slug>, with label and description). A plausible wrong
   option with no named error takes misconception_id null. The correct option never has one.
@@ -197,6 +234,7 @@ const SPEC_SCHEMA = {
     solution: { type: 'array', items: { type: 'string' }, minItems: 1 },
     choices: { type: 'object' },
     marker: { type: 'object' },
+    distinct_by_choices: { type: 'boolean' },
     proposed_misconceptions: { type: 'array', items: { type: 'object' } },
     notes: { type: 'string' },
     version: { type: 'integer' },

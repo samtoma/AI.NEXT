@@ -596,7 +596,8 @@ def decide(entry: dict, rec: dict | None, ver: dict | None, marker_why: str | No
                    + f" (its own answer: {_clip(ver.get('own_answer'), 120)}; {_clip(ver.get('note'), 200)})")
             return down(why, UNCONFIRMED)
         verified = {"by": "g2rec-v1 independent verifier", "own_answer": _clip(ver.get("own_answer"), 200), "verdict": "confirmed",
-                    **({"app_marker_identity": identity} if identity else {}), **({"app_marker_book_answer": agreement} if agreement else {})}
+                    **({"app_marker_identity": identity} if identity == "equal" else {}),
+                    **({"app_marker_book_answer": agreement} if agreement == "equal" else {})}
     if "stem" in fields and conf != "low":
         conf, why_low = "low", "the stem was repaired from the book's own working: it changes the question's text"
     if teaching and conf != "low":
@@ -699,8 +700,9 @@ def record_runs(book, chapter: int) -> list[Path]:
 
 def prepare(book, chapter: int, lesson_runs: list[Path], g2_path: Path | None, embed: Path | None = None, *, batch: int = 8,
             verify_batch: int = 8, model: str = "sonnet", effort: str = "high", max_batches: int = 24, args_out: Path | None = None,
-            skip_keys: set[str] | None = None) -> dict:
-    """The packet and its generated copies for one chapter (embed_workflow.py). Writes nothing without `embed` / `args_out`."""
+            skip_keys: set[str] | None = None, preview_identity: bool = False) -> dict:
+    """The packet and its generated copies for one chapter (embed_workflow.py). Writes nothing without `embed` / `args_out`.
+    `preview_identity`: also run the app's marker over the typed keys of the items whose stem is an identity (informational)."""
     import embed_workflow
     runs = [load_run(p) for p in lesson_runs]
     g2 = json.loads(g2_path.read_text()) if g2_path and Path(g2_path).exists() else None
@@ -712,6 +714,11 @@ def prepare(book, chapter: int, lesson_runs: list[Path], g2_path: Path | None, e
                   "estimate": estimate(len(entries), batch), "lesson_runs": [str(p) for p in lesson_runs]}
     if not entries:
         return info
+    if preview_identity:
+        try:
+            info["identity_preview"] = identity_preview(entries)
+        except RecommendError as e:               # no node: the preview is informational, never a reason to stop
+            info["identity_preview"] = {"unavailable": str(e)[:160]}
     parts = split_parts(entries, batch, max_batches)
     info["parts"] = len(parts)
     titles = lesson_titles(book)

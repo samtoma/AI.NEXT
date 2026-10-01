@@ -432,6 +432,92 @@ class Policy(unittest.TestCase):
         self.assertIn("never a review", doc["status"])
 
 
+# ---------------------------------------------------------------------------------------------- the two deterministic oracles
+class Oracles(unittest.TestCase):
+    """The app's own marker as an identity oracle: is the key equal to the expression the stem asks to transform, and to the answer
+    the book states? No model: a verdict an agent would put live is held when the marker says no."""
+
+    def test_which_stems_are_identities(self):
+        self.assertEqual(G.identity_expr("Simplify: $\\dfrac{a}{b}$"), "\\dfrac{a}{b}")
+        self.assertEqual(G.identity_expr("Answer the following: Expand: $(3a-\\dfrac{1}{2a})^2$"), "(3a-\\dfrac{1}{2a})^2")
+        self.assertEqual(G.identity_expr("Factorise the following: $16x^6-3y^8$"), "16x^6-3y^8")
+        self.assertEqual(G.identity_expr("Simplify (assume all denominators are non-zero): $\\dfrac{1}{x}$"), "\\dfrac{1}{x}")
+        self.assertIsNone(G.identity_expr("Solve: $x+1=2$"))
+        self.assertIsNone(G.identity_expr("Simplify $a$ and $b$"), "two segments: not one expression")
+        self.assertIsNone(G.identity_expr("What is $x$?"))
+
+    def test_where_the_book_states_its_answer(self):
+        it = item("Ex9-1:1", epub_final_answer="$=\\frac{1}{a+4}$",
+                  solution=["$\\begin{align*}x&=2\\\\&=\\frac{1}{a+4}\\end{align*}$", "Note restriction: $a\\ne-4$ ."])
+        c = G.book_candidates(it, "\\frac{1}{a+4}")
+        self.assertEqual(c[0], "\\frac{1}{a+4}")
+        self.assertEqual(len(c), len(set(c)), "each place once")
+        self.assertIn("Note restriction: a\\ne-4", c[-1], "prose is a candidate the marker simply cannot read")
+        self.assertEqual(G.book_candidates(item("x", epub_final_answer="x = \\frac{2}{3}", solution=["x"]), None)[0], "\\frac{2}{3}")
+
+    def test_the_policy_holds_what_the_oracle_refuses(self):
+        es = entries_of()
+        k1 = "g10m9s1-1:Ex9-1:1"
+        r = rec(book_quote="x^{2}")
+        e = collect(es, {k1: (r, CONFIRMED)}, identity_fn=lambda rows: {x["id"]: "different" for x in rows if "#" not in x["id"]}
+                    )["items"][k1]
+        self.assertEqual((e["verdict"], e["class"]), ("hold", "unconfirmed"))
+        self.assertIn("NOT equal to the expression the stem asks to transform", e["note"])
+        e = collect(es, {k1: (r, CONFIRMED)}, identity_fn=lambda rows: {x["id"]: "different" for x in rows if "#" in x["id"]}
+                    )["items"][k1]
+        self.assertEqual((e["verdict"], e["class"]), ("hold", "not grounded"))
+        self.assertIn("Samuel's to approve", e["note"])
+        e = collect(es, {k1: (r, CONFIRMED)}, identity_fn=lambda rows: {x["id"]: "equal" for x in rows})["items"][k1]
+        self.assertEqual(e["verdict"], "accept")
+        self.assertEqual((e["verified"]["app_marker_identity"], e["verified"]["app_marker_book_answer"]), ("equal", "equal"))
+        e = collect(es, {k1: (r, CONFIRMED)}, identity_fn=lambda rows: {x["id"]: "unreadable" for x in rows})["items"][k1]
+        self.assertEqual(e["verdict"], "accept", "no signal is not a veto")
+        self.assertNotIn("app_marker_identity", e["verified"])
+
+    def test_agreement_is_equal_if_any_place_agrees_and_different_only_if_all_it_read_differ(self):
+        res = {"k#0": "different", "k#1": "unreadable", "j#0": "different", "j#1": "equal", "m#0": "unreadable"}
+        self.assertEqual(G.agreement_of(res, "k"), "different")
+        self.assertEqual(G.agreement_of(res, "j"), "equal")
+        self.assertIsNone(G.agreement_of(res, "m"))
+        self.assertIsNone(G.agreement_of(res, "absent"))
+
+    @unittest.skipUnless(NODE and (EX.parent.parent / "app" / "src" / "lib" / "answer-marker.ts").exists(), "needs node and the app's marker")
+    def test_the_real_marker_on_the_pilot_style_cases(self):
+        def after(stem, key, variables, **kw):
+            return item("Ex9-1:1", stem=stem, marker={"kind": "expression", "key": key, "form": None, "variables": variables, "tolerance": None},
+                        answer=key, **kw)
+        right = after("Simplify: $\\dfrac{5}{t-2}-\\dfrac{1}{t-3}$", "\\frac{4t-13}{(t-2)(t-3)}", ["t"])
+        wrong = after("Simplify: $\\dfrac{5}{t-2}-\\dfrac{1}{t-3}$", "\\frac{4t-12}{(t-2)(t-3)}", ["t"])
+        res = G.run_identity_check(G.identity_rows({"right": right, "wrong": wrong}))
+        self.assertEqual(res, {"right": "equal", "wrong": "different"})
+        # a key the typing agent corrected is not the book's: the book's own last line says 2jklabc
+        typed = after("Factorise: $8j^{3}k^{3}l^{3}-b^{3}$", "(2jkl-b)(4j^2k^2l^2+2jklb+b^2)", ["b", "j", "k", "l"],
+                      epub_final_answer=None, solution=["$\\begin{align*}8j^3k^3l^3-b^3&=(2jkl-b)(4j^2k^2l^2+2jklabc+b^2)\\end{align*}$"])
+        quote = "(2jkl-b)(4j^2k^2l^2+2jklabc+b^2)"
+        rows = G.agreement_rows({"k": typed}, {"k": quote})
+        self.assertTrue(rows)
+        self.assertEqual(G.agreement_of(G.run_identity_check(rows), "k"), "different")
+        # ... while the identity oracle is satisfied (the key IS equal to the stem's expression): the two oracles are independent
+        self.assertEqual(G.run_identity_check(G.identity_rows({"k": typed}))["k"], "equal")
+
+    @unittest.skipUnless(NODE and (EX.parent.parent / "app" / "src" / "lib" / "answer-marker.ts").exists(), "needs node and the app's marker")
+    def test_a_silent_correction_never_goes_live(self):
+        typed = item("Ex9-1:1", stem="Factorise: $8j^{3}k^{3}l^{3}-b^{3}$", answer="(2jkl-b)(4j^2k^2l^2+2jklb+b^2)",
+                     marker={"kind": "expression", "key": "(2jkl-b)(4j^2k^2l^2+2jklb+b^2)", "form": "factorised", "variables": ["b", "j", "k", "l"],
+                             "tolerance": None},
+                     epub_final_answer=None, printed_answer="(2jkl −b)(4j2k2l2 + 2jklabc + b2)",
+                     solution=["$\\begin{align*}8j^3k^3l^3-b^3&=(2jkl-b)(4j^2k^2l^2+2jklabc+b^2)\\end{align*}$"],
+                     typing_problems=["book_final is not in the book solution", "the key does not read as the printed answer"])
+        es = [{"key": "g10m9s1-1:Ex9-1:1", "lesson": "g10m9s1-1", "ref": "Ex9-1:1", "state": "excluded", "item": typed}]
+        run = {"results": [{"key": es[0]["key"], "rec": rec("accept", "check too strict", book_quote="(2jkl-b)(4j^2k^2l^2+2jklabc+b^2)"),
+                            "ver": CONFIRMED}]}
+        doc = G.collect(es, [run])                                   # the real marker, the real oracles
+        e = doc["items"][es[0]["key"]]
+        self.assertEqual((e["verdict"], e["class"]), ("exclude", "not grounded"),
+                         "the key is right for the stem but is not the book's: an accept would correct the book silently")
+        self.assertEqual(doc["report"]["app_marker_identity_of_the_typed_key"]["equal"], [es[0]["key"]])
+
+
 # ---------------------------------------------------------------------------------------------- the file reaches G2
 class ReachesG2(unittest.TestCase):
     """The collected file through auto_pass_gates.g2_merge and assemble_objectives.lesson_runs: the pilot's route."""
