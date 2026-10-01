@@ -352,6 +352,7 @@ test("lessons list in catalogue order, not the bank's review order", () => {
   const row = (lo: string, rank: number, status: string, source = "seed") => ({
     id: `q:${lo}`, loId: `lo:${lo}`, loLabel: lo, moduleLabel: null, tier: "basic",
     questionType: "mcq", stem: "", status, source, reviewedBy: null, reviewedAt: null,
+    aiCheckedBy: null, holdReason: null,
     parentQuestionId: null, generatedBy: null, sourcePage: null, attempts: 0,
     courseId: PREP3_MATH_EN, lessonSlug: lo.replace(/-\d+$/, ""), catalogueRank: rank,
   });
