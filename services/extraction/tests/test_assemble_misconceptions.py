@@ -322,6 +322,164 @@ class AssemblerTest(unittest.TestCase):
         diags = json.loads(p.read_text())["questions"][0]["choices"]["diagnostics"]
         self.assertIn("mc:zz1s1-1-1:exponents-multiplied", [d["misconception_id"] for d in diags])
 
+    # ---- the two passes (the Chapter 1 deadlock): the bundles are generated FROM the catalogue ----------------
+    def real_format(self) -> dict:
+        """The final run as the real generators' refusals read: S6 `ref` = `<family>#<tagged error>`, S7 `ref` =
+        `<template>#<predicate name>` and `text` the predicate's MEANING (not its name)."""
+        run = copy.deepcopy(self.final_result)
+        for r in run["records"]:
+            for st in r.get("stripped") or []:
+                if st["origin"] == "S6" and st.get("tagged"):
+                    st["ref"] = f"{st['ref']}#{st['tagged']}"
+                elif st["origin"] == "S7":
+                    st["ref"] = f"{st['ref']}#{st['text']}"
+                    st["text"] = "The base is changed: the contract's sentence for this predicate, not its name"
+        return run
+
+    def test_a_refused_attachment_no_bundle_carries_refuses_unless_this_is_the_catalogue_pass(self):
+        self.assertEqual(self.assemble(self.run_path), 1)          # no flag: as strict as ever
+        self.assertFalse(self.out.exists())
+        self.assertEqual(self.assemble(self.run_path, extra=["--catalogue-only"]), 0)
+        cat = json.loads(self.out.read_text())
+        self.assertEqual(am.validate_catalogue(cat, max_per_objective=4), [])
+        self.assertEqual(json.loads(self.s6.read_text()), fixture("s6-generated.json"))   # no bundle is touched
+
+    def test_the_catalogue_pass_takes_no_bundle_and_keeps_every_rule_on_the_entries(self):
+        with self.assertRaises(SystemExit):
+            self.assemble(self.run_path, bundles=(self.s6,), extra=["--catalogue-only"])
+        # a draft is still never loadable, an unconfirmed entry still dropped: only the bundle check is deferred
+        p = self.write("draft.json", self.draft_result)
+        self.assertEqual(self.assemble(p, extra=["--catalogue-only"]), 1)
+        self.assertFalse(self.out.exists())
+        run = copy.deepcopy(self.final_result)
+        record(run, "lo:zz1s1-1-1")["entries"][0]["refutation"] = [{"step": 1, "text_md": "only one step"}]
+        self.assertEqual(self.assemble(self.write("short.json", run), extra=["--catalogue-only"]), 1)
+
+    def test_the_bundle_pass_after_the_catalogue_pass_strips_what_was_deferred(self):
+        self.assertEqual(self.assemble(self.run_path, extra=["--catalogue-only"]), 0)
+        first = self.out.read_bytes()
+        self.assertEqual(self.assemble(self.run_path, bundles=(self.s6, self.s7)), 0)
+        self.assertEqual(self.out.read_bytes(), first)              # the same catalogue both times
+        d = {c["key"]: c.get("misconception_id") for c in json.loads(self.s6.read_text())["questions"][0]["choices"]}
+        self.assertIsNone(d["D"])                                   # the refused a^(n-m) option lost its tag
+        # and it is still the bundle pass that refuses when it cannot strip
+        self.assertEqual(self.assemble(self.run_path, bundles=(self.s7,)), 1)
+
+    def test_real_refs_are_matched_by_family_and_by_predicate_name(self):
+        # before: `_in_family` compared the whole `family#error` ref with the bundle's family, and an S7 record's
+        # `text` (the predicate's meaning) with the predicate's name — neither ever matched real data
+        run = self.write("real.json", self.real_format())
+        self.assertEqual(self.assemble(run, extra=["--catalogue-only"]), 0)
+        self.assertEqual(self.assemble(run, bundles=(self.s6, self.s7)), 0)
+        em = "mc:zz1s1-1-1:exponents-multiplied"
+        g = {q["id"]: {c["key"]: c.get("misconception_id") for c in q["choices"]}
+             for q in json.loads(self.s6.read_text())["questions"]}
+        self.assertEqual(g["q:zz1s1-1-1:g001-product"], {"A": None, "B": em, "C": None, "D": None})
+        w = json.loads(self.s7.read_text())["questions"][0]["choices"]["diagnostics"]
+        self.assertEqual(w, [{"predicate": "exponents-added", "misconception_id": "mc:zz1s1-1-2:exponents-added"}])
+
+    def test_a_predicate_is_stripped_only_in_the_template_the_refusal_names(self):
+        run = self.write("real.json", self.real_format())
+        s7 = json.loads(self.s7.read_text())
+        other = copy.deepcopy(s7["questions"][0])
+        other.update({"id": "q:zz1s1-1-2:w002", "family": "tpl:zz1s1-1-2:another-template"})
+        s7["questions"].append(other)
+        s7["questions"][0]["family"] = "tpl:zz1s1-1-2:power-builder"
+        p = self.write("s7two.json", s7)
+        self.assertEqual(self.assemble(run, bundles=(self.s6, p)), 0)
+        got = {q["id"]: [d["predicate"] for d in q["choices"]["diagnostics"]]
+               for q in json.loads(p.read_text())["questions"]}
+        self.assertEqual(got["q:zz1s1-1-2:w001"], ["exponents-added"])                       # the named template
+        self.assertEqual(got["q:zz1s1-1-2:w002"], ["exponents-added", "base-changed"])       # another template's own
+
+    def test_a_second_bundle_pass_is_a_no_op_and_the_stamp_is_the_only_excuse(self):
+        run = self.write("real.json", self.real_format())
+        self.assertEqual(self.assemble(run, bundles=(self.s6, self.s7)), 0)
+        once = (self.s6.read_bytes(), self.s7.read_bytes(), self.out.read_bytes())
+        self.assertEqual(json.loads(self.s6.read_text())["s5_reconciled"]["runs"], ["real.json"])
+        self.assertEqual(self.assemble(run, bundles=(self.s6, self.s7)), 0)
+        self.assertEqual((self.s6.read_bytes(), self.s7.read_bytes(), self.out.read_bytes()), once)
+        # a bundle that carries no stamp cannot prove its strips: refused, never assumed
+        doc = json.loads(self.s6.read_text())
+        del doc["s5_reconciled"]
+        self.s6.write_text(json.dumps(doc))
+        self.assertEqual(self.assemble(run, bundles=(self.s6, self.s7)), 1)
+        # and a stamp of ANOTHER run excuses nothing
+        doc["s5_reconciled"] = {"runs": ["another-run.json"], "refused_attachments_stripped": [
+            list(am._unfit_key(u)) for u in am.assemble([run], str(BOOK))[2]]}
+        self.s6.write_text(json.dumps(doc))
+        self.assertEqual(self.assemble(run, bundles=(self.s6, self.s7)), 1)
+
+    def widget_only_unfit(self) -> Path:
+        s7 = json.loads(self.s7.read_text())
+        s7["questions"][0]["choices"]["diagnostics"] = [
+            {"predicate": "base-changed", "misconception_id": "mc:zz1s1-1-2:exponents-added"}]
+        s7["questions"][0]["family"] = "tpl:zz1s1-1-2:power-builder"
+        s7["templates"] = {"tpl:zz1s1-1-2:power-builder": "sha-1"}
+        return self.write("s7only.json", s7)
+
+    def gap_files(self) -> tuple[Path, Path]:
+        graph = self.write("g.json", {"edges": [{"src": "module:zz1", "dst": "lo:zz1s1-1-2", "type": "teaches"}]})
+        gaps = self.write("gaps.json", {
+            "format": "ainext.widget-gaps/1", "book": "zz-test", "uncovered_chapters": [], "proposed_kinds": {},
+            "chapters": [{"module": "module:zz1", "label": "One", "status": "covered", "widgets": 1,
+                          "kinds": ["power_builder"], "objectives_with_widgets": ["lo:zz1s1-1-2"], "gaps": 0}],
+            "gaps": []})
+        return graph, gaps
+
+    def test_a_widget_left_with_no_diagnostic_is_left_out_and_recorded_only_when_asked(self):
+        run = self.write("real.json", self.real_format())
+        p = self.widget_only_unfit()
+        graph, gaps = self.gap_files()
+        # by default it is still an error, and the message names the way out
+        self.assertEqual(self.assemble(run, bundles=(self.s6, p), extra=["--graph", str(graph)]), 1)
+        self.assertFalse(self.out.exists())
+        before = gaps.read_text()
+        # the flag needs somewhere to record, and a module to record it under
+        with self.assertRaises(SystemExit):
+            self.assemble(run, bundles=(self.s6, p), extra=["--graph", str(graph), "--drop-undiagnosed-widgets"])
+        with self.assertRaises(SystemExit):
+            self.assemble(run, bundles=(self.s6, p), extra=["--drop-undiagnosed-widgets", "--widget-gaps", str(gaps)])
+        with self.assertRaises(SystemExit):
+            self.assemble(run, bundles=(self.s6, p), extra=["--graph", str(graph), "--drop-undiagnosed-widgets",
+                                                            "--widget-gaps", str(self.tmp / "missing.json")])
+        self.assertEqual(gaps.read_text(), before)
+        extra = ["--graph", str(graph), "--drop-undiagnosed-widgets", "--widget-gaps", str(gaps)]
+        # --check reports and writes nothing
+        self.assertEqual(self.assemble(run, bundles=(self.s6, p), extra=extra + ["--check"]), 0)
+        self.assertEqual(gaps.read_text(), before)
+        self.assertEqual(self.assemble(run, bundles=(self.s6, p), extra=extra), 0)
+        bundle = json.loads(p.read_text())
+        self.assertEqual(bundle["questions"], [])                                   # never shipped
+        self.assertEqual(bundle["templates"], {})
+        self.assertIn("tpl:zz1s1-1-2:power-builder", bundle["rejected_templates"])
+        self.assertEqual(bundle["s5_reconciled"]["widgets_left_out"], ["q:zz1s1-1-2:w001"])
+        rep = json.loads(gaps.read_text())
+        (gap,) = rep["gaps"]
+        self.assertEqual((gap["module"], gap["lo_id"], gap["need_kind"], gap["signed_off"], gap["scope"]),
+                         ("module:zz1", "lo:zz1s1-1-2", "no-diagnostic", None, "chapter"))
+        self.assertIn("mc:zz1s1-1-2:exponents-added", gap["why"])
+        self.assertEqual(rep["uncovered_chapters"], ["module:zz1"])                 # no widget left: a human signs it
+        self.assertEqual((rep["chapters"][0]["status"], rep["chapters"][0]["widgets"], rep["chapters"][0]["gaps"]),
+                         ("gap", 0, 1))
+        self.assertEqual(rep["proposed_kinds"], {})                                 # no new kind is proposed from it
+        # a rerun changes nothing and records nothing twice
+        self.assertEqual(self.assemble(run, bundles=(self.s6, p), extra=extra), 0)
+        self.assertEqual(json.loads(gaps.read_text()), rep)
+
+    def test_a_problem_elsewhere_writes_neither_the_bundle_nor_the_gap_report(self):
+        run = self.write("real.json", self.real_format())
+        p = self.widget_only_unfit()
+        graph, gaps = self.gap_files()
+        s6 = json.loads(self.s6.read_text())
+        s6["questions"][0]["choices"][1]["misconception_id"] = "mc:zz1s1-1-2:a-stranger"   # another objective's entry
+        before = (p.read_text(), gaps.read_text())
+        extra = ["--graph", str(graph), "--drop-undiagnosed-widgets", "--widget-gaps", str(gaps)]
+        # an unfit item that no bundle carries (S6 not passed) is a problem: nothing is written
+        self.assertEqual(self.assemble(run, bundles=(p,), extra=extra), 1)
+        self.assertEqual((p.read_text(), gaps.read_text()), before)
+        self.assertFalse(self.out.exists())
+
     def test_one_run_per_objective(self):
         a = self.write("a.json", self.final_result)
         cat, _, _, problems = am.assemble([self.run_path, a], str(BOOK))

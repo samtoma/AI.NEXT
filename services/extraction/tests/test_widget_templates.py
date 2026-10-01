@@ -423,6 +423,33 @@ class TheChecks(unittest.TestCase):
         self.assertTrue(all("no diagnostic left" in p for p in problems))
         self.assertEqual(len(problems), 3)
 
+    def test_asked_to_collect_them_an_emptied_widget_is_left_out_not_refused(self):
+        # Chapter 1: one template's only mapping was an entry S5 dropped, and the refusal took the chapter's other five
+        # templates with it. Given `orphans`, the widget is handed back to be left out (and recorded), never shipped
+        g = graph()
+        del g.d["misconceptions"]["mc:u2-3-1:direct-solved-as-inverse"]
+        _, questions = built()
+        orphans: list = []
+        problems, notes = GW.check_questions(questions, g, orphans=orphans)
+        self.assertEqual(problems, [])
+        self.assertEqual(len(notes), 3)
+        self.assertEqual(len(orphans), 3)
+        grouped = GW.orphaned_templates(orphans)
+        self.assertEqual(len(grouped), 1)
+        (tid, o), = grouped.items()
+        self.assertEqual((o["lo_id"], len(o["questions"]), o["dropped"]),
+                         ("lo:u2-3-1", 3, ["mc:u2-3-1:direct-solved-as-inverse"]))
+        self.assertTrue(all(not q["choices"]["diagnostics"] for q, _ in orphans))
+
+    def test_a_widget_that_never_had_a_diagnostic_is_still_a_problem_when_collecting(self):
+        _, questions = built()
+        q = copy.deepcopy(questions[0])
+        q["choices"]["diagnostics"] = []
+        orphans: list = []
+        problems, _ = GW.check_questions([q], graph(), orphans=orphans)
+        self.assertEqual(orphans, [])
+        self.assertTrue(any("no diagnostic left" in p for p in problems))
+
     def test_before_s5_the_objective_is_read_from_the_id(self):
         g = graph()
         del g.d["misconceptions"]["mc:g10m8s3-1-1:run-over-rise"]
@@ -627,6 +654,45 @@ class GapReport(unittest.TestCase):
         self.assertEqual(rep["proposed_kinds"]["power_builder"]["modules"], ["module:g10m-c02"])
         # the shape coverage_report.py reads: a flat list, each gap naming its module, unsigned
         self.assertEqual([(g["module"], g["signed_off"]) for g in rep["gaps"]], [("module:g10m-c02", None)])
+
+    def test_a_template_left_out_is_a_lesson_gap_that_proposes_no_kind(self):
+        _, questions = built()
+        keep = [q for q in questions if q["family"] != "wt:u2-3-1:direct-inverse"] if any(
+            q["family"] == "wt:u2-3-1:direct-inverse" for q in questions) else questions[1:]
+        left = {"wt:g10m8s3-1-2:gradient-line": {"lo_id": "lo:g10m8s3-1-2", "questions": ["q:g10m8s3-1-2:w001"],
+                                                 "dropped": ["mc:g10m8s3-1-2:x"]}}
+        rep = GW.gap_report("g10-math", "course:us-g10-math-en", graph(), keep, [], orphaned=left)
+        mine = [g for g in rep["gaps"] if g["need_kind"] == "no-diagnostic"]
+        self.assertEqual(len(mine), 1)
+        self.assertEqual((mine[0]["lo_id"], mine[0]["signed_off"]), ("lo:g10m8s3-1-2", None))
+        self.assertEqual(rep["proposed_kinds"].get("no-diagnostic"), None)       # no widget kind is asked for
+
+    def test_add_no_diagnostic_gaps_recounts_only_the_chapter_it_touches_and_never_twice(self):
+        g = graph()
+        _, questions = built()
+        rep = GW.gap_report("g10-math", "course:us-g10-math-en", g, questions, [])
+        c8 = next(c for c in rep["chapters"] if c["module"] == "module:g10m-c08")
+        self.assertEqual(c8["status"], "covered")
+        left = {"wt:x:gone": {"lo_id": "lo:g10m8s3-1-2", "questions": ["q:g10m8s3-1-2:w009"], "dropped": ["mc:a", "mc:b"]}}
+        mod = g.module_of()
+        kept = [q for q in questions if q["lo_id"] != "lo:g10m8s3-1-2"] if False else questions
+        new = GW.add_no_diagnostic_gaps(rep, left, mod, kept, "assemble_misconceptions.py")
+        self.assertEqual(rep, GW.gap_report("g10-math", "course:us-g10-math-en", g, questions, []))   # the input is untouched
+        added = [x for x in new["gaps"] if x["need_kind"] == "no-diagnostic"]
+        self.assertEqual([(x["module"], x["source"], x["signed_off"]) for x in added],
+                         [("module:g10m-c08", "assemble_misconceptions.py", None)])
+        self.assertIn("mc:a, mc:b", added[0]["why"])
+        n8 = next(c for c in new["chapters"] if c["module"] == "module:g10m-c08")
+        self.assertEqual((n8["status"], n8["gaps"]), ("covered", c8["gaps"] + 1))     # it still has widgets: a lesson gap
+        self.assertEqual(added[0]["scope"], "lesson")
+        # nothing left in the chapter: it becomes uncovered and the gap chapter-scope, for a human to sign
+        none_left = GW.add_no_diagnostic_gaps(rep, left, mod, [q for q in questions if mod.get(q["lo_id"]) != "module:g10m-c08"],
+                                              "assemble_misconceptions.py")
+        self.assertIn("module:g10m-c08", none_left["uncovered_chapters"])
+        self.assertEqual([x["scope"] for x in none_left["gaps"] if x["need_kind"] == "no-diagnostic"], ["chapter"])
+        self.assertEqual(next(c for c in none_left["chapters"] if c["module"] == "module:g10m-c08")["status"], "gap")
+        # a second telling is a no-op
+        self.assertEqual(GW.add_no_diagnostic_gaps(new, left, mod, kept, "assemble_misconceptions.py"), new)
 
     def test_an_unexamined_uncovered_chapter_still_gets_a_gap(self):
         rep = GW.gap_report("g10-math", "course:us-g10-math-en", graph(), [], [])

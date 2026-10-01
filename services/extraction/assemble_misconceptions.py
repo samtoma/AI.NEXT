@@ -380,8 +380,14 @@ def _split_ref(ref: str | None) -> tuple[str | None, str | None]:
 
 
 def _in_family(q: dict, ref: str | None) -> bool:
+    """The item is of the family the ref names: by its `family` field when it has one (it decides, whatever a note
+    says), else by the legacy note ("Generated from template family X.")."""
     fam, _ = _split_ref(ref)
-    return bool(fam) and (q.get("family") == fam or fam in (q.get("source_note") or ""))
+    if not fam:
+        return False
+    if q.get("family"):
+        return q["family"] == fam
+    return fam in (q.get("source_note") or "")
 
 
 def prerequisites(bundle_paths: list[Path]) -> dict[str, set[str]]:
