@@ -89,13 +89,12 @@ test("a second submission is refused loudly — 409 onboarding_already_completed
     ok: true,
     grade: "10",
     curriculum: AMERICAN,
-    source: "implied",
-    resolvedFrom: null,
+    source: "chosen",
   });
   assert.deepEqual(done, { status: 204, body: null });
 });
 
-test("the step's other refusals: grade and curriculum validated, and a required curriculum carries the offer", () => {
+test("the step's other refusals: grade and curriculum validated, and a required curriculum carries the offer — 422 either way", () => {
   assert.deepEqual(onboardingAnswer({ ok: false, reason: "invalid_grade" }), {
     status: 422,
     body: { error: "invalid_grade", field: "grade" },
@@ -104,36 +103,36 @@ test("the step's other refusals: grade and curriculum validated, and a required 
     status: 422,
     body: { error: "invalid_curriculum", field: "curriculum" },
   });
+  // Samuel's 2026-10-01 reversal: a missing curriculum is 422, like an unknown
+  // one, never 409 — it is a bad request, not a conflict with server state.
   assert.deepEqual(
     onboardingAnswer({ ok: false, reason: "curriculum_required", offered: [NATIONAL, AMERICAN] }),
-    { status: 409, body: { error: "curriculum_required", field: "curriculum", offered: [NATIONAL, AMERICAN] } }
+    { status: 422, body: { error: "curriculum_required", field: "curriculum", offered: [NATIONAL, AMERICAN] } }
   );
 });
 
-test("sign-up and the Google step refuse a curriculum in one shape", () => {
+test("sign-up and the Google step refuse a curriculum in one shape — 422 either way", () => {
   assert.deepEqual(curriculumRefusal("invalid_curriculum", []), {
     status: 422,
     body: { error: "invalid_curriculum", field: "curriculum" },
   });
   const required = curriculumRefusal("curriculum_required", [NATIONAL, AMERICAN]);
-  assert.equal(required.status, 409);
-  assert.deepEqual(required.body?.offered, [NATIONAL, AMERICAN]);
+  assert.equal(required.status, 422);
+  assert.deepEqual(required.body, {
+    error: "curriculum_required",
+    field: "curriculum",
+    offered: [NATIONAL, AMERICAN],
+  });
 });
 
-test("account_created carries the curriculum and how it was set; resolved_from only when the server overrode a pick", () => {
+test("account_created carries the curriculum and how it was set — no resolved_from any more (2026-10-01 reversal)", () => {
   assert.deepEqual(
-    accountCreatedProperties("password", "10", { curriculum: AMERICAN, source: "implied", resolvedFrom: null }),
-    { method: "password", grade: "10", curriculum: AMERICAN, curriculum_source: "implied" }
+    accountCreatedProperties("password", "10", { curriculum: AMERICAN, source: "chosen" }),
+    { method: "password", grade: "10", curriculum: AMERICAN, curriculum_source: "chosen" }
   );
   assert.deepEqual(
-    accountCreatedProperties("google", "10", { curriculum: AMERICAN, source: "implied", resolvedFrom: NATIONAL }),
-    {
-      method: "google",
-      grade: "10",
-      curriculum: AMERICAN,
-      curriculum_source: "implied",
-      curriculum_resolved_from: NATIONAL,
-    }
+    accountCreatedProperties("google", "9", { curriculum: NATIONAL, source: "chosen" }),
+    { method: "google", grade: "9", curriculum: NATIONAL, curriculum_source: "chosen" }
   );
 });
 
