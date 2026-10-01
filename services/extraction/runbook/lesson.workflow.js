@@ -315,13 +315,13 @@ function settle(a, b, textLayer) {
 //     chain 4 / 5 / 6 of g10m3s2-1's "T4 = …; T5 = …; T6 = …" printed). Only a label, never part of a value: the sign, the
 //     digits, a decimal comma, a unit, a variable ("-39x") and the order are exactly as written.
 //   * the separators are ";", "and", "or", and a comma that is not a decimal comma (a comma BETWEEN TWO DIGITS, "-28,1", or between
-//     a digit and a recurring bar, "1,\overline{34}", is one number; the old split broke it in two on both sides, so "1,5; 2" and
-//     "5; 1,2" read alike) and not inside a bracket ("(1,2)").
+//     a digit and a recurring bar, "1,\overline{34}", is a decimal point, as normTex reads it; the old split broke it in two on both
+//     sides, so "1,5; 2" and "5; 1,2" read alike) and not inside a bracket ("(1,2)").
 const VALUE_LABEL = /^(?:[A-Za-z]{1,4}(?:_(?:\{[A-Za-z0-9]+\}|[A-Za-z0-9]+))?(?:\([a-z](?:,[a-z])*\))?|[A-Za-z]\d{1,3})(?:=|\\approx)/
 const DECIMAL_COMMA = /(?<=\d),(?=\d|\\(?:overline|bar|dot|ddot)\s*\{?\s*\d)/g
 function valueList(s, textLayer) {
-  const t = mathsSpan(textLayer ? printedTex(s) : s).replace(/\$/g, ' ').replace(/(\d)\{,\}(\d)/g, '$1,$2').replace(DECIMAL_COMMA, '\u0001')
-  const parts = t.split(/\s+or\s+|\s+and\s+|\\text\{\s*(?:or|and)\s*\}|;|,(?![^()]*\))/).map((x) => x.replace(/\u0001/g, ',').trim()).filter(Boolean)
+  const t = mathsSpan(textLayer ? printedTex(s) : s).replace(/\$/g, ' ').replace(/(\d)\{,\}(\d)/g, '$1.$2').replace(DECIMAL_COMMA, '.')
+  const parts = t.split(/\s+or\s+|\s+and\s+|\\text\{\s*(?:or|and)\s*\}|;|,(?![^()]*\))/).map((x) => x.trim()).filter(Boolean)
   const one = (x) => {
     const n = normTex(x), m = VALUE_LABEL.exec(n)
     const rest = m ? n.slice(m[0].length) : n
