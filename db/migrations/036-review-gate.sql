@@ -16,7 +16,9 @@
 -- console (`app/src/lib/review-gate*.ts`) from the content tables themselves —
 -- every maths question with no human stamp, every widget predicate→misconception
 -- claim, every misconception, worked example, objective and prerequisite link,
--- every `book_image` figure stand-in — minus what a human has decided here. A
+-- every `book_image` figure stand-in — and from the pipeline's auto-passed
+-- gate records (answer 39: Samuel's to sign; read from its run files) — minus
+-- what a human has decided here. A
 -- stored backlog would be a second copy of the content's state that the
 -- loaders would have to keep in step; deriving it means a reload that changes
 -- an item puts it straight back in front of a human.
@@ -29,7 +31,7 @@
 --      the stamp was written with), when, and the environment.
 --        · `item_kind` + `item_ref` name the item (a question id; a widget
 --          claim "q:…|predicate|mc:…"; a misconception, entry, objective or
---          figure id; a link "src>dst"). Content ids are not foreign keys: the
+--          figure id; a link "src>dst"; a gate decision "<book>/<id>"). Content ids are not foreign keys: the
 --          loaders replace content, and a decision must outlive the row it
 --          was about — it is the audit of what a person saw and said.
 --        · `item_fingerprint` is a hash of the content the reviewer saw. The
@@ -108,7 +110,7 @@ CREATE TABLE IF NOT EXISTS review_decisions (
                                             'widget_question', 'mapping_claim',
                                             'misconception', 'worked_example',
                                             'objective', 'prerequisite_link',
-                                            'figure_stand_in')),
+                                            'figure_stand_in', 'gate_decision')),
   item_ref             text        NOT NULL CHECK (length(item_ref) BETWEEN 1 AND 400),
   course_id            text        NOT NULL,
   module_id            text,
@@ -137,6 +139,27 @@ COMMENT ON TABLE review_decisions IS
   'fingerprint and snapshot the reviewer saw and exactly what the decision '
   'changed. Append-only for every role (trigger); the console inserts only in '
   'its own operator''s name (RLS). The backlog itself is derived, never stored.';
+
+-- WIDENED ONCE, before this file shipped anywhere: 'gate_decision' (Samuel's
+-- answer 39 — every auto-passed pipeline gate is a backlog item for him) was
+-- added after the first draft of this file reached a developer's database.
+-- Guarded: the CHECK is replaced only when its definition lacks the value,
+-- and replacing it only ever WIDENS the list, so every existing row passes.
+-- A re-run finds it current and takes no lock.
+DO $widen$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint
+                  WHERE conrelid = 'public.review_decisions'::regclass
+                    AND conname = 'review_decisions_item_kind_check'
+                    AND pg_get_constraintdef(oid) LIKE '%gate_decision%') THEN
+    ALTER TABLE review_decisions DROP CONSTRAINT IF EXISTS review_decisions_item_kind_check;
+    ALTER TABLE review_decisions ADD CONSTRAINT review_decisions_item_kind_check
+      CHECK (item_kind IN ('book_question', 'generated_question', 'widget_question', 'mapping_claim',
+                           'misconception', 'worked_example', 'objective', 'prerequisite_link',
+                           'figure_stand_in', 'gate_decision'));
+  END IF;
+END
+$widen$;
 
 DO $decision_idx$
 BEGIN
