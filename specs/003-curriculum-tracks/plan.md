@@ -369,7 +369,11 @@ The pipeline config's `course:g10-math-en` placeholder becomes `course:us-g10-ma
 | # | File | Idempotent | Rollback | Notes |
 |---|---|---|---|---|
 | 033 | `db/migrations/033-curriculum-tracks.sql` | yes | `rollback/033-curriculum-tracks.down.sql` | No change to 023's tables; no CHECK on curriculum values; `curriculum_source` has a closed two-value CHECK that will never widen |
-| 034 *(proposed)* | `db/migrations/034-book-sections.sql` | yes | `rollback/034-book-sections.down.sql` | A content table of lessons with book provenance (A12). No RLS; loader-written. It widens no existing CHECK |
+| 034 *(built)* | `db/migrations/034-book-sections.sql` | yes | `rollback/034-book-sections.down.sql` | A content table of lessons with book provenance (A12). No RLS; loader-written. It widens no existing CHECK |
+| 035 *(built 2026-10-01)* | `db/migrations/035-human-review-stamps.sql` | yes | `rollback/035-human-review-stamps.down.sql` | `questions.ai_checked_by`, `ai_checked_at`, `hold_reason`, `review_note`; the legacy `reviewed_by` strings split so `reviewed_by` is a human stamp only (FR-4506); CHECK `questions_held_not_live`. Applied to the pilot database; not yet in production |
+| 036 *(built 2026-10-01)* | `db/migrations/036-review-gate.sql` | yes | `rollback/036-review-gate.down.sql` | `review_decisions` (append-only by trigger) and `review_claims`; the backlog is derived, never stored (FR-4501…FR-4505). Needs 035; `ainext_app` holds no privilege on either table |
+| 037 *(built 2026-10-01)* | `db/migrations/037-course-outline.sql` | yes | `rollback/037-course-outline.down.sql` | `course_outline`: a book's whole chapter and lesson structure from its manifest, read-only content, no RLS; readiness derived at read time, never stored (FR-4322…FR-4327). Loaded by `load_course_outline.py` |
+| 038 *(planned, not built)* | `db/migrations/038-…` | yes | `rollback/038-…down.sql` | `questions.parent_kind` and a trigger in place of the `parent_question_id` foreign key (decision 61, T448); `deploy/apply-migrations.sh`'s floor check moves from 36 to 37 only if it lands |
 
 ## Risks
 

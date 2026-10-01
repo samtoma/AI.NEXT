@@ -5,7 +5,7 @@
 `app/src/app/api/auth/google/callback/route.ts`, new `app/src/app/(auth)/welcome/page.student.tsx`,
 new `app/src/app/api/auth/onboarding/route.ts`, `app/src/lib/student-context.ts`,
 `app/src/lib/auth/principal.ts` (`/api/auth/me`), `app/src/lib/ga.ts` (unchanged; a test only)
-**Enforces**: FR-4003, FR-4005, FR-4008, FR-4014, FR-4016, FR-4017; carries 002 FR-2002, FR-2006,
+**Enforces**: FR-4003, FR-4005, FR-4008, FR-4014, FR-4016, FR-4017, FR-4324; carries 002 FR-2002, FR-2006,
 FR-2015
 
 ## Sign-up page (server component) *(changed 2026-10-01, answer 36 — see decisions.md, supersedes
@@ -87,6 +87,26 @@ these columns any other way (FR-4017).
 `/api/auth/me` and `getStudentProfile` expose `curriculum`, `curriculumKnown` and
 `onboardingPending`. They do **not** expose `curriculum_source` or the change history, which are
 operator facts. No student surface shows a curriculum control (FR-4010).
+
+## A lesson the book lists but has not prepared *(added 2026-10-01, decision 59, FR-4324)*
+
+The whole-book outline (migration 037) lists every lesson of a course's book, including lessons whose
+objectives are not loaded yet. Such a lesson is **visible and not startable**, and a request that names it
+is refused the way a hidden course is:
+
+| Request | Result |
+|---|---|
+| `POST /api/ask` on a lesson surface (`lesson_learn`, `lesson_review`) with `lesson` = a slug the outline lists and no objectives are loaded for | `404 { "error": "not_found" }`, **before** a session is opened, a turn counted, a context built or a model called (`isUnpreparedLesson`, `app/src/lib/lesson.ts`; `app/src/app/api/ask/route.ts`) |
+| a lesson page or any reader that resolves the slug through `getLessonData` | `null`, which the page turns into `notFound()` — never the default lesson, which would teach a different lesson under this one's name |
+| `/api/understanding` | resolves the lesson through `getLessonData` before it opens a session, so the same refusal applies |
+| `/api/attempts` | cannot reach it: a question needs an objective, and a course-less one is `404` |
+| a slug no outline lists, or a database without migration 037 | unchanged: an unknown slug falls back to the default lesson exactly as before |
+
+The refusal is the same answer as a hidden course on purpose — "not yours" and "no such lesson" stay one
+answer, so a student cannot learn which lessons exist but are not ready. `course_outline` is content (no
+row-level security), so the check needs no student scope of its own; its readers are passed course ids the
+student's gate already admitted (FR-4006). Nothing about the outline reaches the tutor: Noor is not told
+which lessons are being prepared. Proof: `app/src/lib/course-outline-guard.test.mts`.
 
 ## Anonymous analytics
 

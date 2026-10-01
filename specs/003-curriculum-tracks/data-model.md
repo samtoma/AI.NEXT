@@ -201,6 +201,59 @@ first.
 - **Re-runnable**: `CREATE TABLE IF NOT EXISTS`, no CHECK that could narrow, and grants repeated safely
   (FR-3213). The rollback drops the table and loses only loader-written content.
 
+### Course outline — migration 037 (FR-4322…FR-4327, decision 59) — **built**
+
+The whole book's structure, before its content is prepared. **Not** more rows in `course_lessons` (034):
+that table is the provenance of the lessons that *are* loaded and the content loader prunes it
+(`load_seed.py --replace`), it has no chapter or reading order, and every reader of it treats a row as a
+lesson that exists. One content table of its own, written by `services/extraction/load_course_outline.py`
+from the book's manifest and read only by `lib/course-outline-queries.ts`. No row-level security;
+`ainext_app` and `ainext_operator` hold SELECT, only `ainext_maint` writes (asserted in the migration).
+Rollback: `rollback/037-course-outline.down.sql`.
+
+| Column | Type | Meaning |
+|---|---|---|
+| `course_id` | `text NOT NULL` | the course (not a foreign key, like 034); `PRIMARY KEY (course_id, lesson_slug)` |
+| `lesson_slug` | `text NOT NULL` | the lesson, as the pipeline mints it (`g10m<ch>s<sec>-<part>`) |
+| `module_id`, `module_label`, `module_order` | `text`, `text`, `integer` | the chapter node it becomes when loaded (`module:g10m-c01`), its label ("Chapter 1 — Algebraic expressions") and its place in the book |
+| `book_order` | `integer NOT NULL` | the lesson's place in the whole book, 1…N — the reading order; `UNIQUE (course_id, book_order)` |
+| `title`, `sections`, `section_titles`, `part_n`, `part_of`, `chapter_intro`, `group_key` | as 034 | the same book provenance, with the same meaning, so an unprepared lesson is named as it will be once loaded |
+| `page_from`, `page_to` | `integer NULL` | its printed pages |
+| `source`, `loaded_at` | `text`, `timestamptz` | where the row came from (the manifest and its gate), and when |
+
+- **Readiness is not stored.** There is no "prepared" column. A lesson is prepared exactly when its
+  objectives are loaded in the student's gated catalogue (`getLessonCatalog`, `lib/lesson.ts`), derived at
+  read time by `lib/course-outline.ts`. The fan-out needs no extra step, and a lesson can never read as
+  prepared while having nothing to teach (constitution II).
+- **Gating is the reader's.** An outline is read only for course ids the caller has already gated, so a
+  student sees the titles of a book she may see and of no other (FR-4006). A National course has no rows and
+  is rendered exactly as before (FR-4206).
+- **Re-runnable**: `CREATE TABLE IF NOT EXISTS`, structural CHECKs created with the table, the unique
+  index only when missing, grants repeated (FR-3213).
+
+### Review stamps and the review gate — migrations 035 and 036 (FR-4501…FR-4509) — **built**
+
+- **035** `db/migrations/035-human-review-stamps.sql` adds `questions.ai_checked_by`, `ai_checked_at`,
+  `hold_reason` and `review_note`, and splits the legacy `reviewed_by` strings: an AI check goes to
+  `ai_checked_by`, a free note to `review_note`, a figure mark to `hold_reason`. `reviewed_by` now holds a
+  human's stamp and nothing else (FR-4506). CHECK `questions_held_not_live`. Rollback
+  `rollback/035-human-review-stamps.down.sql` round-trips; only bulk-promotion times are lost.
+- **036** `db/migrations/036-review-gate.sql` adds `review_decisions` (append-only by trigger; one row per
+  human verdict with a content fingerprint, a snapshot and exactly what changed) and `review_claims`
+  (ephemeral, one row per item, expiring). **The backlog itself is not stored**: the console derives it on
+  every read from the content tables and from the pipeline's gate records, minus what a human has decided
+  (FR-4501). `ainext_app` holds no privilege on either table, so review status never reaches a student
+  surface (ADR-0019). Depends on 035 and fails without it. Rollback `rollback/036-review-gate.down.sql`.
+
+### Planned, not built — `questions.parent_kind` (migration 038, decision 61, T448)
+
+For a family modelled on a book **teaching item** (FR-4304): `questions.parent_kind text NOT NULL DEFAULT
+'question'` with values `question` | `teaching`, and the foreign key on `parent_question_id` replaced by a
+trigger that checks the id against `questions` or against the worked-example rows of `explanation_library`
+by kind. Existing rows take the default and change in no way. **Not built, no migration exists**: the plan is
+in `docs/WIP-g10-pilot/README.md` ("Handoff — family-parent agent (answer 40)"), and this section is updated
+in the same work as the migration.
+
 ### Unchanged, stated so nobody changes them by accident
 
 - `course_availability (environment, course_id, grade, state, …)` keeps its UNIQUE key and its

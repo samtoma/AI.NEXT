@@ -98,6 +98,11 @@ python3 services/extraction/parity_check.py --course course:prep3-math-en   # 10
 Follow `services/extraction/runbook/README.md`. It has one command per stage and the human gates
 marked.
 1. G0 manifest. *Passed 2026-09-25, 65 lessons.*
+   - **The whole-book outline** (decision 59), once migration 037 is applied, so students see every chapter
+     before it is prepared: `cd services/extraction && uv run load_course_outline.py --book g10-math`
+     (`--check` builds the rows with no database; `--dry-run` writes, reports and rolls back). Re-running
+     changes nothing. A lesson turns startable by itself when its chapter's objectives are loaded
+     (`load_seed.py`); there is no second step.
 2. S0b, maths transcription, then G0b for its queue.
 3. The Chapter 8 pilot through S11 on a **private scratch database**.
 4. G1 per chapter.
