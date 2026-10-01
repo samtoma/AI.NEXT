@@ -897,3 +897,47 @@ none re-read by any model). Newly accepted: `bde9de9f…`, the blocked image, by
 `ed18dc6a…` (U+2212 and `\cdot{\text{h}}`), had ALREADY been accepted by a third reading (pass C's text; third reading 15 → 12); with A and B now
 agreeing, the assembly takes the first rule that applies, agreement, and stores pass A's text instead of C's (same maths under the key; the
 differences are spacing inside `\text{}` and the minus glyph). No other accepted image changed route or text. `lesson-g10m3s2-1` now prepares.
+
+## The G2 recommendation run — prepared for Chapters 1 and 2, not launched — 2026-10-01 (data-engineer)
+
+No Workflow launched, no model call, nothing loaded, no G2 file or DB row touched. Answers 37a and 42 (students always full, quality first, every
+decision recorded for Samuel's review): the items the G2 auto-pass **held** (a three-way disagreement) or **excluded** (a typing problem) get a
+recommended verdict each, as the Chapter 8 pilot's per-item G2 recommendations did, now as a stage. Runbook §7c; code `services/extraction/g2_recommend.py`,
+`runbook/g2-recommend.workflow.js` (prompts `g2rec-v1`), `g2rec_identity.mjs`; `auto_pass_gates.py g2-recommend-args | g2-recommend-collect`; tests
+`tests/test_g2_recommend.py` (69; the whole suite is green).
+
+**How it works.** One Sonnet agent (effort high) per batch of 8 sees each item's stem, figure, the book's own working, printed answer, EPUB final answer, blind
+answer, the three-way pairs, the typed shape and typing problems, and recommends accept / fix (the item's new typing, only the book's own answer re-typed) / hold /
+exclude with a class, a confidence (`low` = "your call"), a reason and the book span it rests on. One independent agent per batch of verdicts that would put a
+question live derives the answer from the stem first and only then judges the key (it is not shown the first agent's reasoning or the blind answer). The collector
+(deterministic) refuses to put anything live that: quotes no span of the item's own book text; would not pass `RunItem` / the choice-option and marker-spec rules;
+is a key the app's marker cannot read; is NOT equal to the stem's expression or to the answer the book states (the app's own marker, `g2rec_identity.mjs`, no model:
+a typing agent's silent correction of a book's answer is refused, it is Samuel's to approve, decisions 43-45); repairs a stem by more than a few characters; or is not
+confirmed by the verifier. Everything else becomes `hold` / `exclude` with the reason. An exclude may carry the agent's own derivation (`if_corrected`), never applied.
+The gate record (`g2 --recommend`) lists every low-confidence recommendation for Samuel beside the holds and exclusions.
+
+**What the data says before any agent runs** (the app's own marker on the typed key against the stem's expression, for the items whose stem is "Simplify / Expand /
+Factorise: …"): Chapter 1, 31 items: key equal to the stem's expression for 7, **NOT equal for 24** (23 of them held); Chapter 2, 5 items: equal 2, not equal 3
+(Ex2-1:38, 39, Ex2-2:9). So the "42 of the 47 held have the printed answer and the book's worked solution equivalent, only the blind solver differs" in the note above
+**does not mean 42 accepts**: of the 28 held items of that kind, 23 are items where the blind solver was right and the book's printed answer and EPUB answer are both
+wrong for the stem as extracted (hand-checked at random points for all of 23f, 23h, 26a, 25b, 2v, 3d, Ex1-8:11 and 21, Ex1-9:24, Ex1-6:13, 30k, 31k, 31l, 3h, 3i, 3l, 3n,
+3t, 2g, 2j). Some are the book's own errors (Ex1-10:3h: its own working has "5(t-3) - (t-3)" where "- (t-2)" is meant, so its 4t-12 is wrong, 4t-13 is right);
+some are stems the extraction damaged where the book's working shows the intended text (Ex2-1:38: the working's first line has a minus the stem lost, and the book's
+51/49 is right for it; Ex1-10:2m, 2o, 31m likewise: a lost exponent, a sign, a lost letter). Expect: a modest number of accepts (the "(i)/(ii)" classification items 10a/10b/17a-j
+with the unmarked part named, Ex1-9:11 and 25, Ex1-5:15, Ex1-6:14), a few stem repairs (low confidence, `stem_fix_by` "not Samuel"), and a long exclusion list with the
+right answers beside it — an errata list for the book. **Ex1-9:17 is not a "likely fix to the book's worked key":** the extra `abc` term is in the EPUB's own worked line too,
+so the book has no correct key; the typed key is the typing agent's correction, which the collector refuses to put live (an exclude with `if_corrected` for Samuel).
+
+**Prepared, verified (`embed_workflow.py verify` OK), in `work/g10-math/packets/embedded/fanout/`** (args beside them in `work/g10-math/packets/fanout/g2rec-chNN.args.json`):
+`g2rec-ch01.workflow.js` (82 items: 47 held + 35 excluded; 11 recommending + up to 11 verifying agents; modelled ≈ $11-21) and `g2rec-ch02.workflow.js` (20 items:
+3 + 17; 3 + up to 3 agents; ≈ $3-5). Run each with `Workflow({scriptPath})` and NO args (a copy refuses args), save to `runs/g10-math/g2rec/chNN-<runId>.json`, meter with
+`meter_run.py record --book g10-math --stage G2R --run <runId>`. `fanout.py close-chapter N` now prepares `g2rec-chNN` for every chapter (it already did for Chapter 3 when the
+chapters were closed) and, once `runs/g10-math/g2-chNN.recommended.json` exists, passes it to G2 (`--recommend`): without it every re-run recomputes the checks' own rule and
+undoes the recommendation.
+
+**Apply, per chapter** (the commands `g2-recommend-args` prints): `g2-recommend-collect … --out runs/g10-math/g2-chNN.recommended.json`; `auto_pass_gates.py g2 … --recommend … --into
+runs/g10-math/g2-chNN.json --split`; assemble and validate (or `fanout.py close-chapter N`); and, because **Chapters 1 and 2 are both loaded in `ainext_pilot_g10_ch08`** (ch1: 483 live,
+47 `answer_mismatch`, 3 `unanswerable`; ch2: 136 live, 3 `answer_mismatch`), a fresh `pg_dump` and then `load_seed.py … --course course:us-g10-math-en --update --dry-run` (and the same
+without it: adds the newly live questions, releases the held ones the recommendation accepts, applies the typed fixes and stem repairs to unattempted rows) and `apply_review_verdicts.py --g2
+runs/g10-math/g2-chNN.json --book g10-math --runs runs/g10-math/lesson` (stamps `ai_checked_by`, rejects what was excluded). **Order:** launch it before the chapter's working check and S5 draft,
+which are built from the assembled bundle; Chapter 2's have been run, so apply its recommendation and then run a delta working check on the questions it makes live.
