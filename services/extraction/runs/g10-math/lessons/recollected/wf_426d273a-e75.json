@@ -6,9 +6,9 @@
  "book": "g10-math",
  "embedded": {
   "source": "runbook/lesson.workflow.js",
-  "source_sha256": "11ac17d5aa352617ba01956395ede489f9552307fad5e6ed86e02fcc4d383b31",
+  "source_sha256": "a98b9d96d9b7fe234615ca5a376cdab80115fe046275a3f9cf5508e533c53363",
   "args_sha256": "6f8e9178db0ec6968d83fc7d21acff49298b99bfa3534bbe3ae445679adbd563",
-  "generated_sha256": "757d7b5d114dd1ffba87267796612b847abcea00f450a0498681ee3ce9f18705",
+  "generated_sha256": "d66ca67cbd2aff18f59aadd5350bf8433fb3c7597c37dfefb284f94fbffb0934",
   "generator": "services/extraction/embed_workflow.py v1"
  },
  "lessons": [
@@ -494,9 +494,9 @@
      ],
      "solution_provenance": "book_worked_epub",
      "printed_answer": "{x : x ∈R, −13 ≤x < 4}",
-     "epub_final_answer": null,
+     "epub_final_answer": "$\\left\\{x:x\\in\\mathbb{R},-13\\le x<4\\right\\}$",
      "blind_answer": "$\\{x:x\\in\\mathbb{R},\\,-13\\le x<4\\}$",
-     "verification": "disputed",
+     "verification": "agreed",
      "tier": "basic",
      "printed_page": 148,
      "shortcode": "2FWF",
@@ -509,22 +509,17 @@
        },
        {
         "pair_id": "Ex6-1:1b|blind~book",
-        "route": "missing",
-        "verdict": "missing"
+        "route": "normalised",
+        "verdict": "equivalent"
        },
        {
         "pair_id": "Ex6-1:1b|book~printed",
-        "route": "missing",
-        "verdict": "missing"
+        "route": "signature",
+        "verdict": "equivalent"
        }
-      ],
-      "unchecked": [
-       "book_final is not in the book solution"
       ]
      },
-     "typing_problems": [
-      "book_final is not in the book solution"
-     ],
+     "typing_problems": [],
      "unit": null,
      "options_source": null,
      "not_markable_reason": null,
@@ -2237,9 +2232,7 @@
        }
       ]
      },
-     "typing_problems": [
-      "the key \"0 \\le s(t) \\le 10\" does not read as the printed answer \"0 m ≤s(t) ≤10 m\""
-     ],
+     "typing_problems": [],
      "unit": "m",
      "options_source": null,
      "not_markable_reason": null,
@@ -2303,9 +2296,7 @@
        }
       ]
      },
-     "typing_problems": [
-      "the key \"0 \\le t \\le 20\" does not read as the printed answer \"The domain is 0 s ≤t ≤20 s. It represents the total time taken to reach the bottom of the slope.\""
-     ],
+     "typing_problems": [],
      "unit": "s",
      "options_source": null,
      "not_markable_reason": null,
@@ -3136,9 +3127,7 @@
        }
       ]
      },
-     "typing_problems": [
-      "the key \"0 \\le t \\le 120\" does not read as the printed answer \"The domain is 0 ≤t ≤120 min.\""
-     ],
+     "typing_problems": [],
      "unit": "min",
      "options_source": null,
      "not_markable_reason": null,
@@ -3202,9 +3191,7 @@
        }
       ]
      },
-     "typing_problems": [
-      "the key \"0 \\le s \\le 100\" does not read as the printed answer \"The range is 0 ≤s ≤100 km, it represents the total distance travelled.\""
-     ],
+     "typing_problems": [],
      "unit": "km",
      "options_source": null,
      "not_markable_reason": null,
@@ -3882,35 +3869,6 @@
    "verify": {
     "disagreements": [
      {
-      "ref": "Ex6-1:1b",
-      "printed": "{x : x ∈R, −13 ≤x < 4}",
-      "book": null,
-      "blind": "$\\{x:x\\in\\mathbb{R},\\,-13\\le x<4\\}$",
-      "pairs": [
-       {
-        "pair_id": "Ex6-1:1b|blind~printed",
-        "route": "signature",
-        "verdict": "equivalent"
-       },
-       {
-        "pair_id": "Ex6-1:1b|blind~book",
-        "route": "missing",
-        "verdict": "missing"
-       },
-       {
-        "pair_id": "Ex6-1:1b|book~printed",
-        "route": "missing",
-        "verdict": "missing"
-       }
-      ],
-      "typing_problems": [
-       "book_final is not in the book solution"
-      ],
-      "unchecked": [
-       "book_final is not in the book solution"
-      ]
-     },
-     {
       "ref": "Ex6-1:7d",
       "printed": "22,071 L",
       "book": "22,071 L",
@@ -4020,12 +3978,6 @@
     ],
     "unchecked": [
      {
-      "ref": "Ex6-1:1b",
-      "missing": [
-       "book_final is not in the book solution"
-      ]
-     },
-     {
       "ref": "Ex6-8:27a",
       "missing": [
        "book_final is not in the book solution"
@@ -4085,36 +4037,6 @@
      }
     ],
     "typing_problems": [
-     {
-      "ref": "Ex6-1:1b",
-      "problems": [
-       "book_final is not in the book solution"
-      ]
-     },
-     {
-      "ref": "Ex6-1:8b",
-      "problems": [
-       "the key \"0 \\le s(t) \\le 10\" does not read as the printed answer \"0 m ≤s(t) ≤10 m\""
-      ]
-     },
-     {
-      "ref": "Ex6-1:8c",
-      "problems": [
-       "the key \"0 \\le t \\le 20\" does not read as the printed answer \"The domain is 0 s ≤t ≤20 s. It represents the total time taken to reach the bottom of the slope.\""
-      ]
-     },
-     {
-      "ref": "Ex6-8:11b",
-      "problems": [
-       "the key \"0 \\le t \\le 120\" does not read as the printed answer \"The domain is 0 ≤t ≤120 min.\""
-      ]
-     },
-     {
-      "ref": "Ex6-8:11c",
-      "problems": [
-       "the key \"0 \\le s \\le 100\" does not read as the printed answer \"The range is 0 ≤s ≤100 km, it represents the total distance travelled.\""
-      ]
-     },
      {
       "ref": "Ex6-8:27a",
       "problems": [
@@ -4337,9 +4259,9 @@
      "book_worked_epub": 59
     },
     "by_verification": {
-     "agreed": 47,
-     "disputed": 5,
-     "no_printed_answer": 7
+     "agreed": 48,
+     "no_printed_answer": 7,
+     "disputed": 4
     },
     "visuals": 1,
     "viz_gaps": 5,
@@ -4382,9 +4304,9 @@
   "journal": "/Users/samueltoma/.claude/projects/-Users-samueltoma-Documents-Claude-Projects-AI-Enthusiasts-PoC-Tutor-School-V1/5dd6b4ce-c4c4-4eab-b8f8-5465c092db24/subagents/workflows/wf_426d273a-e75/journal.jsonl",
   "script": {
    "source": "runbook/lesson.workflow.js",
-   "source_sha256": "11ac17d5aa352617ba01956395ede489f9552307fad5e6ed86e02fcc4d383b31",
+   "source_sha256": "a98b9d96d9b7fe234615ca5a376cdab80115fe046275a3f9cf5508e533c53363",
    "args_sha256": "6f8e9178db0ec6968d83fc7d21acff49298b99bfa3534bbe3ae445679adbd563",
-   "generated_sha256": "757d7b5d114dd1ffba87267796612b847abcea00f450a0498681ee3ce9f18705"
+   "generated_sha256": "d66ca67cbd2aff18f59aadd5350bf8433fb3c7597c37dfefb284f94fbffb0934"
   },
   "collect_version": "collect-6",
   "prompts_version": "lesson-v8",
