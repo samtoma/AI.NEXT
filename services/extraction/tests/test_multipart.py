@@ -288,6 +288,31 @@ class R3Gradients(unittest.TestCase):
         self.assertEqual(c["Ex8-6:10b"].sentences, ["$m_{MN}=5$."])
 
 
+class Stable(unittest.TestCase):
+    """Whatever the rule writes, running it again on the result changes nothing."""
+
+    def check(self, parts):
+        first, _ = plan(parts)
+        self.assertTrue(first, "the example must carry something")
+        after = [Part(p.ref, first[p.ref].after if p.ref in first else p.stem, p.working, p.fate, p.kind, p.key)
+                 for p in parts]
+        self.assertEqual(plan(after)[0], {})
+
+    def test_every_rule(self):
+        pre = "$L(-1;-1)$ , $N(x;y)$ and $P(4;0)$ are the vertices of parallelogram $LMNP$ ."
+        self.check([part("Ex8-6:9a", "Determine the coordinates of $N$ .", pre=pre, kind="coordinates", key="(3; 5)"),
+                    part("Ex8-6:9b", "Show that $LN\\perpMP$ .", pre=pre)])
+        pre = "$U(6;a)$ is on $f$ ."
+        self.check([part("Ex8-6:9a", "Determine the value of $a$ .", pre=pre, key="11"),
+                    part("Ex8-6:9b", "Find $OU$ .", pre=pre)])
+        self.check([part("Ex8-6:10a", "Calculate the gradient of $MN$ .", kind="expression", key="-\\frac{1}{3}"),
+                    part("Ex8-6:10b", "Show that $AB\\parallelMN$ .", "$m_{AB}=-\\frac{1}{3}=m_{MN}$")])
+        self.check([part("Ex8-6:11a", "Find the coordinates of $M$ where the diagonals meet .", kind="coordinates", key="(1; 2)"),
+                    part("Ex8-6:11b", "Show that $M$ lies on $AB$ .")])
+        self.check([part("Ex8-6:12a", "Find $S$ and $T$ , the mid-points of $AB$ and $BC$ ."),
+                    part("Ex8-6:12b", "Prove that $ST\\parallelAC$ .")])
+
+
 class Listed(unittest.TestCase):
     def test_words_that_point_back_are_listed_with_the_parts_before(self):
         a = part("Ex8-6:11a", "Find the mid-point of $AB$ .", key="(2; 3)", kind="coordinates")
