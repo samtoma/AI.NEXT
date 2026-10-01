@@ -366,7 +366,7 @@ def build_runs(inv: dict) -> list[dict]:
             n_items = round(n_items + share * pool)
             rid = f"lesson-{l['slug']}"
             lesson_ids.append(rid)
-            add(id=rid, stage="S2-S4", chapter=ch, lesson=l["slug"], workflow="lesson.workflow.js (lesson-v7, collect-5)",
+            add(id=rid, stage="S2-S4", chapter=ch, lesson=l["slug"], workflow="lesson.workflow.js (lesson-v8, collect-6)",
                 what=f"S2–S4 for {l['slug']} '{l['title']}' (≈ {n_items} items incl. its share of the end-of-chapter set; "
                      f"{l['figures']} book figure(s))",
                 agents=round(7 + n_items / 9), cost=_cost("s2s4_item", n_items),

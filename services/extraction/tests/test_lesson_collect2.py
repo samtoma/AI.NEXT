@@ -170,7 +170,7 @@ class Collect2(unittest.TestCase):
         src = WORKFLOW.read_text()
         # lesson-v5 / collect-5 (consistency review A3/A8/A9): the visuals prompt and rule, the objective id
         # without "lo:", and the subject form from the book's rule
-        self.assertIn("const PROMPTS_VERSION = 'lesson-v7'", src)
+        self.assertIn("const PROMPTS_VERSION = 'lesson-v8'", src)
         # collect-6 (the first Chapter 1 lessons, tests/test_lesson_collect6.py): the prompts did not change
         self.assertIn("const COLLECT_VERSION = 'collect-6'", src)
 

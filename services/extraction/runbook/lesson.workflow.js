@@ -66,7 +66,7 @@ export const meta = {
 //   uv run meter_run.py record --book <book> --stage S2-S4,S8 --run <runId>
 // ---------------------------------------------------------------------------------------------
 
-const PROMPTS_VERSION = 'lesson-v7'   // v3: ids are asked for WITHOUT their brackets, and read either way
+const PROMPTS_VERSION = 'lesson-v8'   // v3: ids are asked for WITHOUT their brackets, and read either way
 // v4 (2026-09-26, the Chapter 8 pilot): a choice's options may be the labels a figure shows ("Which point lies
 // at (5; −4)?" A–E, shape W–Z): options_source "figure". Only the TYPING prompt changed; on a resume the
 // claims replay, and typing and every agent after it run again.
@@ -77,6 +77,13 @@ const PROMPTS_VERSION = 'lesson-v7'   // v3: ids are asked for WITHOUT their bra
 // rest — Compare accepts exactly that omission; a worked example's figure is drawn whole (it may show its answer);
 // every element a figure shows is drawn, or the figure is a gap naming exactly what its kind cannot draw.
 // v7: a caption describes only what is drawn — never a withheld point as marked (assembly drops such a clause).
+// v8 (2026-10-01, the first Chapter 1 lessons): ONLY the typing prompt changed. A choice's options are never the typing
+// agent's to make up: the stem's alternatives, a figure's labels, or a closed set of one-word categories the book itself
+// uses (rational / irrational; real / non-real / undefined). A number, a pair of numbers ("4 and 5"), several values or a
+// list to select from is numeric or expression (values), never a choice with options placed around the printed answer
+// (28 of one lesson's 34 items were). book_final is a quote of the solution's last sentence, a parenthetical left out at
+// most — never a summary, never a computation of the agent's own (24 of 96 items of one lesson failed that containment).
+// A two-part answer of different kinds is not markable. The collection (COLLECT-6) refuses what this prompt forbids.
 // The script's own deterministic collection is versioned apart from the prompts: a change here replays
 // every cached agent on a resume (no prompt changed) and re-decides what they answered.
 const COLLECT_VERSION = 'collect-6'   // collect-2/-3/-4: the Chapter 8 pilot's S3 fixes (see "COLLECT-2" and "COLLECT-3" below);
@@ -544,11 +551,11 @@ const typingPrompt = (L, batch) => `Type each book item below for automatic mark
 For each item:
 - answer_type:
   numeric — the answer is one number (integer or decimal, possibly with a unit or currency: put the number alone in key, as printed, and the unit in unit);
-  choice — a verbal or choice answer ("irrational", "rhombus", "(ii)"). Give options: the alternatives the stem itself offers in its words (options_source "stem"); or, when the answer is one of the labels a figure of the item shows (a point, a shape), those labels as the figure prints them, each option one label, optionally after the one word the stem uses for them ("E", "shape Z") (options_source "figure"); or, when neither offers any, the natural closed set this lesson uses for such answers (options_source "lesson"); 2–5 options with the key among them;
+  choice — a verbal or choice answer ("irrational", "rhombus", "(ii)"). The options are NEVER yours to make up. Give only: the alternatives the stem itself offers in its words (options_source "stem"); or, when the answer is one of the labels a figure of the item shows (a point, a shape), those labels as the figure prints them, each option one label, optionally after the one word the stem uses for them ("E", "shape Z") (options_source "figure"); or a CLOSED SET OF CATEGORIES the book itself uses for exactly this kind of question — "rational" / "irrational", "real" / "non-real" / "undefined", true / false, "parallel" / "not parallel" — each option one word or short phrase that the stem or the lesson names (options_source "lesson"). Two to five options, with the key among them, written as the book writes them. A NUMBER, a pair of numbers ("4 and 5"), several values, an expression, an equation or a combination of categories ("rational, an integer") is the book's ANSWER, not a category: type it numeric or expression, never choice, and never with options you place around it (the book prints "4 and 5": expression, marker_kind "values", key "4; 5"; it prints "3,1": numeric "3,1"). A question that asks for several numbers out of a list in its stem ("which of these are integers?") is expression with marker_kind "values" (key the numbers, as "-1; 0; 1; 6"), or numeric when the answer is one number: never a choice with the whole list as options. An answer of two parts of different kinds ("(i) 555 (ii) rational") is not_markable with not_markable_reason "two-part answer";
   expression — an algebraic expression, factorised or expanded form, equation, several values, interval, inequality or set, coordinates, surd or π, recurring decimal. Give marker_kind (expression | equation | values | interval | coordinates | surd | recurring), form when the question asks for one (factorised | expanded | simplest | subject, with subject = the variable), variables (the letters in the answer), and key in LaTeX;
   not_markable — a proof, a sketch or drawing, "show that", "represent", "complete the table", or an explanation: give not_markable_reason.
 - key: the PRINTED ANSWER's value, in LaTeX the marker can read. Keep decimal commas and (x; y) as printed. The printed answer is the PDF's flattened text: a fraction's numerator and denominator sit side by side ("y = 1 3 x" is $y = \\frac{1}{3}x$), a root loses its bar ("√ 29" is \\sqrt{29}), a power drops to the line ("x2" is x^{2}) — read its structure from the book solution's final line, which is LaTeX, and never change a value. Only when there is no printed answer, from the book solution's final answer.
-- book_final: the final answer of the BOOK SOLUTION, copied from its last lines (for a worked example, from its last step). Copy it; never from the printed answer.
+- book_final: the final answer of the BOOK SOLUTION, QUOTED from its last sentence or line exactly as written (for a worked example, from its last step): you may leave out a parenthetical remark, but never add a word, a number, a calculation or a step the solution does not contain, never summarise, and never drop or add a "not". Copy it; never from the printed answer.
 - tier: basic = one method step; standard = a multi-step application of one method; advanced = methods combined, a word problem, or an end-of-chapter item.
 - form: when the question asks for one — factorised, expanded, simplest, subject, prime_factors ("a product of prime factors"; a single number is not that form), decimal ("write in decimal form"; a fraction is not that form). An item marked ASKED FORM below takes exactly that form.
 ${BOOK.multiplication_dot ? '- THIS BOOK PRINTS MULTIPLICATION AS A RAISED DOT (2·3^x). In the flattened printed answer it shows as " . " between digits ("2 . 3x"). It is NEVER a decimal point (this book writes decimals with a comma): write it as \\cdot in the key (2\\cdot 3^{x}).\n' : ''}Do not read any file.
