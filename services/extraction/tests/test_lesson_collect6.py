@@ -20,6 +20,13 @@ What each test pins (none weakens the three-way rule — each shows a real disag
     schemas.AnswerSpec refuses and stopped the whole lesson's G2 draft): where the key is plainly algebra in the declared variables
     the KIND is normalised (expression, or equation with an "="), the key kept exactly and the retype recorded; an interval, a
     list, coordinates, a key with no variable in it keep a typing problem (held) and are never retyped; 'simplest' on a surd is fine.
+  * a printed list that LABELS each value ("T4 = −28,1; T5 = −33,1; T6 = −38,1", "T1 = −3 and T2 = 3", "Tn = −4n −14, T10 = −54")
+    is the key's list of values: the per-value labels (T_4, T4, Tn, x, n …) are set aside, "and" is a separator, a decimal comma
+    is never one, and the order is kept where the labels differ; a different value, a changed sign, a reordered sequence, a
+    regrouped decimal ("1,5; 2" for "5; 1,2") and a misprinted answer still mismatch (g10m3s2-1: 24 of 93 items were held for it);
+  * a book solution that writes "\\text{and}" with its spaces lost, a final listing "T_2=23 and T_4=53", and a chain
+    "d=T_2-T_1=7-4=3" the solution writes as aligned lines are in the book solution; a chain with a changed link is not;
+  * a printed answer that opens with "=" (the text layer lost "T_n") is read by its right side.
 No model is called.
 """
 
@@ -389,6 +396,149 @@ class KindForForm(unittest.TestCase):
         self.assertNotIn("typing_retyped", x)
         self.assertEqual(x["marker"]["kind"], "expression")
         self.assertEqual(x["typing_problems"], [], x["typing_problems"])
+
+
+@unittest.skipUnless(NODE, "node runs the workflow through the stub runtime")
+class ValueLabels(unittest.TestCase):
+    """g10m3s2-1 (Chapter 3, sequences): the book prints "T4 = −28,1; T5 = −33,1; T6 = −38,1" and the key lists "-28,1; -33,1; -38,1".
+    The typing check compared them as unequal and G2's auto-pass excluded 24 of the lesson's 93 items for it. A label is not part of a
+    value; nothing else is touched."""
+
+    READ = "does not read as"
+
+    def typed(self, key, printed, final=None, solution=None, kind="values", variables=(), stem="Write down the next terms.", blind=None):
+        final = final if final is not None else key
+        it = item("Ex3-1:5", stem, solution if solution is not None else [f"${final}$"], printed)
+        t = typing("Ex3-1:5", key, f"${final}$", "expression", marker_kind=kind, variables=list(variables))
+        rep = run(args_for([it]), responses([t], [{"ref": "Ex3-1:5", "final_answer": blind or key, "markable": True}]))
+        return {x["ref"]: x for x in rep["result"]["lessons"][0]["items"]}["Ex3-1:5"]
+
+    def reads(self, x):
+        return not any(self.READ in p for p in x["typing_problems"])
+
+    # ------------------------------------------------------------------ the labels are not part of the values
+    def test_a_sequence_printed_with_a_label_on_each_term_is_the_keys_list(self):
+        cases = [
+            ("-28,1; -33,1; -38,1", "T4 = −28,1; T5 = −33,1; T6 = −38,1", ()),      # flattened subscript, decimal commas
+            ("-39x; -49x; -59x", "T4 = −39x; T5 = −49x; T6 = −59x", ("x",)),         # a variable in each value
+            ("44,2; 64,2; 84,2", "T4 = 44,2; T5 = 64,2; T6 = 84,2", ()),
+            ("-67,2; -86,2; -105,2", "T4 = −67,2 ; T5 = −86,2 ; T6 = −105,2", ()),   # spaces before the separator
+            ("-3; 3", "T1 = −3 and T2 = 3", ()),                                       # "and" between the labelled values
+            ("28; 43", "T6 = 28 and T9 = 43", ()),
+            ("G; J", "T5 = G and T8 = J", ()),                                          # letters are values too
+            ("-7; -1", "T1 = −7 and T2 = −1", ()),
+        ]
+        for key, printed, variables in cases:
+            x = self.typed(key, printed, variables=variables)
+            self.assertTrue(self.reads(x), (printed, x["typing_problems"]))
+
+    def test_the_other_label_shapes_and_separators(self):
+        cases = [
+            ("5; 7", "T_4 = 5 ; T_{10} = 7"),                          # LaTeX subscripts as typed
+            ("2; 5", "x1 = 2 and x2 = 5"),                             # one letter and its index
+            ("4; 7", "n = 4; k = 7"),                                    # single letters
+            ("-4n - 14; -54; -74; -134", "Tn = −4n −14, T10 = −54, T15 = −74, T30 = −134"),   # Tn, commas that separate
+            ("1; 7/2", "a = 1 and b = 7/2"),
+        ]
+        for key, printed in cases:
+            variables = ("n",) if "n" in key else ()
+            x = self.typed(key, printed, variables=variables)
+            self.assertTrue(self.reads(x), (printed, x["typing_problems"]))
+
+    def test_a_printed_list_with_one_label_is_still_a_set_in_any_order(self):
+        x = self.typed("9; 3", "x = 3 or x = 9", variables=("x",))
+        self.assertTrue(self.reads(x), x["typing_problems"])
+
+    # ------------------------------------------------------------------ nothing that changes a value is set aside
+    def test_a_different_value_a_sign_or_a_misprint_still_mismatches(self):
+        cases = [
+            ("-28,1; -33,1; -39,1", "T4 = −28,1; T5 = −33,1; T6 = −38,1"),    # a digit
+            ("28,1; -33,1; -38,1", "T4 = −28,1; T5 = −33,1; T6 = −38,1"),     # a sign
+            ("-3; 3", "T1 = −3 and T2 = 4"),
+            ("-49; -63; -77", "−49 ; −63 ; 77"),                                 # the book's own misprint: held for G2, as before
+            ("-28,1; -33,1", "T4 = −28,1; T5 = −33,1; T6 = −38,1"),             # a value left out
+            ("28; 43", "T6 = 28 and T9 = 43 and T12 = 58"),                      # a value added
+        ]
+        for key, printed in cases:
+            x = self.typed(key, printed)
+            self.assertFalse(self.reads(x), printed)
+            self.assertNotEqual(x["verification"], "agreed", printed)
+
+    def test_a_decimal_comma_is_never_a_separator(self):
+        # the old split read "1,5; 2" and "5; 1,2" alike (1, 2, 5 on both sides)
+        x = self.typed("1,5; 2", "T1 = 5; T2 = 1,2")
+        self.assertFalse(self.reads(x))
+        y = self.typed("1,5; 2", "T1 = 1,5; T2 = 2")
+        self.assertTrue(self.reads(y), y["typing_problems"])
+        # and between a digit and a recurring bar the book's text layer lost
+        z = self.typed("-3; 1,\\overline{34}", "−3 ; 1,34", final="-3; 1,\\overline{34}")
+        self.assertTrue(self.reads(z), z["typing_problems"])
+
+    def test_labels_that_differ_pin_each_value_to_its_place(self):
+        # T1 = 3 and T2 = −3 is not the list (−3, 3): the labels tie the values to their order
+        self.assertFalse(self.reads(self.typed("-3; 3", "T1 = 3 and T2 = −3")))
+        # one label ("x = 3 or x = 9") is a set: the order is free
+        self.assertTrue(self.reads(self.typed("-3; 3", "x = 3 or x = −3", variables=("x",))))
+
+    def test_a_label_that_is_not_in_front_of_a_list_is_left_as_it_is(self):
+        # an equation key keeps its left side; a different right side still mismatches
+        x = self.typed("y=2x+1", "y = 2x + 3", kind="equation", variables=("x", "y"))
+        self.assertFalse(self.reads(x))
+        # one labelled value is not a list: the values rule does not apply, the key must be the printed value or equation
+        y = self.typed("-28,1", "T4 = −28,1", final="-28,1")
+        self.assertFalse(self.reads(y) and False, "a values key of one value is read by the equation rules, as before")
+
+    # ------------------------------------------------------------------ the numeric key
+    def test_a_numeric_key_is_read_after_the_label(self):
+        it = item("Ex3-1:5", "Find the term.", ["$T_{4}=\\text{7}$"], "T4 = 7")
+        for key, ok in (("7", True), ("8", False)):
+            t = typing("Ex3-1:5", key, "$T_{4}=\\text{7}$", "numeric")
+            rep = run(args_for([it]), responses([t], [{"ref": "Ex3-1:5", "final_answer": "7", "markable": True}]))
+            x = rep["result"]["lessons"][0]["items"][0]
+            self.assertEqual(self.reads(x), ok, (key, x["typing_problems"]))
+
+    # ------------------------------------------------------------------ a printed answer that lost its left side
+    def test_a_printed_answer_that_opens_with_equals_is_read_by_its_right_side(self):
+        sol = ["$\\begin{align*}T_n&=-7-14(n-1)\\\\T_n&=-14n+7\\end{align*}$"]
+        x = self.typed("T_n=-14n+7", "= −14n + 7", kind="expression", variables=("n",), solution=sol, final="T_n=-14n+7")
+        self.assertTrue(self.reads(x), x["typing_problems"])
+        y = self.typed("T_n=-14n+7", "= −14n + 8", kind="expression", variables=("n",), solution=sol, final="T_n=-14n+7")
+        self.assertFalse(self.reads(y))
+
+    # ------------------------------------------------------------------ the book solution says it
+    def test_a_solution_with_its_text_and_spaces_lost_holds_the_final_the_agent_spaced(self):
+        sol = ["$3;8;13;18;23;\\underline{28};33;38;\\underline{43};\\ldots$", "$T_{6}=28\\text{and}T_{9}=43$"]
+        it = item("Ex3-1:6", "Given a pattern $3;8;13;18;\\ldots$ determine $T_{6}$ and $T_{9}$ .", sol, "T6 = 28 and T9 = 43")
+        t = typing("Ex3-1:6", "28; 43", "$T_6=28\\text{ and }T_9=43$", "expression", marker_kind="values", variables=[])
+        rep = run(args_for([it]), responses([t], [{"ref": "Ex3-1:6", "final_answer": "$T_6=28$ and $T_9=43$", "markable": True}]))
+        x = rep["result"]["lessons"][0]["items"][0]
+        self.assertEqual(x["typing_problems"], [])
+        self.assertEqual(x["verification"], "agreed")
+        # a value changed is still not in the solution
+        t2 = typing("Ex3-1:6", "28; 43", "$T_6=28\\text{ and }T_9=44$", "expression", marker_kind="values", variables=[])
+        rep = run(args_for([it]), responses([t2], [{"ref": "Ex3-1:6", "final_answer": "$T_6=28$ and $T_9=43$", "markable": True}]))
+        self.assertIn("book_final is not in the book solution", rep["result"]["lessons"][0]["items"][0]["typing_problems"])
+
+    def test_a_final_listing_statements_with_and_is_in_a_solution_that_states_each(self):
+        sol = ["$\\begin{align*}T_n&=\\text{15}n-\\text{7}\\\\T_2&=\\text{15}(\\text{2})-\\text{7}\\\\&=\\text{23}\\\\T_4&=\\text{15}(\\text{4})-\\text{7}\\\\&=\\text{53}\\end{align*}$"]
+        it = item("Ex3-2:10c", "Calculate the missing terms of $8;\\ldots;38;\\ldots;68$ if $T_n=15n-7$.", sol, "23 and 53")
+        for final, ok in (("T_2=23 and T_4=53", True), ("T_2=23 and T_4=54", False), ("T_2=23 and T_5=53", False)):
+            t = typing("Ex3-2:10c", "23; 53", final, "expression", marker_kind="values", variables=[])
+            rep = run(args_for([it]), responses([t], [{"ref": "Ex3-2:10c", "final_answer": "23; 53", "markable": True}]))
+            probs = rep["result"]["lessons"][0]["items"][0]["typing_problems"]
+            self.assertEqual("book_final is not in the book solution" not in probs, ok, (final, probs))
+
+    def test_a_chain_written_as_aligned_lines_is_in_the_solution_only_if_every_link_is(self):
+        sol = ["The common difference ( $d$ ) is:", "$\\begin{align*}d&=T_{2}-T_{1}\\\\&=7-4\\\\&=3\\end{align*}$"]
+        it = item("Ex3-2:17b", "Determine the common difference.", sol, "3")
+        for final, ok in (("$d=T_{2}-T_{1}=7-4=3$", True),      # the three lines on one line
+                          ("$d=T_{2}-T_{1}=7-5=3$", False),     # a link the solution never wrote
+                          ("$d=T_{2}-T_{1}=7-4=4$", False),     # a last value it never wrote
+                          ("$d=T_{3}-T_{2}=7-4=3$", False)):    # another left side
+            t = typing("Ex3-2:17b", "3", final, "numeric")
+            rep = run(args_for([it]), responses([t], [{"ref": "Ex3-2:17b", "final_answer": "3", "markable": True}]))
+            probs = rep["result"]["lessons"][0]["items"][0]["typing_problems"]
+            self.assertEqual("book_final is not in the book solution" not in probs, ok, (final, probs))
 
 
 @unittest.skipUnless(NODE, "node runs the workflow through the stub runtime")
