@@ -141,3 +141,7 @@ Consistency-review decisions (2026-09-27), one at a time (decisions.md decisions
     higher-quality options without asking about cost. Orchestrator's first use: the "never two S0b passes at once"
     usage-limit rule is relaxed — S0b passes of different chapter groups run in parallel (packets are deduplicated
     across groups at prepare time, so no image is read twice).
+43. (2026-10-01) Multi-part exercises: when a later part depends on an earlier part, what does the student see in the
+    later part on its own? → "The value from the book (Recommended)": the carried sentence includes the book's own
+    earlier answer (e.g. "m_MN = −1/3. Show that AB ∥ MN."), not only the names — multipart.py rules R1 (with key),
+    R2 and R3 stand as built.
