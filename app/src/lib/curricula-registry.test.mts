@@ -33,7 +33,10 @@ import {
 import {
   COURSES,
   COURSE_IDS,
+  PREP3_ARABIC_AR,
   PREP3_MATH_EN,
+  PREP3_SOCIAL_AR,
+  US_G10_MATH_EN,
   compareCourses,
   courseDef,
   courseRank,
@@ -41,7 +44,18 @@ import {
   curriculumOf,
   isCourseId,
 } from "./courses.ts";
-import { SUBJECTS, SUBJECT_IDS, coursesOfSpineKey, subjectOfCourse } from "./subjects.ts";
+import {
+  SUBJECTS,
+  SUBJECT_IDS,
+  courseLabelAr,
+  coursesOfSpineKey,
+  subjectOfCourse,
+} from "./subjects.ts";
+
+/** Any Arabic-script character — the sweep's own test for "no Arabic at all"
+ *  (Samuel's answer 35, 2026-10-01: "this is american course we said no
+ *  arabic"). */
+const ARABIC_SCRIPT = /[؀-ۿ]/;
 import { GRADES } from "./profile.ts";
 import { PROBING_COURSE_ID } from "./socratic-probing.ts";
 import { slugOfLo } from "./lesson-slug.ts";
@@ -66,6 +80,20 @@ test("curricula are labelled flatly, never as a tier (FR-4016, privacy review F1
     for (const text of [c.label, c.description]) {
       assert.doesNotMatch(text, /premium|international|private|elite|top|advanced|standard|basic/i, `${id}: "${text}"`);
     }
+  }
+});
+
+test("the American curriculum has no Arabic name; National keeps its (Samuel's answer 35, 2026-10-01)", () => {
+  assert.equal(CURRICULA["us-american-en"].labelAr, undefined);
+  assert.equal(CURRICULA["eg-national-en"].labelAr, "المنهج الوطني");
+  // belt and braces: nothing Arabic-script anywhere in the American entry's
+  // own strings (its grade labels are all plain English school-year words).
+  for (const text of [
+    CURRICULA["us-american-en"].label,
+    CURRICULA["us-american-en"].description,
+    ...Object.values(CURRICULA["us-american-en"].gradeLabels),
+  ]) {
+    assert.doesNotMatch(text, ARABIC_SCRIPT, text);
   }
 });
 

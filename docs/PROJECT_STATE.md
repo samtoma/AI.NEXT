@@ -32,9 +32,11 @@ Gate records (G0, T413, G1 and G2 for Chapter 8) are in the same decisions file.
 **What is decided, in short:**
 - **Curricula**: National `eg-national-en`, American `us-american-en`; one course belongs to one
   curriculum; the gate stays (course, grade); the kill switch suspends rules, not curriculum scoping.
-  Sign-up asks only when two or more curricula are live for a grade (at launch nobody is asked). A change
-  of curriculum is console-only, recorded, and loses nothing; an open chat reads the new scope on its next
-  turn (decision 37).
+  Sign-up always asks which curriculum, naming every curriculum in the registry — one with nothing live
+  for the grade is still offered, with a note — and refuses to create the account without an answer
+  (changed 2026-10-01, answer 36, reverses decision 1; code in progress). A change of curriculum is
+  console-only, recorded, and loses nothing; an open chat reads the new scope on its next turn
+  (decision 37).
 - **The G10 course** is the only course live for grade 10 at launch; Play design, probing off, covered by
   ADR-0019 once switched on; its prompts name its own book and are English-only (decision 30).
 - **The prompt hold (ADR-0020)** has eight named exceptions, listed in one place in the ADR since

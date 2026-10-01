@@ -75,7 +75,7 @@ test("offeredCurriculaFor reads this environment's live rules — the one offer 
   assert.deepEqual(await offeredCurriculaFor("10"), ["eg-national-en", "us-american-en"]);
 });
 
-test("the Google step validates before it writes: grade, then curriculum, then the offer", async () => {
+test("the Google step validates before it writes: grade, then curriculum — always required since the 2026-10-01 reversal", async () => {
   assert.deepEqual(await completeOnboarding(7, { grade: "13", curriculum: "us-american-en" }), {
     ok: false,
     reason: "invalid_grade",
@@ -84,28 +84,39 @@ test("the Google step validates before it writes: grade, then curriculum, then t
   const unknown = await completeOnboarding(7, { grade: "10", curriculum: "american" });
   assert.equal(unknown.ok, false);
   assert.equal(!unknown.ok && unknown.reason, "invalid_curriculum");
-  // a grade that offers two curricula must be answered, among what it offers
+  // a grade offering ONE curriculum (10: American only) must still be answered
+  const unansweredOne = await completeOnboarding(7, { grade: "10" });
+  assert.deepEqual(unansweredOne, {
+    ok: false,
+    reason: "curriculum_required",
+    offered: ["us-american-en"],
+  });
+  // a grade offering NOTHING (11: no rule at all) must still be answered
+  const unansweredZero = await completeOnboarding(7, { grade: "11" });
+  assert.deepEqual(unansweredZero, { ok: false, reason: "curriculum_required", offered: [] });
+  // a grade offering TWO must be answered too
   rules.push({ course_id: "course:prep3-social-ar", grade: "10", state: "live" });
-  const unanswered = await completeOnboarding(7, { grade: "10" });
-  assert.deepEqual(unanswered, {
+  const unansweredTwo = await completeOnboarding(7, { grade: "10" });
+  assert.deepEqual(unansweredTwo, {
     ok: false,
     reason: "curriculum_required",
     offered: ["eg-national-en", "us-american-en"],
   });
-  assert.equal(definerCalls().length, 0, "nothing was written");
+  assert.equal(definerCalls().length, 0, "nothing was written — a missing curriculum never reaches the database");
 });
 
-test("the Google step writes once, through the definer, with the resolved curriculum and how it was set", async () => {
-  // grade 10 offers only American: stored as implied, whatever was sent
+test("the Google step writes once, through the definer, with EXACTLY the curriculum sent — never remapped to what's offered", async () => {
+  // grade 10 offers only American, but a known, explicit pick is stored as
+  // sent: the 2026-10-01 reversal ended the old silent remap to the one
+  // offered curriculum.
   const first = await completeOnboarding(7, { grade: "10", curriculum: "eg-national-en" });
   assert.deepEqual(first, {
     ok: true,
     grade: "10",
-    curriculum: "us-american-en",
-    source: "implied",
-    resolvedFrom: "eg-national-en",
+    curriculum: "eg-national-en",
+    source: "chosen",
   });
-  assert.deepEqual(definerCalls().map((c) => c.values), [["10", "us-american-en", "implied"]]);
+  assert.deepEqual(definerCalls().map((c) => c.values), [["10", "eg-national-en", "chosen"]]);
   // a second submission is refused, loudly (FR-4014)
   const second = await completeOnboarding(7, { grade: "9", curriculum: "eg-national-en" });
   assert.deepEqual(second, { ok: false, reason: "already_completed" });
@@ -117,8 +128,8 @@ test("a chosen curriculum is stored as chosen; the legacy prep-3 grade is the sa
   assert.equal(out.ok && out.source, "chosen");
   calls = [];
   onboardingSpent = false;
-  const legacy = await completeOnboarding(8, { grade: "prep-3" });
-  assert.deepEqual(legacy.ok && [legacy.grade, legacy.curriculum, legacy.source], ["9", "eg-national-en", "implied"]);
+  const legacy = await completeOnboarding(8, { grade: "prep-3", curriculum: "eg-national-en" });
+  assert.deepEqual(legacy.ok && [legacy.grade, legacy.curriculum, legacy.source], ["9", "eg-national-en", "chosen"]);
 });
 
 test("the console's change refuses a curriculum the registry does not know, before any database", async () => {

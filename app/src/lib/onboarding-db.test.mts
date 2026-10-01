@@ -10,8 +10,9 @@
  *     creates the student pending, and the app role cannot clear the flag or
  *     write a curriculum itself (FR-4017);
  *   · `completeOnboarding` sets grade and curriculum by the FR-4005 rule —
- *     implied when the grade offers one, chosen when it offers two and the
- *     student picked, `curriculum_required` (nothing written) when she did not;
+ *     since Samuel's 2026-10-01 reversal, always `chosen`, from an explicit,
+ *     known pick; `curriculum_required` (nothing written) when she did not
+ *     send one, whatever the grade offers;
  *   · a second submission is `already_completed` and changes nothing, and the
  *     route answers it 409 (`onboardingAnswer`), never 204;
  *   · an account that never owed the step (a password sign-up) cannot use it;
@@ -220,17 +221,23 @@ test("a first Google sign-in is created pending, and the app role cannot clear i
   assert.equal(back.pending, true);
 });
 
-test("the step works once: grade 10 offering one curriculum stores it implied; a second submission is 409 and changes nothing", { skip }, async () => {
+test("the step works once: a grade offering one curriculum still requires an explicit pick, stored chosen; a second submission is 409 and changes nothing", { skip }, async () => {
   const g = await googleSignIn("once@example.com", "g-once");
 
-  const first = await completeOnboarding(g.studentId, { grade: "10" });
-  assert.deepEqual(first, { ok: true, grade: "10", curriculum: AMERICAN, source: "implied", resolvedFrom: null });
+  // Samuel's 2026-10-01 reversal: grade 10 offers only American, but nothing
+  // sent is still curriculum_required — it is never implied any more.
+  const missing = await completeOnboarding(g.studentId, { grade: "10" });
+  assert.deepEqual(missing, { ok: false, reason: "curriculum_required", offered: [AMERICAN] });
+  assert.equal((await row(g.studentId)).onboarding_pending, true, "still owed: nothing was written");
+
+  const first = await completeOnboarding(g.studentId, { grade: "10", curriculum: AMERICAN });
+  assert.deepEqual(first, { ok: true, grade: "10", curriculum: AMERICAN, source: "chosen" });
   assert.equal(onboardingAnswer(first).status, 204);
-  const done = { grade: "10", curriculum_system: AMERICAN, curriculum_source: "implied", onboarding_pending: false };
+  const done = { grade: "10", curriculum_system: AMERICAN, curriculum_source: "chosen", onboarding_pending: false };
   assert.deepEqual(await row(g.studentId), done);
 
   // The step is never a student-side way to change a curriculum (decision 4).
-  const second = await completeOnboarding(g.studentId, { grade: "9" });
+  const second = await completeOnboarding(g.studentId, { grade: "9", curriculum: NATIONAL });
   assert.deepEqual(second, { ok: false, reason: "already_completed" });
   assert.deepEqual(onboardingAnswer(second), { status: 409, body: { error: "onboarding_already_completed" } });
   assert.deepEqual(await row(g.studentId), done, "nothing changed");
