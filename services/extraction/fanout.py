@@ -1041,6 +1041,49 @@ def chapter_numbers(ch: int) -> dict:
                      "tiers": dict(collections.Counter(q["tier"] for q in qs))}}
 
 
+def g2_recommend_plan(ch: int, files: list[Path]) -> dict:
+    """What the G2 recommendation run (g2_recommend.py) would do for this chapter: sized from the lesson runs, nothing written."""
+    import g2_recommend as G
+    t = ch_tag(ch)
+    rec = RUNS / f"g2-{t}.recommended.json"
+    try:
+        info = G.prepare(_book(), ch, files, RUNS / f"g2-{t}.json", None)
+    except Exception as e:                      # noqa: BLE001 — a dry run only describes; it never fails the close
+        return {"could_not_size": str(e)[:200]}
+    return {"items": info["items"], "by_state": info["by_state"], "estimate": info["estimate"],
+            "copy": rel(EMBED / f"g2rec-{t}.workflow.js"), "recommendation_file": rel(rec), "recommendation_file_exists": rec.exists()}
+
+
+def prepare_g2rec(ch: int, files: list[Path], ids: list[str]) -> dict:
+    """The chapter's G2 recommendation run, prepared (g2_recommend.py): items the checks HELD with no verdict or EXCLUDED for typing, as
+    one generated copy of runbook/g2-recommend.workflow.js (more parts past 24 recommending agents). Not in the plan's run list and not
+    metered into it: launch it BEFORE the chapter's working check and S5 draft (both read the assembled bundle, which the
+    recommendation changes), save it, collect it, then re-run close-chapter (which then passes the recommendation file to G2)."""
+    import embed_workflow
+    import g2_recommend as G
+    t = ch_tag(ch)
+    rec = RUNS / f"g2-{t}.recommended.json"
+    info = G.prepare(_book(), ch, files, RUNS / f"g2-{t}.json", EMBED / f"g2rec-{t}.workflow.js", args_out=PACKETS / f"g2rec-{t}.args.json")
+    covered = 0
+    if rec.exists():
+        covered = len(set(json.loads(rec.read_text()).get("items") or {}))
+    if not info["items"]:
+        return {"items": 0, "note": "nothing owes a recommendation"}
+    bad = [m for c in info["copies"] for m in embed_workflow.verify(Path(c["script"]))]
+    if bad:
+        raise NotReady(f"g2rec-{t}: a prepared copy does not verify: {bad[:2]}")
+    est = info["estimate"]
+    lrs = [rel(f) for f in files]
+    return {"copies": [rel(c["script"]) for c in info["copies"]], "stage": "G2R", "items": info["items"], "by_state": info["by_state"],
+            "agents": est["agents"], "cost_usd": [est["usd_low"], est["usd_high"]], "cost_note": "modelled until the first run is metered",
+            "recommendation_file_items": covered,
+            "meter": f"uv run meter_run.py record --book {BOOK} --stage G2R --run <runId>",
+            "save_to": f"runs/{BOOK}/g2rec/{t}-<runId>.json",
+            "after": G.follow_ups(BOOK, ch, lrs, recommended=rel(rec), g2_file=rel(RUNS / f"g2-{t}.json"), db=FANOUT_DB,
+                                  run_label=", ".join(ids)),
+            "launch": "BEFORE this chapter's working check and S5 draft: they read the assembled bundle this recommendation changes"}
+
+
 def close_chapter(ch: int, dry_run: bool = False) -> dict:
     """A chapter whose lessons are all saved: G2 auto-pass (one record for the chapter) and the split finals, the assembly into the
     book's seed paths (never the pilot's), the chapter config, the load-free validation, then the working check's two passes and the
@@ -1055,12 +1098,15 @@ def close_chapter(ch: int, dry_run: bool = False) -> dict:
         raise NotReady(f"chapter {ch}: lesson run(s) not saved yet: {', '.join(missing)}")
     g2 = ["auto_pass_gates.py", "g2", BOOK, "--chapter", str(ch), *[x for f in files for x in ("--lesson-run", rel(f))],
           "--into", rel(RUNS / f"g2-{t}.json"), "--split", "--maths", rel(MATHS_BOOK / "accepted.json"), "--run", ", ".join(ids)]
+    if (RUNS / f"g2-{t}.recommended.json").exists():
+        # a G2 recommendation run's file (g2_recommend.py): without it every re-run would recompute the checks' own rule and undo it
+        g2 += ["--recommend", rel(RUNS / f"g2-{t}.recommended.json")]
     asm = ["assemble_lesson_bundle.py", "--book", BOOK, "--chapter", str(ch), "--report", rel(RUNS / "fanout" / f"assembly-{t}.json")]
     val = ["load_seed.py", f"seed/{BOOK}/g10m-course.json", f"seed/{BOOK}/g10m-c{ch:02d}.json", "--validate-only"]
     plan = {"chapter": ch, "lesson_runs": [rel(f) for f in files], "commands": [" ".join(c) for c in (g2, asm, val)],
             "then": [f"fanout.py config {ch}", f"fanout.py prepare wcheck-{t}", f"fanout.py prepare s5-draft-{t}"]}
     if dry_run:
-        return {**plan, "dry_run": True}
+        return {**plan, "g2_recommend": g2_recommend_plan(ch, files), "dry_run": True}
     _py(*g2)
     _py(*asm)
     write_config(ch)
@@ -1077,6 +1123,7 @@ def close_chapter(ch: int, dry_run: bool = False) -> dict:
         prepared[rid] = {"copies": copies, "stage": run["stage"], "agents": run["agents"], "cost_usd": run["cost"],
                          "meter": run["meter"], "save_to": run["save_to"], "after": run.get("after"),
                          **{k: info[k] for k in ("solutions", "skipped", "free_flags") if k in info}}
+    prepared[f"g2rec-{t}"] = prepare_g2rec(ch, files, ids)
     return {**plan, "numbers": chapter_numbers(ch), "prepared": prepared}
 
 

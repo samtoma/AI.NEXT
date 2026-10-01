@@ -1334,6 +1334,20 @@ def legacy_item_id(fam: Family, made: int) -> str:
     return f"{fam.lo_id.replace('lo:', 'q:')}:g{made:03d}-{fam.id.split(':')[-1][:6]}"
 
 
+def same_question(item: Item) -> tuple:
+    """What makes two instances of one family the SAME question, for the duplicate filter.
+
+    Its stem, and for a multiple-choice item also its options (as a set: the shuffle is not a difference):
+    "Exactly one of the following numbers is irrational. Which one?" is the whole stem of a family whose
+    instances differ only in what the four options are, so two of them are different questions, not duplicates.
+    Every other kind of item is its stem alone, as it always was.
+    """
+    if item.question_type == "mcq" and isinstance(item.choices, list):
+        texts = {c["key"]: c["text"] for c in item.choices}
+        return (item.stem, tuple(sorted(texts.values())), texts.get(item.correct_answer))
+    return (item.stem,)
+
+
 def instantiate(
     families: list[Family],
     per_family: int | Callable[[Family], int],
@@ -1343,7 +1357,7 @@ def instantiate(
     to_row: Callable[[Item, str, Family], dict] | None = None,
     spec_errors: tuple[type[BaseException], ...] = (),
 ) -> tuple[list[dict], list[str], dict[str, int]]:
-    """THE driver: one seeded stream per family, verify(), duplicate stems dropped.
+    """THE driver: one seeded stream per family, verify(), duplicate questions dropped (same_question).
 
     Shared by the 35 hand-written families and the declarative ones, so the
     two cannot differ in how an item is accepted. `spec_errors` are exceptions a
@@ -1359,7 +1373,7 @@ def instantiate(
         # Each family gets its own stream, so adding a family never renumbers
         # the items of the families before it.
         rng = random.Random(f"{seed}:{fam.id}")
-        seen_stems: set[str] = set()
+        seen_stems: set[tuple] = set()
         made = 0
         attempts = 0
         while made < target and attempts < target * 25:
@@ -1371,13 +1385,13 @@ def instantiate(
                 continue
             if item is None:
                 continue
-            if item.stem in seen_stems:
+            if same_question(item) in seen_stems:
                 continue
             problems = verify(item)
             if problems:
                 rejected.append(f"{fam.id}: {'; '.join(problems)}")
                 continue
-            seen_stems.add(item.stem)
+            seen_stems.add(same_question(item))
             made += 1
             qid = item_id(fam, made)
             questions.append(to_row(item, qid, fam) if to_row else item.as_question(qid))
