@@ -335,6 +335,35 @@
       "solution_provenance": "book_worked"
     },
     {
+      "id": "q:g10m2s2-1-3:we05",
+      "lo": "lo:g10m2s2-1-3",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Simplify: $\\dfrac{{9}^{x}-1}{{3}^{x}+1}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "3^{x}-1",
+          "form": null,
+          "variables": [
+            "x"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "3^{x}-1",
+      "solution": [
+        "Change the bases to prime numbers: $\\begin{aligned}\\frac{9^{x}-1}{3^{x}+1}&=\\frac{\\left(3^{2}\\right)^{x}-1}{3^{x}+1}\\\\&=\\frac{3^{2x}-1}{3^{x}+1}\\quad\\text{Recognisethat}3^{2x}=\\left(3^{x}\\right)^{2}\\end{aligned}$",
+        "Factorise using the difference of squares: $=\\dfrac{\\left({3}^{x}-1\\right)\\left({3}^{x}+1\\right)}{{3}^{x}+1}$",
+        "Cancel the common factor and simplify: $={3}^{x}-1$"
+      ],
+      "source_page": 48,
+      "source_note": "Worked example 5 · p.48 · solution: book_worked",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked"
+    },
+    {
       "id": "q:g10m2s2-1-1:ex2-1-1",
       "lo": "lo:g10m2s2-1-1",
       "tier": "basic",
@@ -1249,60 +1278,6 @@
       "solution_provenance": "book_worked_epub"
     },
     {
-      "id": "q:g10m2s2-1-3:ex2-1-38",
-      "lo": "lo:g10m2s2-1-3",
-      "tier": "advanced",
-      "type": "short",
-      "stem": "Simplify without using a calculator: $\\dfrac{7^{b}+7^{b-2}}{4\\times7^{b}+3\\times7^{b}}$",
-      "choices": {
-        "marker": {
-          "kind": "expression",
-          "key": "\\frac{51}{49}",
-          "form": "simplest",
-          "variables": [],
-          "tolerance": null
-        }
-      },
-      "answer": "\\frac{51}{49}",
-      "solution": [
-        "$\\begin{aligned}\\frac{7^{b}+7^{b-2}}{4\\times7^{b}-3\\times7^{b}}&=\\frac{7^{b}(1+7^{-2})}{7^{b}(4-3)}\\\\&=\\frac{(1+7^{-2})}{1}\\\\&=\\frac{1+\\frac{1}{49}}{1}\\\\&=\\frac{51}{49}\\end{aligned}$"
-      ],
-      "source_page": 49,
-      "source_note": "Exercise 2-1, question 38 (2F2S) · p.49 · solution: book_worked_epub",
-      "verified": false,
-      "source": "seed",
-      "solution_provenance": "book_worked_epub",
-      "hold_reason": "answer_mismatch"
-    },
-    {
-      "id": "q:g10m2s2-1-3:ex2-1-39",
-      "lo": "lo:g10m2s2-1-3",
-      "tier": "advanced",
-      "type": "short",
-      "stem": "Simplify without using a calculator: $\\dfrac{12^{y}-96^{y}}{3^{y}+6^{y}}$",
-      "choices": {
-        "marker": {
-          "kind": "expression",
-          "key": "\\frac{4^{y}-2^{5y}}{3}",
-          "form": "simplest",
-          "variables": [
-            "y"
-          ],
-          "tolerance": null
-        }
-      },
-      "answer": "\\frac{4^{y}-2^{5y}}{3}",
-      "solution": [
-        "$\\begin{aligned}\\frac{12^{y}-96^{y}}{3^{y}+6^{y}}&=\\frac{(4\\cdot3)^{y}-\\left(2^{5}\\cdot3\\right)^{y}}{3^{y}+\\left(2\\cdot3\\right)^{y}}\\\\&=\\frac{3^{y}\\left(4^{y}-2^{5y}\\right)}{3^{y}\\left(2+1\\right)}\\\\&=\\frac{4^{y}-2^{5y}}{3}\\end{aligned}$"
-      ],
-      "source_page": 49,
-      "source_note": "Exercise 2-1, question 39 (2F2T) · p.49 · solution: book_worked_epub",
-      "verified": false,
-      "source": "seed",
-      "solution_provenance": "book_worked_epub",
-      "hold_reason": "answer_mismatch"
-    },
-    {
       "id": "q:g10m2s2-1-1:ex2-4-1a",
       "lo": "lo:g10m2s2-1-1",
       "tier": "basic",
@@ -1613,6 +1588,33 @@
       "solution_provenance": "book_worked_epub"
     },
     {
+      "id": "q:g10m2s2-1-2:ex2-4-1m",
+      "lo": "lo:g10m2s2-1-2",
+      "tier": "advanced",
+      "type": "short",
+      "stem": "Simplify: $\\dfrac{6^{5p}}{9^{p}}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "2^{5p}\\cdot 3^{3p}",
+          "form": "simplest",
+          "variables": [
+            "p"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "2^{5p}\\cdot 3^{3p}",
+      "solution": [
+        "$\\begin{aligned}\\frac{6^{5p}}{9^{p}}&=\\frac{2^{5p}.3^{5p}}{3^{2p}}\\\\&=2^{5p}.3^{5p-2p}\\\\&=2^{5p}.3^{3p}\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 1m (2F4K) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
       "id": "q:g10m2s2-1-1:ex2-4-1n",
       "lo": "lo:g10m2s2-1-1",
       "tier": "standard",
@@ -1688,6 +1690,81 @@
       ],
       "source_page": 57,
       "source_note": "Exercise 2-4, question 1p (2F4P) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-2:ex2-4-1q",
+      "lo": "lo:g10m2s2-1-2",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Simplify: $\\dfrac{2^{a-2}3^{a+3}}{6^{a}}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "\\frac{27}{4}",
+          "form": null,
+          "variables": [],
+          "tolerance": null
+        }
+      },
+      "answer": "\\frac{27}{4}",
+      "solution": [
+        "$\\begin{aligned}\\frac{2^{a-2}3^{a+3}}{6^{a}}&=\\frac{2^{a-2}3^{a+3}}{\\left(2.3\\right)^{a}}\\\\&=\\frac{2^{a-2}3^{a+3}}{2^{a}.3^{a}}\\\\&=2^{a-2-a}.3^{a+3-a}\\\\&=2^{-2}.3^{3}\\\\&=\\frac{27}{4}\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 1q (2F4Q) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-2:ex2-4-1r",
+      "lo": "lo:g10m2s2-1-2",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Simplify: $\\dfrac{3^{n}9^{n-3}}{27^{n-1}}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "\\frac{1}{27}",
+          "form": null,
+          "variables": [],
+          "tolerance": null
+        }
+      },
+      "answer": "\\frac{1}{27}",
+      "solution": [
+        "$\\begin{aligned}\\frac{3^{n}9^{n-3}}{27^{n-1}}&=\\dfrac{3^{n}.\\left(3^{2}\\right)^{n-3}}{\\left(3^{3}\\right)^{n-1}}\\\\&=\\dfrac{3^{n}.3^{2n-6}}{3^{3n-3}}\\\\&=3^{n+2n-6-3n+3}\\\\&=3^{-3}\\\\&=\\frac{1}{27}\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 1r (2F4R) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-2:ex2-4-1s",
+      "lo": "lo:g10m2s2-1-2",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Simplify: $\\dfrac{3^3}{9^3}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "\\frac{1}{27}",
+          "form": null,
+          "variables": [],
+          "tolerance": null
+        }
+      },
+      "answer": "\\frac{1}{27}",
+      "solution": [
+        "$\\begin{aligned}\\frac{3^3}{9^3}&=\\left(\\frac{3}{9}\\right)^3\\\\&=\\frac{1}{3^3}\\\\&=\\frac{1}{27}\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 1s (2F4S) · p.57 · solution: book_worked_epub",
       "verified": true,
       "source": "seed",
       "solution_provenance": "book_worked_epub"
@@ -1821,6 +1898,81 @@
       ],
       "source_page": 57,
       "source_note": "Exercise 2-4, question 1y (2F4Z) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-1:ex2-4-1z",
+      "lo": "lo:g10m2s2-1-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Simplify: $\\left(3^{-1}+2^{-1}\\right)^{-1}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "\\frac{6}{5}",
+          "form": null,
+          "variables": [],
+          "tolerance": null
+        }
+      },
+      "answer": "\\frac{6}{5}",
+      "solution": [
+        "$\\begin{aligned}\\left(3^{-1}+2^{-1}\\right)^{-1}&=\\left(\\frac{1}{3}+\\frac{1}{2}\\right)^{-1}\\\\&=\\left(\\frac{2}{6}+\\frac{3}{6}\\right)^{-1}\\\\&=\\left(\\frac{5}{6}\\right)^{-1}\\\\&=\\frac{5^{-1}}{6^{-1}}\\\\&=\\frac{6}{5}\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 1z (2F52) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-2:ex2-4-2a",
+      "lo": "lo:g10m2s2-1-2",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Simplify: $\\dfrac{9^{n-1}.27^{3-2n}}{81^{2-n}}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "\\frac{1}{3}",
+          "form": null,
+          "variables": [],
+          "tolerance": null
+        }
+      },
+      "answer": "\\frac{1}{3}",
+      "solution": [
+        "$\\begin{aligned}\\dfrac{9^{n-1}.27^{3-2n}}{81^{2-n}}&=\\dfrac{3^{2(n-1)}.3^{3(3-2n)}}{3^{4(2-n)}}\\\\&=3^{2(n-1)+3(3-2n)-4(2-n)}\\\\&=3^{2n-2+9-6n-8+4n}\\\\&=\\dfrac{1}{3}\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 2a (2F53) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-2:ex2-4-2b",
+      "lo": "lo:g10m2s2-1-2",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Simplify: $\\dfrac{2^{3n+2}\\cdot8^{n-3}}{4^{3n-2}}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "\\frac{1}{8}",
+          "form": null,
+          "variables": [],
+          "tolerance": null
+        }
+      },
+      "answer": "\\frac{1}{8}",
+      "solution": [
+        "$\\begin{aligned}\\frac{2^{3n+2}\\cdot8^{n-3}}{4^{3n-2}}&=\\frac{2^{3n+2}\\cdot2^{3(n-3)}}{2^{2(3n-2)}}\\\\&=2^{3n+2+3(n-3)-2(3n-2)}\\\\&=2^{3n+2+3n-9-6n+4}\\\\&=\\dfrac{1}{8}\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 2b (2F54) · p.57 · solution: book_worked_epub",
       "verified": true,
       "source": "seed",
       "solution_provenance": "book_worked_epub"
@@ -1992,6 +2144,31 @@
       "solution_provenance": "book_worked_epub"
     },
     {
+      "id": "q:g10m2s2-1-2:ex2-4-2l",
+      "lo": "lo:g10m2s2-1-2",
+      "tier": "advanced",
+      "type": "short",
+      "stem": "Simplify: $\\dfrac{5^6\\times3^{16}\\times2^7}{10^8\\times9^6}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "\\frac{81}{50}",
+          "form": null,
+          "variables": [],
+          "tolerance": null
+        }
+      },
+      "answer": "\\frac{81}{50}",
+      "solution": [
+        "$\\begin{aligned}\\frac{5^6\\times3^{16}\\times2^7}{10^8\\times9^6}&=\\frac{5^63^{16}2^7}{2^85^83^{12}}\\\\&=\\frac{3^4}{2\\times5^2}\\\\&=\\frac{81}{50}\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 2l (2F5G) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
       "id": "q:g10m2s2-1-3:ex2-4-2p",
       "lo": "lo:g10m2s2-1-3",
       "tier": "standard",
@@ -2042,6 +2219,23 @@
       ],
       "source_page": 57,
       "source_note": "Exercise 2-4, question 2r (2F5P) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-1:ex2-4-7",
+      "lo": "lo:g10m2s2-1-1",
+      "tier": "advanced",
+      "type": "numeric",
+      "stem": "If $2^{2013}.5^{2015}$ is written out in full how many digits will there be?",
+      "answer": "2015",
+      "solution": [
+        "$\\begin{aligned}2^{2013}.5^{2015}&=2^{2013}.5^{2013+2}\\\\&=2^{2013}.5^{2013}.5^2\\\\&=25(2^{2013}.5^{2013})\\\\&=25(10^{2013})\\\\&=25\\times10^{2013}\\end{aligned}$",
+        "$10^{2013}$ has $\\text{2014}$ digits therefore $25\\times10^{2013}$ $\\text{2015}$ digits."
+      ],
+      "source_page": 58,
+      "source_note": "Exercise 2-4, question 7 (2F6W) · p.58 · solution: book_worked_epub",
       "verified": true,
       "source": "seed",
       "solution_provenance": "book_worked_epub"
@@ -2301,35 +2495,6 @@
       "verified": true,
       "source": "seed",
       "solution_provenance": "book_worked_epub"
-    },
-    {
-      "id": "q:g10m2s3-1-1:ex2-2-9",
-      "lo": "lo:g10m2s3-1-1",
-      "tier": "advanced",
-      "type": "short",
-      "stem": "Simplify without using a calculator: $\\left(16x^{12}b^6\\right)^{\\frac{1}{3}}$",
-      "choices": {
-        "marker": {
-          "kind": "expression",
-          "key": "2\\cdot2^{\\frac{1}{3}}a^{4}b^{2}",
-          "form": null,
-          "variables": [
-            "a",
-            "b"
-          ],
-          "tolerance": null
-        }
-      },
-      "answer": "2\\cdot2^{\\frac{1}{3}}a^{4}b^{2}",
-      "solution": [
-        "$\\begin{aligned}\\left(16x^{12}b^6\\right)^{\\frac{1}{3}}&=\\left((8\\times2)x^{12}b^6\\right)^{\\frac{1}{3}}\\\\&=2\\cdot2^{\\frac{1}{3}}a^4b^2\\end{aligned}$"
-      ],
-      "source_page": 51,
-      "source_note": "Exercise 2-2, question 9 (2F36) · p.51 · solution: book_worked_epub",
-      "verified": false,
-      "source": "seed",
-      "solution_provenance": "book_worked_epub",
-      "hold_reason": "answer_mismatch"
     },
     {
       "id": "q:g10m2s3-1-1:ex2-4-2e",
@@ -3218,6 +3383,22 @@
       "solution_provenance": "book_worked_epub"
     },
     {
+      "id": "q:g10m2s4-1-4:ex2-3-4",
+      "lo": "lo:g10m2s4-1-4",
+      "tier": "standard",
+      "type": "numeric",
+      "stem": "Use trial and error to find the value of $x$ correct to 2 decimal places $5^x=11$",
+      "answer": "1.49",
+      "solution": [
+        "$\\begin{aligned}5^{1}=5&\\text{and}5^{2}=25\\\\\\text{so}1<&x<2\\\\\\text{Test}\\\\5^{\\text{1.5}}&=\\text{11.180}\\\\5^{\\text{1.4}}&=\\text{9.51}\\\\5^{\\text{1.45}}&=\\text{10.31}\\\\5^{\\text{1.49}}&=\\text{11.001}\\\\\\therefore x&\\approx\\text{1.49}\\end{aligned}$"
+      ],
+      "source_page": 56,
+      "source_note": "Exercise 2-3, question 4 (2F43) · p.56 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
       "id": "q:g10m2s4-1-1:ex2-4-3a",
       "lo": "lo:g10m2s4-1-1",
       "tier": "standard",
@@ -3266,6 +3447,31 @@
       "solution_provenance": "book_worked_epub"
     },
     {
+      "id": "q:g10m2s4-1-1:ex2-4-3d",
+      "lo": "lo:g10m2s4-1-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Solve: $2\\times7^{3x}=98$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "\\frac{2}{3}",
+          "form": null,
+          "variables": [],
+          "tolerance": null
+        }
+      },
+      "answer": "\\frac{2}{3}",
+      "solution": [
+        "$\\begin{aligned}2\\times7^{3x}&=98\\\\7^{3x}&=49\\\\7^{3x}&=7^{2}\\\\\\therefore3x&=2\\\\x&=\\dfrac{2}{3}\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 3d (2F5V) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
       "id": "q:g10m2s4-1-1:ex2-4-3e",
       "lo": "lo:g10m2s4-1-1",
       "tier": "standard",
@@ -3293,6 +3499,31 @@
       ],
       "source_page": 57,
       "source_note": "Exercise 2-4, question 3f (2F5X) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s4-1-1:ex2-4-3g",
+      "lo": "lo:g10m2s4-1-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Solve: $2^{m+1}=\\left(\\text{0.5}\\right)^{m-2}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "\\frac{1}{2}",
+          "form": null,
+          "variables": [],
+          "tolerance": null
+        }
+      },
+      "answer": "\\frac{1}{2}",
+      "solution": [
+        "$\\begin{aligned}2^{m+1}&=\\left(\\text{0.5}\\right)^{m-2}\\\\2^{m+1}&=\\left(\\dfrac{1}{2}\\right)^{m-2}\\\\2^{m+1}&=\\left(2^{-1}\\right)^{m-2}\\\\2^{m+1}&=2^{2-m}\\\\\\therefore m+1&=2-m\\\\m&=\\dfrac{1}{2}\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 3g (2F5Y) · p.57 · solution: book_worked_epub",
       "verified": true,
       "source": "seed",
       "solution_provenance": "book_worked_epub"
@@ -3368,6 +3599,32 @@
       ],
       "source_page": 57,
       "source_note": "Exercise 2-4, question 3m (2F66) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s4-1-3:ex2-4-3n",
+      "lo": "lo:g10m2s4-1-3",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Solve: $k^{-1}-7k^{-\\frac{1}{2}}-18=0$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "\\frac{1}{81}",
+          "form": null,
+          "variables": [],
+          "tolerance": null
+        }
+      },
+      "answer": "\\frac{1}{81}",
+      "solution": [
+        "$\\begin{aligned}k^{-1}-7k^{-\\frac{1}{2}}-18&=0\\\\\\left(k^{-\\frac{1}{2}}-9\\right)\\left(k^{-\\frac{1}{2}}+2\\right)&=0\\\\k^{-\\frac{1}{2}}-9=0&\\text{or}k^{-\\frac{1}{2}}+2=0\\\\k^{-\\frac{1}{2}}=9&\\text{or}k^{-\\frac{1}{2}}=-2\\\\\\left(k^{-\\frac{1}{2}}\\right)^{-2}=(9)^{-2}&\\text{or}\\left(k^{-\\frac{1}{2}}\\right)^{-2}=(-2)^{-2}\\\\k&=\\frac{1}{81}\\text{or}\\frac{1}{4}\\end{aligned}$",
+        "We check both answers and find that $k=\\frac{1}{81}$ is the only solution."
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 3n (2F67) · p.57 · solution: book_worked_epub",
       "verified": true,
       "source": "seed",
       "solution_provenance": "book_worked_epub"
@@ -3530,6 +3787,38 @@
       ],
       "source_page": 57,
       "source_note": "Exercise 2-4, question 3w (2F6J) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s4-1-4:ex2-4-4",
+      "lo": "lo:g10m2s4-1-4",
+      "tier": "standard",
+      "type": "numeric",
+      "stem": "Use trial and error to find the value of $x$ correct to 2 decimal places $4^x=44$",
+      "answer": "2.73",
+      "solution": [
+        "$\\begin{aligned}4^{2}=16&\\text{and}4^{3}=64\\\\\\text{so}2<&x<3\\\\\\text{Test}\\\\4^{\\text{2.5}}&=32\\\\4^{\\text{2.75}}&=\\text{45.255}\\\\4^{\\text{2.70}}&=\\text{42.224}\\\\4^{\\text{2.73}}&=\\text{44.017}\\\\4^{\\text{2.725}}&=\\text{43.713}\\\\\\therefore x&\\approx\\text{2.73}\\end{aligned}$"
+      ],
+      "source_page": 58,
+      "source_note": "Exercise 2-4, question 4 (2F6M) · p.58 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s4-1-4:ex2-4-5",
+      "lo": "lo:g10m2s4-1-4",
+      "tier": "standard",
+      "type": "numeric",
+      "stem": "Use trial and error to find the value of $x$ correct to 2 decimal places $3^x=30$",
+      "answer": "3.10",
+      "solution": [
+        "$\\begin{aligned}3^{3}=27&\\text{and}3^{4}=81\\\\\\text{so}3<&x<4\\\\\\text{Test}\\\\3^{\\text{3.1}}&=\\text{30.014}\\\\3^{\\text{3.05}}&=\\text{28.525}\\\\3^{\\text{3.08}}&=\\text{29.480}\\\\3^{\\text{3.09}}&=\\text{29.806}\\\\3^{\\text{3.095}}&=\\text{29.970}\\\\3^{\\text{3.096}}&=\\text{30.003}\\\\\\therefore x&\\approx\\text{3.10}\\end{aligned}$"
+      ],
+      "source_page": 58,
+      "source_note": "Exercise 2-4, question 5 (2F6N) · p.58 · solution: book_worked_epub",
       "verified": true,
       "source": "seed",
       "solution_provenance": "book_worked_epub"
@@ -4543,8 +4832,8 @@
     "objectives/g10m2s2-1.json": "ff99c73800e9984f89051b444ceba83b72036a0e61d8afa6bc0b2c16af982fa2",
     "objectives/g10m2s3-1.json": "fc679cf8d6ae1de800805f66f1a5300d9f9e3622b2300e4e84fad9cd6a42886f",
     "objectives/g10m2s4-1.json": "0e953643263ee4c0adb1354f7c649b36d1ec5483940870cef9e5448d2c90397c",
-    "runs/lesson/g10m2s2-1.json": "2600c82cc0719174da1c18cbf6faa18af05bdf9d17e5ae02bf2e4b8c0853341b",
-    "runs/lesson/g10m2s3-1.json": "9c5de27e13e7f3d80cc8eaaa9855d9da91e9a71369e1c6b764335c9daa41e1eb",
-    "runs/lesson/g10m2s4-1.json": "a69369e7cba55826c7a56562b7f4882183b69ffc8ea09b7c1fd53f7eb6efea03"
+    "runs/lesson/g10m2s2-1.json": "1a887826045ced43ec2ee918ee8b01d10efc8c4ddc4b0c3f2b0fded1920b9f50",
+    "runs/lesson/g10m2s3-1.json": "71ba10539039a0419ccdf94286c905a4d9dc45e1767ec8899425e2357bf4e2d4",
+    "runs/lesson/g10m2s4-1.json": "9f0d6b1ab312f7ce77b373cdbf871e1b7a54f9a4eab9e5362089e8d0d232e627"
   }
 }

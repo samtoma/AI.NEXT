@@ -5,11 +5,11 @@
  "id": "g2-ch01",
  "chapter": 1,
  "run": "wf_cab88c79-c65, wf_791f61b5-0bb, wf_6ffd9ec1-5d6, wf_796b7644-0fb, wf_38cd93f2-4a1, wf_5acb7902-ff6, wf_552eebe2-d46, wf_2cd2d32d-a3f",
- "decided_at": "2026-10-01T10:51:39Z",
+ "decided_at": "2026-10-01T18:09:32Z",
  "by": "auto-pass G2 (AI recommendation)",
  "auto": true,
  "outcome": "pass_with_holds",
- "summary": "39 book item(s) decided on the AI recommendation (0 from the recommendation file, 39 by the checks' own rule); 47 held for a person; 0 already decided by a person; 4 typed not markable (teaching only, no verdict owed); 33 item(s) typed again (a choice from the book's printed key, or a marker kind its form cannot apply to)",
+ "summary": "38 book item(s) decided on the AI recommendation (0 from the recommendation file, 38 by the checks' own rule); 47 held for a person; 0 already decided by a person; 4 typed not markable (teaching only, no verdict owed); 35 item(s) typed again, each with its reason (a choice from the book's printed key, a fraction typed as a number, a marker kind the key or its form cannot be read under)",
  "decisions": [
   {
    "key": "g10m1s3-1:Ex1-11:10a",
@@ -458,8 +458,8 @@
   },
   {
    "key": "g10m1s8-1:Ex1-11:37b",
-   "decision": "exclude",
-   "basis": "the answer-typing check flagged it (the key \"a \\neq b \\text{ and } a \\neq -3\" does not read as the printed answer \"a ̸= b and a ̸= −3\"); a fix needs fields a person or a recommendation must write"
+   "decision": "earlier auto verdict dropped — no longer owed",
+   "basis": "a newer collection of the same run no longer flags it: the checks accept it as it is"
   },
   {
    "key": "g10m1s3-1:Ex1-11:5e",
@@ -625,6 +625,16 @@
    "key": "g10m1s7-3:Ex1-9:11",
    "decision": "typed again as expression, kind expression (was surd) (key (\\sqrt[3]{25}x+1)((\\sqrt[3]{25})^2x^2-\\sqrt[3]{25}x+1))",
    "basis": "the typing agent named a marker kind the asked form cannot apply to; the key is algebra in its variables, kept exactly (form 'factorised' applies to an expression or an equation, not to kind 'surd')"
+  },
+  {
+   "key": "g10m1s8-1:Ex1-11:37a",
+   "decision": "typed again as expression, kind interval (was values) (key x \\neq \\frac{1}{3} \\text{ and } x \\neq -1)",
+   "basis": "the typing agent named a marker kind the key cannot be read under: the key is an inequality or a set-membership list; kept exactly, only its kind changes to interval (the key is an inequality or a set-membership list, which kind \"values\" cannot read)"
+  },
+  {
+   "key": "g10m1s8-1:Ex1-11:37b",
+   "decision": "typed again as expression, kind interval (was values) (key a \\neq b \\text{ and } a \\neq -3)",
+   "basis": "the typing agent named a marker kind the key cannot be read under: the key is an inequality or a set-membership list; kept exactly, only its kind changes to interval (the key is an inequality or a set-membership list, which kind \"values\" cannot read)"
   }
  ],
  "checks": [
@@ -664,11 +674,11 @@
   },
   {
    "label": "S2–S4 run wf_38cd93f2-4a1",
-   "path": "services/extraction/runs/g10-math/lessons/wf_38cd93f2-4a1.json"
+   "path": "services/extraction/runs/g10-math/lessons/recollected/wf_38cd93f2-4a1.json"
   },
   {
    "label": "S2–S4 run wf_5acb7902-ff6",
-   "path": "services/extraction/runs/g10-math/lessons/wf_5acb7902-ff6.json"
+   "path": "services/extraction/runs/g10-math/lessons/recollected/wf_5acb7902-ff6.json"
   },
   {
    "label": "S2–S4 run wf_552eebe2-d46",
@@ -676,7 +686,7 @@
   },
   {
    "label": "S2–S4 run wf_2cd2d32d-a3f",
-   "path": "services/extraction/runs/g10-math/lessons/wf_2cd2d32d-a3f.json"
+   "path": "services/extraction/runs/g10-math/lessons/recollected/wf_2cd2d32d-a3f.json"
   }
  ],
  "blocked": [],
@@ -766,7 +776,6 @@
   "g10m1s8-1:Ex1-11:31k",
   "g10m1s8-1:Ex1-11:31l",
   "g10m1s8-1:Ex1-11:31m",
-  "g10m1s8-1:Ex1-11:37a",
-  "g10m1s8-1:Ex1-11:37b"
+  "g10m1s8-1:Ex1-11:37a"
  ]
 }

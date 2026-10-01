@@ -3,22 +3,46 @@
  "auto": true,
  "items": {
   "g10m2s2-1:Ex2-4:1m": {
-   "verdict": "exclude",
+   "verdict": "accept",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"2^{5p}\\cdot 3^{3p}\" does not read as the printed answer \"25p.33p\"); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): $6^{5p}/9^p=2^{5p}3^{5p}/3^{2p}=2^{5p}3^{3p}$. The key matches the EPUB final answer; the complaint is a text comparison against the flattened PDF answer, where the dot means multiplication. Verified independently: the verifier's own answer matches the key."
   },
   "g10m2s2-1:Ex2-4:7": {
-   "verdict": "exclude",
+   "verdict": "accept",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"2015\" does not read as the printed answer \"25 × 102013 2015 digits.\"); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): $2^{2013}5^{2015}=25\\cdot10^{2013}$, which is 25 followed by 2013 zeros: 2015 digits. Key 2015 is one number and right. The complaint is only a text comparison with the flattened printed answer. Verified independently: the verifier's own answer matches the key."
   },
   "g10m2s2-1:WE5": {
+   "verdict": "accept",
+   "auto": true,
+   "by": "auto-pass G2 (AI recommendation)",
+   "note": "auto-pass G2 (AI recommendation): $9^x=3^{2x}=(3^x)^2$, so $(3^{2x}-1)/(3^x+1)=(3^x-1)(3^x+1)/(3^x+1)=3^x-1$. Matches the working's last line and the typed key. The complaint is only that no EPUB final exists to compare with. Verified independently: the verifier's own answer matches the key."
+  },
+  "g10m2s2-1:Ex2-1:38": {
    "verdict": "exclude",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (book_final is not in the book solution); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): The working shows a minus in the denominator, the stem shows plus. Even with minus, $1+\\frac{1}{49}=\\frac{50}{49}$, not $\\frac{51}{49}$. With the stem as shown the value is $\\frac{50}{343}$. The book's answer is wrong either way. Right answer by the agent's own derivation: \\frac{50}{343} for the stem as printed."
+  },
+  "g10m2s2-1:Ex2-1:39": {
+   "verdict": "exclude",
+   "auto": true,
+   "by": "auto-pass G2 (AI recommendation)",
+   "note": "auto-pass G2 (AI recommendation): $12^y=3^y4^y$, $96^y=3^y32^y$, $6^y=3^y2^y$. So the denominator is $3^y(1+2^y)$, not $3^y(2+1)$ as the book writes. Correct result is $\\frac{4^y-2^{5y}}{1+2^y}$, which does not simplify further. Right answer by the agent's own derivation: \\frac{4^{y}-2^{5y}}{1+2^{y}}."
+  },
+  "g10m2s3-1:Ex2-2:9": {
+   "verdict": "exclude",
+   "auto": true,
+   "by": "auto-pass G2 (AI recommendation)",
+   "note": "auto-pass G2 (AI recommendation): $(16x^{12}b^6)^{1/3}=2\\cdot2^{1/3}x^4b^2$. The book's working and answer print $a^4$ where the stem has $x^{12}$, so its key does not match the stem (marker NOT EQUAL). Typo in the book. Right answer by the agent's own derivation: 2\\cdot2^{\\frac{1}{3}}x^{4}b^{2}."
+  },
+  "g10m2s4-1:Ex2-4:3p": {
+   "verdict": "exclude",
+   "auto": true,
+   "by": "auto-pass G2 (AI recommendation)",
+   "note": "auto-pass G2 (AI recommendation): As printed, with $y=16^x$ the equation is $\\frac{y-1}{y+1}=3$, so $y=-2$: no real solution. $x=\\frac12$ gives $\\frac{3}{5}$, not 3. The working's line 2 factorises a numerator $16^{2x}-1$ that the stem (and working line 1) do not show."
   }
  }
 }
