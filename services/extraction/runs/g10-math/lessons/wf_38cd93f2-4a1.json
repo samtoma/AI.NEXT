@@ -1,0 +1,6578 @@
+{
+ "stage": "S2-S4,S8",
+ "workflow": "lesson",
+ "prompts_version": "lesson-v8",
+ "collect_version": "collect-6",
+ "book": "g10-math",
+ "embedded": {
+  "source": "runbook/lesson.workflow.js",
+  "source_sha256": "a3bf7cc90e3ff4ba3154974871da8db640c3ce0b30abf0285b1b474ce87ce759",
+  "args_sha256": "2e49ed334493e43006c646d18ea7ed742ed37d9f2b1b4b3fc1e97b1a22140018",
+  "generated_sha256": "e5e5cca793db7861eece38a061afcee97c1ed6f756915ec3c0bf104cc1155742",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "lessons": [
+  {
+   "lesson": "g10m1s7-1",
+   "claims": [
+    {
+     "lo": "lo:g10m1s7-1-1",
+     "type": "definition",
+     "text": "Factorisation is the opposite process of expanding brackets.",
+     "anchor": "b00288",
+     "printed_page": 20,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "Factorisation is the opposite process of expanding brackets.",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m1s7-1-1",
+     "type": "method",
+     "text": "Factorisation starts with the expanded expression and ends with a bracketed one; for example, start with 2x+2 and end up with 2(x+1).",
+     "anchor": "b00288",
+     "printed_page": 20,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "Factorisation would be to start with $2x+2$ and end up with $2(x+1)$",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m1s7-1-1",
+     "type": "definition",
+     "text": "The expressions 2(x+1) and 2x+2 are equivalent: they have the same value for all values of x.",
+     "anchor": "b00290",
+     "printed_page": 20,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "The two expressions $2(x+1)$ and $2x+2$ are equivalent; they have the same value for all values of $x$",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m1s7-1-1",
+     "type": "rule",
+     "text": "Factorising based on common factors relies on there being factors common to all the terms.",
+     "anchor": "b00293",
+     "printed_page": 21,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "Factorising based on common factors relies on there being factors common to all the terms.",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m1s7-1-1",
+     "type": "method",
+     "text": "The expression 2x - 6x^2 can be factorised as 2x(1 - 3x).",
+     "anchor": "b00295",
+     "printed_page": 21,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "$2x-6{x}^{2}=2x(1-3x)$",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m1s7-1-1",
+     "type": "rule",
+     "text": "The taking out of common factors is the starting point in all factorisation problems.",
+     "anchor": "b00347",
+     "printed_page": 23,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "The taking out of common factors is the starting point in all factorisation problems.",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m1s7-1-2",
+     "type": "method",
+     "text": "The expression 2(x - 1) - a(x - 1) can be factorised as (x - 1)(2 - a).",
+     "anchor": "b00297",
+     "printed_page": 21,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "$(x-1)(2-a)$",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m1s7-1-2",
+     "type": "method",
+     "text": "A \"switch around\" strategy is used to find the common factor when the brackets, such as (a - 2) and (2 - a), differ in sign.",
+     "anchor": "WE10",
+     "printed_page": 21,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "strategy to find the common factor",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m1s7-1-2",
+     "type": "rule",
+     "text": "2 - a = -(a - 2): switching the terms in a bracket gives the negative of the original bracket.",
+     "anchor": "WE10",
+     "printed_page": 21,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "Notice that $2-a=-(a-2)$",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m1s7-1-2",
+     "type": "method",
+     "text": "Writing 2 - a as -(a - 2), the expression 5(a - 2) - b(2 - a) becomes 5(a - 2) - [-b(a - 2)], which equals 5(a - 2) + b(a - 2).",
+     "anchor": "WE10",
+     "printed_page": 21,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "5(a-2)-[-b(a-2)]",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m1s7-1-2",
+     "type": "method",
+     "text": "Taking out the common factor (a - 2) from 5(a - 2) + b(a - 2) gives (a - 2)(5 + b).",
+     "anchor": "WE10",
+     "printed_page": 21,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "(a-2)(5+b)",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m1s7-1-3",
+     "type": "rule",
+     "text": "(ax + b)(ax - b) can be expanded to a^2x^2 - b^2.",
+     "anchor": "b00317",
+     "printed_page": 22,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "$(ax+b)(ax-b)$ can be expanded to ${a}^{2}{x}^{2}-{b}^{2}$",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m1s7-1-3",
+     "type": "rule",
+     "text": "a^2x^2 - b^2 can be factorised as (ax + b)(ax - b).",
+     "anchor": "b00318",
+     "printed_page": 22,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "can be factorised as $(ax+b)(ax-b)$",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m1s7-1-3",
+     "type": "method",
+     "text": "x^2 - 16 can be written as x^2 - 4^2, which is a difference of two squares.",
+     "anchor": "b00319",
+     "printed_page": 22,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "${x}^{2}-16$ can be written as ${x}^{2}-{4}^{2}$ which is a difference of two squares",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m1s7-1-3",
+     "type": "method",
+     "text": "The factors of x^2 - 16 are (x - 4) and (x + 4).",
+     "anchor": "b00319",
+     "printed_page": 22,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "the factors of ${x}^{2}-16$ are $(x-4)$ and $(x+4)$",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m1s7-1-3",
+     "type": "method",
+     "text": "To spot a difference of two squares, look for an expression consisting of two terms.",
+     "anchor": "b00321",
+     "printed_page": 22,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "consisting of two terms",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m1s7-1-3",
+     "type": "method",
+     "text": "To spot a difference of two squares, look for terms that have different signs (one positive, one negative).",
+     "anchor": "b00321",
+     "printed_page": 22,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "with terms that have different signs (one positive, one negative)",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m1s7-1-3",
+     "type": "method",
+     "text": "To spot a difference of two squares, look for each term being a perfect square.",
+     "anchor": "b00321",
+     "printed_page": 22,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "with each term a perfect square",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m1s7-1-3",
+     "type": "method",
+     "text": "Examples of a difference of two squares are a^2 - 1, 4x^2 - y^2 and -49 + p^4.",
+     "anchor": "b00322",
+     "printed_page": 22,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "${a}^{2}-1$ ; $4{x}^{2}-{y}^{2}$ ; $-49+{p}^{4}$",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m1s7-1-3",
+     "type": "method",
+     "text": "Take out the common factor (a^2 - 4) from 3a(a^2 - 4) - 7(a^2 - 4) to get (a^2 - 4)(3a - 7).",
+     "anchor": "WE11",
+     "printed_page": 22,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "$3a({a}^{2}-4)-7({a}^{2}-4)=({a}^{2}-4)(3a-7)$",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m1s7-1-3",
+     "type": "method",
+     "text": "Then factorise the difference of two squares: (a^2 - 4)(3a - 7) = (a - 2)(a + 2)(3a - 7).",
+     "anchor": "WE11",
+     "printed_page": 22,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "$({a}^{2}-4)(3a-7)=(a-2)(a+2)(3a-7)$",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m1s7-1-4",
+     "type": "rule",
+     "text": "The factors of 3x + 3 are 3 and (x + 1).",
+     "anchor": "b00347",
+     "printed_page": 23,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "the factors of $3x+3$ are $\\text{3}$ and $\\left(x+1\\right)$",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m1s7-1-4",
+     "type": "rule",
+     "text": "The factors of 2x^2 + 2x are 2x and (x + 1).",
+     "anchor": "b00347",
+     "printed_page": 23,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "the factors of $2{x}^{2}+2x$ are $2x$ and $\\left(x+1\\right)$",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m1s7-1-4",
+     "type": "method",
+     "text": "The expression 2x^2 + 2x + 3x + 3 has no common factor to all four terms, but it can still be factorised by grouping the terms.",
+     "anchor": "b00349",
+     "printed_page": 23,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "there is no common factor to all four terms, but we can factorise as follows",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m1s7-1-4",
+     "type": "method",
+     "text": "Group the terms in pairs and take out the common factor of each pair: (2x^2 + 2x) + (3x + 3) = 2x(x + 1) + 3(x + 1).",
+     "anchor": "b00350",
+     "printed_page": 23,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "$\\left(2{x}^{2}+2x\\right)+\\left(3x+3\\right)=2x\\left(x+1\\right)+3\\left(x+1\\right)$",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m1s7-1-4",
+     "type": "method",
+     "text": "After taking out the common factor from each pair, there is another common factor, (x + 1).",
+     "anchor": "b00351",
+     "printed_page": 23,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "there is another common factor",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m1s7-1-4",
+     "type": "method",
+     "text": "Taking out the common factor (x + 1) gives (x + 1)(2x + 3).",
+     "anchor": "b00352",
+     "printed_page": 23,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "$\\left(x+1\\right)\\left(2x+3\\right)$",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m1s7-1-4",
+     "type": "method",
+     "text": "To get the second factor, take out the common bracket (x + 1) and see what is left over.",
+     "anchor": "b00353",
+     "printed_page": 23,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "We get this by taking out the $\\left(x+1\\right)$ and seeing what is left over",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m1s7-1-4",
+     "type": "method",
+     "text": "What is left over is 2x from the first group and +3 from the second group.",
+     "anchor": "b00353",
+     "printed_page": 23,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "We have $2x$ from the first group and $\\text{+3}$ from the second group",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m1s7-1-4",
+     "type": "definition",
+     "text": "Factorising a four-term expression by grouping the terms in pairs and taking out the common bracket is called factorising by grouping.",
+     "anchor": "b00353",
+     "printed_page": 23,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "This is called factorising by grouping.",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m1s7-1-4",
+     "type": "method",
+     "text": "In 7x + 14y + bx + 2by, the ratio of the coefficients 7:14 is the same as b:2b, so 7 is a common factor of the first two terms and b is a common factor of the second two terms.",
+     "anchor": "WE12",
+     "printed_page": 23,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "We see that the ratio of the coefficients $7:14$ is the same as $b:2b$",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m1s7-1-4",
+     "type": "method",
+     "text": "Group terms with common factors together: 7x + 14y + bx + 2by = (7x + 14y) + (bx + 2by) = 7(x + 2y) + b(x + 2y).",
+     "anchor": "WE12",
+     "printed_page": 23,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "Group terms with common factors together: $\\text{7}$ is a common factor of the first two terms and $b$ is a common factor of the second two terms",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m1s7-1-4",
+     "type": "method",
+     "text": "Take out the common factor (x + 2y): 7(x + 2y) + b(x + 2y) = (x + 2y)(7 + b).",
+     "anchor": "WE12",
+     "printed_page": 23,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "$7\\left(x+2y\\right)+b\\left(x+2y\\right)=\\left(x+2y\\right)\\left(7+b\\right)$",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m1s7-1-4",
+     "type": "method",
+     "text": "Alternatively, group x as the common factor of the first and third terms and 2y as the common factor of the second and fourth terms, where 7:b = 14:2b.",
+     "anchor": "WE12",
+     "printed_page": 23,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "$x$ is a common factor of the first and third terms and $2y$ is a common factor of the second and fourth terms",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m1s7-1-4",
+     "type": "method",
+     "text": "Rearrange the equation with grouped terms together: 7x + 14y + bx + 2by = (7x + bx) + (14y + 2by) = x(7 + b) + 2y(7 + b).",
+     "anchor": "WE12",
+     "printed_page": 23,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "Rearrange the equation with grouped terms together",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m1s7-1-4",
+     "type": "method",
+     "text": "Take out the common factor (7 + b): x(7 + b) + 2y(7 + b) = (7 + b)(x + 2y).",
+     "anchor": "WE12",
+     "printed_page": 23,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "$x\\left(7+b\\right)+2y\\left(7+b\\right)=\\left(7+b\\right)\\left(x+2y\\right)$",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m1s7-1-4",
+     "type": "method",
+     "text": "The factors of 7x + 14y + bx + 2by are (7 + b) and (x + 2y).",
+     "anchor": "WE12",
+     "printed_page": 23,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "The factors of $7x+14y+bx+2by$ are $\\left(7+b\\right)$ and $\\left(x+2y\\right)$",
+     "provenance": "containment"
+    }
+   ],
+   "claims_dropped": [],
+   "items": [
+    {
+     "ref": "WE10",
+     "kind": "worked_example",
+     "lo": "lo:g10m1s7-1-2",
+     "stem": "Factorise: $5(a-2)-b(2-a)$",
+     "answer_type": "expression",
+     "answer": "(a-2)(5+b)",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "(a-2)(5+b)",
+      "form": "factorised",
+      "variables": [
+       "a",
+       "b"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "Use a “switch around” strategy to find the common factor. Notice that $2-a=-(a-2)$ $\\begin{align*}5(a-2)-b(2-a)&=5(a-2)-[-b(a-2)]\\\\&=5(a-2)+b(a-2)\\\\&=(a-2)(5+b)\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked",
+     "printed_answer": null,
+     "epub_final_answer": "$(a-2)(5+b)$",
+     "blind_answer": "(a-2)(5+b)",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 21,
+     "shortcode": null,
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "WE10|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": null,
+     "figures": [],
+     "figures_missing": [],
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "WE11",
+     "kind": "worked_example",
+     "lo": "lo:g10m1s7-1-3",
+     "stem": "Factorise: $3a({a}^{2}-4)-7({a}^{2}-4)$ .",
+     "answer_type": "expression",
+     "answer": "(a-2)(a+2)(3a-7)",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "(a-2)(a+2)(3a-7)",
+      "form": "factorised",
+      "variables": [
+       "a"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "Take out the common factor: $3a({a}^{2}-4)-7({a}^{2}-4)=({a}^{2}-4)(3a-7)$",
+      "Factorise the difference of two squares: $({a}^{2}-4)(3a-7)=(a-2)(a+2)(3a-7)$"
+     ],
+     "solution_provenance": "book_worked",
+     "printed_answer": null,
+     "epub_final_answer": "$(a-2)(a+2)(3a-7)$",
+     "blind_answer": "(a^{2}-4)(3a-7)=(a-2)(a+2)(3a-7)",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 22,
+     "shortcode": null,
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "WE11|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same fully factorised result (a-2)(a+2)(3a-7); answer 1 just shows the intermediate step."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": null,
+     "figures": [],
+     "figures_missing": [],
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "WE12",
+     "kind": "worked_example",
+     "lo": "lo:g10m1s7-1-4",
+     "stem": "Find the factors of $7x+14y+bx+2by$ .",
+     "answer_type": "expression",
+     "answer": "(7+b)(x+2y)",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "(7+b)(x+2y)",
+      "form": "factorised",
+      "variables": [
+       "x",
+       "y",
+       "b"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "Group terms with common factors together: $\\text{7}$ is a common factor of the first two terms and $b$ is a common factor of the second two terms. We see that the ratio of the coefficients $7:14$ is the same as $b:2b$ . $\\begin{align*}7x+14y+bx+2by&=\\left(7x+14y\\right)+\\left(bx+2by\\right)\\\\&=7\\left(x+2y\\right)+b\\left(x+2y\\right)\\end{align*}$",
+      "Take out the common factor: $7\\left(x+2y\\right)+b\\left(x+2y\\right)=\\left(x+2y\\right)\\left(7+b\\right)$ OR",
+      "Group terms with common factors together: $x$ is a common factor of the first and third terms and $2y$ is a common factor of the second and fourth terms $\\left(7:b=14:2b\\right)$ .",
+      "Rearrange the equation with grouped terms together: $\\begin{align*}7x+14y+bx+2by&=\\left(7x+bx\\right)+\\left(14y+2by\\right)\\\\&=x\\left(7+b\\right)+2y\\left(7+b\\right)\\end{align*}$",
+      "Take out the common factor: $x\\left(7+b\\right)+2y\\left(7+b\\right)=\\left(7+b\\right)\\left(x+2y\\right)$",
+      "Write the final answer: The factors of $7x+14y+bx+2by$ are $\\left(7+b\\right)$ and $\\left(x+2y\\right)$ ."
+     ],
+     "solution_provenance": "book_worked",
+     "printed_answer": null,
+     "epub_final_answer": "The factors of $7x+14y+bx+2by$ are $\\left(7+b\\right)$ and $\\left(x+2y\\right)$ .",
+     "blind_answer": "(x+2y)(7+b)",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 23,
+     "shortcode": null,
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "WE12|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same two factors (x+2y) and (7+b)."
+       }
+      ]
+     },
+     "typing_problems": [
+      "the key \"(7+b)(x+2y)\" does not read as the book final answer \"The factors of $7x+14y+bx+2by$ are $\\left(7+b\\right)$ and $\\left(x+2y\\right)$ .\""
+     ],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": null,
+     "figures": [],
+     "figures_missing": [],
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-5:1",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-1",
+     "stem": "Factorise: $12x+32y$",
+     "answer_type": "expression",
+     "answer": "4(3x+8y)",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "4(3x+8y)",
+      "form": "factorised",
+      "variables": [
+       "x",
+       "y"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$12x+32y=4(3x+8y)$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "4(3x + 8y)",
+     "epub_final_answer": "$12x+32y=4(3x+8y)$",
+     "blind_answer": "4(3x+8y)",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 21,
+     "shortcode": "2DJ2",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-5:1|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-5:1|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same 4(3x+8y); answer 2 restates the original expression."
+       },
+       {
+        "pair_id": "Ex1-5:1|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same 4(3x+8y)."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-5:2",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-1",
+     "stem": "Factorise: $-2ab^{2}-4a^{2}b$",
+     "answer_type": "expression",
+     "answer": "-2ab(b+2a)",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "-2ab(b+2a)",
+      "form": "factorised",
+      "variables": [
+       "a",
+       "b"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$-2ab^{2}-4a^{2}b=-2ab(b+2a)$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "−2ab(b + 2a)",
+     "epub_final_answer": "$-2ab^{2}-4a^{2}b=-2ab(b+2a)$",
+     "blind_answer": "-2ab(b+2a)",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 21,
+     "shortcode": "2DJ3",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-5:2|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-5:2|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same -2ab(b+2a)."
+       },
+       {
+        "pair_id": "Ex1-5:2|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same -2ab(b+2a)."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-5:3",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-1",
+     "stem": "Factorise: $18ab-3bc$",
+     "answer_type": "expression",
+     "answer": "3b(6a-c)",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "3b(6a-c)",
+      "form": "factorised",
+      "variables": [
+       "a",
+       "b",
+       "c"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$18ab-3bc=3b(6a-c)$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "3b(6a −c)",
+     "epub_final_answer": "$18ab-3bc=3b(6a-c)$",
+     "blind_answer": "3b(6a-c)",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 21,
+     "shortcode": "2DJ4",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-5:3|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-5:3|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same 3b(6a-c)."
+       },
+       {
+        "pair_id": "Ex1-5:3|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same 3b(6a-c)."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-5:4",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-1",
+     "stem": "Factorise: $12kj+18kq$",
+     "answer_type": "expression",
+     "answer": "6k(2j+3q)",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "6k(2j+3q)",
+      "form": "factorised",
+      "variables": [
+       "k",
+       "j",
+       "q"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$12kj+18kq=6k(2j+3q)$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "6k(2j + 3q)",
+     "epub_final_answer": "$12kj+18kq=6k(2j+3q)$",
+     "blind_answer": "6k(2j+3q)",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 21,
+     "shortcode": "2DJ5",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-5:4|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-5:4|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same 6k(2j+3q)."
+       },
+       {
+        "pair_id": "Ex1-5:4|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same 6k(2j+3q)."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-5:5",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-1",
+     "stem": "Factorise: $-12a+24a^{3}$",
+     "answer_type": "expression",
+     "answer": "12a(-1+2a^{2})",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "12a(-1+2a^{2})",
+      "form": "factorised",
+      "variables": [
+       "a"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$-12a+24a^{3}=12a(-1+2a^{2})$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "12a(−1 + 2a2)",
+     "epub_final_answer": "$-12a+24a^{3}=12a(-1+2a^{2})$",
+     "blind_answer": "12a(2a^{2}-1)",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 21,
+     "shortcode": "2DJ6",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-5:5|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "12a(2a^2-1) = 12a(-1+2a^2); printed 2a2 is 2a^2, terms reordered."
+       },
+       {
+        "pair_id": "Ex1-5:5|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Terms inside the bracket reordered; both expand to -12a+24a^3."
+       },
+       {
+        "pair_id": "Ex1-5:5|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same 12a(-1+2a^2)."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-5:6",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-1",
+     "stem": "Factorise: $-2ab-8a$",
+     "answer_type": "expression",
+     "answer": "-2a(b+4)",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "-2a(b+4)",
+      "form": "factorised",
+      "variables": [
+       "a",
+       "b"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$-2ab-8a=-2a(b+4)$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "−2a(b + 4)",
+     "epub_final_answer": "$-2ab-8a=-2a(b+4)$",
+     "blind_answer": "-2a(b+4)",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 21,
+     "shortcode": "2DJ7",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-5:6|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-5:6|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same -2a(b+4)."
+       },
+       {
+        "pair_id": "Ex1-5:6|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same -2a(b+4)."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-5:7",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-1",
+     "stem": "Factorise: $24kj-16k^{2}j$",
+     "answer_type": "expression",
+     "answer": "8kj(3-2k)",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "8kj(3-2k)",
+      "form": "factorised",
+      "variables": [
+       "k",
+       "j"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$24kj-16k^{2}j=8kj(3-2k)$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "8kj(3 −2k)",
+     "epub_final_answer": "$24kj-16k^{2}j=8kj(3-2k)$",
+     "blind_answer": "8kj(3-2k)",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 21,
+     "shortcode": "2DJ8",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-5:7|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-5:7|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same 8kj(3-2k)."
+       },
+       {
+        "pair_id": "Ex1-5:7|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same 8kj(3-2k)."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-5:8",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-1",
+     "stem": "Factorise: $-a^{2}b-b^{2}a$",
+     "answer_type": "expression",
+     "answer": "-ab(a+b)",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "-ab(a+b)",
+      "form": "factorised",
+      "variables": [
+       "a",
+       "b"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$-a^{2}b-b^{2}a=-ab(a+b)$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "−ab(a + b)",
+     "epub_final_answer": "$-a^{2}b-b^{2}a=-ab(a+b)$",
+     "blind_answer": "-ab(a+b)",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 21,
+     "shortcode": "2DJ9",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-5:8|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-5:8|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same -ab(a+b)."
+       },
+       {
+        "pair_id": "Ex1-5:8|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same -ab(a+b)."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-5:9",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-1",
+     "stem": "Factorise: $72b^{2}q-18b^{3}q^{2}$",
+     "answer_type": "expression",
+     "answer": "18b^{2}q(4-bq)",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "18b^{2}q(4-bq)",
+      "form": "factorised",
+      "variables": [
+       "b",
+       "q"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$72b^{2}q-18b^{3}q^{2}=18b^{2}q(4-bq)$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "18b2q(4 −bq)",
+     "epub_final_answer": "$72b^{2}q-18b^{3}q^{2}=18b^{2}q(4-bq)$",
+     "blind_answer": "18b^{2}q(4-bq)",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 21,
+     "shortcode": "2DJB",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-5:9|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-5:9|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same 18b^2q(4-bq)."
+       },
+       {
+        "pair_id": "Ex1-5:9|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Printed 18b2q is 18b^2q; same factorisation."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-5:10",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-1",
+     "stem": "Factorise: $125x^6-5y^2$",
+     "answer_type": "expression",
+     "answer": "5(5x^{3}-y)(5x^{3}+y)",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "5(5x^{3}-y)(5x^{3}+y)",
+      "form": "factorised",
+      "variables": [
+       "x",
+       "y"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}125x^6-5y^2&=5(25x^6-y^2)\\\\&=5(5x^3-y)(5x^3+y)\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "5(5x3 −y)(5x3 + y)",
+     "epub_final_answer": "$5(5x^3-y)(5x^3+y)$",
+     "blind_answer": "5(5x^{3}-y)(5x^{3}+y)",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 21,
+     "shortcode": "2DJC",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-5:10|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-5:10|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-5:10|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-5:11",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-1",
+     "stem": "Factorise: $6x^{2}+2x+10x^{3}$",
+     "answer_type": "expression",
+     "answer": "2x(3x+1+5x^{2})",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "2x(3x+1+5x^{2})",
+      "form": "factorised",
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$6x^{2}+2x+10x^{3}=2x(3x+1+5x^{2})$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "2x(3x + 1 + 5x2)",
+     "epub_final_answer": "$6x^{2}+2x+10x^{3}=2x(3x+1+5x^{2})$",
+     "blind_answer": "2x(5x^{2}+3x+1)",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 21,
+     "shortcode": "2DJD",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-5:11|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Bracket terms reordered; printed 5x2 is 5x^2; both expand to 6x^2+2x+10x^3."
+       },
+       {
+        "pair_id": "Ex1-5:11|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Bracket reordered; same factorisation 2x(5x^2+3x+1)."
+       },
+       {
+        "pair_id": "Ex1-5:11|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same 2x(3x+1+5x^2)."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-5:12",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-1",
+     "stem": "Factorise: $2xy^{2}+xy^{2}z+3xy$",
+     "answer_type": "expression",
+     "answer": "xy(2y+yz+3)",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "xy(2y+yz+3)",
+      "form": "factorised",
+      "variables": [
+       "x",
+       "y",
+       "z"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$2xy^{2}+xy^{2}z+3xy=xy(2y+yz+3)$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "xy(2y + yz + 3)",
+     "epub_final_answer": "$2xy^{2}+xy^{2}z+3xy=xy(2y+yz+3)$",
+     "blind_answer": "xy(2y+yz+3)",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 21,
+     "shortcode": "2DJF",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-5:12|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-5:12|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same xy(2y+yz+3)."
+       },
+       {
+        "pair_id": "Ex1-5:12|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same xy(2y+yz+3)."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-5:13",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-1",
+     "stem": "Factorise: $12k^{2}j+24k^{2}j^{2}$",
+     "answer_type": "expression",
+     "answer": "12k^{2}j(1+2j)",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "12k^{2}j(1+2j)",
+      "form": "factorised",
+      "variables": [
+       "k",
+       "j"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$12k^{2}j+24k^{2}j^{2}=12k^{2}j(1+2j)$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "12k2j(1 + 2j)",
+     "epub_final_answer": "$12k^{2}j+24k^{2}j^{2}=12k^{2}j(1+2j)$",
+     "blind_answer": "12k^{2}j(1+2j)",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 21,
+     "shortcode": "2DJG",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-5:13|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-5:13|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same 12k^2j(1+2j)."
+       },
+       {
+        "pair_id": "Ex1-5:13|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Printed 12k2j is 12k^2j; same."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-5:14",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-1",
+     "stem": "Factorise: $3a^{2}+6a-18$",
+     "answer_type": "expression",
+     "answer": "3(a^{2}+2a-6)",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "3(a^{2}+2a-6)",
+      "form": "factorised",
+      "variables": [
+       "a"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$3a^{2}+6a-18=3(a^{2}+2a-6)$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "3(a2 + 2a −6)",
+     "epub_final_answer": "$3a^{2}+6a-18=3(a^{2}+2a-6)$",
+     "blind_answer": "$3(a^{2}+2a-6)$",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 21,
+     "shortcode": "2DJH",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-5:14|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-5:14|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same 3(a^2+2a-6)."
+       },
+       {
+        "pair_id": "Ex1-5:14|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Printed a2 is a^2; same."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-5:15",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-1",
+     "stem": "Factorise: $7a+4$",
+     "answer_type": "expression",
+     "answer": "7a+4",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "7a+4",
+      "form": "factorised",
+      "variables": [
+       "a"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$7a+4$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "7a + 4",
+     "epub_final_answer": "$7a+4$",
+     "blind_answer": "$7a+4$ (cannot be factorised; already in simplest form)",
+     "verification": "disputed",
+     "tier": "basic",
+     "printed_page": 21,
+     "shortcode": "2DJJ",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-5:15|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-5:15|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-5:15|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": "factorised",
+     "printed_form_defect": {
+      "asked_form": "factorised",
+      "printed": "7a + 4",
+      "note": "'Factorise', but the printed answer is a sum"
+     },
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-6:1",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-2",
+     "stem": "Factorise: $4(y-3)+k(3-y)$",
+     "answer_type": "expression",
+     "answer": "(y-3)(4-k)",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "(y-3)(4-k)",
+      "form": "factorised",
+      "variables": [
+       "y",
+       "k"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}4(y-3)+k(3-y)&=4(y-3)-k(y-3)\\\\&=(y-3)(4-k)\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(y −3)(4 −k)",
+     "epub_final_answer": "$(y-3)(4-k)$",
+     "blind_answer": "$(y-3)(4-k)$",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 22,
+     "shortcode": "2DJM",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-6:1|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-6:1|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-6:1|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-6:2",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-3",
+     "stem": "Factorise: $a^{2}(a-1)-25(a-1)$",
+     "answer_type": "expression",
+     "answer": "(a-1)(a-5)(a+5)",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "(a-1)(a-5)(a+5)",
+      "form": "factorised",
+      "variables": [
+       "a"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}a^{2}(a-1)-25(a-1)&=(a-1)(a^{2}-25)\\\\&=(a-1)(a-5)(a+5)\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(a −1)(a −5)(a + 5)",
+     "epub_final_answer": "$(a-1)(a-5)(a+5)$",
+     "blind_answer": "$(a-1)(a-5)(a+5)$",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 22,
+     "shortcode": "2DJN",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-6:2|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-6:2|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-6:2|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-6:3",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-2",
+     "stem": "Factorise: $bm(b+4)-6m(b+4)$",
+     "answer_type": "expression",
+     "answer": "(b+4)m(b-6)",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "(b+4)m(b-6)",
+      "form": "factorised",
+      "variables": [
+       "b",
+       "m"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}bm(b+4)-6m(b+4)&=(b+4)(bm-6m)\\\\&=(b+4)(m)(b-6)\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(b + 4)(m)(b −6)",
+     "epub_final_answer": "$(b+4)(m)(b-6)$",
+     "blind_answer": "$m(b+4)(b-6)$",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 22,
+     "shortcode": "2DJP",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-6:3|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same product m(b+4)(b-6), factors reordered."
+       },
+       {
+        "pair_id": "Ex1-6:3|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same product, factors reordered."
+       },
+       {
+        "pair_id": "Ex1-6:3|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-6:4",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-2",
+     "stem": "Factorise: $a^{2}(a+7)+9(a+7)$",
+     "answer_type": "expression",
+     "answer": "(a+7)(a^{2}+9)",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "(a+7)(a^{2}+9)",
+      "form": "factorised",
+      "variables": [
+       "a"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$a^{2}(a+7)+9(a+7)=(a+7)(a^{2}+9)$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(a + 7)(a2 + 9)",
+     "epub_final_answer": "$a^{2}(a+7)+9(a+7)=(a+7)(a^{2}+9)$",
+     "blind_answer": "$(a+7)(a^{2}+9)$",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 22,
+     "shortcode": "2DJQ",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-6:4|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-6:4|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same (a+7)(a^2+9)."
+       },
+       {
+        "pair_id": "Ex1-6:4|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Printed a2 is a^2; same."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-6:5",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-2",
+     "stem": "Factorise: $3b(b-4)-7(4-b)$",
+     "answer_type": "expression",
+     "answer": "(b-4)(3b+7)",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "(b-4)(3b+7)",
+      "form": "factorised",
+      "variables": [
+       "b"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}3b(b-4)-7(4-b)&=3b(b-4)+7(b-4)\\\\&=(b-4)(3b+7)\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(b −4)(3b + 7)",
+     "epub_final_answer": "$(b-4)(3b+7)$",
+     "blind_answer": "$(b-4)(3b+7)$",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 22,
+     "shortcode": "2DJR",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-6:5|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-6:5|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-6:5|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-6:6",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-2",
+     "stem": "Factorise: $3g(z+6)+2(6+z)$",
+     "answer_type": "expression",
+     "answer": "(z+6)(3g+2)",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "(z+6)(3g+2)",
+      "form": "factorised",
+      "variables": [
+       "z",
+       "g"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}3g(z+6)+2(6+z)&=3g(z+6)+2(z+6)\\\\&=(z+6)(3g+2)\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(z + 6)(3g + 2)",
+     "epub_final_answer": "$(z+6)(3g+2)$",
+     "blind_answer": "$(z+6)(3g+2)$",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 22,
+     "shortcode": "2DJS",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-6:6|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-6:6|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-6:6|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "tier check",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-6:7",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-2",
+     "stem": "Factorise: $4b(y+2)+5(2+y)$",
+     "answer_type": "expression",
+     "answer": "(y+2)(4b+5)",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "(y+2)(4b+5)",
+      "form": "factorised",
+      "variables": [
+       "y",
+       "b"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}4b(y+2)+5(2+y)&=4b(y+2)+5(y+2)\\\\&=(y+2)(4b+5)\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(y + 2)(4b + 5)",
+     "epub_final_answer": "$(y+2)(4b+5)$",
+     "blind_answer": "$(y+2)(4b+5)$",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 22,
+     "shortcode": "2DJT",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-6:7|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-6:7|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-6:7|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-6:8",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-2",
+     "stem": "Factorise: $3d(r+5)+14(5+r)$",
+     "answer_type": "expression",
+     "answer": "(r+5)(3d+14)",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "(r+5)(3d+14)",
+      "form": "factorised",
+      "variables": [
+       "r",
+       "d"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}3d(r+5)+14(5+r)&=3d(r+5)+14(r+5)\\\\&=(r+5)(3d+14)\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(r + 5)(3d + 14)",
+     "epub_final_answer": "$(r+5)(3d+14)$",
+     "blind_answer": "$(r+5)(3d+14)$",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 22,
+     "shortcode": "2DJV",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-6:8|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-6:8|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-6:8|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "tier check",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-6:9",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-3",
+     "stem": "Factorise: $(6x+y)^2-9$",
+     "answer_type": "expression",
+     "answer": "(6x+y-3)(6x+y+3)",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "(6x+y-3)(6x+y+3)",
+      "form": "factorised",
+      "variables": [
+       "x",
+       "y"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$(6x+y)^2-9=(6x+y-3)(6x+y+3)$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(6x + y −3)(6x + y + 3)",
+     "epub_final_answer": "$(6x+y)^2-9=(6x+y-3)(6x+y+3)$",
+     "blind_answer": "$(6x+y-3)(6x+y+3)$",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 22,
+     "shortcode": "2DJW",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-6:9|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-6:9|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same (6x+y-3)(6x+y+3)."
+       },
+       {
+        "pair_id": "Ex1-6:9|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same factorisation."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-6:10",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-3",
+     "stem": "Factorise: $4x^2-(4x-3y)^2$",
+     "answer_type": "expression",
+     "answer": "3(2x-y)(3y-2x)",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "3(2x-y)(3y-2x)",
+      "form": "factorised",
+      "variables": [
+       "x",
+       "y"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}4x^2-(4x-3y)^2&=(2x+4x-3y)(2x-(4x-3y))\\\\&=(6x-3y)(3y-2x)\\\\&=3(2x-y)(3y-2x)\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "3(2x −y)(3y −2x)",
+     "epub_final_answer": "$3(2x-y)(3y-2x)$",
+     "blind_answer": "$(3y-2x)(6x-3y)=3(3y-2x)(2x-y)$",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 22,
+     "shortcode": "2DJX",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-6:10|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "(3y-2x)(6x-3y) = 3(3y-2x)(2x-y) = 3(2x-y)(3y-2x); verified by difference of squares."
+       },
+       {
+        "pair_id": "Ex1-6:10|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same product up to ordering of factors."
+       },
+       {
+        "pair_id": "Ex1-6:10|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-6:11",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-3",
+     "stem": "Factorise: $16a^2-(3b+4c)^2$",
+     "answer_type": "expression",
+     "answer": "(4a+3b+4c)(4a-3b-4c)",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "(4a+3b+4c)(4a-3b-4c)",
+      "form": "factorised",
+      "variables": [
+       "a",
+       "b",
+       "c"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}16a^2-(3b+4c)^2&=(4a+3b+4c)(4a-(3b+4c))\\\\&=(4a+3b+4c)(4a-3b-4c)\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(4a + 3b + 4c)(4a −3b −4c)",
+     "epub_final_answer": "$(4a+3b+4c)(4a-3b-4c)$",
+     "blind_answer": "$(4a-3b-4c)(4a+3b+4c)$",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 22,
+     "shortcode": "2DJY",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-6:11|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same two factors, order swapped."
+       },
+       {
+        "pair_id": "Ex1-6:11|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same two factors, order swapped."
+       },
+       {
+        "pair_id": "Ex1-6:11|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-6:12",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-3",
+     "stem": "Factorise: $(b-4)^2-9(b-5)^2$",
+     "answer_type": "expression",
+     "answer": "(-2b+11)(4b-19)",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "(-2b+11)(4b-19)",
+      "form": "factorised",
+      "variables": [
+       "b"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}(b-4)^2-9(b-5)^2&=(b-4-3(b-5))(b-4+3(b-5))\\\\&=(-2b+11)(4b-19)\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(−2b + 11)(4b −19)",
+     "epub_final_answer": "$(-2b+11)(4b-19)$",
+     "blind_answer": "$(11-2b)(4b-19)$",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 22,
+     "shortcode": "2DJZ",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-6:12|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "(11-2b) = (-2b+11); same product, and it is the correct difference-of-squares result."
+       },
+       {
+        "pair_id": "Ex1-6:12|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same factors, terms in first bracket reordered."
+       },
+       {
+        "pair_id": "Ex1-6:12|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-6:13",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-3",
+     "stem": "Factorise: $4(a-3)^2-49(4a-5)$",
+     "answer_type": "expression",
+     "answer": "(29-26a)(30a-41)",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "(29-26a)(30a-41)",
+      "form": null,
+      "variables": [
+       "a"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}4(a-3)^2-49(4a-5)^2&=(2(a-3)-7(4a-5))(2(a-3)+7(4a-5))\\\\&=(2a-6-28a+35)(2a-6+28a-35)\\\\&=(29-26a)(30a-41)\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(29 −26a)(30a −41)",
+     "epub_final_answer": "$(29-26a)(30a-41)$",
+     "blind_answer": "$4a^{2}-220a+281$, which does not factorise over the integers (over the reals: $(2a-55-14\\sqrt{14})(2a-55+14\\sqrt{14})$)",
+     "verification": "disputed",
+     "tier": "standard",
+     "printed_page": 22,
+     "shortcode": "2DK2",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-6:13|blind~printed",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "The problem expands to 4a^2-220a+281 (discriminant 43904, not a perfect square), whereas (29-26a)(30a-41) expands to -780a^2+1936a-1189; different polynomials."
+       },
+       {
+        "pair_id": "Ex1-6:13|blind~book",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "Same as above: (29-26a)(30a-41) is not equal to 4a^2-220a+281, so the two answers are different."
+       },
+       {
+        "pair_id": "Ex1-6:13|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-6:14",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-3",
+     "stem": "Factorise: $16k^{2}-4$",
+     "answer_type": "expression",
+     "answer": "(4k-2)(4k+2)",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "(4k-2)(4k+2)",
+      "form": "factorised",
+      "variables": [
+       "k"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$16k^{2}-4=(4k-2)(4k+2)$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(4k −2)(4k + 2)",
+     "epub_final_answer": "$(4k-2)(4k+2)$",
+     "blind_answer": "$4(2k-1)(2k+1)$",
+     "verification": "disputed",
+     "tier": "basic",
+     "printed_page": 22,
+     "shortcode": "2DK3",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-6:14|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both are factorised forms of 16k^2-4 and are equal as expressions, since (4k-2)(4k+2) = 4(2k-1)(2k+1). The second is not fully factorised, but the problem only says factorise."
+       },
+       {
+        "pair_id": "Ex1-6:14|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same expression; (4k-2)(4k+2) = 4(2k-1)(2k+1), a factor 2 pulled out of each bracket."
+       },
+       {
+        "pair_id": "Ex1-6:14|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": "factorised",
+     "printed_form_defect": {
+      "asked_form": "factorised",
+      "printed": "(4k −2)(4k + 2)",
+      "note": "a common factor 2 is left in both brackets: 4(2k − 1)(2k + 1)"
+     },
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-6:15",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-3",
+     "stem": "Factorise: $a^{2}b^{2}c^{2}-1$",
+     "answer_type": "expression",
+     "answer": "(abc-1)(abc+1)",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "(abc-1)(abc+1)",
+      "form": null,
+      "variables": [
+       "a",
+       "b",
+       "c"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$a^{2}b^{2}c^{2}-1=(abc-1)(abc+1)$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(abc −1)(abc + 1)",
+     "epub_final_answer": "$(abc-1)(abc+1)$",
+     "blind_answer": "$(abc-1)(abc+1)$",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 22,
+     "shortcode": "2DK4",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-6:15|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-6:15|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-6:15|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-6:16",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-3",
+     "stem": "Factorise: $\\frac{1}{9}a^{2}-4b^{2}$",
+     "answer_type": "expression",
+     "answer": "\\left(\\frac{1}{3}a-2b\\right)\\left(\\frac{1}{3}a+2b\\right)",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "\\left(\\frac{1}{3}a-2b\\right)\\left(\\frac{1}{3}a+2b\\right)",
+      "form": null,
+      "variables": [
+       "a",
+       "b"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}\\frac{1}{9}a^2-4b^2&=\\left(\\frac{1}{3}a-2b\\right)\\left(\\frac{1}{3}a+2b\\right)\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "( 1 3 a −2b ) ( 1 3 a + 2b )",
+     "epub_final_answer": "$\\left(\\frac{1}{3}a-2b\\right)\\left(\\frac{1}{3}a+2b\\right)$",
+     "blind_answer": "$\\left(\\frac{a}{3}-2b\\right)\\left(\\frac{a}{3}+2b\\right)$",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 22,
+     "shortcode": "2DK5",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-6:16|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Flattened '1 3 a' is (1/3)a, which equals a/3; same factorisation."
+       },
+       {
+        "pair_id": "Ex1-6:16|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "a/3 = (1/3)a; same factorisation."
+       },
+       {
+        "pair_id": "Ex1-6:16|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-6:17",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-3",
+     "stem": "Factorise: $\\frac{1}{2}x^{2}-2$",
+     "answer_type": "expression",
+     "answer": "2\\left(\\frac{1}{2}x+1\\right)\\left(\\frac{1}{2}x-1\\right)",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "2\\left(\\frac{1}{2}x+1\\right)\\left(\\frac{1}{2}x-1\\right)",
+      "form": null,
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}\\frac{1}{2}x^2-2&=2\\left(\\frac{1}{4}x^{2}-1\\right)\\\\&=2\\left(\\frac{1}{2}x+1\\right)\\left(\\frac{1}{2}x-1\\right)\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "2 ( 1 2 x + 1 ) ( 1 2 x −1 )",
+     "epub_final_answer": "$2\\left(\\frac{1}{2}x+1\\right)\\left(\\frac{1}{2}x-1\\right)$",
+     "blind_answer": "$\\frac{1}{2}(x-2)(x+2)$",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 22,
+     "shortcode": "2DK6",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-6:17|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both equal x^2/2 - 2: (1/2)(x^2-4) and 2((x^2)/4-1). Both are factorised forms."
+       },
+       {
+        "pair_id": "Ex1-6:17|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both expand to (1/2)x^2-2 and are factorised forms."
+       },
+       {
+        "pair_id": "Ex1-6:17|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-6:18",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-3",
+     "stem": "Factorise: $y^2-8$",
+     "answer_type": "expression",
+     "answer": "(y-\\sqrt{8})(y+\\sqrt{8})",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "(y-\\sqrt{8})(y+\\sqrt{8})",
+      "form": null,
+      "variables": [
+       "y"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "Note that $\\left(\\sqrt{8}\\right)^{2}=8$",
+      "$y^2-8=(y-\\sqrt{8})(y+\\sqrt{8})$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(y − √ 8)(y + √ 8)",
+     "epub_final_answer": "$(y-\\sqrt{8})(y+\\sqrt{8})$",
+     "blind_answer": "$(y-2\\sqrt{2})(y+2\\sqrt{2})$",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 22,
+     "shortcode": "2DK7",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-6:18|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "sqrt(8) = 2*sqrt(2), so the factorisations are equal; the problem does not ask for simplified surd form."
+       },
+       {
+        "pair_id": "Ex1-6:18|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "sqrt(8) = 2*sqrt(2); same factorisation."
+       },
+       {
+        "pair_id": "Ex1-6:18|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-6:19",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-3",
+     "stem": "Factorise: $y^2-13$",
+     "answer_type": "expression",
+     "answer": "(y-\\sqrt{13})(y+\\sqrt{13})",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "(y-\\sqrt{13})(y+\\sqrt{13})",
+      "form": null,
+      "variables": [
+       "y"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "Note that $\\left(\\sqrt{13}\\right)^{2}=13$",
+      "$y^2-13=(y-\\sqrt{13})(y+\\sqrt{13})$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(y − √ 13)(y + √ 13)",
+     "epub_final_answer": "$(y-\\sqrt{13})(y+\\sqrt{13})$",
+     "blind_answer": "$(y-\\sqrt{13})(y+\\sqrt{13})$",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 22,
+     "shortcode": "2DK8",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-6:19|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-6:19|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-6:19|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "tier check",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-6:20",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-3",
+     "stem": "Factorise: $a^2(a-2ab-15b^2)-9b^2(a^2-2ab-15b^2)$",
+     "answer_type": "expression",
+     "answer": "(a-3b)(a-5b)(a+3b)^2",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "(a-3b)(a-5b)(a+3b)^2",
+      "form": null,
+      "variables": [
+       "a",
+       "b"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}a^2(a-2ab-15b^2)-9b^2(a^2-2ab-15b^2)&=(a^2-2ab-15b^2)(a^2-9b^2)\\\\&=(a-5b)(a+3b)(a-3b)(a+3b)\\\\&=(a-3b)(a-5b)(a+3b)^2\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(a −3b)(a −5b)(a + 3b)2",
+     "epub_final_answer": "$(a-3b)(a-5b)(a+3b)^2$",
+     "blind_answer": "$(a-3b)(a+3b)^{2}(a-5b)$",
+     "verification": "agreed",
+     "tier": "advanced",
+     "printed_page": 22,
+     "shortcode": "2DK9",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-6:20|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same factors (a-3b), (a-5b) and (a+3b)^2, reordered; printed trailing 2 is the square."
+       },
+       {
+        "pair_id": "Ex1-6:20|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same factors, reordered."
+       },
+       {
+        "pair_id": "Ex1-6:20|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-7:1",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-4",
+     "stem": "Factorise the following: $6d-9r+2t^{5}d-3t^{5}r$",
+     "answer_type": "expression",
+     "answer": "(2d-3r)(3+t^{5})",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "(2d-3r)(3+t^{5})",
+      "form": null,
+      "variables": [
+       "d",
+       "r",
+       "t"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}6d-9r+2t^{5}d-3t^{5}r&=3(2d-3r)+t^{5}(2d-3r)\\\\&=(2d-3r)(3+t^{5})\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(2d −3r)(3 + t5)",
+     "epub_final_answer": "$(2d-3r)(3+t^{5})$",
+     "blind_answer": "$(2d-3r)(3+t^{5})$",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 24,
+     "shortcode": "2DKB",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-7:1|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-7:1|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-7:1|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-7:2",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-4",
+     "stem": "Factorise the following: $9z-18m+b^{3}z-2b^{3}m$",
+     "answer_type": "expression",
+     "answer": "(z-2m)(9+b^{3})",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "(z-2m)(9+b^{3})",
+      "form": null,
+      "variables": [
+       "z",
+       "m",
+       "b"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}9z-18m+b^{3}z-2b^{3}m&=9(z-2m)+b^{3}(z-2m)\\\\&=(z-2m)(9+b^{3})\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(z −2m)(9 + b3)",
+     "epub_final_answer": "$(z-2m)(9+b^{3})$",
+     "blind_answer": "$(z-2m)(9+b^{3})$",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 24,
+     "shortcode": "2DKC",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-7:2|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-7:2|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-7:2|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-7:3",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-4",
+     "stem": "Factorise the following: $35z-10y+7c^{5}z-2c^{5}y$",
+     "answer_type": "expression",
+     "answer": "(7z-2y)(5+c^{5})",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "(7z-2y)(5+c^{5})",
+      "form": null,
+      "variables": [
+       "z",
+       "y",
+       "c"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}35z-10y+7c^{5}z-2c^{5}y&=5(7z-2y)+c^{5}(7z-2y)\\\\&=(7z-2y)(5+c^{5})\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(7z −2y)(5 + c5)",
+     "epub_final_answer": "$(7z-2y)(5+c^{5})$",
+     "blind_answer": "$(7z-2y)(5+c^{5})$",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 24,
+     "shortcode": "2DKD",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-7:3|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-7:3|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-7:3|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-7:4",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-4",
+     "stem": "Factorise the following: $6x+a+2ax+3$",
+     "answer_type": "expression",
+     "answer": "(3+a)(2x+1)",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "(3+a)(2x+1)",
+      "form": null,
+      "variables": [
+       "x",
+       "a"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}6x+a+2ax+3&=6x+3+a+2ax\\\\&=3(2x+1)+a(2x+1)\\\\&=(3+a)(2x+1)\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(3 + a)(2x + 1)",
+     "epub_final_answer": "$(3+a)(2x+1)$",
+     "blind_answer": "$(2x+1)(3+a)$",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 24,
+     "shortcode": "2DKF",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-7:4|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same product, factors swapped."
+       },
+       {
+        "pair_id": "Ex1-7:4|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same product, factors swapped."
+       },
+       {
+        "pair_id": "Ex1-7:4|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-7:5",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-4",
+     "stem": "Factorise the following: $x^{2}-6x+5x-30$",
+     "answer_type": "expression",
+     "answer": "(x+5)(x-6)",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "(x+5)(x-6)",
+      "form": null,
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}x^{2}-6x+5x-30&=x(x-6)+5(x-6)\\\\&=(x+5)(x-6)\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(x + 5)(x −6)",
+     "epub_final_answer": "$(x+5)(x-6)$",
+     "blind_answer": "$(x-6)(x+5)$",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 24,
+     "shortcode": "2DKG",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-7:5|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same product, factors swapped."
+       },
+       {
+        "pair_id": "Ex1-7:5|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same product, factors swapped."
+       },
+       {
+        "pair_id": "Ex1-7:5|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-7:6",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-4",
+     "stem": "Factorise the following: $5x+10y-ax-2ay$",
+     "answer_type": "expression",
+     "answer": "(5-a)(x+2y)",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "(5-a)(x+2y)",
+      "form": null,
+      "variables": [
+       "x",
+       "y",
+       "a"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}5x+10y-ax-2ay&=5(x+2y)-a(x+2y)\\\\&=(5-a)(x+2y)\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(5 −a)(x + 2y)",
+     "epub_final_answer": "$(5-a)(x+2y)$",
+     "blind_answer": "$(x+2y)(5-a)$",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 24,
+     "shortcode": "2DKH",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-7:6|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same product, factors swapped."
+       },
+       {
+        "pair_id": "Ex1-7:6|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same product, factors swapped."
+       },
+       {
+        "pair_id": "Ex1-7:6|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-7:7",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-4",
+     "stem": "Factorise the following: $a^{2}-2a-ax+2x$",
+     "answer_type": "expression",
+     "answer": "(a-x)(a-2)",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "(a-x)(a-2)",
+      "form": null,
+      "variables": [
+       "a",
+       "x"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}a^{2}-2a-ax+2x&=a(a-2)-x(a-2)\\\\&=(a-x)(a-2)\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(a −x)(a −2)",
+     "epub_final_answer": "$(a-x)(a-2)$",
+     "blind_answer": "$(a-2)(a-x)$",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 24,
+     "shortcode": "2DKJ",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-7:7|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same two factors in a different order."
+       },
+       {
+        "pair_id": "Ex1-7:7|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same two factors in a different order."
+       },
+       {
+        "pair_id": "Ex1-7:7|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-7:8",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-4",
+     "stem": "Factorise the following: $5xy-3y+10x-6$",
+     "answer_type": "expression",
+     "answer": "(y+2)(5x-3)",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "(y+2)(5x-3)",
+      "form": null,
+      "variables": [
+       "x",
+       "y"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}5xy-3y+10x-6&=y(5x-3)+2(5x-3)\\\\&=(y+2)(5x-3)\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(y + 2)(5x −3)",
+     "epub_final_answer": "$(y+2)(5x-3)$",
+     "blind_answer": "$(5x-3)(y+2)$",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 24,
+     "shortcode": "2DKK",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-7:8|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same two factors in a different order."
+       },
+       {
+        "pair_id": "Ex1-7:8|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same two factors in a different order."
+       },
+       {
+        "pair_id": "Ex1-7:8|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-7:9",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-4",
+     "stem": "Factorise the following: $ab-a^{2}-a+b$",
+     "answer_type": "expression",
+     "answer": "(-a+b)(a+1)",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "(-a+b)(a+1)",
+      "form": null,
+      "variables": [
+       "a",
+       "b"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}ab-a^{2}-a+b&=-a^{2}-a+ab+b\\\\&=-a(a+1)+b(a+1)\\\\&=(-a+b)(a+1)\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(−a + b)(a + 1)",
+     "epub_final_answer": "$(-a+b)(a+1)$",
+     "blind_answer": "$(b-a)(a+1)$",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 24,
+     "shortcode": "2DKM",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-7:9|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "(-a+b) is the same as (b-a)."
+       },
+       {
+        "pair_id": "Ex1-7:9|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "(-a+b) is the same as (b-a)."
+       },
+       {
+        "pair_id": "Ex1-7:9|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-7:10",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-4",
+     "stem": "Factorise the following: $14m-4n+7jm-2jn$",
+     "answer_type": "expression",
+     "answer": "(7m-2n)(2+j)",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "(7m-2n)(2+j)",
+      "form": null,
+      "variables": [
+       "m",
+       "n",
+       "j"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}14m-4n+7jm-2jn&=2(7m-2n)+j(7m-2n)\\\\&=(7m-2n)(2+j)\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(7m −2n)(2 + j)",
+     "epub_final_answer": "$(7m-2n)(2+j)$",
+     "blind_answer": "$(7m-2n)(2+j)$",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 24,
+     "shortcode": "2DKN",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-7:10|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-7:10|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-7:10|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-7:11",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-4",
+     "stem": "Factorise the following: $28r-20x+7gr-5gx$",
+     "answer_type": "expression",
+     "answer": "(7r-5x)(4+g)",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "(7r-5x)(4+g)",
+      "form": null,
+      "variables": [
+       "r",
+       "x",
+       "g"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}28r-20x+7gr-5gx&=4(7r-5x)+g(7r-5x)\\\\&=(7r-5x)(4+g)\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(7r −5x)(4 + g)",
+     "epub_final_answer": "$(7r-5x)(4+g)$",
+     "blind_answer": "(7r-5x)(4+g)",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 24,
+     "shortcode": "2DKP",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-7:11|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-7:11|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-7:11|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-7:12",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-4",
+     "stem": "Factorise the following: $25d-15m+5yd-3ym$",
+     "answer_type": "expression",
+     "answer": "(5d-3m)(5+y)",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "(5d-3m)(5+y)",
+      "form": null,
+      "variables": [
+       "d",
+       "m",
+       "y"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}25d-15m+5yd-3ym&=5(5d-3m)+y(5d-3m)\\\\&=(5d-3m)(5+y)\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(5d −3m)(5 + y)",
+     "epub_final_answer": "$(5d-3m)(5+y)$",
+     "blind_answer": "(5d-3m)(5+y)",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 24,
+     "shortcode": "2DKQ",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-7:12|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-7:12|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-7:12|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-7:13",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-4",
+     "stem": "Factorise the following: $45q-18z+5cq-2cz$",
+     "answer_type": "expression",
+     "answer": "(5q-2z)(9+c)",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "(5q-2z)(9+c)",
+      "form": null,
+      "variables": [
+       "q",
+       "z",
+       "c"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}45q-18z+5cq-2cz&=9(5q-2z)+c(5q-2z)\\\\&=(5q-2z)(9+c)\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(5q −2z)(9 + c)",
+     "epub_final_answer": "$(5q-2z)(9+c)$",
+     "blind_answer": "(5q-2z)(9+c)",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 24,
+     "shortcode": "2DKR",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-7:13|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-7:13|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-7:13|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-7:14",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-4",
+     "stem": "Factorise the following: $6j-15v+2yj-5yv$",
+     "answer_type": "expression",
+     "answer": "(2j-5v)(3+y)",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "(2j-5v)(3+y)",
+      "form": null,
+      "variables": [
+       "j",
+       "v",
+       "y"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}6j-15v+2yj-5yv&=3(2j-5v)+y(2j-5v)\\\\&=(2j-5v)(3+y)\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(2j −5v)(3 + y)",
+     "epub_final_answer": "$(2j-5v)(3+y)$",
+     "blind_answer": "(2j-5v)(3+y)",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 24,
+     "shortcode": "2DKS",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-7:14|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-7:14|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-7:14|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-7:15",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-4",
+     "stem": "Factorise the following: $16a-40k+2za-5zk$",
+     "answer_type": "expression",
+     "answer": "(2a-5k)(8+z)",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "(2a-5k)(8+z)",
+      "form": null,
+      "variables": [
+       "a",
+       "k",
+       "z"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}16a-40k+2za-5zk&=8(2a-5k)+z(2a-5k)\\\\&=(2a-5k)(8+z)\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(2a −5k)(8 + z)",
+     "epub_final_answer": "$(2a-5k)(8+z)$",
+     "blind_answer": "(2a-5k)(8+z)",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 24,
+     "shortcode": "2DKT",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-7:15|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-7:15|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-7:15|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-7:16",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-4",
+     "stem": "Factorise the following: $ax-bx+ay-by+2a-2b$",
+     "answer_type": "expression",
+     "answer": "(a-b)(x+y+2)",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "(a-b)(x+y+2)",
+      "form": null,
+      "variables": [
+       "a",
+       "b",
+       "x",
+       "y"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}ax-bx+ay-by+2a-2b&=x(a-b)+y(a-b)+2(a-b)\\\\&=(a-b)(x+y+2)\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(a −b)(x + y + 2)",
+     "epub_final_answer": "$(a-b)(x+y+2)$",
+     "blind_answer": "(a-b)(x+y+2)",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 24,
+     "shortcode": "2DKV",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-7:16|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-7:16|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-7:16|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-7:17",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-4",
+     "stem": "Factorise the following: $3ax+bx-3ay-by-9a-3b$",
+     "answer_type": "expression",
+     "answer": "(3a+b)(x-y-3)",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "(3a+b)(x-y-3)",
+      "form": null,
+      "variables": [
+       "a",
+       "b",
+       "x",
+       "y"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}3ax+bx-3ay-by-9a-3b&=x(3a+b)-y(3a+b)-3(3a+b)\\\\&=(3a+b)(x-y-3)\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(3a + b)(x −y −3)",
+     "epub_final_answer": "$(3a+b)(x-y-3)$",
+     "blind_answer": "(3a+b)(x-y-3)",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 24,
+     "shortcode": "2DKW",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-7:17|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-7:17|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-7:17|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:27a",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-3",
+     "stem": "Solve by factorising: $17^2-15^2$",
+     "answer_type": "numeric",
+     "answer": "64",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "$\\begin{align*}17^2-15^2&=(17-15)(17+15)\\\\&=2(32)\\\\&=64\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "64",
+     "epub_final_answer": "64",
+     "blind_answer": "64",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 39,
+     "shortcode": "2DVZ",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:27a|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:27a|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:27a|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:27b",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-3",
+     "stem": "Solve by factorising: $13^2-12^2$",
+     "answer_type": "numeric",
+     "answer": "25",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "$\\begin{align*}13^2-12^2&=(13-12)(13+12)\\\\&=25\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "25",
+     "epub_final_answer": "25",
+     "blind_answer": "25",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 39,
+     "shortcode": "2DW2",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:27b|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:27b|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:27b|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:27c",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-3",
+     "stem": "Solve by factorising: $120045^2-120035^2$",
+     "answer_type": "numeric",
+     "answer": "2400800",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "$\\begin{align*}120045^2-120035^2&=(120045-120035)(120045+120035)\\\\&=10(240080)\\\\&=2400800\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "2400800",
+     "epub_final_answer": "2400800",
+     "blind_answer": "2400800",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 39,
+     "shortcode": "2DW3",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:27c|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:27c|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:27c|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:27d",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-3",
+     "stem": "Solve by factorising: $26^2-24^2$",
+     "answer_type": "numeric",
+     "answer": "100",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "$\\begin{align*}26^2-24^2&=(26-24)(26+24)\\\\&=2(50)\\\\&=100\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "100",
+     "epub_final_answer": "100",
+     "blind_answer": "100",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 39,
+     "shortcode": "2DW4",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:27d|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:27d|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:27d|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:28a",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-3",
+     "stem": "Represent the following as a product of its prime factors: $143$",
+     "answer_type": "expression",
+     "answer": "11 \\times 13",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "11 \\times 13",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}143&=144-1\\\\&=(12-1)(12+1)\\\\&=11\\times13\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "11 × 13",
+     "epub_final_answer": "$11\\times13$",
+     "blind_answer": "11\\times 13",
+     "verification": "disputed",
+     "tier": "standard",
+     "printed_page": 39,
+     "shortcode": "2DW5",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:28a|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:28a|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:28a|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [
+      "form \"prime_factors\" is not one the app's marker knows"
+     ],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": "prime_factors",
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": "prime_factors",
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:28b",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-3",
+     "stem": "Represent the following as a product of its prime factors: $168$",
+     "answer_type": "expression",
+     "answer": "$2^3\\times3\\times7$",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "$2^3\\times3\\times7$",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}168&=169-1\\\\&=(13-1)(13+1)\\\\&=12(14)\\\\&=3\\times2^2\\times2\\times7\\\\&=2^3\\times3\\times7\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "23 × 3 × 7",
+     "epub_final_answer": "$2^3\\times3\\times7$",
+     "blind_answer": "2^3\\times 3\\times 7",
+     "verification": "disputed",
+     "tier": "standard",
+     "printed_page": 39,
+     "shortcode": "2DW6",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:28b|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:28b|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:28b|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [
+      "form \"prime_factors\" is not one the app's marker knows"
+     ],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": "prime_factors",
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": "prime_factors",
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:28c",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-3",
+     "stem": "Represent the following as a product of its prime factors: $899$",
+     "answer_type": "expression",
+     "answer": "$29\\times31$",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "$29\\times31$",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}899&=900-1\\\\&=(30-1)(30+1)\\\\&=29\\times31\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "29 × 31",
+     "epub_final_answer": "$29\\times31$",
+     "blind_answer": "29\\times 31",
+     "verification": "disputed",
+     "tier": "standard",
+     "printed_page": 39,
+     "shortcode": "2DW7",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:28c|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:28c|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:28c|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [
+      "form \"prime_factors\" is not one the app's marker knows"
+     ],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": "prime_factors",
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": "prime_factors",
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:28d",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-3",
+     "stem": "Represent the following as a product of its prime factors: $99$",
+     "answer_type": "expression",
+     "answer": "$3^2\\times11$",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "$3^2\\times11$",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}99&=100-1\\\\&=(10-1)(10+1)\\\\&=3^2\\times11\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "32 × 11",
+     "epub_final_answer": "$3^2\\times11$",
+     "blind_answer": "3^2\\times 11",
+     "verification": "disputed",
+     "tier": "standard",
+     "printed_page": 39,
+     "shortcode": "2DW8",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:28d|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:28d|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:28d|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [
+      "form \"prime_factors\" is not one the app's marker knows"
+     ],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": "prime_factors",
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": "prime_factors",
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:28e",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-3",
+     "stem": "Represent the following as a product of its prime factors: $1599$",
+     "answer_type": "expression",
+     "answer": "$3\\times13\\times41$",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "$3\\times13\\times41$",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}1599&=1600-1\\\\&=(40-1)(40+1)\\\\&=39(41)\\\\&=3\\times13\\times41\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "3 × 13 × 41",
+     "epub_final_answer": "$3\\times13\\times41$",
+     "blind_answer": "3\\times 13\\times 41",
+     "verification": "disputed",
+     "tier": "standard",
+     "printed_page": 39,
+     "shortcode": "2DW9",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:28e|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:28e|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:28e|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [
+      "form \"prime_factors\" is not one the app's marker knows"
+     ],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": "prime_factors",
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": "prime_factors",
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:29a",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-3",
+     "stem": "Factorise: $a^{2}-9$",
+     "answer_type": "expression",
+     "answer": "$(a-3)(a+3)$",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "$(a-3)(a+3)$",
+      "form": "factorised",
+      "variables": [
+       "a"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "${a}^{2}-9=(a-3)(a+3)$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(a −3)(a + 3)",
+     "epub_final_answer": "$(a-3)(a+3)$",
+     "blind_answer": "(a-3)(a+3)",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 39,
+     "shortcode": "2DWB",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:29a|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:29a|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:29a|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:29b",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-3",
+     "stem": "Factorise: $9b^{2}-81$",
+     "answer_type": "expression",
+     "answer": "$9(b-3)(b+3)$",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "$9(b-3)(b+3)$",
+      "form": "factorised",
+      "variables": [
+       "b"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}9b^{2}-81&=9(b^{2}-9)\\\\&=9(b-3)(b+3)\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "9(b −3)(b + 3)",
+     "epub_final_answer": "$9(b-3)(b+3)$",
+     "blind_answer": "9(b-3)(b+3)",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 39,
+     "shortcode": "2DWC",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:29b|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:29b|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:29b|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:29c",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-3",
+     "stem": "Factorise: $m^{2}-\\frac{1}{9}$",
+     "answer_type": "expression",
+     "answer": "$\\left(m-\\frac{1}{3}\\right)\\left(m+\\frac{1}{3}\\right)$",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "$\\left(m-\\frac{1}{3}\\right)\\left(m+\\frac{1}{3}\\right)$",
+      "form": "factorised",
+      "variables": [
+       "m"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$m^{2}-\\frac{1}{9}=\\left(m-\\frac{1}{3}\\right)\\left(m+\\frac{1}{3}\\right)$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "( m −1 3 ) ( m + 1 3 )",
+     "epub_final_answer": "$\\left(m-\\frac{1}{3}\\right)\\left(m+\\frac{1}{3}\\right)$",
+     "blind_answer": "\\left(m-\\frac{1}{3}\\right)\\left(m+\\frac{1}{3}\\right)",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 39,
+     "shortcode": "2DWD",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:29c|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:29c|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:29c|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:29d",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-3",
+     "stem": "Factorise: $5-5a^{2}b^{6}$",
+     "answer_type": "expression",
+     "answer": "$5(1-ab^{3})(1+ab^{3})$",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "$5(1-ab^{3})(1+ab^{3})$",
+      "form": "factorised",
+      "variables": [
+       "a",
+       "b"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}5-5a^{2}b^{6}&=5(1-a^{2}b^{6})\\\\&=5(1-ab^{3})(1+ab^{3})\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "5(1 −ab3)(1 + ab3)",
+     "epub_final_answer": "$5(1-ab^{3})(1+ab^{3})$",
+     "blind_answer": "5(1-ab^{3})(1+ab^{3})",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 39,
+     "shortcode": "2DWF",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:29d|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:29d|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:29d|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:29e",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-3",
+     "stem": "Factorise: $16ba^{4}-81b$",
+     "answer_type": "expression",
+     "answer": "$b(2a-3)(2a+3)(4a^{2}+9)$",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "$b(2a-3)(2a+3)(4a^{2}+9)$",
+      "form": "factorised",
+      "variables": [
+       "a",
+       "b"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}16ba^{4}-81b&=b(16a^{4}-81)\\\\&=b(4a^{2}-9)(4a^{2}+9)\\\\&=b(2a-3)(2a+3)(4a^{2}+9)\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "b(2a −3)(2a + 3)(4a2 + 9)",
+     "epub_final_answer": "$b(2a-3)(2a+3)(4a^{2}+9)$",
+     "blind_answer": "b(2a-3)(2a+3)(4a^{2}+9)",
+     "verification": "agreed",
+     "tier": "advanced",
+     "printed_page": 39,
+     "shortcode": "2DWG",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:29e|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:29e|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:29e|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:29i",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-3",
+     "stem": "Factorise: $16-x^{4}$",
+     "answer_type": "expression",
+     "answer": "$(4+x^{2})(2+x)(2-x)$",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "$(4+x^{2})(2+x)(2-x)$",
+      "form": "factorised",
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}16-x^{4}&=(4-x^{2})(4+x^{2})\\\\&=(4+x^{2})(2+x)(2-x)\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(4 + x2)(2 + x)(2 −x)",
+     "epub_final_answer": "$(4+x^{2})(2+x)(2-x)$",
+     "blind_answer": "(2-x)(2+x)(4+x^{2})",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 39,
+     "shortcode": "2DWM",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:29i|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same three factors reordered; 'x2' is x^2."
+       },
+       {
+        "pair_id": "Ex1-11:29i|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same three factors reordered."
+       },
+       {
+        "pair_id": "Ex1-11:29i|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:29j",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-4",
+     "stem": "Factorise: $7x^{2}-14x+7xy-14y$",
+     "answer_type": "expression",
+     "answer": "$7(x-2)(x+y)$",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "$7(x-2)(x+y)$",
+      "form": "factorised",
+      "variables": [
+       "x",
+       "y"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}7x^{2}-14x+7xy-14y&=7(x^{2}-2x+xy-2y)\\\\&=7(x(x-2)+y(x-2))\\\\&=7(x-2)(x+y)\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "7(x −2)(x + y)",
+     "epub_final_answer": "$7(x-2)(x+y)$",
+     "blind_answer": "7(x-2)(x+y)",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 39,
+     "shortcode": "2DWN",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:29j|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:29j|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:29j|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:29l",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-4",
+     "stem": "Factorise: $1-x-x^{2}+x^{3}$",
+     "answer_type": "expression",
+     "answer": "$(1-x)^{2}(1+x)$",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "$(1-x)^{2}(1+x)$",
+      "form": "factorised",
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}1-x-x^{2}+x^{3}&=(1-x)-x^{2}(1-x)\\\\&=(1-x)(1-x^{2})\\\\&=(1-x)(1-x)(1+x)\\\\&=(1-x)^{2}(1+x)\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(1 −x)2(1 + x)",
+     "epub_final_answer": "$(1-x)^{2}(1+x)$",
+     "blind_answer": "(1-x)^{2}(1+x)",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 39,
+     "shortcode": "2DWQ",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:29l|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:29l|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:29l|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:29m",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-2",
+     "stem": "Factorise: $-3(1-p^{2})+p+1$",
+     "answer_type": "expression",
+     "answer": "$(1+p)(-2+3p)$",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "$(1+p)(-2+3p)$",
+      "form": "factorised",
+      "variables": [
+       "p"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}-3(1-p^{2})+p+1&=-3(1-p)(1+p)+(1+p)\\\\&=(1+p)[-3(1-p)+1]\\\\&=(1+p)(-2+3p)\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(1 + p)(−2 + 3p)",
+     "epub_final_answer": "$(1+p)(-2+3p)$",
+     "blind_answer": "(p+1)(3p-2)",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 39,
+     "shortcode": "2DWR",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:29m|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "(1+p)(-2+3p) equals (p+1)(3p-2)."
+       },
+       {
+        "pair_id": "Ex1-11:29m|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "(1+p)(-2+3p) equals (p+1)(3p-2)."
+       },
+       {
+        "pair_id": "Ex1-11:29m|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:29n",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-3",
+     "stem": "Factorise: $x^{2}-2x+1-y^{4}$",
+     "answer_type": "expression",
+     "answer": "$x(x-2)+(1+y)(1-y)(1+y^{2})$",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "$x(x-2)+(1+y)(1-y)(1+y^{2})$",
+      "form": "factorised",
+      "variables": [
+       "x",
+       "y"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}x^{2}-2x+1-y^{4}&=x(x-2)+(1-y^{2})(1+y^{2})\\\\&=x(x-2)+(1+y)(1-y)(1+y^{2})\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "x(x−2)+(1+y)(1−y)(1+y2)",
+     "epub_final_answer": "$x(x-2)+(1+y)(1-y)(1+y^{2})$",
+     "blind_answer": "(x-1-y^{2})(x-1+y^{2})",
+     "verification": "disputed",
+     "tier": "advanced",
+     "printed_page": 39,
+     "shortcode": "2DWS",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:29n|blind~printed",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "Answer 2 is a sum, x(x-2)+(1+y)(1-y)(1+y^2). It expands to the same polynomial but is not a factorised form, which the problem asks for. Answer 1 is fully factorised."
+       },
+       {
+        "pair_id": "Ex1-11:29n|blind~book",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "Answer 2 is a sum, not a product, so it is not factorised as the problem requires. Answer 1 is."
+       },
+       {
+        "pair_id": "Ex1-11:29n|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": "factorised",
+     "printed_form_defect": {
+      "asked_form": "factorised",
+      "printed": "x(x−2)+(1+y)(1−y)(1+y2)",
+      "note": "'Factorise', but the printed answer is a sum of two products"
+     },
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:29p",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-2",
+     "stem": "Factorise: $3m(v-7)+19(-7+v)$",
+     "answer_type": "expression",
+     "answer": "$(v-7)(3m+19)$",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "$(v-7)(3m+19)$",
+      "form": "factorised",
+      "variables": [
+       "m",
+       "v"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}3m(v-7)+19(-7+v)&=3m(v-7)+19(v-7)\\\\&=(v-7)(3m+19)\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(v −7)(3m + 19)",
+     "epub_final_answer": "$(v-7)(3m+19)$",
+     "blind_answer": "(v-7)(3m+19)",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 39,
+     "shortcode": "2DWV",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:29p|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:29p|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:29p|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:29q",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-2",
+     "stem": "Factorise: $3f(z+3)+19(3+z)$",
+     "answer_type": "expression",
+     "answer": "$(3f+19)(z+3)$",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "$(3f+19)(z+3)$",
+      "form": "factorised",
+      "variables": [
+       "f",
+       "z"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}3f(z+3)+19(3+z)&=3f(z+3)+19(z+3)\\\\&=(3f+19)(z+3)\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(3f + 19)(z + 3)",
+     "epub_final_answer": "$(3f+19)(z+3)$",
+     "blind_answer": "(z+3)(3f+19)",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 39,
+     "shortcode": "2DWW",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:29q|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same two factors in a different order."
+       },
+       {
+        "pair_id": "Ex1-11:29q|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same two factors in a different order."
+       },
+       {
+        "pair_id": "Ex1-11:29q|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:29u",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-4",
+     "stem": "Factorise: $\\dfrac{1}{3}a^3-a^2b+2a^2b-6ab^2+3ab^2-9b^3$",
+     "answer_type": "expression",
+     "answer": "$\\frac{(a+3b)^{2}(a-3b)}{3}$",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "$\\frac{(a+3b)^{2}(a-3b)}{3}$",
+      "form": "factorised",
+      "variables": [
+       "a",
+       "b"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}\\frac{1}{3}a^3-a^2b+2a^2b-6ab^2+3ab^2-9b^3&=\\frac{1}{3}a^2(a-3b)+2ab(a-3b)+3b^2(a-3b)\\\\&=(\\frac{1}{3}a^2+2ab+3b^2)(a-3b)\\\\&=\\frac{(a^2+6ab+9b^2)(a-3b)}{3}\\\\&=\\frac{(a+3b)^2(a-3b)}{3}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(a+3b)2(a−3b) 3",
+     "epub_final_answer": "$\\frac{(a+3b)^{2}(a-3b)}{3}$",
+     "blind_answer": "\\frac{1}{3}(a+3b)^{2}(a-3b)",
+     "verification": "agreed",
+     "tier": "advanced",
+     "printed_page": 39,
+     "shortcode": "2DX2",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:29u|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "The flattened form reads (a+3b)^2(a-3b) over 3, the same as 1/3 (a+3b)^2(a-3b)."
+       },
+       {
+        "pair_id": "Ex1-11:29u|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "(a+3b)^2(a-3b)/3 is the same as 1/3 (a+3b)^2(a-3b)."
+       },
+       {
+        "pair_id": "Ex1-11:29u|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:29x",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-4",
+     "stem": "Factorise: $16v+24h+2j^{5}v+3j^{5}h$",
+     "answer_type": "expression",
+     "answer": "$(2v+3h)(8+j^{5})$",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "$(2v+3h)(8+j^{5})$",
+      "form": "factorised",
+      "variables": [
+       "h",
+       "j",
+       "v"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}16v+24h+2j^{5}v+3j^{5}h&=8(2v+3h)+j^{5}(2v+3h)\\\\&=(2v+3h)(8+j^{5})\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(2v + 3h)(8 + j5)",
+     "epub_final_answer": "$(2v+3h)(8+j^{5})$",
+     "blind_answer": "(2v+3h)(8+j^{5})",
+     "verification": "agreed",
+     "tier": "advanced",
+     "printed_page": 39,
+     "shortcode": "2DX5",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:29x|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:29x|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:29x|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "tier check",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:29y",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-4",
+     "stem": "Factorise: $18h-45g+2m^{3}h-5m^{3}g$",
+     "answer_type": "expression",
+     "answer": "$(2h-5g)(9+m^{3})$",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "$(2h-5g)(9+m^{3})$",
+      "form": "factorised",
+      "variables": [
+       "g",
+       "h",
+       "m"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}18h-45g+2m^{3}h-5m^{3}g&=9(2h-5g)+m^{3}(2h-5g)\\\\&=(2h-5g)(9+m^{3})\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(2h −5g)(9 + m3)",
+     "epub_final_answer": "$(2h-5g)(9+m^{3})$",
+     "blind_answer": "(2h-5g)(9+m^{3})",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 39,
+     "shortcode": "2DX6",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:29y|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:29y|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:29y|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:29z",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-4",
+     "stem": "Factorise: $63d-18s+7u^{2}d-2u^{2}s$",
+     "answer_type": "expression",
+     "answer": "$(7d-2s)(9+u^{2})$",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "$(7d-2s)(9+u^{2})$",
+      "form": "factorised",
+      "variables": [
+       "d",
+       "s",
+       "u"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}63d-18s+7u^{2}d-2u^{2}s&=9(7d-2s)+u^{2}(7d-2s)\\\\&=(7d-2s)(9+u^{2})\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(7d −2s)(9 + u2)",
+     "epub_final_answer": "$(7d-2s)(9+u^{2})$",
+     "blind_answer": "(7d-2s)(9+u^{2})",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 39,
+     "shortcode": "2DX7",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:29z|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:29z|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:29z|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:30e",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-4",
+     "stem": "Factorise the following: $14m-4n+7jm-2jn$",
+     "answer_type": "expression",
+     "answer": "$(7m-2n)(2+j)$",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "$(7m-2n)(2+j)$",
+      "form": "factorised",
+      "variables": [
+       "j",
+       "m",
+       "n"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}14m-4n+7jm-2jn&=2(7m-2n)+j(7m-2n)\\\\&=(7m-2n)(2+j)\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(7m −2n)(2 + j)",
+     "epub_final_answer": "$(7m-2n)(2+j)$",
+     "blind_answer": "$(7m-2n)(2+j)$",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 39,
+     "shortcode": "2DXD",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:30e|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:30e|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:30e|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:30f",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-4",
+     "stem": "Factorise the following: $25d-15m+5yd-3ym$",
+     "answer_type": "expression",
+     "answer": "$(5d-3m)(5+y)$",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "$(5d-3m)(5+y)$",
+      "form": "factorised",
+      "variables": [
+       "d",
+       "m",
+       "y"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}25d-15m+5yd-3ym&=5(5d-3m)+y(5d-3m)\\\\&=(5d-3m)(5+y)\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(5d −3m)(5 + y)",
+     "epub_final_answer": "$(5d-3m)(5+y)$",
+     "blind_answer": "$(5d-3m)(5+y)$",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 39,
+     "shortcode": "2DXF",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:30f|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:30f|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:30f|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:30i",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-3",
+     "stem": "Factorise the following: $b^2-(3a-2b)^2$",
+     "answer_type": "expression",
+     "answer": "$3(b-a)(3a-b)$",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "$3(b-a)(3a-b)$",
+      "form": "factorised",
+      "variables": [
+       "a",
+       "b"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}b^2-(3a-2b)^2&=(b-(3a-2b))(b+3a-2b)\\\\&=(3b-3a)(3a-b)\\\\&=3(b-a)(3a-b)\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "3(b −a)(3a −b)",
+     "epub_final_answer": "$3(b-a)(3a-b)$",
+     "blind_answer": "$3(b-a)(3a-b)$",
+     "verification": "agreed",
+     "tier": "advanced",
+     "printed_page": 39,
+     "shortcode": "2DXJ",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:30i|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:30i|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:30i|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:30j",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-3",
+     "stem": "Factorise the following: $9y^2-(4x+2y)^2$",
+     "answer_type": "expression",
+     "answer": "$(4x+5y)(y-4x)$",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "$(4x+5y)(y-4x)$",
+      "form": "factorised",
+      "variables": [
+       "x",
+       "y"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}9y^2-(4x+2y)^2&=(3y+4x+2y)(3y-(4x+2y))\\\\&=(4x+5y)(y-4x)\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(4x + 5y)(y −4x)",
+     "epub_final_answer": "$(4x+5y)(y-4x)$",
+     "blind_answer": "$(y-4x)(5y+4x)$",
+     "verification": "agreed",
+     "tier": "advanced",
+     "printed_page": 39,
+     "shortcode": "2DXK",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:30j|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "(4x+5y) is the same as (5y+4x); the other factor is unchanged."
+       },
+       {
+        "pair_id": "Ex1-11:30j|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "(4x+5y) is the same as (5y+4x); the other factor is unchanged."
+       },
+       {
+        "pair_id": "Ex1-11:30j|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:30k",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-3",
+     "stem": "Factorise the following: $16x^6-3y^8$",
+     "answer_type": "expression",
+     "answer": "$4(4x^{3}-3y^{4})(4x^{3}+3y^{4})$",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "$4(4x^{3}-3y^{4})(4x^{3}+3y^{4})$",
+      "form": "factorised",
+      "variables": [
+       "x",
+       "y"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}16x^6-3y^8&=4(4x^6-9y^8)\\\\&=4(4x^6-9y^8)\\\\&=4(4x^3-3y^4)(4x^3+3y^4)\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "4(4x3 −3y4)(4x3 + 3y4)",
+     "epub_final_answer": "$4(4x^{3}-3y^{4})(4x^{3}+3y^{4})$",
+     "blind_answer": "$(4x^3-\\sqrt{3}\\,y^4)(4x^3+\\sqrt{3}\\,y^4)$",
+     "verification": "disputed",
+     "tier": "standard",
+     "printed_page": 39,
+     "shortcode": "2DXM",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:30k|blind~printed",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "Answer 2 expands to 4(16x^6-9y^8)=64x^6-36y^8, which is not 16x^6-3y^8. Answer 1 expands to 16x^6-3y^8 and uses sqrt(3). They are different expressions."
+       },
+       {
+        "pair_id": "Ex1-11:30k|blind~book",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "4(4x^3-3y^4)(4x^3+3y^4)=64x^6-36y^8, which is not 16x^6-3y^8. Answer 1 is the correct difference of squares with sqrt(3)."
+       },
+       {
+        "pair_id": "Ex1-11:30k|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:30l",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-3",
+     "stem": "Factorise the following: $\\frac{1}{6}a^{2}-24b^{4}$",
+     "answer_type": "expression",
+     "answer": "$\\frac{1}{6}\\left(a-12b^{2}\\right)\\left(a+12b^{2}\\right)$",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "$\\frac{1}{6}\\left(a-12b^{2}\\right)\\left(a+12b^{2}\\right)$",
+      "form": "factorised",
+      "variables": [
+       "a",
+       "b"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}\\frac{1}{6}a^2-24b^4&=\\frac{1}{6}\\left(a^2-144b^4\\right)\\\\&=\\frac{1}{6}\\left(a-12b^2\\right)\\left(a+12b^2\\right)\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "1 6 ( a −12b2) ( a + 12b2)",
+     "epub_final_answer": "$\\frac{1}{6}\\left(a-12b^{2}\\right)\\left(a+12b^{2}\\right)$",
+     "blind_answer": "$\\frac{1}{6}\\left(a-12b^{2}\\right)\\left(a+12b^{2}\\right)$",
+     "verification": "agreed",
+     "tier": "advanced",
+     "printed_page": 39,
+     "shortcode": "2DXN",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:30l|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:30l|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:30l|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "tier check",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:30m",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-2",
+     "stem": "Factorise the following: $4(a-3)-81x^2(a-3)$",
+     "answer_type": "expression",
+     "answer": "$(a-3)(2-9x)(2+9x)$",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "$(a-3)(2-9x)(2+9x)$",
+      "form": "factorised",
+      "variables": [
+       "a",
+       "x"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}4(a-3)-81x^2(a-3)&=(a-3)(4-81x^2)\\\\&=(a-3)(2-9x)(2+9x)\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(a −3)(2 −9x)(2 + 9x)",
+     "epub_final_answer": "$(a-3)(2-9x)(2+9x)$",
+     "blind_answer": "$(a-3)(2-9x)(2+9x)$",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 39,
+     "shortcode": "2DXP",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:30m|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:30m|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:30m|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:30s",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-4",
+     "stem": "Factorise the following: $9a^{2}x+9a^{2}y+27a^{2}-b^{2}x-b^{2}y-3b^{2}$",
+     "answer_type": "expression",
+     "answer": "$(3a+b)(3a-b)(x+y+3)$",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "$(3a+b)(3a-b)(x+y+3)$",
+      "form": "factorised",
+      "variables": [
+       "a",
+       "b",
+       "x",
+       "y"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}9a^2x+9a^{2}y+27a^2-b^2x-b^2y-3b^2&=(9a^2-b^2)(x+y+3)\\\\&=(3a+b)(3a-b)(x+y+3)\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(3a + b)(3a −b)(x + y + 3)",
+     "epub_final_answer": "$(3a+b)(3a-b)(x+y+3)$",
+     "blind_answer": "$(x+y+3)(3a-b)(3a+b)$",
+     "verification": "agreed",
+     "tier": "advanced",
+     "printed_page": 39,
+     "shortcode": "2DXW",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:30s|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same three factors reordered."
+       },
+       {
+        "pair_id": "Ex1-11:30s|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same three factors reordered."
+       },
+       {
+        "pair_id": "Ex1-11:30s|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:30u",
+     "kind": "exercise",
+     "lo": "lo:g10m1s7-1-4",
+     "stem": "Factorise the following: $\\dfrac{1}{2}x^3-\\frac{9}{2}x-2x^2+18$",
+     "answer_type": "expression",
+     "answer": "$\\frac{(x-4)(x-3)(x+3)}{2}$",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "$\\frac{(x-4)(x-3)(x+3)}{2}$",
+      "form": "factorised",
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}\\frac{1}{2}x^3-\\frac{9}{2}x-2x^2+18&=\\frac{x^3-9x-4x^2+36}{2}\\\\&=\\frac{x^2(x-4)-9(x-4)}{2}\\\\&=\\frac{(x-4)(x^2-9)}{2}\\\\&=\\frac{(x-4)(x-3)(x+3)}{2}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(x−4)(x−3)(x+3) 2",
+     "epub_final_answer": "$\\frac{(x-4)(x-3)(x+3)}{2}$",
+     "blind_answer": "$\\frac{1}{2}(x-4)(x-3)(x+3)$",
+     "verification": "agreed",
+     "tier": "advanced",
+     "printed_page": 39,
+     "shortcode": "2DXY",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:30u|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "The flattened form reads (x-4)(x-3)(x+3) over 2, the same as 1/2 (x-4)(x-3)(x+3)."
+       },
+       {
+        "pair_id": "Ex1-11:30u|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "(x-4)(x-3)(x+3)/2 is the same as 1/2 (x-4)(x-3)(x+3)."
+       },
+       {
+        "pair_id": "Ex1-11:30u|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    }
+   ],
+   "visuals": [],
+   "viz_gaps": [
+    {
+     "figure_id": "b00289:1",
+     "src": "tikzpicture/b935960683844b0533481f6e2478ab55.png",
+     "ref": null,
+     "printed_page": 20,
+     "reason": "The figure is a two-node cycle diagram. The expression 2(x+1) on the left and 2x+2 on the right are joined by a curved arrow labelled \"factorising\" (from 2x+2 to 2(x+1)) and a curved arrow labelled \"expanding\" (from 2(x+1) to 2x+2). None of the eight kinds can draw it. arrow_map draws one-way arrows between elements of two set columns and has no arrow labels, so it would show a relation or function, which this is not. The other kinds draw points, curves, bars, triangles or circles, not algebraic expressions linked by labelled arrows. Any spec would drop the labels or the two-way direction, or would teach the wrong idea.",
+     "needed_kind": "labelled_cycle_diagram: two or more text/expression nodes connected by curved directional arrows, each arrow carrying a text label (here 2(x+1) <-> 2x+2 with the arrows labelled \"expanding\" and \"factorising\")"
+    }
+   ],
+   "teacher_only": {
+    "seen": 0,
+    "dropped": 0,
+    "reached_claim": 0,
+    "caught_in_claims": 0
+   },
+   "verify": {
+    "disagreements": [
+     {
+      "ref": "Ex1-5:15",
+      "printed": "7a + 4",
+      "book": "$7a+4$",
+      "blind": "$7a+4$ (cannot be factorised; already in simplest form)",
+      "pairs": [
+       {
+        "pair_id": "Ex1-5:15|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-5:15|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-5:15|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ],
+      "typing_problems": []
+     },
+     {
+      "ref": "Ex1-6:13",
+      "printed": "(29 −26a)(30a −41)",
+      "book": "$(29-26a)(30a-41)$",
+      "blind": "$4a^{2}-220a+281$, which does not factorise over the integers (over the reals: $(2a-55-14\\sqrt{14})(2a-55+14\\sqrt{14})$)",
+      "pairs": [
+       {
+        "pair_id": "Ex1-6:13|blind~printed",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "The problem expands to 4a^2-220a+281 (discriminant 43904, not a perfect square), whereas (29-26a)(30a-41) expands to -780a^2+1936a-1189; different polynomials."
+       },
+       {
+        "pair_id": "Ex1-6:13|blind~book",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "Same as above: (29-26a)(30a-41) is not equal to 4a^2-220a+281, so the two answers are different."
+       },
+       {
+        "pair_id": "Ex1-6:13|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ],
+      "typing_problems": []
+     },
+     {
+      "ref": "Ex1-6:14",
+      "printed": "(4k −2)(4k + 2)",
+      "book": "$(4k-2)(4k+2)$",
+      "blind": "$4(2k-1)(2k+1)$",
+      "pairs": [
+       {
+        "pair_id": "Ex1-6:14|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both are factorised forms of 16k^2-4 and are equal as expressions, since (4k-2)(4k+2) = 4(2k-1)(2k+1). The second is not fully factorised, but the problem only says factorise."
+       },
+       {
+        "pair_id": "Ex1-6:14|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same expression; (4k-2)(4k+2) = 4(2k-1)(2k+1), a factor 2 pulled out of each bracket."
+       },
+       {
+        "pair_id": "Ex1-6:14|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ],
+      "typing_problems": []
+     },
+     {
+      "ref": "Ex1-11:28a",
+      "printed": "11 × 13",
+      "book": "$11\\times13$",
+      "blind": "11\\times 13",
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:28a|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:28a|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:28a|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ],
+      "typing_problems": [
+       "form \"prime_factors\" is not one the app's marker knows"
+      ]
+     },
+     {
+      "ref": "Ex1-11:28b",
+      "printed": "23 × 3 × 7",
+      "book": "$2^3\\times3\\times7$",
+      "blind": "2^3\\times 3\\times 7",
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:28b|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:28b|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:28b|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ],
+      "typing_problems": [
+       "form \"prime_factors\" is not one the app's marker knows"
+      ]
+     },
+     {
+      "ref": "Ex1-11:28c",
+      "printed": "29 × 31",
+      "book": "$29\\times31$",
+      "blind": "29\\times 31",
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:28c|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:28c|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:28c|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ],
+      "typing_problems": [
+       "form \"prime_factors\" is not one the app's marker knows"
+      ]
+     },
+     {
+      "ref": "Ex1-11:28d",
+      "printed": "32 × 11",
+      "book": "$3^2\\times11$",
+      "blind": "3^2\\times 11",
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:28d|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:28d|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:28d|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ],
+      "typing_problems": [
+       "form \"prime_factors\" is not one the app's marker knows"
+      ]
+     },
+     {
+      "ref": "Ex1-11:28e",
+      "printed": "3 × 13 × 41",
+      "book": "$3\\times13\\times41$",
+      "blind": "3\\times 13\\times 41",
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:28e|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:28e|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:28e|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ],
+      "typing_problems": [
+       "form \"prime_factors\" is not one the app's marker knows"
+      ]
+     },
+     {
+      "ref": "Ex1-11:29n",
+      "printed": "x(x−2)+(1+y)(1−y)(1+y2)",
+      "book": "$x(x-2)+(1+y)(1-y)(1+y^{2})$",
+      "blind": "(x-1-y^{2})(x-1+y^{2})",
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:29n|blind~printed",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "Answer 2 is a sum, x(x-2)+(1+y)(1-y)(1+y^2). It expands to the same polynomial but is not a factorised form, which the problem asks for. Answer 1 is fully factorised."
+       },
+       {
+        "pair_id": "Ex1-11:29n|blind~book",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "Answer 2 is a sum, not a product, so it is not factorised as the problem requires. Answer 1 is."
+       },
+       {
+        "pair_id": "Ex1-11:29n|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ],
+      "typing_problems": []
+     },
+     {
+      "ref": "Ex1-11:30k",
+      "printed": "4(4x3 −3y4)(4x3 + 3y4)",
+      "book": "$4(4x^{3}-3y^{4})(4x^{3}+3y^{4})$",
+      "blind": "$(4x^3-\\sqrt{3}\\,y^4)(4x^3+\\sqrt{3}\\,y^4)$",
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:30k|blind~printed",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "Answer 2 expands to 4(16x^6-9y^8)=64x^6-36y^8, which is not 16x^6-3y^8. Answer 1 expands to 16x^6-3y^8 and uses sqrt(3). They are different expressions."
+       },
+       {
+        "pair_id": "Ex1-11:30k|blind~book",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "4(4x^3-3y^4)(4x^3+3y^4)=64x^6-36y^8, which is not 16x^6-3y^8. Answer 1 is the correct difference of squares with sqrt(3)."
+       },
+       {
+        "pair_id": "Ex1-11:30k|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ],
+      "typing_problems": []
+     }
+    ],
+    "unchecked": [],
+    "off_task": [],
+    "no_printed_answer": [],
+    "typing_problems": [
+     {
+      "ref": "WE12",
+      "problems": [
+       "the key \"(7+b)(x+2y)\" does not read as the book final answer \"The factors of $7x+14y+bx+2by$ are $\\left(7+b\\right)$ and $\\left(x+2y\\right)$ .\""
+      ]
+     },
+     {
+      "ref": "Ex1-11:28a",
+      "problems": [
+       "form \"prime_factors\" is not one the app's marker knows"
+      ]
+     },
+     {
+      "ref": "Ex1-11:28b",
+      "problems": [
+       "form \"prime_factors\" is not one the app's marker knows"
+      ]
+     },
+     {
+      "ref": "Ex1-11:28c",
+      "problems": [
+       "form \"prime_factors\" is not one the app's marker knows"
+      ]
+     },
+     {
+      "ref": "Ex1-11:28d",
+      "problems": [
+       "form \"prime_factors\" is not one the app's marker knows"
+      ]
+     },
+     {
+      "ref": "Ex1-11:28e",
+      "problems": [
+       "form \"prime_factors\" is not one the app's marker knows"
+      ]
+     }
+    ],
+    "printed_not_in_asked_form": [
+     {
+      "ref": "Ex1-5:15",
+      "printed": "7a + 4",
+      "asked_form": "factorised",
+      "note": "'Factorise', but the printed answer is a sum"
+     },
+     {
+      "ref": "Ex1-6:14",
+      "printed": "(4k −2)(4k + 2)",
+      "asked_form": "factorised",
+      "note": "a common factor 2 is left in both brackets: 4(2k − 1)(2k + 1)"
+     },
+     {
+      "ref": "Ex1-11:29n",
+      "printed": "x(x−2)+(1+y)(1−y)(1+y2)",
+      "asked_form": "factorised",
+      "note": "'Factorise', but the printed answer is a sum of two products"
+     }
+    ],
+    "forms_from_book_rules": [
+     {
+      "ref": "Ex1-5:15",
+      "form": "factorised",
+      "overridden": null
+     },
+     {
+      "ref": "Ex1-6:14",
+      "form": "factorised",
+      "overridden": null
+     },
+     {
+      "ref": "Ex1-11:28a",
+      "form": "prime_factors",
+      "overridden": null
+     },
+     {
+      "ref": "Ex1-11:28b",
+      "form": "prime_factors",
+      "overridden": null
+     },
+     {
+      "ref": "Ex1-11:28c",
+      "form": "prime_factors",
+      "overridden": null
+     },
+     {
+      "ref": "Ex1-11:28d",
+      "form": "prime_factors",
+      "overridden": null
+     },
+     {
+      "ref": "Ex1-11:28e",
+      "form": "prime_factors",
+      "overridden": null
+     },
+     {
+      "ref": "Ex1-11:29n",
+      "form": "factorised",
+      "overridden": null
+     }
+    ],
+    "forms_the_marker_cannot_check": [
+     {
+      "ref": "Ex1-11:28a",
+      "form": "prime_factors",
+      "printed": "11 × 13"
+     },
+     {
+      "ref": "Ex1-11:28b",
+      "form": "prime_factors",
+      "printed": "23 × 3 × 7"
+     },
+     {
+      "ref": "Ex1-11:28c",
+      "form": "prime_factors",
+      "printed": "29 × 31"
+     },
+     {
+      "ref": "Ex1-11:28d",
+      "form": "prime_factors",
+      "printed": "32 × 11"
+     },
+     {
+      "ref": "Ex1-11:28e",
+      "form": "prime_factors",
+      "printed": "3 × 13 × 41"
+     }
+    ],
+    "retyped": [],
+    "tier_checks": [
+     {
+      "ref": "Ex1-5:1",
+      "typing": "basic",
+      "check": "basic"
+     },
+     {
+      "ref": "Ex1-5:10",
+      "typing": "standard",
+      "check": "standard"
+     },
+     {
+      "ref": "Ex1-6:6",
+      "typing": "standard",
+      "check": "basic"
+     },
+     {
+      "ref": "Ex1-6:8",
+      "typing": "standard",
+      "check": "basic"
+     },
+     {
+      "ref": "Ex1-6:12",
+      "typing": "standard",
+      "check": "standard"
+     },
+     {
+      "ref": "Ex1-6:19",
+      "typing": "basic",
+      "check": "standard"
+     },
+     {
+      "ref": "Ex1-7:4",
+      "typing": "standard",
+      "check": "standard"
+     },
+     {
+      "ref": "Ex1-7:11",
+      "typing": "standard",
+      "check": "standard"
+     },
+     {
+      "ref": "Ex1-11:27b",
+      "typing": "basic",
+      "check": "basic"
+     },
+     {
+      "ref": "Ex1-11:29c",
+      "typing": "basic",
+      "check": "basic"
+     },
+     {
+      "ref": "Ex1-11:29i",
+      "typing": "standard",
+      "check": "standard"
+     },
+     {
+      "ref": "Ex1-11:29n",
+      "typing": "advanced",
+      "check": "advanced"
+     },
+     {
+      "ref": "Ex1-11:29x",
+      "typing": "standard",
+      "check": "advanced"
+     },
+     {
+      "ref": "Ex1-11:30k",
+      "typing": "standard",
+      "check": "standard"
+     },
+     {
+      "ref": "Ex1-11:30l",
+      "typing": "standard",
+      "check": "advanced"
+     },
+     {
+      "ref": "Ex1-11:30u",
+      "typing": "advanced",
+      "check": "advanced"
+     }
+    ]
+   },
+   "figure_blocked": [],
+   "oracle": {
+    "tally": {
+     "claims": 37,
+     "questions": 89,
+     "worked_examples_kept_as_teaching": 0,
+     "by_objective": [
+      {
+       "lo": "lo:g10m1s7-1-1",
+       "claims": 6,
+       "items": 15
+      },
+      {
+       "lo": "lo:g10m1s7-1-2",
+       "claims": 5,
+       "items": 12
+      },
+      {
+       "lo": "lo:g10m1s7-1-3",
+       "claims": 10,
+       "items": 34
+      },
+      {
+       "lo": "lo:g10m1s7-1-4",
+       "claims": 16,
+       "items": 28
+      }
+     ]
+    },
+    "verdict": "GREEN",
+    "subheadings": [
+     {
+      "anchor": "EMAG",
+      "status": "covered",
+      "missing_items": []
+     },
+     {
+      "anchor": "EMAH",
+      "status": "covered",
+      "missing_items": []
+     },
+     {
+      "anchor": "EMAJ",
+      "status": "covered",
+      "missing_items": []
+     },
+     {
+      "anchor": "EMAK",
+      "status": "covered",
+      "missing_items": []
+     }
+    ]
+   },
+   "counts": {
+    "claims": 37,
+    "claims_dropped": 0,
+    "items": 89,
+    "worked_examples": 3,
+    "exercises": 86,
+    "by_answer_type": {
+     "expression": 85,
+     "numeric": 4
+    },
+    "by_solution_provenance": {
+     "book_worked": 3,
+     "book_worked_epub": 86
+    },
+    "by_verification": {
+     "agreed": 79,
+     "disputed": 10
+    },
+    "visuals": 0,
+    "viz_gaps": 1,
+    "figure_blocked": 0,
+    "unmapped_worked_examples": 0
+   },
+   "failed": {
+    "s2": false,
+    "s3": false
+   }
+  }
+ ],
+ "failed_lessons": [],
+ "calls": {
+  "by_phase": {
+   "S2 Claims": 1,
+   "S3 Typing": 3,
+   "S3 Blind re-solve": 6,
+   "S3 Tier check": 1,
+   "S3 Judge": 2,
+   "S4 Visuals": 1,
+   "S8 Oracle": 1
+  },
+  "per_lesson": {
+   "g10m1s7-1": 15
+  },
+  "total": 15
+ },
+ "meter": {
+  "stage": "S2-S4,S8",
+  "record": "uv run meter_run.py record --book g10-math --stage S2-S4,S8 --run <runId>",
+  "by_stage": "uv run meter_run.py summary --book g10-math --by phase",
+  "by_lesson": "uv run meter_run.py summary --book g10-math --by lesson",
+  "note": "Phase titles start with their stage (S2, S3, S4, S8), so `--by phase` is the per-stage cost; every label carries the lesson slug (S3:blind:<slug>:1), so `--by lesson` is the per-lesson cost."
+ }
+}
