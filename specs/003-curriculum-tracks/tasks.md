@@ -6,13 +6,15 @@ description: "Task list for 003 — Curriculum Tracks and the Grade 10 American 
 
 **Input**: [spec.md](./spec.md) (rev. 4, with its 2026-09-26/27 and 2026-10-01 amendments) · [plan.md](./plan.md) ·
 [data-model.md](./data-model.md) · [contracts/](./contracts/) · [research.md](./research.md) ·
-[privacy-review.md](./privacy-review.md) · [decisions.md](./decisions.md) (decisions 1–58) ·
+[privacy-review.md](./privacy-review.md) · [decisions.md](./decisions.md) (decisions 1–61) ·
 `docs/specs/extraction-pipeline.md` §9 (B1–B21)
 **Status**: 2026-10-01. Rev. 2 (2026-09-25, after Samuel's *"ok for all"*) added the phases up to
 8c; Phase 9b (T427–T433) came with the third round of decisions; Phase 9c (T434) adds answer 36's
 reversal of decision 1 (sign-up always asks), now **built and ticked**; Phase 9d (T435–T443) adds
 answer 35's no-Arabic-anywhere clean-up (T435, **built and ticked**) and answer 37's internal review
-backlog and full fan-out (T436–T443, not yet built). G0 is passed; for the Chapter 8 pilot,
+backlog and full fan-out (T436–T443, **built and ticked 2026-10-01**); Phase 9e (T444–T448) records the
+whole-book outline and the step checker (built, ticked) and a teaching item as a family's parent (T448, **not built**).
+G0 is passed; for the Chapter 8 pilot,
 G1 and G2 are passed (decisions.md, *Gate record*). Code is on the branch, committed only as unreviewed
 WIP snapshots (an auto-snapshot job, `[skip ci]`) — nothing is reviewed or merged. A task is ticked only
 when its evidence exists. Where code exists but nobody has verified it, the task says so and stays
@@ -21,8 +23,8 @@ unticked.
 require byte-identity captures and migration proofs. Every test file declares what it proves with
 `// @covers FR-…` (or `# @covers` in Python), so `scripts/traceability.py` can see it.
 
-**Numbering**: tasks are **T301–T443** (planned as T301–T399; T400–T433 were added with rev. 2's and the
-third round's work; T434 with answer 36 on 2026-10-01; T435–T443 with answers 35 and 37 the same day).
+**Numbering**: tasks are **T301–T448** (planned as T301–T399; T400–T433 were added with rev. 2's and the
+third round's work; T434 with answer 36 on 2026-10-01; T435–T443 with answers 35 and 37 the same day; T444–T448 with answers 38, 30 and 40 on 2026-10-01, later).
 Spec 001 uses T001–T143, and `scripts/traceability.py` reads
 task ids from every spec's `tasks.md` into one set, so 003 starts at T301 to keep each id unique
 across the repository. That matters when an id is cited in an issue or a commit.
@@ -607,35 +609,72 @@ number assigned).
 
 ### Answer 37 — fill the Grade 10 course, and build its internal review gate (decisions 56–58)
 
-New requirements, FR-4501…FR-4509 (`specs/003-curriculum-tracks/spec.md`). None of the tasks below is
-ticked: code is in progress on the branch, not yet read and run for this pass.
+New requirements, FR-4501…FR-4509 (`specs/003-curriculum-tracks/spec.md`). **Ticked 2026-10-01 (tech-writer),
+each against the code read in the worktree** — nothing was run in that pass; the suites last reported green in
+the handoffs in `docs/WIP-g10-pilot/README.md` (pytest 644 passed, app `npm test` 0 failures, DB tests 20/20,
+`tsc` clean). The FR rows stay OPEN until T387; the file:line evidence is on the FR-4501…FR-4509 rows of
+`traceability.md`. The review-gate tests declare `@covers FR-2204`, not the new FRs.
 
-- [ ] T436 [US1] (WP-G, WP-P7) **The backlog itself** (FR-4501, FR-4507, FR-4509): a console view,
+- [x] T436 [US1] (WP-G, WP-P7) **The backlog itself** (FR-4501, FR-4507, FR-4509): a console view,
   `review_backlog` (or similar) holding one row per item without a human stamp, across book questions
   and corrections, orchestrator stem fixes, generated questions, widget questions and mapping claims
   (including AI-refused ones), misconceptions, objectives and prerequisite links, figure stand-ins
   (T442), and the gate decisions G1–G4 now reach on the AI checks' own recommendation during the
   fan-out (T443) — maths courses only (Prep-3 and G10); Social Studies, Arabic and sealed Quran/Hadith
   content never appear in it.
-- [ ] T437 [US1] (WP-G) **Review verdicts** (FR-4502): approve / fix requested / reject, restricted to
+  **Built, read 2026-10-01**: the backlog is **derived, never stored** (`db/migrations/036-review-gate.sql` header, rollback
+  `rollback/036-review-gate.down.sql`): `app/src/lib/review-gate.ts` (`ITEM_KINDS`: book question, generated question,
+  widget question, mapping claim, misconception, worked example, objective, prerequisite link, figure stand-in, gate
+  decision) and `review-gate-queries.ts` (`deriveAll`, `loadBacklog`; maths objectives only); the console page
+  `app/src/app/(console)/review/page.console.tsx` with `components/console/{ReviewDesk,ReviewItemView}.tsx`; `/review` is
+  `content-review` only (`lib/console-routes.ts`). Proof: `review-gate.test.mts`, `review-gate-db.test.mts`. **Not done:** the
+  step checker's flag files (T447) are not yet read into the backlog.
+- [x] T437 [US1] (WP-G) **Review verdicts** (FR-4502): approve / fix requested / reject, restricted to
   `content-review` holders (Samuel, Tamer, Kamil); reject stops a question reaching students without
   deleting it; fix requested changes nothing a student sees and is exportable with the item.
-- [ ] T438 [US1] (WP-G) **Claim lock** (FR-4503): an item claimed by one reviewer is not handed to a
+  **Built, read 2026-10-01**: `review-gate.ts` (`DECISIONS`, `canDecide`, `decisionEffect`, `planClaimApprove`,
+  `planClaimReject`); `review-gate-queries.ts` (`nextFor`, `decide`, `fixList`); `app/src/app/api/console/review/route.console.ts`
+  (`authorize({ role: "content-review" })`) and `review/fix-requests/route.console.ts` (the exportable fix list). Proof:
+  `review-gate-db.test.mts` (approve signs; reject retires; a fix request leaves students unchanged and is exported).
+- [x] T438 [US1] (WP-G) **Claim lock** (FR-4503): an item claimed by one reviewer is not handed to a
   second until released or decided; a stale claim (the reviewer navigates away) eventually releases.
-- [ ] T439 [US1] (WP-B, WP-G) **Append-only audit** (FR-4504): item, operator, when, verdict, note —
+  **Built, read 2026-10-01**: migration 036's `review_claims` (row-level security: an operator writes a claim only in their
+  own name; another's is taken over only once expired) and `review-gate-queries.ts` (`claimItem`, `CLAIM_MINUTES = 10`,
+  `releaseOtherClaims`, `activeClaims`). Proof: `review-gate-db.test.mts` ("two reviewers never get the same item", "racing for
+  one item…").
+- [x] T439 [US1] (WP-B, WP-G) **Append-only audit** (FR-4504): item, operator, when, verdict, note —
   never overwritten; a changed mind is a new row.
-- [ ] T440 [US1] (WP-G) **Backlog counts** (FR-4505): by kind, course, chapter and reviewer, on the
+  **Built, read 2026-10-01**: migration 036's `review_decisions` — the trigger `review_decisions_append_only` refuses UPDATE and
+  DELETE for every role, the INSERT policy admits a row only in the operator's own name, and the migration's verify block
+  asserts both, plus that `ainext_app` holds no privilege on either table. Proof: `review-gate-db.test.mts` ("the record is
+  append-only, written only in the operator's own name, and closed to students").
+- [x] T440 [US1] (WP-G) **Backlog counts** (FR-4505): by kind, course, chapter and reviewer, on the
   console page the backlog lives on.
-- [ ] T441 [US1] (WP-G, WP-P7) **"Reviewed" means a human stamp only** (FR-4506, decision 54, answer
+  **Built, read 2026-10-01**: `review-gate.ts` (`summarize` → `BacklogSummary`: by kind, by course and chapter, open by reason;
+  `doneShare`), `review-gate-queries.ts` (`reviewerStats`, `overview`), shown on the `/review` page. Proof:
+  `review-gate.test.mts`; the page was not browser-walked in this pass.
+- [x] T441 [US1] (WP-G, WP-P7) **"Reviewed" means a human stamp only** (FR-4506, decision 54, answer
   33): an AI-only pass reads "AI-checked, awaiting human" in the console, never "reviewed"; no student
   surface says either word (unchanged from ADR-0019).
-- [ ] T442 [US1] (WP-P4, WP-P7) **Book-image stand-ins** (FR-4508, decision 58d, answer 37d — TEMPORARY
+  **Built, read 2026-10-01**: `db/migrations/035-human-review-stamps.sql` (`ai_checked_by`, `ai_checked_at`, `hold_reason`,
+  `review_note`; CHECK `questions_held_not_live`; rollback round-trips); `services/extraction/review_policy.py` and the loaders
+  that stopped writing AI checks into `reviewed_by`; app `lib/review-gate.ts` (`stampKind`, `isHumanStamp`), `lib/provenance.ts`,
+  `lib/content-admin.ts`, `(console)/content/page.console.tsx`. Applied to the pilot database only. Proof:
+  `tests/test_review_policy.py`, `review-status-scan.test.mts`. Still to do: Prep 3 gets it "with its next release"; two stamp
+  classifications await Samuel (README, students-full handoff).
+- [x] T442 [US1] (WP-P4, WP-P7) **Book-image stand-ins** (FR-4508, decision 58d, answer 37d — TEMPORARY
   reversal of decision 50/answer 29 for students): where no native figure type exists yet (FR-4321),
   load the figure as `visuals.kind: "book_image"`, `stand_in: true`, instead of shipping the lesson
   without it; register each as a backlog item "needs native figure" (T436). Keep FR-4321's existing
   rule — a stand-in that would draw or reveal the question's own unknown or answer is withheld, same as
   today, and the lesson ships without it in that one case.
-- [ ] T443 [US1] (WP-P2, WP-P3, WP-P4, WP-P5) **Gates G1–G5 auto-pass during the fan-out, each decision marked for Samuel in the console** (FR-4509,
+  **Built, read 2026-10-01**: `assemble_lesson_bundle.py` (`book_image` stand-ins, `book_picture_reveals`, hold reason
+  `figure_reveals_answer`, `--no-book-pictures`), `schemas.py`, `coverage_report.py` (`book_pictures`); app
+  `components/viz/{BookImage,Visual,VizCard,kind-meta}`, `render-viz-widget.tsx`, `lib/question-figures.ts` (`bookImageOf`);
+  pictures in `app/public/book-figures/g10-math/`. Chapter 8 pilot database: 30 stand-ins, 9 held. Proof:
+  `test_assemble_lesson_bundle.py`, `test_review_policy.py` (`BookPictures`), `question-figures.test.mts`. **Left:** the
+  figure-gaps file's rule text still says "never a static book image"; the pictures directory holds ~420 files from another run.
+- [x] T443 [US1] (WP-P2, WP-P3, WP-P4, WP-P5) **Gates G1–G5 auto-pass during the fan-out, each decision marked for Samuel in the console** (FR-4509,
   decision 58c, answer 37c; G5 and "for Samuel" added by decision 60, answer 39): `objectives.workflow.js` / `assemble_objectives.py` (G1, FR-4410),
   `lesson.workflow.js` / `assemble_lesson_bundle.py` (G2, FR-4302), the widget stage (G3, FR-4306 —
   unchanged, decision 47 already has this shape) and the misconceptions stage (G4, FR-4307) each
@@ -643,10 +682,51 @@ ticked: code is in progress on the branch, not yet read and run for this pass.
   decision reached this way is written as an auto-passed backlog item (T436), not a human stamp.
   Automatic safety checks are NOT relaxed: broken maths, an answer that disagrees with the book
   (FR-4302's printed-answer/EPUB-solution/blind-resolve disagreement), and the drift guard
-  (`parity_check.py`) still hold an item exactly as before. **Open for Samuel** (see spec.md, Open
-  questions): whether this also covers **G5** (the dry-run delta/coverage/drift/cost go-or-no-go before
-  promotion, T363) — answer 37c names only G1–G4, and G5 looks like a production-readiness check rather
-  than a content review, so this task leaves G5 as a human gate until told otherwise.
+  (`parity_check.py`) still hold an item exactly as before. **G5 is covered too** (decision 60, answer 39, 2026-10-01): it auto-passes like G1–G4, each decision is
+  marked for Samuel and only his account clears it, and passing deploys nothing.
+  **Built, read 2026-10-01**: `services/extraction/auto_pass_gates.py` (one subcommand per gate, G1–G5, each writing an
+  `ainext.gate-decision/1` record to `runs/<book>/gates/<g>-chNN.json`, signed "auto-pass G<n> (AI recommendation)"); app
+  `lib/review-gate-records.ts`, `review-gate-files.ts`, `review-gate-queries.ts` (`isGateOwner`; `decide` refuses a gate decision
+  unless it is Samuel's account) → backlog kind `gate_decision`. Chapter 8 records: `runs/g10-math/gates/{g3,g4,g5}-ch08.json`.
+  The KaTeX `\0` control-space fix (`respace_latex`'s `_digit_escapes`, test added; Chapter 8's assembly byte-identical) removes the
+  cause of the broken-maths refusal of chapters 9, 10 and 13; those chapters have not been re-loaded to confirm. Proof: `test_review_policy.py` (`AutoPassGates`), `test_assemble_lesson_bundle.py`, `review-gate-records.test.mts`.
+  **Caveat:** both Chapter 8 dry runs predate the last `auto_pass_gates` rewrite and that fix and have not been re-run.
+
+### Answers 38, 30 and 40 — the whole book, the step checker, a teaching item as parent (decisions 59, 51, 61)
+
+Phase 9e, **added 2026-10-01** by the tech-writer. T444…T447 record code that was already built and was read
+against the worktree for this pass; T448 is decided and **not built**.
+
+- [x] T444 [US1] (WP-B, WP-P1) **The course outline store and its loader** (FR-4322, decision 59, answer 38):
+  `db/migrations/037-course-outline.sql` (`course_outline`, a content table, no row-level security, SELECT for
+  `ainext_app` and `ainext_operator`, writes only by `ainext_maint`; rollback `rollback/037-course-outline.down.sql`)
+  and `services/extraction/load_course_outline.py` (`uv run load_course_outline.py --book g10-math`, `--dry-run`,
+  `--check`; built from the G0 manifest, refusing an ungated or another course's manifest). Proof:
+  `services/extraction/tests/test_course_outline.py`.
+- [x] T445 [US1] (WP-C, WP-E) **The outline's rules, reads and the server refusal** (FR-4322, FR-4323, FR-4324, FR-4006):
+  `app/src/lib/course-outline.ts` (the rules, pure) and `course-outline-queries.ts` (the reads, only for courses already
+  gated); `app/src/lib/lesson.ts` (`resolveLessonLos` refuses a listed-but-unprepared slug; `isUnpreparedLesson`);
+  `app/src/app/api/ask/route.ts` (refused before a session, a turn count or a model call; `404 not_found`). Proof:
+  `course-outline.test.mts`, `course-outline-guard.test.mts`, `catalog-gate.test.mts`.
+- [x] T446 [US1] (WP-F, WP-C) **The outline on the student surfaces** (FR-4323, FR-4325, FR-4326, FR-4327, FR-4206):
+  `components/student/LessonCheckIn.tsx` (the whole-book list open by default, "Being prepared" entries that link nowhere),
+  `components/student/SubjectHome.tsx` ("{ready} of {total} lessons ready"), `components/spine/SpineExplorer.tsx` (the
+  "Being prepared" strip), `lib/subject-queries.ts`, `lib/queries.ts`, `app/(student)/student/page.tsx`. Proof:
+  `whole-book-render.test.mts` (National renders the same bytes), `course-outline.test.mts`. **Not covered:** no test
+  renders the skill map's strip itself.
+- [x] T447 [US2] (WP-P2, WP-PDOC) **The step-level working checker** (FR-4411, decision 51, answer 30):
+  `services/extraction/working_check.py`, `runbook/working-check.workflow.js` (prompts `sw-v1`),
+  `tests/test_working_check.py`; Chapter 8 run (`wf_957393ec-d74`): 192 solutions, 21 flagged, metered $31.0, flags in
+  `runs/g10-math/working-check/ch08.flags.json`. **Open under this task:** the console does not read the flag files into
+  the backlog (T436); the 25 flags are unclassified; calibration `sw-v2` is in progress and the cost is 3–5× the
+  estimate (README handoff).
+- [ ] T448 [US1] (WP-P6, WP-P4, WP-B, WP-G) **A book teaching item as a family's parent** (FR-4304, proposed FR-1101
+  wording; decision 61, answer 40) — **code in progress, not built**; a family-parent agent works from the plan in
+  `docs/WIP-g10-pilot/README.md` ("Handoff — family-parent agent (answer 40)"): migration 038 (`questions.parent_kind`,
+  the foreign key replaced by a trigger), `families/spec.py`, `generate_questions.py`, `load_generated_questions.py`, the review
+  desk's "Generated from" line (`review-gate-queries.ts`, `ReviewItemView.tsx`). Needed by lo:g10m8s1-1-1 (run
+  `001-s6-author-ch08-s111`). Tick it when the migration is applied to a scratch database, its tests pass and 001's
+  FR-1101 row is stamped.
 
 ---
 
@@ -671,6 +751,8 @@ Phase 1 (T301–T303)
         Phase 9d: T435 (after T431 — widens "English-only" to "no Arabic anywhere") — DONE
                   T436–T443 (after Phase 4 — the fan-out and its backlog; T442 after T355/T356's
                   figure-gap work, T443 after the pilot's own G1–G4 passes for Chapter 8)
+        Phase 9e: T444 (after G0's manifest and migration 037) → T445 → T446; T447 (after the Chapter 8 bundle exists);
+                  T448 (needs migration 038 and the loader change; blocks run 001 and lo:g10m8s1-1-1's family)
 ```
 
 - **G0 → the pipeline's lesson unit**: T402 and T403 apply G0's 65 lessons before any S1 run (T358). S0b (T418–T421) comes before S1–S3 read any maths.
