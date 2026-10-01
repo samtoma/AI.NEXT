@@ -1,9 +1,9 @@
 export const meta = {
   name: 'working-check',
-  description: 'Step-level working checker (answer 30, backlog 78; sw-v2): one blind Sonnet agent per BATCH of canonical solutions reads each question, its options, the key and the numbered working, and flags every step that does not follow — never corrects',
+  description: 'Step-level working checker (answer 30, backlog 78; sw-v3): one blind Sonnet agent per BATCH of canonical solutions reads each question, its options, its figure, the key and the numbered working, and flags every step that does not follow — never corrects; run twice (two independent passes) and union the flags',
   whenToUse: 'After a chapter is assembled (seed/<book>/<prefix>-cNN.json), before its content is reviewed. Args come from `uv run working_check.py args --book <book> --seed <bundle> --chapter N --by-ref DIR --out A.json` (or its generated copy, --embed).',
   phases: [
-    { title: 'SW Check', detail: 'one agent per batch of up to 8 solutions: does each step follow from the question and the steps before it? (Sonnet, medium effort)' },
+    { title: 'SW Check', detail: 'one agent per batch of up to 12 solutions (default 8): does each step follow from the question, its figure and the steps before it? (Sonnet)' },
   ],
 }
 
@@ -23,15 +23,24 @@ export const meta = {
 // ~95K of cache reads ($0.094) before it opens a shard, its thinking added $0.034 on average, and opening
 // figure images added ~$0.06 to the 66 agents that did. Its flags were 23 real book defects out of 25; the
 // two false ones came from a shard that omitted the multiple-choice options. So: ONE agent per BATCH of
-// ARGS.batch solutions (default 8; the fixed cost is shared), a figure only where the question text does not
-// give its points (the shard offers it or not) and at most ARGS.fig_cap images per batch, all in one turn,
-// effort ARGS.effort (default medium), and notes only on flags. The tool budget is an instruction (the
-// agent() hook has no turn cap); the run's meter record shows whether it held.
+// ARGS.batch solutions (the fixed cost is shared), a figure only where the question text does not give its
+// points, effort ARGS.effort, and notes only on flags. The tool budget is an instruction (the agent() hook
+// has no turn cap); the run's meter record shows whether it held.
+//
+// sw-v3 (2026-10-01, after two sw-v2 calibration runs, recall 12 and 14 of 16 real solutions by the agents
+// alone). Both missed Ex8-4:19b, whose points exist only in its figure: told to open a figure "only if" a
+// value was in no text, the agents back-solved A, B, C from the working itself (circular: the swapped labels
+// then look right) and called it consistent. A figure the shard offers is now read in the agent's FIRST turn,
+// with the shards (the prompt names it), and back-solving is forbidden; a TRACE rule makes every substituted
+// number and every label be matched to its source. The other misses differed between the two runs (lapses of
+// a shallow pass over 5-8 solutions), so the whole-book configuration is TWO independent passes (ARGS.pass_id
+// A and B, the second with ARGS.order 'shuffled') whose flags `working_check.py collect` unions.
 //
 // Args (by reference only; packet_ref.py): {book: {book}, stage: 'SW', prompts_version, chapter, part,
-// parts, batch, fig_cap, effort, model, solutions: [id …], by_ref: {dir, stage: 'SW', shards_sha256,
-// files}}. Solution i's text is the shard s/<i, 4 digits>.txt: the question, its options, the key, the
-// numbered steps, and the figure the question shows when the shard offers one. Batch b is solutions
+// parts, batch, effort, model, pass_id, order, fig_dir, figs: {<shard number>: [image file …]}, solutions:
+// [id …], by_ref: {dir, stage, shards_sha256, files}}. Solution i's text is the shard s/<i, 4 digits>.txt: the
+// question, its options, the key, the numbered steps, and a FIGURE line when its picture holds the question's
+// points. `figs` names each such picture (a bare file name sits under `fig_dir`). Batch b is solutions
 // [b*batch, (b+1)*batch). The script never reads a shard; the agent does.
 //
 // After the run: save the return value to runs/<book>/working-check/chNN-<runId>.json, then
@@ -39,7 +48,7 @@ export const meta = {
 //   uv run meter_run.py record --book <book> --stage SW --run <runId>
 // ---------------------------------------------------------------------------------------------
 
-const PROMPTS_VERSION = 'sw-v2'
+const PROMPTS_VERSION = 'sw-v3'
 const ARGS = typeof args === 'string' ? (args ? JSON.parse(args) : {}) : (args || {})
 const BOOK = ARGS.book || {}
 const REF = ARGS.by_ref || null
@@ -57,12 +66,20 @@ if (ARGS.prompts_version !== PROMPTS_VERSION) {
   throw new Error(`the args were built for prompts ${ARGS.prompts_version}; this script is ${PROMPTS_VERSION}: rebuild them`)
 }
 const BATCH = ARGS.batch
-const FIG_CAP = ARGS.fig_cap
 const EFFORT = ARGS.effort
 const MODEL = ARGS.model
-if (!(Number.isInteger(BATCH) && BATCH >= 1 && BATCH <= 12 && Number.isInteger(FIG_CAP) && FIG_CAP >= 0 && FIG_CAP <= 6 &&
-      ['low', 'medium', 'high'].includes(EFFORT) && ['sonnet', 'haiku'].includes(MODEL))) {
-  throw new Error('args must carry batch (1-12), fig_cap (0-6), effort (low|medium|high) and model (sonnet|haiku): rebuild them with working_check.py args')
+const PASS = ARGS.pass_id
+const FIGS = ARGS.figs
+if (!(Number.isInteger(BATCH) && BATCH >= 1 && BATCH <= 12 && ['low', 'medium', 'high'].includes(EFFORT) &&
+      ['sonnet', 'haiku'].includes(MODEL) && typeof PASS === 'string' && /^[A-Za-z0-9_-]{1,12}$/.test(PASS) &&
+      FIGS && typeof FIGS === 'object' && !Array.isArray(FIGS) && typeof ARGS.fig_dir === 'string')) {
+  throw new Error('args must carry batch (1-12), effort (low|medium|high), model (sonnet|haiku), pass_id, fig_dir and figs: rebuild them with working_check.py args')
+}
+const figPath = (f) => (f.startsWith('/') ? f : `${ARGS.fig_dir}/${f}`)
+for (const [k, v] of Object.entries(FIGS)) {
+  if (!(Number.isInteger(+k) && +k >= 1 && +k <= SOLS.length && Array.isArray(v) && v.every((f) => typeof f === 'string' && figPath(f).startsWith('/')))) {
+    throw new Error(`args.figs[${JSON.stringify(k)}] is not a shard number with absolute image paths: rebuild the args`)
+  }
 }
 
 const READ_RULE = 'Parts of this message are kept in files: wherever it shows [[file: <path>]], read that file with the Read tool (read them all in one turn); its whole content belongs in that place. Those files are the only files you may open.'
@@ -98,15 +115,17 @@ const CHECK_SCHEMA = {
 
 const prompt = (idxs) => `You check ${idxs.length} worked solution${idxs.length > 1 ? 's' : ''} from a mathematics textbook, one at a time, step by step. Students are taught exactly this working, so a step that does not follow would teach them something wrong.
 
-${idxs.map((i, k) => `Solution ${k + 1}: ${shardOf(i)}`).join('\n')}
+${idxs.map((i, k) => {
+  const figs = (FIGS[String(i + 1)] || []).map(figPath)
+  return `Solution ${k + 1}: ${shardOf(i)}${figs.length ? ` and its FIGURE image${figs.length > 1 ? 's' : ''}: ${figs.join(', ')}` : ''}`
+}).join('\n')}
 
 YOUR TOOL BUDGET (a hard limit; do not exceed it):
-1. ONE turn that reads all ${idxs.length} file${idxs.length > 1 ? 's' : ''} above (parallel Read calls).
-2. At most ONE more turn, only to open figure images (rule below); skip it when nothing needs a figure.
-3. Then call StructuredOutput once. No other tool use, no other file, no search.
+1. ONE turn that reads all ${idxs.length} file${idxs.length > 1 ? 's' : ''} above AND every FIGURE image named above (parallel Read calls).
+2. Then call StructuredOutput once. No other tool use, no other file, no search.
 
-For EVERY step of EVERY solution, decide whether it follows from the question, the options and the steps before it. Judge each solution on its own; never carry a value from one to another.
-- wrong_value: a value used or substituted (a coordinate, a length, a coefficient, a given) is not the one the question or an earlier step gives;
+For EVERY step of EVERY solution, decide whether it follows from the question, the options, the figure and the steps before it. Judge each solution on its own; never carry a value from one to another. A short solution is not a safe one: check every step.
+- wrong_value: a value used or substituted (a coordinate, a length, a coefficient, a given) is not the one the question, the figure or an earlier step gives;
 - arithmetic: a line's arithmetic or algebra does not equal what it is set equal to (check each "=" in a chain, and each line of an aligned derivation against the line before it);
 - sign: a minus sign or a bracket is lost or flipped;
 - label: a named point, side, variable or quantity changes (the working says N where the question says M);
@@ -114,10 +133,11 @@ For EVERY step of EVERY solution, decide whether it follows from the question, t
 - final_answer: the last step does not state the FINAL ANSWER given as the key. When the key is a letter, OPTIONS says which answer it stands for, and the working's conclusion must name that same answer;
 - other: any other step that does not follow, including a conclusion the earlier steps do not support.
 Rules:
+- TRACE before you answer: for every line that substitutes values into a formula or names a point, side or quantity, find where each number and each label comes from (the question text, an option, the key, the figure, or an earlier step) and check that the line uses it as it is given there: the right point's coordinates for the right label, the right sign, the right variable. A number that comes from none of these, or a label that is not the question's, is a flag.
 - Judge the working AS WRITTEN. Do not solve the problem your own way, do not judge the choice of method, and never rewrite the solution or propose a corrected one.
 - Rounding the book does on purpose is not an error when it is right to the places shown (e.g. √90 = 9.5 to one decimal place). A step that only states a formula correctly, describes the method, or draws a sketch ([figure]) is fine.
 - The maths is LaTeX; read it as the mathematics it typesets (spacing and \\text{…} wrappers mean nothing).
-- FIGURES: a file lists a FIGURE image only when its question text does not give the points. Open an image ONLY when a value the working uses (a coordinate, a length, a label) is in no text of that file and a step's correctness depends on it. Open every image the batch needs together, in your one figure turn, at most ${FIG_CAP} in all; read printed labels and coordinates, never measure pixels. When a value is in no text and no figure is offered, it comes from the book's figure or from an earlier part of the exercise: do not flag it for that reason.
+- FIGURES: a solution named above with a FIGURE image has its points, lengths or labels only in that picture (its question text does not give them): the picture is the ONLY source for them, so read it in your first turn and check every point name and coordinate the working uses against it. NEVER reconstruct a figure's values from the working itself: that is circular and hides exactly the swapped labels and wrong coordinates you are here to find. Read printed labels and coordinates; never measure pixels. A solution named without a figure has what it needs in its text; when a value is in no text and no figure is named, it comes from an earlier part of the exercise (next rule).
 - A solution whose id ends in a letter (…ex8-6-46c) is one part of a multi-part exercise; it may use a result of an earlier part you cannot see. Never flag a value only because it is not in its file. If its conclusion cannot be judged without that part, the verdict is "unclear" with a one-sentence note.
 - where: "working" when a step is wrong; "question" when the QUESTION TEXT (or an option) is what conflicts with an otherwise consistent working (the question names a side XY, the working and its figure name it ZY); "unsure" when they conflict and you cannot tell which is wrong. The flag's step is the step where the conflict shows.
 - Report every step that does not follow: its number, quote (a short EXACT span copied from that step), kind, where, expected, why. "flagged" when you report any; "consistent" (no flags) when every step follows; "unclear" only when you cannot judge — the working depends on something you cannot see, or a step is unreadable.
@@ -125,14 +145,14 @@ Rules:
 - Be brief: quote at most one short span; why is ONE sentence of at most 25 words; expected is at most 12 words naming only the value or label the earlier text gives (never a rewritten step), or empty; note is only for "unclear" (one sentence). A consistent solution needs only its id and verdict.
 - Return one entry in results per solution, copying its id exactly from the first line of its file (the text after "SOLUTION ").
 
-${READ_RULE} You may also open the image files that a file lists under FIGURE, and nothing else.
+${READ_RULE} You may also open the FIGURE image files named above, and nothing else.
 
 Return CHECK_SCHEMA.`
 
 const BATCHES = []
 for (let i = 0; i < SOLS.length; i += BATCH) BATCHES.push(SOLS.slice(i, i + BATCH).map((_, k) => i + k))
 
-log(`chapter ${ARGS.chapter}${ARGS.parts > 1 ? `, part ${ARGS.part} of ${ARGS.parts}` : ''}: ${SOLS.length} solution(s) in ${BATCHES.length} batch(es) of up to ${BATCH}, one checking agent each (${PROMPTS_VERSION}, ${MODEL}, effort ${EFFORT}); packet by reference: ${REF.files} shard(s) in ${REF.dir}`)
+log(`chapter ${ARGS.chapter}${ARGS.parts > 1 ? `, part ${ARGS.part} of ${ARGS.parts}` : ''}: ${SOLS.length} solution(s) in ${BATCHES.length} batch(es) of up to ${BATCH}, one checking agent each (${PROMPTS_VERSION}, pass ${PASS}, ${MODEL}, effort ${EFFORT}, ${Object.values(FIGS).reduce((n, v) => n + v.length, 0)} figure(s) read); packet by reference: ${REF.files} shard(s) in ${REF.dir}`)
 
 phase('SW Check')
 const raw = await parallel(BATCHES.map((idxs, b) => () =>
@@ -187,7 +207,7 @@ log(`${n('consistent')} consistent, ${n('flagged')} flagged (${results.reduce((a
 return {
   stage: 'SW', workflow: 'working-check', prompts_version: PROMPTS_VERSION, book: BOOK.book,
   chapter: ARGS.chapter, part: ARGS.part || 1, parts: ARGS.parts || 1,
-  batch: BATCH, agents: BATCHES.length, effort: EFFORT, model: MODEL, fig_cap: FIG_CAP,
+  batch: BATCH, agents: BATCHES.length, effort: EFFORT, model: MODEL, pass_id: PASS, order: ARGS.order || 'bundle',
   by_ref: REF,
   ...(ARGS.embedded ? { embedded: ARGS.embedded } : {}),
   results, problems,

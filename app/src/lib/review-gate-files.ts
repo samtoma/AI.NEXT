@@ -21,6 +21,16 @@ import path from "node:path";
 
 import { COURSES, COURSE_IDS } from "./courses";
 import { mergeRecords, parseAutoFile, parseRecord, type GateRecord } from "./review-gate-records";
+import {
+  calibrationFileFor,
+  canonicalFlagsChapter,
+  flagsKey,
+  groupFlags,
+  parseCalibration,
+  parseFlagsFile,
+  type WorkingFlag,
+  type WorkingFlagGroup,
+} from "./review-gate-working";
 
 export type GateRecordRow = GateRecord & { fingerprint: string; courseId: string };
 
@@ -99,4 +109,51 @@ export async function readGateRecords(root: string = defaultRunsRoot()): Promise
     }
   }
   return mergeRecords(found) as GateRecordRow[];
+}
+
+/**
+ * The step-level checker's flags, one group per flagged solution (FR-4411 →
+ * FR-4501), of every maths book: `runs/<book>/working-check/chNN.flags.json`
+ * and nothing else in that folder — a calibration copy (`chNN-cal….flags.json`)
+ * or a raw run file is a measurement of the checker, not a finding about the
+ * book (`canonicalFlagsChapter`). A `chNN.calibration.json` beside a file
+ * classes its flags (REAL / REAL-BUT-ELSEWHERE / FALSE, with evidence); it is
+ * shown to the reviewer and decides nothing.
+ *
+ * Never throws: a file that cannot be read or parsed is skipped and logged.
+ * Same production caveat as `readGateRecords`: the image carries no `runs/`, so
+ * on the box this finds nothing and the backlog has no flagged-step items.
+ */
+export async function readWorkingFlags(root: string = defaultRunsRoot()): Promise<WorkingFlagGroup[]> {
+  const repo = path.resolve(root, "..", "..", "..");
+  const rel = (f: string) => path.relative(repo, f).split(path.sep).join("/");
+  const out: WorkingFlagGroup[] = [];
+  for (const [book, courseId] of mathsBooks()) {
+    const dir = path.join(root, book, "working-check");
+    const truths = new Set((await list(dir, /^ch\d{1,2}\.calibration\.json$/)).map((f) => path.basename(f)));
+    for (const file of await list(dir, /^ch\d{1,2}\.flags\.json$/)) {
+      const chapter = canonicalFlagsChapter(path.basename(file));
+      if (chapter == null) continue;
+      const doc = await readJson(file);
+      const parsed = doc && parseFlagsFile(doc.raw, book, chapter);
+      if (!parsed) continue;
+      // The truth file is named after the FILE's chapter, whatever the flags file says inside.
+      const calibrationPath = path.join(dir, calibrationFileFor(chapter));
+      const cal = truths.has(calibrationFileFor(chapter)) ? await readJson(calibrationPath) : null;
+      const calibration = cal ? parseCalibration(cal.raw) : null;
+      out.push(...groupFlags(parsed, courseId, rel(file), calibration, calibration ? rel(calibrationPath) : null));
+    }
+  }
+  return out;
+}
+
+/**
+ * A flagged solution's fingerprint: the solution's own text (hashed in SQL —
+ * stem, key, working, options) with what the checker flagged in it. A reload
+ * or a correction that changes the text, or a re-run that flags something
+ * else, puts a decided item back in front of a reviewer; a re-run that words
+ * the same finding differently does not (`flagsKey`).
+ */
+export function workingFlagFingerprint(solutionHash: string, flags: readonly Pick<WorkingFlag, "step" | "kind" | "where" | "quote">[]): string {
+  return createHash("md5").update(`${solutionHash}\u001f${flagsKey(flags)}`).digest("hex");
 }
