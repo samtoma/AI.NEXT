@@ -24,7 +24,11 @@ reading, English-only G10 prompts, and the G2 answers written into FR-4302 and F
 Phase 9b carries the build items this plan does not describe. The branch was brought up to `v0.9.3`
 and its migrations renumbered **033** and **034**, so where this plan says the CI migration proof runs
 "from v0.9.2", `scripts/ci-migrations.sh` now uses the previous release, `v0.9.3`. The work is committed
-only as unreviewed WIP snapshots on the pushed branch.
+only as unreviewed WIP snapshots on the pushed branch. **Note 2026-10-01**: decision 1 is superseded by
+Samuel's answer 36, *"yes the sign up should always ask"* — sign-up and the Google step now always ask
+which curriculum, naming every curriculum the product knows, rather than only when a grade offers two or
+more (spec FR-4004, FR-4005, [decisions.md](./decisions.md)). Code for this reversal is in progress on the
+branch; no evidence is cited here yet.
 
 ## Summary
 

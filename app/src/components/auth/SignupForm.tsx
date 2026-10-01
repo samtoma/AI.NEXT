@@ -92,9 +92,9 @@ export function SignupForm({
     e.preventDefault();
     if (busy) return;
 
-    // Asked and not answered: say so here rather than after a round trip.
-    const curriculum = curriculumToSend(gradeOffer, picked);
-    if (askingCurriculum && !curriculum) {
+    // Always required now (Samuel's 2026-10-01 reversal): say so here rather
+    // than after a round trip.
+    if (!picked) {
       setError(null);
       setFieldErrors({ curriculum: messageFor("curriculum_required") });
       return;
@@ -120,8 +120,8 @@ export function SignupForm({
           // column's NULL is the record of a question we never asked.
           ...(gender ? { gender } : {}),
           interests,
-          // Only when the grade asked (FR-4005); otherwise the server decides.
-          ...(curriculum ? { curriculum } : {}),
+          // Always sent now (FR-4005; Samuel's 2026-10-01 reversal).
+          curriculum: picked,
         }),
       });
 
@@ -138,9 +138,9 @@ export function SignupForm({
         offered?: CurriculumId[];
       };
       if (body.error === "curriculum_required" && Array.isArray(body.offered)) {
-        const now = body.offered;
-        setOffer((prev) => ({ ...prev, [grade]: now }));
-        if (picked && !now.includes(picked)) setPicked(null);
+        // Refreshes the "nothing yet" notes only — a pick outside this list is
+        // still a valid, explicit choice and is never cleared because of it.
+        setOffer((prev) => ({ ...prev, [grade]: body.offered! }));
       }
       const message = messageFor(body.error, body);
       if (body.field) setFieldErrors({ [body.field]: message });

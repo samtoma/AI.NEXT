@@ -245,6 +245,10 @@ database" step also depends on T318.
   - in `app/src/app/(auth)/signup/page.student.tsx`, compute `offered` for every grade;
   - in `app/src/components/auth/SignupForm.tsx`, show the curriculum question after grade only when two or more are offered, with nothing pre-selected and flat labels;
   - in `app/src/app/api/auth/signup/route.ts`, return `invalid_curriculum` and `curriculum_required`, resolve with `resolveInitialCurriculum`, and add the curriculum fields to `account_created` (first-party only) (FR-4005, FR-4016).
+
+  **Superseded 2026-10-01 (answer 36, reverses decision 1):** the question is no longer conditional on
+  `offered` having two or more entries — it is always shown, naming every curriculum. This task's code is
+  ticked for what it built under the old rule; T434 carries the change to the new one.
 - [x] T369 [US3] (WP-D) The first-Google-sign-in step:
   - in `app/src/lib/auth/google.ts` and `app/src/app/api/auth/google/callback/route.ts`, set `onboarding_pending` on a created account and redirect to `/welcome`;
   - create `app/src/app/(auth)/welcome/page.student.tsx` and `app/src/components/auth/OnboardingForm.tsx`;

@@ -36,8 +36,14 @@ export interface CurriculumDef {
   /** The name a student and an operator read: flat and factual, never a tier
    *  (privacy review F1: "American" / "National", nothing else). */
   label: string;
-  /** Arabic name, for the Arabic-capable surfaces (constitution V). */
-  labelAr: string;
+  /**
+   * Arabic name, for the Arabic-capable surfaces (constitution V). Optional:
+   * `undefined` for a curriculum with no Arabic-capable surface at all — the
+   * American curriculum (Samuel's answer 35, 2026-10-01: "this is american
+   * course we said no arabic") — so a future reader cannot print one by
+   * reaching for this field without checking it exists. National keeps its.
+   */
+  labelAr?: string;
   /** One neutral line for the console. */
   description: string;
   /** What each stored school year is called in this curriculum (FR-4013). */
@@ -69,7 +75,8 @@ export const CURRICULA = {
   },
   "us-american-en": {
     label: "American",
-    labelAr: "المنهج الأمريكي",
+    // No Arabic name: this curriculum has no Arabic-capable surface at all
+    // (Samuel's answer 35, 2026-10-01).
     description: "American curriculum",
     gradeLabels: {
       "7": "Grade 7",

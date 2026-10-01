@@ -245,6 +245,20 @@ export interface CourseTutorFacts {
    * answer 9 (decisions.md #30), 2026-09-25: "English only" — the student is still described
    * as an Egyptian grade-10 student, but the tutor is told to write no
    * Arabic at all). Only an English-taught subject may say `false`.
+   *
+   * ONE FACT, TWO USES (Samuel's answer 35, 2026-10-01: "this is american
+   * course we said no arabic"). This flag used to govern the tutor's PROMPTS
+   * only; it now ALSO governs the course's ON-SCREEN labels wherever a
+   * surface would otherwise print a subject's Arabic name for a course of it
+   * (`lib/catalog-queries.ts` `CourseCatalogRow`/`StudentAccessRow`'s
+   * `labelAr`, the console's course rows and a student's course access rows,
+   * and `lib/lesson.ts`'s cross-subject bridge block). `lib/subjects.ts`
+   * keys `labelAr`/`labelArShort` per SUBJECT, and `math-en` is taught from
+   * two books now — printing the subject's Arabic name unconditionally would
+   * put «الرياضيات» on the American course's screens too, which is exactly
+   * the thing this flag exists to prevent. "This course carries Arabic" is
+   * one fact about a book; a caller that wants to show or withhold Arabic for
+   * a course reads THIS field, never `SubjectDef.dir` alone.
    */
   arabicTouches: boolean;
   /** lesson-slug prefix of the lessons taught figure-first (geometry), or `null` */
