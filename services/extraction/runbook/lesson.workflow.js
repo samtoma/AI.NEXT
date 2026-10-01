@@ -240,8 +240,9 @@ const ORACLE_SCHEMA = { type: 'object', required: ['verdict', 'subheadings'], pr
 // (2) a relation reads past units attached to each bound ("0 m ≤ s(t) ≤ 10 m" is 0 ≤ s(t) ≤ 10; "The domain is 0 s ≤ t ≤ 20 s. It represents…" too; a set-builder's braces and
 // "Domain:" / "Range:" labels, a capital point name before a pair are dropped): ONE unit per bound, never a letter the key itself uses as a variable, and the relation must
 // otherwise match, so a changed bound, relation or extra constraint is refused; (3) "a=-1; q=1" against a sentence that states both and then the equation (assignedList cuts at
-// the first "so / therefore / hence / thus"); (4) trig names (\sin, \cos, …) are plain letters in the comparison and a trig ratio is a ONE-sided label, so sin never settles
-// against cos; \therefore glued by the EPUB (\thereforeh) and "◦" for the degree sign are read like their spelled forms. Not changed: the 2–5 option cap, options not in the stem or lesson.
+// the first "so / therefore / hence / thus"); (4) trig names (\sin, \cos, …) are plain letters in the comparison and a trig ratio (sinθ=, cosθ/sinθ=) is a ONE-sided label,
+// stripped against a side that names NO trig function (a bare value, "=1/√2", the text layer's flattened chain "AC AB = AD BD"), so sin never settles against cos (a whole-corpus A/B
+// of the 5,901 recorded pairs, ch1-9, found 5 pairs of ch5 this had sent to the judge, fixed; no settled pair became unsettled); \therefore glued by the EPUB (\thereforeh) and "◦" for the degree sign are read like their spelled forms. Not changed: the 2–5 option cap, options not in the stem or lesson.
 const norm = (s) => String(s || '').normalize('NFKC').replace(/[−–—]/g, '-').replace(/[“”]/g, '"').replace(/[’‘]/g, "'")
   .replace(/\$/g, '').replace(/\s+/g, ' ').trim().toLowerCase()
 const contains = (hay, needle) => { const n = norm(needle); return n.length >= 8 && norm(hay).includes(n) }
