@@ -1,0 +1,165 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m3s2-1-5:fractional-terms",
+ "kind": "family",
+ "lo_id": "lo:g10m3s2-1-5",
+ "parent_question_id": "q:g10m3s2-1-5:ex3-1-16a",
+ "source_page": 67,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "q",
+   "choice": [
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "a2",
+   "choice": "[x for x in range(-8, 9) if abs(x) >= 2 and gcd(abs(x), q) == 1]"
+  },
+  {
+   "name": "t1",
+   "choice": [
+    -2,
+    -1,
+    1,
+    2
+   ]
+  },
+  {
+   "name": "t2",
+   "choice": [
+    -2,
+    -1,
+    1,
+    2
+   ],
+   "resample_while": "t2 == t1"
+  },
+  {
+   "name": "d1",
+   "let": "q * t1"
+  },
+  {
+   "name": "d2",
+   "let": "q * t2"
+  },
+  {
+   "name": "A",
+   "let": "d2 - d1"
+  },
+  {
+   "name": "a1",
+   "let": "a2 - d1"
+  },
+  {
+   "name": "a3",
+   "let": "a2 + d2"
+  },
+  {
+   "require": "abs(a1) >= 2 and abs(a1) <= 12 and abs(a3) >= 2 and abs(a3) <= 12",
+   "why": "the coefficients of k print as ak with no special cases and are not large"
+  },
+  {
+   "name": "e1",
+   "randint": [
+    -8,
+    8
+   ],
+   "resample_while": "e1 == 0"
+  },
+  {
+   "name": "e2",
+   "randint": [
+    -8,
+    8
+   ],
+   "resample_while": "e2 == 0 or e2 == e1"
+  },
+  {
+   "name": "w",
+   "choice": [
+    -6,
+    -5,
+    -4,
+    -3,
+    -2,
+    -1,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ]
+  },
+  {
+   "name": "e3",
+   "let": "2 * e2 - e1 - w"
+  },
+  {
+   "require": "e3 != 0 and e3 != e2 and abs(e3) <= 14",
+   "why": "no constant is 0, no difference of constants is 0, and nothing is large"
+  },
+  {
+   "name": "f1",
+   "let": "e2 - e1"
+  },
+  {
+   "name": "f2",
+   "let": "e3 - e2"
+  },
+  {
+   "name": "k",
+   "let": "q * w / A"
+  },
+  {
+   "name": "d",
+   "let": "d1 * w / A + f1"
+  },
+  {
+   "name": "v1",
+   "let": "a1 * k / q + e1"
+  },
+  {
+   "name": "v2",
+   "let": "a2 * k / q + e2"
+  },
+  {
+   "name": "v3",
+   "let": "a3 * k / q + e3"
+  },
+  {
+   "require": "denominator(d) >= 2",
+   "why": "the common difference is a proper fraction, so 'write it as a simplified fraction' is always accurate"
+  }
+ ],
+ "constraints": [
+  "d1 * k / q + f1 == d2 * k / q + f2",
+  "v2 - v1 == d",
+  "v3 - v2 == d"
+ ],
+ "stem": "If the following terms make a linear sequence: $\\frac{{=a1}k}{{=q}} {=signed(e1)}\\;;\\;\\frac{{=a2}k}{{=q}} {=signed(e2)}\\;;\\;\\frac{{=a3}k}{{=q}} {=signed(e3)}\\;;\\;\\ldots$ determine the value of $k$ and hence the numeric value of the common difference of the sequence. Write your answer as a simplified fraction.",
+ "solution": [
+  "In a linear sequence the common difference is the same all the way along, so $T_{2} - T_{1} = T_{3} - T_{2}$.",
+  "Put in the terms: $\\left(\\frac{{=a2}k}{{=q}} {=signed(e2)}\\right) - \\left(\\frac{{=a1}k}{{=q}} {=signed(e1)}\\right) = \\left(\\frac{{=a3}k}{{=q}} {=signed(e3)}\\right) - \\left(\\frac{{=a2}k}{{=q}} {=signed(e2)}\\right)$.",
+  "Multiply every term by ${=q}$ to clear the fractions: $({=a2}k {=signed(q * e2)}) - ({=a1}k {=signed(q * e1)}) = ({=a3}k {=signed(q * e3)}) - ({=a2}k {=signed(q * e2)})$.",
+  "Simplify each side: ${=d1}k {=signed(q * f1)} = {=d2}k {=signed(q * f2)}$.",
+  "Collect the terms in $k$ on one side and the numbers on the other: ${=d1 - d2}k = {=q * (f2 - f1)}$.",
+  "Divide both sides by ${=d1 - d2}$: $k = \\frac{{=q * (f2 - f1)}}{{=d1 - d2}} = {=k}$.",
+  "Now put $k = {=k}$ into the terms: $T_{1} = {=a1 / q} \\times \\left({=k}\\right) {=signed(e1)} = {=v1}$, $T_{2} = {=a2 / q} \\times \\left({=k}\\right) {=signed(e2)} = {=v2}$ and $T_{3} = {=a3 / q} \\times \\left({=k}\\right) {=signed(e3)} = {=v3}$.",
+  "The common difference is $d = T_{2} - T_{1} = \\left({=v2}\\right) - \\left({=v1}\\right) = {=d}$. Check: $T_{3} - T_{2} = \\left({=v3}\\right) - \\left({=v2}\\right) = {=d}$, which is the same."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "{=numerator(d)}/{=denominator(d)}",
+  "form": "simplest",
+  "variables": [],
+  "tolerance": null
+ },
+ "notes": "Book ex3-1-16a / 16b: terms with fractional coefficients of k, found by T2 - T1 = T3 - T2 after multiplying through by the denominator, then the unknown is put back in (the book's 16b 'now determine the numeric value of the terms'). Two steps: solve for k, then evaluate the common difference d = T2 - T1 numerically. The family is built backwards: e3 = 2*e2 - e1 - w for a small non-zero whole number w, which makes k = q*w/A (A = d2 - d1 is never 0), so the equation has exactly one solution. The answer asked for is d = d1*w/A + (e2 - e1), always a non-zero proper fraction with denominator at most 4 (the require clause rejects whole-number d, so 'simplified fraction' in the stem is always accurate); because d is never a whole number, k never is either, as in the book (k = -5/3). The coefficients of k step by multiples of q (d1 = q*t1, d2 = q*t2), exactly as in the book's 16a where they step by -6 and 3 over denominator 3; so every a_i has the same remainder mod q as a2, and a2 is drawn coprime to q, which makes each printed fraction a_i*k/q already be in lowest terms. All coefficients in the terms have size 2 to 12 (never 0 or +-1), and the coefficients in the working (d1, d2, d1 - d2) have size at least 2 because q >= 2. Marker answer is built from numerator(d) and denominator(d) so it is plain maths, not LaTeX."
+}

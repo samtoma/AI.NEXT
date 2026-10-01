@@ -226,6 +226,15 @@ const ORACLE_SCHEMA = { type: 'object', required: ['verdict', 'subheadings'], pr
 //   * in the book solution: an equation the other way round, a relation row of an aligned array, \text{and} with its spaces lost, "T_2=23 and
 //     T_4=53", a chain d=T_2-T_1=7-4=3 whose every link is stated; the signature keeps ± and Greek letters.
 // The collection is still `collect-6` (same day, as kind-for-form): the recollected file records the script's sha.
+// COLLECT-6, Chapter 5 (trigonometry; g10m5s7-1 had 75 of 88 items "book_final is not in the book solution", none of them wrong): the typing agent copies a
+// final as plain text ("x ≈ 76,60", "θ ≈ 26,6°", "sin B̂ = AC/AB", "∴Areaof△ABC=16944units²") and the solution is LaTeX (`x&\approx\text{76,60}`,
+// `\theta\approx\text{26,6}^{\circ}`, `\sin\hat{B}=\frac{AC}{AB}`, `\triangleABC`, `\sinA` glued by the EPUB). Signs are read alike (≈ ° ^ hats, a function
+// name, a simple fraction as a/b, △ ∴ ²) and a final is found only as a WHOLE VALUE (hasValue: "76,6" is not in "76,60", "x=2" not in "x=2/3", "5" not in
+// "-5"): a different rounding or digit stays refused. The same rule tightened the old substring match everywhere. Also: a Greek letter, ≈, a trig ratio
+// (\sin45°=) is a LABEL (θ ≈ 42,07 against the printed 42,07°: round one's visible-Greek signature had sent 13 such pairs to a judge); a worked chain's
+// LAST link is the answer it states; "a = 4(−24) = −96" is −96; a list of words ("adjacent; hypotenuse; opposite") against the sentence that names them
+// ($a$ is the adjacent side …: as many labels as words); a sentence's units ("9,96 mm and 8,35 mm"); a plain "therefore"; a kind the typing agent
+// never named is the key's ('kind-from-key').
 const norm = (s) => String(s || '').normalize('NFKC').replace(/[−–—]/g, '-').replace(/[“”]/g, '"').replace(/[’‘]/g, "'")
   .replace(/\$/g, '').replace(/\s+/g, ' ').trim().toLowerCase()
 const contains = (hay, needle) => { const n = norm(needle); return n.length >= 8 && norm(hay).includes(n) }

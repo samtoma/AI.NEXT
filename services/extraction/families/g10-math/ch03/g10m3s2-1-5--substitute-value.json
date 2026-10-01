@@ -1,0 +1,147 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m3s2-1-5:substitute-value",
+ "kind": "family",
+ "lo_id": "lo:g10m3s2-1-5",
+ "parent_question_id": "q:g10m3s2-1-5:ex3-1-15b",
+ "source_page": 67,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    -4,
+    4
+   ]
+  },
+  {
+   "name": "p",
+   "choice": [
+    -3,
+    -2,
+    2,
+    3
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    -9,
+    9
+   ]
+  },
+  {
+   "name": "q",
+   "choice": [
+    -5,
+    -4,
+    -3,
+    -2,
+    -1,
+    1,
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "require": "min([abs(a + i * p) for i in range(4)]) >= 2",
+   "why": "no coefficient of z is 0, 1 or -1, so every term prints as az + b"
+  },
+  {
+   "require": "min([abs(b + i * q) for i in range(4)]) >= 1",
+   "why": "no constant is 0, so every term prints with a signed constant"
+  },
+  {
+   "name": "c1",
+   "let": "a"
+  },
+  {
+   "name": "c2",
+   "let": "a + p"
+  },
+  {
+   "name": "c3",
+   "let": "a + 2 * p"
+  },
+  {
+   "name": "c4",
+   "let": "a + 3 * p"
+  },
+  {
+   "name": "e1",
+   "let": "b"
+  },
+  {
+   "name": "e2",
+   "let": "b + q"
+  },
+  {
+   "name": "e3",
+   "let": "b + 2 * q"
+  },
+  {
+   "name": "e4",
+   "let": "b + 3 * q"
+  },
+  {
+   "name": "cs",
+   "let": "[c1, c2, c3, c4]"
+  },
+  {
+   "name": "es",
+   "let": "[e1, e2, e3, e4]"
+  },
+  {
+   "name": "u",
+   "randint": [
+    -5,
+    5
+   ],
+   "resample_while": "u == 0"
+  },
+  {
+   "name": "m",
+   "randint": [
+    1,
+    4
+   ]
+  },
+  {
+   "name": "cm",
+   "let": "cs[m - 1]"
+  },
+  {
+   "name": "em",
+   "let": "es[m - 1]"
+  },
+  {
+   "name": "prod",
+   "let": "cm * u"
+  },
+  {
+   "name": "ans",
+   "let": "cm * u + em"
+  },
+  {
+   "require": "abs(ans) <= 40",
+   "why": "keep the answer small for the entry-level family"
+  }
+ ],
+ "constraints": [
+  "c2 - c1 == c3 - c2",
+  "e3 - e2 == e4 - e3"
+ ],
+ "stem": "Consider the following list: ${=c1}z {=signed(e1)}\\;;\\;{=c2}z {=signed(e2)}\\;;\\;{=c3}z {=signed(e3)}\\;;\\;{=c4}z {=signed(e4)}\\;;\\;\\ldots$ If you are now told that $z = {=u}$, determine the value of $T_{{=m}}$.",
+ "answer": "ans",
+ "solution": [
+  "The term $T_{{=m}}$ of the list is ${=cm}z {=signed(em)}$.",
+  "Replace $z$ by $({=u})$: $T_{{=m}} = {=cm}({=u}) {=signed(em)}$.",
+  "Multiply first: $T_{{=m}} = {=prod} {=signed(em)}$.",
+  "So $T_{{=m}} = {=ans}$."
+ ],
+ "notes": "Entry point of the objective: substitute a given value of the unknown into a term (book ex3-1-14b, 15b). The list is a linear sequence in the unknown (coefficients and constants each step by a constant) but the student only needs the one term asked for. The value of z is never 0 and is often negative, so the sign of c*z is the thing being tested. Coefficients of z are never 0 or +-1 and constants are never 0, so every term prints as 'cz + e' with no special cases. The answer is at most 40 in size. Terms print using signed(e) for the constant; the reviewer should confirm it renders as '+ 5' / '- 5'."
+}

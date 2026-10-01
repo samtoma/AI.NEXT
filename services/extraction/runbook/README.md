@@ -393,6 +393,15 @@ every agent except the judge, whose pair list the collection decides). Determini
   - *In the book solution.* An equation the other way round is the solution's last line (`a=\frac{…}` for `\frac{…}&=a`); a relation row of an
     aligned array (`-3&\le&k&<&2`); `\text{and}` with its spaces lost, `T_2=23 and T_4=53`; a chain `d=T_2-T_1=7-4=3` whose every link
     `d=…` the solution states; `\pih` (the EPUB's glued π h) is π·h. A changed link or value is still refused.
+  - *Chapter 5 (trigonometry; g10m5s7-1 had 75 of 88 items "book_final is not in the book solution", none of them wrong).* The typing agent copies the final
+    as plain text (`x ≈ 76,60`, `θ ≈ 26,6°`, `sin B̂ = AC/AB`, `∴Areaof△ABC=16944units²`); the solution is LaTeX (`x&\approx\text{76,60}`,
+    `^{\circ}`, `\hat{B}`, `\frac{AC}{AB}`, `\triangleABC`, the EPUB's glued `\sinA`) with the unrounded value (`\text{76,60444...}`) in the working. Signs are
+    read alike; the digits never: a final is found only **as a whole value** (`76,6` is not in `76,60`, `x=2` not in `x=2/3`, `5` not in `-5`), which also tightens
+    the old substring match for every chapter. A Greek letter, `≈` and a trigonometric ratio (`\sin45°=`) are labels (`θ ≈ 42,07` against the printed `42,07°`
+    settles with no judge). A worked chain's last link is the answer it states (`sin Â = opposite/hypotenuse = CB/AC`); `a = 4(−24) = −96` is −96; a list of
+    words against the sentence that names them (`$a$ is the adjacent side $b$ is …`, as many labels as words); a sentence's units (`9,96 mm and 8,35 mm`); a plain
+    "therefore". A typing with NO marker kind takes the key's (`kind-from-key`). `assemble_lesson_bundle.unescape_entities`: numeric HTML references the EPUB left
+    in the maths (`$\cos30&#176;=$`, 28 in Chapter 5) are the characters they name (`^{\circ}` inside `$…$`); without it `load_seed --validate-only` refuses the chapter.
   Still held for a person: a choice with one option or more than five (a phrase answer, a letter of a stem's list), a typing agent's
   copy of a typo or a copy-paste error in the book's solution, a printed answer that adds a restriction the key lacks (`, b ≠ 0`), a
   flattened root the signature cannot order, a figure as the solution. **Both the collection and its retypes change a saved run**: the
