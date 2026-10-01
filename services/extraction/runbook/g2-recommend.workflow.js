@@ -316,7 +316,7 @@ const problems = []
 // every accept and every fix puts a question in front of students, so it needs a second, independent reading — except a
 // teaching-only retype (not_markable), which marks nothing and so has no key to confirm
 const needsVerify = (rec) => !!rec && ['accept', 'fix'].includes(rec.verdict) && !(rec.verdict === 'fix' && (rec.fix || {}).answer_type === 'not_markable')
-const labelOf = (b, stage, bi, extra) => `G2R:${stage}:b${pad(bi + 1)}${extra || ''}:${b[0].lesson}${b.length > 1 ? `+${b.length - 1}` : ''}`
+const labelOf = (b, stage, bi, extra) => `G2R:${stage}:b${pad(bi + 1)}:${b[0].lesson}${b.length > 1 ? `+${b.length - 1}` : ''}${extra || ''}`
 
 async function recommend(batch, bi) {
   const got = new Map()
@@ -350,7 +350,7 @@ async function verify(rd, bi) {
   if (!live.length) return Object.assign({ vers }, rd)
   for (const [vi, vb] of chunk(live, VBATCH).entries()) {
     const r = await agent(verPrompt(vb, got), {
-      label: labelOf(vb, 'ver', bi, vi ? `.${vi + 1}` : ''), phase: 'G2R Verify', model: MODEL, effort: EFFORT, schema: VER_SCHEMA,
+      label: labelOf(vb, 'ver', bi, vi ? `:part${vi + 1}` : ''), phase: 'G2R Verify', model: MODEL, effort: EFFORT, schema: VER_SCHEMA,
     })
     if (!r || !Array.isArray(r.results)) { problems.push(`batch ${bi + 1}: the verifying agent returned nothing (its ${vb.length} verdict(s) are unconfirmed)`); continue }
     const mine = new Set(vb.map((e) => e.key))

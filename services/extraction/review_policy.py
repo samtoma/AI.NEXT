@@ -73,6 +73,29 @@ def students_always_full(course_id: str | None) -> bool:
     return subject_of(course_id) == "math"
 
 
+def generated_item_is_live(item: dict, course_id: str | None) -> bool:
+    """Is a GENERATED item (a family's variant or a widget question) live for students once its bundle is loaded?
+
+    The one place the audit and the loaders agree on it (load_generated_questions.py: a maths course loads its
+    whole bundle live, answer 37a). A bundle straight from the generator carries no `status` — the loader decides
+    it, and for a maths course the answer is live; an EXPORT of loaded rows (export_generated_content.py) says what
+    each row is, and is believed: a `hold_reason` or any status but `live` (review, retired, rejected) is not live.
+    A course that is not maths keeps its review queue, so a statusless item there is not live."""
+    if item.get("hold_reason"):
+        return False
+    status = item.get("status")
+    if status:
+        return status == "live"
+    return students_always_full(course_id)
+
+
+def book_item_is_live(q: dict) -> bool:
+    """Is a BOOK question of an assembled bundle live once load_seed.py has loaded it? G2 kept it (`verified`) and no
+    automatic check holds it (`hold_reason`). A maths question the assembly left unverified is held `unverified`,
+    never live on no evidence (load_seed.py), so `verified` is the whole rule once no hold is named."""
+    return bool(q.get("verified")) and not q.get("hold_reason")
+
+
 def require_review_columns(cur) -> None:
     """Refuse to write stamps the old way: every loader needs migration 035's columns."""
     cur.execute("""SELECT count(*) FROM information_schema.columns

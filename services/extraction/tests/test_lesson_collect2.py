@@ -340,8 +340,11 @@ class Collect3(unittest.TestCase):
         for key, want in (("\\text{0,5}", "0,5"), ("-\\text{0,5}", "-0,5"), ("5\\text{ cm}", "5")):
             _, x = self.one(it, typing("Ex8-4:15", key, "$m=\\text{0,5}$"), "0.5")
             self.assertEqual(x["answer"], want, key)
+        # a fraction is never stored as a numeric key (the app's numeric grader would read "1/2" as 1): it is typed again as an
+        # expression (COLLECT-6, tests/test_lesson_collect6.py::FractionKeys), and 1/2 still does not read as the printed "0,5"
         _, x = self.one(it, typing("Ex8-4:15", "\\frac{1}{2}", "$m=\\text{0,5}$"), "0.5")
-        self.assertIn('numeric key "\\frac{1}{2}" is not a number', x["typing_problems"], "a fraction is still refused")
+        self.assertEqual((x["answer_type"], x["typing_retyped"]["rule"]), ("expression", "fraction-key"))
+        self.assertTrue(any("does not read as the printed answer" in p for p in x["typing_problems"]), x["typing_problems"])
 
     def test_three_verdicts_that_contradict_each_other_are_flagged(self):
         it = item("Ex8-4:20c", "Find the line.", ["$y=2x+12$"], "y = 2x + 12")
