@@ -427,6 +427,51 @@ Samuel: Sonnet 5.5 exists; the app needs a restart to get it. Every pipeline scr
 - Agents told to stop with handoff notes: spec records (outline/checker/answer 40), family parent (answer 40),
   working-checker calibration (sw-v2). Re-launch them on `model: "sonnet"` from their notes.
 
+## Handoff — working-checker calibration (sw-v2), paused 2026-10-01
+
+Stopped for the app restart (Sonnet 5.5) before any book-source verification or code change was made. Re-launch
+on `model: "sonnet"` (now 5.5) from this note; nothing here needs the old model specifically.
+
+**Flag classification: not started.** Read in full: the run record (`runs/g10-math/working-check/ch08-wf_957393ec-d74.json`,
+$30.996817 metered, 192 solutions, 1086 Sonnet calls' worth of input/output tokens dominated by 29.2M cache_read +
+6.4M cache_write + 911K output — consistent with the Facts' "agents opened figure images and pixel-measured
+coordinates, several wrote long notes") and the collected flags (`runs/g10-math/working-check/ch08.flags.json`:
+169 consistent, 21 flagged solutions / 25 flags, 2 unclear). Also read `working_check.py` (sw-v1: precheck/args/collect
+CLI, the free numeric pre-check evaluator, `render_shard`/`has_working`) and `runbook/working-check.workflow.js`
+(sw-v1: one Sonnet agent per solution, no tool-call cap, no cost guardrail on image opens) and confirmed the
+Chapter 8 shard packet is on disk at `work/g10-math/packets/fanout/wcheck-ch08/` (+ `.args.json`, `.precheck.json`)
+for source lookups. **Zero of the 25 flags have been checked against the book source yet** — none should be
+treated as REAL/REAL-BUT-ELSEWHERE/FALSE until that pass runs. First-glance candidates worth prioritising when
+resumed (unverified): the `q:g10m8s1-1-3:ex8-1-5` / `ex8-6-3` pair (flagged `final_answer`, key "D" vs working's
+"shape Z" — named in the task Facts as possibly a missing-MCQ-options defect, i.e. REAL-BUT-ELSEWHERE rather than
+a working error) and the `q:*:we01`/`ex8-4-19b`/`ex8-6-17` label/wrong_value flags (point swapped for another
+point's coordinates — the kind of error the free numeric pre-check cannot catch by design, so these look like the
+genuine value of the agent pass). Full flag id list for the resumed pass: `ex8-6-36c` (s2-1-1), `ex8-6-26`×2
+(s3-2-2, steps 4 and 5), `ex8-6-38d` (s3-2-2), `ex8-6-46c` (s3-2-2), `ex8-6-42d` (s3-2-3), `ex8-6-27`×2 (s4-1-1,
+steps 1 and 2), `ex8-1-5` (s1-1-3), `ex8-6-3` (s1-1-3), `ex8-6-24a` (s2-1-1), `ex8-6-42a` (s2-1-1), `we01`×2
+(s2-1-1, steps 2 and 5), `ex8-4-10` (s3-2-2), `ex8-4-19b`×2 (s3-2-2, steps 2 and 4), `ex8-4-1b` (s3-2-2),
+`ex8-6-42e` (s3-2-2), `ex8-6-44d` (s3-2-2), `ex8-4-5` (s3-2-3), `ex8-6-17` (s4-1-1), `ex8-6-24c` (s4-1-1), `we10`
+(s4-1-1), `ex8-6-46e` (s4-1-3).
+
+**sw-v2: no code changed.** No edits to `working_check.py`, `runbook/working-check.workflow.js`, or
+`tests/test_working_check.py`. Design not finalised, but the cost breakdown above points at the fix matching the
+task brief: gate figure-image opens behind "the working's claim depends on a figure value not in the text" rather
+than letting every agent open images by default, add a hard tool-call cap, keep notes short, and consider a Haiku
+pre-screen (consistent-looking solutions skip Sonnet) with Sonnet only on candidates — mirroring the pipeline's
+other Haiku-for-yes/no stages. "Flag, never correct" is unchanged. Version bump (`PROMPTS_VERSION`, workflow
+`meta`) still needed once the prompt changes.
+
+**Left, in order:** (1) verify all 25 flags against `work/g10-math/packets/fanout/wcheck-ch08/s/*.txt` (and the
+EPUB source where a shard's figure reference needs it) and classify with one-line evidence each; (2) write sw-v2
+in both files + bump `prompts_version` to `sw-v2`; (3) `uv run fanout.py status` to confirm no S0b run is mid-flight
+before touching any other chapter's embedded working-check copy, then regenerate the not-yet-launched ones from
+`runs/g10-math/fanout-plan.json` via `fanout.py prepare <id>` / `embed_workflow.py`; (4) add/extend
+`tests/test_working_check.py` for sw-v2 and run `AINEXT_TEST_PG="host=127.0.0.1 port=5432" uv run --with pytest
+python -m pytest -q tests/` plus the Chapter 8 dry run, offline only (no Workflow launch, no paid model call);
+(5) update the fan-out plan's cost estimate for the checker; (6) report flag table + sw-v2 diff + new cost/solution
++ test results + a re-run-Chapter-8-or-keep-sw-v1 recommendation. No commit/push/stash/reset — the loop
+auto-snapshots every 30s.
+
 ## Handoff — family-parent agent (answer 40), paused 2026-10-01
 
 Stopped on the coordinator's word (app restart for Sonnet 5.5), mid-investigation, before any file was
