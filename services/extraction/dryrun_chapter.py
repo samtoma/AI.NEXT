@@ -463,7 +463,8 @@ def s2_s4(line: Line, maths: Path, lessons: list[str], figure_types: dict) -> No
     items = {p: {"verdict": "exclude", "note": f"{MARK} typing problem"} for p in problems}
     for key in [d for d in disputes if d not in items][:3] + [n for n in nopa if n not in items][:2]:
         items[key] = {"verdict": "accept", "note": f"{MARK} accepted to exercise the G2 apply step"}
-    g2 = {"by": GATE_BY.format(g="G2"), "items": items}
+    # a stub is not a human: "auto" sends its verdicts to ai_checked_by, never reviewed_by (migration 035)
+    g2 = {"by": GATE_BY.format(g="G2"), "auto": True, "items": items}
     gp = line.p("runs", "g2.dryrun.json")
     gp.write_text(json.dumps(g2, indent=1))
     line.stubbed(f"G2: {sum(v['verdict'] == 'exclude' for v in items.values())} excluded (typing problems), "
@@ -507,9 +508,13 @@ def load(line: Line, bundles: list[Path]) -> None:
         if b.status == "loadable":
             line.uv("load_seed.py", "--all", "--course", b.course_id, db=True)
     # the rule scripts/local-dev.sh applies after a fresh load: Prep-3 maths' book questions live, as
-    # ADR-0019 has them in production (scoped to that course, never scripture or generated rows)
-    n = line.q("""with p as (update questions q set status='live', reviewed_by='local-dev (dry run)', reviewed_at=now()
-                  where q.status<>'live' and q.source in ('seed','authored') and exists (select 1 from node_subject ns
+    # ADR-0019 has them in production (scoped to that course, never scripture or generated rows). Since
+    # migration 035 the loader already loads a maths course live (answer 37a) and this is a backstop that
+    # writes no stamp (only a human stamp is a review, answer 33) and never releases an automatic hold.
+    n = line.q("""with p as (update questions q set status='live',
+                         review_note=coalesce(q.review_note || '; ', '') || 'promoted without review: local-dev (dry run)'
+                  where q.status='review' and q.hold_reason is null and q.materialised_from is null
+                    and q.source in ('seed','authored') and exists (select 1 from node_subject ns
                   where ns.node_id = q.lo_id and ns.course_id = 'course:prep3-math-en') returning 1)
                   select count(*) from p""")[0][0]
     line.note(f"Prep-3 maths: {n} book question(s) promoted to live, as scripts/local-dev.sh does (ADR-0019)")
@@ -534,7 +539,8 @@ def load(line: Line, bundles: list[Path]) -> None:
     line.stage("G2 apply", "the G2 verdicts reach the rows (backlog 3)")
     line.uv("apply_review_verdicts.py", "--g2", line.p("runs", "g2.dryrun.json"), "--book", book.book,
             "--runs", line.p("runs", "lesson", "x").parent, db=True)
-    stamped = line.q("SELECT reviewed_by, status, count(*) FROM questions WHERE lo_id LIKE %s GROUP BY 1, 2 ORDER BY 1, 2",
+    stamped = line.q("""SELECT coalesce(reviewed_by, ai_checked_by), status, hold_reason, count(*) FROM questions
+                         WHERE lo_id LIKE %s GROUP BY 1, 2, 3 ORDER BY 1, 2, 3""",
                      (f"lo:g10m{line.ch}s%",))
     line.count(stamps=[list(r) for r in stamped])
 
@@ -651,7 +657,8 @@ def s5_s6_s7(line: Line) -> None:
         for qid in json.loads(f.read_text())["question_ids"]:
             verdicts[qid] = "accept"
     g3 = line.p("runs", "g3.dryrun.json")
-    g3.write_text(json.dumps({"bundle": "dry run", "reviewer": GATE_BY.format(g="G3"), "verdicts": verdicts}, indent=1))
+    g3.write_text(json.dumps({"bundle": "dry run", "reviewer": GATE_BY.format(g="G3"), "auto": True,
+                              "verdicts": verdicts}, indent=1))
     line.stubbed(f"G3: the {len(verdicts)} sampled item(s) accepted by {GATE_BY.format(g='G3')!r}")
     # Promotion follows the handoff's "status at export" (ADR-0019 note): accepted and unsampled
     # families go live. It comes BEFORE the verdicts are applied: `--promote` reloads the rows

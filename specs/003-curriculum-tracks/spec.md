@@ -1120,6 +1120,75 @@ through the attempts route and confirm identical outcomes.
   as marked, shown or drawn *(amended 2026-09-27, Chapter 8 pilot)*. A figure the visual stage failed to produce (an agent error, not a kind
   no renderer can draw) is a coverage failure, re-run for that figure alone.
 
+  *(TEMPORARILY reversed for students, 2026-10-01, decision 58d, answer 37d — see FR-4508.)* While a
+  needed kind is on the gap list and not yet built, a **maths** course MAY show the book's own image in
+  the figure's place instead of shipping the lesson without it, so the whole extraction can appear to
+  Samuel now. This reverses only the first sentence above, and only for students of a maths course: the
+  figure-gap inventory, the kind-by-kind approval gate, and the "never draws or reveals the unknown"
+  rule two sentences above are all unchanged and still bind the stand-in image exactly as they bind a
+  native one.
+
+### The internal review backlog (FR-4501…FR-4509) **[ADDED 2026-10-01, decision 58, answer 37]**
+
+> Samuel, on filling the Grade 10 course: *"keep the student always full as if everything has been
+> reviewed… and in the background create agents with the review process so we can review from the
+> console page."* This block is for maths courses only — Prep-3 Mathematics and the Grade 10 American
+> course — and does not touch Social Studies' or Arabic's existing review queue, or the sacred-content
+> gate (Principle IV). None of it has file:line evidence yet; see [tasks.md](./tasks.md) T436…T443.
+
+- **FR-4501**: For every maths course, the console MUST hold a **backlog**: one row per content item
+  that carries no human stamp (FR-4506 defines the stamp). The backlog MUST list, at minimum: a book
+  question's canonical solution, or a correction to one (FR-4302); an orchestrator-applied stem fix
+  (FR-4302); a generated question (FR-4304); a widget question and its predicate → misconception
+  mapping, including one the blind verifier refused (FR-4306); a misconception entry (FR-4307); an
+  objective or a prerequisite link (FR-4410); a figure shown as the book's own image because its native
+  type does not exist yet (FR-4508); and a decision a gate reached on the AI checks' recommendation
+  rather than a human's during the fan-out (FR-4509).
+- **FR-4502**: An operator holding `content-review` MUST be able to review one backlog item at a time
+  and record exactly one of three verdicts: **approve** (the human stamp FR-4506 requires; the item now
+  reads reviewed), **fix requested** (a student sees the item completely unchanged; the flag travels
+  with the item's export, FR-4208), or **reject** (the item stops being served to students — a live
+  question reverts to held, a misconception or a figure stand-in stops being used — and stays in the
+  data, attributed, never deleted). Only operators Samuel names for this role — Samuel, Tamer and Kamil,
+  at launch — MAY record a verdict.
+- **FR-4503**: The backlog MUST hold a **claim lock**: once an operator opens an item to review it, no
+  second operator MAY be given that same item until the first releases it or records a verdict. A claim
+  left open (the operator navigates away without deciding) MUST eventually release on its own, so an
+  item can never stay claimed forever.
+- **FR-4504**: Every verdict MUST be recorded as an **append-only audit** entry: which item, which
+  operator, when, which verdict, and any note. No entry is ever overwritten; a changed mind is a new
+  entry, not an edit to an old one.
+- **FR-4505**: The console MUST show the backlog's size **by kind, by course, by chapter and by
+  reviewer**, so the stated goal — an empty backlog — is a number operators watch fall, not an
+  impression.
+- **FR-4506** *(decision 54, answer 33)*: **"Reviewed" MUST mean only that a human stamp exists** —
+  FR-4502's approve verdict, and nothing else. An item an AI check alone has passed, however many
+  independent passes it had, MUST be shown in the console as **"AI-checked, awaiting human"**, never as
+  "reviewed." No student surface MUST say "reviewed" or "unreviewed" about any item (unchanged from
+  ADR-0019).
+- **FR-4507**: This backlog covers **maths courses only**. Social Studies and Arabic MUST keep their
+  existing review queue (the gate ADR-0019 did not touch), unaffected by this feature. Quran and hadith
+  passages held by the sacred-content gate (Principle IV) MUST NOT appear in this backlog and MUST NOT
+  be served regardless of any verdict recorded here.
+- **FR-4508** *(decision 58d, answer 37d; TEMPORARILY reverses decision 50/answer 29 for students only;
+  see FR-4321)*: While a figure's needed native type has not been approved and built, a maths course MAY
+  show the book's own image in its place (`visuals.kind: "book_image"`, `stand_in: true`) rather than
+  shipping the lesson without the figure. Every such stand-in MUST be a backlog item named "needs native
+  figure" (FR-4501), so it is never forgotten once the native type is built and the image is replaced.
+  FR-4321's own rule MUST still hold without exception: a stand-in image MUST NOT draw or reveal the
+  question's own unknown or answer; one that does is withheld, and the lesson ships without it, exactly
+  as FR-4321 already requires of a native figure.
+- **FR-4509** *(decision 58c, answer 37c)*: During the fan-out to the rest of the book, the pipeline's
+  gates **G1** (objectives and prerequisite links, FR-4410), **G2** (solution disputes, FR-4302), **G3**
+  (the family and widget-mapping sample, FR-4306) and **G4** (misconceptions and refutations, FR-4307)
+  MUST proceed on the AI checks' own recommendation rather than hold a chapter waiting for a human to
+  clear it. Every decision reached this way MUST land in the backlog (FR-4501) as an auto-passed item,
+  never counted as a human stamp. The pipeline's **automatic safety checks are unaffected**: broken
+  maths, an answer that disagrees with the book (FR-4302), and the parity drift guard (FR-4207) still
+  hold an item exactly as before this decision. *(This requirement names G1–G4 only, matching Samuel's
+  answer 37c. Whether it also covers G5 — the dry-run delta, coverage, drift and cost go/no-go before
+  production promotion, FR-4209 — is not decided; see Open questions for Samuel, below.)*
+
 ### Key Entities
 
 Plain language; no field names. [data-model.md](./data-model.md) owns the mapping.

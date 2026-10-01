@@ -106,7 +106,8 @@ def g2_targets(g2: dict, runs_dir: Path) -> tuple[list[dict], list[str]]:
                         "question_id": item.question_id(), "teaching": item.answer_type == "not_markable",
                         "reviewer_verdict": (v or {}).get("samuel_verdict") or verdict,
                         "stem_fix_by": (v or {}).get("stem_fix_by"),
-                        "auto": bool((v or {}).get("auto")) or review_policy.is_auto((v or {}).get("by"))})
+                        "auto": bool((v or {}).get("auto")) or review_policy.is_auto((v or {}).get("by")),
+                        "by": (v or {}).get("by")})
     return targets, problems
 
 
@@ -145,7 +146,10 @@ def apply_g2(cur, g2: dict, runs_dir: Path, course: str, dry_run: bool) -> dict:
         # (G2 accept)" and "stem fixed by orchestrator …" is a NOTE — never "(G2 fix)" for a fix the reviewer
         # did not make, and never part of the human stamp (migration 035)
         verdict = t["reviewer_verdict"] if t["verdict"] in ("accept", "fix") else t["verdict"]
-        stamp = f"{auto_by if auto else by} (G2 {verdict})"
+        # who: a human's own name; an auto verdict's signer (the item's, else the file's), which is the AI
+        # recommendation's "auto-pass G2 (AI recommendation)" unless a stub names itself (the dry run)
+        who = by if not auto else ((t.get("by") if t["auto"] else None) or (by if file_auto else None) or auto_by)
+        stamp = f"{who} (G2 {verdict})"
         # the pre-035 "held: its figure is missing" annotation is hold_reason's job now (figure_missing)
         kept = "; ".join(n for n in (note or "").split("; ") if n.strip() != "held: its figure is missing")
         want_note = review_policy.join_notes(kept, f"stem fixed by {t['stem_fix_by']}" if t.get("stem_fix_by") else None)
@@ -242,8 +246,7 @@ def main() -> int:
     # An auto-passed G3 (answer 37c) is the AI's verdict: it goes to ai_checked_by, never reviewed_by.
     auto = bool(doc.get("auto")) or review_policy.is_auto(reviewer)
     stamp_col, stamp_at = ("ai_checked_by", "ai_checked_at") if auto else ("reviewed_by", "reviewed_at")
-    if auto:
-        reviewer = review_policy.auto_pass_by("G3")
+    # (an auto file keeps its signer: "auto-pass G3 (AI recommendation)" from auto_pass_gates.py, or a stub's name)
     verdicts: dict[str, str] = doc["verdicts"]
     bad = {v for v in verdicts.values()} - VALID
     if bad:

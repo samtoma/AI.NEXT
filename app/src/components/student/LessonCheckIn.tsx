@@ -893,6 +893,24 @@ function lessonChip(selected: boolean, mono: boolean) {
   );
 }
 
+/*
+ * NOT READY YET — a lesson or chapter of the book that is listed but not
+ * prepared (lib/course-outline.ts). The design system's own "not ready yet":
+ * the dashed `--play-disabled-border` outline with no fill, no shadow and no
+ * press (globals.css's disabled anatomy; SubjectHome's MoreSubjectsComing).
+ * Its text is `--play-text-muted` (6.9:1 on white), not `--play-disabled-text`,
+ * which the system permits only on a [disabled] control — these are not
+ * controls at all. Same geometry as a lesson chip, so the row keeps its rhythm.
+ */
+const PREPARING_CHIP =
+  "flex min-h-[var(--noor-touch-min)] items-center gap-2 rounded-[var(--play-radius-pill)] border-[length:var(--play-stroke-sm)] border-dashed border-[color:var(--play-disabled-border)] px-3.5 font-display text-[0.85rem] font-semibold leading-none text-[color:var(--play-text-muted)]";
+/** The chapter-level "Being prepared" tag beside a chapter with nothing prepared. */
+const PREPARING_TAG =
+  "rounded-[var(--play-radius-pill)] border-[length:var(--play-stroke-sm)] border-dashed border-[color:var(--play-disabled-border)] px-2.5 py-1 font-display text-[0.72rem] font-bold leading-none text-[color:var(--play-text-muted)]";
+/** The legend's sample of a not-ready chip. */
+const PREPARING_SWATCH =
+  "h-3 w-5 shrink-0 rounded-[var(--play-radius-pill)] border-[length:var(--play-stroke-sm)] border-dashed border-[color:var(--play-disabled-border)]";
+
 /** A door card on the Arabic/Social check-in: a big sticker that presses. */
 const DOOR = cx(
   STROKE,
