@@ -50,8 +50,38 @@ step now always ask which curriculum, naming every curriculum the product knows 
 a curriculum with nothing live yet for the chosen grade is still offered and selectable, carrying a short
 note that there is nothing to study there yet (the orchestrator's default, awaiting Samuel's
 confirmation); the account is not created without an answer. FR-4102's console "offered" line and User
-Story 3's scenarios and edge cases are reworded to match. Existing accounts are untouched. **Code is in
-progress on this branch; this revision has no file:line evidence yet** (added when the code lands).
+Story 3's scenarios and edge cases are reworded to match. Existing accounts are untouched. **Code is now
+built and read** (2026-10-01, T434): both refusals answer `422`, not the `409`/`400` this revision and
+`contracts/student-api.md` first said — corrected in both places; see the FR-4004, FR-4005 and FR-4102
+rows of [traceability.md](./traceability.md).
+
+**2026-10-01 (answer 37)**: Samuel, asked how to fill the Grade 10 course: *"I am on an early phase, and
+I always always want to see the whole extraction appear… keep the student always full as if everything
+has been reviewed… please consider and fan out the full book for me, and in the background create agents
+with the review process so we can review from the console page"* ([decisions.md](./decisions.md),
+decision 58; `docs/WIP-g10-pilot/samuel-answers.md`, answer 37). Five follow-ups the same day (decisions
+56–58, lettered a–e in the answers file):
+- **(a) Maths only, students always full.** Everything extracted for a maths course (Prep-3 or this one)
+  reaches students as if reviewed; review status stays an operator fact. Social Studies and Arabic keep
+  their existing review queue; Quran and hadith stay sealed (Principle IV). This sharpens, rather than
+  changes, ADR-0019 and constitution III's existing "everything in the maths bank is live" rule — see the
+  Constitution check, row III, below.
+- **(b) A new internal review backlog** (new **FR-4501…FR-4507** below): every item without a human
+  stamp is a console row; Samuel, Tamer and Kamil review one at a time; "reviewed" means only a human
+  stamp (decision 54, answer 33) — an AI-only pass reads "AI-checked, awaiting human".
+- **(c) Gates G1–G4 auto-pass during the fan-out** (FR-4302, FR-4410 amended below; FR-4306 unchanged;
+  new **FR-4509**): a chapter is not held for a human to clear before its content reaches students; the
+  automatic safety checks (broken maths, an answer that disagrees with the book, the parity guard) are
+  not relaxed.
+- **(d) A figure with no native type yet is shown as the book's own image, temporarily** (new **FR-4508**,
+  TEMPORARILY reversing decision 50/answer 29 "native only, wait" for students): until the native type
+  exists, the lesson is not held back for its figure; every stand-in is a backlog item.
+- **(e) The full fan-out is approved**, ≈ $0.85–1.1k (decision 58e) — recorded in `plan.md` and
+  `docs/PROJECT_STATE.md`.
+
+**Code is in progress on this branch for all of FR-4501…FR-4509; none has file:line evidence yet**
+(added when it lands). Two things this pass could not resolve and puts to Samuel: see *Open questions
+for Samuel*, below.
 
 **Status of the code.** Committed only as unreviewed WIP snapshots on the pushed feature branch (an
 auto-snapshot job commits every 30 seconds, `[skip ci]`); nothing is reviewed by Samuel or merged to `main`.
@@ -158,6 +188,14 @@ producing generated questions, widget questions and the misconception library, a
 - a third independent reading when two maths-transcription readings disagree, and the EPUB-only image
   rule (FR-4407);
 - the G10 course's prompts are English-only, a per-course setting (FR-4205).
+
+**Added 2026-10-01** (answer 37, decisions 56–58):
+- an internal console review backlog for maths content with no human stamp, reviewed one at a time by
+  `content-review` operators, goal zero (FR-4501…FR-4507);
+- gates G1–G4 proceed on the AI checks' own recommendation during the fan-out, with every decision
+  landing in that backlog (FR-4509);
+- a figure with no native type yet shown as the book's own image, temporarily, instead of holding the
+  lesson (FR-4508).
 
 **Deliberately not written as requirements here:**
 

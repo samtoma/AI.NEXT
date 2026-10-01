@@ -21,6 +21,8 @@ Samuel's answers 33 and 37 (2026-09-27, 2026-10-01; docs/WIP-g10-pilot/samuel-an
 
 from __future__ import annotations
 
+import re
+
 import book_config
 
 # --- what an AI check is called -------------------------------------------------------------
@@ -91,3 +93,37 @@ def join_notes(*notes: str | None) -> str | None:
             if part and part not in out:
                 out.append(part)
     return "; ".join(out) or None
+
+
+_FIG_MARK = " [held: figure missing]"
+_AI_RE = re.compile(r"^\s*ai |\(pending [^)]*\)\s*$", re.I)
+_BULK_RE = re.compile(r"^\s*local-dev|\(poc bulk\)\s*$", re.I)
+_PENDING_RE = re.compile(r"\s*\(pending [^)]*\)$", re.I)
+
+
+def split_legacy_stamp(stamp: str | None) -> dict:
+    """A pre-035 `reviewed_by` string split the way migration 035 splits it, for a RESTORE of an export
+    written before 035: {reviewed_by, ai_checked_by, figure_hold, note}. A post-035 human stamp comes
+    back unchanged as reviewed_by."""
+    out = {"reviewed_by": None, "ai_checked_by": None, "figure_hold": False, "note": None}
+    if not stamp:
+        return out
+    s = stamp
+    if _FIG_MARK in s:
+        out["figure_hold"] = True
+        s = s.replace(_FIG_MARK, "")
+    head, _, rest = s.partition("; ")
+    head, rest = head.strip() or None, rest.strip() or None
+    if rest and re.search(r"held: its figure is missing", rest, re.I):
+        out["figure_hold"] = True
+    notes = [rest]
+    if head is None:
+        pass
+    elif _AI_RE.search(head):
+        out["ai_checked_by"] = _PENDING_RE.sub("", head).strip()
+    elif _BULK_RE.search(head):
+        notes.insert(0, BULK_NOTE.format(stamp=head))
+    else:
+        out["reviewed_by"] = head
+    out["note"] = join_notes(*notes)
+    return out

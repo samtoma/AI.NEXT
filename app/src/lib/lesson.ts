@@ -19,6 +19,7 @@ import { figuresByQuestion, noteFigureless } from "./question-figures";
 import { effectiveProbing, learnWrongAnswerRules, PROBING_SURFACE } from "./socratic-probing";
 import { COURSE_RANK, MODULE_ORDER } from "./module-order";
 import { DEFAULT_LESSON_SLUG, sanitizeLessonSlug, slugOfLo } from "./lesson-slug";
+import { outlineCourseOfLesson } from "./course-outline-queries";
 import type { WidgetQuestionSpec } from "./types";
 import { CURVE_SKETCHER_G10_FAMILIES, documentedMathWidgets, mathWidgetDocs, mathWidgetDocsNamed } from "./widget-docs";
 import { courseDef, type CourseTutorFacts } from "./courses";
@@ -414,8 +415,33 @@ async function resolveLessonLos(db: Db, slug: unknown, firstOnly = false) {
   const safeSlug = sanitizeLessonSlug(slug);
   const rows = await read(safeSlug);
   if (rows.length > 0 || safeSlug === DEFAULT_LESSON_SLUG) return { slug: safeSlug, rows };
+  // A lesson the book's outline lists but whose content is not prepared yet
+  // (migration 037, lib/course-outline.ts): REFUSED — no objectives, so no
+  // course, so `lessonDataOn`'s gate returns null and every caller answers
+  // "not found" before anything is taught, quizzed or sent to a model
+  // (constitution II). It must not fall through to the default lesson below:
+  // that would teach a different lesson under this one's name. Asked only on
+  // this path — a slug with no objectives — so a prepared lesson costs nothing.
+  if ((await outlineCourseOfLesson(safeSlug, db)) !== null) return { slug: safeSlug, rows };
   // unknown slug → the default lesson (same student, same unit of work)
   return { slug: DEFAULT_LESSON_SLUG, rows: await read(DEFAULT_LESSON_SLUG) };
+}
+
+/**
+ * Is `slug` a lesson of some book's outline that is NOT prepared — listed,
+ * with no objectives loaded? The early refusal for a route that would
+ * otherwise open a session before it reaches `getLessonData` (`/api/ask`'s
+ * lesson surfaces). Same two reads `resolveLessonLos` makes on its refusal
+ * path; `false` for every prepared lesson and every slug no outline lists.
+ */
+export async function isUnpreparedLesson(slug: unknown, client: PoolClient): Promise<boolean> {
+  const safeSlug = sanitizeLessonSlug(slug);
+  if (safeSlug !== String(slug ?? "").trim()) return false;
+  const any = await client.query(`SELECT 1 FROM graph_nodes WHERE kind = 'learning_objective' AND id LIKE $1 LIMIT 1`, [
+    `lo:${safeSlug}-%`,
+  ]);
+  if ((any.rowCount ?? 0) > 0) return false;
+  return (await outlineCourseOfLesson(safeSlug, client)) !== null;
 }
 
 /** The course of a resolved lesson: its first objective's, or null. */
@@ -496,6 +522,13 @@ async function lessonDataOn(
   ] as const);
   const safeSlug = lesson.slug;
   const losRes = { rows: lesson.rows };
+
+  // Nothing to teach from — a lesson of the book not prepared yet (migration
+  // 037; `resolveLessonLos` refuses it rather than substituting the default
+  // lesson). Refused here, explicitly, and not only by the course gate below:
+  // with no student in scope the gate admits everything, and a lesson with no
+  // objectives must never reach a prompt (constitution II).
+  if (losRes.rows.length === 0) return null;
 
   // THE GATE, and it is deliberately the first thing after the lesson is
   // identified — before the question bank, the figures and the student's
