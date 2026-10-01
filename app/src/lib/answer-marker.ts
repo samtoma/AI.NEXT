@@ -184,6 +184,12 @@ export function normalise(raw: string): string {
   return s.replace(/\s+/g, " ").trim();
 }
 
+/** Drop the whitespace a `\text{0,}` wrapper leaves at the end of the output, so a mark attaches to its decimal. */
+function trimTrailingSpace(out: string[]): void {
+  while (out.length && /^\s*$/.test(out[out.length - 1])) out.pop();
+  if (out.length) out[out.length - 1] = out[out.length - 1].replace(/\s+$/, "");
+}
+
 /** The LaTeX the keys use (and a math field emits) -> plain notation. Unknown commands are unreadable. */
 function fromLatex(s: string): string {
   let i = 0;
@@ -264,13 +270,26 @@ function fromLatex(s: string): string {
       }
       case "dot": {
         const a = group();
-        out.push(`${a}'`);
+        // a dot over ONE digit of a decimal marks it as repeating: 4,8\dot{3} (also \text{4,8}\dot{3}, \dot{\text{3}})
+        const digit = /^\s*(\d)\s*$/.exec(a);
+        if (digit && /\d[.,][\d']*\s*$/.test(out.join(""))) {
+          trimTrailingSpace(out);
+          out.push(`${digit[1]}'`);
+        } else out.push(`${a}'`);
         break;
       }
       case "overline":
       case "bar": {
         const a = group();
-        out.push(`${a}_bar`);
+        // a bar over the digits after a decimal comma is the recurring period, in the bracketed form the
+        // tokenizer reads: 0,\overline{45} -> 0,(45); 0,1\overline{23} -> 0,1(23) (also \text{0,}\overline{\text{45}}).
+        // A bar over anything else (a segment, a number with no decimal part in front) keeps its x_bar
+        // spelling, which the tokenizer refuses: never guessed.
+        const digits = /^\s*(\d+)\s*$/.exec(a);
+        if (digits && /\d[.,]\d*\s*$/.test(out.join(""))) {
+          trimTrailingSpace(out);
+          out.push(`(${digits[1]})`);
+        } else out.push(`${a}_bar`);
         break;
       }
       case "text":
