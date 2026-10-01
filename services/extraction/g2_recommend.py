@@ -987,7 +987,8 @@ def follow_ups(book: str, chapter: int, lesson_runs: list[str], *, recommended: 
     The chapter's working check and S5 draft are built from the ASSEMBLED bundle, which the recommendation changes: ideally it is applied
     BEFORE they are launched (`fanout.py close-chapter N` then does steps 2-4 itself, passing the recommendation file once it exists, and
     re-prepares them). If they ran already (Chapters 1 and 2), check what the bundle gained since: `g2-recommend-delta` lists the bundle's
-    solutions the working check never covered, and `working_check.py args --only` limits a second check to them.
+    solutions the working check never covered, `working_check.py args --only` limits a second check to them, and `collect --merge-into` puts its flags into the
+    chapter's canonical flags file (the only one the console reads; a delta kept beside it never reaches Samuel's backlog).
 
     If the lesson runs were RE-COLLECTED after the recommendation run was made (lesson.workflow.js COLLECT-6 widened, 2026-10-01), do that first and
     re-run G2 on them before collecting: the collector then skips what the checks now decide and refuses what changed (README §7c)."""
@@ -1013,7 +1014,9 @@ def follow_ups(book: str, chapter: int, lesson_runs: list[str], *, recommended: 
         f"#   uv run working_check.py args --book {book} --seed seed/{book}/g10m-c{t}.json --chapter {chapter} --pass-id B --order shuffled --order-seed 11 "
         f"--only {delta} --by-ref work/{book}/packets/fanout/wcheck-ch{t}-g2rec-B "
         f"--out work/{book}/packets/fanout/wcheck-ch{t}-g2rec-B.args.json --embed work/{book}/packets/embedded/fanout/wcheck-ch{t}-g2rec-B.workflow.js",
-        f"#   (run both copies; then working_check.py collect --args A.json --args B.json --runs <A run> <B run> --out runs/{book}/working-check/ch{t}.g2rec.flags.json)",
+        f"#   (run both copies, save and meter them; then collect the pair AND merge it into the canonical file, the only one the console's backlog reads:)",
+        f"#   uv run working_check.py collect --args A.json --args B.json --runs <A run> <B run> --out runs/{book}/working-check/ch{t}.g2rec.flags.json "
+        f"--merge-into runs/{book}/working-check/ch{t}.flags.json",
         f"# only if chapter {chapter} is ALREADY loaded in {db} (it adds the newly live questions, releases the held ones, rejects the excluded):",
         f"pg_dump -h 127.0.0.1 -Fc {db} > work/{book}/backups/pilot-before-g2rec-ch{t}.dump",
         f'AINEXT_DB_DSN="{dsn}" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/{book}/g10m-course.json seed/{book}/g10m-c{t}.json '

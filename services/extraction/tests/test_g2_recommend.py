@@ -832,6 +832,153 @@ class Errata(unittest.TestCase):
         self.assertIn("Marked as an AI repair for you to review", md)
 
 
+class DeltaMerge(unittest.TestCase):
+    """A delta working check (the solutions a chapter gained after its check ran) is merged into the canonical `chNN.flags.json`: the only file
+    the console's backlog reads (`app/src/lib/review-gate-working.ts` ignores every other `chNN.*.flags.json`)."""
+
+    A1, A2, A3 = "q:g10m8s2-1-1:ex8-2-1", "q:g10m8s2-1-1:ex8-2-2", "expl:g10m8s3-1-1:we03"
+
+    def setUp(self):
+        import working_check as W
+        from test_working_check import Book, bundle
+        self.W = W
+        self.tmp = Path(tempfile.mkdtemp(prefix="wcmerge_"))
+        self.argsBase = W.build_args(Book(), bundle(), 8, self.tmp / "base", only={self.A1}, batch=2)[0]
+        self.argsDelta = W.build_args(Book(), bundle(), 8, self.tmp / "delta", only={self.A2, self.A3}, batch=2, pass_id="A")[0]
+        flag = {"step": 1, "quote": "P(0, 1)", "kind": "wrong_value", "where": "working", "expected": "P(0, 0)", "why": "the question gives P(0, 0)"}
+        run_base = {"stage": "SW", "pass_id": "A", "run_id": "wf_base", "prompts_version": "sw-v3",
+                    "results": [{"solution_id": self.A1, "verdict": "consistent"}]}
+        run_delta = {"stage": "SW", "pass_id": "A", "run_id": "wf_delta", "prompts_version": "sw-v3",
+                     "results": [{"solution_id": self.A2, "verdict": "flagged", "flags": [flag]}, {"solution_id": self.A3, "verdict": "consistent"}]}
+        self.base = W.collect([self.argsBase], [run_base])
+        self.delta = W.collect([self.argsDelta], [run_delta])
+
+    def tearDown(self):
+        shutil.rmtree(self.tmp, ignore_errors=True)
+
+    def test_the_delta_joins_the_canonical_file_and_nothing_of_the_base_changes(self):
+        W = self.W
+        merged = W.merge(copy.deepcopy(self.base), copy.deepcopy(self.delta), "ch08.g2rec.flags.json")
+        self.assertEqual(merged["checked_ids"], sorted([self.A1, self.A2, self.A3]), "the canonical file covers every solution now")
+        self.assertEqual(merged["solutions"], self.base["solutions"] + self.delta["solutions"])
+        self.assertEqual(merged["verdicts"], {"consistent": 2, "flagged": 1, "unclear": 0})
+        self.assertEqual([f for f in merged["flags"] if f in self.base["flags"]], self.base["flags"], "the base's flags are exactly as they were")
+        self.assertTrue(all(f in merged["flags"] for f in self.delta["flags"]))
+        self.assertEqual(len(merged["flags"]), len(self.base["flags"]) + len(self.delta["flags"]))
+        self.assertEqual(merged["flagged_solutions"], len({f["solution_id"] for f in merged["flags"]}))
+        self.assertEqual(merged["runs"], ["wf_base", "wf_delta"])
+        (d,) = merged["delta_runs"]
+        self.assertEqual((d["file"], d["runs"], d["solution_ids"]), ("ch08.g2rec.flags.json", ["wf_delta"], sorted([self.A2, self.A3])))
+        changed = {k for k in set(merged) | set(self.base) if merged.get(k) != self.base.get(k)}
+        self.assertLessEqual(changed, {"flags", "flagged_solutions", "solutions", "verdicts", "checked_ids", "runs", "delta_runs", "skipped",
+                                       "unclear", "unchecked", "problems", "single_pass_ids", "passes"},
+                             "only what a delta adds to changes; the format, book, chapter, prompts version and rule stay")
+        self.assertEqual(merged["format"], "ainext.working-check/1")
+        self.assertEqual(self.base, W.collect([self.argsBase], [{"stage": "SW", "pass_id": "A", "run_id": "wf_base", "prompts_version": "sw-v3",
+                                                                  "results": [{"solution_id": self.A1, "verdict": "consistent"}]}]),
+                         "the inputs were not mutated")
+
+    def test_merging_the_same_delta_again_changes_nothing(self):
+        W = self.W
+        once = W.merge(self.base, self.delta, "d.json")
+        twice = W.merge(once, self.delta, "d.json")
+        self.assertEqual(once, twice)
+        self.assertEqual(len(twice["delta_runs"]), 1)
+
+    def test_a_second_delta_adds_to_the_first(self):
+        W = self.W
+        once = W.merge(self.base, self.delta, "d1.json")
+        more = copy.deepcopy(self.delta)
+        more.update(runs=["wf_delta2"], checked_ids=["q:other"], solutions=1, flags=[], verdicts={"consistent": 1, "flagged": 0, "unclear": 0},
+                    flagged_solutions=0, skipped=[])
+        twice = W.merge(once, more, "d2.json")
+        self.assertEqual(twice["checked_ids"], sorted([self.A1, self.A2, self.A3, "q:other"]))
+        self.assertEqual([x["file"] for x in twice["delta_runs"]], ["d1.json", "d2.json"])
+        self.assertEqual(twice["runs"], ["wf_base", "wf_delta", "wf_delta2"])
+
+    def test_a_solution_in_both_is_refused_rather_than_counted_twice(self):
+        W = self.W
+        both = copy.deepcopy(self.delta)
+        both["checked_ids"] = sorted({*both["checked_ids"], self.A1})
+        with self.assertRaises(W.MergeError) as cm:
+            W.merge(self.base, both)
+        self.assertIn("in both the base and the delta", str(cm.exception))
+
+    def test_a_delta_of_another_chapter_or_a_base_without_coverage_is_refused(self):
+        W = self.W
+        for k, v in (("chapter", 9), ("book", "other"), ("format", "x")):
+            with self.assertRaises(W.MergeError, msg=k):
+                W.merge(self.base, {**self.delta, k: v})
+        old = {k: v for k, v in self.base.items() if k != "checked_ids"}
+        with self.assertRaises(W.MergeError) as cm:
+            W.merge(old, self.delta)
+        self.assertIn("checked_ids", str(cm.exception))
+
+    def test_collect_can_merge_into_the_canonical_file_in_one_step(self):
+        W = self.W
+        import contextlib
+        import io
+        import packet_ref
+        base_f, delta_f, canon = self.tmp / "base.json", self.tmp / "ch08.g2rec.flags.json", self.tmp / "ch08.flags.json"
+        canon.write_text(json.dumps(self.base))
+        (self.tmp / "a.json").write_text(packet_ref.dumps(self.argsDelta) + "\n")
+        run = self.tmp / "run.json"
+        run.write_text(json.dumps({"stage": "SW", "pass_id": "A", "run_id": "wf_delta", "prompts_version": "sw-v3", "results": [
+            {"solution_id": self.A2, "verdict": "consistent"}, {"solution_id": self.A3, "verdict": "consistent"}]}))
+        out, err = io.StringIO(), io.StringIO()
+        with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
+            code = W.main(["collect", "--args", str(self.tmp / "a.json"), "--runs", str(run), "--out", str(delta_f), "--merge-into", str(canon)])
+        self.assertEqual(code, 0, err.getvalue())
+        merged = json.loads(canon.read_text())
+        self.assertEqual(merged["checked_ids"], sorted([self.A1, self.A2, self.A3]))
+        self.assertTrue(delta_f.exists(), "the delta's own file is kept beside the canonical one")
+        self.assertEqual(merged["delta_runs"][0]["file"], "ch08.g2rec.flags.json")
+        self.assertIn("merged into the canonical file", out.getvalue())
+        # the same collection again: already merged
+        with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
+            self.assertEqual(W.main(["collect", "--args", str(self.tmp / "a.json"), "--runs", str(run), "--merge-into", str(canon)]), 0)
+        self.assertEqual(json.loads(canon.read_text()), merged)
+        self.assertIn("already merged", out.getvalue())
+
+    def test_a_collection_with_unchecked_solutions_is_not_merged(self):
+        W = self.W
+        import contextlib
+        import io
+        import packet_ref
+        canon = self.tmp / "ch08.flags.json"
+        canon.write_text(json.dumps(self.base))
+        (self.tmp / "a.json").write_text(packet_ref.dumps(self.argsDelta) + "\n")
+        run = self.tmp / "run.json"
+        run.write_text(json.dumps({"stage": "SW", "pass_id": "A", "run_id": "wf_delta", "results": [{"solution_id": self.A2, "verdict": "consistent"}]}))
+        out, err = io.StringIO(), io.StringIO()
+        with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
+            code = W.main(["collect", "--args", str(self.tmp / "a.json"), "--runs", str(run), "--merge-into", str(canon)])
+        self.assertEqual(code, 1)
+        self.assertIn("not merged", err.getvalue())
+        self.assertEqual(json.loads(canon.read_text()), self.base, "the canonical file is left as it was")
+
+    def test_the_merge_command_and_the_printed_sequence(self):
+        W = self.W
+        import contextlib
+        import io
+        base_f, delta_f = self.tmp / "ch08.flags.json", self.tmp / "ch08.g2rec.flags.json"
+        base_f.write_text(json.dumps(self.base))
+        delta_f.write_text(json.dumps(self.delta))
+        out, err = io.StringIO(), io.StringIO()
+        with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
+            self.assertEqual(W.main(["merge", "--base", str(base_f), "--delta", str(delta_f), "--dry-run"]), 0)
+        self.assertEqual(json.loads(base_f.read_text()), self.base, "a dry run writes nothing")
+        with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
+            self.assertEqual(W.main(["merge", "--base", str(base_f), "--delta", str(delta_f)]), 0)
+        self.assertEqual(json.loads(base_f.read_text())["checked_ids"], sorted([self.A1, self.A2, self.A3]))
+        # the standard sequence g2-recommend-args prints includes the merge, after the delta runs and before anything reads the canonical file
+        text = "\n".join(G.follow_ups("g10-math", 1, ["r.json"], recommended="x.json", g2_file="g.json"))
+        self.assertIn("working_check.py collect --args A.json --args B.json", text)
+        self.assertIn("--merge-into runs/g10-math/working-check/ch01.flags.json", text)
+        self.assertIn("--out runs/g10-math/working-check/ch01.g2rec.flags.json", text)
+        self.assertLess(text.index("g2-recommend-delta"), text.index("--merge-into"))
+
+
 # ---------------------------------------------------------------------------------------------- the file reaches G2
 class ReachesG2(unittest.TestCase):
     """The collected file through auto_pass_gates.g2_merge and assemble_objectives.lesson_runs: the pilot's route."""
