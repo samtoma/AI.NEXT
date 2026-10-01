@@ -165,12 +165,12 @@ def build_index(blocks: list[dict], maths: dict[str, str], old_blocks: dict[str,
         w = AO._we(b, maths, missing)
         steps = []
         for i, (raw, rendered) in enumerate(zip(b.get("steps") or [], w["steps"])):
+            title = raw.get("title")
             if "title_maths" not in raw:
+                # the step is kept (a list built without it would be short); the tool refuses to run on such blocks
                 problems.append(f"{b['id']}: step {i} has no `title_maths`: blocks.jsonl predates the extractor fix "
                                 "(regenerate it with source_adapter.py)")
-                continue
-            title = raw.get("title")
-            if TOKEN.findall(title or "") != list(raw["title_maths"]):
+            elif TOKEN.findall(title or "") != list(raw["title_maths"]):
                 problems.append(f"{b['id']}: step {i}: `title_maths` is not the maths references of its `title`")
             if old_blocks is not None and b["id"] in old_blocks:
                 olds = (old_blocks[b["id"]].get("steps") or [])

@@ -162,8 +162,8 @@ class TitleLists(unittest.TestCase):
     def test_a_body_less_step_is_not_in_the_solution_and_the_loose_solution_is_last(self):
         self.assertEqual(len(self.f.old(2)), 3)                                         # 3 steps, one with no text, + loose
         self.assertEqual(self.f.old(2)[-1], "That completes the working.")
-        self.assertEqual(self.f.old(2)[0], "Calculate: So $z = 4$ .")
-        self.assertEqual(self.f.new(2)[0], "Calculate $z$: So $z = 4$ .")
+        self.assertEqual(self.f.old(2)[0], "Calculate: So $z = 4$.")
+        self.assertEqual(self.f.new(2)[0], "Calculate $z$: So $z = 4$.")
         self.assertEqual(self.f.index.damaged[8], 4)                                    # WE1 s1, WE2 s0, s1 (no text), s2
 
     def test_legacy_title_is_the_title_without_its_maths(self):
