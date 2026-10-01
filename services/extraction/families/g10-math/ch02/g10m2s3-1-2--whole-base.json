@@ -1,0 +1,61 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m2s3-1-2:whole-base",
+ "kind": "family",
+ "lo_id": "lo:g10m2s3-1-2",
+ "parent_question_id": "q:g10m2s3-1-2:ex2-2-4",
+ "source_page": 51,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "n",
+   "choice": [
+    2,
+    3
+   ]
+  },
+  {
+   "name": "m",
+   "choice": [
+    1,
+    2,
+    3
+   ],
+   "resample_while": "gcd(m, n) != 1"
+  },
+  {
+   "name": "rmax",
+   "let": "12 if (n == 2 and m == 1) else 5"
+  },
+  {
+   "name": "r",
+   "randint": [
+    2,
+    "rmax"
+   ]
+  },
+  {
+   "name": "b",
+   "let": "r ** n"
+  },
+  {
+   "name": "ans",
+   "let": "r ** m"
+  }
+ ],
+ "constraints": [
+  "gcd(m, n) == 1"
+ ],
+ "stem": "Evaluate without using a calculator: ${=b}^{\\frac{{=m}}{{=n}}}$",
+ "answer": "ans",
+ "solution": [
+  "Write ${=b}$ as a power whose exponent is ${=n}$, the denominator of the exponent: ${=b}={=r}^{{=n}}$.",
+  "Replace the base: ${=b}^{\\frac{{=m}}{{=n}}}=\\left({=r}^{{=n}}\\right)^{\\frac{{=m}}{{=n}}}$.",
+  "Multiply the exponents: ${=n}\\times\\frac{{=m}}{{=n}}={=m}$, so $\\left({=r}^{{=n}}\\right)^{\\frac{{=m}}{{=n}}}={=r}^{{=m}}$.",
+  "Evaluate the power: ${=r}^{{=m}}={=ans}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Entry point of the skill: a whole-number base that is a perfect n-th power, positive exponent m/n in lowest terms (n is 2 or 3, m is 1 to 3). Same chain as the book's 27^(-1/3): write the base as a power, multiply the exponents. Cases are 4^(1/2) up to 144^(1/2), 8^(1/3) up to 125^(1/3), 4^(3/2) and 25^(3/2) (125), and 8^(2/3) up to 125^(2/3). 23 distinct instances, answers at most 125. The root r may be composite (36 = 6^2, 64 = 4^3), as the book itself does in ex2-4-3i."
+}

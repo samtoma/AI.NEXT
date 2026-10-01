@@ -1,0 +1,149 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m2s4-1-4:hinted-power",
+ "kind": "family",
+ "lo_id": "lo:g10m2s4-1-4",
+ "parent_question_id": "q:g10m2s4-1-4:ex2-3-3",
+ "source_page": 56,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "table",
+   "let": "[[2, 5, 232, 0, 4925, 5278, 4993, 5028, 5011], [2, 10, 332, 0, 9849, 10556, 9987, 10056, 10021], [2, 19, 424, 1, 18379, 19698, 18896, 19027, 18961], [2, 20, 432, 0, 19698, 21112, 19973, 20112, 20043], [2, 29, 485, 1, 27858, 29857, 28840, 29041, 28940], [3, 7, 177, 0, 6473, 7225, 6990, 7068, 7029], [3, 11, 218, 0, 10045, 11212, 10968, 11089, 11028], [3, 12, 226, 0, 11212, 12514, 11976, 12108, 12041], [3, 17, 257, 1, 15588, 17399, 16835, 17021, 16927], [3, 37, 328, 1, 33635, 37541, 36725, 37130, 36927], [3, 40, 335, 1, 37541, 41900, 39660, 40098, 39879], [5, 6, 111, 0, 5873, 6899, 5968, 6065, 6017], [5, 30, 211, 0, 29365, 34493, 29842, 30326, 30083], [5, 46, 237, 1, 40516, 47591, 45348, 46084, 45714], [5, 49, 241, 1, 47591, 55902, 48363, 49148, 48754], [5, 51, 244, 0, 47591, 55902, 50756, 51579, 51166], [5, 53, 246, 1, 47591, 55902, 52416, 53267, 52840], [10, 19, 127, 1, 15849, 19953, 18621, 19055, 18836], [10, 27, 143, 0, 25119, 31623, 26915, 27542, 27227], [10, 28, 144, 1, 25119, 31623, 27542, 28184, 27861], [10, 29, 146, 0, 25119, 31623, 28840, 29512, 29174], [10, 45, 165, 0, 39811, 50119, 44668, 45709, 45186], [10, 56, 174, 1, 50119, 63096, 54954, 56234, 55590], [10, 68, 183, 0, 63096, 79433, 67608, 69183, 68391]]"
+  },
+  {
+   "name": "i",
+   "randint": [
+    0,
+    "len(table) - 1"
+   ]
+  },
+  {
+   "name": "row",
+   "let": "table[i]"
+  },
+  {
+   "name": "a",
+   "let": "row[0]"
+  },
+  {
+   "name": "b",
+   "let": "row[1]"
+  },
+  {
+   "name": "h",
+   "let": "row[2]"
+  },
+  {
+   "name": "up",
+   "let": "row[3]"
+  },
+  {
+   "name": "vtl",
+   "let": "row[4]"
+  },
+  {
+   "name": "vth",
+   "let": "row[5]"
+  },
+  {
+   "name": "vhl",
+   "let": "row[6]"
+  },
+  {
+   "name": "vhh",
+   "let": "row[7]"
+  },
+  {
+   "name": "vm",
+   "let": "row[8]"
+  },
+  {
+   "name": "n",
+   "let": "h // 100"
+  },
+  {
+   "name": "t",
+   "let": "h // 10"
+  },
+  {
+   "name": "tl",
+   "let": "fixed(t / 10, 1)"
+  },
+  {
+   "name": "th",
+   "let": "fixed((t + 1) / 10, 1)"
+  },
+  {
+   "name": "hl",
+   "let": "fixed(h / 100, 2)"
+  },
+  {
+   "name": "hh",
+   "let": "fixed((h + 1) / 100, 2)"
+  },
+  {
+   "name": "mid",
+   "let": "fixed((2 * h + 1) / 200, 3)"
+  },
+  {
+   "name": "ans",
+   "let": "fixed((h + up) / 100, 2)"
+  },
+  {
+   "name": "v1",
+   "let": "fixed(vtl / 1000, 3)"
+  },
+  {
+   "name": "v2",
+   "let": "fixed(vth / 1000, 3)"
+  },
+  {
+   "name": "v3",
+   "let": "fixed(vhl / 1000, 3)"
+  },
+  {
+   "name": "v4",
+   "let": "fixed(vhh / 1000, 3)"
+  },
+  {
+   "name": "v5",
+   "let": "fixed(vm / 1000, 3)"
+  },
+  {
+   "name": "than",
+   "let": "'less than' if up == 1 else 'greater than'"
+  },
+  {
+   "name": "rel",
+   "let": "'greater' if up == 1 else 'less'"
+  },
+  {
+   "name": "way",
+   "let": "'up' if up == 1 else 'down'"
+  },
+  {
+   "require": "a ** n < b and b < a ** (n + 1) and n >= 1",
+   "why": "the whole-number powers in the hint must really bracket the target"
+  },
+  {
+   "require": "vtl < b * 1000 and b * 1000 < vth and vhl < b * 1000 and b * 1000 < vhh and ((up == 1 and vm < b * 1000) or (up == 0 and vm > b * 1000))",
+   "why": "every tabulated trial value must sit on the correct side of the target, and the midpoint test must agree with the direction of rounding"
+  }
+ ],
+ "constraints": [
+  "a ** n < b and b < a ** (n + 1)"
+ ],
+ "stem": "Use trial and error to find the value of $x$ correct to 2 decimal places: ${=a}^x = {=b}$. Hint: start with ${=a}^{{=n}} = {=a ** n}$ and ${=a}^{{=n + 1}} = {=a ** (n + 1)}$.",
+ "answer": "fixed((h + up) / 100, 2)",
+ "solution": [
+  "The hint gives ${=a}^{{=n}} = {=a ** n}$ and ${=a}^{{=n + 1}} = {=a ** (n + 1)}$. Since ${=a ** n} < {=b} < {=a ** (n + 1)}$, we know ${=n} < x < {=n + 1}$.",
+  "Now try values of $x$ in steps of 0.1. ${=a}^{{=tl}} = {=v1}$, which is less than ${=b}$, and ${=a}^{{=th}} = {=v2}$, which is greater than ${=b}$. So ${=tl} < x < {=th}$.",
+  "Now try steps of 0.01. ${=a}^{{=hl}} = {=v3}$, which is less than ${=b}$, and ${=a}^{{=hh}} = {=v4}$, which is greater than ${=b}$. So ${=hl} < x < {=hh}$.",
+  "To decide how to round, test the midpoint ${=mid}$. ${=a}^{{=mid}} = {=v5}$, which is {=than} ${=b}$. So $x$ is {=rel} than ${=mid}$, and it rounds {=way}.",
+  "Therefore $x \\approx {=ans}$ correct to 2 decimal places."
+ ],
+ "notes": "Entry point of the skill: the stem hands over the first rung (the two whole-number powers of the base that bracket the target), so the student practises only the narrowing, tenths then hundredths then the midpoint test that settles the rounding, exactly the book's own sequence (page 56: 2^2.8, 2^2.9, 2^2.81, 2^2.805). The expression language has no logarithm or fractional power, so every instance is a row of a hand-verifiable table: base, target, floor(100x), a rounding-direction flag and five trial values in thousandths, all computed offline with 60-digit decimal arithmetic. Row filters: the target is not a power of the base (so the equation really cannot be solved by a common base and x is irrational); the book's own 2^x = 7 is left out; the tenths digit of x is neither 0 nor 9 (so the tenth trials are never a whole number) and the hundredths digit of floor(100x) is neither 0 nor 9 (so no hundredths trial repeats a tenths trial); the 2 dp answer never ends in 0 (so 1.3 versus 1.30 cannot split a blind solver); 100x is at least 0.15 away from a rounding boundary, i.e. x is at least 0.0015 from the point where the answer would flip; every displayed 3 dp trial value is on the correct side of the target. Two require clauses re-check the bracketing and the side of every tabulated value at draw time. Rounding direction is balanced across rows (11 of 24 round up). Answers are strings such as 2.32, matching the book's printed form. Nothing here goes beyond the book method. The family is numeric, so it has no distractors and declares no misconceptions."
+}

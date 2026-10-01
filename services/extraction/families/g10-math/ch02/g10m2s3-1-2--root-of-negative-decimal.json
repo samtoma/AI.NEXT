@@ -1,0 +1,67 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m2s3-1-2:root-of-negative-decimal",
+ "kind": "family",
+ "lo_id": "lo:g10m2s3-1-2",
+ "parent_question_id": "q:g10m2s3-1-2:ex2-2-3",
+ "source_page": 51,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "n",
+   "choice": [
+    2,
+    3
+   ]
+  },
+  {
+   "name": "m",
+   "choice": [
+    2,
+    3,
+    4,
+    5
+   ],
+   "resample_while": "gcd(m, n) != 1"
+  },
+  {
+   "name": "r",
+   "choice": [
+    2,
+    5,
+    10
+   ],
+   "resample_while": "r ** m > 1000"
+  },
+  {
+   "name": "rn",
+   "let": "r ** n"
+  },
+  {
+   "name": "bd",
+   "let": "fixed(1 / rn, n)"
+  },
+  {
+   "name": "ans",
+   "let": "r ** m"
+  }
+ ],
+ "constraints": [
+  "gcd(m, n) == 1",
+  "r ** m <= 1000"
+ ],
+ "stem": "Evaluate without using a calculator: $\\left({=bd}\\right)^{-\\frac{{=m}}{{=n}}}$",
+ "answer": "ans",
+ "solution": [
+  "Write the decimal as a fraction: ${=bd}=\\frac{1}{{=rn}}$.",
+  "Write the denominator as a power of ${=r}$: $\\frac{1}{{=rn}}=\\frac{1}{{=r}^{{=n}}}$.",
+  "Use a negative exponent to write the power in the numerator: $\\frac{1}{{=r}^{{=n}}}={=r}^{-{=n}}$.",
+  "Replace the base: $\\left({=bd}\\right)^{-\\frac{{=m}}{{=n}}}=\\left({=r}^{-{=n}}\\right)^{-\\frac{{=m}}{{=n}}}$.",
+  "Multiply the exponents: $\\left(-{=n}\\right)\\times\\left(-\\frac{{=m}}{{=n}}\\right)={=m}$, so the expression equals ${=r}^{{=m}}$.",
+  "Evaluate the power: ${=r}^{{=m}}={=ans}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced: decimal base AND negative exponent AND a numerator greater than 1, so the student needs all of the objective's steps (decimal to fraction, fraction to prime power with a negative exponent as in ex2-2-3, multiply exponents, evaluate) and the minus signs cancel. The base is always (1/r)^n with r in 2, 5, 10, so it has exactly n decimal places (0.25, 0.125, 0.04, 0.008, 0.01, 0.001) and fixed(1 / rn, n) prints it exactly. The exponent -m/n is in lowest terms with m from 2 to 5, and r^m is capped at 1000, so the answer is always a whole number (4 up to 1000); 10 distinct instances, e.g. 0.25^(-3/2) = 8, 0.008^(-2/3) = 25, 0.125^(-5/3) = 32. The wrong answers a student is likely to type (1/8 for the first, or -8) are covered diagnostically by the mcq family tpl:g10m2s3-1-2:negative-whole-pick. PIPELINE NORMALISATION (2026-10-01, main session): id renamed from tpl:g10m2s3-1-2:decimal-negative (then to root-of-negative-decimal, clear of negative-whole-pick too) to avoid an item-id collision with decimal-root (same first six slug letters); content unchanged."
+}

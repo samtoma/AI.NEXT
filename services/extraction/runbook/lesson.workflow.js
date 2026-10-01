@@ -221,6 +221,7 @@ function normTex(s) {
   t = t.replace(/\$\$?|\\\(|\\\)|\\\[|\\\]/g, '')
   t = t.replace(/\\(?:left|right|displaystyle)(?![a-zA-Z])/g, '').replace(/\\[,;:! ]|\\q?quad(?![a-zA-Z])|~/g, '')
   t = t.replace(/\\[dt]frac(?![a-zA-Z])/g, '\\frac')
+  t = t.replace(/\\(?:text|mathrm|textrm|mbox)\{\s*and\s*\}/g, ', ')                // the EPUB's own "\text{and}", spaces lost: T_6=28\text{and}T_9=43 (COLLECT-6)
   for (let k = 0; k < 3; k++) t = t.replace(/\\(?:text|mathrm|textrm|mbox)\{([^{}]*)\}/g, '$1')
   t = t.replace(/\s+and\s+/g, ', ')                                      // a list's "and" is its comma (COLLECT-3: both sides)
   t = t.replace(/&/g, '')                                                  // alignment markup, never maths (COLLECT-3)
@@ -305,19 +306,39 @@ function settle(a, b, textLayer) {
   return { route: 'judge', verdict: null }
 }
 
-// A set of values ("x = 3 or x = 9", "3; 9", "a = 1 and b = 7 2") as the sorted list of its values,
-// each without its named left side — the marker's "values" kind is exactly such a set (COLLECT-3).
-// Only the TYPING check uses it, and only for a key typed as values: the three-way pairs are not
-// read as sets here (the judge reads "values in any order").
-function valueSet(s, textLayer) {
-  const t = mathsSpan(textLayer ? printedTex(s) : s).replace(/\$/g, ' ')
-  const parts = t.split(/\s+or\s+|\s+and\s+|\\text\{\s*(?:or|and)\s*\}|;|,(?![^()]*\))/).map((x) => x.trim()).filter(Boolean)
-  const one = (x) => { const n = normTex(x); return textLayer ? stripLhs(n).replace(/\\[a-zA-Z]+/g, '').replace(/[^0-9A-Za-z+\-=<>≤≥.]/g, '') : stripLhs(n) }
-  return parts.map(one).filter(Boolean).sort()
+// A list of values ("x = 3 or x = 9", "3; 9", "a = 1 and b = 7 2", "T4 = −28,1; T5 = −33,1; T6 = −38,1") as its values IN ORDER,
+// each without its own label, and the label each carried — the marker's "values" kind is exactly such a list (COLLECT-3).
+// Only the TYPING check uses it, and only for a key typed as values: the three-way pairs are not read as lists here (the
+// judge reads "values in any order").
+//   * a value's label is what the book prints in front of it: a letter or a short name with a subscript (T_4, T_{10}, T4, Tn,
+//     x, n, m_{AB}) and "=" (COLLECT-3; COLLECT-6 adds one letter + digits, the text layer's flattened T_4, which the
+//     chain 4 / 5 / 6 of g10m3s2-1's "T4 = …; T5 = …; T6 = …" printed). Only a label, never part of a value: the sign, the
+//     digits, a decimal comma, a unit, a variable ("-39x") and the order are exactly as written.
+//   * the separators are ";", "and", "or", and a comma that is not a decimal comma (a comma BETWEEN TWO DIGITS, "-28,1", is
+//     one number, which the old split broke in two on both sides) and not inside a bracket ("(1,2)").
+const VALUE_LABEL = /^(?:[A-Za-z]{1,4}(?:_(?:\{[A-Za-z0-9]+\}|[A-Za-z0-9]+))?(?:\([a-z](?:,[a-z])*\))?|[A-Za-z]\d{1,3})(?:=|\\approx)/
+function valueList(s, textLayer) {
+  const t = mathsSpan(textLayer ? printedTex(s) : s).replace(/\$/g, ' ').replace(/(\d)\{,\}(\d)/g, '$1,$2')
+  const parts = t.split(/\s+or\s+|\s+and\s+|\\text\{\s*(?:or|and)\s*\}|;|(?:(?<!\d),|,(?!\d))(?![^()]*\))/).map((x) => x.trim()).filter(Boolean)
+  const one = (x) => {
+    const n = normTex(x), m = VALUE_LABEL.exec(n)
+    const rest = m ? n.slice(m[0].length) : n
+    return { label: m ? m[0].replace(/(?:=|\\approx)$/, '') : null,
+      value: textLayer ? rest.replace(/\\[a-zA-Z]+/g, '').replace(/[^0-9A-Za-z+\-=<>≤≥.]/g, '') : rest }
+  }
+  const rows = parts.map(one).filter((r) => r.value)
+  return { values: rows.map((r) => r.value), labels: rows.map((r) => r.label) }
 }
+// the values as a set (sorted): what the marker's "values" kind compares
+const valueSet = (s, textLayer) => valueList(s, textLayer).values.sort()
+// A list in which each value has ITS OWN label (T4, T5, T6: a sequence) pins each value to a place, so the key lists them in the same
+// order; a list with one label ("x = 3 or x = 9") or none is a set, in any order (the marker's "values" kind takes any order).
 const sameValues = (key, against, textLayer) => {
-  const k = valueSet(key, textLayer), a = valueSet(against, textLayer)
-  return k.length > 1 && k.length === a.length && k.every((x, i) => x === a[i])
+  const k = valueList(key, textLayer), a = valueList(against, textLayer)
+  if (!(k.values.length > 1 && k.values.length === a.values.length)) return false
+  const named = new Set([...k.labels, ...a.labels].filter(Boolean)).size > 1
+  const kv = named ? k.values : [...k.values].sort(), av = named ? a.values : [...a.values].sort()
+  return kv.every((x, i) => x === av[i])
 }
 
 // Is a final answer in the book solution? The solution's text, and each line of an aligned
