@@ -90,17 +90,24 @@ class Collect6(unittest.TestCase):
         self.assertEqual(rep["result"]["collect_version"], "collect-6")
 
     def test_a_final_the_solution_never_wrote_is_still_refused(self):
-        sol = ["$\\dfrac{\\sqrt{9}}{3}$ is rational, an integer, a whole number and a natural number. An integer is a rational number."]
+        # the solution names BOTH options, so naming cannot settle the item: only a faithful copy of its final can
+        sol = ["Both rational numbers and irrational numbers are real numbers, but this one is rational."]
         base = item("Ex8-2:1", "State whether the number is rational or irrational. $\\dfrac{\\sqrt{9}}{3}$", sol, "rational")
         cases = {
-            "a computation the solution never wrote": "\\frac{\\sqrt{9}}{3} = \\frac{3}{3} = 1 is rational, an integer, a whole number and a natural number",
-            "a word added (a negation flipped)": "\\frac{\\sqrt{9}}{3} is not rational, an integer, a whole number and a natural number",
+            "a computation the solution never wrote": "\\frac{\\sqrt{9}}{3} = 1, but this one is rational",
+            "a word added (a negation flipped)": "Both rational numbers and irrational numbers are real numbers, but this one is not rational",
             "words from another item": "it has no minus sign under the square root, so it is real",
         }
         for why, final in cases.items():
             t = typing("Ex8-2:1", "rational", final, "choice", options=["rational", "irrational"], options_source="stem")
             _, x = self.one(base, t, "Rational")
-            self.assertIn("book_final is not in the book solution", x["typing_problems"] + (x["verify"].get("unchecked") or []), why)
+            self.assertIn("book_final is not in the book solution", x["typing_problems"], why)
+            self.assertNotEqual(x["verification"], "agreed", why)
+        # a faithful copy, with a parenthetical-sized elision, is accepted
+        t = typing("Ex8-2:1", "rational", "Both rational numbers and irrational numbers are real, but this one is rational",
+                   "choice", options=["rational", "irrational"], options_source="stem")
+        _, x = self.one(base, t, "Rational")
+        self.assertNotIn("book_final is not in the book solution", x["typing_problems"])
 
     def test_a_skipped_negation_between_two_copied_words_is_refused(self):
         # the solution says "is NOT rational"; a copy that drops the "not" would state the opposite
@@ -116,7 +123,8 @@ class Collect6(unittest.TestCase):
         it = item("Ex8-2:2", "Round $\\sqrt{82}$ to the nearest 1 decimal place, without using a calculator.",
                   ["$\\sqrt{82}\\approx\\text{9,1}$"], "9,1")
         t = typing("Ex8-2:2", "9,1", "$\\sqrt{82}\\approx\\text{9,1}$", "choice", options=["9,0", "9,1", "9,2"], options_source="lesson")
-        rep, x = self.one(it, t, "9.1")
+        judge = {"verdicts": [{"pair_id": f"Ex8-2:2|{k}", "verdict": "equivalent", "reason": "9,1"} for k in ("blind~book", "book~printed")]}
+        rep, x = self.one(it, t, "9.1", judge)
         self.assertEqual((x["answer_type"], x["answer"], x["choices"]), ("numeric", "9,1", None))
         self.assertEqual(x["typing_problems"], [])
         self.assertEqual(x["typing_retyped"]["rule"], "numeric")

@@ -404,7 +404,7 @@ function closedSetProblems(it, opts, lessonText) {
   // "irrational"; "opposite sides are not parallel" where the question asks whether opposite sides are parallel)
   const hayWords = new Set(norm(`${it.stem} ${lessonText}`).match(/[a-z]+(?:-[a-z]+)*/g) || [])
   const unnamed = opts.filter((o) => !STOCK_CLOSED.has(norm(plainOption(o))) &&
-    !(norm(plainOption(o)).match(/[a-z]+(?:-[a-z]+)*/g) || []).every((w) => hayWords.has(w) || w === 'number' || w === 'numbers'))
+    !(norm(plainOption(o)).match(/[a-z]+(?:-[a-z]+)*/g) || []).every((w) => hayWords.has(w) || ['number', 'numbers', 'not', 'no'].includes(w)))
   return unnamed.length ? [`options said to be the lesson's closed set are named neither in the stem nor in the lesson: ${unnamed.slice(0, 3).map((o) => `"${o}"`).join(', ')}`] : []
 }
 const NUM_RE = /^-?\d+(?:[.,]\d+)?$/
