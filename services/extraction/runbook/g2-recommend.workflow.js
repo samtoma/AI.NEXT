@@ -312,6 +312,9 @@ Return VER_SCHEMA with one row per question; key is the question's id as shown i
 // ---- the pipeline ----------------------------------------------------------------------------------
 const BATCHES = chunk(ITEMS, BATCH)
 const problems = []
+// every accept and every fix puts a question in front of students, so it needs a second, independent reading — except a
+// teaching-only retype (not_markable), which marks nothing and so has no key to confirm
+const needsVerify = (rec) => !!rec && ['accept', 'fix'].includes(rec.verdict) && !(rec.verdict === 'fix' && (rec.fix || {}).answer_type === 'not_markable')
 const labelOf = (b, stage, bi, extra) => `G2R:${stage}:b${pad(bi + 1)}${extra || ''}:${b[0].lesson}${b.length > 1 ? `+${b.length - 1}` : ''}`
 
 async function recommend(batch, bi) {
@@ -341,7 +344,7 @@ async function recommend(batch, bi) {
 
 async function verify(rd, bi) {
   const { batch, got } = rd
-  const live = batch.filter((e) => got.has(e.key) && ['accept', 'fix'].includes(got.get(e.key).verdict))
+  const live = batch.filter((e) => needsVerify(got.get(e.key)))
   const vers = new Map()
   if (!live.length) return Object.assign({ vers }, rd)
   for (const [vi, vb] of chunk(live, VBATCH).entries()) {
@@ -377,7 +380,7 @@ done.forEach((d, bi) => {
 })
 const tally = {}
 for (const r of rows) {
-  const k = r.rec ? `${r.rec.verdict}${['accept', 'fix'].includes(r.rec.verdict) ? (r.ver ? `/${r.ver.verdict}` : '/unverified') : ''}` : 'no verdict'
+  const k = r.rec ? `${r.rec.verdict}${needsVerify(r.rec) ? (r.ver ? `/${r.ver.verdict}` : '/unverified') : ''}` : 'no verdict'
   tally[k] = (tally[k] || 0) + 1
 }
 for (const p of problems) log(p)
@@ -388,7 +391,7 @@ return {
   stage: 'G2R', workflow: 'g2-recommend', prompts_version: PROMPTS_VERSION, book: BOOK.book,
   chapter: ARGS.chapter, part: ARGS.part || 1, parts: ARGS.parts || 1,
   batch: BATCH, verify_batch: VBATCH, model: MODEL, effort: EFFORT, items_sha256: ARGS.items_sha256 || null,
-  agents: { recommend: BATCHES.length, verify: done.filter(Boolean).reduce((n, d) => n + Math.ceil([...d.batch].filter((e) => d.got.has(e.key) && ['accept', 'fix'].includes(d.got.get(e.key).verdict)).length / VBATCH), 0) },
+  agents: { recommend: BATCHES.length, verify: done.filter(Boolean).reduce((n, d) => n + Math.ceil(d.batch.filter((e) => needsVerify(d.got.get(e.key))).length / VBATCH), 0) },
   embedded: ARGS.embedded,
   results: rows, tally, problems,
   meter: { stage: 'G2R', record: `uv run meter_run.py record --book ${BOOK.book} --stage G2R --run <runId>` },
