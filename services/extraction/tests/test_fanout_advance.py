@@ -368,7 +368,7 @@ class SaveAndMeter(Base):
         rec.write_text(json.dumps(d))
         rc, rep = b.adv("s0b-A-g3", wf, task)
         self.assertEqual(rc, 2)
-        self.assertIn("two different copies", rep["refused"])
+        self.assertIn("not a copy of this run", rep["refused"])
 
     def test_unknown_run_malformed_wf_and_unprepared_run_are_refused(self):
         b = self.box

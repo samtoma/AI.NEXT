@@ -167,8 +167,8 @@ def build_args(book, chapter: int, entries: list[dict], *, part: int = 1, parts:
             "batch": batch, "verify_batch": verify_batch, "model": model, "effort": effort,
             "items_sha256": items_sha256(entries),
             "lessons": {s: (titles or {}).get(s, "") for s in slugs},
-            "items": [{"key": e["key"], "lesson": e["lesson"], "state": e["state"], "item": prompt_item(e["item"])}
-                      for e in entries]}
+            "items": [{"key": e["key"], "lesson": e["lesson"], "state": e["state"], "item": prompt_item(e["item"]),
+                       **({"identity": e["identity"]} if e.get("identity") else {})} for e in entries]}
 
 
 def split_parts(entries: list[dict], batch: int, max_batches: int) -> list[list[dict]]:
@@ -437,12 +437,19 @@ def run_identity_check(rows: list[dict]) -> dict[str, str]:
     return json.loads(r.stdout)["results"]
 
 
+def identity_map(entries: list[dict], check=run_identity_check) -> dict[str, str]:
+    """{key: equal | different | unreadable} for the items whose stem is an identity, as typed. {} where node is not available."""
+    try:
+        return check(identity_rows({e["key"]: e["item"] for e in entries}))
+    except RecommendError:
+        return {}
+
+
 def identity_preview(entries: list[dict], check=run_identity_check) -> dict:
     """What the app's marker says about the BOOK'S OWN key of every item whose stem is an identity ("Simplify: …"): the key as typed
     for a held item (its typed shape is sound); for an excluded item whose key is typed expression likewise. Informational: it is
     shown when the packet is built and again by the collector, and it never decides a verdict by itself."""
-    afters = {e["key"]: e["item"] for e in entries}
-    res = check(identity_rows(afters))
+    res = check(identity_rows({e["key"]: e["item"] for e in entries}))
     out = {"equal": sorted(k for k, v in res.items() if v == "equal"), "different": sorted(k for k, v in res.items() if v == "different"),
            "unreadable": sorted(k for k, v in res.items() if v == "unreadable")}
     out["not_an_identity"] = len(entries) - len(res)
@@ -714,11 +721,15 @@ def prepare(book, chapter: int, lesson_runs: list[Path], g2_path: Path | None, e
                   "estimate": estimate(len(entries), batch), "lesson_runs": [str(p) for p in lesson_runs]}
     if not entries:
         return info
+    ident = identity_map(entries) if (preview_identity or embed or args_out) else {}
+    for e in entries:                              # the app's marker's fact about the typed key, shown to the recommender (not the verifier)
+        if ident.get(e["key"]) in ("equal", "different"):
+            e["identity"] = ident[e["key"]]
     if preview_identity:
-        try:
-            info["identity_preview"] = identity_preview(entries)
-        except RecommendError as e:               # no node: the preview is informational, never a reason to stop
-            info["identity_preview"] = {"unavailable": str(e)[:160]}
+        info["identity_preview"] = ({"equal": sorted(k for k, v in ident.items() if v == "equal"),
+                                     "different": sorted(k for k, v in ident.items() if v == "different"),
+                                     "unreadable": sorted(k for k, v in ident.items() if v == "unreadable"),
+                                     "not_an_identity": len(entries) - len(ident)} if ident else {"unavailable": "no node, or no identity stem"})
     parts = split_parts(entries, batch, max_batches)
     info["parts"] = len(parts)
     titles = lesson_titles(book)

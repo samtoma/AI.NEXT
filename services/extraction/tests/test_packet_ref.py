@@ -495,7 +495,7 @@ class S6S7ByRef(unittest.TestCase):
         _, b = self.run2(self.T.FAMILIES_WF, args, compact, {
             "author:lo:g10m4s2-1-1": {"lo_id": "lo:g10m4s2-1-1", "families": [spec], "infeasible": []}})
         self.assertNotIn("Solve $2x = 4$", json.dumps(compact, ensure_ascii=False))
-        self.assertEqual(b["result"]["prompts_version"], "s6-v5")
+        self.assertEqual(b["result"]["prompts_version"], "s6-v6")
         for bad, words in ((dict(compact, objectives=objs), "not both"),
                            ({k: v for k, v in compact.items() if k != "objective_refs"}, "needs both")):
             rep = self.T.run_workflow(self.T.FAMILIES_WF, bad, {})

@@ -851,6 +851,9 @@ class WorkflowUnderTheStub(unittest.TestCase):
         ver_prompt = next(c["prompt"] for c in out["calls"] if ":ver:" in c["label"])
         for must in ("BLIND-MARK-77", "BOOK WORKING", "PRINTED ANSWER", "THE THREE-WAY CHECK", "TYPING PROBLEMS", "x\\cdot x=x^{2}"):
             self.assertIn(must, rec_prompt)
+        self.assertIn("APP MARKER, DETERMINISTIC", rec_prompt)
+        self.assertIn("the typed key is EQUAL to the stem's expression", rec_prompt, "the marker's fact about the typed key is shown to the recommender")
+        self.assertNotIn("APP MARKER", ver_prompt, "the verifier is not told what the marker found")
         self.assertNotIn("BLIND-MARK-77", ver_prompt, "the verifier never sees the blind solver's answer")
         self.assertNotIn("REC-NOTE-88", ver_prompt, "nor the recommender's reasoning")
         self.assertNotIn("THE THREE-WAY CHECK", ver_prompt)

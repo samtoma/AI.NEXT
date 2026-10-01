@@ -576,7 +576,10 @@ def resolve_copy(copies: list[Copy], result: dict, rec: dict | None, label: str 
     want = (result.get("embedded") or {}).get("generated_sha256")
     by_sha = [c for c in copies if want and c.sha == want]
     script = (rec or {}).get("scriptPath")
-    by_script = [c for c in copies if script and os.path.realpath(c.path) == os.path.realpath(script)]
+    by_script = [c for c in copies if script and Path(script).name == c.path.name]     # by name: a moved worktree keeps the file names
+    if script and not by_script and not force:
+        raise Refuse(f"the run record says it ran {Path(script).name}, which is not a copy of this run "
+                     f"({', '.join(c.path.name for c in copies)}): wrong run id for this --wf? (--force to override)")
     if label is not None:
         by_label = [c for c in copies if c.label == label]
         if not by_label:
@@ -586,7 +589,7 @@ def resolve_copy(copies: list[Copy], result: dict, rec: dict | None, label: str 
         return by_label[0]
     if by_sha and by_script and by_sha[0] is not by_script[0]:
         raise Refuse(f"the result echoes copy {by_sha[0].path.name}, but the run record says it ran {Path(script).name}: "
-                     "two different copies — not this run's save")
+                     "two different copies of this run — not one save")
     if by_sha:
         return by_sha[0]
     if force and by_script:

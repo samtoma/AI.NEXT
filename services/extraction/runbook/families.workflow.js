@@ -165,10 +165,9 @@ compares it with a blind solver's answer, and itself prints the LaTeX key the st
 reads there is the book's recurring-decimal notation, for kind "recurring": a dot over the first and the last
 digit of the repeating block (0.8\\dot{3}, 9.2\\dot{8}\\dot{7}, 0.\\dot{1}4285\\dot{7}) or a bar over the whole block
 (0.1\\overline{045}). Write it as the stem asks for it: a stem that says "using a bar" gets the bar form, one that
-says "using dot notation" gets the dots, and the key is printed in that notation. Write the digits with holes,
-e.g. 0.{=q1}\\dot{{=q2}}\\dot{{=q3}} (the first mark opens its own braces). A recurring answer is an exact repeating
-decimal; a plain fraction such as {=n}/{=d} is also read and is printed with dots. A decimal that stops (0.75)
-is not recurring: use kind "expression" for it.
+says "using dot notation" gets the dots, and the key is printed in that notation. Digits come from holes, as in
+0.{=q1}\\dot{{=q2}}\\dot{{=q3}} or 0.{=q1}\\overline{{=q2}{=q3}{=q4}}. A plain fraction such as {=n}/{=d} is also read, and
+prints with dots. A decimal that stops (0.75) is not recurring: use kind "expression" for it.
 
 FORM says what the stem asks the student to write: "factorised", "expanded", "simplest" (a fraction in lowest
 terms), {"subject": "x"} (make x the subject; kind "equation"), or "decimal". Set "decimal" whenever the stem asks

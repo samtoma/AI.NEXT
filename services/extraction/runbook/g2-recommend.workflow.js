@@ -201,7 +201,7 @@ ${(it.solution || []).map((s, i) => `    ${i + 1}. ${s}`).join('\n')}
   THE THREE-WAY CHECK:
       ${pairs || '(no pair recorded)'}
   AS THE PIPELINE TYPED IT FOR MARKING: ${typedOf(it)}
-  TYPING PROBLEMS THE CHECK REPORTED: ${(it.typing_problems || []).length ? (it.typing_problems || []).join(' ¶ ') : 'none'}${rules.length ? `\n  BOOK RULES: ${rules.join('; ')}` : ''}`
+  TYPING PROBLEMS THE CHECK REPORTED: ${(it.typing_problems || []).length ? (it.typing_problems || []).join(' ¶ ') : 'none'}${rules.length ? `\n  BOOK RULES: ${rules.join('; ')}` : ''}${e.identity ? `\n  APP MARKER, DETERMINISTIC (the app's own answer marker on the typed key and the expression in the stem, sampled at several points; no model): ${e.identity === 'equal' ? 'the typed key is EQUAL to the stem\'s expression' : 'the typed key is NOT EQUAL to the stem\'s expression'}` : ''}`
 }
 
 function lessonLine(batch) {
@@ -229,6 +229,8 @@ THE VERDICTS.
 - hold: the item is sound in the book but cannot be checked or shown today, or you could not settle it: the stem asks for a form the app's marker cannot check (a product of prime factors), the key is a value the marker cannot read (the square root of minus one, division by zero, "undefined"), only the book's page image could settle it. Say exactly what is missing. hold is never "probably fine".
 
 READING THE THREE-WAY CHECK. Its three pairs compare answers by meaning: blind~printed (the blind solver against the printed answer), blind~book (the blind solver against the EPUB's final answer), book~printed (the EPUB's final answer against the printed answer). "equivalent" and "different" are a judge's verdicts, which can be wrong; "missing" means one side was absent (no EPUB final, no printed answer). When book~printed is equivalent, the book's two sources agree with each other: that is not yet proof they are right (a book can repeat its own error in both).
+
+THE APP MARKER LINE (only on a "Simplify / Expand / Factorise: …" item). The app's own marker, with no model, compared the item's TYPED key with the expression in the stem. NOT EQUAL is a fact about the stem as extracted and that key: either the book is wrong, or the stem lost something in extraction; decide which from the book's working (the working's first line and its factors show the intended stem; a repair is allowed only where they do), and never accept or fix such an item with the typed key as it stands. EQUAL says the key fits the stem, not that it is the book's answer: the typing agent may have corrected the book's answer when typing it, so compare the typed key with the printed answer, the EPUB final answer and the working's last line yourself.
 
 HOW TO WORK EACH ITEM, IN THIS ORDER.
 1. Read the stem, the figure if one is named, and the book's working line by line.

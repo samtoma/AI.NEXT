@@ -78,6 +78,35 @@ class FamiliesAuthor(unittest.TestCase):
         # every spec the author returns still has to pass the Python checks
         self.assertEqual(FS.check_spec(recs["lo:g10m4s2-1-1"]["families"][0]), [])
 
+    def test_the_author_prompt_names_what_chapter_one_had_to_be_fixed_for(self):
+        """s6-v6. The author is told, up front, the four things Chapter 1's families needed the pipeline to repair:
+        a plain-maths marker answer (the book's recurring notation being the one LaTeX the engine reads), the
+        "decimal" form, "distinct_by_choices" for an mcq whose stem never changes, and the six-letter slug rule.
+        The engine's own lists are compared with the prompt's, so the two cannot drift apart."""
+        spec = json.loads((FIX / "g10-specs" / "g10m4s2-1-1--balance.json").read_text())
+        objs = [{"lo_id": "lo:g10m4s2-1-1", "label": "Linear equations", "tier_gaps": ["basic"], "lesson": "g10m4s2-1",
+                 "module": "module:g10m-c04", "book_questions": [], "misconceptions": [],
+                 "existing_families": ["tpl:g10m4s2-1-1:balance"]}]
+        author = run_workflow(FAMILIES_WF, {"mode": "author", "book": g10_book(), "objectives": objs},
+                              {"author:lo:g10m4s2-1-1": {"lo_id": "lo:g10m4s2-1-1", "families": [spec], "infeasible": []}})
+        self.assertTrue(author["ok"], author["error"])
+        self.assertEqual(author["result"]["prompts_version"], "s6-v6")
+        revise = run_workflow(FAMILIES_WF, {"mode": "author", "book": g10_book(), "revise": [{"spec": spec, "problems": ["x"]}]},
+                              {f"revise:{spec['id']}": {"spec": dict(spec, version=2), "changes": "-"}})
+        self.assertTrue(revise["ok"], revise["error"])
+        for who, prompt in (("author", author["calls"][0]["prompt"]), ("revise", revise["calls"][0]["prompt"])):
+            for need in ("THE MARKER ANSWER IS PLAIN MATHS, NEVER LaTeX", r"0.8\dot{3}", r"0.1\overline{045}",
+                         "a stem that says \"using a bar\" gets the bar form", "DUPLICATES.", '"distinct_by_choices": true',
+                         "SLUG.", "first SIX LETTERS", "which-rational and which-irrational collide",
+                         'Set "decimal" whenever the stem asks'):
+                self.assertIn(need, prompt, f"{who} prompt")
+            for form in (f for f in FS.FORMS if f):
+                self.assertIn(f'"{form}"', prompt, f"{who} prompt offers the form {form!r} the engine accepts")
+        # what the prompt promises is what the check enforces
+        mcq = json.loads((FIX / "g10-specs" / "g10m14s4-1-1--union.json").read_text())
+        self.assertEqual(FS.check_spec(dict(mcq, distinct_by_choices=True)), [])
+        self.assertTrue(FS.check_spec(dict(spec, distinct_by_choices=True)), "refused on a non-mcq family")
+
     def test_bad_args_stop_the_run_before_any_agent(self):
         out = run_workflow(FAMILIES_WF, {"book": g10_book()}, {})
         self.assertFalse(out["ok"])
@@ -111,7 +140,7 @@ class FamiliesRevise(unittest.TestCase):
             self.assertIn(f"- {reason}", prompt)
         self.assertIn('"t = {=a} and b = {=b}"', prompt)
         self.assertEqual(out["result"]["revised"], [fixed])
-        self.assertEqual(out["result"]["prompts_version"], "s6-v5")
+        self.assertEqual(out["result"]["prompts_version"], "s6-v6")
         # s6-v5: the revise agent works from its message alone
         self.assertIn("Work from this message alone", prompt)
         self.assertNotIn("The one exception", prompt, "no figures, no file to open")
