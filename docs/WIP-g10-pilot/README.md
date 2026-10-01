@@ -346,9 +346,9 @@ export is `seed/generated/g10-math/book-export/`; the scratch DB is a new `ainex
 lesson-v7/collect-5, s5-v5, s6-v5, s7-v7 (the current runbook scripts; the pilot ran older ones).
 
 **Checks (2026-10-01):** dry runs (`dryrun_chapter.py`, stubbed, no spend) pass for chapters 1–8, 11, 12, 14; chapters
-9, 10 and 13 stop at the load's KaTeX gate (first blocker below). Pipeline suite: 616 pass; 7 fail in modules being
+9, 10 and 13 stop at the load's KaTeX gate (first blocker below). Pipeline suite: 618 pass; 6 fail in modules being
 changed in parallel (loader status policy, migration 035 stamps, the book-picture VIZ kind, a new coverage check) —
-none in a file this work touched.
+none in a file this work touched. `scripts/traceability.py --check` OK.
 
 **Blocking, or for Samuel:**
 1. **KaTeX: a stripped control space before digits.** Hash-proved S0b LaTeX writes the book's thousands space
