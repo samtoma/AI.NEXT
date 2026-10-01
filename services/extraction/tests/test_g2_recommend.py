@@ -564,7 +564,7 @@ class RetypedBasis(unittest.TestCase):
             {"ref": "Ex9-1:1", "as": "expression (values)", "key": "4; 5", "because": ["x"]},
             {"ref": "Ex9-1:2", "as": "numeric", "key": "3", "because": ["x"]},
             {"ref": "Ex9-1:3", "as": "expression, kind equation (was surd)", "key": "x=2", "because": ["x"]}]}}]}
-        by = {d["key"].split(":")[-1]: d["basis"] for d in A.g2_retyped(run, 9, "g10m")}
+        by = {d["key"].split(":", 1)[1]: d["basis"] for d in A.g2_retyped(run, 9, "g10m")}
         self.assertIn("inventions", by["Ex9-1:1"])
         self.assertIn("inventions", by["Ex9-1:2"])
         self.assertNotIn("inventions", by["Ex9-1:3"], "an unnamed rule that is not an options retype gets the neutral sentence")
@@ -764,7 +764,9 @@ class TheCommands(unittest.TestCase):
         code, text, err = self.cli("g2-recommend-collect", "g10-math", "--chapter", 9, "--lesson-run", self.tmp / "run.json",
                                    "--g2", self.tmp / "g2.json", "--run", saved, "--out", self.tmp / "other.json", "--allow-stale")
         self.assertEqual(code, 0, err)
-        self.assertIn(k1, json.loads((self.tmp / "other.json").read_text())["report"]["off_task"], "a person's item is off task")
+        rep = json.loads((self.tmp / "other.json").read_text())["report"]
+        self.assertIn(k1, rep["no_longer_owed"], "a person decided it since: its recommendation is skipped, never applied over theirs")
+        self.assertNotIn(k1, json.loads((self.tmp / "other.json").read_text())["items"])
 
 
 class FanoutHook(unittest.TestCase):

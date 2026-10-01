@@ -258,7 +258,9 @@ function normTex(s) {
 }
 // a named left side: x=, y_1=, m_{AB}=, d_{AB}\approx, the text layer's flattened mAC=, and a named point
 // with its variables, P(x,y)= (COLLECT-2, COLLECT-3)
-const stripLhs = (t) => t.replace(/^[A-Za-zπλθαβγδμσφω]{1,4}(?:_(?:\{[A-Za-z0-9]+\}|[A-Za-z0-9]+))?(?:\([a-z](?:,[a-z])*\))?(?:=|\\approx|≈)/, '')
+// a trigonometric ratio of an angle names what the value is of, as a letter does: \sin45°=, \tan{30°}=, \sin\hat{A}=, \cos\theta≈ (Chapter 5)
+const TRIG_LHS = /^\\(?:sin|cos|tan|cot|sec|csc)[^=≈]{1,16}(?:=|≈)/
+const stripLhs = (t) => (TRIG_LHS.test(t) ? t.replace(TRIG_LHS, '') : t.replace(/^[A-Za-zπλθαβγδμσφω]{1,4}(?:_(?:\{[A-Za-z0-9]+\}|[A-Za-z0-9]+))?(?:\([a-z](?:,[a-z])*\))?(?:=|\\approx|≈)/, ''))
 // a point's name before its coordinates: M(1,0) is the pair (1,0); only a name directly before ONE
 // parenthesised pair, so f(2) or 3(x+1) is never touched (COLLECT-3)
 const stripPointName = (t) => (/^[A-Za-z]{1,2}(?:_(?:\{[A-Za-z0-9]+\}|[A-Za-z0-9]))?\([^()]*,[^()]*\)$/.test(t) ? t.replace(/^[^(]+/, '') : t)
