@@ -390,6 +390,65 @@ def run_marker_check(rows: list[dict]) -> dict[str, str]:
     return out
 
 
+IDENTITY = HERE / "g2rec_identity.mjs"
+_IDENT_VERB = re.compile(r"^\s*(?:answer the following:\s*)?(?:simplify|expand|factori[sz]e)\b", re.I)
+
+
+def identity_expr(stem: str | None) -> str | None:
+    """The expression a "Simplify / Expand / Factorise" stem asks to be transformed (its one `$…$` segment), or None: the book's
+    key must equal it in value. Anything else (a calculation, a word problem, two segments) has no identity to check."""
+    s = str(stem or "")
+    if not _IDENT_VERB.match(s):
+        return None
+    segs = re.findall(r"\$([^$]+)\$", s)
+    return segs[0].strip() if len(segs) == 1 and segs[0].strip() else None
+
+
+def _letters(expr: str) -> list[str]:
+    t = re.sub(r"\\(?:text|mathrm|mbox|textrm)\{[^{}]*\}", "", expr)
+    t = re.sub(r"\\[a-zA-Z]+", "", t)
+    return sorted(set(re.findall(r"[A-Za-z]", t)))
+
+
+def identity_rows(key_to_after: dict[str, dict]) -> list[dict]:
+    rows = []
+    for key, a in key_to_after.items():
+        e = identity_expr(a.get("stem"))
+        if e and a.get("answer_type") == "expression" and isinstance(a.get("marker"), dict) and a["marker"].get("kind") == "expression":
+            m = {"kind": "expression", "key": unwrap_math_delimiters(a["marker"].get("key")), "form": None,
+                 "variables": _letters(e), "tolerance": None}
+            rows.append({"id": key, "expr": e, "marker": m})
+    return rows
+
+
+def run_identity_check(rows: list[dict]) -> dict[str, str]:
+    """{key: 'equal' | 'different' | 'unreadable'} from the app's own marker (g2rec_identity.mjs)."""
+    if not rows:
+        return {}
+    import shutil
+    import subprocess
+    node = shutil.which("node")
+    if not node:
+        raise RecommendError("the identity check needs node (it runs the app's own answer-marker.ts)")
+    r = subprocess.run([node, "--no-warnings", str(IDENTITY), "-"], input="".join(json.dumps(x, ensure_ascii=False) + "\n" for x in rows),
+                       capture_output=True, text=True, timeout=300)
+    if r.returncode != 0:
+        raise RecommendError(f"the identity check could not run: {r.stderr.strip()[-300:]}")
+    return json.loads(r.stdout)["results"]
+
+
+def identity_preview(entries: list[dict], check=run_identity_check) -> dict:
+    """What the app's marker says about the BOOK'S OWN key of every item whose stem is an identity ("Simplify: …"): the key as typed
+    for a held item (its typed shape is sound); for an excluded item whose key is typed expression likewise. Informational: it is
+    shown when the packet is built and again by the collector, and it never decides a verdict by itself."""
+    afters = {e["key"]: e["item"] for e in entries}
+    res = check(identity_rows(afters))
+    out = {"equal": sorted(k for k, v in res.items() if v == "equal"), "different": sorted(k for k, v in res.items() if v == "different"),
+           "unreadable": sorted(k for k, v in res.items() if v == "unreadable")}
+    out["not_an_identity"] = len(entries) - len(res)
+    return out
+
+
 # ============================================================================ the policy
 def _clip(s, n) -> str:
     s = re.sub(r"\s+", " ", str(s or "")).strip()

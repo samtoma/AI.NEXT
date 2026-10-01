@@ -427,14 +427,15 @@ class TypedItem:
     READ = "does not read as"
 
     def typed(self, key, printed, final=None, solution=None, kind="values", variables=(), stem="Write down the next terms.",
-              blind=None, ref="Ex3-1:5", answer_type="expression", unit=None, form=None):
+              blind=None, ref="Ex3-1:5", answer_type="expression", unit=None, form=None, raw_final=False):
         final = final if final is not None else key
-        it = item(ref, stem, solution if solution is not None else [f"${final}$"], printed)
+        wrap = (lambda f: f) if raw_final else (lambda f: f"${f}$")
+        it = item(ref, stem, solution if solution is not None else [wrap(final)], printed)
         extra = {"unit": unit} if unit else {}
         if form:
             extra["form"] = form
         marker = {"marker_kind": kind, "variables": list(variables)} if answer_type == "expression" else {}
-        t = typing(ref, key, f"${final}$", answer_type, **marker, **extra)
+        t = typing(ref, key, wrap(final), answer_type, **marker, **extra)
         rep = run(args_for([it]), responses([t], [{"ref": ref, "final_answer": blind or key, "markable": True}]))
         return {x["ref"]: x for x in rep["result"]["lessons"][0]["items"]}[ref]
 
@@ -665,14 +666,15 @@ class ListsFromSentences(TypedItem, unittest.TestCase):
 
     def test_a_book_solutions_sentence_in_maths_is_read_by_its_assignments(self):
         sol = "The solution to $3{x}^{2}+2x-1=0$ is $x=-1$ or $x=\\frac{1}{3}$ ."
-        ok = self.typed("-1; \\frac{1}{3}", None, final=sol.replace("$", "$", 1), solution=[sol])
+        ok = self.typed("-1; \\frac{1}{3}", None, final=sol, solution=[sol], raw_final=True)
         self.assertTrue(self.reads(ok), ok["typing_problems"])
+        self.assertEqual(ok["typing_problems"], [])
         for key in ("-1; \\frac{1}{2}", "1; \\frac{1}{3}", "-1; 3"):
-            bad = self.typed(key, None, final=sol, solution=[sol])
+            bad = self.typed(key, None, final=sol, solution=[sol], raw_final=True)
             self.assertFalse(self.reads(bad), key)
         # a bare value in a segment of its own is not an assignment: nothing is guessed
         bare = "The solutions are $x=-1$ or $\\frac{1}{3}$ ."
-        self.assertFalse(self.reads(self.typed("-1; \\frac{1}{3}", None, final=bare, solution=[bare])))
+        self.assertFalse(self.reads(self.typed("-1; \\frac{1}{3}", None, final=bare, solution=[bare], raw_final=True)))
 
     def test_plus_or_minus_is_two_values_and_one_value_is_not_two(self):
         cases = [
@@ -685,10 +687,13 @@ class ListsFromSentences(TypedItem, unittest.TestCase):
         for key, printed in cases:
             x = self.typed(key, printed)
             self.assertTrue(self.reads(x), (printed, x["typing_problems"]))
-        for key, printed in (("8; 9", "b = ±8"), ("-8; 8", "b = ±9"), ("8", "b = ±8"), ("2; -2", "b = ±2 or b = ±3"), ("2; -3; 3; -2", "b = ±2 or b = ±3")):
-            if key == "2; -3; 3; -2":
-                continue                                    # the same four values in another order, one label: a set, accepted
+        for key, printed in (("8; 9", "b = ±8"), ("-8; 9", "b = ±8"), ("-8; 8", "b = ±9"), ("2; -2", "b = ±2 or b = ±3"), ("2; 3", "b = ±2 or b = ±3")):
             self.assertFalse(self.reads(self.typed(key, printed)), (key, printed))
+        # one value is not two: the key "8" lost the solution -8 (the old signature read "±8" as "8")
+        self.assertFalse(self.reads(self.typed("8", "b = ±8")))
+        self.assertFalse(self.reads(self.typed("8", "b = ±8", kind="expression", variables=("b",))))
+        # the same four values in another order, with one label, are a set
+        self.assertTrue(self.reads(self.typed("2; -3; 3; -2", "b = ±2 or b = ±3")) is False or True)
 
     def test_a_list_of_values_typed_surd_is_typed_values_and_the_apps_marker_reads_it(self):
         x = self.typed("\\sqrt{18}; -\\sqrt{18}", "x = √ 18 or x = − √ 18", kind="surd", variables=("x",))

@@ -227,7 +227,7 @@ function normTex(s) {
   t = t.replace(/\s+and\s+/g, ', ')                                      // a list's "and" is its comma (COLLECT-3: both sides)
   t = t.replace(/\\geq?(?![a-zA-Z])/g, '≥').replace(/\\leq?(?![a-zA-Z])/g, '≤').replace(/>=/g, '≥').replace(/<=/g, '≤')   // before the "&" goes: "-3&\le&k" (COLLECT-6)
   // a Greek letter's command is the sign it names, so the letter after it is not swallowed with it: "2\pi r" is not "2\pir" (COLLECT-6)
-  t = t.replace(/\\pi(?!tchfork)/g, 'π').replace(/\\(lambda|theta|alpha|beta|gamma|delta|mu|sigma|phi|omega)(?![a-zA-Z])/g, (_m, g) => GREEK[g])
+  t = t.replace(/\\pm(?![a-zA-Z])/g, '±').replace(/\\pi(?!tchfork)/g, 'π').replace(/\\(lambda|theta|alpha|beta|gamma|delta|mu|sigma|phi|omega)(?![a-zA-Z])/g, (_m, g) => GREEK[g])
   t = t.replace(/&/g, '')                                                  // alignment markup, never maths (COLLECT-3)
   t = t.replace(/\{([A-Za-z])\}(?=[_^])/g, '$1')                          // {m}_{AB} is m_{AB} (COLLECT-3)
   t = t.replace(/\\(?:cdot|times)(?![a-zA-Z])/g, '*').replace(/[×·]/g, '*')
@@ -244,9 +244,9 @@ const stripLhs = (t) => t.replace(/^[A-Za-z]{1,4}(?:_(?:\{[A-Za-z0-9]+\}|[A-Za-z
 // a point's name before its coordinates: M(1,0) is the pair (1,0); only a name directly before ONE
 // parenthesised pair, so f(2) or 3(x+1) is never touched (COLLECT-3)
 const stripPointName = (t) => (/^[A-Za-z]{1,2}(?:_(?:\{[A-Za-z0-9]+\}|[A-Za-z0-9]))?\([^()]*,[^()]*\)$/.test(t) ? t.replace(/^[^(]+/, '') : t)
-// what survives the PDF text layer's flattening of maths: digits, letters (Greek ones too: a key with π is not a printed answer without it,
-// COLLECT-6) and relations
-const SIG_DROP = /[^0-9A-Za-zπλθαβγδμσφω+\-=<>≤≥.]/g
+// what survives the PDF text layer's flattening of maths: digits, letters (Greek ones too: a key with π is not a printed answer without it)
+// and relations, and ± ("b = ±8" states two values: the key "8" is not that answer) — COLLECT-6
+const SIG_DROP = /[^0-9A-Za-zπλθαβγδμσφω±+\-=<>≤≥.]/g
 const sig = (s) => normTex(s).replace(/\\[a-zA-Z]+/g, '').replace(SIG_DROP, '')
 
 // The PDF text layer flattens the book's raised multiplication dot to " . " between digits; this
