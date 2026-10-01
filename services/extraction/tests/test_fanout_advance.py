@@ -39,6 +39,8 @@ class FakeExec:
     """Records every command; answers 0 and nothing unless a test says otherwise (`on`). Side effects the driver reads back
     (a ledger line, a flags file) are made by the box's handlers."""
 
+    ALL: list[list[str]] = []                 # every command any test issued: the flags check at the end reads them
+
     def __init__(self, box):
         self.box, self.calls, self.tools, self.rules = box, [], [], {}
 
@@ -47,6 +49,7 @@ class FakeExec:
 
     def py(self, argv, env=None, timeout=0):
         self.calls.append((list(argv), env))
+        FakeExec.ALL.append(list(argv))
         fn = self.rules.get(argv[0]) or getattr(self.box, "default_" + argv[0].replace(".py", "").replace("-m", "module"), None)
         return fn(argv) if fn else A.Result(0, "")
 
@@ -1363,6 +1366,51 @@ class RealPlan(unittest.TestCase):
         self.assertTrue(by["s7-author-ch03"]["after"][0].startswith("uv run generate_widget_questions.py --merge-author-runs "
                                                                     "runs/g10-math/widgets/author-ch03-<wf_id>.json --merged "
                                                                     "runs/g10-math/widgets/author-merged-ch03.json --write-templates widgets/g10-math/ch03"))
+
+
+SUBCOMMANDS = {"assemble", "approve", "lesson-runs", "collect", "record", "g1", "g2", "g3", "g4", "g5"}
+
+
+class FlagsExist(unittest.TestCase):
+    """Every command the driver issued in the tests above is checked against the REAL script's own --help: a flag that script does
+    not have (a typo, a flag renamed by someone else's edit) would fail on the first real run, which the fakes above cannot see.
+    No script is run beyond `--help`."""
+
+    @classmethod
+    def setUpClass(cls):
+        import shutil
+        if not FakeExec.ALL:
+            raise unittest.SkipTest("run the whole file: this reads the commands the other tests issued")
+        if shutil.which("uv") is None:
+            raise unittest.SkipTest("needs uv")
+        cls.help: dict = {}
+
+    def helptext(self, script, sub):
+        key = (script, sub)
+        if key not in self.help:
+            import subprocess
+            argv = ["uv", "run", "--project", str(EX), "python", *script, *([sub] if sub else []), "--help"]
+            r = subprocess.run(argv, cwd=EX, capture_output=True, text=True, timeout=120)
+            self.help[key] = (r.returncode, r.stdout + r.stderr)
+        return self.help[key]
+
+    def test_every_flag_the_driver_passes_exists_in_the_script_it_passes_it_to(self):
+        seen = {}
+        for argv in FakeExec.ALL:
+            script = ("-m", argv[1]) if argv[0] == "-m" else (argv[0],)
+            rest = argv[len(script):]
+            sub = next((a for a in rest[:2] if a in SUBCOMMANDS), None)
+            flags = {a for a in rest if a.startswith("--")}
+            seen.setdefault((script, sub), set()).update(flags)
+        self.assertGreaterEqual(len(seen), 14, f"only {sorted(seen)} were issued")
+        problems = []
+        for (script, sub), flags in sorted(seen.items(), key=str):
+            rc, text = self.helptext(script, sub)
+            if rc != 0:
+                problems.append(f"{' '.join(script)} {sub or ''} --help exited {rc}: {text[-200:]}")
+                continue
+            problems += [f"{' '.join(script)} {sub or ''}: no flag {f}" for f in sorted(flags) if f not in text]
+        self.assertEqual(problems, [])
 
 
 class CliWiring(unittest.TestCase):

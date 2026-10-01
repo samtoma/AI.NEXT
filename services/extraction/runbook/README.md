@@ -769,6 +769,60 @@ backlog item of kind `gate_decision` that only Samuel can decide.
 | `blocked[]` | what did NOT auto-pass (a G1 pipeline failure, a coverage safety check, parity) |
 | `course_id`, `for_review[]` | extra (the console ignores them): the course; what Samuel should read first |
 
+### 7c. The G2 recommendation run (answers 37a and 42; 2026-10-01)
+
+The G2 auto-pass (§7b) decides an item on the checks' own rule: a typing problem is **excluded**, a three-way disagreement is **held** with
+no verdict. Most of those are not wrong in the way the rule assumes (Chapter 1: 47 held, 35 excluded of 575; the typing check complains
+about text comparisons a right key survives), and some are real book errors the blind solver caught. This stage recommends a verdict per
+item, so what can be live is live and every other decision carries a reason Samuel reads in the console: **students always full, quality
+first, every decision recorded** (answers 37a, 42). It is the Chapter 8 pilot's per-item G2 recommendation, as a stage.
+
+```sh
+# 1. the packet and the generated copy (no model call). fanout.py close-chapter N prepares it too (work/<book>/packets/embedded/fanout/g2rec-chNN.workflow.js)
+uv run auto_pass_gates.py g2-recommend-args <book> --chapter N [--lesson-run RUN …] \
+    --embed work/<book>/packets/embedded/fanout/g2rec-chNN.workflow.js --args-out work/<book>/packets/fanout/g2rec-chNN.args.json
+#    prints the items (held / excluded), agents, the modelled cost and what the app's marker already says about the typed keys
+# 2. run the copy with Workflow({scriptPath}) and NO args; save its return value, then meter it
+#      → runs/<book>/g2rec/chNN-<runId>.json        uv run meter_run.py record --book <book> --stage G2R --run <runId>
+# 3. check it into the recommendation file the `g2 --recommend` line of §7b reads (merges with an earlier file; --fresh starts over)
+uv run auto_pass_gates.py g2-recommend-collect <book> --chapter N [--lesson-run RUN …] --run runs/<book>/g2rec/chNN-<runId>.json \
+    --out runs/<book>/g2-chNN.recommended.json
+# 4. apply: G2's auto verdicts from it, the split finals, then assemble / validate / (load) as §10 says
+uv run auto_pass_gates.py g2 <book> --chapter N --lesson-run … --recommend runs/<book>/g2-chNN.recommended.json \
+    --into runs/<book>/g2-chNN.json --split --maths runs/<book>/maths/book/accepted.json
+```
+
+**Launch it BEFORE the chapter's working check and S5 draft:** both are built from the assembled bundle, which a recommendation changes
+(questions become live, stems and typed keys change). After applying it, `fanout.py close-chapter N` (which passes the recommendation file
+to G2 from then on: without it every re-run would recompute the checks' own rule and undo the recommendation) re-assembles and
+re-prepares them. If they were launched already, run the explicit commands `g2-recommend-args` prints and a delta working check on the newly live items.
+
+**What runs** (`runbook/g2-recommend.workflow.js`, prompts `g2rec-v1`; a generated copy, args embedded, `embed_workflow.py`): one Sonnet agent
+(effort high) per batch of 8 held or excluded items sees each item's stem, its figure, the book's own working, the printed answer, the
+EPUB's final answer, the blind answer, the three-way pairs, the typed shape, the typing problems and, for a "Simplify / Expand / Factorise"
+stem, what the **app's own marker** (no model) says about the typed key against the stem's expression, and recommends `accept`, `fix`,
+`hold` or `exclude` with a class, a confidence (`low` = "your call"), a reason, the book span it rests on (`book_quote`), and for a fix the
+item's new typing. Then **one independent agent per batch of verdicts that would put a question live** works the stem alone first and
+only then judges the key (it is not shown the first agent's reasoning, the blind answer or the marker's fact). Exclusions and holds are not
+verified: they put nothing in front of a student. The book is the authority: the key is the book's own answer re-typed, never an answer
+of the agent's; a blind disagreement alone is not a reason to exclude; when the agent's own derivation shows the book is wrong the item is
+a **book error** (excluded, with the right answer in `if_corrected` for Samuel, never applied).
+
+**What the collector enforces** (`g2_recommend.py`; nothing is trusted without it). A verdict that would put a question live must: quote a span
+the item's own book text contains; leave the item well formed for the pipeline's own models (`RunItem`, the choice-option and marker-spec
+rules, a numeric key that is a number, the options of a "stem" choice present in the stem); for a fix, be re-typed from that quote; have
+every expression key read by the app's marker (`marker_check.mjs`); have its key **equal to the stem's expression** and **equal to the
+answer the book states** where the app's marker (`g2rec_identity.mjs`) can say (a typing agent's silent correction of a book's answer is
+refused: that is Samuel's to approve, decisions 43-45); keep a stem repair small (similarity, the `[figure]` kept) and flag it
+(`stem_fix_by`, `confidence: low`); and be **confirmed** by the verifier with no other answer also right. Anything else is recommended
+`hold` (the item's typing is sound) or `exclude` (it is already excluded for typing, so its typed shape may be unusable) with the reason,
+class `unconfirmed` / `not grounded` / `refused` / `marker cannot check`, and listed in the report. A person's verdict in G2's file is
+never overwritten. The gate record lists every low-confidence recommendation for Samuel beside the holds and exclusions.
+
+**Cost** (API-equivalent, MODELLED until the first run is metered, stage `G2R`): $0.10-0.20 per item recommended plus $0.05-0.10 per
+verdict verified, about $11-21 for Chapter 1's 82 items (11 + up to 7 agents) and $3-5 for Chapter 2's 20. Tests:
+`tests/test_g2_recommend.py` (the workflow under the stub runtime, the policy, the oracles on the app's real marker, the commands).
+
 ## 8. Cost ledger and go / no-go
 
 After **every** workflow run, record it. Then read the summary before G5:
