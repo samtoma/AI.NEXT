@@ -352,8 +352,11 @@ function valueList(s, textLayer) {
   const flat = (rest) => (textLayer ? rest.replace(/\\[a-zA-Z]+/g, '').replace(SIG_DROP, '') : rest)
   const one = (x) => {
     const n = normTex(x), m = VALUE_LABEL.exec(n)
-    const rest = m ? n.slice(m[0].length) : n
+    const rest0 = m ? n.slice(m[0].length) : n
+    let rest = rest0
     const label = m ? m[0].replace(/(?:=|\\approx|≈)$/, '') : null
+    // "a = 4(−24) = −96" states a = −96: a worked chain of arithmetic (no letter outside a command) ends in its value (Chapter 5)
+    if (m && /=/.test(rest0) && rest0.split('=').every((sg) => !/[A-Za-z]/.test(sg.replace(/\\[a-zA-Z]+/g, '')))) rest = rest0.slice(rest0.lastIndexOf('=') + 1)
     // "b = ±2" states TWO values, +2 and -2 (in that order): the sign is read, never dropped (COLLECT-6)
     const pm = /^(?:±|\\pm(?![a-zA-Z]))(?=[^-+±])/.exec(rest)
     if (pm) { const v = flat(rest.slice(pm[0].length)); return v ? [{ label, value: v }, { label, value: `-${v}` }] : [] }
@@ -418,6 +421,24 @@ function assignedList(text) {
   for (const sg of segs) (/^[A-Za-z](?:_(?:\{[A-Za-z0-9]+\}|[A-Za-z0-9]+))?=[^=]+$/.test(normTex(sg)) ? asg : given).push(sg)
   if (asg.length < 2 || given.some((sg) => !normTex(sg).includes('='))) return null
   return asg.map((sg) => sg.replace(/\$/g, '')).join('; ')
+}
+
+// A value given by a list of WORDS ("adjacent; hypotenuse; opposite") against the sentence that names them ("$a$ is the adjacent side $b$ is the hypotenuse
+// $c$ is the opposite side"): the key's words occur in the sentence, in order, and no other word of the key's own vocabulary does (Chapter 5)
+function sentenceMatchesWords(key, text) {
+  const kv = valueList(key, false).values
+  if (kv.length < 2 || !kv.every((v) => /^[A-Za-z]{3,}$/.test(v))) return false
+  const vocab = new Set(kv.map((v) => v.toLowerCase()))
+  const seq = (String(text == null ? '' : text).replace(/\$[^$]*\$/g, ' ').toLowerCase().match(/[a-z]+/g) || []).filter((w) => vocab.has(w))
+  return seq.length === kv.length && seq.every((w, i) => w === kv[i].toLowerCase())
+}
+// The last link of a worked chain "L = middle = answer" ("sin Â = opposite / hypotenuse = CB/AC", "θ = 26,56… ≈ 26,6°"): what the chain ends in is the
+// answer it states. Not a list ("and", ";", ","), not an inequality (Chapter 5)
+function chainEnd(text) {
+  const t = plainSigns(String(text == null ? '' : text)).replace(/\$/g, ' ').replace(/(\d),(\d)/g, '$1.$2')
+  if (/[;,<>≤≥≠]|\b(?:and|or)\b|\\ne/.test(t)) return null
+  const parts = t.split(/=|≈/)
+  return parts.length > 2 && parts[parts.length - 1].trim() ? parts[parts.length - 1].trim() : null
 }
 
 // Inequalities, set membership and intervals, compared as one canonical string: the same relations, the same signs and values, the same
@@ -496,7 +517,8 @@ function plainSigns(s) {
     .replace(/\^\s*\{\s*\\circ\s*\}|\^\s*\\circ(?![a-zA-Z])|\\circ(?![a-zA-Z])/g, '°')
     .replace(/\\(?:widehat|hat)\s*\{\s*([A-Za-z])\s*\}|\\(?:widehat|hat)\s*([A-Za-z])/g, (_m, a, b) => `${a || b}̂`)
     .replace(/ˆ\s*([A-Za-z])/g, '$1̂')
-    .replace(/\\(sin|cos|tan|cot|sec|csc)(?![a-zA-Z])/g, '$1')
+    .replace(/\\(sin|cos|tan|cot|sec|csc)/g, '$1')                 // \sin A and the EPUB's glued \sinA are the same text
+    .replace(/\\triangle(?![a-z])/g, '△').replace(/∴/g, ' therefore ').replace(/²/g, '^2').replace(/³/g, '^3')
     .replace(/\\[dt]?frac\s*\{\s*(-?[A-Za-z0-9.,]+)\s*\}\s*\{\s*(-?[A-Za-z0-9.,]+)\s*\}/g, '$1/$2')
 }
 const containNorm = (s) => normTex(plainSigns(s).replace(/\\therefore(?![a-zA-Z])/g, ' therefore ')
@@ -933,6 +955,13 @@ function checkTyping(it, t, lessonText) {
     // collect-6 (Ex1-9:11): a form the kind cannot carry. The key is algebra in the variables → the kind is normalised (expression, or
     // equation) and the retype recorded; otherwise the item carries the problem, so it is held (schemas.AnswerSpec would refuse it)
     let kind = t.marker_kind
+    // the typing agent named no kind (g10m5s8-1: ten fractions): the KEY decides, as it does for a kind the key cannot be read under, and it is recorded
+    if (!kind) {
+      const k0 = String(t.key || '')
+      const inferred = kindForKey(k0, 'expression') || (semicolonParts(k0).length >= 2 ? 'values' : 'expression')
+      typed.retyped = { from: 'expression (no marker kind)', as: `expression, kind ${inferred}`, rule: 'kind-from-key', because: ['the typing named no marker kind; the key decides it'] }
+      kind = inferred
+    }
     // collect-6 (Chapter 4): a kind the key cannot be read under. A list of values typed "surd" (x = √18 or x = −√18) or an
     // inequality / set-membership list typed "equation" ("not an equation" to the app's marker) is held as unanswerable at assembly; the
     // marker reads the same key under "values" / "interval" (checked against the app's marker), so the KIND is normalised, the key kept exactly.
@@ -971,13 +1000,14 @@ function checkTyping(it, t, lessonText) {
     // a printed answer that opens with "=" has lost its left side to the text layer ("= −14n + 7" for "T_n = −14n + 7"): its right side
     // is what it states, and the key's own left side is not what the book printed (COLLECT-6; the value is never touched)
     const unitless = against && it.printed_answer ? withoutUnit(against, it.stem, t.unit) : null     // "19 50 litres": the stem names the unit
-    const readAs = against ? [against, ...(it.printed_answer && /^\s*=\s*\S/.test(against) ? [against.replace(/^\s*=\s*/, '')] : []), ...(unitless ? [unitless] : [])] : []
+    const ce = against ? chainEnd(against) : null
+    const readAs = against ? [against, ...(it.printed_answer && /^\s*=\s*\S/.test(against) ? [against.replace(/^\s*=\s*/, '')] : []), ...(unitless ? [unitless] : []), ...(ce ? [ce] : [])] : []
     const asValues = t.answer_type === 'expression' && effKind === 'values'
     if (against && !(readAs.some((ag) => settle(t.key, ag, !!it.printed_answer).verdict === 'equivalent') ||
       (asValues && sameValues(t.key, against, !!it.printed_answer)) ||
       // collect-6 (Chapter 4): the values a SENTENCE states ("There are 5 tricycles and 2 bicycles."), in order and with nothing else; the
       // `var = value` segments of a book solution's sentence; a key that is an inequality / interval, found whole in the printed answer
-      (asValues && sentenceMatchesValues(t.key, against)) ||
+      (asValues && (sentenceMatchesValues(t.key, against) || sentenceMatchesWords(t.key, against))) ||
       (asValues && (() => { const al = assignedList(against); return !!al && sameValues(t.key, al, false) })()) ||
       (t.answer_type === 'expression' && relEquivalent(t.key, against, it.ref)) ||
       (t.answer_type === 'numeric' && numOf(typed.answer) !== null && numOf(typed.answer) === numOf(against)) ||

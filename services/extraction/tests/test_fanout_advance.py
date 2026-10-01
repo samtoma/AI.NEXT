@@ -1083,12 +1083,19 @@ class S5Final(Base):
         b.put("runs/g10-math/maths/book/summary.json", {})
         gen = b.here / "seed" / "generated" / BOOK / "ch04"
         self.gen = gen
+        self.skip_stamp = False
 
         def fake(argv):
             s = argv[0]
             if s == "assemble_misconceptions.py":
                 gen.mkdir(parents=True, exist_ok=True)
                 (gen / "misconceptions.json").write_text(json.dumps({"misconceptions": [{"id": "mc:a"}, {"id": "mc:b"}]}))
+                for i, a in enumerate(argv):
+                    if a == "--bundle" and not self.skip_stamp:                 # pass 2 stamps each bundle with the runs it was reconciled with
+                        bp = b.here / argv[i + 1]
+                        d = json.loads(bp.read_text())
+                        d["s5_reconciled"] = {"runs": [Path(argv[1]).name]}
+                        bp.write_text(json.dumps(d))
             elif s == "generate_questions.py":
                 (gen / "generated-questions.json").write_text(json.dumps({"questions": [{"id": "q:g1"}, {"id": "q:g2"}]}))
             elif s == "generate_widget_questions.py" and "--out" in argv:
@@ -1114,6 +1121,7 @@ class S5Final(Base):
                   "auto_pass_gates.py", "coverage_report.py", "load_misconceptions.py", "parity_check.py", "apply_review_verdicts.py"):
             b.ex.on(s, fake)
         self.coverage = {"status": "GREEN", "checks": [], "summary": {"checks": 3}}
+        self.skip_stamp = False
 
     def test_the_whole_chain_in_order_with_the_plans_arguments(self):
         b = self.box
@@ -1123,15 +1131,15 @@ class S5Final(Base):
         cfg, gen = "work/g10-math/fanout/books/ch04/g10-math.json", "seed/generated/g10-math/ch04"
         graphs = ["--graph", "seed/g10-math/g10m-c04.json", "--graph", "seed/g10-math/g10m-course.json"]
         names = [s["step"] for s in rep["steps"]]
-        self.assertEqual(names, ["chapter config", "S5 catalogue", "load catalogue dry run", "pg_dump", "load catalogue", "generated questions", "widget questions",
-                                 "reconcile tags with the catalogue", "validate generated-questions.json", "load generated-questions.json",
+        self.assertEqual(names, ["chapter config", "S5 catalogue (pass 1)", "load catalogue dry run", "pg_dump", "load catalogue", "generated questions",
+                                 "widget questions", "S5 reconcile (pass 2)", "validate generated-questions.json", "load generated-questions.json",
                                  "validate widget-questions.json", "load widget-questions.json", "G3 auto-pass", "apply G3 verdicts",
-                                 "G4 auto-pass", "coverage", "parity (every course)", "register in the loaded-bundles config", "G5 auto-pass"])
+                                 "G4 auto-pass", "coverage", "register in the loaded-bundles config", "G5 auto-pass", "parity (every course)"])
         by_script = self.ex.argv_of
         self.assertEqual(by_script("assemble_misconceptions.py"), [
-            ["assemble_misconceptions.py", final, "--book", cfg, "--out", f"{gen}/misconceptions.json", *graphs],
+            ["assemble_misconceptions.py", final, "--book", cfg, "--out", f"{gen}/misconceptions.json", "--catalogue-only", *graphs],
             ["assemble_misconceptions.py", final, "--book", cfg, "--out", f"{gen}/misconceptions.json", "--bundle", f"{gen}/generated-questions.json",
-             "--bundle", f"{gen}/widget-questions.json", *graphs]])
+             "--bundle", f"{gen}/widget-questions.json", *graphs, "--drop-undiagnosed-widgets", "--widget-gaps", "coverage/g10-math.ch04.widget-gaps.json"]])
         self.assertEqual(by_script("load_misconceptions.py"), [["load_misconceptions.py", f"{gen}/misconceptions.json", "--course", "course:us-g10-math-en",
                                                                 "--dry-run"], ["load_misconceptions.py", f"{gen}/misconceptions.json", "--course",
                                                                               "course:us-g10-math-en"]])
@@ -1145,7 +1153,7 @@ class S5Final(Base):
             "coverage/g10-math.ch04.widget-gaps.json", "--pending-review", "runs/g10-math/widgets/pending-review-ch04.json", "--out",
             f"{gen}/widget-questions.json"]])
         loads = by_script("load_generated_questions.py")
-        base = ["--course", "course:us-g10-math-en", "--sample", "10", "--seed", "20260926", "--catalogue-only"]
+        base = ["--dsn", F.DSN, "--course", "course:us-g10-math-en", "--catalogue-only", "--seed", "20261001"]
         self.assertEqual(loads, [["load_generated_questions.py", f"{gen}/generated-questions.json", *base, "--dry-run"],
                                  ["load_generated_questions.py", f"{gen}/generated-questions.json", *base],
                                  ["load_generated_questions.py", f"{gen}/widget-questions.json", *base, "--dry-run"],
@@ -1154,7 +1162,8 @@ class S5Final(Base):
         self.assertEqual(gates[0], ["auto_pass_gates.py", "g3", BOOK, "--chapter", "4", "--queue", f"{gen}/generated-questions.review-queue.json",
                                     "--queue", f"{gen}/widget-questions.review-queue.json", "--widgets", f"{gen}/widget-questions.json",
                                     "--widget-gaps", "coverage/g10-math.ch04.widget-gaps.json"])
-        self.assertEqual(gates[1], ["auto_pass_gates.py", "g4", BOOK, "--chapter", "4", "--catalogue", f"{gen}/misconceptions.json", "--s5", final])
+        self.assertEqual(gates[1], ["auto_pass_gates.py", "g4", BOOK, "--chapter", "4", "--run", wf, "--catalogue", f"{gen}/misconceptions.json",
+                                    "--s5", final])
         self.assertEqual(gates[2], ["auto_pass_gates.py", "g5", BOOK, "--chapter", "4", "--coverage", "coverage/g10-math.ch04.json", "--book-config",
                                     "runs/g10-math/fanout/loaded/g10-math.json"])
         g5_env = [c[1] for c in self.ex.calls if c[0][:2] == ["auto_pass_gates.py", "g5"]][0]
@@ -1243,6 +1252,33 @@ class S5Final(Base):
         self.assertEqual(rc, 0, rep)
         self.assertEqual([a[1] for a in self.ex.argv_of("auto_pass_gates.py")], ["g4", "g5"])
         self.assertTrue(any("G3 could not run" in w for w in rep["warnings"]))
+
+    def test_a_bundle_not_reconciled_with_this_s5_final_run_is_never_loaded(self):
+        b = self.box
+        self.skip_stamp = True                                       # pass 2 left no (or another run's) stamp
+        rc, rep, wf = b.go("s5-final-ch04", result={"stage": "final"})
+        self.assertEqual(rc, 1)
+        self.assertEqual(rep["failure"]["step"], "reconciled bundle")
+        self.assertIn("not reconciled with this S5 final run", rep["failure"]["detail"])
+        self.assertEqual(self.ex.argv_of("load_generated_questions.py"), [], "not even the dry run")
+        self.assertEqual(self.ex.argv_of("auto_pass_gates.py"), [])
+
+    def test_a_widgetless_chapter_passes_no_widget_bundle_to_pass_2_and_drops_the_widget_arguments(self):
+        b = self.box
+        for p in (b.here / "widgets" / BOOK / "ch04").glob("*.json"):
+            p.unlink()
+        rc, rep, wf = b.go("s5-final-ch04", result={"stage": "final"})
+        self.assertEqual(rc, 0, rep)
+        p2 = self.ex.argv_of("assemble_misconceptions.py")[1]
+        self.assertEqual([p2[i + 1] for i, a in enumerate(p2) if a == "--bundle"], ["seed/generated/g10-math/ch04/generated-questions.json"])
+        (gap,) = self.ex.argv_of("generate_widget_questions.py")
+        self.assertNotIn("--verdicts", gap)
+        self.assertNotIn("--pending-review", gap)
+        self.assertNotIn("--out", gap)
+        g3 = self.ex.argv_of("auto_pass_gates.py")[0]
+        self.assertEqual(g3.count("--queue"), 1)
+        self.assertNotIn("--widgets", g3)
+        self.assertIn("--widget-gaps", g3)
 
     def test_parity_red_blocks(self):
         b = self.box

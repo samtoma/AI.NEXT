@@ -583,8 +583,21 @@ def g2_recommend_main(a, book) -> int:
     t = f"{ch:02d}"
     g2_path = a.g2 or HERE / "runs" / book.book / f"g2-ch{t}.json"
     try:
-        lesson_runs = a.lesson_run or G.record_runs(book, ch)
+        lesson_runs = [] if a.gate == "g2-recommend-delta" else (a.lesson_run or G.record_runs(book, ch))
         recommended = HERE / "runs" / book.book / f"g2-ch{t}.recommended.json"
+        if a.gate == "g2-recommend-delta":
+            seed = a.seed or HERE / "seed" / book.book / f"{book.id_prefixes[0]}-c{t}.json"
+            flags = a.flags or HERE / "runs" / book.book / "working-check" / f"ch{t}.flags.json"
+            for need in (seed, flags):
+                if not need.exists():
+                    raise G.RecommendError(f"{_hr(need)} does not exist (assemble the chapter / run its working check first)")
+            ids = G.delta_ids(json.loads(seed.read_text()), json.loads(flags.read_text()))
+            if a.out:
+                a.out.parent.mkdir(parents=True, exist_ok=True)
+                a.out.write_text(json.dumps(ids, indent=1) + "\n")
+            print(f"G2 recommendation (ch{t}): {len(ids)} solution(s) in {_hr(seed)} the working check ({_hr(flags)}) never covered"
+                  + (f" -> {_hr(a.out)}" if a.out else "") + (": " + ", ".join(i.split(":", 2)[-1] for i in ids[:12]) + (" …" if len(ids) > 12 else "") if ids else ""))
+            return 0
         if a.gate == "g2-recommend-args":
             skip = set((json.loads(a.only_missing.read_text()).get("items") or {})) if a.only_missing else None
             info = G.prepare(book, ch, lesson_runs, g2_path, a.embed, batch=a.batch, verify_batch=a.verify_batch, model=a.model,
@@ -739,6 +752,10 @@ def main(argv: list[str] | None = None) -> int:
                                                                 "splits into parts)")
     ra.add_argument("--only-missing", type=Path, metavar="RECOMMENDED",
                     help="leave out the items this recommendation file already covers (a re-run of what was not answered)")
+    rd = g2rec(sub.add_parser("g2-recommend-delta", help="the assembled bundle's solutions the chapter's working check never covered (for a delta check)"))
+    rd.add_argument("--seed", type=Path, help="the assembled chapter bundle (default seed/<book>/<prefix>-cNN.json)")
+    rd.add_argument("--flags", type=Path, help="the chapter's working-check flags (default runs/<book>/working-check/chNN.flags.json): its checked_ids")
+    rd.add_argument("--out", type=Path, help="write the ids here (a JSON list: working_check.py args --only)")
     rc = g2rec(sub.add_parser("g2-recommend-collect", help="G2 recommendation run: the saved run(s), checked, as a recommendation file"))
     rc.add_argument("--run", type=Path, action="append", required=True, help="a saved run (runs/<book>/g2rec/chNN-<runId>.json)")
     rc.add_argument("--out", type=Path, help="the recommendation file (default runs/<book>/g2-chNN.recommended.json); keys these "

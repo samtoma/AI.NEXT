@@ -855,28 +855,34 @@ def follow_ups(book: str, chapter: int, lesson_runs: list[str], *, recommended: 
                db: str = "ainext_pilot_g10_ch08", run_label: str = "") -> list[str]:
     """The exact commands that apply a saved recommendation, in order (from services/extraction/). Lines starting with # are comments.
 
-    The chapter's working check and S5 draft are built from the ASSEMBLED bundle, so apply the recommendation BEFORE they are
-    launched: `fanout.py close-chapter N` then does steps 2-4 itself (it passes the recommendation file when it exists) and
-    re-prepares those copies. After they were launched, run the explicit steps and a delta working check on the newly live items."""
+    The chapter's working check and S5 draft are built from the ASSEMBLED bundle, which the recommendation changes: ideally it is applied
+    BEFORE they are launched (`fanout.py close-chapter N` then does steps 2-4 itself, passing the recommendation file once it exists, and
+    re-prepares them). If they ran already (Chapters 1 and 2), check what the bundle gained since: `g2-recommend-delta` lists the bundle's
+    solutions the working check never covered, and `working_check.py args --only` limits a second check to them.
+
+    If the lesson runs were RE-COLLECTED after the recommendation run was made (lesson.workflow.js COLLECT-6 widened, 2026-10-01), do that first and
+    re-run G2 on them before collecting: the collector then skips what the checks now decide and refuses what changed (README §7c)."""
     t = f"{chapter:02d}"
     lr = " ".join(f"--lesson-run {p}" for p in lesson_runs)
     gl = f'--run "{run_label}" ' if run_label else ""
     dsn = f"host=127.0.0.1 port=5432 dbname={db}"
+    delta = f"runs/{book}/g2rec/ch{t}.delta-ids.json"
     return [
         f"uv run auto_pass_gates.py g2-recommend-collect {book} --chapter {chapter} {lr} --run runs/{book}/g2rec/ch{t}-<runId>.json "
-        f"--out {recommended} --ids-out runs/{book}/g2rec/ch{t}.live-ids.json",
+        f"--out {recommended}",
         f"uv run auto_pass_gates.py g2 {book} --chapter {chapter} {lr} --recommend {recommended} --into {g2_file} --split "
         f"--maths runs/{book}/maths/book/accepted.json {gl}".rstrip(),
         f"uv run assemble_lesson_bundle.py --book {book} --chapter {chapter} --report runs/{book}/fanout/assembly-ch{t}.json",
         f"uv run load_seed.py seed/{book}/g10m-course.json seed/{book}/g10m-c{t}.json --validate-only",
         f"# or, if chapter {chapter}'s working check and S5 draft are NOT launched yet, one command does the three steps above and re-prepares them:",
         f"#   uv run fanout.py close-chapter {chapter}",
-        f"# if its working check ALREADY ran, check only the newly live questions (the collector wrote their ids; two independent passes, A then B reshuffled):",
-        f"#   uv run working_check.py args --book {book} --seed seed/{book}/g10m-c{t}.json --chapter {chapter} --pass-id A --only runs/{book}/g2rec/ch{t}.live-ids.json "
+        f"# if its working check ALREADY ran, check only what the assembled bundle gained since (two independent passes, A then B reshuffled):",
+        f"#   uv run auto_pass_gates.py g2-recommend-delta {book} --chapter {chapter} --out {delta}",
+        f"#   uv run working_check.py args --book {book} --seed seed/{book}/g10m-c{t}.json --chapter {chapter} --pass-id A --only {delta} "
         f"--by-ref work/{book}/packets/fanout/wcheck-ch{t}-g2rec-A --out work/{book}/packets/fanout/wcheck-ch{t}-g2rec-A.args.json "
         f"--embed work/{book}/packets/embedded/fanout/wcheck-ch{t}-g2rec-A.workflow.js",
         f"#   uv run working_check.py args --book {book} --seed seed/{book}/g10m-c{t}.json --chapter {chapter} --pass-id B --order shuffled --order-seed 11 "
-        f"--only runs/{book}/g2rec/ch{t}.live-ids.json --by-ref work/{book}/packets/fanout/wcheck-ch{t}-g2rec-B "
+        f"--only {delta} --by-ref work/{book}/packets/fanout/wcheck-ch{t}-g2rec-B "
         f"--out work/{book}/packets/fanout/wcheck-ch{t}-g2rec-B.args.json --embed work/{book}/packets/embedded/fanout/wcheck-ch{t}-g2rec-B.workflow.js",
         f"#   (run both copies; then working_check.py collect --args A.json --args B.json --runs <A run> <B run> --out runs/{book}/working-check/ch{t}.g2rec.flags.json)",
         f"# only if chapter {chapter} is ALREADY loaded in {db} (it adds the newly live questions, releases the held ones, rejects the excluded):",

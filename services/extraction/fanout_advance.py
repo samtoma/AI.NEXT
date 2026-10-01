@@ -102,7 +102,7 @@ BOOK = F.BOOK
 COURSE = "course:us-g10-math-en"
 GATE_RUN = "s5-final-ch01"              # the chapter-1 go/no-go the plan puts in front of every other chapter's lessons
 LOCAL_HOSTS = {"127.0.0.1", "localhost", "::1"}
-SAMPLE_PCT, SAMPLE_SEED = 10, 20260926  # the review-queue sample the pilot's generated-bundle loads used (runbook §6, WIP step d)
+LOAD_SEED = 20261001                    # the generated-bundle loads' sample seed (the default 10% is the review queue G3 reads); main session 2026-10-01
 MAX_LANES = 2                           # the plan's rule: at most two Workflow runs at a time
 SAVE_DIRS = ("maths", "objectives", "lessons", "working-check", "misconceptions", "families", "widgets")
 ONE_OFF = {"s6-author-ch08-s111", "wcheck-ch08"}
@@ -1160,7 +1160,8 @@ def present_all(A: Adv, table: str, ids: list[str]) -> bool:
 
 
 def h_s5_final(A: Adv) -> bool:
-    """The plan's `after` of S5 final, in order, with the runbook's G3/G4 (§7b). Every step with files as outputs is skipped when
+    """The plan's `after` of S5 final (the sequence the main session loaded chapter 1 with, 2026-10-01): catalogue pass 1, load, S6/S7 bundles,
+    pass 2, loads, G3 (+ apply), G4, coverage, G5, parity. Every step with files as outputs is skipped when
     they are newer than its inputs; every DB write is preceded by one fresh pg_dump. The catalogue (written first, rewritten by the
     reconcile) is NOT an input of the bundles' freshness: a bundle built before the reconcile would otherwise look stale forever."""
     K, fl, P = A.K, A.fl, A.P
@@ -1176,8 +1177,9 @@ def h_s5_final(A: Adv) -> bool:
     if not fl.dry:
         K.gen.mkdir(parents=True, exist_ok=True)
 
-    fl.run("S5 catalogue", ["assemble_misconceptions.py", P.rel(A.saved), "--book", P.rel(cfg), "--out", P.rel(cat), *graphs],
-           inputs=[A.saved], outputs=[cat])
+    # pass 1: the catalogue alone (no bundle exists yet, and the bundles are generated FROM it); every rule on the entries still refuses
+    fl.run("S5 catalogue (pass 1)", ["assemble_misconceptions.py", P.rel(A.saved), "--book", P.rel(cfg), "--out", P.rel(cat), "--catalogue-only",
+                                     *graphs], inputs=[A.saved], outputs=[cat])
     cat_ids = [m["id"] for m in ((read_json(cat).get("misconceptions") if cat.exists() else None) or [])]
     if present_all(A, "misconceptions", cat_ids) and not A.opts.redo:
         fl.skipped("load catalogue", f"all {len(cat_ids)} entries are in the pilot DB")
@@ -1207,17 +1209,20 @@ def h_s5_final(A: Adv) -> bool:
                                      "--gaps", P.rel(K.merged), "--gap-report", P.rel(K.widget_gaps)],
                env={"AINEXT_DB_DSN": F.DSN}, inputs=[K.merged], outputs=[K.widget_gaps])
     if bundles:
-        fl.run("reconcile tags with the catalogue", ["assemble_misconceptions.py", P.rel(A.saved), "--book", P.rel(cfg), "--out", P.rel(cat),
-                                                      *[x for b in bundles for x in ("--bundle", P.rel(b))], *graphs],
-               inputs=[A.saved, *bundles], outputs=[cat])
+        # pass 2: strip what S5's verifier refused from each bundle, leave out a widget with no diagnostic (recorded as a gap in the widget-gaps
+        # report). It rewrites the bundles and the catalogue IN PLACE, so all of them are its outputs; and step 4 never runs again without this
+        # one (the cascade: a step that ran makes every later one run)
+        fl.run("S5 reconcile (pass 2)", ["assemble_misconceptions.py", P.rel(A.saved), "--book", P.rel(cfg), "--out", P.rel(cat),
+                                         *[x for b in bundles for x in ("--bundle", P.rel(b))], *graphs, "--drop-undiagnosed-widgets",
+                                         "--widget-gaps", P.rel(K.widget_gaps)], inputs=[A.saved], outputs=[cat, *bundles])
     queues: list[Path] = []
     for b in bundles:
         ids = [x["id"] for x in ((read_json(b).get("questions") if b.exists() else None) or [])]
         if present_all(A, "questions", ids) and not A.opts.redo:
             fl.skipped(f"load {b.name}", f"all {len(ids)} questions are in the pilot DB")
         else:
-            load = ["load_generated_questions.py", P.rel(b), "--course", COURSE, "--sample", str(SAMPLE_PCT), "--seed", str(SAMPLE_SEED),
-                    "--catalogue-only"]
+            assert_reconciled(A, b)
+            load = ["load_generated_questions.py", P.rel(b), "--dsn", F.DSN, "--course", COURSE, "--catalogue-only", "--seed", str(LOAD_SEED)]
             fl.run(f"validate {b.name}", [*load, "--dry-run"], env=env, fresh=False)
             fl.backup(f"{K.t}-final-load")
             fl.run(f"load {b.name}", load, env=env, fresh=False)
@@ -1235,7 +1240,7 @@ def h_s5_final(A: Adv) -> bool:
                 fl.backup(f"{K.t}-final-load")
             fl.run("apply G3 verdicts", ["apply_review_verdicts.py", P.rel(auto3)], env=env, fresh=False, mark="apply G3 verdicts",
                    mark_inputs=[auto3])
-    fl.run("G4 auto-pass", ["auto_pass_gates.py", "g4", BOOK, "--chapter", str(A.ch), "--catalogue", P.rel(cat), "--s5", P.rel(A.saved)],
+    fl.run("G4 auto-pass", ["auto_pass_gates.py", "g4", BOOK, "--chapter", str(A.ch), "--run", A.wf, "--catalogue", P.rel(cat), "--s5", P.rel(A.saved)],
            inputs=[cat, A.saved], outputs=[K.gates / f"g4-{K.t}.json"])
     t0 = time.time_ns()
     r = fl.run("coverage", ["coverage_report.py", "--book", P.rel(cfg), "--chapter", str(A.ch), "--maths", P.rel(P.maths_book / "summary.json"),
@@ -1244,7 +1249,6 @@ def h_s5_final(A: Adv) -> bool:
     if r.rc == 1 and not r.dry and not written_since(K.cov, t0):     # RED writes the report; a crash does not
         raise StepFailed("coverage", f"exit 1 and no report was written: {r.key_lines()}")
     coverage_verdict(A, K.cov)
-    fl.run("parity (every course)", ["parity_check.py", "--candidate", F.DSN, "--all-courses"], fresh=False)
     if not queues:
         A.warn("no generated bundle: G3 could not run (it needs a review queue), so the chapter's widget gaps are not auto-signed and "
                "coverage's module_widgets may fail for want of them — a completeness finding for Samuel")
@@ -1260,8 +1264,19 @@ def h_s5_final(A: Adv) -> bool:
     if g5.exists():
         g = read_json(g5)
         A.count(g5={"outcome": g.get("outcome"), "summary": str(g.get("summary"))[:160]})
+    fl.run("parity (every course)", ["parity_check.py", "--candidate", F.DSN, "--all-courses"], fresh=False)
     A.count(bundles=[b.name for b in bundles])
     return True
+
+
+def assert_reconciled(A: Adv, bundle: Path) -> None:
+    """A generated bundle is loaded only after pass 2 of THIS S5 final run: its `s5_reconciled` stamp names the run files it was reconciled with."""
+    if A.fl.dry or not bundle.exists():
+        return
+    stamp = read_json(bundle).get("s5_reconciled") or {}
+    if stamp.get("runs") != [A.saved.name]:
+        raise StepFailed("reconciled bundle", f"{bundle.name} says s5_reconciled.runs = {stamp.get('runs')!r}, not [{A.saved.name!r}]: it was not reconciled with "
+                                              "this S5 final run, so it is not loaded")
 
 
 def coverage_verdict(A: Adv, cov: Path) -> None:
