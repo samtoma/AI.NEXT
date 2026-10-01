@@ -1,0 +1,639 @@
+{
+ "summary": "S6 (B12): declarative question families per objective (mode author), and a blind instance grader (mode grade) — decision 16",
+ "agentCount": 1,
+ "logs": [
+  "authoring families for 1 objective(s); tier gaps: 3; packet by reference: 2 shard(s) in /Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/s6-author-ch08-s111",
+  "3 family spec(s) written; 0 gap(s) reported infeasible. Next: save, write the specs, run --check."
+ ],
+ "result": {
+  "mode": "author",
+  "book": "g10-math",
+  "prompts_version": "s6-v5",
+  "by_ref": {
+   "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/s6-author-ch08-s111",
+   "stage": "S6 author",
+   "shards_sha256": "819ead570dff149381921fc96a7bdd5330a553add0c47e0a36f962cd9f3b9aaa",
+   "files": 2
+  },
+  "embedded": {
+   "source": "runbook/families.workflow.js",
+   "source_sha256": "acfc4775a565b22e6056f9f2e4f8b5b4b6f9eac7b95a046b7a0b0e8e1068095a",
+   "args_sha256": "80b1278a99f7314491e7b320926957c82db247c7b559d5aaba22f46d5b8a5738",
+   "generated_sha256": "21c0c1cd5f1f29b9e490e3b21c7944e0ce2b12fadc7d0b6e336877f75fbd7016",
+   "generator": "services/extraction/embed_workflow.py v1"
+  },
+  "records": [
+   {
+    "lo_id": "lo:g10m8s1-1-1",
+    "families": [
+     {
+      "format": "ainext.family/1",
+      "id": "tpl:g10m8s1-1-1:plot-a-vertex",
+      "kind": "family",
+      "lo_id": "lo:g10m8s1-1-1",
+      "parent_question_id": "q:g10m8s1-1-1:ex8-6-4a",
+      "source_page": 316,
+      "tier": "basic",
+      "answer_type": "mcq",
+      "context": null,
+      "params": [
+       {
+        "name": "a",
+        "choice": [
+         -6,
+         -5,
+         -4,
+         -3,
+         -2,
+         -1,
+         1,
+         2,
+         3,
+         4,
+         5,
+         6
+        ]
+       },
+       {
+        "name": "b",
+        "choice": [
+         -6,
+         -5,
+         -4,
+         -3,
+         -2,
+         -1,
+         1,
+         2,
+         3,
+         4,
+         5,
+         6
+        ],
+        "resample_while": "abs(b) == abs(a)"
+       },
+       {
+        "name": "hx",
+        "let": "['to the left', 'to the right'][1 if a > 0 else 0]"
+       },
+       {
+        "name": "hxo",
+        "let": "['to the left', 'to the right'][0 if a > 0 else 1]"
+       },
+       {
+        "name": "hb",
+        "let": "['to the left', 'to the right'][1 if b > 0 else 0]"
+       },
+       {
+        "name": "vy",
+        "let": "['down', 'up'][1 if b > 0 else 0]"
+       },
+       {
+        "name": "vyo",
+        "let": "['down', 'up'][0 if b > 0 else 1]"
+       },
+       {
+        "name": "va",
+        "let": "['down', 'up'][1 if a > 0 else 0]"
+       },
+       {
+        "name": "sa",
+        "let": "['negative', 'positive'][1 if a > 0 else 0]"
+       },
+       {
+        "name": "sb",
+        "let": "['negative', 'positive'][1 if b > 0 else 0]"
+       },
+       {
+        "name": "ua",
+        "let": "'unit' if abs(a) == 1 else 'units'"
+       },
+       {
+        "name": "ub",
+        "let": "'unit' if abs(b) == 1 else 'units'"
+       }
+      ],
+      "constraints": [
+       "abs(a) != abs(b)",
+       "a != 0",
+       "b != 0"
+      ],
+      "stem": "Triangle $DEF$ is drawn on the Cartesian plane by plotting its three vertices. One of them is $F({=a}, {=b})$. Starting at the origin, which instruction plots $F$ correctly?",
+      "choices": {
+       "correct": "{=abs(a)} {=ua} {=hx}, then {=abs(b)} {=ub} {=vy}",
+       "distractors": [
+        {
+         "text": "{=abs(b)} {=ub} {=hb}, then {=abs(a)} {=ua} {=va}",
+         "misconception_id": "mc:g10m8s1-1-1:swap-xy"
+        },
+        {
+         "text": "{=abs(a)} {=ua} {=hxo}, then {=abs(b)} {=ub} {=vy}",
+         "misconception_id": "mc:g10m8s1-1-1:x-direction-flipped"
+        },
+        {
+         "text": "{=abs(a)} {=ua} {=hx}, then {=abs(b)} {=ub} {=vyo}",
+         "misconception_id": "mc:g10m8s1-1-1:y-direction-flipped"
+        }
+       ]
+      },
+      "proposed_misconceptions": [
+       {
+        "id": "mc:g10m8s1-1-1:swap-xy",
+        "label": "Plots (x, y) as (y, x)",
+        "description": "Reads the first number as the up-and-down move and the second as the across move, so the point lands where (y, x) belongs. Horizontal sides then look vertical and vertical sides look horizontal."
+       },
+       {
+        "id": "mc:g10m8s1-1-1:x-direction-flipped",
+        "label": "Moves the wrong way along the x-axis",
+        "description": "Gets the size of the x-coordinate right but moves left for a positive x-coordinate or right for a negative one."
+       },
+       {
+        "id": "mc:g10m8s1-1-1:y-direction-flipped",
+        "label": "Moves the wrong way along the y-axis",
+        "description": "Gets the size of the y-coordinate right but moves down for a positive y-coordinate or up for a negative one."
+       }
+      ],
+      "solution": [
+       "In a coordinate pair $(x, y)$ the first number is the $x$-coordinate (how far across) and the second is the $y$-coordinate (how far up or down). For $F$ we have $x = {=a}$ and $y = {=b}$.",
+       "The $x$-coordinate ${=a}$ is {=sa}, so from the origin move {=abs(a)} {=ua} {=hx} along the $x$-axis.",
+       "The $y$-coordinate ${=b}$ is {=sb}, so from there move {=abs(b)} {=ub} {=vy}, parallel to the $y$-axis.",
+       "Mark the point where you stop and label it $F$. The correct instruction is: {=abs(a)} {=ua} {=hx}, then {=abs(b)} {=ub} {=vy}."
+      ],
+      "notes": "BASIC, the entry point of the skill: placing ONE vertex of the figure from its coordinates. The book's own tasks (ex8-6-4a and the others) ask for a drawing, which is not markable (teaching_only, no question row), so this checks the step every drawing rests on. Each distractor is one named plotting error: swapped coordinates, wrong x direction, wrong y direction. |a| != |b| keeps the swap distinct from the correct option; both signs occur so the direction errors are real errors in every instance. Verified by simulating 4000 instances: four distinct options, correct option matches an independent derivation."
+     },
+     {
+      "format": "ainext.family/1",
+      "id": "tpl:g10m8s1-1-1:vertex-on-axis",
+      "kind": "family",
+      "lo_id": "lo:g10m8s1-1-1",
+      "parent_question_id": "q:g10m8s1-1-1:ex8-6-4b",
+      "source_page": 316,
+      "tier": "standard",
+      "answer_type": "mcq",
+      "context": null,
+      "params": [
+       {
+        "name": "p",
+        "randint": [
+         1,
+         5
+        ]
+       },
+       {
+        "name": "q",
+        "randint": [
+         1,
+         5
+        ]
+       },
+       {
+        "name": "r",
+        "randint": [
+         1,
+         5
+        ]
+       },
+       {
+        "name": "s",
+        "randint": [
+         1,
+         5
+        ]
+       },
+       {
+        "name": "t",
+        "randint": [
+         1,
+         5
+        ]
+       },
+       {
+        "name": "u",
+        "randint": [
+         1,
+         5
+        ]
+       },
+       {
+        "name": "sx",
+        "choice": [
+         1,
+         -1
+        ]
+       },
+       {
+        "name": "sy",
+        "choice": [
+         1,
+         -1
+        ]
+       },
+       {
+        "name": "k",
+        "randint": [
+         0,
+         3
+        ]
+       },
+       {
+        "name": "flag",
+        "randint": [
+         0,
+         1
+        ]
+       },
+       {
+        "name": "base",
+        "let": "[[sx * p, 0], [0, sy * q], [-sx * r, -sy * s], [sx * t, -sy * u]]"
+       },
+       {
+        "name": "vs",
+        "let": "[base[(i + k) % 4] for i in range(4)]"
+       },
+       {
+        "name": "cr",
+        "let": "[(vs[(i + 1) % 4][0] - vs[i][0]) * (vs[(i + 2) % 4][1] - vs[i][1]) - (vs[(i + 1) % 4][1] - vs[i][1]) * (vs[(i + 2) % 4][0] - vs[i][0]) for i in range(4)]"
+       },
+       {
+        "require": "min([abs(c) for c in cr]) > 0",
+        "why": "no three consecutive vertices in a straight line, so the figure is a true quadrilateral"
+       },
+       {
+        "name": "ax",
+        "let": "vs[0][0]"
+       },
+       {
+        "name": "ay",
+        "let": "vs[0][1]"
+       },
+       {
+        "name": "bx",
+        "let": "vs[1][0]"
+       },
+       {
+        "name": "by",
+        "let": "vs[1][1]"
+       },
+       {
+        "name": "cx",
+        "let": "vs[2][0]"
+       },
+       {
+        "name": "cy",
+        "let": "vs[2][1]"
+       },
+       {
+        "name": "dx",
+        "let": "vs[3][0]"
+       },
+       {
+        "name": "dy",
+        "let": "vs[3][1]"
+       },
+       {
+        "name": "letters",
+        "let": "['A', 'B', 'C', 'D']"
+       },
+       {
+        "name": "iy",
+        "let": "(5 - k) % 4"
+       },
+       {
+        "name": "ix",
+        "let": "(4 - k) % 4"
+       },
+       {
+        "name": "target",
+        "let": "[iy, ix][flag]"
+       },
+       {
+        "name": "mix",
+        "let": "[ix, iy][flag]"
+       },
+       {
+        "name": "others",
+        "let": "[i for i in range(4) if i != iy and i != ix]"
+       },
+       {
+        "name": "ctext",
+        "let": "letters[target]"
+       },
+       {
+        "name": "mtext",
+        "let": "letters[mix]"
+       },
+       {
+        "name": "o1",
+        "let": "letters[others[0]]"
+       },
+       {
+        "name": "o2",
+        "let": "letters[others[1]]"
+       },
+       {
+        "name": "axisname",
+        "let": "['y', 'x'][flag]"
+       },
+       {
+        "name": "coordname",
+        "let": "['x', 'y'][flag]"
+       },
+       {
+        "name": "otheraxis",
+        "let": "['x', 'y'][flag]"
+       },
+       {
+        "name": "othercoord",
+        "let": "['y', 'x'][flag]"
+       },
+       {
+        "name": "co",
+        "let": "[vs[i][flag] for i in range(4)]"
+       }
+      ],
+      "constraints": [
+       "len(unique([ctext, mtext, o1, o2])) == 4"
+      ],
+      "stem": "Quadrilateral $ABCD$ is drawn on the Cartesian plane by plotting $A({=ax}, {=ay})$, $B({=bx}, {=by})$, $C({=cx}, {=cy})$ and $D({=dx}, {=dy})$ and joining $A$ to $B$, $B$ to $C$, $C$ to $D$ and $D$ to $A$. Which vertex lies on the ${=axisname}$-axis?",
+      "choices": {
+       "correct": "${=ctext}$",
+       "distractors": [
+        {
+         "text": "${=mtext}$",
+         "misconception_id": "mc:g10m8s1-1-1:zero-on-wrong-axis"
+        },
+        {
+         "text": "${=o1}$",
+         "misconception_id": null
+        },
+        {
+         "text": "${=o2}$",
+         "misconception_id": null
+        }
+       ]
+      },
+      "proposed_misconceptions": [
+       {
+        "id": "mc:g10m8s1-1-1:zero-on-wrong-axis",
+        "label": "Puts a point with a zero coordinate on the wrong axis",
+        "description": "Reads 'y = 0' as 'on the y-axis' and 'x = 0' as 'on the x-axis'. A point whose x-coordinate is 0 lies on the y-axis, and a point whose y-coordinate is 0 lies on the x-axis."
+       }
+      ],
+      "solution": [
+       "Plot each vertex from its coordinates: the first number is how far across from the $y$-axis, the second is how far up or down from the $x$-axis.",
+       "A point lies on the ${=axisname}$-axis exactly when its ${=coordname}$-coordinate is 0, because it is then 0 units away from that axis.",
+       "The ${=coordname}$-coordinates of the vertices are: $A$ has ${=co[0]}$, $B$ has ${=co[1]}$, $C$ has ${=co[2]}$ and $D$ has ${=co[3]}$.",
+       "Only vertex ${=ctext}$ has ${=coordname} = 0$, so vertex ${=ctext}$ lies on the ${=axisname}$-axis.",
+       "Vertex ${=mtext}$ has ${=othercoord} = 0$, so it lies on the ${=otheraxis}$-axis, not on the ${=axisname}$-axis."
+      ],
+      "notes": "STANDARD, the book's typical exercise (ex8-6-4b has H(0, 2) on the y-axis, vertices in three quadrants). The figure is a true, non-self-intersecting quadrilateral by construction: one vertex on an x-axis, one on a y-axis, one in each of two remaining quadrants, taken in angular order about the origin with every angular gap under 180 degrees; reflections (sx, sy) and a relabelling shift (k) vary the picture; the require rejects three consecutive collinear vertices. Exactly one vertex has x = 0 and exactly one has y = 0, so the answer is unique and the 'other axis' distractor is a real error in every instance. The other two distractors are plausible wrong vertices with no named error (null). Letters rather than typed text because the answer is a choice among named vertices. Verified by simulating 4000 instances (simple quadrilateral by segment-intersection test, unique correct vertex, four distinct options, both axes asked, every letter occurs as the answer)."
+     },
+     {
+      "format": "ainext.family/1",
+      "id": "tpl:g10m8s1-1-1:vertical-side",
+      "kind": "family",
+      "lo_id": "lo:g10m8s1-1-1",
+      "parent_question_id": "q:g10m8s1-1-1:ex8-6-20a",
+      "source_page": 321,
+      "tier": "advanced",
+      "answer_type": "mcq",
+      "context": null,
+      "params": [
+       {
+        "name": "q",
+        "randint": [
+         1,
+         5
+        ]
+       },
+       {
+        "name": "w1",
+        "randint": [
+         2,
+         6
+        ]
+       },
+       {
+        "name": "w2",
+        "randint": [
+         1,
+         6
+        ],
+        "resample_while": "w2 == w1"
+       },
+       {
+        "name": "y1",
+        "randint": [
+         -4,
+         1
+        ]
+       },
+       {
+        "name": "h",
+        "randint": [
+         2,
+         5
+        ]
+       },
+       {
+        "name": "sx",
+        "choice": [
+         1,
+         -1
+        ]
+       },
+       {
+        "name": "sy",
+        "choice": [
+         1,
+         -1
+        ]
+       },
+       {
+        "name": "k",
+        "randint": [
+         0,
+         3
+        ]
+       },
+       {
+        "name": "p",
+        "let": "q - w1"
+       },
+       {
+        "name": "r",
+        "let": "q - w2"
+       },
+       {
+        "name": "y2",
+        "let": "y1 + h"
+       },
+       {
+        "name": "base",
+        "let": "[[sx * p, sy * y1], [sx * q, sy * y1], [sx * q, sy * y2], [sx * r, sy * y2]]"
+       },
+       {
+        "name": "vs",
+        "let": "[base[(i + k) % 4] for i in range(4)]"
+       },
+       {
+        "name": "ax",
+        "let": "vs[0][0]"
+       },
+       {
+        "name": "ay",
+        "let": "vs[0][1]"
+       },
+       {
+        "name": "bx",
+        "let": "vs[1][0]"
+       },
+       {
+        "name": "by",
+        "let": "vs[1][1]"
+       },
+       {
+        "name": "cx",
+        "let": "vs[2][0]"
+       },
+       {
+        "name": "cy",
+        "let": "vs[2][1]"
+       },
+       {
+        "name": "dx",
+        "let": "vs[3][0]"
+       },
+       {
+        "name": "dy",
+        "let": "vs[3][1]"
+       },
+       {
+        "name": "letters",
+        "let": "['A', 'B', 'C', 'D']"
+       },
+       {
+        "name": "sides",
+        "let": "['AB', 'BC', 'CD', 'DA']"
+       },
+       {
+        "name": "iv",
+        "let": "(5 - k) % 4"
+       },
+       {
+        "name": "vname",
+        "let": "sides[iv]"
+       },
+       {
+        "name": "bot",
+        "let": "sides[(4 - k) % 4]"
+       },
+       {
+        "name": "top",
+        "let": "sides[(6 - k) % 4]"
+       },
+       {
+        "name": "lean",
+        "let": "sides[(7 - k) % 4]"
+       },
+       {
+        "name": "v1",
+        "let": "letters[iv]"
+       },
+       {
+        "name": "v2",
+        "let": "letters[(iv + 1) % 4]"
+       },
+       {
+        "name": "xv",
+        "let": "vs[iv][0]"
+       }
+      ],
+      "constraints": [
+       "w1 != w2",
+       "len(unique([vname, bot, top, lean])) == 4"
+      ],
+      "stem": "Quadrilateral $ABCD$ is drawn on the Cartesian plane by plotting $A({=ax}, {=ay})$, $B({=bx}, {=by})$, $C({=cx}, {=cy})$ and $D({=dx}, {=dy})$ and joining $A$ to $B$, $B$ to $C$, $C$ to $D$ and $D$ to $A$. Exactly one side of the quadrilateral is vertical (parallel to the $y$-axis). Which side is it?",
+      "choices": {
+       "correct": "${=vname}$",
+       "distractors": [
+        {
+         "text": "${=bot}$",
+         "misconception_id": "mc:g10m8s1-1-1:horizontal-vertical-mixup"
+        },
+        {
+         "text": "${=top}$",
+         "misconception_id": "mc:g10m8s1-1-1:horizontal-vertical-mixup"
+        },
+        {
+         "text": "${=lean}$",
+         "misconception_id": null
+        }
+       ]
+      },
+      "proposed_misconceptions": [
+       {
+        "id": "mc:g10m8s1-1-1:horizontal-vertical-mixup",
+        "label": "Takes a horizontal side for a vertical one",
+        "description": "Calls a side vertical when its endpoints share a y-coordinate (it runs straight across). Either the words horizontal and vertical are mixed up, or the vertices were plotted as (y, x)."
+       }
+      ],
+      "solution": [
+       "Plot the four vertices and join them in order: $AB$, $BC$, $CD$ and finally $DA$, which closes the figure.",
+       "A vertical side joins two vertices with the same $x$-coordinate, because they lie straight above one another.",
+       "The $x$-coordinates are: $A$ has ${=ax}$, $B$ has ${=bx}$, $C$ has ${=cx}$ and $D$ has ${=dx}$.",
+       "Only vertices ${=v1}$ and ${=v2}$ share an $x$-coordinate, namely $x = {=xv}$, and they are next to each other in the joining order, so ${=vname}$ is a vertical side.",
+       "The other sides are not vertical: ${=bot}$ and ${=top}$ each join two vertices with the same $y$-coordinate, so they run straight across (horizontal), and ${=lean}$ joins vertices whose $x$- and $y$-coordinates both differ, so it is slanted."
+      ],
+      "notes": "ADVANCED, several steps: plot four vertices, join them IN ORDER including the closing side DA, and find which neighbouring pair has equal x. The shape is a right trapezium (two horizontal sides, one vertical side, one slanted side), so the vertical side is unique and the figure is always a simple convex quadrilateral. Reflection (sx, sy) and the relabelling shift k move the vertical side among AB, BC, CD, DA, so the closing side DA is sometimes the answer. The book's own ex8-6-20a has a vertical side CD. Two distractors are the horizontal sides (horizontal/vertical mixup, which is also what plotting (y, x) produces); the slanted side is a plausible wrong option with no named error. Verified by simulating 4000 instances (convex, simple, exactly one vertical and two horizontal sides, four distinct options, vertical side uniformly spread over AB, BC, CD, DA)."
+     }
+    ],
+    "infeasible": [],
+    "notes": "The book items for this objective (ex8-6-4a to 4d, 20a, 25a) are all pure drawing tasks, flagged teaching_only with no markable answer, and the objective has no catalogued misconceptions. A drawing cannot be marked as numeric, mcq or expression, so each family marks a check on the drawn figure: placing a vertex (basic), finding the vertex on an axis in a four-vertex figure (standard) and finding the vertical side when joining in order, including the closing side (advanced). The reviewer should judge whether these checks sit close enough to 'draw a figure from its vertices'. All five misconception ids are new and declared in proposed_misconceptions. I also simulated each family's expressions in Python, since I could not open the engine. Over 4000 instances each, every instance had a unique correct answer and four distinct options, and the two quadrilateral families were always simple quadrilaterals. The advanced family was always convex, with exactly one vertical side. The simulation assumed single-quoted string literals and string-valued 'let' lists are accepted by the expression language, so check that first if an instance fails to render."
+   }
+  ],
+  "revised": []
+ },
+ "workflowProgress": [
+  {
+   "type": "workflow_phase",
+   "index": 1,
+   "title": "Author"
+  },
+  {
+   "type": "workflow_phase",
+   "index": 2,
+   "title": "Solve"
+  },
+  {
+   "type": "workflow_phase",
+   "index": 3,
+   "title": "Judge"
+  },
+  {
+   "type": "workflow_agent",
+   "index": 1,
+   "label": "author:lo:g10m8s1-1-1",
+   "phaseIndex": 1,
+   "phaseTitle": "Author",
+   "agentId": "a8ff7c82b21bc9766",
+   "model": "claude-sonnet-5-5",
+   "state": "done",
+   "startedAt": 1790841820795,
+   "queuedAt": 1790841820787,
+   "attempt": 1,
+   "lastToolName": "StructuredOutput",
+   "lastToolSummary": "lo:g10m8s1-1-1",
+   "promptPreview": "You are writing generated question families for one learning objective of\nEverything Maths, Grade 10 Mathematics (Siyavula, Version 1.1 CAPS). Every instance a family produces may reach a student after only a sampled\nhuman review, and a different agent will solve three instances blind: one disagreement rejects the family.\n\nOBJECTIVE lo:g10m8s1-1-1 (lesson g10m8s1-1, module:g10m-c08): \"Drawing figu…",
+   "promptFramed": true,
+   "lastProgressAt": 1790842347813,
+   "tokens": 145473,
+   "toolCalls": 14,
+   "durationMs": 527018,
+   "resultPreview": "{\"lo_id\":\"lo:g10m8s1-1-1\",\"families\":[{\"format\":\"ainext.family/1\",\"id\":\"tpl:g10m8s1-1-1:plot-a-vertex\",\"kind\":\"family\",\"lo_id\":\"lo:g10m8s1-1-1\",\"parent_question_id\":\"q:g10m8s1-1-1:ex8-6-4a\",\"source_page\":316,\"tier\":\"basic\",\"answer_type\":\"mcq\",\"context\":null,\"params\":[{\"name\":\"a\",\"choice\":[-6,-5,-4,-3,-2,-1,1,2,3,4,5,6]},{\"name\":\"b\",\"choice\":[-6,-5,-4,-3,-2,-1,1,2,3,4,5,6],\"resample_while\":\"abs(b) …"
+  }
+ ],
+ "totalTokens": 145473,
+ "totalToolCalls": 14,
+ "runId": "wf_b6ba10e8-7d3"
+}
