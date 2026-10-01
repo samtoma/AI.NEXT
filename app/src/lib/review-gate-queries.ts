@@ -26,6 +26,16 @@
  *   objective   label, description, syllabus ref, chapter
  *   link        the two objectives and the rationale
  *   figure      kind, spec, caption, question
+ *   working flag  the solution's stem, key, worked solution and options (a
+ *               library entry: its content), with the steps and quotes the
+ *               step-level checker flagged in it — the checker's prose is NOT
+ *               in it (`review-gate-working.ts`, `flagsKey`)
+ *
+ * A working flag is the one kind whose findings live in a file, not a table:
+ * the checker's `runs/<book>/working-check/chNN.flags.json`
+ * (`readWorkingFlags`). The database supplies the solution — its place in the
+ * book, its text — and a flag whose solution is not in scope here (not loaded,
+ * retired, another subject) is not an item.
  *
  * Kinds the backlog cannot derive from the database today are reported by the
  * agent that built this rather than stored somewhere new (the pipeline's G1
@@ -41,7 +51,7 @@ import { COURSES, isCourseId } from "./courses";
 import { withOperator } from "./db";
 import { BOOTSTRAP_OPERATOR_EMAIL, ENVIRONMENT } from "./env";
 import { COURSE_RANK, MODULE_ORDER } from "./module-order";
-import { readGateRecords, type GateRecordRow } from "./review-gate-files";
+import { readGateRecords, readWorkingFlags, workingFlagFingerprint, type GateRecordRow } from "./review-gate-files";
 import {
   canDecide,
   claimRef,
@@ -49,6 +59,7 @@ import {
   deriveContent,
   deriveGate,
   deriveQuestion,
+  deriveWorkingFlag,
   isDecision,
   isItemKind,
   isQuestionKind,
@@ -79,7 +90,9 @@ import {
   type QuestionRow,
   type ResolvedItem,
   type ReviewItemPayload,
+  type WorkingFlagRow,
 } from "./review-gate";
+import { quoteInStep, workingTextOf, type WorkingFlagGroup } from "./review-gate-working";
 
 /** The slice of a client this module uses — a `PoolClient`, or a test's `pg.Client`. */
 export type Db = Pick<PoolClient, "query">;
@@ -200,6 +213,72 @@ const FIGURES_SQL = (where: string) => `
    WHERE v.kind = 'book_image' AND jsonb_typeof(v.spec) = 'object' AND (v.spec->>'stand_in') = 'true'
      AND (v.question_id IS NULL OR q.status IN ('live', 'review')) ${where}`;
 
+/**
+ * The solution a flag is about: its place in the book, and a hash of what the
+ * checker read — stem, key, worked solution and options for a question; the
+ * entry's content (problem and steps) for a worked example. `$1` is the list of
+ * solution ids a flags file names. A question must be one students are served
+ * or one held for review, exactly as `QUESTIONS_SQL` has it: a retired or draft
+ * question is not reviewed, so its flags are not either.
+ */
+const WORKING_Q_SQL = `
+  WITH ${SCOPE_SQL}
+  SELECT q.id AS ref, s.course_id, s.module_id, s.catalogue_rank, q.lo_id,
+         md5(concat_ws(chr(31), q.stem, q.correct_answer, coalesce(q.canonical_solution::text, ''),
+             coalesce(CASE WHEN jsonb_typeof(q.choices) = 'object'
+                           THEN (q.choices - 'diagnostics' - 'pending_review')::text
+                           ELSE q.choices::text END, ''))) AS solution_hash,
+         q.created_at
+    FROM questions q JOIN scope s ON s.lo_id = q.lo_id
+   WHERE q.id = ANY($1) AND q.status IN ('live', 'review') AND q.materialised_from IS NULL`;
+
+const WORKING_E_SQL = `
+  WITH ${SCOPE_SQL}
+  SELECT e.id AS ref, s.course_id, s.module_id, s.catalogue_rank, e.lo_id,
+         md5(e.content::text) AS solution_hash, e.created_at
+    FROM explanation_library e JOIN scope s ON s.lo_id = e.lo_id
+   WHERE e.id = ANY($1) AND e.entry_type <> 'refutation'`;
+
+type WorkingSolutionRow = {
+  ref: string;
+  course_id: string;
+  module_id: string | null;
+  catalogue_rank: number | null;
+  lo_id: string;
+  solution_hash: string;
+  created_at: string | Date;
+};
+
+/** The flagged solutions that are in scope here, as backlog candidates. */
+async function deriveWorkingFlags(c: Db, groups: readonly WorkingFlagGroup[]): Promise<DerivedItem[]> {
+  const byRef = new Map<string, WorkingFlagGroup>();
+  for (const g of groups) if (!byRef.has(g.ref)) byRef.set(g.ref, g);
+  const ids = (kind: WorkingFlagGroup["solutionKind"]) => [...byRef.values()].filter((g) => g.solutionKind === kind).map((g) => g.ref);
+  const rows: WorkingSolutionRow[] = [];
+  const questions = ids("question");
+  if (questions.length > 0) rows.push(...((await c.query(WORKING_Q_SQL, [questions])).rows as WorkingSolutionRow[]));
+  const examples = ids("worked_example");
+  if (examples.length > 0) rows.push(...((await c.query(WORKING_E_SQL, [examples])).rows as WorkingSolutionRow[]));
+  const out: DerivedItem[] = [];
+  for (const r of rows) {
+    const g = byRef.get(r.ref);
+    if (!g) continue;
+    const row: WorkingFlagRow = {
+      ref: r.ref,
+      course_id: r.course_id,
+      module_id: r.module_id,
+      catalogue_rank: r.catalogue_rank,
+      lo_id: r.lo_id,
+      fingerprint: workingFlagFingerprint(r.solution_hash, g.flags),
+      created_at: r.created_at,
+      flags: g.flags.map((f) => ({ step: f.step, where: f.where })),
+      promptsVersion: g.promptsVersion,
+    };
+    out.push(deriveWorkingFlag(row));
+  }
+  return out;
+}
+
 /* --------------------------------------------------------- derivation */
 
 /**
@@ -210,7 +289,8 @@ const FIGURES_SQL = (where: string) => `
 export async function deriveAll(
   c: Db,
   only?: { kind: ItemKind; ref: string } | null,
-  gates: () => Promise<GateRecordRow[]> = readGateRecords
+  gates: () => Promise<GateRecordRow[]> = readGateRecords,
+  flags: () => Promise<WorkingFlagGroup[]> = readWorkingFlags
 ): Promise<DerivedItem[]> {
   const want = (k: ItemKind) => !only || only.kind === k;
   const out: DerivedItem[] = [];
@@ -256,6 +336,10 @@ export async function deriveAll(
     }
   }
   await content("figure_stand_in", FIGURES_SQL, "AND v.id = $1", [only?.ref]);
+  if (want("working_flag")) {
+    const groups = (await flags()).filter((g) => !only || g.ref === only.ref);
+    if (groups.length > 0) out.push(...(await deriveWorkingFlags(c, groups)));
+  }
   if (want("gate_decision")) {
     const records = (await gates()).filter((r) => !only || r.ref === only.ref);
     if (records.length > 0) {
@@ -364,9 +448,10 @@ export async function loadBacklog(
   c: Db,
   environment: string,
   only?: { kind: ItemKind; ref: string } | null,
-  gates?: () => Promise<GateRecordRow[]>
+  gates?: () => Promise<GateRecordRow[]>,
+  flags?: () => Promise<WorkingFlagGroup[]>
 ): Promise<ResolvedItem[]> {
-  const derived = await deriveAll(c, only, gates);
+  const derived = await deriveAll(c, only, gates, flags);
   const latest = await latestDecisions(c, environment, only);
   return derived.map((d) => resolveItem(d, latest.get(itemKey(d.kind, d.ref))));
 }
@@ -587,7 +672,7 @@ export async function itemPayload(
   environment: string,
   item: ResolvedItem,
   claimExpiresAt: string | null,
-  opts: { readOnly?: boolean; gates?: () => Promise<GateRecordRow[]> } = {}
+  opts: { readOnly?: boolean; gates?: () => Promise<GateRecordRow[]>; flags?: () => Promise<WorkingFlagGroup[]> } = {}
 ): Promise<ReviewItemPayload> {
   const names = await labels(c, [item.moduleId, item.loId]);
   const base: ReviewItemPayload = {
@@ -772,6 +857,37 @@ export async function itemPayload(
       }
       return base;
     }
+    case "working_flag": {
+      const group = (await (opts.flags ?? readWorkingFlags)()).find((g) => g.ref === item.ref);
+      if (!group) return base;
+      let working = workingTextOf(null);
+      let sourcePage: number | null = null;
+      if (group.solutionKind === "worked_example") {
+        const r = await c.query(`SELECT content, source_page FROM explanation_library WHERE id = $1`, [item.ref]);
+        working = workingTextOf(r.rows[0]?.content);
+        sourcePage = (r.rows[0]?.source_page as number | null) ?? null;
+      } else {
+        base.question = (await questionPayload(c, item.ref)) ?? undefined;
+        const r = await c.query(`SELECT canonical_solution FROM questions WHERE id = $1`, [item.ref]);
+        working = workingTextOf(r.rows[0]?.canonical_solution);
+        sourcePage = base.question?.sourcePage ?? null;
+      }
+      base.workingFlag = {
+        solutionId: group.ref,
+        solutionKind: group.solutionKind,
+        book: group.book,
+        chapter: group.chapter,
+        promptsVersion: group.promptsVersion,
+        runs: group.runs,
+        source: group.source,
+        problem: working.problem,
+        sourcePage,
+        steps: working.steps.map((text, i) => ({ n: i + 1, text })),
+        flags: group.flags.map((f) => ({ ...f, quoteFound: quoteInStep(working.steps[f.step - 1], f.quote) })),
+        calibration: group.calibration,
+      };
+      return base;
+    }
     case "figure_stand_in": {
       const res = await c.query(
         `SELECT id, kind, spec, caption, source_page, question_id FROM visuals WHERE id = $1`,
@@ -814,6 +930,9 @@ export function snapshotOf(p: ReviewItemPayload): Record<string, unknown> {
       return { link: p.link };
     case "figure_stand_in":
       return { figure: p.figure, question: q && { id: q.id, stem: q.stem, status: q.status } };
+    case "working_flag":
+      // The whole numbered working, so the record (and the pipeline's fix list) reads on its own once the text has moved on.
+      return { workingFlag: p.workingFlag, question: q && { id: q.id, stem: q.stem, choices: q.choices, correctAnswer: q.correctAnswer, status: q.status } };
     case "gate_decision":
       return {
         gate: p.gate && {
@@ -848,11 +967,14 @@ export async function nextFor(
   operatorId: number,
   filters: BacklogFilters,
   skip: ReadonlySet<string>,
-  gateSource: () => Promise<GateRecordRow[]> = readGateRecords
+  gateSource: () => Promise<GateRecordRow[]> = readGateRecords,
+  flagSource: () => Promise<WorkingFlagGroup[]> = readWorkingFlags
 ): Promise<NextResult> {
   const records = await gateSource();
   const gates = async () => records;
-  const items = await loadBacklog(c, environment, null, gates);
+  const groups = await flagSource();
+  const flags = async () => groups;
+  const items = await loadBacklog(c, environment, null, gates, flags);
   const claims = await activeClaims(c, environment);
   const owner = await isGateOwner(c, operatorId);
   const mine = claims.find((cl) => cl.operatorId === operatorId) ?? null;
@@ -870,7 +992,7 @@ export async function nextFor(
       // never to decide — and never claimed, so it is never kept from him.
       await releaseOtherClaims(c, environment, operatorId, null);
       return {
-        item: await itemPayload(c, environment, cand, null, { readOnly: true, gates }),
+        item: await itemPayload(c, environment, cand, null, { readOnly: true, gates, flags }),
         openMatching: candidates.length,
         othersReviewing,
       };
@@ -879,7 +1001,7 @@ export async function nextFor(
     if (!expires) continue; // taken a moment ago by somebody else
     await releaseOtherClaims(c, environment, operatorId, cand);
     return {
-      item: await itemPayload(c, environment, cand, expires, { gates }),
+      item: await itemPayload(c, environment, cand, expires, { gates, flags }),
       openMatching: candidates.length,
       othersReviewing,
     };
@@ -958,7 +1080,9 @@ export function parseDecideInput(body: unknown): DecideInput | { error: string }
  *   worked example approve the entry: reviewed, by, at
  *   figure reject      its question goes to 'review' with hold_reason
  *                      'human_hold' (off students until it has a figure)
- *   anything else      recorded only (a gate decision, an objective, a link)
+ *   anything else      recorded only (a gate decision, an objective, a link, a
+ *                      working flag — "not an error" and "fix needed" both leave
+ *                      the content exactly as it is: students are unaffected)
  *
  * A GATE DECISION is Samuel's alone (answer 39): anyone else's decision on one
  * is refused with `owner_only`, whatever role they hold.
@@ -968,7 +1092,8 @@ export async function decide(
   environment: string,
   operatorId: number,
   input: DecideInput,
-  gates: () => Promise<GateRecordRow[]> = readGateRecords
+  gates: () => Promise<GateRecordRow[]> = readGateRecords,
+  flags: () => Promise<WorkingFlagGroup[]> = readWorkingFlags
 ): Promise<DecideResult> {
   const allowed = canDecide(input.kind, input.decision);
   if (!allowed.ok) return { ok: false, status: 400, error: "not_allowed", message: allowed.why };
@@ -1001,7 +1126,7 @@ export async function decide(
       [input.ref]
     );
   }
-  const [item] = await loadBacklog(c, environment, { kind: input.kind, ref: input.ref }, gates);
+  const [item] = await loadBacklog(c, environment, { kind: input.kind, ref: input.ref }, gates, flags);
   if (item?.assignee === "samuel" && !(await isGateOwner(c, operatorId))) {
     return {
       ok: false,
@@ -1017,7 +1142,7 @@ export async function decide(
     return { ok: false, status: 409, error: "changed", message: "The item changed while you were reviewing it. Open it again." };
   }
 
-  const payload = await itemPayload(c, environment, item, null, { gates });
+  const payload = await itemPayload(c, environment, item, null, { gates, flags });
   const who = await c.query(`SELECT display_name FROM operators WHERE id = $1`, [operatorId]);
   const operatorName = (who.rows[0]?.display_name as string | undefined)?.trim();
   if (!operatorName) return { ok: false, status: 400, error: "invalid", message: "operator not found" };
@@ -1190,9 +1315,10 @@ export async function fixList(
   c: Db,
   environment: string,
   items?: ResolvedItem[],
-  gates?: () => Promise<GateRecordRow[]>
+  gates?: () => Promise<GateRecordRow[]>,
+  flags?: () => Promise<WorkingFlagGroup[]>
 ): Promise<FixRequestEntry[]> {
-  const all = items ?? (await loadBacklog(c, environment, null, gates));
+  const all = items ?? (await loadBacklog(c, environment, null, gates, flags));
   const listed = all
     .map((i) => ({ i, action: onFixList(i) }))
     .filter((x): x is { i: ResolvedItem; action: "fix" | "reject" } => x.action !== null && x.i.latest !== null);
@@ -1262,10 +1388,12 @@ export async function overview(
   environment: string,
   filters: BacklogFilters,
   operatorId: number,
-  gateSource: () => Promise<GateRecordRow[]> = readGateRecords
+  gateSource: () => Promise<GateRecordRow[]> = readGateRecords,
+  flagSource: () => Promise<WorkingFlagGroup[]> = readWorkingFlags
 ): Promise<ReviewOverview> {
   const records = await gateSource();
-  const items = await loadBacklog(c, environment, null, async () => records);
+  const groups = await flagSource();
+  const items = await loadBacklog(c, environment, null, async () => records, async () => groups);
   const owner = await isGateOwner(c, operatorId);
   const recordByRef = new Map(records.map((r) => [r.ref, r]));
   const forSamuel: ForSamuelRow[] = items
