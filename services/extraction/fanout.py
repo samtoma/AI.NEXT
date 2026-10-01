@@ -258,11 +258,12 @@ def build_runs(inv: dict) -> list[dict]:
                "--grade-args work/g10-math/fanout/s111-grade.json --by-ref work/g10-math/packets/fanout/s6-grade-ch08-s111 "
                "→ embed_workflow.py embed --script runbook/families.workflow.js --args work/g10-math/fanout/s111-grade.json "
                "--out work/g10-math/packets/embedded/fanout/000b-s6-grade-ch08-s111.workflow.js (≈ $0.2–0.4)",
-               "# BLOCKED at load (see the plan's decisions): a family's parent_question_id must be a question row "
-               "(FR-1101; db/schema.sql questions.parent_question_id REFERENCES questions(id)) and s1-1-1 has none"],
+               "# the load: a family's parent may be a book TEACHING item (Samuel's answer 40, migration 038) — write-specs "
+               "writes the spec's parent_kind \"teaching\" and the item's expl: id; load_generated_questions.py then "
+               "loads it live under answer 37a and it lands in the review backlog (no human stamp)"],
         checkpoint="Did the author write a family, or report it infeasible again (as wf_41c0663f-36d did with an empty "
-                   "packet)? A family's parent is one of the teaching items: it cannot load until the parent decision "
-                   "is taken.")
+                   "packet)? Its parent is one of the teaching items (parent_kind \"teaching\"): check the write-specs "
+                   "output names the expl: id, and that --check passes.")
     add(id="wcheck-ch08", stage="SW", chapter=8, workflow="working-check.workflow.js (sw-v1)",
         what="The step-level working checker on Chapter 8's 198 served solutions (answer 30: re-run on Chapter 8). "
              "Reads the pilot seed; writes nothing to it.",
@@ -722,6 +723,9 @@ def _teaching_items_s111() -> list[dict]:
                     "solution": ["The book's answer is the drawn figure: open the image file listed in figures "
                                  "(the last one is the book's drawn answer)."],
                     "source_page": e.get("source_page"), "teaching_only": True, "library_entry": e["id"],
+                    # answer 40: a family may be modelled on a teaching item. These two are what a spec built on
+                    # this item writes (spec fields of the same names): the library entry's id, and the kind.
+                    "parent_question_id": e["id"], "parent_kind": "teaching",
                     "figures": [f for f in prob + sol if f]})
     return out
 
@@ -942,9 +946,21 @@ def final_config(write: bool = False) -> dict:
     return {"config": rel(path if write else tmp), "written": write, "parity": raw["parity"]}
 
 
-def write_specs(run_file: Path, into: Path) -> list[Path]:
+def write_specs(run_file: Path, into: Path, book_config_path: Path | None = None) -> list[Path]:
+    """Land the specs an S6 author run returned, one file each, never overwriting one.
+
+    A spec modelled on a book TEACHING item (answer 40) must say so: ``parent_kind: "teaching"`` and the
+    library entry's ``expl:`` id. The author is shown such an item under the id it would have as a
+    question and may write that, without a kind; against the book's bundles (``book_config_path``,
+    default the pilot's) this makes the kind explicit and prints each change. A spec it cannot resolve
+    is written as the author wrote it, and ``generate_questions.py --check`` refuses it in words."""
+    import book_config
+    import generate_questions as G
+    from families import spec as FS
     r = json.loads(run_file.read_text())
     r = r.get("result", r)
+    cfg = book_config_path or PILOT_CONFIG
+    questions, teaching = G.book_parents(book_config.load_book(cfg)) if cfg.exists() else (set(), set())
     into.mkdir(parents=True, exist_ok=True)
     written = []
     for rec in r.get("records") or []:
@@ -953,6 +969,9 @@ def write_specs(run_file: Path, into: Path) -> list[Path]:
             p = into / f"{tail}--{slug}.json"
             if p.exists():
                 raise SystemExit(f"{rel(p)} exists: never overwritten (move it aside first)")
+            spec, note = FS.resolve_teaching_parent(spec, questions, teaching)
+            if note:
+                print(f"  parent: {note}")
             p.write_text(json.dumps(spec, indent=1, ensure_ascii=False) + "\n")
             written.append(p)
     return written
@@ -1008,6 +1027,9 @@ def main(argv: list[str] | None = None) -> int:
                                                         "under work/g10-math/fanout/books/final/)")
     p = sub.add_parser("write-specs")
     p.add_argument("run", type=Path)
+    p.add_argument("--book", type=Path, default=None,
+                   help="the book config whose bundles say which parents are book questions and which are "
+                        "teaching items (default: the pilot's); a teaching parent is written explicitly")
     p.add_argument("--into", type=Path, required=True)
     a = ap.parse_args(argv)
 
@@ -1070,7 +1092,7 @@ def main(argv: list[str] | None = None) -> int:
             return 3
         return 0
     if a.cmd == "write-specs":
-        for p in write_specs(a.run, a.into):
+        for p in write_specs(a.run, a.into, a.book):
             print(f"wrote {rel(p)}")
         return 0
     return 2
