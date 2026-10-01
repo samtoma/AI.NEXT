@@ -44,7 +44,11 @@ import { fileURLToPath } from "node:url";
 
 import pg from "pg";
 
+// Samuel's account, for the gate decisions (answer 39): configuration, read per call.
+process.env.AINEXT_GATE_OWNER_EMAIL = "samuel@example.invalid";
+
 const { claimItem, decide, fixList, loadBacklog, nextFor } = await import("./review-gate-queries.ts");
+const { parseRecord } = await import("./review-gate-records.ts");
 const { itemKey } = await import("./review-gate.ts");
 
 type Db = { query: pg.Client["query"] };
@@ -98,6 +102,26 @@ const WIDGET = {
     },
   ],
 };
+
+/** One auto-passed G1 for chapter 8 — injected, so the test never reads the worktree's real run files. */
+const G1 = parseRecord(
+  {
+    format: "ainext.gate-decision/1",
+    gate: "G1",
+    book: "g10-math",
+    id: "g1-ch08",
+    chapter: 8,
+    decided_at: "2026-10-02T09:14:00Z",
+    by: "auto-pass G1 (AI recommendation)",
+    auto: true,
+    outcome: "pass",
+    summary: "2 objectives approved on the evidence check; 1 link kept",
+    decisions: [{ key: "lo:a", decision: "approve" }],
+  },
+  "services/extraction/runs/g10-math/gates/g1-ch08.json",
+  "2026-10-02T09:14:00.000Z"
+)!;
+const GATES = async () => [{ ...G1, courseId: "course:us-g10-math-en", fingerprint: "9".repeat(32) }];
 
 before(async () => {
   if (!DSN) return;
@@ -242,7 +266,7 @@ const byKind = (items: { kind: string }[]) =>
 /* ------------------------------------------------------------ derivation */
 
 test("the backlog is every maths item without a human stamp — derived kind by kind", { skip }, async () => {
-  const items = await asOperator(a!, SAMUEL, (db) => loadBacklog(db, ENV));
+  const items = await asOperator(a!, SAMUEL, (db) => loadBacklog(db, ENV, null, GATES));
   assert.deepEqual(byKind(items), {
     book_question: 5, // book1, book2, book3, held, fig
     generated_question: 1,
@@ -277,7 +301,7 @@ test("the backlog is every maths item without a human stamp — derived kind by 
 });
 
 test("the fingerprint follows the content, never the stamp or the status", { skip }, async () => {
-  const fp = async () => (await asOperator(a!, SAMUEL, (db) => loadBacklog(db, ENV, { kind: "book_question", ref: "q:book1" })))[0]!.fingerprint;
+  const fp = async () => (await asOperator(a!, SAMUEL, (db) => loadBacklog(db, ENV, { kind: "book_question", ref: "q:book1" }, GATES)))[0]!.fingerprint;
   const before1 = await fp();
   await a!.query(`UPDATE questions SET reviewed_by = 'x', status = 'review' WHERE id = 'q:book1'`);
   assert.equal(await fp(), before1);
@@ -292,14 +316,14 @@ test("the fingerprint follows the content, never the stamp or the status", { ski
 /* ------------------------------------------------------------ claims */
 
 test("two reviewers never get the same item", { skip }, async () => {
-  const first = await asOperator(a!, SAMUEL, (db) => nextFor(db, ENV, SAMUEL, {}, new Set()));
-  const second = await asOperator(b!, TAMER, (db) => nextFor(db, ENV, TAMER, {}, new Set()));
+  const first = await asOperator(a!, SAMUEL, (db) => nextFor(db, ENV, SAMUEL, {}, new Set(), GATES));
+  const second = await asOperator(b!, TAMER, (db) => nextFor(db, ENV, TAMER, {}, new Set(), GATES));
   assert.ok(first.item && second.item);
   assert.notEqual(itemKey(first.item.kind, first.item.ref), itemKey(second.item.kind, second.item.ref));
   assert.deepEqual(second.othersReviewing.map((o) => o.operatorName), ["samuel.s.toma"]);
 
   // Samuel asks again: his own claim comes back (a reload resumes), and he still holds one item.
-  const again = await asOperator(a!, SAMUEL, (db) => nextFor(db, ENV, SAMUEL, {}, new Set()));
+  const again = await asOperator(a!, SAMUEL, (db) => nextFor(db, ENV, SAMUEL, {}, new Set(), GATES));
   assert.equal(again.item!.ref, first.item.ref);
   const held = await a!.query(`SELECT count(*)::int AS n FROM review_claims WHERE operator_id = $1`, [SAMUEL]);
   assert.equal(held.rows[0].n, 1, "one item at a time");
@@ -339,13 +363,13 @@ test("racing for one item: the second claim waits, then finds it taken", { skip 
 /* ------------------------------------------------------------ deciding */
 
 async function current(kind: string, ref: string) {
-  return (await asOperator(a!, SAMUEL, (db) => loadBacklog(db, ENV, { kind: kind as never, ref })))[0]!;
+  return (await asOperator(a!, SAMUEL, (db) => loadBacklog(db, ENV, { kind: kind as never, ref }, GATES)))[0]!;
 }
 
 test("approve signs a question with the reviewer's name — and the record says exactly what changed", { skip }, async () => {
   const item = await current("book_question", "q:book1");
   const r = await asOperator(a!, SAMUEL, (db) =>
-    decide(db, ENV, SAMUEL, { kind: "book_question", ref: "q:book1", fingerprint: item.fingerprint, decision: "approve" })
+    decide(db, ENV, SAMUEL, { kind: "book_question", ref: "q:book1", fingerprint: item.fingerprint, decision: "approve" }, GATES)
   );
   assert.ok(r.ok);
   const row = await q1(`SELECT status, reviewed_by, reviewed_at, ai_checked_by FROM questions WHERE id = 'q:book1'`);
@@ -366,14 +390,14 @@ test("approve signs a question with the reviewer's name — and the record says 
 test("approve promotes a question loaded for review with no hold — never one a safety check holds", { skip }, async () => {
   const gen = await current("generated_question", "q:gen1");
   const r1 = await asOperator(a!, SAMUEL, (db) =>
-    decide(db, ENV, SAMUEL, { kind: "generated_question", ref: "q:gen1", fingerprint: gen.fingerprint, decision: "approve" })
+    decide(db, ENV, SAMUEL, { kind: "generated_question", ref: "q:gen1", fingerprint: gen.fingerprint, decision: "approve" }, GATES)
   );
   assert.ok(r1.ok);
   assert.deepEqual(r1.ok && r1.changes.status, { from: "review", to: "live" });
 
   const held = await current("book_question", "q:held");
   const r2 = await asOperator(a!, SAMUEL, (db) =>
-    decide(db, ENV, SAMUEL, { kind: "book_question", ref: "q:held", fingerprint: held.fingerprint, decision: "approve" })
+    decide(db, ENV, SAMUEL, { kind: "book_question", ref: "q:held", fingerprint: held.fingerprint, decision: "approve" }, GATES)
   );
   assert.ok(r2.ok);
   const row = await q1(`SELECT status, hold_reason, reviewed_by FROM questions WHERE id = 'q:held'`);
@@ -384,19 +408,19 @@ test("approve promotes a question loaded for review with no hold — never one a
 test("reject retires a question; students stop seeing it", { skip }, async () => {
   const item = await current("book_question", "q:book3");
   const noNote = await asOperator(a!, SAMUEL, (db) =>
-    decide(db, ENV, SAMUEL, { kind: "book_question", ref: "q:book3", fingerprint: item.fingerprint, decision: "reject" })
+    decide(db, ENV, SAMUEL, { kind: "book_question", ref: "q:book3", fingerprint: item.fingerprint, decision: "reject" }, GATES)
   );
   assert.equal(!noNote.ok && noNote.error, "note_required");
   const r = await asOperator(a!, SAMUEL, (db) =>
     decide(db, ENV, SAMUEL, {
       kind: "book_question", ref: "q:book3", fingerprint: item.fingerprint, decision: "reject",
       note: "the orchestrator's stem no longer matches the book",
-    })
+    }, GATES)
   );
   assert.ok(r.ok);
   assert.equal((await q1(`SELECT status FROM questions WHERE id = 'q:book3'`)).status, "retired");
   assert.equal(
-    (await asOperator(a!, SAMUEL, (db) => loadBacklog(db, ENV))).some((i) => i.ref === "q:book3"),
+    (await asOperator(a!, SAMUEL, (db) => loadBacklog(db, ENV, null, GATES))).some((i) => i.ref === "q:book3"),
     false
   );
 });
@@ -411,7 +435,7 @@ test("a fix request leaves students unchanged, is exported, and comes back once 
   );
   assert.ok(r.ok);
   assert.equal((await q1(`SELECT status, reviewed_by FROM questions WHERE id = 'q:fig'`)).status, "live");
-  const list = await asOperator(a!, SAMUEL, (db) => fixList(db, ENV));
+  const list = await asOperator(a!, SAMUEL, (db) => fixList(db, ENV, undefined, GATES));
   const entry = list.find((e) => e.ref === "q:fig")!;
   assert.equal(entry.action, "fix");
   assert.equal(entry.requestedBy, "Tamer");
@@ -422,7 +446,7 @@ test("a fix request leaves students unchanged, is exported, and comes back once 
   const back = await current("book_question", "q:fig");
   assert.equal(back.state, "open");
   assert.equal(back.reasons[0]!.code, "changed_since_decision");
-  assert.equal((await asOperator(a!, SAMUEL, (db) => fixList(db, ENV))).some((e) => e.ref === "q:fig"), false);
+  assert.equal((await asOperator(a!, SAMUEL, (db) => fixList(db, ENV, undefined, GATES))).some((e) => e.ref === "q:fig"), false);
 });
 
 test("nothing is written on a stale fingerprint, or on an item another reviewer holds", { skip }, async () => {
@@ -430,20 +454,20 @@ test("nothing is written on a stale fingerprint, or on an item another reviewer 
   const count = async () => Number((await q1(`SELECT count(*) AS n FROM review_decisions`)).n);
   const n0 = await count();
   const stale = await asOperator(a!, SAMUEL, (db) =>
-    decide(db, ENV, SAMUEL, { kind: "objective", ref: "lo:a", fingerprint: "0".repeat(32), decision: "approve" })
+    decide(db, ENV, SAMUEL, { kind: "objective", ref: "lo:a", fingerprint: "0".repeat(32), decision: "approve" }, GATES)
   );
   assert.equal(!stale.ok && stale.error, "changed");
 
   assert.ok(await asOperator(b!, TAMER, (db) => claimItem(db, ENV, TAMER, "objective", "lo:a")));
   const taken = await asOperator(a!, SAMUEL, (db) =>
-    decide(db, ENV, SAMUEL, { kind: "objective", ref: "lo:a", fingerprint: item.fingerprint, decision: "approve" })
+    decide(db, ENV, SAMUEL, { kind: "objective", ref: "lo:a", fingerprint: item.fingerprint, decision: "approve" }, GATES)
   );
   assert.equal(!taken.ok && taken.error, "claimed_by_other");
   assert.equal(await count(), n0);
 
   // Tamer's own decision releases his claim.
   const mine = await asOperator(b!, TAMER, (db) =>
-    decide(db, ENV, TAMER, { kind: "objective", ref: "lo:a", fingerprint: item.fingerprint, decision: "approve" })
+    decide(db, ENV, TAMER, { kind: "objective", ref: "lo:a", fingerprint: item.fingerprint, decision: "approve" }, GATES)
   );
   assert.ok(mine.ok);
   assert.deepEqual(mine.ok && mine.changes, { recorded_only: true });
@@ -455,7 +479,7 @@ test("widget claims: approving a held one switches it on; rejecting an active on
   const activeRef = "q:w1|missed-values|mc:b:stops-at-first-root";
   const held = await current("mapping_claim", heldRef);
   const r1 = await asOperator(a!, SAMUEL, (db) =>
-    decide(db, ENV, SAMUEL, { kind: "mapping_claim", ref: heldRef, fingerprint: held.fingerprint, decision: "approve" })
+    decide(db, ENV, SAMUEL, { kind: "mapping_claim", ref: heldRef, fingerprint: held.fingerprint, decision: "approve" }, GATES)
   );
   assert.ok(r1.ok);
   let choices = (await q1(`SELECT choices FROM questions WHERE id = 'q:w1'`)).choices;
@@ -473,7 +497,7 @@ test("widget claims: approving a held one switches it on; rejecting an active on
     decide(db, ENV, SAMUEL, {
       kind: "mapping_claim", ref: activeRef, fingerprint: active.fingerprint, decision: "reject",
       note: "a student who marks only one value has not shown this",
-    })
+    }, GATES)
   );
   assert.ok(r2.ok);
   choices = (await q1(`SELECT choices FROM questions WHERE id = 'q:w1'`)).choices;
@@ -484,7 +508,7 @@ test("widget claims: approving a held one switches it on; rejecting an active on
 test("a misconception's approval marks its refutation reviewed; a rejected stand-in holds its question", { skip }, async () => {
   const mc = await current("misconception", "mc:b:stops-at-first-root");
   const r1 = await asOperator(a!, SAMUEL, (db) =>
-    decide(db, ENV, SAMUEL, { kind: "misconception", ref: "mc:b:stops-at-first-root", fingerprint: mc.fingerprint, decision: "approve" })
+    decide(db, ENV, SAMUEL, { kind: "misconception", ref: "mc:b:stops-at-first-root", fingerprint: mc.fingerprint, decision: "approve" }, GATES)
   );
   assert.ok(r1.ok);
   const lib = await q1(`SELECT reviewed, reviewed_by FROM explanation_library WHERE id = 'expl:mc:b:stops-at-first-root'`);
@@ -492,7 +516,7 @@ test("a misconception's approval marks its refutation reviewed; a rejected stand
 
   const fig = await current("figure_stand_in", "v:fig1");
   const no = await asOperator(a!, SAMUEL, (db) =>
-    decide(db, ENV, SAMUEL, { kind: "figure_stand_in", ref: "v:fig1", fingerprint: fig.fingerprint, decision: "approve" })
+    decide(db, ENV, SAMUEL, { kind: "figure_stand_in", ref: "v:fig1", fingerprint: fig.fingerprint, decision: "approve" }, GATES)
   );
   assert.equal(!no.ok && no.error, "not_allowed", "a stand-in leaves the backlog when its native figure exists");
   // The fix request above changed q:fig, not its figure: the stand-in is still current.
@@ -500,7 +524,7 @@ test("a misconception's approval marks its refutation reviewed; a rejected stand
     decide(db, ENV, SAMUEL, {
       kind: "figure_stand_in", ref: "v:fig1", fingerprint: fig.fingerprint, decision: "reject",
       note: "the picture shows the answer",
-    })
+    }, GATES)
   );
   assert.ok(r2.ok);
   assert.deepEqual(await q1(`SELECT status, hold_reason FROM questions WHERE id = 'q:fig'`), {

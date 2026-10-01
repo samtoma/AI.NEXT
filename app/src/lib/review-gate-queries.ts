@@ -1162,8 +1162,13 @@ export async function reviewerStats(c: Db, environment: string): Promise<{ revie
 }
 
 /** The fix list: open fix requests, and rejections only the pipeline can act on. */
-export async function fixList(c: Db, environment: string, items?: ResolvedItem[]): Promise<FixRequestEntry[]> {
-  const all = items ?? (await loadBacklog(c, environment));
+export async function fixList(
+  c: Db,
+  environment: string,
+  items?: ResolvedItem[],
+  gates?: () => Promise<GateRecordRow[]>
+): Promise<FixRequestEntry[]> {
+  const all = items ?? (await loadBacklog(c, environment, null, gates));
   const listed = all
     .map((i) => ({ i, action: onFixList(i) }))
     .filter((x): x is { i: ResolvedItem; action: "fix" | "reject" } => x.action !== null && x.i.latest !== null);

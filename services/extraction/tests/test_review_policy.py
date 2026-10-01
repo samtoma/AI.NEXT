@@ -172,6 +172,37 @@ class LoadersWriteNoAiStamp(unittest.TestCase):
             db2.drop()
 
 
+    def test_an_auto_g3_adds_to_the_ai_checks_and_a_human_g3_still_stamps(self):
+        run_loader(self.db.dsn, str(write_bundle(self.tmp, "zz", mini_course("zz"))), "--course", "course:zz-test-en")
+        for i in (1, 2):
+            self.db.q("""INSERT INTO questions (id, lo_id, tier, question_type, stem, correct_answer, canonical_solution,
+                                               status, source, source_note, ai_checked_by)
+                         VALUES (%s, 'lo:zz1-1-1', 'basic', 'numeric', 'x', '1', '[]', 'live', 'variant',
+                                 'Generated from template family tpl:zz:f.', 'ai blind grade (S6)')""",
+                      (f"q:zz1-1-1:g00{i}",))
+        env = dict(os.environ, AINEXT_DB_DSN=self.db.dsn)
+
+        def apply(doc):
+            f = self.tmp / "g3.json"
+            f.write_text(json.dumps(doc))
+            r = subprocess.run([sys.executable, str(EX / "apply_review_verdicts.py"), str(f)],
+                               capture_output=True, text=True, env=env, cwd=EX)
+            self.assertEqual(r.returncode, 0, r.stderr)
+        auto = {"reviewer": "auto-pass G3 (AI recommendation)", "auto": True, "verdicts": {"q:zz1-1-1:g001": "accept"}}
+        apply(auto)
+        apply(auto)           # a re-run adds nothing twice
+        got = dict(self.db.q("SELECT id, ai_checked_by FROM questions WHERE source = 'variant' ORDER BY id"))
+        self.assertEqual(got, {
+            "q:zz1-1-1:g001": "ai blind grade (S6); auto-pass G3 (AI recommendation) (sampled)",
+            "q:zz1-1-1:g002": "ai blind grade (S6); auto-pass G3 (AI recommendation) (family tpl:zz:f via q:zz1-1-1:g001)"})
+        self.assertEqual(self.db.one("SELECT count(*) FROM questions WHERE reviewed_by IS NOT NULL"), 0)
+        apply({"reviewer": "Samuel Toma", "verdicts": {"q:zz1-1-1:g002": "accept"}})
+        self.assertEqual(self.db.one("SELECT reviewed_by FROM questions WHERE id = 'q:zz1-1-1:g002'"),
+                         "Samuel Toma (sampled)")
+        self.assertEqual(self.db.one("SELECT reviewed_by FROM questions WHERE id = 'q:zz1-1-1:g001'"),
+                         "Samuel Toma (family tpl:zz:f via q:zz1-1-1:g002)", "a human's verdict travels as before")
+
+
 class BookPictures(unittest.TestCase):
     """Answer 37d at the assembly: a stand-in for a figure no native kind drew, never one that shows the unknown."""
 
