@@ -50,6 +50,11 @@ attachment's `ref`, `<family>#<error or predicate>`) — and refuses, writing no
 bundle it was given. Without --catalogue-only the command is as strict as before: a refused attachment no
 --bundle carries refuses. The catalogue may be loaded (load_misconceptions.py) after pass 1 — the refused
 attachments live in the bundles, not in it — but a bundle is loaded only after pass 2.
+A reconciled bundle carries an `s5_reconciled` stamp (the runs, the refused links stripped, the widgets left out):
+a second pass 2 over it is a no-op instead of a refusal, and nothing else excuses a refused link no bundle carries.
+`--drop-undiagnosed-widgets --widget-gaps <report> --graph …` replaces the "widget left with no diagnostic" error:
+the widget is LEFT OUT of the bundle (never shipped; its template listed under `rejected_templates`) and recorded as
+a `no-diagnostic` gap in the chapter's widget-gaps report (generate_widget_questions.add_no_diagnostic_gaps).
 
 `--s5-args OUT --stage draft|final` BUILDS the workflow's args from what the line has already
 made, so no stage is hand-stitched: the objectives and book questions of the assembled bundles

@@ -1015,3 +1015,26 @@ number" would pass typing and be typed `expression`: g10m2s2-1 Ex2-4:1q, 1r, 1s,
 **To do (main session).** (1) Chapter 4's `081-s5-draft-ch04` and `082-wcheck-ch04` copies (20:08) were prepared BEFORE this and hold the old live set (196 live questions, now 247), and `g2rec-ch04`
 does not exist yet: `uv run fanout.py close-chapter 4` (now idempotent; it re-prepares all three) before they launch, unless a run is already in flight on them — that is why I did not. (2) Every lesson copy prepared before this
 change (chapters 5+) carries the old collection: re-collect its run afterwards (`recollect_lessons.py`, no model call), never re-run it. (3) The COLLECT_VERSION is still `collect-6` (same day, as for kind-for-form).
+
+## One-command `advance` and `ready` for the fan-out — 2026-10-01 (data-engineer)
+
+`uv run fanout.py advance <run-id> --wf <wf_id> [--task-output F] [--resumed] [--dry-run] [--running …]` does, for a finished Workflow run, what the main session did by
+hand: save the return value (`save_to`) and the wrapper (`runs/g10-math/records/`), meter it (`--stage`/`--lesson` read from the plan, append-once), run the plan's after-steps for that
+kind of run, prepare and verify every run whose dependencies are now saved, and print a one-JSON summary (what was saved and metered with its cost, the key numbers of each step, warnings, the first
+failing step, the runs prepared / skipped / not ready, and the READY scripts in plan order). `uv run fanout.py ready [--running …] [--prepare] [--paths]` lists only what can be launched. Code:
+`fanout_advance.py` (the CLI is wired in `fanout.py`); tests `tests/test_fanout_advance.py` (75 tests, no model call, no DB); documented in `runbook/README.md` §10 ("Advancing a finished run").
+**Kinds covered:** S0b A/B/C, S1 (G1), lessons (+ `close-chapter` when the chapter's lessons are all saved), the working check (both passes, every part), S5 draft (+ the chapter's load after a fresh `pg_dump`), S6 author / grade (parts),
+S7 author / verify, S5 final (+ G3, G4, coverage, parity, G5). **Left manual:** launching, G0b, a G1 ruling, the G2-recommendation runs (`g2rec-chNN`, not plan runs: `ready` lists a prepared one under `extra_ready` and holds the chapter's check and S5 draft behind it),
+S6/S7 contingency re-runs, killed runs (advance refuses a run that is not `completed`), the book-level closing steps.
+
+**What it learned from the main session and the other agents today.** (1) G1 never re-assembles an approved chapter (it re-derives the rejected state and overwrites the approved files — it did on chapter 5): approved → left alone, even with `--redo`; verdicts on disk newer than the run →
+`approve --verdicts` of them; a BLOCKED G1 (an exercise-only objective, rule 1) stops with the gate's BLOCKED lines and is never resolved by the driver. (2) `assemble_maths.py assemble` exits 4 whenever the book's maths is not complete: normal mid-fan-out, not a failure (found by running the real
+command in a sandbox copy). (3) A copy whose runbook script changed (`s6-v6`, the lesson collector) is `stale` in `ready` and still launchable; a copy that exists is never re-prepared (`--refresh-stale` is opt-in). (4) `families.normalise` now renames colliding slugs and exits 1 with UNRESOLVED for chapters 1, 2, 8: a stop, not a
+retry. (5) The chapter-1 go/no-go (`s5-final-ch01` in front of other chapters' lessons) is lifted by default, as the main session lifted it.
+
+**Plan text fixed in `fanout.py` (the plan JSON regenerated, only `after` / `before` / `workflow` / `prepared` changed):** S7 verify's after-step needs `--catalogue <the chapter's S5 draft> --pre-catalogue` (without them WIDGET TEMPLATES REJECTED, no `s5-distractors-chNN.json`, S5 final stays NotReady); S5 final's coverage line needs
+`--generated seed/generated/g10-math/chNN` (else it reads the pilot's top-level bundles); G3 takes `--widget-gaps coverage/g10-math.chNN.widget-gaps.json` (and runs before coverage); G5 is the last step, `--book-config runs/g10-math/fanout/loaded/g10-math.json`, a config that lists every bundle in the pilot DB and gains each
+chapter's seed bundle when it loads (the driver does that at the S5 draft's load step); the explicit load flags for the generated bundles (`--sample 10 --seed 20260926 --catalogue-only`, the pilot's); the families workflow label `s6-v6` (the finished `s6-author-ch08-s111` run keeps `s6-v5`: it ran with it).
+
+**Checked.** The real commands were run in a sandbox copy of `services/extraction/` against saved runs (S0b assembly, lesson drafts, working-check collect, S6 specs, the real meter reproduced a ledger line to the cent, `pg_dump` + `pg_restore -l`), and a test asserts every flag the driver passes exists in the target script's own `--help`.
+`--dry-run` on the real chapter-1 `s5-final` result lists the whole chain without running it. **The first live `s5-final` through `advance` should be `--dry-run`ned first** (the chain was built from the plan and the runbook; the main session had processed chapters 1 and 2 by hand).

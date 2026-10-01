@@ -257,7 +257,7 @@ function normTex(s) {
 }
 // a named left side: x=, y_1=, m_{AB}=, d_{AB}\approx, the text layer's flattened mAC=, and a named point
 // with its variables, P(x,y)= (COLLECT-2, COLLECT-3)
-const stripLhs = (t) => t.replace(/^[A-Za-z]{1,4}(?:_(?:\{[A-Za-z0-9]+\}|[A-Za-z0-9]+))?(?:\([a-z](?:,[a-z])*\))?(?:=|\\approx)/, '')
+const stripLhs = (t) => t.replace(/^[A-Za-zπλθαβγδμσφω]{1,4}(?:_(?:\{[A-Za-z0-9]+\}|[A-Za-z0-9]+))?(?:\([a-z](?:,[a-z])*\))?(?:=|\\approx)/, '')
 // a point's name before its coordinates: M(1,0) is the pair (1,0); only a name directly before ONE
 // parenthesised pair, so f(2) or 3(x+1) is never touched (COLLECT-3)
 const stripPointName = (t) => (/^[A-Za-z]{1,2}(?:_(?:\{[A-Za-z0-9]+\}|[A-Za-z0-9]))?\([^()]*,[^()]*\)$/.test(t) ? t.replace(/^[^(]+/, '') : t)
@@ -310,7 +310,7 @@ function settleOne(a, b, textLayer) {
   if (na && sameForm(na, nb)) return { route: 'normalised', verdict: 'equivalent' }
   if (textLayer) {
     // the signature of each side, and of a named point's pair without its name ("T ( −1; 1 2 )")
-    const sigs = (n) => [...new Set([n, stripPointName(n)])].map((x) => x.replace(/\\[a-zA-Z]+/g, '').replace(SIG_DROP, ''))
+    const sigs = (n) => [...new Set([n, stripPointName(n), stripLhs(n)])].map((x) => x.replace(/\\[a-zA-Z]+/g, '').replace(SIG_DROP, ''))
     const sa = sigs(na), sb = sigs(nb)
     if (sa[0] && sa.some((x) => sb.some((y) => sameForm(x, y)))) return { route: 'signature', verdict: 'equivalent' }
   }
@@ -339,7 +339,7 @@ function settle(a, b, textLayer) {
 //   * the separators are ";", "and", "or", and a comma that is not a decimal comma (a comma BETWEEN TWO DIGITS, "-28,1", or between
 //     a digit and a recurring bar, "1,\overline{34}", is a decimal point, as normTex reads it; the old split broke it in two on both
 //     sides, so "1,5; 2" and "5; 1,2" read alike) and not inside a bracket ("(1,2)").
-const VALUE_LABEL = /^(?:[A-Za-z]{1,4}(?:_(?:\{[A-Za-z0-9]+\}|[A-Za-z0-9]+))?(?:\([a-z](?:,[a-z])*\))?|[A-Za-z]\d{1,3})(?:=|\\approx)/
+const VALUE_LABEL = /^(?:[A-Za-zπλθαβγδμσφω]{1,4}(?:_(?:\{[A-Za-z0-9]+\}|[A-Za-z0-9]+))?(?:\([a-z](?:,[a-z])*\))?|[A-Za-z]\d{1,3})(?:=|\\approx)/
 const DECIMAL_COMMA = /(?<=\d),(?=\d|\\(?:overline|bar|dot|ddot)\s*\{?\s*\d)/g
 function valueList(s, textLayer) {
   const t = mathsSpan(textLayer ? printedTex(s) : s).replace(/\$/g, ' ').replace(/(\d)\{,\}(\d)/g, '$1.$2').replace(DECIMAL_COMMA, '.')
