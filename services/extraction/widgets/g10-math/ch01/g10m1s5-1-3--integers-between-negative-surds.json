@@ -1,0 +1,75 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m1s5-1-3:integers-between-negative-surds",
+ "lo_id": "lo:g10m1s5-1-3",
+ "parent_question_id": "q:g10m1s5-1-3:ex1-3-3",
+ "tier": "standard",
+ "kind": "number_line_marker",
+ "instances": [
+  {
+   "lo": "-\\sqrt{20}",
+   "hi": "-\\sqrt{\\frac{9}{4}}",
+   "targets": [
+    -4,
+    -3,
+    -2
+   ]
+  },
+  {
+   "lo": "-\\sqrt{30}",
+   "hi": "-\\sqrt{10}",
+   "targets": [
+    -5,
+    -4
+   ]
+  },
+  {
+   "lo": "-\\sqrt{14}",
+   "hi": "-\\sqrt{3}",
+   "targets": [
+    -3,
+    -2
+   ]
+  },
+  {
+   "lo": "-\\sqrt{20}",
+   "hi": "0",
+   "targets": [
+    -4,
+    -3,
+    -2,
+    -1
+   ]
+  },
+  {
+   "lo": "-\\sqrt[3]{30}",
+   "hi": "-\\sqrt{2}",
+   "targets": [
+    -3,
+    -2
+   ]
+  }
+ ],
+ "spec": {
+  "mode": "points",
+  "range": [
+   -6,
+   6
+  ],
+  "targets": "{=targets}"
+ },
+ "stem": "Without a calculator, mark on the number line every whole number $n$ that satisfies $ {=lo} < n < {=hi} $.",
+ "solution": [
+  "Bracket each surd between two consecutive whole numbers, using perfect squares (perfect cubes for a cube root). For instance $16 < 20 < 25$ gives $4 < \\sqrt{20} < 5$.",
+  "Put the minus sign back. Negating reverses the order, so $-5 < -\\sqrt{20} < -4$: the surd with the bigger number under the root sits further to the left of zero.",
+  "Now the whole numbers that fit are the ones strictly to the right of the left-hand bound and strictly to the left of the right-hand bound. A surd is never a whole number, but a bound of $0$ is itself left out because the inequality is strict.",
+  "Mark exactly those points. Check each end: the leftmost mark must be greater than the lower bound, and the rightmost must be less than the upper bound."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "sign-flipped",
+   "misconception_id": "mc:g10m1s5-1-3:negative-surds-ranked-by-size-ignoring-sign"
+  }
+ ],
+ "notes": "Why this fits: ranking is the order structure of the real line, and here the student has to place each negative surd against the whole numbers and keep the direction right. The set of marked points is the answer, so any correct construction is the same set (FR-1205 is met because the property determines the set). It combines the bracketing skill of the first two objectives with the sign handling this objective's misconception is about. Limits checked: range [-6, 6] is 12 wide, every target and every negated target (the sign-flipped distractor) lies inside it, 2 to 4 targets per row. Row arithmetic: row 1 gives -4.47 < n < -1.5 so -4, -3, -2; row 2 gives -5.48 < n < -3.16 so -5, -4; row 3 gives -3.74 < n < -1.73 so -3, -2; row 4 gives -4.47 < n < 0 so -4 to -1, with 0 excluded by the strict sign; row 5 gives -3.11 < n < -1.41 so -3, -2. The targets row value is an array: if the template expander only types scalars, expand the first row to confirm before shipping. Only sign-flipped is mapped: a student who reads the minus sign as absent marks the negation of the answer set. missed-values and extra-values are deliberately unmapped: they fire for boundary slips (including 0, or dropping the whole number nearest a bound), which is a bracketing error belonging to the first objective, whose misconception list is empty, and no recorded misconception on this objective dominates them. The exact form of the recorded misconception (putting -sqrt(8) after -sqrt(9/4)) is not separately observable, because 'between' is symmetric; the widget reports only its sign consequence. The second recorded misconception (0.45 versus 0.454545...) cannot fire here because targets are whole numbers; see the ordering gap."
+}

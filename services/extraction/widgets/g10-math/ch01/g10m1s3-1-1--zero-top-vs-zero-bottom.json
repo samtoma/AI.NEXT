@@ -1,0 +1,36 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m1s3-1-1:zero-top-vs-zero-bottom",
+ "lo_id": "lo:g10m1s3-1-1",
+ "parent_question_id": "q:g10m1s3-1-1:ex1-1-3b",
+ "tier": "standard",
+ "kind": "number_line_marker",
+ "spec": {
+  "mode": "points",
+  "range": [
+   -3,
+   3
+  ],
+  "targets": [
+   0
+  ]
+ },
+ "stem": "On the number line, mark every integer $n$ from $-3$ to $3$ for which $\\dfrac{n-2}{n}$ is undefined. Leave the other integers unmarked.",
+ "solution": [
+  "A fraction is undefined exactly when its denominator is zero. The top of the fraction plays no part in that test.",
+  "The denominator is $n$, which is zero only when $n = 0$. Then the fraction is $\\dfrac{-2}{0}$, which is undefined. Mark $0$.",
+  "Check the tempting value: the top, $n - 2$, is zero when $n = 2$. Then $\\dfrac{n-2}{n} = \\dfrac{0}{2} = 0$, a perfectly good real number, because a zero on top is not division by zero. Leave $2$ unmarked.",
+  "Every other integer from $-3$ to $3$ gives a non-zero denominator and a real value. The marked set is $\\{0\\}$."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "missed-values",
+   "misconception_id": "mc:g10m1s3-1-1:fraction-judged-by-top"
+  },
+  {
+   "predicate": "extra-values",
+   "misconception_id": "mc:g10m1s3-1-1:fraction-judged-by-top"
+  }
+ ],
+ "notes": "Fit: the zero on top and the zero on the bottom are placed at different points of the same line (n = 2 and n = 0), so the student has to decide which zero makes the fraction undefined; that is the exact contrast between the book's $\\dfrac{0}{\\sqrt{2}}$ (real) and $\\dfrac{-\\sqrt{7}}{0}$ (undefined). Same family-of-integers caveat as the other template. The denominator is plain $n$ on purpose: a denominator like $n - 2$ would add a sign-flip trap (marking -2 for $n - 2 = 0$) that belongs to solving equations, not to this objective. With one target, a student who judges by the top marks {2}, which fires missed-values (and extra-values); one who also marks the right value gives {0, 2}, which fires extra-values only. Both predicates are mapped to the same misconception because the only attractive wrong value on this line is the zero-on-top one; a stray tap elsewhere would be misdiagnosed, which is accepted as unlikely. sign-flipped cannot fire (the answer set equals its own negation). non-real-undefined-swapped is not visible here. Single fixed question, no instances."
+}
