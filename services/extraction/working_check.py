@@ -769,25 +769,33 @@ def collect(args_list: list[dict], runs: list[dict]) -> dict:
 
 
 # ============================================================================ calibrate
-def calibrate(truth: dict, rep: dict) -> dict:
+def calibrate(truth: dict, rep: dict, mutants: dict | None = None) -> dict:
     """Score a flags file (`collect`'s output) against a calibration truth file (the classified flags of an earlier
-    run on the same chapter). The measure that matters is recall of the REAL defects: a sw-v2 that costs a third
-    and misses the typos is no saving. Nothing here calls a model."""
+    run on the same chapter) and, if given, a mutants file (working_check_mutate.py: known-good solutions with one
+    injected defect each). The measure that matters is recall of the REAL defects: a cheaper checker that misses
+    the typos is no saving. Two cautions are built in. (1) The Chapter 8 truth is sw-v1's OWN findings: sw-v1 scores
+    100% against it by construction, so a v2 below it is not proof v2 is worse; the mutants are the unbiased set.
+    (2) A flag only a free check raised (numeric, stub) is not the agents' recall: both are reported. Nothing
+    here calls a model."""
     flags: dict[str, list[dict]] = {}
     for f in rep["flags"]:
         flags.setdefault(f["solution_id"], []).append(f)
+    unclear_ids = {u["id"] for u in rep.get("unclear") or []}
     checked = set(rep.get("checked_ids") or [])                 # absent: a run that predates it, treat all as run
     ran = (lambda sid: sid in checked) if checked else (lambda sid: True)
+    agent = lambda sid: [f for f in flags.get(sid, []) if "agent" in f["sources"]]
     out: dict = {"prompts_version": rep.get("prompts_version"), "real": [], "elsewhere": [], "false_repeat": [],
-                 "unclear": [], "controls_new_flags": [], "not_run": []}
+                 "unclear": [], "controls_new_flags": [], "not_run": [], "mutants": []}
     for lab in truth["labels"]:
         sid, step, v = lab["solution_id"], lab["step"], lab["verdict"]
         if not ran(sid):
             out["not_run"].append(sid)
             continue
         hit = flags.get(sid, [])
-        row = {"solution_id": sid, "step": step, "solution_flagged": bool(hit),
-               "step_flagged": any(f["step"] == step for f in hit), "sources": sorted({s for f in hit for s in f["sources"]})}
+        row = {"solution_id": sid, "step": step, "solution_flagged": bool(hit), "agent_flagged": bool(agent(sid)),
+               "said_unclear": sid in unclear_ids,
+               "step_flagged": any(f["step"] == step for f in hit), "sources": sorted({s for f in hit for s in f["sources"]}),
+               "passes": sorted({p for f in agent(sid) for p in f.get("passes") or []})}
         if v == "REAL":
             out["real"].append(row)
         elif v == "REAL-BUT-ELSEWHERE":
@@ -798,22 +806,49 @@ def calibrate(truth: dict, rep: dict) -> dict:
         if ran(u["solution_id"]):
             hit = flags.get(u["solution_id"], [])
             out["unclear"].append({"solution_id": u["solution_id"], "flagged": bool(hit),
-                                   "said_unclear": any(x["id"] == u["solution_id"] for x in rep.get("unclear") or [])})
+                                   "said_unclear": u["solution_id"] in unclear_ids})
     for sid in (truth.get("controls") or {}).get("ids", []):
         if ran(sid) and flags.get(sid):
             out["controls_new_flags"].append({"solution_id": sid, "flags": [(f["step"], f["kind"], f["why"][:120]) for f in flags[sid]]})
     real_sols = {r["solution_id"] for r in out["real"]}
     caught = {r["solution_id"] for r in out["real"] if r["solution_flagged"]}
+    caught_agent = {r["solution_id"] for r in out["real"] if r["agent_flagged"]}
+    pids = sorted({p for r in out["real"] for p in r["passes"]})
+    elsewhere_seen = {r["solution_id"] for r in out["elsewhere"]}
+    elsewhere_hit = {r["solution_id"] for r in out["elsewhere"] if r["agent_flagged"] or r["said_unclear"]}
     out["summary"] = {
         "real_solutions": len(real_sols), "real_solutions_caught": len(caught),
         "real_recall_solution": round(len(caught) / len(real_sols), 3) if real_sols else None,
+        "real_solutions_caught_by_agents": len(caught_agent),
+        "real_recall_agents_only": round(len(caught_agent) / len(real_sols), 3) if real_sols else None,
+        "real_recall_by_pass": {p: len({r["solution_id"] for r in out["real"] if p in r["passes"]}) for p in pids},
         "real_flags": len(out["real"]), "real_flags_at_the_step": sum(r["step_flagged"] for r in out["real"]),
         "elsewhere_caught": f"{sum(r['solution_flagged'] for r in out['elsewhere'])}/{len(out['elsewhere'])}",
+        "elsewhere_solutions_flagged_or_unclear": f"{len(elsewhere_hit)}/{len(elsewhere_seen)}",
         "false_flags_repeated": sum(r["solution_flagged"] for r in out["false_repeat"]),
         "unclear_kept_unclear_or_flagged": sum(u["flagged"] or u["said_unclear"] for u in out["unclear"]),
         "controls_flagged_for_a_human_to_read": len(out["controls_new_flags"]),
         "missed_real": sorted(real_sols - caught),
+        "missed_real_by_agents": sorted(real_sols - caught_agent),
     }
+    if mutants:
+        by_op: dict[str, list[bool]] = {}
+        for m in mutants.get("mutants") or []:
+            if not ran(m["id"]):
+                continue
+            hit = agent(m["id"])
+            row = {"id": m["id"], "operator": m["operator"], "kind": m["kind"], "step": m.get("step"), "caught": bool(hit),
+                   "at_step": any(f["step"] == m["step"] for f in hit) if m.get("step") else None,
+                   "passes": sorted({p for f in hit for p in f.get("passes") or []}), "base": m.get("base")}
+            out["mutants"].append(row)
+            by_op.setdefault(m["operator"], []).append(bool(hit))
+        n = len(out["mutants"])
+        out["summary"]["mutants"] = {
+            "total": n, "caught_by_agents": sum(r["caught"] for r in out["mutants"]),
+            "recall": round(sum(r["caught"] for r in out["mutants"]) / n, 3) if n else None,
+            "by_operator": {op: f"{sum(v)}/{len(v)}" for op, v in sorted(by_op.items())},
+            "by_pass": {p: sum(p in r["passes"] for r in out["mutants"]) for p in sorted({p for r in out["mutants"] for p in r["passes"]})},
+            "missed": [r["id"] for r in out["mutants"] if not r["caught"]]}
     return out
 
 
@@ -842,6 +877,12 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--model", default=MODEL, choices=MODELS, help=f"the agents' model (default {MODEL})")
     p.add_argument("--only", type=Path, metavar="FILE",
                    help="limit the run to these solutions: a JSON list of ids, or a calibration file's `subset`")
+    p.add_argument("--order", default="bundle", choices=ORDERS,
+                   help="shuffled = the second, independent pass: other batch neighbours (default bundle order)")
+    p.add_argument("--order-seed", type=int, default=0, help="the shuffle's seed (only with --order shuffled)")
+    p.add_argument("--pass-id", default="A", help="names this pass in `collect`'s merged flags (A, B, …)")
+    p.add_argument("--aliases", type=Path, metavar="FILE",
+                   help="a mutants truth file: its mutant ids offer their base solution's figures")
     p.add_argument("--embed", type=Path, metavar="FILE",
                    help="also write a generated copy of runbook/working-check.workflow.js with the args embedded "
                         "(a second part gets .part2 …)")
@@ -852,6 +893,7 @@ def main(argv: list[str] | None = None) -> int:
     p = sub.add_parser("calibrate", help="score a flags file against a calibration truth file (recall of the real defects)")
     p.add_argument("--truth", type=Path, required=True)
     p.add_argument("--flags", type=Path, required=True)
+    p.add_argument("--mutants", type=Path, help="a mutants truth file (working_check_mutate.py): recall by injected defect")
     a = ap.parse_args(argv)
 
     if a.cmd == "precheck":
@@ -874,15 +916,19 @@ def main(argv: list[str] | None = None) -> int:
         import packet_ref
         book = _book(a.book)
         runs_dir = a.lesson_runs or HERE / "runs" / book.book / "lesson"
-        parts = build_args(book, json.loads(a.seed.read_text()), a.chapter, a.by_ref, figures_for(runs_dir),
-                           a.max_per_run, a.batch, a.effort, a.model, load_only(a.only))
+        figures = figures_for(runs_dir)
+        for mid, base in load_aliases(a.aliases).items():
+            figures[mid] = figures.get(base, [])
+        parts = build_args(book, json.loads(a.seed.read_text()), a.chapter, a.by_ref, figures,
+                           a.max_per_run, a.batch, a.effort, a.model, load_only(a.only), a.order, a.order_seed, a.pass_id)
         for k, args in enumerate(parts, start=1):
             out = a.out if k == 1 else a.out.with_name(f"{a.out.stem}.part{k}{a.out.suffix}")
             out.parent.mkdir(parents=True, exist_ok=True)
             out.write_text(packet_ref.dumps(args) + "\n")
             pre = json.loads(precheck_path(Path(args["by_ref"]["dir"])).read_text())
             print(f"wrote {out} — part {k} of {len(parts)}: {len(args['solutions'])} solution(s) in "
-                  f"{agents_for(len(args['solutions']), a.batch)} agent(s) of ≤ {a.batch} ({a.model}, effort {a.effort}), "
+                  f"{agents_for(len(args['solutions']), a.batch)} agent(s) of ≤ {a.batch} ({a.model}, effort {a.effort}, pass "
+                  f"{a.pass_id}, {a.order} order, {sum(len(v) for v in args['figs'].values())} figure(s) read), "
                   f"{len(pre['skipped'])} skipped, {len(pre['flags'])} free pre-check flag(s); "
                   + packet_ref.report(args, "by ref"))
             if a.embed:
@@ -906,14 +952,25 @@ def main(argv: list[str] | None = None) -> int:
         return 1 if rep["problems"] or rep["unchecked"] else 0
 
     if a.cmd == "calibrate":
-        rep = calibrate(json.loads(a.truth.read_text()), json.loads(a.flags.read_text()))
+        rep = calibrate(json.loads(a.truth.read_text()), json.loads(a.flags.read_text()),
+                        json.loads(a.mutants.read_text()) if a.mutants else None)
         sm = rep["summary"]
         print(f"prompts {rep['prompts_version']}: real defects caught {sm['real_solutions_caught']}/{sm['real_solutions']} "
-              f"solutions (recall {sm['real_recall_solution']}), {sm['real_flags_at_the_step']}/{sm['real_flags']} at the step; "
-              f"real-but-elsewhere {sm['elsewhere_caught']}; false flags repeated {sm['false_flags_repeated']}; "
-              f"controls flagged (read them) {sm['controls_flagged_for_a_human_to_read']}")
+              f"solutions (recall {sm['real_recall_solution']}; by the agents alone {sm['real_solutions_caught_by_agents']}, "
+              f"by pass {sm['real_recall_by_pass']}), {sm['real_flags_at_the_step']}/{sm['real_flags']} at the step; "
+              f"real-but-elsewhere {sm['elsewhere_caught']} flagged, {sm['elsewhere_solutions_flagged_or_unclear']} flagged-or-unclear; "
+              f"false flags repeated {sm['false_flags_repeated']}; controls flagged (read them) "
+              f"{sm['controls_flagged_for_a_human_to_read']}")
         if sm["missed_real"]:
-            print("  MISSED: " + ", ".join(sm["missed_real"]))
+            print("  MISSED (any signal): " + ", ".join(sm["missed_real"]))
+        if sm["missed_real_by_agents"]:
+            print("  missed by the agents: " + ", ".join(sm["missed_real_by_agents"]))
+        if "mutants" in sm:
+            mu = sm["mutants"]
+            print(f"  injected defects (unbiased): caught {mu['caught_by_agents']}/{mu['total']} (recall {mu['recall']}); "
+                  f"by operator {mu['by_operator']}; by pass {mu['by_pass']}")
+            if mu["missed"]:
+                print("  mutants missed: " + ", ".join(mu["missed"]))
         for c in rep["controls_new_flags"]:
             print(f"  control flagged: {c['solution_id']}: {c['flags']}")
         print(json.dumps(sm, ensure_ascii=False))
