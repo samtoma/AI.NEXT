@@ -203,10 +203,12 @@ export function chaptersBeingPrepared(
     c.lessons += 1;
     if (prepared.has(o.slug)) c.ready = true;
   }
+  // In the order the chapters first appear in the book's reading order
+  // (`outlineOf` walks `bookOrder`), which IS book order — no second sort.
   for (const c of byId.values()) {
     if (!c.ready) out.push({ id: c.id, label: c.label, moduleOrder: c.moduleOrder, lessons: c.lessons });
   }
-  return out.sort((a, b) => a.moduleOrder - b.moduleOrder);
+  return out;
 }
 
 /* ------------------------------------------------------------------ */
