@@ -1,0 +1,605 @@
+{
+ "objectives_version": 1,
+ "book": "g10-math",
+ "chapter": 7,
+ "module": "module:g10m-c07",
+ "lesson": "g10m7s4-1",
+ "title": "The mid-point theorem",
+ "provenance": {
+  "sections": [
+   {
+    "number": "7.4",
+    "title": "The mid-point theorem"
+   }
+  ],
+  "part": null,
+  "chapter_intro": false
+ },
+ "status": "rejected",
+ "g1": null,
+ "source_run": {
+  "file": "runs/g10-math/objectives/ch07-wf_504f631f-287.json",
+  "sha256": "d96145e09fe0f18eab45bf52d021bdcbbe92449087aae59874726c8bb252e638",
+  "prompts_version": "s1-v5",
+  "packet_sha256": "a5a65744c823f83005986b177792b5f6c9ff4f8520257460e650df27e5843e88"
+ },
+ "objectives": [
+  {
+   "id": "lo:g10m7s4-1-1",
+   "provisional_id": "lo:g10m7s4-1-1",
+   "n": 1,
+   "statement": "Prove that the line joining the mid-points of two sides of a triangle is parallel to the third side and equal to half its length, and use the converse to show that a line drawn through the mid-point of one side parallel to a second side bisects the third side.",
+   "label": "Prove the mid-point theorem and use its converse",
+   "evidence": [
+    {
+     "kind": "worked_example",
+     "anchor": "WE8",
+     "printed_page": 262,
+     "quote": "Prove that the line joining the mid-points of two sides of a triangle is parallel to the third side",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "intro",
+     "anchor": "b02953",
+     "printed_page": 264,
+     "quote": "it will bisect the third side",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "summary",
+     "anchor": "b03019",
+     "printed_page": 269,
+     "quote": "is parallel to the third side and equal to half the length of the third side",
+     "contained": true,
+     "present": true,
+     "supports": true
+    }
+   ],
+   "evidence_dropped": [
+    {
+     "kind": "exercise",
+     "anchor": "Ex7-7:12",
+     "printed_page": 267,
+     "quote": "Show that $M$ is the mid-point of $AB$",
+     "contained": true,
+     "present": true,
+     "supports": false,
+     "dropped": "the evidence check says it does not support the objective: a0231.txt contains 'Show that M is the mid-point of AB' (exact quote). However, the exercise asks to show M is a mid-point but does not explicitly ask student to prove the mid-point theorem or apply its converse. Does not practice the proof/converse application stated in objective."
+    }
+   ],
+   "exercise_items": [
+    "Ex7-7:12",
+    "Ex7-8:33a",
+    "Ex7-8:35b"
+   ],
+   "worked_examples": [
+    "WE8"
+   ],
+   "confidence": "merged",
+   "from": {
+    "a": [
+     "A1"
+    ],
+    "b": [
+     "B1",
+     "B2"
+    ]
+   },
+   "derivation": "derived",
+   "terms": [
+    "mid-point theorem",
+    "mid-point",
+    "triangle",
+    "parallel",
+    "third side",
+    "converse",
+    "bisect"
+   ],
+   "edited_at_g1": false,
+   "order_in_parent": 12,
+   "node": {
+    "id": "lo:g10m7s4-1-1",
+    "kind": "learning_objective",
+    "label": "Prove the mid-point theorem and use its converse",
+    "description": "Prove that the line joining the mid-points of two sides of a triangle is parallel to the third side and equal to half its length, and use the converse to show that a line drawn through the mid-point of one side parallel to a second side bisects the third side.",
+    "source_page": 262,
+    "syllabus_ref": "7.4",
+    "order_in_parent": 12
+   }
+  },
+  {
+   "id": "lo:g10m7s4-1-2",
+   "provisional_id": "lo:g10m7s4-1-2",
+   "n": 2,
+   "statement": "Identify the third side, the parallel lines and the similar triangle in a triangle in which the mid-points of two sides are marked.",
+   "label": "Identify parallel sides and similar triangles",
+   "evidence": [
+    {
+     "kind": "exercise",
+     "anchor": "Ex7-7:1",
+     "printed_page": 264,
+     "quote": "Identify the third side of this triangle",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex7-7:3",
+     "printed_page": 264,
+     "quote": "identify and name the parallel lines",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex7-7:5b",
+     "printed_page": 265,
+     "quote": "The two triangles in this question are similar triangles",
+     "contained": true,
+     "present": true,
+     "supports": true
+    }
+   ],
+   "evidence_dropped": [],
+   "exercise_items": [
+    "Ex7-7:1",
+    "Ex7-7:2",
+    "Ex7-7:3",
+    "Ex7-7:4",
+    "Ex7-7:5b",
+    "Ex7-7:6b",
+    "Ex7-8:19",
+    "Ex7-8:20",
+    "Ex7-8:21b",
+    "Ex7-8:22b"
+   ],
+   "worked_examples": [],
+   "confidence": "agreed",
+   "from": {
+    "a": [
+     "A2"
+    ],
+    "b": [
+     "B3"
+    ]
+   },
+   "derivation": "derived",
+   "terms": [
+    "mid-point",
+    "third side",
+    "parallel lines",
+    "similar triangles"
+   ],
+   "edited_at_g1": false,
+   "order_in_parent": 13,
+   "node": {
+    "id": "lo:g10m7s4-1-2",
+    "kind": "learning_objective",
+    "label": "Identify parallel sides and similar triangles",
+    "description": "Identify the third side, the parallel lines and the similar triangle in a triangle in which the mid-points of two sides are marked.",
+    "source_page": 264,
+    "syllabus_ref": "7.4",
+    "order_in_parent": 13
+   }
+  },
+  {
+   "id": "lo:g10m7s4-1-3",
+   "provisional_id": "lo:g10m7s4-1-3",
+   "n": 3,
+   "statement": "Determine unknown angles, including angles in terms of a variable, in a triangle crossed by a line joining two mid-points, using the parallel lines the mid-point theorem gives.",
+   "label": "Determine angles with mid-point lines",
+   "evidence": [
+    {
+     "kind": "exercise",
+     "anchor": "Ex7-7:5a",
+     "printed_page": 265,
+     "quote": "determine the value of $D\\hat{C}E$",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex7-7:15a",
+     "printed_page": 268,
+     "quote": "determine the value of $\\hat{A}$ in terms of $q$",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex7-7:16a",
+     "printed_page": 268,
+     "quote": "determine the value of $\\hat{K}$ in terms of $b$",
+     "contained": true,
+     "present": true,
+     "supports": true
+    }
+   ],
+   "evidence_dropped": [],
+   "exercise_items": [
+    "Ex7-7:5a",
+    "Ex7-7:6a",
+    "Ex7-7:15a",
+    "Ex7-7:15b",
+    "Ex7-7:16a",
+    "Ex7-7:16b",
+    "Ex7-8:21a",
+    "Ex7-8:22a",
+    "Ex7-8:27a",
+    "Ex7-8:27b",
+    "Ex7-8:28a",
+    "Ex7-8:28b"
+   ],
+   "worked_examples": [],
+   "confidence": "agreed",
+   "from": {
+    "a": [
+     "A3"
+    ],
+    "b": [
+     "B4"
+    ]
+   },
+   "derivation": "derived",
+   "terms": [
+    "angle",
+    "parallel lines",
+    "mid-point",
+    "mid-point theorem",
+    "in terms of a variable"
+   ],
+   "edited_at_g1": false,
+   "order_in_parent": 14,
+   "node": {
+    "id": "lo:g10m7s4-1-3",
+    "kind": "learning_objective",
+    "label": "Determine angles with mid-point lines",
+    "description": "Determine unknown angles, including angles in terms of a variable, in a triangle crossed by a line joining two mid-points, using the parallel lines the mid-point theorem gives.",
+    "source_page": 265,
+    "syllabus_ref": "7.4",
+    "order_in_parent": 14
+   }
+  },
+  {
+   "id": "lo:g10m7s4-1-4",
+   "provisional_id": "lo:g10m7s4-1-4",
+   "n": 4,
+   "statement": "Calculate unknown lengths, including lengths given in terms of a variable, using the fact that the line joining the mid-points of two sides of a triangle is half the length of the third side.",
+   "label": "Calculate lengths using mid-points",
+   "evidence": [
+    {
+     "kind": "exercise",
+     "anchor": "Ex7-7:7",
+     "printed_page": 265,
+     "quote": "Determine the value of $x$",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex7-7:13a",
+     "printed_page": 268,
+     "quote": "Calculate the value of $MN$ in terms of $a$",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "summary",
+     "anchor": "b03019",
+     "printed_page": 269,
+     "quote": "equal to half the length of the third side",
+     "contained": true,
+     "present": true,
+     "supports": true
+    }
+   ],
+   "evidence_dropped": [],
+   "exercise_items": [
+    "Ex7-7:7",
+    "Ex7-7:8",
+    "Ex7-7:9",
+    "Ex7-7:10",
+    "Ex7-7:11a",
+    "Ex7-7:11b",
+    "Ex7-7:11c",
+    "Ex7-7:11d",
+    "Ex7-7:11e",
+    "Ex7-7:13a",
+    "Ex7-7:13b",
+    "Ex7-7:14a",
+    "Ex7-7:14b",
+    "Ex7-8:23",
+    "Ex7-8:24",
+    "Ex7-8:25",
+    "Ex7-8:26a",
+    "Ex7-8:26b",
+    "Ex7-8:29"
+   ],
+   "worked_examples": [],
+   "confidence": "agreed",
+   "from": {
+    "a": [
+     "A4"
+    ],
+    "b": [
+     "B5"
+    ]
+   },
+   "derivation": "derived",
+   "terms": [
+    "mid-point",
+    "half the length",
+    "third side",
+    "in terms of a variable"
+   ],
+   "edited_at_g1": false,
+   "order_in_parent": 15,
+   "node": {
+    "id": "lo:g10m7s4-1-4",
+    "kind": "learning_objective",
+    "label": "Calculate lengths using mid-points",
+    "description": "Calculate unknown lengths, including lengths given in terms of a variable, using the fact that the line joining the mid-points of two sides of a triangle is half the length of the third side.",
+    "source_page": 265,
+    "syllabus_ref": "7.4",
+    "order_in_parent": 15
+   }
+  }
+ ],
+ "pool_items": [
+  "Ex7-8:19",
+  "Ex7-8:20",
+  "Ex7-8:21a",
+  "Ex7-8:21b",
+  "Ex7-8:22a",
+  "Ex7-8:22b",
+  "Ex7-8:23",
+  "Ex7-8:24",
+  "Ex7-8:25",
+  "Ex7-8:26a",
+  "Ex7-8:26b",
+  "Ex7-8:27a",
+  "Ex7-8:27b",
+  "Ex7-8:28a",
+  "Ex7-8:28b",
+  "Ex7-8:29",
+  "Ex7-8:33a",
+  "Ex7-8:35b"
+ ],
+ "prerequisites": [
+  {
+   "src": "lo:g10m7s2-1-2",
+   "dst": "lo:g10m7s4-1-1",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "worked_example",
+     "anchor": "WE8",
+     "printed_page": 262,
+     "quote": "\\therefore\\triangleEAD&\\equiv\\triangleECF&&\\text{(SAS)}"
+    }
+   ],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "WE8 proves triangle EAD congruent to ECF by SAS in order to show BD is parallel to FC."
+   },
+   "backward": false
+  },
+  {
+   "src": "lo:g10m7s1-1-3",
+   "dst": "lo:g10m7s4-1-1",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "worked_example",
+     "anchor": "WE8",
+     "printed_page": 262,
+     "quote": "But these are alternate interior angles, therefore"
+    }
+   ],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "WE8 says 'these are alternate interior angles, therefore BD parallel to FC', which is the 1-1-3 test (equal alternate angles give parallel lines)."
+   },
+   "backward": false
+  },
+  {
+   "src": "lo:g10m7s3-1-2",
+   "dst": "lo:g10m7s4-1-1",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "worked_example",
+     "anchor": "WE8",
+     "printed_page": 262,
+     "quote": "one pair opp. sides = and"
+    }
+   ],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "WE8 concludes BCFD is a parallelogram by 'one pair opp. sides = and parallel', which is a 3-1-2 condition used as a step."
+   },
+   "backward": false
+  },
+  {
+   "src": "lo:g10m7s3-1-1",
+   "dst": "lo:g10m7s4-1-1",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "worked_example",
+     "anchor": "WE8",
+     "printed_page": 262,
+     "quote": "Use properties of parallelogram to prove that"
+    }
+   ],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "WE8 says 'Use properties of parallelogram to prove that' and then uses 'opp sides of parallelogram' for DF=BC."
+   },
+   "backward": false
+  },
+  {
+   "src": "lo:g10m7s4-1-1",
+   "dst": "lo:g10m7s4-1-2",
+   "signal": "reference",
+   "evidence": [
+    {
+     "kind": "exercise",
+     "anchor": "Ex7-7:1",
+     "printed_page": 264,
+     "quote": "together with what you know about the mid-point theorem"
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex7-7:3",
+     "printed_page": 264,
+     "quote": "identify and name the parallel lines"
+    }
+   ],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "Ex 7-7:1 says to use 'what you know about the mid-point theorem' to identify the third side. Ex 7-7:3 asks to identify the parallel lines, which comes from the same theorem."
+   },
+   "backward": false
+  },
+  {
+   "src": "lo:g10m7s2-1-3",
+   "dst": "lo:g10m7s4-1-2",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "exercise",
+     "anchor": "Ex7-7:5b",
+     "printed_page": 265,
+     "quote": "The two triangles in this question are similar triangles"
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex7-7:6b",
+     "printed_page": 265,
+     "quote": "The two triangles in this question are similar triangles"
+    }
+   ],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "Ex 7-7:5b and 6b require writing the similarity statement with vertices in the correct order. That uses the similar-triangle idea and the correspondence of angles and sides from 2-1-3. The AAA and SSS rules themselves are not invoked, so this is moderate support."
+   },
+   "backward": false
+  },
+  {
+   "src": "lo:g10m7s4-1-1",
+   "dst": "lo:g10m7s4-1-3",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "exercise",
+     "anchor": "Ex7-7:15a",
+     "printed_page": 268,
+     "quote": "Points $C$ and $E$ bisect their respective sides of the triangle"
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex7-7:5a",
+     "printed_page": 265,
+     "quote": "Point $C$ is the mid-point of $BD$ and point $E$ is the mid-point of $AD$"
+    }
+   ],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "Ex 7-7:15a and 5a set up mid-points of two sides ('C and E bisect their respective sides') and ask for angles. These can only be solved through the mid-point theorem's parallel line."
+   },
+   "backward": false
+  },
+  {
+   "src": "lo:g10m4s2-1-1",
+   "dst": "lo:g10m7s4-1-3",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "exercise",
+     "anchor": "Ex7-7:15b",
+     "printed_page": 268,
+     "quote": "Calculate for the value of $q$"
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex7-7:16b",
+     "printed_page": 268,
+     "quote": "Solve for the value of $b$"
+    }
+   ],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "Ex 7-7:15b ('Calculate for the value of q') and 16b ('Solve for the value of b', answer as a fraction) require solving a linear equation in the unknown, which is the 4-2-1 skill. The equation itself is not shown."
+   },
+   "backward": false
+  },
+  {
+   "src": "lo:g10m7s4-1-1",
+   "dst": "lo:g10m7s4-1-4",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "exercise",
+     "anchor": "Ex7-7:13a",
+     "printed_page": 268,
+     "quote": "$P$ is the mid-point of $NQ$ and $R$ is the mid-point of $MQ$"
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex7-7:14a",
+     "printed_page": 268,
+     "quote": "Find the value of $PR$ in terms of $a$"
+    }
+   ],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "Ex 7-7:13a and 14a give P and R as mid-points of NQ and MQ and ask for MN or PR in terms of a. These use the mid-point theorem's half-length fact."
+   },
+   "backward": false
+  },
+  {
+   "src": "lo:g10m4s2-1-1",
+   "dst": "lo:g10m7s4-1-4",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "exercise",
+     "anchor": "Ex7-7:13b",
+     "printed_page": 268,
+     "quote": "Give your answer as a fraction"
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex7-7:14b",
+     "printed_page": 268,
+     "quote": "What is the value of $a$ ?"
+    }
+   ],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "Ex 7-7:13b and 14b ask for the value of a (13b as a fraction) once a length is given, so a linear equation must be solved. This is the 4-2-1 skill, though the equation is implicit."
+   },
+   "backward": false
+  }
+ ],
+ "checks": {
+  "ok": false,
+  "failures": [
+   "lo:g10m7s4-1-2: 1 kind(s) of valid evidence (exercise); rule 1 needs two different kinds",
+   "lo:g10m7s4-1-3: 1 kind(s) of valid evidence (exercise); rule 1 needs two different kinds"
+  ],
+  "warnings": []
+ },
+ "outside_items": []
+}
