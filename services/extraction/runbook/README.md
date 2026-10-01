@@ -772,14 +772,29 @@ uv run assemble_objectives.py lesson-runs <book> runs/<book>/lessons/<runId>.jso
 uv run apply_review_verdicts.py --g2 runs/<book>/g2-ch09.json --book <book>          # auto items → ai_checked_by
 # G3 — generated sample accepted on S6/S7; held predicate claims stay held (no --mapping-review step)
 uv run auto_pass_gates.py g3 <book> --chapter 9 --queue seed/generated/<book>/generated-questions.review-queue.json \
-    --queue seed/generated/<book>/widget-questions.review-queue.json --widgets seed/generated/<book>/widget-questions.json
+    --queue seed/generated/<book>/widget-questions.review-queue.json --widgets seed/generated/<book>/widget-questions.json \
+    [--widget-gaps coverage/<book>.ch09.widget-gaps.json]
 uv run apply_review_verdicts.py runs/<book>/g3-ch09.auto.json                        # adds to ai_checked_by
+#      WIDGET GAPS are G3's (FR-4306). A chapter whose S7 author wrote no template has no widget question, and coverage's
+#      `module_widgets` needs its chapter-scope gaps signed: `--widget-gaps` (after S5 final wrote the gap report) signs THIS
+#      chapter's as `auto-pass G3 (AI recommendation)`, `auto: true` — the chapter ships without a widget for now, as a
+#      person's sign-off would accept it. Coverage counts that as state `auto_passed` and names it (never a human sign-off);
+#      it approves NO kind (each proposed kind is listed for Samuel in the record, decision 11, and nothing is built); a
+#      person's sign-off in the file is kept; a re-run changes nothing; a chapter no author examined (gap kind `unexamined`)
+#      blocks. A bundle-less chapter has only the generated queue: drop the widget `--queue` and `--widgets`.
 # G4 — the catalogue S5's verifier kept (a record)
 uv run auto_pass_gates.py g4 <book> --chapter 9 --catalogue seed/generated/<book>/misconceptions.json \
     --s5 runs/<book>/misconceptions/final-<run>.json
 # G5 — go/no-go on coverage + the drift guard for every course + cost (exit 1 = NO-GO)
 AINEXT_DB_DSN=<the load's database> uv run auto_pass_gates.py g5 <book> --chapter 9 \
-    --coverage coverage/<book>.json [--book-config <the loaded book config>] [--dryrun <report>]
+    --coverage coverage/<book>.ch09.json [--book-config <the loaded book config>] [--dryrun <report>]
+#      A fan-out chapter's coverage is `uv run coverage_report.py --book <chapter config> --chapter 9 --maths … --widget-gaps … --s5 …
+#      --generated seed/generated/<book>/ch09 --out coverage/<book>.ch09.json`: --generated is REQUIRED (its default is the
+#      Chapter 8 pilot's, which a chapter audit now refuses). The drift guard compares the DATABASE with --book-config's
+#      bundles, so for a chapter loaded beside others pass a config listing every bundle the database holds so far (the
+#      course bundle, each loaded chapter's, the pilot's work/…/pilot/seed/g10m-c08.json) — the chapter's own config alone reads
+#      "modules: 3 != expected 1" and is a real NO-GO. G5 lists every completeness finding (an objective with no claim, an empty
+#      tier cell) and every auto-passed scope as a decision line of its own: the console shows those to Samuel.
 ```
 
 Every subcommand takes `--run <name>` (recorded as the decision's `run`) and `--gates-dir`. Loads for a

@@ -178,7 +178,8 @@ class WhichItems(unittest.TestCase):
 
     def test_the_estimate_is_modelled_and_ordered(self):
         e = G.estimate(82)
-        self.assertEqual((e["recommend_agents"], e["verify_agents_max"]), (11, 7))
+        self.assertEqual((e["recommend_agents"], e["verify_agents_max"], e["agents"]), (11, 11, 22),
+                         "one verifying agent per batch that has an accept or a fix, at most")
         self.assertLess(e["usd_low"], e["usd_high"])
 
 
@@ -745,7 +746,7 @@ class FanoutHook(unittest.TestCase):
         self.assertEqual(len(info["copies"]), 1)
         self.assertTrue(info["copies"][0].endswith("g2rec-ch09.workflow.js"))
         self.assertTrue((self.tmp / "packets" / "g2rec-ch09.args.json").exists())
-        self.assertEqual(info["agents"], 1 + 1)
+        self.assertEqual(info["agents"], 1 + 1, "one batch: one recommending agent and at most one verifying agent")
         self.assertLess(info["cost_usd"][0], info["cost_usd"][1])
         self.assertIn("--stage G2R", info["meter"])
         self.assertIn("g2rec/ch09-<runId>.json", info["save_to"])

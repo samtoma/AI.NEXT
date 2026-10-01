@@ -423,6 +423,18 @@ class S0b(Base):
         self.assertIn(f"runs/g10-math/maths/B-{wf}.json", argv)
         self.assertEqual(self.box.steps(rep), [("S0b assembly (A+B+C)", "ok")])
 
+    def test_assemble_maths_exit_4_means_the_books_maths_is_not_complete_yet_and_is_not_a_failure(self):
+        b = self.box
+        b.copies_for("s0b-C-g3")
+        self.ex.on("assemble_maths.py", lambda argv: A.Result(4, "{...summary...}"))
+        rc, rep, wf = b.go("s0b-C-g3", result={"stage": "S0b", "results": []})
+        self.assertEqual(rc, 0, rep)
+        self.assertEqual(self.box.steps(rep), [("S0b assembly (A+B+C)", "ok")])
+        self.ex.on("assemble_maths.py", lambda argv: A.Result(1, "Traceback: boom"))
+        wf2, task = b.finish("s0b-C-g3", result={"stage": "S0b", "results": []}, wf=wf)
+        rc, rep = b.adv("s0b-C-g3", wf, task, redo=True)
+        self.assertEqual(rc, 1, "any other non-zero exit is a failure")
+
     def test_C_unresolved_images_are_a_warning_for_a_human_not_a_failure(self):
         b = self.box
         b.copies_for("s0b-C-g3")
@@ -663,6 +675,28 @@ class WorkingCheck(Base):
         self.assertEqual(rep["counts"]["working_check"]["flagged_solutions"], 9)
         self.assertIn("1 solution(s) no checking agent answered", rep["warnings"][0])
         self.assertTrue(all(c[0][c[0].index("--stage") + 1] == "SW" for c in self.ex.calls if c[0][0] == "meter_run.py"))
+
+    def test_collect_exit_1_with_unchecked_solutions_is_a_warning_but_a_refusal_that_wrote_nothing_is_a_failure(self):
+        b = self.box
+        for label, pid, part in (("A", "A", 1), ("A.part2", "A", 2), ("B", "B", 1)):
+            b.go("wcheck-ch04", label, self.res(pid, part))
+
+        def collect(argv):
+            b.put("runs/g10-math/working-check/ch04.flags.json", {"solutions": 10, "verdicts": {}, "flags": [], "unchecked": [{"id": "q:1"}],
+                                                                   "problems": ["a result names x"], "single_pass_ids": []})
+            return A.Result(1, "chapter 4: ...")
+        self.ex.on("working_check.py", collect)
+        rc, rep, wf = b.go("wcheck-ch04", "B.part2", self.res("B", 2))
+        self.assertEqual(rc, 0, rep)
+        self.assertTrue(any("no checking agent answered" in w for w in rep["warnings"]))
+        self.assertTrue(any("a result names x" in w for w in rep["warnings"]))
+        # a refusal (not a working-check run, say) exits 1 without writing: that is a stop
+        (b.runs / "working-check" / "ch04.flags.json").unlink()
+        self.ex.on("working_check.py", lambda argv: A.Result(1, "not a working-check run (stage is not SW)"))
+        wf2, task = b.finish("wcheck-ch04", "B.part2", self.res("B", 2), wf=wf)
+        rc, rep = b.adv("wcheck-ch04", wf, task)
+        self.assertEqual(rc, 1)
+        self.assertIn("no flags file was written", rep["failure"]["detail"])
 
     def test_the_copy_is_told_apart_by_its_embedded_sha(self):
         b = self.box
@@ -1077,6 +1111,17 @@ class S5Final(Base):
         self.assertEqual(rep["counts"]["coverage"]["failing"], ["tier_floor"])
         self.assertTrue(any("tier_floor" in w and "completeness" in w for w in rep["warnings"]))
 
+    def test_a_coverage_report_that_crashed_is_a_failure_not_a_stale_file_read(self):
+        b = self.box
+        (b.here / "coverage").mkdir(exist_ok=True)
+        (b.here / "coverage" / f"{BOOK}.ch04.json").write_text(json.dumps({"status": "GREEN", "checks": []}))   # last chapter-run's report
+        old = self.ex.rules["coverage_report.py"]
+        self.ex.on("coverage_report.py", lambda argv: A.Result(1, "Traceback (most recent call last): boom"))
+        rc, rep, wf = b.go("s5-final-ch04", result={"stage": "final"})
+        self.assertEqual(rc, 1)
+        self.assertEqual(rep["failure"]["step"], "coverage")
+        self.assertIn("no report was written", rep["failure"]["detail"])
+
     def test_parity_red_blocks(self):
         b = self.box
         self.ex.on("parity_check.py", lambda argv: A.Result(1, "✗ questions_total 450 != 452\n"))
@@ -1191,6 +1236,19 @@ class Next(Base):
         out = A.ready_list(A.Paths(), S, A.parse_running(["s0b-A-g3"]), A.Opts())
         self.assertEqual(out["ready"], [])
         self.assertEqual(out["lanes"], {"max": 2, "in_flight": 1, "free": 1})
+
+    def test_regenerating_a_stale_copy_without_naming_what_is_in_flight_is_a_warning(self):
+        b = self.box
+        b.copies_for("s0b-A-g3", "s0b-B-g3", "s0b-C-g3")
+        b.legacy("s0b-A-g3")
+        b.legacy("s0b-B-g3")
+        b.stub.write_text(STUB + "// edited\n")
+        b.preparable = {"s0b-C-g3"}
+        P, plan = A.Paths(), json.loads(F.PLAN_PATH.read_text())
+        rep = A.new_report("(ready)", "", False)
+        A.prepare_ready(P, A.State(P, plan), A.Flow(P, b.ex), rep, set(), A.Opts(refresh_stale=True))
+        self.assertEqual(rep["refreshed"], ["s0b-C-g3"])
+        self.assertIn("no --running given", rep["warnings"][0])
 
     def test_stale_copies_are_regenerated_only_on_request_and_never_for_a_run_in_flight(self):
         b = self.box

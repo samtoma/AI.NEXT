@@ -1146,9 +1146,12 @@ def h_s5_final(A: Adv) -> bool:
                    mark_inputs=[auto3])
     fl.run("G4 auto-pass", ["auto_pass_gates.py", "g4", BOOK, "--chapter", str(A.ch), "--catalogue", P.rel(cat), "--s5", P.rel(A.saved)],
            inputs=[cat, A.saved], outputs=[K.gates / f"g4-{K.t}.json"])
-    fl.run("coverage", ["coverage_report.py", "--book", P.rel(cfg), "--chapter", str(A.ch), "--maths", P.rel(P.maths_book / "summary.json"),
-                        "--widget-gaps", P.rel(K.widget_gaps), "--s5", P.rel(A.saved), "--generated", P.rel(K.gen), "--out", P.rel(K.cov)],
-           inputs=[A.saved, K.widget_gaps, *bundles, K.seed, P.maths_book / "summary.json"], outputs=[K.cov], ok=(0, 1))
+    t0 = time.time()
+    r = fl.run("coverage", ["coverage_report.py", "--book", P.rel(cfg), "--chapter", str(A.ch), "--maths", P.rel(P.maths_book / "summary.json"),
+                            "--widget-gaps", P.rel(K.widget_gaps), "--s5", P.rel(A.saved), "--generated", P.rel(K.gen), "--out", P.rel(K.cov)],
+               inputs=[A.saved, K.widget_gaps, *bundles, K.seed, P.maths_book / "summary.json"], outputs=[K.cov], ok=(0, 1))
+    if r.rc == 1 and not r.dry and not (K.cov.exists() and K.cov.stat().st_mtime >= t0 - 2):     # RED writes the report; a crash does not
+        raise StepFailed("coverage", f"exit 1 and no report was written: {r.key_lines()}")
     coverage_verdict(A, K.cov)
     fl.run("parity (every course)", ["parity_check.py", "--candidate", F.DSN, "--all-courses"], fresh=False)
     A.count(bundles=[b.name for b in bundles])
@@ -1224,6 +1227,11 @@ def prepare_ready(P: Paths, S: State, fl: Flow, rep: dict, running: set, opts: O
                 rep["not_ready"][rid] = f"ERROR {type(e).__name__}: {e}"[:220]
                 continue
             rep["not_ready"].pop(rid, None)
+            if have:                                          # --refresh-stale regenerated a copy that existed
+                rep.setdefault("refreshed", []).append(rid)
+                if not running:
+                    rep["warnings"].append(f"{rid}: a stale copy was regenerated with no --running given: if that run was in flight, "
+                                           "its copy (and its resume cache) changed under it")
             if isinstance(info, dict) and info.get("skipped"):
                 if kind_of(rid) == "s0b_c":         # the plan still says: run the third reading's after-steps (the S0b assembly)
                     assemble_maths(P, fl)

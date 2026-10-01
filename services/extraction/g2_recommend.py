@@ -77,9 +77,11 @@ PROMPT_FIELDS = ("ref", "kind", "stem", "answer_type", "answer", "choices", "mar
                  "printed_answer", "epub_final_answer", "blind_answer", "verification", "typing_problems", "figures",
                  "asked_form", "printed_form_defect", "raised_dot", "options_source", "not_markable_reason",
                  "printed_page", "less_specific")
-# the cost model (API-equivalent USD; MODELLED until the first run is metered): a recommending agent reads a batch of ~8 items and
-# derives each answer at effort high; a verifying agent does the same for the verdicts that would go live (about 60%)
-UNIT_COST = {"recommend_item": (0.10, 0.20), "verify_item": (0.05, 0.10), "verify_share": 0.6}
+# the cost model (API-equivalent USD; MODELLED until the first run is metered, stage G2R). The harness's fixed cost per agent is ~$0.094 (the
+# working checker's measurement, README §10); an agent here adds a batch of 8 items to read (~10K tokens) and a derivation per item at effort
+# high (~15-40K output tokens at $10/M), so a recommending agent is modelled at $0.30-0.75 and a verifying agent (the stem and the key only,
+# fewer items worth deriving) at $0.20-0.50. At most one verifying agent per batch (every batch that has an accept or a fix).
+UNIT_COST = {"recommend_agent": (0.30, 0.75), "verify_agent": (0.20, 0.50)}
 
 
 class RecommendError(Exception):
@@ -178,14 +180,11 @@ def split_parts(entries: list[dict], batch: int, max_batches: int) -> list[list[
 
 
 def estimate(n_items: int, batch: int = 8) -> dict:
-    lo_r, hi_r = UNIT_COST["recommend_item"]
-    lo_v, hi_v = UNIT_COST["verify_item"]
-    share = UNIT_COST["verify_share"]
+    lo_r, hi_r = UNIT_COST["recommend_agent"]
+    lo_v, hi_v = UNIT_COST["verify_agent"]
     rec_agents = -(-n_items // batch)
-    ver_agents = -(-int(round(n_items * share)) // batch)
-    return {"items": n_items, "recommend_agents": rec_agents, "verify_agents_max": ver_agents,
-            "agents": rec_agents + ver_agents,
-            "usd_low": round(n_items * lo_r + n_items * share * lo_v, 2), "usd_high": round(n_items * hi_r + n_items * share * hi_v, 2)}
+    return {"items": n_items, "recommend_agents": rec_agents, "verify_agents_max": rec_agents, "agents": 2 * rec_agents,
+            "usd_low": round(rec_agents * lo_r + rec_agents * lo_v * 0.5, 2), "usd_high": round(rec_agents * (hi_r + hi_v), 2)}
 
 
 # ============================================================================ checks on a recommended shape
