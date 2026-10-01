@@ -406,10 +406,11 @@ def _group_parts(parts: list[Part]) -> list[list[Part]]:
     return out
 
 
-def plan(parts: list[Part]) -> tuple[dict[str, Carry], list[Unresolved]]:
+def plan(parts: list[Part], rules: tuple[str, ...] = ("R1", "R2", "R3")) -> tuple[dict[str, Carry], list[Unresolved]]:
     """What every part carries and what stays unresolved, over any set of parts (a chapter, a book): they are
     grouped by the exercise and question number in their refs, and a part is only ever helped by the parts
-    before it in its own question. Deterministic: the same parts give the same plan."""
+    before it in its own question. Deterministic: the same parts give the same plan. `rules` limits what is
+    carried: the lesson packet (S2–S4, before any key exists) carries names only, `("R1",)`."""
     carries: dict[str, Carry] = {}
     unresolved: list[Unresolved] = []
     for ps in _group_parts(parts):
@@ -425,6 +426,7 @@ def plan(parts: list[Part]) -> tuple[dict[str, Carry], list[Unresolved]]:
             earlier = ps[:i]
             own = tail[P.ref]
             sentences: list[str] = []
+            swaps: list[tuple[str, str]] = []       # a sentence the packet carried, now with the book's key
             items: list[dict] = []
             notes: list[Unresolved] = []
 
@@ -468,9 +470,23 @@ def plan(parts: list[Part]) -> tuple[dict[str, Carry], list[Unresolved]]:
                     if val and _reveals(P, text):
                         val, text = None, d.clause()          # the name, not its value
                     add("R1", Q, text, names=list(d.names), **({"with_key": True} if val else {}))
+                # the packet (S2–S4) carries the sentence without a value; the assembly adds the book's key to it
+                for Q in earlier:
+                    for d in defs[Q.ref]:
+                        val = (Q.key.strip() if Q.keyed and Q.kind == "coordinates" and _one_point(Q.key)
+                               and len(d.names) == 1 and d.names[0] not in asked_coordinates(own) else None)
+                        if not val or d.clause() not in P.stem or d.names[0] in {n for n in conflicts}:
+                            continue
+                        new = d.with_value(val)
+                        if _reveals(P, new):
+                            continue
+                        swaps.append((d.clause(), new))
+                        sentences.append(new)
+                        items.append({"rule": "R1", "from": Q.ref, "text": new, "names": list(d.names),
+                                      "with_key": True, "was": d.clause()})
 
                 # R2 — the preamble's unknowns, solved by an earlier part
-                for L, vs in sorted(unknown_h.items()):
+                for L, vs in sorted(unknown_h.items() if "R2" in rules else []):
                     if L not in uses or L in concrete_points(own):
                         continue
                     if L in asked_coordinates(own) or any(v in asked_values(own) for v in vs):
@@ -499,7 +515,7 @@ def plan(parts: list[Part]) -> tuple[dict[str, Carry], list[Unresolved]]:
                         break
 
                 # R3 — a gradient the worked answer uses and never computes
-                for xy in gradients_used_not_computed(P.working):
+                for xy in (gradients_used_not_computed(P.working) if "R3" in rules else []):
                     if _states_gradient(own, xy):
                         continue
                     src = next((Q for Q in reversed(earlier)
@@ -533,8 +549,12 @@ def plan(parts: list[Part]) -> tuple[dict[str, Carry], list[Unresolved]]:
             unresolved.extend(notes)
 
             if sentences:
+                stem = P.stem
+                for old_s, new_s in swaps:
+                    stem = stem.replace(old_s, new_s, 1)
+                inserted = [x for x in sentences if x not in {n for _, n in swaps}]
                 end = ends[i]
-                after = " ".join(x for x in (P.stem[:end].strip(), " ".join(sentences), P.stem[end:].strip()) if x)
+                after = " ".join(x for x in (stem[:end].strip(), " ".join(inserted), stem[end:].strip()) if x)
                 carries[P.ref] = Carry(P.ref, sentences, items, P.stem, after)
 
     # an item that is no part at all (a whole question) can still point back by words
