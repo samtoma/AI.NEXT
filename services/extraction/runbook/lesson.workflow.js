@@ -227,7 +227,7 @@ function normTex(s) {
   t = t.replace(/\s+and\s+/g, ', ')                                      // a list's "and" is its comma (COLLECT-3: both sides)
   t = t.replace(/\\geq?(?![a-zA-Z])/g, '≥').replace(/\\leq?(?![a-zA-Z])/g, '≤').replace(/>=/g, '≥').replace(/<=/g, '≤')   // before the "&" goes: "-3&\le&k" (COLLECT-6)
   // a Greek letter's command is the sign it names, so the letter after it is not swallowed with it: "2\pi r" is not "2\pir" (COLLECT-6)
-  t = t.replace(/\\(pi|lambda|theta|alpha|beta|gamma|delta|mu|sigma|phi|omega)(?![a-zA-Z])/g, (_m, g) => GREEK[g])
+  t = t.replace(/\\pi(?!tchfork)/g, 'π').replace(/\\(lambda|theta|alpha|beta|gamma|delta|mu|sigma|phi|omega)(?![a-zA-Z])/g, (_m, g) => GREEK[g])
   t = t.replace(/&/g, '')                                                  // alignment markup, never maths (COLLECT-3)
   t = t.replace(/\{([A-Za-z])\}(?=[_^])/g, '$1')                          // {m}_{AB} is m_{AB} (COLLECT-3)
   t = t.replace(/\\(?:cdot|times)(?![a-zA-Z])/g, '*').replace(/[×·]/g, '*')
@@ -244,8 +244,10 @@ const stripLhs = (t) => t.replace(/^[A-Za-z]{1,4}(?:_(?:\{[A-Za-z0-9]+\}|[A-Za-z
 // a point's name before its coordinates: M(1,0) is the pair (1,0); only a name directly before ONE
 // parenthesised pair, so f(2) or 3(x+1) is never touched (COLLECT-3)
 const stripPointName = (t) => (/^[A-Za-z]{1,2}(?:_(?:\{[A-Za-z0-9]+\}|[A-Za-z0-9]))?\([^()]*,[^()]*\)$/.test(t) ? t.replace(/^[^(]+/, '') : t)
-// digits, letters and relations: what survives the PDF text layer's flattening of maths
-const sig = (s) => normTex(s).replace(/\\[a-zA-Z]+/g, '').replace(/[^0-9A-Za-z+\-=<>≤≥.]/g, '')
+// what survives the PDF text layer's flattening of maths: digits, letters (Greek ones too: a key with π is not a printed answer without it,
+// COLLECT-6) and relations
+const SIG_DROP = /[^0-9A-Za-zπλθαβγδμσφω+\-=<>≤≥.]/g
+const sig = (s) => normTex(s).replace(/\\[a-zA-Z]+/g, '').replace(SIG_DROP, '')
 
 // The PDF text layer flattens the book's raised multiplication dot to " . " between digits; this
 // book writes decimals with a comma, so there it is always a product.
@@ -291,7 +293,7 @@ function settleOne(a, b, textLayer) {
   if (na && sameForm(na, nb)) return { route: 'normalised', verdict: 'equivalent' }
   if (textLayer) {
     // the signature of each side, and of a named point's pair without its name ("T ( −1; 1 2 )")
-    const sigs = (n) => [...new Set([n, stripPointName(n)])].map((x) => x.replace(/\\[a-zA-Z]+/g, '').replace(/[^0-9A-Za-z+\-=<>≤≥.]/g, ''))
+    const sigs = (n) => [...new Set([n, stripPointName(n)])].map((x) => x.replace(/\\[a-zA-Z]+/g, '').replace(SIG_DROP, ''))
     const sa = sigs(na), sb = sigs(nb)
     if (sa[0] && sa.some((x) => sb.some((y) => sameForm(x, y)))) return { route: 'signature', verdict: 'equivalent' }
   }
@@ -325,7 +327,7 @@ const DECIMAL_COMMA = /(?<=\d),(?=\d|\\(?:overline|bar|dot|ddot)\s*\{?\s*\d)/g
 function valueList(s, textLayer) {
   const t = mathsSpan(textLayer ? printedTex(s) : s).replace(/\$/g, ' ').replace(/(\d)\{,\}(\d)/g, '$1.$2').replace(DECIMAL_COMMA, '.')
   const parts = t.split(/\s+or\s+|\s+and\s+|\\text\{\s*(?:or|and)\s*\}|;|,(?![^()]*\))/).map((x) => x.trim()).filter(Boolean)
-  const flat = (rest) => (textLayer ? rest.replace(/\\[a-zA-Z]+/g, '').replace(/[^0-9A-Za-z+\-=<>≤≥.]/g, '') : rest)
+  const flat = (rest) => (textLayer ? rest.replace(/\\[a-zA-Z]+/g, '').replace(SIG_DROP, '') : rest)
   const one = (x) => {
     const n = normTex(x), m = VALUE_LABEL.exec(n)
     const rest = m ? n.slice(m[0].length) : n

@@ -83,6 +83,35 @@ class Normalisations(unittest.TestCase):
             raw = json.loads(f.read_text())
             self.assertEqual(N.normalise(raw), (raw, []), f.name)
 
+    def test_a_one_sentence_mcq_is_marked_distinct_by_choices_and_its_first_item_does_not_change(self):
+        raw = {"format": "ainext.family/1", "id": "tpl:g10m1s3-1-2:pick-largest", "kind": "family",
+               "lo_id": "lo:g10m1s3-1-2", "parent_question_id": "q:g10m1s3-1-2:ex1-1-4a", "source_page": 9,
+               "tier": "basic", "answer_type": "mcq", "context": None,
+               "params": [{"name": "a", "randint": [2, 90]}],
+               "stem": "Which of the following is the largest number?",
+               "solution": ["The largest is ${=a + 40}$."],
+               "choices": {"correct": "${=a + 40}$", "distractors": [
+                   {"text": "${=a}$", "misconception_id": None}, {"text": "${=a + 1}$", "misconception_id": None},
+                   {"text": "${=a + 2}$", "misconception_id": None}]},
+               "notes": "Fixture: tests only."}
+        self.assertEqual(FS.check_spec(raw), [])
+        out, done = N.normalise(raw)
+        self.assertEqual([d.split(":")[0] for d in done], ["distinct-by-choices"])
+        self.assertIs(out["distinct_by_choices"], True)
+        self.assertEqual(FS.check_spec(out), [])
+        self.assertIn(N.MARK, out["notes"])
+        before, after = items(raw), items(out)
+        self.assertEqual(len(before), 1, "the family collapsed to one item")
+        self.assertGreater(len(after), 1)
+        self.assertEqual(after[0], before[0], "the item that was there is unchanged")
+        self.assertEqual(N.normalise(out), (out, []), "a normalised spec is a fixpoint")
+
+    def test_an_mcq_whose_stem_has_a_hole_is_left_to_its_author(self):
+        raw = load("g10m14s4-1-1--union.json")
+        self.assertEqual(raw["answer_type"], "mcq")
+        self.assertTrue(raw["stem"].count("{="))
+        self.assertEqual(N.normalise(raw), (raw, []))
+
     def test_an_author_error_is_not_normalised(self):
         # two named unknowns in a values marker: the marker sorts values, so t and b cannot be told apart —
         # a content decision, which goes back to the author

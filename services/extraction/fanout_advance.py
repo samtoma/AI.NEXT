@@ -1277,6 +1277,9 @@ def advance(run_id: str, wf: str, task_output: Path | None = None, opts: Opts | 
         if r is None:
             raise Refuse(f"{run_id}: not a run of the plan")
         kind = kind_of(run_id)
+        if run_id == "wcheck-ch08":
+            raise Refuse("wcheck-ch08 is finished (both sw-v3 passes saved as working-check/ch08-v3-A/B-…, flags in ch08.flags.json): "
+                         "nothing to advance")
         S = State(P, plan)
         rep["checkpoint"] = r.get("checkpoint")
         rec = find_record(wf)
@@ -1351,6 +1354,8 @@ def advance(run_id: str, wf: str, task_output: Path | None = None, opts: Opts | 
         if done and not opts.dry:
             S.ledger(run_id)["after_done"] = True
         running = parse_running(opts.running)
+        if opts.dry:                                 # nothing was saved: do not offer this very copy as launchable
+            running.add((run_id, cp.label or None))
         prepare_ready(P, S, fl, rep, running, opts)
         rep.update(ready_list(P, S, running, opts))
     except Refuse as e:
@@ -1410,7 +1415,6 @@ def cli_ready(a) -> int:
         except StepFailed as e:
             rep["failure"] = {"step": e.step, "detail": e.detail[-600:]}
         S = State(P, plan)
-        S.led.update(read_ledgers(P))
     out = ready_list(P, S, running, opts)
     if a.paths:
         print("\n".join(out["ready_scripts"]))

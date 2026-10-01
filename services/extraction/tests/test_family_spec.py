@@ -396,6 +396,105 @@ class TierFloorAndHandoffs(unittest.TestCase):
         self.assertEqual(used, {"mc:g10m14s4-1-1:and-for-or"})
 
 
+class ChapterOneEngineFixes(unittest.TestCase):
+    """What Chapter 1's S6 families needed of the engine, each pinned so it cannot quietly come back.
+
+    A recurring-decimal answer in the book's notation reads (and prints in the notation the stem asks for), a
+    number formatted in a ``let`` is still a number in a fixed-context stem, a multiple-choice family whose stem
+    is one sentence can say its options tell its instances apart, and a typed key is one the app's marker reads.
+    """
+
+    def mcq(self, stem, params, flag=None):
+        raw = {"format": "ainext.family/1", "id": "tpl:g10m1s3-1-2:pick-largest", "kind": "family",
+               "lo_id": "lo:g10m1s3-1-2", "parent_question_id": "q:g10m1s3-1-2:ex1-1-4a", "source_page": 9,
+               "tier": "basic", "answer_type": "mcq", "context": None, "params": params, "stem": stem,
+               "solution": ["The largest is ${=a + 40}$."],
+               "choices": {"correct": "${=a + 40}$", "distractors": [
+                   {"text": "${=a}$", "misconception_id": None}, {"text": "${=a + 1}$", "misconception_id": None},
+                   {"text": "${=a + 2}$", "misconception_id": None}]},
+               "notes": "Fixture: tests only."}
+        if flag is not None:
+            raw["distinct_by_choices"] = flag
+        return raw
+
+    def count(self, raw, n=10):
+        _, rejected, counts = run([FS.load_spec(raw)], n)
+        self.assertEqual(rejected, [])
+        return counts[raw["id"]]
+
+    def test_a_one_sentence_stem_is_one_item_unless_the_family_says_its_options_differ(self):
+        params = [{"name": "a", "randint": [2, 90]}]
+        stem = "Which of the following is the largest number?"
+        self.assertEqual(self.count(self.mcq(stem, params)), 1)
+        self.assertEqual(self.count(self.mcq(stem, params, False)), 1)
+        self.assertEqual(self.count(self.mcq(stem, params, True)), 10)
+
+    def test_a_reshuffle_of_the_same_options_is_still_a_duplicate(self):
+        raw = self.mcq("Which of the following is the largest number?", [{"name": "a", "choice": [3, 5]}], True)
+        self.assertEqual(self.count(raw), 2, "two option SETS, however the shuffle orders them")
+
+    def test_without_the_flag_a_family_keeps_the_items_and_ids_it_always_had(self):
+        # the stem names a (two values) but the options also draw r: filtered on the stem alone, two items;
+        # relaxing that for every family would shift the item ids of every shipped bank
+        params = [{"name": "a", "choice": [3, 5]}, {"name": "r", "randint": [1, 30]}]
+        raw = self.mcq("Which is the largest, counting from {=a}?", params)
+        raw["choices"]["distractors"][0]["text"] = "${=a + r}$"
+        self.assertEqual(self.count(raw), 2)
+        raw["distinct_by_choices"] = True
+        self.assertEqual(self.count(raw), 10)
+
+    def test_the_flag_belongs_to_an_mcq_family_and_is_a_boolean(self):
+        raw = load("g10m4s2-1-1--balance.json")
+        self.assertTrue(any("applies to an mcq family" in p for p in FS.check_spec(dict(raw, distinct_by_choices=True))))
+        self.assertEqual(FS.check_spec(dict(raw, distinct_by_choices=False)), [])
+        mcq = self.mcq("Which is largest?", [{"name": "a", "randint": [2, 9]}], "yes")
+        self.assertTrue(any("true or false" in p for p in FS.check_spec(mcq)))
+
+    def test_a_formatted_number_held_in_a_let_is_still_a_number_in_a_fixed_context(self):
+        raw = load("g10m9s2-1-1--interest.json")
+        raw["params"].insert(3, {"name": "price", "let": "fixed(P, 2)"})        # after P is drawn: "500.00"
+        raw["stem"] = raw["stem"].replace("R{=P}", "R{=price}")
+        qs, rejected, counts = run([FS.load_spec(raw)])
+        self.assertEqual(rejected, [])
+        self.assertEqual(counts[raw["id"]], 4)
+        # a word in a let is not: the existing guard still refuses it
+        word = load("g10m9s2-1-1--interest.json")
+        word["params"].insert(3, {"name": "who", "let": "'Lerato'"})
+        word["stem"] = word["stem"].replace("Thabo", "{=who}")
+        _, rejected, counts = run([FS.load_spec(word)])
+        self.assertEqual(counts[word["id"]], 0)
+        self.assertTrue(rejected and all("may vary only numbers" in r for r in rejected))
+
+    def test_a_recurring_marker_prints_its_key_in_the_notation_the_author_wrote(self):
+        self.assertEqual(FS.marker_key("recurring", r"9.2\dot{8}\dot{7}", []), r"9.2\dot{8}\dot{7}")
+        self.assertEqual(FS.marker_key("recurring", r"0.7\overline{592}", []), r"0.7\overline{592}")
+        self.assertEqual(FS.marker_key("recurring", "613/66", []), r"9.2\dot{8}\dot{7}")      # a fraction: dots
+        self.assertEqual(FS.marker_key("recurring", r"0.\overline{592}", []), r"0.\overline{592}")
+        self.assertEqual(FS.marker_key("recurring", "9 + 19/66", []), r"9.2\dot{8}\dot{7}")
+        with self.assertRaises(FS.E.EvalError):
+            FS.marker_key("recurring", "0.75", [])                                             # it stops: not recurring
+
+    def test_a_recurring_family_that_asks_for_a_decimal_carries_the_decimal_form(self):
+        raw = {"format": "ainext.family/1", "id": "tpl:g10m1s3-1-3:thirds", "kind": "family", "lo_id": "lo:g10m1s3-1-3",
+               "parent_question_id": "q:g10m1s3-1-3:ex1-1-11", "source_page": 12, "tier": "basic",
+               "answer_type": "expression", "context": None,
+               "params": [{"name": "a", "randint": [1, 8]}],
+               "stem": "Write $\\frac{{=a}}{9}$ in decimal form, using dot notation.",
+               "solution": ["Divide ${=a}$ by $9$: the digit ${=a}$ repeats."],
+               "marker": {"kind": "recurring", "answer": "0.\\dot{{=a}}", "form": "decimal", "variables": [],
+                          "tolerance": None},
+               "notes": "Fixture: tests only."}
+        qs, rejected, counts = run([FS.load_spec(raw)])
+        self.assertEqual(rejected, [], "the pipeline's own verifier knows the form the app and the schema know")
+        self.assertEqual(counts[raw["id"]], 4)
+        self.assertTrue(all(q["choices"]["marker"]["form"] == "decimal" for q in qs))
+        self.assertTrue(all(q["correct_answer"].startswith("0.\\dot{") for q in qs))
+
+    def test_the_values_key_is_a_plain_comma_the_apps_marker_reads(self):
+        self.assertEqual(FS.marker_key("values", "[7, 8]", []), "7, 8")
+        self.assertEqual(FS.marker_key("values", "[2, -3]", ["x"]), "x = 2 \\text{ or } x = -3")
+
+
 if __name__ == "__main__":
     unittest.main()
 
