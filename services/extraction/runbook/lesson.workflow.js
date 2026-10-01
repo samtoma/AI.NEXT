@@ -202,6 +202,14 @@ const ORACLE_SCHEMA = { type: 'object', required: ['verdict', 'subheadings'], pr
 //     "not rational" — settles nothing): the pair is `equivalent` (route "options") without a judge. The
 //     answer-bearing texts (the printed and the blind answer) must be words only: a number or maths in an answer
 //     ("2,82843; irrational") is a second part the option does not cover, so the judge reads it as before.
+//   * a FORM the marker kind cannot carry (g10m1s7-3, Ex1-9:11 "Factorise: 25x^3 + 1"; the key (\sqrt[3]{25}x+1)(…) typed kind
+//     "surd" with form "factorised", which AnswerSpec refuses: 'factorised' / 'expanded' apply to an expression or an equation, a
+//     subject form to an equation, and the whole lesson's G2 draft could not be written). When the key is plainly algebra in the
+//     declared variables (a variable in it, no list, inequality, set or words), the KIND is normalised: expression, or equation when
+//     the key has an "=". The key is kept exactly; the retype is recorded (`typing_retyped`, rule 'kind-for-form'). Where the kind
+//     cannot be settled that way (an interval, coordinates, a list of values, no variable in the key) the item keeps a typing
+//     problem naming the form and the kind, so it is held for G2 instead of crashing the split. The app's marker reads a surd
+//     inside an `expression` key (tests/test_typing_seam.py runs it on this very key).
 const norm = (s) => String(s || '').normalize('NFKC').replace(/[−–—]/g, '-').replace(/[“”]/g, '"').replace(/[’‘]/g, "'")
   .replace(/\$/g, '').replace(/\s+/g, ' ').trim().toLowerCase()
 const contains = (hay, needle) => { const n = norm(needle); return n.length >= 8 && norm(hay).includes(n) }
@@ -610,6 +618,37 @@ function choiceProblems(it, t, lessonText) {
   return { opts, at, problems, invented: closed.length > 0 || opts.length > 5 || opts.length < 2 || at < 0 }
 }
 
+// A form the marker kind cannot carry (collect-6): the coherence rules of schemas.AnswerSpec, with its words. 'simplest' fits any
+// kind (the app's marker marks a surd under it), so it is never a problem here.
+function formKindProblem(form, kind) {
+  if (!form) return null
+  if (typeof form === 'object') return kind === 'equation' ? null : 'a subject form needs marker kind "equation" (the app\'s marker)'
+  if ((form === 'factorised' || form === 'expanded') && kind !== 'expression' && kind !== 'equation') {
+    return `form '${form}' applies to an expression or an equation, not to kind '${kind}'`
+  }
+  if (form === 'decimal' && !['expression', 'recurring', 'values'].includes(kind)) {
+    return `form 'decimal' applies to a number, a recurring decimal or values, not to kind '${kind}'`
+  }
+  return null
+}
+// The kind a form needs, where the KEY says so: plainly algebra in the declared variables. Not a list ("2; 3", "x=2 or x=3"), an
+// inequality or interval, a set, a coordinate pair, a sentence; never an interval or a pair of coordinates by kind. Returns
+// 'expression' | 'equation' | null (null: leave the problem to G2). The key itself is never touched.
+function kindForForm(t, form) {
+  if (t.marker_kind === 'interval' || t.marker_kind === 'coordinates') return null
+  const key = String(t.key || '')
+  const vars = (t.variables || []).filter((v) => typeof v === 'string' && v)
+  if (!vars.length) return null
+  if (/[<>;]|\\(?:le|ge|leq|geq|ne|neq|in|cup|cap)(?![a-zA-Z])|\\[{}]|\\(?:text|mbox|mathrm|textrm)\{|\b(?:or|and)\b/.test(key)) return null
+  const bare = key.replace(/\\[a-zA-Z]+/g, ' ')                        // LaTeX command names are not variables
+  const has = (v) => (v.startsWith('\\') ? key.includes(v) : bare.includes(v))   // "xy", "jkl": juxtaposed variables
+  if (!vars.some(has)) return null
+  const eq = (key.match(/=/g) || []).length
+  if (eq > 1) return null
+  if (typeof form === 'object') return eq === 1 ? 'equation' : null    // "make x the subject" is of an equation
+  return eq === 1 ? 'equation' : 'expression'
+}
+
 function checkTyping(it, t, lessonText) {
   const problems = []
   if (!t) return { problems: ['typing returned nothing'] }
@@ -659,8 +698,16 @@ function checkTyping(it, t, lessonText) {
       typed.form_overridden = { typing: form, book_rule: it.asked_form }; form = { subject: it.asked_form.subject }
     }
     if (form && typeof form === 'string' && !APP_FORMS.includes(form)) { problems.push(`form "${form}" is not one the app's marker knows`); form = null }
-    if (form && typeof form === 'object' && t.marker_kind !== 'equation') problems.push('a subject form needs marker kind "equation" (the app\'s marker)')
-    typed.marker = { kind: t.marker_kind, key: t.key, form, variables: t.variables || [], tolerance: null }
+    // collect-6 (Ex1-9:11): a form the kind cannot carry. The key is algebra in the variables → the kind is normalised (expression, or
+    // equation) and the retype recorded; otherwise the item carries the problem, so it is held (schemas.AnswerSpec would refuse it)
+    let kind = t.marker_kind
+    const formWhy = MARKER_KINDS.includes(kind) ? formKindProblem(form, kind) : null
+    if (formWhy) {
+      const to = kindForForm(t, form)
+      if (to) { typed.retyped = { from: `expression (${kind})`, as: `expression (${to})`, rule: 'kind-for-form', form, because: [formWhy] }; kind = to }
+      else problems.push(formWhy)
+    }
+    typed.marker = { kind, key: t.key, form, variables: t.variables || [], tolerance: null }
     typed.answer = t.key
   } else if (!t.not_markable_reason) problems.push('not_markable without a reason')
   if (it.asked_form === 'prime_factors' && t.answer_type !== 'expression' && t.answer_type !== 'not_markable') {
@@ -1003,8 +1050,9 @@ async function runLesson(L) {
       printed_not_in_asked_form: items.filter((i) => i.printed_form_defect).map((i) => ({ ref: i.ref, printed: i.printed_answer, ...i.printed_form_defect })),
       forms_from_book_rules: items.filter((i) => i.asked_form).map((i) => ({ ref: i.ref, form: i.asked_form, overridden: i.form_overridden })),
       forms_the_marker_cannot_check: items.filter((i) => i.form_unsupported).map((i) => ({ ref: i.ref, form: i.form_unsupported, printed: i.printed_answer })),
-      // collect-6: a choice whose options were the typing agent's inventions, typed again from the book's printed key
-      retyped: items.filter((i) => i.typing_retyped).map((i) => ({ ref: i.ref, as: i.typing_retyped.as, key: (i.marker && i.marker.key) || i.answer, because: i.typing_retyped.because })),
+      // collect-6: a choice whose options were the typing agent's inventions, typed again from the book's printed key; or a marker kind a
+      // form cannot apply to (rule 'kind-for-form': the key is kept exactly)
+      retyped: items.filter((i) => i.typing_retyped).map((i) => ({ ref: i.ref, as: i.typing_retyped.as, rule: i.typing_retyped.rule, key: (i.marker && i.marker.key) || i.answer, because: i.typing_retyped.because })),
       tier_checks: (s3 && s3.tier_checks) || [],
     },
     figure_blocked: items.filter((i) => i.blocked_on_figure).map((i) => i.ref),
