@@ -584,9 +584,35 @@ function figureOptionProblems(it, opts) {
   return problems
 }
 
-function checkTyping(it, t) {
+// a choice's own problems (collect-6) and whether the OPTIONS are the typing agent's inventions rather than the book's
+function choiceProblems(it, t, lessonText) {
+  const opts = (t.options || []).filter((o) => o && o.trim())
+  const at = opts.findIndex((o) => norm(o) === norm(t.key))
+  const problems = []
+  if (opts.length < 2 || at < 0) problems.push('a choice needs 2–5 options with the key among them')
+  if (opts.length > 5) problems.push(`a choice needs 2–5 options, not ${opts.length}: a list in the stem to select from is not a choice`)
+  if (new Set(opts.map((o) => norm(o))).size !== opts.length) problems.push('a choice\'s options repeat')
+  if (t.options_source === 'stem' && opts.some((o) => !norm(it.stem).includes(norm(o)))) problems.push('options said to be the stem\'s are not all in the stem')
+  if (t.options_source === 'figure') problems.push(...figureOptionProblems(it, opts))
+  const closed = t.options_source === 'lesson' ? closedSetProblems(it, opts, lessonText) : []
+  problems.push(...closed)
+  return { opts, at, problems, invented: closed.length > 0 || opts.length > 5 || opts.length < 2 || at < 0 }
+}
+
+function checkTyping(it, t, lessonText) {
   const problems = []
   if (!t) return { problems: ['typing returned nothing'] }
+  // collect-6: a choice whose options are not the book's is typed again from the key, where the key is plainly a number or numbers
+  if (t.answer_type === 'choice') {
+    const c = choiceProblems(it, t, lessonText || '')
+    const re = c.invented ? retypeFromKey(t) : null
+    if (re) {
+      const r = checkTyping(it, re.t, lessonText)
+      r.typed.retyped = { from: 'choice', as: re.rule === 'numeric' ? 'numeric' : 'expression (values)', rule: re.rule, options_source: t.options_source || null,
+        options: c.opts, because: c.problems.filter((p) => !/^a choice needs 2–5 options with the key/.test(p)).concat(c.opts.length < 2 || c.at < 0 ? ['the key is not among the options'] : []) }
+      return r
+    }
+  }
   if (t.book_final && !inBookSolution(it.solution, t.book_final)) problems.push('book_final is not in the book solution')
   if (!t.book_final && t.answer_type !== 'not_markable') problems.push('no book_final')
   const typed = { answer_type: t.answer_type, answer: null, choices: null, marker: null, unit: t.unit || null, options_source: null }
@@ -598,13 +624,11 @@ function checkTyping(it, t) {
     typed.answer = String(t.key).replace(/\\(?:text|mathrm|textrm|mbox)\{([^{}]*)\}/g, '$1')
       .replace(/\s*[A-Za-z%°][A-Za-z%°0-9\s]*$/, '').replace(/\$/g, '').trim()
   } else if (t.answer_type === 'choice') {
-    const opts = (t.options || []).filter((o) => o && o.trim())
-    const at = opts.findIndex((o) => norm(o) === norm(t.key))
-    if (opts.length < 2 || at < 0) problems.push('a choice needs 2–5 options with the key among them')
-    if (t.options_source === 'stem' && opts.some((o) => !norm(it.stem).includes(norm(o)))) problems.push('options said to be the stem\'s are not all in the stem')
-    if (t.options_source === 'figure') problems.push(...figureOptionProblems(it, opts))
-    typed.choices = opts.map((o, k) => ({ key: 'ABCDE'[k], text: o }))
-    typed.answer = at >= 0 ? 'ABCDE'[at] : null
+    const c = choiceProblems(it, t, lessonText || '')
+    problems.push(...c.problems)
+    // every option keyed (collect-6: 'ABCDE'[5] was undefined, an option without a key)
+    typed.choices = c.opts.map((o, k) => ({ key: LETTERS[k], text: o }))
+    typed.answer = c.at >= 0 ? LETTERS[c.at] : null
     typed.options_source = t.options_source || null
   } else if (t.answer_type === 'expression') {
     if (!MARKER_KINDS.includes(t.marker_kind)) problems.push(`marker kind "${t.marker_kind}" is not one of ${MARKER_KINDS.join(', ')}`)
@@ -640,6 +664,7 @@ function checkTyping(it, t) {
     if (against && !(settle(t.key, against, !!it.printed_answer).verdict === 'equivalent' ||
       (t.answer_type === 'expression' && t.marker_kind === 'values' && sameValues(t.key, against, !!it.printed_answer)) ||
       (t.answer_type === 'numeric' && numOf(typed.answer) !== null && numOf(typed.answer) === numOf(against)) ||
+      (t.answer_type === 'expression' && t.marker_kind === 'values' && betweenEnds(it.stem, against, t.key)) ||
       (t.answer_type === 'choice' && norm(against).includes(norm(t.key))))) {
       problems.push(`the key "${t.key}" does not read as the ${it.printed_answer ? 'printed answer' : 'book final answer'} "${against}"`)
     }
@@ -650,6 +675,8 @@ function checkTyping(it, t) {
 async function runS3(L) {
   const s = L.slug
   const items = s3Items(L)
+  // what the lesson itself says (collect-6): the closed set an option may come from
+  const lessonText = [...L.blocks.map((b) => b.text), ...L.worked_examples.map((w) => `${w.title} ${w.stem} ${w.solution.join(' ')}`)].join(' ')
   const typingBatches = chunk(items, OPT.typing_batch)
   const blindBatches = chunk(items, OPT.blind_batch)
   const sampled = items.filter((it) => fnv(`${s}:${it.ref}`) % OPT.tier_sample_every === 0)
@@ -692,7 +719,7 @@ async function runS3(L) {
 
   // three-way comparison: settle deterministically what can be, send the rest to the judge
   const rows = items.map((it) => {
-    const { typed, problems } = checkTyping(it, typing[it.ref])
+    const { typed, problems } = checkTyping(it, typing[it.ref], lessonText)
     const t = typing[it.ref] || {}
     const b = blind[it.ref]
     const blindAns = b && b.markable !== false && b.final_answer ? b.final_answer : null
@@ -722,6 +749,33 @@ async function runS3(L) {
     }
     if (bothNotMarkable) {
       for (const p of pairs) if (/^.+\|blind~/.test(p.pair_id)) Object.assign(p, { route: 'not_markable', verdict: 'equivalent', reason: 'typing and the blind solver agree it has no answer to mark' })
+    }
+    // collect-6: a verbal choice settles by the option each source names (no judge). The printed and the blind answer must be
+    // words only; the book side is the solution's own text (digits and maths allowed in its explanation), so a typing agent's
+    // faulty copy of the book's final does not hold the item up when the solution itself names the key option.
+    if (typed && typed.answer_type === 'choice' && typed.answer && typed.choices && typed.choices.length >= 2 &&
+        typed.choices.length <= 5 && typed.choices.every((c) => isCategory(c.text)) && !figureWithheld) {
+      const opts = typed.choices.map((c) => c.text)
+      const kIdx = typed.choices.findIndex((c) => c.key === typed.answer)
+      const says = (x) => wordsOnly(x) && namesOnly(x, opts, kIdx)
+      const bookSays = namesOnly(it.solution.join(' '), opts, kIdx)
+      const same = { route: 'options', verdict: 'equivalent', reason: `both name only "${opts[kIdx]}"` }
+      let bookSettled = false
+      for (const p of pairs) {
+        if (p.verdict === 'equivalent') continue
+        const id = p.pair_id.split('|')[1]
+        const ok = id === 'blind~printed' ? says(blindAns) && says(it.printed_answer)
+          : id === 'blind~book' ? says(blindAns) && bookSays
+          : id === 'book~printed' ? bookSays && says(it.printed_answer) : false
+        if (ok) { Object.assign(p, same); if (id !== 'blind~printed') bookSettled = true }
+      }
+      // the typing agent's copy of the book's final was no use, but the solution names the key option: nothing is missing
+      if (bookSettled && !bookFinal && !pairs.some((p) => p.verdict === 'missing')) {
+        const k = problems.indexOf('book_final is not in the book solution')
+        if (k >= 0) problems.splice(k, 1)
+        const m = missing.indexOf('book_final is not in the book solution')
+        if (m >= 0) missing.splice(m, 1)
+      }
     }
     return { it, typed, problems, t, blindAns, bookFinal, pairs, missing, figureWithheld }
   })
@@ -779,6 +833,7 @@ async function runS3(L) {
       printed_answer_scope: it.printed_answer_scope || null, figures: it.figures, figures_missing: it.figures_missing || [],
       asked_form: it.asked_form, printed_form_defect: it.printed_form_defect, form_overridden: (typed && typed.form_overridden) || null,
       form_unsupported: formUnsupported,
+      ...(typed && typed.retyped ? { typing_retyped: typed.retyped } : {}),
     })
   }
   return { items: out, tier_checks: tierChecks, off_task: offTask }
@@ -921,6 +976,8 @@ async function runLesson(L) {
       printed_not_in_asked_form: items.filter((i) => i.printed_form_defect).map((i) => ({ ref: i.ref, printed: i.printed_answer, ...i.printed_form_defect })),
       forms_from_book_rules: items.filter((i) => i.asked_form).map((i) => ({ ref: i.ref, form: i.asked_form, overridden: i.form_overridden })),
       forms_the_marker_cannot_check: items.filter((i) => i.form_unsupported).map((i) => ({ ref: i.ref, form: i.form_unsupported, printed: i.printed_answer })),
+      // collect-6: a choice whose options were the typing agent's inventions, typed again from the book's printed key
+      retyped: items.filter((i) => i.typing_retyped).map((i) => ({ ref: i.ref, as: i.typing_retyped.as, key: (i.marker && i.marker.key) || i.answer, because: i.typing_retyped.because })),
       tier_checks: (s3 && s3.tier_checks) || [],
     },
     figure_blocked: items.filter((i) => i.blocked_on_figure).map((i) => i.ref),
