@@ -430,7 +430,9 @@ def build_runs(inv: dict) -> list[dict]:
                     f"AINEXT_DB_DSN=\"{DSN}\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json "
                     f"seed/g10-math/g10m-c{ch:02d}.json --course course:us-g10-math-en",
                     f"AINEXT_DB_DSN=\"{DSN}\" AINEXT_ENVIRONMENT=mvp1 uv run apply_review_verdicts.py --g2 runs/g10-math/g2-{t}.json "
-                    f"--book g10-math --runs runs/g10-math/lesson"]
+                    f"--book g10-math --runs runs/g10-math/lesson",
+                    f"# then list the chapter in runs/g10-math/fanout/loaded/g10-math.json (\"bundles\": seed/g10-math/g10m-c{ch:02d}.json, in chapter "
+                    "order): the config G5's parity reads — every bundle that is in the pilot DB (`fanout.py advance` does it)"]
         add(id=f"wcheck-{t}", stage="SW", chapter=ch, workflow="working-check.workflow.js (sw-v3, two passes A and B)",
             what=f"the step-level working checker on chapter {ch}'s ≈ {c['solutions']} solutions: two independent blind "
                  f"passes (A, then B reshuffled), {W.BATCH} solutions per agent, effort {W.EFFORT}, offered figures read in "
@@ -523,14 +525,20 @@ def build_runs(inv: dict) -> list[dict]:
                    "course:us-g10-math-en --sample 10 --seed 20260926 --catalogue-only (the pilot's flags: the sample is the review queue "
                    "G3 reads) against the fan-out DB; `fanout.py advance` runs it as a --dry-run (structure) first, after a fresh pg_dump",
                    f"uv run auto_pass_gates.py g3 g10-math --chapter {ch} --queue {gen}/generated-questions.review-queue.json "
-                   f"--queue {gen}/widget-questions.review-queue.json --widgets {gen}/widget-questions.json   # G3 AUTO-PASS (runbook §7b); "
+                   f"[--queue {gen}/widget-questions.review-queue.json --widgets {gen}/widget-questions.json] "
+                   f"--widget-gaps coverage/g10-math.{t}.widget-gaps.json   # G3 AUTO-PASS (runbook §7b); the bracket only when the chapter has a "
+                   f"widget bundle; --widget-gaps signs the chapter-scope widget gaps as auto-pass G3 (in place), so G3 runs BEFORE coverage; "
                    f"then: AINEXT_DB_DSN=\"{DSN}\" uv run apply_review_verdicts.py runs/g10-math/g3-{t}.auto.json (adds to ai_checked_by)",
                    f"uv run auto_pass_gates.py g4 g10-math --chapter {ch} --catalogue {gen}/misconceptions.json "
                    f"--s5 runs/g10-math/misconceptions/final-{t}-<wf_id>.json   # G4 AUTO-PASS: a record of what S5 kept",
                    f"uv run coverage_report.py --book {cfg} --chapter {ch} --maths runs/g10-math/maths/book/summary.json "
                    f"--widget-gaps coverage/g10-math.{t}.widget-gaps.json --s5 runs/g10-math/misconceptions/final-{t}-<wf_id>.json "
                    f"--generated {gen} --out coverage/g10-math.{t}.json   # --generated: without it the report reads the pilot's top-level bundles",
-                   f"uv run parity_check.py --candidate \"{DSN}\" --all-courses"],
+                   f"uv run parity_check.py --candidate \"{DSN}\" --all-courses",
+                   f"AINEXT_DB_DSN=\"{DSN}\" uv run auto_pass_gates.py g5 g10-math --chapter {ch} --coverage coverage/g10-math.{t}.json "
+                   "--book-config runs/g10-math/fanout/loaded/g10-math.json   # G5 AUTO-PASS: the go/no-go (exit 1 = NO-GO). That config lists "
+                   f"every bundle in the pilot DB (the loaded set), so parity checks the whole loaded course; the chapter's seed/g10-math/g10m-c{ch:02d}.json "
+                   "joins it when the chapter loads (`fanout.py advance` does that at the S5 draft's load step)"],
             checkpoint=("chapter 1 complete: its whole cost against the estimate, coverage, parity, the console backlog — "
                         "go / no-go for the remaining 12 chapters") if i == 0 else None)
     return runs

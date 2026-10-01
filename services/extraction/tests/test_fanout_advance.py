@@ -1201,8 +1201,9 @@ class S5Final(Base):
 
     def test_g5_no_go_stops_the_advance_with_the_gates_blocked_lines(self):
         b = self.box
-        self.ex.rules["auto_pass_gates.py"], keep = (lambda argv: A.Result(1, "G5 auto-pass (ch04): NO-GO\n  BLOCKED parity RED for course:us-g10-math-en: modules 2 != 3\n")
-                                                     if argv[1] == "g5" else keep_rule(argv)), None
+        orig = self.ex.rules["auto_pass_gates.py"]
+        self.ex.on("auto_pass_gates.py", lambda argv: A.Result(1, "G5 auto-pass (ch04): NO-GO\n  BLOCKED parity RED for course:us-g10-math-en: modules 2 != 3\n")
+                   if argv[1] == "g5" else orig(argv))
         rc, rep, wf = b.go("s5-final-ch04", result={"stage": "final"})
         self.assertEqual(rc, 1)
         self.assertEqual(rep["failure"]["step"], "G5 auto-pass")
@@ -1523,10 +1524,6 @@ class RealPlan(unittest.TestCase):
         self.assertTrue(by["s7-author-ch03"]["after"][0].startswith("uv run generate_widget_questions.py --merge-author-runs "
                                                                     "runs/g10-math/widgets/author-ch03-<wf_id>.json --merged "
                                                                     "runs/g10-math/widgets/author-merged-ch03.json --write-templates widgets/g10-math/ch03"))
-
-
-def keep_rule(argv):
-    return A.Result(0, "")
 
 
 SUBCOMMANDS = {"assemble", "approve", "lesson-runs", "collect", "record", "g1", "g2", "g3", "g4", "g5"}
