@@ -13,11 +13,11 @@
    "op2": "Divide all three parts by $-2$ and turn both signs around, because you are dividing by a negative number",
    "s2": "3 \\ge x > -1",
    "s3": "-1 < x \\le 3",
-   "from": -1,
    "to": 3,
    "openFrom": true,
    "openTo": false,
-   "marks": "The circle goes with the number, not with the side of the line: $x > -1$ leaves $-1$ out (hollow circle) and $x \\le 3$ keeps $3$ in (filled circle)."
+   "marks": "The circle goes with the number, not with the side of the line: $x > -1$ leaves $-1$ out (hollow circle) and $x \\le 3$ keeps $3$ in (filled circle).",
+   "from_v": -1
   },
   {
    "ineq": "0 \\le 3 - 3x < 9",
@@ -26,11 +26,11 @@
    "op2": "Divide all three parts by $-3$ and turn both signs around, because you are dividing by a negative number",
    "s2": "1 \\ge x > -2",
    "s3": "-2 < x \\le 1",
-   "from": -2,
    "to": 1,
    "openFrom": true,
    "openTo": false,
-   "marks": "The circle goes with the number, not with the side of the line: $x > -2$ leaves $-2$ out (hollow circle) and $x \\le 1$ keeps $1$ in (filled circle)."
+   "marks": "The circle goes with the number, not with the side of the line: $x > -2$ leaves $-2$ out (hollow circle) and $x \\le 1$ keeps $1$ in (filled circle).",
+   "from_v": -2
   },
   {
    "ineq": "-3 < 2 - x \\le 4",
@@ -39,11 +39,11 @@
    "op2": "Divide all three parts by $-1$ and turn both signs around, because you are dividing by a negative number",
    "s2": "5 > x \\ge -2",
    "s3": "-2 \\le x < 5",
-   "from": -2,
    "to": 5,
    "openFrom": false,
    "openTo": true,
-   "marks": "The circle goes with the number, not with the side of the line: $x \\ge -2$ keeps $-2$ in (filled circle) and $x < 5$ leaves $5$ out (hollow circle)."
+   "marks": "The circle goes with the number, not with the side of the line: $x \\ge -2$ keeps $-2$ in (filled circle) and $x < 5$ leaves $5$ out (hollow circle).",
+   "from_v": -2
   },
   {
    "ineq": "0 < 8 - 4x \\le 12",
@@ -52,11 +52,11 @@
    "op2": "Divide all three parts by $-4$ and turn both signs around, because you are dividing by a negative number",
    "s2": "2 > x \\ge -1",
    "s3": "-1 \\le x < 2",
-   "from": -1,
    "to": 2,
    "openFrom": false,
    "openTo": true,
-   "marks": "The circle goes with the number, not with the side of the line: $x \\ge -1$ keeps $-1$ in (filled circle) and $x < 2$ leaves $2$ out (hollow circle)."
+   "marks": "The circle goes with the number, not with the side of the line: $x \\ge -1$ keeps $-1$ in (filled circle) and $x < 2$ leaves $2$ out (hollow circle).",
+   "from_v": -1
   }
  ],
  "spec": {
@@ -65,7 +65,7 @@
    -8,
    8
   ],
-  "from": "{=from}",
+  "from": "{=from_v}",
   "to": "{=to}",
   "openFrom": "{=openFrom}",
   "openTo": "{=openTo}"
@@ -75,7 +75,7 @@
   "Whatever you do to one part of a double inequality you must do to all three parts, so that both inequalities stay true together.",
   "{=op1}: ${=ineq}$ becomes ${=s1}$.",
   "{=op2}: ${=s1}$ becomes ${=s2}$.",
-  "Read it from the smaller number up: ${=s3}$. So the solution starts at ${=from}$ and ends at ${=to}$.",
+  "Read it from the smaller number up: ${=s3}$. So the solution starts at ${=from_v}$ and ends at ${=to}$.",
   "{=marks}"
  ],
  "diagnostics": [
@@ -88,5 +88,5 @@
    "misconception_id": "mc:g10m4s7-1-3:operate-on-middle-only"
   }
  ],
- "notes": "Every instance has a negative coefficient AND one $<$ with one $\\le$, by design. Dividing by the negative number gives the right two endpoints either way, so the reversal error can only show as wrong circles: a student who leaves the signs in their original order writes the numbers in ascending order but keeps the left sign on the left and the right sign on the right, giving the opposite circles with the right endpoints. Signature of negative-no-reverse per row (right endpoints, circles swapped): [-1, 3), [-2, 1), (-2, 5], (-1, 2]. A both-open or both-closed instance would hide the error entirely and is excluded. LIMIT: the line grades the finished interval, not the working, so a student who divides without reversing but then keeps each circle with its own number draws the correct picture and passes undetected; only the circle-swapped version is visible. endpoint-inclusion-wrong can also be an ordinary hollow/filled slip; it is mapped to negative-no-reverse because the mixed-sign, negative-coefficient design makes that the dominant cause. Signature of operate-on-middle-only (constant removed from the middle only, then every part divided): (-3, 1], (-3, 0], [-4, 3), [-3, 0). interval-wrong is also fired by sign slips in the quotient (for example a mirrored interval) and by arithmetic slips; those are named here and not separately mapped, since no misconception on this objective describes them."
+ "notes": "Every instance has a negative coefficient AND one $<$ with one $\\le$, by design. Dividing by the negative number gives the right two endpoints either way, so the reversal error can only show as wrong circles: a student who leaves the signs in their original order writes the numbers in ascending order but keeps the left sign on the left and the right sign on the right, giving the opposite circles with the right endpoints. Signature of negative-no-reverse per row (right endpoints, circles swapped): [-1, 3), [-2, 1), (-2, 5], (-1, 2]. A both-open or both-closed instance would hide the error entirely and is excluded. LIMIT: the line grades the finished interval, not the working, so a student who divides without reversing but then keeps each circle with its own number draws the correct picture and passes undetected; only the circle-swapped version is visible. endpoint-inclusion-wrong can also be an ordinary hollow/filled slip; it is mapped to negative-no-reverse because the mixed-sign, negative-coefficient design makes that the dominant cause. Signature of operate-on-middle-only (constant removed from the middle only, then every part divided): (-3, 1], (-3, 0], [-4, 3), [-3, 0). interval-wrong is also fired by sign slips in the quotient (for example a mirrored interval) and by arithmetic slips; those are named here and not separately mapped, since no misconception on this objective describes them. PIPELINE NORMALISATION (2026-10-01, orchestrator): instance field 'from' renamed 'from_v' and every {=from} → {=from_v}, because 'from' is a reserved word in the template expression language ('cannot parse from'); values unchanged."
 }
