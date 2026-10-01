@@ -1642,6 +1642,40 @@ def no_diagnostic_gap(tid: str, o: dict, module: str | None, source: str) -> dic
             "source": source, "signed_off": None}
 
 
+def add_no_diagnostic_gaps(report: dict, orphaned: dict[str, dict], module_of: dict[str, str], kept: list[dict],
+                           source: str) -> dict:
+    """A gap report (`gap_report`) told afterwards that these templates were not shipped — what the assembler's bundle
+    pass does when S5's refusals leave a widget with no diagnostic (`assemble_misconceptions.py
+    --drop-undiagnosed-widgets`). A new report: one `no-diagnostic` gap per template (never twice), and the chapters
+    they touch recounted from `kept`, the widget questions the bundle still holds. A chapter left with none becomes an
+    uncovered chapter and its gaps chapter-scope (a human signs those); no other chapter is touched."""
+    rep = json.loads(json.dumps(report))
+    have = {(g.get("lo_id"), g.get("need_kind"), g.get("description")) for g in rep.get("gaps", [])}
+    touched: set = set()
+    for tid, o in sorted(orphaned.items()):
+        g = no_diagnostic_gap(tid, o, module_of.get(o["lo_id"]), source)
+        if (g["lo_id"], g["need_kind"], g["description"]) not in have:
+            rep.setdefault("gaps", []).append(g)
+            touched.add(g["module"])
+    for c in rep.get("chapters", []):
+        if c["module"] not in touched:
+            continue
+        ws = [q for q in kept if module_of.get(q["lo_id"]) == c["module"]]
+        c.update({"status": "covered" if ws else "gap", "widgets": len(ws),
+                  "kinds": sorted({q["choices"]["kind"] for q in ws}),
+                  "objectives_with_widgets": sorted({q["lo_id"] for q in ws}),
+                  "gaps": sum(1 for g in rep["gaps"] if g.get("module") == c["module"])})
+        if ws:
+            rep["uncovered_chapters"] = [m for m in rep.get("uncovered_chapters", []) if m != c["module"]]
+        elif c["module"] not in rep.get("uncovered_chapters", []):
+            rep.setdefault("uncovered_chapters", []).append(c["module"])
+    uncovered = set(rep.get("uncovered_chapters", []))
+    for g in rep.get("gaps", []):
+        if g.get("module") in touched:
+            g["scope"] = "chapter" if g["module"] in uncovered else "lesson"
+    return rep
+
+
 def gap_report(book: str, course: str, graph, questions: list[dict], gap_files: list[Path],
                previous: dict | None = None, orphaned: dict[str, dict] | None = None) -> dict:
     """coverage/<book>.widget-gaps.json: every chapter, its widgets, and every gap (FR-4306).

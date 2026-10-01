@@ -404,10 +404,26 @@ def prerequisites(bundle_paths: list[Path]) -> dict[str, set[str]]:
     return out
 
 
+def module_of_los(bundle_paths: list[Path]) -> dict[str, str]:
+    """{objective: its module}, from SeedBundles' `teaches` edges (module -> objective)."""
+    out: dict[str, str] = {}
+    for p in bundle_paths:
+        for e in json.loads(Path(p).read_text()).get("edges") or []:
+            if e.get("type") == "teaches" and str(e.get("src", "")).startswith("module:"):
+                out[e["dst"]] = e["src"]
+    return out
+
+
 def reconcile_bundle(bundle: dict, entries: dict[str, dict], alias_of: dict[str, str],
-                     unfit: list[dict] = (), prereqs: dict[str, set[str]] | None = None
-                     ) -> tuple[dict, list[str], list[str], set[int]]:
+                     unfit: list[dict] = (), prereqs: dict[str, set[str]] | None = None,
+                     dropped: list | None = None) -> tuple[dict, list[str], list[str], set[int]]:
     """(bundle with every tag resolved, log lines, errors, indexes of `unfit` it applied). Pure.
+
+    `dropped`: by default a widget left with no diagnostic (active or held) is an ERROR. Given a list, such a widget
+    is REMOVED from the bundle instead and appended to it as {question_id, family, lo_id, stripped: [(predicate,
+    misconception id)]}; a template left with no widget leaves the bundle's `templates` and is named in its
+    `rejected_templates`. Never a way to ship one: only a way to leave one out, which the caller must record as a
+    gap (`generate_widget_questions.add_no_diagnostic_gaps`).
 
     Every tag must name a verified entry, directly or through an alias, of the question's own
     objective (FR-1106) — or, for a widget diagnostic, of one of its transitive prerequisites
@@ -421,6 +437,7 @@ def reconcile_bundle(bundle: dict, entries: dict[str, dict], alias_of: dict[str,
     applied: set[int] = set()
     out = json.loads(json.dumps(bundle))
     referenced: set[str] = set()
+    gone: set[str] = set()        # widgets dropped for want of a diagnostic (`dropped`)
 
     def resolve(qid: str, lo: str, mid: str | None, where: str, widget: bool = False) -> str | None:
         target = mid if mid in entries else alias_of.get(mid or "")
@@ -477,7 +494,7 @@ def reconcile_bundle(bundle: dict, entries: dict[str, dict], alias_of: dict[str,
                     c["misconception_id"] = t
                     referenced.add(t)
         elif isinstance(ch, dict) and isinstance(ch.get("diagnostics"), list):
-            kept = []
+            kept, lost = [], []
             for d in ch["diagnostics"]:
                 p = d.get("predicate")
                 t = resolve(qid, lo, d.get("misconception_id"), f"predicate {p}", widget=True)
@@ -487,22 +504,46 @@ def reconcile_bundle(bundle: dict, entries: dict[str, dict], alias_of: dict[str,
                 if t is not None:
                     kept.append({**d, "misconception_id": t})
                     referenced.add(t)
+                else:
+                    lost.append((p, d.get("misconception_id")))
             ch["diagnostics"] = kept
             held = []
             for d in ch.get("pending_review") or []:   # decision 47: held mappings follow the catalogue too
                 t = resolve(qid, lo, d.get("misconception_id"), f"held predicate {d.get('predicate')}", widget=True)
                 if t is not None and is_unfit(q, t, predicate=d.get("predicate")):
                     log.append(f"drop held {qid} predicate {d.get('predicate')}: the verifier judged it does not encode {t}")
+                    lost.append((d.get("predicate"), d.get("misconception_id")))
                 elif t is not None:
                     held.append({**d, "misconception_id": t})
+                else:
+                    lost.append((d.get("predicate"), d.get("misconception_id")))
             if "pending_review" in ch:
                 if held:
                     ch["pending_review"] = held
                 else:
                     del ch["pending_review"]
             if not kept and not held:
-                errors.append(f"{qid}: widget left with no diagnostic — it could mark an answer wrong and "
-                              f"never say why (ADR-0009). S7 must re-author it or drop it")
+                if dropped is not None and lost:
+                    log.append(f"DROP WIDGET {qid}: left with no diagnostic once the refused mappings are gone "
+                               f"({', '.join(f'{p} → {m}' for p, m in lost)}); recorded as a widget gap")
+                    dropped.append({"question_id": qid, "family": q.get("family"), "lo_id": lo, "stripped": lost})
+                    gone.add(qid)
+                else:
+                    errors.append(f"{qid}: widget left with no diagnostic — it could mark an answer wrong and "
+                                  f"never say why (ADR-0009). S7 must re-author it or drop it (or pass "
+                                  f"--drop-undiagnosed-widgets with --widget-gaps: it is left out of the bundle and "
+                                  f"recorded as a gap)")
+    if gone:
+        out["questions"] = [q for q in out["questions"] if q.get("id") not in gone]
+        left = {q.get("family") for q in out["questions"]}
+        for rec in dropped or []:
+            fam = rec["family"]
+            if fam in (out.get("templates") or {}) and fam not in left:
+                del out["templates"][fam]
+                out.setdefault("rejected_templates", {})[fam] = [
+                    "not shipped: S5's verifier refused every mapping of it (" + ", ".join(
+                        sorted({f"{p} → {m}" for r in dropped if r["family"] == fam for p, m in r["stripped"]}))
+                    + "), so no widget of it could say why an answer is wrong"]
     out["misconceptions"] = [
         {"id": m, "lo_id": entries[m]["lo_id"], "label": entries[m]["label"], "description": entries[m]["description"]}
         for m in sorted(referenced)
@@ -765,6 +806,14 @@ def main(argv: list[str] | None = None) -> int:
                          "write the catalogue only. Every rule on the entries still refuses; the S6/S7 attachments the "
                          "verifier judged not to encode a confirmed entry are listed as DEFERRED, to be stripped by the "
                          "bundle pass (the same run with --bundle), which refuses if it cannot. Takes no --bundle")
+    ap.add_argument("--drop-undiagnosed-widgets", action="store_true",
+                    help="with --bundle: a widget left with no diagnostic once S5's refused mappings are stripped is "
+                         "LEFT OUT of the bundle (never shipped) instead of refusing everything, and recorded as a "
+                         "`no-diagnostic` gap in --widget-gaps. Needs --widget-gaps and --graph (the module of the "
+                         "objective). Never re-authors anything")
+    ap.add_argument("--widget-gaps", type=Path,
+                    help="with --drop-undiagnosed-widgets: the chapter's coverage/<book>.chNN.widget-gaps.json "
+                         "(generate_widget_questions.py --gap-report), updated in place when widgets are dropped")
     ap.add_argument("--check", action="store_true", help="validate and report; write nothing")
     ap.add_argument("--validate", type=Path, help="validate an existing catalogue file and exit")
     ap.add_argument("--s5-args", type=Path, help="write misconceptions.workflow.js args here and exit")
@@ -831,6 +880,14 @@ def main(argv: list[str] | None = None) -> int:
     if not a.runs or not a.book or (not a.out and not a.check):
         ap.error("pass run files, --book and --out (or --check)")
 
+    if a.drop_undiagnosed_widgets:
+        if not a.bundle:
+            ap.error("--drop-undiagnosed-widgets is a bundle-pass option: pass --bundle")
+        if not a.widget_gaps or not a.widget_gaps.exists():
+            ap.error("--drop-undiagnosed-widgets needs --widget-gaps <the chapter's widget-gaps report, which must "
+                     "exist>: a dropped widget is recorded there or not dropped")
+        if not a.graph:
+            ap.error("--drop-undiagnosed-widgets needs --graph: the gap names the objective's module")
     if a.catalogue_only and a.bundle:
         ap.error("--catalogue-only is the pass BEFORE the bundles exist; the bundle pass is this command with "
                  "--bundle and without --catalogue-only")
@@ -840,8 +897,10 @@ def main(argv: list[str] | None = None) -> int:
     reconciled: list[tuple[Path, dict]] = []
     applied: set[int] = set()
     prereqs = prerequisites(a.graph) if a.graph else None
+    dropped_widgets: list[dict] = []
     for bp in a.bundle:
-        new, lines, errs, hit = reconcile_bundle(json.loads(bp.read_text()), entries, alias_of, unfit, prereqs)
+        new, lines, errs, hit = reconcile_bundle(json.loads(bp.read_text()), entries, alias_of, unfit, prereqs,
+                                                 dropped_widgets if a.drop_undiagnosed_widgets else None)
         problems += [f"{bp.name}: {e}" for e in errs]
         applied |= hit
         reconciled.append((bp, new))
@@ -876,6 +935,19 @@ def main(argv: list[str] | None = None) -> int:
             print(f"  x {p}", file=sys.stderr)
         print(f"REFUSING: {len(problems)} problem(s); nothing written.", file=sys.stderr)
         return 1
+    gap_report_new = None
+    if dropped_widgets:
+        import generate_widget_questions as GW
+        orphaned: dict[str, dict] = {}
+        for r in dropped_widgets:
+            o = orphaned.setdefault(r["family"], {"lo_id": r["lo_id"], "questions": [], "dropped": []})
+            o["questions"].append(r["question_id"])
+            o["dropped"] += [m for _, m in r["stripped"] if m and m not in o["dropped"]]
+        kept_widgets = [q for _, new in reconciled for q in new.get("questions", []) if q.get("question_type") == "widget"]
+        gap_report_new = GW.add_no_diagnostic_gaps(json.loads(a.widget_gaps.read_text()), orphaned,
+                                                   module_of_los(a.graph), kept_widgets, "assemble_misconceptions.py")
+        print(f"  {len(dropped_widgets)} widget(s) of {len(orphaned)} template(s) LEFT OUT of the bundle and recorded "
+              f"as no-diagnostic gaps: {', '.join(sorted(orphaned))}")
     if a.check:
         print("check only: nothing written")
         return 0
@@ -883,6 +955,8 @@ def main(argv: list[str] | None = None) -> int:
     a.out.write_text(json.dumps(catalogue, indent=2, ensure_ascii=False) + "\n")
     for bp, new in reconciled:
         bp.write_text(json.dumps(new, indent=2, ensure_ascii=False) + "\n")
+    if gap_report_new is not None:
+        a.widget_gaps.write_text(json.dumps(gap_report_new, indent=2, ensure_ascii=False) + "\n")
     print(f"wrote {a.out}" + (f" and reconciled {len(reconciled)} bundle(s)" if reconciled else "")
           + (f"; CATALOGUE ONLY — {len(deferred)} S6/S7 attachment(s) the verifier refused are still to be stripped "
              f"by the bundle pass (rerun with --bundle for each bundle written from this catalogue)" if a.catalogue_only
