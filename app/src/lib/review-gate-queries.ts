@@ -36,14 +36,18 @@
 import type { PoolClient } from "pg";
 
 import { courseName } from "./console-course-names";
+import { coverageStatus } from "./coverage-status";
+import { COURSES, isCourseId } from "./courses";
 import { withOperator } from "./db";
-import { ENVIRONMENT } from "./env";
+import { BOOTSTRAP_OPERATOR_EMAIL, ENVIRONMENT } from "./env";
 import { COURSE_RANK, MODULE_ORDER } from "./module-order";
+import { readGateRecords, type GateRecordRow } from "./review-gate-files";
 import {
   canDecide,
   claimRef,
   deriveClaim,
   deriveContent,
+  deriveGate,
   deriveQuestion,
   isDecision,
   isItemKind,
@@ -203,7 +207,11 @@ const FIGURES_SQL = (where: string) => `
  * `only` adds a WHERE on the item's own id so the single-item path reads
  * through exactly the SQL the list does.
  */
-export async function deriveAll(c: Db, only?: { kind: ItemKind; ref: string } | null): Promise<DerivedItem[]> {
+export async function deriveAll(
+  c: Db,
+  only?: { kind: ItemKind; ref: string } | null,
+  gates: () => Promise<GateRecordRow[]> = readGateRecords
+): Promise<DerivedItem[]> {
   const want = (k: ItemKind) => !only || only.kind === k;
   const out: DerivedItem[] = [];
 
@@ -248,7 +256,64 @@ export async function deriveAll(c: Db, only?: { kind: ItemKind; ref: string } | 
     }
   }
   await content("figure_stand_in", FIGURES_SQL, "AND v.id = $1", [only?.ref]);
+  if (want("gate_decision")) {
+    const records = (await gates()).filter((r) => !only || r.ref === only.ref);
+    if (records.length > 0) {
+      const chapters = await chapterIndex(c);
+      for (const r of records) {
+        out.push(deriveGate(r, r.chapter == null ? null : (chapters.get(`${r.courseId}|${r.chapter}`) ?? null)));
+      }
+    }
+  }
   return out;
+}
+
+/**
+ * "<course>|<chapter number>" → the chapter's module and its first objective's
+ * place in book order, for placing a gate decision with its chapter. A
+ * chapter is the module whose position in its course is that number; a
+ * position two modules share (Prep 3's terms) names no chapter.
+ */
+async function chapterIndex(c: Db): Promise<Map<string, { moduleId: string; catalogueRank: number }>> {
+  const res = await c.query(
+    `WITH ${SCOPE_SQL}
+     SELECT s.course_id, s.module_id, m.order_in_parent AS chapter_no, min(s.catalogue_rank)::int AS first_rank
+       FROM scope s JOIN graph_nodes m ON m.id = s.module_id
+      GROUP BY s.course_id, s.module_id, m.order_in_parent`
+  );
+  const out = new Map<string, { moduleId: string; catalogueRank: number }>();
+  const twice = new Set<string>();
+  for (const r of res.rows) {
+    if (r.chapter_no == null) continue;
+    const key = `${r.course_id}|${r.chapter_no}`;
+    if (out.has(key)) twice.add(key);
+    out.set(key, { moduleId: r.module_id, catalogueRank: Number(r.first_rank) });
+  }
+  for (const k of twice) out.delete(k);
+  return out;
+}
+
+/* ------------------------------------------------------------- Samuel */
+
+/**
+ * Whose account signs gate decisions (answer 39: "assigned to Samuel … only an
+ * operator whose account is Samuel's can approve/reject"). Configuration,
+ * never a request field: `AINEXT_GATE_OWNER_EMAIL`, else the bootstrap
+ * operator's address (`AINEXT_BOOTSTRAP_OPERATOR_EMAIL` — the first operator,
+ * who is Samuel). Neither set: nobody may decide a gate item (fail closed).
+ */
+export function gateOwnerEmail(): string | null {
+  const v = (process.env.AINEXT_GATE_OWNER_EMAIL ?? "").trim() || (BOOTSTRAP_OPERATOR_EMAIL ?? "").trim();
+  return v ? v.toLowerCase() : null;
+}
+
+export async function isGateOwner(c: Db, operatorId: number, owner: string | null = gateOwnerEmail()): Promise<boolean> {
+  if (!owner) return false;
+  const res = await c.query(`SELECT lower(email) = $2 AS owner FROM operators WHERE id = $1 AND status = 'active'`, [
+    operatorId,
+    owner,
+  ]);
+  return res.rows[0]?.owner === true;
 }
 
 type DecisionRow = {
@@ -298,9 +363,10 @@ export async function latestDecisions(
 export async function loadBacklog(
   c: Db,
   environment: string,
-  only?: { kind: ItemKind; ref: string } | null
+  only?: { kind: ItemKind; ref: string } | null,
+  gates?: () => Promise<GateRecordRow[]>
 ): Promise<ResolvedItem[]> {
-  const derived = await deriveAll(c, only);
+  const derived = await deriveAll(c, only, gates);
   const latest = await latestDecisions(c, environment, only);
   return derived.map((d) => resolveItem(d, latest.get(itemKey(d.kind, d.ref))));
 }
