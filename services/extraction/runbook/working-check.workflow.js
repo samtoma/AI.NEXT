@@ -75,9 +75,9 @@ if (!(Number.isInteger(BATCH) && BATCH >= 1 && BATCH <= 12 && ['low', 'medium', 
       FIGS && typeof FIGS === 'object' && !Array.isArray(FIGS) && typeof ARGS.fig_dir === 'string')) {
   throw new Error('args must carry batch (1-12), effort (low|medium|high), model (sonnet|haiku), pass_id, fig_dir and figs: rebuild them with working_check.py args')
 }
-const figPath = (f) => (f.startsWith('/') ? f : `${ARGS.fig_dir}/${f}`)
+const figPath = (f) => (f.startsWith('/') ? f : (ARGS.fig_dir.startsWith('/') ? `${ARGS.fig_dir}/${f}` : ''))
 for (const [k, v] of Object.entries(FIGS)) {
-  if (!(Number.isInteger(+k) && +k >= 1 && +k <= SOLS.length && Array.isArray(v) && v.every((f) => typeof f === 'string' && figPath(f).startsWith('/')))) {
+  if (!(Number.isInteger(+k) && +k >= 1 && +k <= SOLS.length && Array.isArray(v) && v.every((f) => typeof f === 'string' && figPath(f) !== ''))) {
     throw new Error(`args.figs[${JSON.stringify(k)}] is not a shard number with absolute image paths: rebuild the args`)
   }
 }

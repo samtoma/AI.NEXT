@@ -180,7 +180,9 @@ class Shard(unittest.TestCase):
             self.assertIn("FIGURE: not offered", W.render_shard(given))
             self.assertNotIn("a.png", W.render_shard(given))
         shard = W.render_shard(none)
-        self.assertIn("FIGURE (the question shows it; open it ONLY if a value the working uses is in no text above):\n  /x/figures/a.png", shard)
+        self.assertIn("FIGURE (the question's points, lengths or labels are shown only in this picture", shard)
+        self.assertIn("\n  /x/figures/a.png", shard)
+        self.assertNotIn("open it ONLY", shard)
         self.assertNotIn("FIGURE", W.render_shard(sol(stem="no picture")))
 
 
@@ -222,7 +224,7 @@ class Packet(unittest.TestCase):
         self.assertFalse(W.precheck_path(d).is_relative_to(d), "the pre-check must sit outside the shard directory")
         self.assertEqual([s["id"] for s in pre["skipped"]], ["expl:g10m8s1-1-1:ex8-6-4a"])
         self.assertEqual([(f["solution_id"], f["step"]) for f in pre["flags"]], [("q:g10m8s2-1-1:ex8-2-2", 2)])
-        self.assertEqual((pre["prompts_version"], pre["batch"]), ("sw-v2", 8))
+        self.assertEqual((pre["prompts_version"], pre["batch"], pre["pass_id"]), ("sw-v3", 8, "A"))
         for p in (d / "s").iterdir():
             text = p.read_text()
             self.assertNotIn("does not hold", text)
@@ -233,13 +235,40 @@ class Packet(unittest.TestCase):
 
     def test_the_args_carry_the_run_settings(self):
         a = W.build_args(Book(), bundle(), 8, self.tmp / "a")[0]
-        self.assertEqual((a["prompts_version"], a["batch"], a["fig_cap"], a["effort"], a["model"]),
-                         ("sw-v2", W.BATCH, W.FIG_CAP, W.EFFORT, W.MODEL))
-        b = W.build_args(Book(), bundle(), 8, self.tmp / "b", batch=2, effort="low", model="haiku")[0]
-        self.assertEqual((b["batch"], b["effort"], b["model"]), (2, "low", "haiku"))
-        for bad in (dict(batch=0), dict(batch=13), dict(effort="max"), dict(model="opus")):
+        self.assertEqual((a["prompts_version"], a["batch"], a["effort"], a["model"], a["pass_id"], a["order"]),
+                         ("sw-v3", W.BATCH, W.EFFORT, W.MODEL, "A", "bundle"))
+        self.assertEqual((a["fig_dir"], a["figs"]), ("", {}))
+        b = W.build_args(Book(), bundle(), 8, self.tmp / "b", batch=2, effort="low", model="haiku", pass_id="B")[0]
+        self.assertEqual((b["batch"], b["effort"], b["model"], b["pass_id"]), (2, "low", "haiku", "B"))
+        for bad in (dict(batch=0), dict(batch=13), dict(effort="max"), dict(model="opus"), dict(order="random"),
+                    dict(pass_id=""), dict(pass_id="a b")):
             with self.assertRaises(SystemExit):
                 W.build_args(Book(), bundle(), 8, self.tmp / "c", **bad)
+
+    def test_a_figure_is_named_in_the_args_for_the_solution_that_offers_one(self):
+        figs = {"q:g10m8s1-1-3:ex8-1-5": ["/w/figures/tikz__aa.png"], "q:g10m8s1-1-2:ex8-1-1": ["/w/figures/tikz__bb.png", "/elsewhere/c.png"]}
+        a = W.build_args(Book(), mcq_bundle(), 8, self.tmp / "f", figures=figs)[0]
+        by = {sid: str(i) for i, sid in enumerate(a["solutions"], start=1)}
+        self.assertEqual(a["fig_dir"], "/w/figures")
+        self.assertEqual(a["figs"][by["q:g10m8s1-1-3:ex8-1-5"]], ["tikz__aa.png"])
+        self.assertEqual(a["figs"][by["q:g10m8s1-1-2:ex8-1-1"]], ["tikz__bb.png", "/elsewhere/c.png"])      # a stranger keeps its path
+        self.assertEqual(len(a["figs"]), 2)                                                                  # 42e has no figure to offer
+        self.assertEqual(W.agents_for(len(a["solutions"]), 2), 2)
+
+    def test_the_second_pass_batches_the_same_solutions_with_other_neighbours(self):
+        big = {"questions": [{"id": f"q:g10m8s1-1-1:ex8-1-{i}", "lo": "lo:x", "stem": "Q", "answer": "5",
+                              "solution": ["$d=\\sqrt{25}=5$"]} for i in range(1, 25)]}
+        a = W.build_args(Book(), big, 8, self.tmp / "p1", batch=4, pass_id="A")[0]
+        b = W.build_args(Book(), big, 8, self.tmp / "p2", batch=4, order="shuffled", order_seed=7, pass_id="B")[0]
+        c = W.build_args(Book(), big, 8, self.tmp / "p3", batch=4, order="shuffled", order_seed=7, pass_id="B")[0]
+        d = W.build_args(Book(), big, 8, self.tmp / "p4", batch=4, order="shuffled", order_seed=8, pass_id="B")[0]
+        self.assertEqual(sorted(a["solutions"]), sorted(b["solutions"]))
+        self.assertNotEqual(a["solutions"], b["solutions"])
+        self.assertEqual(b["solutions"], c["solutions"], "the shuffle is deterministic")
+        self.assertNotEqual(b["solutions"], d["solutions"])
+        batches = lambda args: {frozenset(args["solutions"][i:i + 4]) for i in range(0, 24, 4)}
+        self.assertLess(len(batches(a) & batches(b)), 2, "pass B must not re-form pass A's batches")
+        self.assertEqual(b["order"], "shuffled")
 
     def test_parts_past_the_cap_hold_whole_batches(self):
         parts = W.build_args(Book(), bundle(), 8, self.tmp / "sw-ch08", max_per_run=2, batch=2)
@@ -286,6 +315,8 @@ class Workflow(unittest.TestCase):
         self._tmp = tempfile.TemporaryDirectory()
         self.tmp = Path(self._tmp.name)
         self.args = W.build_args(Book(), bundle(), 8, self.tmp / "sw-ch08", batch=2)[0]
+        self.fig_args = W.build_args(Book(), mcq_bundle(), 8, self.tmp / "sw-fig", batch=3,
+                                     figures={"q:g10m8s1-1-3:ex8-1-5": ["/w/figures/tikz__aa.png"]})[0]
         self.responses = {
             L1: {"results": [
                 {"solution_id": A1, "verdict": "consistent"},
@@ -314,11 +345,13 @@ class Workflow(unittest.TestCase):
             self.assertEqual((c["model"], c["effort"]), ("sonnet", "medium"))
             self.assertNotIn("precheck", c["prompt"])
             self.assertIn("YOUR TOOL BUDGET", c["prompt"])
-            self.assertIn(f"at most {W.FIG_CAP} in all", c["prompt"])
+            self.assertIn("NEVER reconstruct a figure's values from the working itself", c["prompt"])
             self.assertIn("never measure pixels", c["prompt"])
+            self.assertIn("TRACE before you answer", c["prompt"])
+            self.assertNotIn("ONLY when a value", c["prompt"])
             self.assertIn("never rewrite the solution", c["prompt"])
         r = rep["result"]
-        self.assertEqual((r["prompts_version"], r["batch"], r["agents"]), ("sw-v2", 2, 2))
+        self.assertEqual((r["prompts_version"], r["batch"], r["agents"], r["pass_id"], r["order"]), ("sw-v3", 2, 2, "A", "bundle"))
         self.assertEqual([x["solution_id"] for x in r["results"]], [A1, A2, A3])           # solution order, not answer order
         self.assertEqual([x["verdict"] for x in r["results"]], ["consistent", "flagged", "flagged"])
         self.assertEqual(r["results"][1]["flags"][0]["where"], "working")
@@ -330,7 +363,7 @@ class Workflow(unittest.TestCase):
         rep = run_stub(args, {label: {"results": []}}, self.tmp)
         self.assertEqual([(c["model"], c["effort"]) for c in rep["calls"]], [("haiku", "low")])
         self.assertEqual(len(rep["calls"]), 1)
-        self.assertIn("one checking agent each (sw-v2, haiku, effort low)", rep["logs"][0])
+        self.assertIn("one checking agent each (sw-v3, pass A, haiku, effort low, 0 figure(s) read)", rep["logs"][0])
 
     def test_a_dead_agent_leaves_its_whole_batch_unchecked(self):
         self.responses[L1] = None
@@ -366,10 +399,31 @@ class Workflow(unittest.TestCase):
         f = res[A2]["flags"][0]
         self.assertEqual((len(f["quote"]), len(f["why"]), len(f["expected"]), len(res[A2]["note"])), (300, 400, 300, 400))
 
+    def test_a_figure_is_named_in_the_prompt_to_be_read_in_the_first_turn_with_the_shards(self):
+        lab = f"SW:check:b001:{self.fig_args['solutions'][0]}+2"
+        rep = run_stub(self.fig_args, {lab: {"results": []}}, self.tmp)
+        self.assertTrue(rep["ok"], rep["error"])
+        prompt = rep["calls"][0]["prompt"]
+        i = self.fig_args["solutions"].index("q:g10m8s1-1-3:ex8-1-5") + 1
+        self.assertIn(f"Solution {i}: [[file: {self.fig_args['by_ref']['dir']}/s/{self.fig_args['solutions'].index('q:g10m8s1-1-3:ex8-1-5') + 1:04d}.txt]] "
+                      "and its FIGURE image: /w/figures/tikz__aa.png", prompt)
+        self.assertEqual(prompt.count("and its FIGURE image"), 1, "only the solution that offers a figure names one")
+        self.assertIn("reads all 3 files above AND every FIGURE image named above", prompt)
+        self.assertIn("1 figure(s) read", rep["logs"][0])
+
+    def test_figs_that_are_not_shard_numbers_with_absolute_paths_are_refused(self):
+        for bad in ({"9": ["/x.png"]}, {"1": "x.png"}, {"1": ["rel.png"]}):
+            rep = run_stub({**self.fig_args, "fig_dir": "", "figs": bad}, {}, self.tmp)
+            self.assertFalse(rep["ok"])
+            self.assertIn("args.figs", rep["error"])
+        rep = run_stub({k: v for k, v in self.fig_args.items() if k != "figs"}, {}, self.tmp)
+        self.assertIn("must carry", rep["error"])
+
     def test_args_that_are_not_the_builders_are_refused(self):
         for bad, words in (({**self.args, "stage": "S3"}, "working_check.py args"),
                            ({**self.args, "solutions": self.args["solutions"][:2]}, "rebuild the args"),
-                           ({**self.args, "prompts_version": "sw-v1"}, "rebuild them"),
+                           ({**self.args, "prompts_version": "sw-v2"}, "rebuild them"),
+                           ({**self.args, "pass_id": "a b"}, "must carry batch"),
                            ({k: v for k, v in self.args.items() if k != "batch"}, "must carry batch"),
                            ({**self.args, "effort": "max"}, "must carry batch"),
                            ({**self.args, "model": "opus"}, "must carry batch")):
@@ -384,7 +438,8 @@ class Workflow(unittest.TestCase):
         out = W.collect([self.args], [rep["result"]])
         self.assertEqual(json.dumps(bundle(), sort_keys=True), before)
         self.assertEqual(out["format"], "ainext.working-check/1")
-        self.assertEqual(out["prompts_version"], "sw-v2")
+        self.assertEqual(out["prompts_version"], "sw-v3")
+        self.assertEqual((out["passes"], out["single_pass_ids"]), (["A"], []))
         self.assertEqual(out["solutions"], 3)
         self.assertEqual(out["checked_ids"], sorted([A1, A2, A3]))
         self.assertEqual(out["verdicts"], {"consistent": 1, "flagged": 2, "unclear": 0})
