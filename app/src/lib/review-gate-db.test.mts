@@ -277,6 +277,7 @@ test("the backlog is every maths item without a human stamp — derived kind by 
     objective: 2,
     prerequisite_link: 1,
     figure_stand_in: 1,
+    gate_decision: 1,
   });
   const get = (ref: string) => items.find((i) => i.ref === ref)!;
 
@@ -294,6 +295,10 @@ test("the backlog is every maths item without a human stamp — derived kind by 
   assert.equal(get("q:w1|missed-values|mc:b:stops-at-first-root").exposure, "active");
   assert.equal(get("v:fig1").reasons[0]!.code, "needs_native_figure");
   assert.equal(get("lo:a>lo:b").kind, "prerequisite_link");
+  const gate = get("g10-math/g1-ch08");
+  assert.equal(gate.assignee, "samuel");
+  assert.equal(gate.moduleId, "module:g10m-c08", "a chapter's gate sits with its chapter");
+  assert.equal(gate.state, "open");
 
   assert.equal(items.some((i) => i.ref === "q:social"), false, "Social Studies keeps its own queue");
   assert.equal(items.some((i) => i.ref === "q:retired"), false, "a retired question is not served, not reviewed");
@@ -431,7 +436,7 @@ test("a fix request leaves students unchanged, is exported, and comes back once 
     decide(db, ENV, TAMER, {
       kind: "book_question", ref: "q:fig", fingerprint: item.fingerprint, decision: "fix_requested",
       note: "the key should be -1/3", suggestedCorrection: "$-\\frac{1}{3}$",
-    })
+    }, GATES)
   );
   assert.ok(r.ok);
   assert.equal((await q1(`SELECT status, reviewed_by FROM questions WHERE id = 'q:fig'`)).status, "live");
@@ -531,6 +536,52 @@ test("a misconception's approval marks its refutation reviewed; a rejected stand
     status: "review",
     hold_reason: "human_hold",
   });
+});
+
+/* ------------------------------------------------------------ Samuel's gates */
+
+test("a gate decision: anyone reads it, only Samuel's account decides it (answer 39)", { skip }, async () => {
+  // Tamer's queue never hands it to him; "For Samuel" shows it, unclaimed and read-only.
+  const plain = await asOperator(b!, TAMER, (db) => nextFor(db, ENV, TAMER, { kind: "gate_decision" }, new Set(), GATES));
+  assert.equal(plain.item, null);
+  const view = await asOperator(b!, TAMER, (db) =>
+    nextFor(db, ENV, TAMER, { kind: "gate_decision", assignee: "samuel" }, new Set(), GATES)
+  );
+  assert.equal(view.item!.ref, "g10-math/g1-ch08");
+  assert.equal(view.item!.readOnly, true);
+  assert.equal(view.item!.claimExpiresAt, null, "reading it never keeps it from Samuel");
+  assert.equal(view.item!.gate!.gate, "G1");
+
+  const fp = view.item!.fingerprint;
+  const refused = await asOperator(b!, TAMER, (db) =>
+    decide(db, ENV, TAMER, { kind: "gate_decision", ref: "g10-math/g1-ch08", fingerprint: fp, decision: "approve" }, GATES)
+  );
+  assert.equal(!refused.ok && refused.error, "owner_only");
+  assert.equal(!refused.ok && refused.status, 403);
+
+  const mine = await asOperator(a!, SAMUEL, (db) =>
+    nextFor(db, ENV, SAMUEL, { kind: "gate_decision" }, new Set(), GATES)
+  );
+  assert.equal(mine.item!.ref, "g10-math/g1-ch08", "it is in Samuel's own queue");
+  assert.equal(mine.item!.readOnly, undefined);
+  const signed = await asOperator(a!, SAMUEL, (db) =>
+    decide(db, ENV, SAMUEL, { kind: "gate_decision", ref: "g10-math/g1-ch08", fingerprint: fp, decision: "approve" }, GATES)
+  );
+  assert.ok(signed.ok);
+  assert.deepEqual(signed.ok && signed.changes, { recorded_only: true });
+  assert.equal((await current("gate_decision", "g10-math/g1-ch08")).state, "approved");
+
+  // Without an owner configured, nobody decides it (fail closed).
+  const saved = process.env.AINEXT_GATE_OWNER_EMAIL;
+  process.env.AINEXT_GATE_OWNER_EMAIL = "";
+  try {
+    const nobody = await asOperator(a!, SAMUEL, (db) =>
+      decide(db, ENV, SAMUEL, { kind: "gate_decision", ref: "g10-math/g1-ch08", fingerprint: fp, decision: "reject", note: "x" }, GATES)
+    );
+    assert.equal(!nobody.ok && nobody.error, "owner_only");
+  } finally {
+    process.env.AINEXT_GATE_OWNER_EMAIL = saved;
+  }
 });
 
 /* ------------------------------------------------------------ the record */
