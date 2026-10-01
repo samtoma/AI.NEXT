@@ -73,3 +73,9 @@ Consistency-review decisions (2026-09-27), one at a time:
     applies to Prep 3 too with the next release.
 34. A decimal comma typed in a Grade 10 numeric answer ("7,21") → "Accept it as a decimal (Recommended)": read as 7.21
     and marked normally when unambiguous (a clear pair in a coordinates answer stays a pair); Prep 3 marking unchanged.
+35. (2026-10-01) The console showed the American Grade 10 course with an Arabic subtitle («الرياضيات», the shared
+    maths subject's Arabic name) → "change , this is american course we said no arabic": the American course shows
+    no Arabic anywhere — console and student surfaces, its lessons, the American curriculum's name — chosen per
+    course (the `arabicTouches` setting), every National course unchanged. Read as also answering consistency-review
+    B7: the G10 tutor's "write no Arabic at all, even if the student writes in Arabic" line is KEPT. FR-4205 widened.
+    (decisions.md number assigned with answers 27–34, still to be written in.)

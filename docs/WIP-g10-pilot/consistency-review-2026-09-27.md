@@ -51,7 +51,8 @@ widgets in u4-1-2 diagnose nothing) — no wrong content is shown, just plain "n
 6. **Lesson text about the book's notation** ("coordinates separated by a semicolon, e.g. A(1, 1)") now contradicts
    what it shows after FR-4308's conversion. Reword or drop those lines?
 7. **Grade 10 "write no Arabic at all, even if the student writes in Arabic"** goes beyond decision 30 (no Egyptian
-   phrases). Keep or narrow?
+   phrases). Keep or narrow? → **Decided 2026-10-01 (answer 35): keep** — and no Arabic on any screen of the
+   American course either (FR-4205 widened).
 8. **FR-4410 (prerequisite links)** — keep as a requirement, or move to pipeline policy like the objectives method?
 9. **The six new widget types were built before the gap list** existed (decision 27 said "only for chapters that name
    them") — confirm "built ahead".
