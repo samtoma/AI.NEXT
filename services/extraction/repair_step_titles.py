@@ -229,17 +229,17 @@ class Verdict:
     rewrites: list = field(default_factory=list)    # (position, step index, old string, new string)
     already: int = 0                          # damaged positions already holding the new string
     reason: str = ""
+    mode: str = ""                            # the assembly form it was judged under (bundles)
 
 
-def judge(current: list[str], we: WE, assembler: Assembler | None) -> Verdict:
-    """Compare a solution list with the worked example's old and new lists. Pure."""
-    if we.missing:
-        return Verdict("refused", reason="maths image(s) not accepted by S0b: " + ", ".join(sorted(we.missing)[:4]))
+def modes_of(current: list[str], we: WE, assembler: Assembler | None) -> dict:
+    """mode -> (rewrites, already) when the list is exactly the old/new text of the worked example under that assembly
+    form, else the reason it is not. Pure."""
     pos = we.positions()
-    results = []
+    out: dict = {}
     for mode, old, new in candidate_lists(we, assembler):
         if len(current) != len(old):
-            results.append((mode, None, f"{len(current)} step(s), the book's worked example gives {len(old)}"))
+            out[mode] = f"{len(current)} step(s), the book's worked example gives {len(old)}"
             continue
         rewrites, already, bad = [], 0, None
         for j, (cur, o, n) in enumerate(zip(current, old, new)):
@@ -250,14 +250,82 @@ def judge(current: list[str], we: WE, assembler: Assembler | None) -> Verdict:
             else:
                 bad = f"step {j + 1} is neither the old nor the repaired text: {cur[:70]!r}"
                 break
-        results.append((mode, None if bad else (rewrites, already), bad))
-    ok = [(m, r) for m, r, _ in results if r is not None]
+        out[mode] = bad if bad else (rewrites, already)
+    return out
+
+
+def verdict_in(by_mode: dict, mode: str) -> Verdict:
+    r = by_mode.get(mode)
+    if r is None or isinstance(r, str):
+        why = "; ".join(f"[{m}] {x}" for m, x in by_mode.items() if isinstance(x, str)) or f"no {mode} form"
+        return Verdict("refused", reason=why, mode=mode)
+    rewrites, already = r
+    return Verdict("repair" if rewrites else "clean", rewrites, already, mode=mode)
+
+
+def ok_modes(by_mode: dict) -> set:
+    return {m for m, r in by_mode.items() if not isinstance(r, str)}
+
+
+def judge(current: list[str], we: WE, assembler: Assembler | None) -> Verdict:
+    """One list on its own (the DB scan): its only consistent form, else the assembly's default (re-spaced)."""
+    if we.missing:
+        return Verdict("refused", reason="maths image(s) not accepted by S0b: " + ", ".join(sorted(we.missing)[:4]))
+    by_mode = modes_of(current, we, assembler)
+    ok = ok_modes(by_mode)
     if not ok:
-        return Verdict("refused", reason="; ".join(f"[{m}] {why}" for m, _, why in results))
-    if len(ok) > 1 and any(r[0] != ok[0][1][0] for _, r in ok[1:]):
-        return Verdict("refused", reason="the list matches under more than one assembly form with different repairs")
-    rewrites, already = ok[0][1]
-    return Verdict("repair" if rewrites else "clean", rewrites, already)
+        return verdict_in(by_mode, next(iter(by_mode)))
+    return verdict_in(by_mode, "respaced" if "respaced" in ok else sorted(ok)[0])
+
+
+def judge_targets(targets: list, index: Index, assembler: Assembler | None, chapters: set | None) -> tuple[list, str]:
+    """[(Target, Verdict)] for the worked-example lists of one file, and the assembly form inferred for it.
+
+    A bundle is assembled once, in one form: with the app's KaTeX re-spacing (always, in production) or, for a test, without.
+    The strings that tell the two apart (a step holding a glued macro such as \\triangleABC) decide it for the whole file;
+    when nothing in the file tells them apart the assembly's default, re-spaced, is used and the file says so."""
+    prelim = []
+    for t in targets:
+        if chapters is not None and t.chapter not in chapters:
+            continue
+        key = (t.chapter, t.n)
+        if key in index.ambiguous:
+            prelim.append((t, Verdict("refused", reason=f"worked example {key} is in blocks.jsonl more than once: "
+                                      + ", ".join(index.ambiguous[key]))))
+            continue
+        we = index.by_key.get(key)
+        if we is None:
+            prelim.append((t, Verdict("refused", reason=f"chapter {t.chapter} has no worked example {t.n} in blocks.jsonl")))
+            continue
+        if not we.damaged_steps():
+            continue                                                           # nothing to repair here
+        if we.missing:
+            prelim.append((t, Verdict("refused", reason="maths image(s) not accepted by S0b: "
+                                      + ", ".join(sorted(we.missing)[:4]))))
+            continue
+        prelim.append((t, modes_of(t.strings, we, assembler)))
+    file_modes = set(assembler.MODES) if assembler is not None else {"raw"}
+    for _, x in prelim:
+        if isinstance(x, dict) and ok_modes(x):
+            file_modes &= ok_modes(x)
+    if assembler is None:
+        mode = "raw"
+    elif file_modes:
+        mode = "respaced" if "respaced" in file_modes else sorted(file_modes)[0]
+    else:                                                       # the file's own strings disagree: judge each on its own
+        mode = ""
+    out = []
+    for t, x in prelim:
+        if isinstance(x, Verdict):
+            out.append((t, x))
+        elif mode:
+            out.append((t, verdict_in(x, mode)))
+        else:
+            ok = ok_modes(x)
+            out.append((t, verdict_in(x, sorted(ok)[0]) if len(ok) == 1 else
+                        Verdict("refused", reason="the file's strings do not agree on one assembly form: " + "; ".join(
+                            f"[{m}] {r}" for m, r in x.items() if isinstance(r, str)))))
+    return out, mode
 
 
 # ============================================================================ documents
@@ -424,7 +492,7 @@ class FilePlan:
     quotes: list = field(default_factory=list)      # QuotePlan
     unrepaired_quotes: list = field(default_factory=list)
     style: dict | None = None
-    note: str = ""
+    mode: str = ""                                 # the assembly form a bundle was judged under
 
     def changes(self) -> int:
         return sum(len(v.rewrites) for _, v in self.items if v.kind == "repair") + len(self.quotes)
@@ -444,22 +512,7 @@ def plan_file(path: Path, root: Path, cls: str, index: Index, assembler: Assembl
     rel = str(path.relative_to(root)) if path.is_relative_to(root) else str(path)
     fp = FilePlan(path, rel, cls, sha256_bytes(raw))
     targets = run_targets(doc, prefix) if cls == "run" else bundle_targets(doc, prefix)
-    use = assembler if cls == "bundle" else None
-    for t in targets:
-        if chapters is not None and t.chapter not in chapters:
-            continue
-        key = (t.chapter, t.n)
-        if key in index.ambiguous:
-            fp.items.append((t, Verdict("refused", reason=f"worked example {key} is in blocks.jsonl more than once: "
-                                        + ", ".join(index.ambiguous[key]))))
-            continue
-        we = index.by_key.get(key)
-        if we is None:
-            fp.items.append((t, Verdict("refused", reason=f"chapter {t.chapter} has no worked example {t.n} in blocks.jsonl")))
-            continue
-        if not we.damaged_steps():
-            continue                                                           # nothing to repair here
-        fp.items.append((t, judge(t.strings, we, use)))
+    fp.items, fp.mode = judge_targets(targets, index, assembler if cls == "bundle" else None, chapters)
     if cls == "run":
         fp.quotes, fp.unrepaired_quotes = quote_plans(doc, prefix, index, chapters)
     if fp.items or fp.quotes or fp.unrepaired_quotes:
@@ -477,15 +530,8 @@ def apply_plan(fp: FilePlan, root: Path, prefix: str, index: Index, assembler: A
     doc = json.loads(txt)
     before = copy.deepcopy(doc)
     targets = run_targets(doc, prefix) if fp.cls == "run" else bundle_targets(doc, prefix)
-    use = assembler if fp.cls == "bundle" else None
     n = 0
-    for t in targets:
-        if chapters is not None and t.chapter not in chapters:
-            continue
-        we = index.by_key.get((t.chapter, t.n))
-        if we is None or (t.chapter, t.n) in index.ambiguous or not we.damaged_steps():
-            continue
-        v = judge(t.strings, we, use)
+    for t, v in judge_targets(targets, index, assembler if fp.cls == "bundle" else None, chapters)[0]:
         if v.kind == "refused":
             continue                                                           # --skip-refused: left exactly as it is
         for j, _step, _old, new in v.rewrites:
