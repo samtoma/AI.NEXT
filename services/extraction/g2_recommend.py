@@ -538,6 +538,67 @@ def collect(entries: list[dict], runs: list[dict], *, prior: dict | None = None,
             "from_runs": run_names or {}, "by": None, "items": items, "unanswered": unanswered, "report": report}
 
 
+# ============================================================================ preparing the copy
+def part_path(base: Path, k: int) -> Path:
+    """g2rec-ch01.workflow.js for the first part, g2rec-ch01.part2.workflow.js for the next (the working check's naming)."""
+    base = Path(base)
+    if k == 1:
+        return base
+    name = base.name
+    stem = name[:-len(".workflow.js")] if name.endswith(".workflow.js") else base.stem
+    return base.with_name(f"{stem}.part{k}.workflow.js")
+
+
+def record_runs(book, chapter: int) -> list[Path]:
+    """The lesson runs a chapter's G2 gate record names as evidence (`S2–S4 run …`), in its order."""
+    rec = HERE / "runs" / book.book / "gates" / f"g2-ch{chapter:02d}.json"
+    if not rec.exists():
+        raise RecommendError(f"no G2 record {rec}: pass --lesson-run")
+    out = [book_config.REPO_ROOT / e["path"] for e in json.loads(rec.read_text()).get("evidence") or []
+           if str(e.get("label", "")).startswith("S2") and e.get("path")]
+    if not out:
+        raise RecommendError(f"{rec} names no S2–S4 run: pass --lesson-run")
+    return out
+
+
+def prepare(book, chapter: int, lesson_runs: list[Path], g2_path: Path | None, embed: Path | None = None, *, batch: int = 8,
+            verify_batch: int = 8, model: str = "sonnet", effort: str = "high", max_batches: int = 24, args_out: Path | None = None,
+            skip_keys: set[str] | None = None) -> dict:
+    """The packet and its generated copies for one chapter (embed_workflow.py). Writes nothing without `embed` / `args_out`."""
+    import embed_workflow
+    runs = [load_run(p) for p in lesson_runs]
+    g2 = json.loads(g2_path.read_text()) if g2_path and Path(g2_path).exists() else None
+    entries = recommendable(runs, chapter, book.id_prefixes[0], g2)
+    skipped = [e["key"] for e in entries if skip_keys and e["key"] in skip_keys]
+    entries = [e for e in entries if not (skip_keys and e["key"] in skip_keys)]
+    info: dict = {"chapter": chapter, "items": len(entries), "skipped_already_recommended": len(skipped),
+                  "by_state": dict(Counter(e["state"] for e in entries)), "parts": 0, "copies": [], "args_files": [],
+                  "estimate": estimate(len(entries), batch), "lesson_runs": [str(p) for p in lesson_runs]}
+    if not entries:
+        return info
+    parts = split_parts(entries, batch, max_batches)
+    info["parts"] = len(parts)
+    titles = lesson_titles(book)
+    for k, part in enumerate(parts, start=1):
+        args = build_args(book, chapter, part, part=k, parts=len(parts), batch=batch, verify_batch=verify_batch, model=model,
+                          effort=effort, titles=titles)
+        info.setdefault("parts_detail", []).append({"part": k, "items": len(part), "batches": -(-len(part) // batch),
+                                                    "items_sha256": args["items_sha256"]})
+        if args_out:
+            ao = part_path(Path(args_out), k)
+            ao.parent.mkdir(parents=True, exist_ok=True)
+            ao.write_text(json.dumps(args, ensure_ascii=False) + "\n")
+            info["args_files"].append(str(ao))
+        if embed:
+            out = part_path(Path(embed), k)
+            w = embed_workflow.write(WORKFLOW, args, out)
+            bad = embed_workflow.verify(out)
+            if bad:
+                raise RecommendError(f"{out}: the copy does not verify: {bad[:2]}")
+            info["copies"].append({"script": str(out), "bytes": w["bytes"], "generated_sha256": w["generated_sha256"]})
+    return info
+
+
 # ============================================================================ the commands (auto_pass_gates.py)
 def follow_ups(book: str, chapter: int, lesson_runs: list[str], *, recommended: str, g2_file: str,
                db: str = "ainext_pilot_g10_ch08", run_label: str = "") -> list[str]:

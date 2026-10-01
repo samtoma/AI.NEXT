@@ -390,7 +390,7 @@ log(`${rows.filter((r) => r.rec).length} of ${ITEMS.length} item(s) recommended:
 return {
   stage: 'G2R', workflow: 'g2-recommend', prompts_version: PROMPTS_VERSION, book: BOOK.book,
   chapter: ARGS.chapter, part: ARGS.part || 1, parts: ARGS.parts || 1,
-  batch: BATCH, verify_batch: VBATCH, model: MODEL, effort: EFFORT, items_sha256: ARGS.items_sha256 || null,
+  batch: BATCH, verify_batch: VBATCH, model: MODEL, effort: EFFORT, items_sha256: ARGS.items_sha256 || null, keys: KEYS,
   agents: { recommend: BATCHES.length, verify: done.filter(Boolean).reduce((n, d) => n + Math.ceil(d.batch.filter((e) => needsVerify(d.got.get(e.key))).length / VBATCH), 0) },
   embedded: ARGS.embedded,
   results: rows, tally, problems,
