@@ -74,7 +74,7 @@
 
 ## From the app fixes (2026-09-26)
 52. Review question: Arabic prompts read "ara1-1 · عِبادُ الرَّحمنِ — عِبادُ الرَّحمنِ" (name twice, because the objective ref already carries it). Trim the ref? (a further prompt-hold change).
-53. Review question: added language-contract line for G10 — "English only in this course: write no Arabic at all … even if the student writes in Arabic". Confirm.
+53. Review question: added language-contract line for G10 — "English only in this course: write no Arabic at all … even if the student writes in Arabic". Confirm. → **Answered (answer 35, decision 56, 2026-10-01): KEPT** — and widened, the American course shows no Arabic anywhere, not only in its prompts (FR-4205 widened; built and verified, T435).
 54. devops: confirm the Dockerfile COPY of services/extraction/coverage into the image (console completeness panel reads it).
 55. Product-designer: Arabic roll-up wording «الأجزاء المتقنة: 2 من 3» (provisional).
 56. Cleanup at the end: scratch DBs ainext_fe_scratch, ainext_fe_scratch_ui, ainext_scratch_wpm_marker; delete scratch session token files (scratchpad/g10/fe/*-refresh-token.txt, scratchpad/wpm/).
@@ -128,7 +128,9 @@
   4 /spine + subject card merge two maths courses for exception holders (T372); 5 session cache key lacks scope (3 h);
   6 home copy "Egyptian Ministry textbook / syllabus 2025–2026" shown to American students.
 71. Code default AINEXT_COURSE_GATING=off (docker-compose) → with gate off, grade is ignored (curriculum still enforced).
-    Samuel's call whether to flip the default to on / refuse to start without it.
+    Samuel's call whether to flip the default to on / refuse to start without it. → **Answered (answer 28, decision
+    49, 2026-10-01): "Refuse to start."** Built (`app/src/lib/env.ts` `resolveCourseGating`); production (already
+    `on`) unchanged.
 - Pilot: 8.2 lesson run wf_29588ac2-069 $2.28; 8.1/8.3a/8.3b/8.4 launched (wf_73acc1d0-255, wf_e927fd12-ec1,
   wf_96486877-d35, wf_e23ef7b4-30b).
 
@@ -141,7 +143,7 @@
 72. **Done 2026-09-27**: ADR-0020's exceptions are in one list, one to eight (the sign note stays the fourth, as on `main`; G10 prompts the fifth, Arabic lesson names the sixth, G10 English-only the seventh, the handoff line the eighth). Was: ADR-0020 exception numbering: the ADR says "fourth" twice (G10 prompts + widget sign note) — tidy at review.
 73. Product-designer copy review: G10/neutral home wording; "official syllabus" + "Unit 1 · prerequisite DAG" fixed
     text; tester's second maths card opens first lesson not saved place.
-74. (Same question as #71.) Open for Samuel: AINEXT_COURSE_GATING code default "off" (grade ignored when off) — default "on" / refuse to start?
+74. (Same question as #71.) Open for Samuel: AINEXT_COURSE_GATING code default "off" (grade ignored when off) — default "on" / refuse to start? → **Answered, see #71** (decision 49).
 
 ## G2, Chapter 8 (2026-09-26, Samuel's answers 18–22 → decisions 39–43)
 75. OPEN — **Ex8-5:5 excluded pending a detailed review later (Samuel, G2).** "PQRS is a parallelogram with P(5;3),
@@ -159,6 +161,9 @@
 78. QUALITY GAP (for Samuel at the go/no-go): the three-way check compares FINAL answers only, so typos inside the
     book's working (Ex8-6:32d, Ex8-6:45a) reach the tutor unless an S5 author happens to notice. Propose a step-level
     "working checker" (one agent per canonical solution, flags inconsistent lines) — cost to be measured; decide before fan-out.
+    → **Answered (answer 30, decision 51, 2026-10-01): "Yes, add it."** One checking agent per book solution + a free
+    numeric pre-check; flagged steps go to G2, never silently corrected; ≈ $0.03–0.05/solution; re-run on Chapter 8
+    too. Not yet built.
 79. CLOSED (`s7-v5`; `tests/test_widget_templates.py`) — **The six kinds of decision 27 were in the widget contract
     but never registered for the pipeline**: S7 author `wf_816352f4-fbc` saw polygon_builder, solid_scaler,
     box_plot_builder, venn_builder and area_model with an empty instrument, curve_sketcher with only linear and

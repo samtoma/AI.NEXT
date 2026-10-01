@@ -110,10 +110,16 @@ class RealBook(unittest.TestCase):
         self.assertEqual([r["chapter"] for r in s1], F.FANOUT_CHS)
         for a, b in zip(s1, s1[1:]):
             self.assertIn(a["id"], b["depends_on"])
+        first = f"ch{F.FANOUT_CHS[0]:02d}"
         for r in self.plan["runs"]:
             if r["stage"] == "S2-S4":
-                self.assertEqual(r["depends_on"], [f"s1-ch{r['chapter']:02d}"])
+                own = [f"s1-ch{r['chapter']:02d}"]
+                # the go / no-go: every other chapter's lessons wait for the first chapter end to end
+                want = own if r["chapter"] == F.FANOUT_CHS[0] else own + [f"s5-final-{first}"]
+                self.assertEqual(r["depends_on"], want)
                 self.assertGreater(r["order"], by[f"s1-ch{r['chapter']:02d}"]["order"])
+        self.assertTrue(by[f"s5-final-{first}"]["checkpoint"])
+        self.assertLess(by[f"s5-final-{first}"]["order"], 50, "chapter 1's go / no-go comes early in the plan")
 
     def test_two_runs_at_a_time_and_one_s0b(self):
         self.assertLessEqual(overlaps(self.plan["runs"]), 2)
