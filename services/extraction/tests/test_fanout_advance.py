@@ -100,6 +100,16 @@ class Box:
         for d in (F.PACKETS, F.EMBED, self.runs / "records", self.runs / "gates", self.runs / "lesson",
                   self.here / "objectives" / BOOK, self.here / "seed" / BOOK, self.here / "coverage"):
             d.mkdir(parents=True, exist_ok=True)
+        (self.here / "books").mkdir()
+        (self.here / "books" / f"{BOOK}.json").write_text(json.dumps({
+            "book": BOOK, "status": "ingest", "bundles": [], "generated": None, "parity": None,
+            "content_files": ["services/extraction/seed/content/g10m4s2-1.json", "services/extraction/seed/content/g10m4s3-1.json",
+                              "services/extraction/seed/content/g10m5s2-1.json"]}))
+        (self.runs / "fanout" / "loaded").mkdir(parents=True)
+        (self.runs / "fanout" / "loaded" / f"{BOOK}.json").write_text(json.dumps({
+            "book": BOOK, "status": "loadable", "bundles": [
+                "services/extraction/seed/g10-math/g10m-course.json", "services/extraction/seed/g10-math/g10m-c01.json",
+                "services/extraction/work/g10-math/pilot/seed/g10m-c08.json"], "content_files": []}))
         self.ex, self.db = FakeExec(self), FakeDb()
         self.runs_list: list[dict] = []
         self.copies: dict[tuple, tuple] = {}            # (run, label) -> (path, embedded)
@@ -724,7 +734,7 @@ class S5Draft(Base):
         rc, rep, wf = b.go("s5-draft-ch04", result=self.draft())
         self.assertEqual(rc, 0, rep)
         names = [s["step"] for s in rep["steps"]]
-        self.assertEqual(names, ["load dry run", "pg_dump", "load chapter", "apply G2 verdicts"])
+        self.assertEqual(names, ["load dry run", "pg_dump", "load chapter", "apply G2 verdicts", "register in the loaded-bundles config"])
         loads = self.ex.argv_of("load_seed.py")
         load = ["load_seed.py", "seed/g10-math/g10m-course.json", "seed/g10-math/g10m-c04.json", "--course", "course:us-g10-math-en"]
         self.assertEqual(loads, [load + ["--dry-run"], load])

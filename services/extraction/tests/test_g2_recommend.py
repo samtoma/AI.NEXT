@@ -813,7 +813,8 @@ class WorkflowUnderTheStub(unittest.TestCase):
         shutil.rmtree(cls.tmp, ignore_errors=True)
 
     def stub(self, rec, ver, **kw):
-        return run_stub(self.script, {"stub": {"rec": rec, "ver": ver, **kw}, **{k: v for k, v in kw.items() if k == "responses"}}, self.tmp)
+        top = {k: v for k, v in kw.items() if k in ("responses", "serialize_stages")}
+        return run_stub(self.script, {"stub": {"rec": rec, "ver": ver, **{k: v for k, v in kw.items() if k not in top}}, **top}, self.tmp)
 
     def rows(self, **over):
         k1, k2, k3, k7 = self.keys
@@ -943,6 +944,37 @@ class WorkflowUnderTheStub(unittest.TestCase):
         out = self.stub(self.rows(), {k1: self.VER, k2: self.VER}, bracket=True)
         self.assertEqual(out["result"]["problems"], [])
         self.assertEqual(sum(1 for r in out["result"]["results"] if r["rec"]), 4)
+
+    def test_stage_results_are_plain_json_whatever_the_runtime_does_with_them(self):
+        """2026-10-01: the real runtime hands pipeline() results back SERIALIZED (a Map arrives as {}); the first version of this script
+        returned Maps from its stages and died at its last line, after every agent had run ("d.got.get is not a function"), while the
+        stub kept live objects. The stub now serializes (modes "all" and "final"); the result must be the same in every mode, and the
+        verifying agents must run in each."""
+        k1, k2, k3, k7 = self.keys
+        results = {}
+        for mode in ("all", "final", False):
+            out = self.stub(self.rows(), {k1: self.VER, k2: self.VER}, serialize_stages=mode)
+            self.assertTrue(out["ok"], f"{mode}: {out['error']}")
+            self.assertEqual(sum(1 for c in out["calls"] if ":ver:" in c["label"]), 1, f"{mode}: the verifier ran")
+            self.assertEqual(out["result"]["tally"], {"accept/confirmed": 1, "fix/confirmed": 1, "exclude": 1, "hold": 1}, mode)
+            self.assertEqual(out["result"]["problems"], [], mode)
+            results[str(mode)] = out["result"]
+            # what a stage returns is data: nothing in the result is a Map or needs one
+            self.assertTrue(all(isinstance(r["rec"], dict) for r in out["result"]["results"]))
+        self.assertEqual(results["all"], results["final"])
+        self.assertEqual(results["all"], results["False"])
+
+    def test_the_stub_really_serializes_pipeline_results(self):
+        # guards the guard: a script that returns a Map from a stage must NOT work under the stub's default (it does not in the real runtime)
+        script = self.tmp / "maps.workflow.js"
+        script.write_text("export const meta = {\n  name: 'maps',\n  description: 'x',\n}\n"
+                          "const done = await pipeline([1, 2], async (n) => ({ n, m: new Map([['k', n]]) }), async (r) => r)\n"
+                          "return done.map((d) => d.m.get('k'))\n")
+        for mode, ok in (("all", False), ("final", False), (False, True)):
+            out = run_stub(script, {"stub": {}, "serialize_stages": mode}, self.tmp)
+            self.assertEqual(out["ok"], ok, f"{mode}: {out['error']}")
+            if not ok:
+                self.assertIn("get is not a function", out["error"] or "")
 
     def test_the_classes_the_prompt_offers_are_the_classes_the_collector_knows(self):
         src = WORKFLOW.read_text()

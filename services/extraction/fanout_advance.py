@@ -908,6 +908,42 @@ def written_since(path: Path, t0_ns: int, slack_ms: int = 20) -> bool:
     return path.exists() and path.stat().st_mtime_ns >= t0_ns - slack_ms * 1_000_000
 
 
+def loaded_config(P: Paths) -> Path:
+    """runs/<book>/fanout/loaded/<book>.json: the book config that lists every bundle in the pilot DB, so G5's parity (the course against its
+    bundles) checks the whole loaded set. It gains each chapter's seed bundle when that chapter loads."""
+    return P.runs / "fanout" / "loaded" / f"{BOOK}.json"
+
+
+def _chapter_of_bundle(path: str) -> int:
+    m = re.search(r"g10m-c(\d+)\.json$", path)
+    return int(m.group(1)) if m else (-1 if path.endswith("g10m-course.json") else 10_000)
+
+
+def register_loaded(P: Paths, ch: int, dry: bool = False) -> str | None:
+    """Add chapter `ch`'s assembled bundle (and the lesson content files it names that exist) to the loaded-bundles config; idempotent.
+    Returns what changed, or None. Written in the bundles' chapter order, the course bundle first."""
+    f = loaded_config(P)
+    K = chap(P, ch)
+    if not K.seed.exists():
+        raise StepFailed("loaded config", f"no assembled bundle {P.rel(K.seed)} to register")
+    base = read_json(P.here / "books" / f"{BOOK}.json")
+    raw = read_json(f) if f.exists() else dict(base, status="loadable", generated=None, parity=None,
+                                               bundles=[f"services/extraction/seed/{BOOK}/g10m-course.json"], content_files=[])
+    bundle = f"services/extraction/seed/{BOOK}/g10m-c{ch:02d}.json"
+    bundles = list(raw.get("bundles") or [])
+    if any(_chapter_of_bundle(b) == ch for b in bundles):
+        return None
+    repo = P.here.parents[1]
+    content = [c for c in base.get("content_files") or [] if re.search(rf"/g10m{ch}s\d", c) and (repo / c).exists()
+               and c not in (raw.get("content_files") or [])]
+    if dry:
+        return f"would add {bundle} (+{len(content)} content file(s))"
+    raw["bundles"] = sorted(bundles + [bundle], key=lambda b: (_chapter_of_bundle(b), b))
+    raw["content_files"] = list(raw.get("content_files") or []) + content
+    write_json(f, raw, indent=2)
+    return f"added {bundle} (+{len(content)} content file(s))"
+
+
 def last_line(text: str, prefix: str = "") -> str | None:
     hits = [l.strip() for l in (text or "").splitlines() if l.strip().startswith(prefix)]
     return hits[-1][:200] if hits else None
@@ -931,12 +967,14 @@ def ensure_loaded(A: Adv) -> None:
     if loaded and "load chapter" not in fl.marks and not A.opts.redo:
         fl.skipped("load chapter", f"already in the pilot DB ({have_q} questions, {have_n} nodes)")
         A.count(loaded={"already": True, "questions": have_q})
+        register(A)
         return
     if loaded and "load chapter" in fl.marks and not A.opts.redo:
         fl.skipped("load chapter", f"loaded by an earlier advance ({have_q} questions)")
         if "apply G2 verdicts" not in fl.marks:      # the load went through, the stamps did not
             fl.backup(f"{K.t}-load")
             fl.run("apply G2 verdicts", apply_, env=env, fresh=False, mark="apply G2 verdicts")
+        register(A)
         return
     if have_q or have_n:
         A.warn(f"chapter {A.ch} was partly loaded ({have_q}/{len(qids)} questions, {have_n}/{len(nids)} nodes): the add-only load completes it")
@@ -945,7 +983,17 @@ def ensure_loaded(A: Adv) -> None:
     fl.backup(f"{K.t}-load")
     r = fl.run("load chapter", load, env=env, fresh=False, mark="load chapter")
     fl.run("apply G2 verdicts", apply_, env=env, fresh=False, mark="apply G2 verdicts")
+    register(A)
     A.count(loaded={"already": False, "questions": len(qids), "nodes": len(nids), "summary": last_line(r.out, "loaded ")})
+
+
+def register(A: Adv) -> None:
+    """The chapter is in the pilot DB: its bundle goes into the loaded-bundles config G5's parity reads (a file, no DB write)."""
+    what = A.fl.call("register in the loaded-bundles config", lambda: register_loaded(A.P, A.ch, A.fl.dry))
+    if what is None and not A.fl.dry:
+        A.fl.steps[-1].update(status="skipped", note="already listed")
+    elif what:
+        A.fl.steps[-1]["note"] = what
 
 
 def h_s5_draft(A: Adv) -> bool:
@@ -1145,8 +1193,11 @@ def h_s5_final(A: Adv) -> bool:
     if queues:
         auto3 = P.runs / f"g3-{K.t}.auto.json"
         widgets = [x for b in bundles if b == wq for x in ("--widgets", P.rel(b))]
+        # --widget-gaps: the gap report's chapter-scope gaps are signed as auto-pass G3 (coverage's module_widgets needs them), in place:
+        # so G3 runs BEFORE coverage, and the gap report is not among its freshness inputs (G3 itself rewrites it)
         fl.run("G3 auto-pass", ["auto_pass_gates.py", "g3", BOOK, "--chapter", str(A.ch), *[x for q in queues for x in ("--queue", P.rel(q))],
-                                *widgets], inputs=[*queues, *bundles], outputs=[K.gates / f"g3-{K.t}.json", auto3])
+                                *widgets, "--widget-gaps", P.rel(K.widget_gaps)], inputs=[*queues, *bundles],
+               outputs=[K.gates / f"g3-{K.t}.json", auto3])
         if fl.dry or auto3.exists():
             if not fl.marked("apply G3 verdicts", [auto3]):
                 fl.backup(f"{K.t}-final-load")
@@ -1162,6 +1213,21 @@ def h_s5_final(A: Adv) -> bool:
         raise StepFailed("coverage", f"exit 1 and no report was written: {r.key_lines()}")
     coverage_verdict(A, K.cov)
     fl.run("parity (every course)", ["parity_check.py", "--candidate", F.DSN, "--all-courses"], fresh=False)
+    if not queues:
+        A.warn("no generated bundle: G3 could not run (it needs a review queue), so the chapter's widget gaps are not auto-signed and "
+               "coverage's module_widgets may fail for want of them — a completeness finding for Samuel")
+    # G5, the go/no-go: coverage + the drift guard for every course (the new one against the bundles that are LOADED) + cost; exit 1 = NO-GO
+    register(A)
+    loaded = loaded_config(P)
+    g5 = K.gates / f"g5-{K.t}.json"
+    r5 = fl.run("G5 auto-pass", ["auto_pass_gates.py", "g5", BOOK, "--chapter", str(A.ch), "--coverage", P.rel(K.cov), "--book-config", P.rel(loaded)],
+                env=env, inputs=[K.cov, loaded], outputs=[g5])
+    for l in (r5.out or "").splitlines():
+        if l.strip().startswith("for Samuel:"):
+            A.warn("G5 " + l.strip()[:200])
+    if g5.exists():
+        g = read_json(g5)
+        A.count(g5={"outcome": g.get("outcome"), "summary": str(g.get("summary"))[:160]})
     A.count(bundles=[b.name for b in bundles])
     return True
 
