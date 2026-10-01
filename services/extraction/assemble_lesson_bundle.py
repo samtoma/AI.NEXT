@@ -398,6 +398,48 @@ class Gate2(BaseModel):
     note: Optional[str] = None
 
 
+# ---- the options of a choice (collect-6, 2026-10-01) -----------------------------------------------------
+# options_source "lesson" is a closed set the BOOK uses: one verbal category each ("rational" / "irrational", "real" /
+# "non-real" / "undefined", true / false). Numbers, pairs of integers, values and combinations of categories are the
+# book's ANSWER to type; the typing agent that wrote options around a printed answer invented them (Chapter 1: "4 and 5"
+# among "3 and 4" and "5 and 6"). lesson.workflow.js refuses them (COLLECT-6); this is the same check on a run's item, for
+# a run an older collection made. It only ever ADDS a typing problem: G2 (a person, or the auto-pass's exclusion) rules.
+_CATEGORY = re.compile(r"^[A-Za-z][A-Za-z'’]*(?:[ -][A-Za-z][A-Za-z'’]*){0,3}$")
+_LISTISH = re.compile(r"[,;/]|\s(?:and|or)\s", re.I)
+INVENTED_OPTIONS = "options said to be the lesson's closed set are not categories"
+TOO_MANY_OPTIONS = "a choice needs 2–5 options, not"
+UNKEYED_OPTIONS = "a choice's options all need a key"
+
+
+def _plain_option(o) -> str:
+    return re.sub(r"\\(?:text|mathrm|textrm|mbox)\{([^{}]*)\}", r"\1", str(o if o is not None else "").replace("$", "")).strip()
+
+
+def is_category(o) -> bool:
+    w = _plain_option(o)
+    return bool(_CATEGORY.match(w)) and not _LISTISH.search(w)
+
+
+def choice_option_problems(item: dict) -> list[str]:
+    """The typing problems a choice item's OPTIONS have that its run did not already name (idempotent: a problem the
+    collection reported is not added again)."""
+    if item.get("answer_type") != "choice":
+        return []
+    choices = [c for c in item.get("choices") or [] if isinstance(c, dict)]
+    have = item.get("typing_problems") or []
+    out: list[str] = []
+    if len(choices) > 5 and not any(h.startswith(TOO_MANY_OPTIONS) for h in have):
+        out.append(f"{TOO_MANY_OPTIONS} {len(choices)}: a list in the stem to select from is not a choice")
+    if any(not c.get("key") for c in choices) and not any(h.startswith(UNKEYED_OPTIONS) for h in have):
+        out.append(f"{UNKEYED_OPTIONS} (A, B, C …)")
+    if item.get("options_source") == "lesson" and not any(h.startswith(INVENTED_OPTIONS) for h in have):
+        bad = [c.get("text") for c in choices if not is_category(c.get("text"))]
+        if bad:
+            out.append(f"{INVENTED_OPTIONS}: " + ", ".join(f'"{b}"' for b in bad[:3]) +
+                       " — numbers, pairs, values and combinations are the book's answer to type, never options to invent")
+    return out
+
+
 class RunItem(BaseModel):
     """One S3 book item after gate G2 (extraction-pipeline.md §3.6)."""
     model_config = ConfigDict(extra="allow")
@@ -436,22 +478,28 @@ class RunItem(BaseModel):
         if (self.kind == "worked_example") != (self.solution_provenance == "book_worked"):
             raise ValueError(f"{self.ref}: a worked example's solution is `book_worked`, and only "
                              f"a worked example's is (got {self.solution_provenance})")
-        if self.answer_type == "choice":
-            keys = [c.get("key") for c in self.choices or []]
-            if len(keys) < 2 or self.answer not in keys:
-                raise ValueError(f"{self.ref}: a choice item needs >= 2 choices and its key "
-                                 f"among them")
-        elif self.choices:
-            raise ValueError(f"{self.ref}: only a choice item carries choices")
-        if self.answer_type == "expression":
-            if not self.marker:
-                raise ValueError(f"{self.ref}: an expression item carries its marker spec "
-                                 "(contracts/answer-marker.md)")
-            schemas.AnswerSpec.model_validate(self.marker)
-        elif self.marker:
-            raise ValueError(f"{self.ref}: only an expression item carries a marker spec")
-        if self.answer_type in ("numeric", "choice") and not self.answer:
-            raise ValueError(f"{self.ref}: a {self.answer_type} item needs its answer key")
+        # An item the pipeline itself flagged (`typing_problems`) and that G2 has not ruled on — or excluded — is never emitted
+        # as typed, so its typing need not be well formed: 4 choice items of Chapter 1 had a compound key no option
+        # carries, 4 a list of numbers to select from, and the draft G2 reads could not even be written for them. A person's
+        # fix, an accept or a hold puts the full shape back on it: those items are emitted.
+        unsettled = bool((self.model_extra or {}).get("typing_problems")) and (self.g2 is None or self.g2.verdict == "exclude")
+        if not unsettled:
+            if self.answer_type == "choice":
+                keys = [c.get("key") for c in self.choices or []]
+                if len(keys) < 2 or self.answer not in keys:
+                    raise ValueError(f"{self.ref}: a choice item needs >= 2 choices and its key "
+                                     f"among them")
+            elif self.choices:
+                raise ValueError(f"{self.ref}: only a choice item carries choices")
+            if self.answer_type == "expression":
+                if not self.marker:
+                    raise ValueError(f"{self.ref}: an expression item carries its marker spec "
+                                     "(contracts/answer-marker.md)")
+                schemas.AnswerSpec.model_validate(self.marker)
+            elif self.marker:
+                raise ValueError(f"{self.ref}: only an expression item carries a marker spec")
+            if self.answer_type in ("numeric", "choice") and not self.answer:
+                raise ValueError(f"{self.ref}: a {self.answer_type} item needs its answer key")
         if self.verification == "no_printed_answer" and self.printed_answer:
             raise ValueError(f"{self.ref}: 'no_printed_answer' but a printed answer is given")
         if self.less_specific is not None:
@@ -493,6 +541,9 @@ class RunItem(BaseModel):
             return "excluded"
         if self.answer_type == "not_markable":
             return "teaching"
+        # typing the pipeline flagged and nobody ruled on: never emitted as verified (its shape need not be well formed)
+        if (self.model_extra or {}).get("typing_problems") and not self.g2:
+            return "held"
         if self.g2 and self.g2.verdict in ("accept", "fix"):
             return "verified"
         if self.verification == "agreed" and not self.g2:
