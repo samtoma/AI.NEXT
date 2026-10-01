@@ -20,7 +20,11 @@ directory ignores itself):
                        exercise_item (problem + the EPUB worked solution + the PDF shortcode +
                        the printed answer) · teacher_only (FR-4408: S2 drops these) · unparsed
                        Maths stays an image reference, ⟦m:<md5>⟧ in text and `maths: [md5…]`:
-                       the EPUB has no MathML, LaTeX or alt text; S0b supplies the LaTeX.
+                       the EPUB has no MathML, LaTeX or alt text; S0b supplies the LaTeX. A worked
+                       example's step TITLE is no exception: `steps[].title` carries its ⟦m:<md5>⟧
+                       references in the form step text uses, and `steps[].title_maths` lists them
+                       (until 2026-10-01 they were dropped: "Extend to so that and join";
+                       repair_step_titles.py repairs what was built from the old blocks).
     epub_index.json    per spine file: sections, sub-headings, worked examples, exercises,
                        figures by context, boxes, media, maths counts (the S0 scout's inventory,
                        made by the same parse as the blocks; build_manifest.py reads it)

@@ -1248,3 +1248,36 @@ uv run apply_review_verdicts.py --g2 runs/g10-math/g2.json --book g10-math
 
 Tests: `tests/test_multipart.py` (the rules, the packet hook, the assembly across lessons, the review note; the DB half
 needs `AINEXT_TEST_PG`).
+
+## 12. Worked-example step titles keep their maths (2026-10-01, `repair_step_titles.py`)
+
+S0a used to read a worked example's step heading without its equation images: "Extend DE to F so that EF = DE and join C
+to F" reached the packet, the run, the bundle and the database as "Extend to so that and join" (Grade 10: 138 of 571 step titles,
+81 worked examples, 209 images). `source_adapter.py` now keeps them (`steps[].title` carries ⟦m:<md5>⟧, `steps[].title_maths` lists
+them) and `blocks.jsonl` was regenerated; a copy of the old file is `work/g10-math/backups/blocks.pre-step-title-fix.jsonl`.
+
+- **New packets are right.** Lesson packets are built from `blocks.jsonl` when a run is prepared, so a lesson prepared after the fix
+  carries correct titles. A copy prepared before it keeps its old args (so do its agents' prompts).
+- **An S1 run made on the old blocks no longer assembles.** `assemble_objectives.py assemble` / `approve` rebuild the chapter packet from
+  today's blocks and refuse a run whose `packet_sha256` differs. Either re-run S1 on a freshly prepared packet, or assemble and approve
+  it against the inputs it was made on: `--blocks work/g10-math/backups/blocks.pre-step-title-fix.jsonl`. (`auto_pass_gates.py g1 --approve`
+  has no `--blocks`: run `g1` without `--approve`, then `assemble_objectives.py approve … --verdicts … --blocks <that file>`.)
+- **What was built from the old blocks is repaired in place, with no model call:**
+
+  ```sh
+  uv run repair_step_titles.py g10-math plan  --chapters 5,6,7      # the dry run: every change, every refusal (--report out.json)
+  uv run repair_step_titles.py g10-math apply --chapters 5,6,7      # originals + ledger → work/<book>/backups/step-title-repair-<UTC>/
+  uv run repair_step_titles.py g10-math db                          # read-only: what the database still shows
+  uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c05.json --course course:us-g10-math-en --update --dry-run
+  ```
+
+  It rewrites saved runs (`lessons/`, `lessons/recollected/`), the G2 splits (`lesson/`, `lesson-draft/`) and the assembled bundles,
+  matching each damaged string by (chapter, worked-example number, step position) and rendering the title as the packet and the
+  assembly do. Idempotent; refuses anything that is neither the old nor the repaired text. **Repair the runs before any re-assembly**,
+  and **again after any `recollect_lessons.py` of a run prepared before the fix**: a recollect replays the archived (old) args, so it
+  writes the old titles back (a recollect with the new packet is refused: the typing agents' prompts changed). G2 verdict files are
+  keyed by `<slug>:<ref>`, not by content, so nothing in them changes.
+- **Not rewritten, only listed:** S1 evidence quotes, generated S2 claims, S5 flags, the working-check flags (the "multiplier is
+  missing" flag on `q:g10m1s3-1-5:we02` was this defect), and `runs/<book>/records/`.
+
+Tests: `tests/test_repair_step_titles.py`, `tests/test_source_adapter.py` (`StepTitleMaths`).
