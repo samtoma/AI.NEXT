@@ -278,11 +278,13 @@ function normTex(s) {
 // a named left side: x=, y_1=, m_{AB}=, d_{AB}\approx, the text layer's flattened mAC=, and a named point
 // with its variables, P(x,y)= (COLLECT-2, COLLECT-3)
 const stripLhs = (t) => t.replace(/^(?!(?:sin|cos|tan|cot|sec|csc))[A-Za-zπλθαβγδμσφω]{1,4}(?:_(?:\{[A-Za-z0-9]+\}|[A-Za-z0-9]+))?(?:\([a-z](?:,[a-z])*\))?(?:=|\\approx|≈)/, '')
-// a trigonometric ratio of an angle names what the value is of, as a letter does (sin45°=, tan{30°}=, sin Â=, cosθ≈): stripped from ONE side
-// only, against a bare value on the other, so "sin A = 3/5" and "cos A = 3/5" are still different (Chapters 5 and 6)
-const TRIG_LHS = /^(?:sin|cos|tan|cot|sec|csc)[^=≈]{1,16}(?:=|≈)/
+// a trigonometric ratio of an angle names what the value is of, as a letter does (sin45°=, tan{30°}=, sin Â=, cosθ≈, cosθ/sinθ=): stripped from ONE side
+// only, against a side that names no trigonometric function at all (a bare value, "=1/√2", the text layer's flattened "AC AB = AD BD"), so
+// "sin A = 3/5" and "cos A = 3/5" are still different (Chapters 5 and 6)
+const TRIG_NAME = '(?:sin|cos|tan|cot|sec|csc)'
+const TRIG_LHS = new RegExp(`^(?:\\\\frac\\{${TRIG_NAME}[^{}=]{0,16}\\}\\{${TRIG_NAME}[^{}=]{0,16}\\}|${TRIG_NAME}[^=≈]{1,16})(?:=|≈)`)
 const trigRest = (n) => (TRIG_LHS.test(n) ? n.replace(TRIG_LHS, '') : null)
-const isBare = (n) => !/[=≈]/.test(n)
+const noTrig = (n) => !new RegExp(TRIG_NAME).test(n)
 // a point's name before its coordinates: M(1,0) is the pair (1,0); only a name directly before ONE
 // parenthesised pair, so f(2) or 3(x+1) is never touched (COLLECT-3)
 const stripPointName = (t) => (/^[A-Za-z]{1,2}(?:_(?:\{[A-Za-z0-9]+\}|[A-Za-z0-9]))?\([^()]*,[^()]*\)$/.test(t) ? t.replace(/^[^(]+/, '') : t)
@@ -336,14 +338,14 @@ function settleOne(a, b, textLayer) {
   const na = normTex(a), nb = normTex(b)
   if (na && sameForm(na, nb)) return { route: 'normalised', verdict: 'equivalent' }
   const ta = trigRest(na), tb = trigRest(nb)
-  if (na && ((ta !== null && isBare(nb) && sameForm(ta, nb)) || (tb !== null && isBare(na) && sameForm(tb, na)))) return { route: 'normalised', verdict: 'equivalent' }
+  if (na && ((ta !== null && noTrig(nb) && sameForm(ta, nb)) || (tb !== null && noTrig(na) && sameForm(tb, na)))) return { route: 'normalised', verdict: 'equivalent' }
   if (textLayer) {
     // the signature of each side, and of a named point's pair without its name ("T ( −1; 1 2 )")
     const sigOf = (x) => x.replace(/\\[a-zA-Z]+/g, '').replace(SIG_DROP, '')
     const sigs = (n) => [...new Set([n, stripPointName(n), stripLhs(n)])].map(sigOf)
     const sa = sigs(na), sb = sigs(nb)
     if (sa[0] && sa.some((x) => sb.some((y) => sameForm(x, y)))) return { route: 'signature', verdict: 'equivalent' }
-    if (sa[0] && ((ta !== null && isBare(nb) && sb.some((y) => sameForm(sigOf(ta), y))) || (tb !== null && isBare(na) && sa.some((x) => sameForm(sigOf(tb), x))))) return { route: 'signature', verdict: 'equivalent' }
+    if (sa[0] && ((ta !== null && noTrig(nb) && sb.some((y) => sameForm(sigOf(ta), y))) || (tb !== null && noTrig(na) && sa.some((x) => sameForm(sigOf(tb), x))))) return { route: 'signature', verdict: 'equivalent' }
   }
   return null
 }
