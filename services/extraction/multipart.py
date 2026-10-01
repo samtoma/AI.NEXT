@@ -323,7 +323,7 @@ def _one_point(key: str | None) -> bool:
         depth -= ch == ")"
         if depth == 0 and i < len(k) - 1:
             return False
-    return depth == 0 and ";" in k or "," in k
+    return depth == 0 and (";" in k or "," in k)
 
 
 # ------------------------------------------------------------------------------------ referential words

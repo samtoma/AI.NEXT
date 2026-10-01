@@ -102,6 +102,7 @@ from typing import Literal, Optional
 from pydantic import BaseModel, ConfigDict, Field, ValidationError, model_validator
 
 import book_config
+import multipart
 import schemas
 from schemas import Lesson
 
@@ -648,6 +649,9 @@ class Report:
         self.stand_ins: list[dict] = []        # book_image visuals attached (question, file, native kind)
         self.held_reveals: list[dict] = []     # a book picture that shows the unknown: held, never shown
         self.held_katex: list[str] = []        # A2: a question whose own text KaTeX cannot parse: held
+        # multi-part exercises (multipart.py): a part carries what it depends on; what that cannot settle is listed
+        self.carried_stems: list[dict] = []    # {question, lesson, ref, rules, from, sentences, before, after}
+        self.multipart_unresolved: list[dict] = []   # {ref, lesson, reason, detail, sources}: for the review backlog
         self.book_name = ""
 
     def as_dict(self) -> dict:
@@ -663,7 +667,8 @@ class Report:
                 "forms_from_rules": self.forms_from_rules, "visuals_dropped": self.visuals_dropped,
                 "held_for_figure": self.held_for_figure, "captions_fixed": self.captions_fixed,
                 "book_pictures": "on" if self.book_pictures else "off (--no-book-pictures)",
-                "stand_ins": self.stand_ins, "held_reveals": self.held_reveals, "held_katex": self.held_katex}
+                "stand_ins": self.stand_ins, "held_reveals": self.held_reveals, "held_katex": self.held_katex,
+                "stem_carry": {"carried": self.carried_stems, "unresolved": self.multipart_unresolved}}
 
 
 def _norm(text: str | None, where: str, report: Report) -> str | None:
