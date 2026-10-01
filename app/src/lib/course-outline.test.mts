@@ -29,6 +29,7 @@ import { fileURLToPath } from "node:url";
 
 import {
   BEING_PREPARED,
+  bookOpenByDefault,
   chaptersBeingPrepared,
   hasUnpreparedLessons,
   isUnprepared,
@@ -37,6 +38,8 @@ import {
   outlineOf,
   pickerGroups,
   preparedSlugs,
+  readyCount,
+  readyCountText,
   type CatalogueLesson,
   type OutlineLesson,
   type OutlineRow,
@@ -286,6 +289,25 @@ test("everything prepared: no placeholder, no 'being prepared', the whole-course
   assert.deepEqual(chaptersBeingPrepared(G10, OUTLINE, prepared), []);
   assert.equal(hasUnpreparedLessons(G10, OUTLINE, prepared), false);
   assert.ok(pickerGroups(all, OUTLINE).every((g) => !g.preparing && g.entries.every((e) => e.ready)));
+});
+
+test("Samuel 2026-10-01: the Grade 10 list is open by default; National keeps its collapsed picker", () => {
+  assert.equal(bookOpenByDefault(G10, OUTLINE), true);
+  assert.equal(bookOpenByDefault("course:prep3-math-en", OUTLINE), false, "a National lesson, even beside a G10 outline");
+  assert.equal(bookOpenByDefault(G10, []), false, "no outline loaded: as before");
+  assert.equal(bookOpenByDefault(null, OUTLINE), false);
+});
+
+test("Samuel 2026-10-01: the course card counts ready of the whole book, growing as chapters load", () => {
+  const today = readyCount(G10, OUTLINE, preparedSlugs(CH8));
+  assert.deepEqual(today, { ready: 5, total: 65 });
+  assert.equal(readyCountText(today!), "5 of 65 lessons ready");
+  // Chapter 1 loads — nothing else changes
+  const ch1 = OUTLINE.filter((o) => o.moduleId === "module:g10m-c01").map(g10Lesson);
+  assert.equal(readyCountText(readyCount(G10, OUTLINE, preparedSlugs([...ch1, ...CH8]))!), "13 of 65 lessons ready");
+  // a course with no outline gets no count — its card keeps "N lessons"
+  assert.equal(readyCount("course:prep3-math-en", OUTLINE, preparedSlugs(nationalCatalogue())), null);
+  assert.doesNotMatch(readyCountText(today!), ARABIC);
 });
 
 /* ------------------------------------------------------------------ */

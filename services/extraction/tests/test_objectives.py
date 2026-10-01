@@ -388,6 +388,22 @@ class ObjectivesStage(unittest.TestCase):
         self.assertIn("terminology", kinds)
         self.assertEqual(res["status"], "awaiting_g1")
 
+    def test_an_auto_passed_g1_answers_every_owed_decision_and_approves(self):
+        # answer 37c: auto_pass_gates.py g1 writes the AI line's recommendation as G1's verdicts file; it must
+        # leave nothing owed, and the approval it leads to is signed as an auto-pass, never a person
+        import auto_pass_gates as apg
+        r = good_responses(self.args)
+        r["S1:reconcile:g10m8s3-1"]["objectives"][1]["from"] = {"a": ["A2"], "b": []}
+        _, run = self.run_s1(r)
+        res = self.assemble(run)
+        v, blocked, decisions = apg.g1_verdicts(res["check"])
+        self.assertEqual(blocked, [])
+        self.assertTrue(decisions)
+        ev_ = ao.evaluate_chapter(self.args["chapter"], run, self.vocab, v)
+        self.assertEqual((ev_["failures"], ao.undecided(ev_["decisions"], v)), ([], []))
+        g1 = {"approved_by": "auto-pass G1 (AI recommendation)", "approved_at": "2026-10-01T00:00:00+00:00"}
+        self.assertEqual(self.assemble(run, v, g1)["status"], "approved")
+
     # ------------------------------------------------------------------ G1 and after
     def verdicts_for(self, check):
         v = {"objectives": {}, "terminology": {}, "acknowledged": []}

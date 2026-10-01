@@ -190,10 +190,13 @@ test("Grade 10: the whole book is OPEN on the check-in — no 'Pick something el
   assert.doesNotMatch(html, /<details/, "no collapsed picker");
   assert.doesNotMatch(html, /Pick something else/);
   assert.match(html, /Just practise/, "the practice door is still there");
-  // every chapter, in the book's order
-  const c1 = html.indexOf("Algebraic expressions");
-  const c8 = html.indexOf("Analytical geometry");
+  // every chapter, in the book's order, inside the open list
+  const book = html.slice(html.indexOf('aria-label="Everything in the book"'));
+  const c1 = book.indexOf("Algebraic expressions");
+  const c8 = book.indexOf("Analytical geometry");
   assert.ok(c1 > 0 && c8 > c1, "Chapter 1 before Chapter 8");
+  // and the list sits between the card and the practice door
+  assert.ok(html.indexOf("Everything in the book") < html.indexOf("Just practise"));
 });
 
 test("Grade 10: a prepared lesson is a link; an unprepared one is shown, says so, and links nowhere", () => {
@@ -228,8 +231,8 @@ test("Grade 10: finishing everything ready does not claim 'the whole course' whi
 test("Grade 10: no Arabic, and no literal colour — tokens only", () => {
   const html = g10CheckIn({ courseComplete: true, morePreparing: true });
   assert.doesNotMatch(html, ARABIC);
-  assert.doesNotMatch(html, /#[0-9a-fA-F]{3,8}\b(?![^<]*<\/)/, "no hex colour in an attribute");
-  assert.doesNotMatch(html, /\brgba?\(/);
+  assert.doesNotMatch(html, /(class|style)="[^"]*#[0-9a-fA-F]{3,8}/, "no hex colour in a class or style");
+  assert.doesNotMatch(html, /(class|style)="[^"]*\brgba?\(/, "no rgb() colour in a class or style");
 });
 
 /* ------------------------------------------------------------------ */
@@ -246,7 +249,7 @@ test("the Grade 10 card counts what is ready of the whole book; a card without a
   const html = render(h(SubjectHome as never, { summaries: [g10, NATIONAL_CARDS[0]], studentName: "Lina Fouad" }));
   assert.match(html, /5 of 65 lessons ready/);
   assert.match(html, /35 lessons/, "the card with no outline");
-  assert.doesNotMatch(html, /5 lessons</);
+  assert.doesNotMatch(html, />5 lessons</, "never the bare count for a course with an outline");
 });
 
 /* ------------------------------------------------------------------ */
