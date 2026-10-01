@@ -15,7 +15,11 @@ What each test pins (none weakens the three-way rule — each shows a real disag
     five options is a list to select from, every option still keyed; a key that is no option is never an option with no key;
   * a verbal choice settles by the option each source names: no judge call, "rational" is not in "irrational", a negation
     or a number in an answer settles nothing, and the solution's last sentence is its conclusion;
-  * an item typed not markable marks nothing: a copy of the book's final that is not faithful is no problem.
+  * an item typed not markable marks nothing: a copy of the book's final that is not faithful is no problem;
+  * a form the marker kind cannot carry ("Factorise: 25x^3 + 1", key (∛25·x+1)(…) typed kind "surd" with form "factorised", which
+    schemas.AnswerSpec refuses and stopped the whole lesson's G2 draft): where the key is plainly algebra in the declared variables
+    the KIND is normalised (expression, or equation with an "="), the key kept exactly and the retype recorded; an interval, a
+    list, coordinates, a key with no variable in it keep a typing problem (held) and are never retyped; 'simplest' on a surd is fine.
 No model is called.
 """
 
@@ -279,6 +283,104 @@ class Collect6(unittest.TestCase):
         _, x = self.one(it, t, "")
         self.assertEqual(x["typing_problems"], [])
         self.assertNotIn("unchecked", x["verify"])
+
+
+CUBE_SUM = ["Note that $\\left(\\sqrt[3]{25}\\right)^{3}=25$ .",
+            "$\\begin{align*}25x^{3}+1&=(\\sqrt[3]{25}x+1)[(\\sqrt[3]{25}x)^{2}-(\\sqrt[3]{25}x)(1)+(1)^{2}]\\\\"
+            "&=(\\sqrt[3]{25}x+1)((\\sqrt[3]{25})^{2}x^{2}-\\sqrt[3]{25}x+1)\\end{align*}$"]
+CUBE_KEY = "(\\sqrt[3]{25}x+1)((\\sqrt[3]{25})^2x^2-\\sqrt[3]{25}x+1)"
+CUBE_PRINTED = "( 3√ 25x + 1)(( 3√ 25)2x2 −3√ 25x + 1)"
+
+
+@unittest.skipUnless(NODE, "node runs the workflow through the stub runtime")
+class KindForForm(Collect6):
+    """The marker kind a form cannot be asked of (g10m1s7-3, Ex1-9:11): normalised where the key is plainly algebra, flagged
+    where it is not. (Inherits the harness; the inherited tests are not run again here.)"""
+    run_inherited = False
+
+    def cube(self, kind="surd", form="factorised", key=CUBE_KEY, variables=("x",), blind=CUBE_KEY, ref="Ex1-9:11", stem="Factorise: $25x^{3}+1$",
+             solution=CUBE_SUM, printed=CUBE_PRINTED, judge=None):
+        it = item(ref, stem, solution, printed)
+        t = typing(ref, key, "$=(\\sqrt[3]{25}x+1)((\\sqrt[3]{25})^{2}x^{2}-\\sqrt[3]{25}x+1)$", "expression",
+                   marker_kind=kind, form=form, variables=list(variables))
+        return self.one(it, t, blind, judge)
+
+    def test_a_surd_factorised_expression_is_typed_expression_and_the_key_is_kept_exactly(self):
+        rep, x = self.cube()
+        self.assertEqual(x["answer_type"], "expression")
+        self.assertEqual(x["marker"], {"kind": "expression", "key": CUBE_KEY, "form": "factorised", "variables": ["x"], "tolerance": None})
+        self.assertEqual(x["answer"], CUBE_KEY)
+        self.assertEqual(x["typing_problems"], [], x["typing_problems"])
+        self.assertEqual(x["typing_retyped"]["rule"], "kind-for-form")
+        self.assertEqual(x["typing_retyped"]["as"], "expression (expression)")
+        self.assertEqual(x["typing_retyped"]["from"], "expression (surd)")
+        self.assertIn("not to kind 'surd'", x["typing_retyped"]["because"][0])
+        r = rep["result"]["lessons"][0]["verify"]["retyped"]
+        self.assertEqual([(i["ref"], i["rule"], i["key"]) for i in r], [("Ex1-9:11", "kind-for-form", CUBE_KEY)])
+
+    def test_the_retyped_item_is_a_valid_run_item_and_the_draft_writes_it(self):
+        import assemble_lesson_bundle as alb
+        import schemas
+        _, x = self.cube()
+        x = dict(x, lo="lo:zz8s2-1-1")
+        schemas.AnswerSpec.model_validate(x["marker"])
+        self.assertEqual(alb.marker_spec_problems(x), [])
+
+    def test_the_same_item_as_an_equation_when_the_key_has_an_equals_sign(self):
+        _, x = self.cube(key="x=\\sqrt{y}+1", variables=("x", "y"), form={"subject": "x"}, blind="x=\\sqrt{y}+1",
+                         solution=["$x=\\sqrt{y}+1$"], printed="x = √ y + 1", stem="Make $x$ the subject of $(x-1)^2=y$.")
+        self.assertEqual(x["marker"]["kind"], "equation")
+        self.assertEqual(x["marker"]["form"], {"subject": "x"})
+        self.assertEqual(x["typing_problems"], [], x["typing_problems"])
+        self.assertEqual(x["typing_retyped"]["as"], "expression (equation)")
+        _, y = self.cube(key="(x+\\sqrt{2})(x-\\sqrt{2})=0", variables=("x",), blind="(x+\\sqrt{2})(x-\\sqrt{2})=0",
+                         solution=["$(x+\\sqrt{2})(x-\\sqrt{2})=0$"], printed="(x + √ 2)(x − √ 2) = 0", stem="Factorise $x^2-2=0$.")
+        self.assertEqual(y["marker"]["kind"], "equation")
+
+    def test_expanded_is_normalised_too(self):
+        _, x = self.cube(form="expanded", key="x^2+2\\sqrt{2}x+2", variables=("x",), blind="x^2+2\\sqrt{2}x+2",
+                         solution=["$(x+\\sqrt{2})^2=x^2+2\\sqrt{2}x+2$"], printed="x2 + 2 √ 2x + 2", stem="Expand $(x+\\sqrt{2})^2$.")
+        self.assertEqual((x["marker"]["kind"], x["marker"]["form"]), ("expression", "expanded"))
+        self.assertEqual(x["typing_problems"], [], x["typing_problems"])
+
+    def test_a_kind_the_key_cannot_settle_keeps_the_problem_and_is_never_retyped(self):
+        why = "form 'factorised' applies to an expression or an equation, not to kind '{}'"
+        cases = {
+            "interval": dict(kind="interval", key="x<\\sqrt{2}", variables=("x",)),
+            "coordinates": dict(kind="coordinates", key="(x;\\sqrt{2})", variables=("x",)),
+            "a list of values": dict(kind="values", key="2; \\sqrt{3}", variables=("x",)),
+            "values by words": dict(kind="values", key="x=2 or x=3", variables=("x",)),
+            "no variable in the key": dict(kind="surd", key="3\\sqrt{2}", variables=("x",)),
+            "no variable declared": dict(kind="surd", key="(\\sqrt{2}x+1)(x-1)", variables=()),
+        }
+        for label, c in cases.items():
+            _, x = self.cube(kind=c["kind"], key=c["key"], variables=c["variables"], blind=c["key"],
+                             solution=["$" + c["key"] + "$"], printed=c["key"])
+            self.assertIn(why.format(c["kind"]), x["typing_problems"], label)
+            self.assertNotIn("typing_retyped", x, label)
+            self.assertEqual(x["marker"]["kind"], c["kind"], label)
+            self.assertNotEqual(x["verification"], "agreed", label)
+
+    def test_a_subject_form_on_a_key_without_an_equals_sign_is_flagged_not_retyped(self):
+        _, x = self.cube(form={"subject": "x"}, key="\\sqrt{2}x+1", blind="\\sqrt{2}x+1", solution=["$\\sqrt{2}x+1$"], printed="√ 2x + 1")
+        self.assertIn('a subject form needs marker kind "equation" (the app\'s marker)', x["typing_problems"])
+        self.assertNotIn("typing_retyped", x)
+
+    def test_decimal_on_a_surd_is_flagged_and_simplest_on_a_surd_is_left_alone(self):
+        _, x = self.cube(form="decimal", key="1,41", variables=("x",), blind="1,41", solution=["$1,41$"], printed="1,41", stem="Write it as a decimal.")
+        self.assertIn("form 'decimal' applies to a number, a recurring decimal or values, not to kind 'surd'", x["typing_problems"])
+        self.assertNotIn("typing_retyped", x)
+        _, y = self.cube(form="simplest", key="3\\sqrt{2}", variables=(), blind="3\\sqrt{2}", solution=["$3\\sqrt{2}$"], printed="3 √ 2",
+                         stem="Simplify $\\sqrt{18}$.")
+        self.assertEqual((y["marker"]["kind"], y["marker"]["form"], y["typing_problems"]), ("surd", "simplest", []))
+        self.assertNotIn("typing_retyped", y)
+
+    def test_an_expression_that_was_already_the_right_kind_is_untouched(self):
+        _, x = self.cube(kind="expression", key="(x+2)(x^2-2x+4)", blind="(x+2)(x^2-2x+4)", solution=["$x^3+8=(x+2)(x^2-2x+4)$"],
+                         printed="(x + 2)(x2 −2x + 4)", stem="Factorise $x^3+8$.")
+        self.assertNotIn("typing_retyped", x)
+        self.assertEqual(x["marker"]["kind"], "expression")
+        self.assertEqual(x["typing_problems"], [], x["typing_problems"])
 
 
 @unittest.skipUnless(NODE, "node runs the workflow through the stub runtime")
