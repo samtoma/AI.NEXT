@@ -235,6 +235,13 @@ const ORACLE_SCHEMA = { type: 'object', required: ['verdict', 'subheadings'], pr
 // LAST link is the answer it states; "a = 4(−24) = −96" is −96; a list of words ("adjacent; hypotenuse; opposite") against the sentence that names them
 // ($a$ is the adjacent side …: as many labels as words); a sentence's units ("9,96 mm and 8,35 mm"); a plain "therefore"; a kind the typing agent
 // never named is the key's ('kind-from-key').
+// COLLECT-6, Chapter 6 (functions; 92 of its 97 flagged items excluded, 51 of them false): (1) options said to be a figure's labels are accepted when they are
+// single labels OR function labels (f(x), g(x), y(t): the graph prints them), never a mix of the two, and invented options are still refused;
+// (2) a relation reads past units attached to each bound ("0 m ≤ s(t) ≤ 10 m" is 0 ≤ s(t) ≤ 10; "The domain is 0 s ≤ t ≤ 20 s. It represents…" too; a set-builder's braces and
+// "Domain:" / "Range:" labels, a capital point name before a pair are dropped): ONE unit per bound, never a letter the key itself uses as a variable, and the relation must
+// otherwise match, so a changed bound, relation or extra constraint is refused; (3) "a=-1; q=1" against a sentence that states both and then the equation (assignedList cuts at
+// the first "so / therefore / hence / thus"); (4) trig names (\sin, \cos, …) are plain letters in the comparison and a trig ratio is a ONE-sided label, so sin never settles
+// against cos; \therefore glued by the EPUB (\thereforeh) and "◦" for the degree sign are read like their spelled forms. Not changed: the 2–5 option cap, options not in the stem or lesson.
 const norm = (s) => String(s || '').normalize('NFKC').replace(/[−–—]/g, '-').replace(/[“”]/g, '"').replace(/[’‘]/g, "'")
   .replace(/\$/g, '').replace(/\s+/g, ' ').trim().toLowerCase()
 const contains = (hay, needle) => { const n = norm(needle); return n.length >= 8 && norm(hay).includes(n) }

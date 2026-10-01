@@ -1150,3 +1150,11 @@ on their own; they are listed here because their model question is a book error.
 letter A–Z as a symbol (it marks itself correct and another letter incorrect, is case-sensitive, and `E` is not Euler's e; only an undeclared `U` fails, being the union sign), so the held reason the agent gave for Ex3-1:18 ("E may read as Euler's constant") is wrong: it was excluded for six options, and could be
 typed as an expression like Ex3-1:3. (d) Four stem repairs are live in Chapter 1 and some more in Chapters 4 and 5, each marked for your review; 2p changes a digit (7 to 11) and is the one to look at first. (e) The verifier refused, conservatively, items whose key has two correct FORMS
 (WE3 and Ex1-11:26c: a fraction and a mixed number): the marker marks equivalent values correct, so these are probably fine to accept.
+
+## The delta working checks reach the console — 2026-10-01 (data-engineer)
+
+The five delta working checks (ch01 18 solutions, ch02 16, ch03 1, ch04 8, ch05 10) had been collected into `runs/g10-math/working-check/chNN.g2rec.flags.json`, but the console's backlog reads only the canonical
+`chNN.flags.json`, so their flags were invisible. Fixed the right way: `working_check.py collect --merge-into <canonical>` (and a standalone `working_check.py merge --base … --delta …`) merges a delta into the canonical
+file, which now covers every live solution; a `delta_runs` list records each merge; no app change (the console ignores keys it does not know, and it deliberately reads no non-canonical flags file, because the
+calibration files are not backlog). Applied to chapters 1–5 (originals kept in the session scratchpad, every original flag verified unchanged and in the same order). The printed `g2-recommend-args` sequence and
+runbook §7c now carry the merge as a standard step; `tests/test_g2_recommend.py::DeltaMerge`.

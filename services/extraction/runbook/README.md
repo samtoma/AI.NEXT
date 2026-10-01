@@ -922,7 +922,17 @@ item the checks now decide is skipped (`no_longer_owed`), an item whose judged f
 typed key, options) is refused for that item (`stale_items`, listed as unanswered; `g2-recommend-args --only-missing` asks about them again), the rest is collected;
 (5) the `g2 … --recommend … --split` line, whose merge also refuses a recommendation for an item that is not owed any more; then assemble, the DB, and the delta working
 check: `auto_pass_gates.py g2-recommend-delta` lists the assembled bundle's solutions `working-check/chNN.flags.json` (`checked_ids`) never covered, which is everything
-the recommendation AND the newer collection made part of the bundle.
+the recommendation AND the newer collection made part of the bundle; (6) after the delta's two copies have run, saved and metered, `working_check.py collect … --out
+runs/<book>/working-check/chNN.g2rec.flags.json --merge-into runs/<book>/working-check/chNN.flags.json` (see "Merging a delta" below). This step is not optional: the
+console's backlog reads ONLY the canonical `chNN.flags.json` (`app/src/lib/review-gate-working.ts`), so a delta kept in a file of its own never reaches Samuel.
+
+**Merging a delta into the canonical working-check file.** `collect --merge-into <canonical>` collects the delta pair as usual (writing `--out` as its own record), then merges it into the canonical file;
+`working_check.py merge --base <canonical> --delta <file> [--out …] [--dry-run]` does the same for a delta collected earlier. The canonical file then covers every live solution: the delta's flags join
+the base's (sorted by solution and step; the base's own flags are untouched), `solutions`, `flagged_solutions`, `verdicts`, `checked_ids`, `runs`, the skipped / unclear / unchecked / problems lists are
+combined, and a `delta_runs` list records each merge (the delta file, its run ids, prompts version, passes, counts, and the solution ids it added). It is idempotent (a delta whose runs are already in
+`delta_runs` is "already merged", exit 0, nothing written) and fails closed: it refuses a delta of another book or chapter, a base without `checked_ids` (an old file: re-collect it), and a delta that
+checked a solution the base already covers (nothing is counted twice; re-check it with a fresh run instead). A delta with unchecked solutions is not merged (exit 1; the canonical file stays as it was) until they are
+checked. The console ignores the keys it does not know, so `delta_runs` needs no app change. After the merge `g2-recommend-delta` finds nothing left to check.
 
 **The errata list.** `auto_pass_gates.py g2-recommend-errata <book> --chapter N [--chapter M …] --out docs/WIP-g10-pilot/errata-g10.md` writes every "book error" and "stem damaged" finding of the chapters'
 recommendation files as plain sentences (the question, the book's answer, what is wrong, the right answer by the AI's own working, and whether the app's marker confirmed it); regenerate it whenever a chapter is added.
@@ -1066,6 +1076,8 @@ uv run working_check.py args … --pass-id B --order shuffled --order-seed 11 \
 # run both copies (≤ 2 runs at a time); save each to runs/<book>/working-check/chNN-<A|B>-<runId>.json; meter --stage SW
 uv run working_check.py collect --args A.json --args B.json --runs <A run>.json <B run>.json \
     --out runs/<book>/working-check/chNN.flags.json
+#   a DELTA check (the solutions a G2 recommendation added; §7c) writes its own file and MERGES it into the canonical one the console reads:
+#   … collect … --out runs/<book>/working-check/chNN.g2rec.flags.json --merge-into runs/<book>/working-check/chNN.flags.json
 uv run working_check.py calibrate --truth runs/<book>/working-check/chNN.calibration.json \
     --mutants runs/<book>/working-check/chNN.mutants.json --flags <flags.json>
 uv run working_check_mutate.py --seed <bundle> --calibration <calibration.json> --out-bundle <b.json> --out-truth <m.json>
