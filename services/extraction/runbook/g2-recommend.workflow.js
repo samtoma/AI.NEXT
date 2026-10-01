@@ -302,7 +302,7 @@ The textbook's working is shown only for comparison: never trust it over your ow
 ${READ_FIGS(figs)}
 
 ${batch.map((e) => {
-  const v = finalView(e, recs.get(e.key))
+  const v = finalView(e, at(recs, e.key))
   const it = e.item
   const fs = figPaths(it)
   return `[${e.key}] ${whereOf(it)}
@@ -322,6 +322,10 @@ const problems = []
 // every accept and every fix puts a question in front of students, so it needs a second, independent reading — except a
 // teaching-only retype (not_markable), which marks nothing and so has no key to confirm
 const needsVerify = (rec) => !!rec && ['accept', 'fix'].includes(rec.verdict) && !(rec.verdict === 'fix' && (rec.fix || {}).answer_type === 'not_markable')
+// A pipeline stage's result reaches the next stage, and the script's last line, SERIALIZED by the real runtime: a Map arrives as {} (2026-10-01:
+// "d.got.get is not a function", after every agent had run). So a stage returns plain JSON ({key: row} objects, never a Map), and every reader of
+// one goes through `at`, which takes either shape.
+const at = (m, k) => (m && typeof m.get === 'function' ? m.get(k) : (m ? m[k] : undefined))
 const labelOf = (b, stage, bi, extra) => `G2R:${stage}:b${pad(bi + 1)}:${b[0].lesson}${b.length > 1 ? `+${b.length - 1}` : ''}${extra || ''}`
 
 async function recommend(batch, bi) {
@@ -346,14 +350,14 @@ async function recommend(batch, bi) {
     if (todo.length && !attempt) log(`batch ${bi + 1}: ${todo.length} of ${batch.length} item(s) unanswered — asking again once`)
   }
   for (const e of todo) problems.push(`${e.key}: the recommending agent gave no verdict for it (re-run it)`)
-  return { batch, got }
+  return { batch, got: Object.fromEntries(got) }
 }
 
 async function verify(rd, bi) {
   const { batch, got } = rd
-  const live = batch.filter((e) => needsVerify(got.get(e.key)))
+  const live = batch.filter((e) => needsVerify(at(got, e.key)))
   const vers = new Map()
-  if (!live.length) return Object.assign({ vers }, rd)
+  if (!live.length) return { batch, got, vers: {} }
   for (const [vi, vb] of chunk(live, VBATCH).entries()) {
     const r = await agent(verPrompt(vb, got), {
       label: labelOf(vb, 'ver', bi, vi ? `:part${vi + 1}` : ''), phase: 'G2R Verify', model: MODEL, effort: EFFORT, schema: VER_SCHEMA,
@@ -367,7 +371,7 @@ async function verify(rd, bi) {
       vers.set(k, Object.assign({}, x, { key: k }))
     }
   }
-  return Object.assign({ vers }, rd)
+  return { batch, got, vers: Object.fromEntries(vers) }
 }
 
 log(`chapter ${ARGS.chapter}${ARGS.parts > 1 ? `, part ${ARGS.part} of ${ARGS.parts}` : ''}: ${ITEMS.length} item(s) (${ITEMS.filter((e) => e.state === 'held').length} held, ${ITEMS.filter((e) => e.state === 'excluded').length} excluded by the checks) in ${BATCHES.length} batch(es) of up to ${BATCH}; ` +
@@ -380,8 +384,8 @@ const rows = []
 done.forEach((d, bi) => {
   if (!d) { problems.push(`batch ${bi + 1}: the batch failed (its ${BATCHES[bi].length} item(s) have no recommendation)`); return }
   for (const e of d.batch) {
-    const rec = d.got.get(e.key) || null
-    const ver = (d.vers && d.vers.get(e.key)) || null
+    const rec = at(d.got, e.key) || null
+    const ver = at(d.vers, e.key) || null
     rows.push({ key: e.key, state: e.state, rec, ver })
   }
 })
@@ -398,7 +402,7 @@ return {
   stage: 'G2R', workflow: 'g2-recommend', prompts_version: PROMPTS_VERSION, book: BOOK.book,
   chapter: ARGS.chapter, part: ARGS.part || 1, parts: ARGS.parts || 1,
   batch: BATCH, verify_batch: VBATCH, model: MODEL, effort: EFFORT, items_sha256: ARGS.items_sha256 || null, keys: KEYS,
-  agents: { recommend: BATCHES.length, verify: done.filter(Boolean).reduce((n, d) => n + Math.ceil(d.batch.filter((e) => needsVerify(d.got.get(e.key))).length / VBATCH), 0) },
+  agents: { recommend: BATCHES.length, verify: done.filter(Boolean).reduce((n, d) => n + Math.ceil(d.batch.filter((e) => needsVerify(at(d.got, e.key))).length / VBATCH), 0) },
   embedded: ARGS.embedded,
   results: rows, tally, problems,
   meter: { stage: 'G2R', record: `uv run meter_run.py record --book ${BOOK.book} --stage G2R --run <runId>` },

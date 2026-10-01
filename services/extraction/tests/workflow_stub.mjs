@@ -6,7 +6,8 @@
 // fixture: { "args": <the Workflow `args`>,
 //            "responses": { "<agent label>": <the agent's return value> | null },
 //            "responder": "<absolute path to an ES module>" (optional),
-//            "stub": { … anything the responder needs } (optional) }
+//            "stub": { … anything the responder needs } (optional),
+//            "serialize_stages": "all" | "final" | false (optional; see pipeline() below: default "all") }
 // A response is checked against the schema the script passed (the real runtime forces a
 // structured output to validate, so a fixture that does not is a broken fixture). `null` models
 // an agent the user skipped or that died. A label with no canned response goes to the
@@ -92,13 +93,24 @@ const agent = async (prompt, opts = {}) => {
 const parallel = async (thunks) => Promise.all(thunks.map(async (t) => {
   try { return await t() } catch (e) { out.logs.push(`[parallel] thunk failed: ${e.message}`); return null }
 }))
-const pipeline = async (items, ...stages) => Promise.all(items.map(async (item, i) => {
-  let prev = item
-  for (const stage of stages) {
-    try { prev = await stage(prev, item, i) } catch (e) { out.logs.push(`[pipeline] item ${i} failed: ${e.message}`); return null }
-  }
-  return prev
-}))
+// The real runtime does not hand a pipeline's results back as live objects: they come back serialized (a Map becomes {}, a function
+// or an `undefined` field vanishes), so a script that returns a Map from a stage and calls `.get` on it afterwards crashes there and
+// passes here (2026-10-01: g2-recommend.workflow.js died at its last line, after every agent had run: "d.got.get is not a function").
+// Whether a result also crosses BETWEEN two stages serialized is not known, so the default is the strict reading: every stage's
+// result AND the array pipeline() returns go through JSON. Fixture `"serialize_stages"`: "all" (default), "final" (only the returned
+// array: exactly the reported crash), false (live objects, for a script that has not been audited).
+const SERIALIZE = fixture.serialize_stages === undefined ? 'all' : fixture.serialize_stages
+const roundTrip = (v) => (v === undefined ? v : JSON.parse(JSON.stringify(v)))
+const pipeline = async (items, ...stages) => {
+  const res = await Promise.all(items.map(async (item, i) => {
+    let prev = item
+    for (const stage of stages) {
+      try { prev = await stage(prev, item, i); if (SERIALIZE === 'all') prev = roundTrip(prev) } catch (e) { out.logs.push(`[pipeline] item ${i} failed: ${e.message}`); return null }
+    }
+    return prev
+  }))
+  return SERIALIZE ? roundTrip(res) : res
+}
 const phase = (t) => { currentPhase = t; out.phases.push(t) }
 const log = (m) => out.logs.push(String(m))
 const budget = { total: null, spent: () => 0, remaining: () => Infinity }
