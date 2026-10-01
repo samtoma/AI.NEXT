@@ -2,7 +2,7 @@
  * THE CONSOLE REVIEW GATE against a REAL Postgres (migration 036; Samuel's
  * answers 33 and 37; `lib/review-gate-queries.ts`).
  *
- *   · **035 then 036, verbatim**, over a database holding every legacy stamp
+ *   · **035, 036 then 039, verbatim**, over a database holding every legacy stamp
  *     the pilot carries — so the backlog is derived from what 035's backfill
  *     actually leaves, not from what it is supposed to leave.
  *   · **Derivation per kind**: book, generated and widget questions, widget
@@ -19,6 +19,11 @@
  *     writes nothing. Widget claims move in and out of `diagnostics`; a
  *     misconception's refutation is marked reviewed; a rejected stand-in holds
  *     its question.
+ *   · **A flagged working step** (FR-4411 → FR-4501; migration 039): one item
+ *     per flagged solution, in scope or not at all; "Not an error" and "Fix
+ *     needed" both leave content exactly as it is; a correction to the
+ *     solution's text re-opens a decided item and takes it off the fix list; the
+ *     checker rewording itself does not.
  *   · **The record is append-only and in the operator's own name**, and the
  *     student role cannot read it.
  *
@@ -32,7 +37,7 @@
  *
  * It creates ONE database, `ainext_review_gate_<pid>_<ms>`, builds only the
  * content tables the gate reads (their columns as production has them), runs
- * migrations 035 and 036 from `db/migrations/` unchanged, and drops that
+ * migrations 035, 036 and 039 from `db/migrations/` unchanged, and drops that
  * database by its exact name afterwards.
  *
  * @covers FR-2204
@@ -43,6 +48,8 @@ import { after, before, test } from "node:test";
 import { fileURLToPath } from "node:url";
 
 import pg from "pg";
+
+import type { WorkingFlagGroup } from "./review-gate-working.ts";
 
 // Samuel's account, for the gate decisions (answer 39): configuration, read per call.
 process.env.AINEXT_GATE_OWNER_EMAIL = "samuel@example.invalid";
@@ -122,6 +129,8 @@ const G1 = parseRecord(
   "2026-10-02T09:14:00.000Z"
 )!;
 const GATES = async () => [{ ...G1, courseId: "course:us-g10-math-en", fingerprint: "9".repeat(32) }];
+/** No checker flags — the worktree's real `ch08.flags.json` never reaches a test that does not ask for it. */
+const NO_FLAGS = async (): Promise<WorkingFlagGroup[]> => [];
 
 before(async () => {
   if (!DSN) return;
@@ -251,6 +260,7 @@ before(async () => {
 
   await a.query(migration("035-human-review-stamps.sql"));
   await a.query(migration("036-review-gate.sql"));
+  await a.query(migration("039-review-gate-working-flag.sql"));
 });
 
 after(async () => {
@@ -267,7 +277,7 @@ const byKind = (items: { kind: string }[]) =>
 /* ------------------------------------------------------------ derivation */
 
 test("the backlog is every maths item without a human stamp — derived kind by kind", { skip }, async () => {
-  const items = await asOperator(a!, SAMUEL, (db) => loadBacklog(db, ENV, null, GATES));
+  const items = await asOperator(a!, SAMUEL, (db) => loadBacklog(db, ENV, null, GATES, NO_FLAGS));
   assert.deepEqual(byKind(items), {
     book_question: 5, // book1, book2, book3, held, fig
     generated_question: 1,
@@ -645,6 +655,201 @@ test("a gate decision: anyone reads it, only Samuel's account decides it (answer
     assert.equal(!nobody.ok && nobody.error, "owner_only");
   } finally {
     process.env.AINEXT_GATE_OWNER_EMAIL = saved;
+  }
+});
+
+
+/* ------------------------------------------------------------ flagged working steps (FR-4411 → FR-4501) */
+
+const WF_SOLUTION = JSON.stringify([
+  { step: 1, text_md: "Substitute: $d=\\sqrt{(1-5)^{2}+(2-1)^{2}}$" },
+  { step: 2, text_md: "" },
+  { step: 3, text_md: "$d=\\sqrt{17}$" },
+]);
+const WF_EXAMPLE = JSON.stringify([
+  { kind: "problem", text_md: "Find the gradient of the line through $P(1, 8)$ and $Q(8, 7)$." },
+  { step: 1, text_md: "$m=\\frac{8-7}{1-8}$" },
+  { step: 2, text_md: "$m=-\\frac{1}{7}$" },
+]);
+
+function flagGroup(ref: string, flags: Partial<WorkingFlagGroup["flags"][number]>[], over: Partial<WorkingFlagGroup> = {}): WorkingFlagGroup {
+  return {
+    ref,
+    solutionKind: ref.startsWith("expl:") ? "worked_example" : "question",
+    book: "g10-math",
+    courseId: "course:us-g10-math-en",
+    chapter: 8,
+    promptsVersion: "sw-v1",
+    runs: ["wf_test"],
+    source: "services/extraction/runs/g10-math/working-check/ch08.flags.json",
+    lo: "lo:b",
+    flags: flags.map((f) => ({
+      step: 1,
+      kind: "wrong_value",
+      where: "working" as const,
+      quote: "(1-5)^{2}",
+      expected: "(5-1)^{2}",
+      why: "the substituted values are not the question's",
+      sources: ["agent"],
+      ...f,
+    })),
+    calibration: null,
+    ...over,
+  };
+}
+
+test("a flagged working step is an item of its own, decided like any other — and changes nothing for students", { skip }, async () => {
+  await a!.query(
+    `INSERT INTO questions (id, lo_id, tier, question_type, stem, correct_answer, canonical_solution, status, source, source_page, created_at)
+     VALUES ('q:wf:1', 'lo:b', 'standard', 'numeric', 'Find the distance from $(1, 2)$ to $(5, 1)$.', '\\sqrt{17}', $1, 'live', 'seed', 308, '2026-09-26 16:50Z'),
+            ('q:wf:retired', 'lo:b', 'standard', 'numeric', 'Retired.', '1', $1, 'retired', 'seed', 308, '2026-09-26 16:50Z'),
+            ('q:wf:social', 'lo:s', 'standard', 'numeric', 'Social.', '1', $1, 'live', 'authored', 1, '2026-09-26 16:50Z')`,
+    [WF_SOLUTION]
+  );
+  await a!.query(
+    `INSERT INTO explanation_library (id, lo_id, entry_type, content, source_page, generated_by, created_at)
+     VALUES ('expl:wf:2', 'lo:b', 'worked_example', $1, 311, 'book (book_worked_epub)', '2026-09-26 16:51Z')`,
+    [WF_EXAMPLE]
+  );
+  let groups: WorkingFlagGroup[] = [];
+  const FLAGS = async () => groups;
+  const setFlags = (g: WorkingFlagGroup[]) => (groups = g);
+  const wf = async (ref: string) =>
+    (await asOperator(a!, SAMUEL, (db) => loadBacklog(db, ENV, { kind: "working_flag", ref }, GATES, FLAGS)))[0];
+  const decideAsOp = (op: number, client: pg.Client, input: Parameters<typeof decide>[3]) =>
+    asOperator(client, op, (db) => decide(db, ENV, op, input, GATES, FLAGS));
+  const baseGroups = () => [
+    flagGroup("q:wf:1", [
+      { step: 1 },
+      { step: 3, where: "question", quote: "\\sqrt{17}", kind: "other" },
+      { step: 3, quote: "\\sqrt{99}", kind: "final_answer" },
+    ]),
+    flagGroup("expl:wf:2", [{ step: 2, quote: "-\\frac{1}{7}", kind: "label" }]),
+    flagGroup("q:wf:retired", [{ step: 1 }]),
+    flagGroup("q:wf:social", [{ step: 1 }], { courseId: "course:prep3-social-ar" }),
+    flagGroup("q:wf:missing", [{ step: 1 }]),
+  ];
+
+  try {
+    setFlags(baseGroups());
+
+    // 1. In scope or not at all: the question and the worked example; not a retired question, another subject, or a row that is not there.
+    const items = (await asOperator(a!, SAMUEL, (db) => loadBacklog(db, ENV, null, GATES, FLAGS))).filter((i) => i.kind === "working_flag");
+    assert.deepEqual(items.map((i) => i.ref).sort(), ["expl:wf:2", "q:wf:1"]);
+    const q1item = items.find((i) => i.ref === "q:wf:1")!;
+    assert.equal(q1item.state, "open");
+    assert.deepEqual(q1item.reasons.map((r) => r.code), ["working_flagged", "question_flagged"]);
+    assert.equal(q1item.courseId, "course:us-g10-math-en");
+    assert.equal(q1item.moduleId, "module:g10m-c08", "placed by the solution's own row, not by the checker's `lo`");
+    assert.equal(q1item.loId, "lo:b");
+    assert.equal(q1item.createdAt, "2026-09-26T16:50:00.000Z", "it sits in the queue with the content it is about");
+    assert.equal(q1item.exposure, "content");
+
+    // 2. What the reviewer reads: the numbered working, as the checker numbered it, with each quote located.
+    const payload = await asOperator(a!, SAMUEL, (db) => itemPayload(db, ENV, q1item, null, { gates: GATES, flags: FLAGS }));
+    const w = payload.workingFlag!;
+    assert.deepEqual(w.steps.map((s) => s.n), [1, 2, 3], "an empty step keeps its number");
+    assert.equal(w.steps[1]!.text, "");
+    assert.deepEqual(w.flags.map((f) => f.quoteFound), [true, true, false], "a quote that is no longer in the step says so");
+    assert.equal(payload.question!.stem, "Find the distance from $(1, 2)$ to $(5, 1)$.", "the card the student sees");
+    const exItem = items.find((i) => i.ref === "expl:wf:2")!;
+    const exPayload = await asOperator(a!, SAMUEL, (db) => itemPayload(db, ENV, exItem, null, { gates: GATES, flags: FLAGS }));
+    assert.equal(exPayload.workingFlag!.problem, "Find the gradient of the line through $P(1, 8)$ and $Q(8, 7)$.");
+    assert.deepEqual(exPayload.workingFlag!.steps.map((s) => s.n), [1, 2], "the problem is not a step");
+    assert.equal(exPayload.question, undefined);
+    assert.equal(exPayload.workingFlag!.sourcePage, 311);
+
+    // 3. Reject is not offered; "Not an error" records and changes nothing in content.
+    const rejected = await decideAsOp(TAMER, b!, { kind: "working_flag", ref: "q:wf:1", fingerprint: q1item.fingerprint, decision: "reject", note: "x" });
+    assert.equal(!rejected.ok && rejected.error, "not_allowed");
+    const before = await q1(`SELECT status, reviewed_by, canonical_solution::text AS sol FROM questions WHERE id = 'q:wf:1'`);
+    const noError = await decideAsOp(TAMER, b!, { kind: "working_flag", ref: "q:wf:1", fingerprint: q1item.fingerprint, decision: "approve" });
+    assert.ok(noError.ok);
+    assert.deepEqual(noError.ok && noError.changes, { recorded_only: true });
+    assert.deepEqual(await q1(`SELECT status, reviewed_by, canonical_solution::text AS sol FROM questions WHERE id = 'q:wf:1'`), before, "students, the stamp and the working are untouched");
+    assert.equal((await wf("q:wf:1"))!.state, "approved");
+    const rec = await q1(`SELECT item_kind, decision, operator_name, snapshot FROM review_decisions WHERE item_ref = 'q:wf:1'`);
+    assert.equal(rec.item_kind, "working_flag");
+    assert.equal(rec.operator_name, "Tamer");
+    assert.equal(rec.snapshot.workingFlag.steps.length, 3, "the record reads on its own once the text has moved on");
+
+    // 4. "Fix needed" says what is wrong, and goes on the fix list the pipeline exports.
+    const exFp = exItem.fingerprint;
+    const noNote = await decideAsOp(SAMUEL, a!, { kind: "working_flag", ref: "expl:wf:2", fingerprint: exFp, decision: "fix_requested" });
+    assert.equal(!noNote.ok && noNote.error, "note_required");
+    const fix = await decideAsOp(SAMUEL, a!, {
+      kind: "working_flag", ref: "expl:wf:2", fingerprint: exFp, decision: "fix_requested",
+      note: "Step 2: the value is -1/7 only for PQ", suggestedCorrection: "$m_{PQ}=-\\frac{1}{7}$",
+    });
+    assert.ok(fix.ok);
+    assert.equal((await wf("expl:wf:2"))!.state, "fix_requested");
+    assert.equal((await q1(`SELECT count(*)::int AS n FROM explanation_library WHERE id = 'expl:wf:2' AND reviewed`)).n, 0, "no content effect");
+    const list = await asOperator(a!, SAMUEL, (db) => fixList(db, ENV, undefined, GATES, FLAGS));
+    const entry = list.find((e) => e.ref === "expl:wf:2")!;
+    assert.equal(entry.action, "fix");
+    assert.equal(entry.kind, "working_flag");
+    assert.equal(entry.suggestedCorrection, "$m_{PQ}=-\\frac{1}{7}$");
+    const snap = entry.snapshot as { workingFlag: { flags: { step: number; quote: string }[]; steps: unknown[]; problem: string } };
+    assert.deepEqual(snap.workingFlag.flags.map((f) => [f.step, f.quote]), [[2, "-\\frac{1}{7}"]]);
+    assert.equal(snap.workingFlag.steps.length, 2);
+
+    // 5. The checker rewording itself is not a change; a different finding is.
+    const reworded = baseGroups();
+    reworded[1] = flagGroup("expl:wf:2", [{ step: 2, quote: "-\\frac{1}{7}", kind: "label", why: "worded differently on a re-run", expected: "something else" }]);
+    setFlags(reworded);
+    assert.equal((await wf("expl:wf:2"))!.state, "fix_requested", "same step, same quote: the decision stands");
+    assert.equal((await wf("expl:wf:2"))!.fingerprint, exFp);
+    const moved = baseGroups();
+    moved[1] = flagGroup("expl:wf:2", [{ step: 1, quote: "\\frac{8-7}{1-8}", kind: "sign" }]);
+    setFlags(moved);
+    const reopened = (await wf("expl:wf:2"))!;
+    assert.equal(reopened.state, "open", "a new finding goes back in front of a person");
+    assert.equal(reopened.reasons[0]!.code, "changed_since_decision");
+    setFlags(baseGroups());
+    assert.equal((await wf("expl:wf:2"))!.state, "fix_requested", "and back to what was decided, once it is the same finding again");
+
+    // 6. A correction that lands — the solution's text changes — reopens the item and drops it off the fix list by itself.
+    await a!.query(
+      `UPDATE explanation_library SET content = $1 WHERE id = 'expl:wf:2'`,
+      [WF_EXAMPLE.replace("-\\\\frac{1}{7}", "-\\\\frac{1}{7}\\\\text{ (PQ)}")]
+    );
+    const fixed = (await wf("expl:wf:2"))!;
+    assert.equal(fixed.state, "open");
+    assert.equal(fixed.reasons[0]!.code, "changed_since_decision");
+    assert.equal((await asOperator(a!, SAMUEL, (db) => fixList(db, ENV, undefined, GATES, FLAGS))).some((e) => e.ref === "expl:wf:2"), false);
+    await a!.query(`UPDATE questions SET canonical_solution = $1 WHERE id = 'q:wf:1'`, [WF_SOLUTION.replace("(1-5)", "(5-1)")]);
+    assert.equal((await wf("q:wf:1"))!.state, "open", "an approved 'not an error' is re-read once the text it was about has changed");
+    const stale = await decideAsOp(TAMER, b!, { kind: "working_flag", ref: "q:wf:1", fingerprint: q1item.fingerprint, decision: "approve" });
+    assert.equal(!stale.ok && stale.error, "changed", "a reviewer who saw the old text cannot sign the new");
+
+    // 7. The queue offers it, claimed, with the working and the findings; and a flag the file no longer names is gone.
+    const next = await asOperator(a!, SAMUEL, (db) => nextFor(db, ENV, SAMUEL, { kind: "working_flag" }, new Set(), GATES, FLAGS));
+    assert.ok(next.item?.workingFlag, "the queue serves a flagged working step");
+    assert.equal(next.item!.kind, "working_flag");
+    assert.ok(next.item!.claimExpiresAt);
+    await asOperator(a!, SAMUEL, (db) => releaseOtherClaims(db, ENV, SAMUEL, null));
+    setFlags([]);
+    const gone = await decideAsOp(SAMUEL, a!, { kind: "working_flag", ref: "q:wf:1", fingerprint: next.item!.fingerprint, decision: "approve" });
+    assert.equal(!gone.ok && gone.error, "gone");
+
+    // 8. Migration 039 admits the kind and no other, and will not be rolled back over a decision it admitted.
+    await assert.rejects(
+      a!.query(
+        `INSERT INTO review_decisions (environment, item_kind, item_ref, course_id, item_fingerprint, decision, operator_id, operator_name)
+         VALUES ($1, 'working_step', 'q:x', 'c', $2, 'approve', $3, 'Tamer')`,
+        [ENV, "2".repeat(32), TAMER]
+      ),
+      /review_decisions_item_kind_check/
+    );
+    await assert.rejects(a!.query(migration("rollback/039-review-gate-working-flag.down.sql")), /039 down refused/);
+    await a!.query("ROLLBACK");
+    assert.match(
+      (await q1(`SELECT pg_get_constraintdef(oid) AS def FROM pg_constraint WHERE conname = 'review_decisions_item_kind_check'`)).def,
+      /working_flag/
+    );
+  } finally {
+    await a!.query(`DELETE FROM questions WHERE id IN ('q:wf:1', 'q:wf:retired', 'q:wf:social')`);
+    await a!.query(`DELETE FROM explanation_library WHERE id = 'expl:wf:2'`);
   }
 });
 
