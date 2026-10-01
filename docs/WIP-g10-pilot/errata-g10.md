@@ -251,7 +251,7 @@ So far: **61** printed answers that look wrong and **10** questions whose text l
 - A plain computer check, with no AI in it, agrees: the book's answer is not equal to the expression in the question.
 - In the question bank: **not used**. The book's answer was never changed.
 
-### The question's text lost or garbled something (6)
+### The question's text is damaged or unclear (6)
 
 
 **Exercise 1-1, question 1b**, page 11
@@ -274,7 +274,7 @@ So far: **61** printed answers that look wrong and **10** questions whose text l
 
 - The question as we have it: Simplify (assume all denominators are non-zero): $\dfrac{a^2-2a+8}{a^2+6a+8}\times\dfrac{a^2+a-12}{3}-\dfrac{3}{2}$
 - The book's answer: $=\frac{2a^2-14a+15}{6}$
-- What is wrong: Stem shows $a^2-2a+8$; working factorises it as $(a-4)(a+2)=a^2-2a-8$, so a sign was lost. With $-8$: result $\frac{(a-4)(a-3)}{3}-\frac{3}{2}=\frac{2a^2-14a+15}{6}$, matching the key. Verified independently: the verifier's own answer matches the key.
+- What is wrong: Stem shows $a^2-2a+8$; working factorises it as $(a-4)(a+2)=a^2-2a-8$, so a sign was lost. With $-8$: result $\frac{(a-4)(a-3)}{3}-\frac{3}{2}=\frac{2a^2-14a+15}{6}$, matching the key.
 - A plain computer check, with no AI in it, agrees: the book's answer is not equal to the expression in the question.
 - In the question bank: **live, with the question text repaired** to: Simplify (assume all denominators are non-zero): $\dfrac{a^2-2a-8}{a^2+6a+8}\times\dfrac{a^2+a-12}{3}-\dfrac{3}{2}$. Marked as an AI repair for you to review.
 
@@ -282,14 +282,14 @@ So far: **61** printed answers that look wrong and **10** questions whose text l
 
 - The question as we have it: Simplify (assume all denominators are non-zero): $\dfrac{4x^2-1}{3x^2+10x+3}\div\dfrac{6x^2+5x+1}{4x^2+7x-3}\times\dfrac{9x^2+6x+1}{8x^2-6x+1}$
 - The book's answer: $=1$
-- What is wrong: As shown, $4x^2+7x-3$ does not factor as $(x+3)(4x-1)$ (that is $4x^2+11x-3$), so the stem gives no constant. The working's factors show the intended $4x^2+11x-3$; with it the product is $1$, matching the key. Verified independently: the verifier's own answer matches the key.
+- What is wrong: As shown, $4x^2+7x-3$ does not factor as $(x+3)(4x-1)$ (that is $4x^2+11x-3$), so the stem gives no constant. The working's factors show the intended $4x^2+11x-3$; with it the product is $1$, matching the key.
 - In the question bank: **live, with the question text repaired** to: Simplify (assume all denominators are non-zero): $\dfrac{4x^2-1}{3x^2+10x+3}\div\dfrac{6x^2+5x+1}{4x^2+11x-3}\times\dfrac{9x^2+6x+1}{8x^2-6x+1}$. Marked as an AI repair for you to review.
 
 **Exercise 1-10, question 3t**, page 34
 
 - The question as we have it: Simplify (assume all denominators are non-zero): $\dfrac{1}{a^2-4ab+4b^2}+\dfrac{a^2+2ab+b^2}{a^3-8b^3}-\dfrac{1}{a^2-4b^2}$
 - The book's answer: \frac{a^{2}+4b-4b^{2}}{(a-2b)^{2}(a+2b)}
-- What is wrong: As printed ($b^2$), the key fails (at $a=3,b=1$: $156/95$ vs $9/5$). With $4b^2$, which the working's line 2 uses, the key is right: $1+1-1/5=9/5$. Repair the stem by one character group; key unchanged. Verified independently: the verifier's own answer matches the key.
+- What is wrong: As printed ($b^2$), the key fails (at $a=3,b=1$: $156/95$ vs $9/5$). With $4b^2$, which the working's line 2 uses, the key is right: $1+1-1/5=9/5$. Repair the stem by one character group; key unchanged.
 - A plain computer check, with no AI in it, agrees: the book's answer is not equal to the expression in the question.
 - In the question bank: **live, with the question text repaired** to: Simplify (assume all denominators are non-zero): $\dfrac{1}{a^2-4ab+4b^2}+\dfrac{a^2+2ab+4b^2}{a^3-8b^3}-\dfrac{1}{a^2-4b^2}$. Marked as an AI repair for you to review.
 
@@ -297,7 +297,7 @@ So far: **61** printed answers that look wrong and **10** questions whose text l
 
 - The question as we have it: Simplify the following: $2\div\dfrac{a+b}{a+2b}\times\dfrac{b^2-ba-6a^2}{a^2-4b^2}\times\dfrac{a^2-b-2b^2}{3a-b}$
 - The book's answer: -2(2a+b)
-- What is wrong: With $a^2-ab-2b^2=(a-2b)(a+b)$ and $b^2-ba-6a^2=(b-3a)(b+2a)$, factors cancel leaving $2(b-3a)(b+2a)/(3a-b)=-2(2a+b)$. As printed, $a^2-b-2b^2$ does not factor and the key fails. Repair one lost letter. Verified independently: the verifier's own answer matches the key.
+- What is wrong: With $a^2-ab-2b^2=(a-2b)(a+b)$ and $b^2-ba-6a^2=(b-3a)(b+2a)$, factors cancel leaving $2(b-3a)(b+2a)/(3a-b)=-2(2a+b)$. As printed, $a^2-b-2b^2$ does not factor and the key fails. Repair one lost letter.
 - A plain computer check, with no AI in it, agrees: the book's answer is not equal to the expression in the question.
 - In the question bank: **live, with the question text repaired** to: Simplify the following: $2\div\dfrac{a+b}{a+2b}\times\dfrac{b^2-ba-6a^2}{a^2-4b^2}\times\dfrac{a^2-ab-2b^2}{3a-b}$. Marked as an AI repair for you to review.
 
@@ -363,7 +363,7 @@ So far: **61** printed answers that look wrong and **10** questions whose text l
 - The right answer (our own working, not applied to the book): -49; -63; -77
 - In the question bank: **not used**. The book's answer was never changed.
 
-### The question's text lost or garbled something (1)
+### The question's text is damaged or unclear (1)
 
 
 **Exercise 3-2, question 4**, page 68
@@ -491,21 +491,21 @@ So far: **61** printed answers that look wrong and **10** questions whose text l
 - The right answer (our own working, not applied to the book): x=\frac{8}{3}\ (a\ne0)
 - In the question bank: **not used**. The book's answer was never changed.
 
-### The question's text lost or garbled something (2)
+### The question's text is damaged or unclear (2)
 
 
 **Exercise 4-7, question 1h**, page 101
 
 - The question as we have it: Solve: $2k+3=2-3(k+2)$
 - The book's answer: $k=-2$
-- What is wrong: As printed, $2k+3=2-3k-6$ gives $k=-\frac75$ (blind is right for this stem). The book working expands $-3(k+3)=-3k-9$, giving $5k=-10$, $k=-2$, which follows. So the stem lost its '3': repair to $k+3$; key -2 unchanged. Verified independently: the verifier's own answer matches the key.
+- What is wrong: As printed, $2k+3=2-3k-6$ gives $k=-\frac75$ (blind is right for this stem). The book working expands $-3(k+3)=-3k-9$, giving $5k=-10$, $k=-2$, which follows. So the stem lost its '3': repair to $k+3$; key -2 unchanged.
 - In the question bank: **live, with the question text repaired** to: Solve: $2k+3=2-3(k+3)$. Marked as an AI repair for you to review.
 
 **Exercise 4-7, question 12e**, page 104
 
 - The question as we have it: Solve for the unknown variable $a-3=2\left(\frac{6}{a}+1\right)$
 - The book's answer: therefore a=4 or a=-3
-- What is wrong: Stem as shown gives $a^2-5a-12=0$, not the book's roots. The working's first line has $2(\frac6a-1)$, then $a^2-a-12=(a-4)(a+3)=0$, $a=4,-3$; check $a=4$: $1=2(1.5-1)=1$. So the '+' was garbled; repair to '-'. Key unchanged. Verified independently: the verifier's own answer matches the key.
+- What is wrong: Stem as shown gives $a^2-5a-12=0$, not the book's roots. The working's first line has $2(\frac6a-1)$, then $a^2-a-12=(a-4)(a+3)=0$, $a=4,-3$; check $a=4$: $1=2(1.5-1)=1$. So the '+' was garbled; repair to '-'. Key unchanged.
 - In the question bank: **live, with the question text repaired** to: Solve for the unknown variable $a-3=2\left(\frac{6}{a}-1\right)$. Marked as an AI repair for you to review.
 
 ## Chapter 5 — Trigonometry
@@ -625,12 +625,12 @@ So far: **61** printed answers that look wrong and **10** questions whose text l
 - The right answer (our own working, not applied to the book): 16945 units² (exact 16944,53)
 - In the question bank: **not used**. The book's answer was never changed.
 
-### The question's text lost or garbled something (1)
+### The question's text is damaged or unclear (1)
 
 
 **Exercise 5-2, question 1z**, page 117
 
 - The question as we have it: Use your calculator to determine the value of the following (correct to $\text{2}$ decimal places): $\sqrt{\dfrac{\cot103^{\circ}+\sin1090^{\circ}}{\sec10^{\circ}+5}}$
 - The book's answer: 0,21
-- What is wrong: Stem as shown: cot103°+sin1090° ≈ -0,23+0,17 < 0, so the root is undefined. The working starts from cot85°: 0,2611/6,0154=0,0434, root 0,2083, so 0,21. The key fits only the cot85 stem. Repair 103 to 85, key unchanged. Verified independently: the verifier's own answer matches the key.
+- What is wrong: Stem as shown: cot103°+sin1090° ≈ -0,23+0,17 < 0, so the root is undefined. The working starts from cot85°: 0,2611/6,0154=0,0434, root 0,2083, so 0,21. The key fits only the cot85 stem. Repair 103 to 85, key unchanged.
 - In the question bank: **live, with the question text repaired** to: Use your calculator to determine the value of the following (correct to $\text{2}$ decimal places): $\sqrt{\dfrac{\cot85^{\circ}+\sin1090^{\circ}}{\sec10^{\circ}+5}}$. Marked as an AI repair for you to review.

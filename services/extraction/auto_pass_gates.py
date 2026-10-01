@@ -862,7 +862,7 @@ def main(argv: list[str] | None = None) -> int:
         doc, c, decisions = g2_merge(owed, rec_in, existing, scope)
         into.parent.mkdir(parents=True, exist_ok=True)
         into.write_text(json.dumps(doc, ensure_ascii=False, indent=1) + "\n")
-        held = [d["key"] for d in decisions if d["decision"].startswith(("no verdict", "hold", "exclude"))]
+        held = [d["key"] for d in decisions if d["decision"].startswith(("no verdict —", "hold", "exclude"))]   # not "no verdict needed" (teaching)
         # a recommendation the agent marked "low confidence" is a content decision (a stem repair, a teaching-only retype, a
         # partial answer): listed for Samuel beside the holds and exclusions, whatever its verdict (g2_recommend.py)
         low = [d["key"] for d in decisions if "confidence low" in (d.get("basis") or "")]

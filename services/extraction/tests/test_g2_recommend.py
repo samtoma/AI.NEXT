@@ -783,6 +783,55 @@ class AfterARecollection(unittest.TestCase):
             self.assertIn("does not exist", err.getvalue())
 
 
+class Errata(unittest.TestCase):
+    """The book's errata the recommendation runs found, for Samuel: plain sentences, every printed answer left as the book has it."""
+
+    def setUp(self):
+        self.run, self.g2 = make_run()
+        self.es = G.recommendable([self.run], 9, "g10m", self.g2)
+        self.k1, self.k2, self.k3, self.k7 = (e["key"] for e in self.es)
+        rows = {self.k1: (rec("exclude", "book error", note="the book drops a power. Right answer by the agent's own derivation: x^3.",
+                              correct_answer="x^{3}", defect="The last line of the working drops a power."), None),
+                self.k3: (rec("exclude", "stem damaged", note="a statement is missing from the stem"), None),
+                self.k7: (rec("exclude", "partial answer"), None)}
+        self.doc = collect(self.es, {k: v for k, v in rows.items()})
+        self.doc["report"]["app_marker_identity_of_the_typed_key"]["different"] = [self.k1]
+
+    def test_only_the_books_own_findings_are_listed(self):
+        found = G.errata_items(self.doc, {e["key"]: e for e in self.es})
+        self.assertEqual([r["key"] for r in found["wrong"]], [self.k1])
+        self.assertEqual([r["key"] for r in found["damaged"]], [self.k3])
+        self.assertTrue(found["wrong"][0]["computer_checked"])
+        self.assertFalse(found["damaged"][0]["computer_checked"])
+
+    def test_the_markdown_is_plain_and_never_says_the_book_was_corrected(self):
+        book = book_config.load_book("g10-math")
+        md = G.errata_markdown(book, [9], {9: self.doc}, {9: {e["key"]: e for e in self.es}})
+        self.assertIn("Exercise 9-1, question 1", md)
+        self.assertIn("The book's answer: $x^{2}$", md)
+        self.assertIn("What is wrong: The last line of the working drops a power.", md)
+        self.assertIn("The right answer (our own working, not applied to the book): x^{3}", md)
+        self.assertIn("A plain computer check, with no AI in it, agrees", md)
+        self.assertIn("The book's answer was never changed.", md)
+        self.assertIn("**1** printed answers that look wrong and **1** questions", md)
+        self.assertNotIn("Verified independently", md)
+        self.assertNotIn("partial answer", md, "an answer that covers only part of the question is not an erratum")
+        self.assertIn("No person has read this yet", md)
+
+    def test_a_repaired_stem_is_shown_with_its_repair_and_marked_for_review(self):
+        es = [{"key": "g10m9s1-1:Ex9-1:8", "lesson": "g10m9s1-1", "ref": "Ex9-1:8", "state": "held",
+               "item": item("Ex9-1:8", stem="Simplify: $\\frac{a-4}{a+5a+4}$", solution=["$\\frac{a-4}{(a+4)(a+1)}=\\frac{1}{a+4}$"],
+                            printed_answer="1 a+4", epub_final_answer="$=\\frac{1}{a+4}$", answer="\\frac{1}{a+4}",
+                            marker={"kind": "expression", "key": "\\frac{1}{a+4}", "form": None, "variables": ["a"], "tolerance": None})}]
+        run = {"results": [{"key": es[0]["key"], "rec": rec("fix", "stem damaged", "low", why_low="x", book_quote="\\frac{a-4}{(a+4)(a+1)}",
+                                                            fix={"stem": "Simplify: $\\frac{a-4}{a^2+5a+4}$"}), "ver": CONFIRMED}]}
+        doc = G.collect(es, [run], marker_fn=lambda r: {}, identity_fn=lambda r: {})
+        md = G.errata_markdown(book_config.load_book("g10-math"), [9], {9: doc}, {9: {es[0]["key"]: es[0]}})
+        self.assertIn("live, with the question text repaired", md)
+        self.assertIn("a^2+5a+4", md)
+        self.assertIn("Marked as an AI repair for you to review", md)
+
+
 # ---------------------------------------------------------------------------------------------- the file reaches G2
 class ReachesG2(unittest.TestCase):
     """The collected file through auto_pass_gates.g2_merge and assemble_objectives.lesson_runs: the pilot's route."""
@@ -883,6 +932,7 @@ class TheCommands(unittest.TestCase):
         record = json.loads((gates / "g2-ch09.json").read_text())
         self.assertEqual(record["gate"], "G2")
         self.assertEqual(record["outcome"], "pass_with_holds")
+        self.assertNotIn("g10m9s1-1:Ex9-1:5", record["for_review"], "a teaching item (typed not markable) owes no verdict and is not 'for review'")
         self.assertIn(k3, record["for_review"], "a recommended hold is listed for Samuel")
         self.assertIn(k7, record["for_review"], "so is an exclusion")
         self.assertTrue(any(c["name"].startswith("G2 recommendation run") for c in record["checks"]))

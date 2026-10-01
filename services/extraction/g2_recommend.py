@@ -898,6 +898,13 @@ def _chap_titles(book) -> dict[int, str]:
     return {int(m["chapter"]): m.get("title", "") for m in manifest.get("modules") or [] if str(m.get("chapter", "")).isdigit()}
 
 
+def _plain(text) -> str:
+    """A recommendation's note for a reader of the errata list: without the collector's own bookkeeping sentences."""
+    t = re.sub(r"\s*Verified independently:[^.]*\.", "", str(text or ""))
+    t = re.sub(r"\s*Right answer by the agent's own derivation:[^.]*\.", "", t)
+    return re.sub(r"\s+", " ", t).strip()
+
+
 def errata_items(rec: dict, entries_by_key: dict[str, dict]) -> dict[str, list[dict]]:
     """The recommendation file's findings about the BOOK, for the errata list: the printed answer is wrong (`wrong`), or the question text
     lost or garbled something (`damaged`: excluded, or repaired and live)."""
@@ -930,7 +937,7 @@ def errata_markdown(book, chapters: list[int], recs: dict[int, dict], items_by_c
         total_d += len(found["damaged"])
         body.append(f"\n## Chapter {ch} — {titles.get(ch, '')}\n")
         for kind, head in (("wrong", "The book's printed answer is wrong"),
-                           ("damaged", "The question's text lost or garbled something")):
+                           ("damaged", "The question's text is damaged or unclear")):
             rows = found[kind]
             if not rows:
                 continue
@@ -943,9 +950,9 @@ def errata_markdown(book, chapters: list[int], recs: dict[int, dict], items_by_c
                 body.append(f"- The question as we have it: {_clip(it.get('stem'), 300)}")
                 body.append(f"- The book's answer: {_clip(book_ans, 200)}")
                 if ic.get("defect"):
-                    body.append(f"- What is wrong: {_clip(ic['defect'], 420)}")
+                    body.append(f"- What is wrong: {_clip(_plain(ic['defect']), 420)}")
                 else:
-                    body.append(f"- What is wrong: {_clip(v.get('note'), 420)}")
+                    body.append(f"- What is wrong: {_clip(_plain(v.get('note')), 420)}")
                 if ic.get("answer"):
                     body.append(f"- The right answer (our own working, not applied to the book): {_clip(ic['answer'], 200)}")
                 if r["computer_checked"]:
