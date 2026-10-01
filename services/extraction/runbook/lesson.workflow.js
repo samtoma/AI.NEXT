@@ -429,14 +429,17 @@ function sentenceMatchesWords(key, text) {
   const kv = valueList(key, false).values
   if (kv.length < 2 || !kv.every((v) => /^[A-Za-z]{3,}$/.test(v))) return false
   const vocab = new Set(kv.map((v) => v.toLowerCase()))
-  const seq = (String(text == null ? '' : text).replace(/\$[^$]*\$/g, ' ').toLowerCase().match(/[a-z]+/g) || []).filter((w) => vocab.has(w))
+  const raw = String(text == null ? '' : text)
+  // the sentence labels what it names ("$a$ is …, $b$ is …, $c$ is …"): as many labels as the key has words, or nothing is read
+  if ((raw.match(/\$\s*[A-Za-z]\s*\$/g) || []).length !== kv.length) return false
+  const seq = (raw.replace(/\$[^$]*\$/g, ' ').toLowerCase().match(/[a-z]+/g) || []).filter((w) => vocab.has(w))
   return seq.length === kv.length && seq.every((w, i) => w === kv[i].toLowerCase())
 }
 // The last link of a worked chain "L = middle = answer" ("sin Â = opposite / hypotenuse = CB/AC", "θ = 26,56… ≈ 26,6°"): what the chain ends in is the
 // answer it states. Not a list ("and", ";", ","), not an inequality (Chapter 5)
 function chainEnd(text) {
-  const t = plainSigns(String(text == null ? '' : text)).replace(/\$/g, ' ').replace(/(\d),(\d)/g, '$1.$2')
-  if (/[;,<>≤≥≠]|\b(?:and|or)\b|\\ne/.test(t)) return null
+  const t = String(text == null ? '' : text).replace(/\\approx|\\simeq/g, '≈').replace(/\$/g, ' ').replace(/(\d),(\d)/g, '$1.$2')
+  if (/[;,<>≤≥≠]|\b(?:and|or)\b|\\ne|\\[lg]e/.test(t)) return null
   const parts = t.split(/=|≈/)
   return parts.length > 2 && parts[parts.length - 1].trim() ? parts[parts.length - 1].trim() : null
 }

@@ -1074,23 +1074,23 @@ class ChapterFiveForms(TypedItem, unittest.TestCase):
 
     def test_signs_are_read_alike_and_digits_never(self):
         area = ["$\\begin{align*}\\text{Areaof}\\triangleABC&=\\frac{1}{2}\\times\\text{121,032}\\times280\\\\\\therefore\\text{Areaof}\\triangleABC&=16944\\text{units}^{2}\\end{align*}$"]
-        self.assertTrue(self.final_in(area, "∴Areaof△ABC=16944units²", "16944"))
-        self.assertFalse(self.final_in(area, "∴Areaof△ABC=16945units²", "16944"))
-        self.assertFalse(self.final_in(area, "∴Areaof△ABC=16944units³", "16944"))
+        self.assertTrue(self.final_in(area, "∴Areaof△ABC=16944units²", key="16944"))
+        self.assertFalse(self.final_in(area, "∴Areaof△ABC=16945units²", key="16944"))
+        self.assertFalse(self.final_in(area, "∴Areaof△ABC=16944units³", key="16944"))
         glued = ["$\\begin{align*}\\sinA+\\cosA&=\\frac{y}{r}+\\frac{x}{r}\\\\&=\\frac{12-5}{13}\\\\&=\\frac{7}{13}\\end{align*}$"]
-        self.assertTrue(self.final_in(glued, "$\\sin A+\\cos A=\\frac{7}{13}$", "\\frac{7}{13}", "expression", "expression"))
-        self.assertFalse(self.final_in(glued, "$\\sin A+\\cos A=\\frac{7}{14}$", "\\frac{7}{13}", "expression", "expression"))
-        self.assertFalse(self.final_in(glued, "$\\sin A-\\cos A=\\frac{7}{13}$", "\\frac{7}{13}", "expression", "expression"))
+        kw = dict(ref="Ex5-7:6", answer_type="expression", key="\\frac{7}{13}", kind="expression")
+        self.assertTrue(self.final_in(glued, "$\\sin A+\\cos A=\\frac{7}{13}$", **kw))
+        self.assertFalse(self.final_in(glued, "$\\sin A+\\cos A=\\frac{7}{14}$", **kw))
+        self.assertFalse(self.final_in(glued, "$\\sin A-\\cos A=\\frac{7}{13}$", **kw))
 
     def test_a_number_is_found_only_as_a_whole_value(self):
         estimate = ["Since $\\sqrt{10}$ lies between 3 and 4, $\\text{3,1}$ or $\\text{3,2}$ are suitable estimates."]
-        self.assertTrue(self.final_in(estimate, "\\text{3,1}", "3,1"), "3,1 after a sentence's full stop, with a point of its own")
+        self.assertTrue(self.final_in(estimate, "\\text{3,1}", key="3,1"), "3,1 after a sentence's full stop, with a point of its own")
         for final in ("\\text{3,15}", "\\text{3,3}", "\\text{1}", "\\text{31}"):
-            self.assertFalse(self.final_in(estimate, final, "1"), final)
-        self.assertFalse(self.final_in(["$x=\\text{7,6}$"], "6", "6"))        # 6 is not found inside 7,6
-        self.assertFalse(self.final_in(["$x=-5$"], "5", "5"))                 # nor 5 in -5
-        self.assertFalse(self.final_in(["$x=\\frac{2}{3}$"], "$x=2$", "2"))   # nor x=2 in x=2/3
-        self.assertTrue(self.final_in(["$7-5=2$"], "5", "5") or True)
+            self.assertFalse(self.final_in(estimate, final, key="1"), final)
+        self.assertFalse(self.final_in(["$x=\\text{7,6}$"], "6", key="6"))        # 6 is not found inside 7,6
+        self.assertFalse(self.final_in(["$x=-5$"], "5", key="5"))                 # nor 5 in -5
+        self.assertFalse(self.final_in(["$x=\\frac{2}{3}$"], "$x=2$", key="2"))   # nor x=2 in x=2/3
 
     def test_a_plain_therefore_is_not_part_of_the_answer(self):
         # blind and book finals are compared by the same normal form, "therefore" being only the opening word

@@ -7,7 +7,7 @@
 //            "responses": { "<agent label>": <the agent's return value> | null },
 //            "responder": "<absolute path to an ES module>" (optional),
 //            "stub": { … anything the responder needs } (optional),
-//            "serialize_stages": "all" | "final" | false (optional; see pipeline() below: default "all") }
+//            "serialize_stages": "all" | "final" | false (optional; see pipeline() below: default "all", or env WORKFLOW_STUB_SERIALIZE) }
 // A response is checked against the schema the script passed (the real runtime forces a
 // structured output to validate, so a fixture that does not is a broken fixture). `null` models
 // an agent the user skipped or that died. A label with no canned response goes to the
@@ -99,7 +99,8 @@ const parallel = async (thunks) => Promise.all(thunks.map(async (t) => {
 // Whether a result also crosses BETWEEN two stages serialized is not known, so the default is the strict reading: every stage's
 // result AND the array pipeline() returns go through JSON. Fixture `"serialize_stages"`: "all" (default), "final" (only the returned
 // array: exactly the reported crash), false (live objects, for a script that has not been audited).
-const SERIALIZE = fixture.serialize_stages === undefined ? 'all' : fixture.serialize_stages
+const ENV_MODE = process.env.WORKFLOW_STUB_SERIALIZE   // 'all' | 'final' | 'false' — for the tools that build their own fixture (recollect_lessons.py, dryrun_chapter.py)
+const SERIALIZE = fixture.serialize_stages !== undefined ? fixture.serialize_stages : (ENV_MODE === 'false' ? false : (ENV_MODE === 'final' ? 'final' : 'all'))
 const roundTrip = (v) => (v === undefined ? v : JSON.parse(JSON.stringify(v)))
 const pipeline = async (items, ...stages) => {
   const res = await Promise.all(items.map(async (item, i) => {
