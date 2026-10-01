@@ -752,7 +752,7 @@
    "g2": {
     "verdict": "exclude",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"\\frac{201}{37}\" does not read as the book final answer \"x = \\frac{5427}{999} = \\frac{201}{37} = 5\\frac{16}{37}\"); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): NOT RECOMMENDED LIVE (the independent verifier said confirmed, and another answer is also correct (its own answer: 201/37 (that is 5 16/37); 0.432 repeating = 432/999 = 16/37, so 5 + 16/37 = 201/37, which is in lowest terms (37 is prime); the mixed form 5 16/37 is equally correct but may not parse as the key's improper fraction.)). The agent's reading: $5{,}\\dot4\\dot3\\dot2 = x$, $1000x-x=999x=5427$, so $x=\\frac{5427}{999}=\\frac{201}{37}$ (divide by 27). Check: $201/37 = 5.432432\\ldots$. Key $\\frac{201}{37}$ is the book's simplified fraction; the complaint is only a text comparison with the full chain.",
     "auto": true
    }
   },
@@ -829,9 +829,9 @@
    "form_unsupported": null,
    "blocked_on_figure": true,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "accept",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (options said to be a figure's labels are not all single labels); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): $-\\frac{12}{3}=-4$, an integer but not whole or natural, so it sits in the $\\mathbb{Z}$ ring outside $\\mathbb{N}_0$. Figure shows nested ovals labelled $\\mathbb{N}$, $\\mathbb{N}_0$, $\\mathbb{Z}$; the options are exactly those labels. The complaint about 'single labels' is the subscript in $\\mathbb{N}_0$. Verified independently: the verifier's own answer matches the key.",
     "auto": true
    }
   },
@@ -912,7 +912,7 @@
    "g2": {
     "verdict": "exclude",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (book_final is not in the book solution; options said to be the stem's are not all in the stem); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): Statement 1 false (negatives). Statement 2 true ($\\mathbb{N}\\subset\\mathbb{N}_0$). Statement 3 as typed is true too, so a single key would mark a right answer wrong. The working does not show the intended wording, so I cannot repair it. Right answer by the agent's own derivation: Book key is (ii) 'Every natural number is a whole number', but (iii) as typed is also true.",
     "auto": true
    }
   },
@@ -996,9 +996,9 @@
    "form_unsupported": null,
    "blocked_on_figure": true,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "hold",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (book_final is not in the book solution; options said to be a figure's labels are not all single labels; the key \"between \\mathbb{Z} and the rectangle\" does not read as the printed answer \"between the rectangle and Z\"); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): $-\\frac12$ is not an integer, so it lies outside all three ovals, inside the rectangle: the book's answer is right. But the typed option D is not a figure label, and options A-C alone cannot hold the key. Pipeline's option wording also reorders the book's phrase.",
     "auto": true
    }
   },
@@ -1079,7 +1079,7 @@
    "g2": {
     "verdict": "exclude",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (book_final is not in the book solution; options said to be the stem's are not all in the stem); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): Statement 1 false. Statement 2 true ($\\mathbb{N}_0\\subset\\mathbb{Z}$). Statement 3 as typed is true, so one key would mark a right answer wrong. The working's reasoning is garbled and does not show the intended wording. Right answer by the agent's own derivation: Book key is (ii) 'Every whole number is an integer', but (iii) as typed is also true.",
     "auto": true
    }
   },
@@ -1633,7 +1633,7 @@
    "lo": "lo:g10m1s3-1-2",
    "stem": "State whether the following numbers are rational or irrational. If the number is rational, state whether it is a natural number, whole number or an integer. $\\dfrac{\\sqrt{9}}{3}$",
    "answer_type": "choice",
-   "answer": null,
+   "answer": "C",
    "choices": [
     {
      "key": "A",
@@ -1645,11 +1645,15 @@
     },
     {
      "key": "C",
-     "text": "rational, integer"
+     "text": "natural number"
     },
     {
      "key": "D",
-     "text": "rational, integer, whole number and natural number"
+     "text": "whole number"
+    },
+    {
+     "key": "E",
+     "text": "integer"
     }
    ],
    "marker": null,
@@ -1694,7 +1698,7 @@
     "the key \"rational, an integer, a whole number and a natural number\" does not read as the printed answer \"rational, an integer, a whole num- ber and a natural number\""
    ],
    "unit": null,
-   "options_source": "lesson",
+   "options_source": "stem",
    "not_markable_reason": null,
    "tier_source": "typing",
    "printed_answer_scope": "item",
@@ -1705,11 +1709,22 @@
    "form_overridden": null,
    "form_unsupported": null,
    "blocked_on_figure": false,
+   "less_specific": [
+    "B",
+    "D",
+    "E"
+   ],
    "g2": {
-    "verdict": "exclude",
+    "verdict": "fix",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (book_final is not in the book solution; a choice needs 2–5 options with the key among them; options said to be the lesson's closed set are not categories: \"rational, integer\", \"rational, integer, whole number and natural number\" — numbers, pairs, values and combinations are the book's answer to type); a fix needs fields a person or a recommendation must write",
-    "auto": true
+    "note": "auto-pass G2 (AI recommendation): $\\frac{\\sqrt9}{3}=\\frac33=1$: rational, integer, whole, natural, as the book says. Retype as a choice on the stem's own category words; key the most specific true one, the others as less specific. Pipeline's combination options were invented. Verified independently: the verifier's own answer matches the key.",
+    "auto": true,
+    "changed": [
+     "answer",
+     "choices",
+     "less_specific",
+     "options_source"
+    ]
    }
   },
   {
@@ -1913,7 +1928,7 @@
    "lo": "lo:g10m1s3-1-2",
    "stem": "State whether the following numbers are rational or irrational. If the number is rational, state whether it is a natural number, whole number or an integer. $\\left(\\sqrt[3]{1}\\right)^7$",
    "answer_type": "choice",
-   "answer": null,
+   "answer": "C",
    "choices": [
     {
      "key": "A",
@@ -1925,11 +1940,15 @@
     },
     {
      "key": "C",
-     "text": "rational, integer"
+     "text": "natural number"
     },
     {
      "key": "D",
-     "text": "rational, integer, whole number and natural number"
+     "text": "whole number"
+    },
+    {
+     "key": "E",
+     "text": "integer"
     }
    ],
    "marker": null,
@@ -1974,7 +1993,7 @@
     "the key \"rational, an integer, a whole number and a natural number\" does not read as the printed answer \"rational, an integer, a whole num- ber and a natural number\""
    ],
    "unit": null,
-   "options_source": "lesson",
+   "options_source": "stem",
    "not_markable_reason": null,
    "tier_source": "typing",
    "printed_answer_scope": "item",
@@ -1985,11 +2004,22 @@
    "form_overridden": null,
    "form_unsupported": null,
    "blocked_on_figure": false,
+   "less_specific": [
+    "B",
+    "D",
+    "E"
+   ],
    "g2": {
-    "verdict": "exclude",
+    "verdict": "fix",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (book_final is not in the book solution; a choice needs 2–5 options with the key among them; options said to be the lesson's closed set are not categories: \"rational, integer\", \"rational, integer, whole number and natural number\" — numbers, pairs, values and combinations are the book's answer to type); a fix needs fields a person or a recommendation must write",
-    "auto": true
+    "note": "auto-pass G2 (AI recommendation): $\\left(\\sqrt[3]{1}\\right)^7=1^7=1$: rational, integer, whole, natural, as the book says. Retype as a choice on the stem's own category words; key the most specific true one, the others as less specific. Pipeline's combination options were invented. Verified independently: the verifier's own answer matches the key.",
+    "auto": true,
+    "changed": [
+     "answer",
+     "choices",
+     "less_specific",
+     "options_source"
+    ]
    }
   },
   {
@@ -2321,9 +2351,9 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "accept",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (book_final is not in the book solution); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): $a,b$ integers, so $\\frac{-2}{b}$ is a ratio of integers: rational (for $b\\neq0$). Book and blind agree. Options rational/irrational are both words in the stem; the complaint is only a text comparison with a missing EPUB final. Verified independently: the verifier's own answer matches the key.",
     "auto": true
    }
   },
@@ -2949,7 +2979,13 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false
+   "blocked_on_figure": false,
+   "g2": {
+    "verdict": "exclude",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): Integers in the list: $-3, 0, 7, 11$. The book's working, printed answer and EPUB answer all give $-3;7;11$, leaving out $0$, which belongs to $\\{\\ldots;-1;0;1;\\ldots\\}$ (the set the working itself cites). The blind answer is right here. Right answer by the agent's own derivation: -3; 0; 7; 11.",
+    "auto": true
+   }
   },
   {
    "ref": "Ex1-1:7f",
@@ -3016,7 +3052,7 @@
    "lo": "lo:g10m1s3-1-2",
    "stem": "For each of the following numbers write the next three digits and state whether the number is rational or irrational. $\\text{1,1}\\dot{5}$",
    "answer_type": "choice",
-   "answer": null,
+   "answer": "A",
    "choices": [
     {
      "key": "A",
@@ -3080,10 +3116,13 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "fix",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (book_final is not in the book solution; a choice needs 2–5 options with the key among them; the key \"555; rational\" does not read as the printed answer \"(i) 555 (ii) rational\"); a fix needs fields a person or a recommendation must write",
-    "auto": true
+    "note": "auto-pass G2 (AI recommendation): $1,1\\dot{5}=1,1555\\ldots$ so the next three digits are $555$ and the number is rational. Typing has no key (book's answer not among options). Retype as a choice on the stem's own words rational/irrational, key rational. Digits unmarked. Verified independently: the verifier's own answer matches the key.",
+    "auto": true,
+    "changed": [
+     "answer"
+    ]
    }
   },
   {
@@ -3260,7 +3299,7 @@
    "lo": "lo:g10m1s3-1-2",
    "stem": "For each of the following numbers write the next three digits and state whether the number is rational or irrational. $\\text{3,3243}\\dot{5}\\dot{4}$",
    "answer_type": "choice",
-   "answer": null,
+   "answer": "A",
    "choices": [
     {
      "key": "A",
@@ -3324,10 +3363,13 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "fix",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (book_final is not in the book solution; a choice needs 2–5 options with the key among them; the key \"545; rational\" does not read as the printed answer \"(i) 545 (ii) rational\"); a fix needs fields a person or a recommendation must write",
-    "auto": true
+    "note": "auto-pass G2 (AI recommendation): $3,3243\\dot5\\dot4=3,3243545454\\ldots$ so the next three digits are $545$ and the number is rational. Typing has no key. Retype as a choice on the stem's own words rational/irrational, key rational. Digits unmarked. Verified independently: the verifier's own answer matches the key.",
+    "auto": true,
+    "changed": [
+     "answer"
+    ]
    }
   },
   {
@@ -3689,9 +3731,9 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "accept",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"0,\\overline{12}\" does not read as the printed answer \"0,12\"); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): $0,1212\\ldots$ repeats the block 12, so $0,\\overline{12}$. The EPUB LaTeX and the working agree; the printed '0,12' is only the PDF text layer losing the bar. The typed key matches the EPUB. The complaint is a text comparison. Verified independently: the verifier's own answer matches the key.",
     "auto": true
    }
   },
@@ -3759,9 +3801,9 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "accept",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"0,\\overline{123}\" does not read as the printed answer \"0,123\"); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): $0,123123\\ldots$ repeats the block 123, so $0,\\overline{123}$. The EPUB LaTeX and working agree; printed '0,123' lost its bar in the PDF flattening. The typed key equals the EPUB's, so the check's complaint is a text comparison. Verified independently: the verifier's own answer matches the key.",
     "auto": true
    }
   },
@@ -4124,9 +4166,9 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "accept",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"1,\\overline{27}\" does not read as the printed answer \"1,27\"); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): $1\\frac{3}{11}=1+3\\cdot0,0909\\ldots=1+0,2727\\ldots=1,\\overline{27}$. Matches the working's last line and the EPUB answer; the printed '1,27' lost its bar in the PDF. Blind answer agrees with the key. Verified independently: the verifier's own answer matches the key.",
     "auto": true
    }
   },
@@ -4609,26 +4651,9 @@
    "kind": "exercise",
    "lo": "lo:g10m1s3-1-1",
    "stem": "The figure here shows the Venn diagram for the special sets $\\mathbb{N},\\mathbb{N}_0$ and $\\mathbb{Z}$ . [figure] Where does the number $\\text{2,13}$ belong in the diagram?",
-   "answer_type": "choice",
-   "answer": "D",
-   "choices": [
-    {
-     "key": "A",
-     "text": "in \\mathbb{N}"
-    },
-    {
-     "key": "B",
-     "text": "in \\mathbb{N}_0"
-    },
-    {
-     "key": "C",
-     "text": "in \\mathbb{Z}"
-    },
-    {
-     "key": "D",
-     "text": "between the rectangle and \\mathbb{Z}"
-    }
-   ],
+   "answer_type": "not_markable",
+   "answer": null,
+   "choices": null,
    "marker": null,
    "solution": [
     "$\\text{2,13}$ is in its simplest form, therefore it is not in $\\mathbb{N}$ , $\\mathbb{N}_0$ or $\\mathbb{Z}$ . It is in the space between the rectangle and $\\mathbb{Z}$"
@@ -4667,8 +4692,8 @@
     "options said to be a figure's labels are not all single labels"
    ],
    "unit": null,
-   "options_source": "figure",
-   "not_markable_reason": null,
+   "options_source": null,
+   "not_markable_reason": "The answer is a region of the Venn diagram (between the rectangle and Z), which the figure does not label; no option set comes from the book's own words, so the item is kept as a teaching example only.",
    "tier_source": "typing",
    "printed_answer_scope": "item",
    "figures": [
@@ -4681,10 +4706,17 @@
    "form_unsupported": null,
    "blocked_on_figure": true,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "fix",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (options said to be a figure's labels are not all single labels); a fix needs fields a person or a recommendation must write",
-    "auto": true
+    "note": "auto-pass G2 (AI recommendation): In the figure, nested ellipses $\\mathbb{N}\\subset\\mathbb{N}_0\\subset\\mathbb{Z}$ sit inside a rectangle. $2,13$ is not an integer, so it lies in the rectangle outside $\\mathbb{Z}$. The book is right, but the options are invented, not figure labels, so retype as not markable.",
+    "auto": true,
+    "changed": [
+     "answer",
+     "answer_type",
+     "choices",
+     "not_markable_reason",
+     "options_source"
+    ]
    }
   },
   {
@@ -4697,15 +4729,15 @@
    "choices": [
     {
      "key": "A",
-     "text": "(i)"
+     "text": "Every natural number is an integer"
     },
     {
      "key": "B",
-     "text": "(ii)"
+     "text": "Every whole number is a natural number"
     },
     {
      "key": "C",
-     "text": "(iii)"
+     "text": "There are fractions in the integers"
     }
    ],
    "marker": null,
@@ -4760,10 +4792,13 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "fix",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (options said to be the stem's are not all in the stem); a fix needs fields a person or a recommendation must write",
-    "auto": true
+    "note": "auto-pass G2 (AI recommendation): Every natural number is an integer: true. Whole numbers include $0$, not natural: false. Integers contain no fractions: false. The working's order makes (i) the first statement. The labels (i)-(iii) are not in the stem, so use the three statements, which are in the stem, as options. Verified independently: the verifier's own answer matches the key.",
+    "auto": true,
+    "changed": [
+     "choices"
+    ]
    }
   },
   {
@@ -5810,7 +5845,7 @@
    "g2": {
     "verdict": "exclude",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (a choice needs 2–5 options, not 14: a list in the stem to select from is not a choice; options said to be the stem's are not all in the stem); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): Derived: only $\\sqrt{-24}$ is non-real; every other entry is a real number ($\\frac{\\sqrt2}{0}$ is undefined, not non-real). The book key is right, but 14 options cannot be a choice and a value marker cannot read $\\sqrt{-24}$. Held, not accepted. (kept out as exclude, not hold: its typed shape cannot be emitted — a choice needs 2–5 options, not 14: a list in the stem to select from is not a choice)",
     "auto": true
    }
   },
@@ -5819,67 +5854,16 @@
    "kind": "exercise",
    "lo": "lo:g10m1s3-1-2",
    "stem": "Consider the following list of numbers: $\\sqrt[3]{26}\\;;\\;\\frac{3}{2}\\;;\\;\\sqrt{-24}\\;;\\;\\sqrt{39}\\;;\\;\\text{7,}\\dot{1}\\dot{1}\\;;\\;\\pi^2\\;;\\;\\frac{\\pi}{2}\\;;\\;\\text{7,12}\\;;\\;-\\sqrt{24}\\;;\\;\\frac{\\sqrt{2}}{0}\\;;\\;3\\pi\\;;\\;\\sqrt{78}\\;;\\;9\\;;\\;\\pi$ Which of the numbers are irrational numbers?",
-   "answer_type": "choice",
-   "answer": null,
-   "choices": [
-    {
-     "key": "A",
-     "text": "\\sqrt[3]{26}"
-    },
-    {
-     "key": "B",
-     "text": "\\frac{3}{2}"
-    },
-    {
-     "key": "C",
-     "text": "\\sqrt{-24}"
-    },
-    {
-     "key": "D",
-     "text": "\\sqrt{39}"
-    },
-    {
-     "key": "E",
-     "text": "7,\\dot{1}\\dot{1}"
-    },
-    {
-     "key": "F",
-     "text": "\\pi^2"
-    },
-    {
-     "key": "G",
-     "text": "\\frac{\\pi}{2}"
-    },
-    {
-     "key": "H",
-     "text": "7,12"
-    },
-    {
-     "key": "I",
-     "text": "-\\sqrt{24}"
-    },
-    {
-     "key": "J",
-     "text": "\\frac{\\sqrt{2}}{0}"
-    },
-    {
-     "key": "K",
-     "text": "3\\pi"
-    },
-    {
-     "key": "L",
-     "text": "\\sqrt{78}"
-    },
-    {
-     "key": "M",
-     "text": "9"
-    },
-    {
-     "key": "N",
-     "text": "\\pi"
-    }
-   ],
-   "marker": null,
+   "answer_type": "expression",
+   "answer": "-\\sqrt{24}; \\frac{\\pi}{2}; \\sqrt[3]{26}; \\pi; \\sqrt{39}; \\sqrt{78}; 3\\pi; \\pi^2",
+   "choices": null,
+   "marker": {
+    "kind": "values",
+    "key": "-\\sqrt{24}; \\frac{\\pi}{2}; \\sqrt[3]{26}; \\pi; \\sqrt{39}; \\sqrt{78}; 3\\pi; \\pi^2",
+    "form": null,
+    "variables": [],
+    "tolerance": null
+   },
    "solution": [
     "Any number that cannot be written as a fraction of integers is irrational. Therefore $-\\sqrt{24}\\;;\\;\\frac{\\pi}{2}\\;;\\;\\sqrt[3]{26}\\;;\\;\\pi\\;;\\;\\sqrt{39}\\;;\\;\\sqrt{78}\\;;\\;3\\pi\\;;\\;\\pi^2$ are all irrational."
    ],
@@ -5919,7 +5903,7 @@
     "options said to be the stem's are not all in the stem"
    ],
    "unit": null,
-   "options_source": "stem",
+   "options_source": null,
    "not_markable_reason": null,
    "tier_source": "typing",
    "printed_answer_scope": "item",
@@ -5931,10 +5915,17 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "fix",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (a choice needs 2–5 options with the key among them; a choice needs 2–5 options, not 14: a list in the stem to select from is not a choice; options said to be the stem's are not all in the stem); a fix needs fields a person or a recommendation must write",
-    "auto": true
+    "note": "auto-pass G2 (AI recommendation): Checked each entry: 26, 39, 78, 24 are not perfect cubes or squares, and any rational multiple or power of $\\pi$ is irrational, so there are eight irrationals. Excluded as non-irrational: $\\frac32$, $7{,}\\dot1\\dot1$, $7{,}12$, 9, $\\sqrt{-24}$, $\\frac{\\sqrt2}{0}$. Book key is right; retype as a values list. Verified independently: the verifier's own answer matches the key.",
+    "auto": true,
+    "changed": [
+     "answer",
+     "answer_type",
+     "choices",
+     "marker",
+     "options_source"
+    ]
    }
   },
   {
@@ -5942,67 +5933,16 @@
    "kind": "exercise",
    "lo": "lo:g10m1s3-1-2",
    "stem": "Consider the following list of numbers: $\\sqrt[3]{26}\\;;\\;\\frac{3}{2}\\;;\\;\\sqrt{-24}\\;;\\;\\sqrt{39}\\;;\\;\\text{7,}\\dot{1}\\dot{1}\\;;\\;\\pi^2\\;;\\;\\frac{\\pi}{2}\\;;\\;\\text{7,12}\\;;\\;-\\sqrt{24}\\;;\\;\\frac{\\sqrt{2}}{0}\\;;\\;3\\pi\\;;\\;\\sqrt{78}\\;;\\;9\\;;\\;\\pi$ Which of the numbers are rational numbers?",
-   "answer_type": "choice",
-   "answer": null,
-   "choices": [
-    {
-     "key": "A",
-     "text": "\\sqrt[3]{26}"
-    },
-    {
-     "key": "B",
-     "text": "\\frac{3}{2}"
-    },
-    {
-     "key": "C",
-     "text": "\\sqrt{-24}"
-    },
-    {
-     "key": "D",
-     "text": "\\sqrt{39}"
-    },
-    {
-     "key": "E",
-     "text": "7,\\dot{1}\\dot{1}"
-    },
-    {
-     "key": "F",
-     "text": "\\pi^2"
-    },
-    {
-     "key": "G",
-     "text": "\\frac{\\pi}{2}"
-    },
-    {
-     "key": "H",
-     "text": "7,12"
-    },
-    {
-     "key": "I",
-     "text": "-\\sqrt{24}"
-    },
-    {
-     "key": "J",
-     "text": "\\frac{\\sqrt{2}}{0}"
-    },
-    {
-     "key": "K",
-     "text": "3\\pi"
-    },
-    {
-     "key": "L",
-     "text": "\\sqrt{78}"
-    },
-    {
-     "key": "M",
-     "text": "9"
-    },
-    {
-     "key": "N",
-     "text": "\\pi"
-    }
-   ],
-   "marker": null,
+   "answer_type": "expression",
+   "answer": "\\frac{3}{2}; 7,\\dot{1}\\dot{1}; 7,12; 9",
+   "choices": null,
+   "marker": {
+    "kind": "values",
+    "key": "\\frac{3}{2}; 7,\\dot{1}\\dot{1}; 7,12; 9",
+    "form": null,
+    "variables": [],
+    "tolerance": null
+   },
    "solution": [
     "All numbers that can be written as a fraction of integers are rational numbers. Therefore $\\frac{3}{2}\\;;\\;\\text{7,}\\dot{1}\\dot{1}\\;;\\;\\text{7,12}\\;;\\;9$ are all rational numbers."
    ],
@@ -6041,7 +5981,7 @@
     "options said to be the stem's are not all in the stem"
    ],
    "unit": null,
-   "options_source": "stem",
+   "options_source": null,
    "not_markable_reason": null,
    "tier_source": "typing",
    "printed_answer_scope": "item",
@@ -6053,10 +5993,17 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "fix",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (a choice needs 2–5 options with the key among them; a choice needs 2–5 options, not 14: a list in the stem to select from is not a choice; options said to be the stem's are not all in the stem); a fix needs fields a person or a recommendation must write",
-    "auto": true
+    "note": "auto-pass G2 (AI recommendation): Checked: $\\frac32$, the recurring decimal $7{,}\\dot1\\dot1$, the terminating $7{,}12$ and 9 are fractions of integers. The roots, $\\pi$-multiples and $\\sqrt{-24}$ are not rational and $\\frac{\\sqrt2}{0}$ is undefined. Book key right; retype as a values list. Verified independently: the verifier's own answer matches the key.",
+    "auto": true,
+    "changed": [
+     "answer",
+     "answer_type",
+     "choices",
+     "marker",
+     "options_source"
+    ]
    }
   },
   {
@@ -6258,7 +6205,7 @@
    "g2": {
     "verdict": "exclude",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (a choice needs 2–5 options, not 14: a list in the stem to select from is not a choice; options said to be the stem's are not all in the stem); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): Derived: only $\\frac{\\sqrt2}{0}$ has a zero denominator, so it is the one undefined number; $\\sqrt{-24}$ is non-real, not undefined, as the book itself separates in 5a. Key is right but is a division by zero the marker cannot read, and 14 options is not a valid choice. Held. (kept out as exclude, not hold: its typed shape cannot be emitted — a choice needs 2–5 options, not 14: a list in the stem to select from is not a choice)",
     "auto": true
    }
   },
@@ -6960,7 +6907,13 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false
+   "blocked_on_figure": false,
+   "g2": {
+    "verdict": "accept",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): The book accepts any three next digits, so the blind 8, 1, 3 is a guess, not a disagreement. The conclusion is irrational, the book's convention for a non-terminating decimal with no bar or dot. Choice rational/irrational is a lesson category set. Digits part is unmarked. Verified independently: the verifier's own answer matches the key.",
+    "auto": true
+   }
   },
   {
    "ref": "Ex1-11:10b",
@@ -7025,7 +6978,13 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false
+   "blocked_on_figure": false,
+   "g2": {
+    "verdict": "accept",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): $1{,}\\dot1 = 1{,}111\\ldots$ so the next digits are 111 and the number equals $\\frac{10}{9}$, rational. The book, printed answer and blind answer all agree; the check differed only because the EPUB final line omits the digits. Typed choice rational is right. Verified independently: the verifier's own answer matches the key.",
+    "auto": true
+   }
   }
  ],
  "source_run": {

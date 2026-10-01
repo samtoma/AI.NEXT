@@ -5,51 +5,59 @@
  "id": "g2-ch01",
  "chapter": 1,
  "run": "wf_cab88c79-c65, wf_791f61b5-0bb, wf_6ffd9ec1-5d6, wf_796b7644-0fb, wf_38cd93f2-4a1, wf_5acb7902-ff6, wf_552eebe2-d46, wf_2cd2d32d-a3f",
- "decided_at": "2026-10-01T18:09:32Z",
+ "decided_at": "2026-10-01T18:09:56Z",
  "by": "auto-pass G2 (AI recommendation)",
  "auto": true,
  "outcome": "pass_with_holds",
- "summary": "38 book item(s) decided on the AI recommendation (0 from the recommendation file, 38 by the checks' own rule); 47 held for a person; 0 already decided by a person; 4 typed not markable (teaching only, no verdict owed); 35 item(s) typed again, each with its reason (a choice from the book's printed key, a fraction typed as a number, a marker kind the key or its form cannot be read under)",
+ "summary": "85 book item(s) decided on the AI recommendation (81 from the recommendation file, 4 by the checks' own rule); 0 held for a person; 0 already decided by a person; 37 recommended with low confidence (your call); 4 typed not markable (teaching only, no verdict owed); 35 item(s) typed again, each with its reason (a choice from the book's printed key, a fraction typed as a number, a marker kind the key or its form cannot be read under)",
  "decisions": [
   {
    "key": "g10m1s3-1:Ex1-11:10a",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "accept",
+   "detail": "The book accepts any three next digits, so the blind 8, 1, 3 is a guess, not a disagreement. The conclusion is irrational, the book's convention for a non-terminating decimal with no bar or dot. Choice rational/irrational is a lesson category set. Digits part is unmarked. Verified independently: the verifier's own answer matches the key.",
+   "basis": "partial answer · confidence low"
   },
   {
    "key": "g10m1s3-1:Ex1-11:10b",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "accept",
+   "detail": "$1{,}\\dot1 = 1{,}111\\ldots$ so the next digits are 111 and the number equals $\\frac{10}{9}$, rational. The book, printed answer and blind answer all agree; the check differed only because the EPUB final line omits the digits. Typed choice rational is right. Verified independently: the verifier's own answer matches the key.",
+   "basis": "partial answer · confidence low"
   },
   {
    "key": "g10m1s3-1:Ex1-11:1a",
-   "decision": "exclude",
-   "basis": "the answer-typing check flagged it (options said to be a figure's labels are not all single labels); a fix needs fields a person or a recommendation must write"
+   "decision": "fix",
+   "detail": "In the figure, nested ellipses $\\mathbb{N}\\subset\\mathbb{N}_0\\subset\\mathbb{Z}$ sit inside a rectangle. $2,13$ is not an integer, so it lies in the rectangle outside $\\mathbb{Z}$. The book is right, but the options are invented, not figure labels, so retype as not markable.",
+   "basis": "several accepted answers · confidence low"
   },
   {
    "key": "g10m1s3-1:Ex1-11:1b",
-   "decision": "exclude",
-   "basis": "the answer-typing check flagged it (options said to be the stem's are not all in the stem); a fix needs fields a person or a recommendation must write"
+   "decision": "fix",
+   "detail": "Every natural number is an integer: true. Whole numbers include $0$, not natural: false. Integers contain no fractions: false. The working's order makes (i) the first statement. The labels (i)-(iii) are not in the stem, so use the three statements, which are in the stem, as options. Verified independently: the verifier's own answer matches the key.",
+   "basis": "selected from a list · confidence high"
   },
   {
    "key": "g10m1s3-1:Ex1-11:5a",
    "decision": "exclude",
-   "basis": "the answer-typing check flagged it (a choice needs 2–5 options, not 14: a list in the stem to select from is not a choice; options said to be the stem's are not all in the stem); a fix needs fields a person or a recommendation must write"
+   "detail": "Derived: only $\\sqrt{-24}$ is non-real; every other entry is a real number ($\\frac{\\sqrt2}{0}$ is undefined, not non-real). The book key is right, but 14 options cannot be a choice and a value marker cannot read $\\sqrt{-24}$. Held, not accepted. (kept out as exclude, not hold: its typed shape cannot be emitted — a choice needs 2–5 options, not 14: a list in the stem to select from is not a choice)",
+   "basis": "marker cannot check · confidence low"
   },
   {
    "key": "g10m1s3-1:Ex1-11:5c",
-   "decision": "exclude",
-   "basis": "the answer-typing check flagged it (a choice needs 2–5 options with the key among them; a choice needs 2–5 options, not 14: a list in the stem to select from is not a choice; options said to be the stem's are not all in the stem); a fix needs fields a person or a recommendation must write"
+   "decision": "fix",
+   "detail": "Checked each entry: 26, 39, 78, 24 are not perfect cubes or squares, and any rational multiple or power of $\\pi$ is irrational, so there are eight irrationals. Excluded as non-irrational: $\\frac32$, $7{,}\\dot1\\dot1$, $7{,}12$, 9, $\\sqrt{-24}$, $\\frac{\\sqrt2}{0}$. Book key is right; retype as a values list. Verified independently: the verifier's own answer matches the key.",
+   "basis": "selected from a list · confidence high"
   },
   {
    "key": "g10m1s3-1:Ex1-11:5d",
-   "decision": "exclude",
-   "basis": "the answer-typing check flagged it (a choice needs 2–5 options with the key among them; a choice needs 2–5 options, not 14: a list in the stem to select from is not a choice; options said to be the stem's are not all in the stem); a fix needs fields a person or a recommendation must write"
+   "decision": "fix",
+   "detail": "Checked: $\\frac32$, the recurring decimal $7{,}\\dot1\\dot1$, the terminating $7{,}12$ and 9 are fractions of integers. The roots, $\\pi$-multiples and $\\sqrt{-24}$ are not rational and $\\frac{\\sqrt2}{0}$ is undefined. Book key right; retype as a values list. Verified independently: the verifier's own answer matches the key.",
+   "basis": "selected from a list · confidence low"
   },
   {
    "key": "g10m1s3-1:Ex1-11:5f",
    "decision": "exclude",
-   "basis": "the answer-typing check flagged it (a choice needs 2–5 options, not 14: a list in the stem to select from is not a choice; options said to be the stem's are not all in the stem); a fix needs fields a person or a recommendation must write"
+   "detail": "Derived: only $\\frac{\\sqrt2}{0}$ has a zero denominator, so it is the one undefined number; $\\sqrt{-24}$ is non-real, not undefined, as the book itself separates in 5a. Key is right but is a division by zero the marker cannot read, and 14 options is not a valid choice. Held. (kept out as exclude, not hold: its typed shape cannot be emitted — a choice needs 2–5 options, not 14: a list in the stem to select from is not a choice)",
+   "basis": "marker cannot check · confidence low"
   },
   {
    "key": "g10m1s3-1:Ex1-11:7",
@@ -58,63 +66,75 @@
   },
   {
    "key": "g10m1s3-1:Ex1-1:10b",
-   "decision": "exclude",
-   "basis": "the answer-typing check flagged it (the key \"0,\\overline{12}\" does not read as the printed answer \"0,12\"); a fix needs fields a person or a recommendation must write"
+   "decision": "accept",
+   "detail": "$0,1212\\ldots$ repeats the block 12, so $0,\\overline{12}$. The EPUB LaTeX and the working agree; the printed '0,12' is only the PDF text layer losing the bar. The typed key matches the EPUB. The complaint is a text comparison. Verified independently: the verifier's own answer matches the key.",
+   "basis": "typing error · confidence high"
   },
   {
    "key": "g10m1s3-1:Ex1-1:10c",
-   "decision": "exclude",
-   "basis": "the answer-typing check flagged it (the key \"0,\\overline{123}\" does not read as the printed answer \"0,123\"); a fix needs fields a person or a recommendation must write"
+   "decision": "accept",
+   "detail": "$0,123123\\ldots$ repeats the block 123, so $0,\\overline{123}$. The EPUB LaTeX and working agree; printed '0,123' lost its bar in the PDF flattening. The typed key equals the EPUB's, so the check's complaint is a text comparison. Verified independently: the verifier's own answer matches the key.",
+   "basis": "printed text damaged · confidence high"
   },
   {
    "key": "g10m1s3-1:Ex1-1:11e",
-   "decision": "exclude",
-   "basis": "the answer-typing check flagged it (the key \"1,\\overline{27}\" does not read as the printed answer \"1,27\"); a fix needs fields a person or a recommendation must write"
+   "decision": "accept",
+   "detail": "$1\\frac{3}{11}=1+3\\cdot0,0909\\ldots=1+0,2727\\ldots=1,\\overline{27}$. Matches the working's last line and the EPUB answer; the printed '1,27' lost its bar in the PDF. Blind answer agrees with the key. Verified independently: the verifier's own answer matches the key.",
+   "basis": "printed text damaged · confidence high"
   },
   {
    "key": "g10m1s3-1:Ex1-1:1a",
-   "decision": "exclude",
-   "basis": "the answer-typing check flagged it (options said to be a figure's labels are not all single labels); a fix needs fields a person or a recommendation must write"
+   "decision": "accept",
+   "detail": "$-\\frac{12}{3}=-4$, an integer but not whole or natural, so it sits in the $\\mathbb{Z}$ ring outside $\\mathbb{N}_0$. Figure shows nested ovals labelled $\\mathbb{N}$, $\\mathbb{N}_0$, $\\mathbb{Z}$; the options are exactly those labels. The complaint about 'single labels' is the subscript in $\\mathbb{N}_0$. Verified independently: the verifier's own answer matches the key.",
+   "basis": "check too strict · confidence high"
   },
   {
    "key": "g10m1s3-1:Ex1-1:1b",
    "decision": "exclude",
-   "basis": "the answer-typing check flagged it (book_final is not in the book solution; options said to be the stem's are not all in the stem); a fix needs fields a person or a recommendation must write"
+   "detail": "Statement 1 false (negatives). Statement 2 true ($\\mathbb{N}\\subset\\mathbb{N}_0$). Statement 3 as typed is true too, so a single key would mark a right answer wrong. The working does not show the intended wording, so I cannot repair it. Right answer by the agent's own derivation: Book key is (ii) 'Every natural number is a whole number', but (iii) as typed is also true.",
+   "basis": "item wording · confidence high"
   },
   {
    "key": "g10m1s3-1:Ex1-1:2a",
-   "decision": "exclude",
-   "basis": "the answer-typing check flagged it (book_final is not in the book solution; options said to be a figure's labels are not all single labels; the key \"between \\mathbb{Z} and the rectangle\" does not read as the printed answer \"between the rectangle and Z\"); a fix needs fields a person or a recommendation must write"
+   "decision": "hold",
+   "detail": "$-\\frac12$ is not an integer, so it lies outside all three ovals, inside the rectangle: the book's answer is right. But the typed option D is not a figure label, and options A-C alone cannot hold the key. Pipeline's option wording also reorders the book's phrase.",
+   "basis": "needs the page image · confidence low"
   },
   {
    "key": "g10m1s3-1:Ex1-1:2b",
    "decision": "exclude",
-   "basis": "the answer-typing check flagged it (book_final is not in the book solution; options said to be the stem's are not all in the stem); a fix needs fields a person or a recommendation must write"
+   "detail": "Statement 1 false. Statement 2 true ($\\mathbb{N}_0\\subset\\mathbb{Z}$). Statement 3 as typed is true, so one key would mark a right answer wrong. The working's reasoning is garbled and does not show the intended wording. Right answer by the agent's own derivation: Book key is (ii) 'Every whole number is an integer', but (iii) as typed is also true.",
+   "basis": "item wording · confidence high"
   },
   {
    "key": "g10m1s3-1:Ex1-1:4c",
-   "decision": "exclude",
-   "basis": "the answer-typing check flagged it (book_final is not in the book solution; a choice needs 2–5 options with the key among them; options said to be the lesson's closed set are not categories: \"rational, integer\", \"rational, integer, whole number and natural number\" — numbers, pairs, values and combinations are the book's answer to type); a fix needs fields a person or a recommendation must write"
+   "decision": "fix",
+   "detail": "$\\frac{\\sqrt9}{3}=\\frac33=1$: rational, integer, whole, natural, as the book says. Retype as a choice on the stem's own category words; key the most specific true one, the others as less specific. Pipeline's combination options were invented. Verified independently: the verifier's own answer matches the key.",
+   "basis": "selected from a list · confidence high"
   },
   {
    "key": "g10m1s3-1:Ex1-1:4g",
-   "decision": "exclude",
-   "basis": "the answer-typing check flagged it (book_final is not in the book solution; a choice needs 2–5 options with the key among them; options said to be the lesson's closed set are not categories: \"rational, integer\", \"rational, integer, whole number and natural number\" — numbers, pairs, values and combinations are the book's answer to type); a fix needs fields a person or a recommendation must write"
+   "decision": "fix",
+   "detail": "$\\left(\\sqrt[3]{1}\\right)^7=1^7=1$: rational, integer, whole, natural, as the book says. Retype as a choice on the stem's own category words; key the most specific true one, the others as less specific. Pipeline's combination options were invented. Verified independently: the verifier's own answer matches the key.",
+   "basis": "selected from a list · confidence high"
   },
   {
    "key": "g10m1s3-1:Ex1-1:5c",
-   "decision": "exclude",
-   "basis": "the answer-typing check flagged it (book_final is not in the book solution); a fix needs fields a person or a recommendation must write"
+   "decision": "accept",
+   "detail": "$a,b$ integers, so $\\frac{-2}{b}$ is a ratio of integers: rational (for $b\\neq0$). Book and blind agree. Options rational/irrational are both words in the stem; the complaint is only a text comparison with a missing EPUB final. Verified independently: the verifier's own answer matches the key.",
+   "basis": "check too strict · confidence low"
   },
   {
    "key": "g10m1s3-1:Ex1-1:7e",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "exclude",
+   "detail": "Integers in the list: $-3, 0, 7, 11$. The book's working, printed answer and EPUB answer all give $-3;7;11$, leaving out $0$, which belongs to $\\{\\ldots;-1;0;1;\\ldots\\}$ (the set the working itself cites). The blind answer is right here. Right answer by the agent's own derivation: -3; 0; 7; 11.",
+   "basis": "book error · confidence high"
   },
   {
    "key": "g10m1s3-1:Ex1-1:8a",
-   "decision": "exclude",
-   "basis": "the answer-typing check flagged it (book_final is not in the book solution; a choice needs 2–5 options with the key among them; the key \"555; rational\" does not read as the printed answer \"(i) 555 (ii) rational\"); a fix needs fields a person or a recommendation must write"
+   "decision": "fix",
+   "detail": "$1,1\\dot{5}=1,1555\\ldots$ so the next three digits are $555$ and the number is rational. Typing has no key (book's answer not among options). Retype as a choice on the stem's own words rational/irrational, key rational. Digits unmarked. Verified independently: the verifier's own answer matches the key.",
+   "basis": "partial answer · confidence low"
   },
   {
    "key": "g10m1s3-1:Ex1-1:8b",
@@ -133,63 +153,75 @@
   },
   {
    "key": "g10m1s3-1:Ex1-1:8e",
-   "decision": "exclude",
-   "basis": "the answer-typing check flagged it (book_final is not in the book solution; a choice needs 2–5 options with the key among them; the key \"545; rational\" does not read as the printed answer \"(i) 545 (ii) rational\"); a fix needs fields a person or a recommendation must write"
+   "decision": "fix",
+   "detail": "$3,3243\\dot5\\dot4=3,3243545454\\ldots$ so the next three digits are $545$ and the number is rational. Typing has no key. Retype as a choice on the stem's own words rational/irrational, key rational. Digits unmarked. Verified independently: the verifier's own answer matches the key.",
+   "basis": "partial answer · confidence low"
   },
   {
    "key": "g10m1s3-1:WE3",
    "decision": "exclude",
-   "basis": "the answer-typing check flagged it (the key \"\\frac{201}{37}\" does not read as the book final answer \"x = \\frac{5427}{999} = \\frac{201}{37} = 5\\frac{16}{37}\"); a fix needs fields a person or a recommendation must write"
+   "detail": "NOT RECOMMENDED LIVE (the independent verifier said confirmed, and another answer is also correct (its own answer: 201/37 (that is 5 16/37); 0.432 repeating = 432/999 = 16/37, so 5 + 16/37 = 201/37, which is in lowest terms (37 is prime); the mixed form 5 16/37 is equally correct but may not parse as the key's improper fraction.)). The agent's reading: $5{,}\\dot4\\dot3\\dot2 = x$, $1000x-x=999x=5427$, so $x=\\frac{5427}{999}=\\frac{201}{37}$ (divide by 27). Check: $201/37 = 5.432432\\ldots$. Key $\\frac{201}{37}$ is the book's simplified fraction; the complaint is only a text comparison with the full chain.",
+   "basis": "unconfirmed · confidence low"
   },
   {
    "key": "g10m1s4-1:Ex1-11:17a",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "accept",
+   "detail": "$\\sqrt8=2\\sqrt2\\approx2{,}828427$, which is 2,82843 to 5 d.p., and it is irrational since 8 is not a perfect square. Book working and blind answer agree; the check differed only on the missing value in the final line. Choice irrational/rational is a lesson set. Verified independently: the verifier's own answer matches the key.",
+   "basis": "partial answer · confidence low"
   },
   {
    "key": "g10m1s4-1:Ex1-11:17b",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "accept",
+   "detail": "$768=256\\cdot3$, so $\\sqrt{768}=16\\sqrt3\\approx27{,}71281$, irrational. Book working and printed answer agree. Blind answer differs only by adding the decimal. Conclusion-only choice with lesson options is acceptable. Verified independently: the verifier's own answer matches the key.",
+   "basis": "partial answer · confidence low"
   },
   {
    "key": "g10m1s4-1:Ex1-11:17c",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "accept",
+   "detail": "$\\sqrt{0{,}49}=0{,}7=0{,}70000$, rational. Book working and printed answer agree. Blind answer only adds the decimal value. Conclusion-only choice with lesson options. Verified independently: the verifier's own answer matches the key.",
+   "basis": "partial answer · confidence low"
   },
   {
    "key": "g10m1s4-1:Ex1-11:17d",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "accept",
+   "detail": "$\\sqrt{0{,}0016}=0{,}04=0{,}04000$, rational. Book working and printed answer agree. Blind answer only adds the decimal value. Conclusion-only choice with lesson options. Verified independently: the verifier's own answer matches the key.",
+   "basis": "partial answer · confidence low"
   },
   {
    "key": "g10m1s4-1:Ex1-11:17e",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "accept",
+   "detail": "$\\sqrt{0{,}25}=0{,}5=0{,}50000$, rational. Book working and printed answer agree. Blind answer only adds the decimal value. Conclusion-only choice with lesson options. Verified independently: the verifier's own answer matches the key.",
+   "basis": "partial answer · confidence low"
   },
   {
    "key": "g10m1s4-1:Ex1-11:17f",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "accept",
+   "detail": "$\\sqrt{36}=6=6{,}00000$, rational. Book working and printed answer agree. Blind answer only adds the decimal value. Conclusion-only choice with lesson options. Verified independently: the verifier's own answer matches the key.",
+   "basis": "partial answer · confidence low"
   },
   {
    "key": "g10m1s4-1:Ex1-11:17g",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "accept",
+   "detail": "$1960=196\\cdot10$, so $\\sqrt{1960}=14\\sqrt{10}\\approx44{,}27189$, irrational. Book working and printed answer agree. Blind answer only adds the decimal. Conclusion-only choice with lesson options. Verified independently: the verifier's own answer matches the key.",
+   "basis": "partial answer · confidence low"
   },
   {
    "key": "g10m1s4-1:Ex1-11:17h",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "accept",
+   "detail": "$\\sqrt{0{,}0036}=0{,}06=0{,}06000$, rational. Book working and printed answer agree. Blind answer only adds the decimal value. Conclusion-only choice with lesson options. Verified independently: the verifier's own answer matches the key.",
+   "basis": "partial answer · confidence low"
   },
   {
    "key": "g10m1s4-1:Ex1-11:17i",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "accept",
+   "detail": "$-8\\sqrt{0{,}04}=-8(0{,}2)=-1{,}6=-1{,}60000$, rational. Book working and printed answer agree. Blind answer only adds the decimal value. Conclusion-only choice with lesson options. Verified independently: the verifier's own answer matches the key.",
+   "basis": "partial answer · confidence low"
   },
   {
    "key": "g10m1s4-1:Ex1-11:17j",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "accept",
+   "detail": "$\\sqrt{80}=8{,}94427\\ldots$, so $5\\sqrt{80}\\approx44{,}72136$. It is a non-terminating, non-repeating decimal, so irrational. The book's answer and working agree on irrational. The blind solver also gave the value, which the choice does not mark. Verified independently: the verifier's own answer matches the key.",
+   "basis": "partial answer · confidence low"
   },
   {
    "key": "g10m1s4-1:Ex1-11:19a",
@@ -214,252 +246,296 @@
   {
    "key": "g10m1s4-1:Ex1-2:3d",
    "decision": "exclude",
-   "basis": "the answer-typing check flagged it (numeric key \"14,8044...\" is not a number); a fix needs fields a person or a recommendation must write"
+   "detail": "Figure: square ABDE of side $\\pi$ and right triangle BCD with legs $\\pi$ and $\\pi$. Area $=\\pi^2+\\frac12\\pi^2=\\frac{3\\pi^2}{2}\\approx14{,}8044$, so the book is right. But the key \"14,8044...\" is not a number and the stem says not to round, so the book's form cannot be marked. Held. (kept out as exclude, not hold: its typed shape cannot be emitted — typed numeric but its key '14,8044...' is not a number (the assembly refuses it))",
+   "basis": "marker cannot check · confidence low"
   },
   {
    "key": "g10m1s5-1:Ex1-11:21a",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "exclude",
+   "detail": "$\\sqrt{14}=3{,}742\\ldots$, so 3,7 to 1 d.p. The book accepts both 3,7 and 3,8, but the printed key is 3,7 alone. A single key would mark a book-accepted 3,8 wrong, so this cannot be a one-key item. Right answer by the agent's own derivation: The book accepts 3,7 or 3,8.",
+   "basis": "several accepted answers · confidence high"
   },
   {
    "key": "g10m1s5-1:Ex1-11:21d",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "exclude",
+   "detail": "$7^2=49$ and $8^2=64$, so $\\sqrt{57}$ lies between 7 and 8, about 7,55. The book says 'between 7 and 8' and then gives 4,5 or 4,6, which cannot be right. It also gives two answers. The blind 7,5 matches my derivation. Right answer by the agent's own derivation: 7,5 (or 7,6 as a rough estimate).",
+   "basis": "book error · confidence high"
   },
   {
    "key": "g10m1s5-1:Ex1-3:2a",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "exclude",
+   "detail": "$\\sqrt{10}=3{,}162\\ldots$, so rounding to 1 d.p. gives 3,2. The book accepts both 3,1 and 3,2, and the printed key is only 3,1. A single key would mark 3,2, the correctly rounded value, as wrong. Right answer by the agent's own derivation: The book accepts 3,1 or 3,2.",
+   "basis": "several accepted answers · confidence high"
   },
   {
    "key": "g10m1s5-1:Ex1-3:2d",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "exclude",
+   "detail": "$9^2=81$ and $10^2=100$, so $\\sqrt{90}$ lies between 9 and 10, about 9,49, which is 9,5 to 1 d.p. The book's own working says 'between 9 and 10', then 'between 3 and 4' and gives 3,5. That is a book error. The blind answer 9,5 is right. Right answer by the agent's own derivation: 9,5.",
+   "basis": "book error · confidence high"
   },
   {
    "key": "g10m1s6-1:Ex1-11:23f",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "exclude",
+   "detail": "$(9a^2-25b^2)(a^2+ab-b^2)=9a^4+9a^3b-34a^2b^2-25ab^3+25b^4$. The book drops $b$ from the $a^3$ term and flips the signs of the $ab^3$ and $b^4$ terms, in both its working and its answer. The app marker's NOT EQUAL is correct. Right answer by the agent's own derivation: 9a^4+9a^3b-34a^2b^2-25ab^3+25b^4.",
+   "basis": "book error · confidence high"
   },
   {
    "key": "g10m1s6-1:Ex1-11:23h",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "exclude",
+   "detail": "$(\\frac a3-\\frac3a)(\\frac a3+\\frac3a)=\\frac{a^2}{9}-\\frac{9}{a^2}$ (difference of squares, $(3/a)^2=9/a^2$). The book's $-\\frac{3}{a^2}$ is wrong, and its working line '+1-1+3/a^2' is wrong too. Right answer by the agent's own derivation: \\frac{a^2}{9}-\\frac{9}{a^2}.",
+   "basis": "book error · confidence high"
   },
   {
    "key": "g10m1s6-1:Ex1-11:25b",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "exclude",
+   "detail": "$(x+2)(x+k)$ has constant term $c=2k$. $c>0$ needs $k>0$, so from the list only $1;6$. At $k=0$, $c=0$, which is not positive. The book's own reasoning says 'positive value of k' yet lists 0. Right answer by the agent's own derivation: 1; 6.",
+   "basis": "book error · confidence high"
   },
   {
    "key": "g10m1s6-1:Ex1-11:26a",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "exclude",
+   "detail": "$(3a-\\frac1{2a})^2=9a^2-2\\cdot3a\\cdot\\frac1{2a}+\\frac1{4a^2}=9a^2-3+\\frac1{4a^2}$. The book has $+3$, a sign error. (Its own 26c uses $-\\frac{1}{2a}$ squared giving $-3$ consistently with $(x-y)^2$.) Right answer by the agent's own derivation: 9a^2-3+\\frac{1}{4a^2}.",
+   "basis": "book error · confidence high"
   },
   {
    "key": "g10m1s6-1:Ex1-11:26c",
    "decision": "exclude",
-   "basis": "the answer-typing check flagged it (numeric key \"374\\frac{1}{2}\" is not a number); a fix needs fields a person or a recommendation must write"
+   "detail": "NOT RECOMMENDED LIVE (the independent verifier said confirmed, and another answer is also correct (its own answer: 749/2 = 374.5 (374 1/2); With x=3a, y=1/(2a): x-y=7, xy=3/2, so x^3-y^3=343+3(3/2)(7)=374.5, matching the key; the marker must read the mixed number 374\\frac{1}{2} as 374.5 (not 374 times 1/2) and also accept 374.5 or 749/2.)). The agent's reading: With $x=3a$, $y=\\frac1{2a}$: $x^3-y^3=(x-y)(x^2+xy+y^2)=(x-y)((x-y)^2+3xy)=7(49+\\frac92)=374\\frac12$. Matches the book and the blind $\\frac{749}{2}$. It is a mixed number, so it must be typed as an expression, not numeric.",
+   "basis": "unconfirmed · confidence low"
   },
   {
    "key": "g10m1s6-1:Ex1-4:2v",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "exclude",
+   "detail": "$(3x+2)(3x-2)=9x^2-4$, so the product is $(9x^2-4)^2=81x^4-72x^2+16$. The book's working writes $-36x-36x$ where it should be $-36x^2-36x^2$, and the exponent is lost in the answer too. The app marker also says NOT EQUAL. Right answer by the agent's own derivation: 81x^4-72x^2+16.",
+   "basis": "book error · confidence high"
   },
   {
    "key": "g10m1s6-1:Ex1-4:3d",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "exclude",
+   "detail": "$(x-2y)(x^2+xy+y^2)=x^3+x^2y+xy^2-2x^2y-2xy^2-2y^3=x^3-x^2y-xy^2-2y^3$. Doubling gives $2x^3-2x^2y-2xy^2-4y^3$. The book's working loses the 2 on $y^3$ in its second line. The app marker says NOT EQUAL. Right answer by the agent's own derivation: 2x^3-2x^2y-2xy^2-4y^3.",
+   "basis": "book error · confidence high"
   },
   {
    "key": "g10m1s6-1:Ex1-4:3i",
    "decision": "exclude",
-   "basis": "the answer-typing check flagged it (book_final is not in the book solution; the key \"\\frac{x^2}{12}+\\frac{7}{12}+\\frac{12}{x^2}\" does not read as the printed answer \"x2 12 + 7 12 + 3 x2\"); a fix needs fields a person or a recommendation must write"
+   "detail": "Expanding gives $\\frac{x^2}{12}+\\frac{4}{3}-\\frac{3}{4}-\\frac{12}{x^2}$. The last term is $-\\frac{3}{x}\\cdot\\frac{4}{x}=-\\frac{12}{x^2}$. The book's working shows $+\\frac{12}{x^2}$ and then $+\\frac{3}{x^2}$, and the typed key has yet another sign. The marker says NOT EQUAL. Right answer by the agent's own derivation: x^2/12 + 7/12 - 12/x^2.",
+   "basis": "book error · confidence high"
   },
   {
    "key": "g10m1s7-1:Ex1-11:28a",
-   "decision": "exclude",
-   "basis": "the answer-typing check flagged it (form \"prime_factors\" is not one the app's marker knows); a fix needs fields a person or a recommendation must write"
+   "decision": "hold",
+   "detail": "$143=11\\times13$ is correct (12^2-1) and matches the book working. The stem asks for a product of prime factors, a form the app's marker cannot check; typed as an expression, '143' would also be accepted.",
+   "basis": "marker cannot check · confidence high"
   },
   {
    "key": "g10m1s7-1:Ex1-11:28b",
-   "decision": "exclude",
-   "basis": "the answer-typing check flagged it (form \"prime_factors\" is not one the app's marker knows); a fix needs fields a person or a recommendation must write"
+   "decision": "hold",
+   "detail": "$168=2^3\\times3\\times7$ checks (8*21=168) and matches the EPUB. The printed '23' is a flattened $2^3$. The prime-factor form cannot be checked by the marker, so the typed expression would accept '168' or any equal product.",
+   "basis": "marker cannot check · confidence high"
   },
   {
    "key": "g10m1s7-1:Ex1-11:28c",
-   "decision": "exclude",
-   "basis": "the answer-typing check flagged it (form \"prime_factors\" is not one the app's marker knows); a fix needs fields a person or a recommendation must write"
+   "decision": "hold",
+   "detail": "$899=30^2-1=29\\times31$, correct and matching the book. The prime-factor form is not checkable by the app's marker, so the item cannot be marked faithfully today.",
+   "basis": "marker cannot check · confidence high"
   },
   {
    "key": "g10m1s7-1:Ex1-11:28d",
-   "decision": "exclude",
-   "basis": "the answer-typing check flagged it (form \"prime_factors\" is not one the app's marker knows); a fix needs fields a person or a recommendation must write"
+   "decision": "hold",
+   "detail": "$99=10^2-1=9\\times11=3^2\\times11$, correct and matching the EPUB (printed '32' is a flattened $3^2$). A product of prime factors cannot be checked by the marker.",
+   "basis": "marker cannot check · confidence high"
   },
   {
    "key": "g10m1s7-1:Ex1-11:28e",
-   "decision": "exclude",
-   "basis": "the answer-typing check flagged it (form \"prime_factors\" is not one the app's marker knows); a fix needs fields a person or a recommendation must write"
+   "decision": "hold",
+   "detail": "$1599=40^2-1=39\\times41=3\\times13\\times41$, correct and matching the book. The prime-factor form is not checkable by the app's marker, so it is held.",
+   "basis": "marker cannot check · confidence high"
   },
   {
    "key": "g10m1s7-1:Ex1-11:29n",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "exclude",
+   "detail": "$x^2-2x+1-y^4=(x-1)^2-(y^2)^2=(x-1-y^2)(x-1+y^2)$. The book's answer $x(x-2)+(1+y)(1-y)(1+y^2)$ is a sum, not a factorised product, and the working splits the expression as $x(x-2)+(1-y^4)$ instead of completing the square. Right answer by the agent's own derivation: (x-1-y^2)(x-1+y^2).",
+   "basis": "book error · confidence high"
   },
   {
    "key": "g10m1s7-1:Ex1-11:30k",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "exclude",
+   "detail": "Book working turns $16x^6-3y^8$ into $4(4x^6-9y^8)$, which expands to $16x^6-36y^8$, so the step does not follow. The stem as printed gives $(4x^3-\\sqrt3y^4)(4x^3+\\sqrt3y^4)$. The app marker reports NOT EQUAL. It looks like a lost 9, but the working does not show it. Right answer by the agent's own derivation: (4x^3-\\sqrt{3}y^4)(4x^3+\\sqrt{3}y^4).",
+   "basis": "book error · confidence high"
   },
   {
    "key": "g10m1s7-1:Ex1-5:15",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "exclude",
+   "detail": "$7a+4$ has no common factor, so it cannot be factorised. The book's answer is the expression itself, not a product, so a marker checking the factorised form would mark a correct student answer wrong. The question has no answer in the asked form. Right answer by the agent's own derivation: 7a+4 (cannot be factorised).",
+   "basis": "book error · confidence low"
   },
   {
    "key": "g10m1s7-1:Ex1-6:13",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "hold",
+   "detail": "NOT RECOMMENDED LIVE (the re-typed key '(29-26a)(30a-41)' is not the quoted book answer re-typed). The agent's reading: The stem lost an exponent: the working's first line is $4(a-3)^2-49(4a-5)^2$. Then $(2a-6-28a+35)(2a-6+28a-35)=(29-26a)(30a-41)$ checks. With the repaired stem the book's key is right. As printed, the stem does not factorise to it.",
+   "basis": "not grounded · confidence low"
   },
   {
    "key": "g10m1s7-1:Ex1-6:14",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "exclude",
+   "detail": "$16k^2-4=(4k-2)(4k+2)$ is correct in value, but each bracket still has the factor 2, so the book's answer is only partly factorised. The full form is $4(2k-1)(2k+1)$. The form check would teach an incomplete factorisation. Right answer by the agent's own derivation: 4(2k-1)(2k+1).",
+   "basis": "book error · confidence low"
   },
   {
    "key": "g10m1s7-1:WE12",
-   "decision": "exclude",
-   "basis": "the answer-typing check flagged it (the key \"(7+b)(x+2y)\" does not read as the book final answer \"The factors of $7x+14y+bx+2by$ are $\\left(7+b\\right)$ and $\\left(x+2y\\right)$ .\"); a fix needs fields a person or a recommendation must write"
+   "decision": "accept",
+   "detail": "$7x+14y+bx+2by=7(x+2y)+b(x+2y)=(x+2y)(7+b)$, checked by expanding. The typed key $(7+b)(x+2y)$ is correct. The complaint is only a text comparison against the book's sentence answer. Verified independently: the verifier's own answer matches the key.",
+   "basis": "check too strict · confidence high"
   },
   {
    "key": "g10m1s7-2:Ex1-8:11",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "exclude",
+   "detail": "Stem has $-22x$: $2x^2-22x+20=2(x^2-11x+10)=2(x-1)(x-10)$. Book working starts from $+22x$ and keys $2(x+1)(x+10)$, which expands to $2x^2+22x+20$. Key wrong for the stem as shown. Right answer by the agent's own derivation: 2(x-1)(x-10).",
+   "basis": "book error · confidence low"
   },
   {
    "key": "g10m1s7-2:Ex1-8:21",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "exclude",
+   "detail": "$98x^4+14x^2-4=2(49x^4+7x^2-2)=2(7x^2+2)(7x^2-1)$. Book working writes $-7x^2$ and factors with $7x$ not $7x^2$; $2(7x+2)(7x-1)=98x^2+14x-4$, not the stem. Right answer by the agent's own derivation: 2(7x^2+2)(7x^2-1).",
+   "basis": "book error · confidence high"
   },
   {
    "key": "g10m1s7-2:WE13",
-   "decision": "exclude",
-   "basis": "the answer-typing check flagged it (the key \"(x+1)(3x-1)\" does not read as the book final answer \"$3x^{2}+2x-1=(x+1)(3x-1)$\"); a fix needs fields a person or a recommendation must write"
+   "decision": "accept",
+   "detail": "$(x+1)(3x-1)=3x^2-x+3x-1=3x^2+2x-1$, matches the stem. Typed key is the book's factorisation; the complaint is only that the EPUB line restates the expression before the product. Verified independently: the verifier's own answer matches the key.",
+   "basis": "check too strict · confidence high"
   },
   {
    "key": "g10m1s7-3:Ex1-9:11",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "accept",
+   "detail": "Sum of cubes with $a=\\sqrt[3]{25}x$, $b=1$ gives the book's factors; quadratic factor has negative discriminant so it is complete over the reals. Typed key equals the EPUB answer. Blind solver only looked for rational factors. Verified independently: the verifier's own answer matches the key.",
+   "basis": "book answer confirmed · confidence low"
   },
   {
    "key": "g10m1s7-3:Ex1-9:17",
    "decision": "exclude",
-   "basis": "the answer-typing check flagged it (book_final is not in the book solution; the key \"(2jkl-b)(4j^2k^2l^2+2jklb+b^2)\" does not read as the printed answer \"(2jkl −b)(4j2k2l2 + 2jklabc + b2)\"); a fix needs fields a person or a recommendation must write"
+   "detail": "$8j^3k^3l^3-b^3=(2jkl)^3-b^3=(2jkl-b)(4j^2k^2l^2+2jklb+b^2)$. The book's middle term $2jklabc$ is wrong (stray letters); the typed key silently corrected it. Right answer by the agent's own derivation: (2jkl-b)(4j^2k^2l^2+2jklb+b^2).",
+   "basis": "book error · confidence high"
   },
   {
    "key": "g10m1s7-3:Ex1-9:24",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "exclude",
+   "detail": "$1-t^3=(1-t)(1+t+t^2)$ with $t=x-y$. Book uses $1-t+t^2$ (sum-of-cubes pattern). Test $x=2,y=0$: stem $=-7$, book answer $=-3$. Key wrong. Right answer by the agent's own derivation: (1-x+y)(1+x-y+x^2-2xy+y^2).",
+   "basis": "book error · confidence high"
   },
   {
    "key": "g10m1s7-3:Ex1-9:25",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "accept",
+   "detail": "$(h^4-1)(8g^6+h^3)$, $h^4-1=(h-1)(h+1)(h^2+1)$, $8g^6+h^3=(2g^2+h)(4g^4-2g^2h+h^2)$. Book answer is complete and correct; blind answer left the cube sum unfactorised. Marker says key equals the stem. Verified independently: the verifier's own answer matches the key.",
+   "basis": "book answer confirmed · confidence high"
   },
   {
    "key": "g10m1s8-1:Ex1-10:1k",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "exclude",
+   "detail": "$b^2-81a^2=(b-9a)(b+9a)$, $18a-2b=2(9a-b)$, so the result is $-\\frac{b+9a}{2}$. Book's working drops the $a$ throughout and keys $-\\frac{b+9}{2}$, which is not equal to the stem. Right answer by the agent's own derivation: -\\frac{b+9a}{2}.",
+   "basis": "book error · confidence high"
   },
   {
    "key": "g10m1s8-1:Ex1-10:2g",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "exclude",
+   "detail": "$9a-3=3(3a-1)$, not $3(a-1)$ as the book writes. Then $\\frac{8(3a-1)}{12}\\times\\frac{6}{3(3a-1)}=\\frac{4}{3}$. The book's printed answer keeps a lost factor and is not constant. Right answer by the agent's own derivation: \\frac{4}{3}.",
+   "basis": "book error · confidence high"
   },
   {
    "key": "g10m1s8-1:Ex1-10:2j",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "exclude",
+   "detail": "$\\frac{5b(a-3)}{4(a-3)}=\\frac{5b}{4}$; times $\\frac{a+b}{6b^2}$ gives $\\frac{5(a+b)}{24b}$. The book's last line multiplies the numerators and denominators wrongly, giving $\\frac{30b^3}{4(a+b)}$. Right answer by the agent's own derivation: \\frac{5(a+b)}{24b}.",
+   "basis": "book error · confidence high"
   },
   {
    "key": "g10m1s8-1:Ex1-10:2m",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "hold",
+   "detail": "NOT RECOMMENDED LIVE (the quoted span is not in the item's worked solution, EPUB answer or printed answer). The agent's reading: Stem shows $a+5a+4$; working factorises it as $(a+4)(a+1)$, so $a^2$ was lost. With $a^2+5a+4$: $\\frac{a-4}{(a+4)(a+1)}\\times\\frac{(a+1)^2}{(a-4)(a+1)}=\\frac{1}{a+4}$, matching the key. Key unchanged.",
+   "basis": "not grounded · confidence low"
   },
   {
    "key": "g10m1s8-1:Ex1-10:2o",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "fix",
+   "detail": "Stem shows $a^2-2a+8$; working factorises it as $(a-4)(a+2)=a^2-2a-8$, so a sign was lost. With $-8$: result $\\frac{(a-4)(a-3)}{3}-\\frac{3}{2}=\\frac{2a^2-14a+15}{6}$, matching the key. Verified independently: the verifier's own answer matches the key.",
+   "basis": "stem damaged · confidence low"
   },
   {
    "key": "g10m1s8-1:Ex1-10:2p",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "fix",
+   "detail": "As shown, $4x^2+7x-3$ does not factor as $(x+3)(4x-1)$ (that is $4x^2+11x-3$), so the stem gives no constant. The working's factors show the intended $4x^2+11x-3$; with it the product is $1$, matching the key. Verified independently: the verifier's own answer matches the key.",
+   "basis": "stem damaged · confidence low"
   },
   {
    "key": "g10m1s8-1:Ex1-10:3h",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "exclude",
+   "detail": "$5(t-3)-(t-2)=5t-15-t+2=4t-13$. The book subtracted $(t-3)$ instead of $(t-2)$, giving $4t-12$. Printed answer wrong. Right answer by the agent's own derivation: \\frac{4t-13}{(t-2)(t-3)}.",
+   "basis": "book error · confidence high"
   },
   {
    "key": "g10m1s8-1:Ex1-10:3i",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "exclude",
+   "detail": "Numerator $(k+2)^2-(k^2+2)=4k+2=2(2k+1)$. The book's last line writes $2(k+2)$, which is $2k+4$; not equal to $4k+2$. Printed answer wrong. Right answer by the agent's own derivation: \\frac{2(2k+1)}{(k^2+2)(k+2)}.",
+   "basis": "book error · confidence high"
   },
   {
    "key": "g10m1s8-1:Ex1-10:3l",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "exclude",
+   "detail": "$y^2-x^2=-(x+y)(x-y)$, not $(x+y)(x-y)$. So the sum is $\\frac{x(x-y)-x^2}{(x+y)(x-y)}=\\frac{-xy}{(x+y)(x-y)}$. Book's answer has a sign error and is wrong. Right answer by the agent's own derivation: \\frac{-xy}{(x+y)(x-y)}.",
+   "basis": "book error · confidence high"
   },
   {
    "key": "g10m1s8-1:Ex1-10:3n",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "exclude",
+   "detail": "Common denominator is $(h-f)(h^2+hf+f^2)$; $h-(h-f)=f$. Check at $h=2,f=1$: stem gives $2/7-1/7=1/7$; book key gives $1/(3\\cdot7)=1/21$. Book key is wrong; app marker NOT EQUAL agrees. Right answer by the agent's own derivation: \\frac{f}{(h-f)(h^{2}+hf+f^{2})}.",
+   "basis": "book error · confidence high"
   },
   {
    "key": "g10m1s8-1:Ex1-10:3t",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "fix",
+   "detail": "As printed ($b^2$), the key fails (at $a=3,b=1$: $156/95$ vs $9/5$). With $4b^2$, which the working's line 2 uses, the key is right: $1+1-1/5=9/5$. Repair the stem by one character group; key unchanged. Verified independently: the verifier's own answer matches the key.",
+   "basis": "stem damaged · confidence low"
   },
   {
    "key": "g10m1s8-1:Ex1-10:4a",
    "decision": "exclude",
-   "basis": "the answer-typing check flagged it (book_final is not in the book solution; a choice needs 2–5 options with the key among them; options said to be the stem's are not all in the stem; the key \"x \\neq 2\" does not read as the printed answer \"x ̸= 2\"); a fix needs fields a person or a recommendation must write"
+   "detail": "Derived: denominator zero at $x=2$, so $x\\neq2$; matches printed answer and blind. The key is sound, but the current choice typing is invalid and I cannot confirm the marker reads an inequality statement. (kept out as exclude, not hold: its typed shape cannot be emitted — Ex1-10:4a: a choice item needs >= 2 choices and its key among them)",
+   "basis": "marker cannot check · confidence low"
   },
   {
    "key": "g10m1s8-1:Ex1-10:4b",
    "decision": "exclude",
-   "basis": "the answer-typing check flagged it (book_final is not in the book solution; a choice needs 2–5 options with the key among them; options said to be the stem's are not all in the stem; the key \"x \\neq -1\" does not read as the printed answer \"x ̸= −1\"); a fix needs fields a person or a recommendation must write"
+   "detail": "Derived: $4x+4=0$ at $x=-1$, so $x\\neq-1$; matches printed and blind. Book working's $3(x-1)$ is a slip (should be $3(x-3)$) that does not affect the key. Typing is invalid and marker support for an inequality is unconfirmed. (kept out as exclude, not hold: its typed shape cannot be emitted — Ex1-10:4b: a choice item needs >= 2 choices and its key among them)",
+   "basis": "marker cannot check · confidence low"
   },
   {
    "key": "g10m1s8-1:Ex1-10:4c",
    "decision": "exclude",
-   "basis": "the answer-typing check flagged it (book_final is not in the book solution; a choice needs 2–5 options with the key among them; options said to be the stem's are not all in the stem; the key \"x \\neq 0 \\text{ and } x \\neq \\pm 1\" does not read as the printed answer \"x ̸= 0 and x ̸= ±1\"); a fix needs fields a person or a recommendation must write"
+   "detail": "Derived: denominators $x$ and $x^2-1=(x-1)(x+1)$ vanish at $0,1,-1$; matches printed and blind. Typing is invalid; a compound not-equal statement is not confirmed readable by the marker. (kept out as exclude, not hold: its typed shape cannot be emitted — Ex1-10:4c: a choice item needs >= 2 choices and its key among them)",
+   "basis": "marker cannot check · confidence low"
   },
   {
    "key": "g10m1s8-1:Ex1-11:31k",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "exclude",
+   "detail": "$a^2+4a+3=(a+1)(a+3)$, division by $\\frac{(a-1)(a+1)}{a-1}=a+1$, $a^2-2a-15=(a-5)(a+3)$; everything cancels to $\\frac{a-5}{(a+1)^2}$. Book's $(a+2)^2$ is a typo; the blind solver is right here. Right answer by the agent's own derivation: \\frac{a-5}{(a+1)^{2}}.",
+   "basis": "book error · confidence high"
   },
   {
    "key": "g10m1s8-1:Ex1-11:31l",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "exclude",
+   "detail": "$a^3+6^3=(a+6)(a^2-6a+36)$. Other factors cancel as the book shows, leaving $\\frac{1}{a^2-6a+36}$. Check at $a=0$: stem gives $\\frac{6}{11}\\cdot\\frac{33}{3}\\cdot\\frac{1}{216}=\\frac{1}{36}$; book's key also gives 1/36, but at $a=1$ they differ ($1/31$ vs $1/43$). Book key wrong. Right answer by the agent's own derivation: \\frac{1}{a^{2}-6a+36}.",
+   "basis": "book error · confidence high"
   },
   {
    "key": "g10m1s8-1:Ex1-11:31m",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "fix",
+   "detail": "With $a^2-ab-2b^2=(a-2b)(a+b)$ and $b^2-ba-6a^2=(b-3a)(b+2a)$, factors cancel leaving $2(b-3a)(b+2a)/(3a-b)=-2(2a+b)$. As printed, $a^2-b-2b^2$ does not factor and the key fails. Repair one lost letter. Verified independently: the verifier's own answer matches the key.",
+   "basis": "stem damaged · confidence low"
   },
   {
    "key": "g10m1s8-1:Ex1-11:37a",
-   "decision": "exclude",
-   "basis": "the answer-typing check flagged it (the key \"x \\neq \\frac{1}{3} \\text{ and } x \\neq -1\" does not read as the printed answer \"x ̸= 1 3 and x ̸= −1\"); a fix needs fields a person or a recommendation must write"
-  },
-  {
-   "key": "g10m1s8-1:Ex1-11:37b",
-   "decision": "earlier auto verdict dropped — no longer owed",
-   "basis": "a newer collection of the same run no longer flags it: the checks accept it as it is"
+   "decision": "accept",
+   "detail": "$3x^2+2x-1=(3x-1)(x+1)$ checked by expanding. Denominator zero at $x=\\frac13$ and $x=-1$. Book, printed answer, blind agree. Typing complaint is only a text comparison against the flattened PDF; the typed key matches the EPUB LaTeX. Verified independently: the verifier's own answer matches the key.",
+   "basis": "typing error · confidence low"
   },
   {
    "key": "g10m1s3-1:Ex1-11:5e",
@@ -647,6 +723,10 @@
    "state": "done"
   },
   {
+   "name": "G2 recommendation run: recommender + independent verifier (g2_recommend.py)",
+   "state": "done"
+  },
+  {
    "name": "the app's marker on every typed key (assembly)",
    "state": "on load"
   }
@@ -655,6 +735,10 @@
   {
    "label": "G2 verdicts",
    "path": "services/extraction/runs/g10-math/g2-ch01.json"
+  },
+  {
+   "label": "recommendation",
+   "path": "services/extraction/runs/g10-math/g2-ch01.recommended.json"
   },
   {
    "label": "S2–S4 run wf_cab88c79-c65",
@@ -692,42 +776,17 @@
  "blocked": [],
  "course_id": "course:us-g10-math-en",
  "for_review": [
-  "g10m1s3-1:Ex1-11:10a",
-  "g10m1s3-1:Ex1-11:10b",
-  "g10m1s3-1:Ex1-11:1a",
-  "g10m1s3-1:Ex1-11:1b",
   "g10m1s3-1:Ex1-11:5a",
-  "g10m1s3-1:Ex1-11:5c",
-  "g10m1s3-1:Ex1-11:5d",
   "g10m1s3-1:Ex1-11:5f",
   "g10m1s3-1:Ex1-11:7",
-  "g10m1s3-1:Ex1-1:10b",
-  "g10m1s3-1:Ex1-1:10c",
-  "g10m1s3-1:Ex1-1:11e",
-  "g10m1s3-1:Ex1-1:1a",
   "g10m1s3-1:Ex1-1:1b",
   "g10m1s3-1:Ex1-1:2a",
   "g10m1s3-1:Ex1-1:2b",
-  "g10m1s3-1:Ex1-1:4c",
-  "g10m1s3-1:Ex1-1:4g",
-  "g10m1s3-1:Ex1-1:5c",
   "g10m1s3-1:Ex1-1:7e",
-  "g10m1s3-1:Ex1-1:8a",
   "g10m1s3-1:Ex1-1:8b",
   "g10m1s3-1:Ex1-1:8c",
   "g10m1s3-1:Ex1-1:8d",
-  "g10m1s3-1:Ex1-1:8e",
   "g10m1s3-1:WE3",
-  "g10m1s4-1:Ex1-11:17a",
-  "g10m1s4-1:Ex1-11:17b",
-  "g10m1s4-1:Ex1-11:17c",
-  "g10m1s4-1:Ex1-11:17d",
-  "g10m1s4-1:Ex1-11:17e",
-  "g10m1s4-1:Ex1-11:17f",
-  "g10m1s4-1:Ex1-11:17g",
-  "g10m1s4-1:Ex1-11:17h",
-  "g10m1s4-1:Ex1-11:17i",
-  "g10m1s4-1:Ex1-11:17j",
   "g10m1s4-1:Ex1-2:3d",
   "g10m1s5-1:Ex1-11:21a",
   "g10m1s5-1:Ex1-11:21d",
@@ -751,30 +810,44 @@
   "g10m1s7-1:Ex1-5:15",
   "g10m1s7-1:Ex1-6:13",
   "g10m1s7-1:Ex1-6:14",
-  "g10m1s7-1:WE12",
   "g10m1s7-2:Ex1-8:11",
   "g10m1s7-2:Ex1-8:21",
-  "g10m1s7-2:WE13",
-  "g10m1s7-3:Ex1-9:11",
   "g10m1s7-3:Ex1-9:17",
   "g10m1s7-3:Ex1-9:24",
-  "g10m1s7-3:Ex1-9:25",
   "g10m1s8-1:Ex1-10:1k",
   "g10m1s8-1:Ex1-10:2g",
   "g10m1s8-1:Ex1-10:2j",
   "g10m1s8-1:Ex1-10:2m",
-  "g10m1s8-1:Ex1-10:2o",
-  "g10m1s8-1:Ex1-10:2p",
   "g10m1s8-1:Ex1-10:3h",
   "g10m1s8-1:Ex1-10:3i",
   "g10m1s8-1:Ex1-10:3l",
   "g10m1s8-1:Ex1-10:3n",
-  "g10m1s8-1:Ex1-10:3t",
   "g10m1s8-1:Ex1-10:4a",
   "g10m1s8-1:Ex1-10:4b",
   "g10m1s8-1:Ex1-10:4c",
   "g10m1s8-1:Ex1-11:31k",
   "g10m1s8-1:Ex1-11:31l",
+  "g10m1s3-1:Ex1-11:10a",
+  "g10m1s3-1:Ex1-11:10b",
+  "g10m1s3-1:Ex1-11:1a",
+  "g10m1s3-1:Ex1-11:5d",
+  "g10m1s3-1:Ex1-1:5c",
+  "g10m1s3-1:Ex1-1:8a",
+  "g10m1s3-1:Ex1-1:8e",
+  "g10m1s4-1:Ex1-11:17a",
+  "g10m1s4-1:Ex1-11:17b",
+  "g10m1s4-1:Ex1-11:17c",
+  "g10m1s4-1:Ex1-11:17d",
+  "g10m1s4-1:Ex1-11:17e",
+  "g10m1s4-1:Ex1-11:17f",
+  "g10m1s4-1:Ex1-11:17g",
+  "g10m1s4-1:Ex1-11:17h",
+  "g10m1s4-1:Ex1-11:17i",
+  "g10m1s4-1:Ex1-11:17j",
+  "g10m1s7-3:Ex1-9:11",
+  "g10m1s8-1:Ex1-10:2o",
+  "g10m1s8-1:Ex1-10:2p",
+  "g10m1s8-1:Ex1-10:3t",
   "g10m1s8-1:Ex1-11:31m",
   "g10m1s8-1:Ex1-11:37a"
  ]

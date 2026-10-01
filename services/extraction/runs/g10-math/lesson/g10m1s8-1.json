@@ -1221,7 +1221,13 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false
+   "blocked_on_figure": false,
+   "g2": {
+    "verdict": "exclude",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): $b^2-81a^2=(b-9a)(b+9a)$, $18a-2b=2(9a-b)$, so the result is $-\\frac{b+9a}{2}$. Book's working drops the $a$ throughout and keys $-\\frac{b+9}{2}$, which is not equal to the stem. Right answer by the agent's own derivation: -\\frac{b+9a}{2}.",
+    "auto": true
+   }
   },
   {
    "ref": "Ex1-10:1l",
@@ -2373,7 +2379,13 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false
+   "blocked_on_figure": false,
+   "g2": {
+    "verdict": "exclude",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): $9a-3=3(3a-1)$, not $3(a-1)$ as the book writes. Then $\\frac{8(3a-1)}{12}\\times\\frac{6}{3(3a-1)}=\\frac{4}{3}$. The book's printed answer keeps a lost factor and is not constant. Right answer by the agent's own derivation: \\frac{4}{3}.",
+    "auto": true
+   }
   },
   {
    "ref": "Ex1-10:2h",
@@ -2560,7 +2572,13 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false
+   "blocked_on_figure": false,
+   "g2": {
+    "verdict": "exclude",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): $\\frac{5b(a-3)}{4(a-3)}=\\frac{5b}{4}$; times $\\frac{a+b}{6b^2}$ gives $\\frac{5(a+b)}{24b}$. The book's last line multiplies the numerators and denominators wrongly, giving $\\frac{30b^3}{4(a+b)}$. Right answer by the agent's own derivation: \\frac{5(a+b)}{24b}.",
+    "auto": true
+   }
   },
   {
    "ref": "Ex1-10:2k",
@@ -2740,7 +2758,13 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false
+   "blocked_on_figure": false,
+   "g2": {
+    "verdict": "hold",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): NOT RECOMMENDED LIVE (the quoted span is not in the item's worked solution, EPUB answer or printed answer). The agent's reading: Stem shows $a+5a+4$; working factorises it as $(a+4)(a+1)$, so $a^2$ was lost. With $a^2+5a+4$: $\\frac{a-4}{(a+4)(a+1)}\\times\\frac{(a+1)^2}{(a-4)(a+1)}=\\frac{1}{a+4}$, matching the key. Key unchanged.",
+    "auto": true
+   }
   },
   {
    "ref": "Ex1-10:2n",
@@ -2808,7 +2832,7 @@
    "ref": "Ex1-10:2o",
    "kind": "exercise",
    "lo": "lo:g10m1s8-1-2",
-   "stem": "Simplify (assume all denominators are non-zero): $\\dfrac{a^2-2a+8}{a^2+6a+8}\\times\\dfrac{a^2+a-12}{3}-\\dfrac{3}{2}$",
+   "stem": "Simplify (assume all denominators are non-zero): $\\dfrac{a^2-2a-8}{a^2+6a+8}\\times\\dfrac{a^2+a-12}{3}-\\dfrac{3}{2}$",
    "answer_type": "expression",
    "answer": "\\frac{2a^{2}-14a+15}{6}",
    "choices": null,
@@ -2865,13 +2889,23 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false
+   "blocked_on_figure": false,
+   "g2": {
+    "verdict": "fix",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): Stem shows $a^2-2a+8$; working factorises it as $(a-4)(a+2)=a^2-2a-8$, so a sign was lost. With $-8$: result $\\frac{(a-4)(a-3)}{3}-\\frac{3}{2}=\\frac{2a^2-14a+15}{6}$, matching the key. Verified independently: the verifier's own answer matches the key.",
+    "auto": true,
+    "changed": [
+     "stem"
+    ],
+    "stem_fix_by": "auto-pass G2 recommendation (g2rec-v1) — not Samuel"
+   }
   },
   {
    "ref": "Ex1-10:2p",
    "kind": "exercise",
    "lo": "lo:g10m1s8-1-2",
-   "stem": "Simplify (assume all denominators are non-zero): $\\dfrac{4x^2-1}{3x^2+10x+3}\\div\\dfrac{6x^2+5x+1}{4x^2+7x-3}\\times\\dfrac{9x^2+6x+1}{8x^2-6x+1}$",
+   "stem": "Simplify (assume all denominators are non-zero): $\\dfrac{4x^2-1}{3x^2+10x+3}\\div\\dfrac{6x^2+5x+1}{4x^2+11x-3}\\times\\dfrac{9x^2+6x+1}{8x^2-6x+1}$",
    "answer_type": "numeric",
    "answer": "1",
    "choices": null,
@@ -2920,7 +2954,17 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false
+   "blocked_on_figure": false,
+   "g2": {
+    "verdict": "fix",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): As shown, $4x^2+7x-3$ does not factor as $(x+3)(4x-1)$ (that is $4x^2+11x-3$), so the stem gives no constant. The working's factors show the intended $4x^2+11x-3$; with it the product is $1$, matching the key. Verified independently: the verifier's own answer matches the key.",
+    "auto": true,
+    "changed": [
+     "stem"
+    ],
+    "stem_fix_by": "auto-pass G2 recommendation (g2rec-v1) — not Samuel"
+   }
   },
   {
    "ref": "Ex1-10:2q",
@@ -3547,7 +3591,13 @@
    },
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false
+   "blocked_on_figure": false,
+   "g2": {
+    "verdict": "exclude",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): $5(t-3)-(t-2)=5t-15-t+2=4t-13$. The book subtracted $(t-3)$ instead of $(t-2)$, giving $4t-12$. Printed answer wrong. Right answer by the agent's own derivation: \\frac{4t-13}{(t-2)(t-3)}.",
+    "auto": true
+   }
   },
   {
    "ref": "Ex1-10:3i",
@@ -3615,7 +3665,13 @@
    },
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false
+   "blocked_on_figure": false,
+   "g2": {
+    "verdict": "exclude",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): Numerator $(k+2)^2-(k^2+2)=4k+2=2(2k+1)$. The book's last line writes $2(k+2)$, which is $2k+4$; not equal to $4k+2$. Printed answer wrong. Right answer by the agent's own derivation: \\frac{2(2k+1)}{(k^2+2)(k+2)}.",
+    "auto": true
+   }
   },
   {
    "ref": "Ex1-10:3j",
@@ -3807,7 +3863,13 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false
+   "blocked_on_figure": false,
+   "g2": {
+    "verdict": "exclude",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): $y^2-x^2=-(x+y)(x-y)$, not $(x+y)(x-y)$. So the sum is $\\frac{x(x-y)-x^2}{(x+y)(x-y)}=\\frac{-xy}{(x+y)(x-y)}$. Book's answer has a sign error and is wrong. Right answer by the agent's own derivation: \\frac{-xy}{(x+y)(x-y)}.",
+    "auto": true
+   }
   },
   {
    "ref": "Ex1-10:3m",
@@ -3933,7 +3995,13 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false
+   "blocked_on_figure": false,
+   "g2": {
+    "verdict": "exclude",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): Common denominator is $(h-f)(h^2+hf+f^2)$; $h-(h-f)=f$. Check at $h=2,f=1$: stem gives $2/7-1/7=1/7$; book key gives $1/(3\\cdot7)=1/21$. Book key is wrong; app marker NOT EQUAL agrees. Right answer by the agent's own derivation: \\frac{f}{(h-f)(h^{2}+hf+f^{2})}.",
+    "auto": true
+   }
   },
   {
    "ref": "Ex1-10:3o",
@@ -4242,7 +4310,7 @@
    "ref": "Ex1-10:3t",
    "kind": "exercise",
    "lo": "lo:g10m1s8-1-3",
-   "stem": "Simplify (assume all denominators are non-zero): $\\dfrac{1}{a^2-4ab+4b^2}+\\dfrac{a^2+2ab+b^2}{a^3-8b^3}-\\dfrac{1}{a^2-4b^2}$",
+   "stem": "Simplify (assume all denominators are non-zero): $\\dfrac{1}{a^2-4ab+4b^2}+\\dfrac{a^2+2ab+4b^2}{a^3-8b^3}-\\dfrac{1}{a^2-4b^2}$",
    "answer_type": "expression",
    "answer": "\\frac{a^2+4b-4b^2}{(a-2b)^2(a+2b)}",
    "choices": null,
@@ -4301,7 +4369,17 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false
+   "blocked_on_figure": false,
+   "g2": {
+    "verdict": "fix",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): As printed ($b^2$), the key fails (at $a=3,b=1$: $156/95$ vs $9/5$). With $4b^2$, which the working's line 2 uses, the key is right: $1+1-1/5=9/5$. Repair the stem by one character group; key unchanged. Verified independently: the verifier's own answer matches the key.",
+    "auto": true,
+    "changed": [
+     "stem"
+    ],
+    "stem_fix_by": "auto-pass G2 recommendation (g2rec-v1) — not Samuel"
+   }
   },
   {
    "ref": "Ex1-10:4a",
@@ -4373,7 +4451,7 @@
    "g2": {
     "verdict": "exclude",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (book_final is not in the book solution; a choice needs 2–5 options with the key among them; options said to be the stem's are not all in the stem; the key \"x \\neq 2\" does not read as the printed answer \"x ̸= 2\"); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): Derived: denominator zero at $x=2$, so $x\\neq2$; matches printed answer and blind. The key is sound, but the current choice typing is invalid and I cannot confirm the marker reads an inequality statement. (kept out as exclude, not hold: its typed shape cannot be emitted — Ex1-10:4a: a choice item needs >= 2 choices and its key among them)",
     "auto": true
    }
   },
@@ -4449,7 +4527,7 @@
    "g2": {
     "verdict": "exclude",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (book_final is not in the book solution; a choice needs 2–5 options with the key among them; options said to be the stem's are not all in the stem; the key \"x \\neq -1\" does not read as the printed answer \"x ̸= −1\"); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): Derived: $4x+4=0$ at $x=-1$, so $x\\neq-1$; matches printed and blind. Book working's $3(x-1)$ is a slip (should be $3(x-3)$) that does not affect the key. Typing is invalid and marker support for an inequality is unconfirmed. (kept out as exclude, not hold: its typed shape cannot be emitted — Ex1-10:4b: a choice item needs >= 2 choices and its key among them)",
     "auto": true
    }
   },
@@ -4526,7 +4604,7 @@
    "g2": {
     "verdict": "exclude",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (book_final is not in the book solution; a choice needs 2–5 options with the key among them; options said to be the stem's are not all in the stem; the key \"x \\neq 0 \\text{ and } x \\neq \\pm 1\" does not read as the printed answer \"x ̸= 0 and x ̸= ±1\"); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): Derived: denominators $x$ and $x^2-1=(x-1)(x+1)$ vanish at $0,1,-1$; matches printed and blind. Typing is invalid; a compound not-equal statement is not confirmed readable by the marker. (kept out as exclude, not hold: its typed shape cannot be emitted — Ex1-10:4c: a choice item needs >= 2 choices and its key among them)",
     "auto": true
    }
   },
@@ -4935,7 +5013,13 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false
+   "blocked_on_figure": false,
+   "g2": {
+    "verdict": "exclude",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): $a^2+4a+3=(a+1)(a+3)$, division by $\\frac{(a-1)(a+1)}{a-1}=a+1$, $a^2-2a-15=(a-5)(a+3)$; everything cancels to $\\frac{a-5}{(a+1)^2}$. Book's $(a+2)^2$ is a typo; the blind solver is right here. Right answer by the agent's own derivation: \\frac{a-5}{(a+1)^{2}}.",
+    "auto": true
+   }
   },
   {
    "ref": "Ex1-11:31l",
@@ -4998,13 +5082,19 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false
+   "blocked_on_figure": false,
+   "g2": {
+    "verdict": "exclude",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): $a^3+6^3=(a+6)(a^2-6a+36)$. Other factors cancel as the book shows, leaving $\\frac{1}{a^2-6a+36}$. Check at $a=0$: stem gives $\\frac{6}{11}\\cdot\\frac{33}{3}\\cdot\\frac{1}{216}=\\frac{1}{36}$; book's key also gives 1/36, but at $a=1$ they differ ($1/31$ vs $1/43$). Book key wrong. Right answer by the agent's own derivation: \\frac{1}{a^{2}-6a+36}.",
+    "auto": true
+   }
   },
   {
    "ref": "Ex1-11:31m",
    "kind": "exercise",
    "lo": "lo:g10m1s8-1-2",
-   "stem": "Simplify the following: $2\\div\\dfrac{a+b}{a+2b}\\times\\dfrac{b^2-ba-6a^2}{a^2-4b^2}\\times\\dfrac{a^2-b-2b^2}{3a-b}$",
+   "stem": "Simplify the following: $2\\div\\dfrac{a+b}{a+2b}\\times\\dfrac{b^2-ba-6a^2}{a^2-4b^2}\\times\\dfrac{a^2-ab-2b^2}{3a-b}$",
    "answer_type": "expression",
    "answer": "-2(2a+b)",
    "choices": null,
@@ -5062,7 +5152,17 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false
+   "blocked_on_figure": false,
+   "g2": {
+    "verdict": "fix",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): With $a^2-ab-2b^2=(a-2b)(a+b)$ and $b^2-ba-6a^2=(b-3a)(b+2a)$, factors cancel leaving $2(b-3a)(b+2a)/(3a-b)=-2(2a+b)$. As printed, $a^2-b-2b^2$ does not factor and the key fails. Repair one lost letter. Verified independently: the verifier's own answer matches the key.",
+    "auto": true,
+    "changed": [
+     "stem"
+    ],
+    "stem_fix_by": "auto-pass G2 recommendation (g2rec-v1) — not Samuel"
+   }
   },
   {
    "ref": "Ex1-11:31n",
@@ -5995,9 +6095,9 @@
    },
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "accept",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"x \\neq \\frac{1}{3} \\text{ and } x \\neq -1\" does not read as the printed answer \"x ̸= 1 3 and x ̸= −1\"); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): $3x^2+2x-1=(3x-1)(x+1)$ checked by expanding. Denominator zero at $x=\\frac13$ and $x=-1$. Book, printed answer, blind agree. Typing complaint is only a text comparison against the flattened PDF; the typed key matches the EPUB LaTeX. Verified independently: the verifier's own answer matches the key.",
     "auto": true
    }
   },

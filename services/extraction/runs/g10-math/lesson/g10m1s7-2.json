@@ -395,9 +395,9 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "accept",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"(x+1)(3x-1)\" does not read as the book final answer \"$3x^{2}+2x-1=(x+1)(3x-1)$\"); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): $(x+1)(3x-1)=3x^2-x+3x-1=3x^2+2x-1$, matches the stem. Typed key is the book's factorisation; the complaint is only that the EPUB line restates the expression before the product. Verified independently: the verifier's own answer matches the key.",
     "auto": true
    }
   },
@@ -1096,7 +1096,13 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false
+   "blocked_on_figure": false,
+   "g2": {
+    "verdict": "exclude",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): Stem has $-22x$: $2x^2-22x+20=2(x^2-11x+10)=2(x-1)(x-10)$. Book working starts from $+22x$ and keys $2(x+1)(x+10)$, which expands to $2x^2+22x+20$. Key wrong for the stem as shown. Right answer by the agent's own derivation: 2(x-1)(x-10).",
+    "auto": true
+   }
   },
   {
    "ref": "Ex1-8:12",
@@ -1725,7 +1731,13 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false
+   "blocked_on_figure": false,
+   "g2": {
+    "verdict": "exclude",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): $98x^4+14x^2-4=2(49x^4+7x^2-2)=2(7x^2+2)(7x^2-1)$. Book working writes $-7x^2$ and factors with $7x$ not $7x^2$; $2(7x+2)(7x-1)=98x^2+14x-4$, not the stem. Right answer by the agent's own derivation: 2(7x^2+2)(7x^2-1).",
+    "auto": true
+   }
   },
   {
    "ref": "Ex1-8:22",

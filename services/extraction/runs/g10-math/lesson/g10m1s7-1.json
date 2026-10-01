@@ -587,9 +587,9 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "accept",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"(7+b)(x+2y)\" does not read as the book final answer \"The factors of $7x+14y+bx+2by$ are $\\left(7+b\\right)$ and $\\left(x+2y\\right)$ .\"); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): $7x+14y+bx+2by=7(x+2y)+b(x+2y)=(x+2y)(7+b)$, checked by expanding. The typed key $(7+b)(x+2y)$ is correct. The complaint is only a text comparison against the book's sentence answer. Verified independently: the verifier's own answer matches the key.",
     "auto": true
    }
   },
@@ -1552,7 +1552,13 @@
    },
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false
+   "blocked_on_figure": false,
+   "g2": {
+    "verdict": "exclude",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): $7a+4$ has no common factor, so it cannot be factorised. The book's answer is the expression itself, not a product, so a marker checking the factorised form would mark a correct student answer wrong. The question has no answer in the asked form. Right answer by the agent's own derivation: 7a+4 (cannot be factorised).",
+    "auto": true
+   }
   },
   {
    "ref": "Ex1-6:1",
@@ -2368,7 +2374,13 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false
+   "blocked_on_figure": false,
+   "g2": {
+    "verdict": "hold",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): NOT RECOMMENDED LIVE (the re-typed key '(29-26a)(30a-41)' is not the quoted book answer re-typed). The agent's reading: The stem lost an exponent: the working's first line is $4(a-3)^2-49(4a-5)^2$. Then $(2a-6-28a+35)(2a-6+28a-35)=(29-26a)(30a-41)$ checks. With the repaired stem the book's key is right. As printed, the stem does not factorise to it.",
+    "auto": true
+   }
   },
   {
    "ref": "Ex1-6:14",
@@ -2435,7 +2447,13 @@
    },
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false
+   "blocked_on_figure": false,
+   "g2": {
+    "verdict": "exclude",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): $16k^2-4=(4k-2)(4k+2)$ is correct in value, but each bracket still has the factor 2, so the book's answer is only partly factorised. The full form is $4(2k-1)(2k+1)$. The form check would teach an incomplete factorisation. Right answer by the agent's own derivation: 4(2k-1)(2k+1).",
+    "auto": true
+   }
   },
   {
    "ref": "Ex1-6:15",
@@ -4169,9 +4187,9 @@
    "form_unsupported": "prime_factors",
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "hold",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (form \"prime_factors\" is not one the app's marker knows); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): $143=11\\times13$ is correct (12^2-1) and matches the book working. The stem asks for a product of prime factors, a form the app's marker cannot check; typed as an expression, '143' would also be accepted.",
     "auto": true
    }
   },
@@ -4236,9 +4254,9 @@
    "form_unsupported": "prime_factors",
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "hold",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (form \"prime_factors\" is not one the app's marker knows); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): $168=2^3\\times3\\times7$ checks (8*21=168) and matches the EPUB. The printed '23' is a flattened $2^3$. The prime-factor form cannot be checked by the marker, so the typed expression would accept '168' or any equal product.",
     "auto": true
    }
   },
@@ -4303,9 +4321,9 @@
    "form_unsupported": "prime_factors",
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "hold",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (form \"prime_factors\" is not one the app's marker knows); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): $899=30^2-1=29\\times31$, correct and matching the book. The prime-factor form is not checkable by the app's marker, so the item cannot be marked faithfully today.",
     "auto": true
    }
   },
@@ -4370,9 +4388,9 @@
    "form_unsupported": "prime_factors",
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "hold",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (form \"prime_factors\" is not one the app's marker knows); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): $99=10^2-1=9\\times11=3^2\\times11$, correct and matching the EPUB (printed '32' is a flattened $3^2$). A product of prime factors cannot be checked by the marker.",
     "auto": true
    }
   },
@@ -4437,9 +4455,9 @@
    "form_unsupported": "prime_factors",
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "hold",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (form \"prime_factors\" is not one the app's marker knows); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): $1599=40^2-1=39\\times41=3\\times13\\times41$, correct and matching the book. The prime-factor form is not checkable by the app's marker, so it is held.",
     "auto": true
    }
   },
@@ -5065,7 +5083,13 @@
    },
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false
+   "blocked_on_figure": false,
+   "g2": {
+    "verdict": "exclude",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): $x^2-2x+1-y^4=(x-1)^2-(y^2)^2=(x-1-y^2)(x-1+y^2)$. The book's answer $x(x-2)+(1+y)(1-y)(1+y^2)$ is a sum, not a factorised product, and the working splits the expression as $x(x-2)+(1-y^4)$ instead of completing the square. Right answer by the agent's own derivation: (x-1-y^2)(x-1+y^2).",
+    "auto": true
+   }
   },
   {
    "ref": "Ex1-11:29p",
@@ -5760,7 +5784,13 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false
+   "blocked_on_figure": false,
+   "g2": {
+    "verdict": "exclude",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): Book working turns $16x^6-3y^8$ into $4(4x^6-9y^8)$, which expands to $16x^6-36y^8$, so the step does not follow. The stem as printed gives $(4x^3-\\sqrt3y^4)(4x^3+\\sqrt3y^4)$. The app marker reports NOT EQUAL. It looks like a lost 9, but the working does not show it. Right answer by the agent's own derivation: (4x^3-\\sqrt{3}y^4)(4x^3+\\sqrt{3}y^4).",
+    "auto": true
+   }
   },
   {
    "ref": "Ex1-11:30l",

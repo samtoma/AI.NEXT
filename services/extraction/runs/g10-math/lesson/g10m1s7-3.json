@@ -1188,7 +1188,13 @@
      "form 'factorised' applies to an expression or an equation, not to kind 'surd'"
     ]
    },
-   "blocked_on_figure": false
+   "blocked_on_figure": false,
+   "g2": {
+    "verdict": "accept",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): Sum of cubes with $a=\\sqrt[3]{25}x$, $b=1$ gives the book's factors; quadratic factor has negative discriminant so it is complete over the reals. Typed key equals the EPUB answer. Blind solver only looked for rational factors. Verified independently: the verifier's own answer matches the key.",
+    "auto": true
+   }
   },
   {
    "ref": "Ex1-9:12",
@@ -1579,7 +1585,7 @@
    "g2": {
     "verdict": "exclude",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (book_final is not in the book solution; the key \"(2jkl-b)(4j^2k^2l^2+2jklb+b^2)\" does not read as the printed answer \"(2jkl −b)(4j2k2l2 + 2jklabc + b2)\"); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): $8j^3k^3l^3-b^3=(2jkl)^3-b^3=(2jkl-b)(4j^2k^2l^2+2jklb+b^2)$. The book's middle term $2jklabc$ is wrong (stray letters); the typed key silently corrected it. Right answer by the agent's own derivation: (2jkl-b)(4j^2k^2l^2+2jklb+b^2).",
     "auto": true
    }
   },
@@ -2018,7 +2024,13 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false
+   "blocked_on_figure": false,
+   "g2": {
+    "verdict": "exclude",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): $1-t^3=(1-t)(1+t+t^2)$ with $t=x-y$. Book uses $1-t+t^2$ (sum-of-cubes pattern). Test $x=2,y=0$: stem $=-7$, book answer $=-3$. Key wrong. Right answer by the agent's own derivation: (1-x+y)(1+x-y+x^2-2xy+y^2).",
+    "auto": true
+   }
   },
   {
    "ref": "Ex1-9:25",
@@ -2082,7 +2094,13 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false
+   "blocked_on_figure": false,
+   "g2": {
+    "verdict": "accept",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): $(h^4-1)(8g^6+h^3)$, $h^4-1=(h-1)(h+1)(h^2+1)$, $8g^6+h^3=(2g^2+h)(4g^4-2g^2h+h^2)$. Book answer is complete and correct; blind answer left the cube sum unfactorised. Marker says key equals the stem. Verified independently: the verifier's own answer matches the key.",
+    "auto": true
+   }
   },
   {
    "ref": "Ex1-9:26",
