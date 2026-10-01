@@ -508,6 +508,11 @@ def main(argv: list[str] | None = None) -> int:
             owed.update(g2_items(json.loads(p.read_text()), ch, book.id_prefixes[0]))
         into = a.into or HERE / "runs" / book.book / "g2.json"
         existing = json.loads(into.read_text()) if into.exists() else None
+        if a.into is None and ch is not None and existing:
+            foreign = [k for k in existing.get("items") or {} if not k.startswith(f"{book.id_prefixes[0]}{ch}s")]
+            if foreign:
+                ap.error(f"{_rel(into)} already holds verdicts for other chapters ({foreign[0]}, …) — it is the pilot's "
+                         f"file; pass --into runs/{book.book}/g2-ch{ch:02d}.json for this chapter")
         rec_in = json.loads(a.recommend.read_text()) if a.recommend else None
         if rec_in and ch is not None:      # a recommendation file may hold other chapters: this one only
             rec_in = {**rec_in, "items": {k: v for k, v in (rec_in.get("items") or {}).items()
