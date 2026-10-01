@@ -811,7 +811,7 @@ export async function studentAccess(
       courseLabel: course.label,
       subject,
       label: def.label,
-      labelAr: def.labelAr,
+      labelAr: course.tutor.arabicTouches ? def.labelAr : null,
       dir: def.dir,
       curriculum: course.curriculum,
       curriculumLabel: curriculumLabel(course.curriculum),

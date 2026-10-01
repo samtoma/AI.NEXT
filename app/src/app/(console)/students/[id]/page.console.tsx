@@ -454,9 +454,14 @@ export default async function ConsoleStudentPage({
                     <tr key={row.courseId} className="border-b border-line-soft last:border-0">
                       <Td>
                         <span className="block font-semibold text-ink">{courseName(row.courseId)}</span>
-                        <span dir={row.dir} className="block text-[12.5px] text-ink-soft">
-                          {row.labelAr}
-                        </span>
+                        {/* `null` for a course whose tutor carries no Arabic at
+                            all (the American Grade 10 course, Samuel's answer
+                            35, 2026-10-01) — omitted rather than printed empty. */}
+                        {row.labelAr && (
+                          <span dir={row.dir} className="block text-[12.5px] text-ink-soft">
+                            {row.labelAr}
+                          </span>
+                        )}
                       </Td>
                       <Td>
                         <Chip tone={row.gradeState === "live" ? "good" : "neutral"}>

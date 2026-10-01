@@ -212,9 +212,14 @@ function CurriculumSection({
                 <tr key={courseId} className="border-b border-line-soft align-top last:border-0">
                   <td className="min-w-[220px] px-3 py-3">
                     <p className="text-[14px] font-semibold text-ink">{head.courseLabel}</p>
-                    <p dir={head.dir} className="text-[13px] text-ink-soft">
-                      {head.labelAr}
-                    </p>
+                    {/* `null` for a course whose tutor carries no Arabic at all
+                        (the American Grade 10 course, Samuel's answer 35,
+                        2026-10-01) — omitted rather than printed empty. */}
+                    {head.labelAr && (
+                      <p dir={head.dir} className="text-[13px] text-ink-soft">
+                        {head.labelAr}
+                      </p>
+                    )}
                     <p className="mt-1 max-w-[26ch] text-[11.5px] leading-snug text-ink-faint">
                       {head.book}
                     </p>

@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 
-import { asksCurriculum, curriculumToSend } from "@/lib/auth/onboarding";
 import type { CurriculumId } from "@/lib/curricula";
 import { GRADES, INTEREST_CATEGORIES, type InterestId } from "@/lib/profile";
 
@@ -40,13 +39,15 @@ import { MIN_PASSWORD_LENGTH } from "./password-rule";
  * The password rule is printed before it is enforced. A refusal after the fact
  * that could have been a sentence before it is the cheapest kind of rudeness.
  *
- * **One conditional question, feature 003's only addition** (FR-4005, FR-2002):
- * after grade, "which curriculum does your school follow?" — shown only when
- * that grade offers two or more curricula, naming only those, with none
- * pre-selected. A grade that offers one sends nothing and the server stores
- * that one without asking. When the server answers 409 `curriculum_required`
- * (an operator changed the grade's offer after this page loaded), the form
- * takes the offer it carries and asks again.
+ * **One added question, feature 003's addition** (FR-4005, FR-2002): after
+ * grade, "which curriculum does your school follow?" — shown for every grade,
+ * naming every curriculum the registry knows, with none pre-selected and an
+ * answer required to submit (Samuel's reversal of 2026-10-01, "yes the sign up
+ * should always ask"; decision 1, superseded). A curriculum with nothing live
+ * yet for the chosen grade stays selectable, with a short note saying so. When
+ * the server answers 422 `curriculum_required` (nothing was picked, or an
+ * operator changed the grade's offer after this page loaded), the form takes
+ * the offer it carries, refreshes the notes, and asks again.
  */
 
 export function SignupForm({
@@ -73,12 +74,12 @@ export function SignupForm({
 
   const destination = safeNext(next);
   const gradeOffer = offer[grade] ?? [];
-  const askingCurriculum = asksCurriculum(gradeOffer);
 
   function chooseGrade(value: string) {
     setGrade(value);
-    // A pick the new grade does not offer is not carried across.
-    if (picked && !(offer[value] ?? []).includes(picked)) setPicked(null);
+    // The pick survives a grade change: a curriculum with nothing live for
+    // the new grade is still the student's answer, not an invalid one, so it
+    // is never cleared here.
   }
 
   function toggleInterest(id: InterestId) {

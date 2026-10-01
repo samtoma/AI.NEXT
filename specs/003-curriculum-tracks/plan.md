@@ -39,8 +39,10 @@ Make curriculum a dimension of what a student sees, and deliver the first non-Na
 - **Scope**: one per-request student scope feeds every student reader, including the four that are
   ungated today. The privacy review found that three of those would name the new book to every
   student the moment it is loaded, so scoping them is a **precondition of any load**.
-- **Sign-up**: asks for a curriculum only when a grade has live courses in two or more curricula. A
-  first Google sign-in gets a once-only grade-and-curriculum step.
+- **Sign-up**: *(changed 2026-10-01, answer 36 — reverses decision 1)* always asks which curriculum,
+  naming every curriculum the product knows; one with nothing live for the chosen grade is still
+  selectable, with a short note. A first Google sign-in gets a once-only grade-and-curriculum step, which
+  also always asks.
 - **Changing a curriculum** is console-only. Migration 033 makes that a database fact.
 - **The console**: groups `/courses` by curriculum and splits the Overview by course.
 
@@ -166,8 +168,9 @@ validation uses one.
 ### A4. Sign-up and the Google step (FR-4005, FR-4014, FR-4016, FR-4017)
 
 [contracts/student-api.md](./contracts/student-api.md):
-- the sign-up question, asked only when two or more curricula are offered;
-- `curriculum_required`, `invalid_curriculum`;
+- the sign-up question, **always asked** *(changed 2026-10-01, answer 36)*, naming every curriculum,
+  with a "nothing to study yet" note on one with nothing live for the chosen grade;
+- `curriculum_required` on a missing answer, `invalid_curriculum` on an unknown one;
 - the `onboarding_pending` redirect and 403;
 - `/welcome` and `POST /api/auth/onboarding`, through the once-only definer function (409 on a second
   call);

@@ -67,8 +67,10 @@ This covers:
 ## 5. The first Google sign-in
 
 With a Google client configured (002 setup S1): sign in with a new Google account. You land on
-`/welcome`, and no lesson opens until it is done. Submit grade 10. Then replay the same `POST
-/api/auth/onboarding`. The answer is **409 `onboarding_already_completed`**.
+`/welcome`, and no lesson opens until it is done. *(Changed 2026-10-01, answer 36.)* `/welcome` always
+asks for curriculum too, naming National and American with National's "nothing to study yet" note.
+Submit grade 10 and American. Then replay the same `POST /api/auth/onboarding`. The answer is
+**409 `onboarding_already_completed`**.
 
 ## 5b. Parts of one section, and typed maths answers (rev. 2)
 
