@@ -48,8 +48,8 @@ DEFERRED. Pass 2, the same command with each --bundle, strips them — a generat
 error it was tagged with (or its exact text), a widget predicate by its template and name (both read from the
 attachment's `ref`, `<family>#<error or predicate>`) — and refuses, writing nothing, if any is not carried by a
 bundle it was given. Without --catalogue-only the command is as strict as before: a refused attachment no
---bundle carries refuses. Pass 1 skips nothing a bundle could still carry out of the database: load
-(load_misconceptions.py) only after pass 1, but load the BUNDLES only after pass 2.
+--bundle carries refuses. The catalogue may be loaded (load_misconceptions.py) after pass 1 — the refused
+attachments live in the bundles, not in it — but a bundle is loaded only after pass 2.
 
 `--s5-args OUT --stage draft|final` BUILDS the workflow's args from what the line has already
 made, so no stage is hand-stitched: the objectives and book questions of the assembled bundles

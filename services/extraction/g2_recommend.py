@@ -261,6 +261,7 @@ def typed_fields(item: dict, fix: dict | None) -> tuple[dict, list[str]]:
         kind = fix.get("marker_kind")
         if kind not in MARKER_KINDS:
             problems.append(f"marker kind {kind!r} is not one of {', '.join(MARKER_KINDS)}")
+        key = unwrap_math_delimiters(key) or ""
         if not key:
             problems.append("an expression fix has no key")
         form = fix.get("form") or None
@@ -469,18 +470,31 @@ def _final_piece(src) -> str | None:
     return t or None
 
 
-def book_candidates(item: dict, quote: str | None) -> list[str]:
+_RAISED_DOT = re.compile(r"(?<=[0-9}\])A-Za-z])\s*\.\s*(?=[0-9{(\\A-Za-z])")
+
+
+def _is_prose(c: str) -> bool:
+    """A sentence ("25×10^{2013} has 2015 digits"), not an expression: the marker would read its words as letters and say 'different'."""
+    t = re.sub(r"\\text\{[^{}]*\}", " ", c)
+    t = re.sub(r"\\[a-zA-Z]+", " ", t)
+    return bool(re.search(r"[A-Za-z]{2,}\s+[A-Za-z]{2,}", t)) or any(re.fullmatch(r"[A-Za-z]{3,}[.,;:]?", w) for w in t.split())
+
+
+def book_candidates(item: dict, quote: str | None, multiplication_dot: bool = False) -> list[str]:
     """Where the book states its answer, as expressions the app's marker may read: the EPUB's final answer, the quote the agent grounded
-    the key in, and the last line of the book's working. Prose is harmless: the marker cannot read it and says nothing."""
+    the key in, and the last line of the book's working. A sentence is left out (the marker cannot read prose). A book that prints
+    multiplication as a raised dot (this one: decimals take a comma) has it flattened to "." even in the EPUB: it is read as a product."""
     out: list[str] = []
     for src in (item.get("epub_final_answer"), quote, (item.get("solution") or [None])[-1]):
         p = _final_piece(src)
-        if p and p not in out:
+        if p and multiplication_dot:
+            p = _RAISED_DOT.sub(r"\\cdot ", p)
+        if p and not _is_prose(p) and p not in out:
             out.append(p)
     return out
 
 
-def agreement_rows(key_to_after: dict[str, dict], quotes: dict[str, str | None]) -> list[dict]:
+def agreement_rows(key_to_after: dict[str, dict], quotes: dict[str, str | None], multiplication_dot: bool = False) -> list[dict]:
     rows = []
     for key, a in key_to_after.items():
         spec = None
@@ -490,7 +504,7 @@ def agreement_rows(key_to_after: dict[str, dict], quotes: dict[str, str | None])
             spec = {"kind": "expression", "key": _norm_number(a["answer"]), "form": None, "tolerance": None}
         if not spec:
             continue
-        for i, c in enumerate(book_candidates(a, quotes.get(key))):
+        for i, c in enumerate(book_candidates(a, quotes.get(key), multiplication_dot)):
             rows.append({"id": f"{key}#{i}", "expr": c, "marker": {**spec, "variables": sorted(set(_letters(c)) | set(_letters(spec["key"])))}})
     return rows
 
@@ -621,7 +635,8 @@ def question_id(item: dict) -> str:
 
 
 def collect(entries: list[dict], runs: list[dict], *, prior: dict | None = None, run_names: dict[str, str] | None = None,
-            marker_fn=run_marker_check, identity_fn=run_identity_check, chapter: int | None = None) -> dict:
+            marker_fn=run_marker_check, identity_fn=run_identity_check, chapter: int | None = None,
+            multiplication_dot: bool = False) -> dict:
     """The recommendation file from the saved run(s). `prior` is an earlier file for the same chapter: its items for keys these runs
     do not cover are kept (a re-run of the unanswered), these runs' answers win."""
     by_key = {e["key"]: e for e in entries}
@@ -650,7 +665,7 @@ def collect(entries: list[dict], runs: list[dict], *, prior: dict | None = None,
     # the app's own marker as a deterministic oracle, twice: is the key equal to the expression the stem asks to transform
     # ("Simplify: …"), and is it equal to the answer the book states? (no model; g2rec_identity.mjs)
     ident = identity_fn(identity_rows(afters)) if afters else {}
-    agree = identity_fn(agreement_rows(afters, {k: recs[k].get("book_quote") for k in afters})) if afters else {}
+    agree = identity_fn(agreement_rows(afters, {k: recs[k].get("book_quote") for k in afters}, multiplication_dot)) if afters else {}
     ident_typed = identity_fn(identity_rows({k: e["item"] for k, e in by_key.items()}))
     items: dict[str, dict] = {}
     log: dict[str, dict] = {}

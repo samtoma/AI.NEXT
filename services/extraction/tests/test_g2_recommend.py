@@ -456,6 +456,16 @@ class Oracles(unittest.TestCase):
         self.assertIn("Note restriction: a\\ne-4", c[-1], "prose is a candidate the marker simply cannot read")
         self.assertEqual(G.book_candidates(item("x", epub_final_answer="x = \\frac{2}{3}", solution=["x"]), None)[0], "\\frac{2}{3}")
 
+    def test_a_sentence_is_not_a_candidate_and_a_raised_dot_is_a_product(self):
+        prose = item("x", epub_final_answer="25×10^{2013} has 2015 digits", solution=["10^{2013} has 2014 digits so 25\\times10^{2013} has 2015 digits."])
+        self.assertEqual(G.book_candidates(prose, None), [], "the marker would read the words as letters and say 'different'")
+        self.assertEqual(G.book_candidates(item("x", epub_final_answer="(2jkl-b)(4j^2k^2l^2+2jklabc+b^2)", solution=["$y$"]), None)[0],
+                         "(2jkl-b)(4j^2k^2l^2+2jklabc+b^2)", "juxtaposed variables are algebra, not words")
+        dot = item("x", epub_final_answer="2^{5p}.3^{3p}", solution=["$y$"])
+        self.assertEqual(G.book_candidates(dot, None)[0], "2^{5p}.3^{3p}")
+        self.assertEqual(G.book_candidates(dot, None, multiplication_dot=True)[0], "2^{5p}\\cdot 3^{3p}",
+                         "this book prints multiplication as a raised dot and writes decimals with a comma")
+
     def test_the_policy_holds_what_the_oracle_refuses(self):
         es = entries_of()
         k1 = "g10m9s1-1:Ex9-1:1"

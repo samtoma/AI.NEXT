@@ -56,7 +56,7 @@ for p in (str(EX), str(HERE)):
 import assemble_lesson_bundle as alb  # noqa: E402
 import recollect_lessons as RL  # noqa: E402
 import schemas  # noqa: E402
-from test_lesson_collect2 import item, run, typing  # noqa: E402
+from test_lesson_collect2 import STUB, WORKFLOW, item, run, typing  # noqa: E402
 
 NODE = shutil.which("node")
 SLUG = "zz8s2-1"
@@ -830,6 +830,83 @@ class Relations(TypedItem, unittest.TestCase):
         out = app_marker(y["marker"], ["h=\\frac{A-2\\pi r}{2\\pi r}", "h=\\frac{A}{2\\pi r}-1"])
         self.assertIsNone(out["key_problem"])
         self.assertEqual(out["marks"], {"h=\\frac{A-2\\pi r}{2\\pi r}": "correct", "h=\\frac{A}{2\\pi r}-1": "correct"})
+
+
+def run_all_unanswered_null(args, responses):
+    """`run` for a fixture with many items: an agent label with no canned answer (a second judge batch) answers nothing, as a skipped agent."""
+    with tempfile.TemporaryDirectory() as d:
+        f = Path(d, "fx.json")
+        f.write_text(json.dumps({"args": args, "responses": responses, "responder": str(EX / "dryrun" / "null_responder.mjs")}))
+        out = subprocess.run([NODE, str(STUB), str(WORKFLOW), str(f)], capture_output=True, text=True, check=True)
+    rep = json.loads(out.stdout)
+    assert rep["ok"], rep["error"]
+    return rep
+
+
+def single_edits(key):
+    """Every single-character change of a key that changes what it says: a digit, a sign dropped, a relation or a bracket turned over."""
+    out = set()
+    for i, c in enumerate(key):
+        if c.isdigit():
+            out |= {key[:i] + d + key[i + 1:] for d in "0123456789" if d != c}
+        for a, b in (("<", ">"), (">", "<"), ("[", "("), ("(", "["), ("]", ")"), (")", "]")):
+            if c == a:
+                out.add(key[:i] + b + key[i + 1:])
+        if c == "-":
+            out.add(key[:i] + key[i + 1:])
+    return out - {key}
+
+
+@unittest.skipUnless(NODE, "node runs the workflow through the stub runtime")
+class NoSingleEditIsAccepted(unittest.TestCase):
+    """The strictness of everything above, all at once: for every true match the tests list (a labelled list, a sentence, ±, an inequality,
+    an interval), EVERY key that differs from it by one digit, one dropped sign, one relation or one bracket turned over is still refused.
+    (Run against Chapters 1–4's 228 accepted keys, 6,642 such edits were refused: no false accept.)"""
+
+    # (key, printed, ref, marker kind, variables)
+    CASES = [
+        ("-28,1; -33,1; -38,1", "T4 = −28,1; T5 = −33,1; T6 = −38,1", "Ex3-1:5", "values", ()),
+        ("-3; 3", "T1 = −3 and T2 = 3", "Ex3-1:5", "values", ()),
+        ("-4n - 14; -54; -74; -134", "Tn = −4n −14, T10 = −54, T15 = −74, T30 = −134", "Ex3-2:5", "values", ("n",)),
+        ("5; 2", "There are 5 tricycles and 2 bicycles.", "Ex4-4:5", "values", ()),
+        ("48; 96; 36", "48 blue beads, 96 red beads and 36 purple beads,", "Ex4-4:5", "values", ()),
+        ("9; 11", "One chocolate milkshake costs R9,00 and one fruitshake costs R11,00.", "Ex4-4:5", "values", ()),
+        ("28; 45; 53", "width w=28 cm length l=45 cm and diagonal d=53 cm.", "Ex4-4:5", "values", ()),
+        ("8; 16", "b = 8 cm and l = 2b = 16 cm", "Ex4-4:5", "values", ()),
+        ("2; -2; 3; -3", "b = ±2 or b = ±3", "Ex4-2:3", "values", ()),
+        ("-8; 8", "b = ±8", "Ex4-2:3", "values", ()),
+        ("\\sqrt{3}; -\\sqrt{3}; 1; -1", "b = ± √ 3 or b = ±1", "Ex4-2:3", "values", ()),
+        ("b>1; b\\in\\mathbb{Z}", "b 1 2 3 4 5 b > 1; b ∈Z", "Ex4-6:4a", "interval", ("b",)),
+        ("x < 4; x \\in \\mathbb{N}", "x 0 1 2 3 4 5 x < 4; x ∈N", "Ex4-7:11a", "interval", ("x",)),
+        ("4.45 \\leq x < 4.55", "x 4.40 4.45 4.50 4.55 4.60 4.45 ≤x < 4.55", "Ex4-7:13", "interval", ("x",)),
+        ("x\\neq3; x\\neq6; x\\in\\mathbb{R}", "x ̸= 3; x ̸= 6; x ∈R", "Ex4-6:1c", "interval", ("x",)),
+        ("[\\frac{29}{13};\\infty)", "x ∈ [ 29 13 ; ∞ ) .", "Ex4-6:3c", "interval", ("x",)),
+        ("(-\\infty;-\\frac{21}{11}]", "( −∞; −21 11 ] g) ( −∞; −3 2 ) ∪ ( 1 2 ; ∞ )", "Ex4-6:3f", "interval", ("x",)),
+        ("(-\\infty;\\frac{6}{5}]", "x ∈ ( −∞; 6 5 ] . e) ( −∞; −55 13 )", "Ex4-6:3d", "interval", ("x",)),
+        ("\\left(-\\infty;-\\frac{8}{5}\\right]", "x ∈ ( −∞; −8 5 ] . c) [ 80 31 ; ∞ )", "Ex4-7:10b", "interval", ("x",)),
+        ("-3 \\leq k < 2", "−3 ≤k < 2", "Ex4-7:12p", "interval", ("k",)),
+    ]
+
+    def test_every_single_edit_of_a_true_match_is_refused(self):
+        items, types, blinds, expect_read = [], [], [], {}
+        n = 0
+        for key, printed, ref, kind, variables in self.CASES:
+            part = ref[-1] if ref[-1].isalpha() else ""
+            for k in [key, *sorted(single_edits(key))]:
+                n += 1
+                r = f"{ref.split(':')[0]}:{n}{part}"
+                items.append(item(r, "Write down the answer.", [f"${k}$"], printed))
+                types.append(typing(r, k, f"${k}$", "expression", marker_kind=kind, variables=list(variables)))
+                blinds.append({"ref": r, "final_answer": k, "markable": True})
+                expect_read[r] = k == key
+        a = args_for(items)
+        a["options"].update({"typing_batch": 100000, "blind_batch": 100000})
+        rep = run_all_unanswered_null(a, responses(types, blinds))
+        by = {x["ref"]: x for x in rep["result"]["lessons"][0]["items"]}
+        self.assertGreater(len(items), 500, "the edits were not generated")
+        wrong = [(by[r]["answer"], by[r]["printed_answer"]) for r, reads in expect_read.items()
+                 if any("does not read as" in p for p in by[r]["typing_problems"]) == reads]
+        self.assertEqual(wrong, [], f"{len(wrong)} of {len(items)}: an original that no longer reads, or an edit that does")
 
 
 @unittest.skipUnless(NODE, "node runs the workflow through the stub runtime")

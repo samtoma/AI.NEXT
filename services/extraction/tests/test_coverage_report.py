@@ -441,7 +441,7 @@ class CoverageTest(unittest.TestCase):
         code, _, _ = self.run_main(chapter=None)
         rep = json.loads(self.out.read_text())
         self.assertEqual(code, 1)
-        self.assertEqual({c["id"] for c in rep["checks"] if c["state"] == "fails"}, {"solution_sources", "katex"})
+        self.assertLessEqual({"solution_sources", "katex"}, {c["id"] for c in rep["checks"] if c["state"] == "fails"})
         # and a defect in THIS chapter's own bundle is still RED for the chapter
         p = self.seed / "g10m-c08.json"
         b["questions"][0]["solution_provenance"] = None

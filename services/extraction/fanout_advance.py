@@ -110,7 +110,7 @@ WF_RE = re.compile(r"^wf_[0-9a-f]{8}-[0-9a-f]{3}$")
 KINDS = [("s0b-A-", "s0b"), ("s0b-B-", "s0b"), ("s0b-C-", "s0b_c"), ("s1-", "s1"), ("lesson-", "lesson"),
          ("wcheck-", "wcheck"), ("s5-draft-", "s5_draft"), ("s6-author-", "s6_author"), ("s6-grade-", "s6_grade"),
          ("s7-author-", "s7_author"), ("s7-verify-", "s7_verify"), ("s5-final-", "s5_final")]
-KEY_LINE = re.compile(r"BLOCKED|FAIL|OWED|NOT recorded|NOT auto-passed|REFUS|ERROR|Error|Traceback|validation error|Value error|✗|!!")
+KEY_LINE = re.compile(r"BLOCKED|FAIL|OWED|UNRESOLVED|NOT recorded|NOT auto-passed|REFUS|ERROR|Error|Traceback|validation error|Value error|✗|!!")
 
 
 class Refuse(Exception):
@@ -985,7 +985,8 @@ def h_s6_author(A: Adv) -> bool:
     elif present:                      # the directory was worked on by hand (a spec renamed, re-authored, held aside): never resurrect one
         A.fl.skipped("write-specs", f"{len(present)} of {len(targets)} spec(s) are already in {A.P.rel(K.fam)}")
         A.warn(f"{len(targets) - len(present)} of this run's {len(targets)} spec(s) are not in {A.P.rel(K.fam)} (e.g. "
-               f"{next(t.name for t in targets if t not in present)}): moved, renamed or re-authored by hand — not written again")
+               f"{next(t.name for t in targets if t not in present)}): renamed (families.normalise renames a slug that collides), moved or "
+               "re-authored — not written again")
     elif others:
         raise StepFailed("write-specs", f"{A.P.rel(K.fam)} already holds {len(others)} spec(s) that are not this run's (e.g. {others[0].name}): "
                                         "never written over, and which of them stands is not for advance to say — settle the directory, "

@@ -584,7 +584,8 @@ def g2_recommend_main(a, book) -> int:
         out = a.out or recommended
         prior = json.loads(out.read_text()) if out.exists() and not a.fresh else None
         names = {_hr(p): ((r.get("result", r).get("embedded") or {}).get("generated_sha256")) for p, r in zip(runs_files, runs)}
-        doc = G.collect(entries, runs, prior=prior, run_names=names, chapter=ch)
+        doc = G.collect(entries, runs, prior=prior, run_names=names, chapter=ch,
+                        multiplication_dot=bool(getattr(getattr(book, "answer_rules", None), "multiplication_dot", False)))
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(json.dumps(doc, ensure_ascii=False, indent=1) + "\n")
         rep = doc["report"]

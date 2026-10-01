@@ -1,0 +1,53 @@
+{
+ "stage": "S0b",
+ "book": "g10-math",
+ "pass": "C",
+ "model": "sonnet",
+ "batch": 50,
+ "images": 4,
+ "batch_files": [
+  "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/s0b-g7/C-b0001.json"
+ ],
+ "embedded": {
+  "source": "runbook/transcribe-maths.workflow.js",
+  "source_sha256": "c8d1e4967b62fb89c2a764f89766346479a155bbb3c37bfa44d402bba076629e",
+  "args_sha256": "5f13e1a16158fb9f1f9517f57239ed62480e166cfda27e2d90d79ed895c3dd98",
+  "generated_sha256": "668e4561de1395bfe5ccba260b9676f732117c18cfa12ee6e86a973e359de5e3",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "md5": "e6e9f3db03befad5f60370e34f468350",
+   "pass": "C",
+   "latex": "\\therefore\\hat{A_1}=A\\hat{O}M",
+   "status": "transcribed",
+   "hash_match_claimed": true,
+   "note": null
+  },
+  {
+   "md5": "97201faad1166daec0bc6d106dda4165",
+   "pass": "C",
+   "latex": "\\hat{Q_1}=\\hat{R}",
+   "status": "transcribed",
+   "hash_match_claimed": true,
+   "note": null
+  },
+  {
+   "md5": "26792d267fefd0bed2eaacf8229097e7",
+   "pass": "C",
+   "latex": "\\big\\{135;135;135;135;135;135;135;145;145;145;145;145;155;155;155;\\\\155;155;155;155;165;165;165;165;165;165;165;165;165;175;175\\big\\}",
+   "status": "transcribed",
+   "hash_match_claimed": true,
+   "note": null
+  },
+  {
+   "md5": "5b9060539de271bc5fa2c86b5d939048",
+   "pass": "C",
+   "latex": "\\begin{align*}\\bar{x}&=\\frac{x_{1}+x_{2}+...x_{n}}{N}\\\\30&=\\frac{3x+x+2+x-3+x+4+2x-5}{5}\\\\150&=8x-2\\\\152&=8x\\\\x&=\\frac{152}{8}\\\\\\therefore x&=19\\end{align*}",
+   "status": "transcribed",
+   "hash_match_claimed": false,
+   "note": "Content read with certainty: six lines aligned at the equals sign. In the numerator of line 2, the minus signs in x-3 and 2x-5 are printed tighter than the one in 8x-2. I could not find a LaTeX spelling that reproduces the file hash, so this is my own reading with plain minus signs. The maths is unaffected."
+  }
+ ],
+ "problems": []
+}
