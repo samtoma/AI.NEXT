@@ -591,25 +591,45 @@ def load_only(path: Path | None) -> set[str] | None:
     return set(ids)
 
 
+def load_aliases(path: Path | None) -> dict[str, str]:
+    """{mutant id: the solution whose figures it uses} from a mutants truth file (working_check_mutate.py)."""
+    if path is None:
+        return {}
+    return {m["id"]: m["base"] for m in json.loads(Path(path).read_text()).get("mutants") or []}
+
+
+def shuffled(sols: list[dict], seed: int) -> list[dict]:
+    """A deterministic permutation: a second pass batches the solutions with other neighbours, so its misses
+    are not the first pass's misses (the S0b lesson: two independent readings, not one reading twice)."""
+    return sorted(sols, key=lambda x: sha(f"{seed}:{x['id']}"))
+
+
 def build_args(book, bundle: dict, chapter: int, directory: Path, figures: dict | None = None,
                max_per_run: int = MAX_PER_RUN, batch: int = BATCH, effort: str = EFFORT, model: str = MODEL,
-               only: set[str] | None = None) -> list[dict]:
+               only: set[str] | None = None, order: str = "bundle", order_seed: int = 0,
+               pass_id: str = "A") -> list[dict]:
     """The compact args of runbook/working-check.workflow.js, one per part (≤ max_per_run solutions, a
     whole number of batches), and the shard directories they name. Every solution with working gets one
-    shard; the agents read `batch` of them each. The pre-check's result goes BESIDE the shard directory
-    (<dir>.precheck.json, outside it, so no agent is ever pointed at it) for the collector — never into an
-    agent's prompt: the agent is blind to it. `only`: limit the run to those solution ids (a calibration
-    subset); the others are neither sent nor listed as skipped."""
+    shard; the agents read `batch` of them each, and the figure of every solution that offers one
+    (`figs`: shard number → image file, under `fig_dir`). The pre-check's result goes BESIDE the shard
+    directory (<dir>.precheck.json, outside it, so no agent is ever pointed at it) for the collector —
+    never into an agent's prompt: the agent is blind to it. `only`: limit the run to those solution ids (a
+    calibration subset); the others are neither sent nor listed as skipped. `order` "shuffled" (with
+    `order_seed`) is the second independent pass; `pass_id` names the pass in the flags `collect` merges."""
     import packet_ref
     if not 1 <= batch <= 12:
         raise SystemExit(f"--batch {batch}: between 1 and 12 solutions per agent")
-    if effort not in EFFORTS or model not in MODELS:
-        raise SystemExit(f"--effort must be one of {EFFORTS} and --model one of {MODELS}")
+    if effort not in EFFORTS or model not in MODELS or order not in ORDERS:
+        raise SystemExit(f"--effort must be one of {EFFORTS}, --model one of {MODELS}, --order one of {ORDERS}")
+    if not re.fullmatch(r"[A-Za-z0-9_-]{1,12}", pass_id):
+        raise SystemExit(f"--pass-id {pass_id!r}: letters, digits, - or _ (at most 12)")
     per_run = max(batch, max_per_run - max_per_run % batch)
     sols = [s for s in solutions_from_bundle(bundle, figures) if only is None or s["id"] in only]
     if only is not None and (missing := only - {s["id"] for s in sols}):
         raise SystemExit(f"--only names {len(missing)} solution(s) the bundle does not have: {sorted(missing)[:3]}")
     todo = [s for s in sols if has_working(s)]
+    if order == "shuffled":
+        todo = shuffled(todo, order_seed)
     skipped = [{"id": s["id"], "why": "no working to check (the solution is a drawing)"} for s in sols if not has_working(s)]
     parts = [todo[i:i + per_run] for i in range(0, len(todo), per_run)] or [[]]
     out = []
@@ -622,14 +642,20 @@ def build_args(book, bundle: dict, chapter: int, directory: Path, figures: dict 
         pre = [f for s in chunk for f in precheck_solution(s)]
         precheck_path(d).write_text(json.dumps({
             "format": "ainext.working-precheck/1", "book": book.book, "chapter": chapter,
-            "prompts_version": PROMPTS_VERSION, "batch": batch,
+            "prompts_version": PROMPTS_VERSION, "batch": batch, "pass_id": pass_id,
             "solutions": [{"id": s["id"], "lo": s.get("lo"), "kind": s["kind"], "steps": len(s["steps"]),
                            "shard": f"s/{i:04d}.txt", "sha256": sha(render_shard(s))}
                           for i, s in enumerate(chunk, start=1)],
             "skipped": skipped if k == 1 else [], "flags": pre}, ensure_ascii=False, indent=1) + "\n")
+        figs = {str(i): [Path(f).as_posix() for f in figures_offered(s)] for i, s in enumerate(chunk, start=1)
+                if figures_offered(s)}
+        parents = [str(Path(f).parent) for v in figs.values() for f in v]
+        fig_dir = max(set(parents), key=parents.count) if parents else ""
+        figs = {i: [Path(f).name if str(Path(f).parent) == fig_dir else f for f in v] for i, v in figs.items()}
         out.append({"book": {"book": book.book}, "stage": "SW", "prompts_version": PROMPTS_VERSION,
-                    "chapter": chapter, "part": k, "parts": len(parts), "batch": batch, "fig_cap": FIG_CAP,
-                    "effort": effort, "model": model,
+                    "chapter": chapter, "part": k, "parts": len(parts), "batch": batch,
+                    "effort": effort, "model": model, "pass_id": pass_id, "order": order,
+                    "fig_dir": fig_dir, "figs": figs,
                     "solutions": [s["id"] for s in chunk], "by_ref": ref})
     return out
 
@@ -641,7 +667,13 @@ def agents_for(solutions: int, batch: int = BATCH) -> int:
 
 # ============================================================================ collect
 def collect(args_list: list[dict], runs: list[dict]) -> dict:
-    """Merge the agents' verdicts and the pre-check into one flags file. Nothing is corrected."""
+    """Merge the agents' verdicts and the pre-check into one flags file. Nothing is corrected.
+
+    `runs` may hold several PASSES over the same solutions (each run names its `pass_id`, default "A"; the
+    parts of one pass share it). A solution answered by more than one pass gets the UNION of their flags (a
+    flag at the same step is one flag, naming every pass that raised it — `passes`: a flag two independent
+    passes both raised outranks one a single pass raised), "flagged" if any pass flagged it, else "unclear"
+    if any said so, else "consistent"."""
     by_id: dict[str, dict] = {}
     pre: list[dict] = []
     skipped: list[dict] = []
@@ -649,40 +681,62 @@ def collect(args_list: list[dict], runs: list[dict]) -> dict:
         meta = json.loads(precheck_path(Path(a["by_ref"]["dir"])).read_text())
         for s in meta["solutions"]:
             by_id[s["id"]] = s
-        pre += meta["flags"]
-        skipped += meta["skipped"]
-    answered: dict[str, dict] = {}
+        for f in meta["flags"]:
+            if not any((f["solution_id"], f["step"], f["why"]) == (g["solution_id"], g["step"], g["why"]) for g in pre):
+                pre.append(f)
+        skipped += [x for x in meta["skipped"] if x not in skipped]
+    answered: dict[str, dict[str, dict]] = {}
     problems: list[str] = []
+    pass_ids: list[str] = []
     for r in runs:
         r = r.get("result", r)
         if r.get("stage") != "SW":
             raise SystemExit("not a working-check run (stage is not SW)")
+        pid = r.get("pass_id") or "A"
+        if pid not in pass_ids:
+            pass_ids.append(pid)
         for x in r.get("results") or []:
             sid = x.get("solution_id")
             if sid not in by_id:
                 problems.append(f"a result names {sid!r}, which is not a solution of these args")
                 continue
-            answered[sid] = x
+            answered.setdefault(sid, {})[pid] = x
     flags: list[dict] = []
     verdicts = {"consistent": 0, "flagged": 0, "unclear": 0}
-    unclear, unchecked = [], []
+    unclear, unchecked, checked, single = [], [], [], []
     for sid, meta in by_id.items():
-        x = answered.get(sid)
-        if not x or not x.get("verdict"):
+        xs = {pid: x for pid, x in (answered.get(sid) or {}).items() if x.get("verdict")}
+        if not xs:
             unchecked.append({"id": sid, "why": "the checking agent returned nothing: re-run it"})
             continue
-        verdicts[x["verdict"]] = verdicts.get(x["verdict"], 0) + 1
-        if x["verdict"] == "unclear":
-            unclear.append({"id": sid, "why": x.get("note") or ""})
-        for f in x.get("flags") or []:
-            step = f.get("step")
-            if not isinstance(step, int) or not 1 <= step <= meta["steps"]:
-                problems.append(f"{sid}: a flag names step {step!r}, which the solution does not have (1–{meta['steps']})")
-                continue
-            flags.append({"solution_id": sid, "lo": meta.get("lo"), "step": step, "kind": f.get("kind") or "other",
-                          "where": f.get("where") if f.get("where") in FLAG_WHERE else "working",
-                          "quote": f.get("quote") or "", "expected": f.get("expected") or "",
-                          "why": f.get("why") or "", "sources": ["agent"]})
+        checked.append(sid)
+        if len(xs) < len(pass_ids):
+            single.append(sid)
+        mine: list[dict] = []
+        for pid in sorted(xs):
+            for f in xs[pid].get("flags") or []:
+                step = f.get("step")
+                if not isinstance(step, int) or not 1 <= step <= meta["steps"]:
+                    problems.append(f"{sid}: a flag names step {step!r}, which the solution does not have (1–{meta['steps']})")
+                    continue
+                kind = f.get("kind") or "other"
+                same = next((m for m in mine if m["step"] == step), None)
+                if same:
+                    same["passes"].append(pid)
+                    same["sources"] = same["sources"] if "agent" in same["sources"] else same["sources"] + ["agent"]
+                    if kind != same["kind"] and kind not in same.setdefault("also_kinds", []):
+                        same["also_kinds"].append(kind)
+                    continue
+                mine.append({"solution_id": sid, "lo": meta.get("lo"), "step": step, "kind": kind,
+                             "where": f.get("where") if f.get("where") in FLAG_WHERE else "working",
+                             "quote": f.get("quote") or "", "expected": f.get("expected") or "",
+                             "why": f.get("why") or "", "sources": ["agent"], "passes": [pid]})
+        flags += mine
+        merged = "flagged" if mine or any(x["verdict"] == "flagged" for x in xs.values()) else (
+            "unclear" if any(x["verdict"] == "unclear" for x in xs.values()) else "consistent")
+        verdicts[merged] += 1
+        if merged == "unclear":
+            unclear.append({"id": sid, "why": next((x.get("note") for x in xs.values() if x.get("verdict") == "unclear" and x.get("note")), "")})
     for p in pre:                                           # the free pre-check: merged by step
         src = p.get("source") or "numeric"
         detail = {k: p[k] for k in ("left", "relation", "right", "why") if k in p}
@@ -694,7 +748,8 @@ def collect(args_list: list[dict], runs: list[dict]) -> dict:
         else:
             flags.append({"solution_id": p["solution_id"], "lo": p.get("lo"), "step": p["step"],
                           "kind": p.get("kind") or "arithmetic", "where": "working",
-                          "quote": p["quote"], "expected": "", "why": p["why"], "sources": [src], "numeric": detail})
+                          "quote": p["quote"], "expected": "", "why": p["why"], "sources": [src], "passes": [],
+                          "numeric": detail})
     flags.sort(key=lambda f: (f["solution_id"], f["step"]))
     a0 = args_list[0]
     rv = {r.get("result", r).get("prompts_version") for r in runs} - {None}
@@ -703,10 +758,11 @@ def collect(args_list: list[dict], runs: list[dict]) -> dict:
         "prompts_version": sorted(rv)[0] if len(rv) == 1 else a0.get("prompts_version", PROMPTS_VERSION),
         "rule": "Each flag is a backlog item for a human (answer 30; answer 37c). Nothing here was corrected: the "
                 "content stays as the book and G2 have it until a human decides.",
+        "passes": pass_ids, "single_pass_ids": sorted(single),
         "solutions": len(by_id), "skipped": skipped, "verdicts": verdicts,
         "flags": flags, "flagged_solutions": len({f["solution_id"] for f in flags}),
         "unclear": unclear, "unchecked": unchecked, "problems": problems,
-        "checked_ids": sorted(sid for sid in by_id if sid in answered and answered[sid].get("verdict")),
+        "checked_ids": sorted(checked),
         "runs": [r.get("result", r).get("run_id") or r.get("result", r).get("embedded", {}).get("generated_sha256")
                  for r in runs],
     }
