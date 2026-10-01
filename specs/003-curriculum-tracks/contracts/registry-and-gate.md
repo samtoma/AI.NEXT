@@ -48,17 +48,36 @@ loaded course whose `grades` include it. Sign-up, the Google step, the console's
 (FR-4102) and the grade-change re-resolution (FR-4008) all call it. No reader re-derives it.
 
 ```ts
-resolveInitialCurriculum(grade, submitted: string | undefined, offered): { curriculum, source }
+resolveInitialCurriculum(
+  submitted: unknown,
+  offered: readonly CurriculumId[]
+):
+  | { ok: true; curriculum: CurriculumId; source: "chosen" }
+  | { ok: false; error: "invalid_curriculum" | "curriculum_required"; offered: readonly CurriculumId[] }
 ```
 
-This returns one of four results (FR-4005, privacy review F12):
-- two or more offered, and `submitted` among them → `{ submitted, "chosen" }`;
-- two or more offered, and `submitted` missing or not offered → an error the form shows;
-- exactly one offered → `{ that one, "implied" }`, whatever was submitted;
-- none offered → `{ "eg-national-en", "implied" }`.
+*(Rewritten 2026-10-01, answer 36 — supersedes the four-way rule below.)* It answers one question —
+did a known curriculum come in? — never "what does the grade offer": that question is
+`offeredCurricula` alone, read only to carry the current offer back on a refusal (for the form's
+"nothing to study here yet" notes). Three outcomes (FR-4005, `curriculumRefusal` in
+`lib/auth/onboarding.ts`):
+- blank or missing `submitted` → `{ ok: false, error: "curriculum_required", offered }`, answered
+  **422** by the caller;
+- `submitted` present but not a known id → `{ ok: false, error: "invalid_curriculum", offered }`,
+  also **422**;
+- `submitted` a known id → `{ ok: true, curriculum: submitted, source: "chosen" }`, stored exactly as
+  sent — whether or not `offered` lists it for this grade. A curriculum with nothing live yet for the
+  grade is still a valid, `chosen` answer.
 
-When a submitted value was ignored because the grade no longer offers it, the caller records
-`curriculum_resolved_from` on `account_created`.
+`curriculum_resolved_from` is **no longer written** on `account_created`: every known curriculum is
+now an acceptable, `chosen` answer at every grade, so nothing is ever silently resolved away from what
+the student picked (the race privacy review F12 named no longer arises).
+
+**Superseded text** (kept for the record, decisions.md decision 1): the old four-way rule — two or
+more offered and `submitted` among them → `{ submitted, "chosen" }`; two or more offered and
+`submitted` missing or not offered → an error the form showed; exactly one offered → `{ that one,
+"implied" }` whatever was submitted; none offered → `{ "eg-national-en", "implied" }`. A submitted
+value ignored this way was recorded as `curriculum_resolved_from` on `account_created`.
 
 ## The student scope — `lib/catalog-queries.ts`
 

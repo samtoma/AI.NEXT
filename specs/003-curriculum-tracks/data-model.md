@@ -136,7 +136,11 @@ A `SECURITY DEFINER` function owned by `ainext_maint`, with `search_path` pinned
 1. Read the acting student from `current_setting('app.student_id')`. Missing means raise.
 2. `UPDATE students SET grade = p_grade, curriculum_system = p_curriculum,
    curriculum_source = <'chosen' if asked, else 'implied'>, onboarding_pending = false
-   WHERE id = <acting> AND onboarding_pending`.
+   WHERE id = <acting> AND onboarding_pending`. *(Note, 2026-10-01, answer 36: the route always calls
+   this with `'chosen'` now — `resolveInitialCurriculum` no longer returns `'implied'` on the sign-up
+   or onboarding path, since a missing answer is refused rather than resolved. `'implied'` survives
+   only for a pre-reversal row, and for `resolveOnGradeChange`'s re-resolution of one of them when the
+   grade changes (FR-4008) — a different function, not this one.)*
 3. **Zero rows updated raises `onboarding_already_completed`.** A second call fails loudly and never
    succeeds as a no-op (FR-4014, F10).
 
