@@ -531,6 +531,49 @@ class Oracles(unittest.TestCase):
         self.assertEqual(doc["report"]["app_marker_identity_of_the_typed_key"]["equal"], [es[0]["key"]])
 
 
+class RetypedBasis(unittest.TestCase):
+    """The gate record's reason for each retype is the rule's own (2026-10-01: it said "the options were the typing agent's inventions"
+    for every rule but kind-for-form, which was wrong for a fraction typed numeric and for the three kind rules COLLECT-6 added)."""
+
+    RULES = ("numeric", "values", "kind-for-form", "fraction-key", "kind-for-list", "kind-for-relations", "kind-for-equation")
+
+    def run_with(self, rule: str) -> list[dict]:
+        run = {"lessons": [{"lesson": "g10m9s1-1", "verify": {"retyped": [
+            {"ref": "Ex9-1:2", "as": "expression (an exact fraction)", "rule": rule, "key": "\\frac{1}{2}", "because": ["the reason the collection gave"]}]}}]}
+        return A.g2_retyped(run, 9, "g10m")
+
+    def test_each_rule_gives_its_own_reason_and_only_the_option_rules_speak_of_inventions(self):
+        for rule in self.RULES:
+            (d,) = self.run_with(rule)
+            self.assertEqual(d["key"], "g10m9s1-1:Ex9-1:2")
+            self.assertTrue(d["decision"].startswith("typed again as expression (an exact fraction) (key "), rule)
+            self.assertIn("the reason the collection gave", d["basis"], "the collection's own reason is kept beside it")
+            self.assertEqual("inventions" in d["basis"], rule in ("numeric", "values"), rule)
+        self.assertEqual(len({self.run_with(r)[0]["basis"].split(" (the reason")[0] for r in self.RULES}), 6,
+                         "six distinct reasons: numeric and values share the options one")
+
+    def test_the_new_rules_say_what_they_did(self):
+        self.assertIn("fraction as a number", self.run_with("fraction-key")[0]["basis"])
+        self.assertIn("exact fraction", self.run_with("fraction-key")[0]["basis"])
+        self.assertIn("lists values", self.run_with("kind-for-list")[0]["basis"])
+        self.assertIn("inequality", self.run_with("kind-for-relations")[0]["basis"])
+        self.assertIn("equals sign", self.run_with("kind-for-equation")[0]["basis"])
+
+    def test_a_rule_the_table_does_not_know_is_never_given_another_rules_reason(self):
+        (d,) = self.run_with("some-future-rule")
+        self.assertNotIn("inventions", d["basis"])
+        self.assertIn("some-future-rule", d["basis"])
+        self.assertIn("key is kept exactly", d["basis"])
+
+    def test_every_rule_the_collection_can_write_has_a_reason(self):
+        src = (EX / "runbook" / "lesson.workflow.js").read_text()
+        # the literal rules, and the three the script picks by a ternary (`reKind === 'values' ? 'kind-for-list' : …`)
+        rules = set(re.findall(r"rule: '([a-z-]+)'", src)) | set(re.findall(r"\? '(kind-for-[a-z]+)'|: '(kind-for-[a-z]+)'", src) and
+                                                              {"kind-for-list", "kind-for-equation", "kind-for-relations"})
+        self.assertTrue({"numeric", "values", "kind-for-form", "fraction-key"} <= rules, rules)
+        self.assertFalse({r for r in rules if r not in A.RETYPE_BASIS}, "a rule lesson.workflow.js writes has no reason in RETYPE_BASIS")
+
+
 # ---------------------------------------------------------------------------------------------- the file reaches G2
 class ReachesG2(unittest.TestCase):
     """The collected file through auto_pass_gates.g2_merge and assemble_objectives.lesson_runs: the pilot's route."""

@@ -910,6 +910,88 @@ class NoSingleEditIsAccepted(unittest.TestCase):
 
 
 @unittest.skipUnless(NODE, "node runs the workflow through the stub runtime")
+class ApproximateFinals(TypedItem, unittest.TestCase):
+    """Chapter 5 (g10m5s7-1, trigonometry "solving problems"): 75 of 88 items failed "book_final is not in the book solution", none of them wrong. The
+    typing agent copies the final as plain text (`x ≈ 76,60`, `θ ≈ 26,6°`, `sin B̂ = AC/AB`); the book's solution is LaTeX with the decimal comma inside
+    \\text{…}, `\\approx`, `^{\\circ}`, `\\hat{B}`, `\\frac{AC}{AB}`, and the unrounded value (`\\text{76,60444...}`) in the working. The same signs are read the same;
+    a DIGIT never is: the final must be the book's own rounded value, as a whole number."""
+
+    def contained(self, solution, final, key="1", ref="WE4", answer_type="numeric", kind=None, variables=(), printed=None):
+        it = item(ref, "Find the unknown.", solution, printed)
+        t = typing(ref, key, final, answer_type, **({"marker_kind": kind, "variables": list(variables)} if answer_type == "expression" else {}))
+        rep = run(args_for([it]), responses([t], [{"ref": ref, "final_answer": key, "markable": True}]))
+        x = rep["result"]["lessons"][0]["items"][0]
+        return "book_final is not in the book solution" not in x["typing_problems"]
+
+    WE4 = ["Use your calculator to find the answer: $\\begin{align*}x&=\\text{76,60444...}\\\\x&\\approx\\text{76,60}\\end{align*}$"]
+    WE5 = ["Use your calculator: $\\begin{align*}x&=\\frac{7}{\\text{0,90630...}}\\\\&=\\text{7,723645...}\\\\&\\approx\\text{7,72}\\end{align*}$"]
+    WE6 = ["$\\begin{align*}x&=\\text{3,26415...}\\\\x&\\approx\\text{3,26}\\\\\\\\y&=\\text{7,72364...}\\\\y&\\approx\\text{7,72}\\end{align*}$"]
+    WE7 = ["$\\theta=\\text{26,56505...}\\approx\\text{26,6}$", "Write the final answer: $\\theta\\approx\\text{26,6}^{\\circ}$"]
+    ANGLE = ["$\\begin{align*}\\tan\\alpha&=\\frac{4}{9}\\\\&=\\text{0,4444...}\\\\\\alpha&=\\text{23,9624...}\\\\&\\approx\\text{23,96}^{\\circ}\\end{align*}$"]
+    H10 = ["$\\begin{align*}\\sin30^{\\circ}&=\\frac{h}{20}\\\\20(\\text{0,5})&=h\\\\h&\\approx10\\end{align*}$"]
+    RATIO = ["We note that triangles $ABC$ and $ABD$ both contain angle $B$:", "$\\sin\\hat{B}=\\frac{AC}{AB}=\\frac{AD}{BD}$"]
+
+    def test_the_books_rounded_value_in_the_agents_plain_text_is_in_the_solution(self):
+        for sol, final, key in ((self.WE4, "x ≈ 76,60", "76,60"), (self.WE5, "x ≈ 7,72", "7,72"), (self.WE7, "θ ≈ 26,6°", "26,6"),
+                                (self.ANGLE, "α ≈ 23,96°", "23,96"), (self.ANGLE, "≈23,96°", "23,96"), (self.H10, "h ≈ 10", "10")):
+            self.assertTrue(self.contained(sol, final, key), final)
+        self.assertTrue(self.contained(self.WE6, "x ≈ 3,26, y ≈ 7,72", "3,26; 7,72", answer_type="expression", kind="values"))
+        self.assertTrue(self.contained(self.RATIO, "sin B̂ = AC/AB = AD/BD", "\\frac{AC}{AB} = \\frac{AD}{BD}", answer_type="expression", kind="equation",
+                                       variables=("A", "B", "C", "D")))
+        self.assertTrue(self.contained(self.RATIO, "$\\sin\\hat{B}=\\frac{AC}{AB}=\\frac{AD}{BD}$", "\\frac{AC}{AB} = \\frac{AD}{BD}", answer_type="expression",
+                                       kind="equation", variables=("A", "B", "C", "D")))
+
+    def test_a_different_rounding_digit_sign_or_relation_is_refused(self):
+        cases = [
+            (self.WE4, "x ≈ 76,6"),            # 76,6 is not 76,60: a different rounding
+            (self.WE4, "x ≈ 76,61"),           # a different digit
+            (self.WE4, "x ≈ 77,60"),
+            (self.WE4, "x ≈ 6,60"),            # a number is not found inside a longer one
+            (self.WE4, "x ≈ 76"),
+            (self.WE4, "x = 76,60"),           # the solution says ≈, not =
+            (self.WE4, "x ≈ -76,60"),
+            (self.WE5, "x ≈ 7,7"),
+            (self.WE5, "x ≈ 7,723645"),        # the unrounded value is the working, not the book's final
+            (self.WE7, "θ ≈ 26,7°"),
+            (self.WE7, "θ ≈ 26,6"),            # the book's final carries the degree sign… (see below: the sign is part of the final's text)
+            (self.ANGLE, "α ≈ 23,9°"),
+            (self.ANGLE, "α ≈ 24°"),
+            (self.H10, "h ≈ 1"),               # 1 is not found inside 10
+            (self.H10, "h ≈ 100"),
+            (self.RATIO, "sin B̂ = AC/BC = AD/BD"),
+            (self.RATIO, "cos B̂ = AC/AB = AD/BD"),
+            (self.RATIO, "sin B̂ = AC/AB = AD/DB"),
+        ]
+        for sol, final in cases:
+            if final == "θ ≈ 26,6":
+                continue            # (a final without its unit is a shorter copy of the same value: accepted, as before)
+            self.assertFalse(self.contained(sol, final, "1"), final)
+
+    def test_the_unrounded_value_alone_is_not_a_final(self):
+        # a solution that only works to 7,723645… never states a rounded answer: a final "x ≈ 7,72" is the agent's own rounding
+        sol = ["$\\begin{align*}x&=\\frac{7}{\\text{0,90630...}}\\\\&=\\text{7,723645...}\\end{align*}$"]
+        self.assertFalse(self.contained(sol, "x ≈ 7,72", "7,72"))
+
+    def test_a_greek_label_on_the_blind_answer_is_a_label_not_a_difference(self):
+        # `\theta \approx 42{,}07^{\circ}` against the printed "42,07°": settled by the signature, no judge (the key kept Greek letters visible, so
+        # these 13 pairs of g10m5s7-1 were sent to a judge for a label)
+        it = item("Ex5-8:17a", "Find θ.", ["$\\theta=\\text{42,07...}\\approx\\text{42,07}^{\\circ}$"], "42,07°")
+        t = typing("Ex5-8:17a", "42,07", "$\\theta\\approx\\text{42,07}^{\\circ}$", "numeric", unit="°")
+        rep = run(args_for([it]), responses([t], [{"ref": "Ex5-8:17a", "final_answer": "\\theta \\approx 42{,}07^{\\circ}", "markable": True}]))
+        x = rep["result"]["lessons"][0]["items"][0]
+        routes = {p["pair_id"].split("|")[1]: p["route"] for p in x["verify"]["pairs"]}
+        self.assertEqual(routes["blind~printed"], "signature")
+        self.assertEqual(x["verification"], "agreed")
+        self.assertEqual([c["label"] for c in rep["calls"] if c["label"].startswith("S3:judge:")], [])
+        # …and a different angle, or π that is not in the printed answer, is still different
+        for blind, printed in (("\\theta \\approx 42{,}08^{\\circ}", "42,07°"), ("2\\pi r", "2r"), ("\\pi", "3")):
+            it2 = item("Ex5-8:17a", "Find it.", ["$x$"], printed)
+            rep2 = run(args_for([it2]), responses([typing("Ex5-8:17a", "1", "$x$", "numeric")], [{"ref": "Ex5-8:17a", "final_answer": blind, "markable": True}]))
+            y = rep2["result"]["lessons"][0]["items"][0]
+            self.assertNotEqual({p["pair_id"].split("|")[1]: p["route"] for p in y["verify"]["pairs"]}["blind~printed"], "signature", blind)
+
+
+@unittest.skipUnless(NODE, "node runs the workflow through the stub runtime")
 class InTheBookSolution(TypedItem, unittest.TestCase):
     """What "book_final is not in the book solution" got wrong in Chapters 3 and 4 (none of it a wrong final)."""
 

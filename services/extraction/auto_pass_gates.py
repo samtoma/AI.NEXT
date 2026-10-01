@@ -787,7 +787,7 @@ def main(argv: list[str] | None = None) -> int:
                             f"{c['held']} held for a person; {c['human']} already decided by a person"
                             + (f"; {len(low)} recommended with low confidence (your call)" if low else "")
                             + (f"; {c['teaching']} typed not markable (teaching only, no verdict owed)" if c.get("teaching") else "")
-                            + (f"; {len(retyped)} item(s) typed again (a choice from the book's printed key, or a marker kind its form cannot apply to)" if retyped else ""),
+                            + (f"; {len(retyped)} item(s) typed again, each with its reason (a choice from the book's printed key, a fraction typed as a number, a marker kind the key or its form cannot be read under)" if retyped else ""),
             decisions=decisions + retyped, held=bool(review), for_review=review, run=a.run,
             checks=[{"name": "S3 three-way answer check (printed, EPUB solution, blind re-solve)", "state": "done"},
                     {"name": "S3 answer typing check", "state": "done"},

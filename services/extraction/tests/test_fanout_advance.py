@@ -403,6 +403,28 @@ class SaveAndMeter(Base):
         self.assertEqual(rc, 2)
         self.assertEqual(self.ex.calls, [])
 
+    def test_two_advances_never_run_at_once_and_a_held_lock_is_a_refusal_not_a_hang(self):
+        import fcntl
+        b = self.box
+        b.copies_for("s0b-A-g3")
+        wf, task = b.finish("s0b-A-g3", result={"stage": "S0b", "results": []})
+        (b.work / "fanout").mkdir(parents=True, exist_ok=True)
+        fh = open(b.work / "fanout" / "advance.lock", "a+")
+        fcntl.flock(fh, fcntl.LOCK_EX)                                   # another advance is running
+        try:
+            rc, rep = b.adv("s0b-A-g3", wf, task, lock_timeout=0.3)
+            self.assertEqual(rc, 2)
+            self.assertIn("another `fanout.py advance` held", rep["refused"])
+            self.assertEqual(list((b.runs / "maths").glob("*")), [], "nothing was saved")
+            self.assertEqual(self.ex.calls, [])
+            rc, rep = b.adv("s0b-A-g3", wf, task, dry=True)              # a dry run changes nothing, so it does not wait
+            self.assertEqual(rc, 0, rep)
+        finally:
+            fcntl.flock(fh, fcntl.LOCK_UN)
+            fh.close()
+        rc, rep = b.adv("s0b-A-g3", wf, task, lock_timeout=0.3)
+        self.assertEqual(rc, 0, rep)
+
     def test_dry_run_changes_and_runs_nothing(self):
         b = self.box
         b.copies_for("s0b-B-g3")

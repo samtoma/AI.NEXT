@@ -1112,6 +1112,7 @@ uv run fanout.py ready [--running <run-id>[@copy] …] [--prepare] [--paths]
 #   --task-output  the harness's task output file; without it the run's own record under ~/.claude/projects/*/*/workflows/<wf_id>.json (same keys)
 #   --running  runs in flight (or one copy: wcheck-ch01@B.part2): never prepared, never listed ready    --dry-run  every step shown, nothing run or written
 #   --redo  ignore skip-when-fresh and "already loaded"   --no-close-chapter   --no-prepare   --honor-gate (the chapter-1 go/no-go)   --refresh-stale
+#   --lock-timeout S  one advance at a time (flock on work/<book>/fanout/advance.lock): two lessons that finish together cannot both think the other is still to come
 #   put the run id FIRST: `--running` takes any number of ids
 ```
 

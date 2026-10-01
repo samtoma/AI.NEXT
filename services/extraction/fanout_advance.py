@@ -2,7 +2,7 @@
 
     uv run fanout.py advance <run-id> --wf <wf_id> [--task-output <path>] [--resumed] [--dry-run]
                              [--running <run-id>[@copy] ...] [--redo] [--no-close-chapter] [--honor-gate]
-                             [--refresh-stale] [--force] [--copy <label>] [--no-prepare] [-v]
+                             [--refresh-stale] [--force] [--copy <label>] [--no-prepare] [--lock-timeout S] [-v]
     uv run fanout.py ready   [--running <run-id>[@copy] ...] [--prepare] [--refresh-stale] [--honor-gate] [--paths]
 
 WHAT IT REPLACES. The main session ran each finished Workflow run by hand, every time the same chain: save the
@@ -1588,7 +1588,7 @@ def dump(summary: dict) -> str:
 def cli_advance(a) -> int:
     opts = Opts(resumed=a.resumed, dry=a.dry_run, redo=a.redo, no_close=a.no_close_chapter, honor_gate=a.honor_gate,
                 refresh_stale=a.refresh_stale, force=a.force, copy=a.copy, running=tuple(a.running or ()), verbose=a.verbose,
-                no_prepare=a.no_prepare)
+                no_prepare=a.no_prepare, lock_timeout=a.lock_timeout)
     say = (lambda m: print(m, file=sys.stderr)) if a.verbose else None
     rc, rep = advance(a.run_id, a.wf, a.task_output, opts, say=say)
     print(dump(rep))
@@ -1596,7 +1596,7 @@ def cli_advance(a) -> int:
 
 
 def cli_ready(a) -> int:
-    opts = Opts(honor_gate=a.honor_gate, refresh_stale=a.refresh_stale, running=tuple(a.running or ()))
+    opts = Opts(honor_gate=a.honor_gate, refresh_stale=a.refresh_stale, running=tuple(a.running or ()), lock_timeout=a.lock_timeout)
     P = Paths()
     if not P.plan.exists():
         print(f"no {P.rel(P.plan)}: run `uv run fanout.py plan` first")
@@ -1607,9 +1607,14 @@ def cli_ready(a) -> int:
     rep = new_report("(ready)", "", False)
     if a.prepare or a.refresh_stale:
         try:
-            prepare_ready(P, S, Flow(P, Exec()), rep, running, opts)
+            with advance_lock(P, opts.lock_timeout):
+                S = State(P, plan)                               # read under the lock: another advance may have just finished
+                prepare_ready(P, S, Flow(P, Exec()), rep, running, opts)
         except StepFailed as e:
             rep["failure"] = {"step": e.step, "detail": e.detail[-600:]}
+        except Refuse as e:
+            print(str(e))
+            return 2
         S = State(P, plan)
     out = ready_list(P, S, running, opts)
     if a.paths:
@@ -1642,6 +1647,7 @@ def add_parsers(sub) -> None:
     p.add_argument("--force", action="store_true", help="save a result whose embedded sha is not a current copy of this run")
     p.add_argument("--copy", help="which copy of the run this is (A, A.part2, B, B.part2, part1…) when it cannot be told")
     p.add_argument("--no-prepare", action="store_true", help="do not prepare the runs this releases (the ready list is still computed)")
+    p.add_argument("--lock-timeout", type=float, default=1800.0, help="seconds to wait for another advance to finish (default 1800)")
     p.add_argument("-v", "--verbose", action="store_true", help="progress lines on stderr")
     p.set_defaults(fn=cli_advance)
     p = sub.add_parser("ready", help="the generated scripts that can be launched now, in plan order")
@@ -1650,6 +1656,7 @@ def add_parsers(sub) -> None:
     p.add_argument("--refresh-stale", action="store_true", help="implies --prepare; regenerate stale copies of runs not running or saved")
     p.add_argument("--honor-gate", action="store_true", help="wait for s5-final-ch01 before other chapters' lessons")
     p.add_argument("--paths", action="store_true", help="only the absolute script paths, one per line")
+    p.add_argument("--lock-timeout", type=float, default=1800.0, help="with --prepare: seconds to wait for another advance (default 1800)")
     p.set_defaults(fn=cli_ready)
 
 
