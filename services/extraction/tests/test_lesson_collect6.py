@@ -39,7 +39,9 @@ for p in (str(EX), str(HERE)):
     if p not in sys.path:
         sys.path.insert(0, p)
 
+import assemble_lesson_bundle as alb  # noqa: E402
 import recollect_lessons as RL  # noqa: E402
+import schemas  # noqa: E402
 from test_lesson_collect2 import item, run, typing  # noqa: E402
 
 NODE = shutil.which("node")
@@ -293,16 +295,20 @@ CUBE_PRINTED = "( 3√ 25x + 1)(( 3√ 25)2x2 −3√ 25x + 1)"
 
 
 @unittest.skipUnless(NODE, "node runs the workflow through the stub runtime")
-class KindForForm(Collect6):
+class KindForForm(unittest.TestCase):
     """The marker kind a form cannot be asked of (g10m1s7-3, Ex1-9:11): normalised where the key is plainly algebra, flagged
-    where it is not. (Inherits the harness; the inherited tests are not run again here.)"""
-    run_inherited = False
+    where it is not."""
+    go = Collect6.go
+    one = Collect6.one
 
     def cube(self, kind="surd", form="factorised", key=CUBE_KEY, variables=("x",), blind=CUBE_KEY, ref="Ex1-9:11", stem="Factorise: $25x^{3}+1$",
              solution=CUBE_SUM, printed=CUBE_PRINTED, judge=None):
         it = item(ref, stem, solution, printed)
-        t = typing(ref, key, "$=(\\sqrt[3]{25}x+1)((\\sqrt[3]{25})^{2}x^{2}-\\sqrt[3]{25}x+1)$", "expression",
-                   marker_kind=kind, form=form, variables=list(variables))
+        row = dict(marker_kind=kind, variables=list(variables), form=form)
+        if isinstance(form, dict):                    # the typing schema's own spelling of a subject form
+            row.update(form="subject", subject=form["subject"])
+        final = "$=(\\sqrt[3]{25}x+1)((\\sqrt[3]{25})^{2}x^{2}-\\sqrt[3]{25}x+1)$" if key == CUBE_KEY else "$" + key + "$"
+        t = typing(ref, key, final, "expression", **row)
         return self.one(it, t, blind, judge)
 
     def test_a_surd_factorised_expression_is_typed_expression_and_the_key_is_kept_exactly(self):
@@ -318,13 +324,14 @@ class KindForForm(Collect6):
         r = rep["result"]["lessons"][0]["verify"]["retyped"]
         self.assertEqual([(i["ref"], i["rule"], i["key"]) for i in r], [("Ex1-9:11", "kind-for-form", CUBE_KEY)])
 
-    def test_the_retyped_item_is_a_valid_run_item_and_the_draft_writes_it(self):
-        import assemble_lesson_bundle as alb
-        import schemas
-        _, x = self.cube()
-        x = dict(x, lo="lo:zz8s2-1-1")
+    def test_the_retyped_item_is_a_valid_run_item_the_seam_verifies(self):
+        # the judge reads the flattened print ("( 3√ 25x + 1)…") as the LaTeX key; nothing else is left to settle
+        judge = {"verdicts": [{"pair_id": f"Ex1-9:11|{p}", "verdict": "equivalent", "reason": "the printed form is flattened"}
+                              for p in ("blind~printed", "book~printed")]}
+        _, x = self.cube(judge=judge)
         schemas.AnswerSpec.model_validate(x["marker"])
         self.assertEqual(alb.marker_spec_problems(x), [])
+        self.assertEqual(alb.RunItem.model_validate(x).fate(), "verified")
 
     def test_the_same_item_as_an_equation_when_the_key_has_an_equals_sign(self):
         _, x = self.cube(key="x=\\sqrt{y}+1", variables=("x", "y"), form={"subject": "x"}, blind="x=\\sqrt{y}+1",
@@ -359,7 +366,8 @@ class KindForForm(Collect6):
             self.assertIn(why.format(c["kind"]), x["typing_problems"], label)
             self.assertNotIn("typing_retyped", x, label)
             self.assertEqual(x["marker"]["kind"], c["kind"], label)
-            self.assertNotEqual(x["verification"], "agreed", label)
+            # the seam does not stop on it: a flagged item need not be well formed, and is HELD, never verified
+            self.assertEqual(alb.RunItem.model_validate(x).fate(), "held", label)
 
     def test_a_subject_form_on_a_key_without_an_equals_sign_is_flagged_not_retyped(self):
         _, x = self.cube(form={"subject": "x"}, key="\\sqrt{2}x+1", blind="\\sqrt{2}x+1", solution=["$\\sqrt{2}x+1$"], printed="√ 2x + 1")
