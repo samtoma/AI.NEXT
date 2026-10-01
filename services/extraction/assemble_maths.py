@@ -151,6 +151,12 @@ _BRACE_BODY = r"(?:[^{}]|\{(?:[^{}]|\{[^{}]*\})*\})*"      # the inside of one b
 _TABLE_ENVS = {"array": 1, "tabular": 1, "longtable": 1, "tabular*": 2, "tabularx": 2}   # name → leading {…} args
 _SIZED = r"\\(?:big|Big|bigg|Bigg)[lmr]?"                   # \Big, \bigl, \Biggr …: the size of a delimiter only
 _SINGLE_TOKEN = re.compile(r"[A-Za-z0-9]|\\(?:" + "|".join(GREEK) + r")(?![A-Za-z])")
+# commands that take NO argument: a group after one of them is a bare group, not its argument (`\\cdot{h}`)
+_NO_ARG_CMDS = frozenset(GREEK) | {
+    "cdot", "times", "div", "pm", "mp", "leq", "geq", "le", "ge", "neq", "ne", "approx", "equiv", "sim", "cong",
+    "infty", "therefore", "because", "in", "notin", "cup", "cap", "to", "rightarrow", "leftarrow", "Rightarrow",
+    "Leftrightarrow", "leftrightarrow", "ldots", "dots", "cdots", "circ", "angle", "triangle", "parallel", "perp",
+    "subset", "subseteq", "emptyset", "varnothing", "prime", "ast", "forall", "exists", "neg", "wedge", "vee"}
 
 
 def _match_brace(s: str, i: int) -> int:
@@ -233,7 +239,7 @@ def _simplify_braces(s: str) -> str:
             if j < n and s[j].isalpha():
                 while j < n and s[j].isalpha():
                     j += 1
-                last = "cmd"
+                last = "other" if s[i + 1:j] in _NO_ARG_CMDS else "cmd"
             else:
                 j = min(i + 2, n)
                 last = "other"
@@ -273,6 +279,7 @@ def normalise(latex: str) -> str:
     It removes presentation only, and unifies spellings of one thing:
       * spacing — `\\, \\; \\: \\! \\quad`, `\\hspace{…}`, `\\phantom{…}` (it prints nothing), `\\\\[2pt]`;
       * delimiter size — `\\left \\right \\big \\Bigl …`, and the null delimiters `\\left.` `\\right.`;
+      * the minus sign spelt U+2212 (`−`) is `-`; an en dash is NOT touched;
       * style — `\\displaystyle`, `\\dfrac` `\\tfrac` `\\cfrac` → `\\frac`, `\\le` → `\\leq`, ° forms, x^{2} ≡ x^2;
       * grouping — braces around a single token (`{7}^{1}` ≡ `7^{1}`), doubled braces, outer braces
         (see `_simplify_braces` for the groups that are NEVER dropped);
@@ -299,7 +306,7 @@ def normalise(latex: str) -> str:
     s = re.sub(r"\\hspace\*?\{[^{}]*\}", "", s)
     s = re.sub(r"\\[hv]?phantom\{" + _BRACE_BODY + r"\}", "", s)
     s = re.sub(r"\\\\\s*\[\s*-?[0-9.]+\s*(?:pt|em|ex|mm|cm|in|bp|pc)\s*\]", r"\\\\", s)   # a row's extra height
-    s = s.replace("~", "")
+    s = s.replace("~", "").replace("\u2212", "-")        # U+2212 is the minus sign, spelt differently
     s = re.sub(r"\\[dtc]frac(?![a-zA-Z])", r"\\frac", s)
     s = re.sub(r"\\le(?![a-zA-Z])", r"\\leq", s)
     s = re.sub(r"\\ge(?![a-zA-Z])", r"\\geq", s)

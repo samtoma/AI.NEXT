@@ -91,6 +91,14 @@ class Normalise(unittest.TestCase):
                      ("\\sqrt[3]{8}", "\\sqrt[3]{9}"), ("\\sqrt{x}y", "\\sqrt{xy}"), ("\\frac{a}{b}c", "\\frac{a}{bc}"),
                      ("{-}3", "3"), ("{-}3", "{+}3"), ("{7}^{1}", "{7}^{2}"), ("{7}^{1}", "{8}^{1}")])
 
+    def test_the_unicode_minus_is_the_minus_sign_and_a_bare_group_after_a_symbol_is_a_bare_group(self):
+        self.agree([("x\u22122", "x-2"), ("(x\u22121)(x+2)", "(x-1)(x+2)"), ("\\text{km}\\cdot{\\text{h}}^{-1}",
+                                                                               "\\text{km}\\cdot\\text{h}^{-1}"),
+                    ("2\\times{3}", "2\\times 3"), ("{\\alpha}\\pm{b}", "\\alpha\\pm b")])
+        # a command that takes an argument keeps its group; an en dash is not a minus; the sign still counts
+        self.differ([("x\u22122", "x+2"), ("x\u22122", "x2"), ("x\u22122", "x\u20132"), ("\\frac{3}{2}", "\\frac32{}"),
+                     ("\\sqrt{3}", "\\sqrt3x"), ("\\hat{A}", "\\hat{B}")])
+
     def test_left_right_and_sized_delimiters_are_null(self):
         self.agree([("\\left(x+1\\right)", "(x+1)"), ("\\left[0;1\\right]", "[0;1]"), ("\\bigl(x\\bigr)", "(x)"),
                     ("\\Biggl(x\\Biggr)", "(x)"), ("\\left\\{1;2\\right\\}", "\\{1;2\\}"),
