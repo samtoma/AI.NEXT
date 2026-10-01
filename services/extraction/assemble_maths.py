@@ -142,22 +142,164 @@ def hash_ok(latex: str | None, h: str) -> bool:
 
 
 # ============================================================================ normalisation
+# Every rewrite below is SEMANTICALLY NULL: it removes or unifies something that carries no maths, so two
+# readings of one image that differ only in it are recognised as the agreement they are (FR-4407 is
+# about recognising agreement; nothing here ever decides a value). Nothing touches a digit, a sign, an
+# operator, an exponent, a fraction's structure or a decimal comma — tests/test_assemble_maths.py::Normalise
+# pins both halves (the null rewrites agree; a changed value never does).
+_BRACE_BODY = r"(?:[^{}]|\{(?:[^{}]|\{[^{}]*\})*\})*"      # the inside of one brace group, nested twice
+_TABLE_ENVS = {"array": 1, "tabular": 1, "longtable": 1, "tabular*": 2, "tabularx": 2}   # name → leading {…} args
+_SIZED = r"\\(?:big|Big|bigg|Bigg)[lmr]?"                   # \Big, \bigl, \Biggr …: the size of a delimiter only
+_SINGLE_TOKEN = re.compile(r"[A-Za-z0-9]|\\(?:" + "|".join(GREEK) + r")(?![A-Za-z])")
+
+
+def _match_brace(s: str, i: int) -> int:
+    """Index of the `}` closing the `{` at s[i] (escaped `\\{` `\\}` do not count), or -1."""
+    depth, j = 0, i
+    while j < len(s):
+        c = s[j]
+        if c == "\\":
+            j += 2
+            continue
+        if c == "{":
+            depth += 1
+        elif c == "}":
+            depth -= 1
+            if depth == 0:
+                return j
+        j += 1
+    return -1
+
+
+def _strip_rule_bar(cell: str) -> str:
+    """An array cell's rule hack: a vertical bar the transcriber drew with the cell's own text (`…=2\\Big|`)
+    instead of the column spec. It is one only when it is UNBALANCED — an odd number of bars in the cell
+    and one of them at an end of it — because a balanced pair is an absolute value, and a cell that holds
+    a `\\left.` (an evaluation bar) is left alone."""
+    if len(re.findall(r"(?<!\\)\|", cell)) % 2 == 0 or re.search(r"\\left\s*\.", cell):
+        return cell
+    for pat in (r"(?:" + _SIZED + r"\s*)?\|\s*$", r"^\s*(?:" + _SIZED + r"\s*)?\|"):
+        out = re.sub(pat, "", cell, count=1)
+        if out != cell:
+            return out
+    return cell
+
+
+def _strip_table_markup(s: str) -> str:
+    """The rules of an array/tabular carry no maths: its column spec (`{|l|l|}`, `{c|c}`, `{@{}c@{}}`) is
+    dropped, and so is a rule hack inside a cell (see `_strip_rule_bar`). `\\hline` and friends are removed
+    by `normalise`; the environment markers themselves too. A table nested in a table of the same kind
+    is left as written (never rewritten wrongly, at worst a disagreement is kept)."""
+    out, pos = [], 0
+    for m in re.finditer(r"\\begin\{(array|tabular\*|tabularx|tabular|longtable)\}", s):
+        if m.start() < pos:
+            continue
+        env, i = m.group(1), m.end()
+        opt = re.compile(r"\[[tbc]\]").match(s, i)
+        if opt:
+            i = opt.end()
+        for _ in range(_TABLE_ENVS[env]):                   # the column spec (and tabular*'s width)
+            j = i
+            while j < len(s) and s[j].isspace():
+                j += 1
+            k = _match_brace(s, j) if j < len(s) and s[j] == "{" else -1
+            if k < 0:
+                break
+            i = k + 1
+        close = "\\end{" + env + "}"
+        end = s.find(close, i)
+        if end < 0:
+            continue
+        parts = re.split(r"((?<!\\)&|\\\\)", s[i:end])      # cells, with their separators kept
+        parts[0::2] = [_strip_rule_bar(c) for c in parts[0::2]]
+        out += [s[pos:m.start()], "\\begin{" + env + "}", "".join(parts), close]
+        pos = end + len(close)
+    out.append(s[pos:])
+    return "".join(out)
+
+
+def _simplify_braces(s: str) -> str:
+    """Braces that only group, removed — never a brace that scopes something. A group is dropped when it
+    is a single letter, digit or Greek letter standing on its own (`{7}^{1}` → `7^{1}`; `{x}^{2}`), and a
+    doubled group is collapsed (`{{a+b}}` → `{a+b}`). A group that follows a command, a script mark or
+    another group is an ARGUMENT (`\\frac{7}{5}`, `x^{12}`, `\\sqrt[3]{8}`) and stays; so does any group of
+    more than one token, because it decides what a following `^` or `_` attaches to (`{a+b}^{2}` is not
+    `a+b^{2}`, `{12}^{2}` is not `12^{2}`)."""
+    out, i, n, last = [], 0, len(s), ""        # last: what the previous item was: cmd | close | script | other
+    while i < n:
+        c = s[i]
+        if c == "\\":
+            j = i + 1
+            if j < n and s[j].isalpha():
+                while j < n and s[j].isalpha():
+                    j += 1
+                last = "cmd"
+            else:
+                j = min(i + 2, n)
+                last = "other"
+            out.append(s[i:j])
+            i = j
+        elif c == "{":
+            j = _match_brace(s, i)
+            if j < 0:
+                out.append(c)
+                i, last = i + 1, "other"
+                continue
+            inner = _simplify_braces(s[i + 1:j]).strip()
+            while inner.startswith("{") and _match_brace(inner, 0) == len(inner) - 1:
+                inner = inner[1:-1].strip()
+            if last not in ("cmd", "close", "script") and _SINGLE_TOKEN.fullmatch(inner):
+                out.append(inner)
+                last = "other"
+            else:
+                out.append("{" + inner + "}")
+                last = "close"
+            i = j + 1
+        else:
+            out.append(c)
+            i += 1
+            if c in "^_":
+                last = "script"
+            elif c == "]":
+                last = "close"
+            elif not c.isspace():
+                last = "other"
+    return "".join(out)
+
+
 def normalise(latex: str) -> str:
     """The agreement key: two transcriptions of one image are the same maths when these agree.
 
-    It removes presentation only — spacing commands, \\left/\\right, \\displaystyle, the
-    alignment markup of a multi-line derivation (environments and &), \\text{}/\\mathrm{}
-    wrappers — and unifies spellings of one symbol (\\le/\\leq, \\dfrac/\\frac, ° forms,
-    x^{2}/x^2). It never removes or changes a symbol, a digit or a letter.
+    It removes presentation only, and unifies spellings of one thing:
+      * spacing — `\\, \; \\: \\! \\quad`, `\\hspace{…}`, `\\phantom{…}` (it prints nothing), `\\\\[2pt]`;
+      * delimiter size — `\\left \\right \\big \\Bigl …`, and the null delimiters `\\left.` `\\right.`;
+      * style — `\\displaystyle`, `\\dfrac` `\\tfrac` `\\cfrac` → `\\frac`, `\\le` → `\\leq`, ° forms, x^{2} ≡ x^2;
+      * grouping — braces around a single token (`{7}^{1}` ≡ `7^{1}`), doubled braces, outer braces
+        (see `_simplify_braces` for the groups that are NEVER dropped);
+      * alignment markup — environments and `&`, an array's column spec (`{|l|l|}`), `\\hline`, and a
+        vertical rule drawn as a cell's unbalanced trailing/leading `\\Big|` (see `_strip_rule_bar`);
+      * `\\text{}` / `\\mathrm{}` wrappers.
+    It never removes or changes a symbol, a digit, a sign, an exponent, a fraction's structure or a
+    decimal comma, so a changed value can never normalise equal.
     """
     s = latex.strip()
-    s = re.sub(r"\\begin\{array\}\{[^}]*\}", "", s)
+    s = _strip_table_markup(s)
+    s = re.sub(r"\\(?:hline|hdashline|toprule|midrule|bottomrule)(?![a-zA-Z])", "", s)
+    s = re.sub(r"\\(?:cline|cmidrule)(?:\([^)]*\))?\{[^}]*\}", "", s)
+    s = re.sub(r"\\begin\{alignat\*?\}\{[^}]*\}", "", s)
     s = re.sub(r"\\(begin|end)\{[a-zA-Z*]+\}", "", s)
     s = s.replace("&", "")
-    s = re.sub(r"\\(displaystyle|textstyle|left|right|big|Big|bigg|Bigg)(?![a-zA-Z])", "", s)
+    s = re.sub(r"\\(?:left|right)\s*\.", "", s)
+    s = re.sub(r"\\(displaystyle|textstyle|scriptstyle|scriptscriptstyle|left|right|(?:big|Big|bigg|Bigg)[lmr]?)"
+               r"(?![a-zA-Z])", "", s)
     s = re.sub(r"\\(,|;|:|!| |quad|qquad)", "", s)
+    s = re.sub(r"\\(?:enspace|thinspace|negthinspace|medspace|negmedspace|thickspace|negthickspace|hfill)"
+               r"(?![a-zA-Z])", "", s)
+    s = re.sub(r"\\hspace\*?\{[^{}]*\}", "", s)
+    s = re.sub(r"\\[hv]?phantom\{" + _BRACE_BODY + r"\}", "", s)
+    s = re.sub(r"\\\\\s*\[\s*-?[0-9.]+\s*(?:pt|em|ex|mm|cm|in|bp|pc)\s*\]", r"\\\\", s)   # a row's extra height
     s = s.replace("~", "")
-    s = re.sub(r"\\[dt]frac(?![a-zA-Z])", r"\\frac", s)
+    s = re.sub(r"\\[dtc]frac(?![a-zA-Z])", r"\\frac", s)
     s = re.sub(r"\\le(?![a-zA-Z])", r"\\leq", s)
     s = re.sub(r"\\ge(?![a-zA-Z])", r"\\geq", s)
     s = re.sub(r"\\ne(?![a-zA-Z])", r"\\neq", s)
@@ -165,6 +307,9 @@ def normalise(latex: str) -> str:
     s = s.replace("{,}", ",")
     for _ in range(3):   # \text{…} and friends: keep the content (nested braces allowed once)
         s = re.sub(r"\\(text|textrm|mathrm|textnormal|mbox)\{((?:[^{}]|\{[^{}]*\})*)\}", r"\2", s)
+    s = _simplify_braces(s)
+    while s.startswith("{") and _match_brace(s, 0) == len(s) - 1:    # the whole expression braced
+        s = s[1:-1].strip()
     s = re.sub(r"\s+", "", s)
     s = re.sub(r"([\^_])\{(.)\}", r"\1\2", s)   # x^{2} ≡ x^2
     s = s.rstrip("\\")

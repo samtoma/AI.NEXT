@@ -930,6 +930,37 @@ each (a changed coordinate, a swapped label, a flipped sign, a changed key, a re
 truth written down — and `calibrate --mutants` scores recall by defect class. Run both on a new prompt version, or a
 new model, before it checks a book.
 
+**Closing a chapter's lessons** (2026-10-01; `fanout.py close-chapter`, tested in `tests/test_fanout.py`). When every lesson run of a
+chapter is saved, one command does the deterministic steps and prepares the next two runs; it calls no model, loads nothing, launches nothing:
+
+```sh
+uv run fanout.py close-chapter <N> --dry-run   # the lesson runs it found (a re-collected run, runs/<book>/lessons/recollected/, in place of
+                                               # the saved one) and the commands; refuses, naming them, a lesson run not saved yet
+uv run fanout.py close-chapter <N>             # 1. auto_pass_gates.py g2 … --into runs/<book>/g2-chNN.json --split (ONE gate record for the chapter;
+                                               #    never the pilot's g2.json; a human verdict in the file is kept)  2. assemble_lesson_bundle.py
+                                               #    --chapter N → seed/<book>/, seed/content/, the book-picture stand-ins, runs/<book>/fanout/assembly-chNN.json
+                                               # 3. fanout.py config N  4. load_seed.py … --validate-only  5. prepare + embed_workflow verify the
+                                               #    working check (both passes, parts past 300 solutions) and the S5 draft; prints the numbers
+                                               #    (G2 decisions; assembly: live / held by reason / stand-ins / KaTeX / carried stems) and, per
+                                               #    prepared run: copies, agents, cost, meter line, save path
+```
+
+It is idempotent (a second run changes no byte of the seed, the content, the G2 file or the copies). The load is NOT part of it: a chapter loads
+into the database `fanout.py` names (`FANOUT_DB`, Samuel's preview DB `ainext_pilot_g10_ch08`; `AINEXT_FANOUT_DB` overrides it), by path and add-only
+(`books/g10-math.json` is status `ingest` until the whole book is done, so `load_seed.py --all --course` refuses it, and `load_seed` has no `--book`):
+
+```sh
+pg_dump -h 127.0.0.1 -Fc ainext_pilot_g10_ch08 > <backup>.dump      # once, before the first load
+AINEXT_DB_DSN="host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py \
+    seed/g10-math/g10m-course.json seed/g10-math/g10m-cNN.json --course course:us-g10-math-en --dry-run      # then the same without --dry-run
+AINEXT_DB_DSN=… AINEXT_ENVIRONMENT=mvp1 uv run apply_review_verdicts.py --g2 runs/g10-math/g2-chNN.json --book g10-math --runs runs/g10-math/lesson
+```
+
+**The S7 author reads the database's graph, and the database holds every chapter loaded so far** (Chapter 8 first), so `prepare s7-author-chNN`
+passes `--only-lessons <the chapter's lessons>`: without it chapter 1's run would have authored Chapter 8's thirteen objectives again (paid) and
+written their templates into chapter 1's directory. The same flag refuses, naming the lessons, a chapter whose book bundle is not loaded yet, so the
+`load_seed` step above comes BEFORE `prepare s7-author-chNN` (after the S5 draft), not after S7.
+
 ## 11. Multi-part exercises: a part carries what it depends on (2026-10-01, `multipart.py`)
 
 **The defect.** The book prints a question once and its parts (a), (b), (c) … beneath it; the pipeline serves every
