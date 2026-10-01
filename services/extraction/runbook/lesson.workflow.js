@@ -79,8 +79,10 @@ const PROMPTS_VERSION = 'lesson-v7'   // v3: ids are asked for WITHOUT their bra
 // v7: a caption describes only what is drawn — never a withheld point as marked (assembly drops such a clause).
 // The script's own deterministic collection is versioned apart from the prompts: a change here replays
 // every cached agent on a resume (no prompt changed) and re-decides what they answered.
-const COLLECT_VERSION = 'collect-5'   // collect-2/-3/-4: the Chapter 8 pilot's S3 fixes (see "COLLECT-2" and "COLLECT-3" below);
-                                      // collect-5: an objective id without "lo:" is that objective; a subject form from the book's rule
+const COLLECT_VERSION = 'collect-6'   // collect-2/-3/-4: the Chapter 8 pilot's S3 fixes (see "COLLECT-2" and "COLLECT-3" below);
+                                      // collect-5: an objective id without "lo:" is that objective; a subject form from the book's rule;
+                                      // collect-6: the first Chapter 1 lessons (see "COLLECT-6" below): verbal finals, a closed set of
+                                      // options, options that were never the book's, a choice that names one option
 const ARGS = typeof args === 'string' ? (args ? JSON.parse(args) : {}) : (args || {})
 const BOOK = ARGS.book || {}
 if (ARGS.stage !== 'S2-S4,S8' || !Array.isArray(ARGS.lessons) || !ARGS.lessons.length) {
@@ -172,6 +174,27 @@ const ORACLE_SCHEMA = { type: 'object', required: ['verdict', 'subheadings'], pr
 //     flagged `inconsistent`: the judge got one wrong. The item stays held.
 // COLLECT-4 (the final Chapter 8 runs): a numeric key is stored as the bare number the check read,
 //   without the book's \text{…} wrapper ("\text{0,5}"), which assembly refused as not a number.
+// COLLECT-6 (the first four Chapter 1 lessons, 2026-10-01; the prompts are unchanged, so a saved run is re-collected
+// with recollect_lessons.py and no model call). What the algebra chapter showed that Chapter 8 never did:
+//   * "book_final is not in the book solution" fired on 24 of 96 items of one lesson, none of them wrong. The book's
+//     solution for a classification is a SENTENCE ("… and is not divided by zero, so it is real.") and the typing
+//     agent copies a sentence with its parenthetical dropped. A copy with ELISIONS is the book's text: the final's
+//     words, numbers and symbols are an ordered subsequence of the solution's, and no skipped word negates
+//     ("not", "no", "non-"). A value changed, a word added, a final from another item are still refused.
+//   * a choice whose options the typing agent INVENTED. options_source "lesson" is a closed set the book itself
+//     uses ("rational" / "irrational"; "real" / "non-real" / "undefined"; true / false): one verbal category each,
+//     named in the stem or the lesson. Numbers, pairs of integers, values, and combinations of categories
+//     ("rational, integer") are never options: the book printed none, and distractors placed around the printed
+//     answer ("4 and 5" among "3 and 4", "5 and 6") are the typing agent's, not the book's. Also refused: more
+//     than 5 options (a list in the stem to select from), a key that is not among the options, repeated options.
+//   * such a choice is typed again from the KEY the book printed, deterministically and only where the key is
+//     plainly a number (numeric) or a list of numbers ("4 and 5" — marker kind values, in any order); anything
+//     else keeps the choice's problems and G2 decides. The retype is recorded (`typing_retyped`).
+//   * a verbal choice settles by the option each source NAMES. "Real" and "…so it is real." both name the one
+//     option "real" (whole words: "rational" is not in "irrational", "real" is not in "non-real"; a negation —
+//     "not rational" — settles nothing): the pair is `equivalent` (route "options") without a judge. The
+//     answer-bearing texts (the printed and the blind answer) must be words only: a number or maths in an answer
+//     ("2,82843; irrational") is a second part the option does not cover, so the judge reads it as before.
 const norm = (s) => String(s || '').normalize('NFKC').replace(/[−–—]/g, '-').replace(/[“”]/g, '"').replace(/[’‘]/g, "'")
   .replace(/\$/g, '').replace(/\s+/g, ' ').trim().toLowerCase()
 const contains = (hay, needle) => { const n = norm(needle); return n.length >= 8 && norm(hay).includes(n) }
@@ -333,8 +356,90 @@ function inBookSolution(solution, final) {
   const segs = String(final).match(/\$[^$]+\$/g) || [String(final)]
   // a segment that lists several statements must have each of them in the solution (COLLECT-3)
   return segs.every((p) => found(p) || (() => { const ps = topLevelParts(p.replace(/\$/g, ''))
-    return ps.length > 1 && ps.every((x) => x.includes('=') && found(x)) })())
+    return ps.length > 1 && ps.every((x) => x.includes('=') && found(x)) })()) || verbalElision(solution, final)
 }
+
+// ---- COLLECT-6 helpers ----------------------------------------------------------------------------
+// words, numbers and the few symbols that carry meaning, in order (spacing, punctuation, braces and $ ignored)
+function wordTokens(s) {
+  let t = String(s == null ? '' : s).normalize('NFKC').replace(/[−–—]/g, '-').replace(/[“”]/g, '"').replace(/[’‘]/g, "'")
+  t = t.replace(/\$\$?|\\\(|\\\)|\\\[|\\\]/g, ' ')
+  t = t.replace(/\\(?:left|right|displaystyle)(?![a-zA-Z])/g, ' ').replace(/\\[,;:! ]/g, ' ').replace(/\\[dt]frac(?![a-zA-Z])/g, '\\frac')
+  for (let k = 0; k < 3; k++) t = t.replace(/\\(?:text|mathrm|textrm|mbox)\{([^{}]*)\}/g, ' $1 ')
+  return t.toLowerCase().replace(/&/g, ' ').match(/\\[a-z]+|[a-z]+(?:'[a-z]+)?(?:-[a-z]+)*|\d+(?:[.,]\d+)?|[=+*/<>^_≤≥≈√π-]/g) || []
+}
+const NEGATION_WORDS = new Set(['not', 'no', 'never', 'cannot', "can't", "isn't", "doesn't", "don't", 'neither', 'nor', 'without'])
+const negates = (w) => NEGATION_WORDS.has(w) || /^non-/.test(w) || /n't$/.test(w)
+// A final written as a sentence, copied with elisions: its tokens are an ordered subsequence of the solution's, and nothing
+// skipped BETWEEN two matched tokens negates. A sentence only (>= 4 tokens, >= 2 of them words); a value is never loosened.
+function verbalElision(solution, final) {
+  const f = wordTokens(final)
+  if (f.length < 4 || f.filter((x) => /^[a-z]{2,}/.test(x)).length < 2) return false
+  const h = wordTokens(solution.join(' '))
+  let j = 0, last = -1
+  for (let i = 0; i < h.length && j < f.length; i++) {
+    if (h[i] !== f[j]) continue
+    if (last >= 0) for (let k = last + 1; k < i; k++) if (negates(h[k])) return false
+    last = i; j++
+  }
+  return j === f.length
+}
+
+const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+const plainOption = (o) => String(o == null ? '' : o).replace(/\$/g, '').replace(/\\(?:text|mathrm|textrm|mbox)\{([^{}]*)\}/g, '$1').trim()
+// one verbal category: a word, or up to four joined by a space or hyphen; never a list ("rational, integer", "a and b")
+const VERBAL_OPTION = /^[A-Za-z][A-Za-z'’]*(?:[ -][A-Za-z][A-Za-z'’]*){0,3}$/
+const LIST_OPTION = /[,;/]|\s(?:and|or)\s/i
+const isCategory = (o) => { const w = plainOption(o); return VERBAL_OPTION.test(w) && !LIST_OPTION.test(w) }
+const STOCK_CLOSED = new Set(['true', 'false', 'yes', 'no'])
+// options_source "lesson" is a closed set the book uses: one category each, named in the stem or the lesson (or true/false)
+function closedSetProblems(it, opts, lessonText) {
+  const bad = opts.filter((o) => !isCategory(o))
+  if (bad.length) {
+    return [`options said to be the lesson's closed set are not categories: ${bad.slice(0, 3).map((o) => `"${o}"`).join(', ')}` +
+      ' — numbers, pairs, values and combinations are the book\'s answer to type, never options to invent']
+  }
+  const hay = norm(`${it.stem} ${lessonText}`)
+  const unnamed = opts.filter((o) => !STOCK_CLOSED.has(norm(plainOption(o))) && !hay.includes(norm(plainOption(o))))
+  return unnamed.length ? [`options said to be the lesson's closed set are named neither in the stem nor in the lesson: ${unnamed.slice(0, 3).map((o) => `"${o}"`).join(', ')}`] : []
+}
+const NUM_RE = /^-?\d+(?:[.,]\d+)?$/
+// A choice whose options were never the book's: typed again from the KEY, only where it is plainly a number or a list of
+// numbers. Returns the typing row to use instead (and the rule), or null (the choice keeps its problems; G2 decides).
+function retypeFromKey(t) {
+  const key = plainOption(t.key).replace(/\\[,;:! ]/g, ' ').replace(/\s+/g, ' ').trim()
+  if (NUM_RE.test(key.replace(/ /g, ''))) return { rule: 'numeric', t: Object.assign({}, t, { answer_type: 'numeric', key: key.replace(/ /g, ''), options: [], options_source: '' }) }
+  const parts = key.split(/\s+and\s+|\s+or\s+|\s*;\s*|,\s+/).map((x) => x.trim()).filter(Boolean)
+  if (parts.length >= 2 && parts.every((x) => NUM_RE.test(x))) {
+    return { rule: 'values', t: Object.assign({}, t, { answer_type: 'expression', marker_kind: 'values', form: '', variables: [], key: parts.join('; '), options: [], options_source: '' }) }
+  }
+  return null
+}
+// "between which two consecutive integers does √26 lie?": the book's final is the chain 5 < √26 < 6 — its two ends are the key's values
+function betweenEnds(stem, against, key) {
+  const m = /^(-?\d+)<[^<>]+<(-?\d+)$/.exec(normTex(against))
+  return !!m && /\bbetween\b/i.test(String(stem)) && JSON.stringify(valueSet(key, false)) === JSON.stringify([m[1], m[2]].sort())
+}
+// which of the options a text NAMES (whole words, so "rational" is not in "irrational" nor "real" in "non-real"), and
+// whether any is negated ("not rational")
+function optionsNamed(text, opts) {
+  const s = ` ${norm(text).replace(/[.;:,()!?]/g, ' ').replace(/\s+/g, ' ')} `
+  const named = new Set()
+  let negated = false
+  opts.forEach((o, k) => {
+    const w = norm(plainOption(o)).replace(/[.;:,()!?]/g, ' ').replace(/\s+/g, ' ').trim()
+    if (!w) return
+    const re = new RegExp(`(?<![\\w-])${w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?![\\w-])`, 'g')
+    let m
+    while ((m = re.exec(s))) {
+      named.add(k)
+      if (s.slice(0, m.index).trim().split(' ').slice(-3).some(negates)) negated = true
+    }
+  })
+  return { named, negated }
+}
+const namesOnly = (text, opts, k) => { const r = optionsNamed(text, opts); return r.named.size === 1 && r.named.has(k) && !r.negated }
+const wordsOnly = (text) => !!text && !/[\d\\]/.test(String(text).replace(/\$/g, ''))
 
 // The S1 pilot (Chapter 8) found models copying a bracketed id WITH its brackets ("[EMA69]"). Every
 // id this script looks up in a model's answer (a claim's anchor, an item's ref, a figure's id) is read
