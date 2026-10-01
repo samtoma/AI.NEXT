@@ -6,7 +6,7 @@
 --
 -- ORDER: none needed. The app reads `course_outline` only after asking the
 -- catalogue whether it exists (`OUTLINE_PRESENT_SQL`, app/src/lib/
--- course-outline.ts), and with no table it shows exactly what it showed
+-- course-outline-queries.ts), and with no table it shows exactly what it showed
 -- before 037: the prepared lessons only, and no unprepared slug to refuse.
 --
 -- WHAT IS LOST: the list of chapters and lessons not prepared yet. All of it

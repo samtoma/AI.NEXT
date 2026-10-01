@@ -32,7 +32,8 @@
 --
 -- So this table is written by its own loader from the book's manifest
 -- (`services/extraction/load_course_outline.py`), and nothing but the outline
--- readers reads it (`app/src/lib/course-outline.ts`).
+-- readers reads it (`app/src/lib/course-outline-queries.ts`, rules in
+-- `app/src/lib/course-outline.ts`).
 --
 -- ---------------------------------------------------------------------------
 -- READINESS IS NOT STORED (the point of the design)
