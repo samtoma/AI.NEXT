@@ -1254,6 +1254,31 @@ class ChapterSixForms(TypedItem, unittest.TestCase):
             p = {q["pair_id"].split("|")[1]: q["route"] for q in rep["result"]["lessons"][0]["items"][0]["verify"]["pairs"]}
             self.assertEqual(p["blind~printed"] != "judge", same, (blind, printed, p))
 
+    def test_a_trigonometric_label_is_stripped_against_a_side_that_names_none(self):
+        """Chapter 5's flattened chains and its "=\\frac…" finals settled before function names were kept in the signature; they must still settle (a
+        whole-corpus A/B of every recorded pair found 3 chain items and 2 label items that went to the judge), while a side that names ANOTHER function
+        is a different answer."""
+        def routes(blind, book, printed):
+            it = item("Ex5-4:2a", "Write the ratios.", [book], printed)
+            t = typing("Ex5-4:2a", "x", book, "expression", marker_kind="expression", variables=[])
+            rep = run(args_for([it]), responses([t], [{"ref": "Ex5-4:2a", "final_answer": blind, "markable": True}]))
+            return {q["pair_id"].split("|")[1]: q["route"] for q in rep["result"]["lessons"][0]["items"][0]["verify"]["pairs"]}
+        chain = "$\\sin\\hat{B}=\\frac{AD}{BD}=\\frac{AC}{AB}$"
+        for blind, printed, same in (("\\sin\\hat{B}=\\dfrac{AD}{BD}=\\dfrac{AC}{AB}", "AC AB = AD BD", True),       # the text layer's chain, no left side
+                                      ("\\sin\\hat{B}=\\dfrac{AD}{BD}=\\dfrac{AC}{AB}", "cos B̂ = AC AB = AD BD", False),  # another function: another answer
+                                      ("\\cos\\hat{B}=\\dfrac{AD}{BD}=\\dfrac{AC}{AB}", "AC AB = AD BD", True)):      # only ONE side names a function
+            p = routes(blind, chain, printed)
+            self.assertEqual(p["blind~printed"] != "judge", same, (blind, printed, p))
+        # "=\\frac{1}{\\sqrt{2}}" (the EPUB's final without its left side) and a ratio of two functions as the left side
+        for blind, book, printed, pair, same in (("\\cos\\theta=\\frac{1}{\\sqrt{2}}", "$=\\frac{1}{\\sqrt{2}}$", "1 √ 2", "blind~book", True),
+                                                 ("\\cos\\theta=\\frac{1}{\\sqrt{3}}", "$=\\frac{1}{\\sqrt{2}}$", "1 √ 2", "blind~book", False),
+                                                 ("\\dfrac{8}{15}", "$\\frac{\\cos\\theta}{\\sin\\theta}=\\frac{8}{15}$", "8 15", "blind~book", True),
+                                                 ("\\dfrac{8}{16}", "$\\frac{\\cos\\theta}{\\sin\\theta}=\\frac{8}{15}$", "8 15", "blind~book", False),
+                                                 ("\\dfrac{8}{15}", "$\\frac{\\cos\\theta}{\\sin\\theta}=\\frac{8}{15}$", "8 15", "book~printed", True),
+                                                 ("\\dfrac{8}{15}", "$\\frac{\\cos\\theta}{\\sin\\theta}=\\frac{8}{15}$", "9 15", "book~printed", False)):
+            p = routes(blind, book, printed)
+            self.assertEqual(p[pair] != "judge", same, (blind, book, printed, p))
+
     def test_the_epubs_glued_and_the_text_layers_signs_in_a_final(self):
         sol = ["$\\begin{align*}g(-2)&=2(-2)^2-4\\\\&=4\\\\\\thereforeh(g(-2))&=h(4)\\\\&=3^4-4\\\\&=77\\end{align*}$"]
         it = item("Ex6-8:27f", "Find h(g(-2)).", sol, "77")
