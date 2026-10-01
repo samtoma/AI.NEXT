@@ -1232,7 +1232,7 @@
    "lo": "lo:g10m5s6-1-1",
    "stem": "Evaluate the following without using a calculator. Select the closest answer from the list provided. $\\tan30^{\\circ}-\\sin60^{\\circ}$ $\\begin{array}{ccccc}0&\\frac{1}{2}&-\\frac{\\sqrt{3}}{2}&-\\frac{1}{2\\sqrt{3}}&\\frac{\\sqrt{3}}{2}\\end{array}$",
    "answer_type": "choice",
-   "answer": null,
+   "answer": "D",
    "choices": [
     {
      "key": "A",
@@ -1304,10 +1304,13 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "fix",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (a choice needs 2–5 options with the key among them); a fix needs fields a person or a recommendation must write",
-    "auto": true
+    "note": "auto-pass G2 (AI recommendation): $\\tan30°-\\sin60°=\\frac1{\\sqrt3}-\\frac{\\sqrt3}2=\\frac{2-3}{2\\sqrt3}=-\\frac1{2\\sqrt3}\\approx-0{,}29$, which is among the stem's own five options. The typing only failed to match the key to option D; the options are the stem's own list. Verified independently: the verifier's own answer matches the key.",
+    "auto": true,
+    "changed": [
+     "answer"
+    ]
    }
   },
   {

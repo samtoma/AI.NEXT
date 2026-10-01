@@ -1539,7 +1539,13 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": true
+   "blocked_on_figure": true,
+   "g2": {
+    "verdict": "exclude",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): Figure: right angle at N, n = OM hypotenuse, m = ON adjacent, o = MN opposite. So $\\cos\\hat{O}=m/n$. Book's working names n as hypotenuse, then writes $m/o$. Book error in both printed answer and EPUB. The blind answer $m/n$ is right, but a book error is excluded, not repaired. Right answer by the agent's own derivation: \\cos\\hat{O}=\\frac{m}{n}.",
+    "auto": true
+   }
   },
   {
    "ref": "Ex5-1:3b",
@@ -1747,18 +1753,10 @@
    "kind": "exercise",
    "lo": "lo:g10m5s3-1-2",
    "stem": "Complete each of the following: [figure] Find $x$ in the diagram in three different ways. You do not need to calculate the value of $x$ , just write down the appropriate ratio for $x$ . [figure]",
-   "answer_type": "expression",
-   "answer": "$\\sin x=\\frac{4}{5}; \\cos x=\\frac{3}{5}; \\tan x=\\frac{4}{3}$",
+   "answer_type": "not_markable",
+   "answer": null,
    "choices": null,
-   "marker": {
-    "kind": "equation",
-    "key": "$\\sin x=\\frac{4}{5}; \\cos x=\\frac{3}{5}; \\tan x=\\frac{4}{3}$",
-    "form": null,
-    "variables": [
-     "x"
-    ],
-    "tolerance": null
-   },
+   "marker": null,
    "solution": [
     "Side of length 4 is the opposite side Side of length 5 is the hypotenuse Side of length 3 is the adjacent side Notice that the hypotenuse is the longest side as we would expect.",
     "$\\begin{align*}\\sinx&=\\frac{4}{5}\\\\\\cosx&=\\frac{3}{5}\\\\\\tanx&=\\frac{4}{3}\\end{align*}$"
@@ -1787,7 +1785,7 @@
    ],
    "unit": null,
    "options_source": null,
-   "not_markable_reason": null,
+   "not_markable_reason": "The book answers with three different ratios for x (sin, cos, tan), in any order; a single key would mark a correct single ratio wrong. Kept as a teaching example.",
    "tier_source": "typing",
    "printed_answer_scope": null,
    "figures": [
@@ -1801,10 +1799,16 @@
    "form_unsupported": null,
    "blocked_on_figure": true,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "fix",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"$\\sin x=\\frac{4}{5}; \\cos x=\\frac{3}{5}; \\tan x=\\frac{4}{3}$\" does not read as the book final answer \"$\\tan x=\\frac{4}{3}$\"); a fix needs fields a person or a recommendation must write",
-    "auto": true
+    "note": "auto-pass G2 (AI recommendation): Figure: opposite 4, hypotenuse 5, adjacent 3. Book's working gives all three: $\\sin x=4/5$, $\\cos x=3/5$, $\\tan x=4/3$; the EPUB final line keeps only tan. The key typed from the working is right but a list of three, so not safely markable.",
+    "auto": true,
+    "changed": [
+     "answer",
+     "answer_type",
+     "marker",
+     "not_markable_reason"
+    ]
    }
   },
   {
@@ -1890,19 +1894,19 @@
    "choices": [
     {
      "key": "A",
-     "text": "$\\sin\\alpha=\\frac{4}{5}$"
+     "text": "\\sin\\alpha=\\frac{4}{5}"
     },
     {
      "key": "B",
-     "text": "$\\cos\\left(\\frac{3}{5}\\right)=\\alpha$"
+     "text": "\\cos\\left(\\frac{3}{5}\\right)=\\alpha"
     },
     {
      "key": "C",
-     "text": "$\\tan\\alpha=\\frac{5}{4}$"
+     "text": "\\tan\\alpha=\\frac{5}{4}"
     },
     {
      "key": "D",
-     "text": "$\\cos 0,8=\\alpha$"
+     "text": "\\cos\\text{0,8}=\\alpha"
     }
    ],
    "marker": null,
@@ -1957,10 +1961,13 @@
    "form_unsupported": null,
    "blocked_on_figure": true,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "fix",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (options said to be the stem's are not all in the stem); a fix needs fields a person or a recommendation must write",
-    "auto": true
+    "note": "auto-pass G2 (AI recommendation): Figure: opposite 4, hypotenuse 5, adjacent 3 for the angle α. $\\sin\\alpha=4/5$ is correct. $\\cos(3/5)=\\alpha$ is malformed, $\\tan\\alpha=5/4$ is wrong (4/3), $\\cos 0,8=\\alpha$ is wrong (cos α = 0,6). Key A stands; only the option text mismatched the stem. Verified independently: the verifier's own answer matches the key.",
+    "auto": true,
+    "changed": [
+     "choices"
+    ]
    }
   },
   {
@@ -2069,11 +2076,11 @@
    "choices": [
     {
      "key": "A",
-     "text": "been written correctly"
+     "text": "has been written correctly"
     },
     {
      "key": "B",
-     "text": "not been written correctly"
+     "text": "has not been written correctly"
     }
    ],
    "marker": null,
@@ -2114,7 +2121,7 @@
     "options said to be the stem's are not all in the stem"
    ],
    "unit": null,
-   "options_source": "stem",
+   "options_source": "lesson",
    "not_markable_reason": null,
    "tier_source": "typing",
    "printed_answer_scope": "item",
@@ -2126,10 +2133,14 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "fix",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (options said to be the stem's are not all in the stem); a fix needs fields a person or a recommendation must write",
-    "auto": true
+    "note": "auto-pass G2 (AI recommendation): $\\sin\\theta=\\text{opposite}/\\text{hypotenuse}$, so hypotenuse/adjacent is wrong. Book answer 'not written correctly' is right. The typing options 'been / not been written correctly' are not both in the stem, hence the flag. Re-typed in the book's own words. Verified independently: the verifier's own answer matches the key.",
+    "auto": true,
+    "changed": [
+     "choices",
+     "options_source"
+    ]
    }
   },
   {
@@ -2142,11 +2153,11 @@
    "choices": [
     {
      "key": "A",
-     "text": "been written correctly"
+     "text": "has been written correctly"
     },
     {
      "key": "B",
-     "text": "not been written correctly"
+     "text": "has not been written correctly"
     }
    ],
    "marker": null,
@@ -2187,7 +2198,7 @@
     "options said to be the stem's are not all in the stem"
    ],
    "unit": null,
-   "options_source": "stem",
+   "options_source": "lesson",
    "not_markable_reason": null,
    "tier_source": "typing",
    "printed_answer_scope": "item",
@@ -2199,10 +2210,14 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "fix",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (options said to be the stem's are not all in the stem); a fix needs fields a person or a recommendation must write",
-    "auto": true
+    "note": "auto-pass G2 (AI recommendation): $\\tan\\theta=\\text{opposite}/\\text{adjacent}$ is the correct definition, so the book's 'written correctly' is right. Typing options are not both in the stem; re-typed in the book's own words. Verified independently: the verifier's own answer matches the key.",
+    "auto": true,
+    "changed": [
+     "choices",
+     "options_source"
+    ]
    }
   },
   {
@@ -2274,7 +2289,7 @@
    "g2": {
     "verdict": "exclude",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (options said to be the stem's are not all in the stem); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): $\\sec\\theta=1/\\cos\\theta=\\text{hyp}/\\text{adj}$, so the stem's ratio is right. The book confuses secant with cosecant (hyp/opp) and says 'not correct'. The blind answer 'Correct' is right, but this is a book error: excluded. Right answer by the agent's own derivation: has been written correctly.",
     "auto": true
    }
   },

@@ -251,8 +251,11 @@ function normTex(s) {
   t = t.replace(/\\(?:text|mathrm|textrm|mbox)\{\s*and\s*\}/g, ', ')                // the EPUB's own "\text{and}", spaces lost: T_6=28\text{and}T_9=43 (COLLECT-6)
   for (let k = 0; k < 3; k++) t = t.replace(/\\(?:text|mathrm|textrm|mbox)\{([^{}]*)\}/g, '$1')
   t = t.replace(/\s+and\s+/g, ', ')                                      // a list's "and" is its comma (COLLECT-3: both sides)
+  t = t.replace(/(?<![A-Za-z])and(?![A-Za-z])/g, ', ').replace(/\s+en\s+(?=[A-Za-z]+\s*=)/g, ', ')   // "90°and 270°"; the book's own Afrikaans "en" between two equations (Chapter 6)
   t = t.replace(/\\geq?(?![a-zA-Z])/g, '≥').replace(/\\leq?(?![a-zA-Z])/g, '≤').replace(/>=/g, '≥').replace(/<=/g, '≤')   // before the "&" goes: "-3&\le&k" (COLLECT-6)
   // a Greek letter's command is the sign it names, so the letter after it is not swallowed with it: "2\pi r" is not "2\pir" (COLLECT-6)
+  t = t.replace(/\\(sin|cos|tan|cot|sec|csc)/g, '$1').replace(/[◦∘]/g, '°')                        // a function's name is its letters; the text layer's degree sign (Chapter 6)
+  t = t.replace(/\\le(?=[a-zA-Z](?![a-zA-Z]))/g, '≤').replace(/\\ge(?=[a-zA-Z](?![a-zA-Z]))/g, '≥')   // the EPUB's glued \lex, \gex
   t = t.replace(/\\(?:approx|simeq)(?![a-zA-Z])/g, '≈').replace(/\^\s*\{\s*\\circ\s*\}|\^\s*\\circ(?![a-zA-Z])|\\circ(?![a-zA-Z])/g, '°')   // one sign however written: ≈ and ° (Chapter 5)
   t = t.replace(/\\pm(?![a-zA-Z])/g, '±').replace(/\\pi(?!tchfork)/g, 'π').replace(/\\(lambda|theta|alpha|beta|gamma|delta|mu|sigma|phi|omega)(?![a-zA-Z])/g, (_m, g) => GREEK[g])
   t = t.replace(/&/g, '')                                                  // alignment markup, never maths (COLLECT-3)
@@ -267,9 +270,12 @@ function normTex(s) {
 }
 // a named left side: x=, y_1=, m_{AB}=, d_{AB}\approx, the text layer's flattened mAC=, and a named point
 // with its variables, P(x,y)= (COLLECT-2, COLLECT-3)
-// a trigonometric ratio of an angle names what the value is of, as a letter does: \sin45°=, \tan{30°}=, \sin\hat{A}=, \cos\theta≈ (Chapter 5)
-const TRIG_LHS = /^\\(?:sin|cos|tan|cot|sec|csc)[^=≈]{1,16}(?:=|≈)/
-const stripLhs = (t) => (TRIG_LHS.test(t) ? t.replace(TRIG_LHS, '') : t.replace(/^[A-Za-zπλθαβγδμσφω]{1,4}(?:_(?:\{[A-Za-z0-9]+\}|[A-Za-z0-9]+))?(?:\([a-z](?:,[a-z])*\))?(?:=|\\approx|≈)/, ''))
+const stripLhs = (t) => t.replace(/^[A-Za-zπλθαβγδμσφω]{1,4}(?:_(?:\{[A-Za-z0-9]+\}|[A-Za-z0-9]+))?(?:\([a-z](?:,[a-z])*\))?(?:=|\\approx|≈)/, '')
+// a trigonometric ratio of an angle names what the value is of, as a letter does (sin45°=, tan{30°}=, sin Â=, cosθ≈): stripped from ONE side
+// only, against a bare value on the other, so "sin A = 3/5" and "cos A = 3/5" are still different (Chapters 5 and 6)
+const TRIG_LHS = /^(?:sin|cos|tan|cot|sec|csc)[^=≈]{1,16}(?:=|≈)/
+const trigRest = (n) => (TRIG_LHS.test(n) ? n.replace(TRIG_LHS, '') : null)
+const isBare = (n) => !/[=≈]/.test(n)
 // a point's name before its coordinates: M(1,0) is the pair (1,0); only a name directly before ONE
 // parenthesised pair, so f(2) or 3(x+1) is never touched (COLLECT-3)
 const stripPointName = (t) => (/^[A-Za-z]{1,2}(?:_(?:\{[A-Za-z0-9]+\}|[A-Za-z0-9]))?\([^()]*,[^()]*\)$/.test(t) ? t.replace(/^[^(]+/, '') : t)
@@ -322,11 +328,15 @@ function settleOne(a, b, textLayer) {
   if (textLayer) b = printedTex(b)
   const na = normTex(a), nb = normTex(b)
   if (na && sameForm(na, nb)) return { route: 'normalised', verdict: 'equivalent' }
+  const ta = trigRest(na), tb = trigRest(nb)
+  if (na && ((ta !== null && isBare(nb) && sameForm(ta, nb)) || (tb !== null && isBare(na) && sameForm(tb, na)))) return { route: 'normalised', verdict: 'equivalent' }
   if (textLayer) {
     // the signature of each side, and of a named point's pair without its name ("T ( −1; 1 2 )")
-    const sigs = (n) => [...new Set([n, stripPointName(n), stripLhs(n)])].map((x) => x.replace(/\\[a-zA-Z]+/g, '').replace(SIG_DROP, ''))
+    const sigOf = (x) => x.replace(/\\[a-zA-Z]+/g, '').replace(SIG_DROP, '')
+    const sigs = (n) => [...new Set([n, stripPointName(n), stripLhs(n)])].map(sigOf)
     const sa = sigs(na), sb = sigs(nb)
     if (sa[0] && sa.some((x) => sb.some((y) => sameForm(x, y)))) return { route: 'signature', verdict: 'equivalent' }
+    if (sa[0] && ((ta !== null && isBare(nb) && sb.some((y) => sameForm(sigOf(ta), y))) || (tb !== null && isBare(na) && sa.some((x) => sameForm(sigOf(tb), x))))) return { route: 'signature', verdict: 'equivalent' }
   }
   return null
 }
@@ -353,7 +363,7 @@ function settle(a, b, textLayer) {
 //   * the separators are ";", "and", "or", and a comma that is not a decimal comma (a comma BETWEEN TWO DIGITS, "-28,1", or between
 //     a digit and a recurring bar, "1,\overline{34}", is a decimal point, as normTex reads it; the old split broke it in two on both
 //     sides, so "1,5; 2" and "5; 1,2" read alike) and not inside a bracket ("(1,2)").
-const VALUE_LABEL = /^(?:[A-Za-zπλθαβγδμσφω]{1,4}(?:_(?:\{[A-Za-z0-9]+\}|[A-Za-z0-9]+))?(?:\([a-z](?:,[a-z])*\))?|[A-Za-z]\d{1,3})(?:=|\\approx|≈)/
+const VALUE_LABEL = /^(?:[A-Za-z]{1,2}-?[a-z]{3,12}|[A-Za-zπλθαβγδμσφω]{1,4}(?:_(?:\{[A-Za-z0-9]+\}|[A-Za-z0-9]+))?(?:\([a-z](?:,[a-z])*\))?|[A-Za-z]\d{1,3})(?:=|\\approx|≈)/
 const DECIMAL_COMMA = /(?<=\d),(?=\d|\\(?:overline|bar|dot|ddot)\s*\{?\s*\d)/g
 function valueList(s, textLayer) {
   const t = mathsSpan(textLayer ? printedTex(s) : s).replace(/\$/g, ' ').replace(/(\d)\{,\}(\d)/g, '$1.$2').replace(DECIMAL_COMMA, '.')
@@ -424,7 +434,11 @@ function sentenceMatchesValues(key, text) {
 // A sentence of the book's solution in maths ("The solution to $3x^2+2x-1=0$ is $x=-1$ or $x=\frac{1}{3}$"): the answer is what its
 // `var = value` segments set; a given equation beside them is not an answer, but a bare value in a segment of its own is refused.
 function assignedList(text) {
-  const segs = String(text == null ? '' : text).match(/\$[^$]+\$/g)
+  // "$a=-1$ and $q=1$, so the equation of the parabola is $y=-x^2+1$": what follows "so" / "therefore" / "hence" is a consequence of the answer, not part of it
+  let raw = String(text == null ? '' : text)
+  const cut = raw.search(/\b(?:so|therefore|hence|thus)\b/i)
+  if (cut > 0 && (raw.slice(0, cut).match(/\$[^$]+\$/g) || []).length >= 2) raw = raw.slice(0, cut)
+  const segs = raw.match(/\$[^$]+\$/g)
   if (!segs) return null
   const asg = [], given = []
   for (const sg of segs) (/^[A-Za-z](?:_(?:\{[A-Za-z0-9]+\}|[A-Za-z0-9]+))?=[^=]+$/.test(normTex(sg)) ? asg : given).push(sg)
@@ -533,7 +547,7 @@ function plainSigns(s) {
     .replace(/\\triangle(?![a-z])/g, '△').replace(/∴/g, ' therefore ').replace(/²/g, '^2').replace(/³/g, '^3')
     .replace(/\\[dt]?frac\s*\{\s*(-?[A-Za-z0-9.,\s]+?)\s*\}\s*\{\s*(-?[A-Za-z0-9.,\s]+?)\s*\}/g, (_m, a, b) => `${a.replace(/\s+/g, '')}/${b.replace(/\s+/g, '')}`)
 }
-const containNorm = (s) => normTex(plainSigns(s).replace(/\\therefore(?![a-zA-Z])/g, ' therefore ')
+const containNorm = (s) => normTex(plainSigns(s).replace(/\\therefore/g, ' therefore ')
   .replace(/\\because(?![a-zA-Z])/g, ' because ')).toLowerCase()
 // `n` is in `h` AS A WHOLE VALUE: a number is not found inside a longer one ("76,6" is not in "76,60", "x=2" not in "x=2/3" or "x=25", "5" not in
 // "-5"), so a different rounding or a different digit is refused (COLLECT-6, Chapter 5)
@@ -804,12 +818,14 @@ Return BLIND_SCHEMA with one row per problem; ref is the problem's id as shown i
 // set as data (the EPUB's figures are images; the PDF's are vector forms with no position on the page), so
 // whether each label is in the figure is not checked here: the blind re-solve reads the figure and must
 // pick the same label as the printed answer.
-const FIGURE_LABEL = /^(?:([A-Za-z]+)\s+)?\$?([A-Za-z](?:_\{?\d{1,2}\}?|\d)?(?:'|′){0,2})\$?$/
+// (Chapter 6: a graph's curves are labelled f(x), g(x), h(x), k(x) in the figure itself; a function label is a letter with its one variable)
+const FIGURE_LABEL = /^(?:([A-Za-z]+)\s+)?\$?([A-Za-z](?:_\{?\d{1,2}\}?|\d)?(?:'|′){0,2}(?:\([a-z]\))?)\$?$/
 function figureOptionProblems(it, opts) {
   const problems = []
   if (!(it.figures || []).length) problems.push('options said to be a figure\'s labels, but the item has no figure')
   const parsed = opts.map((o) => FIGURE_LABEL.exec(String(o).trim()))
   if (parsed.some((m) => !m)) { problems.push('options said to be a figure\'s labels are not all single labels'); return problems }
+  if (new Set(parsed.map((m) => /\(/.test(m[2]))).size > 1) { problems.push('options said to be a figure\'s labels mix letters and function labels'); return problems }
   const words = new Set(parsed.map((m) => (m[1] || '').toLowerCase()))
   if (words.size > 1) problems.push('options said to be a figure\'s labels do not name them alike')
   const w = [...words][0]
