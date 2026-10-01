@@ -1031,9 +1031,13 @@ def h_s7_verify(A: Adv) -> bool:
     K = A.K
     templates = sorted(K.wid.glob("*.json")) if K.wid.exists() else []
     cfg = chapter_config(A)
+    # --catalogue <the chapter's S5 draft> --pre-catalogue, the flags prepare uses: every diagnostic names a misconception that only S5
+    # final puts in the catalogue, so without them the templates are REJECTED and s5-distractors-<chNN>.json is never written
+    draft = one_file(A.P, f"misconceptions/draft-{K.t}-*.json", A.fl.dry)
     A.fl.run("verify verdicts → distractors, held mappings", [
-        "generate_widget_questions.py", "--templates", A.P.rel(K.wid), "--book", A.P.rel(cfg), "--dsn", F.DSN, "--verdicts",
-        A.P.rel(A.saved), "--gaps", A.P.rel(K.merged), "--s5-distractors", A.P.rel(K.w_dist), "--pending-review", A.P.rel(K.pending)],
+        "generate_widget_questions.py", "--templates", A.P.rel(K.wid), "--book", A.P.rel(cfg), "--dsn", F.DSN, "--catalogue", A.P.rel(draft),
+        "--verdicts", A.P.rel(A.saved), "--gaps", A.P.rel(K.merged), "--pre-catalogue", "--s5-distractors", A.P.rel(K.w_dist),
+        "--pending-review", A.P.rel(K.pending)],
         env={"AINEXT_DB_DSN": F.DSN}, inputs=[A.saved, K.merged, *templates], outputs=[K.w_dist, K.pending])
     A.count(results=len(A.result.get("results") or []))
     if K.pending.exists():

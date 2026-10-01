@@ -428,6 +428,69 @@ class S0bAlignHash(unittest.TestCase):
             sys.stdin = old
         self.assertEqual(json.loads(buf.getvalue())["match"], "c&=9")
 
+    # --- `<` and `>` are HTML-escaped in the book's source too (found 2026-10-01, Chapter 6) -------------
+    RANGE = "\\left\\{y:y\\in\\mathbb{R},y>0\\right\\}"          # what passes A and B read
+    RANGE_HASH = "8617998c96aa092f2317601fdb7cdd2a"                      # = md5 of the same source with `y&gt;0`
+    FIVE = "\\left\\{1;2;2;3;3\\right\\}"                           # what the hash 429b8760 proves
+    SIX = "\\{1;2;2;3;3;3\\}"                                         # what both passes read: six values, wrong
+    DATA_HASH = "429b8760604d18f7f31fce70e11ec838"
+
+    def test_the_book_hashes_lt_and_gt_as_entities_too(self):
+        import assemble_maths as am
+        self.assertTrue(am.hash_ok(self.RANGE, self.RANGE_HASH), "the Chapter 6 image: `>` was `&gt;` when hashed")
+        self.assertTrue(am.hash_ok(self.RANGE.replace(">", "&gt;"), self.RANGE_HASH), "the entity form still proves")
+        self.assertTrue(am.hash_ok("x<9", hashlib.md5("x&lt;9".encode()).hexdigest()))
+        # the book hashed its sources without whitespace: `0\le x<20` is `0\lex&lt;20`
+        self.assertTrue(am.hash_ok("0\\le x<20", hashlib.md5("0\\lex&lt;20".encode()).hexdigest()))
+        # an `&` is still `&amp;`, and a line with no `<` or `>` still hashes as it did
+        self.assertTrue(am.hash_ok("a=b", hashlib.md5("a=b".encode()).hexdigest()))
+        self.assertTrue(am.hash_ok("c&=9", hashlib.md5("c&amp;=9".encode()).hexdigest()))
+
+    def test_an_align_with_both_amp_and_lt_is_tried_with_all_of_them_escaped(self):
+        import assemble_maths as am
+        stored = "\\begin{align*}x-1&<-4(x-6)\\\\x&<5\\\\x&>2\\end{align*}"
+        source = "x-1&amp;&lt;-4(x-6)\\\\x&amp;&lt;5\\\\x&amp;&gt;2"          # the lines, no environment, one escaping pass
+        self.assertTrue(am.hash_ok(stored, hashlib.md5(source.encode()).hexdigest()))
+        self.assertEqual(am.html_escaped("x-1&<-4(x-6)\\\\x&<5\\\\x&>2"), source)
+        # a form nobody's escaping pass writes (the `&` escaped but the `<` not) names nothing
+        half = source.replace("&lt;", "<").replace("&gt;", ">")
+        self.assertFalse(am.hash_ok(stored, hashlib.md5(half.encode()).hexdigest()))
+        # nothing is escaped twice
+        self.assertEqual(am.html_escaped("a&amp;b&lt;c"), "a&amp;b&lt;c")
+        self.assertEqual(am.html_escaped("a&b"), "a&amp;b")
+
+    def test_the_proof_stays_exact_a_wrong_reading_is_never_accepted(self):
+        import assemble_maths as am
+        # 429b8760: both passes read six values; the image and the PDF show five, and the hash proves five
+        self.assertTrue(am.hash_ok(self.FIVE, self.DATA_HASH))
+        self.assertFalse(am.hash_ok(self.SIX, self.DATA_HASH))
+        self.assertFalse(am.hash_ok(self.SIX.replace("\\{", "\\left\\{").replace("\\}", "\\right\\}"), self.DATA_HASH))
+        # a flipped or changed inequality does not hash to the name: only the exact source does
+        for wrong in (self.RANGE.replace(">", "<"), self.RANGE.replace("y>0", "y\\ge0"), self.RANGE.replace(">0", ">1"),
+                      self.RANGE.replace(">", "&gt;&gt;"), self.RANGE.replace(">", "&amp;gt;")):
+            self.assertFalse(am.hash_ok(wrong, self.RANGE_HASH), wrong)
+
+    def test_an_entity_is_never_stored_and_md5check_answers_the_stored_form(self):
+        import assemble_maths as am
+        self.assertEqual(am.canonical(self.RANGE.replace(">", "&gt;")), self.RANGE)
+        self.assertEqual(am.canonical("x&lt;9"), "x<9")
+        lines = "".join(json.dumps({"md5": h, "candidates": c}) + "\n" for h, c in (
+            (self.RANGE_HASH, [self.RANGE.replace("y", "w"), self.RANGE.replace(">", "&gt;")]),   # an entity candidate
+            (self.RANGE_HASH, [self.RANGE]),                                                    # the real character
+            (self.DATA_HASH, [self.SIX, self.FIVE.replace("\\left", "\\Bigl")]),                  # the six-value misreading
+            (self.DATA_HASH, [self.SIX, self.FIVE])))
+        old = sys.stdin
+        try:
+            sys.stdin = io.StringIO(lines)
+            buf = io.StringIO()
+            with redirect_stdout(buf):
+                am.main(["md5check"])
+        finally:
+            sys.stdin = old
+        out = [json.loads(l)["match"] for l in buf.getvalue().splitlines()]
+        self.assertEqual(out, [self.RANGE, self.RANGE, None, self.FIVE])
+        self.assertTrue(all("&gt;" not in (m or "") and "&lt;" not in (m or "") for m in out))
+
 
 class BundleAligned(unittest.TestCase):
     def test_align_star_inline_becomes_aligned_and_a_leftover_is_residual(self):

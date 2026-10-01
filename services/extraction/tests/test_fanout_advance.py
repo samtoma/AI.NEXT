@@ -929,9 +929,11 @@ class S7(Base):
         self.assertEqual(rc, 0, rep)
         self.assertEqual(self.ex.argv_of("generate_widget_questions.py"),
                          [["generate_widget_questions.py", "--templates", "widgets/g10-math/ch04", "--book", "work/g10-math/fanout/books/ch04/g10-math.json",
-                           "--dsn", F.DSN, "--verdicts", f"runs/g10-math/widgets/verify-ch04-{wf}.json", "--gaps",
-                           "runs/g10-math/widgets/author-merged-ch04.json", "--s5-distractors", "runs/g10-math/widgets/s5-distractors-ch04.json",
-                           "--pending-review", "runs/g10-math/widgets/pending-review-ch04.json"]])
+                           "--dsn", F.DSN, "--catalogue", "runs/g10-math/misconceptions/draft-ch04-wf_d.json", "--verdicts",
+                           f"runs/g10-math/widgets/verify-ch04-{wf}.json", "--gaps", "runs/g10-math/widgets/author-merged-ch04.json",
+                           "--pre-catalogue", "--s5-distractors", "runs/g10-math/widgets/s5-distractors-ch04.json",
+                           "--pending-review", "runs/g10-math/widgets/pending-review-ch04.json"]],
+                         "the draft catalogue and --pre-catalogue: without them every template is REJECTED and no distractor file is written")
 
 
 # ====================================================================== S5 final
@@ -1324,6 +1326,15 @@ class RealPlan(unittest.TestCase):
     def test_the_wcheck_pass_is_in_the_save_name(self):
         r = next(x for x in self.plan["runs"] if x["id"] == "wcheck-ch01")
         self.assertEqual(A.save_path(self.P, r, "B.part2", "wf_deadbeef-123").name, "ch01-B-wf_deadbeef-123.json")
+
+    def test_the_plan_quotes_the_fixed_s7_verify_and_coverage_commands(self):
+        by = {r["id"]: r for r in self.plan["runs"]}
+        v = by["s7-verify-ch03"]["after"][0]
+        self.assertIn("--catalogue runs/g10-math/misconceptions/draft-ch03-<s5-draft wf_id>.json", v)
+        self.assertIn("--pre-catalogue", v)
+        self.assertIn("--verdicts runs/g10-math/widgets/verify-ch03-<wf_id>.json", v)
+        cov = next(l for l in by["s5-final-ch03"]["after"] if l.startswith("uv run coverage_report.py"))
+        self.assertIn("--generated seed/generated/g10-math/ch03", cov)
 
     def test_every_after_command_the_plan_quotes_for_a_simple_kind_is_the_one_the_driver_runs(self):
         by = {r["id"]: r for r in self.plan["runs"]}

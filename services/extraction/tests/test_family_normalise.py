@@ -16,6 +16,7 @@ import hashlib
 import json
 import subprocess
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -119,6 +120,157 @@ class Normalisations(unittest.TestCase):
         raw = dict(raw, marker=dict(raw["marker"], kind="values", answer="t = {=a} and b = {=b}",
                                     variables=["t", "b"]))
         self.assertEqual(N.normalise(raw)[1], [])
+
+
+class SlugCollisions(unittest.TestCase):
+    """Two families on one objective whose slugs share their first six letters mint the same item ids, and
+    --check refuses both. The normaliser renames the later ones, mechanically and the same way every time —
+    and never a family whose items are already loaded (Chapters 1, 2, 8, any bundle, prep3)."""
+
+    def setUp(self):
+        self._tmp = tempfile.TemporaryDirectory()
+        self.dir = Path(self._tmp.name)
+
+    def tearDown(self):
+        self._tmp.cleanup()
+
+    def spec(self, slug, tail="g10m4s2-1-1"):
+        """A well-formed family on objective ``tail`` (the balance fixture, re-homed)."""
+        text = json.dumps(load("g10m4s2-1-1--balance.json")).replace("g10m4s2-1-1:balance", f"{tail}:{slug}") \
+            .replace("g10m4s2-1-1", tail)
+        return json.loads(text)
+
+    def put(self, slug, tail="g10m4s2-1-1", where=None) -> Path:
+        d = where or self.dir
+        d.mkdir(parents=True, exist_ok=True)
+        f = d / f"{tail}--{slug}.json"
+        f.write_text(json.dumps(self.spec(slug, tail), indent=1, ensure_ascii=False) + "\n")
+        return f
+
+    def run_n(self, files, loaded=frozenset(), dry=False):
+        return N.process(sorted(files) if files else [], dry_run=dry, loaded=set(loaded))
+
+    def ids(self, where=None):
+        return {json.loads(f.read_text())["id"].split(":")[-1]: f.name for f in sorted((where or self.dir).glob("*.json"))}
+
+    def test_the_later_family_is_renamed_and_the_directory_then_passes_the_check(self):
+        a, b = self.put("which-irrational"), self.put("which-rational")
+        self.assertTrue(FS.load_dir(self.dir)[1], "the collision is real")
+        author_items = items(json.loads(b.read_text()))
+        lines, stuck = self.run_n([a, b])
+        self.assertEqual(stuck, [])
+        self.assertEqual(FS.load_dir(self.dir)[1], [])
+        self.assertEqual(self.ids(), {"which-irrational": "g10m4s2-1-1--which-irrational.json",
+                                      "rational-which": "g10m4s2-1-1--rational-which.json"},
+                         "the first by file name keeps its slug; the other's words rotate and its file follows")
+        self.assertTrue(any("rename-colliding-slug: id tpl:g10m4s2-1-1:which-rational -> "
+                            "tpl:g10m4s2-1-1:rational-which (file renamed to match)" in l for l in lines))
+        out = json.loads((self.dir / "g10m4s2-1-1--rational-which.json").read_text())
+        self.assertIn(N.MARK, out["notes"])
+        self.assertIn("share", out["notes"].replace("were shared", "share"))
+        self.assertIn("which-irrational", out["notes"], "the notes name the sibling it collided with")
+        # nothing else changed: the same family under another id
+        before = self.spec("which-rational")
+        self.assertEqual({k: v for k, v in out.items() if k not in ("id", "notes")},
+                         {k: v for k, v in before.items() if k not in ("id", "notes")})
+        gen = [{k: q[k] for k in ("stem", "canonical_solution", "correct_answer")} for q in items(out)]
+        self.assertEqual(gen, [{k: q[k] for k in ("stem", "canonical_solution", "correct_answer")} for q in author_items])
+
+    def test_three_in_a_group_each_get_their_own_six_letters(self):
+        fs = [self.put(s, "g10m3s8-1-2") for s in ("divide-common-factor-squares", "divide-reversed-squares",
+                                                   "divide-trinomial-squares")]
+        self.assertEqual(len(FS.load_dir(self.dir)[1]), 2)
+        _, stuck = self.run_n(fs)
+        self.assertEqual(stuck, [])
+        self.assertEqual(FS.load_dir(self.dir)[1], [])
+        self.assertEqual(set(self.ids()), {"divide-common-factor-squares", "reversed-squares-divide",
+                                           "trinomial-squares-divide"})
+
+    def test_a_one_word_slug_takes_f2_f3_and_so_on(self):
+        fs = [self.put(s, "g10m3s8-1-2") for s in ("balance", "balanced", "balances")]
+        _, stuck = self.run_n(fs)
+        self.assertEqual(stuck, [])
+        self.assertEqual(FS.load_dir(self.dir)[1], [])
+        self.assertEqual(set(self.ids()), {"balance", "f2-balanced", "f3-balances"},
+                         "f2-bal… is taken by the second, so the third moves on to f3-")
+
+    def test_it_is_deterministic_and_a_fixpoint(self):
+        names = ("which-irrational", "which-rational", "divide-a-b", "divide-b-a")
+        one, two = self.dir / "one", self.dir / "two"
+        for where in (one, two):
+            for n in names:
+                self.put(n, "g10m3s8-1-2", where)
+        self.run_n(sorted(one.glob("*.json")))
+        self.run_n(sorted(two.glob("*.json"), reverse=True))          # another order on the command line
+        self.assertEqual(self.ids(one), self.ids(two))
+        for n in sorted(one.glob("*.json")):
+            self.assertEqual(n.read_text(), (two / n.name).read_text(), n.name)
+        snapshot = {f.name: f.read_text() for f in sorted(one.glob("*.json"))}
+        lines, stuck = self.run_n(sorted(one.glob("*.json")))
+        self.assertEqual(stuck, [])
+        self.assertTrue(all("nothing to normalise" in l for l in lines), lines)
+        self.assertEqual(snapshot, {f.name: f.read_text() for f in sorted(one.glob("*.json"))})
+
+    def test_a_family_whose_items_are_loaded_is_never_renamed(self):
+        for tail in ("g10m1s3-1-2", "g10m2s3-1-2", "g10m8s3-1-2", "u4-2-1"):          # Chapters 1, 2, 8 and prep3
+            where = self.dir / tail
+            fs = [self.put("which-irrational", tail, where), self.put("which-rational", tail, where)]
+            before = {f.name: f.read_text() for f in fs}
+            lines, stuck = self.run_n(fs)
+            self.assertEqual(len(stuck), 1, tail)
+            self.assertIn("cannot be renamed here", stuck[0])
+            self.assertEqual({f.name: f.read_text() for f in sorted(where.glob("*.json"))}, before, f"{tail} untouched")
+            self.assertTrue(all("nothing to normalise" in l for l in lines))
+
+    def test_one_loaded_family_keeps_its_slug_and_the_other_moves(self):
+        a, b = self.put("which-irrational"), self.put("which-rational")
+        # b is loaded (named in a bundle), so a — first by file name — is the one that moves
+        _, stuck = self.run_n([a, b], loaded={"tpl:g10m4s2-1-1:which-rational"})
+        self.assertEqual(stuck, [])
+        self.assertEqual(set(self.ids()), {"which-rational", "irrational-which"})
+        # both loaded: left alone, reported
+        c, d = self.put("alpha-one", "g10m5s1-1-1"), self.put("alpha-two", "g10m5s1-1-1")
+        both = {"tpl:g10m5s1-1-1:alpha-one", "tpl:g10m5s1-1-1:alpha-two"}
+        _, stuck = self.run_n([c, d], loaded=both)
+        self.assertEqual(len(stuck), 1)
+        self.assertEqual(set(self.ids()) & {"alpha-one", "alpha-two"}, {"alpha-one", "alpha-two"})
+
+    def test_a_sibling_not_named_on_the_command_line_is_never_renamed(self):
+        a, b = self.put("which-irrational"), self.put("which-rational")
+        _, stuck = self.run_n([a])                                    # only the first is named: it must be the mover
+        self.assertEqual(stuck, [])
+        self.assertEqual(set(self.ids()), {"irrational-which", "which-rational"})
+        self.assertEqual(FS.load_dir(self.dir)[1], [])
+
+    def test_the_command_line_and_its_exit_status(self):
+        a, b = self.put("which-irrational"), self.put("which-rational")
+        self.assertEqual(N.main([str(a), str(b), "--dry-run"]), 0)
+        self.assertEqual(set(self.ids()), {"which-irrational", "which-rational"}, "--dry-run writes nothing")
+        self.assertEqual(N.main([str(a), str(b)]), 0)
+        self.assertEqual(set(self.ids()), {"which-irrational", "rational-which"})
+        pinned = self.dir / "ch1"
+        fs = [self.put("which-irrational", "g10m1s3-1-2", pinned), self.put("which-rational", "g10m1s3-1-2", pinned)]
+        self.assertEqual(N.main([str(f) for f in fs]), 1, "a collision only a person can settle is not a success")
+
+    def test_a_bundle_names_the_families_that_are_loaded(self):
+        (self.dir / "g10-math").mkdir()
+        (self.dir / "g10-math" / "generated-questions.json").write_text(json.dumps({
+            "families": {"tpl:g10m3s1-1-1:a": 10}, "family_specs": {"tpl:g10m3s1-1-1:b": "sha"},
+            "questions": [{"family": "tpl:g10m3s1-1-1:c"}, {"family": None}, {}]}))
+        (self.dir / "misconceptions.json").write_text(json.dumps({"misconceptions": []}))     # not a bundle: ignored
+        self.assertEqual(N.loaded_family_ids(self.dir), {"tpl:g10m3s1-1-1:a", "tpl:g10m3s1-1-1:b", "tpl:g10m3s1-1-1:c"})
+
+    @unittest.skipUnless(BOOK_FAMILIES.is_dir() and (EX / "seed" / "generated").is_dir(), "no book families / bundles here")
+    def test_the_families_already_in_the_repo_are_left_exactly_as_they_are(self):
+        dirs = [BOOK_FAMILIES, BOOK_FAMILIES / "ch01", BOOK_FAMILIES / "ch02", EX / "families" / "prep3-math-en"]
+        for d in (d for d in dirs if d.is_dir()):
+            files = [f for f in sorted(d.glob("*.json")) if not f.name.startswith("_")]
+            lines, stuck = N.process(files, dry_run=True)
+            self.assertEqual(stuck, [], d.name)
+            self.assertTrue(all("nothing to normalise" in l for l in lines), (d.name, [l for l in lines if "nothing" not in l]))
+        loaded = N.loaded_family_ids()
+        self.assertIn("tpl:g10m8s1-1-3:pentagon-partial-arc", loaded)
+        self.assertTrue(any(i.startswith("tpl:g10m2s") for i in loaded))
 
 
 class BlindAnswersWithNames(unittest.TestCase):
