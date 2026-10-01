@@ -867,7 +867,7 @@ uv run auto_pass_gates.py g2-recommend-args <book> --chapter N [--lesson-run RUN
 #      → runs/<book>/g2rec/chNN-<runId>.json        uv run meter_run.py record --book <book> --stage G2R --run <runId>
 # 3. check it into the recommendation file the `g2 --recommend` line of §7b reads (merges with an earlier file; --fresh starts over)
 uv run auto_pass_gates.py g2-recommend-collect <book> --chapter N [--lesson-run RUN …] --run runs/<book>/g2rec/chNN-<runId>.json \
-    --out runs/<book>/g2-chNN.recommended.json --ids-out runs/<book>/g2rec/chNN.live-ids.json   # the newly live question ids (for a delta working check)
+    --out runs/<book>/g2-chNN.recommended.json            # [--ids-out FILE: the question ids the live recommendations become]
 # 4. apply: G2's auto verdicts from it, the split finals, then assemble / validate / (load) as §10 says
 uv run auto_pass_gates.py g2 <book> --chapter N --lesson-run … --recommend runs/<book>/g2-chNN.recommended.json \
     --into runs/<book>/g2-chNN.json --split --maths runs/<book>/maths/book/accepted.json
@@ -877,7 +877,7 @@ uv run auto_pass_gates.py g2 <book> --chapter N --lesson-run … --recommend run
 (questions become live, stems and typed keys change). After applying it, `fanout.py close-chapter N` (which passes the recommendation file
 to G2 from then on: without it every re-run would recompute the checks' own rule and undo the recommendation) re-assembles and
 re-prepares them. If they were launched already (Chapters 1 and 2's were), run the explicit commands `g2-recommend-args` prints, then a delta working check limited to the newly live
-questions: `working_check.py args … --only runs/<book>/g2rec/chNN.live-ids.json`, pass A and pass B reshuffled (the commands are in the printed list).
+questions: `working_check.py args … --only <g2-recommend-delta's file>`, pass A and pass B reshuffled (the commands are in the printed list).
 
 **What runs** (`runbook/g2-recommend.workflow.js`, prompts `g2rec-v1`; a generated copy, args embedded, `embed_workflow.py`): one Sonnet agent
 (effort high) per batch of 8 held or excluded items sees each item's stem, its figure, the book's own working, the printed answer, the
@@ -900,6 +900,20 @@ refused: that is Samuel's to approve, decisions 43-45); keep a stem repair small
 `hold` (the item's typing is sound) or `exclude` (it is already excluded for typing, so its typed shape may be unusable) with the reason,
 class `unconfirmed` / `not grounded` / `refused` / `marker cannot check`, and listed in the report. A person's verdict in G2's file is
 never overwritten. The gate record lists every low-confidence recommendation for Samuel beside the holds and exclusions.
+
+**After a newer collection (the lesson runs were re-collected after the recommendation run was made).** `lesson.workflow.js` COLLECT-6 was widened on
+2026-10-01 (a fraction typed numeric, a kind the key cannot be read under: `RETYPE_BASIS` in `auto_pass_gates.py` names each rule), so what a chapter owes changes
+under a run already launched: Chapter 2's eleven "numeric key is not a number" exclusions now pass. The run's paid answers for the items STILL owed stay valid, and nothing
+is decided twice. In this order: (1) let the run finish and save it (`runs/<book>/g2rec/chNN-<runId>.json`) before anything regenerates its copy (`g2-recommend-args
+--embed`, `close-chapter`); the copy's packet is also kept by its sha256 in `work/<book>/packets/embedded/fanout/g2rec-archive/`, which is what lets the collector compare
+later; (2) `recollect_lessons.py <the chapter's saved runs>` (dry-run first; a run whose typing prompt changed since cannot be re-collected and says so: its existing
+`recollected/` file stays); (3) `auto_pass_gates.py g2 … <the recollected runs> --into runs/<book>/g2-chNN.json --split` WITHOUT `--recommend`: the checks decide what they now
+can, and an auto verdict for an item no longer flagged is dropped (`g2_merge(scope=…)`; a person's is never); (4) `g2-recommend-collect` against the recollected runs: an
+item the checks now decide is skipped (`no_longer_owed`), an item whose judged facts differ from what the agents were shown (`facts()`: stem, working, answers, figure,
+typed key, options) is refused for that item (`stale_items`, listed as unanswered; `g2-recommend-args --only-missing` asks about them again), the rest is collected;
+(5) the `g2 … --recommend … --split` line, whose merge also refuses a recommendation for an item that is not owed any more; then assemble, the DB, and the delta working
+check: `auto_pass_gates.py g2-recommend-delta` lists the assembled bundle's solutions `working-check/chNN.flags.json` (`checked_ids`) never covered, which is everything
+the recommendation AND the newer collection made part of the bundle.
 
 **Cost** (API-equivalent, MODELLED until the first run is metered, stage `G2R`): the harness's fixed ~$0.09 per agent plus a derivation per item at effort high, so
 $0.30-0.75 per recommending agent (a batch of 8) and $0.20-0.50 per verifying agent (at most one per batch that has an accept or a fix): Chapter 1's 82 items,
