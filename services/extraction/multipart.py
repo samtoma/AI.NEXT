@@ -1,0 +1,568 @@
+"""What a part of a multi-part exercise depends on (2026-10-01; found by the working-checker calibration).
+
+    uv run multipart.py --book g10-math --chapter 8            # the plan: stems changed (before → after), unresolved
+    uv run multipart.py --book g10-math --chapter 8 --json     # the same, machine-readable
+
+THE DEFECT. The book prints a question once and its parts (a), (b), (c) … beneath it, and many parts lean on
+the ones before them: "Prove that ST ∥ PR" names S and T, which part (b) defines ("the mid-points of PQ and QR");
+"Prove that ABCD is a parallelogram" has a worked answer that ends "= E", E being part (a)'s mid-point. The
+pipeline serves every part on its own, so a student who meets part (d) alone cannot answer it (Ex8-6:39d, 44b, 46c;
+`runs/g10-math/working-check/ch08.calibration.json`, "findings for others" in docs/WIP-g10-pilot/README.md).
+
+WHAT A PART ALREADY CARRIES. The question's shared words (the preamble, and the figure it shows): the lesson
+packet (`assemble_objectives.item_stem`) puts the set's instruction and the question's header in front of every
+part's own text, so the preamble `H` is exactly the text every part of a question has in common. This module finds
+the rest. It is deterministic, reads only what the book printed (the parts' own words and G2's keys), never
+solves and never invents, and what it cannot settle it LISTS instead of guessing.
+
+THE RULES (a part P of a question, the parts before it Q):
+
+  R1 DEFINITIONS. Q's own words introduce a name — "S and T, the mid-points of PQ and QR", "M where the diagonals
+     meet", "E (the mid-point of BD)", "the mid-point M of AB" — and P (its words, or its worked answer) uses that
+     name without P's own words or the preamble giving it. P gets one sentence in the book's words: "$S$ and $T$ are
+     the mid-points of $PQ$ and $QR$ ." When Q is a marked question whose key is that one point's coordinates, the
+     key travels too: "$E(\\frac{1}{2};-\\frac{3}{2})$ is the mid-point of $BD$ ." (the book's printed answer, G2's key).
+     This is the shape Samuel's G2 fix gave Ex8-6:39c by hand ("S and T are the mid-points of PQ and QR").
+  R2 VALUES OF THE PREAMBLE'S UNKNOWNS. The preamble gives a point unknown coordinates (`N(x;y)`, `U(6;a)`), an
+     earlier part asks for exactly that ("the coordinates of N", "the value of a"), has a marked key, and P uses the
+     point and does not ask for it itself: "$N=(3;5)$ ." / "$a=5$ ."
+  R3 NAMED GRADIENTS. P's worked answer uses a gradient symbol `m_{MN}` it never computes (it is never followed by
+     "="), and an earlier marked part asked for "the gradient of MN": "$m_{MN}=-\\frac{1}{3}$ ."
+
+The sentences go straight after the preamble, before the part's own words, joined with a space: the same place and
+style as the hand fix on 39c. A part with no earlier part to lean on, or that leans on nothing, is untouched; running
+the rule on a stem that already carries a sentence changes nothing (a part's own words bind a name too).
+
+WHAT IT LISTS (`Unresolved`, for the review backlog — never changed):
+  refers_by_words    the part's words or its worked answer point back by words ("Hence", "from the previous question",
+                     "from above", "we have just calculated"): the fix is a human's (which earlier part, what it
+                     gave), and the earlier parts are listed with their keys so that it takes one look;
+  no_key             a name or value is needed from an earlier part that is held, excluded, teaching-only or unkeyed,
+                     so there is nothing the book printed to carry;
+  conflict           two earlier parts give the same name two meanings;
+  not_extractable    an earlier part introduces a name in words this module's patterns cannot restate safely;
+  unbound_name       (no figure only) the part's words name a point nothing defines.
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import re
+import sys
+from dataclasses import dataclass, field
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+
+# ---------------------------------------------------------------------------------------------- the refs
+_PART_REF = re.compile(r"^Ex(?P<ex>\d+-\d+):(?P<q>\d+)(?P<sub>[a-z]{1,3})(?:-(?P<roman>[ivx]+))?$")
+_ANY_REF = re.compile(r"^Ex(?P<ex>\d+-\d+):(?P<q>\d+)(?P<sub>[a-z]{0,3})(?:-(?P<roman>[ivx]+))?$")
+CARRY_BY = "pipeline carry-over (multipart.py: a part carries what it depends on)"
+
+
+@dataclass
+class Part:
+    """One book item as the rule sees it. `stem` and `working` are the run's own text; `key` is the book's
+    printed answer as G2 approved it (a numeric answer or the marker's key), and only on a verified, markable
+    item: anything else is not a value to carry."""
+    ref: str
+    stem: str
+    working: str = ""
+    fate: str = "verified"             # verified | held | excluded | teaching
+    kind: str | None = None            # the marker's kind (coordinates, expression, equation, values, surd)
+    key: str | None = None
+
+    @property
+    def keyed(self) -> bool:
+        return self.fate == "verified" and bool(self.key)
+
+
+@dataclass
+class Carry:
+    ref: str
+    sentences: list[str]
+    items: list[dict]                   # provenance, one per sentence: {rule, from, names|symbol, text}
+    before: str
+    after: str
+
+
+@dataclass
+class Unresolved:
+    ref: str
+    reason: str
+    detail: str
+    sources: list[dict] = field(default_factory=list)   # the earlier parts to look at: {ref, words, key}
+
+    def as_dict(self) -> dict:
+        return {"ref": self.ref, "reason": self.reason, "detail": self.detail, "sources": self.sources}
+
+
+# ------------------------------------------------------------------------------------------- the text
+# S0b stores LaTeX whitespace-stripped, so commands come back glued to the names after them (`\parallelPR`,
+# `\trianglePQR`, `\thereforeMP`). The assembly re-spaces them with KaTeX's own list; this module only needs
+# to see the names, and splits at the longest command it knows.
+_CMDS = sorted((
+    "triangle", "parallel", "perp", "therefore", "because", "times", "cdot", "angle", "hat", "widehat", "overline",
+    "vec", "frac", "dfrac", "tfrac", "sqrt", "text", "left", "right", "begin", "end", "quad", "qquad", "geq",
+    "leq", "ge", "le", "neq", "ne", "approx", "pm", "mp", "div", "Rightarrow", "rightarrow", "Leftrightarrow",
+    "implies", "infty", "pi", "theta", "alpha", "beta", "gamma", "circ", "degree", "ldots", "cdots", "mathrm",
+    "mathbf", "mathbb", "boxed", "in", "notin", "cup", "cap", "subset", "parallelogram", "textbf", "mathit"),
+    key=len, reverse=True)
+_SUBSCRIPT = re.compile(r"([A-Za-z])_\{?([A-Za-z0-9]+?)\}?(?![A-Za-z0-9])")
+
+
+def _segments(text: str):
+    """(segment, is_math) pairs; a `$…$` span is maths, the rest is prose."""
+    for i, seg in enumerate(re.split(r"\$", text or "")):
+        yield seg, i % 2 == 1
+
+
+def _unlatex(seg: str) -> str:
+    """A maths segment with its commands removed (the longest known one is cut off a glued run) and every
+    `\\text{words}` turned into the words; subscripts keep their letters (`m_{AB}` → ` AB `)."""
+    seg = re.sub(r"\\text\{([^{}]*)\}", lambda m: " " + m.group(1) + " ", seg)
+
+    def cmd(m: re.Match) -> str:
+        run = m.group(1)
+        for c in _CMDS:
+            if run.startswith(c):
+                return " " + run[len(c):]
+        return " "                          # an unknown command (\Delta …): a name of no point
+    seg = re.sub(r"\\([A-Za-z]+)", cmd, seg)
+    seg = _SUBSCRIPT.sub(lambda m: " " + m.group(2) + " ", seg)
+    return seg
+
+
+def plain(text: str) -> str:
+    """The words of a stem: maths delimiters and commands removed, spaces collapsed, no space before a stop."""
+    out = []
+    for seg, is_math in _segments(text):
+        out.append(_unlatex(seg) if is_math else seg)
+    s = re.sub(r"\s+", " ", " ".join(out)).strip()
+    return re.sub(r"\s+([.,;:?!])", r"\1", s)
+
+
+def names_in(text: str) -> set[str]:
+    """The point names a text uses: every capital letter inside maths (an operator's base — the M of M_{AC}, the
+    m of m_{AB} — is no point), and the capitals of an all-capital word in prose ("ABCD is a quadrilateral")."""
+    out: set[str] = set()
+    for seg, is_math in _segments(text):
+        if is_math:
+            out |= set(re.findall(r"[A-Z]", _unlatex(seg)))
+        else:
+            for word in re.findall(r"(?<![A-Za-z])[A-Z]{2,5}(?![A-Za-z])", seg):
+                out |= set(word)
+    return out
+
+
+def _math_plain(text: str) -> str:
+    """Only the maths of a text, commands removed — for what follows a capital (`N(x;y)`)."""
+    return " ".join(_unlatex(seg) for seg, m in _segments(text) if m)
+
+
+def point_bound(text: str) -> dict[str, list[str]]:
+    """Capitals the text gives coordinates to — `P(5;1)`, `N(x;y)` — with what is inside the brackets."""
+    out: dict[str, list[str]] = {}
+    for m in re.finditer(r"(?<![A-Za-z])([A-Z])\s*\(([^()]*)\)", _math_plain(text)):
+        out.setdefault(m.group(1), []).append(m.group(2))
+    return out
+
+
+def concrete_points(text: str) -> set[str]:
+    """Capitals the text gives numbers only: `U(6;5)`, not `U(6;a)`."""
+    return {L for L, ins in point_bound(text).items() if any(not re.search(r"[A-Za-z]", x) for x in ins)}
+
+
+def unknown_points(text: str) -> dict[str, set[str]]:
+    """Points the text leaves unknown — `N(x;y)`, `U(6;a)`, `S(t+1;2.5)` — and the variables in them."""
+    out: dict[str, set[str]] = {}
+    for L, ins in point_bound(text).items():
+        vs = {v for x in ins for v in re.findall(r"[a-z]", x)}
+        if vs:
+            out[L] = vs
+    return out
+
+
+# --------------------------------------------------------------------------- the book's own definitions
+_N = r"[A-Z]"
+_NAMES = rf"{_N}(?:\s*,\s*{_N})*(?:\s*,?\s*and\s+{_N})?"
+_SEG = r"[A-Z]{2,3}"
+_SEGS = rf"{_SEG}(?:\s*(?:,|and)\s*{_SEG})*"
+_NOUN = r"(?:mid-?points?|midpoints?)"
+_B = r"(?<![A-Za-z])"
+_DEFS = (
+    # S and T, the mid-points of PQ and QR   (Find the coordinates of points S and T, the mid-points of …)
+    ("appositive", re.compile(rf"{_B}(?:points?\s+)?(?P<names>{_NAMES})\s*,\s*the\s+(?P<noun>{_NOUN})\s+of\s+"
+                              rf"(?P<rest>{_SEGS})(?![A-Za-z])")),
+    # E (the mid-point of BD)
+    ("bracket", re.compile(rf"{_B}(?P<names>{_NAMES})\s*\(\s*the\s+(?P<noun>{_NOUN})\s+of\s+(?P<rest>{_SEGS})\s*\)")),
+    # S and T are the mid-points of PQ and QR
+    ("copula", re.compile(rf"{_B}(?P<names>{_NAMES})\s+(?:is|are)\s+the\s+(?P<noun>{_NOUN})\s+of\s+"
+                          rf"(?P<rest>{_SEGS})(?![A-Za-z])")),
+    # the mid-point M of AB
+    ("prefix", re.compile(rf"\bthe\s+(?P<noun>{_NOUN})\s+(?P<names>{_N})\s+of\s+(?P<rest>{_SEG})(?![A-Za-z])")),
+    # M where the diagonals meet
+    ("where", re.compile(rf"{_B}(?P<names>{_NAMES})\s+where\s+the\s+diagonals\s+(?P<verb>meet|intersect)(?![A-Za-z])")),
+)
+
+
+@dataclass(frozen=True)
+class Definition:
+    names: tuple[str, ...]
+    noun: str | None                    # "mid-points", "mid-point", or None for "where the diagonals meet"
+    rest: str | None
+    verb: str | None = None
+
+    def clause(self) -> str:
+        """The definition as a sentence in the book's own words, names and segments in maths."""
+        who = " and ".join(f"${n}$" if len(self.names) < 3 else f"${n}$" for n in self.names)
+        if len(self.names) > 2:
+            who = ", ".join(f"${n}$" for n in self.names[:-1]) + f" and ${self.names[-1]}$"
+        return self._tail(who)
+
+    def with_value(self, key: str) -> str:
+        n = self.names[0]
+        return self._tail(f"${n}{key if key.startswith('(') else '(' + key + ')'}$")
+
+    def _tail(self, who: str) -> str:
+        be = "is" if len(self.names) == 1 else "are"
+        if self.noun is None:
+            return f"{who} {be} where the diagonals {self.verb} ."
+        rest = re.sub(_SEG, lambda m: f"${m.group(0)}$", self.rest or "")
+        return f"{who} {be} the {self.noun} of {rest} ."
+
+
+def _split_names(raw: str) -> tuple[str, ...]:
+    return tuple(re.findall(_N, raw))
+
+
+def definitions(tail: str) -> list[Definition]:
+    """The names a part's own words introduce, in the book's patterns (above). Reads the words only."""
+    text = plain(tail)
+    out: list[Definition] = []
+    seen: set[tuple] = set()
+    for _kind, rx in _DEFS:
+        for m in rx.finditer(text):
+            names = _split_names(m.group("names"))
+            if not names:
+                continue
+            d = Definition(names, (m.groupdict().get("noun") or None), (m.groupdict().get("rest") or None),
+                           m.groupdict().get("verb"))
+            sig = (d.names, d.noun, d.rest, d.verb)
+            if sig not in seen:
+                seen.add(sig)
+                out.append(d)
+    return out
+
+
+# ------------------------------------------------------------------------------ what a part asks for
+def asked_coordinates(tail: str) -> set[str]:
+    out: set[str] = set()
+    for m in re.finditer(rf"coordinates of (?:the )?(?:points? )?(?P<n>{_NAMES})(?![A-Za-z])", plain(tail)):
+        names = _split_names(m.group("n"))
+        if len(names) == 1:
+            out.add(names[0])
+    return out
+
+
+def asked_values(tail: str) -> set[str]:
+    out: set[str] = set()
+    for m in re.finditer(r"\bvalues? of (?:the )?(?P<v>[a-z])(?![A-Za-z])(?!\s*(?:,|and)\s*[a-z]\b)", plain(tail)):
+        out.add(m.group("v"))
+    return out
+
+
+def asked_gradients(tail: str) -> set[str]:
+    return {m.group("xy") for m in re.finditer(r"\bgradient of (?:the )?(?:line |side |segment )?(?P<xy>[A-Z]{2})(?![A-Za-z])",
+                                               plain(tail))}
+
+
+_GRADIENT_SYM = re.compile(r"m_\{?([A-Z]{2})\}?")
+
+
+def gradients_used_not_computed(working: str) -> list[str]:
+    """Gradient symbols `m_{XY}` the worked answer uses but never computes (never followed by "=")."""
+    text = re.sub(r"\\text\{[^{}]*\}", " ", working or "")
+    used, computed = [], set()
+    for m in _GRADIENT_SYM.finditer(text):
+        xy = m.group(1)
+        if re.match(r"\s*&?\s*=", text[m.end():]):
+            computed.add(xy)
+        used.append(xy)
+    out = []
+    for xy in used:
+        if xy not in computed and xy not in out:
+            out.append(xy)
+    return out
+
+
+# ------------------------------------------------------------------------------------ referential words
+_REF_TAIL = re.compile(
+    r"\b(hence|thus|your (?:answer|result)|the (?:previous|preceding|above)|previous (?:question|part)|"
+    r"(?:in|from|of) (?:part|question) \(?[a-e]\)?|the answer (?:to|from)|the result (?:of|from))\b", re.I)
+_REF_WORK = re.compile(
+    r"\b(from (?:the )?(?:previous|preceding|first|above|earlier)|from above|from earlier|we found earlier|"
+    r"earlier we|just (?:calculated|found)|(?:the )?previous (?:question|part)|previous questions|as above|"
+    r"in the previous|from question|from part)\b", re.I)
+
+
+def referential(tail: str, working: str) -> list[str]:
+    hits = [m.group(0) for m in _REF_TAIL.finditer(plain(tail))]
+    hits += [m.group(0) for m in _REF_WORK.finditer(re.sub(r"\$[^$]*\$", " ", working or ""))]
+    return hits
+
+
+# --------------------------------------------------------------------------------------- the preamble
+def _tokens(stem: str) -> list[tuple[str, int, int]]:
+    return [(m.group(0), m.start(), m.end()) for m in re.finditer(r"\S+", stem)]
+
+
+_STOP = (".", ":", "?", "!")
+
+
+def _closes_sentence(tok: str) -> bool:
+    return tok.endswith(_STOP) or tok == "[figure]"
+
+
+def preamble_end(stems: list[str]) -> list[int]:
+    """Where the words every part shares end, in each stem: the longest common run of tokens, cut back to a
+    sentence end (a stop, a colon, or a figure). 0 where the parts share no sentence."""
+    toks = [_tokens(s) for s in stems]
+    k = 0
+    while all(len(t) > k for t in toks) and len({t[k][0] for t in toks}) == 1:
+        k += 1
+    while k > 0 and not _closes_sentence(toks[0][k - 1][0]):
+        k -= 1
+    return [t[k - 1][2] if k else 0 for t in toks]
+
+
+# ------------------------------------------------------------------------------------------- the plan
+def _source(p: Part, tail: str) -> dict:
+    return {"ref": p.ref, "words": plain(tail), "key": p.key if p.keyed else None, "fate": p.fate}
+
+
+def _value_of(p: Part) -> str | None:
+    return p.key.strip() if p.keyed and p.key else None
+
+
+def plan(parts: list[Part]) -> tuple[dict[str, Carry], list[Unresolved]]:
+    """What every part carries and what stays unresolved, over any set of parts (a chapter, a book): they are
+    grouped by the exercise and question number in their refs, and a part is only ever helped by the parts
+    before it in its own question."""
+    groups: dict[tuple, list[tuple[tuple, Part]]] = {}
+    by_ref: dict[str, Part] = {}
+    for p in parts:
+        by_ref[p.ref] = p
+        m = _PART_REF.match(p.ref)
+        if m:
+            groups.setdefault((m["ex"], int(m["q"])), []).append(
+                ((m["sub"], m["roman"] or ""), p))
+    carries: dict[str, Carry] = {}
+    unresolved: list[Unresolved] = []
+
+    for (ex, q), members in sorted(groups.items(), key=lambda kv: (tuple(int(x) for x in kv[0][0].split("-")), kv[0][1])):
+        members.sort(key=lambda kp: kp[0])
+        ps = [p for _, p in members]
+        if len(ps) < 2:
+            continue
+        ends = preamble_end([p.stem for p in ps])
+        pre = {p.ref: p.stem[:e] for p, e in zip(ps, ends)}
+        tail = {p.ref: p.stem[e:].strip() for p, e in zip(ps, ends)}
+        H = pre[ps[0].ref]
+        figure = "[figure]" in H
+        h_names = names_in(H)
+        unknown_h = unknown_points(H)
+        defs = {p.ref: definitions(tail[p.ref]) for p in ps}
+
+        for i, P in enumerate(ps):
+            earlier = ps[:i]
+            if not earlier:
+                continue
+            own = tail[P.ref]
+            uses = names_in(own) | names_in(P.working)
+            bound = set(h_names) | set(point_bound(own)) | {n for d in defs[P.ref] for n in d.names}
+            sentences: list[str] = []
+            items: list[dict] = []
+            notes: list[Unresolved] = []
+
+            # R1 — an earlier part introduces a name P uses without having it
+            wanted: dict[str, Definition] = {}
+            owner: dict[str, Part] = {}
+            for Q in earlier:
+                for d in defs[Q.ref]:
+                    for n in d.names:
+                        if n in uses and n not in bound:
+                            if n in wanted and (wanted[n].names, wanted[n].noun, wanted[n].rest, wanted[n].verb) != \
+                                    (d.names, d.noun, d.rest, d.verb):
+                                notes.append(Unresolved(P.ref, "conflict",
+                                                        f"{n} is introduced differently by {owner[n].ref} and {Q.ref}",
+                                                        [_source(owner[n], tail[owner[n].ref]), _source(Q, tail[Q.ref])]))
+                            else:
+                                wanted[n], owner[n] = d, Q
+            done: set[tuple] = set()
+            for n, d in wanted.items():
+                sig = (d.names, d.noun, d.rest, d.verb)
+                if sig in done:
+                    continue
+                done.add(sig)
+                Q = owner[n]
+                val = _value_of(Q) if (len(d.names) == 1 and Q.kind == "coordinates") else None
+                text = d.with_value(val) if val else d.clause()
+                sentences.append(text)
+                items.append({"rule": "R1", "from": Q.ref, "names": list(d.names), "text": text,
+                              **({"key_from": Q.ref} if val else {})})
+
+            # R2 — the preamble's unknowns, solved by an earlier part
+            for L, vs in sorted(unknown_h.items()):
+                if L not in uses or L in concrete_points(own):
+                    continue
+                for Q in reversed(earlier):
+                    t = tail[Q.ref]
+                    byc = L in asked_coordinates(t)
+                    byv = sorted(v for v in vs if v in asked_values(t))
+                    if not (byc or byv):
+                        continue
+                    if L in asked_coordinates(own) or any(v in asked_values(own) for v in vs):
+                        break               # P solves for it itself
+                    if not Q.keyed:
+                        notes.append(Unresolved(P.ref, "no_key",
+                                                f"uses {L}, which {Q.ref} works out, but {Q.ref} is {Q.fate} with no key",
+                                                [_source(Q, t)]))
+                        break
+                    if byc and Q.kind == "coordinates":
+                        text = f"${L}={Q.key.strip()}$ ."
+                    elif byv and Q.kind in (None, "values", "expression"):
+                        text = f"${byv[0]}={Q.key.strip()}$ ."
+                    else:
+                        break
+                    sentences.append(text)
+                    items.append({"rule": "R2", "from": Q.ref, "names": [L], "text": text})
+                    break
+
+            # R3 — a gradient the worked answer uses and never computes
+            for xy in gradients_used_not_computed(P.working):
+                for Q in reversed(earlier):
+                    if xy not in asked_gradients(tail[Q.ref]) and xy[::-1] not in asked_gradients(tail[Q.ref]):
+                        continue
+                    asked = xy if xy in asked_gradients(tail[Q.ref]) else xy[::-1]
+                    if not Q.keyed:
+                        notes.append(Unresolved(P.ref, "no_key",
+                                                f"uses m_{{{xy}}}, which {Q.ref} works out, but {Q.ref} is {Q.fate} with no key",
+                                                [_source(Q, tail[Q.ref])]))
+                    else:
+                        text = f"$m_{{{xy}}}={Q.key.strip()}$ ."
+                        sentences.append(text)
+                        items.append({"rule": "R3", "from": Q.ref, "symbol": f"m_{{{xy}}}", "asked": asked,
+                                      "text": text})
+                    break
+
+            if sentences:
+                end = ends[i]
+                carry = " ".join(sentences)
+                after = (P.stem[:end].rstrip() + " " + carry + " " + P.stem[end:].lstrip()).strip()
+                carries[P.ref] = Carry(P.ref, sentences, items, P.stem, after)
+            unresolved.extend(notes)
+
+            # what words alone point back to, and a point nothing gives
+            hits = referential(own, P.working)
+            if hits:
+                unresolved.append(Unresolved(
+                    P.ref, "refers_by_words", "says " + "; ".join(sorted({h.lower() for h in hits})),
+                    [_source(Q, tail[Q.ref]) for Q in earlier]))
+            elif not figure:
+                free = sorted(n for n in names_in(own)
+                              if n not in bound and not any(n in d.names for Q in earlier for d in defs[Q.ref]))
+                if free:
+                    unresolved.append(Unresolved(P.ref, "unbound_name",
+                                                 f"its words use {', '.join(free)}, which nothing in the question defines",
+                                                 [_source(Q, tail[Q.ref]) for Q in earlier]))
+
+        # the first part of a question points back by words too (to a question before it)
+        first = ps[0]
+        hits = referential(tail[first.ref], first.working)
+        if hits:
+            unresolved.append(Unresolved(first.ref, "refers_by_words", "says " + "; ".join(sorted({h.lower() for h in hits})), []))
+
+    # items that are not parts at all (a whole question) can still point back by words
+    for p in parts:
+        m = _ANY_REF.match(p.ref)
+        if m and not m["sub"]:
+            hits = referential(p.stem, p.working)
+            if hits:
+                unresolved.append(Unresolved(p.ref, "refers_by_words", "says " + "; ".join(sorted({h.lower() for h in hits})), []))
+    unresolved.sort(key=lambda u: (u.ref, u.reason))
+    return carries, unresolved
+
+
+# ------------------------------------------------------------------------------- from a lesson run
+def part_of(item) -> Part:
+    """A `RunItem` (assemble_lesson_bundle.py) or the same fields as a dict, as a Part."""
+    get = (lambda k: item.get(k)) if isinstance(item, dict) else (lambda k: getattr(item, k, None))
+    ref = get("ref")
+    fate_fn = getattr(item, "fate", None)
+    if callable(fate_fn):
+        fate = fate_fn()
+    else:
+        g2 = get("g2") or {}
+        v = g2.get("verdict") if isinstance(g2, dict) else None
+        if v == "exclude":
+            fate = "excluded"
+        elif get("answer_type") == "not_markable":
+            fate = "teaching"
+        elif v in ("accept", "fix") or (get("verification") == "agreed" and not g2):
+            fate = "verified"
+        else:
+            fate = "held"
+    marker = get("marker") or {}
+    atype = get("answer_type")
+    if atype == "expression":
+        key, kind = (marker.get("key") or None), marker.get("kind")
+    elif atype == "numeric":
+        key, kind = (get("answer") or None), None
+    else:
+        key, kind = None, None
+    working = " ".join(get("solution") or [])
+    return Part(ref=ref, stem=get("stem") or "", working=working, fate=fate, kind=kind, key=key)
+
+
+def plan_items(items) -> tuple[dict[str, Carry], list[Unresolved]]:
+    return plan([part_of(it) for it in items])
+
+
+# --------------------------------------------------------------------------------------------- the CLI
+def main(argv: list[str] | None = None) -> int:
+    import book_config
+    from assemble_lesson_bundle import LessonRun
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--book", required=True)
+    ap.add_argument("--chapter", type=int, help="only this chapter's exercises")
+    ap.add_argument("--runs", type=Path, help="default runs/<book>/lesson/")
+    ap.add_argument("--json", action="store_true")
+    a = ap.parse_args(argv)
+    book = book_config.load_book(a.book)
+    runs = a.runs or HERE / "runs" / book.book / "lesson"
+    items = []
+    for f in sorted(runs.glob("*.json")):
+        items += LessonRun.model_validate_json(f.read_text()).items
+    if a.chapter:
+        items = [it for it in items if re.match(rf"^Ex{a.chapter}-", it.ref) or it.ref.startswith(f"WE")]
+    carries, unresolved = plan_items(items)
+    if a.json:
+        print(json.dumps({"carried": {r: {"sentences": c.sentences, "items": c.items, "before": c.before,
+                                           "after": c.after} for r, c in sorted(carries.items())},
+                          "unresolved": [u.as_dict() for u in unresolved]}, indent=2, ensure_ascii=False))
+        return 0
+    print(f"{len(carries)} part(s) carry what they depend on; {len({u.ref for u in unresolved})} part(s) unresolved")
+    for r, c in sorted(carries.items()):
+        print(f"\n{r}  [{', '.join(i['rule'] + ' from ' + i['from'] for i in c.items)}]")
+        print(f"  before: {c.before}")
+        print(f"  after:  {c.after}")
+    print("\nUNRESOLVED (for the review backlog)")
+    for u in unresolved:
+        print(f"  {u.ref}  {u.reason}: {u.detail}")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

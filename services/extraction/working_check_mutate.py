@@ -107,7 +107,7 @@ _NUM = re.compile(r"(?<![\d.])\d+(?![\d.])")
 
 
 def _standalone(num: str, text: str) -> bool:
-    return re.search(rf"(?<![\d.]){re.escape(num)}(?![\d.])", text) is not None
+    return re.search(rf"(?<![\d.]){re.escape(num)}(?!\.?\d)", text) is not None
 
 
 def op_wrong_value(item: dict):
@@ -176,7 +176,7 @@ def op_final_answer(item: dict):
     k = str(key)
     if not re.search(r"\d", k) or re.search(r"[A-Za-z]", re.sub(r"\\[A-Za-z]+", "", k)):
         return None
-    runs = list(re.finditer(r"\d+", k))
+    runs = list(re.finditer(r"\d+(?:\.\d+)?", k))
     last = steps[-1]
     for m in reversed(runs):
         d = m.group(0)

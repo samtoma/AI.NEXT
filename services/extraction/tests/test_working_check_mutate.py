@@ -57,7 +57,7 @@ def key_q() -> dict:
 
 def stem_q() -> dict:
     return {"id": "q:g10m8s3-1-1:we04", "lo": "lo:g10m8s3-1-1", "stem": "Given $P(0, 1)$ and $Q(3, 5)$, find $m_{PQ}$.",
-            "answer": "4/3", "solution": ["$P$ is $(0, 1)$ and $Q$ is $(3, 5)$.", "$m_{PQ}=\\frac{5-1}{3-0}=\\frac{4}{3}$ . So $PQ$ has gradient $\\frac{4}{3}$"]}
+            "answer": "4/3", "solution": ["$P$ is $(0, 1)$ and $Q$ is $(3, 5)$.", "From $P$ to $Q$: $m_{PQ}=\\frac{5-1}{3-0}=\\frac{4}{3}$ ."]}
 
 
 def entry() -> dict:
@@ -95,7 +95,7 @@ class Operators(unittest.TestCase):
 
     def test_sign_flips_a_negative_bracket_in_a_line_with_a_variable_only(self):
         new, truth = M.apply(sign_q(), "sign")
-        self.assertIn("(4)&=(-1.5)(2)+c", new["solution"][0])
+        self.assertIn("(4)&=(1.5)(-2)+c", new["solution"][0])                 # the first negative bracket is flipped
         self.assertEqual((truth["step"], truth["kind"]), (1, "sign"))
         numeric = dict(sign_q(), solution=["$(-2)^{2}=4$"])                                   # no variable: the free check's ground
         self.assertIsNone(M.apply(numeric, "sign"))
