@@ -389,3 +389,25 @@ committing to the feature branch.
 - **Agent model rule:** pass `model: "sonnet"` to every agent (Samuel, 2026-10-01).
 - **Local previews:** Grade 10 student :3010 / console :3011 (DB `ainext_pilot_g10_ch08`), hotfix v0.9.4 student
   :3012 / console :3013 (DB `ainext_hotfix_v094`). The v0.9.4 hotfix still awaits Samuel's review before commit/PR.
+
+## Handoff — students-full agent, paused 2026-10-01
+
+Samuel's answers 33 and 37a–d (+ 39: G5 auto-pass and gate records). **Done** (all uncommitted work is in the auto-snapshots; nothing reviewed by Samuel):
+- **Migration 035** `db/migrations/035-human-review-stamps.sql` (+ `rollback/035-…down.sql`): `questions.ai_checked_by/ai_checked_at/hold_reason/review_note`, legacy `reviewed_by` strings split (AI → ai_checked_by, notes → review_note, figure mark → hold_reason, `(G2 hold)` → human_hold), CHECK `questions_held_not_live`; idempotent; rollback round-trips (only bulk-promotion times are lost). Applied to `ainext_pilot_g10_ch08`. No gate table (the console reads record files).
+- **Policy** `services/extraction/review_policy.py`; loaders: `load_seed.py` (maths always live unless an automatic hold; never writes reviewed_by), `load_generated_questions.py` (maths implies `--promote`, `--review` opt-out; reload never revives retired/rejected or a human hold; human stamp kept only if content unchanged), `apply_review_verdicts.py` (human stamp only; auto verdicts → ai_checked_by), `export_generated_content.py`, `restore_course_bundle.py`, `dryrun_chapter.py`, `generate_questions.py`, `assemble_objectives.py` (auto G2 signer), `scripts/local-dev.sh`, `scripts/local-docker.sh`.
+- **Book pictures** (`assemble_lesson_bundle.py`: `book_image` stand-ins, `book_picture_reveals`, hold reasons, `--no-book-pictures/--figures-out/--figures-dir`; `schemas.py` `book_image` + `Question.hold_reason`; `coverage_report.py` `book_pictures` check + `--public`). App: `components/viz/BookImage.tsx`, `Visual.tsx`, `VizCard.tsx`, `kind-meta.ts`, `render-viz-widget.tsx` (refuses composed book_image), `lib/question-figures.ts` (`bookImageOf`), `lib/provenance.ts` + `content-admin.ts` + console content page (only human stamps count; "AI-checked, awaiting human").
+- **Pilot DB** (Ch. 8): generated 110 + widgets 21 promoted live (4 retired stay retired); 30 book_image stand-ins attached (14 images in `app/public/book-figures/g10-math/`), 9 held `figure_reveals_answer` (38b, 38c, 38e, 40a, 40d, 44a, 45a, 29c, 31a); seed live 149/158. G2 re-applied; G3 auto applied (`work/g10-math/pilot/g3-ch08.auto.json`). Coverage RED only on objective_evidence (s1-1-1) and tier_floor (s1-1-1, s1-1-2 std/adv, **s4-1-2 advanced — new, because 29c/31a are held**); parity GREEN (all courses; G10 matches its bundles).
+- **Auto-pass** `services/extraction/auto_pass_gates.py` g1 (`--approve`) / g2 (`--lesson-run`, `--recommend`) / g3 / g4 / g5; records in the console's `ainext.gate-decision/1` shape (`app/src/lib/review-gate-records.ts`) under `services/extraction/runs/<book>/gates/<g>-chNN.json` (pilot: g3/g4/g5-ch08.json, parsed OK by the console's parser). Documented in `services/extraction/runbook/README.md` §7a/§7b.
+- **KaTeX `\0` fix** in `respace_latex` (`_digit_escapes`: `\` + digit → `\ `), Chapter 8 assembly byte-identical, test added.
+- Tests: new `tests/test_review_policy.py`; updated test_course_lessons, test_g2_verdicts, test_load_generated_questions, test_schemas_v2, test_coverage_report, test_objectives, test_assemble_lesson_bundle; app `question-figures.test.mts`, `review-status-scan.test.mts`, `console-curriculum(-db).test.mts`. Last results: pytest 644 passed; app `npm test` 0 fail; DB tests 20/20; `tsc` clean; eslint clean on touched files; both dry runs rc=0 (GREEN, parity GREEN) — dry runs were BEFORE the final auto_pass_gates rewrite and the `\0` fix.
+
+**Half-done / left**: re-run both dry runs after the last edits; FR/traceability updates for the tech-writer (answers 33/37/39: review semantics, `hold_reason`, book_image stand-ins, auto-pass records — answer 29 temporarily reversed); `coverage/g10-math.figure-gaps.json` rule text still says "never a static book image". Somebody's assembly at 09:53 wrote ~420 more images into `app/public/book-figures/g10-math/` (other chapters, default `--figures-out`) — check with the fan-out agent. Decisions for Samuel: the 9 reveal holds (and s4-1-2 advanced tier), family-propagated G3 stamps counted as human, `samuel (poc bulk)`/`local-dev` treated as not-a-review, G1 auto ruling "outside" items (answer 15b wanted a named human).
+
+Verify:
+```sh
+cd services/extraction
+AINEXT_TEST_PG="host=127.0.0.1 port=5432" uv run --with pytest python -m pytest -q tests/
+uv run dryrun_chapter.py --book g10-math --chapter 8 && uv run dryrun_chapter.py --book g10-math --chapter 8 --mode inline
+uv run parity_check.py --candidate "host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08" --all-courses
+cd ../../app && npm test && npx tsc --noEmit
+```
