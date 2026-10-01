@@ -216,6 +216,7 @@ const contains = (hay, needle) => { const n = norm(needle); return n.length >= 8
 
 // The comparison normal form of an answer (LaTeX or printed text). Decision 15's notation is
 // read both ways here; nothing is written back.
+const GREEK = { pi: 'π', lambda: 'λ', theta: 'θ', alpha: 'α', beta: 'β', gamma: 'γ', delta: 'δ', mu: 'μ', sigma: 'σ', phi: 'φ', omega: 'ω' }
 function normTex(s) {
   let t = String(s == null ? '' : s)
   t = t.replace(/\$\$?|\\\(|\\\)|\\\[|\\\]/g, '')
@@ -225,6 +226,8 @@ function normTex(s) {
   for (let k = 0; k < 3; k++) t = t.replace(/\\(?:text|mathrm|textrm|mbox)\{([^{}]*)\}/g, '$1')
   t = t.replace(/\s+and\s+/g, ', ')                                      // a list's "and" is its comma (COLLECT-3: both sides)
   t = t.replace(/\\geq?(?![a-zA-Z])/g, '≥').replace(/\\leq?(?![a-zA-Z])/g, '≤').replace(/>=/g, '≥').replace(/<=/g, '≤')   // before the "&" goes: "-3&\le&k" (COLLECT-6)
+  // a Greek letter's command is the sign it names, so the letter after it is not swallowed with it: "2\pi r" is not "2\pir" (COLLECT-6)
+  t = t.replace(/\\(pi|lambda|theta|alpha|beta|gamma|delta|mu|sigma|phi|omega)(?![a-zA-Z])/g, (_m, g) => GREEK[g])
   t = t.replace(/&/g, '')                                                  // alignment markup, never maths (COLLECT-3)
   t = t.replace(/\{([A-Za-z])\}(?=[_^])/g, '$1')                          // {m}_{AB} is m_{AB} (COLLECT-3)
   t = t.replace(/\\(?:cdot|times)(?![a-zA-Z])/g, '*').replace(/[×·]/g, '*')
@@ -360,7 +363,7 @@ const PLAIN_NUMBER = /^-?\d+(?:\.\d+)?$/
 // glued to letters ("5kg") is not read (null), so nothing is guessed.
 function sentenceNumbers(text) {
   let t = String(text == null ? '' : text).normalize('NFKC').replace(/[−–—]/g, '-')
-  if (/[\\$]/.test(t) || !t.replace(/\b(?:and|or)\b/gi, ' ').match(/[A-Za-z]{3,}/)) return null
+  if (/[\\$]/.test(t) || !(t.includes('=') || t.replace(/\b(?:and|or)\b/gi, ' ').match(/[A-Za-z]{3,}/))) return null
   t = t.replace(/\bR\s?(?=\d)/g, '')
   const hasEq = t.includes('=')
   const out = []

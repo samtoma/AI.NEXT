@@ -684,6 +684,44 @@ def audit(book, manifest: dict, objectives: dict[str, ObjectivesFile], runs: dic
     return checks, extra
 
 
+GENERATED_ROWS = (("generated-questions", "questions"), ("widget-questions", "questions"),
+                  ("misconceptions", "misconceptions"))
+
+
+def generated_scope(book, generated: dict, slugs: list[str], chapters: set[int] | None) -> tuple[list[str], list[str]]:
+    """(refusals, warnings) about the generated bundles read for a --chapter audit.
+
+    The audit trusts a chapter's `--generated` directory to be that chapter's. The default is the Chapter 8 pilot's
+    seed/generated/<book>/, so a fan-out chapter whose command left `--generated` out audited the pilot's
+    misconceptions and widgets without a word (the s5_catalogue failure that was no failure of Chapter 2's). A bundle
+    that holds rows and NONE of the audited chapters is another chapter's: refused. One that holds the audited
+    chapters' rows AND others' is audited whole by the checks that do not filter by chapter: warned."""
+    if not chapters:
+        return [], []
+    mine = set(slugs)
+    alt = "|".join(re.escape(p) for p in book.id_prefixes)
+
+    def chapter_of(slug: str) -> int | None:
+        m = re.match(rf"^(?:{alt})(\d+)s", slug)
+        return int(m.group(1)) if m else None
+
+    refusals, warnings = [], []
+    for key, rows_key in GENERATED_ROWS:
+        rows = [r for r in (generated.get(key) or {}).get(rows_key) or [] if r.get("lo_id")]
+        if not rows:
+            continue
+        slugs_in = {book_config.lesson_slug(r["lo_id"]) for r in rows}
+        held = sorted({chapter_of(x) for x in slugs_in} - {None})
+        if not slugs_in & mine:
+            refusals.append(f"{key}.json holds {len(rows)} row(s) of chapter(s) {held or 'other than the audit'} and none "
+                            f"of chapter(s) {sorted(chapters)}: it is another chapter's. Pass --generated "
+                            f"seed/generated/<book>/chNN for the chapter audited (the default is the pilot's)")
+        elif extra := sorted(set(held) - chapters):
+            warnings.append(f"{key}.json also holds rows of chapter(s) {extra}, outside this audit: the checks that "
+                            f"do not filter by chapter (notation, katex, the refutation checks) read them too")
+    return refusals, warnings
+
+
 def sha256(p: Path) -> str:
     return hashlib.sha256(p.read_bytes()).hexdigest()
 
@@ -750,6 +788,11 @@ def main(argv: list[str] | None = None) -> int:
         if p.exists():
             generated[key] = json.loads(p.read_text())
             inputs[f"generated/{p.name}"] = sha256(p)
+    refusals, warnings = generated_scope(book, generated, slugs, chapters)
+    if refusals:
+        for r in refusals:
+            print(f"REFUSING: --generated {gen_d}: {r}", file=sys.stderr)
+        return 2
     maths, gaps = load_json(maths_p), load_json(gaps_p)
     s5_paths = a.s5 or sorted((HERE / "runs" / book.book / "misconceptions").glob("*.json"))
     s5_runs = []
@@ -778,12 +821,19 @@ def main(argv: list[str] | None = None) -> int:
     rows = [c.as_dict(exceptions + extra.get("g1_exceptions", [])) for c in checks]
     failing = [r["id"] for r in rows if r["state"] == "fails"]
     status = "RED" if failing else "GREEN"
+    # every scope that holds only on an auto-pass, for the console and G5: never a human sign-off
+    auto_passed = [{"check": r["id"], "scope": a["scope"], "by": a.get("by"), "at": a.get("at")}
+                   for r in rows for a in r.get("auto_passed", [])]
+    n_auto = sum(r["state"] == "auto_passed" for r in rows)
     report = {
         "coverage_version": COVERAGE_VERSION, "book": book.book, "course_id": book.course_id,
         "chapters": sorted(chapters) if chapters else "all", "status": status,
         "summary": {"checks": len(rows), "hold": sum(r["state"] == "holds" for r in rows),
-                    "excepted": sum(r["state"] == "excepted" for r in rows), "fail": len(failing)},
+                    "excepted": sum(r["state"] == "excepted" for r in rows),
+                    **({"auto_passed": n_auto} if n_auto else {}), "fail": len(failing)},
         "checks": rows, **extra,
+        **({"auto_passed": auto_passed} if auto_passed else {}),
+        **({"warnings": warnings} if warnings else {}),
         "missing_inputs": sorted([f"objectives/{s}.json" for s in slugs if s not in objectives]
                                  + [f"runs/lesson/{s}.json" for s in slugs if s not in runs]
                                  + ([] if bundles else ["seed/*.json"])),
@@ -791,19 +841,24 @@ def main(argv: list[str] | None = None) -> int:
         "exceptions": exceptions,
     }
     for r in rows:
-        mark = {"holds": "=", "excepted": "~", "fails": "x"}[r["state"]]
+        mark = {"holds": "=", "excepted": "~", "auto_passed": "a", "fails": "x"}[r["state"]]
         print(f"  {mark} {r['id']:<26} want {r['want']:>5}  got {r['got']:>5}  {r['state']}")
         for f in r["failures"][:4]:
             print(f"      {f['scope']}: {f['detail']}")
         if len(r["failures"]) > 4:
             print(f"      … +{len(r['failures']) - 4} more")
+        for a in r.get("auto_passed", [])[:4]:
+            print(f"      AUTO-PASSED {a['scope']}: {a['detail']}")
+    for w in warnings:
+        print(f"  ! {w}")
     unsigned = [e for e in exceptions if not e.get("signed_by")]
     if unsigned:
         print(f"  ! {len(unsigned)} exception(s) without signed_by — ignored")
     print(f"COVERAGE: {status} — {book.book}"
           + (f" (chapters {sorted(chapters)})" if chapters else "")
           + f": {report['summary']['hold']} hold, {report['summary']['excepted']} excepted, "
-            f"{len(failing)} fail")
+          + (f"{n_auto} auto-passed (AI recommendation, not a human sign-off), " if n_auto else "")
+          + f"{len(failing)} fail")
     if not a.check:
         out_p.parent.mkdir(parents=True, exist_ok=True)
         out_p.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n")

@@ -641,8 +641,8 @@ def main(argv: list[str] | None = None) -> int:
         held = [d["key"] for d in decisions if d["decision"].startswith(("no verdict", "hold", "exclude"))]
         # a recommendation the agent marked "low confidence" is a content decision (a stem repair, a teaching-only retype, a
         # partial answer): listed for Samuel beside the holds and exclusions, whatever its verdict (g2_recommend.py)
-        low = [d["key"] for d in decisions if "confidence low" in (d.get("basis") or "") and d["key"] not in held]
-        review = held + low
+        low = [d["key"] for d in decisions if "confidence low" in (d.get("basis") or "")]
+        review = held + [k for k in low if k not in held]
         retyped = [r for p in a.lesson_run for r in g2_retyped(json.loads(p.read_text()), ch, book.id_prefixes[0])]
         rec = decision_record(
             "G2", book, ch, f"{c['recommended'] + c['rule']} book item(s) decided on the AI recommendation "

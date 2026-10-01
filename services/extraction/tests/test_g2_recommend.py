@@ -493,6 +493,120 @@ class ReachesG2(unittest.TestCase):
         self.assertTrue(any(c.startswith("pg_dump") for c in cmds), "a fresh dump before the update")
 
 
+class TheCommands(unittest.TestCase):
+    """auto_pass_gates.py g2 / g2-recommend-args / g2-recommend-collect, end to end on a synthetic chapter (no model, no database)."""
+
+    def setUp(self):
+        self.tmp = Path(tempfile.mkdtemp(prefix="g2rec_cli_"))
+        self.run, self.g2 = make_run()
+        (self.tmp / "run.json").write_text(json.dumps(self.run))
+        (self.tmp / "g2.json").write_text(json.dumps(self.g2))
+        self.es = G.recommendable([self.run], 9, "g10m", self.g2)
+
+    def tearDown(self):
+        shutil.rmtree(self.tmp, ignore_errors=True)
+
+    def cli(self, *argv) -> tuple[int, str, str]:
+        import contextlib
+        import io
+        out, err = io.StringIO(), io.StringIO()
+        with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
+            code = A.main([str(x) for x in argv])
+        return code, out.getvalue(), err.getvalue()
+
+    def test_g2_with_a_recommendation_writes_the_record_with_low_confidence_for_samuel(self):
+        k1, k2, k3, k7 = (e["key"] for e in self.es)
+        doc = collect(self.es, {k1: (rec(book_quote="x^{2}"), CONFIRMED),
+                                k3: (rec("hold", "needs the page image", "low", why_low="only the page can settle it"), None),
+                                k7: (rec("exclude", "partial answer"), None)})
+        (self.tmp / "rec.json").write_text(json.dumps(doc))
+        gates = self.tmp / "gates"
+        code, out, err = self.cli("g2", "g10-math", "--chapter", 9, "--lesson-run", self.tmp / "run.json", "--recommend", self.tmp / "rec.json",
+                                  "--into", self.tmp / "g2.json", "--gates-dir", gates)
+        self.assertEqual(code, 0, err)
+        record = json.loads((gates / "g2-ch09.json").read_text())
+        self.assertEqual(record["gate"], "G2")
+        self.assertEqual(record["outcome"], "pass_with_holds")
+        self.assertIn(k3, record["for_review"], "a recommended hold is listed for Samuel")
+        self.assertIn(k7, record["for_review"], "so is an exclusion")
+        self.assertTrue(any(c["name"].startswith("G2 recommendation run") for c in record["checks"]))
+        self.assertIn("low confidence", record["summary"])
+        verdicts = json.loads((self.tmp / "g2.json").read_text())["items"]
+        self.assertEqual(verdicts[k1]["verdict"], "accept")
+        self.assertEqual(verdicts["g10m9s1-1:Ex9-1:6"]["by"], "Samuel Toma", "the person's verdict is kept")
+        # idempotent
+        before = (self.tmp / "g2.json").read_text()
+        self.cli("g2", "g10-math", "--chapter", 9, "--lesson-run", self.tmp / "run.json", "--recommend", self.tmp / "rec.json",
+                 "--into", self.tmp / "g2.json", "--gates-dir", gates)
+        self.assertEqual((self.tmp / "g2.json").read_text(), before)
+
+    def test_without_the_recommendation_a_rerun_goes_back_to_the_checks_rule(self):
+        # why fanout.py close-chapter passes the recommendation file once it exists
+        k1 = self.es[0]["key"]
+        (self.tmp / "rec.json").write_text(json.dumps(collect(self.es, {k1: (rec(book_quote="x^{2}"), CONFIRMED)})))
+        args = ["g2", "g10-math", "--chapter", 9, "--lesson-run", self.tmp / "run.json", "--into", self.tmp / "g2.json",
+                "--gates-dir", self.tmp / "gates"]
+        self.cli(*args, "--recommend", self.tmp / "rec.json")
+        self.assertIn(k1, json.loads((self.tmp / "g2.json").read_text())["items"])
+        self.cli(*args)
+        self.assertNotIn(k1, json.loads((self.tmp / "g2.json").read_text())["items"],
+                         "an auto verdict nothing supports any more is dropped: the recommendation must be passed every time")
+
+    def test_args_builds_the_copy_and_prints_the_cost_and_the_follow_ups(self):
+        copy_ = self.tmp / "out" / "g2rec-ch09.workflow.js"
+        code, out, err = self.cli("g2-recommend-args", "g10-math", "--chapter", 9, "--lesson-run", self.tmp / "run.json",
+                                  "--g2", self.tmp / "g2.json", "--embed", copy_, "--args-out", self.tmp / "out" / "a.json")
+        self.assertEqual(code, 0, err)
+        self.assertIn("4 item(s) (1 held with no verdict, 3 excluded for typing)", out)
+        self.assertIn("run it with Workflow scriptPath and NO args", out)
+        self.assertIn("g2-recommend-collect", out)
+        self.assertEqual(embed_workflow.verify(copy_), [])
+        self.assertEqual(json.loads((self.tmp / "out" / "a.json").read_text())["items_sha256"], G.items_sha256(self.es))
+        code, out, _ = self.cli("g2-recommend-args", "g10-math", "--chapter", 9, "--lesson-run", self.tmp / "run.json",
+                                "--g2", self.tmp / "g2.json")
+        self.assertIn("nothing written", out)
+
+    def test_only_missing_leaves_out_what_a_file_already_covers(self):
+        k1 = self.es[0]["key"]
+        (self.tmp / "rec.json").write_text(json.dumps({"items": {k1: {"verdict": "exclude"}}}))
+        code, out, _ = self.cli("g2-recommend-args", "g10-math", "--chapter", 9, "--lesson-run", self.tmp / "run.json",
+                                "--g2", self.tmp / "g2.json", "--only-missing", self.tmp / "rec.json")
+        self.assertIn("3 item(s)", out)
+
+    @unittest.skipUnless(NODE, "node is needed to run the workflow under the stub runtime")
+    def test_collect_from_a_saved_run_and_a_stale_packet_is_refused(self):
+        info = G.prepare(book_config.load_book("g10-math"), 9, [self.tmp / "run.json"], self.tmp / "g2.json", self.tmp / "g2rec-ch09.workflow.js")
+        k1, k2, k3, k7 = (e["key"] for e in self.es)
+        rows = {k1: rec(book_quote="x^{2}"), k2: rec("fix", "typing error", book_quote="\\frac{1}{2}".replace("\\\\", "\\"),
+                fix={"answer_type": "expression", "key": "\\frac{1}{2}".replace("\\\\", "\\"), "marker_kind": "expression"}),
+                k3: rec("exclude", "stem damaged"), k7: rec("exclude", "partial answer")}
+        out = run_stub(Path(info["copies"][0]["script"]),
+                       {"stub": {"rec": rows, "ver": {k1: WorkflowUnderTheStub.VER, k2: WorkflowUnderTheStub.VER}}}, self.tmp)
+        self.assertTrue(out["ok"], out["error"])
+        saved = self.tmp / "ch09-wf_test.json"
+        saved.write_text(json.dumps(out["result"]))
+        target = self.tmp / "g2-ch09.recommended.json"
+        code, text, err = self.cli("g2-recommend-collect", "g10-math", "--chapter", 9, "--lesson-run", self.tmp / "run.json",
+                                   "--g2", self.tmp / "g2.json", "--run", saved, "--out", target)
+        self.assertEqual(code, 0, err)
+        doc = json.loads(target.read_text())
+        self.assertEqual({k: v["verdict"] for k, v in doc["items"].items()}, {k1: "accept", k2: "fix", k3: "exclude", k7: "exclude"})
+        self.assertIn("would be LIVE", text)
+        self.assertEqual(list(doc["from_runs"].values())[0], out["result"]["embedded"]["generated_sha256"])
+        # a person decided an item after the packet was built: the run no longer matches, and the collector says so
+        g2 = json.loads((self.tmp / "g2.json").read_text())
+        g2["items"][k1] = {"verdict": "accept", "by": "Samuel Toma"}
+        (self.tmp / "g2.json").write_text(json.dumps(g2))
+        code, text, err = self.cli("g2-recommend-collect", "g10-math", "--chapter", 9, "--lesson-run", self.tmp / "run.json",
+                                   "--g2", self.tmp / "g2.json", "--run", saved, "--out", self.tmp / "other.json")
+        self.assertEqual(code, 2)
+        self.assertIn("no longer matches", err)
+        code, text, err = self.cli("g2-recommend-collect", "g10-math", "--chapter", 9, "--lesson-run", self.tmp / "run.json",
+                                   "--g2", self.tmp / "g2.json", "--run", saved, "--out", self.tmp / "other.json", "--allow-stale")
+        self.assertEqual(code, 0, err)
+        self.assertIn(k1, json.loads((self.tmp / "other.json").read_text())["report"]["off_task"], "a person's item is off task")
+
+
 # ---------------------------------------------------------------------------------------------- the workflow, under the stub
 RESPONDER = """
 // a canned responder: rec rows from stub.rec (by item id), ver rows from stub.ver; stub.omit_first drops an item from the first answer
