@@ -121,7 +121,11 @@ def _segments(text: str):
 def _unlatex(seg: str) -> str:
     """A maths segment with its commands removed (the longest known one is cut off a glued run) and every
     `\\text{words}` turned into the words; subscripts keep their letters (`m_{AB}` → ` AB `)."""
-    seg = re.sub(r"\\text\{([^{}]*)\}", lambda m: " " + m.group(1) + " ", seg)
+    seg = re.sub(r"\\(?:mathbb|mathrm|mathbf|mathit|operatorname)\{[^{}]*\}", " ", seg)
+    # \text{words}: the words, minus the capitalised ones ("Area", "Therefore" are no point); an all-capital
+    # run ("AB") is a name and stays
+    seg = re.sub(r"\\textbf?\{([^{}]*)\}",
+                 lambda m: " " + re.sub(r"\b[A-Z][a-z]+\b", " ", m.group(1)) + " ", seg)
 
     def cmd(m: re.Match) -> str:
         run = m.group(1)
@@ -216,9 +220,10 @@ class Definition:
 
     def clause(self) -> str:
         """The definition as a sentence in the book's own words, names and segments in maths."""
-        who = " and ".join(f"${n}$" if len(self.names) < 3 else f"${n}$" for n in self.names)
         if len(self.names) > 2:
             who = ", ".join(f"${n}$" for n in self.names[:-1]) + f" and ${self.names[-1]}$"
+        else:
+            who = " and ".join(f"${n}$" for n in self.names)
         return self._tail(who)
 
     def with_value(self, key: str) -> str:
@@ -228,9 +233,9 @@ class Definition:
     def _tail(self, who: str) -> str:
         be = "is" if len(self.names) == 1 else "are"
         if self.noun is None:
-            return f"{who} {be} where the diagonals {self.verb} ."
+            return f"{who} {be} where the diagonals {self.verb}."
         rest = re.sub(_SEG, lambda m: f"${m.group(0)}$", self.rest or "")
-        return f"{who} {be} the {self.noun} of {rest} ."
+        return f"{who} {be} the {self.noun} of {rest}."
 
 
 def _split_names(raw: str) -> tuple[str, ...]:

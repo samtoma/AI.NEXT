@@ -54,7 +54,9 @@ import type { WorkingFlagGroup } from "./review-gate-working.ts";
 // Samuel's account, for the gate decisions (answer 39): configuration, read per call.
 process.env.AINEXT_GATE_OWNER_EMAIL = "samuel@example.invalid";
 
-const { claimItem, decide, fixList, loadBacklog, nextFor, questionPayload } = await import("./review-gate-queries.ts");
+const { claimItem, decide, fixList, itemPayload, loadBacklog, nextFor, questionPayload, releaseOtherClaims } = await import(
+  "./review-gate-queries.ts"
+);
 const { parseRecord } = await import("./review-gate-records.ts");
 const { itemKey } = await import("./review-gate.ts");
 

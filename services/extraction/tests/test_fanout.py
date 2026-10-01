@@ -96,25 +96,30 @@ class RealBook(unittest.TestCase):
             self.assertNotIn(f" --out {f}", text)
             self.assertNotIn(f"--out-dir {Path(f).parent} ", text.replace("runs/g10-math/maths/book", "BOOK"))
 
-    def test_the_working_checks_are_batched_and_costed_from_the_chapter_8_measurement(self):
-        """sw-v1 metered $31.0 / 192 = $0.161 a solution against a plan of $0.03-0.05; sw-v2 batches the agents."""
+    def test_the_working_checks_are_two_batched_passes_costed_from_the_chapter_8_measurements(self):
+        """sw-v1 metered $31.0 / 192 = $0.161 a solution against a plan of $0.03-0.05; the plan now runs two independent
+        sw-v3 passes (batch 5, effort high, the second reshuffled) whose flags are unioned."""
         import working_check as W
         sw = {r["id"]: r for r in self.plan["runs"] if r["stage"] == "SW"}
         self.assertEqual(sorted(sw), sorted(["wcheck-ch08"] + [f"wcheck-ch{c:02d}" for c in F.FANOUT_CHS]))
-        self.assertLessEqual(F.UNIT_COST["sw_solution"][1], 0.05)
-        self.assertLess(F.UNIT_COST["sw_solution"][1], W.MEASURED_SW_V1_PER_SOLUTION / 3)
+        self.assertEqual((W.BATCH, W.EFFORT, W.PASSES), (5, "high", ("A", "B")))
+        lo, hi = F.UNIT_COST["sw_solution"]
+        self.assertEqual((lo, hi), (round(2 * W.SW_PASS_COST_PER_SOLUTION[0], 3), round(2 * W.SW_PASS_COST_PER_SOLUTION[1], 3)))
+        self.assertLess(hi, W.MEASURED_SW_V1_PER_SOLUTION / 2, "two passes must still cost under half of one agent per solution")
         sols = {c["chapter"]: c["solutions"] for c in self.inv["chapters"]}
         for ch in F.FANOUT_CHS:
             r = sw[f"wcheck-ch{ch:02d}"]
-            self.assertTrue(r["workflow"].endswith("(sw-v2)"), r["id"])
-            self.assertEqual(r["agents"], W.agents_for(sols[ch]), r["id"])
-            self.assertLessEqual(r["cost"][1] / sols[ch], 0.05 + 1e-3, r["id"])
-            self.assertLess(r["agents"], sols[ch] / (W.BATCH - 1) + 1, r["id"])
+            self.assertIn("sw-v3", r["workflow"], r["id"])
+            self.assertEqual(r["agents"], W.agents_for(sols[ch], passes=2), r["id"])
+            self.assertAlmostEqual(r["cost"][1], round(hi * sols[ch], 2), places=1, msg=r["id"])
+            self.assertIn("<pass A|B>", r["save_to"])
+            self.assertIn("wcheck-ch%02d-B.args.json" % ch, " ".join(r["after"]), "collect must name both passes' args")
         ch8 = sw["wcheck-ch08"]
         self.assertIn("sw-v1", ch8["workflow"])
         self.assertIn("wf_957393ec-d74", ch8["workflow"])
         self.assertIn("BESIDE", ch8["what"])
-        self.assertLessEqual(self.plan["cost_usd"]["by_stage"]["SW"][1], 0.05 * (sum(sols.values()) + 1))
+        self.assertIn("ch08.sw3.flags.json", " ".join(ch8["after"]))                # never over the sw-v1 record
+        self.assertLessEqual(self.plan["cost_usd"]["by_stage"]["SW"][1], hi * (sum(sols.values()) + 1))
 
     def test_a_chapter_8_re_run_is_built_beside_the_sw_v1_packet_never_over_it(self):
         old = F.PACKETS
@@ -128,11 +133,20 @@ class RealBook(unittest.TestCase):
             finally:
                 F.PACKETS = old
             self.assertTrue((tmp / "packets" / "wcheck-ch08-v2" / "s" / "0001.txt").exists())
+            self.assertTrue((tmp / "packets" / "wcheck-ch08-v2-B" / "s" / "0001.txt").exists())
             self.assertFalse((tmp / "packets" / "wcheck-ch08").exists(), "the sw-v1 packet's name must stay untouched")
             self.assertTrue((tmp / "packets" / "wcheck-ch08-v2.args.json").exists())
+            self.assertTrue((tmp / "packets" / "wcheck-ch08-v2-B.args.json").exists())
+            a = json.loads((tmp / "packets" / "wcheck-ch08-v2.args.json").read_text())
+            b = json.loads((tmp / "packets" / "wcheck-ch08-v2-B.args.json").read_text())
+            self.assertEqual((a["pass_id"], a["order"], b["pass_id"], b["order"]), ("A", "bundle", "B", "shuffled"))
+            self.assertEqual(sorted(a["solutions"]), sorted(b["solutions"]))
+            self.assertNotEqual(a["solutions"], b["solutions"])
             self.assertTrue(out["script"].endswith("-wcheck-ch08-v2.workflow.js"), out["script"])
-            self.assertNotIn("-v2-v2", out["script"])
-            self.assertTrue((tmp / Path(run["embedded_script"]).name).exists())
+            self.assertTrue(out["passes"]["B"][0].endswith("-wcheck-ch08-v2-B.workflow.js"), out["passes"])
+            self.assertNotIn("-v2-v2", json.dumps(out["passes"]))
+            for scripts in out["passes"].values():
+                self.assertTrue(Path(scripts[0]).exists() or (tmp / Path(scripts[0]).name).exists())
             self.assertFalse((tmp / "002-wcheck-ch08.workflow.js").exists())
 
     def test_every_run_says_where_to_save_and_how_to_meter(self):

@@ -224,7 +224,7 @@ class Packet(unittest.TestCase):
         self.assertFalse(W.precheck_path(d).is_relative_to(d), "the pre-check must sit outside the shard directory")
         self.assertEqual([s["id"] for s in pre["skipped"]], ["expl:g10m8s1-1-1:ex8-6-4a"])
         self.assertEqual([(f["solution_id"], f["step"]) for f in pre["flags"]], [("q:g10m8s2-1-1:ex8-2-2", 2)])
-        self.assertEqual((pre["prompts_version"], pre["batch"], pre["pass_id"]), ("sw-v3", 8, "A"))
+        self.assertEqual((pre["prompts_version"], pre["batch"], pre["pass_id"]), ("sw-v3", 5, "A"))
         for p in (d / "s").iterdir():
             text = p.read_text()
             self.assertNotIn("does not hold", text)
@@ -236,7 +236,7 @@ class Packet(unittest.TestCase):
     def test_the_args_carry_the_run_settings(self):
         a = W.build_args(Book(), bundle(), 8, self.tmp / "a")[0]
         self.assertEqual((a["prompts_version"], a["batch"], a["effort"], a["model"], a["pass_id"], a["order"]),
-                         ("sw-v3", W.BATCH, W.EFFORT, W.MODEL, "A", "bundle"))
+                         ("sw-v3", 5, "high", "sonnet", "A", "bundle"))
         self.assertEqual((a["fig_dir"], a["figs"]), ("", {}))
         b = W.build_args(Book(), bundle(), 8, self.tmp / "b", batch=2, effort="low", model="haiku", pass_id="B")[0]
         self.assertEqual((b["batch"], b["effort"], b["model"], b["pass_id"]), (2, "low", "haiku", "B"))
@@ -292,7 +292,9 @@ class Packet(unittest.TestCase):
         self.assertIsNone(W.load_only(None))
 
     def test_the_agent_count_follows_the_batch(self):
-        self.assertEqual([W.agents_for(n) for n in (0, 1, 8, 9, 192, 2705)], [0, 1, 1, 2, 24, 339])
+        self.assertEqual([W.agents_for(n, 8) for n in (0, 1, 8, 9, 192, 2705)], [0, 1, 1, 2, 24, 339])
+        self.assertEqual([W.agents_for(n) for n in (0, 1, 5, 6, 192)], [0, 1, 1, 2, 39])          # the default batch is 5
+        self.assertEqual(W.agents_for(192, 5, passes=2), 78)
         self.assertEqual(W.agents_for(192, 1), 192)
 
 
@@ -342,7 +344,7 @@ class Workflow(unittest.TestCase):
             self.assertIn(f"[[file: {d}/s/{i:04d}.txt]]", rep["calls"][n]["prompt"])
         self.assertNotIn(f"{d}/s/0003.txt", rep["calls"][0]["prompt"])
         for c in rep["calls"]:
-            self.assertEqual((c["model"], c["effort"]), ("sonnet", "medium"))
+            self.assertEqual((c["model"], c["effort"]), ("sonnet", "high"))
             self.assertNotIn("precheck", c["prompt"])
             self.assertIn("YOUR TOOL BUDGET", c["prompt"])
             self.assertIn("NEVER reconstruct a figure's values from the working itself", c["prompt"])
