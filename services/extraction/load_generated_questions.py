@@ -10,8 +10,13 @@ this file has exists to make that fact impossible to lose track of:
   * `source = 'variant'` and `reviewed_by IS NULL` on every row, forced here
     rather than taken from the bundle. Provenance is not something a generator
     gets to assert about itself.
-  * `parent_question_id` points at the book question the item was derived from,
-    so "which reviewed item is this a variant of?" is answerable per row.
+  * `parent_question_id` points at the book item the item was derived from, so "which
+    reviewed item is this a variant of?" is answerable per row. Which kind of item is the
+    row's `parent_kind` (migration 038, Samuel's answer 40): a book `question` (the default,
+    every family before) or a book `teaching` item — a worked example of the explanation
+    library (`expl:…`), for an objective whose book items are all teaching material. The
+    loader refuses an unknown kind and an id whose shape disagrees with its kind before it
+    writes anything, and again (with the database) a parent that is not there.
   * The loader REFUSES to run against an environment that is not `mvp1`. The
     suspension is bounded to the comparison build; the baseline never receives
     generated content, and a wrong `--dsn` is exactly how that would happen by
@@ -83,6 +88,8 @@ REQUIRED_QUESTION_KEYS = {
 }
 VALID_TIERS = {"basic", "standard", "advanced"}
 VALID_TYPES = {"mcq", "numeric", "widget", "short"}
+# What a parent_question_id names, by parent_kind: the id's prefix and what it is called (migration 038).
+PARENT_KINDS = {"question": ("q:", "book question"), "teaching": ("expl:", "book teaching item")}
 FAMILY_NOTE = "template family "
 
 
@@ -92,6 +99,54 @@ def family_of(q: dict) -> str | None:
         return q["family"]
     note = q.get("source_note") or ""
     return note.split(FAMILY_NOTE, 1)[1].rstrip(". ") if FAMILY_NOTE in note else None
+
+
+def parent_kind_of(q: dict) -> str:
+    """The row's parent kind: the bundle's field, else the default every earlier bundle meant."""
+    return q.get("parent_kind") or "question"
+
+
+def parent_problems(qid: str, q: dict) -> list[str]:
+    """A question's parent, as far as the bundle alone can tell: a known kind, an id of that kind's shape,
+    and an id at all for a teaching parent. (That the parent EXISTS is the database's to say: see
+    `missing_parents`.)"""
+    kind = parent_kind_of(q)
+    if kind not in PARENT_KINDS:
+        return [f"{qid}: parent_kind {kind!r} is not one of {sorted(PARENT_KINDS)}"]
+    prefix, noun = PARENT_KINDS[kind]
+    parent = q.get("parent_question_id")
+    if not parent:
+        return [f"{qid}: parent_kind {kind!r} with no parent_question_id"] if kind != "question" else []
+    if not str(parent).startswith(prefix):
+        return [f"{qid}: parent_kind {kind!r} names {parent!r}, which is not a {noun} id (it starts {prefix!r})"]
+    return []
+
+
+def missing_parents(cur, questions: list[dict]) -> list[str]:
+    """Every (parent, kind) the bundle names that the database does not hold — a book question for a
+    `question` parent, a worked example of the explanation library for a `teaching` one — as sentences.
+    The loader runs this before it writes a row, so a family modelled on an item that is not there is
+    refused whole, in words, instead of failing at the first INSERT (migration 038's trigger is the
+    backstop, as the foreign key was)."""
+    want: dict[str, set[str]] = {"question": set(), "teaching": set()}
+    for q in questions:
+        if q.get("parent_question_id"):
+            want.setdefault(parent_kind_of(q), set()).add(q["parent_question_id"])
+    # a parent may itself be a row of this very bundle (a family's items never are, but an export's can)
+    in_bundle = {q["id"] for q in questions}
+    out = []
+    qs = sorted(want["question"] - in_bundle)
+    if qs:
+        cur.execute("SELECT id FROM questions WHERE id = ANY(%s)", (qs,))
+        have = {r[0] for r in cur.fetchall()}
+        out += [f"parent question {x} is not in the database" for x in qs if x not in have]
+    ts = sorted(want["teaching"])
+    if ts:
+        cur.execute("SELECT id FROM explanation_library WHERE id = ANY(%s) AND entry_type = 'worked_example'", (ts,))
+        have = {r[0] for r in cur.fetchall()}
+        out += [f"parent teaching item {x} is not a worked example in the explanation library" for x in ts
+                if x not in have]
+    return out
 
 
 def validate(
@@ -139,6 +194,7 @@ def validate(
             problems.append(f"{qid}: question_type {q['question_type']!r} unsupported")
         if not q["canonical_solution"]:
             problems.append(f"{qid}: canonical_solution is empty — a wrong answer would have nothing to teach from")
+        problems += parent_problems(qid, q)
         if q.get("family"):
             note = q.get("source_note") or ""
             if FAMILY_NOTE in note and note.split(FAMILY_NOTE, 1)[1].rstrip(". ") != q["family"]:
@@ -350,6 +406,13 @@ def main() -> int:
             return 2
 
         review_policy.require_review_columns(cur)
+        gone = missing_parents(cur, questions)
+        if gone:
+            print(f"REFUSING: {len(gone)} parent(s) the bundle names are not in the database. Nothing was written.",
+                  file=sys.stderr)
+            for g in gone[:10]:
+                print(f"  x {g}", file=sys.stderr)
+            return 1
         course_id = args.course or bundle.get("course_id")
         always_full = review_policy.students_always_full(course_id)
         if args.promote and args.review:
@@ -444,9 +507,9 @@ def main() -> int:
                 """INSERT INTO questions
                      (id, lo_id, tier, question_type, stem, choices, correct_answer,
                       canonical_solution, solution_version, status, source,
-                      parent_question_id, source_page, source_note, reviewed_by, reviewed_at,
+                      parent_question_id, parent_kind, source_page, source_note, reviewed_by, reviewed_at,
                       ai_checked_by, ai_checked_at, hold_reason, review_note)
-                   VALUES (%s,%s,%s,%s,%s,%s,%s,%s,1,%s,'variant',%s,%s,%s,%s,%s,
+                   VALUES (%s,%s,%s,%s,%s,%s,%s,%s,1,%s,'variant',%s,%s,%s,%s,%s,%s,
                            %s, coalesce(%s::timestamptz, CASE WHEN %s::text IS NOT NULL THEN now() END), %s, %s)
                    """ + conflict,
                 (
@@ -458,6 +521,7 @@ def main() -> int:
                     # load applies one status to the whole bundle.
                     row_status,
                     q.get("parent_question_id"),
+                    parent_kind_of(q),
                     q.get("source_page"),
                     q.get("source_note"),
                     r_by, r_at,

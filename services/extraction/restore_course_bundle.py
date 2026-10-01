@@ -83,7 +83,8 @@ STUDENT_TABLES = ("students accounts guardians attempts mastery understanding_ch
                   "feedback student_course_access student_curriculum_changes student_testers "
                   "course_availability").split()
 Q_COLS = ("tier", "question_type", "stem", "choices", "correct_answer", "canonical_solution",
-          "status", "parent_question_id", "source_page", "source_note", "reviewed_by", "reviewed_at",
+          "status", "parent_question_id", "parent_kind", "source_page", "source_note", "reviewed_by",
+          "reviewed_at",
           # migration 035
           "ai_checked_by", "ai_checked_at", "hold_reason", "review_note")
 MATERIAL = ("question_type", "stem", "choices", "correct_answer")
@@ -117,6 +118,8 @@ def _item(choices):
 
 
 def _norm(field: str, v):
+    if field == "parent_kind":
+        return v or "question"      # an export writes it only for a teaching parent (migration 038)
     if v is None:
         return None
     if field in ("reviewed_at", "ai_checked_at") and not isinstance(v, str):
@@ -354,11 +357,21 @@ def plan(cur, course: str, record: dict, bundles: dict[str, dict]) -> Plan:
         p.notes += [f"{name}: {x}" for x in notes[:5]]
         if len(notes) > 5:
             p.notes.append(f"{name}: … and {len(notes) - 5} more cross-objective reference(s)")
-    parents = {q["parent_question_id"] for q in questions if q.get("parent_question_id")}
+    parents = {q["parent_question_id"] for q in questions
+               if q.get("parent_question_id") and (q.get("parent_kind") or "question") == "question"}
     cur.execute("SELECT id FROM questions WHERE id = ANY(%s)", (sorted(parents),))
     have = {r[0] for r in cur.fetchall()} | set(bundle_q)
     for parent in sorted(parents - have):
         p.refusals.append(f"parent question {parent} (named by the export) is not in the database")
+    # a family modelled on a book TEACHING item (migration 038): its parent is a worked example
+    teaching = {q["parent_question_id"] for q in questions
+                if q.get("parent_question_id") and q.get("parent_kind") == "teaching"}
+    cur.execute("SELECT id FROM explanation_library WHERE id = ANY(%s) AND entry_type = 'worked_example'",
+                (sorted(teaching),))
+    have_t = {r[0] for r in cur.fetchall()}
+    for parent in sorted(teaching - have_t):
+        p.refusals.append(f"parent teaching item {parent} (named by the export) is not a worked example "
+                          "in the database")
 
     # --- questions: add, change, remove ------------------------------------------------------
     touch_material: list[str] = []
@@ -576,11 +589,14 @@ def apply(cur, p: Plan) -> None:
                               ai_checked_by = %s, ai_checked_at = %s, hold_reason = %s, review_note = %s,
                               solution_version = solution_version + %s
                         WHERE id = %s""", (*vals(q), 1 if solution_changed else 0, q["id"]))
-    # parents last: a parent may itself be a row this replay adds
+    # parents last: a parent may itself be a row this replay adds. The kind travels with the id, in
+    # one statement, so the database's parent check (migration 038) sees the pair together.
     for q in p.q_add + [u[0] for u in p.q_update]:
-        cur.execute("""UPDATE questions SET parent_question_id = %s
-                        WHERE id = %s AND parent_question_id IS DISTINCT FROM %s""",
-                    (q.get("parent_question_id"), q["id"], q.get("parent_question_id")))
+        kind = q.get("parent_kind") or "question"
+        cur.execute("""UPDATE questions SET parent_question_id = %s, parent_kind = %s
+                        WHERE id = %s AND (parent_question_id IS DISTINCT FROM %s
+                                           OR parent_kind IS DISTINCT FROM %s)""",
+                    (q.get("parent_question_id"), kind, q["id"], q.get("parent_question_id"), kind))
     for qid, choices in p.restamp.items():
         cur.execute("UPDATE questions SET choices = %s WHERE id = %s", (json.dumps(choices), qid))
     if p.q_delete:

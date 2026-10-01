@@ -54,7 +54,8 @@ in UTC, so the file does not depend on the exporting session's time zone. Since
 migration 035 `reviewed_by` is a HUMAN stamp only; the AI checks (`ai_checked_by`,
 `ai_checked_at`), a safety hold (`hold_reason`) and a note (`review_note`) travel
 too — each written only when set, so an export of rows that carry none of them is
-byte for byte what it was before 035.
+byte for byte what it was before 035. `parent_kind` (migration 038, answer 40) follows the same rule: written
+only for a family modelled on a book teaching item (`teaching`), never for the default (`question`).
 
 MATERIALISED ROWS ARE NOT EXPORTED. A widget the tutor improvised for one
 student (ADR-0009 §3) is that session's artefact awaiting review, not content to
@@ -125,7 +126,7 @@ def question_bundle(cur, widgets: bool, generator: str, los: list[str] | None = 
     qs = rows(
         cur,
         f"""SELECT id, lo_id, tier, question_type, stem, choices, correct_answer,
-                   canonical_solution, status, parent_question_id, source_page,
+                   canonical_solution, status, parent_question_id, parent_kind, source_page,
                    source_note, reviewed_by, reviewed_at,
                    ai_checked_by, ai_checked_at, hold_reason, review_note
               FROM questions
@@ -144,6 +145,10 @@ def question_bundle(cur, widgets: bool, generator: str, los: list[str] | None = 
         for k in ("ai_checked_by", "ai_checked_at", "hold_reason", "review_note"):
             if q.get(k) is None:
                 q.pop(k, None)
+        # migration 038: a family modelled on a book TEACHING item says so; the default ('question')
+        # is not written, so every export of rows that have no such parent is byte for byte what it was
+        if q.get("parent_kind") == "question":
+            q.pop("parent_kind")
     return _header(prior, {"generator": generator, "questions": qs, "misconceptions": []},
                    "questions")
 
