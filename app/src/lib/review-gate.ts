@@ -285,7 +285,7 @@ export interface DerivedItem {
   exposure: Exposure;
   /** why it needs a human, before any decision */
   reasons: Reason[];
-  /** book order, for ties on `createdAt` */
+  /** the objective's rank in the catalogue order (`lib/module-order.ts`), for ties on `createdAt` */
   catalogueRank: number;
 }
 
@@ -553,18 +553,16 @@ export const isOutstanding = (i: { state: ItemState }) => i.state === "open" || 
 const KIND_RANK = new Map<ItemKind, number>(ITEM_KINDS.map((k, i) => [k, i]));
 
 /**
- * Oldest first, then book order: course, chapter, objective, kind, id. One
- * load writes a whole course in one transaction, so its rows share a
- * timestamp and the tie-break is what puts a chapter in the reviewer's hands
- * in the order the book prints it.
+ * Oldest first, then book order — the objective's `catalogueRank` (course,
+ * term, chapter, position: `lib/module-order.ts`, computed in SQL) — then
+ * kind, then id. One load writes a whole course in one transaction, so its
+ * rows share a timestamp and the tie-break is what puts a chapter in the
+ * reviewer's hands in the order the book prints it.
  */
 export function compareItems(a: DerivedItem, b: DerivedItem): number {
   return (
     a.createdAt.localeCompare(b.createdAt) ||
-    a.courseId.localeCompare(b.courseId) ||
     a.catalogueRank - b.catalogueRank ||
-    (a.moduleId ?? "").localeCompare(b.moduleId ?? "") ||
-    (a.loId ?? "").localeCompare(b.loId ?? "") ||
     (KIND_RANK.get(a.kind)! - KIND_RANK.get(b.kind)!) ||
     a.ref.localeCompare(b.ref)
   );
@@ -653,6 +651,7 @@ function add(t: Tally, s: ItemState) {
 export interface BacklogSummary {
   all: Tally;
   byKind: Record<ItemKind, Tally>;
+  /** courses and their chapters in catalogue order (the first objective's rank) */
   byCourse: { courseId: string; tally: Tally; modules: { moduleId: string | null; catalogueRank: number; tally: Tally }[] }[];
   /** open items per reason (an item with two reasons counts under both) */
   openByReason: Partial<Record<ReasonCode, number>>;
@@ -661,17 +660,22 @@ export interface BacklogSummary {
 export function summarize(items: readonly ResolvedItem[]): BacklogSummary {
   const all = zero();
   const byKind = Object.fromEntries(ITEM_KINDS.map((k) => [k, zero()])) as Record<ItemKind, Tally>;
-  const courses = new Map<string, { tally: Tally; modules: Map<string, { moduleId: string | null; catalogueRank: number; tally: Tally }> }>();
+  const courses = new Map<
+    string,
+    { tally: Tally; catalogueRank: number; modules: Map<string, { moduleId: string | null; catalogueRank: number; tally: Tally }> }
+  >();
   const openByReason: Partial<Record<ReasonCode, number>> = {};
   for (const i of items) {
     add(all, i.state);
     add(byKind[i.kind], i.state);
     let c = courses.get(i.courseId);
-    if (!c) courses.set(i.courseId, (c = { tally: zero(), modules: new Map() }));
+    if (!c) courses.set(i.courseId, (c = { tally: zero(), catalogueRank: i.catalogueRank, modules: new Map() }));
+    c.catalogueRank = Math.min(c.catalogueRank, i.catalogueRank);
     add(c.tally, i.state);
     const mk = i.moduleId ?? "";
     let m = c.modules.get(mk);
     if (!m) c.modules.set(mk, (m = { moduleId: i.moduleId, catalogueRank: i.catalogueRank, tally: zero() }));
+    m.catalogueRank = Math.min(m.catalogueRank, i.catalogueRank);
     add(m.tally, i.state);
     if (i.state === "open") {
       for (const code of new Set(i.reasons.map((r) => r.code))) openByReason[code] = (openByReason[code] ?? 0) + 1;
@@ -681,13 +685,11 @@ export function summarize(items: readonly ResolvedItem[]): BacklogSummary {
     all,
     byKind,
     byCourse: [...courses.entries()]
-      .sort(([a], [b]) => a.localeCompare(b))
+      .sort(([, a], [, b]) => a.catalogueRank - b.catalogueRank)
       .map(([courseId, c]) => ({
         courseId,
         tally: c.tally,
-        modules: [...c.modules.values()].sort(
-          (a, b) => a.catalogueRank - b.catalogueRank || (a.moduleId ?? "").localeCompare(b.moduleId ?? "")
-        ),
+        modules: [...c.modules.values()].sort((a, b) => a.catalogueRank - b.catalogueRank),
       })),
     openByReason,
   };

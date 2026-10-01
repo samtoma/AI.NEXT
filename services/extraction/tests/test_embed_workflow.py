@@ -11,7 +11,8 @@ the lesson conveyor's fixture chapter and the S5 fixtures, through tests/workflo
   * `generated_sha256` is the copy's own hash (with that value zeroed); `verify` catches an edited
     copy and a runbook script that changed since the copy was made;
   * a copy refuses args (it never mixes two inputs), and a script that does not echo ARGS.embedded
-    cannot be copied (S1's objectives.workflow.js is not, and is not touched);
+    cannot be copied (audit-claims.workflow.js does not; S0b's and S1's scripts echo it since the full-book
+    fan-out of 2026-10-01, which runs every stage as a copy);
   * the downstream readers take a copy's run as they take the runbook script's: lesson-runs for
     S2–S4, assemble_misconceptions.py for S5 final (by reference and embedded together);
   * the `embed_workflow.py lesson-args` and `assemble_misconceptions.py --s5-args … --embed` commands.
@@ -106,8 +107,10 @@ class EmbeddedLessonConveyor(unittest.TestCase):
         self.assertFalse(rep["ok"])
         self.assertIn("carries its own args", rep["error"])
         self.assertEqual(rep["calls"], [])
-        with self.assertRaises(E.EmbedError):         # S1 does not echo ARGS.embedded: never copied
-            E.generate(EX / "runbook" / "objectives.workflow.js", {"stage": "S1"})
+        with self.assertRaises(E.EmbedError):         # does not echo ARGS.embedded: never copied
+            E.generate(EX / "runbook" / "audit-claims.workflow.js", {"stage": "audit"})
+        for name in ("objectives.workflow.js", "transcribe-maths.workflow.js", "working-check.workflow.js"):
+            self.assertIn("ARGS.embedded", (EX / "runbook" / name).read_text(), f"{name} must say which copy ran")
         with self.assertRaises(E.EmbedError):
             E.generate(LESSON_WF, dict(self.args, embedded={"x": 1}))
 

@@ -38,6 +38,7 @@ import type { PoolClient } from "pg";
 import { courseName } from "./console-course-names";
 import { withOperator } from "./db";
 import { ENVIRONMENT } from "./env";
+import { COURSE_RANK, MODULE_ORDER } from "./module-order";
 import {
   canDecide,
   claimRef,
@@ -84,12 +85,18 @@ export const CLAIM_MINUTES = 10;
 
 /* ------------------------------------------------------------------ SQL */
 
-/** Maths objectives → chapter → course. One row per objective. */
+/**
+ * Maths objectives → chapter → course, one row per objective, each with its
+ * place in the book: `catalogue_rank` is the objective's rank in THE catalogue
+ * order (`lib/module-order.ts` — course, term, chapter, position, id), so the
+ * queue hands a reviewer a chapter in the order the book prints it and no
+ * second ordering of the curriculum exists here.
+ */
 export const SCOPE_SQL = `
   scope AS (
     SELECT DISTINCT ON (lo.id)
-           lo.id AS lo_id, m.id AS module_id,
-           coalesce(m.order_in_parent, 0) AS catalogue_rank, c.id AS course_id
+           lo.id AS lo_id, m.id AS module_id, c.id AS course_id,
+           dense_rank() OVER (ORDER BY ${COURSE_RANK}, ${MODULE_ORDER}) AS catalogue_rank
       FROM graph_nodes lo
       JOIN graph_edges te ON te.dst_id = lo.id AND te.edge_type = 'teaches' AND te.system_to IS NULL
       JOIN graph_nodes m  ON m.id = te.src_id AND m.kind = 'module'

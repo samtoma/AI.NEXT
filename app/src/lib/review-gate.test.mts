@@ -400,9 +400,9 @@ function open(over: Partial<DerivedItem>): DerivedItem {
 test("oldest first, then book order; never an item another reviewer holds; my own claim first", () => {
   const items = [
     open({ ref: "q:late", createdAt: T1 }),
-    open({ ref: "q:lo2", loId: "lo:g10m8s1-1-2" }),
-    open({ ref: "q:lo1", loId: "lo:g10m8s1-1-1" }),
-    open({ ref: "lo:g10m8s1-1-1", kind: "objective", loId: "lo:g10m8s1-1-1" }),
+    open({ ref: "q:lo2", loId: "lo:g10m8s1-1-2", catalogueRank: 2 }),
+    open({ ref: "q:lo1", loId: "lo:g10m8s1-1-1", catalogueRank: 1 }),
+    open({ ref: "lo:g10m8s1-1-1", kind: "objective", loId: "lo:g10m8s1-1-1", catalogueRank: 1 }),
     open({ ref: "q:taken" }),
     open({ ref: "q:skipped" }),
     open({ ref: "q:signed", humanStamped: true }),

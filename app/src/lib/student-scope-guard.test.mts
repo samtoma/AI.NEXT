@@ -219,6 +219,7 @@ export const MODULES: Readonly<Record<string, ModuleKind>> = {
   "src/lib/overview-queries.ts": { kind: "console", why: "the console Overview." },
   "src/lib/pipeline-queries.ts": { kind: "console", why: "/pipeline." },
   "src/lib/content-admin.ts": { kind: "console", why: "the Content page." },
+  "src/lib/review-gate-queries.ts": { kind: "console", why: "/review, the review gate (migration 036)." },
   "src/lib/course-completeness-queries.ts": { kind: "console", why: "/courses: each course's completeness (FR-4309)." },
   "src/lib/timeline.ts": { kind: "console", why: "a session's timeline and replay." },
   "src/lib/turn-threshold-queries.ts": { kind: "console", why: "the Cost page's thresholds." },
