@@ -41,6 +41,15 @@ never `reviewed_by`. A human verdict already in a gate's file is never overwritt
         markable owes G2 no verdict (it becomes teaching material whichever way a check fell); a choice whose options
         were the typing agent's inventions (COLLECT-6) and was not typed again from the book's key is a typing
         problem like any other: excluded and listed. Choices the collection typed again are listed in the record.
+    uv run auto_pass_gates.py g2-recommend-args <book> --chapter 1 [--lesson-run …] --embed work/<book>/packets/embedded/fanout/g2rec-ch01.workflow.js
+    uv run auto_pass_gates.py g2-recommend-collect <book> --chapter 1 [--lesson-run …] --run runs/<book>/g2rec/ch01-<runId>.json \\
+              --out runs/<book>/g2-ch01.recommended.json
+        the G2 RECOMMENDATION RUN (g2_recommend.py, runbook/g2-recommend.workflow.js; Samuel's answers 37a and 42): the items the
+        checks HELD (a three-way disagreement) or EXCLUDED (a typing problem) get a recommended verdict per item — accept, fix with
+        the book's own answer re-typed, hold, exclude — from one Sonnet agent per batch of ~8, and every accept or fix is confirmed
+        by an independent agent that derives the answer first. `-args` builds the packet and the generated copy (no model is called);
+        `-collect` checks the saved run (the book quote, the pipeline's own models, the app's marker, the verifier) into the
+        recommendation file the `g2 --recommend` line above reads. The lesson runs default to the chapter's G2 record's evidence.
     uv run auto_pass_gates.py g3 <book> --chapter 9 --queue <bundle>.review-queue.json [--queue …] \\
               [--widgets seed/generated/<book>/widget-questions.json]
         the sampled items accepted on the AI checks (S6's blind grade passed every family in the bundle,
@@ -414,6 +423,78 @@ def approve_argv(book, chapter: int, verdicts: Path, maths: Path | None, objecti
     return argv
 
 
+def g2_recommend_main(a, book) -> int:
+    """`g2-recommend-args` and `g2-recommend-collect` (g2_recommend.py): deterministic, no model is called."""
+    import g2_recommend as G
+    ch = a.chapter
+    t = f"{ch:02d}"
+    g2_path = a.g2 or HERE / "runs" / book.book / f"g2-ch{t}.json"
+    try:
+        lesson_runs = a.lesson_run or G.record_runs(book, ch)
+        recommended = HERE / "runs" / book.book / f"g2-ch{t}.recommended.json"
+        if a.gate == "g2-recommend-args":
+            skip = set((json.loads(a.only_missing.read_text()).get("items") or {})) if a.only_missing else None
+            info = G.prepare(book, ch, lesson_runs, g2_path, a.embed, batch=a.batch, verify_batch=a.verify_batch, model=a.model,
+                             effort=a.effort, max_batches=a.max_batches, args_out=a.args_out, skip_keys=skip)
+            est = info["estimate"]
+            if not info["items"]:
+                print(f"G2 recommendation (ch{t}): nothing owes a recommendation"
+                      + (f" ({info['skipped_already_recommended']} already recommended)" if info["skipped_already_recommended"] else ""))
+                return 0
+            print(f"G2 recommendation (ch{t}): {info['items']} item(s) ({info['by_state'].get('held', 0)} held with no verdict, "
+                  f"{info['by_state'].get('excluded', 0)} excluded for typing) in {info['parts']} run(s); "
+                  f"{est['recommend_agents']} recommending + up to {est['verify_agents_max']} verifying agents, "
+                  f"≈ ${est['usd_low']:.0f}–{est['usd_high']:.0f} (modelled)")
+            for c in info["copies"]:
+                print(f"  copy: {_rel(c['script'])} ({c['bytes']} bytes) — run it with Workflow scriptPath and NO args")
+            if not info["copies"]:
+                print("  (nothing written: pass --embed <copy>.workflow.js)")
+            lrs = [_rel(p) for p in lesson_runs]
+            for cmd in G.follow_ups(book.book, ch, lrs, recommended=_rel(recommended), g2_file=_rel(g2_path),
+                                    run_label=", ".join(Path(p).stem for p in lesson_runs)):
+                print(("  " if cmd.startswith("#") else "  $ ") + cmd)
+            return 0
+        # g2-recommend-collect
+        runs_files = list(a.run)
+        entries = G.recommendable([G.load_run(p) for p in lesson_runs], ch, book.id_prefixes[0],
+                                  json.loads(g2_path.read_text()) if g2_path.exists() else None)
+        runs = [json.loads(p.read_text()) for p in runs_files]
+        for p, r in zip(runs_files, runs):
+            r = r.get("result", r)
+            keys = r.get("keys")
+            if keys and not a.allow_stale:
+                now = G.items_sha256([e for e in entries if e["key"] in set(keys)])
+                if r.get("items_sha256") and now != r["items_sha256"]:
+                    raise G.RecommendError(f"{_rel(p)}: the run was made on a packet that no longer matches the lesson runs / G2 file "
+                                           f"(items sha256 {str(r['items_sha256'])[:12]}…, now {now[:12]}…): a person's verdict or a "
+                                           "re-collected run changed an item; rebuild the packet, or pass --allow-stale")
+        out = a.out or recommended
+        prior = json.loads(out.read_text()) if out.exists() and not a.fresh else None
+        names = {_rel(p): ((r.get("result", r).get("embedded") or {}).get("generated_sha256")) for p, r in zip(runs_files, runs)}
+        doc = G.collect(entries, runs, prior=prior, run_names=names, chapter=ch)
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(json.dumps(doc, ensure_ascii=False, indent=1) + "\n")
+        rep = doc["report"]
+        print(f"G2 recommendation (ch{t}): {rep['recommended']} of {rep['items']} item(s) recommended -> {_rel(out)}\n"
+              f"  verdicts {rep['by_verdict']}; confidence {rep['by_confidence']}; classes {rep['by_class']}")
+        print(f"  would be LIVE (accept or fix, each confirmed by the independent verifier): {len(rep['live'])}"
+              f"; stem repairs {len(rep['stem_repairs'])}; retyped {len(rep['retyped'])}; corrections proposed (not applied) "
+              f"{len(rep['corrections_proposed'])}; low confidence ('your call') {len(rep['low_confidence'])}")
+        for k, w in sorted(rep["not_live"].items()):
+            print(f"  NOT live: {k}: the agent said {w['agent_verdict']}, recommended {w['recommended']} — {w['why'][:160]}")
+        if rep["unanswered"]:
+            print(f"  UNANSWERED ({len(rep['unanswered'])}): {', '.join(rep['unanswered'][:8])}{' …' if len(rep['unanswered']) > 8 else ''} "
+                  "— they stay as the checks left them; re-run them with g2-recommend-args --only-missing")
+        if rep["off_task"]:
+            print(f"  off task (not items of this chapter's packet, ignored): {rep['off_task'][:5]}")
+        print("  next: uv run auto_pass_gates.py g2 " + f"{book.book} --chapter {ch} " + " ".join(f"--lesson-run {_rel(p)}" for p in lesson_runs)
+              + f" --recommend {_rel(out)} --into {_rel(g2_path)} --split --maths runs/{book.book}/maths/book/accepted.json")
+        return 0
+    except G.RecommendError as e:
+        print(f"g2 recommendation: {e}", file=sys.stderr)
+        return 2
+
+
 def main(argv: list[str] | None = None) -> int:
     import argparse
     import os
@@ -457,9 +538,37 @@ def main(argv: list[str] | None = None) -> int:
     a5.add_argument("--dryrun", type=Path, help="the dry run's report, as evidence")
     a5.add_argument("--ledger", type=Path, help="the cost ledger (default runs/<book>/cost.jsonl)")
     a5.add_argument("--dsn", default=os.environ.get("AINEXT_DB_DSN"), help="the database the chapter was loaded into")
+    def g2rec(p):
+        p.add_argument("book")
+        p.add_argument("--chapter", type=int, required=True)
+        p.add_argument("--lesson-run", "--from-run", dest="lesson_run", type=Path, action="append", default=[],
+                       help="the S2–S4 run(s) (default: the S2–S4 runs the chapter's G2 record names as evidence)")
+        p.add_argument("--g2", type=Path, help="the chapter's G2 file (default runs/<book>/g2-chNN.json): a human verdict "
+                                               "in it is never recommended over")
+        return p
+    ra = g2rec(sub.add_parser("g2-recommend-args", help="G2 recommendation run: the packet and its generated copy (no model call)"))
+    ra.add_argument("--embed", type=Path, help="write the generated copy of runbook/g2-recommend.workflow.js here "
+                                               "(…/g2rec-ch01.workflow.js; more parts as …part2.workflow.js)")
+    ra.add_argument("--args-out", type=Path, help="also write the args themselves (for reading)")
+    ra.add_argument("--batch", type=int, default=8, help="items per recommending agent (default 8)")
+    ra.add_argument("--verify-batch", type=int, default=8, help="verdicts per verifying agent (default 8)")
+    ra.add_argument("--model", default="sonnet", choices=["sonnet", "haiku"])
+    ra.add_argument("--effort", default="high", choices=["medium", "high"])
+    ra.add_argument("--max-batches", type=int, default=24, help="recommending agents per run (default 24: past it the packet "
+                                                                "splits into parts)")
+    ra.add_argument("--only-missing", type=Path, metavar="RECOMMENDED",
+                    help="leave out the items this recommendation file already covers (a re-run of what was not answered)")
+    rc = g2rec(sub.add_parser("g2-recommend-collect", help="G2 recommendation run: the saved run(s), checked, as a recommendation file"))
+    rc.add_argument("--run", type=Path, action="append", required=True, help="a saved run (runs/<book>/g2rec/chNN-<runId>.json)")
+    rc.add_argument("--out", type=Path, help="the recommendation file (default runs/<book>/g2-chNN.recommended.json); keys these "
+                                             "runs did not answer keep an earlier file's recommendation")
+    rc.add_argument("--fresh", action="store_true", help="ignore an existing --out file (otherwise a re-run adds to it)")
+    rc.add_argument("--allow-stale", action="store_true", help="collect a run whose packet no longer matches the lesson runs")
     a = ap.parse_args(argv)
 
     book = book_config.load_book(a.book)
+    if a.gate.startswith("g2-recommend"):
+        return g2_recommend_main(a, book)
     gates_dir = a.gates_dir or HERE / "runs" / book.book / "gates"
     ch = a.chapter
     scope = f"ch{ch:02d}" if ch is not None else "book"
