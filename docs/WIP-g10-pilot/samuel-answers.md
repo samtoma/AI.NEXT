@@ -51,13 +51,14 @@ G2, Chapter 8 (2026-09-26), asked one topic at a time:
     instead of being auto-dropped. Orchestrator's implementation: until reviewed, a rejected claim is held (never
     shown to a student, never used as evidence); the reviewer confirms or drops each one.
 
-Consistency-review decisions (2026-09-27), one at a time:
+Consistency-review decisions (2026-09-27), one at a time (decisions.md decisions 48–55):
 27. "Load a course" restore (answer 8 / FR-4208/4210) → "Build the safe restore (Recommended)": restore replays a
     previously exported, reviewed bundle for one course, keeping every student's progress or refusing; today's
     whole-database rollback stays as a separate, clearly named emergency `rollback` mode, documented as undoing
-    student data.
+    student data. (decision 48.)
 28. Grade gate default (AINEXT_COURSE_GATING) → "Refuse to start (Recommended)": in the student product (mvp1) the app
     refuses to start unless the setting is explicitly on or off, with a clear message; production (already on) unchanged.
+    (decision 49.)
 29. Figures for the other 13 chapters → "Native only, wait": decision 26 stands strictly — no book images; a question
     whose figure needs a native type that doesn't exist yet stays held until that type is built (chapters may launch
     with large held sets).

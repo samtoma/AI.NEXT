@@ -647,6 +647,7 @@ class Report:
         self.stand_ins: list[dict] = []        # book_image visuals attached (question, file, native kind)
         self.held_reveals: list[dict] = []     # a book picture that shows the unknown: held, never shown
         self.held_katex: list[str] = []        # A2: a question whose own text KaTeX cannot parse: held
+        self.book_name = ""
 
     def as_dict(self) -> dict:
         return {"counts": dict(sorted(self.counts.items())),
@@ -965,10 +966,120 @@ def fix_caption(caption: str | None, withheld) -> str | None:
     return (text + ".") if text and not text.endswith((".", "?", "!")) else (text or None)
 
 
+# =============================================================================
+# Hold reasons (migration 035) and the book picture stand-in (answer 37d)
+# =============================================================================
+def hold_reason_of(it: "RunItem") -> str:
+    """Why a `held` item is held (review_policy's vocabulary): a human's G2 hold, the three-way check's
+    disagreement with the book, or no confirmation at all."""
+    if it.g2 and it.g2.verdict == "hold":
+        auto = bool((it.g2.model_extra or {}).get("auto")) or str(it.g2.by).lower().startswith("auto-pass ")
+        return "unverified" if auto else "human_hold"
+    if it.verification == "disputed":
+        return "answer_mismatch"
+    return "unverified"
+
+
+def needed_kind_of(gap: dict | None) -> str | None:
+    """The native kind a viz gap names: a snake_case kind leading its `needed_kind` ("polygon_scene: …"), or
+    the kind of a spec the check rejected (the kind exists; this drawing did not match)."""
+    if not gap:
+        return None
+    m = re.match(r"\s*(?:an?\s+)?([a-z][a-z0-9]*(?:_[a-z0-9]+)+)\b", str(gap.get("needed_kind") or ""))
+    if m:
+        return m.group(1)
+    return ((gap.get("rejected_spec") or {}).get("kind")) or None
+
+
+def figure_kinds(path: Path) -> dict[str, str]:
+    """image file -> the native kind it needs, from the figure inventory (figure_inventory.py's
+    coverage/<book>.figure-gaps.json): the proposed kind for a gap, else the first kind that covers it."""
+    if not path.exists():
+        return {}
+    out = {}
+    for f in json.loads(path.read_text()).get("figures") or []:
+        kind = f.get("gap_kind") or (f.get("covered_by") or [None])[0]
+        if f.get("src") and kind:
+            out.setdefault(str(f["src"]).replace("/", "__"), kind)
+    return out
+
+
+# The point a question asks for, by name, in the words after the figure ("Find the coordinates of $M$",
+# "Find $T$ , the mid-point", "the $x$ -coordinate of $R$", "the value of a in $U(6, a)$").
+_ASKED_POINT = [re.compile(p) for p in (
+    r"coordinates?\s+of\s+(?:the\s+)?(?:point\s+)?\$([A-Z])\$",
+    r"(?:Find|Determine|Calculate|Write down|Give)\s+\$([A-Z])\$",
+    r"\$([A-Z])\$\s*,\s*the\s+mid-?\s*point",
+    r"value\s+of\s+\$?[a-z]\$?\s+in\s+\$([A-Z])\s*\(",
+)]
+_ASKED_LETTERS = re.compile(r"values?\s+of\s+\$([a-z])\$(?:\s*(?:and|,)\s*\$([a-z])\$)?")
+_CONSTRUCTED = re.compile(r"\b(such that|so that|would be|could be moved|if it were)\b", re.I)
+
+
+def book_picture_reveals(question: dict, natives: list[dict]) -> str | None:
+    """Why the BOOK'S picture must not be shown with its question (A8's rule, carried to the book's image):
+    the question asks for a point — its coordinates, or a letter standing for one of them — and the picture
+    draws that point. The book draws its diagrams to scale on labelled axes, so drawing the point is drawing
+    the answer. Deterministic and conservative:
+      * the asked point is named in the words after the figure; a point the question constructs ("such that
+        OAPB is a parallelogram", "so that", "could be moved") is not in the picture;
+      * the picture draws it when a native transcription of the same image labels it (or withheld it), or —
+        with no transcription to read — when the point is named before the figure (the diagram's own
+        description) or the question asks for its coordinates outright;
+      * a read-off exercise (no coordinates or equation given before the figure: the figure IS the data,
+        A8's Ex8-1:1) never counts — reading the picture is the exercise.
+    Every stand-in and every hold lands in the console backlog; this only decides what a student may see."""
+    stem = question.get("stem") or ""
+    before, _, after = stem.rpartition("[figure]")
+    if not _:
+        before, after = "", stem
+    if not re.search(r"\(\s*-?\$?\d|=", before) and not re.search(r"\(\s*-?\$?\d|=", after):
+        return None                                   # read-off: the figure is the data
+    if _CONSTRUCTED.search(after):
+        return None
+    drawn: set[str] = set()
+    for n in natives:
+        drawn |= {m.group(1) for lab in n["labels"] if (m := re.match(r"\s*([A-Z])", lab))}
+        drawn |= {str(w)[:1] for w in n["withheld"] if str(w)[:1].isupper()}
+    for pat in _ASKED_POINT:
+        for m in pat.finditer(after):
+            name = m.group(1)
+            if (name in drawn) or (not natives):
+                return f"the book's picture draws {name}, the point the question asks for"
+            if re.search(rf"\${name}\b|\b{name}\s*\(", before):
+                return f"the book's picture draws {name}, the point the question asks for"
+    letters = {x for m in _ASKED_LETTERS.finditer(after) for x in m.groups() if x}
+    if letters:
+        # the point whose coordinates those letters are — in a transcription of the picture, or described
+        # before the figure; one introduced only after the figure is not in the picture
+        for n in natives:
+            for lab in n["labels"]:
+                coords = re.findall(r"[a-z]", re.sub(r"^\s*[A-Z]", "", lab))
+                if letters & set(coords):
+                    return f"the book's picture draws {lab}, whose coordinates the question asks for"
+        for name in _unknown_points(before):
+            m = re.search(rf"{name}\s*\(([^)]*)\)", before)
+            if m and letters & set(re.findall(r"\b([a-z])\b", m.group(1))):
+                return f"the book's picture draws {name}, whose coordinates the question asks for"
+    return None
+
+
+def stand_in_alt(question: dict, natives: list[dict], page: int | None) -> str:
+    """Alt text for the book's picture: a native transcription's caption of the same image when there is
+    one (captions describe only what is drawn), else what it is and where it is printed."""
+    for n in natives:
+        if (n.get("caption") or "").strip():
+            return n["caption"].strip()
+    return "The textbook's own diagram for this question" + (f" (printed on page {page})." if page else ".")
+
+
 def police_figures(bundle: dict, report: Report) -> None:
     """A8: drop an EXERCISE figure that draws its question's unknown (a worked example's may show its answer).
     A3: a question whose stem shows [figure] and has no figure is not verified, so it loads as `review`, never
-    `live`, until its figure exists."""
+    `live`, until its figure exists. Answer 37d ("book picture for now", 2026-10-01): where the book has its
+    own image of that figure, a `book_image` stand-in carries it and the question goes live, listed in the
+    console backlog as "needs native figure" — unless the picture draws the question's unknown
+    (`book_picture_reveals`), in which case the question stays held as `figure_reveals_answer`."""
     qs = {q["id"]: q for q in bundle.get("questions") or []}
     kept = []
     for v in bundle.get("visuals") or []:
@@ -983,9 +1094,32 @@ def police_figures(bundle: dict, report: Report) -> None:
     bundle["visuals"] = kept
     drawn = {v.get("question") for v in kept}
     for q in bundle.get("questions") or []:
-        if "[figure]" in (q.get("stem") or "") and q["id"] not in drawn:
-            if q.get("verified"):
-                q["verified"] = False
+        if "[figure]" not in (q.get("stem") or "") or q["id"] in drawn:
+            continue
+        src = report.book_figures.get(q["id"]) or {}
+        files = [f for f in src.get("files") or []
+                 if report.figures_dir is not None and (report.figures_dir / f).is_file()]
+        natives = [n for f in files for n in report.native_by_file.get(f, [])]
+        why = book_picture_reveals(q, natives) if files and report.book_pictures else None
+        if files and report.book_pictures and not why:
+            for i, f in enumerate(files, 1):
+                tail = q["id"].split(":", 2)[-1]
+                vid = f"v:{src['slug']}:bk-{tail}" + (f"-{i}" if len(files) > 1 else "")
+                kind = report.figure_kinds.get(f) or src.get("gap_kind")
+                kept.append({"id": vid, "lo": q["lo"], "question": q["id"], "kind": "book_image",
+                             "spec": {"src": f"/book-figures/{report.book_name}/{f}",
+                                      "alt": stand_in_alt(q, natives, src.get("page")),
+                                      "stand_in": True, "native_kind_needed": kind},
+                             "caption": None, "source_page": src.get("page")})
+                report.stand_ins.append({"question": q["id"], "visual": vid, "file": f, "native_kind_needed": kind})
+            continue
+        if q.get("verified"):
+            q["verified"] = False
+        if why:
+            q["hold_reason"] = q.get("hold_reason") or "figure_reveals_answer"
+            report.held_reveals.append({"question": q["id"], "why": why, "files": files})
+        else:
+            q["hold_reason"] = q.get("hold_reason") or "figure_missing"
             report.held_for_figure.append(q["id"])
 
 
@@ -1312,6 +1446,7 @@ def apply_marker_check(bundles: dict[str, dict], report: Report) -> None:
         for q in b["questions"]:
             if q["id"] in held:
                 q["verified"] = False
+                q["hold_reason"] = q.get("hold_reason") or "unanswerable"
                 report.held_by_marker.append({"id": q["id"], "key": held[q["id"]]["key"],
                                               "why": held[q["id"]]["why"]})
     report.counts["marker_specs_checked"] = res["checked"]
@@ -1376,11 +1511,16 @@ def load_inputs(manifest_path: Path, objectives_dir: Path, runs_dir: Path,
 
 
 def assemble(book, manifest_path: Path, objectives_dir: Path, runs_dir: Path,
-             chapters: set[int] | None = None, check_markers: bool = True) -> tuple[dict[str, dict], Report]:
+             chapters: set[int] | None = None, check_markers: bool = True,
+             book_pictures: bool = True, figures_dir: Path | None = None) -> tuple[dict[str, dict], Report]:
     manifest, all_lessons, wanted, objectives, runs, inputs = load_inputs(
         manifest_path, objectives_dir, runs_dir, chapters)
     prefix = book.id_prefixes[0]
     report = Report()
+    report.book_pictures = book_pictures
+    report.book_name = book.book
+    report.figures_dir = figures_dir or book.work_dir() / "figures"
+    report.figure_kinds = figure_kinds(HERE / "coverage" / f"{book.book}.figure-gaps.json")
     bundles: dict[str, dict] = {f"{prefix}-course.json": course_bundle(book, manifest)}
     by_mod: dict[str, list[Lesson]] = defaultdict(list)
     mods: dict[str, dict] = {}
@@ -1434,6 +1574,15 @@ def assemble(book, manifest_path: Path, objectives_dir: Path, runs_dir: Path,
         rows = [r for name, b in bundles.items() for r in student_texts(b, name)]
         rows += [r for slug, c in report.content.items() for r in student_texts(c, slug)]
         report.katex_errors = katex_errors(rows)
+        # A2 as a hold (migration 035): a question whose own text the app's KaTeX cannot parse is broken
+        # maths in front of a student — held as katex_error, never live, until the text is fixed
+        broken = {e.get("where") for e in report.katex_errors}
+        for b in bundles.values():
+            for q in b.get("questions") or []:
+                if q["id"] in broken:
+                    q["verified"] = False
+                    q["hold_reason"] = q.get("hold_reason") or "katex_error"
+                    report.held_katex.append(q["id"])
     # every lesson of the book is checked, not only the assembled chapters
     problems = validate_bundles(bundles, all_lessons)
     if problems:
