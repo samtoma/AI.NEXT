@@ -1,0 +1,114 @@
+{
+ "format": "ainext.family/1",
+ "version": 1,
+ "id": "tpl:g10m4s2-1-3:binomial-numerators",
+ "kind": "family",
+ "lo_id": "lo:g10m4s2-1-3",
+ "parent_question_id": "q:g10m4s2-1-3:ex4-1-24",
+ "source_page": 78,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "choice": [
+    2,
+    3,
+    4,
+    6
+   ]
+  },
+  {
+   "name": "b",
+   "choice": [
+    2,
+    3,
+    4,
+    6
+   ],
+   "resample_while": "lcm(a, b) == a or lcm(a, b) == b"
+  },
+  {
+   "name": "d",
+   "let": "lcm(a, b)"
+  },
+  {
+   "name": "m",
+   "let": "d // a"
+  },
+  {
+   "name": "n",
+   "let": "d // b"
+  },
+  {
+   "name": "u",
+   "choice": [
+    2,
+    3
+   ],
+   "resample_while": "abs(u * m - n) < 2"
+  },
+  {
+   "name": "h",
+   "let": "u * m - n"
+  },
+  {
+   "name": "p",
+   "randint": [
+    1,
+    6
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    1,
+    6
+   ]
+  },
+  {
+   "name": "j",
+   "let": "m * p + n * q"
+  },
+  {
+   "name": "r",
+   "randint": [
+    -6,
+    10
+   ],
+   "resample_while": "r == 0 or r == q or u * r + p == 0 or h * r + j <= 0"
+  },
+  {
+   "name": "w",
+   "let": "m * (u * r + p) - n * (r - q)"
+  },
+  {
+   "name": "v",
+   "let": "w / d"
+  },
+  {
+   "name": "y",
+   "let": "w - j"
+  }
+ ],
+ "constraints": [
+  "h * r + j == w",
+  "y == h * r",
+  "gcd(m, n) == 1"
+ ],
+ "stem": "Solve for $x$: $\\frac{{=u}x+{=p}}{{=a}}-\\frac{x-{=q}}{{=b}}={=v}$",
+ "answer": "r",
+ "solution": [
+  "The denominators are ${=a}$ and ${=b}$, so the common denominator is ${=d}$.",
+  "Multiply every term on both sides by ${=d}$: ${=d}\\times\\frac{{=u}x+{=p}}{{=a}}-{=d}\\times\\frac{x-{=q}}{{=b}}={=d}\\times{=v}$",
+  "Cancel the denominators: ${=d}\\div{=a}={=m}$, ${=d}\\div{=b}={=n}$ and ${=d}\\times{=v}={=w}$, so ${=m}({=u}x+{=p})-{=n}(x-{=q})={=w}$",
+  "Remove the brackets. The minus sign in front of the second bracket changes both signs inside it: ${=m*u}x+{=m*p}-{=n}x+{=n*q}={=w}$",
+  "Collect the like terms: ${=h}x+{=j}={=w}$",
+  "Subtract ${=j}$ from both sides: ${=h}x={=y}$",
+  "Divide both sides by ${=h}$: $x=\\frac{{=y}}{{=h}}={=r}$",
+  "Check by substituting $x={=r}$ into the left-hand side: $\\frac{{=u*r+p}}{{=a}}-\\frac{{=r-q}}{{=b}}=\\frac{{=m*(u*r+p)}}{{=d}}-\\frac{{=n*(r-q)}}{{=d}}=\\frac{{=w}}{{=d}}$, which equals the right-hand side ${=v}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced tier, generalises book ex4-1-24 ((x+2)/4 - (x-6)/3 = 1/2, answer 24): two binomial numerators, subtraction between them, and a fractional right-hand side. The book's own twist is the minus sign in front of the second bracket. Denominators come from {2,3,4,6} with neither dividing the other (so both multipliers m, n are at least 2); the first numerator carries x-coefficient u (2 or 3) and u is resampled so the collected coefficient h = u*m - n is at least 2 (no '1x' is ever printed). The answer r is drawn first and the right-hand side v = w/d computed from it, so v is a positive fraction or integer and every instance has a whole-number answer; r is kept away from 0, from q and from a zero first numerator. Hand-checked: a=4, b=3, u=2, p=1, q=2, r=5 gives (2x+1)/4 - (x-2)/3 = 7/4, 3(2x+1) - 4(x-2) = 21, 2x + 11 = 21, x = 5; a=3, b=2, u=3, p=4, q=5, r=-2 gives (3x+4)/3 - (x-5)/2 = 17/6, 2(3x+4) - 3(x-5) = 17, 3x + 23 = 17, 3x = -6, x = -2."
+}

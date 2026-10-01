@@ -1,0 +1,52 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m4s6-1-3:volumebase",
+ "kind": "family",
+ "lo_id": "lo:g10m4s6-1-3",
+ "parent_question_id": "q:g10m4s6-1-3:ex4-5-20",
+ "source_page": 96,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "x0",
+   "randint": [
+    2,
+    15
+   ]
+  },
+  {
+   "name": "h",
+   "randint": [
+    2,
+    9
+   ]
+  },
+  {
+   "name": "vv",
+   "let": "x0 * x0 * h"
+  },
+  {
+   "name": "nx0",
+   "let": "0 - x0"
+  }
+ ],
+ "constraints": [],
+ "stem": "Solve for $x$ in $V = x^2h$ if $V = {=vv}$ and $h = {=h}$. Give both values of $x$.",
+ "solution": [
+  "Make $x$ the subject first. Divide both sides of $V = x^2h$ by $h$: $x^2 = \\dfrac{V}{h}$.",
+  "Take the square root of both sides, writing both the positive and the negative root: $x = \\pm\\sqrt{\\dfrac{V}{h}}$.",
+  "Substitute $V = {=vv}$ and $h = {=h}$: $x = \\pm\\sqrt{\\dfrac{{=vv}}{{=h}}} = \\pm\\sqrt{{=x0*x0}} = \\pm{=x0}$.",
+  "So $x = {=x0}$ or $x = {=nx0}$."
+ ],
+ "marker": {
+  "kind": "values",
+  "answer": "[{=x0}, {=nx0}]",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Basic numeric partner to the mcq. Same one-squared-variable skeleton as Ex 4.5 Q5 and Q20: divide, take the root with both signs, substitute. V is built as x0 squared times h so the quotient is always a perfect square and both answers are whole numbers. The stem asks for both values, as the book key does for Q20 (h = 16 or h = -16)."
+}

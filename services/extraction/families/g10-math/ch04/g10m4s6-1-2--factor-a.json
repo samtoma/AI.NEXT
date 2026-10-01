@@ -1,0 +1,85 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m4s6-1-2:factor-a",
+ "kind": "family",
+ "lo_id": "lo:g10m4s6-1-2",
+ "parent_question_id": "q:g10m4s6-1-2:ex4-7-12s",
+ "source_page": 104,
+ "tier": "standard",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "r",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "s",
+   "randint": [
+    3,
+    9
+   ]
+  },
+  {
+   "name": "den",
+   "let": "s + r - p"
+  },
+  {
+   "require": "den >= 2",
+   "why": "the coefficient of ax after collecting must be at least 2, so no '1ax' is printed and x is not a whole number by accident"
+  },
+  {
+   "name": "q",
+   "randint": [
+    2,
+    9
+   ]
+  },
+  {
+   "name": "t",
+   "randint": [
+    2,
+    9
+   ]
+  },
+  {
+   "name": "top",
+   "let": "q + t"
+  },
+  {
+   "require": "gcd(top, den) == 1",
+   "why": "the answer is a fraction already in lowest terms, so 'simplest form' has one right answer"
+  }
+ ],
+ "constraints": [
+  "den >= 2",
+  "gcd(top, den) == 1"
+ ],
+ "stem": "Solve for $x$, given that $a \\ne 0$: ${=p}ax + {=q}a - {=r}ax = {=s}ax - {=t}a$. Give $x$ as a fraction in simplest form.",
+ "solution": [
+  "Move every term to the right-hand side, so that the left-hand side is $0$: $0 = {=s}ax + {=r}ax - {=p}ax - {=t}a - {=q}a$.",
+  "Collect like terms: $0 = {=den}ax - {=top}a$.",
+  "Both terms contain $a$, so take $a$ out as a common factor: $0 = a({=den}x - {=top})$.",
+  "The product is $0$ and $a \\ne 0$, so the bracket must be $0$. (We may divide both sides by $a$ only because $a \\ne 0$.) ${=den}x - {=top} = 0$.",
+  "Solve for $x$: ${=den}x = {=top}$, so $x = \\frac{{=top}}{{=den}}$."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "{=top}/{=den}",
+  "form": "simplest",
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Parametrised from book question ex4-7-12s (3ax + 2a - ax = 5ax - 6a). IMPORTANT BOOK ERROR: the book's printed answer and marker key is x = 3/8, but its own working reaches 3ax - 8a = 0, i.e. a(3x - 8) = 0, which gives x = 8/3. Substituting x = 8/3 into the stem confirms it (both sides equal 8a). This family computes the answer from the parameters (p=3, q=2, r=1, s=5, t=6 would give 8/3), so it is correct; the parent's key should be corrected or the reviewer should not trust it. Deliberate choice: the stem states a != 0, because the book prints no condition but its note says the solver may not divide by a unless a != 0; stating it makes the question unambiguous for a blind solver, and the solution step says explicitly why dividing by a is allowed (the catalogued misconception mc:g10m4s6-1-2:divide-by-unchecked-common-factor is therefore addressed in the working, not used as a distractor, because it does not change the final value and so cannot be a diagnosable wrong option). All coefficients are at least 2 so no '1ax' or '1a' appears (the book's own instance has a coefficient 1 and is not reproducible; that is intentional). den = s + r - p is in 2..12 and top = q + t is in 4..18, gcd 1, so the answer is always a non-integer fraction in lowest terms, checked by exhaustive sampling."
+}

@@ -1,0 +1,60 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m4s6-1-1:wavelength-values",
+ "kind": "family",
+ "lo_id": "lo:g10m4s6-1-1",
+ "parent_question_id": "q:g10m4s6-1-1:ex4-5-6",
+ "source_page": 95,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "lam",
+   "randint": [
+    2,
+    9
+   ]
+  },
+  {
+   "name": "en",
+   "randint": [
+    2,
+    9
+   ]
+  },
+  {
+   "name": "c",
+   "randint": [
+    2,
+    9
+   ]
+  },
+  {
+   "require": "(en * lam) % c == 0",
+   "why": "keeps h a whole number"
+  },
+  {
+   "name": "h",
+   "let": "en * lam // c"
+  },
+  {
+   "require": "h >= 2 and h != en",
+   "why": "avoids trivial instances where h is 1 or equals E"
+  }
+ ],
+ "constraints": [
+  "h * c == en * lam",
+  "en != 0"
+ ],
+ "stem": "Solve for $\\lambda$ in $E=\\dfrac{hc}{\\lambda}$ if $E={=en}$, $h={=h}$ and $c={=c}$.",
+ "answer": "lam",
+ "solution": [
+  "Ask what $\\lambda$ is joined to. In $E=\\frac{hc}{\\lambda}$ the unknown $\\lambda$ is in the denominator: $hc$ is divided by $\\lambda$. The opposite of dividing by $\\lambda$ is multiplying by $\\lambda$, so multiply both sides by $\\lambda$: $E\\lambda=hc$.",
+  "Now $\\lambda$ is multiplied by $E$, so divide both sides by $E$ (here $E\\ne0$): $\\lambda=\\frac{hc}{E}$.",
+  "Substitute $h={=h}$, $c={=c}$ and $E={=en}$: $\\lambda=\\frac{{=h}({=c})}{{=en}}$.",
+  "Calculate: $\\lambda=\\frac{{=h*c}}{{=en}}={=lam}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced: the book's ex4-5-6 makes h the subject of E = hc/lambda (unknown in the numerator, one multiplication and one division). Here the unknown is lambda, in the denominator, which is the harder case: the first step must be multiplying both sides by lambda, as the book's own solution to ex4-5-6 does, then dividing by E. Substituting given values is the book's ex4-5-18 twist. Values are built backwards from lambda, E and c so h is a whole number and the answer lambda is always a whole number between 2 and 9; no decimals or rounding. A common wrong answer a reviewer may see is E/(hc) or hE/c (treating lambda as if it were in the numerator). No misconceptions were catalogued for this objective, so none are referenced. This is a lighter advanced item than accel-values; it is kept because it tests a distinct case (subject in the denominator) that the objective's 'what is it joined to and how' covers."
+}

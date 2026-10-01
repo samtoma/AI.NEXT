@@ -1286,7 +1286,8 @@ def _verify_marker(item: Item) -> list[str]:
     if key != item.correct_answer:
         problems.append("correct_answer and the marker key disagree")
     form = m.get("form")
-    if not (form in MARKER_FORMS or (isinstance(form, dict) and set(form) == {"subject"})):
+    if not ((isinstance(form, dict) and set(form) == {"subject"})
+            or (not isinstance(form, (dict, list)) and form in MARKER_FORMS)):
         problems.append(f"marker form {form!r} unknown")
     if not isinstance(m.get("variables"), list):
         problems.append("marker variables must be a list")

@@ -1,0 +1,53 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m4s5-1-3:rectangle",
+ "kind": "family",
+ "lo_id": "lo:g10m4s5-1-3",
+ "parent_question_id": "q:g10m4s5-1-3:ex4-4-9",
+ "source_page": 93,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": "A rectangle whose length is a given number of centimetres more than its breadth has a given area in square centimetres. The question asks for the breadth. The quadratic that results has one positive and one negative solution, and only the positive one can be a breadth.",
+ "params": [
+  {
+   "name": "q",
+   "randint": [
+    2,
+    10
+   ]
+  },
+  {
+   "name": "k",
+   "randint": [
+    2,
+    8
+   ]
+  },
+  {
+   "name": "p",
+   "let": "q + k"
+  },
+  {
+   "name": "area",
+   "let": "q * (q + k)"
+  },
+  {
+   "require": "p > q and area == p * q and p - q == k",
+   "why": "the two factors of the quadratic are x + p and x - q, with p - q = k and p * q = area, so every instance factorises cleanly over the integers"
+  }
+ ],
+ "constraints": [],
+ "stem": "The length of a rectangle is ${=k}$ cm more than its breadth. The area of the rectangle is ${=area}$ $\\text{cm}^2$. Find the breadth of the rectangle, in cm.",
+ "answer": "q",
+ "solution": [
+  "Let the breadth be $x$ cm. The length is ${=k}$ cm more than the breadth, so the length is $(x+{=k})$ cm.",
+  "The area of a rectangle is length $\\times$ breadth, so $x(x+{=k})={=area}$.",
+  "Multiply out and move every term to the left-hand side: $x^2+{=k}x={=area}$, so $x^2+{=k}x-{=area}=0$.",
+  "Factorise. We need two numbers whose product is $-{=area}$ and whose sum is ${=k}$. These numbers are ${=p}$ and $-{=q}$, so $(x+{=p})(x-{=q})=0$.",
+  "Solve each factor: $x=-{=p}$ or $x={=q}$.",
+  "A breadth cannot be negative, so we reject $x=-{=p}$. The breadth is ${=q}$ cm.",
+  "Check: the length is ${=q}+{=k}={=p}$ cm, and ${=q}\\times{=p}={=area}$ $\\text{cm}^2$, as given."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Basic-tier entry point of the skill: one unknown, one condition (the length exceeds the breadth by k), and one decision (the negative root cannot be a breadth). Modelled on book exercise 4.4 question 9 (rectangle, area given, 'breadth must be positive'), but with the length k more than the breadth instead of twice the breadth, so the equation is a trinomial that needs factorising rather than a difference of squares. The setup is x(x + k) = area, which becomes x^2 + k x - area = 0 and factorises as (x + p)(x - q) with p = q + k and area = p*q. The roots are q and -p, so the answer is always the single positive whole number q. The question asks for the breadth only, so the numeric answer is one value that a blind solver can state without a unit; the stem says 'in cm'. k starts at 2 so the middle term is never written with a coefficient of 1; q runs 2 to 10 and k runs 2 to 8, giving 63 distinct (k, area) stems with area at most 180. The Rand and other contexts are not used here. No mcq is offered, so the two catalogued misconceptions are not attached to distractors; the solution still states the rejection of the negative root explicitly, which addresses 'keeps a solution the problem rules out'. The 'throws away a negative solution without checking' error needs a problem with no sign condition, which belongs to the standard tier (book question 4.4 question 10: a number, answer 7 or -3)."
+}

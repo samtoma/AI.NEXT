@@ -1,0 +1,47 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m4s6-1-3:denomsquare",
+ "kind": "family",
+ "lo_id": "lo:g10m4s6-1-3",
+ "parent_question_id": "q:g10m4s6-1-3:ex4-5-11",
+ "source_page": 95,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "v",
+   "randint": [
+    2,
+    10
+   ]
+  },
+  {
+   "name": "m0",
+   "randint": [
+    2,
+    12
+   ]
+  },
+  {
+   "require": "(m0 * v * v) % 2 == 0",
+   "why": "so that E = m0 * v^2 / 2 is a whole number"
+  },
+  {
+   "name": "en",
+   "let": "m0 * v * v / 2"
+  }
+ ],
+ "constraints": [],
+ "stem": "Solve for $m$ in $v = \\sqrt{\\dfrac{2E}{m}}$ if $v = {=v}$ and $E = {=en}$.",
+ "answer": "m0",
+ "solution": [
+  "Square both sides to remove the square root: $v^2 = \\dfrac{2E}{m}$.",
+  "Multiply both sides by $m$: $v^2m = 2E$.",
+  "Divide both sides by $v^2$: $m = \\dfrac{2E}{v^2}$.",
+  "Substitute $E = {=en}$ and $v = {=v}$: $m = \\dfrac{2({=en})}{{=v}^2} = \\dfrac{{=2*en}}{{=v*v}} = {=m0}$.",
+  "Here $m$ was never squared, so squaring both sides gives a single value and there is no plus-or-minus sign."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced twist: the variable under the root is in the denominator, so the method is square both sides (as in Ex 4.5 Q11) and then rearrange the fraction, and the answer is a single value because m is not the squared quantity. The numeric answer is the whole number m0. E is chosen as m0 * v^2 / 2 and instances with m0 * v^2 odd are rejected so E is always a whole number. Given v is positive, as a square root requires."
+}
