@@ -1177,9 +1177,9 @@ def prepare_ready(P: Paths, S: State, fl: Flow, rep: dict, running: set, opts: O
             rid = r["id"]
             if rid in ONE_OFF or is_running(running, rid) or S.satisfied(r) or S.is_saved(r) or not S.deps_ok(r, opts.honor_gate):
                 continue
-            main = P.here / r["embedded_script"]
-            stale = bool(opts.refresh_stale and main.exists() and copy_status(copies_of(P, r)[0])[0] == "stale")
-            if main.exists() and not stale:
+            have = [c for c in S.copies(r) if c.exists]
+            stale = bool(opts.refresh_stale and have and any(copy_status(c)[0] == "stale" for c in have))
+            if have and not stale:
                 continue
             if fl.dry:
                 if rid not in rep["would_prepare"]:
@@ -1241,15 +1241,23 @@ def ready_list(P: Paths, S: State, running: set, opts: Opts) -> dict:
             if st == "stale":
                 stale.append(c.path.name)
         if scripts:
-            e = {"id": rid, "stage": r["stage"], "order": r.get("order"), "scripts": scripts, "agents": r.get("agents"),
-                 "cost_usd": r.get("cost")}
+            e = {"id": rid, "stage": r["stage"], "copies": [s["copy"] for s in scripts], "agents": r.get("agents"),
+                 "cost_usd": r.get("cost"), "_scripts": scripts}
+            bad = sorted({s["verify"] for s in scripts} - {"ok"})
+            if bad:
+                e["verify"] = bad
             if r.get("s0b") and s0b_running:
                 e["hold"] = "an S0b run is in flight (never two at once)"
             ready.append(e)
     n = len(running)
-    return {"ready": ready, "ready_scripts": [s["path"] for e in ready for s in e["scripts"] if s["verify"] != "broken"],
-            "unprepared": unprepared, "incomplete": incomplete, "stale_copies": stale,
-            "lanes": {"max": MAX_LANES, "in_flight": n, "free": max(0, MAX_LANES - n)}}
+    paths = [s["path"] for e in ready for s in e["_scripts"] if s["verify"] != "broken"]
+    for e in ready:
+        del e["_scripts"]
+    out = {"ready": ready, "ready_scripts": paths, "unprepared": unprepared, "incomplete": incomplete,
+           "lanes": {"max": MAX_LANES, "in_flight": n, "free": max(0, MAX_LANES - n)}}
+    if stale:
+        out["stale_copies"] = stale
+    return out
 
 
 # ================================================================ advance
@@ -1370,10 +1378,19 @@ def advance(run_id: str, wf: str, task_output: Path | None = None, opts: Opts | 
     return (0 if rep["ok"] else 1), finish(rep, fl, P, S, run_id, opts)
 
 
+ORDER = ("run", "wf", "ok", "refused", "dry_run", "saved", "record", "metered", "steps", "counts", "backups", "warnings", "notes",
+         "waiting", "failure", "checkpoint", "prepared", "skipped", "not_ready", "would_prepare", "after_done", "ready",
+         "ready_scripts", "unprepared", "incomplete", "stale_copies", "lanes")
+
+
 def finish(rep: dict, fl: Flow, P: Paths, S: State | None, run_id: str, opts: Opts) -> dict:
     rep["steps"] = fl.steps
     if fl.backups:
         rep["backups"] = list(fl.backups.values())
+    ordered = {k: rep[k] for k in ORDER if k in rep}
+    ordered.update({k: v for k, v in rep.items() if k not in ordered})
+    rep.clear()
+    rep.update(ordered)
     if S is not None and not opts.dry and rep.get("saved") and not rep.get("refused"):
         l = S.ledger(run_id)
         l["after_done"] = bool(rep.get("after_done")) and not rep.get("failure")

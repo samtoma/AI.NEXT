@@ -69,6 +69,14 @@ example's library id, ``"parent_question_id": "expl:<lo tail>:<item>"``. The kin
 never guessed from the id, and the check refuses an id that disagrees with it. Omitting
 ``parent_kind`` means ``"question"``, so every spec written before answer 40 is unchanged.
 
+RECURRING DECIMALS. A marker of kind "recurring" is an exact rational, written either as plain maths (``7/9``,
+``9 + 19/66``) or in the book's own notation: a dot over the first and last digit of the repeating block
+(``0.8\\dot{3}``, ``9.2\\dot{8}\\dot{7}``) or a bar over it (``0.1\\overline{045}``). The evaluator reads the same
+set the app's marker does (those two, ``0.(45)`` and ``0.4545...``) as the exact fraction they stand for, in the
+marker's answer, in the key it prints and in a blind grader's answer. The key prints in the notation the
+author wrote (a stem that asks for a bar keeps its bar); a plain fraction prints with dots. A stem that asks for
+the number "in decimal form" sets ``"form": "decimal"``, or the app accepts a fraction for it (T413).
+
 Templates (``stem``, ``solution[]``, choice texts, ``marker.answer``) interpolate
 ``{=expression}``. A number renders through the house ``num()`` (no trailing
 ``.0``, a Fraction as ``\\frac``, the minus outside the fraction), a string as

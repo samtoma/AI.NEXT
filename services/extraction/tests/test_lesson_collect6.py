@@ -26,7 +26,14 @@ What each test pins (none weakens the three-way rule — each shows a real disag
     regrouped decimal ("1,5; 2" for "5; 1,2") and a misprinted answer still mismatch (g10m3s2-1: 24 of 93 items were held for it);
   * a book solution that writes "\\text{and}" with its spaces lost, a final listing "T_2=23 and T_4=53", and a chain
     "d=T_2-T_1=7-4=3" the solution writes as aligned lines are in the book solution; a chain with a changed link is not;
-  * a printed answer that opens with "=" (the text layer lost "T_n") is read by its right side.
+  * a printed answer that opens with "=" (the text layer lost "T_n") is read by its right side;
+  * Chapter 4 (G2's auto-pass excluded 75 of 88 owed items, most of them correct): a numeric key that is a fraction is typed again as an
+    expression (the app's numeric grader reads "-5/3" as -5); the values a sentence states ("There are 5 tricycles and 2 bicycles.") are the
+    key's list, in order and with nothing else; "±2" is two values; an inequality, a set membership or an interval is compared whole, with its
+    relations, signs, brackets and constraints (a number line's axis and the next part's answer that runs on are not the answer); a list
+    typed "surd" and an inequality list typed "equation", which the app's marker cannot read, are typed again as "values" / "interval". What is
+    NOT accepted is pinned beside it: a changed bound or relation ("a > 0" for "a > 7", "b < -4" for "b > 4"), another bracket, a constraint
+    the key leaves out, an extra number, a reordered list.
 No model is called.
 """
 
@@ -398,23 +405,48 @@ class KindForForm(unittest.TestCase):
         self.assertEqual(x["typing_problems"], [], x["typing_problems"])
 
 
-@unittest.skipUnless(NODE, "node runs the workflow through the stub runtime")
-class ValueLabels(unittest.TestCase):
-    """g10m3s2-1 (Chapter 3, sequences): the book prints "T4 = −28,1; T5 = −33,1; T6 = −38,1" and the key lists "-28,1; -33,1; -38,1".
-    The typing check compared them as unequal and G2's auto-pass excluded 24 of the lesson's 93 items for it. A label is not part of a
-    value; nothing else is touched."""
+def app_marker(spec, tries=()):
+    """The APP'S OWN marker on one spec: {"key_problem": validateKey, "marks": {answer: result}} (the same module the seam test reads)."""
+    script = (EX.parent.parent / "app" / "src" / "lib" / "answer-marker.ts").as_uri()
+    js = (f"const M = await import({json.dumps(script)});\n"
+          "const spec = JSON.parse(process.argv[2]); const tries = JSON.parse(process.argv[3]);\n"
+          "const out = { key_problem: M.validateKey(spec), marks: {} };\n"
+          "if (!out.key_problem) for (const a of tries) out.marks[a] = M.mark(a, spec).result;\n"
+          "console.log(JSON.stringify(out));\n")
+    with tempfile.TemporaryDirectory() as d:
+        f = Path(d, "m.mjs")
+        f.write_text(js)
+        proc = subprocess.run([NODE, "--no-warnings", str(f), json.dumps(spec), json.dumps(list(tries))], capture_output=True, text=True)
+    assert proc.returncode == 0, proc.stderr
+    return json.loads(proc.stdout)
+
+
+class TypedItem:
+    """One expression / numeric item through the workflow's typing check (no model: the stub runtime answers from the fixture)."""
 
     READ = "does not read as"
 
-    def typed(self, key, printed, final=None, solution=None, kind="values", variables=(), stem="Write down the next terms.", blind=None):
+    def typed(self, key, printed, final=None, solution=None, kind="values", variables=(), stem="Write down the next terms.",
+              blind=None, ref="Ex3-1:5", answer_type="expression", unit=None, form=None):
         final = final if final is not None else key
-        it = item("Ex3-1:5", stem, solution if solution is not None else [f"${final}$"], printed)
-        t = typing("Ex3-1:5", key, f"${final}$", "expression", marker_kind=kind, variables=list(variables))
-        rep = run(args_for([it]), responses([t], [{"ref": "Ex3-1:5", "final_answer": blind or key, "markable": True}]))
-        return {x["ref"]: x for x in rep["result"]["lessons"][0]["items"]}["Ex3-1:5"]
+        it = item(ref, stem, solution if solution is not None else [f"${final}$"], printed)
+        extra = {"unit": unit} if unit else {}
+        if form:
+            extra["form"] = form
+        marker = {"marker_kind": kind, "variables": list(variables)} if answer_type == "expression" else {}
+        t = typing(ref, key, f"${final}$", answer_type, **marker, **extra)
+        rep = run(args_for([it]), responses([t], [{"ref": ref, "final_answer": blind or key, "markable": True}]))
+        return {x["ref"]: x for x in rep["result"]["lessons"][0]["items"]}[ref]
 
     def reads(self, x):
         return not any(self.READ in p for p in x["typing_problems"])
+
+
+@unittest.skipUnless(NODE, "node runs the workflow through the stub runtime")
+class ValueLabels(TypedItem, unittest.TestCase):
+    """g10m3s2-1 (Chapter 3, sequences): the book prints "T4 = −28,1; T5 = −33,1; T6 = −38,1" and the key lists "-28,1; -33,1; -38,1".
+    The typing check compared them as unequal and G2's auto-pass excluded 24 of the lesson's 93 items for it. A label is not part of a
+    value; nothing else is touched."""
 
     # ------------------------------------------------------------------ the labels are not part of the values
     def test_a_sequence_printed_with_a_label_on_each_term_is_the_keys_list(self):
