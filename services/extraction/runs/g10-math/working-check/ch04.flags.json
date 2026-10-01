@@ -1,0 +1,843 @@
+{
+ "format": "ainext.working-check/1",
+ "book": "g10-math",
+ "chapter": 4,
+ "prompts_version": "sw-v3",
+ "rule": "Each flag is a backlog item for a human (answer 30; answer 37c). Nothing here was corrected: the content stays as the book and G2 have it until a human decides.",
+ "passes": [
+  "A",
+  "B"
+ ],
+ "single_pass_ids": [
+  "q:g10m4s2-1-1:ex4-1-5",
+  "q:g10m4s4-1-3:ex4-7-3"
+ ],
+ "solutions": 269,
+ "skipped": [],
+ "verdicts": {
+  "consistent": 240,
+  "flagged": 29,
+  "unclear": 0
+ },
+ "flags": [
+  {
+   "solution_id": "expl:g10m4s3-1-3:ex4-7-12w",
+   "lo": "lo:g10m4s3-1-3",
+   "step": 1,
+   "kind": "other",
+   "where": "working",
+   "quote": "because the numerator cannot be zero",
+   "expected": "the denominator cannot be zero",
+   "why": "The restrictions x≠4 and x≠-2 come from the denominator being zero, not the numerator.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m4s2-1-1:ex4-7-1h",
+   "lo": "lo:g10m4s2-1-1",
+   "step": 1,
+   "kind": "copy",
+   "where": "unsure",
+   "quote": "2-3(k+3)",
+   "expected": "2-3(k+2)",
+   "why": "The question gives 2-3(k+2) but the working copies it as 2-3(k+3); the key -2 matches the working's version.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m4s2-1-2:ex4-1-25",
+   "lo": "lo:g10m4s2-1-2",
+   "step": 1,
+   "kind": "sign",
+   "where": "working",
+   "quote": "a\\neq--3",
+   "expected": "a \\neq -3",
+   "why": "The restriction is written with a doubled minus sign; the denominator 2a+6 is zero at a = -3, not at --3.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m4s3-1-2:ex4-2-2i",
+   "lo": "lo:g10m4s3-1-2",
+   "step": 1,
+   "kind": "label",
+   "where": "working",
+   "quote": "y&=-\\frac{9}{2}",
+   "expected": "x = -9/2",
+   "why": "The variable changes from x to y when solving 2x+9=0; the question's variable is x.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m4s3-1-2:ex4-7-12v",
+   "lo": "lo:g10m4s3-1-2",
+   "step": 1,
+   "kind": "copy",
+   "where": "working",
+   "quote": "x=\\frac{1}{2}y",
+   "expected": "x = 1/2",
+   "why": "The factor 2x-1=0 gives x=1/2; the stray y after the fraction is not in the question or earlier lines.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ],
+   "also_kinds": [
+    "label"
+   ]
+  },
+  {
+   "solution_id": "q:g10m4s3-1-2:ex4-7-2i",
+   "lo": "lo:g10m4s3-1-2",
+   "step": 1,
+   "kind": "other",
+   "where": "working",
+   "quote": "(x-2)(x-1)&=",
+   "expected": "(x-2)(x-1) = 0",
+   "why": "The factorised line ends with an equals sign and no right-hand side, so the zero-product step is incomplete.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ],
+   "also_kinds": [
+    "copy"
+   ]
+  },
+  {
+   "solution_id": "q:g10m4s3-1-2:ex4-7-2k",
+   "lo": "lo:g10m4s3-1-2",
+   "step": 1,
+   "kind": "arithmetic",
+   "where": "working",
+   "quote": "0&=(2x+9)(x-2)",
+   "expected": "factors whose product is 2x^2-5x-18",
+   "why": "(2x+9)(x-2) expands to 2x^2+5x-18, not 2x^2-5x-18, so the factorisation and the roots drawn from it do not follow.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m4s3-1-3:ex4-2-3b",
+   "lo": "lo:g10m4s3-1-3",
+   "step": 2,
+   "kind": "arithmetic",
+   "where": "unsure",
+   "quote": "(5z+1)(2z-1)&=0",
+   "expected": "10z^2-3z+1",
+   "why": "(5z+1)(2z-1) expands to 10z^2-3z-1, not the preceding line 10z^2-3z+1; the question's minus sign gives +1 and no real roots.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ],
+   "also_kinds": [
+    "sign"
+   ]
+  },
+  {
+   "solution_id": "q:g10m4s3-1-3:ex4-7-12e",
+   "lo": "lo:g10m4s3-1-3",
+   "step": 2,
+   "kind": "sign",
+   "where": "question",
+   "quote": "2\\left(\\frac{6}{a}-1\\right)",
+   "expected": "2(6/a + 1)",
+   "why": "The question has +1 inside the bracket, but the working copies it as -1 and then continues with -2.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m4s3-1-3:ex4-7-12h",
+   "lo": "lo:g10m4s3-1-3",
+   "step": 1,
+   "kind": "label",
+   "where": "question",
+   "quote": "\\therefore b=\\pm\\sqrt{3}",
+   "expected": "a",
+   "why": "The question's variable is a, but the conclusion (and key) switches to b.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m4s4-1-1:ex4-7-6c",
+   "lo": "lo:g10m4s4-1-1",
+   "step": 1,
+   "kind": "label",
+   "where": "working",
+   "quote": "Make $y$ the subject of the first equation:",
+   "expected": "second equation",
+   "why": "Step 2 rearranges 17=3x-y, which is the second equation, not the first.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m4s4-1-2:ex4-3-4h",
+   "lo": "lo:g10m4s4-1-2",
+   "step": 7,
+   "kind": "label",
+   "where": "question",
+   "quote": "Therefore $a=\\frac{16}{3}",
+   "expected": "question names x and y",
+   "why": "The question asks for x and y, but the equations and working use a and b.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m4s4-1-2:ex4-7-6i",
+   "lo": "lo:g10m4s4-1-2",
+   "step": 2,
+   "kind": "sign",
+   "where": "working",
+   "quote": "6(4)x-3(4)y",
+   "expected": "+3(4)y",
+   "why": "The first equation has +3y, so multiplying by 4 gives +3(4)y, not -3(4)y.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m4s4-1-2:ex4-7-6i",
+   "lo": "lo:g10m4s4-1-2",
+   "step": 8,
+   "kind": "sign",
+   "where": "working",
+   "quote": "6x-3(-5)",
+   "expected": "6x+3(-5)=-63",
+   "why": "Substituting y=-5 into 6x+3y gives 6x+3(-5), not 6x-3(-5); the next line also does not follow from it.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m4s4-1-3:ex4-3-5d",
+   "lo": "lo:g10m4s4-1-3",
+   "step": 8,
+   "kind": "label",
+   "where": "working",
+   "quote": "x&=-2(2)+5",
+   "expected": "y = -2(2)+5",
+   "why": "Substituting x=2 into y=-2x+5 gives y, but the line is labelled x, which then conflicts with x=2.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m4s5-1-2:ex4-4-13",
+   "lo": "lo:g10m4s5-1-2",
+   "step": 5,
+   "kind": "label",
+   "where": "working",
+   "quote": "Substitute into first equation:",
+   "expected": "second equation (x-y=2)",
+   "why": "The next line, 11-y=2, comes from the second equation x-y=2, not the first equation x+y=20.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m4s5-1-2:ex4-4-13",
+   "lo": "lo:g10m4s5-1-2",
+   "step": 6,
+   "kind": "other",
+   "where": "working",
+   "quote": "11-y=2",
+   "expected": "11+y=20 (the first equation)",
+   "why": "Step 5 says to substitute into the first equation, but this line substitutes into the second equation, x-y=2.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A"
+   ]
+  },
+  {
+   "solution_id": "q:g10m4s5-1-3:ex4-4-14",
+   "lo": "lo:g10m4s5-1-3",
+   "step": 5,
+   "kind": "other",
+   "where": "working",
+   "quote": "the denominator is not 1 less than the numerator",
+   "expected": "denominator is not 1 more than the numerator",
+   "why": "The question says the denominator is 1 more than the numerator, so the rejected fraction 2 fails that condition, not a 'less' condition.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m4s5-1-3:ex4-7-7h",
+   "lo": "lo:g10m4s5-1-3",
+   "step": 1,
+   "kind": "other",
+   "where": "working",
+   "quote": "The new price of $x$ chocolates is $\\text{R300}$",
+   "expected": "R300 buys 300/x chocolates at the old price",
+   "why": "x is the price of one chocolate; R300 buys 300/x chocolates, not x, and the next step uses 300/x.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ],
+   "also_kinds": [
+    "label"
+   ]
+  },
+  {
+   "solution_id": "q:g10m4s6-1-1:ex4-5-2",
+   "lo": "lo:g10m4s6-1-1",
+   "step": 1,
+   "kind": "copy",
+   "where": "working",
+   "quote": "s&=ut+\\frac{1}{2}a^{2}",
+   "expected": "s=ut+\\frac{1}{2}at^{2}",
+   "why": "The first line drops the factor t: the question has s=ut+½at², but the working writes ½a².",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m4s6-1-2:ex4-5-16",
+   "lo": "lo:g10m4s6-1-2",
+   "step": 1,
+   "kind": "sign",
+   "where": "working",
+   "quote": "x^2-ax-3x+a+4&=0",
+   "expected": "x^2-ax-3x-a-4=0",
+   "why": "Moving 4+a to the left side should give −a−4; the signs of a and 4 are flipped.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "A",
+    "B"
+   ],
+   "also_kinds": [
+    "arithmetic"
+   ]
+  },
+  {
+   "solution_id": "q:g10m4s6-1-2:ex4-7-12s",
+   "lo": "lo:g10m4s6-1-2",
+   "step": 1,
+   "kind": "arithmetic",
+   "where": "working",
+   "quote": "\\therefore x&=\\frac{3}{8}",
+   "expected": "x = 8/3",
+   "why": "From 3x-8=0 it follows that x=8/3, not 3/8; the fraction is inverted.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m4s6-1-3:ex4-5-13",
+   "lo": "lo:g10m4s6-1-3",
+   "step": 1,
+   "kind": "sign",
+   "where": "working",
+   "quote": "A-\\pi R^{2}&=\\pi r^{2}",
+   "expected": "A-\\pi R^{2}=-\\pi r^{2}",
+   "why": "Subtracting πR² from both sides of A=πR²−πr² gives −πr², not +πr²; the sign is lost and carries into later lines.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A"
+   ]
+  },
+  {
+   "solution_id": "q:g10m4s6-1-4:ex4-7-8h",
+   "lo": "lo:g10m4s6-1-4",
+   "step": 1,
+   "kind": "other",
+   "where": "working",
+   "quote": "1-r&\\frac{a}{S}",
+   "expected": "1-r=\\frac{a}{S}",
+   "why": "The line has no equals sign between 1-r and a/S, so the step as written states no relation.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A"
+   ]
+  },
+  {
+   "solution_id": "q:g10m4s7-1-1:ex4-6-2i",
+   "lo": "lo:g10m4s7-1-1",
+   "step": 1,
+   "kind": "sign",
+   "where": "working",
+   "quote": "5x-1&\\ge-2(1-2x)",
+   "expected": "inequality reverses when multiplying by -6: \\le",
+   "why": "Multiplying both sides by -6 (negative) must reverse the inequality, but \\ge is kept, so x\\ge-1 does not follow.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m4s7-1-1:ex4-6-2k",
+   "lo": "lo:g10m4s7-1-1",
+   "step": 1,
+   "kind": "label",
+   "where": "question",
+   "quote": "y&<\\frac{6}{7}",
+   "expected": "variable x as the question says",
+   "why": "The question says solve for x, but the expression and the whole working use y.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m4s7-1-2:ex4-6-1a",
+   "lo": "lo:g10m4s7-1-2",
+   "step": 1,
+   "kind": "other",
+   "where": "unsure",
+   "quote": "x<-1\\text{ and }x\\geq6",
+   "expected": "x<-1 or x\\geq6",
+   "why": "The figure shades two separate rays, a union; no x satisfies both x<-1 and x\\geq6, so 'and' is wrong.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m4s7-1-2:ex4-7-9a",
+   "lo": "lo:g10m4s7-1-2",
+   "step": 1,
+   "kind": "other",
+   "where": "unsure",
+   "quote": "x<-1\\text{ and }x\\geq4",
+   "expected": "x < -1 or x >= 4",
+   "why": "The figure shades both left of -1 and from 4 rightwards, a union, so the connective should be 'or'; no x satisfies both.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m4s7-1-2:ex4-7-9c",
+   "lo": "lo:g10m4s7-1-2",
+   "step": 1,
+   "kind": "wrong_value",
+   "where": "working",
+   "quote": "-1<x\\leq-2",
+   "expected": "-1 < x \\leq 2",
+   "why": "The figure shows a closed circle at 2 as the upper end, not -2; -1<x\\leq-2 is also impossible.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m4s7-1-3:ex4-6-2j",
+   "lo": "lo:g10m4s7-1-3",
+   "step": 2,
+   "kind": "final_answer",
+   "where": "working",
+   "quote": "In interval notation: $[1, 12]$",
+   "expected": "1\\ge x\\ge-12 gives [-12, 1]",
+   "why": "Step 1 gives -12 \\le x \\le 1, so the interval [1, 12] does not match the solved inequality.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ],
+   "also_kinds": [
+    "other"
+   ]
+  },
+  {
+   "solution_id": "q:g10m4s7-1-3:ex4-6-2l",
+   "lo": "lo:g10m4s7-1-3",
+   "step": 1,
+   "kind": "label",
+   "where": "question",
+   "quote": "0&\\geq&y&>&-4",
+   "expected": "variable x as named in the question",
+   "why": "The question says solve for x, but the inequality and the whole working are in y.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  }
+ ],
+ "flagged_solutions": 29,
+ "unclear": [],
+ "unchecked": [],
+ "problems": [],
+ "checked_ids": [
+  "expl:g10m4s3-1-2:ex4-7-12x",
+  "expl:g10m4s3-1-3:ex4-7-12w",
+  "expl:g10m4s6-1-2:ex4-7-8g",
+  "q:g10m4s2-1-1:ex4-1-1",
+  "q:g10m4s2-1-1:ex4-1-10",
+  "q:g10m4s2-1-1:ex4-1-11",
+  "q:g10m4s2-1-1:ex4-1-12",
+  "q:g10m4s2-1-1:ex4-1-13",
+  "q:g10m4s2-1-1:ex4-1-14",
+  "q:g10m4s2-1-1:ex4-1-16",
+  "q:g10m4s2-1-1:ex4-1-17",
+  "q:g10m4s2-1-1:ex4-1-18",
+  "q:g10m4s2-1-1:ex4-1-19",
+  "q:g10m4s2-1-1:ex4-1-2",
+  "q:g10m4s2-1-1:ex4-1-20",
+  "q:g10m4s2-1-1:ex4-1-21",
+  "q:g10m4s2-1-1:ex4-1-22",
+  "q:g10m4s2-1-1:ex4-1-29",
+  "q:g10m4s2-1-1:ex4-1-3",
+  "q:g10m4s2-1-1:ex4-1-30",
+  "q:g10m4s2-1-1:ex4-1-31",
+  "q:g10m4s2-1-1:ex4-1-4",
+  "q:g10m4s2-1-1:ex4-1-5",
+  "q:g10m4s2-1-1:ex4-1-6",
+  "q:g10m4s2-1-1:ex4-1-7",
+  "q:g10m4s2-1-1:ex4-1-8",
+  "q:g10m4s2-1-1:ex4-7-1a",
+  "q:g10m4s2-1-1:ex4-7-1b",
+  "q:g10m4s2-1-1:ex4-7-1c",
+  "q:g10m4s2-1-1:ex4-7-1d",
+  "q:g10m4s2-1-1:ex4-7-1e",
+  "q:g10m4s2-1-1:ex4-7-1f",
+  "q:g10m4s2-1-1:ex4-7-1g",
+  "q:g10m4s2-1-1:ex4-7-1h",
+  "q:g10m4s2-1-1:ex4-7-2d",
+  "q:g10m4s2-1-1:ex4-7-2f",
+  "q:g10m4s2-1-1:ex4-7-2l",
+  "q:g10m4s2-1-1:we01",
+  "q:g10m4s2-1-2:ex4-1-15",
+  "q:g10m4s2-1-2:ex4-1-23",
+  "q:g10m4s2-1-2:ex4-1-25",
+  "q:g10m4s2-1-2:ex4-1-27",
+  "q:g10m4s2-1-2:ex4-1-35",
+  "q:g10m4s2-1-2:ex4-7-1j",
+  "q:g10m4s2-1-2:ex4-7-1l",
+  "q:g10m4s2-1-2:ex4-7-1m",
+  "q:g10m4s2-1-2:ex4-7-2g",
+  "q:g10m4s2-1-2:ex4-7-2h",
+  "q:g10m4s2-1-2:we02",
+  "q:g10m4s2-1-3:ex4-1-24",
+  "q:g10m4s2-1-3:ex4-1-26",
+  "q:g10m4s2-1-3:ex4-1-28",
+  "q:g10m4s2-1-3:ex4-1-32",
+  "q:g10m4s2-1-3:ex4-1-33",
+  "q:g10m4s2-1-3:ex4-1-34",
+  "q:g10m4s2-1-3:ex4-1-9",
+  "q:g10m4s2-1-3:ex4-7-12a",
+  "q:g10m4s2-1-3:ex4-7-1i",
+  "q:g10m4s2-1-3:ex4-7-1k",
+  "q:g10m4s2-1-3:we03",
+  "q:g10m4s3-1-1:ex4-2-1a",
+  "q:g10m4s3-1-1:ex4-2-1b",
+  "q:g10m4s3-1-1:ex4-2-1c",
+  "q:g10m4s3-1-2:ex4-2-2a",
+  "q:g10m4s3-1-2:ex4-2-2b",
+  "q:g10m4s3-1-2:ex4-2-2c",
+  "q:g10m4s3-1-2:ex4-2-2d",
+  "q:g10m4s3-1-2:ex4-2-2e",
+  "q:g10m4s3-1-2:ex4-2-2f",
+  "q:g10m4s3-1-2:ex4-2-2g",
+  "q:g10m4s3-1-2:ex4-2-2h",
+  "q:g10m4s3-1-2:ex4-2-2i",
+  "q:g10m4s3-1-2:ex4-2-2j",
+  "q:g10m4s3-1-2:ex4-2-2k",
+  "q:g10m4s3-1-2:ex4-2-2l",
+  "q:g10m4s3-1-2:ex4-2-2m",
+  "q:g10m4s3-1-2:ex4-2-2n",
+  "q:g10m4s3-1-2:ex4-2-2o",
+  "q:g10m4s3-1-2:ex4-2-2p",
+  "q:g10m4s3-1-2:ex4-2-2q",
+  "q:g10m4s3-1-2:ex4-2-2r",
+  "q:g10m4s3-1-2:ex4-2-2s",
+  "q:g10m4s3-1-2:ex4-2-2t",
+  "q:g10m4s3-1-2:ex4-2-2u",
+  "q:g10m4s3-1-2:ex4-2-2v",
+  "q:g10m4s3-1-2:ex4-2-2w",
+  "q:g10m4s3-1-2:ex4-2-2x",
+  "q:g10m4s3-1-2:ex4-2-2y",
+  "q:g10m4s3-1-2:ex4-7-12r",
+  "q:g10m4s3-1-2:ex4-7-12u",
+  "q:g10m4s3-1-2:ex4-7-12v",
+  "q:g10m4s3-1-2:ex4-7-2a",
+  "q:g10m4s3-1-2:ex4-7-2b",
+  "q:g10m4s3-1-2:ex4-7-2c",
+  "q:g10m4s3-1-2:ex4-7-2e",
+  "q:g10m4s3-1-2:ex4-7-2i",
+  "q:g10m4s3-1-2:ex4-7-2j",
+  "q:g10m4s3-1-2:ex4-7-2k",
+  "q:g10m4s3-1-2:we04",
+  "q:g10m4s3-1-2:we05",
+  "q:g10m4s3-1-3:ex4-2-3a",
+  "q:g10m4s3-1-3:ex4-2-3b",
+  "q:g10m4s3-1-3:ex4-2-3c",
+  "q:g10m4s3-1-3:ex4-2-3d",
+  "q:g10m4s3-1-3:ex4-2-3f",
+  "q:g10m4s3-1-3:ex4-2-3g",
+  "q:g10m4s3-1-3:ex4-2-3h",
+  "q:g10m4s3-1-3:ex4-2-3i",
+  "q:g10m4s3-1-3:ex4-2-3j",
+  "q:g10m4s3-1-3:ex4-2-3k",
+  "q:g10m4s3-1-3:ex4-2-3l",
+  "q:g10m4s3-1-3:ex4-2-3m",
+  "q:g10m4s3-1-3:ex4-2-3n",
+  "q:g10m4s3-1-3:ex4-7-12b",
+  "q:g10m4s3-1-3:ex4-7-12c",
+  "q:g10m4s3-1-3:ex4-7-12d",
+  "q:g10m4s3-1-3:ex4-7-12e",
+  "q:g10m4s3-1-3:ex4-7-12f",
+  "q:g10m4s3-1-3:ex4-7-12g",
+  "q:g10m4s3-1-3:ex4-7-12h",
+  "q:g10m4s3-1-3:ex4-7-12i",
+  "q:g10m4s3-1-3:ex4-7-12j",
+  "q:g10m4s3-1-3:ex4-7-12k",
+  "q:g10m4s3-1-3:ex4-7-12q",
+  "q:g10m4s4-1-1:ex4-3-4a",
+  "q:g10m4s4-1-1:ex4-3-4b",
+  "q:g10m4s4-1-1:ex4-3-4c",
+  "q:g10m4s4-1-1:ex4-3-4d",
+  "q:g10m4s4-1-1:ex4-3-4f",
+  "q:g10m4s4-1-1:ex4-7-6b",
+  "q:g10m4s4-1-1:ex4-7-6c",
+  "q:g10m4s4-1-1:ex4-7-6g",
+  "q:g10m4s4-1-1:ex4-7-6p",
+  "q:g10m4s4-1-1:we06",
+  "q:g10m4s4-1-1:we07",
+  "q:g10m4s4-1-2:ex4-3-4e",
+  "q:g10m4s4-1-2:ex4-3-4g",
+  "q:g10m4s4-1-2:ex4-3-4h",
+  "q:g10m4s4-1-2:ex4-3-4i",
+  "q:g10m4s4-1-2:ex4-3-4j",
+  "q:g10m4s4-1-2:ex4-3-4k",
+  "q:g10m4s4-1-2:ex4-7-6a",
+  "q:g10m4s4-1-2:ex4-7-6d",
+  "q:g10m4s4-1-2:ex4-7-6e",
+  "q:g10m4s4-1-2:ex4-7-6f",
+  "q:g10m4s4-1-2:ex4-7-6h",
+  "q:g10m4s4-1-2:ex4-7-6i",
+  "q:g10m4s4-1-2:ex4-7-6j",
+  "q:g10m4s4-1-2:ex4-7-6k",
+  "q:g10m4s4-1-2:ex4-7-6l",
+  "q:g10m4s4-1-2:we08",
+  "q:g10m4s4-1-2:we09",
+  "q:g10m4s4-1-3:ex4-3-1",
+  "q:g10m4s4-1-3:ex4-3-3",
+  "q:g10m4s4-1-3:ex4-3-5a",
+  "q:g10m4s4-1-3:ex4-3-5b",
+  "q:g10m4s4-1-3:ex4-3-5c",
+  "q:g10m4s4-1-3:ex4-3-5d",
+  "q:g10m4s4-1-3:ex4-3-5e",
+  "q:g10m4s4-1-3:ex4-7-3",
+  "q:g10m4s4-1-3:ex4-7-5",
+  "q:g10m4s4-1-3:we10",
+  "q:g10m4s5-1-1:ex4-4-1",
+  "q:g10m4s5-1-1:ex4-4-12",
+  "q:g10m4s5-1-1:ex4-4-17",
+  "q:g10m4s5-1-1:ex4-4-2",
+  "q:g10m4s5-1-1:ex4-4-6",
+  "q:g10m4s5-1-1:ex4-4-8",
+  "q:g10m4s5-1-1:ex4-7-7a",
+  "q:g10m4s5-1-1:ex4-7-7e",
+  "q:g10m4s5-1-1:ex4-7-7f",
+  "q:g10m4s5-1-1:ex4-7-7g",
+  "q:g10m4s5-1-1:ex4-7-7k",
+  "q:g10m4s5-1-2:ex4-4-11",
+  "q:g10m4s5-1-2:ex4-4-13",
+  "q:g10m4s5-1-2:ex4-4-15",
+  "q:g10m4s5-1-2:ex4-4-16",
+  "q:g10m4s5-1-2:ex4-4-3",
+  "q:g10m4s5-1-2:ex4-4-4",
+  "q:g10m4s5-1-2:ex4-4-7",
+  "q:g10m4s5-1-2:ex4-7-7b",
+  "q:g10m4s5-1-2:ex4-7-7c",
+  "q:g10m4s5-1-2:ex4-7-7d",
+  "q:g10m4s5-1-2:ex4-7-7i",
+  "q:g10m4s5-1-2:ex4-7-7j",
+  "q:g10m4s5-1-2:we11",
+  "q:g10m4s5-1-2:we12",
+  "q:g10m4s5-1-2:we13",
+  "q:g10m4s5-1-3:ex4-4-10",
+  "q:g10m4s5-1-3:ex4-4-14",
+  "q:g10m4s5-1-3:ex4-4-18",
+  "q:g10m4s5-1-3:ex4-4-5",
+  "q:g10m4s5-1-3:ex4-4-9",
+  "q:g10m4s5-1-3:ex4-7-7h",
+  "q:g10m4s5-1-3:we14",
+  "q:g10m4s6-1-1:ex4-5-1",
+  "q:g10m4s6-1-1:ex4-5-14",
+  "q:g10m4s6-1-1:ex4-5-18",
+  "q:g10m4s6-1-1:ex4-5-2",
+  "q:g10m4s6-1-1:ex4-5-3",
+  "q:g10m4s6-1-1:ex4-5-6",
+  "q:g10m4s6-1-1:ex4-5-7",
+  "q:g10m4s6-1-1:ex4-7-8b",
+  "q:g10m4s6-1-1:ex4-7-8c",
+  "q:g10m4s6-1-1:ex4-7-8d",
+  "q:g10m4s6-1-1:ex4-7-8f",
+  "q:g10m4s6-1-1:we15",
+  "q:g10m4s6-1-2:ex4-5-10",
+  "q:g10m4s6-1-2:ex4-5-16",
+  "q:g10m4s6-1-2:ex4-5-17",
+  "q:g10m4s6-1-2:ex4-5-9",
+  "q:g10m4s6-1-2:ex4-7-12s",
+  "q:g10m4s6-1-2:we16",
+  "q:g10m4s6-1-3:ex4-5-11",
+  "q:g10m4s6-1-3:ex4-5-13",
+  "q:g10m4s6-1-3:ex4-5-20",
+  "q:g10m4s6-1-3:ex4-5-5",
+  "q:g10m4s6-1-3:ex4-7-8i",
+  "q:g10m4s6-1-4:ex4-5-12",
+  "q:g10m4s6-1-4:ex4-5-19",
+  "q:g10m4s6-1-4:ex4-5-21",
+  "q:g10m4s6-1-4:ex4-5-4",
+  "q:g10m4s6-1-4:ex4-5-8",
+  "q:g10m4s6-1-4:ex4-7-8e",
+  "q:g10m4s6-1-4:ex4-7-8h",
+  "q:g10m4s7-1-1:ex4-6-2a",
+  "q:g10m4s7-1-1:ex4-6-2b",
+  "q:g10m4s7-1-1:ex4-6-2c",
+  "q:g10m4s7-1-1:ex4-6-2d",
+  "q:g10m4s7-1-1:ex4-6-2e",
+  "q:g10m4s7-1-1:ex4-6-2h",
+  "q:g10m4s7-1-1:ex4-6-2i",
+  "q:g10m4s7-1-1:ex4-6-2k",
+  "q:g10m4s7-1-1:ex4-6-3a",
+  "q:g10m4s7-1-1:ex4-6-3b",
+  "q:g10m4s7-1-1:ex4-6-3c",
+  "q:g10m4s7-1-1:ex4-6-3d",
+  "q:g10m4s7-1-1:ex4-6-3e",
+  "q:g10m4s7-1-1:ex4-6-3f",
+  "q:g10m4s7-1-1:ex4-7-12l",
+  "q:g10m4s7-1-1:ex4-7-12m",
+  "q:g10m4s7-1-1:ex4-7-12n",
+  "q:g10m4s7-1-1:ex4-7-12o",
+  "q:g10m4s7-1-1:ex4-7-12y",
+  "q:g10m4s7-1-1:we17",
+  "q:g10m4s7-1-1:we18",
+  "q:g10m4s7-1-2:ex4-6-1a",
+  "q:g10m4s7-1-2:ex4-6-1b",
+  "q:g10m4s7-1-2:ex4-6-1c",
+  "q:g10m4s7-1-2:ex4-6-1d",
+  "q:g10m4s7-1-2:ex4-6-4a",
+  "q:g10m4s7-1-2:ex4-7-10a",
+  "q:g10m4s7-1-2:ex4-7-10b",
+  "q:g10m4s7-1-2:ex4-7-10c",
+  "q:g10m4s7-1-2:ex4-7-11a",
+  "q:g10m4s7-1-2:ex4-7-11c",
+  "q:g10m4s7-1-2:ex4-7-9a",
+  "q:g10m4s7-1-2:ex4-7-9b",
+  "q:g10m4s7-1-2:ex4-7-9c",
+  "q:g10m4s7-1-3:ex4-6-2f",
+  "q:g10m4s7-1-3:ex4-6-2g",
+  "q:g10m4s7-1-3:ex4-6-2j",
+  "q:g10m4s7-1-3:ex4-6-2l",
+  "q:g10m4s7-1-3:ex4-6-2m",
+  "q:g10m4s7-1-3:ex4-6-3g",
+  "q:g10m4s7-1-3:ex4-6-3h",
+  "q:g10m4s7-1-3:ex4-7-10d",
+  "q:g10m4s7-1-3:ex4-7-12p",
+  "q:g10m4s7-1-3:we19"
+ ],
+ "runs": [
+  "10b72dd6ed9b7203f81b60414a19716b0657438d154127789c28b3b36aff6d92",
+  "f751f2d5e599bccf47df7a3a6594afe7fdf9b36adce6b1560d5f2abb1c29d00d"
+ ]
+}
