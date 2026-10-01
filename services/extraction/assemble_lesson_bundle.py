@@ -144,7 +144,8 @@ _WORD = re.compile(r"[A-Za-z]{3,}")
 RESIDUAL_DECIMAL = re.compile(r"\d(?:,|\{,\})\d")
 # display-only environments KaTeX refuses inside the app's inline `$…$` (align, align*, eqnarray…)
 DISPLAY_ENV = re.compile(r"\\(begin|end)\{(align\*?|eqnarray\*?|gather\*?|multline\*?)\}")
-_ALIGN_ENV = re.compile(r"\\(begin|end)\{align\*?\}")
+_ALIGN_ENV = re.compile(r"\\(begin|end)\{(align|gather)\*?\}")
+_INLINE_ENV = {"align": "aligned", "gather": "gathered"}      # KaTeX draws align*/gather* only in display mode; aligned/gathered inline
 
 
 def _mathy(inner: str) -> bool:
@@ -247,7 +248,7 @@ def normalise(text: str | None) -> tuple[str | None, Counter]:
     counts: Counter = Counter()
     if not text:
         return text, counts
-    text, n0 = _ALIGN_ENV.subn(lambda m: f"\\{m.group(1)}{{aligned}}", text)
+    text, n0 = _ALIGN_ENV.subn(lambda m: f"\\{m.group(1)}{{{_INLINE_ENV[m.group(2)]}}}", text)
     if n0:
         counts["aligned"] += n0 // 2 or 1
     text = _pair_commas(text, counts)
