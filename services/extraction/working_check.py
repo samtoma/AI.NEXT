@@ -30,7 +30,9 @@ must hold. The book rounds on purpose with "=" ("\\sqrt{90} = 9.5"): a right sid
 is the left side rounded to d places is not a flag. A side with a letter, a unit, a pair or anything
 the evaluator does not know is skipped, never guessed. It catches "9 − 5 = 5" and a zero denominator
 (the §8.3 misprint m = (3−7)/(3−3)); it cannot catch a wrong value substituted from the question —
-that is the agent's job.
+that is the agent's job. One more free rule (sw-v2, `precheck_stub`): a book question whose working holds
+no maths at all and never states a digit of its numeric key is a stub ("First draw a sketch: [figure]"
+for a length the key gives as √34): a final_answer flag, source "stub".
 
 THE AGENT (runbook/working-check.workflow.js, prompts sw-v2). One Sonnet agent per BATCH of up to 8 solutions
 reads each one's question, its options (multiple choice), the key and the numbered working (one shard each,
@@ -51,7 +53,7 @@ flags. Measured sw-v1 precision on the same chapter: 23 of 25 flags were real bo
 came from the shard (it omitted the multiple-choice options), which sw-v2 now prints.
 
 WHAT COMES OUT (`collect`): runs/<book>/working-check/chNN.flags.json, format
-"ainext.working-check/1": every flagged step with its sources (agent, numeric, or both), the agents'
+"ainext.working-check/1": every flagged step with its sources (agent, numeric, stub), the agents'
 verdicts, what could not be checked (`unclear`, an agent that returned nothing → `unchecked`) and what
 was `skipped`. Each flag is a backlog item ("working step flagged — needs a human"), never applied to
 the content: the content stays exactly as the book (and G2) has it until a human decides.
@@ -70,10 +72,22 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 
-PROMPTS_VERSION = "sw-v1"
+PROMPTS_VERSION = "sw-v2"
 FORMAT = "ainext.working-check/1"
 MAX_PER_RUN = 300                       # keeps a part's compact args well under packet_ref.COMPACT_LIMIT
 FLAG_KINDS = ("wrong_value", "arithmetic", "sign", "label", "copy", "final_answer", "other")
+FLAG_WHERE = ("working", "question", "unsure")      # where the fault sits (sw-v2): a step, or the question text
+BATCH = 8                               # solutions per checking agent: shares the ~$0.09 fixed cost of an agent
+FIG_CAP = 3                             # figure images one agent may open, all in one turn
+EFFORT = "medium"                       # the agents' reasoning effort ("low" once a calibration run allows it)
+MODEL = "sonnet"
+EFFORTS = ("low", "medium", "high")
+MODELS = ("sonnet", "haiku")
+# What one checking agent cost (API-equivalent USD per solution), for the fan-out plan. sw-v1 measured: 31.0 / 192.
+# sw-v2 is MODELLED from sw-v1's measured token mix (fixed 30K cache-write + 95K cache-read per agent shared by a
+# batch; thinking 1.2-3.4K tokens per solution at medium..default effort; at most 3 images per batch) and stays
+# unvalidated until the calibration subset run (ch08.calibration.json, 51 solutions) is metered.
+MEASURED_SW_V1_PER_SOLUTION = 0.161
 
 
 # ============================================================================ the solutions
@@ -85,6 +99,17 @@ def _step_texts(q: dict) -> list[str]:
     return out
 
 
+def _options(choices) -> list[tuple[str, str]]:
+    """[(key, text)] of a multiple-choice question: `choices` is a list of {key, text}, or a dict whose
+    `options` is that list (the dict also carries `less_specific`, a grading hint the checker does not need).
+    Any other shape (a short-answer `marker`, null) has no options."""
+    if isinstance(choices, dict):
+        choices = choices.get("options")
+    if not isinstance(choices, list):
+        return []
+    return [(str(c["key"]), str(c.get("text") or "")) for c in choices if isinstance(c, dict) and c.get("key") is not None]
+
+
 def solutions_from_bundle(bundle: dict, figures: dict[str, list[str]] | None = None) -> list[dict]:
     """Every canonical solution in an assembled chapter bundle, in bundle order: book questions, then
     worked-example library entries. `figures`: question id (and expl: id) -> the stem's image files."""
@@ -93,6 +118,7 @@ def solutions_from_bundle(bundle: dict, figures: dict[str, list[str]] | None = N
     for q in bundle.get("questions") or []:
         out.append({"id": q["id"], "lo": q.get("lo") or q.get("lo_id"), "kind": "question",
                     "stem": q.get("stem") or "", "key": q.get("answer") or q.get("correct_answer"),
+                    "options": _options(q.get("choices")), "type": q.get("type"),
                     "steps": _step_texts(q), "page": q.get("source_page"),
                     "figures": list(figures.get(q["id"]) or [])})
     for e in bundle.get("explanation_entries") or []:
@@ -100,6 +126,7 @@ def solutions_from_bundle(bundle: dict, figures: dict[str, list[str]] | None = N
         stem = " ".join(c.get("text_md", "") for c in content if c.get("kind") == "problem")
         steps = [c.get("text_md", "") for c in content if c.get("kind") != "problem"]
         out.append({"id": e["id"], "lo": e.get("lo"), "kind": "worked_example", "stem": stem, "key": None,
+                    "options": [], "type": None,
                     "steps": steps, "page": e.get("source_page"), "figures": list(figures.get(e["id"]) or [])})
     return out
 
@@ -112,19 +139,56 @@ def has_working(sol: dict) -> bool:
     return any(_FIG.sub("", s).strip(" .:\n") for s in sol["steps"])
 
 
+_PLAIN = [(re.compile(r"\\(?:left|right)\s*"), ""), (re.compile(r"\\(?:text|mathrm)\{([^{}]*)\}"), r"\1"),
+          (re.compile(r"\\[,;! ]"), " "), (re.compile(r"\u2212"), "-")]
+_PAIR = re.compile(r"\(\s*-?\s*\d+(?:[.,]\d+)?\s*[,;]\s*-?\s*[\w.]+\s*\)")
+
+
+def points_in(stem: str) -> int:
+    """How many distinct coordinate pairs (-2, 4), (7; y), … the question text itself gives."""
+    t = stem
+    for rx, to in _PLAIN:
+        t = rx.sub(to, t)
+    return len({re.sub(r"\s+", "", m) for m in _PAIR.findall(t)})
+
+
+def figures_offered(sol: dict) -> list[str]:
+    """The figure images the agent may open for this solution. A question that already gives two or more
+    points in its text needs no figure to check the working's substitutions: in the Chapter 8 calibration 66 of
+    192 sw-v1 agents opened one (~$0.06 each) and, of the 18 real flags, only Ex8-4:19b (its points are shown
+    only in the picture) needed it. A figure-only question (points, lengths or shapes shown only in the
+    picture) offers its figure."""
+    figs = list(sol.get("figures") or [])
+    return [] if points_in(sol["stem"]) >= 2 else figs
+
+
+def key_line(sol: dict) -> str:
+    """The key as the student is marked against it; a letter key also says which option it stands for."""
+    key = str(sol["key"])
+    text = dict(sol.get("options") or []).get(key)
+    return f"{key} ({text})" if text else key
+
+
 def render_shard(sol: dict) -> str:
     """What the checking agent reads for one solution (its shard)."""
     lines = [f"SOLUTION {sol['id']} ({'book question' if sol['kind'] == 'question' else 'worked example'}"
              + (f", printed page {sol['page']}" if sol.get("page") is not None else "") + ")",
              "", "QUESTION:", sol["stem"] or "(none)", ""]
+    if sol.get("options"):
+        lines += ["OPTIONS (the student picks one; the key below is one of these letters):"]
+        lines += [f"  {k}. {t}" for k, t in sol["options"]]
+        lines.append("")
     if sol.get("key") is not None:
-        lines += ["FINAL ANSWER (the key the student is marked against):", str(sol["key"]), ""]
+        lines += ["FINAL ANSWER (the key the student is marked against):", key_line(sol), ""]
     lines.append("WORKING (numbered steps, as the student is taught them):")
     for i, s in enumerate(sol["steps"], start=1):
         lines.append(f"step {i}: {s}")
-    if sol.get("figures"):
-        lines += ["", "FIGURES the question shows (image files you may open with the Read tool):"]
-        lines += [f"  {f}" for f in sol["figures"]]
+    figs = figures_offered(sol)
+    if figs:
+        lines += ["", "FIGURE (the question shows it; open it ONLY if a value the working uses is in no text above):"]
+        lines += [f"  {f}" for f in figs]
+    elif sol.get("figures"):
+        lines += ["", "FIGURE: not offered (the question text already gives its points)."]
     return "\n".join(lines) + "\n"
 
 
@@ -457,6 +521,25 @@ def check_line(line: str) -> list[dict]:
     return flags
 
 
+def stub_flag(sol: dict) -> dict | None:
+    """A book question whose working has no maths segment at all and never states a digit of its numeric
+    key: the book's own solution stops at a sketch (Ex8-6:24a: "First draw a sketch: [figure]", key √34).
+    A letter or word key (multiple choice, "parallel") is not judged: it can be reasoned in words."""
+    key = sol.get("key")
+    if key is None or sol.get("kind") != "question" or not sol["steps"]:
+        return None
+    digits = re.findall(r"\d+", str(key))
+    if not digits or any("$" in st for st in sol["steps"]):
+        return None
+    text = " ".join(sol["steps"])
+    if any(d in text for d in digits):
+        return None
+    n = len(sol["steps"])
+    return {"solution_id": sol["id"], "lo": sol.get("lo"), "step": n, "kind": "final_answer", "source": "stub",
+            "quote": _FIG.sub("", sol["steps"][-1]).strip()[:200],
+            "why": "the working shows no calculation and never states the key (the solution stops short of the answer)"}
+
+
 def precheck_solution(sol: dict) -> list[dict]:
     out = []
     for n, step in enumerate(sol["steps"], start=1):
@@ -464,7 +547,8 @@ def precheck_solution(sol: dict) -> list[dict]:
             for f in check_line(line):
                 out.append({"solution_id": sol["id"], "lo": sol.get("lo"), "step": n,
                             "quote": f"{f['left']} {f['relation']} {f['right']}"[:200], **f})
-    return out
+    stub = stub_flag(sol)
+    return out + ([stub] if stub else [])
 
 
 # ============================================================================ the workflow's args
