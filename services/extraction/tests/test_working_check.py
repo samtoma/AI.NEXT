@@ -520,7 +520,9 @@ class Workflow(unittest.TestCase):
 
 
 TRUTH_FILE = EX / "runs" / "g10-math" / "working-check" / "ch08.calibration.json"
-SW_V1_FLAGS = EX / "runs" / "g10-math" / "working-check" / "ch08.flags.json"
+# The calibration truth classifies the sw-v1 run's own flags. Since the sw-v3 two-pass run became the
+# canonical `ch08.flags.json` (2026-10-01, the file the console's backlog reads), sw-v1's are kept here.
+SW_V1_FLAGS = EX / "runs" / "g10-math" / "working-check" / "ch08-sw-v1.flags.json"
 
 
 class Calibrate(unittest.TestCase):
