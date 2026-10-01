@@ -56,6 +56,14 @@ TOP_KEYS = {
 }
 FAMILY_ID_RE = re.compile(r"^tpl:([a-z0-9-]+):([a-z0-9][a-z0-9-]*)$")
 LO_RE = re.compile(r"^lo:([a-z0-9-]+)$")
+ID_SLUG_LETTERS = 6     # an item id ends in this many letters of its family's slug: q:<objective tail>:g001-<six>
+
+
+def id_prefix_key(lo_tail: str, kind: str, slug: str) -> tuple[str, str]:
+    """What two families must not share: the objective, and the kind letter plus the first six letters of the
+    slug. Two families with the same key mint the same item ids. Used by the directory check and by
+    families.normalise, so they cannot disagree about what a collision is."""
+    return lo_tail, ("a" if kind == "authored" else "g") + slug[:ID_SLUG_LETTERS]
 QID_RE = re.compile(r"^q:([a-z0-9-]+):[A-Za-z0-9._-]+$")
 EXPL_RE = re.compile(r"^expl:([a-z0-9-]+):[A-Za-z0-9._-]+$")   # a book teaching item: a worked example
 MC_RE = re.compile(r"^mc:([a-z0-9-]+):[a-z0-9][a-z0-9-]*$")
@@ -519,7 +527,7 @@ def load_dir(directory: Path) -> tuple[list[FamilySpec], list[str]]:
     # two families on one objective must not mint the same item ids
     prefixes: dict[tuple[str, str], str] = {}
     for s in specs:
-        key = (s.lo_tail, ("a" if s.kind == "authored" else "g") + s.slug[:6])
+        key = id_prefix_key(s.lo_tail, s.kind, s.slug)
         if key in prefixes:
             problems.append(f"{s.id} and {prefixes[key]} share an objective and the first six letters "
                             "of their slug, so their item ids would collide; rename one")
@@ -741,4 +749,4 @@ def as_family(spec: FamilySpec):
 
 def item_id(spec: FamilySpec, n: int) -> str:
     """``q:<lo tail>:g001-<slug6>`` as the hand-written families mint, ``a001`` for a one-off."""
-    return f"q:{spec.lo_tail}:{'a' if spec.kind == 'authored' else 'g'}{n:03d}-{spec.slug[:6]}"
+    return f"q:{spec.lo_tail}:{'a' if spec.kind == 'authored' else 'g'}{n:03d}-{spec.slug[:ID_SLUG_LETTERS]}"

@@ -52,13 +52,17 @@ THE DETERMINISTIC RECOVERY (`recover`) hashes candidate strings and keeps exact 
 A candidate can only ever be accepted by its hash, so recall is the only thing these
 heuristics affect; precision is exact.
 
-AN ALIGNED DERIVATION'S HASH (found 2026-09-26 on Chapter 8; see `hash_forms`). The EPUB names a
-multi-line derivation by md5 of its lines WITHOUT the align environment and with every `&` written as
-the XML entity `&amp;` (whitespace removed, as for every image) — 75 of Chapter 8's 247 aligned images
-prove exactly that form, and none any other. The LaTeX STORED is always the renderable one: a real `&`, inside `\\begin{align*}…\\end{align*}`
-(the house style). `canonical` turns an entity-escaped transcription back into that form, so an
-`&amp;` never reaches accepted.json, a lesson or a student; `hash_forms` tries both forms against the
-name, so such an image can still be proved by its hash; `md5check` does the same for a transcriber.
+AN IMAGE'S HASH IS OF ITS HTML-ESCAPED SOURCE (found 2026-09-26 on Chapter 8 for `&`, 2026-10-01 on
+Chapter 6 for `<` and `>`; see `hash_forms`). The EPUB names an image by the md5 of its LaTeX source
+AFTER that source was HTML-escaped: `&` is `&amp;`, `<` is `&lt;`, `>` is `&gt;` (whitespace removed, as for
+every image), and a multi-line derivation is hashed as its lines WITHOUT the align environment — 75 of
+Chapter 8's 247 aligned images prove exactly that form, and none any other. The LaTeX STORED is always the
+renderable one: a real `&`, `<` and `>`, and an aligned derivation inside `\\begin{align*}…\\end{align*}` (the
+house style). `canonical` turns an entity-escaped transcription back into that form, so an entity never
+reaches accepted.json, a lesson or a student; `hash_forms` tries the escaped form (all three characters
+together, as one escaping pass writes them) against the name, so such an image can still be proved by its
+hash; `md5check` does the same for a transcriber. Only exact md5 equality accepts: no candidate is
+loosened, only the form it is hashed in.
 """
 
 from __future__ import annotations
@@ -125,17 +129,29 @@ def canonical(latex: str | None) -> str | None:
     return s
 
 
+_HTML_ESC_RE = re.compile(r"&(?!(?:amp|lt|gt);)|[<>]")
+_HTML_ESC = {"&": "&amp;", "<": "&lt;", ">": "&gt;"}
+
+
+def html_escaped(s: str) -> str:
+    """`s` as the EPUB's source was written before it was hashed: `&`, `<` and `>` HTML-escaped — all
+    three together, as one escaping pass writes them (never one of them alone). An entity already in `s`
+    is left as it is, so nothing is escaped twice. Only these three: nothing else in the source was."""
+    return _HTML_ESC_RE.sub(lambda m: _HTML_ESC[m.group()], s)
+
+
 def hash_forms(latex: str) -> list[str]:
     """Every string whose md5 can name this transcription's image: the LaTeX as written and with its
-    whitespace removed (the EPUB hashed its sources without whitespace), and for an aligned derivation
-    the EPUB's own source form — its lines without the environment, `&` as `&amp;`."""
+    whitespace removed (the EPUB hashed its sources without whitespace), and — when it holds an `&`, `<`
+    or `>` — the EPUB's own source form: HTML-escaped, and for an aligned derivation also without its
+    environment (its lines only)."""
     forms = []
     for x in (latex, re.sub(r"\s+", "", latex)):
         forms.append(x)
         m = _ENV_RE.fullmatch(x)
         inner = m.group(2) if m else x
-        if "&" in inner:
-            forms.append(re.sub(r"&(?!amp;)", "&amp;", inner))
+        if any(ch in inner for ch in "&<>"):
+            forms.append(html_escaped(inner))
     return list(dict.fromkeys(forms))
 
 

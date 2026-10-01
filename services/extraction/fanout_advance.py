@@ -777,7 +777,7 @@ def h_s1(A: Adv) -> bool:
         if g1_approved(K, lessons):
             fl.skipped("S1 assemble + G1", "the chapter is already approved at G1: assemble is never re-run on an approved chapter "
                                            "(it re-derives the rejected state and overwrites the approved files)")
-        elif K.g1_auto.exists() and not fl.dry and A.saved.exists() and K.g1_auto.stat().st_mtime_ns >= A.saved.stat().st_mtime_ns:
+        elif K.g1_auto.exists() and A.saved.exists() and not fl.dirty and K.g1_auto.stat().st_mtime_ns >= A.saved.stat().st_mtime_ns:
             # the verdicts exist (and may carry a ruling): approve WITH them; assembling or re-running the auto-pass would re-derive them
             fl.run("G1 approve (the recorded verdicts)", ["assemble_objectives.py", "approve", BOOK, "--chapter", str(A.ch), "--by", auto_by(),
                                                           "--verdicts", A.P.rel(K.g1_auto), "--maths", A.P.rel(K.accepted)], fresh=False)
