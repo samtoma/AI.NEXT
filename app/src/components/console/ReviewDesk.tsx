@@ -121,9 +121,24 @@ export function ReviewDesk({ filters }: { filters: BacklogFilters }) {
     [accept, post]
   );
 
+  // The first item, on mount (and again when the filters change: the page
+  // remounts the desk under a new key). State is set only once the answer is
+  // back — `phase` already starts at "loading".
   useEffect(() => {
-    void next([]);
-  }, [next]);
+    let alive = true;
+    post({ action: "next" }, [])
+      .then((body) => {
+        if (alive) accept(body);
+      })
+      .catch((e: unknown) => {
+        if (!alive) return;
+        setProblem(e as Problem);
+        setPhase("ready");
+      });
+    return () => {
+      alive = false;
+    };
+  }, [post, accept]);
 
   const decide = useCallback(
     async (decision: Decision) => {
