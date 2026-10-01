@@ -346,6 +346,52 @@ class FromARun(unittest.TestCase):
         self.assertIsNone(mp.part_of({**base, "answer_type": "choice", "answer": "B"}).key, "a letter is no value")
 
 
+class PacketAndAssembly(unittest.TestCase):
+    """The lesson packet (S2–S4) carries the NAMES, before any key exists, so the blind solver and the typing check
+    read what a student will; the assembly then adds the book's values — to the sentence the packet wrote, in place."""
+
+    A = part("Ex8-6:5a", "Determine the coordinates of $E$ , the mid-point of $BC$ .", "$E(4;2)$", kind="coordinates", key="(4; 2)")
+    B = part("Ex8-6:5b", "Prove that $ABE$ is a triangle .", "$E$ lies off $AB$")
+
+    def test_the_packet_carries_names_only(self):
+        a = Part(self.A.ref, self.A.stem, self.A.working)          # no key at S2–S4
+        c, _ = plan([a, self.B], rules=("R1",))
+        self.assertEqual(c["Ex8-6:5b"].sentences, ["$E$ is the mid-point of $BC$."])
+
+    def test_the_packet_does_not_carry_values_or_gradients(self):
+        pre = "$f(x)=2x-1$ with $U(6;a)$ on $f$ ."
+        a = part("Ex8-6:9a", "Determine the value of $a$ in $U(6;a)$ .", pre=pre, key="11")
+        b = part("Ex8-6:9b", "Find the gradient of the line through $U$ and the origin .", "$m_{OU}=\\frac{11}{6}=m_{AB}$", pre=pre)
+        self.assertEqual(set(plan([a, b])[0]), {"Ex8-6:9b"})
+        self.assertEqual(plan([a, b], rules=("R1",))[0], {})
+
+    def test_the_assembly_adds_the_key_to_the_sentence_the_packet_wrote(self):
+        packet = Part("Ex8-6:5b", plan([Part(self.A.ref, self.A.stem, ""), self.B], rules=("R1",))[0]["Ex8-6:5b"].after,
+                      self.B.working)
+        c, _ = plan([self.A, packet])
+        x = c["Ex8-6:5b"]
+        self.assertEqual(x.after, PRE + " $E(4; 2)$ is the mid-point of $BC$. Prove that $ABE$ is a triangle .")
+        self.assertEqual(x.items[0]["was"], "$E$ is the mid-point of $BC$.")
+        again = Part("Ex8-6:5b", x.after, self.B.working)
+        self.assertEqual(plan([self.A, again])[0], {}, "swapped once, then stable")
+
+    def test_a_part_whose_stem_the_packet_already_completed_is_not_touched_without_a_key(self):
+        packet = Part("Ex8-6:5b", plan([Part(self.A.ref, self.A.stem, ""), self.B], rules=("R1",))[0]["Ex8-6:5b"].after, "")
+        held = Part(self.A.ref, self.A.stem, self.A.working, fate="held", kind="coordinates", key="(4; 2)")
+        self.assertEqual(plan([held, packet])[0], {})
+
+    def test_assemble_objectives_writes_the_packet_stems(self):
+        import assemble_objectives as ao
+        def blk(sub, text, sol):
+            return {"type": "exercise_item", "exercise": "8-6", "q": 5, "sub": sub, "problem": {"text": text},
+                    "solution": {"text": sol, "maths": [], "math_kinds": []}}
+        items = [blk("a", "Determine the coordinates of $E$ , the mid-point of $BC$ .", "$E=(4;2)$"),
+                 blk("b", "Prove that $ABE$ is a triangle .", "$E$ lies off $AB$")]
+        headers = {("8-6", 5): PRE}
+        out = ao.carried_stems(items, headers, {})
+        self.assertEqual(out, {"Ex8-6:5b": PRE + " $E$ is the mid-point of $BC$. Prove that $ABE$ is a triangle ."})
+
+
 class Assembly(unittest.TestCase):
     """The assembly applies the plan to the chapter's stems — across lessons — and says so in its report."""
 

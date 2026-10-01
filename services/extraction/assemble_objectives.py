@@ -1772,6 +1772,8 @@ def build_lesson_packet(book, manifest, blocks, maths, rec: dict, work: Path) ->
     header_figs: dict = {}
     for h in a["headers"]:
         header_figs.setdefault((h.get("exercise"), h.get("q")), []).extend(_figure_srcs(h))
+    chapter_items = [x for l in lessons for x in a["lessons"][l["id"]] if x["type"] == "exercise_item"] + a["pool"]
+    carried = carried_stems(chapter_items, headers, maths)
     items = []
     for b in [x for x in bs if x["type"] == "exercise_item"] + a["pool"]:
         ref = item_ref(b)
@@ -1781,11 +1783,12 @@ def build_lesson_packet(book, manifest, blocks, maths, rec: dict, work: Path) ->
         figs = list(dict.fromkeys(header_figs.get((b.get("exercise"), None), [])
                                   + header_figs.get((b.get("exercise"), b.get("q")), [])
                                   + _figure_srcs(b.get("problem"))))
+        stem0 = item_stem(b, headers, maths, missing)         # records this lesson's own missing maths
         items.append({
             "ref": ref, "lo": owner[ref], "printed_page": b.get("printed_page"),
             "section": b.get("section"), "shortcode": b.get("shortcode"),
             "end_of_chapter": bool(b.get("end_of_chapter")),
-            "stem": item_stem(b, headers, maths, missing),
+            "stem": carried.get(ref, stem0),
             # decision 19: the EPUB worked solution is canonical (the Teacher's Guide is not in
             # this book's sources; the adapter would carry it as teachers_guide_solution)
             "solution": solution_steps(b.get("solution"), maths, missing),
@@ -1793,7 +1796,7 @@ def build_lesson_packet(book, manifest, blocks, maths, rec: dict, work: Path) ->
             "printed_answer": _t(pa) or None, "printed_answer_scope": (pa or {}).get("scope"),
             "figures": [p for p in (figure_path(work, s) for s in figs) if p],
             "figures_missing": [s for s in figs if not figure_path(work, s)],
-            **answer_rule_flags(book, ref, item_stem(b, headers, maths, missing), _t(pa)),
+            **answer_rule_flags(book, ref, stem0, _t(pa)),
         })
     wes, unmapped = [], []
     for b in bs:
@@ -1872,6 +1875,21 @@ def build_lesson_packet(book, manifest, blocks, maths, rec: dict, work: Path) ->
                          for b in a["teacher_only_by_lesson"][slug]],
         "unmapped_worked_examples": unmapped,
     }
+
+
+def carried_stems(items: list[dict], headers: dict, maths) -> dict[str, str]:
+    """ref -> the stem with the names its earlier parts introduce (multipart.py, rule R1), for the exercise items
+    that gain any. A part that names S and T, which part (b) of the same question defines, gets the book's own
+    definition in its stem — so the blind solver and the typing check read what a student will (the Chapter 8
+    pilot's Ex8-6:39c came back "undefined" and cost G2 a decision). `items` are ALL of the chapter's exercise
+    items: a question's parts are spread across lessons. Names only: no key exists yet; the assembly adds the
+    book's values (rules R2 and R3, and a point's coordinates) once G2 has approved the keys."""
+    import multipart
+    scratch: set[str] = set()            # another lesson's maths S0b has not accepted is not this lesson's blocker
+    parts = [multipart.Part(item_ref(b), item_stem(b, headers, maths, scratch),
+                            " ".join(solution_steps(b.get("solution"), maths, scratch))) for b in items]
+    carries, _ = multipart.plan(parts, rules=("R1",))
+    return {ref: c.after for ref, c in carries.items()}
 
 
 def lesson_args(book, manifest, blocks, maths, objectives_dir: Path, lessons: list[str],
