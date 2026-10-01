@@ -2,7 +2,7 @@
 
     uv run fanout.py advance <run-id> --wf <wf_id> [--task-output <path>] [--resumed] [--dry-run]
                              [--running <run-id>[@copy] ...] [--redo] [--no-close-chapter] [--honor-gate]
-                             [--refresh-stale] [--force] [--copy <label>]
+                             [--refresh-stale] [--force] [--copy <label>] [-v]
     uv run fanout.py ready   [--running <run-id>[@copy] ...] [--prepare] [--refresh-stale] [--honor-gate] [--paths]
 
 WHAT IT REPLACES. The main session ran each finished Workflow run by hand, every time the same chain: save the
@@ -16,19 +16,27 @@ WHAT EACH RUN KIND DOES AFTER ITS SAVE AND METER (mirrors the plan's `after`/`be
 
     s0b-A / s0b-B   B: the S0b assembly (the plan's `before` of the third reading) → runs/<book>/maths/book/
     s0b-C           the assembly; the group's chapters must show unresolved 0 (anything else is G0b, a human: a WARNING)
-    s1-chNN         assemble_objectives assemble, then the G1 auto-pass with --approve and the book's own maths
+    s1-chNN         G1, see below
     lesson-<slug>   lesson-runs --draft; when every lesson of the chapter is saved: `close-chapter N` (G2 auto-pass,
                     assembly, validation, then the chapter's working check and S5 draft prepared and verified)
     wcheck-chNN     nothing until BOTH passes (and every part) are saved; then working_check.py collect
-    s5-draft-chNN   the chapter's bundle into the pilot DB if it is not there yet — pg_dump first, load dry run,
-                    load, apply_review_verdicts --g2 — then S6/S7 author are prepared (they need the chapter loaded)
+    s5-draft-chNN   the chapter's bundle into the pilot DB if it is not there yet — load dry run, pg_dump, load,
+                    apply_review_verdicts --g2 — then S6/S7 author are prepared (they need the chapter loaded)
     s6-author-chNN  write-specs (never over a spec that exists), families.normalise, generate_questions --check
     s6-grade-chNN   (all parts) generate_questions --grades → the S5 distractors
     s7-author-chNN  merge the author run into templates (never overwriting), normalise them
     s7-verify-chNN  generate_widget_questions --verdicts → the S5 distractors and the held-mapping queue
-    s5-final-chNN   catalogue, the S6/S7 bundles, the generated-bundle load (pg_dump first), G3 + G4 auto-pass,
-                    coverage (a safety check failing blocks), parity (RED blocks)
+    s5-final-chNN   catalogue, the S6/S7 bundles, the generated-bundle loads, G3 + G4 auto-pass, coverage (a safety
+                    check failing blocks), parity (RED blocks)
     one-offs        s6-author-ch08-s111 and wcheck-ch08 are finished; save + meter only, their steps are manual
+
+G1 (S1). NEVER a bare `assemble_objectives.py assemble` on a chapter that is already approved: it re-derives the rejected
+state and overwrites the approved files (it did, on chapter 5). So: a chapter whose lessons are all approved is left alone
+(`--redo` does not change that); one with runs/<book>/objectives/g1-chNN.auto.json newer than its S1 run is approved with
+`assemble_objectives.py approve --verdicts` of that file (the verdicts, rulings included, are what is re-used); only a chapter
+with neither is assembled and auto-passed (`auto_pass_gates.py g1 --approve`). A G1 that is BLOCKED (a pipeline failure, or an
+exercise-only objective — rule 1, one evidence kind — which blocks by design) STOPS the advance and is reported with the
+gate's own BLOCKED lines; advance never resolves it: that is a ruling or a pipeline fix. Advance again once it is made.
 
 Then every run whose dependencies are now satisfied and that has no copy is PREPARED (`fanout.prepare`) and verified
 (`embed_workflow.verify`); a run that cannot be prepared yet is listed with the reason; a run whose input says it is
@@ -38,7 +46,9 @@ waits on it is released.
 IDEMPOTENT. Re-running `advance` on a saved run changes nothing it already did: the save is not rewritten if its
 content is the same, the meter is append-once, and every step with files as outputs is skipped when they exist and
 are newer than its inputs (a gate record re-written would change its fingerprint in the console, so G1/G3/G4 are
-never re-run for nothing). The DB loads are skipped when the rows are already there. `--redo` ignores all of that.
+never re-run for nothing). DB loads are skipped when the rows are already there, the DB writes that follow a load are
+remembered in the run's ledger. `--redo` ignores all of that (but never re-assembles an approved chapter, and never
+re-closes a chapter whose working check or S5 draft has been launched: their copies would be regenerated).
 
 LOADS ONLY AFTER A FRESH pg_dump. Every step that WRITES to the pilot DB (the chapter load, the S5 catalogue, the
 generated bundles, the verdicts) is preceded, once per invocation, by `pg_dump -Fc` of the DB into
@@ -51,9 +61,9 @@ main session lifted it on 2026-10-01 (chapters 2-4's lessons ran with it unsaved
 wait for it; `--honor-gate` puts it back.
 
 LEDGER. runs/<book>/fanout/advance/<run-id>.json records, per run, which copy was saved by which Workflow run, whether
-its after-steps completed (`after_done`) and which step failed, or that the run was skipped and why. A saved run whose
-after-steps did not complete does NOT release what depends on it (`ready` lists it under `incomplete`); a run saved
-by hand before this existed has no ledger and counts as done.
+its after-steps completed (`after_done`) and which step failed, the DB writes already done, or that the run was skipped
+and why. A saved run whose after-steps did not complete does NOT release what depends on it (`ready` lists it under
+`incomplete`); a run saved by hand before this existed has no ledger and counts as done.
 
 SOURCES. The return value comes from `--task-output` (the harness's task output file: summary, agentCount, logs,
 result, workflowProgress, totalTokens, totalToolCalls) or, without it, from the run's own record under
@@ -77,6 +87,7 @@ import shlex
 import subprocess
 import sys
 import time
+import traceback
 from datetime import datetime, timezone
 from pathlib import Path
 from types import SimpleNamespace
@@ -99,6 +110,7 @@ WF_RE = re.compile(r"^wf_[0-9a-f]{8}-[0-9a-f]{3}$")
 KINDS = [("s0b-A-", "s0b"), ("s0b-B-", "s0b"), ("s0b-C-", "s0b_c"), ("s1-", "s1"), ("lesson-", "lesson"),
          ("wcheck-", "wcheck"), ("s5-draft-", "s5_draft"), ("s6-author-", "s6_author"), ("s6-grade-", "s6_grade"),
          ("s7-author-", "s7_author"), ("s7-verify-", "s7_verify"), ("s5-final-", "s5_final")]
+KEY_LINE = re.compile(r"BLOCKED|FAIL|OWED|NOT recorded|NOT auto-passed|REFUS|ERROR|Error|Traceback|validation error|Value error|✗|!!")
 
 
 class Refuse(Exception):
@@ -160,8 +172,13 @@ def read_json(path: Path):
     return json.loads(Path(path).read_text(encoding="utf-8"))
 
 
+def unwrap(j):
+    """A saved run is the result itself; an older one is the harness's wrapper around it."""
+    return j["result"] if isinstance(j, dict) and isinstance(j.get("result"), dict) else j
+
+
 def chap(P: Paths, ch: int) -> SimpleNamespace:
-    """The files one chapter's S5–S7 steps read and write (the plan's `fam`, `wid`, `cfg`, `gen`)."""
+    """The files one chapter's steps read and write (the plan's `fam`, `wid`, `cfg`, `gen`)."""
     t = F.ch_tag(ch)
     return SimpleNamespace(
         n=ch, t=t, fam=P.here / "families" / BOOK / t, wid=P.here / "widgets" / BOOK / t,
@@ -172,8 +189,8 @@ def chap(P: Paths, ch: int) -> SimpleNamespace:
         tier_floor=P.here / "coverage" / f"{BOOK}.{t}.tier-floor.json",
         merged=P.runs / "widgets" / f"author-merged-{t}.json", pending=P.runs / "widgets" / f"pending-review-{t}.json",
         w_dist=P.runs / "widgets" / f"s5-distractors-{t}.json", f_dist=P.runs / "families" / f"s5-distractors-{t}.json",
-        objectives=P.here / "objectives" / BOOK, accepted=P.maths_book / "accepted.json",
-        assembly=P.runs / "fanout" / f"assembly-{t}.json")
+        objectives=P.here / "objectives" / BOOK, g1_auto=P.runs / "objectives" / f"g1-{t}.auto.json",
+        accepted=P.maths_book / "accepted.json", assembly=P.runs / "fanout" / f"assembly-{t}.json")
 
 
 # ================================================================ running things
@@ -186,6 +203,11 @@ class Result:
 
     def tail(self, n: int = 700) -> str:
         return (self.out or "").strip()[-n:]
+
+    def key_lines(self, n: int = 1500) -> str:
+        """What a failing step said that matters: its BLOCKED / FAIL / OWED / error lines, else the tail of its output."""
+        hits = [l.rstrip() for l in (self.out or "").splitlines() if KEY_LINE.search(l)]
+        return ("\n".join(hits)[-n:]) if hits else self.tail()
 
 
 class Exec:
@@ -220,11 +242,21 @@ class Db:
             return int(cur.fetchone()[0])
 
 
-def short_cmd(argv: list[str], limit: int = 12) -> str:
-    a = list(argv)
-    if len(a) > limit:
-        a = a[:limit - 2] + [f"… (+{len(argv) - limit + 2} more)"]
-    return shlex.join(a) if len(a) == len(argv) else " ".join(shlex.quote(x) if not x.startswith("…") else x for x in a)
+def short_cmd(argv: list[str], limit: int = 14) -> str:
+    if len(argv) <= limit:
+        return shlex.join(argv)
+    return shlex.join(argv[:limit - 2]) + f" … (+{len(argv) - limit + 2} more)"
+
+
+def parse_dsn(dsn: str) -> dict:
+    d = dict(re.findall(r"(\w+)=(\S+)", dsn))
+    return {"host": d.get("host", "127.0.0.1"), "port": d.get("port", "5432"), "dbname": d.get("dbname", "")}
+
+
+def _quiet(fn, *a):
+    """Call a fanout.py function and keep what it prints out of the summary."""
+    with contextlib.redirect_stdout(io.StringIO()):
+        return fn(*a)
 
 
 class Flow:
@@ -237,15 +269,20 @@ class Flow:
         self.steps: list[dict] = []
         self.dirty = False                   # a step with outputs ran in this advance: later ones that read them must run too
         self.backups: dict[str, dict] = {}
+        self.marks: dict[str, float] = {}    # DB writes this run's ledger remembers (epoch seconds), by step name
 
-    # a step is fresh when every output exists and none is older than any input
     @staticmethod
     def fresh(inputs, outputs) -> bool:
+        """Every output exists and none is older than any input."""
         outs = [Path(o) for o in outputs]
         if not outs or not all(o.exists() for o in outs):
             return False
         t_out = min(o.stat().st_mtime_ns for o in outs)
         return all(Path(i).stat().st_mtime_ns <= t_out for i in inputs if Path(i).exists())
+
+    def marked(self, name: str, inputs=()) -> bool:
+        t = self.marks.get(name)
+        return bool(t) and not self.redo and all(t >= Path(i).stat().st_mtime for i in inputs if Path(i).exists())
 
     def _rec(self, name: str, status: str, note: str = "", cmd: str | None = None, secs: float | None = None) -> None:
         r: dict = {"step": name, "status": status}
@@ -259,11 +296,14 @@ class Flow:
         self.say(f"  [{status}] {name}" + (f" — {note}" if note else ""))
 
     def run(self, name: str, argv: list[str], *, env: dict | None = None, inputs=(), outputs=(), ok=(0,), fresh: bool = True,
-            note: str = "") -> Result:
+            note: str = "", mark: str | None = None, mark_inputs=()) -> Result:
         cmd = short_cmd(argv)
         if self.dry:
             self._rec(name, "dry", note, cmd)
             return Result(0, "", dry=True)
+        if mark and self.marked(mark, mark_inputs):
+            self._rec(name, "skipped", "already done (this run's ledger)")
+            return Result(0, "", skipped=True)
         if fresh and outputs and not self.dirty and not self.redo and self.fresh(inputs, outputs):
             self._rec(name, "skipped", "outputs exist and are newer than the inputs")
             return Result(0, "", skipped=True)
@@ -271,13 +311,15 @@ class Flow:
         r = self.ex.py(list(argv), env)
         if r.rc not in ok:
             self._rec(name, "failed", f"exit {r.rc}", cmd)
-            raise StepFailed(name, f"exit {r.rc}: {cmd}\n{r.tail()}")
+            raise StepFailed(name, f"exit {r.rc}: {cmd}\n{r.key_lines()}")
         self._rec(name, "ok", note, cmd, time.time() - t0)
         if outputs:
             self.dirty = True
+        if mark:
+            self.marks[mark] = time.time()
         return r
 
-    def call(self, name: str, fn, *, note: str = ""):
+    def call(self, name: str, fn, *, note: str = "", dirty: bool = False):
         """An in-process step (a fanout.py function). Dry: recorded, not called, returns None."""
         if self.dry:
             self._rec(name, "dry", note)
@@ -289,13 +331,14 @@ class Flow:
             self._rec(name, "failed", str(e)[:200])
             raise StepFailed(name, str(e)) from e
         self._rec(name, "ok", note, secs=time.time() - t0)
-        self.dirty = True
+        if dirty:
+            self.dirty = True
         return out
 
     def skipped(self, name: str, why: str) -> None:
         self._rec(name, "skipped", why)
 
-    def backup(self, tag: str) -> dict | None:
+    def backup(self, tag: str) -> dict:
         """pg_dump of the pilot DB, once per tag per advance, before the first step that writes to it."""
         if tag in self.backups:
             return self.backups[tag]
@@ -325,11 +368,6 @@ class Flow:
         return self.backups[tag]
 
 
-def parse_dsn(dsn: str) -> dict:
-    d = dict(re.findall(r"(\w+)=(\S+)", dsn))
-    return {"host": d.get("host", "127.0.0.1"), "port": d.get("port", "5432"), "dbname": d.get("dbname", "")}
-
-
 # ================================================================ the plan, the copies, what is saved
 @dataclasses.dataclass
 class Copy:
@@ -352,11 +390,13 @@ def copies_of(P: Paths, r: dict) -> list[Copy]:
     """Every generated copy that belongs to a plan run: one, or — for the working check — pass A and B and each part, and for
     S6 grading each part. A copy that is not written yet is returned as the (missing) main one."""
     main = P.here / r["embedded_script"]
-    kind = kind_of(r["id"])
+    try:
+        kind = kind_of(r["id"])
+    except Refuse:
+        kind = "other"
     if kind not in ("wcheck", "s6_grade"):
         return [Copy(r["id"], main, "", read_sha(main), main.exists())]
-    stem = main.name[:-len(".workflow.js")]
-    stem = re.sub(r"\.part\d+$", "", stem)
+    stem = re.sub(r"\.part\d+$", "", main.name[:-len(".workflow.js")])
     pat = re.compile(rf"^{re.escape(stem)}(?P<b>-B)?(?:\.part(?P<k>\d+))?\.workflow\.js$")
     found: list[Copy] = []
     for f in sorted(main.parent.glob(f"{stem}*.workflow.js")):
@@ -364,12 +404,9 @@ def copies_of(P: Paths, r: dict) -> list[Copy]:
         if not m or (kind == "s6_grade" and m.group("b")):
             continue
         k = m.group("k")
-        if kind == "wcheck":
-            label = ("B" if m.group("b") else "A") + (f".part{k}" if k else "")
-        else:
-            label = f"part{k}" if k else ""
+        label = ("B" if m.group("b") else "A") + (f".part{k}" if k else "") if kind == "wcheck" else (f"part{k}" if k else "")
         found.append(Copy(r["id"], f, label, read_sha(f), True))
-    if kind == "s6_grade" and any(c.label for c in found):
+    if kind == "s6_grade" and any(c.label for c in found):      # parts exist: a stale unsuffixed copy is not one of them
         found = [c for c in found if c.label]
     return found or [Copy(r["id"], main, "A" if kind == "wcheck" else "", None, False)]
 
@@ -384,9 +421,7 @@ def saved_index(P: Paths) -> dict[str, Path]:
                 j = read_json(f)
             except (OSError, ValueError):
                 continue
-            if not isinstance(j, dict):
-                continue
-            res = j.get("result", j)
+            res = unwrap(j) if isinstance(j, dict) else None
             e = res.get("embedded") if isinstance(res, dict) else None
             sha = e.get("generated_sha256") if isinstance(e, dict) else None
             if sha and (sha not in idx or f.stat().st_mtime_ns >= idx[sha].stat().st_mtime_ns):
@@ -420,8 +455,8 @@ class State:
             self._copies[r["id"]] = copies_of(self.P, r)
         return self._copies[r["id"]]
 
-    def forget(self, rid: str) -> None:
-        self._copies.pop(rid, None)
+    def forget_copies(self) -> None:
+        self._copies.clear()
 
     def copy_saved(self, c: Copy) -> Path | None:
         f = self.idx.get(c.sha) if c.sha else None
@@ -466,9 +501,11 @@ class State:
                 return False
         return True
 
+    def ledger(self, rid: str) -> dict:
+        return self.led.setdefault(rid, {"format": "ainext.fanout-advance/1", "run": rid, "copies": {}, "after_done": False})
+
     def mark_saved(self, rid: str, label: str, wf: str, f: Path) -> None:
-        l = self.led.setdefault(rid, {"format": "ainext.fanout-advance/1", "run": rid, "copies": {}, "after_done": False})
-        l.setdefault("copies", {})[label or "main"] = {"wf": wf, "file": self.P.rel(f), "at": now()}
+        self.ledger(rid).setdefault("copies", {})[label or "main"] = {"wf": wf, "file": self.P.rel(f), "at": now()}
 
 
 def parse_running(tokens) -> set[tuple[str, str | None]]:
@@ -543,7 +580,7 @@ def resolve_copy(copies: list[Copy], result: dict, rec: dict | None, label: str 
         by_label = [c for c in copies if c.label == label]
         if not by_label:
             raise Refuse(f"--copy {label!r}: this run's copies are {[c.label or 'main' for c in copies]}")
-        if by_sha and by_label[0] not in by_sha and not force:
+        if by_sha and by_label[0] is not by_sha[0] and not force:
             raise Refuse(f"--copy {label!r} disagrees with the embedded sha, which is copy {by_sha[0].label or 'main'}")
         return by_label[0]
     if by_sha and by_script and by_sha[0] is not by_script[0]:
@@ -551,9 +588,9 @@ def resolve_copy(copies: list[Copy], result: dict, rec: dict | None, label: str 
                      "two different copies — not this run's save")
     if by_sha:
         return by_sha[0]
-    if by_script and force:
+    if force and by_script:
         return by_script[0]
-    if len(copies) == 1 and force:
+    if force and len(copies) == 1:
         return copies[0]
     if by_script:
         raise Refuse(f"the run ran {Path(script).name}, but its result does not echo that copy's embedded sha (the copy was "
@@ -588,6 +625,20 @@ def read_cost(P: Paths) -> list[dict]:
 
 # ================================================================ the after-steps, per kind
 @dataclasses.dataclass
+class Opts:
+    resumed: bool = False
+    dry: bool = False
+    redo: bool = False
+    no_close: bool = False
+    honor_gate: bool = False
+    refresh_stale: bool = False
+    force: bool = False
+    copy: str | None = None
+    running: tuple = ()
+    verbose: bool = False
+
+
+@dataclasses.dataclass
 class Adv:
     P: Paths
     plan: dict
@@ -601,7 +652,7 @@ class Adv:
     saved: Path
     rep: dict
     db: Db
-    opts: "Opts"
+    opts: Opts
 
     @property
     def ch(self) -> int:
@@ -614,10 +665,13 @@ class Adv:
     def warn(self, msg: str) -> None:
         self.rep["warnings"].append(msg)
 
+    def note(self, msg: str) -> None:
+        self.rep.setdefault("notes", []).append(msg)
+
     def count(self, **kv) -> None:
         self.rep["counts"].update(kv)
 
-    def argv_rel(self, *paths) -> list[str]:
+    def rels(self, *paths) -> list[str]:
         return [self.P.rel(p) for p in paths]
 
 
@@ -631,63 +685,125 @@ def generic_counts(res: dict) -> dict:
     return out
 
 
-def assemble_maths(A: Adv) -> None:
+def one_file(P: Paths, pattern: str, dry: bool = False) -> Path:
+    """The ONE saved run matching runs/<book>/<pattern> (a second one is an ambiguity the pipeline refuses to guess at)."""
+    files = sorted(p for p in P.runs.glob(pattern) if p.is_file())
+    if len(files) != 1:
+        if dry:
+            return P.runs / pattern.replace("*", "<wf_id>")
+        raise StepFailed("find saved run", f"{len(files)} saved run(s) match runs/{BOOK}/{pattern}: "
+                                           f"{[P.rel(f) for f in files]} — keep exactly one")
+    return files[0]
+
+
+# ---- S0b
+def assemble_maths(P: Paths, fl: Flow) -> None:
     """The S0b assembly of every saved A/B/C run: the plan's `before` of the third reading and its `after`."""
-    files = sorted(A.P.runs.glob("maths/[ABC]-*.json"))
-    out = A.P.maths_book
-    A.fl.run("S0b assembly (A+B+C)", ["assemble_maths.py", "assemble", BOOK, *A.argv_rel(*files), "--out-dir", A.P.rel(out)],
-             inputs=files, outputs=[out / "summary.json", out / "accepted.json", out / "queue.json"])
+    files = sorted(P.runs.glob("maths/[ABC]-*.json"))
+    out = P.maths_book
+    fl.run("S0b assembly (A+B+C)", ["assemble_maths.py", "assemble", BOOK, *[P.rel(f) for f in files], "--out-dir", P.rel(out)],
+           inputs=files, outputs=[out / "summary.json", out / "accepted.json", out / "queue.json"])
 
 
-def maths_summary(A: Adv, chapters: list[int]) -> None:
-    f = A.P.maths_book / "summary.json"
+def maths_summary(P: Paths, rep: dict, chapters: list[int]) -> None:
+    f = P.maths_book / "summary.json"
     if not f.exists():
         return
     s = read_json(f)
-    A.count(maths={"accepted": s.get("accepted_by_hash", 0) + s.get("accepted_by_agreement", 0) + s.get("accepted_by_third_reading", 0),
-                   "unresolved": s.get("unresolved"), "awaiting_third_reading": s.get("awaiting_third_reading")})
+    rep["counts"]["maths"] = {"accepted": sum(s.get(k, 0) for k in ("accepted_by_hash", "accepted_by_agreement", "accepted_by_third_reading")),
+                              "unresolved": s.get("unresolved"), "awaiting_third_reading": s.get("awaiting_third_reading")}
     for ch in chapters:
         b = (s.get("by_chapter") or {}).get(str(ch)) or {}
         if b.get("unresolved"):
-            A.warn(f"{F.ch_tag(ch)}: {b['unresolved']} maths image(s) unresolved after S0b → G0b (a human; nothing is guessed, FR-4407)")
+            rep["warnings"].append(f"{F.ch_tag(ch)}: {b['unresolved']} maths image(s) unresolved after S0b → G0b "
+                                   "(a human; nothing is guessed, FR-4407)")
 
 
 def h_s0b(A: Adv) -> bool:
     if A.run["id"].split("-")[1] == "B":            # the plan's `before` of pass C: the assembly the third reading reads
-        assemble_maths(A)
-        g = A.run["id"].rsplit("-", 1)[1]
-        maths_summary(A, [])
-        s = A.P.maths_book / "summary.json"
-        if s.exists():
-            A.count(awaiting_third_reading=read_json(s).get("awaiting_third_reading"), group=g)
-    A.count(**generic_counts(A.result), images=A.result.get("images"), problems=len(A.result.get("problems") or []))
+        assemble_maths(A.P, A.fl)
+        maths_summary(A.P, A.rep, [])
+    A.count(images=A.result.get("images"), results=len(A.result.get("results") or []), pass_id=A.result.get("pass"))
     if A.result.get("problems"):
         A.warn(f"{len(A.result['problems'])} image(s) the pass reported a problem with")
     return True
 
 
 def h_s0b_c(A: Adv) -> bool:
-    assemble_maths(A)
-    g = A.run["id"].rsplit("-", 1)[1]
-    maths_summary(A, dict(F.S0B_GROUPS)[g])
-    A.count(**generic_counts(A.result))
+    assemble_maths(A.P, A.fl)
+    maths_summary(A.P, A.rep, dict(F.S0B_GROUPS)[A.run["id"].rsplit("-", 1)[1]])
+    A.count(images=A.result.get("images"), results=len(A.result.get("results") or []))
     return True
 
 
-def lesson_slugs_of(P: Paths, ch: int, plan: dict) -> list[str]:
+# ---- S1 and the lessons
+def lesson_slugs_of(plan: dict, ch: int) -> list[str]:
     return [r["lesson"] for r in plan["runs"] if r["stage"] == "S2-S4" and r.get("chapter") == ch]
+
+
+def g1_approved(K: SimpleNamespace, lessons: list[str]) -> bool:
+    """Every lesson of the chapter carries G1's approval (objectives/<book>/<slug>.json, status approved)."""
+    def ok(s: str) -> bool:
+        f = K.objectives / f"{s}.json"
+        return f.exists() and read_json(f).get("status") == "approved"
+    return bool(lessons) and all(ok(s) for s in lessons)
+
+
+def auto_by() -> str:
+    try:
+        import review_policy
+        return review_policy.auto_pass_by("G1")
+    except Exception:  # noqa: BLE001
+        return "auto-pass G1 (AI recommendation)"
+
+
+def h_s1(A: Adv) -> bool:
+    """G1 without ever re-assembling an approved chapter (see the module docstring)."""
+    K, fl = A.K, A.fl
+    check = K.objectives / f"{K.t}.check.json"
+    gate = K.gates / f"g1-{K.t}.json"
+    lessons = lesson_slugs_of(A.plan, A.ch)
+    hint = ("\nG1 is not passed and advance does not resolve it: a pipeline failure, or a decision for a person (an exercise-only "
+            "objective — rule 1, one evidence kind — blocks by design; the ruling goes in the verdicts file "
+            f"{A.P.rel(K.g1_auto)}). Advance again once it is settled.")
+    try:
+        if g1_approved(K, lessons):
+            fl.skipped("S1 assemble + G1", "the chapter is already approved at G1: assemble is never re-run on an approved chapter "
+                                           "(it re-derives the rejected state and overwrites the approved files)")
+        elif K.g1_auto.exists() and not fl.dry and A.saved.exists() and K.g1_auto.stat().st_mtime_ns >= A.saved.stat().st_mtime_ns:
+            # the verdicts exist (and may carry a ruling): approve WITH them; assembling or re-running the auto-pass would re-derive them
+            fl.run("G1 approve (the recorded verdicts)", ["assemble_objectives.py", "approve", BOOK, "--chapter", str(A.ch), "--by", auto_by(),
+                                                          "--verdicts", A.P.rel(K.g1_auto), "--maths", A.P.rel(K.accepted)], fresh=False)
+        else:
+            fl.run("S1 assemble", ["assemble_objectives.py", "assemble", BOOK, A.P.rel(A.saved), "--maths", A.P.rel(K.accepted)],
+                   inputs=[A.saved, K.accepted], outputs=[check])
+            fl.run("G1 auto-pass --approve", ["auto_pass_gates.py", "g1", BOOK, "--chapter", str(A.ch), "--maths", A.P.rel(K.accepted),
+                                              "--approve"], fresh=False)
+    except StepFailed as e:
+        raise StepFailed(e.step, e.detail + hint) from e
+    if check.exists():
+        c = read_json(check)
+        A.count(objectives=(c.get("counts") or {}).get("objectives"), lessons=(c.get("counts") or {}).get("lessons"),
+                g1_decisions_owed=len(c.get("undecided") or []), check_status=c.get("status"))
+    if gate.exists():
+        g = read_json(gate)
+        A.count(g1={"outcome": g.get("outcome"), "decisions": len(g.get("decisions") or [])})
+    if K.g1_auto.exists():
+        v = read_json(K.g1_auto)
+        if isinstance(v, dict) and v.get("rulings"):
+            A.count(g1_rulings=len(v["rulings"]))
+    return True
 
 
 def chapter_closed(A: Adv, ch: int) -> bool:
     K = chap(A.P, ch)
-    t = K.t
-    copies = [A.P.here / r["embedded_script"] for r in A.plan["runs"] if r["id"] in (f"wcheck-{t}", f"s5-draft-{t}")]
-    return (K.g2.exists() and K.assembly.exists() and K.seed.exists() and len(copies) == 2 and all(c.exists() for c in copies))
+    copies = [A.P.here / r["embedded_script"] for r in A.plan["runs"] if r["id"] in (f"wcheck-{K.t}", f"s5-draft-{K.t}")]
+    return K.g2.exists() and K.assembly.exists() and K.seed.exists() and len(copies) == 2 and all(c.exists() for c in copies)
 
 
 def h_lesson(A: Adv) -> bool:
     slugs = [L.get("lesson") for L in A.result.get("lessons") or []] or [A.run["lesson"]]
-    drafts = [A.P.here / "runs" / BOOK / "lesson-draft" / f"{s}.json" for s in slugs]
+    drafts = [A.P.runs / "lesson-draft" / f"{s}.json" for s in slugs]
     A.fl.run("lesson-runs --draft", ["assemble_objectives.py", "lesson-runs", BOOK, A.P.rel(A.saved), "--draft",
                                       "--maths", A.P.rel(A.K.accepted)], inputs=[A.saved, A.K.accepted], outputs=drafts)
     items: dict = {}
@@ -697,69 +813,58 @@ def h_lesson(A: Adv) -> bool:
         items[L.get("lesson")] = len(its)
         for it in its:
             types[it.get("answer_type")] = types.get(it.get("answer_type"), 0) + 1
-    A.count(lessons=items, answer_types=types, worked_examples=sum(len(L.get("worked_examples") or []) for L in A.result.get("lessons") or []))
-    # every lesson of the chapter saved → close it (G2 auto-pass, assembly, validation, the working check and S5 draft prepared)
+    A.count(items=items, answer_types=types,
+            worked_examples=sum(len(L.get("worked_examples") or []) for L in A.result.get("lessons") or []))
     mine = [r for r in A.plan["runs"] if r["stage"] == "S2-S4" and r.get("chapter") == A.ch]
-    waiting = [r["id"] for r in mine if r["id"] != A.run["id"] and not A.S.satisfied(A.by(r["id"]))] if False else \
-        [r["id"] for r in mine if r["id"] != A.run["id"] and not A.S.satisfied(r)]
+    waiting = [r["id"] for r in mine if r["id"] != A.run["id"] and not A.S.satisfied(r)]
     if waiting:
         A.rep["waiting"] = f"{len(waiting)} lesson run(s) of chapter {A.ch} not saved yet: {', '.join(waiting[:6])}"
         return True
     if A.opts.no_close:
         A.rep["waiting"] = f"chapter {A.ch}: every lesson saved — close-chapter not run (--no-close-chapter)"
         return True
-    if chapter_closed(A, A.ch) and not A.opts.redo:
-        A.fl.skipped(f"close-chapter {A.ch}", "already closed (G2 file, assembly report, seed bundle and both prepared copies exist)")
+    t = A.K.t
+    if chapter_closed(A, A.ch):
+        launched = [rid for rid in (f"wcheck-{t}", f"s5-draft-{t}") if rid in A.S.by
+                    and (A.S.is_saved(A.S.by[rid]) or is_running(parse_running(A.opts.running), rid))]
+        if not A.opts.redo:
+            A.fl.skipped(f"close-chapter {A.ch}", "already closed (G2 file, assembly report, seed bundle and both prepared copies exist)")
+        elif launched:
+            A.warn(f"chapter {A.ch} not re-closed: {', '.join(launched)} already launched (their copies would be regenerated) — "
+                   "run `uv run fanout.py close-chapter` by hand if that is what you want")
+        else:
+            close_chapter(A)
         return True
-    info = A.fl.call(f"close-chapter {A.ch}", lambda: _quiet(F.close_chapter, A.ch))
-    if info:
-        n = info.get("numbers") or {}
-        A.count(close_chapter={"g2": (n.get("g2") or {}).get("decisions"),
-                               "assembly": {k: v for k, v in (n.get("assembly") or {}).items()
-                                            if k in ("questions", "live", "held_by_reason", "excluded", "stand_ins", "katex_errors")},
-                               "prepared": {k: {"agents": v.get("agents"), "usd": v.get("cost_usd")}
-                                            for k, v in (info.get("prepared") or {}).items()}})
-        if (n.get("assembly") or {}).get("katex_errors"):
-            A.warn(f"chapter {A.ch}: {n['assembly']['katex_errors']} KaTeX error(s) in the assembled bundle")
+    close_chapter(A)
     return True
 
 
-def _quiet(fn, *a):
-    """Call a fanout.py function and keep what it prints out of the summary."""
-    with contextlib.redirect_stdout(io.StringIO()):
-        return fn(*a)
+def close_chapter(A: Adv) -> None:
+    info = A.fl.call(f"close-chapter {A.ch}", lambda: _quiet(F.close_chapter, A.ch), dirty=True)
+    if not info:
+        return
+    n = info.get("numbers") or {}
+    asm = n.get("assembly") or {}
+    A.count(close_chapter={"g2": (n.get("g2") or {}).get("decisions"),
+                           "assembly": {k: v for k, v in asm.items() if k in ("questions", "live", "held_by_reason", "excluded",
+                                                                              "stand_ins", "katex_errors")},
+                           "prepared": {k: {"agents": v.get("agents"), "usd": v.get("cost_usd")}
+                                        for k, v in (info.get("prepared") or {}).items()}})
+    if asm.get("katex_errors"):
+        A.warn(f"chapter {A.ch}: {asm['katex_errors']} KaTeX error(s) in the assembled bundle")
+    held = (n.get("g2") or {}).get("decisions", {}).get("held") or 0
+    if held:
+        A.note(f"chapter {A.ch}: {held} G2 item(s) held with no verdict")
 
 
-def h_s1(A: Adv) -> bool:
-    K = A.K
-    check = K.objectives / f"{K.t}.check.json"
-    A.fl.run("S1 assemble", ["assemble_objectives.py", "assemble", BOOK, A.P.rel(A.saved), "--maths", A.P.rel(K.accepted)],
-             inputs=[A.saved, K.accepted], outputs=[check])
-    lessons = lesson_slugs_of(A.P, A.ch, A.plan)
-    approved = all(F._approved(s) for s in lessons)       # the chapter's lessons carry G1's approval
-    auto = K.objectives / f"g1-{K.t}.auto.json"
-    gate = K.gates / f"g1-{K.t}.json"
-    if approved and not A.opts.redo and not A.fl.dirty and Flow.fresh([check], [auto, gate]) and not A.fl.dry:
-        A.fl.skipped("G1 auto-pass", "gate record and verdicts exist, newer than the check; every lesson approved")
-    else:
-        A.fl.run("G1 auto-pass --approve", ["auto_pass_gates.py", "g1", BOOK, "--chapter", str(A.ch), "--maths", A.P.rel(K.accepted),
-                                            "--approve"], fresh=False)
-    if check.exists():
-        c = read_json(check)
-        A.count(objectives=(c.get("counts") or {}).get("objectives"), lessons=(c.get("counts") or {}).get("lessons"),
-                g1_decisions_owed=len(c.get("undecided") or []), check_status=c.get("status"))
-    if gate.exists():
-        g = read_json(gate)
-        A.count(g1={"outcome": g.get("outcome"), "decisions": len(g.get("decisions") or [])})
-    return True
-
-
+# ---- working check
 def h_wcheck(A: Adv) -> bool:
     K = A.K
     cs = A.S.copies(A.run)
-    files = {c.label: A.S.copy_saved(c) for c in cs}
+    files = {c.label: (A.saved if c.label == A.copy.label else A.S.copy_saved(c)) for c in cs}
     missing = [l for l, f in files.items() if f is None]
-    A.count(**generic_counts(A.result), pass_id=A.result.get("pass_id"), part=A.result.get("part"), parts=A.result.get("parts"))
+    A.count(results=len(A.result.get("results") or []), pass_id=A.result.get("pass_id"), part=A.result.get("part"),
+            parts=A.result.get("parts"))
     if A.result.get("problems"):
         A.warn(f"the {A.copy.label} copy reported {len(A.result['problems'])} problem(s)")
     if missing:
@@ -771,50 +876,57 @@ def h_wcheck(A: Adv) -> bool:
     argv = ["working_check.py", "collect"]
     for a in args:
         argv += ["--args", A.P.rel(a)]
-    A.fl.run("working_check collect", argv + ["--runs", *A.argv_rel(*runs), "--out", A.P.rel(out)], inputs=runs, outputs=[out])
+    A.fl.run("working_check collect", argv + ["--runs", *A.rels(*runs), "--out", A.P.rel(out)], inputs=runs, outputs=[out])
     if out.exists():
         d = read_json(out)
-        A.count(working_check={"solutions": d.get("solutions"), "verdicts": d.get("verdicts"),
-                               "flagged_solutions": d.get("flagged_solutions"), "flags": len(d.get("flags") or []),
-                               "single_pass": len(d.get("single_pass_ids") or [])})
+        A.count(working_check={"solutions": d.get("solutions"), "verdicts": d.get("verdicts"), "flagged_solutions": d.get("flagged_solutions"),
+                               "flags": len(d.get("flags") or []), "single_pass": len(d.get("single_pass_ids") or [])})
         if d.get("unchecked"):
             A.warn(f"{len(d['unchecked'])} solution(s) no checking agent answered — re-run those agents")
         if d.get("problems"):
-            A.warn(f"the collection reported {len(d['problems'])} problem(s): {d['problems'][0][:120]}")
+            A.warn(f"the collection reported {len(d['problems'])} problem(s): {str(d['problems'][0])[:120]}")
     return True
 
 
+# ---- S5 draft and the chapter's load
+def last_line(text: str, prefix: str = "") -> str | None:
+    hits = [l.strip() for l in (text or "").splitlines() if l.strip().startswith(prefix)]
+    return hits[-1][:200] if hits else None
+
+
 def ensure_loaded(A: Adv) -> None:
-    """The chapter's bundle in the pilot DB: skipped when it is all there; else load dry run, fresh pg_dump, load, the G2 stamps."""
-    K = A.K
+    """The chapter's bundle in the pilot DB: skipped when it is all there; else load dry run, fresh pg_dump, load, the G2 stamps.
+    A chapter loaded before advance existed (no mark in this run's ledger) is left exactly as it is."""
+    K, fl = A.K, A.fl
     if not K.seed.exists():
         raise StepFailed("load chapter", f"no assembled bundle {A.P.rel(K.seed)}: close the chapter first")
     b = read_json(K.seed)
     qids, nids = [q["id"] for q in b.get("questions") or []], [n["id"] for n in b.get("nodes") or []]
-    if A.fl.dry:
-        A.fl.skipped("load chapter", "dry run: the DB is not asked whether chapter %d is loaded" % A.ch)
+    if fl.dry:
+        fl.skipped("load chapter", f"dry run: the DB is not asked whether chapter {A.ch} is loaded")
         return
     have_q, have_n = A.db.present("questions", qids), A.db.present("graph_nodes", nids)
-    if have_q == len(qids) and have_n == len(nids) and not A.opts.redo:
-        A.fl.skipped("load chapter", f"already in the pilot DB ({have_q} questions, {have_n} nodes)")
+    loaded = have_q == len(qids) and have_n == len(nids)
+    env = {"AINEXT_DB_DSN": F.DSN, "AINEXT_ENVIRONMENT": "mvp1"}
+    apply_ = ["apply_review_verdicts.py", "--g2", A.P.rel(K.g2), "--book", BOOK, "--runs", A.P.rel(A.P.runs / "lesson")]
+    if loaded and "load chapter" not in fl.marks and not A.opts.redo:
+        fl.skipped("load chapter", f"already in the pilot DB ({have_q} questions, {have_n} nodes)")
         A.count(loaded={"already": True, "questions": have_q})
         return
+    if loaded and "load chapter" in fl.marks and not A.opts.redo:
+        fl.skipped("load chapter", f"loaded by an earlier advance ({have_q} questions)")
+        if "apply G2 verdicts" not in fl.marks:      # the load went through, the stamps did not
+            fl.backup(f"{K.t}-load")
+            fl.run("apply G2 verdicts", apply_, env=env, fresh=False, mark="apply G2 verdicts")
+        return
     if have_q or have_n:
-        A.warn(f"chapter {A.ch} was partly loaded ({have_q}/{len(qids)} questions, {have_n}/{len(nids)} nodes): "
-               "the add-only load completes it")
-    env = {"AINEXT_DB_DSN": F.DSN, "AINEXT_ENVIRONMENT": "mvp1"}
+        A.warn(f"chapter {A.ch} was partly loaded ({have_q}/{len(qids)} questions, {have_n}/{len(nids)} nodes): the add-only load completes it")
     load = ["load_seed.py", A.P.rel(K.course_seed), A.P.rel(K.seed), "--course", COURSE]
-    A.fl.run("load dry run", [*load, "--dry-run"], env=env, fresh=False)
-    A.fl.backup(f"{K.t}-load")
-    r = A.fl.run("load chapter", load, env=env, fresh=False)
-    A.fl.run("apply G2 verdicts", ["apply_review_verdicts.py", "--g2", A.P.rel(K.g2), "--book", BOOK, "--runs", A.P.rel(A.P.runs / "lesson")],
-             env=env, fresh=False)
+    fl.run("load dry run", [*load, "--dry-run"], env=env, fresh=False)
+    fl.backup(f"{K.t}-load")
+    r = fl.run("load chapter", load, env=env, fresh=False, mark="load chapter")
+    fl.run("apply G2 verdicts", apply_, env=env, fresh=False, mark="apply G2 verdicts")
     A.count(loaded={"already": False, "questions": len(qids), "nodes": len(nids), "summary": last_line(r.out, "loaded ")})
-
-
-def last_line(text: str, prefix: str) -> str | None:
-    hits = [l.strip() for l in (text or "").splitlines() if l.strip().startswith(prefix)]
-    return hits[-1][:200] if hits else None
 
 
 def h_s5_draft(A: Adv) -> bool:
@@ -823,6 +935,7 @@ def h_s5_draft(A: Adv) -> bool:
     return True
 
 
+# ---- S6
 def specs_of(res: dict) -> list[tuple[str, dict]]:
     """(file name, spec) for every family the S6 author wrote — the names fanout.write_specs gives them."""
     out = []
@@ -831,6 +944,13 @@ def specs_of(res: dict) -> list[tuple[str, dict]]:
             tail, slug = spec["id"].split(":")[1:]
             out.append((f"{tail}--{slug}.json", spec))
     return out
+
+
+def chapter_config(A: Adv) -> Path:
+    K = A.K
+    if K.cfg.exists() and not A.fl.dry:
+        return K.cfg
+    return A.fl.call("chapter config", lambda: F.write_config(A.ch)) or K.cfg
 
 
 def h_s6_author(A: Adv) -> bool:
@@ -849,42 +969,41 @@ def h_s6_author(A: Adv) -> bool:
             raise StepFailed("write-specs", f"{len(have)} of {len(targets)} spec(s) already exist (e.g. {have[0].name}): "
                                             "never overwritten — settle the directory, then advance again")
         else:
-            A.fl.call("write-specs", lambda: _quiet(F.write_specs, A.saved, K.fam, cfg), note=f"{len(targets)} spec(s)")
+            A.fl.call("write-specs", lambda: _quiet(F.write_specs, A.saved, K.fam, cfg), note=f"{len(targets)} spec(s)", dirty=True)
     files = sorted(K.fam.glob("*.json")) if K.fam.exists() else []
     if not files and not A.fl.dry:
-        A.rep.setdefault("notes", []).append("no family spec: S6 grading will be skipped")
+        A.note("no family spec: S6 grading will be skipped")
         return True
-    glob_arg = [A.P.rel(f) for f in files] or [A.P.rel(K.fam) + "/*.json"]
-    A.fl.run("families.normalise", ["-m", "families.normalise", *glob_arg], fresh=False)
+    A.fl.run("families.normalise", ["-m", "families.normalise", *(A.rels(*files) or [A.P.rel(K.fam) + "/*.json"])], fresh=False)
     r = A.fl.run("generate_questions --check", ["generate_questions.py", "--families", A.P.rel(K.fam), "--book", A.P.rel(cfg), "--check"],
                  fresh=False)
-    A.count(check=last_line(r.out, "") if r.out.strip() else None)
+    A.count(check=last_line(r.out))
     return True
 
 
 def h_s6_grade(A: Adv) -> bool:
     K = A.K
     cs = A.S.copies(A.run)
-    files = {c.label: A.S.copy_saved(c) for c in cs}
+    files = {c.label: (A.saved if c.label == A.copy.label else A.S.copy_saved(c)) for c in cs}
     missing = [l or "main" for l, f in files.items() if f is None]
-    A.count(**generic_counts(A.result), part=A.result.get("part"))
+    A.count(results=len(A.result.get("results") or []), part=A.result.get("part"))
     if missing:
         A.rep["waiting"] = f"S6 grade: parts still to save: {', '.join(missing)}"
         return False
-    grades = sorted(A.P.runs.glob(f"families/grade-{K.t}-*.json"))
-    fam = sorted(K.fam.glob("*.json"))
-    cfg = K.cfg if K.cfg.exists() else A.fl.call("chapter config", lambda: F.write_config(A.ch)) or K.cfg
+    grades = sorted(A.P.runs.glob(f"families/grade-{K.t}-*.json")) or [A.saved]
+    fam = sorted(K.fam.glob("*.json")) if K.fam.exists() else []
+    cfg = chapter_config(A)
     r = A.fl.run("generate_questions --grades", ["generate_questions.py", "--families", A.P.rel(K.fam), "--book", A.P.rel(cfg),
-                                                  "--grades", *A.argv_rel(*grades), "--s5-distractors", A.P.rel(K.f_dist)],
+                                                  "--grades", *A.rels(*grades), "--s5-distractors", A.P.rel(K.f_dist)],
                  inputs=[*grades, *fam], outputs=[K.f_dist])
-    if r.out.strip():
-        A.count(graded=last_line(r.out, "") or None)
+    A.count(graded=last_line(r.out))
     if K.f_dist.exists():
         d = read_json(K.f_dist)
         A.count(s5_distractors=len(d) if isinstance(d, (list, dict)) else None)
     return True
 
 
+# ---- S7
 def h_s7_author(A: Adv) -> bool:
     K = A.K
     A.fl.run("merge author run → templates", ["generate_widget_questions.py", "--merge-author-runs", A.P.rel(A.saved), "--merged",
@@ -893,48 +1012,40 @@ def h_s7_author(A: Adv) -> bool:
     merged = read_json(K.merged) if K.merged.exists() else {}
     A.count(templates=len(templates), gaps=len(merged.get("gaps") or []), lessons=len(merged.get("records") or []))
     if templates:
-        draft = A.fl.call("S5 draft of the chapter", lambda: F._latest(f"misconceptions/draft-{K.t}-*.json")) or K.cfg
-        env = {"AINEXT_DB_DSN": F.DSN}
+        draft = one_file(A.P, f"misconceptions/draft-{K.t}-*.json", A.fl.dry)
         A.fl.run("normalise templates", ["generate_widget_questions.py", "--dsn", F.DSN, "--catalogue", A.P.rel(draft),
-                                         "--normalise-templates", *A.argv_rel(*templates)], env=env, fresh=False)
-    else:
-        A.rep.setdefault("notes", []).append("no template (every lesson a gap): S7 verification will be skipped")
+                                         "--normalise-templates", *A.rels(*templates)], env={"AINEXT_DB_DSN": F.DSN}, fresh=False)
+    elif not A.fl.dry:
+        A.note("no template (every lesson a gap): S7 verification will be skipped")
     return True
 
 
 def h_s7_verify(A: Adv) -> bool:
     K = A.K
     templates = sorted(K.wid.glob("*.json")) if K.wid.exists() else []
-    cfg = K.cfg if K.cfg.exists() else A.fl.call("chapter config", lambda: F.write_config(A.ch)) or K.cfg
-    env = {"AINEXT_DB_DSN": F.DSN}
+    cfg = chapter_config(A)
     A.fl.run("verify verdicts → distractors, held mappings", [
         "generate_widget_questions.py", "--templates", A.P.rel(K.wid), "--book", A.P.rel(cfg), "--dsn", F.DSN, "--verdicts",
         A.P.rel(A.saved), "--gaps", A.P.rel(K.merged), "--s5-distractors", A.P.rel(K.w_dist), "--pending-review", A.P.rel(K.pending)],
-        env=env, inputs=[A.saved, K.merged, *templates], outputs=[K.w_dist, K.pending])
-    A.count(**generic_counts(A.result))
+        env={"AINEXT_DB_DSN": F.DSN}, inputs=[A.saved, K.merged, *templates], outputs=[K.w_dist, K.pending])
+    A.count(results=len(A.result.get("results") or []))
     if K.pending.exists():
         d = read_json(K.pending)
         A.count(held_mappings=len(d) if isinstance(d, (list, dict)) else None)
     return True
 
 
-def one_file(P: Paths, pattern: str) -> Path:
-    files = sorted(p for p in P.runs.glob(pattern) if p.is_file())
-    if len(files) != 1:
-        raise StepFailed("find saved run", f"{len(files)} saved run(s) match runs/{BOOK}/{pattern}: "
-                                           f"{[P.rel(f) for f in files]} — keep exactly one")
-    return files[0]
-
-
-def db_all_present(A: Adv, table: str, ids: list[str]) -> bool:
+# ---- S5 final
+def present_all(A: Adv, table: str, ids: list[str]) -> bool:
     return not A.fl.dry and bool(ids) and A.db.present(table, ids) == len(ids)
 
 
 def h_s5_final(A: Adv) -> bool:
     """The plan's `after` of S5 final, in order, with the runbook's G3/G4 (§7b). Every step with files as outputs is skipped when
-    they are newer than their inputs; every DB write is preceded by one fresh pg_dump."""
+    they are newer than its inputs; every DB write is preceded by one fresh pg_dump. The catalogue (written first, rewritten by the
+    reconcile) is NOT an input of the bundles' freshness: a bundle built before the reconcile would otherwise look stale forever."""
     K, fl, P = A.K, A.fl, A.P
-    cfg = K.cfg if K.cfg.exists() else fl.call("chapter config", lambda: F.write_config(A.ch)) or K.cfg
+    cfg = chapter_config(A)
     env = {"AINEXT_DB_DSN": F.DSN, "AINEXT_ENVIRONMENT": "mvp1"}
     graphs = ["--graph", P.rel(K.seed), "--graph", P.rel(K.course_seed)]
     cat = K.gen / "misconceptions.json"
@@ -942,13 +1053,14 @@ def h_s5_final(A: Adv) -> bool:
     families = sorted(K.fam.glob("*.json")) if K.fam.exists() else []
     templates = sorted(K.wid.glob("*.json")) if K.wid.exists() else []
     grades = sorted(P.runs.glob(f"families/grade-{K.t}-*.json"))
-    verdict = one_file(P, f"widgets/verify-{K.t}-*.json") if templates and not fl.dry else None
-    K.gen.mkdir(parents=True, exist_ok=True) if not fl.dry else None
+    verdict = one_file(P, f"widgets/verify-{K.t}-*.json", fl.dry) if templates else None
+    if not fl.dry:
+        K.gen.mkdir(parents=True, exist_ok=True)
 
     fl.run("S5 catalogue", ["assemble_misconceptions.py", P.rel(A.saved), "--book", P.rel(cfg), "--out", P.rel(cat), *graphs],
            inputs=[A.saved], outputs=[cat])
-    cat_ids = [m["id"] for m in (read_json(cat).get("misconceptions") if cat.exists() else []) or []]
-    if db_all_present(A, "misconceptions", cat_ids) and not A.opts.redo:
+    cat_ids = [m["id"] for m in ((read_json(cat).get("misconceptions") if cat.exists() else None) or [])]
+    if present_all(A, "misconceptions", cat_ids) and not A.opts.redo:
         fl.skipped("load catalogue", f"all {len(cat_ids)} entries are in the pilot DB")
     else:
         fl.run("load catalogue dry run", ["load_misconceptions.py", P.rel(cat), "--course", COURSE, "--dry-run"], env=env, fresh=False)
@@ -957,18 +1069,19 @@ def h_s5_final(A: Adv) -> bool:
     bundles: list[Path] = []
     if families:
         if not grades and not fl.dry:
-            raise StepFailed("generated questions", f"families exist in {P.rel(K.fam)} but no graded run runs/{BOOK}/families/grade-{K.t}-*.json")
+            raise StepFailed("generated questions", f"families exist in {P.rel(K.fam)} but there is no graded run "
+                                                    f"runs/{BOOK}/families/grade-{K.t}-*.json")
         fl.run("generated questions", ["generate_questions.py", "--families", P.rel(K.fam), "--book", P.rel(cfg), "--catalogue", P.rel(cat),
-                                       "--grades", *A.argv_rel(*grades), "--out", P.rel(gq), "--floor-report", P.rel(K.tier_floor)],
-               inputs=[*families, *grades, cat], outputs=[gq])
+                                       "--grades", *A.rels(*grades), "--out", P.rel(gq), "--floor-report", P.rel(K.tier_floor)],
+               inputs=[*families, *grades, A.saved], outputs=[gq])
         bundles.append(gq)
     else:
-        A.rep.setdefault("notes", []).append("no family: no generated-questions bundle")
+        A.note("no family: no generated-questions bundle")
     if templates:
         fl.run("widget questions", ["generate_widget_questions.py", "--templates", P.rel(K.wid), "--book", P.rel(cfg), "--dsn", F.DSN,
-                                    "--verdicts", P.rel(verdict) if verdict else P.rel(K.wid / "…"), "--gaps", P.rel(K.merged),
-                                    "--gap-report", P.rel(K.widget_gaps), "--pending-review", P.rel(K.pending), "--out", P.rel(wq)],
-               env={"AINEXT_DB_DSN": F.DSN}, inputs=[*templates, K.merged, *([verdict] if verdict else [])], outputs=[wq, K.widget_gaps])
+                                    "--verdicts", P.rel(verdict), "--gaps", P.rel(K.merged), "--gap-report", P.rel(K.widget_gaps),
+                                    "--pending-review", P.rel(K.pending), "--out", P.rel(wq)],
+               env={"AINEXT_DB_DSN": F.DSN}, inputs=[*templates, K.merged, verdict, A.saved], outputs=[wq, K.widget_gaps])
         bundles.append(wq)
     else:                           # no template (S7 verify skipped): the gap report alone; a widget bundle is never written unverified
         fl.run("widget gap report", ["generate_widget_questions.py", "--templates", P.rel(K.wid), "--book", P.rel(cfg), "--dsn", F.DSN,
@@ -977,12 +1090,11 @@ def h_s5_final(A: Adv) -> bool:
     if bundles:
         fl.run("reconcile tags with the catalogue", ["assemble_misconceptions.py", P.rel(A.saved), "--book", P.rel(cfg), "--out", P.rel(cat),
                                                       *[x for b in bundles for x in ("--bundle", P.rel(b))], *graphs],
-               inputs=[A.saved, *bundles], outputs=[cat], fresh=not fl.dirty)
+               inputs=[A.saved, *bundles], outputs=[cat])
     queues: list[Path] = []
     for b in bundles:
-        q = b.with_suffix(".review-queue.json")
-        ids = [x["id"] for x in (read_json(b).get("questions") if b.exists() else []) or []]
-        if db_all_present(A, "questions", ids) and not A.opts.redo:
+        ids = [x["id"] for x in ((read_json(b).get("questions") if b.exists() else None) or [])]
+        if present_all(A, "questions", ids) and not A.opts.redo:
             fl.skipped(f"load {b.name}", f"all {len(ids)} questions are in the pilot DB")
         else:
             load = ["load_generated_questions.py", P.rel(b), "--course", COURSE, "--sample", str(SAMPLE_PCT), "--seed", str(SAMPLE_SEED),
@@ -990,22 +1102,22 @@ def h_s5_final(A: Adv) -> bool:
             fl.run(f"validate {b.name}", [*load, "--dry-run"], env=env, fresh=False)
             fl.backup(f"{K.t}-final-load")
             fl.run(f"load {b.name}", load, env=env, fresh=False)
-        queues.append(q)
-    g3 = K.gates / f"g3-{K.t}.json"
-    auto3 = P.runs / f"g3-{K.t}.auto.json"
+        queues.append(b.with_suffix(".review-queue.json"))
     if queues:
-        g3_argv = ["auto_pass_gates.py", "g3", BOOK, "--chapter", str(A.ch), *[x for q in queues for x in ("--queue", P.rel(q))],
-                   *[x for b in bundles if b == wq for x in ("--widgets", P.rel(b))]]
-        before = fl.dirty
-        fl.run("G3 auto-pass", g3_argv, inputs=[*queues, *bundles], outputs=[g3, auto3])
-        if fl.dirty and not before or fl.dry:
-            fl.run("apply G3 verdicts", ["apply_review_verdicts.py", P.rel(auto3)], env=env, fresh=False)
+        auto3 = P.runs / f"g3-{K.t}.auto.json"
+        widgets = [x for b in bundles if b == wq for x in ("--widgets", P.rel(b))]
+        fl.run("G3 auto-pass", ["auto_pass_gates.py", "g3", BOOK, "--chapter", str(A.ch), *[x for q in queues for x in ("--queue", P.rel(q))],
+                                *widgets], inputs=[*queues, *bundles], outputs=[K.gates / f"g3-{K.t}.json", auto3])
+        if fl.dry or auto3.exists():
+            if not fl.marked("apply G3 verdicts", [auto3]):
+                fl.backup(f"{K.t}-final-load")
+            fl.run("apply G3 verdicts", ["apply_review_verdicts.py", P.rel(auto3)], env=env, fresh=False, mark="apply G3 verdicts",
+                   mark_inputs=[auto3])
     fl.run("G4 auto-pass", ["auto_pass_gates.py", "g4", BOOK, "--chapter", str(A.ch), "--catalogue", P.rel(cat), "--s5", P.rel(A.saved)],
            inputs=[cat, A.saved], outputs=[K.gates / f"g4-{K.t}.json"])
-    cov_inputs = [A.saved, K.widget_gaps, *bundles, K.seed, P.maths_book / "summary.json"]
     fl.run("coverage", ["coverage_report.py", "--book", P.rel(cfg), "--chapter", str(A.ch), "--maths", P.rel(P.maths_book / "summary.json"),
                         "--widget-gaps", P.rel(K.widget_gaps), "--s5", P.rel(A.saved), "--generated", P.rel(K.gen), "--out", P.rel(K.cov)],
-           inputs=cov_inputs, outputs=[K.cov], ok=(0, 1))
+           inputs=[A.saved, K.widget_gaps, *bundles, K.seed, P.maths_book / "summary.json"], outputs=[K.cov], ok=(0, 1))
     coverage_verdict(A, K.cov)
     fl.run("parity (every course)", ["parity_check.py", "--candidate", F.DSN, "--all-courses"], fresh=False)
     A.count(bundles=[b.name for b in bundles])
@@ -1022,15 +1134,15 @@ def coverage_verdict(A: Adv, cov: Path) -> None:
     try:
         import auto_pass_gates
         safety = set(auto_pass_gates.SAFETY_CHECKS)
-    except Exception:  # noqa: BLE001
+    except Exception:  # noqa: BLE001 — another agent is editing that file; the list is stable, so a fallback is safe
         safety = {"katex", "notation", "answer_text", "asked_forms", "book_pictures", "captions", "teacher_only", "s5_catalogue",
                   "solution_sources", "distractor_refutations"}
     failing = [c for c in d.get("checks") or [] if c.get("state") == "fails"]
     A.count(coverage={"status": d.get("status"), **(d.get("summary") or {}), "failing": [c["id"] for c in failing]})
-    blocked = [c for c in failing if c["id"] in safety]
     for c in failing:
         if c["id"] not in safety:
             A.warn(f"coverage {c['id']} fails ({c.get('got')}/{c.get('want')}) — a completeness finding for Samuel")
+    blocked = [c for c in failing if c["id"] in safety]
     if blocked:
         raise StepFailed("coverage", "a coverage SAFETY check fails: " + "; ".join(
             f"{c['id']} ({c.get('got')}/{c.get('want')})" for c in blocked))
@@ -1047,20 +1159,6 @@ HANDLERS = {"s0b": h_s0b, "s0b_c": h_s0b_c, "s1": h_s1, "lesson": h_lesson, "wch
 
 
 # ================================================================ preparing what comes next, and what is ready
-@dataclasses.dataclass
-class Opts:
-    resumed: bool = False
-    dry: bool = False
-    redo: bool = False
-    no_close: bool = False
-    honor_gate: bool = False
-    refresh_stale: bool = False
-    force: bool = False
-    copy: str | None = None
-    running: tuple = ()
-    verbose: bool = False
-
-
 def skip_run(P: Paths, S: State, r: dict, reason: str, dry: bool = False) -> None:
     S.led[r["id"]] = {"format": "ainext.fanout-advance/1", "run": r["id"], "copies": {}, "after_done": True, "skipped": reason,
                       "updated": now()}
@@ -1068,26 +1166,26 @@ def skip_run(P: Paths, S: State, r: dict, reason: str, dry: bool = False) -> Non
         write_json(P.ledgers / f"{r['id']}.json", S.led[r["id"]])
 
 
-def prepare_ready(A_P: Paths, S: State, fl: Flow, rep: dict, running: set, opts: Opts, db: Db, plan: dict) -> None:
+def prepare_ready(P: Paths, S: State, fl: Flow, rep: dict, running: set, opts: Opts) -> None:
     """Prepare (and verify) every run whose dependencies are satisfied and that has no copy yet — never regenerating one that
     exists (a copy launched mid-run keeps its hash; `--refresh-stale` is the one opt-in, for runs not running and not saved)."""
+    S.forget_copies()
     for _ in range(12):                                   # a skipped run releases the next: repeat until nothing changes
         changed = False
         for r in S.runs:
             rid = r["id"]
             if rid in ONE_OFF or is_running(running, rid) or S.satisfied(r) or S.is_saved(r) or not S.deps_ok(r, opts.honor_gate):
                 continue
-            main = A_P.here / r["embedded_script"]
-            stale = main.exists() and opts.refresh_stale and copy_status(copies_of(A_P, r)[0])[0] == "stale"
+            main = P.here / r["embedded_script"]
+            stale = bool(opts.refresh_stale and main.exists() and copy_status(copies_of(P, r)[0])[0] == "stale")
             if main.exists() and not stale:
                 continue
-            if rid in rep["not_ready"] and not stale and not changed:
-                pass
             if fl.dry:
-                rep["would_prepare"].append(rid)
+                if rid not in rep["would_prepare"]:
+                    rep["would_prepare"].append(rid)
                 continue
             try:
-                info = F.prepare(rid)
+                info = _quiet(F.prepare, rid)
             except F.NotReady as e:
                 rep["not_ready"][rid] = str(e).replace("\n", " ")[:220]
                 continue
@@ -1096,36 +1194,22 @@ def prepare_ready(A_P: Paths, S: State, fl: Flow, rep: dict, running: set, opts:
                 continue
             rep["not_ready"].pop(rid, None)
             if isinstance(info, dict) and info.get("skipped"):
-                kind = kind_of(rid)
-                if kind == "s0b_c":
-                    fl2 = SimpleNamespace()
-                    assemble_for_skip(A_P, fl, rep, r, db, plan, S)
-                skip_run(A_P, S, r, str(info["skipped"])[:300])
+                if kind_of(rid) == "s0b_c":         # the plan still says: run the third reading's after-steps (the S0b assembly)
+                    assemble_maths(P, fl)
+                    maths_summary(P, rep, dict(F.S0B_GROUPS)[rid.rsplit("-", 1)[1]])
+                skip_run(P, S, r, str(info["skipped"])[:300])
                 rep["skipped"].append({"id": rid, "why": str(info["skipped"])[:200]})
                 changed = True
                 continue
-            S.forget(rid)
-            cps = copies_of(A_P, r)
-            bad = []
-            for c in cps:
-                if c.exists:
-                    st, detail = copy_status(c)
-                    if st != "ok":
-                        bad.append(f"{c.path.name}: {st} {detail}")
+            S.forget_copies()
+            cps = copies_of(P, r)
+            bad = [f"{c.path.name}: {st} {detail}" for c in cps if c.exists for st, detail in [copy_status(c)] if st != "ok"]
             if bad:
                 raise StepFailed(f"verify {rid}", "; ".join(bad))
             rep["prepared"].append({"id": rid, "scripts": [str(c.path) for c in cps], "agents": r.get("agents"), "cost_usd": r.get("cost")})
             changed = True
         if not changed:
             break
-
-
-def assemble_for_skip(P: Paths, fl: Flow, rep: dict, r: dict, db: Db, plan: dict, S: State) -> None:
-    """A third reading nobody asked for: the plan still says run its after-steps — the S0b assembly — and check the group's chapters."""
-    A = SimpleNamespace(P=P, fl=fl, argv_rel=lambda *ps: [P.rel(p) for p in ps], rep=rep,
-                        warn=lambda m: rep["warnings"].append(m), count=lambda **kv: rep["counts"].update(kv))
-    assemble_maths(A)
-    maths_summary(A, dict(F.S0B_GROUPS)[r["id"].rsplit("-", 1)[1]])
 
 
 def ready_list(P: Paths, S: State, running: set, opts: Opts) -> dict:
@@ -1168,26 +1252,30 @@ def ready_list(P: Paths, S: State, running: set, opts: Opts) -> dict:
 
 
 # ================================================================ advance
+def new_report(run_id: str, wf: str, dry: bool) -> dict:
+    return {"run": run_id, "wf": wf, "ok": True, "dry_run": dry, "saved": None, "record": None, "metered": None, "counts": {},
+            "warnings": [], "waiting": None, "failure": None, "checkpoint": None, "prepared": [], "skipped": [], "not_ready": {},
+            "would_prepare": []}
+
+
 def advance(run_id: str, wf: str, task_output: Path | None = None, opts: Opts | None = None, ex=None, db: Db | None = None,
             say=None) -> tuple[int, dict]:
     opts = opts or Opts()
     ex = ex or Exec()
     db = db or Db(F.DSN)
     P = Paths()
-    rep: dict = {"run": run_id, "wf": wf, "ok": True, "dry_run": opts.dry, "saved": None, "record": None, "metered": None,
-                 "counts": {}, "warnings": [], "waiting": None, "failure": None, "checkpoint": None, "prepared": [], "skipped": [],
-                 "not_ready": {}, "would_prepare": []}
+    rep = new_report(run_id, wf, opts.dry)
     fl = Flow(P, ex, dry=opts.dry, redo=opts.redo, say=say)
+    S: State | None = None
     try:
         if not WF_RE.match(wf):
             raise Refuse(f"--wf {wf!r} is not a Workflow run id (wf_xxxxxxxx-xxx)")
         if not P.plan.exists():
             raise Refuse(f"no {P.rel(P.plan)}: run `uv run fanout.py plan` first")
         plan = read_json(P.plan)
-        by = {r["id"]: r for r in plan["runs"]}
-        if run_id not in by:
+        r = next((x for x in plan["runs"] if x["id"] == run_id), None)
+        if r is None:
             raise Refuse(f"{run_id}: not a run of the plan")
-        r = by[run_id]
         kind = kind_of(run_id)
         S = State(P, plan)
         rep["checkpoint"] = r.get("checkpoint")
@@ -1201,17 +1289,17 @@ def advance(run_id: str, wf: str, task_output: Path | None = None, opts: Opts | 
                          "(resumeFromRunId), then advance with --resumed")
         cs = S.copies(r)
         if not cs or not all(c.exists for c in cs):
-            raise Refuse(f"{run_id}: no generated copy on disk ({P.rel(P.here / r['embedded_script'])}): "
-                         "was it prepared? (`uv run fanout.py prepare`)")
+            raise Refuse(f"{run_id}: no generated copy on disk ({P.rel(P.here / r['embedded_script'])}): was it prepared? "
+                         "(`uv run fanout.py prepare`)")
         cp = resolve_copy(cs, result, rec, opts.copy, opts.force)
 
-        # ---- 1. save the return value and the whole wrapper
+        # ---- 1. save the return value and the whole wrapper (the record lives in records/, never beside the results)
         existing = S.copy_saved(cp)
         target = existing or save_path(P, r, cp.label, wf)
         rec_path = P.records / (target.stem + ".record.json")
-        same = target.exists() and read_json(target) == result
+        same = bool(existing) and not opts.resumed and unwrap(read_json(existing)) == result
         if opts.dry:
-            rep["saved"] = f"{P.rel(target)} ({'unchanged' if same else 'would write'})"
+            rep["saved"] = f"{P.rel(target)} ({'already saved' if same else 'would write'})"
             rep["record"] = P.rel(rec_path)
         else:
             if not same:
@@ -1219,23 +1307,20 @@ def advance(run_id: str, wf: str, task_output: Path | None = None, opts: Opts | 
             wrapped = dict(wrapper)
             wrapped.setdefault("runId", wf)
             if not (rec_path.exists() and read_json(rec_path) == wrapped):
-                P.records.mkdir(parents=True, exist_ok=True)
+                rec_path.parent.mkdir(parents=True, exist_ok=True)
                 tmp = rec_path.with_name(rec_path.name + ".tmp")
                 tmp.write_text(json.dumps(wrapped, ensure_ascii=False), encoding="utf-8")
                 os.replace(tmp, rec_path)
             rep["saved"] = P.rel(target) + (" (already saved)" if same else "")
             rep["record"] = P.rel(rec_path)
             S.mark_saved(run_id, cp.label, wf, target)
-            S.idx[cp.sha] = target if cp.sha else None
-            if cp.sha is None:
-                S.idx.pop(None, None)
-        if not opts.dry or True:
-            pass
+            if cp.sha:
+                S.idx[cp.sha] = target
+            fl.marks = S.ledger(run_id).setdefault("steps", {})
 
         # ---- 2. meter (the ledger takes one line per run id; --resumed meters only the agents it has not seen)
         stage, lesson = meter_args(r)
-        led = read_cost(P)
-        have = [l for l in led if l.get("run_id") == wf]
+        have = [l for l in read_cost(P) if l.get("run_id") == wf]
         if have and not opts.resumed:
             rep["metered"] = {"stage": stage, "already": True, "usd": round(sum(l["totals"]["usd"] for l in have), 4)}
         elif opts.dry:
@@ -1246,49 +1331,49 @@ def advance(run_id: str, wf: str, task_output: Path | None = None, opts: Opts | 
             m = ex.py(argv)
             if m.rc != 0:
                 fl._rec("meter", "failed", f"exit {m.rc}", shlex.join(argv))
-                raise StepFailed("meter", f"exit {m.rc}: {shlex.join(argv)}\n{m.tail()}")
-            led2 = [l for l in read_cost(P) if l.get("run_id") == wf]
-            new = led2[len(have):]
+                raise StepFailed("meter", f"exit {m.rc}: {shlex.join(argv)}\n{m.key_lines()}")
+            after = [l for l in read_cost(P) if l.get("run_id") == wf]
+            new = after[len(have):]
             rep["metered"] = {"stage": stage, "already": False, "usd": round(sum(l["totals"]["usd"] for l in new), 4),
-                              "run_total_usd": round(sum(l["totals"]["usd"] for l in led2), 4),
+                              "run_total_usd": round(sum(l["totals"]["usd"] for l in after), 4),
                               "agents": sum(len(l.get("agents") or []) for l in new)}
-            if led2 and not led2[-1].get("complete", True):
+            if after and not after[-1].get("complete", True):
                 rep["warnings"].append("the meter marked the run incomplete (missing transcripts or an unpriced model)")
             if opts.resumed and not new:
                 rep["metered"]["note"] = "the resume ran no new agent"
 
         # ---- 3. the after-steps for this kind of run
         A = Adv(P=P, plan=plan, run=r, kind=kind, S=S, fl=fl, result=result, wf=wf, copy=cp, saved=target, rep=rep, db=db, opts=opts)
-        done = HANDLERS[kind](A)
-        rep["after_done"] = bool(done)
+        done = bool(HANDLERS[kind](A))
+        rep["after_done"] = done
+
         # ---- 4. what comes next
-        S2 = State(P, plan)
-        S2.led = S.led
         if done and not opts.dry:
-            S2.led.setdefault(run_id, {"copies": {}})["after_done"] = True
+            S.ledger(run_id)["after_done"] = True
         running = parse_running(opts.running)
-        if done or True:
-            prepare_ready(P, S2, fl, rep, running, opts, db, plan)
-        rep.update(ready_list(P, S2, running, opts))
+        prepare_ready(P, S, fl, rep, running, opts)
+        rep.update(ready_list(P, S, running, opts))
     except Refuse as e:
         rep.update(ok=False, refused=str(e))
         return 2, finish(rep, fl, P, None, run_id, opts)
     except StepFailed as e:
-        rep.update(ok=False, after_done=False, failure={"step": e.step, "detail": e.detail[-900:]})
-        rep.pop("ready_scripts", None)
-        return 1, finish(rep, fl, P, S if "S" in dir() else None, run_id, opts)
-    return 0, finish(rep, fl, P, S, run_id, opts)
+        rep.update(ok=False, after_done=False, failure={"step": e.step, "detail": e.detail[-1800:]})
+    except Exception as e:  # noqa: BLE001 — a bug must still produce the summary of what was done
+        rep.update(ok=False, after_done=False, failure={"step": "internal error", "detail":
+                   f"{type(e).__name__}: {e}\n{traceback.format_exc()[-900:]}"})
+    return (0 if rep["ok"] else 1), finish(rep, fl, P, S, run_id, opts)
 
 
 def finish(rep: dict, fl: Flow, P: Paths, S: State | None, run_id: str, opts: Opts) -> dict:
     rep["steps"] = fl.steps
+    if fl.backups:
+        rep["backups"] = list(fl.backups.values())
     if S is not None and not opts.dry and rep.get("saved") and not rep.get("refused"):
-        l = S.led.setdefault(run_id, {"format": "ainext.fanout-advance/1", "run": run_id, "copies": {}})
+        l = S.ledger(run_id)
         l["after_done"] = bool(rep.get("after_done")) and not rep.get("failure")
         l["failed_step"] = (rep.get("failure") or {}).get("step")
         l["updated"] = now()
-        l["format"] = "ainext.fanout-advance/1"
-        l["run"] = run_id
+        l["format"], l["run"] = "ainext.fanout-advance/1", run_id
         write_json(P.ledgers / f"{run_id}.json", l)
     return rep
 
@@ -1296,7 +1381,7 @@ def finish(rep: dict, fl: Flow, P: Paths, S: State | None, run_id: str, opts: Op
 # ================================================================ CLI
 def dump(summary: dict) -> str:
     """Valid JSON with one top-level key per line (short, greppable)."""
-    body = ",\n".join(f" {json.dumps(k)}: {json.dumps(v, ensure_ascii=False)}" for k, v in summary.items())
+    body = ",\n".join(f" {json.dumps(k)}: {json.dumps(v, ensure_ascii=False, default=str)}" for k, v in summary.items())
     return "{\n" + body + "\n}"
 
 
@@ -1317,21 +1402,21 @@ def cli_ready(a) -> int:
         return 2
     plan = read_json(P.plan)
     running = parse_running(opts.running)
-    fl = Flow(P, Exec())
-    rep: dict = {"prepared": [], "skipped": [], "not_ready": {}, "would_prepare": [], "warnings": [], "counts": {}}
     S = State(P, plan)
+    rep = new_report("(ready)", "", False)
     if a.prepare or a.refresh_stale:
         try:
-            prepare_ready(P, S, fl, rep, running, opts, Db(F.DSN), plan)
+            prepare_ready(P, S, Flow(P, Exec()), rep, running, opts)
         except StepFailed as e:
             rep["failure"] = {"step": e.step, "detail": e.detail[-600:]}
         S = State(P, plan)
+        S.led.update(read_ledgers(P))
     out = ready_list(P, S, running, opts)
     if a.paths:
         print("\n".join(out["ready_scripts"]))
-        return 0
+        return 1 if rep.get("failure") else 0
     gate = S.by.get(GATE_RUN)
-    out.update(chapter1_gate=("honored" if opts.honor_gate else "lifted") if gate and not S.satisfied(gate) else "passed")
+    out["chapter1_gate"] = ("honored" if opts.honor_gate else "lifted") if gate and not S.satisfied(gate) else "passed"
     for k in ("prepared", "skipped", "not_ready", "failure"):
         if rep.get(k):
             out[k] = rep[k]

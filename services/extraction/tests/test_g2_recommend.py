@@ -607,6 +607,63 @@ class TheCommands(unittest.TestCase):
         self.assertIn(k1, json.loads((self.tmp / "other.json").read_text())["report"]["off_task"], "a person's item is off task")
 
 
+class FanoutHook(unittest.TestCase):
+    """fanout.py close-chapter: passes the recommendation file to G2 once it exists (or a re-run would undo it) and prepares the copy."""
+
+    def setUp(self):
+        import fanout as F
+        self.F = F
+        self.tmp = Path(tempfile.mkdtemp(prefix="g2rec_fanout_"))
+        t = self.tmp
+        (t / "lessons").mkdir()
+        run, g2 = make_run()
+        (t / "lessons" / "wf_aaaaaaaa-aaa.json").write_text(json.dumps(run))
+        (t / "g2-ch09.json").write_text(json.dumps(g2))
+        plan = {"runs": [{"id": "lesson-g10m9s1-1", "stage": "S2-S4", "chapter": 9}]}
+        (t / "plan.json").write_text(json.dumps(plan))
+        self.keep = (F.PLAN_PATH, F.RUNS, F.status, F.EMBED, F.PACKETS)
+        F.PLAN_PATH, F.RUNS, F.EMBED, F.PACKETS = t / "plan.json", t, t / "embedded", t / "packets"
+        F.status = lambda: {"runs": [{"id": "lesson-g10m9s1-1", "saved": "runs/g10-math/lessons/wf_aaaaaaaa-aaa.json"}]}
+
+    def tearDown(self):
+        F = self.F
+        F.PLAN_PATH, F.RUNS, F.status, F.EMBED, F.PACKETS = self.keep
+        shutil.rmtree(self.tmp, ignore_errors=True)
+
+    def test_the_dry_run_sizes_the_recommendation_and_passes_the_file_only_once_it_exists(self):
+        out = self.F.close_chapter(9, dry_run=True)
+        self.assertNotIn("--recommend", out["commands"][0])
+        self.assertEqual(out["g2_recommend"]["items"], 4)
+        self.assertEqual(out["g2_recommend"]["by_state"], {"held": 1, "excluded": 3})
+        self.assertFalse(out["g2_recommend"]["recommendation_file_exists"])
+        self.assertEqual(out["then"], ["fanout.py config 9", "fanout.py prepare wcheck-ch09", "fanout.py prepare s5-draft-ch09"],
+                         "the plan's own steps are unchanged")
+        (self.tmp / "g2-ch09.recommended.json").write_text(json.dumps({"items": {}}))
+        out = self.F.close_chapter(9, dry_run=True)
+        self.assertIn("--recommend", out["commands"][0], "a re-run without it would undo the recommendation")
+        self.assertIn("g2-ch09.recommended.json", out["commands"][0])
+        self.assertTrue(out["g2_recommend"]["recommendation_file_exists"])
+
+    def test_prepare_g2rec_builds_the_copy_and_the_commands(self):
+        files = [self.tmp / "lessons" / "wf_aaaaaaaa-aaa.json"]
+        info = self.F.prepare_g2rec(9, files, ["wf_aaaaaaaa-aaa"])
+        self.assertEqual((info["stage"], info["items"], info["by_state"]), ("G2R", 4, {"held": 1, "excluded": 3}))
+        self.assertEqual(len(info["copies"]), 1)
+        self.assertTrue(info["copies"][0].endswith("g2rec-ch09.workflow.js"))
+        self.assertTrue((self.tmp / "packets" / "g2rec-ch09.args.json").exists())
+        self.assertEqual(info["agents"], 1 + 1)
+        self.assertLess(info["cost_usd"][0], info["cost_usd"][1])
+        self.assertIn("--stage G2R", info["meter"])
+        self.assertIn("g2rec/ch09-<runId>.json", info["save_to"])
+        self.assertIn("BEFORE", info["launch"])
+        self.assertTrue(any("g2-recommend-collect" in c for c in info["after"]))
+        # idempotent: the same bytes
+        copy_ = self.tmp / "embedded" / "g2rec-ch09.workflow.js"
+        before = copy_.read_bytes()
+        self.F.prepare_g2rec(9, files, ["wf_aaaaaaaa-aaa"])
+        self.assertEqual(copy_.read_bytes(), before)
+
+
 # ---------------------------------------------------------------------------------------------- the workflow, under the stub
 RESPONDER = """
 // a canned responder: rec rows from stub.rec (by item id), ver rows from stub.ver; stub.omit_first drops an item from the first answer

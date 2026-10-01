@@ -153,5 +153,73 @@ class PlainMaths(unittest.TestCase):
         self.assertEqual(E.recurring_latex(Fraction(3, 4)), "0.75")
 
 
+class RecurringDecimalNotation(unittest.TestCase):
+    """The book's own recurring-decimal notation is read as the exact fraction it stands for — in a family's
+    marker answer, in the key it prints, and in a blind grader's answer — the same set the app's marker reads
+    (answer-marker.ts: \\dot on the first and last digit of the block, \\overline over it, 0.(45), 0.4545...)."""
+
+    def value(self, text):
+        return E.eval_plain(E.parse_plain(text), {})
+
+    def test_dots_bars_brackets_and_ellipses_are_exact_fractions(self):
+        cases = {
+            r"0.\dot{3}": Fraction(1, 3),
+            r"0.8\dot{3}": Fraction(5, 6),
+            r"0.\dot{1}4285\dot{7}": Fraction(1, 7),
+            r"9.2\dot{8}\dot{7}": Fraction(613, 66),
+            r"0.\overline{45}": Fraction(5, 11),
+            r"0.1\overline{045}": Fraction(58, 555),
+            r"3.\bar{6}": Fraction(11, 3),
+            "0.(45)": Fraction(5, 11),
+            "0.4545...": Fraction(5, 11),
+            "0.8333...": Fraction(5, 6),
+            "0.2\u0307": Fraction(2, 9),             # a combining dot above the digit
+            r"0.\dot{9}": Fraction(1),               # exact, so it IS one
+            r"-0.\dot{3}": Fraction(-1, 3),
+            r"2*0.\dot{3}": Fraction(2, 3),
+            r"$0.\dot{7}$": Fraction(7, 9),          # copied with its math delimiters
+            r"0.\dot{3} + 0.\dot{6}": Fraction(1),
+        }
+        for text, want in cases.items():
+            self.assertEqual(self.value(text), want, text)
+            self.assertIsInstance(self.value(text), Fraction, text)
+
+    def test_a_terminating_decimal_is_left_alone(self):
+        self.assertEqual(self.value("0.75"), 0.75)
+        self.assertEqual(self.value("12.5 + 0.25"), 12.75)
+        self.assertEqual(self.value("3/4"), Fraction(3, 4))
+
+    def test_a_mark_that_cannot_be_read_is_unreadable_never_guessed(self):
+        for text in [r"0.\dot{1}2",                 # a digit after the last dot belongs to no block
+                     "0.123...",                    # no block repeats twice
+                     r"0.\dot{1}\overline{3}",     # two kinds of mark on one decimal
+                     r"\overline{45}",              # a bar over nothing
+                     r"x.\dot{3}", "..."]:
+            with self.assertRaises(E.Unreadable, msg=text):
+                E.parse_plain(text)
+
+    def test_the_same_number_in_any_notation_is_equivalent(self):
+        eq = lambda key, ans: E.equivalent("recurring", key, ans)  # noqa: E731
+        key = r"9.2\dot{8}\dot{7}"
+        for ans in [r"9.2\dot{8}\dot{7}", r"9.2\overline{87}", "9.2(87)", "9.2878787...", "613/66", "9 + 19/66"]:
+            self.assertTrue(eq(key, ans), ans)
+        for ans in ["9.29", "9.2878", r"9.\overline{28}", "613/65"]:
+            self.assertFalse(eq(key, ans), ans)
+        # a bar over the pair is the same number as dots over its two digits, and the reverse
+        self.assertTrue(eq(r"0.1\overline{045}", r"0.1\dot{0}4\dot{5}"))
+        self.assertTrue(eq("5/11", r"0.\dot{4}\dot{5}"))
+
+    def test_a_key_prints_in_the_notation_it_was_written_in(self):
+        v = Fraction(58, 555)
+        self.assertEqual(E.recurring_latex(v), r"0.1\dot{0}4\dot{5}")
+        self.assertEqual(E.recurring_latex(v, "bar"), r"0.1\overline{045}")
+        self.assertEqual(E.recurring_latex(Fraction(1, 3), "bar"), r"0.\overline{3}")
+        self.assertEqual(E.recurring_latex(Fraction(3, 4), "bar"), "0.75")      # it stops: nothing to mark
+        # and what is printed is read back to the same number, in both notations
+        for v in (Fraction(1, 3), Fraction(5, 6), Fraction(1, 7), Fraction(613, 66), Fraction(-58, 555)):
+            for style in ("dot", "bar"):
+                self.assertEqual(self.value(E.recurring_latex(v, style)), v, (v, style))
+
+
 if __name__ == "__main__":
     unittest.main()
