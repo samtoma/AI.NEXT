@@ -438,7 +438,10 @@ export interface ContentRow {
 
 const AI_AUTHOR = /\b(UNREVIEWED|workflow|Sonnet|Haiku|Opus|LLM|agent|S5)\b/i;
 
-export function deriveContent(kind: Exclude<ItemKind, "book_question" | "generated_question" | "widget_question" | "mapping_claim">, row: ContentRow): DerivedItem {
+export function deriveContent(
+  kind: Exclude<ItemKind, "book_question" | "generated_question" | "widget_question" | "mapping_claim" | "gate_decision">,
+  row: ContentRow
+): DerivedItem {
   let reasons: Reason[];
   let humanStamped = false;
   let exposure: Exposure = "content";

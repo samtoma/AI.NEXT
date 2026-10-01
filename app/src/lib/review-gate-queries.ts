@@ -934,7 +934,10 @@ export function parseDecideInput(body: unknown): DecideInput | { error: string }
  *   worked example approve the entry: reviewed, by, at
  *   figure reject      its question goes to 'review' with hold_reason
  *                      'human_hold' (off students until it has a figure)
- *   anything else      recorded only
+ *   anything else      recorded only (a gate decision, an objective, a link)
+ *
+ * A GATE DECISION is Samuel's alone (answer 39): anyone else's decision on one
+ * is refused with `owner_only`, whatever role they hold.
  */
 export async function decide(
   c: Db,
@@ -1193,8 +1196,26 @@ export interface FilterOptions {
   modules: { id: string; label: string; courseId: string }[];
 }
 
+export interface ForSamuelRow {
+  ref: string;
+  state: ResolvedItem["state"];
+  gate: string;
+  chapter: number | null;
+  run: string | null;
+  summary: string;
+  by: string;
+  decidedAt: string;
+  outcome: string;
+}
+
 export interface ReviewOverview {
   environment: string;
+  /** is the viewer the account gate decisions belong to (answer 39)? */
+  viewerIsOwner: boolean;
+  /** is that account configured at all? */
+  gateOwnerConfigured: boolean;
+  /** every gate decision, open ones first */
+  forSamuel: ForSamuelRow[];
   summary: BacklogSummary;
   /** open items matching the page's filters */
   openMatching: number;
@@ -1207,8 +1228,38 @@ export interface ReviewOverview {
   reviewingNow: { operatorName: string; kind: ItemKind; ref: string; expiresAt: string }[];
 }
 
-export async function overview(c: Db, environment: string, filters: BacklogFilters): Promise<ReviewOverview> {
-  const items = await loadBacklog(c, environment);
+export async function overview(
+  c: Db,
+  environment: string,
+  filters: BacklogFilters,
+  operatorId: number,
+  gateSource: () => Promise<GateRecordRow[]> = readGateRecords
+): Promise<ReviewOverview> {
+  const records = await gateSource();
+  const items = await loadBacklog(c, environment, null, async () => records);
+  const owner = await isGateOwner(c, operatorId);
+  const recordByRef = new Map(records.map((r) => [r.ref, r]));
+  const forSamuel: ForSamuelRow[] = items
+    .filter((i) => i.assignee === "samuel" && recordByRef.has(i.ref))
+    .map((i) => {
+      const r = recordByRef.get(i.ref)!;
+      return {
+        ref: i.ref,
+        state: i.state,
+        gate: r.gate,
+        chapter: r.chapter,
+        run: r.run,
+        summary: r.summary,
+        by: r.by,
+        decidedAt: r.decidedAt,
+        outcome: r.outcome,
+      };
+    })
+    .sort(
+      (a, b) =>
+        Number(b.state === "open" || b.state === "fix_requested") - Number(a.state === "open" || a.state === "fix_requested") ||
+        a.decidedAt.localeCompare(b.decidedAt)
+    );
   const summary = summarize(items);
   const moduleIds = [...new Set(items.map((i) => i.moduleId).filter((m): m is string => !!m))];
   const names = await labels(c, moduleIds);
@@ -1219,8 +1270,11 @@ export async function overview(c: Db, environment: string, filters: BacklogFilte
   const courses = [...new Set(items.map((i) => i.courseId))].sort();
   return {
     environment,
+    viewerIsOwner: owner,
+    gateOwnerConfigured: gateOwnerEmail() !== null,
+    forSamuel,
     summary,
-    openMatching: pickCandidates(items, filters, { heldByOthers: new Set() }).length,
+    openMatching: pickCandidates(items, filters, { heldByOthers: new Set(), viewerIsOwner: owner }).length,
     filters,
     options: {
       courses: courses.map((id) => ({ id, label: courseName(id) })),
@@ -1241,7 +1295,7 @@ export async function overview(c: Db, environment: string, filters: BacklogFilte
 /* ------------------------------------------------- the console's entry points */
 
 export const getReviewOverview = (operatorId: number, filters: BacklogFilters) =>
-  withOperator(operatorId, (c) => overview(c, ENVIRONMENT, filters));
+  withOperator(operatorId, (c) => overview(c, ENVIRONMENT, filters, operatorId));
 
 export const nextItemFor = (operatorId: number, filters: BacklogFilters, skip: ReadonlySet<string>) =>
   withOperator(operatorId, (c) => nextFor(c, ENVIRONMENT, operatorId, filters, skip));
