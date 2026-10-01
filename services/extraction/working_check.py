@@ -194,6 +194,8 @@ class _Eval:
                    lambda m: m.group(1).replace(" ", ""), s)       # \text{12 566} -> 12566 (Siyavula style)
         s = re.sub(r"(?<=\d)\s+(?=\d{3}(?!\d))", "", s)             # thousands written with a space
         s = s.replace("{,}", "")
+        # a mixed number (4\frac{1}{3}) is a sum, not a product
+        s = re.sub(r"(?<![\w^_}.])(\d+)\s*\\[dt]?frac\{(\d+)\}\{(\d+)\}", r"(\1+\\frac{\2}{\3})", s)
         self.toks = [t for t in self._TOKEN.findall(s) if t.strip() and t not in ("\\,", "\\;", "\\!", "\\:", "\\ ")]
         self.i = 0
 
@@ -356,6 +358,9 @@ def _decimals(side: str) -> int | None:
     return len(m.group(1)) if m else None
 
 
+_LITERAL = re.compile(r"\s*-?\s*(?:\\text\{)?\s*-?\d+(?:\.\d+)?\s*\}?\s*")
+
+
 def _close(a: float, b: float) -> bool:
     return abs(a - b) <= 1e-9 * max(1.0, abs(a), abs(b))
 
@@ -407,12 +412,16 @@ def check_line(line: str) -> list[dict]:
             (a, ua), (b, ub) = vals[k - 1], vals[k]
             lt, rt = sides[k - 1][1].strip(), sides[k][1].strip()
             if ua or ub:
-                if (ua and (b is not None or ub is None)) or (ub and a is not None):
+                # an undefined side set equal to a NUMBER is a flag (the §8.3 misprint: (3−7)/(3−3) = −4/−6);
+                # set equal to another undefined side, or to words ("= undefined"), it is the book's point
+                if (ua and b is not None) or (ub and a is not None):
                     flags.append({"kind": "arithmetic", "relation": rel, "left": lt, "right": rt,
                                   "why": f"{'the left' if ua else 'the right'} side is undefined ({ua or ub})"})
                 continue
             if a is None or b is None:
                 continue
+            if rel == "=" and _LITERAL.fullmatch(lt) and _LITERAL.fullmatch(rt) and not _close(a, b):
+                continue        # "0 = 10": a contradiction the working states on purpose, not arithmetic
             ok = True
             if rel == "=":
                 ok = _close(a, b) or _rounds_to(a, b, _decimals(rt)) or _rounds_to(b, a, _decimals(lt))

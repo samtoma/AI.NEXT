@@ -4,13 +4,15 @@ description: "Task list for 003 — Curriculum Tracks and the Grade 10 American 
 
 # Tasks: Curriculum Tracks and the Grade 10 American Mathematics Course
 
-**Input**: [spec.md](./spec.md) (rev. 4, with its 2026-09-26/27 amendments) · [plan.md](./plan.md) ·
+**Input**: [spec.md](./spec.md) (rev. 4, with its 2026-09-26/27 and 2026-10-01 amendments) · [plan.md](./plan.md) ·
 [data-model.md](./data-model.md) · [contracts/](./contracts/) · [research.md](./research.md) ·
-[privacy-review.md](./privacy-review.md) · [decisions.md](./decisions.md) (decisions 1–47) ·
+[privacy-review.md](./privacy-review.md) · [decisions.md](./decisions.md) (decisions 1–58) ·
 `docs/specs/extraction-pipeline.md` §9 (B1–B21)
-**Status**: rev. 4, 2026-10-01. Rev. 2 (2026-09-25, after Samuel's *"ok for all"*) added the phases up to
+**Status**: 2026-10-01. Rev. 2 (2026-09-25, after Samuel's *"ok for all"*) added the phases up to
 8c; Phase 9b (T427–T433) came with the third round of decisions; Phase 9c (T434) adds answer 36's
-reversal of decision 1 (sign-up always asks). G0 is passed; for the Chapter 8 pilot,
+reversal of decision 1 (sign-up always asks), now **built and ticked**; Phase 9d (T435–T443) adds
+answer 35's no-Arabic-anywhere clean-up (T435, **built and ticked**) and answer 37's internal review
+backlog and full fan-out (T436–T443, not yet built). G0 is passed; for the Chapter 8 pilot,
 G1 and G2 are passed (decisions.md, *Gate record*). Code is on the branch, committed only as unreviewed
 WIP snapshots (an auto-snapshot job, `[skip ci]`) — nothing is reviewed or merged. A task is ticked only
 when its evidence exists. Where code exists but nobody has verified it, the task says so and stays
@@ -19,8 +21,9 @@ unticked.
 require byte-identity captures and migration proofs. Every test file declares what it proves with
 `// @covers FR-…` (or `# @covers` in Python), so `scripts/traceability.py` can see it.
 
-**Numbering**: tasks are **T301–T434** (planned as T301–T399; T400–T433 were added with rev. 2's and the
-third round's work; T434 with answer 36 on 2026-10-01). Spec 001 uses T001–T143, and `scripts/traceability.py` reads
+**Numbering**: tasks are **T301–T443** (planned as T301–T399; T400–T433 were added with rev. 2's and the
+third round's work; T434 with answer 36 on 2026-10-01; T435–T443 with answers 35 and 37 the same day).
+Spec 001 uses T001–T143, and `scripts/traceability.py` reads
 task ids from every spec's `tasks.md` into one set, so 003 starts at T301 to keep each id unique
 across the repository. That matters when an id is cited in an issue or a commit.
 

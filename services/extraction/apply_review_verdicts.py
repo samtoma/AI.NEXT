@@ -43,17 +43,25 @@ reads to put them on the lesson runs:
     {"by": "Samuel", "items": {"<lesson>:<ref>": {"verdict": "accept"|"fix"|"hold"|"exclude",
                                                    "note": "…", "fields": {…}}}}
 
-Until now the stamp stopped at the run files: the loader stamps every verified book question
-"ai dual-check (pending Samuel)", so the database never said a human read one. `--g2` carries
-the verdicts to the rows, by the question id the assembler minted from the item's own objective
+Until now the stamp stopped at the run files: the loader records every verified book question as
+AI-checked only (ai_checked_by 'ai dual-check'), so the database never said a human read one. `--g2`
+carries the verdicts to the rows, by the question id the assembler minted from the item's own objective
 and place in the book (the run files under runs/<book>/lesson/ say which objective):
 
     accept, fix  status 'live', reviewed_by '<by> (G2 accept|fix)'
-    hold         status 'review', reviewed_by '<by> (G2 hold)'
+    hold         status 'review', hold_reason 'human_hold', reviewed_by '<by> (G2 hold)'
     exclude      the item is not a question row; a row loaded earlier goes to 'rejected'
 A not-markable item is a worked example, not a question row, and is reported, never invented.
 It only ever touches the book's own rows (source 'seed') of the book's course, never deletes
 one, and re-running it changes nothing: it is a replay of the committed file.
+
+ONLY A HUMAN STAMP IS A REVIEW (migration 035, answer 33). `reviewed_by` carries the reviewer's own
+stamp and nothing else; who else changed the item ("stem fixed by orchestrator … — not Samuel") goes
+to `review_note`, and a figure that is still missing to `hold_reason` (figure_missing — a book-picture
+stand-in counts as the figure, answer 37d). AN AUTO-PASSED GATE IS NOT A REVIEW (answer 37c): a file
+(or one of its items) marked `"auto": true`, or signed "auto-pass G<n> (AI recommendation)"
+(auto_pass_gates.py), writes the AI's verdict to `ai_checked_by` and never touches `reviewed_by`; an
+auto "hold" is held as `unverified`, an auto G3 "fix" likewise — only a human's hold is `human_hold`.
 """
 
 from __future__ import annotations
@@ -63,6 +71,8 @@ import json
 import os
 import sys
 from pathlib import Path
+
+import review_policy
 
 VALID = {"accept", "reject", "fix"}
 
@@ -95,7 +105,8 @@ def g2_targets(g2: dict, runs_dir: Path) -> tuple[list[dict], list[str]]:
         targets.append({"key": key, "verdict": verdict, "note": (v or {}).get("note"),
                         "question_id": item.question_id(), "teaching": item.answer_type == "not_markable",
                         "reviewer_verdict": (v or {}).get("samuel_verdict") or verdict,
-                        "stem_fix_by": (v or {}).get("stem_fix_by")})
+                        "stem_fix_by": (v or {}).get("stem_fix_by"),
+                        "auto": bool((v or {}).get("auto")) or review_policy.is_auto((v or {}).get("by"))})
     return targets, problems
 
 
@@ -103,6 +114,9 @@ def apply_g2(cur, g2: dict, runs_dir: Path, course: str, dry_run: bool) -> dict:
     by = (g2.get("by") or "").strip()
     if not by:
         raise SystemExit("ERROR: the G2 file must name its reviewer (`by`) — an unattributed review is not a review")
+    review_policy.require_review_columns(cur)
+    file_auto = bool(g2.get("auto")) or review_policy.is_auto(by)
+    auto_by = review_policy.auto_pass_by("G2")
     targets, problems = g2_targets(g2, runs_dir)
     if problems:
         raise SystemExit("G2 NOT APPLIED — nothing was written:\n  " + "\n  ".join(problems))
@@ -112,7 +126,8 @@ def apply_g2(cur, g2: dict, runs_dir: Path, course: str, dry_run: bool) -> dict:
            "held_for_figure": []}
     for t in targets:
         qid = t["question_id"]
-        cur.execute("SELECT status, reviewed_by, source, lo_id, stem FROM questions WHERE id = %s", (qid,))
+        cur.execute("""SELECT status, reviewed_by, source, lo_id, stem, ai_checked_by, hold_reason, review_note
+                         FROM questions WHERE id = %s""", (qid,))
         row = cur.fetchone()
         if t["teaching"]:
             out["teaching"].append(qid)
@@ -121,38 +136,57 @@ def apply_g2(cur, g2: dict, runs_dir: Path, course: str, dry_run: bool) -> dict:
             if t["verdict"] != "exclude":
                 out["absent"].append(qid)
             continue
-        status, reviewed_by, source, lo, stem = row
+        status, reviewed_by, source, lo, stem, ai_by, hold, note = row
         if source != "seed" or lo not in course_los:
             raise SystemExit(f"G2 NOT APPLIED: {qid} is not a book question of {course} "
                              f"(source {source}, objective {lo}); nothing was written")
+        auto = file_auto or t["auto"]
+        # the reviewer's own verdict, and who else changed the item (2026-09-27): the stamp is "Samuel Toma
+        # (G2 accept)" and "stem fixed by orchestrator …" is a NOTE — never "(G2 fix)" for a fix the reviewer
+        # did not make, and never part of the human stamp (migration 035)
+        verdict = t["reviewer_verdict"] if t["verdict"] in ("accept", "fix") else t["verdict"]
+        stamp = f"{auto_by if auto else by} (G2 {verdict})"
+        want_note = review_policy.join_notes(note, f"stem fixed by {t['stem_fix_by']}" if t.get("stem_fix_by") else None)
+        # (status, reviewed_by, ai_checked_by, hold_reason, review_note)
+        human = reviewed_by if auto else stamp
+        robot = stamp if auto else ai_by
         if t["verdict"] == "exclude":
-            want = ("rejected", reviewed_by)
+            want = ("rejected", reviewed_by, ai_by if not auto else stamp, None, note)
             bucket = "rejected"
         elif t["verdict"] == "hold":
-            want = ("review", f"{by} (G2 hold)")
+            want = ("review", human, robot,
+                    review_policy.UNVERIFIED if auto else review_policy.HUMAN_HOLD, want_note)
             bucket = "held"
         else:
-            # the reviewer's own verdict, and who else changed the item (2026-09-27): "Samuel Toma (G2 accept);
-            # stem fixed by orchestrator …" — never "(G2 fix)" for a fix the reviewer did not make
-            stamp = f"{by} (G2 {t['reviewer_verdict']})" + (f"; stem fixed by {t['stem_fix_by']}" if t.get("stem_fix_by") else "")
-            want = ("live", stamp)
+            want = ("live", human, robot, None, want_note)
             bucket = "stamped"
             # consistency review A3: a question whose stem shows [figure] and has no figure stays at review, G2's
-            # verdict recorded, until its figure exists — it cannot be answered without it
+            # verdict recorded, until its figure exists — it cannot be answered without it. A book-picture
+            # stand-in (answer 37d) is its figure; one that would show the unknown was never attached, and
+            # the load holds the question as figure_reveals_answer — kept here.
             if "[figure]" in (stem or ""):
                 cur.execute("SELECT 1 FROM visuals WHERE question_id = %s LIMIT 1", (qid,))
                 if cur.fetchone() is None:
-                    want = ("review", f"{stamp}; held: its figure is missing")
+                    keep = hold if hold == review_policy.FIGURE_REVEALS_ANSWER else review_policy.FIGURE_MISSING
+                    want = ("review", human, robot, keep, want_note)
                     bucket = "held_for_figure"
-        if (status, reviewed_by) == want:
+        if (status, reviewed_by, ai_by, hold, note) == want:
             out["unchanged"] += 1
             continue
         out[bucket].append(qid)
         if not dry_run:
-            cur.execute("""UPDATE questions SET status = %s, reviewed_by = %s,
-                                  reviewed_at = CASE WHEN %s IS DISTINCT FROM reviewed_by THEN now()
-                                                     ELSE reviewed_at END
-                            WHERE id = %s""", (want[0], want[1], want[1], qid))
+            cur.execute("""UPDATE questions
+                              SET status = %s, reviewed_by = %s,
+                                  reviewed_at = CASE WHEN %s IS NULL THEN NULL
+                                                     WHEN %s IS DISTINCT FROM reviewed_by THEN now()
+                                                     ELSE reviewed_at END,
+                                  ai_checked_by = %s,
+                                  ai_checked_at = CASE WHEN %s IS NULL THEN ai_checked_at
+                                                       WHEN %s IS DISTINCT FROM ai_checked_by THEN now()
+                                                       ELSE ai_checked_at END,
+                                  hold_reason = %s, review_note = %s
+                            WHERE id = %s""",
+                        (want[0], want[1], want[1], want[1], want[2], want[2], want[2], want[3], want[4], qid))
     return out
 
 
@@ -203,6 +237,11 @@ def main() -> int:
         print("ERROR: the file must name a reviewer — an unattributed review is not a review",
               file=sys.stderr)
         return 2
+    # An auto-passed G3 (answer 37c) is the AI's verdict: it goes to ai_checked_by, never reviewed_by.
+    auto = bool(doc.get("auto")) or review_policy.is_auto(reviewer)
+    stamp_col, stamp_at = ("ai_checked_by", "ai_checked_at") if auto else ("reviewed_by", "reviewed_at")
+    if auto:
+        reviewer = review_policy.auto_pass_by("G3")
     verdicts: dict[str, str] = doc["verdicts"]
     bad = {v for v in verdicts.values()} - VALID
     if bad:
@@ -216,6 +255,7 @@ def main() -> int:
     import psycopg
 
     with psycopg.connect(args.dsn) as conn, conn.cursor() as cur:
+        review_policy.require_review_columns(cur)
         # Family membership lives in source_note ("Generated from template
         # family <id>.") because the schema has no family column yet. Reading it
         # here keeps the coupling in one place; if a family column is ever added
@@ -245,8 +285,8 @@ def main() -> int:
                 accepted_families.setdefault(fam, qid)
                 if not args.dry_run:
                     cur.execute(
-                        """UPDATE questions
-                              SET reviewed_by = %s, reviewed_at = now()
+                        f"""UPDATE questions
+                              SET {stamp_col} = %s, {stamp_at} = now()
                             WHERE id = %s""",
                         (f"{reviewer} (sampled)", qid),
                     )
@@ -269,8 +309,10 @@ def main() -> int:
             elif verdict == "fix":
                 pulled += 1
                 if not args.dry_run:
+                    # a human's "fix" is a human hold (no loader releases it); an auto one is `unverified`
                     cur.execute(
-                        "UPDATE questions SET status = 'review' WHERE id = %s", (qid,)
+                        "UPDATE questions SET status = 'review', hold_reason = %s WHERE id = %s",
+                        (review_policy.UNVERIFIED if auto else review_policy.HUMAN_HOLD, qid),
                     )
 
         # Family validation runs last, so a rejection anywhere in a family always
@@ -279,18 +321,18 @@ def main() -> int:
         for fam, via in sorted(accepted_families.items()):
             if args.dry_run:
                 cur.execute(
-                    """SELECT count(*) FROM questions
+                    f"""SELECT count(*) FROM questions
                         WHERE source = 'variant' AND status = 'live'
-                          AND reviewed_by IS NULL AND source_note LIKE %s""",
+                          AND {stamp_col} IS NULL AND reviewed_by IS NULL AND source_note LIKE %s""",
                     (f"%template family {fam}.%",),
                 )
                 by_family += cur.fetchone()[0]
                 continue
             cur.execute(
-                """UPDATE questions
-                      SET reviewed_by = %s, reviewed_at = now()
+                f"""UPDATE questions
+                      SET {stamp_col} = %s, {stamp_at} = now()
                     WHERE source = 'variant' AND status = 'live'
-                      AND reviewed_by IS NULL AND source_note LIKE %s""",
+                      AND {stamp_col} IS NULL AND reviewed_by IS NULL AND source_note LIKE %s""",
                 (f"{reviewer} (family {fam} via {via})", f"%template family {fam}.%"),
             )
             by_family += cur.rowcount
