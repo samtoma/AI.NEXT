@@ -1,0 +1,628 @@
+{
+ "book": "g10-math",
+ "stage": "draft",
+ "prompts_version": "s5-v5",
+ "by_ref": {
+  "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/s5-draft-ch02",
+  "stage": "S5 draft",
+  "shards_sha256": "01021a611b3d99e2707229b9cfca0abb8312e4fe3e43fa5c08a0b1d6d0b32330",
+  "files": 12
+ },
+ "embedded": {
+  "source": "runbook/misconceptions.workflow.js",
+  "source_sha256": "8a48496f9fb571481f131c340cefa1ee28d2d1a96b8ab5a348e2adf4166e0a0a",
+  "args_sha256": "ecdc284b1db263f05bb6e782e2aa4cfbd7384a441cf68faf39ea7ba1e375a78d",
+  "generated_sha256": "d869bef45a444152aba489bd092ca81069486a4e2757825e52df26ab573f247f",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "max_per_objective": 4,
+ "records": [
+  {
+   "lo": "lo:g10m2s2-1-1",
+   "entries": [
+    {
+     "id": "mc:g10m2s2-1-1:power-skips-coefficient",
+     "lo_id": "lo:g10m2s2-1-1",
+     "label": "Raises the letters to the power but leaves the number alone",
+     "description": "The student applies the outer power to the letters inside the brackets but not to the numerical coefficient, so $(3x^4y^2)^3$ becomes $3x^{12}y^6$ instead of $27x^{12}y^6$.",
+     "signal": "The number in front is unchanged from the number inside the brackets, e.g. $6c^3$ for $(6c)^3$ or $3x^{12}y^6$ for $(3x^4y^2)^3$, while the powers on the letters are correct.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You put the power on the letters and left the number as it was, so $(6c)^3$ became $6c^3$. Raising the letters correctly is the harder half. The number just needs the same treatment."
+      },
+      {
+       "step": 2,
+       "text_md": "The book's rule is that the power of a product is the product of all the bases raised to the same power. Inside $(6c)^3$ there are two bases multiplied together, $6$ and $c$, and the $6$ counts as one of them."
+      },
+      {
+       "step": 3,
+       "text_md": "So both get the power: $(6c)^3 = 6^3c^3$. Then $6^3 = 6\\times6\\times6 = 216$, which gives $216c^3$."
+      },
+      {
+       "step": 4,
+       "text_md": "Compare the two answers. $6c^3$ and $216c^3$ are different, and the difference is exactly the $6$ that was left out of the power."
+      },
+      {
+       "step": 5,
+       "text_md": "Next time, write every factor in the brackets with the outer power before you simplify anything, number included. For example $(2t^4)^3 = 2^3t^{12} = 8t^{12}$."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "expl:g10m2s2-1-1:ex2-4-6f"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m2s2-1-1:ex2-1-5"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m2s2-1-1:ex2-1-29"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    },
+    {
+     "id": "mc:g10m2s2-1-1:power-through-a-sum",
+     "lo_id": "lo:g10m2s2-1-1",
+     "label": "Splits a power across a sum, or gathers a sum back into one power",
+     "description": "The student treats a sum of powers and the power of a sum as the same thing, so $(a+b)^2$ becomes $a^2+b^2$, or $\\dfrac{1}{a^{-1}+b^{-1}}$ becomes $a+b$.",
+     "signal": "A sum of separate powers where a bracket was squared, e.g. $a^2+b^2$ for $(a+b)^2$, or the bare sum $a+b$ for $\\dfrac{1}{a^{-1}+b^{-1}}$.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You shared a power out across a sum, or gathered separate powers back into one power of a sum. That move is correct when the bases are multiplied, so it is a natural one to reach for, but it does not work across a $+$."
+      },
+      {
+       "step": 2,
+       "text_md": "The book's reminder is that a sum of two powers is not the power of the sum of the bases. The power law shares an exponent across a product, and a sum is not a product."
+      },
+      {
+       "step": 3,
+       "text_md": "Multiply $(a+b)^2$ out and you get $a^2+2ab+b^2$. The middle term $2ab$ is missing from $a^2+b^2$, so the two expressions are not equal."
+      },
+      {
+       "step": 4,
+       "text_md": "The negative exponent case works the same way. The book writes $a+b$ as $\\dfrac{1}{(a+b)^{-1}}$, and that is not $\\dfrac{1}{a^{-1}+b^{-1}}$, because $a^{-1}+b^{-1}$ is not the same expression as $(a+b)^{-1}$."
+      },
+      {
+       "step": 5,
+       "text_md": "Next time, split a power only across a product or a quotient. When the base is a sum, keep the bracket together as one block, or multiply it out as the book does to get $a^2+2ab+b^2$."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "expl:g10m2s2-1-1:ex2-4-6b"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "expl:g10m2s2-1-1:ex2-4-6a"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "The evidence block for this objective was empty (no caution boxes, remarks or re-solve wrong turns) and no wrong options or widget predicates were supplied, so there are no distractor assignments. Both entries rest on the three 'Explain why the following statements are false' items (6a, 6b, 6f) that appear among this objective's questions. I treated them as the book's own printed account of three errors, and the refutation steps use the book's working for each. If the evidence-free rule is meant to exclude them, drop both entries."
+    },
+    {
+     "kind": "evidence",
+     "text": "I merged the book's items 6a ($\\frac{1}{a^{-1}+b^{-1}}=a+b$) and 6b ($(a+b)^2=a^2+b^2$) into one entry because the book gives the same reason for both: a sum of powers is not the power of a sum. Item 6f (the coefficient left out of a power of a product) is a different error and has its own entry."
+    },
+    {
+     "kind": "evidence",
+     "text": "I left out other errors that are likely for this objective but have no book caution, remark, wrong option or re-solve behind them: the zero exponent read as $a^0=0$ or $16a^0=1$, exponents multiplied when powers are multiplied, and a negative exponent read as a negative number. Writing them would be guessing, so the runtime falls back to the canonical solutions for them."
+    },
+    {
+     "kind": "terminology",
+     "text": "The book's own wording is 'the sum of two powers of the same degree is not the power of the sum of the bases'. 'Degree' is used loosely there, so I paraphrased it in student text as 'a sum of two powers is not the power of the sum of the bases'. Please check this against the book's wording. 'Power of a product' and 'bases' are used as the book words them."
+    },
+    {
+     "kind": "other",
+     "text": "The refutations use worked examples from sibling questions (the cube of $6c$, the cube of $2t^4$) described by their numbers, not by question id. A student who is currently on one of those same questions will see its answer in the refutation, which is the book's own solved result."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m2s2-1-2",
+   "entries": [
+    {
+     "id": "mc:g10m2s2-1-2:merges-factor-into-base",
+     "lo_id": "lo:g10m2s2-1-2",
+     "label": "Multiplying a plain factor into the base",
+     "description": "The student multiplies a plain factor into the base of a power, writing $2\\cdot3^{x}$ as $6^{x}$, as if the exponent $x$ applied to both numbers.",
+     "signal": "A plain factor and a power with a different base are merged into one power, such as $2\\cdot3^{x}$ becoming $6^{x}$, or $4^{n}\\times2$ becoming $8^{n}$.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You were trying to get one single base so the exponent laws can work, and that is the right goal. The slip is in how the two numbers are joined: $2\\cdot3^{x}$ is not $6^{x}$."
+      },
+      {
+       "step": 2,
+       "text_md": "In $2\\cdot3^{x}$ the exponent $x$ belongs to the $3$ only. The $2$ is a plain factor, so it is $2^{1}$. Two powers can be joined into one power by multiplying their bases only when they carry the same exponent: $6^{x}=(2\\times3)^{x}=2^{x}\\cdot3^{x}$. That has $2^{x}$ in it, not $2^{1}$, so $6^{x}\\neq2\\cdot3^{x}$."
+      },
+      {
+       "step": 3,
+       "text_md": "Test it with $x=2$. $2\\cdot3^{2}=2\\cdot9=18$, but $6^{2}=36$."
+      },
+      {
+       "step": 4,
+       "text_md": "The same slip appears when you reduce to prime bases. $4^{n}\\times2=\\left(2^{2}\\right)^{n}\\times2^{1}=2^{2n+1}$, but $8^{n}=\\left(2^{3}\\right)^{n}=2^{3n}$. These are different expressions."
+      },
+      {
+       "step": 5,
+       "text_md": "Never fold a plain factor into a base. Write every base as a power of a prime, so a lone $2$ becomes $2^{1}$ and stays a factor. Then combine only the powers that share a prime base: add the exponents when you multiply, subtract them when you divide."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "expl:g10m2s2-1-2:ex2-4-6d"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "The evidence section was empty and no distractors or widget predicates were supplied. The one entry rests on the book's teaching item in the questions file: it asks why $2\\cdot3^{x}=6^{x}$ is false and answers with $6^{x}=(2\\times3)^{x}=2^{x}\\cdot3^{x}$. No caution box, no worked-example remark naming a common error, and no re-solve wrong turn was available, so I did not invent any other entry (for example, dropping the exponent from one factor of a composite base). A second possible entry, 'bases differ so it cannot be simplified', was left out: the worked example only says it looks that way at first glance, and the refutation would just restate the method."
+    },
+    {
+     "kind": "terminology",
+     "text": "The book's own wording for the error is that we cannot multiply bases unless they are raised to the same power. That wording is loose, because the $2$ in $2\\cdot3^{x}$ is a factor, not a base. I used 'plain factor' and 'carry the same exponent' instead. Please confirm this reading matches the book's usage."
+    },
+    {
+     "kind": "terminology",
+     "text": "The book prints the false statement with a raised dot, $2.3^{x}$, meaning multiplication. In decimal-point notation that reads as 2.3 to the power x, so I wrote $2\\cdot3^{x}$ throughout."
+    },
+    {
+     "kind": "other",
+     "text": "Step 3 checks the claim with $x=2$ (18 against 36). This substitution is not in the book's solution. It is plain arithmetic, but a reviewer may prefer to cut it if only the book's own working is allowed. $x=1$ must not be used, because both sides equal 6 there."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m2s2-1-3",
+   "entries": [
+    {
+     "id": "mc:g10m2s2-1-3:powers-outside-algebra",
+     "lo_id": "lo:g10m2s2-1-3",
+     "label": "Thinks the usual algebra moves do not apply to powers",
+     "description": "The student treats a fraction made of powers as a separate kind of expression where taking out a common factor and cancelling do not apply, so they stall, or say it cannot be simplified because the exponents are different.",
+     "signal": null,
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "It is sensible to be careful with powers, because they do have their own laws. But those laws work alongside the ordinary algebra moves rather than replacing them: taking out a common factor and cancelling work on powers exactly as they work on letters."
+      },
+      {
+       "step": 2,
+       "text_md": "Take the fraction with $2^t-2^{t-2}$ on top and $3\\cdot2^t-2^t$ below. The powers look different, which is what makes it feel stuck. Use the exponent law backwards: $2^{t-2}$ is $2^t\\cdot2^{-2}$. Now every term, top and bottom, contains $2^t$."
+      },
+      {
+       "step": 3,
+       "text_md": "So $2^t$ is a common factor. Take it out of the top and out of the bottom, just as you would take out a letter: $\\dfrac{2^t(1-2^{-2})}{2^t(3-1)}$."
+      },
+      {
+       "step": 4,
+       "text_md": "Cancel the common factor $2^t$ and finish the numbers: $\\dfrac{1-\\frac{1}{4}}{2}=\\dfrac{3}{4}\\times\\dfrac{1}{2}=\\dfrac{3}{8}$. If you stop at \"the exponents are different, so nothing can be done\", you are left with $t$ in an expression that actually simplifies to a single number."
+      },
+      {
+       "step": 5,
+       "text_md": "The move to keep: when a term has a sum or difference in its exponent, such as $13^{c+2}$, split it with the exponent law into $13^c\\cdot13^2$. Then take out the common power from the top and from the bottom, cancel it, and work out what is left."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "b00839"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m2s2-1-3:we04"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "The only evidence supplied for this objective is one caution (all the laws of operation for algebra apply when working with exponents). No wrong options, no existing entries and no re-solve wrong turns were given, so only the one error the caution supports is written. A second plausible error (cancelling a power that is a term, not a factor, before factorising) has no supporting evidence in the packet and was left out rather than invented."
+    },
+    {
+     "kind": "evidence",
+     "text": "Question ex2-1-38 prints a plus sign in its denominator ($4\\times7^{b}+3\\times7^{b}$) but its canonical solution and answer ($\\frac{51}{49}$) use a minus. I did not use that question in any refutation; it needs a human check of the question text."
+    },
+    {
+     "kind": "terminology",
+     "text": "Terms used as the book's solutions word them: \"common factor\", \"take out a common factor\", \"cancel\", \"exponent laws\". The step 2 phrase \"use the exponent law backwards\" paraphrases the worked example's \"undo the law / work backwards\" wording; please confirm it matches the book's usage."
+    },
+    {
+     "kind": "other",
+     "text": "The sum-of-cubes item (2^{3p}+1 over 2^p+1) and the negative-exponent item (a^{-1}-b^{-1} over a-b) go beyond the objective's description of common factors and the difference of squares, and no evidence of wrong turns was supplied for them, so no entry was written for them."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m2s3-1-1",
+   "entries": [
+    {
+     "id": "mc:g10m2s3-1-1:exponent-sign-kept-when-power-moves-up",
+     "lo_id": "lo:g10m2s3-1-1",
+     "label": "Exponent keeps its sign when a power moves up from the denominator",
+     "description": "A power is moved from the denominator to the numerator but its exponent is left positive, so $\\frac{1}{a^{2}}$ is treated as $a^{2}$ and the final exponent has the wrong sign.",
+     "signal": "A final answer such as $a^{\\frac{2}{3}}$ where $a^{-\\frac{2}{3}}$ is correct: the right size of exponent, but the minus sign is missing.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You moved the power out of the denominator, and that was the right idea. If you then multiplied the exponents to get $\\frac{2}{3}$, that part is right too. The one thing missing is a minus sign: the exponent should have changed sign when the power moved up."
+      },
+      {
+       "step": 2,
+       "text_md": "Test the first move with $a=2$. Then $\\frac{1}{a^{2}}=\\frac{1}{4}$, but $a^{2}=4$. A quarter and four are not equal, so $\\frac{1}{a^{2}}$ cannot simply become $a^{2}$."
+      },
+      {
+       "step": 3,
+       "text_md": "The rule is that when a power is moved from the denominator to the numerator, the sign of its exponent changes. So $\\frac{1}{a^{2}}=a^{-2}$."
+      },
+      {
+       "step": 4,
+       "text_md": "Now apply the outer power by multiplying the exponents: $\\left(\\frac{1}{a^{2}}\\right)^{\\frac{1}{3}}=\\left(a^{-2}\\right)^{\\frac{1}{3}}=a^{-\\frac{2}{3}}$. The minus sign stays in the answer."
+      },
+      {
+       "step": 5,
+       "text_md": "Next time, change the sign of the exponent as soon as a power crosses the fraction bar, and only then apply the outer exponent."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "expl:g10m2s3-1-1:ex2-4-6c"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    },
+    {
+     "id": "mc:g10m2s3-1-1:minus-sign-moves-onto-base",
+     "lo_id": "lo:g10m2s3-1-1",
+     "label": "Minus sign of a negative exponent moved onto the base",
+     "description": "A negative exponent is removed by moving the power across the fraction bar, but the minus sign is carried over onto the base as well, giving $\\frac{1}{-x^{\\frac{1}{2}}}$ instead of $\\frac{1}{x^{\\frac{1}{2}}}$.",
+     "signal": "A denominator that has picked up a minus sign, such as $\\frac{1}{-x^{\\frac{1}{2}}}$ written for $x^{-\\frac{1}{2}}$.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You are right that a negative exponent sends the power to the other side of the fraction bar. The slip is that the minus sign travelled with it and ended up in front of the base, as in $\\frac{1}{-x^{\\frac{1}{2}}}$."
+      },
+      {
+       "step": 2,
+       "text_md": "The minus sign in $-\\frac{1}{2}$ belongs to the exponent, not to $x$. Its only job is to say that the power moves across the bar. Once the power has crossed, the exponent is positive and the base is exactly as it was."
+      },
+      {
+       "step": 3,
+       "text_md": "Test with $x=4$. The rule gives $4^{-\\frac{1}{2}}=\\frac{1}{4^{\\frac{1}{2}}}=\\frac{1}{2}$, which is positive. The version with the extra minus sign gives $\\frac{1}{-4^{\\frac{1}{2}}}=\\frac{1}{-2}=-\\frac{1}{2}$, which is negative. The two are not equal, so that minus sign cannot belong there."
+      },
+      {
+       "step": 4,
+       "text_md": "So write $x^{-\\frac{1}{2}}=\\frac{1}{x^{\\frac{1}{2}}}$. The exponent becomes positive as the power crosses the bar, and the sign of the base is not changed."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "expl:g10m2s3-1-1:ex2-4-6e"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "The evidence block was empty: no caution box, no worked-example remark and no re-solve wrong turn was supplied. Both entries rest only on the book's two teaching items for this objective that ask the student to explain why a statement is false (the one-third power of 1 over a squared, and the negative one-half power written with a minus sign on the base). They are cited as canonical_solution sources because that is where the book states the error. I wrote no other entry. Errors this objective might invite, such as adding instead of multiplying exponents for a power of a power, or applying the outer exponent to only one factor of a product, have no support in the material given."
+    },
+    {
+     "kind": "terminology",
+     "text": "The book's solution for the negative one-half power item says the sign of a base is not changed when an exponent is moved 'from the denominator to the numerator', but the move in that item goes from numerator to denominator. I described the move as crossing the fraction bar, and kept the book's phrase 'moved from the denominator to the numerator' only for the first entry, where the direction matches. A human should confirm the wording."
+    },
+    {
+     "kind": "evidence",
+     "text": "Not used: the exercise on the one-third power of 16 x to the 12 times b to the 6 prints an answer containing a to the 4 where the question has x to the 12. That looks like a transcription mismatch in the source, so I did not build any error on it."
+    },
+    {
+     "kind": "other",
+     "text": "The checks with a = 2 and x = 4 are sanity checks I added to argue against each error; they are not worked in the book. The value 4 to the one-half equals 2 is consistent with the book's own square-root cases, such as the 9 to the one-half step."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m2s3-1-2",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No evidence was supplied for this objective: no book caution box or worked-example remark, no wrong-turn from an independent re-solve, no existing entries, and no wrong options or widget predicates (D0, D1, ...). Every candidate error I could name from the six questions alone would rest only on my own general knowledge of common rational-power mistakes, which the brief does not allow. I wrote no entries rather than pad the catalogue, and there are no distractors to assign. The runtime falls back to the canonical solutions for this objective."
+    },
+    {
+     "kind": "evidence",
+     "text": "For a human reviewer, not written up as entries. Two errors this objective's questions could invite are the rewriting step for a decimal base (turning 0.008 or 0.81 into a fraction in lowest terms, e.g. 8/1000 to 1/125) and the sign of a negative rational exponent (27^(-1/3) giving 1/3, not -1/3 or -3). If a re-solve or a wrong option later shows a student taking either wrong turn, an entry can be added then, using the book's method of rewriting the base as a fraction or prime power and then multiplying the exponents."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m2s4-1-1",
+   "entries": [
+    {
+     "id": "mc:g10m2s4-1-1:equates-exponents-base-one",
+     "lo_id": "lo:g10m2s4-1-1",
+     "label": "Equating exponents when the base is 1",
+     "description": "The student sees both sides as powers of the same base and equates the exponents without checking the base, even when that base is 1, where the exponents can be different.",
+     "signal": null,
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You are using the rule the book teaches: when both sides are powers of the same base, equate the exponents. For the prime bases this method gives you, that rule is exactly right. The slip is applying it without looking at the base, because base $1$ is the one case the book warns about."
+      },
+      {
+       "step": 2,
+       "text_md": "Try base $1$ with two different exponents. $1^{2}=1^{5}$ is true, because both sides equal $1$. Yet the exponents $2$ and $5$ are not equal. With base $1$, every power is just $1$, so the exponent makes no difference to the value."
+      },
+      {
+       "step": 3,
+       "text_md": "That is why $1^{x}=1^{3}$ does not tell you $x=3$. The value $x=7$ works just as well, and so does any other number. Equating the exponents would pick out one answer when many are possible."
+      },
+      {
+       "step": 4,
+       "text_md": "The bases you write when you change to prime bases, such as $2$, $3$ or $5$, are never $1$. So the warning does not stop you equating exponents in them."
+      },
+      {
+       "step": 5,
+       "text_md": "Before you write \"equate the exponents\", glance at the base. If both sides are powers of a prime base, like $3^{x+1}=3^{2}$, equate and solve $x+1=2$ to get $x=1$. If the base is $1$, the exponents can be different, so you cannot equate them."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "b00905"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "The only evidence supplied is one printed caution (about base 1). No wrong options or widget predicates were listed, no wrong turns from an independent re-solve were given, and there were no worked-example remarks. I therefore wrote one entry and left the rest out rather than invent errors with no support."
+    },
+    {
+     "kind": "evidence",
+     "text": "None of this objective's questions has base 1. The base-1 illustration (1^2 = 1^5, and 1^x = 1^3 allowing x = 7) is simple arithmetic that restates the caution; it is not taken from a question or canonical solution. The prime-base example in the last step (3^{x+1} = 3^2 giving x = 1) is the book's own worked example, described in words."
+    },
+    {
+     "kind": "evidence",
+     "text": "Not used as an error: the exercise where the two sides have different bases (3^{y+1} = 5^{y+1}, solved by setting the exponent to 0). The book gives no caution, remark or wrong option for it, so there was nothing honest to refute."
+    },
+    {
+     "kind": "terminology",
+     "text": "I used the book's phrases 'equate the exponents', 'same base' and 'prime bases' as they appear in its solutions and in the objective description. I did not give a general reason why equating works only for bases other than 1, because the book does not state one."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m2s4-1-2",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No evidence was supplied for this objective: no printed caution box, no worked-example remark, no wrong turn from an independent re-solve, and no wrong options or widget predicates (D0, D1, ...). The two canonical solutions (a worked example with 5^t + 3*5^(t+1) = 400 and an exercise with 2^t + 2^(t+2) = 40) are method only and print no warning. Nothing supports a named error, so no entries are written and the runtime falls back to the canonical solution."
+    },
+    {
+     "kind": "evidence",
+     "text": "One error is plausible for this objective but unsupported by the evidence, so it is deliberately not written: after taking out the common power, the student drops the leftover 1 from the first term, for example writing 5^t(3*5) = 400. A human reviewer may add it if a real wrong option or student script shows it."
+    },
+    {
+     "kind": "terminology",
+     "text": "No term was in doubt. The solutions use 'Take out a common factor', 'Rewrite the expression', 'Simplify', 'Change the bases to prime numbers' and 'The bases are the same so we can equate exponents', and no entry was written, so none is used in student-facing text."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m2s4-1-3",
+   "entries": [
+    {
+     "id": "mc:g10m2s4-1-3:solves-exponential-equal-to-negative",
+     "lo_id": "lo:g10m2s4-1-3",
+     "label": "Solves an exponential factor that equals a negative number",
+     "description": "After factorising, the student treats a factor such as $3^{x}+1=0$ like any other, rearranges it to $3^{x}=-1$ and goes looking for an $x$ that satisfies it, instead of rejecting the factor.",
+     "signal": "Two answers where the book keeps one: the correct value together with a second value produced from a factor that equals a negative number.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "Factorising and then solving each factor separately is exactly the book's method, so that part is right. The trap is a factor like $3^{x}+1=0$: it leaves $3^{x}=-1$, and it is tempting to hunt for an $x$ that makes that true, the way you did for $3^{x}=81$."
+      },
+      {
+       "step": 2,
+       "text_md": "Test what $3^{x}$ can be. $3^{2}=9$, $3^{0}=1$, and a negative exponent gives a fraction: $3^{-2}=\\frac{1}{3^{2}}=\\frac{1}{9}$. Whatever $x$ you try, the answer stays positive, so it can never equal $-1$."
+      },
+      {
+       "step": 3,
+       "text_md": "That is the book's reason: a positive integer with an exponent is always positive. The book calls $3^{x}=-1$ undefined and rejects that factor, so $3^{2x}-80\\cdot3^{x}-81=0$ has one solution, $x=4$, not two. The same thing happens in $2^{2x}-16=0$: it factorises as $(2^{x}-4)(2^{x}+4)=0$, the factor giving $2^{x}=-4$ is rejected, and only $2^{x}=4=2^{2}$ is kept, so $x=2$."
+      },
+      {
+       "step": 4,
+       "text_md": "The move that works: after factorising, write each factor as a power equal to a number. If the number is negative, reject that factor and say why. For each factor that is left, write both sides with the same base, for example $3^{x}=81=3^{4}$, and read off $x$."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "WE11 p.53"
+      },
+      {
+       "type": "caution",
+       "ref": "WE13 p.54"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m2s4-1-3:we11"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m2s4-1-3:we13"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m2s4-1-3:ex2-3-1n"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    },
+    {
+     "id": "mc:g10m2s4-1-3:skips-check-after-raising-to-power",
+     "lo_id": "lo:g10m2s4-1-3",
+     "label": "Raises both sides to a power and keeps the answer without checking",
+     "description": "From a factor such as $x^{\\frac{1}{4}}+6=0$ the student writes $x^{\\frac{1}{4}}=-6$, raises both sides to the power that clears the fractional exponent, and keeps the number that comes out as a solution without putting it back into the original equation.",
+     "signal": "An extra solution that comes from a negative right-hand side in a fractional-exponent equation: for $x^{\\frac{1}{2}}+3x^{\\frac{1}{4}}-18=0$, the value $1296$ alongside $81$; for $2x^{\\frac{1}{2}}+1=-x$, the value $1$ when the book finds no solution.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "Raising both sides to a power is the book's way of clearing a fractional exponent, so using it is not the mistake. The trap is that it also works on a negative side: $x^{\\frac{1}{4}}=-6$ becomes $x=(-6)^{4}=1296$, and that looks like an ordinary solution."
+      },
+      {
+       "step": 2,
+       "text_md": "Raising to the fourth power wipes out the minus sign, because $(-6)^{4}$ is a positive number. So you get a value even though the equation you started from said $x^{\\frac{1}{4}}$ was $-6$. A value that comes out of this step has to be put back into the original equation before it counts."
+      },
+      {
+       "step": 3,
+       "text_md": "The book does exactly this. In $x^{\\frac{1}{2}}+3x^{\\frac{1}{4}}-18=0$ the factors give $x=1296$ or $x=81$, then the book checks both answers and finds that $x=81$ is the only solution. In $2x^{\\frac{1}{2}}+1=-x$ the working reaches $x^{\\frac{1}{2}}=-1$ and then $x=1$, but putting $1$ back gives $2(1)^{\\frac{1}{2}}+1=2$ on the left and $-1$ on the right. They are not equal, so no solution exists."
+      },
+      {
+       "step": 4,
+       "text_md": "The move that works: whenever you raise both sides to a power to remove a fractional exponent, put each answer back into the original equation. Keep the ones that make it true and cross out the rest, especially any that came from a factor with a negative number on the right."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m2s4-1-3:ex2-4-3o"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "expl:g10m2s4-1-3:ex2-4-3x"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "terminology",
+     "text": "The book's caution gives its reason for rejecting 2^x = -4 as 'a positive integer with an exponent is always positive'. That wording is loose, since the base is what is positive and the result can be a fraction. Entry 'solves-exponential-equal-to-negative' step 3 keeps the book's wording, so a human should confirm it reads acceptably to a student. The book's own term for 3^x = -1 and 5^x = -10 is 'undefined', and I used it as printed."
+    },
+    {
+     "kind": "evidence",
+     "text": "Entry 'skips-check-after-raising-to-power' rests on the check steps inside two canonical solutions (the worked check of x = 1 and the remark 'we check both answers' for 1296 versus 81), not on a printed caution box. The sources file contains only the two cautions, which both concern the exponential case. I did not compute any check the book has not printed: I only restate the book's check and its result."
+    },
+    {
+     "kind": "evidence",
+     "text": "No wrong options (distractors) and no re-solve wrong turns were supplied for this objective, so I wrote no entry for slips in the rewriting step (for example splitting 2^(4-x) incorrectly, or misreading 3^(2x) as (3^x)^2) because nothing in the evidence supports them."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m2s4-1-4",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No evidence was supplied for this objective: no caution boxes, no worked-example remarks, no re-solve wrong turns, no wrong options and no widget predicates. The only material is one exercise (2^x = 7, answer 2.81) with its worked solution, which shows the method but records no error. I wrote no entries because any error I named would rest on my own guess about what students do, and these refutations reach students unreviewed. The runtime falls back to the canonical solution, which is the intended behaviour when nothing supports an entry."
+    },
+    {
+     "kind": "evidence",
+     "text": "Candidate errors I considered and left out for lack of support: stopping at one decimal place (2.8) when the question asks for 2 decimal places, and not bracketing x between two whole numbers before testing. If a later pass finds a wrong option or a re-solve wrong turn showing either error, it can be written then."
+    },
+    {
+     "kind": "terminology",
+     "text": "The book's own words in this solution are 'test', 'trial and error' and 'correct to 2 decimal places'. No other term was needed, so none is in doubt."
+    }
+   ],
+   "notes": []
+  }
+ ],
+ "totals": {
+  "objectives": 9,
+  "entries": 9,
+  "dropped": 0,
+  "stripped": 0,
+  "skipped": 0,
+  "flags": 32
+ }
+}
