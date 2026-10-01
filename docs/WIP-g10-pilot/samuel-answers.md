@@ -114,6 +114,10 @@ Consistency-review decisions (2026-09-27), one at a time (decisions.md decisions
     in the manifest's order — with not-yet-prepared lessons visible but not startable ("Being prepared"), each
     becoming startable automatically when the fan-out loads it. Grounded teaching unchanged: nothing is taught
     from an unprepared lesson. (decision 59)
+38a. (2026-10-01, decision 59 follow-ups, verbatim) Whole-book list for Grade 10 → "Open by default (Recommended)";
+    tell Noor which chapters are being prepared? → "no leave it as it is , I will land them all now as soon as you
+    finish" (Noor's prompts unchanged); course card → "\"5 of 65 ready\" (Recommended)". Skill-map strip placement
+    accepted as built (orchestrator's call, not asked).
 39. (2026-10-01, decision 60) Does the gate auto-pass (answer 37c, G1–G4) also cover G5, the final go/no-go
     (dry run, coverage, drift, cost)? → "YES, and Make sure to mark them for my review in the console view":
     G5 auto-passes too; every auto-passed gate decision (G1–G5) is recorded and shown in the console backlog
