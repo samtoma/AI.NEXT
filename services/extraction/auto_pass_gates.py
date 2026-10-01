@@ -12,7 +12,7 @@ AN AUTO-PASS IS NEVER A HUMAN STAMP (migration 035, answer 33). Every verdict th
 "auto-pass G<n> (AI recommendation)" and marked `"auto": true`; the loaders write it to `ai_checked_by`,
 never `reviewed_by`. A human verdict already in a gate's file is never overwritten.
 
-    uv run auto_pass_gates.py g1 <book> --chapter 9 [--approve]
+    uv run auto_pass_gates.py g1 <book> --chapter 9 [--approve] [--maths runs/<book>/maths/book/accepted.json]
         every decision G1 owes (objectives/<book>/chNN.check.json `undecided`) answered by the AI line's
         own recommendation: a single-finder objective the evidence check kept → approve; a terminology flag
         → keep; two mappers disagreeing → the placement the pool already uses (mapper 1); a backward link
@@ -22,8 +22,11 @@ never `reviewed_by`. A human verdict already in a gate's file is never overwritt
         failure) is NOT auto-passed: the record says `blocked` and the command exits 1. Writes
         runs/<book>/objectives/g1-chNN.auto.json; `--approve` then runs
           assemble_objectives.py approve <book> --chapter N --by "auto-pass G1 (AI recommendation)" --verdicts …
+        with the SAME maths: `--maths`, else the book's own S0b file runs/<book>/maths/book/accepted.json when it exists
+        (without it `approve` would read the pilot's runs/<book>/maths/accepted.json, which lacks the other chapters'
+        images, or fail on them), and the same --objectives-dir.
     uv run auto_pass_gates.py g2 <book> --chapter 9 --lesson-run runs/<book>/lessons/<runId>.json \\
-              [--recommend runs/<book>/g2-ch09.recommended.json]
+              [--recommend runs/<book>/g2-ch09.recommended.json] --into runs/<book>/g2-ch09.json [--split]
         the S2–S4 run's items that owe G2 a verdict, decided in this order: a HUMAN verdict already in G2's
         file (default runs/<book>/g2.json) stands; else the recommendation file's verdict; else the AI
         checks' own rule — an item with no printed answer whose blind re-solve AGREED with the EPUB worked
@@ -32,7 +35,12 @@ never `reviewed_by`. A human verdict already in a gate's file is never overwritt
         verdict, so the assembly holds it (`answer_mismatch`: the "answers vs the book" check blocks). Every
         auto verdict is `{"verdict", "auto": true, "by": "auto-pass G2 (AI recommendation)", "note"}` in G2's
         own file. Then `assemble_objectives.py lesson-runs … --g2`, assemble, load, and
-        `apply_review_verdicts.py --g2` exactly as for a human G2 file.
+        `apply_review_verdicts.py --g2` exactly as for a human G2 file. ALWAYS pass `--into` for a fan-out chapter:
+        the default, runs/<book>/g2.json, is the pilot's file. `--split` runs that lesson-runs step itself (each
+        --lesson-run, with the file just written; `--maths` and `--runs-dir` are forwarded to it). An item typed not
+        markable owes G2 no verdict (it becomes teaching material whichever way a check fell); a choice whose options
+        were the typing agent's inventions (COLLECT-6) and was not typed again from the book's key is a typing
+        problem like any other: excluded and listed. Choices the collection typed again are listed in the record.
     uv run auto_pass_gates.py g3 <book> --chapter 9 --queue <bundle>.review-queue.json [--queue …] \\
               [--widgets seed/generated/<book>/widget-questions.json]
         the sampled items accepted on the AI checks (S6's blind grade passed every family in the bundle,
@@ -380,6 +388,29 @@ def cost_of(ledger: Path, book, chapter: int | None) -> dict:
 
 
 # ============================================================================ CLI
+def book_maths(book, maths: Path | None) -> Path | None:
+    """The accepted maths a later step must read: the one asked for, else the book's own S0b file (the whole book's
+    images, runs/<book>/maths/book/accepted.json) when it exists, else None (the step's own default)."""
+    if maths:
+        return Path(maths)
+    own = HERE / "runs" / book.book / "maths" / "book" / "accepted.json"
+    return own if own.exists() else None
+
+
+def approve_argv(book, chapter: int, verdicts: Path, maths: Path | None, objectives_dir: Path | None) -> list[str]:
+    """The `assemble_objectives.py approve` command that records an auto-passed G1 — with the maths and the objectives
+    directory the auto-pass itself read (without --maths the approval reads the pilot's accepted.json, a different set
+    of images, and the packet it rebuilds no longer matches the run's)."""
+    argv = ["approve", book.book, "--chapter", str(chapter), "--by", review_policy.auto_pass_by("G1"),
+            "--verdicts", str(verdicts)]
+    m = book_maths(book, maths)
+    if m:
+        argv += ["--maths", str(m)]
+    if objectives_dir:
+        argv += ["--objectives-dir", str(objectives_dir)]
+    return argv
+
+
 def main(argv: list[str] | None = None) -> int:
     import argparse
     import os
@@ -394,13 +425,21 @@ def main(argv: list[str] | None = None) -> int:
         return p
     a1 = common(sub.add_parser("g1", help="objectives: answer every owed decision on the AI recommendation"))
     a1.add_argument("--objectives-dir", type=Path)
+    a1.add_argument("--maths", type=Path, help="S0b's accepted maths for `approve` (default: the book's own "
+                                                "runs/<book>/maths/book/accepted.json when it exists)")
     a1.add_argument("--out", type=Path)
     a1.add_argument("--approve", action="store_true", help="then run assemble_objectives.py approve with it")
     a2 = common(sub.add_parser("g2", help="book questions: auto verdicts from the recommendation and the AI checks"))
     a2.add_argument("--lesson-run", "--from-run", dest="lesson_run", type=Path, action="append", default=[],
                     help="the S2–S4 run(s) (runs/<book>/lessons/<runId>.json): the items that owe G2 a verdict")
     a2.add_argument("--recommend", type=Path, help="a recommendation file ({items: {key: {verdict, …}}})")
-    a2.add_argument("--into", type=Path, help="G2's file (default runs/<book>/g2.json); human verdicts kept")
+    a2.add_argument("--into", type=Path, help="G2's file (default runs/<book>/g2.json — the pilot's: pass your own "
+                                              "for a fan-out chapter); human verdicts kept")
+    a2.add_argument("--split", action="store_true",
+                    help="then run `assemble_objectives.py lesson-runs <run> --g2 <into>` for each --lesson-run")
+    a2.add_argument("--maths", type=Path, help="forwarded to that lesson-runs step (default: the book's own "
+                                                "runs/<book>/maths/book/accepted.json when it exists)")
+    a2.add_argument("--runs-dir", type=Path, help="forwarded to that lesson-runs step")
     a3 = common(sub.add_parser("g3", help="generated sample: accepted on the AI checks"))
     a3.add_argument("--queue", type=Path, action="append", required=True)
     a3.add_argument("--widgets", type=Path, action="append", default=[],
@@ -456,10 +495,9 @@ def main(argv: list[str] | None = None) -> int:
               f"  record: {_rel(where)}")
         if a.approve:
             import assemble_objectives
-            return assemble_objectives.main(["approve", book.book, "--chapter", str(ch), "--by",
-                                             review_policy.auto_pass_by("G1"), "--verdicts", str(out)])
-        print(f"  next: uv run assemble_objectives.py approve {book.book} --chapter {ch} "
-              f"--by \"{review_policy.auto_pass_by('G1')}\" --verdicts {_rel(out)}")
+            return assemble_objectives.main(approve_argv(book, ch, out, a.maths, a.objectives_dir))
+        print("  next: uv run assemble_objectives.py " + " ".join(
+            f'"{x}"' if " " in x else x for x in approve_argv(book, ch, out, a.maths, a.objectives_dir)))
         return 0
 
     if a.gate == "g2":
@@ -478,11 +516,14 @@ def main(argv: list[str] | None = None) -> int:
         into.parent.mkdir(parents=True, exist_ok=True)
         into.write_text(json.dumps(doc, ensure_ascii=False, indent=1) + "\n")
         held = [d["key"] for d in decisions if d["decision"].startswith(("no verdict", "hold", "exclude"))]
+        retyped = [r for p in a.lesson_run for r in g2_retyped(json.loads(p.read_text()), ch, book.id_prefixes[0])]
         rec = decision_record(
             "G2", book, ch, f"{c['recommended'] + c['rule']} book item(s) decided on the AI recommendation "
                             f"({c['recommended']} from the recommendation file, {c['rule']} by the checks' own rule); "
-                            f"{c['held']} held for a person; {c['human']} already decided by a person",
-            decisions=decisions, held=bool(held), for_review=held, run=a.run,
+                            f"{c['held']} held for a person; {c['human']} already decided by a person"
+                            + (f"; {c['teaching']} typed not markable (teaching only, no verdict owed)" if c.get("teaching") else "")
+                            + (f"; {len(retyped)} choice(s) typed again from the book's printed key" if retyped else ""),
+            decisions=decisions + retyped, held=bool(held), for_review=held, run=a.run,
             checks=[{"name": "S3 three-way answer check (printed, EPUB solution, blind re-solve)", "state": "done"},
                     {"name": "S3 answer typing check", "state": "done"},
                     {"name": "the app's marker on every typed key (assembly)", "state": "on load"}],
@@ -492,6 +533,18 @@ def main(argv: list[str] | None = None) -> int:
         print(f"G2 auto-pass ({scope}): {c['recommended']} from the recommendation, {c['rule']} by the AI checks' "
               f"rule, {c['held']} left held, {c['human']} human verdict(s) kept -> {_rel(into)}\n"
               f"  record: {_rel(where)}")
+        if a.split:
+            import assemble_objectives
+            for p in a.lesson_run:
+                argv = ["lesson-runs", book.book, str(p), "--g2", str(into)]
+                m = book_maths(book, a.maths)
+                if m:
+                    argv += ["--maths", str(m)]
+                if a.runs_dir:
+                    argv += ["--runs-dir", str(a.runs_dir)]
+                rc = assemble_objectives.main(argv)
+                if rc:
+                    return rc
         return 0
 
     if a.gate == "g3":
