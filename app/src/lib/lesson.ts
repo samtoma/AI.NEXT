@@ -915,7 +915,10 @@ ${sections.join("\n")}`;
  * ends are English maths. `true` — the default, so every existing render is
  * byte-identical — for every course whose tutor may write Arabic; `false` for
  * the Grade 10 course, whose block (and its bilingual coaching example) stays
- * entirely in English.
+ * entirely in English — naming the other end with `labelOfSpineKey`, which
+ * (unlike `displayLabelOfSpineKey`) never falls back to an RTL subject's own
+ * script either, since even that would be an Arabic character in a prompt
+ * this course's tutor must never see.
  */
 export function bridgeBlock(bridges: LessonBridge[], arabic = true): string {
   if (bridges.length === 0) return "";
