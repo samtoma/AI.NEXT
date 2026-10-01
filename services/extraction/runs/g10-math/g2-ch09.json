@@ -3,64 +3,133 @@
  "auto": true,
  "items": {
   "g10m9s2-1:WE1": {
-   "verdict": "exclude",
+   "verdict": "accept",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"1210\" does not read as the book final answer \"At the end of 3 years, Carine will have R1210 in her bank account.\"); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): $A=1000(1+0.07\\times3)=1000\\times1.21=1210$. Key 1210 matches the book's sentence answer R1210; the complaint is only a text comparison against a sentence. Blind agrees. Verified independently: the verifier's own answer matches the key."
   },
   "g10m9s2-1:WE2": {
-   "verdict": "exclude",
+   "verdict": "accept",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"6250\" does not read as the book final answer \"At the end of 2 years, Sarah will pay her neighbour R6250.\"); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): $A=5000(1+0.125\\times2)=5000\\times1.25=6250$. Key 6250 matches the book's sentence answer R6250; the complaint is a text comparison against a sentence. Blind agrees. Verified independently: the verifier's own answer matches the key."
   },
   "g10m9s2-1:WE3": {
-   "verdict": "exclude",
+   "verdict": "fix",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"6\\frac{2}{3}\" does not read as the book final answer \"It will take 6 years and 8 months to make R45000 from R30000 at a simple interest rate of 7,5% p.a.\"); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): $45000/30000-1=0.5$, $n=0.5/0.075=6\\frac23$ years = 6 years 8 months. Book's working gives $n=6\\frac23$, so the key is right but a mixed number is typed as 'values'; retype as expression. The book's final sentence says 6 years 8 months, which the marker cannot read. Verified independently: the verifier's own answer matches the key.",
+   "fields": {
+    "marker": {
+     "kind": "expression",
+     "key": "6\\frac{2}{3}",
+     "form": null,
+     "variables": [],
+     "tolerance": null
+    }
+   }
   },
   "g10m9s3-1:Ex9-2:8": {
    "verdict": "exclude",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (book_final is not in the book solution); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): NOT RECOMMENDED LIVE (the app's own marker finds the typed key NOT equal to the answer the book states (its EPUB answer, the quoted span, the last line of its working): a key the typing agent corrected is not the book's, and correcting a book's answer is Samuel's to approve). The agent's reading: $(2613{,}40/1790)^{1/9}-1=1{,}46^{1/9}-1\\approx0{,}0430$, so 4,3% to one decimal place. The printed answer and working both give 4,3%; the EPUB has no final line, so the complaint is only a missing-text comparison. Key 4,3 is right."
   },
   "g10m9s3-1:Ex9-2:9": {
    "verdict": "exclude",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (book_final is not in the book solution); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): NOT RECOMMENDED LIVE (the app's own marker finds the typed key NOT equal to the answer the book states (its EPUB answer, the quoted span, the last line of its working): a key the typing agent corrected is not the book's, and correcting a book's answer is Samuel's to approve). The agent's reading: $(6904{,}30/6110)^{1/7}-1=1{,}13^{1/7}-1\\approx0{,}0176$, so 1,8% to one decimal place. Printed answer and working agree; the EPUB has no final line, so the complaint is only a missing-text comparison. Key 1,8 is right."
   },
   "g10m9s3-1:Ex9-7:14": {
-   "verdict": "exclude",
+   "verdict": "accept",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (book_final is not in the book solution); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): $1642{,}80/1110=1{,}48$; $1{,}48^{1/12}\\approx1{,}0332$, so $i\\approx3{,}3\\%$. Book working ends at 3,3% per annum, so the complaint (book_final not in solution) is a text comparison. Numeric key 3,3 is one number, unit left out. Verified independently: the verifier's own answer matches the key."
   },
   "g10m9s3-1:Ex9-7:15": {
-   "verdict": "exclude",
+   "verdict": "accept",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (book_final is not in the book solution); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): $6496/4480=1{,}45$; $1{,}45^{1/7}\\approx1{,}0545$, so $i\\approx5{,}5\\%$. Working's last line is 5,5% per annum; the typing complaint is only a text comparison. Numeric key 5,5 is right. Verified independently: the verifier's own answer matches the key."
   },
   "g10m9s5-1:Ex9-6:5": {
-   "verdict": "exclude",
+   "verdict": "fix",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (options said to be the stem's are not all in the stem); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): $7{,}19\\times17{,}36=124{,}82$; $(8{,}49+2)\\times11{,}48=120{,}43$, so New York is cheaper. Book answer is right. Options 'London publisher'/'New York publisher' are not verbatim in the stem; the stem's own words are 'London' and 'New York'. Verified independently: the verifier's own answer matches the key.",
+   "fields": {
+    "choices": [
+     {
+      "key": "A",
+      "text": "London"
+     },
+     {
+      "key": "B",
+      "text": "New York"
+     }
+    ]
+   }
   },
   "g10m9s5-1:Ex9-7:37": {
-   "verdict": "exclude",
+   "verdict": "fix",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (options said to be the stem's are not all in the stem); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): $16{,}99\\times16{,}89=286{,}96$; $23{,}50\\times12{,}43=292{,}11$, so UK is cheaper. Book answer is right. Options must be the stem's own words 'UK' and 'USA', not 'UK publisher'. Verified independently: the verifier's own answer matches the key.",
+   "fields": {
+    "choices": [
+     {
+      "key": "A",
+      "text": "UK"
+     },
+     {
+      "key": "B",
+      "text": "USA"
+     }
+    ]
+   }
   },
   "g10m9s5-1:Ex9-7:39": {
    "verdict": "exclude",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"1 \\text{ AUD} = 82,02 \\text{ Yen}\" does not read as the book final answer \"or 1AUD=82,02Yen\"); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): $1\\text{ AUD}=5{,}11/0{,}0623=82{,}02$ yen, so the book's 82,02 is right. But the stem gives no direction and the book accepts both '1 Yen = 0,012 AUD' and '1 AUD = 82,02 Yen'; one key would mark the other form wrong. Right answer by the agent's own derivation: 1 AUD = 82,02 Yen, or equivalently 1 Yen = 0,012 AUD."
+  },
+  "g10m9s2-1:Ex9-1:7": {
+   "verdict": "exclude",
+   "auto": true,
+   "by": "auto-pass G2 (AI recommendation)",
+   "note": "auto-pass G2 (AI recommendation): $n=(2500/1000-1)/0.082=1.5/0.082\\approx18.29$. The book's own working gives 18,3 then states 19 years; the stem never asks for whole years or rounding up, so a correct 18,3 would be marked wrong. Right answer by the agent's own derivation: n = 18,3 (18,29) years by the book's working; the book states 19."
+  },
+  "g10m9s2-1:Ex9-7:16a": {
+   "verdict": "exclude",
+   "auto": true,
+   "by": "auto-pass G2 (AI recommendation)",
+   "note": "auto-pass G2 (AI recommendation): Interest earned $=500\\times0.0685\\times1=34,25$. The book's working and printed answer give the accumulated amount $A=\\text{R534,25}$, which is not what 'how much you will earn' asks for. Right answer by the agent's own derivation: R34,25 (interest); the book prints R534,25 (accumulated amount)."
+  },
+  "g10m9s3-1:Ex9-2:4": {
+   "verdict": "exclude",
+   "auto": true,
+   "by": "auto-pass G2 (AI recommendation)",
+   "note": "auto-pass G2 (AI recommendation): $P=100000/1.11^5=100000/1.68506\\approx59345{,}13$. The stem asks for the nearest rand, so the answer is 59 345; the book's 59 345,13 is not in the asked form, and a marker checking the form would mark the right answer wrong. Right answer by the agent's own derivation: R 59 345 (nearest rand)."
+  },
+  "g10m9s3-1:Ex9-7:16b": {
+   "verdict": "exclude",
+   "auto": true,
+   "by": "auto-pass G2 (AI recommendation)",
+   "note": "auto-pass G2 (AI recommendation): The stem asks how much you will earn. $A=500(1{,}04)=R520$ is the accumulated amount; the earning is $R520-R500=R20$. The book's key answers a different quantity than the stem as worded. Right answer by the agent's own derivation: R20 (interest earned); the book prints R520, the total amount."
+  },
+  "g10m9s3-1:Ex9-7:31b": {
+   "verdict": "exclude",
+   "auto": true,
+   "by": "auto-pass G2 (AI recommendation)",
+   "note": "auto-pass G2 (AI recommendation): $(67/57)^{1/10}=1{,}01629$ (the book's own line), so $i=1{,}629\\approx1{,}6$. The book then writes 0,016 and $i=1{,}69\\approx1{,}7$, which does not follow. The key 1,7 is wrong. Right answer by the agent's own derivation: 1,6 (about 1,63%)."
+  },
+  "g10m9s4-1:Ex9-3:9": {
+   "verdict": "exclude",
+   "auto": true,
+   "by": "auto-pass G2 (AI recommendation)",
+   "note": "auto-pass G2 (AI recommendation): $n=30/12=2{,}5$, $A=4250(1+0{,}095\\times2{,}5)=5259{,}38$. Over 30 months the monthly payment is $5259{,}38/30=175{,}31$, plus 10,75 gives 186,06. The book divides by 36, which does not follow from 30 months. Right answer by the agent's own derivation: R186,06."
   }
  }
 }

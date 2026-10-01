@@ -821,11 +821,11 @@
    "choices": [
     {
      "key": "A",
-     "text": "London publisher"
+     "text": "London"
     },
     {
      "key": "B",
-     "text": "New York publisher"
+     "text": "New York"
     }
    ],
    "marker": null,
@@ -878,10 +878,13 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "fix",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (options said to be the stem's are not all in the stem); a fix needs fields a person or a recommendation must write",
-    "auto": true
+    "note": "auto-pass G2 (AI recommendation): $7{,}19\\times17{,}36=124{,}82$; $(8{,}49+2)\\times11{,}48=120{,}43$, so New York is cheaper. Book answer is right. Options 'London publisher'/'New York publisher' are not verbatim in the stem; the stem's own words are 'London' and 'New York'. Verified independently: the verifier's own answer matches the key.",
+    "auto": true,
+    "changed": [
+     "choices"
+    ]
    }
   },
   {
@@ -1496,11 +1499,11 @@
    "choices": [
     {
      "key": "A",
-     "text": "UK publisher"
+     "text": "UK"
     },
     {
      "key": "B",
-     "text": "USA publisher"
+     "text": "USA"
     }
    ],
    "marker": null,
@@ -1553,10 +1556,13 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "fix",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (options said to be the stem's are not all in the stem); a fix needs fields a person or a recommendation must write",
-    "auto": true
+    "note": "auto-pass G2 (AI recommendation): $16{,}99\\times16{,}89=286{,}96$; $23{,}50\\times12{,}43=292{,}11$, so UK is cheaper. Book answer is right. Options must be the stem's own words 'UK' and 'USA', not 'UK publisher'. Verified independently: the verifier's own answer matches the key.",
+    "auto": true,
+    "changed": [
+     "choices"
+    ]
    }
   },
   {
@@ -1669,7 +1675,7 @@
    "g2": {
     "verdict": "exclude",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"1 \\text{ AUD} = 82,02 \\text{ Yen}\" does not read as the book final answer \"or 1AUD=82,02Yen\"); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): $1\\text{ AUD}=5{,}11/0{,}0623=82{,}02$ yen, so the book's 82,02 is right. But the stem gives no direction and the book accepts both '1 Yen = 0,012 AUD' and '1 AUD = 82,02 Yen'; one key would mark the other form wrong. Right answer by the agent's own derivation: 1 AUD = 82,02 Yen, or equivalently 1 Yen = 0,012 AUD.",
     "auto": true
    }
   },

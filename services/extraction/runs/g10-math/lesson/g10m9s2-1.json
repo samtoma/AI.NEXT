@@ -311,9 +311,9 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "accept",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"1210\" does not read as the book final answer \"At the end of 3 years, Carine will have R1210 in her bank account.\"); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): $A=1000(1+0.07\\times3)=1000\\times1.21=1210$. Key 1210 matches the book's sentence answer R1210; the complaint is only a text comparison against a sentence. Blind agrees. Verified independently: the verifier's own answer matches the key.",
     "auto": true
    }
   },
@@ -364,9 +364,9 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "accept",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"6250\" does not read as the book final answer \"At the end of 2 years, Sarah will pay her neighbour R6250.\"); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): $A=5000(1+0.125\\times2)=5000\\times1.25=6250$. Key 6250 matches the book's sentence answer R6250; the complaint is a text comparison against a sentence. Blind agrees. Verified independently: the verifier's own answer matches the key.",
     "auto": true
    }
   },
@@ -379,7 +379,7 @@
    "answer": "6\\frac{2}{3}",
    "choices": null,
    "marker": {
-    "kind": "values",
+    "kind": "expression",
     "key": "6\\frac{2}{3}",
     "form": null,
     "variables": [],
@@ -423,10 +423,13 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "fix",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"6\\frac{2}{3}\" does not read as the book final answer \"It will take 6 years and 8 months to make R45000 from R30000 at a simple interest rate of 7,5% p.a.\"); a fix needs fields a person or a recommendation must write",
-    "auto": true
+    "note": "auto-pass G2 (AI recommendation): $45000/30000-1=0.5$, $n=0.5/0.075=6\\frac23$ years = 6 years 8 months. Book's working gives $n=6\\frac23$, so the key is right but a mixed number is typed as 'values'; retype as expression. The book's final sentence says 6 years 8 months, which the marker cannot read. Verified independently: the verifier's own answer matches the key.",
+    "auto": true,
+    "changed": [
+     "marker"
+    ]
    }
   },
   {
@@ -915,7 +918,13 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false
+   "blocked_on_figure": false,
+   "g2": {
+    "verdict": "exclude",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): $n=(2500/1000-1)/0.082=1.5/0.082\\approx18.29$. The book's own working gives 18,3 then states 19 years; the stem never asks for whole years or rounding up, so a correct 18,3 would be marked wrong. Right answer by the agent's own derivation: n = 18,3 (18,29) years by the book's working; the book states 19.",
+    "auto": true
+   }
   },
   {
    "ref": "Ex9-1:8",
@@ -1784,7 +1793,13 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false
+   "blocked_on_figure": false,
+   "g2": {
+    "verdict": "exclude",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): Interest earned $=500\\times0.0685\\times1=34,25$. The book's working and printed answer give the accumulated amount $A=\\text{R534,25}$, which is not what 'how much you will earn' asks for. Right answer by the agent's own derivation: R34,25 (interest); the book prints R534,25 (accumulated amount).",
+    "auto": true
+   }
   },
   {
    "ref": "Ex9-7:18a",
