@@ -96,6 +96,43 @@ class RealBook(unittest.TestCase):
             self.assertNotIn(f" --out {f}", text)
             self.assertNotIn(f"--out-dir {Path(f).parent} ", text.replace("runs/g10-math/maths/book", "BOOK"))
 
+    def test_the_working_checks_are_batched_and_costed_from_the_chapter_8_measurement(self):
+        """sw-v1 metered $31.0 / 192 = $0.161 a solution against a plan of $0.03-0.05; sw-v2 batches the agents."""
+        import working_check as W
+        sw = {r["id"]: r for r in self.plan["runs"] if r["stage"] == "SW"}
+        self.assertEqual(sorted(sw), sorted(["wcheck-ch08"] + [f"wcheck-ch{c:02d}" for c in F.FANOUT_CHS]))
+        self.assertLessEqual(F.UNIT_COST["sw_solution"][1], 0.05)
+        self.assertLess(F.UNIT_COST["sw_solution"][1], W.MEASURED_SW_V1_PER_SOLUTION / 3)
+        sols = {c["chapter"]: c["solutions"] for c in self.inv["chapters"]}
+        for ch in F.FANOUT_CHS:
+            r = sw[f"wcheck-ch{ch:02d}"]
+            self.assertTrue(r["workflow"].endswith("(sw-v2)"), r["id"])
+            self.assertEqual(r["agents"], W.agents_for(sols[ch]), r["id"])
+            self.assertLessEqual(r["cost"][1] / sols[ch], 0.05 + 1e-3, r["id"])
+            self.assertLess(r["agents"], sols[ch] / (W.BATCH - 1) + 1, r["id"])
+        ch8 = sw["wcheck-ch08"]
+        self.assertIn("sw-v1", ch8["workflow"])
+        self.assertIn("wf_957393ec-d74", ch8["workflow"])
+        self.assertIn("BESIDE", ch8["what"])
+        self.assertLessEqual(self.plan["cost_usd"]["by_stage"]["SW"][1], 0.05 * (sum(sols.values()) + 1))
+
+    def test_a_chapter_8_re_run_is_built_beside_the_sw_v1_packet_never_over_it(self):
+        old = F.PACKETS
+        with tempfile.TemporaryDirectory() as t:
+            tmp = Path(t)
+            F.PACKETS = tmp / "packets"
+            try:
+                run = dict(F._run("wcheck-ch08"), embedded_script=str(tmp / "002-wcheck-ch08.workflow.js"))
+                out = F.prep_wcheck(run)
+            finally:
+                F.PACKETS = old
+            self.assertTrue((tmp / "packets" / "wcheck-ch08-v2" / "s" / "0001.txt").exists())
+            self.assertFalse((tmp / "packets" / "wcheck-ch08").exists(), "the sw-v1 packet's name must stay untouched")
+            self.assertTrue((tmp / "packets" / "wcheck-ch08-v2.args.json").exists())
+            self.assertTrue(out["script"].endswith("002-wcheck-ch08-v2.workflow.js"), out["script"])
+            self.assertTrue((tmp / "002-wcheck-ch08-v2.workflow.js").exists())
+            self.assertFalse((tmp / "002-wcheck-ch08.workflow.js").exists())
+
     def test_every_run_says_where_to_save_and_how_to_meter(self):
         for r in self.plan["runs"]:
             self.assertIn("<wf_id>", r["save_to"], r["id"])
