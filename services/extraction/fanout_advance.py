@@ -2,7 +2,7 @@
 
     uv run fanout.py advance <run-id> --wf <wf_id> [--task-output <path>] [--resumed] [--dry-run]
                              [--running <run-id>[@copy] ...] [--redo] [--no-close-chapter] [--honor-gate]
-                             [--refresh-stale] [--force] [--copy <label>] [-v]
+                             [--refresh-stale] [--force] [--copy <label>] [--no-prepare] [-v]
     uv run fanout.py ready   [--running <run-id>[@copy] ...] [--prepare] [--refresh-stale] [--honor-gate] [--paths]
 
 WHAT IT REPLACES. The main session ran each finished Workflow run by hand, every time the same chain: save the
@@ -643,6 +643,7 @@ class Opts:
     copy: str | None = None
     running: tuple = ()
     verbose: bool = False
+    no_prepare: bool = False
 
 
 @dataclasses.dataclass
@@ -1393,7 +1394,8 @@ def advance(run_id: str, wf: str, task_output: Path | None = None, opts: Opts | 
         running = parse_running(opts.running)
         if opts.dry:                                 # nothing was saved: do not offer this very copy as launchable
             running.add((run_id, cp.label or None))
-        prepare_ready(P, S, fl, rep, running, opts)
+        if not opts.no_prepare:
+            prepare_ready(P, S, fl, rep, running, opts)
         rep.update(ready_list(P, S, running, opts))
     except Refuse as e:
         rep.update(ok=False, refused=str(e))
@@ -1438,7 +1440,8 @@ def dump(summary: dict) -> str:
 
 def cli_advance(a) -> int:
     opts = Opts(resumed=a.resumed, dry=a.dry_run, redo=a.redo, no_close=a.no_close_chapter, honor_gate=a.honor_gate,
-                refresh_stale=a.refresh_stale, force=a.force, copy=a.copy, running=tuple(a.running or ()), verbose=a.verbose)
+                refresh_stale=a.refresh_stale, force=a.force, copy=a.copy, running=tuple(a.running or ()), verbose=a.verbose,
+                no_prepare=a.no_prepare)
     say = (lambda m: print(m, file=sys.stderr)) if a.verbose else None
     rc, rep = advance(a.run_id, a.wf, a.task_output, opts, say=say)
     print(dump(rep))
@@ -1491,6 +1494,7 @@ def add_parsers(sub) -> None:
                                                                "running and not saved")
     p.add_argument("--force", action="store_true", help="save a result whose embedded sha is not a current copy of this run")
     p.add_argument("--copy", help="which copy of the run this is (A, A.part2, B, B.part2, part1…) when it cannot be told")
+    p.add_argument("--no-prepare", action="store_true", help="do not prepare the runs this releases (the ready list is still computed)")
     p.add_argument("-v", "--verbose", action="store_true", help="progress lines on stderr")
     p.set_defaults(fn=cli_advance)
     p = sub.add_parser("ready", help="the generated scripts that can be launched now, in plan order")
