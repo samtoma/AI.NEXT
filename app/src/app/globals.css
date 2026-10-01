@@ -801,6 +801,18 @@ body[data-focus="lesson"] > footer {
   box-shadow: 2px 2px 0 var(--ink);
 }
 
+/* The Nour-panel suggestion chip (handoff: "two suggestion chips (999 radius,
+   2.5px ink, `2px 2px 0` shadow)") as a control: only the stroke and shadow,
+   so the Label type set on the button wins. `.chip` itself cannot be used for
+   it — the legacy unlayered `.chip` rule above sets a mono 11px face that
+   beats any utility (ChatCore `suggestionLayout="panel"`). */
+:is([data-ds="play"], [data-ds="noor"]) .panel-chip {
+  border-width: var(--play-stroke-sm);
+  border-style: solid;
+  border-color: var(--ink);
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
 /* Chat bubbles (handoff: Chat bubbles). Nour speaks on white with a resting
    shadow; the student's own turn sits on the sky playmate fill, never ink —
    ChatCore is a shared component (renders under the frozen baseline too), so

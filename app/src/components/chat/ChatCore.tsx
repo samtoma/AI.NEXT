@@ -102,11 +102,16 @@ export interface ChatCoreProps {
    * `1fcf346`). "chips" (default) is the wrapping inline row every existing
    * surface renders. "stacked" is the skill map's docked panel: a "Try asking"
    * list, one suggestion per line, that reads as things you could say rather
-   * than as the screen's primary actions. Opt-in, so no other surface
-   * changes. (The branch's `sendTone` prop is not carried: main's send is
+   * than as the screen's primary actions. "panel" is the Your Progress Map's
+   * Ask Noor (2026-10-01): the Play system's Nour-panel suggestion chips,
+   * exactly as the design system specifies them — 999 radius, 2.5px ink,
+   * `2px 2px 0` shadow (`.panel-chip`), Baloo 700 0.85rem, the press — on ONE
+   * line that scrolls sideways when they do not fit (Tamer, 2026-10-01), and
+   * holding the 52px tap target.
+   * Opt-in, so no other surface changes. (The branch's `sendTone` prop is not carried: main's send is
    * already amber-with-ink on every surface.)
    */
-  suggestionLayout?: "chips" | "stacked";
+  suggestionLayout?: "chips" | "stacked" | "panel";
   questionId?: string;
   wrongAnswer?: string;
   /** lesson slug for the lesson surfaces (e.g. "geo1-2") */
@@ -200,6 +205,10 @@ export interface ChatCoreProps {
   /** Show Noor's avatar beside each of her messages (it wiggles while she
    *  thinks) — the Your Progress Map chat. */
   tutorAvatar?: boolean;
+  /** Show ANY long tutor reply from its top, not only one holding a widget
+   *  or question (FR-3222): the Your Progress Map chat, where replies are
+   *  prose and a long one would otherwise scroll its own start out of view. */
+  alignTutorTop?: boolean;
   /** What is selected on the Your Progress Map. Only kind and id are sent;
    *  the server resolves them (FR-3224, lib/map-focus.ts). */
   mapFocus?: MapFocus | null;
@@ -285,6 +294,7 @@ export function ChatCore({
   questionCards = true,
   suggestionsUntil,
   tutorAvatar = false,
+  alignTutorTop = false,
   mapFocus = null,
   interceptWidget,
   onDirective,
@@ -519,14 +529,16 @@ export function ChatCore({
     // question, not just the block — is what must not be cut off at the top
     // (FR-3222, lib/chat-scroll.ts).
     const row = el.lastElementChild as HTMLElement | null;
-    const acts = !!row?.querySelector(`[${CHAT_INTERACTIVE_ATTR}]`);
+    const acts =
+      !!row?.querySelector(`[${CHAT_INTERACTIVE_ATTR}]`) ||
+      (alignTutorTop && !!row?.querySelector(".noor-bubble-tutor"));
     el.scrollTop = scrollTopFor({
       scrollHeight: el.scrollHeight,
       clientHeight: el.clientHeight,
       frameTop: row && acts ? offsetTopWithin(el, row) : null,
     });
     programmaticTop.current = el.scrollTop;
-  }, []);
+  }, [alignTutorTop]);
   useEffect(() => {
     follow();
     // A widget keeps laying out after it mounts (KaTeX, figures, the pop-in),
@@ -1198,10 +1210,14 @@ export function ChatCore({
           messages.filter((m) => !m.hidden && (m.role === "user" || m.role === "assistant")).length <
             suggestionsUntil) && (
         <div
+          role={suggestionLayout === "panel" ? "group" : undefined}
+          aria-label={suggestionLayout === "panel" ? "Suggestions" : undefined}
           className={
             suggestionLayout === "stacked"
               ? "flex flex-col gap-0.5 px-4 pb-1 pt-2"
-              : "flex flex-wrap gap-2 border-t border-line-soft px-4 pb-2 pt-3"
+              : suggestionLayout === "panel"
+                ? "thin-scroll flex flex-nowrap gap-2 overflow-x-auto px-4 pb-2 pt-3"
+                : "flex flex-wrap gap-2 border-t border-line-soft px-4 pb-2 pt-3"
           }
         >
           {suggestionLayout === "stacked" && (
@@ -1234,6 +1250,21 @@ export function ChatCore({
                     ›
                   </span>
                   <span className="min-w-0">{label}</span>
+                </button>
+              );
+            }
+            if (suggestionLayout === "panel") {
+              /* The design system's Nour-panel chip (`.panel-chip`: 2.5px ink and a
+                 `2px 2px 0` shadow under Play), pill radius, Baloo 700 at the
+                 Label size, and the press. The pill IS the 52px target. */
+              return (
+                <button
+                  key={label}
+                  onClick={onSelect}
+                  disabled={streaming}
+                  className="panel-chip play-pressable inline-flex min-h-[var(--noor-touch-min)] shrink-0 items-center whitespace-nowrap rounded-[var(--play-radius-pill)] bg-card px-4 text-start font-display text-[0.85rem] font-bold leading-snug text-ink disabled:opacity-40"
+                >
+                  {label}
                 </button>
               );
             }

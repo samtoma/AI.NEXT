@@ -96,3 +96,12 @@ test("the old unconditional bottom pin is gone", () => {
   const src = read("../components/chat/ChatCore.tsx");
   assert.doesNotMatch(src, /el\.scrollTop = el\.scrollHeight/);
 });
+
+test("the Your Progress Map chat shows any long tutor reply from its top", () => {
+  const chat = read("../components/chat/ChatCore.tsx");
+  assert.match(chat, /alignTutorTop = false,/);
+  assert.match(chat, /\(alignTutorTop && !!row\?\.querySelector\("\.noor-bubble-tutor"\)\)/);
+  assert.match(read("../components/spine/NoorPanel.tsx"), /\n\s+alignTutorTop\n/);
+  // the lesson chat keeps the widget/question-only rule
+  assert.doesNotMatch(read("../components/student/LessonSession.tsx"), /alignTutorTop/);
+});

@@ -1117,7 +1117,9 @@ context: *"yes for sure, for decision 2, it is part of the overall consistency, 
   message without such a block, MUST keep the bottom-follow. The check MUST repeat when that message
   changes size (a widget keeps laying out after it appears). Aligning MUST NOT switch following off:
   only the student's own scroll away from the bottom does. Not covered: a message taller than the
-  screen still needs scrolling down to reach its block.
+  screen still needs scrolling down to reach its block. *(Extended 2026-10-01: in the Your Progress
+  Map's "Ask Noor" chat the rule applies to every tutor reply, not only one holding a block, so a
+  long prose answer is read from its top, downwards.)*
 - **FR-3224** **[ADDED 2026-10-01 — requested 2026-10-01 (Tamer, skill-map handoff), not yet
   released; supersedes FR-3216, pending Samuel]**: The Your Progress Map MUST show one subject as
   chapter clusters — Term 1 chapters in one row and Term 2 in a second, in book order — each chapter's
@@ -1142,7 +1144,10 @@ context: *"yes for sure, for decision 2, it is part of the overall consistency, 
   itself in a tooltip on hover or keyboard focus. Objective boxes are all one width and show at most
   two lines unless selected; chapter titles are all one width (the narrowest chapter's column) and
   show at most two lines, the full title on hover; chapter, lesson and objective names wrap into
-  balanced lines. Nothing on the page may show a percentage, a score or a count of questions.
+  balanced lines. Ask Noor's suggestions are the design system's Nour-panel chips (pill, 2.5px ink,
+  `2px 2px 0` shadow, Baloo 700 at the Label size, the press, the 52px tap target), on one line
+  that scrolls sideways when they do not fit. Nothing on
+  the page may show a percentage, a score or a count of questions.
 - **FR-3211**: No student surface may say whether content was reviewed. Review status is an operator
   fact, shown in the console only ([ADR-0019](../../docs/decisions/0019-serve-the-whole-maths-bank.md));
   what a student may be told is where a question came from.

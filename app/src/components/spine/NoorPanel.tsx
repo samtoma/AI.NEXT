@@ -78,9 +78,11 @@ export function NoorPanel({
         surface="spine_chat"
         debug={false}
         suggestions={prompts}
-        suggestionLayout="chips"
+        suggestionLayout="panel"
         suggestionsUntil={SUGGESTIONS_UNTIL}
         tutorAvatar
+        // a long reply is shown from its top — read down, never up (FR-3222)
+        alignTutorTop
         mapFocus={focus}
         placeholder="Ask Noor anything…"
         emptyState={
