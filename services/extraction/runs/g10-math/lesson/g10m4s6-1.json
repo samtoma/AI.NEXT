@@ -676,7 +676,13 @@
      "the key has an equals sign, which kind \"surd\" cannot read"
     ]
    },
-   "blocked_on_figure": false
+   "blocked_on_figure": false,
+   "g2": {
+    "verdict": "accept",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): From $V=\\pi r^2h$: $r^2=\\frac{V}{\\pi h}$, so $r=\\pm\\sqrt{\\frac{V}{\\pi h}}$. Matches printed, EPUB final and working; blind only added a positive-root comment. Typing as an equation is right. Verified independently: the verifier's own answer matches the key.",
+    "auto": true
+   }
   },
   {
    "ref": "Ex4-5:6",
@@ -807,7 +813,13 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false
+   "blocked_on_figure": false,
+   "g2": {
+    "verdict": "accept",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): $A-2\\pi r=2\\pi rh$, so $h=\\frac{A-2\\pi r}{2\\pi r}$. Book working, printed and EPUB agree; blind gave an equivalent form. Key is typed as the book's own answer. Verified independently: the verifier's own answer matches the key.",
+    "auto": true
+   }
   },
   {
    "ref": "Ex4-5:8",
@@ -941,7 +953,13 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false
+   "blocked_on_figure": false,
+   "g2": {
+    "verdict": "accept",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): Factor $m$: $E=m(gh+\\frac12v^2)$, so $m=\\frac{E}{gh+\\frac12v^2}$. Book working, printed and EPUB agree; blind's $\\frac{2E}{2gh+v^2}$ is equivalent. Key as typed is the book's answer. Verified independently: the verifier's own answer matches the key.",
+    "auto": true
+   }
   },
   {
    "ref": "Ex4-5:10",
@@ -1214,7 +1232,13 @@
      "the key has an equals sign, which kind \"surd\" cannot read"
     ]
    },
-   "blocked_on_figure": false
+   "blocked_on_figure": false,
+   "g2": {
+    "verdict": "exclude",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): From $A=\\pi R^2-\\pi r^2$: $\\pi r^2=\\pi R^2-A$, so $r^2=\\frac{\\pi R^2-A}{\\pi}$. The book's second line writes $A-\\pi R^2=\\pi r^2$, a sign slip, so its radicand has the wrong sign. Blind is right here; the book is not. Right answer by the agent's own derivation: r=\\pm\\sqrt{\\frac{\\pi R^{2}-A}{\\pi}}.",
+    "auto": true
+   }
   },
   {
    "ref": "Ex4-5:14",
@@ -1287,11 +1311,11 @@
    "lo": "lo:g10m4s6-1-3",
    "stem": "$V=\\frac{4}{3}\\pir^{3}$ is the formula for determining the volume of a soccer ball. Express the radius in terms of the volume.",
    "answer_type": "expression",
-   "answer": "r=\\sqrt[3]{\\frac{3V}{4\\pi}}",
+   "answer": "r=\\sqrt[3]{\\frac{\\frac{3}{4}V}{\\pi}}",
    "choices": null,
    "marker": {
     "kind": "equation",
-    "key": "r=\\sqrt[3]{\\frac{3V}{4\\pi}}",
+    "key": "r=\\sqrt[3]{\\frac{\\frac{3}{4}V}{\\pi}}",
     "form": null,
     "variables": [
      "r",
@@ -1359,10 +1383,14 @@
    },
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "fix",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (book_final is not in the book solution; the key \"r=\\sqrt[3]{\\frac{3V}{4\\pi}}\" does not read as the printed answer \"r = 3 √ 3 4 V π\"); a fix needs fields a person or a recommendation must write",
-    "auto": true
+    "note": "auto-pass G2 (AI recommendation): $V=\\frac43\\pi r^3$ gives $r^3=\\frac{3V}{4\\pi}$; the book's $\\frac{\\frac34V}{\\pi}$ is equal. The typed key is the same value but not the book's own form, and the EPUB has no final line; re-type from the working's last line. Verified independently: the verifier's own answer matches the key.",
+    "auto": true,
+    "changed": [
+     "answer",
+     "marker"
+    ]
    }
   },
   {
@@ -1783,9 +1811,9 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "accept",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"x=\\frac{a-c}{b}\" does not read as the printed answer \"x = a−c b , b ̸= 0\"); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): $a-bx=c$ gives $-bx=c-a$, so $x=\\frac{a-c}{b}$. Printed, EPUB, working and blind all agree; the complaint is only the printed ', b≠0' note, which is a restriction, not part of the answer. Typed key is right. Verified independently: the verifier's own answer matches the key.",
     "auto": true
    }
   },
@@ -2365,7 +2393,13 @@
      "the numeric key \"\\frac{3}{8}\" is a fraction: the numeric grader reads \"a/b\" as a, the expression marker marks the fraction"
     ]
    },
-   "blocked_on_figure": false
+   "blocked_on_figure": false,
+   "g2": {
+    "verdict": "exclude",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): LHS $2ax+2a$, RHS $5ax-6a$, so $3ax-8a=0$, $a(3x-8)=0$, $x=\\frac83$ for $a\\ne0$. The book's own line $3ax-8a=0$ gives $\\frac83$, yet it states $\\frac38$. Blind is right. Right answer by the agent's own derivation: x=\\frac{8}{3}\\ (a\\ne0).",
+    "auto": true
+   }
   },
   {
    "ref": "Ex4-7:12t",
@@ -2439,7 +2473,7 @@
    "g2": {
     "verdict": "exclude",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (book_final is not in the book solution; the key \"\\frac{a}{a-b}\" does not read as the printed answer \"x = a (a−b) for a, b ̸= 0 and a ̸= b\"); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): NOT RECOMMENDED LIVE (the quoted span is not in the item's worked solution, EPUB answer or printed answer). The agent's reading: Multiplying by $ab$: $x(a-b)(a+b)=a(a+b)$, so $x=\\frac{a}{a-b}$. Matches printed and the working's last line; the complaints are text comparison. Book's conditions omit $a\\ne-b$ (then any $x$ works), but the marked value is right.",
     "auto": true
    }
   }

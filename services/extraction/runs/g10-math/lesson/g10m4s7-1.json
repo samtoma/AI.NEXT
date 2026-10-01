@@ -684,7 +684,13 @@
      "the key is an inequality or a set-membership list, which kind \"equation\" cannot read"
     ]
    },
-   "blocked_on_figure": true
+   "blocked_on_figure": true,
+   "g2": {
+    "verdict": "exclude",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): Figure: open circle at -1 shaded left, closed circle at 6 shaded right, so $x<-1$ or $x\\geq6$. The book writes 'and', which read literally is the empty set. The key is not the right answer as printed. Right answer by the agent's own derivation: x<-1 or x\\geq 6; x\\in\\mathbb{R}.",
+    "auto": true
+   }
   },
   {
    "ref": "Ex4-6:1b",
@@ -831,7 +837,13 @@
      "the key is an inequality or a set-membership list, which kind \"equation\" cannot read"
     ]
    },
-   "blocked_on_figure": true
+   "blocked_on_figure": true,
+   "g2": {
+    "verdict": "hold",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): NOT RECOMMENDED LIVE (the independent verifier said confirmed, and another answer is also correct (its own answer: x ≠ 3, x ≠ 6, x ∈ R (open circles at 3 and 6, the rest of the line is shaded); The figure shows open circles at 3 and 6 on an otherwise fully drawn line, so x≠3 and x≠6 with x real is right; the equivalent form x<3 or 3<x<6 or x>6 is also correct.)). The agent's reading: Figure: open circles at 3 and 6 on a fully shaded line, so all reals except 3 and 6: $x\\neq3;x\\neq6$. Book, printed answer and EPUB agree and match the figure. The blind answer misses the exclusions.",
+    "auto": true
+   }
   },
   {
    "ref": "Ex4-6:1d",
@@ -1438,7 +1450,13 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false
+   "blocked_on_figure": false,
+   "g2": {
+    "verdict": "exclude",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): Multiplying by $-6$ flips the sign: $5x-1\\le-2(1-2x)=-2+4x$, so $x\\le-1$. The book keeps $\\ge$ and gets $[-1;\\infty)$. The blind answer is right and the book is wrong. Right answer by the agent's own derivation: (-\\infty;-1].",
+    "auto": true
+   }
   },
   {
    "ref": "Ex4-6:2j",
@@ -1492,7 +1510,13 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false
+   "blocked_on_figure": false,
+   "g2": {
+    "verdict": "exclude",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): $3\\le4-x\\le16$ gives $-1\\le -x\\le12$. Multiplying by $-1$ gives $-12\\le x\\le1$, so $[-12;1]$. The book's working line says $-12$ at the bottom but its interval is $[1;12]$, which does not follow. Right answer by the agent's own derivation: [-12;1].",
+    "auto": true
+   }
   },
   {
    "ref": "Ex4-6:2k",
@@ -2334,7 +2358,7 @@
    "g2": {
     "verdict": "exclude",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"a>0; a\\in\\mathbb{N}\" does not read as the printed answer \"a −1 0 1 2 3 4 5 a > 7; a ∈N\"); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): NOT RECOMMENDED LIVE (the independent verifier said confirmed, and another answer is also correct (its own answer: 3a-1<4a+6 gives a>-7, and with a in N (1,2,3,...) this is a>0, a in N; Algebra gives a>-7 and restricting to N (as the book defines it, without 0) gives a>0; the unrestricted a>-7 with a in N is also a valid form, and the key's a>0 matches the book's own working.)). The agent's reading: $3a-1<4a+6$ gives $-a<7$, so $a>-7$. With $a\\in\\mathbb{N}$ the book states $a>0$, which is correct. The printed answer text is mixed with number-line labels and reads 'a>7'. The typing check complaint is a text comparison.",
     "auto": true
    }
   },
@@ -2405,9 +2429,9 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "accept",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"b < -14\" does not read as the printed answer \"b −18 −17 −16 −15 −14 −13 −12 b < −14; b ∈R\"); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): $\\frac{b-3}{2}+1<\\frac{b}{4}-4$. Multiplying by 4 gives $2b-6+4<b-16$, so $b<-14$. This matches the book and the printed answer. The typing check only compared text against number-line labels. Verified independently: the verifier's own answer matches the key.",
     "auto": true
    }
   },
@@ -2480,7 +2504,7 @@
    "g2": {
     "verdict": "exclude",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"a > 6\" does not read as the printed answer \"a 5 6 7 8 8 9 10 a > 6; a ∈N\"); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): NOT RECOMMENDED LIVE (the independent verifier said confirmed, and another answer is also correct (its own answer: a > 6 (a in N); Multiplying by 3 gives 4a-8>3a-2, so a>6, with a=6 giving equality and a=7 giving 6.67>6.33; the equivalent a>=7 for a in N is also acceptable.)). The agent's reading: $\\frac{4a+7}{3}-5>a-\\frac{2}{3}$. Multiplying by 3 gives $4a+7-15>3a-2$, so $a>6$. This matches the book and the printed answer. The typing check only compared text against number-line labels.",
     "auto": true
    }
   },
@@ -2547,7 +2571,13 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": true
+   "blocked_on_figure": true,
+   "g2": {
+    "verdict": "exclude",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): Figure: open circle at -1 shaded left, closed circle at 4 shaded right, so $x<-1$ or $x\\geq4$. The book writes 'and', which read literally is the empty set. Right answer by the agent's own derivation: x<-1 or x\\geq 4; x\\in\\mathbb{R}.",
+    "auto": true
+   }
   },
   {
    "ref": "Ex4-7:9b",
@@ -2677,7 +2707,13 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": true
+   "blocked_on_figure": true,
+   "g2": {
+    "verdict": "exclude",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): The figure shows an open circle at $-1$ and a filled circle at $2$, so the inequality is $-1<x\\le 2$. The book's $-1<x\\le-2$ is an empty set and does not match its own figure. The blind answer matches the figure, but only the book's text is authoritative. Right answer by the agent's own derivation: -1 < x \\le 2; x \\in \\mathbb{R}.",
+    "auto": true
+   }
   },
   {
    "ref": "Ex4-7:10a",
@@ -2999,7 +3035,13 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false
+   "blocked_on_figure": false,
+   "g2": {
+    "verdict": "hold",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): NOT RECOMMENDED LIVE (the independent verifier said confirmed, and another answer is also correct (its own answer: x < 4 with x in N, i.e. x = 1, 2, 3 (0 as well if N includes 0); Multiplying by 2 gives 4x-6 < 3x-2, so x < 4, and the key x<4 with x in N is correct; a student listing {1,2,3} (or {0,1,2,3}) is equally correct but may not match an interval marker.)). The agent's reading: $2x-3<\\frac{3x-2}{2}\\Rightarrow 4x-6<3x-2\\Rightarrow x<4$, with $x\\in\\mathbb{N}$. This matches the book's working, the EPUB final answer and the printed answer. The blind solver gave nothing. The key marks the solution; the number line is only a representation of it.",
+    "auto": true
+   }
   },
   {
    "ref": "Ex4-7:11b",
@@ -3070,7 +3112,7 @@
    "g2": {
     "verdict": "exclude",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"b < -4; b \\in \\mathbb{Z}\" does not read as the printed answer \"b −6 −5 −4 −3 −2 −1 0 b > 4; b ∈Z\"); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): $3(1-b)-4+b=-1-2b$, so $-1-2b>7+b$ gives $-3b>8$ and $b<-\\frac{8}{3}$. For integers that is $b\\le-3$. The book's line $-2b>8$ drops the $+b$ on the right, giving $b<-4$. The printed answer $b>4$ contradicts the EPUB's $b<-4$. Right answer by the agent's own derivation: b < -8/3 (for b in Z: b <= -3).",
     "auto": true
    }
   },
@@ -3137,7 +3179,13 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false
+   "blocked_on_figure": false,
+   "g2": {
+    "verdict": "accept",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): $1-5x>4x+4-3=4x+1\\Rightarrow -9x>0\\Rightarrow x<0$. This matches the book's working, the EPUB final answer and the printed answer. The printed text only adds the axis and the domain $x\\in\\mathbb{R}$. The blind solver gave nothing. Verified independently: the verifier's own answer matches the key.",
+    "auto": true
+   }
   },
   {
    "ref": "Ex4-7:12l",
@@ -3512,18 +3560,10 @@
    "kind": "exercise",
    "lo": "lo:g10m4s7-1-2",
    "stem": "After solving an equation, Luke gave his answer as $\\text{4,5}$ rounded to one decimal digit. Show on a number line the interval in which his solution lay.",
-   "answer_type": "expression",
-   "answer": "4.45 \\leq x < 4.55",
+   "answer_type": "not_markable",
+   "answer": null,
    "choices": null,
-   "marker": {
-    "kind": "interval",
-    "key": "4.45 \\leq x < 4.55",
-    "form": null,
-    "variables": [
-     "x"
-    ],
-    "tolerance": null
-   },
+   "marker": null,
    "solution": [
     "[figure]"
    ],
@@ -3564,7 +3604,7 @@
    ],
    "unit": null,
    "options_source": null,
-   "not_markable_reason": null,
+   "not_markable_reason": "The stem asks the student to draw the interval on a number line and the book's working is that figure, so the answer cannot be typed and marked. The inequality $4.45\\le x<4.55$ is shown as the teaching explanation.",
    "tier_source": "typing",
    "printed_answer_scope": "item",
    "figures": [],
@@ -3575,10 +3615,16 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "fix",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (book_final is not in the book solution); a fix needs fields a person or a recommendation must write",
-    "auto": true
+    "note": "auto-pass G2 (AI recommendation): A value rounded to $4{,}5$ at one decimal lies in $4.45\\le x<4.55$, which matches the book's printed answer. But the stem asks the student to show the interval on a number line, and the EPUB gives only a figure with no final answer. The inequality is not what the stem asks for, so the item is a teaching example.",
+    "auto": true,
+    "changed": [
+     "answer",
+     "answer_type",
+     "marker",
+     "not_markable_reason"
+    ]
    }
   }
  ],

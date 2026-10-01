@@ -2919,7 +2919,7 @@
    "ref": "Ex4-7:1h",
    "kind": "exercise",
    "lo": "lo:g10m4s2-1-1",
-   "stem": "Solve: $2k+3=2-3(k+2)$",
+   "stem": "Solve: $2k+3=2-3(k+3)$",
    "answer_type": "numeric",
    "answer": "-2",
    "choices": null,
@@ -2968,7 +2968,17 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false
+   "blocked_on_figure": false,
+   "g2": {
+    "verdict": "fix",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): As printed, $2k+3=2-3k-6$ gives $k=-\\frac75$ (blind is right for this stem). The book working expands $-3(k+3)=-3k-9$, giving $5k=-10$, $k=-2$, which follows. So the stem lost its '3': repair to $k+3$; key -2 unchanged. Verified independently: the verifier's own answer matches the key.",
+    "auto": true,
+    "changed": [
+     "stem"
+    ],
+    "stem_fix_by": "auto-pass G2 recommendation (g2rec-v1) — not Samuel"
+   }
   },
   {
    "ref": "Ex4-7:1i",
