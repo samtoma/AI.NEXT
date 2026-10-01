@@ -468,6 +468,7 @@ class ValueLabels(unittest.TestCase):
         # the old split read "1,5; 2" and "5; 1,2" alike (1, 2, 5 on both sides)
         x = self.typed("1,5; 2", "T1 = 5; T2 = 1,2")
         self.assertFalse(self.reads(x))
+        self.assertFalse(self.reads(self.typed("1,5; 2", "5; 1,2")), "no labels: the sorted set of values, never of digits")
         y = self.typed("1,5; 2", "T1 = 1,5; T2 = 2")
         self.assertTrue(self.reads(y), y["typing_problems"])
         # and between a digit and a recurring bar the book's text layer lost
@@ -486,7 +487,7 @@ class ValueLabels(unittest.TestCase):
         self.assertFalse(self.reads(x))
         # one labelled value is not a list: the values rule does not apply, the key must be the printed value or equation
         y = self.typed("-28,1", "T4 = −28,1", final="-28,1")
-        self.assertFalse(self.reads(y) and False, "a values key of one value is read by the equation rules, as before")
+        self.assertFalse(self.reads(y), "a values key of one value is read by the equation rules, as before")
 
     # ------------------------------------------------------------------ the numeric key
     def test_a_numeric_key_is_read_after_the_label(self):
