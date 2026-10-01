@@ -512,9 +512,9 @@ def collect(entries: list[dict], runs: list[dict], *, prior: dict | None = None,
         log[k] = why
         if out:
             items[k] = out
-    if prior:
+    if prior:                                              # an earlier file's items for keys these runs did not answer
         for k, v in (prior.get("items") or {}).items():
-            if k in by_key and k not in items and k not in log or (k in log and log[k]["outcome"] == "unanswered" and k in (prior.get("items") or {})):
+            if k in by_key and k not in items:
                 items[k] = v
     unanswered = [k for k in by_key if k not in items]
     c_verdict = Counter(v["verdict"] for v in items.values())
@@ -531,7 +531,6 @@ def collect(entries: list[dict], runs: list[dict], *, prior: dict | None = None,
         "corrections_proposed": sorted(k for k, v in items.items() if v.get("if_corrected")),
         "off_task": off_task,
         "by_state": dict(Counter(e["state"] for e in entries)),
-        "live_gain": {"was_live": 0, "now_live": len([1 for v in items.values() if v["verdict"] in ("accept", "fix")])},
     }
     return {"status": "RECOMMENDATION ONLY — an AI line's, never a review. `auto_pass_gates.py g2 --recommend` reads `items` and signs "
                       f"each verdict `{SIGNER}`; a person's verdict in G2's file is never overwritten.",
@@ -540,25 +539,30 @@ def collect(entries: list[dict], runs: list[dict], *, prior: dict | None = None,
 
 
 # ============================================================================ the commands (auto_pass_gates.py)
-def follow_ups(book: str, chapter: int, lesson_runs: list[str], *, recommended: str, g2_file: str, loaded: bool,
+def follow_ups(book: str, chapter: int, lesson_runs: list[str], *, recommended: str, g2_file: str,
                db: str = "ainext_pilot_g10_ch08", run_label: str = "") -> list[str]:
-    """The exact commands that apply a saved recommendation, in order. From services/extraction/."""
+    """The exact commands that apply a saved recommendation, in order (from services/extraction/). Lines starting with # are comments.
+
+    The chapter's working check and S5 draft are built from the ASSEMBLED bundle, so apply the recommendation BEFORE they are
+    launched: `fanout.py close-chapter N` then does steps 2-4 itself (it passes the recommendation file when it exists) and
+    re-prepares those copies. After they were launched, run the explicit steps and a delta working check on the newly live items."""
     t = f"{chapter:02d}"
     lr = " ".join(f"--lesson-run {p}" for p in lesson_runs)
-    cmds = [
+    gl = f'--run "{run_label}" ' if run_label else ""
+    dsn = f"host=127.0.0.1 port=5432 dbname={db}"
+    return [
         f"uv run auto_pass_gates.py g2-recommend-collect {book} --chapter {chapter} {lr} --run runs/{book}/g2rec/ch{t}-<runId>.json "
         f"--out {recommended}",
         f"uv run auto_pass_gates.py g2 {book} --chapter {chapter} {lr} --recommend {recommended} --into {g2_file} --split "
-        f"--maths runs/{book}/maths/book/accepted.json" + (f' --run "{run_label}"' if run_label else ""),
-        f"uv run fanout.py close-chapter {chapter}          # re-assembles the bundle from the new finals, then re-prepares the working check and the S5 draft from it",
+        f"--maths runs/{book}/maths/book/accepted.json {gl}".rstrip(),
+        f"uv run assemble_lesson_bundle.py --book {book} --chapter {chapter} --report runs/{book}/fanout/assembly-ch{t}.json",
+        f"uv run load_seed.py seed/{book}/g10m-course.json seed/{book}/g10m-c{t}.json --validate-only",
+        f"# or, if chapter {chapter}'s working check and S5 draft are NOT launched yet, one command does the three steps above and re-prepares them:",
+        f"#   uv run fanout.py close-chapter {chapter}",
+        f"# only if chapter {chapter} is ALREADY loaded in {db} (it adds the newly live questions, releases the held ones, rejects the excluded):",
+        f"pg_dump -h 127.0.0.1 -Fc {db} > work/{book}/backups/pilot-before-g2rec-ch{t}.dump",
+        f'AINEXT_DB_DSN="{dsn}" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/{book}/g10m-course.json seed/{book}/g10m-c{t}.json '
+        f"--course course:us-g10-math-en --update --dry-run      # read the delta; then the same without --dry-run",
+        f'AINEXT_DB_DSN="{dsn}" AINEXT_ENVIRONMENT=mvp1 uv run apply_review_verdicts.py --g2 {g2_file} --book {book} '
+        f"--runs runs/{book}/lesson --dry-run      # then the same without --dry-run",
     ]
-    if loaded:
-        dsn = f"host=127.0.0.1 port=5432 dbname={db}"
-        cmds += [
-            f"pg_dump -h 127.0.0.1 -Fc {db} > work/{book}/backups/pilot-before-g2rec-ch{t}.dump",
-            f'AINEXT_DB_DSN="{dsn}" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/{book}/g10m-course.json seed/{book}/g10m-c{t}.json '
-            f"--course course:us-g10-math-en --update --dry-run     # then the same without --dry-run",
-            f'AINEXT_DB_DSN="{dsn}" AINEXT_ENVIRONMENT=mvp1 uv run apply_review_verdicts.py --g2 {g2_file} --book {book} '
-            f"--runs runs/{book}/lesson --dry-run     # then the same without --dry-run",
-        ]
-    return cmds
