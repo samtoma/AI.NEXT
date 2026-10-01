@@ -647,14 +647,16 @@ def s5_s6_s7(line: Line) -> None:
             "--floor-report", line.p("coverage", "tier-floor.json"))
     gaps = line.p("coverage", f"{book.book}.widget-gaps.json")
     verify = line.p("runs", "widgets", "verify-dryrun.json")
+    # no template (every lesson a widget gap): the gap report only — a widget bundle is never written unverified
+    out_bundles = ("generated-questions.json",) + (("widget-questions.json",) if verify.exists() else ())
     line.uv("generate_widget_questions.py", "--templates", wdir, "--book", cfg,
-            *(["--verdicts", verify] if verify.exists() else []), "--gaps", line.p("runs", "widgets", "author-dryrun.json"),
-            "--gap-report", gaps, "--out", gen / "widget-questions.json", db=True)
+            *(["--verdicts", verify, "--out", gen / "widget-questions.json"] if verify.exists() else []),
+            "--gaps", line.p("runs", "widgets", "author-dryrun.json"), "--gap-report", gaps, db=True)
     line.uv("assemble_misconceptions.py", final, "--book", cfg, "--out", gen / "misconceptions.json",
-            "--bundle", gen / "generated-questions.json", "--bundle", gen / "widget-questions.json",
+            *[x for f in out_bundles for x in ("--bundle", gen / f)],
             *[x for g in graph for x in ("--graph", g)])
     counts = {}
-    for f in ("generated-questions.json", "widget-questions.json"):
+    for f in out_bundles:
         r = line.uv("load_generated_questions.py", gen / f, "--course", book.course_id, "--sample", "10",
                     "--seed", "20260926", "--catalogue-only", db=True)
         counts[f] = [l.strip() for l in r.stdout.splitlines() if "course counts" in l or "review queue" in l]
@@ -670,7 +672,7 @@ def s5_s6_s7(line: Line) -> None:
     # Promotion follows the handoff's "status at export" (ADR-0019 note): accepted and unsampled
     # families go live. It comes BEFORE the verdicts are applied: `--promote` reloads the rows
     # (reviewed_by NULL), and a verdict's family stamp only travels to LIVE siblings.
-    for f in ("generated-questions.json", "widget-questions.json"):
+    for f in out_bundles:
         line.uv("load_generated_questions.py", gen / f, "--course", book.course_id, "--promote", "--sample", "0",
                 "--catalogue-only", db=True)
     r = line.uv("apply_review_verdicts.py", g3, db=True)

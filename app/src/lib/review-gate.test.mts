@@ -149,6 +149,7 @@ test("only a human stamp is a review — every stamp the pilot database carries 
     ["auto-pass G3 (AI recommendation)", "ai"],
     ["local-dev (pilot scratch)", "bulk"],
     ["local-dev (dry run)", "bulk"],
+    ["local-docker", "bulk"],
     ["samuel (poc bulk)", "bulk"],
     ["Samuel Toma (G2 fix)", "human"],
     ["Samuel Toma (G2 accept); held: its figure is missing", "human"],
@@ -163,10 +164,39 @@ test("only a human stamp is a review — every stamp the pilot database carries 
 });
 
 test("the classification is migration 035's, so the database and the console agree", () => {
+  // Read 035's own CASE — its 'ai' and 'bulk' arms — and classify every
+  // sample with it, so a change to either side fails here rather than
+  // letting the console and the backfill disagree about what a review is.
   const sql = readFileSync(path.join(REPO, "db/migrations/035-human-review-stamps.sql"), "utf8");
-  for (const pattern of ["'^ai '", "'\\(pending [^)]*\\)$'", "'^local-dev'", "'\\(poc bulk\\)$'"]) {
-    assert.ok(sql.includes(pattern), `035 classifies with ${pattern}`);
+  const arm = (kind: string) => {
+    const line = sql.split("\n").find((l) => /WHEN stamp ~\*/.test(l) && l.includes(`THEN '${kind}'`));
+    assert.ok(line, `035 has a WHEN … THEN '${kind}' arm`);
+    return [...line!.matchAll(/~\* '([^']+)'/g)].map((m) => new RegExp(m[1]!, "i"));
+  };
+  const ai = arm("ai");
+  const bulk = arm("bulk");
+  const sqlKind = (raw: string) => {
+    const stamp = raw.replace(" [held: figure missing]", "").split("; ")[0]!.trim();
+    if (ai.some((r) => r.test(stamp))) return "ai";
+    if (bulk.some((r) => r.test(stamp))) return "bulk";
+    return "human";
+  };
+  for (const stamp of [
+    "ai dual-check (pending Samuel)",
+    "ai dual-check (pending Samuel) [held: figure missing]",
+    "local-dev (pilot scratch)",
+    "local-docker",
+    "samuel (poc bulk)",
+    "Samuel Toma (G2 fix)",
+    "Samuel Toma (G2 accept); stem fixed by orchestrator (data-engineer agent), 2026-09-27 — not Samuel",
+    "Samuel Toma (family tpl:u3-2-1:range via q:u3-2-1:g009-range)",
+    "samuel.s.toma",
+  ]) {
+    assert.equal(stampKind(stamp), sqlKind(stamp), `035 and the console disagree on ${JSON.stringify(stamp)}`);
   }
+  // The one stamp the console is stricter about, in the safe direction:
+  // the fan-out's auto-pass belongs in ai_checked_by and never counts as a review.
+  assert.equal(stampKind("auto-pass G3 (AI recommendation)"), "ai");
 });
 
 test("a human stamp a machine edited afterwards does not cover the content as it is now", () => {

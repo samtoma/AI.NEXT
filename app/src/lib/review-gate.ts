@@ -179,8 +179,8 @@ export type StampKind = "none" | "ai" | "bulk" | "human";
  *   · the stamp is the first "; "-separated segment, with the loader's
  *     " [held: figure missing]" mark removed;
  *   · "ai …" or "… (pending <name>)" is an AI check;
- *   · "local-dev …" or "… (poc bulk)" is a bulk or dev promotion — explicitly
- *     not a review;
+ *   · "local-dev …", "local-docker …" or "… (poc bulk)" is a bulk or dev
+ *     promotion — explicitly not a review;
  *   · anything else is a human stamp ("Samuel Toma (G2 fix)", "<name>
  *     (sampled)", "<name> (family <tpl> via <qid>)", an operator's display
  *     name written by this gate).
@@ -195,7 +195,7 @@ export function stampKind(raw: string | null | undefined): StampKind {
   const stamp = raw.replace(" [held: figure missing]", "").split("; ")[0]!.trim();
   if (stamp === "") return "none";
   if (/^ai /i.test(stamp) || /\(pending [^)]*\)$/i.test(stamp) || /^auto-pass /i.test(stamp)) return "ai";
-  if (/^local-dev/i.test(stamp) || /\(poc bulk\)$/i.test(stamp)) return "bulk";
+  if (/^local-(dev|docker)/i.test(stamp) || /\(poc bulk\)$/i.test(stamp)) return "bulk";
   return "human";
 }
 

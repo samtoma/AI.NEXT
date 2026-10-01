@@ -128,7 +128,9 @@ before(async () => {
       id text PRIMARY KEY, lo_id text NOT NULL, tier text, question_type text, stem text,
       choices jsonb, correct_answer text, canonical_solution jsonb, source_page int,
       source_note text, reviewed_by text, reviewed_at timestamptz, status text NOT NULL,
-      source text NOT NULL DEFAULT 'seed', parent_question_id text, extraction_run_id bigint
+      source text NOT NULL DEFAULT 'seed', parent_question_id text, extraction_run_id bigint,
+      -- migration 035
+      ai_checked_by text, ai_checked_at timestamptz, hold_reason text, review_note text
     );
     CREATE TABLE operators (id bigint PRIMARY KEY, display_name text, email text);
     CREATE TABLE accounts (
