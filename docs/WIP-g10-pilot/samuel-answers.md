@@ -61,19 +61,21 @@ Consistency-review decisions (2026-09-27), one at a time (decisions.md decisions
     (decision 49.)
 29. Figures for the other 13 chapters → "Native only, wait": decision 26 stands strictly — no book images; a question
     whose figure needs a native type that doesn't exist yet stays held until that type is built (chapters may launch
-    with large held sets).
+    with large held sets). (decision 50; temporarily reversed for students by answer 37d, decision 58d.)
 30. Step-level working checker → "Yes, add it (Recommended)": one checking agent per book solution + a free numeric
     pre-check; flagged steps go to G2, never silently corrected; ≈$0.03–0.05/solution; re-run on Chapter 8 too.
+    (decision 51.)
 31. Live Prep 3 fixes (14 dead widget links; angle widget opening on its own answer) → "Ship as a small hotfix
     (Recommended)": split out of the Grade 10 branch into a small release off main (like v0.9.3) — data migration for
-    the widget links + the opening fix, CI, deploy only on Samuel's explicit go.
+    the widget links + the opening fix, CI, deploy only on Samuel's explicit go. (decision 52.)
 32. Misconception tags on "true but less precise" options → "Remove those tags (Recommended)": such an option is never
-    a mistake; the pipeline refuses misconception tags on it and S5 is told which options they are.
+    a mistake; the pipeline refuses misconception tags on it and S5 is told which options they are. (decision 53.)
 33. What counts as "reviewed" → "Only human stamps count (Recommended)": a question is reviewed only when a human
     signed it; AI-only checks show in the console as "AI-checked, awaiting human"; nothing changes for students;
-    applies to Prep 3 too with the next release.
+    applies to Prep 3 too with the next release. (decision 54; FR-4506.)
 34. A decimal comma typed in a Grade 10 numeric answer ("7,21") → "Accept it as a decimal (Recommended)": read as 7.21
     and marked normally when unambiguous (a clear pair in a coordinates answer stays a pair); Prep 3 marking unchanged.
+    (decision 55.)
 35. (2026-10-01) The console showed the American Grade 10 course with an Arabic subtitle («الرياضيات», the shared
     maths subject's Arabic name) → "change , this is american course we said no arabic": the American course shows
     no Arabic anywhere — console and student surfaces, its lessons, the American curriculum's name — chosen per

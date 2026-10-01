@@ -93,6 +93,7 @@ import argparse
 import hashlib
 import json
 import re
+import shutil
 import sys
 from collections import Counter, defaultdict
 from pathlib import Path
@@ -1026,14 +1027,15 @@ def book_picture_reveals(question: dict, natives: list[dict]) -> str | None:
       * the picture draws it when a native transcription of the same image labels it (or withheld it), or —
         with no transcription to read — when the point is named before the figure (the diagram's own
         description) or the question asks for its coordinates outright;
-      * a read-off exercise (no coordinates or equation given before the figure: the figure IS the data,
-        A8's Ex8-1:1) never counts — reading the picture is the exercise.
+      * a read-off exercise (no coordinates or equation in the stem, nor in the labels of a transcription of
+        the picture: the figure IS the data, A8's Ex8-1:1) never counts — reading the picture is the exercise.
     Every stand-in and every hold lands in the console backlog; this only decides what a student may see."""
     stem = question.get("stem") or ""
     before, _, after = stem.rpartition("[figure]")
     if not _:
         before, after = "", stem
-    if not re.search(r"\(\s*-?\$?\d|=", before) and not re.search(r"\(\s*-?\$?\d|=", after):
+    given = re.compile(r"\(\s*-?\$?\d|=")
+    if not given.search(stem) and not any(given.search(lab) for n in natives for lab in n["labels"]):
         return None                                   # read-off: the figure is the data
     if _CONSTRUCTED.search(after):
         return None
@@ -1069,7 +1071,8 @@ def stand_in_alt(question: dict, natives: list[dict], page: int | None) -> str:
     one (captions describe only what is drawn), else what it is and where it is printed."""
     for n in natives:
         if (n.get("caption") or "").strip():
-            return n["caption"].strip()
+            # an attribute is plain text: no "$" maths delimiters for a screen reader to spell out
+            return re.sub(r"\s{2,}", " ", n["caption"].replace("$", "")).strip()
     return "The textbook's own diagram for this question" + (f" (printed on page {page})." if page else ".")
 
 
@@ -1610,6 +1613,14 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--check", action="store_true", help="assemble and validate, write nothing")
     ap.add_argument("--no-marker-check", action="store_true",
                     help="do not run the app's marker over the typed answers (the report says so)")
+    ap.add_argument("--no-book-pictures", action="store_true",
+                    help="native figures only (answer 29): no book_image stand-ins — a question whose figure "
+                         "no native kind drew stays held as figure_missing. The default is answer 37d's "
+                         "'book picture for now'")
+    ap.add_argument("--figures-dir", type=Path, help="the book's extracted images (default work/<book>/figures)")
+    ap.add_argument("--figures-out", type=Path,
+                    help="where the stand-ins' images are copied for the app to serve (default "
+                         "app/public/book-figures/<book>/, served as /book-figures/<book>/<file>)")
     a = ap.parse_args(argv)
 
     book = book_config.load_book(a.book)
@@ -1622,7 +1633,8 @@ def main(argv: list[str] | None = None) -> int:
     out = a.out or HERE / "seed" / book.book
     try:
         bundles, report = assemble(book, manifest, objectives, runs,
-                                   set(a.chapter) if a.chapter else None, not a.no_marker_check)
+                                   set(a.chapter) if a.chapter else None, not a.no_marker_check,
+                                   book_pictures=not a.no_book_pictures, figures_dir=a.figures_dir)
     except AssemblyError as exc:
         print(f"ASSEMBLY FAILED — nothing written\n  {exc}", file=sys.stderr)
         return 1
@@ -1656,9 +1668,16 @@ def main(argv: list[str] | None = None) -> int:
         print(f"  figure dropped: {x['visual']} ({x['question']}) — {x['why']}")
     for x in rep["captions_fixed"]:
         print(f"  caption fixed: {x['visual']}: {x['now']!r} (was {x['was']!r})")
+    if rep["stand_ins"]:
+        print(f"  book picture for now (answer 37d): {len(rep['stand_ins'])} book_image stand-in(s) attached — "
+              f"each question is live and in the console backlog as 'needs native figure'")
+    for x in rep["held_reveals"]:
+        print(f"  held (review, not live): {x['question']} — {x['why']}")
     if rep["held_for_figure"]:
         print(f"  held (review, not live): {len(rep['held_for_figure'])} question(s) whose stem shows [figure] "
-              f"and have no figure")
+              f"and have no figure" + ("" if report.book_pictures else " (--no-book-pictures)"))
+    if rep["held_katex"]:
+        print(f"  held (review, not live): {len(rep['held_katex'])} question(s) the app's KaTeX cannot render")
     if a.report:
         a.report.parent.mkdir(parents=True, exist_ok=True)
         a.report.write_text(json.dumps(rep, indent=2, ensure_ascii=False) + "\n")
@@ -1675,6 +1694,17 @@ def main(argv: list[str] | None = None) -> int:
         (content_out / f"{slug}.json").write_text(dump(c))
     print(f"wrote {len(report.content)} lesson-content file(s) to {rel(content_out)} "
           f"({sum(len(c['claims']) for c in report.content.values())} claim(s))")
+    if report.stand_ins:
+        fig_out = a.figures_out or book_config.REPO_ROOT / "app" / "public" / "book-figures" / book.book
+        fig_out.mkdir(parents=True, exist_ok=True)
+        copied = 0
+        for f in sorted({x["file"] for x in report.stand_ins}):
+            src, dst = report.figures_dir / f, fig_out / f
+            if not dst.exists() or dst.read_bytes() != src.read_bytes():
+                shutil.copyfile(src, dst)
+                copied += 1
+        print(f"book pictures: {len(report.stand_ins)} stand-in(s), {copied} image(s) copied to {rel(fig_out)} "
+              f"(the app serves them as /book-figures/{book.book}/<file>)")
     return 0
 
 

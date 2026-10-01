@@ -164,8 +164,8 @@ def inventory() -> dict:
         ch = int(mod["chapter"])
         les = mod["lessons"]
         eoc = mod.get("end_of_chapter_exercise") or {}
-        to_map = sum(e.get("items", 0) for e in mod.get("section_exercises_to_map") or []) \
-            if isinstance(mod.get("section_exercises_to_map"), list) else 0
+        # a split section's shared set (6-6: 41 items S1's mappers distribute over its three parts)
+        to_map = sum(e.get("items", 0) for s in mod.get("section_exercises_to_map") or [] for e in s.get("exercises") or [])
         lesson_items = sum(e["items"] for l in les for e in l["exercises"])
         wes = sum(len(l["worked_examples"]) for l in les)
         printed = sum((e.get("printed_answers") or {}).get("items_with_printed_answer", 0) for l in les
