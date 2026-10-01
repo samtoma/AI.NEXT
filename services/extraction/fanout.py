@@ -7,6 +7,8 @@
     uv run fanout.py status                      # which runs are prepared, saved, metered
     uv run fanout.py config <chapter>            # the per-chapter book config S5–S7 read (bundles: course + chapter)
     uv run fanout.py write-specs <S6 author run.json> --into families/g10-math/chNN    # the specs the author wrote
+    uv run fanout.py close-chapter <N> [--dry-run]   # a chapter's lessons are all saved: G2 auto-pass, assembly, validate,
+                                                     # then prepare its working check + S5 draft (no load, no model call)
 
 WHAT IT IS. Chapter 8 was the pilot (docs/WIP-g10-pilot/). Samuel approved running the line over the other
 13 chapters (answer 37e), with gates G1–G4 passing on the AI checks' recommendation into the console backlog
@@ -20,8 +22,9 @@ WHAT IT NEVER TOUCHES. Chapter 8's outputs: the pilot's S0b assembly (runs/g10-m
 summary}.json — the full book's goes to runs/g10-math/maths/book/), the pilot seed and config under
 work/g10-math/pilot/, seed/generated/g10-math/* (the chapter's catalogue and bundles; new chapters write
 seed/generated/g10-math/chNN/), families/g10-math/*.json and widgets/g10-math/*.json (new chapters write
-their chNN/ subdirectory), runs/g10-math/g2.json and assembly-report.json, the scratch database
-ainext_pilot_g10_ch08. A run is never re-run on Chapter 8 except the step-level working checker (answer 30
+their chNN/ subdirectory), runs/g10-math/g2.json and assembly-report.json. The database the chapters load into is
+Samuel's local preview DB (FANOUT_DB, default ainext_pilot_g10_ch08): loads are add-only, Chapter 8's rows are never
+changed, and a pg_dump is taken before a chapter's first load. A run is never re-run on Chapter 8 except the step-level working checker (answer 30
 says "re-run on Chapter 8 too") and the one S6 run for lo:g10m8s1-1-1 the main session asked for.
 
 LAYOUT (all under services/extraction/; work/ is gitignored):
@@ -956,6 +959,97 @@ def prepare(rid: str) -> dict:
     return fn(run)
 
 
+# ================================================================ closing a chapter's lessons (deterministic, no model call)
+def chapter_lesson_runs(ch: int) -> tuple[list[Path], list[str], list[str]]:
+    """The chapter's saved S2–S4 runs in lesson order: (files, wf ids, lesson run ids not saved yet). A run that was re-collected
+    (recollect_lessons.py → runs/<book>/lessons/recollected/<wf_id>.json) is used in place of the saved one: it is what the
+    current collection made of the same agents' answers."""
+    pl = json.loads(PLAN_PATH.read_text())
+    saved = {r["id"]: r["saved"] for r in status()["runs"]}
+    files: list[Path] = []
+    ids: list[str] = []
+    missing: list[str] = []
+    for r in pl["runs"]:
+        if r["stage"] != "S2-S4" or r.get("chapter") != ch:
+            continue
+        s = saved.get(r["id"])
+        if not s:
+            missing.append(r["id"])
+            continue
+        name = Path(s).name
+        rec = RUNS / "lessons" / "recollected" / name
+        f = rec if rec.exists() else RUNS / "lessons" / name
+        if f not in files:
+            files.append(f)
+            ids.append(Path(name).stem)
+    return files, ids, missing
+
+
+def chapter_numbers(ch: int) -> dict:
+    """What closing a chapter produced, read from its files: the G2 record, the assembly report, the assembled bundle."""
+    t = ch_tag(ch)
+    g2 = json.loads((RUNS / "gates" / f"g2-{t}.json").read_text())
+    rep = json.loads((RUNS / "fanout" / f"assembly-{t}.json").read_text())
+    bundle = json.loads((HERE / "seed" / BOOK / f"g10m-c{ch:02d}.json").read_text())
+    qs = bundle["questions"]
+    held = collections.Counter(q.get("hold_reason") or "?" for q in qs if not q.get("verified"))
+    decisions = collections.Counter()
+    for d in g2["decisions"]:
+        x = d["decision"]
+        decisions["held" if x.startswith("no verdict — held") else "teaching" if x.startswith("no verdict needed")
+                  else "retyped" if x.startswith("typed again") else x.split()[0]] += 1
+    sc = rep["stem_carry"]
+    return {
+        "g2": {"summary": g2["summary"], "decisions": dict(decisions)},
+        "assembly": {"questions": len(qs), "live": sum(1 for q in qs if q.get("verified")), "held_by_reason": dict(held),
+                     "worked_example_entries": rep["counts"].get("worked_example_entries", 0),
+                     "excluded": len(rep["excluded"]), "objectives": rep["counts"].get("objectives", 0),
+                     "stand_ins": len(rep["stand_ins"]), "held_for_picture_revealing_answer": len(rep["held_reveals"]),
+                     "held_for_figure": len(rep["held_for_figure"]), "katex_errors": len(rep["katex_errors"]),
+                     "marker_keys_unwrapped": len(rep.get("marker_keys_unwrapped") or []),
+                     "stems_carried": len(sc["carried"]), "multipart_unresolved": len({u["ref"] for u in sc["unresolved"]}),
+                     "tiers": dict(collections.Counter(q["tier"] for q in qs))}}
+
+
+def close_chapter(ch: int, dry_run: bool = False) -> dict:
+    """A chapter whose lessons are all saved: G2 auto-pass (one record for the chapter) and the split finals, the assembly into the
+    book's seed paths (never the pilot's), the chapter config, the load-free validation, then the working check's two passes and the
+    S5 draft prepared and verified. Calls no model, loads nothing, launches nothing. Re-running changes nothing that was not changed
+    by an input (a human G2 verdict in runs/<book>/g2-chNN.json is kept; an auto verdict is recomputed from the runs)."""
+    import embed_workflow
+    t = ch_tag(ch)
+    files, ids, missing = chapter_lesson_runs(ch)
+    if not files and not missing:
+        raise NotReady(f"chapter {ch} has no lesson run in the plan")
+    if missing:
+        raise NotReady(f"chapter {ch}: lesson run(s) not saved yet: {', '.join(missing)}")
+    g2 = ["auto_pass_gates.py", "g2", BOOK, "--chapter", str(ch), *[x for f in files for x in ("--lesson-run", rel(f))],
+          "--into", rel(RUNS / f"g2-{t}.json"), "--split", "--maths", rel(MATHS_BOOK / "accepted.json"), "--run", ", ".join(ids)]
+    asm = ["assemble_lesson_bundle.py", "--book", BOOK, "--chapter", str(ch), "--report", rel(RUNS / "fanout" / f"assembly-{t}.json")]
+    val = ["load_seed.py", f"seed/{BOOK}/g10m-course.json", f"seed/{BOOK}/g10m-c{ch:02d}.json", "--validate-only"]
+    plan = {"chapter": ch, "lesson_runs": [rel(f) for f in files], "commands": [" ".join(c) for c in (g2, asm, val)],
+            "then": [f"fanout.py config {ch}", f"fanout.py prepare wcheck-{t}", f"fanout.py prepare s5-draft-{t}"]}
+    if dry_run:
+        return {**plan, "dry_run": True}
+    _py(*g2)
+    _py(*asm)
+    write_config(ch)
+    _py(*val)
+    pl = json.loads(PLAN_PATH.read_text())
+    prepared = {}
+    for rid in (f"wcheck-{t}", f"s5-draft-{t}"):
+        info = prepare(rid)
+        run = next(r for r in pl["runs"] if r["id"] == rid)
+        copies = [x for xs in (info.get("passes") or {}).values() for x in xs] or [info["script"]]
+        bad = [m for c in copies for m in embed_workflow.verify(HERE / c)]
+        if bad:
+            raise NotReady(f"{rid}: a prepared copy does not verify: {bad[:2]}")
+        prepared[rid] = {"copies": copies, "stage": run["stage"], "agents": run["agents"], "cost_usd": run["cost"],
+                         "meter": run["meter"], "save_to": run["save_to"], "after": run.get("after"),
+                         **{k: info[k] for k in ("solutions", "skipped", "free_flags") if k in info}}
+    return {**plan, "numbers": chapter_numbers(ch), "prepared": prepared}
+
+
 # ================================================================ per-chapter config, specs, status
 def write_config(ch: int) -> Path:
     """work/g10-math/fanout/books/chNN/g10-math.json: the committed config with the chapter's bundles only
@@ -1086,6 +1180,10 @@ def main(argv: list[str] | None = None) -> int:
                                                          "bundle, content file and the book export exist")
     p.add_argument("--write", action="store_true", help="with --final: write books/g10-math.json (otherwise a preview "
                                                         "under work/g10-math/fanout/books/final/)")
+    p = sub.add_parser("close-chapter", help="G2 auto-pass, assembly, validation, then prepare the chapter's working check "
+                                             "and S5 draft (no model call, no load)")
+    p.add_argument("chapter", type=int)
+    p.add_argument("--dry-run", action="store_true", help="list the lesson runs and the commands, run nothing")
     p = sub.add_parser("write-specs")
     p.add_argument("run", type=Path)
     p.add_argument("--book", type=Path, default=None,
@@ -1148,6 +1246,13 @@ def main(argv: list[str] | None = None) -> int:
                 print(rel(write_config(a.chapter)))
             else:
                 ap.error("config <chapter> or config --final")
+        except NotReady as e:
+            print(f"not ready: {e}")
+            return 3
+        return 0
+    if a.cmd == "close-chapter":
+        try:
+            print(json.dumps(close_chapter(a.chapter, a.dry_run), indent=1, ensure_ascii=False))
         except NotReady as e:
             print(f"not ready: {e}")
             return 3
