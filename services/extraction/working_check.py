@@ -8,6 +8,9 @@
     uv run working_check.py collect  --args A.json [--args A.part2.json] --runs R.json [R2.json …] \\
                                      --out runs/<book>/working-check/chNN.flags.json
     uv run working_check.py calibrate --truth runs/<book>/working-check/chNN.calibration.json --flags <flags.json>
+    uv run working_check.py collect  --args A.json --args B.json --runs <A run> <B run> --out chNN.g2rec.flags.json \\
+                                     --merge-into runs/<book>/working-check/chNN.flags.json         # a DELTA check, into the canonical file
+    uv run working_check.py merge    --base runs/<book>/working-check/chNN.flags.json --delta chNN.g2rec.flags.json
 
 WHY. The three-way check of S3 compares FINAL answers only (printed answer, EPUB solution, blind
 re-solve), so a typo INSIDE the book's working passes whenever the final answer is right — and the
@@ -76,6 +79,7 @@ the content: the content stays exactly as the book (and G2) has it until a human
 from __future__ import annotations
 
 import argparse
+import copy
 import hashlib
 import json
 import math
@@ -774,6 +778,55 @@ def collect(args_list: list[dict], runs: list[dict]) -> dict:
     }
 
 
+# ============================================================================ merge (a delta check into the chapter's canonical flags)
+class MergeError(Exception):
+    pass
+
+
+def merge(base: dict, delta: dict, delta_name: str | None = None) -> dict:
+    """The chapter's canonical flags file with a DELTA check merged in: `delta` is `collect`'s output for the solutions a chapter gained AFTER
+    its working check ran (an AI recommendation made questions live, a newer collection typed items again; `auto_pass_gates.py
+    g2-recommend-delta` lists them). The console reads only the canonical `chNN.flags.json`, so a delta kept beside it never reaches the backlog.
+
+    The two cover DISJOINT solutions, so nothing of `base` changes: its flags, verdict counts and runs stay as they are, and the delta's flags,
+    counts, checked ids, runs and problems are added to them (`solutions`, `verdicts`, `flags`, `flagged_solutions`, `checked_ids`, `unclear`,
+    `unchecked`, `problems`, `skipped`, `single_pass_ids`, `passes`, `runs`); `delta_runs` records where each delta came from. A solution both
+    cover is refused (it would be counted twice, and which reading stands is a person's call); merging the same delta again changes
+    nothing (it is recognised by its run ids). Nothing is corrected, no model is called."""
+    for k in ("format", "book", "chapter"):
+        if base.get(k) != delta.get(k):
+            raise MergeError(f"the delta is not the same {k} as the base ({delta.get(k)!r} against {base.get(k)!r})")
+    if base.get("format") != FORMAT:
+        raise MergeError(f"not a {FORMAT} file")
+    druns = [r for r in delta.get("runs") or [] if r]
+    if druns and any(sorted(d.get("runs") or []) == sorted(druns) for d in base.get("delta_runs") or []):
+        return copy.deepcopy(base)                                  # this delta is already in: nothing to do
+    if "checked_ids" not in base:
+        raise MergeError("the base has no checked_ids (a run that predates them): its coverage is unknown, so a delta cannot be proved disjoint")
+    seen = set(base["checked_ids"]) | {u["id"] for u in base.get("unchecked") or []}
+    both = sorted((set(delta.get("checked_ids") or []) | {u["id"] for u in delta.get("unchecked") or []}) & seen)
+    if both:
+        raise MergeError(f"{len(both)} solution(s) are in both the base and the delta ({', '.join(both[:4])}{' …' if len(both) > 4 else ''}): "
+                         "a delta covers only what the check never did")
+    out = copy.deepcopy(base)
+    out["flags"] = sorted([*(base.get("flags") or []), *(delta.get("flags") or [])], key=lambda f: (f["solution_id"], f["step"]))
+    out["flagged_solutions"] = len({f["solution_id"] for f in out["flags"]})
+    out["solutions"] = int(base.get("solutions") or 0) + int(delta.get("solutions") or 0)
+    out["verdicts"] = {k: int((base.get("verdicts") or {}).get(k, 0)) + int((delta.get("verdicts") or {}).get(k, 0))
+                       for k in ("consistent", "flagged", "unclear")}
+    for k in ("skipped", "unclear", "unchecked", "problems"):
+        out[k] = [*(base.get(k) or []), *[x for x in (delta.get(k) or []) if x not in (base.get(k) or [])]]
+    out["checked_ids"] = sorted({*base["checked_ids"], *(delta.get("checked_ids") or [])})
+    out["single_pass_ids"] = sorted({*(base.get("single_pass_ids") or []), *(delta.get("single_pass_ids") or [])})
+    out["passes"] = [*(base.get("passes") or []), *[p for p in (delta.get("passes") or []) if p not in (base.get("passes") or [])]]
+    out["runs"] = [*(base.get("runs") or []), *[r for r in druns if r not in (base.get("runs") or [])]]
+    out["delta_runs"] = [*(base.get("delta_runs") or []),
+                         {"file": delta_name, "runs": druns, "prompts_version": delta.get("prompts_version"), "passes": delta.get("passes"),
+                          "solutions": delta.get("solutions"), "flagged_solutions": delta.get("flagged_solutions"),
+                          "solution_ids": sorted(delta.get("checked_ids") or [])}]
+    return out
+
+
 # ============================================================================ calibrate
 def calibrate(truth: dict, rep: dict, mutants: dict | None = None) -> dict:
     """Score a flags file (`collect`'s output) against a calibration truth file (the classified flags of an earlier
@@ -864,6 +917,19 @@ def _book(name: str):
     return book_config.load_book(name)
 
 
+def _write_merged(base_path: Path, merged: dict, out: Path, dry_run: bool) -> int:
+    base = json.loads(base_path.read_text())
+    gained = len(merged["checked_ids"]) - len(base.get("checked_ids") or [])
+    flags_gained = len(merged["flags"]) - len(base.get("flags") or [])
+    same = merged == base
+    print(f"chapter {merged['chapter']}: " + ("already merged — nothing to do" if same else
+          f"{gained} solution(s) and {flags_gained} flag(s) merged into the canonical file: now {merged['solutions']} solution(s), "
+          f"{len(merged['flags'])} flag(s) on {merged['flagged_solutions']} solution(s)") + (" (dry run)" if dry_run else f" → {out}"))
+    if not dry_run and not same:
+        out.write_text(json.dumps(merged, ensure_ascii=False, indent=1) + "\n")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -895,7 +961,15 @@ def main(argv: list[str] | None = None) -> int:
     p = sub.add_parser("collect", help="merge the runs and the pre-check into the flags file")
     p.add_argument("--args", type=Path, action="append", required=True)
     p.add_argument("--runs", type=Path, nargs="+", required=True)
-    p.add_argument("--out", type=Path, required=True)
+    p.add_argument("--out", type=Path, help="the flags file (a DELTA check's, kept beside the canonical one, when --merge-into is given)")
+    p.add_argument("--merge-into", type=Path, metavar="CANONICAL",
+                   help="then merge this collection into the chapter's canonical runs/<book>/working-check/chNN.flags.json (a delta check: "
+                        "solutions the first check never covered), the only file the console reads")
+    p = sub.add_parser("merge", help="merge a delta check's flags file into the chapter's canonical flags file")
+    p.add_argument("--base", type=Path, required=True, help="the canonical runs/<book>/working-check/chNN.flags.json")
+    p.add_argument("--delta", type=Path, required=True, help="a delta check's flags file (collect --out)")
+    p.add_argument("--out", type=Path, help="default: the base, in place")
+    p.add_argument("--dry-run", action="store_true")
     p = sub.add_parser("calibrate", help="score a flags file against a calibration truth file (recall of the real defects)")
     p.add_argument("--truth", type=Path, required=True)
     p.add_argument("--flags", type=Path, required=True)
@@ -943,19 +1017,41 @@ def main(argv: list[str] | None = None) -> int:
                 print(embed_workflow.summary(embed_workflow.write(HERE / "runbook" / "working-check.workflow.js", args, e)))
         return 0
 
+    if a.cmd == "merge":
+        try:
+            merged = merge(json.loads(a.base.read_text()), json.loads(a.delta.read_text()), a.delta.name)
+        except MergeError as e:
+            print(f"merge: {e}", file=sys.stderr)
+            return 2
+        return _write_merged(a.base, merged, a.out or a.base, a.dry_run)
+
     if a.cmd == "collect":
+        if not a.out and not a.merge_into:
+            ap.error("collect needs --out (the flags file) and/or --merge-into (the canonical file)")
         args_list = [json.loads(p.read_text()) for p in a.args]
         runs = [json.loads(p.read_text()) for p in a.runs]
         rep = collect(args_list, runs)
-        a.out.parent.mkdir(parents=True, exist_ok=True)
-        a.out.write_text(json.dumps(rep, ensure_ascii=False, indent=1) + "\n")
+        if a.out:
+            a.out.parent.mkdir(parents=True, exist_ok=True)
+            a.out.write_text(json.dumps(rep, ensure_ascii=False, indent=1) + "\n")
         v = rep["verdicts"]
         print(f"chapter {rep['chapter']}: {rep['solutions']} solution(s) checked — {v['consistent']} consistent, "
               f"{v['flagged']} flagged, {v['unclear']} unclear, {len(rep['unchecked'])} unchecked; "
-              f"{len(rep['flags'])} flag(s) on {rep['flagged_solutions']} solution(s) → {a.out}")
+              f"{len(rep['flags'])} flag(s) on {rep['flagged_solutions']} solution(s)" + (f" → {a.out}" if a.out else ""))
         for p in rep["problems"]:
             print(f"  x {p}", file=sys.stderr)
-        return 1 if rep["problems"] or rep["unchecked"] else 0
+        bad = bool(rep["problems"] or rep["unchecked"])
+        if a.merge_into:
+            if bad:
+                print("merge: not merged — the collection has problems or unchecked solutions (re-run them first)", file=sys.stderr)
+                return 1
+            try:
+                merged = merge(json.loads(a.merge_into.read_text()), rep, a.out.name if a.out else None)
+            except MergeError as e:
+                print(f"merge: {e}", file=sys.stderr)
+                return 2
+            return _write_merged(a.merge_into, merged, a.merge_into, False)
+        return 1 if bad else 0
 
     if a.cmd == "calibrate":
         rep = calibrate(json.loads(a.truth.read_text()), json.loads(a.flags.read_text()),

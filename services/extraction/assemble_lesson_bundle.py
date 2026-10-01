@@ -794,7 +794,9 @@ def _norm(text: str | None, where: str, report: Report) -> str | None:
 # a command run KaTeX does not know is split after its LONGEST known prefix ("\therefore"+"y"), or, with no known
 # prefix, read as the control space it was ("\ m"). Deterministic: KaTeX (the app's own) decides what is known.
 KATEX_CHECK = HERE / "katex_check.mjs"
-_KNOWN: dict[str, bool] = {}
+# \textdollar is the one command this module writes itself (normalise_dollars): KaTeX 0.17 defines it in text mode only, so the probe below (`\name`
+# in running maths) would call it undefined and the re-spacing pass would split it into "\text dollar".
+_KNOWN: dict[str, bool] = {"textdollar": True}
 _ASSIGN_TOKEN = re.compile(r"([xy])_(?:\{([12])\}|([12]))\s*=")
 
 

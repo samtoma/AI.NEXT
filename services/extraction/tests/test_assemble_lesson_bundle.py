@@ -335,7 +335,8 @@ class EscapedDollarTest(unittest.TestCase):
     own split) stays as strict as it was and is what these tests ask."""
 
     ROWS = {"$\\text{\\$ 7.00}$": "$\\text{\\textdollar{} 7.00}$",
-            "$\\text{\\$1}&=\\text{R11.42}$": "$\\text{\\textdollar{}1}&=\\text{R11.42}$",
+            "$\\begin{aligned}\\text{\\$1}&=\\text{R11.42}\\\\\\text{\u20ac1}&=\\text{R12.97}\\end{aligned}$":
+                "$\\begin{aligned}\\text{\\textdollar{}1}&=\\text{R11.42}\\\\\\text{\u20ac1}&=\\text{R12.97}\\end{aligned}$",
             "( $\\$$ )": "( $\\text{\\textdollar}$ )",
             "costs $\\$\u00a0\\text{21\\ 900}$ now": "costs $\\text{\\textdollar}\u00a0\\text{21\\ 900}$ now",
             "gets $\\$\\text{12}$ .": "gets $\\text{\\textdollar}\\text{12}$ .",
@@ -358,7 +359,10 @@ class EscapedDollarTest(unittest.TestCase):
     def test_nothing_but_the_sign_changes(self):
         # undoing the rewrite gives the input back, so nothing else was added, dropped or moved
         for raw, want in self.ROWS.items():
-            back = want.replace("$\\text{\\textdollar}$", "\\$").replace("\\text{\\textdollar}", "\\$").replace("\\textdollar{}", "\\$")
+            if raw.startswith("the dollar"):          # prose: the lone sign became a maths segment of its own
+                back = want.replace("$\\text{\\textdollar}$", "\\$")
+            else:
+                back = want.replace("\\text{\\textdollar}", "\\$").replace("\\textdollar{}", "\\$")
             self.assertEqual(back, raw)
 
     def test_it_is_idempotent(self):
@@ -385,7 +389,7 @@ class EscapedDollarTest(unittest.TestCase):
     def test_a_bundle_and_a_lesson_content_file_are_cleaned_and_the_report_counts_it(self):
         rep = alb.Report()
         out = alb.respace_tree({"questions": [{"id": "q:1", "stem": "He pays $\\text{\\$ 8,49}$ and $\\$\\text{2}$ shipping.",
-                                               "solution": ["$\\text{\\$1}&=\\text{R11.42}$"], "source": "$\\$"}],
+                                               "solution": ["$\\begin{aligned}\\text{\\$1}&=\\text{R11.42}\\end{aligned}$"], "source": "$\\$"}],
                                "claims": [{"lo": "lo:x", "quote": "the American dollar ( $\\$$ )"}]}, rep)
         flat = json.dumps(out, ensure_ascii=False)
         q = out["questions"][0]
