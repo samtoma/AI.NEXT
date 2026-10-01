@@ -370,3 +370,22 @@ none in a file this work touched. `scripts/traceability.py --check` OK.
    book-picture stand-ins (37d), deterministic, $0.
 6. **Budget**: the top of the range passes $1.1k; the plan's rule is to stop and ask if the metered total does.
 7. **Spec Kit**: the working checker (answer 30) needs its FR/traceability lines (tech-writer).
+
+## PAUSED 2026-10-01 — Samuel: "be careful the usage will finish very soon, can you pause?"
+Everything stopped on purpose (usage about to run out). Nothing is lost; the auto-snapshot loop (no model use) keeps
+committing to the feature branch.
+- **Fan-out held** (Samuel dismissed "keep going until the whole book is done?" — wait for his instruction before
+  launching anything). Plan: `services/extraction/runs/g10-math/fanout-plan.json` + the "Fan-out plan" section above;
+  driver `uv run fanout.py status`.
+- **Two runs stopped mid-way — RESUME, don't relaunch** (completed agents come back cached, not re-billed):
+  - 002 working check, Chapter 8: `Workflow({scriptPath: "<worktree>/services/extraction/work/g10-math/packets/embedded/fanout/002-wcheck-ch08.workflow.js", resumeFromRunId: "wf_957393ec-d74"})`
+  - 003 S0b pass A, chapter group 1: `Workflow({scriptPath: "<worktree>/services/extraction/work/g10-math/packets/embedded/fanout/003-s0b-A-g1.workflow.js", resumeFromRunId: "wf_bfd09dab-0e6"})`
+  - Resume only from the SAME session (resume is same-session); from a new session, read each run's journal
+    (`~/.claude/projects/-Users-samueltoma-Documents-Claude-Projects-AI-Enthusiasts-PoC-Tutor-School-V1/5dd6b4ce-c4c4-4eab-b8f8-5465c092db24/subagents/workflows/<run id>/journal.jsonl`)
+    and hand-author a continuation over the items not yet done. Meter after completion with
+    `uv run meter_run.py record --book g10-math --stage SW|S0b --run <wf id> --resumed`.
+- **Decided, not built yet:** answer 40 (a teaching item may parent a family → fills 8.1 "Drawing figures from
+  coordinates"; run 001 is prepared); spec FRs for the whole-book outline (decision 59; code done).
+- **Agent model rule:** pass `model: "sonnet"` to every agent (Samuel, 2026-10-01).
+- **Local previews:** Grade 10 student :3010 / console :3011 (DB `ainext_pilot_g10_ch08`), hotfix v0.9.4 student
+  :3012 / console :3013 (DB `ainext_hotfix_v094`). The v0.9.4 hotfix still awaits Samuel's review before commit/PR.
