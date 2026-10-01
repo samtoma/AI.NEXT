@@ -6,13 +6,17 @@
   "templates": {
     "wt:g10m1s3-1-1:minus-root-real": "d8aecee70591729a07018a858e709dca2939e064c69bba9005a4f4b760da787c",
     "wt:g10m1s3-1-1:zero-top-vs-zero-bottom": "bd755c519d1e1de2e032e5b4dd3c4a9f2f1b1f4584fe9e3c08f94a1bf079e307",
-    "wt:g10m1s5-1-3:integers-between-negative-surds": "0b5d846b0ff42aaed0ae63558dad544c231d674eb08b876a1aad41e5c6ca8b7d",
-    "wt:g10m1s7-2-1:factor-by-tiles-positive": "e0fde866eecd84f4af61f8758f31a901c6caff6204cd5d6df28341317d9fb70d",
-    "wt:g10m1s7-2-1:factor-by-tiles-signs": "530fb66593623cb3c226c7114f8535d340886ff8c2a7b62d593257c579c59eb6"
+    "wt:g10m1s5-1-3:integers-between-negative-surds": "0b5d846b0ff42aaed0ae63558dad544c231d674eb08b876a1aad41e5c6ca8b7d"
   },
   "rejected_templates": {
     "wt:g10m1s6-1-2:x-plus-k-times-x-minus-4": [
       "not shipped: every mapping names a misconception S5 did not keep (mc:g10m1s6-1-2:x-term-subtracted-wrong-way-round), so no widget of it could say why an answer is wrong"
+    ],
+    "wt:g10m1s7-2-1:factor-by-tiles-positive": [
+      "not shipped: S5's verifier refused every mapping of it (middle-term-sign → mc:g10m1s7-2-1:factor-pair-middle-term-untested), so no widget of it could say why an answer is wrong"
+    ],
+    "wt:g10m1s7-2-1:factor-by-tiles-signs": [
+      "not shipped: S5's verifier refused every mapping of it (middle-term-sign → mc:g10m1s7-2-1:factor-pair-middle-term-untested), so no widget of it could say why an answer is wrong"
     ]
   },
   "questions": [
@@ -38,10 +42,6 @@
           ]
         },
         "diagnostics": [
-          {
-            "predicate": "sign-flipped",
-            "misconception_id": "mc:g10m1s3-1-1:minus-outside-root-read-as-inside"
-          },
           {
             "predicate": "extra-values",
             "misconception_id": "mc:g10m1s3-1-1:negative-under-root-called-real"
@@ -402,600 +402,22 @@
       "source_note": "Generated from template family wt:g10m1s5-1-3:integers-between-negative-surds.",
       "family": "wt:g10m1s5-1-3:integers-between-negative-surds",
       "template_sha": "0b5d846b0ff42aaed0ae63558dad544c231d674eb08b876a1aad41e5c6ca8b7d"
-    },
-    {
-      "id": "q:g10m1s7-2-1:w001",
-      "lo_id": "lo:g10m1s7-2-1",
-      "tier": "basic",
-      "question_type": "widget",
-      "stem": "Build a rectangle from algebra tiles whose area is $x^2 + 5x + 6$. The two sides of your rectangle are the factors: read them off to factorise the trinomial.",
-      "choices": {
-        "kind": "area_model",
-        "spec": {
-          "mode": "factor",
-          "a": 2,
-          "b": 3
-        },
-        "diagnostics": [],
-        "pending_review": [
-          {
-            "predicate": "middle-term-sign",
-            "misconception_id": "mc:g10m1s7-2-1:factor-pair-middle-term-untested",
-            "why": "The predicate fires when the constant is right (6) and the linear term is not. The factor pairs of 6 are (1,6), (2,3) and their negatives. (1,6) is the pair an untested-factor-pair student would reach for, but 6 exceeds |b| ≤ 4, so it cannot be built. The only buildable way to fire is the all-negative pair (−2,−3), giving x²−5x+6. That is a sign slip by a student who already had the right numbers, not an untested factor pair. The misconception cannot show up on this instrument, so false.",
-            "verifier_runs": [
-              "verify-ch01-wf_0b1937ba-165"
-            ]
-          }
-        ]
-      },
-      "correct_answer": "ok",
-      "canonical_solution": [
-        {
-          "step": 1,
-          "text_md": "The constant term and the middle term are both positive, so both numbers in the brackets are positive. List the pairs of positive whole numbers whose product is the constant term."
-        },
-        {
-          "step": 2,
-          "text_md": "Lay the $x^2$ tile. For one pair, run that many $x$ tiles along the top edge and the other number along the left edge. The block those two runs bound takes the unit tiles, and its count is the product of the pair, so the constant term is right."
-        },
-        {
-          "step": 3,
-          "text_md": "Count all the $x$ tiles: the two runs added together. If that total is not the middle coefficient, this pair is not the one, however well it fits the constant term. Try another pair."
-        },
-        {
-          "step": 4,
-          "text_md": "Keep the pair whose total is the middle coefficient. The sides of the rectangle are $(x + p)$ and $(x + q)$, and these are the factors."
-        },
-        {
-          "step": 5,
-          "text_md": "Check by multiplying out $(x + p)(x + q)$: it must give back the trinomial."
-        }
-      ],
-      "parent_question_id": "q:g10m1s7-2-1:ex1-8-1",
-      "source_note": "Generated from template family wt:g10m1s7-2-1:factor-by-tiles-positive.",
-      "family": "wt:g10m1s7-2-1:factor-by-tiles-positive",
-      "template_sha": "e0fde866eecd84f4af61f8758f31a901c6caff6204cd5d6df28341317d9fb70d"
-    },
-    {
-      "id": "q:g10m1s7-2-1:w002",
-      "lo_id": "lo:g10m1s7-2-1",
-      "tier": "basic",
-      "question_type": "widget",
-      "stem": "Build a rectangle from algebra tiles whose area is $x^2 + 7x + 12$. The two sides of your rectangle are the factors: read them off to factorise the trinomial.",
-      "choices": {
-        "kind": "area_model",
-        "spec": {
-          "mode": "factor",
-          "a": 3,
-          "b": 4
-        },
-        "diagnostics": [],
-        "pending_review": [
-          {
-            "predicate": "middle-term-sign",
-            "misconception_id": "mc:g10m1s7-2-1:factor-pair-middle-term-untested",
-            "why": "The factor pairs of 12 are (1,12), (2,6) and (3,4). The two wrong positive pairs, (1,12) and (2,6), need runs of 12 and 6, past the grid limit of 4, so the student cannot build them. The only buildable way to get constant 12 with a wrong linear term is (−3,−4) or (−4,−3), giving −7x. That is a sign error, not the untested-factor-pair misconception, so false.",
-            "verifier_runs": [
-              "verify-ch01-wf_0b1937ba-165"
-            ]
-          }
-        ]
-      },
-      "correct_answer": "ok",
-      "canonical_solution": [
-        {
-          "step": 1,
-          "text_md": "The constant term and the middle term are both positive, so both numbers in the brackets are positive. List the pairs of positive whole numbers whose product is the constant term."
-        },
-        {
-          "step": 2,
-          "text_md": "Lay the $x^2$ tile. For one pair, run that many $x$ tiles along the top edge and the other number along the left edge. The block those two runs bound takes the unit tiles, and its count is the product of the pair, so the constant term is right."
-        },
-        {
-          "step": 3,
-          "text_md": "Count all the $x$ tiles: the two runs added together. If that total is not the middle coefficient, this pair is not the one, however well it fits the constant term. Try another pair."
-        },
-        {
-          "step": 4,
-          "text_md": "Keep the pair whose total is the middle coefficient. The sides of the rectangle are $(x + p)$ and $(x + q)$, and these are the factors."
-        },
-        {
-          "step": 5,
-          "text_md": "Check by multiplying out $(x + p)(x + q)$: it must give back the trinomial."
-        }
-      ],
-      "parent_question_id": "q:g10m1s7-2-1:ex1-8-1",
-      "source_note": "Generated from template family wt:g10m1s7-2-1:factor-by-tiles-positive.",
-      "family": "wt:g10m1s7-2-1:factor-by-tiles-positive",
-      "template_sha": "e0fde866eecd84f4af61f8758f31a901c6caff6204cd5d6df28341317d9fb70d"
-    },
-    {
-      "id": "q:g10m1s7-2-1:w003",
-      "lo_id": "lo:g10m1s7-2-1",
-      "tier": "basic",
-      "question_type": "widget",
-      "stem": "Build a rectangle from algebra tiles whose area is $x^2 + 6x + 8$. The two sides of your rectangle are the factors: read them off to factorise the trinomial.",
-      "choices": {
-        "kind": "area_model",
-        "spec": {
-          "mode": "factor",
-          "a": 2,
-          "b": 4
-        },
-        "diagnostics": [],
-        "pending_review": [
-          {
-            "predicate": "middle-term-sign",
-            "misconception_id": "mc:g10m1s7-2-1:factor-pair-middle-term-untested",
-            "why": "The factor pairs of 8 are (1,8) and (2,4). The wrong pair (1,8) needs a run of 8, past the grid limit of 4, so it cannot be built. The only buildable way to fire is the negative pair (−2,−4) or (−4,−2), giving −6x. That is a sign slip, not an untested pair, so false.",
-            "verifier_runs": [
-              "verify-ch01-wf_0b1937ba-165"
-            ]
-          }
-        ]
-      },
-      "correct_answer": "ok",
-      "canonical_solution": [
-        {
-          "step": 1,
-          "text_md": "The constant term and the middle term are both positive, so both numbers in the brackets are positive. List the pairs of positive whole numbers whose product is the constant term."
-        },
-        {
-          "step": 2,
-          "text_md": "Lay the $x^2$ tile. For one pair, run that many $x$ tiles along the top edge and the other number along the left edge. The block those two runs bound takes the unit tiles, and its count is the product of the pair, so the constant term is right."
-        },
-        {
-          "step": 3,
-          "text_md": "Count all the $x$ tiles: the two runs added together. If that total is not the middle coefficient, this pair is not the one, however well it fits the constant term. Try another pair."
-        },
-        {
-          "step": 4,
-          "text_md": "Keep the pair whose total is the middle coefficient. The sides of the rectangle are $(x + p)$ and $(x + q)$, and these are the factors."
-        },
-        {
-          "step": 5,
-          "text_md": "Check by multiplying out $(x + p)(x + q)$: it must give back the trinomial."
-        }
-      ],
-      "parent_question_id": "q:g10m1s7-2-1:ex1-8-1",
-      "source_note": "Generated from template family wt:g10m1s7-2-1:factor-by-tiles-positive.",
-      "family": "wt:g10m1s7-2-1:factor-by-tiles-positive",
-      "template_sha": "e0fde866eecd84f4af61f8758f31a901c6caff6204cd5d6df28341317d9fb70d"
-    },
-    {
-      "id": "q:g10m1s7-2-1:w004",
-      "lo_id": "lo:g10m1s7-2-1",
-      "tier": "basic",
-      "question_type": "widget",
-      "stem": "Build a rectangle from algebra tiles whose area is $x^2 + 5x + 4$. The two sides of your rectangle are the factors: read them off to factorise the trinomial.",
-      "choices": {
-        "kind": "area_model",
-        "spec": {
-          "mode": "factor",
-          "a": 1,
-          "b": 4
-        },
-        "diagnostics": [
-          {
-            "predicate": "middle-term-sign",
-            "misconception_id": "mc:g10m1s7-2-1:factor-pair-middle-term-untested"
-          }
-        ]
-      },
-      "correct_answer": "ok",
-      "canonical_solution": [
-        {
-          "step": 1,
-          "text_md": "The constant term and the middle term are both positive, so both numbers in the brackets are positive. List the pairs of positive whole numbers whose product is the constant term."
-        },
-        {
-          "step": 2,
-          "text_md": "Lay the $x^2$ tile. For one pair, run that many $x$ tiles along the top edge and the other number along the left edge. The block those two runs bound takes the unit tiles, and its count is the product of the pair, so the constant term is right."
-        },
-        {
-          "step": 3,
-          "text_md": "Count all the $x$ tiles: the two runs added together. If that total is not the middle coefficient, this pair is not the one, however well it fits the constant term. Try another pair."
-        },
-        {
-          "step": 4,
-          "text_md": "Keep the pair whose total is the middle coefficient. The sides of the rectangle are $(x + p)$ and $(x + q)$, and these are the factors."
-        },
-        {
-          "step": 5,
-          "text_md": "Check by multiplying out $(x + p)(x + q)$: it must give back the trinomial."
-        }
-      ],
-      "parent_question_id": "q:g10m1s7-2-1:ex1-8-1",
-      "source_note": "Generated from template family wt:g10m1s7-2-1:factor-by-tiles-positive.",
-      "family": "wt:g10m1s7-2-1:factor-by-tiles-positive",
-      "template_sha": "e0fde866eecd84f4af61f8758f31a901c6caff6204cd5d6df28341317d9fb70d"
-    },
-    {
-      "id": "q:g10m1s7-2-1:w005",
-      "lo_id": "lo:g10m1s7-2-1",
-      "tier": "basic",
-      "question_type": "widget",
-      "stem": "Build a rectangle from algebra tiles whose area is $x^2 + 4x + 4$. The two sides of your rectangle are the factors: read them off to factorise the trinomial.",
-      "choices": {
-        "kind": "area_model",
-        "spec": {
-          "mode": "factor",
-          "a": 2,
-          "b": 2
-        },
-        "diagnostics": [
-          {
-            "predicate": "middle-term-sign",
-            "misconception_id": "mc:g10m1s7-2-1:factor-pair-middle-term-untested"
-          }
-        ]
-      },
-      "correct_answer": "ok",
-      "canonical_solution": [
-        {
-          "step": 1,
-          "text_md": "The constant term and the middle term are both positive, so both numbers in the brackets are positive. List the pairs of positive whole numbers whose product is the constant term."
-        },
-        {
-          "step": 2,
-          "text_md": "Lay the $x^2$ tile. For one pair, run that many $x$ tiles along the top edge and the other number along the left edge. The block those two runs bound takes the unit tiles, and its count is the product of the pair, so the constant term is right."
-        },
-        {
-          "step": 3,
-          "text_md": "Count all the $x$ tiles: the two runs added together. If that total is not the middle coefficient, this pair is not the one, however well it fits the constant term. Try another pair."
-        },
-        {
-          "step": 4,
-          "text_md": "Keep the pair whose total is the middle coefficient. The sides of the rectangle are $(x + p)$ and $(x + q)$, and these are the factors."
-        },
-        {
-          "step": 5,
-          "text_md": "Check by multiplying out $(x + p)(x + q)$: it must give back the trinomial."
-        }
-      ],
-      "parent_question_id": "q:g10m1s7-2-1:ex1-8-1",
-      "source_note": "Generated from template family wt:g10m1s7-2-1:factor-by-tiles-positive.",
-      "family": "wt:g10m1s7-2-1:factor-by-tiles-positive",
-      "template_sha": "e0fde866eecd84f4af61f8758f31a901c6caff6204cd5d6df28341317d9fb70d"
-    },
-    {
-      "id": "q:g10m1s7-2-1:w006",
-      "lo_id": "lo:g10m1s7-2-1",
-      "tier": "standard",
-      "question_type": "widget",
-      "stem": "Factorise $x^2 - 5x + 6$ by building it from algebra tiles. Some of your tiles will be negative (hatched and marked −). The two sides of your rectangle are the factors.",
-      "choices": {
-        "kind": "area_model",
-        "spec": {
-          "mode": "factor",
-          "a": -2,
-          "b": -3
-        },
-        "diagnostics": [
-          {
-            "predicate": "middle-term-sign",
-            "misconception_id": "mc:g10m1s7-2-1:factor-pair-middle-term-untested"
-          }
-        ]
-      },
-      "correct_answer": "ok",
-      "canonical_solution": [
-        {
-          "step": 1,
-          "text_md": "Look at the sign of the constant term. If it is positive, the two numbers have the same sign, and that sign is the sign of the middle term. If it is negative, the two numbers have opposite signs. List the factor pairs of the constant term with the signs this allows."
-        },
-        {
-          "step": 2,
-          "text_md": "Lay the $x^2$ tile and build one pair: the first number as a run of $x$ tiles along the top edge, the second along the left edge, negative tiles for a negative number. The unit block between the runs holds the product of the pair, so the constant term comes out right."
-        },
-        {
-          "step": 3,
-          "text_md": "Count the $x$ tiles net: a negative tile cancels a positive one. The net must equal the middle coefficient. If it does not, the pair multiplies to the right constant but is still wrong; the signs, or the pair itself, must change."
-        },
-        {
-          "step": 4,
-          "text_md": "Swap the signs or the pair until the net $x$ tiles and the constant term both match."
-        },
-        {
-          "step": 5,
-          "text_md": "Read off the sides, $(x + p)$ and $(x + q)$ with their signs, and check by multiplying out."
-        }
-      ],
-      "parent_question_id": "q:g10m1s7-2-1:ex1-8-10",
-      "source_note": "Generated from template family wt:g10m1s7-2-1:factor-by-tiles-signs.",
-      "family": "wt:g10m1s7-2-1:factor-by-tiles-signs",
-      "template_sha": "530fb66593623cb3c226c7114f8535d340886ff8c2a7b62d593257c579c59eb6"
-    },
-    {
-      "id": "q:g10m1s7-2-1:w007",
-      "lo_id": "lo:g10m1s7-2-1",
-      "tier": "standard",
-      "question_type": "widget",
-      "stem": "Factorise $x^2 - 7x + 12$ by building it from algebra tiles. Some of your tiles will be negative (hatched and marked −). The two sides of your rectangle are the factors.",
-      "choices": {
-        "kind": "area_model",
-        "spec": {
-          "mode": "factor",
-          "a": -3,
-          "b": -4
-        },
-        "diagnostics": [
-          {
-            "predicate": "middle-term-sign",
-            "misconception_id": "mc:g10m1s7-2-1:factor-pair-middle-term-untested"
-          }
-        ]
-      },
-      "correct_answer": "ok",
-      "canonical_solution": [
-        {
-          "step": 1,
-          "text_md": "Look at the sign of the constant term. If it is positive, the two numbers have the same sign, and that sign is the sign of the middle term. If it is negative, the two numbers have opposite signs. List the factor pairs of the constant term with the signs this allows."
-        },
-        {
-          "step": 2,
-          "text_md": "Lay the $x^2$ tile and build one pair: the first number as a run of $x$ tiles along the top edge, the second along the left edge, negative tiles for a negative number. The unit block between the runs holds the product of the pair, so the constant term comes out right."
-        },
-        {
-          "step": 3,
-          "text_md": "Count the $x$ tiles net: a negative tile cancels a positive one. The net must equal the middle coefficient. If it does not, the pair multiplies to the right constant but is still wrong; the signs, or the pair itself, must change."
-        },
-        {
-          "step": 4,
-          "text_md": "Swap the signs or the pair until the net $x$ tiles and the constant term both match."
-        },
-        {
-          "step": 5,
-          "text_md": "Read off the sides, $(x + p)$ and $(x + q)$ with their signs, and check by multiplying out."
-        }
-      ],
-      "parent_question_id": "q:g10m1s7-2-1:ex1-8-10",
-      "source_note": "Generated from template family wt:g10m1s7-2-1:factor-by-tiles-signs.",
-      "family": "wt:g10m1s7-2-1:factor-by-tiles-signs",
-      "template_sha": "530fb66593623cb3c226c7114f8535d340886ff8c2a7b62d593257c579c59eb6"
-    },
-    {
-      "id": "q:g10m1s7-2-1:w008",
-      "lo_id": "lo:g10m1s7-2-1",
-      "tier": "standard",
-      "question_type": "widget",
-      "stem": "Factorise $x^2 - x - 6$ by building it from algebra tiles. Some of your tiles will be negative (hatched and marked −). The two sides of your rectangle are the factors.",
-      "choices": {
-        "kind": "area_model",
-        "spec": {
-          "mode": "factor",
-          "a": -3,
-          "b": 2
-        },
-        "diagnostics": [
-          {
-            "predicate": "middle-term-sign",
-            "misconception_id": "mc:g10m1s7-2-1:factor-pair-middle-term-untested"
-          }
-        ]
-      },
-      "correct_answer": "ok",
-      "canonical_solution": [
-        {
-          "step": 1,
-          "text_md": "Look at the sign of the constant term. If it is positive, the two numbers have the same sign, and that sign is the sign of the middle term. If it is negative, the two numbers have opposite signs. List the factor pairs of the constant term with the signs this allows."
-        },
-        {
-          "step": 2,
-          "text_md": "Lay the $x^2$ tile and build one pair: the first number as a run of $x$ tiles along the top edge, the second along the left edge, negative tiles for a negative number. The unit block between the runs holds the product of the pair, so the constant term comes out right."
-        },
-        {
-          "step": 3,
-          "text_md": "Count the $x$ tiles net: a negative tile cancels a positive one. The net must equal the middle coefficient. If it does not, the pair multiplies to the right constant but is still wrong; the signs, or the pair itself, must change."
-        },
-        {
-          "step": 4,
-          "text_md": "Swap the signs or the pair until the net $x$ tiles and the constant term both match."
-        },
-        {
-          "step": 5,
-          "text_md": "Read off the sides, $(x + p)$ and $(x + q)$ with their signs, and check by multiplying out."
-        }
-      ],
-      "parent_question_id": "q:g10m1s7-2-1:ex1-8-10",
-      "source_note": "Generated from template family wt:g10m1s7-2-1:factor-by-tiles-signs.",
-      "family": "wt:g10m1s7-2-1:factor-by-tiles-signs",
-      "template_sha": "530fb66593623cb3c226c7114f8535d340886ff8c2a7b62d593257c579c59eb6"
-    },
-    {
-      "id": "q:g10m1s7-2-1:w009",
-      "lo_id": "lo:g10m1s7-2-1",
-      "tier": "standard",
-      "question_type": "widget",
-      "stem": "Factorise $x^2 - 2x - 8$ by building it from algebra tiles. Some of your tiles will be negative (hatched and marked −). The two sides of your rectangle are the factors.",
-      "choices": {
-        "kind": "area_model",
-        "spec": {
-          "mode": "factor",
-          "a": -4,
-          "b": 2
-        },
-        "diagnostics": [
-          {
-            "predicate": "middle-term-sign",
-            "misconception_id": "mc:g10m1s7-2-1:factor-pair-middle-term-untested"
-          }
-        ]
-      },
-      "correct_answer": "ok",
-      "canonical_solution": [
-        {
-          "step": 1,
-          "text_md": "Look at the sign of the constant term. If it is positive, the two numbers have the same sign, and that sign is the sign of the middle term. If it is negative, the two numbers have opposite signs. List the factor pairs of the constant term with the signs this allows."
-        },
-        {
-          "step": 2,
-          "text_md": "Lay the $x^2$ tile and build one pair: the first number as a run of $x$ tiles along the top edge, the second along the left edge, negative tiles for a negative number. The unit block between the runs holds the product of the pair, so the constant term comes out right."
-        },
-        {
-          "step": 3,
-          "text_md": "Count the $x$ tiles net: a negative tile cancels a positive one. The net must equal the middle coefficient. If it does not, the pair multiplies to the right constant but is still wrong; the signs, or the pair itself, must change."
-        },
-        {
-          "step": 4,
-          "text_md": "Swap the signs or the pair until the net $x$ tiles and the constant term both match."
-        },
-        {
-          "step": 5,
-          "text_md": "Read off the sides, $(x + p)$ and $(x + q)$ with their signs, and check by multiplying out."
-        }
-      ],
-      "parent_question_id": "q:g10m1s7-2-1:ex1-8-10",
-      "source_note": "Generated from template family wt:g10m1s7-2-1:factor-by-tiles-signs.",
-      "family": "wt:g10m1s7-2-1:factor-by-tiles-signs",
-      "template_sha": "530fb66593623cb3c226c7114f8535d340886ff8c2a7b62d593257c579c59eb6"
-    },
-    {
-      "id": "q:g10m1s7-2-1:w010",
-      "lo_id": "lo:g10m1s7-2-1",
-      "tier": "standard",
-      "question_type": "widget",
-      "stem": "Factorise $x^2 + x - 12$ by building it from algebra tiles. Some of your tiles will be negative (hatched and marked −). The two sides of your rectangle are the factors.",
-      "choices": {
-        "kind": "area_model",
-        "spec": {
-          "mode": "factor",
-          "a": 4,
-          "b": -3
-        },
-        "diagnostics": [
-          {
-            "predicate": "middle-term-sign",
-            "misconception_id": "mc:g10m1s7-2-1:factor-pair-middle-term-untested"
-          }
-        ]
-      },
-      "correct_answer": "ok",
-      "canonical_solution": [
-        {
-          "step": 1,
-          "text_md": "Look at the sign of the constant term. If it is positive, the two numbers have the same sign, and that sign is the sign of the middle term. If it is negative, the two numbers have opposite signs. List the factor pairs of the constant term with the signs this allows."
-        },
-        {
-          "step": 2,
-          "text_md": "Lay the $x^2$ tile and build one pair: the first number as a run of $x$ tiles along the top edge, the second along the left edge, negative tiles for a negative number. The unit block between the runs holds the product of the pair, so the constant term comes out right."
-        },
-        {
-          "step": 3,
-          "text_md": "Count the $x$ tiles net: a negative tile cancels a positive one. The net must equal the middle coefficient. If it does not, the pair multiplies to the right constant but is still wrong; the signs, or the pair itself, must change."
-        },
-        {
-          "step": 4,
-          "text_md": "Swap the signs or the pair until the net $x$ tiles and the constant term both match."
-        },
-        {
-          "step": 5,
-          "text_md": "Read off the sides, $(x + p)$ and $(x + q)$ with their signs, and check by multiplying out."
-        }
-      ],
-      "parent_question_id": "q:g10m1s7-2-1:ex1-8-10",
-      "source_note": "Generated from template family wt:g10m1s7-2-1:factor-by-tiles-signs.",
-      "family": "wt:g10m1s7-2-1:factor-by-tiles-signs",
-      "template_sha": "530fb66593623cb3c226c7114f8535d340886ff8c2a7b62d593257c579c59eb6"
-    },
-    {
-      "id": "q:g10m1s7-2-1:w011",
-      "lo_id": "lo:g10m1s7-2-1",
-      "tier": "standard",
-      "question_type": "widget",
-      "stem": "Factorise $x^2 - 3x - 4$ by building it from algebra tiles. Some of your tiles will be negative (hatched and marked −). The two sides of your rectangle are the factors.",
-      "choices": {
-        "kind": "area_model",
-        "spec": {
-          "mode": "factor",
-          "a": -4,
-          "b": 1
-        },
-        "diagnostics": [
-          {
-            "predicate": "middle-term-sign",
-            "misconception_id": "mc:g10m1s7-2-1:factor-pair-middle-term-untested"
-          }
-        ]
-      },
-      "correct_answer": "ok",
-      "canonical_solution": [
-        {
-          "step": 1,
-          "text_md": "Look at the sign of the constant term. If it is positive, the two numbers have the same sign, and that sign is the sign of the middle term. If it is negative, the two numbers have opposite signs. List the factor pairs of the constant term with the signs this allows."
-        },
-        {
-          "step": 2,
-          "text_md": "Lay the $x^2$ tile and build one pair: the first number as a run of $x$ tiles along the top edge, the second along the left edge, negative tiles for a negative number. The unit block between the runs holds the product of the pair, so the constant term comes out right."
-        },
-        {
-          "step": 3,
-          "text_md": "Count the $x$ tiles net: a negative tile cancels a positive one. The net must equal the middle coefficient. If it does not, the pair multiplies to the right constant but is still wrong; the signs, or the pair itself, must change."
-        },
-        {
-          "step": 4,
-          "text_md": "Swap the signs or the pair until the net $x$ tiles and the constant term both match."
-        },
-        {
-          "step": 5,
-          "text_md": "Read off the sides, $(x + p)$ and $(x + q)$ with their signs, and check by multiplying out."
-        }
-      ],
-      "parent_question_id": "q:g10m1s7-2-1:ex1-8-10",
-      "source_note": "Generated from template family wt:g10m1s7-2-1:factor-by-tiles-signs.",
-      "family": "wt:g10m1s7-2-1:factor-by-tiles-signs",
-      "template_sha": "530fb66593623cb3c226c7114f8535d340886ff8c2a7b62d593257c579c59eb6"
-    },
-    {
-      "id": "q:g10m1s7-2-1:w012",
-      "lo_id": "lo:g10m1s7-2-1",
-      "tier": "standard",
-      "question_type": "widget",
-      "stem": "Factorise $x^2 + 2x - 3$ by building it from algebra tiles. Some of your tiles will be negative (hatched and marked −). The two sides of your rectangle are the factors.",
-      "choices": {
-        "kind": "area_model",
-        "spec": {
-          "mode": "factor",
-          "a": 3,
-          "b": -1
-        },
-        "diagnostics": [
-          {
-            "predicate": "middle-term-sign",
-            "misconception_id": "mc:g10m1s7-2-1:factor-pair-middle-term-untested"
-          }
-        ]
-      },
-      "correct_answer": "ok",
-      "canonical_solution": [
-        {
-          "step": 1,
-          "text_md": "Look at the sign of the constant term. If it is positive, the two numbers have the same sign, and that sign is the sign of the middle term. If it is negative, the two numbers have opposite signs. List the factor pairs of the constant term with the signs this allows."
-        },
-        {
-          "step": 2,
-          "text_md": "Lay the $x^2$ tile and build one pair: the first number as a run of $x$ tiles along the top edge, the second along the left edge, negative tiles for a negative number. The unit block between the runs holds the product of the pair, so the constant term comes out right."
-        },
-        {
-          "step": 3,
-          "text_md": "Count the $x$ tiles net: a negative tile cancels a positive one. The net must equal the middle coefficient. If it does not, the pair multiplies to the right constant but is still wrong; the signs, or the pair itself, must change."
-        },
-        {
-          "step": 4,
-          "text_md": "Swap the signs or the pair until the net $x$ tiles and the constant term both match."
-        },
-        {
-          "step": 5,
-          "text_md": "Read off the sides, $(x + p)$ and $(x + q)$ with their signs, and check by multiplying out."
-        }
-      ],
-      "parent_question_id": "q:g10m1s7-2-1:ex1-8-10",
-      "source_note": "Generated from template family wt:g10m1s7-2-1:factor-by-tiles-signs.",
-      "family": "wt:g10m1s7-2-1:factor-by-tiles-signs",
-      "template_sha": "530fb66593623cb3c226c7114f8535d340886ff8c2a7b62d593257c579c59eb6"
     }
   ],
-  "misconceptions": [],
+  "misconceptions": [
+    {
+      "id": "mc:g10m1s3-1-1:fraction-judged-by-top",
+      "lo_id": "lo:g10m1s3-1-1",
+      "label": "Checks the top of a fraction instead of its denominator",
+      "description": "The student tests the top of the fraction for the problem, so either misses a zero denominator because the top looks fine, or treats a zero on top as if it were division by zero."
+    },
+    {
+      "id": "mc:g10m1s3-1-1:negative-under-root-called-real",
+      "lo_id": "lo:g10m1s3-1-1",
+      "label": "Treats the square root of a negative number as a real number",
+      "description": "The student calls a number such as $\\sqrt{-9}$ real, treating a square root with a minus sign under it like any other square root."
+    }
+  ],
   "mapping_review": {
     "rule": "decision 47",
     "verifier_runs": [
@@ -1008,5 +430,48 @@
       "dropped_by_review": 0
     },
     "reviews": []
+  },
+  "s5_reconciled": {
+    "runs": [
+      "final-ch01-wf_bf3bd255-7bf.json"
+    ],
+    "catalogue": "g10-math-misconceptions",
+    "refused_attachments_stripped": [
+      [
+        "lo:g10m1s3-1-1",
+        "S7",
+        "wt:g10m1s3-1-1:minus-root-real#sign-flipped",
+        "mc:g10m1s3-1-1:minus-outside-root-read-as-inside",
+        "Right sizes, wrong signs — a value marked as its negative, as when (x − a) = 0 is read as x = −a"
+      ],
+      [
+        "lo:g10m1s7-2-1",
+        "S7",
+        "wt:g10m1s7-2-1:factor-by-tiles-positive#middle-term-sign",
+        "mc:g10m1s7-2-1:factor-pair-middle-term-untested",
+        "The constant term is right and the linear (x) term is not — usually its sign"
+      ],
+      [
+        "lo:g10m1s7-2-1",
+        "S7",
+        "wt:g10m1s7-2-1:factor-by-tiles-signs#middle-term-sign",
+        "mc:g10m1s7-2-1:factor-pair-middle-term-untested",
+        "The constant term is right and the linear (x) term is not — usually its sign"
+      ]
+    ],
+    "widgets_left_out": [
+      "q:g10m1s7-2-1:w001",
+      "q:g10m1s7-2-1:w002",
+      "q:g10m1s7-2-1:w003",
+      "q:g10m1s7-2-1:w004",
+      "q:g10m1s7-2-1:w005",
+      "q:g10m1s7-2-1:w006",
+      "q:g10m1s7-2-1:w007",
+      "q:g10m1s7-2-1:w008",
+      "q:g10m1s7-2-1:w009",
+      "q:g10m1s7-2-1:w010",
+      "q:g10m1s7-2-1:w011",
+      "q:g10m1s7-2-1:w012"
+    ]
   }
 }

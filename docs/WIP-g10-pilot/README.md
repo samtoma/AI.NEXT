@@ -944,3 +944,74 @@ Chapters 1 and 2's working checks have already run (`working-check/ch01-A/B`, `c
 questions only**: `g2-recommend-collect … --ids-out runs/g10-math/g2rec/chNN.live-ids.json`, then `working_check.py args … --only <that file>`, pass A and pass B reshuffled (the exact
 commands are in the list `g2-recommend-args` prints). The newly live questions' working has not been step-checked until then. (For a chapter closed from now on, close-chapter prepares the recommendation copy beside the working check's and the S5 draft's, but it is not in the plan's run list, so
 nothing orders it: launch it first, apply it, re-run `close-chapter N`, and only then launch the working check.)
+
+## Chapter 3 re-collected, Chapter 4 re-closed: the key-vs-printed comparison read labels, sentences, ±, fractions and relations — 2026-10-01 (data-engineer)
+
+No Workflow launched, no model call, nothing loaded into any database. All commands from `services/extraction/`. `work/g10-math/packets/` was
+written only by `fanout.py close-chapter 3` (chapter 3's own copies); chapter 4's copies were NOT re-prepared (see "To do" below).
+
+**What was wrong.** G2's auto-pass excluded 24 of 93 items of g10m3s2-1 and, after Chapter 4 closed, 75 of its 88 owed items: almost all correct answers the
+typing check (`checkTyping`, `runbook/lesson.workflow.js`) could not match to what the book printed: `T4 = −28,1; T5 = …` for the key `-28,1; -33,1; -38,1`, `T1 = −3
+and T2 = 3` for `-3; 3`, a numeric key `\frac{9}{10}` ("not a number"), `There are 5 tricycles and 2 bicycles.` for `5; 2`, `b = ±8` for `-8; 8`, an interval or an
+inequality list whose print carries a number line's axis or the next part's answer, and "book_final is not in the book solution" on a solution that writes the same
+equation the other way round, `\text{and}` without its spaces, or a relation inside an aligned array. The rules are in `runbook/README.md` §3 (COLLECT-6, "A key against an
+answer the book printed another way") and pinned in `tests/test_lesson_collect6.py` (`ValueLabels`, `FractionKeys`, `ListsFromSentences`, `Relations`, `InTheBookSolution`:
+true matches AND the real mismatches: `a>0; a∈ℕ` for `a > 7; a ∈N`, `b < -4` for `b > 4`, another bracket, a bound, a constraint the key drops, an extra number, a reordered
+sequence, `8` for `±8`, `2πr` for `2r`). It only ever accepts a key whose every value, relation, sign and bracket is in the printed answer and which states nothing else.
+The Python side (`assemble_lesson_bundle.py`, `assemble_objectives.py`) compares no key with a printed answer; nothing there needed the rule.
+**Strictness, measured:** `NoSingleEditIsAccepted` generates every one-character change (a digit, a dropped sign, a relation or bracket turned over) of 20 true matches, 727
+keys, and none of the 707 edits is accepted; over Chapters 1–4's 228 accepted values / relation keys, 6,642 such edits (outside the repo, same function) produced 0 false accepts. No item of
+Chapters 1–4 GAINED a typing problem from this change.
+
+**Two findings that are not comparison bugs.**
+1. The app's NUMERIC grader reads a key "a/b" with `parseFloat` (`attempt-grading.ts`: `-5/3` is −5), so a correct "-5/3" or "-1.6667" is marked wrong. Chapter 3's
+   assembled bundle had TWO such live questions (ex3-1-16a `-5/3`, ex3-1-17a `-1/2`); the pipeline accepted `a/b` as numeric. A numeric key that is a fraction (`\frac{9}{10}`,
+   `-\frac{3}{8}`, `-5/3`) is now typed again as an `expression` (the app's marker marks 9/10, 0.9 and 18/20 for `\frac{9}{10}`, and `-1.6667` for `-5/3` is `wrong_form`),
+   key kept exactly, recorded (`typing_retyped`, rule `fraction-key`). No numeric `a/b` is left in any assembled seed bundle.
+2. Three more kinds the app's marker cannot read were held "unanswerable" at assembly, or would have been once their items stopped being excluded: `T_n=4n-1` typed
+   `expression` (its expression kind refuses an `=`; ten Chapter 3 questions), a list typed `surd`, an inequality list typed `equation` / `values` (the equation kind says "not an equation").
+   Each is typed again under the kind the app's own marker reads (checked in the tests against `app/src/lib/answer-marker.ts`): rules `kind-for-equation`, `kind-for-list`,
+   `kind-for-relations`; the key is never touched. Marker variables are told by name (`λ` → `\lambda`) and π is not a variable (the seam refused both: Ex4-5:8, 5, 13, 15).
+
+**Before → after** (the saved runs re-collected with `recollect_lessons.py`, replayed 14 / 9 / 12 / 10 / 9 / 8 / 11 agent calls with identical prompts; judge verdicts reused pair by pair):
+
+| | typing problems | G2 auto-pass: exclude / held / accept | questions (live) | held by reason |
+|---|---|---|---|---|
+| Chapter 3 (g10m3s2-1) | 24 → 5 | 24 / 3 / 0 → **5 / 6 / 0** (6 teaching, 12 typed again) | 58 (47) → **77 (71)** | answer_mismatch 3, unanswerable 8 → answer_mismatch 6, unanswerable **0** |
+| Chapter 4 (6 lessons) | 75 → 19 | 75 / 10 / 13 → **19 / 18 / 15** (23 typed again) | 210 (196) → **266 (247)** | answer_mismatch 8, unanswerable 4, unverified 2 → 16, 1, 2 |
+
+Chapter 3 re-collected: `runs/g10-math/lessons/recollected/wf_535efd2b-e80.json`; close-out `uv run fanout.py close-chapter 3`: G2 `runs/g10-math/g2-ch03.json`, record
+`runs/g10-math/gates/g2-ch03.json`, finals `runs/g10-math/lesson/g10m3s2-1.json`, `seed/g10-math/g10m-c03.json`, `seed/content/g10m3s2-1.json`. Its prepared copies CHANGED
+(more live questions): `068-s5-draft-ch03` (sha 648d9edd… → c862809e…), `069-wcheck-ch03` (26531ed2… → 7269d81b…), `069-wcheck-ch03-B` (64b32da8… → 5870a8fd…; 88 solutions, 38 agents a pass); a new
+`g2rec-ch03` copy came with the close-out (the other agent's G2 recommendation step). Chapter 4's six runs re-collected the same way (`runs/g10-math/lessons/recollected/wf_05e1710e-e45`,
+`wf_6b3d6321-e16`, `wf_54133f0c-3d5`, `wf_81e5c379-43e`, `wf_04e9155b-ab6`, `wf_c49a4f2c-b4b`); G2, assembly, config and the validate-only load were run exactly as `close-chapter 4` does them.
+
+**Idempotence: a re-run of the close-out does NOT recompute an auto G2 verdict for an item that is no longer owed** (`auto_pass_gates.g2_merge` only touches owed items, so an old
+auto "exclude" stays and the item stays excluded). The chapter's auto verdicts were dropped first (`g2-ch03.json` 24 → 0, `g2-ch04.json` 88 → 0 auto entries; there was no human verdict in either; backups
+are in the session scratchpad), then the close-out recomputed them. After that both close-outs are idempotent: seed, content, G2 file, finals and (chapter 3) the prepared copies are byte-identical on a
+second run (the gate record differs only in `decided_at`). **Any chapter re-collected later needs the same step** (drop the auto entries of its `g2-chNN.json`, keep a person's).
+
+**Still excluded, with the reason.** Chapter 3 (5): Ex3-1:3 and Ex3-1:18 (a letter of a list in the stem, 8 and 6 options: the "2–5 options" rule is the pipeline's — typing prompt, `choiceProblems`,
+`assemble_lesson_bundle.choice_option_problems` — not `schemas.py` (≥ 2 only) nor the database; the app's marker already marks a single-letter `expression` key, "C" correct and "c" incorrect, so typing them
+`expression` would work; not widened here), Ex3-1:14a and Ex3-2:3 (one option, "no common difference", a phrase answer; no marker kind reads a phrase), Ex3-2:12a (the book's own misprint: printed
+`77` for −77). Chapter 4 (19): Ex4-3:2, Ex4-7:4, 6m, 6n, 6o (options "infinitely many solutions" / "infinite solutions" named neither in the stem nor in the lesson), Ex4-3:4l and 4m ("x can be any real
+number …", a verbal answer beside a relation), Ex4-2:3e (the printed answer has a stray "b": a book typo the typing agent corrected), Ex4-4:19, 20, 21 ("book_final" is the agent's own wording of a
+solution that is glued, has a typo, or — Ex4-4:20 — names the wrong object; Ex4-4:21's solution also computes z = 26 and states 36), Ex4-5:15 (a flattened cube root the signature cannot order), Ex4-7:8a and 12t (the printed
+answer adds a restriction, `, b ≠ 0`, the key lacks), Ex4-6:4b and Ex4-7:11b (REAL mismatches: the key says 0 where the book says 7, `<` where it says `>`), Ex4-6:4c and 4d (the key drops `b ∈ R` / `a ∈ N`:
+for 4d that changes the answer set), Ex4-7:13 (the solution is a figure). Held for a person (G2 recommendation): the rest — mostly blind-solver disagreements where printed ≡ book; Ex4-6:1a (the book prints "x < −1 and
+x ≥ 6", which is empty), Ex4-7:9c ("−1 < x ≤ −2", empty) and Ex4-6:2j (key [1; 12], blind [−12; 1]) look like book errors. Ex3-2:10c, Ex3-2:17b and Ex4-5:5, 7, 9 are held only because their blind~book pair has no
+verdict yet (4 + 3 pairs: a judge call of a few cents would settle them; `recollect_lessons.py` reports them as needing a live judge and leaves them `unclear`).
+
+**Chapters 1 and 2 (loaded; NOT reloaded). If they were re-collected with today's script:** Chapter 1 — g10m1s8-1 Ex1-11:37b flips exclude → live-able (typing OK, agreed; kind `values` → `interval`, which the app's marker reads), Ex1-11:37a
+keeps its typing problem (a flattened fraction after `≠`; see below) but its kind would change too, Ex1-10:4c drops one of four problems and stays excluded; the other seven lessons change nothing (the four
+lesson-v7 runs cannot be re-collected with today's script, their prompts differ; run with the prompt check waived they change nothing either). Chapter 2 — 11 items now excluded for "numeric key \frac{…} is not a
+number" would pass typing and be typed `expression`: g10m2s2-1 Ex2-4:1q, 1r, 1s, 1z, 2a, 2b, 2l and g10m2s4-1 Ex2-4:3d, 3g, 3n, 3p (all `agreed` except 3p, `disputed`). Nothing else in either chapter changes.
+
+**Cosmetic, not mine to fix:** `auto_pass_gates.g2_retyped` writes the basis "the options were the typing agent's inventions, not the book's" for every rule but `kind-for-form`; for `fraction-key`, `kind-for-list`,
+`kind-for-relations` and `kind-for-equation` the gate record's reason text is wrong (the decision line itself is right). It wants a branch per rule.
+
+**Tests.** `uv run --with pytest python -m pytest -q tests/` (AINEXT_TEST_PG set): 34 tests added in `tests/test_lesson_collect6.py` (26 → 60), one assertion changed in `tests/test_lesson_collect2.py` (a numeric fraction is no longer "not a number" but typed again as an expression, and still does not read as a decimal printed answer); 24 of the 34 fail on this morning's script and the other 10 (the pins on what must stay refused) pass on both. Whole suite, one run: 1,060 passed, 1 skipped, **1 failed**: `test_dryrun_chapter::ChapterEightDryRun` — `psql` exit 3 on `db/migrations/017-rls-roles-and-policies.sql` in the scratch database, i.e. a collision on the cluster-wide roles with two other agents' pytest runs in this worktree at the same moment, not the collection (run alone afterwards, with the last edit in, `tests/test_dryrun_chapter.py`: 2 passed, both modes). Both Chapter 8 dry runs standalone, before the last edit (a comment and an escape; the test above covers them after it): `uv run dryrun_chapter.py --book g10-math --chapter 8` and `--mode inline`, exit 0, coverage GREEN (23 checks, 0 fail), drift guard GREEN for every course.
+
+**To do (main session).** (1) Chapter 4's `081-s5-draft-ch04`, `082-wcheck-ch04` and `g2rec-ch04` copies were prepared BEFORE this and hold the old live set: re-prepare them
+(`uv run fanout.py close-chapter 4`, now idempotent, or `fanout.py prepare wcheck-ch04 s5-draft-ch04`) before they launch, unless a run is already in flight on them. (2) Every lesson copy prepared before this
+change (chapters 5+) carries the old collection: re-collect its run afterwards (`recollect_lessons.py`, no model call), never re-run it. (3) The COLLECT_VERSION is still `collect-6` (same day, as for kind-for-form).
