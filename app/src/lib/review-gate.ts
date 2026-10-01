@@ -37,6 +37,7 @@
  */
 
 import type { GateRecord } from "./review-gate-records";
+import type { FlagWhere, WorkingFlagItemPayload } from "./review-gate-working";
 
 /* ------------------------------------------------------------------ kinds */
 
@@ -50,6 +51,7 @@ export const ITEM_KINDS = [
   "objective",
   "prerequisite_link",
   "figure_stand_in",
+  "working_flag",
   "gate_decision",
 ] as const;
 
@@ -69,6 +71,7 @@ export const KIND_LABEL: Record<ItemKind, string> = {
   objective: "Objective",
   prerequisite_link: "Prerequisite link",
   figure_stand_in: "Figure stand-in",
+  working_flag: "Working step flagged",
   gate_decision: "Gate decision",
 };
 
@@ -88,6 +91,8 @@ export const KIND_SCOPE: Record<ItemKind, string> = {
   prerequisite_link: "A claim that one objective must come before another.",
   figure_stand_in:
     "The book's own picture, shown to students until a native figure exists (answer 37d).",
+  working_flag:
+    "One book solution (a question's worked solution, or a worked example) in which the step-level checker flagged a step: a wrong value, a lost sign, a changed label, a last step that does not state the key — or a fault in the question text. Nothing was corrected; students still see it as the book prints it until a person decides.",
   gate_decision:
     "A pipeline gate (G1–G5) the fan-out passed on the AI checks' recommendation (answers 37c, 39). Samuel's to sign: anyone may read it, only his account decides it.",
 };
@@ -133,7 +138,40 @@ export function canDecide(kind: ItemKind, decision: Decision): { ok: true } | { 
       why: "A figure stand-in leaves the backlog when its native figure exists (answer 37d). Ask for the native figure, or reject the picture.",
     };
   }
+  if (kind === "working_flag" && decision === "reject") {
+    return {
+      ok: false,
+      why: "A flag is not served to students, so there is nothing to retire. Say “Fix needed” if the working is wrong, or “Not an error” if the checker is.",
+    };
+  }
   return { ok: true };
+}
+
+/**
+ * What a decision is CALLED on the buttons, per kind. The three stored values
+ * (`approve`, `fix_requested`, `reject`) are the gate's vocabulary for every
+ * kind; a flag from the step-level checker says what they mean for it:
+ *
+ *   approve        "Not an error"  — the checker is wrong, or the fix has landed:
+ *                                    nothing is left to fix. Recorded only.
+ *   fix_requested  "Fix needed"    — the working is wrong: on the fix list with the
+ *                                    reviewer's note and correction.
+ *   reject         (not offered)   — `canDecide` refuses it.
+ */
+export function decisionButton(kind: ItemKind, decision: Decision): string {
+  if (kind === "working_flag") {
+    return decision === "approve" ? "Not an error" : decision === "fix_requested" ? "Fix needed" : "Reject";
+  }
+  if (kind === "figure_stand_in" && decision === "fix_requested") return "Needs native figure";
+  return decision === "approve" ? "Approve" : decision === "fix_requested" ? "Needs fix" : "Reject";
+}
+
+/** The same, said of a decision already taken ("Marked not an error by Tamer"). */
+export function decisionLabel(kind: ItemKind, decision: Decision): string {
+  if (kind === "working_flag") {
+    return decision === "approve" ? "Marked not an error" : decision === "fix_requested" ? "Fix needed" : DECISION_LABEL[decision];
+  }
+  return DECISION_LABEL[decision];
 }
 
 /** What each decision does to students, per kind — said beside the buttons. */
@@ -143,6 +181,8 @@ export function decisionEffect(kind: ItemKind, decision: Decision): string {
   }
   if (decision === "approve") {
     switch (kind) {
+      case "working_flag":
+        return "Recorded: nothing is wrong here, or a fix has already landed. Nothing changes for students.";
       case "book_question":
       case "generated_question":
       case "widget_question":
@@ -171,6 +211,8 @@ export function decisionEffect(kind: ItemKind, decision: Decision): string {
       return "The claim is inactive for students (an active one is switched off).";
     case "figure_stand_in":
       return "Holds the question back from students until it has a figure.";
+    case "working_flag":
+      return "Not available for a flag.";
     default:
       return "Recorded and put on the export for the pipeline. Nothing changes for students automatically.";
   }
@@ -238,6 +280,8 @@ export const REASON_CODES = [
   "held_mapping",
   "ai_authored",
   "needs_native_figure",
+  "working_flagged",
+  "question_flagged",
   "no_human_review",
   "auto_passed",
 ] as const;
@@ -258,6 +302,8 @@ export const REASON_LABEL: Record<ReasonCode, string> = {
   held_mapping: "Held inactive: the AI verifier refused it",
   ai_authored: "AI-authored, awaiting human",
   needs_native_figure: "Needs native figure",
+  working_flagged: "Working step flagged",
+  question_flagged: "Question text flagged",
   no_human_review: "No human review recorded",
   auto_passed: "Auto-passed gate, for Samuel",
 };
@@ -439,7 +485,10 @@ export interface ContentRow {
 const AI_AUTHOR = /\b(UNREVIEWED|workflow|Sonnet|Haiku|Opus|LLM|agent|S5)\b/i;
 
 export function deriveContent(
-  kind: Exclude<ItemKind, "book_question" | "generated_question" | "widget_question" | "mapping_claim" | "gate_decision">,
+  kind: Exclude<
+    ItemKind,
+    "book_question" | "generated_question" | "widget_question" | "mapping_claim" | "working_flag" | "gate_decision"
+  >,
   row: ContentRow
 ): DerivedItem {
   let reasons: Reason[];
@@ -478,6 +527,66 @@ export function deriveContent(
     createdAt: iso(row.created_at),
     humanStamped,
     exposure,
+    reasons,
+    catalogueRank: row.catalogue_rank ?? 0,
+  };
+}
+
+/**
+ * One flagged solution, as the SQL reader and the flags file make it (queries):
+ * the solution's own row for its place in the book, and a fingerprint of its
+ * text with what the checker flagged in it.
+ */
+export interface WorkingFlagRow {
+  /** the solution id: "q:…" or "expl:…" */
+  ref: string;
+  course_id: string;
+  module_id: string | null;
+  catalogue_rank: number | null;
+  lo_id: string;
+  fingerprint: string;
+  /** when the solution's row was written — it sits in the queue with the content it is about */
+  created_at: string | Date;
+  flags: { step: number; where: FlagWhere }[];
+  promptsVersion: string | null;
+}
+
+const stepList = (steps: readonly number[]) => (steps.length === 1 ? `step ${steps[0]}` : `steps ${steps.join(", ")}`);
+
+/**
+ * A working step the checker flagged (FR-4411 → FR-4501): never a human stamp,
+ * never closed by a machine — only a person's decision, or content that has
+ * moved on. `where` says what the checker blames: a step (`working_flagged`),
+ * the question text (`question_flagged` — a stem misprint is not a working
+ * error), or a flag it cannot place (read as the working, said so).
+ */
+export function deriveWorkingFlag(row: WorkingFlagRow): DerivedItem {
+  const stepsOf = (pred: (w: FlagWhere) => boolean) =>
+    [...new Set(row.flags.filter((f) => pred(f.where)).map((f) => f.step))].sort((a, b) => a - b);
+  const working = stepsOf((w) => w !== "question");
+  const question = stepsOf((w) => w === "question");
+  const unsure = row.flags.some((f) => f.where === "unsure");
+  const by = row.promptsVersion ? ` (checker ${row.promptsVersion})` : "";
+  const reasons: Reason[] = [];
+  if (working.length > 0) {
+    reasons.push({
+      code: "working_flagged",
+      detail: `${stepList(working)} of the working${unsure ? "; the checker is unsure whether the step or the question is at fault" : ""}${by}`,
+    });
+  }
+  if (question.length > 0) {
+    reasons.push({ code: "question_flagged", detail: `read at ${stepList(question)}, but the checker puts the fault in the question text${by}` });
+  }
+  return {
+    kind: "working_flag",
+    ref: row.ref,
+    courseId: row.course_id,
+    moduleId: row.module_id,
+    loId: row.lo_id,
+    fingerprint: row.fingerprint,
+    createdAt: iso(row.created_at),
+    humanStamped: false,
+    exposure: "content",
     reasons,
     catalogueRank: row.catalogue_rank ?? 0,
   };
@@ -1004,6 +1113,8 @@ export interface ReviewItemPayload {
     rationale: string | null;
   };
   figure?: FigurePayload & { questionId: string | null };
+  /** a flagged solution: the numbered working with the checker's findings (`question` carries the card, for a question) */
+  workingFlag?: WorkingFlagItemPayload;
   gate?: GateRecord & {
     /** the book's S8 coverage audit on record, when there is one */
     coverage: { state: string; file: string; summary: { checks: number; hold: number; excepted: number; fail: number } | null; failing: string[] } | null;
