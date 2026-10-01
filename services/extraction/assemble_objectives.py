@@ -1930,7 +1930,11 @@ def lesson_runs(run: dict, g2: dict | None = None, draft: bool = False) -> dict[
                         raise StageError(f"{key}: an answer_only fix must leave the book's solution as it is")
                     changed = sorted(k for k, val in fields.items() if it.get(k) != val)
                     it.update(fields)
-                it["g2"] = {"verdict": v["verdict"], "by": by, "note": v.get("note"),
+                # an auto-passed verdict (answer 37c, auto_pass_gates.py g2) keeps its own signer and says it is
+                # auto: it is the AI checks' recommendation, never a human's review (migration 035)
+                auto = bool(v.get("auto") or g2.get("auto"))
+                it["g2"] = {"verdict": v["verdict"], "by": (v.get("by") if v.get("auto") else None) or by,
+                            "note": v.get("note"), **({"auto": True} if auto else {}),
                             # what a fix actually changed: S5 reads a disagreement as a student's error only
                             # where the book's answer stood (assemble_misconceptions.s5_args)
                             **({"changed": changed} if v.get("verdict") == "fix" else {}),

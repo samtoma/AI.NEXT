@@ -921,9 +921,9 @@ def status() -> dict:
         sha = json.loads(side.read_text())["generated_sha256"] if side.exists() else None
         f = saved.get(sha) if sha else None
         run_id = None
-        if f:
-            d = json.loads((HERE / f).read_text())
-            run_id = (d.get("result", d) or {}).get("run_id") or d.get("run_id")
+        if f:                                   # the save_to names carry the Workflow run id: …-wf_xxxxxxxx-xxx.json
+            m = re.search(r"(wf_[0-9a-f]{8}-[0-9a-f]{3})", Path(f).name)
+            run_id = m.group(1) if m else None
         rows.append({"order": r["order"], "id": r["id"], "prepared": copy.exists(), "saved": f,
                      "metered": bool(run_id and run_id in metered) if run_id else None})
     return {"runs": rows, "prepared": sum(x["prepared"] for x in rows), "saved": sum(bool(x["saved"]) for x in rows),
