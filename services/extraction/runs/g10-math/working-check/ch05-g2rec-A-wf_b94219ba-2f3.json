@@ -1,0 +1,104 @@
+{
+ "stage": "SW",
+ "workflow": "working-check",
+ "prompts_version": "sw-v3",
+ "book": "g10-math",
+ "chapter": 5,
+ "part": 1,
+ "parts": 1,
+ "batch": 5,
+ "agents": 2,
+ "effort": "high",
+ "model": "sonnet",
+ "pass_id": "A",
+ "order": "bundle",
+ "by_ref": {
+  "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/wcheck-ch05-g2rec-A",
+  "stage": "SW",
+  "shards_sha256": "b7696966ad4123aa52b308a8a311c5c6dbc52e8d82c3962432b7299dc7d5b6b4",
+  "files": 10
+ },
+ "embedded": {
+  "source": "runbook/working-check.workflow.js",
+  "source_sha256": "352a846920d85b4c224df7fb36d3f9a8ea598155cc2b4ee4ba9ef7e4791b6385",
+  "args_sha256": "301782390c06e723fa7378dc42dadc5029f57f29ef4824176a0cb0fac4009ef5",
+  "generated_sha256": "1252d75a155735f05fd294218911283fead19af8efe46ac104a4dcde1c6a5cff",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "solution_id": "q:g10m5s3-1-2:ex5-1-6",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "$\\tan\\alpha=\\frac{3}{4}$",
+     "kind": "copy",
+     "where": "working",
+     "expected": "tan α = 5/4 as in option C",
+     "why": "Working restates option C as 3/4, but option C reads tan α = 5/4."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m5s3-1-2:ex5-8-1a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m5s3-1-2:ex5-8-1b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m5s5-1-1:ex5-2-1v",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m5s5-1-2:ex5-2-1y",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m5s6-1-1:ex5-3-5b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m5s7-1-3:ex5-6-1g",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m5s7-1-3:ex5-6-1k",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m5s7-1-3:ex5-6-1m",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m5s3-1-2:ex5-1-4",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  }
+ ],
+ "problems": [],
+ "meter": {
+  "stage": "SW",
+  "record": "uv run meter_run.py record --book g10-math --stage SW --run <runId>"
+ }
+}

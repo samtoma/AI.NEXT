@@ -830,7 +830,15 @@ class Blocks:
             if "workstep" in classes(x):
                 sh = x.find(NS + "h2")
                 cont = self.content(x, skip={sh} if sh is not None else set())
-                steps.append({"title": text_of(sh, math_token=False) if sh is not None else None, **cont})
+                # The step TITLE keeps its maths exactly as the step text does: ⟦m:<md5>⟧ in `title`, the
+                # md5s in `title_maths`, in order, repeats included. The book's step headings are often
+                # sentences with inline equations ("Extend DE to F so that EF = DE and join C to F"); with
+                # text_of(math_token=False) the images were dropped and a student read "Extend to so that
+                # and join" (138 of 571 step titles in Grade 10, 209 equation images). `maths`/`text` stay
+                # the step BODY's alone (the heading is skipped above), so nothing already reading them moves.
+                tc = self.content(sh) if sh is not None else None
+                steps.append({"title": tc["text"] if tc is not None else None,
+                              "title_maths": tc["maths"] if tc is not None else [], **cont})
             else:
                 loose.append(x)
         loose_c = None
