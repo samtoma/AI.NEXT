@@ -966,17 +966,22 @@ def h_s6_author(A: Adv) -> bool:
     A.count(records=len(A.result.get("records") or []), families=len(specs))
     cfg = A.fl.call("chapter config", lambda: F.write_config(A.ch)) or K.cfg
     targets = [K.fam / n for n, _ in specs]
+    present = [t for t in targets if t.exists() or (K.fam / f"_held--{t.name}").exists()]
+    others = sorted(K.fam.glob("*.json")) if K.fam.exists() else []
     if not specs:
         A.fl.skipped("write-specs", "the author wrote no family (every gap infeasible)")
+    elif len(present) == len(targets) and not A.opts.redo:
+        A.fl.skipped("write-specs", f"all {len(targets)} spec(s) already in {A.P.rel(K.fam)}")
+    elif present:                      # the directory was worked on by hand (a spec renamed, re-authored, held aside): never resurrect one
+        A.fl.skipped("write-specs", f"{len(present)} of {len(targets)} spec(s) are already in {A.P.rel(K.fam)}")
+        A.warn(f"{len(targets) - len(present)} of this run's {len(targets)} spec(s) are not in {A.P.rel(K.fam)} (e.g. "
+               f"{next(t.name for t in targets if t not in present)}): moved, renamed or re-authored by hand — not written again")
+    elif others:
+        raise StepFailed("write-specs", f"{A.P.rel(K.fam)} already holds {len(others)} spec(s) that are not this run's (e.g. {others[0].name}): "
+                                        "never written over, and which of them stands is not for advance to say — settle the directory, "
+                                        "then advance again")
     else:
-        have = [t for t in targets if t.exists() or (K.fam / f"_held--{t.name}").exists()]
-        if len(have) == len(targets) and not A.opts.redo:
-            A.fl.skipped("write-specs", f"all {len(targets)} spec(s) already in {A.P.rel(K.fam)}")
-        elif have:
-            raise StepFailed("write-specs", f"{len(have)} of {len(targets)} spec(s) already exist (e.g. {have[0].name}): "
-                                            "never overwritten — settle the directory, then advance again")
-        else:
-            A.fl.call("write-specs", lambda: _quiet(F.write_specs, A.saved, K.fam, cfg), note=f"{len(targets)} spec(s)", dirty=True)
+        A.fl.call("write-specs", lambda: _quiet(F.write_specs, A.saved, K.fam, cfg), note=f"{len(targets)} spec(s)", dirty=True)
     files = sorted(K.fam.glob("*.json")) if K.fam.exists() else []
     if not files and not A.fl.dry:
         A.note("no family spec: S6 grading will be skipped")

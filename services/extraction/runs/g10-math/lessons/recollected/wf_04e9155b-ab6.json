@@ -6,9 +6,9 @@
  "book": "g10-math",
  "embedded": {
   "source": "runbook/lesson.workflow.js",
-  "source_sha256": "91fc950293cc74b749f1e14283ed3c498f1653fa938429f70b134fe1bd76a68a",
+  "source_sha256": "538070abbf043296f0e037b21ed3592d9a02c9fc37b789ca52a7ba1a63ab509e",
   "args_sha256": "26421788857bd512c564a5e5d46a60d67ea4c63a29af142e5c5f9fe7d98c42f9",
-  "generated_sha256": "7b05a61190193a62f27ef35e5da601233d41a4c1f35f7569806eca5a4196f7a8",
+  "generated_sha256": "4fbcbd4af081919db684e44bd2f884864eb9c904c809c7e0d1c16dbd68f7054b",
   "generator": "services/extraction/embed_workflow.py v1"
  },
  "lessons": [
@@ -620,13 +620,12 @@
      "answer": "r=\\pm\\sqrt{\\frac{V}{\\pi h}}",
      "choices": null,
      "marker": {
-      "kind": "surd",
+      "kind": "equation",
       "key": "r=\\pm\\sqrt{\\frac{V}{\\pi h}}",
       "form": null,
       "variables": [
        "r",
        "V",
-       "π",
        "h"
       ],
       "tolerance": null
@@ -676,6 +675,14 @@
      "printed_form_defect": null,
      "form_overridden": null,
      "form_unsupported": null,
+     "typing_retyped": {
+      "from": "expression (surd)",
+      "as": "expression, kind equation (was surd)",
+      "rule": "kind-for-equation",
+      "because": [
+       "the key has an equals sign, which kind \"surd\" cannot read"
+      ]
+     },
      "blocked_on_figure": false
     },
     {
@@ -693,7 +700,7 @@
       "variables": [
        "h",
        "E",
-       "λ",
+       "\\lambda",
        "c"
       ],
       "tolerance": null
@@ -758,7 +765,6 @@
       "variables": [
        "h",
        "A",
-       "π",
        "r"
       ],
       "tolerance": null
@@ -823,7 +829,7 @@
       "key": "\\lambda=\\frac{D}{tf}",
       "form": null,
       "variables": [
-       "λ",
+       "\\lambda",
        "D",
        "t",
        "f"
@@ -1016,7 +1022,7 @@
      "answer": "b=\\pm\\sqrt{c^{2}-a^{2}}",
      "choices": null,
      "marker": {
-      "kind": "surd",
+      "kind": "equation",
       "key": "b=\\pm\\sqrt{c^{2}-a^{2}}",
       "form": null,
       "variables": [
@@ -1070,6 +1076,14 @@
      "printed_form_defect": null,
      "form_overridden": null,
      "form_unsupported": null,
+     "typing_retyped": {
+      "from": "expression (surd)",
+      "as": "expression, kind equation (was surd)",
+      "rule": "kind-for-equation",
+      "because": [
+       "the key has an equals sign, which kind \"surd\" cannot read"
+      ]
+     },
      "blocked_on_figure": false
     },
     {
@@ -1145,13 +1159,12 @@
      "answer": "r=\\pm\\sqrt{\\frac{A-\\pi R^{2}}{\\pi}}",
      "choices": null,
      "marker": {
-      "kind": "surd",
+      "kind": "equation",
       "key": "r=\\pm\\sqrt{\\frac{A-\\pi R^{2}}{\\pi}}",
       "form": null,
       "variables": [
        "r",
        "A",
-       "π",
        "R"
       ],
       "tolerance": null
@@ -1200,6 +1213,14 @@
      "printed_form_defect": null,
      "form_overridden": null,
      "form_unsupported": null,
+     "typing_retyped": {
+      "from": "expression (surd)",
+      "as": "expression, kind equation (was surd)",
+      "rule": "kind-for-equation",
+      "because": [
+       "the key has an equals sign, which kind \"surd\" cannot read"
+      ]
+     },
      "blocked_on_figure": false
     },
     {
@@ -1276,13 +1297,12 @@
      "answer": "r=\\sqrt[3]{\\frac{3V}{4\\pi}}",
      "choices": null,
      "marker": {
-      "kind": "surd",
+      "kind": "equation",
       "key": "r=\\sqrt[3]{\\frac{3V}{4\\pi}}",
       "form": null,
       "variables": [
        "r",
-       "V",
-       "π"
+       "V"
       ],
       "tolerance": null
      },
@@ -1336,6 +1356,14 @@
      "printed_form_defect": null,
      "form_overridden": null,
      "form_unsupported": null,
+     "typing_retyped": {
+      "from": "expression (surd)",
+      "as": "expression, kind equation (was surd)",
+      "rule": "kind-for-equation",
+      "because": [
+       "the key has an equals sign, which kind \"surd\" cannot read"
+      ]
+     },
      "blocked_on_figure": false
     },
     {
@@ -2652,6 +2680,42 @@
     "forms_the_marker_cannot_check": [],
     "retyped": [
      {
+      "ref": "Ex4-5:5",
+      "as": "expression, kind equation (was surd)",
+      "rule": "kind-for-equation",
+      "key": "r=\\pm\\sqrt{\\frac{V}{\\pi h}}",
+      "because": [
+       "the key has an equals sign, which kind \"surd\" cannot read"
+      ]
+     },
+     {
+      "ref": "Ex4-5:11",
+      "as": "expression, kind equation (was surd)",
+      "rule": "kind-for-equation",
+      "key": "b=\\pm\\sqrt{c^{2}-a^{2}}",
+      "because": [
+       "the key has an equals sign, which kind \"surd\" cannot read"
+      ]
+     },
+     {
+      "ref": "Ex4-5:13",
+      "as": "expression, kind equation (was surd)",
+      "rule": "kind-for-equation",
+      "key": "r=\\pm\\sqrt{\\frac{A-\\pi R^{2}}{\\pi}}",
+      "because": [
+       "the key has an equals sign, which kind \"surd\" cannot read"
+      ]
+     },
+     {
+      "ref": "Ex4-5:15",
+      "as": "expression, kind equation (was surd)",
+      "rule": "kind-for-equation",
+      "key": "r=\\sqrt[3]{\\frac{3V}{4\\pi}}",
+      "because": [
+       "the key has an equals sign, which kind \"surd\" cannot read"
+      ]
+     },
+     {
       "ref": "Ex4-7:8h",
       "as": "expression (an exact fraction)",
       "rule": "fraction-key",
@@ -2799,9 +2863,9 @@
   "journal": "/Users/samueltoma/.claude/projects/-Users-samueltoma-Documents-Claude-Projects-AI-Enthusiasts-PoC-Tutor-School-V1/5dd6b4ce-c4c4-4eab-b8f8-5465c092db24/subagents/workflows/wf_04e9155b-ab6/journal.jsonl",
   "script": {
    "source": "runbook/lesson.workflow.js",
-   "source_sha256": "91fc950293cc74b749f1e14283ed3c498f1653fa938429f70b134fe1bd76a68a",
+   "source_sha256": "538070abbf043296f0e037b21ed3592d9a02c9fc37b789ca52a7ba1a63ab509e",
    "args_sha256": "26421788857bd512c564a5e5d46a60d67ea4c63a29af142e5c5f9fe7d98c42f9",
-   "generated_sha256": "7b05a61190193a62f27ef35e5da601233d41a4c1f35f7569806eca5a4196f7a8"
+   "generated_sha256": "4fbcbd4af081919db684e44bd2f884864eb9c904c809c7e0d1c16dbd68f7054b"
   },
   "collect_version": "collect-6",
   "prompts_version": "lesson-v8",

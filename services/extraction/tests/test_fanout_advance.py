@@ -814,7 +814,7 @@ class S6(Base):
         self.assertEqual(rep["counts"]["check"], "2 spec(s) → 20 item(s); per family: alpha=10, beta=10")
         self.assertEqual([p["id"] for p in rep["prepared"]], ["s6-grade-ch04"])
 
-    def test_specs_already_written_are_not_written_again_and_a_partial_directory_is_a_failure(self):
+    def test_specs_already_written_are_not_written_again_and_a_hand_edited_directory_is_not_resurrected(self):
         b = self.box
         rc, rep, wf = b.go("s6-author-ch04", result=self.result)
         self.assertEqual(rc, 0, rep)
@@ -822,14 +822,25 @@ class S6(Base):
         rc, rep2 = b.adv("s6-author-ch04", wf, task)
         self.assertEqual(rc, 0, rep2)
         self.assertIn(("write-specs", "skipped"), b.steps(rep2))
-        (b.here / "families" / BOOK / "ch04" / "g10m4s2-1-2--beta.json").rename(b.here / "families" / BOOK / "ch04" / "_held--g10m4s2-1-2--beta.json")
+        fam = b.here / "families" / BOOK / "ch04"
+        (fam / "g10m4s2-1-2--beta.json").rename(fam / "_held--g10m4s2-1-2--beta.json")
         rc, rep3 = b.adv("s6-author-ch04", wf, task)
         self.assertEqual(rc, 0, "a spec held aside is not rewritten")
-        (b.here / "families" / BOOK / "ch04" / "_held--g10m4s2-1-2--beta.json").unlink()
+        self.assertEqual(rep3["warnings"], [])
+        (fam / "_held--g10m4s2-1-2--beta.json").rename(fam / "g10m4s2-1-2--beta-revised.json")     # re-authored under another name
         rc, rep4 = b.adv("s6-author-ch04", wf, task)
+        self.assertEqual(rc, 0, rep4)
+        self.assertIn("1 of this run's 2 spec(s) are not in", rep4["warnings"][0])
+        self.assertFalse((fam / "g10m4s2-1-2--beta.json").exists(), "never resurrected")
+
+    def test_a_directory_holding_other_specs_and_none_of_this_runs_is_a_failure_not_a_guess(self):
+        b = self.box
+        b.put("families/g10-math/ch04/g10m4s9-9-9--old.json", {})
+        rc, rep, wf = b.go("s6-author-ch04", result=self.result)
         self.assertEqual(rc, 1)
-        self.assertEqual(rep4["failure"]["step"], "write-specs")
-        self.assertIn("never overwritten", rep4["failure"]["detail"])
+        self.assertEqual(rep["failure"]["step"], "write-specs")
+        self.assertIn("not this run's", rep["failure"]["detail"])
+        self.assertEqual([p.name for p in (b.here / "families" / BOOK / "ch04").glob("*.json")], ["g10m4s9-9-9--old.json"])
 
     def test_an_author_that_wrote_no_family_is_a_note_and_nothing_is_checked(self):
         b = self.box

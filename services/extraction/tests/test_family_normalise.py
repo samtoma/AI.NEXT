@@ -156,7 +156,6 @@ class SlugCollisions(unittest.TestCase):
     def test_the_later_family_is_renamed_and_the_directory_then_passes_the_check(self):
         a, b = self.put("which-irrational"), self.put("which-rational")
         self.assertTrue(FS.load_dir(self.dir)[1], "the collision is real")
-        author_items = items(json.loads(b.read_text()))
         lines, stuck = self.run_n([a, b])
         self.assertEqual(stuck, [])
         self.assertEqual(FS.load_dir(self.dir)[1], [])
@@ -167,14 +166,16 @@ class SlugCollisions(unittest.TestCase):
                             "tpl:g10m4s2-1-1:rational-which (file renamed to match)" in l for l in lines))
         out = json.loads((self.dir / "g10m4s2-1-1--rational-which.json").read_text())
         self.assertIn(N.MARK, out["notes"])
-        self.assertIn("share", out["notes"].replace("were shared", "share"))
+        self.assertIn("were shared with a sibling family on the same objective", out["notes"])
         self.assertIn("which-irrational", out["notes"], "the notes name the sibling it collided with")
         # nothing else changed: the same family under another id
         before = self.spec("which-rational")
         self.assertEqual({k: v for k, v in out.items() if k not in ("id", "notes")},
                          {k: v for k, v in before.items() if k not in ("id", "notes")})
-        gen = [{k: q[k] for k in ("stem", "canonical_solution", "correct_answer")} for q in items(out)]
-        self.assertEqual(gen, [{k: q[k] for k in ("stem", "canonical_solution", "correct_answer")} for q in author_items])
+        # the spec is the same family; its sampled instances are NOT the same ones (each family draws from a stream
+        # keyed on its id), which is exactly why a family whose items are loaded is never renamed
+        new_ids = {q["id"] for q in G.run_specs([FS.load_spec(out)], 3, SEED)[0]}
+        self.assertTrue(new_ids and all(i.startswith("q:g10m4s2-1-1:g00") and i.endswith("-ration") for i in new_ids), new_ids)
 
     def test_three_in_a_group_each_get_their_own_six_letters(self):
         fs = [self.put(s, "g10m3s8-1-2") for s in ("divide-common-factor-squares", "divide-reversed-squares",

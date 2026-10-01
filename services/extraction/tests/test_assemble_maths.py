@@ -380,6 +380,54 @@ class Assemble(unittest.TestCase):
         self.assertNotIn("&amp;", acc[h]["latex"])
         self.assertTrue(acc[h]["latex"].startswith("\\begin{align*}"))
 
+    def test_a_reading_with_lt_or_gt_is_proven_by_the_hash_even_where_the_pdf_check_would_contradict_it(self):
+        """S0b (Chapter 6): the book hashed `>` as `&gt;` and `<` as `&lt;`. Passes A and B both read
+        `y>0` correctly, but the page's text layer is two pages away (a worked example's answer), so the
+        cross-check said `contradicted` and queued it. The hash is exact, so it is accepted by hash, stored
+        with the real character (a pass that copied the entity is stored with `>` too), and the
+        cross-check stays a note on it, as it is for every hash acceptance."""
+        rng = "\\left\\{y:y\\in\\mathbb{R},y>0\\right\\}"
+        h = "8617998c96aa092f2317601fdb7cdd2a"
+        runA = {"pass": "A", "results": [{"md5": h, "latex": rng}]}
+        runB = {"pass": "B", "results": [{"md5": h, "latex": rng.replace(">", "&gt;")}]}
+        res = self.run_assemble({h: ("printed", [1])}, [runA, runB])
+        self.assertEqual(res["queue"], [])
+        self.assertEqual((res["accepted"][h]["accepted_by"], res["accepted"][h]["found_by"]), ("hash", "A"))
+        self.assertEqual(res["accepted"][h]["latex"], rng)
+        self.assertEqual(res["accepted"][h]["cross_check"], "contradicted", "the PDF window misses it; the hash does not")
+        # B alone, with the entity: still proved, stored canonical
+        self.setUp()                       # a fresh work directory for the second assembly
+        res = self.run_assemble({h: ("printed", [1])}, [{"pass": "B", "results": [{"md5": h, "latex": rng.replace(">", "&gt;")}]}])
+        self.assertEqual((res["accepted"][h]["accepted_by"], res["accepted"][h]["latex"]), ("hash", rng))
+        s = res["summary"]
+        self.assertEqual((s["accepted_by_hash"], s["accepted_by_agreement"], s["unresolved"]), (1, 0, 0))
+
+    def test_a_misreading_both_passes_share_is_not_accepted_by_a_hash_that_proves_another_reading(self):
+        """429b8760: both passes read six values, the image has five. Escaping `<`/`>` must not make the
+        hash proof any looser: the six-value reading still fails the hash, still fails the PDF cross-check,
+        and stays on the queue; the reading the hash does prove (five values) is accepted, by hash."""
+        h = "429b8760604d18f7f31fce70e11ec838"
+        six, five = "\\{1;2;2;3;3;3\\}", "\\left\\{1;2;2;3;3\\right\\}"
+        runs = [{"pass": p, "results": [{"md5": h, "latex": six}]} for p in ("A", "B")]
+        res = self.run_assemble({h: ("printed", [1])}, runs)
+        self.assertNotIn(h, res["accepted"])
+        self.assertEqual(res["queue"][0]["reason"], "passes agree but the PDF text layer contradicts them")
+        self.setUp()
+        res = self.run_assemble({h: ("printed", [1])}, runs + [{"pass": "C", "results": [{"md5": h, "latex": five}]}])
+        self.assertEqual((res["accepted"][h]["accepted_by"], res["accepted"][h]["found_by"], res["accepted"][h]["latex"]),
+                         ("hash", "C", five))
+
+    def test_an_image_the_hash_cannot_prove_still_follows_the_other_routes_unchanged(self):
+        """`x<9` read by both passes with an `x<9` the hash does NOT name stays an agreement (the hash is a
+        proof, never a requirement), and the two readings of one inequality that differ (`<` vs `>`) disagree."""
+        agree, flip = "a" * 32, "b" * 32
+        runA = {"pass": "A", "results": [{"md5": agree, "latex": "x = 35"}, {"md5": flip, "latex": "x<9"}]}
+        runB = {"pass": "B", "results": [{"md5": agree, "latex": "x=35"}, {"md5": flip, "latex": "x>9"}]}
+        res = self.run_assemble({agree: ("printed", [1]), flip: ("printed", [1])}, [runA, runB])
+        self.assertEqual(res["accepted"][agree]["accepted_by"], "agreement")
+        self.assertEqual(res["queue"][0]["md5"], flip)
+        self.assertEqual(res["queue"][0]["reason"], "the two passes disagree")
+
     def test_a_pass_that_contradicts_itself_does_not_count(self):
         h = "a" * 32
         runs = [{"pass": "A", "results": [{"md5": h, "latex": "x"}]}, {"pass": "A", "results": [{"md5": h, "latex": "y"}]},
