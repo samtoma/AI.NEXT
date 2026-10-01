@@ -20,9 +20,13 @@
 --     still releases exactly the rows it held.
 --
 -- WHAT IS LOST: every other hold reason (the status stays 'review', which is
--- what the previous build relies on), and any AI check other than "ai
+-- what the previous build relies on), any AI check other than "ai
 -- dual-check" (an "auto-pass G<n>" is not a review, so it is NOT written into
--- reviewed_by — the previous build would read any non-NULL value as one).
+-- reviewed_by — the previous build would read any non-NULL value as one), and
+-- the time of a bulk promotion (035 keeps no time for "promoted without
+-- review"; its reviewed_at comes back NULL). Round-tripped on a copy of the
+-- Chapter 8 pilot database: every other reviewed_by/reviewed_at is restored
+-- byte for byte.
 -- Nothing a student produced is touched; no status changes.
 -- ===========================================================================
 
