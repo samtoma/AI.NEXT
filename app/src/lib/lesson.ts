@@ -920,9 +920,10 @@ ${sections.join("\n")}`;
 export function bridgeBlock(bridges: LessonBridge[], arabic = true): string {
   if (bridges.length === 0) return "";
   const lines = bridges
-    .map(
-      (b) =>
-        `- this "${b.thisLabel}" ↔ ${arabic ? labelArOfSpineKey(b.otherSubject) : displayLabelOfSpineKey(b.otherSubject)} «${b.otherLabel}»: ${b.rationale}`
+    .map((b) =>
+      arabic
+        ? `- this "${b.thisLabel}" ↔ ${labelArOfSpineKey(b.otherSubject)} «${b.otherLabel}»: ${b.rationale}`
+        : `- this "${b.thisLabel}" ↔ ${labelOfSpineKey(b.otherSubject)} "${b.otherLabel}": ${b.rationale}`
     )
     .join("\n");
   const example = arabic
