@@ -214,14 +214,16 @@ export function SignupForm({
           </SelectInput>
         </Field>
 
-        {askingCurriculum && (
+        {grade && (
           <CurriculumChoice
-            options={curricula.filter((c) => gradeOffer.includes(c.id))}
+            options={curricula}
             value={picked}
             onChange={(id) => {
               setPicked(id);
               setFieldErrors((prev) => ({ ...prev, curriculum: "" }));
             }}
+            grade={grade}
+            offered={gradeOffer}
             error={fieldErrors.curriculum}
           />
         )}

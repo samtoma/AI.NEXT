@@ -92,19 +92,35 @@ export default async function StudentPage({
 
   if (mode === "practice") {
     const plan = await getStudentPlan(studentId);
+    const visibleIds = [...(await visibleCoursesFor(studentId))];
     // How a [[page:N]] receipt names the book (backlog #36): the one citation
     // every course she may see shares — "Ministry textbook" for a National
     // student, the Grade 10 book's own name for a Grade 10 student — or none
     // when her courses cite different books, so a page is never attributed
     // to the wrong one.
-    const cites = [...(await visibleCoursesFor(studentId))]
-      .map((id) => courseDef(id)?.cite)
-      .filter((c) => c != null);
+    const cites = visibleIds.map((id) => courseDef(id)?.cite).filter((c) => c != null);
     const bookCite =
       cites.length > 0 && cites.every((c) => c.name === cites[0]!.name && c.edition === cites[0]!.edition)
         ? cites[0]!
         : null;
-    return <StudentLoop plan={plan.items} studentName={plan.studentName} bookCite={bookCite} />;
+    // The loop's header is page chrome shared across every subject, not any
+    // one lesson's, so it cannot read `isRtlSubject` the way a lesson surface
+    // does. It shows Arabic unless every course she may see is explicitly
+    // Arabic-free (`CourseTutorFacts.arabicTouches`, Samuel's answer 35,
+    // 2026-10-01) — true for the American course, which is the only curriculum
+    // with no Arabic-carrying course at all today. An empty set (nothing
+    // assigned yet) keeps the header as it has always rendered.
+    const arabicTouches =
+      visibleIds.length === 0 ||
+      visibleIds.some((id) => courseDef(id)?.tutor.arabicTouches !== false);
+    return (
+      <StudentLoop
+        plan={plan.items}
+        studentName={plan.studentName}
+        bookCite={bookCite}
+        arabicTouches={arabicTouches}
+      />
+    );
   }
 
   if (mode === "learn" || mode === "review") {

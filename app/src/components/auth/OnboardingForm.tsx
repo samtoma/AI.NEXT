@@ -3,7 +3,6 @@
 import { useState } from "react";
 
 import type { CurriculumId } from "@/lib/curricula";
-import { asksCurriculum, curriculumToSend } from "@/lib/auth/onboarding";
 import { GRADES } from "@/lib/profile";
 
 import {
@@ -21,9 +20,10 @@ import { CurriculumChoice, type CurriculumOption } from "./CurriculumChoice";
  *
  * Google told us an email and a name. It did not tell us a grade, and the
  * product cannot choose a course without one, so this asks — and asks for
- * nothing else: grade, and curriculum only when that grade offers two or more
- * (FR-4005). No name, no gender, no interests; those stay optional where they
- * already were.
+ * nothing else: grade, then — always, once a grade is chosen (Samuel's
+ * reversal of 2026-10-01, "yes the sign up should always ask"; decision 1,
+ * superseded) — curriculum, naming every registry curriculum. No name, no
+ * gender, no interests; those stay optional where they already were.
  *
  * **No grade is pre-selected.** The account was stored with a placeholder
  * grade because the column cannot be empty; pre-selecting it here would turn
@@ -48,18 +48,16 @@ export function OnboardingForm({
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [grade, setGrade] = useState("");
   const [picked, setPicked] = useState<CurriculumId | null>(null);
-  // The server's answer wins: a 409 carries what the grade offers NOW.
+  // The server's answer wins: a 422 carries what the grade offers NOW.
   const [offer, setOffer] = useState<Record<string, CurriculumId[]>>({ ...offered });
 
   const gradeOffer = offer[grade] ?? [];
-  const asking = asksCurriculum(gradeOffer);
-  const options = curricula.filter((c) => gradeOffer.includes(c.id));
 
   function chooseGrade(next: string) {
     setGrade(next);
     setFieldErrors({});
-    // A pick the new grade does not offer is not carried across.
-    if (picked && !(offer[next] ?? []).includes(picked)) setPicked(null);
+    // The pick survives a grade change: a curriculum with nothing live for
+    // the new grade is still the student's answer, not an invalid one.
   }
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -71,8 +69,8 @@ export function OnboardingForm({
       setFieldErrors({ grade: messageFor("invalid_grade") });
       return;
     }
-    const curriculum = curriculumToSend(gradeOffer, picked);
-    if (asking && !curriculum) {
+    // Always required now (Samuel's 2026-10-01 reversal).
+    if (!picked) {
       setFieldErrors({ curriculum: messageFor("curriculum_required") });
       return;
     }
@@ -83,7 +81,7 @@ export function OnboardingForm({
       const res = await fetch("/api/auth/onboarding", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ grade, ...(curriculum ? { curriculum } : {}) }),
+        body: JSON.stringify({ grade, curriculum: picked }),
       });
 
       if (res.status === 204) {
@@ -102,9 +100,9 @@ export function OnboardingForm({
         return;
       }
       if (body.error === "curriculum_required" && Array.isArray(body.offered)) {
-        const now = body.offered;
-        setOffer((prev) => ({ ...prev, [grade]: now }));
-        if (picked && !now.includes(picked)) setPicked(null);
+        // Refreshes the "nothing yet" notes only — a pick outside this list is
+        // still a valid, explicit choice and is never cleared because of it.
+        setOffer((prev) => ({ ...prev, [grade]: body.offered! }));
       }
       const message = messageFor(body.error);
       if (body.field) setFieldErrors({ [body.field]: message });
@@ -140,14 +138,16 @@ export function OnboardingForm({
           </SelectInput>
         </Field>
 
-        {asking && (
+        {grade && (
           <CurriculumChoice
-            options={options}
+            options={curricula}
             value={picked}
             onChange={(id) => {
               setPicked(id);
               setFieldErrors({});
             }}
+            grade={grade}
+            offered={gradeOffer}
             error={fieldErrors.curriculum}
           />
         )}

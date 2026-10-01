@@ -538,6 +538,33 @@ and is now passed. These are the remaining build items that round adds.
 
 ---
 
+## Phase 9c: Fourth round of decisions — T434 **[ADDED 2026-10-01, answer 36]**
+
+**Source**: `docs/WIP-g10-pilot/samuel-answers.md`, answer 36 — *"yes the sign up should always ask"* —
+reversing decision 1, after the console showed no curriculum question for grade 10, where only American
+is live. Recorded in [decisions.md](./decisions.md) as a supersession of decision 1 (no new decision
+number assigned).
+
+- [ ] T434 [US3] (WP-D) Sign-up and the Google step always ask which curriculum (FR-4004, FR-4005
+  changed 2026-10-01): remove the "two or more offered" gate before showing the question in
+  `app/src/components/auth/SignupForm.tsx` and `app/src/app/(auth)/welcome/page.student.tsx` /
+  `OnboardingForm.tsx`; list every curriculum the product knows (the full registry from
+  `lib/curricula.ts`), pre-selecting none; a curriculum with nothing live for the chosen grade is still
+  shown and selectable, carrying a short note that there is nothing to study there yet *(the
+  orchestrator's default; awaiting Samuel's confirmation of the note, or that it belongs at all)*. In
+  `app/src/app/api/auth/signup/route.ts` and `app/src/app/api/auth/onboarding/route.ts`, the curriculum
+  field becomes required: missing answers `409 curriculum_required` naming every known id (not only
+  offered ones), an unknown id still answers `400 invalid_curriculum`, and any known id is stored as
+  `chosen` whether or not FR-4004 says the grade offers it. Drop the `curriculum_resolved_from` write
+  on `account_created` (the race it covered no longer arises, per
+  [contracts/student-api.md](./contracts/student-api.md)). Update `offeredCurricula`/
+  `resolveInitialCurriculum` call sites and their tests (T370's `ga-curriculum-guard.test.mts` and
+  `onboarding.test.mts`) for the new behaviour. Supersedes T368's "only when two or more are offered" and
+  T369's offered-gated Google step. Walk US3's scenarios again (T373) and record the result in
+  `traceability.md` once this lands; the main session ticks this task with that evidence.
+
+---
+
 ## Dependencies & execution order
 
 ```text
