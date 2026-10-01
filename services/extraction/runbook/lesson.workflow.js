@@ -400,7 +400,9 @@ function closedSetProblems(it, opts, lessonText) {
       ' — numbers, pairs, values and combinations are the book\'s answer to type, never options to invent']
   }
   const hay = norm(`${it.stem} ${lessonText}`)
-  const unnamed = opts.filter((o) => !STOCK_CLOSED.has(norm(plainOption(o))) && !hay.includes(norm(plainOption(o))))
+  // "Irrational number" is named where the stem says "irrational": the noun "number" alone is not a category
+  const core = (o) => norm(plainOption(o)).replace(/\bnumbers?\b/g, '').replace(/\s+/g, ' ').trim()
+  const unnamed = opts.filter((o) => !STOCK_CLOSED.has(norm(plainOption(o))) && !hay.includes(norm(plainOption(o))) && !(core(o) && hay.includes(core(o))))
   return unnamed.length ? [`options said to be the lesson's closed set are named neither in the stem nor in the lesson: ${unnamed.slice(0, 3).map((o) => `"${o}"`).join(', ')}`] : []
 }
 const NUM_RE = /^-?\d+(?:[.,]\d+)?$/
