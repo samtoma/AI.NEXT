@@ -312,50 +312,48 @@ export function offeredCurricula(
   );
 }
 
-/** How a curriculum came to be a student's (FR-4003). */
+/** How a curriculum came to be a student's (FR-4003). `implied` survives only
+ *  for rows from before 003's reversal, and for the grade-change re-resolution
+ *  of one of them (`resolveOnGradeChange`); nothing on the sign-up or
+ *  first-Google-sign-in path produces it any more. */
 export type CurriculumSource = "chosen" | "implied";
 
 /**
- * The curriculum a NEW account stores (FR-4005; privacy review F12) — at
- * sign-up and in the first-Google-sign-in step (FR-4014) — given what the
- * grade offers at the moment of writing (`offeredCurricula`) and what the
- * form sent:
+ * The curriculum a NEW account stores (FR-4005) — at sign-up and in the
+ * first-Google-sign-in step (FR-4014).
  *
- *   · two or more offered, and the submitted one among them → it, `chosen`;
- *   · two or more offered, and nothing submitted, or one the grade no longer
- *     offers (an operator hid it after the page loaded) → `curriculum_required`:
- *     the form asks again. It is never stored as chosen at face value;
- *   · exactly one offered → that one, `implied`, whatever was sent — and when
- *     a different known curriculum was sent, `resolvedFrom` says so, for the
- *     caller to record on `account_created`;
- *   · none offered → National (`DEFAULT_CURRICULUM`), `implied`.
+ * **Samuel's reversal, 2026-10-01** ("yes the sign up should always ask";
+ * `specs/003-curriculum-tracks/decisions.md`, decision 1, superseded): the
+ * question is asked for EVERY grade, naming every curriculum the registry
+ * knows, none pre-selected, and an answer is required to create the account.
+ * `offered` — what has something live for this grade — no longer gates what
+ * may be chosen; a curriculum with nothing live yet is still a valid, explicit
+ * pick (the form shows it with a note, `CurriculumChoice`). It is kept as a
+ * parameter only so a refusal can carry the current offer back to the form:
  *
- * A submitted value the registry does not know is ALWAYS refused
- * (`invalid_curriculum`), even where none is needed: a value that does not
- * exist is a bug to surface, not to ignore.
+ *   · a known curriculum was sent → stored exactly as sent, `chosen` — whether
+ *     or not it has anything live for this grade;
+ *   · nothing was sent (blank or missing) → `curriculum_required`, carrying
+ *     `offered` so the form's "nothing yet" notes are current;
+ *   · an unknown value was sent → `invalid_curriculum`, always, even where the
+ *     registry has nothing live for anyone: a value that does not exist is a
+ *     bug to surface, not to ignore.
+ *
+ * There is no more silent resolution to a different curriculum than the one
+ * sent (the old `resolvedFrom` case): an explicit pick of a known curriculum
+ * is never overridden.
  */
 export function resolveInitialCurriculum(
   submitted: unknown,
   offered: readonly CurriculumId[]
 ):
-  | { ok: true; curriculum: CurriculumId; source: CurriculumSource; resolvedFrom: CurriculumId | null }
+  | { ok: true; curriculum: CurriculumId; source: CurriculumSource }
   | { ok: false; error: "invalid_curriculum" | "curriculum_required"; offered: readonly CurriculumId[] } {
   const blank = submitted == null || submitted === "";
-  const asked = blank ? null : asCurriculumId(submitted);
-  if (!blank && asked === null) return { ok: false, error: "invalid_curriculum", offered };
-  if (offered.length >= 2) {
-    if (asked && offered.includes(asked)) {
-      return { ok: true, curriculum: asked, source: "chosen", resolvedFrom: null };
-    }
-    return { ok: false, error: "curriculum_required", offered };
-  }
-  const curriculum = offered.length === 1 ? offered[0] : DEFAULT_CURRICULUM;
-  return {
-    ok: true,
-    curriculum,
-    source: "implied",
-    resolvedFrom: asked && asked !== curriculum ? asked : null,
-  };
+  if (blank) return { ok: false, error: "curriculum_required", offered };
+  const asked = asCurriculumId(submitted);
+  if (asked === null) return { ok: false, error: "invalid_curriculum", offered };
+  return { ok: true, curriculum: asked, source: "chosen" };
 }
 
 /**

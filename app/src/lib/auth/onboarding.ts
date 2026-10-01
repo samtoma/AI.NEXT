@@ -9,13 +9,21 @@
  * pure so `node --test` proves every branch without a request behind it
  * (`onboarding.test.mts`), the way `lib/catalog.ts` keeps the gate's rules.
  *
+ * **Since Samuel's reversal of 2026-10-01** ("yes the sign up should always
+ * ask"; `specs/003-curriculum-tracks/decisions.md`, decision 1, superseded)
+ * the curriculum question is asked on every grade, not only where two or more
+ * curricula are offered — see `resolveInitialCurriculum` in `lib/catalog.ts`.
+ * A missing answer is refused the same way an unknown one always was: `422`,
+ * through `curriculumRefusal` below.
+ *
  * What is NOT here, on purpose:
  *
  *   · what a grade offers — ONE rule, `offeredCurricula` in `lib/catalog.ts`,
- *     read through `lib/curriculum-queries.ts` (FR-4004);
+ *     read through `lib/curriculum-queries.ts` (FR-4004); it is display
+ *     information only now (which options get a "nothing yet" note), never a
+ *     gate on what may be chosen;
  *   · how a submitted curriculum resolves — `resolveInitialCurriculum`, the
- *     same function for sign-up and the Google step (FR-4005, privacy review
- *     F12);
+ *     same function for sign-up and the Google step (FR-4005);
  *   · "once" — the database's promise, `complete_student_onboarding()`
  *     (migration 033), which refuses a second call at the point of writing.
  *     This module only translates that refusal into HTTP.
