@@ -83,7 +83,8 @@ class Box:
         self.tmp = tempfile.TemporaryDirectory()
         t = Path(self.tmp.name).resolve()
         self.t = t
-        self.here = t / "ex"
+        self.repo = t / "repo"
+        self.here = self.repo / "services" / "extraction"
         self.work = self.here / "work" / BOOK
         self.runs = self.here / "runs" / BOOK
         self.keep = {k: getattr(F, k) for k in ("HERE", "WORK", "PACKETS", "EMBED", "FAN", "RUNS", "MATHS_BOOK", "PLAN_PATH", "DSN",
@@ -824,6 +825,56 @@ class S5Draft(Base):
         self.assertEqual(len(names), 2)
         self.assertEqual(len(set(names)), 2, "a name that exists is never overwritten")
 
+    def loaded_bundles(self):
+        return json.loads((self.box.runs / "fanout" / "loaded" / "g10-math.json").read_text())
+
+    def test_a_loaded_chapter_joins_the_loaded_bundles_config_in_chapter_order_with_its_existing_content_files(self):
+        b = self.box
+        for name in ("g10m4s2-1", "g10m4s3-1"):                        # one of the base config's three content files for chapter 4 is not on disk
+            b.put(f"seed/content/{name}.json", {}) if name == "g10m4s2-1" else None
+        rc, rep, wf = b.go("s5-draft-ch04", result=self.draft())
+        self.assertEqual(rc, 0, rep)
+        cfg = self.loaded_bundles()
+        self.assertEqual(cfg["bundles"], ["services/extraction/seed/g10-math/g10m-course.json", "services/extraction/seed/g10-math/g10m-c01.json",
+                                          "services/extraction/seed/g10-math/g10m-c04.json",
+                                          "services/extraction/work/g10-math/pilot/seed/g10m-c08.json"])
+        self.assertEqual(cfg["content_files"], ["services/extraction/seed/content/g10m4s2-1.json"])
+        self.assertIn(("register in the loaded-bundles config", "ok"), b.steps(rep))
+        before = (b.runs / "fanout" / "loaded" / "g10-math.json").read_text()
+        wf2, task = b.finish("s5-draft-ch04", result=self.draft(), wf=wf)
+        b.db.have["questions"] = {"q:ch04:1", "q:ch04:2"}
+        b.db.have["graph_nodes"] = {"module:g10m-c04", "lo:g10m4s2-1-1"}
+        rc, rep2 = b.adv("s5-draft-ch04", wf, task)
+        self.assertEqual(rc, 0, rep2)
+        self.assertEqual((b.runs / "fanout" / "loaded" / "g10-math.json").read_text(), before, "registered once")
+        self.assertIn(("register in the loaded-bundles config", "skipped"), b.steps(rep2))
+
+    def test_a_chapter_loaded_by_hand_is_registered_too_so_g5_sees_what_the_db_holds(self):
+        b = self.box
+        b.db.have["questions"] = {"q:ch04:1", "q:ch04:2"}
+        b.db.have["graph_nodes"] = {"module:g10m-c04", "lo:g10m4s2-1-1"}
+        rc, rep, wf = b.go("s5-draft-ch04", result=self.draft())
+        self.assertEqual(rc, 0, rep)
+        self.assertEqual(self.ex.tools, [], "nothing was written to the DB, so no dump")
+        self.assertIn("services/extraction/seed/g10-math/g10m-c04.json", self.loaded_bundles()["bundles"])
+
+    def test_the_loaded_config_is_not_touched_when_the_load_fails(self):
+        b = self.box
+        before = (b.runs / "fanout" / "loaded" / "g10-math.json").read_text()
+        b.ex.on("load_seed.py", lambda argv: A.Result(1, "KaTeX refused 3 items"))
+        rc, rep, wf = b.go("s5-draft-ch04", result=self.draft())
+        self.assertEqual(rc, 1)
+        self.assertEqual((b.runs / "fanout" / "loaded" / "g10-math.json").read_text(), before)
+
+    def test_a_missing_loaded_config_is_made_from_the_base_config(self):
+        b = self.box
+        (b.runs / "fanout" / "loaded" / "g10-math.json").unlink()
+        rc, rep, wf = b.go("s5-draft-ch04", result=self.draft())
+        self.assertEqual(rc, 0, rep)
+        cfg = self.loaded_bundles()
+        self.assertEqual(cfg["bundles"], ["services/extraction/seed/g10-math/g10m-course.json", "services/extraction/seed/g10-math/g10m-c04.json"])
+        self.assertEqual((cfg["status"], cfg["generated"], cfg["parity"]), ("loadable", None, None))
+
     def test_the_chapter_must_be_assembled_first(self):
         b = self.box
         (b.here / "seed" / BOOK / "g10m-c04.json").unlink()
@@ -1030,6 +1081,9 @@ class S5Final(Base):
                 (b.runs / "gates" / "g3-ch04.json").write_text("{}")
             elif s == "auto_pass_gates.py" and argv[1] == "g4":
                 (b.runs / "gates" / "g4-ch04.json").write_text("{}")
+            elif s == "auto_pass_gates.py" and argv[1] == "g5":
+                (b.runs / "gates" / "g5-ch04.json").write_text(json.dumps({"outcome": "pass_with_holds", "summary": "GO for the fan-out"}))
+                return A.Result(0, "G5 auto-pass (ch04): PASS_WITH_HOLDS — GO\n  for Samuel: coverage tier_floor fails (33/39)\n")
             elif s == "coverage_report.py":
                 (b.here / "coverage" / f"{BOOK}.ch04.json").write_text(json.dumps(self.coverage))
                 return A.Result(0 if self.coverage["status"] == "GREEN" else 1, "")
@@ -1050,7 +1104,7 @@ class S5Final(Base):
         self.assertEqual(names, ["chapter config", "S5 catalogue", "load catalogue dry run", "pg_dump", "load catalogue", "generated questions", "widget questions",
                                  "reconcile tags with the catalogue", "validate generated-questions.json", "load generated-questions.json",
                                  "validate widget-questions.json", "load widget-questions.json", "G3 auto-pass", "apply G3 verdicts",
-                                 "G4 auto-pass", "coverage", "parity (every course)"])
+                                 "G4 auto-pass", "coverage", "parity (every course)", "register in the loaded-bundles config", "G5 auto-pass"])
         by_script = self.ex.argv_of
         self.assertEqual(by_script("assemble_misconceptions.py"), [
             ["assemble_misconceptions.py", final, "--book", cfg, "--out", f"{gen}/misconceptions.json", *graphs],
@@ -1076,8 +1130,19 @@ class S5Final(Base):
                                  ["load_generated_questions.py", f"{gen}/widget-questions.json", *base]])
         gates = by_script("auto_pass_gates.py")
         self.assertEqual(gates[0], ["auto_pass_gates.py", "g3", BOOK, "--chapter", "4", "--queue", f"{gen}/generated-questions.review-queue.json",
-                                    "--queue", f"{gen}/widget-questions.review-queue.json", "--widgets", f"{gen}/widget-questions.json"])
+                                    "--queue", f"{gen}/widget-questions.review-queue.json", "--widgets", f"{gen}/widget-questions.json",
+                                    "--widget-gaps", "coverage/g10-math.ch04.widget-gaps.json"])
         self.assertEqual(gates[1], ["auto_pass_gates.py", "g4", BOOK, "--chapter", "4", "--catalogue", f"{gen}/misconceptions.json", "--s5", final])
+        self.assertEqual(gates[2], ["auto_pass_gates.py", "g5", BOOK, "--chapter", "4", "--coverage", "coverage/g10-math.ch04.json", "--book-config",
+                                    "runs/g10-math/fanout/loaded/g10-math.json"])
+        g5_env = [c[1] for c in self.ex.calls if c[0][:2] == ["auto_pass_gates.py", "g5"]][0]
+        self.assertEqual(g5_env["AINEXT_DB_DSN"], F.DSN)
+        self.assertEqual(rep["counts"]["g5"]["outcome"], "pass_with_holds")
+        self.assertIn("G5 for Samuel: coverage tier_floor fails (33/39)", rep["warnings"])
+        loaded = json.loads((b.runs / "fanout" / "loaded" / "g10-math.json").read_text())["bundles"]
+        self.assertEqual(loaded, ["services/extraction/seed/g10-math/g10m-course.json", "services/extraction/seed/g10-math/g10m-c01.json",
+                                  "services/extraction/seed/g10-math/g10m-c04.json", "services/extraction/work/g10-math/pilot/seed/g10m-c08.json"],
+                         "the chapter joins the config G5's parity reads, in chapter order, the course first")
         self.assertEqual(by_script("apply_review_verdicts.py"), [["apply_review_verdicts.py", "runs/g10-math/g3-ch04.auto.json"]])
         self.assertEqual(by_script("coverage_report.py"), [["coverage_report.py", "--book", cfg, "--chapter", "4", "--maths",
                                                             "runs/g10-math/maths/book/summary.json", "--widget-gaps", "coverage/g10-math.ch04.widget-gaps.json",
@@ -1133,6 +1198,28 @@ class S5Final(Base):
         self.assertEqual(rc, 1)
         self.assertEqual(rep["failure"]["step"], "coverage")
         self.assertIn("no report was written", rep["failure"]["detail"])
+
+    def test_g5_no_go_stops_the_advance_with_the_gates_blocked_lines(self):
+        b = self.box
+        self.ex.rules["auto_pass_gates.py"], keep = (lambda argv: A.Result(1, "G5 auto-pass (ch04): NO-GO\n  BLOCKED parity RED for course:us-g10-math-en: modules 2 != 3\n")
+                                                     if argv[1] == "g5" else keep_rule(argv)), None
+        rc, rep, wf = b.go("s5-final-ch04", result={"stage": "final"})
+        self.assertEqual(rc, 1)
+        self.assertEqual(rep["failure"]["step"], "G5 auto-pass")
+        self.assertIn("BLOCKED parity RED", rep["failure"]["detail"])
+        led = json.loads((b.runs / "fanout" / "advance" / "s5-final-ch04.json").read_text())
+        self.assertFalse(led["after_done"])
+
+    def test_without_a_generated_bundle_g3_cannot_run_and_that_is_said(self):
+        b = self.box
+        for p in (b.here / "families" / BOOK / "ch04").glob("*.json"):
+            p.unlink()
+        for p in (b.here / "widgets" / BOOK / "ch04").glob("*.json"):
+            p.unlink()
+        rc, rep, wf = b.go("s5-final-ch04", result={"stage": "final"})
+        self.assertEqual(rc, 0, rep)
+        self.assertEqual([a[1] for a in self.ex.argv_of("auto_pass_gates.py")], ["g4", "g5"])
+        self.assertTrue(any("G3 could not run" in w for w in rep["warnings"]))
 
     def test_parity_red_blocks(self):
         b = self.box
@@ -1436,6 +1523,10 @@ class RealPlan(unittest.TestCase):
         self.assertTrue(by["s7-author-ch03"]["after"][0].startswith("uv run generate_widget_questions.py --merge-author-runs "
                                                                     "runs/g10-math/widgets/author-ch03-<wf_id>.json --merged "
                                                                     "runs/g10-math/widgets/author-merged-ch03.json --write-templates widgets/g10-math/ch03"))
+
+
+def keep_rule(argv):
+    return A.Result(0, "")
 
 
 SUBCOMMANDS = {"assemble", "approve", "lesson-runs", "collect", "record", "g1", "g2", "g3", "g4", "g5"}
