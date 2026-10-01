@@ -213,8 +213,14 @@ export const MODULES: Readonly<Record<string, ModuleKind>> = {
     why:
       "the book outline (chapter and lesson titles) of the course ids its caller passes, already gated: the " +
       "check-in passes the courses of her gated catalogue, the skill map the courses its graph scope put on " +
-      "the map; lib/lesson.ts asks only whether a slug with no objectives is an outline lesson, to refuse it.",
-    importers: ["src/app/(student)/student/page.tsx", "src/lib/lesson.ts", "src/lib/queries.ts"],
+      "the map, the subject home the courses of the cards its gate built; lib/lesson.ts asks only whether a " +
+      "slug with no objectives is an outline lesson, to refuse it.",
+    importers: [
+      "src/app/(student)/student/page.tsx",
+      "src/lib/lesson.ts",
+      "src/lib/queries.ts",
+      "src/lib/subject-queries.ts",
+    ],
   },
   "src/lib/module-order.ts": {
     kind: "sql-text",
