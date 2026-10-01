@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en" dir="ltr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Objectives review, chapter 3</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@600;700;800&family=Cairo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<style>
+:root {
+    --ground:#f7f6fb; --surface:#ffffff; --sunk:#efeef6; --contrast:#1e2450;
+    --on-contrast:#f2f1f7; --on-contrast-dim:#b3b0c9;
+    --ink:#2b2a38; --ink-soft:#5d5b6e; --ink-faint:#6e6c7e;
+    --rule:#e6e4f0; --rule-strong:#d6d3e6;
+    --amber:#f0a22f; --amber-deep:#a3610a; --on-amber:#141833;
+    --teal:#2f9e8f; --teal-deep:#1f6f64; --teal-wash:rgba(47,158,143,.12);
+    --violet:#6e4fa8;
+    --font-display:"Baloo Bhaijaan 2","Baloo 2",system-ui,sans-serif;
+    --font-body:"Cairo",system-ui,sans-serif;
+    --font-mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:#14182f; --surface:#1c2242; --sunk:#232a4e; --contrast:#0f1329;
+      --on-contrast:#eeedf6; --on-contrast-dim:#9d9ab8;
+      --ink:#eceaf5; --ink-soft:#b0adc6; --ink-faint:#9895b0;
+      --rule:#2e3560; --rule-strong:#3a4275;
+      --amber:#f3ae4a; --amber-deep:#f3ae4a;
+      --teal:#46b6a6; --teal-deep:#46b6a6; --teal-wash:rgba(70,182,166,.16);
+      --violet:#9b7bd4;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground:#14182f; --surface:#1c2242; --sunk:#232a4e; --contrast:#0f1329;
+    --on-contrast:#eeedf6; --on-contrast-dim:#9d9ab8;
+    --ink:#eceaf5; --ink-soft:#b0adc6; --ink-faint:#9895b0;
+    --rule:#2e3560; --rule-strong:#3a4275;
+    --amber:#f3ae4a; --amber-deep:#f3ae4a;
+    --teal:#46b6a6; --teal-deep:#46b6a6; --teal-wash:rgba(70,182,166,.16);
+    --violet:#9b7bd4;
+  }
+
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--ground); color:var(--ink); font-family:var(--font-body);
+         line-height:1.6; -webkit-font-smoothing:antialiased; }
+  .shell { max-width:960px; margin:0 auto; padding-inline:16px; }
+  h1,h2,h3 { font-family:var(--font-display); font-weight:800; margin:0; line-height:1.25; }
+  header.top { background:var(--contrast); color:var(--on-contrast); padding-block:28px 22px; }
+  header.top p { color:var(--on-contrast-dim); max-width:70ch; margin:.5em 0 0; }
+  .meta { font-family:var(--font-mono); font-size:12px; color:var(--on-contrast-dim); margin-top:14px; }
+  section.card { background:var(--surface); border:1px solid var(--rule); border-radius:16px;
+                 padding:18px 20px; margin-block:18px; }
+  .prov, .id, .items { font-family:var(--font-mono); font-size:12px; color:var(--ink-faint); }
+  .items { color:var(--ink-soft); word-break:break-word; }
+  .obj { border-top:1px solid var(--rule); padding-top:12px; margin-top:12px; }
+  .obj h3 { font-size:17px; }
+  .badge { font-family:var(--font-mono); font-size:11px; padding:2px 8px; border-radius:999px;
+           background:var(--sunk); color:var(--ink-soft); margin-inline-start:6px; }
+  .badge.single, .badge.none { background:var(--amber); color:var(--on-amber); }
+  .badge.agreed { background:var(--teal-wash); color:var(--teal-deep); }
+  .table-wrap { overflow-x:auto; }
+  table { width:100%; border-collapse:collapse; font-size:14px; margin-top:8px; }
+  th, td { text-align:start; padding:6px 8px; border-bottom:1px solid var(--rule); vertical-align:top; }
+  th { font-family:var(--font-mono); font-size:11px; color:var(--ink-faint); font-weight:500; }
+  td.q { color:var(--ink-soft); }
+  tr.dropped td { color:var(--ink-faint); text-decoration:line-through; }
+  ul.checks { margin:.5em 0; padding-inline-start:1.2em; }
+  .fail { color:var(--amber-deep); }
+
+</style></head><body>
+<header class=top><div class=shell><h1>Chapter 3: Number patterns</h1>
+<p>Gate G1. Two finders derived each lesson's objectives from the book, blind to each other; a
+reconciler aligned them and a separate check read every piece of evidence. Look at every
+<b>single</b> objective, every terminology flag and every failure, then approve with
+<code>assemble_objectives.py approve</code>. Nothing downstream runs until you do.</p>
+<div class=meta>book g10-math · run runs/g10-math/objectives/ch03-wf_af4ff113-3d3.json · prompts s1-v5
+ · 0 failure(s) · 0 decision(s) owed</div></div></header>
+<main class=shell>
+<section class=card><h2>Decisions G1 owes</h2><ul class=checks><li>none</li></ul></section>
+
+<section class=card><h2>Describing sequences</h2><div class=prov>g10m3s2-1 · 3.2 Describing sequences · 43 exercise items · 3 worked examples</div><ul class=checks><li>g10m3s2-1: objectives are not numbered in the order the book practises them (rule 6)</li></ul><div class=obj><h3>Determine the common difference of a sequence by subtracting successive terms, and use it to write down the next terms of a linear sequence, including the next picture in a figure pattern.</h3><span class=id>lo:g10m3s2-1-1</span><span class='badge merged'>merged</span><span class=badge>Continue linear sequences</span><div class=table-wrap><table><tr><th>kind</th><th>anchor</th><th>page</th><th>quote</th><th>found by</th></tr><tr><td>intro</td><td class=id>b01053</td><td>61</td><td class=q>The pattern is continued by adding $\text{3}$ to the previous term.</td><td>substring</td></tr><tr><td>worked_example</td><td class=id>WE1</td><td>61</td><td class=q>So the pattern formed is $4;6;8;10;\ldots$</td><td>substring</td></tr><tr><td>definition</td><td class=id>b01076</td><td>62</td><td class=q>The common difference is the difference between any term and the term before it.</td><td>substring</td></tr><tr><td>exercise</td><td class=id>Ex3-1:4a</td><td>66</td><td class=q>determine the common difference</td><td>substring</td></tr><tr><td>exercise</td><td class=id>Ex3-1:5a</td><td>66</td><td class=q>Write down the next three terms in each of the following sequences:</td><td>substring</td></tr><tr><td>exercise</td><td class=id>Ex3-1:12a</td><td>67</td><td class=q>Write down the next $\text{3}$ terms.</td><td>substring</td></tr></table></div><p class=items>items: Ex3-1:4a, Ex3-1:4b, Ex3-1:4c, Ex3-1:4d, Ex3-1:5a, Ex3-1:5b, Ex3-1:5c, Ex3-1:5d, Ex3-1:5e, Ex3-1:5f, Ex3-1:5g, Ex3-1:11a, Ex3-1:12a, Ex3-1:13a, Ex3-2:2, Ex3-2:3, Ex3-2:5a, Ex3-2:5b, Ex3-2:8a, Ex3-2:8b, Ex3-2:8c, Ex3-2:12a, Ex3-2:16a, Ex3-2:17b, Ex3-2:22a · worked examples: WE1</p></div><div class=obj><h3>Use the T_n notation to identify the term at a given position (such as T_6, T_{n-1} or the first three terms), distinguishing the position n from the value T_n, including for a repeating pattern of letters.</h3><span class=id>lo:g10m3s2-1-2</span><span class='badge agreed'>agreed</span><span class=badge>Identify terms using T_n</span><div class=table-wrap><table><tr><th>kind</th><th>anchor</th><th>page</th><th>quote</th><th>found by</th></tr><tr><td>intro</td><td class=id>b01059</td><td>62</td><td class=q>The tenth term of a sequence is ${T}_{10}$</td><td>substring</td></tr><tr><td>intro</td><td class=id>b01060</td><td>62</td><td class=q>The general term is often expressed as the $n^{\text{th}}$ term</td><td>substring</td></tr><tr><td>intro</td><td class=id>b01087</td><td>64</td><td class=q>the difference between $n$ and ${T}_{n}$</td><td>substring</td></tr><tr><td>summary</td><td class=id>b01145</td><td>68</td><td class=q>is written as ${T}_{n}$</td><td>substring</td></tr><tr><td>exercise</td><td class=id>Ex3-1:3</td><td>66</td><td class=q>what is the value of $T_{n-4}$</td><td>substring</td></tr><tr><td>exercise</td><td class=id>Ex3-1:6</td><td>66</td><td class=q>determine the values of $T_{6}$ and $T_{9}$</td><td>substring</td></tr></table></div><p class=items>items: Ex3-1:2, Ex3-1:3, Ex3-1:6, Ex3-1:7, Ex3-1:8, Ex3-1:18, Ex3-2:4, Ex3-2:6, Ex3-2:7, Ex3-2:13, Ex3-2:14, Ex3-2:17a, Ex3-2:24a, Ex3-2:24b, Ex3-2:24c · worked examples: none</p></div><div class=obj><h3>Find the general formula T_n = dn + c for a linear sequence from a table, a list of terms or a picture pattern.</h3><span class=id>lo:g10m3s2-1-3</span><span class='badge agreed'>agreed</span><span class=badge>Find the general formula</span><div class=table-wrap><table><tr><th>kind</th><th>anchor</th><th>page</th><th>quote</th><th>found by</th></tr><tr><td>intro</td><td class=id>b01074</td><td>62</td><td class=q>the general formula will always be of the form: $T_{n}=dn+c$</td><td>substring</td></tr><tr><td>worked_example</td><td class=id>WE2</td><td>63</td><td class=q>The number of people seated at $n$ tables is ${T}_{n}=4+2\left(n-1\right)$</td><td>substring</td></tr><tr><td>summary</td><td class=id>b01147</td><td>68</td><td class=q>We can work out a general formula for each number pattern</td><td>substring</td></tr><tr><td>exercise</td><td class=id>Ex3-1:10a</td><td>66</td><td class=q>Find the general formula for the following sequences</td><td>substring</td></tr><tr><td>exercise</td><td class=id>Ex3-1:12b</td><td>67</td><td class=q>Find the general formula for the sequence</td><td>substring</td></tr></table></div><p class=items>items: Ex3-1:1, Ex3-1:10a, Ex3-1:10b, Ex3-1:10c, Ex3-1:11b, Ex3-1:12b, Ex3-1:13b, Ex3-2:1, Ex3-2:9a, Ex3-2:9b, Ex3-2:11a, Ex3-2:11b, Ex3-2:11c, Ex3-2:11d, Ex3-2:12b, Ex3-2:16b, Ex3-2:17c, Ex3-2:21, Ex3-2:22b, Ex3-2:23 · worked examples: WE2</p></div><div class=obj><h3>Use the general formula T_n to calculate a required term (such as the missing terms or T_25) and to solve for n when the value of a term is given.</h3><span class=id>lo:g10m3s2-1-4</span><span class='badge merged'>merged</span><span class=badge>Use the general formula</span><div class=table-wrap><table><tr><th>kind</th><th>anchor</th><th>page</th><th>quote</th><th>found by</th></tr><tr><td>worked_example</td><td class=id>WE3</td><td>64</td><td class=q>This question requires us to determine the value of the $30^{\text{th}}$ term</td><td>substring</td></tr><tr><td>worked_example</td><td class=id>WE3</td><td>64</td><td class=q>Solving for $n$ , we get:</td><td>substring</td></tr><tr><td>summary</td><td class=id>b01147</td><td>68</td><td class=q>use it to determine any term in the pattern</td><td>substring</td></tr><tr><td>exercise</td><td class=id>Ex3-1:9a</td><td>66</td><td class=q>Calculate the missing terms</td><td>substring</td></tr><tr><td>exercise</td><td class=id>Ex3-1:11c</td><td>67</td><td class=q>Use the formula to find how many triangles are in the $25^{\text{th}}$ picture</td><td>substring</td></tr><tr><td>exercise</td><td class=id>Ex3-1:12c</td><td>67</td><td class=q>Find the value of $n$ if $T_n$ is $\text{191}$</td><td>substring</td></tr></table></div><p class=items>items: Ex3-1:9a, Ex3-1:9b, Ex3-1:9c, Ex3-1:9d, Ex3-1:9e, Ex3-1:11c, Ex3-1:12c, Ex3-1:13c, Ex3-2:10a, Ex3-2:10b, Ex3-2:10c, Ex3-2:12c, Ex3-2:15, Ex3-2:16c, Ex3-2:17d, Ex3-2:18, Ex3-2:22c, Ex3-2:25 · worked examples: WE3</p></div><div class=obj><h3>Determine the common difference of a sequence whose terms contain an unknown, find the value of the unknown that makes the terms a linear sequence, and evaluate the terms.</h3><span class=id>lo:g10m3s2-1-5</span><span class='badge merged'>merged</span><span class=badge>Unknowns in linear sequences</span><div class=table-wrap><table><tr><th>kind</th><th>anchor</th><th>page</th><th>quote</th><th>found by</th></tr><tr><td>intro</td><td class=id>b01083</td><td>63</td><td class=q>We see that $d$ is constant.</td><td>substring</td></tr><tr><td>definition</td><td class=id>b01084</td><td>63</td><td class=q>In general, $d=T_{n}-T_{n-1}$</td><td>substring</td></tr><tr><td>exercise</td><td class=id>Ex3-1:14a</td><td>67</td><td class=q>Find the common difference for the terms of the list</td><td>substring</td></tr><tr><td>exercise</td><td class=id>Ex3-1:16a</td><td>67</td><td class=q>If the following terms make a linear sequence</td><td>substring</td></tr><tr><td>exercise</td><td class=id>Ex3-2:20a</td><td>70</td><td class=q>If the following terms make a linear sequence</td><td>substring</td></tr></table></div><p class=items>items: Ex3-1:14a, Ex3-1:14b, Ex3-1:15a, Ex3-1:15b, Ex3-1:16a, Ex3-1:16b, Ex3-1:17a, Ex3-1:17b, Ex3-2:19a, Ex3-2:19b, Ex3-2:20a, Ex3-2:20b · worked examples: none</p></div></section>
+<section class=card><h2>Prerequisite links</h2><p>Found in the book by the linker (a recall, a reference back, or a method used before this lesson teaches it) and confirmed by a second agent from the anchored text. Approving the chapter approves every kept link; drop one with <code>links: {"&lt;src&gt;-&gt;&lt;dst&gt;": "drop"}</code> in the verdicts (run ids). Part n−1 → n links are derived by the app and never listed here.</p><div class=table-wrap><table><tr><th>first (src)</th><th>then (dst)</th><th>signal</th><th>evidence</th><th>check</th><th>outcome</th></tr><tr><td class=id>lo:g10m3s2-1-3<br>Find the general formula T_n = dn + c for a linear sequence from a table, a list of terms or a picture pattern.</td><td class=id>lo:g10m3s2-1-4<br>Use the general formula T_n to calculate a required term (such as the missing terms or T_25) and to solve for n when the value of a term is given.</td><td>uses_method</td><td class=q>worked_example WE2 p.63: “Use the general formula to determine how many people can sit around”; exercise Ex3-1:10a p.66: “Find the general formula for the following sequences and then find”; exercise Ex3-1:12c p.67: “Find the value of $n$ if $T_n$ is”</td><td>CONFIRMED</td><td>kept</td></tr><tr><td class=id>lo:g10m3s2-1-1<br>Determine the common difference of a sequence by subtracting successive terms, and use it to write down the next terms of a linear sequence, including the next picture in a figure pattern.</td><td class=id>lo:g10m3s2-1-3<br>Find the general formula T_n = dn + c for a linear sequence from a table, a list of terms or a picture pattern.</td><td>uses_method</td><td class=q>text b01074 p.62: “for sequences with a common difference, the general formula will always be of the form”; worked_example WE3 p.64: “$120+(1)(15)=135$”; exercise Ex3-1:12b p.67: “Find the general formula for the sequence”</td><td>CONFIRMED</td><td>kept</td></tr><tr><td class=id>lo:g10m3s2-1-1<br>Determine the common difference of a sequence by subtracting successive terms, and use it to write down the next terms of a linear sequence, including the next picture in a figure pattern.</td><td class=id>lo:g10m3s2-1-5<br>Determine the common difference of a sequence whose terms contain an unknown, find the value of the unknown that makes the terms a linear sequence, and evaluate the terms.</td><td>uses_method</td><td class=q>exercise Ex3-1:14a p.67: “Find the common difference for the terms of the list”; exercise Ex3-1:16a p.67: “If the following terms make a linear sequence”</td><td>CONFIRMED</td><td>kept</td></tr><tr><td class=id>lo:g10m1s6-1-1<br>Multiply a monomial or a constant by a binomial or trinomial, and simplify sums and differences of such products.</td><td class=id>lo:g10m3s2-1-4<br>Use the general formula T_n to calculate a required term (such as the missing terms or T_25) and to solve for n when the value of a term is given.</td><td>uses_method</td><td class=q>worked_example WE2 p.63: “20&amp;=4+2n-2”; worked_example WE3 p.64: “520&amp;=120+15n-15”</td><td>CONFIRMED</td><td>kept</td></tr><tr><td class=id>lo:g10m3s2-1-2<br>Use the T_n notation to identify the term at a given position (such as T_6, T_{n-1} or the first three terms), distinguishing the position n from the value T_n, including for a repeating pattern of letters.</td><td class=id>lo:g10m3s2-1-4<br>Use the general formula T_n to calculate a required term (such as the missing terms or T_25) and to solve for n when the value of a term is given.</td><td>uses_method</td><td class=q>worked_example WE3 p.64: “This question requires us to determine the value of the $30^{\text{th}}$ term”; exercise Ex3-1:12c p.67: “Find the value of $n$ if $T_n$ is”</td><td>CONFIRMED</td><td>kept</td></tr><tr><td class=id>lo:g10m3s2-1-1<br>Determine the common difference of a sequence by subtracting successive terms, and use it to write down the next terms of a linear sequence, including the next picture in a figure pattern.</td><td class=id>lo:g10m3s2-1-2<br>Use the T_n notation to identify the term at a given position (such as T_6, T_{n-1} or the first three terms), distinguishing the position n from the value T_n, including for a repeating pattern of letters.</td><td>uses_method</td><td class=q>exercise Ex3-1:6 p.66: “determine the values of $T_{6}$ and $T_{9}$”; exercise Ex3-1:8 p.66: “determine the values of $T_{5}$ and $T_{8}$”</td><td>CONFIRMED</td><td>kept</td></tr></table></div></section>
+</main>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+ onload="renderMathInElement(document.body,{delimiters:[{left:'$',right:'$',display:false}],throwOnError:false})"></script>
+</body></html>

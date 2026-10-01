@@ -154,6 +154,22 @@ def s0b_partition() -> dict:
             "chapter_of_block": ch_of}
 
 
+def approved_objective_count(slugs: list[str]) -> int | None:
+    """The chapter's objectives counted from its lessons' approved S1 files (objectives/<book>/<slug>.json), or None unless EVERY
+    lesson of the chapter has one that G1 approved. Chapter 1 came out at 29 against the 2.6-per-lesson estimate's 21: S5–S7 are
+    costed per objective, so the plan uses the real count as soon as it exists."""
+    n = 0
+    for slug in slugs:
+        f = HERE / "objectives" / BOOK / f"{slug}.json"
+        if not f.exists():
+            return None
+        d = json.loads(f.read_text())
+        if d.get("status") != "approved":
+            return None
+        n += len(d.get("objectives") or [])
+    return n
+
+
 def inventory() -> dict:
     m = json.loads((HERE / "manifest" / "g10-math-american.json").read_text())
     part = s0b_partition()
@@ -196,7 +212,10 @@ def inventory() -> dict:
                             "maths_images": sum((l.get("maths_images") or {}).values())})
         imgs = imgs_by_ch[ch]
         to_read = part["by_chapter"].get(ch, [])
-        n_obj = round(OBJECTIVES_PER_LESSON * len(les))
+        n_obj = approved_objective_count([l["id"] for l in les])      # the real count once G1 has passed, else the estimate
+        n_obj_actual = n_obj is not None
+        if n_obj is None:
+            n_obj = round(OBJECTIVES_PER_LESSON * len(les))
         items_total = lesson_items + eoc.get("items", 0) + to_map
         out.append({
             "chapter": ch, "title": mod["title"], "module": mod["id"], "s0b_group": group_of(ch),
@@ -218,6 +237,7 @@ def inventory() -> dict:
                              "tall_derivations_to_read": sum(1 for x in to_read if x["h"] > 60)},
             "teacher_only_blocks": by_type[ch]["teacher_only"],
             "objectives_estimate": n_obj if ch != PILOT_CH else 13,
+            "objectives_counted": n_obj_actual or ch == PILOT_CH,     # True: counted from the approved G1 files, not estimated
             "lessons_detail": lessons,
             "status": "pilot — done (S0b–S7; G1, G2 passed)" if ch == PILOT_CH else "to fan out",
         })

@@ -12,8 +12,8 @@
   "Local DB only (127.0.0.1): host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08 — Samuel's preview database (it already holds the National courses and the pilot's Grade 10 course + Chapter 8; each chapter is loaded into it as its bundle is assembled). pg_dump it before a chapter's first load. AINEXT_FANOUT_DB overrides the name."
  ],
  "cost_usd": {
-  "low": 934.27,
-  "high": 1352.8,
+  "low": 956.04,
+  "high": 1382.73,
   "by_stage": {
    "S0b": [
     259.59,
@@ -28,16 +28,16 @@
     249.7
    ],
    "S5": [
-    150.72,
-    207.24
+    161.28,
+    221.76
    ],
    "S6": [
-    104.22,
-    142.81
+    111.47,
+    152.73
    ],
    "S7": [
-    56.52,
-    78.56
+    60.48,
+    84.05
    ],
    "SW": [
     145.42,
@@ -1094,11 +1094,11 @@
    "stage": "S5",
    "chapter": 1,
    "workflow": "misconceptions.workflow.js (s5-v5, draft)",
-   "what": "S5 draft misconceptions for chapter 1's ≈ 21 objectives",
-   "agents": 21,
+   "what": "S5 draft misconceptions for chapter 1's ≈ 29 objectives",
+   "agents": 29,
    "cost": [
-    9.07,
-    12.47
+    12.53,
+    17.23
    ],
    "minutes": 13,
    "priority": [
@@ -1134,7 +1134,7 @@
    "order": 30,
    "embedded_script": "work/g10-math/packets/embedded/fanout/030-s5-draft-ch01.workflow.js",
    "launch": "Workflow({scriptPath: \"<abs>/services/extraction/work/g10-math/packets/embedded/fanout/030-s5-draft-ch01.workflow.js\"})   # NO args",
-   "prepared": false
+   "prepared": true
   },
   {
    "id": "s0b-C-g5",
@@ -1254,10 +1254,10 @@
    "chapter": 1,
    "workflow": "families.workflow.js (s6-v5, author)",
    "what": "S6 family authoring for chapter 1's objectives below the tier floor",
-   "agents": 17,
+   "agents": 23,
    "cost": [
-    6.24,
-    8.5
+    8.61,
+    11.75
    ],
    "minutes": 8,
    "priority": [
@@ -1326,8 +1326,8 @@
    "what": "S7 widget templates for chapter 1's 8 lesson(s) (kinds that genuinely fit, or a gap)",
    "agents": 8,
    "cost": [
-    4.16,
-    5.78
+    5.74,
+    7.98
    ],
    "minutes": 9,
    "priority": [
@@ -1358,10 +1358,10 @@
    "chapter": 1,
    "workflow": "families.workflow.js (s6-v5, grade; parts if > 15 KB)",
    "what": "S6 blind grading of chapter 1's families (blind solver per sampled instance + judge); skipped when the author wrote no family",
-   "agents": 38,
+   "agents": 52,
    "cost": [
-    7.62,
-    10.39
+    10.53,
+    14.36
    ],
    "minutes": 5,
    "priority": [
@@ -1394,8 +1394,8 @@
    "what": "S7 blind reachability verification of chapter 1's widget templates; skipped when the author wrote no template (every lesson a gap — the dry run meets this on every non-geometry chapter)",
    "agents": 11,
    "cost": [
-    3.4,
-    4.73
+    4.7,
+    6.53
    ],
    "minutes": 5,
    "priority": [
@@ -1467,10 +1467,10 @@
    "chapter": 1,
    "workflow": "misconceptions.workflow.js (s5-v5, final; embedded)",
    "what": "S5 final for chapter 1: the catalogue with S6/S7 distractors attached, fail-closed verifier",
-   "agents": 23,
+   "agents": 31,
    "cost": [
-    11.09,
-    15.25
+    15.31,
+    21.05
    ],
    "minutes": 20,
    "priority": [
@@ -1661,7 +1661,7 @@
    "order": 44,
    "embedded_script": "work/g10-math/packets/embedded/fanout/044-wcheck-ch01.workflow.js",
    "launch": "Workflow({scriptPath: \"<abs>/services/extraction/work/g10-math/packets/embedded/fanout/044-wcheck-ch01.workflow.js\"})   # NO args",
-   "prepared": false
+   "prepared": true
   },
   {
    "id": "s0b-B-g7",
@@ -2078,11 +2078,11 @@
    "stage": "S5",
    "chapter": 2,
    "workflow": "misconceptions.workflow.js (s5-v5, draft)",
-   "what": "S5 draft misconceptions for chapter 2's ≈ 8 objectives",
-   "agents": 8,
+   "what": "S5 draft misconceptions for chapter 2's ≈ 9 objectives",
+   "agents": 9,
    "cost": [
-    3.46,
-    4.75
+    3.89,
+    5.35
    ],
    "minutes": 13,
    "priority": [
@@ -2158,10 +2158,10 @@
    "chapter": 2,
    "workflow": "families.workflow.js (s6-v5, author)",
    "what": "S6 family authoring for chapter 2's objectives below the tier floor",
-   "agents": 6,
+   "agents": 7,
    "cost": [
-    2.38,
-    3.24
+    2.67,
+    3.65
    ],
    "minutes": 8,
    "priority": [
@@ -2233,8 +2233,8 @@
    "what": "S7 widget templates for chapter 2's 3 lesson(s) (kinds that genuinely fit, or a gap)",
    "agents": 3,
    "cost": [
-    1.58,
-    2.2
+    1.78,
+    2.48
    ],
    "minutes": 9,
    "priority": [
@@ -2265,10 +2265,10 @@
    "chapter": 2,
    "workflow": "families.workflow.js (s6-v5, grade; parts if > 15 KB)",
    "what": "S6 blind grading of chapter 2's families (blind solver per sampled instance + judge); skipped when the author wrote no family",
-   "agents": 14,
+   "agents": 16,
    "cost": [
-    2.9,
-    3.96
+    3.27,
+    4.46
    ],
    "minutes": 5,
    "priority": [
@@ -2301,8 +2301,8 @@
    "what": "S7 blind reachability verification of chapter 2's widget templates; skipped when the author wrote no template (every lesson a gap — the dry run meets this on every non-geometry chapter)",
    "agents": 4,
    "cost": [
-    1.3,
-    1.8
+    1.46,
+    2.02
    ],
    "minutes": 5,
    "priority": [
@@ -2379,10 +2379,10 @@
    "chapter": 2,
    "workflow": "misconceptions.workflow.js (s5-v5, final; embedded)",
    "what": "S5 final for chapter 2: the catalogue with S6/S7 distractors attached, fail-closed verifier",
-   "agents": 10,
+   "agents": 11,
    "cost": [
-    4.22,
-    5.81
+    4.75,
+    6.53
    ],
    "minutes": 20,
    "priority": [
@@ -2530,11 +2530,11 @@
    "stage": "S5",
    "chapter": 3,
    "workflow": "misconceptions.workflow.js (s5-v5, draft)",
-   "what": "S5 draft misconceptions for chapter 3's ≈ 3 objectives",
-   "agents": 3,
+   "what": "S5 draft misconceptions for chapter 3's ≈ 5 objectives",
+   "agents": 5,
    "cost": [
-    1.3,
-    1.78
+    2.16,
+    2.97
    ],
    "minutes": 13,
    "priority": [
@@ -2616,10 +2616,10 @@
    "chapter": 3,
    "workflow": "families.workflow.js (s6-v5, author)",
    "what": "S6 family authoring for chapter 3's objectives below the tier floor",
-   "agents": 2,
+   "agents": 4,
    "cost": [
-    0.89,
-    1.22
+    1.48,
+    2.02
    ],
    "minutes": 8,
    "priority": [
@@ -2654,8 +2654,8 @@
    "what": "S7 widget templates for chapter 3's 1 lesson(s) (kinds that genuinely fit, or a gap)",
    "agents": 1,
    "cost": [
-    0.59,
-    0.83
+    0.99,
+    1.38
    ],
    "minutes": 9,
    "priority": [
@@ -2686,10 +2686,10 @@
    "chapter": 3,
    "workflow": "families.workflow.js (s6-v5, grade; parts if > 15 KB)",
    "what": "S6 blind grading of chapter 3's families (blind solver per sampled instance + judge); skipped when the author wrote no family",
-   "agents": 5,
+   "agents": 9,
    "cost": [
-    1.09,
-    1.49
+    1.81,
+    2.48
    ],
    "minutes": 5,
    "priority": [
@@ -2722,8 +2722,8 @@
    "what": "S7 blind reachability verification of chapter 3's widget templates; skipped when the author wrote no template (every lesson a gap — the dry run meets this on every non-geometry chapter)",
    "agents": 1,
    "cost": [
-    0.49,
-    0.68
+    0.81,
+    1.12
    ],
    "minutes": 5,
    "priority": [
@@ -2790,10 +2790,10 @@
    "chapter": 3,
    "workflow": "misconceptions.workflow.js (s5-v5, final; embedded)",
    "what": "S5 final for chapter 3: the catalogue with S6/S7 distractors attached, fail-closed verifier",
-   "agents": 5,
+   "agents": 7,
    "cost": [
-    1.58,
-    2.18
+    2.64,
+    3.63
    ],
    "minutes": 20,
    "priority": [
