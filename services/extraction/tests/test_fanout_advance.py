@@ -659,7 +659,6 @@ class WorkingCheck(Base):
         self.assertIsNone(rep["waiting"])
         self.assertEqual(rep["counts"]["working_check"]["flagged_solutions"], 9)
         self.assertIn("1 solution(s) no checking agent answered", rep["warnings"][0])
-        self.assertEqual(self.ex.argv_of("meter_run.py")[-1][-2:], ["--stage", "SW"] if False else self.ex.argv_of("meter_run.py")[-1][-2:])
         self.assertTrue(all(c[0][c[0].index("--stage") + 1] == "SW" for c in self.ex.calls if c[0][0] == "meter_run.py"))
 
     def test_the_copy_is_told_apart_by_its_embedded_sha(self):
@@ -700,8 +699,6 @@ class S5Draft(Base):
         self.assertEqual(dump[-1], "scratch_pilot")
         self.assertTrue(dump[dump.index("-f") + 1].endswith("work/g10-math/backups/pilot-before-ch04-load.dump"))
         self.assertEqual(self.ex.tools[1][:2], ["pg_restore", "-l"])
-        # the dump comes before the load: order of the recorded commands
-        order = [("dump" if c[0] == "pg_dump" else c[0]) for c in self.ex.tools + [(x[0],) for x in self.ex.calls]]
         self.assertEqual(rep["backups"][0]["bytes"], len(b"PGDMP-fake"))
         self.assertEqual(rep["prepared"] and [p["id"] for p in rep["prepared"]], ["s6-author-ch04", "s7-author-ch04"],
                          "S6/S7 author are prepared once the chapter is loaded")
@@ -709,7 +706,6 @@ class S5Draft(Base):
     def test_the_dump_is_taken_before_the_first_write(self):
         b = self.box
         seen = []
-        b.ex.on("pg_dump", lambda argv: (seen.append(("dump", len(b.ex.argv_of("load_seed.py")))), A.Result(0, ""))[1])
         orig = b.ex.tool
 
         def tool(argv, timeout=0):
@@ -990,12 +986,11 @@ class S5Final(Base):
         cfg, gen = "work/g10-math/fanout/books/ch04/g10-math.json", "seed/generated/g10-math/ch04"
         graphs = ["--graph", "seed/g10-math/g10m-c04.json", "--graph", "seed/g10-math/g10m-course.json"]
         names = [s["step"] for s in rep["steps"]]
-        self.assertEqual(names, ["S5 catalogue", "load catalogue dry run", "pg_dump", "load catalogue", "generated questions", "widget questions",
+        self.assertEqual(names, ["chapter config", "S5 catalogue", "load catalogue dry run", "pg_dump", "load catalogue", "generated questions", "widget questions",
                                  "reconcile tags with the catalogue", "validate generated-questions.json", "load generated-questions.json",
                                  "validate widget-questions.json", "load widget-questions.json", "G3 auto-pass", "apply G3 verdicts",
                                  "G4 auto-pass", "coverage", "parity (every course)"])
-        calls = {n: c for n, c in [(s["step"], None) for s in rep["steps"]]}
-        by_script = lambda s: self.ex.argv_of(s)
+        by_script = self.ex.argv_of
         self.assertEqual(by_script("assemble_misconceptions.py"), [
             ["assemble_misconceptions.py", final, "--book", cfg, "--out", f"{gen}/misconceptions.json", *graphs],
             ["assemble_misconceptions.py", final, "--book", cfg, "--out", f"{gen}/misconceptions.json", "--bundle", f"{gen}/generated-questions.json",
@@ -1068,7 +1063,6 @@ class S5Final(Base):
 
     def test_parity_red_blocks(self):
         b = self.box
-        orig = self.ex.rules["parity_check.py"]
         self.ex.on("parity_check.py", lambda argv: A.Result(1, "✗ questions_total 450 != 452\n"))
         rc, rep, wf = b.go("s5-final-ch04", result={"stage": "final"})
         self.assertEqual(rc, 1)
