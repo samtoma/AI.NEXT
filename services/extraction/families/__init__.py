@@ -19,6 +19,7 @@ THE FORMAT (``"format": "ainext.family/1"``), one family per file::
       "kind": "family",                        # or "authored": a one-off with no params
       "lo_id": "lo:g10m4s2-1-1",               # exactly one objective
       "parent_question_id": "q:g10m4s2-1-1:ex4-1-3a",   # the book question it derives from
+      "parent_kind": "question",               # optional: "question" (default) | "teaching" — see below
       "source_page": 57,
       "tier": "basic",                         # basic | standard | advanced
       "answer_type": "numeric",                # numeric | mcq | expression
@@ -51,6 +52,14 @@ THE FORMAT (``"format": "ainext.family/1"``), one family per file::
       "proposed_misconceptions": [],           # ids this spec uses that S5 has not written yet
       "notes": "for the reviewer"
     }
+
+PARENT. A family derives from ONE book item of its objective: by default a book question
+(``parent_question_id`` ``q:<lo tail>:<item>``). Where the book gave the objective no markable
+question — its items are teaching material, drawings above all — the parent may instead be a book
+TEACHING item (Samuel's answer 40, 2026-10-01): ``"parent_kind": "teaching"`` and the worked
+example's library id, ``"parent_question_id": "expl:<lo tail>:<item>"``. The kind is declared,
+never guessed from the id, and the check refuses an id that disagrees with it. Omitting
+``parent_kind`` means ``"question"``, so every spec written before answer 40 is unchanged.
 
 Templates (``stem``, ``solution[]``, choice texts, ``marker.answer``) interpolate
 ``{=expression}``. A number renders through the house ``num()`` (no trailing
