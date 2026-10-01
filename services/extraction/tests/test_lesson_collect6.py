@@ -325,9 +325,9 @@ class KindForForm(unittest.TestCase):
         self.assertEqual([(i["ref"], i["rule"], i["key"]) for i in r], [("Ex1-9:11", "kind-for-form", CUBE_KEY)])
 
     def test_the_retyped_item_is_a_valid_run_item_the_seam_verifies(self):
-        # the judge reads the flattened print ("( 3√ 25x + 1)…") as the LaTeX key; nothing else is left to settle
+        # the judge reads the flattened print ("( 3√ 25x + 1)…") and the book's "=(…)" line as the LaTeX key; nothing else is left to settle
         judge = {"verdicts": [{"pair_id": f"Ex1-9:11|{p}", "verdict": "equivalent", "reason": "the printed form is flattened"}
-                              for p in ("blind~printed", "book~printed")]}
+                              for p in ("blind~book", "book~printed")]}
         _, x = self.cube(judge=judge)
         schemas.AnswerSpec.model_validate(x["marker"])
         self.assertEqual(alb.marker_spec_problems(x), [])
