@@ -477,6 +477,9 @@ function inBookSolution(solution, final) {
     const n = containNorm(p)
     if (!n) return false
     if (hay.some((h) => h.includes(n))) return true
+    // an equation the other way round: the final "a=\frac{…}{t^{2}}" is the solution's last line "\frac{…}{t^{2}}&=a" (COLLECT-6)
+    const sw = swapEq(n)
+    if (sw && hay.some((h) => h.includes(sw))) return true
     const parts = n.split('=')
     // a worked chain L=m1=…=R the typing agent wrote out states L=R, which the solution must hold (COLLECT-3)
     if (workedChain(n) && hay.some((h) => h.includes(`${parts[0]}=${parts[parts.length - 1]}`))) return true
@@ -769,6 +772,40 @@ function kindForForm(t, form) {
   return eq === 1 ? 'equation' : 'expression'
 }
 
+// a numeric key that is one fraction: "\frac{9}{10}", "-\frac{3}{8}", "\frac{-3}{8}", "-5/3" (the unit, if any, dropped). Returns the key as
+// the typing agent wrote it, without the unit, or null.
+function fractionKey(key) {
+  const k = String(key == null ? '' : key).replace(/\$/g, '').replace(/\\(?:text|mathrm|textrm|mbox)\{[^{}]*\}/g, '').replace(/\s*[A-Za-z%°][A-Za-z%°0-9\s]*$/, '').trim()
+  const n = normTex(k)
+  return /^-?\\frac\{\d+\}\{\d+\}$/.test(n) || /^-?\d+\/\d+$/.test(n) ? k : null
+}
+// the top-level ";"-separated parts of a key (never inside (), {} or [])
+function semicolonParts(key) {
+  const out = []; let depth = 0, cur = ''
+  for (const ch of String(key)) {
+    if ('({['.includes(ch)) depth++
+    if (')}]'.includes(ch)) depth--
+    if (ch === ';' && depth === 0) { out.push(cur); cur = '' } else cur += ch
+  }
+  out.push(cur)
+  return out.map((x) => x.trim()).filter(Boolean)
+}
+// The kind a KEY needs when the typing agent's kind cannot read it (see checkTyping): "values" for a list of plain values (numbers, fractions,
+// surds: no variable, no relation) typed "surd" or "expression"; "interval" for inequalities and set membership typed "equation" or
+// "expression" (the app's interval kind reads x<4; x∈ℕ, x≠3 and 3<x<6; the equation kind refuses them). null: the kind stands.
+function kindForKey(key, kind) {
+  const k = String(key == null ? '' : key)
+  if (kind === 'surd' || kind === 'expression') {
+    const parts = semicolonParts(k)
+    if (parts.length >= 2 && parts.every((x) => { const n = normTex(x); return !/[=<>≤≥≠∈]/.test(n) && !/[A-Za-z]/.test(n.replace(/\\[a-zA-Z]+/g, '')) })) return 'values'
+  }
+  if (kind === 'equation' || kind === 'expression') {
+    const n = normTex(k)
+    if (/[<>≤≥∈≠]|\\neq?(?![a-zA-Z])|\\in(?![a-zA-Z])/.test(n) && !/=/.test(n)) return 'interval'
+  }
+  return null
+}
+
 function checkTyping(it, t, lessonText) {
   const problems = []
   if (!t) return { problems: ['typing returned nothing'] }
@@ -783,6 +820,19 @@ function checkTyping(it, t, lessonText) {
       return r
     }
   }
+  // collect-6 (Chapter 4): a numeric key that is a fraction is an exact value the app's NUMERIC grader cannot mark ("-5/3" is read as -5 by
+  // parseFloat, so a correct "-5/3" or "-1.6667" is marked wrong); the expression marker marks it ("9/10", "0.9" and "18/20" for 9/10).
+  // Typed again as an expression, the key kept exactly (the unit, if any, is the stem's), and recorded.
+  if (t.answer_type === 'numeric') {
+    const fk = fractionKey(t.key)
+    if (fk) {
+      const r = checkTyping(it, Object.assign({}, t, { answer_type: 'expression', marker_kind: 'expression', form: '', variables: [], key: fk }), lessonText)
+      r.typed.retyped = { from: 'numeric', as: 'expression (an exact fraction)', rule: 'fraction-key',
+        because: [`the numeric key "${t.key}" is a fraction: the numeric grader reads "a/b" as a, the expression marker marks the fraction`] }
+      return r
+    }
+  }
+  let effKind = t.marker_kind
   // (collect-6: an item typed not markable marks no answer, so a copy of the book's final that is not faithful is no problem)
   if (t.answer_type !== 'not_markable' && t.book_final && !inBookSolution(it.solution, t.book_final)) problems.push('book_final is not in the book solution')
   if (!t.book_final && t.answer_type !== 'not_markable') problems.push('no book_final')
@@ -821,6 +871,16 @@ function checkTyping(it, t, lessonText) {
     // collect-6 (Ex1-9:11): a form the kind cannot carry. The key is algebra in the variables → the kind is normalised (expression, or
     // equation) and the retype recorded; otherwise the item carries the problem, so it is held (schemas.AnswerSpec would refuse it)
     let kind = t.marker_kind
+    // collect-6 (Chapter 4): a kind the key cannot be read under. A list of values typed "surd" (x = √18 or x = −√18) or an
+    // inequality / set-membership list typed "equation" ("not an equation" to the app's marker) is held as unanswerable at assembly; the
+    // marker reads the same key under "values" / "interval" (checked against the app's marker), so the KIND is normalised, the key kept exactly.
+    const reKind = MARKER_KINDS.includes(kind) ? kindForKey(t.key, kind) : null
+    if (reKind) {
+      typed.retyped = { from: `expression (${kind})`, as: `expression, kind ${reKind} (was ${kind})`, rule: reKind === 'values' ? 'kind-for-list' : 'kind-for-relations',
+        because: [reKind === 'values' ? `the key lists values, which kind "${kind}" cannot read` : `the key is an inequality or a set-membership list, which kind "${kind}" cannot read`] }
+      kind = reKind
+    }
+    effKind = kind
     const formWhy = MARKER_KINDS.includes(kind) ? formKindProblem(form, kind) : null
     if (formWhy) {
       const to = kindForForm(t, form)
@@ -842,11 +902,18 @@ function checkTyping(it, t, lessonText) {
     const numOf = (x) => { const m = normTex(x).split('=').pop().match(/-?\d+(?:\.\d+)?(?:\/\d+)?/); return m ? m[0] : null }
     // a printed answer that opens with "=" has lost its left side to the text layer ("= −14n + 7" for "T_n = −14n + 7"): its right side
     // is what it states, and the key's own left side is not what the book printed (COLLECT-6; the value is never touched)
-    const readAs = against ? [against, ...(it.printed_answer && /^\s*=\s*\S/.test(against) ? [against.replace(/^\s*=\s*/, '')] : [])] : []
+    const unitless = against && it.printed_answer ? withoutUnit(against, it.stem, t.unit) : null     // "19 50 litres": the stem names the unit
+    const readAs = against ? [against, ...(it.printed_answer && /^\s*=\s*\S/.test(against) ? [against.replace(/^\s*=\s*/, '')] : []), ...(unitless ? [unitless] : [])] : []
+    const asValues = t.answer_type === 'expression' && effKind === 'values'
     if (against && !(readAs.some((ag) => settle(t.key, ag, !!it.printed_answer).verdict === 'equivalent') ||
-      (t.answer_type === 'expression' && t.marker_kind === 'values' && sameValues(t.key, against, !!it.printed_answer)) ||
+      (asValues && sameValues(t.key, against, !!it.printed_answer)) ||
+      // collect-6 (Chapter 4): the values a SENTENCE states ("There are 5 tricycles and 2 bicycles."), in order and with nothing else; the
+      // `var = value` segments of a book solution's sentence; a key that is an inequality / interval, found whole in the printed answer
+      (asValues && sentenceMatchesValues(t.key, against)) ||
+      (asValues && (() => { const al = assignedList(against); return !!al && sameValues(t.key, al, false) })()) ||
+      (t.answer_type === 'expression' && relEquivalent(t.key, against, it.ref)) ||
       (t.answer_type === 'numeric' && numOf(typed.answer) !== null && numOf(typed.answer) === numOf(against)) ||
-      (t.answer_type === 'expression' && t.marker_kind === 'values' && betweenEnds(it.stem, against, t.key)) ||
+      (asValues && betweenEnds(it.stem, against, t.key)) ||
       (t.answer_type === 'choice' && norm(against).includes(norm(t.key))))) {
       problems.push(`the key "${t.key}" does not read as the ${it.printed_answer ? 'printed answer' : 'book final answer'} "${against}"`)
     }
