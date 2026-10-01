@@ -328,6 +328,80 @@ class CheckLessonsTest(unittest.TestCase):
         self.assertTrue(alb.check_lessons(gap))
 
 
+class EscapedDollarTest(unittest.TestCase):
+    """Chapter 9's exchange-rate lessons carry a dollar sign written `\\$` inside maths ("$\\text{\\$ 7.00}$", "$\\text{\\$1}&=\\text{R11.42}$", "( $\\$$ )"). The app's
+    TeXRenderer splits on `/(\\$[^$]+\\$)/g`, which knows no escape: the `$` of a `\\$` closed the segment, KaTeX saw half a command, and every later segment of
+    the string paired its dollars the wrong way round. Normalised at assembly into a form with no `$` character; the validator (katex_check.mjs, the app's
+    own split) stays as strict as it was and is what these tests ask."""
+
+    ROWS = {"$\\text{\\$ 7.00}$": "$\\text{\\textdollar{} 7.00}$",
+            "$\\text{\\$1}&=\\text{R11.42}$": "$\\text{\\textdollar{}1}&=\\text{R11.42}$",
+            "( $\\$$ )": "( $\\text{\\textdollar}$ )",
+            "costs $\\$\u00a0\\text{21\\ 900}$ now": "costs $\\text{\\textdollar}\u00a0\\text{21\\ 900}$ now",
+            "gets $\\$\\text{12}$ .": "gets $\\text{\\textdollar}\\text{12}$ .",
+            "$\\mathrm{\\$}5$": "$\\mathrm{\\text{\\textdollar}}5$",
+            "$\\text{a {\\$} b}+\\$$": "$\\text{a {\\textdollar{}} b}+\\text{\\textdollar}$",
+            "the dollar, \\$, is not $x$": "the dollar, $\\text{\\textdollar}$, is not $x$"}
+
+    def test_the_sign_is_written_without_a_dollar(self):
+        for raw, want in self.ROWS.items():
+            got, n = alb.normalise_dollars(raw)
+            self.assertEqual(got, want, raw)
+            self.assertEqual(n, raw.count("\\$") - raw.count("\\\\$"), raw)
+
+    def test_nothing_else_is_touched(self):
+        # a line break before the closing dollar is not an escaped dollar; braces, a lone "\\" and ordinary maths are left as they are
+        for raw in ("$\\frac{35.20}{7}=\\text{5.03}\\\\$", "$a\\\\$ and $b$", "$\\{1,2\\}$", "no maths", "$x$ and $\\text{R}\\ 5$", "50% of $x$",
+                    "$\\text{text} \\textbf{b}$", "", "$\\\\\\\\$"):
+            self.assertEqual(alb.normalise_dollars(raw), (raw, 0), raw)
+
+    def test_nothing_but_the_sign_changes(self):
+        # undoing the rewrite gives the input back, so nothing else was added, dropped or moved
+        for raw, want in self.ROWS.items():
+            back = want.replace("$\\text{\\textdollar}$", "\\$").replace("\\text{\\textdollar}", "\\$").replace("\\textdollar{}", "\\$")
+            self.assertEqual(back, raw)
+
+    def test_it_is_idempotent(self):
+        for raw in self.ROWS:
+            once, _ = alb.normalise_dollars(raw)
+            self.assertEqual(alb.normalise_dollars(once), (once, 0), raw)
+
+    @unittest.skipUnless(shutil.which("node"), "the app's KaTeX runs in node")
+    def test_the_apps_own_split_and_katex_refuse_the_raw_form_and_accept_the_new_one(self):
+        raw = [{"where": f"r{i}", "text": t} for i, t in enumerate(self.ROWS)]
+        self.assertTrue(alb.katex_errors(raw), "the validator must keep flagging a raw \\$: that is what the app does with it")
+        fixed = [{"where": r["where"], "text": alb.normalise_dollars(r["text"])[0]} for r in raw]
+        self.assertEqual(alb.katex_errors(fixed), [])
+
+    @unittest.skipUnless(shutil.which("node"), "the app's KaTeX runs in node")
+    def test_the_dollar_still_prints_and_the_text_after_it_still_pairs(self):
+        # the app's split on the new text: the maths segments are exactly the ones written, none half a command, and the plain text between is untouched
+        import re
+        t, _ = alb.normalise_dollars("American tourists $\\text{\\$ 7.00}$ Dutch tourists $\\text{\u20ac 9.70}$ Brazilian")
+        parts = re.split(r"(\$[^$]+\$)", t)
+        self.assertEqual(parts, ["American tourists ", "$\\text{\\textdollar{} 7.00}$", " Dutch tourists ", "$\\text{\u20ac 9.70}$", " Brazilian"])
+        self.assertEqual(alb.katex_errors([{"where": "a", "text": t}]), [])
+
+    def test_a_bundle_and_a_lesson_content_file_are_cleaned_and_the_report_counts_it(self):
+        rep = alb.Report()
+        out = alb.respace_tree({"questions": [{"id": "q:1", "stem": "He pays $\\text{\\$ 8,49}$ and $\\$\\text{2}$ shipping.",
+                                               "solution": ["$\\text{\\$1}&=\\text{R11.42}$"], "source": "$\\$"}],
+                               "claims": [{"lo": "lo:x", "quote": "the American dollar ( $\\$$ )"}]}, rep)
+        flat = json.dumps(out, ensure_ascii=False)
+        q = out["questions"][0]
+        self.assertNotIn("\\\\$", flat.replace("\\\\\\\\", "").replace(q["source"].replace("\\", "\\\\"), ""))
+        self.assertEqual(q["source"], "$\\$", "metadata is never touched")
+        self.assertEqual(out["claims"][0]["quote"], "the American dollar ( $\\text{\\textdollar}$ )")
+        self.assertEqual(rep.dollars, 4)
+        self.assertEqual(rep.as_dict()["escaped_dollars_normalised"], 4)
+
+    def test_the_entity_pass_sees_the_right_maths_after_it(self):
+        # an entity inside `$\\text{\\$ 7&#176;}$` is inside maths: the degree sign is ^{\\circ} there, which needs the segment not to be cut at the `\\$`
+        rep = alb.Report()
+        out = alb.respace_tree({"stem": "$\\text{\\$ 7}&#176;$ and 5&#176;"}, rep)
+        self.assertEqual(out["stem"], "$\\text{\\textdollar{} 7}^{\\circ}$ and 5\u00b0")
+
+
 if __name__ == "__main__":
     unittest.main()
 
