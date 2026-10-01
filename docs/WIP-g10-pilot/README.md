@@ -1073,3 +1073,46 @@ facts changed since the agents saw it (`stale_items`: stem, working, printed/EPU
 5. The same `g2` line as 3 plus `--recommend runs/g10-math/g2-ch02.recommended.json`; `assemble_lesson_bundle.py --book g10-math --chapter 2 --report runs/g10-math/fanout/assembly-ch02.json`; `load_seed.py … --validate-only`.
 6. DB (both chapters are loaded): `pg_dump`, `load_seed.py … --course course:us-g10-math-en --update --dry-run` and without, `apply_review_verdicts.py --g2 runs/g10-math/g2-ch02.json --book g10-math --runs runs/g10-math/lesson` (dry run first).
 7. `uv run auto_pass_gates.py g2-recommend-delta g10-math --chapter 2 --out runs/g10-math/g2rec/ch02.delta-ids.json`, then `working_check.py args … --only` that file, pass A and pass B. The delta covers the eleven newly-live fraction questions too, not only what the recommendation made live.
+
+## Chapter 5 re-collected and closed: plain-text finals against a LaTeX solution, whole values, the degree sign's HTML entity — 2026-10-01 (data-engineer)
+
+No Workflow launched, no model call, nothing loaded into a database, `auto_pass_gates.py` untouched. All commands from `services/extraction/`. Chapter 5's five lesson runs
+(`wf_3d2ef40a-c31` s3-1, `wf_cbad03dc-4b1` s5-1, `wf_26d2329d-0c0` s6-1, `wf_67e3bf3c-697` s7-1, `wf_796e9e13-512` s8-1) re-collected into `runs/g10-math/lessons/recollected/`.
+
+**The class** (g10m5s7-1, trigonometry "solving problems": 80 typing problems of 88 items, 75 of them "book_final is not in the book solution", none wrong): the typing agent copies the
+final as PLAIN TEXT — `x ≈ 76,60`, `θ ≈ 26,6°`, `α ≈ 23,96°`, `h ≈ 10`, `≈80,1°`, `sin B̂ = AC/AB = AD/BD`, `∴Areaof△ABC=16944units²` — and the solution is LaTeX: `x&\approx\text{76,60}`
+(decimal comma inside `\text{}`), `\approx`, `^{\circ}`, `\hat{B}`, `\frac{AC}{AB}`, `\triangleABC`, and the unrounded value (`\text{76,60444...}`) in the working. `lesson.workflow.js`
+(COLLECT-6, rules in `runbook/README.md` §3 and the script's header; tests `ApproximateFinals`, `ChapterFiveForms`, `NoSingleEditOfAFinal` in `tests/test_lesson_collect6.py`):
+signs are read alike (`≈` `°` hats, function names glued by the EPUB — `\sinA` —, a simple fraction as a/b, `△` `∴` `²`), **digits never**: a final is found only as a WHOLE VALUE (`hasValue`):
+`76,6` is not in `76,60`, `76,61`, `77,60`, `x = 76,60` (the solution says ≈), `x ≈ 7,72` against a working that only says `7,723645...`, `h ≈ 1` in `h ≈ 10`, `x=2` in `x=2/3`, `5` in `-5`
+are all still refused — and `NoSingleEditOfAFinal` refuses every one-digit edit of each accepted final (the same match was a substring before, for every chapter; no item of chapters 1–4
+gained a problem). Also: a Greek letter, `≈` and a trigonometric ratio (`\sin45°=`) are LABELS; a worked chain's last link is its answer (`sin Â = opp/hyp = CB/AC`); `a = 4(−24) = −96` is −96;
+a list of words against the sentence that names them (`$a$ is the adjacent side $b$ is …`: as many `$x$` labels as words); a sentence's units (`9,96 mm and 8,35 mm`, `8,7 cm, 5,65 cm and 5,65 cm`:
+units are no word, no number, and not a number's order); a plain "therefore"; and a typing that named NO marker kind (10 fractions of s8-1) takes the key's (`kind-from-key`, recorded).
+
+**The 13 judge pairs (Ex5-5:1–5, Ex5-6:1a–c, Ex5-8:17a,b,d,e,g, all blind~printed): my own regression, now fixed.** In the recorded run they were settled by the SIGNATURE route and never went to a judge
+(no verdict was ever recorded): blind `\theta \approx 42{,}07^{\circ}` against the printed `42,07°`. Last round's signature kept Greek letters visible (so `2\pi r` is not `2r`), and `\theta` as a label on the
+blind answer then stopped matching. A Greek letter (and `≈`) in the label position is a label again (`stripLhs`, `VALUE_LABEL`, the signature without its left side), and `tests/test_lesson_collect6.py::ApproximateFinals::
+test_a_greek_label_on_the_blind_answer_is_a_label_not_a_difference` pins it (π inside a value is still visible). With the fix **no blind~printed pair needs a judge**. What does need one: **21 blind~book pairs of s7-1** (items whose
+book_final was missing and is now present: mostly the blind solver's own different answer, e.g. Ex5-4:1a blind 37,31 against 36,11; a few format differences, Ex5-8:10a `x = 35` against `≈35°`). A Workflow resume of `lesson.g10m5s7-1`
+(`recollect_lessons.py --resume-preview` logic, run against a throwaway copy of today's script, since the prepared `089-lesson-g10m5s7-1` carries the OLD collection) would replay 11 calls
+(claims, typing ×3, blind ×6, tier) and run LIVE: `S3:judge` (≈ $0.14), `S4:viz` ×3 and `S4:compare` (≈ $2.2 of figures nothing changed in) and `S8:oracle` (≈ $0.10): **≈ $2.44 of the recorded $3.76**. The chapter does not need
+it: those items are already disputed by the blind solver and are held for G2. (s6-1's 10 pairs, which today's script first sent to the judge, are settled deterministically now: a trigonometric ratio is a label.)
+
+**Re-collect, before → after, typing problems** (per lesson; items agreed / disputed after):
+s3-1 21 → 5 (8 / 3, 15 without a printed answer); s5-1 2 → 2 (52 / 3); s6-1 10 → 1 (40 / 0); s7-1 80 → 3 (63 / 24; unchecked 75 → 0); s8-1 12 → 0 (35 / 2). Total 125 → 11.
+
+**Close-out** (`uv run fanout.py close-chapter 5`; there was no `g2-ch05.json`, so no stale auto verdict to drop): G2 auto-pass **12 accept, 15 exclude, 27 held, 9 teaching (typed not markable)**, 15 typed again (10 `kind-from-key`, 5 fractions). Assembly:
+**223 questions, 195 live**, 27 held `answer_mismatch`, 1 `unanswerable` (ex5-7-9a `(-24, -7); (-48, -14)`: not a coordinate pair to the app's marker), 29 excluded/teaching, KaTeX errors 0. Idempotent: a second run gave byte-identical
+G2, assembly, seed and copies (the seed's input hash moves when the script is edited). **It first failed `load_seed --validate-only`**: 28 stems and solutions of s5-1, s6-1 and s7-1 carry the numeric HTML reference `&#176;` inside their maths
+(`$\cos30&#176;=$`); KaTeX refuses the `&`. `assemble_lesson_bundle.unescape_entities` (new, through `respace_tree`; report field `html_entities_unescaped`; `tests/test_assemble_lesson_bundle.py::HtmlEntityTest`) makes a reference the character it names,
+`^{\circ}` inside `$…$`; nothing else is touched. The EPUB source (`source_adapter.py`) still has them.
+Prepared, verified, not launched: `work/g10-math/packets/embedded/fanout/097-wcheck-ch05.workflow.js` + `097-wcheck-ch05-B.workflow.js` (237 solutions, 102 agents a pass, ≈ $13.6–17.6), `092-s5-draft-ch05.workflow.js` (13 agents, ≈ $5.6–7.7),
+`g2rec-ch05.workflow.js` (42 items, 12 agents, ≈ $2.4–7.5).
+
+**Still excluded, 15:** Ex5-1:4 (the key lists three ratios, the agent's book_final only the last), Ex5-1:6 and Ex5-8:1a–c (options "not all in the stem"), Ex5-2:1v, 1y and Ex5-6:1g, 1k, 1m (closed-set options "real" / "undefined" / "solution exists" named neither in the stem nor in the lesson), Ex5-3:5b
+(a choice with no key), and **Ex5-4:2a, 2b, 2c, 3 — a NEW class for Samuel: multi-letter marker variables** (`AC`, `AD`, `MN`: a side's name). `schemas.AnswerSpec` (and the contract) allow a single letter, a subscripted letter or a Greek name; the app's own marker accepts `AC` as one symbol and
+even marks the plain `AC/AB=AD/BD` correct, but with the contract's single letters `A`, `B`, `C`, `D` the plain form is unreadable (only `\frac{AC}{AB}=…` is marked). Either the contract grows `[A-Z]{2,3}` or the agent's variables are split; not done here.
+
+**Chapters 1–4 (nothing reloaded, nothing re-closed):** with today's script chapters 3 and 4 change nothing (0 items; the recollected files are as last round's, only their script sha would move). Chapter 1: Ex1-11:37b flips (typing OK, kind `values` → `interval`; 37a only its kind), Ex1-10:4c stays excluded; the other lessons nothing. Chapter 2:
+14 items now excluded would pass typing: g10m2s2-1 Ex2-4:1q, 1r, 1s, 1z, 2a, 2b, 2l and g10m2s4-1 Ex2-4:3d, 3g, 3n, 3p (fractions typed `expression`) plus Ex2-3:4, Ex2-4:4, Ex2-4:5 ("therefore x ≈ 1,49": a plain "therefore"); all `agreed` but Ex2-4:3p.
