@@ -806,3 +806,28 @@ Also fixed: `auto_pass_gates.py g1 --approve` called `approve` without `--maths`
 own `maths/book/accepted.json`, with `--objectives-dir`); `fanout.py`'s G1 stamp now is `auto-pass G1 (AI recommendation)` (the console and
 `review_policy.is_auto` only know "auto-pass …") and the plan runs `auto_pass_gates.py g1/g2` itself. `auto_pass_gates.py g2` reads no maths
 (nothing in it does); `--maths` is forwarded to the `lesson-runs` step `--split` runs.
+
+## g10m1s7-3 would not split: a marker kind its form cannot carry — 2026-10-01 (data-engineer)
+
+`lesson-runs g10-math runs/g10-math/lessons/wf_552eebe2-d46.json --draft` stopped on Ex1-9:11 ("Factorise: $25x^{3}+1$", answer
+`(\sqrt[3]{25}x+1)((\sqrt[3]{25})^2x^2-\sqrt[3]{25}x+1)`): the typing agent called it marker kind `surd` with form `factorised`, and
+`schemas.AnswerSpec` refuses `factorised` / `expanded` on anything but an expression or an equation (and a subject form on anything but an
+equation), so the whole lesson's draft was not written. No model was called; no Workflow launched; `work/g10-math/packets/` not touched.
+
+**Fix** (collection, deterministic; `runbook/lesson.workflow.js`, COLLECT-6; README §3): where the key is plainly algebra in its declared
+variables, the KIND becomes `expression` (`equation` when the key has an `=`), the key is kept exactly, and the retype is recorded
+(`typing_retyped`, rule `kind-for-form`; `verify.retyped`; the G2 gate record says why). Where the key cannot settle it (interval, coordinates,
+list of values, no variable in the key, `decimal` on a surd) the item carries the form-and-kind problem and is held. `simplest` is untouched.
+`assemble_lesson_bundle.marker_spec_problems` is the same line in the Python seam for a run an older collection made (flag only; the auto-pass
+reads it too). Tests: `tests/test_lesson_collect6.py::KindForForm`, `tests/test_typing_seam.py::MarkerKindForForm`.
+
+**The app's marker reads it**: `\sqrt[3]{25}` inside an `expression` key passes `validateKey`, marks the key, a reordering and a commuted
+first factor correct, `25x^3+1` `wrong_form`, and the sign-flipped factorisation `incorrect`; `marker_check.mjs` reads all 44 markers of the
+re-collected lesson with nothing rejected or unreadable.
+
+**Status.** Re-collected (no model call): `runs/g10-math/lessons/recollected/wf_552eebe2-d46.json`; `lesson-runs --draft` on it wrote
+`runs/g10-math/lesson-draft/g10m1s7-3.json` (pending G2: Ex1-9:17, a printed-answer misprint). Ex1-9:11 is now typed correctly but is still
+**disputed**, rightly, not by typing: the blind solver said "cannot be factorised" (it would not factorise over the rationals), the book and its
+EPUB factorise over the reals with a cube root of 25. G2 should accept the book's key. No other saved run had an incoherent marker, so
+g10m1s7-2 (`wf_5acb7902-ff6`) is unaffected and was not re-collected. The collection is still `collect-6` (same day; the fan-out plan names it);
+a lesson-v8 / collect-6 copy prepared before this change lacks the rule — re-collect its run (`recollect_lessons.py`), it is never a re-run.
