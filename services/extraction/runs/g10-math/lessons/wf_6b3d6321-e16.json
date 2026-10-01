@@ -1,0 +1,4815 @@
+{
+ "stage": "S2-S4,S8",
+ "workflow": "lesson",
+ "prompts_version": "lesson-v8",
+ "collect_version": "collect-6",
+ "book": "g10-math",
+ "embedded": {
+  "source": "runbook/lesson.workflow.js",
+  "source_sha256": "7efa3908b7d87e1ac1d1e4f68d43d5353fc06a08eefbb6baf1eb9ad128f6ea37",
+  "args_sha256": "ccb30f178ac19d89e00fb57293d34d969e1528f96892baca0dd26679b7034013",
+  "generated_sha256": "898b3ba960a9c6236328352de72b14e6e3bcb774c0845a713d4b1e8484cc3426",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "lessons": [
+  {
+   "lesson": "g10m4s3-1",
+   "claims": [
+    {
+     "lo": "lo:g10m4s3-1-1",
+     "type": "definition",
+     "text": "A quadratic equation is an equation where the exponent of the variable is at most 2.",
+     "anchor": "b01268",
+     "printed_page": 78,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "A quadratic equation is an equation where the exponent of the variable is at most",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m4s3-1-1",
+     "type": "definition",
+     "text": "The equation 2x^2+2x=1 is given as an example of a quadratic equation.",
+     "anchor": "b01269",
+     "printed_page": 78,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "2{x}^{2}+2x&=1",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m4s3-1-1",
+     "type": "method",
+     "text": "The first step in solving a quadratic equation is to rewrite the equation in the required form ax^2+bx+c=0.",
+     "anchor": "b01274",
+     "printed_page": 79,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "Rewrite the equation in the required form, $a{x}^{2}+bx+c=0$",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m4s3-1-2",
+     "type": "rule",
+     "text": "Quadratic equations differ from linear equations in that a linear equation has only one solution, while a quadratic equation has at most two solutions.",
+     "anchor": "b01270",
+     "printed_page": 79,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "Quadratic equations differ from linear equations in that a linear equation has only one solution, while a quadratic equation has at most two solutions.",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m4s3-1-2",
+     "type": "caution",
+     "text": "There are some special situations in which a quadratic equation has either one solution or no solutions.",
+     "anchor": "b01270",
+     "printed_page": 79,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "There are some special situations, however, in which a quadratic equation has either one solution or no solutions.",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m4s3-1-2",
+     "type": "method",
+     "text": "Quadratic equations are solved using factorisation.",
+     "anchor": "b01271",
+     "printed_page": 79,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "We solve quadratic equations using factorisation.",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m4s3-1-2",
+     "type": "method",
+     "text": "To solve a quadratic equation by factorisation, write it in its equivalent factorised form; for example, 2x^2-x-3=0 is written as (x+1)(2x-3)=0.",
+     "anchor": "b01271",
+     "printed_page": 79,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "we need to write it in its equivalent factorised form as",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m4s3-1-2",
+     "type": "rule",
+     "text": "If a times b equals 0, then a=0 or b=0.",
+     "anchor": "b01271",
+     "printed_page": 79,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "Note that if $a\\timesb=0$ then $a=0$ or $b=0$",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m4s3-1-2",
+     "type": "method",
+     "text": "Divide the entire equation by any common factor of the coefficients to obtain an equation of the form ax^2+bx+c=0.",
+     "anchor": "b01274",
+     "printed_page": 79,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "Divide the entire equation by any common factor of the coefficients",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m4s3-1-2",
+     "type": "method",
+     "text": "After dividing out the common factor, a, b and c have no common factors.",
+     "anchor": "b01274",
+     "printed_page": 79,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "have no common factors",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m4s3-1-2",
+     "type": "method",
+     "text": "For example, 2x^2+4x+2=0 can be written as x^2+2x+1=0 after dividing by the common factor.",
+     "anchor": "b01274",
+     "printed_page": 79,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "For example $2{x}^{2}+4x+2=0$ can be written as ${x}^{2}+2x+1=0$",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m4s3-1-2",
+     "type": "method",
+     "text": "Factorise ax^2+bx+c=0 to be of the form (rx+s)(ux+v)=0.",
+     "anchor": "b01274",
+     "printed_page": 79,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "Factorise $a{x}^{2}+bx+c=0$ to be of the form $\\left(rx+s\\right)\\left(ux+v\\right)=0$",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m4s3-1-2",
+     "type": "method",
+     "text": "The two solutions come from setting each factor equal to zero: (rx+s)=0 or (ux+v)=0.",
+     "anchor": "b01274",
+     "printed_page": 79,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "The two solutions are $\\left(rx+s\\right)=0$ or $\\left(ux+v\\right)=0$",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m4s3-1-2",
+     "type": "rule",
+     "text": "The solutions of (rx+s)(ux+v)=0 are x=-s/r or x=-v/u, respectively.",
+     "anchor": "b01274",
+     "printed_page": 79,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "so $x=-\\dfrac{s}{r}$ or $x=-\\dfrac{v}{u}$",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m4s3-1-2",
+     "type": "method",
+     "text": "Check the answer by substituting it back into the original equation.",
+     "anchor": "b01274",
+     "printed_page": 79,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "Check the answer by substituting it back into the original equation.",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m4s3-1-2",
+     "type": "method",
+     "text": "To solve 3x^2+2x-1=0, factorise it as (x+1)(3x-1)=0.",
+     "anchor": "WE4",
+     "printed_page": 79,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "Factorise: $\\left(x+1\\right)\\left(3x-1\\right)=0$",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m4s3-1-2",
+     "type": "method",
+     "text": "After factorising, solve for both factors: x+1=0 gives x=-1, OR 3x-1=0 gives x=1/3.",
+     "anchor": "WE4",
+     "printed_page": 79,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "Solve for both factors: We have",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m4s3-1-2",
+     "type": "method",
+     "text": "Write the final answer as a statement giving both solutions: the solution to 3x^2+2x-1=0 is x=-1 or x=1/3.",
+     "anchor": "WE4",
+     "printed_page": 79,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "is $x=-1$ or $x=\\frac{1}{3}$",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m4s3-1-2",
+     "type": "method",
+     "text": "An equation written as 0=-2x^2+4x-2 is rearranged to -2x^2+4x-2=0, with zero on the right, before dividing out the common factor to give x^2-2x+1=0.",
+     "anchor": "WE5",
+     "printed_page": 80,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "-2{x}^{2}+4x-2&=0",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m4s3-1-2",
+     "type": "method",
+     "text": "Divide the equation by the common factor: -2x^2+4x-2=0 becomes x^2-2x+1=0.",
+     "anchor": "WE5",
+     "printed_page": 80,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "Divide the equation by common factor",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m4s3-1-2",
+     "type": "method",
+     "text": "Factorise x^2-2x+1=0 as (x-1)(x-1)=0, which is written (x-1)^2=0.",
+     "anchor": "WE5",
+     "printed_page": 80,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "\\left(x-1\\right)\\left(x-1\\right)&=0",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m4s3-1-2",
+     "type": "definition",
+     "text": "When both factors are the same, as in (x-1)(x-1)=0, the quadratic is a perfect square.",
+     "anchor": "WE5",
+     "printed_page": 80,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "The quadratic is a perfect square",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m4s3-1-2",
+     "type": "rule",
+     "text": "When the quadratic is a perfect square, there is only one solution to the quadratic equation because both factors are the same.",
+     "anchor": "WE5",
+     "printed_page": 80,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "there is only one solution to the quadratic equation because both factors are the same",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m4s3-1-2",
+     "type": "method",
+     "text": "For a perfect square, solve the single repeated factor: (x-1)^2=0 gives x-1=0, so x=1; the solution to 0=-2x^2+4x-2 is x=1.",
+     "anchor": "WE5",
+     "printed_page": 80,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "is $x=1$",
+     "provenance": "checked"
+    }
+   ],
+   "claims_dropped": [],
+   "items": [
+    {
+     "ref": "WE4",
+     "kind": "worked_example",
+     "lo": "lo:g10m4s3-1-2",
+     "stem": "Solve for $x$ : $3{x}^{2}+2x-1=0$",
+     "answer_type": "expression",
+     "answer": "-1; \\frac{1}{3}",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "-1; \\frac{1}{3}",
+      "form": null,
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "Factorise: $\\left(x+1\\right)\\left(3x-1\\right)=0$",
+      "Solve for both factors: We have $\\begin{align*}x+1&=0\\\\\\thereforex&=-1\\end{align*}$ OR $\\begin{align*}3x-1&=0\\\\\\thereforex&=\\frac{1}{3}\\end{align*}$",
+      "Write the final answer: The solution to $3{x}^{2}+2x-1=0$ is $x=-1$ or $x=\\frac{1}{3}$ ."
+     ],
+     "solution_provenance": "book_worked",
+     "printed_answer": null,
+     "epub_final_answer": "The solution to $3{x}^{2}+2x-1=0$ is $x=-1$ or $x=\\frac{1}{3}$ .",
+     "blind_answer": "x=\\frac{1}{3} \\text{ or } x=-1",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 79,
+     "shortcode": null,
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "WE4|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Roots are 1/3 and -1; same set."
+       }
+      ]
+     },
+     "typing_problems": [
+      "the key \"-1; \\frac{1}{3}\" does not read as the book final answer \"The solution to $3{x}^{2}+2x-1=0$ is $x=-1$ or $x=\\frac{1}{3}$ .\""
+     ],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": null,
+     "figures": [],
+     "figures_missing": [],
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "WE5",
+     "kind": "worked_example",
+     "lo": "lo:g10m4s3-1-2",
+     "stem": "Find the roots: $0=-2{x}^{2}+4x-2$",
+     "answer_type": "numeric",
+     "answer": "1",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "Divide the equation by common factor: $\\begin{align*}-2{x}^{2}+4x-2&=0\\\\{x}^{2}-2x+1&=0\\end{align*}$",
+      "Factorise: $\\begin{align*}\\left(x-1\\right)\\left(x-1\\right)&=0\\\\{\\left(x-1\\right)}^{2}&=0\\end{align*}$",
+      "The quadratic is a perfect square: This is an example of a special situation in which there is only one solution to the quadratic equation because both factors are the same. $\\begin{align*}x-1&=0\\\\\\thereforex&=1\\end{align*}$",
+      "Write final answer: The solution to $0=-2{x}^{2}+4x-2$ is $x=1$ ."
+     ],
+     "solution_provenance": "book_worked",
+     "printed_answer": null,
+     "epub_final_answer": "The solution to $0=-2{x}^{2}+4x-2$ is $x=1$ .",
+     "blind_answer": "x=1",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 80,
+     "shortcode": null,
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "WE5|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Double root x=1 in both."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": null,
+     "figures": [],
+     "figures_missing": [],
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-2:1a",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-1",
+     "stem": "Write the following in standard form $(r+4)(5r-4)=-\\text{16}$",
+     "answer_type": "expression",
+     "answer": "5r^{2}+16r=0",
+     "choices": null,
+     "marker": {
+      "kind": "equation",
+      "key": "5r^{2}+16r=0",
+      "form": null,
+      "variables": [
+       "r"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}(r+4)(5r-4)&=-16\\\\5r^{2}-4r+20r-16+16&=0\\\\5r^{2}-4r+20r-16+16&=0\\\\5r^{2}+16r&=0\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "5r2 + 16r = 0",
+     "epub_final_answer": "$5r^{2}+16r=0$",
+     "blind_answer": "5r^{2}+16r=0",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 80,
+     "shortcode": "2FBN",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-2:1a|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-2:1a|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-2:1a|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-2:1b",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-1",
+     "stem": "Write the following in standard form $(3r-8)(2r-3)=-\\text{15}$",
+     "answer_type": "expression",
+     "answer": "6r^{2}-25r+39=0",
+     "choices": null,
+     "marker": {
+      "kind": "equation",
+      "key": "6r^{2}-25r+39=0",
+      "form": null,
+      "variables": [
+       "r"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}(3r-8)(2r-3)&=-15\\\\6r^{2}-9r-16r+24+15&=0\\\\6r^{2}-9r-16r+24+15&=0\\\\6r^{2}-25r+39&=0\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "6r2 −25r + 39 = 0",
+     "epub_final_answer": "$6r^{2}-25r+39=0$",
+     "blind_answer": "6r^{2}-25r+39=0",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 80,
+     "shortcode": "2FBP",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-2:1b|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-2:1b|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-2:1b|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-2:1c",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-1",
+     "stem": "Write the following in standard form $(d+5)(2d+5)=\\text{8}$",
+     "answer_type": "expression",
+     "answer": "2d^{2}+15d+17=0",
+     "choices": null,
+     "marker": {
+      "kind": "equation",
+      "key": "2d^{2}+15d+17=0",
+      "form": null,
+      "variables": [
+       "d"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}(d+5)(2d+5)&=8\\\\2d^{2}+5d+10d+25-8&=0\\\\2d^{2}+5d+10d+25-8&=0\\\\2d^{2}+15d+17&=0\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "2d2 + 15d + 17 = 0",
+     "epub_final_answer": "$2d^{2}+15d+17=0$",
+     "blind_answer": "2d^{2}+15d+17=0",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 80,
+     "shortcode": "2FBQ",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-2:1c|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-2:1c|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-2:1c|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-2:2a",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-2",
+     "stem": "Solve the following equations: $x^{2}+2x-15=0$",
+     "answer_type": "expression",
+     "answer": "-5; 3",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "-5; 3",
+      "form": null,
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}x^{2}+2x-15&=0\\\\(x-3)(x+5)&=0\\\\\\therefore x=-5&\\text{or}x=3\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "x = −5 or x = 3",
+     "epub_final_answer": "$\\therefore x=-5 \\text{ or } x=3$",
+     "blind_answer": "x=-5 \\text{ or } x=3",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 80,
+     "shortcode": "2FBR",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-2:2a|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-2:2a|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-2:2a|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-2:2b",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-2",
+     "stem": "Solve the following equations: $p^{2}-7p-18=0$",
+     "answer_type": "expression",
+     "answer": "-2; 9",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "-2; 9",
+      "form": null,
+      "variables": [
+       "p"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}p^{2}-7p-18&=0\\\\(p-9)(p+2)&=0\\\\\\therefore p=-2&\\text{or}p=9\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "p = −2 or p = 9",
+     "epub_final_answer": "$\\therefore p=-2 \\text{ or } p=9$",
+     "blind_answer": "p=9 \\text{ or } p=-2",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 80,
+     "shortcode": "2FBS",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-2:2b|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Roots 9 and -2; order differs only."
+       },
+       {
+        "pair_id": "Ex4-2:2b|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Roots 9 and -2; order differs only."
+       },
+       {
+        "pair_id": "Ex4-2:2b|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "tier check",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-2:2c",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-2",
+     "stem": "Solve the following equations: $9x^{2}-6x-8=0$",
+     "answer_type": "expression",
+     "answer": "-\\frac{2}{3}; \\frac{4}{3}",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "-\\frac{2}{3}; \\frac{4}{3}",
+      "form": null,
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}9x^{2}-6x-8&=0\\\\(3x+2)(3x-4)&=0\\\\3x+2&=0\\\\x&=-\\frac{2}{3}\\\\\\text{or}&\\\\3x-4&=0\\\\x&=\\frac{4}{3}\\\\\\thereforex=-\\frac{2}{3}&\\text{or}x=\\frac{4}{3}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "x = −2 3 or x = 4 3",
+     "epub_final_answer": "$\\therefore x=-\\frac{2}{3} \\text{ or } x=\\frac{4}{3}$",
+     "blind_answer": "x=\\frac{4}{3} \\text{ or } x=-\\frac{2}{3}",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 80,
+     "shortcode": "2FBT",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-2:2c|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Roots 4/3 and -2/3; flattened fraction -2 3 is -2/3."
+       },
+       {
+        "pair_id": "Ex4-2:2c|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Roots 4/3 and -2/3; order differs only."
+       },
+       {
+        "pair_id": "Ex4-2:2c|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-2:2d",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-2",
+     "stem": "Solve the following equations: $5x^{2}+21x-54=0$",
+     "answer_type": "expression",
+     "answer": "\\frac{9}{5}; -6",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "\\frac{9}{5}; -6",
+      "form": null,
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}5x^{2}+21x-54&=0\\\\(5x-9)(x+6)&=0\\\\5x-9&=0\\\\x&=\\frac{9}{5}\\\\\\text{or}&\\\\x+6&=0\\\\x&=-6\\\\\\thereforex=\\frac{9}{5}&\\text{or}x=-6\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "x = 9 5 or x = −6",
+     "epub_final_answer": "$\\therefore x=\\frac{9}{5} \\text{ or } x=-6$",
+     "blind_answer": "x=\\frac{9}{5} \\text{ or } x=-6",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 80,
+     "shortcode": "2FBV",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-2:2d|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-2:2d|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-2:2d|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-2:2e",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-2",
+     "stem": "Solve the following equations: $4z^{2}+12z+8=0$",
+     "answer_type": "expression",
+     "answer": "-2; -1",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "-2; -1",
+      "form": null,
+      "variables": [
+       "z"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}4z^{2}+12z+8&=0\\\\z^{2}+3z+2&=0\\\\\\left(z+1\\right)\\left(z+2\\right)&=0\\\\z=-2&\\text{ or }z=-1\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "z = −2 or z = −1",
+     "epub_final_answer": "$z=-2 \\text{ or } z=-1$",
+     "blind_answer": "z=-1 \\text{ or } z=-2",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 80,
+     "shortcode": "2FBW",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-2:2e|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Roots -1 and -2; order differs only."
+       },
+       {
+        "pair_id": "Ex4-2:2e|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Roots -1 and -2; order differs only."
+       },
+       {
+        "pair_id": "Ex4-2:2e|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-2:2f",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-2",
+     "stem": "Solve the following equations: $-b^{2}+7b-12=0$",
+     "answer_type": "expression",
+     "answer": "3; 4",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "3; 4",
+      "form": null,
+      "variables": [
+       "b"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}-b^{2}+7b-12&=0\\\\b^{2}-7b+12&=0\\\\\\left(b-4\\right)\\left(b-3\\right)&=0\\\\b=3&\\text{ or }b=4\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "b = 3 or b = 4",
+     "epub_final_answer": "$b=3 \\text{ or } b=4$",
+     "blind_answer": "b=3 \\text{ or } b=4",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 80,
+     "shortcode": "2FBX",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-2:2f|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-2:2f|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-2:2f|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-2:2g",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-2",
+     "stem": "Solve the following equations: $-3a^{2}+27a-54=0$",
+     "answer_type": "expression",
+     "answer": "3; 6",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "3; 6",
+      "form": null,
+      "variables": [
+       "a"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}-3a^{2}+27a-54&=0\\\\a^{2}-9a+18&=0\\\\\\left(a-6\\right)\\left(a-3\\right)&=0\\\\a=3&\\text{ or }a=6.\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "a = 3 or a = 6.",
+     "epub_final_answer": "$a=3 \\text{ or } a=6.$",
+     "blind_answer": "a=3 \\text{ or } a=6",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 80,
+     "shortcode": "2FBY",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-2:2g|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-2:2g|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-2:2g|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-2:2h",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-2",
+     "stem": "Solve the following equations: $4y^{2}-9=0$",
+     "answer_type": "expression",
+     "answer": "\\frac{3}{2}; -\\frac{3}{2}",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "\\frac{3}{2}; -\\frac{3}{2}",
+      "form": null,
+      "variables": [
+       "y"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}4y^{2}-9&=0\\\\(2y-3)(2y+3)&=0\\\\2y-3&=0\\\\y&=\\frac{3}{2}\\\\\\text{or}&\\\\2y+3&=0\\\\y&=-\\frac{3}{2}\\\\\\therefore y=\\frac{3}{2}&\\text{or}y=-\\frac{3}{2}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "y = 3 2 or y = −3 2",
+     "epub_final_answer": "$\\therefore y=\\frac{3}{2} \\text{ or } y=-\\frac{3}{2}$",
+     "blind_answer": "y=\\frac{3}{2} \\text{ or } y=-\\frac{3}{2}",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 80,
+     "shortcode": "2FBZ",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-2:2h|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-2:2h|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-2:2h|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "tier check",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-2:2i",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-2",
+     "stem": "Solve the following equations: $4x^{2}+16x-9=0$",
+     "answer_type": "expression",
+     "answer": "\\frac{1}{2}; -\\frac{9}{2}",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "\\frac{1}{2}; -\\frac{9}{2}",
+      "form": null,
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}4x^{2}+16x-9&=0\\\\(2x-1)(2x+9)&=0\\\\2x-1&=0\\\\x&=\\frac{1}{2}\\\\\\text{or}&\\\\2x+9&=0\\\\y&=-\\frac{9}{2}\\\\\\thereforex=\\frac{1}{2}&\\text{or}x=-\\frac{9}{2}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "x = 1 2 or x = −9 2",
+     "epub_final_answer": "$\\therefore x=\\frac{1}{2} \\text{ or } x=-\\frac{9}{2}$",
+     "blind_answer": "x=\\frac{1}{2} \\text{ or } x=-\\frac{9}{2}",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 80,
+     "shortcode": "2FC2",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-2:2i|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-2:2i|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-2:2i|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-2:2j",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-2",
+     "stem": "Solve the following equations: $4x^{2}-12x=-9$",
+     "answer_type": "numeric",
+     "answer": "\\frac{3}{2}",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "$\\begin{align*}4x^{2}-12x&=-9\\\\4x^{2}-12x+9&=0\\\\(2x-3)(2x-3)&=0\\\\2x-3&=0\\\\x&=\\frac{3}{2}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "3 2",
+     "epub_final_answer": "$x=\\frac{3}{2}$",
+     "blind_answer": "x=\\frac{3}{2}",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 80,
+     "shortcode": "2FC3",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-2:2j|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-2:2j|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-2:2j|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [
+      "numeric key \"\\frac{3}{2}\" is not a number"
+     ],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-2:2k",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-2",
+     "stem": "Solve the following equations: $20m+25m^{2}=0$",
+     "answer_type": "expression",
+     "answer": "0; -\\frac{4}{5}",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "0; -\\frac{4}{5}",
+      "form": null,
+      "variables": [
+       "m"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}20m+25m^{2}&=0\\\\5m(4+5m)&=0\\\\5m&=0\\\\m&=0\\\\\\text{or}&\\\\4+5m&=0\\\\m&=-\\frac{4}{5}\\\\\\thereforem=0&\\text{or}m=-\\frac{4}{5}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "m = 0 or m = −4 5",
+     "epub_final_answer": "$\\therefore m=0 \\text{ or } m=-\\frac{4}{5}$",
+     "blind_answer": "m=0 \\text{ or } m=-\\frac{4}{5}",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 80,
+     "shortcode": "2FC4",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-2:2k|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-2:2k|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-2:2k|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-2:2l",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-2",
+     "stem": "Solve the following equations: $2x^{2}-5x-12=0$",
+     "answer_type": "expression",
+     "answer": "-\\frac{3}{2}; 4",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "-\\frac{3}{2}; 4",
+      "form": null,
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}2x^{2}-5x-12&=0\\\\(2x+3)(x-4)&=0\\\\2x+3&=0\\\\x&=-\\frac{3}{2}\\\\\\text{or}&\\\\x-4&=0\\\\x&=4\\\\\\thereforex=-\\frac{3}{2}&\\text{or}x=4\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "x = −3 2 or x = 4",
+     "epub_final_answer": "$\\therefore x=-\\frac{3}{2} \\text{ or } x=4$",
+     "blind_answer": "x=4 \\text{ or } x=-\\frac{3}{2}",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 80,
+     "shortcode": "2FC5",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-2:2l|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Roots 4 and -3/2; flattened -3 2 is -3/2."
+       },
+       {
+        "pair_id": "Ex4-2:2l|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Roots 4 and -3/2; order differs only."
+       },
+       {
+        "pair_id": "Ex4-2:2l|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-2:2m",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-2",
+     "stem": "Solve the following equations: $-75x^{2}+290x=240$",
+     "answer_type": "expression",
+     "answer": "\\frac{6}{5}; \\frac{8}{3}",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "\\frac{6}{5}; \\frac{8}{3}",
+      "form": null,
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}-75x^{2}+290x&=240\\\\-75x^{2}+290x-240&=0\\\\-15x^{2}+58x-48&=0\\\\(5x-6)(3x-8)&=0\\\\5x-6&=0\\\\x&=\\frac{6}{5}\\\\&\\text{or}\\\\3x-8&=0\\\\x&=\\frac{8}{3}\\\\\\thereforex=\\frac{6}{5}\\text{or}x=\\frac{8}{3}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "x = 6 5 or x = 8 3",
+     "epub_final_answer": "$\\therefore x=\\frac{6}{5} \\text{ or } x=\\frac{8}{3}$",
+     "blind_answer": "x=\\frac{6}{5} \\text{ or } x=\\frac{8}{3}",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 80,
+     "shortcode": "2FC6",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-2:2m|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-2:2m|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-2:2m|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-2:2n",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-2",
+     "stem": "Solve the following equations: $2x=\\frac{1}{3}x^{2}-3x+14\\frac{2}{3}$",
+     "answer_type": "expression",
+     "answer": "4; 11",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "4; 11",
+      "form": null,
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}2x&=\\frac{1}{3}x^{2}-3x+14\\frac{2}{3}\\\\6x&=x^{2}-9x+44\\\\x^{2}-15x+44&=0\\\\(x-4)(x-11)&=0\\\\x-4&=0\\\\x&=4\\\\&\\text{or}\\\\x-11&=0\\\\x&=11\\\\\\thereforex=4\\text{or}x=11\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "x = 4 or x = 11",
+     "epub_final_answer": "$\\therefore x=4 \\text{ or } x=11$",
+     "blind_answer": "x=4 \\text{ or } x=11",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 80,
+     "shortcode": "2FC7",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-2:2n|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-2:2n|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-2:2n|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-2:2o",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-2",
+     "stem": "Solve the following equations: $x^{2}-4x=-4$",
+     "answer_type": "numeric",
+     "answer": "2",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "$\\begin{align*}x^{2}-4x&=-4\\\\x^{2}-4x+4&=0\\\\(x-2)(x-2)&=0\\\\x-2&=0\\\\x&=2\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "2",
+     "epub_final_answer": "$x=2$",
+     "blind_answer": "x=2",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 80,
+     "shortcode": "2FC8",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-2:2o|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-2:2o|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-2:2o|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-2:2p",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-2",
+     "stem": "Solve the following equations: $-x^{2}+4x-6=4x^{2}-14x+3$",
+     "answer_type": "expression",
+     "answer": "\\frac{3}{5}; 3",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "\\frac{3}{5}; 3",
+      "form": null,
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}-x^{2}+4x-6&=4x^{2}-14x+3\\\\5x^{2}-18x+9&=0\\\\(5x-3)(x-3)&=0\\\\5x-3&=0\\\\x&=\\frac{3}{5}\\\\\\text{or}&\\\\x-3&=0\\\\x&=3\\\\\\thereforex=\\frac{3}{5}&\\text{or}x=3\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "x = 3 5 or x = 3",
+     "epub_final_answer": "$\\therefore x=\\frac{3}{5} \\text{ or } x=3$",
+     "blind_answer": "x=\\frac{3}{5} \\text{ or } x=3",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 80,
+     "shortcode": "2FC9",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-2:2p|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-2:2p|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-2:2p|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-2:2q",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-2",
+     "stem": "Solve the following equations: $t^{2}=3t$",
+     "answer_type": "expression",
+     "answer": "0; 3",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "0; 3",
+      "form": null,
+      "variables": [
+       "t"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}t^{2}&=3t\\\\t^{2}-3t&=0\\\\t(t-3)&=0\\\\t&=0\\\\\\text{or}&\\\\t-3&=0\\\\t&=3\\\\\\thereforet=0&\\text{or}t=3\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "t = 0 or t = 3",
+     "epub_final_answer": "$\\therefore t=0 \\text{ or } t=3$",
+     "blind_answer": "t=0 \\text{ or } t=3",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 80,
+     "shortcode": "2FCB",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-2:2q|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-2:2q|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-2:2q|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-2:2r",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-2",
+     "stem": "Solve the following equations: $x^{2}-10x=-25$",
+     "answer_type": "numeric",
+     "answer": "5",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "$\\begin{align*}x^{2}-10x&=-25\\\\x^{2}-10x+25&=0\\\\(x-5)(x-5)&=0\\\\x-5&=0\\\\x&=5\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "5",
+     "epub_final_answer": "$x=5$",
+     "blind_answer": "x=5",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 80,
+     "shortcode": "2FCC",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-2:2r|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-2:2r|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-2:2r|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-2:2s",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-2",
+     "stem": "Solve the following equations: $x^{2}=18$",
+     "answer_type": "expression",
+     "answer": "\\sqrt{18}; -\\sqrt{18}",
+     "choices": null,
+     "marker": {
+      "kind": "surd",
+      "key": "\\sqrt{18}; -\\sqrt{18}",
+      "form": null,
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}x^{2}&=18\\\\\\thereforex=\\sqrt{18}&\\text{or}x=-\\sqrt{18}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "x = √ 18 or x = − √ 18",
+     "epub_final_answer": "$\\therefore x=\\sqrt{18} \\text{ or } x=-\\sqrt{18}$",
+     "blind_answer": "x=\\pm 3\\sqrt{2}",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 80,
+     "shortcode": "2FCD",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-2:2s|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "sqrt(18)=3sqrt(2), so ±3sqrt2 equals ±sqrt18; the problem does not require simplified surd form."
+       },
+       {
+        "pair_id": "Ex4-2:2s|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "sqrt(18)=3sqrt(2), so ±3sqrt2 equals ±sqrt18; the problem does not require simplified surd form."
+       },
+       {
+        "pair_id": "Ex4-2:2s|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [
+      "the key \"\\sqrt{18}; -\\sqrt{18}\" does not read as the printed answer \"x = √ 18 or x = − √ 18\""
+     ],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "tier check",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-2:2t",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-2",
+     "stem": "Solve the following equations: $p^{2}-6p=7$",
+     "answer_type": "expression",
+     "answer": "7; -1",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "7; -1",
+      "form": null,
+      "variables": [
+       "p"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}p^{2}-6p&=7\\\\p^{2}-6p-7&=0\\\\(p-7)(p+1)&=0\\\\p-7&=0\\\\p&=7\\\\\\text{or}&\\\\p+1&=0\\\\p&=-1\\\\\\thereforep=7&\\text{or}p=-1\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "p = 7 or p = −1",
+     "epub_final_answer": "$\\therefore p=7 \\text{ or } p=-1$",
+     "blind_answer": "p=7 \\text{ or } p=-1",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 80,
+     "shortcode": "2FCF",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-2:2t|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-2:2t|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-2:2t|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-2:2u",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-2",
+     "stem": "Solve the following equations: $4x^{2}-17x-77=0$",
+     "answer_type": "expression",
+     "answer": "-\\frac{11}{4}; 7",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "-\\frac{11}{4}; 7",
+      "form": null,
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}4x^{2}-17x-77&=0\\\\(4x+11)(x-7)&=0\\\\4x+11&=0\\\\x&=-\\frac{11}{4}\\\\\\text{or}&\\\\x-7&=0\\\\x&=7\\\\\\thereforex=-\\frac{11}{4}&\\text{or}x=7\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "x = −11 4 or x = 7",
+     "epub_final_answer": "$\\therefore x=-\\frac{11}{4} \\text{ or } x=7$",
+     "blind_answer": "x=7 \\text{ or } x=-\\frac{11}{4}",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 80,
+     "shortcode": "2FCG",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-2:2u|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Roots 7 and -11/4; order differs only."
+       },
+       {
+        "pair_id": "Ex4-2:2u|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Roots 7 and -11/4; order differs only."
+       },
+       {
+        "pair_id": "Ex4-2:2u|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-2:2v",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-2",
+     "stem": "Solve the following equations: $14x^{2}+5x=6$",
+     "answer_type": "expression",
+     "answer": "-\\frac{6}{7}; \\frac{1}{2}",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "-\\frac{6}{7}; \\frac{1}{2}",
+      "form": null,
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}14x^{2}+5x&=6\\\\14x^{2}+5x-6&=0\\\\(7x+6)(2x-1)&=0\\\\7x+6&=0\\\\x&=-\\frac{6}{7}\\\\&\\text{or}\\\\2x-1&=0\\\\x&=\\frac{1}{2}\\\\\\thereforex=-\\frac{6}{7}\\text{or}x=\\frac{1}{2}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "x = −6 7 or x = 1 2",
+     "epub_final_answer": "$\\therefore x=-\\frac{6}{7} \\text{ or } x=\\frac{1}{2}$",
+     "blind_answer": "x=\\frac{1}{2} \\text{ or } x=-\\frac{6}{7}",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 80,
+     "shortcode": "2FCH",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-2:2v|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Roots 1/2 and -6/7; order differs only."
+       },
+       {
+        "pair_id": "Ex4-2:2v|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Roots 1/2 and -6/7; order differs only."
+       },
+       {
+        "pair_id": "Ex4-2:2v|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-2:2w",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-2",
+     "stem": "Solve the following equations: $2x^{2}-2x=12$",
+     "answer_type": "expression",
+     "answer": "3; -2",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "3; -2",
+      "form": null,
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}2x^{2}-2x&=12\\\\x^{2}-x-6&=0\\\\(x-3)(x+2)&=0\\\\x-3&=0\\\\x&=3\\\\\\text{or}&\\\\x+2&=0\\\\x&=-2\\\\\\thereforex=3&\\text{or}x=-2\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "x = 3 or x = −2",
+     "epub_final_answer": "$\\therefore x=3 \\text{ or } x=-2$",
+     "blind_answer": "x=3 \\text{ or } x=-2",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 80,
+     "shortcode": "2FCJ",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-2:2w|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-2:2w|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-2:2w|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-2:2x",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-2",
+     "stem": "Solve the following equations: $(2a-3)^2-16=0$",
+     "answer_type": "expression",
+     "answer": "-\\frac{1}{2}; 3,5",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "-\\frac{1}{2}; 3,5",
+      "form": null,
+      "variables": [
+       "a"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}(2a-3)^2-16&=0\\\\(2a-3+4)(2a-3-4)&=0\\\\(2a+1)(2a-7)&=0\\\\\\thereforea=-\\frac{1}{2}&\\text{ or }a=\\text{3,5}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "a = −1 2 or a = 3,5",
+     "epub_final_answer": "$\\therefore a=-\\frac{1}{2} \\text{ or } a=3,5$",
+     "blind_answer": "a=\\frac{7}{2} \\text{ or } a=-\\frac{1}{2}",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 80,
+     "shortcode": "2FCK",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-2:2x|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Roots 7/2 and -1/2; decimal comma 3,5 = 7/2."
+       },
+       {
+        "pair_id": "Ex4-2:2x|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Roots 7/2 and -1/2; decimal comma 3,5 = 7/2."
+       },
+       {
+        "pair_id": "Ex4-2:2x|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-2:2y",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-2",
+     "stem": "Solve the following equations: $(x-6)^2-24=1$",
+     "answer_type": "expression",
+     "answer": "11; 1",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "11; 1",
+      "form": null,
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}(x-6)^2-24&=1\\\\(x-6)^2-25&=0\\\\(x-6-5)(x-6+5)&=0\\\\(x-11)(x-1)&=0\\\\\\thereforex=11&\\text{or}x=1\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "x = 11 or x = 1",
+     "epub_final_answer": "$\\therefore x=11 \\text{ or } x=1$",
+     "blind_answer": "x=11 \\text{ or } x=1",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 80,
+     "shortcode": "2FCM",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-2:2y|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-2:2y|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-2:2y|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-2:3a",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-3",
+     "stem": "Solve the following equations (note the restrictions that apply): $3y=\\dfrac{54}{2y}$",
+     "answer_type": "expression",
+     "answer": "3; -3",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "3; -3",
+      "form": null,
+      "variables": [
+       "y"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "Note $y\\neq0$",
+      "$\\begin{align*}3y&=\\frac{54}{2y}\\\\3y^2&=27\\\\y^2&=9\\\\y^2-9&=0\\\\(y-3)(y+3)&=0\\\\\\thereforey=3&\\text{or}y=-3\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "y = 3 or y = −3",
+     "epub_final_answer": "therefore y=3 or y=-3",
+     "blind_answer": "y=3 \\text{ or } y=-3 \\quad (y\\neq 0)",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 81,
+     "shortcode": "2FCN",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-2:3a|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "y=±3; the (y≠0) note is a restriction, not a different solution set."
+       },
+       {
+        "pair_id": "Ex4-2:3a|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "y=±3 in both; restriction note does not change the values."
+       },
+       {
+        "pair_id": "Ex4-2:3a|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both y=3 or y=-3."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-2:3b",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-3",
+     "stem": "Solve the following equations (note the restrictions that apply): $\\dfrac{10z}{3}=1-\\dfrac{1}{3z}$",
+     "answer_type": "expression",
+     "answer": "-\\frac{1}{5}; \\frac{1}{2}",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "-\\frac{1}{5}; \\frac{1}{2}",
+      "form": null,
+      "variables": [
+       "z"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "Note $z\\neq0$",
+      "$\\begin{align*}\\frac{10z}{3}&=1-\\frac{1}{3z}\\\\10z^2&=3z-1\\\\10z^2-3z+1&=0\\\\(5z+1)(2z-1)&=0\\\\\\therefore z=-\\frac{1}{5}&\\text{ or }z=\\frac{1}{2}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "z = −1 5 or z = 1 2",
+     "epub_final_answer": "therefore z=-\\frac{1}{5} or z=\\frac{1}{2}",
+     "blind_answer": "\\text{No real solution}",
+     "verification": "disputed",
+     "tier": "standard",
+     "printed_page": 81,
+     "shortcode": "2FCP",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-2:3b|blind~printed",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "Clearing denominators gives 10z^2-3z+1=0 with negative discriminant, so 'no real solution' versus two real values -1/5 and 1/2 are different answers."
+       },
+       {
+        "pair_id": "Ex4-2:3b|blind~book",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "'No real solution' versus z=-1/5 or 1/2 are different answers."
+       },
+       {
+        "pair_id": "Ex4-2:3b|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both give z=-1/5 or z=1/2."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-2:3c",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-3",
+     "stem": "Solve the following equations (note the restrictions that apply): $x+2=\\dfrac{18}{x}-1$",
+     "answer_type": "expression",
+     "answer": "3; -6",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "3; -6",
+      "form": null,
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "Note $x\\neq0$",
+      "$\\begin{align*}x+2&=\\frac{18}{x}-1\\\\x^2+2x&=18-x\\\\x^2+3x-18&=0\\\\(x-3)(x+6)&=0\\\\\\therefore x=3&\\text{ or }x=-6\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "x = 3 or x = −6",
+     "epub_final_answer": "therefore x=3 or x=-6",
+     "blind_answer": "x=-6 \\text{ or } x=3",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 81,
+     "shortcode": "2FCQ",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-2:3c|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "x^2+3x-18=0 gives 3 and -6 in both."
+       },
+       {
+        "pair_id": "Ex4-2:3c|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Roots -6 and 3 in both."
+       },
+       {
+        "pair_id": "Ex4-2:3c|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both 3 and -6."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-2:3d",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-3",
+     "stem": "Solve the following equations (note the restrictions that apply): $y-3=\\frac{5}{4}-\\frac{1}{y}$",
+     "answer_type": "expression",
+     "answer": "\\frac{1}{4}; 4",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "\\frac{1}{4}; 4",
+      "form": null,
+      "variables": [
+       "y"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "Note $y\\neq0$",
+      "$\\begin{align*}y-3&=\\frac{5}{4}-\\frac{1}{y}\\\\4y^2-12y&=5y-4\\\\4y^2-17y+4&=0\\\\(4y-1)(y-4)&=0\\\\\\therefore y=\\frac{1}{4}&\\text{ or }y=4\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "y = 1 4 or y = 4",
+     "epub_final_answer": "therefore y=\\frac{1}{4} or y=4",
+     "blind_answer": "y=\\frac{1}{4} \\text{ or } y=4",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 81,
+     "shortcode": "2FCR",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-2:3d|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-2:3d|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "4y^2-17y+4=0 gives 1/4 and 4 in both."
+       },
+       {
+        "pair_id": "Ex4-2:3d|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both 1/4 and 4; flattened 1 4 is 1/4."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-2:3e",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-3",
+     "stem": "Solve the following equations (note the restrictions that apply): $\\frac{1}{2}(b-1)=\\frac{1}{3}\\left(\\frac{2}{b}+4\\right)$",
+     "answer_type": "expression",
+     "answer": "-\\frac{1}{3}; 4",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "-\\frac{1}{3}; 4",
+      "form": null,
+      "variables": [
+       "b"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "Note $b\\neq0$",
+      "$\\begin{align*}\\frac{1}{2}(b-1)&=\\frac{1}{3}\\left(\\frac{2}{b}+4\\right)\\\\3(b-1)&=2\\left(\\frac{2}{b}+4\\right)\\\\3b-3&=\\frac{4}{b}+8\\\\3b^2-3b&=4+8b\\\\3b^2-11b-4&=0\\\\(3b+1)(b-4)&=\\\\\\thereforeb=-\\frac{1}{3}b&\\text{or}b=4\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "b = −1 3 b or b = 4",
+     "epub_final_answer": null,
+     "blind_answer": "b=-\\frac{1}{3} \\text{ or } b=4",
+     "verification": "disputed",
+     "tier": "advanced",
+     "printed_page": 81,
+     "shortcode": "2FCS",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-2:3e|blind~printed",
+        "route": "judge",
+        "verdict": "unclear",
+        "reason": "Correct roots are -1/3 and 4 (3b^2-11b-4=0). The printed answer 'b = -1 3 b or b = 4' has a stray 'b' after the fraction; likely an artefact for -1/3, but read literally it would be b=-b/3, i.e. b=0, so it cannot be judged with confidence."
+       },
+       {
+        "pair_id": "Ex4-2:3e|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex4-2:3e|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ],
+      "unchecked": [
+       "book_final is not in the book solution"
+      ]
+     },
+     "typing_problems": [
+      "book_final is not in the book solution",
+      "the key \"-\\frac{1}{3}; 4\" does not read as the printed answer \"b = −1 3 b or b = 4\""
+     ],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "tier check",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-2:3f",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-3",
+     "stem": "Solve the following equations (note the restrictions that apply): $3(y+1)=\\frac{4}{y}+2$",
+     "answer_type": "expression",
+     "answer": "-\\frac{4}{3}; 1",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "-\\frac{4}{3}; 1",
+      "form": null,
+      "variables": [
+       "y"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "Note $y\\neq0$",
+      "$\\begin{align*}3(y+1)&=\\frac{4}{y}+2\\\\3y+3&=\\frac{4}{y}+2\\\\3y^2+3y&=4+2y\\\\3y^2+y-4&=0\\\\(3y+4)(y-1)&=0\\\\\\thereforey=-\\frac{4}{3}&\\text{or}y=1\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "y = −4 3 or y = 1",
+     "epub_final_answer": "therefore y=-\\frac{4}{3} or y=1",
+     "blind_answer": "y=-\\frac{4}{3} \\text{ or } y=1",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 81,
+     "shortcode": "2FCT",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-2:3f|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-2:3f|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "3y^2+y-4=0 gives -4/3 and 1 in both."
+       },
+       {
+        "pair_id": "Ex4-2:3f|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both -4/3 and 1."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-2:3g",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-3",
+     "stem": "Solve the following equations (note the restrictions that apply): $(x+1)^2-2(x+1)-15=0$",
+     "answer_type": "expression",
+     "answer": "4; -4",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "4; -4",
+      "form": null,
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}(x+1)^2-2(x+1)-15&=0\\\\((x+1)-5)((x+1)+3)&=0\\\\(x-4)(x+4)&=0\\\\\\thereforex=4&\\text{ or }x=-4\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "x = 4 or x = −4",
+     "epub_final_answer": "therefore x=4 or x=-4",
+     "blind_answer": "x=-4 \\text{ or } x=4",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 81,
+     "shortcode": "2FCV",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-2:3g|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "x=4 and x=-4 in both."
+       },
+       {
+        "pair_id": "Ex4-2:3g|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "x=4 and x=-4 in both."
+       },
+       {
+        "pair_id": "Ex4-2:3g|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "x=4 and x=-4 in both."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-2:3h",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-3",
+     "stem": "Solve the following equations (note the restrictions that apply): $z^4-1=0$",
+     "answer_type": "expression",
+     "answer": "1; -1",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "1; -1",
+      "form": null,
+      "variables": [
+       "z"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}z^4-1&=0\\\\(z^2-1)(z^2+1)&=0\\\\(z-1)(z+1)(z^2+1)&=0\\\\\\thereforez=1&\\text{ or }z=-1\\end{align*}$",
+      "Note that $z^{2}+1$ has no real solutions."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "z = 1 or z = −1",
+     "epub_final_answer": "therefore z=1 or z=-1",
+     "blind_answer": "z=-1 \\text{ or } z=1",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 81,
+     "shortcode": "2FCW",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-2:3h|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "z=±1 in both."
+       },
+       {
+        "pair_id": "Ex4-2:3h|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "z=±1 in both."
+       },
+       {
+        "pair_id": "Ex4-2:3h|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "z=±1 in both."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-2:3i",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-3",
+     "stem": "Solve the following equations (note the restrictions that apply): $b^4-13b^2+36=0$",
+     "answer_type": "expression",
+     "answer": "2; -2; 3; -3",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "2; -2; 3; -3",
+      "form": null,
+      "variables": [
+       "b"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}b^4-13b^2+36&=0\\\\(b^2-4)(b^2-9)&=0\\\\(b-2)(b+2)(b-3)(b+3)&=0\\\\\\thereforeb=\\pm2&\\text{ or }b=\\pm3\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "b = ±2 or b = ±3",
+     "epub_final_answer": "therefore b=\\pm 2 or b=\\pm 3",
+     "blind_answer": "b=-3,\\ -2,\\ 2,\\ 3",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 81,
+     "shortcode": "2FCX",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-2:3i|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Set {-3,-2,2,3} equals ±2 and ±3."
+       },
+       {
+        "pair_id": "Ex4-2:3i|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Set {-3,-2,2,3} equals ±2 and ±3."
+       },
+       {
+        "pair_id": "Ex4-2:3i|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both ±2 and ±3."
+       }
+      ]
+     },
+     "typing_problems": [
+      "the key \"2; -2; 3; -3\" does not read as the printed answer \"b = ±2 or b = ±3\""
+     ],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-2:3j",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-3",
+     "stem": "Solve the following equations (note the restrictions that apply): $\\dfrac{a+1}{3a-4}+\\dfrac{9}{2a+5}+\\dfrac{2a+3}{2a+5}=0$",
+     "answer_type": "expression",
+     "answer": "-\\frac{43}{8}; 1",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "-\\frac{43}{8}; 1",
+      "form": null,
+      "variables": [
+       "a"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}\\frac{a+1}{3a-4}+\\frac{9}{2a+5}+\\frac{2a+3}{2a+5}&=0\\\\\\frac{(a+1)(2a+5)+9(3a-4)+(2a+3)(3a-4)}{(3a-4)(2a+5)}&=0\\\\2a^{2}+7a+5+27a-36+6a^{2}+a-12&=0\\\\8a^{2}+35a-43&=0\\\\(8a+43)(a-1)&=0\\\\8a+43&=0\\\\a&=-\\frac{43}{8}\\\\&\\text{or}\\\\a-1&=0\\\\a&=1\\\\\\thereforea=-\\frac{43}{8}\\text{or}a=1\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "a = −43 8 or a = 1",
+     "epub_final_answer": "therefore a=-\\frac{43}{8} or a=1",
+     "blind_answer": "a=-\\frac{43}{8} \\text{ or } a=1",
+     "verification": "agreed",
+     "tier": "advanced",
+     "printed_page": 81,
+     "shortcode": "2FCY",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-2:3j|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-2:3j|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "8a^2+35a-43=0 gives -43/8 and 1 in both."
+       },
+       {
+        "pair_id": "Ex4-2:3j|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both -43/8 and 1; flattened -43 8 is -43/8."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-2:3k",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-3",
+     "stem": "Solve the following equations (note the restrictions that apply): $\\frac{x^{2}-2x-3}{x+1}=0$",
+     "answer_type": "expression",
+     "answer": "3",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "3",
+      "form": null,
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "Note $x\\neq-1$",
+      "$\\begin{align*}\\frac{x^2-2x-3}{x+1}&=0\\\\\\frac{(x+1)(x-3)}{x+1}&=0\\\\\\thereforex&=3\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "x = 3",
+     "epub_final_answer": "therefore x=3",
+     "blind_answer": "x=3",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 81,
+     "shortcode": "2FCZ",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-2:3k|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-2:3k|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "x=3 in both (x=-1 excluded)."
+       },
+       {
+        "pair_id": "Ex4-2:3k|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "x=3 in both."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-2:3l",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-3",
+     "stem": "Solve the following equations (note the restrictions that apply): $x+2=\\dfrac{6x-12}{x-2}$",
+     "answer_type": "expression",
+     "answer": "4",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "4",
+      "form": null,
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "Note $x\\neq2$",
+      "$\\begin{align*}x+2&=\\frac{6x-12}{x-2}\\\\(x+2)(x-2)&=6x-12\\\\x^2-4&=6x-12\\\\x^2-6x+8&=0\\\\(x-2)(x-4)&=0\\\\\\thereforex&=4\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "x = 4",
+     "epub_final_answer": "therefore x=4",
+     "blind_answer": "x=4",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 81,
+     "shortcode": "2FD2",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-2:3l|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-2:3l|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "x=4 in both."
+       },
+       {
+        "pair_id": "Ex4-2:3l|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "x=4 in both."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-2:3m",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-3",
+     "stem": "Solve the following equations (note the restrictions that apply): $\\frac{3(a^{2}+1)+10a}{3a+1}=1$",
+     "answer_type": "expression",
+     "answer": "-2",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "-2",
+      "form": null,
+      "variables": [
+       "a"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "Note $a\\neq-\\frac{1}{3}$",
+      "$\\begin{align*}\\frac{3(a^2+1)+10a}{3a+1}&=1\\\\3(a^2+1)+10a&=3a+1\\\\3a^2+3+10a-3a-1&=0\\\\3a^2+7a+2&=0\\\\(3a+1)(a+2)&=0\\\\\\thereforea&=-2\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "a = −2",
+     "epub_final_answer": "therefore a=-2",
+     "blind_answer": "a=-2",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 81,
+     "shortcode": "2FD3",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-2:3m|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-2:3m|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "a=-2 in both."
+       },
+       {
+        "pair_id": "Ex4-2:3m|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "a=-2 in both."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-2:3n",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-3",
+     "stem": "Solve the following equations (note the restrictions that apply): $\\dfrac{3}{9a^{2}-3a+1}-\\dfrac{3a+4}{27a^{3}+1}=\\dfrac{1}{9a^{2}-1}$",
+     "answer_type": "expression",
+     "answer": "0; \\frac{2}{3}",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "0; \\frac{2}{3}",
+      "form": null,
+      "variables": [
+       "a"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}\\frac{3}{9a^{2}-3a+1}-\\frac{3a+4}{27a^{3}+1}&=\\frac{1}{9a^{2}-1}\\\\\\frac{3}{9a^{2}-3a+1}-\\frac{3a+4}{(3a+1)(9a^{2}-3a+1)}&=\\frac{1}{(3a-1)(3a+1)}\\\\\\frac{3(9a^{2}-1)-(3a-1)(3a+4)}{(3a+1)(3a-1)(9a^{2}-3a+1)}&=\\frac{9a^{2}-3a+1}{(3a-1)(3a+1)(9a^{2}-3a+1)}\\\\27a^{2}-3-9a^{2}-9a+4&=9a^{2}-3a+1\\\\9a^{2}-6a&=0\\\\3a(3a-2)&=0\\\\3a&=0\\\\a&=0\\\\&\\text{or}\\\\3a-2&=0\\\\a&=\\frac{2}{3}\\\\\\thereforea=0\\text{or}a=\\frac{2}{3}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "a = 0 or a = 2 3",
+     "epub_final_answer": "therefore a=0 or a=\\frac{2}{3}",
+     "blind_answer": "a=0 \\text{ or } a=\\frac{2}{3}",
+     "verification": "agreed",
+     "tier": "advanced",
+     "printed_page": 81,
+     "shortcode": "2FD4",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-2:3n|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-2:3n|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "a=0 or 2/3 in both."
+       },
+       {
+        "pair_id": "Ex4-2:3n|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both 0 and 2/3; flattened 2 3 is 2/3."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-7:2a",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-2",
+     "stem": "Solve: $b^{2}+6b-27=0$",
+     "answer_type": "expression",
+     "answer": "-9; 3",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "-9; 3",
+      "form": null,
+      "variables": [
+       "b"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}b^{2}+6b-27&=0\\\\(b-3)(b+9)&=0\\\\b=-9&\\text{or}b=3\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "b = −9 or b = 3",
+     "epub_final_answer": "b=-9 or b=3",
+     "blind_answer": "b=-9 \\text{ or } b=3",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 101,
+     "shortcode": "2FJ3",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-7:2a|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-7:2a|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-7:2a|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-7:2b",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-2",
+     "stem": "Solve: $-x^{2}+5x+6=0$",
+     "answer_type": "expression",
+     "answer": "-1; 6",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "-1; 6",
+      "form": null,
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}x^{2}-5x-6&=0\\\\\\left(x-6\\right)\\left(x+1\\right)&=0\\\\x=-1&\\text{or}x=6\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "x = −1 or x = 6",
+     "epub_final_answer": "x=-1 or x=6",
+     "blind_answer": "x=-1 \\text{ or } x=6",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 101,
+     "shortcode": "2FJ4",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-7:2b|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-7:2b|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-7:2b|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "tier check",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-7:2c",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-2",
+     "stem": "Solve: $-b^{2}-3b+10=0$",
+     "answer_type": "expression",
+     "answer": "-5; 2",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "-5; 2",
+      "form": null,
+      "variables": [
+       "b"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}b^{2}+3b-10&=0\\\\\\left(b-2\\right)\\left(b+5\\right)&=0\\\\b=-5&\\text{or}b=2\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "b = −5 or b = 2",
+     "epub_final_answer": "b=-5 or b=2",
+     "blind_answer": "b=-5 \\text{ or } b=2",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 101,
+     "shortcode": "2FJ5",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-7:2c|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-7:2c|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-7:2c|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-7:2e",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-2",
+     "stem": "Solve: $(5x+1)(x-3)=0$",
+     "answer_type": "expression",
+     "answer": "-\\frac{1}{5}; 3",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "-\\frac{1}{5}; 3",
+      "form": null,
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}(5x+1)(x-3)&=0\\\\x=-\\frac{1}{5}&\\text{or}x=3\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "x = −1 5 or x = 3",
+     "epub_final_answer": "x=-\\frac{1}{5} or x=3",
+     "blind_answer": "x=-\\frac{1}{5} \\text{ or } x=3",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 101,
+     "shortcode": "2FJ7",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-7:2e|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-7:2e|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-7:2e|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-7:2i",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-2",
+     "stem": "Solve: $x^{2}-3x+2=0$",
+     "answer_type": "expression",
+     "answer": "2; 1",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "2; 1",
+      "form": null,
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}x^{2}-3x+2&=0\\\\(x-2)(x-1)&=\\\\x=2&\\text{or}x=1\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "x = 2 or x = 1",
+     "epub_final_answer": "x=2 or x=1",
+     "blind_answer": "x=1 \\text{ or } x=2",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 101,
+     "shortcode": "2FJC",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-7:2i|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Roots 1 and 2; order differs only."
+       },
+       {
+        "pair_id": "Ex4-7:2i|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Roots 1 and 2; order differs only."
+       },
+       {
+        "pair_id": "Ex4-7:2i|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-7:2j",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-2",
+     "stem": "Solve: $y^{2}+y=6$",
+     "answer_type": "expression",
+     "answer": "-3; 2",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "-3; 2",
+      "form": null,
+      "variables": [
+       "y"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}y^{2}+y&=6\\\\y^{2}+y-6&=0\\\\(y+3)(y-2)&=0\\\\y=-3&\\text{ or }y=2\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "y = −3 or y = 2",
+     "epub_final_answer": "y=-3 or y=2",
+     "blind_answer": "y=-3 \\text{ or } y=2",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 101,
+     "shortcode": "2FJD",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-7:2j|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-7:2j|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-7:2j|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-7:2k",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-2",
+     "stem": "Solve: $0=2x^{2}-5x-18$",
+     "answer_type": "expression",
+     "answer": "-\\frac{9}{2}; 2",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "-\\frac{9}{2}; 2",
+      "form": null,
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}0&=2x^{2}-5x-18\\\\0&=(2x+9)(x-2)\\\\2x+9=0&\\text{ or }x-2=0\\\\x=-\\frac{9}{2}&\\text{ or }x=2\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "x = −9 2 or x = 2",
+     "epub_final_answer": "x=-\\frac{9}{2} or x=2",
+     "blind_answer": "x=-2 \\text{ or } x=\\frac{9}{2}",
+     "verification": "disputed",
+     "tier": "standard",
+     "printed_page": 101,
+     "shortcode": "2FJF",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-7:2k|blind~printed",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "Roots of 2x^2-5x-18=0 are -2 and 9/2; the other answer gives -9/2 and 2, which do not satisfy the equation."
+       },
+       {
+        "pair_id": "Ex4-7:2k|blind~book",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "Roots are -2 and 9/2; the other answer gives -9/2 and 2, a different set."
+       },
+       {
+        "pair_id": "Ex4-7:2k|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-7:12b",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-3",
+     "stem": "Solve for the unknown variable $36-(x-4)^2=0$",
+     "answer_type": "expression",
+     "answer": "-2; 10",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "-2; 10",
+      "form": null,
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}36-(x-4)^2&=0\\\\(6+x-4)(6-(x-4))&=0\\\\(2+x)(10-x)&=0\\\\\\therefore x=-2&\\text{or}x=10\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "x = −2 or x = 10",
+     "epub_final_answer": "therefore x=-2 or x=10",
+     "blind_answer": "x=-2 \\text{ or } x=10",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 104,
+     "shortcode": "2FMB",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-7:12b|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-7:12b|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "x=-2 or 10 in both."
+       },
+       {
+        "pair_id": "Ex4-7:12b|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "x=-2 or 10 in both."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-7:12c",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-3",
+     "stem": "Solve for the unknown variable $64-(a+3)^2=0$",
+     "answer_type": "expression",
+     "answer": "5; -11",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "5; -11",
+      "form": null,
+      "variables": [
+       "a"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}64-(a+3)^2&=0\\\\(8-a-3)(8+a+3)&=0\\\\(5-a)(11+a)&=0\\\\\\therefore a=5&\\text{or}a=-11\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "a = 5 or a = −11",
+     "epub_final_answer": "therefore a=5 or a=-11",
+     "blind_answer": "a=-11 \\text{ or } a=5",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 104,
+     "shortcode": "2FMC",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-7:12c|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "a=-11 or 5 in both."
+       },
+       {
+        "pair_id": "Ex4-7:12c|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "a=-11 or 5 in both."
+       },
+       {
+        "pair_id": "Ex4-7:12c|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "a=5 or -11 in both."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-7:12d",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-3",
+     "stem": "Solve for the unknown variable $\\dfrac{1}{2}x-\\dfrac{2}{x}=0$",
+     "answer_type": "expression",
+     "answer": "2; -2",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "2; -2",
+      "form": null,
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "Note $x\\neq0$",
+      "$\\begin{align*}\\frac{1}{2}x-\\frac{2}{x}&=0\\\\x^2-4&=0\\\\(x-2)(x+2)&=0\\\\\\thereforex=2&\\text{ or }x=-2\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "x = 2 or x = −2",
+     "epub_final_answer": "therefore x=2 or x=-2",
+     "blind_answer": "x=-2 \\text{ or } x=2",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 104,
+     "shortcode": "2FMD",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-7:12d|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both give x = 2 or x = -2, which is the correct solution set."
+       },
+       {
+        "pair_id": "Ex4-7:12d|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same set {2, -2}; 'therefore' is only wording."
+       },
+       {
+        "pair_id": "Ex4-7:12d|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same set {2, -2}."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-7:12e",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-3",
+     "stem": "Solve for the unknown variable $a-3=2\\left(\\frac{6}{a}+1\\right)$",
+     "answer_type": "expression",
+     "answer": "4; -3",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "4; -3",
+      "form": null,
+      "variables": [
+       "a"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "Note $a\\neq0$",
+      "$\\begin{align*}a-3&=2\\left(\\frac{6}{a}-1\\right)\\\\a-3&=\\frac{12}{a}-2\\\\a^2-3a&=12-2a\\\\a^2-a-12&=0\\\\(a-4)(a+3)&=0\\\\\\thereforea=4&\\text{or}a=-3\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "a = 4 or a = −3",
+     "epub_final_answer": "therefore a=4 or a=-3",
+     "blind_answer": "a=\\frac{5\\pm\\sqrt{73}}{2}",
+     "verification": "disputed",
+     "tier": "standard",
+     "printed_page": 104,
+     "shortcode": "2FMF",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-7:12e|blind~printed",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "The equation reduces to a^2 - 5a - 12 = 0, so a = (5 ± sqrt73)/2, about 6.77 or -1.77. That is not 4 or -3. Checking a = 4 gives 1 on the left and 5 on the right."
+       },
+       {
+        "pair_id": "Ex4-7:12e|blind~book",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "(5 ± sqrt73)/2 is not the same set as {4, -3}."
+       },
+       {
+        "pair_id": "Ex4-7:12e|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both give a = 4 or a = -3. They agree with each other, though neither matches the equation."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-7:12f",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-3",
+     "stem": "Solve for the unknown variable $a-\\dfrac{6}{a}=-1$",
+     "answer_type": "expression",
+     "answer": "2; -3",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "2; -3",
+      "form": null,
+      "variables": [
+       "a"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "Note $a\\neq0$",
+      "$\\begin{align*}a-\\frac{6}{a}&=-1\\\\a^2-6&=-a\\\\a^2+a-6&=0\\\\(a-2)(a+3)&=0\\\\\\therefore a=2&\\text{ or }a=-3\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "a = 2 or a = −3",
+     "epub_final_answer": "therefore a=2 or a=-3",
+     "blind_answer": "a=-3 \\text{ or } a=2",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 104,
+     "shortcode": "2FMG",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-7:12f|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both give a = 2 or a = -3, in a different order."
+       },
+       {
+        "pair_id": "Ex4-7:12f|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same set {2, -3}."
+       },
+       {
+        "pair_id": "Ex4-7:12f|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same set {2, -3}."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-7:12g",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-3",
+     "stem": "Solve for the unknown variable $(a+6)^2-5(a+6)-24=0$",
+     "answer_type": "expression",
+     "answer": "2; -9",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "2; -9",
+      "form": null,
+      "variables": [
+       "a"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}(a+6)^2-5(a+6)-24&=0\\\\((a+6)-8)((a+6)+3)&=0\\\\(a-2)(a+9)&=0\\\\\\thereforea=2&\\text{ or }a=-9\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "a = 2 or a = −9",
+     "epub_final_answer": "therefore a=2 or a=-9",
+     "blind_answer": "a=-9 \\text{ or } a=2",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 104,
+     "shortcode": "2FMH",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-7:12g|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both give a = 2 or a = -9, in a different order."
+       },
+       {
+        "pair_id": "Ex4-7:12g|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same set {2, -9}."
+       },
+       {
+        "pair_id": "Ex4-7:12g|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same set {2, -9}."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-7:12h",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-3",
+     "stem": "Solve for the unknown variable $a^4-4a^2+3=0$",
+     "answer_type": "expression",
+     "answer": "\\sqrt{3}; -\\sqrt{3}; 1; -1",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "\\sqrt{3}; -\\sqrt{3}; 1; -1",
+      "form": null,
+      "variables": [
+       "b"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}a^4-4a^2+3&=0\\\\(a^2-3)(a^2-1)&=0\\\\(a-\\sqrt{3})(a+\\sqrt{3})(a-1)(a+1)&=0\\\\\\thereforeb=\\pm\\sqrt{3}&\\text{ or }b=\\pm1\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "b = ± √ 3 or b = ±1",
+     "epub_final_answer": "therefore b=\\pm\\sqrt{3} or b=\\pm1",
+     "blind_answer": "a=\\pm1 \\text{ or } a=\\pm\\sqrt{3}",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 104,
+     "shortcode": "2FMJ",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-7:12h|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both are the set {±1, ±sqrt3}, which is correct. Answer 2 names the variable b instead of a, which is a labelling slip and not a different value."
+       },
+       {
+        "pair_id": "Ex4-7:12h|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same values ±1 and ±sqrt3. Only the variable letter differs (b versus a)."
+       },
+       {
+        "pair_id": "Ex4-7:12h|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both give ±sqrt3 or ±1 in the same variable, with the same values."
+       }
+      ]
+     },
+     "typing_problems": [
+      "the key \"\\sqrt{3}; -\\sqrt{3}; 1; -1\" does not read as the printed answer \"b = ± √ 3 or b = ±1\""
+     ],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-7:12i",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-3",
+     "stem": "Solve for the unknown variable $9y^4-13y^2+4=0$",
+     "answer_type": "expression",
+     "answer": "\\frac{2}{3}; -\\frac{2}{3}; 1; -1",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "\\frac{2}{3}; -\\frac{2}{3}; 1; -1",
+      "form": null,
+      "variables": [
+       "y"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}9y^4-13y^2+4&=0\\\\(9y^2-4)(y^2-1)&=0\\\\(3y-2)(3y+2)(y-1)(y+1)&=0\\\\\\thereforey=\\pm\\frac{2}{3}&\\text{or}y=\\pm1\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "y = ± 2 3 or y = ±1",
+     "epub_final_answer": "therefore y=\\pm\\frac{2}{3} or y=\\pm1",
+     "blind_answer": "y=\\pm1 \\text{ or } y=\\pm\\frac{2}{3}",
+     "verification": "agreed",
+     "tier": "advanced",
+     "printed_page": 104,
+     "shortcode": "2FMK",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-7:12i|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "The flattened 'y = ± 2 3' is ±2/3, so both give ±1 and ±2/3."
+       },
+       {
+        "pair_id": "Ex4-7:12i|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same set {±1, ±2/3}, in a different order."
+       },
+       {
+        "pair_id": "Ex4-7:12i|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Flattened '± 2 3' is ±2/3, so the sets are identical."
+       }
+      ]
+     },
+     "typing_problems": [
+      "the key \"\\frac{2}{3}; -\\frac{2}{3}; 1; -1\" does not read as the printed answer \"y = ± 2 3 or y = ±1\""
+     ],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "tier check",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-7:12j",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-3",
+     "stem": "Solve for the unknown variable $\\frac{(b+1)^{2}-16}{b+5}=1$",
+     "answer_type": "expression",
+     "answer": "4",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "4",
+      "form": null,
+      "variables": [
+       "b"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "Note $b\\neq-5$",
+      "$\\begin{align*}\\frac{(b+1)^2-16}{b+5}&=1\\\\b^2+2b+1-16&=b+5\\\\b^2+b-20&=0\\\\(b-4)(b+5)&=0\\\\\\thereforeb&=4\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "b = 4",
+     "epub_final_answer": "therefore b=4",
+     "blind_answer": "b=4",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 104,
+     "shortcode": "2FMM",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-7:12j|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-7:12j|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both give b = 4. The other root, b = -5, is excluded because it makes the denominator zero."
+       },
+       {
+        "pair_id": "Ex4-7:12j|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both give b = 4."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-7:12k",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-3",
+     "stem": "Solve for the unknown variable $\\frac{a^{2}+8a+7}{a+7}=2$",
+     "answer_type": "numeric",
+     "answer": "1",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "Note $a\\neq-7$",
+      "$\\begin{align*}\\frac{a^2+8a+7}{a+7}&=2\\\\a^2+8a+7&=2a+14\\\\a^2+6a-7&=0\\\\(a-1)(a+7)&=0\\\\\\thereforea&=1\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "a = 1",
+     "epub_final_answer": "Therefore $a = 1$",
+     "blind_answer": "a=1",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 104,
+     "shortcode": "2FMN",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-7:12k|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-7:12k|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex4-7:12k|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-7:12q",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-3",
+     "stem": "Solve for the unknown variable $x-1=\\dfrac{42}{x}$",
+     "answer_type": "expression",
+     "answer": "7; -6",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "7; -6",
+      "form": null,
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "Note that $x\\ne0$ .",
+      "$\\begin{align*}x-1&=\\frac{42}{x}\\\\x^{2}-x&=42\\\\x^{2}-x-42&=0\\\\(x-7)(x+6)&=0\\\\x=7&\\text{ or }x=-6\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "x = 7 or x = −6",
+     "epub_final_answer": "$x = 7$ or $x = -6$",
+     "blind_answer": "x=-6 \\text{ or } x=7",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 104,
+     "shortcode": "2FMV",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-7:12q|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both give x = 7 or x = -6, in a different order."
+       },
+       {
+        "pair_id": "Ex4-7:12q|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same set {7, -6}."
+       },
+       {
+        "pair_id": "Ex4-7:12q|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-7:12r",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-2",
+     "stem": "Solve for the unknown variable $(x+1)^2=(x+1)(2x+3)$",
+     "answer_type": "expression",
+     "answer": "-1; -2",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "-1; -2",
+      "form": null,
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}(x+1)^2&=(x+1)(2x+3)\\\\x^2+2x+1&=2x^2+3x+2x+3\\\\0&=2x^2-x^2+5x-2x+3-1\\\\x^2+3x+2&=0\\\\(x+1)(x+2)&=0\\\\\\\\\\thereforex=-1&\\text{or}x=-2\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "x = −1 or x = −2",
+     "epub_final_answer": "Therefore $x = -1$ or $x = -2$",
+     "blind_answer": "x=-2 \\text{ or } x=-1",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 104,
+     "shortcode": "2FMW",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-7:12r|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both give x = -1 or x = -2, in a different order."
+       },
+       {
+        "pair_id": "Ex4-7:12r|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same set {-1, -2}."
+       },
+       {
+        "pair_id": "Ex4-7:12r|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-7:12u",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-2",
+     "stem": "Solve for the unknown variable $3x^2-xy-2y^2=0$",
+     "answer_type": "expression",
+     "answer": "-\\frac{2}{3}y; y",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "-\\frac{2}{3}y; y",
+      "form": null,
+      "variables": [
+       "x",
+       "y"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}3x^2-xy-2y^2&=0\\\\(3x+2y)(x-y)&=0\\\\\\therefore x=-\\frac{2}{3}y&\\text{or}x=y\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "x = −2 3 y or x = y",
+     "epub_final_answer": "Therefore $x = -\\frac{2}{3}y$ or $x = y$",
+     "blind_answer": "x=y \\text{ or } x=-\\frac{2}{3}y",
+     "verification": "agreed",
+     "tier": "advanced",
+     "printed_page": 104,
+     "shortcode": "2FMZ",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-7:12u|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Flattened 'x = −2 3 y' is x = -(2/3)y, so both give x = y or x = -2y/3."
+       },
+       {
+        "pair_id": "Ex4-7:12u|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both give x = y or x = -(2/3)y, in a different order."
+       },
+       {
+        "pair_id": "Ex4-7:12u|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "tier check",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-7:12v",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-2",
+     "stem": "Solve for the unknown variable $x(2x+1)=1$",
+     "answer_type": "expression",
+     "answer": "\\frac{1}{2}y; -1",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "\\frac{1}{2}y; -1",
+      "form": null,
+      "variables": [
+       "x",
+       "y"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}x(2x+1)&=1\\\\2x^2+x-1&=0\\\\(2x-1)(x+1)&=0\\\\\\thereforex=\\frac{1}{2}y&\\text{or}x=-1\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "x = 1 2 y or x = −1",
+     "epub_final_answer": "Therefore $x = \\frac{1}{2}y$ or $x = -1$",
+     "blind_answer": "x=\\frac{1}{2}\\ \\text{or}\\ x=-1",
+     "verification": "disputed",
+     "tier": "standard",
+     "printed_page": 104,
+     "shortcode": "2FN2",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-7:12v|blind~printed",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "The equation reduces to 2x^2 + x - 1 = 0, so x = 1/2 or -1. Answer 2 reads 'x = 1 2 y', which is x = y/2, and the problem has no y. That is not x = 1/2."
+       },
+       {
+        "pair_id": "Ex4-7:12v|blind~book",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "Answer 2 gives x = (1/2)y, which depends on y and is not the value 1/2."
+       },
+       {
+        "pair_id": "Ex4-7:12v|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-7:12w",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-3",
+     "stem": "Solve for the unknown variable $\\frac{2x-5}{(x+2)(x-4)}=\\frac{1}{2(x-4)}$",
+     "answer_type": "not_markable",
+     "answer": null,
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "Note that $x\\neq4$ and $x\\neq-2$ , because the numerator cannot be zero",
+      "$\\begin{align*}\\frac{2x-5}{(x+2)(x-4)}&=\\frac{1}{2(x-4)}\\\\2(2x-5)&=x+2\\\\4x-10&=x+2\\\\3x&=12\\\\x&=4\\\\\\therefore\\text{nosolutionsince}x&\\neq4\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "no solution since x ̸= 4",
+     "epub_final_answer": null,
+     "blind_answer": "\\text{No solution}",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 104,
+     "shortcode": "2FN3",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-7:12w|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Clearing denominators gives x = 4, which is excluded, so there is no solution. Both say no solution, and the extra 'since x ≠ 4' only gives the reason."
+       },
+       {
+        "pair_id": "Ex4-7:12w|blind~book",
+        "route": "not_markable",
+        "verdict": "equivalent",
+        "reason": "typed not markable: nothing is marked, so the book's final is not compared"
+       },
+       {
+        "pair_id": "Ex4-7:12w|book~printed",
+        "route": "not_markable",
+        "verdict": "equivalent",
+        "reason": "typed not markable: nothing is marked, so the book's final is not compared"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": "requires assessment of domain restrictions",
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex4-7:12x",
+     "kind": "exercise",
+     "lo": "lo:g10m4s3-1-2",
+     "stem": "Solve for the unknown variable $x^2+1=0$",
+     "answer_type": "not_markable",
+     "answer": null,
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "$\\begin{align*}x^2+1&=0\\\\x^2&=-1\\\\x&=\\sqrt{-1}\\\\\\therefore\\text{no solution since }\\sqrt{-1}\\text{ is not a real number}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "no solution since √−1",
+     "epub_final_answer": null,
+     "blind_answer": "\\text{No real solution}",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 104,
+     "shortcode": "2FN4",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex4-7:12x|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "x^2 = -1 has no real solution. Both say there is none, and the 'since sqrt(-1)' in answer 2 gives the reason."
+       },
+       {
+        "pair_id": "Ex4-7:12x|blind~book",
+        "route": "not_markable",
+        "verdict": "equivalent",
+        "reason": "typed not markable: nothing is marked, so the book's final is not compared"
+       },
+       {
+        "pair_id": "Ex4-7:12x|book~printed",
+        "route": "not_markable",
+        "verdict": "equivalent",
+        "reason": "typed not markable: nothing is marked, so the book's final is not compared"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": "requires understanding that square root of negative number is not real",
+     "tier_source": "tier check",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    }
+   ],
+   "visuals": [],
+   "viz_gaps": [],
+   "teacher_only": {
+    "seen": 0,
+    "dropped": 0,
+    "reached_claim": 0,
+    "caught_in_claims": 0
+   },
+   "verify": {
+    "disagreements": [
+     {
+      "ref": "Ex4-2:3b",
+      "printed": "z = −1 5 or z = 1 2",
+      "book": "therefore z=-\\frac{1}{5} or z=\\frac{1}{2}",
+      "blind": "\\text{No real solution}",
+      "pairs": [
+       {
+        "pair_id": "Ex4-2:3b|blind~printed",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "Clearing denominators gives 10z^2-3z+1=0 with negative discriminant, so 'no real solution' versus two real values -1/5 and 1/2 are different answers."
+       },
+       {
+        "pair_id": "Ex4-2:3b|blind~book",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "'No real solution' versus z=-1/5 or 1/2 are different answers."
+       },
+       {
+        "pair_id": "Ex4-2:3b|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both give z=-1/5 or z=1/2."
+       }
+      ],
+      "typing_problems": []
+     },
+     {
+      "ref": "Ex4-2:3e",
+      "printed": "b = −1 3 b or b = 4",
+      "book": null,
+      "blind": "b=-\\frac{1}{3} \\text{ or } b=4",
+      "pairs": [
+       {
+        "pair_id": "Ex4-2:3e|blind~printed",
+        "route": "judge",
+        "verdict": "unclear",
+        "reason": "Correct roots are -1/3 and 4 (3b^2-11b-4=0). The printed answer 'b = -1 3 b or b = 4' has a stray 'b' after the fraction; likely an artefact for -1/3, but read literally it would be b=-b/3, i.e. b=0, so it cannot be judged with confidence."
+       },
+       {
+        "pair_id": "Ex4-2:3e|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex4-2:3e|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ],
+      "typing_problems": [
+       "book_final is not in the book solution",
+       "the key \"-\\frac{1}{3}; 4\" does not read as the printed answer \"b = −1 3 b or b = 4\""
+      ],
+      "unchecked": [
+       "book_final is not in the book solution"
+      ]
+     },
+     {
+      "ref": "Ex4-7:2k",
+      "printed": "x = −9 2 or x = 2",
+      "book": "x=-\\frac{9}{2} or x=2",
+      "blind": "x=-2 \\text{ or } x=\\frac{9}{2}",
+      "pairs": [
+       {
+        "pair_id": "Ex4-7:2k|blind~printed",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "Roots of 2x^2-5x-18=0 are -2 and 9/2; the other answer gives -9/2 and 2, which do not satisfy the equation."
+       },
+       {
+        "pair_id": "Ex4-7:2k|blind~book",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "Roots are -2 and 9/2; the other answer gives -9/2 and 2, a different set."
+       },
+       {
+        "pair_id": "Ex4-7:2k|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ],
+      "typing_problems": []
+     },
+     {
+      "ref": "Ex4-7:12e",
+      "printed": "a = 4 or a = −3",
+      "book": "therefore a=4 or a=-3",
+      "blind": "a=\\frac{5\\pm\\sqrt{73}}{2}",
+      "pairs": [
+       {
+        "pair_id": "Ex4-7:12e|blind~printed",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "The equation reduces to a^2 - 5a - 12 = 0, so a = (5 ± sqrt73)/2, about 6.77 or -1.77. That is not 4 or -3. Checking a = 4 gives 1 on the left and 5 on the right."
+       },
+       {
+        "pair_id": "Ex4-7:12e|blind~book",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "(5 ± sqrt73)/2 is not the same set as {4, -3}."
+       },
+       {
+        "pair_id": "Ex4-7:12e|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both give a = 4 or a = -3. They agree with each other, though neither matches the equation."
+       }
+      ],
+      "typing_problems": []
+     },
+     {
+      "ref": "Ex4-7:12v",
+      "printed": "x = 1 2 y or x = −1",
+      "book": "Therefore $x = \\frac{1}{2}y$ or $x = -1$",
+      "blind": "x=\\frac{1}{2}\\ \\text{or}\\ x=-1",
+      "pairs": [
+       {
+        "pair_id": "Ex4-7:12v|blind~printed",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "The equation reduces to 2x^2 + x - 1 = 0, so x = 1/2 or -1. Answer 2 reads 'x = 1 2 y', which is x = y/2, and the problem has no y. That is not x = 1/2."
+       },
+       {
+        "pair_id": "Ex4-7:12v|blind~book",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "Answer 2 gives x = (1/2)y, which depends on y and is not the value 1/2."
+       },
+       {
+        "pair_id": "Ex4-7:12v|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ],
+      "typing_problems": []
+     }
+    ],
+    "unchecked": [
+     {
+      "ref": "Ex4-2:3e",
+      "missing": [
+       "book_final is not in the book solution"
+      ]
+     }
+    ],
+    "off_task": [],
+    "no_printed_answer": [],
+    "typing_problems": [
+     {
+      "ref": "WE4",
+      "problems": [
+       "the key \"-1; \\frac{1}{3}\" does not read as the book final answer \"The solution to $3{x}^{2}+2x-1=0$ is $x=-1$ or $x=\\frac{1}{3}$ .\""
+      ]
+     },
+     {
+      "ref": "Ex4-2:2j",
+      "problems": [
+       "numeric key \"\\frac{3}{2}\" is not a number"
+      ]
+     },
+     {
+      "ref": "Ex4-2:2s",
+      "problems": [
+       "the key \"\\sqrt{18}; -\\sqrt{18}\" does not read as the printed answer \"x = √ 18 or x = − √ 18\""
+      ]
+     },
+     {
+      "ref": "Ex4-2:3e",
+      "problems": [
+       "book_final is not in the book solution",
+       "the key \"-\\frac{1}{3}; 4\" does not read as the printed answer \"b = −1 3 b or b = 4\""
+      ]
+     },
+     {
+      "ref": "Ex4-2:3i",
+      "problems": [
+       "the key \"2; -2; 3; -3\" does not read as the printed answer \"b = ±2 or b = ±3\""
+      ]
+     },
+     {
+      "ref": "Ex4-7:12h",
+      "problems": [
+       "the key \"\\sqrt{3}; -\\sqrt{3}; 1; -1\" does not read as the printed answer \"b = ± √ 3 or b = ±1\""
+      ]
+     },
+     {
+      "ref": "Ex4-7:12i",
+      "problems": [
+       "the key \"\\frac{2}{3}; -\\frac{2}{3}; 1; -1\" does not read as the printed answer \"y = ± 2 3 or y = ±1\""
+      ]
+     }
+    ],
+    "printed_not_in_asked_form": [],
+    "forms_from_book_rules": [],
+    "forms_the_marker_cannot_check": [],
+    "retyped": [],
+    "tier_checks": [
+     {
+      "ref": "Ex4-2:1a",
+      "typing": "standard",
+      "check": "standard"
+     },
+     {
+      "ref": "Ex4-2:2b",
+      "typing": "standard",
+      "check": "basic"
+     },
+     {
+      "ref": "Ex4-2:2g",
+      "typing": "standard",
+      "check": "standard"
+     },
+     {
+      "ref": "Ex4-2:2h",
+      "typing": "standard",
+      "check": "basic"
+     },
+     {
+      "ref": "Ex4-2:2m",
+      "typing": "standard",
+      "check": "standard"
+     },
+     {
+      "ref": "Ex4-2:2s",
+      "typing": "standard",
+      "check": "basic"
+     },
+     {
+      "ref": "Ex4-2:2y",
+      "typing": "standard",
+      "check": "standard"
+     },
+     {
+      "ref": "Ex4-2:3b",
+      "typing": "standard",
+      "check": "standard"
+     },
+     {
+      "ref": "Ex4-2:3e",
+      "typing": "standard",
+      "check": "advanced"
+     },
+     {
+      "ref": "Ex4-7:2b",
+      "typing": "basic",
+      "check": "standard"
+     },
+     {
+      "ref": "Ex4-7:2e",
+      "typing": "basic",
+      "check": "basic"
+     },
+     {
+      "ref": "Ex4-7:12c",
+      "typing": "standard",
+      "check": "standard"
+     },
+     {
+      "ref": "Ex4-7:12f",
+      "typing": "standard",
+      "check": "standard"
+     },
+     {
+      "ref": "Ex4-7:12i",
+      "typing": "standard",
+      "check": "advanced"
+     },
+     {
+      "ref": "Ex4-7:12r",
+      "typing": "standard",
+      "check": "standard"
+     },
+     {
+      "ref": "Ex4-7:12u",
+      "typing": "standard",
+      "check": "advanced"
+     },
+     {
+      "ref": "Ex4-7:12x",
+      "typing": "standard",
+      "check": "basic"
+     }
+    ]
+   },
+   "figure_blocked": [],
+   "oracle": {
+    "tally": {
+     "claims": 24,
+     "questions": 65,
+     "worked_examples_kept_as_teaching": 2,
+     "by_objective": [
+      {
+       "lo": "lo:g10m4s3-1-1",
+       "claims": 3,
+       "items": 3
+      },
+      {
+       "lo": "lo:g10m4s3-1-2",
+       "claims": 21,
+       "items": 38
+      },
+      {
+       "lo": "lo:g10m4s3-1-3",
+       "claims": 0,
+       "items": 26
+      }
+     ]
+    },
+    "verdict": "GREEN",
+    "subheadings": [
+     {
+      "anchor": "EMA36",
+      "status": "covered",
+      "missing_items": []
+     },
+     {
+      "anchor": "EMA37",
+      "status": "covered",
+      "missing_items": []
+     }
+    ]
+   },
+   "counts": {
+    "claims": 24,
+    "claims_dropped": 0,
+    "items": 67,
+    "worked_examples": 2,
+    "exercises": 65,
+    "by_answer_type": {
+     "expression": 60,
+     "numeric": 5,
+     "not_markable": 2
+    },
+    "by_solution_provenance": {
+     "book_worked": 2,
+     "book_worked_epub": 65
+    },
+    "by_verification": {
+     "agreed": 62,
+     "disputed": 5
+    },
+    "visuals": 0,
+    "viz_gaps": 0,
+    "figure_blocked": 0,
+    "unmapped_worked_examples": 0
+   },
+   "failed": {
+    "s2": false,
+    "s3": false
+   }
+  }
+ ],
+ "failed_lessons": [],
+ "calls": {
+  "by_phase": {
+   "S2 Claims": 1,
+   "S3 Typing": 3,
+   "S3 Blind re-solve": 5,
+   "S3 Tier check": 1,
+   "S2 Provenance": 1,
+   "S3 Judge": 2,
+   "S8 Oracle": 1
+  },
+  "per_lesson": {
+   "g10m4s3-1": 14
+  },
+  "total": 14
+ },
+ "meter": {
+  "stage": "S2-S4,S8",
+  "record": "uv run meter_run.py record --book g10-math --stage S2-S4,S8 --run <runId>",
+  "by_stage": "uv run meter_run.py summary --book g10-math --by phase",
+  "by_lesson": "uv run meter_run.py summary --book g10-math --by lesson",
+  "note": "Phase titles start with their stage (S2, S3, S4, S8), so `--by phase` is the per-stage cost; every label carries the lesson slug (S3:blind:<slug>:1), so `--by lesson` is the per-lesson cost."
+ }
+}
