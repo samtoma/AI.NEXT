@@ -447,7 +447,7 @@ def main() -> int:
                       parent_question_id, source_page, source_note, reviewed_by, reviewed_at,
                       ai_checked_by, ai_checked_at, hold_reason, review_note)
                    VALUES (%s,%s,%s,%s,%s,%s,%s,%s,1,%s,'variant',%s,%s,%s,%s,%s,
-                           %s, coalesce(%s::timestamptz, CASE WHEN %s IS NOT NULL THEN now() END), %s, %s)
+                           %s, coalesce(%s::timestamptz, CASE WHEN %s::text IS NOT NULL THEN now() END), %s, %s)
                    """ + conflict,
                 (
                     q["id"], q["lo_id"], q["tier"], q["question_type"], q["stem"],

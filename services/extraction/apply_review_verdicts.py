@@ -183,12 +183,12 @@ def apply_g2(cur, g2: dict, runs_dir: Path, course: str, dry_run: bool) -> dict:
         if not dry_run:
             cur.execute("""UPDATE questions
                               SET status = %s, reviewed_by = %s,
-                                  reviewed_at = CASE WHEN %s IS NULL THEN NULL
-                                                     WHEN %s IS DISTINCT FROM reviewed_by THEN now()
+                                  reviewed_at = CASE WHEN %s::text IS NULL THEN NULL
+                                                     WHEN %s::text IS DISTINCT FROM reviewed_by THEN now()
                                                      ELSE reviewed_at END,
                                   ai_checked_by = %s,
-                                  ai_checked_at = CASE WHEN %s IS NULL THEN ai_checked_at
-                                                       WHEN %s IS DISTINCT FROM ai_checked_by THEN now()
+                                  ai_checked_at = CASE WHEN %s::text IS NULL THEN ai_checked_at
+                                                       WHEN %s::text IS DISTINCT FROM ai_checked_by THEN now()
                                                        ELSE ai_checked_at END,
                                   hold_reason = %s, review_note = %s
                             WHERE id = %s""",

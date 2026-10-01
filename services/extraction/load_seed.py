@@ -1548,7 +1548,7 @@ def load(paths: list[Path], approve_all: bool, demo_student: bool,
                             source_note, extraction_run_id, reviewed_by, reviewed_at,
                             ai_checked_by, ai_checked_at, hold_reason, review_note)
                            VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,NULL,NULL,
-                                   %s, CASE WHEN %s IS NOT NULL THEN now() END, %s, %s)""",
+                                   %s, CASE WHEN %s::text IS NOT NULL THEN now() END, %s, %s)""",
                         (q.id, q.lo, q.tier, q.type, q.stem,
                          json.dumps(new["choices"]) if new["choices"] else None,
                          new["correct_answer"], json.dumps(new["canonical_solution"]),

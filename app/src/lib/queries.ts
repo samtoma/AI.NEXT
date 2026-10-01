@@ -21,6 +21,8 @@ import { computeLayers } from "./spine-layout";
 import { SPINE_LO_SQL, SPINE_LO_SQL_NO_SUBJECT_VIEW } from "./spine-lo-query";
 import { catalogueObjectivesSql } from "./module-order";
 import { slugOfLo } from "./lesson-slug";
+import { getCourseOutline } from "./course-outline-queries";
+import { chaptersBeingPrepared } from "./course-outline";
 import {
   BOOK_SECTIONS_SQL,
   NO_SECTIONS,
@@ -491,14 +493,28 @@ async function spineDataOn(db: Db, studentId: number): Promise<SpineData> {
   // visible course with nothing loaded has no map to pick.
   const onMap = new Set(los.map((l) => l.courseId).filter((id): id is string => id != null));
   const bookOf = new Map(books.map((b) => [b.courseId, b.book]));
+  // THE WHOLE BOOK (migration 037, lib/course-outline.ts): for a course with
+  // an outline, the chapters with no lesson prepared yet, as placeholders the
+  // map lists beside the prepared topics — chapter names only, never an
+  // objective. Read for the courses ON the map, which the gate already
+  // admitted. Prepared = a lesson with objectives here, the catalogue's rule.
+  // No outline (every National course) → no field, and the course entry is
+  // exactly what it was.
+  const outline = await getCourseOutline([...onMap], db);
+  const preparedOf = (courseId: string) =>
+    new Set(los.filter((l) => l.courseId === courseId).map((l) => slugOfLo(l.id)));
   const courses: SpineCourse[] = [...onMap]
     .sort((a, b) => compareCourses(a, b) || a.localeCompare(b))
-    .map((id) => ({
-      id,
-      label: courseDef(id)?.label ?? id,
-      subject: spineSubjectOfCourse(id),
-      doc: bookOf.get(id) ?? NO_BOOK,
-    }));
+    .map((id) => {
+      const preparing = chaptersBeingPrepared(id, outline, preparedOf(id));
+      return {
+        id,
+        label: courseDef(id)?.label ?? id,
+        subject: spineSubjectOfCourse(id),
+        doc: bookOf.get(id) ?? NO_BOOK,
+        ...(preparing.length > 0 ? { preparing } : {}),
+      };
+    });
 
   // Cross-subject bridges: keep only edges whose endpoints are both real LOs
   // in this graph (defensive — a bridge to a pruned node is meaningless).

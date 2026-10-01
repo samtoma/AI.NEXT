@@ -23,6 +23,7 @@ import type {
   LessonProvenance,
   SectionRollup,
 } from "./book-sections";
+import type { PreparingChapter } from "./course-outline";
 import { choiceOptions } from "./question-flags";
 
 export interface Choice {
@@ -228,6 +229,14 @@ export interface SpineCourse {
   subject: SpineSubject | null;
   /** its own book; empty strings when the loader stamped none */
   doc: SpineBook;
+  /**
+   * The chapters of its book with no lesson prepared yet (migration 037,
+   * `lib/course-outline.ts` `chaptersBeingPrepared`), in book order — the
+   * map lists them as placeholders beside the prepared topics, with no
+   * objective of their own. Absent for a course with no outline (every
+   * National course) and when every chapter has something prepared.
+   */
+  preparing?: PreparingChapter[];
 }
 
 /** One split book section as the skill map groups it (FR-4315). */

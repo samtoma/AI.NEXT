@@ -184,12 +184,17 @@ export type StampKind = "none" | "ai" | "bulk" | "human";
  *   · anything else is a human stamp ("Samuel Toma (G2 fix)", "<name>
  *     (sampled)", "<name> (family <tpl> via <qid>)", an operator's display
  *     name written by this gate).
+ *
+ * One addition, in the safe direction: "auto-pass G<n> (AI recommendation)"
+ * (answer 37c, `services/extraction/review_policy.py`) is an AI check too. The
+ * loaders write it to `ai_checked_by`, never to `reviewed_by`; should one ever
+ * land in `reviewed_by`, it reads as awaiting a human, not as reviewed.
  */
 export function stampKind(raw: string | null | undefined): StampKind {
   if (raw == null) return "none";
   const stamp = raw.replace(" [held: figure missing]", "").split("; ")[0]!.trim();
   if (stamp === "") return "none";
-  if (/^ai /i.test(stamp) || /\(pending [^)]*\)$/i.test(stamp)) return "ai";
+  if (/^ai /i.test(stamp) || /\(pending [^)]*\)$/i.test(stamp) || /^auto-pass /i.test(stamp)) return "ai";
   if (/^local-dev/i.test(stamp) || /\(poc bulk\)$/i.test(stamp)) return "bulk";
   return "human";
 }
