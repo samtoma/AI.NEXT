@@ -271,7 +271,7 @@ def normalise(latex: str) -> str:
     """The agreement key: two transcriptions of one image are the same maths when these agree.
 
     It removes presentation only, and unifies spellings of one thing:
-      * spacing — `\\, \; \\: \\! \\quad`, `\\hspace{…}`, `\\phantom{…}` (it prints nothing), `\\\\[2pt]`;
+      * spacing — `\\, \\; \\: \\! \\quad`, `\\hspace{…}`, `\\phantom{…}` (it prints nothing), `\\\\[2pt]`;
       * delimiter size — `\\left \\right \\big \\Bigl …`, and the null delimiters `\\left.` `\\right.`;
       * style — `\\displaystyle`, `\\dfrac` `\\tfrac` `\\cfrac` → `\\frac`, `\\le` → `\\leq`, ° forms, x^{2} ≡ x^2;
       * grouping — braces around a single token (`{7}^{1}` ≡ `7^{1}`), doubled braces, outer braces

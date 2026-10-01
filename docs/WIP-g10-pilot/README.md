@@ -831,3 +831,47 @@ re-collected lesson with nothing rejected or unreadable.
 EPUB factorise over the reals with a cube root of 25. G2 should accept the book's key. No other saved run had an incoherent marker, so
 g10m1s7-2 (`wf_5acb7902-ff6`) is unaffected and was not re-collected. The collection is still `collect-6` (same day; the fan-out plan names it);
 a lesson-v8 / collect-6 copy prepared before this change lacks the rule — re-collect its run (`recollect_lessons.py`), it is never a re-run.
+
+## Chapter 1 closed up to its remaining runs — G2 for all 8 lessons, assembly, the working check and the S5 draft prepared — 2026-10-01 (data-engineer)
+
+No Workflow launched, no model call, nothing loaded into any database (a dry-run load only). All commands from `services/extraction/`.
+
+**G2 auto-pass, the whole chapter** (`auto_pass_gates.py g2 … --chapter 1 --into runs/g10-math/g2-ch01.json --split`, ONE gate record `runs/g10-math/gates/g2-ch01.json`,
+all eight lesson runs; s3-1 s4-1 s5-1 s6-1 and s7-3 from `runs/g10-math/lessons/recollected/`, s7-1 s7-2 s8-1 as saved — `recollect_lessons.py --dry-run` shows today's script
+changes nothing for them). The earlier 26 verdicts are preserved byte for byte (merge, not overwrite); the pilot's `g2.json` untouched. The four new lessons: **s7-1** 6 exclude
+(typing problems), 5 held (three-way disagreement); **s7-2** 1 exclude, 2 held; **s7-3** 1 exclude (Ex1-9:17: printed answer carries an extra abc term), 3 held (Ex1-9:11, 24, 25), 1 typed again
+(Ex1-9:11, `kind-for-form`: the key kept exactly); **s8-1** 5 exclude, 14 held. Chapter: 39 verdicts by the checks' rule (35 exclude, 4 accept), **47 held**, 4 teaching (typed not markable), 33 typed again.
+Finals `runs/g10-math/lesson/g10m1s*.json`: 575 items (96, 53, 34, 125, 89, 41, 44, 93). **Ex1-9:11 stays held**: the rule has no accept for a three-way disagreement (the blind solver said "cannot be factorised",
+the book factorises over the reals with ∛25); it is for Samuel, or for a G2 recommendation. Of the 47 held, **42 have the printed answer and the book's worked solution equivalent** and only the blind solver differs,
+2 have the printed answer differing from the book solution, 1 all three different, 2 all equivalent but still listed — a G2 recommendation agent over the 47 would be the quick way to put most of them live (not in the plan's estimate).
+
+**Assembly** (`assemble_lesson_bundle.py --book g10-math --chapter 1 --report runs/g10-math/fanout/assembly-ch01.json` → `seed/g10-math/g10m-course.json`, `g10m-c01.json`, `seed/content/g10m1s*.json`; the
+book's seed paths, never the pilot's): 8 lessons, **29 objectives**, 30 nodes, 54 edges, **533 book questions** (415 expression, 71 numeric, 47 choice; tiers 184 basic / 280 standard / 69 advanced), 7 worked-example entries
+(teaching), 234 claims, 42 items not a question (35 excluded at G2 + 7 teaching). **480 live, 53 held**: 47 `answer_mismatch` (the G2 holds above), 6 `unanswerable` (the app's marker cannot mark the key: Ex1-1:7c `√-1` and 7f `14/0`
+are not numbers; 7b has an ellipsis; **7d, 10d, Ex1-3:3 carry `\overline{…}`, which the app's marker cannot read at all** — `answer-marker.ts` `fromLatex` turns `\overline{x}` into `x_bar` and the tokenizer refuses `_`; the
+bracketed form `0.11(4145)` it does read; a fix is `out.push(/^\d+$/.test(a) ? "(" + a + ")" : a + "_bar")` in its `overline`/`bar` case, an app change for backend-engineer, with its marker tests — not made here). **3 book-picture stand-ins** (Ex1-2:3a–c share one image;
+none reveals the answer), 0 held for figure, **KaTeX errors 0**, 14 glued commands re-spaced. **Carried stems 0** (R1–R3 are geometry rules; Chapter 1 has none); **8 parts listed unresolved** for the backlog
+(`runs/g10-math/multipart-ch01.json`; all `refers_by_words`: Ex1-11:25b–d "from above", Ex1-2:3c "using you answers", 4b "using you answer", 4c "with your answer", Ex1-4:6c "from the previous", 6d "from earlier").
+`load_seed.py … --validate-only` passes (533 questions, 480 verified).
+**Fixed on the way:** (1) the typing agent copied 25 questions' keys as the EPUB wrote them, `$(a-3)(a+3)$`; the app's marker refuses the `$` and the assembly held them all "unanswerable" for a delimiter — `unwrap_math_delimiters`
+removes one enclosing `$…$` pair at assembly (report `marker_keys_unwrapped`; tests in `tests/test_assemble_lesson_bundle.py`); held-by-marker went 31 → 6. (2) `multipart.py` did not see "Using you answers" (the book's typo): now listed.
+
+**The database.** `ainext_pilot_g10_ch08` is the load target (Samuel's preview), so `fanout.py`'s `FANOUT_DB` now defaults to it (`AINEXT_FANOUT_DB` overrides; the scratch `ainext_fanout_g10` was never created) and the plan
+was regenerated (only the DSN text in the steps, three `prepared` flags and the new objective counts changed). **Backup before any chapter-1 load:** `pg_dump -Fc` →
+`services/extraction/work/g10-math/backups/pilot-before-ch01.dump` (719,766 bytes, 568 TOC entries, gitignored; a copy in the session scratchpad; DB then held 2,403 questions, unchanged since). **The plan's load line was wrong**: it
+used `load_seed.py --all --course … --book …`; `load_seed` has no `--book`, and `--all --course` refuses `books/g10-math.json` while its status is `ingest`. The load is by path, add-only; **dry run against the pilot DB succeeded**:
++30 nodes, +54 edges, **+533 questions (+480 live, +53 review)**, +3 visuals, +8 course lessons, +7 explanation entries, attempts and mastery untouched (rolled back; DB unchanged). **Order matters**: the book-bundle load must come
+BEFORE `prepare s7-author-ch01` — the S7 author reads the DB's graph and, unfiltered, would have authored Chapter 8's 13 objectives again; `prep_s7_author` now passes `--only-lessons <the chapter's lessons>` (and refuses, naming them,
+a chapter not loaded yet).
+
+**Estimates.** The plan costed Chapter 1 at 21 objectives; the approved G1 files hold **29** (chapter 2: 9 against 8). `fanout.py inventory` now counts objectives from the approved files once G1 has passed
+(`objectives_counted`): the plan's S5/S6/S7 for chapter 1 rose from $41.6–57.1 to $57.4–78.9 in total, the plan from $934–1,353 to $956–1,383 (as of this note).
+
+**`fanout.py close-chapter N`** (new; `--dry-run` lists the runs and commands): G2 auto-pass + split, assembly, config, validation, then prepares and verifies the chapter's working check and S5 draft and prints the numbers above.
+Idempotent (run again on chapter 1: seed, content, G2 file, finals and copies byte-identical). Chapter 2: `--dry-run` only (it found its three saved runs: `wf_40177b3c-94d`, `wf_aa060013-9f1`, `wf_89dbc00a-57a`); the real run for chapter 2
+was not made by this agent (the shell refused it as a change to the shared chapter-2 files) — the main session runs `uv run fanout.py close-chapter 2`, or says so and it will be run here.
+
+**Prepared, verified (`embed_workflow.py verify` OK on every copy), not launched** — `work/g10-math/packets/embedded/fanout/`: `030-s5-draft-ch01.workflow.js` (stage S5, 29 objectives; args by reference);
+`044-wcheck-ch01.workflow.js` + `044-wcheck-ch01.part2.workflow.js` (pass A, 300 + 240 solutions) and `044-wcheck-ch01-B.workflow.js` + `044-wcheck-ch01-B.part2.workflow.js` (pass B reshuffled, 300 + 240; no batch shared with A) (stage SW):
+540 solutions, 108 agents a pass, 3 figures offered, 0 free pre-check flags; ≈ $29–38. After the runs: `working_check.py collect --args` every part's args (A, A.part2, B, B.part2) `--runs` the four saved files `--out runs/g10-math/working-check/ch01.flags.json`.
+S6/S7 (author, grade, verify) and S5 final cannot be prepared before the S5 draft is saved (and, for S7, chapter 1 loaded).
