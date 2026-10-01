@@ -4,12 +4,11 @@
  "book": "g10-math",
  "id": "g3-ch02",
  "chapter": 2,
- "run": "wf_73c7f2f6-af7",
- "decided_at": "2026-10-01T17:13:09Z",
+ "decided_at": "2026-10-01T17:24:22Z",
  "by": "auto-pass G3 (AI recommendation)",
  "auto": true,
- "outcome": "pass",
- "summary": "14 sampled item(s) accepted on the AI checks; 0 predicate claim(s) stay held, as the verifier recommends",
+ "outcome": "pass_with_holds",
+ "summary": "14 sampled item(s) accepted on the AI checks; 0 predicate claim(s) stay held, as the verifier recommends; 9 widget gap(s) accepted on the AI recommendation (the chapter ships without a widget question for now; 9 proposed kind(s) NOT approved, listed for Samuel)",
  "decisions": [
   {
    "key": "q:g10m2s2-1-1:g004-bracke",
@@ -80,6 +79,60 @@
    "key": "q:g10m2s4-1-4:g003-hinted",
    "decision": "accept",
    "basis": "its family passed S6's blind grade / S7's verifier"
+  },
+  {
+   "key": "widget gap lo:g10m2s2-1-1",
+   "decision": "accepted without a widget for now (auto-pass)",
+   "detail": "proposed kind: exponent_expander (factor-chip exponent builder) — NOT approved, needs Samuel (decision 11)",
+   "basis": "No existing kind builds an exponent or an exponent-law step. The nearest, area_model, expands $(x+a)(x+b)$ in a plain variable. It could show that $(x+3)^2\\ne x^2+9$ through its missing-cross-term predicate. But the student would be doing Chapter 3 binomial expansion, and none of this objective's si"
+  },
+  {
+   "key": "widget gap lo:g10m2s2-1-2",
+   "decision": "accepted without a widget for now (auto-pass)",
+   "detail": "proposed kind: base_reducer (prime-column base decomposer) — NOT approved, needs Samuel (decision 11)",
+   "basis": "No existing kind lets a student take a base apart or hold several exponent columns side by side. product_builder, area_model and venn_builder do other jobs: ordered pairs, polynomial tiles and set regions. number_line_marker and ratio_balance grade a position or a fourth term, not an expression rewr"
+  },
+  {
+   "key": "widget gap lo:g10m2s2-1-3",
+   "decision": "accepted without a widget for now (auto-pass)",
+   "detail": "proposed kind: common_factor_extractor (factor-out-and-cancel builder) — NOT approved, needs Samuel (decision 11)",
+   "basis": "area_model in factor mode was considered. It factorises $x^2+(a+b)x+ab$ into $(x+a)(x+b)$ in a plain variable, and with $b=-a$ it can show a difference of squares. It cannot take a common exponential factor such as $13^{c}$ out of terms with different exponents, and the student never meets the fract"
+  },
+  {
+   "key": "widget gap lo:g10m2s3-1-1",
+   "decision": "accepted without a widget for now (auto-pass)",
+   "detail": "proposed kind: exponent_law_builder — NOT approved, needs Samuel (decision 11)",
+   "basis": "No existing kind carries exponent laws. area_model tiles are for (x+a)(x+b), not powers; solid_scaler teaches k, k² and k³ for lengths, areas and volumes but has no coefficient, letter or fractional-exponent structure; curve_sketcher and pair_plotter would only check a graph or a lattice point, not "
+  },
+  {
+   "key": "widget gap lo:g10m2s3-1-2",
+   "decision": "accepted without a widget for now (auto-pass)",
+   "detail": "proposed kind: rational_power_evaluator — NOT approved, needs Samuel (decision 11)",
+   "basis": "None of the existing kinds can ask for or grade the value of a rational power. solid_scaler comes closest, since its scale factor k is the cube root of the volume ratio, but it covers only positive roots on the slider's half-steps. It has no negative exponent, no decimal base and no prime-power rewr"
+  },
+  {
+   "key": "widget gap lo:g10m2s4-1-1",
+   "decision": "accepted without a widget for now (auto-pass)",
+   "detail": "proposed kind: base_matcher — NOT approved, needs Samuel (decision 11)",
+   "basis": "No existing kind constructs a rewriting of a number as a power. number_line_marker (points) would only take the final value of x, which is an answer box in disguise. It also cannot reach the book's answers $-\\frac{5}{2}$ and $\\frac{5}{9}$, because its targets must be whole numbers. And none of its p"
+  },
+  {
+   "key": "widget gap lo:g10m2s4-1-2",
+   "decision": "accepted without a widget for now (auto-pass)",
+   "detail": "proposed kind: common_factor_builder — NOT approved, needs Samuel (decision 11)",
+   "basis": "area_model's factor mode builds $(x+a)(x+b)$ from x² and x tiles, so it has no tile for a power $b^t$ and no step that splits a power with the exponent law. number_line_marker would only record the final t, again an answer box in disguise, and none of its predicates map to the misconceptions on this"
+  },
+  {
+   "key": "widget gap lo:g10m2s4-1-3",
+   "decision": "accepted without a widget for now (auto-pass)",
+   "detail": "proposed kind: exponential_factoriser — NOT approved, needs Samuel (decision 11)",
+   "basis": "number_line_marker (points) can take the final roots as a set, but I rejected it. Rejecting a factor shows up only as a missing mark, which is indistinguishable from not having attempted that factor, so a student can earn full credit without showing the key idea. Its extra-values predicate also fire"
+  },
+  {
+   "key": "widget gap lo:g10m2s4-1-4",
+   "decision": "accepted without a widget for now (auto-pass)",
+   "detail": "proposed kind: trial_and_error_solver — NOT approved, needs Samuel (decision 11)",
+   "basis": "No existing kind lets the student evaluate $b^x$ for a chosen x and narrow in on a target. number_line_marker only accepts whole-number targets inside ±20, so 2.81 cannot be marked. curve_sketcher draws an exponential freehand but neither evaluates nor solves, so it does not model trial and error."
   }
  ],
  "checks": [
@@ -94,6 +147,10 @@
   {
    "name": "the app's marker on every typed key (load)",
    "state": "pass"
+  },
+  {
+   "name": "S7 author examined the chapter (a gap with a reason, or a template)",
+   "state": "pass"
   }
  ],
  "evidence": [
@@ -104,9 +161,23 @@
   {
    "label": "review queue generated-questions.review-queue.json",
    "path": "services/extraction/seed/generated/g10-math/ch02/generated-questions.review-queue.json"
+  },
+  {
+   "label": "widget gaps (auto-passed)",
+   "path": "services/extraction/coverage/g10-math.ch02.widget-gaps.json"
   }
  ],
  "blocked": [],
  "course_id": "course:us-g10-math-en",
- "for_review": []
+ "for_review": [
+  "widget gap, chapter 2: the proposed kind 'base_matcher' needs your approval before anything is built (decision 11); nothing is built on this auto-pass",
+  "widget gap, chapter 2: the proposed kind 'base_reducer (prime-column base decomposer)' needs your approval before anything is built (decision 11); nothing is built on this auto-pass",
+  "widget gap, chapter 2: the proposed kind 'common_factor_builder' needs your approval before anything is built (decision 11); nothing is built on this auto-pass",
+  "widget gap, chapter 2: the proposed kind 'common_factor_extractor (factor-out-and-cancel builder)' needs your approval before anything is built (decision 11); nothing is built on this auto-pass",
+  "widget gap, chapter 2: the proposed kind 'exponent_expander (factor-chip exponent builder)' needs your approval before anything is built (decision 11); nothing is built on this auto-pass",
+  "widget gap, chapter 2: the proposed kind 'exponent_law_builder' needs your approval before anything is built (decision 11); nothing is built on this auto-pass",
+  "widget gap, chapter 2: the proposed kind 'exponential_factoriser' needs your approval before anything is built (decision 11); nothing is built on this auto-pass",
+  "widget gap, chapter 2: the proposed kind 'rational_power_evaluator' needs your approval before anything is built (decision 11); nothing is built on this auto-pass",
+  "widget gap, chapter 2: the proposed kind 'trial_and_error_solver' needs your approval before anything is built (decision 11); nothing is built on this auto-pass"
+ ]
 }

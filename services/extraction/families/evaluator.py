@@ -727,8 +727,8 @@ MATHS_CONSTANTS = {"pi", "inf", "true", "false"}
 # Every form is replaced by "(p/q)", an exact fraction the rest of the parser already understands.
 _DOT = r"\\dot\s*\{\s*(\d)\s*\}"
 _RECURRING_NUMERAL = re.compile(
-    r"(?<![\d.])(?P<ip>\d+)\.(?P<fp>(?:\d|" + _DOT + r")*)"
-    r"(?:(?P<bar>\\(?:overline|bar)\s*\{\s*(?P<barblock>\d+)\s*\})"
+    r"(?<![\d.])(?P<ip>\d+)\.(?P<fp>(?:\d|\s*" + _DOT + r"\s*)*)"
+    r"(?:(?P<bar>\s*\\(?:overline|bar)\s*\{\s*(?P<barblock>\d+)\s*\})"
     r"|\((?P<bracket>\d+)\)"
     r"|(?P<ellipsis>\.\.\.|…))?")
 _DOT_ONE = re.compile(_DOT)

@@ -10,7 +10,8 @@
     "checks": 23,
     "hold": 20,
     "excepted": 0,
-    "fail": 3
+    "auto_passed": 1,
+    "fail": 2
   },
   "checks": [
     {
@@ -70,57 +71,38 @@
       "id": "tier_floor",
       "title": "Objectives × tiers = cells with at least one live item, book or generated (FR-4305)",
       "want": 27,
-      "got": 16,
+      "got": 26,
       "state": "fails",
       "failures": [
         {
-          "scope": "lo:g10m2s2-1-1",
-          "detail": "no live item at tier(s) advanced"
-        },
-        {
-          "scope": "lo:g10m2s2-1-2",
-          "detail": "no live item at tier(s) basic"
-        },
-        {
-          "scope": "lo:g10m2s2-1-3",
-          "detail": "no live item at tier(s) basic"
-        },
-        {
-          "scope": "lo:g10m2s3-1-2",
-          "detail": "no live item at tier(s) basic, advanced"
-        },
-        {
           "scope": "lo:g10m2s4-1-1",
           "detail": "no live item at tier(s) advanced"
-        },
-        {
-          "scope": "lo:g10m2s4-1-2",
-          "detail": "no live item at tier(s) basic, advanced"
-        },
-        {
-          "scope": "lo:g10m2s4-1-3",
-          "detail": "no live item at tier(s) basic"
-        },
-        {
-          "scope": "lo:g10m2s4-1-4",
-          "detail": "no live item at tier(s) basic, advanced"
         }
       ],
-      "excepted_scopes": []
+      "excepted_scopes": [],
+      "notes": [
+        "generated items live: 139 of 139 (0 by the row's own status, the rest by the loader's rule: a maths course loads its bundle live, answer 37a — review_policy.generated_item_is_live)"
+      ]
     },
     {
       "id": "module_widgets",
       "title": "Modules = modules with a widget question + signed-off widget gaps (FR-4306)",
       "want": 1,
-      "got": 0,
-      "state": "fails",
-      "failures": [
+      "got": 1,
+      "state": "auto_passed",
+      "failures": [],
+      "excepted_scopes": [],
+      "auto_passed": [
         {
           "scope": "module:g10m-c02",
-          "detail": "no widget question and no signed-off widget gap"
+          "by": "auto-pass G3 (AI recommendation)",
+          "at": "2026-10-01T17:24:22Z",
+          "detail": "no widget question; 9 widget gap(s) of the chapter were AUTO-PASSED (auto-pass G3 (AI recommendation)), not signed by a person — in Samuel's backlog; no new kind is approved"
         }
       ],
-      "excepted_scopes": []
+      "notes": [
+        "1 chapter(s) covered ONLY by an auto-passed widget gap, 0 widget questions: module:g10m-c02"
+      ]
     },
     {
       "id": "distractor_refutations",
@@ -303,6 +285,14 @@
     "items_printed_in_book_notation": 11,
     "residual_in_bundles": 0
   },
+  "auto_passed": [
+    {
+      "check": "module_widgets",
+      "scope": "module:g10m-c02",
+      "by": "auto-pass G3 (AI recommendation)",
+      "at": "2026-10-01T17:24:22Z"
+    }
+  ],
   "missing_inputs": [],
   "inputs": {
     "content/g10m2s2-1.json": "ac866d0adefc5a597cde56138e7b31bab80120d8b144f1b0e709dd9825e0d399",
@@ -324,7 +314,7 @@
     "seed/g10m-c03.json": "1aa7729d61e9036b9f994efbb9622c7b524cd28731c8162284ec199fc197fc59",
     "seed/g10m-c04.json": "0dbfd6893cddca69437bc4651245d7dc699d7d357a7cd6bc7e3fb9dd87d7e3f9",
     "seed/g10m-course.json": "19916a26526c3cb43ebe28dff24af1272e9662067ebdec9e2c6c82184a48fcff",
-    "widget-gaps": "ce86e92a15001af11bf0c089790c52e14f8331602fb2ae76d10d12e081f0a41b"
+    "widget-gaps": "1116c482cf0980dff9716be5b894b050b287afa5fd88a97e042098702631a2cc"
   },
   "exceptions": []
 }

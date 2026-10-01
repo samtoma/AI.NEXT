@@ -822,8 +822,8 @@ def main(argv: list[str] | None = None) -> int:
     failing = [r["id"] for r in rows if r["state"] == "fails"]
     status = "RED" if failing else "GREEN"
     # every scope that holds only on an auto-pass, for the console and G5: never a human sign-off
-    auto_passed = [{"check": r["id"], "scope": a["scope"], "by": a.get("by"), "at": a.get("at")}
-                   for r in rows for a in r.get("auto_passed", [])]
+    auto_passed = [{"check": r["id"], "scope": x["scope"], "by": x.get("by"), "at": x.get("at")}
+                   for r in rows for x in r.get("auto_passed", [])]
     n_auto = sum(r["state"] == "auto_passed" for r in rows)
     report = {
         "coverage_version": COVERAGE_VERSION, "book": book.book, "course_id": book.course_id,
@@ -847,8 +847,8 @@ def main(argv: list[str] | None = None) -> int:
             print(f"      {f['scope']}: {f['detail']}")
         if len(r["failures"]) > 4:
             print(f"      … +{len(r['failures']) - 4} more")
-        for a in r.get("auto_passed", [])[:4]:
-            print(f"      AUTO-PASSED {a['scope']}: {a['detail']}")
+        for ap_ in r.get("auto_passed", [])[:4]:
+            print(f"      AUTO-PASSED {ap_['scope']}: {ap_['detail']}")
     for w in warnings:
         print(f"  ! {w}")
     unsigned = [e for e in exceptions if not e.get("signed_by")]

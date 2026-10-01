@@ -408,6 +408,7 @@ def copies_of(P: Paths, r: dict) -> list[Copy]:
         found.append(Copy(r["id"], f, label, read_sha(f), True))
     if kind == "s6_grade" and any(c.label for c in found):      # parts exist: a stale unsuffixed copy is not one of them
         found = [c for c in found if c.label]
+    found.sort(key=lambda c: c.label)
     return found or [Copy(r["id"], main, "A" if kind == "wcheck" else "", None, False)]
 
 

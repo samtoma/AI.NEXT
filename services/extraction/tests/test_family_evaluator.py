@@ -179,6 +179,8 @@ class RecurringDecimalNotation(unittest.TestCase):
             r"2*0.\dot{3}": Fraction(2, 3),
             r"$0.\dot{7}$": Fraction(7, 9),          # copied with its math delimiters
             r"0.\dot{3} + 0.\dot{6}": Fraction(1),
+            r"2.6 \dot{9} \dot{0}": Fraction(148, 55),     # 2 + 38/55: spaces around the marks
+            r"0.1 \overline{045}": Fraction(58, 555),
         }
         for text, want in cases.items():
             self.assertEqual(self.value(text), want, text)
