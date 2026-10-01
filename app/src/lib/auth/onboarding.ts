@@ -71,14 +71,17 @@ export type HttpAnswer = { status: number; body: Record<string, unknown> | null 
 
 /**
  * The refusal when a submitted curriculum does not resolve — sign-up and the
- * Google step answer it identically (contracts/student-api.md):
+ * Google step answer it identically (contracts/student-api.md). Both are
+ * `422`, like `invalid_grade` — a required answer that is missing and an
+ * answer the registry does not recognise are the same kind of refusal, a bad
+ * request, not a conflict with server state:
  *
  *   · an id the registry does not know → 422 `invalid_curriculum`, with the
  *     field, in the SAME shape sign-up already answers `invalid_grade` in;
- *   · a grade that offers two or more and none of them was sent (or one the
- *     grade stopped offering after the page loaded) → 409
- *     `curriculum_required` with what the grade offers NOW, so the form asks
- *     again with the right options (FR-4005).
+ *   · nothing was sent (blank or missing — now true of every grade since
+ *     Samuel's 2026-10-01 reversal, not only one offering two or more
+ *     curricula) → 422 `curriculum_required`, carrying what the grade offers
+ *     NOW so the form's "nothing yet" notes stay current.
  */
 export function curriculumRefusal(
   error: "invalid_curriculum" | "curriculum_required",
@@ -86,7 +89,7 @@ export function curriculumRefusal(
 ): HttpAnswer {
   return error === "invalid_curriculum"
     ? { status: 422, body: { error, field: "curriculum" } }
-    : { status: 409, body: { error, field: "curriculum", offered: [...offered] } };
+    : { status: 422, body: { error, field: "curriculum", offered: [...offered] } };
 }
 
 /**
@@ -117,45 +120,32 @@ export function onboardingAnswer(result: OnboardingResult): HttpAnswer {
  * `analytics_events` and nothing else, and `account_created` is not a GA4
  * event (`ga-curriculum-guard.test.mts`, FR-4016).
  *
- * `curriculum_resolved_from` appears only when a known curriculum was sent
- * and the server stored another, because the grade no longer offered it
- * (FR-4005, privacy review F12).
+ * No `curriculum_resolved_from` any more (Samuel's 2026-10-01 reversal):
+ * sign-up and the Google step never override an explicit, known pick, so
+ * there is nothing left to resolve away from.
  */
 export function accountCreatedProperties(
   method: "password" | "google",
   grade: string,
-  resolved: { curriculum: CurriculumId; source: CurriculumSource; resolvedFrom: CurriculumId | null }
+  resolved: { curriculum: CurriculumId; source: CurriculumSource }
 ): Record<string, string> {
   return {
     method,
     grade,
     curriculum: resolved.curriculum,
     curriculum_source: resolved.source,
-    ...(resolved.resolvedFrom ? { curriculum_resolved_from: resolved.resolvedFrom } : {}),
   };
 }
 
 /* ------------------------------------------------------------------ */
 /* The question, on the page                                           */
 /* ------------------------------------------------------------------ */
-
-/**
- * Does this grade's answer need the curriculum question? Only when it offers
- * two or more (FR-4005, decision 1). One or none is stored without asking.
- */
-export function asksCurriculum(offered: readonly CurriculumId[] | undefined): boolean {
-  return (offered?.length ?? 0) >= 2;
-}
-
-/**
- * The curriculum a form sends for a grade: the student's pick when the grade
- * asks and the pick is among what it offers, otherwise nothing — the server
- * resolves the single or empty case itself, and would refuse a pick the grade
- * does not offer anyway.
- */
-export function curriculumToSend(
-  offered: readonly CurriculumId[] | undefined,
-  picked: CurriculumId | null
-): CurriculumId | null {
-  return asksCurriculum(offered) && picked !== null && offered!.includes(picked) ? picked : null;
-}
+//
+// Up to 2026-09-30 this section held `asksCurriculum` (asked only where a
+// grade offered two or more curricula) and `curriculumToSend` (sent a pick
+// only when the grade asked and offered it). Samuel's reversal of 2026-10-01
+// ("yes the sign up should always ask") removed the gate: the question is
+// shown for every grade once one is chosen, and whatever the student picks —
+// offered for that grade or not — is exactly what the form sends. There is no
+// decision left here for this module to own; `SignupForm` and `OnboardingForm`
+// reveal `CurriculumChoice` directly off their own `grade` state.

@@ -270,8 +270,6 @@ export type OnboardingResult =
       grade: string;
       curriculum: CurriculumId;
       source: CurriculumSource;
-      /** a known curriculum sent but not offered, for `account_created` (F12) */
-      resolvedFrom: CurriculumId | null;
     }
   | {
       ok: false;

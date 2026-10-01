@@ -36,6 +36,7 @@ import {
 } from "./viz-prompt";
 import {
   SPINE_SUBJECT_KEYS,
+  displayLabelOfSpineKey,
   labelArOfSpineKey,
   requireSubjectOfCourse,
   subjectDef,

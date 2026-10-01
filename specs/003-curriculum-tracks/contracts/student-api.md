@@ -8,31 +8,38 @@ new `app/src/app/api/auth/onboarding/route.ts`, `app/src/lib/student-context.ts`
 **Enforces**: FR-4003, FR-4005, FR-4008, FR-4014, FR-4016, FR-4017; carries 002 FR-2002, FR-2006,
 FR-2015
 
-## Sign-up page (server component)
+## Sign-up page (server component) *(changed 2026-10-01, answer 36 — see decisions.md, supersedes
+decision 1)*
 
-The page computes `offered: Record<Grade, CurriculumId[]>` with `offeredCurricula` for every grade
-and passes it to the form. It also passes the labels from `lib/curricula.ts`. This is catalogue
-information, not student data.
+The page computes `offered: Record<Grade, CurriculumId[]>` with `offeredCurricula` for every grade, and
+passes it to the form **together with every curriculum in the registry** (`lib/curricula.ts`). The form
+now always asks which curriculum, naming every curriculum it is given; `offered` is used only to flag,
+with a short note, a curriculum that has nothing live for the chosen grade *(the orchestrator's default;
+awaiting Samuel's confirmation of the note's wording)*. This is catalogue information, not student data.
 
-## `POST /api/auth/signup` — one new optional field
+## `POST /api/auth/signup` — one new required field
 
 ```jsonc
 { "email": "…", "password": "…", "displayName": "…", "grade": "10", "gender": "female",
-  "interests": [], "curriculum": "us-american-en" }   // curriculum: optional
+  "interests": [], "curriculum": "us-american-en" }   // curriculum: required
 ```
 
 | Case | Result |
 |---|---|
+| `curriculum` missing | `409 { "error": "curriculum_required", "offered": [every known id] }`; the account is not created |
 | `curriculum` present and not a known id | `400 { "error": "invalid_curriculum" }` — same shape as `invalid_grade` |
-| grade offers ≥ 2, and `curriculum` is one of them | stored as `chosen` |
-| grade offers ≥ 2, and `curriculum` is missing or no longer offered | `409 { "error": "curriculum_required", "offered": [ids] }`; the form asks again |
-| grade offers exactly 1 | that one is stored as `implied`; a different submitted value is recorded as `curriculum_resolved_from` |
-| grade offers 0 | `eg-national-en` is stored as `implied` |
+| `curriculum` present and a known id | stored as `chosen`, whether or not FR-4004 says the grade offers it: a curriculum with nothing live for the grade is still a valid, selectable answer |
 
-The INSERT writes `curriculum_system` and `curriculum_source`; INSERT is `ainext_app`'s privilege
-already. The first-party event is `account_created`, with `properties: { method: "password", grade,
-curriculum, curriculum_source, curriculum_resolved_from? }`. `?next=` handling is unchanged
-(`safeNext`, FR-2015).
+**Superseded by answer 36** (kept for the record): the three rows that made the field optional and
+silently stored `implied` when the grade offered fewer than two curricula — a known curriculum the grade
+no longer offered at submit time was resolved and recorded as `curriculum_resolved_from`. That race no
+longer arises: every known curriculum is acceptable at sign-up regardless of what is live for the grade,
+so `curriculum_resolved_from` is not written by this route any more.
+
+The INSERT writes `curriculum_system` and `curriculum_source` (always `'chosen'` from this route now);
+INSERT is `ainext_app`'s privilege already. The first-party event is `account_created`, with
+`properties: { method: "password", grade, curriculum, curriculum_source }`. `?next=` handling is
+unchanged (`safeNext`, FR-2015).
 
 ## The first-Google-sign-in step
 
@@ -45,21 +52,23 @@ to `next` or `/student`. A returning Google sign-in is unchanged.
 `/api/auth/onboarding` answers `403 { "error": "onboarding_pending" }`. The check reads the principal
 (`/api/auth/me` gains `onboardingPending`), not a cookie.
 
-**`/welcome`** is one screen. It asks for grade, and for curriculum only when `offeredCurricula` for
-the chosen grade has two or more. It asks for nothing else (FR-4014). It uses the published design
-system (Play, FR-4204).
+**`/welcome`** is one screen. *(Changed 2026-10-01, answer 36.)* It asks for grade, and now **always**
+asks for curriculum too, naming every curriculum in the registry; a curriculum `offeredCurricula` does
+not list for the chosen grade is still shown and selectable, carrying the same "nothing to study here
+yet" note as sign-up. It asks for nothing else (FR-4014). It uses the published design system (Play,
+FR-4204).
 
 ### `POST /api/auth/onboarding`
 
 ```jsonc
-{ "grade": "10", "curriculum": "us-american-en" }   // curriculum: only when asked
+{ "grade": "10", "curriculum": "us-american-en" }   // curriculum: always required
 ```
 
 | Case | Result |
 |---|---|
 | not signed in | `401` |
 | grade invalid or curriculum unknown | `400 invalid_grade` / `invalid_curriculum` |
-| curriculum required but missing or not offered | `409 curriculum_required` |
+| curriculum missing | `409 curriculum_required` *(changed 2026-10-01, answer 36 — no longer conditioned on whether the grade offers it)* |
 | valid | calls `complete_student_onboarding(grade, curriculum)`, then `204`; the next request sees `onboardingPending: false` |
 | **already completed** (the function raises) | **`409 { "error": "onboarding_already_completed" }`** — never a silent `204` (FR-4014, privacy review F10) |
 
