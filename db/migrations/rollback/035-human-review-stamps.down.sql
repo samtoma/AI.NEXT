@@ -64,10 +64,6 @@ BEGIN
 END
 $down$;
 
--- The gate decision records go with it; the JSON files under
--- services/extraction/runs/<book>/gates/ still hold every one.
-DROP TABLE IF EXISTS gate_decisions;
-
 ALTER TABLE questions DROP CONSTRAINT IF EXISTS questions_held_not_live;
 ALTER TABLE questions DROP COLUMN IF EXISTS ai_checked_by;
 ALTER TABLE questions DROP COLUMN IF EXISTS ai_checked_at;
@@ -80,8 +76,7 @@ DO $verify$
 BEGIN
   IF EXISTS (SELECT 1 FROM information_schema.columns
               WHERE table_schema = 'public' AND table_name = 'questions'
-                AND column_name IN ('ai_checked_by', 'ai_checked_at', 'hold_reason', 'review_note'))
-     OR to_regclass('public.gate_decisions') IS NOT NULL THEN
+                AND column_name IN ('ai_checked_by', 'ai_checked_at', 'hold_reason', 'review_note')) THEN
     RAISE EXCEPTION '035 down: a review column is still on questions';
   END IF;
   RAISE NOTICE '035 down: review columns folded back into reviewed_by and dropped (or were already absent)';

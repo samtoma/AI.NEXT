@@ -93,25 +93,6 @@
 -- GRANTS: none needed on `questions`. 017's table-level SELECT (ainext_app,
 -- ainext_operator), INSERT (ainext_app, materialised widgets) and UPDATE
 -- (ainext_operator, the console's review gate) cover columns added later.
---
--- AND ONE TABLE: `gate_decisions` (answer 37c, and Samuel's follow-up of
--- 2026-10-01: "auto-pass covers G5 too, and every auto-passed decision is
--- recorded for my review"). During the fan-out the pipeline passes the human
--- gates G1–G5 on the AI checks' recommendation (`auto_pass_gates.py`); each
--- such decision is one row here, keyed '<book>:<scope>:<gate>' (e.g.
--- 'g10-math:ch08:G3'), carrying the whole decision record — gate, what was
--- decided, which automatic and AI checks it rests on, what blocked, the paths
--- to the evidence — as `record` (jsonb), the same JSON the pipeline writes to
--- `services/extraction/runs/<book>/gates/<id>.json`. A re-run replaces the
--- row (the latest decision for that gate and scope); `record_sha256` changes
--- with it, which is what the console's review gate fingerprints, so a changed
--- decision is back in front of Samuel. CONTENT-SHAPED, like 034's table: no
--- RLS, written by the pipeline only (ainext_maint), read by the console
--- (ainext_operator), never visible to the student surface (ainext_app holds
--- nothing). A human's verdict ON a decision is the console's to record (036's
--- `review_decisions`), never a column here: this table never says a human
--- signed anything — an auto decision is signed "auto-pass G<n> (AI
--- recommendation)" and the CHECK below keeps it so.
 
 BEGIN;
 
@@ -212,40 +193,7 @@ END
 $check$;
 
 -- ---------------------------------------------------------------------------
--- 4. The gate decisions the fan-out passes on the AI's recommendation
--- ---------------------------------------------------------------------------
--- Every CHECK is structural (034's rule): the gate is "G" and a number, the
--- id is book:scope:gate, and `auto` agrees with the signature — an
--- auto-passed decision can never be stored as a human's.
-
-CREATE TABLE IF NOT EXISTS gate_decisions (
-  id             text        PRIMARY KEY,
-  gate           text        NOT NULL CHECK (gate ~ '^G[0-9]+[a-z]?$'),
-  book           text        NOT NULL,
-  course_id      text        NOT NULL,
-  scope          text        NOT NULL,
-  outcome        text        NOT NULL,
-  decided_by     text        NOT NULL,
-  auto           boolean     NOT NULL,
-  decided_at     timestamptz NOT NULL,
-  record         jsonb       NOT NULL,
-  record_sha256  text        NOT NULL CHECK (record_sha256 ~ '^[0-9a-f]{64}$'),
-  CONSTRAINT gate_decisions_id_shape CHECK (id = book || ':' || scope || ':' || gate),
-  CONSTRAINT gate_decisions_auto_is_signed CHECK (auto = (decided_by LIKE 'auto-pass %'))
-);
-
-COMMENT ON TABLE gate_decisions IS
-  'One row per pipeline gate decision (G1-G5) taken during the fan-out, usually auto-passed on the AI '
-  'checks'' recommendation (answer 37c; services/extraction/auto_pass_gates.py). record = the decision '
-  'record JSON (runbook/README.md "Gate decision records"); the console lists each for Samuel''s review. '
-  'Written by the pipeline (ainext_maint) only; never a human stamp (migration 035).';
-
-REVOKE ALL ON gate_decisions FROM ainext_app, ainext_operator;
-GRANT SELECT         ON gate_decisions TO ainext_operator;
-GRANT ALL PRIVILEGES ON gate_decisions TO ainext_maint;
-
--- ---------------------------------------------------------------------------
--- 5. Verification — asserted, not assumed
+-- 4. Verification — asserted, not assumed
 -- ---------------------------------------------------------------------------
 
 DO $verify$
@@ -276,15 +224,6 @@ BEGIN
      OR NOT has_column_privilege('ainext_operator', 'questions', 'reviewed_by', 'UPDATE')
      OR NOT has_column_privilege('ainext_app', 'questions', 'hold_reason', 'SELECT') THEN
     RAISE EXCEPTION '035: the review columns are not readable by ainext_app / writable by ainext_operator';
-  END IF;
-
-  IF to_regclass('public.gate_decisions') IS NULL
-     OR NOT has_table_privilege('ainext_operator', 'gate_decisions', 'SELECT')
-     OR has_table_privilege('ainext_operator', 'gate_decisions', 'INSERT')
-     OR has_table_privilege('ainext_operator', 'gate_decisions', 'UPDATE')
-     OR has_table_privilege('ainext_app', 'gate_decisions', 'SELECT')
-     OR NOT has_table_privilege('ainext_maint', 'gate_decisions', 'INSERT') THEN
-    RAISE EXCEPTION '035: gate_decisions must be readable by the console only and written by the pipeline only';
   END IF;
 
   RAISE NOTICE '035 review stamps: % human-stamped, % AI-checked only, % held by a safety check, % annotated',

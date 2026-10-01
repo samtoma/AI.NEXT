@@ -119,3 +119,10 @@ Consistency-review decisions (2026-09-27), one at a time (decisions.md decisions
     G5 auto-passes too; every auto-passed gate decision (G1–G5) is recorded and shown in the console backlog
     as a gate decision for Samuel, cleared only by him. G5 passing deploys nothing — production moves only on
     Samuel's explicit go, through CI.
+40. (2026-10-01) 8.1 "Drawing figures from coordinates" (lo:g10m8s1-1-1) has no book question — its six book items
+    are drawings marked teaching-only, and every generated family must hang off a book question (FR-1101) →
+    "Allow a teaching item as parent (Recommended)": change the rule so a family may be modelled on a book
+    teaching item; the family goes live, marked for review. NOT YET IMPLEMENTED — held with the fan-out (below).
+    Same day: the fan-out's cost question ("keep going until the whole book is done?") was dismissed by Samuel
+    — "do not proceed, wait for next instruction". No new runs launched after 002 (wf_957393ec-d74, Chapter 8
+    working check) and 003 (wf_bfd09dab-0e6, S0b pass A, chapter group 1), which were already running.
