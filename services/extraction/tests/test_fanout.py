@@ -228,5 +228,66 @@ class Specs(unittest.TestCase):
             F.write_config(1)
 
 
+class CloseChapter(unittest.TestCase):
+    """close-chapter (2026-10-01): the chapter's saved lesson runs in lesson order, a re-collected run in place of the saved one,
+    the chapter's own G2 file (never the pilot's), nothing run on --dry-run. Synthetic: a fake plan and runs directory."""
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        t = Path(self.tmp.name)
+        (t / "lessons" / "recollected").mkdir(parents=True)
+        for n in ("wf_aaaaaaaa-aaa", "wf_bbbbbbbb-bbb"):
+            (t / "lessons" / f"{n}.json").write_text("{}")
+        (t / "lessons" / "recollected" / "wf_bbbbbbbb-bbb.json").write_text("{}")
+        plan = {"runs": [{"id": "lesson-g10m9s2-1", "stage": "S2-S4", "chapter": 9},
+                         {"id": "lesson-g10m9s3-1", "stage": "S2-S4", "chapter": 9},
+                         {"id": "lesson-g10m9s4-1", "stage": "S2-S4", "chapter": 9},
+                         {"id": "s1-ch09", "stage": "S1", "chapter": 9}]}
+        (t / "plan.json").write_text(json.dumps(plan))
+        self.saved = {"lesson-g10m9s2-1": "runs/g10-math/lessons/wf_aaaaaaaa-aaa.json",
+                      "lesson-g10m9s3-1": "runs/g10-math/lessons/wf_bbbbbbbb-bbb.json", "lesson-g10m9s4-1": None}
+        self.keep = (F.PLAN_PATH, F.RUNS, F.status)
+        F.PLAN_PATH, F.RUNS = t / "plan.json", t
+        F.status = lambda: {"runs": [{"id": k, "saved": v} for k, v in self.saved.items()]}
+
+    def tearDown(self):
+        F.PLAN_PATH, F.RUNS, F.status = self.keep
+        self.tmp.cleanup()
+
+    def test_a_lesson_not_saved_yet_stops_the_close(self):
+        files, ids, missing = F.chapter_lesson_runs(9)
+        self.assertEqual(missing, ["lesson-g10m9s4-1"])
+        with self.assertRaises(F.NotReady) as cm:
+            F.close_chapter(9, dry_run=True)
+        self.assertIn("lesson-g10m9s4-1", str(cm.exception))
+
+    def test_a_re_collected_run_is_used_in_place_of_the_saved_one(self):
+        self.saved["lesson-g10m9s4-1"] = "runs/g10-math/lessons/recollected/wf_cccccccc-ccc.json"
+        (F.RUNS / "lessons" / "wf_cccccccc-ccc.json").write_text("{}")
+        files, ids, missing = F.chapter_lesson_runs(9)
+        self.assertEqual(missing, [])
+        self.assertEqual(ids, ["wf_aaaaaaaa-aaa", "wf_bbbbbbbb-bbb", "wf_cccccccc-ccc"], "lesson order, by wf id")
+        self.assertEqual([f.parent.name for f in files], ["lessons", "recollected", "lessons"],
+                         "only the run that was re-collected is read from recollected/")
+
+    def test_dry_run_names_the_chapters_own_g2_file_and_runs_nothing(self):
+        self.saved["lesson-g10m9s4-1"] = "runs/g10-math/lessons/wf_aaaaaaaa-aaa.json"   # a run covering two lessons: counted once
+        calls = []
+        keep = F._py
+        F._py = lambda *a, **k: calls.append(a)
+        try:
+            out = F.close_chapter(9, dry_run=True)
+        finally:
+            F._py = keep
+        self.assertEqual(calls, [], "a dry run executes nothing")
+        g2 = out["commands"][0]
+        self.assertIn("--into", g2)
+        self.assertIn("g2-ch09.json", g2)
+        self.assertNotIn("runs/g10-math/g2.json", g2, "the pilot's G2 file is never the target")
+        self.assertIn("--split", g2)
+        self.assertEqual(g2.count("--lesson-run"), 2)
+        self.assertEqual(out["then"], ["fanout.py config 9", "fanout.py prepare wcheck-ch09", "fanout.py prepare s5-draft-ch09"])
+
+
 if __name__ == "__main__":
     unittest.main()
