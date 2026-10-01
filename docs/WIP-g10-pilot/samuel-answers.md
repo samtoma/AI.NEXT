@@ -79,3 +79,10 @@ Consistency-review decisions (2026-09-27), one at a time:
     course (the `arabicTouches` setting), every National course unchanged. Read as also answering consistency-review
     B7: the G10 tutor's "write no Arabic at all, even if the student writes in Arabic" line is KEPT. FR-4205 widened.
     (decisions.md number assigned with answers 27–34, still to be written in.)
+36. (2026-10-01) Sign-up showed no curriculum question for Grade 10 (only American is live there), per decision 1
+    ("ask only when the grade has live courses in two or more curricula") → "yes the sign up should always ask":
+    REVERSES decision 1. Sign-up (password and the first Google sign-in step) always asks which curriculum the
+    student follows, naming every curriculum, pre-selecting none, and the account is not created without an answer.
+    Orchestrator's default, to confirm: a curriculum with nothing live yet for the chosen grade is still offered and
+    selectable, with a short note saying there is nothing to study there yet. (decisions.md number assigned with
+    answers 27–35.)
