@@ -380,6 +380,19 @@ export function labelArOfSpineKey(raw: unknown): string {
 }
 
 /**
+ * English label from a spine key, ALWAYS — unlike `displayLabelOfSpineKey`,
+ * which names an RTL subject (Social Studies, Arabic) in its own script on
+ * purpose ("a subject's name is not a translation"). That rule is right for a
+ * course whose tutor may write Arabic; it is exactly wrong for one that may
+ * not (`CourseTutorFacts.arabicTouches: false` — the Grade 10 course), whose
+ * prompt must never contain an Arabic character naming ANOTHER subject
+ * either (`lib/lesson.ts` `bridgeBlock`).
+ */
+export function labelOfSpineKey(raw: unknown): string {
+  return spineSubjectDef(raw)?.label ?? String(raw ?? "—");
+}
+
+/**
  * A COURSE's Arabic subject name, or `null` when its tutor carries no Arabic
  * at all (`CourseDef.tutor.arabicTouches`, Samuel's answer 35, 2026-10-01:
  * "this is american course we said no arabic").
