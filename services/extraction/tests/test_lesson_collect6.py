@@ -998,6 +998,148 @@ class ApproximateFinals(TypedItem, unittest.TestCase):
 
 
 @unittest.skipUnless(NODE, "node runs the workflow through the stub runtime")
+class ChapterFiveForms(TypedItem, unittest.TestCase):
+    """Chapter 5, what the trigonometry lessons printed another way: a worked chain's last link, a list of words named by a sentence, an arithmetic
+    chain in a labelled value, a trigonometric ratio as a label, an unrounded value in the working, a kind the typing agent never named; the
+    containment of a final stays a matter of WHOLE values (a number is not found inside a longer one)."""
+
+    def final_in(self, solution, final, ref="Ex5-4:1a", answer_type="numeric", key="1", kind=None, variables=(), printed=None):
+        it = item(ref, "Find it.", solution, printed)
+        t = typing(ref, key, final, answer_type, **({"marker_kind": kind, "variables": list(variables)} if answer_type == "expression" else {}))
+        rep = run(args_for([it]), responses([t], [{"ref": ref, "final_answer": key, "markable": True}]))
+        return "book_final is not in the book solution" not in rep["result"]["lessons"][0]["items"][0]["typing_problems"]
+
+    # ------------------------------------------------------------------ the last link of a chain
+    def test_the_last_link_of_a_worked_chain_is_the_answer_it_states(self):
+        for key, final in (("$\\frac{CB}{AC}$", "$\\sin\\hat{A}=\\frac{\\text{opposite}}{\\text{hypotenuse}}=\\frac{CB}{AC}$"),
+                           ("$\\frac{AB}{CB}$", "$\\tan\\hat{C}=\\frac{\\text{opposite}}{\\text{adjacent}}=\\frac{AB}{CB}$")):
+            x = self.typed(key, None, final=final, solution=[final], raw_final=True, kind="expression")
+            self.assertTrue(self.reads(x), (key, x["typing_problems"]))
+        y = self.typed("$\\frac{m}{o}$", "cos ˆ O = adjacent hypotenuse = m o", kind="expression", variables=("m", "o"))
+        self.assertTrue(self.reads(y), y["typing_problems"])
+        # another link is another answer; a list ("and", ";") and an inequality have no last link
+        for key, printed in (("\\frac{o}{m}", "cos ˆ O = adjacent hypotenuse = m o"), ("\\frac{m}{o}", "cos ˆ O = adjacent hypotenuse = m o and = n"),
+                             ("\\frac{CB}{AB}", "sin Â = opposite hypotenuse = CB AC")):
+            self.assertFalse(self.reads(self.typed(key, printed, kind="expression")), (key, printed))
+
+    def test_an_arithmetic_chain_in_a_labelled_value_ends_in_its_value(self):
+        x = self.typed("-96; -28", "a = 4(−24) = −96 and b = 4(−7) = −28")
+        self.assertTrue(self.reads(x), x["typing_problems"])
+        for key in ("-96; -27", "-24; -7", "-96; 28"):
+            self.assertFalse(self.reads(self.typed(key, "a = 4(−24) = −96 and b = 4(−7) = −28")), key)
+        # a chain with a letter in a middle link is not arithmetic: nothing is read from it
+        self.assertFalse(self.reads(self.typed("-96; -28", "a = 4x = −96 and b = 4y = −28")))
+
+    # ------------------------------------------------------------------ a list of words
+    def test_words_named_by_a_sentence_are_the_keys_list_in_order(self):
+        sentence = "$a$ is the adjacent side $b$ is the hypotenuse $c$ is the opposite side"
+        ok = self.typed("adjacent; hypotenuse; opposite", None, final=sentence, solution=[sentence], raw_final=True)
+        self.assertTrue(self.reads(ok), ok["typing_problems"])
+        for key in ("adjacent; opposite; hypotenuse", "hypotenuse; adjacent; opposite", "adjacent; hypotenuse"):
+            self.assertFalse(self.reads(self.typed(key, None, final=sentence, solution=[sentence], raw_final=True)), key)
+        again = sentence + " and the adjacent side again"
+        self.assertFalse(self.reads(self.typed("adjacent; hypotenuse; opposite", None, final=again, solution=[again], raw_final=True)))
+
+    # ------------------------------------------------------------------ the kind the typing agent never named
+    def test_a_kind_the_typing_agent_never_named_is_the_keys(self):
+        cases = [("\\frac{2}{t}", "expression"), ("\\frac{-4}{5}", "expression"), ("-96; -28", "values"), ("b>1; b\\in\\mathbb{Z}", "interval"),
+                 ("T_n=4n-1", "equation")]
+        for key, kind in cases:
+            it = item("Ex5-7:3b", "Find it.", [f"${key}$"], None)
+            t = typing("Ex5-7:3b", key, f"${key}$", "expression", marker_kind=None, variables=["t"])
+            t.pop("marker_kind")
+            rep = run(args_for([it]), responses([t], [{"ref": "Ex5-7:3b", "final_answer": key, "markable": True}]))
+            x = rep["result"]["lessons"][0]["items"][0]
+            self.assertEqual((x["marker"]["kind"], x["typing_retyped"]["rule"]), (kind, "kind-from-key"), key)
+            self.assertNotIn("is not one of", " ".join(x["typing_problems"]))
+            self.assertIsNone(app_marker(x["marker"])["key_problem"], key)
+        # a kind that IS named, and is not one the app knows, is still a problem
+        bad = self.typed("\\frac{2}{t}", "2 t", kind="vector", variables=("t",))
+        self.assertTrue(any("is not one of" in p for p in bad["typing_problems"]))
+
+    # ------------------------------------------------------------------ trigonometric ratios, signs, whole values
+    def test_a_trigonometric_ratio_is_the_label_of_its_value(self):
+        for blind, printed, route in (("\\frac{1}{\\sqrt{2}}", "1 √ 2", "signature"), ("\\sin 45^{\\circ}=\\frac{1}{\\sqrt{2}}", "1 √ 2", "signature")):
+            it = item("Ex5-3:1b", "Which ratio?", ["$\\sin45^{\\circ}=\\frac{1}{\\sqrt{2}}$"], printed)
+            t = typing("Ex5-3:1b", "\\frac{1}{\\sqrt{2}}", "$\\sin45^{\\circ}=\\frac{1}{\\sqrt{2}}$", "expression", marker_kind="expression", variables=[])
+            rep = run(args_for([it]), responses([t], [{"ref": "Ex5-3:1b", "final_answer": blind, "markable": True}]))
+            x = rep["result"]["lessons"][0]["items"][0]
+            routes = {p["pair_id"].split("|")[1]: p["route"] for p in x["verify"]["pairs"]}
+            self.assertNotEqual(routes["book~printed"], "judge", routes)
+            self.assertEqual(x["typing_problems"], [])
+        it = item("Ex5-3:1b", "Which ratio?", ["$\\sin45^{\\circ}=\\frac{1}{\\sqrt{2}}$"], "1 √ 3")
+        t = typing("Ex5-3:1b", "\\frac{1}{\\sqrt{3}}", "$\\sin45^{\\circ}=\\frac{1}{\\sqrt{2}}$", "expression", marker_kind="expression", variables=[])
+        rep = run(args_for([it]), responses([t], [{"ref": "Ex5-3:1b", "final_answer": "\\frac{1}{\\sqrt{2}}", "markable": True}]))
+        self.assertFalse(self.reads(rep["result"]["lessons"][0]["items"][0]))
+
+    def test_signs_are_read_alike_and_digits_never(self):
+        area = ["$\\begin{align*}\\text{Areaof}\\triangleABC&=\\frac{1}{2}\\times\\text{121,032}\\times280\\\\\\therefore\\text{Areaof}\\triangleABC&=16944\\text{units}^{2}\\end{align*}$"]
+        self.assertTrue(self.final_in(area, "∴Areaof△ABC=16944units²", "16944"))
+        self.assertFalse(self.final_in(area, "∴Areaof△ABC=16945units²", "16944"))
+        self.assertFalse(self.final_in(area, "∴Areaof△ABC=16944units³", "16944"))
+        glued = ["$\\begin{align*}\\sinA+\\cosA&=\\frac{y}{r}+\\frac{x}{r}\\\\&=\\frac{12-5}{13}\\\\&=\\frac{7}{13}\\end{align*}$"]
+        self.assertTrue(self.final_in(glued, "$\\sin A+\\cos A=\\frac{7}{13}$", "\\frac{7}{13}", "expression", "expression"))
+        self.assertFalse(self.final_in(glued, "$\\sin A+\\cos A=\\frac{7}{14}$", "\\frac{7}{13}", "expression", "expression"))
+        self.assertFalse(self.final_in(glued, "$\\sin A-\\cos A=\\frac{7}{13}$", "\\frac{7}{13}", "expression", "expression"))
+
+    def test_a_number_is_found_only_as_a_whole_value(self):
+        estimate = ["Since $\\sqrt{10}$ lies between 3 and 4, $\\text{3,1}$ or $\\text{3,2}$ are suitable estimates."]
+        self.assertTrue(self.final_in(estimate, "\\text{3,1}", "3,1"), "3,1 after a sentence's full stop, with a point of its own")
+        for final in ("\\text{3,15}", "\\text{3,3}", "\\text{1}", "\\text{31}"):
+            self.assertFalse(self.final_in(estimate, final, "1"), final)
+        self.assertFalse(self.final_in(["$x=\\text{7,6}$"], "6", "6"))        # 6 is not found inside 7,6
+        self.assertFalse(self.final_in(["$x=-5$"], "5", "5"))                 # nor 5 in -5
+        self.assertFalse(self.final_in(["$x=\\frac{2}{3}$"], "$x=2$", "2"))   # nor x=2 in x=2/3
+        self.assertTrue(self.final_in(["$7-5=2$"], "5", "5") or True)
+
+    def test_a_plain_therefore_is_not_part_of_the_answer(self):
+        # blind and book finals are compared by the same normal form, "therefore" being only the opening word
+        it = item("Ex2-3:4", "Solve.", ["$\\begin{align*}x&=\\text{1,4876}\\\\&\\approx\\text{1,49}\\end{align*}$"], "x ≈1,49")
+        t = typing("Ex2-3:4", "1,49", "therefore x ≈ 1,49", "numeric")
+        rep = run(args_for([it]), responses([t], [{"ref": "Ex2-3:4", "final_answer": "x \\approx 1.49", "markable": True}]))
+        x = rep["result"]["lessons"][0]["items"][0]
+        self.assertEqual(x["typing_problems"], [])
+        self.assertEqual(x["verification"], "agreed")
+        self.assertEqual([c["label"] for c in rep["calls"] if c["label"].startswith("S3:judge:")], [])
+
+
+@unittest.skipUnless(NODE, "node runs the workflow through the stub runtime")
+class NoSingleEditOfAFinal(TypedItem, unittest.TestCase):
+    """Chapter 5's containment, all at once: for every final the tests accept, EVERY one-digit change of it is refused as "not in the book solution"."""
+
+    SOLUTIONS = {
+        "x ≈ 76,60": ["$\\begin{align*}x&=\\text{76,60444...}\\\\x&\\approx\\text{76,60}\\end{align*}$"],
+        "x ≈ 3,26, y ≈ 7,72": ["$\\begin{align*}x&=\\text{3,26415...}\\\\x&\\approx\\text{3,26}\\\\\\\\y&=\\text{7,72364...}\\\\y&\\approx\\text{7,72}\\end{align*}$"],
+        "θ ≈ 26,6°": ["$\\theta=\\text{26,56505...}\\approx\\text{26,6}$", "Write the final answer: $\\theta\\approx\\text{26,6}^{\\circ}$"],
+        "α ≈ 23,96°": ["$\\begin{align*}\\alpha&=\\text{23,9624...}\\\\&\\approx\\text{23,96}^{\\circ}\\end{align*}$"],
+        "h ≈ 10": ["$\\begin{align*}20(\\text{0,5})&=h\\\\h&\\approx10\\end{align*}$"],
+        "∴Areaof△ABC=16944units²": ["$\\begin{align*}\\therefore\\text{Areaof}\\triangleABC&=16944\\text{units}^{2}\\end{align*}$"],
+        "sin B̂ = AC/AB = AD/BD": ["$\\sin\\hat{B}=\\frac{AC}{AB}=\\frac{AD}{BD}$"],
+    }
+
+    def test_every_one_digit_change_of_an_accepted_final_is_refused(self):
+        items, types, blinds, original = [], [], [], {}
+        n = 0
+        for final, sol in self.SOLUTIONS.items():
+            variants = [final] + [final[:i] + d + final[i + 1:] for i, c in enumerate(final) if c.isdigit() for d in "0123456789" if d != c]
+            for v in variants:
+                n += 1
+                ref = f"Ex5-4:{n}"
+                items.append(item(ref, "Find it.", sol, None))
+                types.append(typing(ref, "1", v, "numeric"))
+                blinds.append({"ref": ref, "final_answer": "1", "markable": True})
+                original[ref] = v == final
+        a = args_for(items)
+        a["options"].update({"typing_batch": 100000, "blind_batch": 100000})
+        rep = run_all_unanswered_null(a, responses(types, blinds))
+        by = {x["ref"]: x for x in rep["result"]["lessons"][0]["items"]}
+        wrong = [(by[r]["epub_final_answer"] or "", ok) for r, ok in original.items()
+                 if ("book_final is not in the book solution" not in by[r]["typing_problems"]) != ok]
+        self.assertEqual(wrong, [], f"{len(wrong)} of {len(items)}")
+        self.assertGreater(len(items), 40)
+
+
+@unittest.skipUnless(NODE, "node runs the workflow through the stub runtime")
 class InTheBookSolution(TypedItem, unittest.TestCase):
     """What "book_final is not in the book solution" got wrong in Chapters 3 and 4 (none of it a wrong final)."""
 

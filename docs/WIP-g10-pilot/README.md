@@ -1038,3 +1038,38 @@ chapter's seed bundle when it loads (the driver does that at the S5 draft's load
 
 **Checked.** The real commands were run in a sandbox copy of `services/extraction/` against saved runs (S0b assembly, lesson drafts, working-check collect, S6 specs, the real meter reproduced a ledger line to the cent, `pg_dump` + `pg_restore -l`), and a test asserts every flag the driver passes exists in the target script's own `--help`.
 `--dry-run` on the real chapter-1 `s5-final` result lists the whole chain without running it. **The first live `s5-final` through `advance` should be `--dry-run`ned first** (the chain was built from the plan and the runbook; the main session had processed chapters 1 and 2 by hand).
+
+## G2 recommendation run — the Map crash, ch03/ch04 copies, and what a widened COLLECT-6 does to a run in flight — 2026-10-01 (data-engineer)
+
+**The crash** (`g2rec-ch02`, run `wf_4a4cf562-7e2`: `d.got.get is not a function`, after all 6 agents had run). The real runtime returns `pipeline()` results serialized, so a `Map` a stage
+returned arrived as `{}`; the stub kept live objects and the tests passed. Fixed in `runbook/g2-recommend.workflow.js`: every stage returns plain JSON (`Object.fromEntries`), every
+reader goes through `at(m, k)` (a Map or an object). `tests/workflow_stub.mjs` now serializes pipeline results, as the runtime does (fixture `serialize_stages`: `"all"` default, every stage and the
+returned array; `"final"`, only the returned array: the reported crash exactly; `false`, live objects). Against the old copy `final` reproduces the TypeError after the 6 agent calls and `all` silently loses every
+verification; the new copy passes in all three modes with the same result (`test_stage_results_are_plain_json_whatever_the_runtime_does_with_them`, and `test_the_stub_really_serializes_pipeline_results` guards the
+guard). **Resume is safe:** the old and new copies make the same agent calls in the same order with byte-identical label, phase, model, effort, prompt and opts (schema included), checked on all 22 (ch01) and 6 (ch02)
+calls with a responder that exercises every verifier-prompt branch; the args are identical (`args_sha256` equal), only `source_sha256` and `generated_sha256` differ. Regenerated, verified, NOT launched: `g2rec-ch01`
+(`adaba4fe6b10…`), `g2rec-ch02` (`3e1ee442ff70…`), `g2rec-ch03` (`5a40cf358041…`, 11 items), `g2rec-ch04` (`59db27150f51…`, 37 items). Resume ch02 from `wf_4a4cf562-7e2` and ch01 from `wf_b1bdbb34-3f1`
+with `Workflow({scriptPath, resumeFromRunId})` on the files as they are; do not run `g2-recommend-args --embed` or `close-chapter` on chapters 1 or 2 before their run is saved.
+
+**The gate record's reason text** (`auto_pass_gates.py`, `RETYPE_BASIS`): each retype rule now has its own reason (`numeric`/`values` the options one, `kind-for-form`, `fraction-key`, `kind-for-list`, `kind-for-relations`,
+`kind-for-equation`, `kind-from-key`); a rule the table does not know gets a neutral sentence, never "the options were the typing agent's inventions"; a test fails when `lesson.workflow.js` writes a rule the table lacks
+(it caught `kind-from-key`, added while this was being written).
+
+**What COLLECT-6 widened does to the runs in flight, rehearsed in a scratch directory (nothing shared was written; counts depend on the lesson runs only, not on the agents).** `recollect_lessons.py` on Chapter 2's three runs:
+typing problems 10 → 3 (g10m2s2-1) and 7 → 0 (g10m2s4-1); the G2 re-run then drops ten earlier auto exclusions (Ex2-4:1q 1r 1s 1z 2a 2b 2l 3d 3g 3n) and leaves 3 by rule, 7 held. The eleventh, Ex2-4:3p, stays owed (disputed); Ex2-3:4, Ex2-4:4, Ex2-4:5 go from excluded
+to disputed with six pairs needing a live judge. Chapter 1: **only Ex1-11:37b** changes (g10m1s8-1: typing 5 → 4); **g10m1s3-1, s4-1, s5-1, s6-1 cannot be re-collected any more** (`recollect_lessons.py`: "prompt(s) changed since the recorded run":
+their typing agents ran with the lesson-v7 prompt and the script now carries v8), so their existing `recollected/` files stay as they are and the widened rules do not reach them without live typing calls.
+Two code changes make the order safe: `auto_pass_gates.py g2` drops an AUTO verdict for an item of a given lesson that is no longer owed (`g2_merge(scope=…)`; before, the old exclusion outlived its typing problem;
+a person's verdict is never dropped), and refuses to apply a `g2_recommend.py` recommendation for an item that is no longer owed; `g2-recommend-collect` skips such items (`no_longer_owed`) and refuses, per item, one whose judged
+facts changed since the agents saw it (`stale_items`: stem, working, printed/EPUB/blind answers, figure, typed key, options; the shape of the typing and the checks' pair verdicts are not facts), found from the run's copy sha256
+(each copy's packet is now archived beside it, `g2rec-archive/`). New: `auto_pass_gates.py g2-recommend-delta` lists the assembled bundle's solutions the chapter's working check never covered (`checked_ids`).
+
+**The sequence, for Chapters 1 and 2** (from `services/extraction/`; ch2 shown, ch1 the same with its eight runs and `g2-ch01`):
+1. Resume both runs (above); save to `runs/g10-math/g2rec/chNN-<runId>.json`; `meter_run.py record --book g10-math --stage G2R --run <runId>`.
+2. `uv run recollect_lessons.py runs/g10-math/lessons/wf_40177b3c-94d.json runs/g10-math/lessons/wf_aa060013-9f1.json runs/g10-math/lessons/wf_89dbc00a-57a.json --dry-run`, then without `--dry-run`. (Chapter 1: its eight saved runs; four refuse, as above; only `wf_2cd2d32d-a3f` changes.)
+3. `uv run auto_pass_gates.py g2 g10-math --chapter 2 --lesson-run runs/g10-math/lessons/recollected/wf_40177b3c-94d.json --lesson-run runs/g10-math/lessons/recollected/wf_aa060013-9f1.json --lesson-run runs/g10-math/lessons/recollected/wf_89dbc00a-57a.json --into runs/g10-math/g2-ch02.json --split --maths runs/g10-math/maths/book/accepted.json --run "<ids>"` (no `--recommend`: the checks decide first; the record's evidence now names the recollected runs).
+4. `uv run auto_pass_gates.py g2-recommend-collect g10-math --chapter 2 --run runs/g10-math/g2rec/ch02-<runId>.json --out runs/g10-math/g2-ch02.recommended.json`. Expect ch2: 10 owed, 7 recommended, **10 no longer owed, 3 stale** (Ex2-3:4, Ex2-4:4, Ex2-4:5); ch1: 81 owed, 1 no longer owed (Ex1-11:37b), 0 stale.
+   The stale ones: `uv run auto_pass_gates.py g2-recommend-args g10-math --chapter 2 --only-missing runs/g10-math/g2-ch02.recommended.json --embed work/g10-math/packets/embedded/fanout/g2rec-ch02-missing.workflow.js` (a new name: never over a copy whose run is saved), run it, collect both runs (`--run` twice).
+5. The same `g2` line as 3 plus `--recommend runs/g10-math/g2-ch02.recommended.json`; `assemble_lesson_bundle.py --book g10-math --chapter 2 --report runs/g10-math/fanout/assembly-ch02.json`; `load_seed.py … --validate-only`.
+6. DB (both chapters are loaded): `pg_dump`, `load_seed.py … --course course:us-g10-math-en --update --dry-run` and without, `apply_review_verdicts.py --g2 runs/g10-math/g2-ch02.json --book g10-math --runs runs/g10-math/lesson` (dry run first).
+7. `uv run auto_pass_gates.py g2-recommend-delta g10-math --chapter 2 --out runs/g10-math/g2rec/ch02.delta-ids.json`, then `working_check.py args … --only` that file, pass A and pass B. The delta covers the eleven newly-live fraction questions too, not only what the recommendation made live.
