@@ -1,6 +1,8 @@
 # ADR-0024 — Curriculum is a dimension of what a student sees
 
-**Status**: **Accepted.** Samuel, 2026-09-25: first *"I would take your recommendations"*, answering
+**Status**: **Accepted, amended 2026-10-01** (see *Amendment*, below: decision 1's "ask only when two or
+more curricula are live" is reversed — sign-up now always asks). Samuel, 2026-09-25: first *"I would
+take your recommendations"*, answering
 the options in `specs/003-curriculum-tracks/research.md`, the pipeline design's §10 and spec 003's
 three questions. Then, having read this text, *"ok for all"*. The coordinating session relayed both
 ([decisions.md](../../specs/003-curriculum-tracks/decisions.md)). The five recommendations marked ⚑
@@ -222,3 +224,45 @@ that is present. The constitution amendment proposal names it (PATCH).
 - **Non-Egyptian grade structures.** ADR-0017 named these as a trigger for its grade key. The numbers
   still line up (grade 10 is grade 10); only labels differ, and `lib/curricula.ts` carries them. A
   curriculum whose years do not map onto 7–12 would break that.
+
+## Amendment (2026-10-01)
+
+**Status of the amendment**: Accepted. Samuel, 2026-10-01, reviewing the console: sign-up showed no
+curriculum question for grade 10, because only the American curriculum has a live course there and
+decision 1 asked only when a grade offered two or more. His answer, recorded verbatim as answer 36 in
+[`docs/WIP-g10-pilot/samuel-answers.md`](../../docs/WIP-g10-pilot/samuel-answers.md): *"yes the sign up
+should always ask."* Recorded in
+[`specs/003-curriculum-tracks/decisions.md`](../../specs/003-curriculum-tracks/decisions.md) as a
+supersession of decision 1 (not a new decision number — Spec Kit is the record).
+
+**What is reversed.** The two passages above headed "Sign-up asks …, only when the grade has live
+courses in two or more curricula" (Decision) and "Nobody is asked the curriculum question at launch"
+(Consequences) described decision 1 as it stood from 2026-09-25. They are **superseded**, not deleted:
+this amendment is the current rule; the original text stands above as the record of what was decided
+and why, at the time.
+
+**The new rule.** Sign-up — the password form — and the first-Google-sign-in step **always** ask which
+curriculum the student's school follows, naming every curriculum in the registry (today National and
+American) and pre-selecting none. The account is not created, and the Google step does not complete,
+without an answer: a missing curriculum is refused server-side, never stored silently. A curriculum with
+nothing live yet for the chosen grade is still offered and selectable, carrying a short note that there
+is nothing to study there yet — this note is the orchestrator's default, not yet confirmed by Samuel.
+Existing accounts are untouched.
+
+**Reason, in Samuel's words.** The trigger was seeing the live console offer no choice at grade 10
+because only one curriculum has anything there yet. The old rule treated "nothing else to compare
+against" as a reason not to ask; Samuel's answer treats the question itself — naming the tracks the
+product supports — as something sign-up should always show, whether or not every option has content
+behind it yet.
+
+**Consequence.** FR-4004 keeps its definition of "offers" (a live course for the grade), but it no
+longer gates whether sign-up or the Google step ask — only the "nothing to study yet" note, the
+console's per-grade offered line (FR-4102), and the automatic, silent re-resolution of an *implied*
+curriculum when a grade changes later (FR-4008, untouched by this amendment). FR-4005 is rewritten to
+always ask. The database privilege model, the gate (`isCourseVisible`), the kill switch, the "Load a
+course" action and everything else this ADR decided are unaffected — this amendment touches only the
+sign-up and Google-step question, not how a curriculum is stored, scoped or changed afterwards. The
+spec's full rewrite is in
+[`specs/003-curriculum-tracks/spec.md`](../../specs/003-curriculum-tracks/spec.md) (FR-4004, FR-4005,
+FR-4102, User Story 3). Code for this amendment is in progress on the feature branch; no file:line
+evidence is cited here yet.

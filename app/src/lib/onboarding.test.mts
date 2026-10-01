@@ -352,7 +352,7 @@ test("the step's route: signed-in student only, JSON only, pending checked first
   assert.doesNotMatch(c, /\btrack\(/);
 });
 
-test("/welcome is a student-build page that asks only grade and, when offered, curriculum", () => {
+test("/welcome is a student-build page that asks grade, then always curriculum, once a grade is chosen", () => {
   const page = code("app/(auth)/welcome/page.student.tsx");
   assert.match(page, /welcomeRoute\(me\)/);
   assert.match(page, /if \(route === "done"\) redirect\("\/student"\);/);
@@ -362,23 +362,30 @@ test("/welcome is a student-build page that asks only grade and, when offered, c
     ...form.matchAll(/<Field\s+id="([^"]+)"|<(CurriculumChoice|TextInput|GenderChoice|fieldset)\b/g),
   ].map((m) => m[1] ?? m[2]);
   assert.deepEqual(fields, ["grade", "CurriculumChoice"], "grade, and the curriculum question — nothing else");
-  assert.match(form, /\{asking && \(\s*<CurriculumChoice/);
+  // Samuel's 2026-10-01 reversal: revealed once a grade is chosen, no longer
+  // gated on how many curricula that grade offers.
+  assert.match(form, /\{grade && \(\s*<CurriculumChoice/);
+  assert.doesNotMatch(form, /asksCurriculum|curriculumToSend/, "the offer-count gate is gone");
   assert.match(form, /<option value="" disabled>/, "no grade pre-selected: the placeholder is not an answer");
   // excluded from the console build, by filename and by the surface check
   assert.match(read("../scripts/check-surface-manifest.mts"), /const STUDENT_ONLY = \["\/signup", "\/welcome"\] as const;/);
 });
 
-test("sign-up asks the curriculum only after grade, only when offered two or more, with none pre-selected", () => {
+test("sign-up always asks the curriculum, after grade, with none pre-selected (2026-10-01 reversal)", () => {
   const form = code("components/auth/SignupForm.tsx");
-  assert.match(form, /\{askingCurriculum && \(\s*<CurriculumChoice/);
+  assert.match(form, /\{grade && \(\s*<CurriculumChoice/);
+  assert.doesNotMatch(form, /asksCurriculum|curriculumToSend/, "the offer-count gate is gone");
   assert.ok(form.indexOf('id="grade"') < form.indexOf("<CurriculumChoice"), "the question follows grade");
   assert.match(form, /const \[picked, setPicked\] = useState<CurriculumId \| null>\(null\);/, "nothing pre-selected");
-  assert.match(form, /\.\.\.\(curriculum \? \{ curriculum \} : \{\}\)/, "sent only when asked");
+  assert.match(form, /curriculum: picked,/, "always sent — the question is always answered");
+
   const choice = code("components/auth/CurriculumChoice.tsx");
   assert.match(choice, /type="radio"/);
   assert.match(choice, /checked=\{value === o\.id\}/);
-  // flat labels: the option shows the registry's label and nothing under it (FR-4016, F1)
+  // a curriculum with nothing live for the grade still shows, with a note —
+  // never a description that reads as a tier, a price or a kind of school
   assert.doesNotMatch(choice, /description/);
+  assert.match(choice, /Nothing to study here yet for/);
   // tokens only (constitution XII)
   assert.doesNotMatch(choice, /#[0-9a-f]{3,8}\b/i, "no literal colour");
   assert.doesNotMatch(choice, /border-\[\d|rounded-\[\d/, "no literal stroke or radius");
