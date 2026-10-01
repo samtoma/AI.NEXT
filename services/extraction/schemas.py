@@ -1078,6 +1078,20 @@ class Question(BaseModel):
     source: Optional[QuestionSource] = None
     solution_provenance: Optional[SolutionProvenance] = None   # FR-4302
     family: Optional[str] = None                   # a generated item's family (S6), as a field
+    # Migration 035 / answer 37a: why an AUTOMATIC SAFETY CHECK holds this question at review
+    # (review_policy.HOLD_REASONS). Written by the assembly; the loader stores it in hold_reason.
+    hold_reason: Optional[str] = None
+
+    @model_validator(mode="after")
+    def _known_hold_reason(self) -> "Question":
+        # review_policy.HOLD_REASONS, restated (review_policy imports book_config, which imports this file)
+        if self.hold_reason is not None and self.hold_reason not in {
+                "figure_missing", "figure_reveals_answer", "katex_error", "answer_mismatch", "unanswerable",
+                "unverified", "sacred", "human_hold"}:
+            raise ValueError(f"{self.id}: unknown hold_reason {self.hold_reason!r} (review_policy.HOLD_REASONS)")
+        if self.hold_reason is not None and self.verified:
+            raise ValueError(f"{self.id}: a held question (hold_reason {self.hold_reason}) is not verified")
+        return self
 
     @property
     def marker(self) -> Optional[AnswerSpec]:
@@ -1149,7 +1163,33 @@ class Question(BaseModel):
 VIZ_KINDS = {"coordinate_plot", "function_graph", "arrow_map", "product_grid",
              "ratio_bars", "stat_chart", "trig_triangle", "geo_scene", "number_line",
              # VIZ_SPEC v2 (ADR-0004, Social Studies vertical)
-             "map_scene", "timeline", "flow_chain"}
+             "map_scene", "timeline", "flow_chain",
+             # Samuel's answer 37d (2026-10-01): "book picture for now" — a STAND-IN, never a native kind
+             "book_image"}
+
+# A book picture stand-in (answer 37d): the book's own image, served from the app's static
+# /book-figures/<book>/<file>, until a native figure replaces it. Never an external URL.
+BOOK_IMAGE_SRC_RE = re.compile(r"^/book-figures/[a-z0-9][a-z0-9-]*/[A-Za-z0-9_.-]+\.(?:png|jpe?g|gif|svg|webp)$")
+
+
+def book_image_problems(spec: dict) -> list[str]:
+    """What is wrong with a book_image spec ({src, alt, stand_in: true, native_kind_needed})."""
+    out = []
+    if not isinstance(spec, dict):
+        return ["spec is not an object"]
+    if not BOOK_IMAGE_SRC_RE.match(str(spec.get("src") or "")) or ".." in str(spec.get("src") or ""):
+        out.append(f"src {spec.get('src')!r} is not a /book-figures/<book>/<file> image path")
+    if not str(spec.get("alt") or "").strip():
+        out.append("alt text is required (the picture's description for a screen reader)")
+    if spec.get("stand_in") is not True:
+        out.append("stand_in must be true: a book picture is a stand-in until a native figure exists")
+    nk = spec.get("native_kind_needed", None)
+    if nk is not None and not (isinstance(nk, str) and nk.strip()):
+        out.append("native_kind_needed is a kind name or null")
+    extra = set(spec) - {"src", "alt", "stand_in", "native_kind_needed", "book_file"}
+    if extra:
+        out.append(f"unknown book_image field(s) {sorted(extra)}")
+    return out
 
 
 class Visual(BaseModel):
@@ -1165,6 +1205,12 @@ class Visual(BaseModel):
     def known_kind(self) -> "Visual":
         if self.kind not in VIZ_KINDS:
             raise ValueError(f"{self.id}: unknown viz kind '{self.kind}' (see VIZ_SPEC.md)")
+        if self.kind == "book_image":
+            bad = book_image_problems(self.spec)
+            if bad:
+                raise ValueError(f"{self.id}: book_image " + "; ".join(bad))
+            if not self.question:
+                raise ValueError(f"{self.id}: a book_image stands in for a QUESTION's figure (answer 37d)")
         return self
 
 

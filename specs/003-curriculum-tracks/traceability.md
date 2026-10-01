@@ -294,15 +294,15 @@ but has never been executed is not done.
 
 | FR | Requirement | Status | Implementation | Proof | Tasks · Privacy |
 |---|---|---|---|---|---|
-| FR-4501 | A console backlog, one row per content item with no human stamp, for every maths course; lists the named kinds (solutions/corrections, stem fixes, generated questions, widget questions and mapping claims incl. AI-refused, misconceptions, objectives/prerequisite links, figure stand-ins, auto-passed gate decisions) | **OPEN** | planned | — | T436 |
-| FR-4502 | One-by-one review by `content-review` operators (Samuel, Tamer, Kamil): approve (the human stamp), fix requested (student-unchanged, exportable), or reject (removed from students, never deleted) | **OPEN** | planned | — | T437 |
-| FR-4503 | A claim lock: no two reviewers get the same item; a stale claim eventually releases | **OPEN** | planned | — | T438 |
-| FR-4504 | Append-only audit of every verdict: item, operator, when, verdict, note | **OPEN** | planned | — | T439 |
-| FR-4505 | Backlog counts by kind, course, chapter and reviewer, so zero is a number, not an impression | **OPEN** | planned | — | T440 |
-| FR-4506 | "Reviewed" means only a human stamp (decision 54, answer 33); an AI-only pass shows as "AI-checked, awaiting human", never "reviewed"; no student surface says either word | **OPEN** | planned | — | T441 |
-| FR-4507 | The backlog covers maths courses only; Social Studies and Arabic keep their existing review queue; Quran/Hadith stay sealed (Principle IV), never in this backlog | **OPEN** | planned | — | T436 |
-| FR-4508 | *(decision 58d, answer 37d, extends FR-4321)* Until a figure's native type is approved and built, the course MAY show the book's own image (`visuals.kind: "book_image"`, `stand_in: true`) instead of shipping the lesson without it — maths only, students only; every stand-in is a backlog item "needs native figure"; FR-4321's existing rule still holds without exception — a stand-in MUST NOT draw or reveal the question's own unknown or answer | **OPEN** | planned | — | T442 |
-| FR-4509 | *(decision 58c, answer 37c)* During the fan-out, gates G1 (FR-4410), G2 (FR-4302), G3 (FR-4306) and G4 (misconceptions/refutations, FR-4307) proceed on the AI checks' own recommendation; every such decision is a backlog item, not a human stamp; automatic safety checks (broken maths, an answer that disagrees with the book, the drift guard) still block, unchanged | **OPEN** | planned | — | T436 |
+| FR-4501 | A console backlog, one row per content item with no human stamp, for every maths course; lists the named kinds (solutions/corrections, stem fixes, generated questions, widget questions and mapping claims incl. AI-refused, misconceptions, objectives/prerequisite links, figure stand-ins, auto-passed gate decisions) | **OPEN** | code in progress | — | T436 |
+| FR-4502 | One-by-one review by `content-review` operators (Samuel, Tamer, Kamil): approve (the human stamp), fix requested (student-unchanged, exportable), or reject (removed from students, never deleted) | **OPEN** | code in progress | — | T437 |
+| FR-4503 | A claim lock: no two reviewers get the same item; a stale claim eventually releases | **OPEN** | code in progress | — | T438 |
+| FR-4504 | Append-only audit of every verdict: item, operator, when, verdict, note | **OPEN** | code in progress | — | T439 |
+| FR-4505 | Backlog counts by kind, course, chapter and reviewer, so zero is a number, not an impression | **OPEN** | code in progress | — | T440 |
+| FR-4506 | "Reviewed" means only a human stamp (decision 54, answer 33); an AI-only pass shows as "AI-checked, awaiting human", never "reviewed"; no student surface says either word | **OPEN** | code in progress | — | T441 |
+| FR-4507 | The backlog covers maths courses only; Social Studies and Arabic keep their existing review queue; Quran/Hadith stay sealed (Principle IV), never in this backlog | **OPEN** | code in progress | — | T442 |
+| FR-4508 | *(decision 58d, answer 37d, extends FR-4321)* Until a figure's native type is approved and built, the course MAY show the book's own image (`visuals.kind: "book_image"`, `stand_in: true`) instead of shipping the lesson without it — maths only, students only; every stand-in is a backlog item "needs native figure"; FR-4321's existing rule still holds without exception — a stand-in MUST NOT draw or reveal the question's own unknown or answer | **OPEN** | code in progress | — | T443 |
+| FR-4509 | *(decision 58c, answer 37c)* During the fan-out, gates G1 (FR-4410), G2 (FR-4302), G3 (FR-4306) and G4 (misconceptions/refutations, FR-4307) proceed on the AI checks' own recommendation; every such decision is a backlog item, not a human stamp; automatic safety checks (broken maths, an answer that disagrees with the book, the drift guard) still block, unchanged | **OPEN** | code in progress | — | T444 |
 
 ## 5. The extraction pipeline — FR-4401…FR-4409
 
@@ -336,6 +336,7 @@ but has never been executed is not done.
 | SC-211 | No student moved past a split section with a part not passed; roll-ups agree with parts | **OPEN** | A12 | progression tests; US6 walk | T406, T412 |
 | SC-212 | Marker: 100% of printed answers and equivalents correct, 0 wrong-form correct, existing attempts identical on replay | **OPEN** | A13 | `answer-marker.test.mts`; attempts replay | T415, T416 |
 | SC-213 | 100% of unique maths images accepted by fingerprint, agreement or a third reading, or queued for a human; 0 guessed | **OPEN** | B21 | S0b report; Chapter 8: 853/853, 0 guessed, 0 queued (the rest of the book, ≈ 5,160 images, not yet read) | T419, T421, T433 |
+| SC-214 **[ADDED 2026-10-01, answer 37b]** | The backlog's size is readable by kind, course, chapter and reviewer at any time; two reviewers never claim the same item; every verdict is in the append-only audit with who and when; the design permits zero | **OPEN** | code in progress | — | T436–T441 |
 
 ## 7. What is unresolved, and who owns it
 
