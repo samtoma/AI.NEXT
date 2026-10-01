@@ -479,13 +479,36 @@ const figureOf = (r: Record<string, unknown>): FigurePayload => ({
     (r.spec as Record<string, unknown>).stand_in === true,
 });
 
+/**
+ * What the reviewer reads as "Generated from". A generated question's parent is a book QUESTION
+ * (`parent_kind = 'question'`, the default) or a book TEACHING item (`'teaching'`: a worked example of
+ * the explanation library, for an objective whose book items are all teaching material — Samuel's
+ * answer 40, migration 038). The two live in different tables, so each is joined on its own kind, and
+ * a teaching item's stem is the entry's `problem` element (assemble_lesson_bundle.py writes
+ * `[{kind: "problem", text_md: <stem>}, {step, text_md}…]`). Guarded to an array so a content shape
+ * nobody expected shows no parent text instead of failing the page.
+ */
+const PARENT_STEM_SQL = `CASE q.parent_kind
+         WHEN 'teaching' THEN (
+           SELECT e->>'text_md'
+             FROM jsonb_array_elements(
+                    CASE WHEN jsonb_typeof(te.content) = 'array' THEN te.content ELSE '[]'::jsonb END) e
+            WHERE e->>'kind' = 'problem'
+            LIMIT 1)
+         ELSE p.stem
+       END`;
+
 export async function questionPayload(c: Db, id: string): Promise<QuestionPayload | null> {
   const res = await c.query(
     `SELECT q.id, q.question_type, q.tier, q.stem, q.choices, q.correct_answer, q.canonical_solution,
             q.solution_version, q.status, q.source, q.source_page, q.source_note, q.parent_question_id,
-            p.stem AS parent_stem, q.reviewed_by, q.reviewed_at, q.ai_checked_by, q.ai_checked_at,
+            q.parent_kind, ${PARENT_STEM_SQL} AS parent_stem,
+            q.reviewed_by, q.reviewed_at, q.ai_checked_by, q.ai_checked_at,
             q.hold_reason, q.review_note
-       FROM questions q LEFT JOIN questions p ON p.id = q.parent_question_id
+       FROM questions q
+       LEFT JOIN questions p ON q.parent_kind = 'question' AND p.id = q.parent_question_id
+       LEFT JOIN explanation_library te
+              ON q.parent_kind = 'teaching' AND te.id = q.parent_question_id AND te.entry_type = 'worked_example'
       WHERE q.id = $1`,
     [id]
   );
@@ -513,6 +536,7 @@ export async function questionPayload(c: Db, id: string): Promise<QuestionPayloa
     sourcePage: r.source_page ?? null,
     sourceNote: r.source_note ?? null,
     parentId: r.parent_question_id ?? null,
+    parentKind: r.parent_kind === "teaching" ? "teaching" : "question",
     parentStem: r.parent_stem ?? null,
     family: family(r.source_note ?? null),
     reviewedBy: r.reviewed_by ?? null,

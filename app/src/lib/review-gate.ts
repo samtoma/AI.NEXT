@@ -921,6 +921,8 @@ export interface QuestionPayload {
   sourcePage: number | null;
   sourceNote: string | null;
   parentId: string | null;
+  /** what `parentId` names: a book question, or a book teaching item (answer 40, migration 038) */
+  parentKind: "question" | "teaching";
   parentStem: string | null;
   family: string | null;
   reviewedBy: string | null;
