@@ -73,6 +73,21 @@ def recorded_prompt(text: str) -> str:
     return "\n".join(lines)
 
 
+ORACLE_ITEM_RE = re.compile(r"^(- \S+ \([^,()]+), [a-z_]+\):", re.M)
+ORACLE_TALLY_RE = re.compile(r"^tally: .*$", re.M)
+
+
+def oracle_same_but_types(recorded: str | None, today: str) -> bool:
+    """The coverage oracle is shown each item's ref, objective, ANSWER TYPE and stem, and a tally. A collection fix that
+    types an item again (a choice with invented options becomes a number) changes only that label, and the oracle's verdict
+    — is every sub-heading covered by claims and questions — does not depend on it: the recorded verdict stands when the
+    two prompts are equal once the answer types and the tally are set aside."""
+    if not recorded or not today:
+        return False
+    norm = lambda t: ORACLE_TALLY_RE.sub("tally: -", ORACLE_ITEM_RE.sub(r"\1):", t))
+    return norm(recorded) == norm(today)
+
+
 def journal(run_dir: Path) -> tuple[dict, dict]:
     """(label -> recorded answer, label -> the prompt its agent was given). A resumed run appends to
     the same journal: a label run again live has a later agent, and the LATEST agent per label is
@@ -173,6 +188,9 @@ def _recollect(saved: dict, copy: Path, info: dict, run_dir: Path) -> tuple[dict
             calls.append({"label": lab, "reused": False, "why": "the recorded run made no such call"})
             continue
         same = prompts.get(lab) == c["prompt"]
+        if not same and lab.startswith("S8:oracle:") and oracle_same_but_types(prompts.get(lab), c["prompt"]):
+            calls.append({"label": lab, "reused": True, "note": "only the items' answer types differ"})
+            continue
         if not same:
             changed.append(lab)
         calls.append({"label": lab, "reused": same})
@@ -254,6 +272,9 @@ def main(argv: list[str] | None = None) -> int:
     for path in a.runs:
         saved = json.loads(path.read_text())
         saved = saved.get("result", saved)
+        # a saved return value is the workflow's result object, which names no run: runs/<book>/lessons/<runId>.json does
+        if not saved.get("run_id") and re.fullmatch(r"wf_[0-9a-f]+-[0-9a-f]+", path.stem):
+            saved["run_id"] = path.stem
         slugs = [l["lesson"] for l in saved.get("lessons") or [] if l]
         tag = slugs[0] if len(slugs) == 1 else f"{slugs[0]}..{slugs[-1]}"
         if a.resume_preview:
