@@ -468,13 +468,32 @@ function PlayCheckIn({
                 be able to reopen the last lesson. */}
             {courseComplete && (
               <div className="rounded-[var(--play-radius-sm)] bg-card-warm px-4 py-3.5">
-                <p className="font-display text-[1.05rem] font-bold text-ink">
-                  That&apos;s the whole course 🎉
-                </p>
-                <p className="font-read mt-1 text-[0.95rem] leading-[1.7] text-ink-soft">
-                  You&apos;ve been through every topic here. Go over any of them
-                  again whenever you like.
-                </p>
+                {/* While the book still has lessons being prepared (the
+                    outline, lib/course-outline.ts), "the whole course" is not
+                    true: she has finished everything READY, and the rest will
+                    appear on its own — nothing for her to do or ask for. */}
+                {morePreparing ? (
+                  <>
+                    <p className="font-display text-[1.05rem] font-bold text-ink">
+                      That&apos;s everything that&apos;s ready so far 🎉
+                    </p>
+                    <p className="font-read mt-1 text-[0.95rem] leading-[1.7] text-ink-soft">
+                      You&apos;ve been through every topic that&apos;s ready. The
+                      rest of the book is being prepared and will show up here
+                      on its own.
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <p className="font-display text-[1.05rem] font-bold text-ink">
+                      That&apos;s the whole course 🎉
+                    </p>
+                    <p className="font-read mt-1 text-[0.95rem] leading-[1.7] text-ink-soft">
+                      You&apos;ve been through every topic here. Go over any of them
+                      again whenever you like.
+                    </p>
+                  </>
+                )}
               </div>
             )}
           </div>
@@ -564,6 +583,18 @@ function PlayCheckIn({
                     = how solid you are on it
                   </span>
                 </span>
+                {/* Only with a lesson not prepared yet in the list: the dashed
+                    outline is this design system's "not ready yet" (globals.css,
+                    the disabled anatomy; SubjectHome's MoreSubjectsComing), and
+                    a dashed chip with nothing explaining it is decoration. */}
+                {anyPreparing && (
+                  <span className="flex items-center gap-1.5">
+                    <span aria-hidden className={PREPARING_SWATCH} />
+                    <span className="font-read text-[0.78rem] leading-none text-[color:var(--play-text-muted)]">
+                      = {BEING_PREPARED.toLowerCase()}
+                    </span>
+                  </span>
+                )}
               </div>
 
               <div className="px-4 py-1">
@@ -608,18 +639,59 @@ function PlayCheckIn({
                           // A course without terms (FR-4203): the unit's own
                           // reference is the eyebrow, and no term is named.
                           unitRef !== unitName && (
-                            <span className="font-mono text-[0.7rem] uppercase leading-[1.4] tracking-[0.06em] text-[var(--play-text-amber-warm)]">
+                            <span
+                              className={cx(
+                                "font-mono text-[0.7rem] uppercase leading-[1.4] tracking-[0.06em]",
+                                m.preparing
+                                  ? "text-[color:var(--play-text-muted)]"
+                                  : "text-[var(--play-text-amber-warm)]"
+                              )}
+                            >
                               {unitRef}
                             </span>
                           )
                         )}
-                        <span className="font-display text-[1.05rem] font-bold leading-[1.35] text-ink">
-                          {unitName}
-                        </span>
+                        {m.preparing ? (
+                          // A chapter of the book with no lesson prepared yet
+                          // (lib/course-outline.ts): its name, quiet, and the
+                          // words that say so — never a link, never a ramp.
+                          <span className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
+                            <span className="font-display text-[1.05rem] font-bold leading-[1.35] text-[color:var(--play-text-muted)]">
+                              {unitName}
+                            </span>
+                            <span className={PREPARING_TAG}>{BEING_PREPARED}</span>
+                          </span>
+                        ) : (
+                          <span className="font-display text-[1.05rem] font-bold leading-[1.35] text-ink">
+                            {unitName}
+                          </span>
+                        )}
                       </div>
 
                       <div className="flex flex-wrap gap-2">
-                        {m.lessons.map((l) => {
+                        {m.entries.map((e) => {
+                          if (!e.ready) {
+                            // A lesson of the book not prepared yet: shown in
+                            // its place, named as it will be once loaded
+                            // ("1.7 · part 2"), and NOT a link — nothing opens
+                            // it, so nothing can start it (the server refuses
+                            // it too: lib/lesson.ts). The dashed outline is
+                            // the design system's "not ready yet"; the words
+                            // reach a screen reader and the tooltip.
+                            const h = lessonHeading(e.outline.provenance);
+                            const label = lessonChipText(h, e.outline.provenance);
+                            return (
+                              <span
+                                key={e.slug}
+                                title={`${lessonHeadingText(h)} — ${BEING_PREPARED}`}
+                                className={PREPARING_CHIP}
+                              >
+                                <span dir="ltr">{label}</span>
+                                <span className="sr-only"> — {BEING_PREPARED}</span>
+                              </span>
+                            );
+                          }
+                          const l = e.lesson;
                           const selected = l.slug === lesson.slug;
                           const stage = deriveMasteryStage(l.los);
                           // A Grade 10 lesson's chip is its printed section,

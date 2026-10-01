@@ -97,7 +97,7 @@ def join_notes(*notes: str | None) -> str | None:
 
 _FIG_MARK = " [held: figure missing]"
 _AI_RE = re.compile(r"^\s*ai |\(pending [^)]*\)\s*$", re.I)
-_BULK_RE = re.compile(r"^\s*local-dev|\(poc bulk\)\s*$", re.I)
+_BULK_RE = re.compile(r"^\s*local-(?:dev|docker)|\(poc bulk\)\s*$", re.I)
 _PENDING_RE = re.compile(r"\s*\(pending [^)]*\)$", re.I)
 
 

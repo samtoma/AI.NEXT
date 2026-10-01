@@ -254,7 +254,13 @@ EOF
 # human has read, assert a review that did not happen (FR-1110), and serve it
 # to a student. A local convenience must not be able to do that, so the
 # statement now names the course it was always about.
-PROMOTED=$($PSQL -d $DB -tAc "with p as (update questions q set status='live', reviewed_by='local-dev', reviewed_at=now() where q.status<>'live' and q.source in ('seed','authored') and exists (select 1 from node_subject ns where ns.node_id = q.lo_id and ns.course_id = 'course:prep3-math-en') returning 1) select count(*) from p")
+#
+# NO STAMP, since migration 035 (Samuel's answer 33: only a human stamp is a
+# review). The loader already loads a maths course live (answer 37a), so this
+# is a backstop; it writes "promoted without review: local-dev" to review_note,
+# never reviewed_by, and never touches a row an automatic safety check holds
+# (hold_reason — a missing figure, a broken key), which must stay blocked.
+PROMOTED=$($PSQL -d $DB -tAc "with p as (update questions q set status='live', review_note=coalesce(q.review_note || '; ', '') || 'promoted without review: local-dev' where q.status='review' and q.hold_reason is null and q.materialised_from is null and q.source in ('seed','authored') and exists (select 1 from node_subject ns where ns.node_id = q.lo_id and ns.course_id = 'course:prep3-math-en') returning 1) select count(*) from p")
 [ "$PROMOTED" -gt 0 ] && ok "promoted $PROMOTED book question(s) to live" || ok "all book questions live"
 
 # ----------------------------------------------------- 3b. generated content

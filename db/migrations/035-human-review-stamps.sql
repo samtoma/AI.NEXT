@@ -25,8 +25,8 @@
 --   * an AI check                "ai dual-check (pending Samuel)" — written by
 --                                load_seed.py on every verified book question
 --   * a bulk / dev promotion     "samuel (poc bulk)" (--approve-all, "explicitly
---                                not a real review"), "local-dev (dry run)",
---                                "local-dev (pilot scratch)"
+--                                not a real review"), "local-dev", "local-docker",
+--                                "local-dev (dry run)", "local-dev (pilot scratch)"
 --   * annotations glued on       " [held: figure missing]" (the loader's figure
 --                                gate), "; held: its figure is missing" (G2 on a
 --                                figureless item), "; stem fixed by orchestrator
@@ -132,7 +132,7 @@ WITH src AS (
           OR strpos(reviewed_by, '; ') > 0
           OR reviewed_by ~* '^\s*ai '
           OR reviewed_by ~* '\(pending [^)]*\)\s*$'
-          OR reviewed_by ~* '^\s*local-dev'
+          OR reviewed_by ~* '^\s*local-(dev|docker)'
           OR reviewed_by ~* '\(poc bulk\)\s*$')
 ), parts AS (
   SELECT id, fig_mark,
@@ -143,7 +143,7 @@ WITH src AS (
   SELECT id, fig_mark, stamp, notes,
          CASE WHEN stamp IS NULL                                        THEN 'none'
               WHEN stamp ~* '^ai ' OR stamp ~* '\(pending [^)]*\)$'     THEN 'ai'
-              WHEN stamp ~* '^local-dev' OR stamp ~* '\(poc bulk\)$'    THEN 'bulk'
+              WHEN stamp ~* '^local-(dev|docker)' OR stamp ~* '\(poc bulk\)$'    THEN 'bulk'
               ELSE 'human' END                                          AS kind
     FROM parts
 )
@@ -212,7 +212,7 @@ BEGIN
           OR strpos(reviewed_by, '; ') > 0
           OR reviewed_by ~* '^\s*ai '
           OR reviewed_by ~* '\(pending [^)]*\)\s*$'
-          OR reviewed_by ~* '^\s*local-dev'
+          OR reviewed_by ~* '^\s*local-(dev|docker)'
           OR reviewed_by ~* '\(poc bulk\)\s*$');
   IF legacy > 0 THEN
     RAISE EXCEPTION '035: % reviewed_by value(s) still carry an AI, bulk or annotated stamp', legacy;

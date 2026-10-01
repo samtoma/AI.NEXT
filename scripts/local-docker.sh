@@ -62,9 +62,11 @@ else
   ok "loaded"
 fi
 # A scoped load demotes Unit 1's bulk-promoted questions to 'review'; locally
-# that is noise, so promote them and let the parity check pass.
+# that is noise, so promote them and let the parity check pass. No stamp
+# (migration 035: only a human stamp is a review) and never a row an automatic
+# safety check holds (hold_reason).
 PROMOTED=$($DC exec -T db psql -U ainext -d ainext_mvp1 -tAc \
-  "with p as (update questions set status='live', reviewed_by='local-docker', reviewed_at=now() where status<>'live' returning 1) select count(*) from p" | tr -d '\r')
+  "with p as (update questions set status='live', review_note=coalesce(review_note || '; ', '') || 'promoted without review: local-docker' where status='review' and hold_reason is null and materialised_from is null returning 1) select count(*) from p" | tr -d '\r')
 ok "promoted $PROMOTED question(s) to live"
 
 say "Waiting for the app"

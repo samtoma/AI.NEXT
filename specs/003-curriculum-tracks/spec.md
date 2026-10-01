@@ -1095,6 +1095,12 @@ through the attempts route and confirm identical outcomes.
   a requirement, unlike the objectives-finding methodology (decision 12), because it is about
   prerequisite *links* between objectives already found, not about how an objective itself is defined.
 
+  *(Amended 2026-10-01, decision 58c, answer 37c.)* During the fan-out, a chapter's links MUST move
+  forward on the second AI's agreement alone — the chapter MUST NOT be held waiting for Samuel, Tamer or
+  Kamil to clear it first; each kept link is a backlog item (FR-4501), confirmed afterwards. A link
+  whose evidence is not at its cited anchor, that the second AI does not confirm, or that would close a
+  cycle, is still refused automatically before it ever reaches a human — unchanged.
+
 ### Native figure types (FR-4321) **[ADDED rev. 4, decision 26]**
 
 - **FR-4321**: Where the pipeline's visual stage finds a figure that no existing figure kind can draw
