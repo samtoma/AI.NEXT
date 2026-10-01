@@ -44,6 +44,15 @@ exception).
 **2026-10-01 (answer 35)**: FR-4205 now says the American course shows no Arabic anywhere, console and
 student, not only in its prompts; the G10 tutor's "write no Arabic at all" line stands (review B7: kept).
 
+**2026-10-01 (answer 36)**: Decision 1 is **superseded** — *"yes the sign up should always ask"*
+([decisions.md](./decisions.md)). FR-4004 and FR-4005 are rewritten: sign-up and the first-Google-sign-in
+step now always ask which curriculum, naming every curriculum the product knows and pre-selecting none;
+a curriculum with nothing live yet for the chosen grade is still offered and selectable, carrying a short
+note that there is nothing to study there yet (the orchestrator's default, awaiting Samuel's
+confirmation); the account is not created without an answer. FR-4102's console "offered" line and User
+Story 3's scenarios and edge cases are reworded to match. Existing accounts are untouched. **Code is in
+progress on this branch; this revision has no file:line evidence yet** (added when the code lands).
+
 **Status of the code.** Committed only as unreviewed WIP snapshots on the pushed feature branch (an
 auto-snapshot job commits every 30 seconds, `[skip ci]`); nothing is reviewed by Samuel or merged to `main`.
 **Authority level**: a **derived spec** (Spec Kit). It turns Samuel's direction and his decisions of
@@ -258,32 +267,38 @@ course changed.
 
 ---
 
-### User Story 3 — A student follows one curriculum, set at sign-up (Priority: P3)
+### User Story 3 — A student follows one curriculum, set at sign-up (Priority: P3) *(changed 2026-10-01, answer 36)*
 
-A student signing up picks their grade. If that grade has live courses in two or more curricula, the
-next question asks which curriculum their school follows, naming only those curricula. If it has
-only one, nobody is asked and that curriculum is stored. From then on every list, lesson,
-progression, skill map, practice plan and tutor conversation draws only on that curriculum's courses.
-A student who signs up with Google gets one short screen for grade and curriculum before their first
-lesson.
+A student signing up picks their grade. The next question always asks which curriculum their school
+follows, naming every curriculum the product knows and pre-selecting none — including a curriculum with
+nothing live yet for that grade, which carries a short note that there is nothing to study there yet. The
+account is not created without an answer. From then on every list, lesson, progression, skill map,
+practice plan and tutor conversation draws only on that curriculum's courses. A student who signs up
+with Google gets one short screen for grade and curriculum before their first lesson.
 
 **Why this priority**: it is the second half of Samuel's direction and the reason the course gate
-needs a new dimension. With the launch rules (decision 6) grade 10 has live courses in one
-curriculum only, so at launch nobody is asked. The question appears on its own the first time two
-curricula are live in one grade. The scoping matters from day one.
+needs a new dimension. *(Changed 2026-10-01, answer 36: Samuel reversed decision 1 — "yes the sign up
+should always ask" — after the console showed no curriculum question for grade 10, where only American
+is live.)* Sign-up asks at every grade, whatever is live there, so the scoping question is visible from
+day one even where, as at launch, grade 10 has only one curriculum's course live.
 
 **Independent Test**: with two curricula live for one grade (a fixture is enough), sign up at that
-grade, choose one, and walk every student surface confirming no course of the other curriculum
-appears. Sign up at a grade with one curriculum and confirm the question is not asked and that
-curriculum is stored. Sign in with Google for the first time and confirm the one-screen step.
+grade, choose one, and walk every student surface confirming no course of the other curriculum appears.
+Sign up at a grade with only one curriculum live and confirm the question is still asked, naming every
+curriculum, with the one that has nothing live there carrying the note, and confirm the chosen curriculum
+is stored. Sign in with Google for the first time and confirm the one-screen step also always asks.
 
 **Acceptance Scenarios**:
 
-1. **Given** a grade with live courses in two or more curricula, **When** a new student gives that
-   grade at sign-up, **Then** they are asked to choose among exactly those curricula, and nothing else
-   is added to sign-up.
-2. **Given** a grade with live courses in one curriculum, **When** a new student gives that grade,
-   **Then** they are not asked, and that curriculum is stored.
+1. **Given** any grade, **When** a new student gives that grade at sign-up, **Then** they are asked to
+   choose among every curriculum the product knows, pre-selecting none, and nothing else is added to
+   sign-up. *(Changed 2026-10-01, answer 36: no longer conditioned on how many curricula have a live
+   course for the grade.)*
+2. **Given** a curriculum with nothing live for the grade a new student gave, **When** the question is
+   shown, **Then** that curriculum is still listed and selectable, carrying a short note that there is
+   nothing to study there yet *(the orchestrator's default; awaiting Samuel's confirmation)*, and
+   choosing it stores it as the student's curriculum. *(Changed 2026-10-01, answer 36 — supersedes the
+   former scenario 2, "they are not asked, and that curriculum is stored.")*
 3. **Given** an American-curriculum grade-10 student, **When** they open the lesson list, the subject
    home, the skill map, the practice plan, the progress page or the home page, or ask the tutor
    anything, **Then** only American courses appear or are drawn on.
@@ -292,8 +307,8 @@ curriculum is stored. Sign in with Google for the first time and confirm the one
 5. **Given** a student who existed before this feature, **When** they sign in, **Then** they see
    exactly what they saw before, and their curriculum reads as National.
 6. **Given** a new account created through Google, **When** the sign-in completes, **Then** a single
-   screen asks for grade, and for curriculum only by the same rule as scenario 1, before any lesson.
-   *(added rev. 2, decision 5)*
+   screen asks for grade, and for curriculum by the same always-ask rule as scenario 1, before any
+   lesson. *(added rev. 2, decision 5; reworded 2026-10-01, answer 36)*
 
 ---
 
