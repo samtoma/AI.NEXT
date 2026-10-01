@@ -379,6 +379,12 @@ def structural_problems(after: dict, verdict: str) -> list[str]:
     except ValidationError as e:
         x = e.errors()[0]
         out.append(str(x.get("msg", "invalid")).removeprefix("Value error, "))
+    af = d.get("asked_form")
+    if d.get("answer_type") == "expression" and isinstance(af, str) and af not in APP_FORMS:
+        # the assembly puts the book's asked form on the spec (apply_form_rules); the app's marker rejects a form it does not know, and a
+        # rejected spec stops the WHOLE chapter's assembly ("unknown form prime_factors"): such an item can only be excluded for now
+        out.append(f"the stem asks for '{af}', a form the app's marker does not know: the assembly would put it on the spec and the marker "
+                   "would reject it (it cannot be emitted, not even held)")
     if d.get("answer_type") == "numeric" and d.get("answer") and not _as_number(d["answer"]):
         out.append(f"typed numeric but its key {d['answer']!r} is not a number (the assembly refuses it)")
     if d.get("answer_type") == "choice" and d.get("options_source") == "stem":
@@ -593,6 +599,8 @@ def decide(entry: dict, rec: dict | None, ver: dict | None, marker_why: str | No
         return _entry("exclude", klass, conf, note, why_low=why_low, if_corrected=corrected), {"outcome": "exclude"}
     if verdict == "hold":
         probs = structural_problems(item, "hold") if state == "excluded" else []
+        if marker_why and marker_why.startswith("the app's marker rejects the spec"):
+            probs.append(marker_why)
         if probs:
             return (_entry("exclude", klass, "low", f"{note} (kept out as exclude, not hold: its typed shape cannot be emitted — {probs[0]})",
                            why_low="a hold needs a well-formed item; this one's typing is unusable"),
@@ -708,7 +716,10 @@ def collect(entries: list[dict], runs: list[dict], *, prior: dict | None = None,
         if rec.get("verdict") in ("accept", "fix"):
             fields = typed_fields(by_key[k]["item"], rec.get("fix"))[0] if rec["verdict"] == "fix" else {}
             afters[k] = {**by_key[k]["item"], **fields}
-    markers = marker_fn(marker_rows(afters)) if afters else {}
+    # a HELD item is emitted too (as a question held at review), so the app's marker must accept its spec, or the whole chapter's assembly
+    # stops; an unreadable key is only held by the assembly, but a rejected spec is fatal
+    held_as_is = {k: by_key[k]["item"] for k, rec in recs.items() if rec.get("verdict") == "hold"}
+    markers = marker_fn(marker_rows({**held_as_is, **afters})) if (afters or held_as_is) else {}
     # the app's own marker as a deterministic oracle, twice: is the key equal to the expression the stem asks to transform
     # ("Simplify: …"), and is it equal to the answer the book states? (no model; g2rec_identity.mjs)
     ident = identity_fn(identity_rows(afters)) if afters else {}

@@ -382,6 +382,31 @@ class Policy(unittest.TestCase):
         e, _ = self.one(self.k1, rec("hold", "marker cannot check", note="x"))
         self.assertEqual(e["verdict"], "hold", "a held item with a well-formed shape can be held")
 
+    def test_an_item_whose_form_the_marker_does_not_know_cannot_even_be_held(self):
+        """2026-10-01, Chapter 1: five 'product of prime factors' items recommended `hold` stopped the whole chapter's assembly ("the app's
+        marker rejects these specs: unknown form prime_factors"): the assembly puts the book's asked form on the spec before the marker checks
+        it. Such an item is exclude until the marker knows the form, whatever the agent said."""
+        es = [{"key": "g10m9s1-1:Ex9-1:9", "lesson": "g10m9s1-1", "ref": "Ex9-1:9", "state": "excluded",
+               "item": item("Ex9-1:9", stem="Represent the following as a product of its prime factors: $143$", answer="11\\times13",
+                            marker={"kind": "expression", "key": "11\\times13", "form": None, "variables": [], "tolerance": None},
+                            asked_form="prime_factors", typing_problems=['form "prime_factors" is not one the app\'s marker knows'])}]
+        for verdict in ("hold", "accept"):
+            run = {"results": [{"key": es[0]["key"], "rec": rec(verdict, "marker cannot check", book_quote="11\\times13"), "ver": CONFIRMED}]}
+            e = G.collect(es, [run], marker_fn=lambda r: {}, identity_fn=lambda r: {})["items"][es[0]["key"]]
+            self.assertEqual(e["verdict"], "exclude", verdict)
+            self.assertIn("prime_factors", e["note"])
+
+    def test_a_held_item_whose_spec_the_apps_marker_rejects_is_excluded(self):
+        e, _ = self.one(self.k1, rec("hold", "needs the page image", note="x"),
+                        marker_fn=lambda rows: {r["id"]: "the app's marker rejects the spec: unknown form" for r in rows})
+        self.assertEqual(e["verdict"], "hold", "a held item of a well-formed state: the marker is not asked about it, only about excluded ones' hold")
+        es = [{**self.es[1]}]
+        rows_seen = []
+        doc = G.collect(es, [{"results": [{"key": es[0]["key"], "rec": rec("hold", "needs the page image", note="x"), "ver": None}]}],
+                        marker_fn=lambda rows: (rows_seen.extend(r["id"] for r in rows), {r["id"]: "the app's marker rejects the spec: unknown form" for r in rows})[1],
+                        identity_fn=lambda r: {})
+        self.assertEqual(rows_seen, [], "this item is typed numeric: it has no marker spec to ask about")
+
     def test_a_stem_repair_is_small_flagged_and_low_confidence(self):
         es = [{"key": "g10m9s1-1:Ex9-1:8", "lesson": "g10m9s1-1", "ref": "Ex9-1:8", "state": "held",
                "item": item("Ex9-1:8", stem="Simplify: $\\frac{a-4}{a+5a+4}$", solution=["$\\frac{a-4}{(a+4)(a+1)}=\\frac{1}{a+4}$"],
