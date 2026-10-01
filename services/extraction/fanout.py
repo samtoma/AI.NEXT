@@ -39,6 +39,7 @@ import argparse
 import collections
 import json
 import math
+import os
 import re
 import shutil
 import subprocess
@@ -67,7 +68,10 @@ RUNS = HERE / "runs" / BOOK
 MATHS_BOOK = RUNS / "maths" / "book"
 PLAN_PATH = RUNS / "fanout-plan.json"
 INVENTORY_PATH = RUNS / "fanout" / "inventory.json"
-FANOUT_DB = "ainext_fanout_g10"
+# The database the fan-out's per-chapter steps read and load: Samuel's local preview DB (student :3010 / console :3011), so each
+# chapter shows up as it lands (2026-10-01; the earlier scratch DB ainext_fanout_g10 was never created). AINEXT_FANOUT_DB overrides it.
+# Local only (127.0.0.1); take a pg_dump before the first load of a chapter.
+FANOUT_DB = os.environ.get("AINEXT_FANOUT_DB", "ainext_pilot_g10_ch08")
 DSN = f"host=127.0.0.1 port=5432 dbname={FANOUT_DB}"
 PILOT_CONFIG = WORK / "pilot" / "books" / f"{BOOK}.json"
 PILOT_SEED = WORK / "pilot" / "seed"
@@ -568,8 +572,9 @@ def plan() -> dict:
             "Every gate decision (G1–G4) and every working-check flag lands in the console backlog; nothing is "
             "silently corrected. Automatic safety checks (maths, answers vs the book, parity) still block.",
             "Stop and ask Samuel if the metered total passes $1,100 (the top of the approved range) or a checkpoint fails.",
-            "Scratch DB only: " + DSN + " (create it after the migrations in flight land: schema.sql + db/migrations, "
-            "then every National course and the pilot's Grade 10 course + Chapter 8, as dryrun_chapter.py does).",
+            "Local DB only (127.0.0.1): " + DSN + " — Samuel's preview database (it already holds the National courses and the "
+            "pilot's Grade 10 course + Chapter 8; each chapter is loaded into it as its bundle is assembled). pg_dump it before "
+            "a chapter's first load. AINEXT_FANOUT_DB overrides the name.",
         ],
         "cost_usd": {"low": lo, "high": hi, "by_stage": {k: [round(v[0], 2), round(v[1], 2)] for k, v in sorted(by_stage.items())},
                      "basis": "the pilot's measured unit costs (UNIT_COST in fanout.py; pilot-report.md); API-equivalent",
