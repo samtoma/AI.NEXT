@@ -1656,7 +1656,7 @@
    "save_to": "runs/g10-math/working-check/ch01-<wf_id>.json",
    "meter": "uv run meter_run.py record --book g10-math --stage SW --run <wf_id>   # add --resumed when it was a resume",
    "after": [
-    "uv run working_check.py collect --args work/g10-math/packets/fanout/wcheck-ch01.args.json --runs runs/g10-math/working-check/ch01-<wf_id>.json --out runs/g10-math/working-check/ch01.flags.json",
+    "uv run working_check.py collect --args work/g10-math/packets/fanout/wcheck-ch01.args.json --runs runs/g10-math/working-check/ch01-<wf_id>.json --out runs/g10-math/working-check/ch01.flags.json   # 575 solutions > 300: the copy comes in parts (…part2.workflow.js) — run each, pass every part's args (wcheck-ch01.args.part2.json …) and run file",
     "# every flag → the console backlog; nothing is corrected"
    ],
    "checkpoint": null,
@@ -4134,7 +4134,7 @@
    "save_to": "runs/g10-math/working-check/ch06-<wf_id>.json",
    "meter": "uv run meter_run.py record --book g10-math --stage SW --run <wf_id>   # add --resumed when it was a resume",
    "after": [
-    "uv run working_check.py collect --args work/g10-math/packets/fanout/wcheck-ch06.args.json --runs runs/g10-math/working-check/ch06-<wf_id>.json --out runs/g10-math/working-check/ch06.flags.json",
+    "uv run working_check.py collect --args work/g10-math/packets/fanout/wcheck-ch06.args.json --runs runs/g10-math/working-check/ch06-<wf_id>.json --out runs/g10-math/working-check/ch06.flags.json   # 372 solutions > 300: the copy comes in parts (…part2.workflow.js) — run each, pass every part's args (wcheck-ch06.args.part2.json …) and run file",
     "# every flag → the console backlog; nothing is corrected"
    ],
    "checkpoint": null,

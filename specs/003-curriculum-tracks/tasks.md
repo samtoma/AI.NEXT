@@ -635,8 +635,8 @@ ticked: code is in progress on the branch, not yet read and run for this pass.
   without it; register each as a backlog item "needs native figure" (T436). Keep FR-4321's existing
   rule — a stand-in that would draw or reveal the question's own unknown or answer is withheld, same as
   today, and the lesson ships without it in that one case.
-- [ ] T443 [US1] (WP-P2, WP-P3, WP-P4, WP-P5) **Gates G1–G4 auto-pass during the fan-out** (FR-4509,
-  decision 58c, answer 37c): `objectives.workflow.js` / `assemble_objectives.py` (G1, FR-4410),
+- [ ] T443 [US1] (WP-P2, WP-P3, WP-P4, WP-P5) **Gates G1–G5 auto-pass during the fan-out, each decision marked for Samuel in the console** (FR-4509,
+  decision 58c, answer 37c; G5 and "for Samuel" added by decision 60, answer 39): `objectives.workflow.js` / `assemble_objectives.py` (G1, FR-4410),
   `lesson.workflow.js` / `assemble_lesson_bundle.py` (G2, FR-4302), the widget stage (G3, FR-4306 —
   unchanged, decision 47 already has this shape) and the misconceptions stage (G4, FR-4307) each
   proceed on their own AI checks' recommendation rather than wait for a human per chapter; every

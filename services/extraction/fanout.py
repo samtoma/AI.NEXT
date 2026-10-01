@@ -376,7 +376,9 @@ def build_runs(inv: dict) -> list[dict]:
             depends_on=lesson_ids + ["wcheck-ch08"], before=assemble,
             save_to=f"runs/g10-math/working-check/{t}-<wf_id>.json", meter=_meter("SW"),
             after=[f"uv run working_check.py collect --args work/g10-math/packets/fanout/wcheck-{t}.args.json "
-                   f"--runs runs/g10-math/working-check/{t}-<wf_id>.json --out runs/g10-math/working-check/{t}.flags.json",
+                   f"--runs runs/g10-math/working-check/{t}-<wf_id>.json --out runs/g10-math/working-check/{t}.flags.json"
+                   + (f"   # {c['solutions']} solutions > {300}: the copy comes in parts (…part2.workflow.js) — run each, "
+                      f"pass every part's args (wcheck-{t}.args.part2.json …) and run file" if c["solutions"] > 300 else ""),
                    "# every flag → the console backlog; nothing is corrected"])
         fam = f"families/g10-math/{t}"
         wid = f"widgets/g10-math/{t}"
