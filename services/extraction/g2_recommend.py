@@ -643,21 +643,42 @@ def question_id(item: dict) -> str:
 
 def collect(entries: list[dict], runs: list[dict], *, prior: dict | None = None, run_names: dict[str, str] | None = None,
             marker_fn=run_marker_check, identity_fn=run_identity_check, chapter: int | None = None,
-            multiplication_dot: bool = False) -> dict:
+            multiplication_dot: bool = False, packets: list[dict | None] | None = None) -> dict:
     """The recommendation file from the saved run(s). `prior` is an earlier file for the same chapter: its items for keys these runs
-    do not cover are kept (a re-run of the unanswered), these runs' answers win."""
+    do not cover are kept (a re-run of the unanswered), these runs' answers win.
+
+    `entries` are the items that owe a recommendation NOW (recommendable()); the run answered the items its packet held THEN, and a
+    later collection (lesson-v8 → COLLECT-6 widened, 2026-10-01) can change what is owed. So, per item and never twice-decided:
+      * a key the run answered that is no longer owed (the checks' own rule decides it now, or a person did) is SKIPPED with a note
+        (`no_longer_owed`): its recommendation is not written, so g2 never overrides the rule's decision with an older reading;
+      * a key still owed whose item is NOT what the agents were shown (`packets`: each run's args, as embedded in its copy; the item's
+        prompt fields or its state differ) is REFUSED for that item (`stale_items`): nothing is recommended, it stays as the checks
+        leave it, and `g2-recommend-args --only-missing` asks about it again;
+      * the others are collected as before, so the agents' paid answers for the items still owed stay valid."""
     by_key = {e["key"]: e for e in entries}
     recs: dict[str, dict] = {}
     vers: dict[str, dict | None] = {}
     off_task: list[str] = []
-    for run in runs:
+    no_longer_owed: set[str] = set()
+    stale: set[str] = set()
+    same = lambda a, b: json.dumps(a, sort_keys=True, ensure_ascii=False) == json.dumps(b, sort_keys=True, ensure_ascii=False)  # noqa: E731
+    for ri, run in enumerate(runs):
         run = run.get("result", run)
         if run.get("prompts_version") not in (None, PROMPTS_VERSION):
             raise RecommendError(f"a run made with prompts {run.get('prompts_version')}, this collector is {PROMPTS_VERSION}")
+        packet = (packets[ri] if packets and ri < len(packets) else None) or {}
+        pk = {x["key"]: x for x in packet.get("items") or []}
+        run_keys = set(run.get("keys") or []) | set(pk)
         for r in run.get("results") or []:
             k = r.get("key")
             if k not in by_key:
-                off_task.append(str(k))
+                if k in run_keys:
+                    no_longer_owed.add(str(k))
+                else:
+                    off_task.append(str(k))
+                continue
+            if k in pk and not (same(pk[k].get("item"), prompt_item(by_key[k]["item"])) and pk[k].get("state") == by_key[k]["state"]):
+                stale.add(k)
                 continue
             if r.get("rec"):
                 recs[k] = r["rec"]
@@ -684,7 +705,7 @@ def collect(entries: list[dict], runs: list[dict], *, prior: dict | None = None,
             items[k] = out
     if prior:                                              # an earlier file's items for keys these runs did not answer
         for k, v in (prior.get("items") or {}).items():
-            if k in by_key and k not in items:
+            if k in by_key and k not in items and k not in stale:
                 items[k] = v
     unanswered = [k for k in by_key if k not in items]
     c_verdict = Counter(v["verdict"] for v in items.values())
@@ -704,6 +725,7 @@ def collect(entries: list[dict], runs: list[dict], *, prior: dict | None = None,
         "retyped": sorted(k for k, v in items.items() if v["verdict"] == "fix" and "answer_type" in (v.get("fields") or {})),
         "corrections_proposed": sorted(k for k, v in items.items() if v.get("if_corrected")),
         "off_task": off_task,
+        "no_longer_owed": sorted(no_longer_owed), "stale_items": sorted(stale),
         "by_state": dict(Counter(e["state"] for e in entries)),
         # the app's own marker on the TYPED key of every item whose stem is "Simplify / Expand / Factorise: …" (informational): for a person
         # to set beside an agent's "book error" (a typed key can itself be a typing agent's correction of the book's)
@@ -782,8 +804,50 @@ def prepare(book, chapter: int, lesson_runs: list[Path], g2_path: Path | None, e
             bad = embed_workflow.verify(out)
             if bad:
                 raise RecommendError(f"{out}: the copy does not verify: {bad[:2]}")
+            archive_packet(out, w["generated_sha256"], args)
             info["copies"].append({"script": str(out), "bytes": w["bytes"], "generated_sha256": w["generated_sha256"]})
     return info
+
+
+ARCHIVE = "g2rec-archive"
+
+
+def archive_packet(copy: Path, generated_sha256: str, args: dict) -> Path:
+    """Keep a copy's packet by its generated sha256, beside the copies: a saved run names its copy by that sha (`embedded.generated_sha256`),
+    and the collector compares what the agents were shown with what is owed NOW, even after the copy file has been regenerated."""
+    d = Path(copy).parent / ARCHIVE
+    d.mkdir(parents=True, exist_ok=True)
+    p = d / f"{generated_sha256}.args.json"
+    if not p.exists():
+        p.write_text(json.dumps(args, ensure_ascii=False) + "\n")
+    return p
+
+
+def find_packet(book, generated_sha256: str | None) -> dict | None:
+    """The args a run's copy carried (its `embedded.generated_sha256`): from the archive, else from a copy still on disk. None: not found."""
+    if not generated_sha256:
+        return None
+    import embed_workflow
+    base = HERE / "work" / book.book / "packets" / "embedded" / "fanout"
+    a = base / ARCHIVE / f"{generated_sha256}.args.json"
+    if a.exists():
+        return json.loads(a.read_text())
+    for side in sorted(base.glob("g2rec-*.workflow.json")):
+        try:
+            if json.loads(side.read_text()).get("generated_sha256") == generated_sha256 and side.with_suffix(".js").exists():
+                return embed_workflow.read_args(side.with_suffix(".js"))
+        except (ValueError, OSError):
+            continue
+    return None
+
+
+def delta_ids(bundle: dict, flags: dict) -> list[str]:
+    """The solutions of an assembled chapter bundle (with working to check) that the chapter's working check never covered
+    (`checked_ids` of runs/<book>/working-check/chNN.flags.json): the questions a recommendation, or a newer collection, made part of
+    the bundle after the check ran. A delta working check (`working_check.py args --only`) is limited to them."""
+    import working_check as W
+    checked = set(flags.get("checked_ids") or [])
+    return sorted(s["id"] for s in W.solutions_from_bundle(bundle) if W.has_working(s) and s["id"] not in checked)
 
 
 # ============================================================================ the commands (auto_pass_gates.py)

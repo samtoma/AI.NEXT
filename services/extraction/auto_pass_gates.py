@@ -592,19 +592,24 @@ def g2_recommend_main(a, book) -> int:
         entries = G.recommendable([G.load_run(p) for p in lesson_runs], ch, book.id_prefixes[0],
                                   json.loads(g2_path.read_text()) if g2_path.exists() else None)
         runs = [json.loads(p.read_text()) for p in runs_files]
-        for p, r in zip(runs_files, runs):
+        # what the agents were shown: the packet their copy carried (found by its sha256), item by item. Without it only the whole packet
+        # can be compared, and any change refuses the run
+        packets = [G.find_packet(book, (r.get("result", r).get("embedded") or {}).get("generated_sha256")) for r in runs]
+        for p, r, pk in zip(runs_files, runs, packets):
             r = r.get("result", r)
             keys = r.get("keys")
-            if keys and not a.allow_stale:
+            if pk is None and keys and not a.allow_stale:
                 now = G.items_sha256([e for e in entries if e["key"] in set(keys)])
                 if r.get("items_sha256") and now != r["items_sha256"]:
                     raise G.RecommendError(f"{_hr(p)}: the run was made on a packet that no longer matches the lesson runs / G2 file "
-                                           f"(items sha256 {str(r['items_sha256'])[:12]}…, now {now[:12]}…): a person's verdict or a "
-                                           "re-collected run changed an item; rebuild the packet, or pass --allow-stale")
+                                           f"(items sha256 {str(r['items_sha256'])[:12]}…, now {now[:12]}…) and its packet (copy "
+                                           f"{str((r.get('embedded') or {}).get('generated_sha256'))[:12]}…) is not on disk, so the items cannot be "
+                                           "compared one by one: a person's verdict or a re-collected run changed an item; re-run "
+                                           "g2-recommend-args for this chapter, or pass --allow-stale")
         out = a.out or recommended
         prior = json.loads(out.read_text()) if out.exists() and not a.fresh else None
         names = {_hr(p): ((r.get("result", r).get("embedded") or {}).get("generated_sha256")) for p, r in zip(runs_files, runs)}
-        doc = G.collect(entries, runs, prior=prior, run_names=names, chapter=ch,
+        doc = G.collect(entries, runs, prior=prior, run_names=names, chapter=ch, packets=packets,
                         multiplication_dot=bool(getattr(getattr(book, "answer_rules", None), "multiplication_dot", False)))
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(json.dumps(doc, ensure_ascii=False, indent=1) + "\n")
@@ -623,6 +628,14 @@ def g2_recommend_main(a, book) -> int:
         if rep["unanswered"]:
             print(f"  UNANSWERED ({len(rep['unanswered'])}): {', '.join(rep['unanswered'][:8])}{' …' if len(rep['unanswered']) > 8 else ''} "
                   "— they stay as the checks left them; re-run them with g2-recommend-args --only-missing")
+        if rep["no_longer_owed"]:
+            print(f"  NO LONGER OWED ({len(rep['no_longer_owed'])}): the checks' own rule (a newer collection) or a person now decides "
+                  f"{', '.join(k.split(':', 1)[1] for k in rep['no_longer_owed'][:10])}{' …' if len(rep['no_longer_owed']) > 10 else ''} — "
+                  "their recommendations are skipped, never applied over that decision")
+        if rep["stale_items"]:
+            print(f"  STALE ({len(rep['stale_items'])}): the item is not what the agents were shown (typed again by a newer collection): "
+                  f"{', '.join(k.split(':', 1)[1] for k in rep['stale_items'][:10])}{' …' if len(rep['stale_items']) > 10 else ''} — "
+                  "nothing is recommended for them; ask again with g2-recommend-args --only-missing")
         if rep["off_task"]:
             print(f"  off task (not items of this chapter's packet, ignored): {rep['off_task'][:5]}")
         print("  next: uv run auto_pass_gates.py g2 " + f"{book.book} --chapter {ch} " + " ".join(f"--lesson-run {_hr(p)}" for p in lesson_runs)

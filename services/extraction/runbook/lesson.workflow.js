@@ -244,6 +244,7 @@ function normTex(s) {
   t = t.replace(/\s+and\s+/g, ', ')                                      // a list's "and" is its comma (COLLECT-3: both sides)
   t = t.replace(/\\geq?(?![a-zA-Z])/g, '≥').replace(/\\leq?(?![a-zA-Z])/g, '≤').replace(/>=/g, '≥').replace(/<=/g, '≤')   // before the "&" goes: "-3&\le&k" (COLLECT-6)
   // a Greek letter's command is the sign it names, so the letter after it is not swallowed with it: "2\pi r" is not "2\pir" (COLLECT-6)
+  t = t.replace(/\\(?:approx|simeq)(?![a-zA-Z])/g, '≈').replace(/\^\s*\{\s*\\circ\s*\}|\^\s*\\circ(?![a-zA-Z])|\\circ(?![a-zA-Z])/g, '°')   // one sign however written: ≈ and ° (Chapter 5)
   t = t.replace(/\\pm(?![a-zA-Z])/g, '±').replace(/\\pi(?!tchfork)/g, 'π').replace(/\\(lambda|theta|alpha|beta|gamma|delta|mu|sigma|phi|omega)(?![a-zA-Z])/g, (_m, g) => GREEK[g])
   t = t.replace(/&/g, '')                                                  // alignment markup, never maths (COLLECT-3)
   t = t.replace(/\{([A-Za-z])\}(?=[_^])/g, '$1')                          // {m}_{AB} is m_{AB} (COLLECT-3)
@@ -257,7 +258,7 @@ function normTex(s) {
 }
 // a named left side: x=, y_1=, m_{AB}=, d_{AB}\approx, the text layer's flattened mAC=, and a named point
 // with its variables, P(x,y)= (COLLECT-2, COLLECT-3)
-const stripLhs = (t) => t.replace(/^[A-Za-zπλθαβγδμσφω]{1,4}(?:_(?:\{[A-Za-z0-9]+\}|[A-Za-z0-9]+))?(?:\([a-z](?:,[a-z])*\))?(?:=|\\approx)/, '')
+const stripLhs = (t) => t.replace(/^[A-Za-zπλθαβγδμσφω]{1,4}(?:_(?:\{[A-Za-z0-9]+\}|[A-Za-z0-9]+))?(?:\([a-z](?:,[a-z])*\))?(?:=|\\approx|≈)/, '')
 // a point's name before its coordinates: M(1,0) is the pair (1,0); only a name directly before ONE
 // parenthesised pair, so f(2) or 3(x+1) is never touched (COLLECT-3)
 const stripPointName = (t) => (/^[A-Za-z]{1,2}(?:_(?:\{[A-Za-z0-9]+\}|[A-Za-z0-9]))?\([^()]*,[^()]*\)$/.test(t) ? t.replace(/^[^(]+/, '') : t)
@@ -339,7 +340,7 @@ function settle(a, b, textLayer) {
 //   * the separators are ";", "and", "or", and a comma that is not a decimal comma (a comma BETWEEN TWO DIGITS, "-28,1", or between
 //     a digit and a recurring bar, "1,\overline{34}", is a decimal point, as normTex reads it; the old split broke it in two on both
 //     sides, so "1,5; 2" and "5; 1,2" read alike) and not inside a bracket ("(1,2)").
-const VALUE_LABEL = /^(?:[A-Za-zπλθαβγδμσφω]{1,4}(?:_(?:\{[A-Za-z0-9]+\}|[A-Za-z0-9]+))?(?:\([a-z](?:,[a-z])*\))?|[A-Za-z]\d{1,3})(?:=|\\approx)/
+const VALUE_LABEL = /^(?:[A-Za-zπλθαβγδμσφω]{1,4}(?:_(?:\{[A-Za-z0-9]+\}|[A-Za-z0-9]+))?(?:\([a-z](?:,[a-z])*\))?|[A-Za-z]\d{1,3})(?:=|\\approx|≈)/
 const DECIMAL_COMMA = /(?<=\d),(?=\d|\\(?:overline|bar|dot|ddot)\s*\{?\s*\d)/g
 function valueList(s, textLayer) {
   const t = mathsSpan(textLayer ? printedTex(s) : s).replace(/\$/g, ' ').replace(/(\d)\{,\}(\d)/g, '$1.$2').replace(DECIMAL_COMMA, '.')
@@ -348,7 +349,7 @@ function valueList(s, textLayer) {
   const one = (x) => {
     const n = normTex(x), m = VALUE_LABEL.exec(n)
     const rest = m ? n.slice(m[0].length) : n
-    const label = m ? m[0].replace(/(?:=|\\approx)$/, '') : null
+    const label = m ? m[0].replace(/(?:=|\\approx|≈)$/, '') : null
     // "b = ±2" states TWO values, +2 and -2 (in that order): the sign is read, never dropped (COLLECT-6)
     const pm = /^(?:±|\\pm(?![a-zA-Z]))(?=[^-+±])/.exec(rest)
     if (pm) { const v = flat(rest.slice(pm[0].length)); return v ? [{ label, value: v }, { label, value: `-${v}` }] : [] }
