@@ -146,7 +146,9 @@ def apply_g2(cur, g2: dict, runs_dir: Path, course: str, dry_run: bool) -> dict:
         # did not make, and never part of the human stamp (migration 035)
         verdict = t["reviewer_verdict"] if t["verdict"] in ("accept", "fix") else t["verdict"]
         stamp = f"{auto_by if auto else by} (G2 {verdict})"
-        want_note = review_policy.join_notes(note, f"stem fixed by {t['stem_fix_by']}" if t.get("stem_fix_by") else None)
+        # the pre-035 "held: its figure is missing" annotation is hold_reason's job now (figure_missing)
+        kept = "; ".join(n for n in (note or "").split("; ") if n.strip() != "held: its figure is missing")
+        want_note = review_policy.join_notes(kept, f"stem fixed by {t['stem_fix_by']}" if t.get("stem_fix_by") else None)
         # (status, reviewed_by, ai_checked_by, hold_reason, review_note)
         human = reviewed_by if auto else stamp
         robot = stamp if auto else ai_by

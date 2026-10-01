@@ -667,7 +667,10 @@ Phase 1 (T301–T303)
         Phase 7 US4 (after Phase 2; T375 after T308 + T374)
         Phase 8 US5 (after T312 + T380)
         Phase 9 (T384 after every importer moved; T392–T393 last)
-        Phase 9c: T434 (after T368, T369 — reverses their "offered ≥ 2" gate)
+        Phase 9c: T434 (after T368, T369 — reverses their "offered ≥ 2" gate) — DONE
+        Phase 9d: T435 (after T431 — widens "English-only" to "no Arabic anywhere") — DONE
+                  T436–T443 (after Phase 4 — the fan-out and its backlog; T442 after T355/T356's
+                  figure-gap work, T443 after the pilot's own G1–G4 passes for Chapter 8)
 ```
 
 - **G0 → the pipeline's lesson unit**: T402 and T403 apply G0's 65 lessons before any S1 run (T358). S0b (T418–T421) comes before S1–S3 read any maths.

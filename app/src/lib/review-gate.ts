@@ -807,3 +807,141 @@ export function onFixList(i: ResolvedItem): "fix" | "reject" | null {
   if (i.state === "rejected" && i.latest?.decision === "reject" && REJECT_NEEDS_PIPELINE.has(i.kind)) return "reject";
   return null;
 }
+
+/* ---------------------------------------------------------------- payload */
+
+/** A step of worked text, normalised from any stored shape. */
+export interface TextStep {
+  step: number;
+  text: string;
+}
+
+/** Steps from a stored jsonb value: `[{step, text_md}]`, `{steps: [...]}`, or claim steps. */
+export function stepsOf(content: unknown): TextStep[] {
+  const list = Array.isArray(content)
+    ? content
+    : content && typeof content === "object" && Array.isArray((content as { steps?: unknown }).steps)
+      ? (content as { steps: unknown[] }).steps
+      : [];
+  return list
+    .filter((s): s is Record<string, unknown> => !!s && typeof s === "object")
+    .map((s, i) => ({
+      step: typeof s.step === "number" ? s.step : i + 1,
+      text: typeof s.text_md === "string" ? s.text_md : typeof s.claim_ar === "string" ? s.claim_ar : "",
+    }))
+    .filter((s) => s.text.length > 0);
+}
+
+export interface FigurePayload {
+  id: string;
+  kind: string;
+  spec: Record<string, unknown>;
+  caption: string | null;
+  sourcePage: number | null;
+  /** a `book_image` shown until a native figure exists (answer 37d) */
+  standIn: boolean;
+}
+
+export interface MisconceptionBrief {
+  id: string;
+  label: string;
+  description: string;
+}
+
+export interface QuestionPayload {
+  id: string;
+  questionType: string;
+  tier: string;
+  stem: string;
+  choices: unknown;
+  correctAnswer: string;
+  solution: TextStep[];
+  solutionVersion: number;
+  status: string;
+  source: string;
+  sourcePage: number | null;
+  sourceNote: string | null;
+  parentId: string | null;
+  parentStem: string | null;
+  family: string | null;
+  reviewedBy: string | null;
+  reviewedAt: string | null;
+  aiCheckedBy: string | null;
+  aiCheckedAt: string | null;
+  holdReason: string | null;
+  reviewNote: string | null;
+  figures: FigurePayload[];
+  /** every misconception the question names (options, widget claims) */
+  misconceptions: Record<string, MisconceptionBrief>;
+}
+
+export interface HistoryEntry {
+  decision: Decision;
+  operatorName: string;
+  decidedAt: string;
+  note: string | null;
+  suggestedCorrection: string | null;
+  /** made on the content as it is now */
+  current: boolean;
+}
+
+export interface ReviewItemPayload {
+  kind: ItemKind;
+  ref: string;
+  fingerprint: string;
+  state: ItemState;
+  reasons: Reason[];
+  courseId: string;
+  courseLabel: string;
+  moduleId: string | null;
+  moduleLabel: string | null;
+  loId: string | null;
+  loLabel: string | null;
+  createdAt: string;
+  claimExpiresAt: string | null;
+  question?: QuestionPayload;
+  claim?: {
+    questionId: string;
+    predicate: string;
+    misconceptionId: string;
+    active: boolean;
+    why: string | null;
+    verifierRuns: string[];
+    misconception: (MisconceptionBrief & { signal: string | null }) | null;
+    refutation: TextStep[];
+  };
+  misconception?: {
+    id: string;
+    label: string;
+    description: string;
+    signal: string | null;
+    generatedBy: string;
+    refutations: { id: string; steps: TextStep[]; reviewed: boolean; reviewedBy: string | null }[];
+    taggedQuestions: number;
+  };
+  workedExample?: {
+    id: string;
+    entryType: string;
+    steps: TextStep[];
+    sourcePage: number | null;
+    generatedBy: string;
+    misconceptionId: string | null;
+  };
+  objective?: {
+    id: string;
+    label: string;
+    description: string | null;
+    syllabusRef: string | null;
+    sourcePage: number | null;
+    liveQuestions: number;
+    prerequisites: { id: string; label: string }[];
+    dependents: { id: string; label: string }[];
+  };
+  link?: {
+    src: { id: string; label: string; description: string | null };
+    dst: { id: string; label: string; description: string | null };
+    rationale: string | null;
+  };
+  figure?: FigurePayload & { questionId: string | null };
+  history: HistoryEntry[];
+}
