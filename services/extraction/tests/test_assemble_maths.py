@@ -28,6 +28,7 @@ import tempfile
 import unittest
 from contextlib import redirect_stdout
 from pathlib import Path
+from unittest import mock
 
 import _scratchdb  # noqa: F401  (puts services/extraction on sys.path)
 import assemble_maths as am
@@ -210,6 +211,87 @@ class Recovery(unittest.TestCase):
             self.assertEqual([x["latex"] for x in r.found.values()], [latex])
 
 
+# Chapter 10's last unresolved maths image (printed page 360, "both 2 and 3 are modes in the data set {1; 2; 2; 3; 3}"):
+# passes A and B both read a sixth value, `\\{1;2;2;3;3;3\\}`; the PDF text layer and the image show five, and the
+# image's own hash proves the five-value reading in the book's `\\left\\{ … \\right\\}` spelling.
+SET_IMAGE = "429b8760604d18f7f31fce70e11ec838"
+SET_FIVE = "\\left\\{1;2;2;3;3\\right\\}"
+SET_SIX = "\\{1;2;2;3;3;3\\}"
+
+
+def set_line_scan(values: str = "1; 2; 2; 3; 3", pages: int = 20, at: int = 11) -> dict:
+    """A scan whose page `at` (0-based) holds that sentence as the book's text layer sets it: words in the text
+    font, the braces in CMSY10 and the values in CMR10 (the spans as pdf_scan.json stores them)."""
+    fonts = ["URWClassico-Regular", "CMSY10", "CMR10"]
+    spans = [[0, 10.0, 0, 90, 100.0, "both 2 and 3 are modes in the data set"], [1, 10.0, 90, 96, 100.0, " {"],
+             [2, 10.0, 96, 140, 100.0, values], [1, 10.0, 140, 146, 100.0, "}"],
+             [0, 10.0, 146, 200, 100.0, ". If all points in a data set occur with equal frequency, it is"]]
+    page_spans = [[] for _ in range(pages)]
+    page_spans[at] = [[0, spans]]
+    return {"fonts": fonts, "page_spans": page_spans, "page_text": [""] * pages}
+
+
+class SetBraceRecovery(unittest.TestCase):
+    def recover_from_line(self, target_latex: str, values: str = "1; 2; 2; 3; 3") -> dict:
+        r = am.Recoverer({md5(target_latex)})
+        am.gen_pdf_lines(r, set_line_scan(values))
+        return r.found
+
+    def test_the_real_image_is_proven_by_its_hash_in_the_five_value_reading_only(self):
+        self.assertTrue(am.hash_ok(SET_FIVE, SET_IMAGE), "the image's own hash names the five-value reading")
+        self.assertFalse(am.hash_ok(SET_SIX, SET_IMAGE), "and not the six-value one both passes wrote")
+        r = am.Recoverer({SET_IMAGE})
+        am.gen_pdf_lines(r, set_line_scan())
+        self.assertEqual(r.found, {SET_IMAGE: {"latex": SET_FIVE, "source": "pdf_lines"}})
+
+    def test_a_set_is_tried_in_both_house_spellings_and_in_both_number_styles(self):
+        for latex in ("\\{1;2;2;3;3\\}", "\\left\\{1;2;2;3;3\\right\\}", "\\{\\text{1};\\text{2};\\text{2};\\text{3};\\text{3}\\}",
+                      "\\left\\{\\text{1};\\text{2};\\text{2};\\text{3};\\text{3}\\right\\}"):
+            self.assertEqual([x["latex"] for x in self.recover_from_line(latex).values()], [latex], latex)
+        # a spaced spelling is the same file name: the source was hashed with its whitespace removed
+        r = am.Recoverer({md5("\\left\\{1;2;2;3;3\\right\\}")})
+        r.offer("\\left\\{ 1; 2; 2; 3; 3 \\right\\}", "t")
+        self.assertEqual([x["latex"] for x in r.found.values()], ["\\left\\{1;2;2;3;3\\right\\}"])
+
+    def test_the_six_value_reading_the_two_passes_wrote_is_rejected(self):
+        # whoever wrote it, the recoverer takes a candidate only by exact md5 and this one is not the image's
+        self.assertEqual(self.recover_from_line(SET_SIX), {}, "the line prints five values: no candidate has six")
+        r = am.Recoverer({SET_IMAGE})
+        for spelling in (SET_SIX, "\\left\\{1;2;2;3;3;3\\right\\}", "\\{1;2;2;3;3\\}"):
+            r.offer(spelling, "t")
+        self.assertEqual(r.found, {}, "neither the six-value reading nor the unsized five-value one hashes to it")
+
+    def test_a_near_miss_set_is_rejected(self):
+        # one digit changed, either in the line the book prints or in the image's reading: no hash, no recovery
+        self.assertEqual(self.recover_from_line(SET_FIVE, "1; 2; 2; 3; 4"), {})
+        r = am.Recoverer({md5("\\left\\{1;2;2;3;4\\right\\}")})
+        am.gen_pdf_lines(r, set_line_scan())
+        self.assertEqual(r.found, {})
+        r = am.Recoverer({SET_IMAGE})
+        am.gen_pdf_lines(r, set_line_scan("1; 2; 2; 3; 4"))
+        self.assertEqual(r.found, {}, "the real image is not found in a line that prints another value")
+
+    def test_html_escaped_source_forms_are_tried_for_a_set_and_stored_unescaped(self):
+        # a set-builder set holds `>`: the EPUB hashed `&gt;`, the store keeps `>` (canonical)
+        fonts = ["CMSY10", "CMMI10", "CMR10"]
+        spans = [[0, 10.0, 0, 6, 100.0, "{"], [1, 10.0, 6, 12, 100.0, "x"], [2, 10.0, 12, 30, 100.0, ">3"],
+                 [0, 10.0, 30, 36, 100.0, "}"]]
+        scan = {"fonts": fonts, "page_spans": [[[0, spans]]]}
+        for latex, escaped in (("\\{x>3\\}", "\\{x&gt;3\\}"), ("\\left\\{x>3\\right\\}", "\\left\\{x&gt;3\\right\\}")):
+            r = am.Recoverer({md5(escaped)})
+            am.gen_pdf_lines(r, scan)
+            self.assertEqual([x["latex"] for x in r.found.values()], [latex])
+            self.assertTrue(am.hash_ok(latex, md5(escaped)), "and the assembler re-verifies it as it does any source")
+        # the escaped form is only offered for a set: the same text without braces never reaches it
+        r = am.Recoverer({md5("x&gt;3")})
+        am.gen_pdf_lines(r, {"fonts": fonts, "page_spans": [[[0, spans[1:3]]]]})
+        self.assertEqual(r.found, {})
+        # and nothing is escaped twice
+        r = am.Recoverer({md5("\\{x&amp;gt;3\\}")})
+        am.gen_pdf_lines(r, scan)
+        self.assertEqual(r.found, {})
+
+
 def mini_work(tmp: Path, images: dict) -> Path:
     """A work/<book>/ with equations.json and a one-page scan. images: md5 → (class, printed_pages)."""
     w = tmp / "work"
@@ -228,8 +310,10 @@ class Assemble(unittest.TestCase):
     def setUp(self):
         self.tmp = Path(tempfile.mkdtemp())
 
-    def run_assemble(self, images, runs, recovered=None, human=None):
+    def run_assemble(self, images, runs, recovered=None, human=None, scan=None):
         w = mini_work(self.tmp, images)
+        if scan:
+            (w / "pdf_scan.json").write_text(json.dumps(scan))
         if recovered:
             (w / "maths" / "recovered.json").write_text(json.dumps({"accepted": recovered}))
         paths = []
@@ -280,6 +364,32 @@ class Assemble(unittest.TestCase):
                           "unresolved": 3})
         self.assertEqual(s["teacher_only_not_transcribed"], 1)
         self.assertFalse(s["complete"])
+
+    def test_chapter_10s_set_image_is_recovered_not_queued_and_nothing_else_moves(self):
+        # the image both passes misread: before the set-brace variants it queued ("the PDF text layer contradicts
+        # them"); recovered from its PDF line it is accepted by hash, found_by "recover", the passes' reading unused
+        other = md5("x=3")
+        images = {SET_IMAGE: ("printed", [1]), other: ("printed", [1])}
+        runs = [{"pass": p, "results": [{"md5": SET_IMAGE, "pass": p, "latex": SET_SIX},
+                                        {"md5": other, "pass": p, "latex": "x=3"}]} for p in ("A", "B")]
+        before = self.run_assemble(images, runs, scan=set_line_scan())
+        self.assertEqual([q["md5"] for q in before["queue"]], [SET_IMAGE])
+        self.assertIn("contradicts", before["queue"][0]["reason"])
+        self.tmp = Path(tempfile.mkdtemp())          # run_assemble builds a fresh work dir each call
+        w = mini_work(self.tmp / "recover", images)
+        (w / "pdf_scan.json").write_text(json.dumps(set_line_scan()))
+        with mock.patch.object(am, "gen_symbols"), mock.patch.object(am, "gen_numbers"), \
+                mock.patch.object(am, "gen_grammar"):
+            rec = am.recover(G10, w)["accepted"]
+        self.assertEqual(list(rec), [SET_IMAGE], "only the set is recovered: the other image has no line to read")
+        self.assertEqual((rec[SET_IMAGE]["latex"], rec[SET_IMAGE]["found_by"]), (SET_FIVE, "pdf_lines"))
+        self.assertEqual(rec[SET_IMAGE]["cross_check"], "consistent")
+        after = self.run_assemble(images, runs, recovered=rec, scan=set_line_scan())
+        self.assertEqual(after["queue"], [])
+        self.assertEqual(after["accepted"][SET_IMAGE], {"latex": SET_FIVE, "accepted_by": "hash", "found_by": "recover",
+                                                        "cross_check": "consistent"})
+        self.assertEqual(after["accepted"][other], before["accepted"][other], "no other acceptance moved")
+        self.assertTrue(after["summary"]["complete"])
 
     def test_the_third_reading_decides_only_as_two_of_three(self):
         dis_b, one_a, neither, sol, agreed = ("a" * 32, "b" * 32, "c" * 32, "d" * 32, "e" * 32)
@@ -552,7 +662,7 @@ class Grade10Recovery(unittest.TestCase):
         d = json.loads((WORK / "maths" / "recovered.json").read_text())
         s, acc = d["summary"], d["accepted"]
         for h, a in acc.items():
-            self.assertEqual(md5(a["latex"]), h)
+            self.assertTrue(am.hash_ok(a["latex"], h), "exact md5 of a form the EPUB hashed (an HTML-escaped set too)")
             self.assertEqual(a["accepted_by"], "hash")
         q = json.loads((WORK / "maths" / "vision-queue.json").read_text())
         self.assertEqual(s["unique"], 8561)
