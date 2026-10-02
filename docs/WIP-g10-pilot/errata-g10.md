@@ -8,7 +8,12 @@ wanted to put live). Treat each entry as a lead to confirm against the printed p
 Nothing here changed the book's answers. A question whose printed answer is wrong was left out of the question bank rather than corrected. A question whose text
 lost something in extraction (a missing sign or exponent) is listed with the repair, if there was one.
 
-So far: **74** printed answers that look wrong and **10** questions whose text lost or garbled something, in chapters 1, 2, 3, 4, 5, 6, 9.
+So far: **102** printed answers that look wrong and **20** questions whose text lost or garbled something, in chapters 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14.
+
+*Regenerated 2026-10-02 (the opening paragraph above still carries the generator's original 2026-10-01 date) from every chapter's G2 recommendation run, chapters 1-7 and 9-14, with
+`uv run auto_pass_gates.py g2-recommend-errata g10-math --chapter N ... --out ../../docs/WIP-g10-pilot/errata-g10.md` (from `services/extraction/`). Chapters 1-6 and 9 are unchanged from the
+2026-10-01 version (74 and 10); chapters 7, 10, 11, 12, 13 and 14 are new in this list. **Chapter 8 (the pilot) is not in it**: it has no recommendation run, because Samuel decided its G2 himself
+(decisions 39-45), and the tool refuses a chapter with no G2 record. Do not hand-edit this file: the next regeneration overwrites it.*
 
 ## Chapter 1 — Algebraic expressions
 
@@ -697,6 +702,61 @@ So far: **74** printed answers that look wrong and **10** questions whose text l
 - The right answer (our own working, not applied to the book): 0°≤θ≤360° (positive everywhere on the plotted interval, endpoints included)
 - In the question bank: **not used**. The book's answer was never changed.
 
+## Chapter 7 — Euclidean geometry
+
+
+### The book's printed answer is wrong (4)
+
+
+**Exercise 7-2, question 6b**, page 250
+
+- The question as we have it: State whether the following pairs of triangles are congruent or not. Give reasons for your answers. If there is not enough information to make a decision, explain why. [figure]
+- The book's answer: not congruent
+- What is wrong: The book's reasoning only shows the triangles cannot be proved congruent by SAS, and its own note says the angles are 'not necessarily' equal. It still concludes 'not congruent' where its own 6c and 6d answers use 'not enough information'. A key of 'not congruent' would mark a correct student answe…
+- The right answer (our own working, not applied to the book): not enough information (SSA does not decide)
+- In the question bank: **not used**. The book's answer was never changed.
+
+**Exercise 7-3, question 1b**, page 254
+
+- The question as we have it: $PQRS$ is a parallelogram. $PS=OS$ and $QO=QR$ . $S\hat{O}R=96^{\circ}$ and $Q\hat{O}R=x$ . [figure] Write $\hat{P}$ in terms of $x$ .
+- The book's answer: $\therefore\hat{P}=2x$
+- What is wrong: The working goes from $S\hat{R}O+O\hat{R}Q$ straight to $2x$ without showing $S\hat{R}O=x$. The stem is over-determined (x is forced to 28). A key of 2x marks the natural answer 84° − x wrong, so one key cannot mark both.
+- The right answer (our own working, not applied to the book): 84° − x (equal to 2x only at x = 28)
+- In the question bank: **not used**. The book's answer was never changed.
+
+**Exercise 7-8, question 2h**, page 270
+
+- The question as we have it: Assess whether the following statements are true or false. If the statement is false, explain why: The diagonals of a parallelogram are axes of symmetry.
+- The book's answer: True
+- What is wrong: The book's printed answer and its working both say 'True'. A parallelogram has no axes of symmetry in general. Its diagonals are axes only for a rhombus.
+- The right answer (our own working, not applied to the book): False
+- In the question bank: **not used**. The book's answer was never changed.
+
+**Exercise 7-8, question 10d**, page 273
+
+- The question as we have it: Say which of the following pairs of triangles are congruent with reasons. [figure]
+- The book's answer: Therefore \triangle QRS \text{ not congruent } \triangle TUV.
+- What is wrong: The book's working shows only that SAS fails, then concludes 'not congruent'. That is a non sequitur: SSA does not show the triangles are non-congruent. The typed options 'congruent' and 'not congruent' were invented, as only 'congruent' is in the stem.
+- The right answer (our own working, not applied to the book): Not enough information: congruence cannot be concluded (angle is not the included angle, SSA)
+- In the question bank: **not used**. The book's answer was never changed.
+
+### The question's text is damaged or unclear (2)
+
+
+**Exercise 7-1, question 5f**, page 241
+
+- The question as we have it: Find each of the unknown angles marked in the figure below. Find a reason that leads to the answer in a single step. [figure] Based on the results for the angles above, is $PQ\parallelNR$ ?
+- The book's answer: therefore $PQ\parallel NR$.
+- What is wrong: Figure: $a=50^\circ$, $b=40^\circ$, $d=40^\circ$ (corresponding to $b$), so $PQ\parallel NR$. Book key right. Stem and working print '\parallelNR' with no space, which will not render. Conclusion marked; angle parts not marked.
+- In the question bank: **live, with the question text repaired** to: Find each of the unknown angles marked in the figure below. Find a reason that leads to the answer in a single step. [figure] Based on the results for the angles above, is $PQ \parallel NR$ ?. Marked as an AI repair for you to review.
+
+**Exercise 7-8, question 8**, page 273
+
+- The question as we have it: Have a look at the following triangles, which are drawn to scale: [figure] Are the triangles congruent? If so state the reason and use correct notation to state that they are congruent.
+- The book's answer: Therefore, there is not enough information to determine if the two triangles are congruent.
+- What is wrong: One angle (F=J) is marked and x and c are different labels, so the book's 'not enough information' is sound as logic. But the stem says the triangles are drawn to scale, and the second triangle is visibly larger, which points to 'not congruent'. The stem and the key pull apart. (kept out as exclude, not hold: its typed shape cannot be emitted — options said to be the stem's are not all in the stem: "not congruent",…
+- In the question bank: **not used**. The book's answer was never changed.
+
 ## Chapter 9 — Finance and growth
 
 
@@ -749,4 +809,289 @@ So far: **74** printed answers that look wrong and **10** questions whose text l
 - The book's answer: 1,7
 - What is wrong: After $1{,}01629-1=0{,}01629$ the book writes $100(0{,}016)=1{,}69$ and rounds to 1,7; correct is 1,63, about 1,6.
 - The right answer (our own working, not applied to the book): 1,6 (about 1,63%)
+- In the question bank: **not used**. The book's answer was never changed.
+
+## Chapter 10 — Statistics
+
+
+### The book's printed answer is wrong (7)
+
+
+**Exercise 10-2, question 4d**, page 364
+
+- The question as we have it: Calculate the mean, median and mode of the following data sets: $\{24;35;28;41;31;49;31\}$
+- The book's answer: mean: 34,29; median: 31; mode: none
+- What is wrong: The book gives mean 34,29 (its working says 34,3), but the mean is 239/7 ≈ 34,14. The book gives mode 'none', but 31 appears twice, so the mode is 31.
+- In the question bank: **not used**. The book's answer was never changed.
+
+**Exercise 10-7, question 21a**, page 386
+
+- The question as we have it: In a traffic survey, a random sample of $\text{50}$ motorists were asked the distance they drove to work daily. This information is shown in the table below. Distance ( $\text{km}$ )Count $0<d\leq5$ $\text{4}$ $5<d\leq10$ $\text{5}$ $10<d\leq15$ $\text{9}$ $15<d\leq20$ $\text{10}$ $20<d\leq25$ $\te…
+- The book's answer: $\begin{align*}\text{mean}&=\frac{4(3)+5(8)+9(13)+10(18)+7(23)+8(28)+3(33)+2(38)+2(43)}{50}\\&=\text{19,9}\end{align*}$
+- What is wrong: The book uses 3, 8, 13, ... as class centres for the classes 0<d<=5, 5<d<=10, ... A continuous distance has centres 2,5, 7,5, ...; its 19,9 is therefore the mean for whole-km data, not for the stem as printed.
+- The right answer (our own working, not applied to the book): 19,4
+- In the question bank: **not used**. The book's answer was never changed.
+
+**Exercise 10-7, question 25a**, page 387
+
+- The question as we have it: The following is a list of data: $3;8;8;5;9;1;4;x$ In each separate case, determine the value of $x$ if the: range = $\text{16}$
+- The book's answer: $\begin{align*}\text{range}&=\text{maximum}-\text{minimum}\\16&=x-1\\\therefore x&=17\end{align*}$
+- What is wrong: The book's step 'If x<9 the range would be 9-1=8' ignores x below 1. x=-7 also gives range 16, so the book omits a valid answer.
+- In the question bank: **not used**. The book's answer was never changed.
+
+**Exercise 10-7, question 25e**, page 387
+
+- The question as we have it: The following is a list of data: $3;8;8;5;9;1;4;x$ In each separate case, determine the value of $x$ if the: box-and whiskers plot [figure]
+- The book's answer: therefore x = 4
+- What is wrong: The plot has min 1, Q1 3, median 4,5, Q3 8, max 9. The book uses the median alone and writes 4,5 = (5+x)/2, which gives x = 4. But the median also holds for any x between 3 and 4. With x = 4 the sorted list 1;3;4;4;5;8;8;9 has Q1 = (3+4)/2 = 3,5, not 3. With x = 3 the list 1;3;3;4;5;8;8;9 has Q1 =…
+- The right answer (our own working, not applied to the book): x = 3
+- In the question bank: **not used**. The book's answer was never changed.
+
+**Exercise 10-7, question 28a**, page 387
+
+- The question as we have it: There are 14 men working in a factory. Their ages are : $22;25;33;35;38;48;53;55;55;55;55;56;59;64$ Write down the five number summary.
+- The book's answer: The five number summary is: $\text{22};\text{36,5};\text{50};\text{55};\text{64}$
+- What is wrong: The book's own working gives the median as (53+55)/2 = 54, but its final line and printed answer say 50. The data's 7th and 8th values are 53 and 55, so the median is 54. The printed and typed key 22; 36,5; 50; 55; 64 is wrong in the median.
+- The right answer (our own working, not applied to the book): 22; 36,5; 54; 55; 64
+- In the question bank: **not used**. The book's answer was never changed.
+
+**Exercise 10-7, question 28c**, page 388
+
+- The question as we have it: There are 14 men working in a factory. Their ages are : $22;25;33;35;38;48;53;55;55;55;55;56;59;64$ Find the mean age of the men in the factory using the original data.
+- The book's answer: ¯x = 42,643
+- What is wrong: The book's working gives $\bar{x}=597/14=42{,}643$, but the ages sum to 653, so the mean is $653/14\approx46{,}64$.
+- In the question bank: **not used**. The book's answer was never changed.
+
+**Worked example 12**, page 375
+
+- The question as we have it: Determine the quartiles of the following data set: $\left\{7;45;11;3;9;35;31;7;16;40;12;6\right\}$
+- The book's answer: Therefore the $75^{\text{th}}$ percentile is $\frac{31+35}{2}=33$.
+- What is wrong: For the 75th percentile at rank 9,25 the book takes the halfway point $(31+35)/2=33$; a quarter of the way gives 32.
+- The right answer (our own working, not applied to the book): 7; 11,5; 32
+- In the question bank: **not used**. The book's answer was never changed.
+
+## Chapter 11 — Trigonometry
+
+
+### The book's printed answer is wrong (7)
+
+
+**Exercise 11-2, question 5**, page 398
+
+- The question as we have it: A rugby player is trying to kick a ball through the poles. The rugby crossbar is $\text{3,4}$ $\text{m}$ high. The ball is placed $\text{24}$ $\text{m}$ from the poles. What is the minimum angle he needs to launch the ball to get it over the bar?
+- The book's answer: Therefore he needs to kick the ball with a minimum angle of 8 ° .
+- What is wrong: The key 8 is the book's whole-degree rounding of 8,0632...; the stem asks for no rounding, and 8 degrees would not clear the bar. A student answering 8,06 would be marked wrong.
+- The right answer (our own working, not applied to the book): 8,06
+- In the question bank: **not used**. The book's answer was never changed.
+
+**Exercise 11-2, question 11**, page 399
+
+- The question as we have it: Determine the perimeter of rectangle $PQRS$ : [figure]
+- The book's answer: Therefore the perimeter is 473,52 m .
+- What is wrong: The book's line $2(85(\cos35+\sin35))=2(236{,}76)$ is wrong: $85(\cos35+\sin35)=118{,}38$, not 236,76. The printed 473,52 m is twice the true perimeter.
+- The right answer (our own working, not applied to the book): 236,76 m
+- In the question bank: **not used**. The book's answer was never changed.
+
+**Exercise 11-2, question 12**, page 399
+
+- The question as we have it: A rhombus has diagonals of lengths $\text{6}$ $\text{cm}$ and $\text{9}$ $\text{cm}$ . Calculate the sizes of its interior vertex angles. [figure]
+- The book's answer: Therefore the two angles are 106,62 ° and 67,38 °
+- What is wrong: The book writes $\theta\approx53{,}31$ (and 41,9872) for $\arctan(4{,}5/3)$; the true value is 56,31. So $2\theta=112{,}62$, not 106,62.
+- The right answer (our own working, not applied to the book): 67,38 and 112,62
+- In the question bank: **not used**. The book's answer was never changed.
+
+**Exercise 11-2, question 15b**, page 400
+
+- The question as we have it: One of the angles of a rhombus with perimeter $\text{20}$ $\text{cm}$ is $\text{30}$ °. Find the length of both diagonals.
+- The book's answer: The one diagonal is $2(\text{4,83})=\text{9,66}\text{ cm}$ and the other diagonal is $2(\text{1,29})=\text{2,58}\text{ cm}$ .
+- What is wrong: The short diagonal 2(1,29)=2,58 comes from rounding intermediate values; the exact value is 2,588, i.e. 2,59. The book's key 2,58 is off in the last digit.
+- The right answer (our own working, not applied to the book): 9,66 cm and 2,59 cm
+- In the question bank: **not used**. The book's answer was never changed.
+
+**Exercise 11-2, question 17b**, page 400
+
+- The question as we have it: The angle of elevation of a hot air balloon, climbing vertically, changes from 25 degrees at 11:00 am to 60 degrees at 11:02 am. The point of observation of the angle of elevation is situated 300 metres away from the take off point. Calculate the increase in height between 11:00 am and 11:02 am.
+- The book's answer: The difference is: 519,62 m - 129,89 m = 379,73 m
+- What is wrong: Worked solution subtracts 129,89 instead of 139,89, so its final line is arithmetically wrong. The key 379,73 differs from the exact 379,72 in the second decimal.
+- The right answer (our own working, not applied to the book): 379,72 m (book prints 379,73 from rounded intermediates)
+- In the question bank: **not used**. The book's answer was never changed.
+
+**Exercise 11-2, question 18**, page 400
+
+- The question as we have it: When the top, $T$ , of a mountain is viewed from point $A$ , $\text{2000}$ $\text{m}$ from the ground, the angle of depression ( $a$ ) is equal to 15°. When it is viewed from point $B$ on the ground, the angle of elevation ( $b$ ) is equal to 10°. If the points $A$ and $B$ are on the same vertical…
+- The book's answer: 793,77 m
+- What is wrong: The stem asks for one decimal place but the printed answer 793,77 m has two. The book gives no working (figure only).
+- The right answer (our own working, not applied to the book): 793,8 m
+- In the question bank: **not used**. The book's answer was never changed.
+
+**Worked example 2**, page 393
+
+- The question as we have it: $ABCD$ is a trapezium with $AB=\text{4}\text{cm}$ , $CD=\text{6}\text{cm}$ , $BC=\text{5}\text{cm}$ and $AD=\text{5}\text{cm}$ . Point $E$ on diagonal $AC$ divides the diagonal such that $AE=\text{3}\text{cm}$ . $B\hat{E}C=90^{\circ}$ . Find $A\hat{B}C$ .
+- The book's answer: $A\hat{B}C=\text{48,6}^{\circ}+\text{58,1}^{\circ}=\text{106,7}^{\circ}$
+- What is wrong: Step 5 adds the two intermediate angles after rounding each to 1 d.p. (48,6 + 58,1 = 106,7). The unrounded sum 48,5903 + 58,0519 = 106,6422 gives 106,6. The book's 106,7 is a rounding-accumulation error.
+- The right answer (our own working, not applied to the book): 106,6
+- In the question bank: **not used**. The book's answer was never changed.
+
+### The question's text is damaged or unclear (2)
+
+
+**Exercise 11-2, question 2b**, page 398
+
+- The question as we have it: Captain Jack is sailing towards a cliff with a height of $\text{10}$ $\text{m}$ . If the boat sails $\text{7}$ $\text{m}$ closer to the cliff, what is the new angle of elevation from the boat to the top of the cliff?
+- The book's answer: The new angle of elevation is 23 °.
+- What is wrong: The stem omits the 30 m starting distance, which is in part (a). The book key 23 is also a whole-degree rounding of 23,4986 with no rounding asked for.
+- The right answer (our own working, not applied to the book): 23,5 (given 30 m from part a)
+- In the question bank: **not used**. The book's answer was never changed.
+
+**Exercise 11-2, question 16b**, page 400
+
+- The question as we have it: Upright sticks and the shadows they cast can be used to judge the sun's altitude in the sky (the angle the sun makes with the horizontal) and the heights of objects. At the same time, the shadow of a building is found to be 47 metres long. What is the height of the building?
+- The book's answer: h = 47 tan 36,53° = 34,82 m
+- What is wrong: Part depends on 16a: the 1 m stick, 1,35 m shadow and the angle are not in this stem. The book's 34,82 comes from the rounded angle; the unrounded value is 34,81, so a right answer would be marked wrong.
+- The right answer (our own working, not applied to the book): 34,81 m exactly; the book's 34,82 m only with the angle rounded to 36,53°
+- In the question bank: **not used**. The book's answer was never changed.
+
+## Chapter 12 — Euclidean geometry
+
+
+### The book's printed answer is wrong (1)
+
+
+**Exercise 12-1, question 7c**, page 407
+
+- The question as we have it: Determine the value of $x$ .
+- The book's answer: 42◦
+- What is wrong: Printed answer 42 checks out ($180-36-102=42$; $360-72=288$, $288/2=144$, $144-102=42$). The working misprints: it states $X\hat{U}W=42^{\circ}$ where its own line uses 102; it writes $\hat{U}=\frac{298}{2}=149^{\circ}$ where $360-72=288$ and $U=144^{\circ}$; and $149-102=47$, not 42. Correct answe…
+- In the question bank: **not used**. The book's answer was never changed.
+
+## Chapter 13 — Measurements
+
+
+### The book's printed answer is wrong (7)
+
+
+**Exercise 13-3, question 4**, page 431
+
+- The question as we have it: Calculate the volumes of the following prisms (correct to $\text{1}$ decimal place): The figure here is a triangular prism. The height of the prism is $\text{7}$ units; the triangles, which both contain right angles, have sides which are $\text{2}$ , $\sqrt{21}$ and $\text{5}$ units long. Calculate…
+- The book's answer: ≈ 32,06
+- What is wrong: Book evaluates $7\sqrt{21}$ as 32,06; correct value is 32,08 ($\sqrt{21}=4.5826$). Printed answer field also runs on into items 5 and 6.
+- In the question bank: **not used**. The book's answer was never changed.
+
+**Exercise 13-4, question 1b**, page 438
+
+- The question as we have it: Find the total surface area of the following objects (correct to 1 decimal place if necessary): [figure]
+- The book's answer: $\approx\text{45,6}$ $\text{cm}^{2}$
+- What is wrong: Book writes $\frac12(6)(\sqrt{27}+10)$ where its own formula $\frac12 b(h_b+3h_s)$ gives $\frac12(6)(\sqrt{27}+30)\approx105.6$. The printed 45,6 is wrong.
+- In the question bank: **not used**. The book's answer was never changed.
+
+**Exercise 13-5, question 6a**, page 450
+
+- The question as we have it: Calculate the following properties for the pyramid shown below. Round your answers to two decimal places. [figure] Surface area
+- The book's answer: Therefore the surface area of the triangular pyramid is: $\text{91,39}$ $\text{cm}^{2}$ .
+- What is wrong: Book substitutes b=6 instead of the base side 4 in A=1/2*b*(h_b+3h_s); 1/2(4)(sqrt12+27)=60.93, not 91.39. Printed answer and EPUB repeat the error.
+- The right answer (our own working, not applied to the book): 60.93 cm^2
+- In the question bank: **not used**. The book's answer was never changed.
+
+**Exercise 13-5, question 6b**, page 450
+
+- The question as we have it: Calculate the following properties for the pyramid shown below. Round your answers to two decimal places. [figure] Volume
+- The book's answer: Therefore the volume of the pyramid is: $\text{29,39}$ $\text{cm}^{3}$ .
+- What is wrong: Book takes H^2=9^2-3^2 (foot of the slant height treated as 3 from the centre) and base 6; the inradius of the side-4 equilateral base is sqrt(12)/3, giving H~8.93 and V~20.61, not 29.39.
+- The right answer (our own working, not applied to the book): 20.61 cm^3
+- In the question bank: **not used**. The book's answer was never changed.
+
+**Exercise 13-7, question 26b**, page 464
+
+- The question as we have it: Determine the volume of the following: $ABCD$ is a square, $AC=\text{12}\text{cm}$ , $AP=\text{10}\text{cm}$ . [figure]
+- The book's answer: ≈ 645,07 cm³
+- What is wrong: Book computes 144/2 as 77 (should be 72) and uses V=1/3*pi*b^2*H, a cone formula with pi, for a square pyramid; correct V=1/3(72)(8)=192 cm^3.
+- The right answer (our own working, not applied to the book): 192 cm^3
+- In the question bank: **not used**. The book's answer was never changed.
+
+**Exercise 13-7, question 28b**, page 466
+
+- The question as we have it: A cooldrink container is made in the shape of a pyramid with an isosceles triangular base. This is known as a tetrahedron. The angle of elevation of the top of the container is $\text{33,557}^{\circ}$ . $CI=\text{7}\text{cm}$ ; $JI=\text{18}\text{cm}$ . [figure] The container is filled with the jui…
+- The book's answer: 74,626 cm3
+- What is wrong: Book's total volume 84,661 is exactly half of 1/3*(base area 51.05)*(height 9.95)=169.3; the working just asserts 84,661 and the EPUB has no final line. Juice volume should be ~149.2 cm^3, not 74,626.
+- The right answer (our own working, not applied to the book): about 149.2 cm^3
+- In the question bank: **not used**. The book's answer was never changed.
+
+**Worked example 13**, page 442
+
+- The question as we have it: Find the volume of the following triangular pyramid (correct to 1 decimal place): [figure]
+- The book's answer: The volume of the triangular pyramid is $\text{105,3}$ $\text{cm$^{3}$}$ .
+- What is wrong: Book uses $H=\sqrt{130}$ but the side-triangle figure (12 cm, 4 cm) gives $\sqrt{128}$; resulting volume is about 104,5 cm³, not 105,3.
+- In the question bank: **not used**. The book's answer was never changed.
+
+### The question's text is damaged or unclear (2)
+
+
+**Exercise 13-2, question 2a**, page 427
+
+- The question as we have it: If a litre of paint covers an area of $\text{2}$ $\text{m}^{2}$ , how much paint does a painter need to cover: a rectangular swimming pool with dimensions $\text{4}\text{m}\times\text{3}\text{m}\times\text{2,5}\text{m}$ (the inside walls and floor only);
+- The book's answer: the painter will need \frac{47}{2} = 24 l of paint
+- What is wrong: Stem does not ask for rounding up to whole litres, yet the book's key 24 depends on it. The exact value $47/2=23{,}5$ is correct as the stem reads, and a single key of 24 would mark it wrong.
+- The right answer (our own working, not applied to the book): 23,5 litres (24 only if rounded up to whole litres, which the stem does not say)
+- In the question bank: **not used**. The book's answer was never changed.
+
+**Exercise 13-2, question 2b**, page 427
+
+- The question as we have it: If a litre of paint covers an area of $\text{2}$ $\text{m}^{2}$ , how much paint does a painter need to cover: the inside walls and floor of a circular reservoir with diameter $\text{4}$ $\text{m}$ and height $\text{2,5}$ $\text{m}$ . [figure]
+- The book's answer: the painter will need \frac{44}{2} = 22 l of paint
+- What is wrong: Book rounds the area to 44 and the volume of paint up to 22 although the stem asks for no rounding; a student giving 21,99 (or 7π) would be marked wrong against the key 22.
+- The right answer (our own working, not applied to the book): 7π ≈ 21,99 litres (22 only if rounded up to whole litres)
+- In the question bank: **not used**. The book's answer was never changed.
+
+## Chapter 14 — Probability
+
+
+### The book's printed answer is wrong (2)
+
+
+**Exercise 14-8, question 12f**, page 493
+
+- The question as we have it: A small nursery school has a class with children of various ages. The table gives the number of children of each age in the class. 3 years old 4 years old 5 years old Male $\text{2}$ $\text{7}$ $\text{6}$ Female $\text{6}$ $\text{5}$ $\text{4}$ If a child is selected at random what is the probabili…
+- The book's answer: = 0,56
+- What is wrong: The book's own working reaches 17/30 = 0,5667 but prints 0,56 (truncated). The correct rounding is 0,57, so the printed key is wrong.
+- The right answer (our own working, not applied to the book): 17/30 (0,57 to 2 d.p.)
+- In the question bank: **not used**. The book's answer was never changed.
+
+**Exercise 14-8, question 13f**, page 493
+
+- The question as we have it: Fiona has $\text{85}$ labelled discs, which are numbered from $\text{1}$ to $\text{85}$ . If a disc is selected at random what is the probability that the disc number: is a multiple of $\text{3}$ or $\text{4}$
+- The book's answer: = 0,55
+- What is wrong: The book lists 21 multiples of 4 but says 28, and then subtracts the product P(3)*P(4) as if the events were independent. The correct overlap is the multiples of 12, 7 of them. The printed 0,55 is wrong.
+- The right answer (our own working, not applied to the book): 42/85 (0,49 to 2 d.p.)
+- In the question bank: **not used**. The book's answer was never changed.
+
+### The question's text is damaged or unclear (4)
+
+
+**Exercise 14-1, question 7e**, page 474
+
+- The question as we have it: A playing card is selected randomly from a pack of $\text{52}$ cards. Determine the probability that it is: a number less than $\text{4}$
+- The book's answer: $&=\frac{3}{13}$
+- What is wrong: The stem does not say the ace counts as 1. The book's key 3/13 depends on counting the ace as a number less than 4. Under the usual reading that an ace is not a number card, the answer is 2/13, and a student giving it would be marked wrong.
+- In the question bank: **not used**. The book's answer was never changed.
+
+**Exercise 14-3, question 1**, page 480
+
+- The question as we have it: A group of learners are given the following Venn diagram: [figure] The sample space can be described as $\{n:n\epsilon\mathbb{Z},1\leq n\leq15\}$ . They are asked to identify the event set of $B$ . They get stuck, and you offer to help them find it. Which of the following sets best describes the ev…
+- The book's answer: Therefore the event set {1;2;3;4;5;7;8;9;10;11;12;13;14;15} best describes the event set of B.
+- What is wrong: The book's answer {1;2;3;4;5;7;8;9;10;11;12;13;14;15} is not among the stem's options: the second option reads {1;2;3;4;5;7;8;9;10;11;12;14;15} and lacks 13. Either an element was lost from the option or the book misprints it.
+- The right answer (our own working, not applied to the book): {1;2;3;4;5;7;8;9;10;11;12;13;14;15}
+- In the question bank: **not used**. The book's answer was never changed.
+
+**Exercise 14-3, question 3e**, page 480
+
+- The question as we have it: Pieces of paper labelled with the numbers $\text{1}$ to $\text{12}$ are placed in a box and the box is shaken. One piece of paper is taken out and then replaced. Find: $n(S)$ $n(A)$ $n(B)$
+- The book's answer: (none printed)
+- What is wrong: The stem asks for n(A) and n(B), but events A and B are defined in an earlier part of the question and were not copied into this item. The book's 12, 6, 5 cannot be checked from what the student sees. The book working has no steps to restore A and B from.
+- In the question bank: **not used**. The book's answer was never changed.
+
+**Exercise 14-8, question 27e**, page 495
+
+- The question as we have it: All the clubs are taken out of a pack of cards. The remaining cards are then shuffled and one card chosen. After being chosen, the card is replaced before the next card is chosen. What description of the sets $P$ and $N$ is suitable? (Hint: Find any elements of $P$ in $N$ and of $N$ in $P$ .)
+- The book's answer: Mutually exclusive and complementary.
+- What is wrong: Sets P and N are not defined in the stem; the typed options are invented combinations of categories. The book's own answer is 'Mutually exclusive and complementary' (not verifiable here).
 - In the question bank: **not used**. The book's answer was never changed.

@@ -153,6 +153,64 @@ class PlainMaths(unittest.TestCase):
         self.assertEqual(E.recurring_latex(Fraction(3, 4)), "0.75")
 
 
+class IntervalFlags(unittest.TestCase):
+    """``interval(lo, hi, closed_lo, closed_hi)``: the displayed key's brackets follow the flags.
+
+    Pilot defect (G10 chapter 6, tpl:g10m6s1-1-1:bounded-to-interval): a family wrote the flags as 1/0 (the
+    documented "1 = square bracket"), the printer only knew the word ``true``, so EVERY such key printed round
+    brackets on both ends ("(-9, 2)" for -9 <= t < 2), and the comparison, which wanted ``true``/``false``, called a
+    correct blind answer a disagreement. The brackets are the flags' VALUE, however spelled; an infinite end is
+    always round."""
+
+    def latex(self, s):
+        return E.to_latex(E.parse_plain(s, []))
+
+    def test_all_four_bracket_patterns_in_both_spellings(self):
+        for lo_flag, hi_flag, tex in [(1, 1, "[-9, 2]"), (1, 0, "[-9, 2)"), (0, 1, "(-9, 2]"), (0, 0, "(-9, 2)")]:
+            as_numbers = f"interval(-9, 2, {lo_flag}, {hi_flag})"
+            as_words = "interval(-9, 2, {}, {})".format(*("true" if f else "false" for f in (lo_flag, hi_flag)))
+            self.assertEqual(self.latex(as_numbers), tex, as_numbers)
+            self.assertEqual(self.latex(as_words), tex, as_words)
+
+    def test_a_flag_may_be_computed(self):
+        self.assertEqual(self.latex("interval(1, 4, 2 - 1, 1 - 1)"), "[1, 4)")
+
+    def test_an_infinite_end_is_always_round(self):
+        cases = {
+            "interval(-inf, 4, false, false)": r"(-\infty, 4)", "interval(-inf, 4, true, true)": r"(-\infty, 4]",
+            "interval(-inf, 4, 1, 0)": r"(-\infty, 4)", "interval(3, inf, 0, 1)": r"(3, \infty)",
+            "interval(3, inf, 1, 1)": r"[3, \infty)", "interval(-inf, inf, 1, 1)": r"(-\infty, \infty)",
+            "interval(-inf, 1/2, 1, 1)": r"(-\infty, \frac{1}{2}]",
+        }
+        for plain, tex in cases.items():
+            self.assertEqual(self.latex(plain), tex, plain)
+
+    def test_the_printed_brackets_and_the_comparison_read_the_flags_the_same_way(self):
+        eq = lambda a, b: E.equivalent("interval", a, b)  # noqa: E731
+        self.assertTrue(eq("interval(-9, 2, 1, 0)", "interval(-9, 2, true, false)"))
+        self.assertTrue(eq("interval(-9, 2, true, false)", "interval(-9, 2, 1, 0)"))
+        self.assertFalse(eq("interval(-9, 2, 1, 0)", "interval(-9, 2, 0, 0)"))
+        self.assertFalse(eq("interval(-9, 2, 1, 0)", "interval(-9, 2, true, true)"))
+        self.assertFalse(eq("interval(-9, 2, 1, 0)", "interval(-9, 3, 1, 0)"))
+        # infinity is never in the interval: [-inf, 4) and (-inf, 4) are one interval
+        self.assertTrue(eq("interval(-inf, 4, 1, 0)", "interval(-inf, 4, false, false)"))
+        self.assertTrue(eq("interval(3, inf, 0, 1)", "interval(3, inf, false, false)"))
+        self.assertFalse(eq("interval(-inf, 4, 1, 1)", "interval(-inf, 4, 1, 0)"))
+
+    def test_a_flag_that_is_neither_a_bracket_nor_a_boolean_is_refused_not_read_as_false(self):
+        for plain in ["interval(1, 2, 2, 1)", "interval(1, 2, 1, 0.5)", "interval(1, 2, -1, 1)", "interval(1, 2, 1)",
+                      "interval(1, 2, 1, 1, 1)", "interval(1, 2, 3 - 5, 1)"]:
+            with self.assertRaises(E.EvalError, msg=plain):
+                self.latex(plain)
+            self.assertFalse(E.equivalent("interval", "interval(1, 2, 1, 1)", plain), plain)
+
+    def test_an_interval_that_runs_the_wrong_way_is_refused(self):
+        for plain in ["interval(5, 2, 1, 1)", "interval(inf, 4, 0, 0)", "interval(1, -inf, 0, 0)"]:
+            with self.assertRaises(E.EvalError, msg=plain):
+                self.latex(plain)
+        self.assertEqual(self.latex("interval(2, 2, 1, 1)"), "[2, 2]")      # a single point is still an interval
+
+
 class RecurringDecimalNotation(unittest.TestCase):
     """The book's own recurring-decimal notation is read as the exact fraction it stands for — in a family's
     marker answer, in the key it prints, and in a blind grader's answer — the same set the app's marker reads
