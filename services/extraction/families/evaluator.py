@@ -1160,7 +1160,8 @@ def _tex(n) -> str:
         if name == "abs":
             return r"\left|" + _tex(n.args[0]) + r"\right|"
         if name == "interval":
-            lo, hi, cl, ch = n.args
+            _need("interval", tuple(n.args), 4)
+            lo, hi = n.args[0], n.args[1]
             # The brackets are the FLAGS' value (true or 1: square), not their spelling, and an infinite end is always
             # round: the same canonical form the comparison reads (interval_ends).
             _, _, closed_lo, closed_hi = interval_ends(*(_MathsWalker(_maths_env({})).run(a) for a in n.args))

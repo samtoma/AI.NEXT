@@ -18,6 +18,9 @@ import copy
 import io
 import json
 import random
+import re
+import shutil
+import subprocess
 import tempfile
 import unittest
 from pathlib import Path
@@ -33,6 +36,8 @@ FIX = HERE / "fixtures" / "families"
 SPECS = FIX / "g10-specs"
 CATALOGUE = FIX / "g10-catalogue.json"
 SEED = 20260925
+NODE = shutil.which("node")
+APP_MARKER = HERE.parents[2] / "app" / "src" / "lib" / "answer-marker.ts"
 
 
 def load(name: str) -> dict:
@@ -516,3 +521,128 @@ class TierFloorCountsOnlyLiveBookQuestions(unittest.TestCase):
                                                {"tier": "advanced", "verified": False}]}}
         floor = G.tier_floor(objs, [])
         self.assertEqual(floor["below_floor"], [{"lo_id": "lo:zz1s1-1-1", "missing": ["standard", "advanced"]}])
+
+
+def app_marks(cases: dict[str, tuple[str, ...]], kind: str = "interval", variables=()) -> dict[str, dict[str, str]]:
+    """THE APP'S OWN marker (answer-marker.ts, run in node): for each key, how it marks each typed answer, and
+    whether the key can mark itself at all ({"key": {"<typed>": "correct"|"incorrect"|..., "": key_problem}})."""
+    js = (f"const M = await import({json.dumps(APP_MARKER.as_uri())});\n"
+          "const cases = JSON.parse(process.argv[2]); const out = {};\n"
+          "for (const [key, tries] of Object.entries(cases)) {\n"
+          f"  const spec = {{ kind: {json.dumps(kind)}, key, form: null, variables: {json.dumps(list(variables))}, tolerance: null }};\n"
+          "  out[key] = { '': M.validateKey(spec) };\n"
+          "  for (const a of tries) out[key][a] = M.mark(a, spec).result;\n"
+          "}\nconsole.log(JSON.stringify(out));\n")
+    with tempfile.TemporaryDirectory() as d:
+        f = Path(d, "m.mjs")
+        f.write_text(js)
+        proc = subprocess.run([NODE, "--no-warnings", str(f), json.dumps(cases)], capture_output=True, text=True)
+    assert proc.returncode == 0, proc.stderr
+    return json.loads(proc.stdout)
+
+
+def flip_brackets(key: str) -> str:
+    """The same two ends with the opposite bracket on each side: "[-9, 2)" -> "(-9, 2]"."""
+    return {"[": "(", "(": "["}[key[0]] + key[1:-1] + {"]": ")", ")": "]"}[key[-1]]
+
+
+def key_as_plain(key: str) -> str:
+    """A displayed interval key "[-9, 2)" read back as the plain interval(lo, hi, closed_lo, closed_hi) a blind grader writes."""
+    m = re.fullmatch(r"([\[(])\s*(-?\d+)\s*,\s*(-?\d+)\s*([\])])", key)
+    assert m, key
+    return f"interval({m[2]}, {m[3]}, {'true' if m[1] == '[' else 'false'}, {'true' if m[4] == ']' else 'false'})"
+
+
+class IntervalKeysShowTheirBrackets(unittest.TestCase):
+    """G10 chapter 6, tpl:g10m6s1-1-1:bounded-to-interval: the S6 blind judge rejected the family because every
+    displayed key ("(-9, 2)" for -9 <= t < 2) had round brackets, whatever the flags in the marker said
+    (``interval({=a}, {=b}, {=lc}, {=hc})``, 1 = square bracket). The correct_answer and marker.key a student reads
+    must carry the brackets the flags and the stem's signs call for; that key must be one the app's marker reads, and
+    the same interval as the answer_check the blind grader is compared against."""
+
+    SIGNS = re.compile(r"(-?\d+)(<|\u2264)([a-z])(<|\u2264)(-?\d+)")
+
+    def setUp(self):
+        self.spec = FS.load_spec(json.loads((FIX / "interval-specs" / "g10m6s1-1-1--bounded-to-interval.json").read_text()))
+        self.qs, self.rejected, _ = run([self.spec], 60)
+
+    def expected_key(self, q):
+        m = self.SIGNS.search(q["stem"])
+        assert m, q["stem"]
+        lo, ls, _, hs, hi = m.groups()
+        return ("[" if ls == "\u2264" else "(") + f"{lo}, {hi}" + ("]" if hs == "\u2264" else ")")
+
+    def test_the_key_follows_the_stems_signs_for_all_four_patterns(self):
+        self.assertEqual(self.rejected, [])
+        self.assertGreaterEqual(len(self.qs), 40)
+        seen = set()
+        for q in self.qs:
+            want = self.expected_key(q)
+            self.assertEqual(q["correct_answer"], want, q["stem"])
+            self.assertEqual(q["choices"]["marker"]["key"], want, q["stem"])
+            self.assertEqual(q["choices"]["marker"]["kind"], "interval")
+            self.assertIn(f"${want}$", q["canonical_solution"][-1]["text_md"], "the solution ends on the key it shows")
+            seen.add(want[0] + want[-1])
+        self.assertEqual(seen, {"[]", "[)", "(]", "()"}, "all four bracket patterns are exercised")
+
+    def test_the_key_is_the_same_interval_as_the_answer_check_whichever_way_the_flags_are_spelled(self):
+        for q in self.qs:
+            self.assertRegex(q["answer_check"], r"^interval\(-?\d+, -?\d+, [01], [01]\)$")     # the family's 1/0
+            read_back = key_as_plain(q["correct_answer"])                                         # true/false, as a grader writes
+            self.assertTrue(G.answer_agrees(q, {"plain": read_back})[0], (q["answer_check"], read_back))
+            self.assertTrue(G.answer_agrees(q, {"plain": q["answer_check"]})[0])
+            flipped = key_as_plain(flip_brackets(q["correct_answer"]))
+            self.assertFalse(G.answer_agrees(q, {"plain": flipped})[0], (q["answer_check"], flipped))
+
+    def test_a_clean_blind_grade_no_longer_rejects_the_family(self):
+        with tempfile.TemporaryDirectory() as d:
+            gs_path = Path(d, "gs.json")
+            rc, _ = quiet(G.main_families, ["--families", str(FIX / "interval-specs"), "--per-family", "6",
+                                            "--grading-set", str(gs_path), "--check"])
+            self.assertEqual(rc, 0)
+            grading_set = json.loads(gs_path.read_text())
+        by_id = {q["id"]: q for q in run([self.spec], 6)[0]}
+        grades = good_grades([self.spec], list(by_id.values()), grading_set)
+        for r in grades["results"]:                       # the blind solver wrote true/false, the spec says 1/0
+            for a in r["answers"]:
+                a["answer"] = {"plain": key_as_plain(by_id[a["instance_id"]]["correct_answer"])}
+        verdicts = FS.apply_grades([self.spec], list(by_id.values()), grades)
+        self.assertEqual(verdicts[0] if isinstance(verdicts, tuple) else verdicts, verdicts[0], "apply_grades ran")
+        rejected = verdicts[1] if isinstance(verdicts, tuple) and len(verdicts) > 1 else {}
+        self.assertNotIn(self.spec.id, rejected)
+
+    @unittest.skipUnless(NODE and APP_MARKER.exists(), "node runs the app's own marker")
+    def test_the_apps_marker_reads_every_key_and_marks_the_flipped_brackets_wrong(self):
+        keys = sorted({q["correct_answer"] for q in self.qs})
+        cases = {k: (k, k.replace(", ", ","), flip_brackets(k)) for k in keys}
+        out = app_marks(cases)
+        for k in keys:
+            self.assertIsNone(out[k][""], f"the app's marker cannot read the key {k!r}: {out[k]['']}")
+            self.assertEqual(out[k][k], "correct", k)
+            self.assertEqual(out[k][k.replace(", ", ",")], "correct", k)
+            self.assertEqual(out[k][flip_brackets(k)], "incorrect", k)
+
+    def test_a_key_prints_its_flags_not_its_spelling_and_an_infinite_end_is_round(self):
+        mk = lambda plain: FS.marker_key("interval", plain, [])  # noqa: E731
+        self.assertEqual(mk("interval(-9, 2, 1, 0)"), "[-9, 2)")
+        self.assertEqual(mk("interval(-9, 2, true, false)"), "[-9, 2)")
+        self.assertEqual(mk("interval(6, 16, 1, 1)"), "[6, 16]")
+        self.assertEqual(mk("interval(-4, 0, 0, 1)"), "(-4, 0]")
+        self.assertEqual(mk("interval(1, 5, 0, 0)"), "(1, 5)")
+        self.assertEqual(mk("interval(-inf, 4, 1, 0)"), r"(-\infty, 4)")
+        self.assertEqual(mk("interval(-inf, 4, 1, 1)"), r"(-\infty, 4]")
+        self.assertEqual(mk("interval(3, inf, 1, 1)"), r"[3, \infty)")
+        self.assertEqual(mk("interval(-inf, inf, 1, 1)"), r"(-\infty, \infty)")
+
+    @unittest.skipUnless(NODE and APP_MARKER.exists(), "node runs the app's own marker")
+    def test_the_apps_marker_reads_an_infinite_end_key_and_the_blind_answers_spelling_of_it(self):
+        out = app_marks({r"(-\infty, 4)": (r"(-\infty, 4)", "(-inf, 4)", r"(-\infty, 4]", r"(-\infty, 5)"),
+                         r"[3, \infty)": (r"[3, \infty)", "[3, inf)", r"(3, \infty)"),
+                         r"(-\infty, 4]": (r"(-\infty, 4]", r"(-\infty, 4)")})
+        for k, o in out.items():
+            self.assertIsNone(o[""], k)
+        self.assertEqual([out[r"(-\infty, 4)"][t] for t in (r"(-\infty, 4)", "(-inf, 4)", r"(-\infty, 4]", r"(-\infty, 5)")],
+                         ["correct", "correct", "incorrect", "incorrect"])
+        self.assertEqual([out[r"[3, \infty)"][t] for t in (r"[3, \infty)", "[3, inf)", r"(3, \infty)")],
+                         ["correct", "correct", "incorrect"])
+        self.assertEqual([out[r"(-\infty, 4]"][t] for t in (r"(-\infty, 4]", r"(-\infty, 4)")), ["correct", "incorrect"])
