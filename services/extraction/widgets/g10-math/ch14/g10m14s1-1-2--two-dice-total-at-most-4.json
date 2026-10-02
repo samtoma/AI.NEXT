@@ -1,0 +1,33 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m14s1-1-2:two-dice-total-at-most-4",
+ "lo_id": "lo:g10m14s1-1-2",
+ "parent_question_id": "q:g10m14s1-1-2:ex14-1-3",
+ "tier": "standard",
+ "kind": "sample_space",
+ "spec": {
+  "rows": 6,
+  "cols": 6,
+  "rule": {
+   "kind": "sum",
+   "op": "le",
+   "value": 4
+  }
+ },
+ "stem": "Two fair dice are rolled together. The grid shows all 36 equally likely outcomes. Tap every outcome in the event \"the total is 4 or less\", then read n(E)/n(S) from the grid and write P(E) as a simplified fraction.",
+ "solution": [
+  "The grid has $n(S) = 36$ outcomes and all 36 are equally likely, so $P(E) = \\frac{n(E)}{n(S)}$ applies.",
+  "\"4 or less\" covers the totals 2, 3 and 4.",
+  "Total 2: $(1, 1)$. Total 3: $(1, 2)$ and $(2, 1)$. Total 4: $(1, 3)$, $(2, 2)$ and $(3, 1)$. Each ordered pair is its own cell, so tap all six.",
+  "$n(E) = 6$, so $P(E) = \\frac{6}{36}$.",
+  "Divide top and bottom by 6 to simplify: $P(E) = \\frac{1}{6}$. As a decimal this is about $0.17$ (2 decimal places), or about $16.7\\%$.",
+  "Do not count the totals themselves as the outcomes: \"3 out of the 11 possible totals\" is wrong, because the totals are not equally likely (a total of 2 fills one cell, a total of 4 fills three)."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "counted-once",
+   "misconception_id": "mc:g10m14s1-1-2:unequal-outcomes-counted-as-equal"
+  }
+ ],
+ "notes": "The anchor ex14-1-3 asks for a compound event (\"1 or 2\") on one die as a simplified fraction. A single die cannot be a grid (this widget needs at least 2 rows and 2 columns), so the same ideas (a compound event, a simplified n(E)/n(S)) are carried by two dice, where the unsimplified 6/36 gives the simplifying step something real to do. counted-once is the one predicate that reveals this objective's own misconception: a student who treats each total (2, 3, 4) as one outcome has counted kinds of result as outcomes and is treating them as equally likely (3 of 11); the grid shows that the totals are not equally likely and that the 36 cells are. missed-outcomes and extra-outcomes are left unmapped because the only misconception on this objective's own list is the equal-likelihood one, which neither of them reveals; an id from objective g10m14s1-1-1 would be refused. The single-die and bag anchors (ex14-1-4, 1-5 and 1-6) cannot be a grid and are recorded as a gap."
+}

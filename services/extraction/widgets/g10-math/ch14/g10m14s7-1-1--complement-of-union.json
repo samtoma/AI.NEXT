@@ -1,0 +1,32 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m14s7-1-1:complement-of-union",
+ "lo_id": "lo:g10m14s7-1-1",
+ "parent_question_id": "q:g10m14s7-1-1:ex14-7-2",
+ "tier": "standard",
+ "kind": "venn_builder",
+ "spec": {
+  "sets": 2,
+  "labels": [
+   "Maths",
+   "Science"
+  ],
+  "mode": "shade",
+  "target": "neither"
+ },
+ "stem": "Each learner in a group is asked whether they like Maths ($M$) and whether they like Science ($S$). Some like both and some like neither. The rectangle holds every learner in the group. Shade the complement of the union, $(M \\cup S)'$.",
+ "solution": [
+  "The rectangle is the sample space: every learner in the group.",
+  "$M \\cup S$ is every learner who likes Maths, Science or both: the Maths-only region, the overlap and the Science-only region.",
+  "The complement $(M \\cup S)'$ is every learner in the sample space who is not in $M \\cup S$.",
+  "Only one region lies outside both circles. Shade it.",
+  "Check: $M \\cup S$ and its complement together fill the rectangle with nothing in common."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "neither-region-missed",
+   "misconception_id": "mc:g10m14s7-1-1:lists-event-instead-of-complement"
+  }
+ ],
+ "notes": "Mirrors ex14-7-2, (A \\cup B)'. The complement of a union is the one region outside every circle, so target 'neither' is the right instrument and the stem asks for the complement by name rather than saying 'neither', which would give the region away. neither-region-missed fires when the outside region is left unshaded, i.e. the student shades the event (the union, or part of it) in place of its complement: that is lists-event-instead-of-complement. off-target is left unmapped: for this target it fires when the outside region is shaded together with extra regions, most likely the De Morgan misreading of (M \\cup S)' as M' \\cup S' (everything except the overlap), which no misconception in this objective's list names, plus assorted noise, so no single error dominates. This template cannot reveal complement-only-outside-all-circles (that student gets this question right); the basic template is the one that does."
+}
