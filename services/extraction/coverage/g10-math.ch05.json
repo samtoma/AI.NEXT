@@ -8,9 +8,9 @@
   "status": "RED",
   "summary": {
     "checks": 23,
-    "hold": 20,
+    "hold": 21,
     "excepted": 0,
-    "fail": 3
+    "fail": 2
   },
   "checks": [
     {
@@ -221,14 +221,9 @@
       "id": "notation",
       "title": "Un-normalised decimal commas and (x; y) pairs left in the bundles = 0 (decision 15); no display-only environment (align*) inside the app's inline maths",
       "want": 0,
-      "got": 8,
-      "state": "fails",
-      "failures": [
-        {
-          "scope": "book",
-          "detail": "8 un-normalised span(s): ['(x;y)', '(x;y)', '(-2;3)', '(-5;y)', '(x; y)', '(x; y)', '(x; y)', '(x; y)']"
-        }
-      ],
+      "got": 0,
+      "state": "holds",
+      "failures": [],
       "excepted_scopes": [],
       "notes": [
         "151 S3 item(s) printed in the book's notation were normalised"
@@ -323,18 +318,18 @@
   },
   "notation": {
     "items_printed_in_book_notation": 151,
-    "residual_in_bundles": 8
+    "residual_in_bundles": 0
   },
   "missing_inputs": [],
   "inputs": {
     "content/g10m5s3-1.json": "de6588bd3c21a9ecee4236235f1c18ae4ee1282f20d8657f234c62635519652c",
     "content/g10m5s5-1.json": "ca80de132a657dac46e32065ee9ba647d879f134698c9420a7367fbf3015cb62",
     "content/g10m5s6-1.json": "484cfc9ce1bc3aba980d887040f2f8fabba65cf63de0957e7bc52cb9fc9ba7bc",
-    "content/g10m5s7-1.json": "1c171718f20afdab403e5c0ed5c6845b9fd2ba12ec8914793127debd296212a1",
-    "content/g10m5s8-1.json": "d833f1cc99f86d40fd8c16eee602fe064a06595e582c4b34b504e5754c32d286",
+    "content/g10m5s7-1.json": "b729928adaeb76b72daad6c07c76d5fc72ebdba3b5b775860e657aa642c60a8a",
+    "content/g10m5s8-1.json": "98346c09a0ac37bffc395d2c2747d23a4a1397d365a3863f83cd3098f43842f7",
     "generated/generated-questions.json": "03b6c8b26fdcd09514ec34c93575df0b3b2eb8fad64581ba71505d5a7f867a7e",
     "generated/misconceptions.json": "30cfb7cd209a79d4f38d68dd991f3a72498f8e01823512ea3d0c1107f55d4745",
-    "generated/widget-questions.json": "c0ae55f66864e213d8d25196576bcf445319ec3d0bd0f4ff87faa846653a7f16",
+    "generated/widget-questions.json": "9381898f873ce9db0ba0c5d9f07078f5c15f67227fd42ebb35a5c18c0e0b6693",
     "manifest": "d749f7d1c4052342298d122b82bcea3117e4303b74e16b75062fd6606146c7b1",
     "maths": "1c4240c96084bf9395980fe466c3a443681cf2b0da74adf38081967b4f8428e6",
     "objectives/g10m5s3-1.json": "c4e4f1e193c9fd38ad8cd08df1ba068dbf178a0df3b061eea2302ca1d79a6676",
@@ -345,10 +340,10 @@
     "runs/lesson/g10m5s3-1.json": "5ab1b8c4d4fc16b6d38df7eb22685f3b5c2d900a7ba244c9342e9cb29ca045bb",
     "runs/lesson/g10m5s5-1.json": "9c818df36b56206857340c9b3227650f877227e99b5d9e34a1da55d438c6af59",
     "runs/lesson/g10m5s6-1.json": "5c5cd3f9e221c9a6a927886aa7d30569c10deb48ce53c3306ee189cec11ff900",
-    "runs/lesson/g10m5s7-1.json": "3703f746fde6adb1d1d5a889a25c6a45bd3d224dbc080d5ce4920e8c7f6730c4",
-    "runs/lesson/g10m5s8-1.json": "cef5008531e3d77a6c4c562dde38cb919367433cb009a9225fb5e0cfe404f1e5",
+    "runs/lesson/g10m5s7-1.json": "eb729215d7de42ad9ed9230ae81d59bb5a507c37fb30250e128086760a4a99a8",
+    "runs/lesson/g10m5s8-1.json": "681613d0ad717e3253c05609a30de37dcca4492d880411ea12bbfc3b60299210",
     "s5/final-ch05-wf_7f85d38b-00b.json": "bd3fd8e268ad0db8870f54c69c5754bb19f1a7ce276074eec9f187209837ea32",
-    "seed/g10m-c05.json": "4aca65b75ca54f853d8813fa7f203a764c2304f7df1ba0421b26b395e51fca21",
+    "seed/g10m-c05.json": "69e5e88340e78b2db4a268611545cd26aaee3cb46d0e5f4144e1bc70250f1d22",
     "widget-gaps": "09bcd85b49419125029b92a1a63c8e7eac32bc20878a2b95c86279e98a60bdaa"
   },
   "exceptions": []
