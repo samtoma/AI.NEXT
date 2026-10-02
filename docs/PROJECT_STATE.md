@@ -5,7 +5,7 @@
 > released 2026-10-02 per its own `PROJECT_STATE.md`, so this branch is 16 commits behind it; constitution **v3.4.0** on this branch
 > (main's copy says v3.3.0). **Feature 003 / the Grade 10 course: the extraction pipeline has now run to the end of the book — all 14
 > chapters have a G5 record — on a LOCAL database only. Nothing is deployed, nothing is on `main`, the branch is not merged, and every
-> gate after Chapter 8's G1 and G2 was an AI auto-pass that no person has read.** The full-book record and its open-decisions list are in
+> gate decision except Chapter 8's G1 and G2 was an AI auto-pass that no person has read.** The full-book record and its open-decisions list are in
 > [`docs/WIP-g10-pilot/README.md`](WIP-g10-pilot/README.md), "Full book complete — 2026-10-02".)
 
 ## 🧭 Feature 003 — curriculum tracks and the Grade 10 American maths course (pipeline finished on a local database; not reviewed, not merged, not deployed; its version number is still to be assigned — `v0.10.0` and `v0.11.0` are already taken on `main`)
@@ -30,7 +30,7 @@ commits the worktree every 30 seconds as `wip(003): auto-snapshot … [skip ci]`
 pushed branch. None of it is reviewed by Samuel or merged; there is no version bump. **Branch CI is red and
 hidden:** the last CI run on the branch (`383510c`, 2026-09-26) failed `traceability` and `build`, and no CI
 has run since because every snapshot skips it. `scripts/traceability.py --check` passes locally
-(2026-09-27). Resume doc: [`docs/WIP-g10-pilot/README.md`](WIP-g10-pilot/README.md).
+(2026-09-27; re-run 2026-10-02, OK). Resume doc: [`docs/WIP-g10-pilot/README.md`](WIP-g10-pilot/README.md).
 
 **What Samuel asked for** (2026-09-25): *"we need to digest this book"* — Siyavula *Everything Maths*
 Grade 10, English, written for South Africa's CAPS curriculum, which he calls the "Grade 10 American
@@ -164,7 +164,11 @@ name is not in the practice plan's recommendation), T410 (the part label now sho
 — re-verify, then tick). Not built: T429 (the figure-gap inventory). T430 is built differently from what
 was decided (below).
 
-**Open — decisions for Samuel** (one at a time; the orchestrator's list was
+**Open — decisions for Samuel.** **Updated 2026-10-02: the current, deduplicated list of what is open after the full-book run (29 items:
+exercise-only objectives, the CHECK LATER lesson, completeness holds, widget kinds, `(x; y)` in book pictures, marker gaps, the merge with
+`main`, and more) is [`docs/WIP-g10-pilot/README.md`](WIP-g10-pilot/README.md), "Open decisions after the full-book run". It is not
+repeated here.** The numbered items below are what was asked on 2026-09-27 to 2026-10-01; those the full-book run overtook are marked.
+(One at a time; the orchestrator's list was
 `consistency-review-2026-09-27.md` §B; items 1, 3, 5–8, 10 and 11 below are **answered** — Samuel's
 answers 27–37, 2026-09-27/2026-10-01, decisions 48–58 — kept here struck through rather than deleted, so
 the record shows what was asked and what was decided; see `specs/003-curriculum-tracks/decisions.md`):
@@ -196,8 +200,8 @@ the record shows what was asked and what was decided; see `specs/003-curriculum-
 9. **Lesson text about the book's notation** ("separated by a semicolon") now contradicts the converted
    notation. Reword or drop?
 10. **A step-level working checker** before G2 (backlog 78; ≈ $70–125 for the book). **Answered (decision
-    51, answer 30): "Yes, add it."** **Built** (FR-4411); the real cost is 3–5× the estimate, see the new
-    question 20.
+    51, answer 30): "Yes, add it."** **Built** (FR-4411); the first cost was 3–5× the estimate, see question 20
+    (overtaken 2026-10-02).
 11. ~~**Figure policy for fan-out**: native figure kinds (decision 26) are weeks of work…~~ **Answered
     twice**: first (decision 50, answer 29) "Native only, wait" — decision 26 stands strictly; then
     (decision 58d, answer 37d, 2026-10-01) **TEMPORARILY REVERSED for students**: a figure with no native
@@ -232,29 +236,31 @@ Samuel* for the full text):
 19. **Two stamp classifications** (students-full handoff): are `samuel (poc bulk)` and `local-dev` stamps "not
     a review", and do family-propagated G3 stamps count as human? Also the 9 questions held because the book
     picture reveals the answer (and s4-1-2's advanced tier, now short).
-20. **The step checker's cost**: $31.0 for 192 Chapter 8 solutions (≈ $0.16 each) against $0.03–0.05 planned;
+20. ~~**The step checker's cost**: $31.0 for 192 Chapter 8 solutions (≈ $0.16 each) against $0.03–0.05 planned;
     at that rate the book's checker is ≈ $430, not $81–135. Re-run Chapter 8 on the calibrated `sw-v2`, or keep
-    `sw-v1`? And the console must read the flag files before they are backlog items.
+    `sw-v1`? And the console must read the flag files before they are backlog items.~~ **Overtaken 2026-10-02, not answered by Samuel:**
+    the orchestrator calibrated and adopted `sw-v3` (two passes a solution, ≈ $0.05) for the whole book under answer 42's latitude;
+    Chapter 8 was re-run on it ($9.28, 25 solutions flagged); the book's checker cost $158.71; the console now reads the flag files
+    (migration 039). Whether Samuel accepts that choice is not recorded.
 21. **"No leave it as it is"** (Noor's prompts and the whole-book outline) was relayed, not logged: should it
     be recorded verbatim in `samuel-answers.md`?
 
-**Open — gates and chores:**
-- **Samuel — gates G3, G4, G5** for Chapter 8 (recorded as auto-passed gate decisions waiting in the console
-  backlog for his account, since decision 60).
-  **For the other 13 chapters this is no longer the critical path** (decision 58c, 2026-10-01): G1–G4
-  now auto-pass on the AI checks' own recommendation during the fan-out, landing in the new console
-  backlog (FR-4501…FR-4509) for Samuel, Tamer and Kamil to review afterwards, one at a time — he is off
-  the fan-out's critical path, on an ongoing review queue instead. **G5 auto-passes too** (decision 60).
-  **The fan-out is held** (Samuel, 2026-10-01: wait for his next instruction); two runs stopped mid-way and
-  resume from their journals (`docs/WIP-g10-pilot/README.md`).
-- **Samuel — T388** (review and merge the ADRs: ADR-0024, ADR-0025 and the notes) and **T389** (the
-  constitution amendment is applied; the checkbox is his).
-- **Engineering**: run the branch's CI once, deliberately; T423 (the catalogue's CI proof) and T424 (its
-  rehearsal) before merge, because B19 touches live Prep-3 content; T425/T426 (stale "deletes on reload"
-  comments in migrations 027/028 and the deploy scripts); the full 438-file National prompt capture over
-  a real database (backlog 58); T387 (re-grade spec 003's rows, and add `@covers` tags — none of the new
-  FRs has a test declaring it); **T448** (a teaching item as a family's parent: code in progress); the
-  console reading the step checker's flags.
+**Open — gates and chores** *(rewritten 2026-10-02)*:
+- **Samuel — the gate decisions are now a queue, not a gate.** Every G1–G5 decision for Chapters 1–7 and 9–14 and G3–G5 for Chapter 8 was recorded
+  as an auto-pass waiting in the console backlog for his account (decisions 58c and 60); nothing is waiting *for the pipeline*. What needs him
+  is in the WIP README's list: above all the exercise-only-objectives policy, the CHECK LATER lesson 13.1, the completeness holds and the widget
+  kinds (decisions 1–4 there). **The fan-out is no longer held: it finished 2026-10-02.**
+- **Engineering, before anything can be exported or merged:** the book-level closing steps (Chapter 8's seed into `seed/g10-math/`, the whole-book
+  export, `books/g10-math.json` out of `ingest`, the whole-book coverage report); load the three `lo:g10m8s1-1-1` families; re-run G5 for the
+  chapters whose records are older than the database; the interval display-key fix (an agent is on it); the merge with `origin/main` (15
+  conflicts on a trial merge, plus the ADR-0020 exception numbering, which collides silently); run the branch's CI once, deliberately (its last
+  run, 2026-09-26, was red); T423 (the catalogue's CI proof) and T424 (its rehearsal) before merge, because B19 touches live Prep-3 content;
+  T425/T426 (stale "deletes on reload" comments in migrations 027/028 and the deploy scripts); the full 438-file National prompt capture over a
+  real database (backlog 58); T387 (re-grade spec 003's rows, and add `@covers` tags — none of the new FRs has a test declaring it); tick **T448**.
+- **Samuel — T388** (review and merge the ADRs: ADR-0024, ADR-0025 and the notes) and **T389** (the constitution amendment is applied; the
+  checkbox is his). **Later, only on his word:** T366/T367 (the deploy, then Actions → Load a course) and T392/T393 (the launch, and an iPad Safari walk-through).
+- **Documentation owed (tech-writer):** FRs and traceability rows for the pipeline changes listed under item 27 of the WIP README's list;
+  decisions 62–64 entered in `decisions.md`; the ADR-0020 numbering at merge; `tasks.md` T390 still plans a bump to `v0.10.0`, a number `main` has used.
 
 ## 🩹 v0.9.3 hotfix — three widget answers corrected (released and deployed 2026-09-25; Samuel: "Full fix + deploy")
 
