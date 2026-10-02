@@ -51,7 +51,7 @@
  ],
  "marker": {
   "kind": "values",
-  "answer": "a = {=a}; q = {=q}",
+  "answer": "[{=a}, {=q}]",
   "form": null,
   "variables": [
    "a",
@@ -60,5 +60,5 @@
   "tolerance": null
  },
  "proposed_misconceptions": [],
- "notes": "Advanced because it uses the objective's own pair of facts, the y-intercept (0 degrees, a + q) and the range, and carries a twist the book's section on the effect of a uses: here a is always negative (the graph starts at its lowest value and is a reflected cosine). The value |a| is half the range, q is the midpoint of the range, and the y-intercept then fixes the sign: a = intercept - q. Unique answer for every instance. q is never 0 so the midpoint step is not trivial; whole numbers throughout (|a| 1 to 5, q -4 to 4, range endpoints within -9..9). The stem deliberately does not call a the 'amplitude' (amplitude is |a|). The sign is always negative on purpose, to keep every instance at the advanced level; a family with a random sign would hand half its instances back to the basic tier. Two blind-solver traps to expect: answering a = +h (missing the reflection) and q = the highest value."
+ "notes": "Advanced because it uses the objective's own pair of facts, the y-intercept (0 degrees, a + q) and the range, and carries a twist the book's section on the effect of a uses: here a is always negative (the graph starts at its lowest value and is a reflected cosine). The value |a| is half the range, q is the midpoint of the range, and the y-intercept then fixes the sign: a = intercept - q. Unique answer for every instance. q is never 0 so the midpoint step is not trivial; whole numbers throughout (|a| 1 to 5, q -4 to 4, range endpoints within -9..9). The stem deliberately does not call a the 'amplitude' (amplitude is |a|). The sign is always negative on purpose, to keep every instance at the advanced level; a family with a random sign would hand half its instances back to the basic tier. Two blind-solver traps to expect: answering a = +h (missing the reflection) and q = the highest value.\n\nPIPELINE NORMALISATION (not an author edit): marker-values-plain-form: the marker answer was 'a = {=a}; q = {=q}', the book's printed form 'a = -1; q = 2'. The key is read by families/evaluator.py parse_plain, which splits an answer at ONE top-level '=' (a ';' reads as a ','), so 'a = 3, q = 2' has two and every attempt failed to evaluate ('more than one '='') instead of producing a key. The plain form for kind \"values\" with several variables is a list of the values, '[a, q]' (runbook/families.workflow.js: '[a, b] for several values'; the blind answer's names are stripped to that form by generate_questions.blind_plain, and the siblings tan-135, positive-q, negative-q already write it). The marker is now '[{=a}, {=q}]': the same two numbers, the same order, the same variables list. The stem (which still asks the student to write a=... and q=...), the answer values and the worked solution are unchanged."
 }

@@ -92,7 +92,7 @@
  ],
  "marker": {
   "kind": "values",
-  "answer": "a = {=a}; q = {=q}",
+  "answer": "[{=a}, {=q}]",
   "form": null,
   "variables": [
    "a",
@@ -100,5 +100,5 @@
   ],
   "tolerance": null
  },
- "notes": "Same skeleton as the standard family, at the book's harder end: A has a true fractional y-coordinate, the twist ex6-4-1 uses with A(-2, 5/2), but with x in {+-3, +-4, +-5} so the denominator to clear is 2, 3, 4 or 5, the multiplier is often negative, and a runs to 9 and q to 6 with either sign, so the product and the final subtraction carry signs. The book has no harder skeleton for this objective (all three of its questions use one asymptote and one point), so this is a step up in arithmetic, not in method. Answers a and q are whole numbers."
+ "notes": "Same skeleton as the standard family, at the book's harder end: A has a true fractional y-coordinate, the twist ex6-4-1 uses with A(-2, 5/2), but with x in {+-3, +-4, +-5} so the denominator to clear is 2, 3, 4 or 5, the multiplier is often negative, and a runs to 9 and q to 6 with either sign, so the product and the final subtraction carry signs. The book has no harder skeleton for this objective (all three of its questions use one asymptote and one point), so this is a step up in arithmetic, not in method. Answers a and q are whole numbers.\n\nPIPELINE NORMALISATION (not an author edit): marker-values-plain-form: the marker answer was 'a = {=a}; q = {=q}', the book's printed form 'a = -1; q = 2'. The key is read by families/evaluator.py parse_plain, which splits an answer at ONE top-level '=' (a ';' reads as a ','), so 'a = 3, q = 2' has two and every attempt failed to evaluate ('more than one '='') instead of producing a key. The plain form for kind \"values\" with several variables is a list of the values, '[a, q]' (runbook/families.workflow.js: '[a, b] for several values'; the blind answer's names are stripped to that form by generate_questions.blind_plain, and the siblings tan-135, positive-q, negative-q already write it). The marker is now '[{=a}, {=q}]': the same two numbers, the same order, the same variables list. The stem (which still asks the student to write a=... and q=...), the answer values and the worked solution are unchanged."
 }

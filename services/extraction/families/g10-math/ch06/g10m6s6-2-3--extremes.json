@@ -43,7 +43,7 @@
  ],
  "marker": {
   "kind": "values",
-  "answer": "a = {=a}; q = {=q}",
+  "answer": "[{=a}, {=q}]",
   "form": null,
   "variables": [
    "a",
@@ -52,5 +52,5 @@
   "tolerance": null
  },
  "proposed_misconceptions": [],
- "notes": "Entry-point version of book ex6-6-3 (top point at 0 degrees, bottom point at 180 degrees). The book shows the curve in a figure; here the stem states which point is the highest and which the lowest, which is exactly what the figure tells the student, so the item stands without a diagram. All values are whole numbers, a > 0 and q >= a, so the whole graph sits on or above the x-axis (lowest value 0 to 5, highest at most 15). Answer is a = (top - bottom)/2 and q = top - a, the book's own method (half the top-to-bottom distance, then the shift of the point compared with the unshifted a cos theta). Unique answer: a + q = top and -a + q = bottom. The book's fractional case (a = 1/2) is deliberately not sampled so the key never depends on fraction rendering in a values marker."
+ "notes": "Entry-point version of book ex6-6-3 (top point at 0 degrees, bottom point at 180 degrees). The book shows the curve in a figure; here the stem states which point is the highest and which the lowest, which is exactly what the figure tells the student, so the item stands without a diagram. All values are whole numbers, a > 0 and q >= a, so the whole graph sits on or above the x-axis (lowest value 0 to 5, highest at most 15). Answer is a = (top - bottom)/2 and q = top - a, the book's own method (half the top-to-bottom distance, then the shift of the point compared with the unshifted a cos theta). Unique answer: a + q = top and -a + q = bottom. The book's fractional case (a = 1/2) is deliberately not sampled so the key never depends on fraction rendering in a values marker.\n\nPIPELINE NORMALISATION (not an author edit): marker-values-plain-form: the marker answer was 'a = {=a}; q = {=q}', the book's printed form 'a = -1; q = 2'. The key is read by families/evaluator.py parse_plain, which splits an answer at ONE top-level '=' (a ';' reads as a ','), so 'a = 3, q = 2' has two and every attempt failed to evaluate ('more than one '='') instead of producing a key. The plain form for kind \"values\" with several variables is a list of the values, '[a, q]' (runbook/families.workflow.js: '[a, b] for several values'; the blind answer's names are stripped to that form by generate_questions.blind_plain, and the siblings tan-135, positive-q, negative-q already write it). The marker is now '[{=a}, {=q}]': the same two numbers, the same order, the same variables list. The stem (which still asks the student to write a=... and q=...), the answer values and the worked solution are unchanged."
 }

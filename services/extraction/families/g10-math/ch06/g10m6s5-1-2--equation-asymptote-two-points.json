@@ -88,13 +88,14 @@
  ],
  "marker": {
   "kind": "equation",
-  "answer": "f(x) = {=a}*{=b}^x {=qop} {=qabs}",
+  "answer": "y = {=a}*{=b}^x {=qop} {=qabs}",
   "form": null,
   "variables": [
-   "x"
+   "x",
+   "y"
   ],
   "tolerance": null
  },
  "proposed_misconceptions": [],
- "notes": "Text-only restatement of the book's ex6-5-7a figure (asymptote, y-intercept A, second point B). The book's figure shows the asymptote as a dashed line, so the stem states it; b>0 is stated so b is unique. Twist beyond ex6-5-7a: the asymptote is not the x-axis (q is never 0) and a is not 1, so the student reads q from the asymptote, finds a from the y-intercept, and only then finds b from the second point (three unknowns). Method is exactly the book's: q from the asymptote, then substitute points. Parameters: b in {2,3}, second point at x=2 or 3, a in +-1..3, q in -5..5 excluding 0, |a*b^n| <= 30, giving 200 distinct instances. Because a and b^n are both positive when b>0, the sign of a decides whether the curve lies above or below its asymptote (sign-of-a-lost is the typical wrong answer when the point A lies below the asymptote). The sign of q is rendered through let-params qop/qneg holding '+' or '-' (string literals); if the engine refuses string literals in let, replace them with signed(q)."
+ "notes": "Text-only restatement of the book's ex6-5-7a figure (asymptote, y-intercept A, second point B). The book's figure shows the asymptote as a dashed line, so the stem states it; b>0 is stated so b is unique. Twist beyond ex6-5-7a: the asymptote is not the x-axis (q is never 0) and a is not 1, so the student reads q from the asymptote, finds a from the y-intercept, and only then finds b from the second point (three unknowns). Method is exactly the book's: q from the asymptote, then substitute points. Parameters: b in {2,3}, second point at x=2 or 3, a in +-1..3, q in -5..5 excluding 0, |a*b^n| <= 30, giving 200 distinct instances. Because a and b^n are both positive when b>0, the sign of a decides whether the curve lies above or below its asymptote (sign-of-a-lost is the typical wrong answer when the point A lies below the asymptote). The sign of q is rendered through let-params qop/qneg holding '+' or '-' (string literals); if the engine refuses string literals in let, replace them with signed(q).\n\nPIPELINE NORMALISATION (not an author edit): marker-equation-names-y: the marker answer was 'f(x) = {=a}*{=b}^x {=qop} {=qabs}', with the variables ['x']. families/evaluator.py parse_plain allows only sqrt(), abs() and interval() as calls, so f(x) on the left of the '=' was refused and every attempt failed to evaluate ('only sqrt(), abs() and interval() may be used') instead of producing a key. The app's marker reads f(x) (or g(x)) on one side of an equation as y (answer-marker.ts fnName), so the key names the dependent variable the way the pipeline's parser can: 'y = {=a}*{=b}^x {=qop} {=qabs}', with the variables ['x', 'y'] (as the sibling identify-function writes 'y = m*x + c'). A student's 'f(x) = ...' or 'y = ...' is marked the same. The stem (which still asks for the form f(x)=... / g(x)=...), the answer's value and the worked solution are unchanged."
 }
