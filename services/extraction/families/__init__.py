@@ -77,6 +77,13 @@ marker's answer, in the key it prints and in a blind grader's answer. The key pr
 author wrote (a stem that asks for a bar keeps its bar); a plain fraction prints with dots. A stem that asks for
 the number "in decimal form" sets ``"form": "decimal"``, or the app accepts a fraction for it (T413).
 
+INTERVALS. A marker of kind "interval" is ``interval(lo, hi, closed_lo, closed_hi)``. A flag is read by its VALUE:
+``true`` or ``1`` is a square bracket (the end is in the interval), ``false`` or ``0`` a round one, and the key a
+student reads has the matching brackets (``interval(-9, 2, 1, 0)`` prints ``[-9, 2)``). An infinite end (``-inf``,
+``inf``) is always round: ``interval(-inf, 4, 1, 1)`` prints ``(-\\infty, 4]``. A blind grader's ``true``/``false`` and
+the spec's ``1``/``0`` are the same interval (:func:`families.evaluator.interval_ends`, one reader for the printed key and
+the comparison); a flag that is neither is refused, and so is an interval whose ends run the wrong way.
+
 Templates (``stem``, ``solution[]``, choice texts, ``marker.answer``) interpolate
 ``{=expression}``. A number renders through the house ``num()`` (no trailing
 ``.0``, a Fraction as ``\\frac``, the minus outside the fraction), a string as
