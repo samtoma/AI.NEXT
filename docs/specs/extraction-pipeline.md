@@ -576,7 +576,13 @@ knowledge are excluded.
    does not rewrite them.
 4. **Granularity.** 2 to 5 objectives per lesson, the band ADR-0006 §4 settled for Arabic (and
    Prep-3 maths averages 2.6). A verb such as "understand" is replaced by the observable behaviour
-   the exercises ask for.
+   the exercises ask for. **One exception, to the minimum only (Samuel, 2026-10-02, decision 65:
+   "Allow 1 after ruling, but keep a note so we can check later"):** a lesson G1 leaves with one
+   objective passes with a warning, not a failure, when G1's verdicts drop an objective of it under a
+   recorded ruling and the lesson had two or more before the drop. Never with none left, never over 5,
+   never without a ruling. The warning says it is allowed by that decision and is to be CHECKED LATER,
+   and a machine-readable `check_later` entry goes into `chNN.check.json` and the lesson file's
+   `checks` (`assemble_objectives.py`, `rule4_check_later`).
 5. **Independence.**
    - Two Sonnet finders derive the list **blind to each other**, with different framings. Finder
      A starts from headings and summary; finder B starts from worked examples and exercises.

@@ -145,3 +145,9 @@ Consistency-review decisions (2026-09-27), one at a time (decisions.md decisions
     later part on its own? → "The value from the book (Recommended)": the carried sentence includes the book's own
     earlier answer (e.g. "m_MN = −1/3. Show that AB ∥ MN."), not only the names — multipart.py rules R1 (with key),
     R2 and R3 stand as built.
+44. (2026-10-02, decision 65) Chapter 13's lesson g10m13s1-1 has two objectives; lo:g10m13s1-1-2 (area as an
+    algebraic expression) has exercise evidence only, so the orchestrator ruling drops it, which would leave the
+    lesson with ONE objective and fail G1 rule 4 (2 to 5 per lesson). Relax the minimum? → "Allow 1 after ruling,
+    but keep a note so we can check later": a lesson may keep one objective only when G1 dropped another under a
+    recorded ruling; it is a warning marked CHECK LATER (machine-readable `check_later`, first `for_review`
+    entry of the gate record), never with none left, never over 5, never without a ruling.
