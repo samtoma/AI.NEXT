@@ -201,10 +201,10 @@ class ServableOnlyTest(unittest.TestCase):
         self.set_status("q:zz-extra:001", "rejected")
         self.assertEqual(self.problems(_parity(4, 3)), [])
 
-    def test_a_missing_servable_row_is_red(self):
-        self.db.q("DELETE FROM questions WHERE id = %s", (Q_PLAIN,))
-        red = self.problems(_parity(4, 3))
-        self.assertTrue(any(p.startswith("questions_total: 3 != expected 4") for p in red), red)
+    def test_a_servable_row_the_bundles_hold_but_the_database_lacks_is_red(self):
+        red = self.problems(_parity(5, 4))           # a question and a visual the load never inserted
+        self.assertTrue(any(p.startswith("questions_total: 4 != expected 5") for p in red), red)
+        self.assertTrue(any(p.startswith("visuals: 3 != expected 4") for p in red), red)
 
     def test_a_demotion_to_review_is_still_red_for_a_course_that_requires_all_live(self):
         self.set_status(Q_PLAIN, "review")
