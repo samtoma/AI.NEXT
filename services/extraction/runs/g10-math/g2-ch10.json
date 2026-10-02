@@ -3,130 +3,214 @@
  "auto": true,
  "items": {
   "g10m10s1-1:WE1": {
-   "verdict": "exclude",
+   "verdict": "accept",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"quantitative discrete\" does not read as the book final answer \"The number of SMS messages is a count represented by an integer, which means that it is quantitative and discrete.\"); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): 20 SMS counts are whole numbers, so quantitative discrete, as the book says. The check only compared the key text with the book's full sentence. The options are the book's closed set of data categories. Verified independently: the verifier's own answer matches the key."
   },
   "g10m10s1-1:WE2": {
-   "verdict": "exclude",
+   "verdict": "accept",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"qualitative categorical\" does not read as the book final answer \"Since each response is not a number, but one of a small number of possibilities, these are categorical qualitative data.\"); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): Provider names are not numbers and come from a small set of possibilities, so qualitative categorical, as the book says. The key text is shorter than the book's sentence, which is all the check objected to. Verified independently: the verifier's own answer matches the key."
   },
   "g10m10s2-1:Ex10-2:4d": {
    "verdict": "exclude",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (book_final is not in the book solution; the key \"34,29; 31; 31\" does not read as the printed answer \"mean: 34,29; median: 31; mode: none\"); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): Sorted data sums to $239$, so mean $=239/7\\approx34{,}14$, not 34,29 (the book's working says 34,3 and then 34,29). Median 31 is right. 31 occurs twice and no other value does, so the mode is 31, not 'none'."
   },
   "g10m10s2-1:Ex10-7:25b": {
    "verdict": "exclude",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"x \\notin \\{1; 3; 4; 5; 9\\}\" does not read as the printed answer \"x is any integer with x ̸= {1; 3; 4; 5; 9}\"); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): Without $x$, 8 occurs twice and every other value once. So $x$ may be any value except 1, 3, 4, 5, 9, and the book's statement is right. It is an open condition, not one answer, so a single key would mark right answers (10, 8, 2...) wrong."
   },
   "g10m10s2-1:Ex10-7:27b": {
-   "verdict": "exclude",
+   "verdict": "accept",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (book_final is not in the book solution); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): The first 20 decimal digits sum to 109. Then $21\\times5{,}38095=112{,}99995\\approx113$, so the 21st digit is $113-109=4$. The book and the blind solver agree. The check only compared text against the working. Verified independently: the verifier's own answer matches the key."
   },
   "g10m10s2-1:Ex10-7:28c": {
    "verdict": "exclude",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (book_final is not in the book solution); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): The 14 ages sum to $653$, so the mean is $653/14\\approx46{,}64$. The book's working uses 597, giving 42,643, which is wrong. The blind solver's 46,64 matches my derivation."
   },
   "g10m10s4-1:Ex10-5:6a": {
-   "verdict": "exclude",
+   "verdict": "accept",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"15; 9; 13\" does not read as the book final answer \"Data set 1: $24-9=15$ Data set 2: $16-7=9$ Data set 3: $24-11=13$\"); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): Ranges: $24-9=15$, $16-7=9$, $24-11=13$. Matches the book and the blind answer. The key '15; 9; 13' as values is right; the complaint is a text comparison. Any-order marking does not check which data set each belongs to. Verified independently: the verifier's own answer matches the key."
   },
   "g10m10s4-1:Ex10-5:6b": {
    "verdict": "exclude",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"12; 7,5; 15,5\" does not read as the book final answer \"The lower quartile for each data set is: Data set 1: $\\text{12}$ Data set 2: $\\text{7,5}$ Data set 3: $\\text{15,5}$\"); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): NOT RECOMMENDED LIVE (the independent verifier said confirmed, and another answer is also correct (its own answer: 12; 7,5; 15,5; With the percentile formula (rank 2.5) the quartiles are 12, 7.5 and 15.5; another common median-of-lower-half method gives 12, 7 and 15, which a values marker would reject.)). The agent's reading: $n=7$, rank $r_{25}=\\frac{25}{100}(6)+1=2{,}5$, so halfway between 2nd and 3rd values: DS1 12, DS2 $(7+8)/2=7{,}5$, DS3 $(15+16)/2=15{,}5$. Book key matches. The blind 7 and 15 use another quartile method."
   },
   "g10m10s4-1:Ex10-5:6c": {
-   "verdict": "exclude",
+   "verdict": "accept",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"14; 11; 17\" does not read as the book final answer \"The median for each data set is: Data set 1: $\\text{14}$ Data set 2: $\\text{11}$ Data set 3: $\\text{17}$\"); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): Sorted sets, n=7, median is the 4th value: $14$, $11$, $17$. Matches the book working, the EPUB final answer and the blind solve. The complaint is only a text comparison over a right key. Verified independently: the verifier's own answer matches the key."
   },
   "g10m10s4-1:Ex10-5:6d": {
-   "verdict": "exclude",
+   "verdict": "accept",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"19; 14; 20,5\" does not read as the book final answer \"The upper quartile for each data set is: Data set 1: $\\text{19}$ Data set 2: $\\text{14}$ Data set 3: $\\text{20,5}$\"); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): Rank $r_{75}=5{,}5$: set 1 $(16+22)/2=19$, set 2 $(13+15)/2=14$, set 3 $(19+22)/2=20{,}5$. Confirms the book. The blind solver used a different quartile method (22, 15, 22). Verified independently: the verifier's own answer matches the key."
   },
   "g10m10s4-1:Ex10-5:6e": {
-   "verdict": "exclude",
+   "verdict": "accept",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"7; 6,5; 5\" does not read as the book final answer \"Data set 1: $19-12=\\text{7}$ Data set 2: $14-\\text{7,5}=\\text{6,5}$ Data set 3: $\\text{20,5}-\\text{15,5}=\\text{5}$\"); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): Q1 at rank 2,5 gives 12, 7,5, 15,5. With Q3 of 19, 14, 20,5 the IQR is $7$, $6{,}5$, $5$. Confirms the book. The blind answer (10, 8, 7) used another quartile method. Verified independently: the verifier's own answer matches the key."
   },
   "g10m10s4-1:Ex10-5:6f": {
-   "verdict": "exclude",
+   "verdict": "accept",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"3,5; 3,25; 2,5\" does not read as the book final answer \"Data set 1: $\\frac{7}{2}=\\text{3,5}$ Data set 2: $\\frac{\\text{6,5}}{2}=\\text{3,25}$ Data set 3: $\\frac{5}{2}=\\text{2,5}$\"); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): Half of the IQR: $7/2=3{,}5$, $6{,}5/2=3{,}25$, $5/2=2{,}5$. Confirms the book. The blind answer doubled the other-method IQR. Verified independently: the verifier's own answer matches the key."
   },
   "g10m10s4-1:Ex10-7:22a": {
-   "verdict": "exclude",
+   "verdict": "accept",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"125,5; 129; 131,5; 139,5; 144; 148,5\" does not read as the book final answer \"For the trained employees we get: $25^{\\text{th}}$ percentile: $\\text{125,5}$ ; median: 129; $75^{\\text{th}}$ percentile: $\\text{131,5}$ . For the untrained employees we get: $25^{\\text{th}}$ percentile: $\\text{13); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): Sorted both sets (15 values each). Ranks 4,5, 8, 11,5. Trained: $125{,}5$, 129, $131{,}5$. Untrained: $139{,}5$, 144, $148{,}5$. All match the book. The blind solver used another quartile method. Verified independently: the verifier's own answer matches the key."
   },
   "g10m10s4-1:Ex10-7:22b": {
-   "verdict": "exclude",
+   "verdict": "accept",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"6; 9\" does not read as the book final answer \"Interquartile range for the trained employees: $Q_3-Q_1=6$ . Interquartile range for the untrained employees: $Q_3-Q_1=9$ .\"); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): With the percentile-formula quartiles: trained $131{,}5-125{,}5=6$, untrained $148{,}5-139{,}5=9$. Confirms the book. The blind 7 and 10 come from another method. Verified independently: the verifier's own answer matches the key."
   },
   "g10m10s4-1:WE10": {
-   "verdict": "exclude",
+   "verdict": "accept",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"9; 6\" does not read as the book final answer \"This means that the range would change to $10-4=6$.\"); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): Data 1 to 10: range $10-1=9$. Remove the 1, so the minimum is 4 and the range is $10-4=6$. The key '9; 6' as values holds both numbers from the book's working. The complaint is a text comparison against the final sentence. Verified independently: the verifier's own answer matches the key."
   },
   "g10m10s4-1:WE11": {
-   "verdict": "exclude",
+   "verdict": "accept",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"7; 45; 19\" does not read as the book final answer \"Therefore the median value is $\\text{19}$.\"); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): Sorted: 7,8,14,17,19,20,30,36,45; $n=9$, so min 7, max 45, median is the 5th value, 19. The key '7; 45; 19' matches the three results in the book's working; the complaint compares text with the last sentence only. Verified independently: the verifier's own answer matches the key."
   },
   "g10m10s4-1:WE12": {
    "verdict": "exclude",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"7; 11,5; 33\" does not read as the book final answer \"Therefore the $75^{\\text{th}}$ percentile is $\\frac{31+35}{2}=33$.\"); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): Sorted data: 3,6,7,7,9,11,12,16,31,35,40,45. Ranks 3,75, 6,5, 9,25 give 7 and 11,5, but rank 9,25 is a quarter of the way from 31 to 35, so $31+0{,}25(4)=32$, not the midpoint 33. The book's key 33 does not follow from its own percentile working. Right answer by the agent's own derivation: 7; 11,5; 32."
   },
   "g10m10s5-1:Ex10-6:3": {
-   "verdict": "exclude",
+   "verdict": "accept",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"3; 5; 7; 12; 16\" does not read as the book final answer \"The five number summary is: Minimum: $3$ $Q_1$ : $5$ Median: $7$ $Q_3$ : $12$ Maximum: $16$\"); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): Sorted: 3,5,5,6,7,8,12,14,16, n=9. Percentile ranks 3, 5, 7 give $Q_1=5$, median 7, $Q_3=12$; min 3, max 16. Matches the book. The blind $Q_3=13$ comes from the halves method. Verified independently: the verifier's own answer matches the key."
   },
   "g10m10s5-1:Ex10-6:4a": {
-   "verdict": "exclude",
+   "verdict": "accept",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"15; 22; 25; 28; 35\" does not read as the book final answer \"Minimum: $15$ $Q_1$ : $22$ Median: $25$ $Q_3$ : $28$ Maximum: $35$\"); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): Figure read: whiskers end at 15 and 35, box 22 to 28, median line at 25. Matches the book and the typed key. The complaint is only a text comparison between a bare list and the labelled sentence. Verified independently: the verifier's own answer matches the key."
   },
   "g10m10s5-1:Ex10-6:4b": {
-   "verdict": "exclude",
+   "verdict": "accept",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"88; 92; 98; 100; 101\" does not read as the book final answer \"Minimum: $88$ $Q_1$ : $92$ Median: $98$ $Q_3$ : $100$ Maximum: $101$\"); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): Figure read: whiskers end at 88 and 101, box 92 to 100, median line at 98. Matches the book and the typed key. The complaint is only a text comparison between a bare list and the labelled sentence. Verified independently: the verifier's own answer matches the key."
   },
   "g10m10s5-1:Ex10-7:29b": {
+   "verdict": "fix",
+   "auto": true,
+   "by": "auto-pass G2 (AI recommendation)",
+   "note": "auto-pass G2 (AI recommendation): Figure read: for brand C the box runs 16 to 20 with the median line at 18, whiskers 15 and 22, so 18 mg is the median. The book's key is right. The options Q1 and Q3 were refused as non-categories, so re-type them in the book's words. Verified independently: the verifier's own answer matches the key.",
+   "fields": {
+    "choices": [
+     {
+      "key": "A",
+      "text": "minimum"
+     },
+     {
+      "key": "B",
+      "text": "first quartile"
+     },
+     {
+      "key": "C",
+      "text": "median"
+     },
+     {
+      "key": "D",
+      "text": "third quartile"
+     },
+     {
+      "key": "E",
+      "text": "maximum"
+     }
+    ]
+   }
+  },
+  "g10m10s1-1:Ex10-1:1": {
+   "verdict": "accept",
+   "auto": true,
+   "by": "auto-pass G2 (AI recommendation)",
+   "note": "auto-pass G2 (AI recommendation): The three quotes are short stories (anecdotal), not numbers, so qualitative anecdotal. The printed answer and the EPUB agree. The blind solver stopped at 'qualitative' and gave no subtype. Verified independently: the verifier's own answer matches the key."
+  },
+  "g10m10s3-1:Ex10-3:1": {
+   "verdict": "accept",
+   "auto": true,
+   "by": "auto-pass G2 (AI recommendation)",
+   "note": "auto-pass G2 (AI recommendation): In the histogram the bar for 0-2 has height 1. The bars (1, 1, 2, 4, 2) total 10, matching the 10 learners. The printed answer 1 and the blind answer agree. The EPUB final line is only a method sentence. Verified independently: the verifier's own answer matches the key."
+  },
+  "g10m10s3-1:Ex10-3:2": {
+   "verdict": "accept",
+   "auto": true,
+   "by": "auto-pass G2 (AI recommendation)",
+   "note": "auto-pass G2 (AI recommendation): Figure read: the 0-2 bar has height 1, so 1 learner has 0 to 2 stones. Printed answer, book working and blind answer all give 1. The EPUB 'final answer' is only a method sentence, which is why the check said unclear. Verified independently: the verifier's own answer matches the key."
+  },
+  "g10m10s3-1:Ex10-7:11": {
+   "verdict": "accept",
+   "auto": true,
+   "by": "auto-pass G2 (AI recommendation)",
+   "note": "auto-pass G2 (AI recommendation): Figure read: the 0-1 bar has height 1, so 1 learner has 0 or 1 marbles. Printed answer, working and blind answer all give 1. The EPUB final answer is only a method sentence. Verified independently: the verifier's own answer matches the key."
+  },
+  "g10m10s3-1:Ex10-7:21a": {
    "verdict": "exclude",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (options said to be the lesson's closed set are not categories: \"Q1\", \"Q3\" — numbers, pairs, values and combinations are the book's answer to type, never options to invent); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): The book's working uses 3, 8, 13 ... as class centres, giving $995/50=19{,}9$. The stem has distance in km (continuous), where the centre of $0<d\\le5$ is 2,5, etc. That gives $\\approx19{,}4$, as the blind solver found. A student using true midpoints would be marked wrong. Right answer by the agent's own derivation: 19,4."
+  },
+  "g10m10s4-1:Ex10-7:25a": {
+   "verdict": "exclude",
+   "auto": true,
+   "by": "auto-pass G2 (AI recommendation)",
+   "note": "auto-pass G2 (AI recommendation): Sorted known values 1 to 9. Range 16: if $x$ is the maximum, $x-1=16$ so $x=17$; if $x$ is the minimum, $9-x=16$ so $x=-7$. Both fit. The book rules out $x<1$ wrongly, so a single key marks a right answer wrong."
+  },
+  "g10m10s5-1:Ex10-7:25e": {
+   "verdict": "exclude",
+   "auto": true,
+   "by": "auto-pass G2 (AI recommendation)",
+   "note": "auto-pass G2 (AI recommendation): Tested the book's key against the plot: x=4 gives $Q_1=3{,}5\\neq 3$. x=3 gives Q1 3, median 4,5, Q3 8, min 1, max 9. The book's median-only step does not fix x. Book error, never to be accepted. Right answer by the agent's own derivation: x = 3."
+  },
+  "g10m10s5-1:Ex10-7:26": {
+   "verdict": "exclude",
+   "auto": true,
+   "by": "auto-pass G2 (AI recommendation)",
+   "note": "auto-pass G2 (AI recommendation): Figure read: min 2, Q1 5, median 7, Q3 = max = 10. The book's list {2;5;7;10;10} satisfies it, but the book accepts many lists, so no single key can mark it."
+  },
+  "g10m10s5-1:Ex10-7:27c": {
+   "verdict": "exclude",
+   "auto": true,
+   "by": "auto-pass G2 (AI recommendation)",
+   "note": "auto-pass G2 (AI recommendation): Figure read: 3; 4; 5; 8; 8. Checked both book sets with n=7: Q1 is the mean of values 2 and 3, giving 4; the median is 5; Q3 is the mean of values 5 and 6, giving 8. Both are valid, so the answer is not unique."
+  },
+  "g10m10s5-1:Ex10-7:28a": {
+   "verdict": "exclude",
+   "auto": true,
+   "by": "auto-pass G2 (AI recommendation)",
+   "note": "auto-pass G2 (AI recommendation): Using the book's method: Q1 = (35+38)/2 = 36,5, median = (53+55)/2 = 54, Q3 = (55+55)/2 = 55, min 22, max 64. The final answer line has 50, a typo against its own working. The blind median 54 agrees. Right answer by the agent's own derivation: 22; 36,5; 54; 55; 64."
   }
  }
 }

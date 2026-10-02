@@ -312,9 +312,9 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "accept",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"quantitative discrete\" does not read as the book final answer \"The number of SMS messages is a count represented by an integer, which means that it is quantitative and discrete.\"); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): 20 SMS counts are whole numbers, so quantitative discrete, as the book says. The check only compared the key text with the book's full sentence. The options are the book's closed set of data categories. Verified independently: the verifier's own answer matches the key.",
     "auto": true
    }
   },
@@ -379,9 +379,9 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "accept",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"qualitative categorical\" does not read as the book final answer \"Since each response is not a number, but one of a small number of possibilities, these are categorical qualitative data.\"); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): Provider names are not numbers and come from a small set of possibilities, so qualitative categorical, as the book says. The key text is shorter than the book's sentence, which is all the check objected to. Verified independently: the verifier's own answer matches the key.",
     "auto": true
    }
   },
@@ -456,7 +456,13 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false
+   "blocked_on_figure": false,
+   "g2": {
+    "verdict": "accept",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): The three quotes are short stories (anecdotal), not numbers, so qualitative anecdotal. The printed answer and the EPUB agree. The blind solver stopped at 'qualitative' and gave no subtype. Verified independently: the verifier's own answer matches the key.",
+    "auto": true
+   }
   },
   {
    "ref": "Ex10-1:2",

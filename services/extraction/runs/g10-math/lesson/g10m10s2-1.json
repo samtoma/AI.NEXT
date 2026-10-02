@@ -1203,7 +1203,7 @@
    "g2": {
     "verdict": "exclude",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (book_final is not in the book solution; the key \"34,29; 31; 31\" does not read as the printed answer \"mean: 34,29; median: 31; mode: none\"); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): Sorted data sums to $239$, so mean $=239/7\\approx34{,}14$, not 34,29 (the book's working says 34,3 and then 34,29). Median 31 is right. 31 occurs twice and no other value does, so the mode is 31, not 'none'.",
     "auto": true
    }
   },
@@ -2611,7 +2611,7 @@
    "g2": {
     "verdict": "exclude",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"x \\notin \\{1; 3; 4; 5; 9\\}\" does not read as the printed answer \"x is any integer with x ̸= {1; 3; 4; 5; 9}\"); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): Without $x$, 8 occurs twice and every other value once. So $x$ may be any value except 1, 3, 4, 5, 9, and the book's statement is right. It is an open condition, not one answer, so a single key would mark right answers (10, 8, 2...) wrong.",
     "auto": true
    }
   },
@@ -2849,9 +2849,9 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "accept",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (book_final is not in the book solution); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): The first 20 decimal digits sum to 109. Then $21\\times5{,}38095=112{,}99995\\approx113$, so the 21st digit is $113-109=4$. The book and the blind solver agree. The check only compared text against the working. Verified independently: the verifier's own answer matches the key.",
     "auto": true
    }
   },
@@ -2972,7 +2972,7 @@
    "g2": {
     "verdict": "exclude",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (book_final is not in the book solution); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): The 14 ages sum to $653$, so the mean is $653/14\\approx46{,}64$. The book's working uses 597, giving 42,643, which is wrong. The blind solver's 46,64 matches my derivation.",
     "auto": true
    }
   }

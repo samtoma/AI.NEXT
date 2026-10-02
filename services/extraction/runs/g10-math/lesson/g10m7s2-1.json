@@ -2731,16 +2731,10 @@
    "kind": "exercise",
    "lo": "lo:g10m7s2-1-2",
    "stem": "State whether the following pairs of triangles are congruent or not. Give reasons for your answers. If there is not enough information to make a decision, explain why. [figure]",
-   "answer_type": "expression",
-   "answer": "\\triangle ABC \\equiv \\triangle EDC",
+   "answer_type": "not_markable",
+   "answer": null,
    "choices": null,
-   "marker": {
-    "kind": "expression",
-    "key": "\\triangle ABC \\equiv \\triangle EDC",
-    "form": null,
-    "variables": [],
-    "tolerance": null
-   },
+   "marker": null,
    "solution": [
     "$\\begin{align*}AC&=CE\\qquad\\text{(given)}\\\\BC&=CD\\qquad\\text{(given)}\\\\A\\hat{C}B&=D\\hat{C}E\\qquad\\text{(vertopp}\\angle\\text{s}=\\text{)}\\\\\\therefore\\triangleABC&\\equiv\\triangleEDC\\qquad\\text{SAS}\\end{align*}$"
    ],
@@ -2781,7 +2775,7 @@
    ],
    "unit": null,
    "options_source": null,
-   "not_markable_reason": null,
+   "not_markable_reason": "The answer is a congruence statement with a reason (SAS); vertex orderings vary and the marker cannot compare triangles.",
    "tier_source": "typing",
    "printed_answer_scope": "item",
    "figures": [
@@ -2794,10 +2788,16 @@
    "form_unsupported": null,
    "blocked_on_figure": true,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "fix",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (book_final is not in the book solution; the key \"\\triangle ABC \\equiv \\triangle EDC\" does not read as the printed answer \"△ABC ≡△EDC\"); a fix needs fields a person or a recommendation must write",
-    "auto": true
+    "note": "auto-pass G2 (AI recommendation): Figure ticks: $AC=CE$, $BC=CD$, vertically opposite angles at $C$, so SAS gives $\\triangle ABC\\equiv\\triangle EDC$. Book right. The key is a congruence statement the algebra marker cannot read, and vertex orders vary. Keep as teaching example.",
+    "auto": true,
+    "changed": [
+     "answer",
+     "answer_type",
+     "marker",
+     "not_markable_reason"
+    ]
    }
   },
   {
@@ -2877,7 +2877,7 @@
    "g2": {
     "verdict": "exclude",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (book_final is not in the book solution; options said to be the stem's are not all in the stem); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): Figure: isosceles ABD (AB=BD, angle A = angle D), C on AD, BC common. That is SSA, which decides nothing: congruent if C is the midpoint, not otherwise. The book's own note says 'not necessarily', yet it concludes 'not congruent'. Right answer by the agent's own derivation: not enough information (SSA does not decide).",
     "auto": true
    }
   },
@@ -2940,7 +2940,7 @@
     "options said to be the stem's are not all in the stem"
    ],
    "unit": null,
-   "options_source": "stem",
+   "options_source": "lesson",
    "not_markable_reason": null,
    "tier_source": "typing",
    "printed_answer_scope": "item",
@@ -2954,10 +2954,13 @@
    "form_unsupported": null,
    "blocked_on_figure": true,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "fix",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (options said to be the stem's are not all in the stem); a fix needs fields a person or a recommendation must write",
-    "auto": true
+    "note": "auto-pass G2 (AI recommendation): Figure: triangles ABC and EDC share vertex C; AC=DC and BC=EC are the only equal pairs. Two sides and no included angle gives no congruence test, so 'not enough information' is right and the book agrees. Only the options' source is wrong. Verified independently: the verifier's own answer matches the key.",
+    "auto": true,
+    "changed": [
+     "options_source"
+    ]
    }
   },
   {
@@ -3019,7 +3022,7 @@
     "options said to be the stem's are not all in the stem"
    ],
    "unit": null,
-   "options_source": "stem",
+   "options_source": "lesson",
    "not_markable_reason": null,
    "tier_source": "typing",
    "printed_answer_scope": "item",
@@ -3033,10 +3036,13 @@
    "form_unsupported": null,
    "blocked_on_figure": true,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "fix",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (options said to be the stem's are not all in the stem); a fix needs fields a person or a recommendation must write",
-    "auto": true
+    "note": "auto-pass G2 (AI recommendation): Figure: bowtie, CA=CB (double ticks) and CD=CE (single ticks). Vertical angles at C are equal, so both triangles are isosceles with equal apex angles: similar, but nothing says they are the same size. So 'not enough information' holds, and the blind 'not congruent' overstates it. Verified independently: the verifier's own answer matches the key.",
+    "auto": true,
+    "changed": [
+     "options_source"
+    ]
    }
   },
   {
@@ -3044,16 +3050,10 @@
    "kind": "exercise",
    "lo": "lo:g10m7s2-1-2",
    "stem": "State whether the following pairs of triangles are congruent or not. Give reasons for your answers. If there is not enough information to make a decision, explain why. [figure]",
-   "answer_type": "expression",
-   "answer": "\\triangle ABC \\equiv \\triangle ADC",
+   "answer_type": "not_markable",
+   "answer": null,
    "choices": null,
-   "marker": {
-    "kind": "expression",
-    "key": "\\triangle ABC \\equiv \\triangle ADC",
-    "form": null,
-    "variables": [],
-    "tolerance": null
-   },
+   "marker": null,
    "solution": [
     "$\\begin{align*}AC&=AC\\qquad\\text{(commonside)}\\\\B\\hat{A}C&=D\\hat{A}C\\qquad\\text{(given)}\\\\A\\hat{B}C&=A\\hat{D}C\\qquad\\text{(given)}\\\\\\therefore\\triangleABC&\\equiv\\triangleADC\\qquad\\text{AAS}\\end{align*}$"
    ],
@@ -3094,7 +3094,7 @@
    ],
    "unit": null,
    "options_source": null,
-   "not_markable_reason": null,
+   "not_markable_reason": "The answer is a congruence statement with vertex order and an AAS reason. The expression marker cannot check triangle symbols or vertex correspondence, so the item stays as a teaching example.",
    "tier_source": "typing",
    "printed_answer_scope": "item",
    "figures": [
@@ -3107,10 +3107,16 @@
    "form_unsupported": null,
    "blocked_on_figure": true,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "fix",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (book_final is not in the book solution; the key \"\\triangle ABC \\equiv \\triangle ADC\" does not read as the printed answer \"△ABC ≡△ADC\"); a fix needs fields a person or a recommendation must write",
-    "auto": true
+    "note": "auto-pass G2 (AI recommendation): Figure: kite ABCD with AC common, angle BAC = angle DAC and angle B = angle D. That is AAS, so triangle ABC is congruent to triangle ADC, and the book's statement matches. The key is a congruence statement with a vertex order, which the algebra marker cannot compare reliably, so it should not be marked.",
+    "auto": true,
+    "changed": [
+     "answer",
+     "answer_type",
+     "marker",
+     "not_markable_reason"
+    ]
    }
   },
   {
@@ -3324,7 +3330,7 @@
    "g2": {
     "verdict": "exclude",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (options said to be the stem's are not all in the stem); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): One angle (F=J) is marked and x and c are different labels, so the book's 'not enough information' is sound as logic. But the stem says the triangles are drawn to scale, and the second triangle is visibly larger, which points to 'not congruent'. The stem and the key pull apart. (kept out as exclude, not hold: its typed shape cannot be emitted — options said to be the stem's are not all in the stem: \"not congruent\", \"not enough information\")",
     "auto": true
    }
   },
@@ -3391,16 +3397,10 @@
    "kind": "exercise",
    "lo": "lo:g10m7s2-1-2",
    "stem": "Say which of the following pairs of triangles are congruent with reasons. [figure]",
-   "answer_type": "expression",
-   "answer": "\\triangle ABC \\equiv \\triangle DEF",
+   "answer_type": "not_markable",
+   "answer": null,
    "choices": null,
-   "marker": {
-    "kind": "expression",
-    "key": "\\triangle ABC \\equiv \\triangle DEF",
-    "form": null,
-    "variables": [],
-    "tolerance": null
-   },
+   "marker": null,
    "solution": [
     "We are given $CB=FE$ , $AB=DE$ and $AC=DF$ . Therefore $\\triangleABC\\equiv\\triangleDEF$ by SSS."
    ],
@@ -3439,7 +3439,7 @@
    ],
    "unit": null,
    "options_source": null,
-   "not_markable_reason": null,
+   "not_markable_reason": "The answer is a congruence statement with ordered vertices plus an SSS reason. The expression marker cannot check triangle symbols or vertex correspondence, so the item stays as a teaching example.",
    "tier_source": "typing",
    "printed_answer_scope": "item",
    "figures": [
@@ -3452,10 +3452,16 @@
    "form_unsupported": null,
    "blocked_on_figure": true,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "fix",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"\\triangle ABC \\equiv \\triangle DEF\" does not read as the printed answer \"△ABC ≡△DEF\"); a fix needs fields a person or a recommendation must write",
-    "auto": true
+    "note": "auto-pass G2 (AI recommendation): Figure: AB=DE (double ticks), AC=DF (triple), BC=EF (single). A matches D, B matches E, C matches F, so triangle ABC is congruent to DEF by SSS. The book is right. The key is a congruence statement, which the algebra marker cannot check, so the item should not be marked.",
+    "auto": true,
+    "changed": [
+     "answer",
+     "answer_type",
+     "marker",
+     "not_markable_reason"
+    ]
    }
   },
   {
@@ -3463,16 +3469,10 @@
    "kind": "exercise",
    "lo": "lo:g10m7s2-1-2",
    "stem": "Say which of the following pairs of triangles are congruent with reasons. [figure]",
-   "answer_type": "expression",
-   "answer": "\\triangle GHI \\equiv \\triangle JKL",
+   "answer_type": "not_markable",
+   "answer": null,
    "choices": null,
-   "marker": {
-    "kind": "expression",
-    "key": "\\triangle GHI \\equiv \\triangle JKL",
-    "form": null,
-    "variables": [],
-    "tolerance": null
-   },
+   "marker": null,
    "solution": [
     "We are given $GI=JL$ , $GH=JK$ and $G\\hat{H}I=J\\hat{K}L=90^{\\circ}$ . Therefore $\\triangleGHI\\equiv\\triangleJKL$ by RHS."
    ],
@@ -3511,7 +3511,7 @@
    ],
    "unit": null,
    "options_source": null,
-   "not_markable_reason": null,
+   "not_markable_reason": "The answer is a congruence statement with ordered vertices plus an RHS reason. The expression marker cannot check triangle symbols or vertex correspondence, so the item stays as a teaching example.",
    "tier_source": "typing",
    "printed_answer_scope": "item",
    "figures": [
@@ -3524,10 +3524,16 @@
    "form_unsupported": null,
    "blocked_on_figure": true,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "fix",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"\\triangle GHI \\equiv \\triangle JKL\" does not read as the printed answer \"△GHI ≡△JKL\"); a fix needs fields a person or a recommendation must write",
-    "auto": true
+    "note": "auto-pass G2 (AI recommendation): Figure: right angles at H and K, GH=JK (double ticks), hypotenuses GI=JL (single ticks). G matches J, H matches K, I matches L, so triangle GHI is congruent to JKL by RHS. The book is right. The key is a congruence statement the algebra marker cannot check, so the item should not be marked.",
+    "auto": true,
+    "changed": [
+     "answer",
+     "answer_type",
+     "marker",
+     "not_markable_reason"
+    ]
    }
   },
   {
@@ -3535,16 +3541,10 @@
    "kind": "exercise",
    "lo": "lo:g10m7s2-1-2",
    "stem": "Say which of the following pairs of triangles are congruent with reasons. [figure]",
-   "answer_type": "expression",
-   "answer": "\\triangle MNO \\equiv \\triangle RPQ",
+   "answer_type": "not_markable",
+   "answer": null,
    "choices": null,
-   "marker": {
-    "kind": "expression",
-    "key": "\\triangle MNO \\equiv \\triangle RPQ",
-    "form": null,
-    "variables": [],
-    "tolerance": null
-   },
+   "marker": null,
    "solution": [
     "We are given $MO=QR$ , $O\\hat{M}N=P\\hat{R}Q$ and $M\\hat{N}O=Q\\hat{P}R$ . Therefore $\\triangleMNO\\equiv\\triangleRPQ$ by AAS."
    ],
@@ -3583,7 +3583,7 @@
    ],
    "unit": null,
    "options_source": null,
-   "not_markable_reason": null,
+   "not_markable_reason": "The answer is a congruence statement with ordered vertices (MNO to RPQ) plus an AAS reason. The expression marker cannot check triangle symbols or vertex correspondence, so the item stays as a teaching example.",
    "tier_source": "typing",
    "printed_answer_scope": "item",
    "figures": [
@@ -3596,10 +3596,16 @@
    "form_unsupported": null,
    "blocked_on_figure": true,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "fix",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"\\triangle MNO \\equiv \\triangle RPQ\" does not read as the printed answer \"△MNO ≡△RP Q\"); a fix needs fields a person or a recommendation must write",
-    "auto": true
+    "note": "auto-pass G2 (AI recommendation): Figure: MO=QR (single ticks), angle M = angle R (single arc), angle N = angle P (double arc). M matches R, N matches P, O matches Q, so triangle MNO is congruent to RPQ by AAS (MO is not between the two angles). The book is right. The printed 'RP Q' is only a spacing artefact. The key is a congruence statement the algebra marker cannot check, so the item should not be marked.",
+    "auto": true,
+    "changed": [
+     "answer",
+     "answer_type",
+     "marker",
+     "not_markable_reason"
+    ]
    }
   },
   {
@@ -3673,7 +3679,7 @@
    "g2": {
     "verdict": "exclude",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (options said to be the stem's are not all in the stem); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): Figure marks QR=TU, QS=UV and angle Q = angle T, but the angle at T is not between TU and UV, so this is SSA. SSA proves neither congruence nor non-congruence. The book's 'not congruent' does not follow. Options 'congruent / not congruent' are not both in the stem, and the stem asks about 'pairs'. Right answer by the agent's own derivation: Not enough information: congruence cannot be concluded (angle is not the included angle, SSA).",
     "auto": true
    }
   },

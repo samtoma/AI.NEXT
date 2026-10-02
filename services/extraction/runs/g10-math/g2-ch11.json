@@ -6,25 +6,73 @@
    "verdict": "exclude",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (options said to be the stem's are not all in the stem); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): Book conclusion is right: $35/\\tan0{,}7^\\circ\\approx2{,}86$ km $<4$ km, so not safe. But the typed options ('the ship is safe' / 'the ship is not safe') are not in the stem; they are the typing agent's own, and the book prints only a figure and a sentence. Right answer by the agent's own derivation: the ship is not safe."
   },
   "g10m11s1-1:Ex11-2:15b": {
    "verdict": "exclude",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"9,66; 2,58\" does not read as the book final answer \"The one diagonal is $2(\\text{4,83})=\\text{9,66}\\text{ cm}$ and the other diagonal is $2(\\text{1,29})=\\text{2,58}\\text{ cm}$ .\"); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): Side 5, half-angle $15^\\circ$: long diagonal $10\\cos15=9{,}66$; short diagonal $10\\sin15=2{,}588\\approx2{,}59$. The book gets 2,58 by doubling a rounded 1,29 (and 4,83, 1,67 rounded). Right answer by the agent's own derivation: 9,66 cm and 2,59 cm."
   },
   "g10m11s1-1:Ex11-2:16a": {
-   "verdict": "exclude",
+   "verdict": "accept",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (book_final is not in the book solution); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): $\\tan\\theta=1/1.35=0.7407$, so $\\theta=\\arctan 0.7407\\approx36.53^\\circ$. Printed answer, blind answer and my derivation agree. The complaint is only that the book's working is a figure with no EPUB final answer. Numeric key 36,53 is right. Verified independently: the verifier's own answer matches the key."
   },
   "g10m11s1-1:Ex11-2:18": {
    "verdict": "exclude",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (book_final is not in the book solution); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): With $d$ the horizontal distance: $h=d\\tan10^\\circ$ and $2000-h=d\\tan15^\\circ$, so $h=2000/(1+\\tan15^\\circ/\\tan10^\\circ)=793{,}77$. The stem asks for one decimal place, so the right answer is 793,8. The printed 793,77 is in the wrong form and would mark a right answer wrong. Right answer by the agent's own derivation: 793,8 m."
+  },
+  "g10m11s1-1:Ex11-2:11": {
+   "verdict": "exclude",
+   "auto": true,
+   "by": "auto-pass G2 (AI recommendation)",
+   "note": "auto-pass G2 (AI recommendation): Figure: $PR=85$, angle $35^\\circ$ at $R$; sides $85\\cos35=69{,}63$ and $85\\sin35=48{,}75$. $85(\\cos35+\\sin35)=118{,}38$, so the perimeter is $236{,}76$. The book writes 236,76 for the half-perimeter bracket and doubles it again. Right answer by the agent's own derivation: 236,76 m."
+  },
+  "g10m11s1-1:Ex11-2:12": {
+   "verdict": "exclude",
+   "auto": true,
+   "by": "auto-pass G2 (AI recommendation)",
+   "note": "auto-pass G2 (AI recommendation): Half-diagonals 3 and 4,5. $\\arctan(3/4{,}5)=33{,}69^\\circ$, giving $67{,}38^\\circ$; $\\arctan(4{,}5/3)=56{,}31^\\circ$, giving $112{,}62^\\circ$. The book's 106,62 does not make $180^\\circ$ with 67,38. Right answer by the agent's own derivation: 67,38 and 112,62."
+  },
+  "g10m11s1-1:Ex11-2:16b": {
+   "verdict": "exclude",
+   "auto": true,
+   "by": "auto-pass G2 (AI recommendation)",
+   "note": "auto-pass G2 (AI recommendation): The stem omits the stick data (1 m, shadow 1,35 m) and the angle $36{,}53^\\circ$ from part a, so it cannot be answered as shown. Even with those data the book's 34,82 depends on rounding the angle first. The exact value $47/1{,}35=34{,}81$. Right answer by the agent's own derivation: 34,81 m exactly; the book's 34,82 m only with the angle rounded to 36,53°."
+  },
+  "g10m11s1-1:Ex11-2:17b": {
+   "verdict": "exclude",
+   "auto": true,
+   "by": "auto-pass G2 (AI recommendation)",
+   "note": "auto-pass G2 (AI recommendation): The book's last line reads $519{,}62-129{,}89=379{,}73$, which is false as printed ($=389{,}73$); $\\tan25^\\circ$ gives 139,89. Unrounded $300(\\tan60^\\circ-\\tan25^\\circ)=379{,}72$. The key 379,73 comes from rounded intermediates, with no rounding stated. Right answer by the agent's own derivation: 379,72 m (book prints 379,73 from rounded intermediates)."
+  },
+  "g10m11s1-1:Ex11-2:2b": {
+   "verdict": "exclude",
+   "auto": true,
+   "by": "auto-pass G2 (AI recommendation)",
+   "note": "auto-pass G2 (AI recommendation): The stem never gives the boat's first distance. The working uses 30 m from part (a) ($30-7=23$). Without it the question cannot be answered. Also $\\arctan(10/23)=23{,}50^\\circ$, but the book gives a whole 23. Right answer by the agent's own derivation: 23,5 (given 30 m from part a)."
+  },
+  "g10m11s1-1:Ex11-2:4": {
+   "verdict": "accept",
+   "auto": true,
+   "by": "auto-pass G2 (AI recommendation)",
+   "note": "auto-pass G2 (AI recommendation): Figure: right angle at the pole foot, 5,0 adjacent, 7,07 hypotenuse. $\\cos x=5/7{,}07=0{,}70721$, so $x=44{,}99^\\circ$ (just under 45). The blind 45 is a coarser rounding; the book's key is right and matches printed and EPUB. Verified independently: the verifier's own answer matches the key."
+  },
+  "g10m11s1-1:Ex11-2:5": {
+   "verdict": "exclude",
+   "auto": true,
+   "by": "auto-pass G2 (AI recommendation)",
+   "note": "auto-pass G2 (AI recommendation): $\\tan\\theta=3{,}4/24$, $\\theta=8{,}06^\\circ$. The book's own working shows 8,0632 but then keys 8. The stem asks for a minimum angle and gives no rounding, and 8 is below the true minimum 8,06. Right answer by the agent's own derivation: 8,06."
+  },
+  "g10m11s1-1:WE2": {
+   "verdict": "exclude",
+   "auto": true,
+   "by": "auto-pass G2 (AI recommendation)",
+   "note": "auto-pass G2 (AI recommendation): $\\arcsin(3/4)=48{,}59^\\circ$, $BE=\\sqrt7$, $\\arccos(\\sqrt7/5)=58{,}05^\\circ$, sum $=106{,}64^\\circ\\approx106{,}6^\\circ$. The book adds the already-rounded $48{,}6+58{,}1=106{,}7$, so its key is off in the last digit. Right answer by the agent's own derivation: 106,6."
   }
  }
 }

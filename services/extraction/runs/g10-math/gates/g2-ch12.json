@@ -5,11 +5,11 @@
  "id": "g2-ch12",
  "chapter": 12,
  "run": "wf_7889fa44-ac5",
- "decided_at": "2026-10-02T06:53:28Z",
+ "decided_at": "2026-10-02T06:59:16Z",
  "by": "auto-pass G2 (AI recommendation)",
  "auto": true,
  "outcome": "pass_with_holds",
- "summary": "2 book item(s) decided on the AI recommendation (0 from the recommendation file, 2 by the checks' own rule); 0 held for a person; 0 already decided by a person; 29 typed not markable (teaching only, no verdict owed)",
+ "summary": "2 book item(s) decided on the AI recommendation (2 from the recommendation file, 0 by the checks' own rule); 0 held for a person; 0 already decided by a person; 2 recommended with low confidence (your call); 29 typed not markable (teaching only, no verdict owed)",
  "decisions": [
   {
    "key": "g10m12s1-1:Ex12-1:10",
@@ -38,8 +38,9 @@
   },
   {
    "key": "g10m12s1-1:Ex12-1:6c",
-   "decision": "exclude",
-   "basis": "the answer-typing check flagged it (book_final is not in the book solution); a fix needs fields a person or a recommendation must write"
+   "decision": "accept",
+   "detail": "Triangle route: $180-34-41=105$. Quadrilateral route: $360-68=292$, $292/2=146$, $146-41=105$. Both routes and the printed answer agree. The complaint 'book_final is not in the book solution' is only because the EPUB gives no final answer. Key 105 stands. Verified independently: the verifier's own answer matches the key.",
+   "basis": "check too strict · confidence low"
   },
   {
    "key": "g10m12s1-1:Ex12-1:7a",
@@ -49,7 +50,8 @@
   {
    "key": "g10m12s1-1:Ex12-1:7c",
    "decision": "exclude",
-   "basis": "the answer-typing check flagged it (book_final is not in the book solution); a fix needs fields a person or a recommendation must write"
+   "detail": "Own derivation gives $x=42$, matching the printed answer. The worked solution contains wrong arithmetic: $298/2=149$ should be $288/2=144$, and $XUW$ is shown as 42 instead of 102. Showing it would teach a student wrong steps, so excluded for a person to decide.",
+   "basis": "book error · confidence low"
   },
   {
    "key": "g10m12s1-1:Ex12-1:8",
@@ -177,6 +179,10 @@
    "state": "done"
   },
   {
+   "name": "G2 recommendation run: recommender + independent verifier (g2_recommend.py)",
+   "state": "done"
+  },
+  {
    "name": "the app's marker on every typed key (assembly)",
    "state": "on load"
   }
@@ -187,6 +193,10 @@
    "path": "services/extraction/runs/g10-math/g2-ch12.json"
   },
   {
+   "label": "recommendation",
+   "path": "services/extraction/runs/g10-math/g2-ch12.recommended.json"
+  },
+  {
    "label": "S2–S4 run wf_7889fa44-ac5",
    "path": "services/extraction/runs/g10-math/lessons/wf_7889fa44-ac5.json"
   }
@@ -194,7 +204,7 @@
  "blocked": [],
  "course_id": "course:us-g10-math-en",
  "for_review": [
-  "g10m12s1-1:Ex12-1:6c",
-  "g10m12s1-1:Ex12-1:7c"
+  "g10m12s1-1:Ex12-1:7c",
+  "g10m12s1-1:Ex12-1:6c"
  ]
 }

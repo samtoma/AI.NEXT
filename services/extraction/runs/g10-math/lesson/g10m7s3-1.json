@@ -1250,7 +1250,13 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false
+   "blocked_on_figure": false,
+   "g2": {
+    "verdict": "exclude",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): With O on PQ: triangle QOR isosceles gives $\\hat{ORQ}=x$; triangle PSO isosceles gives $\\hat{P}=\\hat{POS}=180-96-x=84-x$. The book's step to $2x$ needs $\\hat{SRO}=x$, which it never justifies. The data force $x=28$, so $2x$ and $84-x$ agree only there. Right answer by the agent's own derivation: 84° − x (equal to 2x only at x = 28).",
+    "auto": true
+   }
   },
   {
    "ref": "Ex7-3:1c",
@@ -1558,7 +1564,7 @@
    "lo": "lo:g10m7s3-1-5",
    "stem": "The following shape is drawn to scale : [figure] Give the most specific name for the shape.",
    "answer_type": "choice",
-   "answer": "D",
+   "answer": "C",
    "choices": [
     {
      "key": "A",
@@ -1566,27 +1572,19 @@
     },
     {
      "key": "B",
-     "text": "trapezium"
-    },
-    {
-     "key": "C",
      "text": "parallelogram"
     },
     {
-     "key": "D",
+     "key": "C",
      "text": "rectangle"
     },
     {
-     "key": "E",
+     "key": "D",
      "text": "rhombus"
     },
     {
-     "key": "F",
+     "key": "E",
      "text": "square"
-    },
-    {
-     "key": "G",
-     "text": "kite"
     }
    ],
    "marker": null,
@@ -1640,11 +1638,20 @@
    "form_overridden": null,
    "form_unsupported": null,
    "blocked_on_figure": true,
+   "less_specific": [
+    "A",
+    "B"
+   ],
    "g2": {
-    "verdict": "exclude",
+    "verdict": "fix",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (a choice needs 2–5 options, not 7: a list in the stem to select from is not a choice); a fix needs fields a person or a recommendation must write",
-    "auto": true
+    "note": "auto-pass G2 (AI recommendation): Figure is a plain rectangle, about 298 by 120, with right angles and unequal sides. The book's key 'rectangle' is correct. The seven-option choice breaks the 5-option limit. The book's own working names exactly five categories, so the choice is re-typed with those five. Verified independently: the verifier's own answer matches the key.",
+    "auto": true,
+    "changed": [
+     "answer",
+     "choices",
+     "less_specific"
+    ]
    }
   },
   {
@@ -1653,7 +1660,7 @@
    "lo": "lo:g10m7s3-1-5",
    "stem": "The following shape is drawn to scale : [figure] Give the most specific name for the shape.",
    "answer_type": "choice",
-   "answer": "E",
+   "answer": "D",
    "choices": [
     {
      "key": "A",
@@ -1661,27 +1668,19 @@
     },
     {
      "key": "B",
-     "text": "trapezium"
-    },
-    {
-     "key": "C",
      "text": "parallelogram"
     },
     {
-     "key": "D",
+     "key": "C",
      "text": "rectangle"
     },
     {
-     "key": "E",
+     "key": "D",
      "text": "rhombus"
     },
     {
-     "key": "F",
+     "key": "E",
      "text": "square"
-    },
-    {
-     "key": "G",
-     "text": "kite"
     }
    ],
    "marker": null,
@@ -1735,11 +1734,20 @@
    "form_overridden": null,
    "form_unsupported": null,
    "blocked_on_figure": true,
+   "less_specific": [
+    "A",
+    "B"
+   ],
    "g2": {
-    "verdict": "exclude",
+    "verdict": "fix",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (a choice needs 2–5 options, not 7: a list in the stem to select from is not a choice); a fix needs fields a person or a recommendation must write",
-    "auto": true
+    "note": "auto-pass G2 (AI recommendation): Figure is a slanted parallelogram. Top and bottom sides are about 178 and the slanted sides about 175, so the sides are equal, and the angles are not 90°. That makes it a rhombus, matching the book's key. The seven-option choice is cut to the five categories the book's working names. Verified independently: the verifier's own answer matches the key.",
+    "auto": true,
+    "changed": [
+     "answer",
+     "choices",
+     "less_specific"
+    ]
    }
   },
   {
@@ -1760,22 +1768,6 @@
     },
     {
      "key": "C",
-     "text": "parallelogram"
-    },
-    {
-     "key": "D",
-     "text": "rectangle"
-    },
-    {
-     "key": "E",
-     "text": "rhombus"
-    },
-    {
-     "key": "F",
-     "text": "square"
-    },
-    {
-     "key": "G",
      "text": "kite"
     }
    ],
@@ -1831,10 +1823,13 @@
    "form_unsupported": null,
    "blocked_on_figure": true,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "fix",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (a choice needs 2–5 options, not 7: a list in the stem to select from is not a choice); a fix needs fields a person or a recommendation must write",
-    "auto": true
+    "note": "auto-pass G2 (AI recommendation): Figure is an irregular convex quadrilateral. No sides are parallel and no adjacent pair is equal (a kite needs two such pairs). Only 'quadrilateral' holds, matching the book. The seven-option choice is cut to the three names the book's working lists. Verified independently: the verifier's own answer matches the key.",
+    "auto": true,
+    "changed": [
+     "choices"
+    ]
    }
   },
   {
@@ -1967,9 +1962,9 @@
    "form_unsupported": null,
    "blocked_on_figure": true,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "accept",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"square; rectangle; rhombus; parallelogram; kite; trapezium; quadrilateral\" does not read as the printed answer \"square, rectangle, rhombus, parallelo- gram, kite, trapezium and quadrilateral\"); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): Figure is a square (about 120 by 120). The book's working lists square, rectangle, rhombus, parallelogram, kite, trapezium and quadrilateral. Each holds for a square, trapezium on the inclusive definition the book states here. The 'does not read as printed' complaint is only the hyphenation and the word 'and'. Verified independently: the verifier's own answer matches the key.",
     "auto": true
    }
   },
@@ -2538,7 +2533,13 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false
+   "blocked_on_figure": false,
+   "g2": {
+    "verdict": "exclude",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): A parallelogram's diagonals are not lines of symmetry. Reflecting across a diagonal of a non-rhombus parallelogram does not map it to itself. Only a rhombus has its diagonals as axes. A general parallelogram has no line symmetry. The statement is false, the book's 'True' is wrong, and the blind answer is right. Right answer by the agent's own derivation: False.",
+    "auto": true
+   }
   },
   {
    "ref": "Ex7-8:2i",
@@ -2674,7 +2675,7 @@
    "lo": "lo:g10m7s3-1-5",
    "stem": "The following shape is drawn to scale: [figure] Give the most specific name for the shape.",
    "answer_type": "choice",
-   "answer": "G",
+   "answer": "C",
    "choices": [
     {
      "key": "A",
@@ -2686,22 +2687,6 @@
     },
     {
      "key": "C",
-     "text": "parallelogram"
-    },
-    {
-     "key": "D",
-     "text": "rectangle"
-    },
-    {
-     "key": "E",
-     "text": "rhombus"
-    },
-    {
-     "key": "F",
-     "text": "square"
-    },
-    {
-     "key": "G",
      "text": "kite"
     }
    ],
@@ -2756,11 +2741,19 @@
    "form_overridden": null,
    "form_unsupported": null,
    "blocked_on_figure": true,
+   "less_specific": [
+    "A"
+   ],
    "g2": {
-    "verdict": "exclude",
+    "verdict": "fix",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (a choice needs 2–5 options, not 7: a list in the stem to select from is not a choice); a fix needs fields a person or a recommendation must write",
-    "auto": true
+    "note": "auto-pass G2 (AI recommendation): Figure is a kite. The upper sides are about 92 each and the lower sides about 202 each, giving two adjacent equal pairs, with no parallel sides and not a rhombus. The book's key 'kite' is correct. The seven-option choice is cut to the three names the book's working lists. Verified independently: the verifier's own answer matches the key.",
+    "auto": true,
+    "changed": [
+     "answer",
+     "choices",
+     "less_specific"
+    ]
    }
   },
   {

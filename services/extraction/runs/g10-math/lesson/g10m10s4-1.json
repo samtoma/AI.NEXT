@@ -777,9 +777,9 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "accept",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"9; 6\" does not read as the book final answer \"This means that the range would change to $10-4=6$.\"); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): Data 1 to 10: range $10-1=9$. Remove the 1, so the minimum is 4 and the range is $10-4=6$. The key '9; 6' as values holds both numbers from the book's working. The complaint is a text comparison against the final sentence. Verified independently: the verifier's own answer matches the key.",
     "auto": true
    }
   },
@@ -836,9 +836,9 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "accept",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"7; 45; 19\" does not read as the book final answer \"Therefore the median value is $\\text{19}$.\"); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): Sorted: 7,8,14,17,19,20,30,36,45; $n=9$, so min 7, max 45, median is the 5th value, 19. The key '7; 45; 19' matches the three results in the book's working; the complaint compares text with the last sentence only. Verified independently: the verifier's own answer matches the key.",
     "auto": true
    }
   },
@@ -896,7 +896,7 @@
    "g2": {
     "verdict": "exclude",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"7; 11,5; 33\" does not read as the book final answer \"Therefore the $75^{\\text{th}}$ percentile is $\\frac{31+35}{2}=33$.\"); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): Sorted data: 3,6,7,7,9,11,12,16,31,35,40,45. Ranks 3,75, 6,5, 9,25 give 7 and 11,5, but rank 9,25 is a quarter of the way from 31 to 35, so $31+0{,}25(4)=32$, not the midpoint 33. The book's key 33 does not follow from its own percentile working. Right answer by the agent's own derivation: 7; 11,5; 32.",
     "auto": true
    }
   },
@@ -1294,9 +1294,9 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "accept",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"15; 9; 13\" does not read as the book final answer \"Data set 1: $24-9=15$ Data set 2: $16-7=9$ Data set 3: $24-11=13$\"); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): Ranges: $24-9=15$, $16-7=9$, $24-11=13$. Matches the book and the blind answer. The key '15; 9; 13' as values is right; the complaint is a text comparison. Any-order marking does not check which data set each belongs to. Verified independently: the verifier's own answer matches the key.",
     "auto": true
    }
   },
@@ -1355,7 +1355,7 @@
    "g2": {
     "verdict": "exclude",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"12; 7,5; 15,5\" does not read as the book final answer \"The lower quartile for each data set is: Data set 1: $\\text{12}$ Data set 2: $\\text{7,5}$ Data set 3: $\\text{15,5}$\"); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): NOT RECOMMENDED LIVE (the independent verifier said confirmed, and another answer is also correct (its own answer: 12; 7,5; 15,5; With the percentile formula (rank 2.5) the quartiles are 12, 7.5 and 15.5; another common median-of-lower-half method gives 12, 7 and 15, which a values marker would reject.)). The agent's reading: $n=7$, rank $r_{25}=\\frac{25}{100}(6)+1=2{,}5$, so halfway between 2nd and 3rd values: DS1 12, DS2 $(7+8)/2=7{,}5$, DS3 $(15+16)/2=15{,}5$. Book key matches. The blind 7 and 15 use another quartile method.",
     "auto": true
    }
   },
@@ -1412,9 +1412,9 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "accept",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"14; 11; 17\" does not read as the book final answer \"The median for each data set is: Data set 1: $\\text{14}$ Data set 2: $\\text{11}$ Data set 3: $\\text{17}$\"); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): Sorted sets, n=7, median is the 4th value: $14$, $11$, $17$. Matches the book working, the EPUB final answer and the blind solve. The complaint is only a text comparison over a right key. Verified independently: the verifier's own answer matches the key.",
     "auto": true
    }
   },
@@ -1471,9 +1471,9 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "accept",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"19; 14; 20,5\" does not read as the book final answer \"The upper quartile for each data set is: Data set 1: $\\text{19}$ Data set 2: $\\text{14}$ Data set 3: $\\text{20,5}$\"); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): Rank $r_{75}=5{,}5$: set 1 $(16+22)/2=19$, set 2 $(13+15)/2=14$, set 3 $(19+22)/2=20{,}5$. Confirms the book. The blind solver used a different quartile method (22, 15, 22). Verified independently: the verifier's own answer matches the key.",
     "auto": true
    }
   },
@@ -1530,9 +1530,9 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "accept",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"7; 6,5; 5\" does not read as the book final answer \"Data set 1: $19-12=\\text{7}$ Data set 2: $14-\\text{7,5}=\\text{6,5}$ Data set 3: $\\text{20,5}-\\text{15,5}=\\text{5}$\"); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): Q1 at rank 2,5 gives 12, 7,5, 15,5. With Q3 of 19, 14, 20,5 the IQR is $7$, $6{,}5$, $5$. Confirms the book. The blind answer (10, 8, 7) used another quartile method. Verified independently: the verifier's own answer matches the key.",
     "auto": true
    }
   },
@@ -1589,9 +1589,9 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "accept",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"3,5; 3,25; 2,5\" does not read as the book final answer \"Data set 1: $\\frac{7}{2}=\\text{3,5}$ Data set 2: $\\frac{\\text{6,5}}{2}=\\text{3,25}$ Data set 3: $\\frac{5}{2}=\\text{2,5}$\"); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): Half of the IQR: $7/2=3{,}5$, $6{,}5/2=3{,}25$, $5/2=2{,}5$. Confirms the book. The blind answer doubled the other-method IQR. Verified independently: the verifier's own answer matches the key.",
     "auto": true
    }
   },
@@ -1774,9 +1774,9 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "accept",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"125,5; 129; 131,5; 139,5; 144; 148,5\" does not read as the book final answer \"For the trained employees we get: $25^{\\text{th}}$ percentile: $\\text{125,5}$ ; median: 129; $75^{\\text{th}}$ percentile: $\\text{131,5}$ . For the untrained employees we get: $25^{\\text{th}}$ percentile: $\\text{13); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): Sorted both sets (15 values each). Ranks 4,5, 8, 11,5. Trained: $125{,}5$, 129, $131{,}5$. Untrained: $139{,}5$, 144, $148{,}5$. All match the book. The blind solver used another quartile method. Verified independently: the verifier's own answer matches the key.",
     "auto": true
    }
   },
@@ -1833,9 +1833,9 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "accept",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"6; 9\" does not read as the book final answer \"Interquartile range for the trained employees: $Q_3-Q_1=6$ . Interquartile range for the untrained employees: $Q_3-Q_1=9$ .\"); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): With the percentile-formula quartiles: trained $131{,}5-125{,}5=6$, untrained $148{,}5-139{,}5=9$. Confirms the book. The blind 7 and 10 come from another method. Verified independently: the verifier's own answer matches the key.",
     "auto": true
    }
   },
@@ -1939,7 +1939,13 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false
+   "blocked_on_figure": false,
+   "g2": {
+    "verdict": "exclude",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): Sorted known values 1 to 9. Range 16: if $x$ is the maximum, $x-1=16$ so $x=17$; if $x$ is the minimum, $9-x=16$ so $x=-7$. Both fit. The book rules out $x<1$ wrongly, so a single key marks a right answer wrong.",
+    "auto": true
+   }
   },
   {
    "ref": "Ex10-7:29a",

@@ -1,0 +1,80 @@
+{
+ "status": "RECOMMENDATION ONLY — an AI line's, never a review. `auto_pass_gates.py g2 --recommend` reads `items` and signs each verdict `auto-pass G2 (AI recommendation)`; a person's verdict in G2's file is never overwritten.",
+ "prepared_by": "g2_recommend.py g2rec-v1",
+ "prompts_version": "g2rec-v1",
+ "chapter": 12,
+ "from_runs": {
+  "runs/g10-math/g2rec/ch12-wf_e2042d9e-3ff.json": "f840b586019d980cc7e9ffca7971a04c45703ff1dca62d95b19bc602d60e50c8"
+ },
+ "by": null,
+ "items": {
+  "g10m12s1-1:Ex12-1:6c": {
+   "verdict": "accept",
+   "class": "check too strict",
+   "confidence": "low",
+   "note": "Triangle route: $180-34-41=105$. Quadrilateral route: $360-68=292$, $292/2=146$, $146-41=105$. Both routes and the printed answer agree. The complaint 'book_final is not in the book solution' is only because the EPUB gives no final answer. Key 105 stands. Verified independently: the verifier's own answer matches the key.",
+   "why_low": "The stem depends on a figure I cannot see; I rebuilt the angles from the book's two working routes, which agree. A person should confirm the figure is shown to the student.",
+   "verified": {
+    "by": "g2rec-v1 independent verifier",
+    "own_answer": "105 (from the working's geometry: parallelogram with Q = S = 34 degrees, so R = T = 146 degrees; x = 146 - 41 = 105 degrees)",
+    "verdict": "confirmed"
+   }
+  },
+  "g10m12s1-1:Ex12-1:7c": {
+   "verdict": "exclude",
+   "class": "book error",
+   "confidence": "low",
+   "note": "Own derivation gives $x=42$, matching the printed answer. The worked solution contains wrong arithmetic: $298/2=149$ should be $288/2=144$, and $XUW$ is shown as 42 instead of 102. Showing it would teach a student wrong steps, so excluded for a person to decide.",
+   "why_low": "The key 42 is right, but the book's worked solution has misprints that the tutor would show a student. A person must decide whether to keep the item with a corrected explanation.",
+   "if_corrected": {
+    "answer": "",
+    "defect": "Printed answer 42 checks out ($180-36-102=42$; $360-72=288$, $288/2=144$, $144-102=42$). The working misprints: it states $X\\hat{U}W=42^{\\circ}$ where its own line uses 102; it writes $\\hat{U}=\\frac{298}{2}=149^{\\circ}$ where $360-72=288$ and $U=144^{\\circ}$; and $149-102=47$, not 42. Correct answe…",
+    "status": "NOT APPLIED: correcting the book's own answer or working is Samuel's to approve (decisions 43–45)"
+   }
+  }
+ },
+ "unanswered": [],
+ "report": {
+  "items": 2,
+  "recommended": 2,
+  "unanswered": [],
+  "by_verdict": {
+   "accept": 1,
+   "exclude": 1
+  },
+  "by_class": {
+   "check too strict": 1,
+   "book error": 1
+  },
+  "by_confidence": {
+   "low": 2
+  },
+  "live": [
+   "g10m12s1-1:Ex12-1:6c"
+  ],
+  "live_question_ids": [
+   "q:g10m12s1-1-2:ex12-1-6c"
+  ],
+  "not_live": {},
+  "low_confidence": [
+   "g10m12s1-1:Ex12-1:6c",
+   "g10m12s1-1:Ex12-1:7c"
+  ],
+  "stem_repairs": [],
+  "retyped": [],
+  "corrections_proposed": [
+   "g10m12s1-1:Ex12-1:7c"
+  ],
+  "off_task": [],
+  "no_longer_owed": [],
+  "stale_items": [],
+  "by_state": {
+   "excluded": 2
+  },
+  "app_marker_identity_of_the_typed_key": {
+   "equal": [],
+   "different": [],
+   "unreadable": []
+  }
+ }
+}
