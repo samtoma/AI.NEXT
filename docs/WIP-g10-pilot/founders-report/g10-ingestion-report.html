@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>G10 Maths Ingestion Report</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Cairo:wght@400;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+/* Noor Play tokens (docs/design/handoffs/noor-play/tokens.css; published system is the authority) */
+:root {
+  --play-bg-page: #FFF6E6;
+  --play-bg-surface: #FFFFFF;
+  --play-bg-warm: #FFE9BD;
+  --play-ink: #241F3D;
+  --play-text-dim: #4A4266;
+  --play-text-muted: #5A5570;
+  --play-text-label: #615B7D;
+  --play-text-eyebrow: #655B80;
+  --play-text-link: #136386;
+  --play-action: #F0A22F;
+  --play-on-action: #241F3D;
+  --play-mastery: #2F9E8F;
+  --play-on-mastery: #241F3D;
+  --play-celebrate: #7B4FC9;
+  --play-on-celebrate: #FFFFFF;
+  --play-on-celebrate-dim: #F0E9FB;
+  --play-text-amber: #A34F0A;
+  --play-text-amber-warm: #8A4208;
+  --play-inactive-fill: #F6F5FA;
+  --play-inactive-border: #9890B5;
+  --play-stroke: 3px;
+  --play-stroke-sm: 2.5px;
+  --play-shadow: 4px 4px 0 var(--play-ink);
+  --play-shadow-sm: 3px 3px 0 var(--play-ink);
+  --play-shadow-lg: 6px 6px 0 var(--play-ink);
+  --play-radius-sm: 14px;
+  --play-radius: 20px;
+  --play-radius-lg: 28px;
+  --play-radius-pill: 999px;
+  --play-font-display: "Baloo 2", system-ui, sans-serif;
+  --play-font-read: "Cairo", system-ui, sans-serif;
+  --play-font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --play-leading-latin: 1.75;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body {
+  background: var(--play-bg-page);
+  color: var(--play-ink);
+  font-family: var(--play-font-read);
+  font-size: 16px;
+  line-height: 1.6;
+  width: 1000px;
+}
+.wrap { padding: 0 48px 56px; }
+h1, h2, h3 { font-family: var(--play-font-display); margin: 0; line-height: 1.15; }
+h1 { font-size: 44px; font-weight: 800; }
+h2 { font-size: 30px; font-weight: 800; margin-bottom: 6px; }
+h3 { font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+p { margin: 0 0 10px; }
+.mono { font-family: var(--play-font-mono); font-size: 13px; }
+.eyebrow { font-family: var(--play-font-mono); font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--play-text-eyebrow); }
+.dim { color: var(--play-text-dim); }
+.muted { color: var(--play-text-muted); }
+.small { font-size: 14px; }
+.tiny { font-size: 12.5px; }
+
+/* header band */
+.band { background: var(--play-bg-warm); border-bottom: var(--play-stroke) solid var(--play-ink); padding: 44px 48px 36px; }
+.band .sub { font-size: 19px; color: var(--play-text-dim); margin-top: 10px; max-width: 820px; }
+.chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+.chip { background: var(--play-bg-surface); border: var(--play-stroke-sm) solid var(--play-ink); border-radius: var(--play-radius-pill); padding: 5px 14px; font-family: var(--play-font-mono); font-size: 12.5px; font-weight: 600; box-shadow: var(--play-shadow-sm); }
+.chip.amber { background: var(--play-action); color: var(--play-on-action); }
+.chip.teal { background: var(--play-mastery); color: var(--play-on-mastery); }
+
+/* sections */
+section { margin-top: 44px; }
+.lead { font-size: 17px; color: var(--play-text-dim); margin-bottom: 18px; max-width: 860px; }
+.card { background: var(--play-bg-surface); border: var(--play-stroke) solid var(--play-ink); border-radius: var(--play-radius-lg); box-shadow: var(--play-shadow); padding: 24px 28px; }
+.card + .card { margin-top: 18px; }
+.callout { border: var(--play-stroke) solid var(--play-ink); border-radius: var(--play-radius); box-shadow: var(--play-shadow-sm); padding: 16px 20px; margin-top: 18px; }
+.callout.amber { background: var(--play-bg-warm); }
+.callout.amber strong.tag { color: var(--play-text-amber-warm); }
+.callout.violet { background: var(--play-on-celebrate-dim); }
+.grid { display: grid; gap: 16px; }
+.g2 { grid-template-columns: 1fr 1fr; }
+.g3 { grid-template-columns: repeat(3, 1fr); }
+.g4 { grid-template-columns: repeat(4, 1fr); }
+
+/* KPI tiles */
+.kpi { background: var(--play-bg-surface); border: var(--play-stroke) solid var(--play-ink); border-radius: var(--play-radius); box-shadow: var(--play-shadow-sm); padding: 14px 16px 12px; }
+.kpi .n { font-family: var(--play-font-display); font-weight: 800; font-size: 34px; line-height: 1.05; }
+.kpi .l { font-size: 14px; color: var(--play-text-dim); line-height: 1.35; margin-top: 4px; }
+.kpi.teal { background: var(--play-mastery); }
+.kpi.teal .l { color: var(--play-on-mastery); }
+.kpi.amber { background: var(--play-action); }
+.kpi.amber .l { color: var(--play-on-action); }
+.kpi.violet { background: var(--play-celebrate); color: var(--play-on-celebrate); }
+.kpi.violet .l { color: var(--play-on-celebrate-dim); }
+
+/* short answer list */
+ul.big { margin: 0; padding-left: 22px; }
+ul.big li { margin-bottom: 10px; font-size: 17px; }
+ul.plain { margin: 6px 0 0; padding-left: 20px; }
+ul.plain li { margin-bottom: 6px; }
+
+/* timeline */
+.tl { position: relative; margin-left: 10px; padding-left: 26px; border-left: var(--play-stroke) solid var(--play-ink); }
+.tl .ev { position: relative; margin-bottom: 18px; }
+.tl .ev::before { content: ""; position: absolute; left: -38px; top: 4px; width: 18px; height: 18px; border-radius: 50%; background: var(--play-bg-surface); border: var(--play-stroke) solid var(--play-ink); }
+.tl .ev.done::before { background: var(--play-mastery); }
+.tl .ev.warn::before { background: var(--play-action); }
+.tl .when { font-family: var(--play-font-mono); font-size: 12.5px; font-weight: 600; color: var(--play-text-label); }
+.tl .what { font-weight: 700; font-size: 17px; }
+
+/* bars */
+.bars { display: grid; grid-template-columns: 200px 1fr 150px; gap: 8px 14px; align-items: center; }
+.bars .name { font-size: 14.5px; font-weight: 600; line-height: 1.25; }
+.bars .name .tiny { display: block; font-weight: 400; color: var(--play-text-muted); }
+.bars .val { font-family: var(--play-font-mono); font-size: 13px; text-align: right; }
+.track { height: 18px; background: var(--play-inactive-fill); border: var(--play-stroke-sm) solid var(--play-ink); border-radius: var(--play-radius-pill); overflow: hidden; }
+.fill { height: 100%; background: var(--play-mastery); border-right: var(--play-stroke-sm) solid var(--play-ink); }
+.fill.amber { background: var(--play-action); }
+.fill.violet { background: var(--play-celebrate); }
+
+.stack { display: flex; height: 34px; border: var(--play-stroke) solid var(--play-ink); border-radius: var(--play-radius-sm); overflow: hidden; box-shadow: var(--play-shadow-sm); }
+.stack > div { display: flex; align-items: center; justify-content: center; font-family: var(--play-font-mono); font-size: 12.5px; font-weight: 600; border-right: var(--play-stroke-sm) solid var(--play-ink); white-space: nowrap; overflow: hidden; }
+.stack > div:last-child { border-right: 0; }
+.s-teal { background: var(--play-mastery); color: var(--play-on-mastery); }
+.s-amber { background: var(--play-action); color: var(--play-on-action); }
+.s-violet { background: var(--play-celebrate); color: var(--play-on-celebrate); }
+.s-warm { background: var(--play-bg-warm); color: var(--play-ink); }
+.s-grey { background: var(--play-inactive-fill); color: var(--play-ink); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 10px; font-size: 14px; }
+.legend span::before { content: ""; display: inline-block; width: 12px; height: 12px; border: 2px solid var(--play-ink); border-radius: 4px; margin-right: 6px; vertical-align: -1px; background: var(--sw); }
+
+/* tables */
+table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 14px; }
+th, td { padding: 7px 8px; text-align: right; border-bottom: 1.5px solid var(--play-inactive-border); vertical-align: top; }
+th { font-family: var(--play-font-display); font-weight: 700; font-size: 13.5px; line-height: 1.2; background: var(--play-bg-warm); border-bottom: var(--play-stroke-sm) solid var(--play-ink); }
+th:first-child, td:first-child, th.l, td.l { text-align: left; }
+tr.total td { font-weight: 700; border-top: var(--play-stroke-sm) solid var(--play-ink); border-bottom: 0; background: var(--play-inactive-fill); }
+td.num { font-family: var(--play-font-mono); font-size: 13px; }
+.tablecard { padding: 0; overflow: hidden; }
+.tablecard table th:first-child { padding-left: 18px; }
+.tablecard table td:first-child { padding-left: 18px; }
+.tablecard table th:last-child, .tablecard table td:last-child { padding-right: 18px; }
+.pill { display: inline-block; padding: 1px 10px; border: 2px solid var(--play-ink); border-radius: var(--play-radius-pill); font-family: var(--play-font-mono); font-size: 11.5px; font-weight: 600; white-space: nowrap; }
+.pill.teal { background: var(--play-mastery); color: var(--play-on-mastery); }
+.pill.amber { background: var(--play-action); color: var(--play-on-action); }
+
+/* gates */
+.gate { display: grid; grid-template-columns: 64px 1fr 110px; gap: 14px; align-items: center; padding: 12px 0; border-bottom: 1.5px solid var(--play-inactive-border); }
+.gate:last-child { border-bottom: 0; }
+.gate .g { width: 56px; height: 56px; border-radius: 50%; border: var(--play-stroke) solid var(--play-ink); background: var(--play-mastery); color: var(--play-on-mastery); display: flex; align-items: center; justify-content: center; font-family: var(--play-font-display); font-weight: 800; font-size: 22px; box-shadow: var(--play-shadow-sm); }
+.gate .c { font-family: var(--play-font-display); font-weight: 800; font-size: 26px; text-align: right; }
+.gate .c .tiny { display: block; font-family: var(--play-font-read); font-weight: 400; color: var(--play-text-muted); }
+
+/* thesis map */
+.map { display: grid; grid-template-columns: 230px 1fr; gap: 0; }
+.map > div { padding: 12px 14px; border-bottom: 1.5px solid var(--play-inactive-border); }
+.map > div:nth-child(odd) { font-family: var(--play-font-display); font-weight: 700; background: var(--play-on-celebrate-dim); }
+.map > div:nth-last-child(-n+2) { border-bottom: 0; }
+
+ol.refs { margin: 0; padding-left: 22px; }
+ol.refs li { margin-bottom: 10px; }
+a { color: var(--play-text-link); }
+code { font-family: var(--play-font-mono); font-size: 0.86em; background: var(--play-inactive-fill); border: 1.5px solid var(--play-inactive-border); border-radius: 6px; padding: 0 5px; }
+
+footer { margin-top: 48px; border-top: var(--play-stroke) solid var(--play-ink); padding-top: 18px; display: flex; justify-content: space-between; gap: 20px; font-size: 13.5px; color: var(--play-text-muted); }
+</style>
+</head>
+<body>
+
+<header class="band">
+  <div class="eyebrow">AI.Next · Founders' report · Engineering</div>
+  <h1 style="margin-top:8px">Grade 10 Maths book: ingestion in numbers</h1>
+  <p class="sub">How the whole of Siyavula <em>Everything Maths</em> Grade 10 became a curriculum graph and a question bank for the
+    American-curriculum Grade 10 course (<span class="mono">course:us-g10-math-en</span>): the time, the AI agents, the cost, what came out, how it was checked, and what is still to do.</p>
+  <div class="chips">
+    <span class="chip">Dated 2 October 2026</span>
+    <span class="chip">App version v0.11.0 (latest release)</span>
+    <span class="chip">Report rev 1</span>
+    <span class="chip amber">Not live yet: local pilot database only</span>
+  </div>
+</header>
+
+<div class="wrap">
+
+<section style="margin-top:36px">
+  <div class="card">
+    <h2>The short answer</h2>
+    <ul class="big" style="margin-top:12px">
+      <li><strong>Yes, the whole book is through.</strong> All 14 chapters went through the pipeline and passed the final gate (G5): 13 chapters with written holds, Chapter 11 clean. The drift guard (parity) is green.</li>
+      <li><strong>What came out:</strong> 211 learning objectives across 65 lessons, joined by 294 prerequisite links, and <strong>5,326 live questions</strong> (2,090 from the book, 3,137 generated variants, 99 interactive widget questions), plus 300 misconception explanations.</li>
+      <li><strong>What it took:</strong> about <strong>$943 of AI compute</strong> (API list price), <strong>4,394 AI agents</strong> in 280 pipeline runs, about 1.2 billion tokens. Inside the ≈ $0.85–1.1k approved for the book.</li>
+      <li><strong>How long:</strong> an 18½-hour pilot on Chapter 8 (26 Sep), then the other 13 chapters in <strong>24 hours</strong> of wall-clock time (1–2 Oct).</li>
+    </ul>
+    <div class="callout amber">
+      <strong class="tag">Read before sharing further.</strong> This content is <strong>not in front of students</strong>. It sits in a local pilot database; it is on a feature branch, not on <code>main</code>, and nothing is deployed.
+      Apart from Chapter 8, every quality gate was passed by the AI line, with each decision recorded. <strong>No person has yet read the live questions</strong>: human review in the admin console is the next job.
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">At a glance</div>
+  <h2>Twelve numbers</h2>
+  <div class="grid g4" style="margin-top:14px">
+    <div class="kpi teal"><div class="n">14 / 14</div><div class="l">chapters through all five gates</div></div>
+    <div class="kpi"><div class="n">497</div><div class="l">printed pages read</div></div>
+    <div class="kpi"><div class="n">65</div><div class="l">lessons</div></div>
+    <div class="kpi"><div class="n">211</div><div class="l">learning objectives</div></div>
+    <div class="kpi"><div class="n">294</div><div class="l">prerequisite links between objectives</div></div>
+    <div class="kpi violet"><div class="n">5,326</div><div class="l">live questions (book + generated + widgets)</div></div>
+    <div class="kpi"><div class="n">300</div><div class="l">misconception explanations</div></div>
+    <div class="kpi"><div class="n">8,549</div><div class="l">maths images turned into typeset maths</div></div>
+    <div class="kpi amber"><div class="n">$943</div><div class="l">AI compute, metered (a floor; see notes)</div></div>
+    <div class="kpi"><div class="n">4,394</div><div class="l">AI agents in 280 pipeline runs</div></div>
+    <div class="kpi"><div class="n">24 h</div><div class="l">wall clock for 13 chapters in parallel</div></div>
+    <div class="kpi"><div class="n">102</div><div class="l">wrong printed answers found in the book</div></div>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">Timeline</div>
+  <h2>From decision to full book in eight days</h2>
+  <div class="card" style="margin-top:14px">
+    <div class="tl">
+      <div class="ev done"><div class="when">25 Sep 2026</div><div class="what">Curriculum tracks decided</div><div class="dim small">Students pick a curriculum at sign-up; the console gates content per curriculum and grade. First course: Grade 10 American maths, from the Siyavula book.</div></div>
+      <div class="ev done"><div class="when">26 Sep · 04:38–23:04 UTC</div><div class="what">Pilot: Chapter 8 (Analytical geometry) end to end</div><div class="dim small">Every stage run once on one chapter to measure cost and quality before scaling. Samuel personally decided its objective gate (G1) and question gate (G2). Metered $153.30.</div></div>
+      <div class="ev done"><div class="when">27–30 Sep</div><div class="what">Pipeline hardened from the pilot's findings</div><div class="dim small">Cost estimates re-based on measured numbers, rules written down as decisions, the plan for the full book approved (≈ $0.85–1.1k).</div></div>
+      <div class="ev done"><div class="when">1 Oct · 07:56 UTC</div><div class="what">Fan-out starts: chapters 1–7 and 9–14 in parallel</div><div class="dim small">The maths reading for the whole book, then lessons, questions, checks, misconceptions, generated questions and widgets, chapter by chapter.</div></div>
+      <div class="ev warn"><div class="when">1 Oct · evening</div><div class="what">A defect found mid-run and repaired</div><div class="dim small">Worked-example step titles had lost their maths ("Divide both sides by …" with the expression missing): 138 of 571 titles. Fixed at the source and repaired in the saved runs and the database without new model calls.</div></div>
+      <div class="ev done"><div class="when">2 Oct · 07:55 UTC</div><div class="what">Last chapter through G5; drift guard green</div><div class="dim small">All 14 chapters have a G5 record. The status record and the errata list were written up the same morning.</div></div>
+      <div class="ev"><div class="when">Next</div><div class="what">Human review, merge, release</div><div class="dim small">See "What is not done yet" below.</div></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">Time</div>
+  <h2>Hours spent</h2>
+  <div class="grid g4" style="margin-top:14px">
+    <div class="kpi"><div class="n">18.4 h</div><div class="l">pilot, Chapter 8, wall clock (26 Sep)</div></div>
+    <div class="kpi"><div class="n">24.0 h</div><div class="l">full-book fan-out, wall clock (1–2 Oct)</div></div>
+    <div class="kpi"><div class="n">26.1 h</div><div class="l">summed run time of the fan-out's workflows (they overlap)</div></div>
+    <div class="kpi"><div class="n">≈ 21 h</div><div class="l">active orchestration time on G10 (the coordinating Claude session)</div></div>
+  </div>
+  <p class="small dim" style="margin-top:14px">Human time is not metered. Samuel's part was decisions, not labour: <strong>45 written answers</strong> that steer the pipeline (recorded in <code>samuel-answers.md</code> and the spec's decisions table), and his own G1 and G2 on the Chapter 8 pilot.
+    The coordinating session ran about 55 active hours since 20 Sep in all; the rest went to other work (console, releases).</p>
+</section>
+
+<section>
+  <div class="eyebrow">AI effort and cost</div>
+  <h2>Where the $943 went</h2>
+  <p class="lead">Every pipeline run is metered to a ledger (<code>runs/g10-math/cost.jsonl</code>) at API list prices as of 1 Oct 2026. These are API-equivalent figures, not an invoice.</p>
+
+  <div class="card">
+    <h3>By stage</h3>
+    <div class="bars" style="margin-top:12px">
+      <div class="name">Maths reading<span class="tiny">S0b · equation images → typeset maths</span></div><div class="track"><div class="fill" style="width:100%"></div></div><div class="val">$285.94 · 322 ag.</div>
+      <div class="name">Step-by-step working check<span class="tiny">SW · every solution checked twice</span></div><div class="track"><div class="fill" style="width:55.5%"></div></div><div class="val">$158.71 · 1,301 ag.</div>
+      <div class="name">Generated question families<span class="tiny">S6 · author, then grade</span></div><div class="track"><div class="fill" style="width:47.1%"></div></div><div class="val">$134.65 · 853 ag.</div>
+      <div class="name">Misconceptions<span class="tiny">S5 · draft, then final</span></div><div class="track"><div class="fill" style="width:42.9%"></div></div><div class="val">$122.79 · 551 ag.</div>
+      <div class="name">Lessons and book questions<span class="tiny">S2–S4</span></div><div class="track"><div class="fill" style="width:38.4%"></div></div><div class="val">$109.70 · 722 ag.</div>
+      <div class="name">Learning objectives<span class="tiny">S1 · finders + reconciler</span></div><div class="track"><div class="fill" style="width:25.7%"></div></div><div class="val">$73.51 · 378 ag.</div>
+      <div class="name">Interactive widgets<span class="tiny">S7 · author, then blind verify</span></div><div class="track"><div class="fill" style="width:13.5%"></div></div><div class="val">$38.72 · 146 ag.</div>
+      <div class="name">Question-gate recommendations<span class="tiny">G2R · doubtful items re-judged</span></div><div class="track"><div class="fill" style="width:5.2%"></div></div><div class="val">$14.77 · 117 ag.</div>
+      <div class="name">Calibration<span class="tiny">S0b sample run</span></div><div class="track"><div class="fill" style="width:1.6%"></div></div><div class="val">$4.53 · 4 ag.</div>
+    </div>
+    <p class="small" style="margin-top:14px"><strong>Total: $943.32 · 4,394 agents · 280 runs · 1,197.5 million tokens</strong> (982M re-read from cache, 185M written to cache, 30M generated).</p>
+  </div>
+
+  <div class="grid g2" style="margin-top:18px">
+    <div class="card">
+      <h3>By model</h3>
+      <div class="stack" style="margin-top:12px">
+        <div class="s-teal" style="width:77%">Sonnet 5.5 · $726</div>
+        <div class="s-violet" style="width:21.2%">Sonnet 5 · $200</div>
+        <div class="s-amber" style="width:1.8%"></div>
+      </div>
+      <div class="legend"><span style="--sw:var(--play-mastery)">Sonnet 5.5 $726</span><span style="--sw:var(--play-celebrate)">Sonnet 5 $200</span><span style="--sw:var(--play-action)">Haiku 4.5 $17</span></div>
+      <p class="small dim" style="margin-top:10px">Every pipeline agent ran on Sonnet or Haiku. Opus was kept for the coordinator. The run moved to Sonnet 5.5 on 1 Oct (Samuel's answer 41).</p>
+    </div>
+    <div class="card">
+      <h3>Unit economics</h3>
+      <table style="margin-top:6px">
+        <tr><td class="l">per live question</td><td class="num">$0.18</td></tr>
+        <tr><td class="l">per printed page</td><td class="num">$1.90</td></tr>
+        <tr><td class="l">per learning objective</td><td class="num">$4.47</td></tr>
+        <tr><td class="l">per lesson</td><td class="num">$14.51</td></tr>
+        <tr><td class="l">per chapter, excluding the one-off maths reading</td><td class="num">$46.57</td></tr>
+      </table>
+      <p class="small dim" style="margin-top:10px">One-off cost for a book. Serving costs (tutoring turns) are separate and metered per student.</p>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:18px">
+    <h3>By chapter</h3>
+    <p class="small dim">The book-wide maths reading ($290.47, 326 agents) is not split by chapter. Chapter 8 includes the pilot's learning runs.</p>
+    <div class="bars" style="margin-top:10px">
+      <div class="name">1 · Algebraic expressions</div><div class="track"><div class="fill violet" style="width:69.6%"></div></div><div class="val">$80.08 · 592 ag.</div>
+      <div class="name">2 · Exponents</div><div class="track"><div class="fill violet" style="width:21.3%"></div></div><div class="val">$24.46 · 186 ag.</div>
+      <div class="name">3 · Number patterns</div><div class="track"><div class="fill violet" style="width:14.4%"></div></div><div class="val">$16.55 · 109 ag.</div>
+      <div class="name">4 · Equations, inequalities</div><div class="track"><div class="fill violet" style="width:41.4%"></div></div><div class="val">$47.58 · 341 ag.</div>
+      <div class="name">5 · Trigonometry</div><div class="track"><div class="fill violet" style="width:42.1%"></div></div><div class="val">$48.45 · 291 ag.</div>
+      <div class="name">6 · Functions</div><div class="track"><div class="fill violet" style="width:95.2%"></div></div><div class="val">$109.46 · 647 ag.</div>
+      <div class="name">7 · Euclidean geometry</div><div class="track"><div class="fill violet" style="width:40.3%"></div></div><div class="val">$46.32 · 246 ag.</div>
+      <div class="name">8 · Analytical geometry (pilot)</div><div class="track"><div class="fill violet" style="width:99.6%"></div></div><div class="val">$114.59 · 583 ag.</div>
+      <div class="name">9 · Finance and growth</div><div class="track"><div class="fill violet" style="width:27%"></div></div><div class="val">$31.03 · 225 ag.</div>
+      <div class="name">10 · Statistics</div><div class="track"><div class="fill violet" style="width:30.4%"></div></div><div class="val">$34.98 · 219 ag.</div>
+      <div class="name">11 · Trigonometry</div><div class="track"><div class="fill violet" style="width:11.7%"></div></div><div class="val">$13.50 · 66 ag.</div>
+      <div class="name">12 · Euclidean geometry</div><div class="track"><div class="fill violet" style="width:7%"></div></div><div class="val">$8.06 · 48 ag.</div>
+      <div class="name">13 · Measurements</div><div class="track"><div class="fill violet" style="width:29.9%"></div></div><div class="val">$34.34 · 225 ag.</div>
+      <div class="name">14 · Probability</div><div class="track"><div class="fill violet" style="width:37%"></div></div><div class="val">$42.52 · 286 ag.</div>
+    </div>
+    <p class="tiny muted" style="margin-top:10px">Chapters sum to $651.93 and 4,064 agents; with the maths reading ($290.47, 326) and one book-wide run ($0.92, 4) the total is $943.32 and 4,394.</p>
+  </div>
+
+  <div class="callout violet">
+    <strong>How exact is $943?</strong> It is a floor, within about 1%. (1) The ledger file has 284 rows totalling $952.70; four of them repeat a run already counted, so 280 unique runs and $943.32. (2) Five runs are marked incomplete, and the maths-reading and working-check stages include some tokens the meter could not price.
+    (3) <strong>Not included:</strong> the coordinating Claude sessions themselves. Estimated at list price, the main session (≈ $1.1k) and its 169 helper agents (≈ $3.35k) cover <em>all</em> work since 20 Sep, not only this book, so they are not a G10 cost and are not split here. Actual billing depends on the plan in use.
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">Input</div>
+  <h2>What went in: the book</h2>
+  <div class="grid g4" style="margin-top:14px">
+    <div class="kpi"><div class="n">497</div><div class="l">printed pages, 14 chapters</div></div>
+    <div class="kpi"><div class="n">4,599</div><div class="l">content blocks read from the e-book</div></div>
+    <div class="kpi"><div class="n">8,549</div><div class="l">maths images transcribed and accepted</div></div>
+    <div class="kpi"><div class="n">964</div><div class="l">figure images extracted (462 served as pictures)</div></div>
+  </div>
+  <div class="card" style="margin-top:18px">
+    <h3>The blocks, by kind</h3>
+    <table style="margin-top:6px">
+      <tr><th>Exercise items</th><th>Paragraphs</th><th>Summary items</th><th>Headings</th><th>Worked examples</th><th>Boxes</th><th>Figures</th><th>Definitions</th></tr>
+      <tr><td class="num">2,531</td><td class="num">696</td><td class="num">219</td><td class="num">197</td><td class="num">174</td><td class="num">136</td><td class="num">75</td><td class="num">47</td></tr>
+    </table>
+    <p class="small dim" style="margin-top:10px">The remaining blocks are smaller kinds (captions, lists, notes). The book prints maths as images; each one was read by a model into typeset maths and accepted only after a check.
+      Until native figures are drawn, the book's own pictures stand in for figures (Samuel's answer 37d).</p>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">Output 1</div>
+  <h2>What came out: the curriculum graph</h2>
+  <p class="lead">The graph is the product's spine: objectives a student can master, the lessons that teach them, and which objective must come before which.</p>
+  <div class="grid g4">
+    <div class="kpi"><div class="n">14</div><div class="l">modules (one per chapter)</div></div>
+    <div class="kpi"><div class="n">65</div><div class="l">lessons</div></div>
+    <div class="kpi"><div class="n">211</div><div class="l">learning objectives</div></div>
+    <div class="kpi"><div class="n">294</div><div class="l">prerequisite links</div></div>
+    <div class="kpi"><div class="n">1,964</div><div class="l">teaching claims, each cited to the book</div></div>
+    <div class="kpi"><div class="n">358</div><div class="l">worked-example entries</div></div>
+    <div class="kpi"><div class="n">616</div><div class="l">visuals attached</div></div>
+    <div class="kpi"><div class="n">300</div><div class="l">misconception explanations</div></div>
+  </div>
+  <div class="callout violet">
+    <strong>For scale:</strong> the Prep-3 maths book live today has 10 modules, 90 objectives, 112 links and 450 questions. Grade 10 has <strong>2.3×</strong> the objectives, <strong>2.6×</strong> the links and <strong>about 12×</strong> the live questions.
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">Output 2</div>
+  <h2>What came out: the questions</h2>
+  <div class="card" style="margin-top:14px">
+    <h3>5,326 live questions</h3>
+    <div class="stack" style="margin-top:12px">
+      <div class="s-teal" style="width:39.2%">Book · 2,090</div>
+      <div class="s-violet" style="width:58.9%">Generated variants · 3,137</div>
+      <div class="s-amber" style="width:1.9%"></div>
+    </div>
+    <div class="legend"><span style="--sw:var(--play-mastery)">From the book: 2,090</span><span style="--sw:var(--play-celebrate)">Generated from 314 question families: 3,137</span><span style="--sw:var(--play-action)">Interactive widgets: 99</span></div>
+    <p class="small dim" style="margin-top:12px">"Live" means ready to serve once the course is switched on. A further 64 book questions are on automatic hold (the sources disagree, or the answer cannot be marked safely), 41 were rejected (book error or damaged text) and 4 widget questions were retired.
+      Generated questions are new numbers on a book question's pattern, never new maths: 336 families were authored, 314 passed grading.</p>
+  </div>
+
+  <div class="grid g2" style="margin-top:18px">
+    <div class="card">
+      <h3>2,700 book items parsed, by answer type</h3>
+      <div class="bars" style="grid-template-columns:120px 1fr 64px; margin-top:10px">
+        <div class="name">Expression</div><div class="track"><div class="fill" style="width:100%"></div></div><div class="val">1,204</div>
+        <div class="name">Number</div><div class="track"><div class="fill" style="width:72.1%"></div></div><div class="val">868</div>
+        <div class="name">Not markable</div><div class="track"><div class="fill amber" style="width:28.2%"></div></div><div class="val">339</div>
+        <div class="name">Choice</div><div class="track"><div class="fill" style="width:24%"></div></div><div class="val">289</div>
+      </div>
+      <p class="small dim" style="margin-top:10px">2,526 exercises and 174 worked examples. "Not markable" means a proof, sketch or explanation that cannot be marked automatically.</p>
+    </div>
+    <div class="card">
+      <h3>2,154 bank questions, by difficulty</h3>
+      <div class="bars" style="grid-template-columns:120px 1fr 64px; margin-top:10px">
+        <div class="name">Basic</div><div class="track"><div class="fill" style="width:57.2%"></div></div><div class="val">704</div>
+        <div class="name">Standard</div><div class="track"><div class="fill" style="width:100%"></div></div><div class="val">1,231</div>
+        <div class="name">Advanced</div><div class="track"><div class="fill" style="width:17.8%"></div></div><div class="val">219</div>
+      </div>
+      <p class="small dim" style="margin-top:10px"><strong>Every one carries the book's own worked solution</strong> (2,047 from the e-book's worked answers, 107 from its worked examples). The tutor explains from these and never solves from scratch: grounded teaching.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">Quality</div>
+  <h2>How it was checked</h2>
+  <p class="lead">Five gates stand between the book and a student. Each records its decisions and reasons so a person can audit them in the console. On this run the AI line passed them (decisions 58c and 60); Samuel passed G1 and G2 himself on the pilot.</p>
+  <div class="card">
+    <div class="gate"><div class="g">G1</div><div><strong>Objectives.</strong> Is every objective really taught in the book, with evidence? Approve, edit or drop.</div><div class="c">508<span class="tiny">decisions</span></div></div>
+    <div class="gate"><div class="g">G2</div><div><strong>Book questions.</strong> Do the printed answer, the e-book solution and a blind re-solve agree? Accept, fix or exclude.</div><div class="c">700<span class="tiny">decisions</span></div></div>
+    <div class="gate"><div class="g">G3</div><div><strong>Generated questions and widgets.</strong> A sample of every family is read; a rejected family is retired.</div><div class="c">600<span class="tiny">decisions</span></div></div>
+    <div class="gate"><div class="g">G4</div><div><strong>Misconceptions.</strong> Are dropped explanations really wrong, and are kept ones sound?</div><div class="c">376<span class="tiny">decisions</span></div></div>
+    <div class="gate"><div class="g">G5</div><div><strong>Go / no-go.</strong> Coverage, drift guard, cost ledger, the change about to load. Result: 13 chapters <span class="pill amber">pass with holds</span>, Chapter 11 <span class="pill teal">pass</span>.</div><div class="c">80<span class="tiny">decisions</span></div></div>
+    <p class="small" style="margin-top:12px"><strong>2,264 gate decisions in all</strong>, each written to a gate record.</p>
+  </div>
+
+  <div class="grid g2" style="margin-top:18px">
+    <div class="card">
+      <h3>Doubtful book questions re-judged</h3>
+      <p class="small dim">383 items where the sources disagreed went to a recommendation run; 206 recommendations were confirmed by an independent verifier.</p>
+      <div class="stack" style="margin-top:10px">
+        <div class="s-teal" style="width:33.4%">accept 128</div>
+        <div class="s-violet" style="width:24.5%">fix 94</div>
+        <div class="s-warm" style="width:10.2%">hold 39</div>
+        <div class="s-amber" style="width:31.9%">exclude 122</div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>The book's own errors</h3>
+      <p><span style="font-family:var(--play-font-display);font-weight:800;font-size:30px">102</span> printed answers look wrong, and <span style="font-family:var(--play-font-display);font-weight:800;font-size:30px">20</span> questions were damaged in extraction (chapters 1–7, 9–14).</p>
+      <p class="small dim">A question with a wrong printed answer is left out, never silently corrected. The list (<code>errata-g10.md</code>) waits for a reader.</p>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:18px">
+    <h3>Step-by-step working check</h3>
+    <p class="small dim">Each of the <strong>2,556</strong> worked solutions was read twice, line by line, by a checker calibrated on the pilot (16 of 16 real errors found, no false alarms, about 5 cents a solution).
+      It raised <strong>300 flags on 270 solutions</strong>. A flag goes to the console's review list; it never changes the content.</p>
+    <div class="bars" style="grid-template-columns:200px 1fr 64px; margin-top:10px">
+      <div class="name">Arithmetic slip</div><div class="track"><div class="fill amber" style="width:100%"></div></div><div class="val">65</div>
+      <div class="name">Wrong label or name</div><div class="track"><div class="fill amber" style="width:100%"></div></div><div class="val">65</div>
+      <div class="name">Other</div><div class="track"><div class="fill amber" style="width:81.5%"></div></div><div class="val">53</div>
+      <div class="name">Wrong value carried</div><div class="track"><div class="fill amber" style="width:64.6%"></div></div><div class="val">42</div>
+      <div class="name">Sign error</div><div class="track"><div class="fill amber" style="width:52.3%"></div></div><div class="val">34</div>
+      <div class="name">Copied wrongly</div><div class="track"><div class="fill amber" style="width:43.1%"></div></div><div class="val">28</div>
+      <div class="name">Final answer</div><div class="track"><div class="fill amber" style="width:20%"></div></div><div class="val">13</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:18px">
+    <h3>Coverage: safe everywhere, not yet complete everywhere</h3>
+    <p>Every <strong>safety</strong> check passes in every chapter (maths renders, notation is consistent, answers are markable, nothing unreviewed leaks). The <strong>completeness</strong> checks are what keep 13 chapters on "pass with holds":</p>
+    <ul class="plain">
+      <li><strong>178 of 211 objectives (84%)</strong> have full evidence; 33 lack a book question or a cited claim.</li>
+      <li><strong>554 of 633 objective-difficulty slots (88%)</strong> have a live question; 79 are empty, mostly in Chapters 5, 6 and 10.</li>
+    </ul>
+    <p class="small dim">Each gap is either signed off by a person as an exception or filled with new generated questions or widgets: an open decision for Samuel.</p>
+  </div>
+
+  <div class="card" style="margin-top:18px">
+    <h3>Defects the line caught in itself, and fixed</h3>
+    <ul class="plain small">
+      <li><strong>Step titles lost their maths</strong> (138 of 571 worked-example titles): fixed at the source; runs, bundles and the database repaired with no new model calls.</li>
+      <li><strong>Coordinate notation:</strong> the book writes <span class="mono">(x; y)</span>; students now see <span class="mono">(x, y)</span> everywhere they read text.</li>
+      <li><strong>A wrong sample space</strong> (<span class="mono">{(1,1);(1,2)…}</span> read as decimals) in one probability question, invisible to the notation check: found and fixed.</li>
+      <li><strong>Maths that would not render</strong> in Chapter 13 (47 strings): repaired at assembly.</li>
+      <li><strong>Drift guard</strong> now counts only servable questions (Samuel's answer 45); <strong>a one-objective lesson</strong> is allowed once with a "check later" note (answer 44).</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">Detail</div>
+  <h2>Chapter by chapter</h2>
+  <p class="lead">Read from the pilot database on 2 Oct 2026. Book questions: live / held / rejected. Generated: live variants (families passed of authored). Flags: step-check flags (solutions flagged).</p>
+  <div class="card tablecard">
+    <table>
+      <tr><th>Ch</th><th class="l">Title</th><th>Lessons</th><th>Objectives</th><th>Links</th><th>Book questions</th><th>Generated</th><th>Widgets</th><th>Misc.</th><th>Flags</th><th>G5</th></tr>
+      <tr><td>1</td><td class="l">Algebraic expressions</td><td class="num">8</td><td class="num">29</td><td class="num">24</td><td class="num">517 / 6 / 27</td><td class="num">428 (43/45)</td><td class="num">7</td><td class="num">30</td><td class="num">55 (53)</td><td><span class="pill amber">holds</span></td></tr>
+      <tr><td>2</td><td class="l">Exponents</td><td class="num">3</td><td class="num">9</td><td class="num">21</td><td class="num">152 / 0 / 3</td><td class="num">139 (14/15)</td><td class="num">0</td><td class="num">8</td><td class="num">8 (8)</td><td><span class="pill amber">holds</span></td></tr>
+      <tr><td>3</td><td class="l">Number patterns</td><td class="num">1</td><td class="num">5</td><td class="num">6</td><td class="num">75 / 1 / 2</td><td class="num">140 (14/14)</td><td class="num">0</td><td class="num">4</td><td class="num">8 (8)</td><td><span class="pill amber">holds</span></td></tr>
+      <tr><td>4</td><td class="l">Equations and inequalities</td><td class="num">6</td><td class="num">19</td><td class="num">30</td><td class="num">259 / 6 / 9</td><td class="num">250 (25/26)</td><td class="num">20</td><td class="num">18</td><td class="num">33 (31)</td><td><span class="pill amber">holds</span></td></tr>
+      <tr><td>5</td><td class="l">Trigonometry</td><td class="num">5</td><td class="num">18</td><td class="num">30</td><td class="num">210 / 8 / 0</td><td class="num">150 (15/16)</td><td class="num">6</td><td class="num">23</td><td class="num">31 (25)</td><td><span class="pill amber">holds</span></td></tr>
+      <tr><td>6</td><td class="l">Functions</td><td class="num">9</td><td class="num">37</td><td class="num">64</td><td class="num">217 / 22 / 0</td><td class="num">690 (69/78)</td><td class="num">24</td><td class="num">82</td><td class="num">38 (38)</td><td><span class="pill amber">holds</span></td></tr>
+      <tr><td>7</td><td class="l">Euclidean geometry</td><td class="num">4</td><td class="num">13</td><td class="num">19</td><td class="num">103 / 8 / 0</td><td class="num">250 (25/27)</td><td class="num">3</td><td class="num">19</td><td class="num">23 (20)</td><td><span class="pill amber">holds</span></td></tr>
+      <tr><td>8</td><td class="l">Analytical geometry (pilot)</td><td class="num">5</td><td class="num">13</td><td class="num">1</td><td class="num">149 / 9 / 0</td><td class="num">110 (11/11)</td><td class="num">21</td><td class="num">29</td><td class="num">27 (25)</td><td><span class="pill amber">holds</span></td></tr>
+      <tr><td>9</td><td class="l">Finance and growth</td><td class="num">4</td><td class="num">15</td><td class="num">19</td><td class="num">133 / 0 / 0</td><td class="num">200 (20/22)</td><td class="num">1</td><td class="num">17</td><td class="num">14 (13)</td><td><span class="pill amber">holds</span></td></tr>
+      <tr><td>10</td><td class="l">Statistics</td><td class="num">5</td><td class="num">16</td><td class="num">18</td><td class="num">80 / 0 / 0</td><td class="num">180 (18/20)</td><td class="num">7</td><td class="num">24</td><td class="num">13 (11)</td><td><span class="pill amber">holds</span></td></tr>
+      <tr><td>11</td><td class="l">Trigonometry</td><td class="num">1</td><td class="num">3</td><td class="num">10</td><td class="num">24 / 0 / 0</td><td class="num">70 (7/7)</td><td class="num">1</td><td class="num">4</td><td class="num">0 (0)</td><td><span class="pill teal">pass</span></td></tr>
+      <tr><td>12</td><td class="l">Euclidean geometry</td><td class="num">1</td><td class="num">2</td><td class="num">0</td><td class="num">6 / 0 / 0</td><td class="num">20 (2/2)</td><td class="num">0</td><td class="num">0</td><td class="num">6 (6)</td><td><span class="pill amber">holds</span></td></tr>
+      <tr><td>13</td><td class="l">Measurements</td><td class="num">6</td><td class="num">14</td><td class="num">26</td><td class="num">74 / 1 / 0</td><td class="num">210 (21/21)</td><td class="num">1</td><td class="num">18</td><td class="num">29 (18)</td><td><span class="pill amber">holds</span></td></tr>
+      <tr><td>14</td><td class="l">Probability</td><td class="num">7</td><td class="num">18</td><td class="num">26</td><td class="num">91 / 3 / 0</td><td class="num">300 (30/32)</td><td class="num">8</td><td class="num">24</td><td class="num">15 (14)</td><td><span class="pill amber">holds</span></td></tr>
+      <tr class="total"><td></td><td class="l">Book</td><td class="num">65</td><td class="num">211</td><td class="num">294</td><td class="num">2,090 / 64 / 41</td><td class="num">3,137 (314/336)</td><td class="num">99</td><td class="num">300</td><td class="num">300 (270)</td><td></td></tr>
+    </table>
+  </div>
+  <p class="small dim" style="margin-top:12px">Chapter 12 is a proof chapter: no misconceptions were produced and no prerequisite link survived the checker. Chapter 8 has one link and none to other chapters; both are open decisions. Four more Chapter 8 widget questions are retired.</p>
+</section>
+
+<section>
+  <div class="eyebrow">Accountability</div>
+  <h2>Who decided what</h2>
+  <div class="grid g2" style="margin-top:14px">
+    <div class="card">
+      <h3>Samuel (a person)</h3>
+      <ul class="plain small">
+        <li>Chapter 8 pilot: the objective gate and the question gate, 26 Sep.</li>
+        <li>45 written answers that set the rules: what a gate may auto-pass, what to do with exercise-only objectives, how multi-part questions read, quality over cost, the budget.</li>
+        <li>Two rule changes on 2 Oct: the drift guard counts servable questions only; one lesson may keep a single objective, marked "check later".</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>The AI line (agents)</h3>
+      <ul class="plain small">
+        <li>Every gate on chapters 1–7 and 9–14, under Samuel's auto-pass rule, each decision recorded with its reason.</li>
+        <li>Six objectives dropped and their 78 questions moved to a neighbour, by an AI ruling that needs a standing policy.</li>
+        <li>Fixes to its own defects, each tested and marked in the files; none yet reviewed by a person.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">Open</div>
+  <h2>What is not done yet</h2>
+  <div class="card" style="margin-top:14px">
+    <ol class="refs">
+      <li><strong>Human review in the console.</strong> The live questions, generated variants, widgets, misconceptions, the 102 errata and the 300 working-check flags have not been read by a person. This is the next job.</li>
+      <li><strong>Book-level close-out.</strong> Chapter 8's assembled content is not yet on the branch; the whole-book export, the book's status and the book-wide coverage report still have to run before the course can be loaded anywhere else.</li>
+      <li><strong>Merge, release, deploy.</strong> The work sits on a branch forked at v0.9.3; <code>main</code> has since released v0.10.0 and v0.11.0. A trial merge shows 15 conflicts to resolve, then a pull request, green CI, a release and a deploy on Samuel's go.</li>
+      <li><strong>Refresh stale records.</strong> The G5 records of chapters 1–4, 8 and 14 predate later fixes; the misconception drafts of chapters 1–5 were built before the question-gate recommendations. Re-running them is cheap (≈ $1.3 an objective for misconceptions) and is Samuel's call.</li>
+      <li><strong>One objective with nothing live</strong> (Chapter 8.1, "drawing figures from coordinates"): three question families are written and graded but not loaded.</li>
+      <li><strong>Paperwork.</strong> Requirement and traceability entries are owed for several rules the run introduced; three decisions (62–64) are missing from the table.</li>
+    </ol>
+  </div>
+  <div class="grid g3" style="margin-top:18px">
+    <div class="kpi amber"><div class="n">14</div><div class="l">open decisions that need Samuel</div></div>
+    <div class="kpi"><div class="n">7</div><div class="l">content items waiting for a reader</div></div>
+    <div class="kpi"><div class="n">8</div><div class="l">engineering and records items</div></div>
+  </div>
+  <p class="small dim" style="margin-top:12px">All 29 are listed with where to look in <code>docs/WIP-g10-pilot/README.md</code>, section "Open decisions after the full-book run".</p>
+</section>
+
+<section>
+  <div class="eyebrow">Design authority</div>
+  <h2>How the pipeline was built: the Data Spine thesis</h2>
+  <p class="lead">The ingestion line is not ad hoc. ADR-0001 makes <strong>The Agent-Native Data Spine — A Thesis</strong> (founder's thesis v1, June 2026; 20 chapters, about 75,000 words, 28 sources) the design authority for the solution architecture, and ADR-0005 builds the extraction pipeline on it. How its ideas show up in this run:</p>
+  <div class="card" style="padding:0;overflow:hidden">
+    <div class="map">
+      <div>Pillar I: schema first, not text first</div><div>Every stage writes typed records (objectives, claims, questions with an answer spec) that are validated before they load, rather than free text.</div>
+      <div>Ch. 2–3: document understanding and deterministic extraction</div><div>The e-book is read by structure (4,599 blocks), maths images become typeset maths with an acceptance check, and assembly is plain code with no model calls; this is why the step-title defect could be repaired without re-running any model.</div>
+      <div>Ch. 15: curriculum graphs and educational agents</div><div>Objectives, lessons and modules with a prerequisite graph (15.1 schema); every question and claim cites the objective and the book passage it came from (15.5).</div>
+      <div>Ch. 15.7: build a spine, sell verticals</div><div>The same line that built Prep-3 maths ingested a second curriculum's book unchanged in shape, as a new course.</div>
+      <div>Ch. 19.6: MVP-cut discipline</div><div>One chapter piloted end to end, measured, then the rest fanned out; nothing is built that the pilot did not need.</div>
+      <div>Ch. 16: bitemporal knowledge</div><div>Syllabus versioning on graph edges is the design (ADR-0001); this run loads one version and does not yet exercise it.</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">Version and sources</div>
+  <h2>Version, data and references</h2>
+  <div class="grid g2" style="margin-top:14px">
+    <div class="card">
+      <h3>Version</h3>
+      <table class="small">
+        <tr><td class="l">Report</td><td class="l">rev 1 · 2 October 2026</td></tr>
+        <tr><td class="l">App version</td><td class="l"><strong>v0.11.0</strong>, the latest release on <code>main</code> (2 Oct 2026)</td></tr>
+        <tr><td class="l">Where this work is</td><td class="l">branch <code>feat/003-curriculum-tracks-g10-american-math</code> at <code>961de91</code>, forked from v0.9.3; not merged, not released, not deployed</td></tr>
+        <tr><td class="l">Data as of</td><td class="l">pilot database read 2 Oct 2026; cost ledger as of 2 Oct 2026 08:00 UTC</td></tr>
+        <tr><td class="l">Prepared by</td><td class="l">Claude (the coordinating agent) for Samuel Toma, CTO. Figures come from records, not from a person's audit.</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3>References</h3>
+      <ol class="refs small">
+        <li><strong>The Agent-Native Data Spine — A Thesis.</strong> Founder's thesis v1, June 2026. <code>agentic-data-thesis.html</code></li>
+        <li><strong>ADR-0001</strong> Architecture follows the data-spine thesis. <code>docs/decisions/0001-…</code></li>
+        <li><strong>ADR-0005</strong> The extraction pipeline. <code>docs/decisions/0005-extraction-pipeline.md</code>; spec <code>docs/specs/extraction-pipeline.md</code></li>
+        <li>Spine-derived architecture. <code>docs/architecture/spine-derived-architecture.md</code></li>
+        <li>Feature spec 003, curriculum tracks: spec, plan, decisions. <code>specs/003-curriculum-tracks/</code></li>
+        <li>Full-book status record, errata and Samuel's answers. <code>docs/WIP-g10-pilot/</code></li>
+        <li>Cost ledger and gate records. <code>services/extraction/runs/g10-math/</code></li>
+        <li>Source book: Siyavula, <em>Everything Maths</em> Grade 10.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>AI.Next · Grade 10 Maths ingestion: founders' report · rev 1</div>
+  <div>2 October 2026 · App v0.11.0</div>
+</footer>
+
+</div>
+<script>
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(function () {
+    var h = Math.ceil(document.documentElement.getBoundingClientRect().height);
+    document.documentElement.setAttribute('data-h', String(h));
+  });
+</script>
+</body>
+</html>
