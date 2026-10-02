@@ -1,0 +1,60 @@
+{
+ "format": "ainext.gate-decision/1",
+ "gate": "G1",
+ "book": "g10-math",
+ "id": "g1-ch12",
+ "chapter": 12,
+ "decided_at": "2026-10-02T06:38:14Z",
+ "by": "auto-pass G1 (AI recommendation)",
+ "auto": true,
+ "outcome": "blocked",
+ "summary": "G1 not auto-passed: 2 item(s) need the pipeline fixed or a person",
+ "decisions": [
+  {
+   "key": "term:congruent triangles",
+   "decision": "keep",
+   "detail": "congruent triangles: not in the Egyptian Prep-3 maths book's vocabulary",
+   "basis": "a flag on a term the book itself uses"
+  },
+  {
+   "key": "term:bisect",
+   "decision": "keep",
+   "detail": "bisect: 'Diagonals bisect each other' means each diagonal cuts the other into two equal parts; some curricula phrase this as 'cut each other in half'.",
+   "basis": "a flag on a term the book itself uses"
+  }
+ ],
+ "checks": [
+  {
+   "name": "S1 two blind finders + reconciler",
+   "state": "done"
+  },
+  {
+   "name": "S1 independent evidence check",
+   "state": "done"
+  },
+  {
+   "name": "two blind end-of-chapter mappers",
+   "state": "done"
+  },
+  {
+   "name": "independent prerequisite-link checker",
+   "state": "done"
+  }
+ ],
+ "evidence": [
+  {
+   "label": "G1 check",
+   "path": "services/extraction/objectives/g10-math/ch12.check.json"
+  },
+  {
+   "label": "G1 page",
+   "path": "services/extraction/objectives/g10-math/ch12.review.html"
+  }
+ ],
+ "blocked": [
+  "failure: lo:g10m12s1-1-3: 1 kind(s) of valid evidence (summary); rule 1 needs two different kinds",
+  "failure: lo:g10m12s1-1-3: no valid worked-example or exercise evidence; an objective the book never demonstrates or practises cannot be assessed"
+ ],
+ "course_id": "course:us-g10-math-en",
+ "for_review": []
+}

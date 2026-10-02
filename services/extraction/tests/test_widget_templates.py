@@ -1009,6 +1009,128 @@ class NormalisedAfterVerification(unittest.TestCase):
                    instances=[{"x1": -1, "y1": 0, "x2": 1, "y2": 4}])
         self.assertEqual(GW.normalise_template(raw, graph()), (raw, []))
 
+class CoordinateNotationNormalised(unittest.TestCase):
+    """coordinate-notation (Grade 10 Chapter 5, 2026-10-02): the book's `(x; y)` in a template's student-facing text is
+    written `(x, y)` by the rule every book question goes through (assemble_lesson_bundle.normalise_pairs), recorded in
+    the notes. A SOLUTION step keeps the blind verifier's verdicts across it (the verifier never sees the solution); a stem
+    does not (it read it). Holes are never touched and a comma is never turned into a decimal."""
+
+    def setUp(self):
+        self.tmp = Path(tempfile.mkdtemp(prefix="wt_"))
+        self.good = json.loads((TEMPLATES / "g10m8s3-1-2--gradient-line.json").read_text())
+
+    def tearDown(self):
+        shutil.rmtree(self.tmp)
+
+    def build(self, raw):
+        d = self.tmp / "t"
+        shutil.rmtree(d, ignore_errors=True)
+        d.mkdir()
+        Path(d, "t.json").write_text(json.dumps(raw))
+        templates, problems = GW.load_templates(d)
+        self.assertEqual(problems, [])
+        return templates, GW.build_from_templates(templates)[0]
+
+    def verdicts(self, questions, sha):
+        p = self.tmp / "verify.json"
+        p.write_text(json.dumps({"results": [
+            {"question_id": q["id"], "template_sha": sha, "reachable": True, "construction": "…",
+             "reading": {"through": q["choices"]["spec"]["through"], "mode": "points"},
+             "predicates": [{"predicate": x, "matches": True, "why": "…"} for x in ("points-swapped", "off-target")]}
+            for q in questions]}))
+        return p
+
+    def book_notation(self):
+        raw = copy.deepcopy(self.good)
+        raw["solution"] = raw["solution"] + ["Plot $(x; y)$ on the grid, then $A({=x1}; {=y1})$ is where you started.",
+                                             "Between 1,2 and 3,4 nothing changes: a list is not a decimal."]
+        return raw
+
+    def test_a_solution_pair_is_written_the_apps_way_holes_untouched_and_nothing_else_changes(self):
+        out, done = GW.normalise_template(self.book_notation(), graph())
+        self.assertEqual([x.split(":")[0] for x in done], ["coordinate-notation"])
+        self.assertIn("solution step 3", done[0])
+        self.assertNotIn("solution step 4", done[0], "a comma list with no `;` is not a pair")
+        self.assertEqual(out["solution"][2], "Plot $(x, y)$ on the grid, then $A({=x1}, {=y1})$ is where you started.")
+        self.assertEqual(out["solution"][3], "Between 1,2 and 3,4 nothing changes: a list is not a decimal.")
+        self.assertEqual({k: v for k, v in out.items() if k not in ("solution", "notes", "verified_as")},
+                         {k: v for k, v in self.good.items() if k not in ("solution", "notes")})
+        self.assertEqual(out["solution"][:2], self.good["solution"])
+        self.assertIn(f"{GW.NORMALISED}: coordinate-notation", out["notes"])
+        self.assertTrue(out["notes"].startswith(self.good["notes"]), "appended, not rewritten")
+        self.assertEqual(out["verified_as"]["sha"], GW.template_sha(self.book_notation()))
+        self.assertEqual(GW.normalise_template(out, graph())[1], [], "a fixpoint")
+        templates, qs = self.build(out)
+        self.assertEqual(GW.check_questions(copy.deepcopy(qs), graph())[0], [])
+        self.assertNotIn(";", " ".join(s["text_md"] for q in qs for s in q["canonical_solution"]))
+
+    def test_the_rendered_question_reads_the_apps_notation(self):
+        before = self.build(self.book_notation())[1]
+        self.assertIn("(x; y)", before[0]["canonical_solution"][2]["text_md"])
+        after = self.build(GW.normalise_template(self.book_notation(), graph())[0])[1]
+        self.assertIn("Plot $(x, y)$ on the grid", after[0]["canonical_solution"][2]["text_md"])
+        self.assertIn("$A(-2, -4)$ is where", after[0]["canonical_solution"][2]["text_md"])
+
+    def test_a_solution_step_keeps_the_verifiers_verdicts(self):
+        raw = self.book_notation()
+        _, old_qs = self.build(raw)
+        verify = self.verdicts(old_qs, GW.template_sha(raw))
+        out, _ = GW.normalise_template(raw, graph())
+        templates, qs = self.build(out)
+        self.assertNotEqual(templates[0]["_sha"], GW.template_sha(raw), "the template's own sha moved")
+        self.assertEqual(GW.apply_verdicts(templates, qs, [verify]), ({out["id"]}, {}))
+        carried, problems = GW.carried_verification(templates, qs)
+        self.assertEqual((carried, problems), ({out["id"]: GW.template_sha(raw)}, {}))
+
+    def test_a_step_that_changed_in_any_other_way_does_not_carry(self):
+        raw = self.book_notation()
+        _, old_qs = self.build(raw)
+        verify = self.verdicts(old_qs, GW.template_sha(raw))
+        out, _ = GW.normalise_template(raw, graph())
+        out["solution"][2] = out["solution"][2].replace("grid", "board")
+        templates, qs = self.build(out)
+        accepted, rejected = GW.apply_verdicts(templates, qs, [verify])
+        self.assertEqual(accepted, set())
+        self.assertIn("an entry was added or changed since verification", " ".join(rejected[out["id"]]))
+
+    def test_a_stem_pair_is_written_but_its_verdicts_do_not_carry(self):
+        raw = copy.deepcopy(self.good)
+        raw["stem"] = "Draw the straight line through $A({=x1}; {=y1})$ and $B({=x2}; {=y2})$."
+        _, old_qs = self.build(raw)
+        verify = self.verdicts(old_qs, GW.template_sha(raw))
+        out, done = GW.normalise_template(raw, graph())
+        self.assertEqual(out["stem"], self.good["stem"])
+        self.assertIn("stem", done[0])
+        templates, qs = self.build(out)
+        accepted, rejected = GW.apply_verdicts(templates, qs, [verify])
+        self.assertEqual(accepted, set(), "the verifier read the stem")
+        self.assertIn("stem changed since verification", " ".join(rejected[out["id"]]))
+
+    def test_instance_and_spec_strings_are_covered_and_a_hole_with_a_semicolon_is_not_touched(self):
+        raw = copy.deepcopy(self.good)
+        raw["instances"] = [{"x1": -2, "y1": -4, "x2": 2, "y2": 4, "note": "P(1;2)"}]
+        raw["stem"] = self.good["stem"] + " {=\"a;b\"}"
+        out, done = GW.normalise_template(raw, graph())
+        self.assertEqual(out["instances"][0]["note"], "P(1, 2)")
+        self.assertIn("instances[0].note", done[0])
+        self.assertEqual(out["stem"], raw["stem"], "a `;` inside a hole's string is the hole's")
+
+    def test_only_a_pair_is_converted(self):
+        for src in ("(see the table; then answer)", "x = 2; y = 3", "the values 1,2,3 and 0,5", "(sin, cos, tan)"):
+            raw = dict(self.good, solution=[src])
+            self.assertEqual(GW.normalise_template(raw, graph()), (raw, []), src)
+        for src, want in (("Plot $P(2;-3)$", "Plot $P(2, -3)$"), ("the interval $[2; 5)$", "the interval $[2, 5)$"),
+                          ("$(\\frac{a}{2}; \\frac{b}{2})$", "$(\\frac{a}{2}, \\frac{b}{2})$")):
+            out, done = GW.normalise_template(dict(self.good, solution=[src]), graph())
+            self.assertEqual(out["solution"], [want], src)
+
+    def test_the_chapter_5_template_the_audit_refused_is_now_clean(self):
+        f = EX / "widgets" / "g10-math" / "ch05" / "g10m5s8-1-3--plot-point-from-ratio-and-quadrant.json"
+        raw = json.loads(f.read_text())
+        self.assertEqual([x for x in re.findall(r"\([^()]*;[^()]*\)", json.dumps(raw["solution"]))], [])
+        self.assertIn("coordinate-notation", raw["notes"])
+
+
 if __name__ == "__main__":
     with contextlib.redirect_stdout(io.StringIO()):
         unittest.main()
