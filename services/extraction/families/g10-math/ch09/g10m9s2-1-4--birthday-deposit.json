@@ -1,0 +1,87 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m9s2-1-4:birthday-deposit",
+ "kind": "family",
+ "lo_id": "lo:g10m9s2-1-4",
+ "parent_question_id": "q:g10m9s2-1-4:ex9-1-8",
+ "source_page": 335,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": "Joseph deposits Rand into a savings account when his son is a given age; the account earns simple interest at a fixed annual rate, and when the son is older the balance is stated. The number of years must be found from the two ages, and then the rate.",
+ "params": [
+  {
+   "name": "a1",
+   "randint": [
+    3,
+    10
+   ]
+  },
+  {
+   "name": "a2",
+   "randint": [
+    "a1 + 6",
+    21
+   ]
+  },
+  {
+   "name": "n",
+   "let": "a2 - a1"
+  },
+  {
+   "name": "P",
+   "choice": [
+    2000,
+    2400,
+    3200,
+    4000,
+    4800,
+    6000,
+    8000
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    9,
+    39
+   ],
+   "resample_while": "q % 4 == 0"
+  },
+  {
+   "name": "gain",
+   "let": "P // 400 * q * n"
+  },
+  {
+   "name": "A",
+   "let": "P + gain"
+  },
+  {
+   "name": "PN",
+   "let": "P * n"
+  },
+  {
+   "name": "rr",
+   "let": "fixed(q / 4, 2) if q % 2 == 1 else fixed(q / 4, 1)"
+  },
+  {
+   "name": "idec",
+   "let": "fixed(q / 400, 4) if q % 2 == 1 else fixed(q / 400, 3)"
+  }
+ ],
+ "constraints": [
+  "n >= 6",
+  "(A - P) * 400 == P * q * n"
+ ],
+ "stem": "When his son was ${=a1}$ years old, Joseph deposited $\\text{R{=P}}$ into a savings account. Simple interest was used, and when his son was ${=a2}$ years old the balance in the account had grown to $\\text{R{=A}}$. Calculate the rate at which the money was invested. Give the rate as a percentage per year, written as a number without the % sign. It works out exactly, so no rounding is needed.",
+ "answer": "rr",
+ "solution": [
+  "Work out for how many years the money was invested: $n={=a2}-{=a1}={=n}$ years.",
+  "Write down the given information: $\\begin{aligned}A&=\\text{R{=A}}\\\\P&=\\text{R{=P}}\\\\n&={=n}\\\\i&=?\\end{aligned}$",
+  "The interest is simple, so use $A=P(1+in)$ and make $i$ the subject: $\\begin{aligned}A&=P(1+in)\\\\\\frac{A}{P}&=1+in\\\\\\frac{A}{P}-1&=in\\\\\\frac{\\frac{A}{P}-1}{n}&=i\\end{aligned}$",
+  "Substitute the values: $i=\\frac{\\frac{{=A}}{{=P}}-1}{{=n}}=\\frac{{=gain}}{{=PN}}={=idec}$",
+  "Write $i$ as a percentage: $i={=idec}\\times100={=rr}\\%$ per year.",
+  "So the money was invested at a simple interest rate of ${=rr}\\%$ per annum."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Standard tier, modelled on ex9-1-8 (Joseph, R5000 at the son's fifth birthday, R18000 at 21, 16.25%). The extra step the book uses is that n has to be found from the two ages (a2 - a1, between 6 and 18 years), and the rate is not a whole percent: it is a multiple of 0.25% that is never whole (2.25 to 9.75). P is a multiple of 400, so gain = (P/400)*q*n is an integer and A is a whole number of Rand; the second constraint checks that i is exactly q/400. rr and idec are formatted strings so the answer shows 3.25 or 3.5 with no trailing zeros, and the worked i shows its exact decimal (0.0325 or 0.035). The stem tells the solver the rate works out exactly and to give a bare percentage number, so a blind solver does not round or answer 0.0325. No misconceptions are catalogued for this objective and the family is numeric, so there are no distractors. The book's rounded-to-one-decimal questions (ex9-1-9, 9-1-10, 9-1-11, 9-7-4, 9-7-5) and the hire-purchase twist (9-7-25) are left to the book as the advanced tier."
+}

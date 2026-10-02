@@ -1,0 +1,81 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m9s5-1-2:rise-loss",
+ "kind": "family",
+ "lo_id": "lo:g10m9s5-1-2",
+ "parent_question_id": "q:g10m9s5-1-2:ex9-6-2c",
+ "source_page": 348,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": "Mthuli, a South African shopper, wants to buy a television priced in pounds (£) and pays in rand (R). The rand cost is the price in pounds multiplied by the exchange rate, the number of rand in £1. He compares the rand cost at the current exchange rate with the rand cost after the rate has risen.",
+ "params": [
+  {
+   "name": "k",
+   "randint": [
+    4,
+    30
+   ]
+  },
+  {
+   "name": "p",
+   "let": "k * 5"
+  },
+  {
+   "name": "r1",
+   "randint": [
+    8,
+    15
+   ]
+  },
+  {
+   "name": "r2",
+   "randint": [
+    "r1 + 1",
+    "min(20, r1 + 6)"
+   ]
+  },
+  {
+   "name": "c1",
+   "let": "p * r1"
+  },
+  {
+   "name": "c2",
+   "let": "p * r2"
+  },
+  {
+   "name": "loss",
+   "let": "c2 - c1"
+  }
+ ],
+ "constraints": [
+  "r2 > r1",
+  "r2 <= 20",
+  "loss > 0"
+ ],
+ "stem": "Mthuli wants to buy a television that costs $\\text{£ }{=p}$, with the exchange rate currently at $\\text{£1}=\\text{R}{=r1}$. In a month the exchange rate rises to $\\text{£1}=\\text{R}{=r2}$. How much will he lose, in rand, if he buys the television at the new rate instead of at the current rate?",
+ "answer": "loss",
+ "solution": [
+  "The cost in rand is the price in pounds multiplied by the exchange rate.",
+  "At the current rate: $\\text{Cost}={=p}\\times\\text{R}{=r1}=\\text{R}{=c1}$.",
+  "At the new rate: $\\text{Cost}={=p}\\times\\text{R}{=r2}=\\text{R}{=c2}$.",
+  "The rate has risen, so the television now costs more and the difference is a loss: $\\text{Loss}=\\text{R}{=c2}-\\text{R}{=c1}=\\text{R}{=loss}$."
+ ],
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m9s5-1-2:rate-difference-only",
+   "label": "Subtracts the rates but never multiplies by the price in pounds",
+   "description": "The student finds how far the exchange rate moved (old rate minus new rate) and gives that as the saving or loss, forgetting that the item costs many pounds and each pound is affected by the change."
+  },
+  {
+   "id": "mc:g10m9s5-1-2:new-cost-as-change",
+   "label": "Gives the rand cost at the new rate as the saving or loss",
+   "description": "The student computes the price in rand at the new rate and stops there, instead of subtracting it from (or taking it away from) the rand cost at the old rate to find the difference."
+  },
+  {
+   "id": "mc:g10m9s5-1-2:divides-by-rate",
+   "label": "Divides the pound price by the exchange rate",
+   "description": "The student converts pounds to rand by dividing the price in pounds by the number of rand per pound instead of multiplying, so the rand costs and the saving come out wrong."
+  }
+ ],
+ "notes": "Basic entry point, the mirror of fall-saving, modelled on ex9-6-2c (Mthuli's television, loss when the rate moves up). The book pairs every 'save' part with a 'lose' part, and the learner has to see that a rising rate makes the purchase dearer, so the same two rand costs are now subtracted the other way round. Direction is always a rise, so the answer is a positive loss. Ranges: price 20 to 150 pounds in steps of 5, current rate R8 to R15, new rate 1 to 6 above it and never over R20. Loss is a whole number between 20 and 900 rand. The book's extra 'he estimates the rate will drop' sentence is left out so the only rates in the stem are the two being compared. Wording 'instead of at the current rate' pins the comparison for a blind solver. Numeric family, so the proposed misconceptions describe wrong numbers (r2 - r1, p * r2, p / r1 - p / r2)."
+}

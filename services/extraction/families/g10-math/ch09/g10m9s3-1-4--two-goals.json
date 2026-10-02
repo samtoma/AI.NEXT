@@ -1,0 +1,118 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m9s3-1-4:two-goals",
+ "kind": "family",
+ "lo_id": "lo:g10m9s3-1-4",
+ "parent_question_id": "q:g10m9s3-1-4:ex9-7-11",
+ "source_page": 350,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": "Naledi needs one sum of money in rand after a few years (for a laptop) and a second sum after a longer time (for a course). She will invest two separate amounts today, one for each need, both at the same compound interest rate (a percentage with one decimal place, per annum). Each principal is found with the book's method P = A / (1 + i)^n, rounded up to the next whole rand as in the book's own exercises, and the two rounded amounts are added.",
+ "params": [
+  {
+   "name": "t",
+   "randint": [
+    81,
+    149
+   ],
+   "resample_while": "t % 10 == 0"
+  },
+  {
+   "name": "rate",
+   "let": "t / 10"
+  },
+  {
+   "name": "iv",
+   "let": "t / 1000"
+  },
+  {
+   "name": "n1",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "n2",
+   "randint": [
+    "n1 + 2",
+    9
+   ]
+  },
+  {
+   "name": "u1",
+   "randint": [
+    30,
+    120
+   ]
+  },
+  {
+   "name": "u2",
+   "randint": [
+    30,
+    200
+   ]
+  },
+  {
+   "name": "amt1",
+   "let": "100 * u1"
+  },
+  {
+   "name": "amt2",
+   "let": "100 * u2"
+  },
+  {
+   "name": "pv1",
+   "let": "amt1 * 1000 ** n1 / (1000 + t) ** n1"
+  },
+  {
+   "name": "pv2",
+   "let": "amt2 * 1000 ** n2 / (1000 + t) ** n2"
+  },
+  {
+   "name": "f1",
+   "let": "pv1 - floor(pv1)"
+  },
+  {
+   "name": "f2",
+   "let": "pv2 - floor(pv2)"
+  },
+  {
+   "require": "10 * f1 >= 1 and 10 * f1 <= 9",
+   "why": "keep the first principal well away from a whole rand, so rounding up is unambiguous"
+  },
+  {
+   "require": "10 * f2 >= 1 and 10 * f2 <= 9",
+   "why": "keep the second principal well away from a whole rand, so rounding up is unambiguous"
+  },
+  {
+   "name": "q1",
+   "let": "ceil(pv1)"
+  },
+  {
+   "name": "q2",
+   "let": "ceil(pv2)"
+  },
+  {
+   "name": "total",
+   "let": "q1 + q2"
+  }
+ ],
+ "constraints": [
+  "n1 < n2",
+  "q1 > 0",
+  "q2 > 0"
+ ],
+ "stem": "Naledi needs $\\text{R{=amt1}}$ for a laptop in ${=n1}$ years' time and $\\text{R{=amt2}}$ for a course in ${=n2}$ years' time. She will invest two separate amounts today, one for each need, at a compound interest rate of ${=fixed(rate, 1)}$ % p.a. How much must she invest in total? Round each of the two amounts up to the next whole rand before you add them, and do not round any other value.",
+ "answer": "total",
+ "solution": [
+  "Each need has its own investment, so work out the two amounts separately. For the first need write down the given information: $\\begin{aligned}A_1&=\\text{R{=amt1}}\\\\P_1&=?\\\\i&=\\frac{{=fixed(rate, 1)}}{100}={=fixed(iv, 3)}\\\\n_1&={=n1}\\end{aligned}$",
+  "Make $P$ the subject of the formula: $\\begin{aligned}A&=P(1+i)^{n}\\\\\\frac{A}{(1+i)^{n}}&=P\\end{aligned}$",
+  "First amount: $\\begin{aligned}P_1&=\\frac{\\text{R{=amt1}}}{(1+{=fixed(iv, 3)})^{{=n1}}}\\\\&=\\text{R{=fixed(pv1, 2)}}\\end{aligned}$ This rounds up to $\\text{R{=q1}}$.",
+  "Second amount, with $A_2=\\text{R{=amt2}}$ and $n_2={=n2}$: $\\begin{aligned}P_2&=\\frac{\\text{R{=amt2}}}{(1+{=fixed(iv, 3)})^{{=n2}}}\\\\&=\\text{R{=fixed(pv2, 2)}}\\end{aligned}$ This rounds up to $\\text{R{=q2}}$.",
+  "Add the two rounded amounts: $\\text{R{=q1}}+\\text{R{=q2}}=\\text{R{=total}}$",
+  "Naledi must invest $\\text{R{=total}}$ in total."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced = several steps: the book's P = A / (1+i)^n applied twice (different n for each need) and the results added. The rounding follows the book ('round up' means ceiling: its own answers 24001.46 -> 24002 and 44871.03 -> 44872 only fit that reading). The stem says each amount is rounded UP to the next whole rand BEFORE adding, which fixes the order of rounding and the direction. Both unrounded principals are computed exactly (rational arithmetic), and each is required to have a fractional part between 0.1 and 0.9, so the ceiling is never decided by a near-integer value or a calculator's last digit. The rate is a one-decimal percentage with a non-zero last digit (8.1 to 14.9, as in the book) so it always prints cleanly with fixed(rate, 1); i prints with fixed(iv, 3). n1 is 2 to 5 and n2 is at least n1 + 2 and at most 9, so every instance has two different periods and no '1 years' wording. Amounts are multiples of R100, as in the book. Worked example: rate 11.8, A1 = R30000 at n1 = 2 gives 24001.46 (as in the book, ex9-2-5), which rounds up to 24002. This is a reviewer note only: a solver who rounds intermediate powers of (1+i) could lose accuracy, hence the 'do not round any other value' sentence in the stem."
+}

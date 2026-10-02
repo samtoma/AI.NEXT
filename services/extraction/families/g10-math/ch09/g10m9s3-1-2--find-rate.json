@@ -1,0 +1,65 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m9s3-1-2:find-rate",
+ "kind": "family",
+ "lo_id": "lo:g10m9s3-1-2",
+ "parent_question_id": "q:g10m9s3-1-2:ex9-2-7",
+ "source_page": 340,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": "Morgan invests a sum of money (in rand) into an account which pays compound interest, compounded annually, and pays out a lump sum at the end of a whole number of years. Given the amount invested, the number of years and the lump sum he receives, find the annual compound interest rate the bank offered. The rate is a whole-number percentage, so the n-th root comes out exactly.",
+ "params": [
+  {
+   "name": "n",
+   "choice": [
+    3,
+    4
+   ]
+  },
+  {
+   "name": "r",
+   "choice": "[10, 20] if n == 4 else [4, 5, 6, 8, 10, 12, 15, 20]"
+  },
+  {
+   "name": "P",
+   "choice": [
+    1000,
+    2000,
+    2500,
+    4000,
+    5000,
+    8000,
+    10000,
+    12000,
+    15000,
+    20000
+   ]
+  },
+  {
+   "require": "(P * (100 + r) ** n) % (100 ** (n - 1)) == 0",
+   "why": "the lump sum must be an exact number of cents, so the rate is exactly r % and the root is exact"
+  },
+  {
+   "name": "A",
+   "let": "P * (100 + r) ** n / 100 ** n"
+  },
+  {
+   "name": "g",
+   "let": "1 + r / 100"
+  }
+ ],
+ "constraints": [],
+ "stem": "Morgan invests $\\text{R{=P}}$ into an account which pays out a lump sum at the end of ${=n}$ years. If he gets $\\text{R{=fixed(A, 2)}}$ at the end of the period, what compound interest rate did the bank offer him? The interest is compounded annually. Give the rate as a percentage per annum, as a number without the % sign.",
+ "answer": "r",
+ "solution": [
+  "Write down what is given: $A=\\text{R{=fixed(A, 2)}}$, $P=\\text{R{=P}}$, $n={=n}$ and $i=\\,?$",
+  "Write down the formula and substitute the known values: $A=P(1+i)^{n}$ gives $\\text{R{=fixed(A, 2)}}=\\text{R{=P}}(1+i)^{{=n}}$",
+  "Divide both sides by $\\text{R{=P}}$ to get the bracket on its own: $\\frac{{=fixed(A, 2)}}{{=P}}=(1+i)^{{=n}}$",
+  "Take the $n$th root of both sides (here $n={=n}$) and use your calculator: $1+i=\\sqrt[{=n}]{\\frac{{=fixed(A, 2)}}{{=P}}}={=fixed(g, 2)}$",
+  "Subtract $1$ from both sides to find $i$: $i={=fixed(g, 2)}-1={=fixed(r / 100, 2)}$",
+  "Write the rate as a percentage: $i\\times 100={=r}$, so the bank offered a compound interest rate of ${=r}$ % p.a.",
+  "Check: $\\text{R{=P}}\\times({=fixed(g, 2)})^{{=n}}=\\text{R{=fixed(A, 2)}}$, which is the amount Morgan received."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Basic tier: the entry point of 'solve A = P(1+i)^n for i', modelled on ex9-2-7 (Morgan, R5000 to R7500) but with data chosen so that the rate is an exact whole percentage and the n-th root is clean. n is 3 or 4 so the root is written with the book's \\sqrt[n] notation (n = 2 would print the unconventional \\sqrt[2]); for n = 4 only 10 % and 20 % keep the lump sum exact to the cent. The require guarantees A = P(1+r/100)^n is an exact amount of rand and cents (checked offline: 72 distinct (n, r, P) combinations, A at most R41472.00, and the n-th root of A/P equals 1 + r/100 exactly in every one), so there is exactly one correct answer and no rounding is involved. The stem says the interest is compounded annually, to match the formula A = P(1+i)^n, and asks for the percentage as a bare number, as the book's answers are (e.g. 8.45). No mcq, so no distractors; the catalogued misconception (reading a very high rate as a mistake in the working) belongs to the advanced we06 comment question, which is a book question and is not repeated here. Standard and advanced tiers are not gaps (four book questions already cover them), and a non-exact root cannot be computed with the available expression language, so no rounded-decimal family is offered."
+}

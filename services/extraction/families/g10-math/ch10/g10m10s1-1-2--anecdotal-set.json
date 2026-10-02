@@ -1,0 +1,70 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m10s1-1-2:anecdotal-set",
+ "kind": "family",
+ "lo_id": "lo:g10m10s1-1-2",
+ "parent_question_id": "q:g10m10s1-1-2:ex10-1-1",
+ "source_page": 358,
+ "tier": "standard",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "i",
+   "randint": [
+    0,
+    5
+   ]
+  },
+  {
+   "name": "intros",
+   "let": "['Grade 12 learners were asked, just after their final exams, to say in a sentence what they dream of doing next.', 'Learners were asked to describe, in a sentence, their best day at school.', 'Learners were asked to say, in a sentence, what they did during the school holidays.', 'Learners were asked to describe, in a sentence, their journey to school.', 'Learners were asked to tell, in a sentence, about something funny that happened at school.', 'Learners were asked to say, in a sentence, what they are proud of.']"
+  },
+  {
+   "name": "pools",
+   "let": "[['I want to become a doctor in my village.', 'I dream of building a school for my town.', 'I want to travel and see the world.', 'I hope to start my own farm one day.', 'I would like to teach young children.', 'I want to design aeroplanes.'], ['My best day was when our netball team won the final.', 'I loved the day we visited the museum.', 'The day my teacher read us a story was special.', 'I enjoyed the school concert most of all.', 'We planted a garden together and that was my best day.', 'Sports day made me laugh the whole afternoon.'], ['We visited my grandmother in the Eastern Cape.', 'I spent the whole holiday reading books.', 'We went to the beach every weekend.', 'I learnt to ride a bicycle.', 'I stayed at home and played soccer with my friends.', 'I helped my mother sell vegetables at the market.'], ['I walk past a river on my way to school.', 'The road to my school is full of puddles when it rains.', 'I wait for the bus with my older sister each morning.', 'My dog follows me to the gate every day.', 'I enjoy the walk because I greet everyone I meet.', 'The bus is always full, so I stand.'], ['Our teacher slipped on the wet floor and laughed with us.', 'A bird flew into the classroom during the test.', 'My friend fell asleep in assembly and snored.', 'The principal got locked out of his own office.', 'A goat wandered onto the soccer field in the middle of the match.', 'I wore my jersey inside out all day and nobody told me.'], ['I am proud that I taught my little brother to read.', 'I am proud of the vegetable garden I planted at home.', 'I am proud that I finished the school race.', 'I am proud that my poem was read at assembly.', 'I am proud that I helped my neighbour carry water.', 'I am proud that I passed my music exam.']]"
+  },
+  {
+   "name": "intro",
+   "let": "intros[i]"
+  },
+  {
+   "name": "pool",
+   "let": "pools[i]"
+  },
+  {
+   "name": "v",
+   "sample": {
+    "from": "pool",
+    "k": 3
+   }
+  }
+ ],
+ "constraints": [],
+ "stem": "{=intro} Their responses were: \"{=v[0]}\"; \"{=v[1]}\"; \"{=v[2]}\". Which one of the following correctly categorises this data set and explains the choice?",
+ "choices": {
+  "correct": "Qualitative anecdotal: the responses are not numbers, and they take the form of a story told in the learners' own words.",
+  "distractors": [
+   {
+    "text": "Qualitative categorical: the responses are not numbers, and each one is made of words.",
+    "misconception_id": "mc:g10m10s1-1-2:categorical-for-any-words"
+   },
+   {
+    "text": "Quantitative discrete: the responses can be counted, so they are numbers.",
+    "misconception_id": "mc:g10m10s1-1-2:quantitative-for-words"
+   },
+   {
+    "text": "Qualitative, but neither categorical nor anecdotal: the responses are not numbers, and that is as far as the classification goes.",
+    "misconception_id": "mc:g10m10s1-1-2:stops-at-qualitative"
+   }
+  ]
+ },
+ "solution": [
+  "Each response is a sentence in the learner's own words, not a number, so the data set cannot be written as numbers. It is qualitative.",
+  "The three responses are all different, and none of them is chosen from a limited set of possibilities. Being made of words does not make data categorical, so the data set is not categorical.",
+  "Each learner tells something in his or her own words, so the responses take the form of a story. That makes the data set anecdotal. It is not quantitative either: counting the responses does not turn them into numbers.",
+  "Therefore the data set is qualitative anecdotal, because the responses are not numbers and they take the form of a story told in the learners' own words."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Standard tier, the mirror of tpl:g10m10s1-1-2:categorical-set and modelled on the book's dreams question (ex10-1-1, anecdotal). Each instance is three different learner sentences sampled from a pool of six, in six fixed situations; each situation says in its intro that the answer was a sentence. Every instance is anecdotal by construction, so each distractor slot keeps one catalogued error: categorical-for-any-words, quantitative-for-words, stops-at-qualitative. The book's own phrase for anecdotal ('takes the form of a story') is used in the correct option; the sentence pools are recounts and descriptions rather than commands or advice so the phrase is honest for every instance. Sentences are set as plain quoted text, not inside $...$, because three sentences would overflow a single math span on an iPad."
+}

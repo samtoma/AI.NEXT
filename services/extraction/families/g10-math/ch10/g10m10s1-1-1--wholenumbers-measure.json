@@ -1,0 +1,106 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m10s1-1-1:wholenumbers-measure",
+ "kind": "family",
+ "lo_id": "lo:g10m10s1-1-1",
+ "parent_question_id": "q:g10m10s1-1-1:ex10-7-1",
+ "source_page": 382,
+ "tier": "advanced",
+ "answer_type": "mcq",
+ "context": "A class of Grade 10 learners measure things and record each measurement in the unit shown; two of the six measurements happen to be whole numbers. The class is fixed; only the thing measured, its unit and the values change.",
+ "params": [
+  {
+   "name": "whats",
+   "let": "['the mass of each parcel the class posted', 'the length of each piece of ribbon the class cut', 'the volume of water in each bucket the class filled', 'the distance each learner walked to school', 'the time each learner took to complete a puzzle']"
+  },
+  {
+   "name": "units",
+   "let": "['kg', 'm', 'L', 'km', 'min']"
+  },
+  {
+   "name": "los",
+   "let": "[15, 15, 20, 10, 20]"
+  },
+  {
+   "name": "his",
+   "let": "[95, 60, 95, 80, 95]"
+  },
+  {
+   "name": "i",
+   "randint": [
+    0,
+    4
+   ]
+  },
+  {
+   "name": "what",
+   "let": "whats[i]"
+  },
+  {
+   "name": "unit",
+   "let": "units[i]"
+  },
+  {
+   "name": "pw",
+   "let": "[t for t in range(los[i], his[i] + 1) if t % 10 == 0]"
+  },
+  {
+   "name": "pd",
+   "let": "[t for t in range(los[i], his[i] + 1) if t % 10 != 0]"
+  },
+  {
+   "name": "a",
+   "sample": {
+    "from": "pw",
+    "k": 2
+   }
+  },
+  {
+   "name": "b",
+   "sample": {
+    "from": "pd",
+    "k": 4
+   }
+  },
+  {
+   "name": "mix",
+   "let": "[a[0], a[1], b[0], b[1], b[2], b[3]]"
+  },
+  {
+   "name": "s",
+   "shuffle": "mix"
+  },
+  {
+   "name": "show",
+   "let": "[str(t // 10) if t % 10 == 0 else fixed(t / 10, 1) for t in s]"
+  }
+ ],
+ "constraints": [],
+ "stem": "A class of Grade 10 learners recorded {=what}. The data set is $\\{{=show[0]}\\text{ {=unit}}, {=show[1]}\\text{ {=unit}}, {=show[2]}\\text{ {=unit}}, {=show[3]}\\text{ {=unit}}, {=show[4]}\\text{ {=unit}}, {=show[5]}\\text{ {=unit}}\\}$. Which of the following correctly categorises the data set and gives the reason?",
+ "choices": {
+  "correct": "Quantitative continuous, because the values are measurements and cannot all be written as integers",
+  "distractors": [
+   {
+    "text": "Quantitative discrete, because some of the values are integers",
+    "misconception_id": "mc:g10m10s1-1-1:measurement-called-discrete"
+   },
+   {
+    "text": "Qualitative categorical, because the values only name groups",
+    "misconception_id": "mc:g10m10s1-1-1:numbers-called-qualitative"
+   },
+   {
+    "text": "Qualitative anecdotal, because the values only describe the things measured",
+    "misconception_id": "mc:g10m10s1-1-1:numbers-called-qualitative"
+   }
+  ]
+ },
+ "solution": [
+  "The values are numbers, so the data set of {=what} is quantitative, not qualitative.",
+  "Each value is a measurement in {=unit}, not a count.",
+  "Two of the values, {=a[0] // 10} {=unit} and {=a[1] // 10} {=unit}, happen to be whole numbers, but a measurement that lands on a whole number is still a measurement.",
+  "The other four values are decimals, so the data set cannot be represented by integers.",
+  "A measurement written as real numbers is continuous. Therefore the data set is quantitative continuous."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced tier: the twist is that some values print as whole numbers (e.g. 3 kg beside 4.5 kg), which tempts the 'integers means discrete' reading. The reasoning stays the book's own: a data set that cannot be represented by integers, made of measurements, is continuous. Always exactly two whole and four decimal values (shuffled into random positions), so the set is never all integers; all five quantities are plain measurements (mass, length, volume, distance, time). The discrete distractor's reason is the misconception itself and is clearly flawed for a measurement set, so a careful blind solver should not choose it. Whole values print via str(t // 10), decimals via fixed(t / 10, 1); the stem units sit in \\text inside the math."
+}

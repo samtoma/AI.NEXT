@@ -1,0 +1,96 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m9s4-1-4:setup-formula",
+ "kind": "family",
+ "lo_id": "lo:g10m9s4-1-4",
+ "parent_question_id": "q:g10m9s4-1-4:we11",
+ "source_page": 346,
+ "tier": "basic",
+ "answer_type": "mcq",
+ "context": "The population of a town grows at a constant average percentage rate each year.",
+ "params": [
+  {
+   "name": "k",
+   "randint": [
+    5,
+    90
+   ]
+  },
+  {
+   "name": "P",
+   "let": "k * 500"
+  },
+  {
+   "name": "r",
+   "choice": [
+    3,
+    4,
+    5,
+    6,
+    8,
+    12
+   ]
+  },
+  {
+   "name": "n",
+   "randint": [
+    3,
+    12
+   ]
+  },
+  {
+   "require": "r != n",
+   "why": "the swapped-rate-and-years distractor must differ from the correct option"
+  }
+ ],
+ "stem": "The population of a town is currently ${=P}$ and the average rate of population growth is ${=r}$ % p.a. Which calculation uses the compound interest formula correctly to find the expected population of the town in ${=n}$ years' time?",
+ "choices": {
+  "correct": "$A={=P}\\left(1+\\frac{{=r}}{100}\\right)^{{=n}}$",
+  "distractors": [
+   {
+    "text": "$A={=P}\\left(1+{=r}\\right)^{{=n}}$",
+    "misconception_id": "mc:g10m9s4-1-4:rate-not-percent"
+   },
+   {
+    "text": "$A={=P}\\left(1+\\frac{{=r}}{100}\\times {=n}\\right)$",
+    "misconception_id": "mc:g10m9s4-1-4:simple-growth"
+   },
+   {
+    "text": "$A={=P}\\left(1+\\frac{{=n}}{100}\\right)^{{=r}}$",
+    "misconception_id": "mc:g10m9s4-1-4:swapped-rate-years"
+   },
+   {
+    "text": "$A={=P}\\left(\\frac{{=r}}{100}\\right)^{{=n}}$",
+    "misconception_id": "mc:g10m9s4-1-4:growth-factor-no-one"
+   }
+  ]
+ },
+ "solution": [
+  "The compound interest formula is $A=P(1+i)^{n}$, where $P$ is the starting amount, $i$ is the rate per year written as a fraction of $100$ and $n$ is the number of years.",
+  "Here $P={=P}$, $i=\\frac{{=r}}{100}$ and $n={=n}$.",
+  "So $A={=P}\\left(1+\\frac{{=r}}{100}\\right)^{{=n}}$."
+ ],
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m9s4-1-4:rate-not-percent",
+   "label": "Uses the rate as a whole number",
+   "description": "Puts the growth rate into the formula as r (for example 1 + 5) instead of r/100 (1 + 0.05), so the percentage is never converted to a fraction."
+  },
+  {
+   "id": "mc:g10m9s4-1-4:simple-growth",
+   "label": "Treats population growth as simple growth",
+   "description": "Adds the same amount every year, P(1 + i x n), instead of multiplying by (1 + i) each year, so growth is not compounded."
+  },
+  {
+   "id": "mc:g10m9s4-1-4:swapped-rate-years",
+   "label": "Swaps the rate and the number of years",
+   "description": "Uses the number of years as the percentage and the percentage as the exponent, because both are just numbers in the question."
+  },
+  {
+   "id": "mc:g10m9s4-1-4:growth-factor-no-one",
+   "label": "Leaves out the 1 in (1 + i)",
+   "description": "Uses the growth rate i alone as the yearly multiplier, P x i^n, forgetting that the population keeps what it already had and adds the growth."
+  }
+ ],
+ "notes": "Basic: setting up the compound interest calculation without evaluating it. mcq is natural here because the four distractors are the four classic set-up errors (rate not divided by 100, simple instead of compound growth, rate and years swapped, missing the 1). The stem holes (P, r, n) differ between instances, so distinct_by_choices is not needed. r != n is required so the swapped option never equals the correct one. The objective has no catalogued misconceptions; the four ids above are proposed."
+}

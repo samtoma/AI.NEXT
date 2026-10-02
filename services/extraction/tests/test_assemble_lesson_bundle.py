@@ -709,6 +709,47 @@ class NestedDollarTest(unittest.TestCase):
         self.assertEqual((rep.nested_dollars, rep.dollars), (1, 1))
 
 
+class StrayEnvironmentTest(unittest.TestCase):
+    """Exercise 13.4 question 1b reaches us as the book's own markup slip: the last line of an aligned block written `\\begin{align*}\\begin{align*}…\\end{answer}
+    \\end{align*}` (opener doubled, inner closer named `answer`), which KaTeX refuses ("\\begin{aligned} matched by \\end{answer}"). One block, repaired at assembly;
+    only that exact shape is touched."""
+
+    BODY = "\\text{surface area}&=\\frac{1}{2}b(h_{b}+3h_{s})\\\\&\\approx\\text{45,6}\\text{ cm}^{2}"
+
+    def test_the_doubled_block_is_one_block(self):
+        for env in ("aligned", "align*"):
+            raw = f"Then $\\begin{{{env}}}\\begin{{{env}}}{self.BODY}\\end{{answer}}\\end{{{env}}}$"
+            self.assertEqual(alb.repair_stray_environment(raw), (f"Then $\\begin{{{env}}}{self.BODY}\\end{{{env}}}$", 1), env)
+
+    def test_nothing_else_is_touched(self):
+        for raw in (f"$\\begin{{aligned}}{self.BODY}\\end{{aligned}}$",                              # a well-formed block
+                    f"$\\begin{{aligned}}\\begin{{aligned}}{self.BODY}\\end{{aligned}}\\end{{aligned}}$",   # a real nest: KaTeX reads it
+                    f"$\\begin{{aligned}}{self.BODY}\\end{{answer}}$",                                # a stray closer with no doubled opener: left for the validator
+                    f"$\\begin{{aligned}}\\begin{{align*}}{self.BODY}\\end{{answer}}\\end{{aligned}}$",   # not the same environment twice
+                    f"$\\begin{{aligned}}\\begin{{aligned}}x\\begin{{cases}}1\\end{{cases}}\\end{{answer}}\\end{{aligned}}$",  # another environment inside the body
+                    "the \\end{answer} of the book", "", "$x$"):
+            self.assertEqual(alb.repair_stray_environment(raw), (raw, 0), raw)
+
+    def test_it_is_idempotent(self):
+        once, _ = alb.repair_stray_environment(f"$\\begin{{aligned}}\\begin{{aligned}}{self.BODY}\\end{{answer}}\\end{{aligned}}$")
+        self.assertEqual(alb.repair_stray_environment(once), (once, 0))
+
+    @unittest.skipUnless(shutil.which("node"), "the app's KaTeX runs in node")
+    def test_the_apps_katex_refuses_the_raw_block_and_accepts_the_repaired_one(self):
+        raw = f"$\\begin{{aligned}}\\begin{{aligned}}{self.BODY}\\end{{answer}}\\end{{aligned}}$"
+        self.assertTrue(alb.katex_errors([{"where": "r", "text": raw}]))
+        self.assertEqual(alb.katex_errors([{"where": "r", "text": alb.repair_stray_environment(raw)[0]}]), [])
+
+    def test_a_bundle_is_cleaned_and_the_report_counts_it(self):
+        rep = alb.Report()
+        out = alb.respace_tree({"questions": [{"id": "q:1", "solution": [f"$\\begin{{aligned}}\\begin{{aligned}}{self.BODY}\\end{{answer}}\\end{{aligned}}$"],
+                                               "source": "\\begin{aligned}\\begin{aligned}x\\end{answer}\\end{aligned}"}]}, rep)
+        self.assertEqual(out["questions"][0]["solution"], [f"$\\begin{{aligned}}{self.BODY}\\end{{aligned}}$"])
+        self.assertEqual(out["questions"][0]["source"], "\\begin{aligned}\\begin{aligned}x\\end{answer}\\end{aligned}", "metadata is never touched")
+        self.assertEqual(rep.stray_environments, 1)
+        self.assertEqual(rep.as_dict()["stray_environments_repaired"], 1)
+
+
 class HtmlEntityTest(unittest.TestCase):
     """Chapter 5's EPUB left numeric HTML character references in its text and inside its maths ("$\\cos30&#176;=$"): KaTeX refuses the "&" and 28
     questions showed a red error. A reference is the character it names; inside $…$ the degree sign is ^{\\circ}, the book's own spelling beside it."""

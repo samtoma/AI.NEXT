@@ -1,0 +1,117 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m10s1-1-1:measure-reason",
+ "kind": "family",
+ "lo_id": "lo:g10m10s1-1-1",
+ "parent_question_id": "q:g10m10s1-1-1:ex10-7-1",
+ "source_page": 382,
+ "tier": "standard",
+ "answer_type": "mcq",
+ "context": "A class of Grade 10 learners each record one measurement. The class is fixed; only the thing measured, its unit and the six values change.",
+ "params": [
+  {
+   "name": "whats",
+   "let": "['the height of each learner', 'the mass of the school bag each learner carried', 'the time each learner took to walk to school', 'the distance each learner jumped in the long jump', 'the distance from home to school for each learner', 'the volume of water each learner drank yesterday']"
+  },
+  {
+   "name": "units",
+   "let": "['m', 'kg', 'min', 'm', 'km', 'L']"
+  },
+  {
+   "name": "los",
+   "let": "[135, 21, 55, 150, 5, 25]"
+  },
+  {
+   "name": "his",
+   "let": "[186, 79, 355, 420, 95, 195]"
+  },
+  {
+   "name": "scs",
+   "let": "[100, 10, 10, 100, 10, 100]"
+  },
+  {
+   "name": "dps",
+   "let": "[2, 1, 1, 2, 1, 2]"
+  },
+  {
+   "name": "i",
+   "randint": [
+    0,
+    5
+   ]
+  },
+  {
+   "name": "what",
+   "let": "whats[i]"
+  },
+  {
+   "name": "unit",
+   "let": "units[i]"
+  },
+  {
+   "name": "sc",
+   "let": "scs[i]"
+  },
+  {
+   "name": "pool",
+   "let": "[t for t in range(los[i], his[i] + 1) if t % sc != 0]"
+  },
+  {
+   "name": "v",
+   "sample": {
+    "from": "pool",
+    "k": 6
+   }
+  },
+  {
+   "name": "x0",
+   "let": "fixed(v[0] / sc, dps[i])"
+  },
+  {
+   "name": "x1",
+   "let": "fixed(v[1] / sc, dps[i])"
+  },
+  {
+   "name": "x2",
+   "let": "fixed(v[2] / sc, dps[i])"
+  },
+  {
+   "name": "x3",
+   "let": "fixed(v[3] / sc, dps[i])"
+  },
+  {
+   "name": "x4",
+   "let": "fixed(v[4] / sc, dps[i])"
+  },
+  {
+   "name": "x5",
+   "let": "fixed(v[5] / sc, dps[i])"
+  }
+ ],
+ "constraints": [],
+ "stem": "A class of Grade 10 learners recorded {=what}. The data set is $\\{{=x0}\\text{ {=unit}}, {=x1}\\text{ {=unit}}, {=x2}\\text{ {=unit}}, {=x3}\\text{ {=unit}}, {=x4}\\text{ {=unit}}, {=x5}\\text{ {=unit}}\\}$. Which of the following correctly categorises the data set and gives the reason?",
+ "choices": {
+  "correct": "Quantitative continuous, because the values are measurements, written as real numbers",
+  "distractors": [
+   {
+    "text": "Quantitative discrete, because the data set is a short list of separate values",
+    "misconception_id": "mc:g10m10s1-1-1:measurement-called-discrete"
+   },
+   {
+    "text": "Qualitative categorical, because the values only sort the learners into groups",
+    "misconception_id": "mc:g10m10s1-1-1:numbers-called-qualitative"
+   },
+   {
+    "text": "Qualitative anecdotal, because the values only describe the learners",
+    "misconception_id": "mc:g10m10s1-1-1:numbers-called-qualitative"
+   }
+  ]
+ },
+ "solution": [
+  "The values are numbers, so the data set of {=what} is quantitative, not qualitative.",
+  "Each value is a measurement in {=unit}, written as a decimal number, so the data set cannot be represented by integers.",
+  "A measurement written as real numbers is continuous. Therefore the data set is quantitative continuous."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Standard tier: the book's measurement exercise (ex10-7-1) with a reason added to the options. Values are drawn as scaled integers and shown with fixed(..., dp) so every value keeps its decimals (e.g. 1.70 m); the pool excludes any value that would print as a whole number, so no value looks like a count (the whole-number twist is the advanced family wholenumbers-measure). Units are shown in text inside the math. Direction is fixed (always continuous) so the swap distractor carries the single id measurement-called-discrete."
+}

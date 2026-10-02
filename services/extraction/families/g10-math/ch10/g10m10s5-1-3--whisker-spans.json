@@ -1,0 +1,90 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m10s5-1-3:whisker-spans",
+ "kind": "family",
+ "lo_id": "lo:g10m10s5-1-3",
+ "parent_question_id": "q:g10m10s5-1-3:ex10-6-4a",
+ "source_page": 380,
+ "tier": "standard",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    8,
+    60
+   ]
+  },
+  {
+   "name": "g1",
+   "randint": [
+    2,
+    12
+   ]
+  },
+  {
+   "name": "g2",
+   "randint": [
+    1,
+    9
+   ]
+  },
+  {
+   "name": "g3",
+   "randint": [
+    1,
+    9
+   ]
+  },
+  {
+   "name": "g4",
+   "randint": [
+    2,
+    12
+   ]
+  },
+  {
+   "name": "b",
+   "let": "a + g1"
+  },
+  {
+   "name": "c",
+   "let": "b + g2"
+  },
+  {
+   "name": "d",
+   "let": "c + g3"
+  },
+  {
+   "name": "e",
+   "let": "d + g4"
+  },
+  {
+   "require": "a < b and b < c and c < d and d < e",
+   "why": "the five values must be strictly increasing so the plot has a minimum, two quartile ends, a median line inside the box and a maximum"
+  }
+ ],
+ "constraints": [
+  "a < b",
+  "b < c",
+  "c < d",
+  "d < e"
+ ],
+ "stem": "A box-and-whisker plot is drawn above a number line. The box runs from ${=b}$ to ${=d}$, and a line inside the box is drawn at ${=c}$. The whisker on the left runs from ${=a}$ to ${=b}$ and the whisker on the right runs from ${=d}$ to ${=e}$. Write down the five number summary of the plot (the minimum, $Q_1$, the median, $Q_3$ and the maximum), in that order, separated by commas.",
+ "solution": [
+  "The whiskers show where the minimum and maximum values lie. The left whisker starts at ${=a}$ and the right whisker ends at ${=e}$, so the minimum is ${=a}$ and the maximum is ${=e}$.",
+  "The box shows the interquartile range: its two ends are $Q_1$ and $Q_3$. The box runs from ${=b}$ to ${=d}$, so $Q_1 = {=b}$ and $Q_3 = {=d}$.",
+  "The line inside the box shows the median. It is drawn at ${=c}$, so the median is ${=c}$.",
+  "The five number summary is: minimum ${=a}$, $Q_1$ ${=b}$, median ${=c}$, $Q_3$ ${=d}$, maximum ${=e}$. In order: ${=a}$, ${=b}$, ${=c}$, ${=d}$, ${=e}$."
+ ],
+ "marker": {
+  "kind": "values",
+  "answer": "[{=a}, {=b}, {=c}, {=d}, {=e}]",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "The family format has no figure slot and the blind solver cannot see a diagram, so the plot is described in words: each whisker is given as the stretch it covers and the box as the stretch from one end to the other, with the median as the line inside it. The student must still decide which end of each stretch is the extreme and which is a quartile, and must not take the inner line for a box end, which is the book's own reading skill (ex10-6-4a/4b) carried by words instead of a drawn plot. A reviewer who wants a real picture can attach one per instance; the arithmetic of the family does not depend on it. Tiered standard rather than basic because the values are not labelled one by one as in the book's dotted-line figures; each box end appears twice in the description (where a whisker meets the box) and must be read once as a quartile. Values are strictly increasing integers, so marker order and set comparison agree. Max value 102."
+}

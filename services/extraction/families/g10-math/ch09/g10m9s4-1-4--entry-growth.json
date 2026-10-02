@@ -1,0 +1,62 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m9s4-1-4:entry-growth",
+ "kind": "family",
+ "lo_id": "lo:g10m9s4-1-4",
+ "parent_question_id": "q:g10m9s4-1-4:we11",
+ "source_page": 346,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": "The population of a small town grows at a constant average percentage rate each year.",
+ "params": [
+  {
+   "name": "n",
+   "choice": [
+    2,
+    3
+   ]
+  },
+  {
+   "name": "r",
+   "choice": [
+    5,
+    10,
+    20,
+    25
+   ]
+  },
+  {
+   "name": "unit",
+   "let": "8000 if n == 3 else 400"
+  },
+  {
+   "name": "k",
+   "randint": [
+    2,
+    9
+   ]
+  },
+  {
+   "name": "P",
+   "let": "k * unit"
+  },
+  {
+   "require": "(P * (100 + r) ** n) % (100 ** n) == 0",
+   "why": "the unrounded population must be a whole number, so the entry-level answer is exact"
+  },
+  {
+   "name": "A",
+   "let": "(P * (100 + r) ** n) // (100 ** n)"
+  }
+ ],
+ "stem": "The current population of a small town is ${=P}$ and the average rate of population growth is ${=r}$ % p.a. Use the compound interest formula to calculate what the town council can expect the population to be in ${=n}$ years' time.",
+ "answer": "A",
+ "solution": [
+  "Write down the known values: $P={=P}$, $i=\\frac{{=r}}{100}$, $n={=n}$ and $A=?$",
+  "Write down the compound interest formula: $A=P(1+i)^{n}$",
+  "Substitute the values: $A={=P}\\left(1+\\frac{{=r}}{100}\\right)^{{=n}}$",
+  "Calculate: $A={=A}$",
+  "The town council can expect the population to be ${=A}$ in ${=n}$ years' time."
+ ],
+ "notes": "Entry point of the skill: one application of A = P(1+i)^n with n = 2 or 3. P is a multiple of 400 (n = 2) or 8000 (n = 3) and the rate is 5, 10, 20 or 25 %, so the result is always an exact whole number and no rounding is asked. Integrality is enforced by a require. 64 distinct instances. Model: worked example 11 (page 346): same known-values, formula, substitute, answer layout. The stem names the compound interest formula so a blind solver cannot read the growth as simple (linear) growth."
+}
