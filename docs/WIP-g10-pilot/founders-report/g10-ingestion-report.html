@@ -231,9 +231,9 @@ footer { margin-top: 48px; border-top: var(--play-stroke) solid var(--play-ink);
   <div class="card" style="margin-top:14px">
     <div class="tl">
       <div class="ev done"><div class="when">25 Sep 2026</div><div class="what">Curriculum tracks decided</div><div class="dim small">Students pick a curriculum at sign-up; the console gates content per curriculum and grade. First course: Grade 10 American maths, from the Siyavula book.</div></div>
-      <div class="ev done"><div class="when">26 Sep · 04:38–23:04 UTC</div><div class="what">Pilot: Chapter 8 (Analytical geometry) end to end</div><div class="dim small">Every stage run once on one chapter to measure cost and quality before scaling. Samuel personally decided its objective gate (G1) and question gate (G2). Metered $153.30.</div></div>
-      <div class="ev done"><div class="when">27–30 Sep</div><div class="what">Pipeline hardened from the pilot's findings</div><div class="dim small">Cost estimates re-based on measured numbers, rules written down as decisions, the plan for the full book approved (≈ $0.85–1.1k).</div></div>
-      <div class="ev done"><div class="when">1 Oct · 07:56 UTC</div><div class="what">Fan-out starts: chapters 1–7 and 9–14 in parallel</div><div class="dim small">The maths reading for the whole book, then lessons, questions, checks, misconceptions, generated questions and widgets, chapter by chapter.</div></div>
+      <div class="ev done"><div class="when">26 Sep · 04:38–23:04 UTC</div><div class="what">Pilot: Chapter 8 (Analytical geometry) end to end</div><div class="dim small">Every stage run once on one chapter to measure cost and quality before scaling. Samuel personally decided its objective gate (G1) and question gate (G2). Its measured cost re-based the estimate for the whole book.</div></div>
+      <div class="ev done"><div class="when">27–30 Sep</div><div class="what">Pipeline hardened from the pilot's findings</div><div class="dim small">What the pilot exposed was fixed, and the rules it raised were written down as decisions from Samuel's answers.</div></div>
+      <div class="ev done"><div class="when">1 Oct · 07:56 UTC</div><div class="what">Go for the full book; fan-out starts on chapters 1–7 and 9–14 in parallel</div><div class="dim small">Samuel's answer 37: run the whole book, let the gates auto-pass, and put every decision in the console for review (budget ≈ $0.85–1.1k). The maths reading for the whole book, then lessons, questions, checks, misconceptions, generated questions and widgets, chapter by chapter.</div></div>
       <div class="ev warn"><div class="when">1 Oct · evening</div><div class="what">A defect found mid-run and repaired</div><div class="dim small">Worked-example step titles had lost their maths ("Divide both sides by …" with the expression missing): 138 of 571 titles. Fixed at the source and repaired in the saved runs and the database without new model calls.</div></div>
       <div class="ev done"><div class="when">2 Oct · 07:55 UTC</div><div class="what">Last chapter through G5; drift guard green</div><div class="dim small">All 14 chapters have a G5 record. The status record and the errata list were written up the same morning.</div></div>
       <div class="ev"><div class="when">Next</div><div class="what">Human review, merge, release</div><div class="dim small">See "What is not done yet" below.</div></div>
@@ -342,7 +342,7 @@ footer { margin-top: 48px; border-top: var(--play-stroke) solid var(--play-ink);
       <tr><th>Exercise items</th><th>Paragraphs</th><th>Summary items</th><th>Headings</th><th>Worked examples</th><th>Boxes</th><th>Figures</th><th>Definitions</th></tr>
       <tr><td class="num">2,531</td><td class="num">696</td><td class="num">219</td><td class="num">197</td><td class="num">174</td><td class="num">136</td><td class="num">75</td><td class="num">47</td></tr>
     </table>
-    <p class="small dim" style="margin-top:10px">The remaining blocks are smaller kinds (captions, lists, notes). The book prints maths as images; each one was read by a model into typeset maths and accepted only after a check.
+    <p class="small dim" style="margin-top:10px">The other 524 blocks are of smaller kinds. The book prints maths as images; each one was read by a model into typeset maths and accepted only after a check.
       Until native figures are drawn, the book's own pictures stand in for figures (Samuel's answer 37d).</p>
   </div>
 </section>
@@ -452,7 +452,7 @@ footer { margin-top: 48px; border-top: var(--play-stroke) solid var(--play-ink);
 
   <div class="card" style="margin-top:18px">
     <h3>Coverage: safe everywhere, not yet complete everywhere</h3>
-    <p>Every <strong>safety</strong> check passes in every chapter (maths renders, notation is consistent, answers are markable, nothing unreviewed leaks). The <strong>completeness</strong> checks are what keep 13 chapters on "pass with holds":</p>
+    <p>Every <strong>safety</strong> check passes in every chapter (among them: the maths renders, notation is consistent, every question has a sourced solution, teacher-only text stays hidden). The <strong>completeness</strong> checks are what keep 13 chapters on "pass with holds":</p>
     <ul class="plain">
       <li><strong>178 of 211 objectives (84%)</strong> have full evidence; 33 lack a book question or a cited claim.</li>
       <li><strong>554 of 633 objective-difficulty slots (88%)</strong> have a live question; 79 are empty, mostly in Chapters 5, 6 and 10.</li>
@@ -507,7 +507,7 @@ footer { margin-top: 48px; border-top: var(--play-stroke) solid var(--play-ink);
       <h3>Samuel (a person)</h3>
       <ul class="plain small">
         <li>Chapter 8 pilot: the objective gate and the question gate, 26 Sep.</li>
-        <li>45 written answers that set the rules: what a gate may auto-pass, what to do with exercise-only objectives, how multi-part questions read, quality over cost, the budget.</li>
+        <li>45 written answers that set the rules: go for the full book with auto-passing gates, book pictures as stand-in figures, quality over cost, which model, how multi-part questions read.</li>
         <li>Two rule changes on 2 Oct: the drift guard counts servable questions only; one lesson may keep a single objective, marked "check later".</li>
       </ul>
     </div>
@@ -550,9 +550,9 @@ footer { margin-top: 48px; border-top: var(--play-stroke) solid var(--play-ink);
   <div class="card" style="padding:0;overflow:hidden">
     <div class="map">
       <div>Pillar I: schema first, not text first</div><div>Every stage writes typed records (objectives, claims, questions with an answer spec) that are validated before they load, rather than free text.</div>
-      <div>Ch. 2–3: document understanding and deterministic extraction</div><div>The e-book is read by structure (4,599 blocks), maths images become typeset maths with an acceptance check, and assembly is plain code with no model calls; this is why the step-title defect could be repaired without re-running any model.</div>
+      <div>Ch. 2–3: document understanding and deterministic extraction</div><div>The e-book is read by structure (4,599 blocks), maths images become typeset maths with an acceptance check, and assembly is plain code with no model calls; this is why the step-title defect could be repaired by a script rather than by re-running the models.</div>
       <div>Ch. 15: curriculum graphs and educational agents</div><div>Objectives, lessons and modules with a prerequisite graph (15.1 schema); every question and claim cites the objective and the book passage it came from (15.5).</div>
-      <div>Ch. 15.7: build a spine, sell verticals</div><div>The same line that built Prep-3 maths ingested a second curriculum's book unchanged in shape, as a new course.</div>
+      <div>Ch. 15.7: build a spine, sell verticals</div><div>A second curriculum's book arrives as a new course beside Prep-3 on the same graph and the same gates, switched on per curriculum and grade.</div>
       <div>Ch. 19.6: MVP-cut discipline</div><div>One chapter piloted end to end, measured, then the rest fanned out; nothing is built that the pilot did not need.</div>
       <div>Ch. 16: bitemporal knowledge</div><div>Syllabus versioning on graph edges is the design (ADR-0001); this run loads one version and does not yet exercise it.</div>
     </div>
@@ -569,7 +569,7 @@ footer { margin-top: 48px; border-top: var(--play-stroke) solid var(--play-ink);
         <tr><td class="l">Report</td><td class="l">rev 1 · 2 October 2026</td></tr>
         <tr><td class="l">App version</td><td class="l"><strong>v0.11.0</strong>, the latest release on <code>main</code> (2 Oct 2026)</td></tr>
         <tr><td class="l">Where this work is</td><td class="l">branch <code>feat/003-curriculum-tracks-g10-american-math</code> at <code>961de91</code>, forked from v0.9.3; not merged, not released, not deployed</td></tr>
-        <tr><td class="l">Data as of</td><td class="l">pilot database read 2 Oct 2026; cost ledger as of 2 Oct 2026 08:00 UTC</td></tr>
+        <tr><td class="l">Data as of</td><td class="l">pilot database and cost ledger, both read 2 Oct 2026</td></tr>
         <tr><td class="l">Prepared by</td><td class="l">Claude (the coordinating agent) for Samuel Toma, CTO. Figures come from records, not from a person's audit.</td></tr>
       </table>
     </div>
