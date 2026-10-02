@@ -1,0 +1,87 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m7s2-1-3:vertical-angles",
+ "kind": "family",
+ "lo_id": "lo:g10m7s2-1-3",
+ "parent_question_id": "q:g10m7s2-1-3:ex7-8-14",
+ "source_page": 276,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    2,
+    6
+   ],
+   "resample_while": "q == p"
+  },
+  {
+   "require": "gcd(p, q) == 1",
+   "why": "keep the ratio of PR to TR in lowest terms"
+  },
+  {
+   "name": "k",
+   "randint": [
+    1,
+    3
+   ]
+  },
+  {
+   "name": "j",
+   "randint": [
+    1,
+    4
+   ]
+  },
+  {
+   "name": "a",
+   "let": "p * k"
+  },
+  {
+   "name": "b",
+   "let": "p * j"
+  },
+  {
+   "name": "c",
+   "let": "q * k"
+  },
+  {
+   "name": "st",
+   "let": "q * j"
+  },
+  {
+   "require": "a != b and b != c",
+   "why": "the three given lengths are pairwise different, so a wrongly paired ratio cannot give the right answer"
+  },
+  {
+   "name": "ang",
+   "randint": [
+    25,
+    70
+   ]
+  }
+ ],
+ "constraints": [
+  "b * c == a * st",
+  "a != c"
+ ],
+ "stem": "Straight lines $PT$ and $QS$ cross at $R$, so that $R$ lies between $P$ and $T$ and between $Q$ and $S$. $\\angle RPQ = \\angle RTS = {=ang}^{\\circ}$, $PQ = {=b}$ cm, $PR = {=a}$ cm and $TR = {=c}$ cm. Calculate the length of $ST$ in cm.",
+ "answer": "st",
+ "solution": [
+  "Let $ST = x$. In $\\triangle PQR$ and $\\triangle TSR$: $\\angle PRQ = \\angle TRS$ (vertically opposite angles, as $PT$ and $QS$ are straight lines).",
+  "$\\angle RPQ = \\angle RTS = {=ang}^{\\circ}$ (given). Only two pairs of angles are shown equal, but the third pair must be equal too: $\\angle PQR = 180^{\\circ} - \\angle RPQ - \\angle PRQ$ and $\\angle TSR = 180^{\\circ} - \\angle RTS - \\angle TRS$ (sum of $\\angle$s in a $\\triangle$), and the right-hand sides are equal, so $\\angle PQR = \\angle TSR$.",
+  "All three pairs of corresponding angles are equal, so $\\triangle PQR|||\\triangle TSR$ (AAA).",
+  "Corresponding sides are in proportion. $PQ$ corresponds to $TS$ and $PR$ corresponds to $TR$ (each pair is opposite equal angles): $\\frac{PQ}{TS} = \\frac{PR}{TR}$, so $\\frac{{=b}}{x} = \\frac{{=a}}{{=c}}$.",
+  "$x = \\frac{{=b} \\times {=c}}{{=a}} = {=st}$, so $ST = {=st}$ cm."
+ ],
+ "notes": "Parent ex7-8-14 for the bow-tie set-up and the ex7-2-3 idea that two marked angle pairs are enough because the third pair is forced by the angle sum (this is the situation mc:g10m7s2-1-3:aaa-needs-three-marked describes). Different skeleton from the isosceles-bowtie family: here the similarity comes from one given pair of equal angles plus the vertically opposite angles, not from isosceles base angles. No figure exists for a family, so the stem describes the diagram in words (R between P and T and between Q and S). Not over-determined: triangle PQR is fixed by PQ, PR and the angle at P (SAS), triangle TSR by TR, the angle at T and the vertically opposite angle at R (ASA), and ST then follows; I checked numerically for sampled parameters that constructing S with angle RTS equal to the stated angle gives ST = q*j. The angle size itself is not needed for the answer (it only makes the 'equal angles' concrete). Lengths are whole numbers: a = p*k, c = q*k, b = p*j, st = q*j with gcd(p, q) = 1, p != q, and a, b, c pairwise different, so a wrongly paired ratio (a*b/c or a*c/b) never coincides with the right answer. c may be larger or smaller than a, so ST may be larger or smaller than PQ. Numbers: a up to 18, b up to 24, answer up to 24, about 100 distinct draws before the angle varies."
+}

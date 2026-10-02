@@ -1,0 +1,76 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m7s4-1-2:rightlegs",
+ "kind": "family",
+ "lo_id": "lo:g10m7s4-1-2",
+ "parent_question_id": "q:g10m7s4-1-2:ex7-7-11c",
+ "source_page": 266,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "T",
+   "let": "[[3, 4, 5], [5, 12, 13], [8, 15, 17], [7, 24, 25], [20, 21, 29]]"
+  },
+  {
+   "name": "i",
+   "randint": [
+    0,
+    4
+   ]
+  },
+  {
+   "name": "f",
+   "choice": [
+    2,
+    4,
+    6,
+    8,
+    10
+   ]
+  },
+  {
+   "name": "s",
+   "choice": [
+    0,
+    1
+   ]
+  },
+  {
+   "require": "f * T[i][2] <= 60",
+   "why": "keeps the sides at a size the book would print"
+  },
+  {
+   "name": "u",
+   "let": "f * T[i][s]"
+  },
+  {
+   "name": "w",
+   "let": "f * T[i][1 - s]"
+  },
+  {
+   "name": "c",
+   "let": "f * T[i][2]"
+  },
+  {
+   "name": "e",
+   "let": "c // 2"
+  }
+ ],
+ "constraints": [
+  "u * u + w * w == c * c",
+  "c % 2 == 0"
+ ],
+ "stem": "Triangle $ABC$ has a right angle at $B$, with $AB={=u}$ and $BC={=w}$. $D$ is the mid-point of $AB$ and $E$ is the mid-point of $BC$. Determine the length of $DE$.",
+ "answer": "e",
+ "solution": [
+  "The triangle is right-angled at $B$, so by the theorem of Pythagoras $AC^{2}=AB^{2}+BC^{2}$.",
+  "Substitute the two legs: $AC^{2}=({=u})^{2}+({=w})^{2}={=u*u}+{=w*w}={=u*u+w*w}$.",
+  "Take the square root: $AC={=c}$.",
+  "$D$ is the mid-point of $AB$ and $E$ is the mid-point of $BC$, so $DE$ is the line joining the mid-points of two sides, and $AC$ is the third side. From the mid-point theorem we know: $AC=2\\times DE$.",
+  "Substitute $AC$: ${=c}=2\\times DE$, so $DE=\\frac{1}{2}\\times {=c}={=e}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Modelled on ex7-7-11c: Pythagoras gives the hypotenuse, then the mid-point theorem halves it (the segment joins the mid-points of the two legs). Legs come from a table of Pythagorean triples scaled by an even factor so the hypotenuse is even and DE is a whole number; hypotenuse capped at 60. That gives 20 distinct (AB, BC) pairs: 10 triples-and-factors, each with the legs in either order. The book's figure is replaced by a stem that states the right angle and both mid-points."
+}

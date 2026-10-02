@@ -1,0 +1,230 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m7s1-1-3:pick-parallel",
+ "kind": "family",
+ "lo_id": "lo:g10m7s1-1-3",
+ "parent_question_id": "q:g10m7s1-1-3:ex7-1-6c",
+ "source_page": 241,
+ "tier": "advanced",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "th",
+   "choice": "[x for x in range(40, 141) if x < 85 or x > 95]"
+  },
+  {
+   "name": "posp",
+   "choice": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "name": "dl",
+   "choice": [
+    -4,
+    -3,
+    -2,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "base",
+   "let": "[0, 1, 2, 3]"
+  },
+  {
+   "name": "R",
+   "shuffle": "base"
+  },
+  {
+   "name": "cp",
+   "let": "0 if posp == 0 or posp == 3 else 1"
+  },
+  {
+   "name": "mp",
+   "let": "th if cp == 0 else 180 - th"
+  },
+  {
+   "name": "CL",
+   "let": "[[0, 3], [1, 2]]"
+  },
+  {
+   "name": "same",
+   "let": "CL[cp]"
+  },
+  {
+   "name": "other",
+   "let": "CL[1 - cp]"
+  },
+  {
+   "name": "posc",
+   "choice": "other"
+  },
+  {
+   "name": "pose",
+   "choice": "other"
+  },
+  {
+   "name": "posn",
+   "choice": "same"
+  },
+  {
+   "name": "posu",
+   "choice": "same"
+  },
+  {
+   "name": "vc",
+   "let": "180 - mp"
+  },
+  {
+   "name": "ve",
+   "let": "mp"
+  },
+  {
+   "name": "vn",
+   "let": "(th + dl) if cp == 0 else (180 - th - dl)"
+  },
+  {
+   "name": "vu",
+   "let": "180 - mp"
+  },
+  {
+   "name": "POS",
+   "let": "[posc, pose, posn, posu]"
+  },
+  {
+   "name": "VAL",
+   "let": "[vc, ve, vn, vu]"
+  },
+  {
+   "name": "TH",
+   "let": "[th, 180 - th, th + dl, 180 - th]"
+  },
+  {
+   "name": "LET",
+   "let": "['q', 'r', 's', 'u']"
+  },
+  {
+   "name": "UP",
+   "let": "['the upper part of t', 'the lower part of t']"
+  },
+  {
+   "name": "SIDE",
+   "let": "['right-hand', 'left-hand']"
+  },
+  {
+   "name": "REL",
+   "let": "['It is the standard angle itself.', 'It lies next to the standard angle on a straight line, so the standard angle is 180 degrees minus the marked angle.', 'It lies next to the standard angle on a straight line, so the standard angle is 180 degrees minus the marked angle.', 'It is vertically opposite the standard angle, so the two angles are equal.']"
+  },
+  {
+   "name": "xq",
+   "let": "POS[R[0]]"
+  },
+  {
+   "name": "wq",
+   "let": "VAL[R[0]]"
+  },
+  {
+   "name": "tq",
+   "let": "TH[R[0]]"
+  },
+  {
+   "name": "xr",
+   "let": "POS[R[1]]"
+  },
+  {
+   "name": "wr",
+   "let": "VAL[R[1]]"
+  },
+  {
+   "name": "tr",
+   "let": "TH[R[1]]"
+  },
+  {
+   "name": "xs",
+   "let": "POS[R[2]]"
+  },
+  {
+   "name": "ws",
+   "let": "VAL[R[2]]"
+  },
+  {
+   "name": "ts",
+   "let": "TH[R[2]]"
+  },
+  {
+   "name": "xu",
+   "let": "POS[R[3]]"
+  },
+  {
+   "name": "wu",
+   "let": "VAL[R[3]]"
+  },
+  {
+   "name": "tu",
+   "let": "TH[R[3]]"
+  },
+  {
+   "name": "kc",
+   "let": "0 if R[0] == 0 else (1 if R[1] == 0 else (2 if R[2] == 0 else 3))"
+  },
+  {
+   "name": "ke",
+   "let": "0 if R[0] == 1 else (1 if R[1] == 1 else (2 if R[2] == 1 else 3))"
+  },
+  {
+   "name": "kn",
+   "let": "0 if R[0] == 2 else (1 if R[1] == 2 else (2 if R[2] == 2 else 3))"
+  },
+  {
+   "name": "ku",
+   "let": "0 if R[0] == 3 else (1 if R[1] == 3 else (2 if R[2] == 3 else 3))"
+  }
+ ],
+ "constraints": [
+  "mp != 90",
+  "vn != 90",
+  "180 - th != th"
+ ],
+ "stem": "Five straight lines p, q, r, s and u each cross a vertical straight line t, at five different points. At each crossing one of the four angles formed is marked. A marked angle is described by the two arms that bound it: one arm is part of t (the part above the crossing or the part below it) and the other is part of the line (the part to the right of t or the part to the left of t). On p the marked angle lies between {=UP[posp // 2]} and the {=SIDE[posp % 2]} part of p, and measures ${=mp}^\\circ$. On q it lies between {=UP[xq // 2]} and the {=SIDE[xq % 2]} part of q, and measures ${=wq}^\\circ$. On r it lies between {=UP[xr // 2]} and the {=SIDE[xr % 2]} part of r, and measures ${=wr}^\\circ$. On s it lies between {=UP[xs // 2]} and the {=SIDE[xs % 2]} part of s, and measures ${=ws}^\\circ$. On u it lies between {=UP[xu // 2]} and the {=SIDE[xu % 2]} part of u, and measures ${=wu}^\\circ$. Exactly one of the lines q, r, s and u is parallel to p. Which line is it?",
+ "solution": [
+  "The four angles at one crossing are related. Take the angle between the upper part of t and the right-hand part of a line as the standard angle of that line. Any other angle at the crossing is either vertically opposite the standard angle (equal to it) or next to it on a straight line (adding up to $180^\\circ$ with it). Two lines that cross t with equal standard angles have equal corresponding angles, so they are parallel; if their standard angles differ, the lines are not parallel.",
+  "Line p: the marked angle is ${=mp}^\\circ$. {=REL[posp]} So the standard angle of p is ${=th}^\\circ$.",
+  "Line q: the marked angle is ${=wq}^\\circ$. {=REL[xq]} So the standard angle of q is ${=tq}^\\circ$.",
+  "Line r: the marked angle is ${=wr}^\\circ$. {=REL[xr]} So the standard angle of r is ${=tr}^\\circ$.",
+  "Line s: the marked angle is ${=ws}^\\circ$. {=REL[xs]} So the standard angle of s is ${=ts}^\\circ$.",
+  "Line u: the marked angle is ${=wu}^\\circ$. {=REL[xu]} So the standard angle of u is ${=tu}^\\circ$.",
+  "The standard angles are: p ${=th}^\\circ$, q ${=tq}^\\circ$, r ${=tr}^\\circ$, s ${=ts}^\\circ$, u ${=tu}^\\circ$. Only line {=LET[kc]} has the same standard angle as p.",
+  "The standard angle of line {=LET[kc]} and the standard angle of p are equal corresponding angles, so line {=LET[kc]} is parallel to p. The other three lines make a different standard angle with t, so none of them is parallel to p."
+ ],
+ "choices": {
+  "correct": "line {=LET[kc]}",
+  "distractors": [
+   {
+    "text": "line {=LET[ke]}",
+    "misconception_id": "mc:g10m7s1-1-3:compares-unmatched-angles"
+   },
+   {
+    "text": "line {=LET[kn]}",
+    "misconception_id": "mc:g10m7s1-1-3:judges-by-appearance"
+   },
+   {
+    "text": "line {=LET[ku]}",
+    "misconception_id": "mc:g10m7s1-1-3:supplementary-means-parallel"
+   }
+  ]
+ },
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m7s1-1-3:supplementary-means-parallel",
+   "label": "Accepts any pair of angles adding to 180 degrees as showing parallel lines",
+   "description": "The student remembers that co-interior angles add up to 180 degrees and uses that test for every pair of angles, whatever their positions. Two lines are called parallel because the marked angles sum to 180 degrees, although the angles sit in matching positions (corresponding or alternate), where they would have to be equal."
+  }
+ ],
+ "notes": "Advanced: five lines cut by one vertical transversal; each marked angle is given by its two arms, so a text-only stem is unambiguous. The solver converts every marked angle to one standard position (upper part of t, right-hand part of the line) with vertically-opposite and straight-line steps, then compares: equal corresponding angles mean parallel. Exactly one of q, r, s, u matches p. Role of each wrong option: (1) the line whose marked angle has the SAME size as p's marked angle but sits in a position that needs the supplement (compare-without-matching-positions, the false-positive face of mc compares-unmatched-angles); (2) the line whose standard angle is within 2 to 4 degrees of p's (judges-by-appearance); (3) the line whose marked angle is the supplement of p's marked angle but sits in a matching position where equality is needed (new mc supplementary-means-parallel). The correct line always sits in a position of the other class from p, so its marked angle is 180 minus p's marked angle: the book's 7.1 no. 6 (c) twist (straight-line step, then corresponding angles). Standard angle of every line stays in 36..144 and never 90. The closing idea 'lines parallel to the same line are parallel to each other' is not tested directly; no book question asks it as a computation."
+}
