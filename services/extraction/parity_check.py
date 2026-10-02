@@ -30,6 +30,16 @@ the Prep-3 fingerprint and turned it RED although nothing about Prep-3 had
 drifted. Every count is now scoped to ONE course node, and the expected
 constant comes from that course's book config (`parity` in books/<book>.json).
 
+SERVABLE ROWS ONLY (Samuel, 2026-10-02, decision 66). The fingerprint counts the questions
+a student could be served and the visuals attached to them: a question with status
+'rejected' or 'retired' is out, and so is a visual whose question is. Those rows stay in
+the database for the audit trail (a G2 `exclude` rejects a row an earlier load had
+inserted; a dropped question a student had used is retired, never deleted), and the
+bundles never carry them, so counting them made a clean load RED by exactly the number
+of rows a human had removed. 'draft', 'review' and 'live' still count, so a question
+demoted back to 'review' is still caught by the live-vs-total comparison. A visual with
+no question (a lesson figure) is counted as before. See SERVABLE.
+
 Usage:
     uv run parity_check.py --baseline "$BASELINE_DSN" --candidate "$MVP1_DSN"
     uv run parity_check.py --candidate "$MVP1_DSN"      # Prep-3 maths vs its constant
@@ -78,6 +88,12 @@ EXPECTED = expected_for(DEFAULT_COURSE).expected()
 GENERATED_FIELDS = frozenset(
     {"generated_total", "generated_live", "generated_unreviewed"}
 )
+
+# What a student could be served, as far as the drift guard is concerned (decision 66). The
+# statuses are the CHECK on questions.status in db/schema.sql: draft, review, live, rejected,
+# retired. The two that are out are the ones a person or a load took OUT of the book's set.
+UNSERVABLE_STATUSES = ("rejected", "retired")
+SERVABLE = "status NOT IN (" + ", ".join(f"'{s}'" for s in UNSERVABLE_STATUSES) + ")"
 
 
 @dataclass
@@ -172,7 +188,7 @@ def fingerprint(dsn: str, course: str = DEFAULT_COURSE) -> Fingerprint:
         # now expected to carry questions the frozen baseline does not.
         BOOK = "source IN ('seed', 'authored')"
         cur.execute(
-            f"SELECT count(*) FROM questions WHERE {BOOK} AND lo_id IN ({LOS})",
+            f"SELECT count(*) FROM questions WHERE {BOOK} AND {SERVABLE} AND lo_id IN ({LOS})",
             params,
         )
         q_total = cur.fetchone()[0]
@@ -194,7 +210,18 @@ def fingerprint(dsn: str, course: str = DEFAULT_COURSE) -> Fingerprint:
         )
         g_total, g_live, g_unreviewed = cur.fetchone()
 
-        cur.execute(f"SELECT count(*) FROM visuals WHERE lo_id IN ({LOS})", params)
+        # Only the visuals a student could meet: one attached to a rejected or retired question
+        # goes with it (a book picture of an excluded exercise); one attached to no question (a
+        # lesson figure) is counted as it always was.
+        cur.execute(
+            f"""SELECT count(*) FROM visuals v
+                 WHERE v.lo_id IN ({LOS})
+                   AND (v.question_id IS NULL
+                        OR EXISTS (SELECT 1 FROM questions vq
+                                    WHERE vq.id = v.question_id
+                                      AND vq.{SERVABLE}))""",
+            params,
+        )
         visuals = cur.fetchone()[0]
 
         cur.execute(f"SELECT node_id FROM ({LOS}) t ORDER BY node_id", params)
@@ -223,7 +250,7 @@ def render(name: str, fp: Fingerprint) -> str:
         f"    modules         {fp.modules}\n"
         f"    learning objs   {fp.learning_objectives}\n"
         f"    prerequisites   {fp.prerequisite_edges}\n"
-        f"    book questions  {fp.questions_total}  (live: {fp.questions_live})\n"
+        f"    book questions  {fp.questions_total}  (live: {fp.questions_live}; servable only)\n"
         f"    generated       {fp.generated_total}  (live: {fp.generated_live}, "
         f"unreviewed: {fp.generated_unreviewed})\n"
         f"    visuals         {fp.visuals}\n"
