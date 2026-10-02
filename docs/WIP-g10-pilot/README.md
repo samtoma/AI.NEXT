@@ -1,11 +1,14 @@
-# WIP: Grade 10 American maths — Chapter 8 pilot handoff (2026-09-26)
+# WIP: Grade 10 American maths — resume doc (Chapter 8 pilot handoff 2026-09-26; full book complete 2026-10-02)
 
 Resume doc for the feature-003 branch `feat/003-curriculum-tracks-g10-american-math`, written when
-the work moved from a local session to a cloud session. Read this first, then `docs/PROJECT_STATE.md`,
+the work moved from a local session to a cloud session and kept current since. **Start at "Full book complete — 2026-10-02"
+below the standing rules: it is the current state and the current open-decisions list.** The sections after it are the
+chronological history (the Chapter 8 pilot, the fan-out plan, and one note per problem found), kept for the record. Read
+this first, then `docs/PROJECT_STATE.md`,
 `specs/003-curriculum-tracks/` (spec, plan, tasks, traceability, decisions) and the files beside
 this one:
 
-- `samuel-answers.md` — Samuel's answers 1–26 for this feature, in his words. **Answer N is decision
+- `samuel-answers.md` — Samuel's answers 1–45 for this feature, in his words (44 and 45 added 2026-10-02). **Answer N is decision
   N + 21** in `specs/003-curriculum-tracks/decisions.md` (answer 2 → decision 23 … answer 24 → decision
   45; answer 25 extends decision 45, so decision 46 is unused; answer 26 → decision 47). Answer 1, the
   v0.9.3 hotfix, is not a decision of this feature. (This line used to say "decisions 1–15 … recorded
@@ -32,7 +35,253 @@ this one:
   (`national-prompts.test.mts`); any change needs a named exception.
 - Never print secret values; never type passwords or sign in for Samuel.
 
-## STATUS UPDATE — 2026-09-26, corrected 2026-09-27 (latest; everything from "Where the pilot stood" down to "Rebuilding" is the older state, kept for the record)
+## Full book complete — 2026-10-02 (tech-writer; read this section first)
+
+*Authority: a status record, not a decision. Written from the orchestrator's run log (2026-10-01 to 2026-10-02), the gate records in
+`services/extraction/runs/g10-math/gates/` (g1–g5 per chapter), the coverage reports in `services/extraction/coverage/`,
+`uv run meter_run.py summary --book g10-math`, and read-only queries against the pilot database. Where a figure comes from my own
+read-only check and not from a record, the text says so. Decisions are in `specs/003-curriculum-tracks/decisions.md`; Samuel's own words are in
+`samuel-answers.md`. Everything below this section is the history that led here; where it disagrees with this section, this section wins.
+Objective ids are written without the `lo:g10m` prefix (`5s6-1-3` is `lo:g10m5s6-1-3`).*
+
+### Where it stands
+
+- All 14 chapters of Siyavula *Everything Maths* Grade 10 have been through the pipeline and each has a G5 record. The result exists only in the
+  **local pilot database `ainext_pilot_g10_ch08`** (course `course:us-g10-math-en`). **Nothing is deployed and nothing is on `main`.** The branch is not
+  merged: `origin/main` has 16 commits it lacks (v0.11.0 was released today) and the branch had 662 that `origin/main` lacks when I counted, almost all auto-snapshots.
+- Every gate G1–G5 on Chapters 1–7 and 9–14 was an AI auto-pass (decisions 58c and 60). A person decided only Chapter 8's G1 and G2 (Samuel, 2026-09-26).
+  So **no person has read the live book questions, the generated questions, the widget questions, the misconception entries or the errata list**. The console
+  review backlog is how a person will, and it is the next job (decision 58b, FR-4501…FR-4509).
+- **Content in the pilot database, read 2026-10-02.** Book questions: **2,090 live, 64 held for review, 41 rejected**. Generated questions (S6 families):
+  **3,137 live** (314 of 336 authored families passed grading; the others were not loaded). Widget questions (S7): **99 live, 4 retired**. Misconception
+  entries: **300**. All 65 lessons of the book have objectives loaded. The drift guard (`parity_check.py`) is GREEN for the course: 14 modules,
+  211 objectives, 294 prerequisite edges, **2,154 questions in the bundles** (= 2,090 live + 64 held; rejected and retired rows are not counted, answer 45), 616 visuals.
+- **Coverage.** Thirteen of the 14 chapters are RED on **completeness only** (two checks: every objective has evidence, and every objective has a live item
+  at each of its three tiers); every safety check passes. Chapter 11 is GREEN. Per-chapter detail is in the second table below, and what to do about it is
+  open decision 3.
+- **Step-level working check (sw-v3, two passes per solution):** 2,556 solutions checked, 300 flags on 270 of them, saved per chapter in
+  `runs/g10-math/working-check/chNN.flags.json`. The console reads them as backlog items (migration 039, `app/src/lib/review-gate-working.ts`). A flag is
+  never a correction.
+- **Errata:** the AI line found 102 printed answers that look wrong and 20 questions whose text was damaged in extraction, chapters 1–7 and 9–14
+  (`errata-g10.md`, regenerated today). A question with a wrong printed answer was left out of the bank, never corrected.
+- **Cost** (metered ledger `runs/g10-math/cost.jsonl`, API-equivalent, prices as of 2026-10-01): the orchestrator reported 280 runs, 4,394 agents, about
+  1.2 billion tokens, about $943. **`meter_run.py summary` today reads 284 runs and $952.70** (see "Could not reconcile", below). By stage: S0b maths
+  transcription $285.94, step checker $158.71, S6 families $134.65, S5 misconceptions $122.79, S2–S4 lessons $116.08 (+ $3.00 S4), S1 objectives $73.51,
+  S7 widgets $38.72, G2 recommendations $14.77, S0b calibration $4.53. About $153 of the total was spent before the fan-out, on the Chapter 8 pilot
+  (metered 2026-09-27); the fan-out itself is therefore about $800, inside the ≈ $0.85–1.1k approved (decision 58e).
+
+### Per chapter: what is in the database
+
+Read from the pilot database on 2026-10-02. "Prerequisite links" counts edges whose destination objective is in the chapter. "Families" is live generated items,
+with families that passed grading of those authored (from the run log; Chapter 8 from the pilot).
+
+| Ch | Title | Lessons | Objectives | Prereq. links | Book questions live / held / rejected | Families: live items (passed of authored) | Widgets live | Misconceptions |
+|---|---|---|---|---|---|---|---|---|
+| 1 | Algebraic expressions | 8 | 29 | 24 | 517 / 6 / 27 | 428 (43 of 45) | 7 | 30 |
+| 2 | Exponents | 3 | 9 | 21 | 152 / 0 / 3 | 139 (14 of 15) | 0 | 8 |
+| 3 | Number patterns | 1 | 5 | 6 | 75 / 1 / 2 | 140 (14 of 14) | 0 | 4 |
+| 4 | Equations and inequalities | 6 | 19 | 30 | 259 / 6 / 9 | 250 (25 of 26) | 20 | 18 |
+| 5 | Trigonometry | 5 | 18 | 30 | 210 / 8 / 0 | 150 (15 of 16) | 6 | 23 |
+| 6 | Functions | 9 | 37 | 64 | 217 / 22 / 0 | 690 (69 of 78) | 24 | 82 |
+| 7 | Euclidean geometry | 4 | 13 | 19 | 103 / 8 / 0 | 250 (25 of 27) | 3 | 19 |
+| 8 | Analytical geometry (the pilot) | 5 | 13 | 1 | 149 / 9 / 0 | 110 (11 of 11) | 21 (+ 4 retired) | 29 |
+| 9 | Finance and growth | 4 | 15 | 19 | 133 / 0 / 0 | 200 (20 of 22) | 1 | 17 |
+| 10 | Statistics | 5 | 16 | 18 | 80 / 0 / 0 | 180 (18 of 20) | 7 | 24 |
+| 11 | Trigonometry | 1 | 3 | 10 | 24 / 0 / 0 | 70 (7 of 7) | 1 | 4 |
+| 12 | Euclidean geometry | 1 | 2 | 0 | 6 / 0 / 0 | 20 (2 of 2) | 0 | 0 |
+| 13 | Measurements | 6 | 14 | 26 | 74 / 1 / 0 | 210 (21 of 21) | 1 | 18 |
+| 14 | Probability | 7 | 18 | 26 | 91 / 3 / 0 | 300 (30 of 32) | 8 | 24 |
+| | **Book** | **65** | **211** | **294** | **2,090 / 64 / 41** | **3,137** | **99 (+ 4)** | **300** |
+
+"Held" = status `review` (an automatic hold: the answer disagrees across the three sources, the marker cannot read the key, or the figure reveals the
+answer). "Rejected" = excluded by the G2 recommendation run (a book error or damaged stem), kept in the database for the audit trail and never served.
+Chapter 12 has no misconception entries (a proof chapter; S5 produced none) and no prerequisite links (open decision 12).
+
+### Per chapter: gates, coverage and what is missing
+
+G5 is `pass_with_holds` on every chapter except Chapter 11 (`pass`); each says GO "for the fan-out on the dev/pilot database (deploys and promotes nothing)".
+G1 is `pass_with_holds` on every chapter with a G1 record except Chapter 9 (`pass`); Chapter 8's G1 was Samuel's and is in `decisions.md`. The completeness columns list the objectives the two coverage checks name. **For Chapters 1–4 these are
+from my own read-only `coverage_report.py --check` on 2026-10-02, not from the G5 record** — those records are older than the changes described under
+"Could not reconcile". Chapter 8's are from its own G5 record (2026-10-01 07:16Z). Chapters 5–7 and 9–14 are from their G5 records.
+
+| Ch | G1 notes (rulings by an AI line unless marked) | No book question / no claim (objective evidence) | Tier gaps (no live item at the tier) | Step-check flags (solutions) |
+|---|---|---|---|---|
+| 1 | `1s6-1-4` dropped, 23 items re-homed to `1s6-1-2` (20) and `1s6-1-3` (3) | no claim: `1s4-1-2`, `1s5-1-2`, `1s7-2-4`, `1s7-3-4` | `1s6-1-3` basic; `1s8-1-4` basic and advanced | 55 (53) |
+| 2 | none | no claim: `2s4-1-4` | `2s4-1-1` advanced | 8 (8) |
+| 3 | none | no claim: `3s2-1-5` | none | 8 (8) |
+| 4 | Ex4-7:6q ruled outside the chapter | no claim: `4s3-1-3` | none | 33 (31) |
+| 5 | `5s6-1-3` dropped, 19 items to `5s6-1-1`; `5s8-1-4` kept on one finder's evidence, acknowledged as unpractised (no book item uses 0° or 90°) | no book question: `5s3-1-3`, `5s5-1-4`, `5s6-1-3`, `5s6-1-4`, `5s8-1-4`; no claim: `5s5-1-4`, `5s6-1-3`, `5s6-1-4` | those five, at all three tiers | 31 (25) |
+| 6 | Ex6-8:28a ruled outside | no book question: `6s2-1-1`, `6s2-1-4`, `6s3-1-4`, `6s6-1-1`, `6s6-3-1`, `6s6-3-2`; no claim: `6s7-1-3` | `6s1-1-1` standard; `6s6-3-3` basic; those six no-book-question objectives at all three tiers | 38 (38) |
+| 7 | `7s4-1-2` and `7s4-1-3` dropped, 22 items to `7s4-1-1` | no book question: `7s3-1-2` | `7s3-1-2`, all three | 23 (20) |
+| 8 | Samuel's own G1 (2026-09-26): 3 items ruled outside | no book question: `8s1-1-1` | `8s1-1-1` all three; `8s1-1-2` standard and advanced; `8s4-1-2` advanced | 27 (25) |
+| 9 | none | no claim: `9s3-1-4` | `9s4-1-4` advanced | 14 (13) |
+| 10 | none | no book question: `10s2-1-2`, `10s2-1-3`, `10s4-1-3`, `10s5-1-2`; no claim: `10s2-1-4` | `10s1-1-2` standard; the four no-book-question objectives at all three tiers | 13 (11) |
+| 11 | none | none (G5 `pass`, 23 of 23 checks hold) | none | 0 (0) |
+| 12 | `12s1-1-3` dropped, 7 items to `12s1-1-2`; 0 of 6 prerequisite links kept | no book question: `12s1-1-1` (proofs) | `12s1-1-1`, all three | 6 (6) |
+| 13 | `13s1-1-2` dropped, 7 items and Ex13-7:27a to `13s1-1-1`; **lesson 13.1 keeps one objective, CHECK LATER** | no book question: `13s3-2-3`, `13s4-1-2` | those two, all three | 29 (18) |
+| 14 | none | no book question: `14s2-1-2`, `14s5-1-2`; no claim: `14s3-1-3` | `14s2-1-2`, `14s5-1-2` all three; `14s3-1-1`, `14s7-1-2` advanced | 15 (14) |
+
+Totals I derived from the table: **33 objectives** fail the evidence check (22 have no book question, 14 have no claim, 3 are in both), and **33 objectives**
+lack at least one tier (79 of 633 objective-tier slots). Chapters 2, 3 and 12 also carry a "module widgets" check that holds only because G3 auto-signed the
+chapter's widget gaps ("not signed by a person").
+
+### Fixes that landed (2026-10-01 evening to 2026-10-02)
+
+Each is built and tested by an agent, unreviewed by a person. Where to look is in brackets.
+
+- **Worked-example step titles lost their maths.** S0a read a step's heading without its equation images, so "Divide both sides by [expression]" reached the bank as
+  "Divide both sides by". 138 of 571 titles, 81 worked examples, 209 images. Found 2026-10-01 evening; the source adapter now keeps them and `repair_step_titles.py`
+  repaired saved runs, bundles and the database with no model call: Chapters 1–4 and 8 on 2026-10-01 (61 files, 382 strings; database: 32 questions and 4 entries,
+  `canonical_solution` only), Chapters 5, 6, 7, 9 and 10 on 2026-10-02 (Chapter 5 was a text-only database reload). Chapter 11's S1 run, made on the old text, was
+  refused at assembly (packet hash differs) and re-run on the repaired packet ($1.82). Not rewritten, only listed: S1 evidence quotes, S2 claims, S5 flags, step-check
+  flags. [runbook §12; `work/g10-math/backups/step-title-repair-*`]
+- **Notation rules.** (1) The book's coordinate pair `(x; y)` is written `(x, y)` in every field a student reads, not only in question text: objective labels and
+  descriptions, a figure's drawn text, and widget templates (pipeline normalisation `coordinate-notation`). Chapter 5 failed the coverage `notation` safety check on
+  eight spans before this. (2) A set's list commas get a space, `\{1, 2, 3\}`, so the notation check no longer reads `1,2` as a decimal comma (normalisation
+  `set-list-spacing`; Chapter 14's two Venn templates, 10 spans). (3) A set of comma pairs, the book's `\{(1,1);(1,2);…\}`, had been read as a set of decimals and was
+  stored as `\{(1.1), (1.2), …\}`, a wrong sample space that the check could not see; fixed in `_set_pair_commas` (counter `pair_in_set`), one question (Ex14-8:22a) changed. [runbook §13]
+- **Nested `$` inside `\text{}` and a stray environment (Chapter 13).** `\text{cm$^{3}$}` broke the app's maths splitter and failed the KaTeX gate at close-out; the assembly
+  now writes `\text{cm}^{3}` (47 strings in Chapter 13; Chapters 1–12 unaffected). The same pass repairs one doubled `align`/`\end{answer}` in Ex13-4-1b
+  (`repair_stray_environment`; **it edits the book's text in one question and is easy to veto**). An earlier cousin, the escaped `\$` in Chapter 9, was fixed 2026-10-01
+  (`escaped_dollars_normalised`). [`assemble_lesson_bundle.normalise_nested_dollars`; the Chapter 9 section at the end of this file]
+- **Parity counts servable rows only** (Samuel, answer 45, decision 66): rejected and retired questions, and the visuals attached only to them, are not counted. This
+  unblocked Chapter 5's G5 (database 1,433 questions against the bundles' 1,392; 212 visuals against 209; the difference was the 41 rejected rows and 3 picture visuals).
+  [`parity_check.py`; FR-4207 amended, FR-904 cross-note]
+- **G1 rule 4 relaxed once, with a note** (Samuel, answer 44, decision 65): a lesson may keep one objective when G1 dropped another under a recorded ruling; it is a
+  warning marked CHECK LATER, never a pass without a ruling. First use: lesson 13.1. [`assemble_objectives.rule4_check_later`; FR-4509 amended; open decision 2]
+- **S6 family spec fixes**, each recorded in the spec file's `notes` as a `PIPELINE NORMALISATION` line (41 spec files carry one such line in all; find them with
+  `grep -rl "PIPELINE NORMALISATION" services/extraction/families/g10-math services/extraction/widgets/g10-math`): Chapter 9, a conditional formatter in `percentdeposit`
+  and an `n ≤ 10` integer-overflow bound in `increase-years`; Chapter 10, four families whose `context` was cleared to null (open decision 10); Chapter 6, eight
+  families (one `context`-null; five `values` markers written `a = x; q = y` rewritten `[x, y]`; two equation markers `f(x)=` rewritten `y=`); the family engine's earlier
+  fixes (recurring-decimal reader, `distinct_by_choices`, let-guard, decimal form, plain-comma `values` key, slug renames) are in the Chapter 1–4 sections above.
+- **S7 template fixes:** the reserved word `from` as a field name in five double-inequality and shift templates (Chapter 4 ×3, Chapter 6 ×2) renamed `from_v`; a stray null key
+  `parent_question_id_note` removed from a Chapter 9 template. Both recur (open decision 11).
+- **Chapters 6 and 9: S5 drafts re-run** on the corrected bundles (2026-10-02 07:04Z): the first drafts had been built before the G2 recommendations and the step-title repair.
+  The superseded runs are archived in `runs/g10-math/records/*.superseded.record.json` and metered; the re-runs cost $7.56 (Chapter 6) and $2.44 (Chapter 9). Quality over
+  cost, answer 42. Chapters 1–5 were not re-run (open decision 24).
+- **G2 recommendations applied to every chapter except 8** (Chapters 1–5 on 2026-10-01, 6–14 on 2026-10-02): `fanout.py close-chapter` now runs the recommendation
+  stage; the 41 rejected book questions (all in Chapters 1–4) come from it.
+- **Step checker adopted at `sw-v3`** (two passes, calibrated 2026-10-01: 16 of 16 real flags found, 0 false, $0.052 a solution), after `sw-v1` cost 3–5× its estimate on
+  Chapter 8. The book total is $158.71, not the ≈ $430 the sw-v1 rate projected.
+
+### Open decisions after the full-book run
+
+*This list replaces "Blocking, or for Samuel" (below, in the 2026-10-01 fan-out plan). It is deduplicated. Group A needs Samuel; B is content waiting for a reader;
+C is engineering and records. Where to look is in brackets.*
+
+**A. Needs Samuel**
+
+1. **Exercise-only objectives: a standing policy.** Where an objective's only evidence is end-of-chapter exercises (G1 rule 1 fails), an orchestrator (AI) ruling dropped it and
+   re-homed its items: Chapter 1 `1s6-1-4`, Chapter 5 `5s6-1-3` (later objectives renumber), Chapter 7 `7s4-1-2` and `7s4-1-3`, Chapter 12 `12s1-1-3`, Chapter 13 `13s1-1-2`
+   (five chapters, six objectives, 78 items re-homed; Ex13-7:27a, which no mapper placed, was placed beside them). Wanted: either a named G1 rule ("drop and re-home") or another handling (keep the objective with
+   a note; a new S1 pass per lesson), plus a reconciler fix so the dropped objective's cited rule statement is carried (log 2026-10-01T18:12Z, "b03019"). Chapter 7: lesson 7.4 is thin
+   after the drop; placement of Ex7-8:25 is for a look. [`gates/g1-ch01|05|07|12|13.json`, `for_review`]
+2. **CHECK LATER (decision 65): lesson `g10m13s1-1` (13.1, area of plane figures) has one objective, by ruling.** Is 13.1 really one objective, or does it get a second
+   (a new S1 run for the lesson) or merge with a neighbour? [`objectives/g10-math/ch13.check.json` and `g10m13s1-1.json` (`check_later`); first `for_review` entry of `gates/g1-ch13.json`]
+3. **Completeness holds: accept as signed exceptions, or fill?** 33 objectives fail the evidence check and 33 lack a tier (table above). G5 recorded them as findings,
+   "not fixed" (answer 37c: a completeness check lists the gap and does not block). A person can sign an exception in the chapter's coverage file (`exceptions`), or the gap is
+   filled with new families, widgets or questions. Chapters 5, 6 and 10 hold most of it. The console's completeness panel should read `summary.auto_passed` (asked 2026-10-01; not
+   verified). [`gates/g5-chNN.json` `decisions`; `coverage/g10-math.chNN.json`]
+4. **Widget gaps and new widget kinds.** G3 auto-signed each chapter's widget gaps, which FR-4306 says a person approves. The per-chapter gap files list **315 gaps and 156 distinct
+   proposed new widget kinds** (counted by name on 2026-10-02); none is approved (T356, decision 27). Confirm that auto-passing the gaps is acceptable, and say which kinds to build.
+   [`coverage/g10-math.chNN.widget-gaps.json`; `gates/g3-chNN.json`]
+5. **`(x; y)` is burned into book pictures.** The text now says `(x, y)`; the book's own pictures, shown as stand-ins until a native figure exists (decision 58d), still print
+   `(x; y)`: 69 stand-ins in Chapter 5, likely more in Chapter 8 (not counted). A student sees both. Leave until native figures replace them, hold those questions, or redraw?
+   [log 2026-10-02T06:54Z; `app/public/book-figures/g10-math/`; runbook §13]
+6. **A choice question with more than five options.** Chapter 6 Ex6-2:7a–f ("which of the six graphs A–F is y = …?") was excluded because the pipeline caps a choice at 2–5 options
+   (typing prompt, `choiceProblems`, `assemble_lesson_bundle.choice_option_problems`; not `schemas.py`, not the database). The app's marker already marks a single-letter
+   `expression` key, so typing them that way would work (it is how Ex3-1:3 went live; Ex3-1:18 is excluded for six options and could go the same way). Ex6-2:7f also looks like
+   a book error (graph C has slope 1/4; no graph is y = x/2). Raise the cap or retype? [`gates/g2-ch06.json`; runbook §3]
+7. **Multi-letter marker variables.** Chapter 5 Ex5-4:2a, 2b, 2c and 3 (`AC`, `AD`, `MN`, a side's name) are excluded: `schemas.AnswerSpec` allows one letter, a subscripted letter or a
+   Greek name, while the app's marker reads `AC` as one symbol. Either the contract grows `[A-Z]{2,3}` or the agent splits the variables. [this file, "Chapter 5 re-collected and closed"]
+8. **Marker and evaluator gaps.** Each currently excludes or holds an item rather than mark it wrongly. (a) The app's marker cannot read a degree sign inside an inequality or interval
+   key (`60^{\circ}<\theta<300^{\circ}`: Chapter 6 Ex6-6:17, Ex6-8:42–44, 55a, Ex6-6:20a). (b) Lists of points and lists of equations have no marker kind (Chapter 6: nine and four items).
+   (c) The oracle reads "… % per annum" as a different value, so Chapter 9 Ex9-2:8 and Ex9-2:9 (keys 4,3 and 1,8, which the agent's own derivation confirms) stay excluded by the collector's
+   identity guard. (d) The S6 evaluator's `parse_plain` does not read `f(x) =` (the app does). (e) A `values` marker is a multiset, so it accepts swapped values (`a`, `q`; Chapter 6).
+   Widen the marker (an `AnswerSpec` contract change) or leave held? [this file, "Chapter 6 re-collected and closed"; `gates/g2-ch09.json`; log 2026-10-02T07:30Z]
+9. **Widget stem: spacing-only equivalence.** The set-list rule extends when an edited stem counts as "the same stem" for the blind verifier: a whitespace-only change inside maths in a
+   stem no longer forces re-verification (`verified_version`, `carried_verification`). Confirm. [runbook §13; log 2026-10-02T07:55Z]
+10. **Chapter 10: four families have `context: null`.** The author wrote a fixed word-problem situation into `context`; the pipeline cleared it so the family passes the §3.9 rule
+    ("a word problem's context is fixed, only numbers vary", `docs/specs/extraction-pipeline.md` §3.9, `families/spec.py`). Confirm that reading (the `context-null` note is on each spec
+    file). [`families/g10-math/ch10/g10m10s1-1-1--*.json`]
+11. **Proposed pipeline changes, not applied.** S6 `AUTHOR_RULES` lines (integer overflow; `context` only when the situation is word for word fixed); `spec.py` looking through a
+    conditional expression (`IfExp`) so the numeric-hole check sees a formatter; per-family reporting in `generate_questions --check`; and an automatic rename of the reserved word
+    `from` in `normalise_templates` plus an S7 author rule against reserved field names (it recurred in Chapters 4 and 6). [log 2026-10-02T07:11Z, 07:18Z, 07:22Z]
+12. **Prerequisite links.** Chapter 12 has none: the independent checker judged all 6 proposed links UNCLEAR because the source objectives had no description; a link re-check with
+    descriptions would likely keep the congruence → parallelogram-proof link (a model call, not made). Chapter 8 has one link and none to or from any other chapter: the links-only
+    S1 pass after Chapter 7's G1 (≈ $0.5–1, consistency review D4) was never built or decided. [`gates/g1-ch12.json`; `consistency-review-2026-09-27.md` D4]
+13. **Chapter 7 midsegment widget template** (`g10m7s4-1-1`): the blind verifier found its 7 instances unreachable because the stem omits the triangle's third vertex; only the
+    kite, square and rhombus instances (3) are live. Fix or retire. [S7 verify run `wf_783d65e5-6bf`]
+14. **Interval display key** (Chapter 6, possibly Chapter 4): the S6 key renderer prints an interval marker as `(lo, hi)` whatever its open/closed flags, so the grader correctly refused
+    `tpl:g10m6s1-1-1:bounded-to-interval`; the family was not loaded. **An agent is fixing this now.** [log 2026-10-02T07:32:35Z]
+
+**B. Content waiting for a reader**
+
+15. **The errata list**: 102 printed answers that look wrong, 20 damaged questions. [`errata-g10.md`]
+16. **Stem repairs live in the bank**, each carrying a `review_note` that says "stem fixed … not Samuel" (counted in the database on 2026-10-02): Chapter 1 four, Chapter 4 two, Chapter 5 one,
+    Chapter 7 one, and eight in Chapter 8 from the multi-part carry-over. The Chapter 1 item `q:g10m1s8-1-2:ex1-10-2p` changes a digit (7 to 11): read it first.
+    [this file, "The G2 recommendations applied to Chapters 1–4", (d); "Multi-part exercises"]
+17. **20 live generated questions whose model question was rejected**: the 10 variants of family `common-factor-monic` (parent Ex1-8:11, whose printed answer is wrong) and 10 of
+    `factor-a` (parent Ex4-7:12s). [same section, (a)]
+18. **Ex1-9:17 has no correct key in the book** (the extra `abc` term is in the EPUB's own worked line too); the typing agent's correction was refused. [`errata-g10.md`]
+19. **Smaller flags from the run log, not traced to a fix:** the Chapter 2 teaching text of `2s4-1-3` states 2(1)^{1/2} + 1 = 2 (should be 3; a book or transcription slip); Chapter 4 Ex4-7:1h
+    has (k+2) in the question and (k+3) in the solution; a Chapter 4 answer, −22/6, is not in lowest terms (the marker accepts equivalents); Chapter 5 `5s8-1-4` is unpractised.
+20. **Titles with the step-title root cause that the log says were not changed** (2026-10-01T18:52Z): 20 Chapter 6 heading titles, 7 box titles, 2 Chapter 13 worked-example titles. No
+    later line says they were; I could not verify. Check the database text.
+21. **The 300 step-check flags** (above), and the multi-part exercises whose later part refers to an earlier one by words only (Chapter 1: 8, Chapter 8: 16;
+    `runs/g10-math/multipart-ch01.json`, `multipart-ch08.json`).
+
+**C. Engineering and records**
+
+22. **`lo:g10m8s1-1-1` still has nothing live.** Under answer 40 three families (`plot-a-vertex`, `vertex-on-axis`, `vertical-side`; 30 items) were authored and graded
+    (`work/g10-math/fanout/families-s111/`), but the database holds no row for the objective, and Chapter 8's G5 (2026-10-01 07:16Z) still lists it with no book question and no live item
+    at any tier. They need loading (the code is built: migration 038, `parent_kind`), then G3 and coverage again. T448 is still unticked and its spec records are pending: FR-1101 (spec 001),
+    FR-4304, `data-model.md`, `plan.md` migration 038 row, ADR-0008 §4, `extraction-pipeline.md` §3.9/§3.10, the constitution's line about parents (this file, "Done — 2026-10-01 (family-parent agent)").
+23. **Book-level closing steps were not run** (`runs/g10-math/fanout-plan.json` → `closing_steps`). (a) Chapter 8's bundle is only at `services/extraction/work/g10-math/pilot/seed/g10m-c08.json`;
+    `work/` is gitignored, so **Chapter 8's seed is not on the branch**, and `seed/g10-math/` holds Chapters 1–7 and 9–14 only (decision in the plan: copy it as reviewed, or re-assemble it
+    with the book-picture stand-ins). (b) The whole-book export `seed/generated/g10-math/book-export/` does not exist; `seed/generated/g10-math/export/` is the pilot's 13-objective export.
+    (c) `books/g10-math.json` still has `status: ingest` and `parity: null` (T364), so `parity_check.py --all-courses` skips this course; G5 reads the loaded config
+    `runs/g10-math/fanout/loaded/g10-math.json` instead. (d) No whole-book coverage report (`coverage/g10-math.book.json`). Without (a)–(c) the course cannot be exported for "Load a course".
+24. **S5 misconception drafts for Chapters 1–5 were built before the G2 recommendations went in** (live book questions rose by 34, 16, 4, 12 and 15 afterwards) and were not re-run, whereas
+    Chapters 6 and 9 were. No decision is recorded either way. At ≈ $1.3 an objective, quality over cost (answer 42) points to a re-run; it is Samuel's call. [log 2026-10-02T07:04:36Z]
+25. **Records older than the database.** The G5 records of Chapters 1–4 (2026-10-01 17:40–18:07Z) predate the G2 recommendations, the step-title repair and the servable-only parity rule; Chapter 8's
+    (07:16Z) predates the fan-out; Chapter 14's (stamped 2026-10-02 07:49Z) may predate one text-only reload, the pair-in-set fix, logged at 07:55Z. Re-run `auto_pass_gates.py g5` for them, or the book-level closing run, so the
+    records match the database.
+26. **The app's maths splitter knows no nesting and no escaped dollar** (`components/TeXRenderer.tsx` splits on `/(\$[^$]+\$)/g`; the same split is in `lib/math-text.ts`, `lib/voice.ts`,
+    `lib/tts/sanitize.ts`). The pipeline works around both at assembly; the root cause is in the app. Read-aloud is silent at the new `\textdollar` sign. `load_seed` also counts KaTeX
+    errors in held questions. [log 2026-10-02T07:15Z; this file, "Escaped dollar signs"]
+27. **Spec Kit debt.** FRs and traceability rows still owed for: the family-engine changes (recurring-decimal reader, `distinct_by_choices`, let-guard, decimal form, plain-comma `values` key,
+    `s6-v6` prompt, normalise rename rule), the coverage liveness fix (37a), the widened COLLECT-6 comparator, the G1 exercise-only ruling (decision 1 above), the multi-part rule (FR-4303 needs
+    the rule itself; this file, "Multi-part exercises"), the G2-recommendation stage, the assembly rules of runbook §§12–13, and the notation rules. Servable-only parity (FR-4207) and rule 4 (FR-4509)
+    were written by their agents. Not done in this pass: other agents were editing `specs/003-curriculum-tracks/traceability.md` and the FR text that day. [log 2026-10-01T17:26:46Z, "SPEC-KIT TODO"]
+28. **`decisions.md` numbering gap, 62–64.** Answers 41, 42 and 43 (2026-10-01: continue the fan-out on Sonnet 5.5; keep the quality, the credit was raised; a later part of a multi-part exercise
+    carries the book's earlier value) are decisions 62, 63 and 64 by the N + 21 rule and are not entered in the decisions table, which jumps from 61 to 65. [`specs/003-curriculum-tracks/decisions.md`;
+    `samuel-answers.md` 41–43]
+29. **Merge with `main` before any PR.** `origin/main` is 16 commits ahead (v0.11.0, 2026-10-02). A trial merge (`git merge-tree`, nothing written to the tree) reports **15 conflicts**: `app/package.json`,
+    `docs/PROJECT_STATE.md`, `specs/002-identity-and-admin-console/traceability.md`, and in app code `ask.ts`, `lesson.ts`, `progression.ts`, `queries.ts`, `types.ts`, `attempts-client.ts`,
+    `socratic-probing.ts`, `StudentLoop.tsx`, `SpineExplorer.tsx`, `spine-order-scan.test.mts`, plus two files `main` deleted and this branch changed (`spine/GraphCanvas.tsx`, `spine/LoPanel.tsx`: the
+    new Your Progress Map replaced them). **`docs/decisions/0020-mastery-gated-lesson-progression.md` merges with no conflict but wrongly:** both sides number prompt-hold exceptions "fifth", "sixth"
+    and "seventh" for different exceptions (this branch: a new course's prompts, the book's names, English only; `main`: Tamer's Your Progress chat and the map's selection), so a clean merge would
+    leave duplicates. The branch's "v0.10" label is also taken: `main` already has v0.10.0 (2026-10-01) and v0.11.0, and `tasks.md` T390 still plans a bump to v0.10.0. The branch's CI is red at its last
+    run (`383510c`, 2026-09-26) and has been hidden since by `[skip ci]`. T423/T424 (the catalogue's CI proof and rehearsal) are due before merge because the work touches live Prep-3 content. No migration
+    collides (`main` has none after 032; this branch has 033–039).
+
+### Could not reconcile or verify
+
+- **Cost.** The orchestrator's figure (280 runs, ≈ $943) and the ledger today (284 runs, $952.70) differ by 4 runs and about $10. I did not find which runs were added. The meter also flags five runs as
+  incomplete (`wf_2648747c-cf6`, `wf_ace9e326-ddf`, `wf_e4887b3b-cbd`, `wf_957393ec-d74`, `wf_bfd09dab-0e6`; the last two were stopped and resumed on 2026-10-01) and marks S0b, SW and S0b calibration as
+  including unpriced tokens, so the dollar total is a floor. The agent count (4,394) is not in `meter_run.py summary`; I did not recompute it.
+- **"All 14 chapters through G5"** is true in the sense that each has a G5 record; the records for Chapters 1–4, 8 and 14 are older than later changes (open decision 25). My own read-only coverage check
+  for Chapters 1–4 differs from the recorded G5 only for Chapter 1 (objective evidence 25 of 29, not 24; tier floor 84 of 87, not 83), because the G2 recommendations later put one more of its objectives' questions live.
+  I could not check Chapter 8 the same way (its inputs are the pilot's own, outside the fan-out layout).
+- **Run-log lines that are malformed**, nothing material: two `SAVED+APPLIED g2rec-ch13/ch14` lines carry a literal `$(date -u +%FT%TZ)` instead of a time (they fall between 07:15Z and 07:17Z), and one line begins
+  `20:05 s6-grade-ch02` (the 2026-10-01 17:03Z–17:08Z window).
+- **Chapter 12's prerequisite check** is described two ways in the record: "the source objectives have no description" (`checks`) and "it could not see the chapter-7 congruence objective's description"
+  (`for_review`). Same event, one root cause (no objective descriptions reached the checker).
+- **Chapter 6 live count:** the log says 216 live at load, the database says 217 (239 rows either way). The extra row went live in a later step; I did not trace which.
+- **PROJECT_STATE.md and `tasks.md` lag the code** on T448 (built, per the family-parent agent), migration 039 and the console reading the step-check flags; PROJECT_STATE is updated by this pass, `tasks.md` is not (an agent owns it today).
+
+## STATUS UPDATE — 2026-09-26, corrected 2026-09-27 (superseded by "Full book complete — 2026-10-02" above; everything from "Where the pilot stood" down to "Rebuilding" is the older state, kept for the record)
 
 Local session paused for credit safety on 2026-09-26. **Commit status (corrected 2026-09-27):** the work
 is not only on disk. After the WIP push `383510c`, an auto-snapshot job has been committing the worktree
@@ -350,34 +599,21 @@ lesson-v7/collect-5, s5-v5, s6-v5, s7-v7 (the current runbook scripts; the pilot
 changed in parallel (loader status policy, migration 035 stamps, the book-picture VIZ kind, a new coverage check) —
 none in a file this work touched. `scripts/traceability.py --check` OK.
 
-**Blocking, or for Samuel:**
-1. **KaTeX: a stripped control space before digits.** Hash-proved S0b LaTeX writes the book's thousands space
-   `\text{57\ 000\ 000}` as `\text{57\000\000}` (whitespace removed before hashing); KaTeX refuses `\0`, so
-   `load_seed.py` refuses chapters 9 (8 items), 10 (1) and 13 (2) — 14 images today, more once the vision passes
-   land. Fix in the assembly's re-spacing (`respace_latex`: a backslash followed by a digit is a control space,
-   `\ `), owned by the engineer changing `assemble_lesson_bundle.py` today. Not a gate 37c passes: broken maths blocks.
-2. **lo:g10m8s1-1-1 has no parent question.** Its six items are drawings G2 made teaching-only, so they are worked-
-   example entries, not question rows; FR-1101 and `questions.parent_question_id REFERENCES questions(id)` need a
-   question row. Run 001 gives the author those items (with the book's drawn answers) as models and parent
-   candidates — without them it reported "infeasible" in the pilot — but a family it writes cannot load until Samuel
-   decides: let a teaching item be a family's parent (loader + FR-1101 wording), or keep s1-1-1 as a named coverage
-   exception. No widget kind plots given vertices (`polygon_builder` grades shape properties).
-3. **The auto-pass verdicts** for G1 (`approve --verdicts`) and G2 (`lesson-runs --g2`; `"auto": true`, migration 035)
-   come from the gates' auto-pass mode, in flight elsewhere; needed from run 6 (S1 ch01) on.
-4. **Chapter 8's prerequisite links to chapters 1–7** (consistency review D4) need a links-only S1 pass after
-   chapter 7's G1 (≈ $0.5–1); not built, not in the plan — decide whether to add it.
-5. **Chapter 8 into the book's seed** (closing steps): copy the reviewed pilot bundle, or re-assemble it with the
-   book-picture stand-ins (37d), deterministic, $0.
-6. **Budget**: the top of the range passes $1.1k; the plan's rule is to stop and ask if the metered total does.
-7. **Spec Kit**: the working checker (answer 30) needs its FR/traceability lines (tech-writer).
-8. **CHECK LATER (Samuel, 2026-10-02, decision 65): lesson `g10m13s1-1` (13.1, area) has ONE objective, by ruling.**
-   G1's rule 4 wants 2 to 5; `lo:g10m13s1-1-2` (area as an algebraic expression) had exercise evidence only and was
-   dropped by an orchestrator (AI) ruling, its 7 items re-homed to `lo:g10m13s1-1-1` (as was `Ex13-7:27a`, which no mapper placed). Samuel allowed one objective
-   after a ruling, with a note to check it later: is 13.1 really one objective, or should it get a second (a new S1
-   run for the lesson) or merge with a neighbour? Recorded as `check_later` in `objectives/g10-math/ch13.check.json`
-   and `g10m13s1-1.json`, and first in the `for_review` list of `runs/g10-math/gates/g1-ch13.json`.
+**Blocking, or for Samuel:** *(rewritten 2026-10-02. The current, deduplicated list is "Open decisions after the full-book run" under
+"Full book complete — 2026-10-02", near the top of this file. What became of the eight items that stood here on 2026-10-01:)*
+
+1. *KaTeX: a stripped control space before digits* — **fixed** 2026-10-01 (`respace_latex`, `_digit_escapes`: a backslash followed by a digit becomes `\ `).
+2. *`lo:g10m8s1-1-1` has no parent question* — **decided** (answer 40, decision 61) and **built** (migration 038, `parent_kind`); its three families were authored and graded but are
+   **not loaded** — open decision 22.
+3. *The auto-pass verdicts for G1 and G2* — **built** and used for every chapter's G1 to G5 (`auto_pass_gates.py`).
+4. *Chapter 8's prerequisite links to chapters 1–7* — **still open**, never built or decided — open decision 12.
+5. *Chapter 8 into the book's seed* — **still open**: Chapter 8's bundle is only under the gitignored `work/` tree — open decision 23.
+6. *Budget* — the ledger reads $952.70 for the whole book including the pilot, inside the approved ≈ $0.85–1.1k for the fan-out; no stop was needed.
+7. *Spec Kit: the working checker's FR* — written (FR-4411, decision 51). Later pipeline changes still owe FRs — open decision 27.
+8. *CHECK LATER, lesson `g10m13s1-1`* — **still open** — open decision 2.
 
 ## PAUSED 2026-10-01 — Samuel: "be careful the usage will finish very soon, can you pause?"
+*(History, resolved: Samuel resumed the fan-out the same day, answer 41, and it ran to the end of the book. The two runs named below finished; see "Full book complete — 2026-10-02" near the top.)*
 Everything stopped on purpose (usage about to run out). Nothing is lost; the auto-snapshot loop (no model use) keeps
 committing to the feature branch.
 - **Fan-out held** (Samuel dismissed "keep going until the whole book is done?" — wait for his instruction before
@@ -419,6 +655,7 @@ cd ../../app && npm test && npx tsc --noEmit
 ```
 
 ## PAUSED AGAIN 2026-10-01 — app restart for Sonnet 5.5
+*(History, resolved: after the restart the alias `sonnet` resolved to claude-sonnet-5-5 (verified 2026-10-01 08:05Z) and every run since used it.)*
 Samuel: Sonnet 5.5 exists; the app needs a restart to get it. Every pipeline script and agent asks for the alias
 `sonnet` (newest Sonnet the app knows), so after the restart everything runs on Sonnet 5.5 with no code change.
 **Check first after the restart:** a new agent's transcript should show the new model id (the old one was
