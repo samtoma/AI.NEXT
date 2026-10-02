@@ -1,0 +1,671 @@
+{
+ "mode": "author",
+ "book": "g10-math",
+ "prompts_version": "s7-v7",
+ "by_ref": {
+  "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/s7-author-ch14",
+  "stage": "S7 author",
+  "shards_sha256": "20f61bcb3ad8d1851d14c891ec665562108215d53b777ffa16cd256fc1cb4634",
+  "files": 8
+ },
+ "embedded": {
+  "source": "runbook/widgets.workflow.js",
+  "source_sha256": "ed230f08ec96811f4eaa45379aabb16441ac259c0b6b19e018a7b0cfb19de1cf",
+  "args_sha256": "f5545c4b436da56896feacccaed15f1ec438864e14645cf30ddbbf3875c858b3",
+  "generated_sha256": "50e431954bdbbd87f422242693e080001ddbe552733c974e54edf0f87e3c4d37",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "records": [
+  {
+   "lesson": "g10m14s1-1",
+   "templates": [
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:g10m14s1-1-1:two-dice-total-8",
+     "lo_id": "lo:g10m14s1-1-1",
+     "parent_question_id": "q:g10m14s1-1-1:ex14-1-1",
+     "tier": "basic",
+     "kind": "sample_space",
+     "spec": {
+      "rows": 6,
+      "cols": 6,
+      "rule": {
+       "kind": "sum",
+       "op": "eq",
+       "value": 8
+      }
+     },
+     "stem": "Two dice are rolled and you hope for a total of 8. The grid shows every possible outcome as (first die, second die). Tap every outcome that belongs to the event \"the total is 8\".",
+     "solution": [
+      "The sample space is every outcome of rolling two dice: each (first die, second die) pair, shown as the 6 x 6 grid of 36 outcomes.",
+      "The event is \"the total is 8\", so look for the pairs whose two numbers add to 8.",
+      "If the first die shows 2, the second must show 6; for 3 it must be 5; for 4 it must be 4; for 5 it must be 3; for 6 it must be 2. A first die of 1 would need a 7, which does not exist.",
+      "Tap all five cells: $(2, 6)$, $(3, 5)$, $(4, 4)$, $(5, 3)$ and $(6, 2)$. $(2, 6)$ and $(6, 2)$ are different outcomes (a different die shows the 6), so both belong to the event.",
+      "The event set is $E = \\{(2, 6), (3, 5), (4, 4), (5, 3), (6, 2)\\}$ and $n(E) = 5$ out of $n(S) = 36$."
+     ],
+     "diagnostics": [
+      {
+       "predicate": "counted-once",
+       "misconception_id": "mc:g10m14s1-1-1:event-set-incomplete"
+      },
+      {
+       "predicate": "missed-outcomes",
+       "misconception_id": "mc:g10m14s1-1-1:event-set-incomplete"
+      }
+     ],
+     "notes": "Builds the book's own question ex14-1-1 (two dice, total 8, the event set is {(2,6),(3,5),(4,4),(5,3),(6,2)}) as a construction instead of a choice among three printed sets. Here counted-once means a mirror pair such as (3,5) and (5,3) tapped as one outcome, which is exactly how the book's distractors drop outcomes; it and missed-outcomes (e.g. only (4,4), or only (2,6) and (6,2)) both reveal the same own misconception, a listed event set that is incomplete, so both map to event-set-incomplete (one predicate each, no predicate repeated). extra-outcomes is left unmapped on purpose: a cell tapped that does not total 8 is an arithmetic slip, and none of this objective's own misconceptions names it (sample-space-as-an-event is a different error, giving an event where the whole space was asked for, which this widget never asks). The 6 x 6 grid is the sample space and is shown whole to the student, so the construction is only the event, which is exactly the half of the objective this question tests."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:g10m14s1-1-1:boxes-product-at-least-3",
+     "lo_id": "lo:g10m14s1-1-1",
+     "parent_question_id": "q:g10m14s1-1-1:ex14-8-22c",
+     "tier": "standard",
+     "kind": "sample_space",
+     "spec": {
+      "rows": 3,
+      "cols": 2,
+      "rule": {
+       "kind": "product",
+       "op": "ge",
+       "value": 3
+      }
+     },
+     "stem": "Box A contains 3 cards numbered 1, 2 and 3. Box B contains 2 cards numbered 1 and 2. One card is removed at random from each box, and the grid shows every possible pair of cards. Tap every outcome in the event \"the product of the two numbers is at least 3\".",
+     "solution": [
+      "The sample space is every pair (card from Box A, card from Box B): $3 \\times 2 = 6$ outcomes, namely $(1, 1)$, $(1, 2)$, $(2, 1)$, $(2, 2)$, $(3, 1)$ and $(3, 2)$.",
+      "\"At least 3\" means 3 or more, so a product of exactly 3 is included.",
+      "Work out each product in turn: $1$, $2$, $2$, $4$, $3$, $6$.",
+      "The products that are 3 or more come from $(2, 2)$, $(3, 1)$ and $(3, 2)$. Tap those three cells.",
+      "The event set is $E = \\{(2, 2), (3, 1), (3, 2)\\}$, with $n(E) = 3$ out of $n(S) = 6$, which is where the book's answer $P(E) = \\frac{1}{2}$ comes from."
+     ],
+     "diagnostics": [
+      {
+       "predicate": "missed-outcomes",
+       "misconception_id": "mc:g10m14s1-1-1:event-set-incomplete"
+      }
+     ],
+     "notes": "From the book's end-of-chapter two-box question (ex14-8-22c, answer 1/2). A non-square 3 x 2 grid and an inequality rule (at least 3) take the same skill, finding every outcome that gives the wanted result, off the two-dice picture. The common slip is reading \"at least 3\" as \"more than 3\" and so dropping (3,1); that fires missed-outcomes, mapped to event-set-incomplete. extra-outcomes (tapping a product of 2) has no own misconception on this objective, so it is deliberately unmapped. counted-once is also left unmapped: no two cells of the event share a product (4, 3, 6), so it cannot be the likely signal here. The product rule is symmetric in the two boxes, so which axis the grid draws Box A on does not change the question."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:g10m14s1-1-1:boxes-sample-space",
+     "lo_id": "lo:g10m14s1-1-1",
+     "parent_question_id": "q:g10m14s1-1-1:ex14-8-22a",
+     "tier": "basic",
+     "kind": "product_builder",
+     "spec": {
+      "X": [
+       1,
+       2,
+       3
+      ],
+      "Y": [
+       1,
+       2
+      ]
+     },
+     "stem": "Box A contains 3 cards numbered 1, 2 and 3. Box B contains 2 cards numbered 1 and 2. One card is removed at random from each box. Build the sample space: tap every outcome (card from Box A, card from Box B) that could happen.",
+     "solution": [
+      "An outcome records the card from Box A first and the card from Box B second, as an ordered pair $(a, b)$.",
+      "Any card from Box A can come out together with either card from Box B, so go through Box A one card at a time.",
+      "Box A card 1 gives $(1, 1)$ and $(1, 2)$; card 2 gives $(2, 1)$ and $(2, 2)$; card 3 gives $(3, 1)$ and $(3, 2)$.",
+      "The sample space has $3 \\times 2 = 6$ outcomes: $S = \\{(1, 1), (1, 2), (2, 1), (2, 2), (3, 1), (3, 2)\\}$.",
+      "An event such as \"the sum is 4\" is only a part of this set, $\\{(2, 2), (3, 1)\\}$. It is picked out of the sample space; it is not the sample space itself."
+     ],
+     "diagnostics": [
+      {
+       "predicate": "missing-pairs",
+       "misconception_id": "mc:g10m14s1-1-1:sample-space-as-an-event"
+      }
+     ],
+     "notes": "The sample space of a one-from-each-box experiment is exactly the set of ordered pairs A x B, so this is the objective's \"identify the sample space\" half, built outcome by outcome; it is the first step the book's question ex14-8-22 needs before any event can be picked. missing-pairs is mapped to sample-space-as-an-event: the likeliest reason a student leaves out cells when asked for every possible outcome is that they list only the pairs for the event the problem is about (sum 4, product at least 3). It will also fire for plain carelessness, which this predicate cannot tell apart. reversed-pairs (Y x X) is unmapped: none of this objective's own misconceptions describes it. sample-space-of-another-experiment cannot be diagnosed here because extra-pairs is not among the predicates this widget reports. Sets are kept to 3 and 2 numbers, inside the instrument's limits."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:g10m14s1-1-2:two-dice-total-at-most-4",
+     "lo_id": "lo:g10m14s1-1-2",
+     "parent_question_id": "q:g10m14s1-1-2:ex14-1-3",
+     "tier": "standard",
+     "kind": "sample_space",
+     "spec": {
+      "rows": 6,
+      "cols": 6,
+      "rule": {
+       "kind": "sum",
+       "op": "le",
+       "value": 4
+      }
+     },
+     "stem": "Two fair dice are rolled together. The grid shows all 36 equally likely outcomes. Tap every outcome in the event \"the total is 4 or less\", then read n(E)/n(S) from the grid and write P(E) as a simplified fraction.",
+     "solution": [
+      "The grid has $n(S) = 36$ outcomes and all 36 are equally likely, so $P(E) = \\frac{n(E)}{n(S)}$ applies.",
+      "\"4 or less\" covers the totals 2, 3 and 4.",
+      "Total 2: $(1, 1)$. Total 3: $(1, 2)$ and $(2, 1)$. Total 4: $(1, 3)$, $(2, 2)$ and $(3, 1)$. Each ordered pair is its own cell, so tap all six.",
+      "$n(E) = 6$, so $P(E) = \\frac{6}{36}$.",
+      "Divide top and bottom by 6 to simplify: $P(E) = \\frac{1}{6}$. As a decimal this is about $0.17$ (2 decimal places), or about $16.7\\%$.",
+      "Do not count the totals themselves as the outcomes: \"3 out of the 11 possible totals\" is wrong, because the totals are not equally likely (a total of 2 fills one cell, a total of 4 fills three)."
+     ],
+     "diagnostics": [
+      {
+       "predicate": "counted-once",
+       "misconception_id": "mc:g10m14s1-1-2:unequal-outcomes-counted-as-equal"
+      }
+     ],
+     "notes": "The anchor ex14-1-3 asks for a compound event (\"1 or 2\") on one die as a simplified fraction. A single die cannot be a grid (this widget needs at least 2 rows and 2 columns), so the same ideas (a compound event, a simplified n(E)/n(S)) are carried by two dice, where the unsimplified 6/36 gives the simplifying step something real to do. counted-once is the one predicate that reveals this objective's own misconception: a student who treats each total (2, 3, 4) as one outcome has counted kinds of result as outcomes and is treating them as equally likely (3 of 11); the grid shows that the totals are not equally likely and that the 36 cells are. missed-outcomes and extra-outcomes are left unmapped because the only misconception on this objective's own list is the equal-likelihood one, which neither of them reveals; an id from objective g10m14s1-1-1 would be refused. The single-die and bag anchors (ex14-1-4, 1-5 and 1-6) cannot be a grid and are recorded as a gap."
+    }
+   ],
+   "gaps": [
+    {
+     "lo_id": "lo:g10m14s1-1-1",
+     "need_kind": "outcome_set_builder",
+     "description": "The student is told a one-stage experiment (roll a die, toss a coin, spin a spinner, pick a ball from a bag) and assembles its sample space by dragging outcome tokens into a set, from a tray that holds the right outcomes plus decoys. The decoys come from other experiments (H and T when a die was rolled) and from events (only 1, 3, 5, or only the numbers greater than 4). A second mode would name an event (an even number) and ask for the event set drawn from the sample space already built. The widget would diagnose sample-space-as-an-event (a condition-picked subset given for the whole space), sample-space-of-another-experiment (a set from a different experiment) and event-set-incomplete (an event set that leaves out some qualifying outcomes).",
+     "why": "The anchors ex14-1-2 (sample space of a die) and ex14-8-1 (what an outcome is) are about single-stage experiments with labelled or numbered outcomes. sample_space needs a grid of at least 2 x 2 and gives the whole space to the student, so it only grades choosing an event. product_builder only forms ordered pairs from two sets and cannot report an outcome that belongs to another experiment (it cannot emit extra-pairs). number_line_marker takes 1 to 4 numeric targets, which is too few for a die and has no way to hold H and T. So the single-die and coin cases, and the sample-space-of-another-experiment misconception, have no instrument."
+    },
+    {
+     "lo_id": "lo:g10m14s1-1-2",
+     "need_kind": "equal_outcomes_strip",
+     "description": "A one-dimensional sample space drawn as a strip or bag of equally likely tokens: 12 balls coloured 6 red, 3 blue, 2 green and 1 white; 50 cards of the even numbers 2 to 100; or 100 numbered pages. The student sets or sees the tokens, taps those that belong to the event (blue or white; a multiple of 5; an odd page number), and the live readout assembles n(E)/n(S) from tokens counted one each, with a prompt to simplify and then convert to a decimal or a percentage. A switch to \"count the colours\" would show 4 colours and the readout would stay unmoved (1/4 for any colour), so the student sees why the kinds of result are not the outcomes. It would diagnose unequal-outcomes-counted-as-equal directly, which is the misconception the bag anchors ex14-1-6 are built around.",
+     "why": "ex14-1-3 to ex14-1-6 are single-experiment questions (one die, 100 pages, cards, a bag of coloured balls), not two-stage ones. sample_space needs at least 2 rows and 2 columns and its rules (sum, difference, product, same, first, second) read numbers in two coordinates, so it cannot hold a bag of colours or a list of cards with one number each. Its counted-once predicate only reaches the equal-likelihood misconception for two-dice totals. bar_builder and number_line_marker grade other statistics. So the bag, cards and pages questions, which make up most of this objective's anchors, have no instrument."
+    }
+   ],
+   "notes": ""
+  },
+  {
+   "lesson": "g10m14s2-1",
+   "templates": [],
+   "gaps": [
+    {
+     "lo_id": "lo:g10m14s2-1-1",
+     "need_kind": "trial_tally",
+     "description": "The student is given a recorded run of trials (a strip of die faces, coin sides or the paired soccer scores in the book's worked example), and marks the trials in which the stated event occurred. The widget assembles 'event occurred / trials conducted' live as a fraction and a decimal. The student then fixes the denominator as the number of trials, not the number of outcomes. A second move lets the student run the same experiment again and see that the fraction changes each time. Grading is on the property: the marked set must be exactly the trials where the event happened, for any event the stem names (a 3 on a die, heads, 'Team 1 wins' meaning Team 1's score is larger). Errors it would diagnose: (1) the student reports a fixed 'expected' value such as 1/6 or 0.5 instead of the tally, which is the lesson's misconception mc:g10m14s2-1-1:expects-a-fixed-value; (2) event count divided by the number of non-events, or by the number of possible outcomes instead of the number of trials; (3) trials where the event did not occur marked as if they counted (for example a draw counted as a win); (4) trials where the event did occur missed.",
+     "why": "No existing kind fits. sample_space shows the whole theoretical sample space as a grid of equally likely cells, so n(E)/n(S) there is theoretical probability, not experimental relative frequency. A trial log has repeats, order and a total set by the experiment, none of which a grid can hold. bar_builder could be bent into 0/1 'trial' bars whose mean is the relative frequency, but n is capped at 3-8 (the book's examples use 10, 21, 27, 30 and 44 trials), the student would be building a mean rather than counting an event, and its predicates (median-for-mean, total-wrong) name errors that are not this lesson's. That would be a forced fit that diagnoses the wrong things, so it is not offered."
+    },
+    {
+     "lo_id": "lo:g10m14s2-1-2",
+     "need_kind": "convergence_runner",
+     "description": "The student runs a simulated experiment (a fair coin, or a die with one face as the event) in batches and sees a table and a plot of the running relative frequency after each trial or batch, with the theoretical probability drawn as a reference line. The construction is a property: the student sets the number of trials, or chooses the batch sizes, so that the running relative frequency stays within a stated band (for example within 0.05) of the theoretical probability from that point on, and then reads off what happened to the spread as the trials grew. The theoretical value is supplied by the student (marking the event in a small equally-likely grid) before the comparison line appears. Errors it would diagnose: (1) expecting the relative frequency to equal the theoretical probability after a handful of trials, or to hit it exactly, which is mc:g10m14s2-1-1:expects-a-fixed-value; (2) taking the theoretical probability from the kinds of result rather than from equally likely outcomes, which is mc:g10m14s1-1-2:unequal-outcomes-counted-as-equal (a weighted or two-coloured spinner or bag whose kinds are not equally likely); (3) concluding that a long run of one result must be 'made up for' next; (4) comparing the relative frequency to the wrong reference value.",
+     "why": "No existing kind fits. Every kind here grades one final configuration, and none carries a sequence of trials that grows over time. sample_space can build the theoretical probability, but that is the previous section's objective, and the objective here is the comparison with a run of experimental results and how it behaves as the trials grow, which no grid can show. curve_sketcher has no family that draws a running proportion. A template on sample_space would test the wrong objective behind a thin link. Separately, this objective has no anchor book question in the lesson file (anchor_questions is empty), so a template could not carry a valid parent_question_id."
+    }
+   ],
+   "notes": ""
+  },
+  {
+   "lesson": "g10m14s3-1",
+   "templates": [
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:g10m14s3-1-1:die-multiple-of-5-and-odd",
+     "lo_id": "lo:g10m14s3-1-1",
+     "parent_question_id": "q:g10m14s3-1-1:ex14-8-14a",
+     "tier": "basic",
+     "kind": "venn_builder",
+     "spec": {
+      "mode": "counts",
+      "sets": 2,
+      "labels": [
+       "Multiple of 5",
+       "Odd number"
+      ],
+      "regions": {
+       "a": 0,
+       "b": 2,
+       "ab": 1,
+       "n": 3
+      }
+     },
+     "stem": "A die is rolled once. Let $A$ be the event 'a multiple of $5$' and $B$ the event 'an odd number'. The rectangle is the whole sample space $S$. Fill in the Venn diagram: how many outcomes lie in $A$ only, in both $A$ and $B$, in $B$ only, and in neither circle?",
+     "solution": [
+      "Write down the sample space: $S = \\{1, 2, 3, 4, 5, 6\\}$, so $n(S) = 6$. The rectangle holds all six outcomes.",
+      "List the event sets: $A = \\{5\\}$ (the only multiple of $5$ on a die) and $B = \\{1, 3, 5\\}$.",
+      "The outcome $5$ is in both events, so the overlap $A \\cap B$ holds $1$ outcome.",
+      "$A$ has no other outcome, so 'A only' holds $0$. The other outcomes of $B$, namely $1$ and $3$, go in 'B only': $2$ outcomes.",
+      "The outcomes in neither event, $2$, $4$ and $6$, sit inside the rectangle but outside both circles: $3$ outcomes.",
+      "Check: $0 + 1 + 2 + 3 = 6 = n(S)$, so every outcome of the sample space has been placed exactly once."
+     ],
+     "diagnostics": [
+      {
+       "predicate": "neither-region-missed",
+       "misconception_id": "mc:g10m14s1-1-1:sample-space-as-an-event"
+      }
+     ],
+     "notes": "Counts mode with NO clues and NO total, on purpose: for this objective the student must derive the sample space and both event sets herself, so no set size is handed over (and 'overlap-counted-twice' cannot fire, which is right, since no own misconception names it). What it fits: the Venn representation of an experiment, n(S) and the exclusive count of each region; what it does not do: the student does not write the sets out in braces (that stays written work, see the gap). 'A only' = 0 is deliberate: A lies wholly inside B, which the book's own anchor (ex14-8-14a, answer 1/6) has. neither-region-missed is mapped to sample-space-as-an-event as the nearest id this objective owns: the student whose outside region is empty has treated the union of the events as the whole sample space. off-target is left unmapped because it fires for several unrelated slips (a dropped outcome in B, the overlap counted into 'B only') and none dominates; the 'counts a set's full size in its exclusive region' error has no id on this objective."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:g10m14s3-1-1:factors-of-12-and-primes",
+     "lo_id": "lo:g10m14s3-1-1",
+     "parent_question_id": "q:g10m14s3-1-1:ex14-3-3b",
+     "tier": "standard",
+     "kind": "venn_builder",
+     "spec": {
+      "mode": "counts",
+      "sets": 2,
+      "labels": [
+       "Factor of 12",
+       "Prime number"
+      ],
+      "regions": {
+       "a": 4,
+       "b": 3,
+       "ab": 2,
+       "n": 3
+      }
+     },
+     "stem": "Pieces of paper labelled $1$ to $12$ are placed in a box, and one piece is taken out. Let $A$ be the event 'a factor of $12$' and $B$ the event 'a prime number'. The rectangle is the whole sample space $S$. Fill in the Venn diagram: how many outcomes lie in $A$ only, in both $A$ and $B$, in $B$ only, and in neither circle?",
+     "solution": [
+      "Write down the sample space: $S = \\{1, 2, 3, \\dots, 12\\}$, so $n(S) = 12$.",
+      "List the factors of $12$: $A = \\{1, 2, 3, 4, 6, 12\\}$, so $n(A) = 6$.",
+      "List the primes up to $12$ (remember that $1$ is not prime): $B = \\{2, 3, 5, 7, 11\\}$, so $n(B) = 5$.",
+      "The outcomes in both sets are $2$ and $3$, so the overlap $A \\cap B$ holds $2$ outcomes.",
+      "'A only' is the other four factors, $1, 4, 6, 12$: $4$ outcomes. 'B only' is $5, 7, 11$: $3$ outcomes.",
+      "The outcomes in neither set are $8, 9, 10$: $3$ outcomes, inside the rectangle but outside both circles.",
+      "Check: $4 + 2 + 3 + 3 = 12 = n(S)$. (Counting a whole set instead of its exclusive part would give $6 + 5 + 3 = 14$, which is more than $n(S)$.)"
+     ],
+     "diagnostics": [
+      {
+       "predicate": "neither-region-missed",
+       "misconception_id": "mc:g10m14s1-1-1:sample-space-as-an-event"
+      }
+     ],
+     "notes": "Built on the two anchors ex14-3-3b and ex14-3-3c (factors of 12, primes up to 12); both event sets come from the book's own answers. Regions: A only {1,4,6,12} = 4, B only {5,7,11} = 3, overlap {2,3} = 2, neither {8,9,10} = 3, sum 12. Counts mode with no clues and no total, as in the basic template. The likeliest wrong answers here are an incomplete list of factors (1 and 12 forgotten, so event-set-incomplete) and 1 counted as prime, but both land in off-target together with the overlap-counted-twice slip, so off-target is left unmapped rather than blamed on one of them. neither-region-missed is mapped to sample-space-as-an-event on the same reasoning as the basic template."
+    }
+   ],
+   "gaps": [
+    {
+     "lo_id": "lo:g10m14s3-1-2",
+     "need_kind": "venn_event_reader (new kind): a drawn Venn diagram with numbered outcomes, the student taps the outcomes that belong to a named event",
+     "description": "The widget draws a rectangle S with two overlapping circles and the sample-space outcomes placed in the four regions (like the two book figures, which the widget would draw itself rather than point at). The stem names an event ('the event set of A') and the student taps every outcome that belongs to it; the answer is graded as a set, so any order is fine. The correct reading is everything inside A's circle, overlap included. The wrong readings are the book's three distractors and this objective's three own misconceptions: tapping only the outcomes in the overlap (reads-only-the-overlap), tapping the outcomes outside the circle (reads-outside-the-circle), and tapping everything in the other circle (reads-the-other-circle). Each is a recognisable set of taps, so each could carry its own predicate, which would let the tutor say exactly which circle or region she read. A second mode could ask for 'A or B', 'A and B' and 'not A' by reading, to connect to later lessons.",
+     "why": "venn_builder cannot do this honestly. Its shade mode shows no outcomes and has no target for the whole of one circle (the targets are union, intersection, aOnly, bOnly, complements and neither), so 'the event set of A' cannot be asked. None of its predicates (complement-inside-a, exclusive-drawn-overlapping, intersection-for-union) refer to the three misconceptions of this objective, and its counts mode asks for sizes, not for the elements read off a diagram. Mapping any of them would be a forced fit that promises refutations the widget cannot give."
+    },
+    {
+     "lo_id": "lo:g10m14s3-1-3",
+     "need_kind": "no new kind: venn_builder (counts mode) fits; blocked because lo:g10m14s3-1-3 has an empty misconceptions list, so no diagnostic can be mapped",
+     "description": "The construction is the right one and the instrument already exists: venn_builder counts mode, with clues, on the book's survey problems. Intended two-set template for ex14-8-20a: labels ['Red hair', 'Brown eyes'], regions {a: 44, b: 5, ab: 14, n: 40}, total 103, clues {a: 58, b: 19}; the question asks for the number of children outside both circles' complement, i.e. fill in every region. Intended three-set template for ex14-3-5b/c/d: labels ['Maths', 'Geography', 'History'], regions {a: 8, b: 29, c: 16, ab: 6, ac: 14, bc: 4, abc: 2, n: 0}, clues {a: 30, b: 41, c: 36}. The predicates that would fire are overlap-counted-twice (a set's raw size such as 58 or 41 typed into its exclusive region) and neither-region-missed (the children or learners outside every circle left out). Each needs a misconception id on lo:g10m14s3-1-3 to carry it, and the objective lists none. Suggested catalogue entries for this objective: 'Counts the whole set in its exclusive region, so the overlap is counted twice', and 'Leaves out the learners who are in none of the sets'.",
+     "why": "A template needs at least one diagnostic whose misconception id comes from the objective's own list, and an id borrowed from another objective is refused (FR-1215). With an empty list, any template would either break the schema (no diagnostics) or use a forbidden id. Add the two misconceptions above to this objective and the template can be written straight away. Also check the extracted data first: ex14-3-5b/c/d states 71 learners, but the book's own answers (6, 29, 2) and its other figures give regions that add to 79 (8 + 16 + 29 + 14 + 4 + 6 + 2), so the 71 looks like an extraction slip for 79. A template that kept 71 would fail the validator's sum-to-total rule."
+    },
+    {
+     "lo_id": "lo:g10m14s3-1-1",
+     "need_kind": "venn_outcome_sorter (new kind): the student drags the numbered outcomes of a sample space into the regions of a Venn diagram (the build direction of venn_event_reader)",
+     "description": "The two templates above cover the counts half of this objective. What no existing kind does is the first half: writing down the sample space and the event sets. A sorter would show the outcomes of a stated experiment (for example the numbers 1 to 12) as tiles and an empty rectangle with two circles, and the student drags each tile to the region where it belongs: in A only, in both, in B only, or outside both circles. Grading is by region membership per outcome, so any order is correct. It would diagnose the objective's three misconceptions directly: outcomes missing from an event (event-set-incomplete), outcomes in no circle dropped from the rectangle (sample-space-as-an-event), and a tile set that does not match the experiment (sample-space-of-another-experiment).",
+     "why": "venn_builder counts mode takes only numbers per region, so the student never decides which outcome goes where, and the book's own questions (write down the set A, write down the set B) are exactly about that decision. The existing kind is a good fit for n(S), n(A), n(B) and the region counts, but it cannot show the sets themselves."
+    }
+   ],
+   "notes": ""
+  },
+  {
+   "lesson": "g10m14s4-1",
+   "templates": [
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:g10m14s4-1-1:shade-union",
+     "lo_id": "lo:g10m14s4-1-1",
+     "parent_question_id": "q:g10m14s4-1-1:ex14-4-2",
+     "tier": "basic",
+     "kind": "venn_builder",
+     "spec": {
+      "sets": 2,
+      "labels": [
+       "A",
+       "B"
+      ],
+      "mode": "shade",
+      "target": "union"
+     },
+     "stem": "The sample space is the whole numbers from 1 to 15, drawn as the rectangle. Event $A$ and event $B$ are the two overlapping circles. Shade the region that holds every outcome of $A\\cup B$.",
+     "solution": [
+      "Read the symbol $A\\cup B$ as \"$A$ or $B$\": an outcome belongs to it if it is in $A$, or in $B$, or in both.",
+      "Shade the whole of circle $A$, including the part it shares with $B$.",
+      "Shade the whole of circle $B$ as well. The overlap is already shaded, and each outcome in it is still counted only once.",
+      "Leave the part of the rectangle outside both circles unshaded: those outcomes are in the sample space $S$ but in neither event, so they are not in $A\\cup B$."
+     ],
+     "diagnostics": [
+      {
+       "predicate": "intersection-for-union",
+       "misconception_id": "mc:g10m14s4-1-1:union-as-overlap-only"
+      }
+     ],
+     "notes": "Genuine fit: the student builds the region for \"A or B\" by choosing which parts of the diagram belong to it, which is the idea behind writing the union out element by element. Listing the elements once the region is known is the prerequisite skill (reading an event set from a Venn diagram, s3-1-2), so it is not asked here. The widget's shade/union case can emit only intersection-for-union and off-target. intersection-for-union is mapped to union-as-overlap-only (shading just the overlap is the \"and\" for \"or\" confusion, the likeliest error). off-target is deliberately not mapped: it also fires for union-as-a-only-part (shading only A, or A without the overlap) and union-as-outside-both-circles (shading the rectangle outside the circles), and one predicate cannot separate them. Because neither-region-missed is not in the union case, the outside-both-circles error gets a plain \"not quite\". No figure is referenced: the instrument is the diagram."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:g10m14s4-1-2:shade-intersection",
+     "lo_id": "lo:g10m14s4-1-2",
+     "parent_question_id": "q:g10m14s4-1-2:ex14-4-1",
+     "tier": "basic",
+     "kind": "venn_builder",
+     "spec": {
+      "sets": 2,
+      "labels": [
+       "A",
+       "B"
+      ],
+      "mode": "shade",
+      "target": "intersection"
+     },
+     "stem": "The sample space is the whole numbers from 1 to 15, drawn as the rectangle. Event $A$ and event $B$ are the two overlapping circles. Shade the region that holds every outcome of $A\\cap B$.",
+     "solution": [
+      "Read the symbol $A\\cap B$ as \"$A$ and $B$\": an outcome belongs to it only if it is in $A$ and also in $B$ at the same time.",
+      "The only part of the diagram that lies inside both circles is the overlap, so shade just that.",
+      "Do not shade the part of $A$ outside the overlap or the part of $B$ outside the overlap: each of those outcomes is in one event only.",
+      "Leave the part of the rectangle outside both circles unshaded too: those outcomes are in neither event."
+     ],
+     "diagnostics": [
+      {
+       "predicate": "off-target",
+       "misconception_id": "mc:g10m14s4-1-2:either-set-not-both"
+      }
+     ],
+     "notes": "Genuine fit: the student picks out the one region inside both circles, which is what \"only the elements that are in both sets\" means. The widget's shade/intersection case can emit only off-target, so this template has one diagnostic and it is a judgement call. off-target is mapped to either-set-not-both because the stem names both events and the and/or confusion (shading everything inside either circle, the union) is the likeliest wrong shading by a wide margin. It also fires for whole-set-not-intersection (shading one whole circle, overlap included), which the student would wrongly be told is a both-circles error. Samuel may prefer to drop this diagnostic and ship the question with a plain \"not quite\" until venn_builder can name those two shadings apart (see top-level notes). No figure is referenced: the instrument is the diagram."
+    }
+   ],
+   "gaps": [],
+   "notes": "Two templates, one per objective, both venn_builder in shade mode (target union and target intersection, 2 sets, labels A and B). Both are basic tier, matching the two anchor questions, which are the same difficulty. The lesson stays at two sets because both objectives name two event sets. Both anchors show a Venn diagram of the numbers 1 to 15 with one number outside both circles, which the widget's rectangle reproduces, so the stems never point at a [figure]. The instrument shades regions and does not show numbers, so the book's step of writing the elements out is not asked here. It belongs to the prerequisite objective on reading an event set from a diagram. Neither template uses instances, because the widget's only variable inputs are the labels and target, and the labels are plain A and B as in the book.\n\nDiagnostic coverage is thin and I did not pad it. For union, only intersection-for-union can be mapped (to union-as-overlap-only). union-as-a-only-part and union-as-outside-both-circles both surface as the unmappable off-target. For intersection, the shade/intersection case emits only off-target. I mapped it to either-set-not-both as the dominant error, but whole-set-not-intersection fires the same predicate. The one extension that would fix this is for venn_builder to add predicates for shade/intersection, for example union-for-intersection (everything inside either circle shaded) and one-set-for-intersection (one whole circle shaded). A matching predicate for a lone A-only or outside-the-circles shading on the union case would let the other two union misconceptions fire. I am not recording this as a gap, because the existing kind genuinely fits both objectives. It is a predicate refinement for Samuel to weigh, not a missing instrument."
+  },
+  {
+   "lesson": "g10m14s5-1",
+   "templates": [
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:g10m14s5-1-1:venn-union-die",
+     "lo_id": "lo:g10m14s5-1-1",
+     "parent_question_id": "q:g10m14s5-1-1:ex14-5-1",
+     "tier": "basic",
+     "kind": "venn_builder",
+     "spec": {
+      "mode": "counts",
+      "sets": 2,
+      "labels": [
+       "A",
+       "B"
+      ],
+      "total": 6,
+      "regions": {
+       "a": 2,
+       "b": 1,
+       "ab": 2,
+       "n": 1
+      },
+      "clues": {
+       "a": 4,
+       "b": 3
+      }
+     },
+     "stem": "A die is rolled once, so the sample space is $S=\\{1,2,3,4,5,6\\}$. Event $A$ is $\\{1,2,5,6\\}$ (4 outcomes) and event $B$ is $\\{2,3,6\\}$ (3 outcomes), so $A\\cap B=\\{2,6\\}$. Complete the Venn diagram by entering how many outcomes lie in each region, counting every outcome once. Once the diagram is right you can read off $P(A\\cup B)$.",
+     "solution": [
+      "The outcomes in both events are $A\\cap B=\\{2,6\\}$, so the overlap holds 2 outcomes.",
+      "Only in $A$: $A$ has 4 outcomes and 2 of them are in the overlap, so $4-2=2$ (the outcomes 1 and 5).",
+      "Only in $B$: $B$ has 3 outcomes and 2 of them are in the overlap, so $3-2=1$ (the outcome 3).",
+      "In neither event: the outcome 4 is the only one left, so 1. Check: $2+1+2+1=6=n(S)$.",
+      "The union is everything in $A$ or $B$: $n(A\\cup B)=2+2+1=5$. This equals $n(A)+n(B)-n(A\\cap B)=4+3-2$, because the 2 shared outcomes are counted once, not twice.",
+      "$P(A\\cup B)=\\dfrac{n(A\\cup B)}{n(S)}=\\dfrac{5}{6}\\approx 0.83$."
+     ],
+     "diagnostics": [
+      {
+       "predicate": "overlap-counted-twice",
+       "misconception_id": "mc:g10m14s5-1-1:adds-without-subtracting-shared-outcomes"
+      }
+     ],
+     "notes": "Graded construction: the four exclusive region counts (a=2, b=1, ab=2, n=1), which are unique, so FR-1205 holds. P(A∪B) itself is the step after the widget and is not graded here. The book's anchor (ex14-5-1) has an empty intersection, where the overlap error cannot occur; this template keeps the anchor's sample space {1..6} and event A and adds an overlap (B={2,3,6}) so the objective's own error can fire. Clues a=4 and b=3 are a+ab and b+ab, as the pipeline rule requires; regions sum to total 6. Entering the raw set sizes 4 and 3 in the 'only' regions fires overlap-counted-twice, mapped to the objective's own misconception. Unmapped on purpose: neither-region-missed (forgetting outcome 4 would mean dividing by n(A∪B) instead of n(S), and no such misconception is in this objective's list; none of the listed ids, including the prerequisite unequal-outcomes-counted-as-equal, describes it) and off-target (no dominant error)."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:g10m14s5-1-1:venn-union-discs",
+     "lo_id": "lo:g10m14s5-1-1",
+     "parent_question_id": "q:g10m14s5-1-1:ex14-5-1",
+     "tier": "standard",
+     "kind": "venn_builder",
+     "spec": {
+      "mode": "counts",
+      "sets": 2,
+      "labels": [
+       "Multiple of 2",
+       "Multiple of 3"
+      ],
+      "total": 20,
+      "regions": {
+       "a": 7,
+       "b": 3,
+       "ab": 3,
+       "n": 7
+      },
+      "clues": {
+       "a": 10,
+       "b": 6
+      }
+     },
+     "stem": "A disc is chosen at random from discs numbered $1$ to $20$. Event $A$: the number is a multiple of $2$ (10 outcomes). Event $B$: the number is a multiple of $3$ (6 outcomes). Some discs satisfy both events. Complete the Venn diagram by entering how many discs lie in each region, counting every disc once. Once the diagram is right you can read off $P(A\\cup B)$.",
+     "solution": [
+      "List the shared outcomes: a number that is a multiple of 2 and of 3 is a multiple of 6, so $A\\cap B=\\{6,12,18\\}$ and the overlap holds 3 discs.",
+      "Only in $A$: $10-3=7$ discs.",
+      "Only in $B$: $6-3=3$ discs.",
+      "In neither event: $20-(7+3+3)=7$ discs (1, 5, 7, 11, 13, 17, 19). Check: $7+3+3+7=20=n(S)$.",
+      "The union holds $n(A\\cup B)=7+3+3=13$ discs. This equals $n(A)+n(B)-n(A\\cap B)=10+6-3$: the 3 shared discs are subtracted once so they are not counted twice.",
+      "$P(A\\cup B)=\\dfrac{13}{20}=0.65$."
+     ],
+     "diagnostics": [
+      {
+       "predicate": "overlap-counted-twice",
+       "misconception_id": "mc:g10m14s5-1-1:adds-without-subtracting-shared-outcomes"
+      }
+     ],
+     "notes": "Standard tier: events are given by a rule, not listed, so the student has to find the overlap (multiples of 6) before filling the regions; this is the style of the book's own disc exercises. Graded construction: region counts a=7, b=3, ab=3, n=7 (unique). Clues a=10 (7+3) and b=6 (3+3) satisfy the pipeline rule; regions sum to total 20. Entering 10 and 6 in the 'only' regions fires overlap-counted-twice, mapped to the objective's own misconception. Unmapped on purpose: neither-region-missed (an unlisted error, dividing by n(A∪B) rather than n(S); no listed id describes it) and off-target (no dominant error). P(A∪B)=0.65 is derived from the diagram but not graded by the widget."
+    }
+   ],
+   "gaps": [
+    {
+     "lo_id": "lo:g10m14s5-1-2",
+     "need_kind": "none missing: venn_builder (counts mode) fits; blocked because the objective has no anchor book question",
+     "description": "The student would fill a two-set Venn diagram from a word problem or from listed event sets (for example S={1..6}, A={1,2,6}, B={1,5}), entering the exclusive region counts, then verify that n(A∪B) from the diagram equals n(A)+n(B)−n(A∩B) and that P(A∪B) = P(A)+P(B)−P(A∩B). The construction is the proof of the identity, since the overlap is placed once. It would diagnose overlap-counted-twice (raw set sizes entered in the 'only' regions) and neither-region-missed.",
+     "why": "The lesson file lists no anchor question for this objective, and a template's parent_question_id must be the objective's own anchor from the list, so nothing can be authored without inventing a parent. The objective's misconception list holds only prerequisite ids (s1-1-1, s1-1-2, s3-1-2, s4-1-2), none of which describes the identity error, so the one error this widget would diagnose has no id on this objective. Samuel needs to add an anchor question and, ideally, a misconception id for this objective (the existing mc:g10m14s5-1-1:adds-without-subtracting-shared-outcomes belongs to the sibling objective and cannot be borrowed under FR-1215)."
+    },
+    {
+     "lo_id": "lo:g10m14s5-1-3",
+     "need_kind": "none missing: venn_builder (counts mode) fits; blocked because the objective has an empty misconceptions list",
+     "description": "Anchors ex14-5-2 and ex14-8-24 give A, B and A∪B on S={1..6}. In counts mode the student would fill the Venn diagram (for ex14-5-2: total 6, regions a=2, b=1, ab=1, n=2, clues a=3, b=2) so that the shared region is whatever makes the union come out right, i.e. n(A∩B)=n(A)+n(B)−n(A∪B). The widget would diagnose overlap-counted-twice (entering 3 and 2 in the 'only' regions) and neither-region-missed. P(A∩B)=1/6≈0.17 would follow from the diagram.",
+     "why": "The objective's misconceptions list is empty. A template needs at least one diagnostic, and a diagnostic may only name an id from this objective's own list (FR-1215), so no template can be written without inventing or borrowing an id. Candidate misconceptions Samuel could add: reading P(A∪B) as P(A∩B); finding the intersection by adding n(A) and n(B) instead of subtracting n(A∪B); dividing by n(A∪B) instead of n(S)."
+    }
+   ],
+   "notes": "One kind genuinely fits this lesson: venn_builder in counts mode, with clues present. The student builds the exclusive-region partition, which is the picture behind P(A∪B) = P(A) + P(B) − P(A∩B), and overlap-counted-twice is exactly this lesson's own misconception. Two templates, both on lo:g10m14s5-1-1 (the only objective with both an anchor and an own misconception), both without 'instances' because a nested substitution into regions/clues/labels is not documented. Instead, each has a fixed spec, and the two differ in tier and context. The widget grades the region counts, not the probability, so P(A∪B) is the step after the construction and is stated as such in each stem and solution; I judged that a genuine fit rather than an answer box, but it is not a direct grade of the book's numeric question. Objectives -2 and -3 are reported as gaps for data reasons, not kind reasons (see gaps): -2 has no anchor question and -3 has an empty misconceptions list. Misconception id used: only mc:g10m14s5-1-1:adds-without-subtracting-shared-outcomes, from lo:g10m14s5-1-1's own list. neither-region-missed is deliberately unmapped because no id in the list describes it."
+  },
+  {
+   "lesson": "g10m14s6-1",
+   "templates": [],
+   "gaps": [
+    {
+     "lo_id": "lo:g10m14s6-1-1",
+     "need_kind": "event_overlap_checker",
+     "description": "The student sees the whole set of outcomes of the described experiment (the 52-card deck as a suit-by-rank grid, the fridge as three drinks, one die or two dice as a grid). Two events A and B are named in words. The student marks the outcomes that belong to A in one colour and those that belong to B in a second colour. Any outcome carrying both marks lights up as a shared outcome. The student then answers 'can one pick be in both events?', and an empty overlap must be a gradable, correct answer. Errors it would diagnose: (1) a verdict of 'exclusive' for red and picture although red picture cards were marked or exist, because the two events are described in different ways (different-features-so-exclusive); (2) a verdict of 'not exclusive' with an empty overlap, because both events are possible in the set-up (both-possible-so-not-exclusive); (3) a verdict of 'not exclusive' with an empty overlap, justified only by outcomes that belong to neither event, such as grape juice or a tie (leftover-outcomes-so-not-exclusive). Verdict-versus-overlap mismatches would be the predicates.",
+     "why": "No existing kind can hold two events at once and accept an empty overlap, which is the whole of the objective. sample_space grades one rule, and the pipeline rule requires the event to hold at least one outcome. venn_builder always draws overlapping circles, and its shade targets always name a non-empty region. number_line_marker's points mode needs 1-4 targets, so the empty set cannot be the answer. A template built on any of them would only ever ask the student to find the shared outcomes of a NOT-exclusive pair. That is a leading, one-sided question, and the mutually exclusive verdict, which is the objective, would never be constructed or diagnosed."
+    },
+    {
+     "lo_id": "lo:g10m14s6-1-2",
+     "need_kind": "event_union_bar",
+     "description": "The student works on a probability strip from 0 to 1, sized from the book's own counts (blocks purple 24, orange 32, white 41, pink 19, or ages 3 and 4 from the class table). They place the bars for P(A) and P(B) on the strip and build 'A or B' by joining them. For an exclusive pair the bars sit end to end, the joined length is P(A) + P(B), and the live readout shows that sum. The same instrument also offers an overlapping pair, where the bars must overlap and the shared stretch is visibly counted twice, so the student has to decide whether adding is allowed before they add. Errors it would diagnose: adding P(A) and P(B) for events that can happen together, which is the lesson's own error (adds-without-checking-exclusive), shown as a joined bar that overshoots the true union. It could also catch a union that comes out above 1 or fraction slips when adding over a common denominator.",
+     "why": "The only candidate is sample_space: tap the cells of 'A or B' and read n(E)/n(S). That grid counts the union directly and gives the same answer whether or not the events overlap. It never builds the addition and never tests the exclusivity condition, so it would only re-exercise listing outcomes (a prerequisite) while this objective's own misconception (adds-without-checking-exclusive) could never fire. Its rule is also a single (kind, op, value), so two named events can only be encoded by a contrived inequality such as sum < 4. Its cells are equally likely outcomes, so it cannot carry the table counts the anchor questions use. venn_builder in counts mode with an empty overlap reduces to typing the table's numbers into regions, which is an answer box in disguise."
+    }
+   ],
+   "notes": "No template for lesson g10m14s6-1, deliberately, because every candidate would be a forced fit. 6-1-1: the exclusive case is an EMPTY overlap, and no existing instrument can accept an empty answer or hold two events (sample_space is one rule and must hold at least one outcome; venn_builder always draws overlapping circles; number_line_marker needs 1-4 targets). 6-1-2: sample_space can encode 'sum is 2 or sum is 3' as sum < 4, but counting the union gives the same live fraction whether or not the events are exclusive, so the construction is indifferent to the objective's condition. The lesson's own misconception (adds-without-checking-exclusive) could never fire, and the only fireable predicates (missed-outcomes, counted-once) would diagnose the prerequisite mc:g10m14s1-1-1:event-set-incomplete, not this lesson. The chapter's widget obligation should be met by its sample-space and Venn lessons, where sample_space and venn_builder fit directly. The next lesson in the chapter, the addition rule for non-exclusive events, is where venn_builder's counts mode with clues and overlap-counted-twice belongs. Both gaps are written so that one instrument family (events marked on an outcome set, and event sizes laid on a 0-1 strip) could serve 6-1-1 and 6-1-2 and the following non-exclusive lesson."
+  },
+  {
+   "lesson": "g10m14s7-1",
+   "templates": [
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:g10m14s7-1-1:not-in-chess",
+     "lo_id": "lo:g10m14s7-1-1",
+     "parent_question_id": "q:g10m14s7-1-1:ex14-7-1",
+     "tier": "basic",
+     "kind": "venn_builder",
+     "spec": {
+      "sets": 2,
+      "labels": [
+       "Football",
+       "Chess"
+      ],
+      "mode": "shade",
+      "target": "complementB"
+     },
+     "stem": "A club has learners who play Football ($F$) and learners who play Chess ($C$). Some play both and some play neither. The rectangle holds every learner in the club. Shade the complement of Chess, $C'$.",
+     "solution": [
+      "The rectangle is the sample space: every learner in the club, whichever circles they sit in.",
+      "The complement $C'$ is every learner in the sample space who is not in $C$.",
+      "Chess ($C$) is the circle labelled Chess. It holds two regions: Chess only, and the overlap with Football. Both are in $C$, so leave them unshaded.",
+      "Everything else is in $C'$: the Football-only region and the region outside both circles. Shade both of these.",
+      "Check: $C$ and $C'$ together fill the whole rectangle and share no region."
+     ],
+     "diagnostics": [
+      {
+       "predicate": "complement-inside-a",
+       "misconception_id": "mc:g10m14s7-1-1:lists-event-instead-of-complement"
+      },
+      {
+       "predicate": "off-target",
+       "misconception_id": "mc:g10m14s7-1-1:complement-only-outside-all-circles"
+      }
+     ],
+     "notes": "Mirrors ex14-7-1 (B'), where the book's own distractor {3, 4, 6, 11, 12} is exactly the outside-all-circles error. complementB is used so the event is the second-named set, as B is in the book. The instrument shows regions, not numbers, so the stem names the sets and never points at a figure. Mapping choices: complement-inside-a fires when any region inside Chess is shaded (Chess itself, or the Football circle whole, overlap included); that is the 'inside the event' error. off-target is mapped to complement-only-outside-all-circles only because, on a 2-set diagram, once complement-inside-a and neither-region-missed are excluded the shading left over that is not simply wrong is 'only the region outside both circles', so one error dominates; if the grader's off-target is broader than that, drop this mapping. neither-region-missed (shading only the Football-only region and forgetting the outside) is deliberately unmapped: no misconception in this objective's list names it, and mapping it to reads-the-other-circle or union-as-a-only-part would refute an error the student did not make. Diagnostics are ordered specific-first with off-target last so a catch-all cannot shadow a named predicate."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:g10m14s7-1-1:complement-of-union",
+     "lo_id": "lo:g10m14s7-1-1",
+     "parent_question_id": "q:g10m14s7-1-1:ex14-7-2",
+     "tier": "standard",
+     "kind": "venn_builder",
+     "spec": {
+      "sets": 2,
+      "labels": [
+       "Maths",
+       "Science"
+      ],
+      "mode": "shade",
+      "target": "neither"
+     },
+     "stem": "Each learner in a group is asked whether they like Maths ($M$) and whether they like Science ($S$). Some like both and some like neither. The rectangle holds every learner in the group. Shade the complement of the union, $(M \\cup S)'$.",
+     "solution": [
+      "The rectangle is the sample space: every learner in the group.",
+      "$M \\cup S$ is every learner who likes Maths, Science or both: the Maths-only region, the overlap and the Science-only region.",
+      "The complement $(M \\cup S)'$ is every learner in the sample space who is not in $M \\cup S$.",
+      "Only one region lies outside both circles. Shade it.",
+      "Check: $M \\cup S$ and its complement together fill the rectangle with nothing in common."
+     ],
+     "diagnostics": [
+      {
+       "predicate": "neither-region-missed",
+       "misconception_id": "mc:g10m14s7-1-1:lists-event-instead-of-complement"
+      }
+     ],
+     "notes": "Mirrors ex14-7-2, (A \\cup B)'. The complement of a union is the one region outside every circle, so target 'neither' is the right instrument and the stem asks for the complement by name rather than saying 'neither', which would give the region away. neither-region-missed fires when the outside region is left unshaded, i.e. the student shades the event (the union, or part of it) in place of its complement: that is lists-event-instead-of-complement. off-target is left unmapped: for this target it fires when the outside region is shaded together with extra regions, most likely the De Morgan misreading of (M \\cup S)' as M' \\cup S' (everything except the overlap), which no misconception in this objective's list names, plus assorted noise, so no single error dominates. This template cannot reveal complement-only-outside-all-circles (that student gets this question right); the basic template is the one that does."
+    }
+   ],
+   "gaps": [
+    {
+     "lo_id": "lo:g10m14s7-1-2",
+     "need_kind": "event_pair_overlap: two-event Venn overlap checker",
+     "description": "The student is shown a Venn diagram and two named events written as set expressions (for example $A'$ and $B'$, or $A \\cup B$ and $(A \\cup B)'$). For each event in turn they shade the regions that event covers, each in its own mark, and the widget then highlights every region carrying both marks. The student finishes by stating whether the events are mutually exclusive: any doubly-marked region means no, and none means yes. It would diagnose: believing any two complements are mutually exclusive (shading $A'$ and $B'$ and not noticing that both cover the outside region, the all-complements-assumed-exclusive error); marking the overlap of the circles instead of the two events named (the checks-circle-overlap-not-named-events error); and calling a union and its complement non-exclusive because the circles overlap.",
+     "why": "venn_builder takes one target per question and cannot ask for an empty intersection. Asking the student to shade $A' \\cap B'$ (target 'neither') presupposes a non-empty region and so hands over the yes/no verdict, and the 'yes, mutually exclusive' case (the answers to ex14-7-3 and ex14-8-4) has no region to shade at all and cannot be expressed. Stretching venn_builder over this would be an answer box in disguise, so it goes to Samuel instead."
+    },
+    {
+     "lo_id": "lo:g10m14s7-1-3",
+     "need_kind": "probability_bar: a unit bar split into an event and its complement",
+     "description": "A bar of length 1 (shown with a fraction or percentage readout) is split by a draggable divider into $P(A)$ and $P(A')$. The question gives $P(A)$, or the counts that make it, as in ex14-8-15 ($P(\\text{pink}) = \\frac{7}{12}$) or the block table in ex14-8-11d, and the student drags the divider so the complement segment has the right size; the readout then shows $P(A) + P(A') = 1$ as the whole bar. It would diagnose: reporting $P(A)$ as the answer (the given value) instead of the complement; subtracting the count from the wrong total, or never dividing by the number of outcomes (for example 12 − 7 = 5 given as the probability); turning the result into odds ($\\frac{5}{7}$ instead of $\\frac{5}{12}$); and a complement segment that does not close the bar to 1.",
+     "why": "sample_space with op 'ne' could build 'not 7' by tapping thirty cells, but that replaces the identity $P(A') = 1 - P(A)$ with brute counting, and the anchor questions are fraction and table-count problems with no grid structure. The construction would not be the mathematics of the objective. This objective's misconception list also holds no entry of its own, so diagnostics could not be mapped honestly anyway."
+    },
+    {
+     "lo_id": "lo:g10m14s7-1-4",
+     "need_kind": "misconception entries for the existing venn_builder counts mode (the kind fits; the diagnostics do not)",
+     "description": "venn_builder in counts mode is exactly the mathematics of this objective, and a template is ready to author as soon as the list has the right entries. Draft spec: {\"mode\":\"counts\",\"sets\":2,\"labels\":[\"Football\",\"Hockey\"],\"total\":40,\"regions\":{\"a\":12,\"b\":15,\"ab\":8,\"n\":5},\"clues\":{\"a\":20,\"b\":23}}, with the stem 'In a group of 40 learners, 5 play neither Football nor Hockey, 20 play Football and 23 play Hockey. Fill in how many learners are in each region of the Venn diagram.' The student has to find the union (35), then the overlap (20 + 23 − 35 = 8), then each exclusive region. Parents would be ex14-8-10b and ex14-8-30. The predicates it can emit are overlap-counted-twice (the raw 20 and 23 typed into the Football-only and Hockey-only regions), neither-region-missed and off-target.",
+     "why": "The misconception list for this objective has no entry of its own, and none of the prerequisite entries it carries describes 'a whole set's size entered for its exclusive region' or 'the outside region forgotten' (the closest, whole-set-not-intersection, is about the intersection and would refute a different error). Template diagnostics need at least one honest mapping, and FR-1215 refuses ids from other objectives, so mapping to a near-miss would show a student the wrong refutation. Samuel's team needs to add an 'overlap counted twice' misconception (and ideally an 'outside region forgotten' one) to lo:g10m14s7-1-4; the template can then go out."
+    }
+   ],
+   "notes": "Two templates, both venn_builder in shade mode, both for lo:g10m14s7-1-1 (complement of an event set), the one objective in this lesson where an existing kind genuinely fits and where the objective carries misconceptions of its own. Tiers follow the book's anchors: basic is ex14-7-1 (B'), standard is ex14-7-2 ((A \\\\cup B)'). The third anchor, ex14-8-5 ((A \\\\cap B)'), cannot be built: venn_builder has no target for 'everything except the overlap', so that skill (including the common misreading of (A \\\\cap B)' as the outside region only) is untouched by these templates. Adding a 'notIntersection' target to venn_builder would be a small extension. No stem points at a figure; the instrument is a Venn diagram with named sets and the rectangle as the sample space. The three remaining objectives are recorded as gaps (7-1-2 and 7-1-3 need new instruments; 7-1-4 needs misconception entries before a counts-mode template can be mapped honestly).\""
+  }
+ ],
+ "gaps": [
+  {
+   "lo_id": "lo:g10m14s1-1-1",
+   "need_kind": "outcome_set_builder",
+   "description": "The student is told a one-stage experiment (roll a die, toss a coin, spin a spinner, pick a ball from a bag) and assembles its sample space by dragging outcome tokens into a set, from a tray that holds the right outcomes plus decoys. The decoys come from other experiments (H and T when a die was rolled) and from events (only 1, 3, 5, or only the numbers greater than 4). A second mode would name an event (an even number) and ask for the event set drawn from the sample space already built. The widget would diagnose sample-space-as-an-event (a condition-picked subset given for the whole space), sample-space-of-another-experiment (a set from a different experiment) and event-set-incomplete (an event set that leaves out some qualifying outcomes).",
+   "why": "The anchors ex14-1-2 (sample space of a die) and ex14-8-1 (what an outcome is) are about single-stage experiments with labelled or numbered outcomes. sample_space needs a grid of at least 2 x 2 and gives the whole space to the student, so it only grades choosing an event. product_builder only forms ordered pairs from two sets and cannot report an outcome that belongs to another experiment (it cannot emit extra-pairs). number_line_marker takes 1 to 4 numeric targets, which is too few for a die and has no way to hold H and T. So the single-die and coin cases, and the sample-space-of-another-experiment misconception, have no instrument."
+  },
+  {
+   "lo_id": "lo:g10m14s1-1-2",
+   "need_kind": "equal_outcomes_strip",
+   "description": "A one-dimensional sample space drawn as a strip or bag of equally likely tokens: 12 balls coloured 6 red, 3 blue, 2 green and 1 white; 50 cards of the even numbers 2 to 100; or 100 numbered pages. The student sets or sees the tokens, taps those that belong to the event (blue or white; a multiple of 5; an odd page number), and the live readout assembles n(E)/n(S) from tokens counted one each, with a prompt to simplify and then convert to a decimal or a percentage. A switch to \"count the colours\" would show 4 colours and the readout would stay unmoved (1/4 for any colour), so the student sees why the kinds of result are not the outcomes. It would diagnose unequal-outcomes-counted-as-equal directly, which is the misconception the bag anchors ex14-1-6 are built around.",
+   "why": "ex14-1-3 to ex14-1-6 are single-experiment questions (one die, 100 pages, cards, a bag of coloured balls), not two-stage ones. sample_space needs at least 2 rows and 2 columns and its rules (sum, difference, product, same, first, second) read numbers in two coordinates, so it cannot hold a bag of colours or a list of cards with one number each. Its counted-once predicate only reaches the equal-likelihood misconception for two-dice totals. bar_builder and number_line_marker grade other statistics. So the bag, cards and pages questions, which make up most of this objective's anchors, have no instrument."
+  },
+  {
+   "lo_id": "lo:g10m14s2-1-1",
+   "need_kind": "trial_tally",
+   "description": "The student is given a recorded run of trials (a strip of die faces, coin sides or the paired soccer scores in the book's worked example), and marks the trials in which the stated event occurred. The widget assembles 'event occurred / trials conducted' live as a fraction and a decimal. The student then fixes the denominator as the number of trials, not the number of outcomes. A second move lets the student run the same experiment again and see that the fraction changes each time. Grading is on the property: the marked set must be exactly the trials where the event happened, for any event the stem names (a 3 on a die, heads, 'Team 1 wins' meaning Team 1's score is larger). Errors it would diagnose: (1) the student reports a fixed 'expected' value such as 1/6 or 0.5 instead of the tally, which is the lesson's misconception mc:g10m14s2-1-1:expects-a-fixed-value; (2) event count divided by the number of non-events, or by the number of possible outcomes instead of the number of trials; (3) trials where the event did not occur marked as if they counted (for example a draw counted as a win); (4) trials where the event did occur missed.",
+   "why": "No existing kind fits. sample_space shows the whole theoretical sample space as a grid of equally likely cells, so n(E)/n(S) there is theoretical probability, not experimental relative frequency. A trial log has repeats, order and a total set by the experiment, none of which a grid can hold. bar_builder could be bent into 0/1 'trial' bars whose mean is the relative frequency, but n is capped at 3-8 (the book's examples use 10, 21, 27, 30 and 44 trials), the student would be building a mean rather than counting an event, and its predicates (median-for-mean, total-wrong) name errors that are not this lesson's. That would be a forced fit that diagnoses the wrong things, so it is not offered."
+  },
+  {
+   "lo_id": "lo:g10m14s2-1-2",
+   "need_kind": "convergence_runner",
+   "description": "The student runs a simulated experiment (a fair coin, or a die with one face as the event) in batches and sees a table and a plot of the running relative frequency after each trial or batch, with the theoretical probability drawn as a reference line. The construction is a property: the student sets the number of trials, or chooses the batch sizes, so that the running relative frequency stays within a stated band (for example within 0.05) of the theoretical probability from that point on, and then reads off what happened to the spread as the trials grew. The theoretical value is supplied by the student (marking the event in a small equally-likely grid) before the comparison line appears. Errors it would diagnose: (1) expecting the relative frequency to equal the theoretical probability after a handful of trials, or to hit it exactly, which is mc:g10m14s2-1-1:expects-a-fixed-value; (2) taking the theoretical probability from the kinds of result rather than from equally likely outcomes, which is mc:g10m14s1-1-2:unequal-outcomes-counted-as-equal (a weighted or two-coloured spinner or bag whose kinds are not equally likely); (3) concluding that a long run of one result must be 'made up for' next; (4) comparing the relative frequency to the wrong reference value.",
+   "why": "No existing kind fits. Every kind here grades one final configuration, and none carries a sequence of trials that grows over time. sample_space can build the theoretical probability, but that is the previous section's objective, and the objective here is the comparison with a run of experimental results and how it behaves as the trials grow, which no grid can show. curve_sketcher has no family that draws a running proportion. A template on sample_space would test the wrong objective behind a thin link. Separately, this objective has no anchor book question in the lesson file (anchor_questions is empty), so a template could not carry a valid parent_question_id."
+  },
+  {
+   "lo_id": "lo:g10m14s3-1-2",
+   "need_kind": "venn_event_reader (new kind): a drawn Venn diagram with numbered outcomes, the student taps the outcomes that belong to a named event",
+   "description": "The widget draws a rectangle S with two overlapping circles and the sample-space outcomes placed in the four regions (like the two book figures, which the widget would draw itself rather than point at). The stem names an event ('the event set of A') and the student taps every outcome that belongs to it; the answer is graded as a set, so any order is fine. The correct reading is everything inside A's circle, overlap included. The wrong readings are the book's three distractors and this objective's three own misconceptions: tapping only the outcomes in the overlap (reads-only-the-overlap), tapping the outcomes outside the circle (reads-outside-the-circle), and tapping everything in the other circle (reads-the-other-circle). Each is a recognisable set of taps, so each could carry its own predicate, which would let the tutor say exactly which circle or region she read. A second mode could ask for 'A or B', 'A and B' and 'not A' by reading, to connect to later lessons.",
+   "why": "venn_builder cannot do this honestly. Its shade mode shows no outcomes and has no target for the whole of one circle (the targets are union, intersection, aOnly, bOnly, complements and neither), so 'the event set of A' cannot be asked. None of its predicates (complement-inside-a, exclusive-drawn-overlapping, intersection-for-union) refer to the three misconceptions of this objective, and its counts mode asks for sizes, not for the elements read off a diagram. Mapping any of them would be a forced fit that promises refutations the widget cannot give."
+  },
+  {
+   "lo_id": "lo:g10m14s3-1-3",
+   "need_kind": "no new kind: venn_builder (counts mode) fits; blocked because lo:g10m14s3-1-3 has an empty misconceptions list, so no diagnostic can be mapped",
+   "description": "The construction is the right one and the instrument already exists: venn_builder counts mode, with clues, on the book's survey problems. Intended two-set template for ex14-8-20a: labels ['Red hair', 'Brown eyes'], regions {a: 44, b: 5, ab: 14, n: 40}, total 103, clues {a: 58, b: 19}; the question asks for the number of children outside both circles' complement, i.e. fill in every region. Intended three-set template for ex14-3-5b/c/d: labels ['Maths', 'Geography', 'History'], regions {a: 8, b: 29, c: 16, ab: 6, ac: 14, bc: 4, abc: 2, n: 0}, clues {a: 30, b: 41, c: 36}. The predicates that would fire are overlap-counted-twice (a set's raw size such as 58 or 41 typed into its exclusive region) and neither-region-missed (the children or learners outside every circle left out). Each needs a misconception id on lo:g10m14s3-1-3 to carry it, and the objective lists none. Suggested catalogue entries for this objective: 'Counts the whole set in its exclusive region, so the overlap is counted twice', and 'Leaves out the learners who are in none of the sets'.",
+   "why": "A template needs at least one diagnostic whose misconception id comes from the objective's own list, and an id borrowed from another objective is refused (FR-1215). With an empty list, any template would either break the schema (no diagnostics) or use a forbidden id. Add the two misconceptions above to this objective and the template can be written straight away. Also check the extracted data first: ex14-3-5b/c/d states 71 learners, but the book's own answers (6, 29, 2) and its other figures give regions that add to 79 (8 + 16 + 29 + 14 + 4 + 6 + 2), so the 71 looks like an extraction slip for 79. A template that kept 71 would fail the validator's sum-to-total rule."
+  },
+  {
+   "lo_id": "lo:g10m14s3-1-1",
+   "need_kind": "venn_outcome_sorter (new kind): the student drags the numbered outcomes of a sample space into the regions of a Venn diagram (the build direction of venn_event_reader)",
+   "description": "The two templates above cover the counts half of this objective. What no existing kind does is the first half: writing down the sample space and the event sets. A sorter would show the outcomes of a stated experiment (for example the numbers 1 to 12) as tiles and an empty rectangle with two circles, and the student drags each tile to the region where it belongs: in A only, in both, in B only, or outside both circles. Grading is by region membership per outcome, so any order is correct. It would diagnose the objective's three misconceptions directly: outcomes missing from an event (event-set-incomplete), outcomes in no circle dropped from the rectangle (sample-space-as-an-event), and a tile set that does not match the experiment (sample-space-of-another-experiment).",
+   "why": "venn_builder counts mode takes only numbers per region, so the student never decides which outcome goes where, and the book's own questions (write down the set A, write down the set B) are exactly about that decision. The existing kind is a good fit for n(S), n(A), n(B) and the region counts, but it cannot show the sets themselves."
+  },
+  {
+   "lo_id": "lo:g10m14s5-1-2",
+   "need_kind": "none missing: venn_builder (counts mode) fits; blocked because the objective has no anchor book question",
+   "description": "The student would fill a two-set Venn diagram from a word problem or from listed event sets (for example S={1..6}, A={1,2,6}, B={1,5}), entering the exclusive region counts, then verify that n(A∪B) from the diagram equals n(A)+n(B)−n(A∩B) and that P(A∪B) = P(A)+P(B)−P(A∩B). The construction is the proof of the identity, since the overlap is placed once. It would diagnose overlap-counted-twice (raw set sizes entered in the 'only' regions) and neither-region-missed.",
+   "why": "The lesson file lists no anchor question for this objective, and a template's parent_question_id must be the objective's own anchor from the list, so nothing can be authored without inventing a parent. The objective's misconception list holds only prerequisite ids (s1-1-1, s1-1-2, s3-1-2, s4-1-2), none of which describes the identity error, so the one error this widget would diagnose has no id on this objective. Samuel needs to add an anchor question and, ideally, a misconception id for this objective (the existing mc:g10m14s5-1-1:adds-without-subtracting-shared-outcomes belongs to the sibling objective and cannot be borrowed under FR-1215)."
+  },
+  {
+   "lo_id": "lo:g10m14s5-1-3",
+   "need_kind": "none missing: venn_builder (counts mode) fits; blocked because the objective has an empty misconceptions list",
+   "description": "Anchors ex14-5-2 and ex14-8-24 give A, B and A∪B on S={1..6}. In counts mode the student would fill the Venn diagram (for ex14-5-2: total 6, regions a=2, b=1, ab=1, n=2, clues a=3, b=2) so that the shared region is whatever makes the union come out right, i.e. n(A∩B)=n(A)+n(B)−n(A∪B). The widget would diagnose overlap-counted-twice (entering 3 and 2 in the 'only' regions) and neither-region-missed. P(A∩B)=1/6≈0.17 would follow from the diagram.",
+   "why": "The objective's misconceptions list is empty. A template needs at least one diagnostic, and a diagnostic may only name an id from this objective's own list (FR-1215), so no template can be written without inventing or borrowing an id. Candidate misconceptions Samuel could add: reading P(A∪B) as P(A∩B); finding the intersection by adding n(A) and n(B) instead of subtracting n(A∪B); dividing by n(A∪B) instead of n(S)."
+  },
+  {
+   "lo_id": "lo:g10m14s6-1-1",
+   "need_kind": "event_overlap_checker",
+   "description": "The student sees the whole set of outcomes of the described experiment (the 52-card deck as a suit-by-rank grid, the fridge as three drinks, one die or two dice as a grid). Two events A and B are named in words. The student marks the outcomes that belong to A in one colour and those that belong to B in a second colour. Any outcome carrying both marks lights up as a shared outcome. The student then answers 'can one pick be in both events?', and an empty overlap must be a gradable, correct answer. Errors it would diagnose: (1) a verdict of 'exclusive' for red and picture although red picture cards were marked or exist, because the two events are described in different ways (different-features-so-exclusive); (2) a verdict of 'not exclusive' with an empty overlap, because both events are possible in the set-up (both-possible-so-not-exclusive); (3) a verdict of 'not exclusive' with an empty overlap, justified only by outcomes that belong to neither event, such as grape juice or a tie (leftover-outcomes-so-not-exclusive). Verdict-versus-overlap mismatches would be the predicates.",
+   "why": "No existing kind can hold two events at once and accept an empty overlap, which is the whole of the objective. sample_space grades one rule, and the pipeline rule requires the event to hold at least one outcome. venn_builder always draws overlapping circles, and its shade targets always name a non-empty region. number_line_marker's points mode needs 1-4 targets, so the empty set cannot be the answer. A template built on any of them would only ever ask the student to find the shared outcomes of a NOT-exclusive pair. That is a leading, one-sided question, and the mutually exclusive verdict, which is the objective, would never be constructed or diagnosed."
+  },
+  {
+   "lo_id": "lo:g10m14s6-1-2",
+   "need_kind": "event_union_bar",
+   "description": "The student works on a probability strip from 0 to 1, sized from the book's own counts (blocks purple 24, orange 32, white 41, pink 19, or ages 3 and 4 from the class table). They place the bars for P(A) and P(B) on the strip and build 'A or B' by joining them. For an exclusive pair the bars sit end to end, the joined length is P(A) + P(B), and the live readout shows that sum. The same instrument also offers an overlapping pair, where the bars must overlap and the shared stretch is visibly counted twice, so the student has to decide whether adding is allowed before they add. Errors it would diagnose: adding P(A) and P(B) for events that can happen together, which is the lesson's own error (adds-without-checking-exclusive), shown as a joined bar that overshoots the true union. It could also catch a union that comes out above 1 or fraction slips when adding over a common denominator.",
+   "why": "The only candidate is sample_space: tap the cells of 'A or B' and read n(E)/n(S). That grid counts the union directly and gives the same answer whether or not the events overlap. It never builds the addition and never tests the exclusivity condition, so it would only re-exercise listing outcomes (a prerequisite) while this objective's own misconception (adds-without-checking-exclusive) could never fire. Its rule is also a single (kind, op, value), so two named events can only be encoded by a contrived inequality such as sum < 4. Its cells are equally likely outcomes, so it cannot carry the table counts the anchor questions use. venn_builder in counts mode with an empty overlap reduces to typing the table's numbers into regions, which is an answer box in disguise."
+  },
+  {
+   "lo_id": "lo:g10m14s7-1-2",
+   "need_kind": "event_pair_overlap: two-event Venn overlap checker",
+   "description": "The student is shown a Venn diagram and two named events written as set expressions (for example $A'$ and $B'$, or $A \\cup B$ and $(A \\cup B)'$). For each event in turn they shade the regions that event covers, each in its own mark, and the widget then highlights every region carrying both marks. The student finishes by stating whether the events are mutually exclusive: any doubly-marked region means no, and none means yes. It would diagnose: believing any two complements are mutually exclusive (shading $A'$ and $B'$ and not noticing that both cover the outside region, the all-complements-assumed-exclusive error); marking the overlap of the circles instead of the two events named (the checks-circle-overlap-not-named-events error); and calling a union and its complement non-exclusive because the circles overlap.",
+   "why": "venn_builder takes one target per question and cannot ask for an empty intersection. Asking the student to shade $A' \\cap B'$ (target 'neither') presupposes a non-empty region and so hands over the yes/no verdict, and the 'yes, mutually exclusive' case (the answers to ex14-7-3 and ex14-8-4) has no region to shade at all and cannot be expressed. Stretching venn_builder over this would be an answer box in disguise, so it goes to Samuel instead."
+  },
+  {
+   "lo_id": "lo:g10m14s7-1-3",
+   "need_kind": "probability_bar: a unit bar split into an event and its complement",
+   "description": "A bar of length 1 (shown with a fraction or percentage readout) is split by a draggable divider into $P(A)$ and $P(A')$. The question gives $P(A)$, or the counts that make it, as in ex14-8-15 ($P(\\text{pink}) = \\frac{7}{12}$) or the block table in ex14-8-11d, and the student drags the divider so the complement segment has the right size; the readout then shows $P(A) + P(A') = 1$ as the whole bar. It would diagnose: reporting $P(A)$ as the answer (the given value) instead of the complement; subtracting the count from the wrong total, or never dividing by the number of outcomes (for example 12 − 7 = 5 given as the probability); turning the result into odds ($\\frac{5}{7}$ instead of $\\frac{5}{12}$); and a complement segment that does not close the bar to 1.",
+   "why": "sample_space with op 'ne' could build 'not 7' by tapping thirty cells, but that replaces the identity $P(A') = 1 - P(A)$ with brute counting, and the anchor questions are fraction and table-count problems with no grid structure. The construction would not be the mathematics of the objective. This objective's misconception list also holds no entry of its own, so diagnostics could not be mapped honestly anyway."
+  },
+  {
+   "lo_id": "lo:g10m14s7-1-4",
+   "need_kind": "misconception entries for the existing venn_builder counts mode (the kind fits; the diagnostics do not)",
+   "description": "venn_builder in counts mode is exactly the mathematics of this objective, and a template is ready to author as soon as the list has the right entries. Draft spec: {\"mode\":\"counts\",\"sets\":2,\"labels\":[\"Football\",\"Hockey\"],\"total\":40,\"regions\":{\"a\":12,\"b\":15,\"ab\":8,\"n\":5},\"clues\":{\"a\":20,\"b\":23}}, with the stem 'In a group of 40 learners, 5 play neither Football nor Hockey, 20 play Football and 23 play Hockey. Fill in how many learners are in each region of the Venn diagram.' The student has to find the union (35), then the overlap (20 + 23 − 35 = 8), then each exclusive region. Parents would be ex14-8-10b and ex14-8-30. The predicates it can emit are overlap-counted-twice (the raw 20 and 23 typed into the Football-only and Hockey-only regions), neither-region-missed and off-target.",
+   "why": "The misconception list for this objective has no entry of its own, and none of the prerequisite entries it carries describes 'a whole set's size entered for its exclusive region' or 'the outside region forgotten' (the closest, whole-set-not-intersection, is about the intersection and would refute a different error). Template diagnostics need at least one honest mapping, and FR-1215 refuses ids from other objectives, so mapping to a near-miss would show a student the wrong refutation. Samuel's team needs to add an 'overlap counted twice' misconception (and ideally an 'outside region forgotten' one) to lo:g10m14s7-1-4; the template can then go out."
+  }
+ ]
+}
