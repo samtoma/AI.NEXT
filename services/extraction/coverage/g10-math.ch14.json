@@ -8,9 +8,9 @@
   "status": "RED",
   "summary": {
     "checks": 23,
-    "hold": 20,
+    "hold": 21,
     "excepted": 0,
-    "fail": 3
+    "fail": 2
   },
   "checks": [
     {
@@ -209,14 +209,9 @@
       "id": "notation",
       "title": "Un-normalised decimal commas and (x; y) pairs left in the bundles = 0 (decision 15); no display-only environment (align*) inside the app's inline maths",
       "want": 0,
-      "got": 10,
-      "state": "fails",
-      "failures": [
-        {
-          "scope": "book",
-          "detail": "10 un-normalised span(s): ['1,2', '3,4', '5,6', '1,2', '5,6', '2,3', '2,6', '2,6']"
-        }
-      ],
+      "got": 0,
+      "state": "holds",
+      "failures": [],
       "excepted_scopes": [],
       "notes": [
         "56 S3 item(s) printed in the book's notation were normalised"
@@ -312,7 +307,7 @@
   },
   "notation": {
     "items_printed_in_book_notation": 56,
-    "residual_in_bundles": 10
+    "residual_in_bundles": 0
   },
   "missing_inputs": [],
   "inputs": {
@@ -325,7 +320,7 @@
     "content/g10m14s7-1.json": "8f0363c14c4b0b57ea872c2580f900ca458f8c59ebd7ab364a1c46e705d3aa67",
     "generated/generated-questions.json": "eedac57fe4fea844fa1a4d13587996df1a691a6d30442adaf8c700ae783c9cc0",
     "generated/misconceptions.json": "341cf5986ed016a6e12002488b1bfd65318eaf381a96099c44c8d52d07c17b00",
-    "generated/widget-questions.json": "5c7c2fd8df5985195e73b6ce641ea29d163d3c2efed9d0728838af25c834806c",
+    "generated/widget-questions.json": "a871788459c1a838bf035e27356877a8bdfdb4554d344c91873da699b4cf8fb3",
     "manifest": "d749f7d1c4052342298d122b82bcea3117e4303b74e16b75062fd6606146c7b1",
     "maths": "1c4240c96084bf9395980fe466c3a443681cf2b0da74adf38081967b4f8428e6",
     "objectives/g10m14s1-1.json": "67840c994d4ca970fe44b4090d559ceb5b11bfa6f100f9b92abfb8ec76230916",

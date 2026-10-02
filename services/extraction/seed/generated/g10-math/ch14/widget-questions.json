@@ -9,8 +9,8 @@
     "wt:g10m14s1-1-1:two-dice-total-8": "3be2b1c54883fd2c6eedf36a78bb0b3edbc888c7b0fc43d5cc1573f8d48ea129",
     "wt:g10m14s1-1-2:two-dice-total-at-most-4": "85db7088ea1b9f9db1bdbfb015a9ee53c531bda973050202c76c282425ae963b",
     "wt:g10m14s4-1-1:shade-union": "40b36a36cf6a21e87251b161875579a10334912c76a5f3d126706a8e5af3143d",
-    "wt:g10m14s5-1-1:venn-union-die": "e908a4c7d7edfc20fa20ad87d7949eeb032952ef2a5631aaa5cf355382415ccb",
-    "wt:g10m14s5-1-1:venn-union-discs": "d985575209552217ec4b4df61c133b18690a5a9a14144ee395c877cf941b3c9e",
+    "wt:g10m14s5-1-1:venn-union-die": "3c9dd0e6c7a7b84b795d47af8c45d99c54957d83707b2b5c518c07bf4655297b",
+    "wt:g10m14s5-1-1:venn-union-discs": "c5256879e777353dc0f7d28813df1153c4a646e2eb13a648e048fad1b98cc857",
     "wt:g10m14s7-1-1:not-in-chess": "8d7ea0b8d3def26e671925f89da31b2bc65ee61cd44e63145f72894f367f73b6"
   },
   "rejected_templates": {
@@ -26,6 +26,10 @@
     "wt:g10m14s7-1-1:complement-of-union": [
       "not shipped: S5's verifier refused every mapping of it (neither-region-missed → mc:g10m14s7-1-1:lists-event-instead-of-complement), so no widget of it could say why an answer is wrong"
     ]
+  },
+  "carried_verification": {
+    "wt:g10m14s5-1-1:venn-union-die": "e908a4c7d7edfc20fa20ad87d7949eeb032952ef2a5631aaa5cf355382415ccb",
+    "wt:g10m14s5-1-1:venn-union-discs": "d985575209552217ec4b4df61c133b18690a5a9a14144ee395c877cf941b3c9e"
   },
   "questions": [
     {
@@ -310,7 +314,7 @@
       "lo_id": "lo:g10m14s5-1-1",
       "tier": "basic",
       "question_type": "widget",
-      "stem": "A die is rolled once, so the sample space is $S=\\{1,2,3,4,5,6\\}$. Event $A$ is $\\{1,2,5,6\\}$ (4 outcomes) and event $B$ is $\\{2,3,6\\}$ (3 outcomes), so $A\\cap B=\\{2,6\\}$. Complete the Venn diagram by entering how many outcomes lie in each region, counting every outcome once. Once the diagram is right you can read off $P(A\\cup B)$.",
+      "stem": "A die is rolled once, so the sample space is $S=\\{1, 2, 3, 4, 5, 6\\}$. Event $A$ is $\\{1, 2, 5, 6\\}$ (4 outcomes) and event $B$ is $\\{2, 3, 6\\}$ (3 outcomes), so $A\\cap B=\\{2, 6\\}$. Complete the Venn diagram by entering how many outcomes lie in each region, counting every outcome once. Once the diagram is right you can read off $P(A\\cup B)$.",
       "choices": {
         "kind": "venn_builder",
         "spec": {
@@ -343,7 +347,7 @@
       "canonical_solution": [
         {
           "step": 1,
-          "text_md": "The outcomes in both events are $A\\cap B=\\{2,6\\}$, so the overlap holds 2 outcomes."
+          "text_md": "The outcomes in both events are $A\\cap B=\\{2, 6\\}$, so the overlap holds 2 outcomes."
         },
         {
           "step": 2,
@@ -369,7 +373,7 @@
       "parent_question_id": "q:g10m14s5-1-1:ex14-5-1",
       "source_note": "Generated from template family wt:g10m14s5-1-1:venn-union-die.",
       "family": "wt:g10m14s5-1-1:venn-union-die",
-      "template_sha": "e908a4c7d7edfc20fa20ad87d7949eeb032952ef2a5631aaa5cf355382415ccb"
+      "template_sha": "3c9dd0e6c7a7b84b795d47af8c45d99c54957d83707b2b5c518c07bf4655297b"
     },
     {
       "id": "q:g10m14s5-1-1:w002",
@@ -409,7 +413,7 @@
       "canonical_solution": [
         {
           "step": 1,
-          "text_md": "List the shared outcomes: a number that is a multiple of 2 and of 3 is a multiple of 6, so $A\\cap B=\\{6,12,18\\}$ and the overlap holds 3 discs."
+          "text_md": "List the shared outcomes: a number that is a multiple of 2 and of 3 is a multiple of 6, so $A\\cap B=\\{6, 12, 18\\}$ and the overlap holds 3 discs."
         },
         {
           "step": 2,
@@ -435,7 +439,7 @@
       "parent_question_id": "q:g10m14s5-1-1:ex14-5-1",
       "source_note": "Generated from template family wt:g10m14s5-1-1:venn-union-discs.",
       "family": "wt:g10m14s5-1-1:venn-union-discs",
-      "template_sha": "d985575209552217ec4b4df61c133b18690a5a9a14144ee395c877cf941b3c9e"
+      "template_sha": "c5256879e777353dc0f7d28813df1153c4a646e2eb13a648e048fad1b98cc857"
     },
     {
       "id": "q:g10m14s7-1-1:w002",
