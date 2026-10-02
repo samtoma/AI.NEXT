@@ -1416,12 +1416,13 @@ def _predicate_of(text, claimed: set) -> str | None:
 
 def verified_version(tpl: dict) -> tuple[dict | None, str]:
     """The template exactly as the blind verifier judged it, when a pipeline normalisation since then only REMOVED
-    diagnostics, instances or solution steps, or wrote the book's `(x; y)` as `(x, y)` in a solution step (recorded
-    in "verified_as"), else (None, why). The verifier never sees the solution, and a removal cannot make a verified
-    construction unreachable or a confirmed mapping wrong, nor can a notation that changes no word, number or sign.
-    Any other difference — a changed stem, spec or tier (a stem or spec in the other notation too: the verifier read
-    it), an added or altered diagnostic, instance or step, notes rewritten rather than appended — and the verdicts do
-    not carry: the template must be verified again."""
+    diagnostics, instances or solution steps, or wrote the book's `(x; y)` as `(x, y)` or a set's `\\{1,2\\}` as `\\{1, 2\\}`
+    in a solution step (recorded in "verified_as"), else (None, why). The verifier never sees the solution, and a
+    removal cannot make a verified construction unreachable or a confirmed mapping wrong, nor can a notation that
+    changes no word, number or sign. The set-list spacing, which is whitespace inside maths and nothing else, is also
+    the same STEM; the pair rewrite is not (`;` becomes `,`). Any other difference — a changed stem, spec or tier (a stem
+    or spec in the pair notation too: the verifier read it), an added or altered diagnostic, instance or step, notes
+    rewritten rather than appended — and the verdicts do not carry: the template must be verified again."""
     va = tpl.get("verified_as")
     if not va:
         return None, ""
@@ -1433,14 +1434,20 @@ def verified_version(tpl: dict) -> tuple[dict | None, str]:
         return None, "keys changed since verification"
     for k in cur:
         if k not in ("diagnostics", "instances", "solution", "notes") and cur[k] != old[k]:
+            # set-list-spacing alone (`\{1,2\}` -> `\{1, 2\}`) is whitespace inside maths: the stem the verifier read says the
+            # same thing in every word, number and sign, so it is the same stem. Any other stem difference is not.
+            if k == "stem" and cur[k] == _template_sets(old[k]):
+                continue
             return None, f"{k} changed since verification"
     if any(d not in (old.get("diagnostics") or []) for d in cur.get("diagnostics") or []):
         return None, "a diagnostic was added or changed since verification"
     for k, none in (("instances", [{}]), ("solution", [])):
         rest = iter(old.get(k) or none)
-        # a solution step the coordinate-notation normalisation rewrote (`(x; y)` -> `(x, y)`) is the SAME step: the
-        # verifier never sees the solution, and that rule changes no word, number or sign of it
-        same = (lambda x, y: x == y or x == _template_pairs(y)) if k == "solution" else (lambda x, y: x == y)  # noqa: E731
+        # a solution step the notation normalisations rewrote (coordinate-notation `(x; y)` -> `(x, y)`, set-list-spacing
+        # `\{1,2\}` -> `\{1, 2\}`) is the SAME step: the verifier never sees the solution, and those rules change no word,
+        # number or sign of it
+        same = (lambda x, y: x == y or x == _template_notation(y)  # noqa: E731
+                or x == _template_pairs(y) or x == _template_sets(y)) if k == "solution" else (lambda x, y: x == y)
         if not all(any(same(x, y) for y in rest) for x in cur.get(k) or none):
             return None, f"{k}: an entry was added or changed since verification"
     if not str(cur.get("notes") or "").startswith(str(old.get("notes") or "")):
@@ -1465,7 +1472,9 @@ def carried_verification(templates: list[dict], questions: list[dict]) -> tuple[
     if not carried:
         return {}, problems
     old_qs, _ = build_from_templates(olds)
-    content = lambda q: (q["family"], json.dumps(q["choices"]["spec"], sort_keys=True), q["stem"])  # noqa: E731
+    import assemble_lesson_bundle as alb
+    # a stem differing only by set-list-spacing is the stem the verifier read (verified_version allows exactly that)
+    content = lambda q: (q["family"], json.dumps(q["choices"]["spec"], sort_keys=True), alb.space_set_lists(q["stem"])[0])  # noqa: E731
     old_at = {q["id"]: content(q) for q in old_qs}
     moved = {q["lo_id"] for q in questions if old_at.get(q["id"]) != content(q)}
     for t in templates:
@@ -1851,12 +1860,19 @@ def only_lessons(args: dict, lessons) -> dict:
 #                             the solution steps, the instances' and the spec's strings — written `(x, y)`, the notation
 #                             every book question is written in (decision 15; assemble_lesson_bundle.normalise_pairs, the
 #                             `;`-pair rule alone: no decimal commas). `{=…}` holes are never touched.
+#   set-list-spacing          (Grade 10 Chapter 14, 2026-10-02) an unspaced comma between the elements of a maths set
+#                             (`\{1,2,5,6\}`, `\{(2,6),(3,5)\}`) written `, ` (`\{1, 2, 5, 6\}`), the American course's list:
+#                             unspaced, `1,2` reads as the book's decimal comma and the coverage `notation` check refuses it
+#                             (assemble_lesson_bundle.space_set_lists). Only inside `\{ … \}` and the pairs inside it: a decimal
+#                             comma outside a set, an interval, a set-builder and a `{=…}` hole are never touched. Whitespace in
+#                             maths, so unlike the pair rule it keeps the verdicts across a STEM as well as a solution step.
 # The last two and coordinate-notation were first applied AFTER the blind verifier had judged the Chapter 8 and
 # Chapter 5 templates. So when any applies, the template records itself as it was in "verified_as" (its sha and its
 # whole text): a change that only REMOVED diagnostics or instances cannot make a verified construction unreachable or
 # a confirmed mapping wrong, nor can the notation in a SOLUTION step (the verifier never sees the solution), and
 # verdict_scan carries the verdicts across it (carried_verification) — never across any other edit: a stem, instance
-# or spec that coordinate-notation rewrites was read by the verifier, so that template is verified again.
+# or spec that coordinate-notation rewrites was read by the verifier, so that template is verified again (set-list-spacing
+# is the one rewrite of a STEM that keeps them: whitespace in maths).
 NORMALISED = "PIPELINE NORMALISATION (not an author edit)"
 
 
