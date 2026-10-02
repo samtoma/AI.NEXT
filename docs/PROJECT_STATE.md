@@ -67,8 +67,8 @@ Gate records (G0, T413, G1 and G2 for Chapter 8) are in the same decisions file.
   lesson (decision 58d, FR-4508). **FR-4501…FR-4509 are built and read** (2026-10-01: migrations 035 and 036,
   the `/review` console page, the book-picture stand-ins, `auto_pass_gates.py`; `tasks.md` T436–T443
   ticked); their matrix rows stay OPEN until T387. G5 auto-passes too, each auto-passed gate decision marked
-  for Samuel and cleared only by his account (decision 60); passing deploys nothing. Every gate after Chapter 8's G1 and G2 was
-  such an auto-pass, so no person has read the bank yet (WIP README, "Full book complete — 2026-10-02").
+  for Samuel and cleared only by his account (decision 60); passing deploys nothing. Every gate decision except Chapter 8's G1 and G2
+  was such an auto-pass, so no person has read the bank yet (WIP README, "Full book complete — 2026-10-02").
 - **A lesson may keep one objective after a ruling** (answer 44, decision 65, 2026-10-02): G1's rule 4 wants 2 to 5 objectives
   per lesson; when G1 drops an objective under a recorded ruling and that would leave one, the lesson stands with a warning marked
   CHECK LATER (`check_later`, first `for_review` entry of the gate record). Built (`assemble_objectives.rule4_check_later`); first use
