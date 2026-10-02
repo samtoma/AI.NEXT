@@ -1,0 +1,200 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m14s2-1-1:scores-not-lose",
+ "kind": "family",
+ "lo_id": "lo:g10m14s2-1-1",
+ "parent_question_id": "q:g10m14s2-1-1:we03",
+ "source_page": 476,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": "Team 1 plays Team 2 in 10 football matches. Each match is one trial, and the final score of each match is recorded.",
+ "params": [
+  {
+   "name": "x1",
+   "randint": [
+    0,
+    4
+   ]
+  },
+  {
+   "name": "x2",
+   "randint": [
+    0,
+    4
+   ]
+  },
+  {
+   "name": "x3",
+   "randint": [
+    0,
+    4
+   ]
+  },
+  {
+   "name": "x4",
+   "randint": [
+    0,
+    4
+   ]
+  },
+  {
+   "name": "x5",
+   "randint": [
+    0,
+    4
+   ]
+  },
+  {
+   "name": "x6",
+   "randint": [
+    0,
+    4
+   ]
+  },
+  {
+   "name": "x7",
+   "randint": [
+    0,
+    4
+   ]
+  },
+  {
+   "name": "x8",
+   "randint": [
+    0,
+    4
+   ]
+  },
+  {
+   "name": "x9",
+   "randint": [
+    0,
+    4
+   ]
+  },
+  {
+   "name": "x10",
+   "randint": [
+    0,
+    4
+   ]
+  },
+  {
+   "name": "y1",
+   "randint": [
+    0,
+    4
+   ]
+  },
+  {
+   "name": "y2",
+   "randint": [
+    0,
+    4
+   ]
+  },
+  {
+   "name": "y3",
+   "randint": [
+    0,
+    4
+   ]
+  },
+  {
+   "name": "y4",
+   "randint": [
+    0,
+    4
+   ]
+  },
+  {
+   "name": "y5",
+   "randint": [
+    0,
+    4
+   ]
+  },
+  {
+   "name": "y6",
+   "randint": [
+    0,
+    4
+   ]
+  },
+  {
+   "name": "y7",
+   "randint": [
+    0,
+    4
+   ]
+  },
+  {
+   "name": "y8",
+   "randint": [
+    0,
+    4
+   ]
+  },
+  {
+   "name": "y9",
+   "randint": [
+    0,
+    4
+   ]
+  },
+  {
+   "name": "y10",
+   "randint": [
+    0,
+    4
+   ]
+  },
+  {
+   "name": "xs",
+   "let": "[x1, x2, x3, x4, x5, x6, x7, x8, x9, x10]"
+  },
+  {
+   "name": "ys",
+   "let": "[y1, y2, y3, y4, y5, y6, y7, y8, y9, y10]"
+  },
+  {
+   "name": "ds",
+   "let": "[xs[i] - ys[i] for i in range(10)]"
+  },
+  {
+   "name": "nw",
+   "let": "len([i for i in range(10) if xs[i] > ys[i]])"
+  },
+  {
+   "name": "nd",
+   "let": "len([i for i in range(10) if xs[i] == ys[i]])"
+  },
+  {
+   "name": "nl",
+   "let": "len([i for i in range(10) if xs[i] < ys[i]])"
+  },
+  {
+   "name": "nok",
+   "let": "nw + nd"
+  },
+  {
+   "require": "nw >= 2 and nl >= 2 and nd >= 1",
+   "why": "Each outcome (win, draw, loss) must really occur, so the event is neither empty nor the whole experiment and the count needs both a win count and a draw count. This also keeps the answer between 0.3 and 0.8."
+  }
+ ],
+ "constraints": [
+  "nw + nd + nl == 10"
+ ],
+ "stem": "Team 1 and Team 2 play 10 football matches against each other. Each match is one trial. The final scores, written as Team 1 – Team 2, in matches 1 to 10 were: {=x1}–{=y1}, {=x2}–{=y2}, {=x3}–{=y3}, {=x4}–{=y4}, {=x5}–{=y5}, {=x6}–{=y6}, {=x7}–{=y7}, {=x8}–{=y8}, {=x9}–{=y9} and {=x10}–{=y10}. What is the relative frequency of Team 1 not losing a match, that is, of Team 1 either winning or drawing? Give your answer as a decimal.",
+ "answer": "fixed(nok / 10, 1)",
+ "solution": [
+  "Recall the formula for relative frequency: $f=\\frac{p}{t}$, where $p$ is the number of positive trials (trials in which the event occurs) and $t$ is the total number of trials.",
+  "Each match is one trial, so the total number of trials is $t=10$. The event is that Team 1 does not lose, so a positive trial is a match that Team 1 wins or that ends in a draw.",
+  "For each match, subtract Team 2's goals from Team 1's goals. In matches 1 to 10 the differences are $ {=ds[0]}, {=ds[1]}, {=ds[2]}, {=ds[3]}, {=ds[4]}, {=ds[5]}, {=ds[6]}, {=ds[7]}, {=ds[8]}, {=ds[9]} $. A positive difference is a win for Team 1, a difference of $0$ is a draw, and a negative difference is a loss for Team 1.",
+  "Count the positive trials: Team 1 won $ {=nw} $ matches and drew $ {=nd} $ matches, so $p={=nw}+{=nd}={=nok}$.",
+  "Calculate the relative frequency: $f=\\frac{p}{t}=\\frac{{=nok}}{10}={=fixed(nok / 10, 1)}$",
+  "Therefore, the relative frequency of Team 1 not losing a match is ${=fixed(nok / 10, 1)}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced gap, modelled on book worked example we03 (p. 476: ten soccer matches, event deduced from the pair of scores, then p/t). The twist the book itself uses is that the event is not listed in the data: each match must be classified by comparing the two scores. This family adds one step beyond we03: the event 'Team 1 does not lose' is a union of two outcomes (win + draw), so the student must count wins and draws separately and add them before dividing by the total of 10 trials. The total is always 10, so the answer is always an exact tenth (0.3 to 0.8): no rounding ambiguity, and fixed(nok / 10, 1) prints it as a plain decimal. The stem asks for a decimal; the book's own we03 answer is also a one-place decimal. Scores are drawn from 0 to 4 goals; the require clause keeps at least 2 wins, 2 losses and 1 draw so every instance exercises all three classifications (acceptance rate is roughly 75-80 per cent, so resampling is cheap). Scores are written as scorelines (Team 1 - Team 2) rather than two parallel lists so that no student has to line up positions across two rows. The worked solution gives the per-match differences (numbers only, no string-valued holes) and then the counts, all computed from the same twenty draws. No mcq is used: every plausible wrong answer here (counting only wins, counting draws as losses, dividing by something other than 10) is a counting slip rather than one of the catalogued misconceptions, and mc:g10m14s2-1-1:expects-a-fixed-value does not apply to a numeric item."
+}

@@ -1,0 +1,60 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m14s6-1-2:block-box",
+ "kind": "family",
+ "lo_id": "lo:g10m14s6-1-2",
+ "parent_question_id": "q:g10m14s6-1-2:ex14-8-11b",
+ "source_page": 492,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": "A box of coloured blocks (purple, orange and white). The total number of blocks is stated, and one block is selected at random.",
+ "params": [
+  {
+   "name": "T",
+   "choice": [
+    10,
+    20,
+    25,
+    50
+   ]
+  },
+  {
+   "name": "r",
+   "randint": [
+    2,
+    "T // 3 + 1"
+   ]
+  },
+  {
+   "name": "o",
+   "randint": [
+    2,
+    "T // 3 + 1"
+   ]
+  },
+  {
+   "name": "g",
+   "let": "T - r - o"
+  },
+  {
+   "name": "s",
+   "let": "r + g"
+  },
+  {
+   "name": "p",
+   "let": "fixed(s / T, 2)"
+  }
+ ],
+ "constraints": [
+  "g >= 2",
+  "s < T"
+ ],
+ "stem": "A box contains {=T} coloured blocks: {=r} are purple, {=o} are orange and {=g} are white. A block is selected at random. What is the probability that the block is purple or white? Give your answer as a decimal.",
+ "answer": "p",
+ "solution": [
+  "The total is {=T} blocks, so $P(\\text{purple})=\\frac{{=r}}{{=T}}$ and $P(\\text{white})=\\frac{{=g}}{{=T}}$.",
+  "A block cannot be both purple and white, so the events are mutually exclusive: $P(\\text{purple and white})=0$ and $P(\\text{purple or white})=P(\\text{purple})+P(\\text{white})$.",
+  "$P(\\text{purple or white})=\\frac{{=r}}{{=T}}+\\frac{{=g}}{{=T}}=\\frac{{=s}}{{=T}}= {=p}$"
+ ],
+ "notes": "Entry-point skill: the total is given in the stem, so the student only reads off two single-colour probabilities and adds them (modelled on book 11b and 17e, which also start from a counted collection). T is limited to 10, 20, 25 or 50 so that s/T is an exact decimal of at most two places and no rounding rule is needed; the answer string is formatted by fixed(..., 2) (e.g. 0.60), so a numeric comparison should accept 0.6. Orange is the colour not asked for, and both asked colours are single-colour events that cannot occur together. Constraints are invariants of the draws (r and o are at most T//3+1, so g >= 2 and s <= T-2). No mcq is used, so no misconception ids are attached."
+}

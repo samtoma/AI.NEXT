@@ -1,0 +1,114 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m14s3-1-2:inside-circle",
+ "kind": "family",
+ "lo_id": "lo:g10m14s3-1-2",
+ "parent_question_id": "q:g10m14s3-1-2:ex14-3-2",
+ "source_page": 480,
+ "tier": "basic",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "na",
+   "randint": [
+    2,
+    3
+   ]
+  },
+  {
+   "name": "nab",
+   "randint": [
+    1,
+    3
+   ]
+  },
+  {
+   "name": "nb",
+   "randint": [
+    1,
+    3
+   ]
+  },
+  {
+   "name": "nn",
+   "randint": [
+    1,
+    2
+   ]
+  },
+  {
+   "name": "total",
+   "let": "na + nab + nb + nn"
+  },
+  {
+   "require": "total >= 7 and total <= 10",
+   "why": "keep the sample space small for the entry-point tier"
+  },
+  {
+   "name": "U",
+   "let": "list(range(1, total + 1))"
+  },
+  {
+   "name": "P",
+   "shuffle": "U"
+  },
+  {
+   "name": "onlyA",
+   "let": "sorted([P[i] for i in range(0, total) if i < na])"
+  },
+  {
+   "name": "both",
+   "let": "sorted([P[i] for i in range(0, total) if i >= na and i < na + nab])"
+  },
+  {
+   "name": "onlyB",
+   "let": "sorted([P[i] for i in range(0, total) if i >= na + nab and i < na + nab + nb])"
+  },
+  {
+   "name": "neither",
+   "let": "sorted([P[i] for i in range(0, total) if i >= na + nab + nb])"
+  },
+  {
+   "name": "evA",
+   "let": "sorted([P[i] for i in range(0, total) if i < na + nab])"
+  },
+  {
+   "name": "evB",
+   "let": "sorted([P[i] for i in range(0, total) if i >= na and i < na + nab + nb])"
+  },
+  {
+   "name": "outA",
+   "let": "sorted([P[i] for i in range(0, total) if i >= na + nab])"
+  }
+ ],
+ "constraints": [
+  "len(onlyA) > 0 and len(both) > 0 and len(onlyB) > 0 and len(neither) > 0"
+ ],
+ "stem": "A Venn diagram shows the sample space $S = \\{n : n \\in \\mathbb{Z}, 1 \\leq n \\leq {=total}\\}$. Two circles, one for the event $A$ and one for the event $B$, overlap inside the rectangle $S$. The numbers of $S$ are placed in the diagram as follows. Inside circle $A$ only: ${=setof(onlyA)}$. Inside both circles, in the overlap: ${=setof(both)}$. Inside circle $B$ only: ${=setof(onlyB)}$. Outside both circles: ${=setof(neither)}$. Which of the following sets is the event set of $A$?",
+ "solution": [
+  "The event set of $A$ is made of every number that lies inside circle $A$. Circle $A$ includes the part where it overlaps circle $B$, because the numbers there are inside both circles.",
+  "Inside circle $A$ only: ${=setof(onlyA)}$. In the overlap, which is also inside circle $A$: ${=setof(both)}$.",
+  "Put the two parts together: the event set of $A$ is ${=setof(evA)}$.",
+  "The other sets each read the diagram wrongly: ${=setof(both)}$ is only the overlap, ${=setof(evB)}$ is everything inside circle $B$, and ${=setof(outA)}$ is the numbers outside circle $A$."
+ ],
+ "choices": {
+  "correct": "${=setof(evA)}$",
+  "distractors": [
+   {
+    "text": "${=setof(both)}$",
+    "misconception_id": "mc:g10m14s3-1-2:reads-only-the-overlap"
+   },
+   {
+    "text": "${=setof(evB)}$",
+    "misconception_id": "mc:g10m14s3-1-2:reads-the-other-circle"
+   },
+   {
+    "text": "${=setof(outA)}$",
+    "misconception_id": "mc:g10m14s3-1-2:reads-outside-the-circle"
+   }
+  ]
+ },
+ "proposed_misconceptions": [],
+ "notes": "Entry-point version of the book's ex14-3-2: a small sample space (7 to 10 numbers) and always the event A. Families carry no image, so the Venn diagram is given as its four regions in words (inside A only, in the overlap, inside B only, outside both); the skill kept is reading the circle of A as its own region PLUS the shared overlap. Numbers are shuffled into the four regions by position in a shuffled list, so the regions are disjoint and together cover 1..total. All four regions are non-empty (constraint), which makes the four options provably distinct: correct = A-only plus overlap; distractors = overlap only (mc reads-only-the-overlap), the circle of B (mc reads-the-other-circle), and everything outside circle A = B-only plus neither (mc reads-outside-the-circle, matching the book's {3, 8, 12} distractor). Sets are passed to setof already sorted; if setof does not return bare LaTeX braces, the three {=setof(...)} holes in each template need the reviewer's attention. Simulated 20000 draws offline: options always distinct, correct set always equals A-only union overlap."
+}

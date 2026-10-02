@@ -1,0 +1,125 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m14s3-1-2:paired-sets",
+ "kind": "family",
+ "lo_id": "lo:g10m14s3-1-2",
+ "parent_question_id": "q:g10m14s3-1-2:ex14-8-2",
+ "source_page": 491,
+ "tier": "advanced",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "na",
+   "randint": [
+    3,
+    5
+   ]
+  },
+  {
+   "name": "nab",
+   "randint": [
+    2,
+    4
+   ]
+  },
+  {
+   "name": "nb",
+   "randint": [
+    2,
+    4
+   ]
+  },
+  {
+   "name": "nn",
+   "randint": [
+    1,
+    3
+   ]
+  },
+  {
+   "name": "total",
+   "let": "na + nab + nb + nn"
+  },
+  {
+   "require": "total >= 11 and total <= 15",
+   "why": "a sample space as large as the book's 15 numbers, but never more"
+  },
+  {
+   "name": "U",
+   "let": "list(range(1, total + 1))"
+  },
+  {
+   "name": "P",
+   "shuffle": "U"
+  },
+  {
+   "name": "onlyA",
+   "let": "sorted([P[i] for i in range(0, total) if i < na])"
+  },
+  {
+   "name": "both",
+   "let": "sorted([P[i] for i in range(0, total) if i >= na and i < na + nab])"
+  },
+  {
+   "name": "onlyB",
+   "let": "sorted([P[i] for i in range(0, total) if i >= na + nab and i < na + nab + nb])"
+  },
+  {
+   "name": "neither",
+   "let": "sorted([P[i] for i in range(0, total) if i >= na + nab + nb])"
+  },
+  {
+   "name": "evA",
+   "let": "sorted([P[i] for i in range(0, total) if i < na + nab])"
+  },
+  {
+   "name": "evB",
+   "let": "sorted([P[i] for i in range(0, total) if i >= na and i < na + nab + nb])"
+  },
+  {
+   "name": "outA",
+   "let": "sorted([P[i] for i in range(0, total) if i >= na + nab])"
+  },
+  {
+   "name": "outB",
+   "let": "sorted([P[i] for i in range(0, total) if i < na or i >= na + nab + nb])"
+  }
+ ],
+ "constraints": [
+  "len(onlyA) > 0 and len(both) > 0 and len(onlyB) > 0 and len(neither) > 0"
+ ],
+ "stem": "A Venn diagram shows the sample space $S = \\{n : n \\in \\mathbb{Z}, 1 \\leq n \\leq {=total}\\}$ with two overlapping circles, one for the event $A$ and one for the event $B$. Reading the diagram, the overlap of the two circles holds ${=setof(both)}$. The part of circle $B$ that is outside circle $A$ holds ${=setof(onlyB)}$. The part of circle $A$ that is outside circle $B$ holds ${=setof(onlyA)}$. The numbers outside both circles are ${=setof(neither)}$. Which of the following gives the event set of $A$ and the event set of $B$?",
+ "solution": [
+  "An event set is every number that lies inside the circle of that event. The overlap lies inside both circles, so it belongs to both event sets.",
+  "Circle $A$ holds ${=setof(onlyA)}$ on its own and the overlap ${=setof(both)}$, so the event set of $A$ is ${=setof(evA)}$.",
+  "Circle $B$ holds ${=setof(onlyB)}$ on its own and the overlap ${=setof(both)}$, so the event set of $B$ is ${=setof(evB)}$.",
+  "The numbers outside both circles, ${=setof(neither)}$, belong to neither event set.",
+  "The other options go wrong in one way each: one swaps the two circles, one leaves the overlap out of both circles, and one lists the numbers outside each circle instead of inside it."
+ ],
+ "choices": {
+  "correct": "$A = {=setof(evA)}$ and $B = {=setof(evB)}$",
+  "distractors": [
+   {
+    "text": "$A = {=setof(evB)}$ and $B = {=setof(evA)}$",
+    "misconception_id": "mc:g10m14s3-1-2:reads-the-other-circle"
+   },
+   {
+    "text": "$A = {=setof(onlyA)}$ and $B = {=setof(onlyB)}$",
+    "misconception_id": "mc:g10m14s3-1-2:omits-the-overlap"
+   },
+   {
+    "text": "$A = {=setof(outA)}$ and $B = {=setof(outB)}$",
+    "misconception_id": "mc:g10m14s3-1-2:reads-outside-the-circle"
+   }
+  ]
+ },
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m14s3-1-2:omits-the-overlap",
+   "label": "Leaves the overlap out of each circle",
+   "description": "The student reads each circle as only the numbers that sit in that circle on their own, so the numbers in the overlap are left out of both event sets, instead of being counted inside each circle they lie in."
+  }
+ ],
+ "notes": "Advanced version, built on the book's ex14-8-2 (read B from the diagram): the student reads BOTH circles from the same diagram and picks the pair, so the overlap must be counted twice and each circle's own part read correctly (several steps, 11 to 15 numbers, regions listed in a mixed order). Families carry no image, so the diagram is given as its four regions in words. All four regions are non-empty (constraint), so the four options are provably distinct in both the A-part and the B-part. Distractors: the two circles swapped (mc reads-the-other-circle, catalogued), each circle without the overlap (new mc omits-the-overlap, declared here: the opposite error to reads-only-the-overlap), and the numbers outside each circle (mc reads-outside-the-circle, catalogued). No distractor uses reads-only-the-overlap, because a pair giving the same set for A and B is not a plausible reading. Sets are passed to setof already sorted. Simulated 20000 draws offline: options always distinct, correct pair always equals (A-only union overlap, B-only union overlap). The standard tier is not a gap (the two book questions cover it), so no standard family is written."
+}

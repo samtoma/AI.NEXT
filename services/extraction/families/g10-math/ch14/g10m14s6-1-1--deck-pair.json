@@ -1,0 +1,81 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m14s6-1-1:deck-pair",
+ "kind": "family",
+ "lo_id": "lo:g10m14s6-1-1",
+ "parent_question_id": "q:g10m14s6-1-1:ex14-6-3",
+ "source_page": 486,
+ "tier": "standard",
+ "answer_type": "mcq",
+ "context": "One card is chosen at random from a standard deck of 52 playing cards (hearts and diamonds red, spades and clubs black; each suit has an ace, 2 to 10, jack, queen and king; the jack, queen and king are the picture cards).",
+ "params": [
+  {
+   "name": "EXC",
+   "let": "[['a heart', 'a spade', 'a card has only one suit'], ['a club', 'a diamond', 'a card has only one suit'], ['a spade', 'a heart', 'a card has only one suit'], ['a diamond', 'a club', 'a card has only one suit'], ['a red card', 'a black card', 'a card has only one colour'], ['a black card', 'a red card', 'a card has only one colour'], ['a heart', 'a black card', 'every heart is red, so no heart is black'], ['a red card', 'a spade', 'every spade is black, so no spade is red'], ['a diamond', 'a black card', 'every diamond is red, so no diamond is black'], ['a club', 'a red card', 'every club is black, so no club is red'], ['a king', 'a queen', 'each card is only one of ace, 2 to 10, jack, queen or king'], ['an ace', 'a jack', 'each card is only one of ace, 2 to 10, jack, queen or king'], ['a queen', 'a king', 'each card is only one of ace, 2 to 10, jack, queen or king'], ['a king', 'an ace', 'each card is only one of ace, 2 to 10, jack, queen or king'], ['an ace', 'a picture card', 'an ace is not a jack, a queen or a king, so it is not a picture card'], ['a picture card', 'an ace', 'an ace is not a jack, a queen or a king, so it is not a picture card']]"
+  },
+  {
+   "name": "DIF",
+   "let": "[['a heart', 'a king', 'the king of hearts'], ['a spade', 'a queen', 'the queen of spades'], ['a red card', 'a picture card', 'the jack of hearts'], ['a black card', 'an ace', 'the ace of clubs'], ['a diamond', 'a jack', 'the jack of diamonds'], ['a club', 'a picture card', 'the king of clubs'], ['a king', 'a black card', 'the king of spades'], ['an ace', 'a heart', 'the ace of hearts'], ['a queen', 'a red card', 'the queen of diamonds'], ['a picture card', 'a spade', 'the jack of spades'], ['a jack', 'a club', 'the jack of clubs'], ['a diamond', 'an ace', 'the ace of diamonds']]"
+  },
+  {
+   "name": "NES",
+   "let": "[['a heart', 'a red card', 'the ace of hearts'], ['a spade', 'a black card', 'the 2 of spades'], ['a king', 'a picture card', 'the king of diamonds'], ['a queen', 'a picture card', 'the queen of clubs'], ['a red card', 'a diamond', 'the 9 of diamonds'], ['a picture card', 'a jack', 'the jack of hearts'], ['a black card', 'a club', 'the 7 of clubs'], ['a diamond', 'a red card', 'the 10 of diamonds']]"
+  },
+  {
+   "name": "i",
+   "randint": [
+    0,
+    "len(EXC) - 1"
+   ]
+  },
+  {
+   "name": "j",
+   "sample": {
+    "from": "range(0, len(DIF))",
+    "k": 2
+   }
+  },
+  {
+   "name": "m",
+   "randint": [
+    0,
+    "len(NES) - 1"
+   ]
+  }
+ ],
+ "stem": "One card is chosen at random from a standard deck of 52 playing cards. The deck has four suits: hearts and diamonds are red, spades and clubs are black. Each suit has an ace, the numbers 2 to 10, a jack, a queen and a king. The jack, queen and king are the picture cards. Which one of the following pairs of events is mutually exclusive?",
+ "choices": {
+  "correct": "Event A: the card is {=EXC[i][0]}. Event B: the card is {=EXC[i][1]}.",
+  "distractors": [
+   {
+    "text": "Event A: the card is {=DIF[j[0]][0]}. Event B: the card is {=DIF[j[0]][1]}.",
+    "misconception_id": "mc:g10m14s6-1-1:different-features-so-exclusive"
+   },
+   {
+    "text": "Event A: the card is {=NES[m][0]}. Event B: the card is {=NES[m][1]}.",
+    "misconception_id": "mc:g10m14s6-1-1:inside-so-exclusive"
+   },
+   {
+    "text": "Event A: the card is {=DIF[j[1]][0]}. Event B: the card is {=DIF[j[1]][1]}.",
+    "misconception_id": "mc:g10m14s6-1-1:different-features-so-exclusive"
+   }
+  ]
+ },
+ "distinct_by_choices": true,
+ "solution": [
+  "Two events are mutually exclusive when they cannot happen at the same time. One card is chosen, so two events are mutually exclusive only if no card is in both events.",
+  "For Event A: the card is {=EXC[i][0]} and Event B: the card is {=EXC[i][1]}, {=EXC[i][2]}, so no card is in both events. These events are mutually exclusive.",
+  "For Event A: the card is {=DIF[j[0]][0]} and Event B: the card is {=DIF[j[0]][1]}, {=DIF[j[0]][2]} is in both events, so these events are not mutually exclusive.",
+  "For Event A: the card is {=NES[m][0]} and Event B: the card is {=NES[m][1]}, {=NES[m][2]} is in both events, so these events are not mutually exclusive.",
+  "For Event A: the card is {=DIF[j[1]][0]} and Event B: the card is {=DIF[j[1]][1]}, {=DIF[j[1]][2]} is in both events, so these events are not mutually exclusive.",
+  "The only pair of events with no card in common is Event A: the card is {=EXC[i][0]} and Event B: the card is {=EXC[i][1]}."
+ ],
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m14s6-1-1:inside-so-exclusive",
+   "label": "Treats an event that sits inside another as a separate event",
+   "description": "The student reads two events such as 'a heart' and 'a red card', or 'a king' and 'a picture card', as two separate kinds of card, so that a card would be one or the other, and does not see that every card of the first event is also in the second. One card can be in both event sets, so the events are not mutually exclusive."
+  }
+ ],
+ "notes": "Standard tier: the book's typical exercise (ex14-6-1 to ex14-6-4, one pick, can it be in both events?) in a four-option form, because an mcq here needs at least three distractors. Exactly one option is a pair with no card in common. Slot 1 and slot 3 distractors are suit-or-colour against value pairs (always overlapping, a witness card is named); slot 2 is a nested pair of the same kind (a heart and a red card). The correct pair is always of the same kind (two suits, two colours, two values, or an ace against the picture cards), so a student cannot get it right by 'same kind means exclusive' alone; the nested distractor is there to catch that. The stem defines the picture cards (jack, queen, king; the ace is not one). Every table row was checked against a 52-card model: correct rows have no common card, distractor rows have a common card and the named witness belongs to both events. 3000 simulated instances: exactly one option is exclusive each time, all four options differ, and the (stem, option set) pair is almost always new."
+}

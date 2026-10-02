@@ -1,0 +1,93 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m14s4-1-1:bigdiagram",
+ "kind": "family",
+ "lo_id": "lo:g10m14s4-1-1",
+ "parent_question_id": "q:g10m14s4-1-1:ex14-8-3",
+ "source_page": 491,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "N",
+   "choice": [
+    14,
+    15,
+    16,
+    17,
+    18
+   ]
+  },
+  {
+   "name": "nu",
+   "let": "12"
+  },
+  {
+   "name": "na",
+   "randint": [
+    3,
+    5
+   ]
+  },
+  {
+   "name": "nab",
+   "randint": [
+    3,
+    5
+   ]
+  },
+  {
+   "name": "nb",
+   "let": "nu - na - nab"
+  },
+  {
+   "require": "nb >= 3",
+   "why": "each of the two crescents must hold at least three elements so the diagram is not lopsided"
+  },
+  {
+   "name": "pool",
+   "let": "list(range(1, N + 1))"
+  },
+  {
+   "name": "w",
+   "shuffle": "pool"
+  },
+  {
+   "name": "aonly",
+   "let": "sorted([w[i] for i in range(na)])"
+  },
+  {
+   "name": "both",
+   "let": "sorted([w[i] for i in range(na, na + nab)])"
+  },
+  {
+   "name": "bonly",
+   "let": "sorted([w[i] for i in range(na + nab, nu)])"
+  },
+  {
+   "name": "outs",
+   "let": "sorted([w[i] for i in range(nu, N)])"
+  },
+  {
+   "name": "uni",
+   "let": "sorted([w[i] for i in range(nu)])"
+  }
+ ],
+ "stem": "A group of learners are given a Venn diagram. The sample space is $S=\\{n : n\\in\\mathbb{Z}, 1\\leq n\\leq {=N}\\}$. The diagram shows two overlapping circles, the event sets $A$ and $B$, and every element of $S$ is written in exactly one place. Inside circle $A$ only: ${=setof(aonly)}$. In the overlap $A\\cap B$, inside both circles: ${=setof(both)}$. Inside circle $B$ only: ${=setof(bonly)}$. Outside both circles: ${=setof(outs)}$. They are asked to identify the union of event set $A$ and event set $B$, also written as $A\\cup B$. They get stuck, and you offer to help them find it. Write down the event set that best describes $A\\cup B$, with its elements in ascending order, in the form $\\{a, b, c, \\ldots\\}$.",
+ "solution": [
+  "The union $A\\cup B$ is the set of every element that is in $A$ or in $B$ (or in both). So we need every element that lies inside at least one of the two circles.",
+  "Circle $A$ holds the elements in $A$ only, ${=setof(aonly)}$, together with the overlap, ${=setof(both)}$. Circle $B$ holds the same overlap, ${=setof(both)}$, together with the elements in $B$ only, ${=setof(bonly)}$.",
+  "The overlap lies inside both circles, so its {=nab} elements are written once, not twice. The three regions inside the circles hold {=na} + {=nab} + {=nb} = {=nu} elements in all.",
+  "The elements outside both circles, ${=setof(outs)}$, are in neither $A$ nor $B$, so they are left out.",
+  "Collect the elements of the three regions inside the circles and put them in ascending order: $A\\cup B={=setof(uni)}$."
+ ],
+ "marker": {
+  "kind": "values",
+  "answer": "[{=uni[0]}, {=uni[1]}, {=uni[2]}, {=uni[3]}, {=uni[4]}, {=uni[5]}, {=uni[6]}, {=uni[7]}, {=uni[8]}, {=uni[9]}, {=uni[10]}, {=uni[11]}]",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "notes": "Advanced, modelled on the book's ex14-8-3 (a typed event set for A union B read from a 15-element diagram, with an element left outside both circles). The harder demands are an open response with no options to pick from, a bigger diagram (sample space up to 18, twelve elements to collect from three regions), and two to six elements outside both circles that must be left out while the overlap is written once. The book's own union questions are both classed standard, so this family is harder by size and by being a typed set, not by a new technique. The family engine cannot draw the diagram, so the stem gives it as its four regions in words. The union always has exactly twelve elements so the plain marker answer can be written with twelve fixed holes (no join function exists). The stem asks for ascending order so an order-sensitive marker agrees with the key. Please check that setof() prints the sets with escaped braces inside the $...$."
+}
