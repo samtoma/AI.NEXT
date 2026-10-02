@@ -1,0 +1,143 @@
+{
+ "format": "ainext.gate-decision/1",
+ "gate": "G4",
+ "book": "g10-math",
+ "id": "g4-ch09",
+ "chapter": 9,
+ "run": "wf_253279cc-68a",
+ "decided_at": "2026-10-02T07:23:57Z",
+ "by": "auto-pass G4 (AI recommendation)",
+ "auto": true,
+ "outcome": "pass_with_holds",
+ "summary": "17 catalogue entr(ies) kept by S5's verifier, 4 dropped by it",
+ "decisions": [
+  {
+   "key": "mc:g10m9s2-1-3:rounds-n-to-nearest-not-up",
+   "decision": "keep",
+   "basis": "S5's verifier confirmed it"
+  },
+  {
+   "key": "mc:g10m9s2-1-4:divides-by-n-without-subtracting-one",
+   "decision": "keep",
+   "basis": "S5's verifier confirmed it"
+  },
+  {
+   "key": "mc:g10m9s2-1-4:uses-interest-amount-as-accumulated-amount",
+   "decision": "keep",
+   "basis": "S5's verifier confirmed it"
+  },
+  {
+   "key": "mc:g10m9s2-1-4:uses-later-age-as-number-of-years",
+   "decision": "keep",
+   "basis": "S5's verifier confirmed it"
+  },
+  {
+   "key": "mc:g10m9s3-1-1:rounds-before-the-end",
+   "decision": "keep",
+   "basis": "S5's verifier confirmed it"
+  },
+  {
+   "key": "mc:g10m9s3-1-3:bigger-rate-wins",
+   "decision": "keep",
+   "basis": "S5's verifier confirmed it"
+  },
+  {
+   "key": "mc:g10m9s4-1-1:interest-on-full-cash-price",
+   "decision": "keep",
+   "basis": "S5's verifier confirmed it"
+  },
+  {
+   "key": "mc:g10m9s4-1-1:interest-on-interest-formula",
+   "decision": "keep",
+   "basis": "S5's verifier confirmed it"
+  },
+  {
+   "key": "mc:g10m9s4-1-1:smaller-monthly-payment-looks-cheaper",
+   "decision": "keep",
+   "basis": "S5's verifier confirmed it"
+  },
+  {
+   "key": "mc:g10m9s4-1-4:rate-not-percent",
+   "decision": "keep",
+   "basis": "S5's verifier confirmed it"
+  },
+  {
+   "key": "mc:g10m9s4-1-4:simple-growth",
+   "decision": "keep",
+   "basis": "S5's verifier confirmed it"
+  },
+  {
+   "key": "mc:g10m9s4-1-4:swapped-rate-years",
+   "decision": "keep",
+   "basis": "S5's verifier confirmed it"
+  },
+  {
+   "key": "mc:g10m9s5-1-1:mixes-currencies-before-converting",
+   "decision": "keep",
+   "basis": "S5's verifier confirmed it"
+  },
+  {
+   "key": "mc:g10m9s5-1-1:multiplies-or-divides-the-wrong-way",
+   "decision": "keep",
+   "basis": "S5's verifier confirmed it"
+  },
+  {
+   "key": "mc:g10m9s5-1-1:uses-the-estimated-future-rate",
+   "decision": "keep",
+   "basis": "S5's verifier confirmed it"
+  },
+  {
+   "key": "mc:g10m9s5-1-3:compare-without-converting",
+   "decision": "keep",
+   "basis": "S5's verifier confirmed it"
+  },
+  {
+   "key": "mc:g10m9s5-1-3:converts-then-picks-largest",
+   "decision": "keep",
+   "basis": "S5's verifier confirmed it"
+  },
+  {
+   "key": "mc:g10m9s2-1-3:rounds-too-early",
+   "decision": "dropped",
+   "basis": "S5's verifier did not confirm it"
+  },
+  {
+   "key": "mc:g10m9s2-1-4:leaves-rate-as-a-decimal",
+   "decision": "dropped",
+   "basis": "S5's verifier did not confirm it"
+  },
+  {
+   "key": "mc:g10m9s3-1-2:high-rate-means-wrong-working",
+   "decision": "dropped",
+   "basis": "S5's verifier did not confirm it"
+  },
+  {
+   "key": "mc:g10m9s3-1-3:compound-better-for-everyone",
+   "decision": "dropped",
+   "basis": "S5's verifier did not confirm it"
+  }
+ ],
+ "checks": [
+  {
+   "name": "S5 author + fail-closed verifier",
+   "state": "pass"
+  },
+  {
+   "name": "load_generated_questions --catalogue-only",
+   "state": "pass"
+  }
+ ],
+ "evidence": [
+  {
+   "label": "catalogue",
+   "path": "services/extraction/seed/generated/g10-math/ch09/misconceptions.json"
+  },
+  {
+   "label": "S5 final",
+   "path": "services/extraction/runs/g10-math/misconceptions/final-ch09-wf_253279cc-68a.json"
+  }
+ ],
+ "blocked": [],
+ "course_id": "course:us-g10-math-en",
+ "for_review": []
+}
