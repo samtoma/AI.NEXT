@@ -8,7 +8,7 @@ wanted to put live). Treat each entry as a lead to confirm against the printed p
 Nothing here changed the book's answers. A question whose printed answer is wrong was left out of the question bank rather than corrected. A question whose text
 lost something in extraction (a missing sign or exponent) is listed with the repair, if there was one.
 
-So far: **61** printed answers that look wrong and **10** questions whose text lost or garbled something, in chapters 1, 2, 3, 4, 5.
+So far: **74** printed answers that look wrong and **10** questions whose text lost or garbled something, in chapters 1, 2, 3, 4, 5, 6, 9.
 
 ## Chapter 1 — Algebraic expressions
 
@@ -634,3 +634,119 @@ So far: **61** printed answers that look wrong and **10** questions whose text l
 - The book's answer: 0,21
 - What is wrong: Stem as shown: cot103°+sin1090° ≈ -0,23+0,17 < 0, so the root is undefined. The working starts from cot85°: 0,2611/6,0154=0,0434, root 0,2083, so 0,21. The key fits only the cot85 stem. Repair 103 to 85, key unchanged.
 - In the question bank: **live, with the question text repaired** to: Use your calculator to determine the value of the following (correct to $\text{2}$ decimal places): $\sqrt{\dfrac{\cot85^{\circ}+\sin1090^{\circ}}{\sec10^{\circ}+5}}$. Marked as an AI repair for you to review.
+
+## Chapter 6 — Functions
+
+
+### The book's printed answer is wrong (7)
+
+
+**Exercise 6-1, question 7d**, page 149
+
+- The question as we have it: The cost of petrol and diesel per litre are given by the functions $P$ and $D$ , where: $\begin{align*}P&=\text{13,61}V\\D&=\text{12,46}V\end{align*}$ Use this information to answer the following: How many litres of petrol can you buy with $\text{R275}$ ?
+- The book's answer: 22,071 L
+- What is wrong: The book's working uses the diesel function D(V)=275 (12,46V) instead of the petrol function P for a petrol question, so 22,071 L is the diesel answer.
+- The right answer (our own working, not applied to the book): 20,21 L (275/13,61 using the petrol function P)
+- In the question bank: **not used**. The book's answer was never changed.
+
+**Exercise 6-2, question 6b**, page 156
+
+- The question as we have it: Write the following in standard form ( $y=mx+c$ ): $3x-y=5$
+- The book's answer: $y=-3x+5$
+- What is wrong: Book's last step: from $-y=5-3x$ it prints $y=-3x+5$; dividing by $-1$ gives $y=3x-5$ (sign error in the printed answer and the working).
+- The right answer (our own working, not applied to the book): y=3x-5
+- In the question bank: **not used**. The book's answer was never changed.
+
+**Exercise 6-2, question 7f**, page 156
+
+- The question as we have it: Look at the graphs below. Each graph is labelled with a letter. In the questions that follow, match any given equation with the label of a corresponding graph. [figure] $y=\frac{1}{2}x$
+- The book's answer: C
+- What is wrong: The figure draws line C as $y=\frac14 x$ (passes through (8,2)), while the stem asks for $y=\frac12 x$; the book's key C does not match the graph as drawn.
+- The right answer (our own working, not applied to the book): C only by elimination; graph C is y=x/4
+- In the question bank: **not used**. The book's answer was never changed.
+
+**Exercise 6-5, question 6d**, page 187
+
+- The question as we have it: Given the functions $y=2^{x}$ and $y=\left(\frac{1}{2}\right)^{x}$ . Solve the equation $2^{x}=\left(\frac{1}{2}\right)^{x}$ graphically and check your answer is correct by using substitution.
+- The book's answer: The graphs intersect at the point $(0;1)$ .
+- What is wrong: The stem asks to solve the equation, whose solution is x = 0. The book answers with the intersection point (0;1), which is not the form asked for. A key of (0;1) would mark the right answer x = 0 as wrong.
+- The right answer (our own working, not applied to the book): x = 0 (the graphs meet at (0;1))
+- In the question bank: **not used**. The book's answer was never changed.
+
+**Exercise 6-6, question 18a**, page 206
+
+- The question as we have it: Given the following graph. [figure] State the coordinates at $A,~B,~C$ and $D$ .
+- The book's answer: We can read the values off the graph: $A=(90^{\circ};4),~B=(90^{\circ};-2),~C=(180^{\circ};4)\text{ and }D=(180^{\circ};-2)$
+- What is wrong: The book's working gives B=(90°;-2) and D=(180°;-2). In the figure B and D are at height +2: B sits on the curve at (90,2) and D at (180,2).
+- The right answer (our own working, not applied to the book): A=(90^{\circ};4), B=(90^{\circ};2), C=(180^{\circ};4), D=(180^{\circ};2)
+- In the question bank: **not used**. The book's answer was never changed.
+
+**Exercise 6-6, question 20a**, page 206
+
+- The question as we have it: Given the following graph: [figure] State the coordinates at $A,~B,~C$ and $D$ .
+- The book's answer: We read the values off the graph: $A=(90^{\circ};3),~B=(90^{\circ};2),~C=(180^{\circ};-4)\text{ and }D=(270^{\circ};2)$
+- What is wrong: The book's working and typed key give B=(90°;2) and D=(270°;2). The graph shows both points at y=-2. The minus signs were lost in the book.
+- The right answer (our own working, not applied to the book): A=(90°;3), B=(90°;-2), C=(180°;-4), D=(270°;-2)
+- In the question bank: **not used**. The book's answer was never changed.
+
+**Exercise 6-8, question 44**, page 226
+
+- The question as we have it: For which values of $\theta$ is the function positive, in the interval shown? [figure]
+- The book's answer: $0^{\circ}<\theta<360^{\circ}$
+- What is wrong: The graph runs from 0 to 360 and is 2.5 at both ends, so the endpoints are positive too. The book's strict inequalities leave out values where the function is positive. A marker checking the interval would mark the full-interval answer wrong.
+- The right answer (our own working, not applied to the book): 0°≤θ≤360° (positive everywhere on the plotted interval, endpoints included)
+- In the question bank: **not used**. The book's answer was never changed.
+
+## Chapter 9 — Finance and growth
+
+
+### The book's printed answer is wrong (6)
+
+
+**Exercise 9-1, question 7**, page 335
+
+- The question as we have it: Sally wanted to calculate the number of years she needed to invest $\text{R1000}$ for in order to accumulate $\text{R2500}$ . She has been offered a simple interest rate of $\text{8,2}$ % p.a. How many years will it take for the money to grow to $\text{R2500}$ ?
+- The book's answer: It would take 19 years for R1000 to become R2500 at 8,2% p.a.
+- What is wrong: The stem asks 'how many years' with no rounding instruction; the book's working ends at $n=18{,}3$ but the printed answer is 19 (rounded up by an unstated convention).
+- The right answer (our own working, not applied to the book): n = 18,3 (18,29) years by the book's working; the book states 19
+- In the question bank: **not used**. The book's answer was never changed.
+
+**Exercise 9-2, question 4**, page 340
+
+- The question as we have it: Nicola wants to invest some money at a compound interest rate of $\text{11}$ % p.a. How much money (to the nearest rand) should be invested if she wants to reach a sum of $\text{R100000}$ in five years time?
+- The book's answer: R 59 345,13
+- What is wrong: Stem says 'to the nearest rand' but the book's printed answer and working end at R 59 345,13 (two decimals).
+- The right answer (our own working, not applied to the book): R 59 345 (nearest rand)
+- In the question bank: **not used**. The book's answer was never changed.
+
+**Exercise 9-3, question 9**, page 344
+
+- The question as we have it: Tlali wants to buy a new computer and decides to buy one on a hire purchase agreement. The computers cash price is $\text{R4250}$ . He will pay it off over $\text{30}$ months at an interest rate of $\text{9,5}$ % p.a. An insurance premium of $\text{R10,75}$ is added to every monthly payment. How mu…
+- The book's answer: Add the insurance premium: $\text{R146,09}+\text{R10,75}=\text{R156,84}$
+- What is wrong: Book divides by 36 instead of 30 months, giving R156,84; correct is $5259{,}38/30+10{,}75=R186{,}06$.
+- The right answer (our own working, not applied to the book): R186,06
+- In the question bank: **not used**. The book's answer was never changed.
+
+**Exercise 9-7, question 16a**, page 350
+
+- The question as we have it: Calculate how much you will earn if you invested $\text{R500}$ for $\text{1}$ year at the following interest rates: $\text{6,85}$ % simple interest
+- The book's answer: A = \text{R534,25}
+- What is wrong: Stem asks how much you EARN (interest, R34,25) but the book's answer is the total amount A = R534,25.
+- The right answer (our own working, not applied to the book): R34,25 (interest); the book prints R534,25 (accumulated amount)
+- In the question bank: **not used**. The book's answer was never changed.
+
+**Exercise 9-7, question 16b**, page 350
+
+- The question as we have it: Calculate how much you will earn if you invested $\text{R500}$ for $\text{1}$ year at the following interest rates: $\text{4,00}$ % compound interest
+- The book's answer: A = R520
+- What is wrong: Stem says 'earn' but the book's key R520 is the accumulated amount, not the interest.
+- The right answer (our own working, not applied to the book): R20 (interest earned); the book prints R520, the total amount
+- In the question bank: **not used**. The book's answer was never changed.
+
+**Exercise 9-7, question 31b**, page 352
+
+- The question as we have it: According to the latest census, South Africa currently has a population of $\text{57\000\000}$ . If it is found after $\text{10}$ years that the population has actually increased by $\text{10}$ million to $\text{67}$ million, what was the growth rate?
+- The book's answer: 1,7
+- What is wrong: After $1{,}01629-1=0{,}01629$ the book writes $100(0{,}016)=1{,}69$ and rounds to 1,7; correct is 1,63, about 1,6.
+- The right answer (our own working, not applied to the book): 1,6 (about 1,63%)
+- In the question bank: **not used**. The book's answer was never changed.
