@@ -718,6 +718,36 @@ def render(template: str, env: dict) -> str:
 # sqrt/abs/pi and — for intervals — interval(lo, hi, closed_lo, closed_hi).
 MATHS_FUNCTIONS = {"sqrt", "abs", "interval"}
 MATHS_CONSTANTS = {"pi", "inf", "true", "false"}
+
+
+def _closed_flag(v: Any, which: str) -> bool:
+    """One bracket flag of ``interval(lo, hi, closed_lo, closed_hi)``: true/false, or the numbers 1/0 (1 = the end is
+    in the interval, a square bracket; 0 = it is not, a round one). A family author writes either; the blind grader
+    answers with the other. Both mean the same, in the key that is printed and in the comparison."""
+    if isinstance(v, bool):
+        return v
+    if _is_num(v) and v in (0, 1):
+        return bool(v)
+    raise EvalError(f"interval(): {which} is true/false (or 1/0), not {v!r}")
+
+
+def interval_ends(lo: Any, hi: Any, closed_lo: Any, closed_hi: Any) -> tuple[Any, Any, bool, bool]:
+    """An interval's canonical form ``(lo, hi, closed_lo, closed_hi)``: the flags as booleans, however they were written,
+    and an infinite end always round (infinity is not a number, so it is never in the interval: ``[-inf, 4)`` is
+    ``(-inf, 4)``). Printing the key (:func:`to_latex`) and comparing two answers (:func:`equivalent`) both go through
+    this one function, so what the student is shown and what the checker accepts cannot disagree."""
+    if not (_is_num(lo) and _is_num(hi)):
+        raise EvalError("interval(lo, hi, closed_lo, closed_hi): the two ends are numbers")
+    cl, ch = _closed_flag(closed_lo, "closed_lo"), _closed_flag(closed_hi, "closed_hi")
+    if lo == math.inf or hi == -math.inf:
+        raise EvalError("interval(): it cannot start at inf or end at -inf")
+    if lo > hi:
+        raise EvalError("interval(): the smaller end comes first")
+    if lo == -math.inf:
+        cl = False
+    if hi == math.inf:
+        ch = False
+    return lo, hi, cl, ch
 # ---------------------------------------------------------------- recurring decimals
 # The book writes a recurring decimal with a dot over the first and the last digit of the block that repeats
 # (0.\dot{3}, 0.8\dot{3}, 0.\dot{1}4285\dot{7}, 9.2\dot{8}\dot{7}) or a bar over the whole block
@@ -915,10 +945,7 @@ class _MathsWalker(_Walker):
             return abs(args[0])
         if name == "interval":
             _need("interval", tuple(args), 4)
-            lo, hi, cl, ch = args
-            if not (_is_num(lo) and _is_num(hi)) or not isinstance(cl, bool) or not isinstance(ch, bool):
-                raise EvalError("interval(lo, hi, closed_lo, closed_hi)")
-            return ("interval", lo, hi, cl, ch)
+            return ("interval", *interval_ends(*args))
         raise EvalError(f"{name}() is not allowed")  # pragma: no cover
 
     def _Compare(self, n):  # an equation: lhs - rhs
@@ -1134,8 +1161,11 @@ def _tex(n) -> str:
             return r"\left|" + _tex(n.args[0]) + r"\right|"
         if name == "interval":
             lo, hi, cl, ch = n.args
-            left = "[" if _is_true(cl) else "("
-            right = "]" if _is_true(ch) else ")"
+            # The brackets are the FLAGS' value (true or 1: square), not their spelling, and an infinite end is always
+            # round: the same canonical form the comparison reads (interval_ends).
+            _, _, closed_lo, closed_hi = interval_ends(*(_MathsWalker(_maths_env({})).run(a) for a in n.args))
+            left = "[" if closed_lo else "("
+            right = "]" if closed_hi else ")"
             return f"{left}{_tex(lo)}, {_tex(hi)}{right}"
     if isinstance(n, ast.BinOp):
         op = type(n.op)
@@ -1175,10 +1205,6 @@ def _tex(n) -> str:
                 base = f"({base})"
             return base + "^{" + _tex(R) + "}"
     raise EvalError(f"cannot print {type(n).__name__} as LaTeX")
-
-
-def _is_true(n) -> bool:
-    return (isinstance(n, ast.Constant) and n.value is True) or (isinstance(n, ast.Name) and n.id == "true")
 
 
 def recurring_latex(value: Fraction, style: str = "dot") -> str:
