@@ -1303,8 +1303,15 @@ are never touched) is unchanged; it now runs wherever the book's notation can ar
   set-builder (`\mid`, `|`, `:`), a `{=…}` hole, a LaTeX group (`{,}`), a comma the author spaced (`,\,`) and an unclosed set are never touched. It is whitespace
   inside maths, so unlike the pair rule the verdicts carry across it in a **stem** as well as a solution step (`verified_version`, `carried_verification`);
   a stem the pair rule rewrites, or any other stem edit, still means the verifier must run again. `h_s7_author` applies it to every new template.
-  The book path needs no new rule: the book writes a set with `;` (`\{1; 2; 3\}` is `\{1, 2, 3\}`, already spaced) and no assembled bundle, lesson-content file,
+  The book path needs no spacing rule: the book writes a set with `;` (`\{1; 2; 3\}` is `\{1, 2, 3\}`, already spaced) and no assembled bundle, lesson-content file,
   generated family question or other chapter's widget carries the pattern (scan, 2026-10-02: 0 outside the Chapter 14 templates).
+- **A set of comma pairs is not a set of decimals (2026-10-02, found while scanning for the above).** The book's `\{(1,1);(1,2);…\}` (Ex14-8:22a, Chapter 14) has its
+  pairs written with a comma and its elements separated by `;`; the decimal rule read every `(1,1)` as the bracketed decimal 1.1 and the bundle, and the pilot DB,
+  carry `\{(1.1), (1.2), …\}` — a wrong sample space the `notation` check cannot see (no comma is left). `assemble_lesson_bundle._set_pair_commas` (counter `pair_in_set`)
+  writes the pairs' commas `, ` first, but ONLY for a `;`-set whose EVERY element is an integer pair: `\{0,5; 1,5\}`, `\{(1,5); 2\}`, `\{(1,1)\}` and a bare
+  `(1,1);(1,2)` read as before. A scratch assembly of all 15 bundles and 65 lesson-content files with the rule on versus off differs in exactly one field,
+  `q:g10m14s1-1-1:ex14-8-22a` solution step 1. The committed Chapter 14 bundle and the DB row still hold the old text until Chapter 14 is re-assembled and refreshed
+  (this section's re-assemble and refresh steps).
 - **A solution step keeps the blind verifier's verdicts across it** (it never sees the solution): `verified_version` treats a step that equals
   `normalise_pairs` of the verified one as the same step, and the template carries `verified_as` (`carried_verification` in the widget bundle).
   A stem, instance or spec it rewrites was READ by the verifier, so that template is verified again. Apply it by hand to a template already
