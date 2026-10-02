@@ -229,6 +229,96 @@ class NormaliserTest(unittest.TestCase):
         for src in ("(see the table; then answer)", "x = 2; y = 3", "the Rand; 5 000 rand"):
             self.assertEqual(alb.normalise(src)[0], src)
 
+    def test_pairs_only_is_the_pair_rule_alone(self):
+        """What reaches an objective's label and statement (and nothing else): a point, an interval and a set convert as
+        in a question; a decimal comma, a comma list, prose and a top-level `;` are not touched."""
+        pair = {"Ratios of a point (x;y)": "Ratios of a point (x, y)", "Q(-2;3)": "Q(-2, 3)", "K(-5;y)": "K(-5, y)",
+                "the point (x; y) and the point (a;b)": "the point (x, y) and the point (a, b)",
+                "[2; 5)": "[2, 5)", r"\{1; 2; 3\}": r"\{1, 2, 3\}",
+                r"\left(\frac{a}{2}; \frac{b}{2}\right)": r"\left(\frac{a}{2}, \frac{b}{2}\right)"}
+        for src, want in pair.items():
+            out, c = alb.normalise_pairs(src)
+            self.assertEqual(out, want, src)
+            self.assertEqual(c["pair"] >= 1, True, src)
+            self.assertEqual(alb.residual_notation(out), [], src)
+        for src in ("(sin, cos, tan, cosec, sec, cot)", "the values 1,2,3", "3,5 and 2,5", "R 3,50", "x = 2; y = 3",
+                    "(see the table; then answer)", "the Rand; 5 000 rand", "a list 1; 2; 3", "(1,5)", ""):
+            out, c = alb.normalise_pairs(src)
+            self.assertEqual(out, src, src)
+            self.assertEqual(+c["pair"] + c["decimal"], 0, src)
+        self.assertIsNone(alb.normalise_pairs(None)[0])
+        # the full rule is unchanged: it still reads those commas as the book's decimals
+        self.assertEqual(alb.normalise("3,5 and 2,5")[0], "3.5 and 2.5")
+        self.assertEqual(alb.normalise("Q(-2;3)")[0], "Q(-2, 3)")
+
+
+class ObjectiveAndFigureNotationTest(unittest.TestCase):
+    """Grade 10 Chapter 5 (2026-10-02): the coverage audit's `notation` check refused four `;` pairs in an assembled bundle —
+    an objective's label and statement (S1 wrote them from the section title "Ratios of a point (x;y)") and two figure labels
+    a geo_scene draws as `{"type": "label", "text": "Q(-2;3)"}` (only the `label` key was normalised). The assembly writes
+    them in the app's notation, at the root, wherever the field is written."""
+
+    LABEL = "Ratios of a point (x;y)"
+    STATEMENT = "Find the ratios (sin, cos, tan) for a point (x;y); see (the table; then answer) for the signs"
+
+    @classmethod
+    def setUpClass(cls):
+        cls.root = fixture_copy()
+        edit(cls.root / "objectives" / "g10m8s2-1.json",
+             lambda d: d["objectives"][0].update(label=cls.LABEL, statement=cls.STATEMENT))
+
+        def figure(d):
+            d["visuals"][0].update(kind="geo_scene", spec={"elements": [
+                {"type": "label", "x": -3.3, "y": 3.2, "text": "Q(-2;3)", "step": 1},
+                {"type": "label", "x": -5, "y": -13.4, "text": "K(-5;y)", "step": 2},
+                {"type": "label", "x": 1, "y": 1, "text": "0,5", "step": 2},
+                {"type": "point", "x": 1, "y": 2, "label": "A(1;2)", "step": 3}], "animate": "sequence"})
+        edit(cls.root / "runs" / "lesson" / "g10m8s2-1.json", figure)
+        cls.bundles, cls.report = assemble(cls.root)
+        cls.ch8 = cls.bundles["g10m-c08.json"]
+
+    def test_an_objectives_label_and_statement_are_written_the_apps_way(self):
+        node = next(n for n in self.ch8["nodes"] if n["id"] == "lo:g10m8s2-1-1")
+        self.assertEqual(node["label"], "Ratios of a point (x, y)")
+        self.assertEqual(node["description"],
+                         "Find the ratios (sin, cos, tan) for a point (x, y); see (the table; then answer) for the signs",
+                         "the pair only: a comma list and a prose parenthesis are left as they are")
+
+    def test_a_figures_drawn_text_is_normalised_under_either_key(self):
+        els = next(v for v in self.ch8["visuals"] if v["id"] == "v:g10m8s2-1:001")["spec"]["elements"]
+        self.assertEqual([e.get("text") for e in els[:3]], ["Q(-2, 3)", "K(-5, y)", "0.5"])
+        self.assertEqual(els[3]["label"], "A(1, 2)")
+        self.assertEqual({k: v for k, v in els[0].items() if k != "text"}, {"type": "label", "x": -3.3, "y": 3.2, "step": 1})
+
+    def test_the_lesson_content_file_carries_the_same_title(self):
+        sub = self.report.content["g10m8s2-1"]["subtopics"]
+        self.assertTrue(sub, "the fixture lesson has claims, so a subtopic")
+        self.assertEqual(sub[0]["title"], "Ratios of a point (x, y)")
+
+    def test_nothing_the_audit_probes_is_left(self):
+        strings = []
+
+        def walk(v):
+            if isinstance(v, str):
+                strings.append(v)
+            elif isinstance(v, dict):
+                [walk(x) for x in v.values()]
+            elif isinstance(v, list):
+                [walk(x) for x in v]
+        walk({k: v for k, v in self.ch8.items() if k not in ("assembled_from", "source_document")})
+        walk(self.report.content)
+        self.assertEqual([r for s in strings for r in alb.residual_notation(s)], [])
+        self.assertGreaterEqual(self.report.notation["pair"], 5)
+
+    def test_the_source_records_stay_as_the_book_printed_them(self):
+        """Normalisation is the assembly's, never a rewrite of S1's record (decision 15: the book's text is the evidence)."""
+        d = json.loads((self.root / "objectives" / "g10m8s2-1.json").read_text())
+        self.assertEqual(d["objectives"][0]["label"], self.LABEL)
+
+    def test_reassembly_is_byte_identical(self):
+        again, _ = assemble(self.root)
+        self.assertEqual({k: alb.dump(v) for k, v in again.items()}, {k: alb.dump(v) for k, v in self.bundles.items()})
+
 
 class RefusalTest(unittest.TestCase):
     def refuses(self, mutate, match: str):
