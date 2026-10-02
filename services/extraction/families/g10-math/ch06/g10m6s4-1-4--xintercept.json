@@ -1,0 +1,72 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s4-1-4:xintercept",
+ "kind": "family",
+ "lo_id": "lo:g10m6s4-1-4",
+ "parent_question_id": "q:g10m6s4-1-4:ex6-8-57b",
+ "source_page": 233,
+ "tier": "standard",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "x0",
+   "choice": [
+    -6,
+    -5,
+    -4,
+    -3,
+    -2,
+    -1,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ]
+  },
+  {
+   "name": "q",
+   "choice": [
+    -4,
+    -3,
+    -2,
+    -1,
+    1,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "a",
+   "let": "-q * x0"
+  },
+  {
+   "require": "abs(a) <= 12",
+   "why": "keeps the numerator of the hyperbola small"
+  },
+  {
+   "name": "sg",
+   "let": "'+' if q > 0 else '-'"
+  }
+ ],
+ "constraints": [],
+ "stem": "Determine the $x$-intercept of the hyperbola $y = \\frac{{=a}}{x} {=sg} {=abs(q)}$. Give your answer as a coordinate pair $(x, y)$.",
+ "solution": [
+  "At the $x$-intercept the graph meets the $x$-axis, so $y = 0$. Substitute: $0 = \\frac{{=a}}{x} {=sg} {=abs(q)}$.",
+  "Move the constant term to the other side: $\\frac{{=a}}{x} = {=-q}$.",
+  "Multiply both sides by $x$ (we know $x \\neq 0$ because $x = 0$ is the vertical asymptote): ${=a} = ({=-q}) \\cdot x$.",
+  "Divide both sides by ${=-q}$: $x = {=x0}$.",
+  "The $x$-intercept is $({=x0}, 0)$. There is no $y$-intercept, because $x = 0$ is an asymptote."
+ ],
+ "marker": {
+  "kind": "coordinates",
+  "answer": "({=x0}, 0)",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "notes": "Standard tier: the intercept step of the book's three-part method (sign of a, intercepts, asymptotes) for y = a/x + q. The x-intercept is built to be a whole number: x0 and q are drawn and a = -q*x0, with |a| <= 12 so no instance has a large numerator. a is never 0 and q is never 0, so the graph is always a genuine hyperbola with exactly one x-intercept. The marker answer is a plain coordinate pair; every instance has an integer x-coordinate so no LaTeX fraction can enter the marker. The book's own question (ex6-8-57b) only asks for an asymptote, so this family extends the same y = a/x + q skeleton to the intercept step that the objective names."
+}

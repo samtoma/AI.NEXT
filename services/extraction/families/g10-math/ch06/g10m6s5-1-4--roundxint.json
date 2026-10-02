@@ -1,0 +1,102 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s5-1-4:roundxint",
+ "kind": "family",
+ "lo_id": "lo:g10m6s5-1-4",
+ "parent_question_id": "q:g10m6s5-1-4:ex6-8-23b",
+ "source_page": 220,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "tab",
+   "let": "[[2,3,2,0,6,1464,1569],[2,5,2,1,13,2378,2549],[2,3,1,1,16,2928,3138],[2,6,1,2,26,5856,6277],[2,9,2,2,22,4438,4757],[2,4,5,-1,-3,785,841],[2,2,5,-2,-13,392,420],[2,1,5,-3,-23,196,210],[2,3,4,-1,-4,732,785],[2,5,1,2,23,4757,5098],[2,7,2,1,18,3364,3605],[3,1,2,-1,-6,490,546],[3,4,5,-1,-2,760,848],[3,3,2,0,4,1469,1639],[3,2,1,0,6,1830,2042],[3,9,2,1,14,4407,4918],[3,6,1,1,16,5490,6127],[3,16,1,2,25,14755,16469],[3,18,1,2,26,16469,18381],[3,20,1,2,27,18381,20516],[4,3,4,-1,-2,707,812],[4,3,2,0,3,1414,1625],[4,3,1,0,8,2828,3249],[4,6,1,1,13,5657,6498],[4,9,1,1,16,8574,9849],[4,12,1,1,18,11314,12996],[4,21,2,1,17,9849,11314],[4,24,1,2,23,22627,25992],[5,1,2,-1,-4,485,569],[5,3,5,-1,-3,569,669],[5,3,4,-1,-2,669,786],[5,2,1,0,4,1756,2063],[5,5,2,0,6,2423,2847],[5,3,1,0,7,2847,3344],[5,8,1,1,13,7477,8782],[5,10,1,1,14,8782,10316],[5,15,1,1,17,14233,16719],[5,18,1,1,18,16719,19638],[5,7,2,0,8,3344,3928]]"
+  },
+  {
+   "name": "idx",
+   "randint": [
+    0,
+    "len(tab) - 1"
+   ]
+  },
+  {
+   "name": "row",
+   "let": "tab[idx]"
+  },
+  {
+   "name": "b",
+   "let": "row[0]"
+  },
+  {
+   "name": "c",
+   "let": "row[1] if row[2] == 1 else row[1] / row[2]"
+  },
+  {
+   "name": "n0",
+   "let": "row[3]"
+  },
+  {
+   "name": "t",
+   "let": "row[4]"
+  },
+  {
+   "name": "lo3",
+   "let": "row[5]"
+  },
+  {
+   "name": "hi3",
+   "let": "row[6]"
+  },
+  {
+   "name": "alist",
+   "let": "[1/2, -1/2, 1/3, -1/3, 2/3, -2/3, 1/4, -1/4, 3/4, -3/4, 3/2, -3/2, 5/2, -5/2, 2, -2, 3, -3, 4, -4, 5, -5]"
+  },
+  {
+   "name": "a",
+   "choice": "[v for v in alist if is_int(v * c) and abs(v * c) <= 10]"
+  },
+  {
+   "name": "q",
+   "let": "int(0 - a * c)"
+  },
+  {
+   "name": "m",
+   "let": "0 - q"
+  },
+  {
+   "name": "p0",
+   "let": "b ** abs(n0)"
+  },
+  {
+   "name": "lo",
+   "let": "p0 if n0 >= 0 else 1 / p0"
+  },
+  {
+   "name": "p1",
+   "let": "b ** abs(n0 + 1)"
+  },
+  {
+   "name": "hi",
+   "let": "p1 if n0 + 1 >= 0 else 1 / p1"
+  },
+  {
+   "require": "q != 0",
+   "why": "the function must have a constant term"
+  }
+ ],
+ "stem": "Calculate the $x$-intercept of the graph of $y={=a}\\cdot {=b}^{x}{=signed(q)}$. Give the $x$-coordinate of the intercept, rounded to one decimal place.",
+ "answer": "fixed(t / 10, 1)",
+ "solution": [
+  "The $x$-intercept is where the graph cuts the $x$-axis, so we let $y=0$.",
+  "$0={=a}\\cdot {=b}^{x}{=signed(q)}$",
+  "Move the constant term to the other side: ${=m}={=a}\\cdot {=b}^{x}$.",
+  "Divide both sides by ${=a}$ to leave the power on its own: ${=c}={=b}^{x}$.",
+  "Now we look for the exponent by trial and error. Try: ${=b}^{{=n0}}={=lo}$ and ${=b}^{{=n0 + 1}}={=hi}$. Since ${=lo}<{=c}<{=hi}$, the exponent $x$ lies between ${=n0}$ and ${=n0 + 1}$.",
+  "To round to one decimal place we test the two values halfway to the neighbouring one-decimal values: ${=b}^{{=fixed((2 * t - 1) / 20, 2)}}\\approx {=fixed(lo3 / 1000, 3)}$ and ${=b}^{{=fixed((2 * t + 1) / 20, 2)}}\\approx {=fixed(hi3 / 1000, 3)}$.",
+  "Since ${=fixed(lo3 / 1000, 3)}<{=fixed(c, 3)}<{=fixed(hi3 / 1000, 3)}$, the exponent lies between ${=fixed((2 * t - 1) / 20, 2)}$ and ${=fixed((2 * t + 1) / 20, 2)}$, so $x\\approx {=fixed(t / 10, 1)}$ to one decimal place.",
+  "The $x$-intercept is $({=fixed(t / 10, 1)}, 0)$, so the $x$-coordinate is ${=fixed(t / 10, 1)}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced: the book's trial-and-error x-intercept (ex6-8-23b: y = -1/2.4^x + 3, so 6 = 4^x and x is about 1.3) with the harder instances the book's two items do not reach: a fractional or whole-number coefficient of either sign, and a power that is less than 1 (c < 1), so the exponent is negative and the trial values are fractions such as 3^-1 = 1/3. The (b, c) table was computed offline with high-precision logarithms; each row stores b, c as numerator and denominator, the floor of the true exponent, the exponent rounded to tenths as an integer t (so x is about t/10), and b^((t-0.5)/10) and b^((t+0.5)/10) in thousandths. Every row was checked so the true exponent is within 0.031 of t/10, so rounding never sits near a boundary, and so the displayed 3-decimal bounds are strict around c. q is built as -a.c, always a non-zero whole number with |q| at most 10, and a and q always have opposite signs so that c is positive and an x-intercept exists. The solution brackets the exponent between two whole numbers, then confirms the one-decimal answer by testing the two half-way points, which needs no logarithms (not in this book)."
+}

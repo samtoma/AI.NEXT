@@ -1,0 +1,100 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s1-1-3:identify-function",
+ "kind": "family",
+ "lo_id": "lo:g10m6s1-1-3",
+ "parent_question_id": "q:g10m6s1-1-3:ex6-8-1b",
+ "source_page": 214,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "m",
+   "choice": [
+    -4,
+    -3,
+    -2,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "c",
+   "randint": [
+    -7,
+    7
+   ],
+   "resample_while": "c == 0"
+  },
+  {
+   "name": "d",
+   "choice": [
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "x0",
+   "randint": [
+    "-2 * d",
+    -1
+   ]
+  },
+  {
+   "name": "h",
+   "choice": [
+    1,
+    2
+   ]
+  },
+  {
+   "name": "sg",
+   "let": "'+' if c > 0 else '-'"
+  },
+  {
+   "name": "xs",
+   "let": "[x0 + d * i for i in range(4)]"
+  },
+  {
+   "name": "ys",
+   "let": "[m * v + c for v in xs]"
+  },
+  {
+   "name": "xr",
+   "let": "['?' if i == h else str(xs[i]) for i in range(4)]"
+  },
+  {
+   "name": "yr",
+   "let": "['?' if i + h == 3 else str(ys[i]) for i in range(4)]"
+  }
+ ],
+ "constraints": [
+  "c != 0",
+  "d >= 2"
+ ],
+ "stem": "The table below belongs to a linear function of the form $y = mx + c$. The cells marked ? are missing. Complete the table and identify the function. $\\begin{aligned}\\begin{array}{|l|l|l|l|l|}\\hline x&{=xr[0]}&{=xr[1]}&{=xr[2]}&{=xr[3]}\\\\\\hline y&{=yr[0]}&{=yr[1]}&{=yr[2]}&{=yr[3]}\\\\\\hline\\end{array}\\end{aligned}$ Write down the equation of the function.",
+ "solution": [
+  "The columns with $x = {=xs[0]}$ and $x = {=xs[3]}$ are complete, so the points $({=xs[0]}, {=ys[0]})$ and $({=xs[3]}, {=ys[3]})$ are both on the function.",
+  "From the first complete column to the second, $x$ goes up by ${=3 * d}$ and $y$ changes from ${=ys[0]}$ to ${=ys[3]}$, a change of ${=ys[3] - ys[0]}$.",
+  "For a linear function $y$ changes by the same amount for every step of 1 in $x$, so the number multiplying $x$ is ${=ys[3] - ys[0]} \\div {=3 * d} = {=m}$. (Neighbouring columns are ${=d}$ apart in $x$, so $y$ changes by ${=m * d}$ from one column to the next, not by ${=m}$.)",
+  "Write $y = {=m}x + c$ and substitute the point $({=xs[0]}, {=ys[0]})$: ${=ys[0]} = {=m}({=xs[0]}) + c$, so $c = {=ys[0]} - ({=m * xs[0]}) = {=c}$.",
+  "The $x$-values go up by ${=d}$ each time, so the missing $x$-value is ${=xs[h]}$.",
+  "The missing $y$-value comes from the rule: for $x = {=xs[3 - h]}$, $y = {=m}({=xs[3 - h]}) {=sg} {=abs(c)} = {=ys[3 - h]}$.",
+  "The completed table is $\\begin{aligned}\\begin{array}{|l|l|l|l|l|}\\hline x&{=xs[0]}&{=xs[1]}&{=xs[2]}&{=xs[3]}\\\\\\hline y&{=ys[0]}&{=ys[1]}&{=ys[2]}&{=ys[3]}\\\\\\hline\\end{array}\\end{aligned}$",
+  "The function is $y = {=m}x {=sg} {=abs(c)}$."
+ ],
+ "marker": {
+  "kind": "equation",
+  "answer": "y = {=m}*x {=sg} {=abs(c)}",
+  "form": null,
+  "variables": [
+   "x",
+   "y"
+  ],
+  "tolerance": null
+ },
+ "notes": "Table to function, the book's 'complete the table and identify the function' (Exercise 6-8) with the twist that raises it to advanced: the x-values go up in steps of 2, 3 or 4 instead of 1, one x-value and one y-value are missing (in neighbouring middle columns, never in the two end columns, so two complete columns always pin the line down), and the function has both a coefficient and a constant. The trap the instance sets is reading the change between neighbouring y-values (m*d) as the coefficient of x when the x-step is not 1; the solution says so. Missing cells carry a ? rather than the book's blank so a reader cannot misalign them. The stem states the function is linear (y = mx + c), otherwise two points do not fix a function. c is never 0 so the sign word is always + or -. Instance ranges: x between -8 and 11, |y| <= 51."
+}

@@ -1,0 +1,100 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s5-1-2:equation-asymptote-two-points",
+ "kind": "family",
+ "lo_id": "lo:g10m6s5-1-2",
+ "parent_question_id": "q:g10m6s5-1-2:ex6-5-7a",
+ "tier": "advanced",
+ "answer_type": "expression",
+ "source_page": 187,
+ "context": null,
+ "params": [
+  {
+   "name": "b",
+   "choice": [
+    2,
+    3
+   ]
+  },
+  {
+   "name": "n",
+   "choice": [
+    2,
+    3
+   ]
+  },
+  {
+   "name": "a",
+   "choice": [
+    -3,
+    -2,
+    -1,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "require": "abs(a * b ** n) <= 30",
+   "why": "keeps the height of the second point small"
+  },
+  {
+   "name": "q",
+   "randint": [
+    -5,
+    5
+   ],
+   "resample_while": "q == 0"
+  },
+  {
+   "name": "p",
+   "let": "a + q"
+  },
+  {
+   "name": "pw",
+   "let": "b ** n"
+  },
+  {
+   "name": "r",
+   "let": "a * pw + q"
+  },
+  {
+   "name": "d",
+   "let": "a * pw"
+  },
+  {
+   "name": "qabs",
+   "let": "abs(q)"
+  },
+  {
+   "name": "qop",
+   "let": "'+' if q > 0 else '-'"
+  },
+  {
+   "name": "qneg",
+   "let": "'-' if q > 0 else '+'"
+  }
+ ],
+ "constraints": [],
+ "stem": "The graph of the exponential function $f(x)=a\\cdot b^{x}+q$, with $b>0$, has the horizontal asymptote $y={=q}$. The graph cuts the $y$-axis at the point $A(0, {=p})$ and passes through the point $B({=n}, {=r})$. Determine the equation of $f$, in the form $f(x)=a\\cdot b^{x}+q$.",
+ "solution": [
+  "The horizontal asymptote of $f(x)=a\\cdot b^{x}+q$ is the line $y=q$. The asymptote is $y={=q}$, so $q={=q}$ and $f(x)=a\\cdot b^{x} {=qop} {=qabs}$.",
+  "Substitute the $y$-intercept $A(0, {=p})$. Since $b^{0}=1$, we get ${=p}=a\\cdot b^{0} {=qop} {=qabs}$, so ${=p}=a {=qop} {=qabs}$.",
+  "Solve for $a$: $a={=p} {=qneg} {=qabs}={=a}$. So $f(x)={=a}\\cdot b^{x} {=qop} {=qabs}$.",
+  "Substitute the point $B({=n}, {=r})$: ${=r}={=a}\\cdot b^{{=n}} {=qop} {=qabs}$.",
+  "Isolate the power of $b$: ${=r} {=qneg} {=qabs}={=a}\\cdot b^{{=n}}$, so ${=d}={=a}\\cdot b^{{=n}}$. Divide by ${=a}$: $b^{{=n}}=\\frac{{=d}}{{=a}}={=pw}$.",
+  "Since $b>0$ and ${=pw}={=b}^{{=n}}$, we have $b={=b}$.",
+  "Therefore $f(x)={=a}\\cdot {=b}^{x} {=qop} {=qabs}$."
+ ],
+ "marker": {
+  "kind": "equation",
+  "answer": "f(x) = {=a}*{=b}^x {=qop} {=qabs}",
+  "form": null,
+  "variables": [
+   "x"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Text-only restatement of the book's ex6-5-7a figure (asymptote, y-intercept A, second point B). The book's figure shows the asymptote as a dashed line, so the stem states it; b>0 is stated so b is unique. Twist beyond ex6-5-7a: the asymptote is not the x-axis (q is never 0) and a is not 1, so the student reads q from the asymptote, finds a from the y-intercept, and only then finds b from the second point (three unknowns). Method is exactly the book's: q from the asymptote, then substitute points. Parameters: b in {2,3}, second point at x=2 or 3, a in +-1..3, q in -5..5 excluding 0, |a*b^n| <= 30, giving 200 distinct instances. Because a and b^n are both positive when b>0, the sign of a decides whether the curve lies above or below its asymptote (sign-of-a-lost is the typical wrong answer when the point A lies below the asymptote). The sign of q is rendered through let-params qop/qneg holding '+' or '-' (string literals); if the engine refuses string literals in let, replace them with signed(q)."
+}

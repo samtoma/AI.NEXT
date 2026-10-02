@@ -1,0 +1,80 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s4-1-1:symmetric-point",
+ "kind": "family",
+ "lo_id": "lo:g10m6s4-1-1",
+ "parent_question_id": "q:g10m6s4-1-1:ex6-4-6f",
+ "source_page": 176,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "m",
+   "choice": [
+    6,
+    8,
+    10,
+    12,
+    15,
+    18,
+    20,
+    24
+   ]
+  },
+  {
+   "name": "k",
+   "let": "-m"
+  },
+  {
+   "name": "d",
+   "choice": "[t for t in range(1, m + 1) if m % t == 0]"
+  },
+  {
+   "name": "s",
+   "choice": [
+    -1,
+    1
+   ]
+  },
+  {
+   "name": "p",
+   "let": "s * d"
+  },
+  {
+   "name": "q",
+   "let": "k // p"
+  },
+  {
+   "require": "q != -p",
+   "why": "if y = -x then the point lies on the line of symmetry and is its own reflection, so there is nothing to find"
+  },
+  {
+   "name": "rx",
+   "let": "-q"
+  },
+  {
+   "name": "ry",
+   "let": "-p"
+  }
+ ],
+ "constraints": [
+  "p * q == k"
+ ],
+ "stem": "Given the function: $xy={=k}$ . The line $y=-x$ is a line of symmetry of its graph. A point on the graph has $x$-value ${=p}$ . Find the coordinates of the point on the graph that is symmetrical to it about the line $y=-x$. Give your answer as $(x, y)$.",
+ "solution": [
+  "Find the $y$-value of the point by substituting $x={=p}$ into the function: $y=\\frac{{=k}}{{=p}}={=q}$ .",
+  "So the point on the graph is $({=p}, {=q})$ . Check: $({=p})({=q})={=k}$ , so it satisfies $xy={=k}$ .",
+  "Reflecting a point in the line $y=-x$ swaps its two coordinates and changes the sign of each: $(x, y)\\rightarrow(-y, -x)$ .",
+  "So $({=p}, {=q})$ is mapped to $({=rx}, {=ry})$ .",
+  "Check that the new point is also on the graph: $({=rx})({=ry})={=k}$ , so the point symmetrical to it about $y=-x$ is $({=rx}, {=ry})$ ."
+ ],
+ "marker": {
+  "kind": "coordinates",
+  "answer": "({=rx}, {=ry})",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "notes": "Advanced = two of the book's own steps chained: ex6-4-6c (substitute an x-value into xy = k to get y) and then ex6-4-6f (find the point symmetrical about y = -x). k is always negative, as in the book's xy = -6, so y = -x is the line the book pairs with this graph. The x-value is a signed divisor of |k| so y is always a whole number; the point is never on y = -x itself (require). Reflection rule in y = -x is (x, y) -> (-y, -x); the book's own example (-2, 3) -> (-3, 2) agrees. The common slip is to swap without changing signs (reflecting in y = x), which also lands on the graph, so the final check does not catch it; the stem names the line explicitly. All values are whole numbers, so the plain marker answer has no fractions or decimals. Item ids read q:g10m6s4-1-1:g001-symmet."
+}

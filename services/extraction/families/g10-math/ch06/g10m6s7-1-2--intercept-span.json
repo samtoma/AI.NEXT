@@ -1,0 +1,87 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s7-1-2:intercept-span",
+ "kind": "family",
+ "lo_id": "lo:g10m6s7-1-2",
+ "parent_question_id": "q:g10m6s7-1-2:ex6-7-3c",
+ "source_page": 214,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "version": 1,
+ "params": [
+  {
+   "name": "tab",
+   "let": "[[3,4,5],[4,3,5],[5,12,13],[12,5,13],[6,8,10],[8,6,10],[8,15,17],[15,8,17],[9,12,15],[12,9,15]]"
+  },
+  {
+   "name": "i",
+   "randint": [
+    0,
+    9
+   ]
+  },
+  {
+   "name": "xq",
+   "let": "tab[i][0]"
+  },
+  {
+   "name": "yp",
+   "let": "tab[i][1]"
+  },
+  {
+   "name": "dist",
+   "let": "tab[i][2]"
+  },
+  {
+   "name": "a",
+   "randint": [
+    2,
+    3
+   ]
+  },
+  {
+   "name": "b",
+   "choice": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "k",
+   "let": "yp - a"
+  },
+  {
+   "require": "k >= 1",
+   "why": "the vertical shift is written with a plus sign, so it must be positive"
+  },
+  {
+   "name": "m",
+   "randint": [
+    2,
+    3
+   ]
+  },
+  {
+   "name": "c",
+   "let": "m*xq"
+  }
+ ],
+ "constraints": [
+  "xq**2 + yp**2 == dist**2",
+  "a + k == yp",
+  "m*xq - c == 0"
+ ],
+ "stem": "The graphs of $f(x)={=a}\\cdot {=b}^{x}+{=k}$ and $g(x)={=m}x-{=c}$ are drawn on the same set of axes. $P$ is the $y$-intercept of $f$ and $Q$ is the $x$-intercept of $g$. Calculate the length of $PQ$ in units.",
+ "answer": "dist",
+ "solution": [
+  "For the $y$-intercept of $f$, let $x=0$: $f(0)={=a}\\cdot {=b}^{0}+{=k}={=a}\\cdot 1+{=k}={=yp}$. So $P(0, {=yp})$.",
+  "For the $x$-intercept of $g$, let $y=0$: ${=m}x-{=c}=0$, so $x={=xq}$ and $Q({=xq}, 0)$.",
+  "$O$, $P$ and $Q$ form a right-angled triangle with the right angle at the origin, where $OP={=yp}$ and $OQ={=xq}$. By Pythagoras, $PQ^{2}=OQ^{2}+OP^{2}={=xq}^{2}+{=yp}^{2}={=xq**2}+{=yp**2}={=xq**2+yp**2}$.",
+  "Therefore $PQ={=dist}$ units."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Model: book ex6-7-3c (the y-intercept of 2^x + 1 is found by letting x = 0, with b^0 = 1) and the book's habit of turning intercepts into lengths (ex6-8-48b, 48c). The advanced step is the chain: y-intercept of an exponential with a coefficient a (so the intercept is a + k, not 1 + k), x-intercept of a straight line by letting y = 0, then the distance between the two intercepts by Pythagoras. The intercepts (xq, yp) are always the two legs of a Pythagorean triple so PQ is whole (152 distinct instances). Typical wrong answers come from reading b^0 as b or as 0, i.e. the catalogued mc:g10m6s7-1-2:power-at-zero-read-as-base and mc:g10m6s7-1-2:power-vanishes-at-zero. The base b does not change the answer, which is the point of the catalogued errors. a >= 2 so the coefficient is always printed, m >= 2 so the gradient is always printed."
+}

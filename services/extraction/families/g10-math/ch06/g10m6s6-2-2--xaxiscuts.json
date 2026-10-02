@@ -1,0 +1,53 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s6-2-2:xaxiscuts",
+ "kind": "family",
+ "lo_id": "lo:g10m6s6-2-2",
+ "parent_question_id": "q:g10m6s6-2-2:ex6-8-35d",
+ "source_page": 223,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "choice": [
+    -5,
+    -4,
+    -3,
+    -2,
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    -6,
+    6
+   ],
+   "resample_while": "q == 0 or abs(q) == abs(a)"
+  },
+  {
+   "name": "ans",
+   "let": "2 if abs(q) < abs(a) else 0"
+  }
+ ],
+ "constraints": [
+  "q != 0",
+  "abs(q) != abs(a)"
+ ],
+ "stem": "Sketch the graph of $y = {=a}\\cos\\theta {=signed(q)}$ for $\\theta \\in [0^\\circ, 360^\\circ]$ without using a table of values. How many $x$-intercepts does your sketch have?",
+ "answer": "ans",
+ "solution": [
+  "The amplitude is $|a| = {=abs(a)}$ and the vertical shift is $q = {=q}$, so the midline is the line $y = {=q}$.",
+  "The graph therefore lies between its least value ${=q - abs(a)}$ and its greatest value ${=q + abs(a)}$.",
+  "The $x$-axis is the line $y = 0$. The graph cuts it only if $0$ lies strictly between the least and the greatest value, which happens exactly when $|q| < |a|$, that is when the shift is smaller than the amplitude. Then the graph crosses the axis once on the way down and once on the way up. If $|q| > |a|$ the whole graph stays on one side of the axis and never reaches it.",
+  "Here $|q| = {=abs(q)}$ and $|a| = {=abs(a)}$.",
+  "So the sketch has ${=ans}$ $x$-intercepts."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced: combines the effect of a (amplitude) with the effect of q (shift) to decide whether the sketch reaches the x-axis. The case |q| = |a| (graph only touches the axis, at 0 and 360 degrees or at 180 degrees) is excluded so the answer is unambiguous; q = 0 is excluded so the shift always prints. Answer is 2 when |q| < |a| and 0 when |q| > |a|; both occur equally often over the parameter space (40 each; verified by counting sign changes of the sampled curve). Intercepts are interior points of the interval, so the count does not depend on how the end points are treated."
+}

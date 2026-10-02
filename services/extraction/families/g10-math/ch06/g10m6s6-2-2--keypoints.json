@@ -1,0 +1,82 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s6-2-2:keypoints",
+ "kind": "family",
+ "lo_id": "lo:g10m6s6-2-2",
+ "parent_question_id": "q:g10m6s6-2-2:ex6-8-35a",
+ "source_page": 223,
+ "tier": "standard",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "choice": [
+    -5,
+    -4,
+    -3,
+    -2,
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    -4,
+    4
+   ],
+   "resample_while": "q == 0 or q == a or q == 2 * a"
+  }
+ ],
+ "constraints": [
+  "q != 0",
+  "q != a",
+  "q != 2 * a"
+ ],
+ "stem": "A learner sketches $y = {=a}\\cos\\theta {=signed(q)}$ for $\\theta \\in [0^\\circ, 360^\\circ]$ without a table of values, by working out the points of the sketch at $\\theta = 0^\\circ$, $180^\\circ$ and $360^\\circ$. Which option gives these three points correctly?",
+ "choices": {
+  "correct": "$(0^\\circ, {=a + q})$, $(180^\\circ, {=q - a})$, $(360^\\circ, {=a + q})$",
+  "distractors": [
+   {
+    "text": "$(0^\\circ, {=q - a})$, $(180^\\circ, {=q + a})$, $(360^\\circ, {=q - a})$",
+    "misconception_id": "mc:g10m6s6-2-2:reflection-reversed"
+   },
+   {
+    "text": "$(0^\\circ, {=a})$, $(180^\\circ, {=-a})$, $(360^\\circ, {=a})$",
+    "misconception_id": "mc:g10m6s6-2-2:shift-ignored"
+   },
+   {
+    "text": "$(0^\\circ, {=a - q})$, $(180^\\circ, {=-a - q})$, $(360^\\circ, {=a - q})$",
+    "misconception_id": "mc:g10m6s6-2-2:shift-wrong-way"
+   }
+  ]
+ },
+ "solution": [
+  "The graph of $y = \\cos\\theta$ passes through $(0^\\circ, 1)$, $(180^\\circ, -1)$ and $(360^\\circ, 1)$. Multiplying by $a$ stretches these heights (and reflects them in the $x$-axis when $a < 0$); adding $q$ shifts every point vertically by $q$.",
+  "At $\\theta = 0^\\circ$, $\\cos\\theta = 1$, so $y = {=a}\\cdot 1 {=signed(q)} = {=a + q}$.",
+  "At $\\theta = 180^\\circ$, $\\cos\\theta = -1$, so $y = {=a}\\cdot(-1) {=signed(q)} = {=q - a}$.",
+  "At $\\theta = 360^\\circ$, $\\cos\\theta$ is $1$ again, so $y = {=a + q}$ again.",
+  "The points are $(0^\\circ, {=a + q})$, $(180^\\circ, {=q - a})$ and $(360^\\circ, {=a + q})$."
+ ],
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m6s6-2-2:reflection-reversed",
+   "label": "Getting the reflection in the x-axis the wrong way round",
+   "description": "The student swaps the heights at 0 and 360 degrees with the height at 180 degrees: for a negative a they ignore the reflection and start the sketch at its maximum as for y = cos theta (and for a positive a they start it at its minimum), so the two turning heights q + a and q - a trade places."
+  },
+  {
+   "id": "mc:g10m6s6-2-2:shift-ignored",
+   "label": "Leaving out the vertical shift q",
+   "description": "The student plots the points of y = a cos theta and forgets to add q, so the sketch is centred on the x-axis instead of on the line y = q."
+  },
+  {
+   "id": "mc:g10m6s6-2-2:shift-wrong-way",
+   "label": "Shifting the graph the wrong way",
+   "description": "The student applies the shift with the wrong sign, subtracting q instead of adding it, so a graph shifted up is drawn shifted down and the other way round."
+  }
+ ],
+ "notes": "Standard: the three key points of the sketch (0, 180, 360 degrees), which is how a sketch is built without a table. Every instance has a != 0, q != 0, q != a, q != 2a, which makes the four options differ in their first coordinate pair (checked over the whole parameter space: 56 instances, all with four distinct options). The correct option is a+q, q-a, a+q; the swapped option is the reflection error in either direction. For a < 0 the correct option starts at the minimum. Coordinates are (angle, y). Parent is a basic book item; no book question asks for the key points of a sketch, so this extends the book's amplitude identification to the full a and q effect."
+}

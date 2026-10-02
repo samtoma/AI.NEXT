@@ -1,0 +1,64 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s6-2-3:intercept-range",
+ "kind": "family",
+ "lo_id": "lo:g10m6s6-2-3",
+ "parent_question_id": "q:g10m6s6-2-3:ex6-6-3",
+ "source_page": 201,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "h",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    -4,
+    4
+   ],
+   "resample_while": "q == 0"
+  },
+  {
+   "name": "a",
+   "let": "-h"
+  },
+  {
+   "name": "top",
+   "let": "q + h"
+  },
+  {
+   "name": "bot",
+   "let": "q - h"
+  }
+ ],
+ "constraints": [
+  "q != 0"
+ ],
+ "stem": "For $0^{\\circ}\\le\\theta\\le360^{\\circ}$, the graph of $y=a\\cos\\theta+q$ has its y-intercept at $(0^{\\circ}, {=bot})$ and its range is ${=bot}\\le y\\le{=top}$. Calculate the values of $a$ and $q$. Write your answer as $a=\\ldots$ and $q=\\ldots$.",
+ "solution": [
+  "The range gives the lowest and highest values of the graph: $y={=bot}$ and $y={=top}$.",
+  "The graph of $y=a\\cos\\theta+q$ is centred on the line $y=q$, halfway between its lowest and highest values: ${=bot}+{=paren(top)}={=bot + top}$, so $q=\\frac{{=bot + top}}{2}={=q}$.",
+  "At $\\theta=0^{\\circ}$ we have $\\cos\\theta=1$, so the y-intercept is $(0^{\\circ}, a+q)$. The y-intercept is $(0^{\\circ}, {=bot})$, so $a+q={=bot}$.",
+  "Substitute $q={=q}$: $a={=bot}-{=paren(q)}={=a}$.",
+  "Check: ${=h}$ is the distance from the middle line $y={=q}$ to each end of the range, so $|a|={=h}$. The value of $a$ is negative because the graph starts at its lowest value, so it is a reflected cosine graph.",
+  "Therefore $a={=a}$ and $q={=q}$."
+ ],
+ "marker": {
+  "kind": "values",
+  "answer": "a = {=a}; q = {=q}",
+  "form": null,
+  "variables": [
+   "a",
+   "q"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Advanced because it uses the objective's own pair of facts, the y-intercept (0 degrees, a + q) and the range, and carries a twist the book's section on the effect of a uses: here a is always negative (the graph starts at its lowest value and is a reflected cosine). The value |a| is half the range, q is the midpoint of the range, and the y-intercept then fixes the sign: a = intercept - q. Unique answer for every instance. q is never 0 so the midpoint step is not trivial; whole numbers throughout (|a| 1 to 5, q -4 to 4, range endpoints within -9..9). The stem deliberately does not call a the 'amplitude' (amplitude is |a|). The sign is always negative on purpose, to keep every instance at the advanced level; a family with a random sign would hand half its instances back to the basic tier. Two blind-solver traps to expect: answering a = +h (missing the reflection) and q = the highest value."
+}

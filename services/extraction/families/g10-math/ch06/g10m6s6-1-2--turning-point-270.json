@@ -1,0 +1,71 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s6-1-2:turning-point-270",
+ "kind": "family",
+ "lo_id": "lo:g10m6s6-1-2",
+ "parent_question_id": "q:g10m6s6-1-2:ex6-6-7c",
+ "source_page": 202,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "choice": [
+    -4,
+    -3,
+    -2,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "q",
+   "choice": [
+    -4,
+    -3,
+    -2,
+    -1,
+    1,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "require": "q != a",
+   "why": "keeps the answer away from 0"
+  },
+  {
+   "name": "qs",
+   "let": "'+' if q > 0 else '-'"
+  },
+  {
+   "name": "qa",
+   "let": "abs(q)"
+  },
+  {
+   "name": "dir",
+   "let": "'up' if q > 0 else 'down'"
+  },
+  {
+   "name": "refl",
+   "let": "'is negative, so the graph is also reflected in the $x$-axis and this point becomes a maximum' if a < 0 else 'is positive, so there is no reflection and this point stays a minimum'"
+  },
+  {
+   "name": "ans",
+   "let": "q - a"
+  }
+ ],
+ "constraints": [],
+ "stem": "The graph of $y = {=a}\\sin\\theta {=qs} {=qa}$ is sketched for $0^\\circ \\le \\theta \\le 360^\\circ$. What is the $y$-value of the turning point at $\\theta = 270^\\circ$?",
+ "answer": "ans",
+ "solution": [
+  "On the basic graph $y = \\sin\\theta$ the turning point at $\\theta = 270^\\circ$ is the minimum, where $y = -1$.",
+  "Multiplying by $a = {=a}$ stretches the graph vertically by a factor of ${=abs(a)}$, and $a$ {=refl}. The point at $\\theta = 270^\\circ$ therefore moves to $y = {=a} \\times (-1) = {=-a}$.",
+  "The shift $q = {=q}$ moves every point {=dir} ${=qa}$ units, so $y = {=-a} {=qs} {=qa} = {=q - a}$.",
+  "The turning point at $\\theta = 270^\\circ$ has $y = {=q - a}$."
+ ],
+ "notes": "Standard: read one turning point of y = a sin θ + q from the effects of a (stretch, and reflection when a is negative) and q (shift). Check: a sin 270° + q = q - a, so the answer is q - a for every instance. The sign of a is mixed on purpose so the reflection (the turning point at 270° becomes a maximum) is tested. Zero answers are excluded (q != a). Let-strings contain no backslashes; they use plain words so no escape sequence can be misread."
+}

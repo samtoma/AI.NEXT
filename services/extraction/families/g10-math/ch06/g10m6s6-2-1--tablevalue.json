@@ -1,0 +1,72 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s6-2-1:tablevalue",
+ "kind": "family",
+ "lo_id": "lo:g10m6s6-2-1",
+ "parent_question_id": "q:g10m6s6-2-1:ex6-6-18c",
+ "source_page": 206,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "m",
+   "randint": [
+    1,
+    4
+   ]
+  },
+  {
+   "name": "s",
+   "choice": [
+    1,
+    -1
+   ]
+  },
+  {
+   "name": "a",
+   "let": "2 * s * m"
+  },
+  {
+   "name": "q",
+   "choice": [
+    -5,
+    -4,
+    -3,
+    -2,
+    -1,
+    1,
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "th",
+   "choice": [
+    60,
+    120,
+    240,
+    300
+   ]
+  },
+  {
+   "name": "c2",
+   "let": "1 if th == 60 or th == 300 else -1"
+  },
+  {
+   "name": "fa",
+   "let": "c2 * s * m"
+  }
+ ],
+ "constraints": [],
+ "stem": "To plot the graph of $f(\\theta) = a\\cos\\theta + q$ for $0^\\circ \\leq \\theta \\leq 360^\\circ$, where $a = {=a}$ and $q = {=q}$, a table of values is completed with a calculator. What is the value of $f({=th}^\\circ)$ in the table?",
+ "answer": "fa + q",
+ "solution": [
+  "Use a calculator to find $\\cos {=th}^\\circ = {=fixed(c2 / 2, 1)}$.",
+  "Multiply by $a$: $a\\cos {=th}^\\circ = {=a} \\times ({=fixed(c2 / 2, 1)}) = {=fa}$.",
+  "Add $q = {=q}$ to get $f({=th}^\\circ) = a\\cos {=th}^\\circ + q = {=fa + q}$."
+ ],
+ "notes": "Table-of-values step of the objective (the plotting skill), restated as a single value because the book's own items are graph-reading and cannot be sampled. Angles are limited to 60, 120, 240 and 300 degrees, where the calculator gives cos = 0.5 or -0.5 exactly, and a is always an even whole number (a = 2sm), so every answer is a whole number with no rounding. a may be negative (the reflected cosine the book uses in exercise 6.8). q is never 0. 4 x 2 x 10 x 4 = 320 distinct instances."
+}

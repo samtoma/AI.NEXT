@@ -1,0 +1,103 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s4-1-2:quadrant-size",
+ "kind": "family",
+ "lo_id": "lo:g10m6s4-1-2",
+ "parent_question_id": "q:g10m6s4-1-2:ex6-4-5c",
+ "source_page": 176,
+ "tier": "standard",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "s",
+   "choice": [
+    1,
+    -1
+   ]
+  },
+  {
+   "name": "far",
+   "choice": [
+    1,
+    0
+   ]
+  },
+  {
+   "name": "c",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "m",
+   "randint": [
+    "c + 1 if far == 1 else 1",
+    "c + 4 if far == 1 else c - 1"
+   ]
+  },
+  {
+   "name": "n",
+   "randint": [
+    "1 if far == 1 else c + 1",
+    "c - 1 if far == 1 else c + 4"
+   ]
+  },
+  {
+   "name": "sg",
+   "let": "'-' if s < 0 else ''"
+  },
+  {
+   "name": "og",
+   "let": "'' if s < 0 else '-'"
+  },
+  {
+   "name": "quad",
+   "let": "'first and third' if s == 1 else 'second and fourth'"
+  },
+  {
+   "name": "sw",
+   "let": "'positive' if s == 1 else 'negative'"
+  },
+  {
+   "name": "cmp",
+   "let": "'further from' if far == 1 else 'closer to'"
+  },
+  {
+   "name": "bs",
+   "let": "'bigger' if far == 1 else 'smaller'"
+  }
+ ],
+ "constraints": [
+  "m != n",
+  "m != c",
+  "n != c"
+ ],
+ "stem": "A hyperbola has the equation $y=\\frac{a}{x}$. Its graph lies in the {=quad} quadrants, and it lies {=cmp} the axes than the graph of $y=\\frac{{=c}}{x}$. Which of the following could be the equation of the hyperbola?",
+ "choices": {
+  "correct": "$y={=sg}\\frac{{=m}}{x}$",
+  "distractors": [
+   {
+    "text": "$y={=og}\\frac{{=m}}{x}$",
+    "misconception_id": "mc:g10m6s4-1-2:sign-of-a-ignored"
+   },
+   {
+    "text": "$y={=sg}\\frac{{=n}}{x}$",
+    "misconception_id": "mc:g10m6s4-1-2:bigger-a-closer-to-axes"
+   },
+   {
+    "text": "$y={=og}\\frac{{=n}}{x}$",
+    "misconception_id": null
+   }
+  ]
+ },
+ "distinct_by_choices": true,
+ "solution": [
+  "The sign of $a$ decides the quadrants: if $a>0$ the graph lies in the first and third quadrants, and if $a<0$ it lies in the second and fourth quadrants. The graph lies in the {=quad} quadrants, so $a$ is {=sw}.",
+  "The size of $a$ decides how far the graph lies from the axes: the bigger $|a|$ is, the further the graph lies from the axes. The graph of $y=\\frac{{=c}}{x}$ has $|a|={=c}$, and our graph must lie {=cmp} the axes than this one, so $|a|$ must be {=bs} than {=c}.",
+  "Only $y={=sg}\\frac{{=m}}{x}$ has a {=sw} value of $a$ with $|a|={=m}$, which is {=bs} than {=c}. The other equations have the wrong sign of $a$ or the wrong size of $a$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "The book's questions for this objective match a function to a drawn graph (figures of four labelled hyperbolas). A family cannot reuse the figure, so the same two ideas, the sign of a (quadrants) and the size of a (distance from the axes), are asked in words with q = 0. The three distractors each break exactly one clue: wrong sign (sign-of-a-ignored), wrong size (bigger-a-closer-to-axes), or both (null). The reference graph y = c/x is always in the first and third quadrants; 'further from the axes' is decided by |a| only."
+}

@@ -1,0 +1,58 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s6-2-1:midlinevalue",
+ "kind": "family",
+ "lo_id": "lo:g10m6s6-2-1",
+ "parent_question_id": "q:g10m6s6-2-1:ex6-6-19c",
+ "source_page": 206,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "k",
+   "randint": [
+    1,
+    4
+   ]
+  },
+  {
+   "name": "amp",
+   "let": "2 * k"
+  },
+  {
+   "name": "q",
+   "choice": [
+    -5,
+    -4,
+    -3,
+    -2,
+    -1,
+    1,
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "lo",
+   "let": "q - amp"
+  },
+  {
+   "name": "hi",
+   "let": "q + amp"
+  }
+ ],
+ "constraints": [],
+ "stem": "The graph of $f(\\theta) = a\\cos\\theta + q$ is drawn for $0^\\circ \\leq \\theta \\leq 360^\\circ$. Its range is ${=lo} \\leq f(\\theta) \\leq {=hi}$, and the graph starts (at $\\theta = 0^\\circ$) at its lowest point. Find the value of $f(60^\\circ)$.",
+ "answer": "q - k",
+ "solution": [
+  "The highest and lowest values are ${=hi - lo}$ units apart, and the amplitude is half of that: $|a| = {=amp}$.",
+  "The graph is centred half-way between its lowest and highest values: $q = \\frac{{=lo + hi}}{2} = {=q}$.",
+  "The graph starts at its lowest point, so the cosine graph has been turned upside down: $a$ is negative and $a = {=0 - amp}$.",
+  "Use a calculator: $\\cos 60^\\circ = 0.5$, so $a\\cos 60^\\circ = {=0 - amp} \\times 0.5 = {=0 - k}$.",
+  "Add $q = {=q}$: $f(60^\\circ) = {=q - k}$."
+ ],
+ "notes": "Several-step item in the spirit of the book's amplitude questions 6-19c and 6-20c, where the amplitude is half the distance between the highest and lowest values, not the maximum itself, and q is the centre line. Here the range is given instead of a drawn graph, the sign of a comes from 'starts at its lowest point' (always a negative), and the final step is a calculator value for the table, cos 60 = 0.5. a = -2k is always even, so f(60) = q - k is always a whole number. q is never 0. 4 x 10 = 40 instances."
+}

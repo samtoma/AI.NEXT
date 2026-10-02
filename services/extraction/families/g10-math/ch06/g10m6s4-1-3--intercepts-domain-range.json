@@ -1,0 +1,109 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s4-1-3:intercepts-domain-range",
+ "kind": "family",
+ "lo_id": "lo:g10m6s4-1-3",
+ "parent_question_id": "q:g10m6s4-1-3:ex6-8-19b",
+ "source_page": 219,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "aabs",
+   "randint": [
+    1,
+    9
+   ]
+  },
+  {
+   "name": "asgn",
+   "choice": [
+    1,
+    -1
+   ]
+  },
+  {
+   "name": "a",
+   "let": "aabs * asgn"
+  },
+  {
+   "name": "qabs",
+   "randint": [
+    1,
+    6
+   ]
+  },
+  {
+   "name": "qsgn",
+   "choice": [
+    1,
+    -1
+   ]
+  },
+  {
+   "name": "q",
+   "let": "qabs * qsgn"
+  },
+  {
+   "require": "gcd(aabs, qabs) == 1",
+   "why": "the x-intercept -a/q is then already in lowest terms, with numerator xn and denominator xd"
+  },
+  {
+   "name": "pa",
+   "let": "'-' if a < 0 else ''"
+  },
+  {
+   "name": "pq",
+   "let": "'+' if q > 0 else '-'"
+  },
+  {
+   "name": "qx",
+   "let": "'' if qabs == 1 else qabs"
+  },
+  {
+   "name": "qc",
+   "let": "'' if q == 1 else ('-' if q == -1 else q)"
+  },
+  {
+   "name": "na",
+   "let": "-a"
+  },
+  {
+   "name": "xn",
+   "let": "-a * qsgn"
+  },
+  {
+   "name": "xd",
+   "let": "qabs"
+  },
+  {
+   "name": "x0",
+   "let": "-a / q"
+  },
+  {
+   "require": "x0 != q",
+   "why": "keeps the three requested values different from one another"
+  }
+ ],
+ "constraints": [],
+ "stem": "Given the following equation: $y={=pa}\\frac{{=aabs}}{x}{=pq}{=qabs}$ Determine: (a) the $x$-coordinate of the $x$-intercept (as a fraction in lowest terms if it is not a whole number); (b) the one value that $x$ can never take, that is, the value excluded from the domain; (c) the one value that $y$ can never take, that is, the value excluded from the range. Give your three answers in the order (a), (b), (c), separated by commas.",
+ "marker": {
+  "kind": "values",
+  "answer": "[{=xn}/{=xd}, 0, {=q}]",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "solution": [
+  "To find the $x$-intercept, let $y=0$: $0={=pa}\\frac{{=aabs}}{x}{=pq}{=qabs}$.",
+  "Multiply both sides by $x$ (the equation is undefined for $x=0$, so $x\\neq 0$): $0={=pa}{=aabs}{=pq}{=qx}x$.",
+  "Move the constant term to the other side: ${=qc}x={=na}$.",
+  "Divide both sides by ${=q}$: $x=\\frac{{=na}}{{=q}}={=x0}$, so the $x$-intercept is $\\left({=x0}, 0\\right)$.",
+  "Domain: the denominator cannot be $0$, so $x$ can be any real number except $0$: $\\{x: x\\in\\mathbb{R},\\ x\\neq 0\\}$.",
+  "Range: the fraction ${=pa}\\frac{{=aabs}}{x}$ can never equal $0$, so $y$ can never equal ${=q}$: $\\{y: y\\in\\mathbb{R},\\ y\\neq {=q}\\}$.",
+  "So the $x$-coordinate of the $x$-intercept is ${=x0}$, $x$ can never be $0$, and $y$ can never be ${=q}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced = the book's mixed-exercise style (ex6-8-19 pairs the y- and x-intercepts of y = a/x + q): one equation, several results, with both signs and fractional answers. It asks for the x-intercept by the book's own method (y = 0, multiply by x, solve), then the domain (x != 0) and the range (y != q), as the objective description says. Stated once: the book questions packed for this objective print only the intercept parts, so the domain/range part rests on the objective description and the usual statement for y = a/x + q (domain x not equal to 0, range y not equal to q). The stem avoids any set notation and asks for 'the one value x can never take' / 'y can never take', so the answer is three plain numbers. Parameters: a = +/-(1 to 9), q = +/-(1 to 6), gcd(|a|, |q|) = 1, so the x-intercept -a/q is in lowest terms and the marker can be written as xn/xd without \\frac. x0 != q makes the three values distinct. Signs are handled with string tokens (pa, pq) and qx and qc drop a coefficient of 1; if the engine does not accept string literals in a 'let', replace them with signed() or put the signs in the numbers. The reviewer should check that the marker 'values' kind keeps the order (a), (b), (c) or compares the list as a set; either way the three values are distinct."
+}

@@ -1,0 +1,98 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s2-1-3:fractional-intercepts",
+ "kind": "family",
+ "lo_id": "lo:g10m6s2-1-3",
+ "parent_question_id": "q:g10m6s2-1-3:ex6-8-4a",
+ "source_page": 215,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "choice": [
+    -7,
+    -6,
+    -5,
+    -4,
+    -3,
+    -2,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  {
+   "name": "b",
+   "choice": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  {
+   "name": "c",
+   "randint": [
+    -20,
+    20
+   ],
+   "resample_while": "c == 0"
+  },
+  {
+   "require": "a != -b",
+   "why": "otherwise the two intercepts are the same number and the order asked for in the stem would not matter"
+  },
+  {
+   "require": "c % a != 0 or c % b != 0",
+   "why": "at least one intercept is a fraction, which is the twist the book uses in exercise 6.8 question 4a"
+  },
+  {
+   "name": "X",
+   "let": "c / a"
+  },
+  {
+   "name": "Y",
+   "let": "-c / b"
+  },
+  {
+   "name": "xn",
+   "let": "numerator(X)"
+  },
+  {
+   "name": "xd",
+   "let": "denominator(X)"
+  },
+  {
+   "name": "yn",
+   "let": "numerator(Y)"
+  },
+  {
+   "name": "yd",
+   "let": "denominator(Y)"
+  }
+ ],
+ "constraints": [],
+ "stem": "Determine the $x$-intercept and the $y$-intercept of the line ${=a}x - {=b}y = {=c}$. Give each intercept as a whole number or as a fraction in simplest form, and write the $x$-intercept first.",
+ "solution": [
+  "To find the $y$-intercept, let $x=0$: $-{=b}y = {=c}$.",
+  "Divide both sides by $-{=b}$: $y = {=Y}$. The $y$-intercept is ${=Y}$.",
+  "To find the $x$-intercept, let $y=0$: ${=a}x = {=c}$.",
+  "Divide both sides by ${=a}$: $x = {=X}$. The $x$-intercept is ${=X}$.",
+  "So the $x$-intercept is ${=X}$ and the $y$-intercept is ${=Y}$."
+ ],
+ "marker": {
+  "kind": "values",
+  "answer": "[({=xn})/({=xd}), ({=yn})/({=yd})]",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "notes": "Typed companion to the mcq family. The equation is in the form ax - by = c, so the sign of the y-term has to be carried through the division (y = -c/b), and at least one intercept is a fraction, as in the book's y = -3x - 5 whose x-intercept is -5/3. The marker splits each value into numerator and denominator (plain maths) so no LaTeX fraction reaches the marker; a whole-number intercept becomes n/1 and parses as n. Hand-checked: a=-3, b=2, c=5 gives -3x - 2y = 5, x-intercept -5/3 (check: -3(-5/3) = 5) and y-intercept -5/2 (check: -2(-5/2) = 5); a=4, b=3, c=-10 gives x-intercept -5/2 and y-intercept 10/3. The stem fixes the order (x-intercept first) and the format (whole number or simplest fraction). Same method as the book: let x = 0 and let y = 0."
+}
