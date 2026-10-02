@@ -1,0 +1,41 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m10s2-1-4:median-in-order",
+ "lo_id": "lo:g10m10s2-1-4",
+ "parent_question_id": "q:g10m10s2-1-4:ex10-2-9a",
+ "tier": "standard",
+ "kind": "bar_builder",
+ "instances": [
+  {
+   "n": 5,
+   "t": 6
+  },
+  {
+   "n": 7,
+   "t": 3
+  },
+  {
+   "n": 5,
+   "t": 8
+  }
+ ],
+ "spec": {
+  "ask": "median",
+  "target": "{=t}",
+  "n": "{=n}"
+ },
+ "stem": "Use the bars to build a data set of ${=n}$ values whose median is ${=t}$. Any data set with that median counts.",
+ "solution": [
+  "The median is the middle value once the data are in order, so it is the order of the values that matters, not where the bars happen to stand in the row.",
+  "Pick one bar for the target value. Half of the other values (one fewer than the number of values, divided by 2) must be at or below it, and the other half at or above it.",
+  "Set the bars that way. The target bar does not have to be the middle bar of the row.",
+  "Check the live readout: put the values in order in your head and the middle one is the target, and the median readout agrees."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "off-target",
+   "misconception_id": "mc:g10m10s2-1-4:median-without-ordering"
+  }
+ ],
+ "notes": "Constructs a data set that fits a STATED median, the second half of this objective's registered misconception. The student who puts the target on the middle bar of the row and leaves the rest unordered gets a median that is not the target, which arrives as off-target. The mapping assumes the bars sit in a fixed row in the order the student built them, and the widget sorts only to compute the median; if the bars are shown sorted automatically, the error cannot occur and this mapping should be dropped. off-target is mapped despite the usual caution because, for a median build, the unordered-middle-bar build is the dominant way to miss. mean-for-median (mean built where the median was asked) is left unmapped on purpose: LO g10m10s2-1-4 has no misconception for it (the nearest, expects-mean-equals-median, belongs to g10m10s2-1-2 and would be refused). n is odd in every row so the median is a single value in the set; an even n would ask for the mean of two middle values, which belongs to a harder template. The parent is ex10-2-9a because no anchor of this objective asks for a median."
+}

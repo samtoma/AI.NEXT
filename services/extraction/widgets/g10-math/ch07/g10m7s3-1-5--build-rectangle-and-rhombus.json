@@ -1,0 +1,30 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m7s3-1-5:build-rectangle-and-rhombus",
+ "lo_id": "lo:g10m7s3-1-5",
+ "parent_question_id": "q:g10m7s3-1-5:ex7-6-5",
+ "tier": "advanced",
+ "kind": "polygon_builder",
+ "spec": {
+  "mode": "construct",
+  "shape": "square"
+ },
+ "stem": "Drag the corners to make one shape that is both a rectangle and a rhombus. Any such shape counts, in any size and any position.",
+ "solution": [
+  "A rectangle needs four right angles and a rhombus needs four equal sides, so the shape must have both.",
+  "Start from a rectangle: $(-2, -2)$, $(2, -2)$, $(2, 2)$ and $(-2, 2)$. Every corner is a right angle.",
+  "Its width and its height are both 4, so all four sides are equal and it is a rhombus as well.",
+  "A shape that is a rectangle and a rhombus at once is a square, so a square keeps every name of both. A tilted square such as $(0, -2)$, $(2, 0)$, $(0, 2)$ and $(-2, 0)$ is equally correct."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "sides-not-equal",
+   "misconception_id": "mc:g10m7s3-1-5:mixes-rectangle-rhombus-square"
+  },
+  {
+   "predicate": "no-right-angle",
+   "misconception_id": "mc:g10m7s3-1-5:mixes-rectangle-rhombus-square"
+  }
+ ],
+ "notes": "Anchor ex7-6-5 is a square whose full list of names is the answer (square, rectangle, rhombus, parallelogram, kite, trapezium, quadrilateral). The stem names two properties, not 'square', so the student has to reach the square by combining a rectangle's right angles with a rhombus's equal sides, which is the 'every name that applies' idea. The instrument grades the square's properties, which is the same set as 'rectangle and rhombus together'. Both mapped predicates point at mixes-rectangle-rhombus-square because that misconception's text covers both directions (a right-angled shape with unequal sides, an equal-sided shape with no right angles). sides-not-equal is listed first: the likelier build is a plain rectangle that forgets the rhombus half. one-name-only (treating rectangle and rhombus as separate boxes) is the co-occurring belief that would produce either build; the two cannot be told apart from the construction, so it is named here and not mapped. Left unmapped: only-one-pair-parallel (a trapezium-like build, no listed misconception reveals it) and not-the-shape. stops-at-broad-name has no construction signal anywhere in this lesson."
+}

@@ -1,0 +1,83 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m7s4-1-1:midsegment-converse",
+ "lo_id": "lo:g10m7s4-1-1",
+ "parent_question_id": "q:g10m7s4-1-1:ex7-7-4",
+ "tier": "standard",
+ "kind": "polygon_builder",
+ "instances": [
+  {
+   "ax": -4,
+   "ay": -4,
+   "bx": 2,
+   "by": -4,
+   "cx": -2,
+   "cy": 2,
+   "mx": -1,
+   "my": -4
+  },
+  {
+   "ax": 2,
+   "ay": -2,
+   "bx": -4,
+   "by": 0,
+   "cx": 4,
+   "cy": 4,
+   "mx": -1,
+   "my": -1
+  },
+  {
+   "ax": -2,
+   "ay": 4,
+   "bx": 4,
+   "by": 2,
+   "cx": -4,
+   "cy": -2,
+   "mx": 1,
+   "my": 3
+  },
+  {
+   "ax": 0,
+   "ay": 4,
+   "bx": -6,
+   "by": -2,
+   "cx": 6,
+   "cy": 0,
+   "mx": -3,
+   "my": 1
+  }
+ ],
+ "spec": {
+  "mode": "midsegment",
+  "triangle": [
+   [
+    "{=ax}",
+    "{=ay}"
+   ],
+   [
+    "{=bx}",
+    "{=by}"
+   ],
+   [
+    "{=cx}",
+    "{=cy}"
+   ]
+  ],
+  "apex": 0
+ },
+ "stem": "The triangle has a corner at $({=ax}, {=ay})$, and $({=mx}, {=my})$ is the mid-point of one of the two sides that meet there. Draw a segment that starts at $({=mx}, {=my})$, runs parallel to the third side (the side opposite that corner), and ends on the other side that meets at the corner.",
+ "solution": [
+  "Mark the corner and the given mid-point. The third side is the side opposite the corner.",
+  "Start the segment at the given mid-point and give it the same direction as the third side, so it goes across the grid the same way the third side does.",
+  "Let it run across until it meets the other side that touches the corner. It lands exactly at the mid-point of that side.",
+  "This is the converse of the mid-point theorem: a line drawn through the mid-point of one side, parallel to a second side, bisects the third side.",
+  "Check that the segment you drew is also half the length of the side it is parallel to."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "not-the-shape",
+   "misconception_id": "mc:g10m7s4-1-1:any-line-across-triangle-is-parallel"
+  }
+ ],
+ "notes": "The converse half of the objective, made by hand. The grade is the same property as the forward template (parallel to the third side and half its length), and the stem's condition (starts at the given mid-point, parallel to the third side, ends on the other apex side) is sufficient for it, so any construction that satisfies the stem is accepted and the only accepted segment is the midsegment. The student is never told where the far end lands; that it lands on the other mid-point is the converse, discovered. Parent is ex7-7-4: its figure (read) shows a segment RP across a triangle with no tick marks, so it asks the student to decide from the figure and the options which segment is parallel to the third side. I could not check the option list. If ex7-7-4 turns out to be solved only from tick marks, swap the parent to ex7-7-3. Geometry: each row's corner-to-b and corner-to-c differences are even, the mid-point given is on the corner-to-b side, vertices are within +/-6 and not collinear, and no mid-point (or its x/y-swap) is at (-3, -2) or (1, 1). Rows are all slanted, so the direction cannot be read off a horizontal or vertical edge. Only 'not-the-shape' is mapped, as in the forward template; the runner-up cause is mc:g10m7s1-1-3:judges-by-appearance (a segment drawn by eye to look parallel), kept out because the any-line error is the one this lesson's own objective names. 'midsegment-not-half' can fire here only if the student ignores the given mid-point and draws a parallel segment from elsewhere, which again reveals theorem-without-its-conditions (LO2's id, refused on LO1), so it is left unmapped."
+}

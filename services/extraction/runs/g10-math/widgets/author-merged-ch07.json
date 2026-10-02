@@ -1,0 +1,436 @@
+{
+  "mode": "author",
+  "book": "g10-math",
+  "merged_from": [
+    {
+      "file": "author-ch07-wf_1bc178ef-5ae.json",
+      "run_id": null,
+      "prompts_version": "s7-v7",
+      "lessons": [
+        "g10m7s1-1",
+        "g10m7s2-1",
+        "g10m7s3-1",
+        "g10m7s4-1"
+      ]
+    }
+  ],
+  "rule": "oldest first; a lesson's record in a later run replaces its earlier one whole",
+  "records": [
+    {
+      "lesson": "g10m7s1-1",
+      "templates": [],
+      "gaps": [
+        {
+          "lo_id": "lo:g10m7s1-1-1",
+          "need_kind": "angle_builder",
+          "description": "A fixed arm and a free arm that the student drags about the vertex, with a live degree readout and a snap to whole degrees. Mode \"type\": 'Build an obtuse angle', 'Build a reflex angle', 'Build a straight angle', and so on. Any construction in the right range is accepted (acute 0 to 90 exclusive, right exactly 90, obtuse 90 to 180 exclusive, straight exactly 180, reflex 180 to 360 exclusive), which is grading the property, not a position. Mode \"size\": 'Build an angle of 91 degrees and say what kind it is', which mirrors the book's 91 degree item. Mode \"marked\": the instrument draws the arc on one side and asks for the marked angle to be built, so the student must choose which side of the vertex the arc is on. A \"pairs\" mode would show two crossing lines and ask for an angle that is adjacent, vertically opposite, supplementary or complementary to a given one. The predicates it would declare map onto this objective's own misconceptions. A right or straight angle built a few degrees off (85 to 95, or 175 to 185) maps to close-enough-to-right-or-straight. A straight angle or a reflex angle built where obtuse was asked maps to obtuse-for-any-wide-angle. The angle built on the unmarked side, 360 minus the target, maps to reads-the-unmarked-side. A wide angle built where acute was asked, or a narrow one where obtuse was asked (the target's supplement), maps to swaps-acute-and-obtuse. All four misconceptions are reachable by hand, and the 91 degree case cannot be passed by rounding because the snap is exact.",
+          "why": "No existing instrument draws or builds a plane angle outside a circle. angle_setter is bound to the inscribed and central angle on a circle (its asks are only central and inscribed, with the 2:1 arc ratio). polygon_builder's right-triangle shape tests only for one right angle on a lattice and never names acute, obtuse, straight or reflex. line_drawer works in gradients, not degrees. The anchor questions are figure-based MCQs, and a widget may not point at a figure, so a faithful widget has to be an instrument that draws and measures the angle itself. Using any current kind here would be a forced fit."
+        },
+        {
+          "lo_id": "lo:g10m7s1-1-2",
+          "need_kind": "transversal_angles",
+          "description": "A figure the instrument draws itself: two parallel lines marked with arrows and a transversal, all eight angles drawn, with one angle given a value (for example 70 degrees). Mode \"find\": the student taps every angle that is equal to the marked one, then every angle that is supplementary to it. These are graded as sets, as number_line_marker grades a set, and each tap carries the pair name it relies on (corresponding, alternate, vertically opposite, angle on a straight line, co-interior). The orientation and tilt of the transversal are randomised, so a pattern-matching shortcut on one picture does not pass. A second step asks for the numeric value of a chosen angle and the reason that justifies it, which are the two things the book's Exercise 7-1 questions ask for. The errors it would diagnose are specific pair-relationship errors. A co-interior angle tapped as equal is the commonest. Alternate angles taken as supplementary, and an angle adjacent on a straight line taken as equal, follow. The pair names confused with each other are a further error. This objective's misconception list contains only the four angle-type misconceptions inherited from lo:g10m7s1-1-1 (own=false), and none of them is revealed by this construction. The new misconceptions, such as co-interior-treated-as-equal, would have to be authored on this objective, because FR-1215 refuses ids from another objective's list (mc:g10m7s1-1-3:co-interior-must-be-equal is not available here).",
+          "why": "No existing kind draws parallel lines cut by a transversal or lets the student work with the pairs of angles that result. angle_setter is circle-only. line_drawer in equation mode accepts any two points on the correct line and its intercept-wrong predicate is about the coordinate-geometry statement that a line with the same gradient is parallel. That is a different piece of mathematics from reasoning with corresponding, alternate and co-interior angles, and using it would be an answer box in disguise. The anchor questions (ex7-1-3 and ex7-1-4) depend on a drawn figure with a given angle and a chain of angle-chasing, which no current instrument reproduces."
+        },
+        {
+          "lo_id": "lo:g10m7s1-1-3",
+          "need_kind": "transversal_angles",
+          "description": "The same instrument in a second mode, \"parallel-test\". The instrument draws a fixed line, a transversal and a second line that the student rotates about its crossing with the transversal. Mode \"make-parallel\": 'Tilt the lower line until it is parallel to the upper one', with the matching pair of angles shown or hidden at the setter's choice. The grade is the property: the corresponding angles are equal (equivalently the alternate angles are equal, or the co-interior angles sum to 180 degrees) to within a one-degree snap, so every correct tilt is accepted. Mode \"verdict\": two measured angles are shown in named positions (for example corresponding 115 and 125 degrees) and the student must nudge the second line so that the figure agrees with the angles she believes are required, before declaring parallel or not parallel, so the verdict follows from the test. The predicates it would declare map onto this objective's own misconceptions. A tilt that makes the two co-interior angles equal (so each is 90) rather than supplementary maps to co-interior-must-be-equal. A tilt that sets two angles in unmatched positions equal (for instance one corresponding and one alternate) maps to compares-unmatched-angles. A tilt that stops a few degrees short, accepted by eye with the readouts hidden, maps to judges-by-appearance, because the construction shows that the lines looked parallel at 3 to 6 degrees off.",
+          "why": "The objective is the Euclidean converse, which says that equal corresponding or alternate angles, or supplementary co-interior angles, make lines parallel, and the construction is a tilt measured by those angles. No existing kind expresses that. line_drawer would show parallelism only as equal gradients, which is a different test from the angle test this objective teaches, and its slope predicates have no bearing on the three misconceptions listed. polygon_builder's parallelogram shape and its only-one-pair-parallel predicate concern quadrilaterals on a lattice, not a transversal. The anchor questions (ex7-1-5f, ex7-1-6a to c, ex7-8-5f) all show a figure with measured angles and ask a yes/no verdict. That would reduce to a two-option answer with no construction, which is the answer box in disguise the brief rules out."
+        }
+      ],
+      "notes": "",
+      "source": "author-ch07-wf_1bc178ef-5ae.json",
+      "run_id": null
+    },
+    {
+      "lesson": "g10m7s2-1",
+      "templates": [],
+      "gaps": [
+        {
+          "lo_id": "lo:g10m7s2-1-1",
+          "need_kind": "triangle_angle_chase",
+          "description": "A triangle whose vertices the student cannot move but whose angles she sets by dragging markers, with the 180-degree sum shown live. Three variants: (1) two angles given and one side extended past a vertex, so an exterior angle is displayed beside the interior one; the student sets the third INTERIOR angle, and the instrument refuses to let the exterior angle count toward the sum. (2) An isosceles triangle with the equal-side marks shown; the student sets both base angles (the widget keeps them linked) and then the apex, so the sum 2b + a = 180 is built with both equal angles in it. (3) The same figure, but she must also pick which angles the 'equal sides' marks make equal. It would diagnose: exterior-angle-in-triangle-sum (the angle set equals the exterior value, or the exterior angle was included in the sum), isosceles-one-equal-angle-in-sum (apex set to 180 minus ONE base angle), and a wrong-pairing error where the equal angles sit opposite the wrong sides. The construction is the angle-sum theorem done with the hands; the answer is graded on the property (interior angles sum to 180 and the equal-sides marks are honoured), not on a typed number.",
+          "why": "No existing kind sets an angle inside a triangle. angle_setter works only on a circle (central and inscribed angles, 2:1 arc ratio), polygon_builder construct isosceles only checks that three lattice vertices give two equal sides and reports sides-not-equal or not-the-shape, and triangle_ratio sets side lengths of a right triangle. None of them can emit a predicate tied to the exterior-angle or the one-equal-angle errors, so any diagnostic mapped to those three misconceptions would be invented."
+        },
+        {
+          "lo_id": "lo:g10m7s2-1-1",
+          "need_kind": "pythagoras_squares",
+          "description": "A right triangle with a square drawn on each side, as in the textbook's proof picture. One side length is the unknown. The student drags the unknown side's handle until the areas balance, with the three square areas shown live. The question varies which side is unknown: when the hypotenuse is unknown the two leg squares must add up to the big square; when a leg is unknown the big square must equal the sum of the other leg's square and the new square, which the student sees by the unknown square having to shrink rather than grow. Grading is on the property (a squared plus b squared equals c squared), so every solution that satisfies it, including one built from a scaled triangle, is accepted. It would diagnose pythagoras-always-adds (the student sets the unknown leg to the square root of the sum of the squares, which makes the leg longer than the hypotenuse, and the widget can say so), and a swapped-roles error where the hypotenuse is placed against the wrong vertex.",
+          "why": "The only right-triangle instrument is triangle_ratio, which grades sine, cosine and tangent as ratios of the legs and never touches side lengths in the Pythagorean relation; its predicates (ratio-inverted, used-sine, used-cosine, used-tangent) cannot report an added-squares error. polygon_builder construct right only grades whether a lattice triangle has a right angle. So pythagoras-always-adds cannot be reached by any existing predicate."
+        },
+        {
+          "lo_id": "lo:g10m7s2-1-2",
+          "need_kind": "congruence_workbench",
+          "description": "Two triangles are given by their matching facts only (marks on sides and angles listed on screen, not a figure). The student then tries to BUILD a second triangle that satisfies exactly those facts but is not the same shape and size as the first, by dragging vertices on a lattice. If the facts are SSS, SAS, AAS or RHS the instrument shows that no such triangle exists (every attempt collapses onto the original), so the student sees why the rule proves congruence. If the facts are SSA with the angle not between the sides, or AAA, she can build a non-congruent triangle, and the widget shows 'cannot be decided' instead of 'not congruent'. A second step has her drag the letters of the second triangle onto its corners so that the statement triangle ABC is congruent to triangle DEF lines up corner to corner. It would diagnose: not-proved-means-not-congruent (she declares 'not congruent' when a counterexample exists), marks-inside-one-triangle-read-as-matching-sides (she treats a pair of equal sides in each triangle as sides matching between the triangles), angles-at-shared-point-assumed-vertically-opposite (she treats the angle at the meeting point as equal when the lines are not straight, shown by a bent crossing where the angles differ), and congruence-letters-in-wrong-order.",
+          "why": "polygon_builder can construct a named shape on a lattice, but it compares one figure to a property, never two figures to each other, and its predicates (not-the-shape, sides-not-equal, no-right-angle) are about one polygon. Nothing in the catalogue represents 'enough information to fix a triangle' or a letter correspondence between two triangles, so a template would reduce to a multiple-choice question wearing a widget's clothes."
+        },
+        {
+          "lo_id": "lo:g10m7s2-1-3",
+          "need_kind": "similarity_builder",
+          "description": "A fixed reference triangle on a lattice and a second triangle whose vertices the student drags (or whose scale handle she pulls) to make it similar to the first, graded on the PROPERTY: all three pairs of corresponding sides in one common ratio, or two pairs of equal angles (so the third follows). The three side ratios and the three angles of the second triangle update live. Variants: (1) enlarge the reference by a stated factor, so adding the same length to every side is shown up because the three ratios differ; (2) set only two angles equal and watch the third be forced, which answers the belief that all three must be marked; (3) drag the angle markers onto the corresponding corners so a pair that merely 'looks alike' fails because the markers do not match; (4) write the similarity statement by dragging the letters into corresponding order. It would diagnose: sides-scaled-by-different-amounts (ratios unequal, or the same amount added to each side), aaa-needs-three-marked (she refuses to finish with two angles set), markers-not-matched (markers dragged onto non-corresponding corners), and letters-out-of-corresponding-order.",
+          "why": "triangle_ratio is the closest kind, because every similar right triangle gives the same ratio, but it grades a trigonometric ratio on a right triangle only, and can emit only used-sine, used-cosine, used-tangent or ratio-inverted, none of which is a similarity misconception; using it would teach trigonometry out of order and diagnose nothing about AAA or SSS proportionality. polygon_builder midsegment builds a half-scale triangle at one fixed position for the midpoint theorem, which is a different objective, and its only diagnostic is midsegment-not-half. solid_scaler scales solids, not triangles."
+        }
+      ],
+      "notes": "No templates for lesson g10m7s2-1, and that is a deliberate result, not an omission. I read the contract, the lesson file and all the anchor figures. Each of the three objectives is about calculating or deciding from a figure (angle sum, Pythagoras, congruence rules, similarity rules), and every existing kind constructs something else. Candidate fits I considered and rejected: polygon_builder construct isosceles/right for g10m7s2-1-1 (it can only emit sides-not-equal, no-right-angle or not-the-shape, and none of those reveals exterior-angle-in-triangle-sum, isosceles-one-equal-angle-in-sum or pythagoras-always-adds, so a diagnostic mapping would be forced); triangle_ratio for g10m7s2-1-3 (trigonometry, right triangles only, wrong predicates); polygon_builder midsegment for similarity (it is the midpoint theorem and belongs to a different objective). Also, a template needs at least one diagnostic, and the only honest mapping available was none. Where Chapter 7's other lessons are about quadrilaterals or the midpoint theorem, polygon_builder construct and midsegment are the natural carriers there; this lesson should not be forced to meet the chapter's one-widget quota. The four gaps are ordered by how much of the lesson they would cover: triangle_angle_chase and pythagoras_squares serve g10m7s2-1-1 (two separate instruments because angles and sides are different constructions), congruence_workbench serves g10m7s2-1-2, similarity_builder serves g10m7s2-1-3. If Samuel can build only one, the similarity_builder and congruence_workbench could share the same two-triangle lattice base.",
+      "source": "author-ch07-wf_1bc178ef-5ae.json",
+      "run_id": null
+    },
+    {
+      "lesson": "g10m7s3-1",
+      "templates": [
+        {
+          "format": "ainext.widget-template/1",
+          "id": "wt:g10m7s3-1-5:build-rhombus",
+          "lo_id": "lo:g10m7s3-1-5",
+          "parent_question_id": "q:g10m7s3-1-5:ex7-6-2",
+          "tier": "basic",
+          "kind": "polygon_builder",
+          "spec": {
+            "mode": "construct",
+            "shape": "rhombus"
+          },
+          "stem": "Drag the corners to make a rhombus. Any rhombus counts: any size, anywhere on the grid, tilted or not.",
+          "solution": [
+            "A rhombus is a quadrilateral whose four sides are all equal, so the target is $AB = BC = CD = DA$.",
+            "Place the corners at $A(-2, 0)$, $B(0, 3)$, $C(2, 0)$ and $D(0, -3)$, joined in that order.",
+            "Check the sides: each one runs 2 across and 3 up or down, so $AB = BC = CD = DA = \\sqrt{2^2 + 3^2} = \\sqrt{13}$.",
+            "Equal sides are the whole test. The angles need not be right angles (here $AB$ and $BC$ do not meet at $90^{\\circ}$), and a rectangle that is not a square fails the test because its neighbouring sides differ."
+          ],
+          "diagnostics": [
+            {
+              "predicate": "sides-not-equal",
+              "misconception_id": "mc:g10m7s3-1-5:mixes-rectangle-rhombus-square"
+            }
+          ],
+          "notes": "The book's anchor ex7-6-2 is a rhombus drawn to scale (all four sides measure the same in the figure), asked as 'most specific name'. This widget runs that question backwards, from the name to the property. sides-not-equal is mapped to mixes-rectangle-rhombus-square because the likeliest failing build is a rectangle or a slanted parallelogram, i.e. right angles or parallel sides standing in for equal sides (that misconception's own text includes 'the adjacent sides of a rhombus are allowed to differ'). Left unmapped on purpose: only-one-pair-parallel (a trapezium-like build; the only candidate, judges-by-appearance from a prerequisite, rests on thin evidence) and not-the-shape (degenerate or self-crossing figures; no single error). The rhombus predicates never test for a right angle, so a square should be accepted as a rhombus; I have not relied on that in the stem."
+        },
+        {
+          "format": "ainext.widget-template/1",
+          "id": "wt:g10m7s3-1-5:build-kite",
+          "lo_id": "lo:g10m7s3-1-5",
+          "parent_question_id": "q:g10m7s3-1-5:ex7-6-4",
+          "tier": "standard",
+          "kind": "polygon_builder",
+          "spec": {
+            "mode": "construct",
+            "shape": "kite"
+          },
+          "stem": "Drag the corners to make a kite. Any kite counts: any size, anywhere on the grid, tilted or not.",
+          "solution": [
+            "A kite has two pairs of equal sides, and the equal sides in each pair are next to each other: $AB = AD$ and $CB = CD$.",
+            "Choose the two corners where the pairs meet: $A(0, 4)$ and $C(0, -1)$, one above the other.",
+            "Put $B(-2, 1)$ and $D(2, 1)$ on either side, level with each other. Then $AB = AD = \\sqrt{2^2 + 3^2} = \\sqrt{13}$ and $CB = CD = \\sqrt{2^2 + 2^2} = \\sqrt{8}$.",
+            "The two pairs are different lengths, so this kite is not a rhombus. A parallelogram with unequal sides fails the test, because its equal sides are opposite each other, not next to each other."
+          ],
+          "diagnostics": [
+            {
+              "predicate": "sides-not-equal",
+              "misconception_id": "mc:g10m7s3-1-5:names-trapezium-or-kite-by-look"
+            }
+          ],
+          "notes": "Anchor ex7-6-4 is a kite drawn to scale (answer: kite, quadrilateral). Building one forces the check the misconception skips: two pairs of equal ADJACENT sides. sides-not-equal is mapped to names-trapezium-or-kite-by-look: the likeliest failing build is an arrowhead or parallelogram that merely looks kite-like with the sides never compared. Left unmapped: not-the-shape (fires for degenerate or self-crossing figures, no single error). In this book a rhombus and a square are also kites (ex7-6-5's answer lists kite), and the kite predicate tests only for adjacent equal pairs, so a rhombus should be accepted; the stem does not rely on it. A student who builds a kite with the equal pairs opposite is making the opposite-versus-adjacent slip; it is not named by any listed misconception, so it gets the plain not-quite."
+        },
+        {
+          "format": "ainext.widget-template/1",
+          "id": "wt:g10m7s3-1-5:build-rectangle-and-rhombus",
+          "lo_id": "lo:g10m7s3-1-5",
+          "parent_question_id": "q:g10m7s3-1-5:ex7-6-5",
+          "tier": "advanced",
+          "kind": "polygon_builder",
+          "spec": {
+            "mode": "construct",
+            "shape": "square"
+          },
+          "stem": "Drag the corners to make one shape that is both a rectangle and a rhombus. Any such shape counts, in any size and any position.",
+          "solution": [
+            "A rectangle needs four right angles and a rhombus needs four equal sides, so the shape must have both.",
+            "Start from a rectangle: $(-2, -2)$, $(2, -2)$, $(2, 2)$ and $(-2, 2)$. Every corner is a right angle.",
+            "Its width and its height are both 4, so all four sides are equal and it is a rhombus as well.",
+            "A shape that is a rectangle and a rhombus at once is a square, so a square keeps every name of both. A tilted square such as $(0, -2)$, $(2, 0)$, $(0, 2)$ and $(-2, 0)$ is equally correct."
+          ],
+          "diagnostics": [
+            {
+              "predicate": "sides-not-equal",
+              "misconception_id": "mc:g10m7s3-1-5:mixes-rectangle-rhombus-square"
+            },
+            {
+              "predicate": "no-right-angle",
+              "misconception_id": "mc:g10m7s3-1-5:mixes-rectangle-rhombus-square"
+            }
+          ],
+          "notes": "Anchor ex7-6-5 is a square whose full list of names is the answer (square, rectangle, rhombus, parallelogram, kite, trapezium, quadrilateral). The stem names two properties, not 'square', so the student has to reach the square by combining a rectangle's right angles with a rhombus's equal sides, which is the 'every name that applies' idea. The instrument grades the square's properties, which is the same set as 'rectangle and rhombus together'. Both mapped predicates point at mixes-rectangle-rhombus-square because that misconception's text covers both directions (a right-angled shape with unequal sides, an equal-sided shape with no right angles). sides-not-equal is listed first: the likelier build is a plain rectangle that forgets the rhombus half. one-name-only (treating rectangle and rhombus as separate boxes) is the co-occurring belief that would produce either build; the two cannot be told apart from the construction, so it is named here and not mapped. Left unmapped: only-one-pair-parallel (a trapezium-like build, no listed misconception reveals it) and not-the-shape. stops-at-broad-name has no construction signal anywhere in this lesson."
+        }
+      ],
+      "gaps": [
+        {
+          "lo_id": "lo:g10m7s3-1-1",
+          "need_kind": "diagonal_builder",
+          "description": "The student drags the two diagonals of a quadrilateral: four endpoints on a lattice around a crossing point they can also move. The app joins the endpoints into a quadrilateral and reads out, live, whether the crossing point is the midpoint of each diagonal, whether the diagonals are equal, whether they are perpendicular, and whether the opposite sides and opposite angles of the resulting figure are equal. Prompt: 'Place two diagonals that bisect each other', graded on the property (the crossing point is the midpoint of both), then 'now make them bisect each other without being equal'. It would diagnose the existing misconception 'reads bisect as equal diagonals': the student who builds two equal diagonals that cross off-centre is shown that the midpoints are missing and that the figure is not a parallelogram; the student who bisects only one diagonal gets a distinct 'one diagonal cut, one not' result.",
+          "why": "polygon_builder's parallelogram mode grades only the sides (parallel pairs), so no predicate of any existing kind can see a diagonal; the lesson's one own misconception (bisect read as equal diagonals) and the anchor ex7-8-2b (the diagonals of a parallelogram bisect each other) are about diagonals. The other three anchors are angle calculations on a given figure, which a widget cannot show."
+        },
+        {
+          "lo_id": "lo:g10m7s3-1-2",
+          "need_kind": "quadrilateral_condition_tester",
+          "description": "The student drags the four vertices of a quadrilateral while a live panel shows a checklist of the proof conditions: both pairs of opposite sides equal, one pair equal and parallel, both pairs of opposite angles equal, diagonals bisect each other, diagonals equal, diagonals perpendicular. Task A: 'Make a quadrilateral that has this condition but is NOT a parallelogram' for an insufficient condition (one pair of opposite sides equal, or equal diagonals), graded on the property: the construction must meet the stated condition and fail the parallelogram test. Task B: the same prompt for a sufficient condition (diagonals bisecting each other), where the app refuses every attempt and the student sees that no counter-example exists. It would diagnose treating a necessary property as a sufficient test (one pair of equal sides, or equal diagonals, taken as proof of a parallelogram) and mixing up which converse holds.",
+          "why": "No existing kind grades a set of conditions on a figure: polygon_builder construct grades one named shape, and nothing lets the student test whether a condition is enough. This objective also has no anchor book question in the lesson file, so any template for it would have no honest parent_question_id; it needs one assigned before a widget could be authored."
+        },
+        {
+          "lo_id": "lo:g10m7s3-1-3",
+          "need_kind": "diagonal_builder",
+          "description": "The same diagonal instrument as for the parallelogram objective, with rectangle and rhombus targets and a live readout of both diagonal lengths. Prompts: 'make diagonals that bisect each other and are equal in length' (the figure is a rectangle), 'make diagonals that bisect each other at right angles' (the figure is a rhombus), then 'make a rhombus whose diagonals are equal', where the app shows that the only way is a square. It would diagnose 'gives the rhombus the rectangle's equal diagonals': the student who builds equal diagonals for a rhombus is shown a rectangle, and the readout makes the rhombus's two diagonals visibly different lengths. It also supports the proof direction ('a parallelogram with equal diagonals is a rectangle; with perpendicular diagonals, a rhombus').",
+          "why": "polygon_builder's rectangle and rhombus modes grade the figure's sides and angles, never its diagonals, so the own misconception (rhombus diagonals equal) and the anchor ex7-8-2i (the diagonals of a rhombus are equal in length: false) cannot be reached by any existing predicate. The other anchor, ex7-8-17, is angle algebra on a figure."
+        },
+        {
+          "lo_id": "lo:g10m7s3-1-4",
+          "need_kind": "diagonal_builder",
+          "description": "The same diagonal instrument, with a kite target and an angle readout at each vertex. Prompts: 'make diagonals that cross at right angles with only one of them cut in half' (the figure is a kite), and 'which diagonal splits the angle at a corner into two equal halves?', where the student toggles each diagonal and sees the two angle halves at the vertices. It would diagnose 'gives both diagonals of a kite the angle-bisecting job' (the student expects both diagonals to halve the angles; the readout shows only the diagonal between the equal sides does) and 'doubts that a kite's diagonals cross at right angles' (every kite the student builds shows 90 degrees; to keep the doubt, they would have to build a figure that is no longer a kite).",
+          "why": "polygon_builder's kite mode checks only the two pairs of equal adjacent sides, so it can say nothing about the diagonals. Both anchors (ex7-8-2e, ex7-8-2j) are true-or-false statements about a kite's diagonals, and both own misconceptions are about diagonals, so a kite builder would diagnose neither."
+        }
+      ],
+      "notes": "Only objective 5 (naming special quadrilaterals) has a genuine fit, and only through polygon_builder's construct mode, which runs the book's naming question backwards: the student builds a shape from its name, so the properties behind the name are what is checked. The three templates (rhombus, kite, and one shape that is both a rectangle and a rhombus) map onto ex7-6-2, ex7-6-4 and ex7-6-5. I read the anchor figures: ex7-6-1 is a 2:1 rectangle, ex7-6-2 a rhombus drawn to scale, ex7-6-3 an irregular quadrilateral, ex7-6-4 a kite and ex7-6-5 a square. None of my stems points at a figure. Objectives 1, 3 and 4 are about the diagonals of a quadrilateral and the angle facts built on it, which no existing kind can see (polygon_builder grades sides and angles, never a diagonal), so a parallelogram, rhombus or kite builder there would be a forced fit with no misconception to diagnose. Objective 2 has no anchor question in the lesson file, so it could not carry a parent_question_id even if a kind fit. The four gaps are really one proposed instrument (a diagonal builder, with a separate condition tester for the proof objective); building it would serve four of the five objectives of this lesson. Own misconceptions with no construction signal at all: stops-at-broad-name and the 'by look' reading of trapezium. Notation uses (x, y) and a decimal point; all coordinates stay within plus or minus 4.\"",
+      "source": "author-ch07-wf_1bc178ef-5ae.json",
+      "run_id": null
+    },
+    {
+      "lesson": "g10m7s4-1",
+      "templates": [
+        {
+          "format": "ainext.widget-template/1",
+          "id": "wt:g10m7s4-1-1:midsegment-parallel-and-half",
+          "lo_id": "lo:g10m7s4-1-1",
+          "parent_question_id": "q:g10m7s4-1-1:ex7-7-3",
+          "tier": "basic",
+          "kind": "polygon_builder",
+          "instances": [
+            {
+              "ax": 0,
+              "ay": 0,
+              "bx": 6,
+              "by": 0,
+              "cx": 0,
+              "cy": 6
+            },
+            {
+              "ax": -4,
+              "ay": -2,
+              "bx": 4,
+              "by": -2,
+              "cx": 0,
+              "cy": 4
+            },
+            {
+              "ax": -2,
+              "ay": -4,
+              "bx": 4,
+              "by": -2,
+              "cx": -2,
+              "cy": 2
+            }
+          ],
+          "spec": {
+            "mode": "midsegment",
+            "triangle": [
+              [
+                "{=ax}",
+                "{=ay}"
+              ],
+              [
+                "{=bx}",
+                "{=by}"
+              ],
+              [
+                "{=cx}",
+                "{=cy}"
+              ]
+            ],
+            "apex": 0
+          },
+          "stem": "The triangle has a corner at $({=ax}, {=ay})$. Drag a segment so that its ends sit on the two sides that meet at that corner, and it is parallel to the third side (the side opposite that corner) and half as long as it.",
+          "solution": [
+            "Find the corner named in the question. The two sides that meet there are the sides the segment must join; the side opposite the corner is the third side.",
+            "Find the mid-point of each of those two sides by counting halfway along each one on the grid.",
+            "Place one end of the segment on each mid-point.",
+            "Check the result: the segment is parallel to the third side and exactly half its length. That is the mid-point theorem, and you have just seen it hold.",
+            "Any other segment between the same two sides fails one of the two conditions: it is not parallel to the third side, or it is parallel but shorter or longer than half. Only the segment joining the two mid-points is both."
+          ],
+          "diagnostics": [
+            {
+              "predicate": "not-the-shape",
+              "misconception_id": "mc:g10m7s4-1-1:any-line-across-triangle-is-parallel"
+            }
+          ],
+          "notes": "Fits because the midsegment mode of polygon_builder is the mid-point theorem built as a property: parallel to the third side and half its length, graded on the property, so the only accepted segment is the one joining the two mid-points (a half-length parallel segment with ends on the two sides forces both ends to be mid-points). Parent is ex7-7-3, whose figure (read) marks the two mid-points with tick marks and asks for the parallel pair; this is the same fact run the other way round. Stem and rows use apex 0, so the corner named in the stem is always the triangle's first vertex. Every row has even coordinate differences along the two sides meeting at the corner, so both mid-points are lattice points and the student can reach them; vertices are within +/-6 and not collinear; no mid-point (nor its x/y-swap) sits at (-3, -2) or (1, 1), in case the midsegment handles open at the same spots as line_drawer's. Rows run from the axis-aligned spec example to a triangle with no horizontal side. Only 'not-the-shape' is mapped: for this mode it fires when the ends are not at equal fractions along the two sides, so the segment is not parallel at all, and the likeliest cause is joining two sides without checking both ends are mid-points (any-line-across-triangle-is-parallel). A second cause, ends off the apex sides, is rare and is not separately named. 'midsegment-not-half' is deliberately NOT mapped: it fires for an exactly parallel segment whose ends are not mid-points (for example both ends a third of the way along), which reveals 'parallel is enough, whatever the end points' - that is mc:g10m7s4-1-2:theorem-without-its-conditions, an LO2 id the validator refuses on an LO1 template. Mapping it to any-line-across-triangle-is-parallel would tell a student who did draw a parallel line that she assumed parallelism. That is an inventory gap on LO1, not a widget gap. If the instrument does not show the grid or corner coordinates, the stem's coordinate reference must be replaced."
+        },
+        {
+          "format": "ainext.widget-template/1",
+          "id": "wt:g10m7s4-1-1:midsegment-converse",
+          "lo_id": "lo:g10m7s4-1-1",
+          "parent_question_id": "q:g10m7s4-1-1:ex7-7-4",
+          "tier": "standard",
+          "kind": "polygon_builder",
+          "instances": [
+            {
+              "ax": -4,
+              "ay": -4,
+              "bx": 2,
+              "by": -4,
+              "cx": -2,
+              "cy": 2,
+              "mx": -1,
+              "my": -4
+            },
+            {
+              "ax": 2,
+              "ay": -2,
+              "bx": -4,
+              "by": 0,
+              "cx": 4,
+              "cy": 4,
+              "mx": -1,
+              "my": -1
+            },
+            {
+              "ax": -2,
+              "ay": 4,
+              "bx": 4,
+              "by": 2,
+              "cx": -4,
+              "cy": -2,
+              "mx": 1,
+              "my": 3
+            },
+            {
+              "ax": 0,
+              "ay": 4,
+              "bx": -6,
+              "by": -2,
+              "cx": 6,
+              "cy": 0,
+              "mx": -3,
+              "my": 1
+            }
+          ],
+          "spec": {
+            "mode": "midsegment",
+            "triangle": [
+              [
+                "{=ax}",
+                "{=ay}"
+              ],
+              [
+                "{=bx}",
+                "{=by}"
+              ],
+              [
+                "{=cx}",
+                "{=cy}"
+              ]
+            ],
+            "apex": 0
+          },
+          "stem": "The triangle has a corner at $({=ax}, {=ay})$, and $({=mx}, {=my})$ is the mid-point of one of the two sides that meet there. Draw a segment that starts at $({=mx}, {=my})$, runs parallel to the third side (the side opposite that corner), and ends on the other side that meets at the corner.",
+          "solution": [
+            "Mark the corner and the given mid-point. The third side is the side opposite the corner.",
+            "Start the segment at the given mid-point and give it the same direction as the third side, so it goes across the grid the same way the third side does.",
+            "Let it run across until it meets the other side that touches the corner. It lands exactly at the mid-point of that side.",
+            "This is the converse of the mid-point theorem: a line drawn through the mid-point of one side, parallel to a second side, bisects the third side.",
+            "Check that the segment you drew is also half the length of the side it is parallel to."
+          ],
+          "diagnostics": [
+            {
+              "predicate": "not-the-shape",
+              "misconception_id": "mc:g10m7s4-1-1:any-line-across-triangle-is-parallel"
+            }
+          ],
+          "notes": "The converse half of the objective, made by hand. The grade is the same property as the forward template (parallel to the third side and half its length), and the stem's condition (starts at the given mid-point, parallel to the third side, ends on the other apex side) is sufficient for it, so any construction that satisfies the stem is accepted and the only accepted segment is the midsegment. The student is never told where the far end lands; that it lands on the other mid-point is the converse, discovered. Parent is ex7-7-4: its figure (read) shows a segment RP across a triangle with no tick marks, so it asks the student to decide from the figure and the options which segment is parallel to the third side. I could not check the option list. If ex7-7-4 turns out to be solved only from tick marks, swap the parent to ex7-7-3. Geometry: each row's corner-to-b and corner-to-c differences are even, the mid-point given is on the corner-to-b side, vertices are within +/-6 and not collinear, and no mid-point (or its x/y-swap) is at (-3, -2) or (1, 1). Rows are all slanted, so the direction cannot be read off a horizontal or vertical edge. Only 'not-the-shape' is mapped, as in the forward template; the runner-up cause is mc:g10m7s1-1-3:judges-by-appearance (a segment drawn by eye to look parallel), kept out because the any-line error is the one this lesson's own objective names. 'midsegment-not-half' can fire here only if the student ignores the given mid-point and draws a parallel segment from elsewhere, which again reveals theorem-without-its-conditions (LO2's id, refused on LO1), so it is left unmapped."
+        }
+      ],
+      "gaps": [
+        {
+          "lo_id": "lo:g10m7s4-1-2",
+          "need_kind": "midsegment_length_tape",
+          "description": "A triangle with the segment joining two marked mid-points, shown together with two length bars (tape diagram): one for the segment and one for the third side. Each bar's length is labelled with a number (18, 3.5) or a linear expression (-2a+4), as in the book's exercises. The student drags one bar's end, or stacks copies of the midsegment bar, until the two bars stand in the 1 : 2 relation, so that two copies of the midsegment exactly cover the third side, and a live readout then turns the match into an equation that can be solved for the variable. Before the bars appear, a one-tap check asks whether the theorem applies to this figure (are both ends marked mid-points? is the segment parallel to the third side?), so figures built to be traps (a segment with one mid-point, or an unmarked one) are refused. It would diagnose two errors: the factor of 2 put on the wrong bar, that is the student halves the third side's partner or doubles the midsegment when the third side should be doubled from the midsegment (mc:g10m7s4-1-2:twice-and-half-swapped, which would fire when the doubled bar is the midsegment); and applying the 1 : 2 relation to a segment that does not join two mid-points (mc:g10m7s4-1-2:theorem-without-its-conditions, which would fire when the student accepts the theorem on a trap figure).",
+          "why": "LO2 is calculation: finding a length from the 2:1 relation, often as an expression in a variable (-4a+8, 9b, 4q) or a decimal (3.5). No existing kind fits without becoming an answer box in disguise. polygon_builder's midsegment mode grades only the parallel-and-half property of a drawn segment and has no lengths or expressions, so it covers the theorem (LO1), not the use of it. ratio_balance is a pure-number proportion balance (a whole fourth term from 1 to 24, no geometry, no algebraic expressions, and no way to tell which segment carries the factor of 2), so it would be a proportion drill with the theorem removed. The two misconceptions this objective owns (the factor of 2 on the wrong segment, and the theorem used without its conditions) are exactly the ones a tape/length-comparison instrument would reveal and neither existing kind can emit. The midsegment templates on LO1 are a reasonable warm-up, but they do not exercise LO2's calculating skill, so I did not file one against LO2."
+        }
+      ],
+      "notes": "Lesson g10m7s4-1 (the mid-point theorem). One kind genuinely fits: polygon_builder in midsegment mode, which is the theorem as a graded property (parallel to the third side and half its length). It is filed against LO1 as two templates: a basic forward construction (parent ex7-7-3) and a standard converse construction that starts from a given mid-point (parent ex7-7-4). LO2 (calculate lengths, including expressions in a variable) has no honest fit and goes to Samuel as a gap (midsegment_length_tape). I read the figures for ex7-7-3, ex7-7-4, ex7-7-15a and ex7-7-13a before designing. No stem refers to a figure: each states the corner's coordinates in the stem and relies only on the instrument. Things for Samuel or the validator to check: (1) Placeholders: the spec uses scalar placeholders inside the triangle array (for example [\\\"{=ax}\\\", \\\"{=ay}\\\"]), and the solution steps carry no placeholders, so nothing breaks if solutions are not templated. (2) The stem names the corner by coordinates; if the midsegment instrument does not draw the grid or the vertices' coordinates, the stem must be reworded. (3) The default positions of the midsegment handles are not in the contract, so I kept every mid-point (and its x/y-swap) away from (-3, -2) and (1, 1), the spots where line_drawer's handles open, in case they are shared. (4) Diagnostics are thin by necessity: LO1's own list has one misconception, any-line-across-triangle-is-parallel, which maps to 'not-the-shape'. The most plausible error for 'midsegment-not-half' (a parallel segment whose ends are not mid-points) belongs to LO2's theorem-without-its-conditions, which an LO1 template may not cite. This is an inventory gap on LO1: either add a misconception for 'parallel is enough, whatever the end points' to LO1, or accept that predicate yields a plain 'not quite'. (5) The 'prove' half of LO1 (extend the midsegment, congruent triangles, parallelogram) is not served by any construction widget. A step-ordering or proof-assembly kind would be a separate need, and none of the objective's anchor questions test it, so I did not log it as a gap. (6) twice-and-half-swapped cannot be diagnosed by this instrument: the dragged segment is confined to the triangle's sides, so it cannot be doubled.\"",
+      "source": "author-ch07-wf_1bc178ef-5ae.json",
+      "run_id": null
+    }
+  ],
+  "gaps": [
+    {
+      "lo_id": "lo:g10m7s1-1-1",
+      "need_kind": "angle_builder",
+      "description": "A fixed arm and a free arm that the student drags about the vertex, with a live degree readout and a snap to whole degrees. Mode \"type\": 'Build an obtuse angle', 'Build a reflex angle', 'Build a straight angle', and so on. Any construction in the right range is accepted (acute 0 to 90 exclusive, right exactly 90, obtuse 90 to 180 exclusive, straight exactly 180, reflex 180 to 360 exclusive), which is grading the property, not a position. Mode \"size\": 'Build an angle of 91 degrees and say what kind it is', which mirrors the book's 91 degree item. Mode \"marked\": the instrument draws the arc on one side and asks for the marked angle to be built, so the student must choose which side of the vertex the arc is on. A \"pairs\" mode would show two crossing lines and ask for an angle that is adjacent, vertically opposite, supplementary or complementary to a given one. The predicates it would declare map onto this objective's own misconceptions. A right or straight angle built a few degrees off (85 to 95, or 175 to 185) maps to close-enough-to-right-or-straight. A straight angle or a reflex angle built where obtuse was asked maps to obtuse-for-any-wide-angle. The angle built on the unmarked side, 360 minus the target, maps to reads-the-unmarked-side. A wide angle built where acute was asked, or a narrow one where obtuse was asked (the target's supplement), maps to swaps-acute-and-obtuse. All four misconceptions are reachable by hand, and the 91 degree case cannot be passed by rounding because the snap is exact.",
+      "why": "No existing instrument draws or builds a plane angle outside a circle. angle_setter is bound to the inscribed and central angle on a circle (its asks are only central and inscribed, with the 2:1 arc ratio). polygon_builder's right-triangle shape tests only for one right angle on a lattice and never names acute, obtuse, straight or reflex. line_drawer works in gradients, not degrees. The anchor questions are figure-based MCQs, and a widget may not point at a figure, so a faithful widget has to be an instrument that draws and measures the angle itself. Using any current kind here would be a forced fit."
+    },
+    {
+      "lo_id": "lo:g10m7s1-1-2",
+      "need_kind": "transversal_angles",
+      "description": "A figure the instrument draws itself: two parallel lines marked with arrows and a transversal, all eight angles drawn, with one angle given a value (for example 70 degrees). Mode \"find\": the student taps every angle that is equal to the marked one, then every angle that is supplementary to it. These are graded as sets, as number_line_marker grades a set, and each tap carries the pair name it relies on (corresponding, alternate, vertically opposite, angle on a straight line, co-interior). The orientation and tilt of the transversal are randomised, so a pattern-matching shortcut on one picture does not pass. A second step asks for the numeric value of a chosen angle and the reason that justifies it, which are the two things the book's Exercise 7-1 questions ask for. The errors it would diagnose are specific pair-relationship errors. A co-interior angle tapped as equal is the commonest. Alternate angles taken as supplementary, and an angle adjacent on a straight line taken as equal, follow. The pair names confused with each other are a further error. This objective's misconception list contains only the four angle-type misconceptions inherited from lo:g10m7s1-1-1 (own=false), and none of them is revealed by this construction. The new misconceptions, such as co-interior-treated-as-equal, would have to be authored on this objective, because FR-1215 refuses ids from another objective's list (mc:g10m7s1-1-3:co-interior-must-be-equal is not available here).",
+      "why": "No existing kind draws parallel lines cut by a transversal or lets the student work with the pairs of angles that result. angle_setter is circle-only. line_drawer in equation mode accepts any two points on the correct line and its intercept-wrong predicate is about the coordinate-geometry statement that a line with the same gradient is parallel. That is a different piece of mathematics from reasoning with corresponding, alternate and co-interior angles, and using it would be an answer box in disguise. The anchor questions (ex7-1-3 and ex7-1-4) depend on a drawn figure with a given angle and a chain of angle-chasing, which no current instrument reproduces."
+    },
+    {
+      "lo_id": "lo:g10m7s1-1-3",
+      "need_kind": "transversal_angles",
+      "description": "The same instrument in a second mode, \"parallel-test\". The instrument draws a fixed line, a transversal and a second line that the student rotates about its crossing with the transversal. Mode \"make-parallel\": 'Tilt the lower line until it is parallel to the upper one', with the matching pair of angles shown or hidden at the setter's choice. The grade is the property: the corresponding angles are equal (equivalently the alternate angles are equal, or the co-interior angles sum to 180 degrees) to within a one-degree snap, so every correct tilt is accepted. Mode \"verdict\": two measured angles are shown in named positions (for example corresponding 115 and 125 degrees) and the student must nudge the second line so that the figure agrees with the angles she believes are required, before declaring parallel or not parallel, so the verdict follows from the test. The predicates it would declare map onto this objective's own misconceptions. A tilt that makes the two co-interior angles equal (so each is 90) rather than supplementary maps to co-interior-must-be-equal. A tilt that sets two angles in unmatched positions equal (for instance one corresponding and one alternate) maps to compares-unmatched-angles. A tilt that stops a few degrees short, accepted by eye with the readouts hidden, maps to judges-by-appearance, because the construction shows that the lines looked parallel at 3 to 6 degrees off.",
+      "why": "The objective is the Euclidean converse, which says that equal corresponding or alternate angles, or supplementary co-interior angles, make lines parallel, and the construction is a tilt measured by those angles. No existing kind expresses that. line_drawer would show parallelism only as equal gradients, which is a different test from the angle test this objective teaches, and its slope predicates have no bearing on the three misconceptions listed. polygon_builder's parallelogram shape and its only-one-pair-parallel predicate concern quadrilaterals on a lattice, not a transversal. The anchor questions (ex7-1-5f, ex7-1-6a to c, ex7-8-5f) all show a figure with measured angles and ask a yes/no verdict. That would reduce to a two-option answer with no construction, which is the answer box in disguise the brief rules out."
+    },
+    {
+      "lo_id": "lo:g10m7s2-1-1",
+      "need_kind": "triangle_angle_chase",
+      "description": "A triangle whose vertices the student cannot move but whose angles she sets by dragging markers, with the 180-degree sum shown live. Three variants: (1) two angles given and one side extended past a vertex, so an exterior angle is displayed beside the interior one; the student sets the third INTERIOR angle, and the instrument refuses to let the exterior angle count toward the sum. (2) An isosceles triangle with the equal-side marks shown; the student sets both base angles (the widget keeps them linked) and then the apex, so the sum 2b + a = 180 is built with both equal angles in it. (3) The same figure, but she must also pick which angles the 'equal sides' marks make equal. It would diagnose: exterior-angle-in-triangle-sum (the angle set equals the exterior value, or the exterior angle was included in the sum), isosceles-one-equal-angle-in-sum (apex set to 180 minus ONE base angle), and a wrong-pairing error where the equal angles sit opposite the wrong sides. The construction is the angle-sum theorem done with the hands; the answer is graded on the property (interior angles sum to 180 and the equal-sides marks are honoured), not on a typed number.",
+      "why": "No existing kind sets an angle inside a triangle. angle_setter works only on a circle (central and inscribed angles, 2:1 arc ratio), polygon_builder construct isosceles only checks that three lattice vertices give two equal sides and reports sides-not-equal or not-the-shape, and triangle_ratio sets side lengths of a right triangle. None of them can emit a predicate tied to the exterior-angle or the one-equal-angle errors, so any diagnostic mapped to those three misconceptions would be invented."
+    },
+    {
+      "lo_id": "lo:g10m7s2-1-1",
+      "need_kind": "pythagoras_squares",
+      "description": "A right triangle with a square drawn on each side, as in the textbook's proof picture. One side length is the unknown. The student drags the unknown side's handle until the areas balance, with the three square areas shown live. The question varies which side is unknown: when the hypotenuse is unknown the two leg squares must add up to the big square; when a leg is unknown the big square must equal the sum of the other leg's square and the new square, which the student sees by the unknown square having to shrink rather than grow. Grading is on the property (a squared plus b squared equals c squared), so every solution that satisfies it, including one built from a scaled triangle, is accepted. It would diagnose pythagoras-always-adds (the student sets the unknown leg to the square root of the sum of the squares, which makes the leg longer than the hypotenuse, and the widget can say so), and a swapped-roles error where the hypotenuse is placed against the wrong vertex.",
+      "why": "The only right-triangle instrument is triangle_ratio, which grades sine, cosine and tangent as ratios of the legs and never touches side lengths in the Pythagorean relation; its predicates (ratio-inverted, used-sine, used-cosine, used-tangent) cannot report an added-squares error. polygon_builder construct right only grades whether a lattice triangle has a right angle. So pythagoras-always-adds cannot be reached by any existing predicate."
+    },
+    {
+      "lo_id": "lo:g10m7s2-1-2",
+      "need_kind": "congruence_workbench",
+      "description": "Two triangles are given by their matching facts only (marks on sides and angles listed on screen, not a figure). The student then tries to BUILD a second triangle that satisfies exactly those facts but is not the same shape and size as the first, by dragging vertices on a lattice. If the facts are SSS, SAS, AAS or RHS the instrument shows that no such triangle exists (every attempt collapses onto the original), so the student sees why the rule proves congruence. If the facts are SSA with the angle not between the sides, or AAA, she can build a non-congruent triangle, and the widget shows 'cannot be decided' instead of 'not congruent'. A second step has her drag the letters of the second triangle onto its corners so that the statement triangle ABC is congruent to triangle DEF lines up corner to corner. It would diagnose: not-proved-means-not-congruent (she declares 'not congruent' when a counterexample exists), marks-inside-one-triangle-read-as-matching-sides (she treats a pair of equal sides in each triangle as sides matching between the triangles), angles-at-shared-point-assumed-vertically-opposite (she treats the angle at the meeting point as equal when the lines are not straight, shown by a bent crossing where the angles differ), and congruence-letters-in-wrong-order.",
+      "why": "polygon_builder can construct a named shape on a lattice, but it compares one figure to a property, never two figures to each other, and its predicates (not-the-shape, sides-not-equal, no-right-angle) are about one polygon. Nothing in the catalogue represents 'enough information to fix a triangle' or a letter correspondence between two triangles, so a template would reduce to a multiple-choice question wearing a widget's clothes."
+    },
+    {
+      "lo_id": "lo:g10m7s2-1-3",
+      "need_kind": "similarity_builder",
+      "description": "A fixed reference triangle on a lattice and a second triangle whose vertices the student drags (or whose scale handle she pulls) to make it similar to the first, graded on the PROPERTY: all three pairs of corresponding sides in one common ratio, or two pairs of equal angles (so the third follows). The three side ratios and the three angles of the second triangle update live. Variants: (1) enlarge the reference by a stated factor, so adding the same length to every side is shown up because the three ratios differ; (2) set only two angles equal and watch the third be forced, which answers the belief that all three must be marked; (3) drag the angle markers onto the corresponding corners so a pair that merely 'looks alike' fails because the markers do not match; (4) write the similarity statement by dragging the letters into corresponding order. It would diagnose: sides-scaled-by-different-amounts (ratios unequal, or the same amount added to each side), aaa-needs-three-marked (she refuses to finish with two angles set), markers-not-matched (markers dragged onto non-corresponding corners), and letters-out-of-corresponding-order.",
+      "why": "triangle_ratio is the closest kind, because every similar right triangle gives the same ratio, but it grades a trigonometric ratio on a right triangle only, and can emit only used-sine, used-cosine, used-tangent or ratio-inverted, none of which is a similarity misconception; using it would teach trigonometry out of order and diagnose nothing about AAA or SSS proportionality. polygon_builder midsegment builds a half-scale triangle at one fixed position for the midpoint theorem, which is a different objective, and its only diagnostic is midsegment-not-half. solid_scaler scales solids, not triangles."
+    },
+    {
+      "lo_id": "lo:g10m7s3-1-1",
+      "need_kind": "diagonal_builder",
+      "description": "The student drags the two diagonals of a quadrilateral: four endpoints on a lattice around a crossing point they can also move. The app joins the endpoints into a quadrilateral and reads out, live, whether the crossing point is the midpoint of each diagonal, whether the diagonals are equal, whether they are perpendicular, and whether the opposite sides and opposite angles of the resulting figure are equal. Prompt: 'Place two diagonals that bisect each other', graded on the property (the crossing point is the midpoint of both), then 'now make them bisect each other without being equal'. It would diagnose the existing misconception 'reads bisect as equal diagonals': the student who builds two equal diagonals that cross off-centre is shown that the midpoints are missing and that the figure is not a parallelogram; the student who bisects only one diagonal gets a distinct 'one diagonal cut, one not' result.",
+      "why": "polygon_builder's parallelogram mode grades only the sides (parallel pairs), so no predicate of any existing kind can see a diagonal; the lesson's one own misconception (bisect read as equal diagonals) and the anchor ex7-8-2b (the diagonals of a parallelogram bisect each other) are about diagonals. The other three anchors are angle calculations on a given figure, which a widget cannot show."
+    },
+    {
+      "lo_id": "lo:g10m7s3-1-2",
+      "need_kind": "quadrilateral_condition_tester",
+      "description": "The student drags the four vertices of a quadrilateral while a live panel shows a checklist of the proof conditions: both pairs of opposite sides equal, one pair equal and parallel, both pairs of opposite angles equal, diagonals bisect each other, diagonals equal, diagonals perpendicular. Task A: 'Make a quadrilateral that has this condition but is NOT a parallelogram' for an insufficient condition (one pair of opposite sides equal, or equal diagonals), graded on the property: the construction must meet the stated condition and fail the parallelogram test. Task B: the same prompt for a sufficient condition (diagonals bisecting each other), where the app refuses every attempt and the student sees that no counter-example exists. It would diagnose treating a necessary property as a sufficient test (one pair of equal sides, or equal diagonals, taken as proof of a parallelogram) and mixing up which converse holds.",
+      "why": "No existing kind grades a set of conditions on a figure: polygon_builder construct grades one named shape, and nothing lets the student test whether a condition is enough. This objective also has no anchor book question in the lesson file, so any template for it would have no honest parent_question_id; it needs one assigned before a widget could be authored."
+    },
+    {
+      "lo_id": "lo:g10m7s3-1-3",
+      "need_kind": "diagonal_builder",
+      "description": "The same diagonal instrument as for the parallelogram objective, with rectangle and rhombus targets and a live readout of both diagonal lengths. Prompts: 'make diagonals that bisect each other and are equal in length' (the figure is a rectangle), 'make diagonals that bisect each other at right angles' (the figure is a rhombus), then 'make a rhombus whose diagonals are equal', where the app shows that the only way is a square. It would diagnose 'gives the rhombus the rectangle's equal diagonals': the student who builds equal diagonals for a rhombus is shown a rectangle, and the readout makes the rhombus's two diagonals visibly different lengths. It also supports the proof direction ('a parallelogram with equal diagonals is a rectangle; with perpendicular diagonals, a rhombus').",
+      "why": "polygon_builder's rectangle and rhombus modes grade the figure's sides and angles, never its diagonals, so the own misconception (rhombus diagonals equal) and the anchor ex7-8-2i (the diagonals of a rhombus are equal in length: false) cannot be reached by any existing predicate. The other anchor, ex7-8-17, is angle algebra on a figure."
+    },
+    {
+      "lo_id": "lo:g10m7s3-1-4",
+      "need_kind": "diagonal_builder",
+      "description": "The same diagonal instrument, with a kite target and an angle readout at each vertex. Prompts: 'make diagonals that cross at right angles with only one of them cut in half' (the figure is a kite), and 'which diagonal splits the angle at a corner into two equal halves?', where the student toggles each diagonal and sees the two angle halves at the vertices. It would diagnose 'gives both diagonals of a kite the angle-bisecting job' (the student expects both diagonals to halve the angles; the readout shows only the diagonal between the equal sides does) and 'doubts that a kite's diagonals cross at right angles' (every kite the student builds shows 90 degrees; to keep the doubt, they would have to build a figure that is no longer a kite).",
+      "why": "polygon_builder's kite mode checks only the two pairs of equal adjacent sides, so it can say nothing about the diagonals. Both anchors (ex7-8-2e, ex7-8-2j) are true-or-false statements about a kite's diagonals, and both own misconceptions are about diagonals, so a kite builder would diagnose neither."
+    },
+    {
+      "lo_id": "lo:g10m7s4-1-2",
+      "need_kind": "midsegment_length_tape",
+      "description": "A triangle with the segment joining two marked mid-points, shown together with two length bars (tape diagram): one for the segment and one for the third side. Each bar's length is labelled with a number (18, 3.5) or a linear expression (-2a+4), as in the book's exercises. The student drags one bar's end, or stacks copies of the midsegment bar, until the two bars stand in the 1 : 2 relation, so that two copies of the midsegment exactly cover the third side, and a live readout then turns the match into an equation that can be solved for the variable. Before the bars appear, a one-tap check asks whether the theorem applies to this figure (are both ends marked mid-points? is the segment parallel to the third side?), so figures built to be traps (a segment with one mid-point, or an unmarked one) are refused. It would diagnose two errors: the factor of 2 put on the wrong bar, that is the student halves the third side's partner or doubles the midsegment when the third side should be doubled from the midsegment (mc:g10m7s4-1-2:twice-and-half-swapped, which would fire when the doubled bar is the midsegment); and applying the 1 : 2 relation to a segment that does not join two mid-points (mc:g10m7s4-1-2:theorem-without-its-conditions, which would fire when the student accepts the theorem on a trap figure).",
+      "why": "LO2 is calculation: finding a length from the 2:1 relation, often as an expression in a variable (-4a+8, 9b, 4q) or a decimal (3.5). No existing kind fits without becoming an answer box in disguise. polygon_builder's midsegment mode grades only the parallel-and-half property of a drawn segment and has no lengths or expressions, so it covers the theorem (LO1), not the use of it. ratio_balance is a pure-number proportion balance (a whole fourth term from 1 to 24, no geometry, no algebraic expressions, and no way to tell which segment carries the factor of 2), so it would be a proportion drill with the theorem removed. The two misconceptions this objective owns (the factor of 2 on the wrong segment, and the theorem used without its conditions) are exactly the ones a tape/length-comparison instrument would reveal and neither existing kind can emit. The midsegment templates on LO1 are a reasonable warm-up, but they do not exercise LO2's calculating skill, so I did not file one against LO2."
+    }
+  ]
+}

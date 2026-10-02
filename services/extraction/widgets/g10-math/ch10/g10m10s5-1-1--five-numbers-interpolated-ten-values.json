@@ -1,0 +1,41 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m10s5-1-1:five-numbers-interpolated-ten-values",
+ "lo_id": "lo:g10m10s5-1-1",
+ "parent_question_id": "q:g10m10s5-1-1:ex10-6-3",
+ "tier": "standard",
+ "kind": "box_plot_builder",
+ "spec": {
+  "data": [
+   15,
+   6,
+   24,
+   12,
+   3,
+   19,
+   10,
+   21,
+   14,
+   5
+  ]
+ },
+ "stem": "Ten learners wrote a quiz marked out of $25$. In the order the teacher recorded them, their marks were $\\left\\{15, 6, 24, 12, 3, 19, 10, 21, 14, 5\\right\\}$. Drag the five markers to give the five number summary of the marks (minimum, first quartile, median, third quartile, maximum), finding the quartiles with the percentile formula.",
+ "solution": [
+  "Sort the ten marks from smallest to largest: $3, 5, 6, 10, 12, 14, 15, 19, 21, 24$. The minimum is $3$ and the maximum is $24$.",
+  "Median: rank $= 0.5 \\times (10 - 1) + 1 = 5.5$, so it lies halfway between the 5th and 6th values: $\\dfrac{12 + 14}{2} = 13$.",
+  "First quartile: rank $= 0.25 \\times (10 - 1) + 1 = 3.25$, so it lies a quarter of the way from the 3rd value ($6$) to the 4th value ($10$): $6 + 0.25 \\times (10 - 6) = 7$.",
+  "Third quartile: rank $= 0.75 \\times (10 - 1) + 1 = 7.75$, so it lies three quarters of the way from the 7th value ($15$) to the 8th value ($19$): $15 + 0.75 \\times (19 - 15) = 18$.",
+  "Drag the markers to $3$, $7$, $13$, $18$ and $24$. The five number summary is $3, 7, 13, 18, 24$."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "quartile-method",
+   "misconception_id": "mc:g10m10s4-1-2:fractional-rank-rounded-to-one-value"
+  },
+  {
+   "predicate": "median-of-unsorted",
+   "misconception_id": "mc:g10m10s4-1-2:rank-on-unsorted-data"
+  }
+ ],
+ "notes": "Ten values make the ranks fractional (3.25, 5.5, 7.75), so interpolation is the point of the question. The data are built so every interpolated quartile is a whole number (v4 - v3 = 4 and v8 - v7 = 4, v5 + v6 even): five number summary 3, 7, 13, 18, 24, all on any snap grid. No outlier: IQR = 11, upper fence = 34.5, max = 24. quartile-method mapping: for n = 10 the median-of-halves quartiles (6 and 19) are exactly the values at the rounded ranks 3 and 8, so on this data set the split-at-the-median method and the round-the-rank error are the same placement and cannot be told apart; the predicate is mapped to the rank-rounding misconception because the stem asks for the percentile formula, whose fractional ranks 3.25 and 7.75 are being read as single positions. The other reading (a student who knowingly uses median of halves) is named here, not mapped. The list is unsorted, and its middle as given is (3 + 19) / 2 = 11, against a true median of 13, so median-of-unsorted separates. Not mapped: iqr-as-range (no misconception on this objective's list describes it), off-target (many causes), whisker-to-outlier (cannot fire)."
+}
