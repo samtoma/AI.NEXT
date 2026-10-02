@@ -580,6 +580,18 @@ uv run generate_questions.py --families families/<book> --book <book> \
 #     writes PARTS (s6-grade.part1.json …): run each, save each, pass every one to --grades.
 ```
 
+**Interval keys and a re-grade of an unchanged spec (2026-10-02, Chapter 6).** `interval(lo, hi, closed_lo, closed_hi)`:
+a flag is true/false or 1/0 and the key a student reads takes its brackets from the flag's value (an infinite end
+is always round) — one reader, `families.evaluator.interval_ends`, for the printed key and for the blind-answer
+comparison. Before that fix every 1/0 spec printed round brackets and its blind true/false answers "disagreed";
+S6's judge rejected the three Chapter 6 interval families for it. A grade matches a spec by `spec_sha`, so a
+spec the engine fix did not touch is still judged by its OLD grade (`apply_grades` reads every grade file whose
+sha matches, and one failing result rejects the family): to re-grade it, record why in its `notes` (any edit
+re-keys the sha, so the old grades stop counting, as a revised spec's do), then grade it alone — `--families` a
+scratch directory holding only that spec, `--grading-set/--grade-args/--by-ref` as above (the same `--seed` and
+`--per-family` as the chapter's bundle, so the instance ids line up) — and pass the new run to `--grades`
+beside the others.
+
 ```sh
 uv run generate_questions.py --families families/<book> --course <course-id> \
     --out seed/generated/<book>/generated-questions.json            # [exists; --families is new]
