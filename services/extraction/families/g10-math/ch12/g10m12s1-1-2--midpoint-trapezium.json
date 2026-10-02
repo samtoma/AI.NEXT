@@ -1,0 +1,50 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m12s1-1-2:midpoint-trapezium",
+ "kind": "family",
+ "lo_id": "lo:g10m12s1-1-2",
+ "parent_question_id": "q:g10m12s1-1-2:ex12-2-6b",
+ "source_page": 412,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    2,
+    8
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    2,
+    9
+   ]
+  },
+  {
+   "require": "(a * b) % 2 == 0",
+   "why": "keeps the area of triangle SNT a whole number of cm squared"
+  },
+  {
+   "name": "area",
+   "let": "a * b // 2"
+  }
+ ],
+ "constraints": [
+  "area * 2 == a * b"
+ ],
+ "stem": "In $\\triangle MNR$, $\\hat{M} = 90^{\\circ}$. $S$ is the mid-point of $MN$ and $T$ is the mid-point of $NR$, and $ST$ is drawn. $ST = {=a}$ cm and the area of $\\triangle SNT$ is ${=area}$ cm$^{2}$. Calculate the area of quadrilateral $MSTR$ in cm$^{2}$.",
+ "answer": "3 * area",
+ "solution": [
+  "$S$ is the mid-point of $MN$ and $T$ is the mid-point of $NR$, so $ST \\parallel MR$ and $ST = \\frac{1}{2}MR$ (mid-point theorem).",
+  "$N\\hat{S}T = \\hat{M} = 90^{\\circ}$ (corresp $\\angle$s; $ST \\parallel MR$), so $\\triangle SNT$ has a right angle at $S$ and its area is $\\frac{1}{2} \\times ST \\times SN$.",
+  "${=area} = \\frac{1}{2}({=a}) \\times SN$, so $SN = \\frac{2 \\times {=area}}{{=a}} = {=b}$ cm. $S$ is the mid-point of $MN$, so $MN = 2 \\times {=b} = {=2 * b}$ cm.",
+  "$MR = 2 \\times ST = 2 \\times {=a} = {=2 * a}$ cm.",
+  "Area of $\\triangle MNR = \\frac{1}{2} \\times MR \\times MN = \\frac{1}{2}({=2 * a})({=2 * b}) = {=2 * a * b}$ cm$^{2}$.",
+  "Area of $MSTR$ = area of $\\triangle MNR$ $-$ area of $\\triangle SNT = {=2 * a * b} - {=area} = {=3 * area}$ cm$^{2}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Extends book ex12-2-6b (p. 412) by one step: the book asks for the area of the whole right-angled triangle, this asks for the quadrilateral MSTR left after cutting off triangle SNT. The book's figure (triangle MNP with R on MP, T the intersection of SU and NR) is restated in words: right angle at M, S mid-point of MN, T mid-point of NR, ST drawn, so a blind solver needs no diagram. Only the book's own method is used: mid-point theorem (ST parallel to MR and ST = half of MR), corresponding angles to get the right angle at S, area = half x base x height. The geometry is consistent for every instance (right triangle SNT with legs ST = a and SN = b gives MN = 2b, MR = 2a, area MNR = 4 x area SNT), so the answer is always 3 x area SNT. A solver who prefers the area-ratio shortcut reaches the same value. a and b are drawn so a*b is even (area stays a whole number); about 44 distinct (ST, area) pairs, max answer 108."
+}
