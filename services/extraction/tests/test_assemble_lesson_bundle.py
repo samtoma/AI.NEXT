@@ -21,6 +21,7 @@ import json
 import shutil
 import tempfile
 import unittest
+from collections import Counter
 from pathlib import Path
 
 import _scratchdb  # noqa: F401  (puts services/extraction on sys.path)
@@ -250,6 +251,58 @@ class NormaliserTest(unittest.TestCase):
         # the full rule is unchanged: it still reads those commas as the book's decimals
         self.assertEqual(alb.normalise("3,5 and 2,5")[0], "3.5 and 2.5")
         self.assertEqual(alb.normalise("Q(-2;3)")[0], "Q(-2, 3)")
+
+
+class SetListSpacingTest(unittest.TestCase):
+    r"""set-list-spacing (Grade 10 Chapter 14, 2026-10-02): an unspaced comma between the elements of a maths set `\{ … \}`
+    is written `, ` — the American course's list — because unspaced `1,2` reads as the book's decimal comma and the coverage
+    audit's `notation` check refuses it. Only inside the braces (and the pairs inside them): everything else stays."""
+
+    def test_a_set_list_gets_its_space(self):
+        cases = {
+            r"$S=\{1,2,3,4,5,6\}$": r"$S=\{1, 2, 3, 4, 5, 6\}$",
+            r"Event $A$ is $\{1,2,5,6\}$ and $A\cap B=\{2,6\}$": r"Event $A$ is $\{1, 2, 5, 6\}$ and $A\cap B=\{2, 6\}$",
+            r"$A\cap B=\{6,12,18\}$": r"$A\cap B=\{6, 12, 18\}$",
+            r"\{(2,6),(3,5)\}": r"\{(2, 6), (3, 5)\}",                      # ordered pairs: the commas inside the pairs too
+            r"\{(2, 6),(3,5)\}": r"\{(2, 6), (3, 5)\}",                     # half spaced already
+            r"\{1,2,\ldots,6\}": r"\{1, 2, \ldots, 6\}",
+            r"\{\frac{1}{2},\frac{3}{4}\}": r"\{\frac{1}{2}, \frac{3}{4}\}",
+            r"\{a,b,c\}": r"\{a, b, c\}",
+            r"\{\{1,2\},\{3\}\}": r"\{\{1, 2\}, \{3\}\}",
+            r"\left\{1,2\right\}": r"\left\{1, 2\right\}",
+            r"$\{1,2\}$ and $\{3,4\}$": r"$\{1, 2\}$ and $\{3, 4\}$",
+        }
+        for src, want in cases.items():
+            out, c = alb.space_set_lists(src)
+            self.assertEqual(out, want, src)
+            self.assertGreaterEqual(c["set_list"], 1, src)
+            self.assertEqual(alb.residual_notation(out), [], src)
+            self.assertEqual(alb.space_set_lists(out), (out, Counter()), "a fixpoint: " + src)
+        self.assertEqual(alb.space_set_lists(r"$\{1,2,5,6\}$")[1]["set_list"], 3)
+
+    def test_what_is_not_a_set_list_is_never_touched(self):
+        untouched = [
+            "0,75 and 3,5 and R 3,50", "the values 1,2,3", "(1,2) and [1,2] and (1,5)^2",   # decimal commas, bare lists, pairs, intervals
+            r"\{1, 2, 3\}", r"\{1,\,2\}", r"\{1,\ 2\}", r"\{1,\quad 2\}",         # already spaced, or spaced on purpose
+            r"\{3{,}5\}", r"\text{a,b}",                                                # a LaTeX group: `{,}` is a decimal comma
+            r"\{x \mid x \in [1,2]\}", r"\{x \mid x \in (1,2)\}", r"\{x : 1,2\}",   # set-builder: no list
+            r"\{[1,2]\}",                                                                # an interval inside a set
+            r"(\{1, 2\},3)", r"\{1,2",                                                   # outside the set; an unclosed set
+            r"{=a},{=b}", r"x \{",                                                        # holes outside a set, a lone brace
+            "", r"$\sin 30^\circ = 0,5$",
+        ]
+        for src in untouched:
+            self.assertEqual(alb.space_set_lists(src), (src, Counter()), src)
+        self.assertEqual(alb.space_set_lists(None), (None, Counter()))
+        # a comma outside the set next to one inside: only the inside one
+        self.assertEqual(alb.space_set_lists(r"$P=(\{1,2\},3)$ and $x=0,5$")[0], r"$P=(\{1, 2\},3)$ and $x=0,5$")
+        # an interval inside a list is an interval: its comma stays, the list's does not
+        self.assertEqual(alb.space_set_lists(r"\{[1,2],3,4\}")[0], r"\{[1,2], 3, 4\}")
+
+    def test_the_decimal_rule_and_the_pair_rule_are_unchanged(self):
+        self.assertEqual(alb.normalise("3,5 and 2,5")[0], "3.5 and 2.5")
+        self.assertEqual(alb.normalise_pairs(r"\{1,2,5,6\}")[0], r"\{1,2,5,6\}", "the pair rule alone leaves a comma list")
+        self.assertEqual(alb.normalise(r"\{1; 2; 3\}")[0], r"\{1, 2, 3\}")
 
 
 class ObjectiveAndFigureNotationTest(unittest.TestCase):
