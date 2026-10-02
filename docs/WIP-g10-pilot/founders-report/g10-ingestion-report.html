@@ -81,6 +81,7 @@ section { margin-top: 44px; }
 .lead { font-size: 17px; color: var(--play-text-dim); margin-bottom: 18px; max-width: 860px; }
 .card { background: var(--play-bg-surface); border: var(--play-stroke) solid var(--play-ink); border-radius: var(--play-radius-lg); box-shadow: var(--play-shadow); padding: 24px 28px; }
 .card + .card { margin-top: 18px; }
+.grid > .card, .grid > .kpi { margin-top: 0; }
 .callout { border: var(--play-stroke) solid var(--play-ink); border-radius: var(--play-radius); box-shadow: var(--play-shadow-sm); padding: 16px 20px; margin-top: 18px; }
 .callout.amber { background: var(--play-bg-warm); }
 .callout.amber strong.tag { color: var(--play-text-amber-warm); }
@@ -139,7 +140,11 @@ ul.plain li { margin-bottom: 6px; }
 
 /* tables */
 table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 14px; }
-th, td { padding: 7px 8px; text-align: right; border-bottom: 1.5px solid var(--play-inactive-border); vertical-align: top; }
+th, td { padding: 7px 8px; text-align: right; border-bottom: 1.5px solid var(--play-inactive-border); vertical-align: middle; }
+td.num { white-space: nowrap; }
+table.center th, table.center td { text-align: center; }
+table.kv td:first-child { width: 112px; color: var(--play-text-muted); vertical-align: top; }
+table.kv td { vertical-align: top; }
 th { font-family: var(--play-font-display); font-weight: 700; font-size: 13.5px; line-height: 1.2; background: var(--play-bg-warm); border-bottom: var(--play-stroke-sm) solid var(--play-ink); }
 th:first-child, td:first-child, th.l, td.l { text-align: left; }
 tr.total td { font-weight: 700; border-top: var(--play-stroke-sm) solid var(--play-ink); border-bottom: 0; background: var(--play-inactive-fill); }
@@ -184,6 +189,7 @@ footer { margin-top: 48px; border-top: var(--play-stroke) solid var(--play-ink);
     <span class="chip">Dated 2 October 2026</span>
     <span class="chip">App version v0.11.0 (latest release)</span>
     <span class="chip">Report rev 1</span>
+    <span class="chip">Design authority: Data Spine thesis v1 (ADR-0001)</span>
     <span class="chip amber">Not live yet: local pilot database only</span>
   </div>
 </header>
@@ -279,8 +285,8 @@ footer { margin-top: 48px; border-top: var(--play-stroke) solid var(--play-ink);
     <div class="card">
       <h3>By model</h3>
       <div class="stack" style="margin-top:12px">
-        <div class="s-teal" style="width:77%">Sonnet 5.5 · $726</div>
-        <div class="s-violet" style="width:21.2%">Sonnet 5 · $200</div>
+        <div class="s-teal" style="width:77%">Sonnet 5.5</div>
+        <div class="s-violet" style="width:21.2%">Sonnet 5</div>
         <div class="s-amber" style="width:1.8%"></div>
       </div>
       <div class="legend"><span style="--sw:var(--play-mastery)">Sonnet 5.5 $726</span><span style="--sw:var(--play-celebrate)">Sonnet 5 $200</span><span style="--sw:var(--play-action)">Haiku 4.5 $17</span></div>
@@ -338,7 +344,7 @@ footer { margin-top: 48px; border-top: var(--play-stroke) solid var(--play-ink);
   </div>
   <div class="card" style="margin-top:18px">
     <h3>The blocks, by kind</h3>
-    <table style="margin-top:6px">
+    <table class="center" style="margin-top:6px">
       <tr><th>Exercise items</th><th>Paragraphs</th><th>Summary items</th><th>Headings</th><th>Worked examples</th><th>Boxes</th><th>Figures</th><th>Definitions</th></tr>
       <tr><td class="num">2,531</td><td class="num">696</td><td class="num">219</td><td class="num">197</td><td class="num">174</td><td class="num">136</td><td class="num">75</td><td class="num">47</td></tr>
     </table>
@@ -362,7 +368,7 @@ footer { margin-top: 48px; border-top: var(--play-stroke) solid var(--play-ink);
     <div class="kpi"><div class="n">300</div><div class="l">misconception explanations</div></div>
   </div>
   <div class="callout violet">
-    <strong>For scale:</strong> the Prep-3 maths book live today has 10 modules, 90 objectives, 112 links and 450 questions. Grade 10 has <strong>2.3×</strong> the objectives, <strong>2.6×</strong> the links and <strong>about 12×</strong> the live questions.
+    <strong>For scale:</strong> the Prep-3 maths book on the site today has 10 modules, 90 objectives, 112 prerequisite links and 450 book questions. Grade 10 has <strong>2.3×</strong> the objectives, <strong>2.6×</strong> the links and <strong>4.8×</strong> the book questions (2,154), before counting any generated variants.
   </div>
 </section>
 
@@ -422,11 +428,12 @@ footer { margin-top: 48px; border-top: var(--play-stroke) solid var(--play-ink);
       <h3>Doubtful book questions re-judged</h3>
       <p class="small dim">383 items where the sources disagreed went to a recommendation run; 206 recommendations were confirmed by an independent verifier.</p>
       <div class="stack" style="margin-top:10px">
-        <div class="s-teal" style="width:33.4%">accept 128</div>
-        <div class="s-violet" style="width:24.5%">fix 94</div>
-        <div class="s-warm" style="width:10.2%">hold 39</div>
-        <div class="s-amber" style="width:31.9%">exclude 122</div>
+        <div class="s-teal" style="width:33.4%">128</div>
+        <div class="s-violet" style="width:24.5%">94</div>
+        <div class="s-warm" style="width:10.2%">39</div>
+        <div class="s-amber" style="width:31.9%">122</div>
       </div>
+      <div class="legend"><span style="--sw:var(--play-mastery)">accept 128</span><span style="--sw:var(--play-celebrate)">fix 94</span><span style="--sw:var(--play-bg-warm)">hold 39</span><span style="--sw:var(--play-action)">exclude 122</span></div>
     </div>
     <div class="card">
       <h3>The book's own errors</h3>
@@ -553,8 +560,8 @@ footer { margin-top: 48px; border-top: var(--play-stroke) solid var(--play-ink);
       <div>Ch. 2–3: document understanding and deterministic extraction</div><div>The e-book is read by structure (4,599 blocks), maths images become typeset maths with an acceptance check, and assembly is plain code with no model calls; this is why the step-title defect could be repaired by a script rather than by re-running the models.</div>
       <div>Ch. 15: curriculum graphs and educational agents</div><div>Objectives, lessons and modules with a prerequisite graph (15.1 schema); every question and claim cites the objective and the book passage it came from (15.5).</div>
       <div>Ch. 15.7: build a spine, sell verticals</div><div>A second curriculum's book arrives as a new course beside Prep-3 on the same graph and the same gates, switched on per curriculum and grade.</div>
-      <div>Ch. 19.6: MVP-cut discipline</div><div>One chapter piloted end to end, measured, then the rest fanned out; nothing is built that the pilot did not need.</div>
       <div>Ch. 16: bitemporal knowledge</div><div>Syllabus versioning on graph edges is the design (ADR-0001); this run loads one version and does not yet exercise it.</div>
+      <div>Ch. 19.6: MVP-cut discipline</div><div>One chapter piloted end to end, measured, then the rest fanned out; nothing is built that the pilot did not need.</div>
     </div>
   </div>
 </section>
@@ -565,7 +572,7 @@ footer { margin-top: 48px; border-top: var(--play-stroke) solid var(--play-ink);
   <div class="grid g2" style="margin-top:14px">
     <div class="card">
       <h3>Version</h3>
-      <table class="small">
+      <table class="small kv">
         <tr><td class="l">Report</td><td class="l">rev 1 · 2 October 2026</td></tr>
         <tr><td class="l">App version</td><td class="l"><strong>v0.11.0</strong>, the latest release on <code>main</code> (2 Oct 2026)</td></tr>
         <tr><td class="l">Where this work is</td><td class="l">branch <code>feat/003-curriculum-tracks-g10-american-math</code> at <code>961de91</code>, forked from v0.9.3; not merged, not released, not deployed</td></tr>
@@ -577,7 +584,7 @@ footer { margin-top: 48px; border-top: var(--play-stroke) solid var(--play-ink);
       <h3>References</h3>
       <ol class="refs small">
         <li><strong>The Agent-Native Data Spine — A Thesis.</strong> Founder's thesis v1, June 2026. <code>agentic-data-thesis.html</code></li>
-        <li><strong>ADR-0001</strong> Architecture follows the data-spine thesis. <code>docs/decisions/0001-…</code></li>
+        <li><strong>ADR-0001</strong> Architecture follows the data-spine thesis. <code>docs/decisions/0001-architecture-follows-data-spine-thesis.md</code></li>
         <li><strong>ADR-0005</strong> The extraction pipeline. <code>docs/decisions/0005-extraction-pipeline.md</code>; spec <code>docs/specs/extraction-pipeline.md</code></li>
         <li>Spine-derived architecture. <code>docs/architecture/spine-derived-architecture.md</code></li>
         <li>Feature spec 003, curriculum tracks: spec, plan, decisions. <code>specs/003-curriculum-tracks/</code></li>
