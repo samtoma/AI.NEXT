@@ -1,0 +1,730 @@
+{
+ "mode": "author",
+ "book": "g10-math",
+ "prompts_version": "s6-v6",
+ "by_ref": {
+  "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/s6-author-ch11",
+  "stage": "S6 author",
+  "shards_sha256": "3af69080e560269780df5e17f75931f9b65d417991ac14f7971e55f54abba740",
+  "files": 6
+ },
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "ce14b9a275551596540559352d6e1137fc366251ecc65d4b7d34aa4599cbc0b6",
+  "args_sha256": "205446b0bab0732190f228a4e741168e844bab4e982000b875305e19cdc7db8b",
+  "generated_sha256": "48dfac3ba9fb9909d7a29f5786bd448fb17d357dafcbed3a47649870f09d92f2",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "records": [
+  {
+   "lo_id": "lo:g10m11s1-1-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m11s1-1-1:flagpole-roof",
+     "kind": "family",
+     "lo_id": "lo:g10m11s1-1-1",
+     "parent_question_id": "q:g10m11s1-1-1:ex11-1-2",
+     "source_page": 397,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": "A flagpole stands vertically on the roof of a building, at the edge of the roof nearest to an observer on level ground. From the observer's point the angle of elevation of the top of the building and the angle of elevation of the top of the flagpole are both measured.",
+     "params": [
+      {
+       "name": "d",
+       "randint": [
+        30,
+        80
+       ]
+      },
+      {
+       "name": "a",
+       "randint": [
+        15,
+        40
+       ]
+      },
+      {
+       "name": "g",
+       "randint": [
+        3,
+        9
+       ]
+      },
+      {
+       "name": "b",
+       "let": "a + g"
+      },
+      {
+       "name": "tab",
+       "let": "[0, 174550649, 349207695, 524077793, 699268119, 874886635, 1051042353, 1227845609, 1405408347, 1583844403, 1763269807, 1943803091, 2125565617, 2308681911, 2493280028, 2679491924, 2867453858, 3057306815, 3249196962, 3443276133, 3639702343, 3838640350, 4040262258, 4244748162, 4452286853, 4663076582, 4877325886, 5095254495, 5317094317, 5543090515, 5773502692, 6008606190, 6248693519, 6494075932, 6745085168, 7002075382, 7265425280, 7535540501, 7812856265, 8097840332, 8390996312, 8692867378, 9004040443, 9325150861, 9656887748, 10000000000, 10355303138, 10723687100, 11106125148, 11503684072, 11917535926, 12348971565, 12799416322, 13270448216, 13763819205, 14281480067, 14825609685, 15398649638, 16003345290, 16642794824, 17320508076]"
+      },
+      {
+       "name": "h1",
+       "let": "d * tab[a] / 10000000000"
+      },
+      {
+       "name": "h2",
+       "let": "d * tab[b] / 10000000000"
+      },
+      {
+       "name": "hf",
+       "let": "h2 - h1"
+      },
+      {
+       "require": "hf >= 3 and hf <= 20",
+       "why": "the flagpole must have a sensible height"
+      },
+      {
+       "name": "fr",
+       "let": "hf * 10 - floor(hf * 10)"
+      },
+      {
+       "require": "abs(fr - 1/2) > 1/5",
+       "why": "keep the exact answer away from a rounding boundary, so a solver who keeps four decimals in each tangent still lands on the same one-decimal answer"
+      },
+      {
+       "name": "w",
+       "let": "d * tab[g] / 10000000000"
+      },
+      {
+       "require": "abs(w - hf) > 1",
+       "why": "the shortcut d*tan(b - a) must not give the same answer as the correct two-triangle method"
+      }
+     ],
+     "constraints": [],
+     "stem": "A flagpole stands vertically on the roof of a building, at the edge of the roof nearest to a point $P$ on level ground. Point $P$ is ${=d}$ m from the foot of the building. From $P$, the angle of elevation of the top of the building is ${=a}^\\circ$ and the angle of elevation of the top of the flagpole is ${=b}^\\circ$. Ignore the height of the observer. Calculate the height of the flagpole, correct to one decimal place. Do not round off before your final answer.",
+     "answer": "fixed(hf, 1)",
+     "solution": [
+      "Let $B$ be the foot of the building, $R$ the edge of the roof where the flagpole stands and $T$ the top of the flagpole. Triangles $PBR$ and $PBT$ are both right-angled at $B$, and in each of them $PB = {=d}$ m is the side adjacent to the angle at $P$. The flagpole is the part of $BT$ above the roof, so its height is $BT - BR$.",
+      "In triangle $PBR$ we know the angle ${=a}^\\circ$ and the adjacent side, and we want the opposite side $BR$, so we use tangent: $\\tan {=a}^\\circ = \\frac{BR}{{=d}}$, so $BR = {=d}\\tan {=a}^\\circ \\approx {=fixed(h1, 2)}$ m.",
+      "In triangle $PBT$ the same ratio applies with the larger angle ${=b}^\\circ$: $\\tan {=b}^\\circ = \\frac{BT}{{=d}}$, so $BT = {=d}\\tan {=b}^\\circ \\approx {=fixed(h2, 2)}$ m.",
+      "The height of the flagpole is $BT - BR \\approx {=fixed(h2, 2)} - {=fixed(h1, 2)} \\approx {=fixed(hf, 1)}$ m.",
+      "The flagpole is about ${=fixed(hf, 1)}$ m high."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Advanced: two applications of the book's tangent step (ex11-1-2) in two right-angled triangles that share the horizontal side, then a subtraction. The stem fixes that the pole stands at the roof edge nearest P, so the horizontal distance to both tops is d, and tells the student to ignore the observer's height. Answer = d*(tan b - tan a), to one decimal place. The tangent table is tan(n degrees) * 10^10 as whole numbers, because the expression language has no trigonometric functions; the list index is the angle in degrees (entries 0 to 60). Requires keep the flagpole 3 to 20 m, keep the answer at least 0.02 from a rounding boundary (checked by simulation: 4-decimal tangents and 2-decimal intermediate heights give the same one-decimal answer for every surviving draw; the stem says not to round before the end), and make the common slip d*tan(b - a) give a different answer. The book's catalogued misconception (sides labelled from the wrong angle) is not in play here because both angles are elevations from the ground; no distractors, numeric family."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m11s1-1-1:rhombus-height",
+     "kind": "family",
+     "lo_id": "lo:g10m11s1-1-1",
+     "parent_question_id": "q:g10m11s1-1-1:ex11-2-14",
+     "source_page": 400,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "s",
+       "randint": [
+        4,
+        12
+       ]
+      },
+      {
+       "name": "t",
+       "randint": [
+        25,
+        75
+       ]
+      },
+      {
+       "name": "tab",
+       "let": "[0, 174524064, 348994967, 523359562, 697564737, 871557427, 1045284633, 1218693434, 1391731010, 1564344650, 1736481777, 1908089954, 2079116908, 2249510543, 2419218956, 2588190451, 2756373558, 2923717047, 3090169944, 3255681545, 3420201433, 3583679495, 3746065934, 3907311285, 4067366431, 4226182617, 4383711468, 4539904997, 4694715628, 4848096202, 5000000000, 5150380749, 5299192642, 5446390350, 5591929035, 5735764364, 5877852523, 6018150232, 6156614753, 6293203910, 6427876097, 6560590290, 6691306064, 6819983601, 6946583705, 7071067812, 7193398003, 7313537016, 7431448255, 7547095802, 7660444431, 7771459615, 7880107536, 7986355100, 8090169944, 8191520443, 8290375726, 8386705679, 8480480962, 8571673007, 8660254038, 8746197071, 8829475929, 8910065242, 8987940463, 9063077870, 9135454576, 9205048535, 9271838546, 9335804265, 9396926208, 9455185756, 9510565163, 9563047560, 9612616959, 9659258263, 9702957263, 9743700648, 9781476007, 9816271834, 9848077530, 9876883406, 9902680687, 9925461516, 9945218954, 9961946981, 9975640503, 9986295348, 9993908270, 9998476952, 10000000000]"
+      },
+      {
+       "name": "h",
+       "let": "s * tab[t] / 10000000000"
+      },
+      {
+       "name": "fr",
+       "let": "h * 10 - floor(h * 10)"
+      },
+      {
+       "require": "abs(fr - 1/2) > 1/4",
+       "why": "keep the exact answer away from a rounding boundary, so a solver who keeps three decimals in the sine still lands on the same one-decimal answer"
+      },
+      {
+       "name": "w",
+       "let": "s * tab[90 - t] / 10000000000"
+      },
+      {
+       "require": "abs(w - h) >= 1/2",
+       "why": "using cosine instead of sine must not give the same answer"
+      }
+     ],
+     "constraints": [],
+     "stem": "One of the angles of a rhombus with perimeter ${=4 * s}$ cm is ${=t}^\\circ$. Calculate the perpendicular distance between two opposite sides of the rhombus, correct to one decimal place. Do not round off before your final answer.",
+     "answer": "fixed(h, 1)",
+     "solution": [
+      "All four sides of a rhombus are equal, so each side is $\\frac{{=4 * s}}{4} = {=s}$ cm.",
+      "Call the rhombus $ABCD$ with $\\hat{A} = {=t}^\\circ$. Draw the perpendicular $DE$ from $D$ to the side $AB$. Then $DE = h$ is the perpendicular distance between the opposite sides $AB$ and $DC$, and triangle $ADE$ is right-angled at $E$ with hypotenuse $AD = {=s}$ cm.",
+      "$h$ is opposite the angle ${=t}^\\circ$ and we know the hypotenuse, so we use sine: $\\sin {=t}^\\circ = \\frac{h}{{=s}}$.",
+      "$h = {=s}\\sin {=t}^\\circ \\approx {=fixed(h, 1)}$ cm.",
+      "The perpendicular distance between two opposite sides of the rhombus is about ${=fixed(h, 1)}$ cm."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Advanced: perimeter -> side (all sides equal), then the book's parallelogram-height step (ex11-2-14: h = side * sin of the angle), the same two ideas as ex11-2-15a and ex11-2-14 chained. The angle is acute (25 to 75), so the foot of the perpendicular falls on the side AB itself; every altitude of a rhombus has the same length, so it does not matter which pair of opposite sides the solver picks. Answer = (P/4) * sin t, to one decimal place. The sine table is sin(n degrees) * 10^10 as whole numbers, list index = degrees (0 to 90); cos t is read as sin(90 - t) for the 'wrong ratio' require. Requires keep the exact answer at least 0.025 from a rounding boundary and make using cosine instead of sine give a different answer. Numeric family, no distractors."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m11s1-1-1:hinged-ladder",
+     "kind": "family",
+     "lo_id": "lo:g10m11s1-1-1",
+     "parent_question_id": "q:g10m11s1-1-1:ex11-1-6",
+     "source_page": 397,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": "A fire-engine's ladder is hinged to the truck at a point above the ground and is extended at an angle to the vertical.",
+     "params": [
+      {
+       "name": "c",
+       "randint": [
+        2,
+        4
+       ]
+      },
+      {
+       "name": "L",
+       "randint": [
+        10,
+        30
+       ]
+      },
+      {
+       "name": "t",
+       "randint": [
+        15,
+        60
+       ]
+      },
+      {
+       "name": "tab",
+       "let": "[0, 174524064, 348994967, 523359562, 697564737, 871557427, 1045284633, 1218693434, 1391731010, 1564344650, 1736481777, 1908089954, 2079116908, 2249510543, 2419218956, 2588190451, 2756373558, 2923717047, 3090169944, 3255681545, 3420201433, 3583679495, 3746065934, 3907311285, 4067366431, 4226182617, 4383711468, 4539904997, 4694715628, 4848096202, 5000000000, 5150380749, 5299192642, 5446390350, 5591929035, 5735764364, 5877852523, 6018150232, 6156614753, 6293203910, 6427876097, 6560590290, 6691306064, 6819983601, 6946583705, 7071067812, 7193398003, 7313537016, 7431448255, 7547095802, 7660444431, 7771459615, 7880107536, 7986355100, 8090169944, 8191520443, 8290375726, 8386705679, 8480480962, 8571673007, 8660254038, 8746197071, 8829475929, 8910065242, 8987940463, 9063077870, 9135454576, 9205048535, 9271838546, 9335804265, 9396926208, 9455185756, 9510565163, 9563047560, 9612616959, 9659258263, 9702957263, 9743700648, 9781476007, 9816271834, 9848077530, 9876883406, 9902680687, 9925461516, 9945218954, 9961946981, 9975640503, 9986295348, 9993908270, 9998476952, 10000000000]"
+      },
+      {
+       "name": "v",
+       "let": "L * tab[90 - t] / 10000000000"
+      },
+      {
+       "name": "fr",
+       "let": "v * 10 - floor(v * 10)"
+      },
+      {
+       "require": "abs(fr - 1/2) > 1/4",
+       "why": "keep the exact answer away from a rounding boundary, so a solver who keeps three decimals in the cosine still lands on the same one-decimal answer"
+      },
+      {
+       "name": "w",
+       "let": "L * tab[t] / 10000000000"
+      },
+      {
+       "require": "abs(w - v) >= 1",
+       "why": "using sine instead of cosine (the angle taken from the wrong side) must not give the same answer"
+      },
+      {
+       "name": "top",
+       "let": "c + v"
+      }
+     ],
+     "constraints": [],
+     "stem": "A fire-engine's ladder is hinged at a point $H$ on the truck, ${=c}$ m above the ground. The ladder is extended to a length of ${=L}$ m, measured from the hinge, and it makes an angle of ${=t}^\\circ$ with the vertical. Calculate the height of the top of the ladder above the ground, correct to one decimal place. Do not round off before your final answer.",
+     "answer": "fixed(top, 1)",
+     "solution": [
+      "Let $T$ be the top of the ladder. Draw the vertical from $T$ down to the horizontal line through the hinge $H$, meeting it at $K$. Triangle $HKT$ is right-angled at $K$, the ladder $HT = {=L}$ m is its hypotenuse, and $TK$ is the height of the top of the ladder above the hinge.",
+      "The angle ${=t}^\\circ$ is measured from the vertical, so at $T$ it lies between the ladder $TH$ and the vertical $TK$. This makes $TK$ the side adjacent to ${=t}^\\circ$, not the opposite side.",
+      "We know the hypotenuse and want the adjacent side, so we use cosine: $\\cos {=t}^\\circ = \\frac{TK}{{=L}}$, so $TK = {=L}\\cos {=t}^\\circ \\approx {=fixed(v, 2)}$ m.",
+      "The hinge is ${=c}$ m above the ground, so the top of the ladder is ${=c} + {=fixed(v, 2)} \\approx {=fixed(top, 1)}$ m above the ground.",
+      "The top of the ladder is about ${=fixed(top, 1)}$ m above the ground."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Advanced: the book's twist from ex11-1-6 (the angle is given from the vertical, not the ground, so the side wanted is ADJACENT and cosine is needed, the catalogued error mc:g10m11s1-1-1:sides-labelled-from-wrong-angle) plus a second step, adding the hinge height. Answer = c + L*cos t, to one decimal place. The sine table is sin(n degrees) * 10^10 as whole numbers, list index = degrees (0 to 90); cos t is read as sin(90 - t). Requires keep the exact L*cos t at least 0.025 from a rounding boundary and make the sine slip give a different answer by at least 1 m. Numeric family; the wrong-angle error is not attached to a distractor because there are none."
+    }
+   ],
+   "infeasible": [],
+   "notes": "Only the advanced tier was a listed gap, and no family existed, so I wrote three advanced numeric families with different skeletons. They are flagpole-roof (two tangent triangles sharing a horizontal side, then a subtraction), rhombus-height (perimeter to side, then side times sine for the perpendicular distance) and hinged-ladder (angle from the vertical so cosine is needed, then add the hinge height). I did not pad basic or standard; the book questions already sit in those tiers. The expression language has no trig functions, so each family carries a table of sin or tan values as whole numbers scaled by 10^10, indexed by degrees; cos t is read as sin(90 - t). I could not run the real engine, so I checked a Python replica of the params and templates over 12000 draws. Answers matched an independent float calculation in every case, and rendered stems and solutions were clean with no fractions in holes. The requires keep each answer at least 0.02 from a rounding boundary and make the obvious wrong method (d*tan(b - a), cosine for sine, sine for cosine) give a different answer. Stems say not to round before the final answer. Without that, a solver who rounds the tangent to 3 decimals would disagree on about 12% of flagpole draws. All stems are self-contained in words, so no figure is needed. I viewed the figures for ex11-1-1, ex11-2-14, ex11-2-19a and ex11-2-6 and used the escalator and hinged-ladder geometry as models; I did not build a family on ex11-2-19a or ex11-2-6."
+  },
+  {
+   "lo_id": "lo:g10m11s1-1-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m11s1-1-2:shared-hypotenuse",
+     "kind": "family",
+     "lo_id": "lo:g10m11s1-1-2",
+     "parent_question_id": "q:g10m11s1-1-2:ex11-2-19b",
+     "source_page": 401,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "alpha",
+       "randint": [
+        28,
+        62
+       ]
+      },
+      {
+       "name": "a10",
+       "randint": [
+        70,
+        120
+       ]
+      },
+      {
+       "name": "c10",
+       "randint": [
+        40,
+        110
+       ]
+      },
+      {
+       "require": "a10 % 10 != 0 and c10 % 10 != 0",
+       "why": "both lengths are printed with one decimal place, so neither may end in .0"
+      },
+      {
+       "name": "ctab",
+       "let": "[float(v) for v in [1.0, 0.9998476952, 0.999390827, 0.9986295348, 0.9975640503, 0.9961946981, 0.9945218954, 0.9925461516, 0.9902680687, 0.9876883406, 0.984807753, 0.9816271834, 0.9781476007, 0.9743700648, 0.9702957263, 0.9659258263, 0.9612616959, 0.956304756, 0.9510565163, 0.9455185756, 0.9396926208, 0.9335804265, 0.9271838546, 0.9205048535, 0.9135454576, 0.906307787, 0.8987940463, 0.8910065242, 0.8829475929, 0.8746197071, 0.8660254038, 0.8571673007, 0.8480480962, 0.8386705679, 0.8290375726, 0.8191520443, 0.8090169944, 0.79863551, 0.7880107536, 0.7771459615, 0.7660444431, 0.7547095802, 0.7431448255, 0.7313537016, 0.7193398003, 0.7071067812, 0.6946583705, 0.6819983601, 0.6691306064, 0.656059029, 0.6427876097, 0.629320391, 0.6156614753, 0.6018150232, 0.5877852523, 0.5735764364, 0.5591929035, 0.544639035, 0.5299192642, 0.5150380749, 0.5, 0.4848096202, 0.4694715628, 0.4539904997, 0.4383711468, 0.4226182617, 0.4067366431, 0.3907311285, 0.3746065934, 0.3583679495, 0.3420201433, 0.3255681545, 0.3090169944, 0.2923717047, 0.2756373558, 0.2588190451, 0.2419218956, 0.2249510543, 0.2079116908, 0.1908089954, 0.1736481777, 0.156434465, 0.139173101, 0.1218693434, 0.1045284633, 0.0871557427, 0.0697564737, 0.0523359562, 0.0348994967, 0.0174524064, 0.0]]"
+      },
+      {
+       "name": "ttab",
+       "let": "[ctab[90 - j] / ctab[j] for j in range(0, 89)]"
+      },
+      {
+       "name": "sa",
+       "let": "ctab[90 - alpha]"
+      },
+      {
+       "name": "pq",
+       "let": "float(a10) / 10"
+      },
+      {
+       "name": "ps",
+       "let": "float(c10) / 10"
+      },
+      {
+       "name": "r",
+       "let": "ps * sa / pq"
+      },
+      {
+       "require": "r >= 0.35 and r <= 0.85",
+       "why": "keeps cos x between 0.35 and 0.85, so x lies between about 32 and 70 degrees and PS is shorter than PR"
+      },
+      {
+       "name": "pr",
+       "let": "pq / sa"
+      },
+      {
+       "name": "n",
+       "let": "1 - r * r"
+      },
+      {
+       "name": "q0",
+       "let": "(1 + n) / 2"
+      },
+      {
+       "name": "q1",
+       "let": "(q0 + n / q0) / 2"
+      },
+      {
+       "name": "q2",
+       "let": "(q1 + n / q1) / 2"
+      },
+      {
+       "name": "q3",
+       "let": "(q2 + n / q2) / 2"
+      },
+      {
+       "name": "q4",
+       "let": "(q3 + n / q3) / 2"
+      },
+      {
+       "name": "tx",
+       "let": "q4 / r"
+      },
+      {
+       "name": "kg",
+       "let": "len([1 for v in ttab if v <= tx]) - 1"
+      },
+      {
+       "name": "tg",
+       "let": "ttab[kg]"
+      },
+      {
+       "name": "ug",
+       "let": "(tx - tg) / (1 + tx * tg)"
+      },
+      {
+       "name": "xdeg",
+       "let": "kg + 57.29577951308232 * (ug - ug ** 3 / 3 + ug ** 5 / 5)"
+      },
+      {
+       "name": "y",
+       "let": "xdeg * 10"
+      },
+      {
+       "name": "f",
+       "let": "y - floor(y)"
+      },
+      {
+       "name": "sa4",
+       "let": "float(floor(sa * 10000 + 0.5)) / 10000"
+      },
+      {
+       "name": "pra",
+       "let": "float(floor(pr * 100 + 0.5)) / 100"
+      },
+      {
+       "name": "prb",
+       "let": "float(floor(pq / sa4 * 100 + 0.5)) / 100"
+      },
+      {
+       "name": "dr",
+       "let": "max(abs(ps / pra - r), abs(ps / prb - r), abs(ps / (pq / sa4) - r))"
+      },
+      {
+       "name": "dxa",
+       "let": "dr / (q4 * 0.017453292519943295)"
+      },
+      {
+       "name": "dist",
+       "let": "abs(f - 0.5) / 10"
+      },
+      {
+       "require": "dist >= dxa + 0.004",
+       "why": "a solver who rounds PR to two decimals, or sin to four decimals first, moves x by dxa degrees at most; the exact x must be further than that from a one-decimal rounding boundary, so every route reaches the same answer"
+      }
+     ],
+     "constraints": [],
+     "stem": "In quadrilateral $PQRS$ the diagonal $PR$ is drawn. The angles at $Q$ and $S$ are right angles. $PQ = \\text{{=fixed(pq, 1)}}$ $\\text{cm}$, $PS = \\text{{=fixed(ps, 1)}}$ $\\text{cm}$ and $\\angle PRQ = {=alpha}^{\\circ}$. Let $x$ be the size of $\\angle SPR$. Calculate $x$ in degrees, correct to one decimal place. Do not round off until the last step.",
+     "answer": "fixed(xdeg, 1)",
+     "solution": [
+      "Triangle $PQR$ has a right angle at $Q$, so $PR$ is its hypotenuse and $PQ$ is the side opposite $\\angle PRQ$. Use the sine ratio: $\\sin {=alpha}^{\\circ} = \\frac{PQ}{PR}$.",
+      "$PR = \\frac{{=fixed(pq, 1)}}{\\sin {=alpha}^{\\circ}} = {=fixed(pr, 2)}$ cm.",
+      "Triangle $PSR$ has a right angle at $S$, and $PR$ is also its hypotenuse. $PS$ is the side adjacent to $x$, so use the cosine ratio: $\\cos x = \\frac{PS}{PR} = \\frac{{=fixed(ps, 1)}}{{=fixed(pr, 2)}}$.",
+      "$x = \\cos^{-1}\\left(\\frac{{=fixed(ps, 1)}}{{=fixed(pr, 2)}}\\right) = {=fixed(xdeg, 1)}^{\\circ}$ (this uses the unrounded value of $PR$ from the calculator)."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Text-only rendering of the book's quadrilateral (ex11-2-19b, p. 401; I read the figure): two right-angled triangles PQR and PSR share the hypotenuse PR. Step one finds PR from the side PQ opposite the given angle (sine); step two finds angle SPR from the adjacent side PS and PR (cosine). The book's figure marks the 42 degrees at R between RQ and the diagonal PR, so the stem names it angle PRQ rather than 'angle R' (which would read as the whole interior angle of the quadrilateral and change the problem). The book files ex11-2-19b as standard; I tier this family advanced because it is the objective's multi-step exercise (two triangles, two ratios), the only one the book has. The template language has no inverse trig, so the key is computed from a 1-degree cosine table (generated with Python, 10 decimals), a Newton square root, and the tan addition formula with a short arctan series; I emulated the expressions in Python and checked them against math.acos on 3000 draws, error under 1e-7 degrees. The final require keeps the exact x further from a one-decimal rounding boundary than the first-order shift caused by rounding PR to 2 decimals (the book's own route) or sin to 4 decimals, so the book's rounded route and the exact route give the same key. Acceptance is about 45 percent per attempt. Note the template relies on float arithmetic and on max with three arguments."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m11s1-1-2:boat-closer",
+     "kind": "family",
+     "lo_id": "lo:g10m11s1-1-2",
+     "parent_question_id": "q:g10m11s1-1-2:ex11-2-2a",
+     "source_page": 398,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": "Captain Jack sails his boat straight towards a cliff. The angle of elevation of the top of the cliff is measured from the boat at two different distances from the bottom of the cliff.",
+     "params": [
+      {
+       "name": "h",
+       "randint": [
+        8,
+        20
+       ]
+      },
+      {
+       "name": "d1",
+       "randint": [
+        36,
+        60
+       ]
+      },
+      {
+       "name": "d2",
+       "randint": [
+        12,
+        28
+       ]
+      },
+      {
+       "name": "ctab",
+       "let": "[float(v) for v in [1.0, 0.9998476952, 0.999390827, 0.9986295348, 0.9975640503, 0.9961946981, 0.9945218954, 0.9925461516, 0.9902680687, 0.9876883406, 0.984807753, 0.9816271834, 0.9781476007, 0.9743700648, 0.9702957263, 0.9659258263, 0.9612616959, 0.956304756, 0.9510565163, 0.9455185756, 0.9396926208, 0.9335804265, 0.9271838546, 0.9205048535, 0.9135454576, 0.906307787, 0.8987940463, 0.8910065242, 0.8829475929, 0.8746197071, 0.8660254038, 0.8571673007, 0.8480480962, 0.8386705679, 0.8290375726, 0.8191520443, 0.8090169944, 0.79863551, 0.7880107536, 0.7771459615, 0.7660444431, 0.7547095802, 0.7431448255, 0.7313537016, 0.7193398003, 0.7071067812, 0.6946583705, 0.6819983601, 0.6691306064, 0.656059029, 0.6427876097, 0.629320391, 0.6156614753, 0.6018150232, 0.5877852523, 0.5735764364, 0.5591929035, 0.544639035, 0.5299192642, 0.5150380749, 0.5, 0.4848096202, 0.4694715628, 0.4539904997, 0.4383711468, 0.4226182617, 0.4067366431, 0.3907311285, 0.3746065934, 0.3583679495, 0.3420201433, 0.3255681545, 0.3090169944, 0.2923717047, 0.2756373558, 0.2588190451, 0.2419218956, 0.2249510543, 0.2079116908, 0.1908089954, 0.1736481777, 0.156434465, 0.139173101, 0.1218693434, 0.1045284633, 0.0871557427, 0.0697564737, 0.0523359562, 0.0348994967, 0.0174524064, 0.0]]"
+      },
+      {
+       "name": "ttab",
+       "let": "[ctab[90 - j] / ctab[j] for j in range(0, 89)]"
+      },
+      {
+       "name": "r1",
+       "let": "float(h) / d1"
+      },
+      {
+       "name": "r2",
+       "let": "float(h) / d2"
+      },
+      {
+       "name": "k1",
+       "let": "len([1 for v in ttab if v <= r1]) - 1"
+      },
+      {
+       "name": "t1",
+       "let": "ttab[k1]"
+      },
+      {
+       "name": "u1",
+       "let": "(r1 - t1) / (1 + r1 * t1)"
+      },
+      {
+       "name": "th1",
+       "let": "k1 + 57.29577951308232 * (u1 - u1 ** 3 / 3 + u1 ** 5 / 5)"
+      },
+      {
+       "name": "k2",
+       "let": "len([1 for v in ttab if v <= r2]) - 1"
+      },
+      {
+       "name": "t2",
+       "let": "ttab[k2]"
+      },
+      {
+       "name": "u2",
+       "let": "(r2 - t2) / (1 + r2 * t2)"
+      },
+      {
+       "name": "th2",
+       "let": "k2 + 57.29577951308232 * (u2 - u2 ** 3 / 3 + u2 ** 5 / 5)"
+      },
+      {
+       "name": "diff",
+       "let": "th2 - th1"
+      },
+      {
+       "name": "y",
+       "let": "diff * 10"
+      },
+      {
+       "name": "f",
+       "let": "y - floor(y)"
+      },
+      {
+       "require": "abs(f - 0.5) >= 0.2",
+       "why": "the increase is at least 0.02 degrees away from a one-decimal rounding boundary"
+      },
+      {
+       "name": "a1",
+       "let": "float(floor(th1 * 100 + 0.5)) / 100"
+      },
+      {
+       "name": "a2",
+       "let": "float(floor(th2 * 100 + 0.5)) / 100"
+      },
+      {
+       "name": "dd",
+       "let": "a2 - a1"
+      },
+      {
+       "require": "floor(dd * 10 + 0.5) == floor(diff * 10 + 0.5)",
+       "why": "subtracting the two angles after rounding each to two decimals gives the same one-decimal answer"
+      }
+     ],
+     "constraints": [],
+     "stem": "Captain Jack is sailing his boat towards a cliff that is $\\text{{=h}}$ $\\text{m}$ high. The boat is at the same level as the bottom of the cliff. At first the boat is $\\text{{=d1}}$ $\\text{m}$ from the bottom of the cliff, and later it is $\\text{{=d2}}$ $\\text{m}$ from the bottom of the cliff. By how many degrees does the angle of elevation of the top of the cliff, measured from the boat, increase between the two positions? Do not round off either angle before you subtract. Give your answer correct to one decimal place.",
+     "answer": "fixed(diff, 1)",
+     "solution": [
+      "Sketch a right-angled triangle for each position of the boat. The height of the cliff is opposite the angle of elevation and the distance from the boat to the bottom of the cliff is adjacent to it, so use the tangent ratio each time.",
+      "First position: $\\tan x_1 = \\frac{{=h}}{{=d1}}$, so $x_1 = \\tan^{-1}\\left(\\frac{{=h}}{{=d1}}\\right) = {=fixed(th1, 2)}^{\\circ}$.",
+      "Second position: $\\tan x_2 = \\frac{{=h}}{{=d2}}$, so $x_2 = \\tan^{-1}\\left(\\frac{{=h}}{{=d2}}\\right) = {=fixed(th2, 2)}^{\\circ}$.",
+      "The angle of elevation increases by $x_2 - x_1 = {=fixed(th2, 2)}^{\\circ} - {=fixed(th1, 2)}^{\\circ} = {=fixed(dd, 2)}^{\\circ}$, which is ${=fixed(diff, 1)}^{\\circ}$ correct to one decimal place."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Two applications of the book's angle-of-elevation method (ex11-2-2a, p. 398, Captain Jack and the cliff), then a subtraction: the objective's several-step exercise. The context stays the book's (Captain Jack, the cliff, metres); the stem adds one sentence saying the boat is level with the bottom of the cliff, which the book's own sketch assumes. The stem forbids rounding either angle before subtracting; the key is computed unrounded, and the requires keep each instance at least 0.02 degrees from a one-decimal rounding boundary and make the round-to-two-decimals-then-subtract route agree with the key. The template language has no inverse trig, so each angle comes from a 1-degree table (cosine, generated with Python, 10 decimals), the tan addition formula and a short arctan series; emulated in Python and checked against math.atan on 3000 draws, error under 1e-7 degrees. Acceptance is about 60 percent per attempt. Both families are numeric, so no distractors; the two catalogued misconceptions (wrong-angle naming, rounding too coarsely) are not exercised here."
+    }
+   ],
+   "infeasible": [],
+   "notes": "Filled the advanced gap with two numeric families, both from the book's own multi-step questions. (1) shared-hypotenuse is the book's quadrilateral PQRS (ex11-2-19b): sine finds the shared hypotenuse PR, then cosine gives angle SPR. (2) boat-closer is Captain Jack and the cliff (ex11-2-2a) with the boat at two distances: two tan-inverse angles, then their difference. I read both figures (quadrilateral and flagpole). The template language has no trig functions, so the keys are computed from a 1-degree cosine table plus a Newton square root, the tan addition formula and a short arctan series. I emulated every expression in Python, checked the keys against math.acos and math.atan on 3000 draws each (error under 1e-7 degrees), and added requires so that the book's rounded routes (PR to two decimals, sin to four, each angle to two decimals before subtracting) give the same one-decimal key. Residual risk is the engine itself, which I could not run: the templates assume float arithmetic, three-argument max, list comprehensions over a 91-entry list, and a require acceptance of about 45 percent (F1) and 60 percent (F2) per attempt. Did not write a standard or basic family because only the advanced tier was a listed gap; no mcq was used, so the two catalogued misconceptions are unused."
+  },
+  {
+   "lo_id": "lo:g10m11s1-1-3",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m11s1-1-3:elevation-height",
+     "kind": "family",
+     "lo_id": "lo:g10m11s1-1-3",
+     "parent_question_id": "q:g10m11s1-1-3:ex11-2-8b",
+     "source_page": 399,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": "Nandi stands on level ground at a known distance from a tall tower and looks up at its top. The angle of elevation is given and the height of the tower is wanted.",
+     "params": [
+      {
+       "name": "tantable",
+       "let": "{20: 36397023, 25: 46630766, 28: 53170943, 30: 57735027, 32: 62486935, 35: 70020754, 38: 78128563, 40: 83909963, 42: 90040404, 48: 111061251, 50: 119175359, 52: 127994163, 55: 142814801, 58: 160033453, 60: 173205081, 62: 188072647, 65: 214450692}"
+      },
+      {
+       "name": "a",
+       "choice": [
+        20,
+        25,
+        28,
+        30,
+        32,
+        35,
+        38,
+        40,
+        42,
+        48,
+        50,
+        52,
+        55,
+        58,
+        60,
+        62,
+        65
+       ]
+      },
+      {
+       "name": "d",
+       "choice": [
+        25,
+        30,
+        35,
+        40,
+        45,
+        50,
+        55,
+        60,
+        65,
+        70,
+        75,
+        80,
+        85,
+        90,
+        100,
+        120
+       ]
+      },
+      {
+       "name": "t",
+       "let": "tantable[a]"
+      },
+      {
+       "name": "h",
+       "let": "d * t / 100000000"
+      },
+      {
+       "name": "h100",
+       "let": "d * t / 1000000"
+      },
+      {
+       "require": "abs(h100 - floor(h100) - 1/2) > 1/10",
+       "why": "The unrounded height must not sit near a rounding boundary at two decimal places, so a calculator answer and the key always round the same way."
+      },
+      {
+       "require": "h <= 200",
+       "why": "Keep the tower a believable height."
+      }
+     ],
+     "constraints": [],
+     "stem": "Nandi is standing on level ground ${=d}$ m away from a tall tower. From her position, the angle of elevation of the top of the tower is ${=a}^\\circ$. What is the height of the tower, correct to two decimal places? (Ignore Nandi's own height.)",
+     "answer": "fixed(h, 2)",
+     "solution": [
+      "The tower stands vertically on level ground, so the tower, the ground and Nandi's line of sight to the top of the tower form a right-angled triangle. The angle of elevation, ${=a}^\\circ$, is the angle at Nandi between the horizontal ground and her line of sight up to the top of the tower.",
+      "Call the height of the tower $x$. Relative to the angle ${=a}^\\circ$, the side $x$ is opposite and the ${=d}$ m along the ground is adjacent. We know the adjacent side and want the opposite side, so use the tangent ratio.",
+      "$\\begin{aligned}\\tan {=a}^{\\circ}&=\\frac{x}{{=d}}\\\\x&={=d}\\tan {=a}^{\\circ}\\\\&\\approx {=fixed(h, 4)}\\end{aligned}$",
+      "Round to two decimal places: the height of the tower is ${=fixed(h, 2)}$ m."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Modelled on ex11-2-8b (Nandi and the tower, p. 399): same context, same one-step method (tan = opposite / adjacent, then x = d tan a), same two-decimal rounding as the book prints. The expression language has no trig, so tan of each angle is a precomputed integer table scaled by 10^8 (tan 38 = 78128563 / 10^8); the table error is at most 5e-9 per angle, i.e. under 1e-6 m on the answer. The first require rejects any (angle, distance) pair whose exact height lies within 0.1 of a hundredth from a rounding boundary, so the key cannot disagree with a solver's calculator on the second decimal; I checked every surviving pair against math.tan at both 2 and 4 decimals with no mismatches. 45 degrees is left out so the answer is never a trivial d. About 212 of 272 combinations survive; heights run from about 9 m to 192 m. The stem tells the solver to ignore the observer's height, which the book also does silently, so nobody adds an eye height that is not given. No distractors because the answer is numeric; the book's catalogued misconception (trusting the sketch) has no sketch to act on here."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m11s1-1-3:depression-distance",
+     "kind": "family",
+     "lo_id": "lo:g10m11s1-1-3",
+     "parent_question_id": "q:g10m11s1-1-3:we04",
+     "source_page": 395,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": "Sipho stands on the roof of a block of flats and looks down at the base of a cellphone tower on the same level ground. The height of the block and the angle of depression are given and the horizontal distance to the tower is wanted.",
+     "params": [
+      {
+       "name": "tantable",
+       "let": "{20: 36397023, 25: 46630766, 28: 53170943, 30: 57735027, 32: 62486935, 35: 70020754, 38: 78128563, 40: 83909963, 42: 90040404, 48: 111061251, 50: 119175359, 52: 127994163, 55: 142814801, 58: 160033453, 60: 173205081, 62: 188072647, 65: 214450692}"
+      },
+      {
+       "name": "a",
+       "choice": [
+        20,
+        25,
+        28,
+        30,
+        32,
+        35,
+        38,
+        40,
+        42,
+        48,
+        50,
+        52,
+        55,
+        58,
+        60,
+        62,
+        65
+       ]
+      },
+      {
+       "name": "h",
+       "choice": [
+        24,
+        30,
+        36,
+        40,
+        45,
+        48,
+        50,
+        54,
+        60,
+        65,
+        72,
+        75,
+        80,
+        90,
+        96,
+        100,
+        120
+       ]
+      },
+      {
+       "name": "t",
+       "let": "tantable[a]"
+      },
+      {
+       "name": "dist",
+       "let": "h * 100000000 / t"
+      },
+      {
+       "require": "abs(dist - floor(dist) - 1/2) > 1/10",
+       "why": "The exact distance must not sit near a half metre, so rounding to the nearest metre is the same for the key and for a solver's calculator."
+      },
+      {
+       "require": "dist >= 12 and dist <= 300",
+       "why": "Keep the distance a believable size for a block of flats and a tower."
+      }
+     ],
+     "constraints": [],
+     "stem": "Sipho stands on the roof of a block of flats that is ${=h}$ m high. From there he looks down at the base of a cellphone tower that stands on the same level ground as the block. The angle of depression of the base of the tower, from Sipho, is ${=a}^\\circ$. How far is the base of the tower from the base of the block of flats, to the nearest metre? (Treat Sipho as a point on the roof.)",
+     "answer": "floor(dist + 1/2)",
+     "solution": [
+      "Draw a horizontal line from Sipho on the roof. The angle of depression, ${=a}^\\circ$, is measured from this horizontal line down to his line of sight to the base of the tower. It is not measured from the vertical.",
+      "The horizontal line is parallel to the ground, so the vertical drop from it to the base of the tower equals the height of the block, ${=h}$ m. Let $d$ be the horizontal distance from the block to the tower. The right-angled triangle has the angle ${=a}^\\circ$ at Sipho, the side of ${=h}$ m opposite it, and the side $d$ adjacent to it.",
+      "$\\begin{aligned}\\tan {=a}^{\\circ}&=\\frac{{=h}}{d}\\\\d&=\\frac{{=h}}{\\tan {=a}^{\\circ}}\\\\&\\approx {=fixed(dist, 2)}\\end{aligned}$",
+      "To the nearest metre, the base of the tower is ${=floor(dist + 1/2)}$ m from the base of the block of flats."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Modelled on the angle-of-depression triangle CBD in we04 (p. 395): a horizontal line from the observer, the angle of depression measured down from it, the vertical side equal to the height of the block because the lines are parallel (the book's rectangle CABD argument), and tan = opposite / adjacent with the horizontal side adjacent. No alternate angles are used, so the method is the book's own. Context follows we04 (a block of flats and a cellphone tower) but here the height is given and the distance is wanted, so the step is d = h / tan a, the division form the book also uses in ex11-2-20 and ex11-2-3. This is the only family of the two that treats depression, because the book's only depression exercise is advanced and the entry-level step for that half of the objective was missing. Same precomputed tan table scaled by 10^8 as the sibling family, since the language has no trig. The first require keeps the exact distance more than 0.1 away from a half metre; I checked every surviving pair against math.tan and the nearest-metre key and the two-decimal display never disagreed. 45 degrees is left out. About 227 of 289 combinations survive; distances run from about 13 m to 275 m. No distractors because the answer is numeric."
+    }
+   ],
+   "infeasible": [],
+   "notes": "Only the basic tier was listed as a gap, so I wrote two basic families rather than one, because the objective names both angles and the book's only depression exercise (we04) is advanced. Family 1 (elevation, find a height, parent ex11-2-8b) and family 2 (depression, find a distance, parent we04) share one solution idea (tan = opposite / adjacent) but differ in the angle type and in whether the unknown is multiplied or divided by tan. Standard and advanced tiers are already represented by the four book questions, so I did not add families there. I did not write an identification mcq (which angle is the angle of elevation) because without a sketch the options would be prose descriptions that a student could not tell apart without a figure, and the catalogued misconception (trusting the sketch) cannot attach to a text-only option; both families instead name the angle and its reference line in the first solution step. The expression language has no trigonometric functions, so tan values come from an integer table scaled by 10^8 inside a let param; all parameter combinations were checked offline in Python against math.tan with a rounding-boundary margin of at least 0.1 of the last printed digit."
+  }
+ ],
+ "revised": []
+}

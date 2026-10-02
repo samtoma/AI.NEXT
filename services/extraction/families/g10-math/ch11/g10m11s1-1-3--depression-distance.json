@@ -1,0 +1,88 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m11s1-1-3:depression-distance",
+ "kind": "family",
+ "lo_id": "lo:g10m11s1-1-3",
+ "parent_question_id": "q:g10m11s1-1-3:we04",
+ "source_page": 395,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": "Sipho stands on the roof of a block of flats and looks down at the base of a cellphone tower on the same level ground. The height of the block and the angle of depression are given and the horizontal distance to the tower is wanted.",
+ "params": [
+  {
+   "name": "tantable",
+   "let": "{20: 36397023, 25: 46630766, 28: 53170943, 30: 57735027, 32: 62486935, 35: 70020754, 38: 78128563, 40: 83909963, 42: 90040404, 48: 111061251, 50: 119175359, 52: 127994163, 55: 142814801, 58: 160033453, 60: 173205081, 62: 188072647, 65: 214450692}"
+  },
+  {
+   "name": "a",
+   "choice": [
+    20,
+    25,
+    28,
+    30,
+    32,
+    35,
+    38,
+    40,
+    42,
+    48,
+    50,
+    52,
+    55,
+    58,
+    60,
+    62,
+    65
+   ]
+  },
+  {
+   "name": "h",
+   "choice": [
+    24,
+    30,
+    36,
+    40,
+    45,
+    48,
+    50,
+    54,
+    60,
+    65,
+    72,
+    75,
+    80,
+    90,
+    96,
+    100,
+    120
+   ]
+  },
+  {
+   "name": "t",
+   "let": "tantable[a]"
+  },
+  {
+   "name": "dist",
+   "let": "h * 100000000 / t"
+  },
+  {
+   "require": "abs(dist - floor(dist) - 1/2) > 1/10",
+   "why": "The exact distance must not sit near a half metre, so rounding to the nearest metre is the same for the key and for a solver's calculator."
+  },
+  {
+   "require": "dist >= 12 and dist <= 300",
+   "why": "Keep the distance a believable size for a block of flats and a tower."
+  }
+ ],
+ "constraints": [],
+ "stem": "Sipho stands on the roof of a block of flats that is ${=h}$ m high. From there he looks down at the base of a cellphone tower that stands on the same level ground as the block. The angle of depression of the base of the tower, from Sipho, is ${=a}^\\circ$. How far is the base of the tower from the base of the block of flats, to the nearest metre? (Treat Sipho as a point on the roof.)",
+ "answer": "floor(dist + 1/2)",
+ "solution": [
+  "Draw a horizontal line from Sipho on the roof. The angle of depression, ${=a}^\\circ$, is measured from this horizontal line down to his line of sight to the base of the tower. It is not measured from the vertical.",
+  "The horizontal line is parallel to the ground, so the vertical drop from it to the base of the tower equals the height of the block, ${=h}$ m. Let $d$ be the horizontal distance from the block to the tower. The right-angled triangle has the angle ${=a}^\\circ$ at Sipho, the side of ${=h}$ m opposite it, and the side $d$ adjacent to it.",
+  "$\\begin{aligned}\\tan {=a}^{\\circ}&=\\frac{{=h}}{d}\\\\d&=\\frac{{=h}}{\\tan {=a}^{\\circ}}\\\\&\\approx {=fixed(dist, 2)}\\end{aligned}$",
+  "To the nearest metre, the base of the tower is ${=floor(dist + 1/2)}$ m from the base of the block of flats."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Modelled on the angle-of-depression triangle CBD in we04 (p. 395): a horizontal line from the observer, the angle of depression measured down from it, the vertical side equal to the height of the block because the lines are parallel (the book's rectangle CABD argument), and tan = opposite / adjacent with the horizontal side adjacent. No alternate angles are used, so the method is the book's own. Context follows we04 (a block of flats and a cellphone tower) but here the height is given and the distance is wanted, so the step is d = h / tan a, the division form the book also uses in ex11-2-20 and ex11-2-3. This is the only family of the two that treats depression, because the book's only depression exercise is advanced and the entry-level step for that half of the objective was missing. Same precomputed tan table scaled by 10^8 as the sibling family, since the language has no trig. The first require keeps the exact distance more than 0.1 away from a half metre; I checked every surviving pair against math.tan and the nearest-metre key and the two-decimal display never disagreed. 45 degrees is left out. About 227 of 289 combinations survive; distances run from about 13 m to 275 m. No distractors because the answer is numeric."
+}

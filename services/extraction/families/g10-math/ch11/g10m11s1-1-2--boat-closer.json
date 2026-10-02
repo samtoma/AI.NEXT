@@ -1,0 +1,125 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m11s1-1-2:boat-closer",
+ "kind": "family",
+ "lo_id": "lo:g10m11s1-1-2",
+ "parent_question_id": "q:g10m11s1-1-2:ex11-2-2a",
+ "source_page": 398,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": "Captain Jack sails his boat straight towards a cliff. The angle of elevation of the top of the cliff is measured from the boat at two different distances from the bottom of the cliff.",
+ "params": [
+  {
+   "name": "h",
+   "randint": [
+    8,
+    20
+   ]
+  },
+  {
+   "name": "d1",
+   "randint": [
+    36,
+    60
+   ]
+  },
+  {
+   "name": "d2",
+   "randint": [
+    12,
+    28
+   ]
+  },
+  {
+   "name": "ctab",
+   "let": "[float(v) for v in [1.0, 0.9998476952, 0.999390827, 0.9986295348, 0.9975640503, 0.9961946981, 0.9945218954, 0.9925461516, 0.9902680687, 0.9876883406, 0.984807753, 0.9816271834, 0.9781476007, 0.9743700648, 0.9702957263, 0.9659258263, 0.9612616959, 0.956304756, 0.9510565163, 0.9455185756, 0.9396926208, 0.9335804265, 0.9271838546, 0.9205048535, 0.9135454576, 0.906307787, 0.8987940463, 0.8910065242, 0.8829475929, 0.8746197071, 0.8660254038, 0.8571673007, 0.8480480962, 0.8386705679, 0.8290375726, 0.8191520443, 0.8090169944, 0.79863551, 0.7880107536, 0.7771459615, 0.7660444431, 0.7547095802, 0.7431448255, 0.7313537016, 0.7193398003, 0.7071067812, 0.6946583705, 0.6819983601, 0.6691306064, 0.656059029, 0.6427876097, 0.629320391, 0.6156614753, 0.6018150232, 0.5877852523, 0.5735764364, 0.5591929035, 0.544639035, 0.5299192642, 0.5150380749, 0.5, 0.4848096202, 0.4694715628, 0.4539904997, 0.4383711468, 0.4226182617, 0.4067366431, 0.3907311285, 0.3746065934, 0.3583679495, 0.3420201433, 0.3255681545, 0.3090169944, 0.2923717047, 0.2756373558, 0.2588190451, 0.2419218956, 0.2249510543, 0.2079116908, 0.1908089954, 0.1736481777, 0.156434465, 0.139173101, 0.1218693434, 0.1045284633, 0.0871557427, 0.0697564737, 0.0523359562, 0.0348994967, 0.0174524064, 0.0]]"
+  },
+  {
+   "name": "ttab",
+   "let": "[ctab[90 - j] / ctab[j] for j in range(0, 89)]"
+  },
+  {
+   "name": "r1",
+   "let": "float(h) / d1"
+  },
+  {
+   "name": "r2",
+   "let": "float(h) / d2"
+  },
+  {
+   "name": "k1",
+   "let": "len([1 for v in ttab if v <= r1]) - 1"
+  },
+  {
+   "name": "t1",
+   "let": "ttab[k1]"
+  },
+  {
+   "name": "u1",
+   "let": "(r1 - t1) / (1 + r1 * t1)"
+  },
+  {
+   "name": "th1",
+   "let": "k1 + 57.29577951308232 * (u1 - u1 ** 3 / 3 + u1 ** 5 / 5)"
+  },
+  {
+   "name": "k2",
+   "let": "len([1 for v in ttab if v <= r2]) - 1"
+  },
+  {
+   "name": "t2",
+   "let": "ttab[k2]"
+  },
+  {
+   "name": "u2",
+   "let": "(r2 - t2) / (1 + r2 * t2)"
+  },
+  {
+   "name": "th2",
+   "let": "k2 + 57.29577951308232 * (u2 - u2 ** 3 / 3 + u2 ** 5 / 5)"
+  },
+  {
+   "name": "diff",
+   "let": "th2 - th1"
+  },
+  {
+   "name": "y",
+   "let": "diff * 10"
+  },
+  {
+   "name": "f",
+   "let": "y - floor(y)"
+  },
+  {
+   "require": "abs(f - 0.5) >= 0.2",
+   "why": "the increase is at least 0.02 degrees away from a one-decimal rounding boundary"
+  },
+  {
+   "name": "a1",
+   "let": "float(floor(th1 * 100 + 0.5)) / 100"
+  },
+  {
+   "name": "a2",
+   "let": "float(floor(th2 * 100 + 0.5)) / 100"
+  },
+  {
+   "name": "dd",
+   "let": "a2 - a1"
+  },
+  {
+   "require": "floor(dd * 10 + 0.5) == floor(diff * 10 + 0.5)",
+   "why": "subtracting the two angles after rounding each to two decimals gives the same one-decimal answer"
+  }
+ ],
+ "constraints": [],
+ "stem": "Captain Jack is sailing his boat towards a cliff that is $\\text{{=h}}$ $\\text{m}$ high. The boat is at the same level as the bottom of the cliff. At first the boat is $\\text{{=d1}}$ $\\text{m}$ from the bottom of the cliff, and later it is $\\text{{=d2}}$ $\\text{m}$ from the bottom of the cliff. By how many degrees does the angle of elevation of the top of the cliff, measured from the boat, increase between the two positions? Do not round off either angle before you subtract. Give your answer correct to one decimal place.",
+ "answer": "fixed(diff, 1)",
+ "solution": [
+  "Sketch a right-angled triangle for each position of the boat. The height of the cliff is opposite the angle of elevation and the distance from the boat to the bottom of the cliff is adjacent to it, so use the tangent ratio each time.",
+  "First position: $\\tan x_1 = \\frac{{=h}}{{=d1}}$, so $x_1 = \\tan^{-1}\\left(\\frac{{=h}}{{=d1}}\\right) = {=fixed(th1, 2)}^{\\circ}$.",
+  "Second position: $\\tan x_2 = \\frac{{=h}}{{=d2}}$, so $x_2 = \\tan^{-1}\\left(\\frac{{=h}}{{=d2}}\\right) = {=fixed(th2, 2)}^{\\circ}$.",
+  "The angle of elevation increases by $x_2 - x_1 = {=fixed(th2, 2)}^{\\circ} - {=fixed(th1, 2)}^{\\circ} = {=fixed(dd, 2)}^{\\circ}$, which is ${=fixed(diff, 1)}^{\\circ}$ correct to one decimal place."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Two applications of the book's angle-of-elevation method (ex11-2-2a, p. 398, Captain Jack and the cliff), then a subtraction: the objective's several-step exercise. The context stays the book's (Captain Jack, the cliff, metres); the stem adds one sentence saying the boat is level with the bottom of the cliff, which the book's own sketch assumes. The stem forbids rounding either angle before subtracting; the key is computed unrounded, and the requires keep each instance at least 0.02 degrees from a one-decimal rounding boundary and make the round-to-two-decimals-then-subtract route agree with the key. The template language has no inverse trig, so each angle comes from a 1-degree table (cosine, generated with Python, 10 decimals), the tan addition formula and a short arctan series; emulated in Python and checked against math.atan on 3000 draws, error under 1e-7 degrees. Acceptance is about 60 percent per attempt. Both families are numeric, so no distractors; the two catalogued misconceptions (wrong-angle naming, rounding too coarsely) are not exercised here."
+}
