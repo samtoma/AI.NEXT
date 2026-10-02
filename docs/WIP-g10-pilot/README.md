@@ -372,7 +372,7 @@ none in a file this work touched. `scripts/traceability.py --check` OK.
 7. **Spec Kit**: the working checker (answer 30) needs its FR/traceability lines (tech-writer).
 8. **CHECK LATER (Samuel, 2026-10-02, decision 65): lesson `g10m13s1-1` (13.1, area) has ONE objective, by ruling.**
    G1's rule 4 wants 2 to 5; `lo:g10m13s1-1-2` (area as an algebraic expression) had exercise evidence only and was
-   dropped by an orchestrator (AI) ruling, its 8 items re-homed to `lo:g10m13s1-1-1`. Samuel allowed one objective
+   dropped by an orchestrator (AI) ruling, its 7 items re-homed to `lo:g10m13s1-1-1` (as was `Ex13-7:27a`, which no mapper placed). Samuel allowed one objective
    after a ruling, with a note to check it later: is 13.1 really one objective, or should it get a second (a new S1
    run for the lesson) or merge with a neighbour? Recorded as `check_later` in `objectives/g10-math/ch13.check.json`
    and `g10m13s1-1.json`, and first in the `for_review` list of `runs/g10-math/gates/g1-ch13.json`.
