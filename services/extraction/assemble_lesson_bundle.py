@@ -295,7 +295,8 @@ def normalise_pairs(text: str | None) -> tuple[str | None, Counter]:
 # (1,2 = 1.2), and the coverage audit's `notation` check (RESIDUAL_DECIMAL) refuses it for that reason. Inside a set's braces
 # a comma IS a list separator, so there, and only there, the missing space is added (Grade 10 Chapter 14, 2026-10-02).
 _EXPLICIT_SPACE = re.compile(r"\\(?:q?quad|enspace|hspace|thinspace|medspace|thickspace|negthinspace)(?![A-Za-z])")
-_SET_BUILDER = ("\\mid", "\\vert", "\\colon", "|", ":")
+_SET_BUILDER = ("\\mid", "\\vert", "\\colon")
+_TEX_TOKEN = re.compile(r"\\(?:[A-Za-z]+|.)", re.DOTALL)
 
 
 def _comma_wants_space(text: str, i: int) -> bool:
@@ -349,15 +350,10 @@ def set_list_commas(text: str) -> list[int]:
                 close("set")
                 i += 2
             else:
-                m = re.match(r"\\[A-Za-z]+|\\.", text[i:])
-                tok = m.group(0)
-                if tok in _SET_BUILDER:
-                    for fr in reversed(stack):
-                        if fr[0] == "set":
-                            fr[2] = True
-                            break
-                        if fr[0] != "pair":
-                            break
+                m = _TEX_TOKEN.match(text, i)
+                tok = m.group(0) if m else "\\"
+                if tok in _SET_BUILDER and stack and stack[-1][0] == "set":
+                    stack[-1][2] = True
                 i += len(tok)
             continue
         if ch == "{":
@@ -391,7 +387,9 @@ def space_set_lists(text: str | None) -> tuple[str | None, Counter]:
     if not positions:
         return text, counts
     counts["set_list"] += len(positions)
-    return "".join(", " if i in positions else c for i, c in ((i, c) for i, c in enumerate(text))).replace(",  ", ", "), counts
+    for p in reversed(positions):
+        text = text[:p + 1] + " " + text[p + 1:]
+    return text, counts
 
 
 _MATH_WRAPPED = re.compile(r"^\s*(\${1,2})([^$]+)\1\s*$")

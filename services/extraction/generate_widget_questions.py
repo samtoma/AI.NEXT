@@ -1860,10 +1860,11 @@ def only_lessons(args: dict, lessons) -> dict:
 NORMALISED = "PIPELINE NORMALISATION (not an author edit)"
 
 
-def _template_pairs(text):
-    """`assemble_lesson_bundle.normalise_pairs` over one template string, its `{=…}` holes set aside (a pair may run
-    through them: "({=x}; {=y})"). A string with no `;`, a non-string, and a string that does not scan are returned as they are."""
-    if not isinstance(text, str) or ";" not in text:
+def _masked(text, rule, trigger):
+    """`rule` (a text -> (text, counts) function of assemble_lesson_bundle) over one template string, its `{=…}` holes set
+    aside (a list or a pair may run through them: "({=x}; {=y})", "\\{{=a},{=b}\\}"). A string without `trigger` in it, a
+    non-string, and a string that does not scan are returned as they are."""
+    if not isinstance(text, str) or not all(t in text for t in trigger):
         return text
     from families import evaluator as FE
     import assemble_lesson_bundle as alb
@@ -1877,19 +1878,34 @@ def _template_pairs(text):
         holes.append(text[a:b])
         last = b
     out.append(text[last:])
-    masked = alb.normalise_pairs("".join(out))[0]
+    masked = rule(alb, "".join(out))
     for i, h in enumerate(holes):
         masked = masked.replace(f"\x00{i}\x00", h)
     return masked
 
 
-def _pair_notation(out: dict) -> list[str]:
-    """Rewrite `out`'s student-facing strings in place; the places that changed ("stem", "solution step 4", …)."""
+def _template_pairs(text):
+    """`assemble_lesson_bundle.normalise_pairs` over one template string (`_masked`): the book's `(x; y)` written `(x, y)`."""
+    return _masked(text, lambda alb, t: alb.normalise_pairs(t)[0], (";",))
+
+
+def _template_sets(text):
+    """`assemble_lesson_bundle.space_set_lists` over one template string (`_masked`): `\\{1,2,3\\}` written `\\{1, 2, 3\\}`."""
+    return _masked(text, lambda alb, t: alb.space_set_lists(t)[0], ("\\{", ","))
+
+
+def _template_notation(text):
+    """Both notation rules, as `normalise_template` applies them: what a verified solution step becomes."""
+    return _template_sets(_template_pairs(text))
+
+
+def _notation(out: dict, rule) -> list[str]:
+    """Rewrite `out`'s student-facing strings with `rule` in place; the places that changed ("stem", "solution step 4", …)."""
     where: list[str] = []
 
     def fix(v, path, label):
         if isinstance(v, str):
-            w = _template_pairs(v)
+            w = rule(v)
             if w != v:
                 where.append(label)
             return w
@@ -1905,6 +1921,14 @@ def _pair_notation(out: dict) -> list[str]:
     return where
 
 
+def _pair_notation(out: dict) -> list[str]:
+    return _notation(out, _template_pairs)
+
+
+def _set_notation(out: dict) -> list[str]:
+    return _notation(out, _template_sets)
+
+
 def normalise_template(raw: dict, graph) -> tuple[dict, list[str]]:
     """The template with the normalisations applied, and what was done (empty: nothing to do)."""
     import copy
@@ -1914,6 +1938,11 @@ def normalise_template(raw: dict, graph) -> tuple[dict, list[str]]:
     if notation:
         done.append("coordinate-notation: the book's (x; y) written (x, y) in " + ", ".join(notation)
                     + " (assemble_lesson_bundle.normalise_pairs, the rule every book question goes through; decision 15)")
+    sets = _set_notation(out)
+    if sets:
+        done.append("set-list-spacing: an unspaced comma between a set's elements written ', ' in " + ", ".join(sets)
+                    + " (assemble_lesson_bundle.space_set_lists: \\{1,2,3\\} is \\{1, 2, 3\\}, the American course's list; "
+                    "an unspaced 1,2 reads as the book's decimal comma)")
     ds = [d for d in out.get("diagnostics") or [] if isinstance(d, dict)]
     mcs = graph.misconceptions()
     allowed = graph.closure(out.get("lo_id"))
@@ -1941,7 +1970,7 @@ def normalise_template(raw: dict, graph) -> tuple[dict, list[str]]:
         out["diagnostics"] = ds
         stamp = f"{NORMALISED}: " + "; ".join(done) + "."
         out["notes"] = (out.get("notes") or "").rstrip() + ("\n\n" if out.get("notes") else "") + stamp
-        if (later or notation) and "verified_as" not in raw:
+        if (later or notation or sets) and "verified_as" not in raw:
             before = {k: v for k, v in raw.items() if k != "_sha"}
             out["verified_as"] = {"sha": template_sha(before), "template": copy.deepcopy(before)}
     return out, done
