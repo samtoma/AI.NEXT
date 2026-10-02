@@ -1,0 +1,532 @@
+{
+  "format": "ainext.widget-gaps/1",
+  "book": "g10-math",
+  "course_id": "course:us-g10-math-en",
+  "rule": "FR-4306 / FR-1201: every chapter has at least one widget question, or a gap a human has signed. A new kind is built only after Samuel approves it (decision 11, T356).",
+  "chapters": [
+    {
+      "module": "module:g10m-c01",
+      "label": "Chapter 1 — Algebraic expressions",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c02",
+      "label": "Chapter 2 — Exponents",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c03",
+      "label": "Chapter 3 — Number patterns",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c04",
+      "label": "Chapter 4 — Equations and inequalities",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c05",
+      "label": "Chapter 5 — Trigonometry",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c06",
+      "label": "Chapter 6 — Functions",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c07",
+      "label": "Chapter 7 — Euclidean geometry",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c08",
+      "label": "Chapter 8 — Analytical geometry",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c09",
+      "label": "Chapter 9 — Finance and growth",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c10",
+      "label": "Chapter 10 — Statistics",
+      "status": "covered",
+      "widgets": 7,
+      "kinds": [
+        "bar_builder",
+        "box_plot_builder"
+      ],
+      "objectives_with_widgets": [
+        "lo:g10m10s2-1-4",
+        "lo:g10m10s4-1-2",
+        "lo:g10m10s4-1-4",
+        "lo:g10m10s5-1-1"
+      ],
+      "gaps": 12
+    },
+    {
+      "module": "module:g10m-c11",
+      "label": "Chapter 11 — Trigonometry",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c12",
+      "label": "Chapter 12 — Euclidean geometry",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c13",
+      "label": "Chapter 13 — Measurements",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c14",
+      "label": "Chapter 14 — Probability",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    }
+  ],
+  "uncovered_chapters": [
+    "module:g10m-c01",
+    "module:g10m-c02",
+    "module:g10m-c03",
+    "module:g10m-c04",
+    "module:g10m-c05",
+    "module:g10m-c06",
+    "module:g10m-c07",
+    "module:g10m-c08",
+    "module:g10m-c09",
+    "module:g10m-c11",
+    "module:g10m-c12",
+    "module:g10m-c13",
+    "module:g10m-c14"
+  ],
+  "proposed_kinds": {
+    "data_classifier (a decision-tree sorter with a 'can a value sit between?' probe)": {
+      "modules": [
+        "module:g10m-c10"
+      ],
+      "objectives": [
+        "lo:g10m10s1-1-1"
+      ],
+      "why": [
+        "None of the 17 existing kinds classifies a data set by type. bar_builder builds a set to hit a mean, median, mode or range, so it needs the type already known. number_line_marker grades a set of marked values or an interval, not a label for the data. venn_builder shades regions for the fixed targets union, intersection, aOnly and complement, which have nothing to do with discrete versus continuous. Using any of them here would be an answer box in disguise: the student would still just pick discrete or continuous, with no construction to show why."
+      ]
+    },
+    "data_classifier (the same sorter, run on word-valued data sets: categories versus stories)": {
+      "modules": [
+        "module:g10m-c10"
+      ],
+      "objectives": [
+        "lo:g10m10s1-1-2"
+      ],
+      "why": [
+        "No existing kind gets the student to sort data into categorical and anecdotal. venn_builder shades regions of a fixed diagram, but it takes the sets as given and never asks the student to decide which kind of data they hold. Its predicates (overlap-counted-twice, intersection-for-union and so on) cannot name any of this objective's misconceptions. The other kinds work on numbers, points, lines or shapes, and this data is words. Any attempt would reduce to a multiple-choice label, which the contract rules out as an answer box in disguise."
+      ]
+    },
+    "measures_in_context probe (a continuous-data summary widget)": {
+      "modules": [
+        "module:g10m-c10"
+      ],
+      "objectives": [
+        "lo:g10m10s2-1-2"
+      ],
+      "why": [
+        "bar_builder grades ONE statistic on whole-number bars 0 to 10 with n of 3 to 8, so it cannot show continuous measurements, cannot hold a stated requirement, cannot compare two statistics in one question, and has no judgement step. It would be a stretch to make 'build a set with mean T' stand in for interpreting measures in context. The objective also has no anchor book question in the graph, so no parent_question_id could be named for any template."
+      ]
+    },
+    "outlier_balance (before-and-after mean and median on a fixed data set)": {
+      "modules": [
+        "module:g10m-c10"
+      ],
+      "objectives": [
+        "lo:g10m10s2-1-3"
+      ],
+      "why": [
+        "The objective is a before-and-after comparison on the same data, which needs a fixed base set and an added value. bar_builder builds a whole set from scratch, grades one statistic, and its bars stop at 10, so a genuine outlier cannot exist. box_plot_builder deals with outliers only as whiskers on a five-number summary (a different objective). The objective has no anchor book question and no registered misconceptions, so no template could name a parent or a diagnostic."
+      ]
+    },
+    "histogram_builder (mode: bin)": {
+      "modules": [
+        "module:g10m-c10"
+      ],
+      "objectives": [
+        "lo:g10m10s3-1-1"
+      ],
+      "why": [
+        "No existing kind builds a frequency-per-range chart. bar_builder's bars ARE the data values (0 to 10) and it reports mean, median, mode and range, so a bar there is a value, not a count of values in a range, and nothing about ranges or edge values can be diagnosed. number_line_marker (points mode) could ask the student to tap which distinct values lie in a range, but a set loses the repeats that a frequency is made of, never produces a count or a column, and its predicates (missed-values, extra-values) cannot tell an edge-value slip from any other. That would be an answer box in disguise, not the grouping the objective is about."
+      ]
+    },
+    "histogram_builder (mode: check, with a match variant)": {
+      "modules": [
+        "module:g10m-c10"
+      ],
+      "objectives": [
+        "lo:g10m10s3-1-2"
+      ],
+      "why": [
+        "The anchor questions (ex10-3-1 to ex10-3-8) are all histogram reading, error-finding and matching, and the histogram is the whole instrument. No existing kind draws or edits one. bar_builder's bars are data values, not range counts, and has no notion of a range; box_plot_builder places a five-number summary for raw data; number_line_marker has no columns. Using any of them would mean the student is not looking at a histogram at all."
+      ]
+    },
+    "histogram_builder (mode: centre)": {
+      "modules": [
+        "module:g10m-c10"
+      ],
+      "objectives": [
+        "lo:g10m10s3-1-3"
+      ],
+      "why": [
+        "bar_builder computes the exact mean, median and mode of ungrouped values and has no range or midpoint at all, so it can only teach the thing this objective says the grouped estimate is not. number_line_marker could ask the student to mark each range's midpoint, but that tests only midpoint arithmetic (one step of the method) and none of its predicates (sign-flipped, missed-values, extra-values) can name the three misconceptions this objective actually owns. box_plot_builder is for raw data. A forced fit here would diagnose nothing the objective cares about."
+      ]
+    },
+    "outlier_probe (a dot strip of a given data set whose values the student can drag or remove, with range, median, mean and interquartile range updating live)": {
+      "modules": [
+        "module:g10m-c10"
+      ],
+      "objectives": [
+        "lo:g10m10s4-1-1"
+      ],
+      "why": [
+        "bar_builder with ask \"range\" exists, but the only predicate it can emit for that ask is off-target, and a build-to-target-range task fails for many reasons that are not the outlier misconception (range read as the maximum, an arithmetic slip, an extra bar left high). Mapping off-target to mc:g10m10s4-1-1:range-ignores-outlier-effect would be a forced fit. No other existing kind constructs anything about the spread of a data set."
+      ]
+    },
+    "cumulative_interval_locator (a cumulative-frequency strip over class intervals in which the student finds a percentile's rank and picks the interval it falls in)": {
+      "modules": [
+        "module:g10m-c10"
+      ],
+      "objectives": [
+        "lo:g10m10s4-1-3"
+      ],
+      "why": [
+        "No existing kind works with grouped data: bar_builder builds raw values, box_plot_builder takes ungrouped whole numbers, and number_line_marker's interval mode marks an inequality, not a class interval. The objective also has no anchor book question in the lesson file, so no template could name a parent."
+      ]
+    },
+    "box_plot_builder with the five number summary given instead of the data (a summary-input mode of the existing kind)": {
+      "modules": [
+        "module:g10m-c10"
+      ],
+      "objectives": [
+        "lo:g10m10s5-1-2"
+      ],
+      "why": [
+        "box_plot_builder always supplies the data and asks for the summary, so it fuses LO1's computing with the drawing and cannot isolate drawing a plot from a given five number summary. Separately, this objective has an empty anchor_questions list, so no template could be parented to a book question in any case: the book's draw-the-plot exercises need to be attached to lo:g10m10s5-1-2 first. Until then the two LO1 templates already exercise the drawing half, because the plot builds as the markers are placed. This is a modest gap, lower priority than LO3."
+      ]
+    },
+    "box_plot_reader: the instrument draws one box-and-whisker plot (or two to four stacked on one axis) on a labelled number line, and the student identifies its parts": {
+      "modules": [
+        "module:g10m-c10"
+      ],
+      "objectives": [
+        "lo:g10m10s5-1-3"
+      ],
+      "why": [
+        "The anchors (ex10-6-4a, ex10-6-4b, ex10-7-29b) all rest on a drawn plot, and reading a plot is the reverse of what box_plot_builder does: that kind goes from data to markers, so the student never meets a plot to read and neither of this objective's own misconceptions can arise in it. number_line_marker shows no plot and accepts at most 4 targets, while a five number summary has 5. Using box_plot_builder under lo:g10m10s5-1-3 would be an answer box in disguise, so it is a gap, not a template."
+      ]
+    }
+  },
+  "gaps": [
+    {
+      "module": "module:g10m-c10",
+      "lo_id": "lo:g10m10s1-1-1",
+      "need_kind": "data_classifier (a decision-tree sorter with a 'can a value sit between?' probe)",
+      "description": "The student is shown a data set from the lesson's own contexts (sweets in a packet, SMS messages sent, questions answered correctly, learners' heights in metres). They work down a two-level tree. Level 1: numbers or words, so quantitative or qualitative. Level 2, for quantitative data: discrete or continuous. To reach level 2 they must run a probe, not just pick a label. They choose two neighbouring values, such as 25 and 26 sweets or 1.60 m and 1.70 m, and try to insert a value between them that this variable could really take. The widget reports whether a legitimate in-between value exists: 25.5 sweets does not, 1.65 m does. The student then files the whole data set under discrete (counts, integers) or continuous (measurements, real numbers). Grading is on the property, so any correct filing is accepted whichever probe pair was used. Errors it would diagnose: calling a count continuous because the values are plain numbers (mc:g10m10s1-1-1:count-called-continuous), calling a measurement discrete because the list is short and looks like separate values (mc:g10m10s1-1-1:measurement-called-discrete), and refusing the quantitative branch altogether because the numbers come with a story about people (mc:g10m10s1-1-1:numbers-called-qualitative).",
+      "why": "None of the 17 existing kinds classifies a data set by type. bar_builder builds a set to hit a mean, median, mode or range, so it needs the type already known. number_line_marker grades a set of marked values or an interval, not a label for the data. venn_builder shades regions for the fixed targets union, intersection, aOnly and complement, which have nothing to do with discrete versus continuous. Using any of them here would be an answer box in disguise: the student would still just pick discrete or continuous, with no construction to show why.",
+      "source": "author-merged-ch10.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c10",
+      "lo_id": "lo:g10m10s1-1-2",
+      "need_kind": "data_classifier (the same sorter, run on word-valued data sets: categories versus stories)",
+      "description": "The student is shown a data set whose responses are words, such as cellular providers, sandwich spreads, or learners' dreams in their own sentences. They first test whether the responses can be written as numbers. This is a yes/no check run by the widget, and it rules out quantitative. Then they test whether the responses fall into a short list of named groups. They drag each response into a group they create, or into a 'does not fit a group' bin. If almost every response lands in one of a few shared groups, such as Vodacom, MTN, Cell C or Virgin Mobile, the data is categorical. If each response is a one-off sentence that needs its own group, the data is anecdotal. The widget counts groups against responses live, so the student sees why 'I want to build a bridge!' cannot be a category. They then file the data set under categorical or anecdotal. Errors it would diagnose: calling provider or spread choices anecdotal because people reported them (mc:g10m10s1-1-2:anecdotal-because-personal), calling sentences categorical just because they are words (mc:g10m10s1-1-2:categorical-for-any-words), picking discrete or continuous for word data (mc:g10m10s1-1-2:quantitative-for-words), and stopping at 'qualitative' without taking the second step (mc:g10m10s1-1-2:stops-at-qualitative, fired when the student tries to submit before filing a sub-type).",
+      "why": "No existing kind gets the student to sort data into categorical and anecdotal. venn_builder shades regions of a fixed diagram, but it takes the sets as given and never asks the student to decide which kind of data they hold. Its predicates (overlap-counted-twice, intersection-for-union and so on) cannot name any of this objective's misconceptions. The other kinds work on numbers, points, lines or shapes, and this data is words. Any attempt would reduce to a multiple-choice label, which the contract rules out as an answer box in disguise.",
+      "source": "author-merged-ch10.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c10",
+      "lo_id": "lo:g10m10s2-1-2",
+      "need_kind": "measures_in_context probe (a continuous-data summary widget)",
+      "description": "A context with a stated requirement (for example loaf masses, with a rule that the bread must average at least a given mass) and a handful of CONTINUOUS measurements drawn as dots on a number line. The student drags one marker to the mean, which shows as the balance point of the dots, and a second marker to the median, the middle once ordered, then judges whether the requirement is met. A third step asks for a mode: the widget shows that no measurement repeats (or that a repeat is coincidence), so a mode is not a useful summary of continuous data. Diagnoses: the mean and median markers placed at the same spot, or one copied from the other (expects-mean-equals-median); a repeated or nearest-looking value picked as the mode (mode-of-continuous-data); the requirement judged by the wrong measure.",
+      "why": "bar_builder grades ONE statistic on whole-number bars 0 to 10 with n of 3 to 8, so it cannot show continuous measurements, cannot hold a stated requirement, cannot compare two statistics in one question, and has no judgement step. It would be a stretch to make 'build a set with mean T' stand in for interpreting measures in context. The objective also has no anchor book question in the graph, so no parent_question_id could be named for any template.",
+      "source": "author-merged-ch10.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c10",
+      "lo_id": "lo:g10m10s2-1-3",
+      "need_kind": "outlier_balance (before-and-after mean and median on a fixed data set)",
+      "description": "A fixed base data set shown as dots on a number line with live mean and median markers, plus ONE extra draggable value. The student drags the new value out to an extreme and watches the two markers: the mean follows it, the median hardly moves. Graded on a property, for example 'choose a value that raises the mean by at least 5 while the median moves by at most one place', then 'which measure was less affected?'. Errors it would diagnose (these need registering on the objective first): the median believed to move as much as the mean; the mean believed unaffected by one extreme value; the outlier dropped from the data instead of included, so no before-and-after comparison is made.",
+      "why": "The objective is a before-and-after comparison on the same data, which needs a fixed base set and an added value. bar_builder builds a whole set from scratch, grades one statistic, and its bars stop at 10, so a genuine outlier cannot exist. box_plot_builder deals with outliers only as whiskers on a five-number summary (a different objective). The objective has no anchor book question and no registered misconceptions, so no template could name a parent or a diagnostic.",
+      "source": "author-merged-ch10.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c10",
+      "lo_id": "lo:g10m10s3-1-1",
+      "need_kind": "histogram_builder (mode: bin)",
+      "description": "The widget shows a raw data set of about 20 whole numbers, never pre-sorted, with several values deliberately sitting on range edges (4 and 7 when the ranges are 0 to 3, 4 to 7, 8 to 11). The ranges are written with the book's inequality signs, for example $4 \\le x \\le 7$. The student drags each value token into the range it belongs to, or sets each column's height, and a histogram builds live under her hands, with the total count shown against $n$. Grading is on the property (every range holds exactly the values its inequality admits), so any order of placing the tokens is correct. It must also take the left-open form the book uses for continuous data, $700 < x \\le 800$, where the edge rule is different. Diagnostics: an edge value placed in the neighbouring range, so one column is one too many and its neighbour one too few, maps to mc:g10m10s3-1-1:boundary-value-in-wrong-range. A second predicate, column heights that no longer sum to $n$ (a value dropped or counted twice), would have no misconception on this objective and would be left unmapped.",
+      "why": "No existing kind builds a frequency-per-range chart. bar_builder's bars ARE the data values (0 to 10) and it reports mean, median, mode and range, so a bar there is a value, not a count of values in a range, and nothing about ranges or edge values can be diagnosed. number_line_marker (points mode) could ask the student to tap which distinct values lie in a range, but a set loses the repeats that a frequency is made of, never produces a count or a column, and its predicates (missed-values, extra-values) cannot tell an edge-value slip from any other. That would be an answer box in disguise, not the grouping the objective is about.",
+      "source": "author-merged-ch10.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c10",
+      "lo_id": "lo:g10m10s3-1-2",
+      "need_kind": "histogram_builder (mode: check, with a match variant)",
+      "description": "The widget draws the histogram itself, so the question never points at a [figure], and shows the raw data beside it. In check mode one column has been drawn wrongly (the book's own pattern: one column off by one, or a column of height 0 where values exist). The student taps the incorrect column and may then drag its top to the right height; the instrument shows each range's inequality and highlights the data values that fall in it as she hovers. In match mode the student is given a histogram and builds a small data set of $n$ values (tokens on a 0 to 20 line) that would produce it, graded on the count per range, so every valid data set is accepted. Diagnostics: tapping or editing the neighbour of the faulty column, or sorting an edge value into the adjacent range when matching, maps to mc:g10m10s3-1-2:edge-number-in-wrong-range. Reading height as size of the values (one token whose value equals the column height, or putting the largest values under the tallest column) maps to mc:g10m10s3-1-2:tall-column-means-big-values.",
+      "why": "The anchor questions (ex10-3-1 to ex10-3-8) are all histogram reading, error-finding and matching, and the histogram is the whole instrument. No existing kind draws or edits one. bar_builder's bars are data values, not range counts, and has no notion of a range; box_plot_builder places a five-number summary for raw data; number_line_marker has no columns. Using any of them would mean the student is not looking at a histogram at all.",
+      "source": "author-merged-ch10.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c10",
+      "lo_id": "lo:g10m10s3-1-3",
+      "need_kind": "histogram_builder (mode: centre)",
+      "description": "The widget draws a histogram of grouped data (for example passengers per week in ranges of 100, as in ex10-4-3) with the counts readable. The student does three constructions on it. First, she taps the modal group (the tallest column), which asks the range, not a value. Second, she drags a marker along a running cumulative-count strip to the column that holds the middle (the $n/2$-th) value; the strip shows how many values lie below, so counting columns can be seen to differ from counting values. Third, she places one point at the centre of each range and the widget computes $\\sum f m / n$ live; a build variant asks her to set the column counts so the grouped estimate hits a target mean, and shows that many different raw data sets share one histogram but have different true means. Grading is on the property (the right group, the right midpoints, a total that matches the target). Diagnostics: choosing the middle column of the list as the median group maps to mc:g10m10s3-1-3:median-group-middle-of-the-list; asking for a single value when the modal group is wanted, or placing a point on one bar's top, maps to mc:g10m10s3-1-3:modal-group-vs-single-value; the build variant, where one raw set with the same grouped estimate gives a different exact mean, targets mc:g10m10s3-1-3:grouped-mean-taken-as-exact.",
+      "why": "bar_builder computes the exact mean, median and mode of ungrouped values and has no range or midpoint at all, so it can only teach the thing this objective says the grouped estimate is not. number_line_marker could ask the student to mark each range's midpoint, but that tests only midpoint arithmetic (one step of the method) and none of its predicates (sign-flipped, missed-values, extra-values) can name the three misconceptions this objective actually owns. box_plot_builder is for raw data. A forced fit here would diagnose nothing the objective cares about.",
+      "source": "author-merged-ch10.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c10",
+      "lo_id": "lo:g10m10s4-1-1",
+      "need_kind": "outlier_probe (a dot strip of a given data set whose values the student can drag or remove, with range, median, mean and interquartile range updating live)",
+      "description": "The student gets a small data set drawn as dots on a number line, one of them far from the rest. A task asks for an effect, for example: \"Move or remove ONE value so that the range falls from 18 to 6\", or \"Change the data so the range doubles but the median stays put\". The student drags or deletes dots and watches the statistics respond. The construction is graded on the property (the range ends at the target) and diagnoses: choosing a middle value, which cannot change the range (range-ignores-outlier-effect: the range is thought to depend on all the values); removing an extreme and expecting the range to stay the same; and moving the extreme the wrong way. Predicates would be things like middle-value-moved, extreme-removed-range-unchanged-expected and range-shrunk-too-little.",
+      "why": "bar_builder with ask \"range\" exists, but the only predicate it can emit for that ask is off-target, and a build-to-target-range task fails for many reasons that are not the outlier misconception (range read as the maximum, an arithmetic slip, an extra bar left high). Mapping off-target to mc:g10m10s4-1-1:range-ignores-outlier-effect would be a forced fit. No other existing kind constructs anything about the spread of a data set.",
+      "source": "author-merged-ch10.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c10",
+      "lo_id": "lo:g10m10s4-1-3",
+      "need_kind": "cumulative_interval_locator (a cumulative-frequency strip over class intervals in which the student finds a percentile's rank and picks the interval it falls in)",
+      "description": "The student is shown a grouped frequency table as a stacked strip, with the interval frequencies and the running cumulative count growing along it. For a stated percentile or quartile they place a marker at the rank given by the percentile formula and tap the class interval that contains it. The strip lights up the cumulative count under the marker, so the student sees why the answer is the interval whose cumulative count first reaches the rank, not the interval with the largest frequency. Predicates: used-frequency-not-cumulative (picked the interval whose own frequency is largest or covers the rank on its own), off-by-one-interval (rank equal to a cumulative total, so it lies on a boundary), and rank-from-total-not-formula (used P% of n as the rank without the percentile formula). It would diagnose the fractional-rank-rounded-to-one-value misconception in its grouped form.",
+      "why": "No existing kind works with grouped data: bar_builder builds raw values, box_plot_builder takes ungrouped whole numbers, and number_line_marker's interval mode marks an inequality, not a class interval. The objective also has no anchor book question in the lesson file, so no template could name a parent.",
+      "source": "author-merged-ch10.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c10",
+      "lo_id": "lo:g10m10s5-1-2",
+      "need_kind": "box_plot_builder with the five number summary given instead of the data (a summary-input mode of the existing kind)",
+      "description": "The stem states a five number summary, for example minimum 15, Q1 22, median 25, Q3 28, maximum 35. The student drags five markers (or drags the box edges, median line and whisker ends) onto a number line whose spacing is true to scale, and the plot draws itself as she places them. Any plot with those five values is accepted. Errors it would diagnose: the box drawn from minimum to maximum (the existing iqr-as-range predicate), the median line missing or placed at the middle of the box instead of at the median value, whiskers stopped at the quartiles, and the marks spaced evenly instead of by value (15, 22, 25, 28, 35 are not equally far apart).",
+      "why": "box_plot_builder always supplies the data and asks for the summary, so it fuses LO1's computing with the drawing and cannot isolate drawing a plot from a given five number summary. Separately, this objective has an empty anchor_questions list, so no template could be parented to a book question in any case: the book's draw-the-plot exercises need to be attached to lo:g10m10s5-1-2 first. Until then the two LO1 templates already exercise the drawing half, because the plot builds as the markers are placed. This is a modest gap, lower priority than LO3.",
+      "source": "author-merged-ch10.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c10",
+      "lo_id": "lo:g10m10s5-1-3",
+      "need_kind": "box_plot_reader: the instrument draws one box-and-whisker plot (or two to four stacked on one axis) on a labelled number line, and the student identifies its parts",
+      "description": "The widget itself draws the plot, since a question may never point at a [figure]. The student then either taps the part that shows the minimum, Q1, the median, Q3 or the maximum, or drags five name labels onto the matching marks and reads each value off the axis. Grading is on which part of the plot was chosen, not on a pixel position. A comparison mode stacks several plots on a shared axis, as in the book's detergent question, and asks what one marked value represents for one of them. Errors it would diagnose: the line inside the box labelled Q1 or Q3 (inner-line-read-as-box-edge), the line inside the box labelled the minimum or maximum (inner-line-read-as-extreme), the whisker ends and box ends swapped, and, in comparison mode, reading a longer box or whisker as a larger median.",
+      "why": "The anchors (ex10-6-4a, ex10-6-4b, ex10-7-29b) all rest on a drawn plot, and reading a plot is the reverse of what box_plot_builder does: that kind goes from data to markers, so the student never meets a plot to read and neither of this objective's own misconceptions can arise in it. number_line_marker shows no plot and accepts at most 4 targets, while a five number summary has 5. Using box_plot_builder under lo:g10m10s5-1-3 would be an answer box in disguise, so it is a gap, not a template.",
+      "source": "author-merged-ch10.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c10",
+      "lo_id": "lo:g10m10s2-1-4",
+      "need_kind": "no-diagnostic",
+      "description": "template wt:g10m10s2-1-4:median-in-order (3 widget question(s)) was not shipped: it could not say why a wrong answer is wrong",
+      "why": "every misconception its mappings name was refused by S5's fail-closed verifier (mc:g10m10s2-1-4:median-without-ordering); a widget with no diagnostic could mark an answer wrong and never say why (ADR-0009). Re-author it against a misconception S5 kept, or accept the lesson without it",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c01",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c02",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c03",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c04",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c05",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c06",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c07",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c08",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c09",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c11",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c12",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c13",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c14",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    }
+  ]
+}
