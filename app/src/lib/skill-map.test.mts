@@ -220,3 +220,16 @@ test("a linked objective names its destination: lesson, or chapter › lesson ac
     `${m.chapterById.get(t.chapterId)!.title} › ${m.lessonBySlug.get(t.lessonSlug)!.title}`
   );
 });
+
+// Principle XII (v0.11.0): the map draws no literal stroke width. Every line
+// width is a Play stroke or a map stroke derived from one in globals.css.
+test("the map's strokes come from tokens, never literals", async () => {
+  const { readFileSync } = await import("node:fs");
+  const src = readFileSync(new URL("../components/spine/SkillMap.tsx", import.meta.url), "utf8");
+  assert.doesNotMatch(src, /strokeWidth=\{?\s*[\d"']/);
+  assert.doesNotMatch(src, /strokeWidth:\s*[1-9]/);
+  const css = readFileSync(new URL("../app/globals.css", import.meta.url), "utf8");
+  for (const t of ["spoke", "link", "objective", "selected"]) {
+    assert.match(css, new RegExp(`--skillmap-stroke-${t}: calc\\(var\\(--play-stroke`));
+  }
+});

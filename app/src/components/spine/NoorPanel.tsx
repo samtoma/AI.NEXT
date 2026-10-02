@@ -26,6 +26,11 @@ const SUGGESTIONS_UNTIL = 3;
  * collapsing into a bar: the map and the conversation about it are read
  * together, and a sheet that hides one of them breaks that.
  *
+ * Side by side its width is 38% of the window, between 420px and 620px. A
+ * fixed 620px beside the map's 560px minimum needed about 1260px, so on an
+ * iPad in landscape (1133–1194px) the chat wrapped under the map at 620px
+ * with an empty strip beside it; at 38% the two fit from 1100px up.
+ *
  * It knows what is selected on the map (`focus`), and `ChatCore` sends that
  * with every turn; the server resolves it against the curriculum before the
  * tutor sees it (`lib/map-focus.ts`). It explains and plans and never quizzes
@@ -57,7 +62,7 @@ export function NoorPanel({
       className={cx(
         STROKE,
         "flex min-w-0 basis-full flex-col overflow-hidden rounded-[var(--play-radius)] bg-card sticker-shadow",
-        "h-[max(420px,60dvh)] min-[1100px]:h-[max(520px,calc(100dvh_-_252px))] min-[1100px]:w-[620px] min-[1100px]:shrink-0 min-[1100px]:basis-[620px]"
+        "h-[max(420px,60dvh)] min-[1100px]:h-[max(520px,calc(100dvh_-_252px))] min-[1100px]:w-[clamp(420px,38vw,620px)] min-[1100px]:shrink-0 min-[1100px]:basis-[clamp(420px,38vw,620px)]"
       )}
     >
       <div className={cx(HONEY_BAND, "flex h-[79px] shrink-0 items-center gap-3 px-[18px] py-[14px]")}>

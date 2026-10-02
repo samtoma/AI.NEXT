@@ -520,9 +520,17 @@ export function ChatCore({
   useEffect(() => {
     mapFocusRef.current = mapFocus;
   }, [mapFocus]);
+  // Has the student touched the transcript (scrolled it, tapped or typed in it)
+  // since the newest message arrived? Then that message is theirs to read
+  // where they are: a widget that grows when they answer it (feedback, a
+  // revealed step) must not yank the view back up to the message's top, away
+  // from what they just touched. It only keeps the bottom pin, as before
+  // FR-3222. Reset when a new message arrives.
+  const touchedSinceArrival = useRef(false);
   const follow = useCallback(() => {
     const el = scrollRef.current;
     if (!el || !stuckToBottom.current) return;
+    const mayAlignTop = !touchedSinceArrival.current;
     // The newest row is the container's last element: a hidden message renders
     // null, and nothing else sits after the list. When it holds something the
     // student has to act on, its FRAME — the explanation above the widget or
@@ -535,10 +543,14 @@ export function ChatCore({
     el.scrollTop = scrollTopFor({
       scrollHeight: el.scrollHeight,
       clientHeight: el.clientHeight,
-      frameTop: row && acts ? offsetTopWithin(el, row) : null,
+      frameTop: row && acts && mayAlignTop ? offsetTopWithin(el, row) : null,
     });
     programmaticTop.current = el.scrollTop;
   }, [alignTutorTop]);
+  // Declared before the follow effect so a NEW message is aligned as it lands.
+  useEffect(() => {
+    touchedSinceArrival.current = false;
+  }, [messages.length]);
   useEffect(() => {
     follow();
     // A widget keeps laying out after it mounts (KaTeX, figures, the pop-in),
@@ -1163,8 +1175,15 @@ export function ChatCore({
           ) {
             return;
           }
+          touchedSinceArrival.current = true;
           stuckToBottom.current =
             el.scrollHeight - el.scrollTop - el.clientHeight <= 40;
+        }}
+        onPointerDown={() => {
+          touchedSinceArrival.current = true;
+        }}
+        onKeyDown={() => {
+          touchedSinceArrival.current = true;
         }}
         // `relative` so `offsetTop` chains end here (lib/chat-scroll.ts)
         className="thin-scroll relative min-h-0 flex-1 space-y-3 overflow-y-auto px-4 py-4"

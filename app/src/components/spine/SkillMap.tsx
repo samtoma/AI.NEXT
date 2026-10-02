@@ -626,7 +626,13 @@ export function SkillMap({
                 style={{ cursor: "pointer" }}
               >
                 {sel && (
-                  <circle cx={x + 5} cy={y + 5} r={r} fill="var(--ink)" />
+                  <circle
+                    cx={x}
+                    cy={y}
+                    r={r}
+                    fill="var(--ink)"
+                    style={{ transform: "translate(var(--skillmap-disc-shadow), var(--skillmap-disc-shadow))" }}
+                  />
                 )}
                 <circle
                   cx={x}
@@ -640,7 +646,7 @@ export function SkillMap({
                         ? "var(--ink)"
                         : "none"
                   }
-                  strokeWidth={sel || focused === `chapter:${c.id}` ? 3 : 0}
+                  style={{ strokeWidth: sel || focused === `chapter:${c.id}` ? "var(--play-stroke)" : 0 }}
                   role="button"
                   tabIndex={0}
                   aria-label={`Chapter: ${c.title} — ${lessonsStarted(model, c.id, asOf).started} of ${lessonsStarted(model, c.id, asOf).total} lessons started`}
@@ -678,7 +684,7 @@ export function SkillMap({
                       x2={ox}
                       y2={oy}
                       stroke="var(--play-disabled-border)"
-                      strokeWidth={1.5}
+                      style={{ strokeWidth: "var(--skillmap-stroke-spoke)" }}
                     />
                   );
                 })}
@@ -714,7 +720,10 @@ export function SkillMap({
             );
             const opacity =
               style === "faint" ? 0.06 : style === "normal" ? 0.4 : 1;
-            const width = style === "strong" ? 2.6 : 1.7;
+            const width =
+              style === "strong"
+                ? "var(--play-stroke-sm)"
+                : "var(--skillmap-stroke-link)";
             return (
               <g
                 key={`lk-${link.a}-${link.b}`}
@@ -725,7 +734,7 @@ export function SkillMap({
                   d={c.d}
                   fill="none"
                   stroke="var(--ink)"
-                  strokeWidth={width}
+                  style={{ strokeWidth: width }}
                   strokeDasharray={link.across ? "6 5" : undefined}
                 />
                 <path d={c.arrow} fill="var(--ink)" />
@@ -756,7 +765,7 @@ export function SkillMap({
                   // read the same selected or not (Tamer, 2026-10-01).
                   fill={fill(stage)}
                   stroke="var(--ink)"
-                  strokeWidth={sel ? 3.5 : 2.5}
+                  style={{ strokeWidth: sel ? "var(--skillmap-stroke-selected)" : "var(--play-stroke-sm)" }}
                   role="button"
                   tabIndex={level >= 1 ? 0 : -1}
                   aria-label={`Lesson: ${l.title} — ${masteryPhrase(stage)}`}
@@ -778,7 +787,7 @@ export function SkillMap({
                     stroke={
                       focused === id ? "var(--noor-action)" : "var(--ink)"
                     }
-                    strokeWidth={focused === id ? 3 : 2.5}
+                    style={{ strokeWidth: focused === id ? "var(--play-stroke)" : "var(--play-stroke-sm)" }}
                     pointerEvents="none"
                   />
                 )}
@@ -807,7 +816,7 @@ export function SkillMap({
                     r={or + 4}
                     fill="none"
                     stroke="var(--noor-action)"
-                    strokeWidth={3}
+                    style={{ strokeWidth: "var(--play-stroke)" }}
                   />
                 )}
                 <circle
@@ -818,7 +827,7 @@ export function SkillMap({
                   r={or}
                   fill={fill(stage)}
                   stroke="var(--ink)"
-                  strokeWidth={sel ? 3 : 2}
+                  style={{ strokeWidth: sel ? "var(--play-stroke)" : "var(--skillmap-stroke-objective)" }}
                   role="button"
                   tabIndex={level >= 2 ? 0 : -1}
                   aria-label={`${o.label} — ${masteryPhrase(stage)}`}
@@ -840,7 +849,7 @@ export function SkillMap({
                     stroke={
                       focused === id ? "var(--noor-action)" : "var(--ink)"
                     }
-                    strokeWidth={focused === id ? 3 : 2}
+                    style={{ strokeWidth: focused === id ? "var(--play-stroke)" : "var(--skillmap-stroke-objective)" }}
                     pointerEvents="none"
                   />
                 )}

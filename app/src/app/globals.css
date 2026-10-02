@@ -1293,6 +1293,19 @@ body[data-focus="lesson"] > footer {
   }
 }
 
+/* Your Progress Map strokes (FR-3224). Principle XII: the map draws no literal
+   stroke width. The two Play strokes cover selection, focus and lesson rings;
+   these are the map's thinner lines, derived from them so a change to the Play
+   strokes carries through. Applied in SCREEN pixels, constant at every zoom.
+   Scoped where the Play strokes are, so the calc() resolves against them. */
+:is([data-ds="play"], [data-ds="noor"]) {
+  --skillmap-stroke-spoke: calc(var(--play-stroke-sm) * 0.6);     /* lesson → objective, 1.5px */
+  --skillmap-stroke-link: calc(var(--play-stroke-sm) * 0.68);     /* a prerequisite at rest, 1.7px */
+  --skillmap-stroke-objective: calc(var(--play-stroke-sm) * 0.8); /* an objective circle, 2px */
+  --skillmap-stroke-selected: calc(var(--play-stroke) + 0.5px);   /* the selected lesson, 3.5px */
+  --skillmap-disc-shadow: 5px;                                    /* a selected chapter's hard shadow */
+}
+
 /* ---------- Your Progress Map (FR-3224, components/spine/SkillMap.tsx) ----------
    Nodes are drawn in SCREEN pixels, so these transforms scale a node around its
    own centre without touching its stroke. The pop is Play's `pop` spring. */

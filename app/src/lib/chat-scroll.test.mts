@@ -84,12 +84,30 @@ test("ChatCore aligns the newest row's frame, and re-checks when it resizes", ()
   assert.match(src, /scrollTopFor\(\{/);
   // the ROW (the frame, explanation included), not the block inside it
   assert.match(src, /const row = el\.lastElementChild as HTMLElement \| null;/);
-  assert.match(src, /frameTop: row && acts \? offsetTopWithin\(el, row\) : null/);
+  assert.match(src, /frameTop: row && acts && mayAlignTop \? offsetTopWithin\(el, row\) : null/);
   // a widget that grows after it mounts is re-checked
   assert.match(src, /new ResizeObserver\(\(\) => follow\(\)\)/);
   assert.match(src, /programmaticTop\.current = el\.scrollTop/);
   assert.match(src, /Math\.abs\(el\.scrollTop - programmaticTop\.current\) <= 1/);
   assert.match(src, /thin-scroll relative min-h-0 flex-1/);
+});
+
+// v0.11.0 (found in the v0.10.0 review): a widget that grew after the student
+// answered it re-aligned the view to its message's top, away from the widget.
+// Once the student has touched the transcript, the message is theirs to read
+// where they are — only the bottom pin remains — until a new message arrives.
+test("after the student touches the transcript, a growing message no longer jumps to its top", () => {
+  const src = read("../components/chat/ChatCore.tsx");
+  assert.match(src, /const mayAlignTop = !touchedSinceArrival\.current;/);
+  // scrolling, tapping and typing in the transcript all count
+  const scroller = src.slice(src.indexOf("ref={scrollRef}"), src.indexOf("thin-scroll relative"));
+  assert.match(scroller, /touchedSinceArrival\.current = true;\s*stuckToBottom\.current =/);
+  assert.match(scroller, /onPointerDown=\{\(\) => \{\s*touchedSinceArrival\.current = true;/);
+  assert.match(scroller, /onKeyDown=\{\(\) => \{\s*touchedSinceArrival\.current = true;/);
+  // reset by a NEW message, and before the follow effect so that message aligns
+  const reset = src.indexOf("touchedSinceArrival.current = false;\n  }, [messages.length]);");
+  const followEffect = src.indexOf("useEffect(() => {\n    follow();");
+  assert.ok(reset > 0 && followEffect > reset);
 });
 
 test("the old unconditional bottom pin is gone", () => {
