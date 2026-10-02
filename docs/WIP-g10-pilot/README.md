@@ -200,8 +200,8 @@ C is engineering and records. Where to look is in brackets.*
    Greek name, while the app's marker reads `AC` as one symbol. Either the contract grows `[A-Z]{2,3}` or the agent splits the variables. [this file, "Chapter 5 re-collected and closed"]
 8. **Marker and evaluator gaps.** Each currently excludes or holds an item rather than mark it wrongly. (a) The app's marker cannot read a degree sign inside an inequality or interval
    key (`60^{\circ}<\theta<300^{\circ}`: Chapter 6 Ex6-6:17, Ex6-8:42–44, 55a, Ex6-6:20a). (b) Lists of points and lists of equations have no marker kind (Chapter 6: nine and four items).
-   (c) The oracle reads "… % per annum" as a different value, so Chapter 9 Ex9-2:8 and Ex9-2:9 (keys 4,3 and 1,8, which the agent's own derivation confirms) stay excluded by the collector's
-   identity guard. (d) The S6 evaluator's `parse_plain` does not read `f(x) =` (the app does). (e) A `values` marker is a multiset, so it accepts swapped values (`a`, `q`; Chapter 6).
+   (c) The oracle reads "… % per annum" as a different value (the orchestrator's description; the G2 record says only that the app's own marker finds the typed key not equal to the answer
+   the book states), so Chapter 9 Ex9-2:8 and Ex9-2:9 (keys 4,3 and 1,8, which the agent's own derivation confirms) stay excluded by the collector's identity guard. (d) The S6 evaluator's `parse_plain` does not read `f(x) =` (the app does). (e) A `values` marker is a multiset, so it accepts swapped values (`a`, `q`; Chapter 6).
    Widen the marker (an `AnswerSpec` contract change) or leave held? [this file, "Chapter 6 re-collected and closed"; `gates/g2-ch09.json`; log 2026-10-02T07:30Z]
 9. **Widget stem: spacing-only equivalence.** The set-list rule extends when an edited stem counts as "the same stem" for the blind verifier: a whitespace-only change inside maths in a
    stem no longer forces re-verification (`verified_version`, `carried_verification`). Confirm. [runbook §13; log 2026-10-02T07:55Z]
@@ -232,8 +232,10 @@ C is engineering and records. Where to look is in brackets.*
     has (k+2) in the question and (k+3) in the solution; a Chapter 4 answer, −22/6, is not in lowest terms (the marker accepts equivalents); Chapter 5 `5s8-1-4` is unpractised.
 20. **Titles with the step-title root cause that the log says were not changed** (2026-10-01T18:52Z): 20 Chapter 6 heading titles, 7 box titles, 2 Chapter 13 worked-example titles. No
     later line says they were; I could not verify. Check the database text.
-21. **The 300 step-check flags** (above), and the multi-part exercises whose later part refers to an earlier one by words only (Chapter 1: 8, Chapter 8: 16;
-    `runs/g10-math/multipart-ch01.json`, `multipart-ch08.json`).
+21. **The 300 step-check flags** (above), and the multi-part parts the carry-over rule could not settle (a later part that refers to an earlier one in words only, or a gradient no earlier
+    part asks for; the rule carries a stem only where it can, and only Chapter 8 needed it: 17 stems). Listed per chapter in `runs/g10-math/fanout/assembly-chNN.json`, `stem_carry.unresolved`:
+    Chapter 1: 7, 3: 2, 4: 12, 5: 17, 7: 3, 9: 5, 10: 5, 13: 3, 14: 1 (55 in all), plus Chapter 8's 16 in `runs/g10-math/multipart-ch08.json`. Whether the carried values are what Samuel wants
+    in the stem was asked in "Multi-part exercises" and answered by answer 43 (the book's value).
 
 **C. Engineering and records**
 
