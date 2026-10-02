@@ -1,0 +1,1489 @@
+{
+  "source_document": {
+    "title": "Everything Maths, Grade 10 Mathematics (Siyavula, Version 1.1 CAPS)",
+    "publisher": "Siyavula Education (with volunteers)",
+    "edition": "Version 1.1 CAPS",
+    "language": "en",
+    "grade": "10",
+    "subject": "mathematics",
+    "file_path": "docs/Source/Gr10_Mathematics_Learner_Eng_v11.pdf"
+  },
+  "extraction_run": {
+    "extractor": "extraction line v2 (assemble_lesson_bundle.py)",
+    "extractor_version": "b8-1",
+    "schema_version": "1"
+  },
+  "syllabus_version": "Version 1.1 CAPS",
+  "nodes": [
+    {
+      "id": "module:g10m-c11",
+      "kind": "module",
+      "label": "Chapter 11 — Trigonometry",
+      "syllabus_ref": "Chapter 11",
+      "source_page": 389,
+      "order_in_parent": 11
+    },
+    {
+      "id": "lo:g10m11s1-1-1",
+      "kind": "learning_objective",
+      "label": "Calculate sides with trig ratios",
+      "description": "Calculate the length of an unknown side in a right-angled triangle problem, such as the height of a kite, a building or a wall, by choosing sine, cosine or tangent from a given angle and one given side.",
+      "syllabus_ref": "11.1",
+      "source_page": 390,
+      "order_in_parent": 1
+    },
+    {
+      "id": "lo:g10m11s1-1-2",
+      "kind": "learning_objective",
+      "label": "Calculate angles with trig ratios",
+      "description": "Calculate an unknown angle of a right-angled triangle from two given sides, by choosing the appropriate trigonometric ratio and solving for the angle.",
+      "syllabus_ref": "11.1",
+      "source_page": 390,
+      "order_in_parent": 2
+    },
+    {
+      "id": "lo:g10m11s1-1-3",
+      "kind": "learning_objective",
+      "label": "Use angles of elevation and depression",
+      "description": "Identify the angle of elevation and the angle of depression from a description or sketch, and use both, with right-angled triangles, to calculate a height or distance.",
+      "syllabus_ref": "11.1",
+      "source_page": 390,
+      "order_in_parent": 3
+    }
+  ],
+  "edges": [
+    {
+      "src": "module:g10m-c11",
+      "dst": "course:us-g10-math-en",
+      "type": "part_of"
+    },
+    {
+      "src": "module:g10m-c11",
+      "dst": "lo:g10m11s1-1-1",
+      "type": "teaches"
+    },
+    {
+      "src": "module:g10m-c11",
+      "dst": "lo:g10m11s1-1-2",
+      "type": "teaches"
+    },
+    {
+      "src": "module:g10m-c11",
+      "dst": "lo:g10m11s1-1-3",
+      "type": "teaches"
+    },
+    {
+      "src": "lo:g10m5s3-1-2",
+      "dst": "lo:g10m11s1-1-1",
+      "type": "prerequisite_of"
+    },
+    {
+      "src": "lo:g10m5s3-1-2",
+      "dst": "lo:g10m11s1-1-2",
+      "type": "prerequisite_of"
+    },
+    {
+      "src": "lo:g10m5s3-1-2",
+      "dst": "lo:g10m11s1-1-3",
+      "type": "prerequisite_of"
+    },
+    {
+      "src": "lo:g10m5s3-1-1",
+      "dst": "lo:g10m11s1-1-1",
+      "type": "prerequisite_of"
+    },
+    {
+      "src": "lo:g10m5s3-1-1",
+      "dst": "lo:g10m11s1-1-3",
+      "type": "prerequisite_of"
+    },
+    {
+      "src": "lo:g10m5s7-1-1",
+      "dst": "lo:g10m11s1-1-1",
+      "type": "prerequisite_of"
+    },
+    {
+      "src": "lo:g10m5s7-1-1",
+      "dst": "lo:g10m11s1-1-3",
+      "type": "prerequisite_of"
+    },
+    {
+      "src": "lo:g10m5s7-1-2",
+      "dst": "lo:g10m11s1-1-2",
+      "type": "prerequisite_of"
+    },
+    {
+      "src": "lo:g10m7s2-1-1",
+      "dst": "lo:g10m11s1-1-2",
+      "type": "prerequisite_of"
+    },
+    {
+      "src": "lo:g10m7s1-1-2",
+      "dst": "lo:g10m11s1-1-3",
+      "type": "prerequisite_of"
+    }
+  ],
+  "questions": [
+    {
+      "id": "q:g10m11s1-1-2:we02",
+      "lo": "lo:g10m11s1-1-2",
+      "tier": "advanced",
+      "type": "numeric",
+      "stem": "$ABCD$ is a trapezium with $AB=\\text{4}\\text{cm}$ , $CD=\\text{6}\\text{cm}$ , $BC=\\text{5}\\text{cm}$ and $AD=\\text{5}\\text{cm}$ . Point $E$ on diagonal $AC$ divides the diagonal such that $AE=\\text{3}\\text{cm}$ . $B\\hat{E}C=90^{\\circ}$ . Find $A\\hat{B}C$ .",
+      "answer": "106.7",
+      "solution": [
+        "Draw trapezium and label all given lengths on diagram. Indicate that $B\\hat{E}C=90^{\\circ}$: [figure] We will use $\\triangle ABE$ and $\\triangle CBE$ to find $A\\hat{B}E$ and $C\\hat{B}E$ . We can then add these two angles together to find $A\\hat{B}C$ .",
+        "Find the first angle, $A\\hat{B}E$: The hypotenuse and opposite side are given for both triangles, therefore use the $\\sin$ function. In $\\triangle ABE$ : $\\begin{aligned}\\sin A\\hat{B}E&=\\frac{\\text{opposite}}{\\text{hypotenuse}}\\\\&=\\frac{3}{4}\\\\A\\hat{B}E&=\\text{48.5903...}\\\\&\\approx\\text{48.6}^{\\circ}\\end{aligned}$",
+        "Use the theorem of Pythagoras to determine $BE$: In $\\triangle ABE$ : $\\begin{aligned}BE^{2}&=AB^{2}-AE^{2}\\\\&=4^{2}-3^{2}\\\\&=7\\\\\\therefore BE&=\\sqrt{7}\\text{cm}\\end{aligned}$",
+        "Find the second angle $C\\hat{B}E$: In $\\triangle CBE$ : $\\begin{aligned}\\cos C\\hat{B}E&=\\frac{\\text{adjacent}}{\\text{hypotenuse}}\\\\&=\\frac{\\sqrt{7}}{5}\\\\&=\\text{0.52915...}\\\\C\\hat{B}E&=\\text{58.0519...}\\\\&\\approx\\text{58.1}^{\\circ}\\end{aligned}$",
+        "Calculate the sum of the angles: $A\\hat{B}C=\\text{48.6}^{\\circ}+\\text{58.1}^{\\circ}=\\text{106.7}^{\\circ}$"
+      ],
+      "source_page": 393,
+      "source_note": "Worked example 2 · p.393 · solution: book_worked",
+      "verified": false,
+      "source": "seed",
+      "solution_provenance": "book_worked",
+      "hold_reason": "answer_mismatch"
+    },
+    {
+      "id": "q:g10m11s1-1-1:we03",
+      "lo": "lo:g10m11s1-1-1",
+      "tier": "standard",
+      "type": "numeric",
+      "stem": "The given diagram shows a building of unknown height $h$ . We start at point $B$ and walk $\\text{100}$ $\\text{m}$ away from the building to point $Q$ . Next we measure the angle of elevation from the ground to the top of the building, $T$ , and find that the angle is $\\text{38.7}^{\\circ}$ . Calculate the height of the building, correct to the nearest metre. [figure]",
+      "answer": "80",
+      "solution": [
+        "Identify the opposite and adjacent sides and the hypotenuse: We have a right-angled triangle and know the length of one side and an angle. We can therefore calculate the height of the building.",
+        "In $\\triangle QTB$ : $\\begin{aligned}\\tan\\text{38.7}^{\\circ}&=\\frac{\\text{opposite}}{\\text{adjacent}}\\\\&=\\frac{h}{100}\\end{aligned}$",
+        "Rearrange and solve for $h$: $\\begin{aligned}h&=100\\times\\tan\\text{38.7}^{\\circ}\\\\&=\\text{80.1151}...\\\\&\\approx80\\end{aligned}$",
+        "Write final answer: The height of the building is $\\text{80}$ $\\text{m}$ ."
+      ],
+      "source_page": 394,
+      "source_note": "Worked example 3 · p.394 · solution: book_worked",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked"
+    },
+    {
+      "id": "q:g10m11s1-1-3:we04",
+      "lo": "lo:g10m11s1-1-3",
+      "tier": "advanced",
+      "type": "numeric",
+      "stem": "A block of flats is $\\text{200}$ $\\text{m}$ away from a cellphone tower. Someone stands at $B$ . They measure the angle from $B$ to the top of the tower ( $E$ ) to be $\\text{34}$ $^\\circ$ (the angle of elevation). They then measure the angle from $B$ to the bottom of the tower ( $C$ ) to be $\\text{62}$ $^\\circ$ (the angle of depression). What is the height of the cellphone tower (correct to the nearest metre)? [figure] Note: diagram not drawn to scale",
+      "answer": "511",
+      "solution": [
+        "To determine height $CE$ , first calculate lengths $DE$ and $CD$: $\\triangle BDE$ and $\\triangle BDC$ are both right-angled triangles. In each of the triangles, the length $BD$ is known. Therefore we can calculate the sides of the triangles.",
+        "Calculate $CD$: The length $AC$ is given. $CABD$ is a rectangle so $BD=AC=\\text{200}\\text{m}$ . In $\\triangle CBD$ : $\\begin{aligned}\\tan C\\hat{B}D&=\\frac{CD}{BD}\\\\\\therefore CD&=BD\\times\\tan C\\hat{B}D\\\\&=200\\times\\tan62^{\\circ}\\\\&=\\text{376.1452...}\\\\&\\approx376\\text{ m}\\end{aligned}$",
+        "Calculate $DE$: In $\\triangle DBE$ : $\\begin{aligned}\\tan D\\hat{B}E&=\\frac{DE}{BD}\\\\\\therefore DE&=BD\\times\\tan D\\hat{B}E\\\\&=200\\times\\tan34^{\\circ}\\\\&=\\text{134.9017...}\\\\&\\approx135\\text{ m}\\end{aligned}$",
+        "Add the two heights to get the final answer: The height of the tower is: $CE=CD+DE=\\text{135}\\text{m}+\\text{376}\\text{m}=\\text{511}\\text{m}$ ."
+      ],
+      "source_page": 395,
+      "source_note": "Worked example 4 · p.395 · solution: book_worked",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked"
+    },
+    {
+      "id": "q:g10m11s1-1-1:we05",
+      "lo": "lo:g10m11s1-1-1",
+      "tier": "standard",
+      "type": "numeric",
+      "stem": "Mr Nkosi has a garage at his house and he decides to add a corrugated iron roof to the side of the garage. The garage is $\\text{4}$ $\\text{m}$ high, and his sheet for the roof is $\\text{5}$ $\\text{m}$ long. If the angle of the roof is $\\text{5}$ °, how high must he build the wall $BD$ ? Give the answer correct to $\\text{1}$ decimal place. [figure]",
+      "answer": "3.6",
+      "solution": [
+        "Identify opposite and adjacent sides and hypotenuse: $\\triangle ABC$ is right-angled. The hypotenuse and an angle are known therefore we can calculate $AC$ . The height of the wall $BD$ is then the height of the garage minus $AC$ . $\\begin{aligned}\\sin A\\hat{B}C&=\\frac{AC}{BC}\\\\\\therefore AC&=BC\\times\\sin A\\hat{B}C\\\\&=5\\sin5^{\\circ}\\\\&=\\text{0.43577...}\\\\&\\approx\\text{0.4 m}\\\\\\\\\\therefore BD&=\\text{4 m}-\\text{0.4 m}\\\\&=\\text{3.6 m}\\end{aligned}$",
+        "Write the final answer: Mr Nkosi must build his wall to be $\\text{3.6}$ $\\text{m}$ high."
+      ],
+      "source_page": 396,
+      "source_note": "Worked example 5 · p.396 · solution: book_worked",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked"
+    },
+    {
+      "id": "q:g10m11s1-1-1:ex11-1-1",
+      "lo": "lo:g10m11s1-1-1",
+      "tier": "basic",
+      "type": "numeric",
+      "stem": "A person stands at point $A$ , looking up at a bird sitting on the top of a building, point $B$ . The height of the building is $x$ meters, the line of sight distance from point $A$ to the top of the building (point $B$ ) is $\\text{5.32}$ meters, and the angle of elevation to the top of the building is $70^\\circ$ . Calculate the height of the building ( $x$ ) as shown in the diagram below: [figure]",
+      "answer": "5",
+      "solution": [
+        "$\\begin{aligned}\\sin\\theta&=\\frac{\\text{opposite}}{\\text{hypotenuse}}\\\\\\sin\\text{70}^\\circ&=\\frac{x}{\\text{5.32}}\\\\x&=\\text{4.99916...}\\\\&\\approx\\text{5}\\end{aligned}$",
+        "The height of the building is $\\text{5}$ $\\text{m}$ ."
+      ],
+      "source_page": 396,
+      "source_note": "Exercise 11-1, question 1 (2GPN) · p.396 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m11s1-1-1:ex11-1-2",
+      "lo": "lo:g10m11s1-1-1",
+      "tier": "basic",
+      "type": "numeric",
+      "stem": "A person stands at point $A$ , looking up at a bird sitting on the top of a pole (point $B$ ). The height of the pole is $x$ meters, point A is $\\text{4.2}$ meters away from the foot of the pole, and the angle of elevation to the top of the pole is $65^\\circ$ . Calculate the height of the pole ( $x$ ), to the nearest metre. [figure]",
+      "answer": "9",
+      "solution": [
+        "$\\begin{aligned}\\tan\\theta&=\\frac{\\text{opposite}}{\\text{adjacent}}\\\\\\tan65^{\\circ}&=\\frac{x}{\\text{4.2}}\\\\x&=\\text{9.0069...}\\\\&\\approx9\\end{aligned}$",
+        "The height of the pole is $\\text{9}$ $\\text{m}$ ."
+      ],
+      "source_page": 397,
+      "source_note": "Exercise 11-1, question 2 (2GPP) · p.397 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m11s1-1-2:ex11-1-3",
+      "lo": "lo:g10m11s1-1-2",
+      "tier": "basic",
+      "type": "numeric",
+      "stem": "A boy flying a kite is standing $\\text{30}$ $\\text{m}$ from a point directly under the kite. If the kite's string is $\\text{50}$ $\\text{m}$ long, find the angle of elevation of the kite.",
+      "answer": "53.13",
+      "solution": [
+        "First draw a sketch: [figure] We can use the cosine ratio to find the angle of elevation ( $x$ ):",
+        "$\\begin{aligned}\\cos x&=\\frac{30}{50}\\\\x&=\\text{53.1301}...\\\\&\\approx\\text{53.13}^{\\circ}\\end{aligned}$",
+        "The angle of elevation of the kite is $\\text{53.13}$ °."
+      ],
+      "source_page": 397,
+      "source_note": "Exercise 11-1, question 3 (2GPQ) · p.397 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m11s1-1-2:ex11-1-4",
+      "lo": "lo:g10m11s1-1-2",
+      "tier": "basic",
+      "type": "numeric",
+      "stem": "What is the angle of elevation of the sun when a tree $\\text{7.15}$ $\\text{m}$ tall casts a shadow $\\text{10.1}$ $\\text{m}$ long?",
+      "answer": "35.30",
+      "solution": [
+        "First draw a sketch: [figure] We can use the tangent ratio to find the angle of elevation ( $x$ ):",
+        "$\\begin{aligned}\\tan x&=\\frac{\\text{7.15}}{\\text{10.1}}\\\\x&=\\text{35.2954}...\\\\&\\approx\\text{35.30}^{\\circ}\\end{aligned}$",
+        "The angle of elevation of the sun is $\\text{35.30}$ °."
+      ],
+      "source_page": 397,
+      "source_note": "Exercise 11-1, question 4 (2GPR) · p.397 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m11s1-1-1:ex11-1-5",
+      "lo": "lo:g10m11s1-1-1",
+      "tier": "basic",
+      "type": "numeric",
+      "stem": "From a distance of $\\text{300}$ $\\text{m}$ , Susan looks up at the top of a lighthouse. The angle of elevation is $\\text{5}$ °. Determine the height of the lighthouse to the nearest metre.",
+      "answer": "26",
+      "solution": [
+        "First draw a sketch: [figure] We need to find $LT$ . We can use the tangent ratio:",
+        "$\\begin{aligned}\\tan\\hat{S}&=\\frac{LT}{ST}\\\\LT&=300\\tan5^{\\circ}\\\\&=\\text{26.2465...}\\\\&\\approx26\\text{ m}\\end{aligned}$",
+        "The height of the lighthouse is $\\text{26}$ $\\text{m}$ ."
+      ],
+      "source_page": 397,
+      "source_note": "Exercise 11-1, question 5 (2GPS) · p.397 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m11s1-1-1:ex11-1-6",
+      "lo": "lo:g10m11s1-1-1",
+      "tier": "basic",
+      "type": "numeric",
+      "stem": "A ladder of length $\\text{25}$ $\\text{m}$ is resting against a wall, the ladder makes an angle $\\text{37}$ ° to the wall. Find the distance between the wall and the base of the ladder to the nearest metre.",
+      "answer": "15",
+      "solution": [
+        "First draw a sketch: [figure] Notice that we are given the angle that the ladder makes with the wall, not the angle that the ladder makes with the ground. Now we can use the sine function to find $x$ :",
+        "$\\begin{aligned}\\sin37^{\\circ}&=\\frac{x}{25}\\\\x&=25\\sin37^{\\circ}\\\\&=\\text{15.04537...}\\\\&\\approx15\\text{ m}\\end{aligned}$",
+        "The base of the ladder is $\\text{15}$ $\\text{m}$ away from the wall."
+      ],
+      "source_page": 397,
+      "source_note": "Exercise 11-1, question 6 (2GPT) · p.397 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m11s1-1-2:ex11-2-1",
+      "lo": "lo:g10m11s1-1-2",
+      "tier": "basic",
+      "type": "numeric",
+      "stem": "A ladder of length $\\text{15}$ $\\text{m}$ is resting against a wall, the base of the ladder is $\\text{5}$ $\\text{m}$ from the wall. Find the angle between the wall and the ladder.",
+      "answer": "19.47",
+      "solution": [
+        "First draw a sketch: [figure] Notice that we want to find the angle that the ladder makes with the wall, not the angle that the ladder makes with the ground. Now we use $\\sin x=\\frac{\\text{opposite}}{\\text{hypotenuse}}$ :",
+        "$\\begin{aligned}\\sin x&=\\frac{5}{15}\\\\&=\\text{0.3333...}\\\\x&=\\text{19.4712...}\\\\&\\approx\\text{19.47}^{\\circ}\\end{aligned}$",
+        "The angle between the ladder and the wall is $\\text{19.47}$ °."
+      ],
+      "source_page": 398,
+      "source_note": "Exercise 11-2, question 1 (2GPW) · p.398 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m11s1-1-2:ex11-2-2a",
+      "lo": "lo:g10m11s1-1-2",
+      "tier": "basic",
+      "type": "numeric",
+      "stem": "Captain Jack is sailing towards a cliff with a height of $\\text{10}$ $\\text{m}$ . The distance from the boat to the bottom of the cliff is $\\text{30}$ $\\text{m}$ . Calculate the angle of elevation from the boat to the top of the cliff (correct to the nearest degree).",
+      "answer": "18",
+      "solution": [
+        "First draw a sketch: [figure] The angle of elevation is $\\text{18}$ °."
+      ],
+      "source_page": 398,
+      "source_note": "Exercise 11-2, question 2a (2GPX) · p.398 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m11s1-1-2:ex11-2-2b",
+      "lo": "lo:g10m11s1-1-2",
+      "tier": "standard",
+      "type": "numeric",
+      "stem": "Captain Jack is sailing towards a cliff with a height of $\\text{10}$ $\\text{m}$ . If the boat sails $\\text{7}$ $\\text{m}$ closer to the cliff, what is the new angle of elevation from the boat to the top of the cliff?",
+      "answer": "23",
+      "solution": [
+        "We redraw the sketch with the new information: [figure] The new distance from the boat to the cliffs is $\\text{30}\\text{ m}-\\text{7}\\text{ m}=\\text{23}\\text{ m}$ . The height of the cliffs has not changed.",
+        "$\\begin{aligned}\\tan y&=\\frac{\\text{opposite}}{\\text{adjacent}}\\\\&=\\frac{10}{23}\\\\y&=\\text{23.49856...}^{\\circ}\\\\&=23^{\\circ}\\end{aligned}$",
+        "The new angle of elevation is $\\text{23}$ °."
+      ],
+      "source_page": 398,
+      "source_note": "Exercise 11-2, question 2b (2GPX) · p.398 · solution: book_worked_epub",
+      "verified": false,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub",
+      "hold_reason": "answer_mismatch"
+    },
+    {
+      "id": "q:g10m11s1-1-3:ex11-2-3",
+      "lo": "lo:g10m11s1-1-3",
+      "tier": "standard",
+      "type": "numeric",
+      "stem": "Jim stands at point $A$ at the base of a telephone pole, looking up at a bird sitting on the top of another telephone pole (point $B$ ). The height of each of the telephone poles is $\\text{8}$ meters, and the angle of elevation from $A$ to the top of $B$ is $45^\\circ$ . Calculate the distance between the telephone poles ( $x$ ) as shown in the diagram below: [figure]",
+      "answer": "8",
+      "solution": [
+        "$\\begin{aligned}\\tan x&=\\frac{\\text{opposite}}{\\text{adjacent}}\\\\\\tan45^{\\circ}&=\\frac{8}{x}\\\\x&=\\frac{8}{\\tan45^{\\circ}}\\\\&=8\\end{aligned}$",
+        "The distance between the telephone poles is $\\text{8}$ $\\text{m}$ ."
+      ],
+      "source_page": 398,
+      "source_note": "Exercise 11-2, question 3 (2GPY) · p.398 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m11s1-1-2:ex11-2-4",
+      "lo": "lo:g10m11s1-1-2",
+      "tier": "basic",
+      "type": "numeric",
+      "stem": "Alfred stands at point $A$ , looking up at a flag on a pole (point $B$ ). Point $A$ is $\\text{5.0}$ meters away from the bottom of the flag pole, the line of sight distance from point $A$ to the top of the flag pole (point $B$ ) is $\\text{7.07}$ meters, and the angle of elevation to the top of the flag pole is $x^\\circ$ . Calculate the angle of elevation to the top of the flag pole ( $x$ ) as shown in the diagram below: [figure]",
+      "answer": "44.99",
+      "solution": [
+        "$\\begin{aligned}\\cos x&=\\frac{\\text{adjacent}}{\\text{hypotenuse}}\\\\\\cos x^{\\circ}&=\\frac{\\text{5.0}}{\\text{7.07}}\\\\x&=\\text{44.9913...}\\\\&\\approx\\text{44.99}^{\\circ}\\end{aligned}$",
+        "The angle of elevation is $\\text{44.99}^\\circ$ ."
+      ],
+      "source_page": 398,
+      "source_note": "Exercise 11-2, question 4 (2GPZ) · p.398 · solution: book_worked_epub",
+      "verified": false,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub",
+      "hold_reason": "answer_mismatch"
+    },
+    {
+      "id": "q:g10m11s1-1-2:ex11-2-5",
+      "lo": "lo:g10m11s1-1-2",
+      "tier": "standard",
+      "type": "numeric",
+      "stem": "A rugby player is trying to kick a ball through the poles. The rugby crossbar is $\\text{3.4}$ $\\text{m}$ high. The ball is placed $\\text{24}$ $\\text{m}$ from the poles. What is the minimum angle he needs to launch the ball to get it over the bar?",
+      "answer": "8",
+      "solution": [
+        "[figure] $CA$ is the distance from the poles, $\\text{24}$ $\\text{m}$ ; BC is the crossbar height $\\text{3.4}$ $\\text{m}$ . The minimum angle is the angle of elevation.",
+        "$\\begin{aligned}\\tan\\theta&=\\frac{BC}{CA}\\\\&=\\frac{\\text{3.4}}{24}\\\\\\theta&=\\text{8.0632...}\\\\&\\approx8^{\\circ}\\end{aligned}$",
+        "Therefore he needs to kick the ball with a minimum angle of $\\text{8}^{\\circ}$ ."
+      ],
+      "source_page": 398,
+      "source_note": "Exercise 11-2, question 5 (2GQ2) · p.398 · solution: book_worked_epub",
+      "verified": false,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub",
+      "hold_reason": "answer_mismatch"
+    },
+    {
+      "id": "q:g10m11s1-1-1:ex11-2-6",
+      "lo": "lo:g10m11s1-1-1",
+      "tier": "basic",
+      "type": "numeric",
+      "stem": "The escalator at a mall slopes at an angle of 30° and is $\\text{20}$ $\\text{m}$ long. [figure] Through what height would a person be lifted by travelling on the escalator?",
+      "answer": "10",
+      "solution": [
+        "We note that we have the following right-angled triangle: [figure] We can use the sine ratio to find the height:",
+        "$\\begin{aligned}\\sin\\text{30}^{\\circ}&=\\frac{h}{20}\\\\h&=20\\sin\\text{30}^{\\circ}\\\\&=\\text{10m}\\end{aligned}$",
+        "A person travelling on the escalator would be lifted through a height of $\\text{10}$ $\\text{m}$ ."
+      ],
+      "source_page": 398,
+      "source_note": "Exercise 11-2, question 6 (2GQ3) · p.398 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m11s1-1-2:ex11-2-7b",
+      "lo": "lo:g10m11s1-1-2",
+      "tier": "standard",
+      "type": "numeric",
+      "stem": "A ladder is $\\text{8}$ metres long. It is leaning against the wall of a house and reaches $\\text{6}$ metres up the wall. Calculate the angle which the ladder makes with the flat (level) ground.",
+      "answer": "48.59",
+      "solution": [
+        "$\\begin{aligned}\\sin\\theta&=\\frac{6}{8}\\\\\\theta&=\\text{48.5903}...\\\\\\theta&\\approx\\text{48.59}^{\\circ}\\end{aligned}$",
+        "The ladder makes an angle of $\\text{48.59}$ ° with the ground."
+      ],
+      "source_page": 399,
+      "source_note": "Exercise 11-2, question 7b (2GQ4) · p.399 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m11s1-1-3:ex11-2-8b",
+      "lo": "lo:g10m11s1-1-3",
+      "tier": "standard",
+      "type": "numeric",
+      "stem": "Nandi is standing on level ground $\\text{70}$ metres away from a tall tower. From her position, the angle of elevation of the top of the tower is $\\text{38}$ °. What is the height of the tower?",
+      "answer": "54.69",
+      "solution": [
+        "We can use the tangent ratio to find the height of the tower.",
+        "$\\begin{aligned}\\tan38&=\\frac{x}{70}\\\\x&=70\\tan38\\\\&=\\text{54.6899...}\\\\&\\approx\\text{54.69}\\text{ m}\\end{aligned}$",
+        "The height of the tower is $\\text{54.69}$ $\\text{m}$ ."
+      ],
+      "source_page": 399,
+      "source_note": "Exercise 11-2, question 8b (2GQ5) · p.399 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m11s1-1-1:ex11-2-9",
+      "lo": "lo:g10m11s1-1-1",
+      "tier": "basic",
+      "type": "numeric",
+      "stem": "The top of a pole is anchored by a $\\text{12}$ $\\text{m}$ cable which makes an angle of $\\text{40}$ degrees with the horizontal. What is the height of the pole? [figure]",
+      "answer": "7.71",
+      "solution": [
+        "$\\begin{aligned}\\sin40&=\\frac{h}{12}\\\\h&=12\\sin40\\\\&=\\text{7.713...}\\\\&\\approx\\text{7.71}\\text{ m}\\end{aligned}$",
+        "The height of the pole is $\\text{7.71}$ $\\text{m}$ ."
+      ],
+      "source_page": 399,
+      "source_note": "Exercise 11-2, question 9 (2GQ6) · p.399 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m11s1-1-1:ex11-2-11",
+      "lo": "lo:g10m11s1-1-1",
+      "tier": "advanced",
+      "type": "numeric",
+      "stem": "Determine the perimeter of rectangle $PQRS$ : [figure]",
+      "answer": "473.52",
+      "solution": [
+        "Using trigonometric ratios we can calculate $QR$ and $PQ$ .",
+        "$\\begin{aligned}QR&=85\\cos35\\\\PQ&=85\\sin35\\\\\\\\P&=2\\times(h+b)\\\\&=2(85\\cos35+85\\sin35)\\\\&=2(85(\\cos35+\\sin35))\\\\&=2(\\text{236.76 m})\\\\&=\\text{473.52 m}\\end{aligned}$",
+        "Therefore the perimeter is $\\text{473.52}$ $\\text{m}$ ."
+      ],
+      "source_page": 399,
+      "source_note": "Exercise 11-2, question 11 (2GQ8) · p.399 · solution: book_worked_epub",
+      "verified": false,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub",
+      "hold_reason": "answer_mismatch"
+    },
+    {
+      "id": "q:g10m11s1-1-2:ex11-2-12",
+      "lo": "lo:g10m11s1-1-2",
+      "tier": "advanced",
+      "type": "short",
+      "stem": "A rhombus has diagonals of lengths $\\text{6}$ $\\text{cm}$ and $\\text{9}$ $\\text{cm}$ . Calculate the sizes of its interior vertex angles. [figure]",
+      "choices": {
+        "marker": {
+          "kind": "values",
+          "key": "106.62; 67.38",
+          "form": null,
+          "variables": [],
+          "tolerance": null
+        }
+      },
+      "answer": "106.62,\\ 67.38",
+      "solution": [
+        "There are four small right-angled triangles in the rhombus: $\\triangle ABE$ , $\\triangle BEC$ , $\\triangle CED$ and $\\triangle DEA$ . Since the diagonals bisect each other and we are given the lengths of the diagonals, we know the lengths of the sides of the triangles: [figure] We can calculate the two angles:",
+        "$\\begin{aligned}\\tan\\theta&=\\frac{\\text{4.5}}{3}\\\\&=\\text{41.9872...}\\\\\\theta&\\approx\\text{53.31}^{\\circ}\\\\\\\\\\tan\\alpha&=\\frac{3}{\\text{4.5}}\\\\&=\\text{33.6900...}\\\\\\alpha&\\approx\\text{33.69}^{\\circ}\\end{aligned}$",
+        "Now we note that there are two different interior angles. One of these angles is $2\\alpha$ and the other is $2\\theta$ . Therefore the two angles are $\\text{106.62}$ ° and $\\text{67.38}$ °"
+      ],
+      "source_page": 399,
+      "source_note": "Exercise 11-2, question 12 (2GQ9) · p.399 · solution: book_worked_epub",
+      "verified": false,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub",
+      "hold_reason": "answer_mismatch"
+    },
+    {
+      "id": "q:g10m11s1-1-1:ex11-2-13",
+      "lo": "lo:g10m11s1-1-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "A rhombus has edge lengths of $\\text{7}$ $\\text{cm}$ . Its acute interior vertex angles are both 70°. Calculate the lengths of both of its diagonals. [figure]",
+      "choices": {
+        "marker": {
+          "kind": "values",
+          "key": "11.47; 8.03",
+          "form": null,
+          "variables": [],
+          "tolerance": null
+        }
+      },
+      "answer": "11.47,\\ 8.03",
+      "solution": [
+        "[figure] Therefore the two diagonals are $\\text{11.47}$ $\\text{cm}$ and $\\text{8.03}$ $\\text{cm}$"
+      ],
+      "source_page": 400,
+      "source_note": "Exercise 11-2, question 13 (2GQB) · p.400 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m11s1-1-1:ex11-2-14",
+      "lo": "lo:g10m11s1-1-1",
+      "tier": "standard",
+      "type": "numeric",
+      "stem": "A parallelogram has edge-lengths of $\\text{5}$ $\\text{cm}$ and $\\text{9}$ $\\text{cm}$ respectively, and an angle of 58° between them. Calculate the perpendicular distance between the two longer edges. [figure]",
+      "answer": "4.24",
+      "solution": [
+        "$\\begin{aligned}\\sin\\text{58}^{\\circ}&=\\frac{h}{5}\\\\h&=5\\sin\\text{58}^{\\circ}\\\\&=\\text{4.24cm}\\end{aligned}$"
+      ],
+      "source_page": 400,
+      "source_note": "Exercise 11-2, question 14 (2GQC) · p.400 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m11s1-1-1:ex11-2-15a",
+      "lo": "lo:g10m11s1-1-1",
+      "tier": "basic",
+      "type": "numeric",
+      "stem": "One of the angles of a rhombus with perimeter $\\text{20}$ $\\text{cm}$ is $\\text{30}$ °. Find the lengths of the sides of the rhombus.",
+      "answer": "5",
+      "solution": [
+        "First draw a sketch: [figure] The perimeter is found by adding each side together. All the sides are equal in length, therefore the perimeter $=4a$ .",
+        "$\\begin{aligned}20&=4a\\\\a&=5\\end{aligned}$",
+        "Therefore the sides are all $\\text{5}$ $\\text{cm}$ in length."
+      ],
+      "source_page": 400,
+      "source_note": "Exercise 11-2, question 15a (2GQD) · p.400 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m11s1-1-1:ex11-2-16b",
+      "lo": "lo:g10m11s1-1-1",
+      "tier": "standard",
+      "type": "numeric",
+      "stem": "Upright sticks and the shadows they cast can be used to judge the sun's altitude in the sky (the angle the sun makes with the horizontal) and the heights of objects. At the same time, the shadow of a building is found to be 47 metres long. What is the height of the building?",
+      "answer": "34.82",
+      "solution": [
+        "We know the angle that the sun makes with the horizontal and now we can use that to find the height of the building. [figure] In the figure above $\\theta$ is the angle that the sun makes with the horizontal.",
+        "$\\begin{aligned}\\tan\\text{36.53}^{\\circ}&=\\frac{h}{47}\\\\h&=47\\tan\\text{36.53}^{\\circ}\\\\&=\\text{34.82m}\\end{aligned}$"
+      ],
+      "source_page": 400,
+      "source_note": "Exercise 11-2, question 16b (2GQF) · p.400 · solution: book_worked_epub",
+      "verified": false,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub",
+      "hold_reason": "answer_mismatch"
+    },
+    {
+      "id": "q:g10m11s1-1-3:ex11-2-17b",
+      "lo": "lo:g10m11s1-1-3",
+      "tier": "advanced",
+      "type": "numeric",
+      "stem": "The angle of elevation of a hot air balloon, climbing vertically, changes from 25 degrees at 11:00 am to 60 degrees at 11:02 am. The point of observation of the angle of elevation is situated 300 metres away from the take off point. Calculate the increase in height between 11:00 am and 11:02 am.",
+      "answer": "379.73",
+      "solution": [
+        "$\\begin{aligned}\\tan25^{\\circ}&=\\frac{h_{1}}{300}\\\\h_{1}&=300\\tan25^{\\circ}\\\\&=\\text{139.89 m}\\\\\\\\\\tan60^{\\circ}&=\\frac{h_{2}}{300}\\\\h_{2}&=300\\tan60^{\\circ}\\\\&=\\text{519.62 m}\\end{aligned}$",
+        "The difference is:",
+        "$\\text{519.62}\\text{ m}-\\text{129.89}\\text{ m}=\\text{379.73}\\text{ m}$"
+      ],
+      "source_page": 400,
+      "source_note": "Exercise 11-2, question 17b (2GQG) · p.400 · solution: book_worked_epub",
+      "verified": false,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub",
+      "hold_reason": "answer_mismatch"
+    },
+    {
+      "id": "q:g10m11s1-1-1:ex11-2-19a",
+      "lo": "lo:g10m11s1-1-1",
+      "tier": "standard",
+      "type": "numeric",
+      "stem": "The diagram below shows quadrilateral $PQRS$ , with $PQ=\\text{7.5}\\text{cm}$ , $PS=\\text{6.2}\\text{cm}$ , $\\text{angle}R=\\text{42}^{\\circ}$ and angles $S$ and $Q$ are right angles. [figure] Find $PR$ , correct to 2 decimal places.",
+      "answer": "11.21",
+      "solution": [
+        "$\\begin{aligned}\\frac{\\text{7.5}}{PR}&=\\sin42^{\\circ}\\\\\\frac{\\text{7.5}}{\\sin42^{\\circ}}&=PR\\\\\\therefore PR&=\\text{11.21}\\text{ cm}\\end{aligned}$"
+      ],
+      "source_page": 401,
+      "source_note": "Exercise 11-2, question 19a (2GQJ) · p.401 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m11s1-1-2:ex11-2-19b",
+      "lo": "lo:g10m11s1-1-2",
+      "tier": "standard",
+      "type": "numeric",
+      "stem": "The diagram below shows quadrilateral $PQRS$ , with $PQ=\\text{7.5}\\text{cm}$ , $PS=\\text{6.2}\\text{cm}$ , $\\text{angle}R=\\text{42}^{\\circ}$ and angles $S$ and $Q$ are right angles. [figure] Find the size of the angle marked $x$ , correct to one decimal place.",
+      "answer": "56.4",
+      "solution": [
+        "$\\begin{aligned}\\cos x&=\\frac{\\text{6.2}}{\\text{11.21}}\\\\\\therefore x&=\\text{56.4}^{\\circ}\\end{aligned}$"
+      ],
+      "source_page": 401,
+      "source_note": "Exercise 11-2, question 19b (2GQJ) · p.401 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m11s1-1-3:ex11-2-20",
+      "lo": "lo:g10m11s1-1-3",
+      "tier": "standard",
+      "type": "numeric",
+      "stem": "From a boat at sea ( $S$ ), the angle of elevation of the top of a lighthouse $PQ$ , on a cliff $QR$ , is 27°. The lighthouse is $\\text{10}$ $\\text{m}$ high and the cliff top is $\\text{75}$ $\\text{m}$ above sea level. How far is the boat from the base of the cliff, to the nearest metre?",
+      "answer": "167",
+      "solution": [
+        "First draw a sketch: [figure] The distance $PR$ is equal to the height of the lighthouse, $PQ$ , plus the height of the cliffs, $QR$ .",
+        "$\\begin{aligned}\\frac{85}{RS}&=\\tan27^{\\circ}\\\\\\frac{85}{\\tan27^{\\circ}}&=RS\\\\\\therefore RS&=167\\text{ m}\\end{aligned}$"
+      ],
+      "source_page": 401,
+      "source_note": "Exercise 11-2, question 20 (2GQK) · p.401 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    }
+  ],
+  "visuals": [
+    {
+      "id": "v:g10m11s1-1:bk-we03",
+      "lo": "lo:g10m11s1-1-1",
+      "question": "q:g10m11s1-1-1:we03",
+      "kind": "book_image",
+      "spec": {
+        "src": "/book-figures/g10-math/tikzpicture__7a7bcbe003abd6d97807c755f3a407a2.png",
+        "alt": "The textbook's diagram for this question, printed on page 394.",
+        "stand_in": true,
+        "native_kind_needed": "geometry_diagram"
+      },
+      "caption": null,
+      "source_page": 394
+    },
+    {
+      "id": "v:g10m11s1-1:bk-we04",
+      "lo": "lo:g10m11s1-1-3",
+      "question": "q:g10m11s1-1-3:we04",
+      "kind": "book_image",
+      "spec": {
+        "src": "/book-figures/g10-math/tikzpicture__228c7f44418f764b133353ce29599c39.png",
+        "alt": "The textbook's diagram for this question, printed on page 395.",
+        "stand_in": true,
+        "native_kind_needed": "geometry_diagram"
+      },
+      "caption": null,
+      "source_page": 395
+    },
+    {
+      "id": "v:g10m11s1-1:bk-we05",
+      "lo": "lo:g10m11s1-1-1",
+      "question": "q:g10m11s1-1-1:we05",
+      "kind": "book_image",
+      "spec": {
+        "src": "/book-figures/g10-math/tikzpicture__f44c9690e685b603d360b21c1b6656c2.png",
+        "alt": "The textbook's diagram for this question, printed on page 396.",
+        "stand_in": true,
+        "native_kind_needed": "geometry_diagram"
+      },
+      "caption": null,
+      "source_page": 396
+    },
+    {
+      "id": "v:g10m11s1-1:bk-ex11-1-1",
+      "lo": "lo:g10m11s1-1-1",
+      "question": "q:g10m11s1-1-1:ex11-1-1",
+      "kind": "book_image",
+      "spec": {
+        "src": "/book-figures/g10-math/tikzpicture__956187caf9f95616f91401cc2c15342e.png",
+        "alt": "The textbook's diagram for this question, printed on page 396.",
+        "stand_in": true,
+        "native_kind_needed": "trig_triangle"
+      },
+      "caption": null,
+      "source_page": 396
+    },
+    {
+      "id": "v:g10m11s1-1:bk-ex11-1-2",
+      "lo": "lo:g10m11s1-1-1",
+      "question": "q:g10m11s1-1-1:ex11-1-2",
+      "kind": "book_image",
+      "spec": {
+        "src": "/book-figures/g10-math/tikzpicture__d171011add9f7a9a6841420e21a5db1f.png",
+        "alt": "The textbook's diagram for this question, printed on page 397.",
+        "stand_in": true,
+        "native_kind_needed": "trig_triangle"
+      },
+      "caption": null,
+      "source_page": 397
+    },
+    {
+      "id": "v:g10m11s1-1:bk-ex11-2-3",
+      "lo": "lo:g10m11s1-1-3",
+      "question": "q:g10m11s1-1-3:ex11-2-3",
+      "kind": "book_image",
+      "spec": {
+        "src": "/book-figures/g10-math/tikzpicture__d7f023781a1ed949cc280e5513d3864e.png",
+        "alt": "The textbook's diagram for this question, printed on page 398.",
+        "stand_in": true,
+        "native_kind_needed": "geometry_diagram"
+      },
+      "caption": null,
+      "source_page": 398
+    },
+    {
+      "id": "v:g10m11s1-1:bk-ex11-2-4",
+      "lo": "lo:g10m11s1-1-2",
+      "question": "q:g10m11s1-1-2:ex11-2-4",
+      "kind": "book_image",
+      "spec": {
+        "src": "/book-figures/g10-math/tikzpicture__67a339db8c1e4d32d7571a044a05348a.png",
+        "alt": "The textbook's diagram for this question, printed on page 398.",
+        "stand_in": true,
+        "native_kind_needed": "trig_triangle"
+      },
+      "caption": null,
+      "source_page": 398
+    },
+    {
+      "id": "v:g10m11s1-1:bk-ex11-2-6",
+      "lo": "lo:g10m11s1-1-1",
+      "question": "q:g10m11s1-1-1:ex11-2-6",
+      "kind": "book_image",
+      "spec": {
+        "src": "/book-figures/g10-math/tikzpicture__db1734db97d8041e9ddc45e3367a7b88.png",
+        "alt": "The textbook's diagram for this question, printed on page 398.",
+        "stand_in": true,
+        "native_kind_needed": "geometry_diagram"
+      },
+      "caption": null,
+      "source_page": 398
+    },
+    {
+      "id": "v:g10m11s1-1:bk-ex11-2-9",
+      "lo": "lo:g10m11s1-1-1",
+      "question": "q:g10m11s1-1-1:ex11-2-9",
+      "kind": "book_image",
+      "spec": {
+        "src": "/book-figures/g10-math/tikzpicture__1aac0a848db06fafcb4430109f7908cd.png",
+        "alt": "The textbook's diagram for this question, printed on page 399.",
+        "stand_in": true,
+        "native_kind_needed": "trig_triangle"
+      },
+      "caption": null,
+      "source_page": 399
+    },
+    {
+      "id": "v:g10m11s1-1:bk-ex11-2-11",
+      "lo": "lo:g10m11s1-1-1",
+      "question": "q:g10m11s1-1-1:ex11-2-11",
+      "kind": "book_image",
+      "spec": {
+        "src": "/book-figures/g10-math/tikzpicture__64a03e832eb494dff6a5455f232f4a24.png",
+        "alt": "The textbook's diagram for this question, printed on page 399.",
+        "stand_in": true,
+        "native_kind_needed": "geometry_diagram"
+      },
+      "caption": null,
+      "source_page": 399
+    },
+    {
+      "id": "v:g10m11s1-1:bk-ex11-2-12",
+      "lo": "lo:g10m11s1-1-2",
+      "question": "q:g10m11s1-1-2:ex11-2-12",
+      "kind": "book_image",
+      "spec": {
+        "src": "/book-figures/g10-math/tikzpicture__58e733506f05644f68f315a440a5da02.png",
+        "alt": "The textbook's diagram for this question, printed on page 399.",
+        "stand_in": true,
+        "native_kind_needed": "polygon_scene"
+      },
+      "caption": null,
+      "source_page": 399
+    },
+    {
+      "id": "v:g10m11s1-1:bk-ex11-2-13",
+      "lo": "lo:g10m11s1-1-1",
+      "question": "q:g10m11s1-1-1:ex11-2-13",
+      "kind": "book_image",
+      "spec": {
+        "src": "/book-figures/g10-math/tikzpicture__ffbbb179284ac4876c0922b456e26e7d.png",
+        "alt": "The textbook's diagram for this question, printed on page 400.",
+        "stand_in": true,
+        "native_kind_needed": "polygon_scene"
+      },
+      "caption": null,
+      "source_page": 400
+    },
+    {
+      "id": "v:g10m11s1-1:bk-ex11-2-14",
+      "lo": "lo:g10m11s1-1-1",
+      "question": "q:g10m11s1-1-1:ex11-2-14",
+      "kind": "book_image",
+      "spec": {
+        "src": "/book-figures/g10-math/tikzpicture__fdf88de30c5b735bb7194c40c02216b1.png",
+        "alt": "The textbook's diagram for this question, printed on page 400.",
+        "stand_in": true,
+        "native_kind_needed": "polygon_scene"
+      },
+      "caption": null,
+      "source_page": 400
+    },
+    {
+      "id": "v:g10m11s1-1:bk-ex11-2-19a",
+      "lo": "lo:g10m11s1-1-1",
+      "question": "q:g10m11s1-1-1:ex11-2-19a",
+      "kind": "book_image",
+      "spec": {
+        "src": "/book-figures/g10-math/tikzpicture__92380ac6e01fbbc05357796f7ce5d2c7.png",
+        "alt": "The textbook's diagram for this question, printed on page 401.",
+        "stand_in": true,
+        "native_kind_needed": "polygon_scene"
+      },
+      "caption": null,
+      "source_page": 401
+    },
+    {
+      "id": "v:g10m11s1-1:bk-ex11-2-19b",
+      "lo": "lo:g10m11s1-1-2",
+      "question": "q:g10m11s1-1-2:ex11-2-19b",
+      "kind": "book_image",
+      "spec": {
+        "src": "/book-figures/g10-math/tikzpicture__92380ac6e01fbbc05357796f7ce5d2c7.png",
+        "alt": "The textbook's diagram for this question, printed on page 401.",
+        "stand_in": true,
+        "native_kind_needed": "geometry_diagram"
+      },
+      "caption": null,
+      "source_page": 401
+    }
+  ],
+  "external_node_refs": [
+    "course:us-g10-math-en",
+    "lo:g10m5s3-1-1",
+    "lo:g10m5s3-1-2",
+    "lo:g10m5s7-1-1",
+    "lo:g10m5s7-1-2",
+    "lo:g10m7s1-1-2",
+    "lo:g10m7s2-1-1"
+  ],
+  "explanation_entries": [
+    {
+      "id": "expl:g10m11s1-1-1:we01",
+      "lo": "lo:g10m11s1-1-1",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Mandla flies a kite on a $\\text{17}$ $\\text{m}$ string at an inclination of $\\text{63}$ °. What is the height, $h$ , of the kite above the ground? If Mandla's friend Sipho stands directly below the kite, calculate the distance, $d$ , between the two friends."
+        },
+        {
+          "step": 1,
+          "text_md": "Make a sketch and identify the opposite and adjacent sides and the hypotenuse: [figure]"
+        },
+        {
+          "step": 2,
+          "text_md": "Use given information and appropriate ratio to solve for $h$ and $d$: $\\begin{aligned}\\sin63^{\\circ}&=\\frac{\\text{opposite}}{\\text{hypotenuse}}\\\\\\sin63^{\\circ}&=\\frac{h}{17}\\\\\\therefore h&=17\\sin63^{\\circ}\\\\&=\\text{15.14711...}\\\\&\\approx\\text{15.15 m}\\end{aligned}$ $\\begin{aligned}\\cos63^{\\circ}&=\\frac{\\text{adjacent}}{\\text{hypotenuse}}\\\\\\cos63^{\\circ}&=\\frac{d}{17}\\\\\\therefore d&=17\\cos63^{\\circ}\\\\&=\\text{7.7178...}\\\\&\\approx\\text{7.72 m}\\end{aligned}$ Note that the third side of the triangle can also be calculated using the theorem of Pythagoras: ${d}^{2}={17}^{2}-{h}^{2}$ ."
+        },
+        {
+          "step": 3,
+          "text_md": "Write the final answers: The kite is $\\text{15.15}$ $\\text{m}$ above the ground. Mandla and Sipho are $\\text{7.72}$ $\\text{m}$ apart."
+        }
+      ],
+      "source_page": 392,
+      "generated_by": "book (book_worked); extraction line v2 (assemble_lesson_bundle.py)"
+    },
+    {
+      "id": "expl:g10m11s1-1-2:ex11-2-7a",
+      "lo": "lo:g10m11s1-1-2",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "A ladder is $\\text{8}$ metres long. It is leaning against the wall of a house and reaches $\\text{6}$ metres up the wall. Draw a sketch of the situation."
+        },
+        {
+          "step": 1,
+          "text_md": "[figure]"
+        }
+      ],
+      "source_page": 399,
+      "generated_by": "book (book_worked_epub); extraction line v2 (assemble_lesson_bundle.py)"
+    },
+    {
+      "id": "expl:g10m11s1-1-3:ex11-2-8a",
+      "lo": "lo:g10m11s1-1-3",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Nandi is standing on level ground $\\text{70}$ metres away from a tall tower. From her position, the angle of elevation of the top of the tower is $\\text{38}$ °. Draw a sketch of the situation."
+        },
+        {
+          "step": 1,
+          "text_md": "[figure]"
+        }
+      ],
+      "source_page": 399,
+      "generated_by": "book (book_worked_epub); extraction line v2 (assemble_lesson_bundle.py)"
+    },
+    {
+      "id": "expl:g10m11s1-1-3:ex11-2-17a",
+      "lo": "lo:g10m11s1-1-3",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "The angle of elevation of a hot air balloon, climbing vertically, changes from 25 degrees at 11:00 am to 60 degrees at 11:02 am. The point of observation of the angle of elevation is situated 300 metres away from the take off point. Draw a sketch of the situation."
+        },
+        {
+          "step": 1,
+          "text_md": "[figure]"
+        }
+      ],
+      "source_page": 400,
+      "generated_by": "book (book_worked_epub); extraction line v2 (assemble_lesson_bundle.py)"
+    }
+  ],
+  "lessons": [
+    {
+      "slug": "g10m11s1-1",
+      "title": "Two-dimensional problems",
+      "module": "module:g10m-c11",
+      "sections": [
+        {
+          "number": "11.1",
+          "title": "Two-dimensional problems"
+        }
+      ],
+      "group_key": "11.1"
+    }
+  ],
+  "claims": [
+    {
+      "lo": "lo:g10m11s1-1-1",
+      "claim": "For an angle θ of a right-angled triangle, sin θ = opposite / hypotenuse.",
+      "lang": "en",
+      "claim_type": "rule",
+      "anchor": "b03952",
+      "evidence_page": 390,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m11s1-1-1",
+      "claim": "For an angle θ of a right-angled triangle, cos θ = adjacent / hypotenuse.",
+      "lang": "en",
+      "claim_type": "rule",
+      "anchor": "b03952",
+      "evidence_page": 390,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m11s1-1-1",
+      "claim": "For an angle θ of a right-angled triangle, tan θ = opposite / adjacent.",
+      "lang": "en",
+      "claim_type": "rule",
+      "anchor": "b03952",
+      "evidence_page": 390,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m11s1-1-1",
+      "claim": "The trigonometric ratios can be used to solve two-dimensional problems that involve right-angled triangles.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "b03950",
+      "evidence_page": 390,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m11s1-1-1",
+      "claim": "Two-dimensional problems are solved with the three trigonometric ratios (sine, cosine, tangent) together with the theorem of Pythagoras.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "b03953",
+      "evidence_page": 390,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m11s1-1-3",
+      "claim": "The angle of elevation is the angle formed by the line of sight and the horizontal plane for an object above the horizontal plane.",
+      "lang": "en",
+      "claim_type": "definition",
+      "anchor": "b03958",
+      "evidence_page": 390,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m11s1-1-3",
+      "claim": "In the cliff diagram for the angle of elevation, the line of sight runs from the ship to the top of the cliffs and the horizontal plane runs from the ship to the base of the cliffs.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "b03959",
+      "evidence_page": 390,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m11s1-1-3",
+      "claim": "The cliffs can be considered a straight vertical line, so the situation gives a right-angled triangle.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "b03959",
+      "evidence_page": 390,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m11s1-1-3",
+      "claim": "The angle of depression is the angle formed by the line of sight and the horizontal plane for an object below the horizontal plane.",
+      "lang": "en",
+      "claim_type": "definition",
+      "anchor": "b03963",
+      "evidence_page": 391,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m11s1-1-3",
+      "claim": "In the cliff diagram for the angle of depression, the line of sight runs from the top of the cliffs to the ship, and the horizontal plane runs from the top of the cliffs through P.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "b03964",
+      "evidence_page": 391,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m11s1-1-3",
+      "claim": "The horizontal plane through the top of the cliffs is parallel to the line between the base of the cliffs and the ship.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "b03964",
+      "evidence_page": 391,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m11s1-1-3",
+      "claim": "P lies directly above the ship, and a vertical, perpendicular line to the horizontal plane can be constructed at the point P.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "b03964",
+      "evidence_page": 391,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m11s1-1-3",
+      "claim": "When the line from the base of the cliffs to the ship is parallel to the line from the top of the cliffs to P, the angle of depression α equals the angle of elevation θ.",
+      "lang": "en",
+      "claim_type": "rule",
+      "anchor": "b03965",
+      "evidence_page": 391,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m11s1-1-3",
+      "claim": "In trigonometry the angle of inclination is the same as the angle of elevation.",
+      "lang": "en",
+      "claim_type": "convention",
+      "anchor": "b03969",
+      "evidence_page": 391,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m11s1-1-3",
+      "claim": "Once the angle of inclination of a tall building or tree is known (it can be measured with an inclinometer), the height of the building or tree can be determined.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "b03968",
+      "evidence_page": 391,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m11s1-1-1",
+      "claim": "Lowering a tape measure from the roof to find the height of a tall building is impractical and dangerous; it is more sensible to use trigonometry.",
+      "lang": "en",
+      "claim_type": "caution",
+      "anchor": "b03972",
+      "evidence_page": 394,
+      "evidence_kind": "box",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m11s1-1-1",
+      "claim": "Start a trigonometry problem by making a sketch and identifying the opposite and adjacent sides and the hypotenuse.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE1",
+      "evidence_page": 392,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m11s1-1-1",
+      "claim": "Use the given information to choose the appropriate trigonometric ratio, then solve for the unknown side.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE1",
+      "evidence_page": 392,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m11s1-1-1",
+      "claim": "With a 17 m string (the hypotenuse) at an inclination of 63°, the height h is the side opposite the angle, so use sine: sin 63° = h/17, which gives h = 17 sin 63°.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE1",
+      "evidence_page": 392,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m11s1-1-1",
+      "claim": "The distance d is the side adjacent to the 63° angle with the hypotenuse 17 m given, so use cosine: cos 63° = d/17, which gives d = 17 cos 63°.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE1",
+      "evidence_page": 392,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m11s1-1-1",
+      "claim": "The third side of a right-angled triangle can also be calculated using the theorem of Pythagoras, here d² = 17² − h².",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE1",
+      "evidence_page": 392,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m11s1-1-1",
+      "claim": "The calculator value 15.14711... is rounded to 2 decimal places and written with a decimal comma and the unit: 15.15 m.",
+      "lang": "en",
+      "claim_type": "convention",
+      "anchor": "WE1",
+      "evidence_page": 392,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m11s1-1-1",
+      "claim": "End a worked solution by writing the final answers in words with their units.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE1",
+      "evidence_page": 392,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m11s1-1-2",
+      "claim": "Draw the figure, label all given lengths on the diagram and indicate any given right angle.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE2",
+      "evidence_page": 393,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m11s1-1-2",
+      "claim": "To find ∠ABC, find ∠ABE in triangle ABE and ∠CBE in triangle CBE, then add the two angles together.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE2",
+      "evidence_page": 393,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m11s1-1-2",
+      "claim": "When the hypotenuse and the side opposite the required angle are given, use the sin function.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE2",
+      "evidence_page": 393,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m11s1-1-2",
+      "claim": "In triangle ABE, sin ABE = opposite/hypotenuse = 3/4, which gives ∠ABE = 48.5903...°, which is approximately 48.6°.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE2",
+      "evidence_page": 393,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m11s1-1-2",
+      "claim": "Use the theorem of Pythagoras to find a missing side: in triangle ABE, BE² = AB² − AE² = 4² − 3² = 7, so BE = √7 cm.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE2",
+      "evidence_page": 393,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m11s1-1-2",
+      "claim": "When the adjacent side (√7) and the hypotenuse (5) are known, use cosine: cos CBE = adjacent/hypotenuse = √7/5 = 0.52915..., which gives ∠CBE = 58.0519...°, approximately 58.1°.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE2",
+      "evidence_page": 393,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m11s1-1-2",
+      "claim": "Add the two angles to get the required angle: ∠ABC = 48.6° + 58.1° = 106.7°.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE2",
+      "evidence_page": 393,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m11s1-1-2",
+      "claim": "Angles are rounded to 1 decimal place and written with a decimal comma and the degree sign, for example 48.6°.",
+      "lang": "en",
+      "claim_type": "convention",
+      "anchor": "WE2",
+      "evidence_page": 393,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m11s1-1-1",
+      "claim": "A right-angled triangle in which the length of one side and an angle are known lets us calculate the unknown height of the building.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE3",
+      "evidence_page": 394,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m11s1-1-3",
+      "claim": "The angle of elevation is measured from the ground to the top of the building (here 38.7° at a point Q, 100 m from the base of the building).",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE3",
+      "evidence_page": 394,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m11s1-1-3",
+      "claim": "With the angle of elevation 38.7° and the 100 m horizontal distance (adjacent side), the height h is the opposite side, so use tangent: tan 38.7° = opposite/adjacent = h/100.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE3",
+      "evidence_page": 394,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m11s1-1-3",
+      "claim": "Rearrange to solve for h: h = 100 × tan 38.7° = 80.1151..., which is approximately 80.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE3",
+      "evidence_page": 394,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m11s1-1-3",
+      "claim": "When a height is asked correct to the nearest metre, the calculator value is rounded to a whole number of metres (80.1151... becomes 80 m).",
+      "lang": "en",
+      "claim_type": "convention",
+      "anchor": "WE3",
+      "evidence_page": 394,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m11s1-1-3",
+      "claim": "Measuring the angle of elevation to the top of the tower (34°) and the angle of depression to the bottom of the tower (62°) from point B uses both angles in one problem.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE4",
+      "evidence_page": 395,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m11s1-1-3",
+      "claim": "To find the height CE of the tower, first calculate the lengths DE and CD.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE4",
+      "evidence_page": 395,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m11s1-1-3",
+      "claim": "Triangles BDE and BDC are both right-angled and the length BD is known in each, so the sides of both triangles can be calculated.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE4",
+      "evidence_page": 395,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m11s1-1-3",
+      "claim": "Because CABD is a rectangle, BD = AC = 200 m.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE4",
+      "evidence_page": 395,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m11s1-1-3",
+      "claim": "In triangle CBD, use tangent: tan CBD = CD/BD, so CD = BD × tan CBD = 200 × tan 62° = 376.1452..., approximately 376 m.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE4",
+      "evidence_page": 395,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m11s1-1-3",
+      "claim": "In triangle DBE, use tangent: tan DBE = DE/BD, so DE = BD × tan DBE = 200 × tan 34° = 134.9017..., approximately 135 m.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE4",
+      "evidence_page": 395,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m11s1-1-3",
+      "claim": "Add the two heights to get the final answer: CE = CD + DE = 135 m + 376 m = 511 m.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE4",
+      "evidence_page": 395,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m11s1-1-3",
+      "claim": "The diagram for the cellphone tower problem is not drawn to scale.",
+      "lang": "en",
+      "claim_type": "caution",
+      "anchor": "WE4",
+      "evidence_page": 395,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m11s1-1-1",
+      "claim": "When the hypotenuse and an angle of a right-angled triangle are known, the side opposite the angle (here AC) can be calculated.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE5",
+      "evidence_page": 396,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m11s1-1-1",
+      "claim": "In right-angled triangle ABC, use sine: sin ABC = AC/BC, so AC = BC × sin ABC = 5 sin 5°.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE5",
+      "evidence_page": 396,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m11s1-1-1",
+      "claim": "The height of the wall BD is the height of the garage minus AC.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE5",
+      "evidence_page": 396,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m11s1-1-1",
+      "claim": "Correct to 1 decimal place, 0.43577... is rounded to 0.4 m before it is subtracted from the height of the garage.",
+      "lang": "en",
+      "claim_type": "convention",
+      "anchor": "WE5",
+      "evidence_page": 396,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m11s1-1-1",
+      "claim": "BD = 4 m − 0.4 m = 3.6 m.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE5",
+      "evidence_page": 396,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    }
+  ],
+  "assembled_from": {
+    "manifest": "d749f7d1c4052342298d122b82bcea3117e4303b74e16b75062fd6606146c7b1",
+    "objectives/g10m11s1-1.json": "d898fd743c5d2737d915237ad46f03f51909f3bed363333beed4133a4b5f5793",
+    "runs/lesson/g10m11s1-1.json": "50511f70fae66bbb9915073e4fabbd6a2bd6b9399746eb8e309a9b8b66085830"
+  }
+}
