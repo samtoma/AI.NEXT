@@ -6,7 +6,7 @@
 `feat/002-identity-and-admin-console` on 2026-09-21. *(Was "Draft — requirements only, no
 implementation"; corrected 2026-09-22, when this spec also gained the course-availability
 requirements, which were written after their code and are stamped as such.)*
-**Last amended**: 2026-10-01 (student header, home page and the lesson gate — `tamer-mvp-fixes`, accepted by Samuel 2026-10-01, **released in v0.10.0**) — **FR-2016** and **FR-3219…FR-3222** added; **FR-3202** and **FR-3203** amended in place, each marked; FR-3221 is ADR-0020's 2026-09-30 amendment, accepted by Samuel 2026-10-01. Before that, 2026-09-25 (one curriculum order, v0.9.2 — **not committed**, awaiting Samuel's
+**Last amended**: 2026-10-02 (the Your Progress Map — `tamer-graph-test`, accepted by Samuel 2026-10-02, **released in v0.11.0**) — **FR-3224** added; **FR-3216** superseded by it (Samuel, 2026-10-02); FR-3208, FR-3209, FR-3210 and FR-3219 amended in place, each marked. Before that, 2026-10-01 (student header, home page and the lesson gate — `tamer-mvp-fixes`, accepted by Samuel 2026-10-01, **released in v0.10.0**) — **FR-2016** and **FR-3219…FR-3222** added; **FR-3202** and **FR-3203** amended in place, each marked; FR-3221 is ADR-0020's 2026-09-30 amendment, accepted by Samuel 2026-10-01. Before that, 2026-09-25 (one curriculum order, v0.9.2 — **not committed**, awaiting Samuel's
 review) — **FR-3217, FR-3218** added: every reader of curriculum order uses the one catalogue order
 (`MODULE_ORDER`), a list of several subjects splits by subject first (Samuel, 2026-09-25), guarded by a
 source test, the tutor's Ask-the-Spine context included (Samuel lifted ADR-0020's hold for that ordering
@@ -1009,17 +1009,24 @@ password sign-in.
 **The `/spine` skill map ("How you're doing", `b9df1e1`)**
 
 - **FR-3208**: Each topic on the skill map MUST show a plain band word and a fill, and MUST NOT show
-  a student a percentage or an internal identifier.
+  a student a percentage or an internal identifier. *(Amended 2026-10-01 for FR-3224: on the Your
+  Progress Map every node's fill is named in words in its accessible name and hover text, on lesson
+  labels and objective boxes where they are drawn, and in the legend; no count of questions is shown.)*
 - **FR-3209**: Noor MUST sit in a panel beside the map. Below 1024px wide (iPad portrait) the topic
-  panel MUST dock full width under the map and Noor MUST collapse to a bar.
+  panel MUST dock full width under the map and Noor MUST collapse to a bar. *(Amended 2026-10-01 for
+  FR-3224: Noor sits beside the map from 1100px wide, at the same top and height; below that the chat
+  stacks under the map instead of collapsing.)*
 - **FR-3210**: The map MUST work without a pointer: a topic opens from the keyboard with focus on its
   heading, Escape closes it and returns focus to the topic, and a panel that has been dragged MUST be
-  returnable to its place by a control, not only by dragging.
+  returnable to its place by a control, not only by dragging. *(Amended 2026-10-01 for FR-3224: the map
+  itself is keyboard-operable — Tab reaches chapters, then lessons and objectives at the zoom levels that
+  show them, Enter or Space selects, Escape steps up one level, + and − zoom.)*
 - **FR-3215** **[ADDED 2026-09-24 — v0.9.1]**: The skill map orders topics in catalogue order
   (`MODULE_ORDER`), the same order the lesson list and progression use; the order is deterministic.
 - **FR-3216** **[ADDED 2026-09-24 — v0.9.1]**: Each prerequisite-depth column of the skill map is an
   evenly spaced stack centred on the map's midline, ordered by prerequisite barycentre and then
-  catalogue order (Samuel, 2026-09-24, restoring the pre-v0.6.0 packing).
+  catalogue order (Samuel, 2026-09-24, restoring the pre-v0.6.0 packing). **[SUPERSEDED by
+  FR-3224 — proposed by Tamer 2026-10-01, accepted by Samuel 2026-10-02, released v0.11.0]**
 
 > *FR-3215 and FR-3216 are not part of the "written after the code" set above: Samuel approved them
 > on 2026-09-24 after comparing the map before and after v0.6.0 — "nice and sequential" before, "looks
@@ -1059,9 +1066,10 @@ context: *"yes for sure, for decision 2, it is part of the overall consistency, 
   rollback), because deploys do not reload the curriculum graph. The label reaches the tutor's
   prompts; Samuel approved that on 2026-09-25 ("OK") as an exception to ADR-0020's prompt hold for
   this one string only, recorded in ADR-0020.
-- **FR-3219** **[ADDED 2026-09-29 — requested 2026-09-29, released v0.10.0]**: The student build's
-  header MUST offer exactly two tabs to a signed-in student: "Study" (`/student`) and "Your Progress"
-  (`/spine`). The map's heading and title MUST read "Your Progress" and every button that leads to it "See your progress".
+- **FR-3219** **[ADDED 2026-09-29 — requested 2026-09-29, released v0.10.0; renamed in v0.11.0]**: The student build's
+  header MUST offer exactly two tabs to a signed-in student: "Study" (`/student`) and "Your Progress Map"
+  (`/spine`). The map's heading and title MUST read "Your Progress Map" (renamed 2026-10-01; it was "Your
+  Progress") and every button that leads to it "See your progress".
   "Where you stand" is off the header for now; `/dashboard` still resolves and stays linked from the
   outstanding-account screen. This partly reverses #12: that issue removed an internal tool called
   "Evidence Walk", and the page behind the returning tab is the student's own map, rebuilt since.
@@ -1109,7 +1117,37 @@ context: *"yes for sure, for decision 2, it is part of the overall consistency, 
   message without such a block, MUST keep the bottom-follow. The check MUST repeat when that message
   changes size (a widget keeps laying out after it appears). Aligning MUST NOT switch following off:
   only the student's own scroll away from the bottom does. Not covered: a message taller than the
-  screen still needs scrolling down to reach its block.
+  screen still needs scrolling down to reach its block. *(Extended 2026-10-01: in the Your Progress
+  Map's "Ask Noor" chat the rule applies to every tutor reply, not only one holding a block, so a
+  long prose answer is read from its top, downwards.)*
+- **FR-3224** **[ADDED 2026-10-01 — requested 2026-10-01 (Tamer, skill-map handoff), released
+  v0.11.0; supersedes FR-3216 — accepted by Samuel 2026-10-02]**: The Your Progress Map MUST show one subject as
+  chapter clusters — Term 1 chapters in one row and Term 2 in a second, in book order — each chapter's
+  objectives on an outer ring in lesson order from the top and its lessons on an inner ring, over a
+  flat honey disc, with the chapter's title and "{n} of {m} lessons started" above it. Objective and
+  lesson fills are the mastery colour of the chosen snapshot ("Where you started" / "Today"); a lesson
+  is the rounded mean of its objectives; a chapter is never averaged into one colour. It MUST zoom
+  semantically — chapters, then lesson names, then objective boxes naming any link that leaves the
+  lesson — keeping strokes, arrowheads and label sizes constant on screen at every zoom; tapping a
+  chapter, lesson or objective selects it and zooms to it, and tapping empty space or Escape steps up
+  one level. The only lines MUST be objective-to-objective links, at every zoom level — no
+  lesson-to-lesson arrows (Tamer, 2026-10-01: prerequisites are defined between objectives). Links
+  across chapters MUST always be drawn (dashed); links within a chapter only when an end is in the
+  selection. Selecting a node MUST NOT change its fill — the selection is a
+  ring and a pop. Selecting an objective opens no panel (the topic panel was removed 2026-10-01).
+  The "Ask Noor" chat beside it MUST know the current selection: only its kind and id are sent, and
+  the server resolves them against the curriculum the student can see before the tutor is told.
+  Text MUST follow the selection, not the zoom level alone (Tamer, 2026-10-01): with something
+  selected, only its chapter's lesson names and its own and linked objective boxes are written, at
+  any zoom; with nothing selected, everything the level allows is a candidate. Either way no two labels
+  may overlap — the most important are kept and the rest dropped — and any node without a label names
+  itself in a tooltip on hover or keyboard focus. Objective boxes are all one width and show at most
+  two lines unless selected; chapter titles are all one width (the narrowest chapter's column) and
+  show at most two lines, the full title on hover; chapter, lesson and objective names wrap into
+  balanced lines. Ask Noor's suggestions are the design system's Nour-panel chips (pill, 2.5px ink,
+  `2px 2px 0` shadow, Baloo 700 at the Label size, the press, the 52px tap target), on one line
+  that scrolls sideways when they do not fit. Nothing on
+  the page may show a percentage, a score or a count of questions.
 - **FR-3211**: No student surface may say whether content was reviewed. Review status is an operator
   fact, shown in the console only ([ADR-0019](../../docs/decisions/0019-serve-the-whole-maths-bank.md));
   what a student may be told is where a question came from.

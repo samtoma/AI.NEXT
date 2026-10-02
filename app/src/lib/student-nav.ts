@@ -2,7 +2,8 @@
  * The student build's header tabs (FR-3219), kept out of `NavLinks.tsx` so a
  * test can read them without a DOM.
  *
- * **The map is back, as "Your Progress" — the student's name for it.** `/spine` lost its
+ * **The map is back, as "Your Progress Map" (renamed 2026-10-01; it was
+ * "Your Progress", and "Skills Map" before that).** `/spine` lost its
  * tab in #12 because it was an internal tool called "Evidence Walk", offered to
  * a fourteen-year-old beside her lesson. It has since been rebuilt as her own
  * map — her mastery, one subject, none of the graph metadata (see
@@ -14,7 +15,7 @@
  */
 export const STUDENT_NAV_LINKS = [
   { href: "/student", label: "Study" },
-  { href: "/spine", label: "Your Progress" },
+  { href: "/spine", label: "Your Progress Map" },
 ] as const;
 
 /**

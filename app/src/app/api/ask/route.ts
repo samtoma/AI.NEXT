@@ -2,7 +2,8 @@ import { spawn } from "node:child_process";
 import { withPrincipal } from "@/lib/db";
 import { AuthError, requireStudent } from "@/lib/auth/principal";
 import { ENVIRONMENT, RELEASE_TAG } from "@/lib/env";
-import { buildAskContext, type AskSurface } from "@/lib/ask";
+import { buildAskContext, mapFocusNote, type AskSurface } from "@/lib/ask";
+import { parseMapFocus } from "@/lib/map-focus";
 import {
   CLAUDE_BIN,
   claudeCwd,
@@ -144,6 +145,8 @@ export async function POST(req: Request) {
     lesson?: string;
     /** a worksheet the student photographed, to ground this turn on (FR-205) */
     uploadId?: unknown;
+    /** what is selected on the Your Progress Map (FR-3224) — kind + id only */
+    mapFocus?: unknown;
   };
   try {
     body = await req.json();
@@ -364,9 +367,18 @@ export async function POST(req: Request) {
 
 ${ctx.dataBlock}`;
 
+  // FR-3224: on the Your Progress chat, the map selection rides in the
+  // per-turn prompt (it changes every turn; the system prompt stays cached).
+  // Resolved server-side against what this student can see; never the
+  // request's own text.
+  const focus = surface === "spine_chat" ? parseMapFocus(body.mapFocus) : null;
+  const focusNote = focus
+    ? await mapFocusNote(studentId, focus, ctx.grounding.lo_ids).catch(() => "")
+    : "";
+
   const userPrompt = `CONVERSATION SO FAR:
 ${transcript}
-
+${focusNote ? `\n${focusNote}\n` : ""}
 Reply as the Tutor to the last user message. Output only the reply text (with citation markers and, if fitting, one action directive).`;
 
   const started = Date.now();

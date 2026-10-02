@@ -15,6 +15,7 @@ import { spineSubjectOf } from "./subjects";
 import { PREREQ_GATE } from "./progression";
 import { computeLayers } from "./spine-layout";
 import { SPINE_LO_SQL, SPINE_LO_SQL_NO_SUBJECT_VIEW } from "./spine-lo-query";
+import { LESSON_TITLES } from "./lesson-titles";
 import { catalogueObjectivesSql } from "./module-order";
 
 /**
@@ -281,6 +282,8 @@ async function spineDataOn(db: Db, studentId: number): Promise<SpineData> {
     // fell back to `id.startsWith("lo:soc") ? "social" : "math"`, which made
     // every unrecognised objective a maths objective on the graph.
     subject: spineSubjectOf(r.subject),
+    moduleId: r.module_id ?? null,
+    moduleLabel: r.module_label ?? null,
   }));
 
   // Cross-subject bridges: keep only edges whose endpoints are both real LOs
@@ -337,6 +340,7 @@ async function spineDataOn(db: Db, studentId: number): Promise<SpineData> {
       attempts: Number(countsRes.rows[0].attempts),
     },
     studentName: (studentRes.rows[0]?.display_name as string) ?? "Student",
+    lessonTitles: LESSON_TITLES,
   };
 }
 

@@ -162,7 +162,6 @@ test("every student API call goes through authFetch; auth endpoints do not", () 
     "../../components/student/FeedbackPrompt.tsx",
     "../tts-client.ts",
     "../../components/DashboardViewed.tsx",
-    "../../components/spine/LoPanel.tsx",
     "../../components/student/WhiteboardPanel.tsx",
     "../../components/viz/VizRefCard.tsx",
   ];

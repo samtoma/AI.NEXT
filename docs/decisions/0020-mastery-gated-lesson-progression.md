@@ -170,6 +170,14 @@ practice re-explain chat (`student_chat`) no longer calls itself a demo. 9 of 23
 deliberate cuts in the comparison data from v0.10.0. The lesson-prompt reframing this hold waits for is
 still not done.)*
 
+*(A seventh exception — Samuel, 2026-10-02: "I approve both, merge it as v0.11.0", on Tamer's
+`tamer-graph-test` (the Your Progress Map, FR-3224). The Your Progress chat's (`spine_chat`) system prompt
+gains **one static rule**: when the turn ends with a "MAP SELECTION RIGHT NOW" line, answer about that first
+and name what it builds on and what builds on it. The line itself rides in the per-turn prompt, built
+server-side from the curriculum the student can see (`lib/ask.ts` `mapFocusNote`); the browser sends only a
+kind and an id. 3 of 234 captured prompt files change, by that one rule line. Every other prompt is
+unchanged.)*
+
 **Revisit when**: a date or school-calendar signal enters the system (the pointer
 would then compete with it for authority over "today's lesson"); or the
 prerequisite graph gains real lesson-level edges, at which point book order can
