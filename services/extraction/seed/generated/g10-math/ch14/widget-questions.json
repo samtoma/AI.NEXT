@@ -1,0 +1,564 @@
+{
+  "generator": "services/extraction/generate_widget_questions.py (ADR-0009) --templates",
+  "question_type": "widget",
+  "book": "work/g10-math/fanout/books/ch14/g10-math.json",
+  "course_id": "course:us-g10-math-en",
+  "templates": {
+    "wt:g10m14s1-1-1:boxes-product-at-least-3": "c471f7d2fd4fe5541285f96b3c4606842ec8c57b93a15d56aa7fe0b7aab61615",
+    "wt:g10m14s1-1-1:boxes-sample-space": "a5205de42bd12b6807a7ecb90c086705dd3ef5877955a402a7e9183f35a9f9c9",
+    "wt:g10m14s1-1-1:two-dice-total-8": "3be2b1c54883fd2c6eedf36a78bb0b3edbc888c7b0fc43d5cc1573f8d48ea129",
+    "wt:g10m14s1-1-2:two-dice-total-at-most-4": "85db7088ea1b9f9db1bdbfb015a9ee53c531bda973050202c76c282425ae963b",
+    "wt:g10m14s4-1-1:shade-union": "40b36a36cf6a21e87251b161875579a10334912c76a5f3d126706a8e5af3143d",
+    "wt:g10m14s5-1-1:venn-union-die": "e908a4c7d7edfc20fa20ad87d7949eeb032952ef2a5631aaa5cf355382415ccb",
+    "wt:g10m14s5-1-1:venn-union-discs": "d985575209552217ec4b4df61c133b18690a5a9a14144ee395c877cf941b3c9e",
+    "wt:g10m14s7-1-1:not-in-chess": "8d7ea0b8d3def26e671925f89da31b2bc65ee61cd44e63145f72894f367f73b6"
+  },
+  "rejected_templates": {
+    "wt:g10m14s3-1-1:factors-of-12-and-primes": [
+      "q:g10m14s3-1-1:w002: blind reading disagrees with the spec — the stem names the sets ['a factor of 12', 'a prime number']; the spec labels them ['Factor of 12', 'Prime number']"
+    ],
+    "wt:g10m14s4-1-2:shade-intersection": [
+      "not shipped: every mapping names a misconception S5 did not keep (mc:g10m14s4-1-2:either-set-not-both), so no widget of it could say why an answer is wrong"
+    ],
+    "wt:g10m14s3-1-1:die-multiple-of-5-and-odd": [
+      "not shipped: S5's verifier refused every mapping of it (neither-region-missed → mc:g10m14s1-1-1:sample-space-as-an-event), so no widget of it could say why an answer is wrong"
+    ],
+    "wt:g10m14s7-1-1:complement-of-union": [
+      "not shipped: S5's verifier refused every mapping of it (neither-region-missed → mc:g10m14s7-1-1:lists-event-instead-of-complement), so no widget of it could say why an answer is wrong"
+    ]
+  },
+  "questions": [
+    {
+      "id": "q:g10m14s1-1-1:w001",
+      "lo_id": "lo:g10m14s1-1-1",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "Box A contains 3 cards numbered 1, 2 and 3. Box B contains 2 cards numbered 1 and 2. One card is removed at random from each box, and the grid shows every possible pair of cards. Tap every outcome in the event \"the product of the two numbers is at least 3\".",
+      "choices": {
+        "kind": "sample_space",
+        "spec": {
+          "rows": 3,
+          "cols": 2,
+          "rule": {
+            "kind": "product",
+            "op": "ge",
+            "value": 3
+          }
+        },
+        "diagnostics": [
+          {
+            "predicate": "missed-outcomes",
+            "misconception_id": "mc:g10m14s1-1-1:event-set-incomplete"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "The sample space is every pair (card from Box A, card from Box B): $3 \\times 2 = 6$ outcomes, namely $(1, 1)$, $(1, 2)$, $(2, 1)$, $(2, 2)$, $(3, 1)$ and $(3, 2)$."
+        },
+        {
+          "step": 2,
+          "text_md": "\"At least 3\" means 3 or more, so a product of exactly 3 is included."
+        },
+        {
+          "step": 3,
+          "text_md": "Work out each product in turn: $1$, $2$, $2$, $4$, $3$, $6$."
+        },
+        {
+          "step": 4,
+          "text_md": "The products that are 3 or more come from $(2, 2)$, $(3, 1)$ and $(3, 2)$. Tap those three cells."
+        },
+        {
+          "step": 5,
+          "text_md": "The event set is $E = \\{(2, 2), (3, 1), (3, 2)\\}$, with $n(E) = 3$ out of $n(S) = 6$, which is where the book's answer $P(E) = \\frac{1}{2}$ comes from."
+        }
+      ],
+      "parent_question_id": "q:g10m14s1-1-1:ex14-8-22c",
+      "source_note": "Generated from template family wt:g10m14s1-1-1:boxes-product-at-least-3.",
+      "family": "wt:g10m14s1-1-1:boxes-product-at-least-3",
+      "template_sha": "c471f7d2fd4fe5541285f96b3c4606842ec8c57b93a15d56aa7fe0b7aab61615"
+    },
+    {
+      "id": "q:g10m14s1-1-1:w002",
+      "lo_id": "lo:g10m14s1-1-1",
+      "tier": "basic",
+      "question_type": "widget",
+      "stem": "Box A contains 3 cards numbered 1, 2 and 3. Box B contains 2 cards numbered 1 and 2. One card is removed at random from each box. Build the sample space: tap every outcome (card from Box A, card from Box B) that could happen.",
+      "choices": {
+        "kind": "product_builder",
+        "spec": {
+          "X": [
+            1,
+            2,
+            3
+          ],
+          "Y": [
+            1,
+            2
+          ]
+        },
+        "diagnostics": [],
+        "pending_review": [
+          {
+            "predicate": "missing-pairs",
+            "misconception_id": "mc:g10m14s1-1-1:sample-space-as-an-event",
+            "why": "The instrument can emit missing-pairs for this question, and it fires whenever any of the six pairs is left untapped. But the question states no event or condition, so there is nothing for a student to filter on. A student who confuses an event with the sample space has no condition to apply here. Leaving pairs out in this widget is far more likely to come from forgetting some combinations, pairing the cards one-to-one (only (1,1) and (2,2)), or treating (1,2) and (2,1) as the same outcome. The predicate would mostly fire for those reasons rather than for sample-space-as-an-event, so the diagnosis would refute a mistake the student did not make.",
+            "verifier_runs": [
+              "verify-ch14-wf_b8a76d41-441"
+            ]
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "An outcome records the card from Box A first and the card from Box B second, as an ordered pair $(a, b)$."
+        },
+        {
+          "step": 2,
+          "text_md": "Any card from Box A can come out together with either card from Box B, so go through Box A one card at a time."
+        },
+        {
+          "step": 3,
+          "text_md": "Box A card 1 gives $(1, 1)$ and $(1, 2)$; card 2 gives $(2, 1)$ and $(2, 2)$; card 3 gives $(3, 1)$ and $(3, 2)$."
+        },
+        {
+          "step": 4,
+          "text_md": "The sample space has $3 \\times 2 = 6$ outcomes: $S = \\{(1, 1), (1, 2), (2, 1), (2, 2), (3, 1), (3, 2)\\}$."
+        },
+        {
+          "step": 5,
+          "text_md": "An event such as \"the sum is 4\" is only a part of this set, $\\{(2, 2), (3, 1)\\}$. It is picked out of the sample space; it is not the sample space itself."
+        }
+      ],
+      "parent_question_id": "q:g10m14s1-1-1:ex14-8-22a",
+      "source_note": "Generated from template family wt:g10m14s1-1-1:boxes-sample-space.",
+      "family": "wt:g10m14s1-1-1:boxes-sample-space",
+      "template_sha": "a5205de42bd12b6807a7ecb90c086705dd3ef5877955a402a7e9183f35a9f9c9"
+    },
+    {
+      "id": "q:g10m14s1-1-1:w003",
+      "lo_id": "lo:g10m14s1-1-1",
+      "tier": "basic",
+      "question_type": "widget",
+      "stem": "Two dice are rolled and you hope for a total of 8. The grid shows every possible outcome as (first die, second die). Tap every outcome that belongs to the event \"the total is 8\".",
+      "choices": {
+        "kind": "sample_space",
+        "spec": {
+          "rows": 6,
+          "cols": 6,
+          "rule": {
+            "kind": "sum",
+            "op": "eq",
+            "value": 8
+          }
+        },
+        "diagnostics": [
+          {
+            "predicate": "missed-outcomes",
+            "misconception_id": "mc:g10m14s1-1-1:event-set-incomplete"
+          }
+        ],
+        "pending_review": [
+          {
+            "predicate": "counted-once",
+            "misconception_id": "mc:g10m14s1-1-1:event-set-incomplete",
+            "why": "This predicate fires when ordered pairs are collapsed, so a student picks (3,5) but not (5,3), or (2,6) but not (6,2). That is an order-matters or unordered-pair error, not the claimed one. The claimed misconception is stopping after one or two outcomes and treating them as the whole event. A student who stops early would only incidentally trip this predicate. Most of the time it would fire because of the ordering error, so the diagnosis would be wrong.",
+            "verifier_runs": [
+              "verify-ch14-wf_b8a76d41-441"
+            ]
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "The sample space is every outcome of rolling two dice: each (first die, second die) pair, shown as the 6 x 6 grid of 36 outcomes."
+        },
+        {
+          "step": 2,
+          "text_md": "The event is \"the total is 8\", so look for the pairs whose two numbers add to 8."
+        },
+        {
+          "step": 3,
+          "text_md": "If the first die shows 2, the second must show 6; for 3 it must be 5; for 4 it must be 4; for 5 it must be 3; for 6 it must be 2. A first die of 1 would need a 7, which does not exist."
+        },
+        {
+          "step": 4,
+          "text_md": "Tap all five cells: $(2, 6)$, $(3, 5)$, $(4, 4)$, $(5, 3)$ and $(6, 2)$. $(2, 6)$ and $(6, 2)$ are different outcomes (a different die shows the 6), so both belong to the event."
+        },
+        {
+          "step": 5,
+          "text_md": "The event set is $E = \\{(2, 6), (3, 5), (4, 4), (5, 3), (6, 2)\\}$ and $n(E) = 5$ out of $n(S) = 36$."
+        }
+      ],
+      "parent_question_id": "q:g10m14s1-1-1:ex14-1-1",
+      "source_note": "Generated from template family wt:g10m14s1-1-1:two-dice-total-8.",
+      "family": "wt:g10m14s1-1-1:two-dice-total-8",
+      "template_sha": "3be2b1c54883fd2c6eedf36a78bb0b3edbc888c7b0fc43d5cc1573f8d48ea129"
+    },
+    {
+      "id": "q:g10m14s1-1-2:w001",
+      "lo_id": "lo:g10m14s1-1-2",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "Two fair dice are rolled together. The grid shows all 36 equally likely outcomes. Tap every outcome in the event \"the total is 4 or less\", then read n(E)/n(S) from the grid and write P(E) as a simplified fraction.",
+      "choices": {
+        "kind": "sample_space",
+        "spec": {
+          "rows": 6,
+          "cols": 6,
+          "rule": {
+            "kind": "sum",
+            "op": "le",
+            "value": 4
+          }
+        },
+        "diagnostics": [
+          {
+            "predicate": "counted-once",
+            "misconception_id": "mc:g10m14s1-1-2:unequal-outcomes-counted-as-equal"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "The grid has $n(S) = 36$ outcomes and all 36 are equally likely, so $P(E) = \\frac{n(E)}{n(S)}$ applies."
+        },
+        {
+          "step": 2,
+          "text_md": "\"4 or less\" covers the totals 2, 3 and 4."
+        },
+        {
+          "step": 3,
+          "text_md": "Total 2: $(1, 1)$. Total 3: $(1, 2)$ and $(2, 1)$. Total 4: $(1, 3)$, $(2, 2)$ and $(3, 1)$. Each ordered pair is its own cell, so tap all six."
+        },
+        {
+          "step": 4,
+          "text_md": "$n(E) = 6$, so $P(E) = \\frac{6}{36}$."
+        },
+        {
+          "step": 5,
+          "text_md": "Divide top and bottom by 6 to simplify: $P(E) = \\frac{1}{6}$. As a decimal this is about $0.17$ (2 decimal places), or about $16.7\\%$."
+        },
+        {
+          "step": 6,
+          "text_md": "Do not count the totals themselves as the outcomes: \"3 out of the 11 possible totals\" is wrong, because the totals are not equally likely (a total of 2 fills one cell, a total of 4 fills three)."
+        }
+      ],
+      "parent_question_id": "q:g10m14s1-1-2:ex14-1-3",
+      "source_note": "Generated from template family wt:g10m14s1-1-2:two-dice-total-at-most-4.",
+      "family": "wt:g10m14s1-1-2:two-dice-total-at-most-4",
+      "template_sha": "85db7088ea1b9f9db1bdbfb015a9ee53c531bda973050202c76c282425ae963b"
+    },
+    {
+      "id": "q:g10m14s4-1-1:w001",
+      "lo_id": "lo:g10m14s4-1-1",
+      "tier": "basic",
+      "question_type": "widget",
+      "stem": "The sample space is the whole numbers from 1 to 15, drawn as the rectangle. Event $A$ and event $B$ are the two overlapping circles. Shade the region that holds every outcome of $A\\cup B$.",
+      "choices": {
+        "kind": "venn_builder",
+        "spec": {
+          "sets": 2,
+          "labels": [
+            "A",
+            "B"
+          ],
+          "mode": "shade",
+          "target": "union"
+        },
+        "diagnostics": [
+          {
+            "predicate": "intersection-for-union",
+            "misconception_id": "mc:g10m14s4-1-1:union-as-overlap-only"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Read the symbol $A\\cup B$ as \"$A$ or $B$\": an outcome belongs to it if it is in $A$, or in $B$, or in both."
+        },
+        {
+          "step": 2,
+          "text_md": "Shade the whole of circle $A$, including the part it shares with $B$."
+        },
+        {
+          "step": 3,
+          "text_md": "Shade the whole of circle $B$ as well. The overlap is already shaded, and each outcome in it is still counted only once."
+        },
+        {
+          "step": 4,
+          "text_md": "Leave the part of the rectangle outside both circles unshaded: those outcomes are in the sample space $S$ but in neither event, so they are not in $A\\cup B$."
+        }
+      ],
+      "parent_question_id": "q:g10m14s4-1-1:ex14-4-2",
+      "source_note": "Generated from template family wt:g10m14s4-1-1:shade-union.",
+      "family": "wt:g10m14s4-1-1:shade-union",
+      "template_sha": "40b36a36cf6a21e87251b161875579a10334912c76a5f3d126706a8e5af3143d"
+    },
+    {
+      "id": "q:g10m14s5-1-1:w001",
+      "lo_id": "lo:g10m14s5-1-1",
+      "tier": "basic",
+      "question_type": "widget",
+      "stem": "A die is rolled once, so the sample space is $S=\\{1,2,3,4,5,6\\}$. Event $A$ is $\\{1,2,5,6\\}$ (4 outcomes) and event $B$ is $\\{2,3,6\\}$ (3 outcomes), so $A\\cap B=\\{2,6\\}$. Complete the Venn diagram by entering how many outcomes lie in each region, counting every outcome once. Once the diagram is right you can read off $P(A\\cup B)$.",
+      "choices": {
+        "kind": "venn_builder",
+        "spec": {
+          "mode": "counts",
+          "sets": 2,
+          "labels": [
+            "A",
+            "B"
+          ],
+          "total": 6,
+          "regions": {
+            "a": 2,
+            "b": 1,
+            "ab": 2,
+            "n": 1
+          },
+          "clues": {
+            "a": 4,
+            "b": 3
+          }
+        },
+        "diagnostics": [
+          {
+            "predicate": "overlap-counted-twice",
+            "misconception_id": "mc:g10m14s5-1-1:adds-without-subtracting-shared-outcomes"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "The outcomes in both events are $A\\cap B=\\{2,6\\}$, so the overlap holds 2 outcomes."
+        },
+        {
+          "step": 2,
+          "text_md": "Only in $A$: $A$ has 4 outcomes and 2 of them are in the overlap, so $4-2=2$ (the outcomes 1 and 5)."
+        },
+        {
+          "step": 3,
+          "text_md": "Only in $B$: $B$ has 3 outcomes and 2 of them are in the overlap, so $3-2=1$ (the outcome 3)."
+        },
+        {
+          "step": 4,
+          "text_md": "In neither event: the outcome 4 is the only one left, so 1. Check: $2+1+2+1=6=n(S)$."
+        },
+        {
+          "step": 5,
+          "text_md": "The union is everything in $A$ or $B$: $n(A\\cup B)=2+2+1=5$. This equals $n(A)+n(B)-n(A\\cap B)=4+3-2$, because the 2 shared outcomes are counted once, not twice."
+        },
+        {
+          "step": 6,
+          "text_md": "$P(A\\cup B)=\\dfrac{n(A\\cup B)}{n(S)}=\\dfrac{5}{6}\\approx 0.83$."
+        }
+      ],
+      "parent_question_id": "q:g10m14s5-1-1:ex14-5-1",
+      "source_note": "Generated from template family wt:g10m14s5-1-1:venn-union-die.",
+      "family": "wt:g10m14s5-1-1:venn-union-die",
+      "template_sha": "e908a4c7d7edfc20fa20ad87d7949eeb032952ef2a5631aaa5cf355382415ccb"
+    },
+    {
+      "id": "q:g10m14s5-1-1:w002",
+      "lo_id": "lo:g10m14s5-1-1",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "A disc is chosen at random from discs numbered $1$ to $20$. Event $A$: the number is a multiple of $2$ (10 outcomes). Event $B$: the number is a multiple of $3$ (6 outcomes). Some discs satisfy both events. Complete the Venn diagram by entering how many discs lie in each region, counting every disc once. Once the diagram is right you can read off $P(A\\cup B)$.",
+      "choices": {
+        "kind": "venn_builder",
+        "spec": {
+          "mode": "counts",
+          "sets": 2,
+          "labels": [
+            "Multiple of 2",
+            "Multiple of 3"
+          ],
+          "total": 20,
+          "regions": {
+            "a": 7,
+            "b": 3,
+            "ab": 3,
+            "n": 7
+          },
+          "clues": {
+            "a": 10,
+            "b": 6
+          }
+        },
+        "diagnostics": [
+          {
+            "predicate": "overlap-counted-twice",
+            "misconception_id": "mc:g10m14s5-1-1:adds-without-subtracting-shared-outcomes"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "List the shared outcomes: a number that is a multiple of 2 and of 3 is a multiple of 6, so $A\\cap B=\\{6,12,18\\}$ and the overlap holds 3 discs."
+        },
+        {
+          "step": 2,
+          "text_md": "Only in $A$: $10-3=7$ discs."
+        },
+        {
+          "step": 3,
+          "text_md": "Only in $B$: $6-3=3$ discs."
+        },
+        {
+          "step": 4,
+          "text_md": "In neither event: $20-(7+3+3)=7$ discs (1, 5, 7, 11, 13, 17, 19). Check: $7+3+3+7=20=n(S)$."
+        },
+        {
+          "step": 5,
+          "text_md": "The union holds $n(A\\cup B)=7+3+3=13$ discs. This equals $n(A)+n(B)-n(A\\cap B)=10+6-3$: the 3 shared discs are subtracted once so they are not counted twice."
+        },
+        {
+          "step": 6,
+          "text_md": "$P(A\\cup B)=\\dfrac{13}{20}=0.65$."
+        }
+      ],
+      "parent_question_id": "q:g10m14s5-1-1:ex14-5-1",
+      "source_note": "Generated from template family wt:g10m14s5-1-1:venn-union-discs.",
+      "family": "wt:g10m14s5-1-1:venn-union-discs",
+      "template_sha": "d985575209552217ec4b4df61c133b18690a5a9a14144ee395c877cf941b3c9e"
+    },
+    {
+      "id": "q:g10m14s7-1-1:w002",
+      "lo_id": "lo:g10m14s7-1-1",
+      "tier": "basic",
+      "question_type": "widget",
+      "stem": "A club has learners who play Football ($F$) and learners who play Chess ($C$). Some play both and some play neither. The rectangle holds every learner in the club. Shade the complement of Chess, $C'$.",
+      "choices": {
+        "kind": "venn_builder",
+        "spec": {
+          "sets": 2,
+          "labels": [
+            "Football",
+            "Chess"
+          ],
+          "mode": "shade",
+          "target": "complementB"
+        },
+        "diagnostics": [
+          {
+            "predicate": "complement-inside-a",
+            "misconception_id": "mc:g10m14s7-1-1:lists-event-instead-of-complement"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "The rectangle is the sample space: every learner in the club, whichever circles they sit in."
+        },
+        {
+          "step": 2,
+          "text_md": "The complement $C'$ is every learner in the sample space who is not in $C$."
+        },
+        {
+          "step": 3,
+          "text_md": "Chess ($C$) is the circle labelled Chess. It holds two regions: Chess only, and the overlap with Football. Both are in $C$, so leave them unshaded."
+        },
+        {
+          "step": 4,
+          "text_md": "Everything else is in $C'$: the Football-only region and the region outside both circles. Shade both of these."
+        },
+        {
+          "step": 5,
+          "text_md": "Check: $C$ and $C'$ together fill the whole rectangle and share no region."
+        }
+      ],
+      "parent_question_id": "q:g10m14s7-1-1:ex14-7-1",
+      "source_note": "Generated from template family wt:g10m14s7-1-1:not-in-chess.",
+      "family": "wt:g10m14s7-1-1:not-in-chess",
+      "template_sha": "8d7ea0b8d3def26e671925f89da31b2bc65ee61cd44e63145f72894f367f73b6"
+    }
+  ],
+  "misconceptions": [
+    {
+      "id": "mc:g10m14s1-1-1:event-set-incomplete",
+      "lo_id": "lo:g10m14s1-1-1",
+      "label": "Lists only some of the outcomes that give the wanted result",
+      "description": "The student writes down one or two outcomes that give the wanted result, such as a total of 8, and treats that as the whole event set, leaving out the other outcomes that also give it."
+    },
+    {
+      "id": "mc:g10m14s1-1-2:unequal-outcomes-counted-as-equal",
+      "lo_id": "lo:g10m14s1-1-2",
+      "label": "Treats outcomes that are not equally likely as if they were",
+      "description": "The student counts the kinds of result (for example the colours in a bag) as the outcomes and divides by that count, or applies n(E)/n(S) to a situation whose outcomes are not equally likely."
+    },
+    {
+      "id": "mc:g10m14s4-1-1:union-as-overlap-only",
+      "lo_id": "lo:g10m14s4-1-1",
+      "label": "Takes only the overlap as the union",
+      "description": "The student writes down only the elements that are in both sets, the overlap of the two circles, as if $A\\cup B$ meant \"$A$ and $B$\" instead of \"$A$ or $B$\"."
+    },
+    {
+      "id": "mc:g10m14s5-1-1:adds-without-subtracting-shared-outcomes",
+      "lo_id": "lo:g10m14s5-1-1",
+      "label": "Adds the two probabilities and forgets what is in both events",
+      "description": "The student finds P(A) and P(B) and adds them, without subtracting P(A∩B), so every outcome that lies in both events is counted twice."
+    },
+    {
+      "id": "mc:g10m14s7-1-1:lists-event-instead-of-complement",
+      "lo_id": "lo:g10m14s7-1-1",
+      "label": "Lists numbers from inside the event instead of outside it",
+      "description": "The student writes down numbers that lie inside the event's circle or circles (the event itself, or part of it) instead of the numbers of the sample space that are not in the event."
+    }
+  ],
+  "mapping_review": {
+    "rule": "decision 47",
+    "verifier_runs": [
+      "verify-ch14-wf_b8a76d41-441"
+    ],
+    "counts": {
+      "active": 9,
+      "held": 3,
+      "kept_by_review": 0,
+      "dropped_by_review": 0
+    },
+    "reviews": []
+  },
+  "s5_reconciled": {
+    "runs": [
+      "final-ch14-wf_f763b599-117.json"
+    ],
+    "catalogue": "g10-math-misconceptions",
+    "refused_attachments_stripped": [
+      [
+        "lo:g10m14s3-1-1",
+        "S7",
+        "wt:g10m14s3-1-1:die-multiple-of-5-and-odd#neither-region-missed",
+        "mc:g10m14s1-1-1:sample-space-as-an-event",
+        "The region outside every set was left unshaded or uncounted"
+      ],
+      [
+        "lo:g10m14s7-1-1",
+        "S7",
+        "wt:g10m14s7-1-1:complement-of-union#neither-region-missed",
+        "mc:g10m14s7-1-1:lists-event-instead-of-complement",
+        "The region outside every set was left unshaded or uncounted"
+      ]
+    ],
+    "widgets_left_out": [
+      "q:g10m14s3-1-1:w001",
+      "q:g10m14s7-1-1:w001"
+    ]
+  }
+}

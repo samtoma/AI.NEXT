@@ -1,0 +1,617 @@
+{
+  "format": "ainext.widget-gaps/1",
+  "book": "g10-math",
+  "course_id": "course:us-g10-math-en",
+  "rule": "FR-4306 / FR-1201: every chapter has at least one widget question, or a gap a human has signed. A new kind is built only after Samuel approves it (decision 11, T356).",
+  "chapters": [
+    {
+      "module": "module:g10m-c01",
+      "label": "Chapter 1 — Algebraic expressions",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c02",
+      "label": "Chapter 2 — Exponents",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c03",
+      "label": "Chapter 3 — Number patterns",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c04",
+      "label": "Chapter 4 — Equations and inequalities",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c05",
+      "label": "Chapter 5 — Trigonometry",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c06",
+      "label": "Chapter 6 — Functions",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c07",
+      "label": "Chapter 7 — Euclidean geometry",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c08",
+      "label": "Chapter 8 — Analytical geometry",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c09",
+      "label": "Chapter 9 — Finance and growth",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c10",
+      "label": "Chapter 10 — Statistics",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c11",
+      "label": "Chapter 11 — Trigonometry",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c12",
+      "label": "Chapter 12 — Euclidean geometry",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c13",
+      "label": "Chapter 13 — Measurements",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c14",
+      "label": "Chapter 14 — Probability",
+      "status": "covered",
+      "widgets": 8,
+      "kinds": [
+        "product_builder",
+        "sample_space",
+        "venn_builder"
+      ],
+      "objectives_with_widgets": [
+        "lo:g10m14s1-1-1",
+        "lo:g10m14s1-1-2",
+        "lo:g10m14s4-1-1",
+        "lo:g10m14s5-1-1",
+        "lo:g10m14s7-1-1"
+      ],
+      "gaps": 17
+    }
+  ],
+  "uncovered_chapters": [
+    "module:g10m-c01",
+    "module:g10m-c02",
+    "module:g10m-c03",
+    "module:g10m-c04",
+    "module:g10m-c05",
+    "module:g10m-c06",
+    "module:g10m-c07",
+    "module:g10m-c08",
+    "module:g10m-c09",
+    "module:g10m-c10",
+    "module:g10m-c11",
+    "module:g10m-c12",
+    "module:g10m-c13"
+  ],
+  "proposed_kinds": {
+    "outcome_set_builder": {
+      "modules": [
+        "module:g10m-c14"
+      ],
+      "objectives": [
+        "lo:g10m14s1-1-1"
+      ],
+      "why": [
+        "The anchors ex14-1-2 (sample space of a die) and ex14-8-1 (what an outcome is) are about single-stage experiments with labelled or numbered outcomes. sample_space needs a grid of at least 2 x 2 and gives the whole space to the student, so it only grades choosing an event. product_builder only forms ordered pairs from two sets and cannot report an outcome that belongs to another experiment (it cannot emit extra-pairs). number_line_marker takes 1 to 4 numeric targets, which is too few for a die and has no way to hold H and T. So the single-die and coin cases, and the sample-space-of-another-experiment misconception, have no instrument."
+      ]
+    },
+    "equal_outcomes_strip": {
+      "modules": [
+        "module:g10m-c14"
+      ],
+      "objectives": [
+        "lo:g10m14s1-1-2"
+      ],
+      "why": [
+        "ex14-1-3 to ex14-1-6 are single-experiment questions (one die, 100 pages, cards, a bag of coloured balls), not two-stage ones. sample_space needs at least 2 rows and 2 columns and its rules (sum, difference, product, same, first, second) read numbers in two coordinates, so it cannot hold a bag of colours or a list of cards with one number each. Its counted-once predicate only reaches the equal-likelihood misconception for two-dice totals. bar_builder and number_line_marker grade other statistics. So the bag, cards and pages questions, which make up most of this objective's anchors, have no instrument."
+      ]
+    },
+    "trial_tally": {
+      "modules": [
+        "module:g10m-c14"
+      ],
+      "objectives": [
+        "lo:g10m14s2-1-1"
+      ],
+      "why": [
+        "No existing kind fits. sample_space shows the whole theoretical sample space as a grid of equally likely cells, so n(E)/n(S) there is theoretical probability, not experimental relative frequency. A trial log has repeats, order and a total set by the experiment, none of which a grid can hold. bar_builder could be bent into 0/1 'trial' bars whose mean is the relative frequency, but n is capped at 3-8 (the book's examples use 10, 21, 27, 30 and 44 trials), the student would be building a mean rather than counting an event, and its predicates (median-for-mean, total-wrong) name errors that are not this lesson's. That would be a forced fit that diagnoses the wrong things, so it is not offered."
+      ]
+    },
+    "convergence_runner": {
+      "modules": [
+        "module:g10m-c14"
+      ],
+      "objectives": [
+        "lo:g10m14s2-1-2"
+      ],
+      "why": [
+        "No existing kind fits. Every kind here grades one final configuration, and none carries a sequence of trials that grows over time. sample_space can build the theoretical probability, but that is the previous section's objective, and the objective here is the comparison with a run of experimental results and how it behaves as the trials grow, which no grid can show. curve_sketcher has no family that draws a running proportion. A template on sample_space would test the wrong objective behind a thin link. Separately, this objective has no anchor book question in the lesson file (anchor_questions is empty), so a template could not carry a valid parent_question_id."
+      ]
+    },
+    "venn_event_reader (new kind): a drawn Venn diagram with numbered outcomes, the student taps the outcomes that belong to a named event": {
+      "modules": [
+        "module:g10m-c14"
+      ],
+      "objectives": [
+        "lo:g10m14s3-1-2"
+      ],
+      "why": [
+        "venn_builder cannot do this honestly. Its shade mode shows no outcomes and has no target for the whole of one circle (the targets are union, intersection, aOnly, bOnly, complements and neither), so 'the event set of A' cannot be asked. None of its predicates (complement-inside-a, exclusive-drawn-overlapping, intersection-for-union) refer to the three misconceptions of this objective, and its counts mode asks for sizes, not for the elements read off a diagram. Mapping any of them would be a forced fit that promises refutations the widget cannot give."
+      ]
+    },
+    "no new kind: venn_builder (counts mode) fits; blocked because lo:g10m14s3-1-3 has an empty misconceptions list, so no diagnostic can be mapped": {
+      "modules": [
+        "module:g10m-c14"
+      ],
+      "objectives": [
+        "lo:g10m14s3-1-3"
+      ],
+      "why": [
+        "A template needs at least one diagnostic whose misconception id comes from the objective's own list, and an id borrowed from another objective is refused (FR-1215). With an empty list, any template would either break the schema (no diagnostics) or use a forbidden id. Add the two misconceptions above to this objective and the template can be written straight away. Also check the extracted data first: ex14-3-5b/c/d states 71 learners, but the book's own answers (6, 29, 2) and its other figures give regions that add to 79 (8 + 16 + 29 + 14 + 4 + 6 + 2), so the 71 looks like an extraction slip for 79. A template that kept 71 would fail the validator's sum-to-total rule."
+      ]
+    },
+    "venn_outcome_sorter (new kind): the student drags the numbered outcomes of a sample space into the regions of a Venn diagram (the build direction of venn_event_reader)": {
+      "modules": [
+        "module:g10m-c14"
+      ],
+      "objectives": [
+        "lo:g10m14s3-1-1"
+      ],
+      "why": [
+        "venn_builder counts mode takes only numbers per region, so the student never decides which outcome goes where, and the book's own questions (write down the set A, write down the set B) are exactly about that decision. The existing kind is a good fit for n(S), n(A), n(B) and the region counts, but it cannot show the sets themselves."
+      ]
+    },
+    "none missing: venn_builder (counts mode) fits; blocked because the objective has no anchor book question": {
+      "modules": [
+        "module:g10m-c14"
+      ],
+      "objectives": [
+        "lo:g10m14s5-1-2"
+      ],
+      "why": [
+        "The lesson file lists no anchor question for this objective, and a template's parent_question_id must be the objective's own anchor from the list, so nothing can be authored without inventing a parent. The objective's misconception list holds only prerequisite ids (s1-1-1, s1-1-2, s3-1-2, s4-1-2), none of which describes the identity error, so the one error this widget would diagnose has no id on this objective. Samuel needs to add an anchor question and, ideally, a misconception id for this objective (the existing mc:g10m14s5-1-1:adds-without-subtracting-shared-outcomes belongs to the sibling objective and cannot be borrowed under FR-1215)."
+      ]
+    },
+    "none missing: venn_builder (counts mode) fits; blocked because the objective has an empty misconceptions list": {
+      "modules": [
+        "module:g10m-c14"
+      ],
+      "objectives": [
+        "lo:g10m14s5-1-3"
+      ],
+      "why": [
+        "The objective's misconceptions list is empty. A template needs at least one diagnostic, and a diagnostic may only name an id from this objective's own list (FR-1215), so no template can be written without inventing or borrowing an id. Candidate misconceptions Samuel could add: reading P(A∪B) as P(A∩B); finding the intersection by adding n(A) and n(B) instead of subtracting n(A∪B); dividing by n(A∪B) instead of n(S)."
+      ]
+    },
+    "event_overlap_checker": {
+      "modules": [
+        "module:g10m-c14"
+      ],
+      "objectives": [
+        "lo:g10m14s6-1-1"
+      ],
+      "why": [
+        "No existing kind can hold two events at once and accept an empty overlap, which is the whole of the objective. sample_space grades one rule, and the pipeline rule requires the event to hold at least one outcome. venn_builder always draws overlapping circles, and its shade targets always name a non-empty region. number_line_marker's points mode needs 1-4 targets, so the empty set cannot be the answer. A template built on any of them would only ever ask the student to find the shared outcomes of a NOT-exclusive pair. That is a leading, one-sided question, and the mutually exclusive verdict, which is the objective, would never be constructed or diagnosed."
+      ]
+    },
+    "event_union_bar": {
+      "modules": [
+        "module:g10m-c14"
+      ],
+      "objectives": [
+        "lo:g10m14s6-1-2"
+      ],
+      "why": [
+        "The only candidate is sample_space: tap the cells of 'A or B' and read n(E)/n(S). That grid counts the union directly and gives the same answer whether or not the events overlap. It never builds the addition and never tests the exclusivity condition, so it would only re-exercise listing outcomes (a prerequisite) while this objective's own misconception (adds-without-checking-exclusive) could never fire. Its rule is also a single (kind, op, value), so two named events can only be encoded by a contrived inequality such as sum < 4. Its cells are equally likely outcomes, so it cannot carry the table counts the anchor questions use. venn_builder in counts mode with an empty overlap reduces to typing the table's numbers into regions, which is an answer box in disguise."
+      ]
+    },
+    "event_pair_overlap: two-event Venn overlap checker": {
+      "modules": [
+        "module:g10m-c14"
+      ],
+      "objectives": [
+        "lo:g10m14s7-1-2"
+      ],
+      "why": [
+        "venn_builder takes one target per question and cannot ask for an empty intersection. Asking the student to shade $A' \\cap B'$ (target 'neither') presupposes a non-empty region and so hands over the yes/no verdict, and the 'yes, mutually exclusive' case (the answers to ex14-7-3 and ex14-8-4) has no region to shade at all and cannot be expressed. Stretching venn_builder over this would be an answer box in disguise, so it goes to Samuel instead."
+      ]
+    },
+    "probability_bar: a unit bar split into an event and its complement": {
+      "modules": [
+        "module:g10m-c14"
+      ],
+      "objectives": [
+        "lo:g10m14s7-1-3"
+      ],
+      "why": [
+        "sample_space with op 'ne' could build 'not 7' by tapping thirty cells, but that replaces the identity $P(A') = 1 - P(A)$ with brute counting, and the anchor questions are fraction and table-count problems with no grid structure. The construction would not be the mathematics of the objective. This objective's misconception list also holds no entry of its own, so diagnostics could not be mapped honestly anyway."
+      ]
+    },
+    "misconception entries for the existing venn_builder counts mode (the kind fits; the diagnostics do not)": {
+      "modules": [
+        "module:g10m-c14"
+      ],
+      "objectives": [
+        "lo:g10m14s7-1-4"
+      ],
+      "why": [
+        "The misconception list for this objective has no entry of its own, and none of the prerequisite entries it carries describes 'a whole set's size entered for its exclusive region' or 'the outside region forgotten' (the closest, whole-set-not-intersection, is about the intersection and would refute a different error). Template diagnostics need at least one honest mapping, and FR-1215 refuses ids from other objectives, so mapping to a near-miss would show a student the wrong refutation. Samuel's team needs to add an 'overlap counted twice' misconception (and ideally an 'outside region forgotten' one) to lo:g10m14s7-1-4; the template can then go out."
+      ]
+    }
+  },
+  "gaps": [
+    {
+      "module": "module:g10m-c14",
+      "lo_id": "lo:g10m14s1-1-1",
+      "need_kind": "outcome_set_builder",
+      "description": "The student is told a one-stage experiment (roll a die, toss a coin, spin a spinner, pick a ball from a bag) and assembles its sample space by dragging outcome tokens into a set, from a tray that holds the right outcomes plus decoys. The decoys come from other experiments (H and T when a die was rolled) and from events (only 1, 3, 5, or only the numbers greater than 4). A second mode would name an event (an even number) and ask for the event set drawn from the sample space already built. The widget would diagnose sample-space-as-an-event (a condition-picked subset given for the whole space), sample-space-of-another-experiment (a set from a different experiment) and event-set-incomplete (an event set that leaves out some qualifying outcomes).",
+      "why": "The anchors ex14-1-2 (sample space of a die) and ex14-8-1 (what an outcome is) are about single-stage experiments with labelled or numbered outcomes. sample_space needs a grid of at least 2 x 2 and gives the whole space to the student, so it only grades choosing an event. product_builder only forms ordered pairs from two sets and cannot report an outcome that belongs to another experiment (it cannot emit extra-pairs). number_line_marker takes 1 to 4 numeric targets, which is too few for a die and has no way to hold H and T. So the single-die and coin cases, and the sample-space-of-another-experiment misconception, have no instrument.",
+      "source": "author-merged-ch14.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c14",
+      "lo_id": "lo:g10m14s1-1-2",
+      "need_kind": "equal_outcomes_strip",
+      "description": "A one-dimensional sample space drawn as a strip or bag of equally likely tokens: 12 balls coloured 6 red, 3 blue, 2 green and 1 white; 50 cards of the even numbers 2 to 100; or 100 numbered pages. The student sets or sees the tokens, taps those that belong to the event (blue or white; a multiple of 5; an odd page number), and the live readout assembles n(E)/n(S) from tokens counted one each, with a prompt to simplify and then convert to a decimal or a percentage. A switch to \"count the colours\" would show 4 colours and the readout would stay unmoved (1/4 for any colour), so the student sees why the kinds of result are not the outcomes. It would diagnose unequal-outcomes-counted-as-equal directly, which is the misconception the bag anchors ex14-1-6 are built around.",
+      "why": "ex14-1-3 to ex14-1-6 are single-experiment questions (one die, 100 pages, cards, a bag of coloured balls), not two-stage ones. sample_space needs at least 2 rows and 2 columns and its rules (sum, difference, product, same, first, second) read numbers in two coordinates, so it cannot hold a bag of colours or a list of cards with one number each. Its counted-once predicate only reaches the equal-likelihood misconception for two-dice totals. bar_builder and number_line_marker grade other statistics. So the bag, cards and pages questions, which make up most of this objective's anchors, have no instrument.",
+      "source": "author-merged-ch14.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c14",
+      "lo_id": "lo:g10m14s2-1-1",
+      "need_kind": "trial_tally",
+      "description": "The student is given a recorded run of trials (a strip of die faces, coin sides or the paired soccer scores in the book's worked example), and marks the trials in which the stated event occurred. The widget assembles 'event occurred / trials conducted' live as a fraction and a decimal. The student then fixes the denominator as the number of trials, not the number of outcomes. A second move lets the student run the same experiment again and see that the fraction changes each time. Grading is on the property: the marked set must be exactly the trials where the event happened, for any event the stem names (a 3 on a die, heads, 'Team 1 wins' meaning Team 1's score is larger). Errors it would diagnose: (1) the student reports a fixed 'expected' value such as 1/6 or 0.5 instead of the tally, which is the lesson's misconception mc:g10m14s2-1-1:expects-a-fixed-value; (2) event count divided by the number of non-events, or by the number of possible outcomes instead of the number of trials; (3) trials where the event did not occur marked as if they counted (for example a draw counted as a win); (4) trials where the event did occur missed.",
+      "why": "No existing kind fits. sample_space shows the whole theoretical sample space as a grid of equally likely cells, so n(E)/n(S) there is theoretical probability, not experimental relative frequency. A trial log has repeats, order and a total set by the experiment, none of which a grid can hold. bar_builder could be bent into 0/1 'trial' bars whose mean is the relative frequency, but n is capped at 3-8 (the book's examples use 10, 21, 27, 30 and 44 trials), the student would be building a mean rather than counting an event, and its predicates (median-for-mean, total-wrong) name errors that are not this lesson's. That would be a forced fit that diagnoses the wrong things, so it is not offered.",
+      "source": "author-merged-ch14.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c14",
+      "lo_id": "lo:g10m14s2-1-2",
+      "need_kind": "convergence_runner",
+      "description": "The student runs a simulated experiment (a fair coin, or a die with one face as the event) in batches and sees a table and a plot of the running relative frequency after each trial or batch, with the theoretical probability drawn as a reference line. The construction is a property: the student sets the number of trials, or chooses the batch sizes, so that the running relative frequency stays within a stated band (for example within 0.05) of the theoretical probability from that point on, and then reads off what happened to the spread as the trials grew. The theoretical value is supplied by the student (marking the event in a small equally-likely grid) before the comparison line appears. Errors it would diagnose: (1) expecting the relative frequency to equal the theoretical probability after a handful of trials, or to hit it exactly, which is mc:g10m14s2-1-1:expects-a-fixed-value; (2) taking the theoretical probability from the kinds of result rather than from equally likely outcomes, which is mc:g10m14s1-1-2:unequal-outcomes-counted-as-equal (a weighted or two-coloured spinner or bag whose kinds are not equally likely); (3) concluding that a long run of one result must be 'made up for' next; (4) comparing the relative frequency to the wrong reference value.",
+      "why": "No existing kind fits. Every kind here grades one final configuration, and none carries a sequence of trials that grows over time. sample_space can build the theoretical probability, but that is the previous section's objective, and the objective here is the comparison with a run of experimental results and how it behaves as the trials grow, which no grid can show. curve_sketcher has no family that draws a running proportion. A template on sample_space would test the wrong objective behind a thin link. Separately, this objective has no anchor book question in the lesson file (anchor_questions is empty), so a template could not carry a valid parent_question_id.",
+      "source": "author-merged-ch14.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c14",
+      "lo_id": "lo:g10m14s3-1-2",
+      "need_kind": "venn_event_reader (new kind): a drawn Venn diagram with numbered outcomes, the student taps the outcomes that belong to a named event",
+      "description": "The widget draws a rectangle S with two overlapping circles and the sample-space outcomes placed in the four regions (like the two book figures, which the widget would draw itself rather than point at). The stem names an event ('the event set of A') and the student taps every outcome that belongs to it; the answer is graded as a set, so any order is fine. The correct reading is everything inside A's circle, overlap included. The wrong readings are the book's three distractors and this objective's three own misconceptions: tapping only the outcomes in the overlap (reads-only-the-overlap), tapping the outcomes outside the circle (reads-outside-the-circle), and tapping everything in the other circle (reads-the-other-circle). Each is a recognisable set of taps, so each could carry its own predicate, which would let the tutor say exactly which circle or region she read. A second mode could ask for 'A or B', 'A and B' and 'not A' by reading, to connect to later lessons.",
+      "why": "venn_builder cannot do this honestly. Its shade mode shows no outcomes and has no target for the whole of one circle (the targets are union, intersection, aOnly, bOnly, complements and neither), so 'the event set of A' cannot be asked. None of its predicates (complement-inside-a, exclusive-drawn-overlapping, intersection-for-union) refer to the three misconceptions of this objective, and its counts mode asks for sizes, not for the elements read off a diagram. Mapping any of them would be a forced fit that promises refutations the widget cannot give.",
+      "source": "author-merged-ch14.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c14",
+      "lo_id": "lo:g10m14s3-1-3",
+      "need_kind": "no new kind: venn_builder (counts mode) fits; blocked because lo:g10m14s3-1-3 has an empty misconceptions list, so no diagnostic can be mapped",
+      "description": "The construction is the right one and the instrument already exists: venn_builder counts mode, with clues, on the book's survey problems. Intended two-set template for ex14-8-20a: labels ['Red hair', 'Brown eyes'], regions {a: 44, b: 5, ab: 14, n: 40}, total 103, clues {a: 58, b: 19}; the question asks for the number of children outside both circles' complement, i.e. fill in every region. Intended three-set template for ex14-3-5b/c/d: labels ['Maths', 'Geography', 'History'], regions {a: 8, b: 29, c: 16, ab: 6, ac: 14, bc: 4, abc: 2, n: 0}, clues {a: 30, b: 41, c: 36}. The predicates that would fire are overlap-counted-twice (a set's raw size such as 58 or 41 typed into its exclusive region) and neither-region-missed (the children or learners outside every circle left out). Each needs a misconception id on lo:g10m14s3-1-3 to carry it, and the objective lists none. Suggested catalogue entries for this objective: 'Counts the whole set in its exclusive region, so the overlap is counted twice', and 'Leaves out the learners who are in none of the sets'.",
+      "why": "A template needs at least one diagnostic whose misconception id comes from the objective's own list, and an id borrowed from another objective is refused (FR-1215). With an empty list, any template would either break the schema (no diagnostics) or use a forbidden id. Add the two misconceptions above to this objective and the template can be written straight away. Also check the extracted data first: ex14-3-5b/c/d states 71 learners, but the book's own answers (6, 29, 2) and its other figures give regions that add to 79 (8 + 16 + 29 + 14 + 4 + 6 + 2), so the 71 looks like an extraction slip for 79. A template that kept 71 would fail the validator's sum-to-total rule.",
+      "source": "author-merged-ch14.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c14",
+      "lo_id": "lo:g10m14s3-1-1",
+      "need_kind": "venn_outcome_sorter (new kind): the student drags the numbered outcomes of a sample space into the regions of a Venn diagram (the build direction of venn_event_reader)",
+      "description": "The two templates above cover the counts half of this objective. What no existing kind does is the first half: writing down the sample space and the event sets. A sorter would show the outcomes of a stated experiment (for example the numbers 1 to 12) as tiles and an empty rectangle with two circles, and the student drags each tile to the region where it belongs: in A only, in both, in B only, or outside both circles. Grading is by region membership per outcome, so any order is correct. It would diagnose the objective's three misconceptions directly: outcomes missing from an event (event-set-incomplete), outcomes in no circle dropped from the rectangle (sample-space-as-an-event), and a tile set that does not match the experiment (sample-space-of-another-experiment).",
+      "why": "venn_builder counts mode takes only numbers per region, so the student never decides which outcome goes where, and the book's own questions (write down the set A, write down the set B) are exactly about that decision. The existing kind is a good fit for n(S), n(A), n(B) and the region counts, but it cannot show the sets themselves.",
+      "source": "author-merged-ch14.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c14",
+      "lo_id": "lo:g10m14s5-1-2",
+      "need_kind": "none missing: venn_builder (counts mode) fits; blocked because the objective has no anchor book question",
+      "description": "The student would fill a two-set Venn diagram from a word problem or from listed event sets (for example S={1..6}, A={1,2,6}, B={1,5}), entering the exclusive region counts, then verify that n(A∪B) from the diagram equals n(A)+n(B)−n(A∩B) and that P(A∪B) = P(A)+P(B)−P(A∩B). The construction is the proof of the identity, since the overlap is placed once. It would diagnose overlap-counted-twice (raw set sizes entered in the 'only' regions) and neither-region-missed.",
+      "why": "The lesson file lists no anchor question for this objective, and a template's parent_question_id must be the objective's own anchor from the list, so nothing can be authored without inventing a parent. The objective's misconception list holds only prerequisite ids (s1-1-1, s1-1-2, s3-1-2, s4-1-2), none of which describes the identity error, so the one error this widget would diagnose has no id on this objective. Samuel needs to add an anchor question and, ideally, a misconception id for this objective (the existing mc:g10m14s5-1-1:adds-without-subtracting-shared-outcomes belongs to the sibling objective and cannot be borrowed under FR-1215).",
+      "source": "author-merged-ch14.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c14",
+      "lo_id": "lo:g10m14s5-1-3",
+      "need_kind": "none missing: venn_builder (counts mode) fits; blocked because the objective has an empty misconceptions list",
+      "description": "Anchors ex14-5-2 and ex14-8-24 give A, B and A∪B on S={1..6}. In counts mode the student would fill the Venn diagram (for ex14-5-2: total 6, regions a=2, b=1, ab=1, n=2, clues a=3, b=2) so that the shared region is whatever makes the union come out right, i.e. n(A∩B)=n(A)+n(B)−n(A∪B). The widget would diagnose overlap-counted-twice (entering 3 and 2 in the 'only' regions) and neither-region-missed. P(A∩B)=1/6≈0.17 would follow from the diagram.",
+      "why": "The objective's misconceptions list is empty. A template needs at least one diagnostic, and a diagnostic may only name an id from this objective's own list (FR-1215), so no template can be written without inventing or borrowing an id. Candidate misconceptions Samuel could add: reading P(A∪B) as P(A∩B); finding the intersection by adding n(A) and n(B) instead of subtracting n(A∪B); dividing by n(A∪B) instead of n(S).",
+      "source": "author-merged-ch14.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c14",
+      "lo_id": "lo:g10m14s6-1-1",
+      "need_kind": "event_overlap_checker",
+      "description": "The student sees the whole set of outcomes of the described experiment (the 52-card deck as a suit-by-rank grid, the fridge as three drinks, one die or two dice as a grid). Two events A and B are named in words. The student marks the outcomes that belong to A in one colour and those that belong to B in a second colour. Any outcome carrying both marks lights up as a shared outcome. The student then answers 'can one pick be in both events?', and an empty overlap must be a gradable, correct answer. Errors it would diagnose: (1) a verdict of 'exclusive' for red and picture although red picture cards were marked or exist, because the two events are described in different ways (different-features-so-exclusive); (2) a verdict of 'not exclusive' with an empty overlap, because both events are possible in the set-up (both-possible-so-not-exclusive); (3) a verdict of 'not exclusive' with an empty overlap, justified only by outcomes that belong to neither event, such as grape juice or a tie (leftover-outcomes-so-not-exclusive). Verdict-versus-overlap mismatches would be the predicates.",
+      "why": "No existing kind can hold two events at once and accept an empty overlap, which is the whole of the objective. sample_space grades one rule, and the pipeline rule requires the event to hold at least one outcome. venn_builder always draws overlapping circles, and its shade targets always name a non-empty region. number_line_marker's points mode needs 1-4 targets, so the empty set cannot be the answer. A template built on any of them would only ever ask the student to find the shared outcomes of a NOT-exclusive pair. That is a leading, one-sided question, and the mutually exclusive verdict, which is the objective, would never be constructed or diagnosed.",
+      "source": "author-merged-ch14.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c14",
+      "lo_id": "lo:g10m14s6-1-2",
+      "need_kind": "event_union_bar",
+      "description": "The student works on a probability strip from 0 to 1, sized from the book's own counts (blocks purple 24, orange 32, white 41, pink 19, or ages 3 and 4 from the class table). They place the bars for P(A) and P(B) on the strip and build 'A or B' by joining them. For an exclusive pair the bars sit end to end, the joined length is P(A) + P(B), and the live readout shows that sum. The same instrument also offers an overlapping pair, where the bars must overlap and the shared stretch is visibly counted twice, so the student has to decide whether adding is allowed before they add. Errors it would diagnose: adding P(A) and P(B) for events that can happen together, which is the lesson's own error (adds-without-checking-exclusive), shown as a joined bar that overshoots the true union. It could also catch a union that comes out above 1 or fraction slips when adding over a common denominator.",
+      "why": "The only candidate is sample_space: tap the cells of 'A or B' and read n(E)/n(S). That grid counts the union directly and gives the same answer whether or not the events overlap. It never builds the addition and never tests the exclusivity condition, so it would only re-exercise listing outcomes (a prerequisite) while this objective's own misconception (adds-without-checking-exclusive) could never fire. Its rule is also a single (kind, op, value), so two named events can only be encoded by a contrived inequality such as sum < 4. Its cells are equally likely outcomes, so it cannot carry the table counts the anchor questions use. venn_builder in counts mode with an empty overlap reduces to typing the table's numbers into regions, which is an answer box in disguise.",
+      "source": "author-merged-ch14.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c14",
+      "lo_id": "lo:g10m14s7-1-2",
+      "need_kind": "event_pair_overlap: two-event Venn overlap checker",
+      "description": "The student is shown a Venn diagram and two named events written as set expressions (for example $A'$ and $B'$, or $A \\cup B$ and $(A \\cup B)'$). For each event in turn they shade the regions that event covers, each in its own mark, and the widget then highlights every region carrying both marks. The student finishes by stating whether the events are mutually exclusive: any doubly-marked region means no, and none means yes. It would diagnose: believing any two complements are mutually exclusive (shading $A'$ and $B'$ and not noticing that both cover the outside region, the all-complements-assumed-exclusive error); marking the overlap of the circles instead of the two events named (the checks-circle-overlap-not-named-events error); and calling a union and its complement non-exclusive because the circles overlap.",
+      "why": "venn_builder takes one target per question and cannot ask for an empty intersection. Asking the student to shade $A' \\cap B'$ (target 'neither') presupposes a non-empty region and so hands over the yes/no verdict, and the 'yes, mutually exclusive' case (the answers to ex14-7-3 and ex14-8-4) has no region to shade at all and cannot be expressed. Stretching venn_builder over this would be an answer box in disguise, so it goes to Samuel instead.",
+      "source": "author-merged-ch14.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c14",
+      "lo_id": "lo:g10m14s7-1-3",
+      "need_kind": "probability_bar: a unit bar split into an event and its complement",
+      "description": "A bar of length 1 (shown with a fraction or percentage readout) is split by a draggable divider into $P(A)$ and $P(A')$. The question gives $P(A)$, or the counts that make it, as in ex14-8-15 ($P(\\text{pink}) = \\frac{7}{12}$) or the block table in ex14-8-11d, and the student drags the divider so the complement segment has the right size; the readout then shows $P(A) + P(A') = 1$ as the whole bar. It would diagnose: reporting $P(A)$ as the answer (the given value) instead of the complement; subtracting the count from the wrong total, or never dividing by the number of outcomes (for example 12 − 7 = 5 given as the probability); turning the result into odds ($\\frac{5}{7}$ instead of $\\frac{5}{12}$); and a complement segment that does not close the bar to 1.",
+      "why": "sample_space with op 'ne' could build 'not 7' by tapping thirty cells, but that replaces the identity $P(A') = 1 - P(A)$ with brute counting, and the anchor questions are fraction and table-count problems with no grid structure. The construction would not be the mathematics of the objective. This objective's misconception list also holds no entry of its own, so diagnostics could not be mapped honestly anyway.",
+      "source": "author-merged-ch14.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c14",
+      "lo_id": "lo:g10m14s7-1-4",
+      "need_kind": "misconception entries for the existing venn_builder counts mode (the kind fits; the diagnostics do not)",
+      "description": "venn_builder in counts mode is exactly the mathematics of this objective, and a template is ready to author as soon as the list has the right entries. Draft spec: {\"mode\":\"counts\",\"sets\":2,\"labels\":[\"Football\",\"Hockey\"],\"total\":40,\"regions\":{\"a\":12,\"b\":15,\"ab\":8,\"n\":5},\"clues\":{\"a\":20,\"b\":23}}, with the stem 'In a group of 40 learners, 5 play neither Football nor Hockey, 20 play Football and 23 play Hockey. Fill in how many learners are in each region of the Venn diagram.' The student has to find the union (35), then the overlap (20 + 23 − 35 = 8), then each exclusive region. Parents would be ex14-8-10b and ex14-8-30. The predicates it can emit are overlap-counted-twice (the raw 20 and 23 typed into the Football-only and Hockey-only regions), neither-region-missed and off-target.",
+      "why": "The misconception list for this objective has no entry of its own, and none of the prerequisite entries it carries describes 'a whole set's size entered for its exclusive region' or 'the outside region forgotten' (the closest, whole-set-not-intersection, is about the intersection and would refute a different error). Template diagnostics need at least one honest mapping, and FR-1215 refuses ids from other objectives, so mapping to a near-miss would show a student the wrong refutation. Samuel's team needs to add an 'overlap counted twice' misconception (and ideally an 'outside region forgotten' one) to lo:g10m14s7-1-4; the template can then go out.",
+      "source": "author-merged-ch14.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c14",
+      "lo_id": "lo:g10m14s4-1-2",
+      "need_kind": "no-diagnostic",
+      "description": "template wt:g10m14s4-1-2:shade-intersection (1 widget question(s)) was not shipped: it could not say why a wrong answer is wrong",
+      "why": "every misconception its mappings name was refused by S5's fail-closed verifier (mc:g10m14s4-1-2:either-set-not-both); a widget with no diagnostic could mark an answer wrong and never say why (ADR-0009). Re-author it against a misconception S5 kept, or accept the lesson without it",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c01",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c02",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c03",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c04",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c05",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c06",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c07",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c08",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c09",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c10",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c11",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c12",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c13",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c14",
+      "lo_id": "lo:g10m14s3-1-1",
+      "need_kind": "no-diagnostic",
+      "description": "template wt:g10m14s3-1-1:die-multiple-of-5-and-odd (1 widget question(s)) was not shipped: it could not say why a wrong answer is wrong",
+      "why": "every misconception its mappings name was refused by S5's fail-closed verifier (mc:g10m14s1-1-1:sample-space-as-an-event); a widget with no diagnostic could mark an answer wrong and never say why (ADR-0009). Re-author it against a misconception S5 kept, or accept the lesson without it",
+      "source": "assemble_misconceptions.py",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c14",
+      "lo_id": "lo:g10m14s7-1-1",
+      "need_kind": "no-diagnostic",
+      "description": "template wt:g10m14s7-1-1:complement-of-union (1 widget question(s)) was not shipped: it could not say why a wrong answer is wrong",
+      "why": "every misconception its mappings name was refused by S5's fail-closed verifier (mc:g10m14s7-1-1:lists-event-instead-of-complement); a widget with no diagnostic could mark an answer wrong and never say why (ADR-0009). Re-author it against a misconception S5 kept, or accept the lesson without it",
+      "source": "assemble_misconceptions.py",
+      "signed_off": null,
+      "scope": "lesson"
+    }
+  ]
+}

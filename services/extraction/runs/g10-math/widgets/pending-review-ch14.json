@@ -68,30 +68,6 @@
       "misconception_label": "Lists only some of the outcomes that give the wanted result",
       "misconception_description": "The student writes down one or two outcomes that give the wanted result, such as a total of 8, and treats that as the whole event set, leaving out the other outcomes that also give it.",
       "why": "This predicate fires when ordered pairs are collapsed, so a student picks (3,5) but not (5,3), or (2,6) but not (6,2). That is an order-matters or unordered-pair error, not the claimed one. The claimed misconception is stopping after one or two outcomes and treating them as the whole event. A student who stops early would only incidentally trip this predicate. Most of the time it would fire because of the ordering error, so the diagnosis would be wrong."
-    },
-    {
-      "key": "q:g10m14s7-1-1:w002#off-target",
-      "question_id": "q:g10m14s7-1-1:w002",
-      "template_id": "wt:g10m14s7-1-1:not-in-chess",
-      "lo_id": "lo:g10m14s7-1-1",
-      "kind": "venn_builder",
-      "stem": "A club has learners who play Football ($F$) and learners who play Chess ($C$). Some play both and some play neither. The rectangle holds every learner in the club. Shade the complement of Chess, $C'$.",
-      "reading": {
-        "sets": 2,
-        "labels": [
-          "Football",
-          "Chess"
-        ],
-        "mode": "shade",
-        "target": "complementB"
-      },
-      "construction": "Shade exactly two regions: the Football-only region (inside the Football circle, outside the Chess circle) and the region inside the rectangle but outside both circles (neither). Leave the whole Chess circle unshaded, meaning both the Chess-only lens and the Football-and-Chess overlap. This is everything in the rectangle that is not in Chess, which is C'.",
-      "predicate": "off-target",
-      "predicate_meaning": "Wrong in a way none of the named errors describes",
-      "misconception_id": "mc:g10m14s7-1-1:complement-only-outside-all-circles",
-      "misconception_label": "Complement is only what lies outside every circle",
-      "misconception_description": "The student takes the complement of a single event to be just the numbers that sit outside all the circles in the diagram, so numbers that are in the other circle but not in the event get left out.",
-      "why": "off-target is the residual predicate for any wrong shading that no named predicate describes. The claimed misconception does produce one such shading: only the neither region shaded, with Football-only left out. That shading fires neither complement-inside-a nor neither-region-missed, so it falls into off-target. But off-target fires equally for many other wrong builds: the whole Football circle, the complement of Football instead (Chess-only plus neither), the union, the intersection, or a random region. A student who shaded the Football circle because she thinks the complement of Chess is the other set has not made the 'only outside every circle' mistake. Pinning that specific refutation on a catch-all predicate would show it to students who did not make that mistake, so the diagnosis does not match."
     }
   ]
 }
