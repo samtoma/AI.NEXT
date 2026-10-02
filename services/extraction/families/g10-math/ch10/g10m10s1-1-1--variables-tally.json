@@ -7,7 +7,7 @@
  "source_page": 357,
  "tier": "advanced",
  "answer_type": "numeric",
- "context": "A survey of a Grade 10 class records six different things about every learner, so six data sets are collected from the same class. Which six, and which kind of data set is asked about, change between instances.",
+ "context": null,
  "params": [
   {
    "name": "names",
@@ -70,5 +70,5 @@
   "Count the data sets that are {=asks[a]}. There are {=total}, so the answer is {=total}."
  ],
  "proposed_misconceptions": [],
- "notes": "Advanced tier: several steps. The student classifies six data sets one by one (the book's single-set decision, repeated) and then counts those that match a stated category. The 18-item pool is balanced and interleaved (index mod 3 gives the kind: 0 count, 1 measurement, 2 qualitative) and the six picks are shuffled, so no ordering hint. Every item is an unambiguous count, measurement or non-numeric description: no money, ages, shoe sizes or codes. The asked category varies (discrete, continuous, quantitative of either kind, qualitative) through a weight table, so the same skeleton gives different answers. Numeric, so no distractors and no misconception ids; require keeps the answer between 1 and 4 (about 88% of draws pass)."
+ "notes": "Advanced tier: several steps. The student classifies six data sets one by one (the book's single-set decision, repeated) and then counts those that match a stated category. The 18-item pool is balanced and interleaved (index mod 3 gives the kind: 0 count, 1 measurement, 2 qualitative) and the six picks are shuffled, so no ordering hint. Every item is an unambiguous count, measurement or non-numeric description: no money, ages, shoe sizes or codes. The asked category varies (discrete, continuous, quantitative of either kind, qualitative) through a weight table, so the same skeleton gives different answers. Numeric, so no distractors and no misconception ids; require keeps the answer between 1 and 4 (about 88% of draws pass).\n\nPIPELINE NORMALISATION (not an author edit): context-null: the spec set \"context\" (a fixed word problem's situation, in words) to \"A survey of a Grade 10 class records six different things about every learner, so six data sets are collected from the same class. Which six, and which kind of data set is asked about, change between instances.\" and its own text says what varies. The stem varies the wording itself, through {=names[order[0]]} .. {=names[order[5]]} and {=asks[a]}, drawn from an 18-item bank, so it is not a fixed-context word problem. A family with a fixed context may vary only numbers (families/spec.py _stem_holes_are_numbers; extraction-pipeline §3.9), so every attempt was refused ('the stem hole {=...} produced a word') and the family produced no item. A family whose wording is drawn from a curated table is written with \"context\": null, as this objective's siblings anecdotal-set, categorical-set, counting-categorical and paired-questions are, and its stems are still judged one by one by the blind grader. The former context text is kept above; the stem, params, answer, options and worked solution are unchanged."
 }

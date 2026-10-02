@@ -7,7 +7,7 @@
  "source_page": 358,
  "tier": "standard",
  "answer_type": "mcq",
- "context": "A class of Grade 10 learners each record one count (how many of something). The class is fixed; only the thing counted and the six values change.",
+ "context": null,
  "params": [
   {
    "name": "whats",
@@ -73,5 +73,5 @@
   "A count written as integers is discrete. Therefore the data set is quantitative discrete."
  ],
  "proposed_misconceptions": [],
- "notes": "Standard tier: the book's count exercises (ex10-1-2, ex10-1-3, we01) with the explanation step the book asks for in we01 added to the options. The thing counted is drawn from six unambiguous counts (no money, no ages); values are sampled without repeats from a plausible range per item. Direction is fixed (always discrete) so the two quantitative-swap distractors carry a single catalogued id; the continuous mirror is the family measure-reason. Correct option text is identical across instances; the engine should shuffle option order."
+ "notes": "Standard tier: the book's count exercises (ex10-1-2, ex10-1-3, we01) with the explanation step the book asks for in we01 added to the options. The thing counted is drawn from six unambiguous counts (no money, no ages); values are sampled without repeats from a plausible range per item. Direction is fixed (always discrete) so the two quantitative-swap distractors carry a single catalogued id; the continuous mirror is the family measure-reason. Correct option text is identical across instances; the engine should shuffle option order.\n\nPIPELINE NORMALISATION (not an author edit): context-null: the spec set \"context\" (a fixed word problem's situation, in words) to \"A class of Grade 10 learners each record one count (how many of something). The class is fixed; only the thing counted and the six values change.\" and its own text says what varies. The stem varies the wording itself, through {=what} and {=unit}, drawn from six counts, each with its own value range, so it is not a fixed-context word problem. A family with a fixed context may vary only numbers (families/spec.py _stem_holes_are_numbers; extraction-pipeline §3.9), so every attempt was refused ('the stem hole {=...} produced a word') and the family produced no item. A family whose wording is drawn from a curated table is written with \"context\": null, as this objective's siblings anecdotal-set, categorical-set, counting-categorical and paired-questions are, and its stems are still judged one by one by the blind grader. The former context text is kept above; the stem, params, answer, options and worked solution are unchanged."
 }

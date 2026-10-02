@@ -54,7 +54,7 @@
    "name": "n",
    "randint": [
     5,
-    12
+    10
    ]
   },
   {
@@ -105,5 +105,5 @@
   "The increase is the future population minus the current population: ${=Ar}-{=P}={=inc}$",
   "The population is expected to increase by about ${=inc}$ people over the next ${=n}$ years."
  ],
- "notes": "Advanced: the book's own twist from exercise 9.5 question 3 (page 347), where the answer is the increase A - P, not the new population. Adds three things beyond the standard book question: a rate with a decimal (0.4 to 2.8 %), a seven-digit population, and the final subtraction. P is built from millions, thousands and units parts (each of the last two 100 to 999) so the stem prints it in the book's spaced style without leading-zero problems. The exact value is computed in integers (top / bottom); the require keeps its fractional part at least 0.05 from .5, and the stem forbids intermediate rounding, so a calculator solver agrees. Rounding A then subtracting P gives the same integer as rounding A - P because P is an integer. Book check of the formula: 3 879 090 x 1.011^6 = 4 142 255 (page 347). Increases range from about 43 thousand to 1.96 million."
+ "notes": "Advanced: the book's own twist from exercise 9.5 question 3 (page 347), where the answer is the increase A - P, not the new population. Adds three things beyond the standard book question: a rate with a decimal (0.4 to 2.8 %), a seven-digit population, and the final subtraction. P is built from millions, thousands and units parts (each of the last two 100 to 999) so the stem prints it in the book's spaced style without leading-zero problems. The exact value is computed in integers (top / bottom); the require keeps its fractional part at least 0.05 from .5, and the stem forbids intermediate rounding, so a calculator solver agrees. Rounding A then subtracting P gives the same integer as rounding A - P because P is an integer. Book check of the formula: 3 879 090 x 1.011^6 = 4 142 255 (page 347). Increases range from about 43 thousand to 1.96 million.\n\nPIPELINE NORMALISATION (not an author edit): bound-exact-power-below-the-evaluator-ceiling: n was drawn from 5..12 and the family computes the exact integer top = P * (1000 + rt) ** n (P is up to 4 999 999, so a 7-digit population). The evaluator refuses any integer above 10**40 (families/evaluator.py MAX_INT): at n = 12 top has 43 digits for every draw, at n = 11 it has 40 and 2 * top + bottom, in Ar, goes over, so those draws failed to evaluate ('integer too large') instead of being rejected by a require. n is now drawn from 5..10, where top has at most 37 digits and nothing can overflow. The question, its answer logic and its worked solution are unchanged; the largest increase the family now sets is about 1.59 million, not the 1.96 million the author's notes give (n = 11 and 12 could never have been instantiated)."
 }
