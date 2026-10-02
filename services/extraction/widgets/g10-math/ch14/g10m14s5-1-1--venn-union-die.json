@@ -24,9 +24,9 @@
    "b": 3
   }
  },
- "stem": "A die is rolled once, so the sample space is $S=\\{1,2,3,4,5,6\\}$. Event $A$ is $\\{1,2,5,6\\}$ (4 outcomes) and event $B$ is $\\{2,3,6\\}$ (3 outcomes), so $A\\cap B=\\{2,6\\}$. Complete the Venn diagram by entering how many outcomes lie in each region, counting every outcome once. Once the diagram is right you can read off $P(A\\cup B)$.",
+ "stem": "A die is rolled once, so the sample space is $S=\\{1, 2, 3, 4, 5, 6\\}$. Event $A$ is $\\{1, 2, 5, 6\\}$ (4 outcomes) and event $B$ is $\\{2, 3, 6\\}$ (3 outcomes), so $A\\cap B=\\{2, 6\\}$. Complete the Venn diagram by entering how many outcomes lie in each region, counting every outcome once. Once the diagram is right you can read off $P(A\\cup B)$.",
  "solution": [
-  "The outcomes in both events are $A\\cap B=\\{2,6\\}$, so the overlap holds 2 outcomes.",
+  "The outcomes in both events are $A\\cap B=\\{2, 6\\}$, so the overlap holds 2 outcomes.",
   "Only in $A$: $A$ has 4 outcomes and 2 of them are in the overlap, so $4-2=2$ (the outcomes 1 and 5).",
   "Only in $B$: $B$ has 3 outcomes and 2 of them are in the overlap, so $3-2=1$ (the outcome 3).",
   "In neither event: the outcome 4 is the only one left, so 1. Check: $2+1+2+1=6=n(S)$.",
@@ -39,5 +39,51 @@
    "misconception_id": "mc:g10m14s5-1-1:adds-without-subtracting-shared-outcomes"
   }
  ],
- "notes": "Graded construction: the four exclusive region counts (a=2, b=1, ab=2, n=1), which are unique, so FR-1205 holds. P(A∪B) itself is the step after the widget and is not graded here. The book's anchor (ex14-5-1) has an empty intersection, where the overlap error cannot occur; this template keeps the anchor's sample space {1..6} and event A and adds an overlap (B={2,3,6}) so the objective's own error can fire. Clues a=4 and b=3 are a+ab and b+ab, as the pipeline rule requires; regions sum to total 6. Entering the raw set sizes 4 and 3 in the 'only' regions fires overlap-counted-twice, mapped to the objective's own misconception. Unmapped on purpose: neither-region-missed (forgetting outcome 4 would mean dividing by n(A∪B) instead of n(S), and no such misconception is in this objective's list; none of the listed ids, including the prerequisite unequal-outcomes-counted-as-equal, describes it) and off-target (no dominant error)."
+ "notes": "Graded construction: the four exclusive region counts (a=2, b=1, ab=2, n=1), which are unique, so FR-1205 holds. P(A∪B) itself is the step after the widget and is not graded here. The book's anchor (ex14-5-1) has an empty intersection, where the overlap error cannot occur; this template keeps the anchor's sample space {1..6} and event A and adds an overlap (B={2,3,6}) so the objective's own error can fire. Clues a=4 and b=3 are a+ab and b+ab, as the pipeline rule requires; regions sum to total 6. Entering the raw set sizes 4 and 3 in the 'only' regions fires overlap-counted-twice, mapped to the objective's own misconception. Unmapped on purpose: neither-region-missed (forgetting outcome 4 would mean dividing by n(A∪B) instead of n(S), and no such misconception is in this objective's list; none of the listed ids, including the prerequisite unequal-outcomes-counted-as-equal, describes it) and off-target (no dominant error).\n\nPIPELINE NORMALISATION (not an author edit): set-list-spacing: an unspaced comma between a set's elements written ', ' in stem, solution step 1 (assemble_lesson_bundle.space_set_lists: \\{1,2,3\\} is \\{1, 2, 3\\}, the American course's list; an unspaced 1,2 reads as the book's decimal comma).",
+ "verified_as": {
+  "sha": "e908a4c7d7edfc20fa20ad87d7949eeb032952ef2a5631aaa5cf355382415ccb",
+  "template": {
+   "format": "ainext.widget-template/1",
+   "id": "wt:g10m14s5-1-1:venn-union-die",
+   "lo_id": "lo:g10m14s5-1-1",
+   "parent_question_id": "q:g10m14s5-1-1:ex14-5-1",
+   "tier": "basic",
+   "kind": "venn_builder",
+   "spec": {
+    "mode": "counts",
+    "sets": 2,
+    "labels": [
+     "A",
+     "B"
+    ],
+    "total": 6,
+    "regions": {
+     "a": 2,
+     "b": 1,
+     "ab": 2,
+     "n": 1
+    },
+    "clues": {
+     "a": 4,
+     "b": 3
+    }
+   },
+   "stem": "A die is rolled once, so the sample space is $S=\\{1,2,3,4,5,6\\}$. Event $A$ is $\\{1,2,5,6\\}$ (4 outcomes) and event $B$ is $\\{2,3,6\\}$ (3 outcomes), so $A\\cap B=\\{2,6\\}$. Complete the Venn diagram by entering how many outcomes lie in each region, counting every outcome once. Once the diagram is right you can read off $P(A\\cup B)$.",
+   "solution": [
+    "The outcomes in both events are $A\\cap B=\\{2,6\\}$, so the overlap holds 2 outcomes.",
+    "Only in $A$: $A$ has 4 outcomes and 2 of them are in the overlap, so $4-2=2$ (the outcomes 1 and 5).",
+    "Only in $B$: $B$ has 3 outcomes and 2 of them are in the overlap, so $3-2=1$ (the outcome 3).",
+    "In neither event: the outcome 4 is the only one left, so 1. Check: $2+1+2+1=6=n(S)$.",
+    "The union is everything in $A$ or $B$: $n(A\\cup B)=2+2+1=5$. This equals $n(A)+n(B)-n(A\\cap B)=4+3-2$, because the 2 shared outcomes are counted once, not twice.",
+    "$P(A\\cup B)=\\dfrac{n(A\\cup B)}{n(S)}=\\dfrac{5}{6}\\approx 0.83$."
+   ],
+   "diagnostics": [
+    {
+     "predicate": "overlap-counted-twice",
+     "misconception_id": "mc:g10m14s5-1-1:adds-without-subtracting-shared-outcomes"
+    }
+   ],
+   "notes": "Graded construction: the four exclusive region counts (a=2, b=1, ab=2, n=1), which are unique, so FR-1205 holds. P(A∪B) itself is the step after the widget and is not graded here. The book's anchor (ex14-5-1) has an empty intersection, where the overlap error cannot occur; this template keeps the anchor's sample space {1..6} and event A and adds an overlap (B={2,3,6}) so the objective's own error can fire. Clues a=4 and b=3 are a+ab and b+ab, as the pipeline rule requires; regions sum to total 6. Entering the raw set sizes 4 and 3 in the 'only' regions fires overlap-counted-twice, mapped to the objective's own misconception. Unmapped on purpose: neither-region-missed (forgetting outcome 4 would mean dividing by n(A∪B) instead of n(S), and no such misconception is in this objective's list; none of the listed ids, including the prerequisite unequal-outcomes-counted-as-equal, describes it) and off-target (no dominant error)."
+  }
+ }
 }

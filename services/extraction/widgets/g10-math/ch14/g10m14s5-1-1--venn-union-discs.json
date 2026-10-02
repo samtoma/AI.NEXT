@@ -26,7 +26,7 @@
  },
  "stem": "A disc is chosen at random from discs numbered $1$ to $20$. Event $A$: the number is a multiple of $2$ (10 outcomes). Event $B$: the number is a multiple of $3$ (6 outcomes). Some discs satisfy both events. Complete the Venn diagram by entering how many discs lie in each region, counting every disc once. Once the diagram is right you can read off $P(A\\cup B)$.",
  "solution": [
-  "List the shared outcomes: a number that is a multiple of 2 and of 3 is a multiple of 6, so $A\\cap B=\\{6,12,18\\}$ and the overlap holds 3 discs.",
+  "List the shared outcomes: a number that is a multiple of 2 and of 3 is a multiple of 6, so $A\\cap B=\\{6, 12, 18\\}$ and the overlap holds 3 discs.",
   "Only in $A$: $10-3=7$ discs.",
   "Only in $B$: $6-3=3$ discs.",
   "In neither event: $20-(7+3+3)=7$ discs (1, 5, 7, 11, 13, 17, 19). Check: $7+3+3+7=20=n(S)$.",
@@ -39,5 +39,51 @@
    "misconception_id": "mc:g10m14s5-1-1:adds-without-subtracting-shared-outcomes"
   }
  ],
- "notes": "Standard tier: events are given by a rule, not listed, so the student has to find the overlap (multiples of 6) before filling the regions; this is the style of the book's own disc exercises. Graded construction: region counts a=7, b=3, ab=3, n=7 (unique). Clues a=10 (7+3) and b=6 (3+3) satisfy the pipeline rule; regions sum to total 20. Entering 10 and 6 in the 'only' regions fires overlap-counted-twice, mapped to the objective's own misconception. Unmapped on purpose: neither-region-missed (an unlisted error, dividing by n(A∪B) rather than n(S); no listed id describes it) and off-target (no dominant error). P(A∪B)=0.65 is derived from the diagram but not graded by the widget."
+ "notes": "Standard tier: events are given by a rule, not listed, so the student has to find the overlap (multiples of 6) before filling the regions; this is the style of the book's own disc exercises. Graded construction: region counts a=7, b=3, ab=3, n=7 (unique). Clues a=10 (7+3) and b=6 (3+3) satisfy the pipeline rule; regions sum to total 20. Entering 10 and 6 in the 'only' regions fires overlap-counted-twice, mapped to the objective's own misconception. Unmapped on purpose: neither-region-missed (an unlisted error, dividing by n(A∪B) rather than n(S); no listed id describes it) and off-target (no dominant error). P(A∪B)=0.65 is derived from the diagram but not graded by the widget.\n\nPIPELINE NORMALISATION (not an author edit): set-list-spacing: an unspaced comma between a set's elements written ', ' in solution step 1 (assemble_lesson_bundle.space_set_lists: \\{1,2,3\\} is \\{1, 2, 3\\}, the American course's list; an unspaced 1,2 reads as the book's decimal comma).",
+ "verified_as": {
+  "sha": "d985575209552217ec4b4df61c133b18690a5a9a14144ee395c877cf941b3c9e",
+  "template": {
+   "format": "ainext.widget-template/1",
+   "id": "wt:g10m14s5-1-1:venn-union-discs",
+   "lo_id": "lo:g10m14s5-1-1",
+   "parent_question_id": "q:g10m14s5-1-1:ex14-5-1",
+   "tier": "standard",
+   "kind": "venn_builder",
+   "spec": {
+    "mode": "counts",
+    "sets": 2,
+    "labels": [
+     "Multiple of 2",
+     "Multiple of 3"
+    ],
+    "total": 20,
+    "regions": {
+     "a": 7,
+     "b": 3,
+     "ab": 3,
+     "n": 7
+    },
+    "clues": {
+     "a": 10,
+     "b": 6
+    }
+   },
+   "stem": "A disc is chosen at random from discs numbered $1$ to $20$. Event $A$: the number is a multiple of $2$ (10 outcomes). Event $B$: the number is a multiple of $3$ (6 outcomes). Some discs satisfy both events. Complete the Venn diagram by entering how many discs lie in each region, counting every disc once. Once the diagram is right you can read off $P(A\\cup B)$.",
+   "solution": [
+    "List the shared outcomes: a number that is a multiple of 2 and of 3 is a multiple of 6, so $A\\cap B=\\{6,12,18\\}$ and the overlap holds 3 discs.",
+    "Only in $A$: $10-3=7$ discs.",
+    "Only in $B$: $6-3=3$ discs.",
+    "In neither event: $20-(7+3+3)=7$ discs (1, 5, 7, 11, 13, 17, 19). Check: $7+3+3+7=20=n(S)$.",
+    "The union holds $n(A\\cup B)=7+3+3=13$ discs. This equals $n(A)+n(B)-n(A\\cap B)=10+6-3$: the 3 shared discs are subtracted once so they are not counted twice.",
+    "$P(A\\cup B)=\\dfrac{13}{20}=0.65$."
+   ],
+   "diagnostics": [
+    {
+     "predicate": "overlap-counted-twice",
+     "misconception_id": "mc:g10m14s5-1-1:adds-without-subtracting-shared-outcomes"
+    }
+   ],
+   "notes": "Standard tier: events are given by a rule, not listed, so the student has to find the overlap (multiples of 6) before filling the regions; this is the style of the book's own disc exercises. Graded construction: region counts a=7, b=3, ab=3, n=7 (unique). Clues a=10 (7+3) and b=6 (3+3) satisfy the pipeline rule; regions sum to total 20. Entering 10 and 6 in the 'only' regions fires overlap-counted-twice, mapped to the objective's own misconception. Unmapped on purpose: neither-region-missed (an unlisted error, dividing by n(A∪B) rather than n(S); no listed id describes it) and off-target (no dominant error). P(A∪B)=0.65 is derived from the diagram but not graded by the widget."
+  }
+ }
 }

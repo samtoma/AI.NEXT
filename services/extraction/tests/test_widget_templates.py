@@ -1229,7 +1229,7 @@ class SetListNotationNormalised(unittest.TestCase):
         self.assertEqual(GW.apply_verdicts(templates, qs, [verify]), ({out["id"]}, {}))
 
     def test_holes_and_everything_that_is_not_a_set_list_are_not_touched(self):
-        untouched = [r"Join $\{{=x1},{=y1}\}$" and "A hole {=x1},{=y1} outside a set", "0,75 of it and R 3,50", "the interval $[1,2]$ and $(1,2)$",
+        untouched = ["A hole {=x1},{=y1} outside a set", "0,75 of it and R 3,50", "the interval $[1,2]$ and $(1,2)$",
                      r"$\{x \mid x \in [1,2]\}$", r"$3{,}5$ and $\text{a,b}$", r"$\{1, 2, 3\}$", "(sin, cos)"]
         for src in untouched:
             raw = dict(self.good, solution=[src])
