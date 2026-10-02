@@ -1,0 +1,299 @@
+{
+  "format": "ainext.widget-gaps/1",
+  "book": "g10-math",
+  "course_id": "course:us-g10-math-en",
+  "rule": "FR-4306 / FR-1201: every chapter has at least one widget question, or a gap a human has signed. A new kind is built only after Samuel approves it (decision 11, T356).",
+  "chapters": [
+    {
+      "module": "module:g10m-c01",
+      "label": "Chapter 1 — Algebraic expressions",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c02",
+      "label": "Chapter 2 — Exponents",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c03",
+      "label": "Chapter 3 — Number patterns",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c04",
+      "label": "Chapter 4 — Equations and inequalities",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c05",
+      "label": "Chapter 5 — Trigonometry",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c06",
+      "label": "Chapter 6 — Functions",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c07",
+      "label": "Chapter 7 — Euclidean geometry",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c08",
+      "label": "Chapter 8 — Analytical geometry",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c09",
+      "label": "Chapter 9 — Finance and growth",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c10",
+      "label": "Chapter 10 — Statistics",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c11",
+      "label": "Chapter 11 — Trigonometry",
+      "status": "covered",
+      "widgets": 1,
+      "kinds": [
+        "triangle_ratio"
+      ],
+      "objectives_with_widgets": [
+        "lo:g10m11s1-1-2"
+      ],
+      "gaps": 3
+    },
+    {
+      "module": "module:g10m-c12",
+      "label": "Chapter 12 — Euclidean geometry",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    }
+  ],
+  "uncovered_chapters": [
+    "module:g10m-c01",
+    "module:g10m-c02",
+    "module:g10m-c03",
+    "module:g10m-c04",
+    "module:g10m-c05",
+    "module:g10m-c06",
+    "module:g10m-c07",
+    "module:g10m-c08",
+    "module:g10m-c09",
+    "module:g10m-c10",
+    "module:g10m-c12"
+  ],
+  "proposed_kinds": {
+    "trig_setup": {
+      "modules": [
+        "module:g10m-c11"
+      ],
+      "objectives": [
+        "lo:g10m11s1-1-1"
+      ],
+      "why": [
+        "The objective is: given an angle and one side, find another side. triangle_ratio only grades the ratio of a triangle's SHAPE. It never takes an angle size or a length, no unknown side appears in it, nothing is computed, and its marked angle sits in a fixed place, so the ladder's angle-at-the-wall slip cannot be posed for this objective. Any use of it here would only restate the ratio definition (the prerequisite g10m5s3-1-2) or become a number-matching box in disguise. The errors this objective lives on are all in the SETUP (which angle, which sides, which ratio, which way up), and no existing kind builds a setup."
+      ]
+    },
+    "sight_line_scene": {
+      "modules": [
+        "module:g10m-c11"
+      ],
+      "objectives": [
+        "lo:g10m11s1-1-3"
+      ],
+      "why": [
+        "The wording template wt:g10m11s1-1-3:depression-from-the-cliff covers only the last step of the objective, using a depression through its alternate angle with the tangent. No existing kind has an observer, a horizontal reference line or an up-versus-down sense, so none can ask the student to IDENTIFY an elevation or a depression, which is the objective's first clause. None can compose two triangles that share a side. triangle_ratio sees only one anonymous right triangle, and angle_setter is circle-only (arcs and inscribed angles)."
+      ]
+    }
+  },
+  "gaps": [
+    {
+      "module": "module:g10m-c11",
+      "lo_id": "lo:g10m11s1-1-1",
+      "need_kind": "trig_setup",
+      "description": "A right triangle drawn inside a real scene (ladder against a wall, building with a line of sight, kite string), with one angle marked exactly where the problem puts it (for the ladder, at the TOP against the wall), one side labelled with a length and one side marked x. The student builds the setup in two moves. First, tap each side and tag it opposite, adjacent or hypotenuse for the MARKED angle. Second, assemble the equation by dragging the known side and x into a ratio and choosing sin, cos or tan. Any equivalent equation is accepted (x = 25 sin 37 degrees, or x/25 = sin 37 degrees), and a readout then computes x and runs the sense check that a leg must be shorter than the hypotenuse. It would diagnose: the tags exchanged because the angle was pictured at the ground end (this objective's own sides-labelled-from-wrong-angle, cosine used where sine is needed), the hypotenuse picked as 'the slanted side from the angle', the equation inverted (x = 25 divided by sin 37 degrees, multiplying versus dividing), and a computed leg longer than the hypotenuse.",
+      "why": "The objective is: given an angle and one side, find another side. triangle_ratio only grades the ratio of a triangle's SHAPE. It never takes an angle size or a length, no unknown side appears in it, nothing is computed, and its marked angle sits in a fixed place, so the ladder's angle-at-the-wall slip cannot be posed for this objective. Any use of it here would only restate the ratio definition (the prerequisite g10m5s3-1-2) or become a number-matching box in disguise. The errors this objective lives on are all in the SETUP (which angle, which sides, which ratio, which way up), and no existing kind builds a setup.",
+      "source": "author-merged-ch11.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c11",
+      "lo_id": "lo:g10m11s1-1-3",
+      "need_kind": "sight_line_scene",
+      "description": "A scene with an observer, a target and a horizontal reference line always drawn through the observer's eye. The student drags the sight line, or an angle arc swung from the horizontal, to build an angle of elevation or of depression of a stated size, and the widget shows the right triangle that results, with the alternate angle at the other end when the viewpoint is swapped. For two-viewpoint tasks (we04, ex11-2-20), the student builds the elevation to the top and the depression to the base from the same eye, as two right triangles sharing one horizontal side, so that the height is the sum of two tangent terms. It would diagnose: the angle measured from the vertical (depression read as the interior angle at the observer's end, which is 90 degrees minus the true value), depression and elevation swapped (up versus down), the depression angle placed at the wrong end without the alternate-angles step, and trusting-the-sketch (this objective's own misconception) through scenes drawn deliberately not to scale, where the picture disagrees with the stated angle and only the stated data is right. The first and third errors have no record in this lesson's misconception list. A record such as 'angle-of-depression-measured-from-the-vertical' would need to be added before the widget could name them.",
+      "why": "The wording template wt:g10m11s1-1-3:depression-from-the-cliff covers only the last step of the objective, using a depression through its alternate angle with the tangent. No existing kind has an observer, a horizontal reference line or an up-versus-down sense, so none can ask the student to IDENTIFY an elevation or a depression, which is the objective's first clause. None can compose two triangles that share a side. triangle_ratio sees only one anonymous right triangle, and angle_setter is circle-only (arcs and inscribed angles).",
+      "source": "author-merged-ch11.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c01",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c02",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c03",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c04",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c05",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c06",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c07",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c08",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c09",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c10",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c12",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c11",
+      "lo_id": "lo:g10m11s1-1-3",
+      "need_kind": "no-diagnostic",
+      "description": "template wt:g10m11s1-1-3:depression-from-the-cliff (1 widget question(s)) was not shipped: it could not say why a wrong answer is wrong",
+      "why": "every misconception its mappings name was refused by S5's fail-closed verifier (mc:g10m5s3-1-2:reads-sides-from-other-angle, mc:g10m5s3-1-1:hypotenuse-not-opposite-right-angle); a widget with no diagnostic could mark an answer wrong and never say why (ADR-0009). Re-author it against a misconception S5 kept, or accept the lesson without it",
+      "source": "assemble_misconceptions.py",
+      "signed_off": null,
+      "scope": "lesson"
+    }
+  ]
+}

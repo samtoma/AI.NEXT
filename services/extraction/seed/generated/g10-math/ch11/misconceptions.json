@@ -1,0 +1,227 @@
+{
+  "catalogue": "g10-math-misconceptions",
+  "course_id": "course:us-g10-math-en",
+  "book": "g10-math",
+  "reviewed": false,
+  "generator": "S5 runbook/misconceptions.workflow.js (Sonnet author, Sonnet fail-closed verifier) via assemble_misconceptions.py — runs final-ch11-wf_5f004de2-ea5.json; 1 ALIAS LINK(S) STRIPPED on 1 entries (provenance.aliases_stripped says which and why; no entry was deleted); pipeline-generated, UNREVIEWED",
+  "misconceptions": [
+    {
+      "id": "mc:g10m11s1-1-2:names-sides-from-wrong-angle",
+      "lo_id": "lo:g10m11s1-1-2",
+      "label": "Names the sides from the wrong angle",
+      "description": "The student labels opposite and adjacent from the other angle of the right-angled triangle (for example the angle at the ground when the angle with the wall is wanted), so the ratio chosen, and the angle found, belong to a different angle from the one asked for.",
+      "signal": "The angle found is the angle at the other end of the hypotenuse from the one the question asks about.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Naming the sides is the right first move, and you did it. The slip is that you named them from the other angle: \"opposite\" and \"adjacent\" depend on which angle you are looking from, so the ratio you wrote belongs to a different angle from the one the question asks for."
+        },
+        {
+          "step": 2,
+          "text_md": "Only the hypotenuse stays put, because it is the side across from the right angle. The other two sides swap roles when you change the angle you look from."
+        },
+        {
+          "step": 3,
+          "text_md": "Take a ladder $15$ m long with its foot $5$ m from the wall, and suppose the angle wanted is the one between the ladder and the wall. From that angle, at the top of the ladder, the $5$ m along the ground is across from it, so it is the opposite side: $\\sin x=\\frac{5}{15}$, and the book gets $x\\approx 19.47^{\\circ}$."
+        },
+        {
+          "step": 4,
+          "text_md": "From the angle at the foot of the ladder, that same $5$ m touches the angle, so it becomes the adjacent side and the ratio would be cosine. That is a real angle of the same triangle, but it is the angle between the ladder and the ground, not the one asked for, so it gives a different answer."
+        },
+        {
+          "step": 5,
+          "text_md": "Sketch the triangle and mark the angle $x$ the question asks for. Then label from it: the opposite side is across from $x$, the adjacent side touches $x$ (and is not the hypotenuse), and the hypotenuse is across from the right angle. Choose the ratio that uses the two sides you know, such as $\\sin x=\\frac{\\text{opposite}}{\\text{hypotenuse}}$, and find $x$ on your calculator."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch11-wf_5f004de2-ea5.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real and evidenced. The book's ladder remark warns that the angle with the wall is wanted, not the angle with the ground, and the angle-with-the-ground solution (sin = 6/8) shows the other angle of the same ladder triangle. I checked the refutation numerically: sin x = 5/15 gives 19.4712..., which rounds to 19.47 degrees, matching the canonical answer. From the foot of the ladder, the 5 m side is adjacent and the ratio is cosine, which gives 70.53 degrees, a different angle. It uses only the book's own method (opposite, adjacent and hypotenuse named from the marked angle, then the ratio) and teaches nothing outside the book. Steps 1-4 argue against this specific slip, and step 5 restates the method only as the fix. It has no question ids, pages, figure numbers or review history, and the generic mention of the book's answer is not a citation. The signal (the angle found is the other acute angle of the triangle) matches what a student with this error produces.",
+        "sources": [
+          {
+            "type": "remark",
+            "ref": "q:g10m11s1-1-2:ex11-2-1"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m11s1-1-2:ex11-2-7b"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "S7",
+            "ref": "wt:g10m11s1-1-2:ladder-angle-with-the-wall#used-cosine",
+            "question_id": "q:g10m11s1-1-2:w001",
+            "text": "Built the cosine where another ratio was asked for",
+            "tagged": "mc:g10m11s1-1-2:names-sides-from-wrong-angle"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m11s1-1-3:only-part-of-the-height",
+      "lo_id": "lo:g10m11s1-1-3",
+      "label": "Stopping at one part of the height",
+      "description": "The student finds the side of one right-angled triangle from the angle and gives it as the whole height or distance, when the height the question needs is made of two parts.",
+      "signal": "The answer is one piece of the height on its own, such as $135$ m or $376$ m for a tower whose whole height is $511$ m.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Your tangent step is sound: the angle really does give you a right-angled triangle and one of its sides. What has slipped is that this triangle covers only part of the height the question asks for."
+        },
+        {
+          "step": 2,
+          "text_md": "An angle of elevation or of depression is measured from the horizontal at the observer. The triangle it makes therefore reaches only from that horizontal to the point being looked at, and not necessarily the whole way from the ground to the top."
+        },
+        {
+          "step": 3,
+          "text_md": "Take someone on top of a block of flats, $200$ m from a cellphone tower. They look up at an angle of elevation of $34^\\circ$ to the top of the tower and down at an angle of depression of $62^\\circ$ to its bottom. The $34^\\circ$ triangle gives only the part of the tower above their level: $200 \\times \\tan 34^\\circ \\approx 135$ m. The $62^\\circ$ triangle gives only the part below it: $200 \\times \\tan 62^\\circ \\approx 376$ m. Giving $135$ m or $376$ m as the height of the tower leaves the other part out."
+        },
+        {
+          "step": 4,
+          "text_md": "A lighthouse standing on a cliff works the same way. The angle of elevation to the top of the lighthouse is taken from the boat at sea level, so the vertical side of the triangle is the lighthouse plus the cliff: $10 + 75 = 85$ m. Working from $75$ m or $10$ m alone leaves out part of it."
+        },
+        {
+          "step": 5,
+          "text_md": "Next time, ask which point the angle is aimed at, and mark the whole vertical side from the horizontal at the observer up or down to that point. If the figure shows more than one piece, add them: either find each piece with its own triangle and add, as in $135 + 376 = 511$ m, or add the pieces first and then use the tangent, as in $85$ m for the lighthouse."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch11-wf_5f004de2-ea5.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The canonical solutions require summing two parts. In we04, CE = CD + DE = 376 + 135 = 511 m, with the two parts coming from separate triangles. In ex11-2-20, PR = PQ + QR = 10 + 75 = 85 m is the vertical side, and 85/tan 27 = 166.8, which gives 167 m. The refutation's numbers all match this. Using 75 m alone would give 147 m and 10 m alone would give 19.6 m, so those are genuinely wrong. The signal (135 m or 376 m given as the whole tower, whose height is 511 m) is a clear symptom of stopping at one part. Both of the book's methods are offered: add after the triangles, or add before the tangent. Observer B is at the top of the flats, so the 'above and below their level' wording matches the figure. No ids, pages, figure numbers or review history appear in the text. It argues against the error rather than just restating the method.",
+        "sources": [
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m11s1-1-3:we04"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m11s1-1-3:ex11-2-20"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:g10m11s1-1-3:ratio-the-wrong-way-up",
+      "lo_id": "lo:g10m11s1-1-3",
+      "label": "Writing the ratio the wrong way up",
+      "description": "The student finds the right two sides for the angle but writes the tangent ratio upside down, with the side beside the angle on top and the side across from it underneath, so the answer is divided by tan where it should be multiplied, or the other way round.",
+      "signal": "The answer divides by tan where it should multiply, or multiplies where it should divide, for example $70 \\div \\tan 38^\\circ \\approx 89.60$ m for a tower 70 m away seen at an angle of elevation of $38^\\circ$, instead of $70 \\times \\tan 38^\\circ \\approx 54.69$ m.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You picked out the right two sides, the one across from the angle and the one beside it, and that is the harder part. The slip is the order: the ratio has been written with the side beside the angle on top and the side across from it underneath."
+        },
+        {
+          "step": 2,
+          "text_md": "For the tangent the order never changes: $\\tan(\\text{angle}) = \\dfrac{\\text{opposite}}{\\text{adjacent}}$. The opposite side is the one across from the angle, the adjacent side is the one beside it, and the book's solutions write the ratio in this order whichever side is the unknown."
+        },
+        {
+          "step": 3,
+          "text_md": "Take someone looking down at an angle of depression of $62^\\circ$ to the foot of a tower that is $200$ m away. The $200$ m runs beside the $62^\\circ$ angle (adjacent) and the drop to the foot of the tower is across from it (opposite). So $\\tan 62^\\circ = \\dfrac{\\text{drop}}{200}$ and $\\text{drop} = 200 \\times \\tan 62^\\circ \\approx 376$ m."
+        },
+        {
+          "step": 4,
+          "text_md": "Written upside down, $\\tan 62^\\circ = \\dfrac{200}{\\text{drop}}$ turns into $\\text{drop} = 200 \\div \\tan 62^\\circ \\approx 106$ m. That is a very different answer, and it comes from treating the $200$ m as the side across from the angle when it is the side beside it."
+        },
+        {
+          "step": 5,
+          "text_md": "Next time, mark the angle, label the opposite and adjacent sides from that angle, and write $\\tan = \\dfrac{\\text{opposite}}{\\text{adjacent}}$ before you put any numbers in. If the unknown is the opposite side you multiply, as in $x = 70\\tan 38^\\circ$. If the unknown is the adjacent side you divide, as in $x = \\dfrac{8}{\\tan 45^\\circ}$."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch11-wf_5f004de2-ea5.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "I checked every number. 70 divided by tan 38 is 89.596, which rounds to 89.60. 70 times tan 38 is 54.69, matching the canonical answer. 200 times tan 62 is 376.1, and 200 divided by tan 62 is 106.3, so the 106 m figure is right. The 62 degree angle at B has the 200 m (BD) adjacent and the drop (CD) opposite, as in the canonical solution and figure. The rule is always tan = opposite/adjacent: we04 has CD/BD, ex11-2-8b has x/70, and ex11-2-3 has 8/x. So 'multiply when the unknown is opposite (70 tan 38), divide when it is adjacent (8/tan 45)' is exactly the book's method. The 8 m pole is opposite the 45 degree angle at A and x is adjacent, which matches the figure. No ids, pages, figure numbers or review history appear in the student-facing text. The refutation targets the inversion error and gives a concrete wrong result. The signal's numbers are correct and its pattern (divides where it should multiply, or the reverse) describes this error.",
+        "sources": [
+          {
+            "type": "distractor",
+            "ref": "wt:g10m11s1-1-3:depression-from-the-cliff#ratio-inverted"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m11s1-1-3:ex11-2-3"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m11s1-1-3:ex11-2-8b"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m11s1-1-3:we04"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "S7",
+            "ref": "wt:g10m11s1-1-3:depression-from-the-cliff#ratio-inverted",
+            "question_id": "q:g10m11s1-1-3:w001",
+            "text": "The right pair of sides, the wrong way up",
+            "tagged": "mc:g10m5s3-1-2:reads-sides-from-other-angle"
+          }
+        ],
+        "aliases_stripped": [
+          {
+            "alias": "mc:g10m5s3-1-2:reads-sides-from-other-angle",
+            "reason": "it is an id in another objective's namespace (lo:g10m5s3-1-2) and may be live in the database; folding it would delete that row"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m11s1-1-3:trusting-the-sketch",
+      "lo_id": "lo:g10m11s1-1-3",
+      "label": "Taking lengths and angles from the sketch",
+      "description": "The student measures or judges lengths and angles from the picture (with a ruler or by eye) instead of using the distance and angle given in the question with a trigonometric ratio.",
+      "signal": null,
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You treated the sketch as if it showed the real sizes, reading a length or an angle straight off the picture. Using a sketch is exactly the right instinct: it is where you see which angle is the angle of elevation or depression and which side is known."
+        },
+        {
+          "step": 2,
+          "text_md": "But a sketch is only there to show the positions of things. A problem like the cellphone tower one, where a block of flats stands $200$ m from a tower, warns that its diagram is not drawn to scale, so a measurement taken from the page cannot be trusted."
+        },
+        {
+          "step": 3,
+          "text_md": "The real sizes come from the numbers in the question. In the tower problem, the person looks up at the top of the tower at an angle of elevation of $34^\\circ$ and down at its foot at an angle of depression of $62^\\circ$. Both angles sit in right-angled triangles that share the $200$ m side. The part of the tower above is $200\\tan 34^\\circ \\approx 135$ m and the part below is $200\\tan 62^\\circ \\approx 376$ m, so the tower is $135 + 376 = 511$ m. No ruler on the page would give you that."
+        },
+        {
+          "step": 4,
+          "text_md": "So make your own sketch from the words of the question. Write the given lengths and angles on it, find the right-angled triangle that holds the known side, then use the tangent ratio and calculate."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch11-wf_5f004de2-ea5.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The book's own note on the cellphone-tower problem says the diagram is not drawn to scale. The canonical method takes every size from the given 200 m, 34 and 62 degrees, never from the picture. The teaching items also tell the student to draw their own sketch. I re-worked the numbers: 200 tan 62 = 376.1 (376 m), 200 tan 34 = 134.9 (135 m), and the total is 511 m, matching the canonical answer. The two triangles do share the 200 m side (BD) in the figure, and the observer is at B. The text names no question id, page, figure number or review history, and it describes the tower problem in full. It argues against the error rather than just restating the method. There is no signal, so nothing can misdiagnose a student.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "caution WE4 p.395"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m11s1-1-3:we04"
+          }
+        ],
+        "covers": []
+      }
+    }
+  ]
+}

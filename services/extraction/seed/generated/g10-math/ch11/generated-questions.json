@@ -1,0 +1,2445 @@
+{
+  "bundle": "generated-questions-v2",
+  "generator": "declarative families — services/extraction/generate_questions.py --families (decision 16)",
+  "course_id": "course:us-g10-math-en",
+  "book": "g10-math",
+  "reviewed": false,
+  "seed": 20260925,
+  "per_family": 10,
+  "note": "Declarative families: every key computed from the sampled parameters by the safe evaluator that writes the stem; each family blind-graded on sampled instances before it could reach this file (ADR-0008, decision 16).",
+  "families": {
+    "tpl:g10m11s1-1-1:flagpole-roof": 10,
+    "tpl:g10m11s1-1-1:hinged-ladder": 10,
+    "tpl:g10m11s1-1-1:rhombus-height": 10,
+    "tpl:g10m11s1-1-2:boat-closer": 10,
+    "tpl:g10m11s1-1-2:shared-hypotenuse": 10,
+    "tpl:g10m11s1-1-3:depression-distance": 10,
+    "tpl:g10m11s1-1-3:elevation-height": 10
+  },
+  "family_specs": {
+    "tpl:g10m11s1-1-1:flagpole-roof": "3b21ab40ef88b3dbcfd70179f38aa7e47bd8a71d241212053a612dfea1d47b0d",
+    "tpl:g10m11s1-1-1:hinged-ladder": "ea5ece02cb4a0d8a84c92e2774990a0be636e778ba78eae5c346ff3787961a52",
+    "tpl:g10m11s1-1-1:rhombus-height": "c0549ae0d5bc5a3c0c692eef7981de02d568894e3a35463843f6404da08c7506",
+    "tpl:g10m11s1-1-2:boat-closer": "0ee35edcad9bfd349212702f97210cca0d92d392544a87757f4b3e6dd33cd784",
+    "tpl:g10m11s1-1-2:shared-hypotenuse": "06fae7cafa666252455bd7a27d9f61271b4202e7b472712ef08ec0adf99920e4",
+    "tpl:g10m11s1-1-3:depression-distance": "b970f0565405f6412ddf612f5cf114a168f2cd2251983460e2c5abb5025a7276",
+    "tpl:g10m11s1-1-3:elevation-height": "909cf232c94fc3e12ec84e6eb64187ed096624377f802efbc0fea32d5723d723"
+  },
+  "family_grades": {
+    "tpl:g10m11s1-1-1:flagpole-roof": {
+      "grades": [
+        "grade-ch11-wf_0f88a7a9-37b.json"
+      ],
+      "graded_instances": 3
+    },
+    "tpl:g10m11s1-1-1:hinged-ladder": {
+      "grades": [
+        "grade-ch11-wf_0f88a7a9-37b.json"
+      ],
+      "graded_instances": 3
+    },
+    "tpl:g10m11s1-1-1:rhombus-height": {
+      "grades": [
+        "grade-ch11-wf_0f88a7a9-37b.json"
+      ],
+      "graded_instances": 3
+    },
+    "tpl:g10m11s1-1-2:boat-closer": {
+      "grades": [
+        "grade-ch11-wf_0f88a7a9-37b.json"
+      ],
+      "graded_instances": 3
+    },
+    "tpl:g10m11s1-1-2:shared-hypotenuse": {
+      "grades": [
+        "grade-ch11-wf_0f88a7a9-37b.json"
+      ],
+      "graded_instances": 3
+    },
+    "tpl:g10m11s1-1-3:depression-distance": {
+      "grades": [
+        "grade-ch11-wf_0f88a7a9-37b.json"
+      ],
+      "graded_instances": 3
+    },
+    "tpl:g10m11s1-1-3:elevation-height": {
+      "grades": [
+        "grade-ch11-wf_0f88a7a9-37b.json"
+      ],
+      "graded_instances": 3
+    }
+  },
+  "rejected_families": {},
+  "untagged_distractors": [],
+  "misconceptions": [],
+  "questions": [
+    {
+      "id": "q:g10m11s1-1-1:g001-flagpo",
+      "lo_id": "lo:g10m11s1-1-1",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-1:ex11-1-2",
+      "source_page": 397,
+      "source_note": "Generated from template family tpl:g10m11s1-1-1:flagpole-roof.",
+      "stem": "A flagpole stands vertically on the roof of a building, at the edge of the roof nearest to a point $P$ on level ground. Point $P$ is $32$ m from the foot of the building. From $P$, the angle of elevation of the top of the building is $27^\\circ$ and the angle of elevation of the top of the flagpole is $34^\\circ$. Ignore the height of the observer. Calculate the height of the flagpole, correct to one decimal place. Do not round off before your final answer.",
+      "correct_answer": "5.3",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Let $B$ be the foot of the building, $R$ the edge of the roof where the flagpole stands and $T$ the top of the flagpole. Triangles $PBR$ and $PBT$ are both right-angled at $B$, and in each of them $PB = 32$ m is the side adjacent to the angle at $P$. The flagpole is the part of $BT$ above the roof, so its height is $BT - BR$."
+        },
+        {
+          "step": 2,
+          "text_md": "In triangle $PBR$ we know the angle $27^\\circ$ and the adjacent side, and we want the opposite side $BR$, so we use tangent: $\\tan 27^\\circ = \\frac{BR}{32}$, so $BR = 32\\tan 27^\\circ \\approx 16.30$ m."
+        },
+        {
+          "step": 3,
+          "text_md": "In triangle $PBT$ the same ratio applies with the larger angle $34^\\circ$: $\\tan 34^\\circ = \\frac{BT}{32}$, so $BT = 32\\tan 34^\\circ \\approx 21.58$ m."
+        },
+        {
+          "step": 4,
+          "text_md": "The height of the flagpole is $BT - BR \\approx 21.58 - 16.30 \\approx 5.3$ m."
+        },
+        {
+          "step": 5,
+          "text_md": "The flagpole is about $5.3$ m high."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-1:flagpole-roof",
+      "family_spec_sha": "3b21ab40ef88b3dbcfd70179f38aa7e47bd8a71d241212053a612dfea1d47b0d"
+    },
+    {
+      "id": "q:g10m11s1-1-1:g002-flagpo",
+      "lo_id": "lo:g10m11s1-1-1",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-1:ex11-1-2",
+      "source_page": 397,
+      "source_note": "Generated from template family tpl:g10m11s1-1-1:flagpole-roof.",
+      "stem": "A flagpole stands vertically on the roof of a building, at the edge of the roof nearest to a point $P$ on level ground. Point $P$ is $71$ m from the foot of the building. From $P$, the angle of elevation of the top of the building is $19^\\circ$ and the angle of elevation of the top of the flagpole is $28^\\circ$. Ignore the height of the observer. Calculate the height of the flagpole, correct to one decimal place. Do not round off before your final answer.",
+      "correct_answer": "13.3",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Let $B$ be the foot of the building, $R$ the edge of the roof where the flagpole stands and $T$ the top of the flagpole. Triangles $PBR$ and $PBT$ are both right-angled at $B$, and in each of them $PB = 71$ m is the side adjacent to the angle at $P$. The flagpole is the part of $BT$ above the roof, so its height is $BT - BR$."
+        },
+        {
+          "step": 2,
+          "text_md": "In triangle $PBR$ we know the angle $19^\\circ$ and the adjacent side, and we want the opposite side $BR$, so we use tangent: $\\tan 19^\\circ = \\frac{BR}{71}$, so $BR = 71\\tan 19^\\circ \\approx 24.45$ m."
+        },
+        {
+          "step": 3,
+          "text_md": "In triangle $PBT$ the same ratio applies with the larger angle $28^\\circ$: $\\tan 28^\\circ = \\frac{BT}{71}$, so $BT = 71\\tan 28^\\circ \\approx 37.75$ m."
+        },
+        {
+          "step": 4,
+          "text_md": "The height of the flagpole is $BT - BR \\approx 37.75 - 24.45 \\approx 13.3$ m."
+        },
+        {
+          "step": 5,
+          "text_md": "The flagpole is about $13.3$ m high."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-1:flagpole-roof",
+      "family_spec_sha": "3b21ab40ef88b3dbcfd70179f38aa7e47bd8a71d241212053a612dfea1d47b0d"
+    },
+    {
+      "id": "q:g10m11s1-1-1:g003-flagpo",
+      "lo_id": "lo:g10m11s1-1-1",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-1:ex11-1-2",
+      "source_page": 397,
+      "source_note": "Generated from template family tpl:g10m11s1-1-1:flagpole-roof.",
+      "stem": "A flagpole stands vertically on the roof of a building, at the edge of the roof nearest to a point $P$ on level ground. Point $P$ is $80$ m from the foot of the building. From $P$, the angle of elevation of the top of the building is $21^\\circ$ and the angle of elevation of the top of the flagpole is $25^\\circ$. Ignore the height of the observer. Calculate the height of the flagpole, correct to one decimal place. Do not round off before your final answer.",
+      "correct_answer": "6.6",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Let $B$ be the foot of the building, $R$ the edge of the roof where the flagpole stands and $T$ the top of the flagpole. Triangles $PBR$ and $PBT$ are both right-angled at $B$, and in each of them $PB = 80$ m is the side adjacent to the angle at $P$. The flagpole is the part of $BT$ above the roof, so its height is $BT - BR$."
+        },
+        {
+          "step": 2,
+          "text_md": "In triangle $PBR$ we know the angle $21^\\circ$ and the adjacent side, and we want the opposite side $BR$, so we use tangent: $\\tan 21^\\circ = \\frac{BR}{80}$, so $BR = 80\\tan 21^\\circ \\approx 30.71$ m."
+        },
+        {
+          "step": 3,
+          "text_md": "In triangle $PBT$ the same ratio applies with the larger angle $25^\\circ$: $\\tan 25^\\circ = \\frac{BT}{80}$, so $BT = 80\\tan 25^\\circ \\approx 37.30$ m."
+        },
+        {
+          "step": 4,
+          "text_md": "The height of the flagpole is $BT - BR \\approx 37.30 - 30.71 \\approx 6.6$ m."
+        },
+        {
+          "step": 5,
+          "text_md": "The flagpole is about $6.6$ m high."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-1:flagpole-roof",
+      "family_spec_sha": "3b21ab40ef88b3dbcfd70179f38aa7e47bd8a71d241212053a612dfea1d47b0d"
+    },
+    {
+      "id": "q:g10m11s1-1-1:g004-flagpo",
+      "lo_id": "lo:g10m11s1-1-1",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-1:ex11-1-2",
+      "source_page": 397,
+      "source_note": "Generated from template family tpl:g10m11s1-1-1:flagpole-roof.",
+      "stem": "A flagpole stands vertically on the roof of a building, at the edge of the roof nearest to a point $P$ on level ground. Point $P$ is $62$ m from the foot of the building. From $P$, the angle of elevation of the top of the building is $32^\\circ$ and the angle of elevation of the top of the flagpole is $40^\\circ$. Ignore the height of the observer. Calculate the height of the flagpole, correct to one decimal place. Do not round off before your final answer.",
+      "correct_answer": "13.3",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Let $B$ be the foot of the building, $R$ the edge of the roof where the flagpole stands and $T$ the top of the flagpole. Triangles $PBR$ and $PBT$ are both right-angled at $B$, and in each of them $PB = 62$ m is the side adjacent to the angle at $P$. The flagpole is the part of $BT$ above the roof, so its height is $BT - BR$."
+        },
+        {
+          "step": 2,
+          "text_md": "In triangle $PBR$ we know the angle $32^\\circ$ and the adjacent side, and we want the opposite side $BR$, so we use tangent: $\\tan 32^\\circ = \\frac{BR}{62}$, so $BR = 62\\tan 32^\\circ \\approx 38.74$ m."
+        },
+        {
+          "step": 3,
+          "text_md": "In triangle $PBT$ the same ratio applies with the larger angle $40^\\circ$: $\\tan 40^\\circ = \\frac{BT}{62}$, so $BT = 62\\tan 40^\\circ \\approx 52.02$ m."
+        },
+        {
+          "step": 4,
+          "text_md": "The height of the flagpole is $BT - BR \\approx 52.02 - 38.74 \\approx 13.3$ m."
+        },
+        {
+          "step": 5,
+          "text_md": "The flagpole is about $13.3$ m high."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-1:flagpole-roof",
+      "family_spec_sha": "3b21ab40ef88b3dbcfd70179f38aa7e47bd8a71d241212053a612dfea1d47b0d"
+    },
+    {
+      "id": "q:g10m11s1-1-1:g005-flagpo",
+      "lo_id": "lo:g10m11s1-1-1",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-1:ex11-1-2",
+      "source_page": 397,
+      "source_note": "Generated from template family tpl:g10m11s1-1-1:flagpole-roof.",
+      "stem": "A flagpole stands vertically on the roof of a building, at the edge of the roof nearest to a point $P$ on level ground. Point $P$ is $69$ m from the foot of the building. From $P$, the angle of elevation of the top of the building is $28^\\circ$ and the angle of elevation of the top of the flagpole is $31^\\circ$. Ignore the height of the observer. Calculate the height of the flagpole, correct to one decimal place. Do not round off before your final answer.",
+      "correct_answer": "4.8",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Let $B$ be the foot of the building, $R$ the edge of the roof where the flagpole stands and $T$ the top of the flagpole. Triangles $PBR$ and $PBT$ are both right-angled at $B$, and in each of them $PB = 69$ m is the side adjacent to the angle at $P$. The flagpole is the part of $BT$ above the roof, so its height is $BT - BR$."
+        },
+        {
+          "step": 2,
+          "text_md": "In triangle $PBR$ we know the angle $28^\\circ$ and the adjacent side, and we want the opposite side $BR$, so we use tangent: $\\tan 28^\\circ = \\frac{BR}{69}$, so $BR = 69\\tan 28^\\circ \\approx 36.69$ m."
+        },
+        {
+          "step": 3,
+          "text_md": "In triangle $PBT$ the same ratio applies with the larger angle $31^\\circ$: $\\tan 31^\\circ = \\frac{BT}{69}$, so $BT = 69\\tan 31^\\circ \\approx 41.46$ m."
+        },
+        {
+          "step": 4,
+          "text_md": "The height of the flagpole is $BT - BR \\approx 41.46 - 36.69 \\approx 4.8$ m."
+        },
+        {
+          "step": 5,
+          "text_md": "The flagpole is about $4.8$ m high."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-1:flagpole-roof",
+      "family_spec_sha": "3b21ab40ef88b3dbcfd70179f38aa7e47bd8a71d241212053a612dfea1d47b0d"
+    },
+    {
+      "id": "q:g10m11s1-1-1:g006-flagpo",
+      "lo_id": "lo:g10m11s1-1-1",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-1:ex11-1-2",
+      "source_page": 397,
+      "source_note": "Generated from template family tpl:g10m11s1-1-1:flagpole-roof.",
+      "stem": "A flagpole stands vertically on the roof of a building, at the edge of the roof nearest to a point $P$ on level ground. Point $P$ is $49$ m from the foot of the building. From $P$, the angle of elevation of the top of the building is $26^\\circ$ and the angle of elevation of the top of the flagpole is $32^\\circ$. Ignore the height of the observer. Calculate the height of the flagpole, correct to one decimal place. Do not round off before your final answer.",
+      "correct_answer": "6.7",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Let $B$ be the foot of the building, $R$ the edge of the roof where the flagpole stands and $T$ the top of the flagpole. Triangles $PBR$ and $PBT$ are both right-angled at $B$, and in each of them $PB = 49$ m is the side adjacent to the angle at $P$. The flagpole is the part of $BT$ above the roof, so its height is $BT - BR$."
+        },
+        {
+          "step": 2,
+          "text_md": "In triangle $PBR$ we know the angle $26^\\circ$ and the adjacent side, and we want the opposite side $BR$, so we use tangent: $\\tan 26^\\circ = \\frac{BR}{49}$, so $BR = 49\\tan 26^\\circ \\approx 23.90$ m."
+        },
+        {
+          "step": 3,
+          "text_md": "In triangle $PBT$ the same ratio applies with the larger angle $32^\\circ$: $\\tan 32^\\circ = \\frac{BT}{49}$, so $BT = 49\\tan 32^\\circ \\approx 30.62$ m."
+        },
+        {
+          "step": 4,
+          "text_md": "The height of the flagpole is $BT - BR \\approx 30.62 - 23.90 \\approx 6.7$ m."
+        },
+        {
+          "step": 5,
+          "text_md": "The flagpole is about $6.7$ m high."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-1:flagpole-roof",
+      "family_spec_sha": "3b21ab40ef88b3dbcfd70179f38aa7e47bd8a71d241212053a612dfea1d47b0d"
+    },
+    {
+      "id": "q:g10m11s1-1-1:g007-flagpo",
+      "lo_id": "lo:g10m11s1-1-1",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-1:ex11-1-2",
+      "source_page": 397,
+      "source_note": "Generated from template family tpl:g10m11s1-1-1:flagpole-roof.",
+      "stem": "A flagpole stands vertically on the roof of a building, at the edge of the roof nearest to a point $P$ on level ground. Point $P$ is $65$ m from the foot of the building. From $P$, the angle of elevation of the top of the building is $26^\\circ$ and the angle of elevation of the top of the flagpole is $30^\\circ$. Ignore the height of the observer. Calculate the height of the flagpole, correct to one decimal place. Do not round off before your final answer.",
+      "correct_answer": "5.8",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Let $B$ be the foot of the building, $R$ the edge of the roof where the flagpole stands and $T$ the top of the flagpole. Triangles $PBR$ and $PBT$ are both right-angled at $B$, and in each of them $PB = 65$ m is the side adjacent to the angle at $P$. The flagpole is the part of $BT$ above the roof, so its height is $BT - BR$."
+        },
+        {
+          "step": 2,
+          "text_md": "In triangle $PBR$ we know the angle $26^\\circ$ and the adjacent side, and we want the opposite side $BR$, so we use tangent: $\\tan 26^\\circ = \\frac{BR}{65}$, so $BR = 65\\tan 26^\\circ \\approx 31.70$ m."
+        },
+        {
+          "step": 3,
+          "text_md": "In triangle $PBT$ the same ratio applies with the larger angle $30^\\circ$: $\\tan 30^\\circ = \\frac{BT}{65}$, so $BT = 65\\tan 30^\\circ \\approx 37.53$ m."
+        },
+        {
+          "step": 4,
+          "text_md": "The height of the flagpole is $BT - BR \\approx 37.53 - 31.70 \\approx 5.8$ m."
+        },
+        {
+          "step": 5,
+          "text_md": "The flagpole is about $5.8$ m high."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-1:flagpole-roof",
+      "family_spec_sha": "3b21ab40ef88b3dbcfd70179f38aa7e47bd8a71d241212053a612dfea1d47b0d"
+    },
+    {
+      "id": "q:g10m11s1-1-1:g008-flagpo",
+      "lo_id": "lo:g10m11s1-1-1",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-1:ex11-1-2",
+      "source_page": 397,
+      "source_note": "Generated from template family tpl:g10m11s1-1-1:flagpole-roof.",
+      "stem": "A flagpole stands vertically on the roof of a building, at the edge of the roof nearest to a point $P$ on level ground. Point $P$ is $51$ m from the foot of the building. From $P$, the angle of elevation of the top of the building is $27^\\circ$ and the angle of elevation of the top of the flagpole is $34^\\circ$. Ignore the height of the observer. Calculate the height of the flagpole, correct to one decimal place. Do not round off before your final answer.",
+      "correct_answer": "8.4",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Let $B$ be the foot of the building, $R$ the edge of the roof where the flagpole stands and $T$ the top of the flagpole. Triangles $PBR$ and $PBT$ are both right-angled at $B$, and in each of them $PB = 51$ m is the side adjacent to the angle at $P$. The flagpole is the part of $BT$ above the roof, so its height is $BT - BR$."
+        },
+        {
+          "step": 2,
+          "text_md": "In triangle $PBR$ we know the angle $27^\\circ$ and the adjacent side, and we want the opposite side $BR$, so we use tangent: $\\tan 27^\\circ = \\frac{BR}{51}$, so $BR = 51\\tan 27^\\circ \\approx 25.99$ m."
+        },
+        {
+          "step": 3,
+          "text_md": "In triangle $PBT$ the same ratio applies with the larger angle $34^\\circ$: $\\tan 34^\\circ = \\frac{BT}{51}$, so $BT = 51\\tan 34^\\circ \\approx 34.40$ m."
+        },
+        {
+          "step": 4,
+          "text_md": "The height of the flagpole is $BT - BR \\approx 34.40 - 25.99 \\approx 8.4$ m."
+        },
+        {
+          "step": 5,
+          "text_md": "The flagpole is about $8.4$ m high."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-1:flagpole-roof",
+      "family_spec_sha": "3b21ab40ef88b3dbcfd70179f38aa7e47bd8a71d241212053a612dfea1d47b0d"
+    },
+    {
+      "id": "q:g10m11s1-1-1:g009-flagpo",
+      "lo_id": "lo:g10m11s1-1-1",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-1:ex11-1-2",
+      "source_page": 397,
+      "source_note": "Generated from template family tpl:g10m11s1-1-1:flagpole-roof.",
+      "stem": "A flagpole stands vertically on the roof of a building, at the edge of the roof nearest to a point $P$ on level ground. Point $P$ is $65$ m from the foot of the building. From $P$, the angle of elevation of the top of the building is $39^\\circ$ and the angle of elevation of the top of the flagpole is $42^\\circ$. Ignore the height of the observer. Calculate the height of the flagpole, correct to one decimal place. Do not round off before your final answer.",
+      "correct_answer": "5.9",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Let $B$ be the foot of the building, $R$ the edge of the roof where the flagpole stands and $T$ the top of the flagpole. Triangles $PBR$ and $PBT$ are both right-angled at $B$, and in each of them $PB = 65$ m is the side adjacent to the angle at $P$. The flagpole is the part of $BT$ above the roof, so its height is $BT - BR$."
+        },
+        {
+          "step": 2,
+          "text_md": "In triangle $PBR$ we know the angle $39^\\circ$ and the adjacent side, and we want the opposite side $BR$, so we use tangent: $\\tan 39^\\circ = \\frac{BR}{65}$, so $BR = 65\\tan 39^\\circ \\approx 52.64$ m."
+        },
+        {
+          "step": 3,
+          "text_md": "In triangle $PBT$ the same ratio applies with the larger angle $42^\\circ$: $\\tan 42^\\circ = \\frac{BT}{65}$, so $BT = 65\\tan 42^\\circ \\approx 58.53$ m."
+        },
+        {
+          "step": 4,
+          "text_md": "The height of the flagpole is $BT - BR \\approx 58.53 - 52.64 \\approx 5.9$ m."
+        },
+        {
+          "step": 5,
+          "text_md": "The flagpole is about $5.9$ m high."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-1:flagpole-roof",
+      "family_spec_sha": "3b21ab40ef88b3dbcfd70179f38aa7e47bd8a71d241212053a612dfea1d47b0d"
+    },
+    {
+      "id": "q:g10m11s1-1-1:g010-flagpo",
+      "lo_id": "lo:g10m11s1-1-1",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-1:ex11-1-2",
+      "source_page": 397,
+      "source_note": "Generated from template family tpl:g10m11s1-1-1:flagpole-roof.",
+      "stem": "A flagpole stands vertically on the roof of a building, at the edge of the roof nearest to a point $P$ on level ground. Point $P$ is $32$ m from the foot of the building. From $P$, the angle of elevation of the top of the building is $35^\\circ$ and the angle of elevation of the top of the flagpole is $41^\\circ$. Ignore the height of the observer. Calculate the height of the flagpole, correct to one decimal place. Do not round off before your final answer.",
+      "correct_answer": "5.4",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Let $B$ be the foot of the building, $R$ the edge of the roof where the flagpole stands and $T$ the top of the flagpole. Triangles $PBR$ and $PBT$ are both right-angled at $B$, and in each of them $PB = 32$ m is the side adjacent to the angle at $P$. The flagpole is the part of $BT$ above the roof, so its height is $BT - BR$."
+        },
+        {
+          "step": 2,
+          "text_md": "In triangle $PBR$ we know the angle $35^\\circ$ and the adjacent side, and we want the opposite side $BR$, so we use tangent: $\\tan 35^\\circ = \\frac{BR}{32}$, so $BR = 32\\tan 35^\\circ \\approx 22.41$ m."
+        },
+        {
+          "step": 3,
+          "text_md": "In triangle $PBT$ the same ratio applies with the larger angle $41^\\circ$: $\\tan 41^\\circ = \\frac{BT}{32}$, so $BT = 32\\tan 41^\\circ \\approx 27.82$ m."
+        },
+        {
+          "step": 4,
+          "text_md": "The height of the flagpole is $BT - BR \\approx 27.82 - 22.41 \\approx 5.4$ m."
+        },
+        {
+          "step": 5,
+          "text_md": "The flagpole is about $5.4$ m high."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-1:flagpole-roof",
+      "family_spec_sha": "3b21ab40ef88b3dbcfd70179f38aa7e47bd8a71d241212053a612dfea1d47b0d"
+    },
+    {
+      "id": "q:g10m11s1-1-1:g001-hinged",
+      "lo_id": "lo:g10m11s1-1-1",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-1:ex11-1-6",
+      "source_page": 397,
+      "source_note": "Generated from template family tpl:g10m11s1-1-1:hinged-ladder.",
+      "stem": "A fire-engine's ladder is hinged at a point $H$ on the truck, $4$ m above the ground. The ladder is extended to a length of $27$ m, measured from the hinge, and it makes an angle of $60^\\circ$ with the vertical. Calculate the height of the top of the ladder above the ground, correct to one decimal place. Do not round off before your final answer.",
+      "correct_answer": "17.5",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Let $T$ be the top of the ladder. Draw the vertical from $T$ down to the horizontal line through the hinge $H$, meeting it at $K$. Triangle $HKT$ is right-angled at $K$, the ladder $HT = 27$ m is its hypotenuse, and $TK$ is the height of the top of the ladder above the hinge."
+        },
+        {
+          "step": 2,
+          "text_md": "The angle $60^\\circ$ is measured from the vertical, so at $T$ it lies between the ladder $TH$ and the vertical $TK$. This makes $TK$ the side adjacent to $60^\\circ$, not the opposite side."
+        },
+        {
+          "step": 3,
+          "text_md": "We know the hypotenuse and want the adjacent side, so we use cosine: $\\cos 60^\\circ = \\frac{TK}{27}$, so $TK = 27\\cos 60^\\circ \\approx 13.50$ m."
+        },
+        {
+          "step": 4,
+          "text_md": "The hinge is $4$ m above the ground, so the top of the ladder is $4 + 13.50 \\approx 17.5$ m above the ground."
+        },
+        {
+          "step": 5,
+          "text_md": "The top of the ladder is about $17.5$ m above the ground."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-1:hinged-ladder",
+      "family_spec_sha": "ea5ece02cb4a0d8a84c92e2774990a0be636e778ba78eae5c346ff3787961a52"
+    },
+    {
+      "id": "q:g10m11s1-1-1:g002-hinged",
+      "lo_id": "lo:g10m11s1-1-1",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-1:ex11-1-6",
+      "source_page": 397,
+      "source_note": "Generated from template family tpl:g10m11s1-1-1:hinged-ladder.",
+      "stem": "A fire-engine's ladder is hinged at a point $H$ on the truck, $2$ m above the ground. The ladder is extended to a length of $14$ m, measured from the hinge, and it makes an angle of $39^\\circ$ with the vertical. Calculate the height of the top of the ladder above the ground, correct to one decimal place. Do not round off before your final answer.",
+      "correct_answer": "12.9",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Let $T$ be the top of the ladder. Draw the vertical from $T$ down to the horizontal line through the hinge $H$, meeting it at $K$. Triangle $HKT$ is right-angled at $K$, the ladder $HT = 14$ m is its hypotenuse, and $TK$ is the height of the top of the ladder above the hinge."
+        },
+        {
+          "step": 2,
+          "text_md": "The angle $39^\\circ$ is measured from the vertical, so at $T$ it lies between the ladder $TH$ and the vertical $TK$. This makes $TK$ the side adjacent to $39^\\circ$, not the opposite side."
+        },
+        {
+          "step": 3,
+          "text_md": "We know the hypotenuse and want the adjacent side, so we use cosine: $\\cos 39^\\circ = \\frac{TK}{14}$, so $TK = 14\\cos 39^\\circ \\approx 10.88$ m."
+        },
+        {
+          "step": 4,
+          "text_md": "The hinge is $2$ m above the ground, so the top of the ladder is $2 + 10.88 \\approx 12.9$ m above the ground."
+        },
+        {
+          "step": 5,
+          "text_md": "The top of the ladder is about $12.9$ m above the ground."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-1:hinged-ladder",
+      "family_spec_sha": "ea5ece02cb4a0d8a84c92e2774990a0be636e778ba78eae5c346ff3787961a52"
+    },
+    {
+      "id": "q:g10m11s1-1-1:g003-hinged",
+      "lo_id": "lo:g10m11s1-1-1",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-1:ex11-1-6",
+      "source_page": 397,
+      "source_note": "Generated from template family tpl:g10m11s1-1-1:hinged-ladder.",
+      "stem": "A fire-engine's ladder is hinged at a point $H$ on the truck, $3$ m above the ground. The ladder is extended to a length of $17$ m, measured from the hinge, and it makes an angle of $34^\\circ$ with the vertical. Calculate the height of the top of the ladder above the ground, correct to one decimal place. Do not round off before your final answer.",
+      "correct_answer": "17.1",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Let $T$ be the top of the ladder. Draw the vertical from $T$ down to the horizontal line through the hinge $H$, meeting it at $K$. Triangle $HKT$ is right-angled at $K$, the ladder $HT = 17$ m is its hypotenuse, and $TK$ is the height of the top of the ladder above the hinge."
+        },
+        {
+          "step": 2,
+          "text_md": "The angle $34^\\circ$ is measured from the vertical, so at $T$ it lies between the ladder $TH$ and the vertical $TK$. This makes $TK$ the side adjacent to $34^\\circ$, not the opposite side."
+        },
+        {
+          "step": 3,
+          "text_md": "We know the hypotenuse and want the adjacent side, so we use cosine: $\\cos 34^\\circ = \\frac{TK}{17}$, so $TK = 17\\cos 34^\\circ \\approx 14.09$ m."
+        },
+        {
+          "step": 4,
+          "text_md": "The hinge is $3$ m above the ground, so the top of the ladder is $3 + 14.09 \\approx 17.1$ m above the ground."
+        },
+        {
+          "step": 5,
+          "text_md": "The top of the ladder is about $17.1$ m above the ground."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-1:hinged-ladder",
+      "family_spec_sha": "ea5ece02cb4a0d8a84c92e2774990a0be636e778ba78eae5c346ff3787961a52"
+    },
+    {
+      "id": "q:g10m11s1-1-1:g004-hinged",
+      "lo_id": "lo:g10m11s1-1-1",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-1:ex11-1-6",
+      "source_page": 397,
+      "source_note": "Generated from template family tpl:g10m11s1-1-1:hinged-ladder.",
+      "stem": "A fire-engine's ladder is hinged at a point $H$ on the truck, $2$ m above the ground. The ladder is extended to a length of $29$ m, measured from the hinge, and it makes an angle of $48^\\circ$ with the vertical. Calculate the height of the top of the ladder above the ground, correct to one decimal place. Do not round off before your final answer.",
+      "correct_answer": "21.4",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Let $T$ be the top of the ladder. Draw the vertical from $T$ down to the horizontal line through the hinge $H$, meeting it at $K$. Triangle $HKT$ is right-angled at $K$, the ladder $HT = 29$ m is its hypotenuse, and $TK$ is the height of the top of the ladder above the hinge."
+        },
+        {
+          "step": 2,
+          "text_md": "The angle $48^\\circ$ is measured from the vertical, so at $T$ it lies between the ladder $TH$ and the vertical $TK$. This makes $TK$ the side adjacent to $48^\\circ$, not the opposite side."
+        },
+        {
+          "step": 3,
+          "text_md": "We know the hypotenuse and want the adjacent side, so we use cosine: $\\cos 48^\\circ = \\frac{TK}{29}$, so $TK = 29\\cos 48^\\circ \\approx 19.40$ m."
+        },
+        {
+          "step": 4,
+          "text_md": "The hinge is $2$ m above the ground, so the top of the ladder is $2 + 19.40 \\approx 21.4$ m above the ground."
+        },
+        {
+          "step": 5,
+          "text_md": "The top of the ladder is about $21.4$ m above the ground."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-1:hinged-ladder",
+      "family_spec_sha": "ea5ece02cb4a0d8a84c92e2774990a0be636e778ba78eae5c346ff3787961a52"
+    },
+    {
+      "id": "q:g10m11s1-1-1:g005-hinged",
+      "lo_id": "lo:g10m11s1-1-1",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-1:ex11-1-6",
+      "source_page": 397,
+      "source_note": "Generated from template family tpl:g10m11s1-1-1:hinged-ladder.",
+      "stem": "A fire-engine's ladder is hinged at a point $H$ on the truck, $2$ m above the ground. The ladder is extended to a length of $12$ m, measured from the hinge, and it makes an angle of $52^\\circ$ with the vertical. Calculate the height of the top of the ladder above the ground, correct to one decimal place. Do not round off before your final answer.",
+      "correct_answer": "9.4",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Let $T$ be the top of the ladder. Draw the vertical from $T$ down to the horizontal line through the hinge $H$, meeting it at $K$. Triangle $HKT$ is right-angled at $K$, the ladder $HT = 12$ m is its hypotenuse, and $TK$ is the height of the top of the ladder above the hinge."
+        },
+        {
+          "step": 2,
+          "text_md": "The angle $52^\\circ$ is measured from the vertical, so at $T$ it lies between the ladder $TH$ and the vertical $TK$. This makes $TK$ the side adjacent to $52^\\circ$, not the opposite side."
+        },
+        {
+          "step": 3,
+          "text_md": "We know the hypotenuse and want the adjacent side, so we use cosine: $\\cos 52^\\circ = \\frac{TK}{12}$, so $TK = 12\\cos 52^\\circ \\approx 7.39$ m."
+        },
+        {
+          "step": 4,
+          "text_md": "The hinge is $2$ m above the ground, so the top of the ladder is $2 + 7.39 \\approx 9.4$ m above the ground."
+        },
+        {
+          "step": 5,
+          "text_md": "The top of the ladder is about $9.4$ m above the ground."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-1:hinged-ladder",
+      "family_spec_sha": "ea5ece02cb4a0d8a84c92e2774990a0be636e778ba78eae5c346ff3787961a52"
+    },
+    {
+      "id": "q:g10m11s1-1-1:g006-hinged",
+      "lo_id": "lo:g10m11s1-1-1",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-1:ex11-1-6",
+      "source_page": 397,
+      "source_note": "Generated from template family tpl:g10m11s1-1-1:hinged-ladder.",
+      "stem": "A fire-engine's ladder is hinged at a point $H$ on the truck, $4$ m above the ground. The ladder is extended to a length of $14$ m, measured from the hinge, and it makes an angle of $50^\\circ$ with the vertical. Calculate the height of the top of the ladder above the ground, correct to one decimal place. Do not round off before your final answer.",
+      "correct_answer": "13.0",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Let $T$ be the top of the ladder. Draw the vertical from $T$ down to the horizontal line through the hinge $H$, meeting it at $K$. Triangle $HKT$ is right-angled at $K$, the ladder $HT = 14$ m is its hypotenuse, and $TK$ is the height of the top of the ladder above the hinge."
+        },
+        {
+          "step": 2,
+          "text_md": "The angle $50^\\circ$ is measured from the vertical, so at $T$ it lies between the ladder $TH$ and the vertical $TK$. This makes $TK$ the side adjacent to $50^\\circ$, not the opposite side."
+        },
+        {
+          "step": 3,
+          "text_md": "We know the hypotenuse and want the adjacent side, so we use cosine: $\\cos 50^\\circ = \\frac{TK}{14}$, so $TK = 14\\cos 50^\\circ \\approx 9.00$ m."
+        },
+        {
+          "step": 4,
+          "text_md": "The hinge is $4$ m above the ground, so the top of the ladder is $4 + 9.00 \\approx 13.0$ m above the ground."
+        },
+        {
+          "step": 5,
+          "text_md": "The top of the ladder is about $13.0$ m above the ground."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-1:hinged-ladder",
+      "family_spec_sha": "ea5ece02cb4a0d8a84c92e2774990a0be636e778ba78eae5c346ff3787961a52"
+    },
+    {
+      "id": "q:g10m11s1-1-1:g007-hinged",
+      "lo_id": "lo:g10m11s1-1-1",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-1:ex11-1-6",
+      "source_page": 397,
+      "source_note": "Generated from template family tpl:g10m11s1-1-1:hinged-ladder.",
+      "stem": "A fire-engine's ladder is hinged at a point $H$ on the truck, $4$ m above the ground. The ladder is extended to a length of $23$ m, measured from the hinge, and it makes an angle of $54^\\circ$ with the vertical. Calculate the height of the top of the ladder above the ground, correct to one decimal place. Do not round off before your final answer.",
+      "correct_answer": "17.5",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Let $T$ be the top of the ladder. Draw the vertical from $T$ down to the horizontal line through the hinge $H$, meeting it at $K$. Triangle $HKT$ is right-angled at $K$, the ladder $HT = 23$ m is its hypotenuse, and $TK$ is the height of the top of the ladder above the hinge."
+        },
+        {
+          "step": 2,
+          "text_md": "The angle $54^\\circ$ is measured from the vertical, so at $T$ it lies between the ladder $TH$ and the vertical $TK$. This makes $TK$ the side adjacent to $54^\\circ$, not the opposite side."
+        },
+        {
+          "step": 3,
+          "text_md": "We know the hypotenuse and want the adjacent side, so we use cosine: $\\cos 54^\\circ = \\frac{TK}{23}$, so $TK = 23\\cos 54^\\circ \\approx 13.52$ m."
+        },
+        {
+          "step": 4,
+          "text_md": "The hinge is $4$ m above the ground, so the top of the ladder is $4 + 13.52 \\approx 17.5$ m above the ground."
+        },
+        {
+          "step": 5,
+          "text_md": "The top of the ladder is about $17.5$ m above the ground."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-1:hinged-ladder",
+      "family_spec_sha": "ea5ece02cb4a0d8a84c92e2774990a0be636e778ba78eae5c346ff3787961a52"
+    },
+    {
+      "id": "q:g10m11s1-1-1:g008-hinged",
+      "lo_id": "lo:g10m11s1-1-1",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-1:ex11-1-6",
+      "source_page": 397,
+      "source_note": "Generated from template family tpl:g10m11s1-1-1:hinged-ladder.",
+      "stem": "A fire-engine's ladder is hinged at a point $H$ on the truck, $4$ m above the ground. The ladder is extended to a length of $19$ m, measured from the hinge, and it makes an angle of $56^\\circ$ with the vertical. Calculate the height of the top of the ladder above the ground, correct to one decimal place. Do not round off before your final answer.",
+      "correct_answer": "14.6",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Let $T$ be the top of the ladder. Draw the vertical from $T$ down to the horizontal line through the hinge $H$, meeting it at $K$. Triangle $HKT$ is right-angled at $K$, the ladder $HT = 19$ m is its hypotenuse, and $TK$ is the height of the top of the ladder above the hinge."
+        },
+        {
+          "step": 2,
+          "text_md": "The angle $56^\\circ$ is measured from the vertical, so at $T$ it lies between the ladder $TH$ and the vertical $TK$. This makes $TK$ the side adjacent to $56^\\circ$, not the opposite side."
+        },
+        {
+          "step": 3,
+          "text_md": "We know the hypotenuse and want the adjacent side, so we use cosine: $\\cos 56^\\circ = \\frac{TK}{19}$, so $TK = 19\\cos 56^\\circ \\approx 10.62$ m."
+        },
+        {
+          "step": 4,
+          "text_md": "The hinge is $4$ m above the ground, so the top of the ladder is $4 + 10.62 \\approx 14.6$ m above the ground."
+        },
+        {
+          "step": 5,
+          "text_md": "The top of the ladder is about $14.6$ m above the ground."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-1:hinged-ladder",
+      "family_spec_sha": "ea5ece02cb4a0d8a84c92e2774990a0be636e778ba78eae5c346ff3787961a52"
+    },
+    {
+      "id": "q:g10m11s1-1-1:g009-hinged",
+      "lo_id": "lo:g10m11s1-1-1",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-1:ex11-1-6",
+      "source_page": 397,
+      "source_note": "Generated from template family tpl:g10m11s1-1-1:hinged-ladder.",
+      "stem": "A fire-engine's ladder is hinged at a point $H$ on the truck, $2$ m above the ground. The ladder is extended to a length of $23$ m, measured from the hinge, and it makes an angle of $28^\\circ$ with the vertical. Calculate the height of the top of the ladder above the ground, correct to one decimal place. Do not round off before your final answer.",
+      "correct_answer": "22.3",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Let $T$ be the top of the ladder. Draw the vertical from $T$ down to the horizontal line through the hinge $H$, meeting it at $K$. Triangle $HKT$ is right-angled at $K$, the ladder $HT = 23$ m is its hypotenuse, and $TK$ is the height of the top of the ladder above the hinge."
+        },
+        {
+          "step": 2,
+          "text_md": "The angle $28^\\circ$ is measured from the vertical, so at $T$ it lies between the ladder $TH$ and the vertical $TK$. This makes $TK$ the side adjacent to $28^\\circ$, not the opposite side."
+        },
+        {
+          "step": 3,
+          "text_md": "We know the hypotenuse and want the adjacent side, so we use cosine: $\\cos 28^\\circ = \\frac{TK}{23}$, so $TK = 23\\cos 28^\\circ \\approx 20.31$ m."
+        },
+        {
+          "step": 4,
+          "text_md": "The hinge is $2$ m above the ground, so the top of the ladder is $2 + 20.31 \\approx 22.3$ m above the ground."
+        },
+        {
+          "step": 5,
+          "text_md": "The top of the ladder is about $22.3$ m above the ground."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-1:hinged-ladder",
+      "family_spec_sha": "ea5ece02cb4a0d8a84c92e2774990a0be636e778ba78eae5c346ff3787961a52"
+    },
+    {
+      "id": "q:g10m11s1-1-1:g010-hinged",
+      "lo_id": "lo:g10m11s1-1-1",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-1:ex11-1-6",
+      "source_page": 397,
+      "source_note": "Generated from template family tpl:g10m11s1-1-1:hinged-ladder.",
+      "stem": "A fire-engine's ladder is hinged at a point $H$ on the truck, $4$ m above the ground. The ladder is extended to a length of $29$ m, measured from the hinge, and it makes an angle of $33^\\circ$ with the vertical. Calculate the height of the top of the ladder above the ground, correct to one decimal place. Do not round off before your final answer.",
+      "correct_answer": "28.3",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Let $T$ be the top of the ladder. Draw the vertical from $T$ down to the horizontal line through the hinge $H$, meeting it at $K$. Triangle $HKT$ is right-angled at $K$, the ladder $HT = 29$ m is its hypotenuse, and $TK$ is the height of the top of the ladder above the hinge."
+        },
+        {
+          "step": 2,
+          "text_md": "The angle $33^\\circ$ is measured from the vertical, so at $T$ it lies between the ladder $TH$ and the vertical $TK$. This makes $TK$ the side adjacent to $33^\\circ$, not the opposite side."
+        },
+        {
+          "step": 3,
+          "text_md": "We know the hypotenuse and want the adjacent side, so we use cosine: $\\cos 33^\\circ = \\frac{TK}{29}$, so $TK = 29\\cos 33^\\circ \\approx 24.32$ m."
+        },
+        {
+          "step": 4,
+          "text_md": "The hinge is $4$ m above the ground, so the top of the ladder is $4 + 24.32 \\approx 28.3$ m above the ground."
+        },
+        {
+          "step": 5,
+          "text_md": "The top of the ladder is about $28.3$ m above the ground."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-1:hinged-ladder",
+      "family_spec_sha": "ea5ece02cb4a0d8a84c92e2774990a0be636e778ba78eae5c346ff3787961a52"
+    },
+    {
+      "id": "q:g10m11s1-1-1:g001-rhombu",
+      "lo_id": "lo:g10m11s1-1-1",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-1:ex11-2-14",
+      "source_page": 400,
+      "source_note": "Generated from template family tpl:g10m11s1-1-1:rhombus-height.",
+      "stem": "One of the angles of a rhombus with perimeter $32$ cm is $64^\\circ$. Calculate the perpendicular distance between two opposite sides of the rhombus, correct to one decimal place. Do not round off before your final answer.",
+      "correct_answer": "7.2",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "All four sides of a rhombus are equal, so each side is $\\frac{32}{4} = 8$ cm."
+        },
+        {
+          "step": 2,
+          "text_md": "Call the rhombus $ABCD$ with $\\hat{A} = 64^\\circ$. Draw the perpendicular $DE$ from $D$ to the side $AB$. Then $DE = h$ is the perpendicular distance between the opposite sides $AB$ and $DC$, and triangle $ADE$ is right-angled at $E$ with hypotenuse $AD = 8$ cm."
+        },
+        {
+          "step": 3,
+          "text_md": "$h$ is opposite the angle $64^\\circ$ and we know the hypotenuse, so we use sine: $\\sin 64^\\circ = \\frac{h}{8}$."
+        },
+        {
+          "step": 4,
+          "text_md": "$h = 8\\sin 64^\\circ \\approx 7.2$ cm."
+        },
+        {
+          "step": 5,
+          "text_md": "The perpendicular distance between two opposite sides of the rhombus is about $7.2$ cm."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-1:rhombus-height",
+      "family_spec_sha": "c0549ae0d5bc5a3c0c692eef7981de02d568894e3a35463843f6404da08c7506"
+    },
+    {
+      "id": "q:g10m11s1-1-1:g002-rhombu",
+      "lo_id": "lo:g10m11s1-1-1",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-1:ex11-2-14",
+      "source_page": 400,
+      "source_note": "Generated from template family tpl:g10m11s1-1-1:rhombus-height.",
+      "stem": "One of the angles of a rhombus with perimeter $28$ cm is $36^\\circ$. Calculate the perpendicular distance between two opposite sides of the rhombus, correct to one decimal place. Do not round off before your final answer.",
+      "correct_answer": "4.1",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "All four sides of a rhombus are equal, so each side is $\\frac{28}{4} = 7$ cm."
+        },
+        {
+          "step": 2,
+          "text_md": "Call the rhombus $ABCD$ with $\\hat{A} = 36^\\circ$. Draw the perpendicular $DE$ from $D$ to the side $AB$. Then $DE = h$ is the perpendicular distance between the opposite sides $AB$ and $DC$, and triangle $ADE$ is right-angled at $E$ with hypotenuse $AD = 7$ cm."
+        },
+        {
+          "step": 3,
+          "text_md": "$h$ is opposite the angle $36^\\circ$ and we know the hypotenuse, so we use sine: $\\sin 36^\\circ = \\frac{h}{7}$."
+        },
+        {
+          "step": 4,
+          "text_md": "$h = 7\\sin 36^\\circ \\approx 4.1$ cm."
+        },
+        {
+          "step": 5,
+          "text_md": "The perpendicular distance between two opposite sides of the rhombus is about $4.1$ cm."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-1:rhombus-height",
+      "family_spec_sha": "c0549ae0d5bc5a3c0c692eef7981de02d568894e3a35463843f6404da08c7506"
+    },
+    {
+      "id": "q:g10m11s1-1-1:g003-rhombu",
+      "lo_id": "lo:g10m11s1-1-1",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-1:ex11-2-14",
+      "source_page": 400,
+      "source_note": "Generated from template family tpl:g10m11s1-1-1:rhombus-height.",
+      "stem": "One of the angles of a rhombus with perimeter $28$ cm is $56^\\circ$. Calculate the perpendicular distance between two opposite sides of the rhombus, correct to one decimal place. Do not round off before your final answer.",
+      "correct_answer": "5.8",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "All four sides of a rhombus are equal, so each side is $\\frac{28}{4} = 7$ cm."
+        },
+        {
+          "step": 2,
+          "text_md": "Call the rhombus $ABCD$ with $\\hat{A} = 56^\\circ$. Draw the perpendicular $DE$ from $D$ to the side $AB$. Then $DE = h$ is the perpendicular distance between the opposite sides $AB$ and $DC$, and triangle $ADE$ is right-angled at $E$ with hypotenuse $AD = 7$ cm."
+        },
+        {
+          "step": 3,
+          "text_md": "$h$ is opposite the angle $56^\\circ$ and we know the hypotenuse, so we use sine: $\\sin 56^\\circ = \\frac{h}{7}$."
+        },
+        {
+          "step": 4,
+          "text_md": "$h = 7\\sin 56^\\circ \\approx 5.8$ cm."
+        },
+        {
+          "step": 5,
+          "text_md": "The perpendicular distance between two opposite sides of the rhombus is about $5.8$ cm."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-1:rhombus-height",
+      "family_spec_sha": "c0549ae0d5bc5a3c0c692eef7981de02d568894e3a35463843f6404da08c7506"
+    },
+    {
+      "id": "q:g10m11s1-1-1:g004-rhombu",
+      "lo_id": "lo:g10m11s1-1-1",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-1:ex11-2-14",
+      "source_page": 400,
+      "source_note": "Generated from template family tpl:g10m11s1-1-1:rhombus-height.",
+      "stem": "One of the angles of a rhombus with perimeter $28$ cm is $73^\\circ$. Calculate the perpendicular distance between two opposite sides of the rhombus, correct to one decimal place. Do not round off before your final answer.",
+      "correct_answer": "6.7",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "All four sides of a rhombus are equal, so each side is $\\frac{28}{4} = 7$ cm."
+        },
+        {
+          "step": 2,
+          "text_md": "Call the rhombus $ABCD$ with $\\hat{A} = 73^\\circ$. Draw the perpendicular $DE$ from $D$ to the side $AB$. Then $DE = h$ is the perpendicular distance between the opposite sides $AB$ and $DC$, and triangle $ADE$ is right-angled at $E$ with hypotenuse $AD = 7$ cm."
+        },
+        {
+          "step": 3,
+          "text_md": "$h$ is opposite the angle $73^\\circ$ and we know the hypotenuse, so we use sine: $\\sin 73^\\circ = \\frac{h}{7}$."
+        },
+        {
+          "step": 4,
+          "text_md": "$h = 7\\sin 73^\\circ \\approx 6.7$ cm."
+        },
+        {
+          "step": 5,
+          "text_md": "The perpendicular distance between two opposite sides of the rhombus is about $6.7$ cm."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-1:rhombus-height",
+      "family_spec_sha": "c0549ae0d5bc5a3c0c692eef7981de02d568894e3a35463843f6404da08c7506"
+    },
+    {
+      "id": "q:g10m11s1-1-1:g005-rhombu",
+      "lo_id": "lo:g10m11s1-1-1",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-1:ex11-2-14",
+      "source_page": 400,
+      "source_note": "Generated from template family tpl:g10m11s1-1-1:rhombus-height.",
+      "stem": "One of the angles of a rhombus with perimeter $32$ cm is $30^\\circ$. Calculate the perpendicular distance between two opposite sides of the rhombus, correct to one decimal place. Do not round off before your final answer.",
+      "correct_answer": "4.0",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "All four sides of a rhombus are equal, so each side is $\\frac{32}{4} = 8$ cm."
+        },
+        {
+          "step": 2,
+          "text_md": "Call the rhombus $ABCD$ with $\\hat{A} = 30^\\circ$. Draw the perpendicular $DE$ from $D$ to the side $AB$. Then $DE = h$ is the perpendicular distance between the opposite sides $AB$ and $DC$, and triangle $ADE$ is right-angled at $E$ with hypotenuse $AD = 8$ cm."
+        },
+        {
+          "step": 3,
+          "text_md": "$h$ is opposite the angle $30^\\circ$ and we know the hypotenuse, so we use sine: $\\sin 30^\\circ = \\frac{h}{8}$."
+        },
+        {
+          "step": 4,
+          "text_md": "$h = 8\\sin 30^\\circ \\approx 4.0$ cm."
+        },
+        {
+          "step": 5,
+          "text_md": "The perpendicular distance between two opposite sides of the rhombus is about $4.0$ cm."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-1:rhombus-height",
+      "family_spec_sha": "c0549ae0d5bc5a3c0c692eef7981de02d568894e3a35463843f6404da08c7506"
+    },
+    {
+      "id": "q:g10m11s1-1-1:g006-rhombu",
+      "lo_id": "lo:g10m11s1-1-1",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-1:ex11-2-14",
+      "source_page": 400,
+      "source_note": "Generated from template family tpl:g10m11s1-1-1:rhombus-height.",
+      "stem": "One of the angles of a rhombus with perimeter $36$ cm is $67^\\circ$. Calculate the perpendicular distance between two opposite sides of the rhombus, correct to one decimal place. Do not round off before your final answer.",
+      "correct_answer": "8.3",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "All four sides of a rhombus are equal, so each side is $\\frac{36}{4} = 9$ cm."
+        },
+        {
+          "step": 2,
+          "text_md": "Call the rhombus $ABCD$ with $\\hat{A} = 67^\\circ$. Draw the perpendicular $DE$ from $D$ to the side $AB$. Then $DE = h$ is the perpendicular distance between the opposite sides $AB$ and $DC$, and triangle $ADE$ is right-angled at $E$ with hypotenuse $AD = 9$ cm."
+        },
+        {
+          "step": 3,
+          "text_md": "$h$ is opposite the angle $67^\\circ$ and we know the hypotenuse, so we use sine: $\\sin 67^\\circ = \\frac{h}{9}$."
+        },
+        {
+          "step": 4,
+          "text_md": "$h = 9\\sin 67^\\circ \\approx 8.3$ cm."
+        },
+        {
+          "step": 5,
+          "text_md": "The perpendicular distance between two opposite sides of the rhombus is about $8.3$ cm."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-1:rhombus-height",
+      "family_spec_sha": "c0549ae0d5bc5a3c0c692eef7981de02d568894e3a35463843f6404da08c7506"
+    },
+    {
+      "id": "q:g10m11s1-1-1:g007-rhombu",
+      "lo_id": "lo:g10m11s1-1-1",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-1:ex11-2-14",
+      "source_page": 400,
+      "source_note": "Generated from template family tpl:g10m11s1-1-1:rhombus-height.",
+      "stem": "One of the angles of a rhombus with perimeter $40$ cm is $42^\\circ$. Calculate the perpendicular distance between two opposite sides of the rhombus, correct to one decimal place. Do not round off before your final answer.",
+      "correct_answer": "6.7",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "All four sides of a rhombus are equal, so each side is $\\frac{40}{4} = 10$ cm."
+        },
+        {
+          "step": 2,
+          "text_md": "Call the rhombus $ABCD$ with $\\hat{A} = 42^\\circ$. Draw the perpendicular $DE$ from $D$ to the side $AB$. Then $DE = h$ is the perpendicular distance between the opposite sides $AB$ and $DC$, and triangle $ADE$ is right-angled at $E$ with hypotenuse $AD = 10$ cm."
+        },
+        {
+          "step": 3,
+          "text_md": "$h$ is opposite the angle $42^\\circ$ and we know the hypotenuse, so we use sine: $\\sin 42^\\circ = \\frac{h}{10}$."
+        },
+        {
+          "step": 4,
+          "text_md": "$h = 10\\sin 42^\\circ \\approx 6.7$ cm."
+        },
+        {
+          "step": 5,
+          "text_md": "The perpendicular distance between two opposite sides of the rhombus is about $6.7$ cm."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-1:rhombus-height",
+      "family_spec_sha": "c0549ae0d5bc5a3c0c692eef7981de02d568894e3a35463843f6404da08c7506"
+    },
+    {
+      "id": "q:g10m11s1-1-1:g008-rhombu",
+      "lo_id": "lo:g10m11s1-1-1",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-1:ex11-2-14",
+      "source_page": 400,
+      "source_note": "Generated from template family tpl:g10m11s1-1-1:rhombus-height.",
+      "stem": "One of the angles of a rhombus with perimeter $36$ cm is $63^\\circ$. Calculate the perpendicular distance between two opposite sides of the rhombus, correct to one decimal place. Do not round off before your final answer.",
+      "correct_answer": "8.0",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "All four sides of a rhombus are equal, so each side is $\\frac{36}{4} = 9$ cm."
+        },
+        {
+          "step": 2,
+          "text_md": "Call the rhombus $ABCD$ with $\\hat{A} = 63^\\circ$. Draw the perpendicular $DE$ from $D$ to the side $AB$. Then $DE = h$ is the perpendicular distance between the opposite sides $AB$ and $DC$, and triangle $ADE$ is right-angled at $E$ with hypotenuse $AD = 9$ cm."
+        },
+        {
+          "step": 3,
+          "text_md": "$h$ is opposite the angle $63^\\circ$ and we know the hypotenuse, so we use sine: $\\sin 63^\\circ = \\frac{h}{9}$."
+        },
+        {
+          "step": 4,
+          "text_md": "$h = 9\\sin 63^\\circ \\approx 8.0$ cm."
+        },
+        {
+          "step": 5,
+          "text_md": "The perpendicular distance between two opposite sides of the rhombus is about $8.0$ cm."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-1:rhombus-height",
+      "family_spec_sha": "c0549ae0d5bc5a3c0c692eef7981de02d568894e3a35463843f6404da08c7506"
+    },
+    {
+      "id": "q:g10m11s1-1-1:g009-rhombu",
+      "lo_id": "lo:g10m11s1-1-1",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-1:ex11-2-14",
+      "source_page": 400,
+      "source_note": "Generated from template family tpl:g10m11s1-1-1:rhombus-height.",
+      "stem": "One of the angles of a rhombus with perimeter $48$ cm is $38^\\circ$. Calculate the perpendicular distance between two opposite sides of the rhombus, correct to one decimal place. Do not round off before your final answer.",
+      "correct_answer": "7.4",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "All four sides of a rhombus are equal, so each side is $\\frac{48}{4} = 12$ cm."
+        },
+        {
+          "step": 2,
+          "text_md": "Call the rhombus $ABCD$ with $\\hat{A} = 38^\\circ$. Draw the perpendicular $DE$ from $D$ to the side $AB$. Then $DE = h$ is the perpendicular distance between the opposite sides $AB$ and $DC$, and triangle $ADE$ is right-angled at $E$ with hypotenuse $AD = 12$ cm."
+        },
+        {
+          "step": 3,
+          "text_md": "$h$ is opposite the angle $38^\\circ$ and we know the hypotenuse, so we use sine: $\\sin 38^\\circ = \\frac{h}{12}$."
+        },
+        {
+          "step": 4,
+          "text_md": "$h = 12\\sin 38^\\circ \\approx 7.4$ cm."
+        },
+        {
+          "step": 5,
+          "text_md": "The perpendicular distance between two opposite sides of the rhombus is about $7.4$ cm."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-1:rhombus-height",
+      "family_spec_sha": "c0549ae0d5bc5a3c0c692eef7981de02d568894e3a35463843f6404da08c7506"
+    },
+    {
+      "id": "q:g10m11s1-1-1:g010-rhombu",
+      "lo_id": "lo:g10m11s1-1-1",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-1:ex11-2-14",
+      "source_page": 400,
+      "source_note": "Generated from template family tpl:g10m11s1-1-1:rhombus-height.",
+      "stem": "One of the angles of a rhombus with perimeter $16$ cm is $53^\\circ$. Calculate the perpendicular distance between two opposite sides of the rhombus, correct to one decimal place. Do not round off before your final answer.",
+      "correct_answer": "3.2",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "All four sides of a rhombus are equal, so each side is $\\frac{16}{4} = 4$ cm."
+        },
+        {
+          "step": 2,
+          "text_md": "Call the rhombus $ABCD$ with $\\hat{A} = 53^\\circ$. Draw the perpendicular $DE$ from $D$ to the side $AB$. Then $DE = h$ is the perpendicular distance between the opposite sides $AB$ and $DC$, and triangle $ADE$ is right-angled at $E$ with hypotenuse $AD = 4$ cm."
+        },
+        {
+          "step": 3,
+          "text_md": "$h$ is opposite the angle $53^\\circ$ and we know the hypotenuse, so we use sine: $\\sin 53^\\circ = \\frac{h}{4}$."
+        },
+        {
+          "step": 4,
+          "text_md": "$h = 4\\sin 53^\\circ \\approx 3.2$ cm."
+        },
+        {
+          "step": 5,
+          "text_md": "The perpendicular distance between two opposite sides of the rhombus is about $3.2$ cm."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-1:rhombus-height",
+      "family_spec_sha": "c0549ae0d5bc5a3c0c692eef7981de02d568894e3a35463843f6404da08c7506"
+    },
+    {
+      "id": "q:g10m11s1-1-2:g001-boat-c",
+      "lo_id": "lo:g10m11s1-1-2",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-2:ex11-2-2a",
+      "source_page": 398,
+      "source_note": "Generated from template family tpl:g10m11s1-1-2:boat-closer.",
+      "stem": "Captain Jack is sailing his boat towards a cliff that is $\\text{10}$ $\\text{m}$ high. The boat is at the same level as the bottom of the cliff. At first the boat is $\\text{45}$ $\\text{m}$ from the bottom of the cliff, and later it is $\\text{14}$ $\\text{m}$ from the bottom of the cliff. By how many degrees does the angle of elevation of the top of the cliff, measured from the boat, increase between the two positions? Do not round off either angle before you subtract. Give your answer correct to one decimal place.",
+      "correct_answer": "23.0",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Sketch a right-angled triangle for each position of the boat. The height of the cliff is opposite the angle of elevation and the distance from the boat to the bottom of the cliff is adjacent to it, so use the tangent ratio each time."
+        },
+        {
+          "step": 2,
+          "text_md": "First position: $\\tan x_1 = \\frac{10}{45}$, so $x_1 = \\tan^{-1}\\left(\\frac{10}{45}\\right) = 12.53^{\\circ}$."
+        },
+        {
+          "step": 3,
+          "text_md": "Second position: $\\tan x_2 = \\frac{10}{14}$, so $x_2 = \\tan^{-1}\\left(\\frac{10}{14}\\right) = 35.54^{\\circ}$."
+        },
+        {
+          "step": 4,
+          "text_md": "The angle of elevation increases by $x_2 - x_1 = 35.54^{\\circ} - 12.53^{\\circ} = 23.01^{\\circ}$, which is $23.0^{\\circ}$ correct to one decimal place."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-2:boat-closer",
+      "family_spec_sha": "0ee35edcad9bfd349212702f97210cca0d92d392544a87757f4b3e6dd33cd784"
+    },
+    {
+      "id": "q:g10m11s1-1-2:g002-boat-c",
+      "lo_id": "lo:g10m11s1-1-2",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-2:ex11-2-2a",
+      "source_page": 398,
+      "source_note": "Generated from template family tpl:g10m11s1-1-2:boat-closer.",
+      "stem": "Captain Jack is sailing his boat towards a cliff that is $\\text{19}$ $\\text{m}$ high. The boat is at the same level as the bottom of the cliff. At first the boat is $\\text{54}$ $\\text{m}$ from the bottom of the cliff, and later it is $\\text{19}$ $\\text{m}$ from the bottom of the cliff. By how many degrees does the angle of elevation of the top of the cliff, measured from the boat, increase between the two positions? Do not round off either angle before you subtract. Give your answer correct to one decimal place.",
+      "correct_answer": "25.6",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Sketch a right-angled triangle for each position of the boat. The height of the cliff is opposite the angle of elevation and the distance from the boat to the bottom of the cliff is adjacent to it, so use the tangent ratio each time."
+        },
+        {
+          "step": 2,
+          "text_md": "First position: $\\tan x_1 = \\frac{19}{54}$, so $x_1 = \\tan^{-1}\\left(\\frac{19}{54}\\right) = 19.38^{\\circ}$."
+        },
+        {
+          "step": 3,
+          "text_md": "Second position: $\\tan x_2 = \\frac{19}{19}$, so $x_2 = \\tan^{-1}\\left(\\frac{19}{19}\\right) = 45.00^{\\circ}$."
+        },
+        {
+          "step": 4,
+          "text_md": "The angle of elevation increases by $x_2 - x_1 = 45.00^{\\circ} - 19.38^{\\circ} = 25.62^{\\circ}$, which is $25.6^{\\circ}$ correct to one decimal place."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-2:boat-closer",
+      "family_spec_sha": "0ee35edcad9bfd349212702f97210cca0d92d392544a87757f4b3e6dd33cd784"
+    },
+    {
+      "id": "q:g10m11s1-1-2:g003-boat-c",
+      "lo_id": "lo:g10m11s1-1-2",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-2:ex11-2-2a",
+      "source_page": 398,
+      "source_note": "Generated from template family tpl:g10m11s1-1-2:boat-closer.",
+      "stem": "Captain Jack is sailing his boat towards a cliff that is $\\text{20}$ $\\text{m}$ high. The boat is at the same level as the bottom of the cliff. At first the boat is $\\text{57}$ $\\text{m}$ from the bottom of the cliff, and later it is $\\text{18}$ $\\text{m}$ from the bottom of the cliff. By how many degrees does the angle of elevation of the top of the cliff, measured from the boat, increase between the two positions? Do not round off either angle before you subtract. Give your answer correct to one decimal place.",
+      "correct_answer": "28.7",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Sketch a right-angled triangle for each position of the boat. The height of the cliff is opposite the angle of elevation and the distance from the boat to the bottom of the cliff is adjacent to it, so use the tangent ratio each time."
+        },
+        {
+          "step": 2,
+          "text_md": "First position: $\\tan x_1 = \\frac{20}{57}$, so $x_1 = \\tan^{-1}\\left(\\frac{20}{57}\\right) = 19.33^{\\circ}$."
+        },
+        {
+          "step": 3,
+          "text_md": "Second position: $\\tan x_2 = \\frac{20}{18}$, so $x_2 = \\tan^{-1}\\left(\\frac{20}{18}\\right) = 48.01^{\\circ}$."
+        },
+        {
+          "step": 4,
+          "text_md": "The angle of elevation increases by $x_2 - x_1 = 48.01^{\\circ} - 19.33^{\\circ} = 28.68^{\\circ}$, which is $28.7^{\\circ}$ correct to one decimal place."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-2:boat-closer",
+      "family_spec_sha": "0ee35edcad9bfd349212702f97210cca0d92d392544a87757f4b3e6dd33cd784"
+    },
+    {
+      "id": "q:g10m11s1-1-2:g004-boat-c",
+      "lo_id": "lo:g10m11s1-1-2",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-2:ex11-2-2a",
+      "source_page": 398,
+      "source_note": "Generated from template family tpl:g10m11s1-1-2:boat-closer.",
+      "stem": "Captain Jack is sailing his boat towards a cliff that is $\\text{9}$ $\\text{m}$ high. The boat is at the same level as the bottom of the cliff. At first the boat is $\\text{40}$ $\\text{m}$ from the bottom of the cliff, and later it is $\\text{16}$ $\\text{m}$ from the bottom of the cliff. By how many degrees does the angle of elevation of the top of the cliff, measured from the boat, increase between the two positions? Do not round off either angle before you subtract. Give your answer correct to one decimal place.",
+      "correct_answer": "16.7",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Sketch a right-angled triangle for each position of the boat. The height of the cliff is opposite the angle of elevation and the distance from the boat to the bottom of the cliff is adjacent to it, so use the tangent ratio each time."
+        },
+        {
+          "step": 2,
+          "text_md": "First position: $\\tan x_1 = \\frac{9}{40}$, so $x_1 = \\tan^{-1}\\left(\\frac{9}{40}\\right) = 12.68^{\\circ}$."
+        },
+        {
+          "step": 3,
+          "text_md": "Second position: $\\tan x_2 = \\frac{9}{16}$, so $x_2 = \\tan^{-1}\\left(\\frac{9}{16}\\right) = 29.36^{\\circ}$."
+        },
+        {
+          "step": 4,
+          "text_md": "The angle of elevation increases by $x_2 - x_1 = 29.36^{\\circ} - 12.68^{\\circ} = 16.68^{\\circ}$, which is $16.7^{\\circ}$ correct to one decimal place."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-2:boat-closer",
+      "family_spec_sha": "0ee35edcad9bfd349212702f97210cca0d92d392544a87757f4b3e6dd33cd784"
+    },
+    {
+      "id": "q:g10m11s1-1-2:g005-boat-c",
+      "lo_id": "lo:g10m11s1-1-2",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-2:ex11-2-2a",
+      "source_page": 398,
+      "source_note": "Generated from template family tpl:g10m11s1-1-2:boat-closer.",
+      "stem": "Captain Jack is sailing his boat towards a cliff that is $\\text{9}$ $\\text{m}$ high. The boat is at the same level as the bottom of the cliff. At first the boat is $\\text{38}$ $\\text{m}$ from the bottom of the cliff, and later it is $\\text{19}$ $\\text{m}$ from the bottom of the cliff. By how many degrees does the angle of elevation of the top of the cliff, measured from the boat, increase between the two positions? Do not round off either angle before you subtract. Give your answer correct to one decimal place.",
+      "correct_answer": "12.0",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Sketch a right-angled triangle for each position of the boat. The height of the cliff is opposite the angle of elevation and the distance from the boat to the bottom of the cliff is adjacent to it, so use the tangent ratio each time."
+        },
+        {
+          "step": 2,
+          "text_md": "First position: $\\tan x_1 = \\frac{9}{38}$, so $x_1 = \\tan^{-1}\\left(\\frac{9}{38}\\right) = 13.32^{\\circ}$."
+        },
+        {
+          "step": 3,
+          "text_md": "Second position: $\\tan x_2 = \\frac{9}{19}$, so $x_2 = \\tan^{-1}\\left(\\frac{9}{19}\\right) = 25.35^{\\circ}$."
+        },
+        {
+          "step": 4,
+          "text_md": "The angle of elevation increases by $x_2 - x_1 = 25.35^{\\circ} - 13.32^{\\circ} = 12.03^{\\circ}$, which is $12.0^{\\circ}$ correct to one decimal place."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-2:boat-closer",
+      "family_spec_sha": "0ee35edcad9bfd349212702f97210cca0d92d392544a87757f4b3e6dd33cd784"
+    },
+    {
+      "id": "q:g10m11s1-1-2:g006-boat-c",
+      "lo_id": "lo:g10m11s1-1-2",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-2:ex11-2-2a",
+      "source_page": 398,
+      "source_note": "Generated from template family tpl:g10m11s1-1-2:boat-closer.",
+      "stem": "Captain Jack is sailing his boat towards a cliff that is $\\text{8}$ $\\text{m}$ high. The boat is at the same level as the bottom of the cliff. At first the boat is $\\text{51}$ $\\text{m}$ from the bottom of the cliff, and later it is $\\text{14}$ $\\text{m}$ from the bottom of the cliff. By how many degrees does the angle of elevation of the top of the cliff, measured from the boat, increase between the two positions? Do not round off either angle before you subtract. Give your answer correct to one decimal place.",
+      "correct_answer": "20.8",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Sketch a right-angled triangle for each position of the boat. The height of the cliff is opposite the angle of elevation and the distance from the boat to the bottom of the cliff is adjacent to it, so use the tangent ratio each time."
+        },
+        {
+          "step": 2,
+          "text_md": "First position: $\\tan x_1 = \\frac{8}{51}$, so $x_1 = \\tan^{-1}\\left(\\frac{8}{51}\\right) = 8.91^{\\circ}$."
+        },
+        {
+          "step": 3,
+          "text_md": "Second position: $\\tan x_2 = \\frac{8}{14}$, so $x_2 = \\tan^{-1}\\left(\\frac{8}{14}\\right) = 29.74^{\\circ}$."
+        },
+        {
+          "step": 4,
+          "text_md": "The angle of elevation increases by $x_2 - x_1 = 29.74^{\\circ} - 8.91^{\\circ} = 20.83^{\\circ}$, which is $20.8^{\\circ}$ correct to one decimal place."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-2:boat-closer",
+      "family_spec_sha": "0ee35edcad9bfd349212702f97210cca0d92d392544a87757f4b3e6dd33cd784"
+    },
+    {
+      "id": "q:g10m11s1-1-2:g007-boat-c",
+      "lo_id": "lo:g10m11s1-1-2",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-2:ex11-2-2a",
+      "source_page": 398,
+      "source_note": "Generated from template family tpl:g10m11s1-1-2:boat-closer.",
+      "stem": "Captain Jack is sailing his boat towards a cliff that is $\\text{12}$ $\\text{m}$ high. The boat is at the same level as the bottom of the cliff. At first the boat is $\\text{54}$ $\\text{m}$ from the bottom of the cliff, and later it is $\\text{22}$ $\\text{m}$ from the bottom of the cliff. By how many degrees does the angle of elevation of the top of the cliff, measured from the boat, increase between the two positions? Do not round off either angle before you subtract. Give your answer correct to one decimal place.",
+      "correct_answer": "16.1",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Sketch a right-angled triangle for each position of the boat. The height of the cliff is opposite the angle of elevation and the distance from the boat to the bottom of the cliff is adjacent to it, so use the tangent ratio each time."
+        },
+        {
+          "step": 2,
+          "text_md": "First position: $\\tan x_1 = \\frac{12}{54}$, so $x_1 = \\tan^{-1}\\left(\\frac{12}{54}\\right) = 12.53^{\\circ}$."
+        },
+        {
+          "step": 3,
+          "text_md": "Second position: $\\tan x_2 = \\frac{12}{22}$, so $x_2 = \\tan^{-1}\\left(\\frac{12}{22}\\right) = 28.61^{\\circ}$."
+        },
+        {
+          "step": 4,
+          "text_md": "The angle of elevation increases by $x_2 - x_1 = 28.61^{\\circ} - 12.53^{\\circ} = 16.08^{\\circ}$, which is $16.1^{\\circ}$ correct to one decimal place."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-2:boat-closer",
+      "family_spec_sha": "0ee35edcad9bfd349212702f97210cca0d92d392544a87757f4b3e6dd33cd784"
+    },
+    {
+      "id": "q:g10m11s1-1-2:g008-boat-c",
+      "lo_id": "lo:g10m11s1-1-2",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-2:ex11-2-2a",
+      "source_page": 398,
+      "source_note": "Generated from template family tpl:g10m11s1-1-2:boat-closer.",
+      "stem": "Captain Jack is sailing his boat towards a cliff that is $\\text{9}$ $\\text{m}$ high. The boat is at the same level as the bottom of the cliff. At first the boat is $\\text{36}$ $\\text{m}$ from the bottom of the cliff, and later it is $\\text{28}$ $\\text{m}$ from the bottom of the cliff. By how many degrees does the angle of elevation of the top of the cliff, measured from the boat, increase between the two positions? Do not round off either angle before you subtract. Give your answer correct to one decimal place.",
+      "correct_answer": "3.8",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Sketch a right-angled triangle for each position of the boat. The height of the cliff is opposite the angle of elevation and the distance from the boat to the bottom of the cliff is adjacent to it, so use the tangent ratio each time."
+        },
+        {
+          "step": 2,
+          "text_md": "First position: $\\tan x_1 = \\frac{9}{36}$, so $x_1 = \\tan^{-1}\\left(\\frac{9}{36}\\right) = 14.04^{\\circ}$."
+        },
+        {
+          "step": 3,
+          "text_md": "Second position: $\\tan x_2 = \\frac{9}{28}$, so $x_2 = \\tan^{-1}\\left(\\frac{9}{28}\\right) = 17.82^{\\circ}$."
+        },
+        {
+          "step": 4,
+          "text_md": "The angle of elevation increases by $x_2 - x_1 = 17.82^{\\circ} - 14.04^{\\circ} = 3.78^{\\circ}$, which is $3.8^{\\circ}$ correct to one decimal place."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-2:boat-closer",
+      "family_spec_sha": "0ee35edcad9bfd349212702f97210cca0d92d392544a87757f4b3e6dd33cd784"
+    },
+    {
+      "id": "q:g10m11s1-1-2:g009-boat-c",
+      "lo_id": "lo:g10m11s1-1-2",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-2:ex11-2-2a",
+      "source_page": 398,
+      "source_note": "Generated from template family tpl:g10m11s1-1-2:boat-closer.",
+      "stem": "Captain Jack is sailing his boat towards a cliff that is $\\text{9}$ $\\text{m}$ high. The boat is at the same level as the bottom of the cliff. At first the boat is $\\text{47}$ $\\text{m}$ from the bottom of the cliff, and later it is $\\text{24}$ $\\text{m}$ from the bottom of the cliff. By how many degrees does the angle of elevation of the top of the cliff, measured from the boat, increase between the two positions? Do not round off either angle before you subtract. Give your answer correct to one decimal place.",
+      "correct_answer": "9.7",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Sketch a right-angled triangle for each position of the boat. The height of the cliff is opposite the angle of elevation and the distance from the boat to the bottom of the cliff is adjacent to it, so use the tangent ratio each time."
+        },
+        {
+          "step": 2,
+          "text_md": "First position: $\\tan x_1 = \\frac{9}{47}$, so $x_1 = \\tan^{-1}\\left(\\frac{9}{47}\\right) = 10.84^{\\circ}$."
+        },
+        {
+          "step": 3,
+          "text_md": "Second position: $\\tan x_2 = \\frac{9}{24}$, so $x_2 = \\tan^{-1}\\left(\\frac{9}{24}\\right) = 20.56^{\\circ}$."
+        },
+        {
+          "step": 4,
+          "text_md": "The angle of elevation increases by $x_2 - x_1 = 20.56^{\\circ} - 10.84^{\\circ} = 9.72^{\\circ}$, which is $9.7^{\\circ}$ correct to one decimal place."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-2:boat-closer",
+      "family_spec_sha": "0ee35edcad9bfd349212702f97210cca0d92d392544a87757f4b3e6dd33cd784"
+    },
+    {
+      "id": "q:g10m11s1-1-2:g010-boat-c",
+      "lo_id": "lo:g10m11s1-1-2",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-2:ex11-2-2a",
+      "source_page": 398,
+      "source_note": "Generated from template family tpl:g10m11s1-1-2:boat-closer.",
+      "stem": "Captain Jack is sailing his boat towards a cliff that is $\\text{14}$ $\\text{m}$ high. The boat is at the same level as the bottom of the cliff. At first the boat is $\\text{53}$ $\\text{m}$ from the bottom of the cliff, and later it is $\\text{20}$ $\\text{m}$ from the bottom of the cliff. By how many degrees does the angle of elevation of the top of the cliff, measured from the boat, increase between the two positions? Do not round off either angle before you subtract. Give your answer correct to one decimal place.",
+      "correct_answer": "20.2",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Sketch a right-angled triangle for each position of the boat. The height of the cliff is opposite the angle of elevation and the distance from the boat to the bottom of the cliff is adjacent to it, so use the tangent ratio each time."
+        },
+        {
+          "step": 2,
+          "text_md": "First position: $\\tan x_1 = \\frac{14}{53}$, so $x_1 = \\tan^{-1}\\left(\\frac{14}{53}\\right) = 14.80^{\\circ}$."
+        },
+        {
+          "step": 3,
+          "text_md": "Second position: $\\tan x_2 = \\frac{14}{20}$, so $x_2 = \\tan^{-1}\\left(\\frac{14}{20}\\right) = 34.99^{\\circ}$."
+        },
+        {
+          "step": 4,
+          "text_md": "The angle of elevation increases by $x_2 - x_1 = 34.99^{\\circ} - 14.80^{\\circ} = 20.19^{\\circ}$, which is $20.2^{\\circ}$ correct to one decimal place."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-2:boat-closer",
+      "family_spec_sha": "0ee35edcad9bfd349212702f97210cca0d92d392544a87757f4b3e6dd33cd784"
+    },
+    {
+      "id": "q:g10m11s1-1-2:g001-shared",
+      "lo_id": "lo:g10m11s1-1-2",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-2:ex11-2-19b",
+      "source_page": 401,
+      "source_note": "Generated from template family tpl:g10m11s1-1-2:shared-hypotenuse.",
+      "stem": "In quadrilateral $PQRS$ the diagonal $PR$ is drawn. The angles at $Q$ and $S$ are right angles. $PQ = \\text{11.4}$ $\\text{cm}$, $PS = \\text{10.8}$ $\\text{cm}$ and $\\angle PRQ = 54^{\\circ}$. Let $x$ be the size of $\\angle SPR$. Calculate $x$ in degrees, correct to one decimal place. Do not round off until the last step.",
+      "correct_answer": "40.0",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Triangle $PQR$ has a right angle at $Q$, so $PR$ is its hypotenuse and $PQ$ is the side opposite $\\angle PRQ$. Use the sine ratio: $\\sin 54^{\\circ} = \\frac{PQ}{PR}$."
+        },
+        {
+          "step": 2,
+          "text_md": "$PR = \\frac{11.4}{\\sin 54^{\\circ}} = 14.09$ cm."
+        },
+        {
+          "step": 3,
+          "text_md": "Triangle $PSR$ has a right angle at $S$, and $PR$ is also its hypotenuse. $PS$ is the side adjacent to $x$, so use the cosine ratio: $\\cos x = \\frac{PS}{PR} = \\frac{10.8}{14.09}$."
+        },
+        {
+          "step": 4,
+          "text_md": "$x = \\cos^{-1}\\left(\\frac{10.8}{14.09}\\right) = 40.0^{\\circ}$ (this uses the unrounded value of $PR$ from the calculator)."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-2:shared-hypotenuse",
+      "family_spec_sha": "06fae7cafa666252455bd7a27d9f61271b4202e7b472712ef08ec0adf99920e4"
+    },
+    {
+      "id": "q:g10m11s1-1-2:g002-shared",
+      "lo_id": "lo:g10m11s1-1-2",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-2:ex11-2-19b",
+      "source_page": 401,
+      "source_note": "Generated from template family tpl:g10m11s1-1-2:shared-hypotenuse.",
+      "stem": "In quadrilateral $PQRS$ the diagonal $PR$ is drawn. The angles at $Q$ and $S$ are right angles. $PQ = \\text{11.9}$ $\\text{cm}$, $PS = \\text{5.3}$ $\\text{cm}$ and $\\angle PRQ = 60^{\\circ}$. Let $x$ be the size of $\\angle SPR$. Calculate $x$ in degrees, correct to one decimal place. Do not round off until the last step.",
+      "correct_answer": "67.3",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Triangle $PQR$ has a right angle at $Q$, so $PR$ is its hypotenuse and $PQ$ is the side opposite $\\angle PRQ$. Use the sine ratio: $\\sin 60^{\\circ} = \\frac{PQ}{PR}$."
+        },
+        {
+          "step": 2,
+          "text_md": "$PR = \\frac{11.9}{\\sin 60^{\\circ}} = 13.74$ cm."
+        },
+        {
+          "step": 3,
+          "text_md": "Triangle $PSR$ has a right angle at $S$, and $PR$ is also its hypotenuse. $PS$ is the side adjacent to $x$, so use the cosine ratio: $\\cos x = \\frac{PS}{PR} = \\frac{5.3}{13.74}$."
+        },
+        {
+          "step": 4,
+          "text_md": "$x = \\cos^{-1}\\left(\\frac{5.3}{13.74}\\right) = 67.3^{\\circ}$ (this uses the unrounded value of $PR$ from the calculator)."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-2:shared-hypotenuse",
+      "family_spec_sha": "06fae7cafa666252455bd7a27d9f61271b4202e7b472712ef08ec0adf99920e4"
+    },
+    {
+      "id": "q:g10m11s1-1-2:g003-shared",
+      "lo_id": "lo:g10m11s1-1-2",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-2:ex11-2-19b",
+      "source_page": 401,
+      "source_note": "Generated from template family tpl:g10m11s1-1-2:shared-hypotenuse.",
+      "stem": "In quadrilateral $PQRS$ the diagonal $PR$ is drawn. The angles at $Q$ and $S$ are right angles. $PQ = \\text{10.5}$ $\\text{cm}$, $PS = \\text{8.7}$ $\\text{cm}$ and $\\angle PRQ = 62^{\\circ}$. Let $x$ be the size of $\\angle SPR$. Calculate $x$ in degrees, correct to one decimal place. Do not round off until the last step.",
+      "correct_answer": "43.0",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Triangle $PQR$ has a right angle at $Q$, so $PR$ is its hypotenuse and $PQ$ is the side opposite $\\angle PRQ$. Use the sine ratio: $\\sin 62^{\\circ} = \\frac{PQ}{PR}$."
+        },
+        {
+          "step": 2,
+          "text_md": "$PR = \\frac{10.5}{\\sin 62^{\\circ}} = 11.89$ cm."
+        },
+        {
+          "step": 3,
+          "text_md": "Triangle $PSR$ has a right angle at $S$, and $PR$ is also its hypotenuse. $PS$ is the side adjacent to $x$, so use the cosine ratio: $\\cos x = \\frac{PS}{PR} = \\frac{8.7}{11.89}$."
+        },
+        {
+          "step": 4,
+          "text_md": "$x = \\cos^{-1}\\left(\\frac{8.7}{11.89}\\right) = 43.0^{\\circ}$ (this uses the unrounded value of $PR$ from the calculator)."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-2:shared-hypotenuse",
+      "family_spec_sha": "06fae7cafa666252455bd7a27d9f61271b4202e7b472712ef08ec0adf99920e4"
+    },
+    {
+      "id": "q:g10m11s1-1-2:g004-shared",
+      "lo_id": "lo:g10m11s1-1-2",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-2:ex11-2-19b",
+      "source_page": 401,
+      "source_note": "Generated from template family tpl:g10m11s1-1-2:shared-hypotenuse.",
+      "stem": "In quadrilateral $PQRS$ the diagonal $PR$ is drawn. The angles at $Q$ and $S$ are right angles. $PQ = \\text{11.4}$ $\\text{cm}$, $PS = \\text{5.6}$ $\\text{cm}$ and $\\angle PRQ = 59^{\\circ}$. Let $x$ be the size of $\\angle SPR$. Calculate $x$ in degrees, correct to one decimal place. Do not round off until the last step.",
+      "correct_answer": "65.1",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Triangle $PQR$ has a right angle at $Q$, so $PR$ is its hypotenuse and $PQ$ is the side opposite $\\angle PRQ$. Use the sine ratio: $\\sin 59^{\\circ} = \\frac{PQ}{PR}$."
+        },
+        {
+          "step": 2,
+          "text_md": "$PR = \\frac{11.4}{\\sin 59^{\\circ}} = 13.30$ cm."
+        },
+        {
+          "step": 3,
+          "text_md": "Triangle $PSR$ has a right angle at $S$, and $PR$ is also its hypotenuse. $PS$ is the side adjacent to $x$, so use the cosine ratio: $\\cos x = \\frac{PS}{PR} = \\frac{5.6}{13.30}$."
+        },
+        {
+          "step": 4,
+          "text_md": "$x = \\cos^{-1}\\left(\\frac{5.6}{13.30}\\right) = 65.1^{\\circ}$ (this uses the unrounded value of $PR$ from the calculator)."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-2:shared-hypotenuse",
+      "family_spec_sha": "06fae7cafa666252455bd7a27d9f61271b4202e7b472712ef08ec0adf99920e4"
+    },
+    {
+      "id": "q:g10m11s1-1-2:g005-shared",
+      "lo_id": "lo:g10m11s1-1-2",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-2:ex11-2-19b",
+      "source_page": 401,
+      "source_note": "Generated from template family tpl:g10m11s1-1-2:shared-hypotenuse.",
+      "stem": "In quadrilateral $PQRS$ the diagonal $PR$ is drawn. The angles at $Q$ and $S$ are right angles. $PQ = \\text{9.4}$ $\\text{cm}$, $PS = \\text{7.6}$ $\\text{cm}$ and $\\angle PRQ = 37^{\\circ}$. Let $x$ be the size of $\\angle SPR$. Calculate $x$ in degrees, correct to one decimal place. Do not round off until the last step.",
+      "correct_answer": "60.9",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Triangle $PQR$ has a right angle at $Q$, so $PR$ is its hypotenuse and $PQ$ is the side opposite $\\angle PRQ$. Use the sine ratio: $\\sin 37^{\\circ} = \\frac{PQ}{PR}$."
+        },
+        {
+          "step": 2,
+          "text_md": "$PR = \\frac{9.4}{\\sin 37^{\\circ}} = 15.62$ cm."
+        },
+        {
+          "step": 3,
+          "text_md": "Triangle $PSR$ has a right angle at $S$, and $PR$ is also its hypotenuse. $PS$ is the side adjacent to $x$, so use the cosine ratio: $\\cos x = \\frac{PS}{PR} = \\frac{7.6}{15.62}$."
+        },
+        {
+          "step": 4,
+          "text_md": "$x = \\cos^{-1}\\left(\\frac{7.6}{15.62}\\right) = 60.9^{\\circ}$ (this uses the unrounded value of $PR$ from the calculator)."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-2:shared-hypotenuse",
+      "family_spec_sha": "06fae7cafa666252455bd7a27d9f61271b4202e7b472712ef08ec0adf99920e4"
+    },
+    {
+      "id": "q:g10m11s1-1-2:g006-shared",
+      "lo_id": "lo:g10m11s1-1-2",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-2:ex11-2-19b",
+      "source_page": 401,
+      "source_note": "Generated from template family tpl:g10m11s1-1-2:shared-hypotenuse.",
+      "stem": "In quadrilateral $PQRS$ the diagonal $PR$ is drawn. The angles at $Q$ and $S$ are right angles. $PQ = \\text{11.1}$ $\\text{cm}$, $PS = \\text{6.3}$ $\\text{cm}$ and $\\angle PRQ = 61^{\\circ}$. Let $x$ be the size of $\\angle SPR$. Calculate $x$ in degrees, correct to one decimal place. Do not round off until the last step.",
+      "correct_answer": "60.2",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Triangle $PQR$ has a right angle at $Q$, so $PR$ is its hypotenuse and $PQ$ is the side opposite $\\angle PRQ$. Use the sine ratio: $\\sin 61^{\\circ} = \\frac{PQ}{PR}$."
+        },
+        {
+          "step": 2,
+          "text_md": "$PR = \\frac{11.1}{\\sin 61^{\\circ}} = 12.69$ cm."
+        },
+        {
+          "step": 3,
+          "text_md": "Triangle $PSR$ has a right angle at $S$, and $PR$ is also its hypotenuse. $PS$ is the side adjacent to $x$, so use the cosine ratio: $\\cos x = \\frac{PS}{PR} = \\frac{6.3}{12.69}$."
+        },
+        {
+          "step": 4,
+          "text_md": "$x = \\cos^{-1}\\left(\\frac{6.3}{12.69}\\right) = 60.2^{\\circ}$ (this uses the unrounded value of $PR$ from the calculator)."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-2:shared-hypotenuse",
+      "family_spec_sha": "06fae7cafa666252455bd7a27d9f61271b4202e7b472712ef08ec0adf99920e4"
+    },
+    {
+      "id": "q:g10m11s1-1-2:g007-shared",
+      "lo_id": "lo:g10m11s1-1-2",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-2:ex11-2-19b",
+      "source_page": 401,
+      "source_note": "Generated from template family tpl:g10m11s1-1-2:shared-hypotenuse.",
+      "stem": "In quadrilateral $PQRS$ the diagonal $PR$ is drawn. The angles at $Q$ and $S$ are right angles. $PQ = \\text{10.4}$ $\\text{cm}$, $PS = \\text{6.7}$ $\\text{cm}$ and $\\angle PRQ = 62^{\\circ}$. Let $x$ be the size of $\\angle SPR$. Calculate $x$ in degrees, correct to one decimal place. Do not round off until the last step.",
+      "correct_answer": "55.3",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Triangle $PQR$ has a right angle at $Q$, so $PR$ is its hypotenuse and $PQ$ is the side opposite $\\angle PRQ$. Use the sine ratio: $\\sin 62^{\\circ} = \\frac{PQ}{PR}$."
+        },
+        {
+          "step": 2,
+          "text_md": "$PR = \\frac{10.4}{\\sin 62^{\\circ}} = 11.78$ cm."
+        },
+        {
+          "step": 3,
+          "text_md": "Triangle $PSR$ has a right angle at $S$, and $PR$ is also its hypotenuse. $PS$ is the side adjacent to $x$, so use the cosine ratio: $\\cos x = \\frac{PS}{PR} = \\frac{6.7}{11.78}$."
+        },
+        {
+          "step": 4,
+          "text_md": "$x = \\cos^{-1}\\left(\\frac{6.7}{11.78}\\right) = 55.3^{\\circ}$ (this uses the unrounded value of $PR$ from the calculator)."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-2:shared-hypotenuse",
+      "family_spec_sha": "06fae7cafa666252455bd7a27d9f61271b4202e7b472712ef08ec0adf99920e4"
+    },
+    {
+      "id": "q:g10m11s1-1-2:g008-shared",
+      "lo_id": "lo:g10m11s1-1-2",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-2:ex11-2-19b",
+      "source_page": 401,
+      "source_note": "Generated from template family tpl:g10m11s1-1-2:shared-hypotenuse.",
+      "stem": "In quadrilateral $PQRS$ the diagonal $PR$ is drawn. The angles at $Q$ and $S$ are right angles. $PQ = \\text{8.1}$ $\\text{cm}$, $PS = \\text{4.2}$ $\\text{cm}$ and $\\angle PRQ = 52^{\\circ}$. Let $x$ be the size of $\\angle SPR$. Calculate $x$ in degrees, correct to one decimal place. Do not round off until the last step.",
+      "correct_answer": "65.9",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Triangle $PQR$ has a right angle at $Q$, so $PR$ is its hypotenuse and $PQ$ is the side opposite $\\angle PRQ$. Use the sine ratio: $\\sin 52^{\\circ} = \\frac{PQ}{PR}$."
+        },
+        {
+          "step": 2,
+          "text_md": "$PR = \\frac{8.1}{\\sin 52^{\\circ}} = 10.28$ cm."
+        },
+        {
+          "step": 3,
+          "text_md": "Triangle $PSR$ has a right angle at $S$, and $PR$ is also its hypotenuse. $PS$ is the side adjacent to $x$, so use the cosine ratio: $\\cos x = \\frac{PS}{PR} = \\frac{4.2}{10.28}$."
+        },
+        {
+          "step": 4,
+          "text_md": "$x = \\cos^{-1}\\left(\\frac{4.2}{10.28}\\right) = 65.9^{\\circ}$ (this uses the unrounded value of $PR$ from the calculator)."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-2:shared-hypotenuse",
+      "family_spec_sha": "06fae7cafa666252455bd7a27d9f61271b4202e7b472712ef08ec0adf99920e4"
+    },
+    {
+      "id": "q:g10m11s1-1-2:g009-shared",
+      "lo_id": "lo:g10m11s1-1-2",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-2:ex11-2-19b",
+      "source_page": 401,
+      "source_note": "Generated from template family tpl:g10m11s1-1-2:shared-hypotenuse.",
+      "stem": "In quadrilateral $PQRS$ the diagonal $PR$ is drawn. The angles at $Q$ and $S$ are right angles. $PQ = \\text{11.5}$ $\\text{cm}$, $PS = \\text{10.5}$ $\\text{cm}$ and $\\angle PRQ = 61^{\\circ}$. Let $x$ be the size of $\\angle SPR$. Calculate $x$ in degrees, correct to one decimal place. Do not round off until the last step.",
+      "correct_answer": "37.0",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Triangle $PQR$ has a right angle at $Q$, so $PR$ is its hypotenuse and $PQ$ is the side opposite $\\angle PRQ$. Use the sine ratio: $\\sin 61^{\\circ} = \\frac{PQ}{PR}$."
+        },
+        {
+          "step": 2,
+          "text_md": "$PR = \\frac{11.5}{\\sin 61^{\\circ}} = 13.15$ cm."
+        },
+        {
+          "step": 3,
+          "text_md": "Triangle $PSR$ has a right angle at $S$, and $PR$ is also its hypotenuse. $PS$ is the side adjacent to $x$, so use the cosine ratio: $\\cos x = \\frac{PS}{PR} = \\frac{10.5}{13.15}$."
+        },
+        {
+          "step": 4,
+          "text_md": "$x = \\cos^{-1}\\left(\\frac{10.5}{13.15}\\right) = 37.0^{\\circ}$ (this uses the unrounded value of $PR$ from the calculator)."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-2:shared-hypotenuse",
+      "family_spec_sha": "06fae7cafa666252455bd7a27d9f61271b4202e7b472712ef08ec0adf99920e4"
+    },
+    {
+      "id": "q:g10m11s1-1-2:g010-shared",
+      "lo_id": "lo:g10m11s1-1-2",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-2:ex11-2-19b",
+      "source_page": 401,
+      "source_note": "Generated from template family tpl:g10m11s1-1-2:shared-hypotenuse.",
+      "stem": "In quadrilateral $PQRS$ the diagonal $PR$ is drawn. The angles at $Q$ and $S$ are right angles. $PQ = \\text{7.6}$ $\\text{cm}$, $PS = \\text{6.8}$ $\\text{cm}$ and $\\angle PRQ = 37^{\\circ}$. Let $x$ be the size of $\\angle SPR$. Calculate $x$ in degrees, correct to one decimal place. Do not round off until the last step.",
+      "correct_answer": "57.4",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Triangle $PQR$ has a right angle at $Q$, so $PR$ is its hypotenuse and $PQ$ is the side opposite $\\angle PRQ$. Use the sine ratio: $\\sin 37^{\\circ} = \\frac{PQ}{PR}$."
+        },
+        {
+          "step": 2,
+          "text_md": "$PR = \\frac{7.6}{\\sin 37^{\\circ}} = 12.63$ cm."
+        },
+        {
+          "step": 3,
+          "text_md": "Triangle $PSR$ has a right angle at $S$, and $PR$ is also its hypotenuse. $PS$ is the side adjacent to $x$, so use the cosine ratio: $\\cos x = \\frac{PS}{PR} = \\frac{6.8}{12.63}$."
+        },
+        {
+          "step": 4,
+          "text_md": "$x = \\cos^{-1}\\left(\\frac{6.8}{12.63}\\right) = 57.4^{\\circ}$ (this uses the unrounded value of $PR$ from the calculator)."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-2:shared-hypotenuse",
+      "family_spec_sha": "06fae7cafa666252455bd7a27d9f61271b4202e7b472712ef08ec0adf99920e4"
+    },
+    {
+      "id": "q:g10m11s1-1-3:g001-depres",
+      "lo_id": "lo:g10m11s1-1-3",
+      "tier": "basic",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-3:we04",
+      "source_page": 395,
+      "source_note": "Generated from template family tpl:g10m11s1-1-3:depression-distance.",
+      "stem": "Sipho stands on the roof of a block of flats that is $80$ m high. From there he looks down at the base of a cellphone tower that stands on the same level ground as the block. The angle of depression of the base of the tower, from Sipho, is $40^\\circ$. How far is the base of the tower from the base of the block of flats, to the nearest metre? (Treat Sipho as a point on the roof.)",
+      "correct_answer": "95",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Draw a horizontal line from Sipho on the roof. The angle of depression, $40^\\circ$, is measured from this horizontal line down to his line of sight to the base of the tower. It is not measured from the vertical."
+        },
+        {
+          "step": 2,
+          "text_md": "The horizontal line is parallel to the ground, so the vertical drop from it to the base of the tower equals the height of the block, $80$ m. Let $d$ be the horizontal distance from the block to the tower. The right-angled triangle has the angle $40^\\circ$ at Sipho, the side of $80$ m opposite it, and the side $d$ adjacent to it."
+        },
+        {
+          "step": 3,
+          "text_md": "$\\begin{aligned}\\tan 40^{\\circ}&=\\frac{80}{d}\\\\d&=\\frac{80}{\\tan 40^{\\circ}}\\\\&\\approx 95.34\\end{aligned}$"
+        },
+        {
+          "step": 4,
+          "text_md": "To the nearest metre, the base of the tower is $95$ m from the base of the block of flats."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-3:depression-distance",
+      "family_spec_sha": "b970f0565405f6412ddf612f5cf114a168f2cd2251983460e2c5abb5025a7276"
+    },
+    {
+      "id": "q:g10m11s1-1-3:g002-depres",
+      "lo_id": "lo:g10m11s1-1-3",
+      "tier": "basic",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-3:we04",
+      "source_page": 395,
+      "source_note": "Generated from template family tpl:g10m11s1-1-3:depression-distance.",
+      "stem": "Sipho stands on the roof of a block of flats that is $48$ m high. From there he looks down at the base of a cellphone tower that stands on the same level ground as the block. The angle of depression of the base of the tower, from Sipho, is $30^\\circ$. How far is the base of the tower from the base of the block of flats, to the nearest metre? (Treat Sipho as a point on the roof.)",
+      "correct_answer": "83",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Draw a horizontal line from Sipho on the roof. The angle of depression, $30^\\circ$, is measured from this horizontal line down to his line of sight to the base of the tower. It is not measured from the vertical."
+        },
+        {
+          "step": 2,
+          "text_md": "The horizontal line is parallel to the ground, so the vertical drop from it to the base of the tower equals the height of the block, $48$ m. Let $d$ be the horizontal distance from the block to the tower. The right-angled triangle has the angle $30^\\circ$ at Sipho, the side of $48$ m opposite it, and the side $d$ adjacent to it."
+        },
+        {
+          "step": 3,
+          "text_md": "$\\begin{aligned}\\tan 30^{\\circ}&=\\frac{48}{d}\\\\d&=\\frac{48}{\\tan 30^{\\circ}}\\\\&\\approx 83.14\\end{aligned}$"
+        },
+        {
+          "step": 4,
+          "text_md": "To the nearest metre, the base of the tower is $83$ m from the base of the block of flats."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-3:depression-distance",
+      "family_spec_sha": "b970f0565405f6412ddf612f5cf114a168f2cd2251983460e2c5abb5025a7276"
+    },
+    {
+      "id": "q:g10m11s1-1-3:g003-depres",
+      "lo_id": "lo:g10m11s1-1-3",
+      "tier": "basic",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-3:we04",
+      "source_page": 395,
+      "source_note": "Generated from template family tpl:g10m11s1-1-3:depression-distance.",
+      "stem": "Sipho stands on the roof of a block of flats that is $30$ m high. From there he looks down at the base of a cellphone tower that stands on the same level ground as the block. The angle of depression of the base of the tower, from Sipho, is $42^\\circ$. How far is the base of the tower from the base of the block of flats, to the nearest metre? (Treat Sipho as a point on the roof.)",
+      "correct_answer": "33",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Draw a horizontal line from Sipho on the roof. The angle of depression, $42^\\circ$, is measured from this horizontal line down to his line of sight to the base of the tower. It is not measured from the vertical."
+        },
+        {
+          "step": 2,
+          "text_md": "The horizontal line is parallel to the ground, so the vertical drop from it to the base of the tower equals the height of the block, $30$ m. Let $d$ be the horizontal distance from the block to the tower. The right-angled triangle has the angle $42^\\circ$ at Sipho, the side of $30$ m opposite it, and the side $d$ adjacent to it."
+        },
+        {
+          "step": 3,
+          "text_md": "$\\begin{aligned}\\tan 42^{\\circ}&=\\frac{30}{d}\\\\d&=\\frac{30}{\\tan 42^{\\circ}}\\\\&\\approx 33.32\\end{aligned}$"
+        },
+        {
+          "step": 4,
+          "text_md": "To the nearest metre, the base of the tower is $33$ m from the base of the block of flats."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-3:depression-distance",
+      "family_spec_sha": "b970f0565405f6412ddf612f5cf114a168f2cd2251983460e2c5abb5025a7276"
+    },
+    {
+      "id": "q:g10m11s1-1-3:g004-depres",
+      "lo_id": "lo:g10m11s1-1-3",
+      "tier": "basic",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-3:we04",
+      "source_page": 395,
+      "source_note": "Generated from template family tpl:g10m11s1-1-3:depression-distance.",
+      "stem": "Sipho stands on the roof of a block of flats that is $54$ m high. From there he looks down at the base of a cellphone tower that stands on the same level ground as the block. The angle of depression of the base of the tower, from Sipho, is $52^\\circ$. How far is the base of the tower from the base of the block of flats, to the nearest metre? (Treat Sipho as a point on the roof.)",
+      "correct_answer": "42",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Draw a horizontal line from Sipho on the roof. The angle of depression, $52^\\circ$, is measured from this horizontal line down to his line of sight to the base of the tower. It is not measured from the vertical."
+        },
+        {
+          "step": 2,
+          "text_md": "The horizontal line is parallel to the ground, so the vertical drop from it to the base of the tower equals the height of the block, $54$ m. Let $d$ be the horizontal distance from the block to the tower. The right-angled triangle has the angle $52^\\circ$ at Sipho, the side of $54$ m opposite it, and the side $d$ adjacent to it."
+        },
+        {
+          "step": 3,
+          "text_md": "$\\begin{aligned}\\tan 52^{\\circ}&=\\frac{54}{d}\\\\d&=\\frac{54}{\\tan 52^{\\circ}}\\\\&\\approx 42.19\\end{aligned}$"
+        },
+        {
+          "step": 4,
+          "text_md": "To the nearest metre, the base of the tower is $42$ m from the base of the block of flats."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-3:depression-distance",
+      "family_spec_sha": "b970f0565405f6412ddf612f5cf114a168f2cd2251983460e2c5abb5025a7276"
+    },
+    {
+      "id": "q:g10m11s1-1-3:g005-depres",
+      "lo_id": "lo:g10m11s1-1-3",
+      "tier": "basic",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-3:we04",
+      "source_page": 395,
+      "source_note": "Generated from template family tpl:g10m11s1-1-3:depression-distance.",
+      "stem": "Sipho stands on the roof of a block of flats that is $24$ m high. From there he looks down at the base of a cellphone tower that stands on the same level ground as the block. The angle of depression of the base of the tower, from Sipho, is $20^\\circ$. How far is the base of the tower from the base of the block of flats, to the nearest metre? (Treat Sipho as a point on the roof.)",
+      "correct_answer": "66",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Draw a horizontal line from Sipho on the roof. The angle of depression, $20^\\circ$, is measured from this horizontal line down to his line of sight to the base of the tower. It is not measured from the vertical."
+        },
+        {
+          "step": 2,
+          "text_md": "The horizontal line is parallel to the ground, so the vertical drop from it to the base of the tower equals the height of the block, $24$ m. Let $d$ be the horizontal distance from the block to the tower. The right-angled triangle has the angle $20^\\circ$ at Sipho, the side of $24$ m opposite it, and the side $d$ adjacent to it."
+        },
+        {
+          "step": 3,
+          "text_md": "$\\begin{aligned}\\tan 20^{\\circ}&=\\frac{24}{d}\\\\d&=\\frac{24}{\\tan 20^{\\circ}}\\\\&\\approx 65.94\\end{aligned}$"
+        },
+        {
+          "step": 4,
+          "text_md": "To the nearest metre, the base of the tower is $66$ m from the base of the block of flats."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-3:depression-distance",
+      "family_spec_sha": "b970f0565405f6412ddf612f5cf114a168f2cd2251983460e2c5abb5025a7276"
+    },
+    {
+      "id": "q:g10m11s1-1-3:g006-depres",
+      "lo_id": "lo:g10m11s1-1-3",
+      "tier": "basic",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-3:we04",
+      "source_page": 395,
+      "source_note": "Generated from template family tpl:g10m11s1-1-3:depression-distance.",
+      "stem": "Sipho stands on the roof of a block of flats that is $90$ m high. From there he looks down at the base of a cellphone tower that stands on the same level ground as the block. The angle of depression of the base of the tower, from Sipho, is $20^\\circ$. How far is the base of the tower from the base of the block of flats, to the nearest metre? (Treat Sipho as a point on the roof.)",
+      "correct_answer": "247",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Draw a horizontal line from Sipho on the roof. The angle of depression, $20^\\circ$, is measured from this horizontal line down to his line of sight to the base of the tower. It is not measured from the vertical."
+        },
+        {
+          "step": 2,
+          "text_md": "The horizontal line is parallel to the ground, so the vertical drop from it to the base of the tower equals the height of the block, $90$ m. Let $d$ be the horizontal distance from the block to the tower. The right-angled triangle has the angle $20^\\circ$ at Sipho, the side of $90$ m opposite it, and the side $d$ adjacent to it."
+        },
+        {
+          "step": 3,
+          "text_md": "$\\begin{aligned}\\tan 20^{\\circ}&=\\frac{90}{d}\\\\d&=\\frac{90}{\\tan 20^{\\circ}}\\\\&\\approx 247.27\\end{aligned}$"
+        },
+        {
+          "step": 4,
+          "text_md": "To the nearest metre, the base of the tower is $247$ m from the base of the block of flats."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-3:depression-distance",
+      "family_spec_sha": "b970f0565405f6412ddf612f5cf114a168f2cd2251983460e2c5abb5025a7276"
+    },
+    {
+      "id": "q:g10m11s1-1-3:g007-depres",
+      "lo_id": "lo:g10m11s1-1-3",
+      "tier": "basic",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-3:we04",
+      "source_page": 395,
+      "source_note": "Generated from template family tpl:g10m11s1-1-3:depression-distance.",
+      "stem": "Sipho stands on the roof of a block of flats that is $50$ m high. From there he looks down at the base of a cellphone tower that stands on the same level ground as the block. The angle of depression of the base of the tower, from Sipho, is $25^\\circ$. How far is the base of the tower from the base of the block of flats, to the nearest metre? (Treat Sipho as a point on the roof.)",
+      "correct_answer": "107",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Draw a horizontal line from Sipho on the roof. The angle of depression, $25^\\circ$, is measured from this horizontal line down to his line of sight to the base of the tower. It is not measured from the vertical."
+        },
+        {
+          "step": 2,
+          "text_md": "The horizontal line is parallel to the ground, so the vertical drop from it to the base of the tower equals the height of the block, $50$ m. Let $d$ be the horizontal distance from the block to the tower. The right-angled triangle has the angle $25^\\circ$ at Sipho, the side of $50$ m opposite it, and the side $d$ adjacent to it."
+        },
+        {
+          "step": 3,
+          "text_md": "$\\begin{aligned}\\tan 25^{\\circ}&=\\frac{50}{d}\\\\d&=\\frac{50}{\\tan 25^{\\circ}}\\\\&\\approx 107.23\\end{aligned}$"
+        },
+        {
+          "step": 4,
+          "text_md": "To the nearest metre, the base of the tower is $107$ m from the base of the block of flats."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-3:depression-distance",
+      "family_spec_sha": "b970f0565405f6412ddf612f5cf114a168f2cd2251983460e2c5abb5025a7276"
+    },
+    {
+      "id": "q:g10m11s1-1-3:g008-depres",
+      "lo_id": "lo:g10m11s1-1-3",
+      "tier": "basic",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-3:we04",
+      "source_page": 395,
+      "source_note": "Generated from template family tpl:g10m11s1-1-3:depression-distance.",
+      "stem": "Sipho stands on the roof of a block of flats that is $30$ m high. From there he looks down at the base of a cellphone tower that stands on the same level ground as the block. The angle of depression of the base of the tower, from Sipho, is $38^\\circ$. How far is the base of the tower from the base of the block of flats, to the nearest metre? (Treat Sipho as a point on the roof.)",
+      "correct_answer": "38",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Draw a horizontal line from Sipho on the roof. The angle of depression, $38^\\circ$, is measured from this horizontal line down to his line of sight to the base of the tower. It is not measured from the vertical."
+        },
+        {
+          "step": 2,
+          "text_md": "The horizontal line is parallel to the ground, so the vertical drop from it to the base of the tower equals the height of the block, $30$ m. Let $d$ be the horizontal distance from the block to the tower. The right-angled triangle has the angle $38^\\circ$ at Sipho, the side of $30$ m opposite it, and the side $d$ adjacent to it."
+        },
+        {
+          "step": 3,
+          "text_md": "$\\begin{aligned}\\tan 38^{\\circ}&=\\frac{30}{d}\\\\d&=\\frac{30}{\\tan 38^{\\circ}}\\\\&\\approx 38.40\\end{aligned}$"
+        },
+        {
+          "step": 4,
+          "text_md": "To the nearest metre, the base of the tower is $38$ m from the base of the block of flats."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-3:depression-distance",
+      "family_spec_sha": "b970f0565405f6412ddf612f5cf114a168f2cd2251983460e2c5abb5025a7276"
+    },
+    {
+      "id": "q:g10m11s1-1-3:g009-depres",
+      "lo_id": "lo:g10m11s1-1-3",
+      "tier": "basic",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-3:we04",
+      "source_page": 395,
+      "source_note": "Generated from template family tpl:g10m11s1-1-3:depression-distance.",
+      "stem": "Sipho stands on the roof of a block of flats that is $120$ m high. From there he looks down at the base of a cellphone tower that stands on the same level ground as the block. The angle of depression of the base of the tower, from Sipho, is $25^\\circ$. How far is the base of the tower from the base of the block of flats, to the nearest metre? (Treat Sipho as a point on the roof.)",
+      "correct_answer": "257",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Draw a horizontal line from Sipho on the roof. The angle of depression, $25^\\circ$, is measured from this horizontal line down to his line of sight to the base of the tower. It is not measured from the vertical."
+        },
+        {
+          "step": 2,
+          "text_md": "The horizontal line is parallel to the ground, so the vertical drop from it to the base of the tower equals the height of the block, $120$ m. Let $d$ be the horizontal distance from the block to the tower. The right-angled triangle has the angle $25^\\circ$ at Sipho, the side of $120$ m opposite it, and the side $d$ adjacent to it."
+        },
+        {
+          "step": 3,
+          "text_md": "$\\begin{aligned}\\tan 25^{\\circ}&=\\frac{120}{d}\\\\d&=\\frac{120}{\\tan 25^{\\circ}}\\\\&\\approx 257.34\\end{aligned}$"
+        },
+        {
+          "step": 4,
+          "text_md": "To the nearest metre, the base of the tower is $257$ m from the base of the block of flats."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-3:depression-distance",
+      "family_spec_sha": "b970f0565405f6412ddf612f5cf114a168f2cd2251983460e2c5abb5025a7276"
+    },
+    {
+      "id": "q:g10m11s1-1-3:g010-depres",
+      "lo_id": "lo:g10m11s1-1-3",
+      "tier": "basic",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-3:we04",
+      "source_page": 395,
+      "source_note": "Generated from template family tpl:g10m11s1-1-3:depression-distance.",
+      "stem": "Sipho stands on the roof of a block of flats that is $24$ m high. From there he looks down at the base of a cellphone tower that stands on the same level ground as the block. The angle of depression of the base of the tower, from Sipho, is $52^\\circ$. How far is the base of the tower from the base of the block of flats, to the nearest metre? (Treat Sipho as a point on the roof.)",
+      "correct_answer": "19",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Draw a horizontal line from Sipho on the roof. The angle of depression, $52^\\circ$, is measured from this horizontal line down to his line of sight to the base of the tower. It is not measured from the vertical."
+        },
+        {
+          "step": 2,
+          "text_md": "The horizontal line is parallel to the ground, so the vertical drop from it to the base of the tower equals the height of the block, $24$ m. Let $d$ be the horizontal distance from the block to the tower. The right-angled triangle has the angle $52^\\circ$ at Sipho, the side of $24$ m opposite it, and the side $d$ adjacent to it."
+        },
+        {
+          "step": 3,
+          "text_md": "$\\begin{aligned}\\tan 52^{\\circ}&=\\frac{24}{d}\\\\d&=\\frac{24}{\\tan 52^{\\circ}}\\\\&\\approx 18.75\\end{aligned}$"
+        },
+        {
+          "step": 4,
+          "text_md": "To the nearest metre, the base of the tower is $19$ m from the base of the block of flats."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-3:depression-distance",
+      "family_spec_sha": "b970f0565405f6412ddf612f5cf114a168f2cd2251983460e2c5abb5025a7276"
+    },
+    {
+      "id": "q:g10m11s1-1-3:g001-elevat",
+      "lo_id": "lo:g10m11s1-1-3",
+      "tier": "basic",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-3:ex11-2-8b",
+      "source_page": 399,
+      "source_note": "Generated from template family tpl:g10m11s1-1-3:elevation-height.",
+      "stem": "Nandi is standing on level ground $35$ m away from a tall tower. From her position, the angle of elevation of the top of the tower is $20^\\circ$. What is the height of the tower, correct to two decimal places? (Ignore Nandi's own height.)",
+      "correct_answer": "12.74",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "The tower stands vertically on level ground, so the tower, the ground and Nandi's line of sight to the top of the tower form a right-angled triangle. The angle of elevation, $20^\\circ$, is the angle at Nandi between the horizontal ground and her line of sight up to the top of the tower."
+        },
+        {
+          "step": 2,
+          "text_md": "Call the height of the tower $x$. Relative to the angle $20^\\circ$, the side $x$ is opposite and the $35$ m along the ground is adjacent. We know the adjacent side and want the opposite side, so use the tangent ratio."
+        },
+        {
+          "step": 3,
+          "text_md": "$\\begin{aligned}\\tan 20^{\\circ}&=\\frac{x}{35}\\\\x&=35\\tan 20^{\\circ}\\\\&\\approx 12.7390\\end{aligned}$"
+        },
+        {
+          "step": 4,
+          "text_md": "Round to two decimal places: the height of the tower is $12.74$ m."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-3:elevation-height",
+      "family_spec_sha": "909cf232c94fc3e12ec84e6eb64187ed096624377f802efbc0fea32d5723d723"
+    },
+    {
+      "id": "q:g10m11s1-1-3:g002-elevat",
+      "lo_id": "lo:g10m11s1-1-3",
+      "tier": "basic",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-3:ex11-2-8b",
+      "source_page": 399,
+      "source_note": "Generated from template family tpl:g10m11s1-1-3:elevation-height.",
+      "stem": "Nandi is standing on level ground $30$ m away from a tall tower. From her position, the angle of elevation of the top of the tower is $58^\\circ$. What is the height of the tower, correct to two decimal places? (Ignore Nandi's own height.)",
+      "correct_answer": "48.01",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "The tower stands vertically on level ground, so the tower, the ground and Nandi's line of sight to the top of the tower form a right-angled triangle. The angle of elevation, $58^\\circ$, is the angle at Nandi between the horizontal ground and her line of sight up to the top of the tower."
+        },
+        {
+          "step": 2,
+          "text_md": "Call the height of the tower $x$. Relative to the angle $58^\\circ$, the side $x$ is opposite and the $30$ m along the ground is adjacent. We know the adjacent side and want the opposite side, so use the tangent ratio."
+        },
+        {
+          "step": 3,
+          "text_md": "$\\begin{aligned}\\tan 58^{\\circ}&=\\frac{x}{30}\\\\x&=30\\tan 58^{\\circ}\\\\&\\approx 48.0100\\end{aligned}$"
+        },
+        {
+          "step": 4,
+          "text_md": "Round to two decimal places: the height of the tower is $48.01$ m."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-3:elevation-height",
+      "family_spec_sha": "909cf232c94fc3e12ec84e6eb64187ed096624377f802efbc0fea32d5723d723"
+    },
+    {
+      "id": "q:g10m11s1-1-3:g003-elevat",
+      "lo_id": "lo:g10m11s1-1-3",
+      "tier": "basic",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-3:ex11-2-8b",
+      "source_page": 399,
+      "source_note": "Generated from template family tpl:g10m11s1-1-3:elevation-height.",
+      "stem": "Nandi is standing on level ground $85$ m away from a tall tower. From her position, the angle of elevation of the top of the tower is $48^\\circ$. What is the height of the tower, correct to two decimal places? (Ignore Nandi's own height.)",
+      "correct_answer": "94.40",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "The tower stands vertically on level ground, so the tower, the ground and Nandi's line of sight to the top of the tower form a right-angled triangle. The angle of elevation, $48^\\circ$, is the angle at Nandi between the horizontal ground and her line of sight up to the top of the tower."
+        },
+        {
+          "step": 2,
+          "text_md": "Call the height of the tower $x$. Relative to the angle $48^\\circ$, the side $x$ is opposite and the $85$ m along the ground is adjacent. We know the adjacent side and want the opposite side, so use the tangent ratio."
+        },
+        {
+          "step": 3,
+          "text_md": "$\\begin{aligned}\\tan 48^{\\circ}&=\\frac{x}{85}\\\\x&=85\\tan 48^{\\circ}\\\\&\\approx 94.4021\\end{aligned}$"
+        },
+        {
+          "step": 4,
+          "text_md": "Round to two decimal places: the height of the tower is $94.40$ m."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-3:elevation-height",
+      "family_spec_sha": "909cf232c94fc3e12ec84e6eb64187ed096624377f802efbc0fea32d5723d723"
+    },
+    {
+      "id": "q:g10m11s1-1-3:g004-elevat",
+      "lo_id": "lo:g10m11s1-1-3",
+      "tier": "basic",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-3:ex11-2-8b",
+      "source_page": 399,
+      "source_note": "Generated from template family tpl:g10m11s1-1-3:elevation-height.",
+      "stem": "Nandi is standing on level ground $30$ m away from a tall tower. From her position, the angle of elevation of the top of the tower is $35^\\circ$. What is the height of the tower, correct to two decimal places? (Ignore Nandi's own height.)",
+      "correct_answer": "21.01",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "The tower stands vertically on level ground, so the tower, the ground and Nandi's line of sight to the top of the tower form a right-angled triangle. The angle of elevation, $35^\\circ$, is the angle at Nandi between the horizontal ground and her line of sight up to the top of the tower."
+        },
+        {
+          "step": 2,
+          "text_md": "Call the height of the tower $x$. Relative to the angle $35^\\circ$, the side $x$ is opposite and the $30$ m along the ground is adjacent. We know the adjacent side and want the opposite side, so use the tangent ratio."
+        },
+        {
+          "step": 3,
+          "text_md": "$\\begin{aligned}\\tan 35^{\\circ}&=\\frac{x}{30}\\\\x&=30\\tan 35^{\\circ}\\\\&\\approx 21.0062\\end{aligned}$"
+        },
+        {
+          "step": 4,
+          "text_md": "Round to two decimal places: the height of the tower is $21.01$ m."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-3:elevation-height",
+      "family_spec_sha": "909cf232c94fc3e12ec84e6eb64187ed096624377f802efbc0fea32d5723d723"
+    },
+    {
+      "id": "q:g10m11s1-1-3:g005-elevat",
+      "lo_id": "lo:g10m11s1-1-3",
+      "tier": "basic",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-3:ex11-2-8b",
+      "source_page": 399,
+      "source_note": "Generated from template family tpl:g10m11s1-1-3:elevation-height.",
+      "stem": "Nandi is standing on level ground $35$ m away from a tall tower. From her position, the angle of elevation of the top of the tower is $58^\\circ$. What is the height of the tower, correct to two decimal places? (Ignore Nandi's own height.)",
+      "correct_answer": "56.01",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "The tower stands vertically on level ground, so the tower, the ground and Nandi's line of sight to the top of the tower form a right-angled triangle. The angle of elevation, $58^\\circ$, is the angle at Nandi between the horizontal ground and her line of sight up to the top of the tower."
+        },
+        {
+          "step": 2,
+          "text_md": "Call the height of the tower $x$. Relative to the angle $58^\\circ$, the side $x$ is opposite and the $35$ m along the ground is adjacent. We know the adjacent side and want the opposite side, so use the tangent ratio."
+        },
+        {
+          "step": 3,
+          "text_md": "$\\begin{aligned}\\tan 58^{\\circ}&=\\frac{x}{35}\\\\x&=35\\tan 58^{\\circ}\\\\&\\approx 56.0117\\end{aligned}$"
+        },
+        {
+          "step": 4,
+          "text_md": "Round to two decimal places: the height of the tower is $56.01$ m."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-3:elevation-height",
+      "family_spec_sha": "909cf232c94fc3e12ec84e6eb64187ed096624377f802efbc0fea32d5723d723"
+    },
+    {
+      "id": "q:g10m11s1-1-3:g006-elevat",
+      "lo_id": "lo:g10m11s1-1-3",
+      "tier": "basic",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-3:ex11-2-8b",
+      "source_page": 399,
+      "source_note": "Generated from template family tpl:g10m11s1-1-3:elevation-height.",
+      "stem": "Nandi is standing on level ground $65$ m away from a tall tower. From her position, the angle of elevation of the top of the tower is $32^\\circ$. What is the height of the tower, correct to two decimal places? (Ignore Nandi's own height.)",
+      "correct_answer": "40.62",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "The tower stands vertically on level ground, so the tower, the ground and Nandi's line of sight to the top of the tower form a right-angled triangle. The angle of elevation, $32^\\circ$, is the angle at Nandi between the horizontal ground and her line of sight up to the top of the tower."
+        },
+        {
+          "step": 2,
+          "text_md": "Call the height of the tower $x$. Relative to the angle $32^\\circ$, the side $x$ is opposite and the $65$ m along the ground is adjacent. We know the adjacent side and want the opposite side, so use the tangent ratio."
+        },
+        {
+          "step": 3,
+          "text_md": "$\\begin{aligned}\\tan 32^{\\circ}&=\\frac{x}{65}\\\\x&=65\\tan 32^{\\circ}\\\\&\\approx 40.6165\\end{aligned}$"
+        },
+        {
+          "step": 4,
+          "text_md": "Round to two decimal places: the height of the tower is $40.62$ m."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-3:elevation-height",
+      "family_spec_sha": "909cf232c94fc3e12ec84e6eb64187ed096624377f802efbc0fea32d5723d723"
+    },
+    {
+      "id": "q:g10m11s1-1-3:g007-elevat",
+      "lo_id": "lo:g10m11s1-1-3",
+      "tier": "basic",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-3:ex11-2-8b",
+      "source_page": 399,
+      "source_note": "Generated from template family tpl:g10m11s1-1-3:elevation-height.",
+      "stem": "Nandi is standing on level ground $35$ m away from a tall tower. From her position, the angle of elevation of the top of the tower is $32^\\circ$. What is the height of the tower, correct to two decimal places? (Ignore Nandi's own height.)",
+      "correct_answer": "21.87",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "The tower stands vertically on level ground, so the tower, the ground and Nandi's line of sight to the top of the tower form a right-angled triangle. The angle of elevation, $32^\\circ$, is the angle at Nandi between the horizontal ground and her line of sight up to the top of the tower."
+        },
+        {
+          "step": 2,
+          "text_md": "Call the height of the tower $x$. Relative to the angle $32^\\circ$, the side $x$ is opposite and the $35$ m along the ground is adjacent. We know the adjacent side and want the opposite side, so use the tangent ratio."
+        },
+        {
+          "step": 3,
+          "text_md": "$\\begin{aligned}\\tan 32^{\\circ}&=\\frac{x}{35}\\\\x&=35\\tan 32^{\\circ}\\\\&\\approx 21.8704\\end{aligned}$"
+        },
+        {
+          "step": 4,
+          "text_md": "Round to two decimal places: the height of the tower is $21.87$ m."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-3:elevation-height",
+      "family_spec_sha": "909cf232c94fc3e12ec84e6eb64187ed096624377f802efbc0fea32d5723d723"
+    },
+    {
+      "id": "q:g10m11s1-1-3:g008-elevat",
+      "lo_id": "lo:g10m11s1-1-3",
+      "tier": "basic",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-3:ex11-2-8b",
+      "source_page": 399,
+      "source_note": "Generated from template family tpl:g10m11s1-1-3:elevation-height.",
+      "stem": "Nandi is standing on level ground $85$ m away from a tall tower. From her position, the angle of elevation of the top of the tower is $58^\\circ$. What is the height of the tower, correct to two decimal places? (Ignore Nandi's own height.)",
+      "correct_answer": "136.03",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "The tower stands vertically on level ground, so the tower, the ground and Nandi's line of sight to the top of the tower form a right-angled triangle. The angle of elevation, $58^\\circ$, is the angle at Nandi between the horizontal ground and her line of sight up to the top of the tower."
+        },
+        {
+          "step": 2,
+          "text_md": "Call the height of the tower $x$. Relative to the angle $58^\\circ$, the side $x$ is opposite and the $85$ m along the ground is adjacent. We know the adjacent side and want the opposite side, so use the tangent ratio."
+        },
+        {
+          "step": 3,
+          "text_md": "$\\begin{aligned}\\tan 58^{\\circ}&=\\frac{x}{85}\\\\x&=85\\tan 58^{\\circ}\\\\&\\approx 136.0284\\end{aligned}$"
+        },
+        {
+          "step": 4,
+          "text_md": "Round to two decimal places: the height of the tower is $136.03$ m."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-3:elevation-height",
+      "family_spec_sha": "909cf232c94fc3e12ec84e6eb64187ed096624377f802efbc0fea32d5723d723"
+    },
+    {
+      "id": "q:g10m11s1-1-3:g009-elevat",
+      "lo_id": "lo:g10m11s1-1-3",
+      "tier": "basic",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-3:ex11-2-8b",
+      "source_page": 399,
+      "source_note": "Generated from template family tpl:g10m11s1-1-3:elevation-height.",
+      "stem": "Nandi is standing on level ground $45$ m away from a tall tower. From her position, the angle of elevation of the top of the tower is $62^\\circ$. What is the height of the tower, correct to two decimal places? (Ignore Nandi's own height.)",
+      "correct_answer": "84.63",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "The tower stands vertically on level ground, so the tower, the ground and Nandi's line of sight to the top of the tower form a right-angled triangle. The angle of elevation, $62^\\circ$, is the angle at Nandi between the horizontal ground and her line of sight up to the top of the tower."
+        },
+        {
+          "step": 2,
+          "text_md": "Call the height of the tower $x$. Relative to the angle $62^\\circ$, the side $x$ is opposite and the $45$ m along the ground is adjacent. We know the adjacent side and want the opposite side, so use the tangent ratio."
+        },
+        {
+          "step": 3,
+          "text_md": "$\\begin{aligned}\\tan 62^{\\circ}&=\\frac{x}{45}\\\\x&=45\\tan 62^{\\circ}\\\\&\\approx 84.6327\\end{aligned}$"
+        },
+        {
+          "step": 4,
+          "text_md": "Round to two decimal places: the height of the tower is $84.63$ m."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-3:elevation-height",
+      "family_spec_sha": "909cf232c94fc3e12ec84e6eb64187ed096624377f802efbc0fea32d5723d723"
+    },
+    {
+      "id": "q:g10m11s1-1-3:g010-elevat",
+      "lo_id": "lo:g10m11s1-1-3",
+      "tier": "basic",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m11s1-1-3:ex11-2-8b",
+      "source_page": 399,
+      "source_note": "Generated from template family tpl:g10m11s1-1-3:elevation-height.",
+      "stem": "Nandi is standing on level ground $80$ m away from a tall tower. From her position, the angle of elevation of the top of the tower is $40^\\circ$. What is the height of the tower, correct to two decimal places? (Ignore Nandi's own height.)",
+      "correct_answer": "67.13",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "The tower stands vertically on level ground, so the tower, the ground and Nandi's line of sight to the top of the tower form a right-angled triangle. The angle of elevation, $40^\\circ$, is the angle at Nandi between the horizontal ground and her line of sight up to the top of the tower."
+        },
+        {
+          "step": 2,
+          "text_md": "Call the height of the tower $x$. Relative to the angle $40^\\circ$, the side $x$ is opposite and the $80$ m along the ground is adjacent. We know the adjacent side and want the opposite side, so use the tangent ratio."
+        },
+        {
+          "step": 3,
+          "text_md": "$\\begin{aligned}\\tan 40^{\\circ}&=\\frac{x}{80}\\\\x&=80\\tan 40^{\\circ}\\\\&\\approx 67.1280\\end{aligned}$"
+        },
+        {
+          "step": 4,
+          "text_md": "Round to two decimal places: the height of the tower is $67.13$ m."
+        }
+      ],
+      "family": "tpl:g10m11s1-1-3:elevation-height",
+      "family_spec_sha": "909cf232c94fc3e12ec84e6eb64187ed096624377f802efbc0fea32d5723d723"
+    }
+  ],
+  "s5_reconciled": {
+    "runs": [
+      "final-ch11-wf_5f004de2-ea5.json"
+    ],
+    "catalogue": "g10-math-misconceptions",
+    "refused_attachments_stripped": [],
+    "widgets_left_out": []
+  }
+}
