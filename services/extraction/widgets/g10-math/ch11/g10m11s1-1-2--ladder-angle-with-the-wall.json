@@ -1,0 +1,32 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m11s1-1-2:ladder-angle-with-the-wall",
+ "lo_id": "lo:g10m11s1-1-2",
+ "parent_question_id": "q:g10m11s1-1-2:ex11-2-1",
+ "tier": "basic",
+ "kind": "triangle_ratio",
+ "spec": {
+  "ask": "sin",
+  "target": 0.6
+ },
+ "stem": "A $\\text{25}$ $\\text{m}$ ladder rests against a vertical wall with its foot $\\text{15}$ $\\text{m}$ from the wall. Build a right triangle, of any size, whose marked angle $\\theta$ equals the angle between the ladder and the wall.",
+ "solution": [
+  "Picture the ladder, the wall and the ground as a right triangle. The ladder is the hypotenuse (25 m), the side opposite the right angle and the longest side.",
+  "The angle $\\theta$ the question wants is the one between the ladder and the WALL, at the top of the ladder. It is not the angle at the foot of the ladder.",
+  "Read the sides from that angle: the foot's distance from the wall (15 m) lies across from $\\theta$, so it is the opposite side. The wall itself touches $\\theta$, so it is the adjacent side.",
+  "The two sides we know are the opposite side and the hypotenuse, so the ratio is the sine: $\\sin\\theta = \\frac{15}{25} = 0.6$.",
+  "Triangles with the same angle have the same ratio, whatever their size. Drag the legs until the sine reads 0.6: legs 3 and 4 (hypotenuse 5), legs 6 and 8, or the ladder's own 15 and 20 all work.",
+  "Check against the book's method: $\\theta = \\sin^{-1}(0.6) \\approx 36.87^\\circ$, the angle between the ladder and the wall."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "used-cosine",
+   "misconception_id": "mc:g10m11s1-1-2:names-sides-from-wrong-angle"
+  },
+  {
+   "predicate": "used-tangent",
+   "misconception_id": "mc:g10m5s3-1-2:sine-as-opposite-over-adjacent"
+  }
+ ],
+ "notes": "Why it fits LO2: the two given sides (foot distance = opposite, ladder = hypotenuse) fix a ratio, and the ratio fixes the angle. 'Any size of triangle, same angle' is exactly why the angle can be recovered from two sides. The stem never names sine: choosing which of the three live readouts to match is the 'choose the appropriate ratio' step, and the grading property is 'the angle between ladder and wall', which any similar triangle satisfies. The trap is the book's own (ex11-2-1): a student who pictures the angle at the foot, where the ladder meets the ground, sets cos = 0.6 and fires used-cosine, which is this objective's own misconception. used-tangent is mapped to the sine-as-opposite-over-adjacent error (a sine built from the two legs); a student who instead treats the ladder as a leg would fire the same predicate, and that cause is not separately named. off-target is left unmapped because it fires for many unrelated reasons. The question relies only on 'opposite' and 'next to' the marked angle, never on where the angle sits on screen. 15:25 is 3:5, so sin = 0.6 sits inside the instrument's limits (sin target below 1). NOT covered by this template: the inverse-key and rounding steps (misconceptions ratio-key-instead-of-inverse and rounds-angle-too-coarsely). Those are calculator moves with no construction in them, so they stay with the numeric book questions."
+}

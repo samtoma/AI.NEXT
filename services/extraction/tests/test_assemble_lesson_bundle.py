@@ -602,6 +602,113 @@ class ConsistencyReviewTest(unittest.TestCase):
             book_config.FormRule(match="x", form="subject")
 
 
+class NestedDollarTest(unittest.TestCase):
+    """Chapter 13's solutions put the unit inside the maths the way the EPUB's MathJax writes it, `\\text{cm$^{3}$}` (a `$` inside `\\text{}` switches back to
+    maths for the exponent). The app's TeXRenderer splits on `/(\\$[^$]+\\$)/g` and knows no nesting: the inner `$` closed the segment, KaTeX was handed
+    `\\begin{aligned}…\\text{cm` and then `}\\end{aligned}`, and 93 display problems refused the chapter at the load-free validation. Written in maths mode,
+    `\\text{cm}^{3}`, with no `$` inside a maths segment; an escaped currency `\\$`, a real delimiter and a group whose `$` do not pair are left as they are."""
+
+    # the chapter's own shapes (lessons g10m13s2-1 … s4-1): a unit at the end of an aligned block, after another \text, alone, and in the book's final line
+    ROWS = {
+        "$\\text{cm$^{3}$}$": "$\\text{cm}^{3}$",
+        "The volume of the square pyramid is $\\text{4}$ $\\text{cm$^{3}$}$": "The volume of the square pyramid is $\\text{4}$ $\\text{cm}^{3}$",
+        "Multiply: $\\begin{aligned}\\text{volume}&=9\\times3\\\\&=\\text{27}\\text{cm$^{3}$}\\end{aligned}$":
+            "Multiply: $\\begin{aligned}\\text{volume}&=9\\times3\\\\&=\\text{27}\\text{cm}^{3}\\end{aligned}$",
+        "$\\begin{aligned}&=16\\sqrt{3}~\\text{cm$^{2}$}\\\\&\\approx\\text{393}~\\text{mm$^{2}$}\\end{aligned}$":
+            "$\\begin{aligned}&=16\\sqrt{3}~\\text{cm}^{2}\\\\&\\approx\\text{393}~\\text{mm}^{2}\\end{aligned}$",
+        "$\\begin{aligned}A&=\\text{ft$^{2}$}\\\\B&=\\text{feet$^{2}$}\\end{aligned}$":
+            "$\\begin{aligned}A&=\\text{ft}^{2}\\\\B&=\\text{feet}^{2}\\end{aligned}$",
+        # the text on either side of the inner maths stays text; a piece that would be empty is dropped; a command word at the end of the maths keeps its space
+        "$\\text{x$y$ z}$": "$\\text{x}y\\text{ z}$",
+        "$\\text{$a$ cm}$": "$a\\text{ cm}$",
+        "$\\text{a$\\pi$}x$": "$\\text{a}\\pi x$",
+        "$\\textrm{m$^{2}$}$": "$\\textrm{m}^{2}$",
+        "$x^\\text{a$b$}$": "$x^{\\text{a}b}$",
+        # two groups in one string, and both a nested group and a currency sign in the same group (the currency is normalise_dollars' business and survives)
+        "$\\text{a$^{2}$}+\\text{b$_{1}$}$": "$\\text{a}^{2}+\\text{b}_{1}$",
+        "$\\text{\\$ 5 cm$^{2}$}$": "$\\text{\\$ 5 cm}^{2}$",
+    }
+
+    GROUPS = {"$\\text{a$^{2}$}+\\text{b$_{1}$}$": 2,      # every other row has one nested group
+              "$\\begin{aligned}&=16\\sqrt{3}~\\text{cm$^{2}$}\\\\&\\approx\\text{393}~\\text{mm$^{2}$}\\end{aligned}$": 2,
+              "$\\begin{aligned}A&=\\text{ft$^{2}$}\\\\B&=\\text{feet$^{2}$}\\end{aligned}$": 2}
+
+    # what must not change
+    UNCHANGED = (
+        "$\\text{\\$ 7,00}$ then $\\text{R79,94}$",                                  # a currency sign: the escaped-dollar rule's, not this one
+        "$\\begin{aligned}\\text{\\$1}&=\\text{R11,42}\\\\\\text{€1}&=\\text{R12,97}\\end{aligned}$",
+        "costs \\$5 and $x$",
+        "( $\\$$ )",
+        "$\\text{cm}^{3}$",                                                          # already maths mode
+        "$\\text{27}$ $\\text{cm}^{3}$ .",                                           # two real segments side by side
+        "$\\text{a}$ and $\\text{b}$",
+        "$x$ then \\text{cm$^{3}$} in prose",                                        # a \\text outside maths is not the splitter's business
+        "$\\text{a$b}$",                                                             # an unpaired $ inside the group: left for the validator to flag
+        "$\\text{$$}$",                                                              # empty inner maths
+        "$\\text{a$ $b}$",                                                           # blank inner maths
+        "$a\\\\$ $\\text{b}$",                                                       # a line break before a real delimiter
+        "$\\text{unclosed $^{2}$$",                                                  # the group never closes
+        "no maths", "50% of $x$", "", "$$",
+    )
+
+    def test_a_unit_inside_text_is_written_in_maths_mode(self):
+        for raw, want in self.ROWS.items():
+            got, n = alb.normalise_nested_dollars(raw)
+            self.assertEqual(got, want, raw)
+            self.assertEqual(n, self.GROUPS.get(raw, 1), raw)
+
+    def test_nothing_else_is_touched(self):
+        for raw in self.UNCHANGED:
+            self.assertEqual(alb.normalise_nested_dollars(raw), (raw, 0), raw)
+
+    def test_no_dollar_is_left_inside_a_text_group_and_every_real_delimiter_survives(self):
+        for raw, want in self.ROWS.items():
+            self.assertEqual(want.count("$"), raw.count("$") - 2 * alb.normalise_nested_dollars(raw)[1], raw)
+            self.assertEqual(want.replace("\\$", "").count("$") % 2, 0, "every real delimiter still pairs")
+        # the escaped dollar of a group that was rewritten is still there for normalise_dollars
+        self.assertIn("\\$", alb.normalise_nested_dollars("$\\text{\\$ 5 cm$^{2}$}$")[0])
+
+    def test_it_is_idempotent(self):
+        for raw in list(self.ROWS) + list(self.UNCHANGED):
+            once, _ = alb.normalise_nested_dollars(raw)
+            self.assertEqual(alb.normalise_nested_dollars(once), (once, 0), raw)
+
+    @unittest.skipUnless(shutil.which("node"), "the app's KaTeX runs in node")
+    def test_the_apps_own_split_and_katex_refuse_the_raw_form_and_accept_the_new_one(self):
+        raw = [{"where": f"r{i}", "text": t} for i, t in enumerate(self.ROWS)]
+        self.assertTrue(alb.katex_errors(raw), "the validator must keep flagging the nested form: that is what the app does with it")
+        fixed = [{"where": r["where"], "text": alb.normalise_dollars(alb.normalise_nested_dollars(r["text"])[0])[0]} for r in raw]
+        self.assertEqual(alb.katex_errors(fixed), [])
+
+    @unittest.skipUnless(shutil.which("node"), "the app's KaTeX runs in node")
+    def test_the_apps_split_keeps_the_segment_whole(self):
+        import re
+        t, _ = alb.normalise_nested_dollars("Multiply: $\\begin{aligned}V&=3\\\\&=\\text{27}\\text{cm$^{3}$}\\end{aligned}$ Then $x$")
+        self.assertEqual(re.split(r"(\$[^$]+\$)", t), ["Multiply: ", "$\\begin{aligned}V&=3\\\\&=\\text{27}\\text{cm}^{3}\\end{aligned}$", " Then ", "$x$", ""])
+
+    def test_a_bundle_and_a_lesson_content_file_are_cleaned_and_the_report_counts_it(self):
+        rep = alb.Report()
+        out = alb.respace_tree({"questions": [{"id": "q:1", "stem": "Find the volume. $\\text{cm$^{3}$}$",
+                                               "solution": ["$\\begin{aligned}V&=\\text{27}\\text{cm$^{3}$}\\end{aligned}$", "plain"], "source": "$\\text{cm$^{3}$}$"}],
+                               "claims": [{"lo": "lo:x", "quote": "area in $\\text{m$^{2}$}$"}]}, rep)
+        q = out["questions"][0]
+        self.assertEqual(q["solution"][0], "$\\begin{aligned}V&=\\text{27}\\text{cm}^{3}\\end{aligned}$")
+        self.assertEqual(q["stem"], "Find the volume. $\\text{cm}^{3}$")
+        self.assertEqual(q["source"], "$\\text{cm$^{3}$}$", "metadata is never touched")
+        self.assertEqual(out["claims"][0]["quote"], "area in $\\text{m}^{2}$")
+        self.assertEqual(rep.nested_dollars, 3)
+        self.assertEqual(rep.as_dict()["nested_dollars_normalised"], 3)
+        self.assertEqual(rep.dollars, 0)
+
+    def test_a_nested_group_and_a_currency_sign_in_one_string_are_both_written_without_a_dollar(self):
+        rep = alb.Report()
+        out = alb.respace_tree({"stem": "He pays $\\text{\\$ 8,49}$ for $\\text{5 cm$^{2}$}$ of it."}, rep)
+        self.assertEqual(out["stem"].count("$") % 2, 0)
+        self.assertNotIn("\\$", out["stem"])
+        self.assertIn("\\text{5 cm}^{2}", out["stem"])
+        self.assertEqual((rep.nested_dollars, rep.dollars), (1, 1))
+
+
 class HtmlEntityTest(unittest.TestCase):
     """Chapter 5's EPUB left numeric HTML character references in its text and inside its maths ("$\\cos30&#176;=$"): KaTeX refuses the "&" and 28
     questions showed a red error. A reference is the character it names; inside $…$ the degree sign is ^{\\circ}, the book's own spelling beside it."""

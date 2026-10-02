@@ -1,0 +1,30 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m9s5-1-1:pounds-to-rand-balance",
+ "lo_id": "lo:g10m9s5-1-1",
+ "parent_question_id": "q:g10m9s5-1-1:ex9-6-1a",
+ "tier": "basic",
+ "kind": "ratio_balance",
+ "spec": {
+  "mode": "direct",
+  "a": 1,
+  "b": 8,
+  "c": 2
+ },
+ "stem": "The exchange rate is $\\text{£1} = \\text{R8}$. The beam is level when both sides give the same number of rand for each pound. Drag the right pan until it is level: how many rand is $\\text{£2}$ worth?",
+ "solution": [
+  "The exchange rate $\\text{£1} = \\text{R8}$ says that every pound is worth the same R8, so the rand per pound is fixed.",
+  "The beam is level when both sides show that same rate: $\\text{£1} : \\text{R8} = \\text{£2} : \\text{R}?$.",
+  "$\\text{£2}$ is two lots of $\\text{£1}$, so the rand side must be two lots of $\\text{R8}$.",
+  "To find the cost in rand, multiply the foreign amount by the rate: $2 \\times 8 = 16$, so drag the right pan to $\\text{R16}$.",
+  "Check: $\\text{R16} \\div 2 = \\text{R8}$ for each pound, the same rate as on the left, so the beam is level."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "direct-solved-as-inverse",
+   "misconception_id": "mc:g10m9s5-1-1:multiplies-or-divides-the-wrong-way"
+  }
+ ],
+ "notes": "Fit: a fixed exchange rate IS a direct proportion (rand per pound is constant), and ratio_balance in direct mode grades exactly that, equal quotients, with live tilt feedback. This is a scaled-down analogue of ex9-6-1a (foreign amount to rand at the current rate), not a copy of its numbers: the instrument needs a whole-number fourth term from 1 to 24, so the book's R14 and 100 pounds cannot be used. Numbers were chosen so BOTH the correct fourth term (16 = 8 x 2) and the product-matching answer (4 = 8 / 2) are whole and on the beam; otherwise direct-solved-as-inverse could never fire. direct-solved-as-inverse is mapped to multiplies-or-divides-the-wrong-way because the student who lands on R4 has divided the rate by the number of pounds where it should be multiplied (it is also an inverse-proportion habit, i.e. 'more pounds, fewer rand'). off-target is deliberately NOT mapped: it fires for arithmetic slips, additive reasoning (R8 + 1 = R9, the difference carried across) and random drags alike, and no single error dominates; the additive error would be the closest to mixes-currencies-before-converting but does not match its description. uses-the-estimated-future-rate cannot be raised here at all because the pan shows the current rate, so no second rate is offered. NOT covered by this template: (1) the divide direction (rand to foreign currency), because the product-matching answer is not a whole number for any realistic rate, so no specific error could be diagnosed; (2) the chained conversion through an intermediate currency (ex9-6-8), which needs two linked conversions. More question instances can be added later with a = 1, b in {6, 8, 10}, c in {2, 3} so long as b x c is at most 24 and b is divisible by c, which keeps both answers whole.",
+ "parent_question_id_note": null
+}
