@@ -1,9 +1,20 @@
 # Project State — AI Tutor MVP
 
 > Living document. Read at session start; update when progress or decisions land.
-> Last updated: 2026-10-01 (`main`; `v0.10.0` released, deploy approved by Samuel; constitution v3.3.0)
+> Last updated: 2026-10-02 (`main`; `v0.10.0` deployed; `v0.11.0` released, deploy approved by Samuel; constitution v3.3.0)
 
-## 🧭 v0.10.0 — Tamer's testing fixes (released 2026-10-01; Samuel: "I accept all the changes, please merge to main, and deploy")
+## 🗺️ v0.11.0 — the Your Progress Map (released 2026-10-02; Samuel: "I approve both, merge it as v0.11.0")
+
+Tamer's `tamer-graph-test` (2 commits, 2026-10-01) merged onto `main` with its history. **FR-3224**
+(chapter clusters, semantic zoom, selection-aware Ask Noor) **supersedes FR-3216** (the column map,
+now DEFERRED with its evidence kept). ADR-0020 prompt-hold exception seven: `spine_chat` answers
+about the map selection first. Added at merge: the map's strokes come from tokens (Principle XII,
+guarded by a test), the chat is `clamp(420px, 38vw, 620px)` so it fits beside the map on an iPad in
+landscape, and the v0.10.0 scroll jump is fixed (a touched transcript is no longer re-aligned).
+**Open:** pinch/drag by hand, a real iPad, and the Social Studies / Arabic maps; nobody has seen the
+merged tree in a browser; the tag needs a human.
+
+## 🧭 v0.10.0 — Tamer's testing fixes (released and deployed 2026-10-01; Samuel: "I accept all the changes, please merge to main, and deploy")
 
 Tamer's eight commits on `tamer-mvp-fixes` (2026-09-29/30), merged onto `main` with their history.
 FR-2016 (session renewal, BUILT), FR-3219/FR-3220 (Your Progress tab, `/` → Study, VERIFIED), FR-3221

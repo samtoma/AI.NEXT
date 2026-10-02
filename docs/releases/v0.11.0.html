@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Noor v0.11.0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@700;800&family=Cairo:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+  /* Tokens from the product's Noor Play layer. No red anywhere (FR-1002):
+     attention is amber, done is teal, open is slate. */
+  :root {
+    --ink: #241f3d; --ink-soft: #574f75; --paper: #fff6e6; --card: #ffffff;
+    --honey: #ffe9bd; --amber: #a34f0a; --teal: #1f7a6e; --slate: #5a5570;
+    --line: #241f3d; --hair: rgba(36, 31, 61, 0.14); --shadow: 4px 4px 0 var(--ink);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ink: #f3eee1; --ink-soft: #c0b8d4; --paper: #17142a; --card: #221d3c;
+      --honey: #3a2f1c; --amber: #e8a93f; --teal: #5cc4b3; --slate: #a79fc4;
+      --line: #f3eee1; --hair: rgba(243, 238, 225, 0.18); --shadow: 4px 4px 0 rgba(243, 238, 225, 0.85);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #f3eee1; --ink-soft: #c0b8d4; --paper: #17142a; --card: #221d3c;
+    --honey: #3a2f1c; --amber: #e8a93f; --teal: #5cc4b3; --slate: #a79fc4;
+    --line: #f3eee1; --hair: rgba(243, 238, 225, 0.18); --shadow: 4px 4px 0 rgba(243, 238, 225, 0.85);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 400 17px/1.7 "Cairo", system-ui, sans-serif; }
+  main { max-width: 900px; margin: 0 auto; padding: 48px 16px 80px; }
+  h1, h2 { font-family: "Baloo Bhaijaan 2", system-ui, sans-serif; line-height: 1.2; margin: 0; }
+  h1 { font-size: 2.4rem; font-weight: 800; }
+  h2 { font-size: 1.45rem; font-weight: 800; margin-top: 44px; }
+  .eyebrow { font: 500 0.78rem/1.4 "IBM Plex Mono", monospace; letter-spacing: 0.08em; color: var(--ink-soft); text-transform: uppercase; }
+  .lead { font-size: 1.1rem; color: var(--ink-soft); margin: 12px 0 0; }
+  .card { background: var(--card); border: 3px solid var(--line); border-radius: 20px; box-shadow: var(--shadow); padding: 20px 22px; margin-top: 18px; }
+  .card h3 { font: 700 1.1rem/1.35 "Cairo", sans-serif; margin: 0 0 6px; }
+  .row { display: grid; grid-template-columns: 140px 1fr; gap: 6px 16px; margin: 0; }
+  .row dt { font: 500 0.78rem/1.9 "IBM Plex Mono", monospace; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .row dd { margin: 0; }
+  .tag { display: inline-block; font: 700 0.8rem/1 "Cairo", sans-serif; padding: 5px 10px; border-radius: 999px; border: 2px solid var(--line); margin-right: 6px; }
+  .done { background: var(--teal); color: #fff; border-color: var(--teal); }
+  .off { background: var(--honey); color: var(--ink); }
+  .open { background: transparent; color: var(--slate); border-color: var(--slate); }
+  table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 0.95rem; }
+  th, td { text-align: start; padding: 8px 10px; border-bottom: 1px solid var(--hair); vertical-align: top; }
+  th { font: 500 0.75rem/1.4 "IBM Plex Mono", monospace; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-soft); }
+  code { font: 500 0.88em "IBM Plex Mono", monospace; }
+  a { color: var(--teal); }
+  @media (max-width: 600px) { .row { grid-template-columns: 1fr; } h1 { font-size: 1.9rem; } }
+</style>
+</head>
+<body>
+<main>
+  <p class="eyebrow">Noor · release v0.11.0 · 2026-10-02</p>
+  <h1>A map that follows the book</h1>
+  <p class="lead">Tamer rebuilt the Your Progress page on 1 October. Samuel accepted it on 2 October. The map is now organised by chapter, and the chat beside it is twice as wide and knows what you are looking at.</p>
+
+  <h2>What changes for a student</h2>
+  <div class="card">
+    <h3><span class="tag done">Changed</span> The map is organised like the textbook</h3>
+    <dl class="row">
+      <dt>Before</dt><dd>Every objective was a card in columns: the first column needed nothing earlier, the next built on it, and so on. All the links were drawn at once, with no arrows.</dd>
+      <dt>Now</dt><dd>Each chapter is a circle, Term 1 on top and Term 2 below, in book order. Inside, its lessons sit on an inner ring and their objectives on an outer ring. Colours still show how far the student has got.</dd>
+    </dl>
+  </div>
+  <div class="card">
+    <h3><span class="tag done">Changed</span> Zoom in for detail</h3>
+    <dl class="row">
+      <dt>How</dt><dd>Zoomed out you see the chapters; zoom in to see lesson names, then each objective. Tap something to zoom to it; tap empty space or press Esc to go back. Drag, pinch, scroll and the + / − / Fit buttons all work.</dd>
+    </dl>
+  </div>
+  <div class="card">
+    <h3><span class="tag done">Changed</span> The lines</h3>
+    <dl class="row">
+      <dt>Arrows</dt><dd>A line with an arrow means "learn this first". It points to the objective that builds on it.</dd>
+      <dt>Dashed</dt><dd>The link crosses into another chapter. These are always shown.</dd>
+      <dt>Solid</dt><dd>The link stays inside one chapter. These appear when you select something.</dd>
+      <dt>Thin grey</dt><dd>Not a prerequisite: it joins a lesson to its own objectives.</dd>
+    </dl>
+  </div>
+  <div class="card">
+    <h3><span class="tag done">Changed</span> Ask Noor is wider and knows your selection</h3>
+    <dl class="row">
+      <dt>Before</dt><dd>A 300px column beside the map, with no idea what the student was looking at.</dd>
+      <dt>Now</dt><dd>Up to 620px wide on a large screen, and still fits beside the map on an iPad in landscape. Select a chapter, lesson or objective and ask about it: Noor answers about that, and says what it builds on and what builds on it.</dd>
+    </dl>
+  </div>
+  <div class="card">
+    <h3><span class="tag done">Fixed</span> The chat no longer jumps after you answer a widget</h3>
+    <p>In v0.10.0, if a widget grew after you answered it (for example, to show feedback), the chat could scroll back to the top of that message. Now the view stays where you are.</p>
+  </div>
+
+  <h2>Still open</h2>
+  <div class="card">
+    <h3><span class="tag open">Open</span> Try it on an iPad</h3>
+    <p>Pinch and drag have not been tried by hand, nobody has used the map on a real iPad, and the Social Studies and Arabic maps have not been looked at. Automated tests cover the layout on the real maths book.</p>
+  </div>
+</main>
+</body>
+</html>

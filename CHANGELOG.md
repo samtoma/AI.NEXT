@@ -10,6 +10,48 @@ requirement names it.
 
 ## [Unreleased]
 
+## [v0.11.0] — 2026-10-02
+
+The Your Progress page has a new map, built by Tamer on 1 October and accepted by Samuel on
+2 October, and the chat beside it is twice as wide. Student-facing; no migration.
+
+### Changed — the Your Progress Map (FR-3224, replaces FR-3216)
+- **The map now follows the book.** Each maths chapter is a circle, Term 1 in the top row and
+  Term 2 below, in book order. Inside a chapter, its lessons sit on an inner ring and their
+  objectives on an outer ring. Each circle is coloured by how far the student has got.
+- **Zoom shows more detail.** Zoomed out you see the chapters, then lesson names, then each
+  objective. Tap something to zoom to it; tap empty space or press Esc to go back. Drag, pinch,
+  scroll, the + / − / Fit buttons and the keyboard all work.
+- **Prerequisite links now have arrows**, pointing from what comes first to what builds on it.
+  Links between chapters are dashed and always shown; links inside a chapter appear when you
+  select something. Thin grey lines join each lesson to its own objectives.
+- The topic panel that opened over the old map is gone. The page shows no percentage, score or
+  question count anywhere.
+- The tab, title and heading say "Your Progress Map".
+
+### Changed — Ask Noor, beside the map
+- **The chat is wider:** 38% of the window, between 420 and 620px (it was 300px). On a screen
+  narrower than 1100px it sits under the map.
+- **It knows what you have selected on the map** and answers about that first, naming what it
+  builds on and what builds on it. The browser sends only which item is selected; the server
+  looks up its name in the curriculum. A prompt change, approved by Samuel (ADR-0020's seventh
+  exception).
+- Long replies open from their top, and the suggestions are the design system's chips.
+
+### Fixed
+- **The chat no longer jumps after the student answers a widget.** If the student had scrolled,
+  tapped or typed in the chat, a widget that grew (to show feedback, say) pulled the view back up
+  to the top of its message. Now only a new message is aligned to its top. (The known issue in
+  v0.10.0.)
+- **The map and the chat fit side by side on an iPad in landscape.** A fixed 620px chat beside
+  the map needed about 1,260px, so on 1,133–1,194px screens the chat would have wrapped under the
+  map, leaving an empty strip beside it.
+- **The map draws its lines with the design system's stroke tokens**, not hard-coded widths
+  (constitution Principle XII). A test now fails if a literal width comes back.
+
+### Not yet checked
+- Pinch and drag by hand, a real iPad, and the Social Studies and Arabic maps.
+
 ## [v0.10.0] — 2026-10-01
 
 Tamer's fixes from testing on 29–30 September, reviewed and accepted by Samuel on 2026-10-01. The map is
