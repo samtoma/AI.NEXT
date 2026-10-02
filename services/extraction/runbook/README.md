@@ -1281,3 +1281,29 @@ them) and `blocks.jsonl` was regenerated; a copy of the old file is `work/g10-ma
   missing" flag on `q:g10m1s3-1-5:we02` was this defect), and `runs/<book>/records/`.
 
 Tests: `tests/test_repair_step_titles.py`, `tests/test_source_adapter.py` (`StepTitleMaths`).
+
+## 13. The book's `(x; y)` reaches every field a student reads (2026-10-02, Chapter 5)
+
+The coverage audit's `notation` check (safety; `coverage_report.py`) refuses a bundle, a generated question or a widget question that
+still carries the book's `(x; y)`. Chapter 5 failed it with eight spans in fields the assembly's normaliser did not reach. The rule
+itself (`assemble_lesson_bundle.semicolon_groups`: only a bracket group that reads as maths, so a prose parenthesis and a top-level `;`
+are never touched) is unchanged; it now runs wherever the book's notation can arrive:
+
+| Field | Where | Rule |
+|---|---|---|
+| objective `label`, `description` (S1's records stay verbatim) | `assemble_chapter` nodes; `lesson_content` subtopic `title` | `normalise_pairs`: the `;` pair ALONE (no decimal commas: S1 writes English, "1,2,3" there is a list) |
+| a figure's drawn text | `_norm_spec`, keys `SPEC_TEXT_KEYS = ("label", "text")` (a geo_scene `label` element draws `text`: `components/viz/GeoScene.tsx`) | the full `normalise`, as for `label` before |
+| a widget template's stem, solution, instances, spec | `generate_widget_questions.normalise_template`, pipeline normalisation `coordinate-notation`, recorded in the template's `notes` | `normalise_pairs`, `{=…}` holes never touched; `h_s7_author` runs it on every new template, before the blind verifier |
+
+- **A solution step keeps the blind verifier's verdicts across it** (it never sees the solution): `verified_version` treats a step that equals
+  `normalise_pairs` of the verified one as the same step, and the template carries `verified_as` (`carried_verification` in the widget bundle).
+  A stem, instance or spec it rewrites was READ by the verifier, so that template is verified again. Apply it by hand to a template already
+  verified: `uv run generate_widget_questions.py --dsn "$AINEXT_DB_DSN" --catalogue runs/<book>/misconceptions/draft-chNN-*.json --normalise-templates <file> [--dry-run]`.
+- **Re-assemble a closed chapter WITHOUT `close-chapter`** (which re-prepares the working-check, S5 and G2-recommendation packets, so a run already
+  saved against the old copy no longer matches): `uv run assemble_lesson_bundle.py --book g10-math --chapter N --report runs/g10-math/fanout/assembly-chNN.json`
+  (what close-chapter's own assembly step runs). Run `repair_step_titles.py` first (§12). A re-assembly changes a bundle only by the new rule and its
+  `assembled_from` provenance shas (nothing compares those); diff against a scratch assembly (`--out`, `--content-out`, `--figures-out` to a temp dir) to see.
+- **Refresh the database text afterwards:** `load_seed.py <course bundle> <chapter bundle> --course <id> --update --dry-run` (a text change shows as `updated`,
+  never `inserted`), pg_dump, then without `--dry-run`. A widget question is a separate row (`load_generated_questions.py`, an upsert that resets
+  `ai_checked_by`): after it, re-apply G3 (`apply_review_verdicts.py runs/<book>/g3-chNN.auto.json`) and diff the chapter's rows against a snapshot.
+

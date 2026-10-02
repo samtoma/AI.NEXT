@@ -1,12 +1,12 @@
 """S7 widget questions from JSON templates (B13, §3.10).
 
-@covers FR-4306, FR-1207, FR-1215
+@covers FR-4306, FR-4308, FR-1207, FR-1215
 
 FR-4306: every chapter gets widget questions or a recorded gap; new kinds wait for
 Samuel. FR-1207: a target the instrument cannot reach is refused — the Python port of
 the app's validator is cross-checked against the TypeScript itself. FR-1215: a
 diagnostic names a misconception of the question's objective or of a prerequisite,
-checked against the graph. Plus the stage's own gates: parent set, blind verifier
+checked against the graph. FR-4308: a template's `(x; y)` is written `(x, y)`, as every book question is. Plus the stage's own gates: parent set, blind verifier
 verdicts applied fail-closed, and the blind reading of the stem compared with the spec.
 
     uv run --with pytest python -m pytest -q tests/test_widget_templates.py
