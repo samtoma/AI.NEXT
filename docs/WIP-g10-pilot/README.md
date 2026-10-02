@@ -112,7 +112,7 @@ from my own read-only `coverage_report.py --check` on 2026-10-02, not from the G
 | 4 | Ex4-7:6q ruled outside the chapter | no claim: `4s3-1-3` | none | 33 (31) |
 | 5 | `5s6-1-3` dropped, 19 items to `5s6-1-1`; `5s8-1-4` kept on one finder's evidence, acknowledged as unpractised (no book item uses 0° or 90°) | no book question: `5s3-1-3`, `5s5-1-4`, `5s6-1-3`, `5s6-1-4`, `5s8-1-4`; no claim: `5s5-1-4`, `5s6-1-3`, `5s6-1-4` | those five, at all three tiers | 31 (25) |
 | 6 | Ex6-8:28a ruled outside | no book question: `6s2-1-1`, `6s2-1-4`, `6s3-1-4`, `6s6-1-1`, `6s6-3-1`, `6s6-3-2`; no claim: `6s7-1-3` | `6s1-1-1` standard; `6s6-3-3` basic; those six no-book-question objectives at all three tiers | 38 (38) |
-| 7 | `7s4-1-2` and `7s4-1-3` dropped, 22 items to `7s4-1-1` | no book question: `7s3-1-2` | `7s3-1-2`, all three | 23 (20) |
+| 7 | `7s4-1-2` and `7s4-1-3` dropped, 22 items to `7s4-1-1` (lesson 7.4 keeps two objectives) | no book question: `7s3-1-2` | `7s3-1-2`, all three | 23 (20) |
 | 8 | Samuel's own G1 (2026-09-26): 3 items ruled outside | no book question: `8s1-1-1` | `8s1-1-1` all three; `8s1-1-2` standard and advanced; `8s4-1-2` advanced | 27 (25) |
 | 9 | none | no claim: `9s3-1-4` | `9s4-1-4` advanced | 14 (13) |
 | 10 | none | no book question: `10s2-1-2`, `10s2-1-3`, `10s4-1-3`, `10s5-1-2`; no claim: `10s2-1-4` | `10s1-1-2` standard; the four no-book-question objectives at all three tiers | 13 (11) |
@@ -120,6 +120,9 @@ from my own read-only `coverage_report.py --check` on 2026-10-02, not from the G
 | 12 | `12s1-1-3` dropped, 7 items to `12s1-1-2`; 0 of 6 prerequisite links kept | no book question: `12s1-1-1` (proofs) | `12s1-1-1`, all three | 6 (6) |
 | 13 | `13s1-1-2` dropped, 7 items and Ex13-7:27a to `13s1-1-1`; **lesson 13.1 keeps one objective, CHECK LATER** | no book question: `13s3-2-3`, `13s4-1-2` | those two, all three | 29 (18) |
 | 14 | none | no book question: `14s2-1-2`, `14s5-1-2`; no claim: `14s3-1-3` | `14s2-1-2`, `14s5-1-2` all three; `14s3-1-1`, `14s7-1-2` advanced | 15 (14) |
+
+In the G1 column a dropped objective is named by its id before the drop. Where later objectives followed it in the lesson they were renumbered, so the same id
+in the coverage columns names a different objective: in Chapter 5 the old `5s6-1-4` and `5s6-1-5` are now `5s6-1-3` and `5s6-1-4`; in Chapter 7 the old `7s4-1-4` is now `7s4-1-2`.
 
 Totals I derived from the table: **33 objectives** fail the evidence check (22 have no book question, 14 have no claim, 3 are in both), and **33 objectives**
 lack at least one tier (79 of 633 objective-tier slots). Chapters 2, 3 and 12 also carry a "module widgets" check that holds only because G3 auto-signed the
@@ -153,7 +156,7 @@ Each is built and tested by an agent, unreviewed by a person. Where to look is i
   `grep -rl "PIPELINE NORMALISATION" services/extraction/families/g10-math services/extraction/widgets/g10-math`): Chapter 9, a conditional formatter in `percentdeposit`
   and an `n ≤ 10` integer-overflow bound in `increase-years`; Chapter 10, four families whose `context` was cleared to null (open decision 10); Chapter 6, eight
   families (one `context`-null; five `values` markers written `a = x; q = y` rewritten `[x, y]`; two equation markers `f(x)=` rewritten `y=`); the family engine's earlier
-  fixes (recurring-decimal reader, `distinct_by_choices`, let-guard, decimal form, plain-comma `values` key, slug renames) are in the Chapter 1–4 sections above.
+  fixes (recurring-decimal reader, `distinct_by_choices`, let-guard, decimal form, plain-comma `values` key, slug renames) are in the dated Chapter 1–4 notes further down this file.
 - **S7 template fixes:** the reserved word `from` as a field name in five double-inequality and shift templates (Chapter 4 ×3, Chapter 6 ×2) renamed `from_v`; a stray null key
   `parent_question_id_note` removed from a Chapter 9 template. Both recur (open decision 11).
 - **Chapters 6 and 9: S5 drafts re-run** on the corrected bundles (2026-10-02 07:04Z): the first drafts had been built before the G2 recommendations and the step-title repair.
@@ -174,8 +177,9 @@ C is engineering and records. Where to look is in brackets.*
 1. **Exercise-only objectives: a standing policy.** Where an objective's only evidence is end-of-chapter exercises (G1 rule 1 fails), an orchestrator (AI) ruling dropped it and
    re-homed its items: Chapter 1 `1s6-1-4`, Chapter 5 `5s6-1-3` (later objectives renumber), Chapter 7 `7s4-1-2` and `7s4-1-3`, Chapter 12 `12s1-1-3`, Chapter 13 `13s1-1-2`
    (five chapters, six objectives, 78 items re-homed; Ex13-7:27a, which no mapper placed, was placed beside them). Wanted: either a named G1 rule ("drop and re-home") or another handling (keep the objective with
-   a note; a new S1 pass per lesson), plus a reconciler fix so the dropped objective's cited rule statement is carried (log 2026-10-01T18:12Z, "b03019"). Chapter 7: lesson 7.4 is thin
-   after the drop; placement of Ex7-8:25 is for a look. [`gates/g1-ch01|05|07|12|13.json`, `for_review`]
+   a note; a new S1 pass per lesson), plus a reconciler fix. **Chapter 7 is the clearest case:** the finders did cite the theorem statement (summary `b03019`) for both dropped
+   objectives, but the reconciler left it out and the evidence check never saw it, so an S1 reconcile and evidence-check re-run for that one lesson would likely keep them (a model call,
+   not made). Chapter 7's G1 also lists four similarity-statement items placed on `7s4-1-1` as the weakest fit of the 22, and pool items Ex7-8:25, 33a and 35b for review. [`gates/g1-ch01|05|07|12|13.json`, `for_review`]
 2. **CHECK LATER (decision 65): lesson `g10m13s1-1` (13.1, area of plane figures) has one objective, by ruling.** Is 13.1 really one objective, or does it get a second
    (a new S1 run for the lesson) or merge with a neighbour? [`objectives/g10-math/ch13.check.json` and `g10m13s1-1.json` (`check_later`); first `for_review` entry of `gates/g1-ch13.json`]
 3. **Completeness holds: accept as signed exceptions, or fill?** 33 objectives fail the evidence check and 33 lack a tier (table above). G5 recorded them as findings,
