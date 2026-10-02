@@ -223,50 +223,6 @@
       "why": "Here a = -1, so a·q = +2 is exactly -q. The midline-at-+2 sketch (-sin θ + 2) fires the predicate, but it is the same sketch a student produces from a plain sign slip on the shift. It is also what she draws by reflecting the whole shifted graph in the x-axis. With |a| = 1 there is no stretch for the shift to be multiplied by, so the sketch cannot show the stretch-applied-to-shift reasoning and would mostly fire for a different reason. Serving 'you multiplied the shift by a' to a student who made a sign slip would refute a mistake she did not make."
     },
     {
-      "key": "q:g10m6s6-2-2:w001#off-target",
-      "question_id": "q:g10m6s6-2-2:w001",
-      "template_id": "wt:g10m6s6-2-2:reflected-cosine",
-      "lo_id": "lo:g10m6s6-2-2",
-      "kind": "curve_sketcher",
-      "stem": "Sketch the graph of $y = -4\\cos\\theta$ for $0^\\circ \\le \\theta \\le 360^\\circ$ in one smooth stroke, from $\\theta = 0^\\circ$ to $\\theta = 360^\\circ$.",
-      "reading": {
-        "fn": "cosine",
-        "coefs": [
-          -4,
-          0
-        ]
-      },
-      "construction": "One smooth left-to-right stroke tracing y = -4cos(theta) over 0 to 360 degrees, a reflected cosine with amplitude 4 and no vertical shift. Start at (0, -4), the minimum. Rise through (90, 0) to the maximum at (180, 4). Fall through (270, 0) and finish at (360, -4). One full period, one stroke, never doubling back in x, and every value stays inside -5..5 (the extremes are -4 and 4). Within about one grid square of the target, so this satisfies the instrument's limits.",
-      "predicate": "off-target",
-      "predicate_meaning": "The sketch does not follow the curve",
-      "misconception_id": "mc:g10m6s6-2-2:negative-amplitude",
-      "misconception_label": "Giving a negative amplitude when a is negative",
-      "misconception_description": "The student treats the minus sign in a graph such as $y=-4\\cos\\theta$ as part of the amplitude and says the amplitude is $-4$, instead of seeing the minus sign as the reflection in the $x$-axis.",
-      "why": "The misconception is about how the student names the amplitude (saying -4 instead of 4). It does not change what a student draws. A student who reads the minus sign as part of the amplitude still starts the curve at -4 and draws the correct reflected cosine, so off-target would not fire for them. If such a student did draw an upright cosine, the cause would be a missed reflection or a different slip, not this naming error. The predicate is the generic fallback for any sketch that fails to follow the curve (wrong shape, wrong period, a sine instead of a cosine, a stray stroke). It would mostly fire for those other reasons, so it is not a reliable signal for this misconception."
-    },
-    {
-      "key": "q:g10m6s6-2-2:w002#off-target",
-      "question_id": "q:g10m6s6-2-2:w002",
-      "template_id": "wt:g10m6s6-2-2:reflected-shifted-cosine",
-      "lo_id": "lo:g10m6s6-2-2",
-      "kind": "curve_sketcher",
-      "stem": "Sketch the graph of $y = -3\\cos\\theta + 1$ for $0^\\circ \\le \\theta \\le 360^\\circ$ in one smooth stroke, from $\\theta = 0^\\circ$ to $\\theta = 360^\\circ$.",
-      "reading": {
-        "fn": "cosine",
-        "coefs": [
-          -3,
-          1
-        ]
-      },
-      "construction": "One smooth left-to-right stroke over 0 to 360 degrees: start at the minimum (0, -2), rise through the midline point (90, 1), reach the maximum (180, 4), fall back through (270, 1) and finish at (360, -2). The curve is a cosine reflected in its midline y = 1 (a = -3, q = 1), so it is a single-valued stroke that passes the vertical line test and covers the full domain. It stays inside the -5..5 band and each plotted point sits on a grid intersection, so it is within a grid square of the target.",
-      "predicate": "off-target",
-      "predicate_meaning": "The sketch does not follow the curve",
-      "misconception_id": "mc:g10m6s6-2-2:negative-amplitude",
-      "misconception_label": "Giving a negative amplitude when a is negative",
-      "misconception_description": "The student treats the minus sign in a graph such as $y=-4\\cos\\theta$ as part of the amplitude and says the amplitude is $-4$, instead of seeing the minus sign as the reflection in the $x$-axis.",
-      "why": "Cosine does list off-target as an emittable predicate, so it can fire here. It is the generic catch-all for any sketch that does not follow the curve. It would fire for a sine curve, a wrong phase, a sloppy wobble or a mispositioned curve, as well as for an unreflected y = 3cos(theta) + 1 drawn from (0, 4). The claimed misconception is the student calling the amplitude -4 (here -3), which is a naming error about the word amplitude. It does not predict a particular wrong shape, because a student who states a negative amplitude can still draw the reflected curve correctly. A student who ignores the minus and draws the unreflected curve is possible but is only one of several off-target causes. Attributing every off-target sketch to this misconception would mostly rebut a mistake the student did not make."
-    },
-    {
       "key": "q:g10m6s7-1-3:w001#interval-wrong",
       "question_id": "q:g10m6s7-1-3:w001",
       "template_id": "wt:g10m6s7-1-3:range-cosine-lowered",
