@@ -230,6 +230,31 @@ class NormaliserTest(unittest.TestCase):
         for src in ("(see the table; then answer)", "x = 2; y = 3", "the Rand; 5 000 rand"):
             self.assertEqual(alb.normalise(src)[0], src)
 
+    def test_a_set_of_comma_pairs_is_not_read_as_decimals(self):
+        r"""Ex14-8:22a (Chapter 14, found 2026-10-02): the book's set `\{(1,1);(1,2);…\}` has pairs written with a comma and
+        elements separated by `;`. The decimal rule read every `(1,1)` as the bracketed decimal 1.1 — `\{(1.1), (1.2), …\}`,
+        a wrong sample space that the coverage audit could not see. When EVERY element of a `;`-set is an integer pair,
+        the pairs keep their comma; any other set reads exactly as before."""
+        cases = {
+            r"$S=\{(1,1);(1,2);(2,1);(2,2);(3,1);(3,2)\}$": r"$S=\{(1, 1), (1, 2), (2, 1), (2, 2), (3, 1), (3, 2)\}$",
+            r"A=\{(-1,2);(3,-4)\}, B=\{(1,2);(3,4)\}": r"A=\{(-1, 2), (3, -4)\}, B=\{(1, 2), (3, 4)\}",
+            r"\left\{(1,1);(2,2)\right\}": r"\left\{(1, 1), (2, 2)\right\}",
+            r"\{ (1, 1) ; (1,2) \}": r"\{ (1, 1), (1, 2) \}",
+            r"\{(1;1);(1;2)\}": r"\{(1, 1), (1, 2)\}",                       # the book's own pairs: unchanged behaviour
+            r"\{(1,1);(1,2)\} and (7,5)^2 and 3,5": r"\{(1, 1), (1, 2)\} and (7.5)^2 and 3.5",   # decimals outside the set stay decimals
+        }
+        for src, want in cases.items():
+            out, c = alb.normalise(src)
+            self.assertEqual(out, want, src)
+            self.assertEqual(alb.residual_notation(out), [], src)
+        self.assertEqual(alb.normalise(r"$S=\{(1,1);(1,2)\}$")[1]["pair_in_set"], 2)
+        for src, want in {r"\{0,5; 1,5; 2\}": r"\{0.5, 1.5, 2\}",                  # a set of decimals
+                          r"\{(1,5); 2\}": r"\{(1.5), 2\}",                        # not every element is a pair
+                          r"\{(1,1)\}": r"\{(1.1)\}",                              # no `;`: nothing proves a pair
+                          r"(1,1);(1,2)": r"(1.1);(1.2)"}.items():
+            self.assertEqual(alb.normalise(src)[0], want, src)
+            self.assertEqual(alb.normalise(src)[1]["pair_in_set"], 0, src)
+
     def test_pairs_only_is_the_pair_rule_alone(self):
         """What reaches an objective's label and statement (and nothing else): a point, an interval and a set convert as
         in a question; a decimal comma, a comma list, prose and a top-level `;` are not touched."""

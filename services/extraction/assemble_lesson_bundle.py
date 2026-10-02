@@ -243,7 +243,7 @@ def _pair_commas(text: str, counts: Counter) -> str:
     return "".join(rows)
 
 
-_SET_ELEMENT_PAIR = re.compile(r"^(\s*\(\s*[-−]?\d+)\s*,\s*([-−]?\d+\s*\)\s*)$")
+_SET_ELEMENT_PAIR = re.compile(r"^(\s*\(\s*[-−]?\d+)\s*,\s*([-−]?\d+\s*\)\s*(?:\\right)?\s*)$")
 
 
 def _set_pair_commas(text: str, counts: Counter) -> str:
