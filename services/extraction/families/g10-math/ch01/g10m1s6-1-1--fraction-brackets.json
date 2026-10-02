@@ -1,0 +1,94 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m1s6-1-1:fraction-brackets",
+ "kind": "family",
+ "lo_id": "lo:g10m1s6-1-1",
+ "parent_question_id": "q:g10m1s6-1-1:ex1-11-23i",
+ "source_page": 38,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "choice": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "q",
+   "choice": [
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "resample_while": "q == p"
+  },
+  {
+   "name": "a",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "c",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "A",
+   "let": "p * a"
+  },
+  {
+   "name": "B",
+   "let": "p * b"
+  },
+  {
+   "name": "C",
+   "let": "q * c"
+  },
+  {
+   "name": "D",
+   "let": "q * b"
+  },
+  {
+   "name": "T",
+   "let": "a + c"
+  }
+ ],
+ "constraints": [],
+ "stem": "Expand and simplify: $\\dfrac{1}{{=p}}({=A}x-{=B}y)+\\dfrac{1}{{=q}}({=C}x+{=D}y)$",
+ "solution": [
+  "Multiply each bracket by the fraction in front of it, term by term. The first bracket gives $\\dfrac{1}{{=p}}({=A}x-{=B}y)={=a}x-{=b}y$, and the second gives $\\dfrac{1}{{=q}}({=C}x+{=D}y)={=c}x+{=b}y$.",
+  "Write the two results as one sum: $\\begin{aligned}\\dfrac{1}{{=p}}({=A}x-{=B}y)+\\dfrac{1}{{=q}}({=C}x+{=D}y)&={=a}x-{=b}y+{=c}x+{=b}y\\end{aligned}$",
+  "Collect like terms. The $y$ terms cancel because $-{=b}y+{=b}y=0$, and the $x$ terms give ${=a}x+{=c}x={=T}x$.",
+  "So the expression simplifies to ${=T}x$."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "{=T}*x",
+  "form": "expanded",
+  "variables": [
+   "x",
+   "y"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Models the book's own twist in ex1-11-23i (page 38): fractional coefficients that divide each bracket exactly, so every term becomes a whole-number coefficient, and the y terms cancel in the sum, leaving a single x term. Construction: bracket coefficients are p*a, p*b and q*c, q*b, so the division is always exact and the two y coefficients are always equal and opposite (the book's -9y and +18y become -3y and +3y). a, b, c are at least 2 so no instance prints a coefficient of 1. p and q always differ (the book uses 3 and 6). Answer is the single term (a+c)x; the marker lists y among the variables because it appears in the stem. No distractors (expression type), so no misconception ids are needed; the catalogue for this objective is empty. I checked 3000 sampled instances numerically: stem, every equality in the solution steps, and the marker answer agree at four test points."
+}

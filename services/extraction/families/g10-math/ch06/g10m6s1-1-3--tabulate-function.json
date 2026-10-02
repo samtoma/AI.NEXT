@@ -1,0 +1,71 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s1-1-3:tabulate-function",
+ "kind": "family",
+ "lo_id": "lo:g10m6s1-1-3",
+ "parent_question_id": "q:g10m6s1-1-3:ex6-8-1a",
+ "source_page": 214,
+ "tier": "standard",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "choice": [
+    -4,
+    -3,
+    -2,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    -7,
+    7
+   ],
+   "resample_while": "b == 0"
+  },
+  {
+   "name": "x0",
+   "choice": [
+    -3,
+    -2,
+    -1
+   ]
+  },
+  {
+   "name": "sg",
+   "let": "'+' if b > 0 else '-'"
+  },
+  {
+   "name": "ys",
+   "let": "[a * (x0 + i) + b for i in range(5)]"
+  }
+ ],
+ "constraints": [
+  "b != 0",
+  "a != 0"
+ ],
+ "stem": "To draw the graph of $y = {=a}x {=sg} {=abs(b)}$, a table of values is needed. Complete the table below by finding the $y$-value for each $x$-value. $\\begin{aligned}\\begin{array}{|l|l|l|l|l|l|}\\hline x&{=x0}&{=x0 + 1}&{=x0 + 2}&{=x0 + 3}&{=x0 + 4}\\\\\\hline y&?&?&?&?&?\\\\\\hline\\end{array}\\end{aligned}$ Write down the five $y$-values, from left to right, separated by commas.",
+ "solution": [
+  "Substitute each $x$-value of the table into the function $y = {=a}x {=sg} {=abs(b)}$ to find its $y$-value.",
+  "$x = {=x0}$: $y = {=a}({=x0}) {=sg} {=abs(b)} = {=ys[0]}$",
+  "$x = {=x0 + 1}$: $y = {=a}({=x0 + 1}) {=sg} {=abs(b)} = {=ys[1]}$",
+  "$x = {=x0 + 2}$: $y = {=a}({=x0 + 2}) {=sg} {=abs(b)} = {=ys[2]}$",
+  "$x = {=x0 + 3}$: $y = {=a}({=x0 + 3}) {=sg} {=abs(b)} = {=ys[3]}$",
+  "$x = {=x0 + 4}$: $y = {=a}({=x0 + 4}) {=sg} {=abs(b)} = {=ys[4]}$",
+  "The completed table is $\\begin{aligned}\\begin{array}{|l|l|l|l|l|l|}\\hline x&{=x0}&{=x0 + 1}&{=x0 + 2}&{=x0 + 3}&{=x0 + 4}\\\\\\hline y&{=ys[0]}&{=ys[1]}&{=ys[2]}&{=ys[3]}&{=ys[4]}\\\\\\hline\\end{array}\\end{aligned}$",
+  "The $y$-values, from left to right, are ${=ys[0]}, {=ys[1]}, {=ys[2]}, {=ys[3]}, {=ys[4]}$."
+ ],
+ "marker": {
+  "kind": "values",
+  "answer": "[{=ys[0]}, {=ys[1]}, {=ys[2]}, {=ys[3]}, {=ys[4]}]",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "notes": "Function to table: the 'create a table of values from a function in order to plot its graph' part of the objective. Same table layout as the book's Exercise 6-8 (the book leaves the cells blank; here they carry a ? so that a reader, and a blind solver, cannot misalign them). Standard because the function has both a coefficient and a constant, the coefficient is sometimes negative, and the x-values include negatives (a negative coefficient times a negative x is the sign step where students slip). The five y-values are asked as a list so every cell of the table is checked; the five points are the ordered pairs to be plotted. Instance ranges: |y| <= 19."
+}

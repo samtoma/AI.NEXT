@@ -3,6 +3,8 @@ import { redirect } from "next/navigation";
 import { SignupForm } from "@/components/auth/SignupForm";
 import { safeNext } from "@/components/auth/next-param";
 import { currentPrincipal } from "@/lib/auth/principal";
+import { CURRICULA, CURRICULUM_IDS } from "@/lib/curricula";
+import { offeredCurriculaEveryGrade } from "@/lib/curriculum-queries";
 import { GOOGLE_OAUTH } from "@/lib/env";
 
 export const dynamic = "force-dynamic";
@@ -19,6 +21,13 @@ export const metadata = { title: "Create an account — Noor" };
  * Google availability is a server fact, handed down as a boolean. The client
  * id never reaches the browser from here — it reaches it from Google's own
  * redirect, which is the only place it belongs.
+ *
+ * **What each grade offers** (feature 003, FR-4004, FR-4005) is a server fact
+ * too: one read of this environment's live rules, for every grade, handed to
+ * the form so it can ask "which curriculum?" only after a grade that offers two
+ * or more — and never otherwise. It is catalogue information (curriculum ids
+ * and their flat labels), not student data, which is why an anonymous page may
+ * read it. The server reads it again when the form is submitted.
  */
 export default async function SignupPage({
   searchParams,
@@ -31,6 +40,9 @@ export default async function SignupPage({
   const me = await currentPrincipal();
   if (me.kind === "student") redirect(next);
 
+  const offered = await offeredCurriculaEveryGrade();
+  const curricula = CURRICULUM_IDS.map((id) => ({ id, label: CURRICULA[id].label }));
+
   return (
     <>
       <h1 className="mb-2 text-center font-display text-[1.9rem] font-extrabold text-ink">
@@ -39,7 +51,12 @@ export default async function SignupPage({
       <p className="mb-7 text-center text-[1rem] text-ink-soft">
         A few things about you, and Noor can start where you actually are.
       </p>
-      <SignupForm next={next} googleAvailable={GOOGLE_OAUTH !== null} />
+      <SignupForm
+        next={next}
+        googleAvailable={GOOGLE_OAUTH !== null}
+        offered={offered}
+        curricula={curricula}
+      />
     </>
   );
 }

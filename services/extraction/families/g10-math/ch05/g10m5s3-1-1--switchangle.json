@@ -1,0 +1,110 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m5s3-1-1:switchangle",
+ "kind": "family",
+ "lo_id": "lo:g10m5s3-1-1",
+ "parent_question_id": "q:g10m5s3-1-1:ex5-1-2c",
+ "source_page": 112,
+ "tier": "advanced",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "i",
+   "randint": [
+    0,
+    5
+   ]
+  },
+  {
+   "name": "names",
+   "let": "[[\"A\",\"B\",\"C\"],[\"D\",\"E\",\"F\"],[\"K\",\"L\",\"M\"],[\"P\",\"Q\",\"R\"],[\"X\",\"Y\",\"Z\"],[\"G\",\"H\",\"J\"]]"
+  },
+  {
+   "name": "sidetab",
+   "let": "[[\"BC\",\"AC\",\"AB\"],[\"EF\",\"DF\",\"DE\"],[\"LM\",\"KM\",\"KL\"],[\"QR\",\"PR\",\"PQ\"],[\"YZ\",\"XZ\",\"XY\"],[\"HJ\",\"GJ\",\"GH\"]]"
+  },
+  {
+   "name": "vs",
+   "let": "names[i]"
+  },
+  {
+   "name": "ds",
+   "let": "sidetab[i]"
+  },
+  {
+   "name": "r",
+   "randint": [
+    0,
+    2
+   ]
+  },
+  {
+   "name": "f",
+   "randint": [
+    0,
+    1
+   ]
+  },
+  {
+   "name": "s",
+   "let": "(r + 1 + f) % 3"
+  },
+  {
+   "name": "w",
+   "let": "(r + 2 - f) % 3"
+  },
+  {
+   "name": "hyp",
+   "let": "ds[r]"
+  },
+  {
+   "name": "legs",
+   "let": "ds[s]"
+  },
+  {
+   "name": "legw",
+   "let": "ds[w]"
+  }
+ ],
+ "constraints": [
+  "r != s and r != w and s != w"
+ ],
+ "stem": "Triangle ${=vs[0]}{=vs[1]}{=vs[2]}$ has its right angle at ${=vs[r]}$. With respect to the angle at ${=vs[s]}$, the sides are named like this: hypotenuse ${=hyp}$, opposite ${=legs}$, adjacent ${=legw}$. Now let $\\theta$ be the angle at ${=vs[w]}$ instead. Which of the following correctly names the sides with respect to this new $\\theta$?",
+ "solution": [
+  "The hypotenuse is the side directly opposite the right angle at ${=vs[r]}$. Moving $\\theta$ to the other acute angle does not move the right angle, so the hypotenuse is still ${=hyp}$.",
+  "The new $\\theta$ is the angle at ${=vs[w]}$. The opposite side is directly across from it, the side that does not touch ${=vs[w]}$: ${=legw}$ (it joins ${=vs[r]}$ and ${=vs[s]}$).",
+  "The adjacent side is the remaining side. It touches ${=vs[w]}$ and is not the hypotenuse: ${=legs}$ (it joins ${=vs[r]}$ and ${=vs[w]}$).",
+  "The two sides other than the hypotenuse have swapped names: ${=legw}$ was adjacent and is now opposite, and ${=legs}$ was opposite and is now adjacent. The correct choice is: hypotenuse ${=hyp}$, opposite ${=legw}$, adjacent ${=legs}$."
+ ],
+ "choices": {
+  "correct": "hypotenuse ${=hyp}$, opposite ${=legw}$, adjacent ${=legs}$",
+  "distractors": [
+   {
+    "text": "hypotenuse ${=hyp}$, opposite ${=legs}$, adjacent ${=legw}$",
+    "misconception_id": "mc:g10m5s3-1-1:opposite-adjacent-fixed-by-position"
+   },
+   {
+    "text": "hypotenuse ${=legw}$, opposite ${=hyp}$, adjacent ${=legs}$",
+    "misconception_id": "mc:g10m5s3-1-1:hypotenuse-and-opposite-mixed"
+   },
+   {
+    "text": "hypotenuse ${=legs}$, opposite ${=legw}$, adjacent ${=hyp}$",
+    "misconception_id": "mc:g10m5s3-1-1:hypotenuse-not-opposite-right-angle"
+   }
+  ]
+ },
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m5s3-1-1:hypotenuse-and-opposite-mixed",
+   "label": "Mixing up the two meanings of opposite",
+   "description": "The student calls the side across from the right angle (the hypotenuse) the opposite side, and then names the side across from theta as the hypotenuse, confusing opposite the right angle with opposite theta."
+  },
+  {
+   "id": "mc:g10m5s3-1-1:hypotenuse-not-opposite-right-angle",
+   "label": "Choosing the wrong one of the two sides that form theta as the hypotenuse",
+   "description": "Two sides touch the angle theta, the hypotenuse and the adjacent leg. The student picks the leg as the hypotenuse instead of the side across from the right angle, and so calls the true hypotenuse the adjacent side."
+  }
+ ],
+ "notes": "Advanced because the same triangle is labelled twice: the stem gives the naming for one acute angle and the student must re-name for the other. This is the book's central point (opposite and adjacent depend on the angle, only the hypotenuse is fixed by the right angle) and the same triangle in the book's shared figure is read from either acute angle. Option 1 is exactly the stem's own naming, which a student who ties a name to a side rather than to theta will choose (the catalogued position/fixed-name error). All four options are distinct by construction. The stem states a true labelling for the first angle (opposite is the side not touching vertex s, adjacent is the other leg), checked against coordinates for all 36 configurations. 36 distinct stems."
+}

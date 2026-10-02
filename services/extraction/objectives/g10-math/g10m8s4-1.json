@@ -1,0 +1,417 @@
+{
+ "objectives_version": 1,
+ "book": "g10-math",
+ "chapter": 8,
+ "module": "module:g10m-c08",
+ "lesson": "g10m8s4-1",
+ "title": "Mid-point of a line",
+ "provenance": {
+  "sections": [
+   {
+    "number": "8.4",
+    "title": "Mid-point of a line"
+   }
+  ],
+  "part": null,
+  "chapter_intro": false
+ },
+ "status": "approved",
+ "g1": {
+  "approved_by": "Samuel Toma",
+  "approved_at": "2026-09-26T07:19:34+00:00",
+  "verdicts": {
+   "move_items": {
+    "Ex8-6:19d": "lo:g10m8s3-2-2",
+    "Ex8-6:21c": "lo:g10m8s3-2-2",
+    "Ex8-6:22e": "lo:g10m8s3-2-2",
+    "Ex8-6:42e": "lo:g10m8s3-2-2",
+    "Ex8-6:24d": "lo:g10m8s4-1-1",
+    "Ex8-6:28b": "lo:g10m8s4-1-1",
+    "Ex8-6:26": "lo:g10m8s3-2-2",
+    "Ex8-6:29b": "lo:g10m8s3-2-1",
+    "Ex8-6:29c": "lo:g10m8s4-1-2",
+    "Ex8-6:37d": "lo:g10m8s3-2-2",
+    "Ex8-6:40a": "lo:g10m8s3-2-1"
+   },
+   "outside_items": {
+    "Ex8-6:28a": {
+     "why": "Pure recall of parallelogram properties from earlier geometry; this chapter teaches no such objective."
+    },
+    "Ex8-6:32e": {
+     "why": "Area of a triangle from coordinates is not taught in this chapter."
+    },
+    "Ex8-6:46d": {
+     "why": "Ratio of triangle areas via the mid-point theorem / similar triangles is not taught in this chapter."
+    }
+   },
+   "terminology": {
+    "Cartesian plane": "keep",
+    "ordered pair": "keep",
+    "vertices": "keep",
+    "distance formula": "keep",
+    "surd form": "keep",
+    "gradient": "keep",
+    "standard form": "keep",
+    "negative inverse": "keep",
+    "gradient method": "keep",
+    "mid-point": "keep",
+    "end point": "keep"
+   }
+  }
+ },
+ "source_run": {
+  "file": "runs/g10-math/objectives/ch08-wf_a70b525d-f44.json",
+  "sha256": "eee6ed9cd090e2a5546bee783714255cf2853e2751a7ef3480936242c1363aca",
+  "prompts_version": "s1-v5",
+  "packet_sha256": "d5edd2cc963ee59333c27b0a27d97322a423f2ba98ab509376fb0fc1cd7940a9"
+ },
+ "objectives": [
+  {
+   "id": "lo:g10m8s4-1-1",
+   "provisional_id": "lo:g10m8s4-1-1",
+   "n": 1,
+   "statement": "Calculate the coordinates of the mid-point of a line segment given the coordinates of its two end points, using the mid-point formula.",
+   "label": "Calculate the mid-point",
+   "evidence": [
+    {
+     "kind": "heading",
+     "anchor": "EMA6H",
+     "printed_page": 308,
+     "quote": "Mid-point of a line",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "definition",
+     "anchor": "b03257",
+     "printed_page": 309,
+     "quote": "Mid-point $M(x;y)=\\left(\\dfrac{x_1+x_2}{2};\\dfrac{y_1+y_2}{2}\\right)$",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "summary",
+     "anchor": "b03286",
+     "printed_page": 315,
+     "quote": "The formula for finding the mid-point between two points is",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "worked_example",
+     "anchor": "WE10",
+     "printed_page": 309,
+     "quote": "Calculate the coordinates of the mid-point $F\\left(x;y\\right)$",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "worked_example",
+     "anchor": "WE11",
+     "printed_page": 310,
+     "quote": "Calculating the mid-point",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex8-5:1",
+     "printed_page": 313,
+     "quote": "Calculate the coordinates of the mid-point ( $M$ )",
+     "contained": true,
+     "present": true,
+     "supports": true
+    }
+   ],
+   "evidence_dropped": [],
+   "exercise_items": [
+    "Ex8-5:1",
+    "Ex8-5:2",
+    "Ex8-5:3a",
+    "Ex8-5:3b",
+    "Ex8-5:3c",
+    "Ex8-6:16",
+    "Ex8-6:17",
+    "Ex8-6:19c",
+    "Ex8-6:21d",
+    "Ex8-6:24c",
+    "Ex8-6:24d",
+    "Ex8-6:25c",
+    "Ex8-6:27",
+    "Ex8-6:28b",
+    "Ex8-6:31c",
+    "Ex8-6:35a",
+    "Ex8-6:37b",
+    "Ex8-6:38b",
+    "Ex8-6:38c",
+    "Ex8-6:39b",
+    "Ex8-6:42b",
+    "Ex8-6:44a"
+   ],
+   "worked_examples": [
+    "WE10",
+    "WE11"
+   ],
+   "confidence": "agreed",
+   "from": {
+    "a": [
+     "A1"
+    ],
+    "b": [
+     "B1"
+    ]
+   },
+   "derivation": "derived",
+   "terms": [
+    "mid-point",
+    "coordinates",
+    "end point"
+   ],
+   "edited_at_g1": false,
+   "order_in_parent": 11,
+   "node": {
+    "id": "lo:g10m8s4-1-1",
+    "kind": "learning_objective",
+    "label": "Calculate the mid-point",
+    "description": "Calculate the coordinates of the mid-point of a line segment given the coordinates of its two end points, using the mid-point formula.",
+    "source_page": 308,
+    "syllabus_ref": "8.4",
+    "order_in_parent": 11
+   }
+  },
+  {
+   "id": "lo:g10m8s4-1-2",
+   "provisional_id": "lo:g10m8s4-1-2",
+   "n": 2,
+   "statement": "Determine the coordinates of one end point of a line segment given its mid-point and the other end point, by solving the mid-point formula for the unknown coordinates.",
+   "label": "Find an unknown endpoint",
+   "evidence": [
+    {
+     "kind": "definition",
+     "anchor": "b03257",
+     "printed_page": 309,
+     "quote": "Mid-point $M(x;y)=\\left(\\dfrac{x_1+x_2}{2};\\dfrac{y_1+y_2}{2}\\right)$",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "worked_example",
+     "anchor": "WE12",
+     "printed_page": 311,
+     "quote": "has the mid-point $M\\left(1;-3\\right)$ . Find point $D$",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex8-5:4",
+     "printed_page": 314,
+     "quote": "Find $P$ if $Q$ is $(-2;5)$",
+     "contained": true,
+     "present": true,
+     "supports": true
+    }
+   ],
+   "evidence_dropped": [
+    {
+     "kind": "intro",
+     "anchor": "b03253",
+     "printed_page": 309,
+     "quote": "we use the following formulae",
+     "contained": true,
+     "present": true,
+     "supports": false,
+     "dropped": "the evidence check says it does not support the objective: intro discusses calculating mid-points from endpoints, not solving the formula for an unknown endpoint"
+    }
+   ],
+   "exercise_items": [
+    "Ex8-5:4",
+    "Ex8-6:29c",
+    "Ex8-6:31a",
+    "Ex8-6:43a",
+    "Ex8-6:47b"
+   ],
+   "worked_examples": [
+    "WE12"
+   ],
+   "confidence": "agreed",
+   "from": {
+    "a": [
+     "A2"
+    ],
+    "b": [
+     "B2"
+    ]
+   },
+   "derivation": "derived",
+   "terms": [
+    "mid-point",
+    "end point",
+    "coordinates"
+   ],
+   "edited_at_g1": false,
+   "order_in_parent": 12,
+   "node": {
+    "id": "lo:g10m8s4-1-2",
+    "kind": "learning_objective",
+    "label": "Find an unknown endpoint",
+    "description": "Determine the coordinates of one end point of a line segment given its mid-point and the other end point, by solving the mid-point formula for the unknown coordinates.",
+    "source_page": 309,
+    "syllabus_ref": "8.4",
+    "order_in_parent": 12
+   }
+  },
+  {
+   "id": "lo:g10m8s4-1-3",
+   "provisional_id": "lo:g10m8s4-1-3",
+   "n": 3,
+   "statement": "Determine the coordinates of an unknown vertex of a parallelogram, using the mid-point formula and the fact that its diagonals bisect each other.",
+   "label": "Find a parallelogram vertex",
+   "evidence": [
+    {
+     "kind": "worked_example",
+     "anchor": "WE13",
+     "printed_page": 312,
+     "quote": "the diagonals of a parallelogram bisect each other",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex8-5:5",
+     "printed_page": 314,
+     "quote": "$PQRS$ is a parallelogram with the points",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex8-6:23",
+     "printed_page": 322,
+     "quote": "by using the fact that the diagonals of a parallelogram bisect each other",
+     "contained": true,
+     "present": true,
+     "supports": true
+    }
+   ],
+   "evidence_dropped": [
+    {
+     "kind": "heading",
+     "anchor": "EMA6H",
+     "printed_page": 308,
+     "quote": "Mid-point of a line",
+     "contained": true,
+     "present": true,
+     "supports": false,
+     "dropped": "the evidence check says it does not support the objective: heading names general mid-point topic, not the specific parallelogram/diagonal-bisection application"
+    }
+   ],
+   "exercise_items": [
+    "Ex8-5:5",
+    "Ex8-6:23",
+    "Ex8-6:31d",
+    "Ex8-6:31e",
+    "Ex8-6:36a",
+    "Ex8-6:38e",
+    "Ex8-6:44b",
+    "Ex8-6:46e"
+   ],
+   "worked_examples": [
+    "WE13"
+   ],
+   "confidence": "agreed",
+   "from": {
+    "a": [
+     "A3"
+    ],
+    "b": [
+     "B3"
+    ]
+   },
+   "derivation": "derived",
+   "terms": [
+    "mid-point",
+    "parallelogram",
+    "diagonal",
+    "vertex",
+    "bisect"
+   ],
+   "edited_at_g1": false,
+   "order_in_parent": 13,
+   "node": {
+    "id": "lo:g10m8s4-1-3",
+    "kind": "learning_objective",
+    "label": "Find a parallelogram vertex",
+    "description": "Determine the coordinates of an unknown vertex of a parallelogram, using the mid-point formula and the fact that its diagonals bisect each other.",
+    "source_page": 312,
+    "syllabus_ref": "8.4",
+    "order_in_parent": 13
+   }
+  }
+ ],
+ "pool_items": [
+  "Ex8-6:16",
+  "Ex8-6:17",
+  "Ex8-6:19c",
+  "Ex8-6:21d",
+  "Ex8-6:23",
+  "Ex8-6:24c",
+  "Ex8-6:24d",
+  "Ex8-6:25c",
+  "Ex8-6:27",
+  "Ex8-6:28b",
+  "Ex8-6:29c",
+  "Ex8-6:31a",
+  "Ex8-6:31c",
+  "Ex8-6:31d",
+  "Ex8-6:31e",
+  "Ex8-6:35a",
+  "Ex8-6:36a",
+  "Ex8-6:37b",
+  "Ex8-6:38b",
+  "Ex8-6:38c",
+  "Ex8-6:38e",
+  "Ex8-6:39b",
+  "Ex8-6:42b",
+  "Ex8-6:43a",
+  "Ex8-6:44a",
+  "Ex8-6:44b",
+  "Ex8-6:46e",
+  "Ex8-6:47b"
+ ],
+ "prerequisites": [],
+ "checks": {
+  "ok": true,
+  "failures": [],
+  "warnings": []
+ },
+ "outside_items": [
+  {
+   "item": "Ex8-6:28a",
+   "why": "Pure recall of parallelogram properties from earlier geometry; this chapter teaches no such objective.",
+   "by": "Samuel Toma",
+   "at": "2026-09-26T07:19:34+00:00"
+  },
+  {
+   "item": "Ex8-6:32e",
+   "why": "Area of a triangle from coordinates is not taught in this chapter.",
+   "by": "Samuel Toma",
+   "at": "2026-09-26T07:19:34+00:00"
+  },
+  {
+   "item": "Ex8-6:46d",
+   "why": "Ratio of triangle areas via the mid-point theorem / similar triangles is not taught in this chapter.",
+   "by": "Samuel Toma",
+   "at": "2026-09-26T07:19:34+00:00"
+  }
+ ]
+}

@@ -1,0 +1,57 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m1s7-2-4:two-variable-monic",
+ "kind": "family",
+ "lo_id": "lo:g10m1s7-2-4",
+ "parent_question_id": "q:g10m1s7-2-4:ex1-11-30p",
+ "source_page": 39,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    "p + 1",
+    9
+   ]
+  },
+  {
+   "name": "b",
+   "let": "p + q"
+  },
+  {
+   "name": "c",
+   "let": "p * q"
+  }
+ ],
+ "constraints": [
+  "p < q"
+ ],
+ "stem": "Factorise: $x^2+{=b}xy+{=c}y^2$",
+ "solution": [
+  "The coefficient of $x^2$ is 1, so each bracket starts with $x$. We need two numbers that multiply to give ${=c}$ (the coefficient of $y^2$) and add to give ${=b}$ (the coefficient of $xy$).",
+  "The numbers ${=p}$ and ${=q}$ work: ${=p}\\times{=q}={=c}$ and ${=p}+{=q}={=b}$.",
+  "Each number goes with $y$ in its own bracket: $x^2+{=b}xy+{=c}y^2=(x+{=p}y)(x+{=q}y)$.",
+  "Check by expanding: $(x+{=p}y)(x+{=q}y)=x^2+{=q}xy+{=p}xy+{=c}y^2=x^2+{=b}xy+{=c}y^2$."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "(x + {=p}*y)*(x + {=q}*y)",
+  "form": "factorised",
+  "variables": [
+   "x",
+   "y"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Basic entry point of the objective: a trinomial in two variables with leading coefficient 1 and all-positive terms, x^2 + bxy + cy^2, the same two-bracket method as the single-variable case with y carried through. The book's nearest questions are ex1-11-30p (x^2-2xy-15y^2, page 39) and ex1-8-19 (a^2-7ab+12b^2, page 27, whose printed stem drops the square on the last b, though its solution has it); this family is the easier, all-positive sibling of those, so signs are not varied here. Parameters: p in 2..5 and q in p+1..9, so p < q, the two factors are always different (no perfect squares, which would invite the (x+py)^2 form and a marker mismatch), and the b and c coefficients are always at least 3 and 6, so no instance prints 1y^2 or a bare 1 coefficient. The answer is symmetric in the two brackets and the marker is declared factorised, so either bracket order should be accepted. Largest instance is x^2+14xy+45y^2. The catalogue holds no misconceptions for this objective and the family is not mcq, so none are used or proposed. Only the basic gap was listed; standard and advanced are already covered by the book questions (signed two-variable, x^4 quadratics, repeated-bracket and bracketed-expression cases), so no further families were written."
+}

@@ -1,0 +1,76 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m14s7-1-3:remaining-colour",
+ "kind": "family",
+ "lo_id": "lo:g10m14s7-1-3",
+ "parent_question_id": "q:g10m14s7-1-3:ex14-8-15",
+ "source_page": 493,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": "A bag contains only red, blue and green counters. One counter is taken out at random.",
+ "params": [
+  {
+   "name": "d",
+   "choice": [
+    8,
+    9,
+    10,
+    12,
+    14,
+    15,
+    16,
+    18,
+    20,
+    21,
+    24,
+    25
+   ]
+  },
+  {
+   "name": "r",
+   "randint": [
+    1,
+    "d - 2"
+   ]
+  },
+  {
+   "require": "gcd(r, d) == 1",
+   "why": "the given probability of red is shown as a fraction already in lowest terms"
+  },
+  {
+   "name": "b",
+   "randint": [
+    1,
+    "d - 1 - r"
+   ]
+  },
+  {
+   "require": "gcd(b, d) == 1",
+   "why": "the given probability of blue is shown as a fraction already in lowest terms"
+  },
+  {
+   "name": "g",
+   "let": "d - r - b"
+  },
+  {
+   "name": "f",
+   "let": "g / d"
+  }
+ ],
+ "constraints": [],
+ "stem": "A bag contains only red, blue and green counters. A counter is taken out at random. The probability that it is red is $\\frac{{=r}}{{=d}}$ and the probability that it is blue is $\\frac{{=b}}{{=d}}$. What is the probability that the counter is green? Give your answer as a fraction in simplest form.",
+ "solution": [
+  "The counters are only red, blue or green, so the three probabilities add up to $1$. First find the probability that the counter is red or blue: $P(\\text{red or blue})=\\frac{{=r}}{{=d}}+\\frac{{=b}}{{=d}}=\\frac{{=r + b}}{{=d}}$.",
+  "A green counter is the complement of a counter that is red or blue, so $P(\\text{green})=1-P(\\text{red or blue})=1-\\frac{{=r + b}}{{=d}}=\\frac{{=d - (r + b)}}{{=d}}$.",
+  "In simplest form, $P(\\text{green})=\\frac{{=numerator(f)}}{{=denominator(f)}}$."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "{=numerator(f)}/{=denominator(f)}",
+  "form": "simplest",
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Advanced extension of the book's ex14-8-15 (P(pink) given, find P(yellow) as 1 minus it): there are three outcomes and the probabilities of two are given, so the student takes the complement of 'red or blue' with no counts to help. Context fixed (red, blue, green counters). The denominator d is drawn from a list and r, b are drawn coprime to d so the given fractions are in lowest terms and r + b is always less than d (green probability at least 1/d, never 0). The answer is a proper fraction in simplest form. No misconceptions are catalogued for this objective, so none are attached; the family has no distractors."
+}

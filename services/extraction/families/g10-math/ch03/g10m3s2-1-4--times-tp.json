@@ -1,0 +1,75 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m3s2-1-4:times-tp",
+ "kind": "family",
+ "lo_id": "lo:g10m3s2-1-4",
+ "parent_question_id": "q:g10m3s2-1-4:ex3-1-13c",
+ "source_page": 67,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "choice": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    8
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    1,
+    24
+   ]
+  },
+  {
+   "name": "k",
+   "choice": [
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "p",
+   "randint": [
+    5,
+    15
+   ]
+  },
+  {
+   "require": "((k - 1) * b) % a == 0",
+   "why": "n = k*p + (k - 1)*b/a must be a whole number, otherwise k times T_p is not a term of the sequence"
+  },
+  {
+   "name": "tp",
+   "let": "a * p + b"
+  },
+  {
+   "name": "V",
+   "let": "k * tp"
+  },
+  {
+   "name": "pos",
+   "let": "(V - b) // a"
+  }
+ ],
+ "constraints": [],
+ "stem": "The general term of a sequence is $T_n = {=a}n + {=b}$. Calculate $T_{{=p}}$ and hence find the value of $n$ for which $T_n$ is ${=k}$ times as large as $T_{{=p}}$.",
+ "answer": "pos",
+ "solution": [
+  "First calculate $T_{{=p}}$ by substituting $n = {=p}$: $T_{{=p}} = {=a}({=p}) + {=b} = {=tp}$.",
+  "The required term is ${=k}$ times as large as this: $T_n = {=k} \\times {=tp} = {=V}$.",
+  "Substitute this value into the general term: ${=V} = {=a}n + {=b}$.",
+  "Subtract ${=b}$ from both sides: ${=V - b} = {=a}n$.",
+  "Divide both sides by ${=a}$: $n = {=pos}$.",
+  "Check: $T_{{=pos}} = {=a}({=pos}) + {=b} = {=V}$, which is ${=k} \\times {=tp}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced because it chains the two halves of the objective that the book otherwise tests separately: calculate a required term (ex3-1-9d, 3-2-10b, 11c) and then solve for n from a term's value (ex3-1-12c, 13c). No technique beyond those two is used. a and b are both positive so 'k times as large' is unambiguous (all terms positive). The require keeps n a whole number: V - b = k*a*p + (k - 1)*b, which a divides exactly when a divides (k - 1)*b; about 37% of draws survive. n is always greater than p, so the answer is never the position already used. Worked example: a = 5, b = 10, k = 2, p = 8 gives T_8 = 50, V = 100, n = 18."
+}

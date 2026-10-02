@@ -1,0 +1,56 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s6-2-3:extremes",
+ "kind": "family",
+ "lo_id": "lo:g10m6s6-2-3",
+ "parent_question_id": "q:g10m6s6-2-3:ex6-6-3",
+ "source_page": 201,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "bot",
+   "randint": [
+    0,
+    5
+   ]
+  },
+  {
+   "name": "q",
+   "let": "a + bot"
+  },
+  {
+   "name": "top",
+   "let": "2 * a + bot"
+  }
+ ],
+ "constraints": [],
+ "stem": "For $0^{\\circ}\\le\\theta\\le360^{\\circ}$, the graph of $y=a\\cos\\theta+q$ has its highest point at $A(0^{\\circ}, {=top})$ and its lowest point at $B(180^{\\circ}, {=bot})$. Calculate the values of $a$ (the amplitude of the graph) and $q$ (the vertical shift of the graph). Write your answer as $a=\\ldots$ and $q=\\ldots$.",
+ "solution": [
+  "The highest point of the graph is $A(0^{\\circ}, {=top})$ and the lowest point is $B(180^{\\circ}, {=bot})$, so the graph runs from $y={=bot}$ up to $y={=top}$.",
+  "The distance from the bottom of the graph to the top is ${=top}-{=paren(bot)}={=top - bot}$. This distance is twice the amplitude, so $a=\\frac{{=top - bot}}{2}={=a}$.",
+  "To find $q$, compare with an unshifted cosine graph of the same amplitude, $y=a\\cos\\theta$ with $a={=a}$. Its highest point is at $(0^{\\circ}, {=a})$, because $\\cos 0^{\\circ}=1$.",
+  "The highest point of our graph is at $(0^{\\circ}, {=top})$, so the graph has been shifted up by ${=top}-{=a}={=q}$ units. So $q={=q}$.",
+  "Therefore $a={=a}$ and $q={=q}$. Check: at $\\theta=0^{\\circ}$, $a+q={=a}+{=q}={=top}$."
+ ],
+ "marker": {
+  "kind": "values",
+  "answer": "[{=a}, {=q}]",
+  "form": null,
+  "variables": [
+   "a",
+   "q"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Entry-point version of book ex6-6-3 (top point at 0 degrees, bottom point at 180 degrees). The book shows the curve in a figure; here the stem states which point is the highest and which the lowest, which is exactly what the figure tells the student, so the item stands without a diagram. All values are whole numbers, a > 0 and q >= a, so the whole graph sits on or above the x-axis (lowest value 0 to 5, highest at most 15). Answer is a = (top - bottom)/2 and q = top - a, the book's own method (half the top-to-bottom distance, then the shift of the point compared with the unshifted a cos theta). Unique answer: a + q = top and -a + q = bottom. The book's fractional case (a = 1/2) is deliberately not sampled so the key never depends on fraction rendering in a values marker.\n\nPIPELINE NORMALISATION (not an author edit): marker-values-plain-form: the marker answer was 'a = {=a}; q = {=q}', the book's printed form 'a = -1; q = 2'. The key is read by families/evaluator.py parse_plain, which splits an answer at ONE top-level '=' (a ';' reads as a ','), so 'a = 3, q = 2' has two and every attempt failed to evaluate ('more than one '='') instead of producing a key. The plain form for kind \"values\" with several variables is a list of the values, '[a, q]' (runbook/families.workflow.js: '[a, b] for several values'; the blind answer's names are stripped to that form by generate_questions.blind_plain, and the siblings tan-135, positive-q, negative-q already write it). The marker is now '[{=a}, {=q}]': the same two numbers, the same order, the same variables list. The stem (which still asks the student to write a=... and q=...), the answer values and the worked solution are unchanged."
+}

@@ -1,0 +1,77 @@
+{
+  "format": "ainext.family/1",
+  "id": "tpl:g10m14s4-1-1:union",
+  "kind": "family",
+  "lo_id": "lo:g10m14s4-1-1",
+  "parent_question_id": "q:g10m14s4-1-1:ex14-4-2",
+  "source_page": 470,
+  "tier": "advanced",
+  "answer_type": "mcq",
+  "context": null,
+  "params": [
+    {
+      "name": "total",
+      "choice": [
+        20,
+        24,
+        30,
+        40
+      ]
+    },
+    {
+      "name": "na",
+      "randint": [
+        4,
+        "total // 2"
+      ]
+    },
+    {
+      "name": "nb",
+      "randint": [
+        4,
+        "total // 2"
+      ]
+    },
+    {
+      "name": "nab",
+      "randint": [
+        1,
+        "min(na, nb) - 1"
+      ]
+    }
+  ],
+  "constraints": [
+    "na + nb - nab <= total"
+  ],
+  "stem": "In a sample space of ${=total}$ equally likely outcomes, $n(A) = {=na}$, $n(B) = {=nb}$ and $n(A \\text{ and } B) = {=nab}$. Find $P(A \\text{ or } B)$.",
+  "solution": [
+    "$P(A \\text{ or } B) = P(A) + P(B) - P(A \\text{ and } B)$.",
+    "$n(A \\text{ or } B) = {=na} + {=nb} - {=nab} = {=na + nb - nab}$.",
+    "$P(A \\text{ or } B) = {=frac(na + nb - nab, total)} = {=Fraction(na + nb - nab, total)}$."
+  ],
+  "choices": {
+    "correct": "${=Fraction(na + nb - nab, total)}$",
+    "distractors": [
+      {
+        "text": "${=Fraction(na + nb, total)}$",
+        "misconception_id": "mc:g10m14s4-1-1:overlap-counted-twice"
+      },
+      {
+        "text": "${=Fraction(nab, total)}$",
+        "misconception_id": "mc:g10m14s4-1-1:and-for-or"
+      },
+      {
+        "text": "${=Fraction(na * nb, total * total)}$",
+        "misconception_id": "mc:g10m14s4-1-1:product-rule-misused"
+      }
+    ]
+  },
+  "proposed_misconceptions": [
+    {
+      "id": "mc:g10m14s4-1-1:product-rule-misused",
+      "label": "Multiplies probabilities for 'or'",
+      "description": "Uses P(A) × P(B), the rule for independent 'and', where the addition rule is needed."
+    }
+  ],
+  "notes": "Fixture: one proposed misconception S5 has not written (tests only)."
+}

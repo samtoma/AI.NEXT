@@ -1,0 +1,2362 @@
+{
+ "book": "g10-math",
+ "stage": "final",
+ "prompts_version": "s5-v5",
+ "by_ref": {
+  "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/s5-final-ch14",
+  "stage": "S5 final",
+  "shards_sha256": "7135fdebb83bd5ebee6c78e749b0d1a2177aa38b2021be98506e6d9bcead7d20",
+  "files": 23
+ },
+ "embedded": {
+  "source": "runbook/misconceptions.workflow.js",
+  "source_sha256": "8a48496f9fb571481f131c340cefa1ee28d2d1a96b8ab5a348e2adf4166e0a0a",
+  "args_sha256": "d1f513fc048e8cb7d5f4b2af29677ce6586a10c2210d7b6178b907ee80a06eb8",
+  "generated_sha256": "0bd4d442a4831a5c219692f74c6e2313dadc4dd3c259645f42196cd1c7983987",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "max_per_objective": 4,
+ "records": [
+  {
+   "lo": "lo:g10m14s1-1-1",
+   "entries": [
+    {
+     "id": "mc:g10m14s1-1-1:event-set-incomplete",
+     "lo_id": "lo:g10m14s1-1-1",
+     "label": "Lists only some of the outcomes that give the wanted result",
+     "description": "The student writes down one or two outcomes that give the wanted result, such as a total of 8, and treats that as the whole event set, leaving out the other outcomes that also give it.",
+     "signal": "The event set for a total of 8 with two dice holds only some of the pairs, for example just (4, 4), or just (2, 6) and (6, 2).",
+     "kind": "book_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "The pairs you wrote really do total 8, so that part is right. The slip is stopping there: an event is not one outcome you spotted, it is the whole set of outcomes you are interested in."
+      },
+      {
+       "step": 2,
+       "text_md": "The learner is hoping for a total of 8, so every outcome that gives 8 counts. Take the outcome where the first die shows 3 and the second shows 5. It totals 8, so it belongs to the event, but it is missing from a set that holds only $(4, 4)$, and from a set that holds only $(2, 6)$ and $(6, 2)$."
+      },
+      {
+       "step": 3,
+       "text_md": "The same thing happens with a pack of cards that has had the clubs taken out. The event of drawing a picture card is every J, Q and K of hearts, diamonds and spades, not just one of those cards."
+      },
+      {
+       "step": 4,
+       "text_md": "Go through the pairs the two dice can show and keep every one whose total is 8. That gives the event set $\\{(2, 6), (3, 5), (4, 4), (5, 3), (6, 2)\\}$."
+      }
+     ],
+     "maps": [
+      {
+       "question_id": "q:g10m14s1-1-1:ex14-1-1",
+       "choice_text": "\\left\\{(4, 4)\\right\\}"
+      },
+      {
+       "question_id": "q:g10m14s1-1-1:ex14-1-1",
+       "choice_text": "\\left\\{(2, 6), (6, 2)\\right\\}"
+      }
+     ],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "distractor",
+       "ref": "D0"
+      },
+      {
+       "type": "distractor",
+       "ref": "D1"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m14s1-1-1:ex14-1-1"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "expl:g10m14s1-1-1:ex14-8-27b"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "book",
+       "ref": "q:g10m14s1-1-1:ex14-1-1",
+       "question_id": "q:g10m14s1-1-1:ex14-1-1",
+       "text": "\\left\\{(4, 4)\\right\\}",
+       "tagged": null
+      },
+      {
+       "origin": "book",
+       "ref": "q:g10m14s1-1-1:ex14-1-1",
+       "question_id": "q:g10m14s1-1-1:ex14-1-1",
+       "text": "\\left\\{(2, 6), (6, 2)\\right\\}",
+       "tagged": null
+      },
+      {
+       "origin": "S7",
+       "ref": "wt:g10m14s1-1-1:boxes-product-at-least-3#missed-outcomes",
+       "question_id": "q:g10m14s1-1-1:w001",
+       "text": "Some outcomes in the event were not selected",
+       "tagged": "mc:g10m14s1-1-1:event-set-incomplete"
+      },
+      {
+       "origin": "S7",
+       "ref": "wt:g10m14s1-1-1:two-dice-total-8#missed-outcomes",
+       "question_id": "q:g10m14s1-1-1:w003",
+       "text": "Some outcomes in the event were not selected",
+       "tagged": "mc:g10m14s1-1-1:event-set-incomplete"
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The error is real and matches the book's own distractors on the event question. The refutation is correct. The pairs named do total 8, and (3, 5) is a valid missing pair. The book defines an event as the specific set of outcomes you are interested in, and the refutation argues from that. Its final set {(2, 6), (3, 5), (4, 4), (5, 3), (6, 2)} equals the canonical answer B. The pack-of-cards step is the book's own worked example, restated in full, with the picture-card event given as the J, Q and K of hearts, diamonds and spades. It uses no question id, page, figure or review language. One mild weakness: the dice-total-8 wording does not match the boxes widget [62]. The error is identical there, so the fit is kept."
+     }
+    },
+    {
+     "id": "mc:g10m14s1-1-1:sample-space-of-another-experiment",
+     "lo_id": "lo:g10m14s1-1-1",
+     "label": "Picks the sample space of a different experiment",
+     "description": "The student chooses a set they remember from another experiment, such as heads and tails from a coin toss, without checking that it lists the results of the experiment actually described.",
+     "signal": "The sample space given for a die roll is $\\{H, T\\}$, or any list whose members a die cannot show.",
+     "kind": "book_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "$\\{H, T\\}$ really is a sample space, for tossing a coin, where the results are heads and tails. The mix-up is matching the set to a familiar example instead of to the experiment in front of you."
+      },
+      {
+       "step": 2,
+       "text_md": "A sample space is the set of all possible outcomes of the experiment, so it has to be built from this experiment. Here a die is rolled. Ask of each member of the set: can the die show this? A die can never land on $H$ or $T$."
+      },
+      {
+       "step": 3,
+       "text_md": "What a die can land on is the numbers on its faces. Heads and tails would only belong in the sample space if a coin were being tossed."
+      },
+      {
+       "step": 4,
+       "text_md": "Before choosing, say the experiment in your own words, here a die is rolled. Then list every result that experiment can give, and check that each member of your set could really happen. For a die that is $\\{1, 2, 3, 4, 5, 6\\}$."
+      }
+     ],
+     "maps": [
+      {
+       "question_id": "q:g10m14s1-1-1:ex14-1-2",
+       "choice_text": "\\{H, T\\}"
+      }
+     ],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "distractor",
+       "ref": "D2"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m14s1-1-1:ex14-1-2"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "book",
+       "ref": "q:g10m14s1-1-1:ex14-1-2",
+       "question_id": "q:g10m14s1-1-1:ex14-1-2",
+       "text": "\\{H, T\\}",
+       "tagged": null
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The error is real and matches distractor {H, T} on the die sample-space question. The refutation is correct and consistent with the canonical answer {1, 2, 3, 4, 5, 6}. It restates the book's definition (the set of all possible outcomes of the experiment). It concedes that {H, T} is a valid sample space for a coin, which the book's coin-toss caution supports. It then argues against the mix-up with a concrete check, asking whether the die can show each member. It adds nothing beyond the book and has no references to ids, pages or review history. The signal wording 'any list whose members a die cannot show' is read as 'all members', so it is acceptable, though slightly loose."
+     }
+    },
+    {
+     "id": "mc:g10m14s1-1-1:sample-space-as-an-event",
+     "lo_id": "lo:g10m14s1-1-1",
+     "label": "Gives an event in place of the sample space",
+     "description": "The student writes a set picked out by a condition, such as only the odd numbers on a die, when the sample space is every possible outcome of the experiment.",
+     "signal": "The sample space given for a single die roll leaves out some of the numbers 1 to 6, for example $\\{1, 3, 5\\}$.",
+     "kind": "book_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "$\\{1, 3, 5\\}$ is a perfectly good set: it is the odd numbers a die can show. The mix-up is between an event, which is a set of outcomes you are interested in, and the sample space, which is every possible outcome."
+      },
+      {
+       "step": 2,
+       "text_md": "Test it. If the die lands on 4, that is a possible outcome of the experiment, but it is not in $\\{1, 3, 5\\}$. A sample space must hold every possible outcome, so it cannot leave out 2, 4 or 6."
+      },
+      {
+       "step": 3,
+       "text_md": "A pack of cards with the clubs taken out shows the split. The sample space is every card left in the pack, while the event of drawing a picture card is only the J, Q and K of hearts, diamonds and spades."
+      },
+      {
+       "step": 4,
+       "text_md": "To write a sample space, do not filter. Ask what the experiment could give and list all of it, which for a die is $\\{1, 2, 3, 4, 5, 6\\}$. Keep a smaller set like $\\{1, 3, 5\\}$ for when you are told you are interested in only some of the results."
+      }
+     ],
+     "maps": [
+      {
+       "question_id": "q:g10m14s1-1-1:ex14-1-2",
+       "choice_text": "\\{1, 3, 5\\}"
+      }
+     ],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "distractor",
+       "ref": "D3"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m14s1-1-1:ex14-1-2"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "expl:g10m14s1-1-1:ex14-8-27a"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "expl:g10m14s1-1-1:ex14-8-27b"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "book",
+       "ref": "q:g10m14s1-1-1:ex14-1-2",
+       "question_id": "q:g10m14s1-1-1:ex14-1-2",
+       "text": "\\{1, 3, 5\\}",
+       "tagged": null
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The error is real and matches distractor {1, 3, 5}. The refutation is correct. {1, 3, 5} is the odd-numbers event, and a die landing on 4 shows it cannot be the sample space. The pack-of-cards contrast matches the book's two cards examples: the sample space is the deck without clubs, and the picture-card event is the J, Q and K of hearts, diamonds and spades. The final {1, 2, 3, 4, 5, 6} is the canonical answer A. The refutation argues against the event-versus-sample-space confusion and is not a bare restatement of the method. It has no id, page or review references. The signal 'leaves out some of the numbers 1 to 6' is somewhat broad, but any proper subset given as the sample space is an event, so the diagnosis holds."
+     }
+    },
+    {
+     "id": "mc:g10m14s1-1-1:outcome-not-a-result-of-the-experiment",
+     "lo_id": "lo:g10m14s1-1-1",
+     "label": "Calls something unrelated to the experiment an outcome",
+     "description": "The student treats anything that happens at the time as an outcome, so picks something like a teacher walking into the room or a clock striking 3 pm as an outcome of rolling a die, without checking that it is a result of the experiment described.",
+     "signal": null,
+     "kind": "book_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "It is natural to hear \"outcome\" as \"something that happens\", and a teacher walking in or a clock striking 3 pm do happen. What is missing is the check on which experiment the outcome has to come from."
+      },
+      {
+       "step": 2,
+       "text_md": "An outcome of an experiment is a single result of that experiment. Here the experiment is rolling the die, so an outcome has to be something the roll itself produces."
+      },
+      {
+       "step": 3,
+       "text_md": "Ask of each option: if nobody rolled the die, would this still happen? A teacher can walk in, and the clock can strike 3 pm, whether or not a die is ever rolled. The roll does not produce either of them, so neither is a result of it."
+      },
+      {
+       "step": 4,
+       "text_md": "Only one option is produced by the roll: the die lands on the number 5. It is one single result of rolling the die, so it is the outcome."
+      },
+      {
+       "step": 5,
+       "text_md": "Next time, name the experiment first, then pick the option that is one single result of that experiment. For rolling a die, that is the die landing on a number."
+      }
+     ],
+     "maps": [
+      {
+       "question_id": "q:g10m14s1-1-1:ex14-8-1",
+       "choice_text": "A teacher walks into the class room"
+      },
+      {
+       "question_id": "q:g10m14s1-1-1:ex14-8-1",
+       "choice_text": "The clock strikes 3 pm"
+      }
+     ],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "distractor",
+       "ref": "D0"
+      },
+      {
+       "type": "distractor",
+       "ref": "D1"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m14s1-1-1:ex14-8-1"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "book",
+       "ref": "q:g10m14s1-1-1:ex14-8-1",
+       "question_id": "q:g10m14s1-1-1:ex14-8-1",
+       "text": "A teacher walks into the class room",
+       "tagged": null
+      },
+      {
+       "origin": "book",
+       "ref": "q:g10m14s1-1-1:ex14-8-1",
+       "question_id": "q:g10m14s1-1-1:ex14-8-1",
+       "text": "The clock strikes 3 pm",
+       "tagged": null
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The error is real and matches the book's two unrelated distractors on the outcome question. The refutation is correct and consistent with the canonical solution. It uses the book's definition (an outcome is a single result of that experiment) and the canonical answer, that the die lands on the number 5. Its test, 'if nobody rolled the die, would this still happen?', is a restatement of the definition's 'result of that experiment' and teaches no new content. It argues against the specific mix-up of 'something that happens' versus 'a result of this experiment', and is not a bare restatement of the method. It has no id, page or review references. There is no signal, so signal_ok is true."
+     }
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "Two printed cautions were not used. The coin-lands-on-its-edge caution (p.471) and the soccer-score caution (the sample space is infinitely large, p.472) belong to examples that none of this objective's questions test. A coin appears only as a wrong option in the sample-space question, which the existing sample-space-of-another-experiment entry already covers, and no question here asks about a soccer match. Neither is a wrong answer a student would give, so I did not turn either into an entry. A human may want to decide whether a voiced 'what if the coin lands on its edge?' needs an entry."
+    },
+    {
+     "kind": "terminology",
+     "text": "The refutation uses the book's own definition of outcome, 'a single result of that experiment', taken from the canonical solution. The phrases 'something that happens' and 'produced by the roll' are my plain-English wording, not book terms. I avoided the word 'event' because the book defines it as a set of outcomes of interest and it would clash with that sense."
+    },
+    {
+     "kind": "other",
+     "text": "The canonical solutions contain typography that conflicts with the app's notation and that I did not repeat. The box-and-cards sample space is printed with decimal points, as (1.1), where (1, 1) is meant. The worked-example sets use semicolons, {J;Q;K}. The sample-space definition reads 'all possible outcomes of all experiment'. Worth a human look before these reach students."
+    },
+    {
+     "kind": "other",
+     "text": "Only ex14-8-1 has wrong options. The box-and-cards questions (ex14-8-22a to d) and the card-deck worked examples have no distractors, so they gave no option-encoded error, and the evidence file holds no re-solve wrong turns for them."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m14s1-1-2",
+   "entries": [
+    {
+     "id": "mc:g10m14s1-1-2:unequal-outcomes-counted-as-equal",
+     "lo_id": "lo:g10m14s1-1-2",
+     "label": "Treats outcomes that are not equally likely as if they were",
+     "description": "The student counts the kinds of result (for example the colours in a bag) as the outcomes and divides by that count, or applies n(E)/n(S) to a situation whose outcomes are not equally likely.",
+     "signal": "Gives 1 over the number of categories, such as $\\frac{1}{4}$ for a red ball from a bag of four colours, instead of using the number of balls.",
+     "kind": "generated_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "It is natural to list the different things that could happen, for example four colours in a bag, and take $n(S)=4$ so that $P(\\text{red})=\\frac{1}{4}$. Listing the possible results is the right first move, and the formula $P(E)=\\frac{n(E)}{n(S)}$ is the right formula. The catch is what you are allowed to count."
+      },
+      {
+       "step": 2,
+       "text_md": "$P(E)=\\frac{n(E)}{n(S)}$ only works when every outcome counted in $n(S)$ is equally likely."
+      },
+      {
+       "step": 3,
+       "text_md": "Test it on a bag with $6$ red balls, $3$ blue balls, $2$ green balls and $1$ white ball. Is picking red as likely as picking white? There are six red balls and only one white one, so no. The four colours are not equally likely outcomes, so $\\frac{1}{4}$ cannot be the probability of red."
+      },
+      {
+       "step": 4,
+       "text_md": "What is equally likely is each individual ball: any one ball is as likely to be picked as any other. So $n(S)=12$ balls and $n(E)=6$ red balls, which gives $P(\\text{red})=\\frac{6}{12}=\\frac{1}{2}$. That is different from $\\frac{1}{4}$, and it matches the fact that half the balls are red."
+      },
+      {
+       "step": 5,
+       "text_md": "The same warning applies beyond bags. The possible final scores of a soccer match are not all equally likely, so $\\frac{n(E)}{n(S)}$ cannot be used to find the probability of a team winning. This method does not apply there."
+      },
+      {
+       "step": 6,
+       "text_md": "Before you count, ask: is each outcome I am counting as likely as every other one? If yes, use $\\frac{n(E)}{n(S)}$. If you listed kinds or categories that are not equally likely, count the outcomes that are, such as each ball rather than each colour, and write $n(E)$ and $n(S)$ from those."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "b04382"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m14s1-1-2:ex14-1-6a"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "S6",
+       "ref": "tpl:g10m14s1-1-2:colour-fraction#mc:g10m14s1-1-2:unequal-outcomes-counted-as-equal",
+       "question_id": "q:g10m14s1-1-2:g001-colour",
+       "text": "$\\frac{1}{4}$",
+       "tagged": "mc:g10m14s1-1-2:unequal-outcomes-counted-as-equal"
+      },
+      {
+       "origin": "S7",
+       "ref": "wt:g10m14s1-1-2:two-dice-total-at-most-4#counted-once",
+       "question_id": "q:g10m14s1-1-2:w001",
+       "text": "Counted a compound outcome once where the grid shows several ways to make it",
+       "tagged": "mc:g10m14s1-1-2:unequal-outcomes-counted-as-equal"
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The refutation matches the book. The 6/3/2/1 bag with n(E)=6, n(S)=12, P(red)=1/2 agrees with the canonical solution for ex14-1-6a. The soccer-scores step is the book's own caution (outcomes not all equally likely, so n(E)/n(S) cannot be used). It argues against the error, because it shows 1/4 fails by comparing red with white, and it does not just restate the method. No question ids, page numbers, figures or review history appear in the label, description, signal or steps. The 'colours as outcomes' error is a natural elaboration of the caution and is corrected by the book's own method of counting balls."
+     }
+    },
+    {
+     "id": "mc:g10m14s1-1-2:opposite-event-counted",
+     "lo_id": "lo:g10m14s1-1-2",
+     "label": "Counts the outcomes outside the event instead of inside it",
+     "description": "The student counts the outcomes that do not belong to the event and writes that count over n(S), so n(E) is the wrong set.",
+     "signal": "The numerator is the number of outcomes NOT in the event while the denominator is the full total, so the numerator and the correct n(E) add up to n(S).",
+     "kind": "generated_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You counted the outcomes that are not in the event and put that over the total. Your total is right, and you counted carefully. The slip is which outcomes go on top: $n(E)$ should be the ones that make the event happen, not the ones that leave it out."
+      },
+      {
+       "step": 2,
+       "text_md": "$n(E)$ is the number of outcomes in the event set. Whatever event the question names, those are the outcomes to count. Everything else belongs in $n(S)$ but not in $n(E)$."
+      },
+      {
+       "step": 3,
+       "text_md": "Try a die rolled once, with the event \"lands on 1 or 2\". The event set is $\\{1, 2\\}$, so $n(E)=2$ and $n(S)=6$, which gives $P(E)=\\frac{2}{6}=\\frac{1}{3}$. Counting the outcomes outside the event gives 4, and $\\frac{4}{6}=\\frac{2}{3}$. That is the fraction for landing on 3, 4, 5 or 6, which is a different event from the one asked about."
+      },
+      {
+       "step": 4,
+       "text_md": "Take care when the question itself says \"not\". If a ball is picked from a bag of 6 red, 3 blue, 2 green and 1 white ball and the event is \"not green\", then the event set is the red, blue and white balls. So $n(E)=6+3+1=10$ and $P(E)=\\frac{10}{12}=\\frac{5}{6}$. The rule has not changed: you count the outcomes that make the event in the question happen."
+      },
+      {
+       "step": 5,
+       "text_md": "Before you divide, say the event in words. Count only the outcomes that make it happen for $n(E)$, count all the possible outcomes for $n(S)$, then write $P(E)=\\frac{n(E)}{n(S)}$ and simplify."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "distractor",
+       "ref": "D0"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m14s1-1-2:ex14-1-3"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m14s1-1-2:ex14-1-6c"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m14s1-1-2:ex14-8-11a"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "S6",
+       "ref": "tpl:g10m14s1-1-2:colour-fraction#mc:g10m14s1-1-2:opposite-event-counted",
+       "question_id": "q:g10m14s1-1-2:g001-colour",
+       "text": "$\\frac{83}{114}$",
+       "tagged": "mc:g10m14s1-1-2:opposite-event-counted"
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The refutation is mathematically correct and consistent with the canonical solutions. For the die, n(E)=2, n(S)=6 gives 1/3, which matches ex14-1-3, while 4/6=2/3 is correctly identified as a different event. For 'not green', n(E)=6+3+1=10 and P=10/12=5/6, which matches ex14-1-6c. It argues against the complement error and not just the method, and it guards against over-correcting when the question itself says 'not'. The signal is a precise numerical relation (the wrong numerator plus the correct n(E) equals n(S)). There are no ids, page numbers, figure references or review history in the student-facing fields."
+     }
+    },
+    {
+     "id": "mc:g10m14s1-1-2:event-over-the-rest",
+     "lo_id": "lo:g10m14s1-1-2",
+     "label": "Divides by the outcomes outside the event instead of by all the outcomes",
+     "description": "The student writes n(E) over the number of outcomes that are not in the event, comparing the event with the rest, instead of over n(S), the total number of outcomes in the sample space.",
+     "signal": "The denominator is n(S) minus n(E), the outcomes outside the event, instead of the total n(S).",
+     "kind": "generated_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You put the outcomes in the event over the outcomes outside it, which compares one group with the other. Your top number, the count of outcomes in the event, is right. The bottom number is the part to change."
+      },
+      {
+       "step": 2,
+       "text_md": "The bottom number is $n(S)$, the number of possible outcomes in the sample space. The sample space holds every outcome that could happen, and that includes the outcomes in the event. The event is made of some of the outcomes in the sample space, so its outcomes are counted in $n(S)$ and not taken out of it."
+      },
+      {
+       "step": 3,
+       "text_md": "Look at a bag with 6 red, 3 blue, 2 green and 1 white ball, and the event \"blue or white\". Here $n(E)=3+1=4$. Any of the 12 balls could be picked, so $n(S)=12$ and $P(E)=\\frac{4}{12}=\\frac{1}{3}$. Using the other 8 balls underneath gives $\\frac{4}{8}=\\frac{1}{2}$, which leaves the blue and white balls out of the total, even though they could be the ball that is picked."
+      },
+      {
+       "step": 4,
+       "text_md": "To find $n(S)$, add up every group of outcomes. In a table of colours, that means adding all the counts, not just the ones outside your event. Then count the outcomes in the event for $n(E)$ and write $P(E)=\\frac{n(E)}{n(S)}$. Both numbers must come from the same collection of outcomes, with $n(E)$ a part of $n(S)$."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "distractor",
+       "ref": "D1"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m14s1-1-2:ex14-8-11a"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m14s1-1-2:ex14-1-6b"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "expl:g10m14s1-1-2:we01"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "S6",
+       "ref": "tpl:g10m14s1-1-2:colour-fraction#mc:g10m14s1-1-2:event-over-the-rest",
+       "question_id": "q:g10m14s1-1-2:g001-colour",
+       "text": "$\\frac{31}{83}$",
+       "tagged": "mc:g10m14s1-1-2:event-over-the-rest"
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "This is a real part-to-rest versus part-to-whole error, and the refutation is correct and canonical. For 'blue or white', n(E)=4, n(S)=12, P=1/3 matches ex14-1-6b, and the wrong 4/8=1/2 is shown to leave the event's own outcomes out of the total. The advice to add every count in a table to get n(S) matches the method in ex14-8-11a and ex14-8-12a. Both numbers are said to come from the same collection of outcomes, which is consistent with the book. There are no ids, page numbers, figures or review history in the student-facing fields. The signal (denominator equal to n(S)-n(E)) is precise."
+     }
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "terminology",
+     "text": "The book's solutions use the terms \"event set\", \"sample space\", n(E) and n(S). The phrases \"outcomes outside the event\" and \"the rest\" are plain wording of my own, not terms the book prints, so a human should check them against the book's wording."
+    },
+    {
+     "kind": "evidence",
+     "text": "The two cautions in the evidence (outcomes not all equally likely, so n(E)/n(S) cannot be used) support the existing unequal-outcomes entry only. I used them for no new entry and added nothing to that entry."
+    },
+    {
+     "kind": "evidence",
+     "text": "The colour-fraction question family behind D0 and D1 was not included in the question file, so I assumed it asks for the probability of one colour from a table of counts (like the book's blocks-in-a-box question). The refutations use the book's own bag, die and table questions instead of the family's numbers (31, 83, 114)."
+    },
+    {
+     "kind": "other",
+     "text": "I left out errors about simplifying fractions, decimals and percentages. This objective's description mentions them, but no caution, remark or wrong option in the evidence supports a specific error there."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m14s2-1-1",
+   "entries": [
+    {
+     "id": "mc:g10m14s2-1-1:expects-a-fixed-value",
+     "lo_id": "lo:g10m14s2-1-1",
+     "label": "Gives a fixed 'expected' value instead of the fraction the trials produced",
+     "description": "The student treats the relative frequency of an event as one set number, such as 0.5 for heads, and gives that instead of working out the number of trials in which the event occurred divided by the total number of trials, or asks why the answer is not the same every time.",
+     "signal": null,
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "It is natural to feel that a coin has one 'right' answer for heads, such as $0.5$, and to give that whatever the question says happened. Counting heads is exactly the right idea; the slip is putting a number you expect in place of the number the trials gave."
+      },
+      {
+       "step": 2,
+       "text_md": "A relative frequency is experimental. It is worked out only from the trials that were actually carried out: the number of trials in which the event occurs, divided by the total number of trials, $f=\\frac{p}{t}$."
+      },
+      {
+       "step": 3,
+       "text_md": "Compare two coin experiments. A coin tossed $30$ times lands on heads $17$ times, so $f=\\frac{17}{30}=0.57$. A coin tossed $44$ times lands on heads $22$ times, so $f=\\frac{22}{44}=0.50$. It is the same event with two different relative frequencies, and both are right because each one comes from its own trials."
+      },
+      {
+       "step": 4,
+       "text_md": "That is why the book warns that a different relative frequency is possible every time the experiment is repeated: the value depends on the outcomes observed in that run. If you always answered $0.5$, the first coin would be marked wrong, because its trials gave $0.57$."
+      },
+      {
+       "step": 5,
+       "text_md": "So read the question for two numbers only: how many trials had the event ($p$) and how many trials there were in all ($t$). Then calculate $\\frac{p}{t}$ and round as the question asks."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "b04401"
+      },
+      {
+       "type": "caution",
+       "ref": "b04406"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m14s2-1-1:ex14-2-2"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m14s2-1-1:ex14-8-8"
+      }
+     ],
+     "covers": [],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The error is real for this objective. A student given counts for a coin toss can answer 0.5 and skip the p/t calculation. The two cautions support it directly: relative frequency is experimental, differs each time the experiment is repeated, and depends on the outcomes observed. I checked the arithmetic against the canonical solutions. 17/30 = 0.5667, which rounds to 0.57 (matches ex14-2-2). 22/44 = 0.50 (matches ex14-8-8). The notation f = p/t, with p the positive trials and t the total, is the book's own, and the rounding instruction matches the canonical method. The refutation argues against the error and does not just restate the method. Step 3 gives a concrete counterexample, and step 4 shows that a constant 0.5 would mark the first coin wrong. It teaches nothing outside the book: it never brings in theoretical probability or expected value. It names no question id, page number, figure or review history. The 17/30 and 22/44 data are stated in full, so the student can see them, and 'the book warns' is a generic pointer, not a numbered reference. Minor wording nit, not disqualifying: 'Counting heads is exactly the right idea' presumes the student counted. If the student is on the 30-toss question, step 3 repeats that question's numbers and answer."
+     }
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m14s2-1-2",
+   "entries": [
+    {
+     "id": "mc:g10m14s2-1-2:closer-after-every-trial",
+     "lo_id": "lo:g10m14s2-1-2",
+     "label": "Expects every extra trial to bring the relative frequency closer to the theoretical probability",
+     "description": "The student reads 'gets closer as the number of trials increases' as 'closer after each single trial', so they expect every new relative frequency to be nearer the theoretical probability than the one before it.",
+     "signal": "Says or writes that the relative frequency gets closer to the theoretical probability with every trial, or doubts a table in which one value is further from it than the previous value.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You have the main idea right: as the number of trials grows, the relative frequency does end up closer to the theoretical probability. The slip is reading that as 'closer after every single trial'."
+      },
+      {
+       "step": 2,
+       "text_md": "The book words it carefully: the relative frequency *tends* to get closer, and it fluctuates, a lot at first and less later. Take the coin tossed $30$ times, where the theoretical probability of heads is $0.5$. After $10$ tosses there were $5$ heads, so $f=\\frac{5}{10}=0.50$, exactly the theoretical probability."
+      },
+      {
+       "step": 3,
+       "text_md": "The $11$th toss was heads, so $p=6$ and $f=\\frac{6}{11}\\approx 0.55$. That is further from $0.5$ than before, even though there was one more trial."
+      },
+      {
+       "step": 4,
+       "text_md": "It happens at the end too. After $29$ tosses $f=\\frac{13}{29}\\approx 0.45$. The $30$th toss was tails, so $f=\\frac{13}{30}\\approx 0.43$, which is further from $0.5$ than the value before it. A single step can go either way, so a value that moves away from the theoretical probability is not a sign you have miscalculated."
+      },
+      {
+       "step": 5,
+       "text_md": "When you compare, work out $f=\\frac{p}{t}$ after each trial and look at the whole run of values. Say what the run shows: early on $f$ jumps about a lot around the theoretical probability, and as the number of trials increases it fluctuates less and gets closer to it. Do not claim that every new trial is nearer than the last."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "remark",
+       "ref": "expl:g10m14s2-1-2:we02"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "expl:g10m14s2-1-2:we02"
+      }
+     ],
+     "covers": [],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "I re-counted the heads from the 30-trial table and every number in the refutation is right. After 10 tosses there are 5 heads, so f=0.50. Toss 11 is heads, so f=6/11≈0.55, which is further from 0.5 than 0.50. After 29 tosses f=13/29≈0.45, and the 30th toss is tails, so f=13/30≈0.43, which is further out than 0.45. These match the canonical f-table at t=10, 11, 29 and 30, and the plotted graph shows the same zig-zag. The claims about the book's wording (tends to get closer, fluctuates a lot at first and less later) are the book's own words, and step 5 is the book's method (f=p/t, then read the whole run of values). The error is a plausible misreading of the LO's 'gets closer as trials increase', and the table itself is the counterexample. The refutation argues against the error, not just the method. It names no question id, page or figure, and mentions no review history. The one small weakness is that p and t are used without being defined in this entry, which is a clarity point, not an error."
+     }
+    },
+    {
+     "id": "mc:g10m14s2-1-2:relative-frequency-same-as-probability",
+     "lo_id": "lo:g10m14s2-1-2",
+     "label": "Treats the relative frequency as if it must equal the theoretical probability",
+     "description": "The student treats the relative frequency from the trials and the theoretical probability as the same number, so a relative frequency such as 0.43 looks like a mistake, or gets reported as the probability itself.",
+     "signal": "States that the probability of heads is the last relative frequency (for example $0.43$), or says the relative frequency should be exactly $0.5$ and so the result must be wrong.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You are right that the two numbers are linked and that the relative frequency is there to be compared with the theoretical probability. The step to watch is treating them as the same number, because they answer different questions."
+      },
+      {
+       "step": 2,
+       "text_md": "The theoretical probability of heads is $0.5$, and it stays $0.5$ however the tosses turn out. The relative frequency $f=\\frac{p}{t}$ records what actually happened so far: $p$ heads out of $t$ trials. It changes as the experiment goes on."
+      },
+      {
+       "step": 3,
+       "text_md": "In the coin tossed $30$ times, there were $13$ heads, so after $30$ tosses $f=\\frac{13}{30}\\approx 0.43$. That is not $0.5$, and nothing has gone wrong. The book describes this value as close to the theoretical probability of $0.5$, not equal to it. Along the way $f$ was $0.50$ after $10$ tosses and $0.40$ after $20$ tosses, while the theoretical probability stayed at $0.5$ the whole time."
+      },
+      {
+       "step": 4,
+       "text_md": "So $0.43$ is not the new probability of heads either. It describes these $30$ tosses. The theoretical probability is still $0.5$."
+      },
+      {
+       "step": 5,
+       "text_md": "To compare, calculate $f=\\frac{p}{t}$, put it beside the theoretical probability, and say how close it is. For example, $\\frac{13}{30}\\approx 0.43$ is close to $0.5$. Expect it to be close, not identical."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "remark",
+       "ref": "expl:g10m14s2-1-2:we02"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "expl:g10m14s2-1-2:we02"
+      }
+     ],
+     "covers": [],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "Every number checks against the canonical solution and the coin data. 13 heads in 30 tosses gives f=13/30≈0.43, and f was 0.50 after 10 tosses and 0.40 after 20 (8 heads in 20). The theoretical probability of heads is 0.5 throughout. The book says the final value 'is close to the theoretical probability of 0.5', and the refutation reports that as close, not equal. It defines p and t, separates the fixed theoretical probability from the running relative frequency, and rejects 0.43 as 'the new probability'. That is consistent with the canonical method and teaches nothing beyond the book. The error is a real, plausible confusion for this LO. The signal (naming the last relative frequency as the probability, or insisting f must be exactly 0.5) would not misdiagnose a student. It names no question id, page number, numbered figure or review history. 'The book describes…' is a generic mention, not a specific reference."
+     }
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "The only evidence supplied for this objective is a caution on p.477 about the soccer experiment (a case where the theoretical probability is difficult or impossible to compute). It concerns a situation this objective's question does not cover, because here the theoretical probability of $0.5$ is given. Writing against it would mean teaching something outside this objective and referring to an example the student cannot see, so it is not used."
+    },
+    {
+     "kind": "evidence",
+     "text": "There are no wrong options and no re-solve wrong turns for this objective. Both entries are inferred from the worked example's own wording ('tends to get closer', 'fluctuates', 'close to the theoretical probability') and from its table and graph. No caution or distractor encodes them. They need a human check that these are errors worth keeping."
+    },
+    {
+     "kind": "terminology",
+     "text": "Terms used as the book words them: relative frequency, theoretical probability, trials, positive outcomes, fluctuates, 'tends to get closer'. The book prints the last value as $0.4\\dot{3}$ but tabulates it as $0.43$. The refutations write $\\approx 0.43$ for $\\frac{13}{30}$. A reviewer may want to confirm that rounding."
+    },
+    {
+     "kind": "other",
+     "text": "Refutation step 3 of 'relative-frequency-same-as-probability' says the theoretical probability stays $0.5$ however the tosses turn out. The book shows this as the constant dashed line at $0.5$ but does not state it in words, so a reviewer may want to check that framing."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m14s3-1-1",
+   "entries": [],
+   "dropped": [
+    {
+     "id": "mc:g10m14s3-1-1:outside-region-forgotten",
+     "lo_id": "lo:g10m14s3-1-1",
+     "label": "Leaves out the outcomes that are in neither event",
+     "aliases": [],
+     "verdict": "UNSUPPORTED",
+     "reason": "The error is real for this objective, and steps 1-3 and 5 agree with the book. Rectangle = S. Die: S={1..6}, n(S)=6, circles hold only 1, 3, 5, and 2, 4, 6 sit outside both circles. P(multiple of 5 and odd)=1/6, which matches the canonical answer. The entry still cannot be confirmed for two reasons. (1) Step 4 argues from the diagram of another worked example, the diamonds, as if the student can see it: 'The same happens with the diamonds ... yet they are drawn inside the rectangle'. I checked the diamond figure and the content is right (5, A, 7, 3, 9 are outside both circles, n(S)=13). But the refutation never sets up the experiment (a card taken from the diamonds) or the events (even, royal). A student working a different question has no diagram to look at, so this step leans on a figure of another question the student cannot see. (2) The supporting evidence is thin: the evidence section is '(none)', so there is no book caution or independent re-solve wrong turn behind this error. It rests on a distractor and on the fact that the book's worked example draws the outside outcomes. When in doubt, do not confirm."
+    }
+   ],
+   "stripped": [
+    {
+     "lo": "lo:g10m14s3-1-1",
+     "origin": "S7",
+     "ref": "wt:g10m14s3-1-1:die-multiple-of-5-and-odd#neither-region-missed",
+     "question_id": "q:g10m14s3-1-1:w001",
+     "text": "The region outside every set was left unshaded or uncounted",
+     "tagged": "mc:g10m14s1-1-1:sample-space-as-an-event",
+     "reason": "its entry mc:g10m14s3-1-1:outside-region-forgotten was dropped (UNSUPPORTED)"
+    }
+   ],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution box, worked-example remark or re-solve wrong turn was supplied for this objective. The one entry rests only on the deliberately written widget predicate (D0). I did not add entries for other plausible slips (an outcome shared by both events drawn in only one circle, or counted twice in n(A)+n(B)) because nothing in the evidence supports them."
+    },
+    {
+     "kind": "evidence",
+     "text": "The multiple-of-5-and-odd die question prints its Venn figure only as [figure] and its canonical solution is two sentences. I assumed the usual reading consistent with its answer of 1/6: sample space {1, 2, 3, 4, 5, 6}, multiple of 5 = {5}, odd = {1, 3, 5}, so 2, 4 and 6 fall outside both circles. Please confirm the book's own diagram matches."
+    },
+    {
+     "kind": "terminology",
+     "text": "The book's solutions do not name the region outside the circles. I describe it as 'inside the rectangle but outside both circles' and avoid the predicate's phrase 'outside every set'. Terms used: sample space, event, n(S), Venn diagram, rectangle, circles, overlap, royal. 'Overlap' is my wording for the region shared by two circles; please check it against the book's term."
+    },
+    {
+     "kind": "other",
+     "text": "The diamonds example in step 4 relies on the figure for the worked example, which places A, 3, 5, 7 and 9 outside both circles with n(S)=13. I deliberately did not rely on how that figure treats the queen (placed in the overlap of the even and royal events)."
+    }
+   ],
+   "notes": [
+    "D65 was tagged mc:g10m14s1-1-1:sample-space-as-an-event, an entry of lo:g10m14s1-1-1; re-attached on lo:g10m14s3-1-1"
+   ]
+  },
+  {
+   "lo": "lo:g10m14s3-1-2",
+   "entries": [
+    {
+     "id": "mc:g10m14s3-1-2:reads-only-the-overlap",
+     "lo_id": "lo:g10m14s3-1-2",
+     "label": "Reads only the part both circles share",
+     "description": "The student lists only the elements that sit inside both circles, as if the event set were just the shared part rather than everything inside its own circle.",
+     "signal": "The answer is a smaller set made up only of elements that lie in both circles; it leaves out elements that lie inside the named circle alone.",
+     "kind": "book_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You found numbers that really do belong to the event, and none of them is wrong. The slip is stopping at the part the two circles share, as if the event set were only the shared numbers."
+      },
+      {
+       "step": 2,
+       "text_md": "The event set of $A$ is every element inside circle $A$. A number inside both circles is inside circle $A$, so it counts, but a number inside circle $A$ and outside circle $B$ counts just the same."
+      },
+      {
+       "step": 3,
+       "text_md": "For example, if circle $A$ holds twelve numbers and only $\\{4, 7, 10, 14, 15\\}$ of them are also in circle $B$, the other seven ($1, 2, 5, 6, 9, 11, 13$) sit in circle $A$ alone. They are still in the event, so the event set of $A$ is $\\{1, 2, 4, 5, 6, 7, 9, 10, 11, 13, 14, 15\\}$, not just the shared five."
+      },
+      {
+       "step": 4,
+       "text_md": "Shade the whole circle named in the question, including the part it shares with the other circle, then list every number inside the shaded part."
+      }
+     ],
+     "maps": [
+      {
+       "question_id": "q:g10m14s3-1-2:ex14-3-2",
+       "choice_text": "\\{4, 7, 10, 14, 15\\}"
+      },
+      {
+       "question_id": "q:g10m14s3-1-2:ex14-8-2",
+       "choice_text": "\\{1, 3, 5, 7, 10\\}"
+      }
+     ],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "distractor",
+       "ref": "D3"
+      },
+      {
+       "type": "distractor",
+       "ref": "D5"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m14s3-1-2:ex14-3-2"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m14s3-1-2:ex14-8-2"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "book",
+       "ref": "q:g10m14s3-1-2:ex14-3-2",
+       "question_id": "q:g10m14s3-1-2:ex14-3-2",
+       "text": "\\{4, 7, 10, 14, 15\\}",
+       "tagged": null
+      },
+      {
+       "origin": "book",
+       "ref": "q:g10m14s3-1-2:ex14-8-2",
+       "question_id": "q:g10m14s3-1-2:ex14-8-2",
+       "text": "\\{1, 3, 5, 7, 10\\}",
+       "tagged": null
+      },
+      {
+       "origin": "S6",
+       "ref": "tpl:g10m14s3-1-2:inside-circle#mc:g10m14s3-1-2:reads-only-the-overlap",
+       "question_id": "q:g10m14s3-1-2:g001-inside",
+       "text": "$\\{1,\\ 6,\\ 9\\}$",
+       "tagged": "mc:g10m14s3-1-2:reads-only-the-overlap"
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "Both figures checked. In the first figure circle A holds 1,2,5,6,9,11,13 alone plus 4,7,10,14,15 in the overlap, so the correct answer is the 12-element set. The distractor {4,7,10,14,15} is exactly the overlap. In the second figure the overlap is {1,3,5,7,10}, so that option is the overlap too. The refutation is self-contained: it states the twelve numbers and the split of five shared and seven alone, and the arithmetic and final set match the canonical answer. It argues against the error and ends with the book's shade-the-whole-circle method. It names no question id, figure or review history."
+     }
+    },
+    {
+     "id": "mc:g10m14s3-1-2:reads-outside-the-circle",
+     "lo_id": "lo:g10m14s3-1-2",
+     "label": "Reads the numbers outside the circle",
+     "description": "The student lists the elements that lie outside the circle for the event, instead of the elements inside it.",
+     "signal": "The answer is made up only of numbers of the sample space that are not inside the circle named in the question, so it contains none of the numbers inside that circle.",
+     "kind": "book_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You separated the numbers inside the circle from the numbers outside it correctly. The slip is which group you kept: you listed the numbers outside the circle, and the event set is the numbers inside it."
+      },
+      {
+       "step": 2,
+       "text_md": "An event set contains the elements that belong to the event, and those are the ones inside its circle. A number outside the circle does not belong to the event, whether it sits in the other circle or outside both circles."
+      },
+      {
+       "step": 3,
+       "text_md": "For example, take the sample space of whole numbers from 1 to 15, and suppose only $\\{3, 8, 12\\}$ lie outside circle $A$. Those three are exactly the numbers that are not in the event. The other twelve are inside circle $A$, so the event set of $A$ has twelve elements, not three."
+      },
+      {
+       "step": 4,
+       "text_md": "Find the circle named in the question and list the numbers inside it. Leave out everything outside that circle."
+      }
+     ],
+     "maps": [
+      {
+       "question_id": "q:g10m14s3-1-2:ex14-3-2",
+       "choice_text": "\\{3, 8, 12\\}"
+      },
+      {
+       "question_id": "q:g10m14s3-1-2:ex14-8-2",
+       "choice_text": "\\{6, 13\\}"
+      }
+     ],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "distractor",
+       "ref": "D1"
+      },
+      {
+       "type": "distractor",
+       "ref": "D4"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m14s3-1-2:ex14-3-2"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m14s3-1-2:ex14-8-2"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "book",
+       "ref": "q:g10m14s3-1-2:ex14-3-2",
+       "question_id": "q:g10m14s3-1-2:ex14-3-2",
+       "text": "\\{3, 8, 12\\}",
+       "tagged": null
+      },
+      {
+       "origin": "book",
+       "ref": "q:g10m14s3-1-2:ex14-8-2",
+       "question_id": "q:g10m14s3-1-2:ex14-8-2",
+       "text": "\\{6, 13\\}",
+       "tagged": null
+      },
+      {
+       "origin": "S6",
+       "ref": "tpl:g10m14s3-1-2:inside-circle#mc:g10m14s3-1-2:reads-outside-the-circle",
+       "question_id": "q:g10m14s3-1-2:g001-inside",
+       "text": "$\\{4,\\ 5,\\ 8\\}$",
+       "tagged": "mc:g10m14s3-1-2:reads-outside-the-circle"
+      },
+      {
+       "origin": "S6",
+       "ref": "tpl:g10m14s3-1-2:paired-sets#mc:g10m14s3-1-2:reads-outside-the-circle",
+       "question_id": "q:g10m14s3-1-2:g001-paired",
+       "text": "$A = \\{3,\\ 4,\\ 6,\\ 9,\\ 12,\\ 13\\}$ and $B = \\{1,\\ 2,\\ 3,\\ 7,\\ 8,\\ 13\\}$",
+       "tagged": "mc:g10m14s3-1-2:reads-outside-the-circle"
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "{3,8,12} is exactly the complement of A in the first figure (3 is B-only, 8 and 12 are outside both circles) and {6,13} is the complement of B in the second. The refutation's numbers check out: 15 numbers minus 3 outside leaves 12 inside, which matches the canonical 12-element answer. It argues against the error: outside the circle, whether in the other circle or in neither, is not in the event. It ends with the book's method and uses no figure or question reference. The signal is accurate for every attached option."
+     }
+    }
+   ],
+   "dropped": [
+    {
+     "id": "mc:g10m14s3-1-2:reads-the-other-circle",
+     "lo_id": "lo:g10m14s3-1-2",
+     "label": "Reads the other event's circle",
+     "aliases": [],
+     "verdict": "UNSUPPORTED",
+     "reason": "The error is real: {3,4,7,10,14,15} is exactly circle B in the first figure, and the paired swap fits too. But step 3 calls the membership check one that 'always works', and that is false. Checking that every number in your answer is inside the named circle never catches a missing number, so an overlap-only answer would pass it and reinforce the neighbouring error. The step also leans on 'a number such as 3 that sits inside circle B only', which is a value from the book's figure that a student on a generated item may not see (in the paired-sets item 3 is not in the answer). That check is not the book's method."
+    },
+    {
+     "id": "mc:g10m14s3-1-2:omits-the-overlap",
+     "lo_id": "lo:g10m14s3-1-2",
+     "label": "Leaves out the part the circles share",
+     "aliases": [],
+     "verdict": "UNSUPPORTED",
+     "reason": "The refutation is mathematically correct, and its numbers match the first figure. But the evidence does not support the error. The only book distractor cited, D2 = {3,4,7,10,14,15}, is the whole of circle B, which is the other-circle error and includes the overlap. No book option for this objective is an overlap-omitting set: the A-only set {1,2,5,6,9,11,13} is not offered. The only support is one generated paired-sets option and its author's reading. When in doubt, do not confirm."
+    }
+   ],
+   "stripped": [
+    {
+     "lo": "lo:g10m14s3-1-2",
+     "origin": "book",
+     "ref": "q:g10m14s3-1-2:ex14-3-2",
+     "question_id": "q:g10m14s3-1-2:ex14-3-2",
+     "text": "\\{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15\\}",
+     "tagged": null,
+     "reason": "no named error: This lists every number in the sample space except 13, and 13 sits inside circle A. No single reading of the diagram (the circle, the other circle, the outside, the overlap) produces it, so no error can be named honestly."
+    },
+    {
+     "lo": "lo:g10m14s3-1-2",
+     "origin": "book",
+     "ref": "q:g10m14s3-1-2:ex14-8-2",
+     "question_id": "q:g10m14s3-1-2:ex14-8-2",
+     "text": "\\{2, 4, 6, 8, 9, 11, 12, 13, 14, 15\\}",
+     "tagged": null,
+     "reason": "no named error: This is every number outside circle A (equivalently, everything except the overlap), offered for the event set of B. It combines reading the other circle with reading the outside, so assigning it to either existing entry would give a refutation that does not match what the student did, and it is not the new entry either."
+    },
+    {
+     "lo": "lo:g10m14s3-1-2",
+     "origin": "book",
+     "ref": "q:g10m14s3-1-2:ex14-3-2",
+     "question_id": "q:g10m14s3-1-2:ex14-3-2",
+     "text": "\\{3, 4, 7, 10, 14, 15\\}",
+     "tagged": null,
+     "reason": "its entry mc:g10m14s3-1-2:reads-the-other-circle was dropped (UNSUPPORTED)"
+    },
+    {
+     "lo": "lo:g10m14s3-1-2",
+     "origin": "S6",
+     "ref": "tpl:g10m14s3-1-2:inside-circle#mc:g10m14s3-1-2:reads-the-other-circle",
+     "question_id": "q:g10m14s3-1-2:g001-inside",
+     "text": "$\\{1,\\ 4,\\ 5,\\ 6,\\ 9\\}$",
+     "tagged": "mc:g10m14s3-1-2:reads-the-other-circle",
+     "reason": "its entry mc:g10m14s3-1-2:reads-the-other-circle was dropped (UNSUPPORTED)"
+    },
+    {
+     "lo": "lo:g10m14s3-1-2",
+     "origin": "S6",
+     "ref": "tpl:g10m14s3-1-2:paired-sets#mc:g10m14s3-1-2:reads-the-other-circle",
+     "question_id": "q:g10m14s3-1-2:g001-paired",
+     "text": "$A = \\{4,\\ 5,\\ 6,\\ 9,\\ 10,\\ 11,\\ 12\\}$ and $B = \\{1,\\ 2,\\ 5,\\ 7,\\ 8,\\ 10,\\ 11\\}$",
+     "tagged": "mc:g10m14s3-1-2:reads-the-other-circle",
+     "reason": "its entry mc:g10m14s3-1-2:reads-the-other-circle was dropped (UNSUPPORTED)"
+    },
+    {
+     "lo": "lo:g10m14s3-1-2",
+     "origin": "S6",
+     "ref": "tpl:g10m14s3-1-2:paired-sets#mc:g10m14s3-1-2:omits-the-overlap",
+     "question_id": "q:g10m14s3-1-2:g001-paired",
+     "text": "$A = \\{1,\\ 2,\\ 7,\\ 8\\}$ and $B = \\{4,\\ 6,\\ 9,\\ 12\\}$",
+     "tagged": "mc:g10m14s3-1-2:omits-the-overlap",
+     "reason": "its entry mc:g10m14s3-1-2:omits-the-overlap was dropped (UNSUPPORTED)"
+    }
+   ],
+   "flags": [
+    {
+     "kind": "terminology",
+     "text": "The word \"overlap\" is the live catalogue's and the generated family's word for the shared region, and \"circle\" comes from the objective's description. The canonical solutions themselves only say the event set \"can be shaded\", and the book's diagrams label the shared region with $A \\cap B$. I used \"shading\" and \"overlap\" but did not introduce \"intersection\"; a reviewer should confirm the book's students are comfortable with \"overlap\"."
+    },
+    {
+     "kind": "evidence",
+     "text": "I could not see the stem or figure of the generated paired-sets question that D2 comes from, so the new entry rests on that option's author reading plus the book's own canonical solutions (which include the overlap in the event set of $A$ and of $B$). The numbers in the refutation's worked case are those of the first book question, described in words only."
+    },
+    {
+     "kind": "evidence",
+     "text": "D0 (every number but 13) and D1 (every number outside circle A, offered for B) were left unassigned because no single honest reading of the diagram produces them. Note that in the second book question circle A lies wholly inside the overlap, so the 'overlap only' and 'other circle' options coincide there, and the option {6, 13} is simply the numbers outside circle B."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m14s3-1-3",
+   "entries": [
+    {
+     "id": "mc:g10m14s3-1-3:whole-count-read-as-only-region",
+     "lo_id": "lo:g10m14s3-1-3",
+     "label": "Reading a group's whole count as its 'only' part",
+     "description": "The student takes a number given for a whole group, or for the learners taking two subjects together, as if it counted only the people in that group and nowhere else, so the people who also belong to another group get counted twice.",
+     "signal": "36 − 17 − 12 = 7 for the people who read neither magazines nor books; or 16 and 6 written whole into the 'two subjects only' regions of the three-subject diagram, which makes the History circle hold 38 learners instead of 36.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You took a number the question gives for a group as if it counted only the part of that group with nothing else in it. Putting each given number straight onto the diagram is a good start. The catch is that a group's number counts everyone in that group, including the people who also belong to another group."
+      },
+      {
+       "step": 2,
+       "text_md": "Two groups first. Of $36$ people, $17$ read magazines, $12$ read books and $6$ read both. Those $6$ are inside the $17$ and inside the $12$, so only $17-6=11$ read only magazines and only $12-6=6$ read only books."
+      },
+      {
+       "step": 3,
+       "text_md": "So $36-17-12=7$ takes the $6$ who read both away twice. Adding the regions instead: $11+6+6=23$ read magazines or books or both, and $36-23=13$ read neither."
+      },
+      {
+       "step": 4,
+       "text_md": "Three groups work the same way. \"$16$ take Maths and History\" includes some learners who take Geography too. Let $x$ be the number who take all three subjects. Then $16-x$ take Maths and History but not Geography, and $6-x$ take Geography and History but not Maths."
+      },
+      {
+       "step": 5,
+       "text_md": "Writing $16$ and $6$ whole into those two parts cannot be right. The History circle would hold $16+16+6=38$ learners before anyone who takes all three is counted, yet only $36$ take History. Adding the History regions with $x$ kept in gives $36=16+(16-x)+(6-x)+x$, so $x=2$: $14$ take Maths and History but not Geography, and $4$ take Geography and History but not Maths."
+      },
+      {
+       "step": 6,
+       "text_md": "Next time a question gives a number for a group, or for two groups together, write it as the sum of the regions inside it. Then check that the regions in each circle add back up to the number you were given."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "expl:g10m14s3-1-3:ex14-3-5a"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m14s3-1-3:ex14-3-5b"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m14s3-1-3:ex14-8-29a"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m14s3-1-3:ex14-8-31b"
+      }
+     ],
+     "covers": [],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The error is real here. The canonical items stress that the 16 and the 6 'out of these some take the other subject as well', and that 17 magazine readers include the 6 who read both. Every figure in the refutation matches the canonical work. For the two-group case it gives 17-6=11, 12-6=6, 11+6+6=23 and 36-23=13, which is the book's 36-11-6-6=13. For the three-group case it gives 16-x and 6-x, 36=16+(16-x)+(6-x)+x, x=2, and so 14 and 4, which agrees with the book's x=2 and its later 8+14+2+y and 4+2+6+z. The 38-versus-36 check is arithmetically right (16+16+6=38 against 36 History learners). The refutation argues against the specific slip: treating a whole-group count as an 'only' region. It also gives the check the book relies on, that the regions in each circle must sum back to the circle's total. It names no question id, page, figure or review history, and teaches nothing beyond the book. Minor looseness: the History-only 16 and the Maths-and-History 16 are not labelled apart, but the stem shows both. The 7 signal is the overlap-ignored form of the same root error and is acceptable."
+     }
+    },
+    {
+     "id": "mc:g10m14s3-1-3:neither-group-lost-from-the-count",
+     "lo_id": "lo:g10m14s3-1-3",
+     "label": "Losing the learners who belong to neither group",
+     "description": "The student does not treat the people in neither group as a region of their own, so they are left out when the whole group is added up, or left among the circles when the total is shared out.",
+     "signal": "A group size that adds only the regions inside the circles, such as 63 for the children with red hair only, both, and brown eyes only (leaving out the 40 with neither); or a count of 35 for the people who read only the Sowetan, which still contains the 10 who read neither paper.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "Finding the numbers inside the circles is the right method. The slip is the people who belong to neither group: they sit in a region of their own, outside both circles, but they were still part of the survey."
+      },
+      {
+       "step": 2,
+       "text_md": "Finding the whole group: $44$ children have red hair but not brown eyes, $14$ have both, $5$ have brown eyes but not red hair, and $40$ have neither. Adding only the three regions inside the circles gives $44+14+5=63$, but the $40$ were surveyed too, so the whole group is $44+14+5+40=103$."
+      },
+      {
+       "step": 3,
+       "text_md": "Sharing out a total: $80$ people were asked about the Daily Sun and the Sowetan, and $10$ read neither. If everyone who does not read the Daily Sun is counted as reading only the Sowetan, you get $80-45=35$. But that $35$ still contains the $10$ who read neither paper."
+      },
+      {
+       "step": 4,
+       "text_md": "Take them out first: $80-10=70$ people are inside the circles. Then $70=45+s$, where $s$ is the number who read only the Sowetan, so $s=25$."
+      },
+      {
+       "step": 5,
+       "text_md": "Next time, write the number for \"neither\" outside the circles before anything else. To get the size of the whole group, add it in. To work on the circles, take it from the total first. Then check that all the regions, the outside one included, add up to the whole group."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m14s3-1-3:ex14-8-20a"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m14s3-1-3:ex14-8-29a"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m14s3-1-3:ex14-8-29b"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "expl:g10m14s3-1-3:ex14-8-28a"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m14s3-1-3:ex14-8-31b"
+      }
+     ],
+     "covers": [],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The error is real and supported: the canonical items set 'neither' as its own region, with 44+14+5+40=103, 80-10=70 and 650-50=600. The refutation's numbers all match. 44+14+5=63 against a whole group of 103 is right. 80-45=35 still contains the 10 who read neither, so removing them first gives 80-10=70, then 70=45+s and s=25. That is the book's s=25 and its 'only Sowetan' answer. The method is the book's own: write neither first, add it in for the whole group, and take it out first when working inside the circles. It argues against this slip rather than just restating the method, and it names no question id, page, figure or review history. Step 4 is terse, because 70=45+s skips the book's d+x=45 link, but it is correct and not misleading. Both signals (63, and 35 for only-Sowetan) fit the 'neither lost' error."
+     }
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "The evidence list was empty: no printed caution, no re-solve wrong turn and no wrong option were supplied. Both entries rest only on the book's own worked steps, cited as canonical_solution. For the first these are the remarks that some of the 16 (and of the 6) also take Geography, and that some Daily Sun readers also read the Sowetan. For the second they are the 80 − 10 = 70 and 650 − 50 = 600 steps and the four-group addition for the red-hair survey. Please confirm that entries resting on worked-example steps alone are wanted."
+    },
+    {
+     "kind": "terminology",
+     "text": "I used \"circle\" (and \"the History circle\") to describe the Venn diagram's shapes. The supplied text only says \"Venn diagram\" and \"region\" (the objective description), so please confirm \"circle\" is the book's word. I avoided \"overlap\", \"universal set\" and any name for the outside of the circles, because none appears in the book text I was given. I kept the book's phrasing: \"take Maths and History\", \"read both\", \"read neither\", \"only\"."
+    },
+    {
+     "kind": "other",
+     "text": "In the three-subject questions, entry whole-count-read-as-only-region leaves the final answers to the 'Maths and Geography but not History' and 'Geography only' questions unchanged by coincidence, because with x set to 0 the equations still give 6 and 29. The error is only exposed by the History total (38, not 36) and by the 'all three subjects' question, so I gave no final-answer signal for those two."
+    },
+    {
+     "kind": "other",
+     "text": "Not written: the conditional-probability error in the question about a child with brown eyes being chosen (dividing 14 by all 103 children instead of by the 19 with brown eyes). No caution, remark or wrong option supports it, and it is a probability convention rather than a counting one, so I left it for the runtime to handle from the canonical solution."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m14s4-1-1",
+   "entries": [
+    {
+     "id": "mc:g10m14s4-1-1:union-as-a-only-part",
+     "lo_id": "lo:g10m14s4-1-1",
+     "label": "Lists only the part of A that is outside B",
+     "description": "The student reads $A\\cup B$ as just the first set and writes down only the elements that are in $A$ but not in $B$, leaving out the overlap and everything in $B$.",
+     "signal": "The answer lists only the elements of $A$ that are not also in $B$.",
+     "kind": "book_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You went to set $A$ and wrote down the numbers in the part of $A$ that is outside $B$. Looking in $A$ is the right start, because everything in $A$ belongs to the union. The slip is stopping there, as if $A\\cup B$ meant just $A$."
+      },
+      {
+       "step": 2,
+       "text_md": "The circle for $A$ also contains the overlap. Those numbers are in $A$ as well as in $B$, so they belong to the union, and your list leaves them out."
+      },
+      {
+       "step": 3,
+       "text_md": "Set $B$ has to be counted too: a number in $B$ is in \"$A$ or $B$\" even when it is not in $A$. Take a diagram where 1, 6, 7, 10 and 15 are in $A$ only, 8 is in $B$ only, and the overlap holds 2, 4, 5, 9, 11, 12, 13 and 14. A list of just 1, 6, 7, 10 and 15 has five numbers, but the union has fourteen, so it misses nine of them."
+      },
+      {
+       "step": 4,
+       "text_md": "The move that works: shade the whole of $A$ and the whole of $B$, overlap included, then write down every number in the shaded part. A number is in the union when it is in at least one of the two sets."
+      }
+     ],
+     "maps": [
+      {
+       "question_id": "q:g10m14s4-1-1:ex14-4-2",
+       "choice_text": "\\{1, 6, 7, 10, 15\\}"
+      }
+     ],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "distractor",
+       "ref": "D0"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m14s4-1-1:ex14-4-2"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "book",
+       "ref": "q:g10m14s4-1-1:ex14-4-2",
+       "question_id": "q:g10m14s4-1-1:ex14-4-2",
+       "text": "\\{1, 6, 7, 10, 15\\}",
+       "tagged": null
+      },
+      {
+       "origin": "S6",
+       "ref": "tpl:g10m14s4-1-1:unionpick#mc:g10m14s4-1-1:union-as-a-only-part",
+       "question_id": "q:g10m14s4-1-1:g001-unionp",
+       "text": "$\\{3,\\ 6\\}$",
+       "tagged": "mc:g10m14s4-1-1:union-as-a-only-part"
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "I checked the figure. A-only is 15, 10, 1, 7, 6 (five numbers). B-only is 8. The overlap is 12, 4, 9, 5, 11, 14, 13, 2 (eight numbers). Only 3 is outside. The union is therefore 14 numbers, so a list of the five A-only numbers misses nine, as step 3 says. Every number and count in the refutation is correct. The refutation argues against this error, because it says the circle for A includes the overlap and that B must be counted too. It does not just restate the method. Its method (shade all of A and all of B, list everything shaded) matches the canonical shaded union and answer B. It names no question id, page, figure number or review history. The description is slightly muddled, since 'just the first set' would include the overlap, but step 2 corrects both faults, so the refutation does not mislead."
+     }
+    },
+    {
+     "id": "mc:g10m14s4-1-1:union-as-overlap-only",
+     "lo_id": "lo:g10m14s4-1-1",
+     "label": "Takes only the overlap as the union",
+     "description": "The student writes down only the elements that are in both sets, the overlap of the two circles, as if $A\\cup B$ meant \"$A$ and $B$\" instead of \"$A$ or $B$\".",
+     "signal": "The answer is a short list made up of the numbers in the overlap of the two circles.",
+     "kind": "generated_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You went to the overlap of the two circles, where the numbers are in both $A$ and $B$. Those numbers do belong to the union, so that was a sensible place to look. The slip is stopping there."
+      },
+      {
+       "step": 2,
+       "text_md": "The union is \"$A$ or $B$\": a number only has to be in at least one of the two sets. Being in both is more than the union asks for. A number in $A$ alone qualifies, and so does a number in $B$ alone."
+      },
+      {
+       "step": 3,
+       "text_md": "Check it on a diagram where 1, 6, 7, 10 and 15 are in $A$ only, 8 is in $B$ only, and the overlap holds 2, 4, 5, 9, 11, 12, 13 and 14. The number 6 is in $A$, so it is in \"$A$ or $B$\", yet it is not in the overlap. The same goes for 8, which is in $B$. The overlap holds only eight of the fourteen numbers in the union."
+      },
+      {
+       "step": 4,
+       "text_md": "The move that works: treat the overlap as one part of the answer, not the whole of it. Shade the whole of $A$ and the whole of $B$, then write down every number in the shading, whether it is in one set or in both."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "distractor",
+       "ref": "D1"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m14s4-1-1:ex14-4-2"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "S6",
+       "ref": "tpl:g10m14s4-1-1:unionpick#mc:g10m14s4-1-1:union-as-overlap-only",
+       "question_id": "q:g10m14s4-1-1:g001-unionp",
+       "text": "$\\{1,\\ 4\\}$",
+       "tagged": "mc:g10m14s4-1-1:union-as-overlap-only"
+      },
+      {
+       "origin": "S7",
+       "ref": "wt:g10m14s4-1-1:shade-union#intersection-for-union",
+       "question_id": "q:g10m14s4-1-1:w001",
+       "text": "The intersection was shaded (or counted) where the union was asked for",
+       "tagged": "mc:g10m14s4-1-1:union-as-overlap-only"
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "This is the classic union/intersection confusion. The counts are correct: the overlap holds 8 of the 14 numbers in the union. The examples are right: 6 is in A only and 8 is in B only, so both are in 'A or B' but not in the overlap. The refutation credits the overlap as part of the union, then explains 'at least one of the two sets'. This argues against the error and matches the canonical full-union answer B. It names no question id, figure number or review history, and it teaches nothing beyond the 'A or B' definition in the objective."
+     }
+    },
+    {
+     "id": "mc:g10m14s4-1-1:union-as-outside-both-circles",
+     "lo_id": "lo:g10m14s4-1-1",
+     "label": "Picks the number outside both circles",
+     "description": "The student writes down the element that sits outside both circles, in the sample space but in neither $A$ nor $B$, instead of the elements inside the circles.",
+     "signal": "The answer is only the number or numbers that sit outside both circles.",
+     "kind": "book_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You picked out the number that sits in the box but outside both circles. It is a real number in the diagram, but it is the one number the union leaves out, not the one it collects."
+      },
+      {
+       "step": 2,
+       "text_md": "The union $A\\cup B$ is every element that is in at least one of the two sets. A number outside both circles is in neither $A$ nor $B$, so it fails that test."
+      },
+      {
+       "step": 3,
+       "text_md": "Take a diagram where the sample space is the numbers 1 to 15 and only 3 sits outside both circles. Every other number from 1 to 15 is in $A$, in $B$, or in both, so the union is all of them: 1 to 15 with 3 missing. The answer $\\{3\\}$ is the one number the union cannot contain."
+      },
+      {
+       "step": 4,
+       "text_md": "The move that works: ignore what is outside and work inside the circles. Shade the whole of $A$ and the whole of $B$, then write down every number in the shading. Anything left unshaded is not part of $A\\cup B$."
+      }
+     ],
+     "maps": [
+      {
+       "question_id": "q:g10m14s4-1-1:ex14-4-2",
+       "choice_text": "\\{3\\}"
+      }
+     ],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "distractor",
+       "ref": "D2"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m14s4-1-1:ex14-4-2"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "book",
+       "ref": "q:g10m14s4-1-1:ex14-4-2",
+       "question_id": "q:g10m14s4-1-1:ex14-4-2",
+       "text": "\\{3\\}",
+       "tagged": null
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "For the book diagram this is correct. Only 3 sits outside both circles, every other number from 1 to 15 is in A, B or both, and the union is 1 to 15 without 3. Option {3} is the one number the union cannot contain. The refutation gives the correct 'at least one of the two sets' test, argues against this specific slip, and matches the canonical answer B. It names no question id, figure number or review history. One caveat is that it is written in the singular ('the number', 'the one number'), so it fits a diagram with a single outside element and not the two-element template option. That mismatch is handled by marking [41] as not fitting."
+     }
+    }
+   ],
+   "dropped": [],
+   "stripped": [
+    {
+     "lo": "lo:g10m14s4-1-1",
+     "origin": "book",
+     "ref": "q:g10m14s4-1-1:ex14-4-2",
+     "question_id": "q:g10m14s4-1-1:ex14-4-2",
+     "text": "\\{2, 4, 5, 9, 10, 11, 12, 13, 14\\}",
+     "tagged": null,
+     "reason": "does not encode mc:g10m14s4-1-1:union-as-overlap-only: The book option {2,4,5,9,10,11,12,13,14} contains 10, which the figure places in A only, outside the overlap. The true overlap is {2,4,5,9,11,12,13,14}. A student making exactly this error would not write 10. The refutation says the overlap has eight numbers and that 10 is A-only, so it would contradict this option."
+    },
+    {
+     "lo": "lo:g10m14s4-1-1",
+     "origin": "S6",
+     "ref": "tpl:g10m14s4-1-1:unionpick#mc:g10m14s4-1-1:union-as-outside-both-circles",
+     "question_id": "q:g10m14s4-1-1:g001-unionp",
+     "text": "$\\{2,\\ 9\\}$",
+     "tagged": "mc:g10m14s4-1-1:union-as-outside-both-circles",
+     "reason": "does not encode mc:g10m14s4-1-1:union-as-outside-both-circles: {2,9} lists two outside numbers, but the refutation and description speak of a single outside element ('the number', 'the one number the union leaves out', 'only 3 sits outside'). For a student who picked two numbers that wording would misdescribe their answer, and I cannot verify the template diagram. The entry should not be attached to this option."
+    }
+   ],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m14s4-1-2",
+   "entries": [
+    {
+     "id": "mc:g10m14s4-1-2:whole-set-not-intersection",
+     "lo_id": "lo:g10m14s4-1-2",
+     "label": "Gives one whole event set instead of the shared elements",
+     "description": "The student writes out every element of one event set ($A$ or $B$) and calls that the intersection, instead of keeping only the elements that are also in the other set.",
+     "signal": "The answer is one event set listed in full: it contains the shared elements but also elements that belong to only one of the two sets.",
+     "kind": "book_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You found the right numbers to start from: the shared elements are in your list, and you looked in the right place. The slip is writing out a whole event set ($B$, or $A$) and calling it $A\\cap B$. A whole set holds every one of its elements, shared or not."
+      },
+      {
+       "step": 2,
+       "text_md": "$A\\cap B$ means only the elements that are in both $A$ and $B$. So a number has to pass two checks: it is in $A$, and it is in $B$. One check is not enough."
+      },
+      {
+       "step": 3,
+       "text_md": "Try it on an example where $B$ is $\\{7, 10, 11\\}$ and $A$ also contains 7 and 10, along with other numbers. Check each number of $B$ against $A$. 7 is in $A$, so it stays. 10 is in $A$, so it stays. 11 is not in $A$, so it fails and is left out."
+      },
+      {
+       "step": 4,
+       "text_md": "That leaves $A\\cap B=\\{7, 10\\}$. The list $\\{7, 10, 11\\}$ is just $B$ with nothing removed, so it is not the intersection. The same goes for writing out all of $A$: numbers that sit only in $A$ fail the check for $B$."
+      },
+      {
+       "step": 5,
+       "text_md": "Next time, take one event set and go through its elements one by one, asking \"is it in the other set too?\" Write down only the ones that get a yes. That list is $A\\cap B$."
+      }
+     ],
+     "maps": [
+      {
+       "question_id": "q:g10m14s4-1-2:ex14-4-1",
+       "choice_text": "\\{7, 10, 11\\}"
+      }
+     ],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "distractor",
+       "ref": "D0"
+      },
+      {
+       "type": "distractor",
+       "ref": "D2"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m14s4-1-2:ex14-4-1"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "book",
+       "ref": "q:g10m14s4-1-2:ex14-4-1",
+       "question_id": "q:g10m14s4-1-2:ex14-4-1",
+       "text": "\\{7, 10, 11\\}",
+       "tagged": null
+      },
+      {
+       "origin": "S6",
+       "ref": "tpl:g10m14s4-1-2:overlap-pick#mc:g10m14s4-1-2:whole-set-not-intersection",
+       "question_id": "q:g10m14s4-1-2:g001-overla",
+       "text": "$\\{6, 8, 9\\}$",
+       "tagged": "mc:g10m14s4-1-2:whole-set-not-intersection"
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "I checked the Venn figure myself. A is the yellow circle (1,2,3,4,5,6,9,12,13,14,15 plus the shared 7 and 10). B is the blue circle ({7,10,11}). The canonical answer {7,10} is the green overlap. Option A, {7,10,11}, is exactly the whole of B, so the error is real and the book's own distractor supports it. The refutation is mathematically correct against the figure: 7 and 10 are in A, 11 is not, so the answer is {7,10}, and {7,10,11} is B with nothing removed. It frames its numbers explicitly as an example, so it stays valid if it appears on a question with different numbers. Its method (keep only elements that are in both sets) matches the canonical method and the LO wording. It names no question id, figure, page or review history. One weakness: the cited distractor D2 ({1..7,9,10}) is not literally the whole of A, because it omits 12 to 15. D0 alone supports the entry."
+     }
+    }
+   ],
+   "dropped": [
+    {
+     "id": "mc:g10m14s4-1-2:either-set-not-both",
+     "lo_id": "lo:g10m14s4-1-2",
+     "label": "Collects the elements from both circles, not just the shared ones",
+     "aliases": [],
+     "verdict": "UNCLEAR",
+     "reason": "The error itself is real and the refutation is correct for the book question. Option B is a long list with A-only elements, the B-only 11, and the shared 7 and 10, and the claims about 11 and 1 to 6 and 9 match the figure. The problem is how the refutation is framed. Step 3 states flatly, about 'any number in your list', that 'only 7 and 10 get two yes answers' and that A∩B={7,10}. Step 2's 'the example' is never introduced. This entry is also attached to a generated variant whose options are {6,8,9} (a whole set) and {6,7,8,9,10,11,19} (a union). In that variant the shared elements must lie within {6,8,9}, so 7 and 10 cannot both be shared. The text would then make false claims about the student's own diagram and teach the wrong intersection. I cannot confirm it is safe wherever it will be shown, so it is not confirmed. Entry 1 avoids this by saying 'an example' explicitly."
+    }
+   ],
+   "stripped": [
+    {
+     "lo": "lo:g10m14s4-1-2",
+     "origin": "book",
+     "ref": "q:g10m14s4-1-2:ex14-4-1",
+     "question_id": "q:g10m14s4-1-2:ex14-4-1",
+     "text": "\\{1, 2, 3, 4, 5, 6, 7, 9, 10\\}",
+     "tagged": null,
+     "reason": "does not encode mc:g10m14s4-1-2:whole-set-not-intersection: {1,2,3,4,5,6,7,9,10} is not a whole event set. A in the figure also contains 12, 13, 14 and 15, so the option is a truncated list. It does not match the signal 'one event set listed in full'. A student who really wrote out all of A would not find it among the options."
+    },
+    {
+     "lo": "lo:g10m14s4-1-2",
+     "origin": "book",
+     "ref": "q:g10m14s4-1-2:ex14-4-1",
+     "question_id": "q:g10m14s4-1-2:ex14-4-1",
+     "text": "\\{1, 2, 3, 4, 5, 6, 7, 9, 10, 11\\}",
+     "tagged": null,
+     "reason": "its entry mc:g10m14s4-1-2:either-set-not-both was dropped (UNCLEAR)"
+    },
+    {
+     "lo": "lo:g10m14s4-1-2",
+     "origin": "S6",
+     "ref": "tpl:g10m14s4-1-2:overlap-pick#mc:g10m14s4-1-2:either-set-not-both",
+     "question_id": "q:g10m14s4-1-2:g001-overla",
+     "text": "$\\{6, 7, 8, 9, 10, 11, 19\\}$",
+     "tagged": "mc:g10m14s4-1-2:either-set-not-both",
+     "reason": "its entry mc:g10m14s4-1-2:either-set-not-both was dropped (UNCLEAR)"
+    },
+    {
+     "lo": "lo:g10m14s4-1-2",
+     "origin": "S7",
+     "ref": "wt:g10m14s4-1-2:shade-intersection#off-target",
+     "question_id": "q:g10m14s4-1-2:w001",
+     "text": "Wrong in a way none of the named errors describes",
+     "tagged": "mc:g10m14s4-1-2:either-set-not-both",
+     "reason": "its entry mc:g10m14s4-1-2:either-set-not-both was dropped (UNCLEAR)"
+    }
+   ],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m14s5-1-1",
+   "entries": [
+    {
+     "id": "mc:g10m14s5-1-1:adds-without-subtracting-shared-outcomes",
+     "lo_id": "lo:g10m14s5-1-1",
+     "label": "Adds the two probabilities and forgets what is in both events",
+     "description": "The student finds P(A) and P(B) and adds them, without subtracting P(A∩B), so every outcome that lies in both events is counted twice.",
+     "signal": "The answer is exactly P(A) + P(B) even though the two events share at least one outcome, for example 17/52 for 'a diamond or a three'.",
+     "kind": "generated_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You added $P(A)$ and $P(B)$ and stopped there. Adding is the right way to start, because the union is made of everything in $A$ and everything in $B$. The catch is that an outcome sitting in both events has been counted twice."
+      },
+      {
+       "step": 2,
+       "text_md": "Try it on a card drawn from an ordinary pack of $52$ cards, asking for a diamond or a three. There are $13$ diamonds and $4$ threes, so adding the probabilities gives $\\frac{13}{52}+\\frac{4}{52}=\\frac{17}{52}$."
+      },
+      {
+       "step": 3,
+       "text_md": "But the three of diamonds is one of the $13$ diamonds and also one of the $4$ threes, so the sum counted that card twice. Only $16$ different cards are a diamond or a three, and the answer is $\\frac{16}{52}=\\frac{4}{13}$, not $\\frac{17}{52}$."
+      },
+      {
+       "step": 4,
+       "text_md": "That is the reason the identity has a third term: $P(A\\cup B)=P(A)+P(B)-P(A\\cap B)$. The only card in both events is the three of diamonds, so $n(A\\cap B)=1$ and $P(A\\cap B)=\\frac{1}{52}$. Then $\\frac{13}{52}+\\frac{4}{52}-\\frac{1}{52}=\\frac{16}{52}$."
+      },
+      {
+       "step": 5,
+       "text_md": "Each time you work out $P(A)$ and $P(B)$, also look for what is in both events and work out $P(A\\cap B)=\\frac{n(A\\cap B)}{n(S)}$, then subtract it. When $A\\cap B$ is empty, as with the event sets $\\{1,2,5,6\\}$ and $\\{3\\}$ on a six-number sample space, $P(A\\cap B)=0$ and the subtraction changes nothing. That is why adding alone gave the right answer there."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "expl:g10m14s5-1-1:ex14-8-23a"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m14s5-1-1:ex14-5-1"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "S7",
+       "ref": "wt:g10m14s5-1-1:venn-union-die#overlap-counted-twice",
+       "question_id": "q:g10m14s5-1-1:w001",
+       "text": "A region's raw set size was entered instead of the count exclusive to it — the overlap counted in twice",
+       "tagged": "mc:g10m14s5-1-1:adds-without-subtracting-shared-outcomes"
+      },
+      {
+       "origin": "S7",
+       "ref": "wt:g10m14s5-1-1:venn-union-discs#overlap-counted-twice",
+       "question_id": "q:g10m14s5-1-1:w002",
+       "text": "A region's raw set size was entered instead of the count exclusive to it — the overlap counted in twice",
+       "tagged": "mc:g10m14s5-1-1:adds-without-subtracting-shared-outcomes"
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "I worked every number myself. 13 diamonds + 4 threes gives 13/52 + 4/52 = 17/52 when added alone. The three of diamonds is in both events, so 16 distinct cards qualify and the answer is 16/52 = 4/13. With n(A∩B) = 1, 13/52 + 4/52 - 1/52 = 16/52, which matches the canonical 'a diamond or a three' answer. The book's A = {1,2,5,6} and B = {3} case has an empty intersection, so P(A)+P(B) = 4/6 + 1/6 = 5/6 ≈ 0.83, which matches the canonical answer. The refutation uses the book's identity and its P(A∩B) = n(A∩B)/n(S) form. It argues against the error by showing the double count and why the third term exists, and does not just restate the method. It names no question id, page, figure or review history. The last step spells out the event sets of the other example, so a student can follow it without having seen that question. The error is intrinsic to the objective: the canonical answer of 16/52 against a plain sum of 17/52 shows it. The 'right way to start' wording in step 1 is loose but not wrong."
+     }
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m14s5-1-2",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No evidence was supplied for this objective: no caution box, no worked-example remark, no re-solve wrong turn, no wrong option and no widget predicate. No entry was written, so the runtime falls back to the canonical solution."
+    },
+    {
+     "kind": "evidence",
+     "text": "The most predictable error here is adding P(A) and P(B) and not subtracting P(A∩B), which double counts the overlap. Nothing supplied supports it. The related question wording says A and B are not mutually exclusive, but that is a framing of the proof, not a printed caution or a wrong option. I left it out rather than invent evidence. If a wrong option or a re-solve slip later encodes it, the book's two-dice example would carry the refutation: 5/36 + 11/36 = 16/36, but the union is 14/36."
+    },
+    {
+     "kind": "evidence",
+     "text": "The canonical solution of the Venn-diagram proof question is figure placeholders only, with no prose or counts. It could not ground a refutation of any error."
+    },
+    {
+     "kind": "terminology",
+     "text": "In the worked example's canonical solution the book writes P(A∪B) as RHS and the sum P(A)+P(B)−P(A∩B) as LHS, the reverse of the identity as printed (P(A∪B) is on the left). I did not repeat or rely on this labelling. Please check whether it is a transcription quirk or the book's own wording before any entry uses RHS or LHS."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m14s5-1-3",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No evidence was supplied for this objective: no book caution box, no worked-example remark, no re-solve wrong turn, no existing catalogue entries, and no wrong options or widget predicates (D0, D1, ... is empty). The brief only allows errors the evidence supports, so no entry is written. The runtime will fall back to the canonical solutions for this objective."
+    },
+    {
+     "kind": "evidence",
+     "text": "The first line of the canonical solution for the first question (event sets A = {1, 2, 6}, B = {1, 5}) prints P(A∪B)=P(A)+P(B)−P(A∪B). The intersection symbol is clearly meant on the right-hand side, since the second question's solution prints P(A∪B)=P(A)+P(B)−P(A∩B), and the rearranged step that follows is correct. This is a typo in the book's working, not a student error, so it was not turned into an entry. A human may want to correct that step before the solution is shown to a student."
+    },
+    {
+     "kind": "evidence",
+     "text": "The two event-set questions both show 0.33 + 0.5 − 0.67 and give 0.17, but those three rounded numbers subtract to 0.16. The book's 0.17 only comes from the exact fractions (1/6). A student who rounds each probability to two decimal places first and then subtracts will get 0.16 and be marked wrong. This is a plausible rounding-too-early error, but the book itself does not flag it and its own printed arithmetic would contradict any refutation, so I left it out. Human review is advised: the solution may need to keep fractions until the last step."
+    },
+    {
+     "kind": "evidence",
+     "text": "Possible errors the questions might invite, none of them supported by any caution, remark or wrong option here, so none were written: (a) for 'a multiple of 2 and 6', reading 'and' as a union or counting multiples of 2 and 6 separately; (b) taking the intersection of A and B as the elements of A∪B, or adding P(A) + P(B) without subtracting P(A∪B). Add them only if wrong options or a re-solve supply evidence."
+    },
+    {
+     "kind": "terminology",
+     "text": "Terms used by the book's solutions and left as printed: 'event set', 'sample space', 'n(S)', 'P(A∩B)', 'P(A∪B)', 'make P(A∩B) the subject'. Rounded decimal answers (0.17, 0.16) are the book's. No term was changed, because no entry text was written."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m14s6-1-1",
+   "entries": [
+    {
+     "id": "mc:g10m14s6-1-1:both-possible-so-not-exclusive",
+     "lo_id": "lo:g10m14s6-1-1",
+     "label": "Treats two possible results as events that can happen together",
+     "description": "The student sees that each event is a real possibility in the same set-up (orange juice and apple juice are both in the fridge, red velvet and vanilla are both in the packet) and calls the events not mutually exclusive, instead of asking whether one single pick can be in both events.",
+     "signal": null,
+     "kind": "book_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You noticed that both events are real possibilities: the cooldrink could be orange juice, and it could be apple juice. That is true, and it is worth noticing. But it is not what \"mutually exclusive\" asks."
+      },
+      {
+       "step": 2,
+       "text_md": "The question is whether the two events can occur **at the same time**, that is, whether any outcome belongs to both event sets. Two events can both be possible and still never happen together."
+      },
+      {
+       "step": 3,
+       "text_md": "Look at what is actually being done: just **one** item is chosen (one cooldrink, one cupcake). That one item has a single flavour. It cannot be orange juice and apple juice at once, and it cannot be red velvet and vanilla at once. No outcome is in both event sets, so the events are mutually exclusive."
+      },
+      {
+       "step": 4,
+       "text_md": "Compare a case where the answer really is \"not mutually exclusive\": one card chosen from a deck, with the events \"the card is red\" and \"the card is a picture card\". There a single card can be in both events, and that is what makes them not mutually exclusive."
+      },
+      {
+       "step": 5,
+       "text_md": "The move to use each time: picture the single pick or the single game, and ask \"can this one result be in both events at once?\" If nothing can, the events are mutually exclusive, even though each of them is possible on its own."
+      }
+     ],
+     "maps": [
+      {
+       "question_id": "q:g10m14s6-1-1:ex14-6-1",
+       "choice_text": "not mutually exclusive"
+      },
+      {
+       "question_id": "q:g10m14s6-1-1:ex14-6-2",
+       "choice_text": "not mutually exclusive"
+      }
+     ],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "distractor",
+       "ref": "D0"
+      },
+      {
+       "type": "distractor",
+       "ref": "D1"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m14s6-1-1:ex14-6-1"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m14s6-1-1:ex14-6-2"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "book",
+       "ref": "q:g10m14s6-1-1:ex14-6-1",
+       "question_id": "q:g10m14s6-1-1:ex14-6-1",
+       "text": "not mutually exclusive",
+       "tagged": null
+      },
+      {
+       "origin": "book",
+       "ref": "q:g10m14s6-1-1:ex14-6-2",
+       "question_id": "q:g10m14s6-1-1:ex14-6-2",
+       "text": "not mutually exclusive",
+       "tagged": null
+      },
+      {
+       "origin": "S6",
+       "ref": "tpl:g10m14s6-1-1:cricket-not#mc:g10m14s6-1-1:both-possible-so-not-exclusive",
+       "question_id": "q:g10m14s6-1-1:g001-cricke",
+       "text": "Event A: the team does not lose. Event B: the team loses.",
+       "tagged": "mc:g10m14s6-1-1:both-possible-so-not-exclusive"
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "I worked it against the canonical solutions. The error is real: on the cooldrink and cupcake items the wrong option 'not mutually exclusive' is what a student picks after noticing both flavours are in the container. The refutation is correct and matches the book. One item is chosen, it cannot be orange juice and apple juice (or red velvet and vanilla) at once, so no outcome is in both sets and the events are mutually exclusive. The red-card and picture-card contrast agrees with the book's own example. It argues against the 'both possible' reasoning rather than only restating the method. It names no question id, page, figure or review history. Minor, not disqualifying: step 3 mentions both a cooldrink and a cupcake whichever item the student is on, and step 4 previews the red/picture card answer."
+     }
+    },
+    {
+     "id": "mc:g10m14s6-1-1:leftover-outcomes-so-not-exclusive",
+     "lo_id": "lo:g10m14s6-1-1",
+     "label": "Thinks mutually exclusive events must cover every outcome",
+     "description": "The student rejects two events as not mutually exclusive because some other outcome belongs to neither of them (a tie, a grape juice), as if mutually exclusive meant that the two events use up everything that can happen.",
+     "signal": null,
+     "kind": "book_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You spotted that winning and losing are not the only things that can happen: a tie is possible too, and a tie counts as neither a win nor a loss. That is correct. The slip is in thinking it changes the answer."
+      },
+      {
+       "step": 2,
+       "text_md": "\"Mutually exclusive\" asks one thing: can the two events occur at the same time, so that some outcome is in both event sets? It does not ask whether the two events together cover every outcome."
+      },
+      {
+       "step": 3,
+       "text_md": "A tie is in neither event set, and an outcome that is in neither set cannot be in both. The team cannot win and lose the same game at the same time, so no outcome is in both events. They are mutually exclusive."
+      },
+      {
+       "step": 4,
+       "text_md": "The same is true of a fridge with orange, apple and grape juice. Grape juice is left over, but one cooldrink still cannot be both orange juice and apple juice, so those two events are mutually exclusive as well."
+      },
+      {
+       "step": 5,
+       "text_md": "The move to use each time: ignore the leftover outcomes and look only at the two events you were given. Is there any outcome that is in both? If not, they are mutually exclusive."
+      }
+     ],
+     "maps": [
+      {
+       "question_id": "q:g10m14s6-1-1:ex14-6-4",
+       "choice_text": "not mutually exclusive"
+      }
+     ],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "distractor",
+       "ref": "D3"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m14s6-1-1:ex14-6-4"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "book",
+       "ref": "q:g10m14s6-1-1:ex14-6-4",
+       "question_id": "q:g10m14s6-1-1:ex14-6-4",
+       "text": "not mutually exclusive",
+       "tagged": null
+      },
+      {
+       "origin": "S6",
+       "ref": "tpl:g10m14s6-1-1:cricket-not#mc:g10m14s6-1-1:leftover-outcomes-so-not-exclusive",
+       "question_id": "q:g10m14s6-1-1:g001-cricke",
+       "text": "Event A: the game is a tie. Event B: the team wins.",
+       "tagged": "mc:g10m14s6-1-1:leftover-outcomes-so-not-exclusive"
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The error is real and supported. The book's own note that a tie counts as neither a win nor a loss, and the grape juice in the fridge, are exactly the leftover outcomes that tempt this answer. The refutation is correct and matches the canonical answers. A tie, or grape juice, lies in neither event set, so it cannot be in both. Win and lose are mutually exclusive, and so are orange juice and apple juice. It says 'ignore the leftover outcomes and look only at the two events', which directly counters the belief that exclusive events must use up every outcome. It uses no book reference, question id or review history, and teaches nothing outside the book."
+     }
+    },
+    {
+     "id": "mc:g10m14s6-1-1:different-features-so-exclusive",
+     "lo_id": "lo:g10m14s6-1-1",
+     "label": "Takes events described in different ways as having nothing in common",
+     "description": "The student sees red and picture as two different kinds of description (a colour and a type of card), assumes a card cannot be both, and calls the events mutually exclusive without checking whether any card is in both event sets.",
+     "signal": null,
+     "kind": "book_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You are treating \"red\" and \"picture card\" as two different kinds of thing, a colour and a type of card, so it feels as if a card must be one or the other. Events do not become mutually exclusive just because their descriptions sound different."
+      },
+      {
+       "step": 2,
+       "text_md": "The test is whether the two events can occur at the same time, that is, whether any card is in both event sets. So go and look for one card that fits both descriptions."
+      },
+      {
+       "step": 3,
+       "text_md": "There is one. Some picture cards are red: for example the king of hearts is a red card and it is also a picture card. A single card can be both a red card and a picture card."
+      },
+      {
+       "step": 4,
+       "text_md": "Because that card is in both event sets, the events can occur at the same time. They are **not** mutually exclusive."
+      },
+      {
+       "step": 5,
+       "text_md": "The move to use each time: try to build one outcome that fits both descriptions. If you can, the events are not mutually exclusive. If you honestly cannot, as with a single cooldrink that is orange juice and apple juice, they are mutually exclusive."
+      }
+     ],
+     "maps": [
+      {
+       "question_id": "q:g10m14s6-1-1:ex14-6-3",
+       "choice_text": "mutually exclusive"
+      }
+     ],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "distractor",
+       "ref": "D2"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m14s6-1-1:ex14-6-3"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "book",
+       "ref": "q:g10m14s6-1-1:ex14-6-3",
+       "question_id": "q:g10m14s6-1-1:ex14-6-3",
+       "text": "mutually exclusive",
+       "tagged": null
+      },
+      {
+       "origin": "S6",
+       "ref": "tpl:g10m14s6-1-1:deck-pair#mc:g10m14s6-1-1:different-features-so-exclusive",
+       "question_id": "q:g10m14s6-1-1:g001-deck-p",
+       "text": "Event A: the card is a club. Event B: the card is a picture card.",
+       "tagged": "mc:g10m14s6-1-1:different-features-so-exclusive"
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The error is real. The wrong option 'mutually exclusive' on red card and picture card is what a student picks who sees a colour and a type of card as unrelated descriptions. The refutation is mathematically correct and consistent with the book. A single card can be both red and a picture card (the book says so, and the king of hearts is a valid instance). Those events are therefore not mutually exclusive, which matches the canonical answer B. The 'try to build one outcome that fits both' step is the same intersection test as the book's. It names no question id or review history. The signal is flawed (see signal_ok)."
+     }
+    }
+   ],
+   "dropped": [],
+   "stripped": [
+    {
+     "lo": "lo:g10m14s6-1-1",
+     "origin": "S6",
+     "ref": "tpl:g10m14s6-1-1:deck-pair#mc:g10m14s6-1-1:inside-so-exclusive",
+     "question_id": "q:g10m14s6-1-1:g001-deck-p",
+     "text": "Event A: the card is a heart. Event B: the card is a red card.",
+     "tagged": "mc:g10m14s6-1-1:inside-so-exclusive",
+     "reason": "does not encode mc:g10m14s6-1-1:different-features-so-exclusive: A heart sits entirely inside red cards. The wrong choice there comes from treating a contained event as separate (the other tag's reading), not from different features. The red/picture and king-of-hearts refutation does not address containment."
+    }
+   ],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "The evidence section for this objective was empty: no caution box, no worked-example remark and no re-solve wrong turn. The only support for any error beyond the three existing entries is the generated option D0, so no new entry was written."
+    },
+    {
+     "kind": "other",
+     "text": "D0 (a heart and a red card, one event sitting wholly inside the other) was assigned to the existing different-features entry. If a reviewer decides that 'one event inside the other' is its own error, it would need a refutation grounded in the same one-pick test. The book's questions here contain no nested pair, only overlapping pairs (red card and picture card) and disjoint pairs, so the nested case is not shown anywhere in the book's own working."
+    },
+    {
+     "kind": "terminology",
+     "text": "The objective description says 'event sets' and 'elements in common'. The book's solutions for the exercise questions use 'cannot be both' and 'can be both' for one pick, and the worked example uses 'no elements in common' and 'intersection'. Any refutation should keep to those phrasings."
+    }
+   ],
+   "notes": [
+    "mc:g10m14s6-1-1:different-features-so-exclusive: signal removed — the verifier could not confirm it"
+   ]
+  },
+  {
+   "lo": "lo:g10m14s6-1-2",
+   "entries": [],
+   "dropped": [
+    {
+     "id": "mc:g10m14s6-1-2:adds-without-checking-exclusive",
+     "lo_id": "lo:g10m14s6-1-2",
+     "label": "Adds P(A) and P(B) without checking the events cannot both happen",
+     "aliases": [],
+     "verdict": "UNSUPPORTED",
+     "reason": "The core correction is right and matches the book: the caution says the sum rule holds for mutually exclusive events only, and the canonical solution for the purple-or-white question uses the full form with the overlap term equal to 0. Two problems stop me confirming it. (1) Step 1 opens with 'You are right that an \"or\" question is answered by adding two probabilities'. That affirms the very over-generalisation the entry is meant to refute. The evidence says the opposite: the sum alone holds only for exclusive events, and the book's own full form subtracts the overlap. Step 4 then contradicts step 1. That claim is not supported by the evidence and is misleading as a general statement. (2) In all four canonical questions the events are exclusive, so a student who adds without checking gets the right answer every time. The error never produces a wrong answer within this objective. The evidence is a bare caution, with no wrong turns recorded, so nothing shows a student making this error here. A refutation that tells the student they are right to add would also be shown to someone who went wrong for another reason. The 'counted twice' explanation and the 'a child has only one age' reasoning are sound, but the book's solutions do not state them. The entry has no signal, so signal_ok is true. With nothing attached, there are no distractors to judge. In doubt, so not confirmed."
+    }
+   ],
+   "stripped": [],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m14s7-1-1",
+   "entries": [
+    {
+     "id": "mc:g10m14s7-1-1:lists-event-instead-of-complement",
+     "lo_id": "lo:g10m14s7-1-1",
+     "label": "Lists numbers from inside the event instead of outside it",
+     "description": "The student writes down numbers that lie inside the event's circle or circles (the event itself, or part of it) instead of the numbers of the sample space that are not in the event.",
+     "signal": "Every number in the answer is a member of the event itself, all of it or part of it, and none comes from outside the event.",
+     "kind": "book_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You found numbers that really are inside the event, so you read the circles correctly. The complement asks for the opposite: the numbers of the sample space that are not in the event."
+      },
+      {
+       "step": 2,
+       "text_md": "An event and its complement have no number in common. Every number of the sample space is in the event or in the complement, never in both."
+      },
+      {
+       "step": 3,
+       "text_md": "That gives a quick test. Take any number from your answer and ask whether it is in the event. If it is, it cannot be in the complement, so it has to come out."
+      },
+      {
+       "step": 4,
+       "text_md": "For $(A \\cup B)'$, for example, the numbers inside the circles make up $A \\cup B$ itself. The complement is what is left of the sample space once those are taken away, which is the numbers outside both circles."
+      },
+      {
+       "step": 5,
+       "text_md": "Next time, shade the event first, then list the numbers that are left unshaded in the sample space. Finish by checking that none of the numbers you listed is in the event."
+      }
+     ],
+     "maps": [
+      {
+       "question_id": "q:g10m14s7-1-1:ex14-7-1",
+       "choice_text": "$\\{1, 5, 13, 14\\}$"
+      },
+      {
+       "question_id": "q:g10m14s7-1-1:ex14-7-2",
+       "choice_text": "$\\{1, 3, 5, 6, 7, 8, 10, 12, 14\\}$"
+      },
+      {
+       "question_id": "q:g10m14s7-1-1:ex14-7-2",
+       "choice_text": "$\\{6, 8, 12\\}$"
+      }
+     ],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "distractor",
+       "ref": "D0"
+      },
+      {
+       "type": "distractor",
+       "ref": "D2"
+      },
+      {
+       "type": "distractor",
+       "ref": "D3"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m14s7-1-1:ex14-7-1"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m14s7-1-1:ex14-7-2"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "book",
+       "ref": "q:g10m14s7-1-1:ex14-7-1",
+       "question_id": "q:g10m14s7-1-1:ex14-7-1",
+       "text": "$\\{1, 5, 13, 14\\}$",
+       "tagged": null
+      },
+      {
+       "origin": "book",
+       "ref": "q:g10m14s7-1-1:ex14-7-2",
+       "question_id": "q:g10m14s7-1-1:ex14-7-2",
+       "text": "$\\{1, 3, 5, 6, 7, 8, 10, 12, 14\\}$",
+       "tagged": null
+      },
+      {
+       "origin": "book",
+       "ref": "q:g10m14s7-1-1:ex14-7-2",
+       "question_id": "q:g10m14s7-1-1:ex14-7-2",
+       "text": "$\\{6, 8, 12\\}$",
+       "tagged": null
+      },
+      {
+       "origin": "S6",
+       "ref": "tpl:g10m14s7-1-1:single-complement#mc:g10m14s7-1-1:lists-event-instead-of-complement",
+       "question_id": "q:g10m14s7-1-1:g001-single",
+       "text": "$\\{2, 3, 4, 6, 7, 10, 11\\}$",
+       "tagged": "mc:g10m14s7-1-1:lists-event-instead-of-complement"
+      },
+      {
+       "origin": "S7",
+       "ref": "wt:g10m14s7-1-1:not-in-chess#complement-inside-a",
+       "question_id": "q:g10m14s7-1-1:w002",
+       "text": "The complement was shaded inside the set it complements, rather than everywhere outside it",
+       "tagged": "mc:g10m14s7-1-1:lists-event-instead-of-complement"
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The error is real and well evidenced. D2 = {1,3,5,6,7,8,10,12,14} on ex14-7-2 is exactly A union B, the event itself. The refutation is mathematically correct and consistent with the canonical method: shade the event, then shade the rest of the sample space. (A union B)' is the outside-both region {2,4,9,11,13,15}, so step 4 matches the canonical answer. The claims that an event and its complement are disjoint and together make up the sample space are the definition of a complementary event set, which the book's complementary-event example (even and odd on a die) also shows. The steps use no specific numbers from any one diagram, so they read correctly for the book questions and the generated variant. They name no question id, page or figure and no review history. The 'check no listed number is in the event' test argues against this specific error and does not merely restate the method. Weak spots: [23] and [26] are partial subsets of the event, which could also come from overlap or exclusive-or confusions, but the refutation is still true and useful for them."
+     }
+    }
+   ],
+   "dropped": [
+    {
+     "id": "mc:g10m14s7-1-1:complement-only-outside-all-circles",
+     "lo_id": "lo:g10m14s7-1-1",
+     "label": "Complement is only what lies outside every circle",
+     "aliases": [],
+     "verdict": "UNSUPPORTED",
+     "reason": "The error is real and book-supported: on ex14-7-1 the diagram gives B = {1,5,7,8,9,13,14,15} and A = {1,2,5,10,13,14}, so B' = {2,3,4,6,10,11,12}, and the book's own distractor {3,4,6,11,12} is exactly the numbers outside both circles. The refutation is mathematically correct there, and step 4 (outside both circles is right only for A union B) matches ex14-7-2, where (A union B)' = {2,4,9,11,13,15}. The problem is step 3. It hard-wires one diagram: 'the numbers 2 and 10 sit in circle A but outside circle B', and '{3,4,6,11,12} falls short of {2,3,4,6,10,11,12}'. The same entry is also attached to the generated option [48], {1,5,9,14,15}. That option comes from a different instance. The sibling options [48], [49] and [50] partition 1..15 exactly, with A = {6,8,10,11,12,13} and B = {2,3,4,6,7,10,11}, so in that instance 2 is in B only. A student who picks [48] would be told 'Take the numbers 2 and 10, they sit in circle A but outside circle B', which is false for the diagram in front of them, and would be shown another question's sets. That is a figure of another question the student cannot see. Not confirmable as written."
+    },
+    {
+     "id": "mc:g10m14s7-1-1:complement-is-other-event",
+     "lo_id": "lo:g10m14s7-1-1",
+     "label": "Takes the other event as the complement",
+     "aliases": [],
+     "verdict": "UNSUPPORTED",
+     "reason": "The refutation is mathematically correct. With the ex14-7-1 sets, B' = {2,3,4,6,10,11,12} is right, and the claims that 1 would wrongly be in A and 3 would be wrongly left out are right. Step 3 matches the book's complementary-events example (even and odd on a die). The error is not supported by the evidence, though. The cited distractor D0 is {1,5,13,14}, which is the A-and-B overlap, not the other event A = {1,2,5,10,13,14}, so no book option shows this error. Neither ex14-7-1 nor ex14-7-2 offers the other event as an option. The only support is one generated variant [49], and the instance diagram is not shown to me. It can be partly reconstructed from sibling options, but that is inference. The refutation's worked test also uses ex14-7-1's sets, which are not the generated instance the student is looking at. The signal's second clause, 'contains numbers also in the event itself and leaves out numbers in neither', would also match D0 and the event-itself error. The first clause is exact, so I keep signal_ok true. With no book evidence for the error itself, I do not confirm."
+    }
+   ],
+   "stripped": [
+    {
+     "lo": "lo:g10m14s7-1-1",
+     "origin": "book",
+     "ref": "q:g10m14s7-1-1:ex14-7-1",
+     "question_id": "q:g10m14s7-1-1:ex14-7-1",
+     "text": "$\\{3, 4, 6, 11, 12\\}$",
+     "tagged": null,
+     "reason": "its entry mc:g10m14s7-1-1:complement-only-outside-all-circles was dropped (UNSUPPORTED)"
+    },
+    {
+     "lo": "lo:g10m14s7-1-1",
+     "origin": "S6",
+     "ref": "tpl:g10m14s7-1-1:single-complement#mc:g10m14s7-1-1:complement-only-outside-all-circles",
+     "question_id": "q:g10m14s7-1-1:g001-single",
+     "text": "$\\{1, 5, 9, 14, 15\\}$",
+     "tagged": "mc:g10m14s7-1-1:complement-only-outside-all-circles",
+     "reason": "its entry mc:g10m14s7-1-1:complement-only-outside-all-circles was dropped (UNSUPPORTED)"
+    },
+    {
+     "lo": "lo:g10m14s7-1-1",
+     "origin": "S7",
+     "ref": "wt:g10m14s7-1-1:complement-of-union#neither-region-missed",
+     "question_id": "q:g10m14s7-1-1:w001",
+     "text": "The region outside every set was left unshaded or uncounted",
+     "tagged": "mc:g10m14s7-1-1:lists-event-instead-of-complement",
+     "reason": "does not encode mc:g10m14s7-1-1:lists-event-instead-of-complement: 'The region outside every set was left unshaded or uncounted' is an omission symptom. It would also fire for a student who takes the other event as the complement, or who simply forgets the neither region in a count. It does not specifically show the event being shaded in place of its complement, so it is not exactly this error."
+    },
+    {
+     "lo": "lo:g10m14s7-1-1",
+     "origin": "S6",
+     "ref": "tpl:g10m14s7-1-1:single-complement#mc:g10m14s7-1-1:complement-is-other-event",
+     "question_id": "q:g10m14s7-1-1:g001-single",
+     "text": "$\\{6, 8, 10, 11, 12, 13\\}$",
+     "tagged": "mc:g10m14s7-1-1:complement-is-other-event",
+     "reason": "its entry mc:g10m14s7-1-1:complement-is-other-event was dropped (UNSUPPORTED)"
+    }
+   ],
+   "flags": [
+    {
+     "kind": "terminology",
+     "text": "The book's solutions say 'event set', 'complementary event set', 'sample space', 'Venn diagram' and 'shaded'. The word 'circle' appears in the existing entries but not in the book's printed solutions, and I avoided it in the new entry. 'Complementary events' is used for the die example in the book's teaching item."
+    },
+    {
+     "kind": "other",
+     "text": "D0 comes from a generated question whose diagram and sample space were not supplied. The assignment rests on the option's numbers and its author's reading. The refutation uses the book's own first question, described in words, instead of that unseen diagram. A human should confirm that D0's numbers do match the other event in its diagram."
+    },
+    {
+     "kind": "other",
+     "text": "The new entry sits close to the existing 'lists numbers from inside the event' entry. I kept them apart because here the numbers come from a different event, so the refutation points at the other event overlapping the event and leaving numbers out. If a reviewer judges them the same error, D0 should move to the existing id and the new entry should be dropped."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m14s7-1-2",
+   "entries": [
+    {
+     "id": "mc:g10m14s7-1-2:all-complements-assumed-exclusive",
+     "lo_id": "lo:g10m14s7-1-2",
+     "label": "Treats any two complements as mutually exclusive",
+     "description": "The student knows that an event and its own complement cannot overlap and carries that over to $A'$ and $B'$, which are the complements of two different events, answering 'yes' without checking whether they share a number.",
+     "signal": "Answers 'yes' (mutually exclusive) when asked about the complements of two different events, for example $A'$ and $B'$.",
+     "kind": "book_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You have hold of something true: an event and its own complement never share a number, so they cannot occur at the same time. The slip is to carry that over to $A'$ and $B'$ just because both have a prime."
+      },
+      {
+       "step": 2,
+       "text_md": "That fact only covers an event and its own complement, like $A$ and $A'$. Here $A'$ is everything not in $A$ and $B'$ is everything not in $B$. They are complements of two different events, so nothing keeps them apart."
+      },
+      {
+       "step": 3,
+       "text_md": "Check with the sets instead. In the example where $A'=\\{2\\}$ and $B'=\\{2, 4, 5, 7, 9, 12, 13, 15\\}$, the number 2 is in neither $A$ nor $B$, so it sits in both complements. The overlap is $\\{2\\}$, not empty."
+      },
+      {
+       "step": 4,
+       "text_md": "Two events are mutually exclusive if they cannot occur at the same time. The number 2 shows these two can, so the answer is no."
+      },
+      {
+       "step": 5,
+       "text_md": "The move that works: write out both event sets, look for a number that is in both, and say yes only when the overlap is empty ($\\{\\}$ or $\\varnothing$)."
+      }
+     ],
+     "maps": [
+      {
+       "question_id": "q:g10m14s7-1-2:ex14-7-4",
+       "choice_text": "yes"
+      }
+     ],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "distractor",
+       "ref": "D1"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m14s7-1-2:ex14-7-4"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "book",
+       "ref": "q:g10m14s7-1-2:ex14-7-4",
+       "question_id": "q:g10m14s7-1-2:ex14-7-4",
+       "text": "yes",
+       "tagged": null
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "I checked this against the figure: A' = {2} and B' = {2,4,5,7,9,12,13,15}, overlap {2}, answer 'no', all matching the canonical. The refutation is mathematically correct. It concedes the true fact (an event and its own complement never overlap) and shows why it does not carry over to complements of two different events, using the number 2, which is in neither A nor B. It does not restate the method, and it cites no question id, page or figure; the sets are written out. The book places this question right after the event-and-complement question, which supports the overgeneralisation. The phrase 'both have a prime' is loose but readable as the prime mark on A' and B'."
+     }
+    }
+   ],
+   "dropped": [
+    {
+     "id": "mc:g10m14s7-1-2:checks-circle-overlap-not-named-events",
+     "lo_id": "lo:g10m14s7-1-2",
+     "label": "Looks at the overlap of the circles instead of the two events named",
+     "aliases": [],
+     "verdict": "UNCLEAR",
+     "reason": "The error is plausible and the answer ('yes') and method match the canonical. But the worked example in step 3 repeats the canonical sets for the first question, which disagree with its figure: 6 is drawn outside both circles, yet the sets put it in A union B and leave it out of the complement. The step also says A union B is 'every number in at least one circle', so the example contradicts both the rule it states and the figure the student sees. The conclusion survives, but a refutation whose example misreads the picture cannot be confirmed as correct. The example is also taken from a different question than the second one this entry covers, whose figure puts 4 in A union B."
+    },
+    {
+     "id": "mc:g10m14s7-1-2:one-shared-outcome-ignored",
+     "lo_id": "lo:g10m14s7-1-2",
+     "label": "Treats events that share only one number as mutually exclusive",
+     "aliases": [],
+     "verdict": "UNSUPPORTED",
+     "reason": "The refutation is mathematically right, but the error is weakly supported: there is no book evidence for it, and the only book grounding is the 'yes' option on A' and B', which the complements entry explains better. The example does not show the described error. A' = {2} sits entirely inside B', so 'most numbers in the two events are different' does not describe what the student sees; step 3's 'they look mostly different' is a stretch. The cited material only gives the sets {2} and an 8-number set, not a pair that looks mostly different with one shared number. The refutation also leans on the method restated rather than on the specific slip."
+    }
+   ],
+   "stripped": [
+    {
+     "lo": "lo:g10m14s7-1-2",
+     "origin": "S6",
+     "ref": "tpl:g10m14s7-1-2:disjoint-event#untagged",
+     "question_id": "q:g10m14s7-1-2:g001-disjoi",
+     "text": "$\\{ 2, 3, 4 \\}$",
+     "tagged": null,
+     "reason": "no named error: Nothing shows which given event this option is built around or how many numbers it shares with it, so no specific error can be named honestly."
+    },
+    {
+     "lo": "lo:g10m14s7-1-2",
+     "origin": "S6",
+     "ref": "tpl:g10m14s7-1-2:disjoint-event#untagged",
+     "question_id": "q:g10m14s7-1-2:g002-disjoi",
+     "text": "$\\{ 1, 4, 12 \\}$",
+     "tagged": null,
+     "reason": "no named error: Untagged; the given event and its overlap with this option are not shown, so no named error can be assigned."
+    },
+    {
+     "lo": "lo:g10m14s7-1-2",
+     "origin": "S6",
+     "ref": "tpl:g10m14s7-1-2:disjoint-event#untagged",
+     "question_id": "q:g10m14s7-1-2:g003-disjoi",
+     "text": "$\\{ 2, 3, 11 \\}$",
+     "tagged": null,
+     "reason": "no named error: Untagged; the given event and its overlap with this option are not shown, so no named error can be assigned."
+    },
+    {
+     "lo": "lo:g10m14s7-1-2",
+     "origin": "S6",
+     "ref": "tpl:g10m14s7-1-2:disjoint-event#untagged",
+     "question_id": "q:g10m14s7-1-2:g004-disjoi",
+     "text": "$\\{ 2, 3, 5 \\}$",
+     "tagged": null,
+     "reason": "no named error: Untagged; the given event and its overlap with this option are not shown, so no named error can be assigned."
+    },
+    {
+     "lo": "lo:g10m14s7-1-2",
+     "origin": "S6",
+     "ref": "tpl:g10m14s7-1-2:disjoint-event#untagged",
+     "question_id": "q:g10m14s7-1-2:g005-disjoi",
+     "text": "$\\{ 2, 4, 7 \\}$",
+     "tagged": null,
+     "reason": "no named error: Untagged; the given event and its overlap with this option are not shown, so no named error can be assigned."
+    },
+    {
+     "lo": "lo:g10m14s7-1-2",
+     "origin": "S6",
+     "ref": "tpl:g10m14s7-1-2:disjoint-event#untagged",
+     "question_id": "q:g10m14s7-1-2:g006-disjoi",
+     "text": "$\\{ 3, 5, 11 \\}$",
+     "tagged": null,
+     "reason": "no named error: Untagged; the given event and its overlap with this option are not shown, so no named error can be assigned."
+    },
+    {
+     "lo": "lo:g10m14s7-1-2",
+     "origin": "S6",
+     "ref": "tpl:g10m14s7-1-2:disjoint-event#untagged",
+     "question_id": "q:g10m14s7-1-2:g007-disjoi",
+     "text": "$\\{ 1, 6, 9 \\}$",
+     "tagged": null,
+     "reason": "no named error: Untagged; the given event and its overlap with this option are not shown, so no named error can be assigned."
+    },
+    {
+     "lo": "lo:g10m14s7-1-2",
+     "origin": "S6",
+     "ref": "tpl:g10m14s7-1-2:disjoint-event#untagged",
+     "question_id": "q:g10m14s7-1-2:g008-disjoi",
+     "text": "$\\{ 6, 7, 12 \\}$",
+     "tagged": null,
+     "reason": "no named error: Untagged; the given event and its overlap with this option are not shown, so no named error can be assigned."
+    },
+    {
+     "lo": "lo:g10m14s7-1-2",
+     "origin": "S6",
+     "ref": "tpl:g10m14s7-1-2:disjoint-event#untagged",
+     "question_id": "q:g10m14s7-1-2:g009-disjoi",
+     "text": "$\\{ 5, 8, 12 \\}$",
+     "tagged": null,
+     "reason": "no named error: Untagged; the given event and its overlap with this option are not shown, so no named error can be assigned."
+    },
+    {
+     "lo": "lo:g10m14s7-1-2",
+     "origin": "S6",
+     "ref": "tpl:g10m14s7-1-2:disjoint-event#untagged",
+     "question_id": "q:g10m14s7-1-2:g010-disjoi",
+     "text": "$\\{ 1, 6, 8 \\}$",
+     "tagged": null,
+     "reason": "no named error: Untagged; the given event and its overlap with this option are not shown, so no named error can be assigned."
+    },
+    {
+     "lo": "lo:g10m14s7-1-2",
+     "origin": "book",
+     "ref": "q:g10m14s7-1-2:ex14-7-3",
+     "question_id": "q:g10m14s7-1-2:ex14-7-3",
+     "text": "no",
+     "tagged": null,
+     "reason": "its entry mc:g10m14s7-1-2:checks-circle-overlap-not-named-events was dropped (UNCLEAR)"
+    },
+    {
+     "lo": "lo:g10m14s7-1-2",
+     "origin": "book",
+     "ref": "q:g10m14s7-1-2:ex14-8-4",
+     "question_id": "q:g10m14s7-1-2:ex14-8-4",
+     "text": "no",
+     "tagged": null,
+     "reason": "its entry mc:g10m14s7-1-2:checks-circle-overlap-not-named-events was dropped (UNCLEAR)"
+    },
+    {
+     "lo": "lo:g10m14s7-1-2",
+     "origin": "S6",
+     "ref": "tpl:g10m14s7-1-2:disjoint-event#mc:g10m14s7-1-2:one-shared-outcome-ignored",
+     "question_id": "q:g10m14s7-1-2:g001-disjoi",
+     "text": "$\\{ 6, 8, 12 \\}$",
+     "tagged": "mc:g10m14s7-1-2:one-shared-outcome-ignored",
+     "reason": "its entry mc:g10m14s7-1-2:one-shared-outcome-ignored was dropped (UNSUPPORTED)"
+    }
+   ],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "The stem and the given event of the generated disjoint-event widget were not supplied. I could not check that {6, 8, 12} shares exactly one number with that event, nor judge the ten other options. D1 rests on its author's tag plus the book's own question whose overlapping event set is {2}."
+    },
+    {
+     "kind": "evidence",
+     "text": "No caution box, worked-example remark or re-solve wrong turn was supplied for this objective, so the one new entry rests on a deliberately written wrong option and a canonical solution."
+    },
+    {
+     "kind": "terminology",
+     "text": "The tag's author wrote \"outcome\". The book's solutions say \"event set\" and \"overlapping event set\", so the refutation uses those and \"number\" and avoids \"outcome\". Please confirm the book's wording."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m14s7-1-3",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No evidence was supplied for this objective: no book caution boxes, no worked-example remarks, no re-solve wrong turns, no existing catalogue entries, and no wrong options or widget predicates (D0, D1, ...) to index. Under the rules an entry must rest on a caution, a remark, a wrong turn or a deliberately written wrong option, so I have added no entries and made no assignments. Any entry I wrote would be an unsupported guess about how students go wrong, and these refutations reach students unreviewed. The runtime will fall back to the canonical solutions, which for this objective are all the single step of subtracting from 1."
+    },
+    {
+     "kind": "evidence",
+     "text": "The question file shows the book's own method throughout: find the probability of the event, then take 1 minus it. For not orange, not pink, not a shortbread cookie and does not win, it also gives a counting route, subtracting the favourable count from the total (85 - 17 = 68, then 68/85). I did not turn either route into an error entry, because nothing in the evidence says students go wrong there."
+    },
+    {
+     "kind": "other",
+     "text": "If someone later supplies wrong options or a caution box for this objective, re-run the task with them as D0, D1, ... Likely candidates are a wrong option equal to P(A) itself and a wrong option that subtracts a count from 1 instead of a probability, but I have not written either because nothing here evidences them."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m14s7-1-4",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No evidence was supplied for this objective: no caution box, no worked-example remark, no re-solve wrong turn, no wrong option or widget predicate, and no existing entries. Every error I could name here (for example, reading a circle's total such as n(A)=25 as the 'A only' region, or forgetting the 'neither' count when adding up the sample space) comes from general knowledge of the topic, not from anything the book prints. I wrote no entries rather than invent errors, so the runtime falls back to the canonical solutions."
+    },
+    {
+     "kind": "evidence",
+     "text": "The canonical solution for the four-region class question (learners who play football and hockey, answer 31) is only a one-line setup plus a figure reference, with no working. It cannot ground a refutation, and no figure image was supplied for it."
+    },
+    {
+     "kind": "other",
+     "text": "I read both supplied figures (the two-circle Venn diagram of products A and B, showing 20, 5, 30 and 15; and the three-circle Geography, French and History diagram). I checked the canonical answers against their stems (A only 20, B only 30, both 5; sweets only 200, vetkoek only 300, both 100; 8 only Geography, 3 French and History but not Geography) and found no contradiction, so I have no disagreement to flag."
+    }
+   ],
+   "notes": []
+  }
+ ],
+ "totals": {
+  "objectives": 18,
+  "entries": 24,
+  "dropped": 9,
+  "stripped": 31,
+  "skipped": 0,
+  "flags": 47
+ }
+}

@@ -1,0 +1,27 @@
+{
+  "format": "ainext.family/1",
+  "id": "tpl:g10m9s5-1-1:rand-dollar",
+  "kind": "authored",
+  "lo_id": "lo:g10m9s5-1-1",
+  "parent_question_id": "q:g10m9s5-1-1:ex9-5-1",
+  "source_page": 340,
+  "tier": "basic",
+  "answer_type": "numeric",
+  "context": "A tourist changes US dollars into Rand at a fixed rate.",
+  "params": [
+    {
+      "name": "rate",
+      "let": "15"
+    },
+    {
+      "name": "usd",
+      "let": "40"
+    }
+  ],
+  "stem": "The exchange rate is 1 US dollar = R{=rate}. A tourist changes {=usd} US dollars into Rand. How many Rand does she receive?",
+  "answer": "rate * usd",
+  "solution": [
+    "Each dollar buys R{=rate}.",
+    "${=usd} \\times {=rate} = {=rate * usd}$, so she receives R{=rate * usd}."
+  ]
+}

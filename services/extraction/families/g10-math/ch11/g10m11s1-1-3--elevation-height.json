@@ -1,0 +1,91 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m11s1-1-3:elevation-height",
+ "kind": "family",
+ "lo_id": "lo:g10m11s1-1-3",
+ "parent_question_id": "q:g10m11s1-1-3:ex11-2-8b",
+ "source_page": 399,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": "Nandi stands on level ground at a known distance from a tall tower and looks up at its top. The angle of elevation is given and the height of the tower is wanted.",
+ "params": [
+  {
+   "name": "tantable",
+   "let": "{20: 36397023, 25: 46630766, 28: 53170943, 30: 57735027, 32: 62486935, 35: 70020754, 38: 78128563, 40: 83909963, 42: 90040404, 48: 111061251, 50: 119175359, 52: 127994163, 55: 142814801, 58: 160033453, 60: 173205081, 62: 188072647, 65: 214450692}"
+  },
+  {
+   "name": "a",
+   "choice": [
+    20,
+    25,
+    28,
+    30,
+    32,
+    35,
+    38,
+    40,
+    42,
+    48,
+    50,
+    52,
+    55,
+    58,
+    60,
+    62,
+    65
+   ]
+  },
+  {
+   "name": "d",
+   "choice": [
+    25,
+    30,
+    35,
+    40,
+    45,
+    50,
+    55,
+    60,
+    65,
+    70,
+    75,
+    80,
+    85,
+    90,
+    100,
+    120
+   ]
+  },
+  {
+   "name": "t",
+   "let": "tantable[a]"
+  },
+  {
+   "name": "h",
+   "let": "d * t / 100000000"
+  },
+  {
+   "name": "h100",
+   "let": "d * t / 1000000"
+  },
+  {
+   "require": "abs(h100 - floor(h100) - 1/2) > 1/10",
+   "why": "The unrounded height must not sit near a rounding boundary at two decimal places, so a calculator answer and the key always round the same way."
+  },
+  {
+   "require": "h <= 200",
+   "why": "Keep the tower a believable height."
+  }
+ ],
+ "constraints": [],
+ "stem": "Nandi is standing on level ground ${=d}$ m away from a tall tower. From her position, the angle of elevation of the top of the tower is ${=a}^\\circ$. What is the height of the tower, correct to two decimal places? (Ignore Nandi's own height.)",
+ "answer": "fixed(h, 2)",
+ "solution": [
+  "The tower stands vertically on level ground, so the tower, the ground and Nandi's line of sight to the top of the tower form a right-angled triangle. The angle of elevation, ${=a}^\\circ$, is the angle at Nandi between the horizontal ground and her line of sight up to the top of the tower.",
+  "Call the height of the tower $x$. Relative to the angle ${=a}^\\circ$, the side $x$ is opposite and the ${=d}$ m along the ground is adjacent. We know the adjacent side and want the opposite side, so use the tangent ratio.",
+  "$\\begin{aligned}\\tan {=a}^{\\circ}&=\\frac{x}{{=d}}\\\\x&={=d}\\tan {=a}^{\\circ}\\\\&\\approx {=fixed(h, 4)}\\end{aligned}$",
+  "Round to two decimal places: the height of the tower is ${=fixed(h, 2)}$ m."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Modelled on ex11-2-8b (Nandi and the tower, p. 399): same context, same one-step method (tan = opposite / adjacent, then x = d tan a), same two-decimal rounding as the book prints. The expression language has no trig, so tan of each angle is a precomputed integer table scaled by 10^8 (tan 38 = 78128563 / 10^8); the table error is at most 5e-9 per angle, i.e. under 1e-6 m on the answer. The first require rejects any (angle, distance) pair whose exact height lies within 0.1 of a hundredth from a rounding boundary, so the key cannot disagree with a solver's calculator on the second decimal; I checked every surviving pair against math.tan at both 2 and 4 decimals with no mismatches. 45 degrees is left out so the answer is never a trivial d. About 212 of 272 combinations survive; heights run from about 9 m to 192 m. The stem tells the solver to ignore the observer's height, which the book also does silently, so nobody adds an eye height that is not given. No distractors because the answer is numeric; the book's catalogued misconception (trusting the sketch) has no sketch to act on here."
+}

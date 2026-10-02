@@ -1,0 +1,68 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m9s3-1-4:target-exact",
+ "kind": "family",
+ "lo_id": "lo:g10m9s3-1-4",
+ "parent_question_id": "q:g10m9s3-1-4:ex9-2-5",
+ "source_page": 340,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": "Sipho wants to invest a lump sum today at a fixed compound interest rate (a whole-number percentage per annum) so that it grows to a target amount in rand after 2 years. Only the rate and the target amount change between instances; the target is always chosen so that the amount to invest is a whole number of rand, so no rounding is needed.",
+ "params": [
+  {
+   "name": "r",
+   "choice": [
+    4,
+    5,
+    8,
+    10,
+    20
+   ]
+  },
+  {
+   "name": "n",
+   "let": "2"
+  },
+  {
+   "name": "base",
+   "let": "100 ** n // gcd(100 ** n, (100 + r) ** n)"
+  },
+  {
+   "name": "unit",
+   "let": "lcm(base, 500)"
+  },
+  {
+   "name": "m",
+   "randint": [
+    "ceil(2000 / unit)",
+    "floor(30000 / unit)"
+   ]
+  },
+  {
+   "name": "prin",
+   "let": "unit * m"
+  },
+  {
+   "name": "amt",
+   "let": "prin * (100 + r) ** n // 100 ** n"
+  },
+  {
+   "require": "prin * (100 + r) ** n % (100 ** n) == 0",
+   "why": "the target amount must be a whole number of rand, so that the principal comes out exact"
+  }
+ ],
+ "constraints": [
+  "amt > prin",
+  "prin >= 2000"
+ ],
+ "stem": "Sipho wants to invest some money at a compound interest rate of ${=r}$ % p.a. How much money should he invest if he wants to reach a sum of $\\text{R{=amt}}$ in ${=n}$ years' time?",
+ "answer": "prin",
+ "solution": [
+  "Read the question carefully and write down the given information: $\\begin{aligned}A&=\\text{R{=amt}}\\\\P&=?\\\\i&=\\frac{{=r}}{100}={=fixed(r / 100, 2)}\\\\n&={=n}\\end{aligned}$",
+  "To find the amount he must invest, make $P$ the subject of the formula: $\\begin{aligned}A&=P(1+i)^{n}\\\\\\frac{A}{(1+i)^{n}}&=P\\end{aligned}$",
+  "Substitute the values and calculate: $\\begin{aligned}P&=\\frac{\\text{R{=amt}}}{(1+{=fixed(r / 100, 2)})^{{=n}}}\\\\&=\\text{R{=prin}}\\end{aligned}$",
+  "Sipho must invest $\\text{R{=prin}}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Entry point of the skill: n = 2 only, whole-number rate, and the target is built backwards from a round principal (a multiple of lcm(base, 500) where base = 100^n / gcd(100^n, (100+r)^n)), so A is a whole number and the principal is an exact whole number of rand. This removes the book's 'round up' step on purpose (the book's own questions round up, e.g. 24001.46 -> 24002), which is what the standard and advanced work covers. Exact arithmetic means the key cannot differ by calculator rounding. Example: r = 4, principal 2500 -> A = 2704 (2704 / 1.0816 = 2500). Likely student errors (not used as distractors, since the item is numeric): multiplying A by (1+i)^n instead of dividing, dividing by 1+i once instead of (1+i)^n, or dividing by 1 + n*i (simple-interest habit)."
+}

@@ -1,0 +1,858 @@
+{
+ "stage": "SW",
+ "workflow": "working-check",
+ "prompts_version": "sw-v3",
+ "book": "g10-math",
+ "chapter": 14,
+ "part": 1,
+ "parts": 1,
+ "batch": 5,
+ "agents": 23,
+ "effort": "high",
+ "model": "sonnet",
+ "pass_id": "B",
+ "order": "shuffled",
+ "by_ref": {
+  "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/wcheck-ch14-B",
+  "stage": "SW",
+  "shards_sha256": "cdfb06dc042837202ab39d83416b6d4a7d537e4a27b32928eee12c2e93b0ac87",
+  "files": 115
+ },
+ "embedded": {
+  "source": "runbook/working-check.workflow.js",
+  "source_sha256": "352a846920d85b4c224df7fb36d3f9a8ea598155cc2b4ee4ba9ef7e4791b6385",
+  "args_sha256": "fa51b118af93c952dabd30dc4d55587de3f7266ee61a6f3dd2caa2e455b8cccb",
+  "generated_sha256": "0374b5885fc24a3ebb7534524351222ce4c7b1b5581336b7123fbf12b0de63c0",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "solution_id": "q:g10m14s7-1-4:ex14-8-10b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m14s6-1-1:we07",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s7-1-3:ex14-8-19b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s2-1-1:ex14-2-3",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 4,
+     "quote": "f&=\\text{total number of trials}",
+     "kind": "label",
+     "where": "working",
+     "expected": "t = total number of trials",
+     "why": "The variable f is defined as the total number of trials, but the formula f=p/t uses t for the total, and f is the relative frequency."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s3-1-3:ex14-8-29a",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "so $80-10=70$ read neither",
+     "kind": "label",
+     "where": "working",
+     "expected": "70 read at least one newspaper",
+     "why": "80-10=70 is the number who read at least one newspaper, not the number who read neither; 10 read neither."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s7-1-3:ex14-8-17b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s7-1-2:ex14-7-3",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "3, 4, 10, 12, 13",
+     "kind": "wrong_value",
+     "where": "working",
+     "expected": "3, 4, 6, 10, 12, 13",
+     "why": "The figure shows 6 outside both circles, so it belongs in (A∪B)′ but is omitted."
+    },
+    {
+     "step": 1,
+     "quote": "1, 2, 5, 6, 7, 8, 9, 11, 14, 15",
+     "kind": "wrong_value",
+     "where": "working",
+     "expected": "1, 2, 5, 7, 8, 9, 11, 14, 15",
+     "why": "6 lies outside A and B in the figure, so it should not be in A∪B."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s1-1-2:ex14-1-6d",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m14s3-1-3:ex14-8-28a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s7-1-3:ex14-8-17d",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s7-1-3:ex14-8-12e",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s7-1-3:ex14-8-16b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s7-1-3:ex14-8-15",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m14s7-1-4:ex14-8-28b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s1-1-2:ex14-8-13c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m14s3-1-3:ex14-8-20b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s1-1-2:ex14-8-17a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m14s5-1-2:we06",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 2,
+     "quote": "\\text{RHS}&=\\frac{14}{36}",
+     "kind": "label",
+     "where": "working",
+     "expected": "LHS = 14/36, RHS = sum",
+     "why": "The identity has P(A∪B) on the left, so 14/36 is the LHS and the sum is the RHS; the labels are swapped."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s1-1-2:ex14-8-21b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s1-1-2:ex14-8-13a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s1-1-2:ex14-8-21c",
+   "verdict": "unclear",
+   "flags": [],
+   "note": "The 10 purple sweets come from part (b), which is not visible, so the working cannot be judged."
+  },
+  {
+   "solution_id": "q:g10m14s1-1-2:ex14-1-6a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s7-1-1:ex14-7-2",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s3-1-3:ex14-8-31b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s1-1-1:ex14-8-22c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s1-1-2:ex14-8-13b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s5-1-3:ex14-5-2",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "P(A\\cup B)=P(A)+P(B)-P(A\\cup B)",
+     "kind": "copy",
+     "where": "working",
+     "expected": "P(A∩B)",
+     "why": "The subtracted term should be P(A∩B); as written the formula has P(A∪B) on both sides."
+    },
+    {
+     "step": 7,
+     "quote": "=\\text{0.17}",
+     "kind": "arithmetic",
+     "where": "working",
+     "expected": "0.16 from the rounded values",
+     "why": "0.33 + 0.5 - 0.67 equals 0.16, not 0.17, with the rounded values substituted."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s1-1-2:ex14-8-12a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s2-1-1:ex14-8-7",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 4,
+     "quote": "f&=\\text{total number of trials}",
+     "kind": "label",
+     "where": "working",
+     "expected": "t = total number of trials = 21",
+     "why": "The total number of trials is t, as in the formula f = p/t; f is the relative frequency."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s3-1-3:ex14-3-5c",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 2,
+     "quote": "41&=(6-x)+x+y+z",
+     "kind": "other",
+     "where": "question",
+     "expected": "total of 79 learners",
+     "why": "The question gives 71 learners in total, but the regions used here sum to 79, so the stated total conflicts with the working and key."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s3-1-3:ex14-8-10a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s1-1-1:ex14-8-22a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m14s2-1-2:we02",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s7-1-3:ex14-8-18b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m14s7-1-4:ex14-8-32b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s1-1-2:ex14-1-3",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s6-1-2:ex14-8-17e",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s1-1-1:ex14-1-1",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s7-1-1:ex14-8-5",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s7-1-2:ex14-8-4",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s1-1-1:ex14-8-22d",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s3-1-3:ex14-8-32a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s3-1-1:ex14-8-14a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s3-1-1:ex14-3-3b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s1-1-1:ex14-8-1",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s5-1-1:ex14-5-1",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 5,
+     "quote": "=(\\text{0.17})+(\\text{0.67})-(\\text{0})\\\\&=\\text{0.83}",
+     "kind": "arithmetic",
+     "where": "working",
+     "expected": "0.84 from the rounded values shown",
+     "why": "0.17 + 0.67 - 0 equals 0.84, not 0.83; 0.83 only comes from the unrounded 5/6."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s7-1-4:ex14-8-14b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s1-1-2:ex14-8-17c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s1-1-2:ex14-8-13d",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s3-1-3:ex14-8-20a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m14s1-1-1:ex14-8-27b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s6-1-1:ex14-8-11c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s1-1-2:ex14-1-6c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s7-1-3:ex14-8-11d",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s1-1-2:ex14-1-5",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s3-1-3:ex14-8-29b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m14s6-1-1:ex14-8-25a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s6-1-1:ex14-6-1",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s2-1-1:ex14-2-1",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 4,
+     "quote": "f&=totalnumberoftrials",
+     "kind": "label",
+     "where": "working",
+     "expected": "t = total number of trials = 44",
+     "why": "The total number of trials is t in the formula f=p/t, but step 4 labels it f, which is the relative frequency."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s5-1-3:ex14-8-13g",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s1-1-2:ex14-8-6",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s1-1-2:ex14-1-4",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s7-1-3:ex14-8-17f",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s3-1-3:ex14-3-5b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s2-1-1:ex14-2-2",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 4,
+     "quote": "f&=\\text{total number of trials}=\\text{30}",
+     "kind": "label",
+     "where": "working",
+     "expected": "t = total number of trials = 30",
+     "why": "The formula f=p/t makes f the relative frequency and t the total number of trials, but step 4 defines f as the total trials."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s1-1-2:ex14-1-7b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s1-1-2:ex14-8-12b",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 2,
+     "quote": "P(\\text{male})&=\\frac{7}{30}",
+     "kind": "label",
+     "where": "working",
+     "expected": "P(4 year old male)",
+     "why": "The event is a 4 year old male, but the working labels the probability P(male), which would be 15/30."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s6-1-1:ex14-6-3",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s6-1-1:ex14-6-2",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m14s3-1-3:ex14-8-31a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s1-1-2:ex14-8-13h",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m14s1-1-1:ex14-8-27a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s3-1-1:ex14-3-3c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m14s3-1-1:we05",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s1-1-2:ex14-1-7d",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s2-1-1:we03",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s7-1-2:ex14-7-4",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s3-1-3:ex14-8-9",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s4-1-1:ex14-8-3",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s7-1-1:ex14-7-1",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s7-1-4:ex14-8-14c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m14s7-1-1:ex14-8-25b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m14s7-1-4:ex14-8-31c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m14s5-1-2:ex14-8-26",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s3-1-2:ex14-3-2",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s6-1-1:ex14-8-12d",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s2-1-1:ex14-8-8",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 4,
+     "quote": "f&=\\text{total number of trials}=\\text{44}",
+     "kind": "label",
+     "where": "working",
+     "expected": "t = total number of trials = 44",
+     "why": "The formula f=p/t uses t for total trials, but the working labels the total as f, the relative frequency."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s5-1-3:ex14-8-24",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 7,
+     "quote": "=(\\text{0.5})+(\\text{0.33})-(\\text{0.67})\\\\&=\\text{0.17}",
+     "kind": "arithmetic",
+     "where": "working",
+     "expected": "0.5+0.33-0.67 = 0.16",
+     "why": "0.5+0.33-0.67 equals 0.16, not 0.17; the line's result does not follow from the substituted values."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m14s5-1-1:ex14-8-23a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s6-1-2:ex14-8-12c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m14s1-1-1:ex14-8-27c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s3-1-3:ex14-8-29c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s1-1-2:ex14-1-7c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m14s3-1-3:ex14-3-5a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s4-1-2:ex14-4-1",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s1-1-1:ex14-8-22b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s6-1-2:ex14-8-11b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s6-1-1:ex14-6-4",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s3-1-2:ex14-8-2",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s3-1-3:ex14-8-20c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s1-1-2:ex14-8-16a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s7-1-4:ex14-8-30",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m14s7-1-4:we08",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s1-1-2:ex14-1-7a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s4-1-1:ex14-4-2",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s3-1-3:ex14-3-5d",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m14s1-1-2:we01",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s1-1-2:ex14-8-23b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s1-1-2:ex14-8-19a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s1-1-2:ex14-1-6b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m14s7-1-3:ex14-8-21a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s7-1-3:ex14-8-13e",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s1-1-1:ex14-1-2",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s6-1-2:ex14-8-18a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m14s1-1-2:ex14-8-11a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  }
+ ],
+ "problems": [],
+ "meter": {
+  "stage": "SW",
+  "record": "uv run meter_run.py record --book g10-math --stage SW --run <runId>"
+ }
+}

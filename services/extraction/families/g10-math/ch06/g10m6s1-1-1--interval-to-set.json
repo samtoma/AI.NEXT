@@ -1,0 +1,114 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s1-1-1:interval-to-set",
+ "kind": "family",
+ "lo_id": "lo:g10m6s1-1-1",
+ "parent_question_id": "q:g10m6s1-1-1:ex6-1-1b",
+ "source_page": 148,
+ "tier": "standard",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    -15,
+    12
+   ]
+  },
+  {
+   "name": "d",
+   "randint": [
+    2,
+    14
+   ]
+  },
+  {
+   "name": "b",
+   "let": "a + d"
+  },
+  {
+   "name": "lc",
+   "choice": [
+    0,
+    1
+   ]
+  },
+  {
+   "name": "hc",
+   "choice": [
+    0,
+    1
+   ]
+  },
+  {
+   "name": "ls",
+   "let": "['<', '≤'][lc]"
+  },
+  {
+   "name": "hs",
+   "let": "['<', '≤'][hc]"
+  },
+  {
+   "name": "fl",
+   "let": "['≤', '<'][lc]"
+  },
+  {
+   "name": "fh",
+   "let": "['≤', '<'][hc]"
+  },
+  {
+   "name": "lb",
+   "let": "['(', '['][lc]"
+  },
+  {
+   "name": "rb",
+   "let": "[')', ']'][hc]"
+  },
+  {
+   "name": "lin",
+   "let": "['is not in', 'is in'][lc]"
+  },
+  {
+   "name": "hin",
+   "let": "['is not in', 'is in'][hc]"
+  },
+  {
+   "name": "lbn",
+   "let": "['round', 'square'][lc]"
+  },
+  {
+   "name": "hbn",
+   "let": "['round', 'square'][hc]"
+  }
+ ],
+ "constraints": [
+  "b - a >= 2"
+ ],
+ "stem": "Which of the following is the set notation for the interval ${=lb}{=a}, {=b}{=rb}$?",
+ "solution": [
+  "The interval ${=lb}{=a}, {=b}{=rb}$ runs from ${=a}$ to ${=b}$, so the inequality has ${=a}$ on the left, $x$ in the middle and ${=b}$ on the right.",
+  "At ${=a}$ the bracket is {=lbn}, so ${=a}$ {=lin} the set and the sign is ${=ls}$.",
+  "At ${=b}$ the bracket is {=hbn}, so ${=b}$ {=hin} the set and the sign is ${=hs}$.",
+  "The set is $\\{x:x\\in\\mathbb{R},{=a}{=ls}x{=hs}{=b}\\}$."
+ ],
+ "choices": {
+  "correct": "$\\{x:x\\in\\mathbb{R},{=a}{=ls}x{=hs}{=b}\\}$",
+  "distractors": [
+   {
+    "text": "$\\{x:x\\in\\mathbb{R},{=a}{=fl}x{=fh}{=b}\\}$",
+    "misconception_id": "mc:g10m6s1-1-1:brackets-swapped-for-signs"
+   },
+   {
+    "text": "$\\{x:x\\in\\mathbb{R},{=a}{=fl}x{=hs}{=b}\\}$",
+    "misconception_id": "mc:g10m6s1-1-1:brackets-swapped-for-signs"
+   },
+   {
+    "text": "$\\{x:x\\in\\mathbb{R},{=a}{=ls}x{=fh}{=b}\\}$",
+    "misconception_id": "mc:g10m6s1-1-1:brackets-swapped-for-signs"
+   }
+  ]
+ },
+ "proposed_misconceptions": [],
+ "notes": "Standard: interval notation to set notation, both ends finite, all four bracket patterns (ex6-1-1b shape). mcq is natural here because each distractor is one specific bracket/sign mix-up: both signs flipped, only the left sign flipped, only the right sign flipped, so the four options are always distinct. The stem carries {=...} holes, so distinct_by_choices is not set. Computed strings use Unicode <= and < (no backslash in expression strings)."
+}

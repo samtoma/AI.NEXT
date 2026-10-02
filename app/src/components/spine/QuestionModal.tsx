@@ -5,6 +5,8 @@ import { mcqChoices } from "@/lib/types";
 import type { SpineData, SpineLo, SpineQuestion } from "@/lib/types";
 import { stepText } from "@/lib/types";
 import { TeX } from "@/components/TeX";
+import { QuestionFigures } from "@/components/viz/QuestionFigures";
+import { displayStem } from "@/lib/question-figures";
 import { tierStyle } from "./tier-style";
 import { questionProvenance } from "@/lib/provenance";
 import { ProvenanceBadge } from "@/components/ProvenanceBadge";
@@ -143,8 +145,10 @@ export function QuestionModal({
         <div className="space-y-6 px-6 py-5">
           {/* stem */}
           <div className="tex-block text-[17px] leading-relaxed text-ink">
-            <TeX text={q.stem} />
+            <TeX text={displayStem(q.stem)} />
           </div>
+          {/* the question's own figure (A3) — never the "[figure]" placeholder */}
+          <QuestionFigures ids={q.figures} />
 
           {/* choices */}
           {q.questionType === "mcq" && q.choices && (

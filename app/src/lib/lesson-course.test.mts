@@ -106,6 +106,12 @@ function fakeClient(log: string[] = []): PoolClient {
     }
     if (sql.includes("FROM questions")) return { rows: [], rowCount: 0 };
     if (sql.includes("JOIN source_documents")) return { rows: [], rowCount: 0 };
+    // the book-section store (migration 034): no split section here
+    if (sql.includes("FROM course_lessons")) return { rows: [], rowCount: 0 };
+    // the course outline (migration 037): none here, so an unknown slug still
+    // falls back to the default lesson — the refusal of a listed-but-unprepared
+    // lesson is `course-outline-guard.test.mts`'s
+    if (sql.includes("to_regclass('public.course_outline')")) return { rows: [{ present: false }], rowCount: 1 };
     throw new Error(`lesson-course.test: unexpected query: ${sql.slice(0, 160)}`);
   };
   return { query, release() {} } as unknown as PoolClient;

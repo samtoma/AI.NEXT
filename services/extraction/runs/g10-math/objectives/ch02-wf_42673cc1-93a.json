@@ -1,0 +1,3567 @@
+{
+ "stage": "S1",
+ "workflow": "objectives",
+ "prompts_version": "s1-v5",
+ "book": "g10-math",
+ "chapter": 2,
+ "module": "module:g10m-c02",
+ "packet_sha256": "ed03269a31fde0ec13adcb5711dce58c761160da6ea5158a7cae642f16de85e5",
+ "by_ref": {
+  "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/s1-ch02",
+  "stage": "S1",
+  "shards_sha256": "8eef1772bf53ebd8cde52acf661c55b78eb5e8c6e99533cee641e6fe0c987c04",
+  "files": 260,
+  "pool_batch": 60
+ },
+ "embedded": {
+  "source": "runbook/objectives.workflow.js",
+  "source_sha256": "afabf5af79f22a7e2dcb3060c7a8c4596ec06170296f865fd40e76ce1e9fef52",
+  "args_sha256": "3911d09946cbff9b8a6b2d512422581a2162070ba435651fdc543226e74f4ca3",
+  "generated_sha256": "afd25ffe9542f724d52ceaa1e266588e4cbf9b433f8457626e8e4764072a5e31",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "teacher_only_dropped": 3,
+ "lessons": [
+  {
+   "slug": "g10m2s2-1",
+   "finders": {
+    "a": {
+     "objectives": [
+      {
+       "statement": "Simplify exponential expressions without a calculator by applying the product, quotient and power laws together with the zero and negative exponent identities.",
+       "label": "Apply the exponent laws",
+       "evidence": [
+        {
+         "kind": "heading",
+         "anchor": "EMAT",
+         "printed_page": 45,
+         "quote": "Revision of exponent laws"
+        },
+        {
+         "kind": "definition",
+         "anchor": "b00833",
+         "printed_page": 45,
+         "quote": "${a}^{m}\\times{a}^{n}={a}^{m+n}$"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE1",
+         "printed_page": 46,
+         "quote": "${2}^{3x}\\times{2}^{4x}={2}^{3x+4x}={2}^{7x}$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex2-1:3",
+         "printed_page": 49,
+         "quote": "$\\text{11}^{9x}\\times\\text{11}^{2x}$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex2-1:9",
+         "printed_page": 49,
+         "quote": "$\\left(\\dfrac{2}{3}\\right)^{-3}$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex2-4:1h",
+         "printed_page": 57,
+         "quote": "$\\left(b^{k+1}\\right)^{k}$"
+        }
+       ],
+       "exercise_items": [
+        "Ex2-1:1",
+        "Ex2-1:2",
+        "Ex2-1:3",
+        "Ex2-1:4",
+        "Ex2-1:5",
+        "Ex2-1:6",
+        "Ex2-1:7",
+        "Ex2-1:8",
+        "Ex2-1:9",
+        "Ex2-1:10",
+        "Ex2-1:11",
+        "Ex2-1:12",
+        "Ex2-1:13",
+        "Ex2-1:14",
+        "Ex2-1:15",
+        "Ex2-1:16",
+        "Ex2-1:17",
+        "Ex2-1:18",
+        "Ex2-1:19",
+        "Ex2-1:20",
+        "Ex2-1:21",
+        "Ex2-1:22",
+        "Ex2-1:23",
+        "Ex2-1:24",
+        "Ex2-1:25",
+        "Ex2-1:26",
+        "Ex2-1:27",
+        "Ex2-1:28",
+        "Ex2-1:29",
+        "Ex2-1:30"
+       ],
+       "worked_examples": [
+        "WE1"
+       ],
+       "key": "A1"
+      },
+      {
+       "statement": "Simplify exponential expressions whose terms have different bases by reducing the bases to prime bases and then applying the exponent laws.",
+       "label": "Reduce to prime bases",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "b00837",
+         "printed_page": 46,
+         "quote": "use the method of Finding Prime Bases"
+        },
+        {
+         "kind": "summary",
+         "anchor": "b00954",
+         "printed_page": 56,
+         "quote": "we can reduce the bases to prime bases"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE2",
+         "printed_page": 46,
+         "quote": "if we reduce the bases to prime bases, then we can apply the exponent laws"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE3",
+         "printed_page": 47,
+         "quote": "Change the bases to prime numbers"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex2-1:31",
+         "printed_page": 49,
+         "quote": "$\\dfrac{3^{n}9^{n-3}}{27^{n-1}}$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex2-4:2a",
+         "printed_page": 57,
+         "quote": "$\\dfrac{9^{n-1}.27^{3-2n}}{81^{2-n}}$"
+        }
+       ],
+       "exercise_items": [
+        "Ex2-1:31",
+        "Ex2-1:33",
+        "Ex2-1:35",
+        "Ex2-1:36",
+        "Ex2-1:37"
+       ],
+       "worked_examples": [
+        "WE2",
+        "WE3"
+       ],
+       "key": "A2"
+      },
+      {
+       "statement": "Simplify exponential fractions with more than one term by factorising, taking out a common factor or using the difference of squares, and cancelling.",
+       "label": "Factorise exponential expressions",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "b00841",
+         "printed_page": 48,
+         "quote": "change to prime bases if necessary and then factorise"
+        },
+        {
+         "kind": "summary",
+         "anchor": "b00954",
+         "printed_page": 56,
+         "quote": "or factorise"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE4",
+         "printed_page": 48,
+         "quote": "Take out a common factor"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE5",
+         "printed_page": 48,
+         "quote": "Factorise using the difference of squares"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex2-1:32",
+         "printed_page": 49,
+         "quote": "$\\dfrac{\\text{13}^{c}+\\text{13}^{c+2}}{\\text{3}\\times\\text{13}^{c}-\\text{13}^{c}}$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex2-4:2i",
+         "printed_page": 57,
+         "quote": "$\\dfrac{\\text{121}^{b}-\\text{16}^{p}}{\\text{11}^{b}+\\text{4}^{p}}$"
+        }
+       ],
+       "exercise_items": [
+        "Ex2-1:32",
+        "Ex2-1:34",
+        "Ex2-1:38",
+        "Ex2-1:39"
+       ],
+       "worked_examples": [
+        "WE4",
+        "WE5"
+       ],
+       "key": "A3"
+      }
+     ]
+    },
+    "b": {
+     "objectives": [
+      {
+       "statement": "Simplify numerical and algebraic expressions containing zero and negative exponents, using a^0 = 1 and a^(-n) = 1/a^n, and write the answer with positive exponents.",
+       "label": "Zero and negative exponents",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "b00823",
+         "printed_page": 44,
+         "quote": "${a}^{-n}=\\dfrac{1}{{a}^{n}}"
+        },
+        {
+         "kind": "summary",
+         "anchor": "b00945",
+         "printed_page": 56,
+         "quote": "${a}^{0}=1$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex2-1:1",
+         "printed_page": 49,
+         "quote": "$16^{0}$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex2-1:8",
+         "printed_page": 49,
+         "quote": "$\\dfrac{5}{2^{-3}}$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex2-4:1b",
+         "printed_page": 57,
+         "quote": "$t^{3}\\times2t^{0}$"
+        }
+       ],
+       "exercise_items": [
+        "Ex2-1:1",
+        "Ex2-1:2",
+        "Ex2-1:7",
+        "Ex2-1:8",
+        "Ex2-1:9"
+       ],
+       "worked_examples": [],
+       "key": "B1"
+      },
+      {
+       "statement": "Simplify numerical and algebraic expressions by applying the exponent laws for products, quotients, powers of products, powers of quotients and powers of powers, including expressions with variable exponents.",
+       "label": "Apply the exponent laws",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "b00832",
+         "printed_page": 45,
+         "quote": "There are several laws we can use"
+        },
+        {
+         "kind": "definition",
+         "anchor": "b00833",
+         "printed_page": 45,
+         "quote": "${a}^{m}\\times{a}^{n}={a}^{m+n}"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE1",
+         "printed_page": 46,
+         "quote": "${2}^{3x}\\times{2}^{4x}={2}^{3x+4x}"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex2-1:3",
+         "printed_page": 49,
+         "quote": "$\\text{11}^{9x}\\times\\text{11}^{2x}$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex2-1:28",
+         "printed_page": 49,
+         "quote": "$\\left(\\dfrac{a^6}{b^7}\\right)^5$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex2-4:1a",
+         "printed_page": 57,
+         "quote": "$(\\text{8}x)^{\\text{3}}$"
+        }
+       ],
+       "exercise_items": [
+        "Ex2-1:3",
+        "Ex2-1:4",
+        "Ex2-1:5",
+        "Ex2-1:6",
+        "Ex2-1:10",
+        "Ex2-1:11",
+        "Ex2-1:12",
+        "Ex2-1:13",
+        "Ex2-1:14",
+        "Ex2-1:15",
+        "Ex2-1:16",
+        "Ex2-1:17",
+        "Ex2-1:18",
+        "Ex2-1:19",
+        "Ex2-1:20",
+        "Ex2-1:21",
+        "Ex2-1:22",
+        "Ex2-1:23",
+        "Ex2-1:24",
+        "Ex2-1:25",
+        "Ex2-1:26",
+        "Ex2-1:27",
+        "Ex2-1:28",
+        "Ex2-1:29",
+        "Ex2-1:30"
+       ],
+       "worked_examples": [
+        "WE1"
+       ],
+       "key": "B2"
+      },
+      {
+       "statement": "Simplify a single-term fraction of exponential expressions by changing the bases to prime bases and then applying the exponent laws.",
+       "label": "Simplify using prime bases",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "b00837",
+         "printed_page": 46,
+         "quote": "use the method of Finding Prime Bases"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE2",
+         "printed_page": 46,
+         "quote": "if we reduce the bases to prime bases"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE3",
+         "printed_page": 47,
+         "quote": "Change the bases to prime numbers"
+        },
+        {
+         "kind": "summary",
+         "anchor": "b00954",
+         "printed_page": 56,
+         "quote": "we can reduce the bases to prime bases"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex2-1:36",
+         "printed_page": 49,
+         "quote": "$\\dfrac{6^4\\times12^3\\times4^5}{30^3\\times3^6}$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex2-4:2b",
+         "printed_page": 57,
+         "quote": "$\\dfrac{2^{3n+2}\\cdot8^{n-3}}{4^{3n-2}}$"
+        }
+       ],
+       "exercise_items": [
+        "Ex2-1:31",
+        "Ex2-1:33",
+        "Ex2-1:35",
+        "Ex2-1:36",
+        "Ex2-1:37"
+       ],
+       "worked_examples": [
+        "WE2",
+        "WE3"
+       ],
+       "key": "B3"
+      },
+      {
+       "statement": "Simplify a fraction with more than one term in the numerator or denominator by taking out a common exponential factor and cancelling.",
+       "label": "Simplify by common factor",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "b00841",
+         "printed_page": 48,
+         "quote": "change to prime bases if necessary and then factorise"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE4",
+         "printed_page": 48,
+         "quote": "Take out a common factor"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex2-1:38",
+         "printed_page": 49,
+         "quote": "$\\dfrac{7^{b}+7^{b-2}}{4\\times7^{b}+3\\times7^{b}}$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex2-4:2c",
+         "printed_page": 57,
+         "quote": "$\\dfrac{3^{t+3}+3^{t}}{2\\times3^{t}}$"
+        }
+       ],
+       "exercise_items": [
+        "Ex2-1:32",
+        "Ex2-1:38",
+        "Ex2-1:39"
+       ],
+       "worked_examples": [
+        "WE4"
+       ],
+       "key": "B4"
+      },
+      {
+       "statement": "Simplify an exponential fraction by recognising a difference of two squares, factorising it and cancelling the common factor.",
+       "label": "Factorise difference of squares",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE5",
+         "printed_page": 48,
+         "quote": "Factorise using the difference of squares"
+        },
+        {
+         "kind": "summary",
+         "anchor": "b00954",
+         "printed_page": 56,
+         "quote": "or factorise"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex2-1:34",
+         "printed_page": 49,
+         "quote": "$\\dfrac{\\text{16}^{x}-\\text{144}^{b}}{\\text{4}^{x}-\\text{12}^{b}}$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex2-4:2i",
+         "printed_page": 57,
+         "quote": "$\\dfrac{\\text{121}^{b}-\\text{16}^{p}}{\\text{11}^{b}+\\text{4}^{p}}$"
+        }
+       ],
+       "exercise_items": [
+        "Ex2-1:34"
+       ],
+       "worked_examples": [
+        "WE5"
+       ],
+       "key": "B5"
+      }
+     ]
+    }
+   },
+   "reconciled": {
+    "objectives": [
+     {
+      "statement": "Simplify exponential expressions without a calculator by applying the product, quotient and power laws together with the zero and negative exponent identities.",
+      "label": "Apply the exponent laws",
+      "confidence": "merged",
+      "from": {
+       "a": [
+        "A1"
+       ],
+       "b": [
+        "B1",
+        "B2"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "heading",
+        "anchor": "EMAT",
+        "printed_page": 45,
+        "quote": "Revision of exponent laws"
+       },
+       {
+        "kind": "definition",
+        "anchor": "b00823",
+        "printed_page": 44,
+        "quote": "${a}^{-n}=\\dfrac{1}{{a}^{n}}"
+       },
+       {
+        "kind": "intro",
+        "anchor": "b00832",
+        "printed_page": 45,
+        "quote": "There are several laws we can use"
+       },
+       {
+        "kind": "definition",
+        "anchor": "b00833",
+        "printed_page": 45,
+        "quote": "${a}^{m}\\times{a}^{n}={a}^{m+n}$"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE1",
+        "printed_page": 46,
+        "quote": "${2}^{3x}\\times{2}^{4x}={2}^{3x+4x}={2}^{7x}$"
+       },
+       {
+        "kind": "summary",
+        "anchor": "b00945",
+        "printed_page": 56,
+        "quote": "${a}^{0}=1$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex2-1:9",
+        "printed_page": 49,
+        "quote": "$\\left(\\dfrac{2}{3}\\right)^{-3}$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex2-1:28",
+        "printed_page": 49,
+        "quote": "$\\left(\\dfrac{a^6}{b^7}\\right)^5$"
+       }
+      ],
+      "exercise_items": [
+       "Ex2-1:1",
+       "Ex2-1:2",
+       "Ex2-1:3",
+       "Ex2-1:4",
+       "Ex2-1:5",
+       "Ex2-1:6",
+       "Ex2-1:7",
+       "Ex2-1:8",
+       "Ex2-1:9",
+       "Ex2-1:10",
+       "Ex2-1:11",
+       "Ex2-1:12",
+       "Ex2-1:13",
+       "Ex2-1:14",
+       "Ex2-1:15",
+       "Ex2-1:16",
+       "Ex2-1:17",
+       "Ex2-1:18",
+       "Ex2-1:19",
+       "Ex2-1:20",
+       "Ex2-1:21",
+       "Ex2-1:22",
+       "Ex2-1:23",
+       "Ex2-1:24",
+       "Ex2-1:25",
+       "Ex2-1:26",
+       "Ex2-1:27",
+       "Ex2-1:28",
+       "Ex2-1:29",
+       "Ex2-1:30"
+      ],
+      "worked_examples": [
+       "WE1"
+      ],
+      "terms": [
+       "exponent laws",
+       "exponent",
+       "base",
+       "power",
+       "zero exponent",
+       "negative exponent"
+      ],
+      "term_flags": [
+       {
+        "term": "exponent",
+        "why": "Readers from British or Commonwealth curricula know this as an index (plural indices), and the exponent laws as the laws of indices."
+       },
+       {
+        "term": "exponent laws",
+        "why": "Also taught as the laws of indices or the rules of exponents, depending on the curriculum."
+       },
+       {
+        "term": "power",
+        "why": "Can mean the whole expression a^n or only the exponent n, and some curricula use it for one and some for the other."
+       }
+      ]
+     },
+     {
+      "statement": "Simplify exponential expressions whose terms have different bases by reducing the bases to prime bases and then applying the exponent laws.",
+      "label": "Reduce to prime bases",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A2"
+       ],
+       "b": [
+        "B3"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "intro",
+        "anchor": "b00837",
+        "printed_page": 46,
+        "quote": "use the method of Finding Prime Bases"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE2",
+        "printed_page": 46,
+        "quote": "if we reduce the bases to prime bases, then we can apply the exponent laws"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE3",
+        "printed_page": 47,
+        "quote": "Change the bases to prime numbers"
+       },
+       {
+        "kind": "summary",
+        "anchor": "b00954",
+        "printed_page": 56,
+        "quote": "we can reduce the bases to prime bases"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex2-1:31",
+        "printed_page": 49,
+        "quote": "$\\dfrac{3^{n}9^{n-3}}{27^{n-1}}$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex2-1:36",
+        "printed_page": 49,
+        "quote": "$\\dfrac{6^4\\times12^3\\times4^5}{30^3\\times3^6}$"
+       }
+      ],
+      "exercise_items": [
+       "Ex2-1:31",
+       "Ex2-1:33",
+       "Ex2-1:35",
+       "Ex2-1:36",
+       "Ex2-1:37"
+      ],
+      "worked_examples": [
+       "WE2",
+       "WE3"
+      ],
+      "terms": [
+       "prime bases",
+       "base",
+       "exponent laws",
+       "term"
+      ],
+      "term_flags": [
+       {
+        "term": "prime bases",
+        "why": "The book's own method name (Finding Prime Bases). Other curricula describe the same step as writing each base as a power of a prime or as a common base."
+       }
+      ]
+     },
+     {
+      "statement": "Simplify exponential fractions with more than one term by factorising, taking out a common factor or using the difference of squares, and cancelling.",
+      "label": "Factorise exponential expressions",
+      "confidence": "merged",
+      "from": {
+       "a": [
+        "A3"
+       ],
+       "b": [
+        "B4",
+        "B5"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "intro",
+        "anchor": "b00841",
+        "printed_page": 48,
+        "quote": "change to prime bases if necessary and then factorise"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE4",
+        "printed_page": 48,
+        "quote": "Take out a common factor"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE5",
+        "printed_page": 48,
+        "quote": "Factorise using the difference of squares"
+       },
+       {
+        "kind": "summary",
+        "anchor": "b00954",
+        "printed_page": 56,
+        "quote": "or factorise"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex2-1:32",
+        "printed_page": 49,
+        "quote": "$\\dfrac{\\text{13}^{c}+\\text{13}^{c+2}}{\\text{3}\\times\\text{13}^{c}-\\text{13}^{c}}$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex2-1:34",
+        "printed_page": 49,
+        "quote": "$\\dfrac{\\text{16}^{x}-\\text{144}^{b}}{\\text{4}^{x}-\\text{12}^{b}}$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex2-1:38",
+        "printed_page": 49,
+        "quote": "$\\dfrac{7^{b}+7^{b-2}}{4\\times7^{b}+3\\times7^{b}}$"
+       }
+      ],
+      "exercise_items": [
+       "Ex2-1:32",
+       "Ex2-1:34",
+       "Ex2-1:38",
+       "Ex2-1:39"
+      ],
+      "worked_examples": [
+       "WE4",
+       "WE5"
+      ],
+      "terms": [
+       "factorise",
+       "common factor",
+       "difference of squares",
+       "term",
+       "cancel"
+      ],
+      "term_flags": [
+       {
+        "term": "factorise",
+        "why": "British spelling. Readers from American curricula say factor or factoring."
+       },
+       {
+        "term": "difference of squares",
+        "why": "Often called the difference of two squares in British and Commonwealth curricula."
+       },
+       {
+        "term": "take out a common factor",
+        "why": "Some curricula call this factorising by a common factor, or factoring out the greatest common factor."
+       }
+      ]
+     }
+    ],
+    "rejected": [],
+    "unmapped_items": [],
+    "notes": "Three objectives, kept at the coarser A-list granularity. A1 covers B1 and B2: the book's law list puts a^0 = 1 and a^(-n) = 1/a^n beside the product, quotient and power laws, and the exercise items for both sit together in Ex2-1:1-30. A3 covers B4 and B5: taking out a common factor and the difference of squares are two ways of the same factorise-then-cancel step, and B5 has a single exercise item (Ex2-1:34) and one worked example (WE5). A2 and B3 are the same objective. Every one of the 39 exercise items and 5 worked examples is placed exactly once, and every A and B key appears in some objective's \"from\". Chapter-end items (Ex2-4:*) were not placed in exercise_items."
+   },
+   "evidence_check": {
+    "checks": [
+     {
+      "objective_n": 1,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "File a0035.txt contains 'Revision of exponent laws' — exact heading that names the topic"
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "File a0010.txt states the negative exponent identity ${a}^{-n}=\\dfrac{1}{{a}^{n}}$ as a definition"
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "File a0036.txt contains 'There are several laws we can use' — intro explaining the laws"
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true,
+      "note": "File a0037.txt states the product law ${a}^{m}\\times{a}^{n}={a}^{m+n}$ as a definition"
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 4,
+      "present": true,
+      "supports": true,
+      "note": "File a0042.txt contains the worked example ${2}^{3x}\\times{2}^{4x}={2}^{3x+4x}={2}^{7x}$ — demonstrates product law"
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 5,
+      "present": true,
+      "supports": true,
+      "note": "File a0023.txt states the zero exponent identity ${a}^{0}=1$ as a summary"
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 6,
+      "present": true,
+      "supports": true,
+      "note": "File a0055.txt contains the exercise $\\left(\\dfrac{2}{3}\\right)^{-3}$ — practises negative exponents"
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 7,
+      "present": true,
+      "supports": true,
+      "note": "File a0074.txt contains the exercise $\\left(\\dfrac{a^6}{b^7}\\right)^5$ — practises power and quotient laws"
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "File a0039.txt contains 'use the method of Finding Prime Bases' — intro explaining the method"
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "File a0043.txt contains 'if we reduce the bases to prime bases, then we can apply the exponent laws' — demonstrates method"
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "File a0044.txt contains 'Change the bases to prime numbers' — demonstrates prime base reduction"
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true,
+      "note": "File a0032.txt contains 'we can reduce the bases to prime bases' — summarizes method"
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 4,
+      "present": true,
+      "supports": true,
+      "note": "File a0077.txt contains the exercise $\\dfrac{3^{n}9^{n-3}}{27^{n-1}}$ — requires reducing to prime bases"
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 5,
+      "present": true,
+      "supports": true,
+      "note": "File a0082.txt contains the exercise $\\dfrac{6^4\\times12^3\\times4^5}{30^3\\times3^6}$ — requires prime factorisation"
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "File a0041.txt contains 'change to prime bases if necessary and then factorise' — intro for multi-term fractions"
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "File a0045.txt contains 'Take out a common factor' — demonstrates common factor factorisation"
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "File a0046.txt contains 'Factorise using the difference of squares' — demonstrates this factorisation method"
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true,
+      "note": "File a0032.txt contains 'or factorise' — mentions factorisation as a simplification method"
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 4,
+      "present": true,
+      "supports": true,
+      "note": "File a0078.txt contains the exercise $\\dfrac{\\text{13}^{c}+\\text{13}^{c+2}}{\\text{3}\\times\\text{13}^{c}-\\text{13}^{c}}$ — practises factoring multi-term fractions"
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 5,
+      "present": true,
+      "supports": true,
+      "note": "File a0080.txt contains the exercise $\\dfrac{\\text{16}^{x}-\\text{144}^{b}}{\\text{4}^{x}-\\text{12}^{b}}$ — practises factorisation with difference of squares"
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 6,
+      "present": true,
+      "supports": true,
+      "note": "File a0084.txt contains the exercise $\\dfrac{7^{b}+7^{b-2}}{4\\times7^{b}+3\\times7^{b}}$ — practises common factor extraction in multi-term fraction"
+     }
+    ]
+   }
+  },
+  {
+   "slug": "g10m2s3-1",
+   "finders": {
+    "a": {
+     "objectives": [
+      {
+       "statement": "Simplify products and quotients of terms with rational exponents by multiplying the coefficients and adding or subtracting the exponents of like bases, including a result with exponent zero.",
+       "label": "Combine rational exponents, like bases",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "b00884",
+         "printed_page": 50,
+         "quote": "apply the exponent laws to expressions with rational exponents"
+        },
+        {
+         "kind": "summary",
+         "anchor": "b00949",
+         "printed_page": 56,
+         "quote": "$a^{m}\\timesa^{n}=a^{m+n}$"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE6",
+         "printed_page": 50,
+         "quote": "8{x}^{\\frac{1}{2}-\\frac{1}{2}}"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex2-2:1",
+         "printed_page": 51,
+         "quote": "t^{\\frac{1}{4}}\\times3t^{\\frac{7}{4}}"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex2-2:2",
+         "printed_page": 51,
+         "quote": "\\dfrac{16x^{2}}{\\left(4x^{2}\\right)^{\\frac{1}{2}}}"
+        }
+       ],
+       "exercise_items": [
+        "Ex2-2:1",
+        "Ex2-2:2"
+       ],
+       "worked_examples": [
+        "WE6"
+       ],
+       "key": "A1"
+      },
+      {
+       "statement": "Evaluate, without a calculator, a number raised to a rational exponent, including a decimal base or a negative rational exponent, by rewriting the base as a fraction or a prime power.",
+       "label": "Evaluate numeric rational powers",
+       "evidence": [
+        {
+         "kind": "summary",
+         "anchor": "b00954",
+         "printed_page": 56,
+         "quote": "we can reduce the bases to prime bases or factorise"
+        },
+        {
+         "kind": "summary",
+         "anchor": "b00946",
+         "printed_page": 56,
+         "quote": "${a}^{-n}=\\dfrac{1}{{a}^{n}}$"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE7",
+         "printed_page": 50,
+         "quote": "\\left(\\frac{1}{125}\\right)^{\\frac{1}{3}}"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex2-2:3",
+         "printed_page": 51,
+         "quote": "\\left(\\text{0,25}\\right)^{\\frac{1}{2}}"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex2-2:4",
+         "printed_page": 51,
+         "quote": "\\left(27\\right)^{-\\frac{1}{3}}"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex2-4:2m",
+         "printed_page": 57,
+         "quote": "(\\text{0,81})^{\\frac{\\text{1}}{\\text{2}}}"
+        }
+       ],
+       "exercise_items": [
+        "Ex2-2:3",
+        "Ex2-2:4"
+       ],
+       "worked_examples": [
+        "WE7"
+       ],
+       "key": "A2"
+      },
+      {
+       "statement": "Simplify a bracketed product of a coefficient and powers of variables raised to a rational exponent by applying the exponent to every factor and multiplying the exponents, then combine the results.",
+       "label": "Rational power of a product",
+       "evidence": [
+        {
+         "kind": "summary",
+         "anchor": "b00951",
+         "printed_page": 56,
+         "quote": "${\\left(ab\\right)}^{n}={a}^{n}{b}^{n}$"
+        },
+        {
+         "kind": "summary",
+         "anchor": "b00953",
+         "printed_page": 56,
+         "quote": "${\\left({a}^{m}\\right)}^{n}={a}^{mn}$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex2-2:7",
+         "printed_page": 51,
+         "quote": "\\left((-2)^4a^6b^2\\right)^{\\frac{1}{2}}"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex2-2:9",
+         "printed_page": 51,
+         "quote": "\\left(16x^{12}b^6\\right)^{\\frac{1}{3}}"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex2-4:2f",
+         "printed_page": 57,
+         "quote": "\\left(9x^8y^4\\right)^{\\frac{1}{2}}"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex2-4:2q",
+         "printed_page": 57,
+         "quote": "\\left(\\left(x^{36}\\right)^{\\frac{1}{2}}\\right)^{\\frac{1}{3}}"
+        }
+       ],
+       "exercise_items": [
+        "Ex2-2:5",
+        "Ex2-2:6",
+        "Ex2-2:7",
+        "Ex2-2:8",
+        "Ex2-2:9"
+       ],
+       "worked_examples": [],
+       "key": "A3"
+      }
+     ]
+    },
+    "b": {
+     "objectives": [
+      {
+       "statement": "Simplify expressions with rational exponents, including products and quotients of powers and rational powers of products, by applying the exponent laws",
+       "label": "Simplify expressions with rational exponents",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE6",
+         "printed_page": 50,
+         "quote": "2{x}^{\\frac{1}{2}}\\times4{x}^{-\\frac{1}{2}}"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex2-2:1",
+         "printed_page": 51,
+         "quote": "t^{\\frac{1}{4}}\\times3t^{\\frac{7}{4}}"
+        },
+        {
+         "kind": "intro",
+         "anchor": "b00884",
+         "printed_page": 50,
+         "quote": "apply the exponent laws to expressions with rational exponents"
+        },
+        {
+         "kind": "heading",
+         "anchor": "EMAV",
+         "printed_page": 50,
+         "quote": "Rational exponents"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex2-4:2e",
+         "printed_page": 57,
+         "quote": "\\left(a^{10}b^{6}\\right)^{\\frac{1}{2}}"
+        }
+       ],
+       "exercise_items": [
+        "Ex2-2:1",
+        "Ex2-2:2",
+        "Ex2-2:5",
+        "Ex2-2:6",
+        "Ex2-2:7",
+        "Ex2-2:8",
+        "Ex2-2:9"
+       ],
+       "worked_examples": [
+        "WE6"
+       ],
+       "key": "B1"
+      },
+      {
+       "statement": "Evaluate a number raised to a rational exponent without a calculator by rewriting the base as a fraction or a power of a prime base",
+       "label": "Evaluate numeric rational powers",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE7",
+         "printed_page": 50,
+         "quote": "\\left(\\frac{8}{1000}\\right)^{\\frac{1}{3}}"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex2-2:4",
+         "printed_page": 51,
+         "quote": "\\left(27\\right)^{-\\frac{1}{3}}"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex2-2:3",
+         "printed_page": 51,
+         "quote": "\\left(\\text{0,25}\\right)^{\\frac{1}{2}}"
+        },
+        {
+         "kind": "heading",
+         "anchor": "EMAV",
+         "printed_page": 50,
+         "quote": "Rational exponents"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex2-4:2m",
+         "printed_page": 57,
+         "quote": "(\\text{0,81})^{\\frac{\\text{1}}{\\text{2}}}"
+        }
+       ],
+       "exercise_items": [
+        "Ex2-2:3",
+        "Ex2-2:4"
+       ],
+       "worked_examples": [
+        "WE7"
+       ],
+       "key": "B2"
+      }
+     ]
+    }
+   },
+   "reconciled": {
+    "objectives": [
+     {
+      "statement": "Simplify expressions with rational exponents, including products and quotients of powers and rational powers of products, by applying the exponent laws",
+      "label": "Simplify expressions with rational exponents",
+      "confidence": "merged",
+      "from": {
+       "a": [
+        "A1",
+        "A3"
+       ],
+       "b": [
+        "B1"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "heading",
+        "anchor": "EMAV",
+        "printed_page": 50,
+        "quote": "Rational exponents"
+       },
+       {
+        "kind": "intro",
+        "anchor": "b00884",
+        "printed_page": 50,
+        "quote": "apply the exponent laws to expressions with rational exponents"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE6",
+        "printed_page": 50,
+        "quote": "2{x}^{\\frac{1}{2}}\\times4{x}^{-\\frac{1}{2}}"
+       },
+       {
+        "kind": "summary",
+        "anchor": "b00949",
+        "printed_page": 56,
+        "quote": "$a^{m}\\timesa^{n}=a^{m+n}$"
+       },
+       {
+        "kind": "summary",
+        "anchor": "b00951",
+        "printed_page": 56,
+        "quote": "${\\left(ab\\right)}^{n}={a}^{n}{b}^{n}$"
+       },
+       {
+        "kind": "summary",
+        "anchor": "b00953",
+        "printed_page": 56,
+        "quote": "${\\left({a}^{m}\\right)}^{n}={a}^{mn}$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex2-2:1",
+        "printed_page": 51,
+        "quote": "t^{\\frac{1}{4}}\\times3t^{\\frac{7}{4}}"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex2-2:2",
+        "printed_page": 51,
+        "quote": "\\dfrac{16x^{2}}{\\left(4x^{2}\\right)^{\\frac{1}{2}}}"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex2-2:7",
+        "printed_page": 51,
+        "quote": "\\left((-2)^4a^6b^2\\right)^{\\frac{1}{2}}"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex2-2:9",
+        "printed_page": 51,
+        "quote": "\\left(16x^{12}b^6\\right)^{\\frac{1}{3}}"
+       }
+      ],
+      "exercise_items": [
+       "Ex2-2:1",
+       "Ex2-2:2",
+       "Ex2-2:5",
+       "Ex2-2:6",
+       "Ex2-2:7",
+       "Ex2-2:8",
+       "Ex2-2:9"
+      ],
+      "worked_examples": [
+       "WE6"
+      ],
+      "terms": [
+       "rational exponent",
+       "exponent laws",
+       "base",
+       "coefficient",
+       "power",
+       "product",
+       "quotient"
+      ],
+      "term_flags": [
+       {
+        "term": "exponent laws",
+        "why": "Other curricula (for example American) usually say 'laws of exponents' or 'properties of exponents'; same rules, different name."
+       }
+      ]
+     },
+     {
+      "statement": "Evaluate, without a calculator, a number raised to a rational exponent, including a decimal base or a negative rational exponent, by rewriting the base as a fraction or a prime power.",
+      "label": "Evaluate numeric rational powers",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A2"
+       ],
+       "b": [
+        "B2"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "heading",
+        "anchor": "EMAV",
+        "printed_page": 50,
+        "quote": "Rational exponents"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE7",
+        "printed_page": 50,
+        "quote": "\\left(\\frac{1}{125}\\right)^{\\frac{1}{3}}"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE7",
+        "printed_page": 50,
+        "quote": "\\left(\\frac{8}{1000}\\right)^{\\frac{1}{3}}"
+       },
+       {
+        "kind": "summary",
+        "anchor": "b00946",
+        "printed_page": 56,
+        "quote": "${a}^{-n}=\\dfrac{1}{{a}^{n}}$"
+       },
+       {
+        "kind": "summary",
+        "anchor": "b00954",
+        "printed_page": 56,
+        "quote": "we can reduce the bases to prime bases or factorise"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex2-2:3",
+        "printed_page": 51,
+        "quote": "\\left(\\text{0,25}\\right)^{\\frac{1}{2}}"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex2-2:4",
+        "printed_page": 51,
+        "quote": "\\left(27\\right)^{-\\frac{1}{3}}"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex2-4:2m",
+        "printed_page": 57,
+        "quote": "(\\text{0,81})^{\\frac{\\text{1}}{\\text{2}}}"
+       }
+      ],
+      "exercise_items": [
+       "Ex2-2:3",
+       "Ex2-2:4"
+      ],
+      "worked_examples": [
+       "WE7"
+      ],
+      "terms": [
+       "rational exponent",
+       "negative rational exponent",
+       "base",
+       "decimal",
+       "fraction",
+       "prime power",
+       "prime base"
+      ],
+      "term_flags": [
+       {
+        "term": "decimal",
+        "why": "The book writes decimals with a comma (0,25; 0,81); readers from curricula that use a decimal point may not recognise this notation."
+       },
+       {
+        "term": "factorise",
+        "why": "British/South African spelling; American curricula say 'factor' (as in 'factor the base')."
+       },
+       {
+        "term": "prime base",
+        "why": "The book's phrase for rewriting a base as a power of a prime; other curricula may describe this as prime factorisation of the base."
+       }
+      ]
+     }
+    ],
+    "rejected": [],
+    "unmapped_items": [],
+    "notes": "B1 covers both A1 (products and quotients of like bases, including exponent zero) and A3 (rational power of a product), so those three keys are merged into one objective. A2 and B2 are the same objective and agree. Every key of both lists is accounted for, and each of the nine exercise items and both worked examples is placed in exactly one objective. Ex2-4 items appear only as evidence. Both WE7 quotes are kept because the two finders quoted different expressions for the same anchor."
+   },
+   "evidence_check": {
+    "checks": [
+     {
+      "objective_n": 1,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "Heading 'Rational exponents' names the topic where this objective is taught"
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "Intro text explicitly states 'apply the exponent laws to expressions with rational exponents'"
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "Worked example demonstrates simplifying products of powers with rational exponents"
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true,
+      "note": "Summary provides product rule for exponents a^m × a^n = a^(m+n)"
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 4,
+      "present": true,
+      "supports": true,
+      "note": "Summary provides power of product rule (ab)^n = a^n × b^n"
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 5,
+      "present": true,
+      "supports": true,
+      "note": "Summary provides power of power rule (a^m)^n = a^(mn)"
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 6,
+      "present": true,
+      "supports": true,
+      "note": "Exercise practices simplifying products of rational exponents"
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 7,
+      "present": true,
+      "supports": true,
+      "note": "Exercise practices simplifying quotients with rational exponents"
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 8,
+      "present": true,
+      "supports": true,
+      "note": "Exercise practices rational power of a product"
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 9,
+      "present": true,
+      "supports": true,
+      "note": "Exercise practices rational power of a product"
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "Heading 'Rational exponents' names the topic where objective 2 is taught"
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "Worked example shows evaluating decimal by rewriting as fraction then prime power"
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "Same worked example shows rewriting decimal base 0.008 as fraction 8/1000"
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true,
+      "note": "Summary provides rule for negative exponents a^(-n) = 1/a^n"
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 4,
+      "present": true,
+      "supports": true,
+      "note": "Summary explicitly states reducing bases to prime bases, the method required by objective 2"
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 5,
+      "present": true,
+      "supports": true,
+      "note": "Exercise practices evaluating decimal base 0.25 to a rational exponent"
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 6,
+      "present": true,
+      "supports": true,
+      "note": "Exercise practices evaluating with negative rational exponent"
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 7,
+      "present": true,
+      "supports": true,
+      "note": "Exercise practices evaluating decimal base 0.81 to a rational exponent"
+     }
+    ]
+   }
+  },
+  {
+   "slug": "g10m2s4-1",
+   "finders": {
+    "a": {
+     "objectives": [
+      {
+       "statement": "Solve an exponential equation by changing the bases to the same prime base on both sides and equating the exponents.",
+       "label": "Equate exponents, same base",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "b00902",
+         "printed_page": 52,
+         "quote": "we can equate the exponents"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE8",
+         "printed_page": 52,
+         "quote": "The bases are the same so we can equate exponents"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex2-3:1g",
+         "printed_page": 55,
+         "quote": "$81^{k+2}=27^{k+4}$"
+        },
+        {
+         "kind": "summary",
+         "anchor": "b00955",
+         "printed_page": 56,
+         "quote": "if $a^{x}=a^{y}$ then $x=y$"
+        }
+       ],
+       "exercise_items": [
+        "Ex2-3:1a",
+        "Ex2-3:1b",
+        "Ex2-3:1c",
+        "Ex2-3:1d",
+        "Ex2-3:1e",
+        "Ex2-3:1f",
+        "Ex2-3:1g",
+        "Ex2-3:1h",
+        "Ex2-3:1i",
+        "Ex2-3:1q",
+        "Ex2-3:1r",
+        "Ex2-3:1s",
+        "Ex2-3:1t",
+        "Ex2-3:2"
+       ],
+       "worked_examples": [
+        "WE8",
+        "WE9"
+       ],
+       "key": "A1"
+      },
+      {
+       "statement": "Solve an exponential equation containing more than one power by rewriting the powers, taking out a common factor and then equating the exponents.",
+       "label": "Take out common factor",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE10",
+         "printed_page": 53,
+         "quote": "Take out a common factor"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex2-3:1j",
+         "printed_page": 55,
+         "quote": "$2^{t}+2^{t+2}=40$"
+        },
+        {
+         "kind": "summary",
+         "anchor": "b00955",
+         "printed_page": 56,
+         "quote": "or we can factorise the expressions"
+        }
+       ],
+       "exercise_items": [
+        "Ex2-3:1j"
+       ],
+       "worked_examples": [
+        "WE10"
+       ],
+       "key": "A2"
+      },
+      {
+       "statement": "Solve an exponential equation by factorising it, as a trinomial, a difference of two squares or a product of factors equal to zero, and reject any factor that would make a power negative.",
+       "label": "Solve by factorising",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE11",
+         "printed_page": 53,
+         "quote": "Factorise the trinomial"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE13",
+         "printed_page": 54,
+         "quote": "a difference of two squares"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex2-3:1o",
+         "printed_page": 55,
+         "quote": "$9^{m}+3^{3-2m}=28$"
+        },
+        {
+         "kind": "summary",
+         "anchor": "b00955",
+         "printed_page": 56,
+         "quote": "or we can factorise the expressions"
+        }
+       ],
+       "exercise_items": [
+        "Ex2-3:1k",
+        "Ex2-3:1l",
+        "Ex2-3:1m",
+        "Ex2-3:1n",
+        "Ex2-3:1o",
+        "Ex2-3:1p",
+        "Ex2-3:1u",
+        "Ex2-3:1v"
+       ],
+       "worked_examples": [
+        "WE11",
+        "WE12",
+        "WE13"
+       ],
+       "key": "A3"
+      },
+      {
+       "statement": "Use trial and error to find the value of x, correct to 2 decimal places, in an exponential equation whose sides cannot be written with the same base.",
+       "label": "Trial and error estimates",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "b00902",
+         "printed_page": 52,
+         "quote": "This is one method to solve exponential equations"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex2-3:3",
+         "printed_page": 56,
+         "quote": "Use trial and error to find the value of $x$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex2-4:4",
+         "printed_page": 58,
+         "quote": "Use trial and error to find the value of $x$"
+        }
+       ],
+       "exercise_items": [
+        "Ex2-3:3",
+        "Ex2-3:4"
+       ],
+       "worked_examples": [],
+       "key": "A4"
+      }
+     ]
+    },
+    "b": {
+     "objectives": [
+      {
+       "label": "Equate exponents, same base",
+       "statement": "Solve an exponential equation by writing both sides as a single power of the same base (changing to prime bases and using a^0 = 1 where needed) and equating the exponents.",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "b00902",
+         "printed_page": 52,
+         "quote": "we can equate the exponents"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE8",
+         "printed_page": 52,
+         "quote": "The bases are the same so we can equate exponents"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE9",
+         "printed_page": 52,
+         "quote": "We know from the exponent identities that"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex2-3:1a",
+         "printed_page": 55,
+         "quote": "$2^{x+5}=32$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex2-4:3a",
+         "printed_page": 57,
+         "quote": "$3^{x}=\\dfrac{1}{27}$"
+        }
+       ],
+       "exercise_items": [
+        "Ex2-3:1a",
+        "Ex2-3:1b",
+        "Ex2-3:1c",
+        "Ex2-3:1d",
+        "Ex2-3:1e",
+        "Ex2-3:1f",
+        "Ex2-3:1g",
+        "Ex2-3:1h",
+        "Ex2-3:1i",
+        "Ex2-3:1q",
+        "Ex2-3:1r",
+        "Ex2-3:1s",
+        "Ex2-3:1t",
+        "Ex2-3:2"
+       ],
+       "worked_examples": [
+        "WE8",
+        "WE9"
+       ],
+       "key": "B1"
+      },
+      {
+       "label": "Solve by common factor",
+       "statement": "Solve an exponential equation containing terms with different exponents of the same base by rewriting the terms, taking out the common factor, simplifying and then equating exponents.",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE10",
+         "printed_page": 53,
+         "quote": "Take out a common factor"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex2-3:1j",
+         "printed_page": 55,
+         "quote": "$2^{t}+2^{t+2}=40$"
+        }
+       ],
+       "exercise_items": [
+        "Ex2-3:1j"
+       ],
+       "worked_examples": [
+        "WE10"
+       ],
+       "key": "B2"
+      },
+      {
+       "label": "Factorise to solve exponential equations",
+       "statement": "Solve an exponential equation that reduces to a trinomial, a difference of two squares or a product of factors equal to zero by rewriting and factorising, solving each factor and rejecting factors that cannot be satisfied.",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE11",
+         "printed_page": 53,
+         "quote": "Factorise the trinomial"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE12",
+         "printed_page": 54,
+         "quote": "Factorise as a trinomial"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE13",
+         "printed_page": 54,
+         "quote": "we are left with a difference of two squares"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex2-3:1o",
+         "printed_page": 55,
+         "quote": "$9^{m}+3^{3-2m}=28$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex2-3:1k",
+         "printed_page": 55,
+         "quote": "$(7^x-49)(3^x-27)=0$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex2-4:3l",
+         "printed_page": 57,
+         "quote": "$t^{\\frac{1}{2}}-3t^{\\frac{1}{4}}+2=0$"
+        }
+       ],
+       "exercise_items": [
+        "Ex2-3:1k",
+        "Ex2-3:1l",
+        "Ex2-3:1m",
+        "Ex2-3:1n",
+        "Ex2-3:1o",
+        "Ex2-3:1p",
+        "Ex2-3:1u",
+        "Ex2-3:1v"
+       ],
+       "worked_examples": [
+        "WE11",
+        "WE12",
+        "WE13"
+       ],
+       "key": "B3"
+      },
+      {
+       "label": "Approximate by trial and error",
+       "statement": "Find the value of the unknown in an exponential equation, correct to 2 decimal places, by trial and error when the two sides cannot be written with the same base.",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "b00900",
+         "printed_page": 52,
+         "quote": "Exponential equations have the unknown variable in the exponent"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex2-3:3",
+         "printed_page": 56,
+         "quote": "Use trial and error to find the value of $x$ correct to 2 decimal places"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex2-4:4",
+         "printed_page": 58,
+         "quote": "Use trial and error to find the value of $x$ correct to 2 decimal places"
+        }
+       ],
+       "exercise_items": [
+        "Ex2-3:3",
+        "Ex2-3:4"
+       ],
+       "worked_examples": [],
+       "key": "B4"
+      }
+     ]
+    }
+   },
+   "reconciled": {
+    "objectives": [
+     {
+      "statement": "Solve an exponential equation by writing both sides as a single power of the same base (changing to prime bases and using a^0 = 1 where needed) and equating the exponents.",
+      "label": "Equate exponents, same base",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A1"
+       ],
+       "b": [
+        "B1"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "intro",
+        "anchor": "b00902",
+        "printed_page": 52,
+        "quote": "we can equate the exponents"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE8",
+        "printed_page": 52,
+        "quote": "The bases are the same so we can equate exponents"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE9",
+        "printed_page": 52,
+        "quote": "We know from the exponent identities that"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex2-3:1a",
+        "printed_page": 55,
+        "quote": "$2^{x+5}=32$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex2-3:1g",
+        "printed_page": 55,
+        "quote": "$81^{k+2}=27^{k+4}$"
+       },
+       {
+        "kind": "summary",
+        "anchor": "b00955",
+        "printed_page": 56,
+        "quote": "if $a^{x}=a^{y}$ then $x=y$"
+       }
+      ],
+      "exercise_items": [
+       "Ex2-3:1a",
+       "Ex2-3:1b",
+       "Ex2-3:1c",
+       "Ex2-3:1d",
+       "Ex2-3:1e",
+       "Ex2-3:1f",
+       "Ex2-3:1g",
+       "Ex2-3:1h",
+       "Ex2-3:1i",
+       "Ex2-3:1q",
+       "Ex2-3:1r",
+       "Ex2-3:1s",
+       "Ex2-3:1t",
+       "Ex2-3:2"
+      ],
+      "worked_examples": [
+       "WE8",
+       "WE9"
+      ],
+      "terms": [
+       "exponential equation",
+       "base",
+       "prime base",
+       "exponent",
+       "power",
+       "exponent identities"
+      ],
+      "term_flags": [
+       {
+        "term": "exponent",
+        "why": "Readers from British-style curricula may know this as the index (plural indices); 'power' and 'exponent' are used interchangeably in this book."
+       },
+       {
+        "term": "prime base",
+        "why": "Means rewriting each base as a power of a prime number (for example 81 = 3^4); some curricula simply say 'express with the same base'."
+       }
+      ]
+     },
+     {
+      "statement": "Solve an exponential equation containing terms with different exponents of the same base by rewriting the terms, taking out the common factor, simplifying and then equating exponents.",
+      "label": "Take out common factor",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A2"
+       ],
+       "b": [
+        "B2"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "worked_example",
+        "anchor": "WE10",
+        "printed_page": 53,
+        "quote": "Take out a common factor"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex2-3:1j",
+        "printed_page": 55,
+        "quote": "$2^{t}+2^{t+2}=40$"
+       },
+       {
+        "kind": "summary",
+        "anchor": "b00955",
+        "printed_page": 56,
+        "quote": "or we can factorise the expressions"
+       }
+      ],
+      "exercise_items": [
+       "Ex2-3:1j"
+      ],
+      "worked_examples": [
+       "WE10"
+      ],
+      "terms": [
+       "exponential equation",
+       "power",
+       "common factor",
+       "exponent",
+       "base"
+      ],
+      "term_flags": [
+       {
+        "term": "common factor",
+        "why": "Other curricula may say 'factor out' or 'highest common factor (HCF) / greatest common factor (GCF)' for taking out a common factor."
+       }
+      ]
+     },
+     {
+      "statement": "Solve an exponential equation that reduces to a trinomial, a difference of two squares or a product of factors equal to zero by rewriting and factorising, solving each factor and rejecting factors that cannot be satisfied.",
+      "label": "Solve by factorising",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A3"
+       ],
+       "b": [
+        "B3"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "worked_example",
+        "anchor": "WE11",
+        "printed_page": 53,
+        "quote": "Factorise the trinomial"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE12",
+        "printed_page": 54,
+        "quote": "Factorise as a trinomial"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE13",
+        "printed_page": 54,
+        "quote": "we are left with a difference of two squares"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex2-3:1k",
+        "printed_page": 55,
+        "quote": "$(7^x-49)(3^x-27)=0$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex2-3:1o",
+        "printed_page": 55,
+        "quote": "$9^{m}+3^{3-2m}=28$"
+       },
+       {
+        "kind": "summary",
+        "anchor": "b00955",
+        "printed_page": 56,
+        "quote": "or we can factorise the expressions"
+       }
+      ],
+      "exercise_items": [
+       "Ex2-3:1k",
+       "Ex2-3:1l",
+       "Ex2-3:1m",
+       "Ex2-3:1n",
+       "Ex2-3:1o",
+       "Ex2-3:1p",
+       "Ex2-3:1u",
+       "Ex2-3:1v"
+      ],
+      "worked_examples": [
+       "WE11",
+       "WE12",
+       "WE13"
+      ],
+      "terms": [
+       "exponential equation",
+       "trinomial",
+       "difference of two squares",
+       "factorise",
+       "factor",
+       "product of factors",
+       "exponent"
+      ],
+      "term_flags": [
+       {
+        "term": "trinomial",
+        "why": "Here it means a quadratic expression with three terms; other curricula may say 'quadratic trinomial' or just 'quadratic expression'."
+       },
+       {
+        "term": "difference of two squares",
+        "why": "Often called 'difference of squares' in other curricula."
+       },
+       {
+        "term": "factorise",
+        "why": "British spelling; American-style curricula write 'factor' or 'factorize'."
+       }
+      ]
+     },
+     {
+      "statement": "Use trial and error to find the value of x, correct to 2 decimal places, in an exponential equation whose sides cannot be written with the same base.",
+      "label": "Trial and error estimates",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A4"
+       ],
+       "b": [
+        "B4"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "intro",
+        "anchor": "b00900",
+        "printed_page": 52,
+        "quote": "Exponential equations have the unknown variable in the exponent"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex2-3:3",
+        "printed_page": 56,
+        "quote": "Use trial and error to find the value of $x$ correct to 2 decimal places"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex2-4:4",
+        "printed_page": 58,
+        "quote": "Use trial and error to find the value of $x$ correct to 2 decimal places"
+       }
+      ],
+      "exercise_items": [
+       "Ex2-3:3",
+       "Ex2-3:4"
+      ],
+      "worked_examples": [],
+      "terms": [
+       "exponential equation",
+       "trial and error",
+       "base",
+       "decimal places",
+       "exponent"
+      ],
+      "term_flags": [
+       {
+        "term": "trial and error",
+        "why": "Other curricula may call this 'guess and check' or 'trial and improvement'."
+       }
+      ]
+     }
+    ],
+    "rejected": [],
+    "unmapped_items": [],
+    "notes": "All four A objectives pair one-to-one with B objectives (A1-B1, A2-B2, A3-B3, A4-B4), so each is agreed. Nothing was rejected. All 25 exercise items and 6 worked examples are placed once. The two end-of-chapter items (Ex2-4:3a, Ex2-4:3l) were not used as exercise_items; Ex2-4:4 appears as evidence only."
+   },
+   "evidence_check": {
+    "checks": [
+     {
+      "objective_n": 1,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 4,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 5,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 4,
+      "present": true,
+      "supports": false
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 5,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 4,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 4,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 4,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true
+     }
+    ]
+   }
+  }
+ ],
+ "pool": {
+  "items": 79,
+  "batches": 2,
+  "mappers": [
+   {
+    "mapping": [
+     {
+      "item_id": "Ex2-4:1a",
+      "objective": "lo:g10m2s2-1-1",
+      "reason": "Power of a product with integer exponent, a direct exponent-law simplification."
+     },
+     {
+      "item_id": "Ex2-4:1b",
+      "objective": "lo:g10m2s2-1-1",
+      "reason": "Product law plus the zero-exponent identity."
+     },
+     {
+      "item_id": "Ex2-4:1c",
+      "objective": "lo:g10m2s2-1-1",
+      "reason": "Product law on a common base with algebraic exponents."
+     },
+     {
+      "item_id": "Ex2-4:1d",
+      "objective": "lo:g10m2s2-1-1",
+      "reason": "Product law on a common base."
+     },
+     {
+      "item_id": "Ex2-4:1e",
+      "objective": "lo:g10m2s2-1-1",
+      "reason": "Quotient law on a common base."
+     },
+     {
+      "item_id": "Ex2-4:1f",
+      "objective": "lo:g10m2s2-1-1",
+      "reason": "Product law with coefficients."
+     },
+     {
+      "item_id": "Ex2-4:1g",
+      "objective": "lo:g10m2s2-1-1",
+      "reason": "Product law across several variables and coefficients."
+     },
+     {
+      "item_id": "Ex2-4:1h",
+      "objective": "lo:g10m2s2-1-1",
+      "reason": "Power law (power of a power) with algebraic exponents."
+     },
+     {
+      "item_id": "Ex2-4:1i",
+      "objective": "lo:g10m2s2-1-1",
+      "reason": "Quotient law with numeric coefficients."
+     },
+     {
+      "item_id": "Ex2-4:1j",
+      "objective": "lo:g10m2s2-1-1",
+      "reason": "Power and quotient laws together."
+     },
+     {
+      "item_id": "Ex2-4:1k",
+      "objective": "lo:g10m2s2-1-1",
+      "reason": "Power, quotient and product laws together."
+     },
+     {
+      "item_id": "Ex2-4:1l",
+      "objective": "lo:g10m2s2-1-1",
+      "reason": "Power of a quotient with integer exponent."
+     },
+     {
+      "item_id": "Ex2-4:1m",
+      "objective": "lo:g10m2s2-1-2",
+      "reason": "Bases 6 and 9 differ and must be reduced to prime bases 2 and 3."
+     },
+     {
+      "item_id": "Ex2-4:1n",
+      "objective": "lo:g10m2s2-1-1",
+      "reason": "Negative exponent with power and product laws, single variable base."
+     },
+     {
+      "item_id": "Ex2-4:1o",
+      "objective": "lo:g10m2s2-1-1",
+      "reason": "Negative exponent and power of a product, then quotient law."
+     },
+     {
+      "item_id": "Ex2-4:1p",
+      "objective": "lo:g10m2s2-1-1",
+      "reason": "Quotient law yielding a negative exponent."
+     },
+     {
+      "item_id": "Ex2-4:1q",
+      "objective": "lo:g10m2s2-1-2",
+      "reason": "Base 6 must be split into prime bases 2 and 3."
+     },
+     {
+      "item_id": "Ex2-4:1r",
+      "objective": "lo:g10m2s2-1-2",
+      "reason": "Bases 9 and 27 reduced to base 3."
+     },
+     {
+      "item_id": "Ex2-4:1s",
+      "objective": "lo:g10m2s2-1-2",
+      "reason": "Bases 3 and 9 reduced to a common prime base."
+     },
+     {
+      "item_id": "Ex2-4:1t",
+      "objective": "lo:g10m2s2-1-1",
+      "reason": "Quotient law with negative exponents on two variables."
+     },
+     {
+      "item_id": "Ex2-4:1u",
+      "objective": "lo:g10m2s2-1-1",
+      "reason": "Evaluate using negative-exponent identity and even power of -1."
+     },
+     {
+      "item_id": "Ex2-4:1v",
+      "objective": "lo:g10m2s2-1-1",
+      "reason": "Power law with a negative exponent in the denominator."
+     },
+     {
+      "item_id": "Ex2-4:1w",
+      "objective": "lo:g10m2s2-1-2",
+      "reason": "Bases 2, 8 and 4 reduced to base 2."
+     },
+     {
+      "item_id": "Ex2-4:1x",
+      "objective": "lo:g10m2s2-1-2",
+      "reason": "Bases 6 and 22 split into primes 2, 3 and 11 to cancel."
+     },
+     {
+      "item_id": "Ex2-4:1y",
+      "objective": "lo:g10m2s2-1-1",
+      "reason": "Common base -3 with product and quotient laws and negative exponents."
+     },
+     {
+      "item_id": "Ex2-4:1z",
+      "objective": "lo:g10m2s2-1-1",
+      "reason": "Apply the negative exponent identity to numbers and simplify without a calculator."
+     },
+     {
+      "item_id": "Ex2-4:2a",
+      "objective": "lo:g10m2s2-1-2",
+      "reason": "Bases 9, 27 and 81 rewritten as powers of 3."
+     },
+     {
+      "item_id": "Ex2-4:2b",
+      "objective": "lo:g10m2s2-1-2",
+      "reason": "Bases 8 and 4 rewritten as powers of 2."
+     },
+     {
+      "item_id": "Ex2-4:2c",
+      "objective": "lo:g10m2s2-1-3",
+      "reason": "Fraction with several terms: take out common factor 3^t and cancel."
+     },
+     {
+      "item_id": "Ex2-4:2d",
+      "objective": "lo:g10m2s2-1-3",
+      "reason": "Factorise the numerator (sum of cubes) and cancel against the denominator."
+     },
+     {
+      "item_id": "Ex2-4:2e",
+      "objective": "lo:g10m2s3-1-1",
+      "reason": "Rational power of a product, applying the exponent laws."
+     },
+     {
+      "item_id": "Ex2-4:2f",
+      "objective": "lo:g10m2s3-1-1",
+      "reason": "Rational power of a product with a numeric coefficient."
+     },
+     {
+      "item_id": "Ex2-4:2g",
+      "objective": "lo:g10m2s2-1-3",
+      "reason": "Common factor 13^a taken out of numerator and denominator, then cancelled."
+     },
+     {
+      "item_id": "Ex2-4:2h",
+      "objective": "lo:g10m2s2-1-2",
+      "reason": "Bases 27 and 9 reduced to base 3."
+     },
+     {
+      "item_id": "Ex2-4:2i",
+      "objective": "lo:g10m2s2-1-3",
+      "reason": "Numerator is a difference of squares; factorise and cancel."
+     },
+     {
+      "item_id": "Ex2-4:2j",
+      "objective": "lo:g10m2s2-1-2",
+      "reason": "Bases 4 and 22 split into primes 2 and 11 to cancel."
+     },
+     {
+      "item_id": "Ex2-4:2k",
+      "objective": "lo:g10m2s2-1-2",
+      "reason": "Bases 12, 16 and 10 reduced to prime bases."
+     },
+     {
+      "item_id": "Ex2-4:2l",
+      "objective": "lo:g10m2s2-1-2",
+      "reason": "Bases 10 and 9 reduced to prime bases 2, 3 and 5."
+     },
+     {
+      "item_id": "Ex2-4:2m",
+      "objective": "lo:g10m2s3-1-2",
+      "reason": "Evaluate a decimal base raised to the exponent 1/2 by rewriting it as a fraction."
+     },
+     {
+      "item_id": "Ex2-4:2n",
+      "objective": "lo:g10m2s3-1-1",
+      "reason": "Rational powers of products, then product law."
+     },
+     {
+      "item_id": "Ex2-4:2o",
+      "objective": "lo:g10m2s3-1-1",
+      "reason": "Rational powers of products, then product law."
+     },
+     {
+      "item_id": "Ex2-4:2p",
+      "objective": "lo:g10m2s2-1-3",
+      "reason": "Rewrite negative exponents as fractions, factorise the numerator and cancel."
+     },
+     {
+      "item_id": "Ex2-4:2q",
+      "objective": "lo:g10m2s3-1-1",
+      "reason": "Power of a power with rational exponents."
+     },
+     {
+      "item_id": "Ex2-4:2r",
+      "objective": "lo:g10m2s2-1-2",
+      "reason": "Bases 2/3 and 3/2 are reciprocals; rewrite to a common base to combine."
+     },
+     {
+      "item_id": "Ex2-4:2s",
+      "objective": "lo:g10m2s3-1-1",
+      "reason": "Expressions with rational exponents a^(1/2) and a^(-1/2) simplified using exponent laws."
+     },
+     {
+      "item_id": "Ex2-4:3a",
+      "objective": "lo:g10m2s4-1-1",
+      "reason": "Write 1/27 as 3^-3 and equate exponents."
+     },
+     {
+      "item_id": "Ex2-4:3b",
+      "objective": "lo:g10m2s4-1-1",
+      "reason": "Write 121 as 11^2 and equate exponents."
+     },
+     {
+      "item_id": "Ex2-4:3c",
+      "objective": "lo:g10m2s4-1-1",
+      "reason": "Use a^0 = 1 to write 1 as 5^0 and equate exponents."
+     },
+     {
+      "item_id": "Ex2-4:3d",
+      "objective": "lo:g10m2s4-1-1",
+      "reason": "Divide by 2, write 49 as 7^2 and equate exponents."
+     },
+     {
+      "item_id": "Ex2-4:3e",
+      "objective": "lo:g10m2s4-1-1",
+      "reason": "Isolate the power, write the constant as a power of 2 and equate exponents."
+     },
+     {
+      "item_id": "Ex2-4:3f",
+      "objective": "lo:g10m2s4-1-1",
+      "reason": "Isolate the power, write 36 as 6^2 and equate exponents."
+     },
+     {
+      "item_id": "Ex2-4:3g",
+      "objective": "lo:g10m2s4-1-1",
+      "reason": "Write 0,5 as 2^-1 to get a common base, then equate exponents."
+     },
+     {
+      "item_id": "Ex2-4:3h",
+      "objective": "lo:g10m2s4-1-1",
+      "reason": "Different bases only work when the exponent is 0 (a^0 = 1), so y+1 = 0."
+     },
+     {
+      "item_id": "Ex2-4:3i",
+      "objective": "lo:g10m2s3-1-2",
+      "reason": "Solved by raising to the reciprocal power, which means evaluating 64^(2/3)."
+     },
+     {
+      "item_id": "Ex2-4:3j",
+      "objective": "lo:g10m2s3-1-2",
+      "reason": "Isolate x^(1/2) and raise both sides to the reciprocal power, evaluating a rational-exponent value."
+     },
+     {
+      "item_id": "Ex2-4:3k",
+      "objective": "lo:g10m2s4-1-1",
+      "reason": "Uses m^0 = 1 and the negative-exponent identity to solve for the variable."
+     },
+     {
+      "item_id": "Ex2-4:3l",
+      "objective": "lo:g10m2s4-1-3",
+      "reason": "Reduces to a quadratic trinomial in t^(1/4); factorise and solve each factor."
+     },
+     {
+      "item_id": "Ex2-4:3m",
+      "objective": "lo:g10m2s4-1-1",
+      "reason": "Combine like terms to 3^(p+1) = 3^3 and equate exponents."
+     },
+     {
+      "item_id": "Ex2-4:3n",
+      "objective": "lo:g10m2s4-1-3",
+      "reason": "Trinomial in k^(-1/2); factorise and reject the factor that cannot be satisfied."
+     },
+     {
+      "item_id": "Ex2-4:3o",
+      "objective": "lo:g10m2s4-1-3",
+      "reason": "Trinomial in x^(1/4); factorise and reject the factor that cannot be satisfied."
+     },
+     {
+      "item_id": "Ex2-4:3p",
+      "objective": "lo:g10m2s4-1-3",
+      "reason": "Fraction with 16^x - 1 as a difference of squares; factorise, cancel, then solve the resulting exponential equation."
+     },
+     {
+      "item_id": "Ex2-4:3q",
+      "objective": "lo:g10m2s4-1-3",
+      "reason": "Product of two exponential factors equal to zero; solve each factor separately."
+     },
+     {
+      "item_id": "Ex2-4:3r",
+      "objective": "lo:g10m2s4-1-3",
+      "reason": "Product of factors equal to zero; each factor is solved to a power of the same base."
+     },
+     {
+      "item_id": "Ex2-4:3s",
+      "objective": "lo:g10m2s4-1-1",
+      "reason": "Divide by 5, write both sides as powers of 2 and equate exponents."
+     },
+     {
+      "item_id": "Ex2-4:3t",
+      "objective": "lo:g10m2s4-1-1",
+      "reason": "Change 27 and 9 to base 3, then equate exponents."
+     },
+     {
+      "item_id": "Ex2-4:3u",
+      "objective": "lo:g10m2s4-1-3",
+      "reason": "8^x - 1 is a difference of cubes; it reduces to a trinomial in 2^x that is factorised and solved."
+     },
+     {
+      "item_id": "Ex2-4:3v",
+      "objective": "lo:g10m2s4-1-1",
+      "reason": "35^x/5^x simplifies to 7^x; write the right side as 7^-1 and equate exponents."
+     },
+     {
+      "item_id": "Ex2-4:3w",
+      "objective": "lo:g10m2s4-1-1",
+      "reason": "Combine the powers of a into a single power equal to a^0 and equate exponents."
+     },
+     {
+      "item_id": "Ex2-4:3x",
+      "objective": "lo:g10m2s4-1-3",
+      "reason": "Reduces to a perfect-square trinomial in sqrt(x); factorise and reject the factor that cannot be satisfied (sqrt(x) = -1)."
+     },
+     {
+      "item_id": "Ex2-4:4",
+      "objective": "lo:g10m2s4-1-4",
+      "reason": "Trial and error to 2 decimal places for 4^x = 44, which cannot be written with a common base."
+     },
+     {
+      "item_id": "Ex2-4:5",
+      "objective": "lo:g10m2s4-1-4",
+      "reason": "Trial and error to 2 decimal places for 3^x = 30, which cannot be written with a common base."
+     },
+     {
+      "item_id": "Ex2-4:6a",
+      "objective": "lo:g10m2s2-1-1",
+      "reason": "Shows by the negative exponent identity that 1/(a^-1 + b^-1) is not a + b."
+     },
+     {
+      "item_id": "Ex2-4:6b",
+      "objective": "lo:g10m2s2-1-1",
+      "reason": "Misapplication of the power law: (a+b)^2 is not a^2 + b^2."
+     },
+     {
+      "item_id": "Ex2-4:6c",
+      "objective": "lo:g10m2s3-1-1",
+      "reason": "Rational power of a reciprocal: the exponent should be -2/3, not 2/3."
+     },
+     {
+      "item_id": "Ex2-4:6d",
+      "objective": "lo:g10m2s2-1-2",
+      "reason": "Compares 2*3^x with 6^x, whose bases differ, by reducing to prime bases (6^x = 2^x*3^x)."
+     },
+     {
+      "item_id": "Ex2-4:6e",
+      "objective": "lo:g10m2s3-1-1",
+      "reason": "Negative rational exponent: x^(-1/2) = 1/x^(1/2), with no minus sign in the denominator."
+     },
+     {
+      "item_id": "Ex2-4:6f",
+      "objective": "lo:g10m2s2-1-1",
+      "reason": "Power of a product law: the coefficient 3 must also be cubed (27)."
+     },
+     {
+      "item_id": "Ex2-4:7",
+      "objective": "lo:g10m2s2-1-1",
+      "reason": "Combine 2^2013 * 5^2013 into 10^2013 with the product and power laws, leaving 25 * 10^2013."
+     },
+     {
+      "item_id": "Ex2-4:8",
+      "objective": "lo:g10m2s2-1-3",
+      "reason": "Prove equality of exponential fractions by taking out common factors and cancelling."
+     }
+    ]
+   },
+   {
+    "mapping": [
+     {
+      "item_id": "Ex2-4:1a",
+      "objective": "lo:g10m2s2-1-1",
+      "reason": "Power of a product (8x)^3 by the power law."
+     },
+     {
+      "item_id": "Ex2-4:1b",
+      "objective": "lo:g10m2s2-1-1",
+      "reason": "Product of powers with a zero exponent (t^0 = 1)."
+     },
+     {
+      "item_id": "Ex2-4:1c",
+      "objective": "lo:g10m2s2-1-1",
+      "reason": "Product law, same base, add exponents."
+     },
+     {
+      "item_id": "Ex2-4:1d",
+      "objective": "lo:g10m2s2-1-1",
+      "reason": "Product law, same base 15."
+     },
+     {
+      "item_id": "Ex2-4:1e",
+      "objective": "lo:g10m2s2-1-1",
+      "reason": "Quotient law, same base 7."
+     },
+     {
+      "item_id": "Ex2-4:1f",
+      "objective": "lo:g10m2s2-1-1",
+      "reason": "Product law with coefficients."
+     },
+     {
+      "item_id": "Ex2-4:1g",
+      "objective": "lo:g10m2s2-1-1",
+      "reason": "Product law across several variables."
+     },
+     {
+      "item_id": "Ex2-4:1h",
+      "objective": "lo:g10m2s2-1-1",
+      "reason": "Power of a power with algebraic exponents."
+     },
+     {
+      "item_id": "Ex2-4:1i",
+      "objective": "lo:g10m2s2-1-1",
+      "reason": "Quotient law with coefficients and two variables."
+     },
+     {
+      "item_id": "Ex2-4:1j",
+      "objective": "lo:g10m2s2-1-1",
+      "reason": "Power law then quotient law."
+     },
+     {
+      "item_id": "Ex2-4:1k",
+      "objective": "lo:g10m2s2-1-1",
+      "reason": "Power and quotient laws combined."
+     },
+     {
+      "item_id": "Ex2-4:1l",
+      "objective": "lo:g10m2s2-1-1",
+      "reason": "Power of a quotient."
+     },
+     {
+      "item_id": "Ex2-4:1m",
+      "objective": "lo:g10m2s2-1-2",
+      "reason": "Different bases 6 and 9 must be reduced to prime bases 2 and 3."
+     },
+     {
+      "item_id": "Ex2-4:1n",
+      "objective": "lo:g10m2s2-1-1",
+      "reason": "Negative exponent with power and product laws, same base m."
+     },
+     {
+      "item_id": "Ex2-4:1o",
+      "objective": "lo:g10m2s2-1-1",
+      "reason": "Negative exponent and power of a product, quotient law."
+     },
+     {
+      "item_id": "Ex2-4:1p",
+      "objective": "lo:g10m2s2-1-1",
+      "reason": "Quotient law yielding a negative exponent."
+     },
+     {
+      "item_id": "Ex2-4:1q",
+      "objective": "lo:g10m2s2-1-2",
+      "reason": "Bases 2, 3 and 6 reduced to primes 2 and 3."
+     },
+     {
+      "item_id": "Ex2-4:1r",
+      "objective": "lo:g10m2s2-1-2",
+      "reason": "Bases 3, 9, 27 rewritten as powers of 3."
+     },
+     {
+      "item_id": "Ex2-4:1s",
+      "objective": "lo:g10m2s2-1-2",
+      "reason": "Bases 3 and 9 reduced to a common prime base."
+     },
+     {
+      "item_id": "Ex2-4:1t",
+      "objective": "lo:g10m2s2-1-1",
+      "reason": "Negative exponents with quotient law."
+     },
+     {
+      "item_id": "Ex2-4:1u",
+      "objective": "lo:g10m2s2-1-1",
+      "reason": "Evaluate using the negative exponent identity."
+     },
+     {
+      "item_id": "Ex2-4:1v",
+      "objective": "lo:g10m2s2-1-1",
+      "reason": "Power of a quotient with a negative exponent and the power law."
+     },
+     {
+      "item_id": "Ex2-4:1w",
+      "objective": "lo:g10m2s2-1-2",
+      "reason": "Bases 2, 8, 4 rewritten as powers of 2."
+     },
+     {
+      "item_id": "Ex2-4:1x",
+      "objective": "lo:g10m2s2-1-2",
+      "reason": "Bases 6, 11, 22, 3 reduced to primes 2, 3, 11."
+     },
+     {
+      "item_id": "Ex2-4:1y",
+      "objective": "lo:g10m2s2-1-1",
+      "reason": "Same base -3, product and quotient laws with negative exponents."
+     },
+     {
+      "item_id": "Ex2-4:1z",
+      "objective": "lo:g10m2s2-1-1",
+      "reason": "Negative exponent identity applied to numbers, no calculator."
+     },
+     {
+      "item_id": "Ex2-4:2a",
+      "objective": "lo:g10m2s2-1-2",
+      "reason": "Bases 9, 27, 81 rewritten as powers of 3."
+     },
+     {
+      "item_id": "Ex2-4:2b",
+      "objective": "lo:g10m2s2-1-2",
+      "reason": "Bases 2, 8, 4 rewritten as powers of 2."
+     },
+     {
+      "item_id": "Ex2-4:2c",
+      "objective": "lo:g10m2s2-1-3",
+      "reason": "Two-term fraction: take out common factor 3^t and cancel."
+     },
+     {
+      "item_id": "Ex2-4:2d",
+      "objective": "lo:g10m2s2-1-3",
+      "reason": "Factorise the sum of cubes in 2^p and cancel."
+     },
+     {
+      "item_id": "Ex2-4:2e",
+      "objective": "lo:g10m2s3-1-1",
+      "reason": "Rational power (1/2) of a product of variables."
+     },
+     {
+      "item_id": "Ex2-4:2f",
+      "objective": "lo:g10m2s3-1-1",
+      "reason": "Rational power (1/2) of a product including coefficient 9."
+     },
+     {
+      "item_id": "Ex2-4:2g",
+      "objective": "lo:g10m2s2-1-3",
+      "reason": "Multi-term fraction: common factor 13^a taken out and cancelled."
+     },
+     {
+      "item_id": "Ex2-4:2h",
+      "objective": "lo:g10m2s2-1-2",
+      "reason": "Bases 3, 27, 9 reduced to base 3."
+     },
+     {
+      "item_id": "Ex2-4:2i",
+      "objective": "lo:g10m2s2-1-3",
+      "reason": "Difference of squares in the numerator, then cancel."
+     },
+     {
+      "item_id": "Ex2-4:2j",
+      "objective": "lo:g10m2s2-1-2",
+      "reason": "Bases 4, 11, 22 reduced to primes 2 and 11."
+     },
+     {
+      "item_id": "Ex2-4:2k",
+      "objective": "lo:g10m2s2-1-2",
+      "reason": "Numeric bases 12, 16, 10 reduced to prime bases."
+     },
+     {
+      "item_id": "Ex2-4:2l",
+      "objective": "lo:g10m2s2-1-2",
+      "reason": "Numeric bases 10 and 9 reduced to primes 2, 3, 5."
+     },
+     {
+      "item_id": "Ex2-4:2m",
+      "objective": "lo:g10m2s3-1-2",
+      "reason": "Evaluate a decimal base raised to the power 1/2 without a calculator."
+     },
+     {
+      "item_id": "Ex2-4:2n",
+      "objective": "lo:g10m2s3-1-1",
+      "reason": "Rational powers of products, then multiply."
+     },
+     {
+      "item_id": "Ex2-4:2o",
+      "objective": "lo:g10m2s3-1-1",
+      "reason": "Rational powers of products, then multiply."
+     },
+     {
+      "item_id": "Ex2-4:2p",
+      "objective": "lo:g10m2s2-1-3",
+      "reason": "Fraction with several terms: rewrite, factorise and cancel (b-a)/(a-b)."
+     },
+     {
+      "item_id": "Ex2-4:2q",
+      "objective": "lo:g10m2s3-1-1",
+      "reason": "Rational power of a rational power."
+     },
+     {
+      "item_id": "Ex2-4:2r",
+      "objective": "lo:g10m2s2-1-2",
+      "reason": "Reciprocal bases 2/3 and 3/2 reduced to prime bases 2 and 3."
+     },
+     {
+      "item_id": "Ex2-4:2s",
+      "objective": "lo:g10m2s3-1-1",
+      "reason": "Expand and simplify expressions with rational exponents."
+     },
+     {
+      "item_id": "Ex2-4:3a",
+      "objective": "lo:g10m2s4-1-1",
+      "reason": "Write 1/27 as a power of 3 and equate exponents."
+     },
+     {
+      "item_id": "Ex2-4:3b",
+      "objective": "lo:g10m2s4-1-1",
+      "reason": "Write 121 as 11^2 and equate exponents."
+     },
+     {
+      "item_id": "Ex2-4:3c",
+      "objective": "lo:g10m2s4-1-1",
+      "reason": "Use a^0 = 1 and equate the exponent to 0."
+     },
+     {
+      "item_id": "Ex2-4:3d",
+      "objective": "lo:g10m2s4-1-1",
+      "reason": "Isolate 7^(3x) = 49, then equate exponents."
+     },
+     {
+      "item_id": "Ex2-4:3e",
+      "objective": "lo:g10m2s4-1-1",
+      "reason": "Isolate the power of 2, write as 2^4 and equate exponents."
+     },
+     {
+      "item_id": "Ex2-4:3f",
+      "objective": "lo:g10m2s4-1-1",
+      "reason": "Isolate 6^(-n-3) = 36 and equate exponents."
+     },
+     {
+      "item_id": "Ex2-4:3g",
+      "objective": "lo:g10m2s4-1-1",
+      "reason": "Rewrite 0,5 as 2^-1 for a common base 2 and equate exponents."
+     },
+     {
+      "item_id": "Ex2-4:3h",
+      "objective": "lo:g10m2s4-1-1",
+      "reason": "Different bases forces exponent y+1 = 0 via a^0 = 1."
+     },
+     {
+      "item_id": "Ex2-4:3i",
+      "objective": "lo:g10m2s3-1-2",
+      "reason": "Solved by raising to 2/3, i.e. evaluating 64^(2/3) without a calculator; the variable is in the base so not an exponential equation (weak fit)."
+     },
+     {
+      "item_id": "Ex2-4:3j",
+      "objective": "none",
+      "reason": "Equation with the variable in the base: isolate x^(1/2) = 1/4 and square. This is neither an exponential equation nor evaluation of a rational power, so no listed objective states it."
+     },
+     {
+      "item_id": "Ex2-4:3k",
+      "objective": "none",
+      "reason": "Solve m^0 + m^-1 = 0 by using the zero and negative exponent identities and solving a linear equation in m. No objective covers solving equations with a variable base."
+     },
+     {
+      "item_id": "Ex2-4:3l",
+      "objective": "lo:g10m2s4-1-3",
+      "reason": "Quadratic in t^(1/4): substitute, factorise the trinomial and solve each factor."
+     },
+     {
+      "item_id": "Ex2-4:3m",
+      "objective": "lo:g10m2s4-1-1",
+      "reason": "Collect like terms to 3^(p+1) = 3^3 and equate exponents."
+     },
+     {
+      "item_id": "Ex2-4:3n",
+      "objective": "lo:g10m2s4-1-3",
+      "reason": "Trinomial in k^(-1/2): factorise and solve each factor."
+     },
+     {
+      "item_id": "Ex2-4:3o",
+      "objective": "lo:g10m2s4-1-3",
+      "reason": "Trinomial in x^(1/4): factorise, solve each factor and reject the impossible one."
+     },
+     {
+      "item_id": "Ex2-4:3p",
+      "objective": "lo:g10m2s4-1-3",
+      "reason": "Skill: factorise 16^x-1 as a difference of squares, cancel and solve; if literally 4^(2x)+1 the equation has an unsatisfiable factor to reject."
+     },
+     {
+      "item_id": "Ex2-4:3q",
+      "objective": "lo:g10m2s4-1-3",
+      "reason": "Skill: solve a product of exponential factors equal to zero by solving each factor."
+     },
+     {
+      "item_id": "Ex2-4:3r",
+      "objective": "lo:g10m2s4-1-3",
+      "reason": "Skill: solve a product of exponential factors equal to zero, solving each factor."
+     },
+     {
+      "item_id": "Ex2-4:3s",
+      "objective": "lo:g10m2s4-1-1",
+      "reason": "Skill: divide to isolate 2^(x^2+1)=4, write as a single power of base 2 and equate exponents."
+     },
+     {
+      "item_id": "Ex2-4:3t",
+      "objective": "lo:g10m2s4-1-1",
+      "reason": "Skill: change 27 and 9 to base 3 and equate exponents."
+     },
+     {
+      "item_id": "Ex2-4:3u",
+      "objective": "lo:g10m2s4-1-3",
+      "reason": "Skill: factorise 8^x-1 (difference of cubes), cancel, leaving a quadratic in 2^x to factorise and solve."
+     },
+     {
+      "item_id": "Ex2-4:3v",
+      "objective": "lo:g10m2s4-1-1",
+      "reason": "Skill: simplify 35^x/5^x to 7^x, write 1/7 as 7^-1 and equate exponents."
+     },
+     {
+      "item_id": "Ex2-4:3w",
+      "objective": "lo:g10m2s4-1-1",
+      "reason": "Skill: combine powers of a, set the single power equal to a^0 and equate exponents."
+     },
+     {
+      "item_id": "Ex2-4:3x",
+      "objective": "lo:g10m2s4-1-3",
+      "reason": "Skill: treat as a trinomial in x^(1/2), factorise as a perfect square and reject the factor that cannot be satisfied."
+     },
+     {
+      "item_id": "Ex2-4:4",
+      "objective": "lo:g10m2s4-1-4",
+      "reason": "Skill: trial and error to find x to 2 decimal places when 44 is not a power of 4."
+     },
+     {
+      "item_id": "Ex2-4:5",
+      "objective": "lo:g10m2s4-1-4",
+      "reason": "Skill: trial and error to find x to 2 decimal places when 30 is not a power of 3."
+     },
+     {
+      "item_id": "Ex2-4:6a",
+      "objective": "lo:g10m2s2-1-1",
+      "reason": "Skill: apply the negative exponent identity to show a false simplification."
+     },
+     {
+      "item_id": "Ex2-4:6b",
+      "objective": "lo:g10m2s2-1-1",
+      "reason": "Skill: recognise that the power law does not distribute over addition, a misuse of exponent laws."
+     },
+     {
+      "item_id": "Ex2-4:6c",
+      "objective": "lo:g10m2s3-1-1",
+      "reason": "Skill: apply the power law with a rational exponent to (1/a^2)^(1/3); the result is a^(-2/3), not a^(2/3)."
+     },
+     {
+      "item_id": "Ex2-4:6d",
+      "objective": "lo:g10m2s2-1-1",
+      "reason": "Skill: recognise that 2.3^x is not 6^x, since the product law needs the same exponent on both factors."
+     },
+     {
+      "item_id": "Ex2-4:6e",
+      "objective": "lo:g10m2s3-1-1",
+      "reason": "Skill: apply the negative rational exponent identity; x^(-1/2) = 1/x^(1/2), not 1/(-x^(1/2))."
+     },
+     {
+      "item_id": "Ex2-4:6f",
+      "objective": "lo:g10m2s2-1-1",
+      "reason": "Skill: apply the power-of-a-product law, which also raises the coefficient 3 to the power 3."
+     },
+     {
+      "item_id": "Ex2-4:7",
+      "objective": "lo:g10m2s2-1-1",
+      "reason": "Skill: use the exponent laws without a calculator to write 2^2013*5^2015 as 25*10^2013 and count digits."
+     },
+     {
+      "item_id": "Ex2-4:8",
+      "objective": "lo:g10m2s2-1-3",
+      "reason": "Skill: take out the common factor in numerator and denominator of an exponential fraction and cancel."
+     }
+    ]
+   }
+  ],
+  "second_mapper": true
+ },
+ "links": {
+  "asked": true,
+  "prior_objectives": 29,
+  "proposed": [
+   {
+    "src": "lo:g10m2s2-1-1",
+    "dst": "lo:g10m2s2-1-2",
+    "signal": "uses_method",
+    "reason": "Once the bases are reduced to primes, the worked examples simply apply the product, quotient and power laws as steps.",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE2",
+      "printed_page": 46,
+      "quote": "then we can apply the exponent laws"
+     },
+     {
+      "kind": "worked_example",
+      "anchor": "WE3",
+      "printed_page": 47,
+      "quote": "Subtract the exponents (same base)"
+     }
+    ]
+   },
+   {
+    "src": "lo:g10m2s2-1-1",
+    "dst": "lo:g10m2s2-1-3",
+    "signal": "uses_method",
+    "reason": "WE4 reverses the multiplication law to split 2^(t-2) into 2^t times 2^-2 before factorising, using the laws and the negative exponent identity.",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE4",
+      "printed_page": 48,
+      "quote": "we can reverse the multiplication law to write"
+     }
+    ]
+   },
+   {
+    "src": "lo:g10m2s2-1-2",
+    "dst": "lo:g10m2s2-1-3",
+    "signal": "uses_method",
+    "reason": "The tip and WE5 make changing to prime bases the first step before factorising a multi-term exponential fraction.",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "b00841",
+      "printed_page": 48,
+      "quote": "change to prime bases if necessary and then factorise"
+     },
+     {
+      "kind": "worked_example",
+      "anchor": "WE5",
+      "printed_page": 48,
+      "quote": "Change the bases to prime numbers"
+     }
+    ]
+   },
+   {
+    "src": "lo:g10m1s7-1-1",
+    "dst": "lo:g10m2s2-1-3",
+    "signal": "uses_method",
+    "reason": "WE4 takes out the common factor 2^t from numerator and denominator as a step; Ex2-1:38 has the same shape.",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE4",
+      "printed_page": 48,
+      "quote": "Take out a common factor"
+     },
+     {
+      "kind": "exercise",
+      "anchor": "Ex2-1:38",
+      "printed_page": 49,
+      "quote": "7^{b}+7^{b-2}"
+     }
+    ]
+   },
+   {
+    "src": "lo:g10m1s7-1-3",
+    "dst": "lo:g10m2s2-1-3",
+    "signal": "uses_method",
+    "reason": "WE5 factorises 3^(2x)-1 as a difference of squares without teaching the factorisation again.",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE5",
+      "printed_page": 48,
+      "quote": "Factorise using the difference of squares"
+     }
+    ]
+   },
+   {
+    "src": "lo:g10m1s8-1-1",
+    "dst": "lo:g10m2s2-1-3",
+    "signal": "uses_method",
+    "reason": "WE4 and WE5 simplify the fraction by factorising and cancelling the common factor, the algebraic-fraction method applied to powers.",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE4",
+      "printed_page": 48,
+      "quote": "Cancel the common factor and simplify"
+     },
+     {
+      "kind": "worked_example",
+      "anchor": "WE5",
+      "printed_page": 48,
+      "quote": "Cancel the common factor and simplify"
+     }
+    ]
+   },
+   {
+    "src": "lo:g10m2s2-1-1",
+    "dst": "lo:g10m2s3-1-1",
+    "signal": "reference",
+    "reason": "The lesson opens by saying the exponent laws from 2.2 also apply to rational exponents, and WE6 uses the product law and the zero exponent.",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "b00884",
+      "printed_page": 50,
+      "quote": "We can also apply the exponent laws to expressions with rational exponents"
+     },
+     {
+      "kind": "worked_example",
+      "anchor": "WE6",
+      "printed_page": 50,
+      "quote": "8{x}^{0}"
+     }
+    ]
+   },
+   {
+    "src": "lo:g10m2s2-1-1",
+    "dst": "lo:g10m2s3-1-2",
+    "signal": "uses_method",
+    "reason": "WE7 applies the quotient-to-power and power-of-a-power laws to evaluate (1/5^3)^(1/3).",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE7",
+      "printed_page": 50,
+      "quote": "5^{\\left(3\\cdot\\frac{1}{3}\\right)}"
+     }
+    ]
+   },
+   {
+    "src": "lo:g10m1s3-1-4",
+    "dst": "lo:g10m2s3-1-2",
+    "signal": "uses_method",
+    "reason": "WE7 first writes the decimal base 0,008 as a fraction, and Ex2-2:3 has a decimal base too.",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE7",
+      "printed_page": 50,
+      "quote": "Write as a fraction and simplify"
+     },
+     {
+      "kind": "exercise",
+      "anchor": "Ex2-2:3",
+      "printed_page": 51,
+      "quote": "0,25"
+     }
+    ]
+   },
+   {
+    "src": "lo:g10m2s2-1-2",
+    "dst": "lo:g10m2s4-1-1",
+    "signal": "uses_method",
+    "reason": "The solving steps start by changing to prime bases, the method of 2.2, so both sides become a power of the same base.",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE8",
+      "printed_page": 52,
+      "quote": "Change the bases to prime numbers"
+     },
+     {
+      "kind": "exercise",
+      "anchor": "Ex2-3:1g",
+      "printed_page": 55,
+      "quote": "81^{k+2}=27^{k+4}"
+     }
+    ]
+   },
+   {
+    "src": "lo:g10m2s2-1-1",
+    "dst": "lo:g10m2s4-1-1",
+    "signal": "recall",
+    "reason": "WE9 recalls the exponent identity a^0 = 1 from the exponent laws to solve 3^t = 1; Ex2-3:1t needs it too.",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE9",
+      "printed_page": 52,
+      "quote": "We know from the exponent identities that"
+     },
+     {
+      "kind": "exercise",
+      "anchor": "Ex2-3:1t",
+      "printed_page": 55,
+      "quote": "2^{x^{2}-2x-3}=1"
+     }
+    ]
+   },
+   {
+    "src": "lo:g10m1s3-1-4",
+    "dst": "lo:g10m2s4-1-1",
+    "signal": "uses_method",
+    "reason": "Ex2-3:1r and 1s set an exponential equal to a terminating decimal, which must be written as a fraction and then a power of the base.",
+    "evidence": [
+     {
+      "kind": "exercise",
+      "anchor": "Ex2-3:1r",
+      "printed_page": 55,
+      "quote": "0,125"
+     },
+     {
+      "kind": "exercise",
+      "anchor": "Ex2-3:1s",
+      "printed_page": 55,
+      "quote": "0,001"
+     }
+    ]
+   },
+   {
+    "src": "lo:g10m2s4-1-1",
+    "dst": "lo:g10m2s4-1-2",
+    "signal": "uses_method",
+    "reason": "WE10 ends by changing to a prime base and equating exponents, the method taught in the previous lesson.",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE10",
+      "printed_page": 53,
+      "quote": "The bases are the same so we can equate exponents"
+     }
+    ]
+   },
+   {
+    "src": "lo:g10m1s7-1-1",
+    "dst": "lo:g10m2s4-1-2",
+    "signal": "uses_method",
+    "reason": "WE10 takes out the common factor 5^t as a step.",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE10",
+      "printed_page": 53,
+      "quote": "Take out a common factor"
+     }
+    ]
+   },
+   {
+    "src": "lo:g10m2s2-1-1",
+    "dst": "lo:g10m2s4-1-2",
+    "signal": "uses_method",
+    "reason": "WE10 rewrites 5^(t+1) as 5^t times 5 using the product law, and Ex2-3:1j needs the same step for 2^(t+2).",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE10",
+      "printed_page": 53,
+      "quote": "Rewrite the expression"
+     },
+     {
+      "kind": "exercise",
+      "anchor": "Ex2-3:1j",
+      "printed_page": 55,
+      "quote": "2^{t}+2^{t+2}=40"
+     }
+    ]
+   },
+   {
+    "src": "lo:g10m1s7-2-1",
+    "dst": "lo:g10m2s4-1-3",
+    "signal": "uses_method",
+    "reason": "WE11 and WE12 factorise a trinomial in 3^x or p^(1/2) into two brackets without teaching the trinomial method again.",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE11",
+      "printed_page": 53,
+      "quote": "Factorise the trinomial"
+     },
+     {
+      "kind": "worked_example",
+      "anchor": "WE12",
+      "printed_page": 54,
+      "quote": "Factorise as a trinomial"
+     }
+    ]
+   },
+   {
+    "src": "lo:g10m1s7-1-3",
+    "dst": "lo:g10m2s4-1-3",
+    "signal": "uses_method",
+    "reason": "WE13 reduces the equation to 2^(2x)-16 and factorises it as a difference of two squares.",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE13",
+      "printed_page": 54,
+      "quote": "we are left with a difference of two squares"
+     }
+    ]
+   },
+   {
+    "src": "lo:g10m2s3-1-1",
+    "dst": "lo:g10m2s4-1-3",
+    "signal": "uses_method",
+    "reason": "WE12 rewrites p as (p^(1/2))^2 using the power law with a rational exponent, and Ex2-3:1p has the same form.",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE12",
+      "printed_page": 54,
+      "quote": "so we can rewrite the equation as"
+     },
+     {
+      "kind": "exercise",
+      "anchor": "Ex2-3:1p",
+      "printed_page": 55,
+      "quote": "y-2y^{\\frac{1}{2}}+1=0"
+     }
+    ]
+   },
+   {
+    "src": "lo:g10m2s2-1-1",
+    "dst": "lo:g10m2s4-1-3",
+    "signal": "uses_method",
+    "reason": "WE13 rewrites 2^(4-x) as 2^4 times 2^-x and then multiplies 2^x by 2^x, using the product law and negative exponents.",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE13",
+      "printed_page": 54,
+      "quote": "we need to rewrite the equation"
+     }
+    ]
+   },
+   {
+    "src": "lo:g10m2s4-1-1",
+    "dst": "lo:g10m2s4-1-3",
+    "signal": "uses_method",
+    "reason": "After factorising, each factor is solved by writing both sides with the same base and equating exponents.",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE11",
+      "printed_page": 53,
+      "quote": "$3^x=81$ or $3^x=-1$"
+     },
+     {
+      "kind": "worked_example",
+      "anchor": "WE13",
+      "printed_page": 54,
+      "quote": "2^{x}=2^{2}"
+     }
+    ]
+   },
+   {
+    "src": "lo:g10m1s4-1-1",
+    "dst": "lo:g10m2s4-1-4",
+    "signal": "uses_method",
+    "reason": "The trial-and-error exercises ask for x correct to 2 decimal places, which means rounding each trial value to a stated number of decimal places.",
+    "evidence": [
+     {
+      "kind": "exercise",
+      "anchor": "Ex2-3:3",
+      "printed_page": 56,
+      "quote": "correct to 2 decimal places"
+     },
+     {
+      "kind": "exercise",
+      "anchor": "Ex2-3:4",
+      "printed_page": 56,
+      "quote": "correct to 2 decimal places"
+     }
+    ]
+   }
+  ],
+  "outside_book": [
+   {
+    "dst": "lo:g10m2s2-1-1",
+    "anchor": "b00832",
+    "printed_page": 45,
+    "quote": "Some of these laws might have been done in earlier grades"
+   }
+  ],
+  "checks": {
+   "checks": [
+    {
+     "i": 0,
+     "verdict": "CONFIRMED",
+     "note": "WE2 reduces to prime bases 'then we can apply the exponent laws' and then uses product, power and quotient laws; WE3 subtracts exponents (quotient law)."
+    },
+    {
+     "i": 1,
+     "verdict": "CONFIRMED",
+     "note": "WE4 explicitly reverses the multiplication law (2^(t-2) = 2^t * 2^-2) and then evaluates the negative exponent 2^-2 = 1/4."
+    },
+    {
+     "i": 2,
+     "verdict": "CONFIRMED",
+     "note": "The text says to change to prime bases and then factorise; WE5 starts with 'Change the bases to prime numbers' as a step."
+    },
+    {
+     "i": 3,
+     "verdict": "CONFIRMED",
+     "note": "WE4 uses 'Take out a common factor' as a step, and the exercise 7^b + 7^(b-2) needs it."
+    },
+    {
+     "i": 4,
+     "verdict": "CONFIRMED",
+     "note": "WE5 factorises 3^(2x) - 1 using the difference of squares as a step."
+    },
+    {
+     "i": 5,
+     "verdict": "CONFIRMED",
+     "note": "WE4 and WE5 factorise the numerator and denominator and then 'Cancel the common factor and simplify', which is the algebraic-fraction method."
+    },
+    {
+     "i": 6,
+     "verdict": "CONFIRMED",
+     "note": "The text says 'We can also apply the exponent laws to expressions with rational exponents'; WE6 uses the product law and x^0 = 1."
+    },
+    {
+     "i": 7,
+     "verdict": "CONFIRMED",
+     "note": "WE7 uses the power law (1/5^3)^(1/3) = 1/5^(3*1/3), which is one of the laws in the source objective."
+    },
+    {
+     "i": 8,
+     "verdict": "CONFIRMED",
+     "note": "WE7 has the step 'Write as a fraction and simplify' (0,008 = 8/1000), and Ex2-2:3 gives the decimal 0,25."
+    },
+    {
+     "i": 9,
+     "verdict": "CONFIRMED",
+     "note": "WE8 uses 'Change the bases to prime numbers' (9 = 3^2) before equating exponents; Ex 81^(k+2) = 27^(k+4) needs prime bases."
+    },
+    {
+     "i": 10,
+     "verdict": "CONFIRMED",
+     "note": "WE9 recalls 'We know from the exponent identities that a^0 = 1' and uses it to solve 3^t = 1; Ex2-3:1t is of that form."
+    },
+    {
+     "i": 11,
+     "verdict": "CONFIRMED",
+     "note": "Both exercises give decimal right-hand sides (0,125 and 0,001) that must be converted to fractions before they can be written as powers of 2 and 10. The text only states the problems, so this is the weakest link in the batch."
+    },
+    {
+     "i": 12,
+     "verdict": "CONFIRMED",
+     "note": "WE10 finishes with prime bases and 'The bases are the same so we can equate exponents', which is the method of the source objective."
+    },
+    {
+     "i": 13,
+     "verdict": "CONFIRMED",
+     "note": "WE10 has the step 'Take out a common factor'."
+    },
+    {
+     "i": 14,
+     "verdict": "CONFIRMED",
+     "note": "WE10's 'Rewrite the expression' step writes 5^(t+1) as 5^t * 5, which is the multiplication law; Ex 2^t + 2^(t+2) = 40 needs the same step."
+    },
+    {
+     "i": 15,
+     "verdict": "CONFIRMED",
+     "note": "WE11 and WE12 each have the step 'Factorise the trinomial' or 'Factorise as a trinomial'."
+    },
+    {
+     "i": 16,
+     "verdict": "CONFIRMED",
+     "note": "WE13 says 'we are left with a difference of two squares' and factorises it as (2^x - 4)(2^x + 4)."
+    },
+    {
+     "i": 17,
+     "verdict": "CONFIRMED",
+     "note": "WE12 notes (p^(1/2))^2 = p to rewrite the equation, which applies the power law with a rational exponent; Ex y - 2y^(1/2) + 1 = 0 needs the same step."
+    },
+    {
+     "i": 18,
+     "verdict": "CONFIRMED",
+     "note": "WE13 rewrites 2^(4-x) as 2^4 * 2^-x = 2^4/2^x and then gets 2^(2x), using the product, negative-exponent and power laws."
+    },
+    {
+     "i": 19,
+     "verdict": "CONFIRMED",
+     "note": "WE11 and WE13 both finish by writing 3^x = 3^4 and 2^x = 2^2 and equating exponents, which is the method of the source objective."
+    },
+    {
+     "i": 20,
+     "verdict": "CONFIRMED",
+     "note": "Both exercises require the answer 'correct to 2 decimal places', so the student must round to a given number of decimal places."
+    }
+   ]
+  }
+ },
+ "calls": {
+  "by_phase": {
+   "S1 Find": 6,
+   "S1 Reconcile": 3,
+   "S1 Evidence": 3,
+   "S1 Map": 4,
+   "S1 Links": 1,
+   "S1 Link check": 1
+  },
+  "per_lesson": {
+   "g10m2s2-1": 4,
+   "g10m2s3-1": 4,
+   "g10m2s4-1": 4
+  },
+  "total": 18
+ },
+ "meter": {
+  "stage": "S1",
+  "record": "uv run meter_run.py record --book g10-math --stage S1 --run <runId>",
+  "summary": "uv run meter_run.py summary --book g10-math --by lesson",
+  "note": "Each agent label carries its lesson slug (S1:findA:<slug>), so the ledger splits the cost per lesson; the S1 Map agents are chapter-level (\"(book)\")."
+ }
+}

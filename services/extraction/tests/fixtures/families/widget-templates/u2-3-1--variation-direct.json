@@ -1,0 +1,44 @@
+{
+  "format": "ainext.widget-template/1",
+  "id": "wt:u2-3-1:variation-direct",
+  "lo_id": "lo:u2-3-1",
+  "parent_question_id": "q:u2-3-1:001",
+  "tier": "basic",
+  "kind": "ratio_balance",
+  "instances": [
+    {
+      "a": 3,
+      "b": 4,
+      "c": 9
+    },
+    {
+      "a": 2,
+      "b": 5,
+      "c": 6
+    },
+    {
+      "a": 4,
+      "b": 3,
+      "c": 8
+    }
+  ],
+  "spec": {
+    "mode": "direct",
+    "a": "{=a}",
+    "b": "{=b}",
+    "c": "{=c}"
+  },
+  "stem": "${=a} : {=b} = {=c} : ?$ — balance the beam.",
+  "solution": [
+    "Both quantities rise together, so this is DIRECT variation and the two ratios must be equal.",
+    "${=a} \\div {=b}$ and ${=c} \\div ?$ have to give the same number.",
+    "That makes the fourth term ${=b * c // a}$.",
+    "The beam is level when the quotients match — watch it as you drag."
+  ],
+  "diagnostics": [
+    {
+      "predicate": "direct-solved-as-inverse",
+      "misconception_id": "mc:u2-3-1:direct-solved-as-inverse"
+    }
+  ]
+}

@@ -13,6 +13,12 @@
  *  · nothing selected → everything the level allows, but through `declutter`,
  *    which keeps the most important labels and drops any that would overlap.
  *
+ * A split book section's label ("1.7 Factorisation", FR-4315) is one more kind
+ * of name, following the same rule: from the lessons level on (a section is
+ * several lessons; at the chapters level there is no room to write it), and,
+ * with something selected, only the selection's own chapter's. The section
+ * the selected lesson belongs to is kept ahead of its neighbours.
+ *
  * Pure: the canvas measures the labels and supplies the rectangles.
  */
 import {
@@ -22,7 +28,7 @@ import {
   type SkillMapModel,
 } from "./skill-map";
 
-export type LabelKind = "chapter" | "lesson" | "objective";
+export type LabelKind = "chapter" | "lesson" | "objective" | "section";
 
 export interface LabelPick {
   kind: LabelKind;
@@ -61,6 +67,22 @@ export function labelCandidates(
         });
     } else {
       for (const slug of model.lessonBySlug.keys()) out.push({ kind: "lesson", id: slug, priority: 4 });
+    }
+  }
+
+  // Book sections' names (FR-4315): beside the lesson names, never at the
+  // chapters level. Absent entirely for a map with no split section.
+  if (level >= 1 && model.sections.length > 0) {
+    const ownSection = (slug: string | undefined) =>
+      slug === undefined ? undefined : model.sectionOfLesson.get(slug)?.sectionId;
+    const selectedSection = ownSection(path.lesson?.slug);
+    for (const sec of model.sections) {
+      if (path.chapter && sec.chapterId !== path.chapter.id) continue;
+      out.push({
+        kind: "section",
+        id: sec.id,
+        priority: sec.id === selectedSection ? 1 : path.chapter ? 2 : 4,
+      });
     }
   }
 

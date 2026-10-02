@@ -123,6 +123,92 @@ const CASES: Case[] = [
     props: { prompt: "Tap every outcome where the two dice total 7", rows: 6, cols: 6, rule: { kind: "sum", op: "eq", value: 7 } },
     teaches: "n(E)/n(S) assembling under your finger; the app derives the event, not the model",
   },
+  // Feature 003 — the Grade 10 American course. These three are documented
+  // to G10 chapters only (widget-docs.ts), never to a National unit above.
+  {
+    unit: "g10-c07", module: "Grade 10 · Chapter 7 — Euclidean geometry",
+    name: "polygon_builder",
+    props: { prompt: "Construct a rhombus", mode: "construct", shape: "rhombus" },
+    teaches: "graded on side lengths and parallel sides, not a stored pair of coordinates",
+  },
+  {
+    unit: "g10-c07", module: "Grade 10 · Chapter 7 — Euclidean geometry",
+    name: "polygon_builder",
+    props: { prompt: "Draw the segment joining the two midpoints", mode: "midsegment", triangle: [[0, 0], [6, 0], [0, 6]], apex: 0 },
+    teaches: "the midpoint theorem as a property (parallel, half the length), not a fixed position",
+  },
+  {
+    unit: "g10-c13", module: "Grade 10 · Chapter 13 — Measurement",
+    name: "polygon_builder",
+    props: { prompt: "Build a quadrilateral with area 12", mode: "area", shape: "quadrilateral", target: 12 },
+    teaches: "any polygon with the right area is accepted; exactly double is the missing ÷2",
+  },
+  {
+    unit: "g10-c13", module: "Grade 10 · Chapter 13 — Measurement",
+    name: "solid_scaler",
+    props: { prompt: "Scale this cylinder so its volume is 8 times as large", solid: "cylinder", ask: "volume", ratio: 8 },
+    teaches: "k scales a length; volume scales by k³ — setting k=8 is the linear misconception",
+  },
+  {
+    unit: "g10-c13", module: "Grade 10 · Chapter 13 — Measurement",
+    name: "solid_scaler",
+    props: { prompt: "Scale this box so its surface area is 4 times as large", solid: "box", ask: "area", ratio: 4 },
+    teaches: "the right k with a base left uncounted is diagnosed on its own",
+  },
+  {
+    unit: "g10-c10", module: "Grade 10 · Chapter 10 — Statistics",
+    name: "box_plot_builder",
+    props: { prompt: "Build the box plot for this data set", data: [2, 4, 4, 5, 6, 7, 9, 12, 15] },
+    teaches: "this book's own quartile method (linear interpolation between ranks), not split-at-the-median",
+  },
+  // Also feature 003: curve_sketcher's five new families, and the two brand
+  // new kinds, venn_builder and area_model.
+  {
+    unit: "g10-c02", module: "Grade 10 · Chapter 2 — Functions (hyperbola)",
+    name: "curve_sketcher",
+    props: { prompt: "Sketch y = 2/x - 1", fn: "hyperbola", coefs: [2, -1] },
+    teaches: "two branches, one lift-and-continue gesture between them; drawing through x=0 is asymptote-crossed",
+  },
+  {
+    unit: "g10-c02", module: "Grade 10 · Chapter 2 — Functions (exponential)",
+    name: "curve_sketcher",
+    props: { prompt: "Sketch y = 2·3^x - 1", fn: "exponential", coefs: [2, 3, -1] },
+    teaches: "the horizontal asymptote is a boundary the curve nears and never crosses",
+  },
+  {
+    unit: "g10-c06", module: "Grade 10 · Chapter 6 — Trigonometric functions",
+    name: "curve_sketcher",
+    props: { prompt: "Sketch y = 2sin(θ) + 1", fn: "sine", coefs: [2, 1] },
+    teaches: "amplitude, vertical shift and the book's own fixed period, each named on its own when wrong",
+  },
+  {
+    unit: "g10-c06", module: "Grade 10 · Chapter 6 — Trigonometric functions",
+    name: "curve_sketcher",
+    props: { prompt: "Sketch y = tan(θ)", fn: "tangent", coefs: [1, 0] },
+    teaches: "three branches across one period — the most lift-and-continue gestures any widget needs",
+  },
+  {
+    unit: "g10-c01", module: "Grade 10 · Chapter 1 — Sets",
+    name: "venn_builder",
+    props: { prompt: "Shade A only", sets: 2, labels: ["Football", "Chess"], mode: "shade", target: "aOnly" },
+    teaches: "a real 2-circle diagram, tapped or built with buttons — same state either way",
+  },
+  {
+    unit: "g10-c01", module: "Grade 10 · Chapter 1 — Sets",
+    name: "venn_builder",
+    props: {
+      prompt: "12 study French, 9 study German, 4 study both, out of 20. Fill in every region.",
+      sets: 2, labels: ["French", "German"], mode: "counts",
+      total: 20, regions: { a: 8, b: 5, ab: 4, n: 3 }, clues: { a: 12, b: 9 },
+    },
+    teaches: "the raw clue vs. the exclusive count — the overlap-counted-twice mistake, named",
+  },
+  {
+    unit: "g10-c04", module: "Grade 10 · Chapter 4 — Algebraic expressions",
+    name: "area_model",
+    props: { prompt: "Expand (x + 2)(x - 3) with the tiles", mode: "expand", a: 2, b: -3 },
+    teaches: "FOIL as a rectangle you build, negative tiles hatched AND marked, never colour alone",
+  },
 ];
 
 /** Payloads that MUST refuse to render — the guard, made visible. */

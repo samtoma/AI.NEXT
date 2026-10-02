@@ -1,0 +1,64 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m4s3-1-3:fraction-trinomial",
+ "kind": "family",
+ "lo_id": "lo:g10m4s3-1-3",
+ "parent_question_id": "q:g10m4s3-1-3:ex4-2-3c",
+ "source_page": 81,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    1,
+    6
+   ]
+  },
+  {
+   "name": "m",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "q",
+   "let": "p + m"
+  },
+  {
+   "name": "n",
+   "let": "p * q"
+  },
+  {
+   "require": "n <= 60",
+   "why": "keeps the constant on the right-hand side as small as the book's own (18), so every instance factorises by inspection"
+  }
+ ],
+ "constraints": [
+  "q - p == m",
+  "n == p * q"
+ ],
+ "stem": "Solve for $x$ (note the restriction that applies): $x+{=m}=\\frac{{=n}}{x}$",
+ "solution": [
+  "The variable appears in a denominator, so $x\\neq0$.",
+  "Multiply every term by $x$ to clear the fraction: $x^2+{=m}x={=n}$.",
+  "Move everything to the left so that the right-hand side is zero: $x^2+{=m}x-{=n}=0$.",
+  "Factorise the trinomial. Two numbers with product $-{=n}$ and sum ${=m}$ are $-{=p}$ and ${=q}$, so $(x-{=p})(x+{=q})=0$.",
+  "A product is zero only when one of its factors is zero, so $x={=p}$ or $x=-{=q}$.",
+  "Neither value is $0$, so both respect the restriction. Check $x={=p}$: $x+{=m}={=q}$ and $\\frac{{=n}}{{=p}}={=q}$. Check $x=-{=q}$: $-{=q}+{=m}=-{=p}$ and $\\frac{{=n}}{-{=q}}=-{=p}$.",
+  "Therefore $x={=p}$ or $x=-{=q}$."
+ ],
+ "marker": {
+  "kind": "values",
+  "answer": "[{=p}, -{=q}]",
+  "form": null,
+  "variables": [
+   "x"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Entry point of the skill: one fraction whose only denominator is the bare variable, a monic trinomial after multiplying through by x, and integer roots. Modelled on book exercise 4.2 Q3(c) (x + 2 = 18/x - 1, p. 81) with the constant folded into one term so the first step is only 'multiply by x'. Construction: roots are p > 0 and -q where q = p + m, so the equation x + m = pq/x always has one positive and one negative root, both non-zero. m starts at 2 so the expanded line never prints '1x'. 28 distinct (p, m) pairs survive the n <= 60 cap, enough for ten distinct stems. By design the restriction x != 0 never removes a root at this tier (both roots are non-zero), so the catalogued misconception mc:g10m4s3-1-3:keeps-a-root-the-restriction-forbids cannot be exercised here; that trap belongs to a family with a rational expression like book Q 4-7-12k, which is not a gap I was asked to fill. The answer is a values-marker with two values; the stem does not say how many solutions there are. All 28 instances were checked offline: both roots satisfy the original equation and x^2+mx-n equals (x-p)(x+q)."
+}

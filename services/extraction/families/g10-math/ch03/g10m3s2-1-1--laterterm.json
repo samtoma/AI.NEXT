@@ -1,0 +1,94 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m3s2-1-1:laterterm",
+ "kind": "family",
+ "lo_id": "lo:g10m3s2-1-1",
+ "parent_question_id": "q:g10m3s2-1-1:ex3-2-8c",
+ "source_page": 68,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "a10",
+   "randint": [
+    10,
+    60
+   ]
+  },
+  {
+   "name": "d10",
+   "choice": [
+    -3,
+    -4,
+    -5,
+    -6,
+    -7,
+    -8,
+    -9
+   ]
+  },
+  {
+   "name": "n",
+   "choice": [
+    8,
+    9,
+    10,
+    11,
+    12
+   ]
+  },
+  {
+   "name": "v10",
+   "let": "a10 + (n - 1) * d10"
+  },
+  {
+   "require": "v10 < 0",
+   "why": "the asked term is a negative decimal, so the sequence has to cross zero"
+  },
+  {
+   "require": "v10 % 10 != 0",
+   "why": "the answer must have a non-zero tenths digit, so it is a genuine decimal"
+  },
+  {
+   "name": "t1",
+   "let": "a10 / 10"
+  },
+  {
+   "name": "t2",
+   "let": "(a10 + d10) / 10"
+  },
+  {
+   "name": "t3",
+   "let": "(a10 + 2 * d10) / 10"
+  },
+  {
+   "name": "t4",
+   "let": "(a10 + 3 * d10) / 10"
+  },
+  {
+   "name": "d",
+   "let": "d10 / 10"
+  },
+  {
+   "name": "dn",
+   "let": "d10 * (n - 1) / 10"
+  },
+  {
+   "name": "T",
+   "let": "v10 / 10"
+  }
+ ],
+ "constraints": [],
+ "stem": "The following sequence is linear: ${=fixed(t1, 1)}\\;;\\;{=fixed(t2, 1)}\\;;\\;{=fixed(t3, 1)}\\;;\\;{=fixed(t4, 1)}\\;;\\;\\ldots$ Find the ${=n}^{\\text{th}}$ term, $T_{{=n}}$. Give your answer as a decimal.",
+ "answer": "fixed(T, 1)",
+ "solution": [
+  "First find the common difference by subtracting a term from the term that follows it: $d=T_{2}-T_{1}=({=fixed(t2, 1)})-({=fixed(t1, 1)})={=fixed(d, 1)}$.",
+  "Check with the next pairs: $d=T_{3}-T_{2}=({=fixed(t3, 1)})-({=fixed(t2, 1)})={=fixed(d, 1)}$ and $d=T_{4}-T_{3}=({=fixed(t4, 1)})-({=fixed(t3, 1)})={=fixed(d, 1)}$. All of the results are the same, so the common difference is $d={=fixed(d, 1)}$.",
+  "For each successive term we add $d$ to the last term, so $T_{n}=a+d(n-1)$ with $a={=fixed(t1, 1)}$ and $d={=fixed(d, 1)}$.",
+  "$T_{{=n}}={=fixed(t1, 1)}+({=fixed(d, 1)})({=n - 1})={=fixed(t1, 1)}+({=fixed(dn, 1)})={=fixed(T, 1)}$",
+  "$T_{{=n}}={=fixed(T, 1)}$"
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced because it chains several steps with signs: a negative decimal common difference (the book's Q4d and Q8c), a term far beyond the four shown, and an answer that is a negative decimal (require v10 < 0), so the sequence crosses zero. Method is the book's own: d = T2 - T1, then T_n = a + d(n - 1) as in the solution of Q8c. Terms are built in tenths and printed with fixed(x, 1), so every term shows one decimal place (a term such as 2.0 prints as 2.0 rather than 2); the answer always has a non-zero tenths digit, so it never prints as a whole number. n is 8 to 12, so the ordinal is always 'th'. Largest magnitude of the answer is 8.9. A sign slip (earlier minus later) gives the wrong sign of d and a clearly wrong answer, which is mc:g10m3s2-1-1:subtracts-earlier-minus-later."
+}

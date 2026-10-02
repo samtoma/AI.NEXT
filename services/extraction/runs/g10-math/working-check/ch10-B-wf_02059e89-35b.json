@@ -1,0 +1,764 @@
+{
+ "stage": "SW",
+ "workflow": "working-check",
+ "prompts_version": "sw-v3",
+ "book": "g10-math",
+ "chapter": 10,
+ "part": 1,
+ "parts": 1,
+ "batch": 5,
+ "agents": 21,
+ "effort": "high",
+ "model": "sonnet",
+ "pass_id": "B",
+ "order": "shuffled",
+ "by_ref": {
+  "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/wcheck-ch10-B",
+  "stage": "SW",
+  "shards_sha256": "a8cade9a46ee031fe2b237eab464beab7baba6bf723ae4743ef52c77f142371e",
+  "files": 104
+ },
+ "embedded": {
+  "source": "runbook/working-check.workflow.js",
+  "source_sha256": "352a846920d85b4c224df7fb36d3f9a8ea598155cc2b4ee4ba9ef7e4791b6385",
+  "args_sha256": "b4845557b9f5cc78370e338934bb098b37a2d8cc912f3f8d2778a6096a81604c",
+  "generated_sha256": "91b03180cded88bcdc9d23d882431276f32fcc9714a4670ed8e55c5a06239a61",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "solution_id": "q:g10m10s2-1-1:ex10-7-23a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s1-1-1:ex10-1-2",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m10s2-1-4:ex10-2-10",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 5,
+     "quote": "$\\text{3}$ and $\\text{15}$",
+     "kind": "other",
+     "where": "working",
+     "expected": "",
+     "why": "Using 3 and 15 gives {2,2,3,3,15}, where 2 and 3 both occur twice, so the mode is not 2 alone."
+    },
+    {
+     "step": 1,
+     "quote": "Let the five different ages be",
+     "kind": "other",
+     "where": "working",
+     "expected": "",
+     "why": "The ages cannot all be different, since the working later sets x1 = x2 = 2 to make the mode 2."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s3-1-3:ex10-4-3e",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s4-1-1:ex10-7-18",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s2-1-1:ex10-7-24a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s3-1-2:ex10-7-15",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s4-1-1:ex10-5-1",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s2-1-4:ex10-7-7",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s3-1-2:ex10-3-5",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s3-1-2:ex10-3-8",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s4-1-2:ex10-5-6c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m10s2-1-3:ex10-7-23d",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s4-1-2:ex10-5-4",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s4-1-4:ex10-5-6e",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s3-1-3:ex10-4-3c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s2-1-1:ex10-2-2",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s1-1-1:we01",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m10s2-1-3:we08",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s4-1-4:ex10-7-22b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m10s3-1-2:ex10-7-21b",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "\\frac{18}{50}\\times100=38\\%",
+     "kind": "arithmetic",
+     "where": "working",
+     "expected": "36%",
+     "why": "18/50 × 100 equals 36%, not 38%."
+    },
+    {
+     "step": 1,
+     "quote": "\\frac{6}{50}\\times100=12\\%",
+     "kind": "wrong_value",
+     "where": "working",
+     "expected": "7 drivers, 14%",
+     "why": "The last three groups (3, 2, 2) total 7 drivers, not 6, so the percentage is 14%."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m10s3-1-1:we09",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s5-1-3:ex10-6-4b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s2-1-1:we06",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s2-1-1:ex10-2-4c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m10s3-1-3:ex10-4-2",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 3,
+     "quote": "Mean: $\\text{70.66}$",
+     "kind": "copy",
+     "where": "working",
+     "expected": "71.66, as computed in step 2",
+     "why": "Step 2 gives the mean as 71.66, but the final statement of the mean says 70.66."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s3-1-2:ex10-7-17",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m10s2-1-2:ex10-7-20a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s1-1-2:ex10-7-2",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s3-1-2:ex10-3-1",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s2-1-1:ex10-7-23b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s5-1-3:ex10-7-29b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s4-1-1:ex10-5-3",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s2-1-4:ex10-2-9a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s3-1-1:ex10-7-12",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s2-1-1:we04",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m10s2-1-2:we07",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 3,
+     "quote": "$\\text{796.7}$",
+     "kind": "wrong_value",
+     "where": "working",
+     "expected": "796.8, 802.4, 802.4, 808.8 from Monday's column",
+     "why": "Monday's sorted list uses 796.7, 802.3, 802.3 and 808.7, but the Monday data are 796.8, 802.4, 802.4 and 808.8; the middle 802.3 is not in the data."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s2-1-4:ex10-2-8",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s3-1-3:ex10-4-3d",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s3-1-1:ex10-7-13",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s2-1-1:ex10-2-3",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m10s3-1-1:ex10-3-9a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s2-1-1:ex10-7-10",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "p+1+p+2+p+9}{3}",
+     "kind": "other",
+     "where": "question",
+     "expected": "five data values",
+     "why": "The question says five data values but lists only three, and the working sums and divides by 3.}"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s2-1-1:ex10-2-4a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s3-1-2:ex10-7-14",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m10s4-1-1:ex10-7-29a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s5-1-1:ex10-6-3",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s2-1-1:ex10-7-23c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s4-1-2:ex10-5-6d",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "for each data set the lower quartile lies between the fifth and sixth values",
+     "kind": "label",
+     "where": "working",
+     "expected": "upper quartile",
+     "why": "The rank computed is for the 75th percentile, which is the upper quartile, not the lower quartile."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m10s2-1-4:ex10-7-28b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s4-1-4:ex10-5-6f",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s4-1-1:ex10-5-2",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m10s4-1-3:we13",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m10s4-1-4:ex10-5-5",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s2-1-1:ex10-7-6",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "\\{4, 4, 5, 5, 6, 6, 6, 7, 7\\}",
+     "kind": "copy",
+     "where": "working",
+     "expected": "ten values, four 6s",
+     "why": "The question's data has ten values including four 6s; the sorted list has only nine values and three 6s."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s3-1-3:ex10-4-3b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m10s5-1-2:ex10-7-22d",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s2-1-1:ex10-7-5",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m10s5-1-2:ex10-6-1",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s3-1-2:ex10-7-16",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s2-1-1:we05",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s3-1-2:ex10-3-7",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m10s2-1-1:ex10-7-20b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s4-1-2:we11",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s2-1-4:ex10-7-27b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s5-1-3:ex10-6-4a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s2-1-1:ex10-2-4b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m10s5-1-2:ex10-6-2",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s4-1-4:ex10-7-29c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m10s3-1-3:ex10-4-1",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 3,
+     "quote": "Mean: $\\text{52}$",
+     "kind": "wrong_value",
+     "where": "working",
+     "expected": "mean 53, as computed in step 2",
+     "why": "Step 2 computes the mean as 2650/50 = 53, but the closing summary states 52."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s2-1-1:ex10-7-4",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m10s2-1-2:ex10-7-20c",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "bike 1 appears to do better than bike 2 from the mean",
+     "kind": "other",
+     "where": "working",
+     "expected": "bike 2 has the lower mean",
+     "why": "Bike 1's mean is 1.017 s and bike 2's is 0.98 s, so by the means bike 2 is faster, not bike 1."
+    },
+    {
+     "step": 1,
+     "quote": "we would get $\\text{0.9}$ $\\text{s}$",
+     "kind": "arithmetic",
+     "where": "working",
+     "expected": "1.0 s",
+     "why": "Bike 1's mean is 1.017 s, which is 1.0 s to one decimal place, not 0.9 s."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s3-1-2:ex10-3-2",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s4-1-1:we10",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s1-1-2:we02",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s3-1-2:ex10-7-11",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s3-1-1:ex10-3-3",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s2-1-4:ex10-2-7",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m10s5-1-2:ex10-7-24b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s1-1-2:ex10-1-1",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s1-1-1:ex10-7-1",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s1-1-1:ex10-1-3",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s2-1-4:ex10-2-9b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s3-1-1:ex10-3-4",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s2-1-4:ex10-7-25c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s2-1-1:ex10-2-5",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s2-1-1:ex10-7-3",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s2-1-4:ex10-7-8",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s4-1-1:ex10-7-19",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s3-1-2:ex10-3-6",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s2-1-4:ex10-7-9",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m10s5-1-3:ex10-7-29d",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m10s4-1-4:ex10-7-22c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s4-1-1:ex10-5-6a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s2-1-4:ex10-2-6",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m10s3-1-1:ex10-7-21c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m10s5-1-1:we14",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s2-1-1:we03",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s2-1-1:ex10-2-1",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s4-1-2:ex10-7-22a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s3-1-3:ex10-4-3a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s2-1-1:ex10-7-27a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s2-1-4:ex10-2-11",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m10s2-1-4:ex10-7-25d",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  }
+ ],
+ "problems": [],
+ "meter": {
+  "stage": "SW",
+  "record": "uv run meter_run.py record --book g10-math --stage SW --run <runId>"
+ }
+}

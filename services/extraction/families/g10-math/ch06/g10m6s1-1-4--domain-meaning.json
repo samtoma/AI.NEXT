@@ -1,0 +1,92 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s1-1-4:domain-meaning",
+ "kind": "family",
+ "lo_id": "lo:g10m6s1-1-4",
+ "parent_question_id": "q:g10m6s1-1-4:ex6-1-8c",
+ "source_page": 149,
+ "tier": "standard",
+ "answer_type": "mcq",
+ "context": "A ball is released at the top of a slope and rolls to the bottom. The graph of s(t) shows the distance, in metres, that the ball still has to roll, t seconds after it is released. The graph is a straight line segment from (0, L) to (T, 0).",
+ "params": [
+  {
+   "name": "L",
+   "choice": [
+    6,
+    8,
+    10,
+    12,
+    15,
+    20
+   ]
+  },
+  {
+   "name": "T",
+   "choice": [
+    10,
+    12,
+    15,
+    20,
+    25,
+    30
+   ]
+  },
+  {
+   "require": "L != T and L != T + 2 and T != L + 2",
+   "why": "keeps the slope length, the time and the two axis lengths all different, so no option is confusable with another by number alone"
+  },
+  {
+   "name": "A",
+   "let": "T + 2"
+  },
+  {
+   "name": "B",
+   "let": "L + 2"
+  }
+ ],
+ "constraints": [
+  "T != L"
+ ],
+ "stem": "A ball is released at the top of a ${=L}$ m slope and rolls to the bottom. The graph of $s(t)$ shows the distance, in metres, that the ball still has to roll, $t$ seconds after it is released. The graph is a straight line segment that starts at the point $(0, {=L})$ and ends at the point $({=T}, 0)$. The $t$-axis is drawn up to ${=A}$ and the $s$-axis is drawn up to ${=B}$. Which one of the following gives the domain of the function and what it represents?",
+ "choices": {
+  "correct": "$0 \\le t \\le {=T}$ s: the total time the ball takes to reach the bottom of the slope",
+  "distractors": [
+   {
+    "text": "$0 \\le s \\le {=L}$ m: the total distance the ball rolls down the slope",
+    "misconception_id": "mc:g10m6s1-1-4:domain-range-swap"
+   },
+   {
+    "text": "$0 \\le t \\le {=A}$ s: the total time the ball takes to reach the bottom of the slope",
+    "misconception_id": "mc:g10m6s1-1-4:axis-extent"
+   },
+   {
+    "text": "$0 \\le t \\le {=T}$ s: the distance the ball still has to roll",
+    "misconception_id": "mc:g10m6s1-1-4:meaning-mixup"
+   }
+  ]
+ },
+ "solution": [
+  "The domain is the set of input values of the function. Here the input is the time $t$, so we read the domain from the horizontal axis.",
+  "The graph starts at $t = 0$, the moment the ball is released, and ends at $t = {=T}$, where $s = 0$ and the ball is at the bottom of the slope. The $t$-axis is drawn up to ${=A}$, but the graph does not go that far.",
+  "So the domain is $0 \\le t \\le {=T}$ s. It represents the total time the ball takes to reach the bottom of the slope.",
+  "The values $0 \\le s \\le {=L}$ m make up the range of the function, not the domain: they are the distances the ball still has to roll."
+ ],
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m6s1-1-4:domain-range-swap",
+   "label": "Reads the domain from the vertical axis",
+   "description": "The learner gives the interval of the function values (the vertical axis) when asked for the domain, and so describes it as a distance instead of a time; domain and range are swapped."
+  },
+  {
+   "id": "mc:g10m6s1-1-4:axis-extent",
+   "label": "Takes the drawn length of the axis as the domain or range",
+   "description": "The learner reads the domain from how far the axis is drawn instead of from where the graph starts and stops, so gives an interval that is longer than the graph."
+  },
+  {
+   "id": "mc:g10m6s1-1-4:meaning-mixup",
+   "label": "Right interval, meaning taken from the other variable",
+   "description": "The learner finds the correct interval of input values but says it represents the quantity on the other axis (the distance still to roll) instead of the time taken."
+  }
+ ],
+ "notes": "The book question ex6-1-8c shows the ball-on-a-slope graph as a figure; the family engine has no figure support, so the graph is described in words (end points, axis lengths). The ball graph (figure checked): straight line from (0, 10) down to (20, 0), t-axis drawn to 22 and s-axis to 12, which is why the axis-extent distractor is built as T+2 and the stem states the axis lengths. s(t) is the distance still to roll, as in the book's 'how much further does the ball have to roll'. One option per diagnosable error: swapped variables, axis length instead of graph length, right interval with the wrong meaning. 29 distinct (L, T) instances."
+}

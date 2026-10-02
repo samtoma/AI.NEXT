@@ -1,0 +1,248 @@
+{
+  "format": "ainext.bank-corrections/1",
+  "bank": "seed/generated/widget-questions.json",
+  "$comment": [
+    "A record of hand-prepared corrections to the LIVE Prep-3 widget bank (the file above is an EXPORT of the",
+    "live database and must round-trip byte for byte, so the record sits beside it, not inside it).",
+    "The same change is made in generate_widget_questions.py's legacy templates (TEMPLATES), which build",
+    "the committed bank exactly (tests/test_widget_templates.py)."
+  ],
+  "corrections": [
+    {
+      "at": "2026-09-27",
+      "by": "data-engineer agent (pipeline), under Samuel's approval to fix the consistency review's no-decision findings",
+      "why": "Consistency review 2026-09-27, W1: 14 predicate -> misconception mappings on live widgets could never fire — the widget's mode / ask / element can never emit that predicate (contracts/widget-predicates.json can_emit, derived from the app's grading code) — so the student got a plain 'not quite' where a refutation was promised. Rule applied: re-map to an emitting predicate only where it is the SAME error, else drop. geo2-2-2 (9) and geo1-1-1:w002: each dead mapping dropped; the widget keeps its emitting mapping (for geo2-2-2 the same misconception already sits on the predicate the ask does emit). u4-1-2 w001/w002/w004/w006: no emitting predicate is the same error, so the dead mapping is dropped and one candidate mapping is HELD (pending_review, decision 47 — never read by the app) for a human to keep or drop.",
+      "ships": "LIVE CONTENT. Nothing here reaches production by itself: the deploy loads this bank only when it is missing (add-only), so the change needs a data migration like 032, in a release, on Samuel's go.",
+      "rows": [
+        {
+          "question_id": "q:geo1-1-1:w002",
+          "dropped": [
+            {
+              "predicate": "radius-drawn-as-chord",
+              "misconception_id": "mc:geo1-1-1:radius-not-from-centre"
+            }
+          ],
+          "held_for_review": [],
+          "kept": [
+            {
+              "predicate": "ends-not-on-circle",
+              "misconception_id": "mc:geo1-1-1:chord-endpoints-off-circle"
+            }
+          ]
+        },
+        {
+          "question_id": "q:geo2-2-2:w001",
+          "dropped": [
+            {
+              "predicate": "angle-given-as-arc",
+              "misconception_id": "mc:geo2-2-2:inscribed-angle-doubled"
+            }
+          ],
+          "held_for_review": [],
+          "kept": [
+            {
+              "predicate": "arc-given-as-angle",
+              "misconception_id": "mc:geo2-2-2:inscribed-angle-doubled"
+            }
+          ]
+        },
+        {
+          "question_id": "q:geo2-2-2:w002",
+          "dropped": [
+            {
+              "predicate": "angle-given-as-arc",
+              "misconception_id": "mc:geo2-2-2:inscribed-angle-doubled"
+            }
+          ],
+          "held_for_review": [],
+          "kept": [
+            {
+              "predicate": "arc-given-as-angle",
+              "misconception_id": "mc:geo2-2-2:inscribed-angle-doubled"
+            }
+          ]
+        },
+        {
+          "question_id": "q:geo2-2-2:w003",
+          "dropped": [
+            {
+              "predicate": "angle-given-as-arc",
+              "misconception_id": "mc:geo2-2-2:inscribed-angle-doubled"
+            }
+          ],
+          "held_for_review": [],
+          "kept": [
+            {
+              "predicate": "arc-given-as-angle",
+              "misconception_id": "mc:geo2-2-2:inscribed-angle-doubled"
+            }
+          ]
+        },
+        {
+          "question_id": "q:geo2-2-2:w004",
+          "dropped": [
+            {
+              "predicate": "angle-given-as-arc",
+              "misconception_id": "mc:geo2-2-2:inscribed-angle-doubled"
+            }
+          ],
+          "held_for_review": [],
+          "kept": [
+            {
+              "predicate": "arc-given-as-angle",
+              "misconception_id": "mc:geo2-2-2:inscribed-angle-doubled"
+            }
+          ]
+        },
+        {
+          "question_id": "q:geo2-2-2:w005",
+          "dropped": [
+            {
+              "predicate": "angle-given-as-arc",
+              "misconception_id": "mc:geo2-2-2:inscribed-angle-doubled"
+            }
+          ],
+          "held_for_review": [],
+          "kept": [
+            {
+              "predicate": "arc-given-as-angle",
+              "misconception_id": "mc:geo2-2-2:inscribed-angle-doubled"
+            }
+          ]
+        },
+        {
+          "question_id": "q:geo2-2-2:w006",
+          "dropped": [
+            {
+              "predicate": "arc-given-as-angle",
+              "misconception_id": "mc:geo2-2-2:inscribed-angle-doubled"
+            }
+          ],
+          "held_for_review": [],
+          "kept": [
+            {
+              "predicate": "angle-given-as-arc",
+              "misconception_id": "mc:geo2-2-2:inscribed-angle-doubled"
+            }
+          ]
+        },
+        {
+          "question_id": "q:geo2-2-2:w007",
+          "dropped": [
+            {
+              "predicate": "arc-given-as-angle",
+              "misconception_id": "mc:geo2-2-2:inscribed-angle-doubled"
+            }
+          ],
+          "held_for_review": [],
+          "kept": [
+            {
+              "predicate": "angle-given-as-arc",
+              "misconception_id": "mc:geo2-2-2:inscribed-angle-doubled"
+            }
+          ]
+        },
+        {
+          "question_id": "q:geo2-2-2:w008",
+          "dropped": [
+            {
+              "predicate": "arc-given-as-angle",
+              "misconception_id": "mc:geo2-2-2:inscribed-angle-doubled"
+            }
+          ],
+          "held_for_review": [],
+          "kept": [
+            {
+              "predicate": "angle-given-as-arc",
+              "misconception_id": "mc:geo2-2-2:inscribed-angle-doubled"
+            }
+          ]
+        },
+        {
+          "question_id": "q:geo2-2-2:w009",
+          "dropped": [
+            {
+              "predicate": "arc-given-as-angle",
+              "misconception_id": "mc:geo2-2-2:inscribed-angle-doubled"
+            }
+          ],
+          "held_for_review": [],
+          "kept": [
+            {
+              "predicate": "angle-given-as-arc",
+              "misconception_id": "mc:geo2-2-2:inscribed-angle-doubled"
+            }
+          ]
+        },
+        {
+          "question_id": "q:u4-1-2:w001",
+          "dropped": [
+            {
+              "predicate": "ratio-inverted",
+              "misconception_id": "mc:u4-1-2:ratio-inverted"
+            }
+          ],
+          "held_for_review": [
+            {
+              "predicate": "used-cosine",
+              "misconception_id": "mc:u4-1-2:opposite-adjacent-swapped",
+              "why": "PROPOSED, NOT ACTIVE (pipeline, data-engineer agent, 2026-09-27; consistency review W1). The old mapping ratio-inverted -> mc:u4-1-2:ratio-inverted could never fire on a sin question (the legs are whole numbers 1-12, so the ratio stays below 1 and its reciprocal never equals the target) and was dropped. On this ask the instrument DOES report used-cosine when opposite and adjacent are exchanged, the error mc:u4-1-2:opposite-adjacent-swapped describes ('swapping sine with cosine'). It is not the dropped mapping's error, so it is held for a human to keep or drop; until then the widget is plain right/wrong, as it has been in practice since it shipped."
+            }
+          ],
+          "kept": []
+        },
+        {
+          "question_id": "q:u4-1-2:w002",
+          "dropped": [
+            {
+              "predicate": "ratio-inverted",
+              "misconception_id": "mc:u4-1-2:ratio-inverted"
+            }
+          ],
+          "held_for_review": [
+            {
+              "predicate": "used-sine",
+              "misconception_id": "mc:u4-1-2:opposite-adjacent-swapped",
+              "why": "PROPOSED, NOT ACTIVE (pipeline, data-engineer agent, 2026-09-27; consistency review W1). The old mapping ratio-inverted -> mc:u4-1-2:ratio-inverted could never fire on a cos question (the legs are whole numbers 1-12, so the ratio stays below 1 and its reciprocal never equals the target) and was dropped. On this ask the instrument DOES report used-sine when opposite and adjacent are exchanged, the error mc:u4-1-2:opposite-adjacent-swapped describes ('swapping sine with cosine'). It is not the dropped mapping's error, so it is held for a human to keep or drop; until then the widget is plain right/wrong, as it has been in practice since it shipped."
+            }
+          ],
+          "kept": []
+        },
+        {
+          "question_id": "q:u4-1-2:w004",
+          "dropped": [
+            {
+              "predicate": "ratio-inverted",
+              "misconception_id": "mc:u4-1-2:ratio-inverted"
+            }
+          ],
+          "held_for_review": [
+            {
+              "predicate": "used-cosine",
+              "misconception_id": "mc:u4-1-2:opposite-adjacent-swapped",
+              "why": "PROPOSED, NOT ACTIVE (pipeline, data-engineer agent, 2026-09-27; consistency review W1). The old mapping ratio-inverted -> mc:u4-1-2:ratio-inverted could never fire on a sin question (the legs are whole numbers 1-12, so the ratio stays below 1 and its reciprocal never equals the target) and was dropped. On this ask the instrument DOES report used-cosine when opposite and adjacent are exchanged, the error mc:u4-1-2:opposite-adjacent-swapped describes ('swapping sine with cosine'). It is not the dropped mapping's error, so it is held for a human to keep or drop; until then the widget is plain right/wrong, as it has been in practice since it shipped."
+            }
+          ],
+          "kept": []
+        },
+        {
+          "question_id": "q:u4-1-2:w006",
+          "dropped": [
+            {
+              "predicate": "ratio-inverted",
+              "misconception_id": "mc:u4-1-2:ratio-inverted"
+            }
+          ],
+          "held_for_review": [
+            {
+              "predicate": "used-sine",
+              "misconception_id": "mc:u4-1-2:opposite-adjacent-swapped",
+              "why": "PROPOSED, NOT ACTIVE (pipeline, data-engineer agent, 2026-09-27; consistency review W1). The old mapping ratio-inverted -> mc:u4-1-2:ratio-inverted could never fire on a cos question (the legs are whole numbers 1-12, so the ratio stays below 1 and its reciprocal never equals the target) and was dropped. On this ask the instrument DOES report used-sine when opposite and adjacent are exchanged, the error mc:u4-1-2:opposite-adjacent-swapped describes ('swapping sine with cosine'). It is not the dropped mapping's error, so it is held for a human to keep or drop; until then the widget is plain right/wrong, as it has been in practice since it shipped."
+            }
+          ],
+          "kept": []
+        }
+      ]
+    }
+  ]
+}

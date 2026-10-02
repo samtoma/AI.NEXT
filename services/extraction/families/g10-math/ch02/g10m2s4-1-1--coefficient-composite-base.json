@@ -1,0 +1,143 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m2s4-1-1:coefficient-composite-base",
+ "kind": "family",
+ "lo_id": "lo:g10m2s4-1-1",
+ "parent_question_id": "q:g10m2s4-1-1:ex2-3-1f",
+ "source_page": 55,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "version": 1,
+ "params": [
+  {
+   "name": "i",
+   "randint": [
+    0,
+    4
+   ]
+  },
+  {
+   "name": "base",
+   "let": "[4, 8, 9, 16, 27][i]"
+  },
+  {
+   "name": "pr",
+   "let": "[2, 2, 3, 2, 3][i]"
+  },
+  {
+   "name": "k",
+   "let": "[2, 3, 2, 4, 3][i]"
+  },
+  {
+   "name": "top",
+   "let": "[4, 3, 3, 2, 2][i]"
+  },
+  {
+   "name": "tp",
+   "randint": [
+    1,
+    "top"
+   ]
+  },
+  {
+   "name": "zz",
+   "choice": [
+    0,
+    1,
+    1,
+    1,
+    1,
+    1
+   ]
+  },
+  {
+   "name": "t",
+   "let": "tp if zz == 1 else 0"
+  },
+  {
+   "name": "d",
+   "choice": [
+    2,
+    3
+   ]
+  },
+  {
+   "name": "n",
+   "randint": [
+    1,
+    4
+   ]
+  },
+  {
+   "name": "s",
+   "choice": [
+    -1,
+    1
+   ]
+  },
+  {
+   "name": "m",
+   "choice": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "q",
+   "choice": [
+    1,
+    1,
+    2,
+    3,
+    4
+   ],
+   "resample_while": "(base ** t) % q != 0"
+  },
+  {
+   "name": "c",
+   "let": "(s * m) if q == 1 else (s / q)"
+  },
+  {
+   "name": "rhs",
+   "let": "(s * m * base ** t) if q == 1 else (s * ((base ** t) // q))"
+  },
+  {
+   "name": "big",
+   "let": "k * t"
+  },
+  {
+   "name": "ans",
+   "let": "d * (t - n)"
+  },
+  {
+   "require": "ans != 0",
+   "why": "x = 0 would let the solver read the answer straight off the exponent; keep every instance a real multi-step solve"
+  },
+  {
+   "require": "abs(rhs) <= 1000",
+   "why": "keep the right-hand side a number the book would print"
+  }
+ ],
+ "constraints": [
+  "ans != 0",
+  "abs(rhs) <= 1000",
+  "(base ** t) % q == 0"
+ ],
+ "stem": "Solve for the variable: ${=c}\\cdot {=base}^{\\frac{x}{{=d}}+{=n}}={=rhs}$",
+ "answer": "ans",
+ "solution": [
+  "Divide both sides by ${=c}$ so that the power stands alone: ${=base}^{\\frac{x}{{=d}}+{=n}}={=base ** t}$",
+  "Write ${=base}$ as a power of the prime ${=pr}$: ${=base}={=pr}^{{=k}}$, so the left side becomes $\\left({=pr}^{{=k}}\\right)^{\\frac{x}{{=d}}+{=n}}$",
+  "Write ${=base ** t}$ as a power of ${=pr}$: ${=base ** t}={=pr}^{{=big}}$",
+  "Both sides are now powers of ${=pr}$, so the exponents must be equal: ${=k}\\left(\\frac{x}{{=d}}+{=n}\\right)={=big}$",
+  "Expand the bracket: $\\frac{{=k}x}{{=d}}+{=k * n}={=big}$",
+  "Multiply both sides by ${=d}$ to clear the fraction: ${=k}x+{=d * k * n}={=d * big}$",
+  "Subtract ${=d * k * n}$ from both sides: ${=k}x={=d * big - d * k * n}$",
+  "Divide both sides by ${=k}$: $x={=ans}$"
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced tier, modelled on book question ex2-3-1f (a coefficient to clear and a fractional exponent m/2+3) combined with the composite-base rewriting of ex2-3-1c/1g (64 = 2^6, 81 = 3^4). One skeleton: c * base^(x/d + n) = rhs, where base is a power of a prime (4, 8, 9, 16, 27), c is a whole number (+-2..5) or a unit fraction (+-1/2, 1/3, 1/4), and rhs = c * base^t is always a whole number. Steps: divide out the coefficient, rewrite both sides as powers of the prime, equate exponents, expand the bracket, clear the fraction, solve the linear equation. In roughly one instance in six t = 0, so the right-hand side after dividing is 1 and the solver must use a^0 = 1 (1 = 2^0), the technique named in the objective description. The exponent is strictly monotone in x (base >= 4), so each equation has exactly one solution and the integer answer is x = d*(t - n), which is never 0. Answers lie between -12 and 9; |rhs| <= 1000; about 1000 distinct instances. Numeric answer, so no distractors and no misconception ids are needed. Basic and standard tiers were not listed as gaps, so only the advanced family is written; no mcq is offered because no choice here is natural."
+}

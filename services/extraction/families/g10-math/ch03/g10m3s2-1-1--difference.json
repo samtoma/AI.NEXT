@@ -1,0 +1,71 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m3s2-1-1:difference",
+ "kind": "family",
+ "lo_id": "lo:g10m3s2-1-1",
+ "parent_question_id": "q:g10m3s2-1-1:ex3-2-2",
+ "source_page": 68,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    -10,
+    20
+   ]
+  },
+  {
+   "name": "d",
+   "choice": [
+    -9,
+    -8,
+    -7,
+    -6,
+    -5,
+    -4,
+    -3,
+    -2,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ]
+  },
+  {
+   "name": "t1",
+   "let": "a"
+  },
+  {
+   "name": "t2",
+   "let": "a + d"
+  },
+  {
+   "name": "t3",
+   "let": "a + 2 * d"
+  },
+  {
+   "name": "t4",
+   "let": "a + 3 * d"
+  },
+  {
+   "name": "t5",
+   "let": "a + 4 * d"
+  }
+ ],
+ "constraints": [],
+ "stem": "Given the linear sequence ${=t1}\\;;\\;{=t2}\\;;\\;{=t3}\\;;\\;{=t4}\\;;\\;{=t5}\\;;\\;\\ldots$ determine the common difference.",
+ "answer": "d",
+ "solution": [
+  "The common difference is found by subtracting a term from the term that follows it: $d=T_{2}-T_{1}=({=t2})-({=t1})={=d}$.",
+  "Check with other pairs: $d=T_{3}-T_{2}=({=t3})-({=t2})={=d}$ and $d=T_{4}-T_{3}=({=t4})-({=t3})={=d}$.",
+  "All of the results are the same, which means we have found the common difference for these numbers: $d={=d}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Entry point of the skill, modelled on Q2 (7; 4; 1; -2; -5, d = -3). Half the instances have a negative common difference, so the order of subtraction matters (mc:g10m3s2-1-1:subtracts-earlier-minus-later gives the opposite sign). Numeric family, so no distractors. d is never 0 or a stated 'no common difference' case; every instance is linear and the stem says so."
+}

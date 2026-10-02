@@ -77,7 +77,7 @@ export default async function Home() {
             <strong className="font-bold text-ink">
               agent-native data spine
             </strong>{" "}
-            — a knowledge graph extracted from the Egyptian Ministry textbook,
+            — a knowledge graph extracted from {stats.sourceWording.source},
             with full provenance, temporal mastery tracking, and explanations
             grounded in worked solutions.
           </p>
@@ -90,43 +90,53 @@ export default async function Home() {
           </div>
         </div>
 
-        {/* source-document plate */}
-        <div
-          className={cx(
-            STROKE,
-            "anim-rise self-center rounded-[var(--play-radius-lg)] bg-card-warm p-6 sticker-shadow"
-          )}
-          style={{ animationDelay: "120ms" }}
-        >
-          <div className="relative">
-            <div className="flex items-start justify-between gap-4">
-              <p className="font-mono text-[0.72rem] font-medium uppercase tracking-[0.14em] text-[color:var(--play-text-amber-warm)]">
-                Source of truth
+        {/* The book and syllabus above and in the ledger come from the
+            courses she may see (lib/courses.ts `sourceWordingFor`): a Grade
+            10 student is never told her material is the Egyptian Ministry
+            textbook's (FR-4205), and a National student reads what she always
+            did (FR-4206). */}
+        {/* source-document plate — the book of her first visible course
+            (lib/queries.ts `sourceBookFor`), and none at all when she may see
+            no course yet: a plate naming a book she cannot open is the leak
+            003 closed. */}
+        {stats.doc && (
+          <div
+            className={cx(
+              STROKE,
+              "anim-rise self-center rounded-[var(--play-radius-lg)] bg-card-warm p-6 sticker-shadow"
+            )}
+            style={{ animationDelay: "120ms" }}
+          >
+            <div className="relative">
+              <div className="flex items-start justify-between gap-4">
+                <p className="font-mono text-[0.72rem] font-medium uppercase tracking-[0.14em] text-[color:var(--play-text-amber-warm)]">
+                  Source of truth
+                </p>
+                {/* Where the rubber stamp was: a leaf badge, which is what
+                    "done, and correct" looks like in this palette. */}
+                <span
+                  className={cx(
+                    BADGE,
+                    "anim-pop shrink-0 bg-[var(--play-leaf)] text-[color:var(--play-on-leaf)]"
+                  )}
+                >
+                  Ingested ✓
+                </span>
+              </div>
+              <h2 className="mt-3 font-display text-[1.5rem] font-extrabold leading-[1.25] text-ink">
+                {stats.doc.title}
+              </h2>
+              <p className="mt-2 text-[0.95rem] leading-relaxed text-ink-soft">
+                {stats.doc.publisher}
               </p>
-              {/* Where the rubber stamp was: a leaf badge, which is what
-                  "done, and correct" looks like in this palette. */}
-              <span
-                className={cx(
-                  BADGE,
-                  "anim-pop shrink-0 bg-[var(--play-leaf)] text-[color:var(--play-on-leaf)]"
-                )}
-              >
-                Ingested ✓
-              </span>
-            </div>
-            <h2 className="mt-3 font-display text-[1.5rem] font-extrabold leading-[1.25] text-ink">
-              {stats.doc.title}
-            </h2>
-            <p className="mt-2 text-[0.95rem] leading-relaxed text-ink-soft">
-              {stats.doc.publisher}
-            </p>
-            <div className="mt-4 flex flex-wrap gap-x-5 gap-y-1 font-mono text-[0.72rem] font-medium text-ink-faint">
-              <span>edition {stats.doc.edition}</span>
-              <span>grade {stats.doc.grade}</span>
-              <span>{stats.doc.subject}</span>
+              <div className="mt-4 flex flex-wrap gap-x-5 gap-y-1 font-mono text-[0.72rem] font-medium text-ink-faint">
+                <span>edition {stats.doc.edition}</span>
+                <span>grade {stats.doc.grade}</span>
+                <span>{stats.doc.subject}</span>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </section>
 
       {/* stat ledger row */}
@@ -141,7 +151,7 @@ export default async function Home() {
           { n: stats.los, label: "learning objectives", sub: "Unit 1 · prerequisite DAG" },
           { n: stats.questions, label: "live questions", sub: "each with a worked solution" },
           { n: stats.attempts, label: "attempts logged", sub: `by ${stats.studentName}` },
-          { n: stats.prereqs, label: "prerequisite edges", sub: "syllabus 2025–2026" },
+          { n: stats.prereqs, label: "prerequisite edges", sub: stats.sourceWording.syllabus },
           { n: stats.aiTurns, label: "AI turns logged", sub: "grounded · cost-metered" },
         ].map((s) => (
           <div key={s.label} className="px-6 py-5">

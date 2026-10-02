@@ -1,0 +1,379 @@
+{
+ "format": "ainext.working-check/1",
+ "book": "g10-math",
+ "chapter": 8,
+ "prompts_version": "sw-v1",
+ "rule": "Each flag is a backlog item for a human (answer 30; answer 37c). Nothing here was corrected: the content stays as the book and G2 have it until a human decides.",
+ "solutions": 192,
+ "skipped": [
+  {
+   "id": "expl:g10m8s1-1-1:ex8-6-4a",
+   "why": "no working to check (the solution is a drawing)"
+  },
+  {
+   "id": "expl:g10m8s1-1-1:ex8-6-4b",
+   "why": "no working to check (the solution is a drawing)"
+  },
+  {
+   "id": "expl:g10m8s1-1-1:ex8-6-4c",
+   "why": "no working to check (the solution is a drawing)"
+  },
+  {
+   "id": "expl:g10m8s1-1-1:ex8-6-4d",
+   "why": "no working to check (the solution is a drawing)"
+  },
+  {
+   "id": "expl:g10m8s1-1-1:ex8-6-20a",
+   "why": "no working to check (the solution is a drawing)"
+  },
+  {
+   "id": "expl:g10m8s1-1-1:ex8-6-25a",
+   "why": "no working to check (the solution is a drawing)"
+  }
+ ],
+ "verdicts": {
+  "consistent": 169,
+  "flagged": 21,
+  "unclear": 2
+ },
+ "flags": [
+  {
+   "solution_id": "expl:g10m8s2-1-1:ex8-6-36c",
+   "lo": "lo:g10m8s2-1-1",
+   "step": 3,
+   "kind": "other",
+   "quote": "Therefore $LMNP$ is a square, all the sides are equal in length.",
+   "expected": "A check that an angle is a right angle (e.g. gradients of two adjacent sides, such as LM and MN, multiply to -1) or that the diagonals LN and MP are equal in length, before concluding 'square' — since LMNP is already given as a parallelogram, showing all four sides equal only establishes that it is a rhombus.",
+   "why": "A parallelogram with all sides equal is a rhombus, not necessarily a square; step 2 shows only equal side lengths, so step 3's conclusion that LMNP is a square does not follow from the reasoning given (no right-angle or equal-diagonal check is shown).",
+   "sources": [
+    "agent"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m8s3-2-2:ex8-6-26",
+   "lo": "lo:g10m8s3-2-2",
+   "step": 4,
+   "kind": "label",
+   "quote": "m_{PR}\\times m_{QR}",
+   "expected": "m_{PQ}\\times m_{QR}",
+   "why": "The values substituted, -1/7 and 7/1, are m_PQ and m_QR from step 2, not m_PR (which step 2 gives as -4/3 and which is never used here), so the product is mislabeled.",
+   "sources": [
+    "agent"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m8s3-2-2:ex8-6-26",
+   "lo": "lo:g10m8s3-2-2",
+   "step": 5,
+   "kind": "label",
+   "quote": "PR\\perp QR",
+   "expected": "PQ\\perp QR",
+   "why": "Step 4's product (as actually computed, -1/7 times 7) shows PQ is perpendicular to QR, not PR to QR; this also contradicts the very next clause in step 5, which puts the right angle at Q (P\\hat{Q}R) — a right angle between PR and QR would sit at R, not Q.",
+   "sources": [
+    "agent"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m8s3-2-2:ex8-6-38d",
+   "lo": "lo:g10m8s3-2-2",
+   "step": 1,
+   "kind": "wrong_value",
+   "quote": "\\frac{-2-1}{1-4}",
+   "expected": "\\frac{-2-1}{1-5} (using R's given x-coordinate of 5), which equals 3/4",
+   "why": "R is given as (5,1), so the denominator of m_QR should be 1-5=-4, not 1-4=-3; as written, -3/-3=1, not the 3/4 the line states.",
+   "sources": [
+    "agent",
+    "numeric"
+   ],
+   "numeric": {
+    "left": "\\frac{-2-1}{1-4}",
+    "relation": "=",
+    "right": "\\frac{3}{4}",
+    "why": "\\frac{-2-1}{1-4} = \\frac{3}{4} does not hold (1 vs 0.75)"
+   }
+  },
+  {
+   "solution_id": "expl:g10m8s3-2-2:ex8-6-46c",
+   "lo": "lo:g10m8s3-2-2",
+   "step": 6,
+   "kind": "other",
+   "quote": "-\\frac{1}{3}=m_{MN}",
+   "expected": "a computed line such as m_{MN}=\\frac{4-2}{-1-5}=-\\frac{1}{3} before equating it to m_AB",
+   "why": "the working never computes m_MN anywhere (the gradient formula was only ever applied to A and B); the value -1/3 is asserted for m_MN rather than derived from M(-1,4) and N(5,2), so this equality does not follow from the shown steps even though it happens to be numerically true.",
+   "sources": [
+    "agent"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m8s3-2-3:ex8-6-42d",
+   "lo": "lo:g10m8s3-2-3",
+   "step": 1,
+   "kind": "sign",
+   "quote": "-2-(-\\text{0.5})",
+   "expected": "2-(-0.5), i.e. 2.5, using the given x-coordinate of C (which is 2, not -2)",
+   "why": "The denominator substitutes x_C as -2, flipping the sign of the given value C(2,-5), and the displayed expression (-2-(-0.5)=-1.5) does not equal the 2.5 used on the next line of the same step.",
+   "sources": [
+    "agent",
+    "numeric"
+   ],
+   "numeric": {
+    "left": "\\frac{-5-(-\\text{4.5})}{-2-(-\\text{0.5})}",
+    "relation": "=",
+    "right": "\\frac{-\\text{0.5}}{\\text{2.5}}",
+    "why": "\\frac{-5-(-\\text{4.5})}{-2-(-\\text{0.5})} = \\frac{-\\text{0.5}}{\\text{2.5}} does not hold (0.333333 vs -0.2)"
+   }
+  },
+  {
+   "solution_id": "expl:g10m8s4-1-1:ex8-6-27",
+   "lo": "lo:g10m8s4-1-1",
+   "step": 1,
+   "kind": "other",
+   "quote": "we need to show that $MN\\parallel BC$ and that $MN=\\frac{1}{2}BC$",
+   "expected": "we need to show that $MN\\parallel AB$ and that $MN=\\frac{1}{2}AB$",
+   "why": "M (midpoint of AC) and N (midpoint of BC) are the midpoints of the two sides that meet at C, so by the theorem just stated the 'third side' to compare MN to is AB, not BC — BC is one of the two sides already used to form M and N.",
+   "sources": [
+    "agent"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m8s4-1-1:ex8-6-27",
+   "lo": "lo:g10m8s4-1-1",
+   "step": 2,
+   "kind": "wrong_value",
+   "quote": "N&=\\left(\\frac{-3+3}{2}, \\frac{4-2}{2}\\right)",
+   "expected": "N=\\left(\\frac{3+(-5)}{2}, \\frac{-2+(-2)}{2}\\right)=(-1,-2)",
+   "why": "N is defined as the midpoint of BC, but the formula substitutes A's coordinates (-3,4) and B's coordinates (3,-2) instead of B's (3,-2) and C's (-5,-2), so it actually computes the midpoint of AB, not of BC.",
+   "sources": [
+    "agent"
+   ]
+  },
+  {
+   "solution_id": "q:g10m8s1-1-3:ex8-1-5",
+   "lo": "lo:g10m8s1-1-3",
+   "step": 1,
+   "kind": "final_answer",
+   "quote": "only shape Z sticks to this naming convention",
+   "expected": "The working's own conclusion is shape Z, which the figure confirms is the only shape whose points run in consecutive alphabetical order (Q,R,S,T,A,B,...,P clockwise); the final-answer key should read 'Z' to match. As written, the key is 'D', which names no shape in the diagram (the four shapes are labelled W, X, Y, Z, and the question gives no A/B/C/D options).",
+   "why": "The last (and only) step concludes 'shape Z', but the stated FINAL ANSWER key is 'D', a label that does not correspond to any shape shown in the diagram, so the taught conclusion and the key the student is marked against disagree.",
+   "sources": [
+    "agent"
+   ]
+  },
+  {
+   "solution_id": "q:g10m8s1-1-3:ex8-6-3",
+   "lo": "lo:g10m8s1-1-3",
+   "step": 1,
+   "kind": "final_answer",
+   "quote": "only Shape Z sticks to this naming convention",
+   "expected": "D",
+   "why": "Step 1 correctly identifies Shape Z as the one labeled in alphabetical order (verified against the figure: Z's vertices run T,A,B,C,...,S clockwise, an unbroken alphabetical cycle, while W, X and Y are not in order), but it never states or ties that conclusion to the FINAL ANSWER given as the key, 'D' — the working's last step names 'Shape Z', not 'D', so as written it does not state the keyed final answer.",
+   "sources": [
+    "agent"
+   ]
+  },
+  {
+   "solution_id": "q:g10m8s2-1-1:ex8-6-24a",
+   "lo": "lo:g10m8s2-1-1",
+   "step": 1,
+   "kind": "final_answer",
+   "quote": "First draw a sketch of the quadrilateral: [figure]",
+   "expected": "A continuation such as QR = √((3-(-2))² + (2-5)²) = √(25+9) = √34, arriving at the key.",
+   "why": "The working consists of only this sketch step and stops; it never computes the distance QR or states the FINAL ANSWER √34 given as the key.",
+   "sources": [
+    "agent"
+   ]
+  },
+  {
+   "solution_id": "q:g10m8s2-1-1:ex8-6-42a",
+   "lo": "lo:g10m8s2-1-1",
+   "step": 1,
+   "kind": "arithmetic",
+   "quote": "\\sqrt{5^2(-1)^2}",
+   "expected": "$\\sqrt{5^2+(-1)^2}$ — a \"+\" between the two squared terms, matching the distance formula on the line above and the next line's $\\sqrt{25+1}$",
+   "why": "As typeset, the radicand has no operator between $5^2$ and $(-1)^2$, which reads as their product ($25$), not the sum ($25+1=26$) that the following line and the final answer depend on.",
+   "sources": [
+    "agent",
+    "numeric",
+    "numeric"
+   ],
+   "numeric": {
+    "left": "\\sqrt{5^2(-1)^2}",
+    "relation": "=",
+    "right": "\\sqrt{25+1}",
+    "why": "\\sqrt{5^2(-1)^2} = \\sqrt{25+1} does not hold (5 vs 5.09902)"
+   }
+  },
+  {
+   "solution_id": "q:g10m8s2-1-1:we01",
+   "lo": "lo:g10m8s2-1-1",
+   "step": 2,
+   "kind": "label",
+   "quote": "the coordinates of $T$ be $\\left({x}_{2}, {y}_{2}\\right)$",
+   "expected": "Q",
+   "why": "The question names the second point Q, but this step assigns its coordinates to a point called T instead.",
+   "sources": [
+    "agent"
+   ]
+  },
+  {
+   "solution_id": "q:g10m8s2-1-1:we01",
+   "lo": "lo:g10m8s2-1-1",
+   "step": 5,
+   "kind": "label",
+   "quote": "distance between $S$ and $T$",
+   "expected": "Q",
+   "why": "The final statement names the second point T instead of Q, carrying forward step 2's label error into what the student is taught as the answer.",
+   "sources": [
+    "agent"
+   ]
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-4-10",
+   "lo": "lo:g10m8s3-2-2",
+   "step": 3,
+   "kind": "label",
+   "quote": "to solve for $x$",
+   "expected": "to solve for y (x=2 is already given from point B; y is the unknown, and the question asks for the missing coordinate, which is y)",
+   "why": "B's x-coordinate (2) is already known from the question, so substituting B into the line equation solves for y, not x; the step mislabels the variable being found, even though step 4 then correctly solves for y.",
+   "sources": [
+    "agent"
+   ]
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-4-19b",
+   "lo": "lo:g10m8s3-2-2",
+   "step": 2,
+   "kind": "wrong_value",
+   "quote": "(-5-2)^{2}+(2+4)^{2}",
+   "expected": "BC uses B(2,-4) and C(8,3): sqrt{(2-8)^2+(-4-3)^2}",
+   "why": "The step is headed 'The length of BC is', but the formula substitutes A's coordinates (-5,2) and B's coordinates (2,-4) — that computes AB, not BC.",
+   "sources": [
+    "agent"
+   ]
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-4-19b",
+   "lo": "lo:g10m8s3-2-2",
+   "step": 4,
+   "kind": "wrong_value",
+   "quote": "(8-2)^{2}+(3+4)^{2}",
+   "expected": "AB uses A(-5,2) and B(2,-4): sqrt{(-5-2)^2+(2-(-4))^2}",
+   "why": "The step is headed 'The length of AB is', but the formula substitutes B's coordinates (2,-4) and C's coordinates (8,3) — that computes BC, not AB.",
+   "sources": [
+    "agent"
+   ]
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-4-1b",
+   "lo": "lo:g10m8s3-2-2",
+   "step": 5,
+   "kind": "arithmetic",
+   "quote": "m_{AB}\\times\\frac{1}{m_{CD}}\\ne-1",
+   "expected": "m_{AB}\\times m_{CD}\\ne-1 (3\\times(-3)=-9\\ne-1) is the test that was described in step 1 (\"gradients are the negative inverses of each other\") and that supports the stated conclusion; the quantity actually written, m_{AB}\\times\\frac{1}{m_{CD}}=3\\times(-\\frac{1}{3})=-1, equals -1 rather than being unequal to it.",
+   "why": "Substituting the gradients found in steps 2 and 4 (m_AB=3, m_CD=-3) into the formula exactly as written gives 3×(1/-3) = -1, which contradicts the step's own claim that this quantity is ≠ -1 — a student following this line literally would get a self-contradictory check, even though the correct test (multiplying the two gradients directly) does give −9≠-1 and the final verdict happens to match the key.",
+   "sources": [
+    "agent"
+   ]
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-6-42e",
+   "lo": "lo:g10m8s3-2-2",
+   "step": 1,
+   "kind": "other",
+   "quote": "we know that the quadrilateral must be a square",
+   "expected": "Equal diagonals alone do not establish a square — a (non-square) rectangle, and even an isosceles trapezoid, can also have equal diagonals. The square conclusion only follows once the sides are shown equal AND the four right angles are shown, i.e. only after the checks proposed in the very next sentence are actually carried out.",
+   "why": "The step draws the conclusion 'must be a square' directly from 'diagonals are equal in length', which is a non-sequitur: equal diagonals are a necessary but nowhere near sufficient condition for a square, so this inference does not follow from what precedes it.",
+   "sources": [
+    "agent"
+   ]
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-6-44d",
+   "lo": "lo:g10m8s3-2-2",
+   "step": 2,
+   "kind": "sign",
+   "quote": "-\\frac{3}{2}&=(3)(\\frac{1}{2})+c",
+   "expected": "-\\frac{3}{2}=(-3)(\\frac{1}{2})+c — the gradient m=-3 found two lines above should be substituted with its negative sign intact",
+   "why": "The gradient was just found to be m=-3, but here it is substituted into y=mx+c as +3, dropping the negative sign; read literally this line would give c=-3, not c=0, and only the following line's arithmetic (c = -3/2+3/2) is consistent with the correctly-signed m=-3, so this substitution line is inconsistent with the step before it.",
+   "sources": [
+    "agent"
+   ]
+  },
+  {
+   "solution_id": "q:g10m8s3-2-3:ex8-4-5",
+   "lo": "lo:g10m8s3-2-3",
+   "step": 5,
+   "kind": "label",
+   "quote": "m_{PR}",
+   "expected": "m_{PQ}",
+   "why": "Step 1 states the method as gradient of PQ equals gradient of QR, and step 2 computes m_PQ, but step 5 equates m_QR to m_PR — a gradient that was never defined or computed anywhere in the working — instead of m_PQ.",
+   "sources": [
+    "agent"
+   ]
+  },
+  {
+   "solution_id": "q:g10m8s4-1-1:ex8-6-17",
+   "lo": "lo:g10m8s4-1-1",
+   "step": 1,
+   "kind": "wrong_value",
+   "quote": "-2-2",
+   "expected": "-2+2 (B's x-coordinate is 2, not -2, since B(2, 6))",
+   "why": "The x-coordinate substituted for B in the midpoint formula is -2, but the question states B(2, 6), so x2 = 2 and the numerator should be -2+2, not -2-2.",
+   "sources": [
+    "agent"
+   ]
+  },
+  {
+   "solution_id": "q:g10m8s4-1-1:ex8-6-24c",
+   "lo": "lo:g10m8s4-1-1",
+   "step": 1,
+   "kind": "label",
+   "quote": "M_{QR}",
+   "expected": "M_{PR}",
+   "why": "The question asks for the midpoint of PR, and the substituted values (0+3)/2 and (-3+2)/2 are P's and R's coordinates, but the result is labeled as the midpoint of QR.",
+   "sources": [
+    "agent"
+   ]
+  },
+  {
+   "solution_id": "q:g10m8s4-1-1:we10",
+   "lo": "lo:g10m8s4-1-1",
+   "step": 2,
+   "kind": "label",
+   "quote": "x_{1}=2",
+   "expected": "x_{2}=2",
+   "why": "x_1 was already set to -2 earlier in this same step, so repeating the label x_1 for the value 2 leaves x_2 (which the formula in step 3 and the substitution in step 4 both use as 2) never actually defined, and makes x_1 self-contradictory.",
+   "sources": [
+    "agent"
+   ]
+  },
+  {
+   "solution_id": "q:g10m8s4-1-3:ex8-6-46e",
+   "lo": "lo:g10m8s4-1-3",
+   "step": 2,
+   "kind": "arithmetic",
+   "quote": "(8, 12)&=\\left(\\frac{x_p}{2}, \\frac{y_p}{2}\\right)",
+   "expected": "(8, 12) = (x_p, y_p)",
+   "why": "The line before has (4,6) = (x_p/2, y_p/2); doubling the left side to (8,12) while leaving the right side as x_p/2, y_p/2 makes the equation false as written (it would force x_p=16, y_p=24), yet the next line takes x_p=8, y_p=12 anyway — the denominator should have been cleared on both sides at once.",
+   "sources": [
+    "agent"
+   ]
+  }
+ ],
+ "flagged_solutions": 21,
+ "unclear": [
+  {
+   "id": "expl:g10m8s3-2-2:ex8-6-39d",
+   "why": "The question given only defines triangle PQR (P(5,1), Q(1,3), R(1,-2)) — it never defines points S or T at all. Step 1's one computation, m_PR = (1+2)/(5-1) = 3/4, is itself correct: using P(5,1) and R(1,-2), (1-(-2))/(5-1) = 3/4 matches the standard gradient formula value (equivalently (-2-1)/(1-5) = 3/4), so no wrong_value/sign/arithmetic/label/copy error there. But the step's conclusion, \"∴ ST ∥ PR (equal gradients)\", requires m_ST to equal 3/4, and m_ST is never computed or stated anywhere in this file, nor is S or T defined in the question text supplied. The exercise id (ex8-6-39d, 'part d') and the shape of the claim (a midpoint-theorem-style parallel proof) strongly suggest S and T were defined, and m_ST likely already found, in an earlier part (a/b/c) of this same multi-part question that isn't included in this file. Since judging whether the final line follows depends on content I cannot see, I can't respond 'consistent' or 'flagged' with confidence — reporting 'unclear' per the stated rule for exactly this situation."
+  },
+  {
+   "id": "expl:g10m8s4-1-3:ex8-6-44b",
+   "why": "The arithmetic in step 1 itself is correct: M_AC = ((-3+4)/2, (6+(-9))/2) = (1/2, -3/2). The issue is the line \"∴ M_AC = E\": the point E is never defined in the question text given to me, and the figure (tikzpicture__6a35113644a14d671ff701773dc410c8.png) only shows E positioned on the dashed diagonal DB, with no coordinates printed for it. The equality M_AC = E is only true as a parallelogram proof if E was previously established as the midpoint of BD (midpoint of B(5,0) and D(-4,-3) does in fact equal (1/2, -3/2), matching M_AC) — but that computation does not appear anywhere in this file. The problem ID \"ex8-6-44b\" strongly suggests this is part (b) of a multi-part worked example, where part (a) (not included in this packet — I was only permitted to open the one listed file and its figure) most likely asked students to find E as the midpoint of BD. Because the correctness of step 1's key claim depends on content I cannot see, and step 2's conclusion (\"diagonals bisect at E\") depends entirely on step 1, I can't confirm or deny an inconsistency here as written in isolation — it would help to see the ex8-6-44a packet (or whatever step defines E) to confirm."
+  }
+ ],
+ "unchecked": [],
+ "problems": [],
+ "runs": [
+  "92e155285bf70af84019dece6fa5c8aab0bdff9febfb2e921cfb38b150652f1f"
+ ]
+}

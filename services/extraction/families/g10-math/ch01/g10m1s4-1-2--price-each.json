@@ -1,0 +1,69 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m1s4-1-2:price-each",
+ "kind": "family",
+ "lo_id": "lo:g10m1s4-1-2",
+ "parent_question_id": "q:g10m1s4-1-2:ex1-2-6",
+ "source_page": 14,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": "Several tickets, all at the same price, are bought for one total amount in rand (R). The price of a single ticket must be found and given to the nearest cent, that is, rounded to 2 decimal places.",
+ "params": [
+  {
+   "name": "n",
+   "choice": [
+    3,
+    6,
+    7,
+    9,
+    11
+   ]
+  },
+  {
+   "name": "c",
+   "randint": [
+    1500,
+    9999
+   ],
+   "resample_while": "(2 * c) % n == 0"
+  },
+  {
+   "name": "tot",
+   "let": "fixed(c / 100, 2)"
+  },
+  {
+   "name": "unr",
+   "let": "fixed((c * 1000 // n) / 100000, 5)"
+  },
+  {
+   "name": "keep",
+   "let": "fixed((c // n) / 100, 2)"
+  },
+  {
+   "name": "d",
+   "let": "(10 * c // n) % 10"
+  },
+  {
+   "name": "ansc",
+   "let": "(2 * c + n) // (2 * n)"
+  },
+  {
+   "name": "ans",
+   "let": "fixed(ansc / 100, 2)"
+  }
+ ],
+ "constraints": [
+  "(2 * c) % n != 0"
+ ],
+ "stem": "If ${=n}$ tickets cost $\\text{R}{=tot}$ , how much does one ticket cost? Round your answer to $2$ decimal places.",
+ "answer": "ans",
+ "solution": [
+  "One ticket costs the total cost divided by the number of tickets: $\\text{R}{=tot}\\div{=n}$ .",
+  "$\\frac{{=tot}}{{=n}}={=unr}...$",
+  "Money is rounded off to $2$ decimal places (the nearest cent). The digits up to the second decimal place are ${=keep}$ and the next digit is ${=d}$ . A digit of $5$ or more rounds the last kept digit up by $1$ ; a smaller digit leaves it as it is.",
+  "Therefore one ticket costs $\\text{R}{=ans}$ , correct to $2$ decimal places."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Entry point of the objective: one division, then one rounding to a stated number of decimal places. Skeleton and context are the book's ex1-2-6 (tickets, the Rand, money rounded to 2 decimal places); the stem states the 2 decimal places so that the instance is not ambiguous for a first exposure. Parameters: n tickets in {3, 6, 7, 9, 11} and a total of R15.00 to R99.99 held as whole cents c. The constraint (2c) % n != 0 guarantees that every instance really needs rounding (the price is never already a whole number of cents) and never sits exactly halfway between two cents (so no round-half-up versus round-half-even disagreement). With these n the quotient is always a non-terminating decimal, so the '...' in step 2 is always true; the displayed value is the quotient TRUNCATED to 5 decimal places, never rounded, so it cannot disagree with the final rounding. Step 3 is deliberately worded to be true for any digit (no 'round up' / 'stays' branch), so every instance's steps are true. The answer is printed with 2 decimals, trailing zero kept (as the book prints R14.80). Checked offline against Decimal ROUND_HALF_UP for 20 000 draws: answers range R1.36 to R33.33. No distractors: numeric answer, so no misconception ids are attached.",
+ "version": 1
+}

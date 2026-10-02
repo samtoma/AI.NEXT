@@ -1,0 +1,40 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m4s5-1-3:keep-every-solution-that-fits",
+ "lo_id": "lo:g10m4s5-1-3",
+ "parent_question_id": "q:g10m4s5-1-3:ex4-4-10",
+ "tier": "basic",
+ "kind": "number_line_marker",
+ "spec": {
+  "mode": "points",
+  "range": [
+   -8,
+   10
+  ],
+  "targets": [
+   -3,
+   7
+  ]
+ },
+ "stem": "If $4$ times a number is increased by $6$, the result is $15$ less than the square of the number. Mark on the number line every number that fits this story.",
+ "solution": [
+  "Let the number be $n$. \"4 times the number, increased by 6\" is $4n + 6$, and \"15 less than the square of the number\" is $n^2 - 15$.",
+  "The story says these are equal: $4n + 6 = n^2 - 15$.",
+  "Bring every term to one side, so the equation equals zero: $n^2 - 4n - 21 = 0$.",
+  "Factorise, and test the middle term by multiplying out: $(n - 7)(n + 3) = 0$ gives $-7n + 3n = -4n$ and $-7 \\times 3 = -21$.",
+  "A product is zero only when a factor is zero, so $n - 7 = 0$ or $n + 3 = 0$: $n = 7$ or $n = -3$.",
+  "Check each solution against the story. The problem puts no condition on the sign of the number. $n = 7$: $4(7) + 6 = 34$ and $7^2 - 15 = 34$. $n = -3$: $4(-3) + 6 = -6$ and $(-3)^2 - 15 = -6$. Both fit, so both are kept.",
+  "Mark $-3$ and $7$ on the number line."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "missed-values",
+   "misconception_id": "mc:g10m4s5-1-3:discards-negative-solution-by-reflex"
+  },
+  {
+   "predicate": "sign-flipped",
+   "misconception_id": "mc:g10m1s7-2-1:factor-pair-middle-term-untested"
+  }
+ ],
+ "notes": "Pair this with the second template (rule-out-the-negative-breadth) and serve them in contrast: here the negative root is a genuine solution, there it is ruled out, so neither \"always drop the negative\" nor \"always keep both\" survives both. The construction grades the last third of the objective (selecting the solution the story allows) as a SET; setting up and factorising happen on paper, so a plain wrong solve will show as missed-values and extra-values together and diagnoses nothing. missed-values is mapped to discards-negative-solution-by-reflex because in this instance the missing value is almost always -3; a student who marks only -3 is a rarer reading and is not told apart. sign-flipped (marks -7 and 3) is the signature of writing (n+7)(n-3) from the factor pair 3 and 7 without testing the middle term, which is why it is mapped to the prerequisite misconception factor-pair-middle-term-untested (in this objective's list, own=false). extra-values is deliberately not mapped: no solution is ruled out in this instance and nothing specific produces a stray mark. Limits: range [-8,10] is 18 wide and within +-20; both targets are whole numbers inside it; -7 and 3 (the sign-flipped marks) are inside it too, so the error can be made."
+}

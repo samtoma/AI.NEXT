@@ -1,0 +1,107 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m8s3-1-2:coefficient-unknown-point",
+ "kind": "family",
+ "lo_id": "lo:g10m8s3-1-2",
+ "parent_question_id": "q:g10m8s3-1-2:ex8-3-4b",
+ "source_page": 297,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "cx",
+   "randint": [
+    -6,
+    6
+   ]
+  },
+  {
+   "name": "num_v",
+   "choice": [
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "name": "den",
+   "choice": [
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "require": "gcd(num_v, den) == 1",
+   "why": "the gradient must already be in lowest terms, matching how the book always prints it"
+  },
+  {
+   "name": "sign",
+   "choice": [
+    1,
+    -1
+   ]
+  },
+  {
+   "name": "t2",
+   "randint": [
+    -3,
+    3
+   ]
+  },
+  {
+   "require": "t2 != 0",
+   "why": "a zero step would put C and D at the same x-coordinate, giving a vertical line with no defined gradient"
+  },
+  {
+   "name": "t",
+   "let": "den * t2"
+  },
+  {
+   "name": "dx",
+   "let": "cx + t"
+  },
+  {
+   "name": "k",
+   "choice": [
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "p",
+   "randint": [
+    -4,
+    4
+   ]
+  },
+  {
+   "require": "p != 0",
+   "why": "p = 0 would make the unknown-coordinate point's y-value 0, hiding the coefficient step the family is built to test"
+  },
+  {
+   "name": "d",
+   "let": "sign * num_v * t2"
+  },
+  {
+   "name": "dy",
+   "let": "k*p + d"
+  }
+ ],
+ "constraints": [
+  "dx != cx",
+  "k != 1"
+ ],
+ "stem": "If the gradient of $CD={=frac(sign*num_v, den)}$, find $p$ given: $C({=cx}, {=k}p)$ and $D({=dx}, {=dy})$.",
+ "answer": "p",
+ "solution": [
+  "Let the coordinates of $C$ be $\\left({x}_{1}, {y}_{1}\\right)$ and the coordinates of $D$ be $\\left({x}_{2}, {y}_{2}\\right)$",
+  "Assign values: $x_{1}={=cx}\\quad y_{1}={=k}p\\quad x_{2}={=dx}\\quad y_{2}={=dy}$",
+  "$\\begin{aligned}m_{CD}&=\\dfrac{y_2-y_1}{x_2-x_1}\\\\{=frac(sign*num_v, den)}&=\\dfrac{{=dy}-{=k}p}{{=dx}-\\left({=cx}\\right)}\\\\{=frac(sign*num_v, den)}\\times\\left({=t}\\right)&={=dy}-{=k}p\\\\{=d}&={=dy}-{=k}p\\\\{=k}p&={=dy}-\\left({=d}\\right)\\\\{=k}p&={=k*p}\\end{aligned}$",
+  "The coordinate is written as ${=k}p$, not $p$ itself, so divide both sides by ${=k}$: $p=\\dfrac{{=k*p}}{{=k}}={=p}$"
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced twist matching ex8-3-4b (page 297): one point has a coordinate written as a coefficient times the unknown (here k*p, k in {2,3,4} so it's never just 'p'), and the gradient is a signed fraction in lowest terms — so after the usual cross-multiplication there is one extra division-by-k step before p is isolated, which is exactly the twist ex8-3-4a/b use. p is constrained to be a whole number so the answer stays clean even though the gradient itself is fractional (mirrors ex8-3-4b's p=5, not ex8-3-4a's p=-10/3 case — that messier fractional-answer variant is closer to a different, harder family and I left it out rather than force it here). Reviewer: this family is the natural place a student would apply mc:g10m8s3-1-2:dropped-coefficient-on-unknown (reporting k*p's value as p itself) — since answer_type is numeric there's no distractor slot to pin it to, but it's worth a note in review guidance for this family. Also watch for mc:g10m8s3-1-2:mismatched-point-order and mc:g10m8s3-1-2:inverted-gradient-ratio, both still reachable on the plain gradient setup step.\n\nPIPELINE NORMALISATION (not an author edit): rename-shadowing-param: param 'num' hid the built-in num(); renamed 'num_v' in every expression and hole, nothing else changed."
+}

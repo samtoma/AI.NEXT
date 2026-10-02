@@ -1,0 +1,97 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m8s2-1-2:missing-coord-number-line",
+ "lo_id": "lo:g10m8s2-1-2",
+ "parent_question_id": "q:g10m8s2-1-2:ex8-2-6a",
+ "tier": "standard",
+ "kind": "number_line_marker",
+ "instances": [
+  {
+   "kx": 6,
+   "ky": -2,
+   "missingCoord": "x",
+   "otherVal": 2,
+   "distance": 5,
+   "range": [
+    -5,
+    15
+   ],
+   "targets": [
+    3,
+    9
+   ],
+   "restrictionNote": ""
+  },
+  {
+   "kx": 1,
+   "ky": -1,
+   "missingCoord": "y",
+   "otherVal": 4,
+   "distance": 5,
+   "range": [
+    -10,
+    10
+   ],
+   "targets": [
+    3,
+    -5
+   ],
+   "restrictionNote": ""
+  },
+  {
+   "kx": 0,
+   "ky": -3,
+   "missingCoord": "y",
+   "otherVal": 8,
+   "distance": 10,
+   "range": [
+    -12,
+    10
+   ],
+   "targets": [
+    3,
+    -9
+   ],
+   "restrictionNote": ""
+  },
+  {
+   "kx": 0,
+   "ky": 0,
+   "missingCoord": "y",
+   "otherVal": 3,
+   "distance": 5,
+   "range": [
+    -10,
+    10
+   ],
+   "targets": [
+    4
+   ],
+   "restrictionNote": ", taking only the value with $y \\geq 0$"
+  }
+ ],
+ "spec": {
+  "mode": "points",
+  "range": "{=range}",
+  "targets": "{=targets}"
+ },
+ "stem": "One point is $({=kx}, {=ky})$. A second point's {=missingCoord}-coordinate is unknown; its other coordinate is ${=otherVal}$. The distance between the two points is ${=distance}$ units{=restrictionNote}. Mark every value the missing coordinate could be.",
+ "solution": [
+  "Write the distance formula: $\\text{distance}^2 = (\\Delta x)^2 + (\\Delta y)^2$.",
+  "Substitute the known coordinates and the given distance, then isolate the squared difference that holds the missing coordinate.",
+  "Take the square root of both sides, keeping both the positive and the negative root.",
+  "Add each root to the known coordinate to get the two candidate values, then drop any candidate a stated restriction rules out.",
+  "Mark every value that survives on the number line."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "missed-values",
+   "misconception_id": "mc:g10m8s2-1-2:stops-at-first-root"
+  },
+  {
+   "predicate": "extra-values",
+   "misconception_id": "mc:g10m8s2-1-2:keeps-both-roots-ignores-restriction"
+  }
+ ],
+ "notes": "Reframes the algebra (solve for the missing coordinate given a distance) as marking the resulting solution set on a number line, which is a genuine fit because this LO's own difficulty IS root multiplicity, not plotting. Rows 1-3 mirror ex8-2-6a, ex8-2-6b and ex8-2-7 exactly (two valid values each); row 4 is an authored analogue of ex8-6-33b's pattern (a stated restriction eliminates one algebraic root), using clean 3-4-5 numbers rather than ex8-6-33b's own figures/quadrilateral context since that question is embedded in a multi-part figure problem. missed-values fires whenever a student reports only one root (stops-at-first-root) and is the likelier error since three of four rows have no restriction to forget; extra-values fires when the eliminated root is marked anyway (keeps-both-roots-ignores-restriction), which only row 4 can trigger. Deliberately leaves out a predicate for the LO1 sign-drop misconception (drops-double-negative-sign): the mapping from 'sign-flipped' (a value marked as its own negative) to a lost sign inside a $(a-(-b))$ subtraction was not clean enough to assert with confidence, so it is omitted rather than forced."
+}

@@ -1,0 +1,61 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m5s6-1-2:fracsides",
+ "kind": "family",
+ "lo_id": "lo:g10m5s6-1-2",
+ "parent_question_id": "q:g10m5s6-1-2:ex5-8-8",
+ "source_page": 140,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "i",
+   "randint": [
+    0,
+    5
+   ]
+  },
+  {
+   "name": "p",
+   "let": "[2, 3, 2, 5, 6, 4][i]"
+  },
+  {
+   "name": "m",
+   "let": "[5, 7, 21, 11, 13, 33][i]"
+  },
+  {
+   "name": "c",
+   "let": "[3, 4, 5, 6, 7, 7][i]"
+  },
+  {
+   "name": "a",
+   "randint": [
+    2,
+    9
+   ]
+  },
+  {
+   "require": "p * p + m == c * c",
+   "why": "(p, root m, c) must be a right-angled triple"
+  }
+ ],
+ "constraints": [
+  "p * p + m == c * c"
+ ],
+ "stem": "In the right-angled triangle $ABC$ the right angle is at $B$, $AB = \\frac{{=p * a}}{\\sqrt{{=m}}}$, $BC = {=a}$ and $AC = \\frac{{=c * a}}{\\sqrt{{=m}}}$. Let $\\theta$ be the angle at $A$. Solve for $\\tan{\\theta}$ in surd form.",
+ "marker": {
+  "kind": "surd",
+  "answer": "sqrt({=m})/{=p}",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "solution": [
+  "For the angle $\\theta$ at $A$, the opposite side is $BC = {=a}$ and the adjacent side is $AB = \\frac{{=p * a}}{\\sqrt{{=m}}}$. The hypotenuse $AC$ is not needed for $\\tan{\\theta}$.",
+  "$\\tan{\\theta}=\\frac{\\text{opposite}}{\\text{adjacent}}=\\frac{{=a}}{\\frac{{=p * a}}{\\sqrt{{=m}}}}$",
+  "Dividing by a fraction is the same as multiplying by its reciprocal: $\\tan{\\theta}={=a}\\times\\frac{\\sqrt{{=m}}}{{=p * a}}=\\frac{{=a}\\sqrt{{=m}}}{{=p * a}}$",
+  "Cancel the common factor ${=a}$: $\\tan{\\theta}=\\frac{\\sqrt{{=m}}}{{=p}}$"
+ ],
+ "notes": "Advanced tier, the twist the book itself uses in ex5-8-8 (sides 7, 7/root 3, 14/root 3; tan = 7 / (7/root 3) = root 3): the sides are fractions with a surd denominator, so the student divides by a fraction and cancels. Sides are the base triple (p, root m, c) scaled by a/root m: BC = a, AB = pa/root m, AC = ca/root m; check (pa)^2/m + a^2 = (ca)^2/m. Triples have p >= 2 so the answer root m over p never prints as 'over 1' (the book's own p = 1 case is covered by the standard family 'scaled'). Triples: (2,5,3), (3,7,4), (2,21,5), (5,11,6), (6,13,7), (4,33,7); a runs 2..9, giving 48 distinct stems. Answer has a rational denominator, so there is a single natural form. The hypotenuse is given but unused, as in the book."
+}

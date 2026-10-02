@@ -64,6 +64,18 @@ export function messageFor(
     case "invalid_gender":
       return "Pick one of the options, or leave it.";
 
+    // --- curriculum and the first-Google-sign-in step (feature 003) ----------
+    case "curriculum_required":
+      // Also what a student reads when an operator changed what her grade
+      // offers after the page loaded: the options are refreshed, and she picks.
+      return "Pick the curriculum your school follows.";
+    case "invalid_curriculum":
+      return "Pick one of the curricula shown.";
+    case "onboarding_already_completed":
+      return "You've already set this up. Your lessons are ready.";
+    case "onboarding_pending":
+      return "Tell Noor your grade first, and your lessons are ready.";
+
     // --- tokens ------------------------------------------------------------
     case "invalid_token":
       return "This link doesn't work any more. Ask for a new one.";

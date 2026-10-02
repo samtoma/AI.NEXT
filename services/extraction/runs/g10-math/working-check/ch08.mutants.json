@@ -1,0 +1,376 @@
+{
+ "format": "ainext.working-check-mutants/1",
+ "chapter": 8,
+ "rng": 8,
+ "per_operator": 8,
+ "rule": "Each mutant is a v1-consistent solution outside the calibration subset with ONE injected defect; `base` is the original, `operator`/`kind`/`step` the injected defect. A mutant counts as caught when an AGENT flags it (a free check never sees these: the operators leave the pre-check unchanged).",
+ "mutants": [
+  {
+   "id": "expl:g10m8s4-1-1:ex8-9-101",
+   "base": "expl:g10m8s4-1-1:ex8-6-24d",
+   "step": 4,
+   "kind": "wrong_value",
+   "where": "question",
+   "detail": "question text: Q(-2, 5) → Q(-2, 6)",
+   "operator": "wrong_value"
+  },
+  {
+   "id": "q:g10m8s2-1-1:ex8-9-102",
+   "base": "q:g10m8s2-1-1:ex8-2-5c",
+   "step": 1,
+   "kind": "wrong_value",
+   "where": "question",
+   "detail": "question text: B(x+4, y-1) → B(x+5, y-1)",
+   "operator": "wrong_value"
+  },
+  {
+   "id": "q:g10m8s3-2-3:ex8-9-103",
+   "base": "q:g10m8s3-2-3:ex8-6-47a",
+   "step": 2,
+   "kind": "wrong_value",
+   "where": "question",
+   "detail": "question text: A(6, -4) → A(7, -4)",
+   "operator": "wrong_value"
+  },
+  {
+   "id": "q:g10m8s4-1-1:ex8-9-104",
+   "base": "q:g10m8s4-1-1:we11",
+   "step": 2,
+   "kind": "wrong_value",
+   "where": "question",
+   "detail": "question text: A\\left(6, 2\\right) → A\\left(7, 2\\right)",
+   "operator": "wrong_value"
+  },
+  {
+   "id": "q:g10m8s3-2-3:ex8-9-105",
+   "base": "q:g10m8s3-2-3:ex8-6-34d",
+   "step": 1,
+   "kind": "wrong_value",
+   "where": "question",
+   "detail": "question text: Q(7, -1) → Q(8, -1)",
+   "operator": "wrong_value"
+  },
+  {
+   "id": "q:g10m8s2-1-1:ex8-9-106",
+   "base": "q:g10m8s2-1-1:ex8-6-30a",
+   "step": 1,
+   "kind": "wrong_value",
+   "where": "question",
+   "detail": "question text: A(4, -1) → A(5, -1)",
+   "operator": "wrong_value"
+  },
+  {
+   "id": "q:g10m8s3-1-1:ex8-9-107",
+   "base": "q:g10m8s3-1-1:ex8-6-34b",
+   "step": 1,
+   "kind": "wrong_value",
+   "where": "question",
+   "detail": "question text: Q(7, -1) → Q(8, -1)",
+   "operator": "wrong_value"
+  },
+  {
+   "id": "q:g10m8s3-1-1:ex8-9-108",
+   "base": "q:g10m8s3-1-1:ex8-3-1c",
+   "step": 2,
+   "kind": "wrong_value",
+   "where": "question",
+   "detail": "question text: B(x, y+4) → B(x, y+5)",
+   "operator": "wrong_value"
+  },
+  {
+   "id": "expl:g10m8s3-2-3:ex8-9-109",
+   "base": "expl:g10m8s3-2-3:ex8-6-25e",
+   "step": 2,
+   "kind": "label",
+   "where": "working",
+   "detail": "step 2: _{AB} → _{AC}",
+   "operator": "label"
+  },
+  {
+   "id": "q:g10m8s3-2-2:ex8-9-110",
+   "base": "q:g10m8s3-2-2:ex8-4-13",
+   "step": 2,
+   "kind": "label",
+   "where": "working",
+   "detail": "step 2: _{CD} → _{CA}",
+   "operator": "label"
+  },
+  {
+   "id": "expl:g10m8s3-2-2:ex8-9-111",
+   "base": "expl:g10m8s3-2-2:ex8-6-32b",
+   "step": 2,
+   "kind": "label",
+   "where": "working",
+   "detail": "step 2: _{AB} → _{AC}",
+   "operator": "label"
+  },
+  {
+   "id": "q:g10m8s3-2-2:ex8-9-112",
+   "base": "q:g10m8s3-2-2:ex8-4-20b",
+   "step": 3,
+   "kind": "label",
+   "where": "working",
+   "detail": "step 3: _{AB} → _{AC}",
+   "operator": "label"
+  },
+  {
+   "id": "q:g10m8s3-2-2:ex8-9-113",
+   "base": "q:g10m8s3-2-2:ex8-6-14",
+   "step": 2,
+   "kind": "label",
+   "where": "working",
+   "detail": "step 2: _{CD} → _{CA}",
+   "operator": "label"
+  },
+  {
+   "id": "expl:g10m8s3-2-3:ex8-9-114",
+   "base": "expl:g10m8s3-2-3:ex8-6-30c",
+   "step": 2,
+   "kind": "label",
+   "where": "working",
+   "detail": "step 2: _{AC} → _{AB}",
+   "operator": "label"
+  },
+  {
+   "id": "expl:g10m8s4-1-1:ex8-9-115",
+   "base": "expl:g10m8s4-1-1:ex8-6-21d",
+   "step": 3,
+   "kind": "label",
+   "where": "working",
+   "detail": "step 3: _{AC} → _{AB}",
+   "operator": "label"
+  },
+  {
+   "id": "q:g10m8s3-2-1:ex8-9-116",
+   "base": "q:g10m8s3-2-1:ex8-6-18c",
+   "step": 1,
+   "kind": "label",
+   "where": "working",
+   "detail": "step 1: _{GH} → _{GF}",
+   "operator": "label"
+  },
+  {
+   "id": "q:g10m8s3-2-2:ex8-9-117",
+   "base": "q:g10m8s3-2-2:ex8-4-11",
+   "step": 4,
+   "kind": "sign",
+   "where": "working",
+   "detail": "step 4: (-1) → (1)",
+   "operator": "sign"
+  },
+  {
+   "id": "q:g10m8s3-2-1:ex8-9-118",
+   "base": "q:g10m8s3-2-1:ex8-6-46b",
+   "step": 1,
+   "kind": "sign",
+   "where": "working",
+   "detail": "step 1: (-1) → (1)",
+   "operator": "sign"
+  },
+  {
+   "id": "q:g10m8s2-1-2:ex8-9-119",
+   "base": "q:g10m8s2-1-2:ex8-2-4",
+   "step": 1,
+   "kind": "sign",
+   "where": "working",
+   "detail": "step 1: (-3) → (3)",
+   "operator": "sign"
+  },
+  {
+   "id": "q:g10m8s3-2-2:ex8-9-120",
+   "base": "q:g10m8s3-2-2:ex8-4-7",
+   "step": 1,
+   "kind": "sign",
+   "where": "working",
+   "detail": "step 1: (-4) → (4)",
+   "operator": "sign"
+  },
+  {
+   "id": "q:g10m8s3-2-1:ex8-9-121",
+   "base": "q:g10m8s3-2-1:ex8-4-4",
+   "step": 1,
+   "kind": "sign",
+   "where": "working",
+   "detail": "step 1: (-1) → (1)",
+   "operator": "sign"
+  },
+  {
+   "id": "q:g10m8s4-1-1:ex8-9-122",
+   "base": "q:g10m8s4-1-1:ex8-6-35a",
+   "step": 1,
+   "kind": "sign",
+   "where": "working",
+   "detail": "step 1: (-2) → (2)",
+   "operator": "sign"
+  },
+  {
+   "id": "q:g10m8s3-2-1:ex8-9-123",
+   "base": "q:g10m8s3-2-1:ex8-6-34c",
+   "step": 2,
+   "kind": "sign",
+   "where": "working",
+   "detail": "step 2: (-3) → (3)",
+   "operator": "sign"
+  },
+  {
+   "id": "q:g10m8s3-2-1:ex8-9-124",
+   "base": "q:g10m8s3-2-1:ex8-4-6",
+   "step": 1,
+   "kind": "sign",
+   "where": "working",
+   "detail": "step 1: (-7) → (7)",
+   "operator": "sign"
+  },
+  {
+   "id": "q:g10m8s2-1-1:ex8-9-125",
+   "base": "q:g10m8s2-1-1:ex8-6-22d",
+   "step": 2,
+   "kind": "final_answer",
+   "where": "working",
+   "detail": "key 3 → 4",
+   "operator": "final_answer"
+  },
+  {
+   "id": "q:g10m8s2-1-1:ex8-9-126",
+   "base": "q:g10m8s2-1-1:ex8-6-22c",
+   "step": 2,
+   "kind": "final_answer",
+   "where": "working",
+   "detail": "key \\sqrt{10} → \\sqrt{11}",
+   "operator": "final_answer"
+  },
+  {
+   "id": "q:g10m8s4-1-3:ex8-9-127",
+   "base": "q:g10m8s4-1-3:ex8-6-36a",
+   "step": 3,
+   "kind": "final_answer",
+   "where": "working",
+   "detail": "key (3, 5) → (3, 6)",
+   "operator": "final_answer"
+  },
+  {
+   "id": "q:g10m8s2-1-1:ex8-9-128",
+   "base": "q:g10m8s2-1-1:ex8-6-37c",
+   "step": 1,
+   "kind": "final_answer",
+   "where": "working",
+   "detail": "key 4.1 → 4.2",
+   "operator": "final_answer"
+  },
+  {
+   "id": "q:g10m8s4-1-2:ex8-9-129",
+   "base": "q:g10m8s4-1-2:ex8-6-43a",
+   "step": 1,
+   "kind": "final_answer",
+   "where": "working",
+   "detail": "key (1, -5) → (1, -6)",
+   "operator": "final_answer"
+  },
+  {
+   "id": "q:g10m8s3-1-1:ex8-9-130",
+   "base": "q:g10m8s3-1-1:ex8-6-32a",
+   "step": 1,
+   "kind": "final_answer",
+   "where": "working",
+   "detail": "key -\\frac{1}{3} → -\\frac{2}{3}",
+   "operator": "final_answer"
+  },
+  {
+   "id": "q:g10m8s4-1-1:ex8-9-131",
+   "base": "q:g10m8s4-1-1:ex8-5-2",
+   "step": 5,
+   "kind": "final_answer",
+   "where": "working",
+   "detail": "key (-0.5, -1.25) → (-0.5, -1.26)",
+   "operator": "final_answer"
+  },
+  {
+   "id": "q:g10m8s4-1-2:ex8-9-132",
+   "base": "q:g10m8s4-1-2:ex8-6-47b",
+   "step": 1,
+   "kind": "final_answer",
+   "where": "working",
+   "detail": "key (10, 8) → (10, 9)",
+   "operator": "final_answer"
+  },
+  {
+   "id": "q:g10m8s3-1-2:ex8-9-133",
+   "base": "q:g10m8s3-1-2:we04",
+   "step": null,
+   "kind": "label",
+   "where": "question",
+   "detail": "question text: point H(…) renamed T",
+   "operator": "stem_label"
+  },
+  {
+   "id": "q:g10m8s2-1-2:ex8-9-134",
+   "base": "q:g10m8s2-1-2:we02",
+   "step": null,
+   "kind": "label",
+   "where": "question",
+   "detail": "question text: point S(…) renamed T",
+   "operator": "stem_label"
+  },
+  {
+   "id": "q:g10m8s3-2-2:ex8-9-135",
+   "base": "q:g10m8s3-2-2:ex8-4-20c",
+   "step": null,
+   "kind": "label",
+   "where": "question",
+   "detail": "question text: point A(…) renamed T",
+   "operator": "stem_label"
+  },
+  {
+   "id": "q:g10m8s3-2-2:ex8-9-136",
+   "base": "q:g10m8s3-2-2:ex8-6-12",
+   "step": null,
+   "kind": "label",
+   "where": "question",
+   "detail": "question text: point B(…) renamed T",
+   "operator": "stem_label"
+  },
+  {
+   "id": "q:g10m8s3-2-1:ex8-9-137",
+   "base": "q:g10m8s3-2-1:ex8-6-32d",
+   "step": null,
+   "kind": "label",
+   "where": "question",
+   "detail": "question text: point A(…) renamed T",
+   "operator": "stem_label"
+  },
+  {
+   "id": "q:g10m8s4-1-1:ex8-9-138",
+   "base": "q:g10m8s4-1-1:ex8-6-16",
+   "step": null,
+   "kind": "label",
+   "where": "question",
+   "detail": "question text: point A(…) renamed T",
+   "operator": "stem_label"
+  },
+  {
+   "id": "q:g10m8s4-1-3:ex8-9-139",
+   "base": "q:g10m8s4-1-3:ex8-6-38e",
+   "step": null,
+   "kind": "label",
+   "where": "question",
+   "detail": "question text: point S(…) renamed T",
+   "operator": "stem_label"
+  },
+  {
+   "id": "q:g10m8s3-1-1:ex8-9-140",
+   "base": "q:g10m8s3-1-1:ex8-6-7",
+   "step": null,
+   "kind": "label",
+   "where": "question",
+   "detail": "question text: point A(…) renamed T",
+   "operator": "stem_label"
+  }
+ ],
+ "by_operator": {
+  "wrong_value": 8,
+  "label": 8,
+  "sign": 8,
+  "final_answer": 8,
+  "stem_label": 8
+ }
+}

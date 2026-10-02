@@ -1,0 +1,36 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m14s1-1-1:two-dice-total-8",
+ "lo_id": "lo:g10m14s1-1-1",
+ "parent_question_id": "q:g10m14s1-1-1:ex14-1-1",
+ "tier": "basic",
+ "kind": "sample_space",
+ "spec": {
+  "rows": 6,
+  "cols": 6,
+  "rule": {
+   "kind": "sum",
+   "op": "eq",
+   "value": 8
+  }
+ },
+ "stem": "Two dice are rolled and you hope for a total of 8. The grid shows every possible outcome as (first die, second die). Tap every outcome that belongs to the event \"the total is 8\".",
+ "solution": [
+  "The sample space is every outcome of rolling two dice: each (first die, second die) pair, shown as the 6 x 6 grid of 36 outcomes.",
+  "The event is \"the total is 8\", so look for the pairs whose two numbers add to 8.",
+  "If the first die shows 2, the second must show 6; for 3 it must be 5; for 4 it must be 4; for 5 it must be 3; for 6 it must be 2. A first die of 1 would need a 7, which does not exist.",
+  "Tap all five cells: $(2, 6)$, $(3, 5)$, $(4, 4)$, $(5, 3)$ and $(6, 2)$. $(2, 6)$ and $(6, 2)$ are different outcomes (a different die shows the 6), so both belong to the event.",
+  "The event set is $E = \\{(2, 6), (3, 5), (4, 4), (5, 3), (6, 2)\\}$ and $n(E) = 5$ out of $n(S) = 36$."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "counted-once",
+   "misconception_id": "mc:g10m14s1-1-1:event-set-incomplete"
+  },
+  {
+   "predicate": "missed-outcomes",
+   "misconception_id": "mc:g10m14s1-1-1:event-set-incomplete"
+  }
+ ],
+ "notes": "Builds the book's own question ex14-1-1 (two dice, total 8, the event set is {(2,6),(3,5),(4,4),(5,3),(6,2)}) as a construction instead of a choice among three printed sets. Here counted-once means a mirror pair such as (3,5) and (5,3) tapped as one outcome, which is exactly how the book's distractors drop outcomes; it and missed-outcomes (e.g. only (4,4), or only (2,6) and (6,2)) both reveal the same own misconception, a listed event set that is incomplete, so both map to event-set-incomplete (one predicate each, no predicate repeated). extra-outcomes is left unmapped on purpose: a cell tapped that does not total 8 is an arithmetic slip, and none of this objective's own misconceptions names it (sample-space-as-an-event is a different error, giving an event where the whole space was asked for, which this widget never asks). The 6 x 6 grid is the sample space and is shown whole to the student, so the construction is only the event, which is exactly the half of the objective this question tests."
+}

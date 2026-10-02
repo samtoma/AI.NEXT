@@ -1,0 +1,1355 @@
+{
+ "stage": "S2-S4,S8",
+ "workflow": "lesson",
+ "prompts_version": "lesson-v8",
+ "collect_version": "collect-6",
+ "book": "g10-math",
+ "embedded": {
+  "source": "runbook/lesson.workflow.js",
+  "source_sha256": "ea9e7a0ab155fc65d14116b648792fb90975a7b59c1dc548e33e6a4bc36b5935",
+  "args_sha256": "64feb28657c38e1ef1e9b7cd4b262ff2a418633c116ab24e148658f4b0864523",
+  "generated_sha256": "ddb6a4c377b6c5fb43c67d535c3f7550a93c91013181372d115d6d8267202b10",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "lessons": [
+  {
+   "lesson": "g10m10s5-1",
+   "claims": [
+    {
+     "lo": "lo:g10m10s5-1-1",
+     "type": "definition",
+     "text": "The five number summary consists of the minimum value, the maximum value and the three quartiles.",
+     "anchor": "b03858",
+     "printed_page": 378,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "The five number summary consists of the minimum value, the maximum value and the three quartiles.",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m10s5-1-1",
+     "type": "definition",
+     "text": "Equivalently, the five number summary consists of the 0th, 25th, 50th, 75th and 100th percentiles.",
+     "anchor": "b03858",
+     "printed_page": 378,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "the five number summary consists of the following percentiles: $0^{\\text{th}}$ , $25^{\\text{th}}$ , $50^{\\text{th}}$ , $75^{\\text{th}}$ , $100^{\\text{th}}$",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m10s5-1-1",
+     "type": "method",
+     "text": "To find the minimum and maximum of a data set that is already sorted, read off the minimum as the first value and the maximum as the last value.",
+     "anchor": "WE14",
+     "printed_page": 379,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "Since the data set is already sorted, we can read off the minimum as the first value ( $\\text{1,25}$ ) and the maximum as the last value",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m10s5-1-1",
+     "type": "method",
+     "text": "To determine the quartiles, use the percentile formula to find where the median and the quartiles lie in the data set.",
+     "anchor": "WE14",
+     "printed_page": 379,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "Using the percentile formula, we can determine that the median lies between the sixth and seventh values",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m10s5-1-1",
+     "type": "method",
+     "text": "When the median lies between two values (as with 12 values, between the sixth and seventh), the median is the average of those two values.",
+     "anchor": "WE14",
+     "printed_page": 379,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "the median lies between the sixth and seventh values, making it: $\\frac{\\text{3,2}+\\text{4,1}}{2}=\\text{3,65}$",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m10s5-1-1",
+     "type": "method",
+     "text": "When the first quartile lies between two values (in the 12-value example, between the third and fourth values), the first quartile is the average of those two values.",
+     "anchor": "WE14",
+     "printed_page": 379,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "The first quartile lies between the third and fourth values, making it: $\\frac{\\text{2,5}+\\text{2,5}}{2}=\\text{2,5}$",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m10s5-1-1",
+     "type": "method",
+     "text": "When the third quartile lies between two values (in the 12-value example, between the ninth and tenth values), the third quartile is the average of those two values.",
+     "anchor": "WE14",
+     "printed_page": 379,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "The third quartile lies between the ninth and tenth values, making it: $\\frac{\\text{4,75}+\\text{4,8}}{2}=\\text{4,775}$",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m10s5-1-1",
+     "type": "convention",
+     "text": "The book writes decimal numbers with a comma as the decimal separator, for example 1,25.",
+     "anchor": "WE14",
+     "printed_page": 379,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "the first value ( $\\text{1,25}$ )",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m10s5-1-2",
+     "type": "rule",
+     "text": "The five number summary and the box-and-whisker plot represent exactly the same information, numerically in the case of the five number summary and graphically in the case of the box-and-whisker plot.",
+     "anchor": "b03857",
+     "printed_page": 378,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "These two represent exactly the same information, numerically in the case of the five number summary and graphically in the case of the box-and-whisker plot.",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m10s5-1-2",
+     "type": "definition",
+     "text": "The box-and-whisker plot shows the five percentiles of the five number summary.",
+     "anchor": "b03859",
+     "printed_page": 379,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "The box-and-whisker plot shows these five percentiles as in the figure below.",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m10s5-1-2",
+     "type": "method",
+     "text": "Once the minimum, maximum and the three quartiles have been determined, they give the five number summary of the data set, which allows the box-and-whisker plot to be drawn.",
+     "anchor": "WE14",
+     "printed_page": 379,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "This provides the five number summary of the data set and allows us to draw the following box-and-whisker plot.",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m10s5-1-2",
+     "type": "convention",
+     "text": "A box-and-whisker plot can also be drawn horizontally.",
+     "anchor": "b03859",
+     "printed_page": 379,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "This graph can also be drawn horizontally.",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m10s5-1-3",
+     "type": "definition",
+     "text": "In a box-and-whisker plot the box shows the interquartile range, the distance between Q1 and Q3.",
+     "anchor": "b03859",
+     "printed_page": 379,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "The box shows the interquartile range (the distance between $Q_1$ and $Q_3$ ).",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m10s5-1-3",
+     "type": "definition",
+     "text": "In a box-and-whisker plot a line inside the box shows the median.",
+     "anchor": "b03859",
+     "printed_page": 379,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "A line inside the box shows the median.",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m10s5-1-3",
+     "type": "definition",
+     "text": "In a box-and-whisker plot the lines extending outside the box (the whiskers) show where the minimum and maximum values lie.",
+     "anchor": "b03859",
+     "printed_page": 379,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "The lines extending outside the box (the whiskers) show where the minimum and maximum values lie.",
+     "provenance": "containment"
+    }
+   ],
+   "claims_dropped": [],
+   "items": [
+    {
+     "ref": "WE14",
+     "kind": "worked_example",
+     "lo": "lo:g10m10s5-1-1",
+     "stem": "Draw a box and whisker diagram for the following data set: $\\left\\{\\text{1,25};\\text{1,5};\\text{2,5};\\text{2,5};\\text{3,1};\\text{3,2};\\text{4,1};\\text{4,25};\\text{4,75};\\text{4,8};\\text{4,95};\\text{5,1}\\right\\}$",
+     "answer_type": "not_markable",
+     "answer": null,
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "Determine the minimum and maximum: Since the data set is already sorted, we can read off the minimum as the first value ( $\\text{1,25}$ ) and the maximum as the last value ( $\\text{5,1}$ ).",
+      "Determine the quartiles: There are $\\text{12}$ values in the data set. Using the percentile formula, we can determine that the median lies between the sixth and seventh values, making it: $\\frac{\\text{3,2}+\\text{4,1}}{2}=\\text{3,65}$ The first quartile lies between the third and fourth values, making it: $\\frac{\\text{2,5}+\\text{2,5}}{2}=\\text{2,5}$ The third quartile lies between the ninth and tenth values, making it: $\\frac{\\text{4,75}+\\text{4,8}}{2}=\\text{4,775}$ This provides the five number summary of the data set and allows us to draw the following box-and-whisker plot. [figure]"
+     ],
+     "solution_provenance": "book_worked",
+     "printed_answer": null,
+     "epub_final_answer": null,
+     "blind_answer": null,
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 379,
+     "shortcode": null,
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "WE14|blind~book",
+        "route": "not_markable",
+        "verdict": "equivalent",
+        "reason": "typing and the blind solver agree it has no answer to mark"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": "sketch or drawing",
+     "tier_source": "typing",
+     "printed_answer_scope": null,
+     "figures": [
+      "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__a113f43c6ddc661e9419eee46d6deb16.png"
+     ],
+     "figures_missing": [],
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex10-6:1",
+     "kind": "exercise",
+     "lo": "lo:g10m10s5-1-2",
+     "stem": "Lisa is working in a computer store. She sells the following number of computers each month: $\\left\\{27;39;3;15;43;27;19;54;65;23;45;16\\right\\}$ Give the five number summary and box-and-whisker plot of Lisa's sales.",
+     "answer_type": "not_markable",
+     "answer": null,
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "We first order the data set.",
+      "$\\left\\{3;15;16;19;23;27;27;39;43;45;54;65\\right\\}$",
+      "Now we can read off the minimum as the first value ( $\\text{3}$ ) and the maximum as the last value ( $\\text{65}$ ). Next we need to determine the quartiles. There are $\\text{12}$ values in the data set. Using the percentile formula, we can determine that the median lies between the sixth and seventh values, making it:",
+      "$\\frac{\\text{27}+\\text{27}}{2}=\\text{27}$",
+      "The first quartile lies between the third and fourth values, making it:",
+      "$\\frac{\\text{16}+\\text{19}}{2}=\\text{17,5}$",
+      "The third quartile lies between the ninth and tenth values, making it:",
+      "$\\frac{\\text{43}+\\text{45}}{2}=\\text{44}$",
+      "This provides the five number summary of the data set and allows us to draw the following box-and-whisker plot. Five number summary: Minimum: $3$ $Q_1$ : $\\text{17,5}$ Median: $27$ $Q_3$ : $44$ Maximum: $65$ Box-and-whisker plot: [figure]"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": null,
+     "epub_final_answer": null,
+     "blind_answer": null,
+     "verification": "no_printed_answer",
+     "tier": "standard",
+     "printed_page": 380,
+     "shortcode": "2GND",
+     "verify": {
+      "agreed_with_book_solution": true,
+      "pairs": [
+       {
+        "pair_id": "Ex10-6:1|blind~book",
+        "route": "not_markable",
+        "verdict": "equivalent",
+        "reason": "typing and the blind solver agree it has no answer to mark"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": "two-part answer",
+     "tier_source": "typing",
+     "printed_answer_scope": null,
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex10-6:2",
+     "kind": "exercise",
+     "lo": "lo:g10m10s5-1-2",
+     "stem": "Zithulele works as a telesales person. He keeps a record of the number of sales he makes each month. The data below show how much he sells each month. $\\left\\{49;12;22;35;2;45;60;48;19;1;43;12\\right\\}$ Give the five number summary and box-and-whisker plot of Zithulele's sales.",
+     "answer_type": "not_markable",
+     "answer": null,
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "We first order the data set.",
+      "$\\left\\{1;2;12;12;19;22;35;43;45;48;49;60\\right\\}$",
+      "Now we can read off the minimum as the first value ( $\\text{1}$ ) and the maximum as the last value ( $\\text{60}$ ). Next we need to determine the quartiles. There are $\\text{12}$ values in the data set. Using the percentile formula, we can determine that the median lies between the sixth and seventh values, making it:",
+      "$\\frac{\\text{22}+\\text{35}}{2}=\\text{28,5}$",
+      "The first quartile lies between the third and fourth values, making it:",
+      "$\\frac{\\text{12}+\\text{12}}{2}=\\text{12}$",
+      "The third quartile lies between the ninth and tenth values, making it:",
+      "$\\frac{\\text{45}+\\text{48}}{2}=\\text{46,5}$",
+      "The five number summary is: Minimum: $1$ $Q_1$ : $12$ Median: $\\text{28,5}$ $Q_3$ : $\\text{46,5}$ Maximum: $60$ The box and whisker plot is: [figure]"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": null,
+     "epub_final_answer": null,
+     "blind_answer": null,
+     "verification": "no_printed_answer",
+     "tier": "standard",
+     "printed_page": 380,
+     "shortcode": "2GNF",
+     "verify": {
+      "agreed_with_book_solution": true,
+      "pairs": [
+       {
+        "pair_id": "Ex10-6:2|blind~book",
+        "route": "not_markable",
+        "verdict": "equivalent",
+        "reason": "typing and the blind solver agree it has no answer to mark"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": "two-part answer",
+     "tier_source": "typing",
+     "printed_answer_scope": null,
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex10-6:3",
+     "kind": "exercise",
+     "lo": "lo:g10m10s5-1-1",
+     "stem": "Nombusa has worked as a florist for nine months. She sold the following number of wedding bouquets: $\\left\\{16;14;8;12;6;5;3;5;7\\right\\}$ Give the five number summary of Nombusa's sales.",
+     "answer_type": "expression",
+     "answer": "3; 5; 7; 12; 16",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "3; 5; 7; 12; 16",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "solution": [
+      "We first order the data set.",
+      "$\\left\\{3;5;5;6;7;8;12;14;16\\right\\}$",
+      "Now we can read off the minimum as the first value ( $\\text{3}$ ) and the maximum as the last value ( $\\text{16}$ ). Next we need to determine the quartiles. There are $\\text{9}$ values in the data set. Using the percentile formula, we can determine that the median lies at the fifth value, making it $\\text{7}$ . The first quartile lies at the third value, making it $\\text{5}$ . The third quartile lies at the seventh values, making it $\\text{12}$ . The five number summary is: Minimum: $3$ $Q_1$ : $5$ Median: $7$ $Q_3$ : $12$ Maximum: $16$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": null,
+     "epub_final_answer": "The five number summary is: Minimum: $3$ $Q_1$ : $5$ Median: $7$ $Q_3$ : $12$ Maximum: $16$",
+     "blind_answer": "$3;\\ 5;\\ 7;\\ 13;\\ 16$ (min, Q1, median, Q3, max)",
+     "verification": "no_printed_answer",
+     "tier": "standard",
+     "printed_page": 380,
+     "shortcode": "2GNG",
+     "verify": {
+      "agreed_with_book_solution": false,
+      "pairs": [
+       {
+        "pair_id": "Ex10-6:3|blind~book",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "Q3 differs: 13 vs 12. The sorted data 3,5,5,6,7,8,12,14,16 gives upper half 8,12,14,16, so Q3 is 13 (median of the upper half), not 12."
+       }
+      ]
+     },
+     "typing_problems": [
+      "the key \"3; 5; 7; 12; 16\" does not read as the book final answer \"The five number summary is: Minimum: $3$ $Q_1$ : $5$ Median: $7$ $Q_3$ : $12$ Maximum: $16$\""
+     ],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": null,
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex10-6:4a",
+     "kind": "exercise",
+     "lo": "lo:g10m10s5-1-3",
+     "stem": "Determine the five number summary for each of the box-and-whisker plots below. [figure]",
+     "answer_type": "expression",
+     "answer": "15; 22; 25; 28; 35",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "15; 22; 25; 28; 35",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "solution": [
+      "The box shows the interquartile range (the distance between $Q1$ and $Q3$ ). A line inside the box shows the median. The lines extending outside the box (the whiskers) show where the minimum and maximum values lie. Reading off the graph we obtain the following five number summary: Minimum: $15$ $Q_1$ : $22$ Median: $25$ $Q_3$ : $28$ Maximum: $35$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": null,
+     "epub_final_answer": "Minimum: $15$ $Q_1$ : $22$ Median: $25$ $Q_3$ : $28$ Maximum: $35$",
+     "blind_answer": "$15;\\ 22;\\ 25;\\ 28;\\ 35$ (min, Q1, median, Q3, max)",
+     "verification": "no_printed_answer",
+     "tier": "basic",
+     "printed_page": 380,
+     "shortcode": "2GNH",
+     "verify": {
+      "agreed_with_book_solution": true,
+      "pairs": [
+       {
+        "pair_id": "Ex10-6:4a|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same five values: 15, 22, 25, 28, 35."
+       }
+      ]
+     },
+     "typing_problems": [
+      "the key \"15; 22; 25; 28; 35\" does not read as the book final answer \"Minimum: $15$ $Q_1$ : $22$ Median: $25$ $Q_3$ : $28$ Maximum: $35$\""
+     ],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": null,
+     "figures": [
+      "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__1afc7807341229b5748f218b372c6a77.png"
+     ],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": true
+    },
+    {
+     "ref": "Ex10-6:4b",
+     "kind": "exercise",
+     "lo": "lo:g10m10s5-1-3",
+     "stem": "Determine the five number summary for each of the box-and-whisker plots below. [figure]",
+     "answer_type": "expression",
+     "answer": "88; 92; 98; 100; 101",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "88; 92; 98; 100; 101",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "solution": [
+      "The box shows the interquartile range (the distance between $Q1$ and $Q3$ ). A line inside the box shows the median. The lines extending outside the box (the whiskers) show where the minimum and maximum values lie. Reading off the graph we obtain the following five number summary: Minimum: $88$ $Q_1$ : $92$ Median: $98$ $Q_3$ : $100$ Maximum: $101$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": null,
+     "epub_final_answer": "Minimum: $88$ $Q_1$ : $92$ Median: $98$ $Q_3$ : $100$ Maximum: $101$",
+     "blind_answer": "$88;\\ 92;\\ 98;\\ 100;\\ 101$ (min, Q1, median, Q3, max)",
+     "verification": "no_printed_answer",
+     "tier": "basic",
+     "printed_page": 380,
+     "shortcode": "2GNJ",
+     "verify": {
+      "agreed_with_book_solution": true,
+      "pairs": [
+       {
+        "pair_id": "Ex10-6:4b|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same five values: 88, 92, 98, 100, 101."
+       }
+      ]
+     },
+     "typing_problems": [
+      "the key \"88; 92; 98; 100; 101\" does not read as the book final answer \"Minimum: $88$ $Q_1$ : $92$ Median: $98$ $Q_3$ : $100$ Maximum: $101$\""
+     ],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": null,
+     "figures": [
+      "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__603d10cf4ef1764eb07def5fc7152c95.png"
+     ],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": true
+    },
+    {
+     "ref": "Ex10-7:22d",
+     "kind": "exercise",
+     "lo": "lo:g10m10s5-1-2",
+     "stem": "A company wanted to evaluate the training programme in its factory. They gave the same task to trained and untrained employees and timed each one in seconds. Trained $\\text{121}$ $\\text{137}$ $\\text{131}$ $\\text{135}$ $\\text{130}$ $\\text{128}$ $\\text{130}$ $\\text{126}$ $\\text{132}$ $\\text{127}$ $\\text{129}$ $\\text{120}$ $\\text{118}$ $\\text{125}$ $\\text{134}$ Untrained $\\text{135}$ $\\text{142}$ $\\text{126}$ $\\text{148}$ $\\text{145}$ $\\text{156}$ $\\text{152}$ $\\text{153}$ $\\text{149}$ $\\text{145}$ $\\text{144}$ $\\text{134}$ $\\text{139}$ $\\text{140}$ $\\text{142}$ Draw a box-and-whisker diagram for each data set to illustrate the five number summary.",
+     "answer_type": "not_markable",
+     "answer": null,
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "A box-and-whisker plot shows the five number summary. The box shows the interquartile range (the distance between $Q1$ and $Q3$ ). A line inside the box shows the median. The lines extending outside the box (the whiskers) show where the minimum and maximum values lie. Trained employees: [figure] Untrained employees: [figure]"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": null,
+     "epub_final_answer": null,
+     "blind_answer": null,
+     "verification": "no_printed_answer",
+     "tier": "standard",
+     "printed_page": 386,
+     "shortcode": "2GPC",
+     "verify": {
+      "agreed_with_book_solution": true,
+      "pairs": [
+       {
+        "pair_id": "Ex10-7:22d|blind~book",
+        "route": "not_markable",
+        "verdict": "equivalent",
+        "reason": "typing and the blind solver agree it has no answer to mark"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": "sketch or drawing",
+     "tier_source": "typing",
+     "printed_answer_scope": null,
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex10-7:24b",
+     "kind": "exercise",
+     "lo": "lo:g10m10s5-1-2",
+     "stem": "The stem-and-leaf diagram below indicates the pulse rate per minute of ten Grade 10 learners. $\\begin{align*}\\begin{array}{c|cccc}7&8\\\\8&1&3&5&5\\\\9&0&1&1\\\\10&3&5\\end{array}\\end{align*}$ Key: $7|8=78$ . Give the five-number summary and create a box-and-whiskers plot for the data.",
+     "answer_type": "not_markable",
+     "answer": null,
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "$\\begin{align*}r&=\\frac{p}{100}(n-1)+1\\\\r_{25}&=\\frac{25}{100}(10-1)+1\\\\&=\\text{3,25}\\\\\\\\\\thereforeQ_{1}&=\\frac{83+85}{2}\\\\&=84\\\\\\\\r_{50}&=\\frac{50}{100}(10-1)+1\\\\&=\\text{5,5}\\\\\\\\\\thereforeQ_{2}&=\\frac{85+90}{2}\\\\&=\\text{87,5}\\\\\\\\r_{75}&=\\frac{75}{100}(10-1)+1\\\\&=\\text{7,75}\\\\\\thereforeQ_{3}&=\\frac{91+91}{2}\\\\&=91\\end{align*}$",
+      "The five-number summary is: $\\text{78};\\text{84};\\text{87,5};\\text{91};\\text{105}$ . Using this we can draw the box-and-whisker plot. [figure]"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": null,
+     "epub_final_answer": null,
+     "blind_answer": null,
+     "verification": "no_printed_answer",
+     "tier": "standard",
+     "printed_page": 387,
+     "shortcode": "2GPF",
+     "verify": {
+      "agreed_with_book_solution": true,
+      "pairs": [
+       {
+        "pair_id": "Ex10-7:24b|blind~book",
+        "route": "not_markable",
+        "verdict": "equivalent",
+        "reason": "typing and the blind solver agree it has no answer to mark"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": "two-part answer",
+     "tier_source": "typing",
+     "printed_answer_scope": null,
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex10-7:25e",
+     "kind": "exercise",
+     "lo": "lo:g10m10s5-1-3",
+     "stem": "The following is a list of data: $3;8;8;5;9;1;4;x$ In each separate case, determine the value of $x$ if the: box-and whiskers plot [figure]",
+     "answer_type": "numeric",
+     "answer": "4",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "In part a we found that if the range is 8, then $x<9$ . The range here is 8, therefore $x<9$ . Therefore we will use the median to help us find $x$ . The median on the box-and-whiskers plot is $\\text{4,5}$ . From our reasoning in part c we know that this means $x$ is either the fourth or fifth value. So we can calculate $x$ as follows:",
+      "$\\begin{align*}\\text{4,5}&=\\frac{5+x}{2}\\\\x+5&=9\\\\\\thereforex&=4\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "x = 4",
+     "epub_final_answer": "therefore x = 4",
+     "blind_answer": "$x=3$",
+     "verification": "disputed",
+     "tier": "advanced",
+     "printed_page": 387,
+     "shortcode": "2GPG",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex10-7:25e|blind~printed",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "x = 3 versus x = 4 are different values."
+       },
+       {
+        "pair_id": "Ex10-7:25e|blind~book",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "x = 3 versus x = 4 are different values."
+       },
+       {
+        "pair_id": "Ex10-7:25e|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [
+      "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__70b9fff8c4bd160b19e9e16841e1e78f.png"
+     ],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": true
+    },
+    {
+     "ref": "Ex10-7:26",
+     "kind": "exercise",
+     "lo": "lo:g10m10s5-1-3",
+     "stem": "Write down one list of numbers that satisfies the box-and-whisker plot below: [figure]",
+     "answer_type": "expression",
+     "answer": "2; 5; 7; 10; 10",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "2; 5; 7; 10; 10",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "solution": [
+      "From the box-and-whisker plot we get the five number summary: $2;5;7;10;10$ . Note that the third quartile is also the maximum value in this case. From this we can state that the data set must have a minimum value of 2 and a maximum value of 10. The data set can contain any numbers in the range $2\\lex\\le10$ such that the first quartile is 5, the median is 7 and the third quartile is 10. There is also no restriction on how many values are in the data set. One possible set that satisfies this set of numbers is $\\{2;5;7;10;10\\}$ . You can check that this set works by calculating the quartiles."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "{2; 5; 7; 10; 10}",
+     "epub_final_answer": "One possible set that satisfies this set of numbers is $\\{2;5;7;10;10\\}$ .",
+     "blind_answer": null,
+     "verification": "disputed",
+     "tier": "advanced",
+     "printed_page": 387,
+     "shortcode": "2GPH",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex10-7:26|blind~printed",
+        "route": "missing",
+        "verdict": "missing",
+        "reason": "the blind solver judged the item not markable; typing says it is"
+       },
+       {
+        "pair_id": "Ex10-7:26|blind~book",
+        "route": "missing",
+        "verdict": "missing",
+        "reason": "the blind solver judged the item not markable; typing says it is"
+       },
+       {
+        "pair_id": "Ex10-7:26|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [
+      "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__18e970d539b1a5a77cc21733440cfe60.png"
+     ],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": true
+    },
+    {
+     "ref": "Ex10-7:27c",
+     "kind": "exercise",
+     "lo": "lo:g10m10s5-1-3",
+     "stem": "Given $\\phi$ (which represents the golden ratio) to 20 decimal places: $\\text{1,61803398874989484820}$ Below is a box-and-whisker plot of the $21^{\\text{st}}$ - $27^{\\text{th}}$ decimal digits. Write down one list of numbers that satisfies this box-and-whisker plot. [figure]",
+     "answer_type": "expression",
+     "answer": "3; 3; 5; 5; 8; 8; 8 or 3; 4; 4; 5; 8; 8; 8",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "3; 3; 5; 5; 8; 8; 8 or 3; 4; 4; 5; 8; 8; 8",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "solution": [
+      "From the box-and-whisker plot we get the five number summary: $3;4;5;8;8$ . Note that the third quartile is also the maximum value in this case. From this we can state that the data set must have a minimum value of 3 and a maximum value of 8. The data set can contain any numbers in the range $3\\lex\\le8$ such that the first quartile is 4, the median is 5 and the third quartile is 8. However, we know that the data set consists of the $21^{\\text{st}}$ - $27^{\\text{th}}$ decimal digits of $\\Phi$ and so the data set must contain 7 values. The median will be at the fourth position and so the fourth number in the set is 5. The first quartile will lie between the second and third values while the third quartile will lie between the fifth and sixth values. Let the data set be: $\\{3;x;y;5;a;b;8\\}$ The first quartile is:",
+      "$\\begin{align*}4&=\\frac{x+y}{2}\\\\8&=x+y\\end{align*}$",
+      "$x$ and $y$ can be any integers that add up to 8. However $x$ and $y$ must be greater than or equal to 3 and less than or equal to 5. Therefore the possible values are: 3 and 5 or 4 and 4. The third quartile is:",
+      "$\\begin{align*}8&=\\frac{a+b}{2}\\\\16&=a+b\\end{align*}$",
+      "$a$ and $b$ can be any integers that add up to 16. However $a$ and $b$ must be greater than or equal to 5 and less than or equal to 8. Therefore the only possible values are: 8 and 8. There are two possible sets: $\\{3;3;5;5;8;8;8\\}$ or $\\{3;4;4;5;8;8;8\\}$ ."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "{3; 3; 5; 5; 8; 8; 8} or {3; 4; 4; 5; 8; 8; 8}",
+     "epub_final_answer": "There are two possible sets: $\\{3;3;5;5;8;8;8\\}$ or $\\{3;4;4;5;8;8;8\\}$ .",
+     "blind_answer": null,
+     "verification": "disputed",
+     "tier": "advanced",
+     "printed_page": 387,
+     "shortcode": "2GPJ",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex10-7:27c|blind~printed",
+        "route": "missing",
+        "verdict": "missing",
+        "reason": "the blind solver judged the item not markable; typing says it is"
+       },
+       {
+        "pair_id": "Ex10-7:27c|blind~book",
+        "route": "missing",
+        "verdict": "missing",
+        "reason": "the blind solver judged the item not markable; typing says it is"
+       },
+       {
+        "pair_id": "Ex10-7:27c|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [
+      "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__aad73c1dcd39673e713d2265140f52c3.png"
+     ],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": true
+    },
+    {
+     "ref": "Ex10-7:28a",
+     "kind": "exercise",
+     "lo": "lo:g10m10s5-1-1",
+     "stem": "There are 14 men working in a factory. Their ages are : $22;25;33;35;38;48;53;55;55;55;55;56;59;64$ Write down the five number summary.",
+     "answer_type": "expression",
+     "answer": "22; 36,5; 50; 55; 64",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "22; 36,5; 50; 55; 64",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}r&=\\frac{p}{100}(n-1)+1\\\\r_{25}&=\\frac{25}{100}(14-1)+1\\\\&=\\text{4,25}\\\\\\\\\\thereforeQ_{1}&=\\frac{35+38}{2}\\\\&=\\text{36,5}\\\\\\\\r_{50}&=\\frac{50}{100}(14-1)+1\\\\&=\\text{7,5}\\\\\\\\\\thereforeQ_{2}&=\\frac{53+55}{2}\\\\&=54\\\\\\\\r_{75}&=\\frac{75}{100}(14-1)+1\\\\&=\\text{10,75}\\\\\\\\\\thereforeQ_{3}&=\\frac{55+55}{2}\\\\&=55\\end{align*}$",
+      "The five number summary is: $\\text{22};\\text{36,5};\\text{50};\\text{55};\\text{64}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "22; 36,5; 50; 55; 64",
+     "epub_final_answer": "The five number summary is: $\\text{22};\\text{36,5};\\text{50};\\text{55};\\text{64}$",
+     "blind_answer": "$22;\\ 35;\\ 54;\\ 55;\\ 64$ (min, Q1, median, Q3, max)",
+     "verification": "disputed",
+     "tier": "standard",
+     "printed_page": 387,
+     "shortcode": "2GPK",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex10-7:28a|blind~printed",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "Q1 differs (35 vs 36.5) and the median differs (54 vs 50). The sorted data have median (55+53)/2 = 54, so the two summaries are different."
+       },
+       {
+        "pair_id": "Ex10-7:28a|blind~book",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "Q1 differs (35 vs 36.5) and the median differs (54 vs 50)."
+       },
+       {
+        "pair_id": "Ex10-7:28a|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex10-7:29b",
+     "kind": "exercise",
+     "lo": "lo:g10m10s5-1-3",
+     "stem": "The example below shows a comparison of the amount of dirt removed by four brands of detergents (brands $A$ to $D$ ). [figure] For brand $C$ , what does the number $\\text{18}$ $\\text{mg}$ represent?",
+     "answer_type": "choice",
+     "answer": "C",
+     "choices": [
+      {
+       "key": "A",
+       "text": "minimum"
+      },
+      {
+       "key": "B",
+       "text": "Q1"
+      },
+      {
+       "key": "C",
+       "text": "median"
+      },
+      {
+       "key": "D",
+       "text": "Q3"
+      },
+      {
+       "key": "E",
+       "text": "maximum"
+      }
+     ],
+     "marker": null,
+     "solution": [
+      "$\\text{18}$ $\\text{mg}$ represents the median."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "median",
+     "epub_final_answer": "$\\text{18}$ $\\text{mg}$ represents the median.",
+     "blind_answer": "The median amount of dirt removed by brand $C$: half of the results were $18$ mg or less and half were $18$ mg or more.",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 388,
+     "shortcode": "2GPM",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex10-7:29b|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both say the 18 mg value is the median; the first just elaborates on the meaning."
+       },
+       {
+        "pair_id": "Ex10-7:29b|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both say 18 mg represents the median."
+       },
+       {
+        "pair_id": "Ex10-7:29b|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both identify 18 mg as the median."
+       }
+      ]
+     },
+     "typing_problems": [
+      "options said to be the lesson's closed set are not categories: \"Q1\", \"Q3\" — numbers, pairs, values and combinations are the book's answer to type, never options to invent"
+     ],
+     "unit": null,
+     "options_source": "lesson",
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [
+      "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__60e9ac828ccca02bcf01092432b4d150.png"
+     ],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex10-7:29d",
+     "kind": "exercise",
+     "lo": "lo:g10m10s5-1-3",
+     "stem": "The example below shows a comparison of the amount of dirt removed by four brands of detergents (brands $A$ to $D$ ). [figure] Which brand of detergent would you buy? Explain your answer.",
+     "answer_type": "not_markable",
+     "answer": null,
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "We need to compare several values to help us decide. These values are shown in the table below. BrandMinimum valueMaximum valueRangeInterquartile rangeA101774B122193C152274D111874From this we see that brand C has the highest minimum value. Brand B has the smallest interquartile range but the largest range. It is possible that the minimum value for brand B is an outlier which would make brand B a better choice than brand C. Considering all the data available it would be hard to choose between brand C and brand B. We can however say that brands A and D are not very good choices as they both have low minimum and maximum values. Since brand C does not have a potential outlier this might be the best brand to choose."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "brand C",
+     "epub_final_answer": null,
+     "blind_answer": null,
+     "verification": "agreed",
+     "tier": "advanced",
+     "printed_page": 388,
+     "shortcode": "2GPM",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex10-7:29d|blind~printed",
+        "route": "not_markable",
+        "verdict": "equivalent",
+        "reason": "typing and the blind solver agree it has no answer to mark"
+       },
+       {
+        "pair_id": "Ex10-7:29d|blind~book",
+        "route": "not_markable",
+        "verdict": "equivalent",
+        "reason": "typing and the blind solver agree it has no answer to mark"
+       },
+       {
+        "pair_id": "Ex10-7:29d|book~printed",
+        "route": "not_markable",
+        "verdict": "equivalent",
+        "reason": "typed not markable: nothing is marked, so the book's final is not compared"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": "explanation required",
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [
+      "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__60e9ac828ccca02bcf01092432b4d150.png"
+     ],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    }
+   ],
+   "visuals": [],
+   "viz_gaps": [
+    {
+     "figure_id": "b03860:1",
+     "src": "tikzpicture/5498b5406028c512c20f952d1d2f386b.png",
+     "ref": null,
+     "printed_page": 379,
+     "reason": "This is an annotated vertical box-and-whisker plot: whiskers with end caps, a box, a bold median line, curly braces labelled 'data range' and 'interquartile range', and a percentile label beside each part. None of the existing kinds draws a box and whiskers, and stat_chart (bar, sector, dots) and number_line (points and intervals) would each show a different picture.",
+     "needed_kind": "box_plot: a box-and-whisker plot built from a five number summary (min, Q1, median, Q3, max), vertical or horizontal, with labelled parts and optional range braces"
+    },
+    {
+     "figure_id": "b03863:2",
+     "src": "tikzpicture/a113f43c6ddc661e9419eee46d6deb16.png",
+     "ref": "WE14",
+     "printed_page": 379,
+     "reason": "This is a vertical box-and-whisker plot of a worked example, with the five summary values (1,25; 2,5; 3,65; 4,775; 5,1) marked by dotted leaders on a vertical axis. No existing kind draws a box, a median line and whiskers. Using number_line or stat_chart would draw the wrong picture.",
+     "needed_kind": "box_plot: a box-and-whisker plot built from a five number summary (min, Q1, median, Q3, max), vertical or horizontal, with the five values marked on its axis"
+    },
+    {
+     "figure_id": "b03868:3",
+     "src": "tikzpicture/1afc7807341229b5748f218b372c6a77.png",
+     "ref": "Ex10-6:4a",
+     "printed_page": 380,
+     "reason": "This is a horizontal box-and-whisker plot on a labelled number line, with dotted leaders from the whisker ends and the box edges down to the axis, and a median line in the box. No existing kind draws a box with whiskers. Marking points or intervals on number_line would not show the box, the median line or the whisker caps.",
+     "needed_kind": "box_plot: a horizontal box-and-whisker plot on a number line, with whiskers, box and median line placed from five number summary values"
+    },
+    {
+     "figure_id": "b03869:4",
+     "src": "tikzpicture/603d10cf4ef1764eb07def5fc7152c95.png",
+     "ref": "Ex10-6:4b",
+     "printed_page": 380,
+     "reason": "This is a horizontal box-and-whisker plot on a labelled number line, with a long left whisker, a wide box, a median line and a short right whisker. No existing kind draws a box with whiskers. number_line points and intervals would not show the box, the median line or the whisker caps.",
+     "needed_kind": "box_plot: a horizontal box-and-whisker plot on a number line, with whiskers, box and median line placed from five number summary values"
+    },
+    {
+     "figure_id": "b03933:5",
+     "src": "tikzpicture/70b9fff8c4bd160b19e9e16841e1e78f.png",
+     "ref": "Ex10-7:25e",
+     "printed_page": 387,
+     "reason": "This is a horizontal box-and-whisker plot on a 1 to 9 number line, with whisker caps, a box and a median line. No existing kind draws a box with whiskers. The figure is given as part of the question and holds no letter-labelled unknown to withhold, but no kind can draw it faithfully.",
+     "needed_kind": "box_plot: a horizontal box-and-whisker plot on a number line, with whiskers, box and median line placed from five number summary values"
+    },
+    {
+     "figure_id": "b03934:6",
+     "src": "tikzpicture/18e970d539b1a5a77cc21733440cfe60.png",
+     "ref": "Ex10-7:26",
+     "printed_page": 387,
+     "reason": "This is a horizontal box-and-whisker plot with a left whisker, a box and a median line inside it. The right whisker is absent, so the box ends at the plot's right edge. No existing kind draws a box with whiskers, and number_line cannot draw the box, the median line or the whisker caps.",
+     "needed_kind": "box_plot: a horizontal box-and-whisker plot on a number line, with whiskers, box and median line placed from five number summary values, allowing a whisker of zero length"
+    },
+    {
+     "figure_id": "b03938:7",
+     "src": "tikzpicture/aad73c1dcd39673e713d2265140f52c3.png",
+     "ref": "Ex10-7:27c",
+     "printed_page": 387,
+     "reason": "This is a horizontal box-and-whisker plot on a number line, with a short left whisker, a box and a median line, and the axis titled 'decimal digits'. The right whisker is absent. No existing kind draws a box with whiskers, so stat_chart (bar, sector, dots) and number_line would each show a different picture.",
+     "needed_kind": "box_plot: a horizontal box-and-whisker plot on a number line with an axis title, with whiskers, box and median line placed from five number summary values, allowing a whisker of zero length"
+    }
+   ],
+   "teacher_only": {
+    "seen": 1,
+    "dropped": 1,
+    "reached_claim": 0,
+    "caught_in_claims": 0
+   },
+   "verify": {
+    "disagreements": [
+     {
+      "ref": "Ex10-7:25e",
+      "printed": "x = 4",
+      "book": "therefore x = 4",
+      "blind": "$x=3$",
+      "pairs": [
+       {
+        "pair_id": "Ex10-7:25e|blind~printed",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "x = 3 versus x = 4 are different values."
+       },
+       {
+        "pair_id": "Ex10-7:25e|blind~book",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "x = 3 versus x = 4 are different values."
+       },
+       {
+        "pair_id": "Ex10-7:25e|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ],
+      "typing_problems": []
+     },
+     {
+      "ref": "Ex10-7:26",
+      "printed": "{2; 5; 7; 10; 10}",
+      "book": "One possible set that satisfies this set of numbers is $\\{2;5;7;10;10\\}$ .",
+      "blind": null,
+      "pairs": [
+       {
+        "pair_id": "Ex10-7:26|blind~printed",
+        "route": "missing",
+        "verdict": "missing",
+        "reason": "the blind solver judged the item not markable; typing says it is"
+       },
+       {
+        "pair_id": "Ex10-7:26|blind~book",
+        "route": "missing",
+        "verdict": "missing",
+        "reason": "the blind solver judged the item not markable; typing says it is"
+       },
+       {
+        "pair_id": "Ex10-7:26|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ],
+      "typing_problems": []
+     },
+     {
+      "ref": "Ex10-7:27c",
+      "printed": "{3; 3; 5; 5; 8; 8; 8} or {3; 4; 4; 5; 8; 8; 8}",
+      "book": "There are two possible sets: $\\{3;3;5;5;8;8;8\\}$ or $\\{3;4;4;5;8;8;8\\}$ .",
+      "blind": null,
+      "pairs": [
+       {
+        "pair_id": "Ex10-7:27c|blind~printed",
+        "route": "missing",
+        "verdict": "missing",
+        "reason": "the blind solver judged the item not markable; typing says it is"
+       },
+       {
+        "pair_id": "Ex10-7:27c|blind~book",
+        "route": "missing",
+        "verdict": "missing",
+        "reason": "the blind solver judged the item not markable; typing says it is"
+       },
+       {
+        "pair_id": "Ex10-7:27c|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ],
+      "typing_problems": []
+     },
+     {
+      "ref": "Ex10-7:28a",
+      "printed": "22; 36,5; 50; 55; 64",
+      "book": "The five number summary is: $\\text{22};\\text{36,5};\\text{50};\\text{55};\\text{64}$",
+      "blind": "$22;\\ 35;\\ 54;\\ 55;\\ 64$ (min, Q1, median, Q3, max)",
+      "pairs": [
+       {
+        "pair_id": "Ex10-7:28a|blind~printed",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "Q1 differs (35 vs 36.5) and the median differs (54 vs 50). The sorted data have median (55+53)/2 = 54, so the two summaries are different."
+       },
+       {
+        "pair_id": "Ex10-7:28a|blind~book",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "Q1 differs (35 vs 36.5) and the median differs (54 vs 50)."
+       },
+       {
+        "pair_id": "Ex10-7:28a|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ],
+      "typing_problems": []
+     }
+    ],
+    "unchecked": [],
+    "off_task": [],
+    "no_printed_answer": [
+     {
+      "ref": "Ex10-6:1",
+      "book": null,
+      "blind": null,
+      "agreed_with_book_solution": true,
+      "answer_type": "not_markable"
+     },
+     {
+      "ref": "Ex10-6:2",
+      "book": null,
+      "blind": null,
+      "agreed_with_book_solution": true,
+      "answer_type": "not_markable"
+     },
+     {
+      "ref": "Ex10-6:3",
+      "book": "The five number summary is: Minimum: $3$ $Q_1$ : $5$ Median: $7$ $Q_3$ : $12$ Maximum: $16$",
+      "blind": "$3;\\ 5;\\ 7;\\ 13;\\ 16$ (min, Q1, median, Q3, max)",
+      "agreed_with_book_solution": false,
+      "answer_type": "expression"
+     },
+     {
+      "ref": "Ex10-6:4a",
+      "book": "Minimum: $15$ $Q_1$ : $22$ Median: $25$ $Q_3$ : $28$ Maximum: $35$",
+      "blind": "$15;\\ 22;\\ 25;\\ 28;\\ 35$ (min, Q1, median, Q3, max)",
+      "agreed_with_book_solution": true,
+      "answer_type": "expression"
+     },
+     {
+      "ref": "Ex10-6:4b",
+      "book": "Minimum: $88$ $Q_1$ : $92$ Median: $98$ $Q_3$ : $100$ Maximum: $101$",
+      "blind": "$88;\\ 92;\\ 98;\\ 100;\\ 101$ (min, Q1, median, Q3, max)",
+      "agreed_with_book_solution": true,
+      "answer_type": "expression"
+     },
+     {
+      "ref": "Ex10-7:22d",
+      "book": null,
+      "blind": null,
+      "agreed_with_book_solution": true,
+      "answer_type": "not_markable"
+     },
+     {
+      "ref": "Ex10-7:24b",
+      "book": null,
+      "blind": null,
+      "agreed_with_book_solution": true,
+      "answer_type": "not_markable"
+     }
+    ],
+    "typing_problems": [
+     {
+      "ref": "Ex10-6:3",
+      "problems": [
+       "the key \"3; 5; 7; 12; 16\" does not read as the book final answer \"The five number summary is: Minimum: $3$ $Q_1$ : $5$ Median: $7$ $Q_3$ : $12$ Maximum: $16$\""
+      ]
+     },
+     {
+      "ref": "Ex10-6:4a",
+      "problems": [
+       "the key \"15; 22; 25; 28; 35\" does not read as the book final answer \"Minimum: $15$ $Q_1$ : $22$ Median: $25$ $Q_3$ : $28$ Maximum: $35$\""
+      ]
+     },
+     {
+      "ref": "Ex10-6:4b",
+      "problems": [
+       "the key \"88; 92; 98; 100; 101\" does not read as the book final answer \"Minimum: $88$ $Q_1$ : $92$ Median: $98$ $Q_3$ : $100$ Maximum: $101$\""
+      ]
+     },
+     {
+      "ref": "Ex10-7:29b",
+      "problems": [
+       "options said to be the lesson's closed set are not categories: \"Q1\", \"Q3\" — numbers, pairs, values and combinations are the book's answer to type, never options to invent"
+      ]
+     }
+    ],
+    "printed_not_in_asked_form": [],
+    "forms_from_book_rules": [],
+    "forms_the_marker_cannot_check": [],
+    "retyped": [],
+    "tier_checks": [
+     {
+      "ref": "Ex10-6:1",
+      "typing": "standard",
+      "check": "standard"
+     },
+     {
+      "ref": "Ex10-6:4b",
+      "typing": "basic",
+      "check": "basic"
+     },
+     {
+      "ref": "Ex10-7:25e",
+      "typing": "advanced",
+      "check": "advanced"
+     },
+     {
+      "ref": "Ex10-7:28a",
+      "typing": "standard",
+      "check": "standard"
+     }
+    ]
+   },
+   "figure_blocked": [
+    "Ex10-6:4a",
+    "Ex10-6:4b",
+    "Ex10-7:25e",
+    "Ex10-7:26",
+    "Ex10-7:27c"
+   ],
+   "oracle": {
+    "tally": {
+     "claims": 15,
+     "questions": 8,
+     "worked_examples_kept_as_teaching": 6,
+     "by_objective": [
+      {
+       "lo": "lo:g10m10s5-1-1",
+       "claims": 8,
+       "items": 3
+      },
+      {
+       "lo": "lo:g10m10s5-1-2",
+       "claims": 4,
+       "items": 4
+      },
+      {
+       "lo": "lo:g10m10s5-1-3",
+       "claims": 3,
+       "items": 7
+      }
+     ]
+    },
+    "verdict": "GREEN",
+    "subheadings": [
+     {
+      "anchor": "g10m10s5-1",
+      "status": "covered",
+      "missing_items": []
+     }
+    ]
+   },
+   "counts": {
+    "claims": 15,
+    "claims_dropped": 0,
+    "items": 14,
+    "worked_examples": 1,
+    "exercises": 13,
+    "by_answer_type": {
+     "not_markable": 6,
+     "expression": 6,
+     "numeric": 1,
+     "choice": 1
+    },
+    "by_solution_provenance": {
+     "book_worked": 1,
+     "book_worked_epub": 13
+    },
+    "by_verification": {
+     "agreed": 3,
+     "no_printed_answer": 7,
+     "disputed": 4
+    },
+    "visuals": 0,
+    "viz_gaps": 7,
+    "figure_blocked": 5,
+    "unmapped_worked_examples": 0
+   },
+   "failed": {
+    "s2": false,
+    "s3": false
+   }
+  }
+ ],
+ "failed_lessons": [],
+ "calls": {
+  "by_phase": {
+   "S2 Claims": 1,
+   "S3 Typing": 1,
+   "S3 Blind re-solve": 1,
+   "S3 Tier check": 1,
+   "S3 Judge": 1,
+   "S4 Visuals": 1,
+   "S8 Oracle": 1
+  },
+  "per_lesson": {
+   "g10m10s5-1": 7
+  },
+  "total": 7
+ },
+ "meter": {
+  "stage": "S2-S4,S8",
+  "record": "uv run meter_run.py record --book g10-math --stage S2-S4,S8 --run <runId>",
+  "by_stage": "uv run meter_run.py summary --book g10-math --by phase",
+  "by_lesson": "uv run meter_run.py summary --book g10-math --by lesson",
+  "note": "Phase titles start with their stage (S2, S3, S4, S8), so `--by phase` is the per-stage cost; every label carries the lesson slug (S3:blind:<slug>:1), so `--by lesson` is the per-lesson cost."
+ }
+}

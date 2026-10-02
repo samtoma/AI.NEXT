@@ -1,0 +1,130 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m9s3-1-3:different-rates",
+ "kind": "family",
+ "lo_id": "lo:g10m9s3-1-3",
+ "parent_question_id": "q:g10m9s3-1-3:ex9-7-17",
+ "source_page": 351,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": "Bianca has an amount of money to invest for a number of years. Bank A offers a savings account paying simple interest and Bank B offers a savings account paying compound interest (compounded annually). Bank A's rate is higher than Bank B's. Amounts are in rand (R).",
+ "params": [
+  {
+   "name": "rc",
+   "randint": [
+    6,
+    12
+   ]
+  },
+  {
+   "name": "g",
+   "choice": [
+    1,
+    2
+   ]
+  },
+  {
+   "name": "rs",
+   "let": "rc + g"
+  },
+  {
+   "name": "n",
+   "randint": [
+    3,
+    6
+   ]
+  },
+  {
+   "name": "p",
+   "choice": [
+    1000,
+    1500,
+    2000,
+    2500,
+    3000,
+    4000,
+    5000,
+    6000
+   ]
+  },
+  {
+   "name": "sbal",
+   "let": "p * (1 + rs * n / 100)"
+  },
+  {
+   "name": "cbal",
+   "let": "p * (1 + rc / 100) ** n"
+  },
+  {
+   "name": "d",
+   "let": "abs(cbal - sbal)"
+  },
+  {
+   "require": "d >= 20",
+   "why": "the two balances must differ clearly so the better account is not a near tie"
+  },
+  {
+   "require": "abs(d - floor(d) - 1/2) > 1/4",
+   "why": "keeps the exact difference well away from a half rand, so rounding only the final answer to the nearest rand is unambiguous even if a solver rounds the balances to cents or the growth factor to 4 decimals"
+  },
+  {
+   "require": "cbal * 100 - floor(cbal * 100) != 1/2",
+   "why": "the compound balance must not be an exact half cent, so its rounding to cents is unambiguous"
+  },
+  {
+   "name": "ans",
+   "let": "floor(d + 1/2)"
+  },
+  {
+   "name": "ids",
+   "let": "fixed(rs / 100, 2)"
+  },
+  {
+   "name": "idc",
+   "let": "fixed(rc / 100, 2)"
+  },
+  {
+   "name": "fs",
+   "let": "fixed(1 + rs * n / 100, 2)"
+  },
+  {
+   "name": "sbal_s",
+   "let": "fixed(sbal, 2)"
+  },
+  {
+   "name": "cbal_s",
+   "let": "fixed(cbal, 2)"
+  },
+  {
+   "name": "big_s",
+   "let": "fixed(max(sbal, cbal), 2)"
+  },
+  {
+   "name": "small_s",
+   "let": "fixed(min(sbal, cbal), 2)"
+  },
+  {
+   "name": "d_s",
+   "let": "fixed(d, 2)"
+  },
+  {
+   "name": "wtxt",
+   "let": "'Bank B, even though its rate is lower' if cbal > sbal else 'Bank A'"
+  }
+ ],
+ "constraints": [
+  "rs > rc"
+ ],
+ "stem": "Bianca has $\\text{R{=p}}$ to invest for ${=n}$ years. Bank A offers a savings account which pays simple interest at a rate of ${=rs}$ % per annum, whereas Bank B offers a savings account paying compound interest, compounded annually, at a rate of ${=rc}$ % per annum. Bianca chooses the account that leaves her with the higher accumulated balance at the end of the ${=n}$ year period. How much more money does she have than she would have had in the other account? Give your answer to the nearest rand.",
+ "answer": "ans",
+ "solution": [
+  "Bank A pays simple interest, so use $A=P(1+in)$ with $P={=p}$, $i={=ids}$ and $n={=n}$.",
+  "$\\begin{aligned}A&={=p}(1+({=ids})({=n}))\\\\A&={=p}({=fs})\\\\A&=\\text{R {=sbal_s}}\\end{aligned}$",
+  "Bank B pays compound interest, so use $A=P(1+i)^{n}$ with $P={=p}$, $i={=idc}$ and $n={=n}$.",
+  "$\\begin{aligned}A&={=p}(1+{=idc})^{{=n}}\\\\A&=\\text{R {=cbal_s}}\\end{aligned}$",
+  "Bank A leaves her with $\\text{R {=sbal_s}}$ and Bank B leaves her with $\\text{R {=cbal_s}}$, so the account that gives her more money is {=wtxt}.",
+  "The difference is $\\text{R {=big_s}}-\\text{R {=small_s}}=\\text{R {=d_s}}$, which is $\\text{R {=ans}}$ to the nearest rand."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced: uses the twist of the book question itself (simple interest at the higher rate against compound interest at the lower rate, so the rates alone do not decide it) but adds steps: both closing balances, the decision, then the difference rounded to the nearest rand. The simple rate is 1 or 2 points above the compound rate, over 3 to 6 years, so the winner varies (verified by exact-fraction enumeration: 173 valid combinations, 82 where compound wins and 91 where simple wins; short periods favour simple, longer periods favour compound). The guards keep the answer robust: difference at least R20, exact difference at least a quarter rand from a half rand (so rounding balances to cents, or the growth factor to 4 or 5 decimals, gives the same nearest rand), and no exact half-cent in the compound balance. P is a multiple of 100 and rates are whole percentages, so the simple balance is exact to the cent. The stem states annual compounding, the book's convention. No distractors since it is numeric. The listed misconception mc:g10m9s3-1-3:bigger-rate-wins is exactly the error the numeric answer exposes when compound wins (the solver picks the higher rate and gets the wrong sign or size), but it cannot be tagged on a numeric family."
+}

@@ -1,0 +1,78 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m4s6-1-3:both-roots-sum-of-squares",
+ "lo_id": "lo:g10m4s6-1-3",
+ "parent_question_id": "q:g10m4s6-1-3:ex4-7-8i",
+ "tier": "standard",
+ "kind": "number_line_marker",
+ "instances": [
+  {
+   "a": 4,
+   "M": 8,
+   "I": 320,
+   "t": [
+    -8,
+    8
+   ]
+  },
+  {
+   "a": 3,
+   "M": 2,
+   "I": 34,
+   "t": [
+    -5,
+    5
+   ]
+  },
+  {
+   "a": 6,
+   "M": 4,
+   "I": 104,
+   "t": [
+    -4,
+    4
+   ]
+  },
+  {
+   "a": 2,
+   "M": 6,
+   "I": 120,
+   "t": [
+    -6,
+    6
+   ]
+  },
+  {
+   "a": 5,
+   "M": 10,
+   "I": 370,
+   "t": [
+    -7,
+    7
+   ]
+  }
+ ],
+ "spec": {
+  "mode": "points",
+  "range": [
+   -10,
+   10
+  ],
+  "targets": "{=t}"
+ },
+ "stem": "In the formula $I=\\dfrac{1}{2}M\\left(a^2+b^2\\right)$, $a={=a}$, $M={=M}$ and $I={=I}$. Mark on the number line every value of $b$ that makes the formula true.",
+ "solution": [
+  "Put the three given numbers into $I=\\dfrac{1}{2}M\\left(a^2+b^2\\right)$, so that $b$ is the only letter left.",
+  "Undo what multiplies the bracket by doing the same to both sides: multiply by 2, then divide by $M$.",
+  "Subtract the number $a^2$ from both sides so that $b^2$ stands alone and equals a positive number.",
+  "Take the square root of both sides: the positive root and its negative both square to this number, so $b$ has two values.",
+  "Tap both values on the number line, one on each side of 0."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "missed-values",
+   "misconception_id": "mc:g10m4s6-1-3:only-positive-root"
+  }
+ ],
+ "notes": "Standard tier because the square root comes after three undoing steps and a subtraction, not one. Row 1 is the anchor's own numbers (a=4, M=8, I=320, b=±8); every row checked: ½M(a²+b²) = I with whole-number roots inside the ±10 range. Same single diagnostic and same limits as the basic template: the symbolic half of the objective is a gap; extra-values and sign-flipped are deliberately not mapped; missed-values also fires when only the negative root was marked, so feedback must not presume which root is missing."
+}

@@ -1,0 +1,919 @@
+{
+ "objectives_version": 1,
+ "book": "g10-math",
+ "chapter": 6,
+ "module": "module:g10m-c06",
+ "lesson": "g10m6s5-1",
+ "title": "Exponential functions",
+ "provenance": {
+  "sections": [
+   {
+    "number": "6.5",
+    "title": "Exponential functions"
+   }
+  ],
+  "part": null,
+  "chapter_intro": false
+ },
+ "status": "approved",
+ "g1": {
+  "approved_by": "auto-pass G1 (AI recommendation)",
+  "approved_at": "2026-10-01T17:53:16+00:00",
+  "verdicts": {
+   "auto": true,
+   "by": "auto-pass G1 (AI recommendation)",
+   "terminology": {
+    "set notation": "keep",
+    "interval notation": "keep",
+    "real numbers": "keep",
+    "interval": "keep",
+    "round brackets": "keep",
+    "square brackets": "keep",
+    "function notation": "keep",
+    "input value": "keep",
+    "output value": "keep",
+    "composition of functions": "keep",
+    "table of values": "keep",
+    "plot": "keep",
+    "ordered pairs": "keep",
+    "dependent value": "keep",
+    "independent value": "keep",
+    "range": "keep",
+    "standard form": "keep",
+    "gradient": "keep",
+    "straight-line graph": "keep",
+    "x-intercept": "keep",
+    "increasing": "keep",
+    "decreasing": "keep",
+    "dual intercept method": "keep",
+    "gradient-intercept method": "keep",
+    "steepness": "keep",
+    "parabola": "keep",
+    "vertical shift": "keep",
+    "turning point": "keep",
+    "intercepts": "keep",
+    "hyperbola": "keep",
+    "smooth curve": "keep",
+    "discontinuity": "keep",
+    "asymptote": "keep",
+    "line of symmetry": "keep",
+    "hyperbolic function": "keep",
+    "transformation": "keep",
+    "exponential function": "keep",
+    "system of axes": "keep",
+    "reflection": "keep",
+    "axis of symmetry": "keep",
+    "vertical stretch": "keep",
+    "sign of a": "keep",
+    "horizontal asymptote": "keep",
+    "sine function": "keep",
+    "sine graph": "keep",
+    "amplitude": "keep",
+    "reflection about the x-axis": "keep",
+    "basic graph": "keep",
+    "turning points": "keep",
+    "period": "keep",
+    "cosine function": "keep",
+    "cosine graph": "keep",
+    "shift": "keep",
+    "tangent function": "keep",
+    "branches": "keep",
+    "tangent graph": "keep",
+    "trigonometric function": "keep",
+    "parabolic function": "keep",
+    "intercept": "keep",
+    "set of axes": "keep",
+    "y-values": "keep"
+   },
+   "move_items": {
+    "Ex6-6:9": "lo:g10m6s6-3-2",
+    "Ex6-6:12": "lo:g10m6s6-3-3",
+    "Ex6-6:14b": "lo:g10m6s6-2-3",
+    "Ex6-6:18a": "lo:g10m6s6-2-4",
+    "Ex6-6:18c": "lo:g10m6s6-2-1",
+    "Ex6-6:19a": "lo:g10m6s6-2-4",
+    "Ex6-6:19c": "lo:g10m6s6-2-1",
+    "Ex6-6:20a": "lo:g10m6s6-2-4",
+    "Ex6-6:20c": "lo:g10m6s6-2-1",
+    "Ex6-8:48d": "lo:g10m6s5-1-1",
+    "Ex6-8:52": "lo:g10m6s6-1-2"
+   },
+   "links": {},
+   "acknowledged": [],
+   "objectives": {},
+   "outside_items": {
+    "Ex6-8:28a": {
+     "why": "auto-pass G1 (AI recommendation): both blind mappers placed it nowhere, so no objective of this chapter practises it"
+    }
+   }
+  }
+ },
+ "source_run": {
+  "file": "runs/g10-math/objectives/ch06-wf_976df06d-d5a.json",
+  "sha256": "46f17dea8bb1f7f5684a6ec7ddda2743bf81d90da4ecccce9cae13c61500068a",
+  "prompts_version": "s1-v5",
+  "packet_sha256": "ea8ee5a1e24cbb235bdaa7d00f20d7cd665cb45ba3e8288f05c94edc8961a05a"
+ },
+ "objectives": [
+  {
+   "id": "lo:g10m6s5-1-1",
+   "provisional_id": "lo:g10m6s5-1-1",
+   "n": 1,
+   "statement": "Complete a table of values and draw the graphs of exponential functions of the form y = b^x (b > 0, b ≠ 1) for different values of b on the same system of axes, and describe how the graphs compare (common y-intercept, asymptote, and that (1/b)^x is the reflection of b^x in the y-axis), including how the value of b changes the graph.",
+   "label": "Plot exponential graphs",
+   "evidence": [
+    {
+     "kind": "worked_example",
+     "anchor": "WE12",
+     "printed_page": 177,
+     "quote": "Complete the following table for each of the functions and draw the graphs on the same system of axes",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "intro",
+     "anchor": "b02316",
+     "printed_page": 179,
+     "quote": "Use your results to deduce the effect of $b$",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex6-5:6a",
+     "printed_page": 187,
+     "quote": "Draw the graphs on the same set of axes.",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex6-5:6b",
+     "printed_page": 187,
+     "quote": "Is the $x$ -axis an asymptote or an axis of symmetry to both graphs?",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex6-5:6c",
+     "printed_page": 187,
+     "quote": "Which graph can be described by the equation",
+     "contained": true,
+     "present": true,
+     "supports": true
+    }
+   ],
+   "evidence_dropped": [
+    {
+     "kind": "intro",
+     "anchor": "b02312",
+     "printed_page": 177,
+     "quote": "Functions of the general form $y=a{b}^{x}+q$ are called exponential functions.",
+     "contained": true,
+     "present": true,
+     "supports": false,
+     "dropped": "the evidence check says it does not support the objective:"
+    }
+   ],
+   "exercise_items": [
+    "Ex6-5:6a",
+    "Ex6-5:6b",
+    "Ex6-5:6c",
+    "Ex6-5:6d",
+    "Ex6-8:48d",
+    "Ex6-8:50e"
+   ],
+   "worked_examples": [
+    "WE12"
+   ],
+   "confidence": "agreed",
+   "from": {
+    "a": [
+     "A1"
+    ],
+    "b": [
+     "B1"
+    ]
+   },
+   "derivation": "derived",
+   "terms": [
+    "exponential function",
+    "table of values",
+    "system of axes",
+    "y-intercept",
+    "asymptote",
+    "reflection",
+    "y-axis",
+    "axis of symmetry"
+   ],
+   "edited_at_g1": false,
+   "order_in_parent": 18,
+   "node": {
+    "id": "lo:g10m6s5-1-1",
+    "kind": "learning_objective",
+    "label": "Plot exponential graphs",
+    "description": "Complete a table of values and draw the graphs of exponential functions of the form y = b^x (b > 0, b ≠ 1) for different values of b on the same system of axes, and describe how the graphs compare (common y-intercept, asymptote, and that (1/b)^x is the reflection of b^x in the y-axis), including how the value of b changes the graph.",
+    "source_page": 177,
+    "syllabus_ref": "6.5",
+    "order_in_parent": 18
+   }
+  },
+  {
+   "id": "lo:g10m6s5-1-2",
+   "provisional_id": "lo:g10m6s5-1-2",
+   "n": 2,
+   "statement": "Determine the values of a and q (or the equation) of an exponential function y = ab^x + q from points on its graph, using the effects of a and q (sign of a, vertical shift), and write the equation of its reflection, vertical shift or vertical stretch.",
+   "label": "Determine equation from graph",
+   "evidence": [
+    {
+     "kind": "intro",
+     "anchor": "b02318",
+     "printed_page": 180,
+     "quote": "The effect of $q$ is called a vertical shift",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "intro",
+     "anchor": "b02332",
+     "printed_page": 181,
+     "quote": "The standard form of an exponential function is $y=a{b}^{x}+q$",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex6-5:2",
+     "printed_page": 185,
+     "quote": "Determine the values of $a$ and $q$",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex6-5:7b",
+     "printed_page": 187,
+     "quote": "the reflection of $f(x)$ in the $x$ -axis",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex6-5:7f",
+     "printed_page": 187,
+     "quote": "is a vertical shift of",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex6-8:25",
+     "printed_page": 220,
+     "quote": "Find the values of $a$ and $q$",
+     "contained": true,
+     "present": true,
+     "supports": true
+    }
+   ],
+   "evidence_dropped": [],
+   "exercise_items": [
+    "Ex6-5:2",
+    "Ex6-5:3",
+    "Ex6-5:7a",
+    "Ex6-5:7b",
+    "Ex6-5:7d",
+    "Ex6-5:7e",
+    "Ex6-5:7f",
+    "Ex6-8:25",
+    "Ex6-8:50c",
+    "Ex6-8:50d"
+   ],
+   "worked_examples": [],
+   "confidence": "agreed",
+   "from": {
+    "a": [
+     "A2"
+    ],
+    "b": [
+     "B5"
+    ]
+   },
+   "derivation": "derived",
+   "terms": [
+    "exponential function",
+    "standard form",
+    "vertical shift",
+    "reflection",
+    "vertical stretch",
+    "x-axis"
+   ],
+   "edited_at_g1": false,
+   "order_in_parent": 19,
+   "node": {
+    "id": "lo:g10m6s5-1-2",
+    "kind": "learning_objective",
+    "label": "Determine equation from graph",
+    "description": "Determine the values of a and q (or the equation) of an exponential function y = ab^x + q from points on its graph, using the effects of a and q (sign of a, vertical shift), and write the equation of its reflection, vertical shift or vertical stretch.",
+    "source_page": 180,
+    "syllabus_ref": "6.5",
+    "order_in_parent": 19
+   }
+  },
+  {
+   "id": "lo:g10m6s5-1-3",
+   "provisional_id": "lo:g10m6s5-1-3",
+   "n": 3,
+   "statement": "Determine the domain and range of an exponential function y = ab^x + q, using the sign of a and the value of q to decide whether the range lies above or below y = q.",
+   "label": "Domain and range",
+   "evidence": [
+    {
+     "kind": "heading",
+     "anchor": "b02333",
+     "printed_page": 181,
+     "quote": "Domain and range",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "intro",
+     "anchor": "b02335",
+     "printed_page": 181,
+     "quote": "is dependent on the sign of $a$",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "worked_example",
+     "anchor": "WE13",
+     "printed_page": 182,
+     "quote": "Find the domain and range of",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex6-5:7c",
+     "printed_page": 187,
+     "quote": "Determine the range of $h(x)$",
+     "contained": true,
+     "present": true,
+     "supports": true
+    }
+   ],
+   "evidence_dropped": [
+    {
+     "kind": "summary",
+     "anchor": "b02553",
+     "printed_page": 214,
+     "quote": "The range is the set of all $y$ -values",
+     "contained": true,
+     "present": true,
+     "supports": false,
+     "dropped": "the evidence check says it does not support the objective:"
+    }
+   ],
+   "exercise_items": [
+    "Ex6-5:7c",
+    "Ex6-8:48e",
+    "Ex6-8:50f"
+   ],
+   "worked_examples": [
+    "WE13"
+   ],
+   "confidence": "agreed",
+   "from": {
+    "a": [
+     "A3"
+    ],
+    "b": [
+     "B2"
+    ]
+   },
+   "derivation": "derived",
+   "terms": [
+    "domain",
+    "range",
+    "exponential function",
+    "sign of a"
+   ],
+   "edited_at_g1": false,
+   "order_in_parent": 20,
+   "node": {
+    "id": "lo:g10m6s5-1-3",
+    "kind": "learning_objective",
+    "label": "Domain and range",
+    "description": "Determine the domain and range of an exponential function y = ab^x + q, using the sign of a and the value of q to decide whether the range lies above or below y = q.",
+    "source_page": 181,
+    "syllabus_ref": "6.5",
+    "order_in_parent": 20
+   }
+  },
+  {
+   "id": "lo:g10m6s5-1-4",
+   "provisional_id": "lo:g10m6s5-1-4",
+   "n": 4,
+   "statement": "Calculate the y-intercept (let x = 0) and the x-intercept (let y = 0) of an exponential function y = ab^x + q, rounding where required, and recognise when there is no x-intercept.",
+   "label": "Calculate intercepts",
+   "evidence": [
+    {
+     "kind": "intro",
+     "anchor": "b02345",
+     "printed_page": 182,
+     "quote": "For the $y$ -intercept, let $x=0$",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "intro",
+     "anchor": "b02351",
+     "printed_page": 182,
+     "quote": "For the $x$ -intercept, let $y=0$",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex6-5:1a",
+     "printed_page": 185,
+     "quote": "Calculate the $y$ -intercept",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex6-5:1b",
+     "printed_page": 185,
+     "quote": "calculate the $x$ -intercept",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex6-5:4b",
+     "printed_page": 186,
+     "quote": "Now calculate the $x$ -intercept",
+     "contained": true,
+     "present": true,
+     "supports": true
+    }
+   ],
+   "evidence_dropped": [],
+   "exercise_items": [
+    "Ex6-5:1a",
+    "Ex6-5:1b",
+    "Ex6-5:4a",
+    "Ex6-5:4b",
+    "Ex6-8:23a",
+    "Ex6-8:23b",
+    "Ex6-8:48a"
+   ],
+   "worked_examples": [],
+   "confidence": "agreed",
+   "from": {
+    "a": [
+     "A4"
+    ],
+    "b": [
+     "B3"
+    ]
+   },
+   "derivation": "derived",
+   "terms": [
+    "y-intercept",
+    "x-intercept",
+    "exponential function"
+   ],
+   "edited_at_g1": false,
+   "order_in_parent": 21,
+   "node": {
+    "id": "lo:g10m6s5-1-4",
+    "kind": "learning_objective",
+    "label": "Calculate intercepts",
+    "description": "Calculate the y-intercept (let x = 0) and the x-intercept (let y = 0) of an exponential function y = ab^x + q, rounding where required, and recognise when there is no x-intercept.",
+    "source_page": 182,
+    "syllabus_ref": "6.5",
+    "order_in_parent": 21
+   }
+  },
+  {
+   "id": "lo:g10m6s5-1-5",
+   "provisional_id": "lo:g10m6s5-1-5",
+   "n": 5,
+   "statement": "Sketch the graph of an exponential function y = ab^x + q by examining the sign of a and the value of q and finding the intercepts and the horizontal asymptote y = q, and identify the graph that matches a given equation.",
+   "label": "Sketch exponential graphs",
+   "evidence": [
+    {
+     "kind": "intro",
+     "anchor": "b02322",
+     "printed_page": 180,
+     "quote": "determines whether the graph curves upwards or downwards",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "intro",
+     "anchor": "b02320",
+     "printed_page": 180,
+     "quote": "is the line $y=q$",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "heading",
+     "anchor": "EMA4Z",
+     "printed_page": 183,
+     "quote": "Sketching graphs of the form",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "intro",
+     "anchor": "b02358",
+     "printed_page": 183,
+     "quote": "we need to determine four characteristics",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "worked_example",
+     "anchor": "WE14",
+     "printed_page": 183,
+     "quote": "Mark the intercept and the asymptote.",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex6-5:5a",
+     "printed_page": 186,
+     "quote": "identify a function that matches each of the following equations",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex6-8:24a",
+     "printed_page": 220,
+     "quote": "Sketch the following functions and identify the asymptotes",
+     "contained": true,
+     "present": true,
+     "supports": true
+    }
+   ],
+   "evidence_dropped": [],
+   "exercise_items": [
+    "Ex6-5:5a",
+    "Ex6-5:5b",
+    "Ex6-5:5c",
+    "Ex6-5:5d",
+    "Ex6-8:24a",
+    "Ex6-8:24b",
+    "Ex6-8:24c",
+    "Ex6-8:26a",
+    "Ex6-8:26b",
+    "Ex6-8:26c",
+    "Ex6-8:26d",
+    "Ex6-8:58a"
+   ],
+   "worked_examples": [
+    "WE14",
+    "WE15"
+   ],
+   "confidence": "agreed",
+   "from": {
+    "a": [
+     "A5"
+    ],
+    "b": [
+     "B4"
+    ]
+   },
+   "derivation": "derived",
+   "terms": [
+    "horizontal asymptote",
+    "y-intercept",
+    "x-intercept",
+    "sign of a",
+    "vertical shift",
+    "exponential function"
+   ],
+   "edited_at_g1": false,
+   "order_in_parent": 22,
+   "node": {
+    "id": "lo:g10m6s5-1-5",
+    "kind": "learning_objective",
+    "label": "Sketch exponential graphs",
+    "description": "Sketch the graph of an exponential function y = ab^x + q by examining the sign of a and the value of q and finding the intercepts and the horizontal asymptote y = q, and identify the graph that matches a given equation.",
+    "source_page": 180,
+    "syllabus_ref": "6.5",
+    "order_in_parent": 22
+   }
+  }
+ ],
+ "pool_items": [
+  "Ex6-8:23a",
+  "Ex6-8:23b",
+  "Ex6-8:24a",
+  "Ex6-8:24b",
+  "Ex6-8:24c",
+  "Ex6-8:25",
+  "Ex6-8:26a",
+  "Ex6-8:26b",
+  "Ex6-8:26c",
+  "Ex6-8:26d",
+  "Ex6-8:48a",
+  "Ex6-8:48d",
+  "Ex6-8:48e",
+  "Ex6-8:50c",
+  "Ex6-8:50d",
+  "Ex6-8:50e",
+  "Ex6-8:50f",
+  "Ex6-8:58a"
+ ],
+ "prerequisites": [
+  {
+   "src": "lo:g10m2s2-1-1",
+   "dst": "lo:g10m6s5-1-1",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "worked_example",
+     "anchor": "WE12",
+     "printed_page": 177,
+     "quote": "Any number with exponent $\\text{0}$ is equal to $\\text{1}$"
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex6-5:6c",
+     "printed_page": 187,
+     "quote": "Which graph can be described by the equation $y=2^{-x}$"
+    }
+   ],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "WE12 says 'Any number with exponent 0 equals 1', the zero-exponent identity. The table entries need negative exponents, and Ex6-5:6c needs 2^-x=(1/2)^x."
+   },
+   "backward": false
+  },
+  {
+   "src": "lo:g10m6s1-1-3",
+   "dst": "lo:g10m6s5-1-1",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "worked_example",
+     "anchor": "WE12",
+     "printed_page": 177,
+     "quote": "Complete the following table for each of the functions and draw the graphs on the same system of axes"
+    }
+   ],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "WE12 completes tables and draws graphs on the same axes, which is the table-and-plot method."
+   },
+   "backward": false
+  },
+  {
+   "src": "lo:g10m6s5-1-1",
+   "dst": "lo:g10m6s5-1-2",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "worked_example",
+     "anchor": "WE12",
+     "printed_page": 177,
+     "quote": "$F(x)$ is the reflection of $f(x)$ about the $y$ -axis"
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex6-5:7d",
+     "printed_page": 187,
+     "quote": "the reflection of $f(x)$ in the $y$ -axis"
+    }
+   ],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "WE12 states that F(x) is the reflection of f(x) about the y-axis. Ex6-5:7d asks for the equation of a reflection in the y-axis, which uses that result."
+   },
+   "backward": false
+  },
+  {
+   "src": "lo:g10m4s7-1-1",
+   "dst": "lo:g10m6s5-1-3",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "text",
+     "anchor": "b02340",
+     "printed_page": 181,
+     "quote": "ab^{x}&<0"
+    },
+    {
+     "kind": "text",
+     "anchor": "b02341",
+     "printed_page": 181,
+     "quote": "for $a<0$ the range is"
+    }
+   ],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "The range derivation goes b^x>0, then ab^x<0, then ab^x+q<q. That is multiplying by a negative (reversing the sign) and adding q, the inequality rules."
+   },
+   "backward": false
+  },
+  {
+   "src": "lo:g10m2s4-1-1",
+   "dst": "lo:g10m6s5-1-4",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "worked_example",
+     "anchor": "WE15",
+     "printed_page": 184,
+     "quote": "{3}^{1}&={3}^{x}"
+    }
+   ],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "WE15 solves -6=-2*3^x and writes 3^1=3^x so x=1. That is the same-base exponent-equating method."
+   },
+   "backward": false
+  },
+  {
+   "src": "lo:g10m2s4-1-4",
+   "dst": "lo:g10m6s5-1-4",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "exercise",
+     "anchor": "Ex6-5:1b",
+     "printed_page": 185,
+     "quote": "Estimate your answer to one decimal place if necessary"
+    }
+   ],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "Ex6-5:1b finds the x-intercept of -2/3*3^x+1 and says to estimate to one decimal place. That needs trial and error on an exponential equation."
+   },
+   "backward": false
+  },
+  {
+   "src": "lo:g10m1s4-1-1",
+   "dst": "lo:g10m6s5-1-4",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "exercise",
+     "anchor": "Ex6-5:1a",
+     "printed_page": 185,
+     "quote": "Your answer must be correct to 2 decimal places"
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex6-5:4a",
+     "printed_page": 186,
+     "quote": "Your answer must be correct to 2 decimal places"
+    }
+   ],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "Both exercises require the y-intercept correct to 2 decimal places, which needs rounding."
+   },
+   "backward": false
+  },
+  {
+   "src": "lo:g10m6s2-1-3",
+   "dst": "lo:g10m6s5-1-4",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "text",
+     "anchor": "b02345",
+     "printed_page": 182,
+     "quote": "For the $y$ -intercept, let $x=0$"
+    },
+    {
+     "kind": "text",
+     "anchor": "b02351",
+     "printed_page": 182,
+     "quote": "For the $x$ -intercept, let $y=0$"
+    }
+   ],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "The exponential text restates 'let x=0' for the y-intercept and 'let y=0' for the x-intercept, which is the straight-line intercept method."
+   },
+   "backward": false
+  },
+  {
+   "src": "lo:g10m6s5-1-2",
+   "dst": "lo:g10m6s5-1-5",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "worked_example",
+     "anchor": "WE14",
+     "printed_page": 183,
+     "quote": "therefore the graph curves upwards"
+    },
+    {
+     "kind": "text",
+     "anchor": "b02359",
+     "printed_page": 183,
+     "quote": "sign of $a$ $y$ -intercept"
+    }
+   ],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "WE14 reads a>1 as 'the graph curves upwards' and q>0 as a vertical shift. The characteristics list starts with the sign of a. Both are effects of a and q from the first objective."
+   },
+   "backward": false
+  },
+  {
+   "src": "lo:g10m6s5-1-3",
+   "dst": "lo:g10m6s5-1-5",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "worked_example",
+     "anchor": "WE14",
+     "printed_page": 183,
+     "quote": "Range: $\\left\\{g(x):g(x)>2\\right\\}$"
+    },
+    {
+     "kind": "worked_example",
+     "anchor": "WE15",
+     "printed_page": 184,
+     "quote": "Range: $\\left\\{g(x):g(x)<6\\right\\}$"
+    }
+   ],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "WE14 and WE15 end by stating the range as g(x)>2 and g(x)<6. That uses the sign of a and the value of q to place the range."
+   },
+   "backward": false
+  },
+  {
+   "src": "lo:g10m6s5-1-4",
+   "dst": "lo:g10m6s5-1-5",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "text",
+     "anchor": "b02358",
+     "printed_page": 183,
+     "quote": "we need to determine four characteristics"
+    },
+    {
+     "kind": "worked_example",
+     "anchor": "WE14",
+     "printed_page": 183,
+     "quote": "For the $x$ -intercept, let $y=0$"
+    }
+   ],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "The exponential characteristics list includes the intercepts, and WE14 calculates the x-intercept with 'let y=0'. That is the first objective's calculation."
+   },
+   "backward": false
+  }
+ ],
+ "checks": {
+  "ok": true,
+  "failures": [],
+  "warnings": [
+   "g10m6s5-1: objectives are not numbered in the order the book practises them (rule 6)"
+  ]
+ },
+ "outside_items": [
+  {
+   "item": "Ex6-8:28a",
+   "why": "auto-pass G1 (AI recommendation): both blind mappers placed it nowhere, so no objective of this chapter practises it",
+   "by": "auto-pass G1 (AI recommendation)",
+   "at": "2026-10-01T17:53:16+00:00"
+  }
+ ]
+}

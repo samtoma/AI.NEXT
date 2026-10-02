@@ -1,0 +1,64 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m3s2-1-4:quad-n",
+ "kind": "family",
+ "lo_id": "lo:g10m3s2-1-4",
+ "parent_question_id": "q:g10m3s2-1-4:ex3-1-9a",
+ "source_page": 66,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "choice": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "c",
+   "randint": [
+    1,
+    15
+   ]
+  },
+  {
+   "name": "m",
+   "randint": [
+    4,
+    15
+   ]
+  },
+  {
+   "name": "t1",
+   "let": "a - c"
+  },
+  {
+   "name": "t2",
+   "let": "4 * a - c"
+  },
+  {
+   "name": "t3",
+   "let": "9 * a - c"
+  },
+  {
+   "name": "V",
+   "let": "a * m * m - c"
+  }
+ ],
+ "constraints": [],
+ "stem": "Study the following sequence: ${=t1}\\;;\\;{=t2}\\;;\\;{=t3}\\;;\\;\\ldots$ The general term of the sequence is $T_n = {=a}n^{2} - {=c}$. Find the value of $n$ if $T_n$ is ${=V}$. ($n$ is the position of a term in the sequence, so it is a positive whole number.)",
+ "answer": "m",
+ "solution": [
+  "Substitute the value of $T_n$ into the general term: ${=V} = {=a}n^{2} - {=c}$.",
+  "Add ${=c}$ to both sides: ${=V + c} = {=a}n^{2}$.",
+  "Divide both sides by ${=a}$: ${=m*m} = n^{2}$.",
+  "Take the square root. $n$ is a position in the sequence, so it is positive: $n = {=m}$.",
+  "Check: $T_{{=m}} = {=a}({=m})^{2} - {=c} = {=a*m*m} - {=c} = {=V}$, so $n = {=m}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "The twist the book itself uses in ex3-1-9a: a general term with n squared (T_n = n^2 - 1). Here the formula is used in the other direction, solving for n, so the student must undo the constant, undo the coefficient and take a square root. The stem states that n is a positive whole number so the negative root is excluded and the answer is unique. The coefficient a is 2 to 5 (never 1, so the formula prints without a leading '1n^2'); the constant is subtracted in the template so it never has to print '+ -c'. m >= 4 so the asked term is not one of the three printed terms. If the reviewer judges that solving n^2 = k goes beyond what this lesson's book questions do, drop this family; the other three do not depend on it."
+}

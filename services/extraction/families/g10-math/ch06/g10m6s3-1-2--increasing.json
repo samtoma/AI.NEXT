@@ -1,0 +1,145 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s3-1-2:increasing",
+ "kind": "family",
+ "lo_id": "lo:g10m6s3-1-2",
+ "parent_question_id": "q:g10m6s3-1-2:ex6-3-7d",
+ "source_page": 167,
+ "tier": "basic",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "choice": [
+    -5,
+    -4,
+    -3,
+    -2,
+    -1,
+    1,
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    -9,
+    9
+   ],
+   "resample_while": "q == 0"
+  },
+  {
+   "name": "inc",
+   "choice": [
+    0,
+    1
+   ]
+  },
+  {
+   "name": "pos",
+   "let": "1 if a > 0 else 0"
+  },
+  {
+   "name": "right",
+   "let": "1 if pos == inc else 0"
+  },
+  {
+   "name": "ac",
+   "let": "'' if a == 1 else ('-' if a == -1 else str(a))"
+  },
+  {
+   "name": "qs",
+   "let": "'+ ' if q > 0 else '- '"
+  },
+  {
+   "name": "qa",
+   "let": "abs(q)"
+  },
+  {
+   "name": "word",
+   "let": "['decreasing', 'increasing'][inc]"
+  },
+  {
+   "name": "rc",
+   "let": "['≤', '≥'][right]"
+  },
+  {
+   "name": "ro",
+   "let": "['≥', '≤'][right]"
+  },
+  {
+   "name": "rr",
+   "let": "['≤', '≥'][pos]"
+  },
+  {
+   "name": "sgn",
+   "let": "['negative', 'positive'][pos]"
+  },
+  {
+   "name": "opens",
+   "let": "['downwards', 'upwards'][pos]"
+  },
+  {
+   "name": "ext",
+   "let": "['maximum', 'minimum'][pos]"
+  },
+  {
+   "name": "lw",
+   "let": "['increasing', 'decreasing'][pos]"
+  },
+  {
+   "name": "rw",
+   "let": "['decreasing', 'increasing'][pos]"
+  }
+ ],
+ "constraints": [
+  "a != 0",
+  "q != 0"
+ ],
+ "stem": "The parabola $g$ is given by $y = {=ac}x^2 {=qs}{=qa}$. For what values of $x$ is $g$ {=word}?",
+ "solution": [
+  "A parabola of the form $y = ax^2 + q$ has its turning point on the $y$-axis, at $(0, q)$. Here $q = {=q}$, so the turning point is $(0, {=q})$.",
+  "Here $a = {=a}$, which is {=sgn}, so the parabola opens {=opens} and the turning point is a {=ext}.",
+  "To the left of the turning point ($x \\leq 0$) the graph is {=lw}. To the right of the turning point ($x \\geq 0$) the graph is {=rw}.",
+  "So $g$ is {=word} for $x {=rc} 0$."
+ ],
+ "choices": {
+  "correct": "$x {=rc} 0$",
+  "distractors": [
+   {
+    "text": "$x {=ro} 0$",
+    "misconception_id": "mc:g10m6s3-1-2:wrong-side"
+   },
+   {
+    "text": "$x {=rc} {=q}$",
+    "misconception_id": "mc:g10m6s3-1-2:shift-on-x"
+   },
+   {
+    "text": "$y {=rr} {=q}$",
+    "misconception_id": "mc:g10m6s3-1-2:range-for-x"
+   }
+  ]
+ },
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m6s3-1-2:wrong-side",
+   "label": "Chooses the wrong side of the turning point",
+   "description": "The student picks x ≤ 0 where x ≥ 0 is right, or the reverse. Either they ignore the sign of a (assuming every parabola rises to the right of the turning point) or they mix up increasing and decreasing."
+  },
+  {
+   "id": "mc:g10m6s3-1-2:shift-on-x",
+   "label": "Treats q as an x-value",
+   "description": "The student thinks the turning point of y = ax^2 + q sits at x = q (reading it as (q, 0)), so they start the interval at x = q instead of x = 0. The constant q shifts the graph up or down, not left or right."
+  },
+  {
+   "id": "mc:g10m6s3-1-2:range-for-x",
+   "label": "Gives the range instead of the x-values where the graph rises or falls",
+   "description": "The student answers with the y-values the graph takes (y ≥ q or y ≤ q) when asked for the values of x where it is increasing or decreasing."
+  }
+ ],
+ "notes": "Basic entry point, modelled on the book's ex6-3-7d (where is g increasing, solution: it increases from the turning point, x ≥ 0). The book reads a graph; here the equation y = ax^2 + q is given, and the same reasoning is used: find the turning point (0, q), then say on which side the graph rises. The sign of a is varied (a from -5 to 5, never 0) and the question alternates between increasing and decreasing, so the correct answer is x ≥ 0 in some instances and x ≤ 0 in others; the skeleton is the same. The turning point is included in the interval (x ≥ 0, x ≤ 0), as in the book's key; no distractor uses a strict inequality, so no option is correct under a second reading. q is never 0, so the 'shift-on-x' distractor (boundary q) always differs from the correct boundary 0. The inequality symbols come from small tables of unicode characters (≤, ≥) in let params, and the coefficient is written without a 1 when a = ±1 (ac table)."
+}

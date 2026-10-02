@@ -15,6 +15,22 @@
  * Account and student are created in ONE transaction. FR-2001 says one account
  * holds exactly one student; a half-created signup is an account that can sign
  * in and resolve to nobody.
+ *
+ * **The curriculum** (feature 003, FR-4005; contracts/student-api.md) is the
+ * field 003 adds. Since Samuel's reversal of 2026-10-01 ("yes the sign up
+ * should always ask"; decision 1, superseded) it is required in the body for
+ * every grade, not only where the grade offers two or more curricula: the form
+ * always asks, naming every registry curriculum, and the account is not
+ * created without an answer. The server never trusts the form's idea of what
+ * the grade offers: it reads the offer again, now, only to carry it back on a
+ * refusal — `offeredCurriculaFor` no longer decides what may be chosen — and
+ * resolves with `resolveInitialCurriculum`, the same function the Google step
+ * uses. A known id sent → stored exactly as sent, `chosen`, whether or not it
+ * has anything live for this grade; blank or missing → 422
+ * `curriculum_required` carrying what the grade offers NOW (for the form's
+ * "nothing yet" notes); an id the registry does not know → 422
+ * `invalid_curriculum`, always. The INSERT writes the curriculum and how it
+ * was set; `account_created` records both, first-party only (FR-4016).
  */
 
 import { hashPassword, checkPolicy } from "@/lib/auth/password";
@@ -25,7 +41,10 @@ import { issueVerificationToken } from "@/lib/auth/verify";
 import { signAccessToken } from "@/lib/auth/tokens";
 import { ipOverLimit, noteIpFailure } from "@/lib/auth/throttle";
 import { sendMail, verificationLink, verificationMail } from "@/lib/mail";
+import { accountCreatedProperties, curriculumRefusal } from "@/lib/auth/onboarding";
 import { emit } from "@/lib/analytics";
+import { resolveInitialCurriculum } from "@/lib/catalog";
+import { offeredCurriculaFor } from "@/lib/curriculum-queries";
 import { ENVIRONMENT } from "@/lib/env";
 import { isValidGrade, normalizeInterests } from "@/lib/profile";
 
@@ -80,6 +99,14 @@ export async function POST(req: Request) {
   const interests = normalizeInterests(body.interests);
 
   try {
+    // What the grade offers at THIS moment, not when the page loaded (FR-4005,
+    // privacy review F12). A catalogue read with no student in it.
+    const curriculum = resolveInitialCurriculum(body.curriculum, await offeredCurriculaFor(grade));
+    if (!curriculum.ok) {
+      const refusal = curriculumRefusal(curriculum.error, curriculum.offered);
+      return Response.json(refusal.body, { status: refusal.status });
+    }
+
     const outcome = await withAuthTx(async (db) => {
       const throttled = await ipOverLimit(db, meta.ip);
       if (throttled.over) return { kind: "throttled" as const, retryAfter: throttled.retryAfter };
@@ -96,9 +123,20 @@ export async function POST(req: Request) {
       const accountId = Number(account.rows[0]!.id);
 
       const student = await db.query(
-        `INSERT INTO students (display_name, grade, interests, account_id, status, gender, environment)
-         VALUES ($1, $2, $3, $4, 'active', $5, $6) RETURNING id`,
-        [displayName, grade, interests, accountId, gender, ENVIRONMENT]
+        `INSERT INTO students
+           (display_name, grade, interests, account_id, status, gender, environment,
+            curriculum_system, curriculum_source)
+         VALUES ($1, $2, $3, $4, 'active', $5, $6, $7, $8) RETURNING id`,
+        [
+          displayName,
+          grade,
+          interests,
+          accountId,
+          gender,
+          ENVIRONMENT,
+          curriculum.curriculum,
+          curriculum.source,
+        ]
       );
       const studentId = Number(student.rows[0]!.id);
 
@@ -156,7 +194,7 @@ export async function POST(req: Request) {
     void emit({
       event: "account_created",
       studentId: outcome.studentId,
-      properties: { method: "password", grade },
+      properties: accountCreatedProperties("password", grade, curriculum),
     });
 
     // After the response is built, in its own error boundary: a mail server

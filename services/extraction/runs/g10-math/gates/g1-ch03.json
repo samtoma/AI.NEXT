@@ -1,0 +1,126 @@
+{
+ "format": "ainext.gate-decision/1",
+ "gate": "G1",
+ "book": "g10-math",
+ "id": "g1-ch03",
+ "chapter": 3,
+ "run": "wf_af4ff113-3d3",
+ "decided_at": "2026-10-01T10:52:00Z",
+ "by": "auto-pass G1 (AI recommendation)",
+ "auto": true,
+ "outcome": "pass_with_holds",
+ "summary": "12 owed objective decision(s) taken on the AI line's recommendation",
+ "decisions": [
+  {
+   "key": "term:sequence",
+   "decision": "keep",
+   "detail": "sequence: not in the Egyptian Prep-3 maths book's vocabulary",
+   "basis": "a flag on a term the book itself uses"
+  },
+  {
+   "key": "term:pattern",
+   "decision": "keep",
+   "detail": "pattern: not in the Egyptian Prep-3 maths book's vocabulary",
+   "basis": "a flag on a term the book itself uses"
+  },
+  {
+   "key": "term:common difference",
+   "decision": "keep",
+   "detail": "common difference: not in the Egyptian Prep-3 maths book's vocabulary",
+   "basis": "a flag on a term the book itself uses"
+  },
+  {
+   "key": "term:linear sequence",
+   "decision": "keep",
+   "detail": "linear sequence: not in the Egyptian Prep-3 maths book's vocabulary",
+   "basis": "a flag on a term the book itself uses"
+  },
+  {
+   "key": "term:t_n",
+   "decision": "keep",
+   "detail": "T_n: not in the Egyptian Prep-3 maths book's vocabulary",
+   "basis": "a flag on a term the book itself uses"
+  },
+  {
+   "key": "term:general term",
+   "decision": "keep",
+   "detail": "general term: not in the Egyptian Prep-3 maths book's vocabulary",
+   "basis": "a flag on a term the book itself uses"
+  },
+  {
+   "key": "term:nth term",
+   "decision": "keep",
+   "detail": "nth term: not in the Egyptian Prep-3 maths book's vocabulary",
+   "basis": "a flag on a term the book itself uses"
+  },
+  {
+   "key": "term:general formula",
+   "decision": "keep",
+   "detail": "general formula: not in the Egyptian Prep-3 maths book's vocabulary",
+   "basis": "a flag on a term the book itself uses"
+  },
+  {
+   "key": "term:position n",
+   "decision": "keep",
+   "detail": "position n: not in the Egyptian Prep-3 maths book's vocabulary",
+   "basis": "a flag on a term the book itself uses"
+  },
+  {
+   "key": "pool:Ex3-2:1",
+   "decision": "place on lo:g10m3s2-1-3",
+   "detail": "Ex3-2:1: mapper 1 says lo:g10m3s2-1-3, mapper 2 says None",
+   "basis": "the primary blind mapper's placement (mapper 1)"
+  },
+  {
+   "key": "pool:Ex3-2:21",
+   "decision": "place on lo:g10m3s2-1-3",
+   "detail": "Ex3-2:21: mapper 1 says lo:g10m3s2-1-3, mapper 2 says lo:g10m3s2-1-4",
+   "basis": "the primary blind mapper's placement (mapper 1)"
+  },
+  {
+   "key": "pool:Ex3-2:23",
+   "decision": "place on lo:g10m3s2-1-3",
+   "detail": "Ex3-2:23: mapper 1 says lo:g10m3s2-1-3, mapper 2 says lo:g10m3s2-1-4",
+   "basis": "the primary blind mapper's placement (mapper 1)"
+  }
+ ],
+ "checks": [
+  {
+   "name": "S1 two blind finders + reconciler",
+   "state": "done"
+  },
+  {
+   "name": "S1 independent evidence check",
+   "state": "done"
+  },
+  {
+   "name": "two blind end-of-chapter mappers",
+   "state": "done"
+  },
+  {
+   "name": "independent prerequisite-link checker",
+   "state": "done"
+  }
+ ],
+ "evidence": [
+  {
+   "label": "G1 check",
+   "path": "services/extraction/objectives/g10-math/ch03.check.json"
+  },
+  {
+   "label": "G1 verdicts (auto)",
+   "path": "services/extraction/runs/g10-math/objectives/g1-ch03.auto.json"
+  },
+  {
+   "label": "G1 page",
+   "path": "services/extraction/objectives/g10-math/ch03.review.html"
+  }
+ ],
+ "blocked": [],
+ "course_id": "course:us-g10-math-en",
+ "for_review": [
+  "pool:Ex3-2:1",
+  "pool:Ex3-2:21",
+  "pool:Ex3-2:23"
+ ]
+}

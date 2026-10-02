@@ -1,0 +1,101 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m14s1-1-2:nursery-older",
+ "kind": "family",
+ "lo_id": "lo:g10m14s1-1-2",
+ "parent_question_id": "q:g10m14s1-1-2:ex14-8-12a",
+ "source_page": 492,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": "A small nursery school has one class of children aged 3, 4 and 5; the numbers of children and of boys at each age are given, and one child is selected at random.",
+ "params": [
+  {
+   "name": "t3",
+   "randint": [
+    6,
+    12
+   ]
+  },
+  {
+   "name": "t4",
+   "randint": [
+    6,
+    12
+   ]
+  },
+  {
+   "name": "t5",
+   "randint": [
+    6,
+    12
+   ]
+  },
+  {
+   "name": "b3",
+   "randint": [
+    2,
+    "t3 - 2"
+   ]
+  },
+  {
+   "name": "b4",
+   "randint": [
+    2,
+    "t4 - 2"
+   ]
+  },
+  {
+   "name": "b5",
+   "randint": [
+    2,
+    "t5 - 2"
+   ]
+  },
+  {
+   "name": "g4",
+   "let": "t4 - b4"
+  },
+  {
+   "name": "g5",
+   "let": "t5 - b5"
+  },
+  {
+   "name": "ev",
+   "let": "g4 + g5"
+  },
+  {
+   "name": "tot",
+   "let": "t3 + t4 + t5"
+  },
+  {
+   "name": "p",
+   "let": "ev / tot"
+  },
+  {
+   "require": "gcd(ev, tot) > 1",
+   "why": "the fraction must need simplifying, so the simplest-form step is part of every instance"
+  }
+ ],
+ "constraints": [
+  "ev < tot",
+  "ev > 0"
+ ],
+ "stem": "A small nursery school has one class of children aged 3, 4 and 5. There are {=t3} children aged 3, {=t4} children aged 4 and {=t5} children aged 5. Of the 3-year-olds, {=b3} are boys and the rest are girls. Of the 4-year-olds, {=b4} are boys and the rest are girls. Of the 5-year-olds, {=b5} are boys and the rest are girls. A child from the class is selected at random. What is the probability that the child is a girl who is at least 4 years old? Write your answer as a fraction in its simplest form.",
+ "solution": [
+  "The number of possible outcomes is the number of children in the class: $n(S)={=t3}+{=t4}+{=t5}={=tot}$ .",
+  "The rest of the children at each age are girls. The number of girls aged 4 is ${=t4}-{=b4}={=g4}$ and the number of girls aged 5 is ${=t5}-{=b5}={=g5}$ .",
+  "A girl who is at least 4 years old is a girl aged 4 or a girl aged 5, so $n(E)={=g4}+{=g5}={=ev}$ .",
+  "Finally, we can find the probability: $\\begin{aligned}P(E)&=\\frac{n(E)}{n(S)}\\\\&=\\frac{{=ev}}{{=tot}}\\end{aligned}$",
+  "Both ${=ev}$ and ${=tot}$ can be divided by ${=gcd(ev, tot)}$ , so in simplest form $P(E)=\\frac{{=numerator(p)}}{{=denominator(p)}}$ .",
+  "Therefore, the probability that the child is a girl who is at least 4 years old is $\\frac{{=numerator(p)}}{{=denominator(p)}}$ ."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "{=numerator(p)}/{=denominator(p)}",
+  "form": "simplest",
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Advanced twist on book ex14-8-12a (the nursery class): the number of girls at each age is not given, only the totals and the boys, so the student first finds the girls by subtraction, then adds the two cells that make up the event, then finds n(S) from all three age groups (the 3-year-olds are needed for n(S) although they are not in the event), then simplifies. Method is the book's (n(E)/n(S)); the answer is asked as a simplified fraction because the learning objective names that form. gcd(ev, tot) > 1 is required so every instance has a genuine simplification step; ev < tot always holds because every age group has at least 2 boys. Verified offline: about 39% of random draws are accepted, 6000+ distinct instances."
+}

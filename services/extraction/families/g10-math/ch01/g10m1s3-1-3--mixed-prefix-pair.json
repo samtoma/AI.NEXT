@@ -1,0 +1,116 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m1s3-1-3:mixed-prefix-pair",
+ "version": 1,
+ "kind": "family",
+ "lo_id": "lo:g10m1s3-1-3",
+ "parent_question_id": "q:g10m1s3-1-3:ex1-1-11f",
+ "source_page": 12,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "d",
+   "choice": [
+    22,
+    55,
+    66
+   ]
+  },
+  {
+   "name": "w",
+   "randint": [
+    1,
+    9
+   ]
+  },
+  {
+   "name": "n",
+   "randint": [
+    1,
+    "d - 1"
+   ]
+  },
+  {
+   "require": "gcd(n, d) == 1",
+   "why": "the fraction is in lowest terms, so its decimal has exactly one digit before a recurring pair"
+  },
+  {
+   "name": "t1",
+   "let": "10 * n"
+  },
+  {
+   "name": "q1",
+   "let": "t1 // d"
+  },
+  {
+   "name": "r1",
+   "let": "t1 % d"
+  },
+  {
+   "name": "t2",
+   "let": "10 * r1"
+  },
+  {
+   "name": "q2",
+   "let": "t2 // d"
+  },
+  {
+   "name": "r2",
+   "let": "t2 % d"
+  },
+  {
+   "name": "t3",
+   "let": "10 * r2"
+  },
+  {
+   "name": "q3",
+   "let": "t3 // d"
+  },
+  {
+   "name": "r3",
+   "let": "t3 % d"
+  }
+ ],
+ "constraints": [
+  "gcd(n, d) == 1",
+  "r3 == r1",
+  "r2 != r1"
+ ],
+ "stem": "Write ${=w}\\frac{{=n}}{{=d}}$ in decimal form, using dot notation for the recurring digits.",
+ "solution": [
+  "The whole number ${=w}$ stays as it is, so we only need $\\frac{{=n}}{{=d}}$ as a decimal. Divide ${=n}$ by ${=d}$ by long division, bringing down a zero each time, until a remainder comes back.",
+  "$10 \\times {=n} = {=t1}$ and ${=t1} \\div {=d} = {=q1}$ remainder ${=r1}$, so the first decimal digit is ${=q1}$.",
+  "$10 \\times {=r1} = {=t2}$ and ${=t2} \\div {=d} = {=q2}$ remainder ${=r2}$, so the next digit is ${=q2}$.",
+  "$10 \\times {=r2} = {=t3}$ and ${=t3} \\div {=d} = {=q3}$ remainder ${=r3}$, so the next digit is ${=q3}$.",
+  "The remainder ${=r1}$ has come back (we also had it after the first digit), so the digits repeat from the second decimal place onwards: the pair ${=q2}{=q3}$ repeats for ever, and $\\frac{{=n}}{{=d}} = 0.{=q1}{=q2}{=q3}{=q2}{=q3}{=q2}{=q3}\\ldots$",
+  "The digit ${=q1}$ comes only once, so it gets no dot. Put a dot over each digit of the repeating pair: $\\frac{{=n}}{{=d}} = 0.{=q1}\\dot{{=q2}}\\dot{{=q3}}$.",
+  "Add the whole number back: ${=w}\\frac{{=n}}{{=d}} = {=w}.{=q1}\\dot{{=q2}}\\dot{{=q3}}$."
+ ],
+ "marker": {
+  "kind": "recurring",
+  "answer": "{=w}.{=q1}\\dot{{=q2}}\\dot{{=q3}}",
+  "form": "decimal",
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m1s3-1-3:marks-nonrepeating-digit",
+   "label": "Marks a digit that occurs only once as recurring",
+   "description": "Puts the dot or bar over a digit that appears only once before the repeating part (for example writing 3.\\overline{136} or 3.\\dot{1}\\dot{3}\\dot{6} for 3.1363636...), because the learner does not locate where the repeat actually begins."
+  },
+  {
+   "id": "mc:g10m1s3-1-3:stops-before-repeat",
+   "label": "Stops the division before a remainder repeats",
+   "description": "Stops the long division after a few digits and writes a truncated or rounded decimal (for example 3.136) instead of recognising the repeating remainder and using recurring notation."
+  },
+  {
+   "id": "mc:g10m1s3-1-3:marks-part-of-block",
+   "label": "Marks only part of the repeating block",
+   "description": "Puts a dot over only the last digit of a two-digit repeating pair (for example 3.13\\dot{6} for 3.1363636...), so the notation describes a different number."
+  }
+ ],
+ "notes": "Mirrors book Exercise 1.1 Q11f (4 5/6 = 4.8 with 3 recurring) but with a denominator whose reciprocal is not a known decimal, so long division is required, and with a two-digit repeating pair after one non-repeating digit. Denominators 22, 55, 66 with gcd(n, d) = 1 give exactly one non-repeating digit and a recurring pair, which makes the expansion canonical: the dotted pair starts at the earliest possible place and cannot be shortened. All 70 (d, n) pairs were enumerated and checked against an independent remainder-detection routine; every one gives pre-period [q1] and period [q2, q3], and r3 == r1 always holds, so the six-step solution skeleton is true for every instance (630 instances with the nine whole parts). The non-repeating digit can be 0 (for example 3.0 then a dotted pair); that is correct. Marker convention: the book's own recurring markers store the key in LaTeX (\\dot{} / \\overline{}), so the marker answer follows that; the stem asks for dot notation, and for a two-digit block dots over each digit equal a bar over the pair, so a bar answer should be accepted as equivalent. Only the advanced gap was authored; basic and standard were not requested.\n\nPIPELINE NORMALISATION (not an author edit): drop-redundant-answer: removed the top-level \"answer\" (\"{=w}.{=q1}\\\\dot{{=q2}}\\\\dot{{=q3}}\"); an expression family's answer is marker.answer (\"{=w}.{=q1}\\\\dot{{=q2}}\\\\dot{{=q3}}\"), unchanged.\n\nPIPELINE NORMALISATION (not an author edit): set marker.form to \"decimal\": the stem asks for the number in decimal form, and without the flag the app's marker accepts a fraction for a recurring decimal (answer-marker.ts, T413: \"a fraction for a recurring decimal is correct, unless the question asks for a decimal: the pipeline sets form: decimal\"). Nothing else changed."
+}

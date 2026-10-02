@@ -1,0 +1,1360 @@
+{
+ "mode": "author",
+ "book": "g10-math",
+ "prompts_version": "s6-v5",
+ "by_ref": {
+  "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/s6-author-ch02",
+  "stage": "S6 author",
+  "shards_sha256": "d8c1f1da54adb41c4bd1aa981580b279a40e20811f1a03ce5d2fe26943728498",
+  "files": 16
+ },
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "acfc4775a565b22e6056f9f2e4f8b5b4b6f9eac7b95a046b7a0b0e8e1068095a",
+  "args_sha256": "d531a29926e3461e5b402b1b3f0ea4d5aec37096a4db439941d0481f9f93abac",
+  "generated_sha256": "4d2b9e69ee6a3a045c5a1378b6827ad4dd878b8f2a2f0c035945d228d3191c89",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "records": [
+  {
+   "lo_id": "lo:g10m2s2-1-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "version": 1,
+     "id": "tpl:g10m2s2-1-1:power-product-quotient",
+     "kind": "family",
+     "lo_id": "lo:g10m2s2-1-1",
+     "parent_question_id": "q:g10m2s2-1-1:ex2-1-15",
+     "source_page": 49,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "b",
+       "choice": [
+        2,
+        3,
+        5
+       ]
+      },
+      {
+       "name": "emax",
+       "let": "6 if b == 2 else (4 if b == 3 else 3)"
+      },
+      {
+       "name": "k",
+       "randint": [
+        2,
+        "emax"
+       ]
+      },
+      {
+       "name": "p",
+       "randint": [
+        1,
+        3
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        1,
+        3
+       ]
+      },
+      {
+       "name": "r",
+       "let": "2 * p + q - k"
+      },
+      {
+       "require": "r >= 1",
+       "why": "the constant in the denominator's exponent must be a positive whole number, otherwise the attempt is thrown away"
+      }
+     ],
+     "constraints": [
+      "2 * p + q - r == k"
+     ],
+     "stem": "Simplify without using a calculator: $\\dfrac{({=b}^{x+{=p}})^{2}\\times {=b}^{{=q}-x}}{{=b}^{x+{=r}}}$",
+     "answer": "b ** k",
+     "solution": [
+      "Use the power law on the bracket in the numerator, multiplying the exponent by 2: $({=b}^{x+{=p}})^{2}={=b}^{2(x+{=p})}={=b}^{2x+{=2 * p}}$.",
+      "Use the product law in the numerator, adding the exponents: ${=b}^{2x+{=2 * p}}\\times {=b}^{{=q}-x}={=b}^{(2x+{=2 * p})+({=q}-x)}={=b}^{x+{=2 * p + q}}$.",
+      "Use the quotient law, subtracting the exponent of the denominator and keeping its brackets: $\\dfrac{{=b}^{x+{=2 * p + q}}}{{=b}^{x+{=r}}}={=b}^{(x+{=2 * p + q})-(x+{=r})}={=b}^{x+{=2 * p + q}-x-{=r}}={=b}^{{=k}}$.",
+      "The $x$ terms cancel, so evaluate the power: ${=b}^{{=k}}={=b ** k}$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Modelled on the book's variable-exponent cancellations (ex2-1-14, ex2-1-15, ex2-4-1e), which use the same 'subtract with brackets, then collect' method. The advanced twist is that all three laws are needed in one line: power law on a bracket whose exponent is a sum, product law in the numerator, then the quotient law with a bracketed subtraction, so that the x terms (2x - x - x) cancel and a pure number remains. Parameters: base from 2, 3, 5; the final exponent k is drawn first (2..6 for base 2, 2..4 for base 3, 2..3 for base 5) so the answer never exceeds 125, and r is computed as 2p + q - k and must be at least 1. The statement is true for every real x, and no denominator can be zero. No distractors (numeric answer), so no misconception ids are attached."
+    },
+    {
+     "format": "ainext.family/1",
+     "version": 1,
+     "id": "tpl:g10m2s2-1-1:bracket-negative-quotient",
+     "kind": "family",
+     "lo_id": "lo:g10m2s2-1-1",
+     "parent_question_id": "q:g10m2s2-1-1:ex2-4-1j",
+     "source_page": 57,
+     "tier": "advanced",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "table",
+       "let": "[[2, 2, 2], [2, 3, 2], [2, 3, 4], [3, 2, 3], [3, 3, 3], [3, 3, 9]]"
+      },
+      {
+       "name": "i",
+       "randint": [
+        0,
+        5
+       ]
+      },
+      {
+       "name": "t",
+       "let": "table[i]"
+      },
+      {
+       "name": "a",
+       "let": "t[0]"
+      },
+      {
+       "name": "n",
+       "let": "t[1]"
+      },
+      {
+       "name": "c",
+       "let": "t[2]"
+      },
+      {
+       "name": "p",
+       "randint": [
+        1,
+        2
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        2,
+        3
+       ]
+      },
+      {
+       "name": "r",
+       "randint": [
+        2,
+        4
+       ]
+      },
+      {
+       "name": "s",
+       "randint": [
+        2,
+        "q * n - 2"
+       ]
+      },
+      {
+       "name": "k",
+       "let": "a ** n // c"
+      },
+      {
+       "name": "m",
+       "let": "p * n + r"
+      },
+      {
+       "name": "u",
+       "let": "q * n - s"
+      }
+     ],
+     "constraints": [
+      "a ** n % c == 0",
+      "q * n - s >= 2"
+     ],
+     "stem": "Simplify, writing your answer with positive exponents only: $\\dfrac{({=a}x^{-{=p}}y^{{=q}})^{{=n}}}{{=c}x^{{=r}}y^{{=s}}}$",
+     "solution": [
+      "Use the power law on every factor inside the brackets, the coefficient included: $({=a}x^{-{=p}}y^{{=q}})^{{=n}}={=a}^{{=n}}x^{-{=p}\\times {=n}}y^{{=q}\\times {=n}}={=a ** n}x^{-{=p * n}}y^{{=q * n}}$.",
+      "The fraction is now $\\dfrac{{=a ** n}x^{-{=p * n}}y^{{=q * n}}}{{=c}x^{{=r}}y^{{=s}}}$.",
+      "Divide the coefficients: ${=a ** n}\\div {=c}={=k}$.",
+      "Use the quotient law on each letter, subtracting the exponents: $\\dfrac{x^{-{=p * n}}}{x^{{=r}}}=x^{-{=p * n}-{=r}}=x^{-{=m}}$ and $\\dfrac{y^{{=q * n}}}{y^{{=s}}}=y^{{=q * n}-{=s}}=y^{{=u}}$.",
+      "A negative exponent means a reciprocal: $x^{-{=m}}=\\dfrac{1}{x^{{=m}}}$, so the answer with positive exponents is $\\dfrac{{=k}y^{{=u}}}{x^{{=m}}}$."
+     ],
+     "marker": {
+      "kind": "expression",
+      "answer": "({=k}*y**{=u})/(x**{=m})",
+      "form": "simplest",
+      "variables": [
+       "x",
+       "y"
+      ],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Extends the book's ex2-4-1j (power of a power, a coefficient, then a quotient) to a bracket holding a coefficient and two letters, one with a negative exponent, over a monomial. Steps: power law on every factor of the bracket (the coefficient too, which is where mc:g10m2s2-1-1:power-skips-coefficient bites), divide the coefficients, quotient law on x and y separately, then the negative exponent identity to leave positive exponents only. The (a, n, c) triples come from a table so that a^n is always divisible by c and the coefficient of the answer is a whole number of at least 2 (2, 3, 4 or 9). Exponent ranges are set so that the y exponent in the answer is at least 2 (so no 'y^1' is printed), the printed exponents inside the stem are at least 2 where they are a letter's own exponent (q, r, s), and the x exponent in the denominator is between 4 and 10. The instruction 'positive exponents only' makes the answer form unambiguous; the marker compares equivalent expressions in x and y. No zero exponent appears in this skeleton. Numeric-free expression answer, so no distractors."
+    },
+    {
+     "format": "ainext.family/1",
+     "version": 1,
+     "id": "tpl:g10m2s2-1-1:reciprocal-of-sum",
+     "kind": "family",
+     "lo_id": "lo:g10m2s2-1-1",
+     "parent_question_id": "q:g10m2s2-1-1:ex2-1-8",
+     "source_page": 49,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "table",
+       "let": "[[1, 2], [1, 3], [2, 3], [1, 4], [1, 5], [2, 5]]"
+      },
+      {
+       "name": "i",
+       "randint": [
+        0,
+        5
+       ]
+      },
+      {
+       "name": "s",
+       "choice": [
+        1,
+        2
+       ]
+      },
+      {
+       "name": "sw",
+       "choice": [
+        0,
+        1
+       ]
+      },
+      {
+       "name": "u",
+       "let": "table[i][0]"
+      },
+      {
+       "name": "v",
+       "let": "table[i][1]"
+      },
+      {
+       "name": "a",
+       "let": "s * (u + v) * (u if sw == 0 else v)"
+      },
+      {
+       "name": "b",
+       "let": "s * (u + v) * (v if sw == 0 else u)"
+      },
+      {
+       "require": "max(a, b) <= 40",
+       "why": "keep both bases small enough to add the reciprocals by hand"
+      },
+      {
+       "name": "L",
+       "let": "lcm(a, b)"
+      },
+      {
+       "name": "N",
+       "let": "L // a + L // b"
+      },
+      {
+       "name": "ans",
+       "let": "s * u * v"
+      }
+     ],
+     "constraints": [
+      "a != b",
+      "a * b % (a + b) == 0"
+     ],
+     "stem": "Simplify without using a calculator: $\\dfrac{1}{{=a}^{-1}+{=b}^{-1}}$",
+     "answer": "ans",
+     "solution": [
+      "Use the negative exponent identity on each term: ${=a}^{-1}=\\dfrac{1}{{=a}}$ and ${=b}^{-1}=\\dfrac{1}{{=b}}$, so the denominator is $\\dfrac{1}{{=a}}+\\dfrac{1}{{=b}}$.",
+      "Add the fractions over their common denominator ${=L}$: $\\dfrac{1}{{=a}}+\\dfrac{1}{{=b}}=\\dfrac{{=L // a}}{{=L}}+\\dfrac{{=L // b}}{{=L}}=\\dfrac{{=N}}{{=L}}$, which simplifies to $\\dfrac{1}{{=ans}}$.",
+      "The whole expression is 1 divided by $\\dfrac{1}{{=ans}}$, and dividing by a fraction means multiplying by its reciprocal: $\\dfrac{1}{\\dfrac{1}{{=ans}}}={=ans}$.",
+      "The sum of two separate powers cannot be gathered into one power, so ${=a}^{-1}+{=b}^{-1}$ is not $({=a}+{=b})^{-1}$; each term is dealt with on its own."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Uses the negative exponent identity on numbers, as the book's ex2-1-8 does (5 over 2^-3), but inside a reciprocal of a sum: this is the book's twist that the catalogued misconception mc:g10m2s2-1-1:power-through-a-sum describes (gathering a^-1 + b^-1 into (a+b)^-1 would give the wrong answer a + b). The bases are built as a = s(u+v)u and b = s(u+v)v with gcd(u, v) = 1, which guarantees that ab/(a+b) = s*u*v is a whole number, so 1/a + 1/b is always a unit fraction 1/(suv) and every instance has a clean whole-number answer between 2 and 12. Orientation (a, b) or (b, a) is drawn at random. Both bases are at most 40 and are never equal. Twenty distinct instances in all. Numeric answer, so no distractors; the solution's fourth step names the misconception without naming the wrong value."
+    }
+   ],
+   "infeasible": [],
+   "notes": "Only the advanced tier was listed as a gap, so I wrote three advanced families, each with a different solution skeleton: (1) power + product + quotient laws on variable exponents that cancel to a pure number (numeric), (2) power of a bracket with a coefficient and a negative exponent over a monomial, answered with positive exponents (expression with marker), (3) reciprocal of a sum of two negative powers of numbers (numeric). Parameter ranges were verified by simulation (answers checked against direct evaluation: family 1 has 74 distinct instances with answers up to 125, family 2 has 264 with whole-number coefficients, family 3 has 20 with whole-number answers 2 to 12). No basic or standard family was written because those tiers were not listed as gaps and the book supplies seven basic and one standard question. Families 1 and 3 are numeric and carry no distractors; family 2 is an expression with a marker, so no misconception ids are attached anywhere and no new misconceptions are proposed."
+  },
+  {
+   "lo_id": "lo:g10m2s2-1-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m2s2-1-2:prime-base-cancel",
+     "kind": "family",
+     "lo_id": "lo:g10m2s2-1-2",
+     "parent_question_id": "q:g10m2s2-1-2:we02",
+     "source_page": 46,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "t",
+       "randint": [
+        0,
+        6
+       ]
+      },
+      {
+       "name": "p",
+       "let": "[2, 2, 2, 3, 3, 5, 5][t]"
+      },
+      {
+       "name": "s",
+       "let": "[2, 3, 4, 2, 3, 2, 3][t]"
+      },
+      {
+       "name": "B",
+       "let": "p ** s"
+      },
+      {
+       "name": "cmax",
+       "let": "[7, 7, 7, 4, 4, 3, 3][t]"
+      },
+      {
+       "name": "c",
+       "randint": [
+        2,
+        "cmax"
+       ]
+      },
+      {
+       "require": "B == p ** s",
+       "why": "the non-prime base must be exactly the s-th power of the prime p"
+      },
+      {
+       "require": "p ** c <= 128",
+       "why": "keep the final whole number small enough to work without a calculator"
+      }
+     ],
+     "constraints": [
+      "c >= 2",
+      "p ** c <= 128"
+     ],
+     "stem": "Simplify without using a calculator: $\\dfrac{{=B}^{n}\\times{=p}^{{=c}}}{{=p}^{{=s}n}}$. Give your answer as a single whole number.",
+     "answer": "p ** c",
+     "solution": [
+      "The bases ${=B}$ and ${=p}$ are different, so reduce ${=B}$ to a power of the prime ${=p}$: ${=B}={=p}^{{=s}}$.",
+      "Rewrite the power of ${=B}$ with the prime base: ${=B}^{n}=\\left({=p}^{{=s}}\\right)^{n}={=p}^{{=s}n}$.",
+      "Now every term has the same base ${=p}$: $\\dfrac{{=p}^{{=s}n}\\times{=p}^{{=c}}}{{=p}^{{=s}n}}$.",
+      "Multiply in the numerator by adding the exponents: $\\dfrac{{=p}^{{=s}n+{=c}}}{{=p}^{{=s}n}}$.",
+      "Divide by subtracting the exponents: ${=p}^{{=s}n+{=c}-{=s}n}={=p}^{{=c}}$.",
+      "Evaluate the power: ${=p}^{{=c}}={=p ** c}$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Basic entry point of 'reduce to prime bases', modelled on worked example we02 (p.46): one base is a power of a prime, it is rewritten as (p^s)^n = p^(sn), and the variable exponent then cancels so the answer is a whole number independent of n (we02's own answer is the plain number 2). One skeleton: numerator B^n * p^c over p^(sn), where B = p^s is 4/8/16 (prime 2), 9/27 (prime 3) or 25/125 (prime 5). c runs from 2 up to a cap chosen so the answer p^c never exceeds 128 (c <= 7 for 2, <= 4 for 3, <= 3 for 5), which gives 28 distinct instances; c = 1 is excluded so no exponent of 1 is printed. When c equals s the answer happens to equal B, which is valid. Verified by checking that B^N * p^c / p^(sN) equals p^c for N = 1, 2, 3, 5 on every instance. The stem states 'single whole number' so a blind solver does not answer with a power. No distractors, since the answer is numeric; the catalogued misconception mc:g10m2s2-1-2:merges-factor-into-base concerns merging a plain factor into a base and has no honest place in this skeleton, so it is left for the standard-tier questions where bases are factorised (6^x, 22^x)."
+    }
+   ],
+   "infeasible": [],
+   "notes": "Only the basic gap was listed, so one family was written. Standard and advanced tiers were not requested. I did not add a second basic family: a pure-numeric variant would be a different skeleton, and the single family already gives 28 clean instances."
+  },
+  {
+   "lo_id": "lo:g10m2s2-1-3",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m2s2-1-3:common-factor-basic",
+     "kind": "family",
+     "lo_id": "lo:g10m2s2-1-3",
+     "parent_question_id": "q:g10m2s2-1-3:ex2-4-2c",
+     "source_page": 57,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "m",
+       "randint": [
+        2,
+        7
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        2,
+        "14 // m"
+       ]
+      },
+      {
+       "name": "a",
+       "let": "m * q - 1"
+      }
+     ],
+     "constraints": [
+      "a <= 13",
+      "q >= 2",
+      "(a + 1) % m == 0"
+     ],
+     "stem": "Simplify: $\\dfrac{{=a}^{x+1}+{=a}^{x}}{{=m}\\times{=a}^{x}}$. Give your answer as a whole number.",
+     "answer": "q",
+     "solution": [
+      "Rewrite the first power with the exponent law $b^{m+n}=b^{m}\\cdot b^{n}$: ${=a}^{x+1}={=a}^{x}\\cdot{=a}$. The fraction becomes $\\dfrac{{=a}^{x}\\cdot{=a}+{=a}^{x}}{{=m}\\times{=a}^{x}}$.",
+      "Take out the common factor ${=a}^{x}$ in the numerator: $\\dfrac{{=a}^{x}({=a}+1)}{{=m}\\times{=a}^{x}}$.",
+      "Cancel the common factor ${=a}^{x}$ from the top and the bottom: $\\dfrac{{=a}+1}{{=m}}$.",
+      "Calculate: $\\dfrac{{=a}+1}{{=m}} = \\dfrac{{=a + 1}}{{=m}} = {=q}$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Basic entry point of the skill: the numerator has just two terms, the exponent is shifted by exactly 1 (the book's ex2-4-2c shifts by 3), the common factor is the single power a^x, and the arithmetic after cancelling is small. Same skeleton as the parent (split a^(x+1) with the multiplication law, take out the common factor, cancel, evaluate) and the book's own notation (\\times in the denominator, answer a whole number). Parameters are built backwards so every instance is clean: pick the divisor m and the answer q, then base a = m*q - 1, so (a+1)/m = q is always a whole number >= 2 and a <= 13 (14 distinct instances; bases 3, 5, 7, 8, 9, 11, 13). The variable is fixed as x. Plus sign only, so the factor is always (a + 1). Numeric answer, so no distractors and no misconception ids are attached; mc:g10m2s2-1-3:powers-outside-algebra is not targeted here. The difference-of-squares method is left to the standard and advanced tiers, where the book's questions sit (ex2-4-2i, ex2-1-34)."
+    }
+   ],
+   "infeasible": [],
+   "notes": "One basic-tier family written (the only listed gap). It is a common-factor-and-cancel numeric family modelled on ex2-4-2c, with the exponent shift cut to 1 and small clean parameters. A difference-of-squares basic family was deliberately not added: the book's difference-of-squares questions are standard/advanced (two bases, two variables) and no honest entry-level version exists in the book's own method without padding. Arithmetic over all 14 parameter combinations was checked in Python."
+  },
+  {
+   "lo_id": "lo:g10m2s3-1-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m2s3-1-2:whole-base",
+     "kind": "family",
+     "lo_id": "lo:g10m2s3-1-2",
+     "parent_question_id": "q:g10m2s3-1-2:ex2-2-4",
+     "source_page": 51,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "n",
+       "choice": [
+        2,
+        3
+       ]
+      },
+      {
+       "name": "m",
+       "choice": [
+        1,
+        2,
+        3
+       ],
+       "resample_while": "gcd(m, n) != 1"
+      },
+      {
+       "name": "rmax",
+       "let": "12 if (n == 2 and m == 1) else 5"
+      },
+      {
+       "name": "r",
+       "randint": [
+        2,
+        "rmax"
+       ]
+      },
+      {
+       "name": "b",
+       "let": "r ** n"
+      },
+      {
+       "name": "ans",
+       "let": "r ** m"
+      }
+     ],
+     "constraints": [
+      "gcd(m, n) == 1"
+     ],
+     "stem": "Evaluate without using a calculator: ${=b}^{\\frac{{=m}}{{=n}}}$",
+     "answer": "ans",
+     "solution": [
+      "Write ${=b}$ as a power whose exponent is ${=n}$, the denominator of the exponent: ${=b}={=r}^{{=n}}$.",
+      "Replace the base: ${=b}^{\\frac{{=m}}{{=n}}}=\\left({=r}^{{=n}}\\right)^{\\frac{{=m}}{{=n}}}$.",
+      "Multiply the exponents: ${=n}\\times\\frac{{=m}}{{=n}}={=m}$, so $\\left({=r}^{{=n}}\\right)^{\\frac{{=m}}{{=n}}}={=r}^{{=m}}$.",
+      "Evaluate the power: ${=r}^{{=m}}={=ans}$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Entry point of the skill: a whole-number base that is a perfect n-th power, positive exponent m/n in lowest terms (n is 2 or 3, m is 1 to 3). Same chain as the book's 27^(-1/3): write the base as a power, multiply the exponents. Cases are 4^(1/2) up to 144^(1/2), 8^(1/3) up to 125^(1/3), 4^(3/2) and 25^(3/2) (125), and 8^(2/3) up to 125^(2/3). 23 distinct instances, answers at most 125. The root r may be composite (36 = 6^2, 64 = 4^3), as the book itself does in ex2-4-3i."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m2s3-1-2:decimal-root",
+     "kind": "family",
+     "lo_id": "lo:g10m2s3-1-2",
+     "parent_question_id": "q:g10m2s3-1-2:ex2-4-2m",
+     "source_page": 57,
+     "tier": "standard",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "n",
+       "choice": [
+        2,
+        3
+       ]
+      },
+      {
+       "name": "smax",
+       "let": "9 if n == 2 else 6"
+      },
+      {
+       "name": "s",
+       "randint": [
+        2,
+        "smax"
+       ]
+      },
+      {
+       "name": "t",
+       "let": "s / 10"
+      },
+      {
+       "name": "bf",
+       "let": "(s ** n) / (10 ** n)"
+      },
+      {
+       "name": "bd",
+       "let": "fixed(bf, n)"
+      },
+      {
+       "name": "p",
+       "let": "numerator(t)"
+      },
+      {
+       "name": "q",
+       "let": "denominator(t)"
+      }
+     ],
+     "constraints": [
+      "numerator(bf) == p ** n",
+      "denominator(bf) == q ** n"
+     ],
+     "stem": "Simplify without using a calculator: $\\left({=bd}\\right)^{\\frac{1}{{=n}}}$. Give your answer as a fraction in simplest form.",
+     "solution": [
+      "Write the decimal as a fraction in lowest terms: $\\left({=bd}\\right)^{\\frac{1}{{=n}}}=\\left({=bf}\\right)^{\\frac{1}{{=n}}}$.",
+      "Write the numerator and the denominator as powers with exponent ${=n}$: ${=bf}=\\frac{{=p}^{{=n}}}{{=q}^{{=n}}}$.",
+      "A fraction with the same exponent on top and bottom is a power of a fraction: $\\frac{{=p}^{{=n}}}{{=q}^{{=n}}}=\\left({=t}\\right)^{{=n}}$.",
+      "Substitute and multiply the exponents: ${=n}\\times\\frac{1}{{=n}}=1$, so $\\left({=bf}\\right)^{\\frac{1}{{=n}}}=\\left[\\left({=t}\\right)^{{=n}}\\right]^{\\frac{1}{{=n}}}=\\left({=t}\\right)^{1}={=t}$.",
+      "Therefore $\\left({=bd}\\right)^{\\frac{1}{{=n}}}={=t}$."
+     ],
+     "marker": {
+      "kind": "expression",
+      "answer": "{=p}/{=q}",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "The book's own standard exercise (0.25^(1/2), 0.81^(1/2), 0.008^(1/3)). The base is always (s/10)^n with s from 2 to 9 for n = 2 and 2 to 6 for n = 3, so it has exactly n decimal places and no trailing zero (0.04 ... 0.81, 0.008 ... 0.216) and the answer is s/10 in lowest terms (1/5, 3/10, 2/5, 1/2, 3/5, 7/10, 4/5, 9/10). 13 distinct instances. The solution follows ex2-4-2m: fraction, numerator and denominator as powers, [(p/q)^n]^(1/n). Decimal strings come from fixed(bf, n); the two constraints check that the reduced fraction really is p^n over q^n, so step 2 is true for every instance. The marker accepts any equivalent value; the stem asks for a fraction because that is the book's key."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m2s3-1-2:negative-whole-pick",
+     "kind": "family",
+     "lo_id": "lo:g10m2s3-1-2",
+     "parent_question_id": "q:g10m2s3-1-2:ex2-2-4",
+     "source_page": 51,
+     "tier": "standard",
+     "answer_type": "mcq",
+     "context": null,
+     "params": [
+      {
+       "name": "n",
+       "choice": [
+        2,
+        3
+       ]
+      },
+      {
+       "name": "m",
+       "choice": [
+        2,
+        3,
+        4,
+        5
+       ],
+       "resample_while": "gcd(m, n) != 1"
+      },
+      {
+       "name": "r",
+       "randint": [
+        2,
+        6
+       ],
+       "resample_while": "r ** m > 250 or r ** n > 150"
+      },
+      {
+       "name": "b",
+       "let": "r ** n"
+      },
+      {
+       "name": "rm",
+       "let": "r ** m"
+      },
+      {
+       "name": "cv",
+       "let": "1 / rm"
+      },
+      {
+       "name": "d1",
+       "let": "0 - rm"
+      },
+      {
+       "name": "d3",
+       "let": "1 / r"
+      }
+     ],
+     "constraints": [
+      "gcd(m, n) == 1",
+      "rm <= 250",
+      "b <= 150"
+     ],
+     "stem": "Which of the following is equal to ${=b}^{-\\frac{{=m}}{{=n}}}$? Do not use a calculator.",
+     "choices": {
+      "correct": "${=cv}$",
+      "distractors": [
+       {
+        "text": "${=rm}$",
+        "misconception_id": "mc:g10m2s3-1-2:negative-exponent-ignored"
+       },
+       {
+        "text": "${=d1}$",
+        "misconception_id": "mc:g10m2s3-1-2:negative-exponent-negative-value"
+       },
+       {
+        "text": "${=d3}$",
+        "misconception_id": "mc:g10m2s3-1-2:numerator-ignored"
+       }
+      ]
+     },
+     "solution": [
+      "Write ${=b}$ as a power whose exponent is ${=n}$, the denominator of the exponent: ${=b}={=r}^{{=n}}$.",
+      "Replace the base: ${=b}^{-\\frac{{=m}}{{=n}}}=\\left({=r}^{{=n}}\\right)^{-\\frac{{=m}}{{=n}}}$.",
+      "Multiply the exponents: ${=n}\\times\\left(-\\frac{{=m}}{{=n}}\\right)=-{=m}$, so the expression equals ${=r}^{-{=m}}$.",
+      "A negative exponent means the reciprocal: ${=r}^{-{=m}}=\\frac{1}{{=r}^{{=m}}}=\\frac{1}{{=rm}}$."
+     ],
+     "proposed_misconceptions": [
+      {
+       "id": "mc:g10m2s3-1-2:negative-exponent-ignored",
+       "label": "Drops the minus sign of the exponent",
+       "description": "Evaluates the power as if the exponent were positive, so no reciprocal is taken: 64^(-2/3) is given as 16 instead of 1/16."
+      },
+      {
+       "id": "mc:g10m2s3-1-2:negative-exponent-negative-value",
+       "label": "Reads a negative exponent as a negative answer",
+       "description": "Treats the minus sign in the exponent as making the value negative: 64^(-2/3) is given as -16 instead of 1/16."
+      },
+      {
+       "id": "mc:g10m2s3-1-2:numerator-ignored",
+       "label": "Ignores the numerator of the exponent",
+       "description": "Takes only the root named by the denominator and the reciprocal, and forgets to raise to the numerator: 64^(-2/3) is given as 1/4 (the value of 64^(-1/3)) instead of 1/16."
+      }
+     ],
+     "notes": "mcq because every wrong option is one specific, diagnosable error and the catalogue for this objective was empty (so the three ids are new, declared above). Exponent is -m/n in lowest terms with m of at least 2, so the numerator-ignored option (1/r) can never equal the correct 1/r^m; the three distractors (r^m, -r^m, 1/r) and the correct 1/r^m are always four different values (checked over all 15 instances). Bases are 4 up to 125 with answers 1/8 up to 1/243. Parent is the book's 27^(-1/3), which has m = 1; m of at least 2 is the small extension that makes the numerator error observable. Standard rather than advanced: one twist (the negative exponent) on a whole-number base."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m2s3-1-2:decimal-negative",
+     "kind": "family",
+     "lo_id": "lo:g10m2s3-1-2",
+     "parent_question_id": "q:g10m2s3-1-2:ex2-2-3",
+     "source_page": 51,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "n",
+       "choice": [
+        2,
+        3
+       ]
+      },
+      {
+       "name": "m",
+       "choice": [
+        2,
+        3,
+        4,
+        5
+       ],
+       "resample_while": "gcd(m, n) != 1"
+      },
+      {
+       "name": "r",
+       "choice": [
+        2,
+        5,
+        10
+       ],
+       "resample_while": "r ** m > 1000"
+      },
+      {
+       "name": "rn",
+       "let": "r ** n"
+      },
+      {
+       "name": "bd",
+       "let": "fixed(1 / rn, n)"
+      },
+      {
+       "name": "ans",
+       "let": "r ** m"
+      }
+     ],
+     "constraints": [
+      "gcd(m, n) == 1",
+      "r ** m <= 1000"
+     ],
+     "stem": "Evaluate without using a calculator: $\\left({=bd}\\right)^{-\\frac{{=m}}{{=n}}}$",
+     "answer": "ans",
+     "solution": [
+      "Write the decimal as a fraction: ${=bd}=\\frac{1}{{=rn}}$.",
+      "Write the denominator as a power of ${=r}$: $\\frac{1}{{=rn}}=\\frac{1}{{=r}^{{=n}}}$.",
+      "Use a negative exponent to write the power in the numerator: $\\frac{1}{{=r}^{{=n}}}={=r}^{-{=n}}$.",
+      "Replace the base: $\\left({=bd}\\right)^{-\\frac{{=m}}{{=n}}}=\\left({=r}^{-{=n}}\\right)^{-\\frac{{=m}}{{=n}}}$.",
+      "Multiply the exponents: $\\left(-{=n}\\right)\\times\\left(-\\frac{{=m}}{{=n}}\\right)={=m}$, so the expression equals ${=r}^{{=m}}$.",
+      "Evaluate the power: ${=r}^{{=m}}={=ans}$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Advanced: decimal base AND negative exponent AND a numerator greater than 1, so the student needs all of the objective's steps (decimal to fraction, fraction to prime power with a negative exponent as in ex2-2-3, multiply exponents, evaluate) and the minus signs cancel. The base is always (1/r)^n with r in 2, 5, 10, so it has exactly n decimal places (0.25, 0.125, 0.04, 0.008, 0.01, 0.001) and fixed(1 / rn, n) prints it exactly. The exponent -m/n is in lowest terms with m from 2 to 5, and r^m is capped at 1000, so the answer is always a whole number (4 up to 1000); 10 distinct instances, e.g. 0.25^(-3/2) = 8, 0.008^(-2/3) = 25, 0.125^(-5/3) = 32. The wrong answers a student is likely to type (1/8 for the first, or -8) are covered diagnostically by the mcq family tpl:g10m2s3-1-2:negative-whole-pick."
+    }
+   ],
+   "infeasible": [],
+   "notes": "Both listed gaps are filled: basic with whole-base (positive m/n, perfect n-th power base) and advanced with decimal-negative (decimal base, negative non-unit exponent). Two standard families are added because the book's six standard questions are unit-fraction decimal roots (decimal-root) and 27^(-1/3) (negative-whole-pick). Equation-solving book items (z^(3/2)=64, 16x^(1/2)-4=0) are deliberately not turned into families: they are a different skeleton (solve for the base) from this objective's description (evaluate a numeric rational power). The misconception catalogue for this objective was empty, so the three ids used on the mcq distractors are declared in proposed_misconceptions; the numeric and expression families have no distractors and declare none. I could not run the family engine, so I checked every parameter combination of all four families with an independent script (exact fractions): the base/exponent identities, decimal digit counts, the lowest-terms identity numerator(bf)=p^n and denominator(bf)=q^n, and the distinctness of the four mcq options. Template braces follow the spec's \\frac{{=b}}{2} convention. Please spot-check that fixed(x, n) on an exact fraction prints '0.25', '0.008', '0.001' (no trailing zero, leading 0) because three families rely on it."
+  },
+  {
+   "lo_id": "lo:g10m2s4-1-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m2s4-1-1:coefficient-composite-base",
+     "kind": "family",
+     "lo_id": "lo:g10m2s4-1-1",
+     "parent_question_id": "q:g10m2s4-1-1:ex2-3-1f",
+     "source_page": 55,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "version": 1,
+     "params": [
+      {
+       "name": "i",
+       "randint": [
+        0,
+        4
+       ]
+      },
+      {
+       "name": "base",
+       "let": "[4, 8, 9, 16, 27][i]"
+      },
+      {
+       "name": "pr",
+       "let": "[2, 2, 3, 2, 3][i]"
+      },
+      {
+       "name": "k",
+       "let": "[2, 3, 2, 4, 3][i]"
+      },
+      {
+       "name": "top",
+       "let": "[4, 3, 3, 2, 2][i]"
+      },
+      {
+       "name": "tp",
+       "randint": [
+        1,
+        "top"
+       ]
+      },
+      {
+       "name": "zz",
+       "choice": [
+        0,
+        1,
+        1,
+        1,
+        1,
+        1
+       ]
+      },
+      {
+       "name": "t",
+       "let": "tp if zz == 1 else 0"
+      },
+      {
+       "name": "d",
+       "choice": [
+        2,
+        3
+       ]
+      },
+      {
+       "name": "n",
+       "randint": [
+        1,
+        4
+       ]
+      },
+      {
+       "name": "s",
+       "choice": [
+        -1,
+        1
+       ]
+      },
+      {
+       "name": "m",
+       "choice": [
+        2,
+        3,
+        4,
+        5
+       ]
+      },
+      {
+       "name": "q",
+       "choice": [
+        1,
+        1,
+        2,
+        3,
+        4
+       ],
+       "resample_while": "(base ** t) % q != 0"
+      },
+      {
+       "name": "c",
+       "let": "(s * m) if q == 1 else (s / q)"
+      },
+      {
+       "name": "rhs",
+       "let": "(s * m * base ** t) if q == 1 else (s * ((base ** t) // q))"
+      },
+      {
+       "name": "big",
+       "let": "k * t"
+      },
+      {
+       "name": "ans",
+       "let": "d * (t - n)"
+      },
+      {
+       "require": "ans != 0",
+       "why": "x = 0 would let the solver read the answer straight off the exponent; keep every instance a real multi-step solve"
+      },
+      {
+       "require": "abs(rhs) <= 1000",
+       "why": "keep the right-hand side a number the book would print"
+      }
+     ],
+     "constraints": [
+      "ans != 0",
+      "abs(rhs) <= 1000",
+      "(base ** t) % q == 0"
+     ],
+     "stem": "Solve for the variable: ${=c}\\cdot {=base}^{\\frac{x}{{=d}}+{=n}}={=rhs}$",
+     "answer": "ans",
+     "solution": [
+      "Divide both sides by ${=c}$ so that the power stands alone: ${=base}^{\\frac{x}{{=d}}+{=n}}={=base ** t}$",
+      "Write ${=base}$ as a power of the prime ${=pr}$: ${=base}={=pr}^{{=k}}$, so the left side becomes $\\left({=pr}^{{=k}}\\right)^{\\frac{x}{{=d}}+{=n}}$",
+      "Write ${=base ** t}$ as a power of ${=pr}$: ${=base ** t}={=pr}^{{=big}}$",
+      "Both sides are now powers of ${=pr}$, so the exponents must be equal: ${=k}\\left(\\frac{x}{{=d}}+{=n}\\right)={=big}$",
+      "Expand the bracket: $\\frac{{=k}x}{{=d}}+{=k * n}={=big}$",
+      "Multiply both sides by ${=d}$ to clear the fraction: ${=k}x+{=d * k * n}={=d * big}$",
+      "Subtract ${=d * k * n}$ from both sides: ${=k}x={=d * big - d * k * n}$",
+      "Divide both sides by ${=k}$: $x={=ans}$"
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Advanced tier, modelled on book question ex2-3-1f (a coefficient to clear and a fractional exponent m/2+3) combined with the composite-base rewriting of ex2-3-1c/1g (64 = 2^6, 81 = 3^4). One skeleton: c * base^(x/d + n) = rhs, where base is a power of a prime (4, 8, 9, 16, 27), c is a whole number (+-2..5) or a unit fraction (+-1/2, 1/3, 1/4), and rhs = c * base^t is always a whole number. Steps: divide out the coefficient, rewrite both sides as powers of the prime, equate exponents, expand the bracket, clear the fraction, solve the linear equation. In roughly one instance in six t = 0, so the right-hand side after dividing is 1 and the solver must use a^0 = 1 (1 = 2^0), the technique named in the objective description. The exponent is strictly monotone in x (base >= 4), so each equation has exactly one solution and the integer answer is x = d*(t - n), which is never 0. Answers lie between -12 and 9; |rhs| <= 1000; about 1000 distinct instances. Numeric answer, so no distractors and no misconception ids are needed. Basic and standard tiers were not listed as gaps, so only the advanced family is written; no mcq is offered because no choice here is natural."
+    }
+   ],
+   "infeasible": [],
+   "notes": "One advanced-tier family written for lo:g10m2s4-1-1 (the only listed gap). It combines the book's hardest pattern (ex2-3-1f: coefficient to clear plus a fractional exponent) with composite prime-power bases (ex2-3-1c/1g), and includes the a^0 = 1 case through t = 0 instances. I checked the parameter logic in a scratch simulation of 20000 draws: the stated answer satisfies the equation exactly in every draw, every solution step holds, the right-hand side is always a whole number, and the instance space is large (about 1000 distinct instances). I did not open any project files beyond the two supplied, so the template engine's formatting of negative and fractional holes ({=c} for -1/2 renders as -\\frac{1}{2}) relies on the spec's stated rule; no hole is placed after a + or - sign where a negative could appear."
+  },
+  {
+   "lo_id": "lo:g10m2s4-1-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m2s4-1-2:shift-by-one",
+     "kind": "family",
+     "lo_id": "lo:g10m2s4-1-2",
+     "parent_question_id": "q:g10m2s4-1-2:ex2-3-1j",
+     "source_page": 55,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "b",
+       "choice": [
+        2,
+        3,
+        5
+       ]
+      },
+      {
+       "name": "e",
+       "randint": [
+        2,
+        "5 if b == 2 else (4 if b == 3 else 3)"
+       ]
+      },
+      {
+       "name": "n",
+       "let": "b ** e * (1 + b)"
+      }
+     ],
+     "constraints": [
+      "n <= 1000"
+     ],
+     "stem": "Solve for $t$: ${=b}^{t}+{=b}^{t+1}={=n}$.",
+     "answer": "e",
+     "solution": [
+      "Rewrite the term with the larger exponent using $a^{m+n}=a^{m}\\cdot a^{n}$: ${=b}^{t+1}={=b}^{t}\\cdot {=b}$, so the equation becomes ${=b}^{t}+{=b}^{t}\\cdot {=b}={=n}$.",
+      "Take out the common factor ${=b}^{t}$: ${=b}^{t}\\left(1+{=b}\\right)={=n}$.",
+      "Simplify the bracket: ${=b}^{t}\\left({=1+b}\\right)={=n}$.",
+      "Divide both sides by ${=1+b}$: ${=b}^{t}={=b**e}$.",
+      "Write the right-hand side as a power of ${=b}$: ${=b}^{t}={=b}^{{=e}}$.",
+      "The bases are the same, so equate the exponents: $t={=e}$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Entry point of the skill: two terms, the second exponent exceeds the first by exactly 1, no coefficient. This is the book's ex2-3-1j (2^t + 2^(t+2) = 40) with the shift cut to 1 and the same steps: rewrite, take out the common factor, simplify, write as a power of the same prime base, equate exponents. Parameter space is every (b, e) with b in {2, 3, 5} and e in 2..5 / 2..4 / 2..3, nine instances. I checked all nine by brute force: the left side equals n for exactly one integer t, and that t equals e. Largest n is 750 (5^3 * 6). Numeric answer is a whole number from 2 to 5. No mcq: the book catalogue holds no misconceptions for this objective, and a distractor with no diagnosable error would be padding."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m2s4-1-2:three-terms",
+     "kind": "family",
+     "lo_id": "lo:g10m2s4-1-2",
+     "parent_question_id": "q:g10m2s4-1-2:we10",
+     "source_page": 53,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "b",
+       "choice": [
+        2,
+        3,
+        5
+       ]
+      },
+      {
+       "name": "e",
+       "randint": [
+        1,
+        "5 if b == 2 else (3 if b == 3 else 2)"
+       ]
+      },
+      {
+       "name": "n",
+       "let": "b ** e * (1 + b + b ** 2)"
+      }
+     ],
+     "constraints": [
+      "n <= 1000"
+     ],
+     "stem": "Solve for $t$: ${=b}^{t-1}+{=b}^{t}+{=b}^{t+1}={=n}$.",
+     "answer": "e + 1",
+     "solution": [
+      "The exponents are $t-1$, $t$ and $t+1$. Rewrite the last two terms so that each contains the smallest power ${=b}^{t-1}$, using $a^{m+n}=a^{m}\\cdot a^{n}$: ${=b}^{t}={=b}^{t-1}\\cdot {=b}$ and ${=b}^{t+1}={=b}^{t-1}\\cdot {=b}^{2}$.",
+      "Substitute into the equation: ${=b}^{t-1}+{=b}^{t-1}\\cdot {=b}+{=b}^{t-1}\\cdot {=b}^{2}={=n}$.",
+      "Take out the common factor ${=b}^{t-1}$: ${=b}^{t-1}\\left(1+{=b}+{=b}^{2}\\right)={=n}$.",
+      "Simplify the bracket: $1+{=b}+{=b**2}={=1+b+b**2}$, so ${=b}^{t-1}\\left({=1+b+b**2}\\right)={=n}$.",
+      "Divide both sides by ${=1+b+b**2}$: ${=b}^{t-1}={=b**e}$.",
+      "Write the right-hand side as a power of ${=b}$: ${=b}^{t-1}={=b}^{{=e}}$.",
+      "The bases are the same, so equate the exponents: $t-1={=e}$.",
+      "Solve for $t$: $t={=e+1}$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Advanced twist: three terms with exponents t-1, t and t+1, so the common factor is the smallest power b^(t-1) and the exponent equation that ends the solution is linear (t-1 = e) instead of t = e. It uses only the book's method from we10 (rewrite each term with a^(m+n) = a^m * a^n, take out the common factor, simplify, write the right side as a power of the same prime base, equate exponents), extended to three terms and a lowered exponent. A student who prefers to factor out b^t and work with the fraction 1/b gets the same unique answer. Parameter space: b = 2 with e in 1..5, b = 3 with e in 1..3, b = 5 with e in 1..2, ten instances. I checked all ten by brute force: the left side equals n for exactly one integer t, and it is e + 1 (so t runs from 2 to 6). Largest n is 775 (5^2 * 31). Numeric answer is a whole number. No mcq, for the same reason as the basic family: the catalogue holds no misconceptions for this objective."
+    }
+   ],
+   "infeasible": [],
+   "notes": "Two families, one per listed gap (basic and advanced). The standard tier is already covered by the two book questions, so I added no standard family. The misconception catalogue for this objective is empty, so both families are numeric and carry no distractors. I did not invent misconception ids to justify an mcq. I could not run the family validator because I was told to open only the two packet files. Instead I replicated both templates in a throwaway Python script outside the repo. It enumerated every parameter combination (9 basic, 10 advanced). For each one it confirmed the stated answer is the single integer root of the equation and that n stays at or below 1000. It also rendered the stem and solution steps for a sample instance. The {=...} holes contain no braces, and the nested form {{=e}} follows the spec's own \\frac{{=b}}{2} pattern. A validator run should still confirm that bounds written as conditional expressions, such as \"5 if b == 2 else (4 if b == 3 else 3)\", are accepted in randint."
+  },
+  {
+   "lo_id": "lo:g10m2s4-1-3",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m2s4-1-3:trinomial-reject",
+     "kind": "family",
+     "lo_id": "lo:g10m2s4-1-3",
+     "parent_question_id": "q:g10m2s4-1-3:ex2-4-3u",
+     "source_page": 57,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "b",
+       "choice": [
+        2,
+        3
+       ]
+      },
+      {
+       "name": "mmax",
+       "let": "3 if b == 2 else 2"
+      },
+      {
+       "name": "m",
+       "randint": [
+        1,
+        "mmax"
+       ]
+      },
+      {
+       "name": "q",
+       "let": "b ** m"
+      },
+      {
+       "name": "d",
+       "randint": [
+        2,
+        4
+       ]
+      },
+      {
+       "name": "p",
+       "let": "q + d"
+      },
+      {
+       "name": "c",
+       "let": "p * q"
+      }
+     ],
+     "constraints": [
+      "p > q",
+      "c <= 120"
+     ],
+     "stem": "Solve for $x$: ${=b}^{2x}+{=d}\\times {=b}^{x}-{=c}=0$. Give the one value of $x$ that satisfies the equation.",
+     "answer": "m",
+     "solution": [
+      "Write ${=b}^{2x}$ as $({=b}^{x})^{2}$, so the equation is a trinomial in ${=b}^{x}$: $({=b}^{x})^{2}+{=d}({=b}^{x})-{=c}=0$.",
+      "Factorise the trinomial. Look for two numbers whose product is $-{=c}$ and whose sum is ${=d}$: they are ${=p}$ and $-{=q}$. So $({=b}^{x}+{=p})({=b}^{x}-{=q})=0$.",
+      "A product is zero when one of its factors is zero, so ${=b}^{x}+{=p}=0$ or ${=b}^{x}-{=q}=0$. That gives ${=b}^{x} = -{=p}$ or ${=b}^{x} = {=q}$.",
+      "The factor ${=b}^{x}+{=p}=0$ cannot be satisfied: a power of ${=b}$ is always positive, so ${=b}^{x}$ is never equal to $-{=p}$. Reject this factor.",
+      "Write ${=q}$ as a power of ${=b}$: ${=b}^{x} = {=q} = {=b}^{{=m}}$. The bases are equal, so the exponents are equal: $x = {=m}$.",
+      "Check in the original equation: when $x = {=m}$, ${=b}^{x} = {=q}$, so $({=q})^{2}+{=d}\\times {=q}-{=c} = {=q*q}+{=d*q}-{=c} = 0$. So the only solution is $x = {=m}$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Basic = the entry point of the skill: a trinomial in b^x that is already set equal to zero, followed by the book's own moves from ex2-4-3u (page 57): rewrite b^(2x) as (b^x)^2, factorise, set each factor to zero, reject the factor b^x = negative number, solve the other factor by writing it as a power of b. Equation built as (b^x + p)(b^x - q) = 0 with q = b^m and p = q + d, so the expanded form is b^(2x) + d*b^x - p*q = 0. Because p > q the middle coefficient is always a positive whole number (d between 2 and 4, never 1), so no sign or coefficient-1 special-casing is needed in the stem. The constant term is at most 117 (b = 3, m = 2, d = 4); the smaller cases are 8 to 96. The answer is always the whole number m (1, 2 or 3), and the equation has exactly one real solution because b^x = -p is impossible; the stem says so to make the numeric entry unambiguous. Answer is numeric, so no distractors are offered: the catalogued errors (mc:g10m2s4-1-3:solves-exponential-equal-to-negative, mc:g10m2s4-1-3:skips-check-after-raising-to-power) show up in working, not in a single number, and the second one belongs to fractional-exponent questions this tier does not use. Difference of two squares is deliberately left out of this family: none of the book questions of this objective uses it, so adding it would teach a method the book's solutions do not show. Hand-checked instances: b=2, m=3, d=4 gives 2^(2x)+4*2^x-96=0 = (2^x+12)(2^x-8), x=3; b=3, m=2, d=3 gives 3^(2x)+3*3^x-108=0 = (3^x+12)(3^x-9), x=2; b=3, m=1, d=2 gives 3^(2x)+2*3^x-15=0 = (3^x+5)(3^x-3), x=1."
+    }
+   ],
+   "infeasible": [],
+   "notes": "One basic family written, filling the only listed gap. The skeleton follows the last part of book question ex2-4-3u (page 57): trinomial in b^x, factorise, solve each factor, reject the factor that equals a negative number. Only the base (2 or 3), the target exponent, and the size of the middle coefficient change. I stayed with the book's trinomial method and left out difference of two squares, because none of this objective's book questions or solutions use it. I could not open the template engine, so I used only constructs the spec names: choice, let, randint with an expression bound, a conditional expression, **, and plain holes. I kept the middle coefficient positive and at least 2 so the stem needs no sign-handling helper such as signed()."
+  },
+  {
+   "lo_id": "lo:g10m2s4-1-4",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m2s4-1-4:hinted-power",
+     "kind": "family",
+     "lo_id": "lo:g10m2s4-1-4",
+     "parent_question_id": "q:g10m2s4-1-4:ex2-3-3",
+     "source_page": 56,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "table",
+       "let": "[[2, 5, 232, 0, 4925, 5278, 4993, 5028, 5011], [2, 10, 332, 0, 9849, 10556, 9987, 10056, 10021], [2, 19, 424, 1, 18379, 19698, 18896, 19027, 18961], [2, 20, 432, 0, 19698, 21112, 19973, 20112, 20043], [2, 29, 485, 1, 27858, 29857, 28840, 29041, 28940], [3, 7, 177, 0, 6473, 7225, 6990, 7068, 7029], [3, 11, 218, 0, 10045, 11212, 10968, 11089, 11028], [3, 12, 226, 0, 11212, 12514, 11976, 12108, 12041], [3, 17, 257, 1, 15588, 17399, 16835, 17021, 16927], [3, 37, 328, 1, 33635, 37541, 36725, 37130, 36927], [3, 40, 335, 1, 37541, 41900, 39660, 40098, 39879], [5, 6, 111, 0, 5873, 6899, 5968, 6065, 6017], [5, 30, 211, 0, 29365, 34493, 29842, 30326, 30083], [5, 46, 237, 1, 40516, 47591, 45348, 46084, 45714], [5, 49, 241, 1, 47591, 55902, 48363, 49148, 48754], [5, 51, 244, 0, 47591, 55902, 50756, 51579, 51166], [5, 53, 246, 1, 47591, 55902, 52416, 53267, 52840], [10, 19, 127, 1, 15849, 19953, 18621, 19055, 18836], [10, 27, 143, 0, 25119, 31623, 26915, 27542, 27227], [10, 28, 144, 1, 25119, 31623, 27542, 28184, 27861], [10, 29, 146, 0, 25119, 31623, 28840, 29512, 29174], [10, 45, 165, 0, 39811, 50119, 44668, 45709, 45186], [10, 56, 174, 1, 50119, 63096, 54954, 56234, 55590], [10, 68, 183, 0, 63096, 79433, 67608, 69183, 68391]]"
+      },
+      {
+       "name": "i",
+       "randint": [
+        0,
+        "len(table) - 1"
+       ]
+      },
+      {
+       "name": "row",
+       "let": "table[i]"
+      },
+      {
+       "name": "a",
+       "let": "row[0]"
+      },
+      {
+       "name": "b",
+       "let": "row[1]"
+      },
+      {
+       "name": "h",
+       "let": "row[2]"
+      },
+      {
+       "name": "up",
+       "let": "row[3]"
+      },
+      {
+       "name": "vtl",
+       "let": "row[4]"
+      },
+      {
+       "name": "vth",
+       "let": "row[5]"
+      },
+      {
+       "name": "vhl",
+       "let": "row[6]"
+      },
+      {
+       "name": "vhh",
+       "let": "row[7]"
+      },
+      {
+       "name": "vm",
+       "let": "row[8]"
+      },
+      {
+       "name": "n",
+       "let": "h // 100"
+      },
+      {
+       "name": "t",
+       "let": "h // 10"
+      },
+      {
+       "name": "tl",
+       "let": "fixed(t / 10, 1)"
+      },
+      {
+       "name": "th",
+       "let": "fixed((t + 1) / 10, 1)"
+      },
+      {
+       "name": "hl",
+       "let": "fixed(h / 100, 2)"
+      },
+      {
+       "name": "hh",
+       "let": "fixed((h + 1) / 100, 2)"
+      },
+      {
+       "name": "mid",
+       "let": "fixed((2 * h + 1) / 200, 3)"
+      },
+      {
+       "name": "ans",
+       "let": "fixed((h + up) / 100, 2)"
+      },
+      {
+       "name": "v1",
+       "let": "fixed(vtl / 1000, 3)"
+      },
+      {
+       "name": "v2",
+       "let": "fixed(vth / 1000, 3)"
+      },
+      {
+       "name": "v3",
+       "let": "fixed(vhl / 1000, 3)"
+      },
+      {
+       "name": "v4",
+       "let": "fixed(vhh / 1000, 3)"
+      },
+      {
+       "name": "v5",
+       "let": "fixed(vm / 1000, 3)"
+      },
+      {
+       "name": "than",
+       "let": "'less than' if up == 1 else 'greater than'"
+      },
+      {
+       "name": "rel",
+       "let": "'greater' if up == 1 else 'less'"
+      },
+      {
+       "name": "way",
+       "let": "'up' if up == 1 else 'down'"
+      },
+      {
+       "require": "a ** n < b and b < a ** (n + 1) and n >= 1",
+       "why": "the whole-number powers in the hint must really bracket the target"
+      },
+      {
+       "require": "vtl < b * 1000 and b * 1000 < vth and vhl < b * 1000 and b * 1000 < vhh and ((up == 1 and vm < b * 1000) or (up == 0 and vm > b * 1000))",
+       "why": "every tabulated trial value must sit on the correct side of the target, and the midpoint test must agree with the direction of rounding"
+      }
+     ],
+     "constraints": [
+      "a ** n < b and b < a ** (n + 1)"
+     ],
+     "stem": "Use trial and error to find the value of $x$ correct to 2 decimal places: ${=a}^x = {=b}$. Hint: start with ${=a}^{{=n}} = {=a ** n}$ and ${=a}^{{=n + 1}} = {=a ** (n + 1)}$.",
+     "answer": "fixed((h + up) / 100, 2)",
+     "solution": [
+      "The hint gives ${=a}^{{=n}} = {=a ** n}$ and ${=a}^{{=n + 1}} = {=a ** (n + 1)}$. Since ${=a ** n} < {=b} < {=a ** (n + 1)}$, we know ${=n} < x < {=n + 1}$.",
+      "Now try values of $x$ in steps of 0.1. ${=a}^{{=tl}} = {=v1}$, which is less than ${=b}$, and ${=a}^{{=th}} = {=v2}$, which is greater than ${=b}$. So ${=tl} < x < {=th}$.",
+      "Now try steps of 0.01. ${=a}^{{=hl}} = {=v3}$, which is less than ${=b}$, and ${=a}^{{=hh}} = {=v4}$, which is greater than ${=b}$. So ${=hl} < x < {=hh}$.",
+      "To decide how to round, test the midpoint ${=mid}$. ${=a}^{{=mid}} = {=v5}$, which is {=than} ${=b}$. So $x$ is {=rel} than ${=mid}$, and it rounds {=way}.",
+      "Therefore $x \\approx {=ans}$ correct to 2 decimal places."
+     ],
+     "notes": "Entry point of the skill: the stem hands over the first rung (the two whole-number powers of the base that bracket the target), so the student practises only the narrowing, tenths then hundredths then the midpoint test that settles the rounding, exactly the book's own sequence (page 56: 2^2.8, 2^2.9, 2^2.81, 2^2.805). The expression language has no logarithm or fractional power, so every instance is a row of a hand-verifiable table: base, target, floor(100x), a rounding-direction flag and five trial values in thousandths, all computed offline with 60-digit decimal arithmetic. Row filters: the target is not a power of the base (so the equation really cannot be solved by a common base and x is irrational); the book's own 2^x = 7 is left out; the tenths digit of x is neither 0 nor 9 (so the tenth trials are never a whole number) and the hundredths digit of floor(100x) is neither 0 nor 9 (so no hundredths trial repeats a tenths trial); the 2 dp answer never ends in 0 (so 1.3 versus 1.30 cannot split a blind solver); 100x is at least 0.15 away from a rounding boundary, i.e. x is at least 0.0015 from the point where the answer would flip; every displayed 3 dp trial value is on the correct side of the target. Two require clauses re-check the bracketing and the side of every tabulated value at draw time. Rounding direction is balanced across rows (11 of 24 round up). Answers are strings such as 2.32, matching the book's printed form. Nothing here goes beyond the book method. The family is numeric, so it has no distractors and declares no misconceptions."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m2s4-1-4:coefficient-power",
+     "kind": "family",
+     "lo_id": "lo:g10m2s4-1-4",
+     "parent_question_id": "q:g10m2s4-1-4:ex2-3-3",
+     "source_page": 56,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "table",
+       "let": "[[3, 2, 19, 266, 0, 18189, 19494, 18961, 19093, 19027], [3, 2, 87, 485, 1, 83573, 89571, 86520, 87122, 86820], [5, 2, 69, 378, 1, 64980, 69644, 68685, 69163, 68924], [5, 2, 132, 472, 0, 129960, 139288, 131775, 132691, 132232], [6, 2, 107, 415, 1, 102890, 110275, 106519, 107260, 106888], [6, 2, 137, 451, 0, 135765, 145509, 136709, 137660, 137183], [4, 3, 193, 352, 1, 187061, 208784, 191217, 193329, 192270], [4, 3, 196, 354, 0, 187061, 208784, 195465, 197624, 196542], [5, 3, 53, 214, 1, 50226, 56058, 52482, 53062, 52771], [5, 3, 165, 318, 0, 150677, 168174, 164519, 166336, 165425], [6, 3, 195, 316, 1, 180812, 201808, 193132, 195266, 194196], [6, 3, 196, 317, 0, 180812, 201808, 195266, 197423, 196341], [2, 5, 84, 232, 0, 81033, 95183, 83684, 85041, 84360], [2, 5, 209, 288, 1, 181195, 212835, 206093, 209437, 207758], [3, 5, 149, 242, 1, 142774, 167705, 147445, 149837, 148636], [3, 5, 211, 264, 0, 196990, 231388, 210088, 213497, 211786], [4, 5, 141, 221, 0, 137973, 162066, 140212, 142486, 141344], [4, 5, 199, 242, 1, 190365, 223607, 196593, 199782, 198181], [2, 7, 132, 215, 0, 119052, 144626, 131217, 133796, 132500], [3, 7, 74, 164, 1, 67496, 81995, 72960, 74393, 73673], [4, 7, 113, 171, 1, 109327, 132812, 111475, 113665, 112565], [4, 7, 147, 185, 0, 132812, 161342, 146383, 149260, 147814], [5, 7, 180, 184, 0, 166015, 201677, 179453, 182979, 181207], [6, 7, 219, 184, 1, 199218, 242012, 215343, 219575, 217449]]"
+      },
+      {
+       "name": "i",
+       "randint": [
+        0,
+        "len(table) - 1"
+       ]
+      },
+      {
+       "name": "row",
+       "let": "table[i]"
+      },
+      {
+       "name": "k",
+       "let": "row[0]"
+      },
+      {
+       "name": "a",
+       "let": "row[1]"
+      },
+      {
+       "name": "m",
+       "let": "row[2]"
+      },
+      {
+       "name": "h",
+       "let": "row[3]"
+      },
+      {
+       "name": "up",
+       "let": "row[4]"
+      },
+      {
+       "name": "vtl",
+       "let": "row[5]"
+      },
+      {
+       "name": "vth",
+       "let": "row[6]"
+      },
+      {
+       "name": "vhl",
+       "let": "row[7]"
+      },
+      {
+       "name": "vhh",
+       "let": "row[8]"
+      },
+      {
+       "name": "vm",
+       "let": "row[9]"
+      },
+      {
+       "name": "n",
+       "let": "h // 100"
+      },
+      {
+       "name": "t",
+       "let": "h // 10"
+      },
+      {
+       "name": "tl",
+       "let": "fixed(t / 10, 1)"
+      },
+      {
+       "name": "th",
+       "let": "fixed((t + 1) / 10, 1)"
+      },
+      {
+       "name": "hl",
+       "let": "fixed(h / 100, 2)"
+      },
+      {
+       "name": "hh",
+       "let": "fixed((h + 1) / 100, 2)"
+      },
+      {
+       "name": "mid",
+       "let": "fixed((2 * h + 1) / 200, 3)"
+      },
+      {
+       "name": "ans",
+       "let": "fixed((h + up) / 100, 2)"
+      },
+      {
+       "name": "v1",
+       "let": "fixed(vtl / 1000, 3)"
+      },
+      {
+       "name": "v2",
+       "let": "fixed(vth / 1000, 3)"
+      },
+      {
+       "name": "v3",
+       "let": "fixed(vhl / 1000, 3)"
+      },
+      {
+       "name": "v4",
+       "let": "fixed(vhh / 1000, 3)"
+      },
+      {
+       "name": "v5",
+       "let": "fixed(vm / 1000, 3)"
+      },
+      {
+       "name": "than",
+       "let": "'less than' if up == 1 else 'greater than'"
+      },
+      {
+       "name": "rel",
+       "let": "'greater' if up == 1 else 'less'"
+      },
+      {
+       "name": "way",
+       "let": "'up' if up == 1 else 'down'"
+      },
+      {
+       "require": "k * a ** n < m and m < k * a ** (n + 1) and n >= 1",
+       "why": "the whole-number trials must really bracket the target"
+      },
+      {
+       "require": "vtl < m * 1000 and m * 1000 < vth and vhl < m * 1000 and m * 1000 < vhh and ((up == 1 and vm < m * 1000) or (up == 0 and vm > m * 1000))",
+       "why": "every tabulated trial value must sit on the correct side of the target, and the midpoint test must agree with the direction of rounding"
+      }
+     ],
+     "constraints": [
+      "k * a ** n < m and m < k * a ** (n + 1)"
+     ],
+     "stem": "Use trial and error to find the value of $x$ correct to 2 decimal places: ${=k} \\times {=a}^x = {=m}$",
+     "answer": "fixed((h + up) / 100, 2)",
+     "solution": [
+      "First find the two whole numbers $x$ lies between. ${=k} \\times {=a}^{{=n}} = {=k * a ** n}$ and ${=k} \\times {=a}^{{=n + 1}} = {=k * a ** (n + 1)}$. Since ${=k * a ** n} < {=m} < {=k * a ** (n + 1)}$, we know ${=n} < x < {=n + 1}$.",
+      "Now try values of $x$ in steps of 0.1. ${=k} \\times {=a}^{{=tl}} = {=v1}$, which is less than ${=m}$, and ${=k} \\times {=a}^{{=th}} = {=v2}$, which is greater than ${=m}$. So ${=tl} < x < {=th}$.",
+      "Now try steps of 0.01. ${=k} \\times {=a}^{{=hl}} = {=v3}$, which is less than ${=m}$, and ${=k} \\times {=a}^{{=hh}} = {=v4}$, which is greater than ${=m}$. So ${=hl} < x < {=hh}$.",
+      "To decide how to round, test the midpoint ${=mid}$. ${=k} \\times {=a}^{{=mid}} = {=v5}$, which is {=than} ${=m}$. So $x$ is {=rel} than ${=mid}$, and it rounds {=way}.",
+      "Therefore $x \\approx {=ans}$ correct to 2 decimal places."
+     ],
+     "notes": "Advanced tier: the same trial-and-error method with no hint and a coefficient on the power, so every trial is k times a power of the base compared with the right-hand side, and the whole-number bracket is found by the student. The book has only one question for this objective (the standard 2^x = 7), so this is an extension of its method, not a technique it lacks: the student still tests values of x directly and compares with the target, exactly as in the book's solution; no isolating of the power is taught (a student who divides both sides by k first reaches the same x). Reviewer, please confirm the coefficient form is in scope for the objective. As in the basic family, there is no logarithm in the expression language, so each instance is a table row (k, base, target, floor(100x), a rounding flag, five trial values in thousandths) computed offline with 60-digit decimal arithmetic. Row filters: k is not a power of the base (so k * a^x is not just a shifted exponent) and target / k is not a power of the base (x irrational, no common base); the tenths digit of x is neither 0 nor 9 and the hundredths digit of floor(100x) is neither 0 nor 9 (no repeated trials); the 2 dp answer never ends in 0; 100x is at least 0.15 from a rounding boundary (x at least 0.0015 from the point where the answer flips); every displayed 3 dp value is on the correct side of the target; whole-number bracket n between 1 and 4, target at most 220. Two require clauses re-check the bracketing and every tabulated side at draw time. Rounding direction is balanced (12 of 24 round up). The family is numeric, so it has no distractors and declares no misconceptions."
+    }
+   ],
+   "infeasible": [],
+   "notes": "Both listed gaps (basic, advanced) are filled, one numeric family each; the standard tier is the book's own question and is not duplicated. The expression language has no logarithm or fractional power, so each family draws a row from a table precomputed offline (60-digit decimal arithmetic) and every row was re-verified independently against math.log and a direct recomputation of each displayed trial value; I also simulated the template rendering for every row. Unverified assumption: the expression engine accepts single-quoted string literals inside the 'let' params (used only for the less than / greater than and up / down wording) and fixed() accepts exact fractions such as 281/100. If string literals are not supported, replace those three 'let' params with a table of words. No misconceptions are catalogued for this objective and neither family is mcq, so none are declared on distractors. Candidate catalogue entries for the human reviewer, if wanted: divide-instead (reads a^x = b as a*x = b and answers b/a), stop-at-whole (reports the nearer whole number instead of narrowing to 2 dp), truncate-trial (never tests the midpoint, so a value that should round up is one hundredth too small). The advanced family extends the book's single question with a coefficient on the power and is flagged in its notes for the reviewer to confirm it is in scope."
+  }
+ ],
+ "revised": []
+}

@@ -1,0 +1,655 @@
+{
+ "format": "ainext.working-check/1",
+ "book": "g10-math",
+ "chapter": 13,
+ "prompts_version": "sw-v3",
+ "rule": "Each flag is a backlog item for a human (answer 30; answer 37c). Nothing here was corrected: the content stays as the book and G2 have it until a human decides.",
+ "passes": [
+  "A",
+  "B"
+ ],
+ "single_pass_ids": [],
+ "solutions": 100,
+ "skipped": [],
+ "verdicts": {
+  "consistent": 82,
+  "flagged": 18,
+  "unclear": 0
+ },
+ "flags": [
+  {
+   "solution_id": "expl:g10m13s2-1-1:ex13-7-25a",
+   "lo": "lo:g10m13s2-1-1",
+   "step": 2,
+   "kind": "arithmetic",
+   "where": "working",
+   "quote": "=\\text{15\\ 000}\\pi",
+   "expected": "π(10)^2(15) = 1500π ≈ 4712.39",
+   "why": "π(10)^2(15) equals 1500π, not 15 000π, so the volume 47 123.89 is ten times too large.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m13s2-1-1:ex13-7-25a",
+   "lo": "lo:g10m13s2-1-1",
+   "step": 4,
+   "kind": "final_answer",
+   "where": "working",
+   "quote": "$\\text{47\\ 123.89}$ $\\text{cm}^{3}$",
+   "expected": "4712.39 cm^3",
+   "why": "The stated volume repeats the arithmetic error from step 2.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m13s2-1-1:ex13-7-25c",
+   "lo": "lo:g10m13s2-1-1",
+   "step": 6,
+   "kind": "copy",
+   "where": "working",
+   "quote": "2((9)(15))",
+   "expected": "2(BL) = 2(8)(9)",
+   "why": "The formula term 2(BL) is substituted as 2(9)(15), which is L times H, not B times L, inflating the total to 690.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m13s2-2-1:ex13-7-25b",
+   "lo": "lo:g10m13s2-2-1",
+   "step": 1,
+   "kind": "label",
+   "where": "working",
+   "quote": "$x$ (the slant height) and $y$ (the base)",
+   "expected": "",
+   "why": "x is a leg and y is the hypotenuse, yet they are called slant height and base, which is inconsistent with the later use.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m13s2-2-1:ex13-7-25b",
+   "lo": "lo:g10m13s2-2-1",
+   "step": 2,
+   "kind": "wrong_value",
+   "where": "working",
+   "quote": "\\frac{x}{8}&=\\tan30^{\\circ}",
+   "expected": "30° is opposite the side of length 8",
+   "why": "The 30° angle is opposite the vertical side 8, so the other leg is 8/tan30°, not 8tan30°.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m13s2-2-1:ex13-7-25b",
+   "lo": "lo:g10m13s2-2-1",
+   "step": 6,
+   "kind": "arithmetic",
+   "where": "working",
+   "quote": "+(5\\times8\\tan30^{\\circ})+(5\\times8) = 64\\tan30^{\\circ}+\\frac{40}{\\sin30^{\\circ}}+40\\tan30^{\\circ}+40",
+   "expected": "",
+   "why": "+(5\\times8\\tan30^{\\circ})+(5\\times8) = 64\\tan30^{\\circ}+\\frac{40}{\\sin30^{\\circ}}+40\\tan30^{\\circ}+40 does not hold (63.094 vs 180.044)",
+   "sources": [
+    "numeric"
+   ],
+   "passes": [],
+   "numeric": {
+    "left": "+(5\\times8\\tan30^{\\circ})+(5\\times8)",
+    "relation": "=",
+    "right": "64\\tan30^{\\circ}+\\frac{40}{\\sin30^{\\circ}}+40\\tan30^{\\circ}+40",
+    "why": "+(5\\times8\\tan30^{\\circ})+(5\\times8) = 64\\tan30^{\\circ}+\\frac{40}{\\sin30^{\\circ}}+40\\tan30^{\\circ}+40 does not hold (63.094 vs 180.044)"
+   }
+  },
+  {
+   "solution_id": "expl:g10m13s3-2-1:ex13-7-15b",
+   "lo": "lo:g10m13s3-2-1",
+   "step": 6,
+   "kind": "arithmetic",
+   "where": "working",
+   "quote": "&=18\\pi",
+   "expected": "128π/3",
+   "why": "(4/3)π(4)^3(1/2) equals 128π/3, not 18π; the following approximation 134.04 matches 128π/3, not 18π.",
+   "sources": [
+    "agent",
+    "numeric"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ],
+   "numeric": {
+    "left": "\\frac{4}{3}\\pi(\\text{4})^{3}\\times\\frac{1}{2}",
+    "relation": "=",
+    "right": "18\\pi",
+    "why": "\\frac{4}{3}\\pi(\\text{4})^{3}\\times\\frac{1}{2} = 18\\pi does not hold (134.041 vs 56.5487)"
+   }
+  },
+  {
+   "solution_id": "expl:g10m13s3-2-1:ex13-7-28a",
+   "lo": "lo:g10m13s3-2-1",
+   "step": 2,
+   "kind": "wrong_value",
+   "where": "working",
+   "quote": "\\cos\\text{33.577}^{\\circ}",
+   "expected": "33.557",
+   "why": "The question and figure give the angle as 33.557 degrees, but the working uses 33.577 (also repeated in step 4).",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m13s3-2-1:ex13-7-28a",
+   "lo": "lo:g10m13s3-2-1",
+   "step": 4,
+   "kind": "wrong_value",
+   "where": "working",
+   "quote": "\\sin\\text{33.577}^{\\circ}",
+   "expected": "33.557 degrees",
+   "why": "The question and figure give the angle as 33.557 degrees; the working uses 33.577.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "B"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m13s3-2-1:ex13-7-28a",
+   "lo": "lo:g10m13s3-2-1",
+   "step": 8,
+   "kind": "wrong_value",
+   "where": "working",
+   "quote": "\\frac{1}{2}(\\text{3.5})(\\text{14.586})",
+   "expected": "b = CI = 7 cm",
+   "why": "The base of triangle CUI is CI = 7 cm; 3.5 is only half of it, so the area is halved wrongly.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m13s3-2-1:ex13-7-29d",
+   "lo": "lo:g10m13s3-2-1",
+   "step": 1,
+   "kind": "copy",
+   "where": "working",
+   "quote": "V&=\\frac{1}{3}\\pi b^{2}H",
+   "expected": "V = 1/3 b^2 H",
+   "why": "A square-based pyramid volume has no factor of pi, and the final numeric value shown does not include pi.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m13s3-2-1:ex13-7-29d",
+   "lo": "lo:g10m13s3-2-1",
+   "step": 2,
+   "kind": "arithmetic",
+   "where": "working",
+   "quote": "\\approx\\text{1\\ 551\\ 425.432}",
+   "expected": "about 1 496 319",
+   "why": "755.79 times (755.79 + 1224.0176) is about 1 496 319, not 1 551 425.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m13s3-2-2:ex13-7-21",
+   "lo": "lo:g10m13s3-2-2",
+   "step": 2,
+   "kind": "arithmetic",
+   "where": "working",
+   "quote": "=\\text{17 592.91}",
+   "expected": "5600π = 17 592.92",
+   "why": "5600π is 17 592.92 to two decimal places, and step 5 itself uses 17 592.92.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m13s3-2-2:ex13-7-21",
+   "lo": "lo:g10m13s3-2-2",
+   "step": 4,
+   "kind": "other",
+   "where": "working",
+   "quote": "\\text{2}\\pi r\\sqrt{r^{2}+h^{2}}",
+   "expected": "",
+   "why": "The curved surface area of a cone is πr times the slant height, not 2πr times it, so the value is doubled.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m13s3-2-2:ex13-7-21",
+   "lo": "lo:g10m13s3-2-2",
+   "step": 5,
+   "kind": "arithmetic",
+   "where": "working",
+   "quote": "\\text{17 592.92}+\\text{12 566.4}=\\text{30 159.52}",
+   "expected": "30 159.32",
+   "why": "17 592.92 plus 12 566.4 equals 30 159.32, not 30 159.52.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m13s3-2-2:ex13-7-22a",
+   "lo": "lo:g10m13s3-2-2",
+   "step": 7,
+   "kind": "final_answer",
+   "where": "working",
+   "quote": "\\text{1194.67}",
+   "expected": "1194.68",
+   "why": "Step 6 gives 1194.68 and the exact value rounds to 1194.68, so the stated final surface area differs.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ],
+   "also_kinds": [
+    "copy"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m13s3-2-2:ex13-7-22c",
+   "lo": "lo:g10m13s3-2-2",
+   "step": 4,
+   "kind": "wrong_value",
+   "where": "working",
+   "quote": "h_{s}^{2}&=9^{2}+4^{2}",
+   "expected": "half the triangle base 12, which is 6, with height 9",
+   "why": "The triangle has base 12 and height 9 (step 2), so the slant height uses 6, not 4.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m13s3-2-2:ex13-7-22c",
+   "lo": "lo:g10m13s3-2-2",
+   "step": 6,
+   "kind": "wrong_value",
+   "where": "working",
+   "quote": "2(12)(\\sqrt{97})",
+   "expected": "prism length 4 as the sloping rectangle width",
+   "why": "The sloping rectangles are slant height times the prism length 4, not times the triangle base 12.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m13s3-2-2:ex13-7-22c",
+   "lo": "lo:g10m13s3-2-2",
+   "step": 8,
+   "kind": "arithmetic",
+   "where": "working",
+   "quote": "&=256",
+   "expected": "192+128+48-48 = 320",
+   "why": "The line before it evaluates to 320, not 256.",
+   "sources": [
+    "agent",
+    "numeric"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ],
+   "numeric": {
+    "left": "2(16)(6)+2(16)(4)+2(6)(4)-(12)(4)",
+    "relation": "=",
+    "right": "256",
+    "why": "2(16)(6)+2(16)(4)+2(6)(4)-(12)(4) = 256 does not hold (320 vs 256)"
+   }
+  },
+  {
+   "solution_id": "expl:g10m13s3-2-3:ex13-7-15a",
+   "lo": "lo:g10m13s3-2-3",
+   "step": 6,
+   "kind": "label",
+   "where": "working",
+   "quote": "h_{s}^{2}&=b^{2}+h^{2}",
+   "expected": "b/2 = 7.5",
+   "why": "b is 15 in the figure and in step 8, but this line substitutes 7.5 for b, so the formula and the substitution disagree.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m13s3-2-3:ex13-7-15a",
+   "lo": "lo:g10m13s3-2-3",
+   "step": 8,
+   "kind": "arithmetic",
+   "where": "working",
+   "quote": "=(\\text{15})(\\text{15}+\\text{2}\\sqrt{\\text{200.25}})\\\\&\\approx\\text{437.26}",
+   "expected": "about 649.5 cm²",
+   "why": "15(15+2√200.25) is about 649.5, not 437.26; 437.26 equals 15(15+√200.25).",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m13s4-1-2:we20",
+   "lo": "lo:g10m13s4-1-2",
+   "step": 1,
+   "kind": "other",
+   "where": "working",
+   "quote": "A&=\\pi{r}^{2}+2\\pi rh",
+   "expected": "A = 2πr² + 2πrh",
+   "why": "The figure shows a closed cylinder with top and base, so total surface area needs two circular ends, 2πr², not one.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m13s4-1-3:ex13-7-19d",
+   "lo": "lo:g10m13s4-1-3",
+   "step": 2,
+   "kind": "arithmetic",
+   "where": "working",
+   "quote": "\\approx\\text{13\\ 571.9}",
+   "expected": "13 571.7",
+   "why": "4320π equals 13 571.68, which is 13 571.7 to one decimal place, not 13 571.9.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m13s2-1-1:ex13-7-4",
+   "lo": "lo:g10m13s2-1-1",
+   "step": 1,
+   "kind": "wrong_value",
+   "where": "question",
+   "quote": "4 rectangles with a breadth of 5 units and a height of 8 units",
+   "expected": "height 8 (figure)",
+   "why": "The question gives the prism height as 5, but the figure labels the height 8 and the working uses 8.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ],
+   "also_kinds": [
+    "other"
+   ]
+  },
+  {
+   "solution_id": "q:g10m13s2-1-1:we03",
+   "lo": "lo:g10m13s2-1-1",
+   "step": 1,
+   "kind": "wrong_value",
+   "where": "working",
+   "quote": "Sketch and label the net of the prism",
+   "expected": "12 cm (prism length)",
+   "why": "The net's large rectangle is labelled 8 cm, but the question's figure gives the prism length as 12 cm, and the 216 later needs 18 × 12.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ],
+   "also_kinds": [
+    "label"
+   ]
+  },
+  {
+   "solution_id": "q:g10m13s3-2-1:ex13-7-23",
+   "lo": "lo:g10m13s3-2-1",
+   "step": 2,
+   "kind": "copy",
+   "where": "working",
+   "quote": "\\frac{\\pi(3)^{3}12}{3}",
+   "expected": "r squared: (3)^2",
+   "why": "The cone formula needs r squared; (3)^3 times 12 over 3 is 108π, not the 36π written.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m13s3-2-1:ex13-7-24b",
+   "lo": "lo:g10m13s3-2-1",
+   "step": 1,
+   "kind": "copy",
+   "where": "working",
+   "quote": "The volume of a cone is $\\frac{4}{3}\\pi r^{2}H$",
+   "expected": "\\frac{1}{3}\\pi r^{2}H",
+   "why": "The cone volume formula is stated with 4/3, but step 2 (and the correct formula) uses 1/3.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m13s4-1-3:ex13-7-17",
+   "lo": "lo:g10m13s4-1-3",
+   "step": 2,
+   "kind": "other",
+   "where": "working",
+   "quote": "A_{\\text{new}}&=\\frac{1}{3}\\left(\\frac{1}{3}b\\right)^{2}H",
+   "expected": "surface area of the new pyramid",
+   "why": "This is a volume-type expression with height H left unscaled, not a surface area, so it does not support the area conclusion.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "A",
+    "B"
+   ],
+   "also_kinds": [
+    "label"
+   ]
+  },
+  {
+   "solution_id": "q:g10m13s4-1-3:ex13-7-18",
+   "lo": "lo:g10m13s4-1-3",
+   "step": 2,
+   "kind": "other",
+   "where": "working",
+   "quote": "\\frac{1}{3}\\pi\\left(\\frac{1}{2}r\\right)^{2}\\left(\\frac{1}{2}H\\right)",
+   "expected": "cylinder volume pi r^2 H",
+   "why": "The factor 1/3 makes this the cone volume formula, but the question asks about a cylinder.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "A",
+    "B"
+   ],
+   "also_kinds": [
+    "label",
+    "wrong_value"
+   ]
+  }
+ ],
+ "flagged_solutions": 18,
+ "unclear": [],
+ "unchecked": [],
+ "problems": [],
+ "checked_ids": [
+  "expl:g10m13s1-1-1:ex13-7-27a",
+  "expl:g10m13s2-1-1:ex13-7-25a",
+  "expl:g10m13s2-1-1:ex13-7-25c",
+  "expl:g10m13s2-2-1:ex13-7-25b",
+  "expl:g10m13s3-1-2:we11",
+  "expl:g10m13s3-2-1:ex13-7-15b",
+  "expl:g10m13s3-2-1:ex13-7-19b",
+  "expl:g10m13s3-2-1:ex13-7-24a",
+  "expl:g10m13s3-2-1:ex13-7-28a",
+  "expl:g10m13s3-2-1:ex13-7-29d",
+  "expl:g10m13s3-2-2:ex13-5-7",
+  "expl:g10m13s3-2-2:ex13-7-21",
+  "expl:g10m13s3-2-2:ex13-7-22a",
+  "expl:g10m13s3-2-2:ex13-7-22b",
+  "expl:g10m13s3-2-2:ex13-7-22c",
+  "expl:g10m13s3-2-3:ex13-5-5",
+  "expl:g10m13s3-2-3:ex13-7-15a",
+  "expl:g10m13s3-2-3:ex13-7-19a",
+  "expl:g10m13s4-1-1:we18",
+  "expl:g10m13s4-1-2:ex13-6-3",
+  "expl:g10m13s4-1-2:we19",
+  "expl:g10m13s4-1-2:we20",
+  "expl:g10m13s4-1-3:ex13-6-6",
+  "expl:g10m13s4-1-3:ex13-7-19c",
+  "expl:g10m13s4-1-3:ex13-7-19d",
+  "q:g10m13s1-1-1:ex13-1-1h",
+  "q:g10m13s1-1-1:ex13-1-2a",
+  "q:g10m13s1-1-1:ex13-1-2b",
+  "q:g10m13s1-1-1:ex13-1-3a",
+  "q:g10m13s1-1-1:ex13-1-3b",
+  "q:g10m13s1-1-1:ex13-7-1b",
+  "q:g10m13s1-1-1:ex13-7-1c",
+  "q:g10m13s1-1-1:ex13-7-27b",
+  "q:g10m13s1-1-1:ex13-7-29a",
+  "q:g10m13s1-1-1:ex13-7-2a",
+  "q:g10m13s1-1-1:ex13-7-2b",
+  "q:g10m13s2-1-1:ex13-2-1a",
+  "q:g10m13s2-1-1:ex13-2-1b",
+  "q:g10m13s2-1-1:ex13-2-1c",
+  "q:g10m13s2-1-1:ex13-2-1d",
+  "q:g10m13s2-1-1:ex13-2-1e",
+  "q:g10m13s2-1-1:ex13-2-1f",
+  "q:g10m13s2-1-1:ex13-7-3",
+  "q:g10m13s2-1-1:ex13-7-4",
+  "q:g10m13s2-1-1:we02",
+  "q:g10m13s2-1-1:we03",
+  "q:g10m13s2-1-2:ex13-7-5",
+  "q:g10m13s2-1-2:we04",
+  "q:g10m13s2-2-1:ex13-3-3",
+  "q:g10m13s2-2-1:ex13-3-5",
+  "q:g10m13s2-2-1:ex13-7-27c",
+  "q:g10m13s2-2-1:ex13-7-6",
+  "q:g10m13s2-2-1:ex13-7-7",
+  "q:g10m13s2-2-1:we05",
+  "q:g10m13s2-2-1:we06",
+  "q:g10m13s2-2-2:ex13-3-6",
+  "q:g10m13s2-2-2:ex13-7-8",
+  "q:g10m13s2-2-2:we07",
+  "q:g10m13s3-1-1:ex13-4-1a",
+  "q:g10m13s3-1-1:ex13-4-4",
+  "q:g10m13s3-1-1:ex13-7-10",
+  "q:g10m13s3-1-1:ex13-7-29b",
+  "q:g10m13s3-1-1:ex13-7-29c",
+  "q:g10m13s3-1-1:we08",
+  "q:g10m13s3-1-2:ex13-4-1c",
+  "q:g10m13s3-1-2:ex13-4-2",
+  "q:g10m13s3-1-2:ex13-7-11",
+  "q:g10m13s3-1-2:we09",
+  "q:g10m13s3-1-3:ex13-4-1d",
+  "q:g10m13s3-1-3:ex13-4-3",
+  "q:g10m13s3-1-3:ex13-7-9",
+  "q:g10m13s3-1-3:we10",
+  "q:g10m13s3-2-1:ex13-5-1",
+  "q:g10m13s3-2-1:ex13-5-2",
+  "q:g10m13s3-2-1:ex13-5-3",
+  "q:g10m13s3-2-1:ex13-5-4a",
+  "q:g10m13s3-2-1:ex13-5-4b",
+  "q:g10m13s3-2-1:ex13-5-4c",
+  "q:g10m13s3-2-1:ex13-5-4d",
+  "q:g10m13s3-2-1:ex13-7-12",
+  "q:g10m13s3-2-1:ex13-7-13",
+  "q:g10m13s3-2-1:ex13-7-14",
+  "q:g10m13s3-2-1:ex13-7-23",
+  "q:g10m13s3-2-1:ex13-7-24b",
+  "q:g10m13s3-2-1:ex13-7-26a",
+  "q:g10m13s3-2-1:we12",
+  "q:g10m13s3-2-1:we14",
+  "q:g10m13s3-2-1:we15",
+  "q:g10m13s3-2-2:ex13-7-20a",
+  "q:g10m13s3-2-2:ex13-7-20b",
+  "q:g10m13s3-2-2:we16",
+  "q:g10m13s3-2-2:we17",
+  "q:g10m13s4-1-1:ex13-6-4a",
+  "q:g10m13s4-1-1:ex13-6-4b",
+  "q:g10m13s4-1-3:ex13-6-1",
+  "q:g10m13s4-1-3:ex13-6-2",
+  "q:g10m13s4-1-3:ex13-6-5",
+  "q:g10m13s4-1-3:ex13-7-16",
+  "q:g10m13s4-1-3:ex13-7-17",
+  "q:g10m13s4-1-3:ex13-7-18"
+ ],
+ "runs": [
+  "bf06baf8878e2dba3f60547516cc09e0af5b31c6b46c4f5bfc8bd52d185b1e15",
+  "a1d8c0f04c28001bdc33db3e65d5d15086001830a8b4423d445653e9371b76b5"
+ ]
+}

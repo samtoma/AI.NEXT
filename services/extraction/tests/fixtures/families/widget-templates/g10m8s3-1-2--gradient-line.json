@@ -1,0 +1,45 @@
+{
+  "format": "ainext.widget-template/1",
+  "id": "wt:g10m8s3-1-2:gradient-line",
+  "lo_id": "lo:g10m8s3-1-2",
+  "parent_question_id": "q:g10m8s3-1-2:ex8-3-1a",
+  "tier": "standard",
+  "kind": "line_drawer",
+  "instances": [
+    {
+      "x1": -2,
+      "y1": -4,
+      "x2": 2,
+      "y2": 4
+    }
+  ],
+  "spec": {
+    "mode": "points",
+    "through": [
+      [
+        "{=x1}",
+        "{=y1}"
+      ],
+      [
+        "{=x2}",
+        "{=y2}"
+      ]
+    ]
+  },
+  "stem": "Draw the straight line through $A({=x1}, {=y1})$ and $B({=x2}, {=y2})$.",
+  "solution": [
+    "Put one handle on $A$ and the other on $B$.",
+    "Its gradient is $\\frac{{=y2 - y1}}{{=x2 - x1}} = {=Fraction(y2 - y1, x2 - x1)}$."
+  ],
+  "diagnostics": [
+    {
+      "predicate": "points-swapped",
+      "misconception_id": "mc:g10m8s3-1-2:coordinates-swapped"
+    },
+    {
+      "predicate": "off-target",
+      "misconception_id": "mc:g10m8s3-1-1:run-over-rise"
+    }
+  ],
+  "notes": "Test fixture. Instance moved off (-2, -3), whose swap (-3, -2) is where LineDrawer's first handle opens (consistency review A10), and the prerequisite's mapping moved from slope-inverted, which points mode never emits (W1), to off-target: this fixture exercises the FR-1215 prerequisite mechanics, not the wisdom of that mapping."
+}

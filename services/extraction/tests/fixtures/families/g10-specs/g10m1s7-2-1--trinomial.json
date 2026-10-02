@@ -1,0 +1,45 @@
+{
+  "format": "ainext.family/1",
+  "id": "tpl:g10m1s7-2-1:trinomial",
+  "kind": "family",
+  "lo_id": "lo:g10m1s7-2-1",
+  "parent_question_id": "q:g10m1s7-2-1:ex1-8-1a",
+  "source_page": 25,
+  "tier": "standard",
+  "answer_type": "expression",
+  "context": null,
+  "params": [
+    {
+      "name": "p",
+      "randint": [
+        -7,
+        7
+      ],
+      "resample_while": "p == 0"
+    },
+    {
+      "name": "q",
+      "randint": [
+        -7,
+        7
+      ],
+      "resample_while": "q == 0 or q == p or q == -p"
+    }
+  ],
+  "stem": "Factorise fully: ${=quadratic(1, p + q, p * q)}$.",
+  "solution": [
+    "Look for two numbers whose product is ${=p * q}$ and whose sum is ${=p + q}$.",
+    "They are ${=p}$ and ${=q}$: ${=p} \\times {=paren(q)} = {=p * q}$ and ${=p}{=signed(q)} = {=p + q}$.",
+    "So ${=quadratic(1, p + q, p * q)} = (x{=signed(p)})(x{=signed(q)})$."
+  ],
+  "marker": {
+    "kind": "expression",
+    "answer": "(x + {=p})*(x + {=q})",
+    "form": "factorised",
+    "variables": [
+      "x"
+    ],
+    "tolerance": null
+  },
+  "notes": "Fixture: a typed answer with the marker spec (tests only)."
+}

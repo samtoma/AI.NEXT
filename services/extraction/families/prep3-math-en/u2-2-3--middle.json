@@ -1,0 +1,43 @@
+{
+  "format": "ainext.family/1",
+  "id": "tpl:u2-2-3:middle",
+  "kind": "family",
+  "lo_id": "lo:u2-2-3",
+  "parent_question_id": "q:u2-2-3:001",
+  "source_page": 37,
+  "tier": "advanced",
+  "answer_type": "numeric",
+  "context": null,
+  "params": [
+    {
+      "name": "m",
+      "randint": [
+        2,
+        15
+      ]
+    },
+    {
+      "name": "a",
+      "choice": "[1, 2, 3, 4, m]"
+    },
+    {
+      "require": "(m * m) % a == 0",
+      "why": "the third term must be a whole number"
+    },
+    {
+      "name": "c",
+      "let": "m * m // a"
+    }
+  ],
+  "constraints": [
+    "c != a"
+  ],
+  "stem": "If ${=a}$, $x$, ${=c}$ are in continued proportion and $x > 0$, find $x$.",
+  "answer": "m",
+  "solution": [
+    "In a continued proportion the middle term is the middle proportional: $x^2 = $ first $\\times$ last.",
+    "$x^2 = {=a} \\times {=c} = {=a * c}$.",
+    "$x = {=m}$ (the positive root, since $x > 0$)."
+  ],
+  "notes": "Reproduces the hand-written family tpl:u2-2-3:middle in generate_questions.py, item for item (decision 16 proof, tests/test_family_reproduction.py). Misconception ids are the catalogue's (seed/generated/misconceptions.json), which the live bank carries. Not loaded by anything: the live Prep-3 bank is the committed export."
+}

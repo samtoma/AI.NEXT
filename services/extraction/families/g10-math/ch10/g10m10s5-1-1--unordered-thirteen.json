@@ -1,0 +1,130 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m10s5-1-1:unordered-thirteen",
+ "kind": "family",
+ "lo_id": "lo:g10m10s5-1-1",
+ "parent_question_id": "q:g10m10s5-1-1:ex10-6-3",
+ "source_page": 380,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": "A bakery recorded the number of loaves of bread it sold on each of 13 days.",
+ "params": [
+  {
+   "name": "x1",
+   "randint": [
+    18,
+    30
+   ]
+  },
+  {
+   "name": "x2",
+   "randint": [
+    "x1",
+    "x1 + 6"
+   ]
+  },
+  {
+   "name": "x3",
+   "randint": [
+    "x2",
+    "x2 + 6"
+   ]
+  },
+  {
+   "name": "x4",
+   "randint": [
+    "x3 + 1",
+    "x3 + 6"
+   ]
+  },
+  {
+   "name": "x5",
+   "randint": [
+    "x4 + 1",
+    "x4 + 6"
+   ]
+  },
+  {
+   "name": "x6",
+   "let": "x5"
+  },
+  {
+   "name": "x7",
+   "randint": [
+    "x6 + 1",
+    "x6 + 6"
+   ]
+  },
+  {
+   "name": "x8",
+   "randint": [
+    "x7",
+    "x7 + 6"
+   ]
+  },
+  {
+   "name": "x9",
+   "randint": [
+    "x8",
+    "x8 + 6"
+   ]
+  },
+  {
+   "name": "x10",
+   "randint": [
+    "x9 + 1",
+    "x9 + 6"
+   ]
+  },
+  {
+   "name": "x11",
+   "randint": [
+    "x10 + 1",
+    "x10 + 6"
+   ]
+  },
+  {
+   "name": "x12",
+   "randint": [
+    "x11",
+    "x11 + 6"
+   ]
+  },
+  {
+   "name": "x13",
+   "randint": [
+    "x12",
+    "x12 + 6"
+   ]
+  },
+  {
+   "name": "xs",
+   "let": "[x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12, x13]"
+  },
+  {
+   "name": "s",
+   "shuffle": "xs"
+  }
+ ],
+ "constraints": [
+  "x1 < x4 and x4 < x7 and x7 < x10 and x10 < x13"
+ ],
+ "stem": "A bakery recorded the number of loaves of bread it sold on each of 13 days. $\\left\\{ {=s[0]}, {=s[1]}, {=s[2]}, {=s[3]}, {=s[4]}, {=s[5]}, {=s[6]}, {=s[7]}, {=s[8]}, {=s[9]}, {=s[10]}, {=s[11]}, {=s[12]} \\right\\}$ Give the five number summary of the number of loaves sold (minimum, $Q_1$, median, $Q_3$, maximum), in that order. Use the percentile formula to find the quartiles: the $p$th percentile lies at position $\\frac{p}{100} \\times n$, where $n$ is the number of values; round this position up to the next whole number. $Q_1$, the median and $Q_3$ are the 25th, 50th and 75th percentiles.",
+ "solution": [
+  "First arrange the 13 values in order, from smallest to largest. A value that occurs more than once is written each time it occurs (here ${=x5}$ appears twice). $\\left\\{ {=xs[0]}, {=xs[1]}, {=xs[2]}, {=xs[3]}, {=xs[4]}, {=xs[5]}, {=xs[6]}, {=xs[7]}, {=xs[8]}, {=xs[9]}, {=xs[10]}, {=xs[11]}, {=xs[12]} \\right\\}$",
+  "The minimum is the first value, ${=x1}$, and the maximum is the last value, ${=x13}$.",
+  "There are $n = 13$ values. The median is the 50th percentile: $\\frac{50}{100} \\times 13 = 6.5$, which rounds up to 7. The median is the 7th value, ${=x7}$.",
+  "$Q_1$ is the 25th percentile: $\\frac{25}{100} \\times 13 = 3.25$, which rounds up to 4. $Q_1$ is the 4th value, ${=x4}$.",
+  "$Q_3$ is the 75th percentile: $\\frac{75}{100} \\times 13 = 9.75$, which rounds up to 10. $Q_3$ is the 10th value, ${=x10}$.",
+  "The five number summary is: minimum ${=x1}$, $Q_1 = {=x4}$, median ${=x7}$, $Q_3 = {=x10}$, maximum ${=x13}$."
+ ],
+ "marker": {
+  "kind": "values",
+  "answer": "[{=x1}, {=x4}, {=x7}, {=x10}, {=x13}]",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Advanced: the book's own twist (raw, unordered data in a context, with a repeated value) at a larger size, 13 values, so the student must order the data and then locate positions 4, 7 and 10 from rounded-up percentile positions (3.25, 6.5, 9.75). The data are built already sorted (xs), then shuffled for display (s); the key and the solution use the sorted list. A repeated value is guaranteed (x5 = x6, strictly between x4 and x7, so it occurs exactly twice) and further ties occur at random. The strict gaps x3<x4, x6<x7, x9<x10 and x10<x11 are there so that the usual wrong answers (rounding down to positions 3, 6, 9, or (n+1)p/100 interpolation giving the mean of the 3rd and 4th, and of the 10th and 11th) never coincide with the correct value, and so the five summary values are always distinct. Whole numbers only, roughly 18 to 100 loaves a day. The percentile-position rule is stated in the stem for the same reason as in the basic family: the book's stem leaves it implicit and a blind solver cannot otherwise know which quartile convention is meant. An odd number of values keeps every quartile position non-integer."
+}

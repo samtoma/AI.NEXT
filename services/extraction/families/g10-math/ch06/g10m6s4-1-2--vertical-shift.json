@@ -1,0 +1,129 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s4-1-2:vertical-shift",
+ "kind": "family",
+ "lo_id": "lo:g10m6s4-1-2",
+ "parent_question_id": "q:g10m6s4-1-2:ex6-4-5a",
+ "source_page": 176,
+ "tier": "standard",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "sa",
+   "choice": [
+    1,
+    -1
+   ]
+  },
+  {
+   "name": "am",
+   "randint": [
+    1,
+    6
+   ]
+  },
+  {
+   "name": "a",
+   "let": "sa * am"
+  },
+  {
+   "name": "p",
+   "randint": [
+    -6,
+    6
+   ],
+   "resample_while": "p == 0"
+  },
+  {
+   "name": "q",
+   "randint": [
+    -6,
+    6
+   ],
+   "resample_while": "abs(q) < 2 or q == p or p == 2 * q or abs(q - p) < 2"
+  },
+  {
+   "name": "d",
+   "let": "abs(q - p)"
+  },
+  {
+   "name": "ag",
+   "let": "'-' if a < 0 else ''"
+  },
+  {
+   "name": "ps",
+   "let": "'+' if p > 0 else '-'"
+  },
+  {
+   "name": "qs",
+   "let": "'+' if q > 0 else '-'"
+  },
+  {
+   "name": "dirc",
+   "let": "'up' if q > p else 'down'"
+  },
+  {
+   "name": "dirr",
+   "let": "'down' if q > p else 'up'"
+  },
+  {
+   "name": "side",
+   "let": "'right' if q > p else 'left'"
+  },
+  {
+   "name": "dq",
+   "let": "'up' if q > 0 else 'down'"
+  },
+  {
+   "name": "incdec",
+   "let": "'increased' if q > p else 'decreased'"
+  }
+ ],
+ "constraints": [
+  "abs(q) != d",
+  "d >= 2",
+  "abs(q) >= 2"
+ ],
+ "stem": "The graph of $f(x)={=ag}\\frac{{=abs(a)}}{x} {=ps} {=abs(p)}$ is transformed into the graph of $g(x)={=ag}\\frac{{=abs(a)}}{x} {=qs} {=abs(q)}$. Which statement describes the transformation?",
+ "choices": {
+  "correct": "The graph of $f$ is shifted {=d} units {=dirc}.",
+  "distractors": [
+   {
+    "text": "The graph of $f$ is shifted {=d} units {=dirr}.",
+    "misconception_id": "mc:g10m6s4-1-2:shift-direction-reversed"
+   },
+   {
+    "text": "The graph of $f$ is shifted {=d} units to the {=side}.",
+    "misconception_id": "mc:g10m6s4-1-2:q-shifts-sideways"
+   },
+   {
+    "text": "The graph of $f$ is shifted {=abs(q)} units {=dq}.",
+    "misconception_id": "mc:g10m6s4-1-2:shift-from-q-alone"
+   }
+  ]
+ },
+ "solution": [
+  "$f$ and $g$ have the same value $a={=a}$, so the graph keeps its shape. Only $q$ is different.",
+  "In $f$ we have $q={=p}$ and in $g$ we have $q={=q}$, so $q$ has {=incdec} by {=d}.",
+  "The value of $q$ is a vertical shift: when $q$ increases the graph moves up, and when $q$ decreases it moves down. So the graph of $f$ is shifted {=d} units {=dirc}."
+ ],
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m6s4-1-2:shift-direction-reversed",
+   "label": "A shift up or down is applied the wrong way",
+   "description": "The student moves the graph vertically in the wrong direction, down when it should go up and up when it should go down, so the sign of q, or of the change in q, is read backwards."
+  },
+  {
+   "id": "mc:g10m6s4-1-2:q-shifts-sideways",
+   "label": "q is thought to shift the graph sideways",
+   "description": "The student believes that changing the constant q moves the graph to the left or right instead of up or down."
+  },
+  {
+   "id": "mc:g10m6s4-1-2:shift-from-q-alone",
+   "label": "The shift is read from the new q alone",
+   "description": "The student takes the shift to be the value of q in the new equation and ignores the q that the first graph already had, instead of finding how much q has changed."
+  }
+ ],
+ "notes": "The book's questions here are all picture matching and none of them shows a q, so this family states the effect of q directly: a vertical shift by the change in q. a is the same in f and g so the graph keeps its shape. p and q are never 0, the change is at least 2 units (no '1 units'), and p != 2q so that taking q alone never gives the same amount as the true shift (all four options differ)."
+}

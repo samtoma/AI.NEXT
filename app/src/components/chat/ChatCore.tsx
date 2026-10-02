@@ -29,7 +29,8 @@ import {
   stripIncompleteTail,
   type Cite,
 } from "@/lib/chat-parse";
-import { submitAttempt } from "@/lib/attempts-client";
+import { AttemptRetryError, submitAttempt } from "@/lib/attempts-client";
+import { ANSWER_ONLY_INSTRUCTION, isAnswerOnly } from "@/lib/question-flags";
 import {
   cardRevealUnlocked,
   pendingAfterDeclaration,
@@ -907,7 +908,22 @@ export function ChatCore({
                   setExternalAttempt({ questionId: openQ.id, result: r });
                   handleAttemptRef.current(r, openQ);
                 } catch (e) {
-                  console.error("chat-typed answer submission failed:", e);
+                  // The maths-expression marker sent this chat-typed answer
+                  // back for re-entry (T416, FR-4320): nothing was recorded —
+                  // no attempt, no mastery change. Before this it was only
+                  // logged, so a student who typed an unreadable or
+                  // wrong-form answer in chat saw nothing and never knew to
+                  // retype it. Shown as a local note (never sent to the
+                  // model, never counted as an attempt) — the same words the
+                  // tapped card already shows via its own `reentry` prop.
+                  if (e instanceof AttemptRetryError) {
+                    setMessages((prev) => [
+                      ...prev,
+                      { role: "note", kind: "say", localOnly: true, text: e.retry.message },
+                    ]);
+                  } else {
+                    console.error("chat-typed answer submission failed:", e);
+                  }
                 }
               }
             }
@@ -1037,7 +1053,15 @@ export function ChatCore({
       const wasPending = pendingConfirmationRef.current;
       const wrongCountAfter =
         wasPending?.loId === q.loId ? wasPending.wrongCount + 1 : 1;
-      if (probingNow) {
+      if (probingNow && !r.isCorrect && isAnswerOnly(q.choices)) {
+        // An `answer_only` question (Samuel's G2 answer 22): the book prints
+        // no working, so a probe has nothing grounded to hint toward and the
+        // reveal nothing to walk — the tutor confirms and points back to the
+        // lesson's own worked examples instead (lib/question-flags.ts).
+        note += cardRevealUnlocked(wrongCountAfter)
+          ? `\nSOCRATIC PROBE — REVEALED — ${q.loId}: that's two attempts without landing it. The card is now showing the student the correct answer. ${ANSWER_ONLY_INSTRUCTION} Once the student seems ready, your next check on ${q.loId} must still be a fresh same-tier question before you can treat it as resolved.`
+          : `\nSOCRATIC PROBE — ${q.loId} is now confirmation-pending. ${q.id} is ANSWER ONLY: the book prints no worked solution for it, so there is no method to hint toward — do not solve it or suggest one. Ask ONE short question that sends the student back to this lesson's own worked examples, then let them try again.`;
+      } else if (probingNow) {
         if (!r.isCorrect) {
           const material = r.refutation
             ? r.refutation.steps.map((st) => st.text_md).join(" ")

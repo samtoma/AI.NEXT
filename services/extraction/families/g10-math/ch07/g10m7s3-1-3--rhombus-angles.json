@@ -1,0 +1,85 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m7s3-1-3:rhombus-angles",
+ "kind": "family",
+ "lo_id": "lo:g10m7s3-1-3",
+ "parent_question_id": "q:g10m7s3-1-3:ex7-8-17",
+ "source_page": 277,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "v",
+   "randint": [
+    6,
+    20
+   ]
+  },
+  {
+   "name": "a",
+   "choice": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "c",
+   "choice": [
+    2,
+    4,
+    6
+   ]
+  },
+  {
+   "name": "d",
+   "choice": [
+    2,
+    4,
+    6,
+    8,
+    10,
+    12,
+    14,
+    16,
+    18,
+    20
+   ]
+  },
+  {
+   "name": "beta",
+   "let": "(c * v + d) // 2"
+  },
+  {
+   "name": "alpha",
+   "let": "90 - beta"
+  },
+  {
+   "name": "b",
+   "let": "alpha - a * v"
+  },
+  {
+   "require": "b >= 1 and b <= 40",
+   "why": "keeps the constant in the angle expression small and positive"
+  },
+  {
+   "require": "alpha >= 15 and alpha <= 75 and alpha != 45",
+   "why": "both half-angles are sensible and the rhombus is not a square"
+  }
+ ],
+ "constraints": [],
+ "stem": "$FGHI$ is a rhombus, with the vertices labelled in order around it. Its diagonals $FH$ and $GI$ intersect at $E$. The interior angle at $G$ is $F\\hat{G}H = ({=c}x + {=d})^{\\circ}$, and $G\\hat{F}E = ({=a}x + {=b})^{\\circ}$. Determine the size of the interior angle $G\\hat{H}I$. Give your answer in degrees, as a number.",
+ "answer": "2 * alpha",
+ "solution": [
+  "The diagonals of a rhombus bisect each other at right angles, so $F\\hat{E}G = 90^{\\circ}$.",
+  "The diagonal $GI$ bisects the interior angle at $G$, so $F\\hat{G}E = \\frac{1}{2}F\\hat{G}H = \\frac{1}{2}({=c}x + {=d})^{\\circ} = ({=c // 2}x + {=d // 2})^{\\circ}$.",
+  "The angles of $\\triangle FGE$ add up to $180^{\\circ}$: $G\\hat{F}E + F\\hat{G}E + F\\hat{E}G = 180^{\\circ}$, so $({=a}x + {=b}) + ({=c // 2}x + {=d // 2}) + 90 = 180$.",
+  "Simplify: ${=a + c // 2}x + {=b + d // 2} = 90$, so ${=a + c // 2}x = {=90 - b - d // 2}$ and $x = {=v}$.",
+  "Then $G\\hat{F}E = {=a} \\times {=v} + {=b} = {=alpha}^{\\circ}$.",
+  "The triangles $FGE$ and $HGE$ are congruent (SAS: $FE = HE$ because the diagonals bisect each other, $F\\hat{E}G = H\\hat{E}G = 90^{\\circ}$, and $GE$ is common), so $G\\hat{H}E = G\\hat{F}E = {=alpha}^{\\circ}$.",
+  "The diagonal $FH$ bisects the interior angle at $H$, so $G\\hat{H}I = 2 \\times {=alpha}^{\\circ} = {=2 * alpha}^{\\circ}$."
+ ],
+ "notes": "Advanced twist on book Ex 7-8 Q17 (rhombus, find x from angles in the triangle cut off by the diagonals). Here the angle given at G is the whole interior angle, so the student must (1) use perpendicular diagonals, (2) halve it because the diagonal bisects the interior angle, (3) solve the angle-sum equation for x, and (4) carry the result to a different vertex, doubling because the other diagonal bisects the interior angle at H (congruent triangles FGE and HGE). Every route to the answer agrees: 2*alpha equals 180 minus the given interior angle at G (co-interior angles), so a solver who goes that way also lands on the same number. c and d are even so the half-angle has whole coefficients. Constants b, d are kept positive so the stems never print a minus sign inside an expression. Cross-check run in Python over all 810 accepted parameter sets: the equation a*v + b + (c*v + d)/2 = 90 holds, both angles lie between 15 and 75 degrees, the answer lies between 30 and 150 degrees, and no two accepted sets give the same stem. Only the book's own facts are used (diagonals of a rhombus bisect each other at right angles and bisect the interior angles; angle sum of a triangle; congruent triangles)."
+}

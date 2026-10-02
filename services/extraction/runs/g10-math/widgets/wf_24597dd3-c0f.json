@@ -1,0 +1,54 @@
+{
+ "mode": "author",
+ "book": "g10-math",
+ "prompts_version": "s7-v7",
+ "by_ref": {
+  "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/s7-author-r3",
+  "stage": "S7 author",
+  "shards_sha256": "a22a988f0981903a59e099e9c50195c02f71855775c5995bbb0d9861a169f8f3",
+  "files": 2
+ },
+ "embedded": {
+  "source": "runbook/widgets.workflow.js",
+  "source_sha256": "ed230f08ec96811f4eaa45379aabb16441ac259c0b6b19e018a7b0cfb19de1cf",
+  "args_sha256": "dd45e0701adff7b94cede96ba235ec9a6db9357665541d2937ea48122e3091e0",
+  "generated_sha256": "7c07e3a31f034c8e2603e1f9a8413676adcd8ea8c590aa8a458cfee05060803d",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "records": [
+  {
+   "lesson": "g10m8s3-1",
+   "templates": [],
+   "gaps": [
+    {
+     "lo_id": "lo:g10m8s3-1-1",
+     "need_kind": "gradient_formula_builder (proposed, does not exist)",
+     "description": "A widget where the student is given two named points (e.g. A(7, 10), B(-4, 1)) and constructs the gradient calculation itself — for example by assigning which point is 'first' for the numerator and which is 'first' for the denominator (two independent point-order choices, one per fraction bar), rather than dragging a line on a grid. The instrument would need no numeric-range restriction tying the result to a lattice-friendly slope, since real two-point gradients are arbitrary fractions (9/11, 4/3, 1.5, etc.), and it would diagnose exactly this lesson's own misconception (mismatched-subscript-order) by detecting when the numerator and denominator were built from different point orderings, independent of whether the final fraction value happens to be right or wrong.",
+     "why": "line_drawer's 'points' mode explicitly reports only points-swapped/off-target, never a slope (stated directly in the contract), so it cannot surface a gradient-formula error at all. Its 'equation' mode can report slope predicates, but only by making the student draw a whole line (any two points satisfying a target m and b), which forces in an unrelated skill (finding the y-intercept) that this objective does not cover, and its m-range limit ('whole number or the reciprocal of one') excludes the fractional gradients (9/11, 11/8, 4/3, 1.5) that this objective's own anchor questions actually produce — an instance built to fit the instrument would not be the mathematics the anchor questions test."
+    },
+    {
+     "lo_id": "lo:g10m8s3-1-2",
+     "need_kind": "coordinate_from_gradient_solver (proposed, does not exist)",
+     "description": "A widget that shows one fully known point, the line's gradient, and a second point with one coordinate given and the other expressed as an unknown (optionally as a coefficient multiple, e.g. D(8, p) or C(3, 2p)) for the student to determine and enter/place. It would need to report distinct predicates for: solving the gradient equation with mismatched point order (sign error), inverting the ratio (run over rise), and — critically — reporting the coefficient on the unknown as if it were the unknown itself when the target coordinate is a multiple like 2p. This last predicate requires the instrument to represent a symbolic coefficient on a coordinate, which none of the current kinds' spec fields can express (all take concrete numeric values).",
+     "why": "The only nearby kind, line_drawer, has no spec field or can_emit predicate for any of this objective's three own misconceptions. Its 'points' mode is limited to points-swapped/off-target (a plotting-convention error, not a gradient-formula error). Reframing the task as 'draw the whole line through the two points' in equation mode could loosely approximate two of the three misconceptions (inverted-gradient-ratio to slope-inverted, mismatched-point-order to slope-sign-flipped) but still leaves dropped-coefficient-on-unknown — the misconception built entirely around a coordinate written as a coefficient times the unknown — permanently undiagnosable, since no kind's spec can hold a symbolic coefficient. Since one of the LO's three own misconceptions can never fire regardless of kind choice, and the other two only fire by expanding the task beyond 'find one coordinate' into 'produce a full line equation,' this is a genuine gap rather than a fit worth forcing."
+    }
+   ],
+   "notes": "Read files: contract.txt (15 widget kinds) and lessons/g10m8s3-1.txt (2 objectives, no images needed — none of this lesson's anchor questions with figures were used as a basis for a template, since no template was written). Both objectives in this lesson are algebraic/formula-manipulation skills (compute a gradient; solve for a missing coordinate given a gradient), and the one kind adjacent to the topic, line_drawer, is a graphical line-construction instrument whose own contract text explicitly rules out slope diagnostics in 'points' mode and whose 'equation' mode conflates gradient-finding with intercept-finding while capping m to whole numbers or unit fractions — a range the lesson's actual two-point gradients (9/11, 11/8, 4/3, 1.5, 2/3) mostly fall outside of. No other kind (pair_plotter, product_builder, circle_builder, angle_setter, triangle_ratio, etc.) has any plausible connection to gradient-between-points or solving-for-a-coordinate-given-a-gradient. Recommendation: this lesson needs a new widget kind (a gradient/point-algebra instrument) before it can get an honest widget question; zero templates were forced to fill the quota."
+  }
+ ],
+ "gaps": [
+  {
+   "lo_id": "lo:g10m8s3-1-1",
+   "need_kind": "gradient_formula_builder (proposed, does not exist)",
+   "description": "A widget where the student is given two named points (e.g. A(7, 10), B(-4, 1)) and constructs the gradient calculation itself — for example by assigning which point is 'first' for the numerator and which is 'first' for the denominator (two independent point-order choices, one per fraction bar), rather than dragging a line on a grid. The instrument would need no numeric-range restriction tying the result to a lattice-friendly slope, since real two-point gradients are arbitrary fractions (9/11, 4/3, 1.5, etc.), and it would diagnose exactly this lesson's own misconception (mismatched-subscript-order) by detecting when the numerator and denominator were built from different point orderings, independent of whether the final fraction value happens to be right or wrong.",
+   "why": "line_drawer's 'points' mode explicitly reports only points-swapped/off-target, never a slope (stated directly in the contract), so it cannot surface a gradient-formula error at all. Its 'equation' mode can report slope predicates, but only by making the student draw a whole line (any two points satisfying a target m and b), which forces in an unrelated skill (finding the y-intercept) that this objective does not cover, and its m-range limit ('whole number or the reciprocal of one') excludes the fractional gradients (9/11, 11/8, 4/3, 1.5) that this objective's own anchor questions actually produce — an instance built to fit the instrument would not be the mathematics the anchor questions test."
+  },
+  {
+   "lo_id": "lo:g10m8s3-1-2",
+   "need_kind": "coordinate_from_gradient_solver (proposed, does not exist)",
+   "description": "A widget that shows one fully known point, the line's gradient, and a second point with one coordinate given and the other expressed as an unknown (optionally as a coefficient multiple, e.g. D(8, p) or C(3, 2p)) for the student to determine and enter/place. It would need to report distinct predicates for: solving the gradient equation with mismatched point order (sign error), inverting the ratio (run over rise), and — critically — reporting the coefficient on the unknown as if it were the unknown itself when the target coordinate is a multiple like 2p. This last predicate requires the instrument to represent a symbolic coefficient on a coordinate, which none of the current kinds' spec fields can express (all take concrete numeric values).",
+   "why": "The only nearby kind, line_drawer, has no spec field or can_emit predicate for any of this objective's three own misconceptions. Its 'points' mode is limited to points-swapped/off-target (a plotting-convention error, not a gradient-formula error). Reframing the task as 'draw the whole line through the two points' in equation mode could loosely approximate two of the three misconceptions (inverted-gradient-ratio to slope-inverted, mismatched-point-order to slope-sign-flipped) but still leaves dropped-coefficient-on-unknown — the misconception built entirely around a coordinate written as a coefficient times the unknown — permanently undiagnosable, since no kind's spec can hold a symbolic coefficient. Since one of the LO's three own misconceptions can never fire regardless of kind choice, and the other two only fire by expanding the task beyond 'find one coordinate' into 'produce a full line equation,' this is a genuine gap rather than a fit worth forcing."
+  }
+ ],
+ "run_id": "wf_24597dd3-c0f"
+}

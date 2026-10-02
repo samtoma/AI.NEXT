@@ -1,0 +1,47 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m7s3-1-4:diagonal-chase",
+ "kind": "family",
+ "lo_id": "lo:g10m7s3-1-4",
+ "parent_question_id": "q:g10m7s3-1-4:ex7-8-2e",
+ "source_page": 270,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "z",
+   "randint": [
+    10,
+    60
+   ]
+  },
+  {
+   "name": "c",
+   "randint": [
+    20,
+    70
+   ]
+  },
+  {
+   "name": "t",
+   "let": "90 - c"
+  },
+  {
+   "name": "ans",
+   "let": "z + 90 - c"
+  }
+ ],
+ "constraints": [
+  "ans > 0 and ans < 180"
+ ],
+ "stem": "$ABCD$ is a kite with $AB = AD$ and $CB = CD$. The diagonals intersect at $E$. $A\\hat{B}E = {=z}^\\circ$ and $B\\hat{C}E = {=c}^\\circ$. Calculate the size of $A\\hat{D}C$, in degrees.",
+ "answer": "ans",
+ "solution": [
+  "The diagonals of a kite intersect at right angles, so $B\\hat{E}C = 90^\\circ$.",
+  "The angles of $\\triangle BEC$ add up to $180^\\circ$: $E\\hat{B}C = 180^\\circ - 90^\\circ - {=c}^\\circ = {=t}^\\circ$.",
+  "$E$ lies on the diagonal $AC$, inside $A\\hat{B}C$, so $A\\hat{B}C = A\\hat{B}E + E\\hat{B}C = {=z}^\\circ + {=t}^\\circ = {=ans}^\\circ$.",
+  "One pair of opposite angles of a kite is equal. The unequal sides meet at $B$ and at $D$, so $A\\hat{D}C = A\\hat{B}C = {=ans}^\\circ$."
+ ],
+ "notes": "Advanced: a multi-step angle chase that uses the right-angled diagonals, the angle sum of a triangle, adding two adjacent angles at B, and the equal pair of opposite angles. Check: with BAE = 90 - z and BCE = c, the angles of triangle ABC are 90 - z, c and z + 90 - c, summing to 180, so every (z, c) in range is a real convex kite. The answer also equals (360 - A - C)/2 with A = 180 - 2z and C = 2c, so a solver using the angle sum of the quadrilateral agrees."
+}

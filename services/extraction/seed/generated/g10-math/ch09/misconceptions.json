@@ -1,0 +1,970 @@
+{
+  "catalogue": "g10-math-misconceptions",
+  "course_id": "course:us-g10-math-en",
+  "book": "g10-math",
+  "reviewed": false,
+  "generator": "S5 runbook/misconceptions.workflow.js (Sonnet author, Sonnet fail-closed verifier) via assemble_misconceptions.py — runs final-ch09-wf_253279cc-68a.json; pipeline-generated, UNREVIEWED",
+  "misconceptions": [
+    {
+      "id": "mc:g10m9s2-1-3:rounds-n-to-nearest-not-up",
+      "lo_id": "lo:g10m9s2-1-3",
+      "label": "Rounds n to the nearest year instead of up",
+      "description": "The student finds n correctly but then rounds it to the nearest whole year in the usual way, so a value such as 19.3 becomes 19 instead of being rounded up to 20.",
+      "signal": null,
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You found $n$ correctly and then rounded it the way you would round any number, to the nearest whole year, so $19.3$ became $19$. Finding $n$ was the hard part and you did it. The last step is the one that is different here: the question says to round up."
+        },
+        {
+          "step": 2,
+          "text_md": "Remember what $n$ is. Solving $A=P(1+in)$ for $n$ gives the time at which the money has grown to exactly the goal amount. Investing $\\text{R1080}$ at $10.9$ % p.a. to reach $\\text{R3348}$ gives $n=19.3$ years."
+        },
+        {
+          "step": 3,
+          "text_md": "The money keeps growing the longer it stays invested, so after $19$ years it has not yet reached $\\text{R3348}$. The goal is only reached part of the way into the 20th year. The answer has to be a whole number of years, so the first whole number of years that is enough is $20$."
+        },
+        {
+          "step": 4,
+          "text_md": "Rounding up means going to the next whole number above whenever $n$ is not already a whole number. So $19.3$ becomes $20$, and $24.9987...$ becomes $25$."
+        },
+        {
+          "step": 5,
+          "text_md": "When a question asks you to round up, finish by writing the next whole year above $n$: $19.3$ years means $20$ years."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch09-wf_253279cc-68a.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "I worked the example through. 3348/1080 = 3.1, then (3.1 - 1)/0.109 = 19.27, which the book writes as 19.3. After 19 years the amount is 1080(1 + 0.109 x 19) = R3316.68, below R3348. After 20 years it is R3434.40, above R3348. So 20 is the first whole year that is enough, and the refutation's claims about 19 and 20 are true. It matches the canonical answer of 20 for this exercise. It also matches the book's treatment of 24.9987... becoming 25, in the same family of exercises. The error is real. The book stresses 'round UP' at the last step, and nearest rounding of 19.3 gives the one-short answer 19. The refutation argues against that specific slip rather than restating the method. It teaches nothing new: the 'money keeps growing' reasoning follows directly from the formula. It names no question id, page or review history. The only q: id sits in the evidence field, not in the student-facing text. The signal is too broad (see signal_ok).",
+        "sources": [
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m9s2-1-3:ex9-1-12"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:g10m9s2-1-4:divides-by-n-without-subtracting-one",
+      "lo_id": "lo:g10m9s2-1-4",
+      "label": "Divides $\\frac{A}{P}$ by $n$ without taking the 1 away",
+      "description": "After reaching $\\frac{A}{P} = 1 + in$, the student divides by $n$ straight away and never subtracts the 1, so the principal gets counted as interest.",
+      "signal": "The rate comes out far too large: it equals $\\frac{A}{P} \\div n$ written as a percentage, for example 32 where the correct rate is 12 for growing R2500 to R4000 in 5 years.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You made the right first move: dividing both sides by $P$ gives $\\frac{A}{P} = 1 + in$. Then you divided by $n$ straight away, as if all of $\\frac{A}{P}$ were interest, and the $1$ was left behind."
+        },
+        {
+          "step": 2,
+          "text_md": "In $\\frac{A}{P} = 1 + in$, the $1$ is the principal itself coming back, and only $in$ is the interest. For Fritha, $\\frac{4000}{2500} = 1.6$ means her money ends up 1.6 times what she put in, so only the extra $0.6$ is interest."
+        },
+        {
+          "step": 3,
+          "text_md": "Test what dividing by 5 gives: $\\frac{1.6}{5} = 0.32$, a rate of 32 %. Put it back into the formula: $2500(1 + 0.32 \\times 5) = 2500 \\times 2.6 = 6500$, not R4000. So that rate does not grow R2500 to R4000."
+        },
+        {
+          "step": 4,
+          "text_md": "The move that works: from $\\frac{A}{P} = 1 + in$, subtract $1$ from both sides to get $\\frac{A}{P} - 1 = in$, and only then divide by $n$. For Fritha, $1.6 - 1 = 0.6$ and $0.6 \\div 5 = 0.12$, so the rate is 12 % p.a."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch09-wf_253279cc-68a.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "I worked it through myself. From A/P = 1.6, dividing by 5 gives 0.32, which is 32%. Substituting back gives 2500(1 + 0.32 x 5) = 2500 x 2.6 = 6500, not 4000, so the check is right. The corrected route (1.6 - 1 = 0.6, then 0.6 / 5 = 0.12, so 12% p.a.) matches the worked example and its final answer. The refutation argues against the specific slip: the 1 is the principal, so only the 0.6 is interest. It names no question id, page or review history. The signal (A/P divided by n as a percentage, e.g. 32 for a correct 12) is accurate and would not misdiagnose a student.",
+        "sources": [
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m9s2-1-4:we04"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m9s2-1-4:ex9-1-9"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:g10m9s2-1-4:uses-interest-amount-as-accumulated-amount",
+      "lo_id": "lo:g10m9s2-1-4",
+      "label": "Uses the interest charged as $A$",
+      "description": "When the question gives the interest on its own, the student puts that interest in for $A$ instead of adding it to the principal first.",
+      "signal": "A negative rate, for example about -24.8 for the stove that cost R3750 and was paid off over 3 years with R956.25 interest.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You spotted the right formula, $A = P(1 + in)$, and that $n = 3$. The slip is in which amount is $A$: you used the R956.25 of interest, which is only the extra part."
+        },
+        {
+          "step": 2,
+          "text_md": "In $A = P(1 + in)$, $A$ is the whole accumulated amount: the starting amount $P$ plus the interest on it. For Bonnie, $A$ is everything she paid in total, not just the interest."
+        },
+        {
+          "step": 3,
+          "text_md": "See what the mistake does: $\\frac{956.25}{3750} = 0.255$, which is less than $1$. For $1 + in$ to be less than $1$, $i$ would have to be negative, and a negative rate cannot be interest being charged. A negative answer is the sign that $A$ is wrong."
+        },
+        {
+          "step": 4,
+          "text_md": "The move that works: when you are given the interest, add it to the principal first. Total paid $= 3750 + 956.25 = 4706.25$, so $A = 4706.25$ and $P = 3750$. Then $1.255 - 1 = 0.255$ and $0.255 \\div 3 = 0.085$, which is 8.5 %."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch09-wf_253279cc-68a.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "I checked the numbers. Using A = 956.25 gives 956.25/3750 = 0.255, then (0.255 - 1)/3 = -0.2483, about -24.8%, so the signal is right. The corrected route (A = 3750 + 956.25 = 4706.25, A/P = 1.255, 0.255/3 = 0.085, so 8.5%) matches the canonical solution step for step. The point that A/P < 1 forces a negative i, which cannot be interest charged, is mathematically sound and argues against this specific slip. The refutation names no question id, page or review history. The line 'a negative answer is the sign that A is wrong' is slightly loose as a general rule, but it is correct in this context and does not teach an error.",
+        "sources": [
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m9s2-1-4:ex9-7-25"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:g10m9s2-1-4:uses-later-age-as-number-of-years",
+      "lo_id": "lo:g10m9s2-1-4",
+      "label": "Uses the later age as the number of years",
+      "description": "When the question gives the child's age at the deposit and at the end, the student puts the later age in for $n$ instead of the difference between the two ages.",
+      "signal": "The rate comes out too small, because $n$ was too big: for the deposit made on the son's fifth birthday and checked on his 21st birthday the answer is about 12.4 where the correct rate is 16.25.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You rearranged correctly, with $\\frac{A}{P} - 1$ divided by $n$. The slip is in what you put in for $n$: you used the child's age at the end, but $n$ is the number of years the money was invested."
+        },
+        {
+          "step": 2,
+          "text_md": "The money only started earning interest on the day of the deposit. If it went in on the son's fifth birthday and was counted on his 21st, it was invested for $21 - 5 = 16$ years, which is how the book sets out $n$. The first 5 years of the son's life never earned anything."
+        },
+        {
+          "step": 3,
+          "text_md": "Using 21 makes the time too long, so the same growth gets spread over too many years: $\\frac{\\frac{18000}{5000} - 1}{21} = \\frac{2.6}{21} \\approx 0.124$, about 12.4 %. The correct rate over 16 years is $\\frac{2.6}{16} = 0.1625$, which is 16.25 %."
+        },
+        {
+          "step": 4,
+          "text_md": "The move that works: when the question gives two ages, subtract the earlier from the later to get $n$, and write $n = \\text{later age} - \\text{earlier age}$ in your list of known values before you substitute."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch09-wf_253279cc-68a.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "I checked the numbers. Using n = 21 gives 2.6/21 = 0.1238, about 12.4%. The correct n = 21 - 5 = 16 gives 2.6/16 = 0.1625, which is 16.25% and matches the canonical answer. The advice to set n = later age - earlier age among the known values is exactly how the book writes it in all six cited solutions. The statement about how the book sets out n is true, because those solutions are book-worked. There is no question id, page number or review history. The signal (rate too small because n is too big, about 12.4 against 16.25) is correct and specific.",
+        "sources": [
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m9s2-1-4:ex9-1-8"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m9s2-1-4:ex9-1-9"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m9s2-1-4:ex9-1-10"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m9s2-1-4:ex9-1-11"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m9s2-1-4:ex9-7-4"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m9s2-1-4:ex9-7-5"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:g10m9s3-1-1:rounds-before-the-end",
+      "lo_id": "lo:g10m9s3-1-1",
+      "label": "Rounding part-way through the calculation",
+      "description": "The student works out $(1+i)^n$ (or another middle value), cuts it to a few decimal places to keep the numbers tidy, and only then multiplies by $P$, so the final amount is slightly off.",
+      "signal": "The amount is close to the correct accumulated amount but does not match it to the cent.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You shortened a long decimal part-way through, probably to keep the working neat. That is a natural thing to do, and writing $A=P(1+i)^n$ with the right $P$, $i$ and $n$ is exactly the right start. The slip comes after that, at the rounding."
+        },
+        {
+          "step": 2,
+          "text_md": "The book asks you not to round off until you have reached the solution. The reason is that $(1+i)^n$ is not the answer yet: it still gets multiplied by $P$, and $P$ is a large number. Whatever you cut off from $(1+i)^n$ is multiplied by $P$ too, so a tiny cut turns into a visible difference in rand."
+        },
+        {
+          "step": 3,
+          "text_md": "Take the investment of R30 000 at $6\\%$ for $4$ years. Here $(1+0.06)^4=1.26247696$. If you shorten that to $1.26$ first, then $30\\,000\\times 1.26=37\\,800$. The book's amount is R37 874.31, which comes from going straight from $30\\,000(1+0.06)^4$ to the answer without cutting anything off on the way."
+        },
+        {
+          "step": 4,
+          "text_md": "Write $A=P(1+i)^n$, substitute your values, and let the calculator work out the whole line at full length. Round off once, at the very end, to two decimal places."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch09-wf_253279cc-68a.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real for this objective. Four canonical questions in this set (ex9-2-2, ex9-2-3, ex9-7-9, ex9-7-10) carry the instruction 'round your answer to two decimal places, but do not round off until you have reached the solution'. The canonical method is a single-line A=P(1+i)^n evaluated in full, rounded once at the end, and the refutation matches it. I checked the numbers myself: 1.06^2=1.1236 and 1.1236^2=1.26247696. Cutting that to 1.26 gives 30 000x1.26=37 800. The full calculation gives 30 000x1.26247696=37 874.3088, which rounds to 37 874.31, matching the canonical answer of the worked example. The argument targets this specific slip. It explains that a cut in (1+i)^n is multiplied by P, and it does not just restate the method. The worked example it uses states all of its givens, so the student does not need to see another question. The text names no question id, page, figure or review history. It says only 'the book', which is generic and has no id or page. The 'why' (the cut is multiplied by P) is plain arithmetic, not new curriculum. Minor wording points that do not change the verdict: 'a tiny cut' is loose, since 1.26 changes the answer by about R74, and 'P is a large number' holds for every exercise in this set (R800 to R6970). One residual risk: if the tutor ever asks the R30 000 / 6% / 4-year question itself, the refutation reveals its answer. The question set marks that item as a worked example, not an exercise.",
+        "sources": [
+          {
+            "type": "remark",
+            "ref": "q:g10m9s3-1-1:ex9-2-2"
+          },
+          {
+            "type": "remark",
+            "ref": "q:g10m9s3-1-1:ex9-2-3"
+          },
+          {
+            "type": "remark",
+            "ref": "q:g10m9s3-1-1:ex9-7-9"
+          },
+          {
+            "type": "remark",
+            "ref": "q:g10m9s3-1-1:ex9-7-10"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:g10m9s3-1-3:bigger-rate-wins",
+      "lo_id": "lo:g10m9s3-1-3",
+      "label": "Picks the account with the bigger rate",
+      "description": "The student compares the two stated percentage rates and chooses the account with the larger one, without working out the accumulated amounts, so a simple-interest account with a slightly higher rate beats a compound-interest account that actually grows more.",
+      "signal": "Chooses the account with the larger stated rate (here Bank A at 11%) and gives no accumulated amounts for the two accounts.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You compared the two rates, saw that $11\\%$ is bigger than $10.5\\%$, and picked that account. That is a natural first check, and it works when both accounts earn interest the same way. Here they do not: one pays simple interest and the other pays compound interest."
+        },
+        {
+          "step": 2,
+          "text_md": "Simple interest is calculated on the original R1450 only. Compound interest is calculated on the original amount plus the interest already earned, so each year's interest is a little bigger than the year before. That is how a lower rate can still end up ahead."
+        },
+        {
+          "step": 3,
+          "text_md": "Bank A, simple interest at $11\\%$ for $3$ years: $A=P(1+in)=1450(1+(0.11)(3))=1450(1.33)=\\text{R1928.50}$."
+        },
+        {
+          "step": 4,
+          "text_md": "Bank B, compound interest at $10.5\\%$ for $3$ years: $A=P(1+i)^{n}=1450(1+0.105)^{3}=\\text{R1956.39}$."
+        },
+        {
+          "step": 5,
+          "text_md": "R1956.39 is more than R1928.50, so Bank B leaves Bianca with the highest accumulated balance even though its rate is lower. The two rates alone could not tell you that."
+        },
+        {
+          "step": 6,
+          "text_md": "Next time, do not choose on the rate. Work out the accumulated amount for each account with its own formula, $A=P(1+in)$ for simple interest and $A=P(1+i)^{n}$ for compound interest, then compare the two amounts."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:g10m9s3-1-3:ex9-7-17",
+          "choice_text": "Bank A"
+        }
+      ],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch09-wf_253279cc-68a.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "I re-solved it myself. Bank A: 1450(1+0.11x3)=1450x1.33=R1928.50. Bank B: 1450x1.105^3=1956.387, which rounds to R1956.39. Both match the canonical solution, and Bank B is the answer. The refutation uses the book's own formulas A=P(1+in) and A=P(1+i)^n. Its description of simple versus compound interest matches the book's wording (interest on the principal only, versus interest on principal plus earlier interest). It argues against the error itself: rates alone cannot decide when the two accounts earn interest differently. It then gives the numbers that show it, rather than only restating the method. No step names a question id, page, figure or review history. The only remark beyond the book is that comparing rates works when both accounts earn interest the same way. That is a true, harmless concession, so I accept it. The error is real: Bank A is the book's own wrong option, and the 11% versus 10.5% rates invite exactly this shortcut. The signal is the standard fingerprint for this error.",
+        "sources": [
+          {
+            "type": "distractor",
+            "ref": "q:g10m9s3-1-3:ex9-7-17"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m9s3-1-3:ex9-7-17"
+          },
+          {
+            "type": "caution",
+            "ref": "b03528"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "book",
+            "ref": "q:g10m9s3-1-3:ex9-7-17",
+            "question_id": "q:g10m9s3-1-3:ex9-7-17",
+            "text": "Bank A",
+            "tagged": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m9s4-1-1:interest-on-full-cash-price",
+      "lo_id": "lo:g10m9s4-1-1",
+      "label": "Charges interest on the full cash price, deposit not taken off",
+      "description": "The student uses the cash price as the starting amount $P$ in $A=P(1+in)$, forgetting that the deposit is paid up front and only the rest is borrowed.",
+      "signal": "The accumulated amount or monthly repayment matches working from the full cash price, for example about 399.67 a month instead of 359.70 for a R4400 microwave with a 10% deposit, at 9% p.a. over 12 months.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You used the cash price as the amount being borrowed. That is an easy thing to do, because the cash price is the biggest number in the question. Your plan of using the simple interest formula and then dividing by the number of months is the right one; the slip is in the amount it starts from."
+        },
+        {
+          "step": 2,
+          "text_md": "The deposit is paid in cash at the start, so that part of the price is never borrowed and no interest is charged on it. The amount borrowed, $P$, is only what is left: $P=\\text{cash price}-\\text{deposit}$, where the deposit is its percentage of the cash price."
+        },
+        {
+          "step": 3,
+          "text_md": "See it in one case. A microwave has a cash price of R4400, with a 10% deposit and then 12 months at 9% p.a. The deposit is $4400\\times\\frac{10}{100}=440$, so $P=4400-440=3960$. Then $A=3960(1+0.09\\times1)=4316.40$ and the monthly repayment is $\\frac{4316.40}{12}=359.70$."
+        },
+        {
+          "step": 4,
+          "text_md": "Starting from 4400 instead gives $A=4400(1+0.09\\times1)=4796$, which is about R399.67 a month. That is too much, because it charges interest on the R440 that was already paid as the deposit."
+        },
+        {
+          "step": 5,
+          "text_md": "So before you use $A=P(1+in)$, check for a deposit. Work out its percentage of the cash price, subtract it to get $P$, then find $A$ and divide by the number of months. If the question mentions no deposit, there is nothing to take off and $P$ is the cash price."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch09-wf_253279cc-68a.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "I re-solved it. Deposit 4400 x 0.10 = 440, P = 3960, A = 3960 x 1.09 = 4316.40, monthly 4316.40/12 = 359.70. The wrong route gives 4400 x 1.09 = 4796, and 4796/12 = 399.67. These match ex9-3-1a, b and c. The error is supported by the worked example's own note that a new opening balance is needed because the deposit is paid in cash. The refutation argues against this slip rather than restating the method. It explains that the deposit is never borrowed, shows the contrast numerically, and gives the no-deposit case (P is the cash price), which matches ex9-3-4a. It names no question id, page, figure or review history. The signal figures are correct and describe a student who skipped the deposit.",
+        "sources": [
+          {
+            "type": "remark",
+            "ref": "q:g10m9s4-1-1:we07"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m9s4-1-1:ex9-3-1b"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m9s4-1-1:ex9-3-1c"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:g10m9s4-1-1:interest-on-interest-formula",
+      "lo_id": "lo:g10m9s4-1-1",
+      "label": "Uses an interest-on-interest formula instead of simple interest",
+      "description": "The student grows the loan with a formula in which interest is charged on earlier interest, instead of the simple interest formula $A=P(1+in)$ that a hire purchase agreement uses.",
+      "signal": null,
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Some loans and savings do add interest on top of earlier interest, so it is natural to reach for that kind of formula here. The rest of your plan, finding the loan after any deposit and dividing the final amount by the number of months, is still the right one."
+        },
+        {
+          "step": 2,
+          "text_md": "A hire purchase agreement is charged at simple interest, so the simple interest formula is the one to use every time: $A=P(1+in)$, where $i$ is the yearly rate as a decimal and $n$ is the number of years."
+        },
+        {
+          "step": 3,
+          "text_md": "In simple interest, interest is charged only on the amount first borrowed, never on interest already added. Take a loan of R2250 at 7.5% p.a. over 2 years. Each year's interest is $2250\\times0.075=168.75$, the same in year 2 as in year 1, so $A=2250+2\\times168.75=2587.50$. This is exactly what $2250(1+0.075\\times2)$ gives."
+        },
+        {
+          "step": 4,
+          "text_md": "A formula that charges interest on interest would charge year 2's interest on more than R2250, so year 2 would cost more than year 1. The amount to pay back, and so the monthly repayment, would come out too large for what the agreement says."
+        },
+        {
+          "step": 5,
+          "text_md": "So in any hire purchase question, find $P$ (the cash price less any deposit), write $A=P(1+in)$ with $n$ in years, and then divide $A$ by the number of months."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch09-wf_253279cc-68a.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The book states in a caution that hire purchase uses simple interest, so always use the simple interest formula. Several canonical solutions repeat this (we07, ex9-3-3b). The error of reaching for an interest-on-interest formula is the one that caution guards against. The refutation's example matches we07: R2250 at 7.5% for 2 years gives 168.75 a year, A = 2250 + 337.50 = 2587.50, and 2250 x 1.15 = 2587.50, so it is correct. It uses the book's own method and answer. It argues against this error by explaining that interest is charged only on the original amount, and that interest on interest would make year 2 cost more than year 1, so the repayment would be too large. It names no question id, page, figure or review history. The entry has no signal, so signal_ok is true.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "b03543"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m9s4-1-1:we07"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:g10m9s4-1-1:smaller-monthly-payment-looks-cheaper",
+      "lo_id": "lo:g10m9s4-1-1",
+      "label": "Judges the cheaper deal by the smaller monthly payment",
+      "description": "Asked which hire purchase offer costs the least interest, the student picks the offer with the smaller monthly payment without comparing what each offer costs in interest.",
+      "signal": "Picks the offer with the smaller monthly payment as the one with the least interest.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You compared the monthly payments and chose the smaller one. That is a sensible instinct if you are thinking about what fits your monthly budget, but this question asks about the interest, and that depends on how much is paid altogether compared with the cash price."
+        },
+        {
+          "step": 2,
+          "text_md": "Look at the totals. Store A collects $350\\times24=8400$ and store B collects $175\\times48=8400$. Both stores take the same R8400. Store B's payment is smaller only because the same amount is spread over 48 months instead of 24."
+        },
+        {
+          "step": 3,
+          "text_md": "Interest is what is paid above the cash price, so we need each store's cash price. Use $A=P(1+in)$ with $A=8400$ and $i=0.075$, taking $n=2$ years for store A and $n=4$ years for store B: $8400=P(1+0.075\\times2)$ for store A and $8400=P(1+0.075\\times4)$ for store B. Then divide to find $P$ each time."
+        },
+        {
+          "step": 4,
+          "text_md": "Store B's longer time makes the bracket $1+in$ bigger, so dividing the same R8400 by it gives a smaller cash price. The interest, $8400-P$, is then bigger. Store A has the larger cash price and so charges less interest, which makes store A the one to choose."
+        },
+        {
+          "step": 5,
+          "text_md": "So for \"least interest\", never stop at the monthly payment. Find each offer's total paid, work back to its cash price with $A=P(1+in)$, and compare the interest, $A-P$, for each offer."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:g10m9s4-1-1:ex9-3-8",
+          "choice_text": "store B"
+        }
+      ],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch09-wf_253279cc-68a.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Both stores total 350 x 24 = 8400 and 175 x 48 = 8400, so the claim in the refutation is correct. Working back correctly: A has 1+0.075x2 = 1.15 and B has 1+0.075x4 = 1.30. P is therefore smaller for B, so B's interest (8400 - P) is larger and store A is the right answer, as in the book. The refutation's qualitative reasoning (a bigger bracket gives a smaller cash price and so more interest) is valid and uses the book's method. It gives no intermediate numbers, so it does not repeat the book's printed slips (2.15 and 4.3 instead of 1.15 and 1.3), and the final answer A is unchanged. The error is supported by the question itself, where store B is the lower-payment option. It names no question id, page or review history. 'Store A' and 'store B' are visible on the question the option is attached to. The signal fits a student choosing B because its payment is lower.",
+        "sources": [
+          {
+            "type": "distractor",
+            "ref": "q:g10m9s4-1-1:ex9-3-8"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m9s4-1-1:ex9-3-8"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "book",
+            "ref": "q:g10m9s4-1-1:ex9-3-8",
+            "question_id": "q:g10m9s4-1-1:ex9-3-8",
+            "text": "store B",
+            "tagged": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m9s4-1-4:rate-not-percent",
+      "lo_id": "lo:g10m9s4-1-4",
+      "label": "Uses the rate as a whole number",
+      "description": "The student puts the percentage into the bracket as it is written, such as $1+3$, instead of converting it to $\\frac{3}{100}$ or $0.03$ first.",
+      "signal": "The expected population comes out many times larger than the current population, far more than a yearly percentage rise could produce.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You have the formula, and the numbers are in the right places. What is missing is the conversion: a percentage means 'out of 100', so 16% is $\\frac{16}{100}=0.16$, not 16."
+        },
+        {
+          "step": 2,
+          "text_md": "See what $1+16$ does. It multiplies the population by 17 every year, so 1600 residents would become $1600\\times 17=27\\ 200$ after only one year of a 16% rise. But 16% of 1600 is 256, so after one year there are $1600+256=1856$ people, which is $1600\\times 1.16$."
+        },
+        {
+          "step": 3,
+          "text_md": "That is why the working converts first, for example $i=\\frac{0.4}{100}=0.004$, and only then makes the bracket $1+0.004$. The bracket for a yearly growth rate is a number a little bigger than 1."
+        },
+        {
+          "step": 4,
+          "text_md": "Before you substitute, turn the rate into $i$ by dividing by 100, then write $1+i$. If your bracket is 2 or more, such as $1+3$, the rate has not been converted yet."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch09-wf_253279cc-68a.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Real error, and the canonical solutions (ex9-5-3 with i=0.16, ex9-7-32 with i=0.4/100=0.004) show the conversion it skips. The arithmetic is correct. 1+16=17 gives 1600*17=27200. 16% of 1600 is 256, so 1856=1600*1.16. i=0.4/100=0.004, so the bracket is 1+0.004. The refutation targets the missing conversion and gives a concrete check (the bracket should be a little above 1). 'A bracket of 2 or more means not converted' is a sufficient test for every rate in this LO (all well below 100%), and the text does not claim the converse. The signal (an answer many times the current population) fits 1+3 over 6 years, which is about 4096 times, and no correct answer in this LO behaves that way.",
+        "sources": [
+          {
+            "type": "distractor",
+            "ref": "D2"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m9s4-1-4:ex9-5-3"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m9s4-1-4:ex9-7-32"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "S6",
+            "ref": "tpl:g10m9s4-1-4:setup-formula#mc:g10m9s4-1-4:rate-not-percent",
+            "question_id": "q:g10m9s4-1-4:g001-setup-",
+            "text": "$A=34500\\left(1+3\\right)^{6}$",
+            "tagged": "mc:g10m9s4-1-4:rate-not-percent"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m9s4-1-4:simple-growth",
+      "lo_id": "lo:g10m9s4-1-4",
+      "label": "Adds the same growth every year",
+      "description": "The student treats population growth as adding the same amount every year, writing $P(1+i\\times n)$ instead of multiplying by $(1+i)$ once for each year.",
+      "signal": null,
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You have the right ingredients: the starting population, the rate as a decimal and the number of years. The slip is in how the years are used. Writing $P(1+i\\times n)$ works out every year's growth on the starting population, as if the population never got bigger."
+        },
+        {
+          "step": 2,
+          "text_md": "A population grows on what it is now, not on what it started as. Take 1600 residents growing at 16% a year. After one year there are $1600\\times 1.16=1856$ people."
+        },
+        {
+          "step": 3,
+          "text_md": "In the second year the 16% is taken of 1856, not of 1600: $\\frac{16}{100}\\times 1856=296.96$, which is more than the 256 that 16% of 1600 gives. After two years there are $1856+296.96=2152.96$ people."
+        },
+        {
+          "step": 4,
+          "text_md": "Adding 16% of the starting 1600 twice, $1600(1+0.16\\times 2)$, gives only 2112, so it under-counts. Multiplying by $(1+i)$ once for every year is what gives 2152.96, and that is exactly what the compound interest formula does: $1600(1+0.16)^{2}=2152.96$."
+        },
+        {
+          "step": 5,
+          "text_md": "So keep $n$ as the raised number on the whole bracket: $A=P(1+i)^{n}$, never $P(1+i\\times n)$. If you are unsure, check one year at a time as above."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch09-wf_253279cc-68a.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Real error for this LO: P(1+i*n) is the simple-interest shape applied where the canonical method is A=P(1+i)^n. I re-worked every number in the refutation. 1600*1.16=1856. 16% of 1856 is 296.96, versus 256 for 16% of 1600. 1856+296.96=2152.96. 1600(1+0.16*2)=2112. 1600(1.16)^2=2152.96, which agrees with the canonical ex9-5-3 intermediate value. The steps argue against the 'same growth each year' idea itself (growth is taken on the current population), not just the formula. No question ids, page numbers, figures or review history appear in the text. Minor note: it reuses the numbers of a book exercise, so it shows that exercise's intermediate value, but this is not a correctness or sourcing defect.",
+        "sources": [
+          {
+            "type": "distractor",
+            "ref": "D0"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m9s4-1-4:ex9-5-3"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "S6",
+            "ref": "tpl:g10m9s4-1-4:setup-formula#mc:g10m9s4-1-4:simple-growth",
+            "question_id": "q:g10m9s4-1-4:g001-setup-",
+            "text": "$A=34500\\left(1+\\frac{3}{100}\\times 6\\right)$",
+            "tagged": "mc:g10m9s4-1-4:simple-growth"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m9s4-1-4:swapped-rate-years",
+      "lo_id": "lo:g10m9s4-1-4",
+      "label": "Swaps the rate and the number of years",
+      "description": "The student puts the number of years in the rate position and the percentage in the raised number on the bracket, because both are just numbers in the question.",
+      "signal": null,
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You have picked out the right numbers and you know the formula needs a bracket and a raised number. The only mix-up is which number goes where, because both are just numbers in the question."
+        },
+        {
+          "step": 2,
+          "text_md": "Ask what each number counts. The percentage followed by p.a. is the growth in one year, so it belongs in the bracket as $i$. The number of years is how many times that growth is applied, so it is $n$, the raised number."
+        },
+        {
+          "step": 3,
+          "text_md": "Take a rate of 0.7% p.a. over 12 years: $i=\\frac{0.7}{100}$ and $n=12$, so the working is $\\left(1+\\frac{0.7}{100}\\right)^{12}$. Swapped, it would read $\\left(1+\\frac{12}{100}\\right)^{0.7}$, which describes 12% growth a year for only 0.7 of a year, a completely different situation."
+        },
+        {
+          "step": 4,
+          "text_md": "Before you substitute, write down the known variables the way the worked examples do: $P$ is the starting population, $i$ is the percentage written as a decimal and $n$ is the number of years. Then copy each one into its own place in $A=P(1+i)^{n}$."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch09-wf_253279cc-68a.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Real, natural transposition error, since both quantities are just numbers in the question. The refutation is correct and uses the book's own data (0.7% over 12 years, as in the canonical ex9-5-2 solution): i=0.7/100, n=12, so (1+0.7/100)^12. The swapped form (1+12/100)^0.7 is correctly described as 12% a year for 0.7 of a year. It argues against the swap by asking what each number counts, and the variable list P, i (as a decimal), n matches the canonical solutions' 'known variables' step. The phrase 'the way the worked examples do' is generic and names no specific example, id or page.",
+        "sources": [
+          {
+            "type": "distractor",
+            "ref": "D1"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m9s4-1-4:ex9-5-2"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "S6",
+            "ref": "tpl:g10m9s4-1-4:setup-formula#mc:g10m9s4-1-4:swapped-rate-years",
+            "question_id": "q:g10m9s4-1-4:g001-setup-",
+            "text": "$A=34500\\left(1+\\frac{6}{100}\\right)^{3}$",
+            "tagged": "mc:g10m9s4-1-4:swapped-rate-years"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m9s5-1-1:mixes-currencies-before-converting",
+      "lo_id": "lo:g10m9s5-1-1",
+      "label": "Adds or subtracts amounts in different currencies without converting first",
+      "description": "The student takes an amount in a foreign currency straight off an amount in rands, or adds it to one, as if both amounts were in the same currency.",
+      "signal": "The answer is the plain difference or sum of the two numbers, for example 49 000 from R50 000 and €1000.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You have the right idea about what happens: the gift reduces what Mathe still has to save. The slip is treating €1000 as if it were R1000."
+        },
+        {
+          "step": 2,
+          "text_md": "Euros and rands are different currencies, so their numbers cannot be subtracted directly. With €1 = R13.22, one euro is worth R13.22, so €1000 is worth much more than R1000."
+        },
+        {
+          "step": 3,
+          "text_md": "Taking $50\\,000-1000=49\\,000$ removes only R1000. First change the gift into rands: $1000\\times 13.22=\\text{R}13\\,220$. Now both amounts are in rands, and $50\\,000-13\\,220=\\text{R}36\\,780$."
+        },
+        {
+          "step": 4,
+          "text_md": "The same care applies when Kayla spends 65 000 MWK. Her R5000 has to become kwacha first: $5000\\times 39.46=197\\,300$ MWK. Only then can the spending come off: $197\\,300-65\\,000=132\\,300$ MWK."
+        },
+        {
+          "step": 5,
+          "text_md": "Before you add or subtract, convert every amount into the same currency using the exchange rate. Do the subtraction or addition in that one currency, and convert again only if the question asks for a different one."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch09-wf_253279cc-68a.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real and supported: ex9-6-6 invites 50000 - 1000 = 49000, and ex9-6-8 invites subtracting kwacha spending from a rand amount. The refutation follows the canonical method exactly: 1000 x 13.22 = R13 220, then 50 000 - 13 220 = R36 780. The Kayla step is also right: 5000 x 39.46 = 197 300 MWK, then minus 65 000 = 132 300 MWK. Both match the canonical solutions. It argues against the specific slip of treating euros as rands and gives a general rule (convert to one currency, then add or subtract), which the book uses. The only weakness is presentational: Mathe's R50 000 and Kayla's rate are not set up in the text. This does not affect correctness, and there is no id, page, figure or review reference.",
+        "sources": [
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m9s5-1-1:ex9-6-6"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m9s5-1-1:ex9-6-8"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:g10m9s5-1-1:multiplies-or-divides-the-wrong-way",
+      "lo_id": "lo:g10m9s5-1-1",
+      "label": "Multiplies or divides by the exchange rate the wrong way round",
+      "description": "The student uses the exchange rate in the right place but with the wrong operation, multiplying when the amount should be divided by the rate, or dividing when it should be multiplied.",
+      "signal": "The converted amount is the wrong size for the rate, for example 106 800 euros from R10 000 when one euro costs R10.68.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You picked out the exchange rate and used it, and that is the right ingredient. The slip is in the operation: the rate was multiplied where it should divide, or divided where it should multiply."
+        },
+        {
+          "step": 2,
+          "text_md": "A rate such as 1 euro = R10.68 says that one of the first currency is worth that many of the second. Start with an amount in the first currency (euros) and every euro brings R10.68, so you multiply by the rate. Start with an amount in the second currency (rands) and you are finding how many lots of R10.68 fit into it, so you divide by the rate."
+        },
+        {
+          "step": 3,
+          "text_md": "Test it on Saba, who has R10 000 and a euro costs R10.68. Multiplying gives $10\\,000\\times 10.68=106\\,800$ euros. That is far more euros than she has rands, even though each euro costs more than a rand. Dividing gives $\\frac{10\\,000}{10.68}=936.33$ euros, which is the sensible size."
+        },
+        {
+          "step": 4,
+          "text_md": "What matters is where the 1 sits in the rate, not whether the money is foreign. Bonani has 4120 PEN to turn into Brazilian real, and the rate is 1 BRL = 1.17 PEN. The 1 is on the real, and he is starting from the other currency, so he divides: $\\frac{4120}{1.17}=3521.37$ BRL. Multiplying would give 4820.4, which is wrong."
+        },
+        {
+          "step": 5,
+          "text_md": "Before you calculate, read the rate and find the currency that has the 1. If your amount is in that currency, multiply by the rate. If your amount is in the other currency, divide by the rate. Then check that the size of your answer makes sense."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch09-wf_253279cc-68a.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real. The canonical solutions multiply when the amount is in the currency that has the 1 in the rate (ex9-6-1a, ex9-6-8, and 25000 x 0.26 in ex9-7-38). They divide when the amount is in the other currency (we12 and 4120 / 1.17 in ex9-7-38). The refutation's rule of finding the currency that has the 1 matches this. I rechecked the arithmetic: 10000 x 10.68 = 106800, 10000 / 10.68 = 936.33, 4120 / 1.17 = 3521.37 and 4120 x 1.17 = 4820.4. All of these agree with the canonical answers. It argues against the slip with a size check (106 800 euros from R10 000 is absurd) and a second case, and does not merely restate the method. The examples are introduced in the text. It names no question id, page, figure or review history, and teaches nothing beyond the book.",
+        "sources": [
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m9s5-1-1:we12"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m9s5-1-1:ex9-6-1a"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m9s5-1-1:ex9-7-38"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m9s5-1-1:ex9-6-8"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:g10m9s5-1-1:uses-the-estimated-future-rate",
+      "lo_id": "lo:g10m9s5-1-1",
+      "label": "Converts with the estimated later rate instead of the current rate",
+      "description": "The student uses the second rate in the question, the one the exchange rate is expected to drop to in a month, instead of the current rate, even though the item is bought now.",
+      "signal": "The answer equals the price in the foreign currency times the estimated lower rate, for example R1170 where R1430 is correct.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You read both rates in the question, which is careful, and you did multiply the price by a rate, which is the right operation. The question is which of the two rates applies."
+        },
+        {
+          "step": 2,
+          "text_md": "The question asks what the item costs if the person buys it now. Buying now means paying at the rate that is given as the current one. The other rate is only an estimate of what might happen in a month, so it plays no part in the cost today."
+        },
+        {
+          "step": 3,
+          "text_md": "Take Mthuli's television at £130, with the rate currently £1 = R11 and an estimate that it will drop to R9. Using the estimate gives $130\\times 9=\\text{R}1170$, which would only be the price if his guess comes true a month from now. At the current rate it is $130\\times 11=\\text{R}1430$, and that is the cost if he buys it now."
+        },
+        {
+          "step": 4,
+          "text_md": "Find the word currently, or the words if he buys it now, and take the rate that goes with it. Leave the estimate alone. Then, because the price is in pounds and you want rands, multiply the pound price by that current rate."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch09-wf_253279cc-68a.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The book's questions (ex9-6-1a, ex9-6-2a, ex9-6-3a, ex9-7-34a, ex9-7-35a) each give a current rate and an estimated lower rate. Every canonical solution uses the current rate, so choosing the estimate is a real and plausible error. The Mthuli example is correct: 130 x 11 = R1430 and 130 x 9 = R1170, matching the signal and the canonical answer. The refutation tells the student to take the rate that goes with now, and to multiply the pound price by it, which is the book's method. It does not restate the method alone, because it argues why the estimate does not apply. It has no id or book reference and nothing beyond the book.",
+        "sources": [
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m9s5-1-1:ex9-6-1a"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m9s5-1-1:ex9-6-2a"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m9s5-1-1:ex9-6-3a"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m9s5-1-1:ex9-7-34a"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m9s5-1-1:ex9-7-35a"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:g10m9s5-1-3:compare-without-converting",
+      "lo_id": "lo:g10m9s5-1-3",
+      "label": "Comparing the amounts as printed, without converting to rands",
+      "description": "The student compares the numbers in the different currencies directly (for example takes the smaller printed number as the cheaper or the bigger printed number as the better tip) and never converts them to rands first.",
+      "signal": "The answer is the option with the smaller printed figure for a 'cheapest' or 'better deal' question, or the bigger printed figure for a 'better tip' question, with no rand amounts worked out.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You compared the numbers as they are printed, for example reading $\\text{\\textdollar}12$ as more than $\\text{£6}$ because 12 is bigger than 6. Wanting to compare is the right instinct. The catch is that pounds and dollars are different currencies, so the printed numbers are not measuring the same thing."
+        },
+        {
+          "step": 2,
+          "text_md": "One pound and one dollar are worth different numbers of rands. With $\\text{£1}=\\text{R14.13}$ and $\\text{\\textdollar}1=\\text{R7.04}$, a pound is worth about twice as much as a dollar, so a smaller number of pounds can be the bigger amount."
+        },
+        {
+          "step": 3,
+          "text_md": "Convert each amount to rands by multiplying by its exchange rate. $\\text{£6}$ gives $6\\times 14.13=\\text{R84.78}$ and $\\text{\\textdollar}12$ gives $12\\times 7.04=\\text{R84.48}$. The $\\text{£6}$ is worth 30 cents more, which is the opposite of what the printed numbers suggested."
+        },
+        {
+          "step": 4,
+          "text_md": "So convert first, then compare: work out every amount in rands, and only then decide which is the cheapest or the greatest."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:g10m9s5-1-3:ex9-6-4a",
+          "choice_text": "UK"
+        },
+        {
+          "question_id": "q:g10m9s5-1-3:ex9-6-4b",
+          "choice_text": "Arinda"
+        },
+        {
+          "question_id": "q:g10m9s5-1-3:ex9-6-5",
+          "choice_text": "London"
+        }
+      ],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch09-wf_253279cc-68a.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Real error for this objective. In the car question the printed figures are 173400 (rand), 12200 (pounds) and 21900 (dollars), so a non-converting student picks the smallest, UK. In the tip question 12 is bigger than 6, so Arinda. In the book question 7.19 is smaller than 8.49, so London. The refutation's arithmetic checks out: 6 x 14.13 = 84.78, 12 x 7.04 = 84.48, a gap of 30 cents, and 14.13 / 7.04 is about 2. That matches the canonical tip solution (Sollie, 30 cents more; the book's '14.31' is a typo, since 84.78 only comes from 14.13). It uses the book's own method of multiplying by the exchange rate. It argues against the error with a counter-example where the printed numbers point the wrong way, and it names no question id, page, figure or review history. The example uses rates different from the ones in the book-purchase question, but it states them in full and calls itself an example, so I see no real problem.",
+        "sources": [
+          {
+            "type": "distractor",
+            "ref": "D1"
+          },
+          {
+            "type": "distractor",
+            "ref": "D2"
+          },
+          {
+            "type": "distractor",
+            "ref": "D3"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m9s5-1-3:ex9-6-4b"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m9s5-1-3:ex9-6-5"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "book",
+            "ref": "q:g10m9s5-1-3:ex9-6-4a",
+            "question_id": "q:g10m9s5-1-3:ex9-6-4a",
+            "text": "UK",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m9s5-1-3:ex9-6-4b",
+            "question_id": "q:g10m9s5-1-3:ex9-6-4b",
+            "text": "Arinda",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m9s5-1-3:ex9-6-5",
+            "question_id": "q:g10m9s5-1-3:ex9-6-5",
+            "text": "London",
+            "tagged": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m9s5-1-3:converts-then-picks-largest",
+      "lo_id": "lo:g10m9s5-1-3",
+      "label": "Converting correctly, then choosing the largest rand amount as the cheapest",
+      "description": "The student converts the amounts to rands but then names the option that costs the most rands as the cheapest or better deal, mixing up which end of the comparison the question wants.",
+      "signal": "On a 'cheapest' or 'better deal' question, the answer is the option with the highest rand cost.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You converted the amounts to rands, which is the real work, and then chose the largest rand amount as the cheapest. Once every number is in rands it is easy to reach for the biggest one without checking whether the question wants the biggest or the smallest."
+        },
+        {
+          "step": 2,
+          "text_md": "When you are buying, the rand amount is what you have to pay, so more rands means it costs you more. If a book works out at $\\text{R124.82}$ from one publisher and $\\text{R120.43}$ from another, the second is the better deal because it takes fewer rands."
+        },
+        {
+          "step": 3,
+          "text_md": "A tip is the other way round, because you receive it: more rands is better. A tip worth $\\text{R84.78}$ beats one worth $\\text{R84.48}$. So first ask whether the question is about paying or about receiving."
+        },
+        {
+          "step": 4,
+          "text_md": "List the rand values side by side, then pick the smallest when you are asked for the cheapest or the better deal, and the largest when you are asked for the greatest, such as the better tip."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:g10m9s5-1-3:ex9-6-4a",
+          "choice_text": "South Africa"
+        },
+        {
+          "question_id": "q:g10m9s5-1-3:ex9-7-37",
+          "choice_text": "USA"
+        }
+      ],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch09-wf_253279cc-68a.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Real error for this objective: the question asks for the minimum cost but the student takes the maximum rand amount. The refutation is correct and matches the canonical solutions. The book purchase gives R124.82 against R120.43, so the cheaper New York publisher is the better deal. The tip gives R84.78 against R84.48, so the larger amount is the better tip, as in the canonical answer 'Sollie ... 30 cents more'. The paying-versus-receiving distinction and the final rule (smallest for cheapest or better deal, largest for greatest or better tip) are consistent with all the book's solutions, including the 'tipped the most' and 'tipped the least' items. It targets the end-of-comparison mix-up rather than restating the conversion method. It names no question id, page, figure or review history, and teaches nothing outside the book.",
+        "sources": [
+          {
+            "type": "distractor",
+            "ref": "D0"
+          },
+          {
+            "type": "distractor",
+            "ref": "D4"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m9s5-1-3:ex9-6-5"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m9s5-1-3:ex9-6-4b"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "book",
+            "ref": "q:g10m9s5-1-3:ex9-6-4a",
+            "question_id": "q:g10m9s5-1-3:ex9-6-4a",
+            "text": "South Africa",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m9s5-1-3:ex9-7-37",
+            "question_id": "q:g10m9s5-1-3:ex9-7-37",
+            "text": "USA",
+            "tagged": null
+          }
+        ]
+      }
+    }
+  ]
+}

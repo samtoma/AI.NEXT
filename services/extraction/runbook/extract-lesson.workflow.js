@@ -9,8 +9,26 @@ export const meta = {
   ],
 }
 
+// ---- book config (B1/B20) --------------------------------------------------
+// Nothing in this script names a path. The operating session resolves the book
+// config and passes it as `args`:
+//     uv run book_config.py workflow-args prep3-social-ar [--only a,b]
+// Absolute paths exist only in that runtime value, and point at whichever
+// checkout the operator stands in — a worktree included (the gitignored source
+// PDF is found in the main checkout, read-only).
+const ARGS = typeof args === 'string' ? (args ? JSON.parse(args) : {}) : (args || {})
+const BOOK = ARGS.book
+if (!BOOK || BOOK.book !== 'prep3-social-ar') {
+  throw new Error('args.book must be the prep3-social-ar config: run `uv run book_config.py workflow-args ' +
+    'prep3-social-ar` in services/extraction and pass its output as this workflow\'s args.')
+}
+if (!BOOK.paths || !BOOK.paths.pdf) {
+  throw new Error(`the source PDF ${BOOK.sources && BOOK.sources.pdf} was not found in this checkout, ` +
+    'the main checkout, or $AINEXT_SOURCES_ROOT (it is gitignored: put it in docs/Source/).')
+}
+const PDF = BOOK.paths.pdf
+
 // ---- Lesson config (from services/extraction/manifest/social-prep3-t1.json) ----
-const PDF = '/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/docs/Source/Social_prp3_T1_2.pdf'
 // printed book page = PDF index - 7
 const LOS = {
   'lo:soc1-2-1': 'يقرأ التضاريس من خريطة تضاريس العالم',

@@ -1,0 +1,51 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m1s8-1-2:reversed-divide-squares",
+ "kind": "family",
+ "lo_id": "lo:g10m1s8-1-2",
+ "parent_question_id": "q:g10m1s8-1-2:ex1-10-2k",
+ "source_page": 34,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    3,
+    9
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    1,
+    "a - 2"
+   ]
+  },
+  {
+   "name": "c",
+   "choice": [
+    2,
+    3,
+    4,
+    5,
+    6
+   ]
+  }
+ ],
+ "constraints": [
+  "a - b >= 2"
+ ],
+ "stem": "Simplify (assume all denominators are non-zero): $\\dfrac{{=a*a}-x^2}{x^2-{=a-b}x-{=a*b}}\\div\\dfrac{x+{=a}}{{=c}x+{=c*b}}$",
+ "answer": "-c",
+ "solution": [
+  "Change the division to multiplication by the reciprocal, that is, flip the second fraction: $\\frac{{=a*a}-x^2}{x^2-{=a-b}x-{=a*b}}\\times\\frac{{=c}x+{=c*b}}{x+{=a}}$",
+  "Factorise every numerator and denominator: ${=a*a}-x^2=({=a}-x)({=a}+x)$, $x^2-{=a-b}x-{=a*b}=(x-{=a})(x+{=b})$ and ${=c}x+{=c*b}={=c}(x+{=b})$",
+  "Write the product with every factor showing: $\\frac{({=a}-x)({=a}+x)}{(x-{=a})(x+{=b})}\\times\\frac{{=c}(x+{=b})}{x+{=a}}$",
+  "Cancel the common factors $({=a}+x)$ and $(x+{=b})$: $=\\frac{{=c}({=a}-x)}{x-{=a}}$",
+  "Notice that ${=a}-x=-(x-{=a})$, so the two remaining factors cancel and leave a factor of $-1$: $=\\frac{-{=c}(x-{=a})}{x-{=a}}=-{=c}$"
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Takes the twist the book itself uses in ex1-10-2k, a difference of squares written the 'wrong way round' (16 - x^2 = (4-x)(4+x)) so that one cancellation leaves (a-x)/(x-a) = -1, and adds the division and a common-factor step that the book's other exercises use. Skeleton: (a^2-x^2)/[(x-a)(x+b)] divided by (x+a)/[c(x+b)]; the middle coefficient of the trinomial is -(a-b), written out by the template. Constraint a - b >= 2 so the trinomial never prints a bare '1x' (and b != a, so the two cancelled linear factors are distinct); b >= 1. The answer is -c, a whole negative number (-2 to -6), so the answer is not the same in every instance. Verified by exact rational evaluation at several x over all 140 parameter combinations. Worked example for a = 5, b = 2, c = 3: (25-x^2)/(x^2-3x-10) divided by (x+5)/(3x+6) equals -3.\n\nPIPELINE NORMALISATION (not an author edit): rename-colliding-slug: id tpl:g10m1s8-1-2:divide-reversed-squares -> tpl:g10m1s8-1-2:reversed-divide-squares (file renamed to match). The first six letters of the slug were shared with a sibling family on the same objective (divide-common-factor-squares), so their item ids (q:<objective>:g001-<six letters>) would collide; --check refuses that. Nothing else changed."
+}

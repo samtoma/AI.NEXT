@@ -1,0 +1,927 @@
+{
+ "book": "g10-math",
+ "stage": "draft",
+ "prompts_version": "s5-v5",
+ "by_ref": {
+  "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/s5-draft-ch13",
+  "stage": "S5 draft",
+  "shards_sha256": "ff9d7775c9b33d971f51c258319c7b437a8a6cb3479680f941624004f36be05f",
+  "files": 15
+ },
+ "embedded": {
+  "source": "runbook/misconceptions.workflow.js",
+  "source_sha256": "8a48496f9fb571481f131c340cefa1ee28d2d1a96b8ab5a348e2adf4166e0a0a",
+  "args_sha256": "c27896d461928234c6622c48e4a5e1ac8f2b078a12cf7901e1931c0f23d949e1",
+  "generated_sha256": "b1b67976d498f9514255ba9422bbae95ee974e7abd6da3470523283e16c58a37",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "max_per_objective": 4,
+ "records": [
+  {
+   "lo": "lo:g10m13s1-1-1",
+   "entries": [
+    {
+     "id": "mc:g10m13s1-1-1:slanted-side-as-height",
+     "lo_id": "lo:g10m13s1-1-1",
+     "label": "Using the slanted side as the height",
+     "description": "The student puts the length of a slanted side into the area formula as the height of a trapezium or parallelogram, instead of finding the dashed height that meets the base at a right angle.",
+     "signal": null,
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You used the slanted side as the height. That is an understandable choice: it is a number printed on the shape, and the area formula really does need a height. The catch is that the height is the dashed line, which meets the bottom edge at a right angle. The slanted side leans over, so it is a different length."
+      },
+      {
+       "step": 2,
+       "text_md": "Look at the right-angled triangle on the left of the shape. Its three sides are the slanted side, the dashed height and the piece of the bottom edge up to the dashed line. The slanted side is opposite the right angle, which makes it the longest side of that triangle. So the slanted side is always longer than the height, and putting it into the formula makes the height too big."
+      },
+      {
+       "step": 3,
+       "text_md": "The book finds the height first, with the theorem of Pythagoras. For the trapezium with a 15 cm slanted side and a 9 cm piece of the bottom edge: $h^{2}=15^{2}-9^{2}=144$, so $h=12$. The height is 12 cm, which is shorter than the 15 cm side you were about to use."
+      },
+      {
+       "step": 4,
+       "text_md": "Now the 12 goes into the area formula: $A=\\frac{1}{2}(a+b)h=\\frac{1}{2}(46)(12)=276\\text{ cm}^{2}$. The same order works for the parallelogram with a 14 cm slanted side and an 8 cm piece of the bottom edge: $h^{2}=14^{2}-8^{2}$ gives the height, and only then do you use $A=b\\times h$."
+      },
+      {
+       "step": 5,
+       "text_md": "The move to use: if the shape shows a slanted side and a dashed line, but no number on the dashed line, do not use the slanted side as the height. Build the right-angled triangle, use $h^{2}=(\\text{slanted side})^{2}-(\\text{piece of the base})^{2}$ to find $h$, and then put $h$ into the area formula."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m13s1-1-1:ex13-1-1h"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m13s1-1-1:ex13-7-1c"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    },
+    {
+     "id": "mc:g10m13s1-1-1:part-of-base-as-base",
+     "lo_id": "lo:g10m13s1-1-1",
+     "label": "Using only part of the bottom edge as the base",
+     "description": "The student takes one labelled piece of the bottom edge as the base, when the bottom edge is split into pieces and the base is the whole edge with the pieces added together.",
+     "signal": null,
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You took one of the numbers along the bottom edge as the base. That is a reasonable start: the base does lie along the bottom, and the number you picked is a real length on the shape. The catch is that the dashed line splits the bottom edge, so each number labels only a piece of it, not the whole base."
+      },
+      {
+       "step": 2,
+       "text_md": "The base is the whole side from one end to the other. When the side is labelled in pieces, add the pieces first. For the parallelogram with 8 cm and 14 cm marked along the bottom, the book notes that the base is $b=8+14=22$, so the base is 22 cm, not 14 cm."
+      },
+      {
+       "step": 3,
+       "text_md": "The trapezium works the same way. Its bottom edge is marked 9 cm and 21 cm, so the longer parallel side is $21+9=30$ cm. That is why the book writes $\\frac{1}{2}(16+(21+9))(12)=\\frac{1}{2}(46)(12)=276\\text{ cm}^{2}$. Using 21 on its own would leave out the 9 cm piece, and the sum inside the brackets would no longer be 46."
+      },
+      {
+       "step": 4,
+       "text_md": "The move to use: before you put numbers into the formula, add up everything labelled along the side you are using as the base, and check the total is the whole side. For the parallelogram that gives $A=b\\times h$ with $b=22$ and $h=\\sqrt{132}$."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m13s1-1-1:ex13-7-1c"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m13s1-1-1:ex13-1-1h"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "The evidence section was empty and no wrong options or widget predicates were listed, so no caution box, remark, re-solve wrong turn or deliberately written wrong option supports any entry. Both entries rest only on the book's own explicit working in the canonical solutions: the two solutions that start with 'We first find the height' using the theorem of Pythagoras, and the note that the base of the parallelogram is 8+14=22 together with the trapezium's 21+9. A human reviewer should decide whether that is enough support; if not, drop both and let the runtime fall back to the canonical solution."
+    },
+    {
+     "kind": "evidence",
+     "text": "Left out for lack of any evidence: forgetting the half in the triangle formula, confusing circle area with circumference, and dropping the middle term when expanding the squared radius such as (-3z-2)^2 (the last is an expansion error rather than an area-formula error). Left out of the student text: the first answer a student might get from the slanted-side error was never solved by the book, so no wrong numerical answer is quoted and no signal is given."
+    },
+    {
+     "kind": "terminology",
+     "text": "The text says 'slanted side' and 'dashed line' to describe the shape, since the book's solutions only say 'height' and 'base'. The book's own terms (height, base, theorem of Pythagoras, trapezium, parallelogram, parallel sides) are used where the book uses them. 'Perpendicular' and 'hypotenuse' were avoided because the supplied solutions do not use them."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m13s2-1-1",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No evidence was supplied for this objective: no caution boxes or worked-example remarks, no re-solve wrong turns, no existing entries and no wrong options or widget predicates to index. Every likely slip (leaving out the two end faces, adding only some of the rectangles, using the base instead of the perimeter of the end shape as the width of the large rectangle, forgetting the half in the triangle area) is plausible but nothing here supports it, so I wrote no entries rather than invent errors. The runtime falls back to the canonical solutions, which are complete for all eleven questions."
+    },
+    {
+     "kind": "terminology",
+     "text": "The book's own wording for the faces is 'large rectangle' (the one whose width is the perimeter of the end shape, or the circumference for a cylinder) and 'small rectangle' (the end face of a rectangular prism). Any future entry must keep those terms and should not say 'lateral face' or 'cross-section'."
+    },
+    {
+     "kind": "evidence",
+     "text": "The worked example for the compound shape (three rectangular prisms, answer 886) was not used. Its working involves hidden and partly covered faces, which goes beyond this objective's description of a right rectangular or triangular prism, and there is no evidence of an error to rest an entry on."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m13s2-1-2",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No evidence was supplied for this objective: no caution box, no worked-example remark, no re-solve wrong turn, and no wrong options or widget predicates (no distractors D0, D1, ...). The two canonical solutions (a net-based worked example with r = 10 cm and height 30 cm, and an exercise with r = 6 cm and height 11 cm) only state the method: the curved surface unfolds into a rectangle whose length is the circumference, then add two circles. Any error I named (for example using the base area instead of the circumference for the rectangle's length, or counting only one circular end) would be my own guess rather than something the evidence supports, so I wrote no entries. The runtime falls back to the canonical solution, which is the intended behaviour here."
+    },
+    {
+     "kind": "terminology",
+     "text": "No term was in doubt. The solutions use 'net', 'circumference', 'surface area', 'rectangle' and 'circle' for the pieces, and I used none of them in student-facing text because no entry was written."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m13s2-2-1",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No evidence was supplied for this objective: no caution box, no worked-example remark, no re-solve wrong turn, no wrong options and no widget predicates, and no existing entries. I wrote no entry, because an error invented from the questions alone would reach students unreviewed with nothing behind it. The runtime falls back to the canonical solutions here."
+    },
+    {
+     "kind": "evidence",
+     "text": "Possible errors I noticed from the figures but did not use, because nothing supports them: (a) in the triangular prism with sides 5, 12 and 13, taking 13 as the triangle's base or height instead of the two sides that meet at the right angle; (b) in the isosceles triangular prism with 8 cm, 10 cm and 20 cm, using a slanting side in place of the perpendicular 10 cm height. If a distractor or a re-solve later encodes either, it would warrant an entry then."
+    },
+    {
+     "kind": "evidence",
+     "text": "The teaching item solved as a triangular pyramid (stem 'Find the volume and surface area of the following prisms', with tan 30 and sin 30 working) is not about right prisms as this objective describes them and includes surface area. I treated it as out of scope and drew nothing from it."
+    },
+    {
+     "kind": "evidence",
+     "text": "The cylinder question (radius 5 cm, height 10 cm, answer 785.4) and the prism with a quarter-circle end face are outside the objective's description (cube, rectangular prism or triangular prism). I used neither as grounds for an entry."
+    },
+    {
+     "kind": "terminology",
+     "text": "The canonical solutions use 'area of base' and 'height of the solid' (written H), and a lowercase h for the triangle's own height. The rectangular-prism solutions write the base as (bh)(H) with h meaning a base side, which clashes with h as the triangle height. This is notation a human should check before any entry on base versus height is written."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m13s2-2-2",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No evidence was supplied for this objective: no caution boxes, no worked-example remarks, no wrong turns from an independent re-solve, no wrong options and no widget predicates, and no existing entries. The three questions (a worked example with radius 4 cm and height 15 cm, and two exercises with radius 4 and height 11, and radius 7 cm and height 12) all follow one direct route: area of the circular base, then multiply by the height. Any error I named (for example squaring after multiplying by pi, or using the diameter as the radius) would be my own guess rather than something the evidence supports, so I returned no new entries. The runtime falls back to the canonical solution, which is the correct behaviour here."
+    },
+    {
+     "kind": "other",
+     "text": "The stem of the exercise with radius 4 and height 11 still carries the lead-in 'Calculate the volumes of the following prisms (correct to 1 decimal place)', but its own text asks for two decimal places and its answer (552.92) is to two decimal places. The stem looks like two exercise parts merged during extraction. I did not use either rounding instruction in any entry, and the stem needs a human look."
+    },
+    {
+     "kind": "other",
+     "text": "That same stem gives the radius and height as 'units' while the figure labels them in cm. I made no use of the unit and flag it only as an inconsistency."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m13s3-1-1",
+   "entries": [
+    {
+     "id": "mc:g10m13s3-1-1:vertical-height-for-slant-height",
+     "lo_id": "lo:g10m13s3-1-1",
+     "label": "Vertical height used for the triangular sides",
+     "description": "The student puts the pyramid's vertical height (straight down to the centre of the base) into $\\frac{1}{2}bh$ for each triangular side, instead of the slant height measured up the side itself.",
+     "signal": "The triangular sides were worked with the vertical height, so the total comes out smaller than the book's.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "Your plan is right: the surface area is the base plus the triangular sides, and each side is worked as $\\frac{1}{2}\\times b\\times h$. The slip is only in which height goes in. When a pyramid shows two heights, the vertical one, the one that drops from the top point down through the inside of the pyramid, is easy to grab."
+      },
+      {
+       "step": 2,
+       "text_md": "A triangular side is a flat triangle, so its height has to be measured along that side: from the bottom edge, at right angles to it, up to the top point. That is the slant height, $h_s$. The vertical height does not lie on any of the triangular sides. It runs through the inside, to the centre of the base."
+      },
+      {
+       "step": 3,
+       "text_md": "The two heights are linked by the theorem of Pythagoras. In a square-based pyramid, the slant height is the longest side of a right-angled triangle whose other two sides are the vertical height and half of one side of the base. So the slant height is always longer than the vertical height. In the square pyramid with base sides $7$ and vertical height $9.36$, the slant height is $10$."
+      },
+      {
+       "step": 4,
+       "text_md": "Put $9.36$ into $\\frac{1}{2}bh_s$ instead of $10$, and every triangular side comes out too small. The total then falls short of $189$, because the base is unchanged and each of the four triangles has lost area it really has."
+      },
+      {
+       "step": 5,
+       "text_md": "Before a height goes into $\\frac{1}{2}bh_s$, check that it is the one measured along the triangular side. For this pyramid: $A=b(b+2h_s)=7(7+2(10))=189$. If only the vertical height is given, find $h_s$ first with the theorem of Pythagoras, then use $h_s$ in the areas of the triangular sides."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m13s3-1-1:ex13-4-4"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m13s3-1-1:ex13-7-10"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m13s3-1-1:ex13-7-29b"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No evidence was supplied for this objective: no caution boxes, remarks, re-solve wrong turns or wrong options. The single entry rests only on how the book's own questions are built: two exercises print BOTH a vertical height (9.36 and 8.77) and a slant height (10 and 9) in the stem, and their solutions use the slant height. A reviewer should decide whether that counts as enough support; if not, drop the entry and the runtime falls back to the canonical solution."
+    },
+    {
+     "kind": "terminology",
+     "text": "The terms 'vertical height' and 'slant height' are printed in the stems of the two square-pyramid exercises, and 'h_s' appears in the solutions. The solutions call the triangles 'the sides' (and the objective says 'triangular sides'), while 'the sides of the base' also appears for the square's edges. The entry uses 'triangular sides' to keep them apart; please confirm that wording."
+    },
+    {
+     "kind": "other",
+     "text": "Step 3 states that the slant height is the hypotenuse of a right-angled triangle with the vertical height and half a base side. This is taken from the book's own Pythagoras working on the large square-based pyramid (AF = sqrt(a^2 + h^2), a = half the side). It is stated for square-based pyramids only, because it does not hold the same way for the triangular pyramid. The wrong total from using 9.36 was deliberately not computed, since the book never solves it."
+    },
+    {
+     "kind": "other",
+     "text": "Not used: the 'forgetting the base' and 'using a side of the base triangle as its height instead of finding it by Pythagoras' errors in the triangular pyramid. Both are plausible, but nothing in the evidence supports them, so they were left out rather than padded in."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m13s3-1-2",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No evidence was supplied for this objective: no book caution box or worked-example remark, no wrong option or widget predicate, and no wrong turn from an independent re-solve. Every candidate error I could name would rest on the canonical solutions alone, so I wrote no entries. The runtime falls back to the canonical solutions."
+    },
+    {
+     "kind": "evidence",
+     "text": "Possible entry for a human to decide on, not written. A student may use the vertical height of the cone where the slant height is needed. Two exercises give the vertical height (9.16 and 7.41) next to the slant height (10 and 8), and the worked example's figure shows a vertical height of 14 cm with the slant height unknown. Nothing supplied shows that students actually make this error. If someone adds one, the refutation can use the book's own derivation: the walls open out into thin triangles whose height is the slant height."
+    },
+    {
+     "kind": "evidence",
+     "text": "The exercise on a square-based pyramid (area of base plus four triangular sides) is not about a cone. It sits under this objective but is outside its description, so I did not use it."
+    },
+    {
+     "kind": "terminology",
+     "text": "The book uses h for different lengths. In the worked example and the cone exercises it is the slant height (the exercises write H for the vertical height). In the derivation worked example it is the vertical height, and the slant height is a. A refutation that uses these letters could confuse a student, so I avoided them."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m13s3-1-3",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No evidence was supplied for this objective: no caution box, no worked-example remark, no re-solve wrong turn, and no wrong options or widget predicates (no distractors D0, D1, ...). I read the four questions and their figures. Each gives the radius directly and the canonical solutions are plain substitutions into $4\\pi r^{2}$ with rounding. I did not write an entry from my own sense of common mistakes (for example $4\\pi r$ or $4\\pi (2r)$, or reading the radius as the diameter), because nothing supplied supports it. With no entries the runtime falls back to the canonical solution, as intended."
+    },
+    {
+     "kind": "terminology",
+     "text": "The book's own wording is 'surface area of sphere' and 'total surface area', with the formula written $4\\pi r^{2}$ and 'correct to 1 decimal place' or 'round to two decimal places'. No other term was needed."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m13s3-2-1",
+   "entries": [
+    {
+     "id": "mc:g10m13s3-2-1:slant-height-for-vertical-height",
+     "lo_id": "lo:g10m13s3-2-1",
+     "label": "Slant height used as the height",
+     "description": "The student puts the slant height (the length along the slanting side of the cone or pyramid) into the volume formula where the vertical height $H$ belongs.",
+     "signal": "The volume comes out too big, because a slanting length is longer than the straight-up height. For example, a square pyramid with base side 8 units, vertical height 8 units and slant height 8.94 units gives 190.72 instead of 170.67.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You have the right formula and you have put in a real length from the question, which is good. The slip is which length. The slant height runs down along the side of the cone or pyramid, but the formula needs the vertical height $H$: the length that goes straight up from the base to the top."
+      },
+      {
+       "step": 2,
+       "text_md": "The slant height leans over, so it is always longer than the vertical height. Using it makes the solid look taller than it really is, so the volume comes out too big."
+      },
+      {
+       "step": 3,
+       "text_md": "Take a square pyramid with base side 8 units, vertical height $H=8$ units and slant height 8.94 units. With the vertical height, $V=\\frac{1}{3}b^{2}H=\\frac{1}{3}(8)^{2}(8)=\\frac{512}{3}\\approx 170.67$ units$^3$. Putting in 8.94 instead gives $\\frac{1}{3}(8)^{2}(8.94)=190.72$ units$^3$, which is too big."
+      },
+      {
+       "step": 4,
+       "text_md": "Sometimes the question gives the slant height and no vertical height. Then the radius, the vertical height and the slant height make a right-angled triangle, with the slant height as the longest side, and Pythagoras gives $H$. For a cone with radius 5 cm and slant height 13 cm: $H^{2}=13^{2}-5^{2}=144$, so $H=12$ cm, and $V=\\frac{1}{3}\\pi(5)^{2}(12)=100\\pi\\approx 314.2$ cm$^3$."
+      },
+      {
+       "step": 5,
+       "text_md": "Next time, before you substitute, ask which length goes straight up from the base. If the question gives it as $H$, use it and leave the slant height unused. If it is missing, find it with Pythagoras first, then put $H$ into the formula."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m13s3-2-1:ex13-5-2"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m13s3-2-1:ex13-5-3"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m13s3-2-1:ex13-7-13"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m13s3-2-1:ex13-7-14"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m13s3-2-1:ex13-5-4a"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m13s3-2-1:ex13-7-26a"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    },
+    {
+     "id": "mc:g10m13s3-2-1:triangle-side-for-triangle-height",
+     "lo_id": "lo:g10m13s3-2-1",
+     "label": "Edge of the triangular base used as its height",
+     "description": "In a pyramid with a triangular base, the student uses an edge of the base as the height $h$ in the triangle's area $\\frac{1}{2}bh$ instead of finding the triangle's perpendicular height first.",
+     "signal": "The volume comes out too big. For example, a pyramid whose triangular base has an edge of 6 cm and whose vertical height is 10 cm gives 60 cm$^3$ instead of 52.0 cm$^3$.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You have the structure right: the volume is one third of the base area times the pyramid's height, and a triangle's area is $\\frac{1}{2}bh$. The slip is the triangle's $h$. The 6 cm edge leans, so it is not the perpendicular height of the triangle. That height is also a different length from the pyramid's vertical height $H$, which is 10 cm here."
+      },
+      {
+       "step": 2,
+       "text_md": "The triangle's height $h$ is measured at right angles to the base edge, from the opposite corner. It is shorter than the leaning 6 cm edge, so using 6 makes the base area, and so the volume, too big."
+      },
+      {
+       "step": 3,
+       "text_md": "The book finds $h$ with Pythagoras. The perpendicular cuts the 6 cm edge in half, which gives a right-angled triangle whose longest side is 6 cm and whose short side is $\\frac{b}{2}=3$ cm. So $h^{2}=6^{2}-3^{2}=36-9=27$ and $h=\\sqrt{27}$ cm."
+      },
+      {
+       "step": 4,
+       "text_md": "The two routes give different answers. With $h=6$ you get $\\frac{1}{3}\\times\\frac{1}{2}(6)(6)\\times 10=60$ cm$^3$. With $h=\\sqrt{27}$ the book's working is $V=\\frac{1}{3}\\times\\frac{1}{2}(\\sqrt{27})(6)\\times 10=10\\sqrt{27}\\approx 52.0$ cm$^3$."
+      },
+      {
+       "step": 5,
+       "text_md": "Next time, find the triangle's perpendicular height $h$ with Pythagoras before anything else. Then work out the base area $\\frac{1}{2}bh$, and put it into $V=\\frac{1}{3}\\times\\frac{1}{2}bh\\times H$."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m13s3-2-1:ex13-5-4b"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "expl:g10m13s3-2-1:ex13-7-28a"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    }
+   ],
+   "dropped": [],
+   "stripped": [
+    {
+     "lo": "lo:g10m13s3-2-1",
+     "origin": "book",
+     "ref": "q:g10m13s3-2-1:ex13-7-23",
+     "question_id": "q:g10m13s3-2-1:ex13-7-23",
+     "text": "No",
+     "tagged": null,
+     "reason": "no named error: The wrong option is the bare 'No' of a yes/no comparison, and no single named error leads to it. The two slips an ice-cream question invites each give a different result. Forgetting to halve the sphere makes the scoop 36 pi, exactly equal to the cone's 36 pi, so that student would say it just fits, not 'No'. Dropping a factor in the cone formula makes the cone bigger, which pushes towards 'Yes'. Naming an error for 'No' would be invented, so the runtime falls back to the canonical solution."
+    }
+   ],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "The sources file held only one item: the re-solve disagreement on the triangular pyramid with base edge 6 cm and height 10 cm (re-solve 144.0, book 52.0). I could not use it. 144 cannot be reached from 6 cm and 10 cm by any slip I can name. It equals the answer to the square-based pyramid with base side 6 cm and height 12 cm, so the re-solve most likely read the wrong figure, which is our own check going wrong and not a student error. The book's 52.0 is correct: 10*sqrt(27) is about 51.96."
+    },
+    {
+     "kind": "evidence",
+     "text": "The sources file had no caution box and no worked-example remark for this objective. Both new entries therefore rest on the canonical solutions alone, not on a printed caution. For the first: four stems (ex13-5-2, ex13-5-3, ex13-7-13, ex13-7-14) print both the vertical and the slant height and the book's solutions use only the vertical one, and two solutions (ex13-5-4a, ex13-7-26a) derive H from the slant height by Pythagoras. For the second: ex13-5-4b and the teaching item ex13-7-28a find the triangle's perpendicular height first. A human reviewer should confirm that is enough support to ship them."
+    },
+    {
+     "kind": "evidence",
+     "text": "I left out a 'half sphere not halved' entry. It would only restate the book's own remark that a half sphere is half the volume of a sphere, and in the ice-cream question it gives equal volumes, not a wrong yes/no answer."
+    },
+    {
+     "kind": "terminology",
+     "text": "The book's letters clash. In the stems, $H$ is the solid's vertical height and $h$ is its slant height. In the triangular-pyramid solution, $h$ is the triangle's perpendicular height. The second entry says 'the triangle's perpendicular height $h$' and calls the pyramid's height $H$, to avoid the clash. 'Perpendicular height of the triangle' is the book's own wording there; 'slant height' and 'vertical height' are the stems' own terms."
+    },
+    {
+     "kind": "other",
+     "text": "The canonical solutions contain printed slips that I did not reproduce. In ex13-7-23 the cone working prints $(3)^3$ where $(3)^2$ is needed for the printed 36 pi. In ex13-7-24b step 1 says the cone volume is $\\frac{4}{3}\\pi r^2 H$, though the working uses $\\frac{1}{3}$. In ex13-7-29d a pi appears in the square-pyramid formula, but the printed number has no pi. All three are worth a look in the book-review pass."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m13s3-2-2",
+   "entries": [
+    {
+     "id": "mc:g10m13s3-2-2:counts-covered-faces",
+     "lo_id": "lo:g10m13s3-2-2",
+     "label": "Counts the faces where the two solids meet",
+     "description": "The student finds the full surface area of each solid and adds them, so the face the pyramid sits on and the pyramid's own base are counted even though both are covered.",
+     "signal": "A total surface area larger than the exposed-faces total by the area of the face where the solids meet, or by twice that area.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You found the full surface area of each solid and added the two totals. Finding each solid's area is the right start, and so is adding. The catch is that two of the faces you counted are not on the outside of the finished solid."
+      },
+      {
+       "step": 2,
+       "text_md": "Where the pyramid sits on the cube or prism, the pyramid's base is covered by the solid beneath it, and the face it sits on is covered by the pyramid. Nobody can see or touch either face, so neither is an exposed face, and the total surface area counts only the exposed faces."
+      },
+      {
+       "step": 3,
+       "text_md": "Try a cube of side $5$ $\\text{cm}$ with a square pyramid on top. Counting everything gives the cube's six faces, $6\\times25=150$, plus the pyramid's base, $25$, plus its four triangles, $65$: that is $240$ $\\text{cm}^2$. Counting only the exposed faces gives five faces of the cube, $5\\times25=125$, plus the four triangles, $65$: that is $190$ $\\text{cm}^2$. The extra $50$ $\\text{cm}^2$ is exactly the two covered faces, $25$ each."
+      },
+      {
+       "step": 4,
+       "text_md": "So before you add, ask which faces are covered. For the solid underneath, count every face except the one the pyramid sits on. For the pyramid, count only its slanted triangular faces and leave out its base. Then add the areas of those exposed faces."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "expl:g10m13s3-2-2:ex13-5-7"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m13s3-2-2:we17"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m13s3-2-2:ex13-7-20a"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    },
+    {
+     "id": "mc:g10m13s3-2-2:uses-total-height-for-pyramid",
+     "lo_id": "lo:g10m13s3-2-2",
+     "label": "Uses the whole height of the solid as the pyramid's height",
+     "description": "Given the overall height of the composite solid, the student puts that number in as the height of the pyramid instead of subtracting the height of the cube or prism underneath it.",
+     "signal": null,
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You used the height given for the whole solid as the height of the pyramid. The formula you chose, $\\frac{1}{3}\\times\\text{base}\\times H$, is the right one for the pyramid. What needs another look is the number you put in for $H$."
+      },
+      {
+       "step": 2,
+       "text_md": "The height of the pyramid is measured from its base up to its tip, and the pyramid is only the top part of the solid. The overall height starts at the bottom of the whole solid, so it also includes the height of the cube or prism underneath."
+      },
+      {
+       "step": 3,
+       "text_md": "Take a cube of side $7$ $\\text{cm}$ with a square pyramid on top, and the whole solid is $22$ $\\text{cm}$ tall. The pyramid's height is $22-7=15$ $\\text{cm}$, so its volume is $\\frac{1}{3}(7)^2(15)=245$ $\\text{cm}^3$, and with the cube the total is $343+245=588$ $\\text{cm}^3$. Using $22$ instead gives about $359.3$ $\\text{cm}^3$ for the pyramid, which counts the cube's $7$ $\\text{cm}$ of height a second time."
+      },
+      {
+       "step": 4,
+       "text_md": "So subtract first: height of the pyramid $=$ overall height $-$ height of the cube or prism. Use that height in $\\frac{1}{3}\\times\\text{base}\\times H$, and in the theorem of Pythagoras if you need the slant height, then add the volumes."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m13s3-2-2:ex13-7-20a"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m13s3-2-2:ex13-7-20b"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "expl:g10m13s3-2-2:ex13-5-7"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    },
+    {
+     "id": "mc:g10m13s3-2-2:uses-pyramid-height-for-triangular-faces",
+     "lo_id": "lo:g10m13s3-2-2",
+     "label": "Uses the pyramid's height instead of its slant height for the triangular faces",
+     "description": "To find the area of a triangular face of the pyramid, the student takes the pyramid's vertical height $H$ as the height of the triangle instead of the slant height $h_s$.",
+     "signal": null,
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You used $\\frac{1}{2}\\times\\text{base}\\times\\text{height}$ for each triangular face, which is the right formula for a triangle, and you took the pyramid's height $H$ as that height. That is natural, because $H$ is the height you have been given. But $H$ is not the height of the triangular face."
+      },
+      {
+       "step": 2,
+       "text_md": "$H$ is measured straight up from the middle of the pyramid's base to its tip. The height of a triangular face is measured along the slanted face, from the middle of its bottom edge up to the tip. That is the slant height $h_s$, and it is longer than $H$."
+      },
+      {
+       "step": 3,
+       "text_md": "Take a cube of side $5$ $\\text{cm}$ with a square pyramid of height $6$ $\\text{cm}$ on top. Using $H=6$ gives triangles of $\\frac{1}{2}(5)(6)=15$ $\\text{cm}^2$ and a total of $125+4(15)=185$ $\\text{cm}^2$. The slant height is $h_s^2=6^2+2.5^2=42.25$, so $h_s=6.5$. That gives triangles of $\\frac{1}{2}(5)(6.5)=16.25$ $\\text{cm}^2$ and a total of $125+4(16.25)=190$ $\\text{cm}^2$."
+      },
+      {
+       "step": 4,
+       "text_md": "So for the triangular faces, use the slant height $h_s$. If it is not given, find it with the theorem of Pythagoras from $H$ and half of the base edge: $h_s^2=H^2+\\left(\\frac{b}{2}\\right)^2$. Then find the area of one face with $\\frac{1}{2}bh_s$ and multiply by the number of triangular faces."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "expl:g10m13s3-2-2:ex13-5-7"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m13s3-2-2:ex13-7-20a"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m13s3-2-2:we17"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "The evidence section was empty: no caution box, no worked-example remark, no re-solve wrong turn and no wrong options were supplied. The three entries rest only on the book's own worked solutions, which state the relevant steps explicitly (the covered faces are excluded, the pyramid's height is the overall height minus the cube's, and the slant height is used for the triangular faces). Nothing in the book labels these as common errors, so the entries are the author's judgement of predictable errors. Drop any of them if human review wants strictly caution-backed entries."
+    },
+    {
+     "kind": "terminology",
+     "text": "Terms used as the book words them: 'slant height' (h_s), 'exposed faces', 'covered', 'height of the pyramid' (H), 'theorem of Pythagoras', 'composite'. 'Covered' and 'exposed faces' appear in the worked solutions; the exact term for the face where the two solids meet is not given by the book, so the text describes it in words rather than naming it."
+    },
+    {
+     "kind": "evidence",
+     "text": "Teaching items on the cylinder with a cone and on the hemisphere, double hemisphere and prism combinations were not used, because the objective's description covers a pyramid on a prism or cube only. Their printed working also looks inconsistent: the cylinder-and-cone surface area adds the cylinder's full area including the covered top circle and writes the cone's curved area as 2 pi r times the slant height, and the hemisphere-on-cone surface area has a mismatch between the printed 1194.68 working and the final 1194.67. These were not used and should be checked by a human reviewer."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m13s3-2-3",
+   "entries": [
+    {
+     "id": "mc:g10m13s3-2-3:vertical-height-used-as-slant-height",
+     "lo_id": "lo:g10m13s3-2-3",
+     "label": "Uses the vertical height where the slant height belongs",
+     "description": "The student puts the vertical height of the cone or pyramid straight into the surface area formula in place of the slant height, so the sloping surface is measured with a length that is too short.",
+     "signal": "For a cone with radius 3 cm and vertical height 10 cm, the answer comes out as about $122.52\\text{ cm}^2$ (that is $39\\pi$) instead of $126.67\\text{ cm}^2$.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You put the vertical height (the length that goes straight up through the middle of the solid) into the surface area formula where the slant height belongs. Your formula is the right one, and both lengths are called a height, so it is an easy swap to make."
+      },
+      {
+       "step": 2,
+       "text_md": "They are different lengths. The vertical height runs straight up inside the solid, from the middle of the base to the top. The slant height runs along the sloping surface, from the top down to the edge of the base. Together with the radius of the base they make a right-angled triangle, and the slant height is its longest side, so it is always longer than the vertical height."
+      },
+      {
+       "step": 3,
+       "text_md": "Take a cone with radius $3\\text{ cm}$ and vertical height $10\\text{ cm}$. Using $10$ as the slant height gives $\\pi(3)(3+10)=39\\pi\\approx 122.52\\text{ cm}^2$. The real slant height is $h_s=\\sqrt{3^2+10^2}=\\sqrt{109}\\approx 10.44\\text{ cm}$, and $\\pi(3)(3+\\sqrt{109})\\approx 126.67\\text{ cm}^2$. The first answer is too small because the surface slopes for $10.44\\text{ cm}$, not $10\\text{ cm}$."
+      },
+      {
+       "step": 4,
+       "text_md": "A square pyramid works the same way, with one thing to watch. The vertical height lands in the middle of the base, so the other short side of the right-angled triangle is half of the base side, not the whole side. For a base side of $15\\text{ cm}$ that short side is $7.5\\text{ cm}$, and you use $h_s^2=(7.5)^2+h^2$."
+      },
+      {
+       "step": 5,
+       "text_md": "So first ask what the length you were given is. If it is marked along the sloping side, it already is the slant height and you can use it straight away. If it is the vertical height, find the slant height first with the theorem of Pythagoras ($h_s^2=r^2+h^2$ for a cone), then put $h_s$ into the surface area formula: $\\pi r(r+h_s)$ for a cone, or $b(b+2h_s)$ for a square pyramid, where $b$ is the whole base side."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "expl:g10m13s3-2-3:ex13-7-15a"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "expl:g10m13s3-2-3:ex13-5-5"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "The evidence section and the wrong-option list were both empty, so no caution, remark, re-solve wrong turn or distractor backs the one entry. It rests only on the canonical solutions' own structure (each cone and pyramid solution opens with a Pythagoras step to find the slant height, and the cone worked example separates the 'perpendicular (or vertical) height' from the slant length). A reviewer who wants entries only where listed evidence exists may prefer zero entries here; the runtime then falls back to the canonical solution."
+    },
+    {
+     "kind": "evidence",
+     "text": "The printed final answer for the square pyramid (437.26 cm^2) does not match its own printed expression $(15)(15+2\\sqrt{200.25})$, which evaluates to about 649.53 cm^2. 437.26 equals $15^2+15\\sqrt{200.25}$, i.e. only half of the four triangular faces. I did not use the pyramid's numerical answer anywhere and did not contradict it; the worked cone figures check out (126.67 and 393). The pyramid answer needs a human check against the book before this objective's canonical solution is trusted."
+    },
+    {
+     "kind": "terminology",
+     "text": "The book's first cone worked example writes the slant length as $h$ in $\\pi r(r+h)$ (the 20 cm side), while its other cone solution uses $h_s$ for the slant height and 'perpendicular (or vertical) height' / $H$ for the other. I used $h_s$ for the slant height and the words 'vertical height' for the other. The pyramid solution also uses $b$ for both 7.5 (half the base side, inside Pythagoras) and 15 (the whole side, in the area formula). Please confirm the wording is acceptable."
+    },
+    {
+     "kind": "other",
+     "text": "Candidate errors considered and left out for lack of any supporting evidence: leaving the base area out of the total (the book only says 'include the area of a circle' for the half sphere, not for the cone or pyramid), and using the whole base side instead of half in the pyramid's Pythagoras step (the book writes 7.5 without explaining it; I explained it inside step 4 of the single entry rather than as a separate entry). The cylinder and prism question in the evidence belongs to a different objective and was not used."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m13s4-1-1",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No evidence was supplied for this objective: no book caution box, no worked-example remark, no re-solve wrong turn, and no wrong options or widget predicates (D0, D1, ... is empty). Every entry would therefore have rested on my own guess about student error, not on anything the book or a deliberate wrong option supports, so I wrote none. The runtime falls back to the canonical solutions."
+    },
+    {
+     "kind": "evidence",
+     "text": "A plausible error is visible in the worked example (surface area is assumed to scale by the same factor as volume, e.g. 9 instead of 51/11 when two dimensions are tripled). I did not turn it into an entry because nothing in the supplied evidence flags it, and the book's solution does not warn against it. A human may wish to review it if wrong options for this objective are added later."
+    },
+    {
+     "kind": "other",
+     "text": "Terms I would keep as the book words them if an entry is added later: 'constant factor', 'multiplied by a constant factor', 'express ... as a factor of the original', 'base lengths', 'new surface area (A_n) and volume (V_n)'. I did not need to use any of them in student-facing text."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m13s4-1-2",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No evidence was supplied for this objective: no caution box, no worked-example remark, no wrong turn from a re-solve, and no wrong option or widget predicate (no D0, D1, ...). The three teaching items (the rectangular-prism proof that scaling the height by k scales the volume by k, the cylinder with its radius scaled by k, and the doubled-height prism) are worked examples with only canonical solutions and no printed warning about a mistake. Every error I could write here (for example, expecting the cylinder's whole surface area to scale by one factor when the book's own working shows the base term scaling by k squared and the side term by k) would be my own guess rather than something the evidence supports, so I have added no entries. The runtime falls back to the canonical solutions, which is the correct behaviour."
+    },
+    {
+     "kind": "other",
+     "text": "The worked solution for the cylinder with its radius scaled by k stops at A_n = k^2(pi r^2) + k(2 pi r h) and does not state a single surface-area factor. If a surface-area misconception is wanted later, it needs a deliberately written wrong option or a real student-voiced confusion as evidence first. I did not infer one from this working."
+    },
+    {
+     "kind": "terminology",
+     "text": "No unsure terms. The book's wording is 'multiplied by a constant factor k', 'new volume', 'new surface area', 'the volume increases by a factor of k', and 'area of base'. These would be kept as printed if an entry is added later."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m13s4-1-3",
+   "entries": [
+    {
+     "id": "mc:g10m13s4-1-3:scale-factor-applied-once",
+     "lo_id": "lo:g10m13s4-1-3",
+     "label": "Multiplies the area or volume by k itself",
+     "description": "The student treats the scale factor as acting directly on the area, surface area or volume, so doubling every length is taken to double the area (or a quarter of every length to make a quarter of the area).",
+     "signal": "The answer is the scale factor itself: 2 for the surface area of a cone whose radius and height are doubled, 4 for the volume of a prism whose sides are quadrupled, $\\frac{1}{3}$ for a circle whose radius becomes a third, $\\frac{1}{4}$ for a square whose sides become a quarter.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You are thinking that if every length is multiplied by $k$, the area (or volume) is multiplied by $k$ as well. That is true for a length, and finding $k$ from the wording is the first real step, so that part is fine. The slip is that area and volume are not lengths."
+      },
+      {
+       "step": 2,
+       "text_md": "An area is built from two lengths multiplied together, so the factor gets applied twice. Take a circle whose radius becomes a third of its size: $A_{\\text{new}}=\\pi\\left(\\frac{1}{3}r\\right)^{2}=\\frac{1}{9}\\pi r^{2}=\\frac{1}{9}A$. The new area is $\\frac{1}{9}$ of the original, not $\\frac{1}{3}$."
+      },
+      {
+       "step": 3,
+       "text_md": "The same thing happens with a square whose sides are each a quarter of the original: $A_{\\text{new}}=\\left(\\frac{1}{4}s\\right)^{2}=\\frac{1}{16}s^{2}=\\frac{1}{16}A$. Check it with numbers: a square of side 4 has area 16, and a square of side 1 has area 1, which is $\\frac{1}{16}$ of 16, not $\\frac{1}{4}$."
+      },
+      {
+       "step": 4,
+       "text_md": "A volume is built from three lengths, so the factor is applied three times. When the sides of a triangular prism are quadrupled, $k=4$ and the volume is multiplied by $4^{3}=64$, not by 4."
+      },
+      {
+       "step": 5,
+       "text_md": "So after you have found $k$ from the words (\"doubled\" gives $k=2$, \"quadrupled\" gives $k=4$), do not stop there. For an area or surface area, work out $k^{2}$. For a volume, work out $k^{3}$."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m13s4-1-3:ex13-6-1"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m13s4-1-3:ex13-7-16"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m13s4-1-3:ex13-6-5"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    },
+    {
+     "id": "mc:g10m13s4-1-3:wrong-power-for-measure",
+     "lo_id": "lo:g10m13s4-1-3",
+     "label": "Uses the wrong power of k for what is being asked",
+     "description": "The student chooses $k^{2}$ or $k^{3}$ by the kind of shape instead of by the quantity asked for, typically cubing $k$ for the surface area of a solid or squaring $k$ for a volume.",
+     "signal": "A surface area answer of $k^{3}$ (8 for a cone whose radius and height are doubled), or a volume answer of $k^{2}$ (16 for a triangular prism whose sides are quadrupled).",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You know the factor has to be raised to a power, and you have found $k$. The slip is in which power: it depends on what you are asked for (area or volume), not on whether the shape is flat or solid. A cone is a solid, but its surface area is still an area."
+      },
+      {
+       "step": 2,
+       "text_md": "The book's rule: when every dimension is multiplied by $k$, an area (including a surface area) is multiplied by $k^{2}$, and a volume is multiplied by $k^{3}$. Surface area is measured in square units and volume in cubic units."
+      },
+      {
+       "step": 3,
+       "text_md": "The book puts both on one solid. A prism has volume $493\\ \\text{cm}^{3}$ and surface area $6007\\ \\text{cm}^{2}$, and every dimension is multiplied by 4. The volume becomes $493\\times4^{3}=31\\,552\\ \\text{cm}^{3}$ and the surface area becomes $6007\\times4^{2}=96\\,112\\ \\text{cm}^{2}$. It is the same solid and the same $k$, with two different powers."
+      },
+      {
+       "step": 4,
+       "text_md": "Now compare the two answers for a doubled cone and a quadrupled prism. Doubling the cone's radius and height multiplies its surface area by $2^{2}=4$, not by $2^{3}=8$. Quadrupling the sides of a triangular prism multiplies its volume by $4^{3}=64$, not by $4^{2}=16$."
+      },
+      {
+       "step": 5,
+       "text_md": "Before you square or cube $k$, ask \"is this asking for an area or a volume?\" Use $k^{2}$ for surface area and area, and $k^{3}$ for volume."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m13s4-1-3:ex13-6-2"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m13s4-1-3:ex13-6-5"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "expl:g10m13s4-1-3:ex13-6-6"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    },
+    {
+     "id": "mc:g10m13s4-1-3:shrink-read-as-enlarge",
+     "lo_id": "lo:g10m13s4-1-3",
+     "label": "Uses k = 3 when a length becomes a third",
+     "description": "The student reads \"a third of its original size\" (or a quarter, or half) as a factor of 3 (or 4, or 2) instead of $\\frac{1}{3}$, so a shape that gets smaller is given a larger area or volume.",
+     "signal": "A whole number greater than 1, such as 9 or 16, as the answer to a question in which every length gets smaller, for example 9 for a circle whose radius becomes a third.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "Your method is right: square $k$ for an area and cube it for a volume. What has flipped is $k$ itself: \"a third of its original size\" has been read as 3 instead of $\\frac{1}{3}$."
+      },
+      {
+       "step": 2,
+       "text_md": "$k$ is the number you multiply each original length by to get the new length. A radius that becomes a third of its size is $\\frac{1}{3}r$, so $k=\\frac{1}{3}$. With $k=3$ the radius would be three times as long as it was."
+      },
+      {
+       "step": 3,
+       "text_md": "A quick check is whether the shape gets bigger or smaller. If every length shrinks, the area and the volume must shrink too. Squaring $k=3$ gives 9, which says the circle's area grew ninefold, and that cannot be right for a smaller circle. With $k=\\frac{1}{3}$: $A_{\\text{new}}=\\pi\\left(\\frac{1}{3}r\\right)^{2}=\\frac{1}{9}\\pi r^{2}$, one ninth of the original."
+      },
+      {
+       "step": 4,
+       "text_md": "The same applies to the other cases: sides that are a quarter of the size give $k=\\frac{1}{4}$ and a new area of $\\frac{1}{16}$ of the original, and a radius and height that are both halved give $k=\\frac{1}{2}$ and a volume of $\\frac{1}{8}$ of the original."
+      },
+      {
+       "step": 5,
+       "text_md": "Start by writing down what each length is multiplied by (\"doubled\" is 2, \"a quarter of its size\" is $\\frac{1}{4}$). Check whether the shape grows or shrinks, then use $k^{2}$ for an area or $k^{3}$ for a volume. The answer should be bigger than 1 only if the shape got bigger."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m13s4-1-3:ex13-6-1"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m13s4-1-3:ex13-7-16"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m13s4-1-3:ex13-7-18"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, worked-example remarks, re-solve wrong turns or wrong options were supplied for this objective. All three entries rest only on the canonical solutions and on how the questions are built (a mix of enlargements and reductions, and of areas and volumes). They are the standard errors for this objective, but nothing printed in the book names them. Reviewer should confirm they are wanted."
+    },
+    {
+     "kind": "evidence",
+     "text": "The canonical working for the square-pyramid surface-area question and the cylinder volume question was not reused. The pyramid working uses a volume-style expression ($\\frac{1}{3}b^{2}H$) for a surface-area question. The cylinder working uses a cone-style expression ($\\frac{1}{3}\\pi r^{2}H$) labelled $A_{\\text{new}}$ for a cylinder volume. The final answers ($\\frac{1}{9}$ and $\\frac{1}{8}$) agree with the $k^{2}$ and $k^{3}$ rules, so I quoted only those answers and the rules. I also did not reuse the triangular-prism surface-area working in the solids worked example (its working does not match a plain $k^{2}$ scaling of the original prism), nor the worked-example solutions that need the figures."
+    },
+    {
+     "kind": "evidence",
+     "text": "Two canonical solutions justify $k^{2}$ by saying \"we are changing two dimensions\" or \"we multiply two dimensions\", which differs from the stated objective (every dimension is multiplied by $k$, area scales by $k^{2}$). I did not echo the \"two dimensions\" wording in any refutation."
+    },
+    {
+     "kind": "terminology",
+     "text": "The book says area or volume will \"increase by\" or \"change by\" $k^{2}$ or $k^{3}$ even when $k<1$. I used \"is multiplied by\", which is the book's own phrasing in the circle and square questions (\"multiply $r$ by one third\"). Please confirm this is acceptable."
+    },
+    {
+     "kind": "terminology",
+     "text": "The circle solution says \"reduce the radius by a third\" and then clarifies \"multiply $r$ by one third\". I avoided \"reduce by\" in the refutations so no student reads it as subtracting a third (a possible $k=\\frac{2}{3}$ error that no evidence supports, so it has no entry). Also check that \"surface area\", \"dimension\" and \"original size\" match the book's usage in student-facing copy."
+    },
+    {
+     "kind": "other",
+     "text": "The second entry quotes the worked prism example (volume $493\\ \\text{cm}^{3}$, surface area $6007\\ \\text{cm}^{2}$, factor 4, giving $31\\,552$ and $96\\,112$) in words and numbers with no question id. The book prints these numbers with a thin space as thousands separator, which I kept as $31\\,552$. Check the app's thousands-separator convention."
+    }
+   ],
+   "notes": []
+  }
+ ],
+ "totals": {
+  "objectives": 14,
+  "entries": 12,
+  "dropped": 0,
+  "stripped": 1,
+  "skipped": 0,
+  "flags": 50
+ }
+}

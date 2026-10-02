@@ -1,0 +1,477 @@
+{
+ "lesson": "g10m14s4-1",
+ "claims": [
+  {
+   "lo": "lo:g10m14s4-1-1",
+   "type": "definition",
+   "text": "The union of two sets is a new set that contains all of the elements that are in at least one of the two sets.",
+   "anchor": "b04436",
+   "printed_page": 481,
+   "supported": true,
+   "teacher_only": false,
+   "quote": "The union of two sets is a new set that contains all of the elements that are in at least one of the two sets.",
+   "provenance": "containment"
+  },
+  {
+   "lo": "lo:g10m14s4-1-1",
+   "type": "convention",
+   "text": "The union of sets A and B is written as A∪B, or as \"A or B\".",
+   "anchor": "b04436",
+   "printed_page": 481,
+   "supported": true,
+   "teacher_only": false,
+   "quote": "The union is written as $A\\cupB$ or “ $A\\text{ or }B$ ”.",
+   "provenance": "containment"
+  },
+  {
+   "lo": "lo:g10m14s4-1-2",
+   "type": "definition",
+   "text": "The intersection of two sets is a new set that contains all of the elements that are in both sets.",
+   "anchor": "b04437",
+   "printed_page": 481,
+   "supported": true,
+   "teacher_only": false,
+   "quote": "The intersection of two sets is a new set that contains all of the elements that are in both sets.",
+   "provenance": "containment"
+  },
+  {
+   "lo": "lo:g10m14s4-1-2",
+   "type": "convention",
+   "text": "The intersection of sets A and B is written as A∩B, or as \"A and B\".",
+   "anchor": "b04437",
+   "printed_page": 481,
+   "supported": true,
+   "teacher_only": false,
+   "quote": "The intersection is written as $A\\capB$ or “ $A\\text{ and }B$ ”.",
+   "provenance": "containment"
+  },
+  {
+   "lo": "lo:g10m14s4-1-1",
+   "type": "convention",
+   "text": "The union of two events in a sample space can be shown using a Venn diagram, for different configurations of the two events.",
+   "anchor": "b04438",
+   "printed_page": 481,
+   "supported": true,
+   "teacher_only": false,
+   "quote": "The figure below shows the union and intersection for different configurations of two events in a sample space, using Venn diagrams.",
+   "provenance": "containment"
+  },
+  {
+   "lo": "lo:g10m14s4-1-2",
+   "type": "convention",
+   "text": "The intersection of two events in a sample space can be shown using a Venn diagram, for different configurations of the two events.",
+   "anchor": "b04438",
+   "printed_page": 481,
+   "supported": true,
+   "teacher_only": false,
+   "quote": "The figure below shows the union and intersection for different configurations of two events in a sample space, using Venn diagrams.",
+   "provenance": "containment"
+  }
+ ],
+ "visuals": [],
+ "viz_gaps": [
+  {
+   "figure_id": "b04439:1",
+   "src": "tikzpicture/ffa836033f01e5c5657502b3eba43f4e.png",
+   "ref": null,
+   "printed_page": 481,
+   "reason": "Venn diagram: sample-space box S containing two overlapping set circles A and B. None of the eight kinds draws a sample space with set regions (A only, both, B only, outside); geo_scene's circles would be generic geometry, not sets, so the figure would lose its meaning as events.",
+   "needed_kind": "venn_diagram: a sample-space rectangle S with two labelled set circles (overlapping, disjoint or nested) and per-region highlighting"
+  },
+  {
+   "figure_id": "b04439:2",
+   "src": "tikzpicture/425af81fda2eebd0900276cd0611b963.png",
+   "ref": null,
+   "printed_page": 481,
+   "reason": "Venn diagram of two disjoint events A and B inside sample space S (the 'no overlap, so A and B is empty' case). No kind can draw set circles inside a sample-space box or show that the intersection region is empty.",
+   "needed_kind": "venn_diagram: a sample-space rectangle S with two labelled set circles (overlapping, disjoint or nested) and per-region highlighting"
+  },
+  {
+   "figure_id": "b04439:3",
+   "src": "tikzpicture/6e450064da0f95f67b5b6381d6e02a2a.png",
+   "ref": null,
+   "printed_page": 481,
+   "reason": "Venn diagram with set B nested wholly inside set A inside sample space S. No kind draws set circles in a sample-space box or conveys containment of one event in another.",
+   "needed_kind": "venn_diagram: a sample-space rectangle S with two labelled set circles (overlapping, disjoint or nested) and per-region highlighting"
+  },
+  {
+   "figure_id": "b04439:4",
+   "src": "tikzpicture/e9e323af04473efebfe0fef9417543e9.png",
+   "ref": null,
+   "printed_page": 481,
+   "reason": "Venn diagram of A union B: both overlapping circles shaded grey, dotted arc marking the inner overlap boundary, label A union B, inside sample-space box S. Needs region shading and dotted outlines, which no kind provides.",
+   "needed_kind": "venn_diagram with shaded regions (union highlighted) and dotted boundary segments inside a sample-space rectangle"
+  },
+  {
+   "figure_id": "b04439:5",
+   "src": "tikzpicture/8b8db10b13d9cfbbd3d28dcbe5b46c9c.png",
+   "ref": null,
+   "printed_page": 481,
+   "reason": "Venn diagram of A union B for two disjoint events: both separate circles shaded grey, labelled A union B, inside sample space S. Shaded set regions in a sample-space box cannot be drawn by any kind.",
+   "needed_kind": "venn_diagram with shaded regions (union highlighted) inside a sample-space rectangle"
+  },
+  {
+   "figure_id": "b04439:6",
+   "src": "tikzpicture/f0741883bab68a398322e922887bdf92.png",
+   "ref": null,
+   "printed_page": 481,
+   "reason": "Venn diagram of A union B when B is nested in A: the outer circle A shaded grey, B drawn dotted inside it, labelled A union B, inside sample space S. Needs shading and dotted outlines, which no kind offers.",
+   "needed_kind": "venn_diagram with shaded regions (union highlighted) and dotted boundary segments inside a sample-space rectangle"
+  },
+  {
+   "figure_id": "b04439:7",
+   "src": "tikzpicture/177bef6979699d04dfbd5aecc23c31d5.png",
+   "ref": null,
+   "printed_page": 481,
+   "reason": "Venn diagram of A intersection B: both circles dotted, only the lens where they overlap shaded grey and labelled A intersection B, inside sample space S. A shaded lens region cannot be drawn by any kind (geo_scene has no fill or region-intersection).",
+   "needed_kind": "venn_diagram with shaded intersection region (lens) and dotted circle outlines inside a sample-space rectangle"
+  },
+  {
+   "figure_id": "b04439:8",
+   "src": "tikzpicture/ba17ac4beeb710d9f4b00edc65f7d916.png",
+   "ref": null,
+   "printed_page": 481,
+   "reason": "Venn diagram of two disjoint events drawn with dotted circles and nothing shaded, showing that A intersection B is empty, inside sample space S. Dotted set outlines in a sample-space box cannot be drawn by any kind.",
+   "needed_kind": "venn_diagram with dotted circle outlines and an empty-intersection case inside a sample-space rectangle"
+  },
+  {
+   "figure_id": "b04439:9",
+   "src": "tikzpicture/3dedb7c96bd626920bccadc876c2d053.png",
+   "ref": null,
+   "printed_page": 481,
+   "reason": "Venn diagram of A intersection B when B is nested in A: outer circle dotted, inner circle B shaded grey and labelled A intersection B, inside sample space S. Needs shaded regions and dotted outlines, which no kind offers.",
+   "needed_kind": "venn_diagram with shaded intersection region and dotted circle outlines inside a sample-space rectangle"
+  },
+  {
+   "figure_id": "b04440:10",
+   "src": "tikzpicture/4bd17fae44bbde95773717adebeae4e2.png",
+   "ref": "Ex14-4:1",
+   "printed_page": 482,
+   "reason": "Venn diagram with coloured set regions (A yellow, B blue, overlap green, outside grey) and the integers 1 to 15 placed in their regions (10 and 7 in the overlap, 11 in B only, 8 outside, others in A only), labelled A, B and A intersection B. Element placement by region cannot be drawn by any kind.",
+   "needed_kind": "venn_diagram with a sample-space rectangle, two labelled set circles, individual elements placed in each region, and region colouring"
+  },
+  {
+   "figure_id": "b04441:11",
+   "src": "tikzpicture/376d27da23fff90f63f2e37aaff4dffa.png",
+   "ref": "Ex14-4:2",
+   "printed_page": 482,
+   "reason": "Venn diagram with coloured set regions (A yellow, B blue, overlap green, outside grey) and the integers 1 to 15 placed in their regions (3 in A only, 1 and 6 and 15 and others in A only, 12 at the top of the overlap, 8 in B only), labelled A, B and A intersection B. Per-region element placement cannot be drawn by any kind.",
+   "needed_kind": "venn_diagram with a sample-space rectangle, two labelled set circles, individual elements placed in each region, and region colouring"
+  },
+  {
+   "figure_id": "b04506:12",
+   "src": "tikzpicture/f9883307e977ab359123818d30cb6f9e.png",
+   "ref": "Ex14-8:3",
+   "printed_page": 491,
+   "reason": "Venn diagram with coloured set regions (A yellow, B blue, overlap green, outside grey), the integers 1 to 15 placed in their regions, and the label (A union B)' under the circles marking the outside region. Per-region element placement and the complement label cannot be drawn by any kind.",
+   "needed_kind": "venn_diagram with a sample-space rectangle, two labelled set circles, individual elements placed in each region, region colouring, and a complement-region label"
+  }
+ ],
+ "teacher_only": {
+  "seen": 0,
+  "dropped": 0,
+  "reached_claim": 0,
+  "caught_in_claims": 0
+ },
+ "items": [
+  {
+   "ref": "Ex14-4:1",
+   "kind": "exercise",
+   "lo": "lo:g10m14s4-1-2",
+   "stem": "A group of learners are given the following Venn diagram: [figure] The sample space can be described as $\\{n:n\\epsilon\\mathbb{Z},1\\leq n\\leq15\\}$ . They are asked to identify the event set of the intersection between event set $A$ and event set $B$ , also written as $A\\capB$ . They get stuck, and you offer to help them find it. Which set best describes the event set of $A\\capB$ ? $\\{7;10;11\\}$ $\\{1;2;3;4;5;6;7;9;10;11\\}$ $\\{1;2;3;4;5;6;7;9;10\\}$ $\\{7;10\\}$",
+   "answer_type": "choice",
+   "answer": "D",
+   "choices": [
+    {
+     "key": "A",
+     "text": "\\{7;10;11\\}"
+    },
+    {
+     "key": "B",
+     "text": "\\{1;2;3;4;5;6;7;9;10;11\\}"
+    },
+    {
+     "key": "C",
+     "text": "\\{1;2;3;4;5;6;7;9;10\\}"
+    },
+    {
+     "key": "D",
+     "text": "\\{7;10\\}"
+    }
+   ],
+   "marker": null,
+   "solution": [
+    "The intersection between event set $A$ and event set $B$ , also written as $A\\capB$ , can be shaded as follows: [figure] Therefore the event set $\\{7;10\\}$ best describes the event set of $A\\capB$ ."
+   ],
+   "solution_provenance": "book_worked_epub",
+   "printed_answer": "{7; 10}",
+   "epub_final_answer": "Therefore the event set $\\{7;10\\}$ best describes the event set of $A\\cap B$ .",
+   "blind_answer": "$\\{7;10\\}$",
+   "verification": "agreed",
+   "tier": "basic",
+   "printed_page": 482,
+   "shortcode": "2GWK",
+   "verify": {
+    "pairs": [
+     {
+      "pair_id": "Ex14-4:1|blind~printed",
+      "route": "signature",
+      "verdict": "equivalent"
+     },
+     {
+      "pair_id": "Ex14-4:1|blind~book",
+      "route": "judge",
+      "verdict": "equivalent",
+      "reason": "Both give the set {7;10}; the second is only wrapped in a sentence."
+     },
+     {
+      "pair_id": "Ex14-4:1|book~printed",
+      "route": "judge",
+      "verdict": "equivalent",
+      "reason": "Both give {7;10}; the second is only spaced differently."
+     }
+    ]
+   },
+   "typing_problems": [],
+   "unit": null,
+   "options_source": "stem",
+   "not_markable_reason": null,
+   "tier_source": "tier check",
+   "printed_answer_scope": "item",
+   "figures": [
+    "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__4bd17fae44bbde95773717adebeae4e2.png"
+   ],
+   "figures_missing": [],
+   "asked_form": null,
+   "printed_form_defect": null,
+   "form_overridden": null,
+   "form_unsupported": null,
+   "blocked_on_figure": true
+  },
+  {
+   "ref": "Ex14-4:2",
+   "kind": "exercise",
+   "lo": "lo:g10m14s4-1-1",
+   "stem": "A group of learners are given the following Venn diagram: [figure] The sample space can be described as $\\{n:n\\epsilon\\mathbb{Z},1\\leq n\\leq15\\}$ They are asked to identify the event set of the union between event set $A$ and event set $B$ , also written as $A\\cupB$ . They get stuck, and you offer to help them find it. Which set best describes the event set of $A\\cupB$ ? $\\{1;6;7;10;15\\}$ $\\{1;2;4;5;6;7;8;9;10;11;12;13;14;15\\}$ $\\{2;4;5;9;10;11;12;13;14\\}$ $\\{3\\}$",
+   "answer_type": "choice",
+   "answer": "B",
+   "choices": [
+    {
+     "key": "A",
+     "text": "\\{1;6;7;10;15\\}"
+    },
+    {
+     "key": "B",
+     "text": "\\{1;2;4;5;6;7;8;9;10;11;12;13;14;15\\}"
+    },
+    {
+     "key": "C",
+     "text": "\\{2;4;5;9;10;11;12;13;14\\}"
+    },
+    {
+     "key": "D",
+     "text": "\\{3\\}"
+    }
+   ],
+   "marker": null,
+   "solution": [
+    "The union between event set $A$ and event set $B$ , also written as $A\\cupB$ , can be shaded as follows: [figure] Therefore the event set $\\{1;2;4;5;6;7;8;9;10;11;12;13;14;15\\}$ best describes the event set of $A\\cupB$ ."
+   ],
+   "solution_provenance": "book_worked_epub",
+   "printed_answer": "{1; 2; 4; 5; 6; 7; 8; 9; 10; 11; 12; 13; 14; 15}",
+   "epub_final_answer": "Therefore the event set $\\{1;2;4;5;6;7;8;9;10;11;12;13;14;15\\}$ best describes the event set of $A\\cup B$ .",
+   "blind_answer": "$\\{1;2;4;5;6;7;8;9;10;11;12;13;14;15\\}$",
+   "verification": "agreed",
+   "tier": "standard",
+   "printed_page": 482,
+   "shortcode": "2GWM",
+   "verify": {
+    "pairs": [
+     {
+      "pair_id": "Ex14-4:2|blind~printed",
+      "route": "signature",
+      "verdict": "equivalent"
+     },
+     {
+      "pair_id": "Ex14-4:2|blind~book",
+      "route": "judge",
+      "verdict": "equivalent",
+      "reason": "Both give {1;2;4;5;6;7;8;9;10;11;12;13;14;15}; the second is only wrapped in a sentence."
+     },
+     {
+      "pair_id": "Ex14-4:2|book~printed",
+      "route": "judge",
+      "verdict": "equivalent",
+      "reason": "Both give the same 14-element set, differing only in spacing."
+     }
+    ]
+   },
+   "typing_problems": [],
+   "unit": null,
+   "options_source": "stem",
+   "not_markable_reason": null,
+   "tier_source": "typing",
+   "printed_answer_scope": "item",
+   "figures": [
+    "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__376d27da23fff90f63f2e37aaff4dffa.png"
+   ],
+   "figures_missing": [],
+   "asked_form": null,
+   "printed_form_defect": null,
+   "form_overridden": null,
+   "form_unsupported": null,
+   "blocked_on_figure": true
+  },
+  {
+   "ref": "Ex14-8:3",
+   "kind": "exercise",
+   "lo": "lo:g10m14s4-1-1",
+   "stem": "A group of learners are given the following Venn diagram: [figure] The sample space can be described as $\\{n:n\\epsilon\\mathbb{Z},1\\leq n\\leq15\\}$ . They are asked to identify the event set of the union between event set $A$ and event set $B$ , also written as $A\\cupB$ . They get stuck, and you offer to help them find it. Write down the event set that best describes $A\\cupB$ .",
+   "answer_type": "expression",
+   "answer": "\\{1;2;3;4;5;7;8;9;10;11;12;13;14;15\\}",
+   "choices": null,
+   "marker": {
+    "kind": "values",
+    "key": "\\{1;2;3;4;5;7;8;9;10;11;12;13;14;15\\}",
+    "form": null,
+    "variables": [],
+    "tolerance": null
+   },
+   "solution": [
+    "The union between event set $A$ and event set $B$ , also written as $A\\cupB$ , can be shaded as follows: [figure] Therefore the event set $\\{1;2;3;4;5;7;8;9;10;11;12;13;14;15\\}$ best describes the event set of $A\\cupB$ ."
+   ],
+   "solution_provenance": "book_worked_epub",
+   "printed_answer": "{1; 2; 3; 4; 5; 7; 8; 9; 10; 11; 12; 13; 14; 15}",
+   "epub_final_answer": "Therefore the event set $\\{1;2;3;4;5;7;8;9;10;11;12;13;14;15\\}$ best describes the event set of $A\\cup B$ .",
+   "blind_answer": "$\\{1;2;3;4;5;7;8;9;10;11;12;13;14;15\\}$",
+   "verification": "agreed",
+   "tier": "standard",
+   "printed_page": 491,
+   "shortcode": "2GX5",
+   "verify": {
+    "pairs": [
+     {
+      "pair_id": "Ex14-8:3|blind~printed",
+      "route": "signature",
+      "verdict": "equivalent"
+     },
+     {
+      "pair_id": "Ex14-8:3|blind~book",
+      "route": "judge",
+      "verdict": "equivalent",
+      "reason": "Both give {1;2;3;4;5;7;8;9;10;11;12;13;14;15}; the second is only wrapped in a sentence."
+     },
+     {
+      "pair_id": "Ex14-8:3|book~printed",
+      "route": "judge",
+      "verdict": "equivalent",
+      "reason": "Both give the same 14-element set, differing only in spacing."
+     }
+    ]
+   },
+   "typing_problems": [],
+   "unit": null,
+   "options_source": null,
+   "not_markable_reason": null,
+   "tier_source": "typing",
+   "printed_answer_scope": "item",
+   "figures": [
+    "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__f9883307e977ab359123818d30cb6f9e.png"
+   ],
+   "figures_missing": [],
+   "asked_form": null,
+   "printed_form_defect": null,
+   "form_overridden": null,
+   "form_unsupported": null,
+   "blocked_on_figure": true
+  }
+ ],
+ "source_run": {
+  "prompts_version": "lesson-v8",
+  "stage": "S2-S4,S8",
+  "collect_version": "collect-6",
+  "embedded": {
+   "source": "runbook/lesson.workflow.js",
+   "source_sha256": "a4df6336258cfde8275ef865541baa15d403cc530c79af13f51f2e89145abaab",
+   "args_sha256": "5eca8802c2cc5eaa750bba8e03e0195fae83db448a9f79ee0dcfbb3561a0c70e",
+   "generated_sha256": "7f273925a66c662dd17ca24b6733d9d448f50a70df6be5fb3cb042a9c37ce098",
+   "generator": "services/extraction/embed_workflow.py v1"
+  }
+ },
+ "draft": true,
+ "pending_g2": [],
+ "checks": {
+  "verify": {
+   "disagreements": [],
+   "unchecked": [],
+   "off_task": [],
+   "no_printed_answer": [],
+   "typing_problems": [],
+   "printed_not_in_asked_form": [],
+   "forms_from_book_rules": [],
+   "forms_the_marker_cannot_check": [],
+   "retyped": [],
+   "tier_checks": [
+    {
+     "ref": "Ex14-4:1",
+     "typing": "standard",
+     "check": "basic"
+    }
+   ]
+  },
+  "oracle": {
+   "tally": {
+    "claims": 6,
+    "questions": 3,
+    "worked_examples_kept_as_teaching": 0,
+    "by_objective": [
+     {
+      "lo": "lo:g10m14s4-1-1",
+      "claims": 3,
+      "items": 2
+     },
+     {
+      "lo": "lo:g10m14s4-1-2",
+      "claims": 3,
+      "items": 1
+     }
+    ]
+   },
+   "verdict": "GREEN",
+   "subheadings": [
+    {
+     "anchor": "EMA7Z",
+     "status": "covered",
+     "missing_items": []
+    }
+   ]
+  },
+  "counts": {
+   "claims": 6,
+   "claims_dropped": 0,
+   "items": 3,
+   "worked_examples": 0,
+   "exercises": 3,
+   "by_answer_type": {
+    "choice": 2,
+    "expression": 1
+   },
+   "by_solution_provenance": {
+    "book_worked_epub": 3
+   },
+   "by_verification": {
+    "agreed": 3
+   },
+   "visuals": 0,
+   "viz_gaps": 12,
+   "figure_blocked": 3,
+   "unmapped_worked_examples": 0
+  },
+  "claims_dropped": [],
+  "figure_blocked": [
+   "Ex14-4:1",
+   "Ex14-4:2",
+   "Ex14-8:3"
+  ]
+ }
+}

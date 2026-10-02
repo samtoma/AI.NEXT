@@ -1,0 +1,62 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m8s4-1-2:plot-endpoint",
+ "lo_id": "lo:g10m8s4-1-2",
+ "parent_question_id": "q:g10m8s4-1-2:ex8-5-4",
+ "tier": "basic",
+ "kind": "pair_plotter",
+ "instances": [
+  {
+   "Ax": 1,
+   "Ay": 4,
+   "Mx": 2,
+   "My": 1,
+   "Bx": 3,
+   "By": -2
+  },
+  {
+   "Ax": -3,
+   "Ay": 2,
+   "Mx": -1,
+   "My": -1,
+   "Bx": 1,
+   "By": -4
+  },
+  {
+   "Ax": 4,
+   "Ay": -3,
+   "Mx": 0,
+   "My": 0,
+   "Bx": -4,
+   "By": 3
+  },
+  {
+   "Ax": -2,
+   "Ay": -4,
+   "Mx": -3,
+   "My": -1,
+   "Bx": -4,
+   "By": 2
+  }
+ ],
+ "spec": {
+  "target": [
+   "{=Bx}",
+   "{=By}"
+  ]
+ },
+ "stem": "$M({=Mx}, {=My})$ is the mid-point of $AB$. Given $A({=Ax}, {=Ay})$, plot the other end point $B$.",
+ "solution": [
+  "Write the mid-point formula for each coordinate: $M_x = \\dfrac{A_x + B_x}{2}$ and $M_y = \\dfrac{A_y + B_y}{2}$.",
+  "Multiply both sides by 2 first: $2M_x = A_x + B_x$ and $2M_y = A_y + B_y$.",
+  "Solve for the unknown end point: $B_x = 2M_x - A_x$ and $B_y = 2M_y - A_y$.",
+  "Plot $B(B_x, B_y)$."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "off-target",
+   "misconception_id": "mc:g10m8s4-1-2:averages-known-point-with-midpoint"
+  }
+ ],
+ "notes": "Rows keep B on a whole-number lattice point within ±5. Neither misconception has a clean swap/sign-flip signature (working the algebra through, averaging-with-M gives B'=(3A+B)/4 and skipping the ×2 gives B'=(B-A)/2 shifted from M — both land on an unpredictable point relative to the true B), so both are mapped to the generic off-target predicate, averaging-with-M ranked first as the more common slip.\n\nPIPELINE NORMALISATION (not an author edit): drop-duplicate-predicate: kept the first mapping of each predicate, dropped off-target → mc:g10m8s4-1-2:skips-multiply-by-two-step."
+}

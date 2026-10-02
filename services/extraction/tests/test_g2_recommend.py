@@ -1,0 +1,1522 @@
+"""The G2 recommendation run (answers 37a and 42): g2_recommend.py and runbook/g2-recommend.workflow.js.
+
+    AINEXT_TEST_PG="host=127.0.0.1 port=5432" uv run --with pytest python -m pytest -q tests/test_g2_recommend.py
+
+No model is called. What is proved:
+  * WHICH ITEMS owe a recommendation: the ones the checks HELD (a three-way disagreement) or EXCLUDED (a typing problem), in book
+    order, and never an item the rule accepts, a teaching item, or one a person decided; the packet is the same however often
+    it is built, and whether or not a recommendation has already been applied;
+  * the WORKFLOW under the stub runtime: one recommending agent per batch, one independent verifying agent per batch of
+    verdicts that would go live (never for an exclude, a hold or a teaching-only retype), the verifier never sees the
+    recommender's reasoning or the blind answer, a batch answered in part is asked again once, a dead agent leaves
+    its items without a verdict, the classes the prompt offers are the classes the collector knows;
+  * the COLLECTOR's policy: a verdict that would put a question live must quote the book, leave the item well formed for the
+    pipeline's own models, be the book's answer re-typed, be readable by the app's marker and be confirmed by the verifier —
+    anything else is recommended hold (or exclude, where the item's typed shape is unusable) with the reason; an exclude may
+    carry the agent's own derivation (never applied); a stem repair is flagged and small; nothing here edits a G2 file;
+  * the file reaches G2 through auto_pass_gates.g2_merge and assemble_objectives.lesson_runs exactly like the pilot's
+    recommendations did (fields applied, auto stamp, `stem_fix_by`), and the commands it prints name the right files.
+
+@covers FR-4302
+"""
+
+from __future__ import annotations
+
+import copy
+import json
+import re
+import shutil
+import subprocess
+import sys
+import tempfile
+import unittest
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+EX = HERE.parent
+for p in (str(EX), str(HERE)):
+    if p not in sys.path:
+        sys.path.insert(0, p)
+
+import auto_pass_gates as A  # noqa: E402
+import book_config  # noqa: E402
+import embed_workflow  # noqa: E402
+import g2_recommend as G  # noqa: E402
+
+NODE = shutil.which("node")
+STUB = HERE / "workflow_stub.mjs"
+WORKFLOW = EX / "runbook" / "g2-recommend.workflow.js"
+
+
+# ---------------------------------------------------------------------------------------------- a synthetic chapter
+def pairs(ref: str, bp="different", bb="missing", bk="missing") -> dict:
+    return {"pairs": [{"pair_id": f"{ref}|blind~printed", "route": "judge", "verdict": bp, "reason": "values differ"},
+                      {"pair_id": f"{ref}|blind~book", "route": "judge", "verdict": bb},
+                      {"pair_id": f"{ref}|book~printed", "route": "judge", "verdict": bk}]}
+
+
+def item(ref: str, **kw) -> dict:
+    d = {"ref": ref, "kind": "exercise", "lo": "lo:g10m9s1-1-1", "stem": "Simplify: $x\\cdot x$", "answer_type": "expression",
+         "answer": "x^{2}", "choices": None,
+         "marker": {"kind": "expression", "key": "x^{2}", "form": None, "variables": ["x"], "tolerance": None},
+         "solution": ["$x\\cdot x=x^{2}$"], "solution_provenance": "book_worked_epub", "printed_answer": "x2",
+         "epub_final_answer": "$x^{2}$", "blind_answer": "BLIND-MARK-77", "verification": "disputed", "tier": "basic",
+         "printed_page": 10, "shortcode": None, "typing_problems": [], "verify": pairs(ref, bk="equivalent"), "figures": []}
+    d.update(kw)
+    return d
+
+
+FOURTEEN = [{"key": "ABCDE"[i % 5] if i < 5 else "", "text": f"n{i}"} for i in range(14)]
+
+
+def make_run() -> tuple[dict, dict]:
+    items = [
+        item("Ex9-1:1"),                                                                       # held: blind differs, the book's key is right
+        item("Ex9-1:2", answer_type="numeric", answer="\\frac{1}{2}", marker=None, verification="agreed",
+             printed_answer="1 2", epub_final_answer="$\\frac{1}{2}$", blind_answer="\\frac{1}{2}", stem="Simplify: $\\frac{2}{4}$",
+             solution=["$\\frac{2}{4}=\\frac{1}{2}$"], typing_problems=['numeric key "\\frac{1}{2}" is not a number'],
+             verify=pairs("Ex9-1:2", "equivalent", "equivalent", "equivalent")),            # excluded: a fraction typed numeric
+        item("Ex9-1:3", answer_type="choice", answer=None, marker=None, choices=FOURTEEN, options_source="stem",
+             stem="Which of n0 ... n13 are non-real? [list]", solution=["Only n3 is non-real."], printed_answer="n3",
+             epub_final_answer="Only n3 is non-real.", typing_problems=["a choice needs 2–5 options, not 14"]),   # excluded: a list to select from
+        item("Ex9-1:4", verification="no_printed_answer", printed_answer=None, verify={"pairs": []}),       # the rule accepts it
+        item("Ex9-1:5", answer_type="not_markable", answer=None, marker=None, not_markable_reason="a sketch",
+             verification="no_printed_answer", printed_answer=None, verify={"pairs": []}),                 # teaching: no verdict owed
+        item("Ex9-1:6"),                                                                       # a person decided this one
+        item("Ex9-1:7", answer_type="choice", answer=None, marker=None, options_source="lesson",
+             stem="State whether $3$ is rational or irrational. If rational, state whether it is a natural number, whole number or an integer.",
+             choices=[{"key": "A", "text": "irrational"}, {"key": "B", "text": "rational, integer"},
+                      {"key": "C", "text": "rational, integer, whole number and natural number"}],
+             printed_answer="rational, an integer, a whole number and a natural number", epub_final_answer=None,
+             solution=["$3$ is rational, an integer, a whole number and a natural number."],
+             typing_problems=["a choice needs 2–5 options with the key among them"], verify=pairs("Ex9-1:7", "equivalent")),
+    ]
+    verify = {"disagreements": [{"ref": "Ex9-1:1"}, {"ref": "Ex9-1:6"}],
+              "typing_problems": [{"ref": "Ex9-1:2", "problems": items[1]["typing_problems"]},
+                                  {"ref": "Ex9-1:3", "problems": items[2]["typing_problems"]},
+                                  {"ref": "Ex9-1:7", "problems": items[6]["typing_problems"]}],
+              "no_printed_answer": [{"ref": "Ex9-1:4", "agreed_with_book_solution": True},
+                                    {"ref": "Ex9-1:5", "agreed_with_book_solution": False}]}
+    run = {"stage": "S2-S4,S8", "lessons": [{"lesson": "g10m9s1-1", "items": items, "verify": verify}]}
+    g2 = {"by": "auto-pass G2 (AI recommendation)", "auto": True,
+          "items": {"g10m9s1-1:Ex9-1:6": {"verdict": "hold", "by": "Samuel Toma", "note": "I will look"}}}
+    return run, g2
+
+
+def entries_of(run=None, g2=None) -> list[dict]:
+    r, g = make_run()
+    return G.recommendable([run or r], 9, "g10m", g2 if g2 is not None else g)
+
+
+def by_key(entries) -> dict:
+    return {e["key"]: e for e in entries}
+
+
+def rec(verdict="accept", klass="book answer confirmed", conf="high", note="checked", **kw) -> dict:
+    d = {"verdict": verdict, "class": klass, "confidence": conf, "note": note}
+    d.update(kw)
+    return d
+
+
+CONFIRMED = {"verdict": "confirmed", "own_answer": "x^2", "other_correct_answers": False, "note": "ok"}
+NO_MARKER = staticmethod(lambda rows: {})
+
+
+def collect(entries, results: dict, **kw) -> dict:
+    """results: {key: (rec, ver)} -> the recommendation file, with the app's marker faked (or real when NODE and asked)."""
+    run = {"results": [{"key": k, "state": by_key(entries)[k]["state"], "rec": r, "ver": v} for k, (r, v) in results.items()]}
+    return G.collect(entries, [run], marker_fn=kw.pop("marker_fn", lambda rows: {}), identity_fn=kw.pop("identity_fn", lambda rows: {}), **kw)
+
+
+# ---------------------------------------------------------------------------------------------- which items, the packet
+class WhichItems(unittest.TestCase):
+    def test_held_and_excluded_only_in_book_order(self):
+        es = entries_of()
+        self.assertEqual([e["key"] for e in es], ["g10m9s1-1:Ex9-1:1", "g10m9s1-1:Ex9-1:2", "g10m9s1-1:Ex9-1:3", "g10m9s1-1:Ex9-1:7"])
+        self.assertEqual({e["ref"]: e["state"] for e in es},
+                         {"Ex9-1:1": "held", "Ex9-1:2": "excluded", "Ex9-1:3": "excluded", "Ex9-1:7": "excluded"})
+
+    def test_never_the_rule_accepted_the_teaching_or_a_persons_item(self):
+        keys = {e["key"] for e in entries_of()}
+        self.assertNotIn("g10m9s1-1:Ex9-1:4", keys, "no printed answer and the re-solve agreed: the rule accepts it")
+        self.assertNotIn("g10m9s1-1:Ex9-1:5", keys, "typed not markable: teaching, no verdict owed")
+        self.assertNotIn("g10m9s1-1:Ex9-1:6", keys, "a human's verdict stands")
+
+    def test_an_auto_verdict_is_not_a_decision_so_the_same_items_come_back(self):
+        r, g = make_run()
+        g["items"]["g10m9s1-1:Ex9-1:1"] = {"verdict": "accept", "auto": True, "by": "auto-pass G2 (AI recommendation)"}
+        g["items"]["g10m9s1-1:Ex9-1:2"] = {"verdict": "fix", "by": "auto-pass G2 (AI recommendation)", "auto": True}
+        self.assertEqual([e["key"] for e in G.recommendable([r], 9, "g10m", g)], [e["key"] for e in entries_of()],
+                         "building the packet after a recommendation was applied gives the same packet")
+
+    def test_the_chapter_filter(self):
+        r, g = make_run()
+        self.assertEqual(G.recommendable([r], 8, "g10m", g), [])
+
+    def test_the_packet_and_its_hash(self):
+        es = entries_of()
+        book = book_config.load_book("g10-math")
+        a = G.build_args(book, 9, es)
+        self.assertEqual((a["stage"], a["prompts_version"], a["batch"], a["verify_batch"], a["model"], a["effort"]),
+                         ("G2R", "g2rec-v1", 8, 8, "sonnet", "high"))
+        self.assertEqual([x["key"] for x in a["items"]], [e["key"] for e in es])
+        self.assertEqual(a["items_sha256"], G.items_sha256(es))
+        self.assertEqual(G.items_sha256(es), G.items_sha256(copy.deepcopy(es)))
+        changed = copy.deepcopy(es)
+        changed[0]["item"]["stem"] += " (changed)"
+        self.assertNotEqual(G.items_sha256(changed), a["items_sha256"], "a changed item is a different packet")
+        it = a["items"][0]["item"]
+        self.assertEqual(set(it), set(G.PROMPT_FIELDS) | {"pairs"}, "a prompt gets what it needs of an item and nothing else")
+        self.assertEqual(it["pairs"][0], {"p": "blind~printed", "v": "different", "r": "values differ"})
+
+    def test_parts_are_whole_batches(self):
+        es = [{"key": str(i), "state": "held", "lesson": "g10m9s1-1", "ref": str(i), "item": {}} for i in range(70)]
+        parts = G.split_parts(es, batch=8, max_batches=4)
+        self.assertEqual([len(p) for p in parts], [32, 32, 6])
+        self.assertEqual(G.part_path(Path("w/g2rec-ch01.workflow.js"), 1).name, "g2rec-ch01.workflow.js")
+        self.assertEqual(G.part_path(Path("w/g2rec-ch01.workflow.js"), 3).name, "g2rec-ch01.part3.workflow.js")
+
+    def test_the_estimate_is_modelled_and_ordered(self):
+        e = G.estimate(82)
+        self.assertEqual((e["recommend_agents"], e["verify_agents_max"], e["agents"]), (11, 11, 22),
+                         "one verifying agent per batch that has an accept or a fix, at most")
+        self.assertLess(e["usd_low"], e["usd_high"])
+
+
+# ---------------------------------------------------------------------------------------------- the checks on a typed shape
+class TypedShape(unittest.TestCase):
+    def setUp(self):
+        self.it = item("Ex9-1:2", answer_type="numeric", answer="\\frac{1}{2}", marker=None)
+
+    def test_a_fraction_typed_numeric_is_typed_expression_like_the_pilots_fix(self):
+        f, probs = G.typed_fields(self.it, {"answer_type": "expression", "key": "\\frac{1}{2}", "marker_kind": "expression", "variables": []})
+        self.assertEqual(probs, [])
+        self.assertEqual(f, {"answer_type": "expression",
+                             "marker": {"kind": "expression", "key": "\\frac{1}{2}", "form": None, "variables": [], "tolerance": None}})
+        # the pilot's 35c fix: answer_type, answer, marker (here `answer` already equals the key, so only the changes remain)
+
+    def test_a_numeric_key_is_one_number(self):
+        _, probs = G.typed_fields(self.it, {"answer_type": "numeric", "key": "\\frac{1}{2}"})
+        self.assertTrue(any("ONE number" in p for p in probs))
+        f, probs = G.typed_fields(self.it, {"answer_type": "numeric", "key": "1,49"})
+        self.assertEqual((probs, f["answer"]), ([], "1,49"))
+
+    def test_the_books_asked_form_wins_and_prime_factors_is_refused(self):
+        it = item("Ex9-1:9", asked_form="factorised")
+        f, _ = G.typed_fields(it, {"answer_type": "expression", "key": "(x+1)(x-1)", "marker_kind": "expression", "form": "expanded"})
+        self.assertEqual(f["marker"]["form"], "factorised")
+        _, probs = G.typed_fields(item("Ex9-1:9", asked_form="prime_factors"),
+                                  {"answer_type": "expression", "key": "11\\times13", "marker_kind": "expression"})
+        self.assertTrue(any("prime factors" in p for p in probs))
+
+    def test_the_raised_dot_is_multiplication(self):
+        _, probs = G.typed_fields(item("Ex9-1:9", raised_dot=True),
+                                  {"answer_type": "expression", "key": "2.3^{x}", "marker_kind": "expression"})
+        self.assertTrue(any("raised dot" in p for p in probs))
+
+    def test_several_true_categories_become_a_choice_with_less_specific(self):
+        it = by_key(entries_of())["g10m9s1-1:Ex9-1:7"]["item"]
+        fix = {"answer_type": "choice", "key": "natural number", "options_source": "stem",
+               "options": ["irrational", "rational", "integer", "whole number", "natural number"],
+               "less_specific": ["rational", "integer", "whole number"]}
+        f, probs = G.typed_fields(it, fix)
+        self.assertEqual(probs, [])
+        self.assertEqual((f["answer"], f["less_specific"], f["options_source"]), ("E", ["B", "C", "D"], "stem"))
+        self.assertEqual([c["key"] for c in f["choices"]], list("ABCDE"))
+        self.assertEqual(G.structural_problems({**it, **f}, "fix"), [], "the pipeline's own models take it")
+
+    def test_a_choice_fix_cannot_invent_its_options(self):
+        it = by_key(entries_of())["g10m9s1-1:Ex9-1:7"]["item"]
+        _, p = G.typed_fields(it, {"answer_type": "choice", "key": "rational", "options": ["rational", "irrational"]})
+        self.assertTrue(any("where its options come from" in x for x in p))
+        _, p = G.typed_fields(it, {"answer_type": "choice", "key": "x", "options": ["rational", "irrational"], "options_source": "stem"})
+        self.assertTrue(any("not the text of one of the options" in x for x in p))
+        _, p = G.typed_fields(it, {"answer_type": "choice", "key": "rational", "options": ["rational", "irrational", "x"] * 3,
+                                   "options_source": "stem"})
+        self.assertTrue(any("2–5 options" in x for x in p) or any("repeat" in x for x in p))
+        f, _ = G.typed_fields(it, {"answer_type": "choice", "key": "real", "options": ["real", "non-real"], "options_source": "stem"})
+        self.assertTrue(any("not all in the stem" in x for x in G.structural_problems({**it, **f}, "fix")),
+                        "a 'stem' option the stem does not contain is the typing agent's invention")
+        _, p = G.typed_fields(it, {"answer_type": "choice", "key": "rational", "options": ["rational", "irrational"],
+                                   "options_source": "figure"})
+        self.assertTrue(any("no figure" in x for x in p))
+        f, _ = G.typed_fields(it, {"answer_type": "choice", "key": "rational", "options": ["rational", "9", "irrational"],
+                                   "options_source": "lesson"})
+        self.assertTrue(any("closed set" in x for x in G.structural_problems({**it, **f}, "fix")),
+                        "a number among the options of a lesson's closed set is invented")
+
+    def test_the_key_is_not_a_less_specific_option(self):
+        it = by_key(entries_of())["g10m9s1-1:Ex9-1:7"]["item"]
+        _, p = G.typed_fields(it, {"answer_type": "choice", "key": "rational", "options": ["rational", "irrational"],
+                                   "options_source": "stem", "less_specific": ["rational"]})
+        self.assertTrue(any("most specific" in x for x in p))
+
+    def test_not_markable_and_answer_only(self):
+        f, p = G.typed_fields(self.it, {"answer_type": "not_markable", "not_markable_reason": "several points in one answer"})
+        self.assertEqual((p, f["answer_type"], f["answer"]), ([], "not_markable", None))
+        _, p = G.typed_fields(self.it, {"answer_type": "not_markable"})
+        self.assertTrue(any("reason" in x for x in p))
+        f, _ = G.typed_fields(item("Ex9-1:1"), {"answer_type": "expression", "key": "x^{2}", "marker_kind": "expression",
+                                                "variables": ["x"], "answer_only": True})
+        self.assertTrue(f["answer_only"])
+        self.assertTrue(any("blind~printed" in x or "agreed" in x for x in G.structural_problems({**item("Ex9-1:1"), **f}, "fix")),
+                        "answer_only needs the printed answer and the blind re-solve to agree (decision 43)")
+
+    def test_a_stem_repair_is_small_and_keeps_the_figure(self):
+        it = item("Ex9-1:8", stem="Simplify: $\\frac{a-4}{a+5a+4}$ [figure]")
+        f, p = G.typed_fields(it, {"stem": "Simplify: $\\frac{a-4}{a^2+5a+4}$ [figure]"})
+        self.assertEqual((p, list(f)), ([], ["stem"]), "no typing named: the typing stays and only the stem changes")
+        _, p = G.typed_fields(it, {"stem": "Rewrite the whole question in a completely different way, please"})
+        self.assertTrue(any("rewritten" in x for x in p))
+        _, p = G.typed_fields(it, {"stem": "Simplify: $\\frac{a-4}{a^2+5a+4}$"})
+        self.assertTrue(any("[figure]" in x for x in p))
+        _, p = G.typed_fields(it, {})
+        self.assertTrue(any("nothing else to change" in x for x in p))
+
+    def test_a_repair_alone_keeps_the_choice_flags(self):
+        it = item("Ex9-1:8", answer_type="choice", answer="B", marker=None, options_source="stem", less_specific=["A"],
+                  choices=[{"key": "A", "text": "trapezium"}, {"key": "B", "text": "isosceles trapezium"}],
+                  stem="What is $ABCD$? trapezium isosceles trapezium")
+        f, _ = G.typed_fields(it, {"stem": "What is $ABCD$ ? trapezium isosceles trapezium"})
+        self.assertNotIn("less_specific", f, "the stem repair does not clear the less_specific options")
+
+    def test_the_quote_is_the_books(self):
+        it = item("Ex9-1:1")
+        self.assertTrue(G.grounded(it, "x^{2}"))
+        self.assertTrue(G.grounded(it, "$x\\cdot x = x^{2}$"), "spacing and $ are not part of a quote")
+        self.assertTrue(G.grounded(it, "x2"), "the printed answer is a book source too")
+        self.assertFalse(G.grounded(it, "x^{3}"))
+        self.assertFalse(G.grounded(it, ""))
+
+
+# ---------------------------------------------------------------------------------------------- the policy
+class Policy(unittest.TestCase):
+    def setUp(self):
+        self.es = entries_of()
+        self.k1, self.k2, self.k3, self.k7 = ("g10m9s1-1:Ex9-1:" + n for n in "1237")
+
+    def one(self, key, r, v=None, **kw):
+        doc = collect(self.es, {key: (r, v)}, **kw)
+        return doc["items"].get(key), doc
+
+    def test_accept_needs_a_book_quote_and_the_verifier(self):
+        e, doc = self.one(self.k1, rec(book_quote="x^{2}"), CONFIRMED)
+        self.assertEqual((e["verdict"], e["confidence"], e["class"]), ("accept", "high", "book answer confirmed"))
+        self.assertEqual(e["verified"]["verdict"], "confirmed")
+        self.assertIn("Verified independently", e["note"])
+        self.assertNotIn("fields", e)
+        self.assertEqual(doc["report"]["live"], [self.k1])
+
+    def test_no_quote_or_a_quote_the_book_does_not_hold_is_not_live(self):
+        e, _ = self.one(self.k1, rec(), CONFIRMED)
+        self.assertEqual((e["verdict"], e["class"]), ("hold", "not grounded"))
+        self.assertEqual(e["confidence"], "low")
+        e, doc = self.one(self.k1, rec(book_quote="x^{5}"), CONFIRMED)
+        self.assertEqual((e["verdict"], e["class"]), ("hold", "not grounded"))
+        self.assertIn("NOT RECOMMENDED LIVE", e["note"])
+        self.assertIn(self.k1, doc["report"]["not_live"])
+
+    def test_the_verifier_has_the_last_word_on_anything_that_would_go_live(self):
+        for ver, why in ((None, "gave no answer"),
+                         ({**CONFIRMED, "verdict": "wrong", "own_answer": "x^3", "note": "the book has a sign wrong"}, "said wrong"),
+                         ({**CONFIRMED, "verdict": "unsure"}, "said unsure"),
+                         ({**CONFIRMED, "other_correct_answers": True}, "another answer is also correct")):
+            e, _ = self.one(self.k1, rec(book_quote="x^{2}"), ver)
+            self.assertEqual((e["verdict"], e["class"]), ("hold", "unconfirmed"), why)
+            self.assertIn(why.split()[-1], e["note"] + e["why_low"] + (why if ver is None else ""))
+
+    def test_an_item_already_excluded_stays_excluded_when_nothing_confirms_it(self):
+        e, _ = self.one(self.k2, rec("fix", "typing error", book_quote="\\frac{1}{2}",
+                                     fix={"answer_type": "expression", "key": "\\frac{1}{2}", "marker_kind": "expression"}), None)
+        self.assertEqual((e["verdict"], e["class"]), ("exclude", "unconfirmed"),
+                         "a held item falls back to hold; an excluded one to exclude (its typed shape may be unusable)")
+
+    def test_a_fix_carries_the_pilots_fields_and_the_book_quote(self):
+        fix = {"answer_type": "expression", "key": "\\frac{1}{2}", "marker_kind": "expression", "form": "", "variables": []}
+        e, _ = self.one(self.k2, rec("fix", "typing error", book_quote="\\frac{1}{2}", fix=fix), CONFIRMED)
+        self.assertEqual(e["verdict"], "fix")
+        self.assertEqual(e["fields"]["answer_type"], "expression")
+        self.assertEqual(e["fields"]["marker"]["key"], "\\frac{1}{2}")
+        self.assertNotIn("stem_fix_by", e)
+
+    def test_a_fix_must_be_the_quoted_answer_retyped(self):
+        fix = {"answer_type": "expression", "key": "\\frac{1}{3}", "marker_kind": "expression"}
+        e, _ = self.one(self.k2, rec("fix", "typing error", book_quote="\\frac{1}{2}", fix=fix), CONFIRMED)
+        self.assertEqual((e["verdict"], e["class"]), ("exclude", "not grounded"), "a key from nowhere is never a fix")
+
+    def test_a_fix_the_pipeline_refuses_is_not_live(self):
+        e, _ = self.one(self.k2, rec("fix", "typing error", book_quote="\\frac{1}{2}", fix={"answer_type": "numeric", "key": "\\frac{1}{2}"}),
+                        CONFIRMED)
+        self.assertEqual((e["verdict"], e["class"]), ("exclude", "refused"))
+        self.assertIn("ONE number", e["note"])
+
+    def test_an_accept_of_a_shape_the_pipeline_cannot_emit_is_refused(self):
+        e, _ = self.one(self.k3, rec(book_quote="Only n3 is non-real"), CONFIRMED)
+        self.assertEqual((e["verdict"], e["class"]), ("exclude", "refused"), "14 options and no key: not a choice")
+        e, _ = self.one(self.k7, rec(book_quote="a natural number"), CONFIRMED)
+        self.assertEqual((e["verdict"], e["class"]), ("exclude", "refused"), "invented options are not accepted by an accept")
+
+    def test_compound_categories_with_less_specific_are_a_live_fix(self):
+        fix = {"answer_type": "choice", "key": "natural number", "options_source": "stem",
+               "options": ["irrational", "rational", "integer", "whole number", "natural number"],
+               "less_specific": ["rational", "integer", "whole number"]}
+        e, _ = self.one(self.k7, rec("fix", "compound answer", "low", why_low="the option set is a policy call",
+                                     book_quote="a whole number and a natural number", fix=fix), CONFIRMED)
+        self.assertEqual((e["verdict"], e["confidence"]), ("fix", "low"))
+        self.assertEqual((e["fields"]["answer"], e["fields"]["less_specific"]), ("E", ["B", "C", "D"]))
+        self.assertIn("your call", "your call" if e["why_low"] else "")
+
+    def test_an_exclude_may_carry_the_agents_derivation_and_it_is_never_applied(self):
+        e, doc = self.one(self.k1, rec("exclude", "book error", note="the book drops a power",
+                                       correct_answer="x^{3}", defect="the book's last line"))
+        self.assertEqual(e["verdict"], "exclude")
+        self.assertEqual(e["if_corrected"]["answer"], "x^{3}")
+        self.assertIn("NOT APPLIED", e["if_corrected"]["status"])
+        self.assertNotIn("fields", e)
+        self.assertEqual(doc["report"]["corrections_proposed"], [self.k1])
+
+    def test_a_hold_of_an_unusable_typed_shape_is_an_exclude(self):
+        e, _ = self.one(self.k3, rec("hold", "marker cannot check", note="x"))
+        self.assertEqual(e["verdict"], "exclude")
+        self.assertIn("cannot be emitted", e["note"])
+        e, _ = self.one(self.k1, rec("hold", "marker cannot check", note="x"))
+        self.assertEqual(e["verdict"], "hold", "a held item with a well-formed shape can be held")
+
+    def test_an_item_whose_form_the_marker_does_not_know_cannot_even_be_held(self):
+        """2026-10-01, Chapter 1: five 'product of prime factors' items recommended `hold` stopped the whole chapter's assembly ("the app's
+        marker rejects these specs: unknown form prime_factors"): the assembly puts the book's asked form on the spec before the marker checks
+        it. Such an item is exclude until the marker knows the form, whatever the agent said."""
+        es = [{"key": "g10m9s1-1:Ex9-1:9", "lesson": "g10m9s1-1", "ref": "Ex9-1:9", "state": "excluded",
+               "item": item("Ex9-1:9", stem="Represent the following as a product of its prime factors: $143$", answer="11\\times13",
+                            marker={"kind": "expression", "key": "11\\times13", "form": None, "variables": [], "tolerance": None},
+                            asked_form="prime_factors", typing_problems=['form "prime_factors" is not one the app\'s marker knows'])}]
+        for verdict in ("hold", "accept"):
+            run = {"results": [{"key": es[0]["key"], "rec": rec(verdict, "marker cannot check", book_quote="11\\times13"), "ver": CONFIRMED}]}
+            e = G.collect(es, [run], marker_fn=lambda r: {}, identity_fn=lambda r: {})["items"][es[0]["key"]]
+            self.assertEqual(e["verdict"], "exclude", verdict)
+            self.assertIn("prime_factors", e["note"])
+
+    def test_a_held_item_whose_spec_the_apps_marker_rejects_is_excluded(self):
+        """A held item is emitted too (held at review), so a spec the app's marker REJECTS would stop the whole chapter's assembly."""
+        e, _ = self.one(self.k1, rec("hold", "needs the page image", note="x"),
+                        marker_fn=lambda rows: {r["id"]: "the app's marker rejects the spec: unknown form" for r in rows})
+        self.assertEqual(e["verdict"], "exclude")
+        self.assertIn("rejects the spec", e["note"])
+        e, _ = self.one(self.k1, rec("hold", "needs the page image", note="x"),
+                        marker_fn=lambda rows: {r["id"]: "the app's marker cannot read the key 'x': nope" for r in rows})
+        self.assertEqual(e["verdict"], "hold", "an unreadable KEY is only held by the assembly (unanswerable), never fatal")
+
+    def test_a_stem_repair_is_small_flagged_and_low_confidence(self):
+        es = [{"key": "g10m9s1-1:Ex9-1:8", "lesson": "g10m9s1-1", "ref": "Ex9-1:8", "state": "held",
+               "item": item("Ex9-1:8", stem="Simplify: $\\frac{a-4}{a+5a+4}$", solution=["$\\frac{a-4}{(a+4)(a+1)}=\\frac{1}{a+4}$"],
+                            printed_answer="1 a+4", epub_final_answer="$=\\frac{1}{a+4}$", answer="\\frac{1}{a+4}",
+                            marker={"kind": "expression", "key": "\\frac{1}{a+4}", "form": None, "variables": ["a"], "tolerance": None})}]
+        run = {"results": [{"key": es[0]["key"], "rec": rec("fix", "item wording", "high", book_quote="\\frac{a-4}{(a+4)(a+1)}",
+                                                            fix={"stem": "Simplify: $\\frac{a-4}{a^2+5a+4}$"}), "ver": CONFIRMED}]}
+        e = G.collect(es, [run], marker_fn=lambda rows: {}, identity_fn=lambda rows: {})["items"][es[0]["key"]]
+        self.assertEqual((e["verdict"], e["confidence"]), ("fix", "low"), "a stem repair is always 'your call'")
+        self.assertEqual(list(e["fields"]), ["stem"])
+        self.assertIn("not Samuel", e["stem_fix_by"])
+        self.assertIn("repaired", e["why_low"])
+        run["results"][0]["rec"]["fix"]["stem"] = "A different question about $a$ entirely, please do it"
+        e = G.collect(es, [run], marker_fn=lambda rows: {}, identity_fn=lambda rows: {})["items"][es[0]["key"]]
+        self.assertEqual((e["verdict"], e["class"]), ("hold", "refused"), "a rewrite is not a repair")
+
+    def test_a_teaching_only_retype_is_not_verified_and_is_low_confidence(self):
+        e, _ = self.one(self.k2, rec("fix", "several parts", "high", fix={"answer_type": "not_markable", "not_markable_reason": "several parts"}))
+        self.assertEqual((e["verdict"], e["confidence"]), ("fix", "low"))
+        self.assertNotIn("verified", e)
+        self.assertEqual(e["fields"]["answer_type"], "not_markable")
+
+    def test_the_apps_marker_has_a_say(self):
+        e, _ = self.one(self.k1, rec(book_quote="x^{2}"), CONFIRMED,
+                        marker_fn=lambda rows: {r["id"]: "the app's marker cannot read the key 'x^{2}': nope" for r in rows})
+        self.assertEqual((e["verdict"], e["class"]), ("hold", "marker cannot check"))
+
+    def test_unanswered_items_are_listed_and_a_prior_file_fills_them(self):
+        doc = collect(self.es, {self.k1: (rec(book_quote="x^{2}"), CONFIRMED)})
+        self.assertEqual(set(doc["unanswered"]), {self.k2, self.k3, self.k7})
+        self.assertEqual(doc["report"]["unanswered"], doc["unanswered"])
+        again = collect(self.es, {self.k2: (rec("exclude", "book error"), None)}, prior=doc)
+        self.assertEqual(set(again["items"]), {self.k1, self.k2}, "keys the new run did not answer keep the earlier recommendation")
+        self.assertEqual(again["items"][self.k1], doc["items"][self.k1])
+
+    def test_off_task_answers_are_ignored_and_a_stale_prompts_version_refused(self):
+        run = {"results": [{"key": "g10m9s1-1:Ex9-1:99", "rec": rec("exclude")}]}
+        self.assertEqual(G.collect(self.es, [run], marker_fn=lambda r: {}, identity_fn=lambda r: {})["report"]["off_task"], ["g10m9s1-1:Ex9-1:99"])
+        with self.assertRaises(G.RecommendError):
+            G.collect(self.es, [{"prompts_version": "g2rec-v0", "results": []}], marker_fn=lambda r: {}, identity_fn=lambda r: {})
+
+    def test_every_entry_is_what_g2_merge_reads(self):
+        doc = collect(self.es, {self.k1: (rec(book_quote="x^{2}"), CONFIRMED), self.k2: (rec("exclude", "book error"), None)})
+        for e in doc["items"].values():
+            self.assertIn(e["verdict"], ("accept", "fix", "hold", "exclude"))
+            self.assertIn(e["confidence"], ("high", "low"))
+            self.assertTrue(e["note"])
+        self.assertIsNone(doc["by"], "unsigned: g2_merge signs every verdict auto-pass G2 (AI recommendation)")
+        self.assertIn("never a review", doc["status"])
+
+
+# ---------------------------------------------------------------------------------------------- the two deterministic oracles
+class Oracles(unittest.TestCase):
+    """The app's own marker as an identity oracle: is the key equal to the expression the stem asks to transform, and to the answer
+    the book states? No model: a verdict an agent would put live is held when the marker says no."""
+
+    def test_which_stems_are_identities(self):
+        self.assertEqual(G.identity_expr("Simplify: $\\dfrac{a}{b}$"), "\\dfrac{a}{b}")
+        self.assertEqual(G.identity_expr("Answer the following: Expand: $(3a-\\dfrac{1}{2a})^2$"), "(3a-\\dfrac{1}{2a})^2")
+        self.assertEqual(G.identity_expr("Factorise the following: $16x^6-3y^8$"), "16x^6-3y^8")
+        self.assertEqual(G.identity_expr("Simplify (assume all denominators are non-zero): $\\dfrac{1}{x}$"), "\\dfrac{1}{x}")
+        self.assertIsNone(G.identity_expr("Solve: $x+1=2$"))
+        self.assertIsNone(G.identity_expr("Simplify $a$ and $b$"), "two segments: not one expression")
+        self.assertIsNone(G.identity_expr("What is $x$?"))
+
+    def test_where_the_book_states_its_answer(self):
+        it = item("Ex9-1:1", epub_final_answer="$=\\frac{1}{a+4}$",
+                  solution=["$\\begin{align*}x&=2\\\\&=\\frac{1}{a+4}\\end{align*}$", "Note restriction: $a\\ne-4$ ."])
+        c = G.book_candidates(it, "\\frac{1}{a+4}")
+        self.assertEqual(c[0], "\\frac{1}{a+4}")
+        self.assertEqual(len(c), len(set(c)), "each place once")
+        self.assertEqual(len(c), 1, "the working's last line here is a restriction note (prose): the answer line above it is the same")
+        c2 = G.book_candidates(item("Ex9-1:1", epub_final_answer=None, solution=["$\\begin{align*}x&=2\\\\&=\\frac{3}{4}\\end{align*}$", "Note restriction: $a\\ne-4$ ."]), None)
+        self.assertEqual(c2, ["\\frac{3}{4}"], "no EPUB final: the working's own last answer line, the note skipped")
+        self.assertEqual(G.book_candidates(item("x", epub_final_answer="x = \\frac{2}{3}", solution=["x"]), None)[0], "\\frac{2}{3}")
+
+    def test_a_sentence_is_not_a_candidate_and_a_raised_dot_is_a_product(self):
+        prose = item("x", epub_final_answer="25×10^{2013} has 2015 digits", solution=["10^{2013} has 2014 digits so 25\\times10^{2013} has 2015 digits."])
+        self.assertEqual(G.book_candidates(prose, None), [], "the marker would read the words as letters and say 'different'")
+        self.assertEqual(G.book_candidates(item("x", epub_final_answer="(2jkl-b)(4j^2k^2l^2+2jklabc+b^2)", solution=["$y$"]), None)[0],
+                         "(2jkl-b)(4j^2k^2l^2+2jklabc+b^2)", "juxtaposed variables are algebra, not words")
+        dot = item("x", epub_final_answer="2^{5p}.3^{3p}", solution=["$y$"])
+        self.assertEqual(G.book_candidates(dot, None)[0], "2^{5p}.3^{3p}")
+        self.assertEqual(G.book_candidates(dot, None, multiplication_dot=True)[0], "2^{5p}\\cdot 3^{3p}",
+                         "this book prints multiplication as a raised dot and writes decimals with a comma")
+
+    def test_the_policy_holds_what_the_oracle_refuses(self):
+        es = entries_of()
+        k1 = "g10m9s1-1:Ex9-1:1"
+        r = rec(book_quote="x^{2}")
+        e = collect(es, {k1: (r, CONFIRMED)}, identity_fn=lambda rows: {x["id"]: "different" for x in rows if "#" not in x["id"]}
+                    )["items"][k1]
+        self.assertEqual((e["verdict"], e["class"]), ("hold", "unconfirmed"))
+        self.assertIn("NOT equal to the expression the stem asks to transform", e["note"])
+        e = collect(es, {k1: (r, CONFIRMED)}, identity_fn=lambda rows: {x["id"]: "different" for x in rows if "#" in x["id"]}
+                    )["items"][k1]
+        self.assertEqual((e["verdict"], e["class"]), ("hold", "not grounded"))
+        self.assertIn("Samuel's to approve", e["note"])
+        e = collect(es, {k1: (r, CONFIRMED)}, identity_fn=lambda rows: {x["id"]: "equal" for x in rows})["items"][k1]
+        self.assertEqual(e["verdict"], "accept")
+        self.assertEqual((e["verified"]["app_marker_identity"], e["verified"]["app_marker_book_answer"]), ("equal", "equal"))
+        e = collect(es, {k1: (r, CONFIRMED)}, identity_fn=lambda rows: {x["id"]: "unreadable" for x in rows})["items"][k1]
+        self.assertEqual(e["verdict"], "accept", "no signal is not a veto")
+        self.assertNotIn("app_marker_identity", e["verified"])
+
+    def test_agreement_is_equal_if_any_place_agrees_and_different_only_if_all_it_read_differ(self):
+        res = {"k#0": "different", "k#1": "unreadable", "j#0": "different", "j#1": "equal", "m#0": "unreadable"}
+        self.assertEqual(G.agreement_of(res, "k"), "different")
+        self.assertEqual(G.agreement_of(res, "j"), "equal")
+        self.assertIsNone(G.agreement_of(res, "m"))
+        self.assertIsNone(G.agreement_of(res, "absent"))
+
+    @unittest.skipUnless(NODE and (EX.parent.parent / "app" / "src" / "lib" / "answer-marker.ts").exists(), "needs node and the app's marker")
+    def test_the_real_marker_on_the_pilot_style_cases(self):
+        def after(stem, key, variables, **kw):
+            return item("Ex9-1:1", stem=stem, marker={"kind": "expression", "key": key, "form": None, "variables": variables, "tolerance": None},
+                        answer=key, **kw)
+        right = after("Simplify: $\\dfrac{5}{t-2}-\\dfrac{1}{t-3}$", "\\frac{4t-13}{(t-2)(t-3)}", ["t"])
+        wrong = after("Simplify: $\\dfrac{5}{t-2}-\\dfrac{1}{t-3}$", "\\frac{4t-12}{(t-2)(t-3)}", ["t"])
+        res = G.run_identity_check(G.identity_rows({"right": right, "wrong": wrong}))
+        self.assertEqual(res, {"right": "equal", "wrong": "different"})
+        # a key the typing agent corrected is not the book's: the book's own last line says 2jklabc
+        typed = after("Factorise: $8j^{3}k^{3}l^{3}-b^{3}$", "(2jkl-b)(4j^2k^2l^2+2jklb+b^2)", ["b", "j", "k", "l"],
+                      epub_final_answer=None, solution=["$\\begin{align*}8j^3k^3l^3-b^3&=(2jkl-b)(4j^2k^2l^2+2jklabc+b^2)\\end{align*}$"])
+        quote = "(2jkl-b)(4j^2k^2l^2+2jklabc+b^2)"
+        rows = G.agreement_rows({"k": typed}, {"k": quote})
+        self.assertTrue(rows)
+        self.assertEqual(G.agreement_of(G.run_identity_check(rows), "k"), "different")
+        # ... while the identity oracle is satisfied (the key IS equal to the stem's expression): the two oracles are independent
+        self.assertEqual(G.run_identity_check(G.identity_rows({"k": typed}))["k"], "equal")
+
+    @unittest.skipUnless(NODE and (EX.parent.parent / "app" / "src" / "lib" / "answer-marker.ts").exists(), "needs node and the app's marker")
+    def test_a_silent_correction_never_goes_live(self):
+        typed = item("Ex9-1:1", stem="Factorise: $8j^{3}k^{3}l^{3}-b^{3}$", answer="(2jkl-b)(4j^2k^2l^2+2jklb+b^2)",
+                     marker={"kind": "expression", "key": "(2jkl-b)(4j^2k^2l^2+2jklb+b^2)", "form": "factorised", "variables": ["b", "j", "k", "l"],
+                             "tolerance": None},
+                     epub_final_answer=None, printed_answer="(2jkl −b)(4j2k2l2 + 2jklabc + b2)",
+                     solution=["$\\begin{align*}8j^3k^3l^3-b^3&=(2jkl-b)(4j^2k^2l^2+2jklabc+b^2)\\end{align*}$"],
+                     typing_problems=["book_final is not in the book solution", "the key does not read as the printed answer"])
+        es = [{"key": "g10m9s1-1:Ex9-1:1", "lesson": "g10m9s1-1", "ref": "Ex9-1:1", "state": "excluded", "item": typed}]
+        run = {"results": [{"key": es[0]["key"], "rec": rec("accept", "check too strict", book_quote="(2jkl-b)(4j^2k^2l^2+2jklabc+b^2)"),
+                            "ver": CONFIRMED}]}
+        doc = G.collect(es, [run])                                   # the real marker, the real oracles
+        e = doc["items"][es[0]["key"]]
+        self.assertEqual((e["verdict"], e["class"]), ("exclude", "not grounded"),
+                         "the key is right for the stem but is not the book's: an accept would correct the book silently")
+        self.assertEqual(doc["report"]["app_marker_identity_of_the_typed_key"]["equal"], [es[0]["key"]])
+
+
+class RetypedBasis(unittest.TestCase):
+    """The gate record's reason for each retype is the rule's own (2026-10-01: it said "the options were the typing agent's inventions"
+    for every rule but kind-for-form, which was wrong for a fraction typed numeric and for the three kind rules COLLECT-6 added)."""
+
+    RULES = ("numeric", "values", "kind-for-form", "fraction-key", "kind-for-list", "kind-for-relations", "kind-for-equation", "kind-from-key")
+
+    def run_with(self, rule: str) -> list[dict]:
+        run = {"lessons": [{"lesson": "g10m9s1-1", "verify": {"retyped": [
+            {"ref": "Ex9-1:2", "as": "expression (an exact fraction)", "rule": rule, "key": "\\frac{1}{2}", "because": ["the reason the collection gave"]}]}}]}
+        return A.g2_retyped(run, 9, "g10m")
+
+    def test_each_rule_gives_its_own_reason_and_only_the_option_rules_speak_of_inventions(self):
+        for rule in self.RULES:
+            (d,) = self.run_with(rule)
+            self.assertEqual(d["key"], "g10m9s1-1:Ex9-1:2")
+            self.assertTrue(d["decision"].startswith("typed again as expression (an exact fraction) (key "), rule)
+            self.assertIn("the reason the collection gave", d["basis"], "the collection's own reason is kept beside it")
+            self.assertEqual("inventions" in d["basis"], rule in ("numeric", "values"), rule)
+        self.assertEqual(len({self.run_with(r)[0]["basis"].split(" (the reason")[0] for r in self.RULES}), 7,
+                         "seven distinct reasons: numeric and values share the options one")
+
+    def test_the_new_rules_say_what_they_did(self):
+        self.assertIn("fraction as a number", self.run_with("fraction-key")[0]["basis"])
+        self.assertIn("exact fraction", self.run_with("fraction-key")[0]["basis"])
+        self.assertIn("lists values", self.run_with("kind-for-list")[0]["basis"])
+        self.assertIn("inequality", self.run_with("kind-for-relations")[0]["basis"])
+        self.assertIn("equals sign", self.run_with("kind-for-equation")[0]["basis"])
+
+    def test_a_run_recorded_before_rules_had_names_is_read_by_what_it_was_typed_as(self):
+        run = {"lessons": [{"lesson": "g10m9s1-1", "verify": {"retyped": [
+            {"ref": "Ex9-1:1", "as": "expression (values)", "key": "4; 5", "because": ["x"]},
+            {"ref": "Ex9-1:2", "as": "numeric", "key": "3", "because": ["x"]},
+            {"ref": "Ex9-1:3", "as": "expression, kind equation (was surd)", "key": "x=2", "because": ["x"]}]}}]}
+        by = {d["key"].split(":", 1)[1]: d["basis"] for d in A.g2_retyped(run, 9, "g10m")}
+        self.assertIn("inventions", by["Ex9-1:1"])
+        self.assertIn("inventions", by["Ex9-1:2"])
+        self.assertNotIn("inventions", by["Ex9-1:3"], "an unnamed rule that is not an options retype gets the neutral sentence")
+
+    def test_a_rule_the_table_does_not_know_is_never_given_another_rules_reason(self):
+        (d,) = self.run_with("some-future-rule")
+        self.assertNotIn("inventions", d["basis"])
+        self.assertIn("some-future-rule", d["basis"])
+        self.assertIn("key is kept exactly", d["basis"])
+
+    def test_every_rule_the_collection_can_write_has_a_reason(self):
+        src = (EX / "runbook" / "lesson.workflow.js").read_text()
+        # the literal rules, and the three the script picks by a ternary (`reKind === 'values' ? 'kind-for-list' : …`)
+        rules = set(re.findall(r"rule: '([a-z-]+)'", src)) | set(re.findall(r"\? '(kind-for-[a-z]+)'|: '(kind-for-[a-z]+)'", src) and
+                                                              {"kind-for-list", "kind-for-equation", "kind-for-relations"})
+        self.assertTrue({"numeric", "values", "kind-for-form", "fraction-key"} <= rules, rules)
+        self.assertFalse({r for r in rules if r not in A.RETYPE_BASIS}, "a rule lesson.workflow.js writes has no reason in RETYPE_BASIS")
+
+
+# ---------------------------------------------------------------------------------------------- a newer collection after the run
+class AfterARecollection(unittest.TestCase):
+    """2026-10-01: lesson.workflow.js COLLECT-6 was widened after the first recommendation runs were launched, so what is owed changed under
+    them: fractions typed numeric (excluded) now pass, a typing problem can turn into a disputed answer. The run's paid answers for the items
+    still owed stay valid; the collector must never decide an item twice, and must never apply an answer to an item the agents did not see."""
+
+    def setUp(self):
+        self.run, self.g2 = make_run()
+        self.es = G.recommendable([self.run], 9, "g10m", self.g2)
+        self.k1, self.k2, self.k3, self.k7 = (e["key"] for e in self.es)
+        self.packet = G.build_args(book_config.load_book("g10-math"), 9, self.es)
+        fix = {"answer_type": "expression", "key": "\\frac{1}{2}", "marker_kind": "expression", "form": "", "variables": []}
+        rows = {self.k1: (rec(book_quote="x^{2}"), CONFIRMED),
+                self.k2: (rec("fix", "typing error", book_quote="\\frac{1}{2}", fix=fix), CONFIRMED),
+                self.k3: (rec("exclude", "stem damaged"), None), self.k7: (rec("exclude", "partial answer"), None)}
+        self.saved = {"prompts_version": "g2rec-v1", "keys": self.packet["items"] and [x["key"] for x in self.packet["items"]],
+                      "results": [{"key": k, "rec": r, "ver": v} for k, (r, v) in rows.items()]}
+
+    def collect(self, entries, **kw):
+        return G.collect(entries, [self.saved], marker_fn=lambda r: {}, identity_fn=lambda r: {}, **kw)
+
+    def test_an_item_the_checks_decide_now_is_skipped_never_decided_twice(self):
+        # the second item (a fraction typed numeric) no longer has a typing problem: it is not owed any more
+        now = [e for e in self.es if e["key"] != self.k2]
+        doc = self.collect(now, packets=[self.packet])
+        self.assertNotIn(self.k2, doc["items"], "its recommendation is not written: g2 would override the rule's decision with an older reading")
+        self.assertEqual(doc["report"]["no_longer_owed"], [self.k2])
+        self.assertEqual(set(doc["items"]), {self.k1, self.k3, self.k7})
+        self.assertEqual(doc["report"]["off_task"], [])
+        self.assertNotIn(self.k2, doc["unanswered"])
+
+    def test_without_a_packet_the_run_still_knows_its_keys(self):
+        now = [e for e in self.es if e["key"] != self.k2]
+        doc = self.collect(now)                                    # no packet: the run's own `keys` say the key was in it
+        self.assertEqual(doc["report"]["no_longer_owed"], [self.k2])
+        saved = dict(self.saved, keys=None)
+        doc = G.collect(now, [saved], marker_fn=lambda r: {}, identity_fn=lambda r: {})
+        self.assertEqual((doc["report"]["no_longer_owed"], doc["report"]["off_task"]), ([], [self.k2]), "an older run: unknown key, off task")
+
+    def test_an_item_the_agents_did_not_see_is_refused_for_that_item_only(self):
+        now = copy.deepcopy(self.es)
+        by_key(now)[self.k1]["item"]["stem"] += " (typed again)"                           # a fact the agent judged on
+        by_key(now)[self.k3]["item"]["options_source"] = "figure"
+        by_key(now)[self.k7]["item"]["printed_answer"] = "something else"
+        doc = self.collect(now, packets=[self.packet])
+        self.assertEqual(doc["report"]["stale_items"], sorted([self.k1, self.k3, self.k7]))
+        self.assertEqual(set(doc["items"]), {self.k2}, "the others are collected as before: their paid answers stay valid")
+        self.assertEqual(set(doc["unanswered"]), {self.k1, self.k3, self.k7}, "listed, so g2-recommend-args --only-missing asks again")
+
+    def test_what_the_checks_reported_is_not_what_the_agent_judged_on(self):
+        # a newer collection types the SAME key another way, re-judges a pair, finds another typing problem, leaves a disputed item disputed
+        # instead of excluded: the agents' answers are still about this item, and the collector re-validates them on it as it is now
+        now = copy.deepcopy(self.es)
+        by_key(now)[self.k1]["item"]["marker"] = {**by_key(now)[self.k1]["item"]["marker"], "kind": "equation", "form": "simplest"}
+        by_key(now)[self.k1]["item"]["verify"] = pairs("Ex9-1:1", "equivalent", "equivalent", "equivalent")
+        by_key(now)[self.k1]["item"]["typing_problems"] = ["a new typing problem"]
+        by_key(now)[self.k3]["state"] = "held"
+        by_key(now)[self.k2]["item"].update(answer_type="expression", marker={"kind": "expression", "key": "\\frac{1}{2}", "form": None,
+                                                                              "variables": [], "tolerance": None}, typing_problems=[])
+        doc = self.collect(now, packets=[self.packet])
+        self.assertEqual(doc["report"]["stale_items"], [])
+        self.assertEqual(set(doc["items"]), {self.k1, self.k2, self.k3, self.k7})
+        self.assertEqual(doc["items"][self.k2]["verdict"], "accept", "the agent's fix to expression changes nothing now: an accept")
+        key = by_key(now)[self.k2]["item"]
+        self.assertNotEqual(G.facts(self.packet["items"][1]["item"])["typed_key"], None)
+        self.assertEqual(G.facts(key)["typed_key"], "\\frac{1}{2}")
+
+    def test_the_typed_key_and_the_options_are_facts(self):
+        a = item("Ex9-1:5", answer_type="choice", answer="B", marker=None, choices=[{"key": "A", "text": "x"}, {"key": "B", "text": "y"}])
+        b = copy.deepcopy(a)
+        b["answer"] = "A"
+        self.assertNotEqual(G.facts(a), G.facts(b), "another option is the key")
+        c = copy.deepcopy(a)
+        c["choices"][0]["text"] = "z"
+        self.assertNotEqual(G.facts(a), G.facts(c))
+        d = item("Ex9-1:6")
+        e = copy.deepcopy(d)
+        e["marker"]["key"] = "x^{3}"
+        self.assertNotEqual(G.facts(d), G.facts(e))
+
+    def test_a_prior_file_never_brings_a_stale_item_back(self):
+        prior = {"items": {self.k1: {"verdict": "accept", "class": "book answer confirmed", "confidence": "high", "note": "an old reading"}}}
+        now = copy.deepcopy(self.es)
+        by_key(now)[self.k1]["item"]["stem"] += " (typed again)"
+        doc = self.collect(now, packets=[self.packet], prior=prior)
+        self.assertNotIn(self.k1, doc["items"])
+        doc = self.collect(self.es, packets=[self.packet], prior=prior)
+        self.assertEqual(doc["items"][self.k1]["note"].startswith("an old reading"), False, "this run's answer wins over the prior file's")
+
+    def test_the_merge_does_not_apply_a_recommendation_for_an_item_that_is_not_owed(self):
+        now_run = copy.deepcopy(self.run)
+        it = now_run["lessons"][0]["items"][1]                    # Ex9-1:2: typed expression now, its typing problem gone
+        it.update(answer_type="expression", answer="\\frac{1}{2}", typing_problems=[],
+                  marker={"kind": "expression", "key": "\\frac{1}{2}", "form": None, "variables": [], "tolerance": None})
+        now_run["lessons"][0]["verify"]["typing_problems"] = [x for x in now_run["lessons"][0]["verify"]["typing_problems"] if x["ref"] != "Ex9-1:2"]
+        doc = collect(self.es, {self.k2: (rec("exclude", "book error"), None), self.k1: (rec(book_quote="x^{2}"), CONFIRMED)})
+        self.assertEqual(doc["prepared_by"], f"g2_recommend.py {G.PROMPTS_VERSION}")
+        owed = A.g2_items(now_run, 9, "g10m")
+        self.assertNotIn(self.k2, owed)
+        merged, c, decisions = A.g2_merge(owed, doc, {"by": "auto-pass G2 (AI recommendation)", "auto": True, "items": {}})
+        self.assertNotIn(self.k2, merged["items"], "an older recommendation never overrides the checks' own decision")
+        self.assertEqual(merged["items"][self.k1]["verdict"], "accept", "the still-owed item's recommendation applies")
+        self.assertTrue(any(d["key"] == self.k2 and "not applied" in d["decision"] for d in decisions))
+        # a recommendation file that is not a g2_recommend.py one (the pilot's, written by hand) names whatever it likes
+        pilot = {"items": {self.k2: {"verdict": "exclude", "note": "x"}}}
+        merged, _, _ = A.g2_merge(owed, pilot, {"by": "auto-pass G2 (AI recommendation)", "auto": True, "items": {}})
+        self.assertEqual(merged["items"][self.k2]["verdict"], "exclude")
+
+    def test_an_auto_verdict_for_an_item_no_longer_owed_is_dropped_from_g2s_file_but_a_persons_never(self):
+        owed = A.g2_items(self.run, 9, "g10m")
+        existing = {"by": "auto-pass G2 (AI recommendation)", "auto": True, "items": {
+            "g10m9s1-1:Ex9-1:8": {"verdict": "exclude", "auto": True, "by": "auto-pass G2 (AI recommendation)", "note": "typing, long ago"},
+            "g10m9s1-1:Ex9-1:9": {"verdict": "hold", "by": "Samuel Toma", "note": "mine"},
+            "g10m8s1-1:Ex8-1:1": {"verdict": "exclude", "auto": True, "by": "auto-pass G2 (AI recommendation)"}}}
+        merged, c, decisions = A.g2_merge(owed, None, existing)
+        self.assertIn("g10m9s1-1:Ex9-1:8", merged["items"], "no scope given: nothing is ever dropped (the old behaviour)")
+        merged, c, decisions = A.g2_merge(owed, None, existing, scope={"g10m9s1-1"})
+        self.assertNotIn("g10m9s1-1:Ex9-1:8", merged["items"], "the lesson's run says it is not flagged any more")
+        self.assertEqual(merged["items"]["g10m9s1-1:Ex9-1:9"]["by"], "Samuel Toma")
+        self.assertIn("g10m8s1-1:Ex8-1:1", merged["items"], "another lesson's verdict is outside the runs given")
+        self.assertEqual(c["dropped"], 1)
+        self.assertTrue(any(d["key"] == "g10m9s1-1:Ex9-1:8" and "dropped" in d["decision"] for d in decisions))
+
+    def test_the_packet_is_archived_by_its_sha_so_a_regenerated_copy_does_not_lose_it(self):
+        with tempfile.TemporaryDirectory() as t:
+            copy_ = Path(t) / "g2rec-ch09.workflow.js"
+            p = G.archive_packet(copy_, "ab" * 32, self.packet)
+            self.assertEqual(p, Path(t) / G.ARCHIVE / ("ab" * 32 + ".args.json"))
+            self.assertEqual(json.loads(p.read_text())["items_sha256"], self.packet["items_sha256"])
+            before = p.read_text()
+            G.archive_packet(copy_, "ab" * 32, {"other": 1})
+            self.assertEqual(p.read_text(), before, "the first packet of a sha is the packet")
+            self.assertIsNone(G.find_packet(book_config.load_book("g10-math"), None))
+            self.assertIsNone(G.find_packet(book_config.load_book("g10-math"), "0" * 64))
+
+    def test_prepare_archives_each_copys_packet(self):
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            (t / "run.json").write_text(json.dumps(self.run))
+            (t / "g2.json").write_text(json.dumps(self.g2))
+            info = G.prepare(book_config.load_book("g10-math"), 9, [t / "run.json"], t / "g2.json", t / "g2rec-ch09.workflow.js")
+            sha = info["copies"][0]["generated_sha256"]
+            self.assertTrue((t / G.ARCHIVE / f"{sha}.args.json").exists())
+            self.assertEqual(json.loads((t / G.ARCHIVE / f"{sha}.args.json").read_text()), embed_workflow.read_args(Path(info["copies"][0]["script"])))
+
+    def test_the_delta_is_what_the_bundle_gained_since_the_working_check(self):
+        bundle = {"questions": [
+            {"id": "q:a:1", "stem": "s", "solution": ["$x=1$"], "choices": None, "type": "short", "answer": "1"},
+            {"id": "q:a:2", "stem": "s", "solution": ["$x=2$"], "choices": None, "type": "short", "answer": "2"},
+            {"id": "q:a:3", "stem": "s", "solution": ["[figure]"], "choices": None, "type": "short", "answer": "3"}],
+            "explanation_entries": [{"id": "expl:a:4", "lo": "lo:a", "content": [{"kind": "problem", "text_md": "p"}, {"step": 1, "text_md": "$y=3$"}]}]}
+        flags = {"checked_ids": ["q:a:1"]}
+        self.assertEqual(G.delta_ids(bundle, flags), ["expl:a:4", "q:a:2"], "a drawing-only solution has no working to check; a checked one is not repeated")
+        self.assertEqual(G.delta_ids(bundle, {"checked_ids": ["q:a:1", "q:a:2", "expl:a:4"]}), [])
+
+    def test_the_delta_command(self):
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            (t / "seed.json").write_text(json.dumps({"questions": [{"id": "q:a:1", "stem": "s", "solution": ["$x=1$"], "choices": None, "type": "short",
+                                                                    "answer": "1"}]}))
+            (t / "flags.json").write_text(json.dumps({"checked_ids": []}))
+            import contextlib
+            import io
+            out, err = io.StringIO(), io.StringIO()
+            with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
+                code = A.main(["g2-recommend-delta", "g10-math", "--chapter", "9", "--seed", str(t / "seed.json"), "--flags", str(t / "flags.json"),
+                               "--out", str(t / "ids.json")])
+            self.assertEqual(code, 0, err.getvalue())
+            self.assertEqual(json.loads((t / "ids.json").read_text()), ["q:a:1"])
+            with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
+                code = A.main(["g2-recommend-delta", "g10-math", "--chapter", "9", "--seed", str(t / "nope.json"), "--flags", str(t / "flags.json")])
+            self.assertEqual(code, 2)
+            self.assertIn("does not exist", err.getvalue())
+
+
+class Errata(unittest.TestCase):
+    """The book's errata the recommendation runs found, for Samuel: plain sentences, every printed answer left as the book has it."""
+
+    def setUp(self):
+        self.run, self.g2 = make_run()
+        self.es = G.recommendable([self.run], 9, "g10m", self.g2)
+        self.k1, self.k2, self.k3, self.k7 = (e["key"] for e in self.es)
+        rows = {self.k1: (rec("exclude", "book error", note="the book drops a power. Right answer by the agent's own derivation: x^3.",
+                              correct_answer="x^{3}", defect="The last line of the working drops a power."), None),
+                self.k3: (rec("exclude", "stem damaged", note="a statement is missing from the stem"), None),
+                self.k7: (rec("exclude", "partial answer"), None)}
+        self.doc = collect(self.es, {k: v for k, v in rows.items()})
+        self.doc["report"]["app_marker_identity_of_the_typed_key"]["different"] = [self.k1]
+
+    def test_only_the_books_own_findings_are_listed(self):
+        found = G.errata_items(self.doc, {e["key"]: e for e in self.es})
+        self.assertEqual([r["key"] for r in found["wrong"]], [self.k1])
+        self.assertEqual([r["key"] for r in found["damaged"]], [self.k3])
+        self.assertTrue(found["wrong"][0]["computer_checked"])
+        self.assertFalse(found["damaged"][0]["computer_checked"])
+
+    def test_the_markdown_is_plain_and_never_says_the_book_was_corrected(self):
+        book = book_config.load_book("g10-math")
+        md = G.errata_markdown(book, [9], {9: self.doc}, {9: {e["key"]: e for e in self.es}})
+        self.assertIn("Exercise 9-1, question 1", md)
+        self.assertIn("The book's answer: $x^{2}$", md)
+        self.assertIn("What is wrong: The last line of the working drops a power.", md)
+        self.assertIn("The right answer (our own working, not applied to the book): x^{3}", md)
+        self.assertIn("A plain computer check, with no AI in it, agrees", md)
+        self.assertIn("The book's answer was never changed.", md)
+        self.assertIn("**1** printed answers that look wrong and **1** questions", md)
+        self.assertNotIn("Verified independently", md)
+        self.assertNotIn("partial answer", md, "an answer that covers only part of the question is not an erratum")
+        self.assertIn("No person has read this yet", md)
+
+    def test_a_repaired_stem_is_shown_with_its_repair_and_marked_for_review(self):
+        es = [{"key": "g10m9s1-1:Ex9-1:8", "lesson": "g10m9s1-1", "ref": "Ex9-1:8", "state": "held",
+               "item": item("Ex9-1:8", stem="Simplify: $\\frac{a-4}{a+5a+4}$", solution=["$\\frac{a-4}{(a+4)(a+1)}=\\frac{1}{a+4}$"],
+                            printed_answer="1 a+4", epub_final_answer="$=\\frac{1}{a+4}$", answer="\\frac{1}{a+4}",
+                            marker={"kind": "expression", "key": "\\frac{1}{a+4}", "form": None, "variables": ["a"], "tolerance": None})}]
+        run = {"results": [{"key": es[0]["key"], "rec": rec("fix", "stem damaged", "low", why_low="x", book_quote="\\frac{a-4}{(a+4)(a+1)}",
+                                                            fix={"stem": "Simplify: $\\frac{a-4}{a^2+5a+4}$"}), "ver": CONFIRMED}]}
+        doc = G.collect(es, [run], marker_fn=lambda r: {}, identity_fn=lambda r: {})
+        md = G.errata_markdown(book_config.load_book("g10-math"), [9], {9: doc}, {9: {es[0]["key"]: es[0]}})
+        self.assertIn("live, with the question text repaired", md)
+        self.assertIn("a^2+5a+4", md)
+        self.assertIn("Marked as an AI repair for you to review", md)
+
+
+class DeltaMerge(unittest.TestCase):
+    """A delta working check (the solutions a chapter gained after its check ran) is merged into the canonical `chNN.flags.json`: the only file
+    the console's backlog reads (`app/src/lib/review-gate-working.ts` ignores every other `chNN.*.flags.json`)."""
+
+    A1, A2, A3 = "q:g10m8s2-1-1:ex8-2-1", "q:g10m8s2-1-1:ex8-2-2", "expl:g10m8s3-1-1:we03"
+
+    def setUp(self):
+        import working_check as W
+        from test_working_check import Book, bundle
+        self.W = W
+        self.tmp = Path(tempfile.mkdtemp(prefix="wcmerge_"))
+        self.argsBase = W.build_args(Book(), bundle(), 8, self.tmp / "base", only={self.A1}, batch=2)[0]
+        self.argsDelta = W.build_args(Book(), bundle(), 8, self.tmp / "delta", only={self.A2, self.A3}, batch=2, pass_id="A")[0]
+        flag = {"step": 1, "quote": "P(0, 1)", "kind": "wrong_value", "where": "working", "expected": "P(0, 0)", "why": "the question gives P(0, 0)"}
+        run_base = {"stage": "SW", "pass_id": "A", "run_id": "wf_base", "prompts_version": "sw-v3",
+                    "results": [{"solution_id": self.A1, "verdict": "consistent"}]}
+        run_delta = {"stage": "SW", "pass_id": "A", "run_id": "wf_delta", "prompts_version": "sw-v3",
+                     "results": [{"solution_id": self.A2, "verdict": "flagged", "flags": [flag]}, {"solution_id": self.A3, "verdict": "consistent"}]}
+        self.base = W.collect([self.argsBase], [run_base])
+        self.delta = W.collect([self.argsDelta], [run_delta])
+
+    def tearDown(self):
+        shutil.rmtree(self.tmp, ignore_errors=True)
+
+    def test_the_delta_joins_the_canonical_file_and_nothing_of_the_base_changes(self):
+        W = self.W
+        merged = W.merge(copy.deepcopy(self.base), copy.deepcopy(self.delta), "ch08.g2rec.flags.json")
+        self.assertEqual(merged["checked_ids"], sorted([self.A1, self.A2, self.A3]), "the canonical file covers every solution now")
+        self.assertEqual(merged["solutions"], self.base["solutions"] + self.delta["solutions"])
+        self.assertEqual(merged["verdicts"], {"consistent": 2, "flagged": 1, "unclear": 0})
+        self.assertEqual([f for f in merged["flags"] if f in self.base["flags"]], self.base["flags"], "the base's flags are exactly as they were")
+        self.assertTrue(all(f in merged["flags"] for f in self.delta["flags"]))
+        self.assertEqual(len(merged["flags"]), len(self.base["flags"]) + len(self.delta["flags"]))
+        self.assertEqual(merged["flagged_solutions"], len({f["solution_id"] for f in merged["flags"]}))
+        self.assertEqual(merged["runs"], ["wf_base", "wf_delta"])
+        (d,) = merged["delta_runs"]
+        self.assertEqual((d["file"], d["runs"], d["solution_ids"]), ("ch08.g2rec.flags.json", ["wf_delta"], sorted([self.A2, self.A3])))
+        changed = {k for k in set(merged) | set(self.base) if merged.get(k) != self.base.get(k)}
+        self.assertLessEqual(changed, {"flags", "flagged_solutions", "solutions", "verdicts", "checked_ids", "runs", "delta_runs", "skipped",
+                                       "unclear", "unchecked", "problems", "single_pass_ids", "passes"},
+                             "only what a delta adds to changes; the format, book, chapter, prompts version and rule stay")
+        self.assertEqual(merged["format"], "ainext.working-check/1")
+        self.assertEqual(self.base, W.collect([self.argsBase], [{"stage": "SW", "pass_id": "A", "run_id": "wf_base", "prompts_version": "sw-v3",
+                                                                  "results": [{"solution_id": self.A1, "verdict": "consistent"}]}]),
+                         "the inputs were not mutated")
+
+    def test_merging_the_same_delta_again_changes_nothing(self):
+        W = self.W
+        once = W.merge(self.base, self.delta, "d.json")
+        twice = W.merge(once, self.delta, "d.json")
+        self.assertEqual(once, twice)
+        self.assertEqual(len(twice["delta_runs"]), 1)
+
+    def test_a_second_delta_adds_to_the_first(self):
+        W = self.W
+        once = W.merge(self.base, self.delta, "d1.json")
+        more = copy.deepcopy(self.delta)
+        more.update(runs=["wf_delta2"], checked_ids=["q:other"], solutions=1, flags=[], verdicts={"consistent": 1, "flagged": 0, "unclear": 0},
+                    flagged_solutions=0, skipped=[])
+        twice = W.merge(once, more, "d2.json")
+        self.assertEqual(twice["checked_ids"], sorted([self.A1, self.A2, self.A3, "q:other"]))
+        self.assertEqual([x["file"] for x in twice["delta_runs"]], ["d1.json", "d2.json"])
+        self.assertEqual(twice["runs"], ["wf_base", "wf_delta", "wf_delta2"])
+
+    def test_a_solution_in_both_is_refused_rather_than_counted_twice(self):
+        W = self.W
+        both = copy.deepcopy(self.delta)
+        both["checked_ids"] = sorted({*both["checked_ids"], self.A1})
+        with self.assertRaises(W.MergeError) as cm:
+            W.merge(self.base, both)
+        self.assertIn("in both the base and the delta", str(cm.exception))
+
+    def test_a_delta_of_another_chapter_or_a_base_without_coverage_is_refused(self):
+        W = self.W
+        for k, v in (("chapter", 9), ("book", "other"), ("format", "x")):
+            with self.assertRaises(W.MergeError, msg=k):
+                W.merge(self.base, {**self.delta, k: v})
+        old = {k: v for k, v in self.base.items() if k != "checked_ids"}
+        with self.assertRaises(W.MergeError) as cm:
+            W.merge(old, self.delta)
+        self.assertIn("checked_ids", str(cm.exception))
+
+    def test_collect_can_merge_into_the_canonical_file_in_one_step(self):
+        W = self.W
+        import contextlib
+        import io
+        import packet_ref
+        base_f, delta_f, canon = self.tmp / "base.json", self.tmp / "ch08.g2rec.flags.json", self.tmp / "ch08.flags.json"
+        canon.write_text(json.dumps(self.base))
+        (self.tmp / "a.json").write_text(packet_ref.dumps(self.argsDelta) + "\n")
+        run = self.tmp / "run.json"
+        run.write_text(json.dumps({"stage": "SW", "pass_id": "A", "run_id": "wf_delta", "prompts_version": "sw-v3", "results": [
+            {"solution_id": self.A2, "verdict": "consistent"}, {"solution_id": self.A3, "verdict": "consistent"}]}))
+        out, err = io.StringIO(), io.StringIO()
+        with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
+            code = W.main(["collect", "--args", str(self.tmp / "a.json"), "--runs", str(run), "--out", str(delta_f), "--merge-into", str(canon)])
+        self.assertEqual(code, 0, err.getvalue())
+        merged = json.loads(canon.read_text())
+        self.assertEqual(merged["checked_ids"], sorted([self.A1, self.A2, self.A3]))
+        self.assertTrue(delta_f.exists(), "the delta's own file is kept beside the canonical one")
+        self.assertEqual(merged["delta_runs"][0]["file"], "ch08.g2rec.flags.json")
+        self.assertIn("merged into the canonical file", out.getvalue())
+        # the same collection again: already merged
+        with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
+            self.assertEqual(W.main(["collect", "--args", str(self.tmp / "a.json"), "--runs", str(run), "--merge-into", str(canon)]), 0)
+        self.assertEqual(json.loads(canon.read_text()), merged)
+        self.assertIn("already merged", out.getvalue())
+
+    def test_a_collection_with_unchecked_solutions_is_not_merged(self):
+        W = self.W
+        import contextlib
+        import io
+        import packet_ref
+        canon = self.tmp / "ch08.flags.json"
+        canon.write_text(json.dumps(self.base))
+        (self.tmp / "a.json").write_text(packet_ref.dumps(self.argsDelta) + "\n")
+        run = self.tmp / "run.json"
+        run.write_text(json.dumps({"stage": "SW", "pass_id": "A", "run_id": "wf_delta", "results": [{"solution_id": self.A2, "verdict": "consistent"}]}))
+        out, err = io.StringIO(), io.StringIO()
+        with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
+            code = W.main(["collect", "--args", str(self.tmp / "a.json"), "--runs", str(run), "--merge-into", str(canon)])
+        self.assertEqual(code, 1)
+        self.assertIn("not merged", err.getvalue())
+        self.assertEqual(json.loads(canon.read_text()), self.base, "the canonical file is left as it was")
+
+    def test_the_merge_command_and_the_printed_sequence(self):
+        W = self.W
+        import contextlib
+        import io
+        base_f, delta_f = self.tmp / "ch08.flags.json", self.tmp / "ch08.g2rec.flags.json"
+        base_f.write_text(json.dumps(self.base))
+        delta_f.write_text(json.dumps(self.delta))
+        out, err = io.StringIO(), io.StringIO()
+        with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
+            self.assertEqual(W.main(["merge", "--base", str(base_f), "--delta", str(delta_f), "--dry-run"]), 0)
+        self.assertEqual(json.loads(base_f.read_text()), self.base, "a dry run writes nothing")
+        with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
+            self.assertEqual(W.main(["merge", "--base", str(base_f), "--delta", str(delta_f)]), 0)
+        self.assertEqual(json.loads(base_f.read_text())["checked_ids"], sorted([self.A1, self.A2, self.A3]))
+        # the standard sequence g2-recommend-args prints includes the merge, after the delta runs and before anything reads the canonical file
+        text = "\n".join(G.follow_ups("g10-math", 1, ["r.json"], recommended="x.json", g2_file="g.json"))
+        self.assertIn("working_check.py collect --args A.json --args B.json", text)
+        self.assertIn("--merge-into runs/g10-math/working-check/ch01.flags.json", text)
+        self.assertIn("--out runs/g10-math/working-check/ch01.g2rec.flags.json", text)
+        self.assertLess(text.index("g2-recommend-delta"), text.index("--merge-into"))
+
+
+# ---------------------------------------------------------------------------------------------- the file reaches G2
+class ReachesG2(unittest.TestCase):
+    """The collected file through auto_pass_gates.g2_merge and assemble_objectives.lesson_runs: the pilot's route."""
+
+    def test_through_g2_merge_and_the_lesson_runs_split(self):
+        import assemble_objectives as ao
+        run, g2 = make_run()
+        es = G.recommendable([run], 9, "g10m", g2)
+        k1, k2, k7 = ("g10m9s1-1:Ex9-1:" + n for n in "127")
+        fix = {"answer_type": "expression", "key": "\\frac{1}{2}", "marker_kind": "expression", "variables": []}
+        doc = collect(es, {k1: (rec(book_quote="x^{2}"), CONFIRMED),
+                           k2: (rec("fix", "typing error", book_quote="\\frac{1}{2}", fix=fix), CONFIRMED),
+                           k7: (rec("exclude", "partial answer"), None)})
+        owed = A.g2_items(run, 9, "g10m")
+        merged, counts, decisions = A.g2_merge(owed, doc, g2)
+        self.assertEqual(counts["recommended"], 3)
+        self.assertEqual(merged["items"][k1]["verdict"], "accept")
+        self.assertEqual(merged["items"][k2]["fields"]["answer_type"], "expression")
+        self.assertEqual(merged["items"]["g10m9s1-1:Ex9-1:6"]["by"], "Samuel Toma", "a person's verdict is kept")
+        self.assertTrue(all(merged["items"][k]["by"] == "auto-pass G2 (AI recommendation)" for k in (k1, k2, k7)))
+        basis = {d["key"]: d["basis"] for d in decisions}
+        self.assertIn("confidence high", basis[k1])
+        # the split: the fix is applied to the item and validated by the pipeline's own model; the unrecommended item (Ex9-1:3) is
+        # still excluded by its typing problems' rule
+        merged["items"]["g10m9s1-1:Ex9-1:3"] = {"verdict": "exclude", "auto": True, "by": "auto-pass G2 (AI recommendation)", "note": "rule"}
+        recs = ao.lesson_runs(copy.deepcopy(run), merged)
+        items = {i["ref"]: i for i in recs["g10m9s1-1"]["items"]}
+        self.assertEqual(items["Ex9-1:2"]["answer_type"], "expression")
+        self.assertEqual(items["Ex9-1:2"]["marker"]["key"], "\\frac{1}{2}")
+        self.assertTrue(items["Ex9-1:2"]["g2"]["auto"])
+        self.assertEqual(items["Ex9-1:2"]["g2"]["verdict"], "fix")
+        self.assertIn("answer_type", items["Ex9-1:2"]["g2"]["changed"])
+        self.assertEqual(items["Ex9-1:1"]["g2"]["verdict"], "accept")
+
+    def test_the_gate_record_lists_the_low_confidence_verdicts_for_samuel(self):
+        # decisions carry the basis "<class> · confidence low": the console shows them as 'your call'
+        run, g2 = make_run()
+        es = G.recommendable([run], 9, "g10m", g2)
+        k1 = "g10m9s1-1:Ex9-1:1"
+        doc = collect(es, {k1: (rec("hold", "needs the page image", "low", why_low="only the page can settle it"), None)})
+        _, _, decisions = A.g2_merge(A.g2_items(run, 9, "g10m"), doc, g2)
+        d = next(x for x in decisions if x["key"] == k1)
+        self.assertEqual(d["decision"], "hold")
+        self.assertIn("confidence low", d["basis"])
+
+    def test_the_commands_name_the_chapters_own_files_and_the_right_order(self):
+        cmds = G.follow_ups("g10-math", 1, ["runs/g10-math/lessons/a.json", "runs/g10-math/lessons/b.json"],
+                            recommended="runs/g10-math/g2-ch01.recommended.json", g2_file="runs/g10-math/g2-ch01.json", run_label="wf_a, wf_b")
+        text = "\n".join(cmds)
+        self.assertEqual(text.count("--lesson-run"), 4)
+        self.assertNotIn("runs/g10-math/g2.json", text, "the pilot's file is never the target")
+        order = [text.index(x) for x in ("g2-recommend-collect", " g2 g10-math", "assemble_lesson_bundle", "--validate-only", "pg_dump",
+                                         "load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c01.json --course",
+                                         "apply_review_verdicts")]
+        self.assertEqual(order, sorted(order))
+        self.assertIn("--update --dry-run", text)
+        self.assertIn("--split", text)
+        self.assertIn("fanout.py close-chapter 1", text)
+        self.assertIn("g2-recommend-delta g10-math --chapter 1 --out runs/g10-math/g2rec/ch01.delta-ids.json", text)
+        self.assertIn("working_check.py args --book g10-math --seed seed/g10-math/g10m-c01.json --chapter 1 --pass-id A --only "
+                      "runs/g10-math/g2rec/ch01.delta-ids.json", text, "a delta working check on what the bundle gained since the check")
+        self.assertLess(text.index("assemble_lesson_bundle"), text.index("g2-recommend-delta"), "the delta is read from the re-assembled bundle")
+        self.assertIn("--pass-id B --order shuffled --order-seed 11", text)
+        self.assertTrue(any(c.startswith("pg_dump") for c in cmds), "a fresh dump before the update")
+
+
+class TheCommands(unittest.TestCase):
+    """auto_pass_gates.py g2 / g2-recommend-args / g2-recommend-collect, end to end on a synthetic chapter (no model, no database)."""
+
+    def setUp(self):
+        self.tmp = Path(tempfile.mkdtemp(prefix="g2rec_cli_"))
+        self.run, self.g2 = make_run()
+        (self.tmp / "run.json").write_text(json.dumps(self.run))
+        (self.tmp / "g2.json").write_text(json.dumps(self.g2))
+        self.es = G.recommendable([self.run], 9, "g10m", self.g2)
+
+    def tearDown(self):
+        shutil.rmtree(self.tmp, ignore_errors=True)
+
+    def cli(self, *argv) -> tuple[int, str, str]:
+        import contextlib
+        import io
+        out, err = io.StringIO(), io.StringIO()
+        with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
+            code = A.main([str(x) for x in argv])
+        return code, out.getvalue(), err.getvalue()
+
+    def test_g2_with_a_recommendation_writes_the_record_with_low_confidence_for_samuel(self):
+        k1, k2, k3, k7 = (e["key"] for e in self.es)
+        doc = collect(self.es, {k1: (rec(book_quote="x^{2}"), CONFIRMED),
+                                k3: (rec("hold", "needs the page image", "low", why_low="only the page can settle it"), None),
+                                k7: (rec("exclude", "partial answer"), None)})
+        (self.tmp / "rec.json").write_text(json.dumps(doc))
+        gates = self.tmp / "gates"
+        code, out, err = self.cli("g2", "g10-math", "--chapter", 9, "--lesson-run", self.tmp / "run.json", "--recommend", self.tmp / "rec.json",
+                                  "--into", self.tmp / "g2.json", "--gates-dir", gates)
+        self.assertEqual(code, 0, err)
+        record = json.loads((gates / "g2-ch09.json").read_text())
+        self.assertEqual(record["gate"], "G2")
+        self.assertEqual(record["outcome"], "pass_with_holds")
+        self.assertNotIn("g10m9s1-1:Ex9-1:5", record["for_review"], "a teaching item (typed not markable) owes no verdict and is not 'for review'")
+        self.assertIn(k3, record["for_review"], "a recommended hold is listed for Samuel")
+        self.assertIn(k7, record["for_review"], "so is an exclusion")
+        self.assertTrue(any(c["name"].startswith("G2 recommendation run") for c in record["checks"]))
+        self.assertIn("low confidence", record["summary"])
+        verdicts = json.loads((self.tmp / "g2.json").read_text())["items"]
+        self.assertEqual(verdicts[k1]["verdict"], "accept")
+        self.assertEqual(verdicts["g10m9s1-1:Ex9-1:6"]["by"], "Samuel Toma", "the person's verdict is kept")
+        # idempotent
+        before = (self.tmp / "g2.json").read_text()
+        self.cli("g2", "g10-math", "--chapter", 9, "--lesson-run", self.tmp / "run.json", "--recommend", self.tmp / "rec.json",
+                 "--into", self.tmp / "g2.json", "--gates-dir", gates)
+        self.assertEqual((self.tmp / "g2.json").read_text(), before)
+
+    def test_without_the_recommendation_a_rerun_goes_back_to_the_checks_rule(self):
+        # why fanout.py close-chapter passes the recommendation file once it exists
+        k1 = self.es[0]["key"]
+        (self.tmp / "rec.json").write_text(json.dumps(collect(self.es, {k1: (rec(book_quote="x^{2}"), CONFIRMED)})))
+        args = ["g2", "g10-math", "--chapter", 9, "--lesson-run", self.tmp / "run.json", "--into", self.tmp / "g2.json",
+                "--gates-dir", self.tmp / "gates"]
+        self.cli(*args, "--recommend", self.tmp / "rec.json")
+        self.assertIn(k1, json.loads((self.tmp / "g2.json").read_text())["items"])
+        self.cli(*args)
+        self.assertNotIn(k1, json.loads((self.tmp / "g2.json").read_text())["items"],
+                         "an auto verdict nothing supports any more is dropped: the recommendation must be passed every time")
+
+    def test_args_builds_the_copy_and_prints_the_cost_and_the_follow_ups(self):
+        copy_ = self.tmp / "out" / "g2rec-ch09.workflow.js"
+        code, out, err = self.cli("g2-recommend-args", "g10-math", "--chapter", 9, "--lesson-run", self.tmp / "run.json",
+                                  "--g2", self.tmp / "g2.json", "--embed", copy_, "--args-out", self.tmp / "out" / "a.json")
+        self.assertEqual(code, 0, err)
+        self.assertIn("4 item(s) (1 held with no verdict, 3 excluded for typing)", out)
+        self.assertIn("run it with Workflow scriptPath and NO args", out)
+        self.assertIn("g2-recommend-collect", out)
+        self.assertEqual(embed_workflow.verify(copy_), [])
+        self.assertEqual(json.loads((self.tmp / "out" / "a.json").read_text())["items_sha256"], G.items_sha256(self.es))
+        code, out, _ = self.cli("g2-recommend-args", "g10-math", "--chapter", 9, "--lesson-run", self.tmp / "run.json",
+                                "--g2", self.tmp / "g2.json")
+        self.assertIn("nothing written", out)
+
+    def test_only_missing_leaves_out_what_a_file_already_covers(self):
+        k1 = self.es[0]["key"]
+        (self.tmp / "rec.json").write_text(json.dumps({"items": {k1: {"verdict": "exclude"}}}))
+        code, out, _ = self.cli("g2-recommend-args", "g10-math", "--chapter", 9, "--lesson-run", self.tmp / "run.json",
+                                "--g2", self.tmp / "g2.json", "--only-missing", self.tmp / "rec.json")
+        self.assertIn("3 item(s)", out)
+
+    @unittest.skipUnless(NODE, "node is needed to run the workflow under the stub runtime")
+    def test_collect_from_a_saved_run_and_a_stale_packet_is_refused(self):
+        info = G.prepare(book_config.load_book("g10-math"), 9, [self.tmp / "run.json"], self.tmp / "g2.json", self.tmp / "g2rec-ch09.workflow.js")
+        k1, k2, k3, k7 = (e["key"] for e in self.es)
+        rows = {k1: rec(book_quote="x^{2}"), k2: rec("fix", "typing error", book_quote="\\frac{1}{2}".replace("\\\\", "\\"),
+                fix={"answer_type": "expression", "key": "\\frac{1}{2}".replace("\\\\", "\\"), "marker_kind": "expression"}),
+                k3: rec("exclude", "stem damaged"), k7: rec("exclude", "partial answer")}
+        out = run_stub(Path(info["copies"][0]["script"]),
+                       {"stub": {"rec": rows, "ver": {k1: WorkflowUnderTheStub.VER, k2: WorkflowUnderTheStub.VER}}}, self.tmp)
+        self.assertTrue(out["ok"], out["error"])
+        saved = self.tmp / "ch09-wf_test.json"
+        saved.write_text(json.dumps(out["result"]))
+        target = self.tmp / "g2-ch09.recommended.json"
+        code, text, err = self.cli("g2-recommend-collect", "g10-math", "--chapter", 9, "--lesson-run", self.tmp / "run.json",
+                                   "--g2", self.tmp / "g2.json", "--run", saved, "--out", target, "--ids-out", self.tmp / "ids.json")
+        self.assertEqual(code, 0, err)
+        ids = json.loads((self.tmp / "ids.json").read_text())
+        self.assertEqual(ids, sorted(G.question_id(by_key(self.es)[k]["item"]) for k in (k1, k2)),
+                         "the newly live questions only: the accept and the fix, not the two exclusions")
+        self.assertTrue(all(i.startswith("q:g10m9s1-1-1:ex9-1-") for i in ids))
+        doc = json.loads(target.read_text())
+        self.assertEqual({k: v["verdict"] for k, v in doc["items"].items()}, {k1: "accept", k2: "fix", k3: "exclude", k7: "exclude"})
+        self.assertIn("would be LIVE", text)
+        self.assertEqual(list(doc["from_runs"].values())[0], out["result"]["embedded"]["generated_sha256"])
+        # a person decided an item after the packet was built: the run no longer matches, and the collector says so
+        g2 = json.loads((self.tmp / "g2.json").read_text())
+        g2["items"][k1] = {"verdict": "accept", "by": "Samuel Toma"}
+        (self.tmp / "g2.json").write_text(json.dumps(g2))
+        code, text, err = self.cli("g2-recommend-collect", "g10-math", "--chapter", 9, "--lesson-run", self.tmp / "run.json",
+                                   "--g2", self.tmp / "g2.json", "--run", saved, "--out", self.tmp / "other.json")
+        self.assertEqual(code, 2)
+        self.assertIn("no longer matches", err)
+        code, text, err = self.cli("g2-recommend-collect", "g10-math", "--chapter", 9, "--lesson-run", self.tmp / "run.json",
+                                   "--g2", self.tmp / "g2.json", "--run", saved, "--out", self.tmp / "other.json", "--allow-stale")
+        self.assertEqual(code, 0, err)
+        rep = json.loads((self.tmp / "other.json").read_text())["report"]
+        self.assertIn(k1, rep["no_longer_owed"], "a person decided it since: its recommendation is skipped, never applied over theirs")
+        self.assertNotIn(k1, json.loads((self.tmp / "other.json").read_text())["items"])
+
+
+class FanoutHook(unittest.TestCase):
+    """fanout.py close-chapter: passes the recommendation file to G2 once it exists (or a re-run would undo it) and prepares the copy."""
+
+    def setUp(self):
+        import fanout as F
+        self.F = F
+        self.tmp = Path(tempfile.mkdtemp(prefix="g2rec_fanout_"))
+        t = self.tmp
+        (t / "lessons").mkdir()
+        run, g2 = make_run()
+        (t / "lessons" / "wf_aaaaaaaa-aaa.json").write_text(json.dumps(run))
+        (t / "g2-ch09.json").write_text(json.dumps(g2))
+        plan = {"runs": [{"id": "lesson-g10m9s1-1", "stage": "S2-S4", "chapter": 9}]}
+        (t / "plan.json").write_text(json.dumps(plan))
+        self.keep = (F.PLAN_PATH, F.RUNS, F.status, F.EMBED, F.PACKETS)
+        F.PLAN_PATH, F.RUNS, F.EMBED, F.PACKETS = t / "plan.json", t, t / "embedded", t / "packets"
+        F.status = lambda: {"runs": [{"id": "lesson-g10m9s1-1", "saved": "runs/g10-math/lessons/wf_aaaaaaaa-aaa.json"}]}
+
+    def tearDown(self):
+        F = self.F
+        F.PLAN_PATH, F.RUNS, F.status, F.EMBED, F.PACKETS = self.keep
+        shutil.rmtree(self.tmp, ignore_errors=True)
+
+    def test_the_dry_run_sizes_the_recommendation_and_passes_the_file_only_once_it_exists(self):
+        out = self.F.close_chapter(9, dry_run=True)
+        self.assertNotIn("--recommend", out["commands"][0])
+        self.assertEqual(out["g2_recommend"]["items"], 4)
+        self.assertEqual(out["g2_recommend"]["by_state"], {"held": 1, "excluded": 3})
+        self.assertFalse(out["g2_recommend"]["recommendation_file_exists"])
+        self.assertEqual(out["then"], ["fanout.py config 9", "fanout.py prepare wcheck-ch09", "fanout.py prepare s5-draft-ch09"],
+                         "the plan's own steps are unchanged")
+        (self.tmp / "g2-ch09.recommended.json").write_text(json.dumps({"items": {}}))
+        out = self.F.close_chapter(9, dry_run=True)
+        self.assertIn("--recommend", out["commands"][0], "a re-run without it would undo the recommendation")
+        self.assertIn("g2-ch09.recommended.json", out["commands"][0])
+        self.assertTrue(out["g2_recommend"]["recommendation_file_exists"])
+
+    def test_prepare_g2rec_builds_the_copy_and_the_commands(self):
+        files = [self.tmp / "lessons" / "wf_aaaaaaaa-aaa.json"]
+        info = self.F.prepare_g2rec(9, files, ["wf_aaaaaaaa-aaa"])
+        self.assertEqual((info["stage"], info["items"], info["by_state"]), ("G2R", 4, {"held": 1, "excluded": 3}))
+        self.assertEqual(len(info["copies"]), 1)
+        self.assertTrue(info["copies"][0].endswith("g2rec-ch09.workflow.js"))
+        self.assertTrue((self.tmp / "packets" / "g2rec-ch09.args.json").exists())
+        self.assertEqual(info["agents"], 1 + 1, "one batch: one recommending agent and at most one verifying agent")
+        self.assertLess(info["cost_usd"][0], info["cost_usd"][1])
+        self.assertIn("--stage G2R", info["meter"])
+        self.assertIn("g2rec/ch09-<runId>.json", info["save_to"])
+        self.assertIn("BEFORE", info["launch"])
+        self.assertTrue(any("g2-recommend-collect" in c for c in info["after"]))
+        # idempotent: the same bytes
+        copy_ = self.tmp / "embedded" / "g2rec-ch09.workflow.js"
+        before = copy_.read_bytes()
+        self.F.prepare_g2rec(9, files, ["wf_aaaaaaaa-aaa"])
+        self.assertEqual(copy_.read_bytes(), before)
+
+
+# ---------------------------------------------------------------------------------------------- the workflow, under the stub
+RESPONDER = """
+// a canned responder: rec rows from stub.rec (by item id), ver rows from stub.ver; stub.omit_first drops an item from the first answer
+export async function respond({ label, prompt, schema, phase, args, stub }) {
+  const keys = [...prompt.matchAll(/^\\[([^\\]\\n]+)\\] /gm)].map((m) => m[1])
+  stub.seen = stub.seen || {}
+  if (label.includes(':rec:')) {
+    const first = !label.endsWith(':again')
+    const rows = keys.filter((k) => !(first && (stub.omit_first || []).includes(k))).map((k) => Object.assign({ key: stub.bracket ? `[${k}]` : k }, stub.rec[k]))
+    return { results: rows.concat(first ? (stub.extra_rec || []) : []) }
+  }
+  return { results: keys.map((k) => Object.assign({ key: k }, stub.ver[k])) }
+}
+"""
+
+
+def run_stub(script: Path, fixture: dict, tmp: Path) -> dict:
+    (tmp / "responder.mjs").write_text(RESPONDER)
+    fixture = dict(fixture, responder=str(tmp / "responder.mjs"), args={})
+    (tmp / "fx.json").write_text(json.dumps(fixture))
+    r = subprocess.run([NODE, str(STUB), str(script), str(tmp / "fx.json")], capture_output=True, text=True, timeout=120)
+    return json.loads(r.stdout)
+
+
+@unittest.skipUnless(NODE, "node is needed to run the workflow under the stub runtime")
+class WorkflowUnderTheStub(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.tmp = Path(tempfile.mkdtemp(prefix="g2rec_"))
+        cls.lrun, cls.g2 = make_run()
+        (cls.tmp / "run.json").write_text(json.dumps(cls.lrun))
+        (cls.tmp / "g2.json").write_text(json.dumps(cls.g2))
+        cls.book = book_config.load_book("g10-math")
+        cls.info = G.prepare(cls.book, 9, [cls.tmp / "run.json"], cls.tmp / "g2.json", cls.tmp / "g2rec-ch09.workflow.js", batch=3)
+        cls.script = Path(cls.info["copies"][0]["script"])
+        cls.keys = [e["key"] for e in G.recommendable([cls.lrun], 9, "g10m", cls.g2)]
+
+    @classmethod
+    def tearDownClass(cls):
+        shutil.rmtree(cls.tmp, ignore_errors=True)
+
+    def stub(self, rec, ver, **kw):
+        top = {k: v for k, v in kw.items() if k in ("responses", "serialize_stages")}
+        return run_stub(self.script, {"stub": {"rec": rec, "ver": ver, **{k: v for k, v in kw.items() if k not in top}}, **top}, self.tmp)
+
+    def rows(self, **over):
+        k1, k2, k3, k7 = self.keys
+        base = {k1: rec(book_quote="x^{2}", note="REC-NOTE-88"),
+                k2: rec("fix", "typing error", book_quote="\\frac{1}{2}",
+                        fix={"answer_type": "expression", "key": "\\frac{1}{2}", "marker_kind": "expression"}),
+                k3: rec("exclude", "stem damaged", note="the list is not in the stem"),
+                k7: rec("hold", "marker cannot check")}
+        base.update(over)
+        return base
+
+    VER = {"own_answer": "x^2", "verdict": "confirmed", "other_correct_answers": False, "note": "ok"}
+
+    def test_the_copy_is_the_script_with_its_packet_and_verifies(self):
+        self.assertEqual(embed_workflow.verify(self.script), [])
+        a = embed_workflow.read_args(self.script)
+        self.assertEqual((a["stage"], a["chapter"], len(a["items"]), a["batch"]), ("G2R", 9, 4, 3))
+        text = self.script.read_text()
+        self.assertTrue(text.startswith("export const meta = "))
+        self.assertEqual(G.prepare(self.book, 9, [], None, None)["items"], 0, "no run: nothing owes a recommendation")
+
+    def test_a_copy_refuses_args_and_a_plain_script_refuses_to_run(self):
+        # the generated copy takes no args; the runbook script itself is only ever run as a copy
+        plain = run_stub(WORKFLOW, {"stub": {}}, self.tmp)
+        self.assertFalse(plain["ok"])
+        self.assertIn("generated copy", plain["error"])
+
+    def test_one_recommender_per_batch_and_a_verifier_only_for_what_would_go_live(self):
+        k1, k2, k3, k7 = self.keys
+        out = self.stub(self.rows(), {k1: self.VER, k2: self.VER})
+        self.assertTrue(out["ok"], out["error"])
+        calls = out["calls"]
+        recs = [c for c in calls if ":rec:" in c["label"]]
+        vers = [c for c in calls if ":ver:" in c["label"]]
+        self.assertEqual(len(recs), 2, "4 items in batches of 3")
+        self.assertEqual(len(vers), 1, "only k1 (accept) and k2 (fix) are verified, and they sit in the first batch")
+        for c in calls:
+            self.assertEqual((c["model"], c["effort"]), ("sonnet", "high"))
+        self.assertEqual({c["phase"] for c in recs}, {"G2R Recommend"})
+        self.assertEqual({c["phase"] for c in vers}, {"G2R Verify"})
+        for k in (k3, k7):
+            self.assertNotIn(f"[{k}]", vers[0]["prompt"], "an exclude and a hold are never verified: they put nothing in front of a student")
+        r = out["result"]
+        self.assertEqual((r["stage"], r["workflow"], r["prompts_version"], r["chapter"]), ("G2R", "g2-recommend", "g2rec-v1", 9))
+        self.assertEqual(r["keys"], self.keys)
+        self.assertEqual(r["agents"], {"recommend": 2, "verify": 1})
+        self.assertEqual(r["tally"], {"accept/confirmed": 1, "fix/confirmed": 1, "exclude": 1, "hold": 1})
+        self.assertEqual(r["embedded"]["generated_sha256"], embed_workflow.embedded_info(self.script.read_text())["generated_sha256"],
+                         "a saved run says which script ran")
+        self.assertEqual(r["items_sha256"], embed_workflow.read_args(self.script)["items_sha256"])
+
+    def test_the_recommender_sees_everything_the_verifier_is_blind_to(self):
+        k1, k2, *_ = self.keys
+        out = self.stub(self.rows(), {k1: self.VER, k2: self.VER})
+        rec_prompt = next(c["prompt"] for c in out["calls"] if ":rec:b01" in c["label"])
+        ver_prompt = next(c["prompt"] for c in out["calls"] if ":ver:" in c["label"])
+        for must in ("BLIND-MARK-77", "BOOK WORKING", "PRINTED ANSWER", "THE THREE-WAY CHECK", "TYPING PROBLEMS", "x\\cdot x=x^{2}"):
+            self.assertIn(must, rec_prompt)
+        self.assertIn("APP MARKER, DETERMINISTIC", rec_prompt)
+        self.assertIn("the typed key is EQUAL to the stem's expression", rec_prompt, "the marker's fact about the typed key is shown to the recommender")
+        self.assertNotIn("APP MARKER", ver_prompt, "the verifier is not told what the marker found")
+        self.assertNotIn("BLIND-MARK-77", ver_prompt, "the verifier never sees the blind solver's answer")
+        self.assertNotIn("REC-NOTE-88", ver_prompt, "nor the recommender's reasoning")
+        self.assertNotIn("THE THREE-WAY CHECK", ver_prompt)
+        for must in ("THE KEY", "own_answer BEFORE you look at the key", "THE BOOK'S WORKING"):
+            self.assertIn(must, ver_prompt)
+        self.assertIn("\\frac{1}{2}", ver_prompt, "the key a fix proposes is what the verifier is asked about")
+        self.assertIn("NEVER an option of your own", rec_prompt)
+        self.assertIn("never accept it", rec_prompt)
+
+    def test_an_item_the_agent_left_out_is_asked_again_once(self):
+        k1, k2, *_ = self.keys
+        out = self.stub(self.rows(), {k1: self.VER, k2: self.VER}, omit_first=[k2])
+        again = [c for c in out["calls"] if c["label"].endswith(":again")]
+        self.assertEqual(len(again), 1)
+        self.assertIn(f"[{k2}]", again[0]["prompt"])
+        self.assertNotIn(f"[{k1}]", again[0]["prompt"], "only the items left out are asked again")
+        self.assertEqual(out["result"]["problems"], [])
+        self.assertEqual(sum(1 for r in out["result"]["results"] if r["rec"]), 4)
+
+    def test_a_dead_recommender_leaves_its_items_without_a_verdict(self):
+        k1, k2, k3, k7 = self.keys
+        labels = [c["label"] for c in self.stub(self.rows(), {k1: self.VER, k2: self.VER})["calls"] if ":rec:" in c["label"]]
+        out = self.stub(self.rows(), {k1: self.VER, k2: self.VER},
+                        responses={labels[1]: None, labels[1] + ":again": None})
+        self.assertTrue(out["ok"], out["error"])
+        res = {r["key"]: r for r in out["result"]["results"]}
+        self.assertIsNone(res[k7]["rec"], "the second batch's agent died twice")
+        self.assertTrue(any(k7 in p for p in out["result"]["problems"]))
+        self.assertIsNotNone(res[k1]["rec"])
+
+    def test_a_dead_verifier_leaves_the_verdict_unconfirmed(self):
+        k1, k2, *_ = self.keys
+        ver_label = next(c["label"] for c in self.stub(self.rows(), {k1: self.VER, k2: self.VER})["calls"] if ":ver:" in c["label"])
+        out = self.stub(self.rows(), {k1: self.VER, k2: self.VER}, responses={ver_label: None})
+        self.assertTrue(out["ok"], out["error"])
+        self.assertTrue(any("unconfirmed" in p for p in out["result"]["problems"]))
+        self.assertEqual(out["result"]["tally"].get("accept/unverified"), 1)
+        # the collector then recommends hold, never accept
+        es = G.recommendable([self.lrun], 9, "g10m", self.g2)
+        doc = G.collect(es, [out["result"]], marker_fn=lambda rows: {}, identity_fn=lambda rows: {})
+        self.assertEqual(doc["items"][k1]["verdict"], "hold")
+        self.assertEqual(doc["items"][k1]["class"], "unconfirmed")
+
+    def test_a_teaching_only_retype_is_not_sent_to_the_verifier(self):
+        k1, k2, *_ = self.keys
+        rows = self.rows(**{k2: rec("fix", "several parts", fix={"answer_type": "not_markable", "not_markable_reason": "several parts"})})
+        out = self.stub(rows, {k1: self.VER})
+        ver = next(c["prompt"] for c in out["calls"] if ":ver:" in c["label"])
+        self.assertNotIn(f"[{k2}]", ver)
+        self.assertIn(f"[{k1}]", ver)
+
+    def test_an_answer_for_another_batch_or_twice_is_ignored_and_reported(self):
+        k1, k2, k3, k7 = self.keys
+        extra = [dict(key=k7, **rec("accept", note="WRONG BATCH")), dict(key=k1, **rec("exclude", note="TWICE"))]
+        out = self.stub(self.rows(), {k1: self.VER, k2: self.VER}, extra_rec=extra)
+        self.assertTrue(out["ok"], out["error"])
+        probs = " | ".join(out["result"]["problems"])
+        self.assertIn("not an item of this batch", probs)
+        self.assertIn("answered twice", probs)
+        res = {r["key"]: r for r in out["result"]["results"]}
+        self.assertEqual(res[k1]["rec"]["verdict"], "accept", "the first answer is kept")
+        self.assertEqual(res[k7]["rec"]["verdict"], "hold", "the batch that owns k7 answered it")
+
+    def test_an_id_written_with_its_brackets_is_read(self):
+        k1, k2, *_ = self.keys
+        out = self.stub(self.rows(), {k1: self.VER, k2: self.VER}, bracket=True)
+        self.assertEqual(out["result"]["problems"], [])
+        self.assertEqual(sum(1 for r in out["result"]["results"] if r["rec"]), 4)
+
+    def test_stage_results_are_plain_json_whatever_the_runtime_does_with_them(self):
+        """2026-10-01: the real runtime hands pipeline() results back SERIALIZED (a Map arrives as {}); the first version of this script
+        returned Maps from its stages and died at its last line, after every agent had run ("d.got.get is not a function"), while the
+        stub kept live objects. The stub now serializes (modes "all" and "final"); the result must be the same in every mode, and the
+        verifying agents must run in each."""
+        k1, k2, k3, k7 = self.keys
+        results = {}
+        for mode in ("all", "final", False):
+            out = self.stub(self.rows(), {k1: self.VER, k2: self.VER}, serialize_stages=mode)
+            self.assertTrue(out["ok"], f"{mode}: {out['error']}")
+            self.assertEqual(sum(1 for c in out["calls"] if ":ver:" in c["label"]), 1, f"{mode}: the verifier ran")
+            self.assertEqual(out["result"]["tally"], {"accept/confirmed": 1, "fix/confirmed": 1, "exclude": 1, "hold": 1}, mode)
+            self.assertEqual(out["result"]["problems"], [], mode)
+            results[str(mode)] = out["result"]
+            # what a stage returns is data: nothing in the result is a Map or needs one
+            self.assertTrue(all(isinstance(r["rec"], dict) for r in out["result"]["results"]))
+        self.assertEqual(results["all"], results["final"])
+        self.assertEqual(results["all"], results["False"])
+
+    def test_the_stub_really_serializes_pipeline_results(self):
+        # guards the guard: a script that returns a Map from a stage must NOT work under the stub's default (it does not in the real runtime)
+        script = self.tmp / "maps.workflow.js"
+        script.write_text("export const meta = {\n  name: 'maps',\n  description: 'x',\n}\n"
+                          "const done = await pipeline([1, 2], async (n) => ({ n, m: new Map([['k', n]]) }), async (r) => r)\n"
+                          "return done.map((d) => d.m.get('k'))\n")
+        for mode, ok in (("all", False), ("final", False), (False, True)):
+            out = run_stub(script, {"stub": {}, "serialize_stages": mode}, self.tmp)
+            self.assertEqual(out["ok"], ok, f"{mode}: {out['error']}")
+            if not ok:
+                self.assertIn("get is not a function", out["error"] or "")
+
+    def test_the_classes_the_prompt_offers_are_the_classes_the_collector_knows(self):
+        src = WORKFLOW.read_text()
+        block = re.search(r"const CLASSES = \[(.*?)\n\]", src, re.S).group(1)
+        js = tuple(re.findall(r"^\s*'([^']+)',", block, re.M))
+        self.assertEqual(js, G.CLASSES)
+
+    def test_collected_from_the_stubs_run_end_to_end(self):
+        k1, k2, k3, k7 = self.keys
+        out = self.stub(self.rows(), {k1: self.VER, k2: self.VER})
+        es = G.recommendable([self.lrun], 9, "g10m", self.g2)
+        doc = G.collect(es, [out["result"]], marker_fn=lambda rows: {}, identity_fn=lambda rows: {})
+        self.assertEqual({k: v["verdict"] for k, v in doc["items"].items()}, {k1: "accept", k2: "fix", k3: "exclude", k7: "exclude"},
+                         "k7's hold becomes exclude: its typed shape (invented options, no key) cannot be emitted")
+
+
+# ---------------------------------------------------------------------------------------------- the app's own marker
+@unittest.skipUnless(NODE and (EX.parent.parent / "app" / "src" / "lib" / "answer-marker.ts").exists(), "needs node and the app's marker")
+class TheAppsMarker(unittest.TestCase):
+    def test_a_readable_key_passes_and_a_spec_the_app_does_not_know_is_rejected(self):
+        ok = {"kind": "expression", "key": "\\frac{27}{4}", "form": None, "variables": [], "tolerance": None}
+        bad = {"kind": "expression", "key": "x", "form": "bogus_form", "variables": ["x"], "tolerance": None}
+        unreadable = {"kind": "expression", "key": "\\sqrt{-}", "form": None, "variables": [], "tolerance": None}
+        out = G.run_marker_check([{"id": "a", "choices": {"marker": ok}}, {"id": "b", "choices": {"marker": bad}},
+                                  {"id": "c", "choices": {"marker": unreadable}}])
+        self.assertNotIn("a", out)
+        self.assertIn("b", out)
+        self.assertIn("rejects the spec", out["b"])
+
+    def test_a_fix_whose_key_the_marker_cannot_read_is_not_live(self):
+        run, g2 = make_run()
+        es = G.recommendable([run], 9, "g10m", g2)
+        k2 = "g10m9s1-1:Ex9-1:2"
+        fix = {"answer_type": "expression", "key": "\\frac{1}{2}", "marker_kind": "expression", "form": "", "variables": []}
+        r = {"results": [{"key": k2, "rec": rec("fix", "typing error", book_quote="\\frac{1}{2}", fix=fix), "ver": CONFIRMED}]}
+        doc = G.collect(es, [r])                                    # the real marker
+        self.assertEqual(doc["items"][k2]["verdict"], "fix", doc["items"][k2]["note"])
+        self.assertEqual(doc["report"]["live"], [k2])
+
+
+# ---------------------------------------------------------------------------------------------- Grade 10's real chapters
+CH1 = EX / "runs" / "g10-math" / "gates" / "g2-ch01.json"
+CH2 = EX / "runs" / "g10-math" / "gates" / "g2-ch02.json"
+
+
+@unittest.skipUnless(CH1.exists() and CH2.exists(), "Chapters 1 and 2 are not in this checkout")
+class RealChapters(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.book = book_config.load_book("g10-math")
+
+    def entries(self, ch):
+        lr = G.record_runs(self.book, ch)
+        g2p = EX / "runs" / "g10-math" / f"g2-ch{ch:02d}.json"
+        g2 = json.loads(g2p.read_text()) if g2p.exists() else None
+        return lr, G.recommendable([G.load_run(p) for p in lr], ch, "g10m", g2)
+
+    def test_the_two_chapters_have_items_of_both_kinds_and_none_twice(self):
+        for ch in (1, 2):
+            _, es = self.entries(ch)
+            self.assertTrue(es)
+            self.assertEqual(len({e["key"] for e in es}), len(es))
+            self.assertEqual({e["state"] for e in es}, {"held", "excluded"})
+            self.assertTrue(all(e["key"].startswith(f"g10m{ch}s") for e in es))
+
+    def test_the_known_cases_are_in_the_packet(self):
+        _, es = self.entries(1)
+        keys = {e["key"]: e for e in es}
+        self.assertEqual(keys["g10m1s7-3:Ex1-9:11"]["state"], "held")
+        self.assertEqual(keys["g10m1s7-3:Ex1-9:17"]["state"], "excluded")
+        self.assertEqual(keys["g10m1s3-1:Ex1-1:4c"]["state"], "excluded")
+
+    def test_the_packet_embeds_and_verifies_for_both_chapters(self):
+        with tempfile.TemporaryDirectory() as t:
+            for ch in (1, 2):
+                lr, es = self.entries(ch)
+                info = G.prepare(self.book, ch, lr, EX / "runs" / "g10-math" / f"g2-ch{ch:02d}.json", Path(t) / f"g2rec-ch{ch:02d}.workflow.js")
+                self.assertEqual(info["items"], len(es))
+                self.assertEqual(info["parts"], 1)
+                for c in info["copies"]:
+                    self.assertEqual(embed_workflow.verify(Path(c["script"])), [])
+                    self.assertLess(c["bytes"], 1_000_000)
+
+    def test_the_book_text_of_every_item_is_in_its_packet(self):
+        _, es = self.entries(2)
+        a = G.build_args(self.book, 2, es)
+        for x in a["items"]:
+            it = x["item"]
+            self.assertTrue(it["solution"] and it["stem"], x["key"])
+
+
+if __name__ == "__main__":
+    unittest.main()

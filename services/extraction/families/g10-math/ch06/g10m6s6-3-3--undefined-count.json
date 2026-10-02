@@ -1,0 +1,105 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s6-3-3:undefined-count",
+ "kind": "family",
+ "lo_id": "lo:g10m6s6-3-3",
+ "parent_question_id": "q:g10m6s6-3-3:ex6-8-55a",
+ "source_page": 232,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "choice": [
+    -4,
+    -3,
+    -2,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "q",
+   "choice": [
+    -3,
+    -2,
+    -1,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "name": "sq",
+   "let": "'+' if q > 0 else '-'"
+  },
+  {
+   "name": "qa",
+   "let": "abs(q)"
+  },
+  {
+   "name": "L",
+   "choice": [
+    -360,
+    -270,
+    -180,
+    -90,
+    0,
+    90,
+    180
+   ]
+  },
+  {
+   "name": "w",
+   "choice": [
+    270,
+    360,
+    450,
+    540,
+    630,
+    720
+   ]
+  },
+  {
+   "name": "R",
+   "let": "L + w"
+  },
+  {
+   "name": "first",
+   "let": "L + ((90 - L + 720) % 180)"
+  },
+  {
+   "name": "last",
+   "let": "R - ((R - 90 + 720) % 180)"
+  },
+  {
+   "require": "first <= last",
+   "why": "the interval must contain at least one asymptote"
+  },
+  {
+   "name": "d",
+   "let": "last - first"
+  },
+  {
+   "name": "k",
+   "let": "d // 180"
+  },
+  {
+   "name": "count",
+   "let": "k + 1"
+  }
+ ],
+ "stem": "Consider $f(\\theta)={=a}\\tan\\theta {=sq} {=qa}$ for ${=L}^{\\circ}\\le\\theta\\le{=R}^{\\circ}$. For how many values of $\\theta$ in this interval is $f(\\theta)$ undefined?",
+ "answer": "count",
+ "solution": [
+  "$f$ is undefined exactly where the graph has a vertical asymptote. A tangent graph has an asymptote at $\\theta=90^{\\circ}$ and another one every $180^{\\circ}$ (its period), in both directions: $\\ldots, -270^{\\circ}, -90^{\\circ}, 90^{\\circ}, 270^{\\circ}, 450^{\\circ}, 630^{\\circ}, 810^{\\circ}, \\ldots$ The values $a={=a}$ and $q={=q}$ do not move the asymptotes.",
+  "The first asymptote at or after ${=L}^{\\circ}$ is at $\\theta={=first}^{\\circ}$.",
+  "The last asymptote at or before ${=R}^{\\circ}$ is at $\\theta={=last}^{\\circ}$. An end value of the interval counts if it is an asymptote, because $f$ is not defined there.",
+  "From ${=first}^{\\circ}$ to ${=last}^{\\circ}$ is ${=d}^{\\circ}$, which is ${=k}$ steps of $180^{\\circ}$. There is one more asymptote than there are steps: ${=k}+1={=count}$.",
+  "So $f(\\theta)$ is undefined for ${=count}$ values of $\\theta$ in the interval."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced tier: the book's domain idea (the asymptotes are left out of the domain) pushed over intervals longer than one period, with the twist that an end of the closed interval may itself be an asymptote (L or R equal to -270, -90, 90, 270, ...) and must be counted. a and q are in the stem but do not matter (the point of the characteristic). The first and last asymptotes are found with modulo arithmetic shifted by +720 so no operand is ever negative; every instance has at least two asymptotes (first <= last is also enforced). Largest R is 900, largest count is 6 or less. The sign of q is printed through a string let; q is never 0."
+}

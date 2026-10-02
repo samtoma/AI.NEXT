@@ -1,0 +1,306 @@
+{
+  "coverage_version": 1,
+  "book": "g10-math",
+  "course_id": "course:us-g10-math-en",
+  "chapters": [
+    9
+  ],
+  "status": "RED",
+  "summary": {
+    "checks": 23,
+    "hold": 21,
+    "excepted": 0,
+    "fail": 2
+  },
+  "checks": [
+    {
+      "id": "pages",
+      "title": "Body pages = pages assigned to lessons + pages excluded with a reason",
+      "want": 25,
+      "got": 25,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "worked_examples",
+      "title": "Manifest worked examples = worked-example items accounted for",
+      "want": 12,
+      "got": 12,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "items_mapped_once",
+      "title": "Exercise items = items mapped to exactly one objective",
+      "want": 135,
+      "got": 135,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "mapped_items_accounted",
+      "title": "Mapped exercise items = book questions + items excluded with a reason",
+      "want": 135,
+      "got": 135,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": [],
+      "notes": [
+        "exercise items by fate: excluded 9, teaching 5, verified 121"
+      ]
+    },
+    {
+      "id": "objective_evidence",
+      "title": "Objectives = objectives with a claim, a book question and worked-example-or-exercise evidence (two kinds or more)",
+      "want": 15,
+      "got": 14,
+      "state": "fails",
+      "failures": [
+        {
+          "scope": "lo:g10m9s3-1-4",
+          "detail": "no claim"
+        }
+      ],
+      "excepted_scopes": []
+    },
+    {
+      "id": "tier_floor",
+      "title": "Objectives × tiers = cells with at least one live item, book or generated (FR-4305)",
+      "want": 45,
+      "got": 44,
+      "state": "fails",
+      "failures": [
+        {
+          "scope": "lo:g10m9s4-1-4",
+          "detail": "no live item at tier(s) advanced"
+        }
+      ],
+      "excepted_scopes": [],
+      "notes": [
+        "generated items live: 201 of 201 (0 by the row's own status, the rest by the loader's rule: a maths course loads its bundle live, answer 37a — review_policy.generated_item_is_live)"
+      ]
+    },
+    {
+      "id": "module_widgets",
+      "title": "Modules = modules with a widget question + signed-off widget gaps (FR-4306)",
+      "want": 1,
+      "got": 1,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "distractor_refutations",
+      "title": "Tagged distractors and predicates = those whose misconception has a refutation (FR-1112)",
+      "want": 37,
+      "got": 37,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "misconception_refutations",
+      "title": "Catalogue entries = entries with a refutation",
+      "want": 17,
+      "got": 17,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "s5_catalogue",
+      "title": "Entries S5 kept = entries in the catalogue; no dropped entry in it",
+      "want": 17,
+      "got": 17,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": [],
+      "notes": [
+        "4 entr(ies) dropped by the verifier"
+      ]
+    },
+    {
+      "id": "figures",
+      "title": "Manifest figures = visuals + viz gaps with a reason + figures withheld for giving the answer away (per chapter); a gap whose reason is a pipeline error is a failure (consistency review A3)",
+      "want": 2,
+      "got": 2,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "maths_images",
+      "title": "Maths images to transcribe = accepted by hash + by agreement + by the third reading + resolved at G0b; unresolved = 0",
+      "want": 546,
+      "got": 546,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": [],
+      "notes": [
+        "by route: hash 453, agreement 86, third_reading 7, resolved_at_g0b 0"
+      ]
+    },
+    {
+      "id": "items_typed_once",
+      "title": "Exercise items = numeric + choice + expression + not_markable",
+      "want": 135,
+      "got": 135,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": [],
+      "notes": [
+        "by type: choice 6, expression 1, not_markable 5, numeric 123"
+      ]
+    },
+    {
+      "id": "solution_sources",
+      "title": "Book questions = book_worked + book_worked_epub + teachers_guide (+ answer_anchored)",
+      "want": 133,
+      "got": 133,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": [],
+      "notes": [
+        "by source: book_worked 12, book_worked_epub 121"
+      ]
+    },
+    {
+      "id": "lesson_provenance",
+      "title": "Lessons = lessons carrying book provenance; parts consecutive and numbered 1..m",
+      "want": 4,
+      "got": 4,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "teacher_only",
+      "title": "Teacher-only blocks = blocks dropped at S2; reaching a claim = 0 (FR-4408)",
+      "want": 0,
+      "got": 0,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "notation",
+      "title": "Un-normalised decimal commas and (x; y) pairs left in the bundles = 0 (decision 15); no display-only environment (align*) inside the app's inline maths",
+      "want": 0,
+      "got": 0,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": [],
+      "notes": [
+        "123 S3 item(s) printed in the book's notation were normalised"
+      ]
+    },
+    {
+      "id": "katex",
+      "title": "Maths segments in student-facing text the app's KaTeX cannot parse = 0 (A2)",
+      "want": 0,
+      "got": 0,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "book_pictures",
+      "title": "Book-picture stand-ins (answer 37d) that are not servable = 0: each stands in for a question of its own objective, carries alt text and stand_in, and its image is in app/public at its /book-figures/ path",
+      "want": 0,
+      "got": 0,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "captions",
+      "title": "Figure captions that describe a withheld point (the exercise's unknown) as marked or shown = 0",
+      "want": 0,
+      "got": 0,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "answer_text",
+      "title": "Typed questions whose answer text is not their marker key, rendered = 0 (A1)",
+      "want": 0,
+      "got": 0,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "asked_forms",
+      "title": "Typed questions whose stem asks for a form the book's rules name, and whose marker does not check it = 0 (A9)",
+      "want": 0,
+      "got": 0,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "claims_served",
+      "title": "Claims in the bundles = claims in the lessons' content files",
+      "want": 114,
+      "got": 114,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    }
+  ],
+  "g1_exceptions": [],
+  "widgets_per_chapter": {
+    "module:g10m-c09": 1
+  },
+  "refutations_per_misconception": {
+    "mc:g10m9s2-1-3:rounds-n-to-nearest-not-up": 5,
+    "mc:g10m9s2-1-4:divides-by-n-without-subtracting-one": 4,
+    "mc:g10m9s2-1-4:uses-interest-amount-as-accumulated-amount": 4,
+    "mc:g10m9s2-1-4:uses-later-age-as-number-of-years": 4,
+    "mc:g10m9s3-1-1:rounds-before-the-end": 4,
+    "mc:g10m9s3-1-3:bigger-rate-wins": 6,
+    "mc:g10m9s4-1-1:interest-on-full-cash-price": 5,
+    "mc:g10m9s4-1-1:interest-on-interest-formula": 5,
+    "mc:g10m9s4-1-1:smaller-monthly-payment-looks-cheaper": 5,
+    "mc:g10m9s4-1-4:rate-not-percent": 4,
+    "mc:g10m9s4-1-4:simple-growth": 5,
+    "mc:g10m9s4-1-4:swapped-rate-years": 4,
+    "mc:g10m9s5-1-1:mixes-currencies-before-converting": 5,
+    "mc:g10m9s5-1-1:multiplies-or-divides-the-wrong-way": 5,
+    "mc:g10m9s5-1-1:uses-the-estimated-future-rate": 4,
+    "mc:g10m9s5-1-3:compare-without-converting": 4,
+    "mc:g10m9s5-1-3:converts-then-picks-largest": 4
+  },
+  "notation": {
+    "items_printed_in_book_notation": 123,
+    "residual_in_bundles": 0
+  },
+  "missing_inputs": [],
+  "inputs": {
+    "content/g10m9s2-1.json": "8f75a4d528b0049f3c8759c355282523787f0dc0bd11af9ad9550f12975db79e",
+    "content/g10m9s3-1.json": "e458207e7db0155d8e57f4024478bf6ea95c113bc211fccf838e258d19f9d58d",
+    "content/g10m9s4-1.json": "7c31f7f28cdb81c49f5ef1f2f486de6a3b4e1b62a0e7cc8e69e2b8860449d820",
+    "content/g10m9s5-1.json": "d1a502862b24dfd698792ed992857a925ca470ef929e9e8e9edd446dac364d36",
+    "generated/generated-questions.json": "c7d5805eb4f584325623f1e6481f44936495f960c6a2744b09127cb351de7a21",
+    "generated/misconceptions.json": "dec666f29448065872ce1c635415f4644c0a92f974202bf8cec45260357a8406",
+    "generated/widget-questions.json": "4ddf3080472f923d71741071788791f9d7264b791caebf03b59e7dff2cc7ac1c",
+    "manifest": "d749f7d1c4052342298d122b82bcea3117e4303b74e16b75062fd6606146c7b1",
+    "maths": "1c4240c96084bf9395980fe466c3a443681cf2b0da74adf38081967b4f8428e6",
+    "objectives/g10m9s2-1.json": "e625586605ff74ecb3e877c5748c7adcc4922e2fbf2c5c9dbc098fd781ba41de",
+    "objectives/g10m9s3-1.json": "429bd75c19292fcf31605502c11f8d46508ae7b763424e4f7382ac47c429ddea",
+    "objectives/g10m9s4-1.json": "8ecfb5321620244d10403c217a28727b6a8e915a7e1278f7b1029fdce677fdab",
+    "objectives/g10m9s5-1.json": "21a8d098e208d4c5532f6d030fc8996ffe86345ca4e57ac1f2cb400b22f54a88",
+    "runs/lesson/g10m9s2-1.json": "557d7ac2d4c2a70744569e9ce0f2bd7f1423c3cd58ddd1ec1f1a70469c840b4f",
+    "runs/lesson/g10m9s3-1.json": "f9043d612bb17629a377a32b6425ecc96ef7d0db2c2ac128647278d4972fcf9d",
+    "runs/lesson/g10m9s4-1.json": "a0036aa35051fc9caf3ae95da85d7755554e43fbadca4f696fa169f6c2c571f0",
+    "runs/lesson/g10m9s5-1.json": "a622e06226a8608f32e36419daca831b97a7ff70d16d6e4c76ffe6ab5608cb54",
+    "s5/final-ch09-wf_253279cc-68a.json": "fa3c1719521af005df523c1c571c4c89b04548bcb404ed83edc79fe8da75cceb",
+    "seed/g10m-c09.json": "fbe2e4e1662973f2c932ac847edc1dbfb615ba0827af74c4a8f9ab31a7431920",
+    "widget-gaps": "d13d6a6852de5a85143fbadac905a7bda3a8b05bb70a70f7f484c91071c24f49"
+  },
+  "exceptions": []
+}

@@ -32,7 +32,8 @@
  * The expected order is `catalogueCompare` from `spine-maths-fixture.mts` —
  * the TypeScript statement of `MODULE_ORDER` that `spine-order-db.test.mts`
  * already holds to the SQL — behind the registry position of the course
- * (`SUBJECT_IDS`, lib/subjects.ts) for the readers of every subject.
+ * (`COURSE_IDS`, lib/courses.ts — the National courses in the subject
+ * registry's order) for the readers of every course.
  *
  * @covers FR-3217
  */
@@ -54,7 +55,7 @@ import {
 } from "./module-order.ts";
 import { SPINE_LO_SQL } from "./spine-lo-query.ts";
 import { MATHS_SEED_FILES, catalogueCompare, termRank } from "./spine-maths-fixture.mts";
-import { SUBJECTS, SUBJECT_IDS } from "./subjects.ts";
+import { COURSE_IDS } from "./courses.ts";
 
 const { LO_MODULE_SELECT, getLessonCatalog } = await import("./lesson.ts");
 const { getGalleryData } = await import("./visuals.ts");
@@ -108,6 +109,17 @@ function nodeSubjectView(): string {
   return m[0];
 }
 
+/** migration 034's `course_lessons` table, as shipped (feature 003, book sections) */
+function courseLessonsTable(): string {
+  const sql = readFileSync(
+    fileURLToPath(new URL("../../../db/migrations/034-book-sections.sql", import.meta.url)),
+    "utf8"
+  );
+  const m = sql.match(/CREATE TABLE IF NOT EXISTS course_lessons \([\s\S]*?\n\);/);
+  assert.ok(m, "migration 034 defines course_lessons");
+  return m[0];
+}
+
 /** Deterministic shuffle, so the physical insert order is not catalogue order. */
 function scramble<T>(xs: T[]): T[] {
   return xs
@@ -122,8 +134,8 @@ const moduleOrderOf = new Map(
 );
 const moduleOf = new Map(seeds.edges.filter((e) => e.type === "teaches").map((e) => [e.dst, e.src]));
 const courseOfModule = new Map(seeds.edges.filter((e) => e.type === "part_of").map((e) => [e.src, e.dst]));
-const REGISTRY_COURSES = SUBJECT_IDS.map((id) => SUBJECTS[id].courseId as string);
-/** `SUBJECT_RANK` in TypeScript: the registry position of the module's course. */
+const REGISTRY_COURSES: readonly string[] = COURSE_IDS;
+/** `COURSE_RANK` in TypeScript: the registry position of the module's course. */
 const subjectRankOfModule = (moduleId: string | null) => {
   const c = moduleId ? courseOfModule.get(moduleId) : undefined;
   return c && REGISTRY_COURSES.includes(c) ? REGISTRY_COURSES.indexOf(c) : REGISTRY_COURSES.length;
@@ -188,7 +200,8 @@ before(async () => {
   await db.query(`
     CREATE TABLE graph_nodes (
       id text PRIMARY KEY, kind text NOT NULL, label text NOT NULL, description text,
-      syllabus_ref text, order_in_parent int, source_page int, subject text
+      syllabus_ref text, order_in_parent int, source_page int, subject text,
+      source_sha256 text
     );
     CREATE TABLE graph_edges (
       id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -212,9 +225,20 @@ before(async () => {
       lo_id text NOT NULL, score numeric NOT NULL,
       system_from timestamptz NOT NULL DEFAULT now(), system_to timestamptz
     );
-    CREATE TABLE students (id bigint PRIMARY KEY, display_name text);
+    CREATE TABLE students (
+      id bigint PRIMARY KEY, display_name text, grade text,
+      curriculum_system text NOT NULL DEFAULT 'eg-national-en'
+    );
+    -- read by the student scope even with the gate off (FR-4015): the
+    -- exceptions still apply; none are seeded here
+    CREATE TABLE student_course_access (
+      environment text NOT NULL, student_id bigint NOT NULL, course_id text NOT NULL, state text NOT NULL
+    );
   `);
   await db.query(nodeSubjectView());
+  // the book-section store every reader now consults (migration 034) — empty:
+  // no National course has a split section, so the orders below are unchanged
+  await db.query(courseLessonsTable());
 
   for (const n of scramble(seeds.nodes)) {
     await db.query(
@@ -254,7 +278,8 @@ before(async () => {
       [`q:${id.slice(3)}:001`, id]
     );
   }
-  await db.query(`INSERT INTO students (id, display_name) VALUES (1, 'New'), (2, 'Started'), (3, 'Plan')`);
+  // National Prep-3 students — every student before 003
+  await db.query(`INSERT INTO students (id, display_name, grade) VALUES (1, 'New', '9'), (2, 'Started', '9'), (3, 'Plan', '9')`);
 
   (pool as unknown as { query: (t: string, v?: unknown[]) => unknown }).query = (t, v) => db!.query(t, v);
   (pool as unknown as { connect: () => Promise<PoolClient> }).connect = async () => asClient();
@@ -326,7 +351,11 @@ test("inside one course the split order IS the order the progression walks", { s
   // front. Course by course, the two must be the same lessons in the same order.
   const progression = (await db!.query(`${LO_MODULE_SELECT} ORDER BY ${MODULE_ORDER}`)).rows;
   const catalogue = await getLessonCatalog(null, asClient());
-  for (const course of REGISTRY_COURSES) {
+  // every registry course this database holds — the three National ones; the
+  // Grade 10 course is in the registry but no bundle of it is loaded here
+  const loaded = REGISTRY_COURSES.filter((c) => seeds.nodes.some((n) => n.id === c));
+  assert.equal(loaded.length, 3);
+  for (const course of loaded) {
     const walk = [
       ...new Set(
         progression.filter((r) => r.course_id === course).map((r) => (r.id as string).slice(3).replace(/-\d+$/, ""))
@@ -337,7 +366,7 @@ test("inside one course the split order IS the order the progression walks", { s
   }
 });
 
-test("the console Overview's heatmap query, as written, lists one subject in catalogue order", { skip }, async () => {
+test("the console Overview's heatmap query, as written, lists one course in catalogue order", { skip }, async () => {
   const source = readFileSync(fileURLToPath(new URL("./overview-queries.ts", import.meta.url)), "utf8");
   const at = source.indexOf("AS module_ordinal");
   const sql = source
@@ -345,10 +374,11 @@ test("the console Overview's heatmap query, as written, lists one subject in cat
     .replace("${LO_MODULE_JOIN}", LO_MODULE_JOIN)
     .replace("${MODULE_ORDER}", MODULE_ORDER);
   assert.ok(!sql.includes("${"), "every interpolation resolved");
-  const rows = (await db!.query(sql, ["math"])).rows;
+  // keyed by course since 003 (FR-4104)
+  const rows = (await db!.query(sql, ["course:prep3-math-en"])).rows;
   assert.deepEqual(rows.map((r) => r.lo_id), MATHS_EXPECTED);
   assertTermsInOrder(rows.map((r) => r.lo_id as string), "heatmap");
-  const arabic = (await db!.query(sql, ["arabic"])).rows.map((r) => r.lo_id);
+  const arabic = (await db!.query(sql, ["course:prep3-arabic-ar"])).rows.map((r) => r.lo_id);
   assert.deepEqual(arabic, EXPECTED.filter((id) => id.startsWith("lo:ara")));
 });
 

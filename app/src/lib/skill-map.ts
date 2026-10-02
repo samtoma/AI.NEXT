@@ -14,6 +14,17 @@
  * and with 16 cross-chapter links for maths it stays readable). A subject with
  * no Term 2 wraps its chapters into rows of five instead.
  *
+ * BOOK SECTIONS (feature 003, FR-4315). A book section the Grade 10 book splits
+ * into parts is several lessons — and lessons already sit on their chapter's
+ * ring in lesson order, so the parts of one section are a CONTIGUOUS ARC of the
+ * outer ring. That arc is the group: `buildSkillMap` finds it from the section
+ * groups it is given (`SpineData.sectionGroups`) and returns it as a
+ * `MapSection` — the span of the arc, its label ("1.7 Factorisation") and the
+ * parts on it — for the canvas to draw as a tray behind those objectives and
+ * to name at the lesson level. With no section groups — every National subject
+ * — `sections` is empty and nothing else in the model differs by a bit from
+ * what it was (`skill-map-sections.test.mts` holds it to main's v0.11.0 output).
+ *
  * WORLD units are the layout's own; the canvas converts with
  * `screen = world × scale + t`. Strokes, shadows, radii floors and label sizes
  * are applied in SCREEN pixels by the canvas, never scaled (handoff §4).
@@ -21,6 +32,7 @@
 import { slugOfLo } from "./lesson-slug";
 import { termOfModule, withoutTerm } from "./module-term";
 import { masteryStage } from "./mastery";
+import { sectionLabel } from "./section-label";
 
 /* ------------------------------------------------------------- types --- */
 
@@ -34,6 +46,13 @@ export interface MapObjectiveInput {
   label: string;
   moduleId: string | null;
   moduleLabel: string | null;
+  /**
+   * The course this objective is taught in. A chapter's term comes from its
+   * COURSE's own term rules (`lib/module-term.ts`); a course with no terms —
+   * the Grade 10 American book — puts every chapter in the one row sequence.
+   * Optional: absent, the chapter has no course and no term.
+   */
+  courseId?: string | null;
   syllabusRef: string | null;
   baseline: number;
   current: number;
@@ -87,6 +106,63 @@ export interface MapLink {
   a: string;
   b: string;
   across: boolean;
+  /**
+   * Added by the product, not stated by the book: part n-1 → part n of a split
+   * section (FR-4317). Present (true) only on those; absent on every book link,
+   * so a map with no split section has links exactly as it always did.
+   */
+  derived?: true;
+}
+
+/**
+ * One split book section, as the map is given it (`SpineData.sectionGroups`,
+ * built by `getSpineData` from the book-section store): its printed number and
+ * title, and each part — a lesson — with its objectives.
+ */
+export interface MapSectionInput {
+  /** `lib/book-sections.ts` `SectionGroup.key` */
+  key: string;
+  /** the printed section number ("1.7") */
+  number: string | null;
+  /** the printed section title ("Factorisation") */
+  title: string | null;
+  parts: readonly { slug: string; n: number; of: number; loIds: readonly string[] }[];
+}
+
+/**
+ * A split section's group on the map: one run of its parts' objectives on one
+ * chapter's outer ring. A section whose parts are contiguous — which the
+ * catalogue guarantees (FR-4312) — is exactly one run; a run is broken only by
+ * an objective of another lesson standing between its parts, or by a chapter
+ * boundary, and each break is its own group, never a tray over objectives
+ * that are not the section's.
+ */
+export interface MapSection {
+  /** unique on the map: `<section key>#<run>` */
+  id: string;
+  /** the section's own key — shared by the runs of one section */
+  key: string;
+  /** "1.7 Factorisation" */
+  label: string;
+  chapterId: string;
+  /** its parts on this run, in ring order (slugs) */
+  lessons: string[];
+  /** its objectives on this run, in ring order */
+  objectives: string[];
+  /** ring angle of the first and of the last objective, radians (as `MapObjective.angle`) */
+  a0: number;
+  a1: number;
+  /** the angle between neighbouring objectives on this chapter's ring */
+  step: number;
+  /** the middle of the arc, where the label goes */
+  mid: number;
+}
+
+/** What a lesson that is a part of a split section says about it. */
+export interface MapSectionMember {
+  sectionId: string;
+  label: string;
+  part: { n: number; of: number } | null;
 }
 
 export interface SkillMapModel {
@@ -96,6 +172,11 @@ export interface SkillMapModel {
   objectiveById: Map<string, MapObjective>;
   links: MapLink[];
   bounds: { minX: number; minY: number; maxX: number; maxY: number };
+  /** the split sections' groups on the map — empty when no subject objective is in one (FR-4315) */
+  sections: MapSection[];
+  sectionById: Map<string, MapSection>;
+  /** lesson slug → the section it is a part of */
+  sectionOfLesson: Map<string, MapSectionMember>;
 }
 
 export type Selection =
@@ -159,12 +240,14 @@ const stageOf = (score: number): Stage => masteryStage(score, score > 0);
  */
 export function buildSkillMap(
   los: readonly MapObjectiveInput[],
-  edges: readonly { src: string; dst: string }[],
+  edges: readonly { src: string; dst: string; origin?: "part-order" }[],
   lessonTitles: Readonly<Record<string, string>>,
+  sectionInputs: readonly MapSectionInput[] = [],
 ): SkillMapModel {
   // --- group, in catalogue order
   const chapterOrder: string[] = [];
   const chapterLabel = new Map<string, string | null>();
+  const chapterCourse = new Map<string, string | null>();
   const lessonsOf = new Map<string, string[]>();
   const objsOfLesson = new Map<string, MapObjectiveInput[]>();
   const chapterOfLesson = new Map<string, string>();
@@ -174,6 +257,7 @@ export function buildSkillMap(
       chapterOrder.push(ch);
       lessonsOf.set(ch, []);
       chapterLabel.set(ch, lo.moduleLabel);
+      chapterCourse.set(ch, lo.courseId ?? null);
     }
     const slug = slugOfLo(lo.id);
     // A lesson belongs to the first chapter it is met in.
@@ -199,7 +283,9 @@ export function buildSkillMap(
       id,
       title,
       unitRef,
-      term: id === UNFILED ? 1 : termOfModule(id),
+      // Term 2 only where the course's own rules say so; a course with no
+      // terms (or an unfiled chapter) sits in the first row sequence.
+      term: id === UNFILED || termOfModule(id, chapterCourse.get(id)) !== 2 ? 1 : 2,
       lessons,
       objectives,
       cx: 0,
@@ -280,8 +366,21 @@ export function buildSkillMap(
     const a = objectiveById.get(e.src);
     const b = objectiveById.get(e.dst);
     if (!a || !b) continue;
-    links.push({ a: a.id, b: b.id, across: a.chapterId !== b.chapterId });
+    links.push({
+      a: a.id,
+      b: b.id,
+      across: a.chapterId !== b.chapterId,
+      ...(e.origin === "part-order" ? { derived: true as const } : {}),
+    });
   }
+
+  // --- book sections (FR-4315): contiguous arcs of a chapter's ring
+  const { sections, sectionOfLesson } = placeSections(
+    chapters,
+    objectiveById,
+    lessonBySlug,
+    sectionInputs,
+  );
 
   const bounds = chapters.length
     ? {
@@ -299,7 +398,110 @@ export function buildSkillMap(
     objectiveById,
     links,
     bounds,
+    sections,
+    sectionById: new Map(sections.map((x) => [x.id, x])),
+    sectionOfLesson,
   };
+}
+
+/**
+ * Find each split section's group: walk every chapter's ring in order, and
+ * collect the maximal runs of consecutive objectives that belong to the
+ * section's parts. Walking the ring (rather than sorting the section's
+ * objectives) keeps the catalogue order the rest of the map is built in, and
+ * makes "contiguous" the definition of a group: an objective that is not the
+ * section's, standing between two of its parts, ends the run.
+ */
+function placeSections(
+  chapters: readonly MapChapter[],
+  objectiveById: ReadonlyMap<string, MapObjective>,
+  lessonBySlug: ReadonlyMap<string, MapLesson>,
+  inputs: readonly MapSectionInput[],
+): { sections: MapSection[]; sectionOfLesson: Map<string, MapSectionMember> } {
+  const sections: MapSection[] = [];
+  const sectionOfLesson = new Map<string, MapSectionMember>();
+  for (const g of inputs) {
+    const label = sectionLabel(g) || g.key;
+    const inGroup = new Set(g.parts.flatMap((p) => p.loIds));
+    const partOf = new Map(g.parts.map((p) => [p.slug, { n: p.n, of: p.of }]));
+    let runs = 0;
+    for (const c of chapters) {
+      const n = c.objectives.length;
+      const step = (2 * Math.PI) / Math.max(n, 1);
+      let run: string[] = [];
+      const close = () => {
+        if (run.length === 0) return;
+        const first = objectiveById.get(run[0]!)!;
+        const last = objectiveById.get(run[run.length - 1]!)!;
+        const lessons = [...new Set(run.map((id) => objectiveById.get(id)!.lessonSlug))];
+        const id = `${g.key}#${runs++}`;
+        sections.push({
+          id,
+          key: g.key,
+          label,
+          chapterId: c.id,
+          lessons,
+          objectives: run,
+          a0: first.angle,
+          a1: last.angle,
+          step,
+          mid: (first.angle + last.angle) / 2,
+        });
+        for (const slug of lessons)
+          if (lessonBySlug.has(slug))
+            sectionOfLesson.set(slug, { sectionId: id, label, part: partOf.get(slug) ?? null });
+        run = [];
+      };
+      for (const objectiveId of c.objectives) {
+        if (inGroup.has(objectiveId)) run.push(objectiveId);
+        else close();
+      }
+      close();
+    }
+  }
+  return { sections, sectionOfLesson };
+}
+
+/**
+ * What a framed lesson or objective says about its book section, for its
+ * accessible name and its tooltip: "1.7 Factorisation, part 2 of 3" for a part,
+ * "1.7 Factorisation" for a lesson of the section with no part number; null for
+ * a lesson in no split section — every National lesson.
+ */
+export function sectionNameOf(model: SkillMapModel, lessonSlug: string): string | null {
+  const m = model.sectionOfLesson.get(lessonSlug);
+  if (!m) return null;
+  return m.part ? `${m.label}, part ${m.part.n} of ${m.part.of}` : m.label;
+}
+
+/**
+ * The SVG path of a section's tray: the part of the ring between angles `a0`
+ * and `a1` (radians, clockwise on screen from east, like `MapObjective.angle`),
+ * `r0` to `r1` from the centre. A span covering the whole ring is an annulus
+ * (draw it with `fill-rule: evenodd`); a tray reaching the centre (`r0` ≈ 0)
+ * closes through it. Screen pixels in, a path out.
+ */
+export function annularSectorPath(
+  cx: number,
+  cy: number,
+  r0: number,
+  r1: number,
+  a0: number,
+  a1: number,
+): string {
+  const f = (v: number) => Number(v.toFixed(2));
+  const p = (a: number, r: number) => `${f(cx + r * Math.cos(a))},${f(cy + r * Math.sin(a))}`;
+  const span = a1 - a0;
+  if (span >= 2 * Math.PI - 1e-6) {
+    const ring = (r: number, sweep: 0 | 1) =>
+      `M${f(cx + r)},${f(cy)} A${f(r)},${f(r)} 0 1 ${sweep} ${f(cx - r)},${f(cy)} A${f(r)},${f(r)} 0 1 ${sweep} ${f(cx + r)},${f(cy)} Z`;
+    return r0 <= 0.5 ? ring(r1, 1) : `${ring(r1, 1)} ${ring(r0, 0)}`;
+  }
+  const large = span > Math.PI ? 1 : 0;
+  const outer = `M${p(a0, r1)} A${f(r1)},${f(r1)} 0 ${large} 1 ${p(a1, r1)}`;
+  return r0 <= 0.5
+    ? `${outer} L${f(cx)},${f(cy)} Z`
+    : `${outer} L${p(a1, r0)} A${f(r0)},${f(r0)} 0 ${large} 0 ${p(a0, r0)} Z`;
 }
 
 /* ------------------------------------------------------------- stages --- */
@@ -549,10 +751,17 @@ export function focusOf(model: SkillMapModel, sel: Selection): Focus | null {
 export function linkStyle(
   link: MapLink,
   focus: Focus | null,
+  sel: Selection = null,
 ): "hidden" | "faint" | "normal" | "strong" {
   const touches = focus
     ? focus.own.has(link.a) || focus.own.has(link.b)
     : false;
+  // The product's part-order links (FR-4317) join EVERY objective of part n-1
+  // to every objective of part n: a chapter selection would light them all and
+  // bury the book's own links under a lattice. They are drawn when a lesson or
+  // an objective is selected — the question they answer ("what does this part
+  // build on, and what builds on it?") is asked of one part, not of a chapter.
+  if (link.derived && !link.across && sel?.kind === "chapter") return "hidden";
   if (link.across) {
     if (!focus) return "normal";
     return touches ? "strong" : "faint";

@@ -1,0 +1,1782 @@
+{
+  "catalogue": "g10-math-misconceptions",
+  "course_id": "course:us-g10-math-en",
+  "book": "g10-math",
+  "reviewed": false,
+  "generator": "S5 runbook/misconceptions.workflow.js (Sonnet author, Sonnet fail-closed verifier) via assemble_misconceptions.py — runs final-ch05-wf_7f85d38b-00b.json; 1 ALIAS LINK(S) STRIPPED on 1 entries (provenance.aliases_stripped says which and why; no entry was deleted); pipeline-generated, UNREVIEWED",
+  "misconceptions": [
+    {
+      "id": "mc:g10m5s3-1-1:hypotenuse-not-longest-side",
+      "lo_id": "lo:g10m5s3-1-1",
+      "label": "Not checking that the hypotenuse is the longest side",
+      "description": "The student accepts a right-angled triangle whose marked hypotenuse is shorter than another side, because they treat the hypotenuse as simply the side opposite the right angle with no condition on its length.",
+      "signal": null,
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You are treating the hypotenuse as just the side directly opposite the right angle, with any length at all. Finding that side is the right first step, but the hypotenuse has one more property that is easy to forget."
+        },
+        {
+          "step": 2,
+          "text_md": "The hypotenuse is the longest side of a right-angled triangle. So whenever lengths are marked, the hypotenuse must be bigger than each of the other sides."
+        },
+        {
+          "step": 3,
+          "text_md": "Test it on numbers. Suppose the side directly across from the right angle is marked $12$ and another side of the same triangle is marked $15$. That would make the hypotenuse shorter than a side of its own triangle, which cannot happen, so the diagram is wrong. Checking only that the $12$ is opposite the right angle would let this slip through."
+        },
+        {
+          "step": 4,
+          "text_md": "Next time, find the right angle, find the hypotenuse across from it, then compare its length with the other sides. If any other side is bigger, the hypotenuse is too small and that is what is wrong with the diagram."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch05-wf_7f85d38b-00b.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The book's remarks on the explain-what-is-wrong items (15 and 12; 4 and 10, with the hypotenuse marked shorter than a leg) say that the hypotenuse is the longest side and here it is too small. The refutation is mathematically correct: the hypotenuse is strictly longer than each leg. The 12 versus 15 example is sound. Step 4 matches the book's wording that the hypotenuse is too small. It argues against the 'any length will do' belief and names no question id, page, figure or review history. There is no signal and no attached option.",
+        "sources": [
+          {
+            "type": "remark",
+            "ref": "expl:g10m5s3-1-1:ex5-1-7a"
+          },
+          {
+            "type": "remark",
+            "ref": "expl:g10m5s3-1-1:ex5-1-7b"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:g10m5s3-1-1:hypotenuse-not-opposite-right-angle",
+      "lo_id": "lo:g10m5s3-1-1",
+      "label": "Choosing the hypotenuse from the angle θ, not from the right angle",
+      "description": "The student picks as the hypotenuse a side that forms $\\theta$ or faces $\\theta$, instead of the side directly opposite the right angle, so the true hypotenuse ends up called adjacent or opposite.",
+      "signal": "The side named as the hypotenuse is one of the two sides that form the right angle.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You picked the hypotenuse by looking at $\\theta$: either the side that forms $\\theta$, or the side across from it. That is an easy slip, because opposite and adjacent really are found from $\\theta$, and one of the names you gave does fit."
+        },
+        {
+          "step": 2,
+          "text_md": "The hypotenuse works differently. It is always directly opposite the right angle, so you find the right angle first, before you look at $\\theta$ at all."
+        },
+        {
+          "step": 3,
+          "text_md": "Take a triangle with its right angle at the top and $\\theta$ at the bottom-left corner. The flat bottom side is directly opposite the right angle, so it is the hypotenuse, even though it forms $\\theta$. The left side forms both the right angle and $\\theta$, so it is the adjacent side. The right side is directly opposite $\\theta$, so it is the opposite side. Calling the left side the hypotenuse because it forms $\\theta$, or the right side because it faces $\\theta$, puts the name on the wrong side, because both of them form the right angle."
+        },
+        {
+          "step": 4,
+          "text_md": "Work in this order. Find the right angle: the side directly opposite it is the hypotenuse. Then find the side directly opposite $\\theta$: that is the opposite side. The side left over, which forms $\\theta$, is the adjacent side."
+        }
+      ],
+      "maps": [],
+      "aliases": [
+        "mc:g10m5s3-1-1:hypotenuse-and-opposite-mixed"
+      ],
+      "provenance": {
+        "run": "final-ch05-wf_7f85d38b-00b.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is supported by canonical 2a and 2b, where the true hypotenuse itself forms theta, so choosing from theta is a natural slip. The refutation is correct and uses the right configuration (right angle at top, theta bottom-left): the bottom side is the hypotenuse and also forms theta, the left side is adjacent, and the right side is opposite. Its closing reason that both legs form the right angle is sound. Steps 2 and 4 follow the canonical order (right angle first, then opposite, then adjacent) and teach nothing outside the book. Minor risk: the claim that 'one of the names you gave does fit' holds for the attached swap options, but not for a three-way rotation of all names. The attached options are all swaps, so it holds for every attached option. The signal (the named hypotenuse is a leg) matches the error, though it can also fire from other causes.",
+        "sources": [
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m5s3-1-1:ex5-1-2a"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m5s3-1-1:ex5-1-2b"
+          },
+          {
+            "type": "distractor",
+            "ref": "D0"
+          },
+          {
+            "type": "distractor",
+            "ref": "D2"
+          },
+          {
+            "type": "distractor",
+            "ref": "D3"
+          },
+          {
+            "type": "distractor",
+            "ref": "D4"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "S6",
+            "ref": "tpl:g10m5s3-1-1:sidenames#mc:g10m5s3-1-1:hypotenuse-not-opposite-right-angle",
+            "question_id": "q:g10m5s3-1-1:g001-sidena",
+            "text": "hypotenuse $KL$, opposite $KM$, adjacent $LM$",
+            "tagged": "mc:g10m5s3-1-1:hypotenuse-not-opposite-right-angle"
+          },
+          {
+            "origin": "S6",
+            "ref": "tpl:g10m5s3-1-1:sidenames#mc:g10m5s3-1-1:hypotenuse-and-opposite-mixed",
+            "question_id": "q:g10m5s3-1-1:g001-sidena",
+            "text": "hypotenuse $KM$, opposite $LM$, adjacent $KL$",
+            "tagged": "mc:g10m5s3-1-1:hypotenuse-and-opposite-mixed"
+          },
+          {
+            "origin": "S6",
+            "ref": "tpl:g10m5s3-1-1:switchangle#mc:g10m5s3-1-1:hypotenuse-and-opposite-mixed",
+            "question_id": "q:g10m5s3-1-1:g001-switch",
+            "text": "hypotenuse $HJ$, opposite $GJ$, adjacent $GH$",
+            "tagged": "mc:g10m5s3-1-1:hypotenuse-and-opposite-mixed"
+          },
+          {
+            "origin": "S6",
+            "ref": "tpl:g10m5s3-1-1:switchangle#mc:g10m5s3-1-1:hypotenuse-not-opposite-right-angle",
+            "question_id": "q:g10m5s3-1-1:g001-switch",
+            "text": "hypotenuse $GH$, opposite $HJ$, adjacent $GJ$",
+            "tagged": "mc:g10m5s3-1-1:hypotenuse-not-opposite-right-angle"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m5s3-1-1:opposite-adjacent-fixed-by-position",
+      "lo_id": "lo:g10m5s3-1-1",
+      "label": "Naming opposite and adjacent by where the side sits, not by the angle",
+      "description": "The student decides which side is opposite and which is adjacent from its position on the page (for example the flat bottom side is always adjacent and the upright side always opposite) instead of from the angle $\\theta$ being used.",
+      "signal": "Opposite and adjacent are swapped whenever $\\theta$ sits at the other end of the triangle from where the student expects it, while the hypotenuse is still right.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You are naming opposite and adjacent by where a side sits on the page, for example the flat bottom side as adjacent and the upright side as opposite. That fits many triangles, which is why it feels dependable, but these two names are not attached to any particular side."
+        },
+        {
+          "step": 2,
+          "text_md": "The book says the opposite and adjacent sides depend on the angle we are looking at. The opposite side is the one directly across from $\\theta$, so when $\\theta$ is in a different corner, the opposite side is a different side."
+        },
+        {
+          "step": 3,
+          "text_md": "Try it on two triangles. In the first, the right angle is at the bottom left and $\\theta$ is in the bottom right corner: the upright side is opposite $\\theta$ and the flat bottom side is adjacent. In the second, the right angle is at the bottom right and $\\theta$ is at the top: now the flat bottom side is opposite $\\theta$ and the upright side is adjacent. The two sides are in the same places in both triangles, but their names have swapped, because $\\theta$ moved."
+        },
+        {
+          "step": 4,
+          "text_md": "So keep $\\theta$ in hand and label in this order. Find the right angle and name the hypotenuse directly across from it. Name the side directly across from $\\theta$ as opposite. The side that is left, which forms $\\theta$ along with the hypotenuse, is adjacent."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch05-wf_7f85d38b-00b.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real and shown by the canonical solutions. In 2d the upright side is opposite and the flat bottom side adjacent. In 2e (right angle bottom-right, theta at the top) the flat bottom side is opposite and the upright side adjacent. The refutation's two triangles match those configurations and are correct. Step 2 quotes the book's 'depends on the angle' idea. Step 4 gives the canonical order. It argues against the position habit rather than restating the method, and it names no question ids, figures or review history. Minor looseness in 'same places', but nothing wrong mathematically. The signal is wordy and the 'where the student expects' part cannot be observed, but it does not misdiagnose in a harmful way.",
+        "sources": [
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m5s3-1-1:ex5-1-2d"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m5s3-1-1:ex5-1-2e"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "S6",
+            "ref": "tpl:g10m5s3-1-1:switchangle#mc:g10m5s3-1-1:opposite-adjacent-fixed-by-position",
+            "question_id": "q:g10m5s3-1-1:g001-switch",
+            "text": "hypotenuse $GJ$, opposite $GH$, adjacent $HJ$",
+            "tagged": "mc:g10m5s3-1-1:opposite-adjacent-fixed-by-position"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m5s3-1-2:ratio-at-the-right-angle",
+      "lo_id": "lo:g10m5s3-1-2",
+      "label": "Takes the ratio at the right angle",
+      "description": "The student writes a ratio of the two sides that are not the hypotenuse against the angle where those two sides meet, which is the right angle, instead of against one of the other two angles.",
+      "signal": "A ratio of the opposite and adjacent sides written as the tangent of the right angle itself.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You used the right kind of ratio for a tangent: opposite over adjacent is a ratio of the two sides that are not the hypotenuse, and $\\dfrac{r}{p}$ is exactly that. What went wrong is the angle named: $\\hat{Q}$ is where $p$ and $r$ meet, and it is the right angle."
+        },
+        {
+          "step": 2,
+          "text_md": "Every question starts by finding the right angle, because the hypotenuse is always directly opposite it. The side directly opposite $\\hat{Q}$ is $q$, the hypotenuse, and both $p$ and $r$ form $\\hat{Q}$. So at $\\hat{Q}$ the sides cannot be sorted into hypotenuse, opposite and adjacent the way the book does it."
+        },
+        {
+          "step": 3,
+          "text_md": "Your ratio does belong to an angle, just a different one. $r$ is directly opposite $\\hat{R}$ and $p$ is one of the sides that form $\\hat{R}$, so $\\dfrac{r}{p}=\\dfrac{\\text{opposite}}{\\text{adjacent}}=\\tan\\hat{R}$."
+        },
+        {
+          "step": 4,
+          "text_md": "Choose the angle first, from the two that are not the right angle. Then find the side directly opposite it and the remaining side that forms it, and write the ratio from there."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:g10m5s3-1-2:ex5-1-5",
+          "choice_text": "$\\tan\\hat{Q}=\\dfrac{r}{p}$"
+        }
+      ],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch05-wf_7f85d38b-00b.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "In the figure the right angle is at Q, where p (RQ) and r (PQ) meet, and the hypotenuse q is opposite it. So tan Q = r/p is not a valid statement. The refutation is correct: r/p equals tan R, since r is opposite R and p is a side forming R. It follows the book's method (find the right angle first, the hypotenuse is opposite it, opposite and adjacent depend on the angle). The remark that the book's sorting breaks down at Q follows directly from those definitions. It names no id, page or review history, and it argues against this specific error. The signal (a leg-over-leg tangent written for the right angle itself) is precise.",
+        "sources": [
+          {
+            "type": "distractor",
+            "ref": "D1"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m5s3-1-2:ex5-1-1a"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "book",
+            "ref": "q:g10m5s3-1-2:ex5-1-5",
+            "question_id": "q:g10m5s3-1-2:ex5-1-5",
+            "text": "$\\tan\\hat{Q}=\\dfrac{r}{p}$",
+            "tagged": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m5s3-1-2:ratios-without-a-right-angle",
+      "lo_id": "lo:g10m5s3-1-2",
+      "label": "Uses the ratios without checking for a right angle",
+      "description": "The student writes sine, cosine or tangent for a triangle without first checking that it has a right angle, as if the ratios worked on any triangle.",
+      "signal": null,
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "It is natural to carry the ratios over to any triangle: they are only fractions of sides, and every triangle has sides. The step that gets skipped is checking for the right angle first."
+        },
+        {
+          "step": 2,
+          "text_md": "The ratios are built from the hypotenuse, the opposite side and the adjacent side. The hypotenuse is the side directly opposite the right angle, and the opposite and adjacent sides are then found from the angle you are looking at. In a triangle with no right angle, that first step has nothing to find."
+        },
+        {
+          "step": 3,
+          "text_md": "The book warns about exactly this: always check that the triangle has a right angle before using the trigonometric ratios, otherwise the answer will be wrong."
+        },
+        {
+          "step": 4,
+          "text_md": "So make it your first move every time. Find the right angle, then the hypotenuse directly opposite it, then label the opposite and adjacent sides for the angle you are looking at. If there is no right angle, sine, cosine and tangent as written here do not apply to that triangle."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch05-wf_7f85d38b-00b.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "This is directly supported by the book's caution to check for a right angle before using the trigonometric ratios, and by the canonical method of finding the right angle and then the hypotenuse first. The refutation is mathematically sound: the hypotenuse is defined as the side opposite the right angle, so a triangle with no right angle has no hypotenuse to find. It adds nothing beyond the book's warning. It cites no question id, page, figure or review history; its only reference is the generic mention of what the book warns. It argues against the specific habit of skipping the check. There is no signal and nothing attached, so there is nothing to misdiagnose.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "b01636"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m5s3-1-2:ex5-1-1a"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:g10m5s3-1-2:reads-sides-from-other-angle",
+      "lo_id": "lo:g10m5s3-1-2",
+      "label": "Reads opposite and adjacent from the other angle",
+      "description": "The student names one angle but sorts the sides into opposite and adjacent as they stand for the other angle, so the two sides trade places and the ratio they write belongs to the other angle.",
+      "signal": null,
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You kept the hypotenuse $q$ underneath, which is right, and you know that sine is opposite over hypotenuse. The slip is the top of the fraction: the opposite and adjacent sides depend on the angle you are looking at, and $p$ has been read from a different angle than the one named. $p$ is the side opposite $\\hat{P}$, but this option is about $\\hat{R}$."
+        },
+        {
+          "step": 2,
+          "text_md": "The opposite side to an angle is the one directly opposite it. $p$ is directly opposite $\\hat{P}$, but it is one of the sides that form $\\hat{R}$, so from $\\hat{R}$ it is the adjacent side."
+        },
+        {
+          "step": 3,
+          "text_md": "From $\\hat{R}$, the side directly opposite is $r$, so $\\sin\\hat{R}=\\dfrac{\\text{opposite}}{\\text{hypotenuse}}=\\dfrac{r}{q}$. Your $\\dfrac{p}{q}$ is a real ratio, but it belongs to $\\hat{P}$, where $p$ is opposite: $\\sin\\hat{P}=\\dfrac{p}{q}$. For $\\hat{R}$, $\\dfrac{p}{q}$ is adjacent over hypotenuse, which is $\\cos\\hat{R}$."
+        },
+        {
+          "step": 4,
+          "text_md": "Each time you change angle, redo the labelling: the opposite and adjacent sides switch places, and the hypotenuse stays the same. Pick the angle, find the side directly opposite it, find the remaining side that forms it, and only then write the ratio."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:g10m5s3-1-2:ex5-1-5",
+          "choice_text": "$\\sin\\hat{R}=\\dfrac{p}{q}$"
+        }
+      ],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch05-wf_7f85d38b-00b.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Checked against the PQR figure (right angle at Q, p on RQ, q on PR, r on PQ). sin R = r/q, so option A, sin R = p/q, is wrong. p is opposite P and adjacent to R, so p/q is sin P and also cos R. The refutation is correct at every step. It matches the book's method: find the hypotenuse, then the opposite side for the named angle, then the adjacent side, with opposite and adjacent switching places for the other angle and the hypotenuse unchanged. It names no question id, page or review history, and it argues against the specific slip rather than restating the method. The only caveat is that a student who simply mixes up sine and cosine could also pick A. Step 3 still tells that student that p/q is cos R, so nothing false is taught. The three widget predicates are wrong-ratio or inverted-ratio outcomes that other errors also produce, so they do not diagnose this error.",
+        "sources": [
+          {
+            "type": "distractor",
+            "ref": "D0"
+          },
+          {
+            "type": "remark",
+            "ref": "expl:g10m5s3-1-2:we01"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m5s3-1-2:ex5-1-5"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "book",
+            "ref": "q:g10m5s3-1-2:ex5-1-5",
+            "question_id": "q:g10m5s3-1-2:ex5-1-5",
+            "text": "$\\sin\\hat{R}=\\dfrac{p}{q}$",
+            "tagged": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m5s3-1-2:sine-as-opposite-over-adjacent",
+      "lo_id": "lo:g10m5s3-1-2",
+      "label": "Writes sine as opposite over adjacent",
+      "description": "The student finds the opposite and adjacent sides correctly but writes sine as the opposite side over the adjacent side, which is the tangent's pair of sides, so no hypotenuse appears in the answer.",
+      "signal": "A sine or cosine with no hypotenuse in it: a fraction of the opposite and adjacent sides only.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You found the right sides for $\\hat{P}$: $p$ is the opposite side and $r$ is the adjacent side. The slip is which pair of sides goes with which ratio."
+        },
+        {
+          "step": 2,
+          "text_md": "Each ratio has its own pair. Sine is opposite over hypotenuse, cosine is adjacent over hypotenuse, and tangent is opposite over adjacent. $\\dfrac{p}{r}$ is opposite over adjacent, so it is $\\tan\\hat{P}$, not $\\sin\\hat{P}$."
+        },
+        {
+          "step": 3,
+          "text_md": "Sine always has the hypotenuse underneath, and here the hypotenuse is $q$. So $\\sin\\hat{P}=\\dfrac{\\text{opposite}}{\\text{hypotenuse}}=\\dfrac{p}{q}$."
+        },
+        {
+          "step": 4,
+          "text_md": "Before you write a ratio, say which two sides its name uses, and check your fraction against that. If you are writing sine or cosine, the hypotenuse must be in the fraction; only the tangent leaves it out."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:g10m5s3-1-2:ex5-1-5",
+          "choice_text": "$\\sin\\hat{P}=\\dfrac{p}{r}$"
+        }
+      ],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch05-wf_7f85d38b-00b.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "For P, p is opposite (RQ), r is adjacent (PQ) and q is the hypotenuse, so option D, sin P = p/r, is opposite over adjacent. That is tan P, and sin P = p/q. The refutation states the three ratios correctly, identifies p/r as the tangent's pair of sides, and gives the correct sine, in line with the book's definitions. It names no question id, page or review history, and it argues against the specific error. The advice to say which two sides the ratio uses and check the fraction against that is covered by the book's practice of stating which sides are used for each ratio. The signal (a sine or cosine with no hypotenuse) is a direct observable of this error.",
+        "sources": [
+          {
+            "type": "distractor",
+            "ref": "D2"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m5s3-1-2:ex5-1-5"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "book",
+            "ref": "q:g10m5s3-1-2:ex5-1-5",
+            "question_id": "q:g10m5s3-1-2:ex5-1-5",
+            "text": "$\\sin\\hat{P}=\\dfrac{p}{r}$",
+            "tagged": null
+          },
+          {
+            "origin": "S7",
+            "ref": "wt:g10m5s3-1-2:build-sin#used-tangent",
+            "question_id": "q:g10m5s3-1-2:w004",
+            "text": "Built the tangent where another ratio was asked for",
+            "tagged": "mc:g10m5s3-1-2:sine-as-opposite-over-adjacent"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m5s5-1-2:looks-for-reciprocal-key",
+      "lo_id": "lo:g10m5s5-1-2",
+      "label": "Looking for a cosec, sec or cot key",
+      "description": "The student searches the calculator for a cosec, sec or cot key, or tries to key one in directly, instead of first writing the ratio as 1 divided by sin, cos or tan.",
+      "signal": null,
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "It is natural to go looking for a cosec, sec or cot key: they are ratios of an angle just like sin, cos and tan, so you expect them to sit beside those keys. You are right about what they are. The catch is only in how you enter them."
+        },
+        {
+          "step": 2,
+          "text_md": "On a calculator, the only way to get cosec, sec or cot is to convert it first into sin, cos or tan. That works because each reciprocal ratio is 1 divided by one of those three, with the same angle: cosec goes with sin, sec goes with cos, and cot goes with tan."
+        },
+        {
+          "step": 3,
+          "text_md": "So nothing is lost. For example, $\\sec65^{\\circ}=\\frac{1}{\\cos65^{\\circ}}=\\text{2.36620...}\\approx\\text{2.37}$. Likewise $\\text{cosec}140^{\\circ}=\\frac{1}{\\sin140^{\\circ}}=\\text{1.555724...}\\approx\\text{1.56}$. The calculator only ever has to do a $1\\div$ calculation with a key it already has."
+        },
+        {
+          "step": 4,
+          "text_md": "When a reciprocal ratio sits inside a longer expression, convert just that part and leave the rest as it is: $\\tan35^{\\circ}+\\cot35^{\\circ}=\\text{0.7002...}+\\frac{1}{\\tan35^{\\circ}}=\\text{0.7002...}+\\text{1.4281...}\\approx\\text{2.13}$."
+        },
+        {
+          "step": 5,
+          "text_md": "Next time you see cosec, sec or cot: write it as 1 over sin, cos or tan of the same angle, key that in, and round to 2 decimal places only at the end."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch05-wf_7f85d38b-00b.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real and backed by the book's caution that converting to sin, cos or tan is the only way to get the reciprocal ratios on a calculator. Each worked number in the refutation matches the canonical solutions: sec65° = 1/cos65° = 2.36620... ≈ 2.37, cosec140° = 1/sin140° = 1.555724... ≈ 1.56, and tan35° + cot35° = 0.7002... + 1/tan35° = 0.7002... + 1.4281... ≈ 2.13 (checked: 0.70021 + 1.42815 = 2.12836). The pairings (cosec with sin, sec with cos, cot with tan, same angle) and rounding only at the end are the book's method. The refutation answers the belief that a key should exist instead of only restating the steps. It names no question id, page or figure and no review history, and it teaches nothing the book does not.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "b01677"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:g10m5s5-1-3:drops-the-complement",
+      "lo_id": "lo:g10m5s5-1-3",
+      "label": "Takes sine squared plus cosine squared to make 1 whatever the angles are",
+      "description": "The student sees $\\sin^{2}$ added to $\\cos^{2}$ and accepts that the total is 1 without checking that the two terms are for the same angle, so they accept $\\sin^{2}x+\\cos^{2}y=1$ when $x$ and $y$ are different angles.",
+      "signal": "Chooses $\\sin^{2}x+\\cos^{2}y=1$ as the true statement.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You noticed $\\sin^{2}$ added to $\\cos^{2}$ and expected 1, and that is not out of nowhere: when $x=25^\\circ$ and $y=65^\\circ$, the statement $\\sin^{2}x+\\cos^{2}(90^\\circ-y)=1$ does check out on the calculator. What got missed is which angle each term is for."
+        },
+        {
+          "step": 2,
+          "text_md": "Look at that example. The second term is $\\cos^{2}(90^\\circ-y)$, and $90^\\circ-65^\\circ=25^\\circ$, so it is $\\cos^{2}25^\\circ$, the same angle as in $\\sin^{2}25^\\circ$. The $90^\\circ-$ is what brought the two terms onto one angle."
+        },
+        {
+          "step": 3,
+          "text_md": "In your statement the second term is $\\cos^{2}y$, with no $90^\\circ-$. With the given values, $x$ and $y$ are not the same angle, so you are adding $\\sin^{2}$ of one angle to $\\cos^{2}$ of another. Nothing about the shape of the statement tells you that adds to 1, so it cannot be accepted by its look. It has to be tested."
+        },
+        {
+          "step": 4,
+          "text_md": "Put the given values in, work out $\\sin^{2}x$ and $\\cos^{2}y$ separately on the calculator, add them, and compare the total with 1. The statement is true only if the total comes out as 1."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch05-wf_7f85d38b-00b.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The refutation is self-contained and mathematically correct. With x=25° and y=65°, sin²25°+cos²(90°-65°)=sin²25°+cos²25°=1, which matches the canonical true result. The refutation then shows that 90°- is what puts both terms on one angle. It points out that cos²y is cos² of a different angle (65° against 25°), so the statement cannot be trusted by its look; sin²25°+cos²65° is about 0.357, not 1. It names no question id, page or figure, and the example it uses is written out in full. It argues against the specific error and not only the method. It is weaker than ideal because it never states the numeric result and ends by telling the student to test, but nothing in it is wrong or outside the book.",
+        "sources": [
+          {
+            "type": "distractor",
+            "ref": "D3"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m5s5-1-3:we03"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "S6",
+            "ref": "tpl:g10m5s5-1-3:which-true#mc:g10m5s5-1-3:drops-the-complement",
+            "question_id": "q:g10m5s5-1-3:g001-which-",
+            "text": "$\\sin^2 x + \\cos^2 y = 1$",
+            "tagged": "mc:g10m5s5-1-3:drops-the-complement"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m5s5-1-3:splits-trig-function-over-angle",
+      "lo_id": "lo:g10m5s5-1-3",
+      "label": "Shares the function out over the angle",
+      "description": "The student treats cos like a number that can be shared out, so they accept cos(x+y) = cos x + cos y, or cos 2y = cos y + cos y, without working out both sides.",
+      "signal": "Says \"true\" for a statement whose left hand side applies cos to a sum or multiple of angles while the right hand side applies cos to each angle separately.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You're treating $\\cos$ like a number that can be shared out, so $\\cos(39^{\\circ}+21^{\\circ})$ becomes $\\cos 39^{\\circ}+\\cos 21^{\\circ}$, and $\\cos 2y$ becomes $\\cos y+\\cos y$. Sharing out works for something like $3(a+b)$, so it is a natural thing to try, and you are right that $\\cos x+2\\cos x$ really is $3\\cos x$. The catch is what the angle is doing inside the brackets."
+        },
+        {
+          "step": 2,
+          "text_md": "Test it the way the question asks: work out each side on your calculator. Left hand side: $\\cos(39^{\\circ}+21^{\\circ})=\\cos 60^{\\circ}\\approx 0.5$. Right hand side: $\\cos 39^{\\circ}+\\cos 21^{\\circ}\\approx 1.71$. The two sides are not equal, so the statement is false."
+        },
+        {
+          "step": 3,
+          "text_md": "The same thing happens with $y=21^{\\circ}$. Left hand side: $\\cos 2y=\\cos 42^{\\circ}\\approx 0.74$. Right hand side: $\\cos y+\\cos y=\\cos 21^{\\circ}+\\cos 21^{\\circ}\\approx 1.867$. Doubling the angle is not the same as doubling the cosine, so this statement is false too."
+        },
+        {
+          "step": 4,
+          "text_md": "The reason is that $\\cos$ is taken of the whole angle as one number. The angle inside is worked out first ($39^{\\circ}+21^{\\circ}=60^{\\circ}$, or $2\\times 21^{\\circ}=42^{\\circ}$) and only then do you take the cosine. In $\\cos x+2\\cos x$ every term is the cosine of the same angle $x$, so you are just adding 1 lot and 2 lots of one number, and that is why it does equal $3\\cos x$."
+        },
+        {
+          "step": 5,
+          "text_md": "Next time, work out the left hand side and the right hand side separately on your calculator, with the whole angle inside the brackets, and then compare them. If they are different, the statement is false."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:g10m5s5-1-3:ex5-2-2b",
+          "choice_text": "true"
+        },
+        {
+          "question_id": "q:g10m5s5-1-3:ex5-2-2d",
+          "choice_text": "true"
+        }
+      ],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch05-wf_7f85d38b-00b.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "I re-solved the cases myself. cos(39°+21°)=cos60°≈0.5, and cos39°+cos21°≈0.7771+0.9336≈1.71, so the statement is false, as the canonical solution says. cos42°≈0.74 against cos21°+cos21°≈1.867 is also false. The remark that cos x+2cos x equals 3cos x matches the canonical true case. The 1.867 is the correctly rounded 1.86716..., and the canonical's 1.86 is a truncation; the true/false answer is the same, so this is not a contradiction. The refutation names no question id, page, figure or review history. It argues against the specific error of sharing cos out over a sum or multiple of angles, and it does not just restate the method. The distributive-law analogy is general algebra, not new trig content.",
+        "sources": [
+          {
+            "type": "distractor",
+            "ref": "D2"
+          },
+          {
+            "type": "distractor",
+            "ref": "D4"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m5s5-1-3:ex5-2-2b"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m5s5-1-3:ex5-2-2d"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "book",
+            "ref": "q:g10m5s5-1-3:ex5-2-2b",
+            "question_id": "q:g10m5s5-1-3:ex5-2-2b",
+            "text": "true",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m5s5-1-3:ex5-2-2d",
+            "question_id": "q:g10m5s5-1-3:ex5-2-2d",
+            "text": "true",
+            "tagged": null
+          },
+          {
+            "origin": "S6",
+            "ref": "tpl:g10m5s5-1-3:which-true#mc:g10m5s5-1-3:splits-trig-function-over-angle",
+            "question_id": "q:g10m5s5-1-3:g001-which-",
+            "text": "$\\cos(x + y) = \\cos x + \\cos y$",
+            "tagged": "mc:g10m5s5-1-3:splits-trig-function-over-angle"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m5s6-1-1:ratio-upside-down",
+      "lo_id": "lo:g10m5s6-1-1",
+      "label": "Writes the fraction the wrong way up",
+      "description": "The student has the right two numbers for the angle but puts them the wrong way round in the fraction, so $\\frac{1}{\\sqrt{2}}$ becomes $\\sqrt{2}$ or $\\frac{1}{\\sqrt{3}}$ becomes $\\sqrt{3}$.",
+      "signal": "The answer is the correct value turned upside down: $\\sqrt{2}$ for $\\sin 45^{\\circ}$ or $\\cos 45^{\\circ}$, $\\sqrt{3}$ for $\\tan 30^{\\circ}$, or $\\frac{1}{\\sqrt{3}}$ for $\\tan 60^{\\circ}$.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You have the right two numbers for this angle; they are just the wrong way up in the fraction, so the answer comes out turned upside down."
+        },
+        {
+          "step": 2,
+          "text_md": "Sin and cos put the hypotenuse underneath. In the right-angled triangle with two equal sides of 1, the hypotenuse is $\\sqrt{2}$, so $\\sin 45^{\\circ}=\\cos 45^{\\circ}=\\frac{1}{\\sqrt{2}}$. Writing $\\sqrt{2}$ on top is hypotenuse over a side, which is not what sin or cos mean."
+        },
+        {
+          "step": 3,
+          "text_md": "Tan is opposite over adjacent. In the right-angled triangle with sides 1, $\\sqrt{3}$ and 2, the side opposite $30^{\\circ}$ is 1 and the side adjacent to it is $\\sqrt{3}$, so $\\tan 30^{\\circ}=\\frac{1}{\\sqrt{3}}$. Put $\\sqrt{3}$ on top and you have written $\\tan 60^{\\circ}$, where the opposite side is $\\sqrt{3}$ and the adjacent side is 1."
+        },
+        {
+          "step": 4,
+          "text_md": "Before you pick an answer, say the ratio in words (for example 'opposite over adjacent'), name those two sides for your angle, and put the side named first on top."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:g10m5s6-1-1:ex5-3-1a",
+          "choice_text": "\\sqrt{2}"
+        },
+        {
+          "question_id": "q:g10m5s6-1-1:ex5-3-1b",
+          "choice_text": "\\sqrt{2}"
+        },
+        {
+          "question_id": "q:g10m5s6-1-1:ex5-3-1c",
+          "choice_text": "\\frac{\\sqrt{3}}{1}"
+        },
+        {
+          "question_id": "q:g10m5s6-1-1:ex5-3-1d",
+          "choice_text": "\\frac{1}{\\sqrt{3}}"
+        },
+        {
+          "question_id": "q:g10m5s6-1-1:ex5-3-1e",
+          "choice_text": "\\sqrt{2}"
+        },
+        {
+          "question_id": "q:g10m5s6-1-1:ex5-3-1g",
+          "choice_text": "\\frac{\\sqrt{3}}{1}"
+        },
+        {
+          "question_id": "q:g10m5s6-1-1:ex5-3-5b",
+          "choice_text": "\\frac{\\sqrt{3}}{2}"
+        }
+      ],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch05-wf_7f85d38b-00b.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Worked through against both figures: 45-45-90 triangle has sides 1, 1, sqrt2; 30-60-90 triangle has 1, sqrt3, 2 with 1 opposite 30 and sqrt3 opposite 60. Every refutation claim is correct and matches the canonical answers (sin45=cos45=1/sqrt2, tan30=1/sqrt3, tan60=sqrt3/1). The sin/cos hypotenuse-underneath statement, the tan = opp/adj statement, and 'sqrt3 on top is tan60' are all right. It argues against the inversion itself rather than restating the method, uses only the book's own triangles, and has no question id, figure number, page or review-history reference. The signal lists exact inversions of canonical values and does not misdiagnose.",
+        "sources": [
+          {
+            "type": "distractor",
+            "ref": "D2"
+          },
+          {
+            "type": "distractor",
+            "ref": "D4"
+          },
+          {
+            "type": "distractor",
+            "ref": "D19"
+          },
+          {
+            "type": "distractor",
+            "ref": "D9"
+          },
+          {
+            "type": "distractor",
+            "ref": "D14"
+          },
+          {
+            "type": "distractor",
+            "ref": "D27"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m5s6-1-1:ex5-8-4a"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m5s6-1-1:ex5-8-3f"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m5s6-1-1:ex5-8-3c"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "book",
+            "ref": "q:g10m5s6-1-1:ex5-3-1a",
+            "question_id": "q:g10m5s6-1-1:ex5-3-1a",
+            "text": "\\sqrt{2}",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m5s6-1-1:ex5-3-1b",
+            "question_id": "q:g10m5s6-1-1:ex5-3-1b",
+            "text": "\\sqrt{2}",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m5s6-1-1:ex5-3-1c",
+            "question_id": "q:g10m5s6-1-1:ex5-3-1c",
+            "text": "\\frac{\\sqrt{3}}{1}",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m5s6-1-1:ex5-3-1d",
+            "question_id": "q:g10m5s6-1-1:ex5-3-1d",
+            "text": "\\frac{1}{\\sqrt{3}}",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m5s6-1-1:ex5-3-1e",
+            "question_id": "q:g10m5s6-1-1:ex5-3-1e",
+            "text": "\\sqrt{2}",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m5s6-1-1:ex5-3-1g",
+            "question_id": "q:g10m5s6-1-1:ex5-3-1g",
+            "text": "\\frac{\\sqrt{3}}{1}",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m5s6-1-1:ex5-3-5b",
+            "question_id": "q:g10m5s6-1-1:ex5-3-5b",
+            "text": "\\frac{\\sqrt{3}}{2}",
+            "tagged": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m5s6-1-1:wrong-triangle-for-angle",
+      "lo_id": "lo:g10m5s6-1-1",
+      "label": "Uses a value from the other triangle",
+      "description": "The student takes a number from the $30^{\\circ}$ and $60^{\\circ}$ triangle for a $45^{\\circ}$ angle, or from the $45^{\\circ}$ triangle for a $30^{\\circ}$ or $60^{\\circ}$ angle.",
+      "signal": "The answer has $\\sqrt{3}$ or a 2 in a $45^{\\circ}$ value (for example $\\frac{1}{2}$ or $\\frac{\\sqrt{3}}{2}$ for $\\cos 45^{\\circ}$), or $\\sqrt{2}$ in a $30^{\\circ}$ or $60^{\\circ}$ value (for example $\\frac{1}{\\sqrt{2}}$ for $\\tan 30^{\\circ}$), or 1 for $\\tan 30^{\\circ}$ or $\\tan 60^{\\circ}$.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You used a real special-angle value, but from the wrong triangle. The special angles come from two different right-angled triangles, and each angle belongs to only one of them."
+        },
+        {
+          "step": 2,
+          "text_md": "The $45^{\\circ}$ triangle has two equal sides of 1 and a hypotenuse of $\\sqrt{2}$. Its only numbers are 1 and $\\sqrt{2}$, so a $45^{\\circ}$ value never has $\\sqrt{3}$ or a 2 in it. For example, $\\cos 45^{\\circ}$ is adjacent over hypotenuse, which is $\\frac{1}{\\sqrt{2}}$."
+        },
+        {
+          "step": 3,
+          "text_md": "The $30^{\\circ}$ and $60^{\\circ}$ triangle has sides 1, $\\sqrt{3}$ and 2. Its only numbers are 1, $\\sqrt{3}$ and 2, so a $30^{\\circ}$ or $60^{\\circ}$ value never has $\\sqrt{2}$ in it. For example, $\\tan 30^{\\circ}$ is opposite over adjacent, which is $\\frac{1}{\\sqrt{3}}$."
+        },
+        {
+          "step": 4,
+          "text_md": "Here is one more check. $\\tan 45^{\\circ}=\\frac{1}{1}$ belongs to the $45^{\\circ}$ triangle, because only there are the two sides next to the right angle equal. In the other triangle those two sides are 1 and $\\sqrt{3}$, so $\\tan 30^{\\circ}$ and $\\tan 60^{\\circ}$ are never 1."
+        },
+        {
+          "step": 5,
+          "text_md": "So start from the angle. $45^{\\circ}$ means the triangle with sides 1, 1 and $\\sqrt{2}$; $30^{\\circ}$ or $60^{\\circ}$ means the triangle with sides 1, $\\sqrt{3}$ and 2. Then read your ratio from that triangle only."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:g10m5s6-1-1:ex5-3-1a",
+          "choice_text": "\\frac{1}{2}"
+        },
+        {
+          "question_id": "q:g10m5s6-1-1:ex5-3-1a",
+          "choice_text": "\\frac{1}{\\sqrt{3}}"
+        },
+        {
+          "question_id": "q:g10m5s6-1-1:ex5-3-1b",
+          "choice_text": "\\frac{1}{2}"
+        },
+        {
+          "question_id": "q:g10m5s6-1-1:ex5-3-1b",
+          "choice_text": "\\frac{\\sqrt{3}}{1}"
+        },
+        {
+          "question_id": "q:g10m5s6-1-1:ex5-3-1c",
+          "choice_text": "\\frac{1}{\\sqrt{2}}"
+        },
+        {
+          "question_id": "q:g10m5s6-1-1:ex5-3-1d",
+          "choice_text": "\\frac{1}{\\sqrt{2}}"
+        },
+        {
+          "question_id": "q:g10m5s6-1-1:ex5-3-1d",
+          "choice_text": "\\frac{1}{1}"
+        },
+        {
+          "question_id": "q:g10m5s6-1-1:ex5-3-1e",
+          "choice_text": "\\frac{\\sqrt{3}}{2}"
+        },
+        {
+          "question_id": "q:g10m5s6-1-1:ex5-3-1e",
+          "choice_text": "\\frac{1}{2}"
+        },
+        {
+          "question_id": "q:g10m5s6-1-1:ex5-3-1e",
+          "choice_text": "\\frac{1}{\\sqrt{3}}"
+        },
+        {
+          "question_id": "q:g10m5s6-1-1:ex5-3-1f",
+          "choice_text": "\\frac{1}{\\sqrt{2}}"
+        },
+        {
+          "question_id": "q:g10m5s6-1-1:ex5-3-1f",
+          "choice_text": "\\frac{1}{1}"
+        },
+        {
+          "question_id": "q:g10m5s6-1-1:ex5-3-1g",
+          "choice_text": "\\frac{1}{\\sqrt{2}}"
+        },
+        {
+          "question_id": "q:g10m5s6-1-1:ex5-3-1h",
+          "choice_text": "\\frac{1}{\\sqrt{2}}"
+        },
+        {
+          "question_id": "q:g10m5s6-1-1:ex5-3-5c",
+          "choice_text": "-\\frac{1}{\\sqrt{3}}"
+        },
+        {
+          "question_id": "q:g10m5s6-1-1:ex5-3-5c",
+          "choice_text": "-\\frac{\\sqrt{3}}{1}"
+        },
+        {
+          "question_id": "q:g10m5s6-1-1:ex5-3-5f",
+          "choice_text": "-\\frac{1}{\\sqrt{2}}"
+        },
+        {
+          "question_id": "q:g10m5s6-1-1:ex5-3-5g",
+          "choice_text": "-\\frac{1}{\\sqrt{2}}"
+        },
+        {
+          "question_id": "q:g10m5s6-1-1:ex5-3-5c",
+          "choice_text": "-\\frac{\\sqrt{3}}{2}"
+        },
+        {
+          "question_id": "q:g10m5s6-1-1:ex5-3-5d",
+          "choice_text": "\\frac{\\sqrt{3}}{1}"
+        },
+        {
+          "question_id": "q:g10m5s6-1-1:ex5-3-5d",
+          "choice_text": "\\frac{2}{\\sqrt{3}}"
+        },
+        {
+          "question_id": "q:g10m5s6-1-1:ex5-3-5e",
+          "choice_text": "\\frac{2\\sqrt{2}}{\\sqrt{3}}"
+        }
+      ],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch05-wf_7f85d38b-00b.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Checked against both figures. 45-45-90 has only 1 and sqrt2, 30-60-90 has only 1, sqrt3 and 2, so a 45 value (as the book writes it, a ratio of those side lengths) has no sqrt3 or 2, and a 30 or 60 value has no sqrt2. tan30 and tan60 are ratios of the legs 1 and sqrt3, so never 1, while tan45 = 1/1 only in the isosceles triangle. All worked values match the canonical solutions. It argues against this error (use the triangle that belongs to the angle) rather than restating the method, and uses only the book's own triangles. No question ids, figure numbers, pages or review history. Minor nit: it would be loose if a rationalised form such as sqrt2/2 were counted, but the book's surd forms are all of the 1/sqrt2 type.",
+        "sources": [
+          {
+            "type": "distractor",
+            "ref": "D0"
+          },
+          {
+            "type": "distractor",
+            "ref": "D3"
+          },
+          {
+            "type": "distractor",
+            "ref": "D5"
+          },
+          {
+            "type": "distractor",
+            "ref": "D6"
+          },
+          {
+            "type": "distractor",
+            "ref": "D10"
+          },
+          {
+            "type": "distractor",
+            "ref": "D13"
+          },
+          {
+            "type": "distractor",
+            "ref": "D15"
+          },
+          {
+            "type": "distractor",
+            "ref": "D16"
+          },
+          {
+            "type": "distractor",
+            "ref": "D17"
+          },
+          {
+            "type": "distractor",
+            "ref": "D18"
+          },
+          {
+            "type": "distractor",
+            "ref": "D20"
+          },
+          {
+            "type": "distractor",
+            "ref": "D23"
+          },
+          {
+            "type": "distractor",
+            "ref": "D25"
+          },
+          {
+            "type": "distractor",
+            "ref": "D31"
+          },
+          {
+            "type": "distractor",
+            "ref": "D37"
+          },
+          {
+            "type": "distractor",
+            "ref": "D38"
+          },
+          {
+            "type": "distractor",
+            "ref": "D50"
+          },
+          {
+            "type": "distractor",
+            "ref": "D53"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m5s6-1-1:ex5-8-4b"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m5s6-1-1:ex5-8-4c"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m5s6-1-1:ex5-8-3f"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m5s6-1-1:ex5-8-3c"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "book",
+            "ref": "q:g10m5s6-1-1:ex5-3-1a",
+            "question_id": "q:g10m5s6-1-1:ex5-3-1a",
+            "text": "\\frac{1}{2}",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m5s6-1-1:ex5-3-1a",
+            "question_id": "q:g10m5s6-1-1:ex5-3-1a",
+            "text": "\\frac{1}{\\sqrt{3}}",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m5s6-1-1:ex5-3-1b",
+            "question_id": "q:g10m5s6-1-1:ex5-3-1b",
+            "text": "\\frac{1}{2}",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m5s6-1-1:ex5-3-1b",
+            "question_id": "q:g10m5s6-1-1:ex5-3-1b",
+            "text": "\\frac{\\sqrt{3}}{1}",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m5s6-1-1:ex5-3-1c",
+            "question_id": "q:g10m5s6-1-1:ex5-3-1c",
+            "text": "\\frac{1}{\\sqrt{2}}",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m5s6-1-1:ex5-3-1d",
+            "question_id": "q:g10m5s6-1-1:ex5-3-1d",
+            "text": "\\frac{1}{\\sqrt{2}}",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m5s6-1-1:ex5-3-1d",
+            "question_id": "q:g10m5s6-1-1:ex5-3-1d",
+            "text": "\\frac{1}{1}",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m5s6-1-1:ex5-3-1e",
+            "question_id": "q:g10m5s6-1-1:ex5-3-1e",
+            "text": "\\frac{\\sqrt{3}}{2}",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m5s6-1-1:ex5-3-1e",
+            "question_id": "q:g10m5s6-1-1:ex5-3-1e",
+            "text": "\\frac{1}{2}",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m5s6-1-1:ex5-3-1e",
+            "question_id": "q:g10m5s6-1-1:ex5-3-1e",
+            "text": "\\frac{1}{\\sqrt{3}}",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m5s6-1-1:ex5-3-1f",
+            "question_id": "q:g10m5s6-1-1:ex5-3-1f",
+            "text": "\\frac{1}{\\sqrt{2}}",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m5s6-1-1:ex5-3-1f",
+            "question_id": "q:g10m5s6-1-1:ex5-3-1f",
+            "text": "\\frac{1}{1}",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m5s6-1-1:ex5-3-1g",
+            "question_id": "q:g10m5s6-1-1:ex5-3-1g",
+            "text": "\\frac{1}{\\sqrt{2}}",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m5s6-1-1:ex5-3-1h",
+            "question_id": "q:g10m5s6-1-1:ex5-3-1h",
+            "text": "\\frac{1}{\\sqrt{2}}",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m5s6-1-1:ex5-3-5c",
+            "question_id": "q:g10m5s6-1-1:ex5-3-5c",
+            "text": "-\\frac{1}{\\sqrt{3}}",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m5s6-1-1:ex5-3-5c",
+            "question_id": "q:g10m5s6-1-1:ex5-3-5c",
+            "text": "-\\frac{\\sqrt{3}}{1}",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m5s6-1-1:ex5-3-5f",
+            "question_id": "q:g10m5s6-1-1:ex5-3-5f",
+            "text": "-\\frac{1}{\\sqrt{2}}",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m5s6-1-1:ex5-3-5g",
+            "question_id": "q:g10m5s6-1-1:ex5-3-5g",
+            "text": "-\\frac{1}{\\sqrt{2}}",
+            "tagged": null
+          },
+          {
+            "origin": "S6",
+            "ref": "tpl:g10m5s6-1-1:crossratio#mc:g10m5s6-1-1:wrong-triangle-for-angle",
+            "question_id": "q:g10m5s6-1-1:g001-crossr",
+            "text": "\\frac{\\mathrm{1}}{\\sqrt{2}}",
+            "tagged": "mc:g10m5s6-1-1:wrong-triangle-for-angle"
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m5s6-1-1:ex5-3-5c",
+            "question_id": "q:g10m5s6-1-1:ex5-3-5c",
+            "text": "-\\frac{\\sqrt{3}}{2}",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m5s6-1-1:ex5-3-5d",
+            "question_id": "q:g10m5s6-1-1:ex5-3-5d",
+            "text": "\\frac{\\sqrt{3}}{1}",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m5s6-1-1:ex5-3-5d",
+            "question_id": "q:g10m5s6-1-1:ex5-3-5d",
+            "text": "\\frac{2}{\\sqrt{3}}",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m5s6-1-1:ex5-3-5e",
+            "question_id": "q:g10m5s6-1-1:ex5-3-5e",
+            "text": "\\frac{2\\sqrt{2}}{\\sqrt{3}}",
+            "tagged": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m5s7-1-1:names-sides-from-the-wrong-angle",
+      "lo_id": "lo:g10m5s7-1-1",
+      "label": "Names opposite and adjacent from the wrong angle",
+      "description": "The student labels the opposite and adjacent sides as seen from the other acute angle (or just by position on the page) instead of from the angle the question gives, so the ratio they write pairs the wrong sides.",
+      "signal": null,
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You started by naming the three sides, which is exactly the right first move, and you know the three names. The slip is *where you named them from*: \"opposite\" and \"adjacent\" were read from the wrong angle, not from the angle the question gives you."
+        },
+        {
+          "step": 2,
+          "text_md": "Only one side never moves: the hypotenuse is always the side opposite the right angle, whichever angle you are working with. The other two sides depend on the angle you are interested in. The opposite side is the one across from that angle, and the adjacent side is the remaining side."
+        },
+        {
+          "step": 3,
+          "text_md": "Here is what goes wrong. Take a right-angled triangle with a $25^{\\circ}$ angle, a side of length $7$ that is next to that angle (not the hypotenuse), and the hypotenuse $y$. If you read the $7$ as *opposite* (which it is from the other acute angle), you write $\\sin25^{\\circ}=\\frac{7}{y}$ and get $y=\\frac{7}{\\sin25^{\\circ}}\\approx16.56$."
+        },
+        {
+          "step": 4,
+          "text_md": "Now stand at the $25^{\\circ}$ angle. The hypotenuse is $y$. The side across from the $25^{\\circ}$ angle is the opposite side, so the side of length $7$ is the remaining side: it is the **adjacent** side. The ratio that uses adjacent and hypotenuse is $\\cos25^{\\circ}=\\frac{7}{y}$, which gives $y=\\frac{7}{\\cos25^{\\circ}}\\approx7.72$, a different answer from $16.56$."
+        },
+        {
+          "step": 5,
+          "text_md": "Next time, before you pick sin, cos or tan: mark the hypotenuse (opposite the right angle), then the side across from the given angle (opposite), then the side that is left (adjacent). Then choose the ratio that uses the side you want and the side you know."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch05-wf_7f85d38b-00b.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real and tied to the book's own remark that opposite and adjacent are named with reference to the given angle. The hypotenuse-never-moves point, the opposite and remaining-side definitions, and the 'mark hypotenuse, opposite, adjacent' routine all match the book. The numbers check out: 7 is adjacent to 25 degrees and opposite to the other acute angle. The wrong route gives sin25 = 7/y, so y = 7/sin25 = 16.56. The right route gives cos25 = 7/y, so y = 7/cos25 = 7.72, which matches the canonical answer (7.72). The refutation argues against this error with a concrete counter-example rather than restating the method. It names no question id, page, figure or review history, and it has no signal to misdiagnose.",
+        "sources": [
+          {
+            "type": "remark",
+            "ref": "q:g10m5s7-1-1:we04"
+          },
+          {
+            "type": "remark",
+            "ref": "q:g10m5s7-1-1:we05"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:g10m5s7-1-2:ratio-key-instead-of-inverse",
+      "lo_id": "lo:g10m5s7-1-2",
+      "label": "Presses the plain tan, sin or cos key on the ratio instead of its inverse",
+      "description": "After writing the ratio of the two known sides correctly, the student presses the plain tan, sin or cos key on that ratio, so the calculator works from angle to ratio instead of from ratio back to the angle.",
+      "signal": null,
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You wrote the ratio of the sides correctly, and that is the hard part. The slip is at the calculator: the plain $\\tan$, $\\sin$ and $\\cos$ keys go from an angle to a ratio. You already have the ratio and it is the angle you are looking for, so you need the key that goes the other way."
+        },
+        {
+          "step": 2,
+          "text_md": "Take a right-angled triangle where the side opposite the angle $\\theta$ is 50 and the side adjacent to it is 100. Then $\\tan\\theta=\\frac{50}{100}=0.5$. The 0.5 is what tan gave from the unknown angle, so the angle is still the thing you have not found."
+        },
+        {
+          "step": 3,
+          "text_md": "Pressing $\\tan$ on 0.5 asks \"what is the tangent of an angle of 0.5?\", which is a different question from \"which angle has a tangent of 0.5?\". Only the second question is the one the triangle is asking."
+        },
+        {
+          "step": 4,
+          "text_md": "The book describes the inverse tangent function as working backwards: it takes the ratio of the sides and gives the angle that resulted in that ratio. Inverse sine and inverse cosine do the same for their own ratios."
+        },
+        {
+          "step": 5,
+          "text_md": "So after writing the ratio, press $\\boxed{\\text{SHIFT}}$ and then the key for the same function, and enter the ratio as a division. For $\\tan\\theta=\\frac{50}{100}$ that is $\\boxed{\\text{SHIFT}}\\enspace\\boxed{\\text{tan}}\\enspace\\boxed{50}\\enspace\\boxed{\\div}\\enspace\\boxed{100}$, which gives 26.56505..., so $\\theta\\approx 26.6^{\\circ}$. Written out, $\\theta=\\tan^{-1}\\frac{50}{100}$."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch05-wf_7f85d38b-00b.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real for this objective, and the canonical method rules it out directly. The worked example says to use the inverse tangent function because it works backwards from the ratio to the angle. The exercise solutions write the angle as an inverse ratio (cos^-1 3/8), and pressing a plain key would not do that. I checked the maths. In the 50/100 triangle (figure checked), tan(theta) = 0.5 and tan^-1(0.5) = 26.565..., which rounds to 26.6 and matches the canonical answer. A plain tan press on 0.5 asks for the tangent of an angle of 0.5, which is a different question, as the refutation says. The refutation uses the book's own method and notation (SHIFT, then tan^-1, then the ratio entered as a division). It adds nothing outside the book. It names no question id, page, figure or review history. The 50/100 triangle is described in words, so the student needs no figure. It argues against this slip by explaining what the plain key computes, so it is more than a restatement of the method. Minor blemishes that do not change the verdict: the boxed key sequence leaves out the closing bracket and the equals key that the book shows, and step 1 calls the ratio 'the hard part', which is a mild framing claim the book does not make.",
+        "sources": [
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m5s7-1-2:we07"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m5s7-1-2:ex5-8-15c"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:g10m5s7-1-3:judges-range-before-rearranging",
+      "lo_id": "lo:g10m5s7-1-3",
+      "label": "Checks the number on the right before rearranging",
+      "description": "The student reads the number on the right of the equation as the sine or cosine ratio, sees it is in range, and says a solution exists without first rearranging to find what the sine or cosine actually equals.",
+      "signal": "Gives the angle for the number on the right as if it were the whole ratio, or says a solution exists because that number is no bigger than 1.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You looked at the number on the right, saw it is a size a sine can have, and decided a solution exists. Checking the size of the number is the right instinct. The slip is that $0.8$ is not what $\\sin\\theta$ equals in this equation."
+        },
+        {
+          "step": 2,
+          "text_md": "The equation is $2\\sin\\theta+5=0.8$, so the $2$ and the $5$ are still attached to $\\sin\\theta$. If $\\sin\\theta$ really were $0.8$, then $2\\sin\\theta+5$ would be $2(0.8)+5=6.6$, not $0.8$."
+        },
+        {
+          "step": 3,
+          "text_md": "Rearrange first, so that $\\sin\\theta$ is on its own. Take away 5 from both sides: $2\\sin\\theta=-4.2$. Divide both sides by 2: $\\sin\\theta=-2.1$."
+        },
+        {
+          "step": 4,
+          "text_md": "Now check that number. $\\sin\\theta=-2.1$ is out of range, because a sine cannot be smaller than $-1$ or bigger than 1. So there is no solution."
+        },
+        {
+          "step": 5,
+          "text_md": "Rearrange first so the sine or cosine is on its own, then check that number is in range. Only then press SHIFT and the function. If it is out of range, write no solution."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:g10m5s7-1-3:ex5-6-1k",
+          "choice_text": "solution exists"
+        }
+      ],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch05-wf_7f85d38b-00b.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real and matches the canonical solution for 2 sin(theta)+5=0.8. That solution rearranges to sin(theta)=-2.1 and concludes no solution. The refutation's arithmetic is correct: 2(0.8)+5=6.6, which is not 0.8; subtracting 5 gives -4.2, and dividing by 2 gives -2.1. It argues against this specific slip of reading the right-hand 0.8 as the whole ratio. It agrees that checking the size is a sound instinct but must be done after rearranging, as in the book's worked method. It names no question id or review history. The signal's first clause, 'gives the angle for the number on the right', is somewhat broad and could also catch a student who just forgets a coefficient. It still describes the same underlying slip, so I judged it acceptable.",
+        "sources": [
+          {
+            "type": "distractor",
+            "ref": "D1"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m5s7-1-3:ex5-6-1k"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m5s7-1-3:we09"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "book",
+            "ref": "q:g10m5s7-1-3:ex5-6-1k",
+            "question_id": "q:g10m5s7-1-3:ex5-6-1k",
+            "text": "solution exists",
+            "tagged": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m5s7-1-3:thinks-every-ratio-has-an-angle",
+      "lo_id": "lo:g10m5s7-1-3",
+      "label": "Thinks every number is a possible sine or cosine ratio",
+      "description": "The student assumes some angle always gives the ratio, so says a solution exists for a sine or cosine equal to a number that is out of range.",
+      "signal": "Says a solution exists when a sine or cosine is set equal to a number bigger than 1.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You assumed there is always an angle behind a ratio, so you expected $1.2$ to have one too. That is a fair guess, because most ratios do: $\\cos\\theta=0.2$ gives $78.46^{\\circ}$, and even $\\tan\\beta=4.2$ gives $76.6^{\\circ}$."
+        },
+        {
+          "step": 2,
+          "text_md": "Sine and cosine are limited, though. The maximum value of the cosine function is 1, and a sine has the same limit, so no angle has a cosine of $1.2$ and no angle has a sine of $1.2$. A number beside the angle, as in $\\sin3\\alpha=1.2$, does not change this: the sine is still being set equal to $1.2$."
+        },
+        {
+          "step": 3,
+          "text_md": "The same thing shows up after converting. $3\\sec\\alpha=1.4$ becomes $\\frac{3}{\\cos\\alpha}=1.4$, then $\\cos\\alpha=\\frac{3}{1.4}$, and $\\frac{3}{1.4}$ is greater than 1. The cosine cannot be that big, so there is no solution."
+        },
+        {
+          "step": 4,
+          "text_md": "The calculator tells you the same. Pressing $\\boxed{\\text{SHIFT}}\\enspace\\boxed{\\text{cos}}$ on a ratio like that gives math error. That is not a slip of your keys: it is the calculator telling you there is no solution."
+        },
+        {
+          "step": 5,
+          "text_md": "Before you press SHIFT, look at the number the sine or cosine equals. If it is bigger than 1 or smaller than $-1$, write no solution. If it is in range, press SHIFT and the function as usual."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:g10m5s7-1-3:ex5-6-1g",
+          "choice_text": "solution exists"
+        },
+        {
+          "question_id": "q:g10m5s7-1-3:ex5-6-1m",
+          "choice_text": "solution exists"
+        }
+      ],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch05-wf_7f85d38b-00b.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real and grounded: the canonical answers for cos(beta)=1.2 and sin(3alpha)=1.2 are both no solution, and the worked example gives 3/1.4 > 1 with cosine's maximum being 1. The refutation arithmetic checks against the book: cos(theta)=0.2 gives 78.46, tan(beta)=4.2 gives 76.6, and 3/1.4 exceeds 1. It correctly says the 3 inside sin(3alpha) does not change that the sine is set equal to 1.2. It argues against the belief that every number has an angle, and it introduces no outside method. The lower bound of -1 is mathematically true and matches the book's own no-solution answer for sin(theta)=-2.1. The signal says only 'bigger than 1' but does not misdiagnose anyone. It names no question id or review history.",
+        "sources": [
+          {
+            "type": "distractor",
+            "ref": "D0"
+          },
+          {
+            "type": "distractor",
+            "ref": "D2"
+          },
+          {
+            "type": "remark",
+            "ref": "expl:g10m5s7-1-3:we10"
+          },
+          {
+            "type": "caution",
+            "ref": "b01792"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m5s7-1-3:ex5-6-1g"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m5s7-1-3:ex5-6-1m"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "book",
+            "ref": "q:g10m5s7-1-3:ex5-6-1g",
+            "question_id": "q:g10m5s7-1-3:ex5-6-1g",
+            "text": "solution exists",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m5s7-1-3:ex5-6-1m",
+            "question_id": "q:g10m5s7-1-3:ex5-6-1m",
+            "text": "solution exists",
+            "tagged": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m5s7-1-3:writes-math-error-for-no-solution",
+      "lo_id": "lo:g10m5s7-1-3",
+      "label": "Writes \"math error\" instead of \"no solution\"",
+      "description": "After pressing inverse sine or inverse cosine and seeing the calculator's error message, the student writes the message down as the answer (or leaves it as the result) instead of recognising the ratio is out of range and stating that there is no solution.",
+      "signal": "The final answer is \"math error\" (or \"error\") rather than \"There is no solution.\"",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You rearranged correctly, keyed in the inverse function, and wrote down what the calculator showed. That is a natural thing to copy, and the rearranging was the hard part. The slip is in treating the message as your answer."
+        },
+        {
+          "step": 2,
+          "text_md": "\"Math error\" is the calculator talking about itself, not telling you anything about the equation. What it is really saying is that you asked for an angle whose cosine (or sine) is a certain number, and no angle has that value."
+        },
+        {
+          "step": 3,
+          "text_md": "Take $3\\sec\\alpha=1.4$. Converting to cosine and rearranging gives $\\cos\\alpha=\\frac{3}{1.4}$. That number is greater than 1, and the largest value cosine can take is 1, so no angle $\\alpha$ can have this cosine. The same is true for sine, which is why an error on either one points the same way."
+        },
+        {
+          "step": 4,
+          "text_md": "So the error is not a keying slip to fix, and pressing the buttons again will give the same message. It is the calculator's way of showing that the ratio is out of range, and the equation has no solution."
+        },
+        {
+          "step": 5,
+          "text_md": "Next time, when an inverse sine or inverse cosine gives an error, check that the number you keyed in is one sine or cosine cannot reach (here, greater than 1). Then write \"There is no solution.\" as your final answer, not \"math error\"."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch05-wf_7f85d38b-00b.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The book's own remark on 3 sec(alpha)=1.4 says to write no solution and not math error, and its caution says a calculator error on sin or cos means no solution. The refutation uses that same worked case: cos(alpha)=3/1.4 is greater than 1 and cosine's maximum is 1, so there is no solution. Its argument is aimed at the slip of copying the message down, not just at the method. It names no question id, page, or review history. The one loose sentence is 'not telling you anything about the equation', which the next sentence and step 4 correct. It does not change a method or an answer.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "b01792"
+          },
+          {
+            "type": "remark",
+            "ref": "expl:g10m5s7-1-3:we10"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:g10m5s8-1-2:r-takes-sign-of-point",
+      "lo_id": "lo:g10m5s8-1-2",
+      "label": "Gives r a minus sign",
+      "description": "The student lets the position of the point decide the sign of r, writing r as negative when the point is left of the y-axis or below the x-axis, instead of keeping r positive.",
+      "signal": "Every ratio that has r in it comes out with the opposite sign to the correct one while tan is right, for example $\\text{cosec}\\beta=\\frac{\\sqrt{10}}{3}$ instead of $\\frac{\\sqrt{10}}{-3}$ for the point (1, -3).",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You gave $r$ a minus sign because the point sits to the left of the $y$-axis or below the $x$-axis, as if $r$ travels with the coordinates. That is an understandable thought: $x$ and $y$ really do change sign from one quadrant to another, and you are right that the signs matter in these ratios."
+        },
+        {
+          "step": 2,
+          "text_md": "But $r$ is not a coordinate. It is the distance from the origin $O$ to the point, the radius of the circle the point lies on, and a distance is never negative. As the book puts it, $r$ is positive because it is the radius of the circle. That is why the theorem of Pythagoras, $r^{2}=x^{2}+y^{2}$, is followed by the positive square root only."
+        },
+        {
+          "step": 3,
+          "text_md": "See what the minus sign does with the point $(1, -3)$, where $x=1$, $y=-3$ and $r=\\sqrt{10}$. With the correct $r$: $\\cos\\beta=\\frac{x}{r}=\\frac{1}{\\sqrt{10}}$ and $\\text{cosec}\\beta=\\frac{r}{y}=\\frac{\\sqrt{10}}{-3}$. With $r=-\\sqrt{10}$ you would get $\\frac{1}{-\\sqrt{10}}$ and $\\frac{-\\sqrt{10}}{-3}=\\frac{\\sqrt{10}}{3}$. Both signs are flipped, and the minus of $y$ has been cancelled by the minus you put on $r$."
+        },
+        {
+          "step": 4,
+          "text_md": "Next time, find $r$ with $r^{2}=x^{2}+y^{2}$ and take the positive root. Then let only $x$ and $y$ carry their signs, read from where the point is, and substitute into the ratio you need."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch05-wf_7f85d38b-00b.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real and book-supported: the worked example for P(-3,4) states r is positive as the radius of the circle, and the B(1;-3) solution keeps r=sqrt10 with cosec = sqrt10/(-3). The refutation's arithmetic is correct: with r=-sqrt10, cos becomes 1/(-sqrt10) and cosec becomes -sqrt10/-3 = sqrt10/3, so both signs flip and tan is unchanged. It follows the book's method (Pythagoras, positive root, signs carried only by x and y), argues against this particular slip with the counterexample, and adds nothing outside the book. No question ids, page numbers, figure references or review history appear in the label, description, signal or steps. The phrase 'as the book puts it' names no location.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "WE11"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "expl:g10m5s8-1-2:we11"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m5s8-1-2:ex5-7-1c"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "S6",
+            "ref": "tpl:g10m5s8-1-2:sec-choice#mc:g10m5s8-1-2:r-takes-sign-of-point",
+            "question_id": "q:g10m5s8-1-2:g001-sec-ch",
+            "text": "$\\frac{-\\sqrt{61}}{-6}$",
+            "tagged": "mc:g10m5s8-1-2:r-takes-sign-of-point"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m5s8-1-2:ratio-not-turned-over",
+      "lo_id": "lo:g10m5s8-1-2",
+      "label": "Gives sec the value of cos",
+      "description": "The student finds x over r correctly but writes it as sec, which is the value of cos, instead of turning the fraction over to get r over x.",
+      "signal": "The answer to a sec, cosec or cot question is the ordinary ratio it is the reciprocal of, with x, y and r left in the un-turned positions: x over r for sec, y over r for cosec, y over x for cot.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You found $\\frac{x}{r}$ correctly, and that part is right. The slip is the name: $\\frac{x}{r}$ is the value of $\\cos\\theta$, so writing it for $\\sec\\theta$ answers a different question."
+        },
+        {
+          "step": 2,
+          "text_md": "The reciprocal ratios are defined in the Cartesian plane the same way as before: each one is the reciprocal of a ratio you already know. So $\\sec\\theta=\\frac{r}{x}$, which is $\\cos\\theta$ turned over. In the same way $\\text{cosec}\\theta=\\frac{r}{y}$ and $\\cot\\theta=\\frac{x}{y}$."
+        },
+        {
+          "step": 3,
+          "text_md": "Try the point $(5, 8)$, where $x=5$, $y=8$ and $r=\\sqrt{89}$. Here $\\cos\\theta=\\frac{5}{\\sqrt{89}}$, but $\\sec\\theta=\\frac{\\sqrt{89}}{5}$. These are different numbers, and $\\frac{5}{\\sqrt{89}}$ is the answer to the cos question, not the sec question."
+        },
+        {
+          "step": 4,
+          "text_md": "Before you write your answer, ask which ratio the question names. Find $x$, $y$ and $r$, write the ratio you know, $\\cos\\theta=\\frac{x}{r}$, then turn it over to get $\\sec\\theta=\\frac{r}{x}$. Keep the signs of $x$ and $y$ exactly as they are in the point."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch05-wf_7f85d38b-00b.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real and matches the book's caution that the reciprocal ratios are extended to the Cartesian plane in the same way. The refutation is correct and consistent with the canonical answers. For (5,8), cos = 5/sqrt89 and sec = sqrt89/5, so these are different numbers. It also gives cosec = r/y and cot = x/y. It names the specific slip (x/r is cos, not sec) and contrasts the two values. It does not just restate the method, and it teaches nothing beyond the book. The signal is accurate for sec (x/r), cosec (y/r) and cot (y/x, the tan value). No forbidden references appear.",
+        "sources": [
+          {
+            "type": "distractor",
+            "ref": "D0"
+          },
+          {
+            "type": "caution",
+            "ref": "b01832"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m5s8-1-2:ex5-7-8f"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m5s8-1-2:ex5-7-8c"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "S6",
+            "ref": "tpl:g10m5s8-1-2:sec-choice#mc:g10m5s8-1-2:ratio-not-turned-over",
+            "question_id": "q:g10m5s8-1-2:g001-sec-ch",
+            "text": "$\\frac{-6}{\\sqrt{61}}$",
+            "tagged": "mc:g10m5s8-1-2:ratio-not-turned-over"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m5s8-1-2:reciprocal-named-by-letters",
+      "lo_id": "lo:g10m5s8-1-2",
+      "label": "Pairs cosec with cos and sec with sin",
+      "description": "The student matches each reciprocal ratio to the ratio whose name it resembles, writing cosec as r over x and sec as r over y, instead of turning over the ratio it is the reciprocal of.",
+      "signal": "Cosec has x underneath and sec has y underneath, for example $\\text{cosec}\\theta=\\frac{\\sqrt{89}}{5}$ and $\\sec\\theta=\\frac{\\sqrt{89}}{8}$ for the point (5, 8).",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You matched cosec with cos and sec with sin, going by the first letters of the names. It is an easy trap, because the names seem to point that way. You are right that the three reciprocal ratios are built from $x$, $y$ and $r$ in just the same way as the first three, so the pieces you are using are the right ones."
+        },
+        {
+          "step": 2,
+          "text_md": "The letters in the name do not tell you which coordinate goes underneath. A reciprocal ratio is another ratio turned upside down, so what decides it is which ratio you are turning over."
+        },
+        {
+          "step": 3,
+          "text_md": "Try it on the point $(5, 8)$, where $x=5$, $y=8$ and $r=\\sqrt{89}$. The sine is $\\sin\\theta=\\frac{y}{r}=\\frac{8}{\\sqrt{89}}$. Turn it over and you get $\\text{cosec}\\theta=\\frac{r}{y}=\\frac{\\sqrt{89}}{8}$, with the $8$ underneath. The cosine is $\\cos\\theta=\\frac{x}{r}=\\frac{5}{\\sqrt{89}}$, and turning that over gives $\\sec\\theta=\\frac{r}{x}=\\frac{\\sqrt{89}}{5}$. So the $\\frac{\\sqrt{89}}{5}$ you wrote for cosec is really the secant, and your secant is really the cosecant."
+        },
+        {
+          "step": 4,
+          "text_md": "Next time, write the first three ratios from the point: $\\sin\\theta=\\frac{y}{r}$, $\\cos\\theta=\\frac{x}{r}$, $\\tan\\theta=\\frac{y}{x}$. Turn each over to get $\\text{cosec}\\theta=\\frac{r}{y}$, $\\sec\\theta=\\frac{r}{x}$, $\\cot\\theta=\\frac{x}{y}$, then substitute your values."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch05-wf_7f85d38b-00b.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "This is a genuine cosec/sec swap, driven by the names (cosec with cos, sec with sin). Its signal is accurate: for (5,8) the student gets cosec = sqrt89/5 and sec = sqrt89/8, where the canonical answers are cosec = sqrt89/8 and sec = sqrt89/5. The refutation is mathematically correct. It derives sin = 8/sqrt89, so cosec = r/y = sqrt89/8, and cos = 5/sqrt89, so sec = r/x = sqrt89/5. It then points out that the student's cosec is really the secant and the reverse. It matches the book's definitions (sin = y/r, cos = x/r, tan = y/x, each reciprocal turned over) and the canonical answers for (5,8). It is not a bare restatement of the method, since it names the letter-matching habit and shows what it produces. No forbidden references appear.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "b01832"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m5s8-1-2:ex5-7-8e"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m5s8-1-2:ex5-7-8f"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "S6",
+            "ref": "tpl:g10m5s8-1-2:sec-choice#mc:g10m5s8-1-2:reciprocal-named-by-letters",
+            "question_id": "q:g10m5s8-1-2:g001-sec-ch",
+            "text": "$\\frac{\\sqrt{61}}{5}$",
+            "tagged": "mc:g10m5s8-1-2:reciprocal-named-by-letters"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m5s8-1-3:negative-r",
+      "lo_id": "lo:g10m5s8-1-3",
+      "label": "Putting the minus sign on r",
+      "description": "Given a negative ratio such as $\\sin\\theta=-\\frac{15}{17}$, the student writes the minus sign on $r$ (so $r=-17$ and $y=15$) instead of on the coordinate it belongs to, and then divides by that negative $r$.",
+      "signal": null,
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You read $\\sin\\theta=-\\frac{15}{17}$ as $\\frac{y}{r}$, which is right, and you noticed that the minus sign has to be written somewhere. You put it on the denominator, so you took $y=15$ and $r=-17$."
+        },
+        {
+          "step": 2,
+          "text_md": "The catch is that $r$ is the hypotenuse, the distance from the origin to the point, so it is a length and is always positive. Only $x$ and $y$ change with the position of the point, so only they can be negative."
+        },
+        {
+          "step": 3,
+          "text_md": "See what the wrong choice does. With $y=15$ and $r=-17$, the theorem of Pythagoras still gives $x^{2}=17^{2}-15^{2}=64$, so $x=\\pm8$, and $\\cos\\theta<0$ makes you take $x=-8$. Then $\\cos\\theta=\\frac{x}{r}=\\frac{-8}{-17}=\\frac{8}{17}$. That is positive, which contradicts the $\\cos\\theta<0$ in the question. Nothing looked wrong at the first step, so the slip only shows up in the answer."
+        },
+        {
+          "step": 4,
+          "text_md": "The move that works: when a ratio is negative, give the minus sign to $x$ or $y$ and keep $r$ positive. Here $\\frac{y}{r}=-\\frac{15}{17}$ gives $y=-15$ and $r=17$. Pythagoras gives $x=\\pm8$, and since the sine and the cosine are both negative the angle is in the third quadrant, so $x=-8$ and $\\cos\\theta=\\frac{-8}{17}$."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch05-wf_7f85d38b-00b.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real and directly supported by the evidence: caution b01850 says r is a length and always positive, caution b01845 says only x and y change sign, and the canonical solution for ex5-7-5a says to take y=-15 and r=17 because r cannot be negative. Every calculation in the refutation checks out. With y=15 and r=-17, x^2=289-225=64, so x=±8; cos<0 gives x=-8; then x/r=(-8)/(-17)=8/17, which is positive and contradicts cos<0. The corrected route (y=-15, r=17, x=-8, cos=-8/17) matches the canonical method and answer. It argues against the slip by showing the contradiction it produces, and it does not just restate the method. It names no question id, page, figure or review history. There is no signal, so there is nothing to misdiagnose.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "b01845"
+          },
+          {
+            "type": "caution",
+            "ref": "b01850"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m5s8-1-3:ex5-7-5a"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:g10m5s8-1-3:sign-not-from-quadrant",
+      "lo_id": "lo:g10m5s8-1-3",
+      "label": "Not using the quadrant to choose the sign of the missing coordinate",
+      "description": "After the theorem of Pythagoras gives $x=\\pm\\ldots$ or $y=\\pm\\ldots$, the student keeps the positive root (or reads the signs of $x$ and $y$ from the ratio alone) instead of using the quadrant or range in the question to decide the sign.",
+      "signal": null,
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You found the missing length with the theorem of Pythagoras, which is the right tool, and then kept the positive root, so the sign of $x$ or $y$ came from the square root. The trouble is that squaring throws the sign away, so Pythagoras alone cannot give it back."
+        },
+        {
+          "step": 2,
+          "text_md": "Take $\\sin\\theta=0.4$ with $\\theta$ obtuse. Then $\\sin\\theta=\\frac{2}{5}=\\frac{y}{r}$, so $y=2$ and $r=5$, and $x^{2}=5^{2}-2^{2}=21$. That gives $x=\\pm\\sqrt{21}$, because both $\\sqrt{21}$ and $-\\sqrt{21}$ square to $21$. Both are candidates."
+        },
+        {
+          "step": 3,
+          "text_md": "If you keep $x=\\sqrt{21}$ you get $\\cos\\theta=\\frac{\\sqrt{21}}{5}$, which is positive. But an obtuse angle is greater than $90^{\\circ}$ and less than $180^{\\circ}$, so it lies in the second quadrant, where $x$ is negative. The positive root cannot be the one, so $x=-\\sqrt{21}$ and $\\cos\\theta=\\frac{-\\sqrt{21}}{5}$."
+        },
+        {
+          "step": 4,
+          "text_md": "The reason is that $r$ is always positive but $x$ and $y$ change with the position of the point. The quadrant tells you the sign of each: in the second quadrant $x$ is negative, and in the third quadrant $x$ and $y$ are both negative."
+        },
+        {
+          "step": 5,
+          "text_md": "The move that works: once Pythagoras gives a $\\pm$, sketch the angle in the quadrant or range the question gives and keep the root with the sign that sketch shows. If a condition such as $\\cos\\theta<0$ leaves two quadrants, use the sign of the other value you were given to choose between them."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch05-wf_7f85d38b-00b.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is central to this objective. Canonical solutions ex5-7-2a, ex5-7-5a, ex5-7-6 and we12 all get a ± from Pythagoras and then fix the sign from the quadrant or range. Cautions b01845 and b01862 support the role of the signs and of the sketch. The worked numbers match canonical ex5-7-2a: sin=0.4=2/5, y=2, r=5, x=±√21; an obtuse angle is in quadrant II, so x=-√21 and cos=-√21/5. The claims that x is negative in quadrant II and that x and y are both negative in quadrant III are correct. The closing advice (sketch, keep the root whose sign the sketch shows, and use the other given value to choose between two quadrants) is the book's own method in ex5-7-5a and ex5-7-6. The remark that squaring discards the sign is just the reason for the ±, not new content. It argues against the slip by showing the wrong result of keeping the positive root. It names no question id, figure or review history. There is no signal. Predicate [99] fits: a student who keeps the positive root puts a coordinate on the wrong side and lands in the wrong quadrant with the right distances.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "b01845"
+          },
+          {
+            "type": "caution",
+            "ref": "b01862"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m5s8-1-3:ex5-7-2a"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m5s8-1-3:ex5-7-6"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "expl:g10m5s8-1-3:we12"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "S7",
+            "ref": "wt:g10m5s8-1-3:plot-point-from-ratio-and-quadrant#wrong-quadrant",
+            "question_id": "q:g10m5s8-1-3:w004",
+            "text": "Right distances, wrong signs — the point is in the wrong quadrant",
+            "tagged": "mc:g10m5s8-1-3:sign-not-from-quadrant"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m5s8-1-3:swapped-coordinates",
+      "lo_id": "lo:g10m5s8-1-3",
+      "label": "Writing the point as (y, x)",
+      "description": "The student has the right two values and the right signs for the point but plots or writes them in the wrong order, putting the $y$-value first and the $x$-value second.",
+      "signal": "A point whose coordinates are the correct pair reversed, for example $(-7, -24)$ where $(-24, -7)$ was wanted.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You found the right two numbers and put the point in the right quadrant, and that is the hard part. The slip is the order: a point is written $(x, y)$, with the horizontal value first, and here the vertical value has gone first."
+        },
+        {
+          "step": 2,
+          "text_md": "Each coordinate belongs to a particular ratio. $\\cos\\theta=\\frac{x}{r}$ gives the horizontal coordinate $x$, and $\\sin\\theta=\\frac{y}{r}$ gives the vertical coordinate $y$. So the value that comes from the cosine goes first."
+        },
+        {
+          "step": 3,
+          "text_md": "This slip is easy to miss, because the swapped point passes the usual checks. Take $\\cos\\theta=-\\frac{24}{25}$ with the angle in the third quadrant. Here $x=-24$ and $r=25$, the theorem of Pythagoras gives $y=\\pm7$, and the third quadrant makes $y=-7$, so the point is $(-24, -7)$. The swapped point $(-7, -24)$ is also in the third quadrant, and $(-7)^2+(-24)^2=625$, so $r$ is still $25$. Neither the quadrant nor Pythagoras warns you."
+        },
+        {
+          "step": 4,
+          "text_md": "Only reading the ratio back off the point catches it. From $(-7, -24)$ you would get $\\cos\\theta=\\frac{x}{r}=\\frac{-7}{25}$, which is not the $-\\frac{24}{25}$ you were given. From $(-24, -7)$ you get $\\frac{-24}{25}$, which matches."
+        },
+        {
+          "step": 5,
+          "text_md": "Before you plot, write $\\cos\\theta=\\frac{x}{r}$ and $\\sin\\theta=\\frac{y}{r}$, and fill in $x$, $y$ and $r$ from the ratio you were given. Write the point as $(x, y)$, plot it, then read the given ratio back off the point to check it."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch05-wf_7f85d38b-00b.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The slip is plausible and bears directly on canonical ex5-7-9a, which asks for A(a, b) with a as the x-value and b as the y-value, and gives (-24, -7). The refutation is mathematically correct and consistent with that answer. With cos=-24/25 in quadrant III, x=-24, r=25, y=±7, and quadrant III gives y=-7, so the point is (-24, -7). The swapped point (-7, -24) is also in quadrant III with (-7)^2+(-24)^2=625, so neither the quadrant nor Pythagoras exposes it. Reading the ratio back gives -7/25 for the swapped point and -24/25 for the correct one. It uses only cos=x/r, sin=y/r and (x, y) order, all of which the book uses. It argues against the slip rather than just restating the method, and it names no question id, figure or review history. The evidence is thin: no book caution covers coordinate order, and the support is the canonical answer plus a distractor. That evidence is enough for a harmless, correct refutation. The signal describes only the observable reversed pair, and the refutation still holds if the cause was mixing up cos and sin, so it will not misdiagnose a student. Predicate [100] fits.",
+        "sources": [
+          {
+            "type": "distractor",
+            "ref": "D0"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m5s8-1-3:ex5-7-9a"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "S7",
+            "ref": "wt:g10m5s8-1-3:plot-point-from-ratio-and-quadrant#swapped-coordinates",
+            "question_id": "q:g10m5s8-1-3:w003",
+            "text": "Plotted (y, x) — the pair read in the wrong order",
+            "tagged": "mc:g10m5s3-1-2:reads-sides-from-other-angle"
+          }
+        ],
+        "aliases_stripped": [
+          {
+            "alias": "mc:g10m5s3-1-2:reads-sides-from-other-angle",
+            "reason": "it is a live entry of another objective (lo:g10m5s3-1-2); folding it would delete that entry"
+          }
+        ]
+      }
+    }
+  ]
+}

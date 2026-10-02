@@ -1,0 +1,920 @@
+{
+ "stage": "G2R",
+ "workflow": "g2-recommend",
+ "prompts_version": "g2rec-v1",
+ "book": "g10-math",
+ "chapter": 5,
+ "part": 1,
+ "parts": 1,
+ "batch": 8,
+ "verify_batch": 8,
+ "model": "sonnet",
+ "effort": "high",
+ "items_sha256": "5db9cd78d436a1dbd0881e82b4ffc416071ce241e9b4680aa75c39b101c05614",
+ "keys": [
+  "g10m5s3-1:Ex5-1:3a",
+  "g10m5s3-1:Ex5-1:4",
+  "g10m5s3-1:Ex5-1:6",
+  "g10m5s3-1:Ex5-8:1a",
+  "g10m5s3-1:Ex5-8:1b",
+  "g10m5s3-1:Ex5-8:1c",
+  "g10m5s5-1:Ex5-2:1v",
+  "g10m5s5-1:Ex5-2:1y",
+  "g10m5s5-1:Ex5-2:1z",
+  "g10m5s5-1:Ex5-2:3",
+  "g10m5s5-1:Ex5-8:18c",
+  "g10m5s6-1:Ex5-3:5b",
+  "g10m5s7-1:WE7",
+  "g10m5s7-1:Ex5-4:1a",
+  "g10m5s7-1:Ex5-4:1e",
+  "g10m5s7-1:Ex5-4:1h",
+  "g10m5s7-1:Ex5-4:1j",
+  "g10m5s7-1:Ex5-4:2a",
+  "g10m5s7-1:Ex5-4:2b",
+  "g10m5s7-1:Ex5-4:2c",
+  "g10m5s7-1:Ex5-4:3",
+  "g10m5s7-1:Ex5-6:1g",
+  "g10m5s7-1:Ex5-6:1k",
+  "g10m5s7-1:Ex5-6:1m",
+  "g10m5s7-1:Ex5-6:3e",
+  "g10m5s7-1:Ex5-6:3f",
+  "g10m5s7-1:Ex5-8:9",
+  "g10m5s7-1:Ex5-8:10a",
+  "g10m5s7-1:Ex5-8:10f",
+  "g10m5s7-1:Ex5-8:10g",
+  "g10m5s7-1:Ex5-8:10h",
+  "g10m5s7-1:Ex5-8:12c",
+  "g10m5s7-1:Ex5-8:13",
+  "g10m5s7-1:Ex5-8:14",
+  "g10m5s7-1:Ex5-8:15c",
+  "g10m5s7-1:Ex5-8:16",
+  "g10m5s7-1:Ex5-8:17f",
+  "g10m5s7-1:Ex5-8:17g",
+  "g10m5s7-1:Ex5-8:23",
+  "g10m5s7-1:Ex5-8:24",
+  "g10m5s8-1:Ex5-7:4b",
+  "g10m5s8-1:Ex5-8:22"
+ ],
+ "agents": {
+  "recommend": 6,
+  "verify": 5
+ },
+ "embedded": {
+  "source": "runbook/g2-recommend.workflow.js",
+  "source_sha256": "5c0a9ef82f1f0643ac9935f6a60e6623730012cf2bd415344941c4a6a5e1b361",
+  "args_sha256": "0c6ab3b2e58827798dc6cffb4e3cec8761b9f9066dae020a06e172c49a8ccc1b",
+  "generated_sha256": "1056bb708cf487c1aa27bbf9c9c0cda2cd4f3e5c5fe8cbcfb6f72ceb2c164009",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "key": "g10m5s3-1:Ex5-1:3a",
+   "state": "held",
+   "rec": {
+    "key": "g10m5s3-1:Ex5-1:3a",
+    "verdict": "exclude",
+    "class": "book error",
+    "confidence": "high",
+    "own_value": "\\cos\\hat{O}=\\frac{m}{n}",
+    "correct_answer": "\\cos\\hat{O}=\\frac{m}{n}",
+    "defect": "The figure shows right angle at N, n = OM (hypotenuse), m = ON (adjacent to O), o = MN (opposite). The book's own working says n is the hypotenuse and m the adjacent side, then writes cos O = adjacent/hypotenuse = m/o. Its last step swaps n for o; the printed answer repeats the error.",
+    "book_quote": "$\\cos\\hat{O}=\\dfrac{\\text{adjacent}}{\\text{hypotenuse}}=\\dfrac{m}{o}$",
+    "note": "Figure: right angle at N, n = OM hypotenuse, m = ON adjacent, o = MN opposite. So $\\cos\\hat{O}=m/n$. Book's working names n as hypotenuse, then writes $m/o$. Book error in both printed answer and EPUB. The blind answer $m/n$ is right, but a book error is excluded, not repaired."
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m5s3-1:Ex5-1:4",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m5s3-1:Ex5-1:4",
+    "verdict": "fix",
+    "class": "compound answer",
+    "confidence": "low",
+    "own_value": "\\sin x=\\frac{4}{5};\\ \\cos x=\\frac{3}{5};\\ \\tan x=\\frac{4}{3}",
+    "fix": {
+     "answer_type": "not_markable",
+     "not_markable_reason": "The book answers with three different ratios for x (sin, cos, tan), in any order; a single key would mark a correct single ratio wrong. Kept as a teaching example."
+    },
+    "book_quote": "$\\sinx&=\\frac{4}{5}\\\\\\cosx&=\\frac{3}{5}\\\\\\tanx&=\\frac{4}{3}$",
+    "why_low": "Content decision: teaching-only retype versus a values marker over the three equations (the app marker's ability to read equations as values is unchecked). Also the stem's first figure is the unlabelled lead-in triangle ABC copied from another part, which could confuse a student.",
+    "note": "Figure: opposite 4, hypotenuse 5, adjacent 3. Book's working gives all three: $\\sin x=4/5$, $\\cos x=3/5$, $\\tan x=4/3$; the EPUB final line keeps only tan. The key typed from the working is right but a list of three, so not safely markable."
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m5s3-1:Ex5-1:6",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m5s3-1:Ex5-1:6",
+    "verdict": "fix",
+    "class": "selected from a list",
+    "confidence": "low",
+    "own_value": "A: \\sin\\alpha=\\frac{4}{5}",
+    "fix": {
+     "answer_type": "choice",
+     "key": "\\sin\\alpha=\\frac{4}{5}",
+     "options": [
+      "\\sin\\alpha=\\frac{4}{5}",
+      "\\cos\\left(\\frac{3}{5}\\right)=\\alpha",
+      "\\tan\\alpha=\\frac{5}{4}",
+      "\\cos\\text{0,8}=\\alpha"
+     ],
+     "options_source": "stem"
+    },
+    "book_quote": "$\\sin\\alpha=\\frac{4}{5}$ is one such ratio that will help her find $\\alpha$ . From the given list of options this is the only correct line of reasoning.",
+    "why_low": "Option text was re-typed to match the stem character for character (\\cos\\text{0,8}). The stem's option C reads tan = 5/4 while the book's working prints 3/4; it is wrong either way (true value 4/3), so the key is unaffected, but a person may want to check the page.",
+    "note": "Figure: opposite 4, hypotenuse 5, adjacent 3 for the angle α. $\\sin\\alpha=4/5$ is correct. $\\cos(3/5)=\\alpha$ is malformed, $\\tan\\alpha=5/4$ is wrong (4/3), $\\cos 0,8=\\alpha$ is wrong (cos α = 0,6). Key A stands; only the option text mismatched the stem."
+   },
+   "ver": {
+    "key": "g10m5s3-1:Ex5-1:6",
+    "own_answer": "sin α = 4/5 (opposite 4, adjacent 3, hypotenuse 5)",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "The figure shows opposite 4, adjacent 3 and hypotenuse 5, so sin α = 4/5 is right, tan α would be 4/3 not 5/4, and the other two options misuse the angle and the ratio."
+   }
+  },
+  {
+   "key": "g10m5s3-1:Ex5-8:1a",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m5s3-1:Ex5-8:1a",
+    "verdict": "fix",
+    "class": "selected from a list",
+    "confidence": "low",
+    "own_value": "has not been written correctly (sin θ = opposite/hypotenuse)",
+    "fix": {
+     "answer_type": "choice",
+     "key": "has not been written correctly",
+     "options": [
+      "has been written correctly",
+      "has not been written correctly"
+     ],
+     "options_source": "lesson",
+     "less_specific": []
+    },
+    "book_quote": "Therefore this trigonometric ratio has not been written correctly.",
+    "why_low": "Content decision: the two options are the book's own answer wording for this yes/no set, but the 'not' form is not in the stem, so the stem-source check may still object; a person decides if that wording is acceptable.",
+    "note": "$\\sin\\theta=\\text{opposite}/\\text{hypotenuse}$, so hypotenuse/adjacent is wrong. Book answer 'not written correctly' is right. The typing options 'been / not been written correctly' are not both in the stem, hence the flag. Re-typed in the book's own words."
+   },
+   "ver": {
+    "key": "g10m5s3-1:Ex5-8:1a",
+    "own_answer": "has not been written correctly",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "sin θ is opposite over hypotenuse, so hypotenuse over adjacent is wrong."
+   }
+  },
+  {
+   "key": "g10m5s3-1:Ex5-8:1b",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m5s3-1:Ex5-8:1b",
+    "verdict": "fix",
+    "class": "selected from a list",
+    "confidence": "low",
+    "own_value": "has been written correctly (tan θ = opposite/adjacent)",
+    "fix": {
+     "answer_type": "choice",
+     "key": "has been written correctly",
+     "options": [
+      "has been written correctly",
+      "has not been written correctly"
+     ],
+     "options_source": "lesson",
+     "less_specific": []
+    },
+    "book_quote": "Therefore this trigonometric ratio has been written correctly.",
+    "why_low": "Content decision: the two options are the book's own answer wording for this yes/no set, but the 'not' form is not in the stem, so the stem-source check may still object; a person decides if that wording is acceptable.",
+    "note": "$\\tan\\theta=\\text{opposite}/\\text{adjacent}$ is the correct definition, so the book's 'written correctly' is right. Typing options are not both in the stem; re-typed in the book's own words."
+   },
+   "ver": {
+    "key": "g10m5s3-1:Ex5-8:1b",
+    "own_answer": "has been written correctly",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "tan θ = opposite/adjacent is the correct definition."
+   }
+  },
+  {
+   "key": "g10m5s3-1:Ex5-8:1c",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m5s3-1:Ex5-8:1c",
+    "verdict": "exclude",
+    "class": "book error",
+    "confidence": "high",
+    "own_value": "has been written correctly (sec θ = hypotenuse/adjacent)",
+    "correct_answer": "has been written correctly",
+    "defect": "Book's working recalls $\\sec\\theta=\\text{hypotenuse}/\\text{opposite}$. That is cosecant. Secant is $1/\\cos\\theta=\\text{hypotenuse}/\\text{adjacent}$, exactly as the stem writes it, so the stem's ratio is correct and the book's 'not written correctly' is wrong.",
+    "book_quote": "$\\sec\\theta=\\dfrac{\\text{hypotenuse}}{\\text{opposite}}$ . Therefore this trigonometric ratio has not been written correctly.",
+    "note": "$\\sec\\theta=1/\\cos\\theta=\\text{hyp}/\\text{adj}$, so the stem's ratio is right. The book confuses secant with cosecant (hyp/opp) and says 'not correct'. The blind answer 'Correct' is right, but this is a book error: excluded."
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m5s5-1:Ex5-2:1v",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m5s5-1:Ex5-2:1v",
+    "verdict": "hold",
+    "class": "marker cannot check",
+    "confidence": "high",
+    "own_value": "undefined ($\\sin90^\\circ/\\cos90^\\circ=1/0$)",
+    "defect": "Book's key is 'undefined' (division by zero). The marker cannot read it as an expression or number, and the typed choice options (real / undefined / non-real) are not in the stem or the lesson, so they are the typing agent's own. Needs a way to mark a non-value answer, or a person to approve teaching-only.",
+    "book_quote": "$\\frac{\\sin90^{\\circ}}{\\cos90^{\\circ}}&=\\frac{1}{0}\\\\&\\text{undefined}$",
+    "note": "$\\sin90^\\circ=1$, $\\cos90^\\circ=0$, so the quotient is $1/0$, undefined. The book is right and all three sources agree. The key cannot be marked as typed: 'undefined' is not a readable value and the options are invented."
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m5s5-1:Ex5-2:1y",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m5s5-1:Ex5-2:1y",
+    "verdict": "hold",
+    "class": "marker cannot check",
+    "confidence": "low",
+    "own_value": "non-real ($4\\sec99^\\circ=4/\\cos99^\\circ\\approx-25.57$, so its root is not real)",
+    "defect": "Book is right (non-real). The check reports that 'real / non-real' are named neither in the stem nor in the lesson, and the stem asks for a 2-decimal value, so offering real / non-real as options would give away the answer. I cannot see the lesson text to confirm the book uses this closed set here.",
+    "book_quote": "$\\sqrt{-\\text{25,5698...}}\\\\&\\text{non-real}$",
+    "why_low": "Content decision: whether real / non-real counts as the lesson's closed set (the rules allow it) or the item stays teaching-only; needs the lesson text.",
+    "note": "$\\cos99^\\circ<0$, so $4\\sec99^\\circ\\approx-25{,}57$ and its square root is non-real. Book, printed answer and blind answer agree in meaning. Only the options typing is unverified, so I hold rather than accept."
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m5s5-1:Ex5-2:1z",
+   "state": "held",
+   "rec": {
+    "key": "g10m5s5-1:Ex5-2:1z",
+    "verdict": "fix",
+    "class": "stem damaged",
+    "confidence": "low",
+    "why_low": "The stem prints cot103 but the book's own working starts from cot85; a person should decide whether this is an extraction slip or a book erratum. Repairing the stem to match the working is a content decision.",
+    "own_value": "As printed (cot 103°): radicand ≈ -0,0572/6,0154 < 0, undefined. With cot 85° (the working's first line): ≈ 0,2083, so 0,21.",
+    "note": "Stem as shown: cot103°+sin1090° ≈ -0,23+0,17 < 0, so the root is undefined. The working starts from cot85°: 0,2611/6,0154=0,0434, root 0,2083, so 0,21. The key fits only the cot85 stem. Repair 103 to 85, key unchanged.",
+    "book_quote": "\\sqrt{\\frac{\\cot85^{\\circ}+\\sin1090^{\\circ}}{\\sec10^{\\circ}+5}}",
+    "correct_answer": "0,21",
+    "defect": "Stem says cot103° but the book's working and answer use cot85°.",
+    "fix": {
+     "stem": "Use your calculator to determine the value of the following (correct to $\\text{2}$ decimal places): $\\sqrt{\\dfrac{\\cot85^{\\circ}+\\sin1090^{\\circ}}{\\sec10^{\\circ}+5}}$"
+    }
+   },
+   "ver": {
+    "key": "g10m5s5-1:Ex5-2:1z",
+    "own_answer": "0,21",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "cot85° = 0,08749, sin1090° = sin10° = 0,17365, sum 0,26114; sec10°+5 = 6,01543; ratio 0,04341; square root 0,2083, which is 0,21 to 2 d.p."
+   }
+  },
+  {
+   "key": "g10m5s5-1:Ex5-2:3",
+   "state": "held",
+   "rec": {
+    "key": "g10m5s5-1:Ex5-2:3",
+    "verdict": "exclude",
+    "class": "partial answer",
+    "confidence": "low",
+    "why_low": "The stem gives no interval or unit; a person could instead choose to add the book's intended restriction (acute angle in degrees) to the stem, which I may not invent.",
+    "own_value": "tan x = 3, so x ≈ 71,57° + k·180° (k integer)",
+    "note": "$5^{\\tan x}=5^3$ gives $\\tan x=3$, $x=71{,}565°$ plus any multiple of 180°. The book gives only the principal value and the stem sets no interval, so a correct student answer such as 251,57 would be marked wrong by a single key.",
+    "book_quote": "",
+    "correct_answer": "x ≈ 71,57° + k·180°, k an integer (book gives only 71,57)",
+    "defect": "Stem has no domain or unit, but the book's key is only the principal value; other correct solutions would be marked wrong."
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m5s5-1:Ex5-8:18c",
+   "state": "held",
+   "rec": {
+    "key": "g10m5s5-1:Ex5-8:18c",
+    "verdict": "exclude",
+    "class": "book error",
+    "confidence": "high",
+    "own_value": "-0,72",
+    "note": "$29\\times38\\times47=51794$, and $51794-143\\cdot360=314$, so $\\sin314°\\approx-0{,}72$. The book writes $\\sin(114)$, which is the sum $29+38+47$, not the product, so $0{,}91$ is wrong for the stem as written.",
+    "book_quote": "",
+    "correct_answer": "-0,72",
+    "defect": "Working replaces the product 29×38×47 = 51794 by 114 (the sum a+b+c); sin 114° = 0,91 is the answer to a different expression."
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m5s6-1:Ex5-3:5b",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m5s6-1:Ex5-3:5b",
+    "verdict": "fix",
+    "class": "typing error",
+    "confidence": "high",
+    "own_value": "-\\frac{1}{2\\sqrt{3}}",
+    "note": "$\\tan30°-\\sin60°=\\frac1{\\sqrt3}-\\frac{\\sqrt3}2=\\frac{2-3}{2\\sqrt3}=-\\frac1{2\\sqrt3}\\approx-0{,}29$, which is among the stem's own five options. The typing only failed to match the key to option D; the options are the stem's own list.",
+    "book_quote": "=\\frac{-1}{2\\sqrt{3}}",
+    "correct_answer": "-\\frac{1}{2\\sqrt{3}}",
+    "fix": {
+     "answer_type": "choice",
+     "key": "-\\frac{1}{2\\sqrt{3}}",
+     "options": [
+      "0",
+      "\\frac{1}{2}",
+      "-\\frac{\\sqrt{3}}{2}",
+      "-\\frac{1}{2\\sqrt{3}}",
+      "\\frac{\\sqrt{3}}{2}"
+     ],
+     "options_source": "stem",
+     "less_specific": []
+    }
+   },
+   "ver": {
+    "key": "g10m5s6-1:Ex5-3:5b",
+    "own_answer": "-1/(2√3)",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "tan30° - sin60° = 1/√3 - √3/2 = (2-3)/(2√3) = -1/(2√3) ≈ -0,2887, and no other option has that value."
+   }
+  },
+  {
+   "key": "g10m5s7-1:WE7",
+   "state": "held",
+   "rec": {
+    "key": "g10m5s7-1:WE7",
+    "verdict": "accept",
+    "class": "book answer confirmed",
+    "confidence": "low",
+    "why_low": "The stem states no precision; the book rounds to 1 decimal place (26,6) while a student giving 26,57 is also right. A person should decide whether the marker tolerance covers this.",
+    "own_value": "26,565...° (about 26,6°)",
+    "note": "Figure: right angle at lower right, opposite 50, adjacent 100 to $\\theta$. $\\tan\\theta=50/100=0{,}5$, $\\theta=26{,}565°\\approx26{,}6°$. Book working and EPUB answer agree; the blind 26.57 is the same angle to more places.",
+    "book_quote": "\\theta\\approx\\text{26,6}^{\\circ}",
+    "correct_answer": "26,6"
+   },
+   "ver": {
+    "key": "g10m5s7-1:WE7",
+    "own_answer": "26,6",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "The figure shows 100 adjacent and 50 opposite to θ, so tanθ = 0,5 and θ = 26,565...° ≈ 26,6°."
+   }
+  },
+  {
+   "key": "g10m5s7-1:Ex5-4:1a",
+   "state": "held",
+   "rec": {
+    "key": "g10m5s7-1:Ex5-4:1a",
+    "verdict": "exclude",
+    "class": "book error",
+    "confidence": "high",
+    "own_value": "37,31",
+    "note": "Figure: right angle at top, hypotenuse 62 (bottom side), 37° at right vertex, $a$ opposite it. $a=62\\sin37°=62(0{,}6018)=37{,}31$. The book's $36{,}1089$ is an arithmetic slip: $62\\times0{,}6018\\ne36{,}11$. Blind 37.31 is right.",
+    "book_quote": "",
+    "correct_answer": "37,31",
+    "defect": "Book's multiplication 62 × 0,6018 is given as 36,10890; the correct product is 37,31."
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m5s7-1:Ex5-4:1e",
+   "state": "held",
+   "rec": {
+    "key": "g10m5s7-1:Ex5-4:1e",
+    "verdict": "exclude",
+    "class": "book error",
+    "confidence": "high",
+    "own_value": "41,04",
+    "note": "Figure: right angle at left, leg 12 opposite the 17° angle, $e$ is the hypotenuse. $\\sin17°=12/e$, so $e=12/0{,}29237=41{,}04$. The book multiplies $12\\times0{,}29237$, writing $\\sin17°=e/12$, treating $e$ as the opposite side.",
+    "book_quote": "",
+    "correct_answer": "41,04",
+    "defect": "Book writes sin17° = e/12, but e is the hypotenuse and 12 is the opposite side; correct is e = 12/sin17° = 41,04."
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m5s7-1:Ex5-4:1h",
+   "state": "held",
+   "rec": {
+    "key": "g10m5s7-1:Ex5-4:1h",
+    "verdict": "accept",
+    "class": "book answer confirmed",
+    "confidence": "high",
+    "own_value": "10",
+    "note": "Figure: right angle top right, 20 is the hypotenuse, 30° at top left, $h$ is opposite it. $h=20\\sin30°=20(0{,}5)=10$. Book, printed answer and blind 10.00 all agree.",
+    "book_quote": "h ≈ 10",
+    "correct_answer": "10"
+   },
+   "ver": {
+    "key": "g10m5s7-1:Ex5-4:1h",
+    "own_answer": "10 (10,00)",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "The figure shows the hypotenuse 20 and h opposite the 30° angle, so h = 20 sin30° = 10 exactly, which is 10,00 to 2 d.p., so the key 10 is numerically correct."
+   }
+  },
+  {
+   "key": "g10m5s7-1:Ex5-4:1j",
+   "state": "held",
+   "rec": {
+    "key": "g10m5s7-1:Ex5-4:1j",
+    "verdict": "exclude",
+    "class": "book error",
+    "confidence": "high",
+    "correct_answer": "9,07",
+    "own_value": "9,07",
+    "defect": "Figure: right angle at top right, x is the top side (opposite the 65 degree angle), 4,23 is the vertical side (adjacent). x = 4,23 tan65 = 4,23 x 2,14451 = 9,0713, so 9,07 to 2 d.p. The book prints 9,06 (rounded tan65 too early, or an arithmetic slip).",
+    "note": "Figure read: x is opposite 65 degrees, 4,23 adjacent, so $x=4{,}23\\tan65^{\\circ}=9{,}0713\\approx9{,}07$. Book's working and printed answer both give 9,06, which is wrong at 2 d.p. Blind 9,07 matches my derivation. Book error."
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m5s7-1:Ex5-4:2a",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m5s7-1:Ex5-4:2a",
+    "verdict": "fix",
+    "class": "compound answer",
+    "confidence": "low",
+    "own_value": "sin B = AC/AB = AD/BD",
+    "note": "Figure: right angle at A and at C (AC perpendicular to BD). In $\\triangle ABC$, $\\sin B=AC/AB$; in $\\triangle ABD$, $\\sin B=AD/BD$. Book is right. The stem asks for two ratios, so retype as two values in any order.",
+    "book_quote": "$\\sin\\hat{B}=\\frac{AC}{AB}=\\frac{AD}{BD}$",
+    "fix": {
+     "answer_type": "expression",
+     "key": "\\frac{AC}{AB}; \\frac{AD}{BD}",
+     "marker_kind": "values",
+     "variables": [
+      "AC",
+      "AB",
+      "AD",
+      "BD"
+     ]
+    },
+    "why_low": "Content decision: retype the chain of two equal ratios as an unordered pair of values instead of an equation, since the stem asks for two ratios and either order is right."
+   },
+   "ver": {
+    "key": "g10m5s7-1:Ex5-4:2a",
+    "own_answer": "sin B = AC/AB = AD/BD",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "In the figure, with right angles at C and A, triangle ABC gives sin B = AC/AB and triangle ABD gives sin B = AD/BD, matching the key."
+   }
+  },
+  {
+   "key": "g10m5s7-1:Ex5-4:2b",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m5s7-1:Ex5-4:2b",
+    "verdict": "hold",
+    "class": "marker cannot check",
+    "confidence": "low",
+    "own_value": "cos D = AD/BD = CD/AD",
+    "note": "Figure: right angles at A and C. $\\triangle ABD$: $\\cos D=AD/BD$; $\\triangle ACD$: $\\cos D=CD/AD$. Book is right. But the stem lists the side as DC while the key writes CD; the marker cannot know DC and CD are the same segment, so a correct DC/AD would be marked wrong.",
+    "why_low": "Needs a decision on whether the marker can treat CD and DC as one side, or the key should accept both spellings."
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m5s7-1:Ex5-4:2c",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m5s7-1:Ex5-4:2c",
+    "verdict": "fix",
+    "class": "compound answer",
+    "confidence": "low",
+    "own_value": "tan B = AC/BC = AD/AB",
+    "note": "Figure: right angles at A and C. $\\triangle ABC$: $\\tan B=AC/BC$; $\\triangle ABD$: $\\tan B=AD/AB$. Book is right. Retype as two ratios as values, any order.",
+    "book_quote": "$\\tan\\hat{B}=\\frac{AC}{BC}=\\frac{AD}{AB}$",
+    "fix": {
+     "answer_type": "expression",
+     "key": "\\frac{AC}{BC}; \\frac{AD}{AB}",
+     "marker_kind": "values",
+     "variables": [
+      "AC",
+      "BC",
+      "AD",
+      "AB"
+     ]
+    },
+    "why_low": "Content decision: retype the chain of two equal ratios as an unordered pair of values instead of an equation."
+   },
+   "ver": {
+    "key": "g10m5s7-1:Ex5-4:2c",
+    "own_answer": "tan B = AC/BC = AD/AB",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "Triangle ABC gives tan B = AC/BC and triangle ABD gives tan B = AD/AB, matching the key."
+   }
+  },
+  {
+   "key": "g10m5s7-1:Ex5-4:3",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m5s7-1:Ex5-4:3",
+    "verdict": "accept",
+    "class": "several parts",
+    "confidence": "low",
+    "own_value": "MN = 12,86 and NP = 15,32",
+    "note": "MP is the hypotenuse (right angle at N). $MN=20\\sin40^{\\circ}=12{,}8557\\approx12{,}86$; $NP=20\\cos40^{\\circ}=15{,}3209\\approx15{,}32$. Book, printed answer and blind agree.",
+    "book_quote": "Therefore $MN=\\text{12,86}\\text{and}NP=\\text{15,32}$",
+    "why_low": "Typed as two unordered values, so a swapped pair (MN = 15,32) would also be marked right; a person should decide whether that leniency is acceptable."
+   },
+   "ver": {
+    "key": "g10m5s7-1:Ex5-4:3",
+    "own_answer": "NP = 20cos40 = 15,32; MN = 20sin40 = 12,86",
+    "verdict": "wrong",
+    "other_correct_answers": true,
+    "note": "The values are correct, but the question asks for NP then MN and the key lists 12,86 (which is MN) first, so a student answering in the asked order (15,32; 12,86) would be marked wrong by an ordered comparison; the key should be 15,32; 12,86 or the marker order-insensitive."
+   }
+  },
+  {
+   "key": "g10m5s7-1:Ex5-6:1g",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m5s7-1:Ex5-6:1g",
+    "verdict": "hold",
+    "class": "marker cannot check",
+    "confidence": "low",
+    "own_value": "no solution",
+    "note": "$\\cos\\beta=1{,}2$ is impossible since $|\\cos\\beta|\\le1$; book's 'no solution' is right. The typed choice uses an invented option 'solution exists' that is not in the stem or lesson, and a text key cannot be read by the marker.",
+    "why_low": "Decide whether to show this as a teaching-only (not marked) item or give the lesson a real closed option set."
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m5s7-1:Ex5-6:1k",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m5s7-1:Ex5-6:1k",
+    "verdict": "hold",
+    "class": "marker cannot check",
+    "confidence": "low",
+    "own_value": "no solution",
+    "note": "$2\\sin\\theta+5=0{,}8$ gives $\\sin\\theta=-2{,}1$, outside $[-1,1]$, so no solution; book is right. The typed choice has an invented option 'solution exists' and the key is text the marker cannot read.",
+    "why_low": "Decide whether to show this as a teaching-only (not marked) item or give the lesson a real closed option set."
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m5s7-1:Ex5-6:1m",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m5s7-1:Ex5-6:1m",
+    "verdict": "hold",
+    "class": "marker cannot check",
+    "confidence": "low",
+    "own_value": "no solution",
+    "note": "$\\sin3\\alpha=1{,}2$ is impossible since $|\\sin|\\le1$; book's 'no solution' is right. The typed choice has an invented option 'solution exists' and the key is text the marker cannot read.",
+    "why_low": "Decide whether to show this as a teaching-only (not marked) item or give the lesson a real closed option set."
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m5s7-1:Ex5-6:3e",
+   "state": "held",
+   "rec": {
+    "key": "g10m5s7-1:Ex5-6:3e",
+    "verdict": "accept",
+    "class": "book answer confirmed",
+    "confidence": "low",
+    "why_low": "The stem gives no interval, so other solutions exist (2x+45=172,93 gives x=63,97). The book and the key use the calculator principal value; a person should decide whether a student who gives 63,97 should be marked wrong.",
+    "note": "$\\sin^{-1}(0{,}123)=7{,}0653^{\\circ}$, so $2x=-37{,}9347$ and $x=-18{,}967\\approx-18{,}97$. Matches the printed answer, the EPUB and the working. The blind solver agrees on the main value. Typing as one number is correct.",
+    "own_value": "-18,97",
+    "book_quote": "x&=-\\text{18,9673...}\\\\&\\approx-\\text{18,97}^{\\circ}"
+   },
+   "ver": {
+    "key": "g10m5s7-1:Ex5-6:3e",
+    "own_answer": "-18,97 (principal solution: 2x+45 = arcsin 0,123 = 7,065 deg, so x = -18,97)",
+    "verdict": "confirmed",
+    "other_correct_answers": true,
+    "note": "The key is the principal-value solution and is correct, but sin(2x+45)=0,123 has other solutions such as x=63,97 that the marker would reject."
+   }
+  },
+  {
+   "key": "g10m5s7-1:Ex5-6:3f",
+   "state": "held",
+   "rec": {
+    "key": "g10m5s7-1:Ex5-6:3f",
+    "verdict": "accept",
+    "class": "book answer confirmed",
+    "confidence": "low",
+    "why_low": "The stem gives no interval, so other solutions exist (x-10=147 gives x=157). The book and the key use the principal value; a person should decide whether a student who gives 157 should be marked wrong.",
+    "note": "$\\cos57^{\\circ}=\\sin33^{\\circ}=0{,}5446$, so $x-10=33$ and $x=43$, which is exactly 43,00 to 2 d.p. The printed answer, the EPUB and the working agree, and the blind answer 43,00 is the same value.",
+    "own_value": "43",
+    "book_quote": "x-10&=33\\\\x&=43^{\\circ}"
+   },
+   "ver": {
+    "key": "g10m5s7-1:Ex5-6:3f",
+    "own_answer": "43 (cos 57 = sin 33, so x-10 = 33, x = 43)",
+    "verdict": "confirmed",
+    "other_correct_answers": true,
+    "note": "x = 43 is correct (43,00 to two decimals); x = 157 (x-10 = 147) also satisfies the equation but is not the key."
+   }
+  },
+  {
+   "key": "g10m5s7-1:Ex5-8:9",
+   "state": "held",
+   "rec": {
+    "key": "g10m5s7-1:Ex5-8:9",
+    "verdict": "exclude",
+    "class": "book error",
+    "confidence": "high",
+    "note": "$a=13\\sin50^{\\circ}=9{,}9586$ and $b=13\\cos50^{\\circ}=8{,}3562\\approx8{,}36$. The book's own working reaches 8,36, but its final line and printed answer say 8,35. The key 9,96; 8,35 would mark the right answer 8,36 wrong.",
+    "own_value": "9,96 mm and 8,36 mm",
+    "defect": "The book's final sentence and printed answer give 8,35 mm, but its own working gives $b=8{,}3562\\approx8{,}36$ mm. The correct pair is 9,96 mm and 8,36 mm."
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m5s7-1:Ex5-8:10a",
+   "state": "held",
+   "rec": {
+    "key": "g10m5s7-1:Ex5-8:10a",
+    "verdict": "accept",
+    "class": "book answer confirmed",
+    "confidence": "high",
+    "note": "The figure shows x at the base with 8,19 adjacent and hypotenuse 10. $\\cos x=0{,}819$ gives $x=35{,}015^{\\circ}\\approx35$. Matches the printed answer, the EPUB and the working. Typing as numeric 35 is fine.",
+    "own_value": "35",
+    "book_quote": "x&=\\text{35,0151...}\\\\&\\approx35^{\\circ}"
+   },
+   "ver": {
+    "key": "g10m5s7-1:Ex5-8:10a",
+    "own_answer": "35 (cos x = 8,19/10 = 0,819, x = 35,02)",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "The figure shows 8,19 adjacent to x and 10 as hypotenuse, so cos x = 0,819 gives 35 degrees."
+   }
+  },
+  {
+   "key": "g10m5s7-1:Ex5-8:10f",
+   "state": "held",
+   "rec": {
+    "key": "g10m5s7-1:Ex5-8:10f",
+    "verdict": "accept",
+    "class": "book answer confirmed",
+    "confidence": "high",
+    "note": "The figure shows x at the top vertex, opposite side 4,24, hypotenuse 6. $\\sin x=0{,}7067$ gives $x=44{,}96^{\\circ}\\approx45$. Matches the printed answer, the EPUB and the working.",
+    "own_value": "45",
+    "book_quote": "x&=\\text{44,96434...}\\\\&\\approx45^{\\circ}"
+   },
+   "ver": {
+    "key": "g10m5s7-1:Ex5-8:10f",
+    "own_answer": "45 (sin x = 4,24/6 = 0,7067, x = 44,96)",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "The side 4,24 is opposite x and 6 is the hypotenuse, so sin x = 0,7067 gives 45 degrees to the nearest integer."
+   }
+  },
+  {
+   "key": "g10m5s7-1:Ex5-8:10g",
+   "state": "held",
+   "rec": {
+    "key": "g10m5s7-1:Ex5-8:10g",
+    "verdict": "accept",
+    "class": "book answer confirmed",
+    "confidence": "high",
+    "note": "The figure shows x at the top left, opposite side 5,73, hypotenuse 7. $\\sin x=0{,}81857$ gives $x=54{,}94^{\\circ}\\approx55$. Matches the printed answer, the EPUB and the working.",
+    "own_value": "55",
+    "book_quote": "x&=\\text{54,9420...}\\\\&\\approx55^{\\circ}"
+   },
+   "ver": {
+    "key": "g10m5s7-1:Ex5-8:10g",
+    "own_answer": "55 (sin x = 5,73/7 = 0,8186, x = 54,94)",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "The side 5,73 is opposite x and 7 is the hypotenuse, so x = 54,94, which rounds to 55 degrees."
+   }
+  },
+  {
+   "key": "g10m5s7-1:Ex5-8:10h",
+   "state": "held",
+   "rec": {
+    "key": "g10m5s7-1:Ex5-8:10h",
+    "verdict": "accept",
+    "class": "book answer confirmed",
+    "confidence": "high",
+    "note": "The figure shows x at the bottom right, opposite side 5,44, adjacent 2,54. $\\tan x=2{,}1417$ gives $x=64{,}97^{\\circ}\\approx65$. Matches the printed answer, the EPUB and the working.",
+    "own_value": "65",
+    "book_quote": "x&=\\text{64,9715...}\\\\&\\approx65^{\\circ}"
+   },
+   "ver": {
+    "key": "g10m5s7-1:Ex5-8:10h",
+    "own_answer": "65 (tan x = 5,44/2,54 = 2,1417, x = 64,97)",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "The side 5,44 is opposite x and 2,54 is adjacent, so tan x = 2,1417 gives 64,97, which rounds to 65 degrees."
+   }
+  },
+  {
+   "key": "g10m5s7-1:Ex5-8:12c",
+   "state": "held",
+   "rec": {
+    "key": "g10m5s7-1:Ex5-8:12c",
+    "verdict": "accept",
+    "class": "book answer confirmed",
+    "confidence": "high",
+    "note": "$PX=20\\sin30^{\\circ}=10$, $XR=20\\cos30^{\\circ}=17{,}32$, $QX=4{,}68$. Then $\\tan(Q\\hat{P}X)=0{,}468$ gives $25{,}08^{\\circ}$. The exact $QX=4{,}6795$ also gives 25,08. The stem is self-contained, and the blind answer matches.",
+    "own_value": "25,08",
+    "book_quote": "Q\\hat{P}X&=\\text{25,0795...}\\\\&\\approx\\text{25,08}^{\\circ}"
+   },
+   "ver": {
+    "key": "g10m5s7-1:Ex5-8:12c",
+    "own_answer": "25,08 (PX = 10, XR = 17,32, QX = 4,68, tan QPX = 0,468, angle = 25,08 degrees)",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "The altitude PX = 20 sin 30 = 10 and XR = 20 cos 30 = 17,32 give QX = 4,68, so QPX = arctan(0,468) = 25,08 degrees, and unrounded values also give 25,08."
+   }
+  },
+  {
+   "key": "g10m5s7-1:Ex5-8:13",
+   "state": "held",
+   "rec": {
+    "key": "g10m5s7-1:Ex5-8:13",
+    "verdict": "exclude",
+    "class": "book error",
+    "confidence": "high",
+    "note": "Figure: right angle at C, AC=9, D=41°, DB=17. tan41° = 9/DC gives $DC=9/\\tan41°\\approx10{,}353$, not $9\\tan41°$. Then $BC\\approx6{,}647$, $\\tan B=9/6{,}647$, $\\hat{B}\\approx53{,}55°$. The blind answer is right.",
+    "own_value": "53,55°",
+    "correct_answer": "53,55°",
+    "defect": "The book's working writes $DC=9\\tan41°=7{,}8235$ but $\\tan41°=9/DC$ gives $DC=9/\\tan41°=10{,}353$. Printed 44,44° is wrong; the right value is about 53,55°.",
+    "book_quote": "$DC&=9\\tan41^{\\circ}\\\\&=\\text{7,8235...}$"
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m5s7-1:Ex5-8:14",
+   "state": "held",
+   "rec": {
+    "key": "g10m5s7-1:Ex5-8:14",
+    "verdict": "exclude",
+    "class": "book error",
+    "confidence": "low",
+    "why_low": "The book's 11,88 comes only from rounding intermediate values to 2 d.p. (24,73 and 12,85). A person must decide whether 11,87 and 11,88 should both be marked right; a single key would mark one of them wrong.",
+    "note": "Figure: right angle at B, AB=9, ACB=35°, CAD=15°. $BC=9/\\tan35°=12{,}8535$, $BD=9\\tan70°=24{,}7273$, so $CD=11{,}8738\\approx11{,}87$. The book's 11,88 is a rounding accumulation.",
+    "own_value": "11,87",
+    "correct_answer": "11,87",
+    "defect": "Book rounds BC and BD to 2 d.p. before subtracting (24,73-12,85=11,88). Exact working gives 11,8738, so 11,87.",
+    "book_quote": "$CD&=BD-BC\\\\&=\\text{24,73}-\\text{12,85}\\\\&=\\text{11,88}$"
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m5s7-1:Ex5-8:15c",
+   "state": "held",
+   "rec": {
+    "key": "g10m5s7-1:Ex5-8:15c",
+    "verdict": "accept",
+    "class": "book answer confirmed",
+    "confidence": "low",
+    "why_low": "The stem gives no rounding instruction and the key has 3 decimals (67,976); a student who answers 67,98 depends on the marker's tolerance. The maths is correct.",
+    "note": "Figure: right angle at F, EG=8 (hypotenuse), FG=3 adjacent to θ at G. $\\cos\\theta=3/8$, $\\theta=\\cos^{-1}0{,}375=67{,}976°$. Matches the book. Blind 67,98 is the same value, rounded.",
+    "own_value": "67,976",
+    "correct_answer": "67,976°",
+    "defect": "",
+    "book_quote": "$\\theta&=\\cos^{-1}\\frac{3}{8}\\\\\\theta&=\\text{67,976}^{\\circ}$"
+   },
+   "ver": {
+    "key": "g10m5s7-1:Ex5-8:15c",
+    "own_answer": "theta = arccos(3/8) = 67,976 degrees",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "The figure shows a right angle at F, hypotenuse EG = 8, and FG = 3 adjacent to theta at G, so cos(theta) = 3/8 and theta = 67,976 degrees, which matches the key."
+   }
+  },
+  {
+   "key": "g10m5s7-1:Ex5-8:16",
+   "state": "held",
+   "rec": {
+    "key": "g10m5s7-1:Ex5-8:16",
+    "verdict": "accept",
+    "class": "book answer confirmed",
+    "confidence": "high",
+    "note": "Figure: B right angle, B-C-D collinear, $\\hat{C}_1=ACB$ is the exterior angle of triangle ACD, so $A_2=x$ and $CD=AC=\\sqrt{24{,}6^2+12{,}2^2}=\\sqrt{754}\\approx27{,}46$. Matches the book and the blind answer.",
+    "own_value": "27,46",
+    "correct_answer": "27,46 cm",
+    "defect": "",
+    "book_quote": "$&=\\text{27,45906...}\\\\&\\approx\\text{27,46}\\text{ cm}$"
+   },
+   "ver": {
+    "key": "g10m5s7-1:Ex5-8:16",
+    "own_answer": "CD = 27,46 cm",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "In the right triangle ABC, tan(C1) = 24,6/12,2 gives C1 = 63,62 degrees, so D = 31,81 degrees (tan D = 0,6203 from the double-angle check). Then BD = 24,6/0,6203 = 39,659, and CD = BD - BC = 27,46 cm, which matches the key."
+   }
+  },
+  {
+   "key": "g10m5s7-1:Ex5-8:17f",
+   "state": "held",
+   "rec": {
+    "key": "g10m5s7-1:Ex5-8:17f",
+    "verdict": "exclude",
+    "class": "book error",
+    "confidence": "high",
+    "note": "$\\sin3\\theta+5=4$ gives $\\sin3\\theta=-1$, so $3\\theta=270°$ and $\\theta=90°$, which is not acute. The book's $3\\theta=90$ gives $\\sin90°=1$, not $-1$. No acute solution exists.",
+    "own_value": "no solution",
+    "correct_answer": "No solution (the only solution is 90°, not acute)",
+    "defect": "The book takes $\\sin3\\theta=-1$ and writes $3\\theta=90$, but $\\sin90°=+1$. 30° gives $\\sin90°+5=6\\ne4$. The stem or the book is in error.",
+    "book_quote": "$\\sin3\\theta&=-1\\\\3\\theta&=90\\\\\\theta&=30^{\\circ}$"
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m5s7-1:Ex5-8:17g",
+   "state": "held",
+   "rec": {
+    "key": "g10m5s7-1:Ex5-8:17g",
+    "verdict": "accept",
+    "class": "book answer confirmed",
+    "confidence": "high",
+    "note": "$\\cos(4+\\theta)=0{,}45$ gives $4+\\theta=\\cos^{-1}0{,}45=63{,}2563°$, so $\\theta=59{,}2563\\approx59{,}26$, which is acute and positive. Matches the book and the blind answer.",
+    "own_value": "59,26",
+    "correct_answer": "59,26",
+    "defect": "",
+    "book_quote": "$\\theta&=\\text{59,25631...}\\\\&\\approx\\text{59,26}$"
+   },
+   "ver": {
+    "key": "g10m5s7-1:Ex5-8:17g",
+    "own_answer": "theta = 59,26 degrees",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "arccos(0,45) = 63,2563 degrees, so theta = 63,2563 - 4 = 59,2563, which is about 59,26 and acute, matching the key."
+   }
+  },
+  {
+   "key": "g10m5s7-1:Ex5-8:23",
+   "state": "held",
+   "rec": {
+    "key": "g10m5s7-1:Ex5-8:23",
+    "verdict": "exclude",
+    "class": "book error",
+    "confidence": "high",
+    "note": "Law of sines with perimeter 20: $a=20\\sin40°/(2\\sin40°+\\sin100°)=5{,}662$, $b=20-2a=8{,}675$. The book rounds $\\cos40°$ to 0,77 (true 0,766), giving 5,65 and 8,7, which are off.",
+    "own_value": "5,66 cm, 5,66 cm and 8,68 cm",
+    "correct_answer": "5,66 cm, 5,66 cm and 8,68 cm",
+    "defect": "The book uses $\\cos40°\\approx0{,}77$ (it is 0,7660), so $a=5{,}65$ instead of 5,66, and $b=8{,}7$ instead of 8,68. The printed lengths are inaccurate.",
+    "book_quote": "$\\text{0,77}a=10-a\\\\a&=\\text{5,65 cm}$"
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m5s7-1:Ex5-8:24",
+   "state": "held",
+   "rec": {
+    "key": "g10m5s7-1:Ex5-8:24",
+    "verdict": "exclude",
+    "class": "book error",
+    "confidence": "low",
+    "why_low": "The book's 16944 comes from rounding AD, CD and AC to 3 d.p. before multiplying (121,032x140=16944,48). Exact value is 16944,53, which rounds to 16945. A person must decide whether to accept 16944 or 16945 for a single key.",
+    "note": "Figure: right angle at D, BD=280, A=55°, C=75°. $AD=280/\\tan55°=196{,}0581$, $CD=280/\\tan75°=75{,}0258$, $AC=121{,}0323$, area $=140\\times121{,}0323=16944{,}53\\approx16945$. The book's 16944 is a rounding artefact.",
+    "own_value": "16945 square units (16944,5)",
+    "correct_answer": "16945 units² (exact 16944,53)",
+    "defect": "Book rounds intermediate lengths to 3 d.p., so 121,032x140 gives 16944. Unrounded working gives 16944,53, which rounds to 16945.",
+    "book_quote": "$\\therefore\\text{Areaof}\\triangleABC&=16944\\text{units}^{2}$"
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m5s8-1:Ex5-7:4b",
+   "state": "held",
+   "rec": {
+    "key": "g10m5s8-1:Ex5-7:4b",
+    "verdict": "exclude",
+    "class": "book error",
+    "confidence": "high",
+    "note": "$\\cos\\beta=-4/5$, third quadrant, $x=-4,y=-3,r=5$. $\\tan\\beta=3/4$ so $3/\\tan\\beta=4$, and $2\\sin^2\\beta=18/25$. Sum is $118/25$. The book's line $\\frac{3(-4)}{-3}=\\frac{-12}{3}$ drops a sign.",
+    "own_value": "\\frac{118}{25}",
+    "correct_answer": "\\frac{118}{25}",
+    "defect": "Sign error in the book's working: $\\frac{3(-4)}{-3}$ equals $+4$, but the book writes $\\frac{-12}{3}=-4$. So its final $\\frac{-82}{25}$ is wrong; the right value is $\\frac{118}{25}$ (4,72), which is also the blind answer."
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m5s8-1:Ex5-8:22",
+   "state": "held",
+   "rec": {
+    "key": "g10m5s8-1:Ex5-8:22",
+    "verdict": "exclude",
+    "class": "book error",
+    "confidence": "low",
+    "why_low": "The book's error is rounding accumulation. A person may prefer to keep the item with a tolerance or a key of 97,13; I may not write that answer myself.",
+    "note": "$\\vec{EF}=(1,2)$, $\\vec{EG}=(3,-2)$. The angle is $\\arctan2+\\arctan(2/3)=63{,}435^{\\circ}+33{,}690^{\\circ}=97{,}125^{\\circ}$, which is 97,13 to 2 d.p. The book adds two rounded angles and prints 97,12.",
+    "own_value": "97,125 (97,13 to 2 d.p.)",
+    "correct_answer": "97,13",
+    "defect": "The book adds the rounded part-angles 63,43 and 33,69 to get 97,12. The exact angle is 97,125, so rounded to 2 d.p. it is 97,13. A key of 97,12 would mark a correctly rounded answer wrong."
+   },
+   "ver": null
+  }
+ ],
+ "tally": {
+  "exclude": 15,
+  "fix": 1,
+  "fix/confirmed": 7,
+  "hold": 6,
+  "accept/confirmed": 12,
+  "accept/wrong": 1
+ },
+ "problems": [],
+ "meter": {
+  "stage": "G2R",
+  "record": "uv run meter_run.py record --book g10-math --stage G2R --run <runId>"
+ }
+}

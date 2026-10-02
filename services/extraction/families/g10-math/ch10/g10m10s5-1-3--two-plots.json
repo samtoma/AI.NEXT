@@ -1,0 +1,153 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m10s5-1-3:two-plots",
+ "kind": "family",
+ "lo_id": "lo:g10m10s5-1-3",
+ "parent_question_id": "q:g10m10s5-1-3:ex10-7-29b",
+ "source_page": 388,
+ "tier": "advanced",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "loA",
+   "randint": [
+    20,
+    50
+   ]
+  },
+  {
+   "name": "h1",
+   "randint": [
+    2,
+    7
+   ]
+  },
+  {
+   "name": "h2",
+   "randint": [
+    2,
+    7
+   ]
+  },
+  {
+   "name": "h3",
+   "randint": [
+    2,
+    7
+   ]
+  },
+  {
+   "name": "h4",
+   "randint": [
+    2,
+    7
+   ]
+  },
+  {
+   "name": "q1A",
+   "let": "loA + h1"
+  },
+  {
+   "name": "mdA",
+   "let": "q1A + h2"
+  },
+  {
+   "name": "q3A",
+   "let": "mdA + h3"
+  },
+  {
+   "name": "hiA",
+   "let": "q3A + h4"
+  },
+  {
+   "name": "mdB",
+   "choice": "[loA, q1A, q3A, hiA]"
+  },
+  {
+   "name": "g1",
+   "randint": [
+    2,
+    7
+   ]
+  },
+  {
+   "name": "g2",
+   "randint": [
+    2,
+    7
+   ]
+  },
+  {
+   "name": "g3",
+   "randint": [
+    2,
+    7
+   ]
+  },
+  {
+   "name": "g4",
+   "randint": [
+    2,
+    7
+   ]
+  },
+  {
+   "name": "q1B",
+   "let": "mdB - g2"
+  },
+  {
+   "name": "loB",
+   "let": "q1B - g1"
+  },
+  {
+   "name": "q3B",
+   "let": "mdB + g3"
+  },
+  {
+   "name": "hiB",
+   "let": "q3B + g4"
+  },
+  {
+   "require": "loB > 0 and mdB != mdA",
+   "why": "plot B must stay on the positive part of the scale, and the shared number must not be the median of plot A as well, so that it plays a different role in each plot"
+  }
+ ],
+ "constraints": [
+  "loB < q1B",
+  "q1B < mdB",
+  "mdB < q3B",
+  "q3B < hiB",
+  "mdB != mdA"
+ ],
+ "stem": "Two box-and-whisker plots, $A$ and $B$, are drawn above the same number line. In plot $A$, the box runs from ${=q1A}$ to ${=q3A}$ with a line inside the box at ${=mdA}$, the whisker on the left runs from ${=loA}$ to ${=q1A}$ and the whisker on the right runs from ${=q3A}$ to ${=hiA}$. In plot $B$, the box runs from ${=q1B}$ to ${=q3B}$ with a line inside the box at ${=mdB}$, the whisker on the left runs from ${=loB}$ to ${=q1B}$ and the whisker on the right runs from ${=q3B}$ to ${=hiB}$. For plot $B$, what does the number ${=mdB}$ represent?",
+ "choices": {
+  "correct": "median",
+  "distractors": [
+   {
+    "text": "minimum",
+    "misconception_id": "mc:g10m10s5-1-3:inner-line-read-as-extreme"
+   },
+   {
+    "text": "first quartile",
+    "misconception_id": "mc:g10m10s5-1-3:inner-line-read-as-box-edge"
+   },
+   {
+    "text": "third quartile",
+    "misconception_id": "mc:g10m10s5-1-3:inner-line-read-as-box-edge"
+   },
+   {
+    "text": "maximum",
+    "misconception_id": "mc:g10m10s5-1-3:inner-line-read-as-extreme"
+   }
+  ]
+ },
+ "solution": [
+  "The question is about plot $B$ only. The number ${=mdB}$ also appears in plot $A$, but there it marks a different part of the plot, so plot $A$ does not help.",
+  "In a box-and-whisker plot the ends of the whiskers show the minimum and the maximum, the two ends of the box show $Q_1$ and $Q_3$, and the line inside the box shows the median.",
+  "In plot $B$ the whiskers end at ${=loB}$ and ${=hiB}$ and the box runs from ${=q1B}$ to ${=q3B}$, so ${=mdB}$ is none of these.",
+  "In plot $B$ the line inside the box is drawn at ${=mdB}$, so ${=mdB}$ represents the median."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Modelled on ex10-7-29b (the same number is a different part of two plots on one scale, and the question names one plot). The family format has no figure slot and the blind solver cannot see a diagram, so both plots are described in words as stretches covered by whiskers and the box, with the median as the line inside the box. The shared number is always the median of plot B and always a non-median part of plot A (minimum, Q1, Q3 or maximum), so the student has to read the right plot. Target is fixed at the median so the distractors can carry static misconception ids: first and third quartile name the inner-line-read-as-box-edge error, minimum and maximum name inner-line-read-as-extreme. A student who reads plot A instead would pick whichever of those four A's role happens to be, so that mix-up is only approximately covered by the same ids. The options are identical in every instance; instances are told apart by the stem holes, so no distinct_by_choices key. Values are strictly increasing integers, all positive (loA at least 20, plot B at most 6 below shared value plus 7 more, so loB at least 6)."
+}

@@ -1,22 +1,42 @@
 import { sequential } from "./db";
-import { visibleGraphFor } from "./catalog-queries";
+import { visibleGraphFor, type StudentGraphScope } from "./catalog-queries";
+import { compareCourses, courseDef, sourceWordingFor } from "./courses";
 import { scoped, type Db } from "./student-context";
 import type {
   PlanItem,
   PlanReason,
   SpineBridge,
+  SpineCourse,
   SpineData,
   SpineLo,
   SpineQuestion,
+  SpineSectionGroup,
   Tier,
 } from "./types";
 
-import { spineSubjectOf } from "./subjects";
-import { PREREQ_GATE } from "./progression";
+import { spineSubjectOf, spineSubjectOfCourse } from "./subjects";
+import { figuresByQuestion, noteFigureless } from "./question-figures";
+import { PREREQ_GATE, type ProgressionLesson } from "./progression";
 import { computeLayers } from "./spine-layout";
 import { SPINE_LO_SQL, SPINE_LO_SQL_NO_SUBJECT_VIEW } from "./spine-lo-query";
 import { LESSON_TITLES } from "./lesson-titles";
 import { catalogueObjectivesSql } from "./module-order";
+import { slugOfLo } from "./lesson-slug";
+import { getCourseOutline } from "./course-outline-queries";
+import { chaptersBeingPrepared } from "./course-outline";
+import {
+  BOOK_SECTIONS_SQL,
+  NO_SECTIONS,
+  buildSectionIndex,
+  partPrereqEdges,
+  provenanceFromRow,
+  sectionIndexFromRows,
+  withPartPrereqs,
+  type BookSectionRow,
+  type LessonProvenance,
+  type SectionIndex,
+} from "./book-sections";
+import { lessonNamesOnMap, sectionGroupsOf } from "./section-label";
 
 /**
  * Every function here mixes curriculum reads (no policies — the graph is not
@@ -59,50 +79,209 @@ async function columnExists(db: Db, table: string, column: string): Promise<bool
 }
 
 /* ------------------------------------------------------------------ */
+/* Book sections (feature 003, decision 18)                            */
+/* ------------------------------------------------------------------ */
+
+/**
+ * The book sections of the courses this student may see (`course_lessons`,
+ * migration 034), indexed by `lib/book-sections.ts`. `courses` is the gate's
+ * own set — the store holds lesson titles, and a hidden course's are not
+ * hers. No course, no read.
+ *
+ * With no split section in them (every National course) the index's
+ * `hasSplits` is false, and each reader below then does exactly what it did
+ * before 003: the derived edges are empty and the prerequisite map is the
+ * same object.
+ */
+async function sectionIndexOn(
+  db: Db,
+  courses: ReadonlySet<string> | null
+): Promise<SectionIndex> {
+  const ids = [...(courses ?? [])];
+  if (ids.length === 0) return NO_SECTIONS;
+  const r = await db.query(BOOK_SECTIONS_SQL, [ids]);
+  return sectionIndexFromRows(r.rows as BookSectionRow[]);
+}
+
+/**
+ * The same store read as provenance rows, for the one reader that needs the
+ * rows themselves and the index (`spineDataOn`: the index groups split
+ * sections, the rows name the Grade 10 lessons). Same statement, same gate.
+ */
+async function sectionRowsOn(
+  db: Db,
+  courses: ReadonlySet<string> | null
+): Promise<LessonProvenance[]> {
+  const ids = [...(courses ?? [])];
+  if (ids.length === 0) return [];
+  const r = await db.query(BOOK_SECTIONS_SQL, [ids]);
+  return (r.rows as BookSectionRow[]).map(provenanceFromRow);
+}
+
+/**
+ * Objectives in catalogue order → the lessons they make up, in the same
+ * order: the shape `lib/book-sections.ts` reads. Only ids are needed for the
+ * derived edges, so mastery is 0 and the course is left unset.
+ */
+function lessonsOfObjectives(loIds: readonly string[]): ProgressionLesson[] {
+  const bySlug = new Map<string, { slug: string; courseId: null; los: { id: string; mastery: number }[] }>();
+  for (const id of loIds) {
+    const slug = slugOfLo(id);
+    let l = bySlug.get(slug);
+    if (!l) {
+      l = { slug, courseId: null, los: [] };
+      bySlug.set(slug, l);
+    }
+    l.los.push({ id, mastery: 0 });
+  }
+  return [...bySlug.values()];
+}
+
+/* ------------------------------------------------------------------ */
 /* Home                                                                */
 /* ------------------------------------------------------------------ */
 
+/** One source book, as the home plate and the skill map print it. */
+export type SourceBook = {
+  title: string;
+  publisher: string;
+  edition: string;
+  grade: string;
+  subject: string;
+};
+
+/**
+ * THE book a student-facing page names as "the source": the book of the first
+ * course — in course-registry order — that this student may see. `null` when
+ * she may see none.
+ *
+ * It replaces `SELECT … FROM source_documents LIMIT 1` with no ORDER BY, on
+ * `/` and on `/spine`, which named whichever book Postgres returned first:
+ * with three books loaded that was non-deterministic, and it named a book the
+ * student may not see — once a second curriculum's book is loaded, possibly
+ * that one (003 privacy review §5 items 1 and 3). A course's book is the
+ * `source_documents` row its node is stamped with by the loader.
+ */
+export async function sourceBookFor(
+  db: Db,
+  gate: StudentGraphScope
+): Promise<SourceBook | null> {
+  return (await sourceBooksFor(db, gate))[0]?.book ?? null;
+}
+
+/**
+ * Every visible course's own book, in course order — for a page that shows
+ * more than one course and must cite each from its own book (the skill map's
+ * course picker, FR-4009, FR-4205). `sourceBookFor` is its first entry.
+ */
+export async function sourceBooksFor(
+  db: Db,
+  gate: StudentGraphScope
+): Promise<{ courseId: string; book: SourceBook }[]> {
+  const res = await db.query(
+    `SELECT c.id AS course_id, d.title, d.publisher, d.edition, d.grade, d.subject
+       FROM graph_nodes c
+       JOIN source_documents d ON d.sha256 = c.source_sha256
+      WHERE c.kind = 'course'`
+  );
+  return res.rows
+    .filter((r) => gate.course(r.course_id as string))
+    .sort((a, b) => compareCourses(a.course_id, b.course_id) || String(a.course_id).localeCompare(String(b.course_id)))
+    .map((r) => ({
+      courseId: String(r.course_id),
+      book: {
+        title: r.title as string,
+        publisher: r.publisher as string,
+        edition: r.edition as string,
+        grade: r.grade as string,
+        subject: r.subject as string,
+      },
+    }));
+}
+
+/**
+ * Each gated question's OWN stored figures (`visuals.question_id`), for its
+ * card (consistency review A3; lib/question-figures.ts). A figure is kept only
+ * when its objective is inside the scope, like every other figure read.
+ */
+async function questionFiguresOn(
+  db: Db,
+  gate: StudentGraphScope,
+  questionIds: readonly string[]
+): Promise<Map<string, string[]>> {
+  if (questionIds.length === 0) return new Map();
+  const res = await db.query(
+    `SELECT id, lo_id, question_id FROM visuals WHERE question_id = ANY($1) ORDER BY question_id, id`,
+    [[...questionIds]]
+  );
+  return figuresByQuestion(
+    (res.rows as { id: string; lo_id: string; question_id: string }[]).filter((r) => gate.lo(r.lo_id))
+  );
+}
+
+/**
+ * The home page's ledger.
+ *
+ * THE COURSE GATE (003; FR-2705, FR-4006). The corpus counts used to be
+ * corpus-wide — every objective, live question and prerequisite in the
+ * database, a hidden course's included — and the plate named `LIMIT 1`'s book.
+ * They are now this student's: objectives, live questions and prerequisite
+ * edges of the courses she may see (an edge counts when both ends are
+ * visible, the rule `/spine` draws by), and her first course's book. Counted
+ * in JavaScript over the scope's predicates rather than in SQL, so the gate
+ * stays one implementation (`resolveStudentGraphScope`).
+ */
 export async function getHomeStats(studentId: number) {
   return scoped(studentId, undefined, async (db) => {
-    const [counts, doc, student] = await sequential([
+    const gate = await visibleGraphFor(db, studentId);
+    const [counts, losRes, questionsRes, edgesRes, student] = await sequential([
       // attempts + AI turns are the STUDENT's ledger (the card reads "by
-      // <name>"), everything else is corpus-wide. The `student_id = $1` clauses
-      // are now belt and braces — the policy would narrow these to the
-      // principal anyway — and they stay because a query that states its own
-      // scope is a query a reader can check.
+      // <name>"). The `student_id = $1` clauses are belt and braces — the
+      // policy would narrow these to the principal anyway — and they stay
+      // because a query that states its own scope is a query a reader can
+      // check.
       () =>
         db.query(
           `
       SELECT
-        (SELECT count(*) FROM graph_nodes WHERE kind = 'learning_objective') AS los,
-        (SELECT count(*) FROM questions WHERE status = 'live')               AS questions,
         (SELECT count(*) FROM attempts WHERE student_id = $1)                AS attempts,
-        (SELECT count(*) FROM graph_edges WHERE edge_type = 'prerequisite_of'
-           AND system_to IS NULL)                                            AS prereqs,
         (SELECT count(*) FROM ai_interactions WHERE student_id = $1)         AS ai_turns
     `,
           [studentId]
         ),
+      () => db.query(`SELECT id FROM graph_nodes WHERE kind = 'learning_objective'`),
+      // one row per objective, not per question: the count is summed below
       () =>
         db.query(
-          `SELECT title, publisher, edition, grade, subject FROM source_documents LIMIT 1`
+          `SELECT lo_id, count(*) AS n FROM questions WHERE status = 'live' GROUP BY lo_id`
+        ),
+      () =>
+        db.query(
+          `SELECT src_id, dst_id FROM graph_edges
+            WHERE edge_type = 'prerequisite_of' AND system_to IS NULL`
         ),
       () => db.query(`SELECT display_name FROM students WHERE id = $1`, [studentId]),
     ] as const);
+    const doc = await sourceBookFor(db, gate);
     const c = counts.rows[0];
     return {
-      los: Number(c.los),
-      questions: Number(c.questions),
+      los: losRes.rows.filter((r) => gate.lo(r.id as string)).length,
+      questions: questionsRes.rows
+        .filter((r) => gate.lo(r.lo_id as string))
+        .reduce((sum, r) => sum + Number(r.n), 0),
       attempts: Number(c.attempts),
-      prereqs: Number(c.prereqs),
+      prereqs: edgesRes.rows.filter(
+        (r) => gate.lo(r.src_id as string) && gate.lo(r.dst_id as string)
+      ).length,
       aiTurns: Number(c.ai_turns),
-      doc: doc.rows[0] as {
-        title: string;
-        publisher: string;
-        edition: string;
-        grade: string;
-        subject: string;
-      },
+      /** `null` when she may see no course at all — the plate is not drawn */
+      doc,
+      /**
+       * How the page words where her material comes from, from the courses
+       * she may see (FR-4205): the National wording for a National student,
+       * her own book's for a Grade 10 student, neutral when they disagree.
+       */
+      sourceWording: sourceWordingFor(gate.courses ?? []),
       studentName: (student.rows[0]?.display_name as string) ?? "Student",
     };
   });
@@ -114,6 +293,9 @@ export async function getHomeStats(studentId: number) {
 
 // Longest-path layering (`computeLayers`) lives in lib/spine-layout.ts with
 // the rest of the map's geometry, where it can be tested without a database.
+
+/** What the map names when the student may see no course at all. */
+const NO_BOOK: SourceBook = { title: "", publisher: "", edition: "", grade: "", subject: "" };
 
 export async function getSpineData(studentId: number): Promise<SpineData> {
   return scoped(studentId, undefined, (db) => spineDataOn(db, studentId));
@@ -146,7 +328,7 @@ async function spineDataOn(db: Db, studentId: number): Promise<SpineData> {
       `)
       : Promise.resolve({ rows: [] as { src_id: string; dst_id: string; rationale: string }[] });
 
-  const [losRes, edgesRes, masteryRes, questionsRes, docRes, countsRes, studentRes, bridgesRes] =
+  const [losRes, edgesRes, masteryRes, questionsRes, countsRes, studentRes, bridgesRes] =
     await sequential([
       () => db.query(loQuery),
       () =>
@@ -177,10 +359,7 @@ async function spineDataOn(db: Db, studentId: number): Promise<SpineData> {
         WHERE q.status = 'live'
         ORDER BY q.lo_id, q.tier, q.id
       `),
-      () =>
-        db.query(
-          `SELECT title, publisher, edition, grade, subject FROM source_documents LIMIT 1`
-        ),
+      // (the book the map names is read after the gate — `sourceBookFor`)
       // this student's attempts (the toolbar chip sits next to HIS avg mastery)
       () =>
         db.query(`SELECT count(*) AS attempts FROM attempts WHERE student_id = $1`, [
@@ -204,6 +383,12 @@ async function spineDataOn(db: Db, studentId: number): Promise<SpineData> {
   // narrowed IN PLACE deliberately: every projection below reads `.rows`, and
   // a filtered copy beside the original is a second thing to remember to use.
   const gate = await visibleGraphFor(db, studentId);
+  // The books the map names as its sources: each visible course's own, in
+  // course order, never `LIMIT 1`'s (see `sourceBookFor`). The map's `doc` is
+  // the first; a page citation names the book of the course being looked at
+  // (`courses`, below). An empty map has no book to name.
+  const books = await sourceBooksFor(db, gate);
+  const doc = books[0]?.book ?? NO_BOOK;
   // One card per objective, at its first (earliest-in-catalogue) row. The
   // module join would fan an objective out if it were ever taught by two open
   // modules; `node_subject` already could. Neither happens in today's data.
@@ -227,7 +412,23 @@ async function spineDataOn(db: Db, studentId: number): Promise<SpineData> {
     dst: r.dst_id as string,
   }));
   const ids = losRes.rows.map((r) => r.id as string);
-  const layers = computeLayers(ids, edges);
+
+  // BOOK SECTIONS (feature 003; FR-4315, FR-4317). A split section's parts
+  // are one visible group on the map, and part n-1 is a prerequisite of part
+  // n. Those edges are DERIVED here from the store, over the gated objectives
+  // only, and kept apart from `edges` (the book's own): they shape the
+  // columns and the topic panel's "worth having first" like any prerequisite,
+  // and travel as `partEdges` so the map can draw them and nothing mistakes
+  // them for the book's. With no split section — every National course —
+  // `layerEdges` IS `edges` and both new fields are empty.
+  const sectionRows = await sectionRowsOn(db, gate.courses);
+  const sections = sectionRows.length > 0 ? buildSectionIndex(sectionRows) : NO_SECTIONS;
+  const lessons = sections.hasSplits ? lessonsOfObjectives(ids) : [];
+  const partEdges = sections.hasSplits ? partPrereqEdges(lessons, sections) : [];
+  const layerEdges = partEdges.length > 0 ? [...edges, ...partEdges] : edges;
+  const sectionGroups: SpineSectionGroup[] = sectionGroupsOf(sections, lessons);
+
+  const layers = computeLayers(ids, layerEdges);
 
   // baseline = earliest mastery row per LO; current = open row (system_to IS NULL)
   const baseline = new Map<string, number>();
@@ -259,6 +460,12 @@ async function spineDataOn(db: Db, studentId: number): Promise<SpineData> {
     list.push(e.src);
     prereqsOf.set(e.dst, list);
   }
+  // the derived part edges (none without a split section), each once
+  for (const e of partEdges) {
+    const list = prereqsOf.get(e.dst) ?? [];
+    if (!list.includes(e.src)) list.push(e.src);
+    prereqsOf.set(e.dst, list);
+  }
   // The edge read has no ORDER BY, so the topic panel's "Worth having first"
   // list came out in whatever order Postgres returned — the same defect as the
   // map's columns, one level down. Catalogue order here too.
@@ -284,7 +491,37 @@ async function spineDataOn(db: Db, studentId: number): Promise<SpineData> {
     subject: spineSubjectOf(r.subject),
     moduleId: r.module_id ?? null,
     moduleLabel: r.module_label ?? null,
+    // from the gate's own walk: no second read, and the same filing
+    courseId: gate.courseOf(r.id),
   }));
+
+  // One entry per course on the map, in course order, each with its own book
+  // (FR-4009, FR-4205). Only courses that put an objective on the map — a
+  // visible course with nothing loaded has no map to pick.
+  const onMap = new Set(los.map((l) => l.courseId).filter((id): id is string => id != null));
+  const bookOf = new Map(books.map((b) => [b.courseId, b.book]));
+  // THE WHOLE BOOK (migration 037, lib/course-outline.ts): for a course with
+  // an outline, the chapters with no lesson prepared yet, as placeholders the
+  // map lists beside the prepared topics — chapter names only, never an
+  // objective. Read for the courses ON the map, which the gate already
+  // admitted. Prepared = a lesson with objectives here, the catalogue's rule.
+  // No outline (every National course) → no field, and the course entry is
+  // exactly what it was.
+  const outline = await getCourseOutline([...onMap], db);
+  const preparedOf = (courseId: string) =>
+    new Set(los.filter((l) => l.courseId === courseId).map((l) => slugOfLo(l.id)));
+  const courses: SpineCourse[] = [...onMap]
+    .sort((a, b) => compareCourses(a, b) || a.localeCompare(b))
+    .map((id) => {
+      const preparing = chaptersBeingPrepared(id, outline, preparedOf(id));
+      return {
+        id,
+        label: courseDef(id)?.label ?? id,
+        subject: spineSubjectOfCourse(id),
+        doc: bookOf.get(id) ?? NO_BOOK,
+        ...(preparing.length > 0 ? { preparing } : {}),
+      };
+    });
 
   // Cross-subject bridges: keep only edges whose endpoints are both real LOs
   // in this graph (defensive — a bridge to a pruned node is meaningless).
@@ -297,7 +534,9 @@ async function spineDataOn(db: Db, studentId: number): Promise<SpineData> {
       rationale: (r.rationale as string) ?? "",
     }));
 
+  const figures = await questionFiguresOn(db, gate, questionsRes.rows.map((r) => r.id as string));
   const questions: SpineQuestion[] = questionsRes.rows.map((r) => ({
+    ...(figures.has(r.id) ? { figures: figures.get(r.id) } : {}),
     id: r.id,
     loId: r.lo_id,
     tier: r.tier as Tier,
@@ -324,12 +563,15 @@ async function spineDataOn(db: Db, studentId: number): Promise<SpineData> {
     },
   }));
 
+  for (const q of questions) noteFigureless(q);
+
   return {
     los,
     edges,
     bridges,
     questions,
-    doc: docRes.rows[0],
+    doc,
+    courses,
     syllabusVersion: (edgesRes.rows[0]?.syllabus_version as string) ?? "2025-2026",
     baselineDate,
     currentDate,
@@ -340,7 +582,9 @@ async function spineDataOn(db: Db, studentId: number): Promise<SpineData> {
       attempts: Number(countsRes.rows[0].attempts),
     },
     studentName: (studentRes.rows[0]?.display_name as string) ?? "Student",
-    lessonTitles: LESSON_TITLES,
+    lessonTitles: lessonNamesOnMap(sectionRows, LESSON_TITLES),
+    sectionGroups,
+    partEdges,
   };
 }
 
@@ -460,11 +704,11 @@ async function studentPlanOn(
   const score = new Map<string, number>(
     masteryRes.rows.map((r) => [r.lo_id, Number(r.score)])
   );
-  const prereqs = new Map<string, string[]>();
+  const bookPrereqs = new Map<string, string[]>();
   for (const e of edgesRes.rows) {
-    const list = prereqs.get(e.dst_id) ?? [];
+    const list = bookPrereqs.get(e.dst_id) ?? [];
     list.push(e.src_id);
-    prereqs.set(e.dst_id, list);
+    bookPrereqs.set(e.dst_id, list);
   }
   const qs: QRow[] = qRes.rows.map((r) => ({
     ...r,
@@ -472,6 +716,18 @@ async function studentPlanOn(
   }));
 
   const loIds = losRes.rows.map((r) => r.id as string);
+
+  // BOOK SECTIONS (feature 003; FR-4313, FR-4317). Part n-1 of a split
+  // section is a prerequisite of part n, so a part's objectives are
+  // "eligible" only once the part before it is under way — the same derived
+  // edges the progression walks (`withPartPrereqs`, lib/book-sections.ts),
+  // over the gated objectives only. With no split section — every National
+  // course — `withPartPrereqs` returns `bookPrereqs` itself, and the plan is
+  // exactly the plan it was.
+  const sections = await sectionIndexOn(db, gate.courses);
+  const prereqs: ReadonlyMap<string, readonly string[]> = sections.hasSplits
+    ? withPartPrereqs(bookPrereqs, lessonsOfObjectives(loIds), sections)
+    : bookPrereqs;
   const eligible = (lo: string) =>
     (prereqs.get(lo) ?? []).every((p) => (score.get(p) ?? 0) >= PREREQ_GATE);
 
@@ -535,6 +791,14 @@ async function studentPlanOn(
   while (items.length < 5 && bi < byScoreAsc.length) {
     add(byScoreAsc[bi], "weakest");
     bi++;
+  }
+
+  // each chosen question's own figures, for the practice card (A3)
+  const figures = await questionFiguresOn(db, gate, items.map((i) => i.questionId));
+  for (const item of items) {
+    const own = figures.get(item.questionId);
+    if (own) item.figures = own;
+    noteFigureless({ id: item.questionId, stem: item.stem, figures: own });
   }
 
   return {

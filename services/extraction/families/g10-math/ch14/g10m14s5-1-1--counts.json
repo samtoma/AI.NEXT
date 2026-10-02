@@ -1,0 +1,78 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m14s5-1-1:counts",
+ "kind": "family",
+ "lo_id": "lo:g10m14s5-1-1",
+ "parent_question_id": "q:g10m14s5-1-1:ex14-5-1",
+ "source_page": 484,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "nS",
+   "choice": [
+    10,
+    20,
+    25,
+    50
+   ]
+  },
+  {
+   "name": "nAB",
+   "randint": [
+    1,
+    3
+   ]
+  },
+  {
+   "name": "nA",
+   "randint": [
+    "nAB + 1",
+    "nS // 2"
+   ]
+  },
+  {
+   "name": "nB",
+   "randint": [
+    "nAB + 1",
+    "nS // 2"
+   ],
+   "resample_while": "nB == nA"
+  },
+  {
+   "name": "nU",
+   "let": "nA + nB - nAB"
+  },
+  {
+   "name": "pa",
+   "let": "fixed(nA / nS, 2)"
+  },
+  {
+   "name": "pb",
+   "let": "fixed(nB / nS, 2)"
+  },
+  {
+   "name": "pab",
+   "let": "fixed(nAB / nS, 2)"
+  },
+  {
+   "name": "pu",
+   "let": "fixed(nU / nS, 2)"
+  }
+ ],
+ "constraints": [
+  "nU < nS"
+ ],
+ "stem": "A sample space $S$ has {=nS} equally likely outcomes, so $n(S)={=nS}$. For two events $A$ and $B$, $n(A)={=nA}$, $n(B)={=nB}$ and $n(A\\cap B)={=nAB}$. Calculate $P(A\\cup B)$. Give your answer as a decimal number, rounded to two decimal places.",
+ "answer": "fixed(nU / nS, 2)",
+ "solution": [
+  "Use the identity $P(A\\cup B)=P(A)+P(B)-P(A\\cap B)$. Subtracting $P(A\\cap B)$ stops the outcomes that lie in both events from being counted twice.",
+  "Find each probability using $P(X)=\\frac{n(X)}{n(S)}$:",
+  "$\\begin{aligned}P(A)&=\\frac{{=nA}}{{=nS}}={=pa}\\\\P(B)&=\\frac{{=nB}}{{=nS}}={=pb}\\\\P(A\\cap B)&=\\frac{{=nAB}}{{=nS}}={=pab}\\end{aligned}$",
+  "Calculate $P(A\\cup B)$:",
+  "$\\begin{aligned}P(A\\cup B)&=P(A)+P(B)-P(A\\cap B)\\\\&=({=pa})+({=pb})-({=pab})\\\\&={=pu}\\end{aligned}$",
+  "Therefore, the value of $P(A\\cup B)$ is ${=pu}$."
+ ],
+ "notes": "Entry point: the book's identity applied to counts n(S), n(A), n(B), n(A and B), with no set to read. n(S) is always 10, 20, 25 or 50 so that every P(X) is an exact two-decimal number; the worked sum is therefore exact and no intermediate rounding can change the final answer (the book's own worked solution rounds 5/6 stages, 0.17+0.67, and still prints 0.83; these instances avoid that). n(A and B) is always at least 1 so the subtraction really changes the answer (the book's own question has an empty intersection, which is covered by the book question itself). The catalogued error mc:g10m14s5-1-1:adds-without-subtracting-shared-outcomes gives P(A)+P(B) here; it cannot be attached to a numeric family, so no distractor carries it."
+}

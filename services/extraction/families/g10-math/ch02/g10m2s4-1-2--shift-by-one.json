@@ -1,0 +1,47 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m2s4-1-2:shift-by-one",
+ "kind": "family",
+ "lo_id": "lo:g10m2s4-1-2",
+ "parent_question_id": "q:g10m2s4-1-2:ex2-3-1j",
+ "source_page": 55,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "b",
+   "choice": [
+    2,
+    3,
+    5
+   ]
+  },
+  {
+   "name": "e",
+   "randint": [
+    2,
+    "5 if b == 2 else (4 if b == 3 else 3)"
+   ]
+  },
+  {
+   "name": "n",
+   "let": "b ** e * (1 + b)"
+  }
+ ],
+ "constraints": [
+  "n <= 1000"
+ ],
+ "stem": "Solve for $t$: ${=b}^{t}+{=b}^{t+1}={=n}$.",
+ "answer": "e",
+ "solution": [
+  "Rewrite the term with the larger exponent using $a^{m+n}=a^{m}\\cdot a^{n}$: ${=b}^{t+1}={=b}^{t}\\cdot {=b}$, so the equation becomes ${=b}^{t}+{=b}^{t}\\cdot {=b}={=n}$.",
+  "Take out the common factor ${=b}^{t}$: ${=b}^{t}\\left(1+{=b}\\right)={=n}$.",
+  "Simplify the bracket: ${=b}^{t}\\left({=1+b}\\right)={=n}$.",
+  "Divide both sides by ${=1+b}$: ${=b}^{t}={=b**e}$.",
+  "Write the right-hand side as a power of ${=b}$: ${=b}^{t}={=b}^{{=e}}$.",
+  "The bases are the same, so equate the exponents: $t={=e}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Entry point of the skill: two terms, the second exponent exceeds the first by exactly 1, no coefficient. This is the book's ex2-3-1j (2^t + 2^(t+2) = 40) with the shift cut to 1 and the same steps: rewrite, take out the common factor, simplify, write as a power of the same prime base, equate exponents. Parameter space is every (b, e) with b in {2, 3, 5} and e in 2..5 / 2..4 / 2..3, nine instances. I checked all nine by brute force: the left side equals n for exactly one integer t, and that t equals e. Largest n is 750 (5^3 * 6). Numeric answer is a whole number from 2 to 5. No mcq: the book catalogue holds no misconceptions for this objective, and a distractor with no diagnosable error would be padding."
+}

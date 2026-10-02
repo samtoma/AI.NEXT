@@ -12,13 +12,20 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 
 import { addressForms, type Gender } from "./address.ts";
-import { snapshotKey } from "./session-cache.ts";
+import { scopeFingerprint, snapshotKey } from "./session-cache.ts";
+
+const NATIONAL_9 = scopeFingerprint({
+  grade: "9",
+  curriculum: "eg-national-en",
+  courses: new Set(["course:prep3-math-en", "course:prep3-social-ar"]),
+});
 
 const BASE = {
   surface: "lesson_learn",
   chatSession: "sess-1",
   studentId: 7,
   lesson: "u1-1",
+  scope: NATIONAL_9,
 } as const;
 
 test("the same register is the same key — the prefix stays cache-hot", () => {
@@ -106,10 +113,12 @@ test("probing false or absent is v0.6.0's key exactly; probing true is a differe
     { ...BASE, gender: null },
     { ...BASE, questionId: "q:u1-1-1:001", wrongAnswer: "12", gender: "male" as const },
     { ...BASE, uploadId: 41, gender: "unspecified" as const },
-    { surface: "lesson_review", chatSession: "s", studentId: null, gender: null },
+    { surface: "lesson_review", chatSession: "s", studentId: null, gender: null, scope: NATIONAL_9 },
   ];
   for (const k of shapes) {
-    const old = v060SnapshotKey(k);
+    // v0.6.0's key, plus the scope component every key has carried since the
+    // 2026-09-26 isolation audit — probing off still adds nothing to it
+    const old = `${v060SnapshotKey(k)}|${k.scope}`;
     assert.equal(snapshotKey(k), old, "probing absent must be v0.6.0's key");
     assert.equal(snapshotKey({ ...k, probing: false }), old, "probing false must be v0.6.0's key");
     // A lesson that probes carries a different system prompt, so it must
@@ -117,4 +126,54 @@ test("probing false or absent is v0.6.0's key exactly; probing true is a differe
     // nor the other way round when the switch goes Off mid-sitting.
     assert.notEqual(snapshotKey({ ...k, probing: true }), old);
   }
+});
+
+/* ------------------------------------------------------------------ */
+/* The student's scope (the 2026-09-26 isolation audit)                */
+/* ------------------------------------------------------------------ */
+
+// @covers FR-4006
+test("a changed scope is a changed key — a revoked exception reaches an open chat on its next turn", () => {
+  const before = snapshotKey({ ...BASE, gender: "female" });
+  // the operator hides Social Studies for her (or revokes the exception that showed it)
+  const narrowed = scopeFingerprint({
+    grade: "9",
+    curriculum: "eg-national-en",
+    courses: new Set(["course:prep3-math-en"]),
+  });
+  assert.notEqual(before, snapshotKey({ ...BASE, gender: "female", scope: narrowed }));
+  // her curriculum changes, same grade
+  const american = scopeFingerprint({
+    grade: "9",
+    curriculum: "us-american-en",
+    courses: new Set<string>(),
+  });
+  assert.notEqual(before, snapshotKey({ ...BASE, gender: "female", scope: american }));
+  // her grade changes, same courses
+  const grade10 = scopeFingerprint({
+    grade: "10",
+    curriculum: "eg-national-en",
+    courses: new Set(["course:prep3-math-en", "course:prep3-social-ar"]),
+  });
+  assert.notEqual(before, snapshotKey({ ...BASE, gender: "female", scope: grade10 }));
+});
+
+test("an unchanged scope is the same key — the prefix stays cache-hot", () => {
+  // the same set in another order is the same scope
+  const reordered = scopeFingerprint({
+    grade: "9",
+    curriculum: "eg-national-en",
+    courses: new Set(["course:prep3-social-ar", "course:prep3-math-en"]),
+  });
+  assert.equal(reordered, NATIONAL_9);
+  assert.equal(
+    snapshotKey({ ...BASE, gender: null }),
+    snapshotKey({ ...BASE, gender: null, scope: reordered })
+  );
+});
+
+test("the ungated scope is its own value, never 'no courses'", () => {
+  const ungated = scopeFingerprint({ grade: null, curriculum: null, courses: null });
+  const empty = scopeFingerprint({ grade: null, curriculum: null, courses: new Set() });
+  assert.notEqual(ungated, empty);
 });

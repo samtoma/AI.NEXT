@@ -94,11 +94,224 @@ export const WIDGET_PREDICATES = {
     "slope-sign-flipped": "The line rises where it should fall, or the reverse",
     "vertically-displaced": "Right shape, sitting consistently above or below the true curve",
     "partial-coverage": "The sketch covers only part of the visible domain",
+    "asymptote-crossed": "The stroke runs straight through where the curve is undefined, as if it were continuous there",
+    "wrong-quadrants": "The hyperbola's branches sit in the wrong pair of quadrants — the sign of a",
+    "wrong-intercept": "The curve does not pass through its true y-intercept",
+    "amplitude-wrong": "The curve reaches the wrong distance from its midline",
+    "period-wrong": "The curve repeats at the wrong rate for this function",
+    "vertical-shift-wrong": "The curve is centred on the wrong midline",
     "off-target": "The sketch does not follow the curve",
+  },
+  polygon_builder: {
+    "only-one-pair-parallel": "That is a trapezium — only one pair of opposite sides is parallel",
+    "sides-not-equal": "The sides that must be equal for this shape are not",
+    "no-right-angle": "None of the interior angles is a right angle",
+    "midsegment-not-half": "Parallel to the third side, but not half its length",
+    "area-missing-half": "Exactly double the target — the ÷2 was left out of the area formula",
+    "not-the-shape": "The construction does not have the property this shape needs",
+  },
+  solid_scaler: {
+    "volume-scaled-by-k": "The scale factor was applied once (k), not cubed (k³) — a linear length scaling used for a volume",
+    "area-scaled-by-k": "The scale factor was applied once (k), not squared (k²) — a linear length scaling used for an area",
+    "wrong-formula-part": "The scale factor is right, but a face — usually a base — is missing from the surface-area reading",
+    "off-target": "Neither the scale factor nor the surface reading matches",
+  },
+  box_plot_builder: {
+    "median-of-unsorted": "The middle of the data as GIVEN, not the middle once it is sorted",
+    "iqr-as-range": "The lower and upper quartiles were placed at the minimum and maximum — the interquartile range rebuilt as the full range",
+    "quartile-method": "A different quartile method was used (splitting at the median) — this book uses linear interpolation between ranks",
+    "whisker-to-outlier": "A whisker was dragged out to a raw outlier instead of stopping at the last value within 1.5×IQR",
+    "off-target": "The five-number summary does not match, with no recognisable pattern",
+  },
+  venn_builder: {
+    "overlap-counted-twice": "A region's raw set size was entered instead of the count exclusive to it — the overlap counted in twice",
+    "intersection-for-union": "The intersection was shaded (or counted) where the union was asked for",
+    "complement-inside-a": "The complement was shaded inside the set it complements, rather than everywhere outside it",
+    "exclusive-drawn-overlapping": "\"X only\" was shaded including its overlap with another set",
+    "neither-region-missed": "The region outside every set was left unshaded or uncounted",
+    "off-target": "Wrong in a way none of the named errors describes",
+  },
+  area_model: {
+    "missing-cross-term": "The x tiles were skipped — only x² and the constant are there, as in (a+b)² read as a² + b²",
+    "middle-term-sign": "The constant term is right and the linear (x) term is not — usually its sign",
+    "constant-sign": "The linear (x) term is right and the constant term is not — usually its sign",
+    "not-a-rectangle": "The placed tiles do not tile a rectangle: a gap, a stray tile, or more than one x² tile",
+    "off-target": "A valid rectangle whose terms match neither the target sum nor its product",
   },
 } as const;
 
 export type WidgetKind = keyof typeof WIDGET_PREDICATES;
+
+/**
+ * CAN EMIT (consistency review 2026-09-27, W1) — GENERATED from the contract's
+ * `can_emit`, checked by widget-predicates.test.mts like the vocabulary above.
+ *
+ * A kind DECLARES every predicate it knows; a given question emits only some:
+ * line_drawer in "points" mode grades the two handles and never reports a
+ * slope, angle_setter asked for the inscribed angle never reports
+ * "angle-given-as-arc". Per kind: a list, or `{ by, cases }` dispatching on the
+ * stored spec's field (`"(absent)"` when it is missing, `"(present)"` when it
+ * holds an object). Derived from each component's grading code (the contract
+ * names the file); the pipeline refuses a mapping outside it
+ * (`services/extraction/widget_spec.py` validate_widget), because a mapping on a
+ * predicate the question cannot emit never fires and the student gets a plain
+ * "not quite" where a refutation was promised.
+ */
+export const WIDGET_CAN_EMIT = {
+  pair_plotter: ["swapped-coordinates", "wrong-quadrant", "off-target"],
+  product_builder: ["reversed-pairs", "missing-pairs"],
+  line_drawer: {
+    by: "mode",
+    cases: {
+      points: ["points-swapped", "off-target"],
+      equation: ["vertical-line", "intercept-wrong", "slope-sign-flipped", "slope-inverted", "off-target"],
+    },
+  },
+  circle_builder: {
+    by: "element",
+    cases: {
+      radius: ["radius-drawn-as-chord", "radius-short", "off-target"],
+      chord: ["ends-not-on-circle"],
+      diameter: ["chord-not-through-centre", "ends-not-on-circle"],
+      tangent: ["is-secant", "is-external"],
+    },
+  },
+  angle_setter: {
+    by: "ask",
+    cases: {
+      inscribed: ["arc-given-as-angle", "other-arc", "off-target"],
+      central: ["angle-given-as-arc", "other-arc", "off-target"],
+    },
+  },
+  triangle_ratio: {
+    by: "ask",
+    cases: {
+      sin: ["used-cosine", "used-tangent", "off-target"],
+      cos: ["used-sine", "used-tangent", "off-target"],
+      tan: ["used-sine", "used-cosine", "ratio-inverted", "off-target"],
+    },
+  },
+  bar_builder: {
+    by: "ask",
+    cases: {
+      mean: ["median-for-mean", "total-wrong"],
+      median: ["mean-for-median", "off-target"],
+      mode: ["no-mode", "multi-modal", "off-target"],
+      range: ["off-target"],
+    },
+  },
+  number_line_marker: {
+    by: "mode",
+    cases: {
+      points: ["missed-values", "extra-values", "sign-flipped"],
+      interval: ["endpoint-inclusion-wrong", "interval-wrong"],
+    },
+  },
+  ratio_balance: {
+    by: "mode",
+    cases: {
+      direct: ["direct-solved-as-inverse", "off-target"],
+      inverse: ["inverse-solved-as-direct", "off-target"],
+    },
+  },
+  sample_space: ["counted-once", "missed-outcomes", "extra-outcomes"],
+  curve_sketcher: {
+    by: "fn",
+    cases: {
+      linear: ["fails-vertical-line-test", "partial-coverage", "vertically-displaced", "off-target", "slope-sign-flipped"],
+      quadratic: ["fails-vertical-line-test", "partial-coverage", "vertically-displaced", "off-target", "opens-wrong-way"],
+      hyperbola: ["fails-vertical-line-test", "partial-coverage", "vertically-displaced", "off-target", "asymptote-crossed", "wrong-quadrants"],
+      exponential: ["fails-vertical-line-test", "partial-coverage", "vertically-displaced", "off-target", "asymptote-crossed", "wrong-intercept"],
+      sine: ["fails-vertical-line-test", "partial-coverage", "vertically-displaced", "off-target", "vertical-shift-wrong", "amplitude-wrong", "period-wrong"],
+      cosine: ["fails-vertical-line-test", "partial-coverage", "vertically-displaced", "off-target", "vertical-shift-wrong", "amplitude-wrong", "period-wrong"],
+      tangent: ["fails-vertical-line-test", "partial-coverage", "vertically-displaced", "off-target", "asymptote-crossed", "vertical-shift-wrong", "amplitude-wrong", "period-wrong"],
+    },
+  },
+  polygon_builder: {
+    by: "mode",
+    cases: {
+      construct: {
+        by: "shape",
+        cases: {
+          scalene: ["not-the-shape"],
+          isosceles: ["sides-not-equal", "not-the-shape"],
+          right: ["no-right-angle", "not-the-shape"],
+          parallelogram: ["only-one-pair-parallel", "not-the-shape"],
+          rectangle: ["only-one-pair-parallel", "no-right-angle", "not-the-shape"],
+          rhombus: ["only-one-pair-parallel", "sides-not-equal", "not-the-shape"],
+          square: ["only-one-pair-parallel", "no-right-angle", "sides-not-equal", "not-the-shape"],
+          trapezium: ["not-the-shape"],
+          kite: ["sides-not-equal", "not-the-shape"],
+        },
+      },
+      midsegment: ["midsegment-not-half", "not-the-shape"],
+      area: ["area-missing-half", "not-the-shape"],
+    },
+  },
+  solid_scaler: {
+    by: "ask",
+    cases: {
+      volume: ["volume-scaled-by-k", "off-target"],
+      area: {
+        by: "solid",
+        cases: {
+          box: ["area-scaled-by-k", "wrong-formula-part", "off-target"],
+          cylinder: ["area-scaled-by-k", "wrong-formula-part", "off-target"],
+          cone: ["area-scaled-by-k", "wrong-formula-part", "off-target"],
+          pyramid: ["area-scaled-by-k", "wrong-formula-part", "off-target"],
+          sphere: ["area-scaled-by-k", "off-target"],
+        },
+      },
+    },
+  },
+  box_plot_builder: ["median-of-unsorted", "iqr-as-range", "quartile-method", "whisker-to-outlier", "off-target"],
+  venn_builder: {
+    by: "mode",
+    cases: {
+      shade: {
+        by: "target",
+        cases: {
+          union: ["intersection-for-union", "off-target"],
+          intersection: ["off-target"],
+          aOnly: ["exclusive-drawn-overlapping", "off-target"],
+          bOnly: ["exclusive-drawn-overlapping", "off-target"],
+          cOnly: ["exclusive-drawn-overlapping", "off-target"],
+          complementA: ["complement-inside-a", "neither-region-missed", "off-target"],
+          complementB: ["complement-inside-a", "neither-region-missed", "off-target"],
+          complementC: ["complement-inside-a", "neither-region-missed", "off-target"],
+          neither: ["neither-region-missed", "off-target"],
+        },
+      },
+      counts: {
+        by: "clues",
+        cases: {
+          "(present)": ["overlap-counted-twice", "neither-region-missed", "off-target"],
+          "(absent)": ["neither-region-missed", "off-target"],
+        },
+      },
+    },
+  },
+  area_model: ["missing-cross-term", "middle-term-sign", "constant-sign", "not-a-rectangle", "off-target"],
+} as const;
+
+type EmitNode = readonly string[] | { readonly by: string; readonly cases: Readonly<Record<string, EmitNode>> };
+
+/** The predicates (besides `ok`) a widget of `kind` with this stored `spec` can
+ *  actually emit, or null when the spec reaches no case (a value the widget
+ *  does not render) or the kind is unknown. */
+export function canEmit(kind: string, spec: Record<string, unknown> | null | undefined): readonly string[] | null {
+  let node: EmitNode | undefined = (WIDGET_CAN_EMIT as Record<string, EmitNode>)[kind];
+  while (node && !Array.isArray(node)) {
+    const n = node as { by: string; cases: Record<string, EmitNode> };
+    const v = spec?.[n.by];
+    const key =
+      v === undefined || v === null ? "(absent)"
+      : typeof v === "object" || typeof v === "boolean" ? "(present)"
+      : String(v);
+    node = n.cases[key];
+  }
+  return (node as readonly string[] | undefined) ?? null;
+}
 
 /** Every predicate a given kind may return, `ok` included. */
 export function predicatesFor(kind: string): readonly string[] {

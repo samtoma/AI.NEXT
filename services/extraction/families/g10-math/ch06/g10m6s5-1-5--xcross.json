@@ -1,0 +1,80 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s5-1-5:xcross",
+ "kind": "family",
+ "lo_id": "lo:g10m6s5-1-5",
+ "parent_question_id": "q:g10m6s5-1-5:ex6-5-5b",
+ "source_page": 186,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "choice": [
+    -5,
+    -4,
+    -3,
+    -2,
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "b",
+   "choice": [
+    2,
+    3,
+    5
+   ]
+  },
+  {
+   "name": "k",
+   "choice": [
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "name": "c",
+   "let": "b ** k"
+  },
+  {
+   "require": "c <= 27",
+   "why": "keeps the constant term small"
+  },
+  {
+   "name": "q",
+   "let": "-a * c"
+  },
+  {
+   "require": "abs(q) <= 60",
+   "why": "the number the book would print stays small"
+  },
+  {
+   "name": "qs",
+   "let": "'+' if q > 0 else '-'"
+  },
+  {
+   "name": "qa",
+   "let": "abs(q)"
+  }
+ ],
+ "constraints": [
+  "a * q < 0",
+  "-q / a == b ** k"
+ ],
+ "stem": "The graph of $y = {=a}\\cdot {=b}^x {=qs} {=qa}$ cuts the $x$-axis at exactly one point. What is the $x$-coordinate of that point?",
+ "answer": "k",
+ "solution": [
+  "On the $x$-axis $y=0$, so ${=a}\\cdot {=b}^x {=qs} {=qa} = 0$.",
+  "Move the constant to the right-hand side: ${=a}\\cdot {=b}^x = {=-q}$.",
+  "Divide both sides by ${=a}$: ${=b}^x = {=c}$.",
+  "Write ${=c}$ as a power of ${=b}$: ${=c} = {=b}^{{=k}}$.",
+  "The bases are equal, so the exponents are equal: $x = {=k}$. The graph cuts the $x$-axis at $({=k}, 0)$."
+ ],
+ "notes": "The book's method for an intercept: put y = 0 (x-axis) and solve, here by writing both sides as powers of the same base, as in the book's exponential equations. q = -a*c with c = b^k, so a and q always have opposite signs and the graph really cuts the x-axis exactly once (an exponential graph with a and q of the same sign never reaches the axis, so that case is never drawn). The stem says 'exactly one point' only because that is true by construction. When k = 1 the step 'write b as a power of b' is trivial but true (b = b^1). Every valid instance was substituted back into the equation: y is 0 at the stated x."
+}

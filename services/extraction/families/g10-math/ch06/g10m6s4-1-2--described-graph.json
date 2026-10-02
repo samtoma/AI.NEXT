@@ -1,0 +1,136 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s4-1-2:described-graph",
+ "kind": "family",
+ "lo_id": "lo:g10m6s4-1-2",
+ "parent_question_id": "q:g10m6s4-1-2:ex6-8-20c",
+ "source_page": 219,
+ "tier": "advanced",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "s",
+   "choice": [
+    1,
+    -1
+   ]
+  },
+  {
+   "name": "far",
+   "choice": [
+    1,
+    0
+   ]
+  },
+  {
+   "name": "c",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "m",
+   "randint": [
+    "c + 1 if far == 1 else 1",
+    "c + 4 if far == 1 else c - 1"
+   ]
+  },
+  {
+   "name": "n",
+   "randint": [
+    "1 if far == 1 else c + 1",
+    "c - 1 if far == 1 else c + 4"
+   ]
+  },
+  {
+   "name": "t",
+   "choice": [
+    1,
+    -1
+   ]
+  },
+  {
+   "name": "k",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "sg",
+   "let": "'-' if s < 0 else ''"
+  },
+  {
+   "name": "og",
+   "let": "'' if s < 0 else '-'"
+  },
+  {
+   "name": "quad",
+   "let": "'first and third' if s == 1 else 'second and fourth'"
+  },
+  {
+   "name": "sw",
+   "let": "'positive' if s == 1 else 'negative'"
+  },
+  {
+   "name": "cmp",
+   "let": "'further from' if far == 1 else 'closer to'"
+  },
+  {
+   "name": "bs",
+   "let": "'bigger' if far == 1 else 'smaller'"
+  },
+  {
+   "name": "ts",
+   "let": "'+' if t == 1 else '-'"
+  },
+  {
+   "name": "os",
+   "let": "'-' if t == 1 else '+'"
+  },
+  {
+   "name": "dr",
+   "let": "'up' if t == 1 else 'down'"
+  }
+ ],
+ "constraints": [
+  "m != n",
+  "m != c",
+  "n != c"
+ ],
+ "stem": "Before it is shifted, the graph of a hyperbola $y=\\frac{a}{x}$ lies in the {=quad} quadrants, and it lies {=cmp} the axes than the graph of $y=\\frac{{=c}}{x}$. The graph is then shifted {=k} units {=dr}. Which of the following could be the equation of the shifted graph?",
+ "choices": {
+  "correct": "$y={=sg}\\frac{{=m}}{x} {=ts} {=k}$",
+  "distractors": [
+   {
+    "text": "$y={=og}\\frac{{=m}}{x} {=ts} {=k}$",
+    "misconception_id": "mc:g10m6s4-1-2:sign-of-a-ignored"
+   },
+   {
+    "text": "$y={=sg}\\frac{{=n}}{x} {=ts} {=k}$",
+    "misconception_id": "mc:g10m6s4-1-2:bigger-a-closer-to-axes"
+   },
+   {
+    "text": "$y={=sg}\\frac{{=m}}{x} {=os} {=k}$",
+    "misconception_id": "mc:g10m6s4-1-2:shift-direction-reversed"
+   }
+  ]
+ },
+ "distinct_by_choices": true,
+ "solution": [
+  "The sign of $a$ decides the quadrants: a graph in the {=quad} quadrants has a {=sw} value of $a$.",
+  "The size of $a$ decides how far the graph lies from the axes: the bigger $|a|$ is, the further the graph lies from the axes. The graph of $y=\\frac{{=c}}{x}$ has $|a|={=c}$, and our graph must lie {=cmp} the axes than this one, so $|a|$ must be {=bs} than {=c}.",
+  "Before the shift the equation is $y=\\frac{a}{x}$, so $q=0$. A vertical shift of {=k} units {=dr} makes $q={=t * k}$, because a shift up makes $q$ positive and a shift down makes $q$ negative.",
+  "Only $y={=sg}\\frac{{=m}}{x} {=ts} {=k}$ has a {=sw} value of $a$ with $|a|={=m}$, which is {=bs} than {=c}, and $q={=t * k}$. The other equations have the wrong sign of $a$, the wrong size of $a$, or the shift the wrong way."
+ ],
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m6s4-1-2:shift-direction-reversed",
+   "label": "A shift up or down is applied the wrong way",
+   "description": "The student moves the graph vertically in the wrong direction, down when it should go up and up when it should go down, so the sign of q, or of the change in q, is read backwards."
+  }
+ ],
+ "notes": "Three clues to combine, each distractor breaks exactly one of them: sign of a (quadrants, before the shift), size of a (distance from the axes compared with y = c/x, before the shift) and the direction of the vertical shift. The clues about quadrants and distance are stated before the shift because with q different from 0 the branches no longer lie in the quadrants. Same ideas as the book's picture matching, but the picture is replaced by a description. The shift is at least 2 units."
+}

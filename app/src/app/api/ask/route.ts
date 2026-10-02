@@ -10,16 +10,19 @@ import {
   claudeEnv,
   classifyCliFailure,
 } from "@/lib/claude-cli";
-import { buildLessonContext, lessonCourseId } from "@/lib/lesson";
+import { buildLessonContext, isUnpreparedLesson, lessonCourseId } from "@/lib/lesson";
 import { getAllSacredPassages } from "@/lib/lesson-content";
 import {
   makeSacredGuard,
   SACRED_HOLDBACK_CHARS,
   type SacredGuard,
 } from "@/lib/sacred-guard";
-import { snapshotContext, snapshotKey } from "@/lib/session-cache";
+import { scopeFingerprint, snapshotContext, snapshotKey } from "@/lib/session-cache";
+import { makeHandoffFilter, stripClosedHandoffs } from "@/lib/handoff-filter";
+import { SPINE_SUBJECT_KEYS } from "@/lib/subjects";
 import { coerceUploadId } from "@/lib/upload-contract";
 import { getStudentProfile } from "@/lib/student-context";
+import { resolveStudentScope } from "@/lib/catalog-queries";
 import { currentSessionSnapshot } from "@/lib/sessions";
 import {
   ZERO_TOKENS,
@@ -214,8 +217,24 @@ export async function POST(req: Request) {
   let ctx: Awaited<ReturnType<typeof buildAskContext>>;
   /** what the system prompt was built with — this request's answer, effective */
   let probing: boolean;
+  /** the subjects a `{{switch_subject:…}}` card may name for her (lib/handoff-filter.ts) */
+  let handoffOpen: ReadonlySet<string>;
   try {
     const pre = await withPrincipal(studentId, async (client) => {
+      // A LESSON OF THE BOOK NOT PREPARED YET (migration 037,
+      // lib/course-outline.ts): the outline lists it, nothing is loaded to
+      // teach from. Refused FIRST — before a session is opened, a turn is
+      // counted or a context is built — so no sitting is left behind and no
+      // model is ever started for it (constitution II). `buildLessonContext`
+      // would refuse it too (`getLessonData` → null); this is the earlier,
+      // cheaper door.
+      if (
+        (surface === "lesson_learn" || surface === "lesson_review") &&
+        (await isUnpreparedLesson(body.lesson, client))
+      ) {
+        return null;
+      }
+
       // Server-side turn count for this chat session: every row, whatever its
       // outcome. It drives `turn_index`, which stays monotonic across every
       // row in the conversation so a failed turn and the retry after it are
@@ -264,6 +283,13 @@ export async function POST(req: Request) {
       // very next turn, without signing out or starting a new session. See the
       // decision recorded in `lib/session-cache.ts`.
       const me = await getStudentProfile(studentId, client);
+      // Her scope, read HERE, this turn, in the same unit of work — never
+      // cached across turns — and keyed, so a course switched off for her, an
+      // exception revoked or a curriculum changed reaches this open chat on its
+      // very next turn instead of after the snapshot's three-hour TTL (the
+      // 2026-09-26 isolation audit; FR-2705, FR-4006). Three small reads per
+      // turn; the rebuild happens only when the scope actually changed.
+      const scope = await resolveStudentScope(studentId, client);
       //
       // The upload joins the key for the same reason the register does: it
       // changes the model-visible payload. Without it the FIRST turn of a chat
@@ -285,6 +311,7 @@ export async function POST(req: Request) {
         // cache: switching Off mid-sitting misses once and rebuilds the Off
         // prompt, never replaying the probing one.
         probing: session.probing,
+        scope: scopeFingerprint(scope),
       });
       const built = await snapshotContext(key, () =>
         surface === "lesson_learn" || surface === "lesson_review"
@@ -312,10 +339,17 @@ export async function POST(req: Request) {
         turns,
         sessionId: session.sessionId,
         ctx: built,
+        // Her open subjects, from the same scope: a handoff card to any other
+        // is removed from the reply before it reaches her (decision 38).
+        handoffOpen: new Set<string>(
+          SPINE_SUBJECT_KEYS.filter((k) => scope.course(scope.courseForSubject(k)))
+        ),
       };
     });
 
-    if (!pre.ctx) {
+    if (pre === null || !pre.ctx) {
+      // An unprepared lesson (`pre === null`, above) gets this same answer.
+      //
       // THE COURSE GATE (migration 023, lib/catalog.ts). `body.lesson` is a
       // client-supplied slug: without this, a student who could not open a
       // hidden lesson's page could still be taught it turn by turn, which is
@@ -331,6 +365,7 @@ export async function POST(req: Request) {
     sessionId = pre.sessionId;
     ctx = pre.ctx;
     probing = pre.ctx.probing === true;
+    handoffOpen = pre.handoffOpen;
   } catch (err) {
     console.error("ask: pre-turn reads failed:", err);
     return Response.json({ error: "internal error" }, { status: 500 });
@@ -468,6 +503,17 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
 
       let fullText = "";
       let emittedLen = 0; // holdback frontier (sacred guard active only)
+      // THE HANDOFF FILTER (Samuel's answer 17, decision 38; FR-4006). Every
+      // byte of the model's reply reaches her through `emit`, which removes a
+      // `{{switch_subject:…}}` card to a subject she may not open — the
+      // server-side half of `crossSubjectRule`'s instruction, for a reply that
+      // ignores it. It holds back only a tail that could still become such a
+      // card; everything else streams as before.
+      const handoffs = makeHandoffFilter(handoffOpen);
+      const emit = (t: string) => {
+        const out = handoffs.push(t);
+        if (out) send({ type: "delta", t: out });
+      };
       let redacted = false;
       /**
        * The best usage the stream has reported SO FAR.
@@ -598,11 +644,11 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
                 fullText.length - SACRED_HOLDBACK_CHARS
               );
               if (safeLen > emittedLen) {
-                send({ type: "delta", t: fullText.slice(emittedLen, safeLen) });
+                emit(fullText.slice(emittedLen, safeLen));
                 emittedLen = safeLen;
               }
             } else {
-              send({ type: "delta", t: j.event.delta.text });
+              emit(j.event.delta.text);
             }
           } else if (j.type === "result") {
             result = j as typeof result;
@@ -775,11 +821,15 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
         const tokens = tokensFromUsage(result.usage);
         const costUsd = result.total_cost_usd ?? 0;
         const latencyMs = result.duration_ms ?? Date.now() - started;
-        const citations = extractCitations(fullText);
+        // What she was shown: the reply with any handoff to a closed subject
+        // removed — the same function the stream applied, so the ledger, the
+        // replay and her screen agree.
+        const shownText = stripClosedHandoffs(fullText, handoffOpen);
+        const citations = extractCitations(shownText);
 
         const interactionId = await logTurn({
           outcome: "ok",
-          assistantMessage: fullText,
+          assistantMessage: shownText,
           tokens,
           cliCostUsd: result.total_cost_usd ?? null,
           latencyMs,
@@ -789,8 +839,16 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
         // guard-mode emission runs behind the holdback window — release the
         // clean tail before closing the turn
         if (sacredGuard && fullText.length > emittedLen) {
-          send({ type: "delta", t: fullText.slice(emittedLen) });
+          emit(fullText.slice(emittedLen));
           emittedLen = fullText.length;
+        }
+        // …and whatever the handoff filter was still holding
+        const held = handoffs.end();
+        if (held) send({ type: "delta", t: held });
+        if (handoffs.removed > 0) {
+          console.warn(
+            `ask: removed ${handoffs.removed} handoff card(s) to a subject closed to the student on ${surface}`
+          );
         }
 
         send({

@@ -27,7 +27,16 @@ export type CircleElement = "radius" | "chord" | "diameter" | "tangent";
 export type BarStat = "mean" | "median" | "mode" | "range";
 export type RuleKind = "sum" | "diff" | "product" | "same" | "first" | "second";
 export type RuleOp = "eq" | "ne" | "lt" | "le" | "gt" | "ge";
-export type CurveFn = "linear" | "quadratic";
+export type CurveFn =
+  | "linear" | "quadratic" | "hyperbola" | "exponential" | "sine" | "cosine" | "tangent";
+export type PolygonShape =
+  | "scalene" | "isosceles" | "right"
+  | "parallelogram" | "rectangle" | "rhombus" | "square" | "trapezium" | "kite";
+export type SolidKind = "box" | "cylinder" | "cone" | "pyramid" | "sphere";
+export type VennTarget =
+  | "union" | "intersection" | "aOnly" | "bOnly" | "cOnly"
+  | "complementA" | "complementB" | "complementC" | "neither";
+export type VennRegionCounts = Partial<Record<"a" | "b" | "c" | "ab" | "ac" | "bc" | "abc" | "n", number>>;
 
 export type MathWidget =
   | { name: "pair_plotter"; prompt: string; target: [number, number] }
@@ -42,13 +51,26 @@ export type MathWidget =
   | { name: "number_line_marker"; prompt: string; mode: "interval"; range: [number, number]; from: number; to: number; openFrom: boolean; openTo: boolean }
   | { name: "ratio_balance"; prompt: string; mode: "direct" | "inverse"; a: number; b: number; c: number }
   | { name: "sample_space"; prompt: string; rows: number; cols: number; rule: { kind: RuleKind; op: RuleOp; value: number } }
-  | { name: "curve_sketcher"; prompt: string; fn: CurveFn; coefs: number[] };
+  | { name: "curve_sketcher"; prompt: string; fn: CurveFn; coefs: number[] }
+  | { name: "polygon_builder"; prompt: string; mode: "construct"; shape: PolygonShape }
+  | { name: "polygon_builder"; prompt: string; mode: "midsegment"; triangle: [[number, number], [number, number], [number, number]]; apex: 0 | 1 | 2 }
+  | { name: "polygon_builder"; prompt: string; mode: "area"; shape: "triangle" | "quadrilateral"; target: number }
+  | { name: "solid_scaler"; prompt: string; solid: SolidKind; dims: Record<string, number>; ask: "volume" | "area"; ratio: number }
+  | { name: "box_plot_builder"; prompt: string; data: number[] }
+  | { name: "venn_builder"; prompt: string; sets: 2 | 3; labels: string[]; mode: "shade"; target: VennTarget }
+  | {
+      name: "venn_builder"; prompt: string; sets: 2 | 3; labels: string[]; mode: "counts";
+      total?: number; regions: VennRegionCounts; clues?: { a?: number; b?: number; c?: number };
+    }
+  | { name: "area_model"; prompt: string; mode: "expand" | "factor"; a: number; b: number };
 
 /** Every maths widget name the dispatcher answers to. */
 export const MATH_WIDGETS = [
   "pair_plotter", "product_builder", "line_drawer", "circle_builder",
   "angle_setter", "triangle_ratio", "bar_builder", "number_line_marker",
   "ratio_balance", "sample_space", "curve_sketcher",
+  "polygon_builder", "solid_scaler", "box_plot_builder",
+  "venn_builder", "area_model",
 ] as const;
 
 const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
@@ -79,7 +101,115 @@ const CIRCLE_ELEMENTS = ["radius", "chord", "diameter", "tangent"] as const;
 const BAR_STATS = ["mean", "median", "mode", "range"] as const;
 const RULE_KINDS = ["sum", "diff", "product", "same", "first", "second"] as const;
 const RULE_OPS = ["eq", "ne", "lt", "le", "gt", "ge"] as const;
-const CURVE_FNS = ["linear", "quadratic"] as const;
+const CURVE_FNS = [
+  "linear", "quadratic", "hyperbola", "exponential", "sine", "cosine", "tangent",
+] as const;
+/** Coefficients each curve family takes — kept beside `CURVE_FNS` rather than
+ *  imported from `curve-sketcher-grade.ts` (a components/ module): this file
+ *  has no imports by design (widget-payloads.test.mts exercises it with no
+ *  rendering at all), and the replay test in the widget's own folder is what
+ *  proves the two copies cannot drift apart unnoticed. */
+const CURVE_COEF_COUNT: Record<CurveFn, number> = {
+  linear: 2, quadratic: 3, hyperbola: 2, exponential: 3, sine: 2, cosine: 2, tangent: 2,
+};
+const POLYGON_SHAPES = [
+  "scalene", "isosceles", "right",
+  "parallelogram", "rectangle", "rhombus", "square", "trapezium", "kite",
+] as const;
+const SOLID_KINDS = ["box", "cylinder", "cone", "pyramid", "sphere"] as const;
+const VENN_TARGETS = [
+  "union", "intersection", "aOnly", "bOnly", "cOnly",
+  "complementA", "complementB", "complementC", "neither",
+] as const;
+/** Shading targets that only mean something with a third set. */
+const THREE_SET_ONLY_TARGETS: readonly VennTarget[] = ["cOnly", "complementC"];
+const VENN_REGION_KEYS_2 = ["a", "b", "ab", "n"] as const;
+const VENN_REGION_KEYS_3 = ["a", "b", "c", "ab", "ac", "bc", "abc", "n"] as const;
+
+/** Positive, on-screen-sized dimensions per solid — override with `dims`,
+ *  falling back to a nice default per field. Out-of-range rejects the whole
+ *  payload rather than clamping: a huge solid is unreadable, not "close". */
+function parseSolidDims(solid: SolidKind, raw: unknown): Record<string, number> | null {
+  const d: Record<string, unknown> =
+    raw !== null && typeof raw === "object" && !Array.isArray(raw) ? (raw as Record<string, unknown>) : {};
+  const dim = (key: string, fallback: number): number | null => {
+    const v = d[key];
+    if (v === undefined) return fallback;
+    return isNum(v) && v > 0 && v <= 8 ? v : null;
+  };
+  switch (solid) {
+    case "box": {
+      const l = dim("l", 4), w = dim("w", 3), h = dim("h", 2);
+      return l === null || w === null || h === null ? null : { l, w, h };
+    }
+    case "cylinder":
+    case "cone": {
+      const r = dim("r", 2), h = dim("h", 4);
+      return r === null || h === null ? null : { r, h };
+    }
+    case "pyramid": {
+      const s = dim("s", 4), h = dim("h", 3);
+      return s === null || h === null ? null : { s, h };
+    }
+    case "sphere": {
+      const r = dim("r", 2);
+      return r === null ? null : { r };
+    }
+  }
+}
+
+/**
+ * Reachability for `curve_sketcher`, per family. Linear and quadratic are the
+ * ORIGINAL two checks, unchanged (a quadratic with a = 0 is a line wearing
+ * the wrong name; no coefficient over 10 in magnitude) — `curve-sketcher-
+ * replay.test.mts` proves every live spec still validates the same way.
+ * The five new families each get their own bounds, chosen so the visible
+ * sketch stays legible on a 290×290 frame and, for hyperbola/exponential,
+ * so growth near the edge of the domain does not run away entirely.
+ */
+function curveReachable(fn: CurveFn, coefs: readonly number[]): boolean {
+  switch (fn) {
+    case "linear":
+    case "quadratic":
+      if (fn === "quadratic" && coefs[0] === 0) return false;
+      return coefs.every((k) => Math.abs(k) <= 10);
+
+    case "hyperbola": {
+      const [a, q] = coefs;
+      return (
+        Number.isInteger(a) && a !== 0 && Math.abs(a) <= 6 &&
+        Number.isInteger(q) && Math.abs(q) <= 3
+      );
+    }
+
+    case "exponential": {
+      const [a, b, q] = coefs;
+      const validB = b === 2 || b === 3 || b === 0.5;
+      return (
+        Number.isInteger(a) && a !== 0 && Math.abs(a) <= 3 &&
+        validB &&
+        Number.isInteger(q) && Math.abs(q) <= 3
+      );
+    }
+
+    case "sine":
+    case "cosine": {
+      const [a, q] = coefs;
+      return (
+        Number.isInteger(a) && a !== 0 && Math.abs(a) <= 4 &&
+        Number.isInteger(q) && Math.abs(q) <= 3
+      );
+    }
+
+    case "tangent": {
+      const [a, q] = coefs;
+      return (
+        Number.isInteger(a) && a !== 0 && Math.abs(a) <= 3 &&
+        Number.isInteger(q) && Math.abs(q) <= 3
+      );
+    }
+  }
+}
 
 export function parseMathWidget(
   name: string,
@@ -251,13 +381,166 @@ export function parseMathWidget(
     case "curve_sketcher": {
       const fn = oneOf<CurveFn>(props.fn, CURVE_FNS);
       if (!fn) return null;
-      const coefs = nums(props.coefs, fn === "linear" ? 2 : 3);
+      const coefs = nums(props.coefs, CURVE_COEF_COUNT[fn]);
       if (!coefs) return null;
-      // A quadratic with a = 0 is a line wearing the wrong name, and the
-      // "opens upwards/downwards" diagnosis would be nonsense about it.
-      if (fn === "quadratic" && coefs[0] === 0) return null;
-      if (coefs.some((k) => Math.abs(k) > 10)) return null;
+      if (!curveReachable(fn, coefs)) return null;
       return { name, fn, coefs, prompt: str(props.prompt, "Sketch the curve") };
+    }
+
+    case "polygon_builder": {
+      const mode = oneOf(props.mode, ["construct", "midsegment", "area"] as const);
+      if (!mode) return null;
+
+      if (mode === "construct") {
+        const shape = oneOf<PolygonShape>(props.shape, POLYGON_SHAPES);
+        if (!shape) return null;
+        return {
+          name, mode: "construct", shape,
+          prompt: str(props.prompt, `Construct a ${shape} on the lattice`),
+        };
+      }
+
+      if (mode === "midsegment") {
+        const raw = props.triangle;
+        if (!Array.isArray(raw) || raw.length !== 3) return null;
+        const t0 = intPair(raw[0], 6);
+        const t1 = intPair(raw[1], 6);
+        const t2 = intPair(raw[2], 6);
+        if (!t0 || !t1 || !t2) return null;
+        // Non-degenerate: the three vertices must not be collinear.
+        const area2 = (t1[0] - t0[0]) * (t2[1] - t0[1]) - (t2[0] - t0[0]) * (t1[1] - t0[1]);
+        if (area2 === 0) return null;
+        const apex = props.apex;
+        if (apex !== 0 && apex !== 1 && apex !== 2) return null;
+        return {
+          name, mode: "midsegment", triangle: [t0, t1, t2], apex,
+          prompt: str(props.prompt, "Draw the segment joining the two midpoints"),
+        };
+      }
+
+      // area: any polygon (3 or 4 free vertices) that hits a target area.
+      const shape = oneOf(props.shape, ["triangle", "quadrilateral"] as const);
+      const target = props.target;
+      if (!shape || !isNum(target)) return null;
+      // Pick's theorem: a lattice polygon's area is always a multiple of ½,
+      // so anything else can never be built exactly, whatever the student does.
+      if (target <= 0 || target > 24 || Math.round(target * 2) !== target * 2) return null;
+      return {
+        name, mode: "area", shape, target,
+        prompt: str(props.prompt, `Build a ${shape} with area ${target}`),
+      };
+    }
+
+    case "solid_scaler": {
+      const solid = oneOf<SolidKind>(props.solid, SOLID_KINDS);
+      const ask = oneOf(props.ask, ["volume", "area"] as const);
+      const ratio = props.ratio;
+      if (!solid || !ask || !isNum(ratio) || ratio <= 0) return null;
+      // Reachability: the scale slider only stops at multiples of 0.5 from
+      // 0.5 to 4 (FR-1207) — the k this ratio needs must land on one of them.
+      const kNeeded = ask === "volume" ? Math.cbrt(ratio) : Math.sqrt(ratio);
+      if (kNeeded < 0.5 - 1e-9 || kNeeded > 4 + 1e-9) return null;
+      const steps = (kNeeded - 0.5) / 0.5;
+      if (Math.abs(steps - Math.round(steps)) > 1e-6) return null;
+      const dims = parseSolidDims(solid, props.dims);
+      if (!dims) return null;
+      return {
+        name, solid, dims, ask, ratio,
+        prompt: str(
+          props.prompt,
+          ask === "volume"
+            ? `Scale this ${solid} so its volume is ${ratio}× as large`
+            : `Scale this ${solid} so its surface area is ${ratio}× as large`
+        ),
+      };
+    }
+
+    case "box_plot_builder": {
+      const raw = props.data;
+      if (!Array.isArray(raw) || raw.length < 5 || raw.length > 16) return null;
+      if (!raw.every(isInt)) return null;
+      const data = raw as number[];
+      // Keeps the drawn number line readable; whole numbers ensure the book's
+      // rank formula lands every quartile on the widget's 0.25 snap grid.
+      if (data.some((v) => Math.abs(v) > 500)) return null;
+      return { name, data, prompt: str(props.prompt, "Build the box plot for this data set") };
+    }
+
+    case "venn_builder": {
+      const sets = props.sets === 2 || props.sets === 3 ? props.sets : null;
+      if (!sets) return null;
+      const rawLabels = props.labels;
+      if (!Array.isArray(rawLabels) || rawLabels.length !== sets) return null;
+      if (!rawLabels.every((l) => typeof l === "string" && l.trim().length > 0)) return null;
+      const labels = rawLabels as string[];
+
+      const mode = oneOf(props.mode, ["shade", "counts"] as const);
+      if (!mode) return null;
+
+      if (mode === "shade") {
+        const target = oneOf<VennTarget>(props.target, VENN_TARGETS);
+        if (!target) return null;
+        // Reachability: a target that names a third set means nothing on a
+        // 2-set diagram — there is no C to be outside of, or on its own.
+        if (sets === 2 && THREE_SET_ONLY_TARGETS.includes(target)) return null;
+        return {
+          name, mode: "shade", sets, labels, target,
+          prompt: str(props.prompt, "Shade the named region"),
+        };
+      }
+
+      const rawRegions = props.regions;
+      if (rawRegions === null || typeof rawRegions !== "object" || Array.isArray(rawRegions)) return null;
+      const regionKeys = sets === 2 ? VENN_REGION_KEYS_2 : VENN_REGION_KEYS_3;
+      const regions: VennRegionCounts = {};
+      for (const k of regionKeys) {
+        const v = (rawRegions as Record<string, unknown>)[k];
+        if (!isInt(v) || v < 0 || v > 999) return null;
+        regions[k] = v;
+      }
+      // Reachability: a stated total the regions cannot possibly add up to is
+      // a target no arrangement of non-negative counts can satisfy.
+      const total = props.total;
+      if (total !== undefined) {
+        if (!isInt(total) || total < 0) return null;
+        const sum = regionKeys.reduce((s, k) => s + (regions[k] ?? 0), 0);
+        if (sum !== total) return null;
+      }
+      let clues: { a?: number; b?: number; c?: number } | undefined;
+      const rawClues = props.clues;
+      if (rawClues !== null && typeof rawClues === "object" && !Array.isArray(rawClues)) {
+        const rc = rawClues as Record<string, unknown>;
+        const c: { a?: number; b?: number; c?: number } = {};
+        for (const k of ["a", "b", "c"] as const) {
+          if (rc[k] === undefined) continue;
+          if (!isInt(rc[k]) || (rc[k] as number) < 0) return null;
+          c[k] = rc[k] as number;
+        }
+        clues = c;
+      }
+      return {
+        name, mode: "counts", sets, labels, total, regions, clues,
+        prompt: str(props.prompt, "Fill in every region, including neither"),
+      };
+    }
+
+    case "area_model": {
+      const mode = oneOf(props.mode, ["expand", "factor"] as const);
+      const { a, b } = props;
+      if (!mode || !isInt(a) || !isInt(b)) return null;
+      // Reachability: both zero is just x², which teaches nothing this widget
+      // is for; past ±4 the grid the tiles are placed on runs out of room.
+      if (a === 0 && b === 0) return null;
+      if (Math.abs(a) > 4 || Math.abs(b) > 4) return null;
+      return {
+        name, mode, a, b,
+        prompt: str(
+          props.prompt,
+          mode === "expand"
+            ? `Expand (x ${a >= 0 ? "+" : "−"} ${Math.abs(a)})(x ${b >= 0 ? "+" : "−"} ${Math.abs(b)}) with the tiles`
+            : `Factorise x² ${a + b >= 0 ? "+" : "−"} ${Math.abs(a + b)}x ${a * b >= 0 ? "+" : "−"} ${Math.abs(a * b)} by building its rectangle`
+        ),
+      };
     }
 
     default:

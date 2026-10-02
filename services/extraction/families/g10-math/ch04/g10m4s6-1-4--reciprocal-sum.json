@@ -1,0 +1,48 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m4s6-1-4:reciprocal-sum",
+ "kind": "family",
+ "lo_id": "lo:g10m4s6-1-4",
+ "parent_question_id": "q:g10m4s6-1-4:ex4-5-21",
+ "source_page": 96,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "r1",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "r2",
+   "randint": [
+    2,
+    8
+   ],
+   "resample_while": "r2 == r1"
+  },
+  {
+   "name": "R",
+   "let": "r1 * r2 / (r1 + r2)"
+  }
+ ],
+ "constraints": [
+  "r1 != r2"
+ ],
+ "stem": "Solve for $r_2$ in $\\frac{1}{R}=\\frac{1}{r_1}+\\frac{1}{r_2}$ if $R={=R}$ and $r_1={=r1}$.",
+ "answer": "r2",
+ "solution": [
+  "The denominators are $R$, $r_1$ and $r_2$, so the LCD is $Rr_1r_2$. Multiply every term of $\\frac{1}{R}=\\frac{1}{r_1}+\\frac{1}{r_2}$ by $Rr_1r_2$.",
+  "Each fraction cancels: $r_1r_2=Rr_2+Rr_1$.",
+  "Collect the terms containing $r_2$ on the left: $r_1r_2-Rr_2=Rr_1$.",
+  "Factorise out $r_2$: $r_2(r_1-R)=Rr_1$.",
+  "Divide both sides by $(r_1-R)$: $r_2=\\frac{Rr_1}{r_1-R}$.",
+  "Substitute $R={=R}$ and $r_1={=r1}$: $r_2=\\frac{{=R}\\times{=r1}}{{=r1}-{=R}}$.",
+  "Simplify the numerator and the denominator: $r_2=\\frac{{=R*r1}}{{=r1-R}}$.",
+  "So $r_2={=r2}$."
+ ],
+ "notes": "Same formula and same given/asked variables as the book's ex4-5-21 (1/R = 1/r1 + 1/r2, given R and r1, find r2). The book's instance r1 = 2, R = 3/2 is the case r2 = 6 here. R is built backwards as r1*r2/(r1+r2), so r2 is always a whole number; R is a fraction (or occasionally a whole number such as 2 for r1 = 3, r2 = 6). The solution follows the symbolic route (multiply by the LCD R*r1*r2, collect, factorise, divide) and substitutes at the end, like the book. r1 - R = r1^2/(r1+r2) is always positive, so no division by zero. 25 distinct (r1, r2) pairs."
+}

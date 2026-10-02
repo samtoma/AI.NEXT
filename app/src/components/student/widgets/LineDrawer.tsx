@@ -28,6 +28,7 @@ import { Handle, WidgetShell, type Verdict, WIDGET_ACTIONS, WIDGET_WELL } from "
 import { clamp, tidy, useDragSurface, useKeyNudge, type Pt } from "./drag";
 import { lineText, numText } from "./format";
 import { OK, type WidgetOutcome } from "@/lib/widget-predicates";
+import { gradeLinePoints } from "./line-drawer-grade";
 
 const R = 5;
 const W = 280;
@@ -109,6 +110,9 @@ export function LineDrawer({
   const fired = useRef(false);
   /** Which handle this drag grabbed; null between drags. */
   const held = useRef<number | null>(null);
+  /** Whether each handle has been moved at all — an untouched handle is never
+   *  evidence of a swap (line-drawer-grade.ts). */
+  const moved = useRef<[boolean, boolean]>([false, false]);
 
   const snap = useCallback((v: Pt): Pt => {
     const x = clamp(Math.round(v.x), -R, R);
@@ -126,6 +130,7 @@ export function LineDrawer({
         if (v.x === other.x && v.y === other.y) return cur;
         const next: [Pt, Pt] = [cur[0], cur[1]];
         next[active] = v;
+        if (v.x !== cur[active].x || v.y !== cur[active].y) moved.current[active] = true;
         return next;
       });
     },
@@ -156,6 +161,7 @@ export function LineDrawer({
         if (v.x === other.x && v.y === other.y) return cur;
         const next: [Pt, Pt] = [cur[0], cur[1]];
         next[at] = v;
+        if (v.x !== cur[at].x || v.y !== cur[at].y) moved.current[at] = true;
         return next;
       });
     },
@@ -174,19 +180,16 @@ export function LineDrawer({
     let pred = "off-target";
 
     if (mode === "points" && through) {
-      const [t0, t1] = through;
-      const hit = (a: Pt, t: number[]) => a.x === t[0] && a.y === t[1];
-      ok =
-        (hit(pts[0], t0) && hit(pts[1], t1)) ||
-        (hit(pts[0], t1) && hit(pts[1], t0));
+      // Both handles must have been moved AND both be swapped before the
+      // diagnosis fires (line-drawer-grade.ts; consistency review A10).
+      const g = gradeLinePoints(pts, through, [moved.current[0], moved.current[1]]);
+      ok = g.ok;
       if (!ok) {
-        const swapped =
-          (pts[0].x === t0[1] && pts[0].y === t0[0]) ||
-          (pts[1].x === t1[1] && pts[1].y === t1[0]);
-        pred = swapped ? "points-swapped" : "off-target";
-        diagnosis = swapped
-          ? " — the coordinates are the right numbers in the wrong order (x first, then y)"
-          : "";
+        pred = g.predicate;
+        diagnosis =
+          g.predicate === "points-swapped"
+            ? " — the coordinates are the right numbers in the wrong order (x first, then y)"
+            : "";
       }
     } else {
       // Graded on the LINE, so any two points on it are accepted.

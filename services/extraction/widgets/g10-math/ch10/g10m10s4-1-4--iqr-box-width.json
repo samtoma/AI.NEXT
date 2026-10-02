@@ -1,0 +1,44 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m10s4-1-4:iqr-box-width",
+ "lo_id": "lo:g10m10s4-1-4",
+ "parent_question_id": "q:g10m10s4-1-4:ex10-5-6e",
+ "tier": "standard",
+ "kind": "box_plot_builder",
+ "spec": {
+  "data": [
+   24,
+   9,
+   31,
+   17,
+   38,
+   21,
+   12,
+   6,
+   26,
+   14,
+   19
+  ]
+ },
+ "stem": "Eleven learners wrote a test marked out of $40$. Their marks were: $24,\\ 9,\\ 31,\\ 17,\\ 38,\\ 21,\\ 12,\\ 6,\\ 26,\\ 14,\\ 19$. Build the box-and-whisker diagram for these marks by dragging the minimum, lower quartile, median, upper quartile and maximum markers to their values. Find the quartiles with the percentile formula. The box runs from the lower quartile to the upper quartile, so its width is the interquartile range.",
+ "solution": [
+  "Sort the marks from smallest to largest: $6,\\ 9,\\ 12,\\ 14,\\ 17,\\ 19,\\ 21,\\ 24,\\ 26,\\ 31,\\ 38$, so $n = 11$.",
+  "The minimum is $6$ and the maximum is $38$.",
+  "Median (50th percentile): rank $= \\frac{50}{100}(11 - 1) + 1 = 6$, so the median is the 6th value, $19$.",
+  "Lower quartile (25th percentile): rank $= \\frac{25}{100}(11 - 1) + 1 = 3.5$. This is not a whole number, so take the value halfway between the 3rd and 4th values: $\\frac{12 + 14}{2} = 13$.",
+  "Upper quartile (75th percentile): rank $= \\frac{75}{100}(11 - 1) + 1 = 8.5$, so take the value halfway between the 8th and 9th values: $\\frac{24 + 26}{2} = 25$.",
+  "Place the five markers at $6,\\ 13,\\ 19,\\ 25,\\ 38$. The box runs from $13$ to $25$.",
+  "The width of the box is the interquartile range: $Q_3 - Q_1 = 25 - 13 = 12$. The semi-interquartile range is half of that, $\\frac{12}{2} = 6$. The range of the marks is $38 - 6 = 32$, much larger than the interquartile range, because the interquartile range ignores the lowest and highest quarters of the data."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "quartile-method",
+   "misconception_id": "mc:g10m10s4-1-2:fractional-rank-rounded-to-one-value"
+  },
+  {
+   "predicate": "median-of-unsorted",
+   "misconception_id": "mc:g10m10s4-1-2:rank-on-unsorted-data"
+  }
+ ],
+ "notes": "Data design: n = 11 so the quartile ranks are 3.5 and 8.5, again half ranks where linear interpolation and the book's halfway rule agree. All five numbers are whole (6, 13, 19, 25, 38). Raw middle of the list as printed is 21, true median 19. The median of each half gives 12 and 26, where the book needs 13 and 25. IQR is 12 and the data run 6 to 38, so the range (32) is far larger than the IQR; the fences are -5 and 43, so 38 is not an outlier and the whiskers end at the minimum and maximum. The construction shows the box width as the IQR, the reading the book's own box-plot exercises ask for. The widget grades the five-number summary, not the IQR or semi-interquartile value; the subtraction and the halving are in the solution, and the live box width is what the student reads. Same diagnostic mappings and same reasoning as wt:g10m10s4-1-2:quartiles-box-build. iqr-as-range (quartiles dragged to the extremes) is the characteristic error for this objective but no misconception on lo-4's list names it, so it is left unmapped (see top-level notes). Not mapped: off-target. whisker-to-outlier cannot fire on this data."
+}

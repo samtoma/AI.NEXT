@@ -1,0 +1,44 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m4s2-1-2:denominator-one",
+ "kind": "family",
+ "lo_id": "lo:g10m4s2-1-2",
+ "parent_question_id": "q:g10m4s2-1-2:ex4-1-15",
+ "source_page": 78,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "s",
+   "randint": [
+    2,
+    12
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    2,
+    9
+   ]
+  },
+  {
+   "name": "a",
+   "let": "b * s"
+  }
+ ],
+ "constraints": [
+  "a % b == 0"
+ ],
+ "stem": "Solve for $x$: $\\dfrac{{=a}}{x}={=b}$",
+ "answer": "s",
+ "solution": [
+  "The variable $x$ is in the denominator, and division by $0$ is undefined, so there is a restriction: $x\\neq 0$.",
+  "Multiply both sides of the equation by $x$ to clear the denominator: $\\begin{aligned}\\frac{{=a}}{x}&={=b}\\\\{=a}&={=b}x\\end{aligned}$",
+  "Divide both sides by ${=b}$: $\\begin{aligned}x&=\\frac{{=a}}{{=b}}\\\\x&={=s}\\end{aligned}$",
+  "Check the answer by substituting $x={=s}$ back into the original equation: $\\begin{aligned}\\text{LHS}&=\\frac{{=a}}{{=s}}\\\\&={=a // s}\\\\&=\\text{RHS}\\end{aligned}$ Both sides are equal, and ${=s}\\neq 0$, so the restriction is respected and $x={=s}$ is the solution."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Entry-point skill: the variable is alone in one denominator and the right-hand side is a whole number, so the only moves are state x != 0, multiply both sides by x, divide by the coefficient, and check by substitution. It is the simplest case of the book's ex4-1-15 (4/p = 16/24, page 78, which cross-multiplies) and its solution follows the four steps of worked example 2 (restriction, multiply, solve, check by substitution). Parameters: the answer s is drawn first (2 to 12) and the right-hand side b (2 to 9), so a = b*s is always exactly divisible and the answer is always a positive whole number (largest numerator 108). That gives 88 distinct (a, b) stems; the same numerator can recur but never with the same b and a different answer. The restriction is x != 0 for every instance and the answer is never 0, so no instance has an extraneous root. No distractors, so no misconception ids are attached; the catalogued misconception about the restriction seeming optional is addressed by the worked solution stating it in step 1 and re-checking it in step 4. The multiplies-only-the-fractions misconception cannot arise because there is no term without a denominator on the left. Standard and advanced tiers were not listed as gaps and are already covered by the book's own questions (ex4-1-25, ex4-1-27 standard; ex4-1-23, ex4-7-2g advanced), so no further families were written."
+}

@@ -1,0 +1,45 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m6s4-1-1:sketch-xy-negative-k",
+ "lo_id": "lo:g10m6s4-1-1",
+ "parent_question_id": "q:g10m6s4-1-1:ex6-4-6e",
+ "tier": "basic",
+ "kind": "curve_sketcher",
+ "instances": [
+  {
+   "a": -6
+  },
+  {
+   "a": -4
+  },
+  {
+   "a": -3
+  }
+ ],
+ "spec": {
+  "fn": "hyperbola",
+  "coefs": [
+   "{=a}",
+   0
+  ]
+ },
+ "stem": "Sketch the graph of $xy={=a}$. It has two branches: draw one, lift your finger, then draw the other. Show how each branch behaves near the two axes.",
+ "solution": [
+  "Write $xy=k$ as $y=\\dfrac{k}{x}$. The number on the right of $xy=$ is $a$, and it is negative here.",
+  "Because $a<0$, $x$ and $y$ always have opposite signs, so one branch lies in quadrant II ($x<0$, $y>0$) and the other in quadrant IV ($x>0$, $y<0$).",
+  "Complete a short table, for example $x=\\pm1,\\pm2,\\pm3$ (and any other value that divides $a$ exactly), and plot each pair. Check that $x$ and $y$ have opposite signs in every row.",
+  "$x=0$ gives no $y$-value (division by $0$) and $y=0$ is never produced (a fraction with a non-zero top is never $0$), so the graph has no point on either axis.",
+  "Join the points in each quadrant with a smooth curve. Each branch gets closer and closer to the axes but never touches or crosses them, so the axes ($x=0$ and $y=0$) are the asymptotes."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "asymptote-crossed",
+   "misconception_id": "mc:g10m6s4-1-1:asymptote-is-met"
+  },
+  {
+   "predicate": "wrong-quadrants",
+   "misconception_id": "mc:g10m6s4-1-1:sign-lost-testing-point"
+  }
+ ],
+ "notes": "Instrument fit: the book asks the student to join table points into two smooth curves and then describe the asymptotes; the freehand two-branch stroke is exactly that, and the widget rejects a stroke that runs through x = 0. asymptote-crossed is the only misconception this construction can show of the asymptote-is-met kind: joining the branches into one curve through the y-axis is the belief that the graph reaches its asymptote. Rows are negative so that wrong-quadrants means one thing here (the curve drawn in quadrants I and III, as when a negative divided by a negative or a negative times a positive loses its sign); it is mapped to sign-lost-testing-point because that is the only sign-handling error on this objective's list, though the likelier conceptual cause, sign-of-a-ignored, belongs to lesson objective 1-2 and is not on this list. continuous-means-has-breaks is a vocabulary reversal that a sketch cannot reveal, so it is not mapped. partial-coverage (one branch only), vertically-displaced and off-target are left unmapped: they have no single dominant cause. Grading is within about one grid square, so |a| of 3, 4 and 6 are used for clear separation; a = -6 puts the points at x = ±1 off the visible grid, which the stem tolerates (the curve is mostly inside). Anchor is ex6-4-6e (xy = -6, give the asymptotes); the first row is that exact function."
+}

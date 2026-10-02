@@ -1,0 +1,52 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m13s3-1-3:twospheres",
+ "kind": "family",
+ "lo_id": "lo:g10m13s3-1-3",
+ "parent_question_id": "q:g10m13s3-1-3:ex13-4-1d",
+ "source_page": 438,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    12,
+    59
+   ],
+   "resample_while": "a % 10 == 0"
+  },
+  {
+   "name": "b",
+   "randint": [
+    12,
+    59
+   ],
+   "resample_while": "b % 10 == 0 or b == a"
+  },
+  {
+   "name": "v",
+   "let": "4 * pi * (a * a + b * b) / 100"
+  },
+  {
+   "name": "t",
+   "let": "v * 10"
+  },
+  {
+   "require": "abs((t - floor(t)) - 0.5) > 0.02",
+   "why": "keeps the exact total away from a 1-decimal-place rounding boundary, so a solver using the calculator value of pi (or 3.14159) cannot round differently from the key"
+  }
+ ],
+ "stem": "One sphere has a radius of ${=fixed(a/10, 1)}$ cm and a second sphere has a radius of ${=fixed(b/10, 1)}$ cm. Find the total surface area of the two spheres, in $\\text{cm}^{2}$, correct to 1 decimal place. Use the value of $\\pi$ on your calculator and round only at the end.",
+ "answer": "fixed(4 * pi * (a * a + b * b) / 100, 1)",
+ "solution": [
+  "The surface area of a sphere is $A=4\\pi r^{2}$. Work out the surface area of each sphere, then add the two areas.",
+  "First sphere: $\\begin{aligned}A_{1}&=4\\pi r^{2}\\\\&=4\\pi({=fixed(a/10, 1)})^{2}\\\\&={=fixed(4*a*a/100, 2)}\\pi\\end{aligned}$",
+  "Second sphere: $\\begin{aligned}A_{2}&=4\\pi r^{2}\\\\&=4\\pi({=fixed(b/10, 1)})^{2}\\\\&={=fixed(4*b*b/100, 2)}\\pi\\end{aligned}$",
+  "Add the two areas, keeping $\\pi$ exact until the end: $\\begin{aligned}A_{1}+A_{2}&=({=fixed(4*a*a/100, 2)}+{=fixed(4*b*b/100, 2)})\\pi\\\\&={=fixed((4*a*a+4*b*b)/100, 2)}\\pi\\\\&\\approx{=fixed(4 * pi * (a * a + b * b) / 100, 1)}\\end{aligned}$",
+  "Therefore the total surface area of the two spheres is approximately ${=fixed(4 * pi * (a * a + b * b) / 100, 1)}\\text{ cm}^{2}$, correct to 1 decimal place."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced gap. Every book question of this objective is a single sphere with a whole-number radius given directly (we10, ex13-4-1d, ex13-4-3, ex13-7-9), so there is no book exercise that is harder in kind. The honest harder form that stays inside the book's own method is: the same formula 4*pi*r^2 applied twice (two spheres, one-decimal radii) and the two areas added, with a single rounding at the end. It uses the 'total surface area ... correct to 1 decimal place' wording of ex13-4-1d, which is why that is the parent. Nothing new is taught: no diameter, no hemisphere, no volume, no reverse (find r from A). Radii run from 1.2 to 5.9 cm with no whole-number radius; the second radius differs from the first. The stem tells the solver to use the calculator pi and round only at the end, because rounding 4*pi*r^2 per sphere before adding can move the last digit. The require clause keeps the exact total at least 0.002 away from a rounding boundary (checked over all 1818 admissible (a, b) pairs: the 1-dp answer is identical for pi = 3.14159, 3.1416 and the full-precision value). The intermediate coefficients (54.76, 23.04, 77.80 ...) are exact two-decimal numbers because they are 4*r^2 with r in tenths. No distractors: the objective has no catalogued misconceptions and this is a numeric family, not an mcq. If a reviewer judges two-sphere totals to be outside 'surface area of a sphere from its radius', the family should be dropped rather than replaced, since a single sphere with a decimal radius would be standard tier, not advanced."
+}

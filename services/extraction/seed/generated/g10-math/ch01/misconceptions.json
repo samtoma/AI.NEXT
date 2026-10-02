@@ -1,0 +1,2080 @@
+{
+  "catalogue": "g10-math-misconceptions",
+  "course_id": "course:us-g10-math-en",
+  "book": "g10-math",
+  "reviewed": false,
+  "generator": "S5 runbook/misconceptions.workflow.js (Sonnet author, Sonnet fail-closed verifier) via assemble_misconceptions.py — runs final-ch01-wf_bf3bd255-7bf.json; pipeline-generated, UNREVIEWED",
+  "misconceptions": [
+    {
+      "id": "mc:g10m1s3-1-1:fraction-judged-by-top",
+      "lo_id": "lo:g10m1s3-1-1",
+      "label": "Checks the top of a fraction instead of its denominator",
+      "description": "The student tests the top of the fraction for the problem, so either misses a zero denominator because the top looks fine, or treats a zero on top as if it were division by zero.",
+      "signal": "A fraction with a zero denominator and a good top, such as $\\dfrac{\\sqrt{8}}{0}$, is answered real; or a fraction with $0$ on top, such as $\\dfrac{0}{\\sqrt{2}}$, is answered undefined or non-real.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Checking the numbers in a fraction is the right habit, but the check has to be on the right part. The book's caution is about the denominator, the number you divide **by**: when the denominator of a fraction is zero, the fraction is undefined."
+        },
+        {
+          "step": 2,
+          "text_md": "Take $\\dfrac{-\\sqrt{7}}{0}$. The top, $-\\sqrt{7}$, is a perfectly good real number, but the denominator is $0$, so the fraction is undefined. A good top does not rescue a zero denominator."
+        },
+        {
+          "step": 3,
+          "text_md": "Now the other way round, $\\dfrac{0}{\\sqrt{2}}$. The $0$ is on top and the denominator is $\\sqrt{2}$, which is not zero. There is no minus sign under the root either, so it is real. A zero on top is not division by zero."
+        },
+        {
+          "step": 4,
+          "text_md": "Next time, read the fraction from the bottom. Is the denominator $0$? Then it is undefined, whatever the top is. If not, check for a minus sign under a root, and if there is none, the number is real."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:g10m1s3-1-1:ex1-1-3b",
+          "choice_text": "undefined"
+        },
+        {
+          "question_id": "q:g10m1s3-1-1:ex1-1-3d",
+          "choice_text": "real"
+        },
+        {
+          "question_id": "q:g10m1s3-1-1:ex1-11-2b",
+          "choice_text": "real"
+        }
+      ],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch01-wf_bf3bd255-7bf.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real and supported by the denominator caution and the canonical solutions for 0/sqrt2 (real), -sqrt7/0 and sqrt8/0 (undefined). The refutation is correct and matches the book. A zero denominator makes the fraction undefined whatever the top is. A zero on top over sqrt2 has no minus under the root and no division by zero, so it is real. It addresses both halves of the error (a good top hiding a zero denominator, and a zero top mistaken for division by zero) and is not a bare restatement of the method. No ids, page numbers or review history appear. Minor caveat: the signal's 'or non-real' tail for 0/sqrt2 is looser than the described error, which would produce 'undefined'.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "b00024"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s3-1-1:ex1-1-3b"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s3-1-1:ex1-1-3d"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s3-1-1:ex11-2b"
+          },
+          {
+            "type": "distractor",
+            "ref": "D6"
+          },
+          {
+            "type": "distractor",
+            "ref": "D14"
+          },
+          {
+            "type": "distractor",
+            "ref": "D2"
+          },
+          {
+            "type": "distractor",
+            "ref": "D3"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "book",
+            "ref": "q:g10m1s3-1-1:ex1-1-3b",
+            "question_id": "q:g10m1s3-1-1:ex1-1-3b",
+            "text": "undefined",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m1s3-1-1:ex1-1-3d",
+            "question_id": "q:g10m1s3-1-1:ex1-1-3d",
+            "text": "real",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m1s3-1-1:ex1-11-2b",
+            "question_id": "q:g10m1s3-1-1:ex1-11-2b",
+            "text": "real",
+            "tagged": null
+          },
+          {
+            "origin": "S6",
+            "ref": "tpl:g10m1s3-1-1:which-undefined#mc:g10m1s3-1-1:fraction-judged-by-top",
+            "question_id": "q:g10m1s3-1-1:g001-which-",
+            "text": "$\\frac{0}{\\sqrt{7}}$",
+            "tagged": "mc:g10m1s3-1-1:fraction-judged-by-top"
+          },
+          {
+            "origin": "S7",
+            "ref": "wt:g10m1s3-1-1:zero-top-vs-zero-bottom#missed-values",
+            "question_id": "q:g10m1s3-1-1:w002",
+            "text": "Part of the answer set was not marked",
+            "tagged": "mc:g10m1s3-1-1:fraction-judged-by-top"
+          },
+          {
+            "origin": "S7",
+            "ref": "wt:g10m1s3-1-1:zero-top-vs-zero-bottom#extra-values",
+            "question_id": "q:g10m1s3-1-1:w002",
+            "text": "Marked values that the answer set does not contain",
+            "tagged": "mc:g10m1s3-1-1:fraction-judged-by-top"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m1s3-1-1:minus-outside-root-read-as-inside",
+      "lo_id": "lo:g10m1s3-1-1",
+      "label": "Reads a minus sign in front of a root as a minus sign under it",
+      "description": "The student sees a minus sign next to a square root, as in $-\\sqrt{15}$, and treats it as the square root of a negative number, so calls it non-real (or undefined).",
+      "signal": "A number like $-\\sqrt{15}$ or $-\\sqrt{3}$, with the minus sign outside the root and a positive number under it, is answered non-real or undefined.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "A minus sign next to a square root looks like trouble, and you are right that a minus sign **under** a square root is a problem. What matters is where the minus sign sits."
+        },
+        {
+          "step": 2,
+          "text_md": "In $-\\sqrt{15}$ the minus sign is outside the root. Under the root is $15$, which is positive. So there is no minus sign under the square root."
+        },
+        {
+          "step": 3,
+          "text_md": "Compare $-\\sqrt{-16}$. It has a negative number under the square root, so it is non-real. $-\\sqrt{15}$ has its minus sign outside the root, with $15$ under it, so it is real."
+        },
+        {
+          "step": 4,
+          "text_md": "Nothing in $-\\sqrt{15}$ is divided by zero either, so it is not undefined. It passes both checks, which makes it real."
+        },
+        {
+          "step": 5,
+          "text_md": "Next time, point at the number under the square root. A minus sign there means non-real, and a zero denominator means undefined. If neither is there, the number is real, even with a minus sign in front of the root."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:g10m1s3-1-1:ex1-1-3a",
+          "choice_text": "non-real"
+        },
+        {
+          "question_id": "q:g10m1s3-1-1:ex1-1-3a",
+          "choice_text": "undefined"
+        },
+        {
+          "question_id": "q:g10m1s3-1-1:ex1-11-2c",
+          "choice_text": "non-real"
+        },
+        {
+          "question_id": "q:g10m1s3-1-1:ex1-11-2c",
+          "choice_text": "undefined"
+        },
+        {
+          "question_id": "q:g10m1s3-1-1:ex1-11-2d",
+          "choice_text": "non-real"
+        },
+        {
+          "question_id": "q:g10m1s3-1-1:ex1-11-2d",
+          "choice_text": "undefined"
+        }
+      ],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch01-wf_bf3bd255-7bf.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real and well evidenced: the book's own solutions for -sqrt3, -sqrt15 and -sqrt7 stress that the minus is outside the root, and the wrong options are non-real and undefined. The refutation is correct and uses only the book's checks: -sqrt15 has positive 15 under the root, so no minus under it; it is not divided by zero, so it is real. It contrasts -sqrt(-16), which is non-real, as the book does. It argues against the specific confusion (where the minus sits) and is not just the method restated. No question ids, page numbers, figures or review history appear in the student-facing text.",
+        "sources": [
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s3-1-1:ex1-1-3a"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s3-1-1:ex11-2c"
+          },
+          {
+            "type": "distractor",
+            "ref": "D0"
+          },
+          {
+            "type": "distractor",
+            "ref": "D1"
+          },
+          {
+            "type": "distractor",
+            "ref": "D16"
+          },
+          {
+            "type": "distractor",
+            "ref": "D17"
+          },
+          {
+            "type": "distractor",
+            "ref": "D18"
+          },
+          {
+            "type": "distractor",
+            "ref": "D19"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "book",
+            "ref": "q:g10m1s3-1-1:ex1-1-3a",
+            "question_id": "q:g10m1s3-1-1:ex1-1-3a",
+            "text": "non-real",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m1s3-1-1:ex1-1-3a",
+            "question_id": "q:g10m1s3-1-1:ex1-1-3a",
+            "text": "undefined",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m1s3-1-1:ex1-11-2c",
+            "question_id": "q:g10m1s3-1-1:ex1-11-2c",
+            "text": "non-real",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m1s3-1-1:ex1-11-2c",
+            "question_id": "q:g10m1s3-1-1:ex1-11-2c",
+            "text": "undefined",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m1s3-1-1:ex1-11-2d",
+            "question_id": "q:g10m1s3-1-1:ex1-11-2d",
+            "text": "non-real",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m1s3-1-1:ex1-11-2d",
+            "question_id": "q:g10m1s3-1-1:ex1-11-2d",
+            "text": "undefined",
+            "tagged": null
+          },
+          {
+            "origin": "S6",
+            "ref": "tpl:g10m1s3-1-1:which-undefined#mc:g10m1s3-1-1:minus-outside-root-read-as-inside",
+            "question_id": "q:g10m1s3-1-1:g001-which-",
+            "text": "$-\\sqrt{17}$",
+            "tagged": "mc:g10m1s3-1-1:minus-outside-root-read-as-inside"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m1s3-1-1:negative-under-root-called-real",
+      "lo_id": "lo:g10m1s3-1-1",
+      "label": "Treats the square root of a negative number as a real number",
+      "description": "The student calls a number such as $\\sqrt{-9}$ real, treating a square root with a minus sign under it like any other square root.",
+      "signal": "$\\sqrt{-9}$, $\\sqrt{-1}$, $-\\sqrt{-5}$ or $-\\sqrt{-16}$ is answered real.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Most of the numbers you have met so far are real, so it feels natural to call $\\sqrt{-9}$ real too. The book warns that not all numbers are real numbers, and this is one of the ones that is not."
+        },
+        {
+          "step": 2,
+          "text_md": "The book looks at the number under the square root first. In $\\sqrt{-9}$ that number is $-9$, so there is a minus sign under the root. A square root with a minus sign under it is non-real."
+        },
+        {
+          "step": 3,
+          "text_md": "A second minus sign in front does not change this. $-\\sqrt{-16}$ still has a negative number under the square root, so it is non-real."
+        },
+        {
+          "step": 4,
+          "text_md": "Compare $-\\sqrt{15}$. Its minus sign is outside the root and $15$ is positive, so that one is real. The difference is only what sits under the root."
+        },
+        {
+          "step": 5,
+          "text_md": "Next time, look under the square root before you answer. A minus sign there means non-real. No minus sign there, and no zero denominator, means real."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:g10m1s3-1-1:ex1-1-3c",
+          "choice_text": "real"
+        },
+        {
+          "question_id": "q:g10m1s3-1-1:ex1-1-3e",
+          "choice_text": "real"
+        },
+        {
+          "question_id": "q:g10m1s3-1-1:ex1-11-2a",
+          "choice_text": "real"
+        },
+        {
+          "question_id": "q:g10m1s3-1-1:ex1-11-2e",
+          "choice_text": "real"
+        }
+      ],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch01-wf_bf3bd255-7bf.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real and supported by the book's caution that not all numbers are real, and by the canonical solutions for sqrt(-9), -sqrt(-16), -sqrt(-5) and sqrt(-1), all non-real. Every step is mathematically right and matches the book: a minus sign under the root means non-real, a second minus outside does not change that, and -sqrt15 is the real contrast case. It counters the 'feels like any other root' intuition and pre-empts the double-minus confusion. The generic mentions of 'the book' are tied to the caution and are not an item reference. No ids, page numbers or review history appear.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "b00012"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s3-1-1:ex1-1-3c"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s3-1-1:ex1-1-3e"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s3-1-1:ex1-1-7c"
+          },
+          {
+            "type": "distractor",
+            "ref": "D4"
+          },
+          {
+            "type": "distractor",
+            "ref": "D8"
+          },
+          {
+            "type": "distractor",
+            "ref": "D12"
+          },
+          {
+            "type": "distractor",
+            "ref": "D20"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "book",
+            "ref": "q:g10m1s3-1-1:ex1-1-3c",
+            "question_id": "q:g10m1s3-1-1:ex1-1-3c",
+            "text": "real",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m1s3-1-1:ex1-1-3e",
+            "question_id": "q:g10m1s3-1-1:ex1-1-3e",
+            "text": "real",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m1s3-1-1:ex1-11-2a",
+            "question_id": "q:g10m1s3-1-1:ex1-11-2a",
+            "text": "real",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m1s3-1-1:ex1-11-2e",
+            "question_id": "q:g10m1s3-1-1:ex1-11-2e",
+            "text": "real",
+            "tagged": null
+          },
+          {
+            "origin": "S7",
+            "ref": "wt:g10m1s3-1-1:minus-root-real#extra-values",
+            "question_id": "q:g10m1s3-1-1:w001",
+            "text": "Marked values that the answer set does not contain",
+            "tagged": "mc:g10m1s3-1-1:negative-under-root-called-real"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m1s3-1-1:non-real-undefined-swapped",
+      "lo_id": "lo:g10m1s3-1-1",
+      "label": "Swaps the labels non-real and undefined",
+      "description": "The student sees that the number is a special case but treats non-real and undefined as one idea, so calls the square root of a negative number undefined, or a fraction with a zero denominator non-real.",
+      "signal": "A square root of a negative number, such as $\\sqrt{-9}$, is answered undefined, or a fraction with $0$ underneath, such as $\\dfrac{\\sqrt{8}}{0}$, is answered non-real.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You have spotted that something is wrong with the number, and that is the right instinct. The two labels are easy to mix up, but the book keeps them apart and gives each its own cause."
+        },
+        {
+          "step": 2,
+          "text_md": "A minus sign under a square root makes a number **non-real**. For example, $-\\sqrt{-16}$ has a negative number under the square root, so it is non-real."
+        },
+        {
+          "step": 3,
+          "text_md": "Division by zero makes a fraction **undefined**. For example, $\\dfrac{-\\sqrt{7}}{0}$ has $0$ underneath, so it is undefined, whatever is on the top."
+        },
+        {
+          "step": 4,
+          "text_md": "So the label follows the cause. Swap the labels and both of those answers come out wrong."
+        },
+        {
+          "step": 5,
+          "text_md": "Next time, ask what has gone wrong. A minus sign under a root gives non-real, and a zero denominator gives undefined."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:g10m1s3-1-1:ex1-1-3c",
+          "choice_text": "undefined"
+        },
+        {
+          "question_id": "q:g10m1s3-1-1:ex1-1-3d",
+          "choice_text": "non-real"
+        },
+        {
+          "question_id": "q:g10m1s3-1-1:ex1-1-3e",
+          "choice_text": "undefined"
+        },
+        {
+          "question_id": "q:g10m1s3-1-1:ex1-11-2a",
+          "choice_text": "undefined"
+        },
+        {
+          "question_id": "q:g10m1s3-1-1:ex1-11-2b",
+          "choice_text": "non-real"
+        },
+        {
+          "question_id": "q:g10m1s3-1-1:ex1-11-2e",
+          "choice_text": "undefined"
+        }
+      ],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch01-wf_bf3bd255-7bf.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real and supported by both cautions and by the canonical solutions for sqrt(-9), -sqrt(-16), -sqrt7/0 and sqrt8/0. The refutation is correct and matches the book: a minus under a root gives non-real (-sqrt(-16)), a zero denominator gives undefined (-sqrt7/0 whatever the top), so the label follows the cause. It targets the label mix-up directly and is not just the method restated. No ids, page numbers, figures or review history appear.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "b00012"
+          },
+          {
+            "type": "caution",
+            "ref": "b00024"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s3-1-1:ex1-1-3c"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s3-1-1:ex1-1-3d"
+          },
+          {
+            "type": "distractor",
+            "ref": "D5"
+          },
+          {
+            "type": "distractor",
+            "ref": "D9"
+          },
+          {
+            "type": "distractor",
+            "ref": "D13"
+          },
+          {
+            "type": "distractor",
+            "ref": "D21"
+          },
+          {
+            "type": "distractor",
+            "ref": "D7"
+          },
+          {
+            "type": "distractor",
+            "ref": "D15"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "book",
+            "ref": "q:g10m1s3-1-1:ex1-1-3c",
+            "question_id": "q:g10m1s3-1-1:ex1-1-3c",
+            "text": "undefined",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m1s3-1-1:ex1-1-3d",
+            "question_id": "q:g10m1s3-1-1:ex1-1-3d",
+            "text": "non-real",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m1s3-1-1:ex1-1-3e",
+            "question_id": "q:g10m1s3-1-1:ex1-1-3e",
+            "text": "undefined",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m1s3-1-1:ex1-11-2a",
+            "question_id": "q:g10m1s3-1-1:ex1-11-2a",
+            "text": "undefined",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m1s3-1-1:ex1-11-2b",
+            "question_id": "q:g10m1s3-1-1:ex1-11-2b",
+            "text": "non-real",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m1s3-1-1:ex1-11-2e",
+            "question_id": "q:g10m1s3-1-1:ex1-11-2e",
+            "text": "undefined",
+            "tagged": null
+          },
+          {
+            "origin": "S6",
+            "ref": "tpl:g10m1s3-1-1:which-undefined#mc:g10m1s3-1-1:non-real-undefined-swapped",
+            "question_id": "q:g10m1s3-1-1:g001-which-",
+            "text": "$\\sqrt{-10}$",
+            "tagged": "mc:g10m1s3-1-1:non-real-undefined-swapped"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m1s3-1-2:fraction-bar-means-rational",
+      "lo_id": "lo:g10m1s3-1-2",
+      "label": "Any fraction is rational",
+      "description": "The student sees one number over another and calls it rational without checking what is above and below the bar, so a fraction with an irrational number in it is wrongly called rational.",
+      "signal": "calls $\\frac{1}{c}$, $\\frac{a}{c}$ or $\\frac{\\sqrt{2}}{14}$ rational 'because it is a fraction'",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You saw one number over another and took the fraction bar as the sign of a rational number. That is half of the book's rule: a fraction of integers is rational, and the words 'of integers' are the part that counts."
+        },
+        {
+          "step": 2,
+          "text_md": "Look at what sits above and below the bar. In $\\frac{1}{c}$ the bottom, $c$, is irrational, so this is not a fraction of integers. The book's answer is that an integer divided by an irrational number is irrational, so $\\frac{1}{c}$ and $\\frac{a}{c}$ are irrational. The one exception the book notes is $a=0$, because then $\\frac{a}{c}$ is just 0, which is rational."
+        },
+        {
+          "step": 3,
+          "text_md": "An irrational number on top is not hidden by the bar either. $\\frac{\\sqrt{2}}{14}$ has the integer 14 underneath, but $\\sqrt{2}$ is irrational and dividing it by 14 does not turn it into a fraction of integers, so the book calls it irrational."
+        },
+        {
+          "step": 4,
+          "text_md": "Compare $\\frac{1}{14}$ and $\\frac{-10}{14}$. These have integers above and below, so they are rational. Same fraction bar, different answer, because of what is inside it."
+        },
+        {
+          "step": 5,
+          "text_md": "So look at the top and the bottom before you decide. Integers on both: rational. An integer divided by an irrational number, or $\\sqrt{2}$ over 14: irrational."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:g10m1s3-1-2:ex1-1-5d",
+          "choice_text": "rational"
+        },
+        {
+          "question_id": "q:g10m1s3-1-2:ex1-1-6c",
+          "choice_text": "rational"
+        },
+        {
+          "question_id": "q:g10m1s3-1-2:ex1-11-4c",
+          "choice_text": "rational"
+        },
+        {
+          "question_id": "q:g10m1s3-1-2:ex1-11-4d",
+          "choice_text": "rational"
+        }
+      ],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch01-wf_bf3bd255-7bf.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Real error, shown by the book's irrational answers for 1/c, a/c and sqrt(2)/14. The refutation matches the canonical solutions. An integer divided by an irrational number is irrational, with the a=0 exception the book notes. sqrt(2)/14 is irrational. 1/14 and -10/14 are rational because both parts are integers. It puts the weight on 'of integers', which argues against the error and does not just restate the method. It names no question id, page, figure or review history. The variables a and c are explained in the text (c irrational, 'an integer divided by...'), so the steps stand alone. Minor looseness over a=0 for a/c, but the book itself notes it.",
+        "sources": [
+          {
+            "type": "distractor",
+            "ref": "D9"
+          },
+          {
+            "type": "distractor",
+            "ref": "D12"
+          },
+          {
+            "type": "distractor",
+            "ref": "D20"
+          },
+          {
+            "type": "distractor",
+            "ref": "D21"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s3-1-2:ex1-11-4c"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s3-1-2:ex1-11-4d"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s3-1-2:ex1-1-5d"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s3-1-2:ex1-1-6c"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "book",
+            "ref": "q:g10m1s3-1-2:ex1-1-5d",
+            "question_id": "q:g10m1s3-1-2:ex1-1-5d",
+            "text": "rational",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m1s3-1-2:ex1-1-6c",
+            "question_id": "q:g10m1s3-1-2:ex1-1-6c",
+            "text": "rational",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m1s3-1-2:ex1-11-4c",
+            "question_id": "q:g10m1s3-1-2:ex1-11-4c",
+            "text": "rational",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m1s3-1-2:ex1-11-4d",
+            "question_id": "q:g10m1s3-1-2:ex1-11-4d",
+            "text": "rational",
+            "tagged": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m1s3-1-2:rational-must-come-out-neat",
+      "lo_id": "lo:g10m1s3-1-2",
+      "label": "Rational only if it comes out neat",
+      "description": "The student calls a fraction of integers, or a decimal whose digits repeat, irrational because it does not work out to a whole number or a decimal that stops.",
+      "signal": "calls a fraction of two integers, such as $\\frac{5}{6}$, or a decimal with a dot or bar over its repeating digits, such as $1.\\dot{1}$, irrational",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You were checking whether the number works out to a whole number, or to a decimal that stops, and you called it irrational when it did not. A decimal that stops is rational, so you are part-way there, but rational numbers include more than that."
+        },
+        {
+          "step": 2,
+          "text_md": "The book's test is whether the number can be written as a fraction $\\frac{a}{b}$ where $a$ and $b$ are integers. $\\frac{5}{6}$, $-\\frac{1}{3}$ and $\\frac{-10}{14}$ already are fractions of integers, so the book calls each one rational even though none of them is a whole number."
+        },
+        {
+          "step": 3,
+          "text_md": "Decimals work the same way. A decimal that goes on forever is rational when its digits repeat in a pattern, marked with a dot or a bar. In $1.\\dot{1}$ the dot over the 1 says that the 1 repeats, so the book calls it rational."
+        },
+        {
+          "step": 4,
+          "text_md": "A number is irrational only when its decimal neither stops nor repeats, so that it cannot be simplified to a fraction of integers. Going on forever is not enough."
+        },
+        {
+          "step": 5,
+          "text_md": "Next time ask: is it a fraction of two integers, or does its decimal stop or repeat in a pattern? If so, it is rational, whether or not it comes out neat."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:g10m1s3-1-2:ex1-1-4a",
+          "choice_text": "irrational"
+        },
+        {
+          "question_id": "q:g10m1s3-1-2:ex1-1-5a",
+          "choice_text": "irrational"
+        },
+        {
+          "question_id": "q:g10m1s3-1-2:ex1-1-5b",
+          "choice_text": "irrational"
+        },
+        {
+          "question_id": "q:g10m1s3-1-2:ex1-1-6a",
+          "choice_text": "irrational"
+        },
+        {
+          "question_id": "q:g10m1s3-1-2:ex1-1-6b",
+          "choice_text": "irrational"
+        },
+        {
+          "question_id": "q:g10m1s3-1-2:ex1-11-4a",
+          "choice_text": "irrational"
+        },
+        {
+          "question_id": "q:g10m1s3-1-2:ex1-11-10b",
+          "choice_text": "irrational"
+        }
+      ],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch01-wf_bf3bd255-7bf.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Real error, since a student can reject 5/6 or 1.(dot)1 for not being whole or terminating. Each refutation claim agrees with the canonical solutions: -1/3, 5/6 and -10/14 are fractions of integers and so rational; a dot over the 1 makes 1.(dot)1 repeat and so rational; irrational means the decimal neither stops nor repeats and cannot be simplified to a fraction of integers. It argues against the error, uses only book ideas, and names no question id, page, figure or review history. The 'dot or bar' wording never says it is the only way to show repetition, so it does not clash with the unmarked 1.7373... example.",
+        "sources": [
+          {
+            "type": "distractor",
+            "ref": "D0"
+          },
+          {
+            "type": "distractor",
+            "ref": "D7"
+          },
+          {
+            "type": "distractor",
+            "ref": "D8"
+          },
+          {
+            "type": "distractor",
+            "ref": "D10"
+          },
+          {
+            "type": "distractor",
+            "ref": "D11"
+          },
+          {
+            "type": "distractor",
+            "ref": "D18"
+          },
+          {
+            "type": "distractor",
+            "ref": "D23"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s3-1-2:ex1-1-4a"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s3-1-2:ex1-11-10b"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "expl:g10m1s3-1-2:we01"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "book",
+            "ref": "q:g10m1s3-1-2:ex1-1-4a",
+            "question_id": "q:g10m1s3-1-2:ex1-1-4a",
+            "text": "irrational",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m1s3-1-2:ex1-1-5a",
+            "question_id": "q:g10m1s3-1-2:ex1-1-5a",
+            "text": "irrational",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m1s3-1-2:ex1-1-5b",
+            "question_id": "q:g10m1s3-1-2:ex1-1-5b",
+            "text": "irrational",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m1s3-1-2:ex1-1-6a",
+            "question_id": "q:g10m1s3-1-2:ex1-1-6a",
+            "text": "irrational",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m1s3-1-2:ex1-1-6b",
+            "question_id": "q:g10m1s3-1-2:ex1-1-6b",
+            "text": "irrational",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m1s3-1-2:ex1-11-4a",
+            "question_id": "q:g10m1s3-1-2:ex1-11-4a",
+            "text": "irrational",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m1s3-1-2:ex1-11-10b",
+            "question_id": "q:g10m1s3-1-2:ex1-11-10b",
+            "text": "irrational",
+            "tagged": null
+          },
+          {
+            "origin": "S6",
+            "ref": "tpl:g10m1s3-1-2:which-irrational#mc:g10m1s3-1-2:rational-must-come-out-neat",
+            "question_id": "q:g10m1s3-1-2:g001-which-",
+            "text": "$-\\frac{2}{3}$",
+            "tagged": "mc:g10m1s3-1-2:rational-must-come-out-neat"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m1s3-1-2:root-sign-means-irrational",
+      "lo_id": "lo:g10m1s3-1-2",
+      "label": "Root sign means irrational",
+      "description": "The student sees a root sign and calls the number irrational without first working out whether the root comes out as an integer.",
+      "signal": "says a number such as $\\sqrt{9}$ or $\\sqrt[3]{8}$ is irrational 'because it is a root'",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You saw a root sign and took it as the mark of an irrational number. Some roots are irrational, so the instinct is a fair one, but the root sign alone does not decide it."
+        },
+        {
+          "step": 2,
+          "text_md": "Work the root out first. $\\sqrt{9}=3$ and $\\sqrt[3]{8}=2$. Both come out as integers, and every integer is rational, so both numbers are rational: each can be simplified to an integer."
+        },
+        {
+          "step": 3,
+          "text_md": "Compare $\\sqrt[3]{4}$. It has a root sign too, but it cannot be simplified to a fraction of integers, so it is irrational. Same sign, different result: the working out decides, not the sign."
+        },
+        {
+          "step": 4,
+          "text_md": "Whenever you meet a root, simplify it first. If it becomes an integer, or a fraction of integers, it is rational. If it cannot be simplified to a fraction of integers, it is irrational."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:g10m1s3-1-2:ex1-11-3c",
+          "choice_text": "Irrational"
+        },
+        {
+          "question_id": "q:g10m1s3-1-2:ex1-11-3d",
+          "choice_text": "Irrational"
+        }
+      ],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch01-wf_bf3bd255-7bf.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Real error, shown by the book's own wrong options on sqrt(9) and cube-root(8). Every step matches the canonical solutions: sqrt(9)=3 and cube-root(8)=2 are rational because they simplify to integers, and cube-root(4) is irrational because it cannot be simplified to a fraction of integers. The refutation argues against 'root sign means irrational' and does not just restate the method. It names no question id, page, figure or review history, and it teaches nothing beyond the book's fraction-of-integers test.",
+        "sources": [
+          {
+            "type": "distractor",
+            "ref": "D16"
+          },
+          {
+            "type": "distractor",
+            "ref": "D17"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s3-1-2:ex1-11-3c"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s3-1-2:ex1-11-3d"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s3-1-2:ex1-11-3a"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "book",
+            "ref": "q:g10m1s3-1-2:ex1-11-3c",
+            "question_id": "q:g10m1s3-1-2:ex1-11-3c",
+            "text": "Irrational",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m1s3-1-2:ex1-11-3d",
+            "question_id": "q:g10m1s3-1-2:ex1-11-3d",
+            "text": "Irrational",
+            "tagged": null
+          },
+          {
+            "origin": "S6",
+            "ref": "tpl:g10m1s3-1-2:which-irrational#mc:g10m1s3-1-2:root-sign-means-irrational",
+            "question_id": "q:g10m1s3-1-2:g001-which-",
+            "text": "$\\sqrt{144}+\\frac{6}{7}$",
+            "tagged": "mc:g10m1s3-1-2:root-sign-means-irrational"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m1s3-1-5:recurring-read-as-stopping",
+      "lo_id": "lo:g10m1s3-1-5",
+      "label": "Reading a recurring decimal as if it stopped",
+      "description": "The student reads the digits off by place value as though the decimal ended, for example writing $0.\\dot{4}$ as $\\frac{4}{10}$, instead of defining an equation, multiplying and subtracting.",
+      "signal": "The answer's denominator is a power of 10, such as $\\frac{4}{10}$ or $\\frac{78}{100}$, for a decimal whose digits repeat forever.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You read $0.\\dot{4}$ the way you would read a decimal that stops: four tenths, so $\\frac{4}{10}$. Reading place values is a good habit and it works when a decimal ends. The catch here is that this decimal never ends."
+        },
+        {
+          "step": 2,
+          "text_md": "Test it with the book's equation. Let $x=0.4444...$, so $10x=4.4444...$. If $x$ were $\\frac{4}{10}$, then $10x$ would be exactly $4$, not $4.4444...$. So $\\frac{4}{10}$ is too small: it keeps the first $4$ and throws away all the $4$s that come after it."
+        },
+        {
+          "step": 3,
+          "text_md": "Those endless $4$s are why a recurring decimal needs a bit more work. You cannot capture them by reading place values, but you can make them cancel. Subtract the first equation from the second: $10x-x=4.4444...-0.4444...$, and the tail disappears, leaving $9x=4$. So $x=\\frac{4}{9}$."
+        },
+        {
+          "step": 4,
+          "text_md": "Next time you see a repeating dot or bar, do not read the digits off. Write $x$ equal to the decimal, multiply by a power of 10 that lines the repeating digits up, subtract so the endless tail cancels, then solve for $x$ and simplify."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch01-wf_bf3bd255-7bf.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real and tied to this objective. The book's caution says a recurring decimal needs a bit more work than a stopping one, and the canonical solution for 0.4444... shows that work (define x, multiply by 10, subtract, 9x=4, x=4/9). The refutation is mathematically correct and uses the same steps and final answer as that canonical solution. It argues against this error, not just the method: if x were 4/10 then 10x would be exactly 4, not 4.4444..., so 4/10 drops the endless 4s. The method recap in step 4 matches the objective's own description (power of 10 matching the recurring digits, subtract, simplify). It teaches nothing beyond the book's equation. Nothing in the label, description, signal or steps names a question id, page, figure or review history. 'The book's equation' is a generic pointer to the method, not a reference the student cannot see.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "b00042"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s3-1-5:ex1-1-12c"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:g10m1s4-1-2:round-to-nearest-when-whole-needed",
+      "lo_id": "lo:g10m1s4-1-2",
+      "label": "Rounding to the nearest whole number when the answer has to be rounded up",
+      "description": "In a counting problem (how many people are needed), the student divides to get $10.3333...$ and rounds to the nearest whole number, 10, instead of rounding up.",
+      "signal": "An answer of 10 people to carry 31 boxes when each person carries 3 boxes.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "The division $\\frac{31}{3}=10.3333...$ is right, and rounding $10.3333...$ to the nearest whole number does give 10. You have used the usual rounding rule correctly. The difficulty is that this question is not asking for the nearest whole number, it is asking how many people are needed."
+        },
+        {
+          "step": 2,
+          "text_md": "Check 10 people against the question. Each person carries 3 boxes, so 10 people carry $10\\times 3=30$ boxes. There are 31 boxes, so one box is left with nobody to carry it. Ten people is not enough."
+        },
+        {
+          "step": 3,
+          "text_md": "The $0.3333...$ in $10.3333...$ is that left-over box: it stands for part of another person's load. We cannot have $0.333$ of a person, so that part still needs a whole person."
+        },
+        {
+          "step": 4,
+          "text_md": "After you divide, ask what the decimal part stands for. Here a part of a person cannot do the work, so we round up to the next whole number, which gives 11 people."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch01-wf_bf3bd255-7bf.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real and matches the canonical solution to the boxes question. 31/3 = 10.3333..., the nearest whole number is 10, and the book's answer is 11 because 0.333 of a person cannot be had, so we round up. The refutation is correct: 10 x 3 = 30 leaves one box uncarried, and the 0.3333 stands for that leftover box. Its closing advice (ask what the decimal part stands for, then round up to 11) is the book's reasoning, not a new method. It argues against the nearest-whole-number error rather than restating the method. It cites no question id, page, figure or review history. The signal (an answer of 10 people for 31 boxes at 3 per person) matches exactly what a student making this error would give, and a correct student would give 11.",
+        "sources": [
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s4-1-2:ex1-2-5"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:g10m1s5-1-1:cubes-for-squares",
+      "lo_id": "lo:g10m1s5-1-1",
+      "label": "Uses perfect cubes to locate a square root",
+      "description": "The student finds the two perfect cubes either side of the number under a square root and takes their roots as the two integers, instead of using perfect squares.",
+      "signal": "A square root placed between the integers whose cubes surround the number under it, for example $\\sqrt{30}$ placed between 3 and 4 because $27<30<64$.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You used perfect cubes to place a square root: for $\\sqrt{30}$, the number 30 sits between $3^3=27$ and $4^3=64$, so you said it lies between 3 and 4. Bracketing the number between perfect powers is the right idea. The slip is that perfect cubes belong to cube roots, not square roots."
+        },
+        {
+          "step": 2,
+          "text_md": "$\\sqrt{30}$ is a square root, so it needs perfect squares. Check your answer by squaring every term. If $\\sqrt{30}$ were between 3 and 4, then 30 would have to lie between $3^2=9$ and $4^2=16$. It is bigger than both, so 3 and 4 cannot be right."
+        },
+        {
+          "step": 3,
+          "text_md": "Use the perfect squares instead: $5^2=25$ and $6^2=36$. Since $25<30<36$, we get $5<\\sqrt{30}<6$."
+        },
+        {
+          "step": 4,
+          "text_md": "Before you start, check which root you have. A square root such as $\\sqrt{30}$ uses perfect squares. A cube root such as $\\sqrt[3]{30}$ uses perfect cubes. Pick that list first, then find the two perfect squares either side of the number under the root."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch01-wf_bf3bd255-7bf.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Real conflation, symmetric with the squares-for-cubes entry, and plausible because the book's exercises mix square roots and cube roots. The refutation is correct: 27<30<64 is the student's slip; squaring 3 and 4 gives 9 and 16, and 30 exceeds both, so 3 and 4 is wrong; 25<30<36 gives 5<root of 30<6, which matches the book's answers for the square root of 30 and of 26. The squaring check is the direct analogue of the book's cubing check and is mathematically sound. Step 2 argues against this error, and step 4 adds a root-type check. No ids, pages, figures or review history appear.",
+        "sources": [
+          {
+            "type": "distractor",
+            "ref": "D2"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s5-1-1:we05"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s5-1-1:ex1-11-20d"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "S6",
+            "ref": "tpl:g10m1s5-1-1:which-between#mc:g10m1s5-1-1:cubes-for-squares",
+            "question_id": "q:g10m1s5-1-1:g001-which-",
+            "text": "$\\sqrt{30}$",
+            "tagged": "mc:g10m1s5-1-1:cubes-for-squares"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m1s5-1-1:root-as-half",
+      "lo_id": "lo:g10m1s5-1-1",
+      "label": "Treats a square root as half the number",
+      "description": "The student takes the square root of a number to be about half of that number, so places the root next to half the number under it instead of finding the perfect squares either side.",
+      "signal": "A square root placed between the integers either side of half the number under it, for example $\\sqrt{29}$ placed between 14 and 15 because half of 29 is 14.5.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You are treating the square root of a number as about half of it, so $\\sqrt{29}$ looks like it should be near 14.5. You are right that the root is smaller than 29, but halving is not how a square root is found."
+        },
+        {
+          "step": 2,
+          "text_md": "Test the idea on a perfect square. $6^2=36$, so the square root of 36 is 6. Halving 36 gives 18, not 6, so halving does not give a square root."
+        },
+        {
+          "step": 3,
+          "text_md": "The same thing goes wrong with $\\sqrt{29}$. Even $6^2=36$ is already bigger than 29, so $\\sqrt{29}$ is less than 6, nowhere near 14.5."
+        },
+        {
+          "step": 4,
+          "text_md": "The book's method uses perfect squares instead. $5^2=25$ and $6^2=36$, and $25<29<36$, so $5<\\sqrt{29}<6$. For any square root, find the two perfect squares either side of the number under the root. Their roots are your two consecutive integers."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch01-wf_bf3bd255-7bf.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Treating a square root as half the number is a well-documented misconception, and it would defeat this objective. The refutation is mathematically sound: 6^2=36 so the root of 36 is 6, not 18; 6^2=36>29 so the root of 29 is below 6; 25<29<36 gives 5<root of 29<6, which matches the book's answer (5 and 6). It attacks halving specifically and does not merely restate the method. It teaches nothing beyond the book, since a counterexample on a perfect square is not new content. No ids, pages, figures or review history appear.",
+        "sources": [
+          {
+            "type": "distractor",
+            "ref": "D1"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s5-1-1:ex1-3-1b"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "S6",
+            "ref": "tpl:g10m1s5-1-1:which-between#mc:g10m1s5-1-1:root-as-half",
+            "question_id": "q:g10m1s5-1-1:g001-which-",
+            "text": "$\\sqrt{7}$",
+            "tagged": "mc:g10m1s5-1-1:root-as-half"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m1s5-1-1:squares-for-cubes",
+      "lo_id": "lo:g10m1s5-1-1",
+      "label": "Uses perfect squares to locate a cube root",
+      "description": "The student finds the two perfect squares either side of the number under a cube root and takes their roots as the two integers, instead of using perfect cubes.",
+      "signal": "A cube root placed between the integers whose squares surround the number under it, for example $\\sqrt[3]{30}$ placed between 5 and 6 because $25<30<36$.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You used perfect squares to place a cube root: for $\\sqrt[3]{30}$, the number 30 sits between $5^2=25$ and $6^2=36$, so you said it lies between 5 and 6. Looking for the perfect squares or cubes on either side of the number is the right idea. The slip is that perfect squares belong to square roots, not cube roots."
+        },
+        {
+          "step": 2,
+          "text_md": "Check your answer by cubing every term, the way the book checks a cube root. If $\\sqrt[3]{30}$ were between 5 and 6, then 30 would have to be at least $5^3=125$. It is not, so 5 and 6 cannot be right."
+        },
+        {
+          "step": 3,
+          "text_md": "A cube root needs perfect cubes. Here they are $3^3=27$ and $4^3=64$. Since $27<30<64$, we get $3<\\sqrt[3]{30}<4$."
+        },
+        {
+          "step": 4,
+          "text_md": "Before you start, check which root you have. A square root such as $\\sqrt{30}$ uses perfect squares. A cube root such as $\\sqrt[3]{30}$ uses perfect cubes. Pick that list first, then find the two perfect cubes either side of the number under the root."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch01-wf_bf3bd255-7bf.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Real conflation, since the objective is about choosing perfect squares versus perfect cubes. All arithmetic checks out: 25<30<36 is the student's slip; 5^3=125 shows 5 to 6 cannot hold for the cube root of 30; 27<30<64 gives 3<cube root of 30<4. This matches the book's answer for the cube root of 30 (3 and 4) and the book's cubing-all-terms check in the cube-root worked example. Step 2 argues against this specific error, and the closing step is a rule for choosing the right list, not just a restated method. No question ids, pages, figures or review history appear; 'the book' is generic and accurate.",
+        "sources": [
+          {
+            "type": "distractor",
+            "ref": "D0"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s5-1-1:we06"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s5-1-1:ex1-11-20h"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "S6",
+            "ref": "tpl:g10m1s5-1-1:which-between#mc:g10m1s5-1-1:squares-for-cubes",
+            "question_id": "q:g10m1s5-1-1:g001-which-",
+            "text": "$\\sqrt[3]{13}$",
+            "tagged": "mc:g10m1s5-1-1:squares-for-cubes"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m1s5-1-3:negative-surds-ranked-by-size-ignoring-sign",
+      "lo_id": "lo:g10m1s5-1-3",
+      "label": "Ranking negative surds by the size of the number, ignoring the minus sign",
+      "description": "The student compares $-\\sqrt{8}$ with $-\\sqrt{\\frac{9}{4}}$ by noticing that $8$ is bigger than $\\frac{9}{4}$, and so puts $-\\sqrt{8}$ after $-\\sqrt{\\frac{9}{4}}$, as if the minus signs were not there.",
+      "signal": "$-\\sqrt{\\frac{9}{4}}$ listed before $-\\sqrt{8}$, so the negative numbers appear in the order they would have without their minus signs.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You used the root rule correctly: $8$ is bigger than $\\frac{9}{4}$, so $\\sqrt{8}$ is bigger than $\\sqrt{\\frac{9}{4}}$. The trouble is that the minus signs were left out of the comparison, and a minus sign changes which number is smaller."
+        },
+        {
+          "step": 2,
+          "text_md": "Keep the minus signs when you estimate. $-\\sqrt{\\frac{9}{4}} = -\\frac{3}{2} = -1.5$, and $-\\sqrt{8}$ lies between $-2$ and $-3$."
+        },
+        {
+          "step": 3,
+          "text_md": "Ascending order means smallest to largest, which is left to right on a number line. $-3$ is to the left of $-2$, and $-2$ is to the left of $-1.5$. So $-\\sqrt{8}$ is further left than $-1.5$, which makes it the smaller number, and it comes first."
+        },
+        {
+          "step": 4,
+          "text_md": "For negative numbers, estimate each one between two whole numbers with its minus sign kept, such as $-2$ and $-3$. Then place them left to right on a number line. The one further below zero is the smallest and goes first."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch01-wf_bf3bd255-7bf.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real and sits in the canonical solution: -\\sqrt{8} and -\\sqrt{9/4} = -1.5, with the book's final order -\\sqrt{8}, -\\sqrt{9/4}. Description and signal agree: ignoring the signs gives -\\sqrt{9/4} first, which is wrong. The refutation is correct and uses the book's own estimates (-1.5, and -\\sqrt{8} between -2 and -3). It correctly concludes that -\\sqrt{8} is further left and therefore first. It builds on the book's remark that negatives are smaller than positives, and names no ids or review history.",
+        "sources": [
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s5-1-3:ex1-3-3"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:g10m1s5-1-3:repeating-decimal-same-as-terminating",
+      "lo_id": "lo:g10m1s5-1-3",
+      "label": "Treating $0.45$ and $0.\\overline{45}$ as the same size",
+      "description": "The student reads both decimals as 'nought point four five', so they tie them or list $0.\\overline{45}$ before $0.45$, without noticing that the bar means the 45 repeats.",
+      "signal": "$0.\\overline{45}$ listed before $0.45$, or the two decimals treated as equal in the final ranking.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You have the digits right: both decimals start with 4 then 5. The part that is easy to miss is the bar over the 45 in $0.\\overline{45}$. It says the 45 repeats and never stops, so the number is $0.454545\\ldots$, not $0.45$."
+        },
+        {
+          "step": 2,
+          "text_md": "Compare them digit by digit, writing the shorter one with zeros after it: $0.450000\\ldots$ and $0.454545\\ldots$."
+        },
+        {
+          "step": 3,
+          "text_md": "The first two decimal places match (4 and 5). At the third decimal place one has $0$ and the other has $4$. So $0.\\overline{45}$ is the bigger number, and $0.45 < 0.\\overline{45}$."
+        },
+        {
+          "step": 4,
+          "text_md": "Next time two decimals in a list start with the same digits, do not stop at the digits you can see. Keep comparing place by place until they differ. Here that puts $0.45$ first and $0.\\overline{45}$ straight after it."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch01-wf_bf3bd255-7bf.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The canonical solution explicitly flags 0.45 < 0,\\overline{45} and ranks 0.45 immediately before 0,\\overline{45}. The refutation is correct: 0.450000... versus 0.454545..., first difference at the third decimal place (0 versus 4). It targets the misreading of the bar and gives the same final order as the book. It names no question id, page or review history. The place-by-place comparison is elementary and does not change the book's method. Minor cosmetic point: the book writes 0,\\overline{45} with a comma, and the refutation writes 0.\\overline{45}.",
+        "sources": [
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s5-1-3:ex1-3-3"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:g10m1s5-1-3:whole-number-compared-with-radicand",
+      "lo_id": "lo:g10m1s5-1-3",
+      "label": "Comparing a whole number with the number under the root sign",
+      "description": "The student compares a whole number with the number under the root sign instead of with the root itself, so they judge $6$ to be smaller than $\\sqrt{19}$ because $6<19$, and they list the whole number first.",
+      "signal": "A whole number is listed before a surd that is actually smaller than it, for example $6$ placed before $\\sqrt{19}$.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You compared $6$ with the $19$ under the root sign, and since $6<19$ you put $6$ first. Comparing two whole numbers is a sound move, but the number in the list is $\\sqrt{19}$, not $19$, so the $19$ is not the number to compare with $6$."
+        },
+        {
+          "step": 2,
+          "text_md": "Instead, find the two whole numbers the surd lies between. A smaller positive whole number has a smaller square root, and $16<19<25$ with $\\sqrt{16}=4$ and $\\sqrt{25}=5$, so $\\sqrt{19}$ lies between $4$ and $5$."
+        },
+        {
+          "step": 3,
+          "text_md": "Now compare $6$ with those two numbers. $6$ is bigger than $5$, so $6$ is bigger than $\\sqrt{19}$. The surd comes first, the opposite of what comparing with $19$ gave."
+        },
+        {
+          "step": 4,
+          "text_md": "This habit can look reliable because it sometimes works: $6<51$, and $6$ really is smaller than $\\sqrt{51}$, which lies between $7$ and $8$. It lets you down with $6$ and $\\sqrt{19}$: $6$ is smaller than $19$, yet $6$ is bigger than $\\sqrt{19}$."
+        },
+        {
+          "step": 5,
+          "text_md": "When a whole number meets a surd, do not compare it with the number under the root sign. Place the surd between two whole numbers and compare the whole number with those. Here that gives $\\sqrt{19}<6<\\sqrt{51}$."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch01-wf_bf3bd255-7bf.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real. In the canonical solution, 6 is compared with \\sqrt{19} (between 4 and 5) and with \\sqrt{51} (between 7 and 8), and the book's order is \\sqrt{19}, 6, ..., \\sqrt{51}. Every step of the refutation checks out: 16<19<25 gives \\sqrt{19} between 4 and 5, so 6 > \\sqrt{19}. The 'sometimes works' example 6 < \\sqrt{51} is true. The closing order \\sqrt{19} < 6 < \\sqrt{51} matches the book. It argues against the specific habit of comparing with the radicand and uses the LO's own rule. It names no ids or review history. The signal (a whole number placed before a smaller surd) is acceptable.",
+        "sources": [
+          {
+            "type": "distractor",
+            "ref": "D1"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s5-1-3:ex1-3-3"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:g10m1s6-1-2:x-term-from-k-alone",
+      "lo_id": "lo:g10m1s6-1-2",
+      "label": "Counts only kx as the x term",
+      "description": "The student reads the $x$ term as $kx$ alone, so any positive $k$ seems to make $b$ positive, and the $-4x$ that comes from the other bracket is left out.",
+      "signal": "Says the $x$ term is positive whenever $k$ is positive, for example by choosing $3$ or answering $k>0$.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You noticed that $k$ is multiplied by $x$ and took $kx$ as the whole $x$ term, so a positive $k$ looked like enough. The $kx$ is right. What is missing is a second term with $x$ that comes from the other bracket."
+        },
+        {
+          "step": 2,
+          "text_md": "Every term in one bracket multiplies every term in the other: $(x-4)(x+k)=x^{2}+kx-4x-4k$. The $-4$ times the $x$ gives $-4x$, which also has an $x$ in it, so the $x$ term is $kx-4x$, not just $kx$."
+        },
+        {
+          "step": 3,
+          "text_md": "With $k=3$ that is $3x-4x=-x$, so $b=-1$. It is negative, even though $3$ is a positive number, because the $-4x$ is bigger than the $3x$."
+        },
+        {
+          "step": 4,
+          "text_md": "So collect all the terms that contain $x$, combine them, and only then look at the sign. Here $kx-4x$ is only positive when $k$ is big enough to outweigh the $4$."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:g10m1s6-1-2:ex1-4-6a",
+          "choice_text": "3"
+        }
+      ],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch01-wf_bf3bd255-7bf.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real and natural: reading the x term as kx alone and missing the -4x from the other bracket. The canonical solution states the x term is kx-4x. The refutation's arithmetic is correct: (x-4)(x+k)=x^2+kx-4x-4k, and k=3 gives 3x-4x=-x, so b=-1. It argues against this specific omission, uses only the book's expand-every-term method, and agrees with the canonical answer k>4 (so E). It names no ids or review history. The wording that kx-4x is positive is slightly loose, since it means the coefficient, but it matches the book's own phrasing.",
+        "sources": [
+          {
+            "type": "distractor",
+            "ref": "D3"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s6-1-2:ex1-4-6a"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "book",
+            "ref": "q:g10m1s6-1-2:ex1-4-6a",
+            "question_id": "q:g10m1s6-1-2:ex1-4-6a",
+            "text": "3",
+            "tagged": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m1s6-1-2:x-term-taken-from-constant-product",
+      "lo_id": "lo:g10m1s6-1-2",
+      "label": "Reads the x term from the product of the two numbers",
+      "description": "The student asks when the product $-4k$ of the two numbers is positive and answers with a negative $k$, but $-4k$ is the constant term, not the $x$ term that $b$ belongs to.",
+      "signal": "Answers with a negative $k$ (for example $-3$ or $-1$, or $k<0$) when asked when the $x$ term is positive.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You worked out when $-4k$ is positive, and that part is right: it is positive when $k$ is negative. But $-4k$ is the constant term, the term with no $x$ in it. It is not the $x$ term."
+        },
+        {
+          "step": 2,
+          "text_md": "Expanding $(x-4)(x+k)$ gives $x^{2}+kx-4x-4k$. The terms that contain $x$ are $kx$ and $-4x$. Together they are the $x$ term, and that is what $b$ stands for. The $-4k$ on its own belongs to $c$."
+        },
+        {
+          "step": 3,
+          "text_md": "Check with $k=-3$: the $x$ term is $-3x-4x=-7x$, so $b$ is negative, even though $-4k=12$ is positive. With $k=-1$ it is the same story: $-x-4x=-5x$, while $-4k=4$."
+        },
+        {
+          "step": 4,
+          "text_md": "Before you answer, ask which term the question is about. For the $x$ term, add up every term that contains $x$, here $kx-4x$, and test its sign. Keep the term with no $x$ for questions about $c$."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:g10m1s6-1-2:ex1-4-6a",
+          "choice_text": "-3"
+        },
+        {
+          "question_id": "q:g10m1s6-1-2:ex1-4-6a",
+          "choice_text": "-1"
+        }
+      ],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch01-wf_bf3bd255-7bf.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real and is the exact mirror of the book's answer for the c-version (constant term -4k, so k<0). Every step checks out. (x-4)(x+k)=x^2+kx-4x-4k. The x terms are kx and -4x. k=-3 gives -7x with -4k=12, and k=-1 gives -5x with -4k=4. This matches the canonical x term kx-4x and its answer k>4 (so E). It argues against this specific confusion of b with c, teaches only the book's method, and names no question id, page, or review history.",
+        "sources": [
+          {
+            "type": "distractor",
+            "ref": "D0"
+          },
+          {
+            "type": "distractor",
+            "ref": "D1"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s6-1-2:ex1-4-6a"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s6-1-2:ex1-4-6b"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "book",
+            "ref": "q:g10m1s6-1-2:ex1-4-6a",
+            "question_id": "q:g10m1s6-1-2:ex1-4-6a",
+            "text": "-3",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m1s6-1-2:ex1-4-6a",
+            "question_id": "q:g10m1s6-1-2:ex1-4-6a",
+            "text": "-1",
+            "tagged": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m1s6-1-3:merges-unlike-terms",
+      "lo_id": "lo:g10m1s6-1-3",
+      "label": "Combines terms that are not alike",
+      "description": "When simplifying the expanded product, the student adds terms that do not have exactly the same letters and powers, such as $4a^2b$ and $5ab^2$, and so runs separate terms into one.",
+      "signal": "The answer has fewer terms than the expansion should have, with terms such as $a^2b$ and $ab^2$, or different powers of one letter, merged into one.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "The expansion itself can be right. The slip comes when simplifying: terms can only be added together when they have exactly the same letters with exactly the same powers."
+        },
+        {
+          "step": 2,
+          "text_md": "Take the products from $(a+2b)(a^2+b^2+2ab)$: $a^3+ab^2+2a^2b+2a^2b+2b^3+4ab^2$. The two $2a^2b$ terms match, so they add to $4a^2b$. The $ab^2$ and $4ab^2$ terms match, so they add to $5ab^2$."
+        },
+        {
+          "step": 3,
+          "text_md": "But $4a^2b$ and $5ab^2$ do not match. In $a^2b$ the $a$ is squared and the $b$ is not; in $ab^2$ the $b$ is squared and the $a$ is not. Four of one thing and five of another thing do not make nine of either, so they stay as two separate terms: $a^3+4a^2b+5ab^2+2b^3$."
+        },
+        {
+          "step": 4,
+          "text_md": "The same happens with different powers of one letter. In $x^3-2x^2+x-x^2+2x-1$ the two $x^2$ terms combine to $-3x^2$ and the two $x$ terms combine to $3x$, but an $x^2$ term and an $x$ term never join. The result is $x^3-3x^2+3x-1$."
+        },
+        {
+          "step": 5,
+          "text_md": "Next time, before you simplify, group the terms that have the same letters and the same powers. Add the numbers in front within each group only, and leave the groups as separate terms."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch01-wf_bf3bd255-7bf.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The refutation matches the canonical working for (a+2b)(a^2+b^2+2ab) step for step. The six products are a^3+ab^2+2a^2b+2a^2b+2b^3+4ab^2. The two 2a^2b terms give 4a^2b, and ab^2 and 4ab^2 give 5ab^2. The final answer a^3+4a^2b+5ab^2+2b^3 equals the book's. The second illustration, x^3-2x^2+x-x^2+2x-1 giving x^3-3x^2+3x-1, matches the worked example. The error is real, since the book's own simplification step is exactly where unlike terms can be run together. The refutation argues against that slip with the 'four of one thing and five of another' point, not by restating the expansion method. The signal (fewer terms, with a^2b and ab^2 or different powers of one letter merged) is specific. The text names no question ids or references.",
+        "sources": [
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s6-1-3:ex1-4-2q"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s6-1-3:we09"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:g10m1s6-1-3:outside-number-into-every-bracket",
+      "lo_id": "lo:g10m1s6-1-3",
+      "label": "Multiplies the outside number into every bracket",
+      "description": "Given a number outside two brackets, such as $3(a-3b)(a^2+3ab-b^2)$, the student multiplies the number into both brackets, so the number is used twice and the answer is too large.",
+      "signal": "The answer is the correct expansion with every coefficient multiplied again by the outside number.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You are right that the number outside has to be multiplied in. The slip is doing it for each bracket, so the number gets used twice. The number outside is one factor of the product and is used once."
+        },
+        {
+          "step": 2,
+          "text_md": "$3(a-3b)(a^2+3ab-b^2)$ means $3\\times(a-3b)\\times(a^2+3ab-b^2)$: three factors, each used once. Putting the $3$ into both brackets gives $(3a-9b)(3a^2+9ab-3b^2)$. That is $3\\times 3=9$ times the product of the two brackets, not $3$ times."
+        },
+        {
+          "step": 3,
+          "text_md": "Instead, expand the two brackets and leave the $3$ outside: $3(a^3+3a^2b-ab^2-3a^2b-9ab^2+3b^3)=3(a^3-10ab^2+3b^3)$."
+        },
+        {
+          "step": 4,
+          "text_md": "Then multiply by the $3$ once, at the end: $3a^3-30ab^2+9b^3$."
+        },
+        {
+          "step": 5,
+          "text_md": "Next time you see a number outside the brackets, expand the brackets first with the number kept outside, and multiply the result by that number once at the end."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch01-wf_bf3bd255-7bf.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Checked against the canonical solution of 3(a-3b)(a^2+3ab-b^2). The product of the two brackets expands to a^3+3a^2b-ab^2-3a^2b-9ab^2+3b^3, which simplifies to a^3-10ab^2+3b^3. Times 3 gives 3a^3-30ab^2+9b^3, the book's answer. Putting the 3 into both brackets gives (3a-9b)(3a^2+9ab-3b^2), which is 9 times the bracket product. The refutation says exactly that. The signal is accurate: 9P is the correct 3P multiplied again by 3, so every coefficient of the wrong answer is 3 times the correct one. The method advice (expand the brackets with the number kept outside, multiply by it once at the end) is the book's own method. The text names no question ids or references.",
+        "sources": [
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s6-1-3:ex1-4-3e"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s6-1-3:ex1-11-23e"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:g10m1s6-1-3:skips-some-products",
+      "lo_id": "lo:g10m1s6-1-3",
+      "label": "Leaves out some of the products",
+      "description": "The student multiplies only some of the terms, for example the first term of the binomial across the trinomial but not the second term, so some products are never written.",
+      "signal": "The answer is what the first term of the binomial alone would give, for example $x^3-2x^2+x$ for the product of $(x-1)$ and $(x^2-2x+1)$, or it has visibly too few terms.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You started the right way: part of the first bracket was multiplied across the second bracket. What is missing is the rest. Every term in the first bracket has to multiply every term in the second bracket."
+        },
+        {
+          "step": 2,
+          "text_md": "Take $(x-1)(x^2-2x+1)$. It means $x$ times the whole second bracket, and $-1$ times the whole second bracket: $x(x^2-2x+1)-1(x^2-2x+1)$. Doing only the first part gives $x^3-2x^2+x$."
+        },
+        {
+          "step": 3,
+          "text_md": "Doing both parts gives $x^3-2x^2+x-x^2+2x-1$, which simplifies to $x^3-3x^2+3x-1$. The part that was left out changes the $x^2$ term, changes the $x$ term, and brings in the constant $-1$."
+        },
+        {
+          "step": 4,
+          "text_md": "A quick count helps: a two-term bracket times a three-term bracket makes $2\\times 3=6$ products before you simplify. If you have written fewer than six, a product is missing."
+        },
+        {
+          "step": 5,
+          "text_md": "Next time, go through the first bracket one term at a time. Multiply that term by every term of the second bracket and write the products, then move on to the next term. Only simplify once all six products are down."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch01-wf_bf3bd255-7bf.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "All the maths checks out against the book's worked solution to (x-1)(x^2-2x+1). Using only x gives x^3-2x^2+x. Adding the -1 part gives -x^2+2x-1. The total is x^3-3x^2+3x-1. The claim that the omitted part changes the x^2 coefficient, changes the x coefficient and adds the constant -1 is correct. The 2x3=6 products count matches the six products the book writes in every binomial-by-trinomial expansion. The refutation argues against the specific slip (the second term never multiplied across) and does not just restate the method. The advice to take the first bracket one term at a time and simplify last is the book's own method. No question ids, pages or review history appear in the student-facing text. The loose clause 'visibly too few terms' in the signal overlaps with the merging error, but the main signal, the first-term-only product, is concrete and accurate.",
+        "sources": [
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s6-1-3:we09"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s6-1-3:ex1-4-2k"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:g10m1s7-1-3:minus-on-first-term-only",
+      "lo_id": "lo:g10m1s7-1-3",
+      "label": "Subtracting a bracket but changing only its first term",
+      "description": "When one of the two squares is a bracket, the student writes the second factor with the minus sign applied to the first term inside the bracket only, so the last term keeps its original sign.",
+      "signal": "The two factors differ only in the sign of the first term of the bracket, for example (4a+3b+4c)(4a-3b+4c) for 16a^2-(3b+4c)^2.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You split it the right way: the first factor adds the bracket to $4a$ and the second takes the bracket away from $4a$. The slip is in the second factor, where the minus sign has been applied to only the first term inside the bracket."
+        },
+        {
+          "step": 2,
+          "text_md": "In $16a^2-(3b+4c)^2$ the second factor is $4a-(3b+4c)$. The minus sign sits in front of the whole bracket, so it takes away both $3b$ and $4c$, giving $4a-3b-4c$. Writing $4a-3b+4c$ takes away $3b$ but adds $4c$."
+        },
+        {
+          "step": 3,
+          "text_md": "Check with $a=2$, $b=1$, $c=1$. The original is $16\\times 4-(3+4)^2=64-49=15$. The factors $(4a+3b+4c)(4a-3b-4c)$ give $(8+3+4)(8-3-4)=15\\times 1=15$, which matches. The slipped version gives $15\\times 9=135$, which does not."
+        },
+        {
+          "step": 4,
+          "text_md": "Next time: write the second factor with the bracket kept whole, $4a-(\\ldots)$, then remove the bracket by changing the sign of every term inside it, and collect like terms."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch01-wf_bf3bd255-7bf.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real and matches the book's own bracket-subtraction step: 4a-(3b+4c) gives 4a-3b-4c (ex1-6-11), and 2x-(4x-3y) is handled the same way in ex1-6-10. The refutation is mathematically correct. The numeric check holds: with a=2, b=1, c=1 the original is 64-49=15, the correct factors give 15x1=15, and the slipped factors give 15x9=135. It argues against this specific slip rather than restating the method. It names no question id, page or review history. The signal (factors differ only in the sign of the first bracket term) describes this error.",
+        "sources": [
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s7-1-3:ex1-6-11"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s7-1-3:ex1-6-10"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s7-1-3:ex1-11-30j"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:g10m1s7-1-3:non-square-number-blocks-method",
+      "lo_id": "lo:g10m1s7-1-3",
+      "label": "Thinking the method needs a whole-number square",
+      "description": "The student says a difference such as y^2-8 or y^2-13 cannot be factorised because 8 or 13 is not the square of a whole number.",
+      "signal": "Says y^2-8 or y^2-13 cannot be factorised, or skips it, because the number is not a whole-number square.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You are right that 8 and 13 are not squares of whole numbers the way 9 and 16 are, so it looks as if the pattern is missing. The step that gets it back is that 8 is the square of $\\sqrt{8}$ and 13 is the square of $\\sqrt{13}$."
+        },
+        {
+          "step": 2,
+          "text_md": "Note that $(\\sqrt{8})^2=8$. So $y^2-8$ is $y^2-(\\sqrt{8})^2$, which is a difference of two squares, and it splits into $(y-\\sqrt{8})(y+\\sqrt{8})$."
+        },
+        {
+          "step": 3,
+          "text_md": "The same works for $y^2-13=(y-\\sqrt{13})(y+\\sqrt{13})$. The brackets look less tidy because the root is not a whole number, but the pattern is exactly the one in $a^2-9=(a-3)(a+3)$."
+        },
+        {
+          "step": 4,
+          "text_md": "Next time: if the number is not a whole-number square, write it as $(\\sqrt{\\ })^2$, leave the square root in the brackets, and split as usual."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch01-wf_bf3bd255-7bf.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real for this objective and matches ex1-6-18 and ex1-6-19. The refutation reproduces the canonical steps exactly: (sqrt8)^2=8 and y^2-8=(y-sqrt8)(y+sqrt8), and likewise for 13. It leaves the roots unsimplified, as the book does. It argues against the 'needs a whole-number square' belief and does not just restate the method. The comparison with a^2-9=(a-3)(a+3) is self-contained. It names no id, page or review history. The signal is accurate.",
+        "sources": [
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s7-1-3:ex1-6-18"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s7-1-3:ex1-6-19"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:g10m1s7-1-3:square-written-not-root",
+      "lo_id": "lo:g10m1s7-1-3",
+      "label": "Putting the squared term in the brackets instead of what was squared",
+      "description": "The student splits into (first - second)(first + second) but writes the number or term as it stands in the original, rather than the thing that was squared to make it.",
+      "signal": "The brackets contain the unrooted numbers or coefficients, for example (6x+y-9)(6x+y+9) for (6x+y)^2-9, or (16k-4)(16k+4) for 16k^2-4.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You have the right shape: one factor with a minus and one with a plus. The slip is what goes inside the brackets. Each term in the original is a square, and the brackets need the thing that was squared, not the square itself."
+        },
+        {
+          "step": 2,
+          "text_md": "In $(6x+y)^2-9$, the first term is $6x+y$ squared, so $6x+y$ goes in. The $9$ is $3^2$, so $3$ goes in, giving $(6x+y-3)(6x+y+3)$. Writing $9$ would mean the second square is $9^2=81$, not $9$."
+        },
+        {
+          "step": 3,
+          "text_md": "In $16k^2-4$, $16k^2=(4k)^2$ and $4=2^2$, so the answer is $(4k-2)(4k+2)$. The version $(16k-4)(16k+4)$ would be built from the squares of $16k$ and $4$, which are $256k^2$ and $16$, a different expression."
+        },
+        {
+          "step": 4,
+          "text_md": "Next time: before writing any brackets, write each term as something squared, such as $16k^2=(4k)^2$ and $4=2^2$. Then the brackets take those somethings: $(4k-2)(4k+2)$."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch01-wf_bf3bd255-7bf.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real and matches ex1-6-9 and ex1-6-14. The answers (6x+y-3)(6x+y+3) and (4k-2)(4k+2) are correct and agree with the canonical solutions. The counter-arguments check out: 9^2=81, (16k)^2=256k^2 and 4^2=16, and the slipped version expands to 256k^2-16, a different expression. The refutation argues against the specific slip. The 'write each term as something squared' habit is the book's own method. It names no id, page or review history. The signal describes the error accurately.",
+        "sources": [
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s7-1-3:ex1-6-9"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s7-1-3:ex1-6-14"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:g10m1s7-2-1:factor-pair-middle-term-untested",
+      "lo_id": "lo:g10m1s7-2-1",
+      "label": "Writes a factor pair of c into the brackets without testing the middle term",
+      "description": "The student finds two numbers that multiply to give c, puts them straight into the brackets and stops, without multiplying out to see whether the middle term comes out right.",
+      "signal": "Two brackets whose numbers multiply to the last number c, but which multiply out to a different middle term from the one in the question (for $x^2+9x+8$, an answer like $(x+4)(x+2)$).",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You listed a factor pair of $c$ and built the brackets from it, which is the right way to start. The slip is stopping there: the pair only passes the first test, multiplying to $c$. It also has to give the middle term when the brackets are multiplied out."
+        },
+        {
+          "step": 2,
+          "text_md": "Take $x^2+9x+8$. The numbers $4$ and $2$ multiply to $8$, so $(x+4)(x+2)$ looks possible. Multiply it out: $(x+4)(x+2)=x^2+2x+4x+8=x^2+6x+8$. The middle term is $6x$, not $9x$, so this pair does not work."
+        },
+        {
+          "step": 3,
+          "text_md": "Factorising is mostly trial and error, so a first try that fails is normal. It just means moving to the next factor pair of $8$. Try $1$ and $8$: $(x+8)(x+1)=x^2+x+8x+8=x^2+9x+8$. The middle term is now $9x$, which matches, so $(x+8)(x+1)$ is the answer."
+        },
+        {
+          "step": 4,
+          "text_md": "Use this order every time. List the factor pairs of $c$, using the sign of $c$ to decide the signs (both the same when $c$ is positive, one of each when $c$ is negative). Multiply out each option and compare its middle term with the one in the question. When one matches, multiply out once more as your final check."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch01-wf_bf3bd255-7bf.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real for this objective and is supported by the book's caution to always multiply out the brackets again (b00395). The caution that factorising is mostly trial and error (b00392) supports the point that a failed first try is normal. I worked the refutation myself. (x+4)(x+2) = x^2+2x+4x+8 = x^2+6x+8, which is not x^2+9x+8, so the pair fails the middle-term test. (x+8)(x+1) = x^2+x+8x+8 = x^2+9x+8, which matches the canonical answer to the x^2+9x+8 question. The sign rule in step 4 (same signs when c is positive, one of each when c is negative) is in the objective description. Steps 1 to 3 argue against the specific slip of stopping after a pair that only multiplies to c. Only step 4 restates the method, and it supports the argument rather than replacing it. Nothing in the label, description, signal or refutation names a question id, page, figure or review history. The only id is in the separate provenance field, which is not student-facing text. The method is expand-and-compare with a final multiply-out check, which is consistent with the canonical approach. Weakness: step 3's 'try the next factor pair' does not speak directly to a student whose pair is right but whose signs are wrong. That does not make the content wrong.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "b00395"
+          },
+          {
+            "type": "caution",
+            "ref": "b00392"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s7-2-1:ex1-8-2"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:g10m1s8-1-1:cancel-terms-not-factors",
+      "lo_id": "lo:g10m1s8-1-1",
+      "label": "Cancelling a term instead of a common factor",
+      "description": "The student crosses out a number or letter that appears in both the numerator and the denominator, even though it is only one term of a sum, instead of factorising first and cancelling a common factor.",
+      "signal": "A letter or number has been removed from one term on the top and one term on the bottom, for example $\\frac{27}{18}$ or $\\frac{3}{2}$ given for $\\frac{9a+27}{9a+18}$.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You spotted that $9a$ appears on the top and on the bottom of $\\frac{9a+27}{9a+18}$, crossed it out, and were left with $\\frac{27}{18}=\\frac{3}{2}$. Looking for what the top and bottom share is the right instinct. The problem is how they share it."
+        },
+        {
+          "step": 2,
+          "text_md": "Cancelling means dividing the top and the bottom by the same thing, and that only works when it is a factor of the whole top and the whole bottom. In $9a+27$ the $9a$ is just one term being added to $27$, so it is not a factor of $9a+27$, and it cannot be cancelled."
+        },
+        {
+          "step": 3,
+          "text_md": "Factorise first. $\\frac{9a+27}{9a+18}=\\frac{9(a+3)}{9(a+2)}$. Now the common factor is $9$, and it multiplies everything on the top and everything on the bottom. Cancelling it gives $\\frac{a+3}{a+2}$."
+        },
+        {
+          "step": 4,
+          "text_md": "Test both answers with $a=1$. The original fraction is $\\frac{36}{27}=\\frac{4}{3}$. The factorised answer $\\frac{a+3}{a+2}$ also gives $\\frac{4}{3}$. The crossed-out answer $\\frac{3}{2}$ does not, so it cannot be equal to the original."
+        },
+        {
+          "step": 5,
+          "text_md": "The move that works is to factorise the numerator and the denominator before you cancel anything. Then cancel only a factor that appears in both, such as a whole $9$ or a whole $(x-b)$, never a piece of a sum."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch01-wf_bf3bd255-7bf.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real for this objective, which is about cancelling common factors after factorising. Every step checks out against the canonical solution for (9a+27)/(9a+18). Cancelling 9a leaves 27/18 = 3/2, which is a wrong answer. Factorising gives 9(a+3)/9(a+2) = (a+3)/(a+2), the book's answer. The a=1 check is correct: 36/27 = 4/3, (a+3)/(a+2) gives 4/3, and 3/2 does not. The substitution check only confirms the book's answer and adds no new method. The refutation argues against the error (a term is not a factor), not just the method. It names no question id, page, reviewer or review history. The (x-b) in step 5 is a generic example of a factor and is not tied to a hidden question.",
+        "sources": [
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s8-1-1:ex1-10-1f"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s8-1-1:ex1-10-1c"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s8-1-1:we18"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:g10m1s8-1-1:reversed-factor-sign-lost",
+      "lo_id": "lo:g10m1s8-1-1",
+      "label": "Treating $(2-b)$ and $(b-2)$ as the same factor",
+      "description": "The student factorises correctly and finds a matching pair of factors, but the pair is written in opposite order, for example $(2-b)$ on the top and $(b-2)$ on the bottom, and cancels them as if equal, losing a minus sign.",
+      "signal": "The answer matches the book's except for its sign, for example $\\frac{2+b}{3}$ where $-\\frac{2+b}{3}$ is expected.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You factorised $\\frac{4-b^2}{3b-6}$ correctly into $\\frac{(2-b)(2+b)}{3(b-2)}$ and noticed that $2-b$ and $b-2$ are made of the same pieces. That part is right. The slip is treating them as the same factor and cancelling them, because they are not the same."
+        },
+        {
+          "step": 2,
+          "text_md": "$2-b$ is $b-2$ with both signs changed. Write it as $2-b=-(b-2)$: expanding the right side gives $-b+2$, which is $2-b$. So the two factors are negatives of each other, and $\\frac{2-b}{b-2}$ is $-1$, not $1$."
+        },
+        {
+          "step": 3,
+          "text_md": "Rewrite the top so the factors really match: $\\frac{(2-b)(2+b)}{3(b-2)}=\\frac{-(b-2)(2+b)}{3(b-2)}$. Now $(b-2)$ is a common factor and it cancels, leaving $-\\frac{2+b}{3}$. The minus sign stays."
+        },
+        {
+          "step": 4,
+          "text_md": "Check with $b=0$. The original fraction is $\\frac{4}{-6}=-\\frac{2}{3}$. The answer $-\\frac{2+b}{3}$ gives $-\\frac{2}{3}$, which matches. Cancelling $(2-b)$ with $(b-2)$ as if equal gives $\\frac{2+b}{3}=\\frac{2}{3}$, which has the wrong sign."
+        },
+        {
+          "step": 5,
+          "text_md": "The move that works is this. When two factors match except for the order of the terms, take a minus sign out of one of them so that they look identical. Cancel them, and keep the minus sign in your answer."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch01-wf_bf3bd255-7bf.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real and appears in the canonical solutions. For (4-b^2)/(3b-6) the book factorises to (2-b)(2+b)/3(b-2) and gets -(2+b)/3, and a student who cancels (2-b) with (b-2) gets (2+b)/3, the wrong sign. All the refutation's mathematics is correct. 2-b = -(b-2). (2-b)/(b-2) = -1 when b is not 2. Rewriting the top as -(b-2)(2+b) and cancelling gives -(2+b)/3, which is the book's answer. The b=0 check works: 4/(-6) = -2/3, -(2+0)/3 = -2/3, and the wrong answer gives +2/3. Taking out a minus sign is the step the book's own working uses between its lines, so it adds no new method. The refutation argues against the specific error and is not just a restatement of the method. It contains no question id, page, reviewer or review history. The signal (an answer that matches the book's except for its sign) fits this error. Other sign slips, such as writing 4-b^2 as (b-2)(b+2), come from the same confusion about order inside a difference.",
+        "sources": [
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s8-1-1:ex1-11-31g"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s8-1-1:ex1-10-1l"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:g10m1s8-1-3:adds-numerators-and-denominators-separately",
+      "lo_id": "lo:g10m1s8-1-3",
+      "label": "Adds the numerators and adds the denominators",
+      "description": "The student writes one fraction whose numerator is the sum of the numerators and whose denominator is the sum of the denominators, instead of first making the denominators the same.",
+      "signal": "The denominator of the answer is the sum of the original denominators, for example $2a+3$ from $(a+11)$ and $(a-8)$.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You added across: numerators together, denominators together. That is a natural guess, and part of it is right, because the numerators do get added in the end. The catch is that this only works once the denominators are the same."
+        },
+        {
+          "step": 2,
+          "text_md": "A denominator tells you how big each piece is, and you can only add pieces that are the same size. That is why the book's first move is to make all the denominators the same so that the fractions can be added or subtracted. Adding the two denominators does not make them match; it just makes a new size of piece."
+        },
+        {
+          "step": 3,
+          "text_md": "Try $\\frac{11}{a+11}+\\frac{8}{a-8}$. Adding across gives $\\frac{19}{2a+3}$. Putting both fractions over $(a+11)(a-8)$ gives $\\frac{11(a-8)+8(a+11)}{(a+11)(a-8)}=\\frac{19a}{(a+11)(a-8)}$. The two answers are different expressions, and only the second comes from rewriting each fraction so the pieces match."
+        },
+        {
+          "step": 4,
+          "text_md": "What works: factorise the denominators, find the lowest common denominator, rewrite every fraction over it, write as one fraction, and only then add or subtract the numerators."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch01-wf_bf3bd255-7bf.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Adding across is a real, common error for this objective. The canonical solutions require a common denominator before the numerators are combined. The worked example, a+11 and a-8: 2a+3 is the correct sum of the denominators, 19 the sum of the numerators. The book's answer 19a/((a+11)(a-8)) is reproduced exactly, so the two results do differ. The pieces-of-the-same-size gloss is only an explanation of the book's stated rule, not a new method. 'The book's first move' is loose wording, since the book factorises first, but it is not mathematically wrong. No question ids, pages or review history appear in the label, description, signal or refutation.",
+        "sources": [
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s8-1-3:ex1-10-3d"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s8-1-3:we20"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "S6",
+            "ref": "tpl:g10m1s8-1-3:sum-numeric-denominators#mc:g10m1s8-1-3:adds-numerators-and-denominators-separately",
+            "question_id": "q:g10m1s8-1-3:g001-sum-nu",
+            "text": "$\\dfrac{2x+11}{7}$",
+            "tagged": "mc:g10m1s8-1-3:adds-numerators-and-denominators-separately"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m1s8-1-3:missing-factor-not-distributed-over-numerator",
+      "lo_id": "lo:g10m1s8-1-3",
+      "label": "Multiplies only part of the numerator by the number the denominator was multiplied by",
+      "description": "When rewriting a fraction over the lowest common denominator, the student multiplies the denominator and the $x$-term of the numerator by the number needed, but leaves the other number in the numerator as it was, as if the multiplier did not apply to the whole numerator.",
+      "signal": "In the final numerator the $x$-term is right, but the number is just the original numbers combined, with nothing multiplied onto them.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You did the hard part: you found the lowest common denominator, worked out what each denominator had to be multiplied by, and used that on the $x$-term. The slip is treating that number as if it reached only the first term of the numerator, so the number beside the $x$ keeps its old value."
+        },
+        {
+          "step": 2,
+          "text_md": "The numerator is one expression, not two separate pieces. The book's working for $\\dfrac{x+4}{3}-\\dfrac{x-2}{2}$ puts $2(x+4)$ over $6$ for the first fraction, keeping the numerator in a bracket so the $2$ multiplies all of it. Multiplying out gives $2x+8$, not $2x+4$."
+        },
+        {
+          "step": 3,
+          "text_md": "Here is what the slip does in the book's working for $\\dfrac{1}{2}x+\\dfrac{x-2}{3}+4$. Over the denominator $6$ the book gets $\\dfrac{3x+2(x-2)+(2)(3)(4)}{6}=\\dfrac{3x+2x-4+24}{6}=\\dfrac{5x+20}{6}$. If the $2$ reaches only the $x$, you write $2x-2$ instead of $2x-4$, and the answer becomes $\\dfrac{5x+22}{6}$, which is not the book's $\\dfrac{5x+20}{6}$."
+        },
+        {
+          "step": 4,
+          "text_md": "The move that works: write the number you multiplied the denominator by in front of the whole numerator, in a bracket, like $2(x-2)$. Then multiply out the bracket so it multiplies the $x$-term and the number. Check that every term inside has been multiplied before you combine the numerators."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch01-wf_bf3bd255-7bf.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The worked figures are correct. 2(x+4) gives 2x+8, not 2x+4. The book's 3x+2(x-2)+24 gives (5x+20)/6. Writing 2(x-2) as 2x-2 gives 3x+2x-2+24 = 5x+22, so (5x+22)/6, which differs from the book's answer. The error, partial distribution of the multiplier, is distinct from the entry that leaves the whole numerator unscaled, and the canonical working shows the bracketed multiplier method. The refutation is not a mere restatement of the method. It names no ids or pages and has no review history. The signal (x-term right, number only the originals combined) separates this error from the unscaled-numerator error, which has a wrong x-term, so it would not misdiagnose.",
+        "sources": [
+          {
+            "type": "distractor",
+            "ref": "D0"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s8-1-3:ex1-10-2q"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s8-1-3:ex1-11-31u"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "S6",
+            "ref": "tpl:g10m1s8-1-3:sum-numeric-denominators#mc:g10m1s8-1-3:missing-factor-not-distributed-over-numerator",
+            "question_id": "q:g10m1s8-1-3:g001-sum-nu",
+            "text": "$\\dfrac{7x+11}{10}$",
+            "tagged": "mc:g10m1s8-1-3:missing-factor-not-distributed-over-numerator"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m1s8-1-3:numerator-or-whole-number-not-scaled",
+      "lo_id": "lo:g10m1s8-1-3",
+      "label": "Multiplies the denominator but not the numerator (or the whole number)",
+      "description": "When rewriting a term over the lowest common denominator, the student multiplies the denominator by the missing factor but leaves the numerator, or a whole-number term, as it was.",
+      "signal": null,
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You found the common denominator, which is the hard part. The slip is in rewriting each fraction over it. When a denominator is multiplied by something, the numerator has to be multiplied by the same thing, and here only the denominator was."
+        },
+        {
+          "step": 2,
+          "text_md": "For $\\frac{x-3}{3}-\\frac{x+5}{4}$ the common denominator is $12$. The first denominator is multiplied by $4$, so the first numerator becomes $4(x-3)$. The second is multiplied by $3$, so it becomes $3(x+5)$. Writing $\\frac{x-3}{12}$ for $\\frac{x-3}{3}$ would make it only a quarter of what it was."
+        },
+        {
+          "step": 3,
+          "text_md": "Leaving the numerators alone gives $\\frac{(x-3)-(x+5)}{12}=\\frac{-8}{12}$, and the $x$ has vanished. The book's working is $\\frac{4(x-3)-3(x+5)}{12}=\\frac{x-27}{12}$."
+        },
+        {
+          "step": 4,
+          "text_md": "A whole number needs the same treatment. In $\\frac{2x-4}{9}-\\frac{x-3}{4}+1$ the common denominator is $36$, and $1$ is $\\frac{36}{36}$, so it adds $36$ to the numerator, not $1$. Leaving it as $+1$ gives $\\frac{12-x}{36}$ instead of the book's $\\frac{47-x}{36}$."
+        },
+        {
+          "step": 5,
+          "text_md": "What works: for every term, ask what it must be multiplied by to reach the common denominator. Then multiply the whole numerator, or the whole number, by that same factor, keeping brackets round any numerator with more than one term."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch01-wf_bf3bd255-7bf.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The arithmetic is correct throughout. (x-3)/12 is a quarter of (x-3)/3. Leaving the numerators alone gives -8/12 and the x vanishes. The book's 4(x-3)-3(x+5) gives (x-27)/12. For the whole-number case, 4(2x-4)-9(x-3)+1 gives (12-x)/36 against the book's 47-x over 36, with 1 correctly rewritten as 36/36. The canonical solutions require scaling the numerator by the same factor as the denominator, so the error is real and supported. The refutation is specific to the error and matches the book's method. The two sub-cases (numerator and whole number) share one root cause. It names no ids or pages and has no signal.",
+        "sources": [
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s8-1-3:ex1-10-3a"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s8-1-3:ex1-10-3b"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "S6",
+            "ref": "tpl:g10m1s8-1-3:sum-numeric-denominators#mc:g10m1s8-1-3:numerator-or-whole-number-not-scaled",
+            "question_id": "q:g10m1s8-1-3:g001-sum-nu",
+            "text": "$\\dfrac{2x+11}{10}$",
+            "tagged": "mc:g10m1s8-1-3:numerator-or-whole-number-not-scaled"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m1s8-1-3:sign-changed-on-first-term-only",
+      "lo_id": "lo:g10m1s8-1-3",
+      "label": "Changes only the first sign when subtracting a numerator",
+      "description": "After writing the fractions over the common denominator, the student removes the brackets round the subtracted numerator but changes the sign of only its first term, so the other terms keep their old signs.",
+      "signal": null,
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Your plan is right: both fractions go over the same denominator and the numerators are subtracted. The slip comes when you remove the bracket. The minus sign in front of it acts on every term inside, and here it was applied only to the first one."
+        },
+        {
+          "step": 2,
+          "text_md": "Look at $\\frac{x+4}{3}-\\frac{x-2}{2}$. Over 6 it is $\\frac{2(x+4)-3(x-2)}{6}$. Subtracting $3(x-2)$ means taking away $3x$ and also taking away $-6$, and taking away $-6$ adds $6$. If the $6$ keeps its minus sign you get $\\frac{2x+8-3x-6}{6}=\\frac{2-x}{6}$."
+        },
+        {
+          "step": 3,
+          "text_md": "The book's working is $\\frac{2x+8-3x+6}{6}=\\frac{14-x}{6}$. The constant terms are different ($8-6=2$ against $8+6=14$), and the second one is correct."
+        },
+        {
+          "step": 4,
+          "text_md": "The same thing matters with a longer numerator. When the book subtracts a fraction whose numerator is $x^3+x-4$, it keeps that numerator in brackets, and removing the brackets gives $-x^3-x+4$: all three signs change."
+        },
+        {
+          "step": 5,
+          "text_md": "What works: keep the subtracted numerator in brackets, together with its multiplier, until the last moment. Then multiply the bracket out term by term, changing the sign of every term inside, and simplify."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch01-wf_bf3bd255-7bf.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Every figure checks against the canonical working. The slip version of (x+4)/3-(x-2)/2 gives 2x+8-3x-6 over 6, which is (2-x)/6. The book's 2x+8-3x+6 gives (14-x)/6, matching the canonical answer. The 8-6=2 versus 8+6=14 contrast is right. For the subtracted numerator x^3+x-4 the book's -x^3-x+4 matches the worked example. The error is real, since the canonical steps depend on distributing the minus. The refutation argues against the specific slip and teaches nothing beyond the book. It names no ids or pages and has no signal.",
+        "sources": [
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s8-1-3:ex1-10-2q"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m1s8-1-3:we20"
+          }
+        ],
+        "covers": []
+      }
+    }
+  ]
+}

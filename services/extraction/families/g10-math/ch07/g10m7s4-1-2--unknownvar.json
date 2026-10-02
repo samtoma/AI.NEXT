@@ -1,0 +1,75 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m7s4-1-2:unknownvar",
+ "kind": "family",
+ "lo_id": "lo:g10m7s4-1-2",
+ "parent_question_id": "q:g10m7s4-1-2:ex7-7-14b",
+ "source_page": 268,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "choice": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "d",
+   "choice": [
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "resample_while": "gcd(p, d) != 1"
+  },
+  {
+   "name": "t",
+   "randint": [
+    2,
+    8
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    2,
+    9
+   ]
+  },
+  {
+   "require": "(p * t + q) % 2 == 0",
+   "why": "the third side is then even, so PR comes out as a whole number"
+  },
+  {
+   "name": "a",
+   "let": "d * t"
+  },
+  {
+   "name": "r",
+   "let": "(p * t + q) // 2"
+  }
+ ],
+ "constraints": [
+  "gcd(p, d) == 1",
+  "(p * t + q) % 2 == 0"
+ ],
+ "stem": "In triangle $MNQ$, $P$ is the mid-point of $NQ$ and $R$ is the mid-point of $MQ$. One side of the triangle, $MN$, has a given length of $\\frac{{=p}a}{{=d}}+{=q}$. You are now told that $PR$ has a length of ${=r}$. What is the value of $a$?",
+ "answer": "a",
+ "solution": [
+  "$P$ is the mid-point of $NQ$ and $R$ is the mid-point of $MQ$, so $PR$ is the line joining the mid-points of two sides, and $MN$ is the third side.",
+  "From the mid-point theorem we know that the third side is twice the line joining the mid-points: $MN=2\\times PR$.",
+  "Substitute the two lengths: $\\frac{{=p}a}{{=d}}+{=q}=2\\times {=r}={=2*r}$.",
+  "Subtract ${=q}$ from both sides: $\\frac{{=p}a}{{=d}}={=2*r}-{=q}={=2*r-q}$.",
+  "Multiply both sides by ${=d}$: ${=p}a={=d}\\times {=2*r-q}={=d*(2*r-q)}$.",
+  "Divide both sides by ${=p}$: $a=\\frac{{=d*(2*r-q)}}{{=p}}={=a}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Modelled on ex7-7-14b (a side given in terms of a, PR given as a number, find a). The family solves by MN = 2 x PR and then a linear equation with a fraction coefficient, as the book does (the book halves the expression instead; the result is the same). The sampling picks a as a multiple of d so a is always a whole number, with gcd(p, d) = 1 so the fraction is already in lowest terms, and p*t + q even so PR is a whole number. The triangle is named in words only (P on NQ, R on MQ, third side MN) so no figure is needed."
+}

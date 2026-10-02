@@ -1,0 +1,2129 @@
+{
+ "mode": "author",
+ "book": "g10-math",
+ "prompts_version": "s6-v6",
+ "by_ref": {
+  "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/s6-author-ch09",
+  "stage": "S6 author",
+  "shards_sha256": "61bf808424a098859227548f809b5648296af0e390aaf8726f1f9db16be6a23e",
+  "files": 24
+ },
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "ce14b9a275551596540559352d6e1137fc366251ecc65d4b7d34aa4599cbc0b6",
+  "args_sha256": "c2fb3dc3574b85419fca3f5d8e24eef47252912815d8a83e303545e2485c0438",
+  "generated_sha256": "66e8b44176c3ee99956a7131252040910396f0cd2d51713e848d1ae3225275ff",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "records": [
+  {
+   "lo_id": "lo:g10m9s2-1-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m9s2-1-2:whole-amount",
+     "kind": "family",
+     "lo_id": "lo:g10m9s2-1-2",
+     "parent_question_id": "q:g10m9s2-1-2:ex9-1-6",
+     "source_page": 334,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": "A bank savings account pays simple interest at a whole-number percentage per annum. The amount wanted after a whole number of years is given in rand, and the amount to invest now is asked for.",
+     "params": [
+      {
+       "name": "r",
+       "choice": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+       ]
+      },
+      {
+       "name": "n",
+       "choice": [
+        2,
+        3,
+        4,
+        5
+       ]
+      },
+      {
+       "name": "m",
+       "randint": [
+        5,
+        80
+       ]
+      },
+      {
+       "name": "P",
+       "let": "100 * m"
+      },
+      {
+       "name": "d",
+       "let": "100 + r * n"
+      },
+      {
+       "name": "A",
+       "let": "m * d"
+      },
+      {
+       "name": "ds",
+       "let": "fixed(d / 100, 2) if d % 10 != 0 else fixed(d / 100, 1)"
+      }
+     ],
+     "constraints": [],
+     "stem": "A bank offers a savings account which pays simple interest at a rate of ${=r}$ % per annum. If you want to accumulate $\\text{R{=A}}$ in ${=n}$ years, how much should you invest now?",
+     "answer": "P",
+     "solution": [
+      "Read the question carefully and write down the given information: $\\begin{aligned}A&=\\text{R{=A}}\\\\P&=?\\\\i&=\\frac{{=r}}{100}=0.0{=r}\\\\n&={=n}\\end{aligned}$",
+      "Write down the simple interest formula: $A=P(1+in)$",
+      "Substitute the given values and work out the bracket: $\\begin{aligned}\\text{R{=A}}&=P\\left(1+0.0{=r}\\times{=n}\\right)\\\\\\text{R{=A}}&=P\\times{=ds}\\end{aligned}$",
+      "Divide both sides by ${=ds}$ to find $P$: $\\begin{aligned}P&=\\frac{\\text{R{=A}}}{{=ds}}\\\\&=\\text{R{=P}}\\end{aligned}$",
+      "You should invest $\\text{R{=P}}$ now."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Entry point of the skill: same skeleton as the book's ex9-1-6 (A = P(1 + in), then divide), but the numbers are built backwards from P = 100m so that A is a whole number of rand and the principal is an exact whole number, with no rounding step. Rate is a single-digit whole percent so i prints as 0.0r. The denominator 1 + in is printed the book's way with trailing zeros dropped (1.3, not 1.30). Numeric family, so no distractors and no misconception ids are needed; none are catalogued for this objective."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m9s2-1-2:round-cent",
+     "kind": "family",
+     "lo_id": "lo:g10m9s2-1-2",
+     "parent_question_id": "q:g10m9s2-1-2:ex9-1-6",
+     "source_page": 334,
+     "tier": "standard",
+     "answer_type": "numeric",
+     "context": "A bank savings account pays simple interest at a whole-number percentage per annum. The amount wanted after a given number of years is given in rand, and the amount to invest now is asked for, correct to the cent.",
+     "params": [
+      {
+       "name": "r",
+       "choice": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+       ]
+      },
+      {
+       "name": "n",
+       "choice": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+       ]
+      },
+      {
+       "name": "k",
+       "randint": [
+        4,
+        60
+       ]
+      },
+      {
+       "name": "A",
+       "let": "500 * k"
+      },
+      {
+       "name": "d",
+       "let": "100 + r * n"
+      },
+      {
+       "name": "P",
+       "let": "A * 100 / d"
+      },
+      {
+       "name": "ds",
+       "let": "fixed(d / 100, 2) if d % 10 != 0 else fixed(d / 100, 1)"
+      },
+      {
+       "require": "(100 * A) % d != 0",
+       "why": "the principal is not already a whole number of rand, so the rounding step is real"
+      },
+      {
+       "require": "(20000 * A) % d != 0 or ((20000 * A) // d) % 2 == 0",
+       "why": "the principal never lies exactly half a cent from a cent, so the rounding is unambiguous"
+      }
+     ],
+     "constraints": [],
+     "stem": "A bank offers a savings account which pays simple interest at a rate of ${=r}$ % per annum. If you want to accumulate $\\text{R{=A}}$ in ${=n}$ years, how much should you invest now? Give your answer in rand, correct to two decimal places.",
+     "answer": "fixed(P, 2)",
+     "solution": [
+      "Read the question carefully and write down the given information: $\\begin{aligned}A&=\\text{R{=A}}\\\\P&=?\\\\i&=\\frac{{=r}}{100}=0.0{=r}\\\\n&={=n}\\end{aligned}$",
+      "Write down the simple interest formula: $A=P(1+in)$",
+      "Substitute the given values and work out the bracket: $\\begin{aligned}\\text{R{=A}}&=P\\left(1+0.0{=r}\\times{=n}\\right)\\\\\\text{R{=A}}&=P\\times{=ds}\\end{aligned}$",
+      "Divide both sides by ${=ds}$ to find $P$: $P=\\frac{\\text{R{=A}}}{{=ds}}$",
+      "Calculate and round to two decimal places: $P=\\text{R{=fixed(P, 2)}}$",
+      "You should invest $\\text{R{=fixed(P, 2)}}$ now."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "The book's typical exercise, a direct parametrisation of ex9-1-6 (R15000, 6 %, 5 years gives R11538.46 when r = 6, n = 5, k = 30). Not one of the listed gaps; added because the bank holds only two standard items for this objective. The requires keep P a non-integer and away from an exact half-cent tie (a tie occurs only when 20000A/d is an odd integer), so every instance rounds the same way for any solver. Rate is a single-digit whole percent. Numeric family, so no distractors and no misconception ids."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m9s2-1-2:ages-goal",
+     "kind": "family",
+     "lo_id": "lo:g10m9s2-1-2",
+     "parent_question_id": "q:g10m9s2-1-2:ex9-7-3",
+     "source_page": 350,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": "Adam opens a savings account when he is a certain age and wants a given amount of rand by the time he reaches a later age. The account pays simple interest at a rate that is a whole percent plus one half, per annum.",
+     "params": [
+      {
+       "name": "a1",
+       "choice": [
+        12,
+        13,
+        14
+       ]
+      },
+      {
+       "name": "g",
+       "choice": [
+        3,
+        4,
+        5,
+        6
+       ]
+      },
+      {
+       "name": "a2",
+       "let": "a1 + g"
+      },
+      {
+       "name": "w",
+       "choice": [
+        5,
+        6,
+        7,
+        8,
+        9
+       ]
+      },
+      {
+       "name": "k",
+       "randint": [
+        20,
+        90
+       ]
+      },
+      {
+       "name": "A",
+       "let": "1000 * k"
+      },
+      {
+       "name": "t",
+       "let": "g * (2 * w + 1)"
+      },
+      {
+       "name": "th",
+       "let": "1000 + 5 * t"
+      },
+      {
+       "name": "P",
+       "let": "A * 1000 / th"
+      },
+      {
+       "name": "ds",
+       "let": "fixed(th / 1000, 3) if th % 10 != 0 else (fixed(th / 1000, 2) if th % 100 != 0 else fixed(th / 1000, 1))"
+      },
+      {
+       "require": "(1000 * A) % th != 0",
+       "why": "the principal is not already a whole number of rand, so the rounding step is real"
+      },
+      {
+       "require": "(200000 * A) % th != 0 or ((200000 * A) // th) % 2 == 0",
+       "why": "the principal never lies exactly half a cent from a cent, so the rounding is unambiguous"
+      }
+     ],
+     "constraints": [],
+     "stem": "Adam opens a savings account when he is ${=a1}$ years old. He would like to have $\\text{R{=A}}$ by the time he is ${=a2}$ years old. If the savings account offers simple interest at a rate of ${=w}.5$ % per annum, how much money should he invest now to reach his goal? Give your answer in rand, correct to two decimal places.",
+     "answer": "fixed(P, 2)",
+     "solution": [
+      "Work out how many years the money is invested: $n={=a2}-{=a1}={=g}$ years.",
+      "Write down the given information: $\\begin{aligned}A&=\\text{R{=A}}\\\\P&=?\\\\i&=\\frac{{=w}.5}{100}=0.0{=w}5\\\\n&={=g}\\end{aligned}$",
+      "Write down the simple interest formula: $A=P(1+in)$",
+      "Substitute the given values and work out the bracket: $\\begin{aligned}\\text{R{=A}}&=P\\left(1+0.0{=w}5\\times{=g}\\right)\\\\\\text{R{=A}}&=P\\times{=ds}\\end{aligned}$",
+      "Divide both sides by ${=ds}$ to find $P$: $P=\\frac{\\text{R{=A}}}{{=ds}}$",
+      "Calculate and round to two decimal places: $P=\\text{R{=fixed(P, 2)}}$",
+      "Adam should invest $\\text{R{=fixed(P, 2)}}$ now."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Harder variant built on the two twists of ex9-7-3 (R50000, 8.5 %, ages 13 to 18 gives R35087.72 when w = 8, a1 = 13, g = 5, k = 50): the number of years is not given and must be found from two ages, and the rate has a half-percent so i has three decimal places and the divisor 1 + in is a three-decimal number. The rate is always x.5 % so i prints exactly as 0.0w5. Ages stay at most 20. The requires keep P a non-integer and away from an exact half-cent tie (a tie occurs only when 200000A/th is an odd integer). Numeric family, so no distractors and no misconception ids."
+    }
+   ],
+   "infeasible": [],
+   "notes": "No misconceptions are catalogued for this objective and all three families are numeric, so no distractors or misconception ids are used. The listed gaps (basic and advanced) are filled; one standard family is added because the bank holds only the two book items at that tier. Nothing was run through the engine, so the expression language was used only as specified. The riskiest points are fixed() applied to an exact fraction (d / 100 and th / 1000, used for the divisor display and the rounded answer) and nested conditional expressions inside a let."
+  },
+  {
+   "lo_id": "lo:g10m9s2-1-3",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m9s2-1-3:period-exact",
+     "kind": "family",
+     "lo_id": "lo:g10m9s2-1-3",
+     "parent_question_id": "q:g10m9s2-1-3:we03",
+     "source_page": 333,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": "Prashant deposits money into a bank account that pays simple interest. Amounts are in rands (R). The final amount is the capital plus all the interest earned.",
+     "params": [
+      {
+       "name": "k",
+       "randint": [
+        2,
+        40
+       ]
+      },
+      {
+       "name": "r",
+       "choice": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        11,
+        12,
+        13,
+        14,
+        15
+       ]
+      },
+      {
+       "name": "n",
+       "randint": [
+        2,
+        12
+       ]
+      },
+      {
+       "name": "p",
+       "let": "500 * k"
+      },
+      {
+       "name": "a",
+       "let": "5 * k * (100 + r * n)"
+      },
+      {
+       "name": "i",
+       "let": "fixed(r / 100, 2)"
+      },
+      {
+       "require": "a > p",
+       "why": "the investment must actually grow"
+      }
+     ],
+     "constraints": [
+      "a > p"
+     ],
+     "stem": "Prashant deposits $\\text{R}{=p}$ into a bank account that pays a simple interest rate of ${=r}$ % p.a. How many years must he leave the money in the account for it to grow to $\\text{R}{=a}$ ?",
+     "answer": "n",
+     "solution": [
+      "Read the question carefully and write down the given information: $\\begin{aligned}A&=\\text{R}{=a}\\\\P&=\\text{R}{=p}\\\\i&=\\frac{{=r}}{100}={=i}\\\\n&=?\\end{aligned}$",
+      "To calculate the number of years, we need to make $n$ the subject of the formula: $\\begin{aligned}A&=P(1+in)\\\\\\frac{A}{P}&=1+in\\\\\\frac{A}{P}-1&=in\\\\\\frac{\\frac{A}{P}-1}{i}&=n\\end{aligned}$",
+      "Substitute the values and calculate: $\\begin{aligned}n&=\\frac{\\left(\\frac{{=a}}{{=p}}\\right)-1}{{=i}}\\\\&={=n}\\end{aligned}$",
+      "It will take ${=n}$ years for $\\text{R}{=p}$ to grow to $\\text{R}{=a}$ at a simple interest rate of ${=r}$ % p.a."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Basic tier: the entry point of the skill. Every instance is built forwards from a whole number of years n, so A = P(1 + in) holds exactly and the answer is a whole number with no rounding. P is a multiple of R500 (R1000 to R20000) so the interest per year is a whole number of rands and A is a whole number. The rate is a whole percentage chosen from a list that skips 10, so i always prints with exactly two decimals (0.04 to 0.15) and never with a trailing zero. The solution follows the book's own skeleton (write down A, P, i, n; make n the subject; substitute; state the answer) from worked example 3 on p.333. The book's round-up-to-the-nearest-year rule is deliberately left to the standard and advanced book questions, so the two catalogued rounding misconceptions (rounds-n-to-nearest-not-up, rounds-too-early) do not apply here and no distractors are needed (numeric, not mcq). Check one instance: k=6, r=8, n=5 gives P=3000, A=4200, i=0.08, n=(4200/3000-1)/0.08=5."
+    }
+   ],
+   "infeasible": [],
+   "notes": "Only the basic tier was listed as a gap, so one family was written. Standard and advanced are already covered by the book's own questions for this objective (ex9-1-13, we03, ex9-1-12, ex9-7-6, ex9-7-7)."
+  },
+  {
+   "lo_id": "lo:g10m9s2-1-4",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m9s2-1-4:direct",
+     "kind": "family",
+     "lo_id": "lo:g10m9s2-1-4",
+     "parent_question_id": "q:g10m9s2-1-4:we04",
+     "source_page": 333,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": "Fritha wants a sum of money (in Rand) to grow to a larger target amount over a stated number of whole years in an account that pays simple interest at a fixed annual rate; the rate is unknown and must be found.",
+     "params": [
+      {
+       "name": "P",
+       "choice": [
+        1000,
+        1500,
+        2000,
+        2500,
+        3000,
+        4000,
+        5000,
+        6000,
+        8000,
+        10000
+       ]
+      },
+      {
+       "name": "r",
+       "randint": [
+        3,
+        15
+       ]
+      },
+      {
+       "name": "n",
+       "randint": [
+        2,
+        10
+       ]
+      },
+      {
+       "require": "r * n <= 90",
+       "why": "keeps the total growth to a believable size"
+      },
+      {
+       "name": "gain",
+       "let": "P // 100 * r * n"
+      },
+      {
+       "name": "A",
+       "let": "P + gain"
+      },
+      {
+       "name": "PN",
+       "let": "P * n"
+      },
+      {
+       "name": "idec",
+       "let": "fixed(r / 100, 2)"
+      }
+     ],
+     "constraints": [
+      "A > P",
+      "(A - P) % (P // 100 * n) == 0"
+     ],
+     "stem": "At what simple interest rate should Fritha invest if she wants to grow $\\text{R{=P}}$ to $\\text{R{=A}}$ in ${=n}$ years? Give the rate as a percentage per year, written as a number without the % sign.",
+     "answer": "r",
+     "solution": [
+      "Read the question and write down the given information: $\\begin{aligned}A&=\\text{R{=A}}\\\\P&=\\text{R{=P}}\\\\n&={=n}\\\\i&=?\\end{aligned}$",
+      "The question asks for a simple interest rate, so use the simple interest formula $A=P(1+in)$ and make $i$ the subject: $\\begin{aligned}A&=P(1+in)\\\\\\frac{A}{P}&=1+in\\\\\\frac{A}{P}-1&=in\\\\\\frac{\\frac{A}{P}-1}{n}&=i\\end{aligned}$",
+      "Substitute the values: $i=\\frac{\\frac{{=A}}{{=P}}-1}{{=n}}=\\frac{{=gain}}{{=PN}}={=idec}$",
+      "Write $i$ as a percentage: $i={=idec}\\times100={=r}\\%$ per year.",
+      "So Fritha must invest at a simple interest rate of ${=r}\\%$ per annum."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Basic entry point, modelled on we04 (Fritha, R2500 to R4000 in 5 years, 12%). n is given directly, the rate is a whole percent, and every amount is a whole number of Rand: P is a multiple of 100, so gain = (P/100)*r*n is an integer and A = P + gain is exact. The constraint checks that i comes out as exactly r/100. r*n is capped at 90 so total growth stays believable. The answer is the percentage as a plain number (12 for 12%), as the book prints it; the stem says so to keep a blind solver from answering 0.12. No misconceptions are catalogued for this objective and the family is numeric, so there are no distractors."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m9s2-1-4:birthday-deposit",
+     "kind": "family",
+     "lo_id": "lo:g10m9s2-1-4",
+     "parent_question_id": "q:g10m9s2-1-4:ex9-1-8",
+     "source_page": 335,
+     "tier": "standard",
+     "answer_type": "numeric",
+     "context": "Joseph deposits Rand into a savings account when his son is a given age; the account earns simple interest at a fixed annual rate, and when the son is older the balance is stated. The number of years must be found from the two ages, and then the rate.",
+     "params": [
+      {
+       "name": "a1",
+       "randint": [
+        3,
+        10
+       ]
+      },
+      {
+       "name": "a2",
+       "randint": [
+        "a1 + 6",
+        21
+       ]
+      },
+      {
+       "name": "n",
+       "let": "a2 - a1"
+      },
+      {
+       "name": "P",
+       "choice": [
+        2000,
+        2400,
+        3200,
+        4000,
+        4800,
+        6000,
+        8000
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        9,
+        39
+       ],
+       "resample_while": "q % 4 == 0"
+      },
+      {
+       "name": "gain",
+       "let": "P // 400 * q * n"
+      },
+      {
+       "name": "A",
+       "let": "P + gain"
+      },
+      {
+       "name": "PN",
+       "let": "P * n"
+      },
+      {
+       "name": "rr",
+       "let": "fixed(q / 4, 2) if q % 2 == 1 else fixed(q / 4, 1)"
+      },
+      {
+       "name": "idec",
+       "let": "fixed(q / 400, 4) if q % 2 == 1 else fixed(q / 400, 3)"
+      }
+     ],
+     "constraints": [
+      "n >= 6",
+      "(A - P) * 400 == P * q * n"
+     ],
+     "stem": "When his son was ${=a1}$ years old, Joseph deposited $\\text{R{=P}}$ into a savings account. Simple interest was used, and when his son was ${=a2}$ years old the balance in the account had grown to $\\text{R{=A}}$. Calculate the rate at which the money was invested. Give the rate as a percentage per year, written as a number without the % sign. It works out exactly, so no rounding is needed.",
+     "answer": "rr",
+     "solution": [
+      "Work out for how many years the money was invested: $n={=a2}-{=a1}={=n}$ years.",
+      "Write down the given information: $\\begin{aligned}A&=\\text{R{=A}}\\\\P&=\\text{R{=P}}\\\\n&={=n}\\\\i&=?\\end{aligned}$",
+      "The interest is simple, so use $A=P(1+in)$ and make $i$ the subject: $\\begin{aligned}A&=P(1+in)\\\\\\frac{A}{P}&=1+in\\\\\\frac{A}{P}-1&=in\\\\\\frac{\\frac{A}{P}-1}{n}&=i\\end{aligned}$",
+      "Substitute the values: $i=\\frac{\\frac{{=A}}{{=P}}-1}{{=n}}=\\frac{{=gain}}{{=PN}}={=idec}$",
+      "Write $i$ as a percentage: $i={=idec}\\times100={=rr}\\%$ per year.",
+      "So the money was invested at a simple interest rate of ${=rr}\\%$ per annum."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Standard tier, modelled on ex9-1-8 (Joseph, R5000 at the son's fifth birthday, R18000 at 21, 16.25%). The extra step the book uses is that n has to be found from the two ages (a2 - a1, between 6 and 18 years), and the rate is not a whole percent: it is a multiple of 0.25% that is never whole (2.25 to 9.75). P is a multiple of 400, so gain = (P/400)*q*n is an integer and A is a whole number of Rand; the second constraint checks that i is exactly q/400. rr and idec are formatted strings so the answer shows 3.25 or 3.5 with no trailing zeros, and the worked i shows its exact decimal (0.0325 or 0.035). The stem tells the solver the rate works out exactly and to give a bare percentage number, so a blind solver does not round or answer 0.0325. No misconceptions are catalogued for this objective and the family is numeric, so there are no distractors. The book's rounded-to-one-decimal questions (ex9-1-9, 9-1-10, 9-1-11, 9-7-4, 9-7-5) and the hire-purchase twist (9-7-25) are left to the book as the advanced tier."
+    }
+   ],
+   "infeasible": [],
+   "notes": "Two families written, one per listed gap (basic and standard). Advanced is not in the gap list and the book's own questions already cover it (the rounded-to-one-decimal son-deposit questions and the hire-purchase twist), so I added no advanced family. I had no access to the engine, so I checked the arithmetic by hand: basic P=2500, r=12, n=5 gives gain 1500 and A=4000, which matches the book's we04; standard P=4800, q=13, ages 5 and 17 gives n=12, gain 1872, A=6672, i=0.0325 and rate 3.25. The templates rely on fixed() returning plain strings and on {=int} rendering without separators; amounts are kept whole so no Fraction is ever rendered as a \\frac."
+  },
+  {
+   "lo_id": "lo:g10m9s3-1-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m9s3-1-1:compare-two-investments",
+     "kind": "family",
+     "lo_id": "lo:g10m9s3-1-1",
+     "parent_question_id": "q:g10m9s3-1-1:ex9-7-13b",
+     "source_page": 350,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": "Two friends, Thandi and Sipho, each put money into a savings account that pays compound interest, in Rand. The accounts have different principal amounts and different annual rates, but both investments run for the same number of whole years. The question asks how much more Thandi's accumulated amount is than Sipho's, to two decimal places, with no rounding until the end.",
+     "params": [
+      {
+       "name": "k1",
+       "randint": [
+        200,
+        900
+       ]
+      },
+      {
+       "name": "P1",
+       "let": "10 * k1"
+      },
+      {
+       "name": "r1t",
+       "randint": [
+        30,
+        150
+       ],
+       "resample_while": "r1t % 10 == 0"
+      },
+      {
+       "name": "k2",
+       "randint": [
+        200,
+        900
+       ]
+      },
+      {
+       "name": "P2",
+       "let": "10 * k2"
+      },
+      {
+       "name": "r2t",
+       "randint": [
+        30,
+        150
+       ],
+       "resample_while": "r2t % 10 == 0 or r2t == r1t"
+      },
+      {
+       "name": "n",
+       "randint": [
+        3,
+        7
+       ]
+      },
+      {
+       "name": "r1s",
+       "let": "fixed(r1t / 10, 1)"
+      },
+      {
+       "name": "r2s",
+       "let": "fixed(r2t / 10, 1)"
+      },
+      {
+       "name": "i1s",
+       "let": "fixed(r1t / 1000, 3)"
+      },
+      {
+       "name": "i2s",
+       "let": "fixed(r2t / 1000, 3)"
+      },
+      {
+       "name": "A1",
+       "let": "P1 * (1 + r1t / 1000) ** n"
+      },
+      {
+       "name": "A2",
+       "let": "P2 * (1 + r2t / 1000) ** n"
+      },
+      {
+       "name": "D",
+       "let": "A1 - A2"
+      },
+      {
+       "require": "D >= 100",
+       "why": "Thandi's investment must be clearly worth more, so the difference is a sensible positive amount of money."
+      },
+      {
+       "require": "abs(100 * A1 - floor(100 * A1) - 1/2) > 1/20",
+       "why": "Keep Thandi's accumulated amount away from a half-cent, so every solver rounds it to the same cent."
+      },
+      {
+       "require": "abs(100 * A2 - floor(100 * A2) - 1/2) > 1/20",
+       "why": "Keep Sipho's accumulated amount away from a half-cent, so every solver rounds it to the same cent."
+      },
+      {
+       "require": "abs(100 * D - floor(100 * D) - 1/2) > 1/20",
+       "why": "Keep the final difference away from a half-cent, so every solver rounds it to the same cent."
+      },
+      {
+       "require": "floor(100 * A1 + 1/2) - floor(100 * A2 + 1/2) == floor(100 * D + 1/2)",
+       "why": "Rounding each amount to the cent and then subtracting must give the same answer as subtracting first and rounding at the end, so the worked solution and any sensible solver agree."
+      }
+     ],
+     "constraints": [
+      "A1 > A2"
+     ],
+     "stem": "Thandi and Sipho each invest money in a savings account which pays compound interest. Thandi invests $\\text{R{=P1}}$ at a compound interest rate of ${=r1s}$ % p.a. and Sipho invests $\\text{R{=P2}}$ at a compound interest rate of ${=r2s}$ % p.a. Both investments run for ${=n}$ years. Calculate how much more Thandi's investment is worth than Sipho's at the end of the ${=n}$ years. As usual with financial calculations, round your answer to two decimal places, but do not round off until you have reached the solution.",
+     "answer": "fixed(D, 2)",
+     "solution": [
+      "Each investment needs its own accumulated amount, so write down the given information for Thandi's investment: $\\begin{aligned}P_1&={=P1}\\\\i_1&=\\frac{{=r1s}}{100}={=i1s}\\\\n&={=n}\\\\A_1&=?\\end{aligned}$",
+      "Write down the given information for Sipho's investment: $\\begin{aligned}P_2&={=P2}\\\\i_2&=\\frac{{=r2s}}{100}={=i2s}\\\\n&={=n}\\\\A_2&=?\\end{aligned}$",
+      "Thandi's accumulated amount is found with $A=P(1+i)^n$. Do not round part-way: use the full calculator value and round only the amount itself to two decimal places. $\\begin{aligned}A_1&=P_1(1+i_1)^n\\\\&={=P1}\\left(1+{=i1s}\\right)^{{=n}}\\\\&=\\text{R {=fixed(A1, 2)}}\\end{aligned}$",
+      "Sipho's accumulated amount is found the same way: $\\begin{aligned}A_2&=P_2(1+i_2)^n\\\\&={=P2}\\left(1+{=i2s}\\right)^{{=n}}\\\\&=\\text{R {=fixed(A2, 2)}}\\end{aligned}$",
+      "To see how much more Thandi's investment is worth, subtract Sipho's accumulated amount from Thandi's: $\\begin{aligned}A_1-A_2&={=fixed(A1, 2)}-{=fixed(A2, 2)}\\\\&=\\text{R {=fixed(D, 2)}}\\end{aligned}$",
+      "At the end of ${=n}$ years Thandi's investment is worth $\\text{R {=fixed(D, 2)}}$ more than Sipho's."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Advanced gap: the book's own questions for this objective are one-investment, one-formula calculations (basic ex9-2-1; standard ex9-2-2, ex9-2-3, ex9-7-10) plus the A minus P compound-interest variant (ex9-7-13). This family needs the same method A = P(1+i)^n applied twice, rate percentages converted to decimals twice, and a final subtraction. Nothing outside the book's method is used. Parent is ex9-7-13b (p. 350) because it is the book's own question that combines the formula with a subtraction at the end. The 'do not round off until you have reached the solution' sentence is the book's own wording from ex9-2-2/ex9-2-3, so the catalogued mc:g10m9s3-1-1:rounds-before-the-end is the error this family is built to expose (numeric family, so no distractors). Rates always have exactly one non-zero tenth (3.1 to 14.9 percent, like the book's 7.5, 11.6, 8.3) so the decimal i always prints with exactly three places with no trailing zero. Both investments share one term n (3 to 7 years, the book's range), which removes any ambiguity about the date at which the two amounts are compared. All arithmetic is exact (whole-number division gives fractions), so no floating-point error. The four require lines (a) keep the difference positive and at least R100, (b) keep each of A1, A2 and the difference at least 0.05 of a cent from a half-cent boundary, and (c) force round(A1) - round(A2) to equal round(A1 - A2), so a solver who rounds each amount to the cent before subtracting, as the worked solution shows, and one who rounds only at the very end both reach the same answer. Principals run from R2000 to R9000 in steps of R10, so the largest amount is about R24000. Rand notation follows the book as $\\text{R3500}$. Answer is formatted with fixed(D, 2)."
+    }
+   ],
+   "infeasible": [],
+   "notes": "Only the advanced tier was listed as a gap, so one family was written. Basic (ex9-2-1) and standard (ex9-2-2, ex9-2-3, ex9-7-10, ex9-7-13a-c, ex9-7-18b) are already covered by book questions and were not padded with extra families. Nothing is marked infeasible. I did not run the engine, so the exact-fraction behaviour of fixed(), floor() and ** on rational values and the retry limit for the require lines are assumed from the spec, not tested. Acceptance for the require lines is roughly a quarter of draws, which should be plenty."
+  },
+  {
+   "lo_id": "lo:g10m9s3-1-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m9s3-1-2:find-rate",
+     "kind": "family",
+     "lo_id": "lo:g10m9s3-1-2",
+     "parent_question_id": "q:g10m9s3-1-2:ex9-2-7",
+     "source_page": 340,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": "Morgan invests a sum of money (in rand) into an account which pays compound interest, compounded annually, and pays out a lump sum at the end of a whole number of years. Given the amount invested, the number of years and the lump sum he receives, find the annual compound interest rate the bank offered. The rate is a whole-number percentage, so the n-th root comes out exactly.",
+     "params": [
+      {
+       "name": "n",
+       "choice": [
+        3,
+        4
+       ]
+      },
+      {
+       "name": "r",
+       "choice": "[10, 20] if n == 4 else [4, 5, 6, 8, 10, 12, 15, 20]"
+      },
+      {
+       "name": "P",
+       "choice": [
+        1000,
+        2000,
+        2500,
+        4000,
+        5000,
+        8000,
+        10000,
+        12000,
+        15000,
+        20000
+       ]
+      },
+      {
+       "require": "(P * (100 + r) ** n) % (100 ** (n - 1)) == 0",
+       "why": "the lump sum must be an exact number of cents, so the rate is exactly r % and the root is exact"
+      },
+      {
+       "name": "A",
+       "let": "P * (100 + r) ** n / 100 ** n"
+      },
+      {
+       "name": "g",
+       "let": "1 + r / 100"
+      }
+     ],
+     "constraints": [],
+     "stem": "Morgan invests $\\text{R{=P}}$ into an account which pays out a lump sum at the end of ${=n}$ years. If he gets $\\text{R{=fixed(A, 2)}}$ at the end of the period, what compound interest rate did the bank offer him? The interest is compounded annually. Give the rate as a percentage per annum, as a number without the % sign.",
+     "answer": "r",
+     "solution": [
+      "Write down what is given: $A=\\text{R{=fixed(A, 2)}}$, $P=\\text{R{=P}}$, $n={=n}$ and $i=\\,?$",
+      "Write down the formula and substitute the known values: $A=P(1+i)^{n}$ gives $\\text{R{=fixed(A, 2)}}=\\text{R{=P}}(1+i)^{{=n}}$",
+      "Divide both sides by $\\text{R{=P}}$ to get the bracket on its own: $\\frac{{=fixed(A, 2)}}{{=P}}=(1+i)^{{=n}}$",
+      "Take the $n$th root of both sides (here $n={=n}$) and use your calculator: $1+i=\\sqrt[{=n}]{\\frac{{=fixed(A, 2)}}{{=P}}}={=fixed(g, 2)}$",
+      "Subtract $1$ from both sides to find $i$: $i={=fixed(g, 2)}-1={=fixed(r / 100, 2)}$",
+      "Write the rate as a percentage: $i\\times 100={=r}$, so the bank offered a compound interest rate of ${=r}$ % p.a.",
+      "Check: $\\text{R{=P}}\\times({=fixed(g, 2)})^{{=n}}=\\text{R{=fixed(A, 2)}}$, which is the amount Morgan received."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Basic tier: the entry point of 'solve A = P(1+i)^n for i', modelled on ex9-2-7 (Morgan, R5000 to R7500) but with data chosen so that the rate is an exact whole percentage and the n-th root is clean. n is 3 or 4 so the root is written with the book's \\sqrt[n] notation (n = 2 would print the unconventional \\sqrt[2]); for n = 4 only 10 % and 20 % keep the lump sum exact to the cent. The require guarantees A = P(1+r/100)^n is an exact amount of rand and cents (checked offline: 72 distinct (n, r, P) combinations, A at most R41472.00, and the n-th root of A/P equals 1 + r/100 exactly in every one), so there is exactly one correct answer and no rounding is involved. The stem says the interest is compounded annually, to match the formula A = P(1+i)^n, and asks for the percentage as a bare number, as the book's answers are (e.g. 8.45). No mcq, so no distractors; the catalogued misconception (reading a very high rate as a mistake in the working) belongs to the advanced we06 comment question, which is a book question and is not repeated here. Standard and advanced tiers are not gaps (four book questions already cover them), and a non-exact root cannot be computed with the available expression language, so no rounded-decimal family is offered."
+    }
+   ],
+   "infeasible": [],
+   "notes": "One basic family (tpl:g10m9s3-1-2:find-rate). The gap list named only the basic tier. The standard and advanced tiers already have book questions, and a rounded-decimal family would need an n-th root, which the expression language does not provide (only sqrt). Offline check of the (n, r, P) combinations the require allows: 72 distinct, each with an exact-cent lump sum. In every one the n-th root of A/P equals 1 + r/100, so the rate is exactly r percent."
+  },
+  {
+   "lo_id": "lo:g10m9s3-1-3",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m9s3-1-3:same-rate-gap",
+     "kind": "family",
+     "lo_id": "lo:g10m9s3-1-3",
+     "parent_question_id": "q:g10m9s3-1-3:ex9-7-17",
+     "source_page": 351,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": "Bianca invests an amount of money for 2 years. Bank A pays simple interest and Bank B pays compound interest (compounded annually), both at the same rate per annum. Amounts are in rand (R).",
+     "params": [
+      {
+       "name": "m",
+       "randint": [
+        2,
+        25
+       ]
+      },
+      {
+       "name": "r",
+       "choice": [
+        5,
+        10,
+        15,
+        20
+       ]
+      },
+      {
+       "name": "p",
+       "let": "400 * m"
+      },
+      {
+       "name": "sbal",
+       "let": "p * (1 + 2 * r / 100)"
+      },
+      {
+       "name": "cbal",
+       "let": "p * (1 + r / 100) ** 2"
+      },
+      {
+       "name": "d",
+       "let": "cbal - sbal"
+      },
+      {
+       "require": "is_int(sbal) and is_int(cbal)",
+       "why": "both closing balances must be whole rands so the answer needs no rounding"
+      },
+      {
+       "require": "d > 0",
+       "why": "the compound account must be the larger one, as the stem asks how much more it holds"
+      },
+      {
+       "name": "idec",
+       "let": "fixed(r / 100, 2)"
+      },
+      {
+       "name": "fdec",
+       "let": "fixed(1 + r / 100, 2)"
+      }
+     ],
+     "constraints": [
+      "cbal > sbal"
+     ],
+     "stem": "Bianca invests $\\text{R{=p}}$ for 2 years. Bank A pays simple interest at a rate of ${=r}$ % per annum, whereas Bank B pays compound interest, compounded annually, at the same rate of ${=r}$ % per annum. How much more money does Bianca have in the account at Bank B than in the account at Bank A at the end of the 2 years? Give your answer in rand.",
+     "answer": "d",
+     "solution": [
+      "Bank A pays simple interest, so use $A=P(1+in)$ with $P={=p}$, $i={=idec}$ and $n=2$.",
+      "$\\begin{aligned}A&={=p}(1+({=idec})(2))\\\\A&=\\text{R {=sbal}}\\end{aligned}$",
+      "Bank B pays compound interest, so use $A=P(1+i)^{n}$ with $P={=p}$, $i={=idec}$ and $n=2$.",
+      "$\\begin{aligned}A&={=p}(1+{=idec})^{2}\\\\A&={=p}({=fdec})^{2}\\\\A&=\\text{R {=cbal}}\\end{aligned}$",
+      "The difference between the two closing balances is $\\text{R {=cbal}}-\\text{R {=sbal}}=\\text{R {=d}}$.",
+      "Bianca has $\\text{R {=d}}$ more in the compound interest account at Bank B, because in the second year it also earns interest on the first year's interest."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Entry point of the skill: same rate, same 2-year period, so the only difference between the accounts is the type of interest. Uses the book's own formulas A = P(1 + in) and A = P(1 + i)^n and its layout (P, i, n, A). Principal is 400*m and the rate is 5, 10, 15 or 20 so that both closing balances AND the difference are whole rands (difference = m*r^2/25), meaning no rounding is needed and the answer is exact for any solver. 96 distinct (P, r) combinations. No distractors because it is numeric. The compounding period is stated as annual, which is the book's convention. Verified by exact-fraction enumeration: every instance has cbal > sbal and whole-number balances."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m9s3-1-3:different-rates",
+     "kind": "family",
+     "lo_id": "lo:g10m9s3-1-3",
+     "parent_question_id": "q:g10m9s3-1-3:ex9-7-17",
+     "source_page": 351,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": "Bianca has an amount of money to invest for a number of years. Bank A offers a savings account paying simple interest and Bank B offers a savings account paying compound interest (compounded annually). Bank A's rate is higher than Bank B's. Amounts are in rand (R).",
+     "params": [
+      {
+       "name": "rc",
+       "randint": [
+        6,
+        12
+       ]
+      },
+      {
+       "name": "g",
+       "choice": [
+        1,
+        2
+       ]
+      },
+      {
+       "name": "rs",
+       "let": "rc + g"
+      },
+      {
+       "name": "n",
+       "randint": [
+        3,
+        6
+       ]
+      },
+      {
+       "name": "p",
+       "choice": [
+        1000,
+        1500,
+        2000,
+        2500,
+        3000,
+        4000,
+        5000,
+        6000
+       ]
+      },
+      {
+       "name": "sbal",
+       "let": "p * (1 + rs * n / 100)"
+      },
+      {
+       "name": "cbal",
+       "let": "p * (1 + rc / 100) ** n"
+      },
+      {
+       "name": "d",
+       "let": "abs(cbal - sbal)"
+      },
+      {
+       "require": "d >= 20",
+       "why": "the two balances must differ clearly so the better account is not a near tie"
+      },
+      {
+       "require": "abs(d - floor(d) - 1/2) > 1/4",
+       "why": "keeps the exact difference well away from a half rand, so rounding only the final answer to the nearest rand is unambiguous even if a solver rounds the balances to cents or the growth factor to 4 decimals"
+      },
+      {
+       "require": "cbal * 100 - floor(cbal * 100) != 1/2",
+       "why": "the compound balance must not be an exact half cent, so its rounding to cents is unambiguous"
+      },
+      {
+       "name": "ans",
+       "let": "floor(d + 1/2)"
+      },
+      {
+       "name": "ids",
+       "let": "fixed(rs / 100, 2)"
+      },
+      {
+       "name": "idc",
+       "let": "fixed(rc / 100, 2)"
+      },
+      {
+       "name": "fs",
+       "let": "fixed(1 + rs * n / 100, 2)"
+      },
+      {
+       "name": "sbal_s",
+       "let": "fixed(sbal, 2)"
+      },
+      {
+       "name": "cbal_s",
+       "let": "fixed(cbal, 2)"
+      },
+      {
+       "name": "big_s",
+       "let": "fixed(max(sbal, cbal), 2)"
+      },
+      {
+       "name": "small_s",
+       "let": "fixed(min(sbal, cbal), 2)"
+      },
+      {
+       "name": "d_s",
+       "let": "fixed(d, 2)"
+      },
+      {
+       "name": "wtxt",
+       "let": "'Bank B, even though its rate is lower' if cbal > sbal else 'Bank A'"
+      }
+     ],
+     "constraints": [
+      "rs > rc"
+     ],
+     "stem": "Bianca has $\\text{R{=p}}$ to invest for ${=n}$ years. Bank A offers a savings account which pays simple interest at a rate of ${=rs}$ % per annum, whereas Bank B offers a savings account paying compound interest, compounded annually, at a rate of ${=rc}$ % per annum. Bianca chooses the account that leaves her with the higher accumulated balance at the end of the ${=n}$ year period. How much more money does she have than she would have had in the other account? Give your answer to the nearest rand.",
+     "answer": "ans",
+     "solution": [
+      "Bank A pays simple interest, so use $A=P(1+in)$ with $P={=p}$, $i={=ids}$ and $n={=n}$.",
+      "$\\begin{aligned}A&={=p}(1+({=ids})({=n}))\\\\A&={=p}({=fs})\\\\A&=\\text{R {=sbal_s}}\\end{aligned}$",
+      "Bank B pays compound interest, so use $A=P(1+i)^{n}$ with $P={=p}$, $i={=idc}$ and $n={=n}$.",
+      "$\\begin{aligned}A&={=p}(1+{=idc})^{{=n}}\\\\A&=\\text{R {=cbal_s}}\\end{aligned}$",
+      "Bank A leaves her with $\\text{R {=sbal_s}}$ and Bank B leaves her with $\\text{R {=cbal_s}}$, so the account that gives her more money is {=wtxt}.",
+      "The difference is $\\text{R {=big_s}}-\\text{R {=small_s}}=\\text{R {=d_s}}$, which is $\\text{R {=ans}}$ to the nearest rand."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Advanced: uses the twist of the book question itself (simple interest at the higher rate against compound interest at the lower rate, so the rates alone do not decide it) but adds steps: both closing balances, the decision, then the difference rounded to the nearest rand. The simple rate is 1 or 2 points above the compound rate, over 3 to 6 years, so the winner varies (verified by exact-fraction enumeration: 173 valid combinations, 82 where compound wins and 91 where simple wins; short periods favour simple, longer periods favour compound). The guards keep the answer robust: difference at least R20, exact difference at least a quarter rand from a half rand (so rounding balances to cents, or the growth factor to 4 or 5 decimals, gives the same nearest rand), and no exact half-cent in the compound balance. P is a multiple of 100 and rates are whole percentages, so the simple balance is exact to the cent. The stem states annual compounding, the book's convention. No distractors since it is numeric. The listed misconception mc:g10m9s3-1-3:bigger-rate-wins is exactly the error the numeric answer exposes when compound wins (the solver picks the higher rate and gets the wrong sign or size), but it cannot be tagged on a numeric family."
+    }
+   ],
+   "infeasible": [],
+   "notes": "Two families filling the listed gaps (basic and advanced); the standard tier is covered by the book question itself, so no standard family was added. Both families are numeric and use only the book's formulas A = P(1 + in) and A = P(1 + i)^n with annual compounding. Parameters were enumerated with exact fractions so that every instance is clean: the basic family always gives whole-rand balances and difference (96 combinations); the advanced family gives 173 valid combinations with margins that make the nearest-rand answer insensitive to ordinary intermediate rounding. The solution templates use fixed(x, 2) strings for decimals (e.g. 0.05, 1.05) because I could not confirm how the engine renders a decimal Fraction; the advanced family also uses string literals inside a let expression for the winning-bank sentence. mc:g10m9s3-1-3:compound-better-for-everyone concerns borrowing, which is outside the book's investment context, so no family uses it; mc:g10m9s3-1-3:bigger-rate-wins is not attached because neither family is mcq."
+  },
+  {
+   "lo_id": "lo:g10m9s3-1-4",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m9s3-1-4:target-exact",
+     "kind": "family",
+     "lo_id": "lo:g10m9s3-1-4",
+     "parent_question_id": "q:g10m9s3-1-4:ex9-2-5",
+     "source_page": 340,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": "Sipho wants to invest a lump sum today at a fixed compound interest rate (a whole-number percentage per annum) so that it grows to a target amount in rand after 2 years. Only the rate and the target amount change between instances; the target is always chosen so that the amount to invest is a whole number of rand, so no rounding is needed.",
+     "params": [
+      {
+       "name": "r",
+       "choice": [
+        4,
+        5,
+        8,
+        10,
+        20
+       ]
+      },
+      {
+       "name": "n",
+       "let": "2"
+      },
+      {
+       "name": "base",
+       "let": "100 ** n // gcd(100 ** n, (100 + r) ** n)"
+      },
+      {
+       "name": "unit",
+       "let": "lcm(base, 500)"
+      },
+      {
+       "name": "m",
+       "randint": [
+        "ceil(2000 / unit)",
+        "floor(30000 / unit)"
+       ]
+      },
+      {
+       "name": "prin",
+       "let": "unit * m"
+      },
+      {
+       "name": "amt",
+       "let": "prin * (100 + r) ** n // 100 ** n"
+      },
+      {
+       "require": "prin * (100 + r) ** n % (100 ** n) == 0",
+       "why": "the target amount must be a whole number of rand, so that the principal comes out exact"
+      }
+     ],
+     "constraints": [
+      "amt > prin",
+      "prin >= 2000"
+     ],
+     "stem": "Sipho wants to invest some money at a compound interest rate of ${=r}$ % p.a. How much money should he invest if he wants to reach a sum of $\\text{R{=amt}}$ in ${=n}$ years' time?",
+     "answer": "prin",
+     "solution": [
+      "Read the question carefully and write down the given information: $\\begin{aligned}A&=\\text{R{=amt}}\\\\P&=?\\\\i&=\\frac{{=r}}{100}={=fixed(r / 100, 2)}\\\\n&={=n}\\end{aligned}$",
+      "To find the amount he must invest, make $P$ the subject of the formula: $\\begin{aligned}A&=P(1+i)^{n}\\\\\\frac{A}{(1+i)^{n}}&=P\\end{aligned}$",
+      "Substitute the values and calculate: $\\begin{aligned}P&=\\frac{\\text{R{=amt}}}{(1+{=fixed(r / 100, 2)})^{{=n}}}\\\\&=\\text{R{=prin}}\\end{aligned}$",
+      "Sipho must invest $\\text{R{=prin}}$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Entry point of the skill: n = 2 only, whole-number rate, and the target is built backwards from a round principal (a multiple of lcm(base, 500) where base = 100^n / gcd(100^n, (100+r)^n)), so A is a whole number and the principal is an exact whole number of rand. This removes the book's 'round up' step on purpose (the book's own questions round up, e.g. 24001.46 -> 24002), which is what the standard and advanced work covers. Exact arithmetic means the key cannot differ by calculator rounding. Example: r = 4, principal 2500 -> A = 2704 (2704 / 1.0816 = 2500). Likely student errors (not used as distractors, since the item is numeric): multiplying A by (1+i)^n instead of dividing, dividing by 1+i once instead of (1+i)^n, or dividing by 1 + n*i (simple-interest habit)."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m9s3-1-4:two-goals",
+     "kind": "family",
+     "lo_id": "lo:g10m9s3-1-4",
+     "parent_question_id": "q:g10m9s3-1-4:ex9-7-11",
+     "source_page": 350,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": "Naledi needs one sum of money in rand after a few years (for a laptop) and a second sum after a longer time (for a course). She will invest two separate amounts today, one for each need, both at the same compound interest rate (a percentage with one decimal place, per annum). Each principal is found with the book's method P = A / (1 + i)^n, rounded up to the next whole rand as in the book's own exercises, and the two rounded amounts are added.",
+     "params": [
+      {
+       "name": "t",
+       "randint": [
+        81,
+        149
+       ],
+       "resample_while": "t % 10 == 0"
+      },
+      {
+       "name": "rate",
+       "let": "t / 10"
+      },
+      {
+       "name": "iv",
+       "let": "t / 1000"
+      },
+      {
+       "name": "n1",
+       "randint": [
+        2,
+        5
+       ]
+      },
+      {
+       "name": "n2",
+       "randint": [
+        "n1 + 2",
+        9
+       ]
+      },
+      {
+       "name": "u1",
+       "randint": [
+        30,
+        120
+       ]
+      },
+      {
+       "name": "u2",
+       "randint": [
+        30,
+        200
+       ]
+      },
+      {
+       "name": "amt1",
+       "let": "100 * u1"
+      },
+      {
+       "name": "amt2",
+       "let": "100 * u2"
+      },
+      {
+       "name": "pv1",
+       "let": "amt1 * 1000 ** n1 / (1000 + t) ** n1"
+      },
+      {
+       "name": "pv2",
+       "let": "amt2 * 1000 ** n2 / (1000 + t) ** n2"
+      },
+      {
+       "name": "f1",
+       "let": "pv1 - floor(pv1)"
+      },
+      {
+       "name": "f2",
+       "let": "pv2 - floor(pv2)"
+      },
+      {
+       "require": "10 * f1 >= 1 and 10 * f1 <= 9",
+       "why": "keep the first principal well away from a whole rand, so rounding up is unambiguous"
+      },
+      {
+       "require": "10 * f2 >= 1 and 10 * f2 <= 9",
+       "why": "keep the second principal well away from a whole rand, so rounding up is unambiguous"
+      },
+      {
+       "name": "q1",
+       "let": "ceil(pv1)"
+      },
+      {
+       "name": "q2",
+       "let": "ceil(pv2)"
+      },
+      {
+       "name": "total",
+       "let": "q1 + q2"
+      }
+     ],
+     "constraints": [
+      "n1 < n2",
+      "q1 > 0",
+      "q2 > 0"
+     ],
+     "stem": "Naledi needs $\\text{R{=amt1}}$ for a laptop in ${=n1}$ years' time and $\\text{R{=amt2}}$ for a course in ${=n2}$ years' time. She will invest two separate amounts today, one for each need, at a compound interest rate of ${=fixed(rate, 1)}$ % p.a. How much must she invest in total? Round each of the two amounts up to the next whole rand before you add them, and do not round any other value.",
+     "answer": "total",
+     "solution": [
+      "Each need has its own investment, so work out the two amounts separately. For the first need write down the given information: $\\begin{aligned}A_1&=\\text{R{=amt1}}\\\\P_1&=?\\\\i&=\\frac{{=fixed(rate, 1)}}{100}={=fixed(iv, 3)}\\\\n_1&={=n1}\\end{aligned}$",
+      "Make $P$ the subject of the formula: $\\begin{aligned}A&=P(1+i)^{n}\\\\\\frac{A}{(1+i)^{n}}&=P\\end{aligned}$",
+      "First amount: $\\begin{aligned}P_1&=\\frac{\\text{R{=amt1}}}{(1+{=fixed(iv, 3)})^{{=n1}}}\\\\&=\\text{R{=fixed(pv1, 2)}}\\end{aligned}$ This rounds up to $\\text{R{=q1}}$.",
+      "Second amount, with $A_2=\\text{R{=amt2}}$ and $n_2={=n2}$: $\\begin{aligned}P_2&=\\frac{\\text{R{=amt2}}}{(1+{=fixed(iv, 3)})^{{=n2}}}\\\\&=\\text{R{=fixed(pv2, 2)}}\\end{aligned}$ This rounds up to $\\text{R{=q2}}$.",
+      "Add the two rounded amounts: $\\text{R{=q1}}+\\text{R{=q2}}=\\text{R{=total}}$",
+      "Naledi must invest $\\text{R{=total}}$ in total."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Advanced = several steps: the book's P = A / (1+i)^n applied twice (different n for each need) and the results added. The rounding follows the book ('round up' means ceiling: its own answers 24001.46 -> 24002 and 44871.03 -> 44872 only fit that reading). The stem says each amount is rounded UP to the next whole rand BEFORE adding, which fixes the order of rounding and the direction. Both unrounded principals are computed exactly (rational arithmetic), and each is required to have a fractional part between 0.1 and 0.9, so the ceiling is never decided by a near-integer value or a calculator's last digit. The rate is a one-decimal percentage with a non-zero last digit (8.1 to 14.9, as in the book) so it always prints cleanly with fixed(rate, 1); i prints with fixed(iv, 3). n1 is 2 to 5 and n2 is at least n1 + 2 and at most 9, so every instance has two different periods and no '1 years' wording. Amounts are multiples of R100, as in the book. Worked example: rate 11.8, A1 = R30000 at n1 = 2 gives 24001.46 (as in the book, ex9-2-5), which rounds up to 24002. This is a reviewer note only: a solver who rounds intermediate powers of (1+i) could lose accuracy, hence the 'do not round any other value' sentence in the stem."
+    }
+   ],
+   "infeasible": [],
+   "notes": "Two families, one per listed gap (basic, advanced). No standard family written: the four book questions are all standard and the gap list did not ask for it. The misconception catalogue for this objective is empty and both families are numeric, so there are no distractors and no misconception ids were used or declared. The basic family is exact by construction (A is built from a round principal), so there is no rounding ambiguity. The advanced family rounds up each principal as the book does, with a stated order of rounding and a 0.1 to 0.9 margin on each fractional part. Slugs start target / two-go, so the item ids do not collide. I could not run the engine (only the two packet files were allowed), so the expression syntax was written to the spec but not executed. Points worth a smoke test: fixed() on a Fraction (e.g. t / 10), ceil()/floor() on a Fraction, and an exact Fraction result from whole-number division inside a let."
+  },
+  {
+   "lo_id": "lo:g10m9s4-1-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m9s4-1-2:nodeposit",
+     "kind": "family",
+     "lo_id": "lo:g10m9s4-1-2",
+     "parent_question_id": "q:g10m9s4-1-2:we08",
+     "source_page": 342,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": "Thandi buys a fridge on hire purchase. She pays no deposit, the whole cash price is repaid over a whole number of years with simple interest, and a fixed insurance premium is added to every monthly payment.",
+     "params": [
+      {
+       "name": "k",
+       "randint": [
+        20,
+        90
+       ]
+      },
+      {
+       "name": "cash",
+       "let": "k * 100"
+      },
+      {
+       "name": "yrs",
+       "choice": [
+        2,
+        3,
+        4,
+        5
+       ]
+      },
+      {
+       "name": "r",
+       "choice": [
+        8,
+        9,
+        10,
+        12,
+        14,
+        15,
+        18,
+        20
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        200,
+        700
+       ]
+      },
+      {
+       "name": "prem_c",
+       "let": "q * 5"
+      },
+      {
+       "name": "m",
+       "let": "yrs * 12"
+      },
+      {
+       "name": "acc_c",
+       "let": "cash * (100 + r * yrs)"
+      },
+      {
+       "require": "((2 * acc_c) % m != 0) or (((2 * acc_c) // m) % 2 == 0)",
+       "why": "the monthly repayment must not fall exactly on a half cent, so rounding to the nearest cent is unambiguous"
+      },
+      {
+       "require": "acc_c > 2 * prem_c * m",
+       "why": "keeps the insurance premium realistically small next to the monthly repayment (at most half of it)"
+      },
+      {
+       "name": "acc",
+       "let": "acc_c / 100"
+      },
+      {
+       "name": "inst",
+       "let": "acc / m"
+      },
+      {
+       "name": "prem",
+       "let": "prem_c / 100"
+      },
+      {
+       "name": "tot",
+       "let": "inst + prem"
+      },
+      {
+       "name": "i_t",
+       "let": "fixed(r / 100, 2)"
+      },
+      {
+       "name": "acc_t",
+       "let": "fixed(acc, 2)"
+      },
+      {
+       "name": "inst_t",
+       "let": "fixed(inst, 2)"
+      },
+      {
+       "name": "prem_t",
+       "let": "fixed(prem, 2)"
+      },
+      {
+       "name": "tot_t",
+       "let": "fixed(tot, 2)"
+      }
+     ],
+     "constraints": [
+      "2 * prem <= inst"
+     ],
+     "stem": "Thandi buys a fridge on hire purchase. The cash price of the fridge is $\\text{R{=cash}}$. She pays no deposit and pays the fridge off over ${=yrs}$ years at an interest rate of ${=r}\\%$ p.a., charged as simple interest. An insurance premium of $\\text{R{=prem_t}}$ is added to every monthly payment. Calculate Thandi's monthly payment in rand, correct to the nearest cent.",
+     "answer": "fixed(tot, 2)",
+     "solution": [
+      "There is no deposit, so the amount financed is the cash price: $P = \\text{R{=cash}}$. The interest rate is $i = {=i_t}$ and the period is $n = {=yrs}$ years.",
+      "Calculate the accumulated amount: $A = P(1 + in) = {=cash}(1 + {=i_t} \\times {=yrs}) = \\text{R{=acc_t}}$.",
+      "The agreement runs for ${=yrs} \\times 12 = {=m}$ months, so the monthly repayment on the hire purchase agreement is $\\frac{{=acc_t}}{{=m}} = \\text{R{=inst_t}}$ (to the nearest cent).",
+      "Add the insurance premium to the monthly repayment: $\\text{R{=inst_t}} + \\text{R{=prem_t}} = \\text{R{=tot_t}}$.",
+      "Thandi's monthly payment is $\\text{R{=tot_t}}$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Entry point of the skill: the book's we08 method (A = P(1 + in), divide by the number of months, add the premium) with the deposit removed and the term a whole number of years, so n needs no conversion from months. Simple interest is stated in the stem so a blind solver cannot reach for compound interest; the book leaves it implicit. Cash price is a multiple of R100 so A is a whole number of rand. Premium is in 5-cent steps (R10.00 to R35.00) and is kept at no more than half the monthly repayment. Tie check keeps the repayment off an exact half cent; because the premium is an exact number of cents, rounding the repayment first (as the book does) and rounding the sum give the same answer. I checked 20 000 sampled instances against an independent step-by-step calculation that rounds as the book does: they agree, about 99.5% of draws are accepted, and answers run from about R57 to R560. Typical errors to watch for in review or blind solves: adding the premium once instead of to every month, dividing by the number of years instead of months, using compound interest. No misconceptions are catalogued for this objective and a numeric family has no distractors to tag, so none are proposed."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m9s4-1-2:percentdeposit",
+     "kind": "family",
+     "lo_id": "lo:g10m9s4-1-2",
+     "parent_question_id": "q:g10m9s4-1-2:ex9-3-10",
+     "source_page": 344,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": "Zodwa buys a laptop on hire purchase. She pays a percentage of the cash price as a deposit, repays the balance over a number of months that is not a whole number of years, with simple interest, and a fixed insurance premium is added to every monthly payment.",
+     "params": [
+      {
+       "name": "k",
+       "randint": [
+        20,
+        90
+       ]
+      },
+      {
+       "name": "cash",
+       "let": "k * 100"
+      },
+      {
+       "name": "d",
+       "choice": [
+        10,
+        15,
+        20,
+        25
+       ]
+      },
+      {
+       "name": "m",
+       "choice": [
+        18,
+        30,
+        42,
+        54
+       ]
+      },
+      {
+       "name": "r2",
+       "randint": [
+        12,
+        42
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        200,
+        700
+       ]
+      },
+      {
+       "name": "prem_c",
+       "let": "q * 5"
+      },
+      {
+       "name": "dep",
+       "let": "k * d"
+      },
+      {
+       "name": "P",
+       "let": "cash - dep"
+      },
+      {
+       "name": "acc_num",
+       "let": "P * (2400 + r2 * m)"
+      },
+      {
+       "require": "acc_num % 24 == 0",
+       "why": "the accumulated amount must be a whole number of cents, so no intermediate rounding can change the answer"
+      },
+      {
+       "name": "acc_c",
+       "let": "acc_num // 24"
+      },
+      {
+       "require": "((2 * acc_c) % m != 0) or (((2 * acc_c) // m) % 2 == 0)",
+       "why": "the monthly repayment must not fall exactly on a half cent, so rounding to the nearest cent is unambiguous"
+      },
+      {
+       "require": "acc_c > 2 * prem_c * m",
+       "why": "keeps the insurance premium realistically small next to the monthly repayment (at most half of it)"
+      },
+      {
+       "name": "acc",
+       "let": "acc_c / 100"
+      },
+      {
+       "name": "inst",
+       "let": "acc / m"
+      },
+      {
+       "name": "prem",
+       "let": "prem_c / 100"
+      },
+      {
+       "name": "tot",
+       "let": "inst + prem"
+      },
+      {
+       "name": "r_t",
+       "let": "fixed(r2 / 2, 1) if r2 % 2 == 1 else r2 // 2"
+      },
+      {
+       "name": "i_t",
+       "let": "fixed(r2 / 200, 3) if r2 % 2 == 1 else fixed(r2 / 200, 2)"
+      },
+      {
+       "name": "n_t",
+       "let": "fixed(m / 12, 1)"
+      },
+      {
+       "name": "acc_t",
+       "let": "fixed(acc, 2)"
+      },
+      {
+       "name": "inst_t",
+       "let": "fixed(inst, 2)"
+      },
+      {
+       "name": "prem_t",
+       "let": "fixed(prem, 2)"
+      },
+      {
+       "name": "tot_t",
+       "let": "fixed(tot, 2)"
+      }
+     ],
+     "constraints": [
+      "2 * prem <= inst"
+     ],
+     "stem": "Zodwa is buying a laptop on hire purchase. The cash price of the laptop is $\\text{R{=cash}}$. She has to pay a ${=d}\\%$ deposit and then pay off the remaining amount over ${=m}$ months at an interest rate of ${=r_t}\\%$ p.a., charged as simple interest. An insurance premium of $\\text{R{=prem_t}}$ is added to every monthly payment. Calculate Zodwa's monthly payment in rand, correct to the nearest cent.",
+     "answer": "fixed(tot, 2)",
+     "solution": [
+      "The deposit is ${=d}\\%$ of the cash price: ${=d}\\% \\times {=cash} = \\text{R{=dep}}$. The amount that is financed is $P = {=cash} - {=dep} = \\text{R{=P}}$.",
+      "Write down the interest rate and the period in years: $i = {=i_t}$ and $n = \\frac{{=m}}{12} = {=n_t}$.",
+      "Calculate the accumulated amount: $A = P(1 + in) = {=P}(1 + {=i_t} \\times {=n_t}) = \\text{R{=acc_t}}$.",
+      "Calculate the monthly repayment on the hire purchase agreement: $\\frac{{=acc_t}}{{=m}} = \\text{R{=inst_t}}$ (to the nearest cent).",
+      "Add the insurance premium to the monthly repayment: $\\text{R{=inst_t}} + \\text{R{=prem_t}} = \\text{R{=tot_t}}$.",
+      "Zodwa's monthly payment is $\\text{R{=tot_t}}$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Harder variant of the book's ex9-3-10: a percentage deposit comes off the cash price first, the term is given in months and is an odd multiple of 6 (18, 30, 42 or 54), so n is a decimal (1.5, 2.5, 3.5, 4.5 years), and the rate moves in half-percent steps (6% to 21%), so i can be a three-decimal number such as 0.125, as in the book's ex9-7-26. Simple interest is stated in the stem. Cash price is a multiple of R100 and the deposit is a multiple of 5%, so the deposit and the amount financed are whole rand. Two requires keep it clean: the accumulated amount A is an exact number of cents (about 70% of draws pass), and the monthly repayment is not an exact half cent, so the book's round-then-add and a full-precision solution always agree. The premium is in 5-cent steps (R10.00 to R35.00) and at most half the repayment. I checked 20 000 sampled instances against an independent calculation that rounds as the book does: they agree, and the formula reproduces the book's ex9-3-10 (P = 5778, i = 0.08, n = 3 gives A = 7164.72). Answers run from about R49 to R603. Typical errors to watch for in review or blind solves: applying the percentage to the wrong base, using n = 30 instead of 2.5 in A = P(1 + in), forgetting the deposit, adding the premium once. No misconceptions are catalogued for this objective and a numeric family has no distractors to tag, so none are proposed."
+    }
+   ],
+   "infeasible": [],
+   "notes": "Two families, one for each gap tier (basic and advanced). I left the standard tier alone because it was not listed as a gap. All three book questions are numeric, so both families are numeric. The misconceptions file was empty, so no distractor needed an id and I proposed none. Each family states simple interest in the stem, because the book leaves it implicit and a blind solver could otherwise use compound interest. Money is formatted with fixed(x, 2), and the answer is the rounded monthly payment including the premium. Both families keep the repayment off an exact half cent. I checked both families' arithmetic in Python against a step-by-step calculation that rounds as the book does. I did not run the family engine itself, so the template syntax is unchecked there. That includes fixed() on exact fractions, string-valued let params and the \\text{R{=x}} nesting."
+  },
+  {
+   "lo_id": "lo:g10m9s4-1-3",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m9s4-1-3:increase",
+     "kind": "family",
+     "lo_id": "lo:g10m9s4-1-3",
+     "parent_question_id": "q:g10m9s4-1-3:ex9-4-7",
+     "source_page": 346,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": "The price of popcorn and a cooldrink at the movies is known today. The average rate of inflation over the past few years is given, and the student finds how many rand the price has risen by over that period (past price first, then the difference).",
+     "params": [
+      {
+       "name": "k",
+       "randint": [
+        8,
+        20
+       ]
+      },
+      {
+       "name": "now",
+       "let": "5 * k"
+      },
+      {
+       "name": "n",
+       "randint": [
+        3,
+        8
+       ]
+      },
+      {
+       "name": "r10",
+       "randint": [
+        61,
+        139
+       ]
+      },
+      {
+       "require": "r10 % 10 != 0",
+       "why": "the rate is a decimal such as 9.2 or 7.3, never a whole percentage, as in the book's own harder examples"
+      },
+      {
+       "name": "i",
+       "let": "r10 / 1000"
+      },
+      {
+       "name": "grow",
+       "let": "(1 + i) ** n"
+      },
+      {
+       "name": "past",
+       "let": "now / grow"
+      },
+      {
+       "name": "pr",
+       "let": "floor(past * 100 + 1/2) / 100"
+      },
+      {
+       "name": "d",
+       "let": "now - pr"
+      },
+      {
+       "name": "cents",
+       "let": "(now - past) * 100"
+      },
+      {
+       "require": "abs(cents - floor(cents) - 1/2) > 1/20",
+       "why": "keeps the cent digit away from a rounding boundary, so rounding the past price first or the difference last gives the same answer"
+      },
+      {
+       "name": "rt",
+       "let": "fixed(r10 / 10, 1)"
+      },
+      {
+       "name": "it",
+       "let": "fixed(i, 3)"
+      },
+      {
+       "name": "gt",
+       "let": "fixed(1 + i, 3)"
+      },
+      {
+       "name": "pt",
+       "let": "fixed(pr, 2)"
+      },
+      {
+       "name": "dt",
+       "let": "fixed(d, 2)"
+      }
+     ],
+     "constraints": [],
+     "stem": "The price of popcorn and a cooldrink at the movies is now $\\text{R{=now}}$. The average rate of inflation over the past ${=n}$ years was $\\text{{=rt}}$ % p.a. By how many rand has the price increased over these ${=n}$ years? Round your answer to 2 decimal places.",
+     "answer": "fixed(d, 2)",
+     "solution": [
+      "First find what the popcorn and cooldrink cost ${=n}$ years ago. Write down the given information: $A=\\text{R{=now}}$, $P=?$, $i=\\frac{{=rt}}{100}=\\text{{=it}}$, $n={=n}$.",
+      "Today's price is the amount $A$. Use the compound interest formula and make $P$ the subject: $A=P(1+i)^{n}$, so $P=\\frac{A}{(1+i)^{n}}$.",
+      "Substitute and calculate: $P=\\frac{{=now}}{(1+{=it})^{{=n}}}=\\frac{{=now}}{({=gt})^{{=n}}}=\\text{R{=pt}}$.",
+      "The increase is today's price minus the price ${=n}$ years ago: $\\text{R{=now}}-\\text{R{=pt}}=\\text{R{=dt}}$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Advanced = several steps plus the book's decimal-rate twist (ex9-4-7 uses 9.2 %, ex9-4-6 uses 7.3 %). The student must work BACKWARDS (make P the subject, divide by (1+i)^n) and then take a difference. Rounding is robust: today's price is a multiple of R5, so (today - past price rounded to cents) equals (exact difference rounded to cents); the second require removes instances where the exact value sits within 0.05 of a cent boundary. Worked instance: now=60, n=5, 9.2 % -> past price R38.64 (the book's own ex9-4-7 value), increase R21.36. Rate range 6.1 %-13.9 %, never a whole percent. The misconception catalogue for this objective is empty, and a numeric family carries no distractors, so none is proposed; the typical slips (multiplying by (1+i)^n instead of dividing, or stopping at the past price) give visibly wrong numbers."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m9s4-1-3:pastfuture",
+     "kind": "family",
+     "lo_id": "lo:g10m9s4-1-3",
+     "parent_question_id": "q:g10m9s4-1-3:ex9-4-2",
+     "source_page": 345,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": "The price of a bag of potatoes is known from some years ago, not from today. The inflation rate is constant, and the student finds the price some years from now, so the price grows for the sum of the two periods.",
+     "params": [
+      {
+       "name": "p0",
+       "randint": [
+        8,
+        40
+       ]
+      },
+      {
+       "name": "n",
+       "randint": [
+        2,
+        5
+       ]
+      },
+      {
+       "name": "m",
+       "randint": [
+        2,
+        6
+       ]
+      },
+      {
+       "name": "r",
+       "randint": [
+        6,
+        14
+       ]
+      },
+      {
+       "name": "tot",
+       "let": "n + m"
+      },
+      {
+       "name": "g",
+       "let": "1 + r / 100"
+      },
+      {
+       "name": "amt",
+       "let": "p0 * g ** tot"
+      },
+      {
+       "name": "fin",
+       "let": "floor(amt * 100 + 1/2) / 100"
+      },
+      {
+       "name": "today",
+       "let": "floor(p0 * g ** n * 100 + 1/2) / 100"
+      },
+      {
+       "name": "alt",
+       "let": "floor(today * g ** m * 100 + 1/2) / 100"
+      },
+      {
+       "require": "alt == fin",
+       "why": "a student who rounds today's price to the cent before growing it further must reach the same final cents"
+      },
+      {
+       "require": "abs(amt * 100 - floor(amt * 100) - 1/2) > 1/20",
+       "why": "keeps the final value away from a rounding boundary"
+      },
+      {
+       "name": "at",
+       "let": "fixed(fin, 2)"
+      }
+     ],
+     "constraints": [],
+     "stem": "A bag of potatoes cost $\\text{R{=p0}}$ ${=n}$ years ago. If the rate of inflation is $\\text{{=r}}$ % p.a. from then on, how much will a bag of potatoes cost ${=m}$ years from now? Round only your final answer to 2 decimal places.",
+     "answer": "fixed(fin, 2)",
+     "solution": [
+      "Write down the given information: $P=\\text{R{=p0}}$ (the price ${=n}$ years ago), $A=?$, $i=\\frac{{=r}}{100}$.",
+      "The price grows from ${=n}$ years ago to ${=m}$ years from now, so it grows for $n={=n}+{=m}={=tot}$ years in total.",
+      "To determine the future cost we use the compound interest formula: $A=P(1+i)^{n}$.",
+      "Substitute and calculate: $A=\\text{{=p0}}\\times\\left(1+\\frac{{=r}}{100}\\right)^{{=tot}}=\\text{R{=at}}$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Advanced = the twist that the starting price is not today's price. The student must see that the compounding period is (years ago) + (years ahead) and not just the years ahead. A student who first finds today's price and then grows it reaches the same answer, because the stem says to round only at the end and the second-to-last require rejects any instance where rounding today's price to the cent would change the final cents. Same method as ex9-4-2: A = P(1+i)^n with whole-number rates, now with a longer n (4 to 11). Worked instance: P=15, n=3, m=3, 12 % -> 15 x 1.12^6 = R29.61, which is the book's ex9-4-2 value. Answers stay below about R165. The misconception catalogue for this objective is empty, and a numeric family carries no distractors, so none is proposed."
+    }
+   ],
+   "infeasible": [],
+   "notes": "Only the advanced tier was listed as a gap, so two advanced families were written and nothing for basic or standard. They cover two different twists: (1) work backwards for the past price, then take a difference, with a decimal rate; (2) the given price is from the past, so the compounding period is the sum of years ago and years ahead. Both use only the book's own formula, A = P(1+i)^n, and its rearrangement for P. I did not write a changing-rates or a find-the-rate or find-the-years family, since those need methods this objective does not teach. The misconception file for this objective is empty, and both families are numeric (no distractors), so none is proposed. Slug prefixes are increa and pastfu. I computed the rounding checks and the acceptance rates for both parameter sets outside the engine: about 81 % of draws pass for the first family and about 58 % for the second. I did not run the family engine itself, so please run the standard family check on both."
+  },
+  {
+   "lo_id": "lo:g10m9s4-1-4",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m9s4-1-4:entry-growth",
+     "kind": "family",
+     "lo_id": "lo:g10m9s4-1-4",
+     "parent_question_id": "q:g10m9s4-1-4:we11",
+     "source_page": 346,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": "The population of a small town grows at a constant average percentage rate each year.",
+     "params": [
+      {
+       "name": "n",
+       "choice": [
+        2,
+        3
+       ]
+      },
+      {
+       "name": "r",
+       "choice": [
+        5,
+        10,
+        20,
+        25
+       ]
+      },
+      {
+       "name": "unit",
+       "let": "8000 if n == 3 else 400"
+      },
+      {
+       "name": "k",
+       "randint": [
+        2,
+        9
+       ]
+      },
+      {
+       "name": "P",
+       "let": "k * unit"
+      },
+      {
+       "require": "(P * (100 + r) ** n) % (100 ** n) == 0",
+       "why": "the unrounded population must be a whole number, so the entry-level answer is exact"
+      },
+      {
+       "name": "A",
+       "let": "(P * (100 + r) ** n) // (100 ** n)"
+      }
+     ],
+     "stem": "The current population of a small town is ${=P}$ and the average rate of population growth is ${=r}$ % p.a. Use the compound interest formula to calculate what the town council can expect the population to be in ${=n}$ years' time.",
+     "answer": "A",
+     "solution": [
+      "Write down the known values: $P={=P}$, $i=\\frac{{=r}}{100}$, $n={=n}$ and $A=?$",
+      "Write down the compound interest formula: $A=P(1+i)^{n}$",
+      "Substitute the values: $A={=P}\\left(1+\\frac{{=r}}{100}\\right)^{{=n}}$",
+      "Calculate: $A={=A}$",
+      "The town council can expect the population to be ${=A}$ in ${=n}$ years' time."
+     ],
+     "notes": "Entry point of the skill: one application of A = P(1+i)^n with n = 2 or 3. P is a multiple of 400 (n = 2) or 8000 (n = 3) and the rate is 5, 10, 20 or 25 %, so the result is always an exact whole number and no rounding is asked. Integrality is enforced by a require. 64 distinct instances. Model: worked example 11 (page 346): same known-values, formula, substitute, answer layout. The stem names the compound interest formula so a blind solver cannot read the growth as simple (linear) growth."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m9s4-1-4:setup-formula",
+     "kind": "family",
+     "lo_id": "lo:g10m9s4-1-4",
+     "parent_question_id": "q:g10m9s4-1-4:we11",
+     "source_page": 346,
+     "tier": "basic",
+     "answer_type": "mcq",
+     "context": "The population of a town grows at a constant average percentage rate each year.",
+     "params": [
+      {
+       "name": "k",
+       "randint": [
+        5,
+        90
+       ]
+      },
+      {
+       "name": "P",
+       "let": "k * 500"
+      },
+      {
+       "name": "r",
+       "choice": [
+        3,
+        4,
+        5,
+        6,
+        8,
+        12
+       ]
+      },
+      {
+       "name": "n",
+       "randint": [
+        3,
+        12
+       ]
+      },
+      {
+       "require": "r != n",
+       "why": "the swapped-rate-and-years distractor must differ from the correct option"
+      }
+     ],
+     "stem": "The population of a town is currently ${=P}$ and the average rate of population growth is ${=r}$ % p.a. Which calculation uses the compound interest formula correctly to find the expected population of the town in ${=n}$ years' time?",
+     "choices": {
+      "correct": "$A={=P}\\left(1+\\frac{{=r}}{100}\\right)^{{=n}}$",
+      "distractors": [
+       {
+        "text": "$A={=P}\\left(1+{=r}\\right)^{{=n}}$",
+        "misconception_id": "mc:g10m9s4-1-4:rate-not-percent"
+       },
+       {
+        "text": "$A={=P}\\left(1+\\frac{{=r}}{100}\\times {=n}\\right)$",
+        "misconception_id": "mc:g10m9s4-1-4:simple-growth"
+       },
+       {
+        "text": "$A={=P}\\left(1+\\frac{{=n}}{100}\\right)^{{=r}}$",
+        "misconception_id": "mc:g10m9s4-1-4:swapped-rate-years"
+       },
+       {
+        "text": "$A={=P}\\left(\\frac{{=r}}{100}\\right)^{{=n}}$",
+        "misconception_id": "mc:g10m9s4-1-4:growth-factor-no-one"
+       }
+      ]
+     },
+     "solution": [
+      "The compound interest formula is $A=P(1+i)^{n}$, where $P$ is the starting amount, $i$ is the rate per year written as a fraction of $100$ and $n$ is the number of years.",
+      "Here $P={=P}$, $i=\\frac{{=r}}{100}$ and $n={=n}$.",
+      "So $A={=P}\\left(1+\\frac{{=r}}{100}\\right)^{{=n}}$."
+     ],
+     "proposed_misconceptions": [
+      {
+       "id": "mc:g10m9s4-1-4:rate-not-percent",
+       "label": "Uses the rate as a whole number",
+       "description": "Puts the growth rate into the formula as r (for example 1 + 5) instead of r/100 (1 + 0.05), so the percentage is never converted to a fraction."
+      },
+      {
+       "id": "mc:g10m9s4-1-4:simple-growth",
+       "label": "Treats population growth as simple growth",
+       "description": "Adds the same amount every year, P(1 + i x n), instead of multiplying by (1 + i) each year, so growth is not compounded."
+      },
+      {
+       "id": "mc:g10m9s4-1-4:swapped-rate-years",
+       "label": "Swaps the rate and the number of years",
+       "description": "Uses the number of years as the percentage and the percentage as the exponent, because both are just numbers in the question."
+      },
+      {
+       "id": "mc:g10m9s4-1-4:growth-factor-no-one",
+       "label": "Leaves out the 1 in (1 + i)",
+       "description": "Uses the growth rate i alone as the yearly multiplier, P x i^n, forgetting that the population keeps what it already had and adds the growth."
+      }
+     ],
+     "notes": "Basic: setting up the compound interest calculation without evaluating it. mcq is natural here because the four distractors are the four classic set-up errors (rate not divided by 100, simple instead of compound growth, rate and years swapped, missing the 1). The stem holes (P, r, n) differ between instances, so distinct_by_choices is not needed. r != n is required so the swapped option never equals the correct one. The objective has no catalogued misconceptions; the four ids above are proposed."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m9s4-1-4:increase-years",
+     "kind": "family",
+     "lo_id": "lo:g10m9s4-1-4",
+     "parent_question_id": "q:g10m9s4-1-4:ex9-5-3",
+     "source_page": 347,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": "The population of a city grows at a constant average percentage rate each year.",
+     "params": [
+      {
+       "name": "m",
+       "randint": [
+        2,
+        4
+       ]
+      },
+      {
+       "name": "t",
+       "randint": [
+        100,
+        999
+       ]
+      },
+      {
+       "name": "u",
+       "randint": [
+        100,
+        999
+       ]
+      },
+      {
+       "name": "rt",
+       "choice": [
+        4,
+        6,
+        7,
+        9,
+        11,
+        13,
+        14,
+        16,
+        18,
+        19,
+        21,
+        22,
+        24,
+        26,
+        28
+       ]
+      },
+      {
+       "name": "n",
+       "randint": [
+        5,
+        12
+       ]
+      },
+      {
+       "name": "P",
+       "let": "m * 1000000 + t * 1000 + u"
+      },
+      {
+       "name": "top",
+       "let": "P * (1000 + rt) ** n"
+      },
+      {
+       "name": "bottom",
+       "let": "1000 ** n"
+      },
+      {
+       "require": "abs(2 * (top % bottom) - bottom) * 20 > bottom",
+       "why": "keep the unrounded population at least 0.05 away from a .5 boundary so the rounded answer is unambiguous"
+      },
+      {
+       "name": "Ar",
+       "let": "(2 * top + bottom) // (2 * bottom)"
+      },
+      {
+       "name": "inc",
+       "let": "Ar - P"
+      },
+      {
+       "name": "rate",
+       "let": "fixed(rt / 10, 1)"
+      },
+      {
+       "name": "i3",
+       "let": "fixed(rt / 1000, 3)"
+      },
+      {
+       "name": "Afix",
+       "let": "fixed(top / bottom, 2)"
+      }
+     ],
+     "stem": "The current population of a city is $\\text{{=m}\\ {=t}\\ {=u}}$ and the average rate of population growth is ${=rate}$ % p.a. Use the compound interest formula to calculate by how many people the population is expected to increase over the next ${=n}$ years. Do not round off until your final answer, and round that to the nearest integer.",
+     "answer": "inc",
+     "solution": [
+      "Write down the known values: $P=\\text{{=m}\\ {=t}\\ {=u}}$, $i=\\frac{{=rate}}{100}={=i3}$, $n={=n}$ and $A=?$",
+      "Write down the compound interest formula: $A=P(1+i)^{n}$",
+      "Substitute the values: $A=\\text{{=m}\\ {=t}\\ {=u}}\\left(1+{=i3}\\right)^{{=n}}$",
+      "Calculate, rounding only at the end: $A={=Afix}$",
+      "Round to the nearest integer: $A\\approx{=Ar}$",
+      "The increase is the future population minus the current population: ${=Ar}-{=P}={=inc}$",
+      "The population is expected to increase by about ${=inc}$ people over the next ${=n}$ years."
+     ],
+     "notes": "Advanced: the book's own twist from exercise 9.5 question 3 (page 347), where the answer is the increase A - P, not the new population. Adds three things beyond the standard book question: a rate with a decimal (0.4 to 2.8 %), a seven-digit population, and the final subtraction. P is built from millions, thousands and units parts (each of the last two 100 to 999) so the stem prints it in the book's spaced style without leading-zero problems. The exact value is computed in integers (top / bottom); the require keeps its fractional part at least 0.05 from .5, and the stem forbids intermediate rounding, so a calculator solver agrees. Rounding A then subtracting P gives the same integer as rounding A - P because P is an integer. Book check of the formula: 3 879 090 x 1.011^6 = 4 142 255 (page 347). Increases range from about 43 thousand to 1.96 million."
+    }
+   ],
+   "infeasible": [],
+   "notes": "The misconception catalogue for lo:g10m9s4-1-4 was empty, so the four ids used on the mcq distractors are declared as proposed_misconceptions. All seven book questions are tier standard; basic and advanced have one numeric family each, plus a basic set-up mcq. Rounding is exact (integer arithmetic) and every numeric instance is kept clear of a .5 boundary; stems forbid intermediate rounding. The engine could not be run here, so the template and param syntax follows the spec only; the arithmetic, ranges and rounding safety were checked separately in Python, including the book's own answers (4142255, 4217645, 4065346, 4083001, 4786343)."
+  },
+  {
+   "lo_id": "lo:g10m9s5-1-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m9s5-1-2:fall-saving",
+     "kind": "family",
+     "lo_id": "lo:g10m9s5-1-2",
+     "parent_question_id": "q:g10m9s5-1-2:ex9-6-1b",
+     "source_page": 348,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": "Bridget, a South African shopper, wants to buy an iPod priced in pounds (£) and pays in rand (R). The rand cost is the price in pounds multiplied by the exchange rate, the number of rand in £1. She compares the rand cost at the current exchange rate with the rand cost after the rate has dropped.",
+     "params": [
+      {
+       "name": "k",
+       "randint": [
+        4,
+        30
+       ]
+      },
+      {
+       "name": "p",
+       "let": "k * 5"
+      },
+      {
+       "name": "r1",
+       "randint": [
+        10,
+        20
+       ]
+      },
+      {
+       "name": "r2",
+       "randint": [
+        "max(7, r1 - 6)",
+        "r1 - 1"
+       ]
+      },
+      {
+       "name": "c1",
+       "let": "p * r1"
+      },
+      {
+       "name": "c2",
+       "let": "p * r2"
+      },
+      {
+       "name": "saving",
+       "let": "c1 - c2"
+      }
+     ],
+     "constraints": [
+      "r2 < r1",
+      "r2 >= 7",
+      "saving > 0"
+     ],
+     "stem": "Bridget wants to buy an iPod that costs $\\text{£ }{=p}$, with the exchange rate currently at $\\text{£1}=\\text{R}{=r1}$. In a month the exchange rate drops to $\\text{£1}=\\text{R}{=r2}$. How much will she save, in rand, if she buys the iPod at the new rate instead of at the current rate?",
+     "answer": "saving",
+     "solution": [
+      "The cost in rand is the price in pounds multiplied by the exchange rate.",
+      "At the current rate: $\\text{Cost}={=p}\\times\\text{R}{=r1}=\\text{R}{=c1}$.",
+      "At the new rate: $\\text{Cost}={=p}\\times\\text{R}{=r2}=\\text{R}{=c2}$.",
+      "The rate has dropped, so the iPod now costs less and the difference is a saving: $\\text{Saving}=\\text{R}{=c1}-\\text{R}{=c2}=\\text{R}{=saving}$."
+     ],
+     "proposed_misconceptions": [
+      {
+       "id": "mc:g10m9s5-1-2:rate-difference-only",
+       "label": "Subtracts the rates but never multiplies by the price in pounds",
+       "description": "The student finds how far the exchange rate moved (old rate minus new rate) and gives that as the saving or loss, forgetting that the item costs many pounds and each pound is affected by the change."
+      },
+      {
+       "id": "mc:g10m9s5-1-2:new-cost-as-change",
+       "label": "Gives the rand cost at the new rate as the saving or loss",
+       "description": "The student computes the price in rand at the new rate and stops there, instead of subtracting it from (or taking it away from) the rand cost at the old rate to find the difference."
+      },
+      {
+       "id": "mc:g10m9s5-1-2:divides-by-rate",
+       "label": "Divides the pound price by the exchange rate",
+       "description": "The student converts pounds to rand by dividing the price in pounds by the number of rand per pound instead of multiplying, so the rand costs and the saving come out wrong."
+      }
+     ],
+     "notes": "Basic entry point of the skill, modelled on ex9-6-1b (Bridget's iPod, saving when the rate drops). Strips the book's extra 'she estimates' sentence so the learner meets only the two rates: rand cost at the current rate, rand cost at the lower rate, subtract. Direction is always a drop, so the answer is a positive saving. Ranges: price 20 to 150 pounds in steps of 5, current rate R10 to R20, new rate 1 to 6 below it and never under R7 (the book's rates run R9 to R20). Saving is a whole number between 20 and 900 rand. Wording 'compared with buying at the current rate' is explicit so a blind solver cannot read the saving against any other rate. A numeric family has no distractors, so the proposed misconceptions describe the wrong numbers a marker might see (r1 - r2, p * r2, p / r1 - p / r2). Standard (the book's own three-rate exercises) and advanced tiers were not requested; the book has no exercise harder than a single comparison, so no advanced family was written."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m9s5-1-2:rise-loss",
+     "kind": "family",
+     "lo_id": "lo:g10m9s5-1-2",
+     "parent_question_id": "q:g10m9s5-1-2:ex9-6-2c",
+     "source_page": 348,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": "Mthuli, a South African shopper, wants to buy a television priced in pounds (£) and pays in rand (R). The rand cost is the price in pounds multiplied by the exchange rate, the number of rand in £1. He compares the rand cost at the current exchange rate with the rand cost after the rate has risen.",
+     "params": [
+      {
+       "name": "k",
+       "randint": [
+        4,
+        30
+       ]
+      },
+      {
+       "name": "p",
+       "let": "k * 5"
+      },
+      {
+       "name": "r1",
+       "randint": [
+        8,
+        15
+       ]
+      },
+      {
+       "name": "r2",
+       "randint": [
+        "r1 + 1",
+        "min(20, r1 + 6)"
+       ]
+      },
+      {
+       "name": "c1",
+       "let": "p * r1"
+      },
+      {
+       "name": "c2",
+       "let": "p * r2"
+      },
+      {
+       "name": "loss",
+       "let": "c2 - c1"
+      }
+     ],
+     "constraints": [
+      "r2 > r1",
+      "r2 <= 20",
+      "loss > 0"
+     ],
+     "stem": "Mthuli wants to buy a television that costs $\\text{£ }{=p}$, with the exchange rate currently at $\\text{£1}=\\text{R}{=r1}$. In a month the exchange rate rises to $\\text{£1}=\\text{R}{=r2}$. How much will he lose, in rand, if he buys the television at the new rate instead of at the current rate?",
+     "answer": "loss",
+     "solution": [
+      "The cost in rand is the price in pounds multiplied by the exchange rate.",
+      "At the current rate: $\\text{Cost}={=p}\\times\\text{R}{=r1}=\\text{R}{=c1}$.",
+      "At the new rate: $\\text{Cost}={=p}\\times\\text{R}{=r2}=\\text{R}{=c2}$.",
+      "The rate has risen, so the television now costs more and the difference is a loss: $\\text{Loss}=\\text{R}{=c2}-\\text{R}{=c1}=\\text{R}{=loss}$."
+     ],
+     "proposed_misconceptions": [
+      {
+       "id": "mc:g10m9s5-1-2:rate-difference-only",
+       "label": "Subtracts the rates but never multiplies by the price in pounds",
+       "description": "The student finds how far the exchange rate moved (old rate minus new rate) and gives that as the saving or loss, forgetting that the item costs many pounds and each pound is affected by the change."
+      },
+      {
+       "id": "mc:g10m9s5-1-2:new-cost-as-change",
+       "label": "Gives the rand cost at the new rate as the saving or loss",
+       "description": "The student computes the price in rand at the new rate and stops there, instead of subtracting it from (or taking it away from) the rand cost at the old rate to find the difference."
+      },
+      {
+       "id": "mc:g10m9s5-1-2:divides-by-rate",
+       "label": "Divides the pound price by the exchange rate",
+       "description": "The student converts pounds to rand by dividing the price in pounds by the number of rand per pound instead of multiplying, so the rand costs and the saving come out wrong."
+      }
+     ],
+     "notes": "Basic entry point, the mirror of fall-saving, modelled on ex9-6-2c (Mthuli's television, loss when the rate moves up). The book pairs every 'save' part with a 'lose' part, and the learner has to see that a rising rate makes the purchase dearer, so the same two rand costs are now subtracted the other way round. Direction is always a rise, so the answer is a positive loss. Ranges: price 20 to 150 pounds in steps of 5, current rate R8 to R15, new rate 1 to 6 above it and never over R20. Loss is a whole number between 20 and 900 rand. The book's extra 'he estimates the rate will drop' sentence is left out so the only rates in the stem are the two being compared. Wording 'instead of at the current rate' pins the comparison for a blind solver. Numeric family, so the proposed misconceptions describe wrong numbers (r2 - r1, p * r2, p / r1 - p / r2)."
+    }
+   ],
+   "infeasible": [],
+   "notes": "Two basic families, one per direction of the objective (saving when the rate drops, loss when it rises). No misconceptions were catalogued, so three were declared in proposed_misconceptions; numeric families carry no distractors, so they only describe the wrong numbers a marker might see. Standard and advanced tiers were not requested: all nine book questions are standard and use one skeleton (two rand costs, subtract), and the book has no exercise harder than that, so no advanced family was written. The book's decoy sentence (the estimated drop in the loss questions) is deliberately omitted because it makes 'lose' ambiguous for a blind solver (relative to the current rate or to the estimate). I could not run the family checker or the engine, because only the two packet files were open to me, so templates, bounds and constraints are unvalidated by the tool."
+  },
+  {
+   "lo_id": "lo:g10m9s5-1-3",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m9s5-1-3:convert-compare",
+     "kind": "family",
+     "lo_id": "lo:g10m9s5-1-3",
+     "parent_question_id": "q:g10m9s5-1-3:ex9-7-37",
+     "source_page": 352,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": "A student is buying the same textbook online. One shop in the UK prices it in pounds and one shop in the USA prices it in dollars. Shipping is ignored. The two exchange rates (rand per pound and rand per dollar) are given, and the student converts both prices to rand to find the cheaper offer.",
+     "params": [
+      {
+       "name": "p",
+       "randint": [
+        12,
+        30
+       ]
+      },
+      {
+       "name": "r",
+       "randint": [
+        1350,
+        1850
+       ]
+      },
+      {
+       "name": "s",
+       "randint": [
+        1000,
+        1300
+       ]
+      },
+      {
+       "name": "k",
+       "choice": [
+        -2,
+        -1,
+        1,
+        2
+       ]
+      },
+      {
+       "name": "d",
+       "let": "(p * r) // s + k"
+      },
+      {
+       "name": "uk",
+       "let": "p * r / 100"
+      },
+      {
+       "name": "us",
+       "let": "d * s / 100"
+      },
+      {
+       "name": "lo",
+       "let": "min(uk, us)"
+      },
+      {
+       "name": "hi",
+       "let": "max(uk, us)"
+      },
+      {
+       "require": "hi - lo >= 2 and hi - lo <= 25",
+       "why": "The two rand amounts must be close enough that the comparison needs the conversion, but never a tie and never wildly apart."
+      }
+     ],
+     "constraints": [
+      "hi != lo"
+     ],
+     "stem": "Lerato wants to buy a textbook online. A shop in the UK sells it for $\\text{£}{=p}$ and a shop in the USA sells it for $\\text{\\textdollar}{=d}$. Ignore shipping costs. Use the exchange rates $\\text{£}1=\\text{R}{=fixed(r / 100, 2)}$ and $\\text{\\textdollar}1=\\text{R}{=fixed(s / 100, 2)}$. Convert each price to rand and decide which shop is cheaper. What is the cost, in rand, of the cheaper offer? Give your answer to the nearest cent.",
+     "answer": "fixed(lo, 2)",
+     "solution": [
+      "To compare prices quoted in different currencies, convert each price to rand first. Cost in rand = cost in the foreign currency $\\times$ exchange rate.",
+      "UK shop: $\\text{£}{=p}\\times\\text{R}{=fixed(r / 100, 2)}=\\text{R}{=fixed(uk, 2)}$.",
+      "USA shop: $\\text{\\textdollar}{=d}\\times\\text{R}{=fixed(s / 100, 2)}=\\text{R}{=fixed(us, 2)}$.",
+      "Compare the two amounts in rand: $\\text{R}{=fixed(lo, 2)}$ is less than $\\text{R}{=fixed(hi, 2)}$, so the shop whose price converts to $\\text{R}{=fixed(lo, 2)}$ is the cheaper one.",
+      "The cheaper offer costs $\\text{R}{=fixed(lo, 2)}$."
+     ],
+     "notes": "Basic entry point of the objective: two prices, two rates given in the stem, no shipping fee, whole-number foreign prices so each conversion is an exact two-decimal rand amount (no rounding ambiguity). Skeleton follows ex9-7-37 (and the same method as ex9-6-4b and ex9-6-5) without their decimal prices or shipping twist. Numeric rather than mcq on purpose: a two-option comparison is a coin flip and cannot carry three diagnosable distractors, while asking for the rand cost of the cheaper offer still forces the student to convert both prices and decide; a student who compares the printed numbers (mc:g10m9s5-1-3:compare-without-converting) or who picks the dearer offer (mc:g10m9s5-1-3:converts-then-picks-largest) reports the wrong rand figure. The pound rate is always above the dollar rate and the prices are built so the two rand amounts are within R2 to R25 of each other, so in roughly half the instances the larger printed number is the cheaper offer. The solution never names the shop (the expression language is not assumed to have string literals); it identifies the cheaper offer by its rand amount. Worked check: p=17, r=1689, s=1243, k=1 gives d=24, UK R287.13, USA R298.32, answer 287.13. Note for the reviewer: the printed solution of ex9-6-4b uses R14.31 for the pound where the table says R14.13 (the figure R84.78 is consistent with 14.13), so that is a typo in the book, not a rate to copy."
+    }
+   ],
+   "infeasible": [],
+   "notes": "Only the basic tier was listed as a gap and no families existed, so one family was written. The standard and advanced tiers are already covered by the book's own questions (ex9-6-4b standard; ex9-6-4a, ex9-6-5, ex9-7-37 advanced) and were not padded with further families. No distractors are used (numeric answer), so no misconception ids are attached and none are proposed."
+  }
+ ],
+ "revised": []
+}

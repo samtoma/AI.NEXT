@@ -1,0 +1,144 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m10s1-1-2:paired-questions",
+ "kind": "family",
+ "lo_id": "lo:g10m10s1-1-2",
+ "parent_question_id": "q:g10m10s1-1-2:we02",
+ "source_page": 358,
+ "tier": "advanced",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "i",
+   "randint": [
+    0,
+    5
+   ]
+  },
+  {
+   "name": "flip",
+   "randint": [
+    0,
+    1
+   ]
+  },
+  {
+   "name": "closedqs",
+   "let": "['Which cellular provider do you use?', 'Which sport do you play at school?', 'How do you travel to school?', 'Which subject do you like best?', 'Which sandwich spread do you like best?', 'Which language do you speak at home?']"
+  },
+  {
+   "name": "openqs",
+   "let": "['In one sentence, say what you like about your cellphone.', 'In one sentence, describe the best match you have played.', 'In one sentence, describe something that happened on your way to school this morning.', 'In one sentence, say why you like that subject.', 'In one sentence, describe your perfect lunch.', 'In one sentence, say what you enjoy about speaking that language.']"
+  },
+  {
+   "name": "closedpools",
+   "let": "[['Vodacom', 'MTN', 'Cell C', 'Telkom', 'Virgin Mobile'], ['soccer', 'netball', 'rugby', 'cricket', 'hockey', 'athletics'], ['walk', 'bus', 'taxi', 'car', 'bicycle', 'train'], ['Mathematics', 'English', 'Geography', 'History', 'Art', 'Life Sciences'], ['cheese', 'peanut butter', 'jam', 'honey', 'tomato', 'egg mayonnaise'], ['isiZulu', 'Sesotho', 'English', 'Afrikaans', 'isiXhosa', 'Setswana']]"
+  },
+  {
+   "name": "openpools",
+   "let": "[['I like that I can phone my grandmother every Sunday.', 'The camera takes beautiful pictures of my friends.', 'It helps me find answers when I do my homework.', 'I enjoy listening to music on the way to school.', 'It lets me send messages to my cousins far away.', 'The battery lasts me the whole day.'], ['We won in the last minute and everybody screamed.', 'It rained the whole match and we still had fun.', 'I scored for the first time and my mother cried.', 'We lost badly, but our coach said we played with heart.', 'The crowd sang for us from the first whistle.', 'My sister brought oranges for the whole team.'], ['A cow stood in the road and the taxi had to wait.', 'I met my cousin at the corner and we walked together.', 'It was so cold that my fingers hurt.', 'The bus broke down and we all helped to push it.', 'I saw a rainbow over the mountain.', 'I forgot my lunch and had to run back home.'], ['My teacher makes the lessons feel like stories.', 'I always understand the homework, and that makes me happy.', 'It makes me curious about how things work.', 'We do experiments and projects with our friends.', 'It is the lesson where I can be quiet and think.', 'It reminds me of the things my father taught me.'], ['A warm sandwich, an apple and a long break in the sun.', 'Rice and chicken from my grandmother, shared with my friends.', 'Fruit salad eaten under the big tree.', 'A cold drink and a sandwich after a hard soccer match.', 'Pap and gravy that is still hot from the pot.', 'Anything that I do not have to eat in a hurry.'], ['It is the language my grandmother sings to me in.', 'I can tell jokes in it that nobody else understands.', 'It makes me feel at home wherever I am.', 'I love the way the proverbs sound.', 'It is the first language I learned to read.', 'My whole family speaks it at the dinner table.']]"
+  },
+  {
+   "name": "cpool",
+   "let": "closedpools[i]"
+  },
+  {
+   "name": "opool",
+   "let": "openpools[i]"
+  },
+  {
+   "name": "c1",
+   "choice": "cpool"
+  },
+  {
+   "name": "c2",
+   "choice": "cpool",
+   "resample_while": "c2 == c1"
+  },
+  {
+   "name": "c3",
+   "choice": "cpool",
+   "resample_while": "c3 == c1 or c3 == c2"
+  },
+  {
+   "name": "c4",
+   "choice": "[c1, c2, c3]"
+  },
+  {
+   "name": "cbase",
+   "let": "[c1, c2, c3, c4]"
+  },
+  {
+   "name": "closed",
+   "shuffle": "cbase"
+  },
+  {
+   "name": "opened",
+   "sample": {
+    "from": "opool",
+    "k": 4
+   }
+  },
+  {
+   "name": "q1",
+   "let": "closedqs[i] if flip == 0 else openqs[i]"
+  },
+  {
+   "name": "q2",
+   "let": "openqs[i] if flip == 0 else closedqs[i]"
+  },
+  {
+   "name": "d1",
+   "let": "closed if flip == 0 else opened"
+  },
+  {
+   "name": "d2",
+   "let": "opened if flip == 0 else closed"
+  },
+  {
+   "name": "t1",
+   "let": "'categorical' if flip == 0 else 'anecdotal'"
+  },
+  {
+   "name": "t2",
+   "let": "'anecdotal' if flip == 0 else 'categorical'"
+  },
+  {
+   "name": "cn",
+   "let": "1 if flip == 0 else 2"
+  },
+  {
+   "name": "an",
+   "let": "3 - cn"
+  }
+ ],
+ "constraints": [],
+ "stem": "A teacher asks the learners in her class two questions and records the answers as two data sets. Data set 1 holds the answers to this question: {=q1} The answers were: \"{=d1[0]}\"; \"{=d1[1]}\"; \"{=d1[2]}\"; \"{=d1[3]}\". Data set 2 holds the answers to this question: {=q2} The answers were: \"{=d2[0]}\"; \"{=d2[1]}\"; \"{=d2[2]}\"; \"{=d2[3]}\". Which one of the following correctly categorises the two data sets?",
+ "choices": {
+  "correct": "Data set 1 is qualitative {=t1} and data set 2 is qualitative {=t2}.",
+  "distractors": [
+   {
+    "text": "Both data sets are qualitative anecdotal, because both sets of answers come from the learners themselves.",
+    "misconception_id": "mc:g10m10s1-1-2:anecdotal-because-personal"
+   },
+   {
+    "text": "Both data sets are qualitative categorical, because both are made of words.",
+    "misconception_id": "mc:g10m10s1-1-2:categorical-for-any-words"
+   },
+   {
+    "text": "Data set 1 is qualitative {=t2} and data set 2 is qualitative {=t1}.",
+    "misconception_id": null
+   }
+  ]
+ },
+ "solution": [
+  "Neither data set can be written as numbers, so both are qualitative.",
+  "In data set {=cn} the answers are picked from a limited set of possibilities: only three different answers appear, and some learners gave the same one. So data set {=cn} is categorical.",
+  "In data set {=an} each learner answered in a sentence of his or her own, in the form of a story, so data set {=an} is anecdotal.",
+  "Both data sets come from the same learners, so where the answers come from cannot tell the two types apart. It is the form of the answers that decides: words picked from a limited set are categorical, and sentences in the learners' own words are anecdotal.",
+  "Therefore data set {=cn} is qualitative categorical and data set {=an} is qualitative anecdotal."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced tier: the same learners answer a closed question and an open question, so the student has to separate categorical from anecdotal inside one context and see that who gave the answers does not decide the type (the book's we02 asks for the explanation; ex10-1-1 supplies the anecdotal case). Which question is Question 1 is randomised with flip, so the correct option varies between 'categorical then anecdotal' and 'anecdotal then categorical'; the two 'both' distractors carry the catalogued anecdotal-because-personal and categorical-for-any-words in every instance, and the reversed-order distractor carries no id (it is both mistakes at once, not a catalogued single error). The closed data set always has exactly three different answers, one of them repeated, and both data sets are printed in the same quoted form so the type cannot be read off the typography. Strings are interpolated from lists; the question texts are chosen by conditional expressions, not by concatenation."
+}

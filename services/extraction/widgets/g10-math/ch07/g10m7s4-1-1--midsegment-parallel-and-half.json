@@ -1,0 +1,67 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m7s4-1-1:midsegment-parallel-and-half",
+ "lo_id": "lo:g10m7s4-1-1",
+ "parent_question_id": "q:g10m7s4-1-1:ex7-7-3",
+ "tier": "basic",
+ "kind": "polygon_builder",
+ "instances": [
+  {
+   "ax": 0,
+   "ay": 0,
+   "bx": 6,
+   "by": 0,
+   "cx": 0,
+   "cy": 6
+  },
+  {
+   "ax": -4,
+   "ay": -2,
+   "bx": 4,
+   "by": -2,
+   "cx": 0,
+   "cy": 4
+  },
+  {
+   "ax": -2,
+   "ay": -4,
+   "bx": 4,
+   "by": -2,
+   "cx": -2,
+   "cy": 2
+  }
+ ],
+ "spec": {
+  "mode": "midsegment",
+  "triangle": [
+   [
+    "{=ax}",
+    "{=ay}"
+   ],
+   [
+    "{=bx}",
+    "{=by}"
+   ],
+   [
+    "{=cx}",
+    "{=cy}"
+   ]
+  ],
+  "apex": 0
+ },
+ "stem": "The triangle has a corner at $({=ax}, {=ay})$. Drag a segment so that its ends sit on the two sides that meet at that corner, and it is parallel to the third side (the side opposite that corner) and half as long as it.",
+ "solution": [
+  "Find the corner named in the question. The two sides that meet there are the sides the segment must join; the side opposite the corner is the third side.",
+  "Find the mid-point of each of those two sides by counting halfway along each one on the grid.",
+  "Place one end of the segment on each mid-point.",
+  "Check the result: the segment is parallel to the third side and exactly half its length. That is the mid-point theorem, and you have just seen it hold.",
+  "Any other segment between the same two sides fails one of the two conditions: it is not parallel to the third side, or it is parallel but shorter or longer than half. Only the segment joining the two mid-points is both."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "not-the-shape",
+   "misconception_id": "mc:g10m7s4-1-1:any-line-across-triangle-is-parallel"
+  }
+ ],
+ "notes": "Fits because the midsegment mode of polygon_builder is the mid-point theorem built as a property: parallel to the third side and half its length, graded on the property, so the only accepted segment is the one joining the two mid-points (a half-length parallel segment with ends on the two sides forces both ends to be mid-points). Parent is ex7-7-3, whose figure (read) marks the two mid-points with tick marks and asks for the parallel pair; this is the same fact run the other way round. Stem and rows use apex 0, so the corner named in the stem is always the triangle's first vertex. Every row has even coordinate differences along the two sides meeting at the corner, so both mid-points are lattice points and the student can reach them; vertices are within +/-6 and not collinear; no mid-point (nor its x/y-swap) sits at (-3, -2) or (1, 1), in case the midsegment handles open at the same spots as line_drawer's. Rows run from the axis-aligned spec example to a triangle with no horizontal side. Only 'not-the-shape' is mapped: for this mode it fires when the ends are not at equal fractions along the two sides, so the segment is not parallel at all, and the likeliest cause is joining two sides without checking both ends are mid-points (any-line-across-triangle-is-parallel). A second cause, ends off the apex sides, is rare and is not separately named. 'midsegment-not-half' is deliberately NOT mapped: it fires for an exactly parallel segment whose ends are not mid-points (for example both ends a third of the way along), which reveals 'parallel is enough, whatever the end points' - that is mc:g10m7s4-1-2:theorem-without-its-conditions, an LO2 id the validator refuses on an LO1 template. Mapping it to any-line-across-triangle-is-parallel would tell a student who did draw a parallel line that she assumed parallelism. That is an inventory gap on LO1, not a widget gap. If the instrument does not show the grid or corner coordinates, the stem's coordinate reference must be replaced."
+}

@@ -1,0 +1,1394 @@
+{
+ "mode": "grade",
+ "book": "g10-math",
+ "prompts_version": "s6-v6",
+ "by_ref": {
+  "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/s6-grade-ch07",
+  "stage": "S6 grade",
+  "shards_sha256": "0e17b14908495f1fa3eca85c34d462d35ca80fbb72f83911a5e3b9b8fa8eec70",
+  "files": 108
+ },
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "ce14b9a275551596540559352d6e1137fc366251ecc65d4b7d34aa4599cbc0b6",
+  "args_sha256": "38c52eb325786cd28086e2ccabf9f18e7c47dd492e45812282b0c92745a617c7",
+  "generated_sha256": "cb33f8d42ac711fb5f2555ea6d3a647fb36062f1c6f74c99b81a26628e38c5a6",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "family_id": "tpl:g10m7s1-1-1:angle-count",
+   "spec_sha": "b0dbf7c874ff7e639d4602a825e30a48e4fcfe06f0c6dc0a50e25e7e41036140",
+   "answers": [
+    {
+     "instance_id": "q:g10m7s1-1-1:g002-angle-",
+     "stem_sha": "609461f36016f733",
+     "answer": {
+      "value": "2"
+     },
+     "working": "Obtuse means strictly between 90 and 180 degrees. 158 yes; 323 reflex; 91 yes; 180 straight angle, not obtuse; 241 reflex; 181 reflex. Two obtuse angles (158 and 91)."
+    },
+    {
+     "instance_id": "q:g10m7s1-1-1:g003-angle-",
+     "stem_sha": "df9eea868bfe6861",
+     "answer": {
+      "value": "3"
+     },
+     "working": "Obtuse means strictly between 90 and 180 degrees. 320 reflex; 179 yes; 272 reflex; 91 yes; 72 acute; 130 yes. Three obtuse angles (179, 91, 130)."
+    },
+    {
+     "instance_id": "q:g10m7s1-1-1:g004-angle-",
+     "stem_sha": "43b920ae0a4ba7a5",
+     "answer": {
+      "value": "2"
+     },
+     "working": "Obtuse means strictly between 90 and 180 degrees. 276 reflex; 76 acute; 53 acute; 90 right angle, not obtuse; 179 yes; 110 yes. Two obtuse angles (179 and 110)."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "Numeric-answer family with no options, so there are no distractors to check. I recounted all three instances by hand.\n\n- g002 (158, 323, 91, 180, 241, 181): obtuse are 158 and 91, so the key 2 is right. The step-3 tally is acute 0, right 0, obtuse 2, straight 1 (180), reflex 3 (181, 241, 323). That sums to 6, and the sorted order in step 2 is correct.\n- g003 (320, 179, 272, 91, 72, 130): obtuse are 179, 91 and 130, so the key 3 is right. Tally is acute 1 (72), right 0, obtuse 3, straight 0, reflex 2 (272, 320). That sums to 6, and the sorted order is correct.\n- g004 (276, 76, 53, 90, 179, 110): obtuse are 179 and 110, so the key 2 is right. Tally is acute 2 (53, 76), right 1 (90), obtuse 2, straight 0, reflex 1 (276). That sums to 6, and the sorted order is correct.\n\nThe key is a bare integer, which is the form the stem asks for (\"how many\"). The definitions in step 1 are the standard textbook ones: obtuse is strictly between 90 and 180, with 90 right, 180 straight and anything above 180 reflex. They are applied the same way in every instance. The boundary values 90, 180, 181, 179 and 91 are deliberate, and the solution states why 90 and 180 are excluded, so the stems are unambiguous.\n\nThe context is a plain classification question with realistic angle sizes, and the angles up to 360 are within Grade 10 scope. No word problem is involved.\n\nNothing to flag. Only the instance ids appear truncated (\"g002-angle-\"), which looks like a display or id-format matter and not a content defect. I could not check the LaTeX key against answer_check because the file does not show that field."
+   }
+  },
+  {
+   "family_id": "tpl:g10m7s1-1-1:pick-obtuse",
+   "spec_sha": "63e58389e46707c1544c3f8b9620bd57575b5901849e51b4a2b1ac5912023c8f",
+   "answers": [
+    {
+     "instance_id": "q:g10m7s1-1-1:g001-pick-o",
+     "stem_sha": "a54c1612b2127159",
+     "answer": {
+      "choice": "B",
+      "choice_text": "$152^\\circ$"
+     },
+     "working": "An obtuse angle is strictly between 90 and 180 degrees. 184 is reflex (over 180), 152 is between 90 and 180, 180 is a straight angle, 43 is acute. Only 152 qualifies."
+    },
+    {
+     "instance_id": "q:g10m7s1-1-1:g005-pick-o",
+     "stem_sha": "a54c1612b2127159",
+     "answer": {
+      "choice": "B",
+      "choice_text": "$138^\\circ$"
+     },
+     "working": "An obtuse angle is strictly between 90 and 180 degrees. 63 is acute, 138 is between 90 and 180, 231 is reflex, 180 is a straight angle. Only 138 qualifies."
+    },
+    {
+     "instance_id": "q:g10m7s1-1-1:g007-pick-o",
+     "stem_sha": "a54c1612b2127159",
+     "answer": {
+      "choice": "C",
+      "choice_text": "$169^\\circ$"
+     },
+     "working": "An obtuse angle is strictly between 90 and 180 degrees. 180 is a straight angle, 213 is reflex, 169 is between 90 and 180, 82 is acute. Only 169 qualifies."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [
+     {
+      "instance_id": "q:g10m7s1-1-1:g001-pick-o",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "184 degrees is a reflex angle (>180). A student who calls any wide angle obtuse picks it. Definitely wrong."
+     },
+     {
+      "instance_id": "q:g10m7s1-1-1:g001-pick-o",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "180 degrees is a straight angle, not strictly between 90 and 180. It is the boundary case of the same wide-angle error. Definitely wrong."
+     },
+     {
+      "instance_id": "q:g10m7s1-1-1:g001-pick-o",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "43 degrees is acute. A student who swaps the acute and obtuse names picks it. Definitely wrong."
+     },
+     {
+      "instance_id": "q:g10m7s1-1-1:g005-pick-o",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "63 degrees is acute. It is the swapped-names error. Definitely wrong."
+     },
+     {
+      "instance_id": "q:g10m7s1-1-1:g005-pick-o",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "231 degrees is reflex. It is the any-wide-angle error. Definitely wrong."
+     },
+     {
+      "instance_id": "q:g10m7s1-1-1:g005-pick-o",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "180 degrees is a straight angle. It is the boundary form of the wide-angle error. Definitely wrong."
+     },
+     {
+      "instance_id": "q:g10m7s1-1-1:g007-pick-o",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "180 degrees is a straight angle. It is the boundary form of the wide-angle error. Definitely wrong."
+     },
+     {
+      "instance_id": "q:g10m7s1-1-1:g007-pick-o",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "213 degrees is reflex. It is the any-wide-angle error. Definitely wrong."
+     },
+     {
+      "instance_id": "q:g10m7s1-1-1:g007-pick-o",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "82 degrees is acute. It is the swapped-names error. Definitely wrong."
+     }
+    ],
+    "notes": "All three instances pass. Each has exactly one angle strictly between 90 and 180 (152, 138, 169), and the keys B, B, C point at them. Each wrong option falls into one of three classes: acute (43, 63, 82), straight (180) or reflex (184, 231, 213). None is obtuse, so no option is ALSO_CORRECT. The tags match the errors: acute options carry swaps-acute-and-obtuse, and the 180 and reflex options carry obtuse-for-any-wide-angle. I only saw the misconception ids, not their descriptions. Judging from the id wording, putting the 180 boundary case under \"any wide angle\" is acceptable but a little loose. The stem asks for an obtuse angle and the key is that angle, so the form is right. There is no word problem, and the numbers are realistic and unambiguous without a figure. The worked solutions are correct and consistent. One minor wart: step 2 says \"Test the options against these two limits: 90 degrees is exactly a right angle...\", but 90 degrees is not among the options in any instance. This is a generic boundary statement, mathematically correct, and I judged it harmless. Tidying it to say only 180 degrees, or \"an angle of exactly 90 or 180\", would read better. Step 3 never names the 180 option, but step 2 covers it."
+   }
+  },
+  {
+   "family_id": "tpl:g10m7s1-1-1:supplementary-pair",
+   "spec_sha": "0d3acf3cfd9bb3a8cbd5661ec956f5a7f5921b0bf9ee79ff5b102916488c92cb",
+   "answers": [
+    {
+     "instance_id": "q:g10m7s1-1-1:g004-supple",
+     "stem_sha": "28fd9b8667a57d0b",
+     "answer": {
+      "choice": "A",
+      "choice_text": "$129^\\circ$ and $51^\\circ$"
+     },
+     "working": "Supplementary angles sum to 180 degrees. A: 129+51=180. B: 151+209=360. C: 61+61=122. D: 27+63=90 (complementary). Only A sums to 180."
+    },
+    {
+     "instance_id": "q:g10m7s1-1-1:g007-supple",
+     "stem_sha": "28fd9b8667a57d0b",
+     "answer": {
+      "choice": "C",
+      "choice_text": "$72^\\circ$ and $108^\\circ$"
+     },
+     "working": "Supplementary angles sum to 180 degrees. A: 59+59=118. B: 154+206=360. C: 72+108=180. D: 50+40=90 (complementary). Only C sums to 180."
+    },
+    {
+     "instance_id": "q:g10m7s1-1-1:g010-supple",
+     "stem_sha": "28fd9b8667a57d0b",
+     "answer": {
+      "choice": "B",
+      "choice_text": "$82^\\circ$ and $98^\\circ$"
+     },
+     "working": "Supplementary angles sum to 180 degrees. A: 41+49=90 (complementary). B: 82+98=180. C: 121+239=360. D: 35+35=70. Only B sums to 180."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": false,
+    "notes": "The solution is not ok in all three instances (g004, g007, g010). Step 2 says \"Add the two angles in each pair\" and then lists FIVE sums, but each question has only FOUR options. The extra pair appears in no option: 61+99=160 in g004, 42+118=160 in g007, 123+47=170 in g010. A student checking the solution against the options will look for a pair that isn't there. This looks like a fifth distractor that was dropped from the options while the solution template still lists it. The sums are listed in a different order from options A to D, which is a minor extra mismatch. Fix: build step 2 from the actual choices only, in option order, or restore the fifth option with a misconception tag.\n\nThe arithmetic is correct everywhere, and each question has exactly one pair summing to 180 degrees, so the key is unambiguous. The keys match the stem: g004 key A is 129 and 51, g007 key C is 72 and 108, g010 key B is 82 and 98. Step 3 is correct, and its remark that a sum of 90 degrees means complementary is right.\n\nDistractors:\n- The 360 pairs (151/209, 154/206, 121/239) match the tagged error supplementary-sums-to-360.\n- The 90 pairs (27/63, 50/40, 41/49) match complementary-for-supplementary.\n- The equal pairs (61/61, 59/59, 35/35) are definitely wrong and fit equal-angles-called-supplementary. This is the weakest tag. A student might confuse supplementary with vertically opposite or with 90 plus 90, but the pair is a reasonable thing for that error to produce.\n- No wrong option is accidentally correct, and none has a wrong label.\n\nContext: there is no word problem, and the numbers are realistic for a Grade 10 student.",
+    "distractors": [
+     {
+      "instance_id": "q:g10m7s1-1-1:g004-supple",
+      "option": "B: 151 and 209",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Sums to 360, which is the supplementary-sums-to-360 error (confusing a straight angle with a full turn)."
+     },
+     {
+      "instance_id": "q:g10m7s1-1-1:g004-supple",
+      "option": "C: 61 and 61",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Equal angles that sum to 122, which is wrong. This is what a student would pick who believes equal angles are supplementary."
+     },
+     {
+      "instance_id": "q:g10m7s1-1-1:g004-supple",
+      "option": "D: 27 and 63",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Sums to 90, so this is complementary. This is the complementary-for-supplementary swap."
+     },
+     {
+      "instance_id": "q:g10m7s1-1-1:g007-supple",
+      "option": "A: 59 and 59",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Equal angles that sum to 118, which is wrong. Matches the equal-angles tag."
+     },
+     {
+      "instance_id": "q:g10m7s1-1-1:g007-supple",
+      "option": "B: 154 and 206",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Sums to 360, which is the supplementary-sums-to-360 error."
+     },
+     {
+      "instance_id": "q:g10m7s1-1-1:g007-supple",
+      "option": "D: 50 and 40",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Sums to 90, so this is complementary. This is the complementary-for-supplementary swap."
+     },
+     {
+      "instance_id": "q:g10m7s1-1-1:g010-supple",
+      "option": "A: 41 and 49",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Sums to 90, so this is complementary. This is the complementary-for-supplementary swap."
+     },
+     {
+      "instance_id": "q:g10m7s1-1-1:g010-supple",
+      "option": "C: 121 and 239",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Sums to 360, which is the supplementary-sums-to-360 error."
+     },
+     {
+      "instance_id": "q:g10m7s1-1-1:g010-supple",
+      "option": "D: 35 and 35",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Equal angles that sum to 70, which is wrong. Matches the equal-angles tag."
+     }
+    ]
+   }
+  },
+  {
+   "family_id": "tpl:g10m7s1-1-2:exterior-chain",
+   "spec_sha": "4f2d90ffdfb1cee7ffacff6b0932d0072a2f0f46bde341a82a13d5ff001d07f8",
+   "answers": [
+    {
+     "instance_id": "q:g10m7s1-1-2:g003-exteri",
+     "stem_sha": "778dd046254e33c6",
+     "answer": {
+      "value": "129"
+     },
+     "working": "Angle APS is the upper-left angle at P. Its corresponding angle at Q is the upper-left angle at Q (CQS). Angle DQT is the lower-right angle at Q, which is vertically opposite CQS. So APS = DQT. 3x+15 = 5x-9 gives x = 12, so APS = 51 degrees. APQ is the lower-left angle at P and forms a straight line with APS, so APQ = 180 - 51 = 129."
+    },
+    {
+     "instance_id": "q:g10m7s1-1-2:g006-exteri",
+     "stem_sha": "5510fc99356de6f7",
+     "answer": {
+      "value": "78"
+     },
+     "working": "Same configuration: APS (upper-left at P) equals the corresponding angle at Q, which is vertically opposite DQT (lower-right at Q). So 3x+30 = 5x-18 gives x = 24, so APS = 102 degrees. APQ = 180 - 102 = 78."
+    },
+    {
+     "instance_id": "q:g10m7s1-1-2:g009-exteri",
+     "stem_sha": "0f15ad54761c2adc",
+     "answer": {
+      "value": "71"
+     },
+     "working": "Same configuration: APS = DQT. 3x+22 = 5x-36 gives 2x = 58, x = 29, so APS = 109 degrees. APQ = 180 - 109 = 71."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family has numeric answers only, so there are no wrong options and distractors_ok is vacuously true. I did not see an answer_check, but the keys are plain integers (129, 78, 71) and match the question's form.\n\nGeometry check, from the stem's own configuration (S, P, Q, T in order on the transversal; A and C on the left; B and D on the right):\n- Step 1: PB and PQ are the rays opposite PA and PS, so angle APS equals angle BPQ (vertically opposite). Correct.\n- Step 2: BPQ and CQP are alternate interior angles between AB and CD, since B and C are on opposite sides of the transversal. Correct.\n- Step 3: QD and QT are the rays opposite QC and QP, so angle CQP equals angle DQT (vertically opposite). Correct, so APS = DQT.\n- Step 6: S, P, Q are collinear with P between S and Q, so APS + APQ = 180. Correct.\n\nArithmetic for each instance:\n- g003: 3x+15 = 5x-9 gives x = 12. APS = 51 and DQT = 5(12)-9 = 51, which agree. APQ = 129.\n- g006: 3x+30 = 5x-18 gives x = 24. APS = 102 and DQT = 5(24)-18 = 102, which agree. APQ = 78.\n- g009: 3x+22 = 5x-36 gives x = 29. APS = 109 and DQT = 5(29)-36 = 109, which agree. APQ = 71.\n\nAll angles are valid, between 0 and 180 degrees. The answer is the same whichever way the transversal slants. The stem has no diagram, but the verbal description is complete and unambiguous, so it is sensible for a Grade 10 student.\n\nMinor, non-blocking: g006 is exactly g003 doubled (constants and angles), so it adds little variety."
+   }
+  },
+  {
+   "family_id": "tpl:g10m7s1-1-2:twolines-algebra",
+   "spec_sha": "b7efc76cda42cd46906b715f8439c898b9231d76080d9064ed7de138bc760741",
+   "answers": [
+    {
+     "instance_id": "q:g10m7s1-1-2:g004-twolin",
+     "stem_sha": "5488dc3f21d2df8b",
+     "answer": {
+      "value": "40"
+     },
+     "working": "Triangle XYZ: X and Z lie on AB, so XZ lies along AB. At X the angle between XZ (towards B) and XY is BXY = x. At Z the angle between ZX (towards A) and ZY is AZY = 47. So angle XYZ = 180 - x - 47 = 133 - x. PYQ is vertically opposite XYZ (P is on ZY extended, Q is on XY extended), so PYQ = 133 - x. Set 3x - 27 = 133 - x, so 4x = 160 and x = 40. Check: PYQ = 93 = 133 - 40."
+    },
+    {
+     "instance_id": "q:g10m7s1-1-2:g006-twolin",
+     "stem_sha": "cd6f9b3b7f54984f",
+     "answer": {
+      "value": "55"
+     },
+     "working": "Triangle XYZ has angle at X = x, angle at Z = 30, so angle XYZ = 180 - x - 30 = 150 - x. PYQ is vertically opposite XYZ, so PYQ = 150 - x. Set 2x - 15 = 150 - x, so 3x = 165 and x = 55. Check: PYQ = 95 = 150 - 55."
+    },
+    {
+     "instance_id": "q:g10m7s1-1-2:g010-twolin",
+     "stem_sha": "5d4d8ee83cee7c34",
+     "answer": {
+      "value": "46"
+     },
+     "working": "Triangle XYZ has angle at X = x, angle at Z = 80, so angle XYZ = 180 - x - 80 = 100 - x. PYQ is vertically opposite XYZ, so PYQ = 100 - x. Set 2x - 38 = 100 - x, so 3x = 138 and x = 46. Check: PYQ = 54 = 100 - 46."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "Numeric family with no options, so there are no distractors to judge. Instances checked: g004 (key 40), g006 (key 55), g010 (key 46).\n\nGeometry. The verbal description fixes the figure unambiguously. X is above Y, Y is above Z, and DC is to the right of AB. Ray ZY continues up and to the right to P. Ray XY continues down and to the right to Q, so P is above Q.\n- Angle AZY and angle DYP are corresponding angles: both lie between the upward parallel direction and the transversal heading up-right.\n- Angle BXY and angle QYC are corresponding angles: both lie between the downward parallel direction and the transversal heading down-right.\n- D, Y, C are collinear with Y between D and C, so DYP + PYQ + QYC = 180 holds.\n\nArithmetic, re-derived independently.\n- g004: 47 + (3x - 27) + x = 180 gives 4x = 160, so x = 40. Then PYQ = 93 and 47 + 93 + 40 = 180.\n- g006: 30 + (2x - 15) + x = 180 gives 3x = 165, so x = 55. Then PYQ = 95 and 30 + 95 + 55 = 180.\n- g010: 80 + (2x - 38) + x = 180 gives 3x = 138, so x = 46. Then PYQ = 54 and 80 + 54 + 46 = 180.\n\nEach key matches the solution, and the stem asks for the value of x, which is what the key gives. Each step has a correct reason. All three PYQ values are positive angles below 180, and the figure can be built for every instance (X above Z, Y between them). The notation and the 'corresponding angles' and 'angles on a straight line' reasons are the standard Grade 10 method. No problems found."
+   }
+  },
+  {
+   "family_id": "tpl:g10m7s1-1-3:pick-parallel",
+   "spec_sha": "74445419e9e3f227c381f9e0f9ed13413d04408c05cf20481e95c15f446afd86",
+   "answers": [
+    {
+     "instance_id": "q:g10m7s1-1-3:g003-pick-p",
+     "stem_sha": "9f3d9af674436e72",
+     "answer": {
+      "choice": "D",
+      "choice_text": "line q"
+     },
+     "working": "Measure each line's direction mod 180 degrees from the horizontal, with t vertical. Up+right angle x gives 90-x. Up+left gives 90+x. Down+right gives 90+x. Down+left gives 90-x. p (up,right,130): 90-130 = -40, so 140. q (up,left,50): 90+50 = 140. r (up,right,50): 40. s (down,right,130): 220, so 40. u (up,right,132): -42, so 138. Only q matches p's 140 (u is 138, not equal), so q is parallel to p."
+    },
+    {
+     "instance_id": "q:g10m7s1-1-3:g009-pick-p",
+     "stem_sha": "e628349ab0ed9682",
+     "answer": {
+      "choice": "C",
+      "choice_text": "line q"
+     },
+     "working": "Same direction method. p (up,left,137): 90+137 = 227, so 47. q (down,left,43): 90-43 = 47. r (up,left,134): 224, so 44. s (up,right,137): 90-137 = -47, so 133. u (down,right,43): 90+43 = 133. Only q matches p's 47 (r is 44, not equal), so q is parallel to p."
+    },
+    {
+     "instance_id": "q:g10m7s1-1-3:g010-pick-p",
+     "stem_sha": "46e0a06b7d1307e6",
+     "answer": {
+      "choice": "D",
+      "choice_text": "line q"
+     },
+     "working": "Same direction method. p (up,left,116): 90+116 = 206, so 26. q (down,left,64): 90-64 = 26. r (up,left,64): 154. s (up,left,118): 208, so 28. u (down,left,116): 90-116 = -26, so 154. Only q matches p's 26 (s is 28, not equal), so q is parallel to p."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [
+     {
+      "instance_id": "q:g10m7s1-1-3:g003-pick-p",
+      "option": "A line s",
+      "verdict": "IS_THAT_ERROR",
+      "why": "s marks 130 (lower-right), the same number as p's 130 (upper-right) but a different position. Its standard angle is 180-130=50, so it is not parallel. This is the equal-number, unmatched-position error."
+     },
+     {
+      "instance_id": "q:g10m7s1-1-3:g003-pick-p",
+      "option": "B line u",
+      "verdict": "IS_THAT_ERROR",
+      "why": "u marks 132 in the same position as p's 130. The near-equal values make the lines look parallel, but 132 is not 130, so it is not parallel. This is the judged-by-appearance error."
+     },
+     {
+      "instance_id": "q:g10m7s1-1-3:g003-pick-p",
+      "option": "C line r",
+      "verdict": "IS_THAT_ERROR",
+      "why": "r marks 50 in the same position as p's 130, so the pair sums to 180. A student who treats any supplementary pair as parallel picks r. It is wrong, since r's standard angle is 50, not 130. The same error would also accept q, which is the key, so the tag is weakly diagnostic."
+     },
+     {
+      "instance_id": "q:g10m7s1-1-3:g009-pick-p",
+      "option": "A line r",
+      "verdict": "IS_THAT_ERROR",
+      "why": "r marks 134 in the same position (upper-left) as p's 137. A 3 degree gap looks near-parallel, but r's standard angle is 46 against p's 43, so it is not parallel."
+     },
+     {
+      "instance_id": "q:g10m7s1-1-3:g009-pick-p",
+      "option": "B line u",
+      "verdict": "IS_THAT_ERROR",
+      "why": "u marks 43 (lower-right) and p marks 137 (upper-left), which sum to 180. A student who treats supplementary as parallel picks u. u's standard angle is 137, not 43, so it is not parallel."
+     },
+     {
+      "instance_id": "q:g10m7s1-1-3:g009-pick-p",
+      "option": "D line s",
+      "verdict": "IS_THAT_ERROR",
+      "why": "s marks 137 (upper-right) and p marks 137 (upper-left). The numbers are equal but the positions are not matched. s's standard angle is 137, p's is 43, so it is not parallel."
+     },
+     {
+      "instance_id": "q:g10m7s1-1-3:g010-pick-p",
+      "option": "A line r",
+      "verdict": "IS_THAT_ERROR",
+      "why": "r marks 64 and p marks 116 in the same upper-left position, so the pair sums to 180. A student who treats supplementary as parallel picks r. r's standard angle is 116, not 64, so it is not parallel."
+     },
+     {
+      "instance_id": "q:g10m7s1-1-3:g010-pick-p",
+      "option": "B line u",
+      "verdict": "IS_THAT_ERROR",
+      "why": "u marks 116 (lower-left) and p marks 116 (upper-left). The numbers are equal but the positions differ. u's standard angle is 116, not 64, so it is not parallel."
+     },
+     {
+      "instance_id": "q:g10m7s1-1-3:g010-pick-p",
+      "option": "C line s",
+      "verdict": "IS_THAT_ERROR",
+      "why": "s marks 118 in the same upper-left position as p's 116. The near-equal values look parallel, but s's standard angle is 62, not 64, so it is not parallel."
+     }
+    ],
+    "notes": "I checked all three instances (g003, g009, g010) by working out each line's standard angle (upper-right) from the marked position and value. Each key is the only line whose standard angle equals p's.\n\n- g003: p=130, q=130, r=50, s=50, u=132. Key D (q) is correct.\n- g009: p=43, q=43, r=46, s=137, u=137. Key C (q) is correct.\n- g010: p=64, q=64, r=116, s=62, u=116. Key D (q) is correct.\n\nIn each instance the key letter matches the \"line q\" option. Every distractor is definitely wrong, and each tagged distractor is what its misconception would produce. The three tags map consistently: the near-equal same-position value is \"judges-by-appearance\", the equal number in a different position is \"compares-unmatched-angles\", and the supplementary marked angle is \"supplementary-means-parallel\". No distractor is also correct, and the stems state that exactly one line is parallel.\n\nEach solution reads correctly step by step. It uses the vertically opposite, adjacent-on-a-straight-line and equal-corresponding-angles relations, and the vertically-opposite and 180-minus cases are applied correctly in every step. The key form is just \"line q\", which matches \"Which line is it?\".\n\nThe stem is purely descriptive with no word problem and no diagram. It is long, but each angle is unambiguously located by its two arms.\n\nOne weakness, not a defect: in all three instances the supplementary-means-parallel distractor shares its marked-angle value with the key (q). A student with that error cannot tell q from the distractor and would pick between them, so the distractor is consistent with the error but not strongly diagnostic. The stem also never shows a figure, so \"judges-by-appearance\" is read as accepting a near-equal angle value."
+   }
+  },
+  {
+   "family_id": "tpl:g10m7s2-1-2:crossing",
+   "spec_sha": "ccf663c6e9e97f54da595d58aac798e9387f5291187c5581efb66128ac4e26af",
+   "answers": [
+    {
+     "instance_id": "q:g10m7s2-1-2:g003-crossi",
+     "stem_sha": "e5f89493e402f7f0",
+     "answer": {
+      "value": "86"
+     },
+     "working": "FH = JH, GH = KH, and angle FHG = angle JHK (vertically opposite), so triangle FHG is congruent to triangle JHK (SAS) with F<->J, G<->K. Angle JKH therefore equals angle FGH. In triangle FHG, angle FGH = 180 - 42 - 52 = 86."
+    },
+    {
+     "instance_id": "q:g10m7s2-1-2:g004-crossi",
+     "stem_sha": "ab0cde5737e0c8b1",
+     "answer": {
+      "value": "61"
+     },
+     "working": "PR = SR, QR = TR, and angle PRQ = angle SRT (vertically opposite), so triangle PRQ is congruent to triangle SRT (SAS) with P<->S, Q<->T. Angle STR therefore equals angle PQR. In triangle PRQ, angle PQR = 180 - 70 - 49 = 61."
+    },
+    {
+     "instance_id": "q:g10m7s2-1-2:g006-crossi",
+     "stem_sha": "81714ee8d45e8b10",
+     "answer": {
+      "value": "84"
+     },
+     "working": "AC = DC, BC = EC, and angle ACB = angle DCE (vertically opposite), so triangle ACB is congruent to triangle DCE (SAS) with A<->D, B<->E. Angle DEC therefore equals angle ABC. In triangle ACB, angle ABC = 180 - 45 - 51 = 84."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family is numeric with no options, so there are no distractors to judge. I checked all three instances independently and each key and solution is correct.\n\n- g003: In triangle FGH the angles are 42, 52 and so 86 for angle FGH. F matches J, G matches K and H matches H, so angle JKH equals angle FGH, which is 86. The key \"86\" is correct.\n- g004: Angle PQR is 180 - 70 - 49 = 61. P matches S and Q matches T, so angle STR equals angle PQR, which is 61. The key \"61\" is correct.\n- g006: Angle ABC is 180 - 45 - 51 = 84. A matches D and B matches E, so angle DEC equals angle ABC, which is 84. The key \"84\" is correct.\n\nChecks that passed:\n- Vertically opposite angles: in each stem the two lines are straight and cross at the midpoint, so the angle between the first segments of the two lines equals the angle between the opposite segments.\n- SAS: the equal sides are the given pairs and the included angle is the vertically opposite pair, so the triangles are congruent.\n- Matching order: the vertex letters are listed in matching order, so the corresponding-angle step is justified.\n- Angle sums: all three triangles are realistic and consistent (42+52+86, 70+49+61, 45+51+84, each 180).\n- Stem and key form: each stem asks for the angle \"in degrees\", and the key is a bare numeric degree value. The stems give no diagram, but they are self-contained and unambiguous, because the angle at the named vertex and the midpoint structure fully determine the configuration.\n\nMinor note, not a defect: the question is a single SAS congruence plus an angle sum, which is on the light side for tier \"advanced\". That is a tiering matter, not a correctness one."
+   }
+  },
+  {
+   "family_id": "tpl:g10m7s2-1-2:isosceles",
+   "spec_sha": "40c40d1d27c49a7bcb599ee2d7733888619a9fadea8a0000547bfd6b55d87628",
+   "answers": [
+    {
+     "instance_id": "q:g10m7s2-1-2:g008-isosce",
+     "stem_sha": "2c6f4f22d307978b",
+     "answer": {
+      "choice": "B",
+      "choice_text": "There is not enough information to decide whether the triangles are congruent."
+     },
+     "working": "Lines QS and PT cross at R, so angle TRS is vertically opposite angle PRQ and equals 86 degrees. Both triangles are isosceles with apex angle 86 degrees at R, so each has base angles 47 degrees. The triangles are therefore similar (same shape), but congruence needs a side of one triangle equal to the corresponding side of the other. We are only told RP = RQ and RT = RS, which are equalities inside each triangle. Nothing links RP or RQ to RT or RS, so the triangles could be congruent or could be different sizes. SAS and AAS both need a between-triangle side equality, so they fail. 'Not congruent' is also unjustified. The answer is 'not enough information'."
+    },
+    {
+     "instance_id": "q:g10m7s2-1-2:g009-isosce",
+     "stem_sha": "49a20941d5530eb5",
+     "answer": {
+      "choice": "A",
+      "choice_text": "There is not enough information to decide whether the triangles are congruent."
+     },
+     "working": "Lines GJ and FK cross at H, so angle KHJ is vertically opposite angle FHG and equals 42 degrees. Both triangles are isosceles with apex angle 42 degrees at H, so each has base angles 69 degrees. They are similar, but no side of FGH is given equal to a side of KJH (HF = HG and HK = HJ are within each triangle). SAS and AAS cannot be applied, and non-congruence cannot be concluded either, because the triangles might have the same size. The answer is 'not enough information'."
+    },
+    {
+     "instance_id": "q:g10m7s2-1-2:g010-isosce",
+     "stem_sha": "c5b02b16c9d31d94",
+     "answer": {
+      "choice": "B",
+      "choice_text": "There is not enough information to decide whether the triangles are congruent."
+     },
+     "working": "Lines GJ and FK cross at H, so angle KHJ is vertically opposite angle FHG and equals 66 degrees. Both triangles are isosceles with apex angle 66 degrees at H, so each has base angles 57 degrees. They are similar, but no side of FGH is given equal to a side of KJH. SAS and AAS both need a between-triangle side equality, which we do not have, and we cannot say they are not congruent. The answer is 'not enough information'."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I checked the geometry and the arithmetic for all three instances.\n\nGeometry: P-R-T and Q-R-S are collinear (G-H-J and F-H-K in g009 and g010), so the angle at the apex of the first triangle is vertically opposite the angle at the apex of the second. Both triangles are isosceles with the same apex angle, so they are similar. They are congruent only if RP = RT, which the stem does not give. \"Not enough information\" is therefore correct, and \"congruent\" and \"not congruent\" are both unjustified conclusions. The worked solutions reach this correctly.\n\nArithmetic: (180-86)/2 = 47, (180-42)/2 = 69 and (180-66)/2 = 57 are all correct. The solution steps use the vertically opposite angles, then the base angles of an isosceles triangle, then note that no side of one triangle is tied to a side of the other. None of SSS, SAS, AAS or RHS can be applied.\n\nDistractors:\n- The SAS and AAS options are what a student produces by reading the equalities inside each triangle as equalities between the triangles. SAS pairs that reading with the vertically opposite angle at R, and AAS with the equal angles found in step 2. Both fit the tag \"marks-inside-one-triangle-read-as-matching-sides\".\n- The \"not congruent, because no side of one is shown equal to a side of the other\" option is exactly the tag \"not-proved-means-not-congruent\": it treats \"not proved\" as \"disproved\".\n- All three wrong options are definitely wrong as conclusions. Each instance has exactly one correct option and the key letter matches it.\n\nMinor, non-blocking: two wrong options per instance carry the same misconception tag, so the tag cannot tell SAS from AAS. This does not make anything incorrect.\n\nThe stem is text-only but self-contained, and the angle values and contexts are realistic. The key is a single MCQ letter that answers \"which conclusion can be drawn\".",
+    "distractors": [
+     {
+      "instance_id": "q:g10m7s2-1-2:g008-isosce",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "SAS with the vertically opposite angles at R is what a student gets by reading RP=RQ and RT=RS as equalities between the two triangles. Wrong as a conclusion, because congruence is not given."
+     },
+     {
+      "instance_id": "q:g10m7s2-1-2:g008-isosce",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Treats 'not proved congruent' as 'not congruent'. The triangles are congruent if RP = RT, so this is not a valid conclusion."
+     },
+     {
+      "instance_id": "q:g10m7s2-1-2:g008-isosce",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "AAS from the equal angles plus a misread 'pair of equal sides'. This is the same tagged misreading of the equalities, and congruence is still not established."
+     },
+     {
+      "instance_id": "q:g10m7s2-1-2:g009-isosce",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "SAS with the vertically opposite angles at H comes from the same misreading of the equal sides inside each triangle. It is wrong."
+     },
+     {
+      "instance_id": "q:g10m7s2-1-2:g009-isosce",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "AAS built from the equal angles and a misread pair of equal sides. It is wrong."
+     },
+     {
+      "instance_id": "q:g10m7s2-1-2:g009-isosce",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "'Not proved' is read as 'not congruent', which is the tagged error. It is wrong because the triangles could be congruent."
+     },
+     {
+      "instance_id": "q:g10m7s2-1-2:g010-isosce",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "'Not proved' is read as 'not congruent', which is the tagged error. It is wrong because the triangles could be congruent."
+     },
+     {
+      "instance_id": "q:g10m7s2-1-2:g010-isosce",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "AAS from the equal angles and a misread pair of equal sides. It is wrong."
+     },
+     {
+      "instance_id": "q:g10m7s2-1-2:g010-isosce",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "SAS with the vertically opposite angles at H comes from reading the equalities inside each triangle as equalities between the triangles. It is wrong."
+     }
+    ]
+   }
+  },
+  {
+   "family_id": "tpl:g10m7s2-1-2:statement",
+   "spec_sha": "11e34fa99df474c3f1f0b52ee0bafc4e0a16ed9ca606b1c74525caf9b045c55a",
+   "answers": [
+    {
+     "instance_id": "q:g10m7s2-1-2:g005-statem",
+     "stem_sha": "dd54b455664e7e25",
+     "answer": {
+      "choice": "A",
+      "choice_text": "$\\triangle ABC \\equiv \\triangle RPQ$ (AAS)"
+     },
+     "working": "Matched the equal parts to vertices. C=Q and B=P, so the remaining vertex A corresponds to R. AB=RP is consistent with A to R and B to P. So the correspondence is A to R, B to P, C to Q, giving triangle ABC congruent to triangle RPQ. The equal parts are two angles (B and C) and side AB, which is not between B and C (AB joins B to A, and C is not on it). That is two angles and a non-included side, so the rule is AAS. Option A matches. Option B says SAS, which is wrong. C and D have the wrong vertex order."
+    },
+    {
+     "instance_id": "q:g10m7s2-1-2:g008-statem",
+     "stem_sha": "4c9d160e5400049f",
+     "answer": {
+      "choice": "A",
+      "choice_text": "$\\triangle GHJ \\equiv \\triangle YXZ$ (AAS)"
+     },
+     "working": "H=X and G=Y, so the remaining vertex J corresponds to Z. GJ=YZ is consistent with G to Y and J to Z. So the correspondence is G to Y, H to X, J to Z, giving triangle GHJ congruent to triangle YXZ. The equal parts are angles G and H and side GJ. GJ has G as an endpoint but not H, so it is a non-included side, which makes the rule AAS. Option A matches. Option C says SAS, which is wrong. B and D have the wrong vertex order."
+    },
+    {
+     "instance_id": "q:g10m7s2-1-2:g010-statem",
+     "stem_sha": "d65f6403e0db0f06",
+     "answer": {
+      "choice": "B",
+      "choice_text": "$\\triangle PQR \\equiv \\triangle SUT$ (RHS)"
+     },
+     "working": "This is a right-angle triangle pair with P=S=90°, hypotenuse QR = hypotenuse UT, and a leg PR = leg ST. The right angles give P to S. From the hypotenuses, Q to U and R to T. Check with the legs: PR to ST is P to S and R to T, which is consistent. So the correspondence is P to S, Q to U, R to T, giving triangle PQR congruent to triangle SUT, by RHS (right angle, hypotenuse, side). Option B matches. A and C have the wrong vertex order. D says SAS, which is not the rule that applies here."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [
+     {
+      "instance_id": "q:g10m7s2-1-2:g005-statem",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Letters RPQ are correct (A to R, B to P, C to Q) and only the rule is wrong. Only one side is given, so SAS is not justified. This is a rule named from the wrong parts."
+     },
+     {
+      "instance_id": "q:g10m7s2-1-2:g005-statem",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "ABC = QPR would match A to Q and C to R, but A matches R and C matches Q. The rule AAS is right and the letter order is wrong, so this is the order error alone."
+     },
+     {
+      "instance_id": "q:g10m7s2-1-2:g005-statem",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "PQR is the alphabetical-order trap that step 4 names. It would match A to P and B to Q, which is wrong. The rule AAS is right."
+     },
+     {
+      "instance_id": "q:g10m7s2-1-2:g008-statem",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "XYZ is alphabetical order and mismatches G to X and H to Y. The rule AAS is right, so this is the order error alone."
+     },
+     {
+      "instance_id": "q:g10m7s2-1-2:g008-statem",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "YXZ is the correct order, but SAS needs two sides and an included angle. Only one side is given, so the rule is named from the wrong parts."
+     },
+     {
+      "instance_id": "q:g10m7s2-1-2:g008-statem",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "YZX would match H to Z and J to X, but H matches X and J matches Z. The rule AAS is right and only the order is wrong."
+     },
+     {
+      "instance_id": "q:g10m7s2-1-2:g010-statem",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "STU is alphabetical order and would match Q to T and R to U. The correct matches are Q to U and R to T. The rule RHS is right, so this is the order error alone."
+     },
+     {
+      "instance_id": "q:g10m7s2-1-2:g010-statem",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "TUS would match P to T and R to S, but P matches S and R matches T. The rule RHS is right and only the order is wrong."
+     },
+     {
+      "instance_id": "q:g10m7s2-1-2:g010-statem",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "SUT is the correct order, but the right angle at P lies between PQ and PR. The given sides are QR and PR, so the included angle is R and SAS does not apply. The rule is named from the wrong parts."
+     }
+    ],
+    "notes": "I checked all three instances independently and found no defect.\n\ng005: C matches Q and B matches P. Side AB equals RP, so A matches R. The statement is ABC = RPQ, and the two angles plus a non-included side (AB lies on B, not between B and C) make it AAS.\ng008: H matches X and G matches Y. Side GJ equals YZ, so J matches Z. The statement is GHJ = YXZ (AAS).\ng010: P matches S and the hypotenuses QR and UT are equal. PR equals ST, so R matches T and Q matches U. The statement is PQR = SUT (RHS).\n\nNo wrong option equals the key under any relabelling. Every option keeps the first triangle as written, so each correspondence is distinct. No wrong rule is valid for the given parts. SAS needs two sides, and in g010 the right angle at P is not between the given sides QR and PR. Each tagged distractor changes exactly one thing, either the letter order or the rule, so each isolates its misconception. Key positions are A, A, B.\n\nTwo minor points, neither enough to reject:\n1. Step 2 of each solution states the correspondence (for example \"A matches R\") without showing how it follows from the side equality. A learner is told the pairing rather than shown the derivation. It is correct, and step 4 does explain why alphabetical order fails.\n2. I could not open the book, so I did not check whether it names the rule RHS or something like 90°HS or hypotenuse-side. The family is internally consistent, but a reviewer with the book should confirm that label."
+   }
+  },
+  {
+   "family_id": "tpl:g10m7s2-1-2:touching",
+   "spec_sha": "6fb4ee39888a72a19e53fcf7f289ebc898508246b7cf9ba38e32c49b28ae3f3f",
+   "answers": [
+    {
+     "instance_id": "q:g10m7s2-1-2:g004-touchi",
+     "stem_sha": "87d81225a80a25c6",
+     "answer": {
+      "choice": "D",
+      "choice_text": "There is not enough information to decide whether the triangles are congruent."
+     },
+     "working": "Given PR=SR=9 and QR=TR=6, two pairs of equal sides meeting at R. SAS needs the included angles (PRQ and SRT) to be equal. P,R,S are not collinear and Q,R,T are not collinear, so the angles at R are not vertically opposite and nothing says they are equal. The third sides PQ and ST are unknown. So congruence can't be concluded, and non-congruence can't be concluded either (PR and QR differing in length is irrelevant, as the pairing is PR with SR and QR with TR). Not enough information."
+    },
+    {
+     "instance_id": "q:g10m7s2-1-2:g005-touchi",
+     "stem_sha": "265518a48192d90a",
+     "answer": {
+      "choice": "D",
+      "choice_text": "There is not enough information to decide whether the triangles are congruent."
+     },
+     "working": "Same structure as Q1 with PR=SR=3 and QR=TR=7. Two pairs of equal sides share the vertex R, but the included angles at R are not stated equal, because the points are not collinear, so the angles are not vertically opposite. The third sides are unknown. Neither congruence nor non-congruence follows. Not enough information."
+    },
+    {
+     "instance_id": "q:g10m7s2-1-2:g010-touchi",
+     "stem_sha": "cd9484b4ba68714d",
+     "answer": {
+      "choice": "C",
+      "choice_text": "There is not enough information to decide whether the triangles are congruent."
+     },
+     "working": "AC=DC=4 and BC=EC=5. A, C, D are not collinear and B, C, E are not collinear, so angles ACB and DCE are not vertically opposite and not known to be equal. SAS cannot be applied, and non-congruence cannot be shown either. Not enough information."
+    }
+   ],
+   "judge": {
+    "distractors_ok": false,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [
+     {
+      "instance_id": "q:g10m7s2-1-2:g004-touchi",
+      "option": "A: not congruent, because PR and QR have different lengths",
+      "verdict": "WRONG_LABEL",
+      "why": "Tagged not-proved-means-not-congruent, but this is a different error. The student compares two sides within the same triangle (PR=9 vs QR=6) instead of corresponding sides across triangles. That is a corresponding-versus-same-triangle slip, not 'cannot prove, so not congruent'. The option is definitely wrong, but its tag is wrong, so the tag would feed the wrong remediation."
+     },
+     {
+      "instance_id": "q:g10m7s2-1-2:g004-touchi",
+      "option": "B: congruent (SAS), vertically opposite angles at R",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Exactly what a student produces by assuming the angles at the shared point R are vertically opposite. The stem says the points are not collinear, so the claim is false."
+     },
+     {
+      "instance_id": "q:g10m7s2-1-2:g004-touchi",
+      "option": "C: not congruent, because they do not have all three pairs of sides equal",
+      "verdict": "IS_THAT_ERROR",
+      "why": "A student who treats 'cannot prove congruence' as 'not congruent' reasons this way (no SSS, so not congruent). It is wrong because the third pair is unknown, so non-congruence is not established."
+     },
+     {
+      "instance_id": "q:g10m7s2-1-2:g005-touchi",
+      "option": "A: not congruent, because they do not have all three pairs of sides equal",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Matches the not-proved-means-not-congruent error. Definitely wrong because the third pair of sides is unknown."
+     },
+     {
+      "instance_id": "q:g10m7s2-1-2:g005-touchi",
+      "option": "B: congruent (SAS), vertically opposite angles at R",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Matches the assumed-vertically-opposite error. Definitely wrong because the stem rules out collinearity."
+     },
+     {
+      "instance_id": "q:g10m7s2-1-2:g005-touchi",
+      "option": "C: not congruent, because PR and QR have different lengths (3 vs 7)",
+      "verdict": "WRONG_LABEL",
+      "why": "Tagged not-proved-means-not-congruent, but it is a different error: it compares sides within one triangle. The option is wrong, but the tag does not describe the student's reasoning."
+     },
+     {
+      "instance_id": "q:g10m7s2-1-2:g010-touchi",
+      "option": "A: congruent (SAS), vertically opposite angles at C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Matches the assumed-vertically-opposite error. Definitely wrong because the stem rules out collinearity."
+     },
+     {
+      "instance_id": "q:g10m7s2-1-2:g010-touchi",
+      "option": "B: not congruent, because AC and BC have different lengths (4 vs 5)",
+      "verdict": "WRONG_LABEL",
+      "why": "Tagged not-proved-means-not-congruent, but it compares sides within one triangle (AC vs BC), which is a different error. The option is wrong but mislabelled."
+     },
+     {
+      "instance_id": "q:g10m7s2-1-2:g010-touchi",
+      "option": "D: not congruent, because they do not have all three pairs of sides equal",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Matches the not-proved-means-not-congruent error. Definitely wrong because the third pair is unknown."
+     }
+    ],
+    "notes": "The key is correct. Two sides and no included-angle information give no congruence criterion, and the triangles can be congruent (rotate PQR about R) or not (different angle at R). The stem is unambiguous, the numbers are realistic, and the worked solution is correct and in the book's SSS/SAS/AAS/RHS terms. Step 2's 'only if' about vertically opposite angles is right. Step 4 never explicitly rebuts 'not congruent', but 'may or may not be congruent' covers it.\n\ndistractors_ok is false for one reason. In every instance, the option 'not congruent, because [side of a triangle] and [other side of the same triangle] have different lengths' carries mc:...:not-proved-means-not-congruent. That error is 'I cannot prove congruence, so they are not congruent'. This option instead compares two sides inside one triangle, which is a different misconception. It is not defensibly the tagged error, and a student who picks it would be diagnosed wrongly. Fix: either re-tag it as a new misconception (for example 'sides-within-a-triangle-must-match' or 'congruence-needs-all-sides-equal'), or replace it with a distractor that really expresses not-proved-means-not-congruent, such as 'not congruent, because only two pairs of sides are known to be equal'. All the other wrong options match their tags and are definitely wrong. The three instances do share the same two-option structure for the tagged error."
+   }
+  },
+  {
+   "family_id": "tpl:g10m7s2-1-3:isosceles-bowtie",
+   "spec_sha": "399ae2dfab23d7de895674fbabbfdc72ddf4a5b1de965f3fb84f15281ba2998c",
+   "answers": [
+    {
+     "instance_id": "q:g10m7s2-1-3:g001-isosce",
+     "stem_sha": "7896c48b44eb10a4",
+     "answer": {
+      "value": "5"
+     },
+     "working": "P-R-T and Q-R-S are straight, so angle PRQ and angle TRS are vertical angles and equal. Both triangles are isosceles with the same apex angle at R, so they are similar and ST/PQ = RT/PR = 3/12. ST = 20 x 3/12 = 5."
+    },
+    {
+     "instance_id": "q:g10m7s2-1-3:g003-isosce",
+     "stem_sha": "85677578608e97a4",
+     "answer": {
+      "value": "4"
+     },
+     "working": "Angle PRQ = angle TRS (vertically opposite). Both triangles are isosceles with the same apex angle, so they are similar with ST/PQ = RT/PR = 3/9. ST = 12 x 3/9 = 4."
+    },
+    {
+     "instance_id": "q:g10m7s2-1-3:g007-isosce",
+     "stem_sha": "9e66edb1e14a1c0e",
+     "answer": {
+      "value": "6"
+     },
+     "working": "Angle PRQ = angle TRS (vertically opposite). Both triangles are isosceles with the same apex angle, so they are similar with ST/PQ = RT/PR = 4/6. ST = 9 x 4/6 = 6."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family has no multiple-choice options (numeric answer), so there are no distractors to judge. I checked all three instances independently.\n\nGeometry. PT and QS are straight lines crossing at R, with R between P and T and between Q and S. So angle PRQ equals angle TRS (vertically opposite). Both triangles are isosceles with apex R, so the base angles are equal in each triangle. The angle sums then force angle P = angle T and angle Q = angle S. This gives triangle PQR ||| triangle TSR with P to T, Q to S and R to R. The correspondence is PQ to TS and PR to TR, exactly as the solution states. The inference in step 2 (2P = 2T) is sound.\n\nInstances.\n- g001: 20/x = 12/3 gives x = 5. Key \"5\" is correct. The triangle inequality holds (12 + 12 > 20).\n- g003: 12/x = 9/3 gives x = 4. Key \"4\" is correct. The triangle inequality holds (9 + 9 > 12).\n- g007: 9/x = 6/4 gives x = 6. Key \"6\" is correct. The triangle inequality holds (6 + 6 > 9, and 4 + 4 > 6).\n\nKey form. The stem asks for the length ST in cm. The key is a bare number and the solution ends \"ST = ... cm\", so the form matches. I could not see answer_check (it was not in the file), so I could not compare the LaTeX key against it. For a plain integer this is low risk.\n\nContext. The stem is self-contained and unambiguous: the betweenness of R is stated, the equal sides are stated, and the numbers are realistic for a Grade 10 student. No diagram is needed.\n\nSolution. The steps run vertical angles, then isosceles base angles, then angle sum, then AAA similarity, then the proportion, then the arithmetic. This is correct and in the book's style, including the Siyavula-style ||| notation. All three instances use the same template text with the numbers substituted correctly."
+   }
+  },
+  {
+   "family_id": "tpl:g10m7s2-1-3:vertical-angles",
+   "spec_sha": "fc2718d74f6bb885d9f0188a946cde0b92690d7426481a53b734a49f52a420b0",
+   "answers": [
+    {
+     "instance_id": "q:g10m7s2-1-3:g001-vertic",
+     "stem_sha": "b074c047f5567449",
+     "answer": {
+      "value": "8"
+     },
+     "working": "Angle RPQ = angle RTS (given) and angle PRQ = angle TRS (vertical angles), so triangles RPQ and RTS are similar with P<->T, Q<->S, R<->R. Then PQ/TS = PR/TR, so ST = PQ x TR / PR = 12 x 2 / 3 = 8."
+    },
+    {
+     "instance_id": "q:g10m7s2-1-3:g003-vertic",
+     "stem_sha": "ab1756f77158e7f0",
+     "answer": {
+      "value": "20"
+     },
+     "working": "Angle RPQ = angle RTS and vertical angles at R are equal, so triangle RPQ ~ triangle RTS (P<->T, Q<->S). PQ/TS = PR/TR, so ST = 16 x 5 / 4 = 20."
+    },
+    {
+     "instance_id": "q:g10m7s2-1-3:g007-vertic",
+     "stem_sha": "fb93e0bab08a6040",
+     "answer": {
+      "value": "12"
+     },
+     "working": "Angle RPQ = angle RTS and vertical angles at R are equal, so triangle RPQ ~ triangle RTS (P<->T, Q<->S). PQ/TS = PR/TR, so ST = 15 x 4 / 5 = 12."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family has no options (typed numeric answer), so there are no distractors to judge. I checked the geometry and the arithmetic for all three instances.\n\nThe correspondence is P to T, Q to S, R to R. This follows from the vertically opposite angles at R and the given equal angles at P and T. The stated pairs PQ/TS and PR/TR each sit opposite equal angles.\n\n- g001: 12/x = 3/2, so x = 8. The key \"8\" matches.\n- g003: 16/x = 4/5, so x = 20. The key \"20\" matches.\n- g007: 15/x = 5/4, so x = 12. The key \"12\" matches.\n\nThe key is a plain number and the stem already gives the unit (cm), which is what a Calculate question asks for. The stem is self-contained. It fixes the configuration by stating that R lies between P and T and between Q and S, so the vertical angles are unambiguous and no diagram is needed. The triangles exist in each case, since each is determined by an SAS with realistic angles and lengths. I also checked instance 1 numerically, with QR about 10.9 and SR about 7.3, giving the 3:2 ratio. The three instances share the same structure.\n\nThe worked solution follows the book's AAA similarity method. It uses vertically opposite angles, then the third pair by the angle sum of a triangle, then the |||  notation, then proportional sides. Step 2 says \"only two pairs of angles are shown equal\", which is correct at that point. The steps are in the right order, and the substitution and the final arithmetic are correct in all three instances."
+   }
+  },
+  {
+   "family_id": "tpl:g10m7s3-1-1:diagonals-bisect",
+   "spec_sha": "4c95a38586dfa7f6063d19b8c3ea5e80ade11eac03aebc30b5f0c5f9a898319d",
+   "answers": [
+    {
+     "instance_id": "q:g10m7s3-1-1:g003-diagon",
+     "stem_sha": "250d7cc89b09360a",
+     "answer": {
+      "value": "18"
+     },
+     "working": "The diagonals of a parallelogram bisect each other, so M is the midpoint of BD and BD = 2 x BM = 2 x 9 = 18. AM = 13 is not needed."
+    },
+    {
+     "instance_id": "q:g10m7s3-1-1:g006-diagon",
+     "stem_sha": "9b61aa010f471f66",
+     "answer": {
+      "value": "28"
+     },
+     "working": "The diagonals of a parallelogram bisect each other, so M is the midpoint of BD and BD = 2 x BM = 2 x 14 = 28. AM = 7 is not needed."
+    },
+    {
+     "instance_id": "q:g10m7s3-1-1:g009-diagon",
+     "stem_sha": "aba45bac7c33a000",
+     "answer": {
+      "value": "8"
+     },
+     "working": "The diagonals of a parallelogram bisect each other, so M is the midpoint of BD and BD = 2 x BM = 2 x 4 = 8. AM = 11 is not needed."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family is numeric with no options, so there are no distractors to judge. I checked all three instances (g003, g006, g009).\n\nKeys: BD = 2*BM, which gives 18, 28 and 8. Each is a plain number in cm, matching the stem's unit and the form it asks for. No answer_check was supplied in the packet, so I could not compare the key against one.\n\nSolutions: each step follows the book's Grade 10 Euclidean geometry property that the diagonals of a parallelogram bisect each other. Step 1 sets MD = BM, step 2 adds the two halves, and step 3 says AM is not needed for BD. The side computations are correct: AC = 2*13 = 26, 2*7 = 14 and 2*11 = 22.\n\nContext: the data are realistic and consistent. AM and BM can take any values because the angle between the diagonals is free, so the parallelogram exists. In g006, AC = 14 equals BM = 14, which is only a coincidence and not misleading. AM is a deliberate irrelevant datum, and step 3 explains why it is not used. The stem names the parallelogram, the diagonals, the intersection point M and the unit, so it is unambiguous."
+   }
+  },
+  {
+   "family_id": "tpl:g10m7s3-1-1:opposite-angles",
+   "spec_sha": "3692f4f7698a0c51bdfbed73ebfe46cab227c3c7c121bb0b546e5d8d25ea5c9c",
+   "answers": [
+    {
+     "instance_id": "q:g10m7s3-1-1:g001-opposi",
+     "stem_sha": "09745458a07fd429",
+     "answer": {
+      "value": "141"
+     },
+     "working": "Let theta = angle PSR = 154. In the parallelogram, angle Q = 154 and angle P = 180 - 154 = 26. PS = OS, so angle SOP = angle SPO = 26. QO = QR, so angle QOR = (180 - 154)/2 = 13. O lies on PQ, so angle SOR = 180 - 26 - 13 = 141."
+    },
+    {
+     "instance_id": "q:g10m7s3-1-1:g006-opposi",
+     "stem_sha": "58c2cc057ef65935",
+     "answer": {
+      "value": "87"
+     },
+     "working": "Let theta = angle PSR = 118. In the parallelogram, angle Q = 118 and angle P = 180 - 118 = 62. PS = OS, so angle SOP = angle SPO = 62. QO = QR, so angle QOR = (180 - 118)/2 = 31. O lies on PQ, so angle SOR = 180 - 62 - 31 = 87."
+    },
+    {
+     "instance_id": "q:g10m7s3-1-1:g007-opposi",
+     "stem_sha": "1c4ac3cd02d210c1",
+     "answer": {
+      "value": "108"
+     },
+     "working": "Let theta = angle PSR = 132. In the parallelogram, angle Q = 132 and angle P = 180 - 132 = 48. PS = OS, so angle SOP = angle SPO = 48. QO = QR, so angle QOR = (180 - 132)/2 = 24. O lies on PQ, so angle SOR = 180 - 48 - 24 = 108."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family is numeric with no options, so there are no distractors to judge. I re-derived all three instances independently and each key and solution is correct.\n\nMethod for the geometry. In parallelogram PQRS, opposite angles are equal, so angle Q = angle PSR. Co-interior angles with PQ parallel to SR give angle P = 180 - angle PSR. Since QO = QR, triangle QOR is isosceles with apex Q, so angle QOR = (180 - Q)/2. Since PS = OS, triangle PSO has equal base angles, so angle SOP = angle P. P, O and Q are collinear, so angle SOR = 180 - SOP - QOR.\n\nResults for the three instances:\n- g001 (PSR = 154): P = 26, QOR = 13, SOR = 141. Key 141 is correct.\n- g006 (PSR = 118): P = 62, QOR = 31, SOR = 87. Key 87 is correct.\n- g007 (PSR = 132): P = 48, QOR = 24, SOR = 108. Key 108 is correct.\n\nEach worked solution follows this method step by step with the right reasons and arithmetic, and the five steps are consistent across instances.\n\nConfiguration checks:\n- The stem names the vertices in order, puts O on side PQ, and states PS = OS and QO = QR, so it is self-contained and unambiguous without a diagram.\n- Because QR = PS, we get QO = PS = OS, which fixes PQ = PO + OQ. The figure therefore exists for every angle used.\n- The ray order OP, OS, OR, OQ holds: angle POS (26, 62 or 48) is less than angle POR (167, 149 or 156). Angle SOR is therefore a genuine positive angle and the 180-degree sum on the straight line is valid.\n- The angles are even numbers, so every isosceles base angle is a whole number of degrees.\n- The key is a plain integer in degrees, which is what the stem asks (\"in degrees\")."
+   }
+  },
+  {
+   "family_id": "tpl:g10m7s3-1-1:straight-line",
+   "spec_sha": "40c0aed557f478771f3151b78719d86c24ac64001b2d28f4f79ecc9d248c2549",
+   "answers": [
+    {
+     "instance_id": "q:g10m7s3-1-1:g001-straig",
+     "stem_sha": "a313689cfa89b261",
+     "answer": {
+      "value": "17"
+     },
+     "working": "Let angle P = a. Triangle PSO has PS = OS, so angle SOP = angle SPO = a. Opposite angles of a parallelogram are equal and co-interior angles sum to 180, so angle Q = 180 - a. Triangle QOR has QO = QR, so angle QOR = angle QRO = (180 - (180 - a))/2 = a/2 = x. Angles on the straight line PQ at O: a + 129 + a/2 = 180, so 3a/2 = 51, a = 34, x = 17."
+    },
+    {
+     "instance_id": "q:g10m7s3-1-1:g003-straig",
+     "stem_sha": "b575bca7b81116c3",
+     "answer": {
+      "value": "24"
+     },
+     "working": "Let angle P = a. PS = OS gives angle SOP = a. Angle Q = 180 - a, and QO = QR gives angle QOR = a/2 = x. Straight line PQ at O: a + 108 + a/2 = 180, so 3a/2 = 72, a = 48, x = 24."
+    },
+    {
+     "instance_id": "q:g10m7s3-1-1:g006-straig",
+     "stem_sha": "30e1c8fa49a27142",
+     "answer": {
+      "value": "38"
+     },
+     "working": "Let angle P = a. PS = OS gives angle SOP = a. Angle Q = 180 - a, and QO = QR gives angle QOR = a/2 = x. Straight line PQ at O: a + 66 + a/2 = 180, so 3a/2 = 114, a = 76, x = 38."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family is numeric with no options, so there are no distractors to judge. The three instances (g001, g003, g006) share one solution template and differ only in the given angle.\n\nI checked the geometry independently. QO=QR makes triangle QOR isosceles, so angle QRO = angle QOR = x and angle Q = 180-2x. The parallelogram has PS parallel to QR, so P+Q = 180 and P = 2x. PS=OS gives angle SOP = angle SPO = 2x, since each is opposite an equal side. P, O and Q are collinear, so 2x + SOR + x = 180 and SOR = 180-3x. That gives x = 17 for SOR=129, x = 24 for 108 and x = 38 for 66, matching all three keys.\n\nI also rebuilt each figure fully and every angle sum closes:\n- g001: P=R=34, Q=S=146, PSO=112, OSR=34, ORS=17. Triangle SOR has angles 34, 129 and 17, which sum to 180.\n- g003: P=R=48, Q=S=132, PSO=84, OSR=48, ORS=24. Triangle SOR has angles 48, 108 and 24, which sum to 180.\n- g006: P=R=76, Q=S=104, PSO=28, OSR=76, ORS=38. Triangle SOR has angles 76, 66 and 38, which sum to 180.\n\nEach figure is realisable: PS=OS=QR=QO, P is acute (34, 48 and 76 degrees), and PO = 2·PS·cos P is positive, so O lies on side PQ.\n\nKey form: the stem asks for the value of x, and the key is a plain integer in degrees, with no unit or other form ambiguity. I was not shown an answer_check, so I could not compare it to the key.\n\nContext: there is no word problem. The stem names the vertices in order round the parallelogram, which fixes which sides are parallel and which angles are meant. The stem has no figure, but the text is sufficient and unambiguous.\n\nSolution: each step is correct and in the book's style, with a reason for each step. Steps 2 and 3 write Q-hat for angle OQR and angle PQR interchangeably, which is valid because O is on PQ. That is a harmless notational shortcut, not an error."
+   }
+  },
+  {
+   "family_id": "tpl:g10m7s3-1-3:rectangle-iso",
+   "spec_sha": "2c57a896f03f150417e8f7fa06749c2b36925bf26d6610d1caa4d9cf69d2a647",
+   "answers": [
+    {
+     "instance_id": "q:g10m7s3-1-3:g002-rectan",
+     "stem_sha": "fb426ba8c561ec1c",
+     "answer": {
+      "value": "35"
+     },
+     "working": "Rectangle diagonals are equal and bisect each other, so TP = TQ and triangle PTQ is isosceles with angle TPQ = angle TQP = 3x+4. Angle sum: 2(3x+4) + (3x+19) = 180, so 9x + 27 = 180, x = 17. Then angle TPQ = 55 degrees (and angle PTQ = 70). In triangle PQR, angle Q = 90, so angle PRQ = 90 - angle RPQ = 90 - 55 = 35."
+    },
+    {
+     "instance_id": "q:g10m7s3-1-3:g004-rectan",
+     "stem_sha": "467e04735b4cf0da",
+     "answer": {
+      "value": "24"
+     },
+     "working": "Rectangle diagonals are equal and bisect each other, so TP = TQ and angle TPQ = angle TQP = 5x+16. Angle sum: 2(5x+16) + (2x+28) = 180, so 12x + 60 = 180, x = 10. Then angle TPQ = 66 degrees (and angle PTQ = 48; 66+66+48 = 180). In triangle PQR, angle Q = 90, so angle PRQ = 90 - 66 = 24."
+    },
+    {
+     "instance_id": "q:g10m7s3-1-3:g009-rectan",
+     "stem_sha": "4282a25d83b2a94d",
+     "answer": {
+      "value": "24"
+     },
+     "working": "Rectangle diagonals are equal and bisect each other, so TP = TQ and angle TPQ = angle TQP = 3x+36. Angle sum: 2(3x+36) + (3x+18) = 180, so 9x + 90 = 180, x = 10. Then angle TPQ = 66 degrees (and angle PTQ = 48; 66+66+48 = 180). In triangle PQR, angle Q = 90, so angle PRQ = 90 - 66 = 24."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "Family f016 has numeric answer type with no options in the file, so there are no distractors to judge (distractors_ok is true vacuously). Only three instances are shown (g002, g004, g009). I re-solved each independently.\n\ng002: TP = TQ because the diagonals of a rectangle are equal and bisect each other. The base angles of triangle PTQ are therefore equal: 2(3x+4) + (3x+19) = 9x+27 = 180, so x = 17. Then angle TPQ = 55 and angle PTQ = 70, and 55+55+70 = 180. Angle PRQ = 90 - 55 = 35. Check: triangle TQR is isosceles with base angles 35, and its exterior angle at T is 70, which matches. Key 35 is correct.\n\ng004: 2(5x+16) + (2x+28) = 12x+60 = 180, so x = 10. Angles are 66, 66, 48, which sum to 180. Angle PRQ = 90 - 66 = 24. Key 24 is correct.\n\ng009: 2(3x+36) + (3x+18) = 9x+90 = 180, so x = 10. Angles are 66, 66, 48, which sum to 180. Angle PRQ = 24. Key 24 is correct.\n\nEvery stem asks for the size of angle PRQ in degrees as a number, and each key is a bare number in that form. Every algebra line in the six steps checks out. Step 5 correctly says angle TPQ equals angle RPQ because T lies on PR. Step 6 uses the 90 degree angle PQR in triangle PQR. All angles are below 90, so the geometry is consistent and realistic. The stems are unambiguous: the vertex order is stated, and the angle notation puts the vertex in the middle letter. There is no word problem.\n\nTwo things I could not check or that need a look, neither enough to reject. First, answer_check is not in the file, so I could only confirm that the displayed keys are the right numbers. Second, g004 and g009 reduce to identical geometry (66, 66, 48 degrees, answer 24) with different x expressions. That is weak variety, and a family generator might avoid duplicate underlying angle sets, but it is not an error."
+   }
+  },
+  {
+   "family_id": "tpl:g10m7s3-1-3:rhombus-angles",
+   "spec_sha": "041dc8896c4fa6786fbc8848b54b03a601958eca5c0b5afccbb3e86ccab23d8b",
+   "answers": [
+    {
+     "instance_id": "q:g10m7s3-1-3:g003-rhombu",
+     "stem_sha": "aab657c3a30cfcff",
+     "answer": {
+      "value": "146"
+     },
+     "working": "FG = GH in a rhombus, so triangle FGH is isosceles and the diagonal FH makes angle GFE = (180 - angle G)/2. Then 4x+13 = (180 - (2x+4))/2 = 88 - x, so 5x = 75 and x = 15. Angle G = 34 degrees. Angle GHI is the interior angle at H, which is consecutive to G, so GHI = 180 - 34 = 146. Check: GFE = 73 and (180-34)/2 = 73."
+    },
+    {
+     "instance_id": "q:g10m7s3-1-3:g007-rhombu",
+     "stem_sha": "bed60a3e0cd0166a",
+     "answer": {
+      "value": "120"
+     },
+     "working": "Triangle FGH is isosceles (FG = GH), so GFE = (180 - angle G)/2. 5x+25 = (180 - (6x+18))/2 = 81 - 3x, so 8x = 56 and x = 7. Angle G = 60 degrees. Angle GHI is consecutive to G, so GHI = 180 - 60 = 120. Check: GFE = 60 and (180-60)/2 = 60."
+    },
+    {
+     "instance_id": "q:g10m7s3-1-3:g009-rhombu",
+     "stem_sha": "b78b89ecb0ee7e6c",
+     "answer": {
+      "value": "126"
+     },
+     "working": "Triangle FGH is isosceles (FG = GH), so GFE = (180 - angle G)/2. 2x+23 = (180 - (2x+14))/2 = 83 - x, so 3x = 60 and x = 20. Angle G = 54 degrees. Angle GHI is consecutive to G, so GHI = 180 - 54 = 126. Check: GFE = 63 and (180-54)/2 = 63."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family has no options (numeric answer), so there are no distractors to judge. I re-solved all three instances independently and each key is correct.\n\n- g003: x=15, so GFE=73 and GHI=146. Check: F=146, G=2(15)+4=34, and F+G=180.\n- g007: x=7, so GFE=60 and GHI=120. Check: G=6(7)+18=60, F=120, and F+G=180.\n- g009: x=20, so GFE=63 and GHI=126. Check: G=2(20)+14=54, F=126, and F+G=180.\n\nEach key matches the asked quantity, the interior angle at H, in degrees as a plain number.\n\nThe geometry is sound. GI passes through G, so it bisects angle FGH. FH passes through F and H, so GFE equals half of angle F, and E lies on FH. The diagonals meet at 90 degrees, and the SAS congruence of FGE and HGE gives GHE=GFE. Doubling gives the angle at H. The stem fixes the vertex order (\"labelled in order around it\"), so nothing is ambiguous. The numbers are realistic: x is a positive integer and every angle is positive and acute or obtuse as expected.\n\nEach worked solution is arithmetically correct at every step. For example, g003 step 4 simplifies 5x+15=90 to x=15, and g007 step 4 simplifies 8x+34=90 to x=7.\n\nOne cosmetic defect, which I did not count as a solution error: the solution text writes coefficient 1 as \"(1x + 2)\" and \"(1x + 7)\" in g003 and g009. A Grade 10 book would write \"(x + 2)\" and \"(x + 7)\". The template should drop a coefficient of 1 when it renders the halved angle.\n\nThe stem also over-determines slightly. Since 2*GFE + FGH = 180, the given GFE alone fixes x, and the family never checks that. This is harmless, because the data are consistent in all three instances."
+   }
+  },
+  {
+   "family_id": "tpl:g10m7s3-1-4:algebra-opposite",
+   "spec_sha": "5c5c250fffcad0edb1a335a110c5ca8706905d564eb90f402d320bfe030c3ffa",
+   "answers": [
+    {
+     "instance_id": "q:g10m7s3-1-4:g006-algebr",
+     "stem_sha": "30c5ebb33b88300b",
+     "answer": {
+      "value": "148"
+     },
+     "working": "AB = AD and CB = CD, so the kite is symmetric about AC and angle ABC = angle ADC. 4x+15 = 2x+41 gives x = 13, so ABC = ADC = 67 degrees. Angles of a quadrilateral sum to 360: BCD = 360 - 78 - 67 - 67 = 148."
+    },
+    {
+     "instance_id": "q:g10m7s3-1-4:g007-algebr",
+     "stem_sha": "7d8e922778ac88ae",
+     "answer": {
+      "value": "117"
+     },
+     "working": "Kite symmetric about AC, so angle ABC = angle ADC. 5x+5 = 3x+33 gives x = 14, so ABC = ADC = 75 degrees. BCD = 360 - 93 - 75 - 75 = 117."
+    },
+    {
+     "instance_id": "q:g10m7s3-1-4:g008-algebr",
+     "stem_sha": "57d17fabaa47b3a7",
+     "answer": {
+      "value": "130"
+     },
+     "working": "Kite symmetric about AC, so angle ABC = angle ADC. 4x+37 = 2x+49 gives x = 6, so ABC = ADC = 61 degrees. BCD = 360 - 108 - 61 - 61 = 130."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family is numeric and typed, with no wrong options, so distractors_ok is vacuously true. The file for f018 also shows no answer_check, so the key was checked only against the stem and the solution.\n\nI rechecked all three instances (g006, g007, g008) by hand, and each also by geometry.\n- g006: 4x+15 = 2x+41 gives x = 13, so B = D = 67. BCD = 360 - 78 - 134 = 148. Geometry: base angles of triangle ABD are 51 and of triangle CBD are 16, and 51 + 16 = 67.\n- g007: 5x+5 = 3x+33 gives x = 14, so B = D = 75. BCD = 360 - 93 - 150 = 117. Base angles 43.5 + 31.5 = 75.\n- g008: 4x+37 = 2x+49 gives x = 6, so B = D = 61. BCD = 360 - 108 - 122 = 130. Base angles 36 + 25 = 61.\n\nContext:\n- AB = AD and CB = CD with vertices in order A, B, C, D is a genuine kite whose axis is AC.\n- The equal angles are the ones between unequal sides, at B and D, which is what the solution uses.\n- Every angle is below 180 and the numbers are realistic.\n- The answer is unique even if a student pictured a dart, because the angle sum is still 360.\n- The given data is not overdetermined: it fixes x only through B = D.\n\nSolution:\n- The step order is equate B and D, solve for x, substitute to get the angle, then subtract from 360.\n- Every line is arithmetically correct and matches the book's kite property of one equal pair of opposite angles.\n- Step 1's wording, \"the unequal sides meet at B and at D\", is slightly unusual but correct."
+   }
+  },
+  {
+   "family_id": "tpl:g10m7s3-1-4:bisect-perp",
+   "spec_sha": "802ef656a3587748d2d12cd1e26bea91db710470b959f8d19761d29fa2962373",
+   "answers": [
+    {
+     "instance_id": "q:g10m7s3-1-4:g001-bisect",
+     "stem_sha": "2904f80b7a8ec2a7",
+     "answer": {
+      "value": "65"
+     },
+     "working": "AB = AD makes triangle ABD isosceles with apex angle BAD = 50 degrees, so the base angles ABD and ADB are equal. ABD = (180 - 50)/2 = 65."
+    },
+    {
+     "instance_id": "q:g10m7s3-1-4:g002-bisect",
+     "stem_sha": "5adfd8ba6e991c56",
+     "answer": {
+      "value": "67"
+     },
+     "working": "AB = AD makes triangle ABD isosceles with apex angle BAD = 46 degrees, so the base angles ABD and ADB are equal. ABD = (180 - 46)/2 = 67."
+    },
+    {
+     "instance_id": "q:g10m7s3-1-4:g008-bisect",
+     "stem_sha": "33c5c3edc86aabb3",
+     "answer": {
+      "value": "58"
+     },
+     "working": "AB = AD makes triangle ABD isosceles with apex angle BAD = 64 degrees, so the base angles ABD and ADB are equal. ABD = (180 - 64)/2 = 58."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family is numeric with no options in the packet, so there are no wrong options to judge. Distractors are vacuously ok. The packet also shows no answer_check and no LaTeX key, so there was nothing to compare to the key there. I did not need either to judge the keys.\n\nI recomputed all three instances.\n- g001: apex angle 50, half is 25, ABE = 90 - 25 = 65. Cross-check: triangle ABD is isosceles with AB = AD, so ABD = (180 - 50)/2 = 65. Matches key 65.\n- g002: apex angle 46, half is 23, ABE = 67. Cross-check: (180 - 46)/2 = 67. Matches key 67.\n- g008: apex angle 64, half is 32, ABE = 58. Cross-check: (180 - 64)/2 = 58. Matches key 58.\n\nThe key is a single number of degrees, which is what the stem asks for.\n\nThe worked solutions follow the standard kite method in the same four steps for every instance. AC joins the vertex between the equal sides, so it bisects BAD. The diagonals meet at right angles, so AEB = 90. The angle sum in triangle ABE gives ABE. E lies on BD, so ABD = ABE. The stem says the diagonals intersect at E, which fixes the kite as convex, so that last step holds.\n\nThe context is a plain geometry problem with realistic angles (46 to 64 degrees) and a fully specified kite. It needs no diagram. The numbers are plausible and give integer answers."
+   }
+  },
+  {
+   "family_id": "tpl:g10m7s3-1-4:diagonal-chase",
+   "spec_sha": "87773089b86dc06b552163564fedb1854c2d75afcd524c8ff102e2efc07b4669",
+   "answers": [
+    {
+     "instance_id": "q:g10m7s3-1-4:g001-diagon",
+     "stem_sha": "6c0887472ec3351c",
+     "answer": {
+      "value": "80"
+     },
+     "working": "Diagonals of a kite meet at right angles, so triangle BCE has a right angle at E. Angle CBE = 90 - 51 = 39. Angle ABC = ABE + EBC = 41 + 39 = 80. Triangles ABC and ADC are congruent (AB=AD, CB=CD, AC common), so angle ADC = angle ABC = 80."
+    },
+    {
+     "instance_id": "q:g10m7s3-1-4:g002-diagon",
+     "stem_sha": "bd89f879db30ead2",
+     "answer": {
+      "value": "69"
+     },
+     "working": "Diagonals of a kite meet at right angles, so triangle BCE has a right angle at E. Angle CBE = 90 - 50 = 40. Angle ABC = 29 + 40 = 69. By symmetry about AC, angle ADC = angle ABC = 69."
+    },
+    {
+     "instance_id": "q:g10m7s3-1-4:g003-diagon",
+     "stem_sha": "bd08853466d3a952",
+     "answer": {
+      "value": "94"
+     },
+     "working": "Diagonals of a kite meet at right angles, so triangle BCE has a right angle at E. Angle CBE = 90 - 34 = 56. Angle ABC = 38 + 56 = 94. By symmetry about AC, angle ADC = angle ABC = 94."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family is numeric with no options, so there are no distractors to judge. I checked every instance, each three ways.\n\nMethod: the kite's diagonals meet at 90 degrees. In triangle BEC, angle EBC = 90 - (angle BCE). Then angle ABC = angle ABE + angle EBC, and angle ADC = angle ABC because the unequal sides meet at B and D. All three keys follow from this.\n\nKeys:\n- g001: EBC = 39, ABC = 41 + 39 = 80, so ADC = 80. Key 80 is correct.\n- g002: EBC = 40, ABC = 29 + 40 = 69, so ADC = 69. Key 69 is correct.\n- g003: EBC = 56, ABC = 38 + 56 = 94, so ADC = 94. Key 94 is correct.\n\nConsistency: each stem describes a real convex kite. I found BAE = 90 - ABE, then A = 2*BAE, and C = 2*BCE. The four angles sum to 360 degrees in all three cases:\n- g001: 98 + 102 + 80 + 80 = 360.\n- g002: 122 + 100 + 69 + 69 = 360.\n- g003: 104 + 68 + 94 + 94 = 360.\n\nThe stem gives enough data and no more, so the answer is unique. In each case A differs from C, so AB differs from CB and the kite is not a rhombus. The step 4 claim about where the unequal sides meet therefore holds.\n\nSolution steps: the arithmetic is correct in every step of all three instances. The step 3 wording (\"E lies on the diagonal AC, inside angle ABC\", so the angles add) is valid for a convex kite and matches the book's kite properties: perpendicular diagonals, and one pair of equal opposite angles where the unequal sides meet.\n\nKey form: the stem asks for the size of angle ADC in degrees, and the keys are plain numbers of degrees. There is no LaTeX/answer_check mismatch to worry about.\n\nContext: this is a pure geometry question with no word problem. The angle values are realistic and the figure is unambiguous without a diagram."
+   }
+  },
+  {
+   "family_id": "tpl:g10m7s3-1-4:opposite-angles",
+   "spec_sha": "240e2126278aef9fb5186a294bdfbd08bdc58956cae2b03de00168b937bf9987",
+   "answers": [
+    {
+     "instance_id": "q:g10m7s3-1-4:g003-opposi",
+     "stem_sha": "40235328bfd61e22",
+     "answer": {
+      "value": "102"
+     },
+     "working": "A kite with AB=AD and CB=CD is symmetric about AC, so angle ABC = angle ADC. Interior angles sum to 360. 105 + 51 + 2x = 360, so 2x = 204 and x = 102."
+    },
+    {
+     "instance_id": "q:g10m7s3-1-4:g004-opposi",
+     "stem_sha": "a1d6a8631b8ee1c2",
+     "answer": {
+      "value": "90"
+     },
+     "working": "A kite with AB=AD and CB=CD is symmetric about AC, so angle ABC = angle ADC. Interior angles sum to 360. 85 + 95 + 2x = 360, so 2x = 180 and x = 90."
+    },
+    {
+     "instance_id": "q:g10m7s3-1-4:g008-opposi",
+     "stem_sha": "edfd67a1faa7b288",
+     "answer": {
+      "value": "86"
+     },
+     "working": "A kite with AB=AD and CB=CD is symmetric about AC, so angle ABC = angle ADC. Interior angles sum to 360. 54 + 134 + 2x = 360, so 2x = 172 and x = 86."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "Numeric family with no options, so there are no distractors to judge. All three instances check out.\n\nMethod: in a kite with AB = AD and CB = CD, the angles at B and D are equal. Each worked solution uses this correctly. The equal sides meet at A and C, so the unequal-side angles are at B and D, and step 1 says so. The angle sum of 360 degrees then gives 2 x ABC = 360 - BAD - BCD.\n\nArithmetic:\n- g003: 105 + 51 = 156, 360 - 156 = 204, 204 / 2 = 102. Key 102 is correct.\n- g004: 85 + 95 = 180, 360 - 180 = 180, 180 / 2 = 90. Key 90 is correct.\n- g008: 54 + 134 = 188, 360 - 188 = 172, 172 / 2 = 86. Key 86 is correct.\n\nGeometry: I also checked each kite by splitting along BD into two isosceles triangles. The base angles at B are 37.5 + 64.5 = 102 (g003), 47.5 + 42.5 = 90 (g004) and 63 + 23 = 86 (g008). These match the keys. All the kites are convex (every interior angle is below 180 degrees), so the numbers are realistic.\n\nKey form: each key is a plain number of degrees, as the stem asks (\"in degrees\"). The angle notation (B-hat-A-D for the angle at A, A-hat-B-C for the angle at B) is used consistently.\n\nMinor caveat, not enough to reject: the stem does not say the kite is convex. A concave dart would give a different ABC, for example 27 degrees for g003. Grade 10 textbook convention is a convex kite, and the given angles are the interior angles at A and C, so I treat this as unambiguous for a student."
+   }
+  },
+  {
+   "family_id": "tpl:g10m7s4-1-1:bigangle",
+   "spec_sha": "acb8cb9093d5fb81a6d3909215c102950e9ad91349dee7e6d3a50604d6855393",
+   "answers": [
+    {
+     "instance_id": "q:g10m7s4-1-1:g001-bigang",
+     "stem_sha": "92a52cc04d732308",
+     "answer": {
+      "value": "4"
+     },
+     "working": "C and E are midpoints of BD and AD, so CE is parallel to AB (midpoint theorem). Then angle DEC = angle DAB = 90 (corresponding angles). In triangle ABD, B = 180 - 54 - 90 = 36. So 4x + 20 = 36, 4x = 16, x = 4."
+    },
+    {
+     "instance_id": "q:g10m7s4-1-1:g008-bigang",
+     "stem_sha": "d76c092482fdad39",
+     "answer": {
+      "value": "10"
+     },
+     "working": "CE is parallel to AB (midpoint theorem), so angle DAB = angle DEC = 56 (corresponding angles). B = 180 - 59 - 56 = 65. So 5x + 15 = 65, 5x = 50, x = 10."
+    },
+    {
+     "instance_id": "q:g10m7s4-1-1:g010-bigang",
+     "stem_sha": "7284b8fa3840c1bf",
+     "answer": {
+      "value": "4"
+     },
+     "working": "CE is parallel to AB (midpoint theorem), so angle DAB = angle DEC = 52 (corresponding angles). B = 180 - 80 - 52 = 48. So 5x + 28 = 48, 5x = 20, x = 4."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "I checked all three instances by recomputing them independently; they pass. The family is numeric with no options, so there are no wrong options or misconception tags to judge. The packet shows no answer_check expression, so I could only check each key against the stem, not against a typed-answer checker.\n\nGeometry. C is the mid-point of BD and E is the mid-point of AD, so EC is parallel to AB (mid-point theorem). The direction E to C equals the direction A to B, and ED lies along AD, so angle A and angle DEC are corresponding angles. This gives A = DEC in every instance, and B is then the remainder of the 180 degrees.\n\nInstances.\n- g001: D = 54 and A = 90, so B = 36. 4x + 20 = 36 gives x = 4. This matches the key \"4\".\n- g008: D = 59 and A = 56, so B = 65. 5x + 15 = 65 gives x = 10. This matches the key \"10\".\n- g010: D = 80 and A = 52, so B = 48. 5x + 28 = 48 gives x = 4. This matches the key \"4\".\n\nKey form. The stem asks \"Solve for the value of x\", so a bare number is the asked form. Every key is an integer, and B is positive and below 180 in all three triangles.\n\nContext. There is no real-world word problem. The stem is self-contained, the triangles are valid, and the angle notation is standard (angle at D, angle DEC, angle at B). There is no diagram, but the stem names every point and relation needed, so it is not ambiguous.\n\nSolutions. All three follow the same steps: mid-point theorem, then corresponding angles, then angle sum in a triangle, then set the expressions for B equal, then solve the linear equation. The arithmetic is correct in every step, and each geometric step has its justification stated. This is the standard Grade 10 Euclidean-geometry method."
+   }
+  },
+  {
+   "family_id": "tpl:g10m7s4-1-1:smallexpr",
+   "spec_sha": "f6b713bbb70eab00fc910483f1e87b55bfd70fb06951b16657c2775e959b249d",
+   "answers": [
+    {
+     "instance_id": "q:g10m7s4-1-1:g001-smalle",
+     "stem_sha": "dfc830af28035a27",
+     "answer": {
+      "value": "5"
+     },
+     "working": "J and L are mid-points of HK and GK, so LJ is parallel to GH (mid-point theorem). Angle KLJ and angle KGH are corresponding angles, so KLJ = G. G = 180 - 57 - 73 = 50. Then 5b + 25 = 50, so 5b = 25 and b = 5."
+    },
+    {
+     "instance_id": "q:g10m7s4-1-1:g003-smalle",
+     "stem_sha": "7323b1c13455278e",
+     "answer": {
+      "value": "10"
+     },
+     "working": "J and L are mid-points of HK and GK, so LJ is parallel to GH. Angle KLJ is a corresponding angle to angle G. G = 180 - 53 - 63 = 64. Then 5b + 14 = 64, so 5b = 50 and b = 10."
+    },
+    {
+     "instance_id": "q:g10m7s4-1-1:g005-smalle",
+     "stem_sha": "30b8d4bd123deed5",
+     "answer": {
+      "value": "13"
+     },
+     "working": "J and L are mid-points of HK and GK, so LJ is parallel to GH. Angle KLJ is a corresponding angle to angle G. G = 180 - 57 - 33 = 90. Then 5b + 25 = 90, so 5b = 65 and b = 13."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "Numeric family with no options, so there are no distractors to judge.\n\nI rechecked the geometry. L is the mid-point of GK and J is the mid-point of HK, so LJ is parallel to GH, with J-L equal to half of H-G in the same direction. K-hat-L-J sits at L between rays LK and LJ, and G-hat sits at G between rays GK and GH. These are corresponding angles on transversal GK, so G-hat = K-hat-L-J, as step 2 states.\n\nI recomputed all three instances:\n- g001: G = 180 - 57 - 73 = 50, so 5b + 25 = 50, 5b = 25, b = 5. Matches the key \"5\".\n- g003: G = 180 - 53 - 63 = 64, so 5b + 14 = 64, 5b = 50, b = 10. Matches the key \"10\".\n- g005: G = 180 - 57 - 33 = 90, so 5b + 25 = 90, 5b = 65, b = 13. Matches the key \"13\".\n\nThe keys are single numbers and the stem asks only for the value of b, so the form is right. The stem names which points are mid-points and which angle is meant, and the angle expressions are realistic. g005 has G = 90, which is a valid triangle. The worked steps run mid-point theorem, corresponding angles, angle sum, equate, then solve, each correct. I could not see answer_check, so I could not compare the numeric key against it."
+   }
+  },
+  {
+   "family_id": "tpl:g10m7s4-1-2:halfthird",
+   "spec_sha": "6ecafaad795de05d326ddc4297ed975baf408dbcaae2efc2204bfb10cbbae27f",
+   "answers": [
+    {
+     "instance_id": "q:g10m7s4-1-2:g003-halfth",
+     "stem_sha": "60dacdbc982ca3ba",
+     "answer": {
+      "value": "22"
+     },
+     "working": "D and E are the mid-points of AB and AC, so DE is the mid-segment of triangle ABC and DE = BC/2 (mid-point theorem). DE = 44/2 = 22."
+    },
+    {
+     "instance_id": "q:g10m7s4-1-2:g009-halfth",
+     "stem_sha": "a3edf1cb3bdd4bfd",
+     "answer": {
+      "value": "24"
+     },
+     "working": "Mid-point theorem: DE = BC/2 = 48/2 = 24."
+    },
+    {
+     "instance_id": "q:g10m7s4-1-2:g010-halfth",
+     "stem_sha": "fe1085b34d78f013",
+     "answer": {
+      "value": "8"
+     },
+     "working": "Mid-point theorem: DE = BC/2 = 16/2 = 8."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "Numeric family with no options, so there are no distractors to judge. All three instances (g003 BC=44, g009 BC=48, g010 BC=16) apply the mid-point theorem correctly. D and E are mid-points of AB and AC, so DE is parallel to BC and DE = BC/2. The keys 22, 24 and 8 are each half of the given BC. The stem asks for a length, and a bare number is the asked form. The context is a plain geometry statement with realistic even numbers. It is unambiguous without a figure: the segment DE and the third side BC are both fully specified. Each worked solution runs identify the mid-point segment, state BC = 2 x DE, substitute, divide by 2, and the arithmetic is correct. The steps match the book's mid-point theorem method, and the instances differ only in the numbers."
+   }
+  },
+  {
+   "family_id": "tpl:g10m7s4-1-2:parallelhalf",
+   "spec_sha": "9d28137ba31c1f407cf567711eb27a31eb23cfcaf528b1a9dbb95eb3e3d76627",
+   "answers": [
+    {
+     "instance_id": "q:g10m7s4-1-2:g001-parall",
+     "stem_sha": "b7e7480ae6f22500",
+     "answer": {
+      "value": "38"
+     },
+     "working": "ZX is parallel to VW, so triangle YZX is similar to triangle YVW (common angle at Y). The scale factor is ZX/VW = 8/16 = 1/2. Then XY/WY = 1/2, so WY = 2 x 19 = 38. As a check, YZ/YV = 18/YV = 1/2 gives YV = 36, which is consistent."
+    },
+    {
+     "instance_id": "q:g10m7s4-1-2:g006-parall",
+     "stem_sha": "6ebfb5b8efdbe55b",
+     "answer": {
+      "value": "16"
+     },
+     "working": "ZX is parallel to VW, so triangle YZX is similar to triangle YVW. The scale factor is ZX/VW = 12/24 = 1/2. Then XY/WY = 1/2, so WY = 2 x 8 = 16. As a check, YZ/YV = 11/YV = 1/2 gives YV = 22, which is consistent."
+    },
+    {
+     "instance_id": "q:g10m7s4-1-2:g009-parall",
+     "stem_sha": "100d46feecc020c9",
+     "answer": {
+      "value": "10"
+     },
+     "working": "ZX is parallel to VW, so triangle YZX is similar to triangle YVW. The scale factor is ZX/VW = 2/4 = 1/2. Then XY/WY = 1/2, so WY = 2 x 5 = 10. As a check, YZ/YV = 6/YV = 1/2 gives YV = 12, which is consistent."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family has no options (numeric answer), so there are no distractors to judge. I checked all three instances (g001, g006, g009) and found no error. The one weakness is a missing justification in step 1 of the worked solutions. I could not check the book's own method, because the packet file was the only file I was allowed to open.\n\nKeys:\n- g001: WY = 2 x XY = 2 x 19 = 38.\n- g006: WY = 2 x 8 = 16.\n- g009: WY = 2 x 5 = 10.\n- Each key is a plain number in the asked form (a length), and each matches the arithmetic in step 3.\n\nConsistency of the data:\n- ZX = half of VW in every instance, and the \"half of 16 is 8\", \"half of 24 is 12\" and \"half of 4 is 2\" remarks are correct.\n- The decoy YZ makes the figure consistent in every instance. Implied VY = 2 x YZ gives 36, 22 and 12, and each triangle satisfies the triangle inequality:\n  - g001: triangle YZX (18, 19, 8) and triangle YVW (36, 38, 16).\n  - g006: triangle YZX (11, 8, 12) and triangle YVW (22, 16, 24).\n  - g009: triangle YZX (6, 5, 2) and triangle YVW (12, 10, 4).\n- The answer is also robust to reading \"lies on VY\" as the line rather than the segment. A homothety centred at Y with ratio of absolute value 1/2 still gives XY = (1/2) WY, so WY = 2 x XY either way.\n- Step 4, which says YZ is not needed, is true and honest.\n\nSolution gap, and why I did not fail it: step 1 concludes \"ZX is parallel to VW and ZX = (1/2) VW, so Z and X are the mid-points\" without naming a theorem. This is valid, because triangles YZX and YVW are similar (AA) with ratio 1/2, so YZ/YV = YX/YW = 1/2. It is not the usual textbook converse of the midpoint theorem, whose hypothesis is \"through the mid-point of one side, parallel to another\". No false statement is taught. I recommend adding the similar-triangle reason (or the proportionality theorem) to step 1 before this ships, if the book's section on this learning objective works that way. I judged this a justification gap, not an error.\n\nContext: the stem has no diagram, but the verbal description fixes the configuration. The redundant YZ is a deliberate decoy and the numbers are realistic."
+   }
+  },
+  {
+   "family_id": "tpl:g10m7s4-1-2:rightlegs",
+   "spec_sha": "396851c320e00cce0c383d38b5ecd9440a0cbc0a00cd3e330180ef586d5aca54",
+   "answers": [
+    {
+     "instance_id": "q:g10m7s4-1-2:g007-rightl",
+     "stem_sha": "356a26336d95b26c",
+     "answer": {
+      "value": "5"
+     },
+     "working": "D and E are midpoints of AB and BC, so by the midpoint theorem DE is parallel to AC and DE = AC/2. AC = sqrt(8^2 + 6^2) = sqrt(100) = 10. DE = 10/2 = 5."
+    },
+    {
+     "instance_id": "q:g10m7s4-1-2:g008-rightl",
+     "stem_sha": "be5691c02ff1984d",
+     "answer": {
+      "value": "5"
+     },
+     "working": "Midpoint theorem gives DE = AC/2. AC = sqrt(6^2 + 8^2) = sqrt(100) = 10. DE = 10/2 = 5."
+    },
+    {
+     "instance_id": "q:g10m7s4-1-2:g010-rightl",
+     "stem_sha": "be7c6ce93d55c861",
+     "answer": {
+      "value": "20"
+     },
+     "working": "Midpoint theorem gives DE = AC/2. AC = sqrt(32^2 + 24^2) = 8*sqrt(4^2 + 3^2) = 8*5 = 40. DE = 40/2 = 20."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "Numeric family with no options, so there are no distractors to judge. I checked each instance independently. g007 (AB=8, BC=6): AC^2=64+36=100, AC=10, DE=5. g008 (AB=6, BC=8): AC^2=36+64=100, AC=10, DE=5. g010 (AB=32, BC=24): AC^2=1024+576=1600, AC=40, DE=20. All three keys are correct. D and E are the mid-points of AB and BC, so DE joins the mid-points of two sides and AC is the third side. The mid-point theorem gives DE = AC/2, and each solution reaches the key by Pythagoras then the mid-point theorem, with correct arithmetic and a correct statement of the theorem at every step. The keys are bare numbers, which fits a length with no units given in the stem. The stem is unambiguous: the right angle is at B and the mid-points are named. The numbers are clean Pythagorean-triple scalings (3-4-5 and 6-8-10, with 32-24-40 as 8 times 4-3-5). The only weakness is variety. g007 and g008 are the same triangle with the legs swapped, so they have the same answer and structure, and the pair adds almost no variety. That is not a correctness defect, so I did not reject the family for it."
+   }
+  },
+  {
+   "family_id": "tpl:g10m7s4-1-2:unknownvar",
+   "spec_sha": "ef91c08fe714777746d5da492c4805589a3a7264508f4eaf041a91f41429e1dc",
+   "answers": [
+    {
+     "instance_id": "q:g10m7s4-1-2:g007-unknow",
+     "stem_sha": "9b6efbbce5eba8b3",
+     "answer": {
+      "value": "6"
+     },
+     "working": "P and R are midpoints of NQ and MQ, so PR is the midsegment parallel to MN and PR = MN/2. So MN = 2*9 = 18. Then 5a/2 + 3 = 18, so 5a/2 = 15, so a = 6."
+    },
+    {
+     "instance_id": "q:g10m7s4-1-2:g009-unknow",
+     "stem_sha": "1dc38f55f52a4ebb",
+     "answer": {
+      "value": "40"
+     },
+     "working": "PR is the midsegment, so MN = 2*PR = 30. Then 3a/5 + 6 = 30, so 3a/5 = 24, so a = 40."
+    },
+    {
+     "instance_id": "q:g10m7s4-1-2:g010-unknow",
+     "stem_sha": "2d9fdafd16f19624",
+     "answer": {
+      "value": "24"
+     },
+     "working": "PR is the midsegment, so MN = 2*PR = 46. Then 5a/3 + 6 = 46, so 5a/3 = 40, so a = 24."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family is numeric with no options, so distractors_ok is vacuously true. The file does not include answer_check, so I judged each key as a plain number in the asked form (a). I checked each of the three instances independently. All three use the same set-up: P and R are the mid-points of NQ and MQ, so PR joins the mid-points of two sides and MN is the third side. The mid-point theorem therefore gives MN = 2 x PR, which is stated correctly in step 2. g007: 5a/2 + 3 = 18, so 5a/2 = 15, 5a = 30, a = 6. This matches the key \"6\". g009: 3a/5 + 6 = 30, so 3a/5 = 24, 3a = 120, a = 40. This matches the key \"40\". g010: 5a/3 + 6 = 46, so 5a/3 = 40, 5a = 120, a = 24. This matches the key \"24\". Each step is arithmetically correct and follows the same method: substitute, subtract the constant, multiply by the denominator, divide by the coefficient. The stems are unambiguous, and the lengths (MN = 18, 30 and 46) are plausible. The only slightly odd wording is \"You are now told that PR has a length of ...\", which does not affect the maths. The stems contain no hidden diagram dependency. The mid-points are named explicitly, so the stem fully determines which side is the third side."
+   }
+  }
+ ]
+}

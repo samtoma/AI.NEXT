@@ -1,0 +1,81 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s5-1-3:rangeabove",
+ "kind": "family",
+ "lo_id": "lo:g10m6s5-1-3",
+ "parent_question_id": "q:g10m6s5-1-3:ex6-8-48e",
+ "source_page": 230,
+ "tier": "basic",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "b",
+   "choice": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    -6,
+    6
+   ],
+   "resample_while": "q == 0"
+  }
+ ],
+ "stem": "Determine the domain and range of $f(x) = {=b}^x{=signed(q)}$. Which of the following is correct?",
+ "choices": {
+  "correct": "Domain: $x \\in \\mathbb{R}$; range: $y \\in ({=q}, \\infty)$",
+  "distractors": [
+   {
+    "text": "Domain: $x \\in \\mathbb{R}$; range: $y \\in (0, \\infty)$",
+    "misconception_id": "mc:g10m6s5-1-3:range-from-zero"
+   },
+   {
+    "text": "Domain: $x \\in \\mathbb{R}$; range: $y \\in (-\\infty, {=q})$",
+    "misconception_id": "mc:g10m6s5-1-3:direction-reversed"
+   },
+   {
+    "text": "Domain: $x \\in \\mathbb{R}$; range: $y \\in [{=q}, \\infty)$",
+    "misconception_id": "mc:g10m6s5-1-3:endpoint-included"
+   },
+   {
+    "text": "Domain: $x \\in ({=q}, \\infty)$; range: $y \\in \\mathbb{R}$",
+    "misconception_id": "mc:g10m6s5-1-3:domain-range-swapped"
+   }
+  ]
+ },
+ "solution": [
+  "The power ${=b}^x$ can be calculated for every real number $x$, so there is no restriction on $x$: the domain is $x \\in \\mathbb{R}$.",
+  "Compare $f(x) = {=b}^x{=signed(q)}$ with $y = ab^x + q$: here $a = 1$, which is positive, and $q = {=q}$.",
+  "Because $a > 0$, the power ${=b}^x$ is positive for every $x$, so $f(x) = {=b}^x{=signed(q)}$ is always greater than ${=q}$: the graph lies above the line $y = {=q}$.",
+  "The graph gets closer and closer to $y = {=q}$ but never reaches it, so ${=q}$ is not part of the range. The range is $y \\in ({=q}, \\infty)$, with a round bracket."
+ ],
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m6s5-1-3:range-from-zero",
+   "label": "Ignores q: takes y = 0 as the boundary of the range",
+   "description": "The student states the range of y = ab^x + q as (0, infinity) or (-infinity, 0), forgetting that q moves the boundary line from y = 0 to y = q."
+  },
+  {
+   "id": "mc:g10m6s5-1-3:direction-reversed",
+   "label": "Puts the range on the wrong side of y = q",
+   "description": "The student gives (-infinity, q) when a is positive, or (q, infinity) when a is negative, instead of using the sign of a to decide whether the graph lies above or below y = q."
+  },
+  {
+   "id": "mc:g10m6s5-1-3:endpoint-included",
+   "label": "Includes y = q in the range",
+   "description": "The student writes a square bracket, [q, infinity) or (-infinity, q], as if the graph reached the line y = q. It only gets closer and closer, so the bracket must be round."
+  },
+  {
+   "id": "mc:g10m6s5-1-3:domain-range-swapped",
+   "label": "Swaps domain and range",
+   "description": "The student restricts x by the boundary value q and says every real number is an output, the wrong way round: for an exponential the domain is all real numbers and the range is restricted."
+  }
+ ],
+ "notes": "Basic entry point, modelled on the book's y = 2^x range with a vertical shift q added. a is fixed at 1 so the family has one skeleton (range above y = q); the opposite direction is practised in the standard and advanced families and appears here as a distractor. q is never 0 so that the 'range from zero' and 'swapped' options stay distinct from the key. mcq because the answer is an interval with infinity: every distractor is a named error. The domain is always R for y = ab^x + q."
+}

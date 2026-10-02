@@ -9,6 +9,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { loadMathsGraph } from "./spine-maths-fixture.mts";
+import { PREP3_MATH_EN } from "./courses.ts";
 import {
   buildSkillMap,
   chapterTitleParts,
@@ -45,6 +46,9 @@ const input: MapObjectiveInput[] = g.los.map((l) => ({
   label: l.label,
   moduleId: l.moduleId,
   moduleLabel: l.moduleId ? (g.moduleLabel.get(l.moduleId) ?? null) : null,
+  // the chapter's term comes from its COURSE's rules (feature 003: a course
+  // with no terms has none) — these are Prep-3 maths objectives
+  courseId: PREP3_MATH_EN,
   syllabusRef: null,
   baseline: scores[l.id]?.[0] ?? 0,
   current: scores[l.id]?.[1] ?? 0,

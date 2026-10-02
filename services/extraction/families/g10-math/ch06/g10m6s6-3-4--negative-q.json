@@ -1,0 +1,57 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s6-3-4:negative-q",
+ "kind": "family",
+ "lo_id": "lo:g10m6s6-3-4",
+ "parent_question_id": "q:g10m6s6-3-4:ex6-8-34",
+ "source_page": 222,
+ "tier": "standard",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    -6,
+    -1
+   ]
+  },
+  {
+   "name": "yb",
+   "let": "a + q"
+  }
+ ],
+ "constraints": [],
+ "stem": "A tangent curve has an equation of the form $y=a\\tan\\theta+q$. Point $A$ is at $\\left(0^{\\circ}, {=q}\\right)$ and point $B$ is at $\\left(45^{\\circ}, {=yb}\\right)$; both points lie on the curve. Determine the values of $a$ and $q$.",
+ "solution": [
+  "The constant $q$ shifts the graph up or down. For an unshifted tangent graph, point $A$ would be at $\\left(0^{\\circ}, 0\\right)$. Here $A$ is at $\\left(0^{\\circ}, {=q}\\right)$, so the graph has been shifted downwards by ${=abs(q)}$. Therefore $q={=q}$.",
+  "To find $a$, substitute $q={=q}$ and point $B$, $\\left(45^{\\circ}, {=yb}\\right)$, into the equation. Remember that $\\tan 45^{\\circ}=1$.",
+  "$\\begin{aligned}y&=a\\tan\\theta-{=abs(q)}\\\\{=yb}&=a\\tan45^{\\circ}-{=abs(q)}\\\\{=yb}&=a(1)-{=abs(q)}\\\\{=yb}+{=abs(q)}&=a\\\\{=a}&=a\\end{aligned}$",
+  "Therefore $a={=a}$ and $q={=q}$."
+ ],
+ "marker": {
+  "kind": "values",
+  "answer": "[{=a}, {=q}]",
+  "form": null,
+  "variables": [
+   "a",
+   "q"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m6s6-3-4:q-sign-slip",
+   "label": "Loses the sign of q",
+   "description": "Reads the y-intercept (0 degrees, -3) as q = 3, or after substituting q = -3 subtracts 3 from y_B instead of adding 3, so that a and/or q carries the wrong sign."
+  }
+ ],
+ "notes": "The book's typical exercise with the graph shifted DOWN (q a negative integer), second point at 45 degrees; y_B = a + q can be negative, zero or positive. Models ex6-8-34. NOTE: the book's printed solution of ex6-8-34 writes a(-1) for a tan 45 degrees (its answer a = 1 is nevertheless right because of a second sign slip); this family's steps use tan 45 = 1 throughout and do not reproduce that line. Figure not reproduced; both points are given as coordinates in the stem. a may be 1: the solution therefore does not print the complete equation, so it never reads 1tan."
+}

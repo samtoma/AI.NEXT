@@ -1,0 +1,92 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s6-3-3:domain-pick",
+ "kind": "family",
+ "lo_id": "lo:g10m6s6-3-3",
+ "parent_question_id": "q:g10m6s6-3-3:ex6-8-55a",
+ "source_page": 232,
+ "tier": "basic",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "choice": [
+    -4,
+    -3,
+    -2,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "L",
+   "choice": [
+    -360,
+    -180,
+    0,
+    180
+   ]
+  },
+  {
+   "name": "R",
+   "let": "L + 360"
+  },
+  {
+   "name": "m",
+   "let": "L + 180"
+  },
+  {
+   "name": "ea",
+   "let": "L + 90"
+  },
+  {
+   "name": "eb",
+   "let": "L + 270"
+  }
+ ],
+ "stem": "The graph of $g(\\theta)={=a}\\tan\\theta$ is drawn for ${=L}^{\\circ}\\le\\theta\\le{=R}^{\\circ}$. Which one of the following is the domain of $g$?",
+ "choices": {
+  "correct": "$\\{\\theta : {=L}^{\\circ}\\le\\theta\\le{=R}^{\\circ}, \\theta \\ne {=ea}^{\\circ}, {=eb}^{\\circ}\\}$",
+  "distractors": [
+   {
+    "text": "$\\{\\theta : {=L}^{\\circ}\\le\\theta\\le{=R}^{\\circ}\\}$",
+    "misconception_id": "mc:g10m6s6-3-3:no-exclusions"
+   },
+   {
+    "text": "$\\{\\theta : {=L}^{\\circ}\\le\\theta\\le{=R}^{\\circ}, \\theta \\ne {=L}^{\\circ}, {=m}^{\\circ}, {=R}^{\\circ}\\}$",
+    "misconception_id": "mc:g10m6s6-3-3:asymptote-at-zeros"
+   },
+   {
+    "text": "$\\{\\theta : {=L}^{\\circ}\\le\\theta\\le{=R}^{\\circ}, \\theta \\ne {=ea}^{\\circ}\\}$",
+    "misconception_id": "mc:g10m6s6-3-3:period-360"
+   }
+  ]
+ },
+ "solution": [
+  "A tangent graph has a vertical asymptote at $\\theta=90^{\\circ}$ and another one every $180^{\\circ}$ (its period), in both directions. The graph never reaches an asymptote, so those values of $\\theta$ are not in the domain.",
+  "The factor ${=a}$ only stretches the graph vertically (and reflects it in the $\\theta$-axis when it is negative). It does not move the asymptotes.",
+  "In the interval ${=L}^{\\circ}\\le\\theta\\le{=R}^{\\circ}$ the asymptotes are at $\\theta={=ea}^{\\circ}$ and $\\theta={=eb}^{\\circ}$, which are $180^{\\circ}$ apart.",
+  "Every other value of $\\theta$ in the interval is allowed, including the two end values ${=L}^{\\circ}$ and ${=R}^{\\circ}$.",
+  "Domain: $\\{\\theta : {=L}^{\\circ}\\le\\theta\\le{=R}^{\\circ}, \\theta \\ne {=ea}^{\\circ}, {=eb}^{\\circ}\\}$"
+ ],
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m6s6-3-3:no-exclusions",
+   "label": "Thinks the tangent graph has no excluded values",
+   "description": "Treats the tangent like the sine and cosine graphs, whose domain is the whole interval, and gives the whole interval as the domain without leaving out the asymptotes."
+  },
+  {
+   "id": "mc:g10m6s6-3-3:asymptote-at-zeros",
+   "label": "Puts the asymptotes where the graph crosses the axis",
+   "description": "Takes the asymptotes to be at the x-intercepts (0 degrees, 180 degrees, 360 degrees ...) instead of at 90 degrees and 270 degrees, so leaves out the intercepts instead of the asymptotes."
+  },
+  {
+   "id": "mc:g10m6s6-3-3:period-360",
+   "label": "Thinks the tangent graph repeats every 360 degrees",
+   "description": "Uses the period of sine and cosine for the tangent graph, so gives a period of 360 degrees, or finds only one asymptote in a 360 degree interval instead of two."
+  }
+ ],
+ "notes": "Models the book's only question for this objective (ex6-8-55a, domain of g(theta) = -tan theta on 0 to 360 degrees, answer {theta : 0 <= theta <= 360, theta not 90, 270}). The window is always 360 degrees long and starts at a multiple of 180 degrees, so there are always exactly two asymptotes and neither is an end value. The book's marker is a set-builder interval that cannot be typed and marked reliably, so the family is mcq; every distractor is one diagnosable error. The options use literal LaTeX braces \\{ and \\} for set-builder notation (not followed by '=' so they should pass through the template untouched): please check the rendered options once. a is never 0 and never +-1 so the stem never prints '1\\tan' or '-1\\tan'."
+}

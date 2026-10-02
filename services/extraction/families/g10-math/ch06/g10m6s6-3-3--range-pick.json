@@ -1,0 +1,111 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s6-3-3:range-pick",
+ "kind": "family",
+ "lo_id": "lo:g10m6s6-3-3",
+ "parent_question_id": "q:g10m6s6-3-3:ex6-8-55a",
+ "source_page": 232,
+ "tier": "standard",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "choice": [
+    -4,
+    -3,
+    -2,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "q",
+   "choice": [
+    -4,
+    -3,
+    -2,
+    -1,
+    1,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "sq",
+   "let": "'+' if q > 0 else '-'"
+  },
+  {
+   "name": "qa",
+   "let": "abs(q)"
+  },
+  {
+   "name": "lo",
+   "let": "q - abs(a)"
+  },
+  {
+   "name": "hi",
+   "let": "q + abs(a)"
+  },
+  {
+   "name": "L",
+   "choice": [
+    -180,
+    0,
+    180
+   ]
+  },
+  {
+   "name": "R",
+   "let": "L + 360"
+  },
+  {
+   "name": "m",
+   "let": "L + 180"
+  }
+ ],
+ "stem": "The graph of $f(\\theta)={=a}\\tan\\theta {=sq} {=qa}$ is drawn for ${=L}^{\\circ}\\le\\theta\\le{=R}^{\\circ}$. Which one of the following is the range of $f$?",
+ "choices": {
+  "correct": "All real numbers, $y\\in\\mathbb{R}$",
+  "distractors": [
+   {
+    "text": "${=lo}\\le y\\le{=hi}$",
+    "misconception_id": "mc:g10m6s6-3-3:amplitude-range"
+   },
+   {
+    "text": "$y\\in\\mathbb{R}$, $y \\ne {=q}$",
+    "misconception_id": "mc:g10m6s6-3-3:range-hyperbola"
+   },
+   {
+    "text": "$-1\\le y\\le 1$",
+    "misconception_id": "mc:g10m6s6-3-3:sine-range"
+   }
+  ]
+ },
+ "solution": [
+  "Next to each asymptote the tangent graph goes off to $+\\infty$ on one side and to $-\\infty$ on the other, so between two asymptotes it passes through every $y$-value. It has no highest or lowest point.",
+  "The factor $a={=a}$ stretches the graph vertically (and reflects it if it is negative) and $q={=q}$ shifts it up or down. Neither of these puts a limit on how high or how low the graph goes, so there is no amplitude as there is for sine and cosine.",
+  "No value is missed either: at $\\theta={=m}^{\\circ}$ we have $\\tan {=m}^{\\circ}=0$, so $f({=m}^{\\circ})={=q}$ and the value $y={=q}$ is reached. The graph does not level off at $y={=q}$.",
+  "Range: all real numbers, $y\\in\\mathbb{R}$."
+ ],
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m6s6-3-3:amplitude-range",
+   "label": "Gives a tangent graph a bounded range using a as an amplitude",
+   "description": "Treats a as an amplitude and q as the shift of the middle line, so gives the range q - |a| <= y <= q + |a| as for a sine or cosine graph."
+  },
+  {
+   "id": "mc:g10m6s6-3-3:range-hyperbola",
+   "label": "Leaves y = q out of the range",
+   "description": "Carries over the hyperbola idea that the shift q is a horizontal asymptote that is never reached, so gives y in R, y not equal to q."
+  },
+  {
+   "id": "mc:g10m6s6-3-3:sine-range",
+   "label": "Gives the range of sine and cosine",
+   "description": "States -1 <= y <= 1 for the tangent graph, ignoring both that tangent is unbounded and the effect of a and q."
+  }
+ ],
+ "notes": "Standard tier: the range characteristic of y = a tan(theta) + q. The correct answer is the same every time, so the variation is in a, q, the window and in the three distractors, which all depend on a and q. The window is 360 degrees long and starts at -180, 0 or 180 so it always holds a full branch between two asymptotes (range is all reals on it) and a multiple of 180 degrees where tan = 0 (used to show y = q is reached, ruling out the 'y not equal to q' option). q is never 0, so q - |a| and q + |a| can never reproduce the -1 to 1 option. The sign of q is printed through a string let."
+}

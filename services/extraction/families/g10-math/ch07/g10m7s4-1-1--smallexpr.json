@@ -1,0 +1,77 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m7s4-1-1:smallexpr",
+ "version": 1,
+ "kind": "family",
+ "lo_id": "lo:g10m7s4-1-1",
+ "parent_question_id": "q:g10m7s4-1-1:ex7-7-16b",
+ "source_page": 268,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "bval",
+   "randint": [
+    2,
+    14
+   ]
+  },
+  {
+   "name": "p",
+   "choice": [
+    2,
+    3,
+    4,
+    5,
+    6
+   ]
+  },
+  {
+   "name": "c",
+   "randint": [
+    3,
+    30
+   ]
+  },
+  {
+   "name": "g",
+   "let": "p * bval + c"
+  },
+  {
+   "require": "g >= 35 and g <= 100",
+   "why": "angle G is a sensible triangle angle and leaves room for H and K"
+  },
+  {
+   "name": "h",
+   "randint": [
+    30,
+    "min(90, 155 - g)"
+   ]
+  },
+  {
+   "name": "k",
+   "let": "180 - g - h"
+  },
+  {
+   "name": "r",
+   "let": "g - c"
+  }
+ ],
+ "constraints": [
+  "g == p * bval + c",
+  "g + h + k == 180",
+  "k >= 25"
+ ],
+ "stem": "In $\\triangle GHK$, the point $J$ is the mid-point of $HK$ and the point $L$ is the mid-point of $GK$. Three angles are given: $\\hat{H}={=h}^{\\circ}$, $\\hat{K}={=k}^{\\circ}$ and $K\\hat{L}J=({=p}b+{=c})^{\\circ}$. Solve for the value of $b$.",
+ "answer": "bval",
+ "solution": [
+  "$J$ is the mid-point of $HK$ and $L$ is the mid-point of $GK$, so the line joining them is parallel to the third side: $GH \\parallel LJ$ (mid-point theorem).",
+  "$K\\hat{L}J$ and $\\hat{G}$ are corresponding angles, so $\\hat{G}=K\\hat{L}J=({=p}b+{=c})^{\\circ}$ (corresp $\\angle$s; $GH \\parallel LJ$).",
+  "The angles of $\\triangle GHK$ add up to $180^{\\circ}$, so $\\hat{G}=180^{\\circ}-{=h}^{\\circ}-{=k}^{\\circ}={=g}^{\\circ}$ (sum of $\\angle$s in a $\\triangle$).",
+  "Both expressions are the size of $\\hat{G}$, so ${=p}b+{=c}={=g}$.",
+  "Subtract ${=c}$ from both sides: ${=p}b={=r}$.",
+  "Divide both sides by ${=p}$: $b={=bval}$."
+ ],
+ "notes": "Mirrors book ex7-7-16b (page 268): the figure there has J on HK, L on GK, angle H, angle K and the angle JLK written as an expression in b. Here the stem carries the whole configuration in words (no figure), so every instance is self-contained. Reasoning chain: mid-point theorem gives LJ parallel to GH, corresponding angles give G = angle KLJ, the angle sum of triangle GHK gives G from H and K, then a linear equation in b. Parameters are built backwards from b so b is always a whole number (the book's own b = 16/3 is a fraction, deliberately avoided so the answer is a clean numeric). p is 2 to 6 so the coefficient never renders as 1b; H and K are bounded so K is at least 25 degrees and G stays between 35 and 100. Uses only the theorem direction and corresponding angles, as the book's solutions do; no lengths and no converse."
+}

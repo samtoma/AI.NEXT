@@ -1,0 +1,77 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m14s7-1-1:notboth-complement",
+ "kind": "family",
+ "lo_id": "lo:g10m14s7-1-1",
+ "parent_question_id": "q:g10m14s7-1-1:ex14-8-5",
+ "source_page": 492,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "lo",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "hi",
+   "let": "lo + 14"
+  },
+  {
+   "name": "pool",
+   "let": "list(range(lo, hi + 1))"
+  },
+  {
+   "name": "s",
+   "shuffle": "pool"
+  },
+  {
+   "name": "onlya",
+   "let": "sorted([s[i] for i in range(0, 3)])"
+  },
+  {
+   "name": "both",
+   "let": "sorted([s[i] for i in range(3, 8)])"
+  },
+  {
+   "name": "onlyb",
+   "let": "sorted([s[i] for i in range(8, 11)])"
+  },
+  {
+   "name": "neither",
+   "let": "sorted([s[i] for i in range(11, 15)])"
+  },
+  {
+   "name": "ea",
+   "let": "sorted([s[i] for i in range(0, 8)])"
+  },
+  {
+   "name": "eb",
+   "let": "sorted([s[i] for i in range(3, 11)])"
+  },
+  {
+   "name": "ans",
+   "let": "sorted([s[i] for i in range(0, 15) if i < 3 or i > 7])"
+  }
+ ],
+ "constraints": [],
+ "stem": "A group of learners work with the sample space $S = \\{n : n \\in \\mathbb{Z}, {=lo} \\leq n \\leq {=hi}\\}$. Two events in $S$ are $A = \\{{=ea[0]}, {=ea[1]}, {=ea[2]}, {=ea[3]}, {=ea[4]}, {=ea[5]}, {=ea[6]}, {=ea[7]}\\}$ and $B = \\{{=eb[0]}, {=eb[1]}, {=eb[2]}, {=eb[3]}, {=eb[4]}, {=eb[5]}, {=eb[6]}, {=eb[7]}\\}$. They are asked to identify the complementary event set of $(A \\cap B)$, also known as $(A \\cap B)'$. Write down the elements of $(A \\cap B)'$ in increasing order, separated by commas.",
+ "solution": [
+  "The sample space $S$ contains every integer from ${=lo}$ to ${=hi}$, so it has 15 elements.",
+  "$A \\cap B$ is the set of elements that are in both $A$ and $B$: $A \\cap B = \\{{=both[0]}, {=both[1]}, {=both[2]}, {=both[3]}, {=both[4]}\\}$.",
+  "The complementary event set $(A \\cap B)'$ is every element of $S$ that is not in $A \\cap B$. That includes the elements of $S$ that are in only one of the two events, and the elements that are in neither event.",
+  "The elements of $S$ in $A$ only are $\\{{=onlya[0]}, {=onlya[1]}, {=onlya[2]}\\}$, the elements in $B$ only are $\\{{=onlyb[0]}, {=onlyb[1]}, {=onlyb[2]}\\}$, and the elements in neither $A$ nor $B$ are $\\{{=neither[0]}, {=neither[1]}, {=neither[2]}, {=neither[3]}\\}$.",
+  "Together these are every element of $S$ that is not in $A \\cap B$, so $(A \\cap B)' = \\{{=ans[0]}, {=ans[1]}, {=ans[2]}, {=ans[3]}, {=ans[4]}, {=ans[5]}, {=ans[6]}, {=ans[7]}, {=ans[8]}, {=ans[9]}\\}$."
+ ],
+ "marker": {
+  "kind": "values",
+  "answer": "[{=ans[0]}, {=ans[1]}, {=ans[2]}, {=ans[3]}, {=ans[4]}, {=ans[5]}, {=ans[6]}, {=ans[7]}, {=ans[8]}, {=ans[9]}]",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "notes": "The book gives these sets as numbers placed in a Venn diagram (ex14-8-5 asks for (A and B)' on 1 to 15). A family cannot carry a figure, so the same data is given as the two event sets A and B written out (A = 'A only' plus 'both'; B = 'both' plus 'B only'). The numbers that lie outside both circles in the book's figure are not listed anywhere: the student has to find them in S. Region sizes are fixed (A only 3, both 5, B only 3, neither 4) so the answer always has exactly 10 elements and the marker key can be written with indexed holes; only which numbers fall in which region changes, and the lower bound of S runs from 1 to 5 (always 15 integers). Advanced because there is no diagram: the student first has to work out A and B (the overlap) from two lists, then take everything else in S, including the numbers in neither event. The catalogued error 'complement is only what lies outside every circle' would give just the 4 'neither' numbers; listing the overlap instead of the rest is the other likely slip. The answer is a set of integers, marked as values, and the stem asks for increasing order."
+}

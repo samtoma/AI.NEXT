@@ -1,0 +1,182 @@
+{
+ "stage": "SW",
+ "workflow": "working-check",
+ "prompts_version": "sw-v3",
+ "book": "g10-math",
+ "chapter": 11,
+ "part": 1,
+ "parts": 1,
+ "batch": 5,
+ "agents": 5,
+ "effort": "high",
+ "model": "sonnet",
+ "pass_id": "A",
+ "order": "bundle",
+ "by_ref": {
+  "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/wcheck-ch11",
+  "stage": "SW",
+  "shards_sha256": "8badec11351915e074de3a62cce1669afd4552f4a9b0e524096dc3e5b8f27263",
+  "files": 24
+ },
+ "embedded": {
+  "source": "runbook/working-check.workflow.js",
+  "source_sha256": "352a846920d85b4c224df7fb36d3f9a8ea598155cc2b4ee4ba9ef7e4791b6385",
+  "args_sha256": "58d848da4e3e33d16a4c8826649fcf285f7bcdd6ad3e02ce526ccf321bb7a807",
+  "generated_sha256": "5c8a58dbc2e929532e8613b7cec099787ff80c76ec640cb9ea93293ae46b68cb",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "solution_id": "q:g10m11s1-1-1:we03",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m11s1-1-3:we04",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m11s1-1-1:we05",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m11s1-1-1:ex11-1-1",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m11s1-1-1:ex11-1-2",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m11s1-1-2:ex11-1-3",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m11s1-1-2:ex11-1-4",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m11s1-1-1:ex11-1-5",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m11s1-1-1:ex11-1-6",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m11s1-1-2:ex11-2-1",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m11s1-1-2:ex11-2-2a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m11s1-1-3:ex11-2-3",
+   "verdict": null,
+   "flags": [],
+   "note": "no answer"
+  },
+  {
+   "solution_id": "q:g10m11s1-1-2:ex11-2-4",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m11s1-1-1:ex11-2-6",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m11s1-1-2:ex11-2-7b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m11s1-1-3:ex11-2-8b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m11s1-1-1:ex11-2-9",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m11s1-1-1:ex11-2-13",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m11s1-1-1:ex11-2-14",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m11s1-1-1:ex11-2-15a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m11s1-1-1:ex11-2-19a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m11s1-1-2:ex11-2-19b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m11s1-1-3:ex11-2-20",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m11s1-1-1:we01",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  }
+ ],
+ "problems": [
+  "batch 3: an answer names \"q:g10m11s1-1-2:ex11-2-3\", which is not in this batch (ignored)",
+  "q:g10m11s1-1-3:ex11-2-3: the checking agent gave no verdict for it (unchecked: re-run it)"
+ ],
+ "meter": {
+  "stage": "SW",
+  "record": "uv run meter_run.py record --book g10-math --stage SW --run <runId>"
+ }
+}

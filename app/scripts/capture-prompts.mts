@@ -32,10 +32,37 @@
  * FULL model-visible payload: systemPrompt + dataBlock + grounding for the ask
  * and lesson surfaces, and both prompts of the two surfaces that were invisible
  * to this harness until P6 — the comprehension grader and the upload parser.
+ *
+ * FEATURE 003 — A SECOND CURRICULUM (FR-4205, FR-4206). The National question
+ * picks below are FIXED: they are what every National capture since P6 has
+ * rendered, and the byte-identity proof compares them. A course of any OTHER
+ * curriculum gets its picks from its own data instead — its first live
+ * question in catalogue order, not a widget where one exists — so a new
+ * curriculum is captured without a new line here. A fixed pick that is not a
+ * live question in the database being captured is skipped rather than
+ * rendered as an empty "question in scope". Neither rule changes a capture of
+ * a database holding only the National courses.
+ *
+ * The Grade 10 course has no content yet, so its prompts are captured from a
+ * FIXTURE (`src/lib/g10-prompt-fixture.mts`) loaded into a scratch database
+ * that holds nothing else — which is also exactly what the tutor sees for a
+ * Grade 10 student, since the course gate shows her that course alone:
+ *
+ *   createdb ainext_scratch_g10
+ *   pg_dump --schema-only --no-owner ainext_mvp1 | psql -q ainext_scratch_g10
+ *   node --import ./scripts/ts-resolver.mjs src/lib/g10-prompt-fixture.mts postgres://127.0.0.1/ainext_scratch_g10
+ *   DATABASE_URL=postgres://127.0.0.1/ainext_scratch_g10 node --import ./scripts/ts-resolver.mjs scripts/capture-prompts.mts <outDir>
+ *   dropdb ainext_scratch_g10
+ *
+ * `src/lib/g10-prompts.test.mts` holds the same prompts as committed goldens,
+ * rendered without a database.
  */
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+
+import { COURSE_IDS, COURSES } from "../src/lib/courses.ts";
+import { DEFAULT_CURRICULUM } from "../src/lib/curricula.ts";
 
 /** The ask-surface combinations captured: a question id (or none) × surface. */
 export const ASK_PICKS: readonly (string | null)[] = [
@@ -45,6 +72,36 @@ export const ASK_PICKS: readonly (string | null)[] = [
 ];
 
 export const ASK_SURFACES = ["spine_chat", "student_chat"] as const;
+
+/**
+ * The courses whose Ask picks come from their own data: every registry course
+ * outside the National curriculum (feature 003). The National picks stay the
+ * fixed `ASK_PICKS` above.
+ */
+export const DATA_PICK_COURSES: readonly string[] = COURSE_IDS.filter(
+  (id) => COURSES[id].curriculum !== DEFAULT_CURRICULUM
+);
+
+/**
+ * A course's own Ask pick: its first live question in catalogue order (the
+ * catalogue's lesson order, then objective order), preferring a question with
+ * an answer to be wrong about (not a widget construction). `null` when it has
+ * no live question. Pure, so the rule is tested without a database.
+ */
+export function coursePick(
+  lessonLos: readonly string[],
+  live: readonly { id: string; lo_id: string; question_type: string }[]
+): string | null {
+  const rank = (q: { lo_id: string; question_type: string; id: string }) =>
+    [lessonLos.indexOf(q.lo_id), q.question_type === "widget" ? 1 : 0] as const;
+  const inCourse = live.filter((q) => lessonLos.includes(q.lo_id));
+  const sorted = [...inCourse].sort((a, b) => {
+    const [la, wa] = rank(a);
+    const [lb, wb] = rank(b);
+    return wa - wb || la - lb || a.id.localeCompare(b.id);
+  });
+  return sorted[0]?.id ?? null;
+}
 
 /**
  * Fixed input for the comprehension grader, so its capture is a function of the
@@ -74,6 +131,8 @@ export function surfacePlan(): readonly string[] {
     ...ASK_PICKS.flatMap((qid) =>
       ASK_SURFACES.map((s) => `ask:${s}:${qid ?? "none"}`)
     ),
+    // one per loaded course outside the National curriculum (feature 003)
+    ...ASK_SURFACES.map((s) => `ask:${s}:<first live question of each non-National course>`),
     "understanding:learn",
     "understanding:review",
     "understanding:retry",
@@ -130,8 +189,30 @@ export async function capture(
 
   // 2) Ask-the-Spine: observer (no question), one maths question, one social
   //    question — on both surfaces, with a wrong answer where a question is
-  //    in scope (exercises the re-explain mode blocks).
-  for (const qid of ASK_PICKS) {
+  //    in scope (exercises the re-explain mode blocks). Then each loaded course
+  //    of another curriculum, by its own first question (feature 003).
+  const fixed = ASK_PICKS.filter((q): q is string => q != null);
+  const liveFixed = new Set(
+    (
+      await pool.query(`SELECT id FROM questions WHERE status = 'live' AND id = ANY($1)`, [fixed])
+    ).rows.map((r: { id: string }) => r.id)
+  );
+  const picks: (string | null)[] = ASK_PICKS.filter((q) => q == null || liveFixed.has(q));
+  for (const courseId of DATA_PICK_COURSES) {
+    const lessonLos = catalog
+      .filter((i: { courseId: string | null }) => i.courseId === courseId)
+      .flatMap((i: { los: { id: string }[] }) => i.los.map((l) => l.id));
+    if (lessonLos.length === 0) continue; // not loaded here
+    const live = (
+      await pool.query(
+        `SELECT id, lo_id, question_type FROM questions WHERE status = 'live' AND lo_id = ANY($1)`,
+        [lessonLos]
+      )
+    ).rows as { id: string; lo_id: string; question_type: string }[];
+    const pick = coursePick(lessonLos, live);
+    if (pick) picks.push(pick);
+  }
+  for (const qid of picks) {
     for (const surface of ASK_SURFACES) {
       const ctx = await ask.buildAskContext(
         surface,
@@ -192,7 +273,7 @@ export async function capture(
   await pool.end();
   return {
     lessons: catalog.length,
-    askSurfaces: ASK_PICKS.length * ASK_SURFACES.length,
+    askSurfaces: picks.length * ASK_SURFACES.length,
     files,
   };
 }

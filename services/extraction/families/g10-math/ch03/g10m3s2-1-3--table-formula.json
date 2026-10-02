@@ -1,0 +1,52 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m3s2-1-3:table-formula",
+ "kind": "family",
+ "lo_id": "lo:g10m3s2-1-3",
+ "parent_question_id": "q:g10m3s2-1-3:ex3-2-11a",
+ "source_page": 69,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "d",
+   "randint": [
+    2,
+    9
+   ]
+  },
+  {
+   "name": "c",
+   "randint": [
+    1,
+    9
+   ]
+  },
+  {
+   "name": "a",
+   "let": "d + c"
+  }
+ ],
+ "constraints": [],
+ "stem": "The table shows the first four terms of a linear sequence. $\\begin{array}{c|c|c|c|c} n & 1 & 2 & 3 & 4 \\\\ \\hline T_n & {=a} & {=a + d} & {=a + 2 * d} & {=a + 3 * d} \\end{array}$ Find the general formula $T_n$ for the sequence. Give your answer as an expression in $n$, in the form $dn + c$.",
+ "solution": [
+  "Read the terms from the table: ${=a}\\;;\\;{=a + d}\\;;\\;{=a + 2 * d}\\;;\\;{=a + 3 * d}\\;;\\;\\ldots$ The first term is $a = T_1 = {=a}$.",
+  "Find the common difference: $d = T_2 - T_1 = {=a + d} - {=a} = {=d}$. The difference between the next two terms is the same: ${=a + 2 * d} - {=a + d} = {=d}$.",
+  "Each term is the one before it plus $d$, so $T_n = T_1 + d(n - 1)$. Substitute $T_1 = {=a}$ and $d = {=d}$: $T_n = {=a} + {=d}(n - 1)$.",
+  "Expand and simplify: $T_n = {=a} + {=d}n - {=d} = {=d}n + {=c}$.",
+  "Check with $n = 4$: $T_4 = {=d}(4) + {=c} = {=4 * d + c}$, which is the value in the table for $n = 4$.",
+  "The general formula is $T_n = {=d}n + {=c}$."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "{=d}*n + {=c}",
+  "form": "expanded",
+  "variables": [
+   "n"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "The objective names three presentations (table, list of terms, picture pattern). The book prints only lists and pictures, so this family covers the table presentation with the book's own method (d = T_2 - T_1, then T_n = T_1 + d(n-1)); the table is a LaTeX array with n in the first row and T_n in the second, n running 1 to 4 so no new technique is needed. Same parameter ranges and basic-tier restrictions as the list family (d 2 to 9, c 1 to 9, all terms positive). Picture patterns cannot be sampled honestly here because a family has no figure of its own, and the book's two picture questions (ex3-2-21, ex3-2-23) stay as the standard and advanced items. First six letters of the slug differ from the list family's slug."
+}

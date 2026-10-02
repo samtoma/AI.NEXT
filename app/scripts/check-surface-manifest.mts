@@ -78,16 +78,18 @@ const CONSOLE_KEY = "/(console)/";
  * group layout's `notFound()` does not cover them and only a suffixed filename
  * can exclude them at build time.
  *
- * `/signup` is the whole list. It sits in the `(auth)` group, which is shared
+ * `/signup` and `/welcome`. Both sit in the `(auth)` group, which is shared
  * because both builds sign somebody in — but only one of them lets anybody
  * register. Operators are **seeded or granted, never self-registered**
  * (contracts/auth.md "Operator authentication", ADR-0014): a signup form on the
  * console build would create a `students` account against an `accounts` row, on
  * the surface whose entire purpose is that student credentials do not work
- * there. It is `page.student.tsx` for that reason, and this asserts it in both
- * directions.
+ * there. `/welcome` is the second half of a Google sign-up — the one-screen
+ * grade-and-curriculum step (feature 003, FR-4014) — and belongs to the same
+ * surface for the same reason. Each is `page.student.tsx`, and this asserts it
+ * in both directions.
  */
-const STUDENT_ONLY = ["/signup"] as const;
+const STUDENT_ONLY = ["/signup", "/welcome"] as const;
 
 /**
  * Console sign-in endpoints that are NOT role-gated console routes, so they

@@ -1,0 +1,201 @@
+{
+  "format": "ainext.widget-gaps/1",
+  "book": "g10-math",
+  "course_id": "course:us-g10-math-en",
+  "rule": "FR-4306 / FR-1201: every chapter has at least one widget question, or a gap a human has signed. A new kind is built only after Samuel approves it (decision 11, T356).",
+  "chapters": [
+    {
+      "module": "module:g10m-c08",
+      "label": "Chapter 8 — Analytical geometry",
+      "status": "covered",
+      "widgets": 21,
+      "kinds": [
+        "line_drawer",
+        "number_line_marker",
+        "pair_plotter"
+      ],
+      "objectives_with_widgets": [
+        "lo:g10m8s1-1-2",
+        "lo:g10m8s2-1-2",
+        "lo:g10m8s3-2-1",
+        "lo:g10m8s3-2-2",
+        "lo:g10m8s4-1-1",
+        "lo:g10m8s4-1-2"
+      ],
+      "gaps": 8
+    }
+  ],
+  "uncovered_chapters": [],
+  "proposed_kinds": {
+    "vertex-set plotter (multi-point figure constructor)": {
+      "modules": [
+        "module:g10m-c08"
+      ],
+      "objectives": [
+        "lo:g10m8s1-1-1"
+      ],
+      "why": [
+        "No anchor book question is listed for this objective in the lesson packet (anchor_questions: []), and independently no existing, instrumented kind lets a student place more than one named point — the two blockers compound: there is nothing to anchor a template to, and nothing that could construct the mathematics even if there were."
+      ]
+    },
+    "vertex-labelling sequence checker (alphabetical naming convention)": {
+      "modules": [
+        "module:g10m-c08"
+      ],
+      "objectives": [
+        "lo:g10m8s1-1-3"
+      ],
+      "why": [
+        "Every anchor question for this objective (ex8-1-5, ex8-1-6, ex8-6-3) is 'which of these 4 identical shapes is labelled correctly' — a pure comparison of labelling direction/order across diagram variants. Forcing this into, say, polygon_builder's property predicates (parallel sides, right angles, equal sides) would grade a different, unrelated property and call it this objective's mathematics — exactly the forced fit the task asks to avoid; it belongs to Samuel as a gap instead."
+      ]
+    },
+    "distance_ruler": {
+      "modules": [
+        "module:g10m-c08"
+      ],
+      "objectives": [
+        "lo:g10m8s2-1-1"
+      ],
+      "why": [
+        "None of the existing kinds grades the length of a segment between two arbitrary points. pair_plotter only grades where a single point lands against one fixed target coordinate, not a distance the student computes; line_drawer grades a line's slope and intercept, and circle_builder grades a radius/chord/diameter/tangent property against a fixed circle â€” neither is a finite segment's length. None of their predicate sets contain anything resembling a coordinate sign-subtraction slip or a triangle-classification judgement, so mapping this objective's two misconceptions onto any of them would grade a property other than the one the lesson teaches (an answer box in disguise), not a genuine construction of the distance formula."
+      ]
+    },
+    "gradient_formula_builder (proposed, does not exist)": {
+      "modules": [
+        "module:g10m-c08"
+      ],
+      "objectives": [
+        "lo:g10m8s3-1-1"
+      ],
+      "why": [
+        "line_drawer's 'points' mode explicitly reports only points-swapped/off-target, never a slope (stated directly in the contract), so it cannot surface a gradient-formula error at all. Its 'equation' mode can report slope predicates, but only by making the student draw a whole line (any two points satisfying a target m and b), which forces in an unrelated skill (finding the y-intercept) that this objective does not cover, and its m-range limit ('whole number or the reciprocal of one') excludes the fractional gradients (9/11, 11/8, 4/3, 1.5) that this objective's own anchor questions actually produce — an instance built to fit the instrument would not be the mathematics the anchor questions test."
+      ]
+    },
+    "coordinate_from_gradient_solver (proposed, does not exist)": {
+      "modules": [
+        "module:g10m-c08"
+      ],
+      "objectives": [
+        "lo:g10m8s3-1-2"
+      ],
+      "why": [
+        "The only nearby kind, line_drawer, has no spec field or can_emit predicate for any of this objective's three own misconceptions. Its 'points' mode is limited to points-swapped/off-target (a plotting-convention error, not a gradient-formula error). Reframing the task as 'draw the whole line through the two points' in equation mode could loosely approximate two of the three misconceptions (inverted-gradient-ratio to slope-inverted, mismatched-point-order to slope-sign-flipped) but still leaves dropped-coefficient-on-unknown — the misconception built entirely around a coordinate written as a coefficient times the unknown — permanently undiagnosable, since no kind's spec can hold a symbolic coefficient. Since one of the LO's three own misconceptions can never fire regardless of kind choice, and the other two only fire by expanding the task beyond 'find one coordinate' into 'produce a full line equation,' this is a genuine gap rather than a fit worth forcing."
+      ]
+    },
+    "line_relationship_classifier": {
+      "modules": [
+        "module:g10m-c08"
+      ],
+      "objectives": [
+        "lo:g10m8s3-2-2"
+      ],
+      "why": [
+        "line_drawer only grades one freshly-drawn line's own slope and intercept against a single target; it has no mechanism for a student to compare two already-given gradients or classify a pre-drawn shape's sides, so these three misconceptions (all about mis-judging an existing relationship, not about drawing a new line) have no home. polygon_builder's construct mode is graded on the shape the student itself builds, not on classifying a pre-drawn one, so it does not fit either without inverting the whole interaction. treats-contradiction-as-a-k-value (recognising an equation with no solution) is purely algebraic and fits no visual construction kind at all."
+      ]
+    },
+    "collinearity_checker": {
+      "modules": [
+        "module:g10m-c08"
+      ],
+      "objectives": [
+        "lo:g10m8s3-2-3"
+      ],
+      "why": [
+        "Collinearity is a three-point equality judgement, not the construction of one line. line_drawer mode='points' only grades whether the drawn line passes through two given points and never involves or grades a third, so building it here would just re-test LO1's two-point-line skill under a different name rather than this LO's actual comparison step — the stretch the rules warn against. No other listed kind offers a multi-value numeric-equality comparison interaction (gradient-vs-gradient or surd-length-vs-surd-length)."
+      ]
+    },
+    "a diagonal-aware vertex solver (no existing kind)": {
+      "modules": [
+        "module:g10m-c08"
+      ],
+      "objectives": [
+        "lo:g10m8s4-1-3"
+      ],
+      "why": [
+        "Every existing kind either doesn't touch coordinate geometry at all, or (pair_plotter) only grades one placed point against generic swapped-coordinates/wrong-quadrant/off-target predicates. Reusing pair_plotter here would push the objective's actual content (which pair is the diagonal) into the stem text instead of the graded construction — a student who guesses the right diagonal and one who derives it would look identical to the grader, and diagonal-vs-side-confusion, midpoint-formula-subtraction and shared-midpoint-as-vertex would all collapse into the same unspecific off-target bucket already used for lo:g10m8s4-1-2, with no way to tell them apart. polygon_builder's predicates (only-one-pair-parallel, sides-not-equal, no-right-angle, midsegment-not-half, area-missing-half) classify a shape's properties, not solve for an unknown vertex from coordinates, so it doesn't fit either, and its instrument is left empty in the contract in any case."
+      ]
+    }
+  },
+  "gaps": [
+    {
+      "module": "module:g10m-c08",
+      "lo_id": "lo:g10m8s1-1-1",
+      "need_kind": "vertex-set plotter (multi-point figure constructor)",
+      "description": "The construction this objective needs is: given a short list of named vertex coordinates (e.g. A(-2,1), B(3,1), C(1,-3)), the student places all of them on a lattice grid and the figure they bound is checked as a whole — each vertex within tolerance of its target, and (for the misconceptions this would diagnose) able to say per-vertex whether a coordinate pair was swapped, one sign was flipped, or a vertex was placed off-target entirely, plus a figure-level check that the vertices were placed as a closed shape in the stated order. pair_plotter is the closest existing kind but its instrument places exactly ONE point, so it cannot pose 'draw a figure from several vertices' without either dropping vertices (answering a different, easier question) or stitching several one-point widgets together and losing the point of the objective, which is the figure as a whole, not one coordinate. polygon_builder is named in the contract but its instrument string is empty — no grid, no vertex-count range, no coordinate range are specified, so there is nothing to validate a target against (FR-1207: an instrument with no stated limits can't be checked for reachability) and its own predicates (parallel-sides, equal-sides, right-angle, midsegment, area) are about a shape's geometric properties, not about plotting stated vertex coordinates, so even a built-out polygon_builder would be answering a different question than this LO asks.",
+      "why": "No anchor book question is listed for this objective in the lesson packet (anchor_questions: []), and independently no existing, instrumented kind lets a student place more than one named point — the two blockers compound: there is nothing to anchor a template to, and nothing that could construct the mathematics even if there were.",
+      "source": "author-merged.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c08",
+      "lo_id": "lo:g10m8s1-1-3",
+      "need_kind": "vertex-labelling sequence checker (alphabetical naming convention)",
+      "description": "This objective is about a labelling convention, not a measurable geometric quantity: given an unlabelled polygon, the student assigns letters to its vertices, and the construction is graded on whether the letters climb by one, in a single consistent rotational direction (either clockwise or counter-clockwise, starting from any vertex), all the way around the shape. That would let it diagnose exactly the three misconceptions this objective owns: assumes-only-one-direction-counts (reject a shape correctly labelled the 'wrong' way round), expects-labels-to-start-at-a (reject a correct labelling because A isn't first), and partial-arc-check (approve a labelling after checking only a few neighbouring vertices, missing a break further round). No kind in the contract touches vertex order or labelling at all — the geometry kinds that build shapes (circle_builder, angle_setter, triangle_ratio, polygon_builder) all grade coordinates, angles or ratios, never the sequence in which vertices are named, and polygon_builder additionally has no instrument defined.",
+      "why": "Every anchor question for this objective (ex8-1-5, ex8-1-6, ex8-6-3) is 'which of these 4 identical shapes is labelled correctly' — a pure comparison of labelling direction/order across diagram variants. Forcing this into, say, polygon_builder's property predicates (parallel sides, right angles, equal sides) would grade a different, unrelated property and call it this objective's mathematics — exactly the forced fit the task asks to avoid; it belongs to Samuel as a gap instead.",
+      "source": "author-merged.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c08",
+      "lo_id": "lo:g10m8s2-1-1",
+      "need_kind": "distance_ruler",
+      "description": "A 'distance_ruler' kind: a lattice grid spanning at least ±10 on both axes (to host questions like $A(2, 7)$ and $B(-3, 5)$), where the student drags a point so its distance from a fixed first point matches a target length, which may be given as a surd; a three-point variant would let the student place $P$, $Q$ and $R$ and would grade the triangle type the three constructed side lengths actually produce. This would diagnose this objective's own misconceptions directly: a predicate for 'the point landed where it would if a subtraction of a negative coordinate had its sign dropped' (e.g. treating $3-(-2)$ as $3-2$) would catch drops-double-negative-sign, and, on the three-point variant, a predicate comparing the constructed side lengths against the triangle's true classification rather than its on-screen appearance would catch reads-triangle-type-off-sketch.",
+      "why": "None of the existing kinds grades the length of a segment between two arbitrary points. pair_plotter only grades where a single point lands against one fixed target coordinate, not a distance the student computes; line_drawer grades a line's slope and intercept, and circle_builder grades a radius/chord/diameter/tangent property against a fixed circle â€” neither is a finite segment's length. None of their predicate sets contain anything resembling a coordinate sign-subtraction slip or a triangle-classification judgement, so mapping this objective's two misconceptions onto any of them would grade a property other than the one the lesson teaches (an answer box in disguise), not a genuine construction of the distance formula.",
+      "source": "author-merged.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c08",
+      "lo_id": "lo:g10m8s3-1-1",
+      "need_kind": "gradient_formula_builder (proposed, does not exist)",
+      "description": "A widget where the student is given two named points (e.g. A(7, 10), B(-4, 1)) and constructs the gradient calculation itself — for example by assigning which point is 'first' for the numerator and which is 'first' for the denominator (two independent point-order choices, one per fraction bar), rather than dragging a line on a grid. The instrument would need no numeric-range restriction tying the result to a lattice-friendly slope, since real two-point gradients are arbitrary fractions (9/11, 4/3, 1.5, etc.), and it would diagnose exactly this lesson's own misconception (mismatched-subscript-order) by detecting when the numerator and denominator were built from different point orderings, independent of whether the final fraction value happens to be right or wrong.",
+      "why": "line_drawer's 'points' mode explicitly reports only points-swapped/off-target, never a slope (stated directly in the contract), so it cannot surface a gradient-formula error at all. Its 'equation' mode can report slope predicates, but only by making the student draw a whole line (any two points satisfying a target m and b), which forces in an unrelated skill (finding the y-intercept) that this objective does not cover, and its m-range limit ('whole number or the reciprocal of one') excludes the fractional gradients (9/11, 11/8, 4/3, 1.5) that this objective's own anchor questions actually produce — an instance built to fit the instrument would not be the mathematics the anchor questions test.",
+      "source": "author-merged.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c08",
+      "lo_id": "lo:g10m8s3-1-2",
+      "need_kind": "coordinate_from_gradient_solver (proposed, does not exist)",
+      "description": "A widget that shows one fully known point, the line's gradient, and a second point with one coordinate given and the other expressed as an unknown (optionally as a coefficient multiple, e.g. D(8, p) or C(3, 2p)) for the student to determine and enter/place. It would need to report distinct predicates for: solving the gradient equation with mismatched point order (sign error), inverting the ratio (run over rise), and — critically — reporting the coefficient on the unknown as if it were the unknown itself when the target coordinate is a multiple like 2p. This last predicate requires the instrument to represent a symbolic coefficient on a coordinate, which none of the current kinds' spec fields can express (all take concrete numeric values).",
+      "why": "The only nearby kind, line_drawer, has no spec field or can_emit predicate for any of this objective's three own misconceptions. Its 'points' mode is limited to points-swapped/off-target (a plotting-convention error, not a gradient-formula error). Reframing the task as 'draw the whole line through the two points' in equation mode could loosely approximate two of the three misconceptions (inverted-gradient-ratio to slope-inverted, mismatched-point-order to slope-sign-flipped) but still leaves dropped-coefficient-on-unknown — the misconception built entirely around a coordinate written as a coefficient times the unknown — permanently undiagnosable, since no kind's spec can hold a symbolic coefficient. Since one of the LO's three own misconceptions can never fire regardless of kind choice, and the other two only fire by expanding the task beyond 'find one coordinate' into 'produce a full line equation,' this is a genuine gap rather than a fit worth forcing.",
+      "source": "author-merged.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c08",
+      "lo_id": "lo:g10m8s3-2-2",
+      "need_kind": "line_relationship_classifier",
+      "description": "A widget showing two already-drawn line segments (or a quadrilateral's four vertices) on a lattice, where the student builds the comparison itself — e.g. exposing each segment's own rise-over-run and then classifying the pair as parallel, perpendicular, or neither, or for a quadrilateral, checking each side-pair in turn — rather than drawing one new line. This would diagnose: calling sides parallel/perpendicular from how the sketch looks rather than the computed gradients (judges-parallel-by-appearance); confirming only one defining property of a quadrilateral and stopping there instead of checking the second the book pairs with it (stops-at-partial-quadrilateral-property); and blurring the parallel test (equal gradients) with the perpendicular test (product of exactly -1) when reading the comparison (swaps-parallel-perpendicular-tests, as a judgement rather than a construction error).",
+      "why": "line_drawer only grades one freshly-drawn line's own slope and intercept against a single target; it has no mechanism for a student to compare two already-given gradients or classify a pre-drawn shape's sides, so these three misconceptions (all about mis-judging an existing relationship, not about drawing a new line) have no home. polygon_builder's construct mode is graded on the shape the student itself builds, not on classifying a pre-drawn one, so it does not fit either without inverting the whole interaction. treats-contradiction-as-a-k-value (recognising an equation with no solution) is purely algebraic and fits no visual construction kind at all.",
+      "source": "author-merged.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c08",
+      "lo_id": "lo:g10m8s3-2-3",
+      "need_kind": "collinearity_checker",
+      "description": "A widget presenting three points on a lattice where the student builds the actual comparison the book teaches — either the two gradients between consecutive point-pairs (confirming or denying they are the exact same fraction), or the two shorter segment lengths against the longest (confirming or denying they sum to it) — rather than drawing any single line. This would diagnose: treating two gradients that merely share a sign as equal instead of checking they are the same fraction exactly (same-sign-gradients-mistaken-for-equal); and leaving distances as separate, un-simplified surds so a genuine match is missed and the points are wrongly called non-collinear (unsimplified-surds-look-unequal).",
+      "why": "Collinearity is a three-point equality judgement, not the construction of one line. line_drawer mode='points' only grades whether the drawn line passes through two given points and never involves or grades a third, so building it here would just re-test LO1's two-point-line skill under a different name rather than this LO's actual comparison step — the stretch the rules warn against. No other listed kind offers a multi-value numeric-equality comparison interaction (gradient-vs-gradient or surd-length-vs-surd-length).",
+      "source": "author-merged.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c08",
+      "lo_id": "lo:g10m8s4-1-3",
+      "need_kind": "a diagonal-aware vertex solver (no existing kind)",
+      "description": "This objective's distinguishing step is not 'solve for a point from two given points' — lo:g10m8s4-1-2's widget already covers that arithmetic. What's new here is recognising, among three NAMED vertices of a parallelogram (e.g. E, F, G of EFGH), which pair is the diagonal already fully known (the 'skip-one' pair, E & G) rather than a side (E & F, a common trap), before applying the shared-midpoint property to solve for the fourth vertex. A genuine widget would show the three given vertices on a lattice and have the student both mark/select which pair is the diagonal and place the fourth vertex, so the construction itself can tell apart: picking the wrong pair as the diagonal, finding that diagonal's midpoint by subtracting instead of adding the known coordinates, and stopping at that midpoint instead of solving on for the vertex.",
+      "why": "Every existing kind either doesn't touch coordinate geometry at all, or (pair_plotter) only grades one placed point against generic swapped-coordinates/wrong-quadrant/off-target predicates. Reusing pair_plotter here would push the objective's actual content (which pair is the diagonal) into the stem text instead of the graded construction — a student who guesses the right diagonal and one who derives it would look identical to the grader, and diagonal-vs-side-confusion, midpoint-formula-subtraction and shared-midpoint-as-vertex would all collapse into the same unspecific off-target bucket already used for lo:g10m8s4-1-2, with no way to tell them apart. polygon_builder's predicates (only-one-pair-parallel, sides-not-equal, no-right-angle, midsegment-not-half, area-missing-half) classify a shape's properties, not solve for an unknown vertex from coordinates, so it doesn't fit either, and its instrument is left empty in the contract in any case.",
+      "source": "author-merged.json",
+      "signed_off": null,
+      "scope": "lesson"
+    }
+  ]
+}

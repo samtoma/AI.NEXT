@@ -1,0 +1,40 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m13s4-1-1:single-dimension",
+ "kind": "family",
+ "lo_id": "lo:g10m13s4-1-1",
+ "parent_question_id": "q:g10m13s4-1-1:ex13-6-4a",
+ "source_page": 455,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "v",
+   "randint": [
+    12,
+    120
+   ]
+  },
+  {
+   "name": "k",
+   "choice": [
+    2,
+    3,
+    4,
+    5,
+    6
+   ]
+  }
+ ],
+ "constraints": [],
+ "stem": "The volume of a rectangular prism is {=v} cm$^3$. The height of the prism is multiplied by a constant factor of {=k}, while its length and breadth stay the same. Calculate the volume of the new prism, in cm$^3$.",
+ "answer": "k * v",
+ "solution": [
+  "The volume of a rectangular prism is given by $V=l\\times b\\times h$, so for the original prism $l\\times b\\times h={=v}$.",
+  "If the height is multiplied by a constant factor of {=k}, the new volume is $V_{\\text{new}}=l\\times b\\times({=k}h)={=k}\\times(l\\times b\\times h)={=k}V$.",
+  "So the volume of the prism increases by a factor of {=k}: $V_{\\text{new}}={=k}\\times{=v}={=k*v}$ cm$^3$."
+ ],
+ "notes": "Entry point of the skill: ONE dimension scaled by a constant factor, so the volume is scaled by that same factor (book Ex 13.6 Q4 steps down to a single dimension). The original volume is given instead of the dimensions so the student must use the factor idea (V_new = k x V) rather than recompute from three lengths; the book's own questions are likewise abstract (no dimensions). The dimension scaled is always the height, so no instance is ambiguous. The original volume is any whole number of cm^3; no integer dimensions are implied or needed. Surface area is deliberately not asked here: with only one or two dimensions scaled the surface area is not a single constant multiple of the original, so a 'factor' only exists when all three dimensions are scaled (see the advanced family). Answer is the bare number of cm^3 (the stem names the unit).",
+ "proposed_misconceptions": []
+}

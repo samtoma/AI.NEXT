@@ -1,0 +1,56 @@
+{
+  "format": "ainext.family/1",
+  "id": "tpl:g10m4s7-1-1:interval",
+  "kind": "family",
+  "lo_id": "lo:g10m4s7-1-1",
+  "parent_question_id": "q:g10m4s7-1-1:ex4-7-1a",
+  "source_page": 88,
+  "tier": "standard",
+  "answer_type": "expression",
+  "context": null,
+  "params": [
+    {
+      "name": "a",
+      "choice": [
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "name": "x0",
+      "randint": [
+        -6,
+        6
+      ]
+    },
+    {
+      "name": "b",
+      "randint": [
+        -9,
+        9
+      ],
+      "resample_while": "b == 0"
+    },
+    {
+      "name": "c",
+      "let": "a * x0 + b"
+    }
+  ],
+  "stem": "Solve ${=linear(a, b)} < {=c}$ and write the solution in interval notation.",
+  "solution": [
+    "Subtract ${=paren(b)}$ from both sides: ${=a}x < {=c - b}$.",
+    "Divide by ${=a}$, which is positive, so the inequality keeps its direction: $x < {=x0}$.",
+    "In interval notation: $(-\\infty, {=x0})$."
+  ],
+  "marker": {
+    "kind": "interval",
+    "answer": "interval(-inf, {=x0}, false, false)",
+    "form": null,
+    "variables": [
+      "x"
+    ],
+    "tolerance": null
+  }
+}

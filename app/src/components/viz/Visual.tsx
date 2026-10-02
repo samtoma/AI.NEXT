@@ -28,6 +28,7 @@ import {
   usePrefersReducedMotion,
 } from "./core";
 import { ArrowMap } from "./ArrowMap";
+import { BookImage } from "./BookImage";
 import { CaseTable } from "./CaseTable";
 import { CoordinatePlot } from "./CoordinatePlot";
 import { FlowChain } from "./FlowChain";
@@ -70,6 +71,10 @@ export const VIZ_KINDS = [
   "harakat_reveal",
   "case_table",
   "irab_tree",
+  // Answer 37d (2026-10-01): the book's own picture, a STAND-IN until a
+  // native kind draws the figure — not a primitive, and never chosen by the
+  // lesson AI (only the pipeline writes one).
+  "book_image",
 ] as const;
 
 export type VizKind = (typeof VIZ_KINDS)[number];
@@ -97,6 +102,7 @@ const REGISTRY: Record<
   harakat_reveal: HarakatReveal,
   case_table: CaseTable,
   irab_tree: IrabTree,
+  book_image: BookImage,
 };
 
 export function Visual({

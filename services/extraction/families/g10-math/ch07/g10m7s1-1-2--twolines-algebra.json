@@ -1,0 +1,77 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m7s1-1-2:twolines-algebra",
+ "kind": "family",
+ "lo_id": "lo:g10m7s1-1-2",
+ "parent_question_id": "q:g10m7s1-1-2:ex7-1-3",
+ "source_page": 240,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "c",
+   "choice": [
+    2,
+    3
+   ]
+  },
+  {
+   "name": "x",
+   "randint": [
+    30,
+    70
+   ]
+  },
+  {
+   "name": "d",
+   "randint": [
+    10,
+    40
+   ]
+  },
+  {
+   "name": "p",
+   "let": "180 + d - (c + 1) * x"
+  },
+  {
+   "require": "p >= 30 and p <= 80",
+   "why": "the given angle at Z must be acute (Y lies higher than Z) and a clean size"
+  },
+  {
+   "require": "p != x",
+   "why": "the two corresponding angles must not coincide, so the reasons cannot be confused"
+  },
+  {
+   "name": "m",
+   "let": "c * x - d"
+  },
+  {
+   "require": "m >= 20",
+   "why": "the angle between the extensions must be a sensible, non-tiny size"
+  },
+  {
+   "name": "s",
+   "let": "c + 1"
+  },
+  {
+   "name": "r",
+   "let": "180 - p + d"
+  }
+ ],
+ "constraints": [
+  "m == 180 - p - x",
+  "r == s * x"
+ ],
+ "stem": "$AB$ and $DC$ are parallel lines, both drawn vertically: $A$ and $D$ are at the top, $B$ and $C$ are at the bottom, and $DC$ is to the right of $AB$. The points $X$ and $Z$ lie on $AB$, with $X$ above $Z$. The point $Y$ lies on $DC$, lower than $X$ and higher than $Z$. The straight lines $XY$ and $ZY$ are drawn, and each is extended beyond $Y$ to the right of $DC$: $ZY$ is extended to a point $P$ and $XY$ is extended to a point $Q$ (so $P$ lies above $Q$). It is given that $A\\hat{Z}Y = {=p}^\\circ$, $B\\hat{X}Y = x^\\circ$ and $P\\hat{Y}Q = ({=c}x - {=d})^\\circ$. Calculate the value of $x$.",
+ "answer": "x",
+ "solution": [
+  "$D\\hat{Y}P = A\\hat{Z}Y = {=p}^\\circ$ (corresponding angles; $AB \\parallel DC$), because $ZYP$ is a straight line crossing both parallel lines.",
+  "$Q\\hat{Y}C = B\\hat{X}Y = x^\\circ$ (corresponding angles; $AB \\parallel DC$), because $XYQ$ is a straight line crossing both parallel lines.",
+  "$D\\hat{Y}P + P\\hat{Y}Q + Q\\hat{Y}C = 180^\\circ$ (angles on a straight line $DC$), so ${=p}^\\circ + ({=c}x - {=d})^\\circ + x^\\circ = 180^\\circ$.",
+  "Collect the terms in $x$: ${=s}x = 180 - {=p} + {=d} = {=r}$.",
+  "$x = \\frac{{=r}}{{=s}} = {=x}$.",
+  "Check: $P\\hat{Y}Q = ({=c} \\times {=x} - {=d})^\\circ = {=m}^\\circ$, and ${=p}^\\circ + {=m}^\\circ + {=x}^\\circ = 180^\\circ$."
+ ],
+ "notes": "Text-only restatement of book exercise 7.1 q3 (two lines through a point Y on one parallel line; corresponding angles at Y, then angles on a straight line, then a linear equation). The book's figure is replaced by an explicit layout in words: vertical parallels, X above Z on AB, Y on DC between them in height, P above Q on the extensions beyond Y. Given angles p (at Z) and x (at X) are both acute, which forces Y between the two heights, so the layout is consistent for every instance; I checked this numerically with coordinates for all 898 admissible parameter sets. The equation (c+1)x = 180 - p + d is also what the triangle route gives (P-Y-Q is vertically opposite X-Y-Z), so a solver using either method reaches the same x. Parameters are built backwards from x, so x is always a whole number between 30 and 70 and the angle c*x - d is positive."
+}

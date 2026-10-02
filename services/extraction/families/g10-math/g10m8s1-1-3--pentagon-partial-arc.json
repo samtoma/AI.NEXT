@@ -1,0 +1,114 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m8s1-1-3:pentagon-partial-arc",
+ "kind": "family",
+ "lo_id": "lo:g10m8s1-1-3",
+ "parent_question_id": "q:g10m8s1-1-3:ex8-6-3",
+ "source_page": 316,
+ "tier": "advanced",
+ "answer_type": "mcq",
+ "context": null,
+ "version": 2,
+ "params": [
+  {
+   "name": "v",
+   "choice": [
+    [
+     "E",
+     "F",
+     "G",
+     "H",
+     "B"
+    ],
+    [
+     "C",
+     "D",
+     "E",
+     "F",
+     "M"
+    ],
+    [
+     "G",
+     "H",
+     "I",
+     "J",
+     "A"
+    ],
+    [
+     "K",
+     "L",
+     "M",
+     "N",
+     "C"
+    ],
+    [
+     "P",
+     "Q",
+     "R",
+     "S",
+     "F"
+    ],
+    [
+     "B",
+     "C",
+     "D",
+     "E",
+     "T"
+    ],
+    [
+     "M",
+     "N",
+     "O",
+     "P",
+     "B"
+    ],
+    [
+     "S",
+     "T",
+     "U",
+     "V",
+     "D"
+    ],
+    [
+     "D",
+     "E",
+     "F",
+     "G",
+     "Q"
+    ],
+    [
+     "N",
+     "O",
+     "P",
+     "Q",
+     "H"
+    ]
+   ]
+  }
+ ],
+ "stem": "A pentagon has 5 vertices, each labelled with a different letter. Going around the shape clockwise, the labels are, in order: {=v[0]}, {=v[1]}, {=v[2]}, {=v[3]}, {=v[4]}. A student checks the first four labels, sees that they climb the alphabet one letter at a time, and concludes that the pentagon is correctly named. Is the student right, and why?",
+ "solution": [
+  "Check every consecutive pair of vertices going around the shape, not just the first few: {=v[0]}→{=v[1]}, {=v[1]}→{=v[2]}, {=v[2]}→{=v[3]} each climb one letter at a time.",
+  "The next edge, {=v[3]}→{=v[4]}, is where the pattern already breaks: for the naming to hold, {=v[4]} would have to be the very next letter after {=v[3]}, but it is not.",
+  "There is still one edge left in the cycle — the one that actually closes the loop back to the start, {=v[4]}→{=v[0]} — but a single break is already enough to fail the naming, so that edge cannot rescue it. The pentagon is not correctly named as given, and checking only the first four labels, as the student did, would have missed the break entirely."
+ ],
+ "choices": {
+  "correct": "No — the convention requires the letters to climb one at a time all the way around the shape and back to the start. After {=v[3]} the next vertex is {=v[4]}, which does not continue the sequence, so the pentagon is not correctly named as given.",
+  "distractors": [
+   {
+    "text": "Yes — the first four vertices climb one letter at a time, so the pentagon is correctly named.",
+    "misconception_id": "mc:g10m8s1-1-3:partial-arc-check"
+   },
+   {
+    "text": "No — the labels must be read going anticlockwise instead, since a clockwise reading is never the correct convention.",
+    "misconception_id": "mc:g10m8s1-1-3:assumes-only-one-direction-counts"
+   },
+   {
+    "text": "No — the naming is wrong because the sequence does not start with the letter A.",
+    "misconception_id": "mc:g10m8s1-1-3:expects-labels-to-start-at-a"
+   }
+  ]
+ },
+ "proposed_misconceptions": [],
+ "notes": "Advanced twist on the same book device (ex8-6-3, p.316, viewed its figure): four of five vertices climb consecutively but the 4th edge breaks, so a partial check (misconception already catalogued) looks correct. All three distractors reuse the three catalogued misconceptions for this LO verbatim; no new ids needed. The five-letter tuples are hand-verified literals (no chr()/letter-arithmetic exists in the family DSL) so every instance is guaranteed clean: first four strictly consecutive ascending, fifth distinct from all four and never the true next letter. v2 fix: the blind grader (wf_c9fa108d-2eb) correctly caught that solution step 2 mislabeled v[3]→v[4] (just the 4th of 5 cycle edges) as 'the edge that closes the loop back to the start' — the real closing edge is v[4]→v[0], which the template never examined. Verified by hand on instance E,F,G,H,B: the true closing edge is B→E, not H→B. The key answer was never wrong (the break found at v[3]→v[4] is on its own sufficient to fail the naming, regardless of what the closing edge does), so only the solution wording needed fixing — rewrote step 2 to correctly describe v[3]→v[4] as the next edge (where the break is found) and added step 3 to correctly name the true closing edge v[4]→v[0] and explain why it's moot once a break is already found."
+}

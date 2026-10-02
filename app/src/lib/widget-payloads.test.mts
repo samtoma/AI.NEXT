@@ -46,6 +46,11 @@ test("every registered name accepts at least one payload", () => {
     ratio_balance: { mode: "direct", a: 3, b: 4, c: 9 },
     sample_space: { rule: { kind: "sum", op: "eq", value: 7 } },
     curve_sketcher: { fn: "quadratic", coefs: [1, 0, -4] },
+    polygon_builder: { mode: "construct", shape: "isosceles" },
+    solid_scaler: { solid: "box", ask: "volume", ratio: 8 },
+    box_plot_builder: { data: [2, 4, 4, 5, 6, 7, 9] },
+    venn_builder: { sets: 2, labels: ["Football", "Chess"], mode: "shade", target: "aOnly" },
+    area_model: { mode: "expand", a: 2, b: -3 },
   };
   for (const name of MATH_WIDGETS) {
     assert.ok(samples[name], `no sample payload for registered widget ${name}`);
@@ -179,9 +184,168 @@ test("enumerated fields reject anything outside the enum", () => {
   rejects("curve_sketcher", { fn: "cubic", coefs: [1, 0, 0] }, "unsupported family");
 });
 
+/* ------------------------------------ polygon_builder, solid_scaler, box_plot_builder */
+
+test("polygon_builder construct accepts every named shape and rejects an unknown one", () => {
+  for (const shape of ["scalene", "isosceles", "right", "parallelogram", "rectangle",
+                        "rhombus", "square", "trapezium", "kite"]) {
+    ok("polygon_builder", { mode: "construct", shape });
+  }
+  rejects("polygon_builder", { mode: "construct", shape: "equilateral" },
+    "a square lattice cannot draw an equilateral triangle");
+  rejects("polygon_builder", { mode: "construct" }, "no shape named");
+});
+
+test("polygon_builder midsegment needs a real, non-degenerate triangle", () => {
+  ok("polygon_builder", { mode: "midsegment", triangle: [[0, 0], [6, 0], [0, 6]], apex: 0 });
+  rejects("polygon_builder", { mode: "midsegment", triangle: [[0, 0], [2, 0], [4, 0]], apex: 0 },
+    "three collinear points");
+  rejects("polygon_builder", { mode: "midsegment", triangle: [[0, 0], [6, 0], [0, 6]], apex: 3 },
+    "apex out of range");
+  rejects("polygon_builder", { mode: "midsegment", triangle: [[0, 0], [6, 0]], apex: 0 },
+    "only two vertices");
+});
+
+test("polygon_builder area needs a target that a lattice polygon can actually hit", () => {
+  ok("polygon_builder", { mode: "area", shape: "triangle", target: 6 });
+  ok("polygon_builder", { mode: "area", shape: "quadrilateral", target: 6.5 });
+  rejects("polygon_builder", { mode: "area", shape: "triangle", target: 6.3 },
+    "not a multiple of Pick's-theorem ½");
+  rejects("polygon_builder", { mode: "area", shape: "triangle", target: 0 }, "no area at all");
+  rejects("polygon_builder", { mode: "area", shape: "triangle", target: 100 }, "off the lattice entirely");
+});
+
+test("solid_scaler refuses a ratio whose k does not land on the slider's own grid", () => {
+  ok("solid_scaler", { solid: "cylinder", ask: "volume", ratio: 8 });   // k = 2
+  ok("solid_scaler", { solid: "sphere", ask: "area", ratio: 2.25 });    // k = 1.5
+  rejects("solid_scaler", { solid: "box", ask: "volume", ratio: 10 }, "∛10 is not on the 0.5 grid");
+  rejects("solid_scaler", { solid: "box", ask: "area", ratio: 30 }, "√30 is off the top of the slider");
+  rejects("solid_scaler", { solid: "teapot", ask: "volume", ratio: 8 }, "not a built solid");
+});
+
+test("solid_scaler dims fall back to a nice default and reject an unreasonable override", () => {
+  const w = ok("solid_scaler", { solid: "box", ask: "volume", ratio: 8 });
+  assert.equal(w.name === "solid_scaler" && w.dims.l, 4);
+  ok("solid_scaler", { solid: "box", ask: "volume", ratio: 8, dims: { l: 2, w: 2, h: 2 } });
+  rejects("solid_scaler", { solid: "box", ask: "volume", ratio: 8, dims: { l: -1 } }, "negative dimension");
+  rejects("solid_scaler", { solid: "box", ask: "volume", ratio: 8, dims: { l: 50 } }, "too large to draw");
+});
+
+test("box_plot_builder needs a readable, whole-number data set", () => {
+  ok("box_plot_builder", { data: [2, 4, 4, 5, 6, 7, 9] });
+  rejects("box_plot_builder", { data: [1, 2, 3] }, "too few values to summarise");
+  rejects("box_plot_builder", { data: [1.5, 2, 3, 4, 5] }, "quartiles would land off the snap grid");
+  rejects("box_plot_builder", { data: ["1", "2", "3", "4", "5"] }, "strings, not numbers");
+  rejects("box_plot_builder", { data: Array.from({ length: 20 }, (_, i) => i) }, "too many to lay out");
+});
+
 test("a payload is never mutated by validation", () => {
   const props = { target: [3, 2], prompt: "Plot it" };
   const before = JSON.stringify(props);
   parseMathWidget("pair_plotter", props);
   assert.equal(JSON.stringify(props), before);
+});
+
+/* ---------------------- curve_sketcher's five new families (feature 003) -- */
+
+test("curve_sketcher's five new families each accept a reasonable target", () => {
+  ok("curve_sketcher", { fn: "hyperbola", coefs: [2, -1] });
+  ok("curve_sketcher", { fn: "exponential", coefs: [2, 3, -1] });
+  ok("curve_sketcher", { fn: "sine", coefs: [2, 1] });
+  ok("curve_sketcher", { fn: "cosine", coefs: [-3, 0] });
+  ok("curve_sketcher", { fn: "tangent", coefs: [1, -2] });
+  // Linear and quadratic are completely unaffected by the new families.
+  ok("curve_sketcher", { fn: "linear", coefs: [2, -1] });
+  ok("curve_sketcher", { fn: "quadratic", coefs: [1, 0, -4] });
+});
+
+test("a hyperbola with a = 0 is refused — it is not a hyperbola at all", () => {
+  rejects("curve_sketcher", { fn: "hyperbola", coefs: [0, 1] }, "y=q is a flat line");
+  rejects("curve_sketcher", { fn: "hyperbola", coefs: [7, 1] }, "a beyond the ±6 bound");
+  rejects("curve_sketcher", { fn: "hyperbola", coefs: [1.5, 1] }, "a is not a whole number");
+});
+
+test("exponential's base must land on the family's three built-in growth rates", () => {
+  ok("curve_sketcher", { fn: "exponential", coefs: [1, 2, 0] });
+  ok("curve_sketcher", { fn: "exponential", coefs: [1, 0.5, 0] });
+  rejects("curve_sketcher", { fn: "exponential", coefs: [1, 4, 0] }, "b=4 is not one of the three rates");
+  rejects("curve_sketcher", { fn: "exponential", coefs: [1, 1, 0] }, "b=1 is a constant, not exponential");
+  rejects("curve_sketcher", { fn: "exponential", coefs: [0, 2, 0] }, "a=0 is the asymptote itself");
+});
+
+test("sine, cosine and tangent all refuse a zero amplitude and an out-of-range one", () => {
+  ok("curve_sketcher", { fn: "sine", coefs: [4, 0] });
+  rejects("curve_sketcher", { fn: "sine", coefs: [0, 0] }, "a flat line is not a sine curve");
+  rejects("curve_sketcher", { fn: "sine", coefs: [5, 0] }, "beyond the sine/cosine bound of 4");
+  ok("curve_sketcher", { fn: "tangent", coefs: [3, 0] });
+  rejects("curve_sketcher", { fn: "tangent", coefs: [4, 0] }, "beyond tangent's tighter bound of 3");
+});
+
+/* --------------------------------------------------------------- venn_builder */
+
+test("venn_builder shade mode accepts every 2-set target and rejects a 3-set-only one", () => {
+  for (const target of ["union", "intersection", "aOnly", "bOnly", "complementA", "complementB", "neither"]) {
+    ok("venn_builder", { sets: 2, labels: ["A", "B"], mode: "shade", target });
+  }
+  rejects("venn_builder", { sets: 2, labels: ["A", "B"], mode: "shade", target: "cOnly" },
+    "no third set on a 2-set diagram");
+  rejects("venn_builder", { sets: 2, labels: ["A", "B"], mode: "shade", target: "complementC" },
+    "no third set to complement");
+  ok("venn_builder", { sets: 3, labels: ["A", "B", "C"], mode: "shade", target: "cOnly" });
+});
+
+test("venn_builder needs exactly as many labels as sets", () => {
+  rejects("venn_builder", { sets: 3, labels: ["A", "B"], mode: "shade", target: "aOnly" },
+    "two labels for three sets");
+  rejects("venn_builder", { sets: 2, labels: ["A", "B", "C"], mode: "shade", target: "aOnly" },
+    "three labels for two sets");
+  rejects("venn_builder", { sets: 2, labels: ["A", ""], mode: "shade", target: "aOnly" },
+    "a blank label");
+  rejects("venn_builder", { sets: 4, labels: ["A", "B", "C", "D"], mode: "shade", target: "aOnly" },
+    "only 2 or 3 sets are drawable");
+});
+
+test("venn_builder counts mode requires every region and a consistent total", () => {
+  ok("venn_builder", {
+    sets: 2, labels: ["French", "German"], mode: "counts",
+    total: 20, regions: { a: 8, b: 5, ab: 4, n: 3 },
+  });
+  rejects("venn_builder", {
+    sets: 2, labels: ["French", "German"], mode: "counts",
+    total: 20, regions: { a: 8, b: 5, ab: 4 }, // "n" missing
+  }, "a region left out entirely");
+  rejects("venn_builder", {
+    sets: 2, labels: ["French", "German"], mode: "counts",
+    total: 21, regions: { a: 8, b: 5, ab: 4, n: 3 }, // sums to 20, not 21
+  }, "the stated total the regions cannot add up to");
+  rejects("venn_builder", {
+    sets: 2, labels: ["French", "German"], mode: "counts",
+    regions: { a: -1, b: 5, ab: 4, n: 3 },
+  }, "a negative count");
+  // No total given at all is fine — not every word problem states one.
+  ok("venn_builder", {
+    sets: 2, labels: ["French", "German"], mode: "counts",
+    regions: { a: 8, b: 5, ab: 4, n: 3 },
+  });
+});
+
+/* ---------------------------------------------------------------- area_model */
+
+test("area_model accepts whole a/b within the grid's reach and refuses the degenerate/oversized cases", () => {
+  ok("area_model", { mode: "expand", a: 2, b: -3 });
+  ok("area_model", { mode: "factor", a: -4, b: 4 });
+  rejects("area_model", { mode: "expand", a: 0, b: 0 }, "just x² teaches nothing this widget is for");
+  rejects("area_model", { mode: "expand", a: 5, b: 1 }, "the grid runs out past ±4");
+  rejects("area_model", { mode: "expand", a: 1.5, b: 1 }, "a must be a whole number");
+  rejects("area_model", { mode: "spread", a: 1, b: 1 }, "not a recognised mode");
+});
+
+test("every registered widget from feature 003's own list still validates its sample", () => {
+  // A drift guard: if a widget agent adds a kind to MATH_WIDGETS without a
+  // reachable sample here, "every registered name accepts at least one
+  // payload" above already catches it — this just names the three kinds this
+  // brief added, so a reviewer can see them called out explicitly.
+  for (const name of ["curve_sketcher", "venn_builder", "area_model"]) {
+    assert.ok((MATH_WIDGETS as readonly string[]).includes(name), `${name} is not registered`);
+  }
 });

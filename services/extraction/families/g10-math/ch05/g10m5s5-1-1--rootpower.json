@@ -1,0 +1,115 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m5s5-1-1:rootpower",
+ "kind": "family",
+ "lo_id": "lo:g10m5s5-1-1",
+ "parent_question_id": "q:g10m5s5-1-1:ex5-2-1c",
+ "source_page": 117,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "ANG",
+   "let": "[12, 18, 23, 28, 34, 39, 43, 52, 57, 62, 67, 73, 77, 82, 108, 114, 124, 131, 142, 157, 164, 197, 203, 216, 227, 238, 251, 262, 281, 289, 296, 305, 314, 326, 338, 347]"
+  },
+  {
+   "name": "SIN",
+   "let": "[2079116908, 3090169944, 3907311285, 4694715628, 5591929035, 6293203910, 6819983601, 7880107536, 8386705679, 8829475929, 9205048535, 9563047560, 9743700648, 9902680687, 9510565163, 9135454576, 8290375726, 7547095802, 6156614753, 3907311285, 2756373558, -2923717047, -3907311285, -5877852523, -7313537016, -8480480962, -9455185756, -9902680687, -9816271834, -9455185756, -8987940463, -8191520443, -7193398003, -5591929035, -3746065934, -2249510543]"
+  },
+  {
+   "name": "AC",
+   "let": "[12, 18, 23, 28, 34, 39, 43, 52, 57, 62, 67, 73, 77, 82, 281, 289, 296, 305, 314, 326, 338, 347]"
+  },
+  {
+   "name": "CAC",
+   "let": "[9781476007, 9510565163, 9205048535, 8829475929, 8290375726, 7771459615, 7313537016, 6156614753, 5446390350, 4694715628, 3907311285, 2923717047, 2249510543, 1391731010, 1908089954, 3255681545, 4383711468, 5735764364, 6946583705, 8290375726, 9271838546, 9743700648]"
+  },
+  {
+   "name": "SQC",
+   "let": "[9890134482, 9752212653, 9594294416, 9396529108, 9105150040, 8815588247, 8551922016, 7846409850, 7379966362, 6851799492, 6250848970, 5407140693, 4742900530, 3730591119, 4368168900, 5705857994, 6620960254, 7573482926, 8334616791, 9105150040, 9629038657, 9871018513]"
+  },
+  {
+   "name": "p",
+   "randint": [
+    2,
+    9
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    2,
+    9
+   ]
+  },
+  {
+   "name": "i",
+   "randint": [
+    0,
+    21
+   ]
+  },
+  {
+   "name": "j",
+   "randint": [
+    0,
+    35
+   ]
+  },
+  {
+   "name": "a",
+   "let": "AC[i]"
+  },
+  {
+   "name": "b",
+   "let": "ANG[j]"
+  },
+  {
+   "name": "ca",
+   "let": "CAC[i] / 10000000000"
+  },
+  {
+   "name": "r",
+   "let": "SQC[i] / 10000000000"
+  },
+  {
+   "name": "s",
+   "let": "SIN[j] / 10000000000"
+  },
+  {
+   "name": "v",
+   "let": "p * r - q * s * s"
+  },
+  {
+   "name": "va",
+   "let": "p * round(r, 4) - q * round(s, 4) * round(s, 4)"
+  },
+  {
+   "require": "abs(v) >= 3/10",
+   "why": "keep the answer away from 0"
+  },
+  {
+   "require": "abs(v * 100 - floor(v * 100) - 1/2) > 3/100",
+   "why": "the unrounded value is at least 0.0003 away from a rounding boundary"
+  },
+  {
+   "require": "floor(v * 100 + 1/2) == floor(va * 100 + 1/2)",
+   "why": "the answer is the same even if the ratios are first rounded to 4 decimal places"
+  }
+ ],
+ "constraints": [],
+ "stem": "Use your calculator, set to degrees mode, to evaluate ${=p}\\sqrt{\\cos {=a}^{\\circ}}-{=q}\\left(\\sin {=b}^{\\circ}\\right)^{2}$. Do not round any intermediate value; give the final answer correct to $2$ decimal places.",
+ "answer": "fixed(v, 2)",
+ "solution": [
+  "Set the calculator to degrees mode (DEG). Work out each part separately and keep all the digits the calculator shows; round only at the very end.",
+  "$\\cos {=a}^{\\circ}\\approx {=fixed(ca, 6)}$, which is positive, so the square root can be taken",
+  "$\\sqrt{\\cos {=a}^{\\circ}}\\approx {=fixed(r, 6)}$",
+  "$\\sin {=b}^{\\circ}\\approx {=fixed(s, 6)}$",
+  "$\\left(\\sin {=b}^{\\circ}\\right)^{2}\\approx {=fixed(s * s, 6)}$",
+  "Combine the parts: ${=p}\\times {=fixed(r, 6)}-{=q}\\times {=fixed(s * s, 6)}\\approx {=fixed(v, 4)}$",
+  "Round to $2$ decimal places: ${=fixed(v, 2)}$"
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced: one skeleton, p sqrt(cos a) - q (sin b)^2. The angle a is drawn only from angles whose cosine is positive (first and fourth quadrant, so the root exists; 305 degrees is the book's own fourth-quadrant angle); b is drawn from all four quadrants, and squaring removes the sign, which is the twist. Ratio and root values are tabulated (integers over 10^10, exact) because the expression language has no sin/cos/tan; AC, CAC, SQC are index-aligned and ANG, SIN are index-aligned. Guards: |answer| at least 0.3, at least 0.0003 from a rounding boundary, unchanged if ratios are first rounded to 4 dp. Special angles left out. Numeric, so no distractors; the worked solution's first step names degrees mode."
+}

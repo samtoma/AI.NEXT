@@ -1,0 +1,39 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m14s3-1-1:factors-of-12-and-primes",
+ "lo_id": "lo:g10m14s3-1-1",
+ "parent_question_id": "q:g10m14s3-1-1:ex14-3-3b",
+ "tier": "standard",
+ "kind": "venn_builder",
+ "spec": {
+  "mode": "counts",
+  "sets": 2,
+  "labels": [
+   "Factor of 12",
+   "Prime number"
+  ],
+  "regions": {
+   "a": 4,
+   "b": 3,
+   "ab": 2,
+   "n": 3
+  }
+ },
+ "stem": "Pieces of paper labelled $1$ to $12$ are placed in a box, and one piece is taken out. Let $A$ be the event 'a factor of $12$' and $B$ the event 'a prime number'. The rectangle is the whole sample space $S$. Fill in the Venn diagram: how many outcomes lie in $A$ only, in both $A$ and $B$, in $B$ only, and in neither circle?",
+ "solution": [
+  "Write down the sample space: $S = \\{1, 2, 3, \\dots, 12\\}$, so $n(S) = 12$.",
+  "List the factors of $12$: $A = \\{1, 2, 3, 4, 6, 12\\}$, so $n(A) = 6$.",
+  "List the primes up to $12$ (remember that $1$ is not prime): $B = \\{2, 3, 5, 7, 11\\}$, so $n(B) = 5$.",
+  "The outcomes in both sets are $2$ and $3$, so the overlap $A \\cap B$ holds $2$ outcomes.",
+  "'A only' is the other four factors, $1, 4, 6, 12$: $4$ outcomes. 'B only' is $5, 7, 11$: $3$ outcomes.",
+  "The outcomes in neither set are $8, 9, 10$: $3$ outcomes, inside the rectangle but outside both circles.",
+  "Check: $4 + 2 + 3 + 3 = 12 = n(S)$. (Counting a whole set instead of its exclusive part would give $6 + 5 + 3 = 14$, which is more than $n(S)$.)"
+ ],
+ "diagnostics": [
+  {
+   "predicate": "neither-region-missed",
+   "misconception_id": "mc:g10m14s1-1-1:sample-space-as-an-event"
+  }
+ ],
+ "notes": "Built on the two anchors ex14-3-3b and ex14-3-3c (factors of 12, primes up to 12); both event sets come from the book's own answers. Regions: A only {1,4,6,12} = 4, B only {5,7,11} = 3, overlap {2,3} = 2, neither {8,9,10} = 3, sum 12. Counts mode with no clues and no total, as in the basic template. The likeliest wrong answers here are an incomplete list of factors (1 and 12 forgotten, so event-set-incomplete) and 1 counted as prime, but both land in off-target together with the overlap-counted-twice slip, so off-target is left unmapped rather than blamed on one of them. neither-region-missed is mapped to sample-space-as-an-event on the same reasoning as the basic template."
+}

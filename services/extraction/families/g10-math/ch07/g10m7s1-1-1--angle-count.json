@@ -1,0 +1,76 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m7s1-1-1:angle-count",
+ "kind": "family",
+ "lo_id": "lo:g10m7s1-1-1",
+ "parent_question_id": "q:g10m7s1-1-1:ex7-8-1f",
+ "source_page": 270,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "j",
+   "randint": [
+    0,
+    9
+   ]
+  },
+  {
+   "name": "pool",
+   "let": "[22 + j, 47 + j, 70 + j, 89, 90, 91, 104 + j, 128 + j, 153 + j, 179, 180, 181, 203 + j, 236 + j, 270 + j, 318 + j]"
+  },
+  {
+   "name": "v",
+   "sample": {
+    "from": "pool",
+    "k": 6
+   }
+  },
+  {
+   "name": "w",
+   "let": "sorted(v)"
+  },
+  {
+   "name": "nacute",
+   "let": "len([x for x in v if x < 90])"
+  },
+  {
+   "name": "nright",
+   "let": "len([x for x in v if x == 90])"
+  },
+  {
+   "name": "nobtuse",
+   "let": "len([x for x in v if x > 90 and x < 180])"
+  },
+  {
+   "name": "nstraight",
+   "let": "len([x for x in v if x == 180])"
+  },
+  {
+   "name": "nreflex",
+   "let": "len([x for x in v if x > 180])"
+  },
+  {
+   "require": "nobtuse >= 1 and nobtuse <= 4",
+   "why": "the count is never 0 or 5 or 6, so it cannot be guessed from the shape of the list"
+  },
+  {
+   "require": "len([x for x in v if abs(x - 90) <= 1 or abs(x - 180) <= 1]) >= 2",
+   "why": "at least two boundary angles (89, 90, 91 or 179, 180, 181) so the book's near-right twist appears in every instance"
+  }
+ ],
+ "constraints": [
+  "nacute + nright + nobtuse + nstraight + nreflex == 6"
+ ],
+ "stem": "Six angles measure ${=v[0]}^\\circ$, ${=v[1]}^\\circ$, ${=v[2]}^\\circ$, ${=v[3]}^\\circ$, ${=v[4]}^\\circ$ and ${=v[5]}^\\circ$. How many of these six angles are obtuse angles?",
+ "answer": "nobtuse",
+ "solution": [
+  "An obtuse angle is bigger than $90^\\circ$ and smaller than $180^\\circ$. An angle of exactly $90^\\circ$ is a right angle and one of exactly $180^\\circ$ is a straight angle, so neither of those is obtuse.",
+  "Put the angles in order of size: ${=w[0]}^\\circ$, ${=w[1]}^\\circ$, ${=w[2]}^\\circ$, ${=w[3]}^\\circ$, ${=w[4]}^\\circ$, ${=w[5]}^\\circ$.",
+  "Compare each angle with the limits $90^\\circ$ and $180^\\circ$. Acute (smaller than $90^\\circ$): {=nacute}; right (exactly $90^\\circ$): {=nright}; obtuse (between $90^\\circ$ and $180^\\circ$): {=nobtuse}; straight (exactly $180^\\circ$): {=nstraight}; reflex (bigger than $180^\\circ$): {=nreflex}.",
+  "So {=nobtuse} of the six angles are obtuse."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced because it asks for six classifications at once and always includes at least two boundary angles (89/90/91 or 179/180/181): the book itself uses a 91 degree angle as its twist (ex 7.8 no. 1f). Pool of 16 angles with every type present (acute 4, right 1, obtuse 5, straight 1, reflex 5); the mid-range values shift together by j (0 to 9) and never cross a type boundary (largest acute 79 or 89, smallest obtuse 91, largest obtuse 162 or 179, largest reflex 327). The sample is six distinct angles; the obtuse count is 1 to 4 (a Python simulation of the sampling gave about 74 percent of draws accepted and about 14,900 distinct angle sets in 20,000 draws). No angle of 0 or 360 occurs. The worked solution is numeric only (sorted list and a count per type), so every step is true for each instance."
+}

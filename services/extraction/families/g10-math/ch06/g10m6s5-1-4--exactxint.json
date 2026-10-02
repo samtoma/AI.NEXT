@@ -1,0 +1,81 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s5-1-4:exactxint",
+ "kind": "family",
+ "lo_id": "lo:g10m6s5-1-4",
+ "parent_question_id": "q:g10m6s5-1-4:ex6-5-4b",
+ "source_page": 186,
+ "tier": "standard",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "choice": [
+    -5,
+    -4,
+    -3,
+    -2,
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "b",
+   "choice": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "kmax",
+   "let": "5 if b == 2 else (4 if b == 3 else 3)"
+  },
+  {
+   "name": "k",
+   "randint": [
+    1,
+    "kmax"
+   ]
+  },
+  {
+   "name": "n",
+   "let": "b ** k"
+  },
+  {
+   "name": "m",
+   "let": "a * n"
+  },
+  {
+   "name": "q",
+   "let": "0 - m"
+  },
+  {
+   "require": "abs(m) <= 400",
+   "why": "keeps the constant term q to at most three digits"
+  }
+ ],
+ "stem": "Calculate the $x$-intercept of the graph of $y={=a}\\cdot {=b}^{x}{=signed(q)}$. Write your answer as a point $(x, y)$.",
+ "marker": {
+  "kind": "coordinates",
+  "answer": "({=k}, 0)",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "solution": [
+  "The $x$-intercept is where the graph cuts the $x$-axis, so we let $y=0$.",
+  "$0={=a}\\cdot {=b}^{x}{=signed(q)}$",
+  "Move the constant term to the other side: ${=m}={=a}\\cdot {=b}^{x}$.",
+  "Divide both sides by ${=a}$ to leave the power on its own: ${=n}={=b}^{x}$.",
+  "Write ${=n}$ as a power of ${=b}$: ${=n}={=b}^{{=k}}$, so ${=b}^{{=k}}={=b}^{x}$.",
+  "The bases are the same, so the exponents are equal: $x={=k}$.",
+  "The $x$-intercept is $({=k}, 0)$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Standard: the book's own typical x-intercept exercise in its clean form, as ex6-5-4b (y = 1/4.4^x - 1, so 4 = 4^x and x = 1). q is built as -a.b^k so that, after isolating the power, the right-hand side is exactly a power of b and x = k is a whole number; no trial and error or rounding. a is never 1 or -1 (so '1\\cdot' is never printed) and may be negative, in which case q is positive. kmax keeps b^k at most 32 (b=2), 81 (b=3) or 64 and 125 (b=4, 5); |a.b^k| is capped at 400."
+}

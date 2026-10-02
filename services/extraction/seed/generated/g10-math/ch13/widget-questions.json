@@ -1,0 +1,103 @@
+{
+  "generator": "services/extraction/generate_widget_questions.py (ADR-0009) --templates",
+  "question_type": "widget",
+  "book": "work/g10-math/fanout/books/ch13/g10-math.json",
+  "course_id": "course:us-g10-math-en",
+  "templates": {
+    "wt:g10m13s4-1-3:cone-area-quadruple": "dded094d1fd3dcd9c2f7b751e7a38c352c810e38618e6100127deeb692ee9871"
+  },
+  "rejected_templates": {
+    "wt:g10m13s4-1-3:cylinder-volume-eighth": [
+      "not shipped: S5's verifier refused every mapping of it (off-target → mc:g10m13s4-1-3:shrink-read-as-enlarge), so no widget of it could say why an answer is wrong"
+    ]
+  },
+  "questions": [
+    {
+      "id": "q:g10m13s4-1-3:w001",
+      "lo_id": "lo:g10m13s4-1-3",
+      "tier": "basic",
+      "question_type": "widget",
+      "stem": "A cone is scaled so that every length on it (the base radius, the height and the slant height) is multiplied by the same factor $k$. Drag $k$, and tick every face that makes up the cone's total surface area, until that total surface area is $4$ times the original. What factor $k$ does this need?",
+      "choices": {
+        "kind": "solid_scaler",
+        "spec": {
+          "solid": "cone",
+          "ask": "area",
+          "ratio": 4
+        },
+        "diagnostics": [
+          {
+            "predicate": "area-scaled-by-k",
+            "misconception_id": "mc:g10m13s4-1-3:scale-factor-applied-once"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Every length on the cone is multiplied by the same factor $k$, so each face (the flat circular base and the curved surface) is stretched in two directions at once. An area is a length times a length, so each face is multiplied by $k \\times k = k^{2}$."
+        },
+        {
+          "step": 2,
+          "text_md": "Every face scales by $k^{2}$, so the total surface area (base plus curved surface) is multiplied by $k^{2}$, whatever the measurements of the cone are."
+        },
+        {
+          "step": 3,
+          "text_md": "The total surface area has to become $4$ times as large, so $k^{2} = 4$."
+        },
+        {
+          "step": 4,
+          "text_md": "Take the positive root: $k = 2$. Drag $k$ to $2$, so the radius, the height and the slant height are all doubled."
+        },
+        {
+          "step": 5,
+          "text_md": "Check against the live readout: with $k = 2$ the area is multiplied by $2^{2} = 4$. Setting $k = 4$ would multiply the area by $4^{2} = 16$, which is too much."
+        }
+      ],
+      "parent_question_id": "q:g10m13s4-1-3:ex13-6-2",
+      "source_note": "Generated from template family wt:g10m13s4-1-3:cone-area-quadruple.",
+      "family": "wt:g10m13s4-1-3:cone-area-quadruple",
+      "template_sha": "dded094d1fd3dcd9c2f7b751e7a38c352c810e38618e6100127deeb692ee9871"
+    }
+  ],
+  "misconceptions": [
+    {
+      "id": "mc:g10m13s4-1-3:scale-factor-applied-once",
+      "lo_id": "lo:g10m13s4-1-3",
+      "label": "Multiplies the area or volume by k itself",
+      "description": "The student treats the scale factor as acting directly on the area, surface area or volume, so doubling every length is taken to double the area (or a quarter of every length to make a quarter of the area)."
+    }
+  ],
+  "mapping_review": {
+    "rule": "decision 47",
+    "verifier_runs": [
+      "verify-ch13-wf_5a8df236-8a6"
+    ],
+    "counts": {
+      "active": 2,
+      "held": 0,
+      "kept_by_review": 0,
+      "dropped_by_review": 0
+    },
+    "reviews": []
+  },
+  "s5_reconciled": {
+    "runs": [
+      "final-ch13-wf_b3d795b9-755.json"
+    ],
+    "catalogue": "g10-math-misconceptions",
+    "refused_attachments_stripped": [
+      [
+        "lo:g10m13s4-1-3",
+        "S7",
+        "wt:g10m13s4-1-3:cylinder-volume-eighth#off-target",
+        "mc:g10m13s4-1-3:shrink-read-as-enlarge",
+        "Neither the scale factor nor the surface reading matches"
+      ]
+    ],
+    "widgets_left_out": [
+      "q:g10m13s4-1-3:w002"
+    ]
+  }
+}

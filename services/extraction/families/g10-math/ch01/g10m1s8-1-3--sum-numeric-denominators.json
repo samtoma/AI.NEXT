@@ -1,0 +1,81 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m1s8-1-3:sum-numeric-denominators",
+ "version": 1,
+ "kind": "family",
+ "lo_id": "lo:g10m1s8-1-3",
+ "parent_question_id": "q:g10m1s8-1-3:ex1-10-3a",
+ "source_page": 34,
+ "tier": "basic",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    2,
+    7
+   ],
+   "resample_while": "gcd(p, q) != 1"
+  },
+  {
+   "name": "a",
+   "randint": [
+    1,
+    6
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    1,
+    6
+   ],
+   "resample_while": "b == a"
+  }
+ ],
+ "constraints": [
+  "gcd(p, q) == 1",
+  "a != b"
+ ],
+ "stem": "Simplify to a single fraction: $\\dfrac{x+{=a}}{{=p}}+\\dfrac{x+{=b}}{{=q}}$",
+ "solution": [
+  "The denominators ${=p}$ and ${=q}$ have no common factor, so the lowest common denominator is ${=p}\\times {=q}={=p*q}$.",
+  "Write each fraction over ${=p*q}$ by multiplying its numerator and its denominator by the missing factor: the first fraction by ${=q}$ and the second by ${=p}$. $\\dfrac{x+{=a}}{{=p}}+\\dfrac{x+{=b}}{{=q}}=\\dfrac{{=q}(x+{=a})}{{=p*q}}+\\dfrac{{=p}(x+{=b})}{{=p*q}}$",
+  "Put both numerators over the one common denominator and remove the brackets, multiplying every term inside each bracket. $\\dfrac{{=q}(x+{=a})}{{=p*q}}+\\dfrac{{=p}(x+{=b})}{{=p*q}}=\\dfrac{{=q}(x+{=a})+{=p}(x+{=b})}{{=p*q}}=\\dfrac{{=q}x+{=q*a}+{=p}x+{=p*b}}{{=p*q}}$",
+  "Collect the like terms in the numerator. $\\dfrac{{=q}x+{=q*a}+{=p}x+{=p*b}}{{=p*q}}=\\dfrac{{=p+q}x+{=q*a+p*b}}{{=p*q}}$",
+  "This cannot be simplified further, because the coefficient ${=p+q}$ of $x$ and the denominator ${=p*q}$ have no common factor. So $\\dfrac{x+{=a}}{{=p}}+\\dfrac{x+{=b}}{{=q}}=\\dfrac{{=p+q}x+{=q*a+p*b}}{{=p*q}}$."
+ ],
+ "choices": {
+  "correct": "$\\dfrac{{=p+q}x+{=q*a+p*b}}{{=p*q}}$",
+  "distractors": [
+   {
+    "text": "$\\dfrac{2x+{=a+b}}{{=p+q}}$",
+    "misconception_id": "mc:g10m1s8-1-3:adds-numerators-and-denominators-separately"
+   },
+   {
+    "text": "$\\dfrac{2x+{=a+b}}{{=p*q}}$",
+    "misconception_id": "mc:g10m1s8-1-3:numerator-or-whole-number-not-scaled"
+   },
+   {
+    "text": "$\\dfrac{{=p+q}x+{=a+b}}{{=p*q}}$",
+    "misconception_id": "mc:g10m1s8-1-3:missing-factor-not-distributed-over-numerator"
+   }
+  ]
+ },
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m1s8-1-3:missing-factor-not-distributed-over-numerator",
+   "label": "Multiplies only the first term of the numerator by the missing factor",
+   "description": "When rewriting a fraction over the lowest common denominator, the student multiplies the denominator and the x-term of the numerator by the missing factor but leaves the constant term as it was, as if the factor were not applied to the whole bracket."
+  }
+ ],
+ "notes": "Basic = the entry point of the skill: add two fractions whose denominators are different small numbers with no common factor (so the LCD is their product), each numerator a linear x + constant, all signs positive. This is the book's own method from ex1-10-3a / ex1-10-2q (LCD, multiply each numerator through, remove brackets, collect like terms) minus the subtraction sign hazard, which stays with the standard-tier book questions; addition of two fractions over their LCD is also what ex1-10-3d and 3f do. Parameters: p in 2..5, q in 2..7, coprime (15 denominator pairs), a and b in 1..6 and different (30 pairs), so 450 instances. Every instance is clean: p+q >= 5 so the x coefficient is never 1 (no '1x' rendering), and gcd(p+q, p*q) = 1 whenever gcd(p, q) = 1, so the final fraction is always in lowest terms and the last solution step is true for every instance. The four options are always pairwise distinct: the correct numerator has x-coefficient p+q >= 5 and constant q*a+p*b, D1 has coefficient 2 and denominator p+q (never equal to p*q for coprime p, q >= 2), D2 has coefficient 2, D3 has the right coefficient but constant a+b, which differs from q*a+p*b because (q-1)*a+(p-1)*b > 0. Distractors: D1 adds numerators and adds denominators (catalogued mc adds-numerators-and-denominators-separately); D2 writes the common denominator p*q but leaves both numerators unscaled, so the x terms add to 2x (catalogued mc numerator-or-whole-number-not-scaled); D3 scales only the x term of each numerator and not the constant, one new misconception declared here. The catalogued mc sign-changed-on-first-term-only needs a subtraction and is not used on this addition-only basic family. mcq is used because every distractor is a specific diagnosable error, not to avoid typing; if the reviewer prefers a typed answer the correct option converts directly to an expression marker."
+}

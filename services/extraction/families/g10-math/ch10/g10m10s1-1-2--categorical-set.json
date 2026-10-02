@@ -1,0 +1,97 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m10s1-1-2:categorical-set",
+ "kind": "family",
+ "lo_id": "lo:g10m10s1-1-2",
+ "parent_question_id": "q:g10m10s1-1-2:ex10-7-2",
+ "source_page": 382,
+ "tier": "standard",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "i",
+   "randint": [
+    0,
+    7
+   ]
+  },
+  {
+   "name": "asks",
+   "let": "['which sandwich spread they like best', 'which cellular provider they currently use', 'how they travel to school', 'which sport they play at school', 'what their favourite colour is', 'which language they speak at home', 'which subject they like best', 'which pet they keep at home']"
+  },
+  {
+   "name": "pools",
+   "let": "[['cheese', 'peanut butter', 'jam', 'honey', 'tomato', 'egg mayonnaise'], ['Vodacom', 'MTN', 'Cell C', 'Telkom', 'Virgin Mobile'], ['walk', 'bus', 'taxi', 'car', 'bicycle', 'train'], ['soccer', 'netball', 'rugby', 'cricket', 'hockey', 'athletics'], ['red', 'blue', 'green', 'yellow', 'purple', 'orange'], ['isiZulu', 'Sesotho', 'English', 'Afrikaans', 'isiXhosa', 'Setswana'], ['Mathematics', 'English', 'Geography', 'History', 'Art', 'Life Sciences'], ['dog', 'cat', 'bird', 'fish', 'rabbit', 'hamster']]"
+  },
+  {
+   "name": "asked",
+   "let": "asks[i]"
+  },
+  {
+   "name": "pool",
+   "let": "pools[i]"
+  },
+  {
+   "name": "r1",
+   "choice": "pool"
+  },
+  {
+   "name": "r2",
+   "choice": "pool",
+   "resample_while": "r2 == r1"
+  },
+  {
+   "name": "r3",
+   "choice": "pool",
+   "resample_while": "r3 == r1 or r3 == r2"
+  },
+  {
+   "name": "r4",
+   "choice": "pool"
+  },
+  {
+   "name": "r5",
+   "choice": "[r1, r2, r3, r4]"
+  },
+  {
+   "name": "base",
+   "let": "[r1, r2, r3, r4, r5]"
+  },
+  {
+   "name": "rs",
+   "shuffle": "base"
+  },
+  {
+   "name": "n",
+   "let": "3 if (r4 == r1 or r4 == r2 or r4 == r3) else 4"
+  }
+ ],
+ "constraints": [],
+ "stem": "Learners at a school were asked {=asked}. Each learner gave one answer, and the answers were recorded as the following data set. $\\{\\text{{=rs[0]}; {=rs[1]}; {=rs[2]}; {=rs[3]}; {=rs[4]}}\\}$ Which one of the following correctly categorises this data set and explains the choice?",
+ "choices": {
+  "correct": "Qualitative categorical: the responses are not numbers, and each one comes from a limited set of possibilities.",
+  "distractors": [
+   {
+    "text": "Qualitative anecdotal: the responses are not numbers, and each one is a personal report from a learner.",
+    "misconception_id": "mc:g10m10s1-1-2:anecdotal-because-personal"
+   },
+   {
+    "text": "Quantitative discrete: the responses can be counted, so they are numbers.",
+    "misconception_id": "mc:g10m10s1-1-2:quantitative-for-words"
+   },
+   {
+    "text": "Qualitative, but neither categorical nor anecdotal: the responses are not numbers, and that is as far as the classification goes.",
+    "misconception_id": "mc:g10m10s1-1-2:stops-at-qualitative"
+   }
+  ]
+ },
+ "solution": [
+  "The learners were asked {=asked}, and every answer is a name or a word, not a number. The data set cannot be written as numbers, so it is qualitative.",
+  "Only {=n} different answers appear among the five responses, and some learners gave the same answer, so every response comes from a limited set of possibilities. That makes the data set categorical.",
+  "It is not anecdotal: no response is a story, and it does not matter that the answers come from the learners themselves. It is not quantitative either: counting how many learners gave each answer does not turn the answers into numbers.",
+  "Therefore the data set is qualitative categorical, because the responses are not numbers and each one comes from a limited set of possibilities."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Standard tier: the book's own categorise-the-data-set exercise (ex10-7-2, we02) with the reason built into the options, which is the 'explain the choice' half of the objective. Every instance is categorical data by construction (three or four different short answers, at least one repeated, from a pool of six or five), so each distractor slot keeps one catalogued error across all instances: anecdotal-because-personal, quantitative-for-words (counting answers is not making them numbers), stops-at-qualitative. The mirror family for anecdotal data is tpl:g10m10s1-1-2:anecdotal-set. The data-set shuffle uses the shuffle param on a list named base; r5 is drawn from the first four so a repeat is guaranteed. Strings are interpolated into the stem and the data set is typeset as in the book, $\\{\\text{...}\\}$. The only book facts used are the definitions in the book's solutions: categorical = comes from a limited set of possibilities; anecdotal = takes the form of a story."
+}

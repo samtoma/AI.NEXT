@@ -1,0 +1,113 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m1s3-1-5:mixed-recurring",
+ "kind": "family",
+ "lo_id": "lo:g10m1s3-1-5",
+ "parent_question_id": "q:g10m1s3-1-5:ex1-11-6e",
+ "source_page": 37,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "m",
+   "choice": [
+    1,
+    2
+   ]
+  },
+  {
+   "name": "n",
+   "randint": [
+    1,
+    15
+   ]
+  },
+  {
+   "name": "t",
+   "randint": [
+    "10 ** (m - 1)",
+    "10 ** m - 1"
+   ]
+  },
+  {
+   "name": "c",
+   "randint": [
+    1,
+    8
+   ],
+   "resample_while": "c == t % 10"
+  },
+  {
+   "name": "base",
+   "let": "10 ** m"
+  },
+  {
+   "name": "base2",
+   "let": "10 * base"
+  },
+  {
+   "name": "low",
+   "let": "n * base + t"
+  },
+  {
+   "name": "high",
+   "let": "10 * low + c"
+  },
+  {
+   "name": "tail",
+   "let": "c * 111"
+  },
+  {
+   "name": "dec",
+   "let": "t * 1000 + tail"
+  },
+  {
+   "name": "top",
+   "let": "9 * low + c"
+  },
+  {
+   "name": "bot",
+   "let": "9 * base"
+  },
+  {
+   "name": "g",
+   "let": "gcd(top, bot)"
+  },
+  {
+   "require": "g > 1",
+   "why": "every instance ends with a genuine simplification, so the last step is never a no-op"
+  },
+  {
+   "name": "ans_n",
+   "let": "top // g"
+  },
+  {
+   "name": "ans_d",
+   "let": "bot // g"
+  }
+ ],
+ "constraints": [
+  "g > 1",
+  "c != t % 10",
+  "gcd(ans_n, ans_d) == 1"
+ ],
+ "stem": "Write the recurring decimal ${=n}.{=t}\\dot{{=c}}$ as a single fraction in simplest form (not a mixed number). The dot marks the digit that repeats for ever; the digits before it do not repeat.",
+ "solution": [
+  "Write the decimal out as an equation: $x = {=n}.{=dec}\\ldots$",
+  "Multiply both sides by ${=base}$ so that the decimal point sits just before the recurring digit: ${=base}x = {=low}.{=tail}\\ldots$",
+  "Multiply both sides by ${=base2}$ to move the decimal point one place further, past one recurring digit: ${=base2}x = {=high}.{=tail}\\ldots$",
+  "Subtract the equation for ${=base}x$ from the equation for ${=base2}x$ so that the recurring digits cancel: ${=base2}x - {=base}x = ({=high}.{=tail}\\ldots) - ({=low}.{=tail}\\ldots)$, which gives ${=bot}x = {=top}$.",
+  "Divide both sides by ${=bot}$: $x = \\frac{{=top}}{{=bot}}$.",
+  "Simplify: the highest common factor of ${=top}$ and ${=bot}$ is ${=g}$, so $x = \\frac{{=ans_n}}{{=ans_d}}$."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "{=ans_n}/{=ans_d}",
+  "form": "simplest",
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "The book's twist, as in 11-6e (12.27 with the last 7 recurring, solved by 100x - 10x = 90x = 1105, giving 221/18) and 12b (0.6 then 3 recurring): non-recurring digit(s) between the point and the recurring digit, so TWO multiplications (10^m and 10^(m+1)) before subtracting, plus a whole-number part and a compulsory simplification. m (1 or 2 non-recurring digits) only changes the two powers of ten; the steps are identical. The recurring digit is 1 to 8 (0 would terminate, 9 is the 0.9-recurring trap) and must differ from the digit just before it, so the printed form is never the redundant one the book itself uses for 11-6e (12.27 followed by a recurring 7 is the same number as 12.2 followed by a recurring 7; my solution would be correct for either reading, but the stem avoids the ambiguity). First non-recurring digit is non-zero so no leading-zero display. Algebra: 10^(m+1)x - 10^m x = 9*10^m x = (9*low + c), where low is the whole part and non-recurring digits read as one integer. Check on the book's number: n=12, t=2, c=7, m=1 gives 90x = 1105, 221/18. 7110 instances after g > 1; all checked by script (fraction equals the decimal to 45 places, fraction is in lowest terms and is never an integer)."
+}

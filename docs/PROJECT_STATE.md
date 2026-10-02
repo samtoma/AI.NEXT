@@ -1,7 +1,16 @@
 # Project State — AI Tutor MVP
 
 > Living document. Read at session start; update when progress or decisions land.
-> Last updated: 2026-10-02 (`main`; `v0.10.0` deployed; `v0.11.0` released, deploy approved by Samuel; constitution v3.3.0)
+> Last updated: 2026-10-02. **`main`** is at `v0.11.0` (released 2026-10-02, deploy approved by Samuel), `v0.10.0` is deployed, and
+> its constitution is v3.3.0. **This branch, `feat/003-curriculum-tracks-g10-american-math`, was rebuilt on 2026-10-02 as `main` at `v0.11.0`
+> plus ONE squashed commit carrying all of feature 003** (Samuel, answer 46a: "One commit on main"), **tagged `g10-progress-map` and
+> force-pushed with lease to GitHub the same day** (answer 46d: "Push once checks pass"). The old history (678 commits, almost all 30-second
+> auto-snapshots, last in step with `main` at `v0.9.3`) is kept whole under the tag `g10-old-graph-view`; the constitution on this branch is **v3.4.0**.
+> It is still a feature branch: **not merged to `main`, not released, not deployed; its release is to be `v0.12.0`** (answer 47: "T390 should be
+> v0.12.0", because `main` already used v0.10.0 and v0.11.0). The Grade 10
+> content exists in a LOCAL pilot database only: the pipeline has run to the end of the book (all 14 chapters have a G5 record), and every
+> gate decision except Chapter 8's G1 and G2 was an AI auto-pass that no person has read. The full-book record and its open-decisions
+> list are in [`docs/WIP-g10-pilot/README.md`](WIP-g10-pilot/README.md), "Full book complete — 2026-10-02".
 
 ## 🗺️ v0.11.0 — the Your Progress Map (released 2026-10-02; Samuel: "I approve both, merge it as v0.11.0")
 
@@ -12,7 +21,8 @@ about the map selection first. Added at merge: the map's strokes come from token
 guarded by a test), the chat is `clamp(420px, 38vw, 620px)` so it fits beside the map on an iPad in
 landscape, and the v0.10.0 scroll jump is fixed (a touched transcript is no longer re-aligned).
 **Open:** pinch/drag by hand, a real iPad, and the Social Studies / Arabic maps; nobody has seen the
-merged tree in a browser; the tag needs a human.
+merged tree in a browser. *(The tag `v0.11.0` exists on GitHub, on `96b01c38`; checked 2026-10-02 — this line used to say
+"the tag needs a human".)*
 
 ## 🧭 v0.10.0 — Tamer's testing fixes (released and deployed 2026-10-01; Samuel: "I accept all the changes, please merge to main, and deploy")
 
@@ -21,20 +31,305 @@ FR-2016 (session renewal, BUILT), FR-3219/FR-3220 (Your Progress tab, `/` → St
 (lesson finished = every objective attempted + average at "Getting there", BUILT — ADR-0020 amendment
 **accepted**), FR-3222 (chat shows a widget's message from its top, VERIFIED). ADR-0020 prompt-hold
 exceptions five ("LO" wording) and six (Your Progress chat) recorded. **Open:** the chat can jump back to
-a message's top when a widget grows after the student answers it (found in review, not fixed); no iPad
-Safari run of any of it; the tag needs a human (VERSIONING.md, step 3).
+a message's top when a widget grows after the student answers it (found in review, then fixed in v0.11.0, see above); no iPad
+Safari run of any of it. *(The tag `v0.10.0` exists on GitHub, on `8d1f2b1d`; checked 2026-10-02 — this line used to say "the tag
+needs a human".)*
 
-## 🩹 v0.9.3 hotfix — three widget answers corrected (released 2026-09-25; Samuel: "Full fix + deploy")
+## 🧭 Feature 003 — curriculum tracks and the Grade 10 American maths course (pipeline finished on a local database; one squashed commit on top of `main` at v0.11.0, tagged `g10-progress-map` and pushed 2026-10-02; not reviewed, not merged, not deployed; release to be `v0.12.0`, answer 47)
 
-Worktree `.claude/worktrees/v093`, branch `fix/widget-excluded-values-sign` (from `main` at v0.9.2),
-**uncommitted by instruction; no version bump**. Three live widget questions (`q:t2u2-2-1:w001–w003`,
+**State on 2026-10-02 (dev database only).** The full-book fan-out (approved 2026-10-01, decision 58e) ran 2026-10-01 to 2026-10-02 and
+every one of the 14 chapters has a G5 record, in the local pilot database `ainext_pilot_g10_ch08`. Course `course:us-g10-math-en` there holds
+**65 lessons, 211 objectives, 294 prerequisite edges**; **book questions 2,090 live / 64 held for review / 41 rejected**; **3,137 generated
+questions live**; **99 widget questions live (4 retired)**; **300 misconception entries**; parity GREEN (2,154 questions in the bundles — live
+and held, rejected rows not counted, answer 45 — and 616 visuals). Thirteen chapters are RED on completeness only (33 objectives lack
+evidence, 33 lack a tier; every safety check passes); Chapter 11 is GREEN. The step checker ran on the whole book (2,556 solutions, 300
+flags, in the console backlog). The AI line's errata list holds 102 printed answers that look wrong and 20 damaged questions
+([`docs/WIP-g10-pilot/errata-g10.md`](WIP-g10-pilot/errata-g10.md)). Metered cost **$952.70** for the course including the $153 pilot, 284
+runs, ≈ 1.2 billion tokens (the orchestrator reported ≈ $943 and 280 runs earlier the same day — not reconciled). **Not done:** the book-level
+closing steps (Chapter 8's seed is only in the gitignored `work/` tree; no whole-book export; `books/g10-math.json` is still `ingest`), the
+pull request into `main` and the CI proof before it (see "Where it is" below: the branch was rebuilt on v0.11.0 on 2026-10-02 with its conflicts resolved and its tests passing, but nothing is merged), a human read of any of it, and a deploy. **Where to look for what is open:** the WIP
+README's "Open decisions after the full-book run" (30 items, grouped; it, not this file, is kept current).
+
+**Where it is.** Worktree `.claude/worktrees/g10`, branch `feat/003-curriculum-tracks-g10-american-math`
+(migrations **033** curriculum tracks, **034** book sections, then **035–039** below; `main` has none after 032).
+**Rebuilt on `main` at v0.11.0 and pushed, 2026-10-02 (Samuel, answer 46).** The branch is `origin/main` (release v0.11.0, Tamer's Your Progress Map)
+plus **one** squashed commit carrying all of feature 003 (answer 46a, "One commit on main"), tagged **`g10-progress-map`**, and force-pushed with
+lease to GitHub together with the tag the same day (answer 46d, "Push once checks pass"). The old history — cut from `main` at `v0.9.2` and brought
+up to `v0.9.3` on 2026-09-25, 678 commits, almost all 30-second `wip(003): auto-snapshot … [skip ci]` commits (that snapshot job was stopped for the
+rewrite) — is kept whole under the tag **`g10-old-graph-view`** (`ca855eba`, on GitHub too), named for what it still has: the old skill-map view
+(`GraphCanvas`, `LoPanel`, the FR-4315 section frames) that the Your Progress Map replaced on `main`. None of it is reviewed by Samuel, merged to
+`main`, released or deployed. **Release number: `v0.12.0`** (answer 47, "T390 should be v0.12.0"): `main` already used v0.10.0 and v0.11.0, so the
+v0.10.0 that `tasks.md` T390 planned was taken; `app/package.json` still reads 0.11.0, and T390 stays unticked until the release is made.
+**What the rebuild did (15 conflicts, all resolved):** the two documents (this file and spec 002's traceability) and ADR-0020's numbering, which
+merged with no conflict and wrongly (the feature's four prompt-hold exceptions are now the eighth to eleventh), were resolved by the tech-writer;
+the other 13 are app code (`package.json`, `ask.ts`, `lesson.ts`, `progression.ts`, `queries.ts`, `types.ts`, `attempts-client.ts`,
+`socratic-probing.ts`, `StudentLoop.tsx`, `SpineExplorer.tsx`, `spine-order-scan.test.mts`, and `spine/GraphCanvas.tsx` and `spine/LoPanel.tsx`,
+which `main` deleted when the map replaced them), resolved in the same move. **FR-4315's section frames were ported onto the Your Progress Map**
+(answer 46c, "Port the frames into the new map now"): `SkillMap.tsx`, `skill-map.ts` (`placeSections`), test `skill-map-sections.test.mts`.
+**Tests: 1661 of 1661 pass** with a scratch database. **One consequence is open for Samuel:** `main`'s amended lesson gate (ADR-0020, 2026-09-30,
+accepted 2026-10-01) now also decides when a student's place leaves a split section, and the section roll-up "k of m parts mastered" follows it, so
+"mastered" there means "passes the gate", not mastery 0.75 — see "Open — decisions for Samuel" below and FR-4314 in spec 003. **Branch CI:** the last CI
+run on the old history (`383510c`, 2026-09-26) failed `traceability` and `build`, and every snapshot after it skipped CI; **no CI result on the new
+commit is recorded here**, so read it on GitHub before relying on it. `scripts/traceability.py --check` passes on the rebuilt tree (re-run 2026-10-02,
+after the app conflicts were resolved and FR-4315 ported: spec 002 174/174 traced, spec 003 95/95, spec 001 104/104; the generated counts blocks of
+specs 001 and 003 were refreshed, and spec 003 now has 52 requirements a test declares). Resume doc: [`docs/WIP-g10-pilot/README.md`](WIP-g10-pilot/README.md).
+
+**What Samuel asked for** (2026-09-25): *"we need to digest this book"* — Siyavula *Everything Maths*
+Grade 10, English, written for South Africa's CAPS curriculum, which he calls the "Grade 10 American
+Curriculum, Math" — and *"When the user sign up for grade 10, they can have at the beginning choose:
+American, National, etc.. … and consider that in the console, to choose which subject for which grade,
+should be done also per curriculum."*
+
+**Decisions: 1–61, then 65–68, in nine rounds** (`specs/003-curriculum-tracks/decisions.md`; 46 is unused, and **62–64 are
+answers 41–43 of 2026-10-01 that are not yet entered in the decisions table** — a numbering gap flagged 2026-10-02). 1–17, the
+first round (*"I would take your recommendations"*); 18–22 and A–E, the second (*"ok for all"*); 23–34, the
+third, one question at a time; 35–36, the Chapter 8 pilot; 37–38, the curriculum-isolation audit; 39–45,
+gate G2 for Chapter 8; 47, the widget verifier; 48–61, the consistency review, filling the Grade 10
+course and showing the whole book (2026-09-27/2026-10-01); 65–68, the four answers of 2026-10-02 (a lesson may keep one
+objective after a ruling, marked CHECK LATER; the drift guard counts servable rows only; **67**, answer 46: the branch becomes `main` v0.11.0 plus
+one squashed commit, tags `g10-old-graph-view` / `g10-progress-map`, FR-4315's frames ported to the new map, push once checks pass; **68**,
+answer 47: the feature's release is `v0.12.0`). From the third round on, Samuel's words are in
+[`docs/WIP-g10-pilot/samuel-answers.md`](WIP-g10-pilot/samuel-answers.md): **answer N is decision N + 21**.
+Gate records (G0, T413, G1 and G2 for Chapter 8) are in the same decisions file.
+
+**What is decided, in short:**
+- **Curricula**: National `eg-national-en`, American `us-american-en`; one course belongs to one
+  curriculum; the gate stays (course, grade); the kill switch suspends rules, not curriculum scoping.
+  Sign-up always asks which curriculum, naming every curriculum in the registry — one with nothing live
+  for the grade is still offered, with a note — and refuses to create the account without an answer
+  (changed 2026-10-01, answer 36, reverses decision 1; **built and verified, T434**: both refusals are
+  `422`). The American course shows no Arabic anywhere, not only in its prompts (answer 35, decision 56;
+  **built and verified, T435**). A change of curriculum is
+  console-only, recorded, and loses nothing; an open chat reads the new scope on its next turn
+  (decision 37).
+- **Filling the Grade 10 course**: the full fan-out to the other 13 chapters was approved, ≈ $0.85–1.1k
+  (decision 58e), and **has run** (2026-10-01/02; the whole course, pilot included, metered $952.70). Maths content now reaches students as if reviewed as it is extracted — gates G1–G4
+  proceed on the AI checks' own recommendation rather than wait for a human per chapter (decision 58c);
+  a new internal console backlog lets Samuel, Tamer and Kamil review every unstamped item afterwards, one
+  at a time, goal zero (decision 58b, FR-4501…FR-4507); "reviewed" means only a human stamp (decision 54);
+  a figure with no native type yet shows as the book's own image, temporarily, rather than holding the
+  lesson (decision 58d, FR-4508). **FR-4501…FR-4509 are built and read** (2026-10-01: migrations 035 and 036,
+  the `/review` console page, the book-picture stand-ins, `auto_pass_gates.py`; `tasks.md` T436–T443
+  ticked); their matrix rows stay OPEN until T387. G5 auto-passes too, each auto-passed gate decision marked
+  for Samuel and cleared only by his account (decision 60); passing deploys nothing. Every gate decision except Chapter 8's G1 and G2
+  was such an auto-pass, so no person has read the bank yet (WIP README, "Full book complete — 2026-10-02").
+- **A lesson may keep one objective after a ruling** (answer 44, decision 65, 2026-10-02): G1's rule 4 wants 2 to 5 objectives
+  per lesson; when G1 drops an objective under a recorded ruling and that would leave one, the lesson stands with a warning marked
+  CHECK LATER (`check_later`, first `for_review` entry of the gate record). Built (`assemble_objectives.rule4_check_later`); first use
+  Chapter 13's lesson 13.1, which Samuel is to check later. FR-4509 amended.
+- **Parity counts servable rows only** (answer 45, decision 66, 2026-10-02): `parity_check.py` does not count rejected or retired
+  questions, nor visuals attached only to them; rejected rows stay in the database. Built; FR-4207 amended, FR-904 cross-note.
+- **The student sees the whole book** (decision 59, answer 38, *"I want the students to see all chapters as
+  well not only 8!"*): every chapter and lesson in the book's order; a lesson not yet prepared reads "Being
+  prepared", is not startable and is refused on the server (404, no model call); readiness is derived, not
+  stored; the course card reads "5 of 65 lessons ready" (in the local database all 65 lessons now have objectives loaded); Noor's
+  prompts are unchanged. **Built** (migration 037, `load_course_outline.py`; FR-4322…FR-4327, T444–T446).
+- **A step-level working checker** (decision 51, answer 30; FR-4411, T447): built. The first Chapter 8 run (`sw-v1`) flagged 21
+  of 192 solutions and cost **$31.0, 3–5× the estimate**; after calibration the book ran on `sw-v3` (two passes a solution,
+  ≈ $0.05 each), **2,556 solutions, 300 flags on 270 of them, $158.71 for the stage**. The console reads the flags as backlog
+  items (migration 039, `app/src/lib/review-gate-working.ts`); a flag is never a correction.
+- **A teaching item may be a family's parent** (decision 61, answer 40): a family may be modelled on a book
+  item marked teaching-only, with an explicit `parent_kind`; needed by lo:g10m8s1-1-1. **Code built and applied to the local
+  database 2026-10-01** (migration 038, `families/spec.py`, `load_generated_questions.py`, the review desk); T448 is still unticked
+  and its spec records are pending. The three families for lo:g10m8s1-1-1 were authored and graded but **are not loaded**
+  — the objective still has no live item.
+- **The G10 course** is the only course live for grade 10 at launch; Play design, probing off, covered by
+  ADR-0019 once switched on; its prompts name its own book and are English-only (decision 30).
+- **The prompt hold (ADR-0020)** has **eleven** named exceptions, listed in one place in the ADR. Seven are `main`'s (the fifth, sixth and
+  seventh are Tamer's v0.10.0 and v0.11.0 work, released and unchanged). The feature's four — the Grade 10 course's prompts, the Arabic
+  lessons' printed names, English-only, and the handoff line — were the fifth to eighth on this branch until 2026-10-02, when it moved onto
+  v0.11.0 and `main`'s own fifth to seventh took those numbers; they are now the **eighth, ninth, tenth and eleventh** (the numbering collision
+  the move would have produced silently is resolved, with a dated note on each). Three touch National prompts on purpose (spec 003 FR-4206): the Ask book-list line, the
+  handoff line for a student who cannot see a subject (decision 38, now the eleventh), and the Arabic lessons' printed names
+  (decision 34, now the ninth).
+- **The marker** is built in-house (ADR-0025). Wrong-form, unreadable and wrong-shape answers, and a "true
+  but less precise" choice (decision 41), come back for another try, never marked wrong.
+- **Content**: canonical solutions are the EPUB's worked solutions with a three-way check; Samuel may
+  approve corrections to the book's working, and mark an item on its answer only (decisions 43–45,
+  FR-4302). Every chapter gets widget questions; six new widget kinds approved in principle (decision 27);
+  figures no kind can draw get native renderers, once Samuel approves the kind (FR-4321).
+- **Pipeline**: objectives derived from the book (policy, not an FR); two blind mappers, disagreements to
+  G1 (decision 33); prerequisite links found in the book and checked (decision 25); S0b with a third
+  reading (decision 32); widget mappings the verifier refuses are held for human review at G3 (decision 47).
+- **Production path**: a manual "Load a course" action (presence-gated, verified backup, add-only);
+  `refresh-content` points at noor; the loader refuses rather than deleting student data.
+- **Every curriculum**: a book section's parts stay together (FR-4311…FR-4319).
+
+**The Chapter 8 pilot** (decision 35; 2026-09-26/27), on a private scratch database only
+(`ainext_pilot_g10_ch08`):
+- **S0b**: 853 of 853 formulas accepted — 558 by hash, 282 by agreement, 13 by the third reading — so G0b
+  was not needed.
+- **S1 + G1**: 13 objectives in 5 lessons, both blind finders agreeing on all 13; 1 prerequisite link kept.
+  **G1 passed 2026-09-26** ("Approve as recommended"): 11 end-of-chapter items placed, 3 ruled outside the
+  chapter (decision 36).
+- **S2–S4 + G2**: 201 book items. **G2 passed 2026-09-26** (decisions 39–45): 158 marked questions, 40
+  worked examples, 3 excluded; book errors corrected where the independent re-solve was right, each with
+  Samuel's approval.
+- **S5** 29 misconceptions confirmed; **S6** 11 families (110 items); **S7** 7 templates, 25 widgets —
+  17 mappings active, 22 held for review. All loaded as `status=review`. Coverage is RED on two items that
+  wait for decisions (objective evidence for s1-1-1; the tier floor before G3); parity GREEN.
+- **Still to come** *(as of 2026-09-27; since then G3, G4 and G5 for Chapter 8 were recorded as auto-passes on 2026-10-01, waiting in the
+  console for Samuel's account — decision 60)*: G3 (the 10% family sample and the 22 held widget mappings), G4 (the catalogue),
+  G5 (go / no-go).
+- **Metered: $153.30** API-equivalent for the chapter (`services/extraction/runs/g10-math/cost.jsonl`),
+  including first-chapter waste (≈ $36 of S0b lost to usage limits).
+- **The consolidated review of 2026-09-27**
+  ([`docs/WIP-g10-pilot/consistency-review-2026-09-27.md`](WIP-g10-pilot/consistency-review-2026-09-27.md))
+  lists twelve things a student would see that must be fixed before Grade 10 goes live (garbled "correct
+  answer" display on 29 questions, KaTeX errors, missing question figures, …) and what fan-out to the
+  other 13 chapters needs first, above all a figure policy.
+
+**Cost for the whole book** (corrected 2026-09-27; **the fan-out itself approved 2026-10-01, decision
+58e**): ≈ **$0.85–1.1k** one-time, projected from the pilot —
+S0b **$250–520** (batch 50 vs 25), S1 ≈ $93, S2–S4 ≈ $146, S5–S7 ≈ $350–400. S5 metered **≈ $1.3 per
+objective** on Chapter 8 ($17.13 for 13, including one superseded draft). The "$22–32" once labelled "per
+objective" was the planned whole-book S5 figure; "$0.70 per objective" was a projection before S5 ran;
+"$24–44" and "$210–230" were pre-pilot estimates.
+**Actual, 2026-10-02:** `meter_run.py summary --book g10-math` reads **$952.70** (284 runs, ≈ 1.2 billion tokens, API-equivalent at
+2026-10-01 prices, a floor because some S0b and step-checker tokens are unpriced) for the whole course, the $153 pilot included — about
+$800 for the fan-out, inside the approved range. By stage: S0b $285.94, step checker $158.71, S6 $134.65, S5 $122.79, S2–S4 $116.08,
+S1 $73.51, S7 $38.72, G2 recommendations $14.77. S0b cost $0.040 an image against the plan's $0.024; the step checker, after calibration,
+$158.71 against a projected ≈ $430 at its first rate.
+
+**Curriculum isolation** (audit 2026-09-26, Samuel: each curriculum and grade stays isolated while
+teaching): six gaps found and fixed server-side — tutor bridges and the retrieval hop gated, the loader
+refuses cross-course prerequisites, the scope guard checks each function, the skill map and subject home
+per course (T372), the chat snapshot keyed by scope, home-page wording per course; plus a server-side
+filter that strips a handoff card to a closed subject. Both prompt goldens unchanged. Production has
+`AINEXT_COURSE_GATING=on` (read 2026-09-26).
+
+**Build status (2026-10-02).** `tasks.md` was still **99 of 143** ticked when read on 2026-10-02 (`traceability.py --check` passes); T448
+is built but unticked, and the matrix and FR text were being edited by other agents that day, so re-read them before quoting the figures
+below. **Build status (2026-10-01).** `tasks.md`: **99 of 143** ticked; the matrix **traced 95/95** (81 FRs and 14
+SCs; 1 BUILT, 94 OPEN). *Older figures follow, as of 2026-09-27:* `tasks.md`: 84 of 128 ticked (2026-09-27: T303, T304, T427, T428, T431, T432 and
+T433 ticked after their code and tests were read and run). The matrix: 65 FRs and 13 SCs, **traced
+78/78**; 1 BUILT (FR-4409), 77 OPEN — where OPEN now means **"not yet re-graded (T387)"**, not "not
+started": most rows have code and passing tests behind them. Known gaps in built work: T305 (the alias
+step skipped; T397 may be moot), T308 (`courseCatalog` flat, no `CourseCompleteness`), T406 (the section
+name is not in the practice plan's recommendation), T410 (the part label now shows in `LessonSession.tsx`
+— re-verify, then tick). Not built: T429 (the figure-gap inventory). T430 is built differently from what
+was decided (below).
+
+**Open — decisions for Samuel.** **Updated 2026-10-02: the current, deduplicated list of what is open after the full-book run (30 items:
+exercise-only objectives, the CHECK LATER lesson, completeness holds, widget kinds, `(x; y)` in book pictures, marker gaps, what "mastered"
+means in a section's roll-up, and more) is [`docs/WIP-g10-pilot/README.md`](WIP-g10-pilot/README.md), "Open decisions after the full-book run". It is not
+repeated here.** The numbered items below are what was asked on 2026-09-27 to 2026-10-01; those the full-book run overtook are marked.
+(One at a time; the orchestrator's list was
+`consistency-review-2026-09-27.md` §B; items 1, 3, 5–8, 10 and 11 below are **answered** — Samuel's
+answers 27–37, 2026-09-27/2026-10-01, decisions 48–58 — kept here struck through rather than deleted, so
+the record shows what was asked and what was decided; see `specs/003-curriculum-tracks/decisions.md`):
+1. ~~**"Load a course" restore** (decision 29): as built it rolls the **whole database** back to a
+   backup… Build the bundle replay, or keep it as a "rollback" and amend decision 29, FR-4208/4210 and
+   constitution X?~~ **Answered (decision 48, answer 27): "Build the safe restore."** Built 2026-09-28
+   (T430); the whole-database mode is the separate, clearly named `rollback`.
+2. **The six new widget kinds were built before the gap list existed**; decision 27 and FR-4306 say each
+   is built only for chapters the list names. Confirm "built ahead" (T357 stays unticked until then).
+3. ~~**The G10 language line** tells the tutor to "write no Arabic at all … even if the student writes to
+   you in Arabic" — more than decision 30's "no Egyptian-Arabic phrases". Keep or narrow? (backlog 53)~~
+   **Answered (decision 56, answer 35): KEPT** — read as also answering consistency-review B7 — and
+   widened: the American course now shows no Arabic anywhere, not only in its prompts (T435).
+4. **FR-4410** (prerequisite links): keep it as a requirement, or move it to pipeline policy like the
+   objectives method (decision 12)? *(Decision 58c, 2026-10-01, amends what FR-4410 requires during the
+   fan-out without answering this question — it is still a requirement, just one whose G1 now auto-passes.)*
+5. ~~**`AINEXT_COURSE_GATING` code default "off"**… default "on", or refuse to start without it?
+   (backlog 71/74)~~ **Answered (decision 49, answer 28): "Refuse to start."** Built
+   (`app/src/lib/env.ts` `resolveCourseGating`); production (already `on`) unchanged.
+6. ~~**Misconception tags on "true but less precise" options** can never fire. Refuse such tags, or send
+   the refutation with the re-entry message?~~ **Answered (decision 53, answer 32): "Remove those tags."**
+   Extends FR-4307/FR-4320; not yet built.
+7. ~~**What "reviewed" means**: 123 Grade 10 questions carry "ai dual-check (pending Samuel)"…~~
+   **Answered (decision 54, answer 33): "Only human stamps count."** Now FR-4506 (answer 37b); an
+   AI-only pass reads "AI-checked, awaiting human", never "reviewed"; not yet built.
+8. ~~**A decimal comma typed by a student** in a numeric question is marked wrong, not returned; change
+   it for Grade 10 only?~~ **Answered (decision 55, answer 34): "Accept it as a decimal."** Read as 7.21
+   when unambiguous; extends FR-4320's notation rule; not yet built.
+9. **Lesson text about the book's notation** ("separated by a semicolon") now contradicts the converted
+   notation. Reword or drop?
+10. **A step-level working checker** before G2 (backlog 78; ≈ $70–125 for the book). **Answered (decision
+    51, answer 30): "Yes, add it."** **Built** (FR-4411); the first cost was 3–5× the estimate, see question 20
+    (overtaken 2026-10-02).
+11. ~~**Figure policy for fan-out**: native figure kinds (decision 26) are weeks of work…~~ **Answered
+    twice**: first (decision 50, answer 29) "Native only, wait" — decision 26 stands strictly; then
+    (decision 58d, answer 37d, 2026-10-01) **TEMPORARILY REVERSED for students**: a figure with no native
+    type yet shows as the book's own image until one exists, each one a backlog item "needs native
+    figure" (new FR-4508). Not yet built.
+12. **Smaller items**: Ex8-5:5's detailed review (backlog 75); "draw figures from coordinates" has no
+    marked question (tier floor); decision 31's "per topic" was recorded as "per objective" — confirm;
+    the Arabic lesson data line names the lesson twice (backlog 52); where #60 (`curve_sketcher_g10`)
+    belongs in the FRs (backlog 65); keep the extra G1 decision `unpractised` (backlog 70); log unreadable
+    student inputs as text (backlog 50, privacy).
+13. **Constitution, listed not edited**: its "Target cohort: 10–20 invited pilot students behind
+    Cloudflare Access" line contradicts ADR-0019, which lifted the Access bound on noor. A wording fix is
+    a constitution change and needs Samuel.
+
+**New, 2026-10-01** (from this pass; see `specs/003-curriculum-tracks/spec.md` → *Open questions for
+Samuel* for the full text):
+14. **The "nothing to study here yet" note's wording** — keep the orchestrator's default copy, change it,
+    or drop the note entirely?
+15. **The `/pipeline` page's static explainer** still shows illustrative Arabic words even when the
+    American course is selected — a gap against decision 56, or an exempt, course-agnostic explainer?
+16. **The sacred-text guard's redaction message is hardcoded Arabic** regardless of a course's
+    `arabicTouches` setting — latent (the American course has no sealed scripture to trigger it), but
+    worth scoping or leaving as is?
+17. **A possible constitution PATCH** making explicit that "reviewed" means a human stamp only, and that
+    an operator may reject one item from the maths exception without reinstating the whole gate —
+    proposed wording only, not decided (spec.md names it; no file is edited).
+18. ~~**Does decision 58c's gate auto-pass also cover G5** (the dry-run/coverage/drift/cost go-or-no-go
+    before production promotion), or only G1–G4 as answer 37c literally says?~~ **Answered (decision 60,
+    answer 39): "YES, and make sure to mark them for my review in the console view."**
+
+**New, 2026-10-01 (later; the spec-records pass):**
+19. **Two stamp classifications** (students-full handoff): are `samuel (poc bulk)` and `local-dev` stamps "not
+    a review", and do family-propagated G3 stamps count as human? Also the 9 questions held because the book
+    picture reveals the answer (and s4-1-2's advanced tier, now short).
+20. ~~**The step checker's cost**: $31.0 for 192 Chapter 8 solutions (≈ $0.16 each) against $0.03–0.05 planned;
+    at that rate the book's checker is ≈ $430, not $81–135. Re-run Chapter 8 on the calibrated `sw-v2`, or keep
+    `sw-v1`? And the console must read the flag files before they are backlog items.~~ **Overtaken 2026-10-02, not answered by Samuel:**
+    the orchestrator calibrated and adopted `sw-v3` (two passes a solution, ≈ $0.05) for the whole book under answer 42's latitude;
+    Chapter 8 was re-run on it ($9.28, 25 solutions flagged); the book's checker cost $158.71; the console now reads the flag files
+    (migration 039). Whether Samuel accepts that choice is not recorded.
+21. **"No leave it as it is"** (Noor's prompts and the whole-book outline) was relayed, not logged: should it
+    be recorded verbatim in `samuel-answers.md`?
+
+**New, 2026-10-02 (after the branch was rebuilt on v0.11.0):**
+22. **What "mastered" means in a section's roll-up** (FR-4314; WIP README open decision 30). `main`'s amended lesson gate (ADR-0020, 2026-09-30:
+    every objective attempted and the lesson average at "Getting there") now also decides when the student's place leaves a split section, and the
+    roll-up "k of m parts mastered" follows that gate — so "mastered" there means "passes the gate", not mastery 0.75. Keep it tied to the gate (built;
+    the roll-up and the place cannot disagree), or make the word mean 0.75 (one line in `sectionRollup`, `app/src/lib/book-sections.ts`), accepting that
+    "Continue Factorisation" would keep showing after the place has moved on? **Open for Samuel; not decided.**
+
+**Open — gates and chores** *(rewritten 2026-10-02)*:
+- **Samuel — the gate decisions are now a queue, not a gate.** Every G1–G5 decision for Chapters 1–7 and 9–14 and G3–G5 for Chapter 8 was recorded
+  as an auto-pass waiting in the console backlog for his account (decisions 58c and 60); nothing is waiting *for the pipeline*. What needs him
+  is in the WIP README's list: above all the exercise-only-objectives policy, the CHECK LATER lesson 13.1, the completeness holds and the widget
+  kinds (decisions 1–4 there). **The fan-out is no longer held: it finished 2026-10-02.**
+- **Engineering, before anything can be exported or merged:** the book-level closing steps (Chapter 8's seed into `seed/g10-math/`, the whole-book
+  export, `books/g10-math.json` out of `ingest`, the whole-book coverage report); load the three `lo:g10m8s1-1-1` families; re-run G5 for the
+  chapters whose records are older than the database; the interval display-key fix (an agent is on it). *Done 2026-10-02: the 15 conflicts of the
+  move onto v0.11.0 are resolved (listed under "Where it is"), the ADR-0020 numbering is renumbered, FR-4315's frames are ported onto the Your Progress
+  Map (answer 46c, so the question this bullet used to leave open is closed), the tests pass (1661 of 1661 with a scratch database), and the branch is
+  one commit, tagged `g10-progress-map` and pushed.* **Still open before a pull request to `main`:** read the branch's CI on the new commit (the last
+  recorded run, 2026-09-26, on the old history, was red, and none is recorded for the new commit); T423 (the catalogue's CI proof) and T424 (its
+  rehearsal), because B19 touches live Prep-3 content; and the pull request itself, which is Samuel's call and has not been opened. Also
+  T425/T426 (stale "deletes on reload" comments in migrations 027/028 and the deploy scripts); the full 438-file National prompt capture over a
+  real database (backlog 58); T387 (re-grade spec 003's rows, and add `@covers` tags — none of the new FRs has a test declaring it); tick **T448**.
+- **Samuel — T388** (review and merge the ADRs: ADR-0024, ADR-0025 and the notes) and **T389** (the constitution amendment is applied; the
+  checkbox is his). **Later, only on his word:** T366/T367 (the deploy, then Actions → Load a course) and T392/T393 (the launch, and an iPad Safari walk-through).
+- **Documentation owed (tech-writer):** FRs and traceability rows for the pipeline changes listed under item 27 of the WIP README's list;
+  decisions 62–64 entered in `decisions.md` (the gap is a separate open item; decisions 67 and 68 were entered 2026-10-02 without filling it). *Done 2026-10-02: the ADR-0020 numbering — the feature's four exceptions are the eighth to eleventh; `tasks.md` T390 now names `v0.12.0` (answer 47) instead of the `v0.10.0` that `main` had used.*
+
+## 🩹 v0.9.3 hotfix — three widget answers corrected (released and deployed 2026-09-25; Samuel: "Full fix + deploy")
+
+Released through PR #65 (merged to `main` as `b9735cb`, tagged `v0.9.3`, `app/package.json` 0.9.3) and
+**deployed** the same day by the CI/CD workflow's manual run (run 36182444509, 2026-09-25 19:53Z; its
+`deploy` job succeeded — checked with `gh` 2026-09-27). Three live widget questions (`q:t2u2-2-1:w001–w003`,
 excluded values of 1/((x + r)(x + s))) stored the negatives of their answers — the generator stored
 the factors' shifts, not their roots; 0 attempts on production. Fixed in the template, the seed and
-**migration 032** (+ rollback; floor 31); `number_line_marker` gains `sign-flipped` → the transposition
-refutation (FR-1206). A blind reading of all 48 stored widget stems found no other mismatch and is now
-a CI test (FR-1207). Details: `CHANGELOG.md` `[Unreleased]`, the FR-1206/1207/1213 rows in
-`specs/001-student-mvp1-delta/traceability.md`. **Not yet rendered in a browser; production keeps the
-wrong keys until a deploy runs 032.**
+**migration 032** (+ rollback; floor 31), which every deploy applies; `number_line_marker` gains
+`sign-flipped` → the transposition refutation (FR-1206; ADR-0020's fourth exception). A blind reading of all
+48 stored widget stems found no other mismatch and is now a CI test (FR-1207). Details: `CHANGELOG.md`
+`[v0.9.3]`, the FR-1206/1207/1213 rows in `specs/001-student-mvp1-delta/traceability.md`. No browser check
+of the widget on the live site is recorded.
 
 ## 🧭 v0.9.2 — one curriculum order, split by subject, and the circle unit names its term (released and deployed 2026-09-25)
 
@@ -1295,7 +1590,7 @@ Glass-box grounded AI chat on /spine + /student: streams answers with inline rec
 | ADR-0002 | AI runtime = Python service; app layer = Next.js/React; PoC content = ministry Prep-3 Math (English) | ✅ Accepted 2026-07-17 |
 | ADR-0003 | Graph store: Postgres system of record + demo layer as P0 | ✅ Accepted 2026-07-17 |
 | ADR-0004 | Social Studies vertical (2nd subject on the spine) | ✅ Accepted 2026-07-20 |
-| ADR-0005 | Agentic extraction pipeline + coverage oracle | ✅ Accepted 2026-07-21 |
+| ADR-0005 | Agentic extraction pipeline + coverage oracle | ✅ Accepted 2026-07-21 · amendment 2026-09-25 (accepted; on the feature branch, not merged): derived objectives, the v2 line, EPUB solutions, S0b, B19 · note 2026-09-27: later decisions #25, #32, #33, #36, #47 and the Chapter 8 pilot's measured cost |
 | ADR-0006 | Arabic Language vertical — new contract: vendored Quran corpus, Noto Naskh font, 5 assessable LOs/lesson, scope = text+grammar+إملاء | ✅ Accepted 2026-07-28 |
 | ADR-0007 | Two distinct decisions share this number: PRD supersession — "Student MVP" (International) replaces "Founding Families" (Bakaloreya) (`0007-prd-supersession-student-mvp.md`); and Student MVP 1.0 built as a side-by-side comparison on the same book (`0007-student-mvp1-comparison-build.md`) | ✅ Accepted 2026-09-02 / 2026-09-08 |
 | ADR-0008 | Generate the question bank, review a 10% sample | ✅ Accepted 2026-09-10 |
@@ -1308,11 +1603,18 @@ Glass-box grounded AI chat on /spine + /student: streams answers with inline rec
 | ADR-0015 | One interaction timeline per student per session, replayed by reconstruction; every operator read audited | ✅ Accepted 2026-09-20 |
 | ADR-0016 | Analytics and monitoring: three layers, one system of record — first-party events, anonymous GA4 as audience layer, console as presentation | ✅ Accepted 2026-09-20 |
 | ADR-0017 | Two design-system variants ship — Play and Master, one per render, keyed to the student's grade with a stored override; amends ADR-0011's "Master is replaced" | ✅ Accepted 2026-09-20 |
-| ADR-0020 | Mastery-gated lesson progression — persisted per-student-per-course lesson pointer, advances when every LO ≥ 0.75; `/student` no longer opens on a constant (Tamer's ADR-0012 on `wip/socratic-probing-route-b`, renumbered on `main`) | ✅ Accepted — Samuel, 2026-09-23, by approving the merge onto `main` · amended same day: no backfill, stricter "complete" |
+| ADR-0018 | Who may see which course, decided in the console — per (course, grade) rule + per-student exception, default hidden | ✅ Accepted 2026-09-21 · amended by ADR-0024 (accepted 2026-09-25; on the feature branch, not merged) |
+| ADR-0019 | Serve the whole maths bank on the open site; review status shown to operators only | ✅ Accepted 2026-09-23 · note 2026-09-25 (accepted; on the feature branch, not merged): covers the G10 course |
+| ADR-0020 | Mastery-gated lesson progression — persisted per-student-per-course lesson pointer, advances when every LO ≥ 0.75; `/student` no longer opens on a constant (Tamer's ADR-0012 on `wip/socratic-probing-route-b`, renumbered on `main`) | ✅ Accepted — Samuel, 2026-09-23, by approving the merge onto `main` · amended same day: no backfill, stricter "complete" · amended 2026-09-30, accepted 2026-10-01 (v0.10.0, on `main`): the gate is the ramp's second stage · the prompt hold's exceptions are listed in one place, eleven as of 2026-10-02: the fifth to seventh are `main`'s (v0.10.0, v0.11.0, released) · notes 2026-09-25/26 (accepted; on the feature branch, not merged): a book section's parts are one unit, and the feature's four exceptions, numbered the eighth to eleventh since 2026-10-02 (the G10 course's prompts are the eighth; they were the fifth to eighth until the branch moved onto v0.11.0) |
+| ADR-0021 | Socratic probing becomes a console switch, test accounts first | ✅ Accepted 2026-09-24 · amended same day |
+| ADR-0022 | Console sign-in from the Cloudflare Access identity | ✅ Accepted 2026-09-24 |
+| ADR-0023 | Turn and upload limits become observed thresholds, not an enforced cap | ✅ Accepted 2026-09-24 · amended same day |
+| ADR-0024 | Curriculum is a dimension of what a student sees — curricula and courses registries, one curriculum per course and per student, the manual "Load a course" action | ✅ Accepted 2026-09-25 ("I would take your recommendations", then "ok for all") · on the feature branch as unreviewed WIP snapshots, not merged |
+| ADR-0025 | The maths-expression marker is built in-house — no third-party library; exact rationals plus seeded sampling behind a pluggable `mark(answer, spec, engine)` seam | ✅ Accepted 2026-09-25 (T413, "Build our own (Recommended)") · on the feature branch, not merged |
 
 ## Key metrics to watch (once live)
 50 paying families · ≥60% M2 retention · diagnostic score lift at day 45 · ≥3 sessions/week/student ·
 per-student AI spend **measured, no ceiling set** — the EGP 40 figure came from a parent price band
 the new PRD withdrew, and constitution v2.0.0 Principle VI detached it pending PRD §10 pricing
 (Samuel, 2026-09-12: *"I don't want a ceiling to be applied yet, we will make it in the future"*).
-Instrumentation and per-surface turn caps remain mandatory.
+Instrumentation remains mandatory; since ADR-0023 (2026-09-24) the per-surface turn caps are observed thresholds, not enforced.

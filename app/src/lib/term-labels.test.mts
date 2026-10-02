@@ -27,6 +27,7 @@ import { test } from "node:test";
 import { fileURLToPath } from "node:url";
 
 import { moduleHeading, termOfModule, termOfSlug, withoutTerm } from "./module-term.ts";
+import { PREP3_MATH_EN, US_G10_MATH_EN } from "./courses.ts";
 import { slugOfLo } from "./lesson-slug.ts";
 import { readMathsSeeds } from "./spine-maths-fixture.mts";
 
@@ -53,13 +54,13 @@ test("the seed: module:geo-u1 reads \"Term 2 · Unit 4 — The Circle\", and is 
 
 test("every Term 2 maths module's label names its term; no Term 1 label does", () => {
   assert.equal(modules.length, 10);
-  const term2 = modules.filter((m) => termOfModule(m.id) === 2);
+  const term2 = modules.filter((m) => termOfModule(m.id, PREP3_MATH_EN) === 2);
   assert.deepEqual(
     term2.map((m) => m.id).sort(),
     ["module:geo-u1", "module:geo-u2", "module:t2-u1", "module:t2-u2", "module:t2-u3"]
   );
   for (const m of term2) assert.ok(m.label.startsWith("Term 2 · "), `${m.id}: "${m.label}"`);
-  for (const m of modules.filter((m) => termOfModule(m.id) === 1)) {
+  for (const m of modules.filter((m) => termOfModule(m.id, PREP3_MATH_EN) === 1)) {
     assert.doesNotMatch(m.label, /^\s*Term\b/, `${m.id}: a Term 1 label carries no term`);
   }
 });
@@ -70,13 +71,13 @@ test("every Term 2 maths module's label names its term; no Term 1 label does", (
 
 test("no double prefix: every maths module, as the check-in composes it, says its term exactly once", () => {
   for (const m of modules) {
-    const heading = moduleHeading(m.id, m.label);
+    const heading = moduleHeading(m.id, m.label, PREP3_MATH_EN);
     assert.equal(count(heading, "Term"), 1, heading);
-    assert.ok(heading.startsWith(`Term ${termOfModule(m.id)} · Unit `), heading);
+    assert.ok(heading.startsWith(`Term ${termOfModule(m.id, PREP3_MATH_EN)} · Unit `), heading);
   }
-  assert.equal(moduleHeading("module:geo-u1", NEW_LABEL), NEW_LABEL);
+  assert.equal(moduleHeading("module:geo-u1", NEW_LABEL, PREP3_MATH_EN), NEW_LABEL);
   // …and the same on a database migration 031 has not reached yet
-  assert.equal(moduleHeading("module:geo-u1", OLD_LABEL), NEW_LABEL);
+  assert.equal(moduleHeading("module:geo-u1", OLD_LABEL, PREP3_MATH_EN), NEW_LABEL);
 });
 
 test("the lesson card's subtitle and the picker's eyebrow and title, for every Unit-4 geometry lesson", () => {
@@ -88,13 +89,27 @@ test("the lesson card's subtitle and the picker's eyebrow and title, for every U
   assert.deepEqual(geoLessons.sort(), ["geo1-1", "geo1-2", "geo1-3", "geo1-4"]);
   for (const slug of geoLessons) {
     // PlayCheckIn: "Term {termOfSlug} · {withoutTerm(moduleLabel)}"
-    const subtitle = `Term ${termOfSlug(slug)} · ${withoutTerm(NEW_LABEL)}`;
+    const subtitle = `Term ${termOfSlug(slug, PREP3_MATH_EN)} · ${withoutTerm(NEW_LABEL)}`;
     assert.equal(subtitle, NEW_LABEL, slug);
   }
   // the picker splits the plain label on the em dash: eyebrow "Term 2 · Unit 4", title "The Circle"
   const [unitRef, ...rest] = withoutTerm(NEW_LABEL).split(" — ");
-  assert.equal(`Term ${termOfModule("module:geo-u1")} · ${unitRef}`, "Term 2 · Unit 4");
+  assert.equal(`Term ${termOfModule("module:geo-u1", PREP3_MATH_EN)} · ${unitRef}`, "Term 2 · Unit 4");
   assert.equal(rest.join(" — "), "The Circle");
+});
+
+test("003: a course without school terms names no term, and its label is printed as it is (FR-4203)", () => {
+  // The Grade 10 book is chapters and sections (lib/courses.ts: terms null).
+  assert.equal(termOfModule("module:g10m-c01", US_G10_MATH_EN), null);
+  assert.equal(termOfSlug("g10m1s1-1", US_G10_MATH_EN), null);
+  assert.equal(moduleHeading("module:g10m-c01", "Chapter 1 — Algebraic expressions", US_G10_MATH_EN), "Chapter 1 — Algebraic expressions");
+  // even a G10 module id that looked like a Prep-3 term prefix would not borrow its term
+  assert.equal(termOfModule("module:geo-x", US_G10_MATH_EN), null);
+  // and a course the registry does not know claims nothing
+  assert.equal(termOfModule("module:geo-u1", "course:unknown"), null);
+  // National Social Studies and Arabic keep the "Term 1" they have always printed
+  assert.equal(termOfModule("module:soc1", "course:prep3-social-ar"), 1);
+  assert.equal(termOfModule("module:ara5", "course:prep3-arabic-ar"), 1);
 });
 
 /** Source with comments removed. */
@@ -113,7 +128,7 @@ test("the check-in's special case is gone: shared helpers, and no stored label p
   }
   // the two literal prefixes the Arabic/Social card put in front of m.label
   assert.doesNotMatch(c, /"Term [12] · "/);
-  assert.match(c, /\{moduleHeading\(m\.id, m\.label\)\}/);
+  assert.match(c, /\{moduleHeading\(m\.id, m\.label, m\.courseId\)\}/);
   // nothing in it — code or comment — still names the module or its old label
   assert.doesNotMatch(src, /geo-u1|The Circle/);
 });
@@ -194,7 +209,7 @@ test("the rollback is 031 mirrored: the old text back, only over the new text", 
   assert.doesNotMatch(sql, /\b(INSERT|DELETE|ALTER|CREATE|DROP|TRUNCATE|GRANT)\b/i);
 });
 
-test("the deploy's migration floor counts 031", () => {
+test("the deploy's migration floor counts every migration file (031; 032 since v0.9.3; 033 and 034 since 003)", () => {
   const files = readdirSync(join(REPO, "db/migrations")).filter((f) => f.endsWith(".sql"));
   const floor = Number(
     readFileSync(join(REPO, "deploy/apply-migrations.sh"), "utf8").match(/\[ "\$applied" -ge (\d+) \]/)?.[1]

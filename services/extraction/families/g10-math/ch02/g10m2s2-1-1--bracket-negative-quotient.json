@@ -1,0 +1,105 @@
+{
+ "format": "ainext.family/1",
+ "version": 1,
+ "id": "tpl:g10m2s2-1-1:bracket-negative-quotient",
+ "kind": "family",
+ "lo_id": "lo:g10m2s2-1-1",
+ "parent_question_id": "q:g10m2s2-1-1:ex2-4-1j",
+ "source_page": 57,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "table",
+   "let": "[[2, 2, 2], [2, 3, 2], [2, 3, 4], [3, 2, 3], [3, 3, 3], [3, 3, 9]]"
+  },
+  {
+   "name": "i",
+   "randint": [
+    0,
+    5
+   ]
+  },
+  {
+   "name": "t",
+   "let": "table[i]"
+  },
+  {
+   "name": "a",
+   "let": "t[0]"
+  },
+  {
+   "name": "n",
+   "let": "t[1]"
+  },
+  {
+   "name": "c",
+   "let": "t[2]"
+  },
+  {
+   "name": "p",
+   "randint": [
+    1,
+    2
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    2,
+    3
+   ]
+  },
+  {
+   "name": "r",
+   "randint": [
+    2,
+    4
+   ]
+  },
+  {
+   "name": "s",
+   "randint": [
+    2,
+    "q * n - 2"
+   ]
+  },
+  {
+   "name": "k",
+   "let": "a ** n // c"
+  },
+  {
+   "name": "m",
+   "let": "p * n + r"
+  },
+  {
+   "name": "u",
+   "let": "q * n - s"
+  }
+ ],
+ "constraints": [
+  "a ** n % c == 0",
+  "q * n - s >= 2"
+ ],
+ "stem": "Simplify, writing your answer with positive exponents only: $\\dfrac{({=a}x^{-{=p}}y^{{=q}})^{{=n}}}{{=c}x^{{=r}}y^{{=s}}}$",
+ "solution": [
+  "Use the power law on every factor inside the brackets, the coefficient included: $({=a}x^{-{=p}}y^{{=q}})^{{=n}}={=a}^{{=n}}x^{-{=p}\\times {=n}}y^{{=q}\\times {=n}}={=a ** n}x^{-{=p * n}}y^{{=q * n}}$.",
+  "The fraction is now $\\dfrac{{=a ** n}x^{-{=p * n}}y^{{=q * n}}}{{=c}x^{{=r}}y^{{=s}}}$.",
+  "Divide the coefficients: ${=a ** n}\\div {=c}={=k}$.",
+  "Use the quotient law on each letter, subtracting the exponents: $\\dfrac{x^{-{=p * n}}}{x^{{=r}}}=x^{-{=p * n}-{=r}}=x^{-{=m}}$ and $\\dfrac{y^{{=q * n}}}{y^{{=s}}}=y^{{=q * n}-{=s}}=y^{{=u}}$.",
+  "A negative exponent means a reciprocal: $x^{-{=m}}=\\dfrac{1}{x^{{=m}}}$, so the answer with positive exponents is $\\dfrac{{=k}y^{{=u}}}{x^{{=m}}}$."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "({=k}*y**{=u})/(x**{=m})",
+  "form": "simplest",
+  "variables": [
+   "x",
+   "y"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Extends the book's ex2-4-1j (power of a power, a coefficient, then a quotient) to a bracket holding a coefficient and two letters, one with a negative exponent, over a monomial. Steps: power law on every factor of the bracket (the coefficient too, which is where mc:g10m2s2-1-1:power-skips-coefficient bites), divide the coefficients, quotient law on x and y separately, then the negative exponent identity to leave positive exponents only. The (a, n, c) triples come from a table so that a^n is always divisible by c and the coefficient of the answer is a whole number of at least 2 (2, 3, 4 or 9). Exponent ranges are set so that the y exponent in the answer is at least 2 (so no 'y^1' is printed), the printed exponents inside the stem are at least 2 where they are a letter's own exponent (q, r, s), and the x exponent in the denominator is between 4 and 10. The instruction 'positive exponents only' makes the answer form unambiguous; the marker compares equivalent expressions in x and y. No zero exponent appears in this skeleton. Numeric-free expression answer, so no distractors."
+}

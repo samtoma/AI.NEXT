@@ -1,0 +1,166 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m1s7-2-1:many-factor-pairs",
+ "kind": "family",
+ "lo_id": "lo:g10m1s7-2-1",
+ "parent_question_id": "q:g10m1s7-2-1:ex1-11-29k",
+ "source_page": 39,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    -12,
+    12
+   ],
+   "resample_while": "abs(p) < 2"
+  },
+  {
+   "name": "q",
+   "randint": [
+    -12,
+    12
+   ],
+   "resample_while": "abs(q) < 2 or abs(q) == abs(p)"
+  },
+  {
+   "name": "c",
+   "let": "p * q"
+  },
+  {
+   "name": "b",
+   "let": "p + q"
+  },
+  {
+   "name": "n",
+   "let": "abs(c)"
+  },
+  {
+   "name": "ds",
+   "let": "[d for d in range(1, isqrt(n) + 1) if n % d == 0]"
+  },
+  {
+   "require": "len(ds) >= 4 and len(ds) <= 6",
+   "why": "the constant term must have four to six factor pairs, so there are several options to test but the working stays printable"
+  },
+  {
+   "require": "not is_square(n)",
+   "why": "no pair of equal factors, so no option has a zero middle term and the options are all distinct pairs"
+  },
+  {
+   "name": "s",
+   "let": "1 if b > 0 else -1"
+  },
+  {
+   "name": "su",
+   "let": "s if c > 0 else -s"
+  },
+  {
+   "name": "pu",
+   "let": "'+ ' if su > 0 else '- '"
+  },
+  {
+   "name": "pv",
+   "let": "'+ ' if s > 0 else '- '"
+  },
+  {
+   "name": "bm",
+   "let": "(str(abs(b)) if abs(b) != 1 else '') + 'x'"
+  },
+  {
+   "name": "bterm",
+   "let": "('+ ' if b > 0 else '- ') + bm"
+  },
+  {
+   "name": "bmid",
+   "let": "('-' if b < 0 else '') + bm"
+  },
+  {
+   "name": "cterm",
+   "let": "('+ ' if c > 0 else '- ') + str(abs(c))"
+  },
+  {
+   "name": "ms",
+   "let": "[su * d + s * (n // d) for d in ds]"
+  },
+  {
+   "name": "mts",
+   "let": "[('-' if m < 0 else '') + (str(abs(m)) if abs(m) != 1 else '') + 'x' for m in ms]"
+  },
+  {
+   "name": "opts",
+   "let": "['$(x ' + pu + str(ds[i]) + ')(x ' + pv + str(n // ds[i]) + ')$ has middle term $' + mts[i] + '$' for i in range(len(ds))]"
+  },
+  {
+   "name": "pp",
+   "let": "opts + ['', '', '', '', '', '']"
+  },
+  {
+   "name": "tbl",
+   "let": "pp[0] + '; ' + pp[1] + '; ' + pp[2] + '; ' + pp[3] + ('; ' + pp[4] if len(ds) > 4 else '') + ('; ' + pp[5] if len(ds) > 5 else '')"
+  },
+  {
+   "name": "fps",
+   "let": "[str(d) + ' and ' + str(n // d) for d in ds]"
+  },
+  {
+   "name": "fq",
+   "let": "fps + ['', '', '', '', '', '']"
+  },
+  {
+   "name": "fl",
+   "let": "fq[0] + ', ' + fq[1] + ', ' + fq[2] + ', ' + fq[3] + (', ' + fq[4] if len(ds) > 4 else '') + (', ' + fq[5] if len(ds) > 5 else '')"
+  },
+  {
+   "name": "lo",
+   "let": "min(p, q)"
+  },
+  {
+   "name": "hi",
+   "let": "max(p, q)"
+  },
+  {
+   "name": "sl",
+   "let": "('+ ' if lo > 0 else '- ') + str(abs(lo))"
+  },
+  {
+   "name": "sh",
+   "let": "('+ ' if hi > 0 else '- ') + str(abs(hi))"
+  },
+  {
+   "name": "ft",
+   "let": "'(x ' + sl + ')(x ' + sh + ')'"
+  },
+  {
+   "name": "sw",
+   "let": "'positive' if b > 0 else 'negative'"
+  },
+  {
+   "name": "why",
+   "let": "('Because the product is positive, the two numbers have the same sign, and because the sum is ' + sw + ', both numbers are ' + sw + '.') if c > 0 else ('Because the product is negative, the two numbers have opposite signs, and because the sum is ' + sw + ', the number further from 0 is ' + sw + '.')"
+  }
+ ],
+ "constraints": [],
+ "stem": "Factorise the following: $x^{2} {=bterm} {=cterm}$",
+ "solution": [
+  "To factorise $x^{2} {=bterm} {=cterm}$, look for two numbers whose product is ${=c}$ (the constant term) and whose sum is ${=b}$ (the coefficient of $x$).",
+  "{=why}",
+  "Write down the factor pairs of ${=n}$: {=fl}.",
+  "Put each pair into the brackets with those signs and expand to find the middle term: {=tbl}.",
+  "Only ${=ft}$ has the middle term ${=bmid}$, so $x^{2} {=bterm} {=cterm} = {=ft}$.",
+  "Check by multiplying out: ${=ft} = x^{2} {=sh}x {=sl}x {=cterm} = x^{2} {=bterm} {=cterm}$, which is the expression we started with."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "(x {=sl})*(x {=sh})",
+  "form": "factorised",
+  "variables": [
+   "x"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "ADVANCED gap. The book's eight questions for this objective are all single-step in difficulty (c up to 30, at most five factor pairs, tiered basic/standard), so no book question sits above standard. 'Advanced' is therefore defined here as the same skill with real search work: |c| is drawn so that it has four to six factor pairs (24, 30, 40, 42, 48, 54, 56, 60, 66, 70, 72, 80, 84, 88, 90, 96, 108, 110, 132), the roots p and q are integers with 2 <= |p|,|q| <= 12, either sign, so the student must list and test several pairs, and it includes both signs of c and the book's x^2 - x - 20 type (|b| = 1 occurs, e.g. x^2 + x - 30, and the stem and steps print 'x', never '1x'). Parent is q:g10m1s7-2-1:ex1-11-29k (y^2 - 7y - 30, p. 39), the nearest book question: mixed signs, several factor pairs. Method is the book's and the objective description's: factor pairs of c, the same-sign / opposite-sign rule for c, expand each option to read the middle term, check by multiplying out. One deliberate shortcut: the sign of b fixes which sign goes with which factor (same sign as b if c > 0; if c < 0, the factor further from zero takes the sign of b), so the table shows one option per pair instead of both placements. Reviewer: please confirm that shortcut is acceptable; if not, the table would need to show both sign placements for c < 0. Exclusions on purpose: |p| = |q| (perfect squares such as x^2 - 12x + 36, which the book treats at basic tier, and difference of squares, which is a different objective and would give a zero middle term), |p| or |q| = 1 (so the pair 1 and |c| is never the answer), and more than six factor pairs (|c| = 120 would print eight and be unreadable). The unique answer is guaranteed because the sum d + c/d (c > 0) or c/d - d (c < 0) is strictly monotone in d over the factor pairs, so exactly one listed option matches b; the order of the two brackets is free and the marker is a factorised-form expression check. The step that tests every option addresses mc:g10m1s7-2-1:factor-pair-middle-term-untested (the student who writes a pair of c into the brackets without testing the middle term). No new misconceptions are proposed because this is an expression family with no distractors. Template note: the strings built in the let params use only + concatenation, str, indexing, conditional expressions in parentheses, and list comprehensions with one for clause; the lists are padded with empty strings so no index is ever out of range. The top-level answer is omitted (expression type, marker carries it)."
+}

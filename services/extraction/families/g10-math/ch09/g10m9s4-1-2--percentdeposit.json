@@ -1,0 +1,147 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m9s4-1-2:percentdeposit",
+ "kind": "family",
+ "lo_id": "lo:g10m9s4-1-2",
+ "parent_question_id": "q:g10m9s4-1-2:ex9-3-10",
+ "source_page": 344,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": "Zodwa buys a laptop on hire purchase. She pays a percentage of the cash price as a deposit, repays the balance over a number of months that is not a whole number of years, with simple interest, and a fixed insurance premium is added to every monthly payment.",
+ "params": [
+  {
+   "name": "k",
+   "randint": [
+    20,
+    90
+   ]
+  },
+  {
+   "name": "cash",
+   "let": "k * 100"
+  },
+  {
+   "name": "d",
+   "choice": [
+    10,
+    15,
+    20,
+    25
+   ]
+  },
+  {
+   "name": "m",
+   "choice": [
+    18,
+    30,
+    42,
+    54
+   ]
+  },
+  {
+   "name": "r2",
+   "randint": [
+    12,
+    42
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    200,
+    700
+   ]
+  },
+  {
+   "name": "prem_c",
+   "let": "q * 5"
+  },
+  {
+   "name": "dep",
+   "let": "k * d"
+  },
+  {
+   "name": "P",
+   "let": "cash - dep"
+  },
+  {
+   "name": "acc_num",
+   "let": "P * (2400 + r2 * m)"
+  },
+  {
+   "require": "acc_num % 24 == 0",
+   "why": "the accumulated amount must be a whole number of cents, so no intermediate rounding can change the answer"
+  },
+  {
+   "name": "acc_c",
+   "let": "acc_num // 24"
+  },
+  {
+   "require": "((2 * acc_c) % m != 0) or (((2 * acc_c) // m) % 2 == 0)",
+   "why": "the monthly repayment must not fall exactly on a half cent, so rounding to the nearest cent is unambiguous"
+  },
+  {
+   "require": "acc_c > 2 * prem_c * m",
+   "why": "keeps the insurance premium realistically small next to the monthly repayment (at most half of it)"
+  },
+  {
+   "name": "acc",
+   "let": "acc_c / 100"
+  },
+  {
+   "name": "inst",
+   "let": "acc / m"
+  },
+  {
+   "name": "prem",
+   "let": "prem_c / 100"
+  },
+  {
+   "name": "tot",
+   "let": "inst + prem"
+  },
+  {
+   "name": "r_t",
+   "let": "fixed(r2 / 2, 1 if r2 % 2 == 1 else 0)"
+  },
+  {
+   "name": "i_t",
+   "let": "fixed(r2 / 200, 3) if r2 % 2 == 1 else fixed(r2 / 200, 2)"
+  },
+  {
+   "name": "n_t",
+   "let": "fixed(m / 12, 1)"
+  },
+  {
+   "name": "acc_t",
+   "let": "fixed(acc, 2)"
+  },
+  {
+   "name": "inst_t",
+   "let": "fixed(inst, 2)"
+  },
+  {
+   "name": "prem_t",
+   "let": "fixed(prem, 2)"
+  },
+  {
+   "name": "tot_t",
+   "let": "fixed(tot, 2)"
+  }
+ ],
+ "constraints": [
+  "2 * prem <= inst"
+ ],
+ "stem": "Zodwa is buying a laptop on hire purchase. The cash price of the laptop is $\\text{R{=cash}}$. She has to pay a ${=d}\\%$ deposit and then pay off the remaining amount over ${=m}$ months at an interest rate of ${=r_t}\\%$ p.a., charged as simple interest. An insurance premium of $\\text{R{=prem_t}}$ is added to every monthly payment. Calculate Zodwa's monthly payment in rand, correct to the nearest cent.",
+ "answer": "fixed(tot, 2)",
+ "solution": [
+  "The deposit is ${=d}\\%$ of the cash price: ${=d}\\% \\times {=cash} = \\text{R{=dep}}$. The amount that is financed is $P = {=cash} - {=dep} = \\text{R{=P}}$.",
+  "Write down the interest rate and the period in years: $i = {=i_t}$ and $n = \\frac{{=m}}{12} = {=n_t}$.",
+  "Calculate the accumulated amount: $A = P(1 + in) = {=P}(1 + {=i_t} \\times {=n_t}) = \\text{R{=acc_t}}$.",
+  "Calculate the monthly repayment on the hire purchase agreement: $\\frac{{=acc_t}}{{=m}} = \\text{R{=inst_t}}$ (to the nearest cent).",
+  "Add the insurance premium to the monthly repayment: $\\text{R{=inst_t}} + \\text{R{=prem_t}} = \\text{R{=tot_t}}$.",
+  "Zodwa's monthly payment is $\\text{R{=tot_t}}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Harder variant of the book's ex9-3-10: a percentage deposit comes off the cash price first, the term is given in months and is an odd multiple of 6 (18, 30, 42 or 54), so n is a decimal (1.5, 2.5, 3.5, 4.5 years), and the rate moves in half-percent steps (6% to 21%), so i can be a three-decimal number such as 0.125, as in the book's ex9-7-26. Simple interest is stated in the stem. Cash price is a multiple of R100 and the deposit is a multiple of 5%, so the deposit and the amount financed are whole rand. Two requires keep it clean: the accumulated amount A is an exact number of cents (about 70% of draws pass), and the monthly repayment is not an exact half cent, so the book's round-then-add and a full-precision solution always agree. The premium is in 5-cent steps (R10.00 to R35.00) and at most half the repayment. I checked 20 000 sampled instances against an independent calculation that rounds as the book does: they agree, and the formula reproduces the book's ex9-3-10 (P = 5778, i = 0.08, n = 3 gives A = 7164.72). Answers run from about R49 to R603. Typical errors to watch for in review or blind solves: applying the percentage to the wrong base, using n = 30 instead of 2.5 in A = P(1 + in), forgetting the deposit, adding the premium once. No misconceptions are catalogued for this objective and a numeric family has no distractors to tag, so none are proposed.\n\nPIPELINE NORMALISATION (not an author edit): formatter-visible-to-the-numeric-hole-check: param r_t was a conditional, 'fixed(r2 / 2, 1) if r2 % 2 == 1 else r2 // 2', which prints a half-percent rate with one decimal (7.5) and a whole one with none (12). The stem hole {=r_t} is checked as a number only if the check can see a numeric formatter (families/spec.py _is_formatted_number looks through a name to its let, and through a call, but not through a conditional), so every odd-r2 draw was refused as 'the stem hole {=r_t} produced 7.5; a family with a fixed context may vary only numbers' although 7.5 is a number. r_t is now 'fixed(r2 / 2, 1 if r2 % 2 == 1 else 0)': the same printed text for every r2 (7.5, 12, ...), the conditional moved into the formatter's decimals argument. Nothing else changed (i_t, which has the same shape but is not a stem hole, is left as the author wrote it); the context, the question, the answer and the worked solution are unchanged."
+}

@@ -1,0 +1,93 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m14s1-1-2:colour-fraction",
+ "kind": "family",
+ "lo_id": "lo:g10m14s1-1-2",
+ "parent_question_id": "q:g10m14s1-1-2:ex14-8-11a",
+ "source_page": 492,
+ "tier": "standard",
+ "answer_type": "mcq",
+ "context": "A box contains purple, orange, white and pink coloured blocks, and one block is selected at random.",
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    12,
+    40
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    12,
+    40
+   ]
+  },
+  {
+   "name": "c",
+   "randint": [
+    12,
+    40
+   ]
+  },
+  {
+   "name": "d",
+   "randint": [
+    12,
+    40
+   ]
+  },
+  {
+   "name": "tot",
+   "let": "a + b + c + d"
+  },
+  {
+   "require": "gcd(a, tot) == 1",
+   "why": "the correct fraction is already in simplest form, and so are the two distractors built from it, so no option is given away by being reducible"
+  },
+  {
+   "require": "a * tot != (tot - a) * (tot - a)",
+   "why": "the part-to-rest distractor and the opposite-event distractor must be different values"
+  }
+ ],
+ "constraints": [
+  "tot > a"
+ ],
+ "stem": "A box contains coloured blocks: {=a} purple, {=b} orange, {=c} white and {=d} pink. A block is selected at random. Which of the following is the probability that the block is purple?",
+ "solution": [
+  "First we work out how many blocks there are in total. This gives us the sample space: $n(S)={=a}+{=b}+{=c}+{=d}={=tot}$ .",
+  "The event is that the block is purple. There are ${=a}$ purple blocks, so $n(E)={=a}$ .",
+  "Every block is equally likely to be selected, so: $\\begin{aligned}P(\\text{purple})&=\\frac{n(E)}{n(S)}\\\\&=\\frac{{=a}}{{=tot}}\\end{aligned}$ This fraction is already in simplest form.",
+  "The four colours are not equally likely, because there are different numbers of blocks of each colour, so the answer is not $\\frac{1}{4}$ . The total ${=tot}$ counts all the blocks, not only the ones that are not purple, and the numerator counts the purple blocks, not the others."
+ ],
+ "choices": {
+  "correct": "$\\frac{{=a}}{{=tot}}$",
+  "distractors": [
+   {
+    "text": "$\\frac{1}{4}$",
+    "misconception_id": "mc:g10m14s1-1-2:unequal-outcomes-counted-as-equal"
+   },
+   {
+    "text": "$\\frac{{=a}}{{=tot - a}}$",
+    "misconception_id": "mc:g10m14s1-1-2:event-over-the-rest"
+   },
+   {
+    "text": "$\\frac{{=tot - a}}{{=tot}}$",
+    "misconception_id": "mc:g10m14s1-1-2:opposite-event-counted"
+   }
+  ]
+ },
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m14s1-1-2:event-over-the-rest",
+   "label": "Divides by the outcomes outside the event",
+   "description": "The student writes n(E) over the number of outcomes that are not in the event (a part-to-rest comparison) instead of over n(S), the total number of outcomes in the sample space."
+  },
+  {
+   "id": "mc:g10m14s1-1-2:opposite-event-counted",
+   "label": "Counts the outcomes that are not in the event",
+   "description": "The student counts the outcomes that are not in the event instead of the ones that are, so n(E) is the wrong set, and writes that count over n(S)."
+  }
+ ],
+ "notes": "Standard-tier diagnostic multiple choice on book ex14-8-11a (coloured blocks). It gives the catalogued misconception unequal-outcomes-counted-as-equal a home (the 1/4 option: four colours, so one in four) and declares two further named errors of n(E)/n(S). Constraint gcd(a, tot) = 1 makes the correct fraction irreducible, and gcd(a, tot - a) = gcd(tot - a, tot) = gcd(a, tot) = 1 makes both built distractors irreducible too, so reducibility never identifies the correct option. The four values are always distinct (1/4 is excluded by a >= 12 with gcd 1, and the last require separates the two built distractors). The stem carries the variation, so distinct_by_choices is not set. Verified offline: about 59% of random draws are accepted, 11000+ distinct instances."
+}

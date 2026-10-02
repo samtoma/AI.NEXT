@@ -1,0 +1,77 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m10s1-1-1:counts-reason",
+ "kind": "family",
+ "lo_id": "lo:g10m10s1-1-1",
+ "parent_question_id": "q:g10m10s1-1-1:ex10-1-2",
+ "source_page": 358,
+ "tier": "standard",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "whats",
+   "let": "['the number of SMS messages each learner sent yesterday', 'the number of questions each learner answered correctly in a class test', 'the number of books each learner carried in a school bag', 'the number of brothers and sisters each learner has', 'the number of times each learner was late for school this term', 'the number of pens each learner has in a pencil case']"
+  },
+  {
+   "name": "units",
+   "let": "['SMS messages', 'questions answered correctly', 'books', 'brothers and sisters', 'times late', 'pens']"
+  },
+  {
+   "name": "los",
+   "let": "[0, 0, 1, 0, 0, 1]"
+  },
+  {
+   "name": "his",
+   "let": "[25, 20, 9, 7, 12, 12]"
+  },
+  {
+   "name": "i",
+   "randint": [
+    0,
+    5
+   ]
+  },
+  {
+   "name": "what",
+   "let": "whats[i]"
+  },
+  {
+   "name": "unit",
+   "let": "units[i]"
+  },
+  {
+   "name": "v",
+   "sample": {
+    "from": "range(los[i], his[i] + 1)",
+    "k": 6
+   }
+  }
+ ],
+ "constraints": [],
+ "stem": "A class of Grade 10 learners recorded {=what}. The data set is $\\{{=v[0]}, {=v[1]}, {=v[2]}, {=v[3]}, {=v[4]}, {=v[5]}\\}$. Which of the following correctly categorises the data set and gives the reason?",
+ "choices": {
+  "correct": "Quantitative discrete, because the values are counts, written as integers",
+  "distractors": [
+   {
+    "text": "Quantitative continuous, because the values are numbers",
+    "misconception_id": "mc:g10m10s1-1-1:count-called-continuous"
+   },
+   {
+    "text": "Qualitative categorical, because the values only name groups of learners",
+    "misconception_id": "mc:g10m10s1-1-1:numbers-called-qualitative"
+   },
+   {
+    "text": "Qualitative anecdotal, because the values only describe what the learners did",
+    "misconception_id": "mc:g10m10s1-1-1:numbers-called-qualitative"
+   }
+  ]
+ },
+ "solution": [
+  "The values are numbers, so the data set of {=what} is quantitative, not qualitative.",
+  "Each value is a count of {=unit}, so it can be represented by an integer.",
+  "A count written as integers is discrete. Therefore the data set is quantitative discrete."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Standard tier: the book's count exercises (ex10-1-2, ex10-1-3, we01) with the explanation step the book asks for in we01 added to the options. The thing counted is drawn from six unambiguous counts (no money, no ages); values are sampled without repeats from a plausible range per item. Direction is fixed (always discrete) so the two quantitative-swap distractors carry a single catalogued id; the continuous mirror is the family measure-reason. Correct option text is identical across instances; the engine should shuffle option order.\n\nPIPELINE NORMALISATION (not an author edit): context-null: the spec set \"context\" (a fixed word problem's situation, in words) to \"A class of Grade 10 learners each record one count (how many of something). The class is fixed; only the thing counted and the six values change.\" and its own text says what varies. The stem varies the wording itself, through {=what} and {=unit}, drawn from six counts, each with its own value range, so it is not a fixed-context word problem. A family with a fixed context may vary only numbers (families/spec.py _stem_holes_are_numbers; extraction-pipeline §3.9), so every attempt was refused ('the stem hole {=...} produced a word') and the family produced no item. A family whose wording is drawn from a curated table is written with \"context\": null, as this objective's siblings anecdotal-set, categorical-set, counting-categorical and paired-questions are, and its stems are still judged one by one by the blind grader. The former context text is kept above; the stem, params, answer, options and worked solution are unchanged."
+}

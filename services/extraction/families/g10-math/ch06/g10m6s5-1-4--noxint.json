@@ -1,0 +1,261 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s5-1-4:noxint",
+ "kind": "family",
+ "lo_id": "lo:g10m6s5-1-4",
+ "parent_question_id": "q:g10m6s5-1-4:ex6-8-48a",
+ "source_page": 230,
+ "tier": "advanced",
+ "answer_type": "mcq",
+ "context": null,
+ "distinct_by_choices": true,
+ "params": [
+  {
+   "name": "s",
+   "choice": [
+    1,
+    -1
+   ]
+  },
+  {
+   "name": "u0",
+   "choice": [
+    2,
+    3,
+    4,
+    5,
+    6
+   ]
+  },
+  {
+   "name": "v0",
+   "choice": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ]
+  },
+  {
+   "name": "b0",
+   "choice": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "a0",
+   "let": "s * u0"
+  },
+  {
+   "name": "q0",
+   "let": "s * v0"
+  },
+  {
+   "name": "u1",
+   "choice": [
+    2,
+    3,
+    4,
+    5,
+    6
+   ]
+  },
+  {
+   "name": "v1",
+   "choice": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ]
+  },
+  {
+   "name": "b1",
+   "choice": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "a1",
+   "let": "u1"
+  },
+  {
+   "name": "q1",
+   "let": "0 - v1"
+  },
+  {
+   "name": "u2",
+   "choice": [
+    2,
+    3,
+    4,
+    5,
+    6
+   ]
+  },
+  {
+   "name": "v2",
+   "choice": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ]
+  },
+  {
+   "name": "b2",
+   "choice": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "a2",
+   "let": "0 - u2"
+  },
+  {
+   "name": "q2",
+   "let": "v2"
+  },
+  {
+   "name": "s3",
+   "choice": [
+    1,
+    -1
+   ]
+  },
+  {
+   "name": "u3",
+   "choice": [
+    2,
+    3,
+    4,
+    5,
+    6
+   ]
+  },
+  {
+   "name": "v3",
+   "choice": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ]
+  },
+  {
+   "name": "b3",
+   "choice": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "a3",
+   "let": "s3 * u3"
+  },
+  {
+   "name": "q3",
+   "let": "0 - s3 * v3"
+  },
+  {
+   "require": "a3 != a1 or b3 != b1 or q3 != q1",
+   "why": "the third distractor must be a different function from the first"
+  },
+  {
+   "require": "a3 != a2 or b3 != b2 or q3 != q2",
+   "why": "the third distractor must be a different function from the second"
+  },
+  {
+   "name": "c0",
+   "let": "0 - q0 / a0"
+  },
+  {
+   "name": "c1",
+   "let": "0 - q1 / a1"
+  },
+  {
+   "name": "c2",
+   "let": "0 - q2 / a2"
+  },
+  {
+   "name": "c3",
+   "let": "0 - q3 / a3"
+  }
+ ],
+ "stem": "Exactly one of the following exponential functions has no $x$-intercept. Which one?",
+ "choices": {
+  "correct": "$y={=a0}\\cdot {=b0}^{x}{=signed(q0)}$",
+  "distractors": [
+   {
+    "text": "$y={=a1}\\cdot {=b1}^{x}{=signed(q1)}$",
+    "misconception_id": "mc:g10m6s5-1-4:positive-a-stays-above"
+   },
+   {
+    "text": "$y={=a2}\\cdot {=b2}^{x}{=signed(q2)}$",
+    "misconception_id": "mc:g10m6s5-1-4:negative-a-stays-below"
+   },
+   {
+    "text": "$y={=a3}\\cdot {=b3}^{x}{=signed(q3)}$",
+    "misconception_id": "mc:g10m6s5-1-4:power-never-zero"
+   }
+  ]
+ },
+ "solution": [
+  "To find an $x$-intercept we let $y=0$. For $y=a\\cdot b^{x}+q$ this gives $a\\cdot b^{x}=-q$, so $b^{x}=-\\frac{q}{a}$.",
+  "A power of a positive base is always positive. So there is an $x$-intercept only if $-\\frac{q}{a}$ is positive; if it is negative, the equation has no solution.",
+  "For $y={=a1}\\cdot {=b1}^{x}{=signed(q1)}$: setting $y=0$ gives ${=b1}^{x}={=c1}$. This is positive, so there is an $x$-intercept.",
+  "For $y={=a2}\\cdot {=b2}^{x}{=signed(q2)}$: setting $y=0$ gives ${=b2}^{x}={=c2}$. This is positive, so there is an $x$-intercept.",
+  "For $y={=a3}\\cdot {=b3}^{x}{=signed(q3)}$: setting $y=0$ gives ${=b3}^{x}={=c3}$. This is positive, so there is an $x$-intercept.",
+  "For $y={=a0}\\cdot {=b0}^{x}{=signed(q0)}$: setting $y=0$ gives ${=b0}^{x}={=c0}$. This is negative, and no power of ${=b0}$ is negative, so there is no solution.",
+  "The function with no $x$-intercept is $y={=a0}\\cdot {=b0}^{x}{=signed(q0)}$."
+ ],
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m6s5-1-4:positive-a-stays-above",
+   "label": "A positive a keeps the graph above the x-axis",
+   "description": "Decides that a graph with a > 0 stays above the x-axis and so has no x-intercept, ignoring that a negative constant q shifts the graph down far enough to cross the axis."
+  },
+  {
+   "id": "mc:g10m6s5-1-4:negative-a-stays-below",
+   "label": "A negative a keeps the graph below the x-axis",
+   "description": "Decides that a graph with a < 0 stays below the x-axis and so has no x-intercept, ignoring that a positive constant q shifts the graph up far enough to cross the axis."
+  },
+  {
+   "id": "mc:g10m6s5-1-4:power-never-zero",
+   "label": "b^x is never zero, so there is no x-intercept",
+   "description": "Reasons that y = ab^x + q can never equal 0 because b^x is never 0, carrying the 'no x-intercept' of y = ab^x over to every exponential function and forgetting that q can cancel ab^x."
+  }
+ ],
+ "notes": "Advanced: the objective's 'recognise when there is no x-intercept'. The parent figure (ex6-8-48a, y = 2^x and y = -2^x) shows two exponential graphs that never meet the x-axis. Here q is not zero: setting y = 0 gives b^x = -q/a, which has a solution only when -q/a > 0, that is when a and q have opposite signs. Exactly one option (a and q of the same sign) has no x-intercept; the other three have a and q of opposite signs, so each has one. The stem never changes, so distinct_by_choices is set; the options vary over 5 x 9 x 4 numbers for each of four functions. Distractor 1 (a > 0, q < 0) and distractor 2 (a < 0, q > 0) carry the sign-of-a errors; distractor 3 takes either sign pattern and carries the general 'b^x is never 0' error. Option texts are the four formulas, so a blind solver answers by formula."
+}

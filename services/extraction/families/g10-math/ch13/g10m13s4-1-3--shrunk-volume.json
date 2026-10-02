@@ -1,0 +1,43 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m13s4-1-3:shrunk-volume",
+ "kind": "family",
+ "lo_id": "lo:g10m13s4-1-3",
+ "parent_question_id": "q:g10m13s4-1-3:ex13-7-18",
+ "source_page": 461,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "n",
+   "choice": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "m",
+   "randint": [
+    2,
+    9
+   ]
+  },
+  {
+   "name": "V",
+   "let": "m * n ** 3"
+  }
+ ],
+ "constraints": [],
+ "stem": "A cylinder has a volume of ${=V}\\ \\text{cm}^{3}$. The length of its base radius and the length of its height are each made $\\frac{1}{{=n}}$ of their original size. By how many $\\text{cm}^{3}$ is the volume of the new cylinder smaller than the volume of the original cylinder?",
+ "answer": "V - m",
+ "solution": [
+  "Both the radius and the height are multiplied by the scale factor $k = \\frac{1}{{=n}}$. The shape gets smaller, so $k$ is a fraction, not {=n}.",
+  "When every length is multiplied by $k$, the volume is multiplied by $k^{3}$. So $k^{3} = \\left(\\frac{1}{{=n}}\\right)^{3} = \\frac{1}{{=n ** 3}}$.",
+  "$V_{\\text{new}} = \\frac{1}{{=n ** 3}} \\times {=V} = {=m}\\ \\text{cm}^{3}$.",
+  "The volume decreases by the original volume minus the new volume: ${=V} - {=m} = {=V - m}\\ \\text{cm}^{3}$."
+ ],
+ "notes": "Advanced: the book's own twist of a shrink (a unit-fraction scale factor, as in ex13-7-18 where radius and height are halved and the volume becomes 1/8) with a concrete original volume, followed by one more step (the decrease, original minus new). V is built as m * n^3 so the new volume m is always a whole number and the answer V - m is a whole number; every instance is clean. Cylinder: radius and height both scaled, so the new cylinder is similar to the original and the k^3 rule applies. The stem asks for the difference between the two volumes in unambiguous words. Typical wrong answers: reading the fraction as an enlargement (k = n, mc:g10m13s4-1-3:shrink-read-as-enlarge), V - V/n or V - V/n^2 (applied-once / wrong-power), or giving the new volume m without subtracting. Numeric family, so no distractor options carry those ids."
+}

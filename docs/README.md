@@ -30,7 +30,7 @@ brainstorm material in the Google folder is context and never an authority.
 | Question | Authority | Where |
 |---|---|---|
 | WHAT we build & why (product scope) | **PRD: AI Tutor — Student MVP v0.4** (Tamer Deif) | Drive `1gUAF0IyHRBr47k7aqiPxe9q22CJy8A7JwVqI405bRnk` |
-| HOW we build (engineering principles) | **Constitution v3.3.0** | [`.specify/memory/constitution.md`](../.specify/memory/constitution.md) |
+| HOW we build (engineering principles) | **Constitution v3.4.0** | [`.specify/memory/constitution.md`](../.specify/memory/constitution.md) |
 | Design philosophy (data spine) | Thesis, adopted by ADR-0001 | [`agentic-data-thesis.html`](../agentic-data-thesis.html) |
 | Which product is under change | **ADR-0010** — one branch per solution *(amends ADR-0007's delivery model; its product scope stands)* | [`decisions/0007-student-mvp1-comparison-build.md`](decisions/0007-student-mvp1-comparison-build.md) |
 | How it looks (visual language) | **The published Noor Play design system** — binding on every surface we build under constitution **Principle XII**; two variants, selected by grade per **ADR-0011** and **ADR-0017** | <https://claude.ai/artifact/SXTAsvPUCjU4ZMp5oZtM6J> · source material in [`design/handoffs/noor-play/`](design/handoffs/noor-play/) |
@@ -129,6 +129,8 @@ feature gets its own `specs/NNN-slug/` set, checked against the constitution.
 | [0021](decisions/0021-runtime-teaching-toggle-and-testers.md) | Socratic probing becomes a console switch — On at the next sitting, Off at the next message — for test accounts first; Everyone locked until #53; the `teaching-controls` role |
 | [0022](decisions/0022-console-signin-from-cloudflare-access.md) | Console sign-in from the Cloudflare Access identity — the verified JWT, never the plain header; fails closed; password kept as the fallback; a triple-locked dev picker locally *(amends ADR-0014)* |
 | [0023](decisions/0023-turn-limits-observed-not-enforced.md) | Turn and upload limits become observed thresholds, not an enforced cap — no surface refuses a turn or upload for count; the numbers survive in `turn-thresholds.ts`, watched in the console *(constitution v3.3.0, supersedes FR-051 and T047's cap clause)* |
+| [0024](decisions/0024-curriculum-as-a-visibility-dimension.md) | Curriculum as a second visibility dimension alongside (course, grade) — one course per curriculum, sign-up asks only when a grade offers two or more, the kill switch suspends rules but not curriculum scoping *(amends ADR-0018; accepted 2026-09-25, not committed)* |
+| [0025](decisions/0025-answer-marker-build-in-house.md) | The maths-expression marker is built in-house, no third-party computer-algebra library — the built-in engine scores 100% on 8,620 labelled cases at sub-millisecond latency with no added dependency, behind a pluggable `MarkerEngine` seam *(spec 003 FR-4320, gate T413; accepted 2026-09-25, not committed)* |
 
 ## 3. Architecture (`docs/architecture/`)
 

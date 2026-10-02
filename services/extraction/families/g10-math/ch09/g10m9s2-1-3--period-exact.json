@@ -1,0 +1,72 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m9s2-1-3:period-exact",
+ "kind": "family",
+ "lo_id": "lo:g10m9s2-1-3",
+ "parent_question_id": "q:g10m9s2-1-3:we03",
+ "source_page": 333,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": "Prashant deposits money into a bank account that pays simple interest. Amounts are in rands (R). The final amount is the capital plus all the interest earned.",
+ "params": [
+  {
+   "name": "k",
+   "randint": [
+    2,
+    40
+   ]
+  },
+  {
+   "name": "r",
+   "choice": [
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    11,
+    12,
+    13,
+    14,
+    15
+   ]
+  },
+  {
+   "name": "n",
+   "randint": [
+    2,
+    12
+   ]
+  },
+  {
+   "name": "p",
+   "let": "500 * k"
+  },
+  {
+   "name": "a",
+   "let": "5 * k * (100 + r * n)"
+  },
+  {
+   "name": "i",
+   "let": "fixed(r / 100, 2)"
+  },
+  {
+   "require": "a > p",
+   "why": "the investment must actually grow"
+  }
+ ],
+ "constraints": [
+  "a > p"
+ ],
+ "stem": "Prashant deposits $\\text{R}{=p}$ into a bank account that pays a simple interest rate of ${=r}$ % p.a. How many years must he leave the money in the account for it to grow to $\\text{R}{=a}$ ?",
+ "answer": "n",
+ "solution": [
+  "Read the question carefully and write down the given information: $\\begin{aligned}A&=\\text{R}{=a}\\\\P&=\\text{R}{=p}\\\\i&=\\frac{{=r}}{100}={=i}\\\\n&=?\\end{aligned}$",
+  "To calculate the number of years, we need to make $n$ the subject of the formula: $\\begin{aligned}A&=P(1+in)\\\\\\frac{A}{P}&=1+in\\\\\\frac{A}{P}-1&=in\\\\\\frac{\\frac{A}{P}-1}{i}&=n\\end{aligned}$",
+  "Substitute the values and calculate: $\\begin{aligned}n&=\\frac{\\left(\\frac{{=a}}{{=p}}\\right)-1}{{=i}}\\\\&={=n}\\end{aligned}$",
+  "It will take ${=n}$ years for $\\text{R}{=p}$ to grow to $\\text{R}{=a}$ at a simple interest rate of ${=r}$ % p.a."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Basic tier: the entry point of the skill. Every instance is built forwards from a whole number of years n, so A = P(1 + in) holds exactly and the answer is a whole number with no rounding. P is a multiple of R500 (R1000 to R20000) so the interest per year is a whole number of rands and A is a whole number. The rate is a whole percentage chosen from a list that skips 10, so i always prints with exactly two decimals (0.04 to 0.15) and never with a trailing zero. The solution follows the book's own skeleton (write down A, P, i, n; make n the subject; substitute; state the answer) from worked example 3 on p.333. The book's round-up-to-the-nearest-year rule is deliberately left to the standard and advanced book questions, so the two catalogued rounding misconceptions (rounds-n-to-nearest-not-up, rounds-too-early) do not apply here and no distractors are needed (numeric, not mcq). Check one instance: k=6, r=8, n=5 gives P=3000, A=4200, i=0.08, n=(4200/3000-1)/0.08=5."
+}

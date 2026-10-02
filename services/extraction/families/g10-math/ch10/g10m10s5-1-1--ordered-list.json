@@ -1,0 +1,82 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m10s5-1-1:ordered-list",
+ "kind": "family",
+ "lo_id": "lo:g10m10s5-1-1",
+ "parent_question_id": "q:g10m10s5-1-1:ex10-6-3",
+ "source_page": 380,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "x1",
+   "randint": [
+    2,
+    12
+   ]
+  },
+  {
+   "name": "x2",
+   "randint": [
+    "x1 + 1",
+    "x1 + 7"
+   ]
+  },
+  {
+   "name": "x3",
+   "randint": [
+    "x2 + 1",
+    "x2 + 7"
+   ]
+  },
+  {
+   "name": "x4",
+   "randint": [
+    "x3 + 1",
+    "x3 + 7"
+   ]
+  },
+  {
+   "name": "x5",
+   "randint": [
+    "x4 + 1",
+    "x4 + 7"
+   ]
+  },
+  {
+   "name": "x6",
+   "randint": [
+    "x5 + 1",
+    "x5 + 7"
+   ]
+  },
+  {
+   "name": "x7",
+   "randint": [
+    "x6 + 1",
+    "x6 + 7"
+   ]
+  }
+ ],
+ "constraints": [
+  "x1 < x2 and x2 < x4 and x4 < x6 and x6 < x7"
+ ],
+ "stem": "The data set below is already in order, from smallest to largest. $\\left\\{ {=x1}, {=x2}, {=x3}, {=x4}, {=x5}, {=x6}, {=x7} \\right\\}$ Give the five number summary (minimum, $Q_1$, median, $Q_3$, maximum), in that order. Use the percentile formula to find the quartiles: the $p$th percentile lies at position $\\frac{p}{100} \\times n$, where $n$ is the number of values; round this position up to the next whole number. $Q_1$, the median and $Q_3$ are the 25th, 50th and 75th percentiles.",
+ "solution": [
+  "The data set is already in order, so the minimum is the first value, ${=x1}$, and the maximum is the last value, ${=x7}$.",
+  "There are $n = 7$ values. The median is the 50th percentile: $\\frac{50}{100} \\times 7 = 3.5$, which rounds up to 4. The median is the 4th value, ${=x4}$.",
+  "$Q_1$ is the 25th percentile: $\\frac{25}{100} \\times 7 = 1.75$, which rounds up to 2. $Q_1$ is the 2nd value, ${=x2}$.",
+  "$Q_3$ is the 75th percentile: $\\frac{75}{100} \\times 7 = 5.25$, which rounds up to 6. $Q_3$ is the 6th value, ${=x6}$.",
+  "The five number summary is: minimum ${=x1}$, $Q_1 = {=x2}$, median ${=x4}$, $Q_3 = {=x6}$, maximum ${=x7}$."
+ ],
+ "marker": {
+  "kind": "values",
+  "answer": "[{=x1}, {=x2}, {=x4}, {=x6}, {=x7}]",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Entry point: seven values, already ordered, no context, so the student only has to locate the five positions (1st, 2nd, 4th, 6th, 7th). All values are whole numbers and strictly increasing, so the five summary values are always distinct and the key is a clean ascending list. The stem states the percentile-position rule (round the position up) because the book's own stem leaves it implicit and a blind solver otherwise has to choose between this rule, (n+1)p/100 interpolation, median-of-halves and spreadsheet interpolation, which disagree on some sizes. The rule matches the book's worked solution (positions 3, 5, 7 of 9 values). Only an odd number of values is used, so a quartile position is never a whole number and the book's treatment of a whole-number position (not shown in the single book solution I was given) is never needed."
+}

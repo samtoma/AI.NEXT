@@ -1,0 +1,119 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s7-1-3:reflected-range",
+ "kind": "family",
+ "lo_id": "lo:g10m6s7-1-3",
+ "parent_question_id": "q:g10m6s7-1-3:ex6-7-3b",
+ "source_page": 213,
+ "tier": "advanced",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "c",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "a",
+   "let": "0 - c"
+  },
+  {
+   "name": "lim",
+   "let": "min(2 * c - 1, 6)"
+  },
+  {
+   "name": "q",
+   "randint": [
+    "0 - lim",
+    "lim"
+   ],
+   "resample_while": "q == 0 or q == c"
+  },
+  {
+   "name": "t",
+   "randint": [
+    0,
+    1
+   ]
+  },
+  {
+   "name": "fn",
+   "let": "['sin', 'cos'][t]"
+  },
+  {
+   "name": "w",
+   "randint": [
+    0,
+    1
+   ]
+  },
+  {
+   "name": "lo",
+   "let": "q - c"
+  },
+  {
+   "name": "hi",
+   "let": "q + c"
+  },
+  {
+   "name": "d2lo",
+   "let": "0 - c if w == 0 else q - c"
+  },
+  {
+   "name": "d2hi",
+   "let": "q + c if w == 0 else c"
+  },
+  {
+   "name": "f1",
+   "let": "0 - q - c"
+  },
+  {
+   "name": "f2",
+   "let": "c - q"
+  }
+ ],
+ "constraints": [
+  "q != 0",
+  "q != c",
+  "abs(q) < 2 * c"
+ ],
+ "stem": "Which of the following is the range of $y = {=a}\\operatorname{{=fn}}\\theta {=signed(q)}$?",
+ "solution": [
+  "The sine and the cosine of any angle lie between $-1$ and $1$: $-1 \\le \\operatorname{{=fn}}\\theta \\le 1$.",
+  "Multiply every part by ${=a}$. A negative multiplier reverses the inequality signs, and the ends $-1$ and $1$ become ${=c}$ and $-{=c}$, so $-{=c} \\le {=a}\\operatorname{{=fn}}\\theta \\le {=c}$.",
+  "Now add the constant ${=q}$ to every part. The lowest value of $y$ is ${=q} - {=c} = {=lo}$ and the highest value of $y$ is ${=q} + {=c} = {=hi}$.",
+  "So the range is ${=lo} \\le y \\le {=hi}$. The negative sign of $a$ changes which value of $\\operatorname{{=fn}}\\theta$ gives the lowest $y$, but the range is still ${=c}$ below and ${=c}$ above ${=q}$."
+ ],
+ "choices": {
+  "correct": "${=lo} \\le y \\le {=hi}$",
+  "distractors": [
+   {
+    "text": "$-{=c} \\le y \\le {=c}$",
+    "misconception_id": "mc:g10m6s7-1-3:ignores-added-number"
+   },
+   {
+    "text": "${=d2lo} \\le y \\le {=d2hi}$",
+    "misconception_id": "mc:g10m6s7-1-3:adds-q-to-one-end"
+   },
+   {
+    "text": "${=lo} \\le y \\le {=q}$",
+    "misconception_id": "mc:g10m6s7-1-3:sine-cosine-start-at-zero"
+   },
+   {
+    "text": "${=f1} \\le y \\le {=f2}$",
+    "misconception_id": "mc:g10m6s7-1-3:negative-sign-flips-q"
+   }
+  ]
+ },
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m6s7-1-3:negative-sign-flips-q",
+   "label": "Lets the negative sign of a flip q as well",
+   "description": "For an equation such as $y=-3\\sin\\theta+2$ the student reads the minus sign as applying to the whole right-hand side, so finds the range of $-(3\\sin\\theta+2)$ instead. The range is mirrored about 0 and the sign of $q$ is reversed, giving $-q-|a|\\le y\\le -q+|a|$."
+  }
+ ],
+ "notes": "Advanced tier: the twist the book's method uses for a < 0 (the range is q+a <= y <= q-a, i.e. q-|a| <= y <= q+|a|). a = -c with c from 2 to 6; q is a non-zero whole number with |q| < 2c, |q| <= 6 and q != c, which guarantees that all five options are different and each is a proper interval (lower end below upper end) for both values of the option switch w. Distractors: ignores q (-c to c); q added at one end only (w picks which end: -c to q+c, or q-c to c); the sine/cosine-from-0-to-1 error carried over to a negative a (a times [0,1] plus q gives q-c to q, so the range ends at q instead of starting there; same catalogued id); and the new negative-sign-flips-q error (range of -(c sin + q)). mc:...:ends-are-the-equation-numbers is not used here (only four distractors are needed). Option texts carry $...$ as the stem does. The stem holds a, q and the function, so instances differ without distinct_by_choices. About 90 distinct instances. As in the standard family, the book's printed options say theta where y is meant; this family says y."
+}

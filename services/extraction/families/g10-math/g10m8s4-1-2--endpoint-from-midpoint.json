@@ -1,0 +1,68 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m8s4-1-2:endpoint-from-midpoint",
+ "kind": "family",
+ "lo_id": "lo:g10m8s4-1-2",
+ "parent_question_id": "q:g10m8s4-1-2:ex8-6-43a",
+ "source_page": 325,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "x1",
+   "randint": [
+    -6,
+    6
+   ]
+  },
+  {
+   "name": "y1",
+   "randint": [
+    -6,
+    6
+   ]
+  },
+  {
+   "name": "mx",
+   "randint": [
+    -6,
+    6
+   ]
+  },
+  {
+   "name": "my",
+   "randint": [
+    -6,
+    6
+   ]
+  },
+  {
+   "name": "x2",
+   "let": "2*mx - x1"
+  },
+  {
+   "name": "y2",
+   "let": "2*my - y1"
+  }
+ ],
+ "constraints": [
+  "[x1, y1] != [mx, my]"
+ ],
+ "stem": "$M({=mx}, {=my})$ is the mid-point of $AB$ with point $A({=x1}, {=y1})$ . Determine the coordinates of $B$ .",
+ "solution": [
+  "Write down the mid-point formula: $M(x, y)=(\\frac{x_{1}+x_{2}}{2}, \\frac{y_{1}+y_{2}}{2})$",
+  "Substitute $A({=x1}, {=y1})$ for $(x_{1}, y_{1})$ and $M({=mx}, {=my})$ for $M(x, y)$: $\\begin{aligned}{=mx}&=\\frac{{=x1}+x_{2}}{2}&{=my}&=\\frac{{=y1}+y_{2}}{2}\\end{aligned}$",
+  "Multiply both sides by 2: $\\begin{aligned}{=2*mx}&={=x1}+x_{2}&{=2*my}&={=y1}+y_{2}\\end{aligned}$",
+  "Solve for $x_{2}$ and $y_{2}$: $\\begin{aligned}x_{2}&={=2*mx}-{=x1}&y_{2}&={=2*my}-{=y1}\\\\x_{2}&={=x2}&y_{2}&={=y2}\\end{aligned}$",
+  "The coordinates of point $B$ are $({=x2}, {=y2})$ ."
+ ],
+ "marker": {
+  "kind": "coordinates",
+  "answer": "({=x2}, {=y2})",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "notes": "Basic-tier entry point: a single unknown-endpoint application with no fractions and small integer coordinates, so every instance is clean by construction (2*m - k is always an integer). Constraint blocks the degenerate case where the known endpoint equals the mid-point (B would equal A). Parent method mirrors ex8-6-43a (p.325); solution explicitly shows the 'multiply both sides by 2' step to model the correct method against the catalogued mc:g10m8s4-1-2:skips-multiply-by-two-step error, even though this family has no distractors (answer_type is expression/coordinates, not mcq)."
+}

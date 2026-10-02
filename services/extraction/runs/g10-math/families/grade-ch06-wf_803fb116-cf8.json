@@ -1,0 +1,1222 @@
+{
+ "mode": "grade",
+ "book": "g10-math",
+ "prompts_version": "s6-v6",
+ "by_ref": {
+  "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/s6-grade-ch06",
+  "stage": "S6 grade",
+  "shards_sha256": "474fd16490625dd4e3e77c54548a1ce551d8e646b32ef3b240759ceae777c265",
+  "files": 312
+ },
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "ce14b9a275551596540559352d6e1137fc366251ecc65d4b7d34aa4599cbc0b6",
+  "args_sha256": "b5c445c3b6c640cfef889852823e2db01058967c5cf1c13d832a86fab2c8fbf3",
+  "generated_sha256": "9ae8644aaaf9d8806db2f2b077d43f35d2846ecbde0585a14715afa39aa369c9",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "family_id": "tpl:g10m6s4-1-4:describe",
+   "spec_sha": "b6ced8b000982f3fe7c519d12ab77d9b90b827dee6291779a326200f1ce35fa7",
+   "answers": [
+    {
+     "instance_id": "q:g10m6s4-1-4:g002-descri",
+     "stem_sha": "e2cb8c95ddb0c485",
+     "answer": {
+      "choice": "A",
+      "choice_text": "The branches lie in the top-right and bottom-left regions formed by the asymptotes; the asymptotes are $x = 0$ and $y = 4$; the $x$-intercept is $(-\\frac{1}{2}, 0)$."
+     },
+     "working": "Rearrange xy = 2 + 4x to x(y - 4) = 2, so y = 4 + 2/x. The vertical asymptote is x = 0 and the horizontal asymptote is y = 4. The constant 2 is positive, so the branches lie top-right and bottom-left of the asymptote intersection. For the x-intercept set y = 0: 0 = 2 + 4x, so x = -1/2. That matches option A."
+    },
+    {
+     "instance_id": "q:g10m6s4-1-4:g004-descri",
+     "stem_sha": "da4e2f7c74965109",
+     "answer": {
+      "choice": "D",
+      "choice_text": "The branches lie in the top-left and bottom-right regions formed by the asymptotes; the asymptotes are $x = 0$ and $y = 2$; the $x$-intercept is $(3, 0)$."
+     },
+     "working": "Rearrange xy = -6 + 2x to x(y - 2) = -6, so y = 2 - 6/x. The asymptotes are x = 0 and y = 2. The constant -6 is negative, so the branches lie top-left and bottom-right. For the x-intercept set y = 0: 0 = -6 + 2x, so x = 3. That matches option D."
+    },
+    {
+     "instance_id": "q:g10m6s4-1-4:g007-descri",
+     "stem_sha": "ca6e3b6b389515fe",
+     "answer": {
+      "choice": "D",
+      "choice_text": "The branches lie in the top-right and bottom-left regions formed by the asymptotes; the asymptotes are $x = 0$ and $y = 2$; the $x$-intercept is $(-\\frac{3}{2}, 0)$."
+     },
+     "working": "Rearrange xy = 3 + 2x to x(y - 2) = 3, so y = 2 + 3/x. The asymptotes are x = 0 and y = 2. The constant 3 is positive, so the branches lie top-right and bottom-left. For the x-intercept set y = 0: 0 = 3 + 2x, so x = -3/2. That matches option D."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [
+     {
+      "instance_id": "q:g10m6s4-1-4:g002-descri",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "a=2>0 so the true branches are top-right/bottom-left; B puts them top-left/bottom-right (sign-swapped) and keeps y=4 and (-1/2,0) correct. Wrong only in the branches."
+     },
+     {
+      "instance_id": "q:g10m6s4-1-4:g002-descri",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Gives y=2 (the numerator a) as the horizontal asymptote instead of q=4. Definitely wrong, matches the tag."
+     },
+     {
+      "instance_id": "q:g10m6s4-1-4:g002-descri",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Gives y=-4 (sign of q flipped) instead of y=4. Definitely wrong, matches the tag."
+     },
+     {
+      "instance_id": "q:g10m6s4-1-4:g004-descri",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Gives y=-6 (a) as the asymptote instead of q=2; branches and intercept are correct. Wrong and matches the tag."
+     },
+     {
+      "instance_id": "q:g10m6s4-1-4:g004-descri",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "a=-6<0 so the true branches are top-left/bottom-right; B swaps them to top-right/bottom-left. Wrong and matches the tag."
+     },
+     {
+      "instance_id": "q:g10m6s4-1-4:g004-descri",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Gives y=-2 (sign of q flipped) instead of y=2. Wrong and matches the tag."
+     },
+     {
+      "instance_id": "q:g10m6s4-1-4:g007-descri",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "a=3>0 so the true branches are top-right/bottom-left; A swaps them. Asymptote y=2 and intercept (-3/2,0) are correct, so wrong only in the branches, matching the tag."
+     },
+     {
+      "instance_id": "q:g10m6s4-1-4:g007-descri",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Gives y=3 (the numerator a) as the asymptote instead of q=2. Wrong and matches the tag."
+     },
+     {
+      "instance_id": "q:g10m6s4-1-4:g007-descri",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Gives y=-2 (sign of q flipped) instead of y=2. Wrong and matches the tag."
+     }
+    ],
+    "notes": "Checked all three instances by rearranging to y = a/x + q. g002: y = 2/x + 4, so a=2, q=4, asymptotes x=0 and y=4, branches top-right/bottom-left, and 2/x = -4 gives x = -1/2. The key A is right. g004: y = -6/x + 2, so branches top-left/bottom-right, asymptotes x=0 and y=2, and x = 3 (check: -6/3 + 2 = 0). The key D is right. g007: y = 3/x + 2, so branches top-right/bottom-left, asymptotes x=0 and y=2, and x = -3/2 (check: 3/(-3/2) + 2 = 0). The key D is right. Each distractor differs from the key in exactly one component, and that component is wrong and is exactly what its tagged misconception would produce, so none is also correct. The wrong options keep the other two components correct, so each one isolates a single error. The six-step worked solutions are correct and follow the book's method: standard form, sign of a, asymptotes, x-intercept at y=0, no y-intercept. The stem is unambiguous and the numbers are realistic. The key is a full description matching the stem's request."
+   }
+  },
+  {
+   "family_id": "tpl:g10m6s4-1-4:rewrite",
+   "spec_sha": "ce730e934c6ecfb6ea05b8cb43868487e8ba3650e6113474c8092a74ba4c8e90",
+   "answers": [
+    {
+     "instance_id": "q:g10m6s4-1-4:g001-rewrit",
+     "stem_sha": "c408e523269b7b14",
+     "answer": {
+      "value": "-3"
+     },
+     "working": "Solve for y: 4xy = 8 - 12x, so y = (8 - 12x)/(4x) = 2/x - 3. As x goes to infinity, 2/x goes to 0, so y approaches -3."
+    },
+    {
+     "instance_id": "q:g10m6s4-1-4:g003-rewrit",
+     "stem_sha": "3f048a2e1e17e333",
+     "answer": {
+      "value": "-5"
+     },
+     "working": "Solve for y: 5xy = 30 - 25x, so y = (30 - 25x)/(5x) = 6/x - 5. As x goes to infinity, 6/x goes to 0, so y approaches -5."
+    },
+    {
+     "instance_id": "q:g10m6s4-1-4:g008-rewrit",
+     "stem_sha": "7343c90e691c0d55",
+     "answer": {
+      "value": "3"
+     },
+     "working": "Solve for y: 4xy = 12x - 16, so y = (12x - 16)/(4x) = 3 - 4/x. As x goes to infinity, 4/x goes to 0, so y approaches 3."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "Numeric family with no options, so there are no distractors to judge. I re-derived all three instances independently. g001: 4xy = 8 - 12x, so y = 2/x - 3 and k = -3. g003: 5xy = 30 - 25x, so y = 6/x - 5 and k = -5. g008: 4xy = -16 + 12x, so y = -4/x + 3 and k = 3. Each key matches the asymptote the stem asks for, and each is a plain number in the asked form. Each stem describes a graph that really is a hyperbola, since the rewritten form is y = a/x + q with a non-zero. Dividing by x is safe in every case, because x = 0 gives 0 = constant, which is false for the non-zero right-hand sides. The worked solutions follow the book's method of isolating y, rewriting as y = a/x + q and reading off the horizontal asymptote y = q. Each step is arithmetically correct, including the sign handling in g008. The context is a bare algebraic stem with no word problem, and the numbers are clean and reasonable for Grade 10."
+   }
+  },
+  {
+   "family_id": "tpl:g10m6s4-1-4:xintercept",
+   "spec_sha": "12406d0a9e27c51a75a09efcd66ff40beeae91ba1de95ca02332b54d947fe5e4",
+   "answers": [
+    {
+     "instance_id": "q:g10m6s4-1-4:g001-xinter",
+     "stem_sha": "4f8aa5735a7f2ac8",
+     "answer": {
+      "plain": "(3, 0)"
+     },
+     "working": "The x-intercept is where y = 0. Set -12/x + 4 = 0, so 12/x = 4 and x = 3."
+    },
+    {
+     "instance_id": "q:g10m6s4-1-4:g004-xinter",
+     "stem_sha": "d9748203a9f4adbc",
+     "answer": {
+      "plain": "(5, 0)"
+     },
+     "working": "The x-intercept is where y = 0. Set 5/x - 1 = 0, so 5/x = 1 and x = 5."
+    },
+    {
+     "instance_id": "q:g10m6s4-1-4:g005-xinter",
+     "stem_sha": "57e4385f0434ff74",
+     "answer": {
+      "plain": "(-5, 0)"
+     },
+     "working": "The x-intercept is where y = 0. Set 5/x + 1 = 0, so 5/x = -1 and x = -5."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family is a typed-answer family (marker kind coordinates) with no options, so there are no distractors to judge. I re-solved all three instances independently. g001: y = -12/x + 4, set y = 0, so -12/x = -4, -12 = -4x, x = 3. The key (3, 0) is correct. g004: y = 5/x - 1, so 5/x = 1 and x = 5. The key (5, 0) is correct. g005: y = 5/x + 1, so 5/x = -1 and x = -5. The key (-5, 0) is correct. Each key matches its answer_check string and is in the coordinate-pair form the stem asks for, with y = 0. Each of these hyperbolas (a/x + q with q not 0) has exactly one x-intercept, so \"the x-intercept\" is unambiguous. No y-intercept exists because x = 0 is the vertical asymptote, and the closing step says so correctly. The stems are plain function-graph questions with no word problem. The worked steps follow the standard set y = 0, isolate a/x, multiply by x, divide method, and each step is correct. One cosmetic point: g004 step 4 says \"Divide both sides by 1\", which is trivially correct but slightly clumsy because the generator does not skip the step when the divisor is 1. It teaches no error, so it does not justify rejecting the family."
+   }
+  },
+  {
+   "family_id": "tpl:g10m6s4-1-5:asymptote-a",
+   "spec_sha": "fc52699fe4dbb822e30abaa769483caef6ee3dc28f85350fbd4b6ab710c82919",
+   "answers": [
+    {
+     "instance_id": "q:g10m6s4-1-5:g005-asympt",
+     "stem_sha": "6a8078449de4849e",
+     "answer": {
+      "value": "10"
+     },
+     "working": "The horizontal asymptote of y = a/x + q is y = q, so q = 4. Substitute (5, 6): 6 = a/5 + 4, so a/5 = 2 and a = 10."
+    },
+    {
+     "instance_id": "q:g10m6s4-1-5:g007-asympt",
+     "stem_sha": "fef59974da4cdc1e",
+     "answer": {
+      "value": "15"
+     },
+     "working": "The horizontal asymptote is y = q, so q = 2. Substitute (5, 5): 5 = a/5 + 2, so a/5 = 3 and a = 15."
+    },
+    {
+     "instance_id": "q:g10m6s4-1-5:g010-asympt",
+     "stem_sha": "15fbda5f6217dfdc",
+     "answer": {
+      "value": "10"
+     },
+     "working": "The horizontal asymptote is y = q, so q = 5. Substitute (5, 7): 7 = a/5 + 5, so a/5 = 2 and a = 10."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family is numeric with typed answers, so there are no wrong options to judge. The file lists three instances and no answer_check, so I could only check each key against its stem. I checked each by substitution.\n\n- g005: the asymptote is y=4, so q=4. Then 6 = a/5 + 4 gives a=10. Check: 10/5+4 = 6. The key is 10 and the solution reaches it.\n- g007: the asymptote is y=2, so q=2. Then 5 = a/5 + 2 gives a=15. Check: 15/5+2 = 5. The key is 15 and the solution reaches it.\n- g010: the asymptote is y=5, so q=5. Then 7 = a/5 + 5 gives a=10. Check: 10/5+5 = 7. The key is 10 and the solution reaches it.\n\nAll three solutions use the same four steps and every intermediate line is arithmetically correct. They read off q from the horizontal asymptote y=q, substitute the point, multiply by 5 to clear the fraction, then subtract. That is the standard Grade 10 method for y = a/x + q.\n\nThe stems ask for the single value of a, so a numeric key is the asked form. Numbers are realistic and each stem has one unambiguous answer. The mild point is that \"Point A\" refers to a graph that is not shown. The stem gives the asymptote and the coordinates in text, so it is self-contained."
+   }
+  },
+  {
+   "family_id": "tpl:g10m6s4-1-5:both-values",
+   "spec_sha": "756d9c02e66a2583c47bbcceaf19e96314309d84b9d1adaeeebcbb5ada853b05",
+   "answers": [
+    {
+     "instance_id": "q:g10m6s4-1-5:g004-both-v",
+     "stem_sha": "dc6a4eb253f689c5",
+     "answer": {
+      "plain": "[-2, 3]"
+     },
+     "working": "The horizontal asymptote of y = a/x + q is y = q, so q = 3. Substitute (2, 2): 2 = a/2 + 3, so a/2 = -1 and a = -2."
+    },
+    {
+     "instance_id": "q:g10m6s4-1-5:g005-both-v",
+     "stem_sha": "a7ebc3996ecda378",
+     "answer": {
+      "plain": "[-1, -3]"
+     },
+     "working": "The horizontal asymptote is y = q, so q = -3. Substitute (-1, -2): -2 = a/(-1) - 3, so -2 = -a - 3, so a = -1."
+    },
+    {
+     "instance_id": "q:g10m6s4-1-5:g010-both-v",
+     "stem_sha": "557c252b7367d684",
+     "answer": {
+      "plain": "[-1, -4]"
+     },
+     "working": "The horizontal asymptote is y = q, so q = -4. Substitute (-2, -7/2): -7/2 = a/(-2) - 4, so 1/2 = -a/2, so a = -1."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family is a typed answer with no options, so there are no distractors to judge. I re-solved all three instances independently, and each key and each worked solution checks out.\n\n- g004: asymptote y=3 gives q=3. With A(2,2), 2 = a/2 + 3, so a = -2. Check: -2/2 + 3 = 2. The key \"-2, 3\" matches, and the worked steps (multiply by 2 to get 4 = a + 6, then a = -2) are correct.\n- g005: asymptote y=-3 gives q=-3. With A(-1,-2), -2 = a/(-1) - 3, so -a = 1 and a = -1. Check: -1/(-1) - 3 = -2. The key \"-1, -3\" matches. Multiplying by -1 gives 2 = a + 3, so a = -1, which is correct.\n- g010: asymptote y=-4 gives q=-4. With A(-2, -7/2), -7/2 = a/(-2) - 4, so a/(-2) = 1/2 and a = -1. Check: -1/(-2) - 4 = -7/2. The key \"-1, -4\" matches. Multiplying by -2 gives 7 = a + 8, so a = -1, which is correct.\n\nKey form: the stem asks for \"a and q\", the keys are ordered (a, q), and the marker's variables list is [\"a\",\"q\"]. Each answer_check (\"[-2, 3]\", \"[-1, -3]\", \"[-1, -4]\") holds the same two numbers in the same order as its key. Every a is non-zero, so each function is a genuine hyperbola.\n\nContext: the stem is self-contained, because the asymptote and one point on the curve are given without a graph. The numbers are realistic, and the g010 fractional y-coordinate is clean. No ambiguity found.\n\nNon-blocking observation: the key \"-2, 3\" carries no \"a=\" or \"q=\" labels, so a student relies on the stem's \"a and q\" order. The marker's variables list pins that order for checking, so I count this as acceptable."
+   }
+  },
+  {
+   "family_id": "tpl:g10m6s4-1-5:fraction-point",
+   "spec_sha": "5b2e0e1df423fa031c50959ea1c28f5b3e26c48b7d5688d43da7aafb96f4eb42",
+   "answers": [
+    {
+     "instance_id": "q:g10m6s4-1-5:g001-fracti",
+     "stem_sha": "3a0ca34f5e2528e9",
+     "answer": {
+      "plain": "[-8, 1]"
+     },
+     "working": "The horizontal asymptote of y = a/x + q is y = q, so q = 1. Substitute (-3, 11/3): 11/3 = a/(-3) + 1, so -a/3 = 8/3, so a = -8."
+    },
+    {
+     "instance_id": "q:g10m6s4-1-5:g002-fracti",
+     "stem_sha": "aa8b39f3fd1ee39f",
+     "answer": {
+      "plain": "[4, 4]"
+     },
+     "working": "The horizontal asymptote gives q = 4. Substitute (5, 24/5): 24/5 = a/5 + 4, so a/5 = 24/5 - 20/5 = 4/5, so a = 4."
+    },
+    {
+     "instance_id": "q:g10m6s4-1-5:g004-fracti",
+     "stem_sha": "d2f545520ee2a007",
+     "answer": {
+      "plain": "[-3, -1]"
+     },
+     "working": "The horizontal asymptote gives q = -1. Substitute (5, -8/5): -8/5 = a/5 - 1, so a/5 = -8/5 + 5/5 = -3/5, so a = -3."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family is a typed-answer family (marker kind \"values\", variables [a, q]). It has no options, so distractors_ok is vacuously true.\n\nI re-solved all three instances independently, and each key and worked solution is correct.\n- g001: the asymptote y=1 gives q=1. Then 11/3 = a/(-3) + 1, so a/(-3) = 8/3 and a = -8. The step-3 line -11 = a - 3 is correct, so a = -8. The key \"-8, 1\" matches answer_check \"[-8, 1]\".\n- g002: q=4. Then 24/5 = a/5 + 4, so a/5 = 4/5 and a = 4. The step-3 line 24 = a + 20 is correct. The key \"4, 4\" matches \"[4, 4]\".\n- g004: q=-1. Then -8/5 = a/5 - 1, so a/5 = -3/5 and a = -3. The step-3 line -8 = a - 5 is correct. The key \"-3, -1\" matches \"[-3, -1]\".\n\nKey form: the stem asks for \"the values of a and q\", in that order. The key lists a first and then q, which matches the marker's variables order, and the key and answer_check are the same pair in each instance.\n\nSolution method: each solution reads q off the horizontal asymptote, substitutes the point, clears the fraction by multiplying through by x, and solves for a. This is the book's method, and the signs are handled correctly, including the x=-3 case.\n\nContext: the stems are clean. The asymptote gives q directly, and the point is on the graph. The numbers are realistic. The stem needs no figure.\n\nOne weakness, not an error: in g002 a = q = 4, so a student who swaps a and q still gets it marked correct. This family can't tell a swap from a correct answer on that instance. Consider changing the numbers (for example a different asymptote) if g002 is regenerated. It does not teach a wrong answer, so I did not fail context_ok.\n\ng003 is absent from the packet, so I judged only g001, g002 and g004."
+   }
+  },
+  {
+   "family_id": "tpl:g10m6s5-1-1:highest",
+   "spec_sha": "eaae86d382ed6db82c8e407e3ec03ca8ded1b05d6c33fc536d7e7a7c98c0b8f4",
+   "answers": [
+    {
+     "instance_id": "q:g10m6s5-1-1:g002-highes",
+     "stem_sha": "ddc24350321ecc00",
+     "answer": {
+      "choice": "C",
+      "choice_text": "$y=\\left(\\frac{1}{5}\\right)^{x}$"
+     },
+     "working": "At x=-1: 2^(-1)=1/2, 5^(-1)=1/5, (1/2)^(-1)=2, (1/5)^(-1)=5. The largest is 5, from y=(1/5)^x."
+    },
+    {
+     "instance_id": "q:g10m6s5-1-1:g003-highes",
+     "stem_sha": "bf6a308171f000ab",
+     "answer": {
+      "choice": "C",
+      "choice_text": "$y=\\left(\\frac{1}{5}\\right)^{x}$"
+     },
+     "working": "At x=-3: 3^(-3)=1/27, 5^(-3)=1/125, (1/3)^(-3)=27, (1/5)^(-3)=125. The largest is 125, from y=(1/5)^x."
+    },
+    {
+     "instance_id": "q:g10m6s5-1-1:g006-highes",
+     "stem_sha": "bad83b3a8c3bb669",
+     "answer": {
+      "choice": "A",
+      "choice_text": "$y=\\left(\\frac{1}{5}\\right)^{x}$"
+     },
+     "working": "At x=-2: 3^(-2)=1/9, 5^(-2)=1/25, (1/3)^(-2)=9, (1/5)^(-2)=25. The largest is 25, from y=(1/5)^x."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [
+     {
+      "instance_id": "q:g10m6s5-1-1:g002-highes",
+      "option": "A: y=(1/2)^x",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Value at x=-1 is 2, which is less than 5, so it is definitely wrong. It is what a student who knows decreasing graphs are higher at negative x, but picks the one with the larger base (1/2 over 1/5), would choose. This matches decreasing-by-base and is consistent across the three instances."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-1:g002-highes",
+      "option": "B: y=2^x",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Value is 1/2, so it is wrong. It is the smaller-base growth graph, which is higher than 5^x at negative x. A student who stops at the growth graphs and never considers the decreasing ones would choose it. This matches small-base-rising."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-1:g002-highes",
+      "option": "D: y=5^x",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Value is 1/5, so it is wrong. It is the pick of a student who thinks the largest base gives the highest graph, ignoring the negative x. This matches largest-base-highest."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-1:g003-highes",
+      "option": "A: y=3^x",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Value is 1/27, so it is wrong. It is the smaller-base growth graph, so small-base-rising fits."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-1:g003-highes",
+      "option": "B: y=5^x",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Value is 1/125, so it is wrong. It is the largest base, so largest-base-highest fits."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-1:g003-highes",
+      "option": "D: y=(1/3)^x",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Value is 27, which is less than 125, so it is wrong. It is the decreasing graph with the larger base, so decreasing-by-base fits."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-1:g006-highes",
+      "option": "B: y=(1/3)^x",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Value is 9, which is less than 25, so it is wrong. It is the decreasing graph with the larger base, so decreasing-by-base fits."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-1:g006-highes",
+      "option": "C: y=3^x",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Value is 1/9, so it is wrong. It is the smaller-base growth graph, so small-base-rising fits."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-1:g006-highes",
+      "option": "D: y=5^x",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Value is 1/25, so it is wrong. It is the largest base, so largest-base-highest fits."
+     }
+    ],
+    "notes": "All three instances (g002 at x=-1, g003 at x=-3, g006 at x=-2) check out arithmetically. The greatest value is from y=(1/5)^x in each case (5, 125 and 25). The key letter matches that option (C, C, A), and each wrong option is strictly smaller. Each worked solution substitutes into all four graphs and compares the values correctly, and the stem is unambiguous. One limit on this verdict: I could not open the misconception definitions, so I judged the tags by their IDs and by how consistently they map across the three instances. The IDs are decreasing-by-base (the decreasing graph with the larger base), small-base-rising (the smaller-base growth graph) and largest-base-highest (the largest base). Each tagged option is a plausible product of the named error, and none is also correct. The chain \"5>2>1>1/2>1/5\" in g002 includes 1 as a reference point, which is harmless."
+   }
+  },
+  {
+   "family_id": "tpl:g10m6s5-1-1:mirror",
+   "spec_sha": "ac94ef69a3ec0b96b65acb0063ef037f51b1208658cb31472661d5bbc99d4983",
+   "answers": [
+    {
+     "instance_id": "q:g10m6s5-1-1:g006-mirror",
+     "stem_sha": "384f99cc18e04d6a",
+     "answer": {
+      "value": "6"
+     },
+     "working": "P and Q share the y-coordinate 1/125, so PQ is horizontal and its length is the difference of the x-coordinates. For P: 5^x = 1/125 = 5^-3, so x = -3. For Q: (1/5)^x = 1/125 = (1/5)^3, so x = 3. PQ = 3 - (-3) = 6."
+    },
+    {
+     "instance_id": "q:g10m6s5-1-1:g009-mirror",
+     "stem_sha": "9de49a0c386dcebf",
+     "answer": {
+      "value": "4"
+     },
+     "working": "P and Q share the y-coordinate 25, so PQ is horizontal. For P: 5^x = 25 = 5^2, so x = 2. For Q: (1/5)^x = 25 = (1/5)^-2, so x = -2. PQ = 2 - (-2) = 4."
+    },
+    {
+     "instance_id": "q:g10m6s5-1-1:g010-mirror",
+     "stem_sha": "1f344ffdb6f88f96",
+     "answer": {
+      "value": "8"
+     },
+     "working": "P and Q share the y-coordinate 1/16, so PQ is horizontal. For P: 2^x = 1/16 = 2^-4, so x = -4. For Q: (1/2)^x = 1/16 = (1/2)^4, so x = 4. PQ = 4 - (-4) = 8."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family has three instances and answer type numeric, so there are no options and no misconception tags to judge. I checked each instance independently.\n\n- g006 (base 5, y = 1/125): 5^x = 1/125 gives x = -3, so P = (-3, 1/125). (1/5)^x = 1/125 gives x = 3, so Q = (3, 1/125). PQ = 6, which matches the key \"6\".\n- g009 (base 5, y = 25): P = (2, 25) and Q = (-2, 25). The check (1/5)^(-2) = 25 holds. PQ = 4, which matches the key \"4\".\n- g010 (base 2, y = 1/16): P = (-4, 1/16) and Q = (4, 1/16). The check (1/2)^4 = 1/16 holds. PQ = 8, which matches the key \"8\".\n\nKey form: each stem asks for a length and each key is a single positive integer, so the form is right. The answer_check was not in the packet, so I could not compare it to the key; the keys themselves are plain integers.\n\nContext: there is no word problem. The stems are unambiguous: the same y-coordinate puts P and Q on a horizontal line, and each curve is one-to-one, so each point is unique.\n\nSolutions: each follows the same sequence. Find P by solving the exponential, find Q by reflecting in the y-axis, check, then take the horizontal distance. Every step is arithmetically correct, and the reflection argument is valid because (1/b)^x = b^(-x)."
+   }
+  },
+  {
+   "family_id": "tpl:g10m6s5-1-1:quadexp",
+   "spec_sha": "0611ee895c58507141094c3332caabd7b73ac4926d03ae543c5f752e64041f6b",
+   "answers": [
+    {
+     "instance_id": "q:g10m6s5-1-1:g003-quadex",
+     "stem_sha": "c1c5b116b799d9fc",
+     "answer": {
+      "value": "9"
+     },
+     "working": "A is on the y-axis (x=0). f(0)=5^0=1, so A=(0,1). g passes through A: g(0)=q=1, so g(x)=-5x^2+1. At x=1: B=(1,f(1))=(1,5), C=(1,g(1))=(1,-5+1)=(1,-4). Same x-coordinate, so BC = 5-(-4) = 9."
+    },
+    {
+     "instance_id": "q:g10m6s5-1-1:g004-quadex",
+     "stem_sha": "b4085e251786f96c",
+     "answer": {
+      "value": "7"
+     },
+     "working": "A is on the y-axis (x=0). f(0)=4^0=1, so A=(0,1). g passes through A: g(0)=q=1, so g(x)=-4x^2+1. At x=1: B=(1,4), C=(1,-4+1)=(1,-3). BC = 4-(-3) = 7."
+    },
+    {
+     "instance_id": "q:g10m6s5-1-1:g006-quadex",
+     "stem_sha": "0b787afb530f43dc",
+     "answer": {
+      "value": "6"
+     },
+     "working": "A is on the y-axis (x=0). f(0)=2^0=1, so A=(0,1). g passes through A: g(0)=q=1, so g(x)=-5x^2+1. At x=1: B=(1,2), C=(1,-5+1)=(1,-4). BC = 2-(-4) = 6."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family has no options (numeric answer), so there are no distractors to judge. I recomputed all three instances. In general f(x)=b^x passes through A=(0,1), so q=1. Then B=(1,b), C=(1,1-a) and BC=b+a-1. g003 (b=5, a=5) gives B=(1,5), C=(1,-4), BC=9, matching the key. g004 (b=4, a=4) gives B=(1,4), C=(1,-3), BC=7, matching the key. g006 (b=2, a=5) gives B=(1,2), C=(1,-4), BC=6, matching the key. Each key is a single number, which is the form the stem asks for. Each solution runs in the same order: find A from f, find q from A on g, find B, find C, then subtract the y-coordinates, since B and C share an x-coordinate. Every step is arithmetically correct. The stem is unambiguous. A is the common point on the y-axis, and the length is a positive distance that the key reports as one. The numbers are realistic. Two minor points do not affect correctness: the answer has no units, which is appropriate for graph coordinates, and in g003 and g004 the base equals the quadratic coefficient, which is only a numerical coincidence."
+   }
+  },
+  {
+   "family_id": "tpl:g10m6s5-1-2:equation-asymptote-two-points",
+   "spec_sha": "c141126df017a1d726bc0bdecb68781991c72178dbae4b62ffac2c4a6368d6b1",
+   "answers": [
+    {
+     "instance_id": "q:g10m6s5-1-2:g001-equati",
+     "stem_sha": "69687c9866efa80c",
+     "answer": {
+      "plain": "y=3*2^x-5"
+     },
+     "working": "Asymptote y=-5 gives q=-5. f(0)=a+q=-2 gives a=3. f(2)=3b^2-5=7 gives b^2=4, and b>0 so b=2. So f(x)=3*2^x-5. Check: f(0)=3-5=-2, f(2)=12-5=7."
+    },
+    {
+     "instance_id": "q:g10m6s5-1-2:g003-equati",
+     "stem_sha": "fa96fb36ffb2898a",
+     "answer": {
+      "plain": "y=-1*3^x-1"
+     },
+     "working": "Asymptote y=-1 gives q=-1. f(0)=a+q=-2 gives a=-1. f(2)=-b^2-1=-10 gives b^2=9, and b>0 so b=3. So f(x)=-3^x-1. Check: f(0)=-1-1=-2, f(2)=-9-1=-10."
+    },
+    {
+     "instance_id": "q:g10m6s5-1-2:g004-equati",
+     "stem_sha": "2ef9e56f53d8d2c4",
+     "answer": {
+      "plain": "y=1*3^x+5"
+     },
+     "working": "Asymptote y=5 gives q=5. f(0)=a+q=6 gives a=1. f(3)=b^3+5=32 gives b^3=27, so b=3. So f(x)=3^x+5. Check: f(0)=1+5=6, f(3)=27+5=32."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family is a typed-expression family with no options, so there are no distractors to judge. I checked all three instances (g001, g003, g004) by substituting the key back into the stem.\n\n- g001: q=-5 and A(0,-2) give a=3. B(2,7) gives 3b²-5=7, so b²=4 and b=2. The key is y = 3·2^x - 5. Checks: f(0)=-2 and f(2)=7. The key LaTeX and answer_check \"y = 3*2^x - 5\" are the same expression.\n- g003: q=-1 and A(0,-2) give a=-1. B(2,-10) gives -b²-1=-10, so b²=9 and b=3. The key is y = -3^x - 1, which is -(3^x) - 1. Checks: f(0)=-2 and f(2)=-10. The answer_check \"y = -1*3^x - 1\" is equivalent. The graph lies below the asymptote y=-1, which matches a<0.\n- g004: q=5 and A(0,6) give a=1. B(3,32) gives b³=27, so b=3. The key is y = 3^x + 5. Checks: f(0)=6 and f(3)=32. The answer_check \"y = 1*3^x + 5\" is equivalent.\n\nEvery worked solution follows the same sequence: read q from the asymptote, use the y-intercept to find a, use the second point to find b, and take the positive root because b>0. The arithmetic in each step is correct.\n\nThe numbers are realistic and the points are consistent with the asymptote side set by the sign of a. The wording is the usual textbook \"cuts the y-axis\" phrasing and is unambiguous. The condition b>0 makes the root unique.\n\nMinor remarks, none of which I count as defects:\n- The key is written \"y = ...\" while the stem asks for f(x) = ... . This is acceptable because the marker is an equation in x and y. I could not open the grader, so I did not confirm that a student who types \"f(x) = ...\" is accepted.\n- When a=1 or a=-1, the key drops the coefficient, as in 3^x + 5 and -3^x - 1. This is the normal simplest form and is equivalent to a·b^x + q."
+   }
+  },
+  {
+   "family_id": "tpl:g10m6s5-1-2:reflect-after-point",
+   "spec_sha": "42df89c6060eee58bd441c9325222799364fe45c8de2e29a768a93e5467530a4",
+   "answers": [
+    {
+     "instance_id": "q:g10m6s5-1-2:g002-reflec",
+     "stem_sha": "dede209277eaed60",
+     "answer": {
+      "plain": "y = -4*2^x - 5"
+     },
+     "working": "Horizontal asymptote y=5 gives q=5. f(-2)=6 gives a*2^(-2)+5=6, so a/4=1, a=4. f(x)=4*2^x+5. Reflection in the x-axis negates f: g(x)=-4*2^x-5."
+    },
+    {
+     "instance_id": "q:g10m6s5-1-2:g007-reflec",
+     "stem_sha": "4bc54e9b28a41253",
+     "answer": {
+      "plain": "y = -3*2^x - 1"
+     },
+     "working": "Asymptote y=1 gives q=1. f(-1)=2.5 gives a*2^(-1)+1=2.5, so a/2=1.5, a=3. f(x)=3*2^x+1. Reflect in the x-axis: g(x)=-3*2^x-1."
+    },
+    {
+     "instance_id": "q:g10m6s5-1-2:g010-reflec",
+     "stem_sha": "198cbefc2a006d4d",
+     "answer": {
+      "plain": "y = -4*2^x + 1"
+     },
+     "working": "Asymptote y=-1 gives q=-1. f(-1)=1 gives a*2^(-1)-1=1, so a/2=2, a=4. f(x)=4*2^x-1. Reflect in the x-axis: g(x)=-4*2^x+1."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family has three typed-answer instances and no options, so there are no distractors to check. I re-solved each instance independently and all three keys are correct.\n\n- g002: asymptote y=5, so q=5. A(-2,6) gives 6 = a/4 + 5, so a=4 and f=4·2^x+5. Reflecting in the x-axis gives g = -4·2^x - 5, which matches the key.\n- g007: q=1. A(-1,2.5) gives 2.5 = a/2 + 1, so a=3 and g = -3·2^x - 1, which matches the key.\n- g010: q=-1. A(-1,1) gives 1 = a/2 - 1, so a=4, f=4·2^x - 1 and g = -4·2^x + 1, which matches the key.\n\nEach key is the same expression as its answer_check (for example \"y = (-4) \\times 2^{x} - 5\" and \"y = -4*2^x - 5\"). The form c·2^x+d is met.\n\nThe worked solutions follow the book's method in the same seven steps: read q off the asymptote, substitute the point, isolate the power, divide, form f, negate, expand. Every arithmetic step is correct, including 2^-2=0.25, 2^-1=0.5 and the sign handling in -(4·2^x - 1). The numbers are realistic and the stems are unambiguous.\n\nTwo cosmetic points, neither of which I counted against the family:\n- The key is written \"y = ...\" while the stem says g(x)=..., so the marker should accept \"g(x) = ...\" as well.\n- The displayed key wraps the negative coefficient as \"(-4) \\times\", which is a little awkward but equivalent."
+   }
+  },
+  {
+   "family_id": "tpl:g10m6s5-1-3:rangeabove",
+   "spec_sha": "0b543669913e24e060e31c4fbded29f6360967244c27a48ff8f6d63bd9fa5b1c",
+   "answers": [
+    {
+     "instance_id": "q:g10m6s5-1-3:g002-rangea",
+     "stem_sha": "e389e72977b47bab",
+     "answer": {
+      "choice": "B",
+      "choice_text": "Domain: $x \\in \\mathbb{R}$; range: $y \\in (-1, \\infty)$"
+     },
+     "working": "The domain of 2^x is all reals. 2^x takes every value in (0, ∞), and it never reaches 0. Subtracting 1 shifts the graph down by 1, so f(x) = 2^x - 1 takes every value in (-1, ∞) and never reaches -1. The horizontal asymptote is y = -1."
+    },
+    {
+     "instance_id": "q:g10m6s5-1-3:g003-rangea",
+     "stem_sha": "b21a49c0ed3cbe59",
+     "answer": {
+      "choice": "C",
+      "choice_text": "Domain: $x \\in \\mathbb{R}$; range: $y \\in (1, \\infty)$"
+     },
+     "working": "The domain of 4^x is all reals. 4^x takes every value in (0, ∞). Adding 1 shifts the graph up by 1, so f(x) = 4^x + 1 takes every value in (1, ∞) and never reaches 1. The horizontal asymptote is y = 1."
+    },
+    {
+     "instance_id": "q:g10m6s5-1-3:g010-rangea",
+     "stem_sha": "60b26734aae8dab1",
+     "answer": {
+      "choice": "B",
+      "choice_text": "Domain: $x \\in \\mathbb{R}$; range: $y \\in (-6, \\infty)$"
+     },
+     "working": "The domain of 2^x is all reals. 2^x takes every value in (0, ∞). Subtracting 6 shifts the graph down by 6, so f(x) = 2^x - 6 takes every value in (-6, ∞) and never reaches -6. The horizontal asymptote is y = -6, and the endpoint is open."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "All three instances (g002: 2^x - 1, g003: 4^x + 1, g010: 2^x - 6) check out. The range is (q, infinity) with a round bracket, so the keys are B, C and B respectively, and the stem asks for domain and range, which every option states. Distractors: in each instance the three tagged wrong options are definitely wrong, and each is what the tagged error produces.\n- direction-reversed gives (-inf, q), which is the graph lying below the asymptote.\n- endpoint-included gives [q, inf), which is the closed bracket on the asymptote value.\n- range-from-zero gives (0, inf), which ignores the vertical shift q.\nNo option is also correct, and no label is mismatched. All four options per instance share the correct domain R, so the range alone separates them.\nSolutions: each reaches its key by the book's method. The domain is R, then compare with y = ab^x + q (a = 1 > 0, q given), then the graph lies above y = q, then the asymptote is never reached, so a round bracket. The arithmetic on q and the restated asymptote is right in all three.\nOne non-blocking wording nit in step 3, for a future rewrite pass. 'Because a > 0, the power 2^x is positive' attributes the positivity of b^x to a. It is really b > 0 that makes b^x positive, and a > 0 that keeps a*b^x positive. Here a = 1, so the conclusion is unaffected and the solution is not wrong. A cleaner sentence would be 'Because b^x > 0 and a > 0, ab^x > 0'.\nContext: no word problem, and the numbers are ordinary.",
+    "distractors": [
+     {
+      "instance_id": "q:g10m6s5-1-3:g002-rangea",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "(-inf, -1) is the direction-reversed error: the graph lies above y = -1, not below it. Definitely wrong."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-3:g002-rangea",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "[-1, inf) is the endpoint-included error: the asymptote is never reached, so the bracket must be round. Definitely wrong."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-3:g002-rangea",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "(0, inf) is the range-from-zero error: it ignores the shift q = -1, since 2^x - 1 takes values between -1 and 0. Definitely wrong."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-3:g003-rangea",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "(0, inf) is the range-from-zero error: it ignores the shift q = 1, since 4^x + 1 never takes values up to 1. Definitely wrong."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-3:g003-rangea",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "(-inf, 1) is the direction-reversed error: the graph lies above y = 1. Definitely wrong."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-3:g003-rangea",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "[1, inf) is the endpoint-included error: 4^x + 1 never equals 1. Definitely wrong."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-3:g010-rangea",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "[-6, inf) is the endpoint-included error: -6 is the asymptote and is never reached. Definitely wrong."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-3:g010-rangea",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "(-inf, -6) is the direction-reversed error: the graph lies above y = -6. Definitely wrong."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-3:g010-rangea",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "(0, inf) is the range-from-zero error: it ignores the shift q = -6, since 2^x - 6 takes values between -6 and 0. Definitely wrong."
+     }
+    ]
+   }
+  },
+  {
+   "family_id": "tpl:g10m6s5-1-3:twographs",
+   "spec_sha": "4fa6e547c46ca98b44060faddce9a791057a7c1ecdef1c2e1cb79bb95d0e28d3",
+   "answers": [
+    {
+     "instance_id": "q:g10m6s5-1-3:g004-twogra",
+     "stem_sha": "bdaf46b535932ba3",
+     "answer": {
+      "choice": "C",
+      "choice_text": "$f$: $y \\in (-4, \\infty)$; $g$: $y \\in (-\\infty, -4)$"
+     },
+     "working": "4^x > 0 for all x. For f = 3*4^x - 4, 3*4^x > 0 so f > -4, range (-4, inf). For g = -3*4^x - 4, -3*4^x < 0 so g < -4, range (-inf, -4). This matches option C."
+    },
+    {
+     "instance_id": "q:g10m6s5-1-3:g006-twogra",
+     "stem_sha": "0bcbae965072388f",
+     "answer": {
+      "choice": "A",
+      "choice_text": "$f$: $y \\in (-6, \\infty)$; $g$: $y \\in (-\\infty, -6)$"
+     },
+     "working": "5^x > 0 for all x. For f = 2*5^x - 6, 2*5^x > 0 so f > -6, range (-6, inf). For g = -2*5^x - 6, -2*5^x < 0 so g < -6, range (-inf, -6). This matches option A."
+    },
+    {
+     "instance_id": "q:g10m6s5-1-3:g010-twogra",
+     "stem_sha": "ba0289b2e6bec03e",
+     "answer": {
+      "choice": "A",
+      "choice_text": "$f$: $y \\in (6, \\infty)$; $g$: $y \\in (-\\infty, 6)$"
+     },
+     "working": "5^x > 0 for all x. For f = 2*5^x + 6, 2*5^x > 0 so f > 6, range (6, inf). For g = -2*5^x + 6, -2*5^x < 0 so g < 6, range (-inf, 6). This matches option A."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I checked all three instances (g004, g006, g010) by recomputing both ranges and each tagged option.\n\nKeys: for f(x) = a·b^x + q with a>0, the range is (q, ∞). For g with a<0, the range is (-∞, q). Both are correct for all three instances:\n- g004: f (-4, ∞), g (-∞, -4). Key C.\n- g006: f (-6, ∞), g (-∞, -6). Key A.\n- g010: f (6, ∞), g (-∞, 6). Key A.\nThe letters in correct_answer match the untagged option in each instance. The key states the range of f and the range of g in interval notation, which is the form the stem asks for.\n\nDistractors, the same pattern in every instance:\n- range-from-zero gives f (0, ∞) and g (-∞, 0). This is what a student produces by using the sign of a and dropping the shift q. It is wrong because q is never 0 here.\n- direction-reversed gives f (-∞, q) and g (q, ∞). This is the swapped ranges, which is exactly that error, and it is wrong.\n- sign-of-a-ignored gives both ranges as (q, ∞). That is what a student produces by treating g like f, and g's range is wrong.\nNo wrong option equals the key, and no option is also correct. The three tagged options are distinct from each other in every instance. The q = +6 case (g010) still keeps range-from-zero distinct from the key, since 0 ≠ 6.\n\nSolutions: each follows the book's method. Read off a and q, then use the sign of a to show a·b^x stays positive or negative, so the graph never reaches y = q. The inequality direction and the interval notation are correct in every step, and b = 4 or 5 is a valid base.\n\nContext: there is no word problem. The stem is unambiguous and the numbers are ordinary for Grade 10. I found nothing to reject.",
+    "distractors": [
+     {
+      "instance_id": "q:g10m6s5-1-3:g004-twogra",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Ignoring q and using only the sign of a gives f (0,∞) and g (-∞,0), which is range-from-zero. It is wrong because q=-4."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-3:g004-twogra",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "The two ranges swapped (f below -4, g above -4) is direction-reversed, and it is wrong."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-3:g004-twogra",
+      "option": "C",
+      "verdict": "UNTAGGED_OK",
+      "why": "This is the key and it is correct."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-3:g004-twogra",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Both ranges (-4,∞) is what a student gets by ignoring the sign of a, and g's range is wrong."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-3:g006-twogra",
+      "option": "A",
+      "verdict": "UNTAGGED_OK",
+      "why": "This is the key and it is correct."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-3:g006-twogra",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "f (0,∞) and g (-∞,0) is range-from-zero, and it is wrong because q=-6."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-3:g006-twogra",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Both ranges (-6,∞) is sign-of-a-ignored, and g's range is wrong."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-3:g006-twogra",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "The swapped ranges is direction-reversed, and it is wrong."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-3:g010-twogra",
+      "option": "A",
+      "verdict": "UNTAGGED_OK",
+      "why": "This is the key and it is correct."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-3:g010-twogra",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Both ranges (6,∞) is sign-of-a-ignored, and g's range is wrong."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-3:g010-twogra",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "f (-∞,6) and g (6,∞) is direction-reversed, and it is wrong."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-3:g010-twogra",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "f (0,∞) and g (-∞,0) is range-from-zero, ignoring q=6, and it is wrong."
+     }
+    ]
+   }
+  },
+  {
+   "family_id": "tpl:g10m6s5-1-3:unknownq",
+   "spec_sha": "813c141bea1afe06e2a87810dd4c9a93ae8ad37d9b7e23b6f3fac22fb06783e1",
+   "answers": [
+    {
+     "instance_id": "q:g10m6s5-1-3:g002-unknow",
+     "stem_sha": "12a5782600417e2c",
+     "answer": {
+      "choice": "B",
+      "choice_text": "$y \\in (-\\infty, 10)$"
+     },
+     "working": "Substitute (2, -6): -4*2^2 + q = -6, so -16 + q = -6, q = 10. Since -4*2^x is always negative and approaches 0 from below, g(x) < q = 10. Range is (-inf, 10)."
+    },
+    {
+     "instance_id": "q:g10m6s5-1-3:g004-unknow",
+     "stem_sha": "5e3e537ed807a160",
+     "answer": {
+      "choice": "A",
+      "choice_text": "$y \\in (-\\infty, 4)$"
+     },
+     "working": "Substitute (1, -5): -3*3^1 + q = -5, so -9 + q = -5, q = 4. Since -3*3^x < 0 and tends to 0, g(x) < 4. Range is (-inf, 4)."
+    },
+    {
+     "instance_id": "q:g10m6s5-1-3:g008-unknow",
+     "stem_sha": "b94dec70fb178f65",
+     "answer": {
+      "choice": "A",
+      "choice_text": "$y \\in (-\\infty, 13)$"
+     },
+     "working": "Substitute (2, -5): -2*3^2 + q = -5, so -18 + q = -5, q = 13. Since -2*3^x < 0 and tends to 0, g(x) < 13. Range is (-inf, 13)."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I re-solved all three instances independently. g002: -6 = -16 + q gives q = 10 and range (-∞, 10), key B. g004: -5 = -9 + q gives q = 4 and range (-∞, 4), key A. g008: -5 = -18 + q gives q = 13 and range (-∞, 13), key A. The keys are correct, and each is asked in the form the stem wants, an interval for the range with a round bracket on the unreached asymptote. Each worked solution follows the book's method of substituting the point, solving for q, then reading the range from the sign of a (a < 0 gives y < q). All five steps are correct in all three instances. Every tagged wrong option is what a student making that error would produce, and none is also correct. sign-of-a-ignored: the right q with the direction flipped, e.g. (10, ∞). solve-q-sign: q = y - (a·b^x) instead of y + (a·b^x), giving -6 - 16 = -22, -5 - 9 = -14 and -5 - 18 = -23, which match the options. point-y-as-q: q taken as the point's y-value, keeping the correct direction, giving -6, -5 and -5. The wrong options are distinct from each other and from the key, and the key position varies (B, A, A). The stems are sensible and unambiguous: base and a are given and only q is unknown. The numbers are realistic and no word problem is involved. Minor, non-blocking: step 2 says \"Calculate the power\" but computes the product a·b^x, which is harmless.",
+    "distractors": [
+     {
+      "instance_id": "q:g10m6s5-1-3:g002-unknow",
+      "option": "A: y ∈ (10, ∞)",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Correct q = 10 but the negative a is ignored, so the range is flipped to y > q. Definitely wrong, since -4·2^x < 0."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-3:g002-unknow",
+      "option": "C: y ∈ (-∞, -22)",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Sign slip when solving -6 = -16 + q: q = -6 - 16 = -22, then a < 0 gives y < -22. Wrong, because q = 10."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-3:g002-unknow",
+      "option": "D: y ∈ (-∞, -6)",
+      "verdict": "IS_THAT_ERROR",
+      "why": "The y-coordinate of the point is taken as q, with the correct direction. Wrong, because the graph passes through y = -6 and the asymptote is y = 10."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-3:g004-unknow",
+      "option": "B: y ∈ (-∞, -5)",
+      "verdict": "IS_THAT_ERROR",
+      "why": "The point's y-value -5 is taken as q. Wrong, because q = 4."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-3:g004-unknow",
+      "option": "C: y ∈ (4, ∞)",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Correct q = 4 but the sign of a is ignored, so the direction is flipped. Wrong."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-3:g004-unknow",
+      "option": "D: y ∈ (-∞, -14)",
+      "verdict": "IS_THAT_ERROR",
+      "why": "q = -5 - 9 = -14 is the sign error in solving -5 = -9 + q. Wrong, because q = 4."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-3:g008-unknow",
+      "option": "B: y ∈ (-∞, -23)",
+      "verdict": "IS_THAT_ERROR",
+      "why": "q = -5 - 18 = -23 is the sign error in solving -5 = -18 + q. Wrong, because q = 13."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-3:g008-unknow",
+      "option": "C: y ∈ (-∞, -5)",
+      "verdict": "IS_THAT_ERROR",
+      "why": "The point's y-value is taken as q. Wrong, because q = 13."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-3:g008-unknow",
+      "option": "D: y ∈ (13, ∞)",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Correct q = 13 but the sign of a is ignored, so the direction is flipped. Wrong."
+     }
+    ]
+   }
+  },
+  {
+   "family_id": "tpl:g10m6s5-1-4:exactxint",
+   "spec_sha": "1cd59320752f92818a6432e0d131b2aaac23b0ecdb4ddf719b08bf5178a3476e",
+   "answers": [
+    {
+     "instance_id": "q:g10m6s5-1-4:g003-exactx",
+     "stem_sha": "d61845ae915a6694",
+     "answer": {
+      "plain": "(2, 0)"
+     },
+     "working": "The x-intercept is where y = 0. 3*4^x - 48 = 0, so 3*4^x = 48 and 4^x = 16 = 4^2, giving x = 2."
+    },
+    {
+     "instance_id": "q:g10m6s5-1-4:g009-exactx",
+     "stem_sha": "2daa29f1dac454da",
+     "answer": {
+      "plain": "(2, 0)"
+     },
+     "working": "Set y = 0. 4*5^x - 100 = 0, so 4*5^x = 100 and 5^x = 25 = 5^2, giving x = 2."
+    },
+    {
+     "instance_id": "q:g10m6s5-1-4:g010-exactx",
+     "stem_sha": "2857bbf9f11111cc",
+     "answer": {
+      "plain": "(1, 0)"
+     },
+     "working": "Set y = 0. -2*4^x + 8 = 0, so -2*4^x = -8 and 4^x = 4 = 4^1, giving x = 1."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "I checked each instance by hand and all three are correct. The family is typed-answer, so there are no options and no distractors to judge. g003: 0 = 3·4^x − 48 gives 16 = 4^x, so x = 2, and the key (2, 0) holds (3·16 − 48 = 0). g009: 0 = 4·5^x − 100 gives 25 = 5^x, so x = 2, and the key (2, 0) holds (4·25 − 100 = 0). g010: 0 = −2·4^x + 8 gives −8 = −2·4^x, then 4 = 4^x, so x = 1, and the key (1, 0) holds (−2·4 + 8 = 0). The worked steps are in the same order in all three: set y = 0, move the constant, divide by the coefficient, write the right side as a power of the base, equate exponents, state the point. Signs are handled correctly in g010. The stem asks for a point (x, y), and the key and answer_check are both \"(2, 0)\" or \"(1, 0)\", the same expression, with y = 0 stated explicitly. Every instance has an exact, positive power on one side, so the x-intercept exists and is an integer, with realistic numbers. There is no word problem. Minor, not a defect: g010 step 5 writes 4 as 4^1, which is trivial but correct and consistent with the method."
+   }
+  },
+  {
+   "family_id": "tpl:g10m6s5-1-4:noxint",
+   "spec_sha": "00b6943ff4513e7cf036d4adbc943aab697adecb881a6cddb5ee3cb1fda8b66a",
+   "answers": [
+    {
+     "instance_id": "q:g10m6s5-1-4:g001-noxint",
+     "stem_sha": "df4b7824bee1cad8",
+     "answer": {
+      "choice": "B",
+      "choice_text": "$y=-6\\cdot 3^{x} - 8$"
+     },
+     "working": "For y = a*b^x + c with b > 0, b^x is always positive. Setting y = 0 gives b^x = -c/a, which has a solution only if -c/a > 0, i.e. a and c have opposite signs. No x-intercept means a and c have the same sign. A: 4 and -9, opposite, so it crosses. B: -6 and -8, same sign, so b^x = -8/6 < 0 has no solution and there is no x-intercept. C: 5 and -9, opposite, so it crosses. D: -4 and 7, opposite, so it crosses. Only B has no x-intercept."
+    },
+    {
+     "instance_id": "q:g10m6s5-1-4:g009-noxint",
+     "stem_sha": "df4b7824bee1cad8",
+     "answer": {
+      "choice": "D",
+      "choice_text": "$y=3\\cdot 3^{x} + 3$"
+     },
+     "working": "Same test: y = a*b^x + c has an x-intercept only if -c/a > 0, i.e. a and c have opposite signs. A: 3 and -7, opposite, so it crosses. B: -5 and 5, opposite, so 5^x = 1 and x = 0 works, so it crosses. C: 4 and -9, opposite, so it crosses. D: 3 and 3, same sign, so 3^x = -1 has no solution and there is no x-intercept. Only D has none."
+    },
+    {
+     "instance_id": "q:g10m6s5-1-4:g010-noxint",
+     "stem_sha": "df4b7824bee1cad8",
+     "answer": {
+      "choice": "C",
+      "choice_text": "$y=2\\cdot 5^{x} + 1$"
+     },
+     "working": "Same test: an x-intercept needs a and c with opposite signs, so that b^x = -c/a > 0. A: -4 and 5, opposite, so 4^x = 5/4 has a solution and it crosses. B: 3 and -5, opposite, so it crosses. C: 2 and 1, same sign, so 5^x = -1/2 has no solution and there is no x-intercept. D: -6 and 6, opposite, so 3^x = 1 gives x = 0 and it crosses. Only C has none."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I checked every option in all three instances by hand using the book's method: set y=0 to get b^x = -q/a. An x-intercept exists only when -q/a > 0, so there is none when a and q have the same sign.\n\nKeys:\n- g001: key B, y=-6*3^x-8, gives 3^x=-4/3. Options A, C and D give 9/4, 9/5 and 7/4, so each has an intercept.\n- g009: key D, y=3*3^x+3, gives 3^x=-1. Options A, B and C give 7/3, 1 and 9/4. B gives x=0, which is still a genuine intercept at the origin.\n- g010: key C, y=2*5^x+1, gives 5^x=-1/2. Options A, B and D give 5/4, 5/3 and 1, so each has an intercept.\n- In every instance exactly one option lacks an intercept, so \"exactly one\" is true and each key letter matches its option text.\n\nSolutions: every algebra step is correct, and the positive/negative verdicts are right. The wording \"there is an x-intercept only if -q/a is positive\" is used as if it were \"if and only if\". That is true here because b>0 and b≠1, so it is not an error. The functions are walked in an order that differs from A to D, but the text never cites letters, so there is no mismatch.\n\nDistractors: the tagged options match their errors.\n- positive-a-stays-above sits on an option with a>0 and q<0 (g001 A, g009 A, g010 B). The student reasons that a>0 puts the graph above the x-axis.\n- negative-a-stays-below sits on an option with a<0 and q>0 (g001 D, g009 B, g010 D).\n- power-never-zero is the generic claim that b^x never reaches 0, so the student thinks there is never an intercept. It would produce any option.\n\nTwo caveats, neither of which makes an option wrong:\n1. The power-never-zero option is structurally identical to another tagged distractor. In g001 and g009 it matches the positive-a option (a>0, q<0). In g010 it matches the negative-a option (a<0, q>0): g010 A and D are both a<0, q>0. So a pick of that option cannot reliably be attributed to power-never-zero. This is forced by the maths, because only the two opposite-sign patterns have an intercept, so three distractors must overlap.\n2. Each key shares the sign of a with one a-sign misconception: g001 B has a<0, and g009 D and g010 C have a>0. A student holding that misconception can land on the key for the wrong reason. This too is inherent in the design.\n\nI judge both acceptable for a pass. The misconception descriptions were not in the file, so the attributions above rest on the misconception ids alone.",
+    "distractors": [
+     {
+      "instance_id": "q:g10m6s5-1-4:g001-noxint",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "4*2^x-9 has a>0, q<0, so the student sees a>0 and wrongly concludes the graph stays above the axis. It does have an intercept (2^x=9/4), so it is wrong."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-4:g001-noxint",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "5*4^x-9 does have an intercept (4^x=9/5), so it is wrong. It fits the claim that a power is never 0, so there is no intercept, but it is structurally the same as option A, so the attribution is weak."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-4:g001-noxint",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "-4*2^x+7 has a<0, q>0, so the student thinks a<0 keeps the graph below the axis. It does have an intercept (2^x=7/4), so it is wrong."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-4:g009-noxint",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "3*5^x-7 has a>0, q<0, so it fits positive-a-stays-above. It has an intercept (5^x=7/3), so it is wrong."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-4:g009-noxint",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "-5*5^x+5 has a<0, q>0, so it fits negative-a-stays-below. It meets the axis at x=0 (5^x=1), so it is genuinely wrong."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-4:g009-noxint",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "4*3^x-9 has an intercept (3^x=9/4), so it is wrong. It fits power-never-zero but is structurally the same as option A, so the attribution is weak."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-4:g010-noxint",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "-4*4^x+5 has an intercept (4^x=5/4), so it is wrong. It fits power-never-zero but is structurally the same as option D (a<0, q>0), so the attribution is ambiguous."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-4:g010-noxint",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "3*4^x-5 has a>0, q<0, so it fits positive-a-stays-above. It has an intercept (4^x=5/3), so it is wrong."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-4:g010-noxint",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "-6*3^x+6 has a<0, q>0, so it fits negative-a-stays-below. It meets the axis at x=0 (3^x=1), so it is genuinely wrong."
+     }
+    ]
+   }
+  },
+  {
+   "family_id": "tpl:g10m6s5-1-4:roundxint",
+   "spec_sha": "c88974c0049af34ca551ef30ff446131b682e96027f8a6352b22adde7a4f4932",
+   "answers": [
+    {
+     "instance_id": "q:g10m6s5-1-4:g004-roundx",
+     "stem_sha": "a49873ffd25980fc",
+     "answer": {
+      "value": "-2.3"
+     },
+     "working": "Set y=0: 5·2^x - 1 = 0, so 2^x = 1/5 = 0.2. Then x = log2(0.2) = -log2(5) = -2.3219..., which rounds to -2.3."
+    },
+    {
+     "instance_id": "q:g10m6s5-1-4:g007-roundx",
+     "stem_sha": "9b17b5eeda53a9db",
+     "answer": {
+      "value": "2.2"
+     },
+     "working": "Set y=0: (2/3)·2^x = 3, so 2^x = 9/2 = 4.5. Then x = log2(4.5) = 2.1699..., which rounds to 2.2."
+    },
+    {
+     "instance_id": "q:g10m6s5-1-4:g010-roundx",
+     "stem_sha": "2c06d6399648d8d3",
+     "answer": {
+      "value": "0.6"
+     },
+     "working": "Set y=0: 2·2^x = 3, so 2^x = 1.5. Then x = log2(1.5) = 0.5850..., which rounds to 0.6."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family has no options (numeric typed answer), so distractors_ok is vacuously true. I checked all three instances independently.\n\n- g004 (y = 5·2^x − 1): 2^x = 1/5, so x = log2(0.2) = −2.3219, which rounds to −2.3. The bracketing values 2^−2.35 ≈ 0.1961 and 2^−2.25 ≈ 0.2102 are correct, and 0.196 < 0.2 < 0.210. Key −2.3 is correct.\n- g007 (y = (2/3)·2^x − 3): 3 ÷ (2/3) = 9/2, so x = log2(4.5) = 2.1699, which rounds to 2.2. The bracketing values 2^2.15 ≈ 4.438 and 2^2.25 ≈ 4.757 are correct. Key 2.2 is correct.\n- g010 (y = 2·2^x − 3): 2^x = 3/2, so x = 0.585, which rounds to 0.6. The bracketing values 2^0.55 ≈ 1.464 and 2^0.65 ≈ 1.569 are correct. Key 0.6 is correct.\n\nKey form: each stem asks for the x-coordinate to one decimal place, and each key is a single number in that form. I could not see answer_check, so I could not compare it with the keys.\n\nContext: these are pure function questions with no word problem, and the stems are unambiguous.\n\nSolution: the steps run in a consistent order (set y = 0, isolate the power, bracket the exponent between integers, test the rounding boundaries). The arithmetic is correct and each one reaches its key. Step 6 does not say why the boundaries −2.35 and −2.25 (or 2.15 and 2.25, 0.55 and 0.65) are the ones to test. The one-decimal candidate is not named first, so the step is a small leap for a student. It is not an error, and I did not reject the family for it. A one-line fix would be to say \"the likely candidate is −2.3, so test the rounding boundaries −2.35 and −2.25\"."
+   }
+  },
+  {
+   "family_id": "tpl:g10m6s5-1-4:yintercept",
+   "spec_sha": "de88bc570b2e3065ac17f43e16d982f9365ac00af3c3bd4409a8717c9cb20f3c",
+   "answers": [
+    {
+     "instance_id": "q:g10m6s5-1-4:g002-yinter",
+     "stem_sha": "7486b9157b4178dc",
+     "answer": {
+      "plain": "(0, -7)"
+     },
+     "working": "The y-intercept is where x = 0. Since 5^0 = 1, y = -6*1 - 1 = -7."
+    },
+    {
+     "instance_id": "q:g10m6s5-1-4:g005-yinter",
+     "stem_sha": "23f71332eb54c15b",
+     "answer": {
+      "plain": "(0, -12)"
+     },
+     "working": "Set x = 0. Since 2^0 = 1, y = -4*1 - 8 = -12."
+    },
+    {
+     "instance_id": "q:g10m6s5-1-4:g009-yinter",
+     "stem_sha": "8e9bb97ddd3689b1",
+     "answer": {
+      "plain": "(0, 3)"
+     },
+     "working": "Set x = 0. Since 10^0 = 1, y = -5*1 + 8 = 3."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "Typed-answer family with no options, so there are no distractors to judge. I recomputed all three instances by setting x=0 and using b^0=1. g002: y=-6·5^0-1=-6-1=-7, key (0, -7). g005: y=-4·2^0-8=-4-8=-12, key (0, -12). g009: y=-5·10^0+8=-5+8=3, key (0, 3). The key matches answer_check and the marker key in every instance, with the same string and spacing. The stem asks for a point (x, y), and each key is a point with x=0. The expression -6·5^x - 1 is unambiguous because the exponent binds before the multiplication, and no word problem is involved. Each worked solution follows the same four steps: set x=0, substitute, use \"any non-zero number to the power 0 is 1\", then state the point. The arithmetic in each is correct. The only thing I could not verify is whether the answer checker accepts spacing variants such as \"(0,-7)\". That is checker behaviour, not a defect in the family."
+   }
+  },
+  {
+   "family_id": "tpl:g10m6s5-1-5:describe",
+   "spec_sha": "4a8fde85d4a3fc1d127580b1e1cc67f9f21f46e2f4b0549319f3469db2272356",
+   "answers": [
+    {
+     "instance_id": "q:g10m6s5-1-5:g001-descri",
+     "stem_sha": "d62f5e493fccde9e",
+     "answer": {
+      "choice": "B",
+      "choice_text": "It falls as $x$ increases, has the horizontal asymptote $y=4$ and cuts the $y$-axis at $(0, -1)$."
+     },
+     "working": "y = -5*4^x + 4. Coefficient -5 is negative and base 4 > 1, so the graph falls as x increases. Horizontal asymptote is the added constant, y = 4. At x = 0: -5*1 + 4 = -1, so the y-intercept is (0, -1). This matches B."
+    },
+    {
+     "instance_id": "q:g10m6s5-1-5:g004-descri",
+     "stem_sha": "bff4ff6356bad1b5",
+     "answer": {
+      "choice": "C",
+      "choice_text": "It falls as $x$ increases, has the horizontal asymptote $y=-2$ and cuts the $y$-axis at $(0, -6)$."
+     },
+     "working": "y = -4*4^x - 2. Coefficient -4 is negative and base 4 > 1, so the graph falls as x increases. Horizontal asymptote is y = -2. At x = 0: -4*1 - 2 = -6, so the y-intercept is (0, -6). This matches C."
+    },
+    {
+     "instance_id": "q:g10m6s5-1-5:g010-descri",
+     "stem_sha": "4f662b444979219b",
+     "answer": {
+      "choice": "D",
+      "choice_text": "It rises as $x$ increases, has the horizontal asymptote $y=1$ and cuts the $y$-axis at $(0, 5)$."
+     },
+     "working": "y = 4*3^x + 1. Coefficient 4 is positive and base 3 > 1, so the graph rises as x increases. Horizontal asymptote is y = 1. At x = 0: 4*1 + 1 = 5, so the y-intercept is (0, 5). This matches D."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [
+     {
+      "instance_id": "q:g10m6s5-1-5:g001-descri",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Dropping a=-5 gives y=4^x+4, which rises and has y-intercept 1+4=5. Matches (0,5) and 'rises'. Wrong for the real function."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-5:g001-descri",
+      "option": "B",
+      "verdict": "UNTAGGED_OK",
+      "why": "Key. a=-5<0 and b=4>1 so it falls. Asymptote y=4. Intercept -5+4=-1."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-5:g001-descri",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Direction flipped (rises), with asymptote and intercept (0,-1) correct. This is exactly a rising/falling mix-up. Definitely wrong because a<0 makes the graph fall."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-5:g001-descri",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Reads the y-intercept straight from a=-5 and forgets b^0=1 and +q. Direction and asymptote are right. Intercept is -1, so it is wrong."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-5:g004-descri",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Takes the intercept as a=-4 (ignoring +q). Direction and asymptote right. True intercept is -6, so wrong."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-5:g004-descri",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Says rises instead of falls; asymptote y=-2 and intercept (0,-6) are right. A pure direction flip. Wrong since a=-4<0."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-5:g004-descri",
+      "option": "C",
+      "verdict": "UNTAGGED_OK",
+      "why": "Key. a<0, b>1 so it falls; asymptote y=-2; intercept -4-2=-6."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-5:g004-descri",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Leaving out a gives y=4^x-2, which rises and has intercept 1-2=-1. Matches. Wrong for the real function."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-5:g010-descri",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Takes the intercept as a=4, ignoring b^0=1 and +q. Rises and asymptote are right. True intercept is 5, so wrong."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-5:g010-descri",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Leaving out a gives y=3^x+1, which rises and has intercept 1+1=2. Matches. Wrong, since the true intercept is 5."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-5:g010-descri",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Says falls although a>0 and b>1; asymptote and (0,5) correct. Pure direction flip. Wrong."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-5:g010-descri",
+      "option": "D",
+      "verdict": "UNTAGGED_OK",
+      "why": "Key. a>0, b>1 so it rises; asymptote y=1; intercept 4+1=5."
+     }
+    ],
+    "notes": "I checked all three instances (g001: y=-5*4^x+4, g004: y=-4*4^x-2, g010: y=4*3^x+1). Each has exactly one correct option and the lettered key points to it: B, C and D respectively. Each wrong option differs from the key in exactly one way, and that way matches its misconception tag. 'Leaves out a' gives direction as if a=1 and intercept 1+q. 'Intercept from the number' gives (0,a). 'Rising/falling mixed up' flips only the direction. No wrong option is also correct, and no two options in an instance are identical. Every worked solution is correct step by step. It reads a, b and q, gives the direction from the signs of a and b, takes the asymptote as y=q, and gets the intercept by substituting x=0. The arithmetic is right in all three. The stem asks which description matches, and the key gives direction, asymptote and y-intercept in full. There is no word problem, and the numbers are ordinary Grade 10 values. One minor point: in g001 option C (rises, with the intercept correct) could also be read as ignoring the sign of a rather than mixing up the direction. It is still wrong, and the 'rising-falling-mixed-up' tag is acceptable, so I did not reject the family. I could not see the misconception descriptions, only their ids, so the tag fit is judged from the ids and the resulting options."
+   }
+  },
+  {
+   "family_id": "tpl:g10m6s5-1-5:fracx",
+   "spec_sha": "88e98461e9efe9ad63490f0472645070ba0cd580ef209e408c674de87a108782",
+   "answers": [
+    {
+     "instance_id": "q:g10m6s5-1-5:g003-fracx",
+     "stem_sha": "cbbe002c7067f805",
+     "answer": {
+      "value": "2"
+     },
+     "working": "Set y = 0: 4(1/2)^x - 1 = 0, so (1/2)^x = 1/4 = (1/2)^2, giving x = 2."
+    },
+    {
+     "instance_id": "q:g10m6s5-1-5:g007-fracx",
+     "stem_sha": "9a2ee20ede988fa9",
+     "answer": {
+      "value": "2"
+     },
+     "working": "Set y = 0: 18(1/3)^x - 2 = 0, so (1/3)^x = 2/18 = 1/9 = (1/3)^2, giving x = 2."
+    },
+    {
+     "instance_id": "q:g10m6s5-1-5:g010-fracx",
+     "stem_sha": "f1227c0980ae4d07",
+     "answer": {
+      "value": "1"
+     },
+     "working": "Set y = 0: -9(1/3)^x + 3 = 0, so 9(1/3)^x = 3, so (1/3)^x = 1/3, giving x = 1."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family is numeric with no options, so there are no distractors to judge. I checked each instance by solving it independently. g003: 4(1/2)^x - 1 = 0 gives (1/2)^x = 1/4, so x = 2, which matches the key \"2\". g007: 18(1/3)^x - 2 = 0 gives (1/3)^x = 2/18 = 1/9, so x = 2, which matches the key \"2\". g010: -9(1/3)^x + 3 = 0 gives -9(1/3)^x = -3, then (1/3)^x = 1/3, so x = 1, which matches the key \"1\". Each stem asks for the x-coordinate of the x-intercept and each key is a single integer, which is the form asked. Each curve is a monotone exponential with horizontal asymptote y = q, and q has the opposite sign to a in all three, so \"exactly one point\" holds. The numbers are realistic for a Grade 10 exponential-graph question (bases 1/2 and 1/3, y = ab^x + q). All three worked solutions follow the same book route: set y = 0, isolate the power, write the right-hand side as a power of the same base, equate exponents. Every step is correct, including the sign handling in g010. Two small presentational points, neither wrong. In g007 step 3, dividing by 18 gives 2/18, and the solution writes 1/9 without showing the reduction. In g010 step 4, \"write 1/3 as a power of 1/3\" is trivial but valid. I could not check answer_check against the key because it is not in the file. The numeric keys are plain integers, so it should be a trivial match."
+   }
+  }
+ ]
+}

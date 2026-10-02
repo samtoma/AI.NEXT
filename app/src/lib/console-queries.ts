@@ -1,5 +1,16 @@
-import { sequential, withOperator } from "@/lib/db";
-import { ENVIRONMENT } from "@/lib/env";
+import { crossStudentReadAllowed } from "@/lib/auth/authorize";
+import {
+  canonicalGrade,
+  isCourseVisible,
+  type AvailabilityRule,
+  type CurriculumSource,
+  type StudentOverride,
+  type SwitchedOff,
+} from "@/lib/catalog";
+import { COURSES, COURSE_IDS, type CourseId } from "@/lib/courses";
+import { CURRICULUM_IDS, asCurriculumId, type CurriculumId } from "@/lib/curricula";
+import { sequential, withOperator, type OperatorRole } from "@/lib/db";
+import { COURSE_GATING, ENVIRONMENT } from "@/lib/env";
 import { studentFeedback, type FeedbackNote } from "@/lib/feedback-queries";
 import { sessionWallClockMs } from "@/lib/timeline-rules";
 import { readSessionTurnLimits } from "@/lib/turn-threshold-queries";
@@ -71,12 +82,28 @@ export type StudentListRow = {
   accountStatus: string | null;
   emailVerified: boolean | null;
   subscriptionStatus: string;
+  /**
+   * `students.curriculum_system` as stored, and how it was set (FR-4105) —
+   * **the `full` projection only.** In the `cost` projection both are `null`
+   * because they were never SELECTED: `cost-billing` reads no per-student
+   * curriculum anywhere (FR-2406, privacy review F7), and a value that is not
+   * read cannot be printed by mistake. `console-curriculum.test.mts` holds it.
+   */
+  curriculum: string | null;
+  curriculumSource: CurriculumSource | null;
   /** Latest of the account's last sign-in and the last session opened. */
   lastSeenAt: string | null;
   sessionsInPeriod: number;
   /** US dollars, imputed at list price, over the period. */
   costUsdInPeriod: number;
 };
+
+/**
+ * The curriculum columns, for the `student-data` projection only (FR-4105,
+ * privacy review F7). A fragment rather than a SELECT-then-null, so the cost
+ * projection's query does not carry the column at all.
+ */
+const CURRICULUM_COLUMNS = `st.curriculum_system, st.curriculum_source,`;
 
 export type StudentList = {
   rows: StudentListRow[];
@@ -90,11 +117,13 @@ export async function getStudentList(
   projection: StudentListProjection,
   periodDays: number = LIST_PERIOD_DAYS
 ): Promise<StudentList> {
+  const full = projection === "full";
   const rows = await withOperator(operatorId, async (db) => {
     const res = await db.query(
       `SELECT st.id,
               st.display_name,
               st.grade,
+              ${full ? CURRICULUM_COLUMNS : ""}
               st.gender,
               st.status              AS student_status,
               st.subscription_status,
@@ -125,7 +154,6 @@ export async function getStudentList(
     return res.rows;
   });
 
-  const full = projection === "full";
   return {
     projection,
     periodDays,
@@ -134,6 +162,12 @@ export async function getStudentList(
       id: Number(r.id),
       displayName: String(r.display_name ?? ""),
       grade: String(r.grade ?? ""),
+      curriculum: full && r.curriculum_system != null ? String(r.curriculum_system) : null,
+      curriculumSource: full
+        ? r.curriculum_source === "chosen"
+          ? "chosen"
+          : "implied"
+        : null,
       gender: full ? ((r.gender as string | null) ?? null) : null,
       studentStatus: String(r.student_status ?? "active"),
       accountStatus: (r.account_status as string | null) ?? null,
@@ -806,3 +840,202 @@ export async function getOperatorCard(
     return { displayName: String(r.display_name ?? ""), email: String(r.email ?? "") };
   });
 }
+
+/* ================================================================== */
+/* Feature 003 — curricula on the console                              */
+/* ================================================================== */
+
+/**
+ * Per (curriculum, grade), HOW MANY students would have nothing to study if
+ * that curriculum had no live course for that grade (FR-4103; privacy review
+ * F9; contracts/console.md).
+ *
+ * `/courses` asks this before a change hides the last live course of a
+ * curriculum for a grade: the cell turns into an in-page question stating the
+ * number. **A count and nothing else.** `/courses` is `content-review`'s page,
+ * and that role must not learn a student's name or id from a content decision
+ * (FR-2707) — so the query SELECTs a grade, a curriculum and `count(*)`, the
+ * return type holds numbers only, and `course-count-guard.test.mts` fails if
+ * this function or the view that prints it could carry a name or an id.
+ *
+ * **Gated by `CROSS_STUDENT_READS`** (`last_live_course_headcount`, owned by
+ * `content-review`): an operator without the role gets `null` and no query
+ * runs. It is a deliberate cross-student read, so it is enumerated, not
+ * implicit (FR-2108).
+ *
+ * What "nothing to study" means, exactly: with the curriculum's last live
+ * course for the grade hidden, no grade rule shows her anything of her own
+ * curriculum, so she sees only what an exception grants (`lib/catalog.ts`,
+ * step 1). A student who holds ANY live exception still has something and is
+ * not counted; one who holds none is. A retired picker-era record
+ * (`status = 'legacy'`) has no account and studies nothing either way, so it
+ * is not counted. Grades are folded onto the canonical spelling (`prep-3` is
+ * grade 9), and a stored curriculum the registry does not know is left out —
+ * no rule can reach that student anyway (FR-4003).
+ *
+ * No `operator_reads` row: nothing here names a student, which is the whole
+ * point of the entry's "count only".
+ */
+export type CurriculumHeadcounts = Partial<Record<CurriculumId, Record<string, number>>>;
+
+export async function lastLiveCourseHeadcount(
+  operatorId: number,
+  roles: readonly OperatorRole[]
+): Promise<CurriculumHeadcounts | null> {
+  if (!crossStudentReadAllowed("last_live_course_headcount", roles)) return null;
+  const rows = await withOperator(operatorId, async (db) => {
+    const res = await db.query(
+      `SELECT st.grade, st.curriculum_system, count(*) AS students
+         FROM students st
+        WHERE st.environment = $1
+          AND coalesce(st.status, 'active') <> 'legacy'
+          AND NOT EXISTS (
+                SELECT 1 FROM student_course_access sca
+                 WHERE sca.environment = $1
+                   AND sca.student_id = st.id
+                   AND sca.state = 'live')
+        GROUP BY st.grade, st.curriculum_system`,
+      [ENVIRONMENT]
+    );
+    return res.rows;
+  });
+  return foldHeadcounts(rows);
+}
+
+/** `lastLiveCourseHeadcount`'s arithmetic, pure: (grade, curriculum, n) rows
+ *  folded onto canonical grades and known curricula. Exported for its test. */
+export function foldHeadcounts(rows: readonly Record<string, unknown>[]): CurriculumHeadcounts {
+  const out: CurriculumHeadcounts = {};
+  for (const r of rows) {
+    const curriculum = asCurriculumId(r.curriculum_system);
+    const grade = canonicalGrade(r.grade == null ? null : String(r.grade));
+    if (!curriculum || !grade) continue;
+    const byGrade = (out[curriculum] ??= {});
+    byGrade[grade] = (byGrade[grade] ?? 0) + Number(r.students ?? 0);
+  }
+  return out;
+}
+
+/**
+ * What one student WOULD see under each curriculum the registry knows — for
+ * the Student 360's curriculum editor, which must name the courses she will
+ * stop and start seeing before anything is written (FR-4010, FR-2710).
+ *
+ * Decided by `isCourseVisible` itself (`lib/catalog.ts`), over this
+ * environment's rules and her own exceptions, exactly as the student gate
+ * decides it — so the confirmation cannot promise an answer the product does
+ * not give. With the kill switch off, "live" is "loaded" (FR-4015), as it is
+ * for her. `current` is what she sees today with the value AS STORED, so an
+ * unknown value correctly sees only what an exception grants (FR-4003).
+ *
+ * **No `operator_reads` row**, for the reason `studentAccess` gives
+ * (`lib/catalog-queries.ts`): its callers are the Student 360, which has
+ * already recorded this read in the same render, and the curriculum endpoint
+ * that the 360 posts to. A caller anywhere else must record its own.
+ */
+export type CurriculumProjection = {
+  /** her grade, canonical (`prep-3` → `9`), or null when she has none */
+  grade: string | null;
+  /** `students.curriculum_system` as stored */
+  stored: string;
+  /** registry courses she sees today, registry order */
+  current: CourseId[];
+  /** registry courses she would see if her curriculum were each of these */
+  byCurriculum: Record<CurriculumId, CourseId[]>;
+};
+
+export async function curriculumProjection(
+  operatorId: number,
+  studentId: number
+): Promise<CurriculumProjection | null> {
+  const read = await withOperator(operatorId, async (db) => {
+    const who = await db.query(
+      `SELECT grade, curriculum_system FROM students WHERE id = $1 AND environment = $2`,
+      [studentId, ENVIRONMENT]
+    );
+    if (!who.rows[0]) return null;
+    const [ruleRes, overrideRes, loadedRes] = await sequential([
+      () =>
+        db.query(`SELECT course_id, grade, state FROM course_availability WHERE environment = $1`, [
+          ENVIRONMENT,
+        ]),
+      () =>
+        db.query(
+          `SELECT course_id, state FROM student_course_access
+            WHERE environment = $1 AND student_id = $2`,
+          [ENVIRONMENT, studentId]
+        ),
+      () =>
+        COURSE_GATING
+          ? Promise.resolve({ rows: [] as Record<string, unknown>[] })
+          : db.query(`SELECT id FROM graph_nodes WHERE kind = 'course'`),
+    ] as const);
+    return {
+      student: who.rows[0],
+      rules: ruleRes.rows,
+      overrides: overrideRes.rows,
+      loaded: loadedRes.rows,
+    };
+  });
+  if (!read) return null;
+  const rules: AvailabilityRule[] = read.rules.map((r) => ({
+    courseId: String(r.course_id),
+    grade: String(r.grade),
+    state: r.state === "live" ? "live" : "hidden",
+  }));
+  const overrides: StudentOverride[] = read.overrides.map((r) => ({
+    courseId: String(r.course_id),
+    state: r.state === "live" ? "live" : "hidden",
+  }));
+  const switchedOff: SwitchedOff | undefined = COURSE_GATING
+    ? undefined
+    : { loaded: new Set(read.loaded.map((r) => String(r.id))) };
+  const grade = canonicalGrade(read.student.grade == null ? null : String(read.student.grade));
+  const stored = String(read.student.curriculum_system ?? "");
+  return projectCurricula({ grade, stored, rules, overrides, switchedOff });
+}
+
+/** `curriculumProjection`'s decision, pure — every registry course through
+ *  the gate's own `isCourseVisible`, once per curriculum. Exported for its test. */
+export function projectCurricula(input: {
+  grade: string | null;
+  stored: string;
+  rules: readonly AvailabilityRule[];
+  overrides: readonly StudentOverride[];
+  switchedOff?: SwitchedOff;
+}): CurriculumProjection {
+  const sees = (curriculum: string) =>
+    COURSE_IDS.filter((id) =>
+      isCourseVisible(id, { grade: input.grade, curriculum }, input.rules, input.overrides, input.switchedOff)
+    );
+  return {
+    grade: input.grade,
+    stored: input.stored,
+    current: sees(input.stored),
+    byCurriculum: Object.fromEntries(CURRICULUM_IDS.map((c) => [c, sees(c)])) as Record<
+      CurriculumId,
+      CourseId[]
+    >,
+  };
+}
+
+/**
+ * The registry courses this database holds, grouped by curriculum, for the
+ * console footer (003, T378, FR-4104): the shell used to print "Prep-3
+ * Mathematics" on every page, which stopped being the whole truth the day a
+ * second curriculum's book could be loaded. Corpus data (`graph_nodes`), no
+ * student anywhere; a course the registry does not know is left out.
+ */
+export async function loadedCurricula(
+  operatorId: number
+): Promise<{ curriculum: CurriculumId; courses: CourseId[] }[]> {
+  const ids = await withOperator(operatorId, async (db) => {
+    const res = await db.query(`SELECT id FROM graph_nodes WHERE kind = 'course'`);
+    return new Set(res.rows.map((r) => String(r.id)));
+  });
+  return CURRICULUM_IDS.map((curriculum) => ({
+    curriculum,
+    courses: COURSE_IDS.filter((id) => ids.has(id) && COURSES[id].curriculum === curriculum),
+  })).filter((g) => g.courses.length > 0);
+}
+

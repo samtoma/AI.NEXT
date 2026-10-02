@@ -1,0 +1,122 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m1s3-1-3:prefix-block3",
+ "version": 1,
+ "kind": "family",
+ "lo_id": "lo:g10m1s3-1-3",
+ "parent_question_id": "q:g10m1s3-1-3:ex1-1-11c",
+ "source_page": 12,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "d",
+   "choice": [
+    54,
+    74,
+    222
+   ]
+  },
+  {
+   "name": "n",
+   "randint": [
+    1,
+    "d - 1"
+   ]
+  },
+  {
+   "require": "gcd(n, d) == 1",
+   "why": "the fraction is in lowest terms, so its decimal has exactly one non-repeating digit followed by a block of three recurring digits"
+  },
+  {
+   "name": "t1",
+   "let": "10 * n"
+  },
+  {
+   "name": "q1",
+   "let": "t1 // d"
+  },
+  {
+   "name": "r1",
+   "let": "t1 % d"
+  },
+  {
+   "name": "t2",
+   "let": "10 * r1"
+  },
+  {
+   "name": "q2",
+   "let": "t2 // d"
+  },
+  {
+   "name": "r2",
+   "let": "t2 % d"
+  },
+  {
+   "name": "t3",
+   "let": "10 * r2"
+  },
+  {
+   "name": "q3",
+   "let": "t3 // d"
+  },
+  {
+   "name": "r3",
+   "let": "t3 % d"
+  },
+  {
+   "name": "t4",
+   "let": "10 * r3"
+  },
+  {
+   "name": "q4",
+   "let": "t4 // d"
+  },
+  {
+   "name": "r4",
+   "let": "t4 % d"
+  }
+ ],
+ "constraints": [
+  "gcd(n, d) == 1",
+  "r4 == r1",
+  "r2 != r1",
+  "r3 != r1"
+ ],
+ "stem": "Write $\\frac{{=n}}{{=d}}$ in decimal form, using a bar over the recurring digits.",
+ "solution": [
+  "Divide ${=n}$ by ${=d}$ by long division, bringing down a zero each time, and keep going until a remainder comes back.",
+  "$10 \\times {=n} = {=t1}$ and ${=t1} \\div {=d} = {=q1}$ remainder ${=r1}$, so the first decimal digit is ${=q1}$.",
+  "$10 \\times {=r1} = {=t2}$ and ${=t2} \\div {=d} = {=q2}$ remainder ${=r2}$, so the second digit is ${=q2}$.",
+  "$10 \\times {=r2} = {=t3}$ and ${=t3} \\div {=d} = {=q3}$ remainder ${=r3}$, so the third digit is ${=q3}$.",
+  "$10 \\times {=r3} = {=t4}$ and ${=t4} \\div {=d} = {=q4}$ remainder ${=r4}$, so the fourth digit is ${=q4}$.",
+  "The remainder ${=r1}$ has come back (we also had it after the first digit), so the digits from the second decimal place onwards repeat: the block ${=q2}{=q3}{=q4}$ repeats for ever, and $\\frac{{=n}}{{=d}} = 0.{=q1}{=q2}{=q3}{=q4}{=q2}{=q3}{=q4}{=q2}{=q3}{=q4}\\ldots$",
+  "The digit ${=q1}$ comes only once, so it is not under the bar. Put the bar over the repeating block: $\\frac{{=n}}{{=d}} = 0.{=q1}\\overline{{=q2}{=q3}{=q4}}$."
+ ],
+ "marker": {
+  "kind": "recurring",
+  "answer": "0.{=q1}\\overline{{=q2}{=q3}{=q4}}",
+  "form": "decimal",
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m1s3-1-3:marks-nonrepeating-digit",
+   "label": "Marks a digit that occurs only once as recurring",
+   "description": "Puts the dot or bar over a digit that appears only once before the repeating part (for example writing 3.\\overline{136} or 3.\\dot{1}\\dot{3}\\dot{6} for 3.1363636...), because the learner does not locate where the repeat actually begins."
+  },
+  {
+   "id": "mc:g10m1s3-1-3:stops-before-repeat",
+   "label": "Stops the division before a remainder repeats",
+   "description": "Stops the long division after a few digits and writes a truncated or rounded decimal (for example 3.136) instead of recognising the repeating remainder and using recurring notation."
+  },
+  {
+   "id": "mc:g10m1s3-1-3:marks-part-of-block",
+   "label": "Marks only part of the repeating block",
+   "description": "Puts a dot over only the last digit of a multi-digit repeating block (for example 0.0925\\dot{5}... style) or a bar over only some of its digits, so the notation describes a different number."
+  }
+ ],
+ "notes": "Follows book Exercise 1.1 Q11c (7/33 by long division, remainders until one repeats) and the bar notation of Q10d, but the block has three digits and is preceded by one non-repeating digit, so the learner needs four divisions and must spot that the first remainder (not the starting one) is the one that returns. Denominators 54, 74, 222 (= 2 times 27, 37, 111) with gcd(n, d) = 1 give exactly one non-repeating digit and a block of exactly three digits, so the expansion is canonical (the bar starts as early as possible and the block cannot be shortened). All 126 (d, n) pairs were enumerated and checked against an independent remainder-detection routine; every one gives pre-period [q1] and period [q2, q3, q4], and r4 == r1 always holds, so the seven-step skeleton is true for every instance. The non-repeating digit and the first block digit can be 0 (for example 1/222 = 0.0 then bar over 045); that is correct and the solution steps print those zeros. Marker convention: the book's own recurring markers store the key in LaTeX (\\dot{} / \\overline{}), so the marker answer follows that; the stem asks for bar notation, and a dotted answer (dots over the first and last block digit) should be accepted as equivalent. Only the advanced gap was authored; basic and standard were not requested.\n\nPIPELINE NORMALISATION (not an author edit): drop-redundant-answer: removed the top-level \"answer\" (\"0.{=q1}\\\\overline{{=q2}{=q3}{=q4}}\"); an expression family's answer is marker.answer (\"0.{=q1}\\\\overline{{=q2}{=q3}{=q4}}\"), unchanged.\n\nPIPELINE NORMALISATION (not an author edit): set marker.form to \"decimal\": the stem asks for the number in decimal form, and without the flag the app's marker accepts a fraction for a recurring decimal (answer-marker.ts, T413: \"a fraction for a recurring decimal is correct, unless the question asks for a decimal: the pipeline sets form: decimal\"). Nothing else changed."
+}

@@ -1,4 +1,4 @@
-import { currentPrincipal } from "@/lib/auth/principal";
+import { currentPrincipal, onboardingRefusal } from "@/lib/auth/principal";
 import {
   dismissFeedback,
   feedbackContext,
@@ -102,6 +102,9 @@ function momentOf(raw: unknown): FeedbackMoment | null {
 export async function GET(req: Request) {
   const me = await currentPrincipal();
   if (me.kind !== "student") return Response.json({ ask: false });
+  // FR-4014: nothing about a lesson while the first-Google-sign-in step is owed.
+  const pending = onboardingRefusal(me);
+  if (pending) return pending;
 
   const moment = momentOf(new URL(req.url).searchParams.get("moment"));
   if (!moment) return Response.json({ ask: false });
@@ -141,6 +144,8 @@ export async function POST(req: Request) {
     // it never produces it.
     return Response.json({ error: "unauthenticated" }, { status: 401 });
   }
+  const pending = onboardingRefusal(me);
+  if (pending) return pending;
 
   let body: { moment?: unknown; rating?: unknown; note?: unknown; dismiss?: unknown };
   try {

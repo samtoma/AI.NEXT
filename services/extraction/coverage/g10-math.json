@@ -1,0 +1,372 @@
+{
+  "coverage_version": 1,
+  "book": "g10-math",
+  "course_id": "course:us-g10-math-en",
+  "chapters": [
+    8
+  ],
+  "status": "RED",
+  "summary": {
+    "checks": 23,
+    "hold": 20,
+    "excepted": 1,
+    "fail": 2
+  },
+  "checks": [
+    {
+      "id": "pages",
+      "title": "Body pages = pages assigned to lessons + pages excluded with a reason",
+      "want": 45,
+      "got": 45,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "worked_examples",
+      "title": "Manifest worked examples = worked-example items accounted for",
+      "want": 13,
+      "got": 13,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "items_mapped_once",
+      "title": "Exercise items = items mapped to exactly one objective",
+      "want": 191,
+      "got": 188,
+      "state": "excepted",
+      "failures": [
+        {
+          "scope": "item Ex8-6:28a",
+          "detail": "Ex8-6:28a: ruled outside this chapter's objectives at G1 by Samuel Toma on 2026-09-26T07:19:34+00:00: Pure recall of parallelogram properties from earlier geometry; this chapter teaches no such objective."
+        },
+        {
+          "scope": "item Ex8-6:32e",
+          "detail": "Ex8-6:32e: ruled outside this chapter's objectives at G1 by Samuel Toma on 2026-09-26T07:19:34+00:00: Area of a triangle from coordinates is not taught in this chapter."
+        },
+        {
+          "scope": "item Ex8-6:46d",
+          "detail": "Ex8-6:46d: ruled outside this chapter's objectives at G1 by Samuel Toma on 2026-09-26T07:19:34+00:00: Ratio of triangle areas via the mid-point theorem / similar triangles is not taught in this chapter."
+        }
+      ],
+      "excepted_scopes": [
+        "item Ex8-6:28a",
+        "item Ex8-6:32e",
+        "item Ex8-6:46d"
+      ]
+    },
+    {
+      "id": "mapped_items_accounted",
+      "title": "Mapped exercise items = book questions + items excluded with a reason",
+      "want": 188,
+      "got": 188,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": [],
+      "notes": [
+        "exercise items by fate: excluded 3, teaching 37, verified 148"
+      ]
+    },
+    {
+      "id": "objective_evidence",
+      "title": "Objectives = objectives with a claim, a book question and worked-example-or-exercise evidence (two kinds or more)",
+      "want": 13,
+      "got": 12,
+      "state": "fails",
+      "failures": [
+        {
+          "scope": "lo:g10m8s1-1-1",
+          "detail": "no book question"
+        }
+      ],
+      "excepted_scopes": []
+    },
+    {
+      "id": "tier_floor",
+      "title": "Objectives × tiers = cells with at least one live item, book or generated (FR-4305)",
+      "want": 39,
+      "got": 33,
+      "state": "fails",
+      "failures": [
+        {
+          "scope": "lo:g10m8s1-1-1",
+          "detail": "no live item at tier(s) basic, standard, advanced"
+        },
+        {
+          "scope": "lo:g10m8s1-1-2",
+          "detail": "no live item at tier(s) standard, advanced"
+        },
+        {
+          "scope": "lo:g10m8s4-1-2",
+          "detail": "no live item at tier(s) advanced"
+        }
+      ],
+      "excepted_scopes": []
+    },
+    {
+      "id": "module_widgets",
+      "title": "Modules = modules with a widget question + signed-off widget gaps (FR-4306)",
+      "want": 1,
+      "got": 1,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "distractor_refutations",
+      "title": "Tagged distractors and predicates = those whose misconception has a refutation (FR-1112)",
+      "want": 87,
+      "got": 87,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "misconception_refutations",
+      "title": "Catalogue entries = entries with a refutation",
+      "want": 29,
+      "got": 29,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "s5_catalogue",
+      "title": "Entries S5 kept = entries in the catalogue; no dropped entry in it",
+      "want": 29,
+      "got": 29,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": [],
+      "notes": [
+        "2 entr(ies) dropped by the verifier"
+      ]
+    },
+    {
+      "id": "figures",
+      "title": "Manifest figures = visuals + viz gaps with a reason + figures withheld for giving the answer away (per chapter); a gap whose reason is a pipeline error is a failure (consistency review A3)",
+      "want": 71,
+      "got": 71,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "maths_images",
+      "title": "Maths images to transcribe = accepted by hash + by agreement + by the third reading + resolved at G0b; unresolved = 0",
+      "want": 853,
+      "got": 853,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": [],
+      "notes": [
+        "by route: hash 558, agreement 282, third_reading 13, resolved_at_g0b 0"
+      ]
+    },
+    {
+      "id": "items_typed_once",
+      "title": "Exercise items = numeric + choice + expression + not_markable",
+      "want": 188,
+      "got": 188,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": [],
+      "notes": [
+        "by type: choice 21, expression 90, not_markable 37, numeric 40"
+      ]
+    },
+    {
+      "id": "solution_sources",
+      "title": "Book questions = book_worked + book_worked_epub + teachers_guide (+ answer_anchored)",
+      "want": 158,
+      "got": 158,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": [],
+      "notes": [
+        "by source: book_worked 10, book_worked_epub 148"
+      ]
+    },
+    {
+      "id": "lesson_provenance",
+      "title": "Lessons = lessons carrying book provenance; parts consecutive and numbered 1..m",
+      "want": 5,
+      "got": 5,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "teacher_only",
+      "title": "Teacher-only blocks = blocks dropped at S2; reaching a claim = 0 (FR-4408)",
+      "want": 4,
+      "got": 4,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "notation",
+      "title": "Un-normalised decimal commas and (x; y) pairs left in the bundles = 0 (decision 15); no display-only environment (align*) inside the app's inline maths",
+      "want": 0,
+      "got": 0,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": [],
+      "notes": [
+        "193 S3 item(s) printed in the book's notation were normalised"
+      ]
+    },
+    {
+      "id": "katex",
+      "title": "Maths segments in student-facing text the app's KaTeX cannot parse = 0 (A2)",
+      "want": 0,
+      "got": 0,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "book_pictures",
+      "title": "Book-picture stand-ins (answer 37d) that are not servable = 0: each stands in for a question of its own objective, carries alt text and stand_in, and its image is in app/public at its /book-figures/ path",
+      "want": 0,
+      "got": 0,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": [],
+      "notes": [
+        "30 stand-in(s) for 30 question(s), each in the console backlog as 'needs native figure'; 9 question(s) held because the book's picture shows the unknown"
+      ]
+    },
+    {
+      "id": "captions",
+      "title": "Figure captions that describe a withheld point (the exercise's unknown) as marked or shown = 0",
+      "want": 0,
+      "got": 0,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "answer_text",
+      "title": "Typed questions whose answer text is not their marker key, rendered = 0 (A1)",
+      "want": 0,
+      "got": 0,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "asked_forms",
+      "title": "Typed questions whose stem asks for a form the book's rules name, and whose marker does not check it = 0 (A9)",
+      "want": 0,
+      "got": 0,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "claims_served",
+      "title": "Claims in the bundles = claims in the lessons' content files",
+      "want": 59,
+      "got": 59,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    }
+  ],
+  "g1_exceptions": [
+    {
+      "check": "items_mapped_once",
+      "scope": "item Ex8-6:28a",
+      "reason": "Pure recall of parallelogram properties from earlier geometry; this chapter teaches no such objective.",
+      "signed_by": "Samuel Toma",
+      "signed_at": "2026-09-26T07:19:34+00:00",
+      "source": "G1 verdict outside_items (answer 15)"
+    },
+    {
+      "check": "items_mapped_once",
+      "scope": "item Ex8-6:32e",
+      "reason": "Area of a triangle from coordinates is not taught in this chapter.",
+      "signed_by": "Samuel Toma",
+      "signed_at": "2026-09-26T07:19:34+00:00",
+      "source": "G1 verdict outside_items (answer 15)"
+    },
+    {
+      "check": "items_mapped_once",
+      "scope": "item Ex8-6:46d",
+      "reason": "Ratio of triangle areas via the mid-point theorem / similar triangles is not taught in this chapter.",
+      "signed_by": "Samuel Toma",
+      "signed_at": "2026-09-26T07:19:34+00:00",
+      "source": "G1 verdict outside_items (answer 15)"
+    }
+  ],
+  "widgets_per_chapter": {
+    "module:g10m-c08": 25
+  },
+  "refutations_per_misconception": {
+    "mc:g10m8s1-1-2:flips-a-coordinate-sign": 3,
+    "mc:g10m8s1-1-3:assumes-only-one-direction-counts": 4,
+    "mc:g10m8s1-1-3:expects-labels-to-start-at-a": 4,
+    "mc:g10m8s1-1-3:partial-arc-check": 4,
+    "mc:g10m8s1-1-3:writes-descending-order": 4,
+    "mc:g10m8s2-1-1:drops-double-negative-sign": 3,
+    "mc:g10m8s2-1-1:reads-triangle-type-off-sketch": 3,
+    "mc:g10m8s2-1-2:keeps-both-roots-ignores-restriction": 4,
+    "mc:g10m8s2-1-2:stops-at-first-root": 4,
+    "mc:g10m8s3-1-1:gradient-mismatched-subscript-order": 4,
+    "mc:g10m8s3-1-2:dropped-coefficient-on-unknown": 4,
+    "mc:g10m8s3-1-2:inverted-gradient-ratio": 4,
+    "mc:g10m8s3-1-2:mismatched-point-order": 4,
+    "mc:g10m8s3-2-1:gradient-formula-inversion": 4,
+    "mc:g10m8s3-2-1:negative-coordinate-subtraction-slip": 4,
+    "mc:g10m8s3-2-1:sign-slip-converting-general-form": 4,
+    "mc:g10m8s3-2-1:swaps-coordinates-when-substituting": 4,
+    "mc:g10m8s3-2-2:judges-parallel-by-appearance": 4,
+    "mc:g10m8s3-2-2:stops-at-partial-quadrilateral-property": 4,
+    "mc:g10m8s3-2-2:swaps-parallel-perpendicular-tests": 4,
+    "mc:g10m8s3-2-2:treats-contradiction-as-a-k-value": 4,
+    "mc:g10m8s3-2-3:same-sign-gradients-mistaken-for-equal": 4,
+    "mc:g10m8s4-1-1:checks-only-one-coordinate": 4,
+    "mc:g10m8s4-1-1:drops-sign-adding-negatives": 4,
+    "mc:g10m8s4-1-2:averages-known-point-with-midpoint": 4,
+    "mc:g10m8s4-1-2:skips-multiply-by-two-step": 4,
+    "mc:g10m8s4-1-3:diagonal-vs-side-confusion": 4,
+    "mc:g10m8s4-1-3:midpoint-formula-subtraction": 4,
+    "mc:g10m8s4-1-3:shared-midpoint-as-vertex": 4
+  },
+  "notation": {
+    "items_printed_in_book_notation": 193,
+    "residual_in_bundles": 0
+  },
+  "missing_inputs": [],
+  "inputs": {
+    "content/g10m8s1-1.json": "547b0b966c031091be2dca9bb0e3309a906e5a847eb1450aef85bb539fc55006",
+    "content/g10m8s2-1.json": "b6bbe54d4401b910e031bd5af38fe2390dcd526d3c976c21d45f432346ced9bc",
+    "content/g10m8s3-1.json": "de8b78d923313e36511571ec4d2f54a313bf6d6051e7804497aee0dfff4ddee9",
+    "content/g10m8s3-2.json": "a36f18788f942fd9ba00d792af672a9dd9b51282c169504c18b2a2d739d347fc",
+    "content/g10m8s4-1.json": "9ff1ba4c2b49f9a9e6d3fa9215b1dde15a9655d7c8580e4f477e6ab5df1ca646",
+    "generated/generated-questions.json": "590d9b1f241129715c38550114ab5ab22e9f45cb52dfdd66f5dff6438e7e9c11",
+    "generated/misconceptions.json": "884ce6f470b47795fb099400815f0b97c9619b91492e339d3fecfe2f5fa53db2",
+    "generated/widget-questions.json": "9b22acc4618a2df630708a336534c683237b76ac5bf1b030eed370bc3a5be6e1",
+    "manifest": "d749f7d1c4052342298d122b82bcea3117e4303b74e16b75062fd6606146c7b1",
+    "maths": "773bc135b62de698f278ba74f6d7c2b909ba0d81f8e384248fc3de98d2fc8153",
+    "objectives/g10m8s1-1.json": "2c34e7513a5052128245052e61b0c261b4e915b50a4fd22f3a9931866ae1e952",
+    "objectives/g10m8s2-1.json": "ae564d6c242e6d0435939600e101ac1bdba636305c54e2ecf1ce54204271fdf8",
+    "objectives/g10m8s3-1.json": "d6aed23430fd57507618b045b6aadffcaed9dcbaf70cbee5513d64bc5bf88bc3",
+    "objectives/g10m8s3-2.json": "c26257fa2819d29624732aadb67232056045ce112de9c836fc26a1c73ef3743f",
+    "objectives/g10m8s4-1.json": "ad3e029af0c3272373b1fcb5438ca24798cbdc15a1db8cffeda52184db366a60",
+    "runs/lesson/g10m8s1-1.json": "2b32ec544756c92184f17e57050c3d176663f8b6f1a4faed2564a0c3f797b017",
+    "runs/lesson/g10m8s2-1.json": "2367911b1d61e654fd44d0f031db9d586b6a10bcfe6b89fa331bd3c3747dd83c",
+    "runs/lesson/g10m8s3-1.json": "474209137c8d04b94b172169af4ca9f32688a77e65e4c62096f811a027fa1221",
+    "runs/lesson/g10m8s3-2.json": "a5f6a48f521efa336cdce7e0507aaab8313b2d8df02e182f9134339993489d18",
+    "runs/lesson/g10m8s4-1.json": "ca183e24ea4cf325b477708fc002f085d42e5dd4688b2cb1bb11477d2c8e3863",
+    "s5/final-wf_ed8c8e80-51d.json": "5b576232d2bcfe7146ab58e96c0cda87726f3eaf54c02aec9ffc91e7fdf88795",
+    "seed/g10m-c08.json": "441c58eecc75ca8cbcafda8689cb840d75b86e6af3a72c31724989d23c7810cd",
+    "seed/g10m-course.json": "19916a26526c3cb43ebe28dff24af1272e9662067ebdec9e2c6c82184a48fcff",
+    "widget-gaps": "0db08a3d51130ff8a059e38f5f1aa04ace0b910558807546d929198ba4a35a2a"
+  },
+  "exceptions": []
+}

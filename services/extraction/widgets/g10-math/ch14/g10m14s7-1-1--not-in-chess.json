@@ -1,0 +1,36 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m14s7-1-1:not-in-chess",
+ "lo_id": "lo:g10m14s7-1-1",
+ "parent_question_id": "q:g10m14s7-1-1:ex14-7-1",
+ "tier": "basic",
+ "kind": "venn_builder",
+ "spec": {
+  "sets": 2,
+  "labels": [
+   "Football",
+   "Chess"
+  ],
+  "mode": "shade",
+  "target": "complementB"
+ },
+ "stem": "A club has learners who play Football ($F$) and learners who play Chess ($C$). Some play both and some play neither. The rectangle holds every learner in the club. Shade the complement of Chess, $C'$.",
+ "solution": [
+  "The rectangle is the sample space: every learner in the club, whichever circles they sit in.",
+  "The complement $C'$ is every learner in the sample space who is not in $C$.",
+  "Chess ($C$) is the circle labelled Chess. It holds two regions: Chess only, and the overlap with Football. Both are in $C$, so leave them unshaded.",
+  "Everything else is in $C'$: the Football-only region and the region outside both circles. Shade both of these.",
+  "Check: $C$ and $C'$ together fill the whole rectangle and share no region."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "complement-inside-a",
+   "misconception_id": "mc:g10m14s7-1-1:lists-event-instead-of-complement"
+  },
+  {
+   "predicate": "off-target",
+   "misconception_id": "mc:g10m14s7-1-1:complement-only-outside-all-circles"
+  }
+ ],
+ "notes": "Mirrors ex14-7-1 (B'), where the book's own distractor {3, 4, 6, 11, 12} is exactly the outside-all-circles error. complementB is used so the event is the second-named set, as B is in the book. The instrument shows regions, not numbers, so the stem names the sets and never points at a figure. Mapping choices: complement-inside-a fires when any region inside Chess is shaded (Chess itself, or the Football circle whole, overlap included); that is the 'inside the event' error. off-target is mapped to complement-only-outside-all-circles only because, on a 2-set diagram, once complement-inside-a and neither-region-missed are excluded the shading left over that is not simply wrong is 'only the region outside both circles', so one error dominates; if the grader's off-target is broader than that, drop this mapping. neither-region-missed (shading only the Football-only region and forgetting the outside) is deliberately unmapped: no misconception in this objective's list names it, and mapping it to reads-the-other-circle or union-as-a-only-part would refute an error the student did not make. Diagnostics are ordered specific-first with off-target last so a catch-all cannot shadow a named predicate."
+}

@@ -1,0 +1,59 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s1-1-4:rolled-time",
+ "kind": "family",
+ "lo_id": "lo:g10m6s1-1-4",
+ "parent_question_id": "q:g10m6s1-1-4:ex6-1-8a",
+ "source_page": 149,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": "A ball is released at the top of a slope and rolls to the bottom. The graph of s(t) shows the distance, in metres, that the ball still has to roll, t seconds after it is released. The graph is a straight line from (0, L) to (T, 0).",
+ "params": [
+  {
+   "name": "L",
+   "choice": [
+    6,
+    8,
+    10,
+    12,
+    15
+   ]
+  },
+  {
+   "name": "q",
+   "choice": [
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "T",
+   "let": "L * q"
+  },
+  {
+   "name": "r",
+   "randint": [
+    2,
+    "L - 2"
+   ]
+  },
+  {
+   "name": "rem",
+   "let": "L - r"
+  },
+  {
+   "name": "ans",
+   "let": "q * r"
+  }
+ ],
+ "constraints": [],
+ "stem": "A ball is released at the top of a ${=L}$ m slope and rolls to the bottom. The graph of $s(t)$ shows the distance, in metres, that the ball still has to roll, $t$ seconds after it is released. The graph is a straight line that starts at the point $(0, {=L})$ and ends at the point $({=T}, 0)$. After how many seconds has the ball rolled ${=r}$ m?",
+ "answer": "ans",
+ "solution": [
+  "The graph shows the distance still to roll, not the distance already rolled. When the ball has rolled ${=r}$ m it still has ${=L} - {=r} = {=rem}$ m to roll, so we need the time $t$ at which $s(t) = {=rem}$.",
+  "The line goes from $(0, {=L})$ to $({=T}, 0)$, so the ball covers ${=L}$ m in ${=T}$ s, which is ${=q}$ s for every metre it rolls.",
+  "The ball has rolled ${=r}$ m, so $t = {=r} \\times {=q} = {=ans}$ s. Check: the point $({=ans}, {=rem})$ is on the line, because the ball then still has ${=rem}$ m to roll."
+ ],
+ "notes": "Reads the book's ball graph (ex6-1-8a) in the opposite direction: given an output-side fact, find the time. The twist is that s(t) is the distance still to roll but the question asks about the distance already rolled; a learner who reads s(t) = r gets q*(L - r) instead of q*r. The graph is described in words because the engine has no figure support (book figure checked: straight line (0, 10) to (20, 0), i.e. q = 2 for L = 10). Every instance has T = L*q, so the rate is a whole number of seconds per metre and every answer is a whole number; r runs from 2 to L-2, so the ball is neither at the start nor at the bottom. 108 instances."
+}

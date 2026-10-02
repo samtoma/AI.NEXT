@@ -1,0 +1,92 @@
+{
+  "config_version": 1,
+  "book": "prep3-math-en",
+  "title": "Mathematics — Student's Book, Preparatory Year Three (First and Second Term), English medium",
+  "course_id": "course:prep3-math-en",
+  "curriculum": "eg-national-en",
+  "subject": "math",
+  "grade": "prep-3",
+  "language": "en",
+  "direction": "ltr",
+  "id_prefixes": ["u", "geo", "t2u"],
+  "load_order": 10,
+  "sources": {
+    "pdf": "docs/Source/Math_En_Prp3_Tr1_2.pdf",
+    "epub": null,
+    "teacher_pdf": null
+  },
+  "page_offsets": [
+    {
+      "label": "First Term Student's Book",
+      "pdf_from": 1,
+      "pdf_to": 73,
+      "pdf_minus_printed": null,
+      "verified_at": [],
+      "note": "Not recorded. The Prep-3 maths bundles were written by ad-hoc agents before the line existed and set source_page by hand (extraction-pipeline.md §2.2, G1)."
+    },
+    {
+      "label": "Second Term Student's Book",
+      "pdf_from": 74,
+      "pdf_to": 178,
+      "pdf_minus_printed": 73,
+      "verified_at": [[5, 78], [39, 112], [42, 115], [64, 137], [100, 173]],
+      "note": "seed/geometry-structure.md"
+    }
+  ],
+  "objectives_mode": "printed",
+  "sacred_content": false,
+  "bundles": [
+    "services/extraction/seed/unit1.json",
+    "services/extraction/seed/unit2.json",
+    "services/extraction/seed/unit3.json",
+    "services/extraction/seed/unit4.json",
+    "services/extraction/seed/unit5.json",
+    "services/extraction/seed/geo-unit1.json",
+    "services/extraction/seed/t2-unit12.json",
+    "services/extraction/seed/t2-unit3.json",
+    "services/extraction/seed/geo-unit2a.json",
+    "services/extraction/seed/geo-unit2b.json"
+  ],
+  "superseded_bundles": {},
+  "content_files": [],
+  "lesson_titles": {
+    "u1-1": "Cartesian product",
+    "u1-2": "Relations",
+    "u1-3": "Functions",
+    "u1-4": "Polynomial functions",
+    "u2-1": "Ratio",
+    "u2-2": "Proportion",
+    "u2-3": "Direct and inverse variation",
+    "u3-1": "Collecting data and samples",
+    "u3-2": "Dispersion and standard deviation",
+    "u4-1": "Trigonometric ratios",
+    "u4-2": "Special angles and applications",
+    "u5-1": "The distance between two points",
+    "u5-2": "The midpoint of a segment",
+    "u5-3": "The slope of a straight line",
+    "u5-4": "The equation of a straight line",
+    "geo1-1": "The circle: definitions and chords",
+    "geo1-2": "Point, line and circle positions — tangents",
+    "geo1-3": "The circumcircle",
+    "geo1-4": "Chords and distance from the center"
+  },
+  "lesson_titles_note": "Moved here from app/src/lib/courses.ts PREP3_MATH_LESSON_TITLES (integration backlog 5), text unchanged. The loader writes them to course_lessons.title; the other Prep-3 maths lessons keep their first objective's label, as the app shows today.",
+  "manifest": null,
+  "generated": {
+    "misconceptions": "services/extraction/seed/generated/misconceptions.json",
+    "questions": [
+      "services/extraction/seed/generated/generated-questions.json",
+      "services/extraction/seed/generated/widget-questions.json"
+    ],
+    "note": "The generated bank is not course-scoped yet: these files hold the maths bank only because maths is the only course with one (extraction-pipeline.md B15)."
+  },
+  "parity": {
+    "modules": 10,
+    "learning_objectives": 90,
+    "prerequisite_edges": 112,
+    "questions_total": 450,
+    "visuals": 212,
+    "require_all_live": true,
+    "note": "The Prep-3 maths constant (specs/001-student-mvp1-delta/spec.md). require_all_live: the whole maths bank is live under ADR-0019."
+  }
+}

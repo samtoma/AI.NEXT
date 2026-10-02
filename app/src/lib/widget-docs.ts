@@ -75,7 +75,61 @@ const DOCS: Record<string, WidgetDoc> = {
     name: "curve_sketcher",
     line: `{{widget:curve_sketcher:{"prompt":"Sketch y = x^2 - 4","fn":"quadratic","coefs":[1,0,-4]}}} — the student draws the curve FREEHAND with a finger and the sketch is scored on shape, within about one grid square. fn ∈ linear (coefs [m,c]) | quadratic (coefs [a,b,c], a ≠ 0). A stroke that doubles back is rejected for failing the vertical line test, which makes it a good way to revisit what a function is. Keep the curve mostly inside −5..5.`,
   },
+  // The three kinds below belong to feature 003 (the Grade 10 American course)
+  // and are documented here so `mathWidgetDocsNamed` can render them; they are
+  // never added to BY_UNIT below, so no Prep-3 (National) lesson is ever told
+  // about them and every National prompt stays byte-identical.
+  polygon_builder: {
+    name: "polygon_builder",
+    line: `{{widget:polygon_builder:{"prompt":"Construct a rhombus","mode":"construct","shape":"rhombus"}}} — the student drags 3 or 4 vertices on a lattice into the named shape; graded on its PROPERTIES (side lengths, parallel sides, right angles), so every valid figure is accepted. shape (triangle) ∈ scalene | isosceles | right; shape (quadrilateral) ∈ parallelogram | rectangle | rhombus | square | trapezium | kite — never equilateral, which a square lattice cannot draw. Two other modes: {"mode":"midsegment","triangle":[[0,0],[6,0],[0,6]],"apex":0} — the student drags a segment onto the two sides touching "apex" and it is graded parallel-and-half-length against the third side (the midpoint theorem, as a property, not a position); and {"mode":"area","shape":"triangle","target":6} — any polygon of that vertex count is accepted if its area matches (target must be a whole or half number, Pick's theorem).`,
+  },
+  solid_scaler: {
+    name: "solid_scaler",
+    line: `{{widget:solid_scaler:{"prompt":"Scale this cylinder so its volume is 8 times as large","solid":"cylinder","ask":"volume","ratio":8}}} — a simple isometric solid the student scales by dragging a factor k; the live readout shows V0·k³ and A0·k² together. solid ∈ box | cylinder | cone | pyramid | sphere; ask ∈ volume | area. "ratio" is the TARGET MULTIPLE (never an absolute number) and its correct k — ∛ratio for volume, √ratio for area — must land on the slider's own 0.5 stops from 0.5 to 4 (so favour ratio ∈ {1, 2.25, 4, 8, 9, 15.625, 16, 27, 64, …} — check ∛ or √ lands on a half before emitting). ask:"area" also shows toggles for which face(s) count, so leaving a base off is diagnosed on its own.`,
+  },
+  box_plot_builder: {
+    name: "box_plot_builder",
+    line: `{{widget:box_plot_builder:{"prompt":"Build the box plot for this data set","data":[2,4,4,5,6,7,9,12,15]}}} — the student drags five markers (minimum, Q1, median, Q3, maximum) onto a number line for the given data set. "data" must be 5–16 WHOLE numbers (so every quartile lands on the widget's snap grid) — never pre-sorted for the student, and include an outlier only when you want the whisker-vs-outlier distinction taught. Quartiles are graded by this book's own method: linear interpolation between ranks (Siyavula §10.4's "percentile formula"), not the split-at-the-median method some other syllabuses use.`,
+  },
+  venn_builder: {
+    name: "venn_builder",
+    line: `{{widget:venn_builder:{"prompt":"Shade A only","sets":2,"labels":["Football","Chess"],"mode":"shade","target":"aOnly"}}} — a real 2- or 3-circle Venn diagram; the student taps the region(s) that make the named target true. target ∈ union | intersection | aOnly | bOnly | cOnly | complementA | complementB | complementC | neither — cOnly/complementC need sets:3. The other mode fills in counts instead of shading: {"mode":"counts","sets":2,"labels":["French","German"],"total":20,"regions":{"a":8,"b":5,"ab":4,"n":3},"clues":{"a":12,"b":9}} — "regions" is every exclusive zone's TRUE count (a/b/c/ab/ac/bc/abc/n, whichever the set count needs) and must sum to "total" when you give one; "clues" are the word problem's raw, PRE-overlap set sizes, which is what lets the widget name "counted the overlap twice" as the specific mistake it is.`,
+  },
+  area_model: {
+    name: "area_model",
+    line: `{{widget:area_model:{"prompt":"Expand (x + 2)(x - 3) with the tiles","mode":"expand","a":2,"b":-3}}} — algebra tiles as a grid the student builds: one x² tile anchored, x-tiles run out along its top and left edges (the "a" and "b" signs — negative tiles are hatched AND marked "−", never colour alone), and the block those two runs bound is where the ab unit tiles go. mode ∈ expand | factor — same target (x+a)(x+b), same grading, only the prompt differs; a and b are whole numbers, not both zero, |a| and |b| ≤ 4 (the grid runs out past that). Prefer this over an explanation of FOIL: the cross term is something the student places, not a step they recite.`,
+  },
+  /**
+   * `curve_sketcher`'s FIVE NEW FAMILIES, documented under a SEPARATE key
+   * rather than folded into the entry above. That entry is read by every
+   * Prep-3 (National) unit that already offers curve_sketcher (u1, u5, t2u2,
+   * via BY_UNIT) — extending its text would extend THEIR prompt too, which is
+   * exactly the byte-identity this feature is required not to break. `lib/
+   * lesson.ts` asks for this key by name, in place of "curve_sketcher", for a
+   * G10 lesson whose unit's LIVE widget bank holds a curve_sketcher question
+   * of one of these five families (`hasG10CurveFamily`) — a National lesson
+   * never sets that flag, so its prompt is unaffected (`documentedMathWidgets`
+   * already tolerates a name with no BY_UNIT entry, so this is additive there
+   * too).
+   */
+  curve_sketcher_g10: {
+    name: "curve_sketcher",
+    line: `{{widget:curve_sketcher:{"prompt":"Sketch y = 2/x - 1","fn":"hyperbola","coefs":[2,-1]}}} — the same freehand curve_sketcher, five more families. fn ∈ hyperbola (coefs [a,q], y=a/x+q, a a nonzero whole number |a|≤6, q whole |q|≤3) | exponential (coefs [a,b,q], y=a·b^x+q, a nonzero whole |a|≤3, b ∈ {2,3,0.5}, q whole |q|≤3) | sine | cosine | tangent (coefs [a,q], amplitude a — nonzero whole, |a|≤4 for sine/cosine or ≤3 for tangent — and vertical shift q whole |q|≤3; θ is in DEGREES, domain 0..360, and the period is fixed by the book's own convention — 360° for sine/cosine, 180° for tangent — never a parameter you set). Hyperbola and tangent have more than one visible branch and CANNOT be drawn as one stroke: tell the student to lift their finger and draw each branch separately. Drawing straight through where the curve is undefined (x=0 for a hyperbola, θ=90°/270° for tangent) is rejected as "asymptote-crossed", which is the point — an asymptote is a boundary the curve approaches and never crosses.`,
+  },
 };
+
+/**
+ * The five families `curve_sketcher_g10` documents that `curve_sketcher`'s
+ * original entry does not (linear, quadratic) — `lib/lesson.ts` reads this to
+ * decide whether a G10 unit's live curve_sketcher bank needs the wider entry.
+ */
+export const CURVE_SKETCHER_G10_FAMILIES: ReadonlySet<string> = new Set([
+  "hyperbola",
+  "exponential",
+  "sine",
+  "cosine",
+  "tangent",
+]);
 
 /**
  * Which widgets each unit is told about. Keyed by the lesson-slug prefix the
@@ -121,11 +175,34 @@ export function mathWidgetDocs(
    *  rather than wrong about half the students. */
   a: AddressForms = addressForms(null)
 ): string {
-  const names = BY_UNIT[unitOf(slug)] ?? ["pair_plotter", "product_builder"];
+  return mathWidgetDocsNamed(
+    BY_UNIT[unitOf(slug)] ?? ["pair_plotter", "product_builder"],
+    a
+  );
+}
+
+/**
+ * The same lines for a widget list the caller already has — a course whose
+ * units are not in the map above names its own (feature 003: the Grade 10
+ * course reads the widget kinds of its unit's live widget questions,
+ * `lib/lesson.ts`). Names with no documentation here are skipped, as they are
+ * above. An EMPTY list is told so, rather than handed another unit's widgets:
+ * FR-1209 forbids a borrowed widget, and so does decision 10 for Grade 10.
+ */
+export function mathWidgetDocsNamed(
+  names: readonly string[],
+  a: AddressForms = addressForms(null)
+): string {
   const lines = names
     .map((n) => DOCS[n])
     .filter((d): d is WidgetDoc => !!d)
     .map((d) => `- ${d.line}`);
+  if (lines.length === 0) {
+    return (
+      `- This lesson's unit has no drawing widget of its own: for a hands-on ` +
+      `beat use a stored figure or a question card from the QUESTION BANK.`
+    );
+  }
   lines.push(
     `- EVERY widget payload above may carry "lo":"lo:…" naming the objective ` +
       `the beat is teaching, and it SHOULD. A widget you compose is recorded ` +
@@ -142,6 +219,11 @@ export function mathWidgetDocs(
       `mistakes they can diagnose. Compose one inline only when nothing stored fits.`
   );
   return lines.join("\n");
+}
+
+/** The names in `names` that this file documents, in their order. */
+export function documentedMathWidgets(names: readonly string[]): string[] {
+  return names.filter((n) => !!DOCS[n]);
 }
 
 /** The widget names this lesson is told about — for tests and the dev fixture. */

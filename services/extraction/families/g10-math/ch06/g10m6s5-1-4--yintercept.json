@@ -1,0 +1,85 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s5-1-4:yintercept",
+ "kind": "family",
+ "lo_id": "lo:g10m6s5-1-4",
+ "parent_question_id": "q:g10m6s5-1-4:ex6-5-4a",
+ "source_page": 186,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "choice": [
+    -6,
+    -5,
+    -4,
+    -3,
+    -2,
+    2,
+    3,
+    4,
+    5,
+    6
+   ]
+  },
+  {
+   "name": "b",
+   "choice": [
+    2,
+    3,
+    4,
+    5,
+    10
+   ]
+  },
+  {
+   "name": "q",
+   "choice": [
+    -9,
+    -8,
+    -7,
+    -6,
+    -5,
+    -4,
+    -3,
+    -2,
+    -1,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ]
+  },
+  {
+   "require": "a + q != 0",
+   "why": "keeps the y-intercept off the origin, so the point is a clean (0, k) with k not 0"
+  },
+  {
+   "name": "yv",
+   "let": "a + q"
+  }
+ ],
+ "stem": "Calculate the $y$-intercept of the graph of $y={=a}\\cdot {=b}^{x}{=signed(q)}$. Write your answer as a point $(x, y)$.",
+ "marker": {
+  "kind": "coordinates",
+  "answer": "(0, {=yv})",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "solution": [
+  "The $y$-intercept is where the graph cuts the $y$-axis, so we let $x=0$.",
+  "$y={=a}\\cdot {=b}^{0}{=signed(q)}$",
+  "Any non-zero number raised to the power $0$ equals $1$, so ${=b}^{0}=1$ and $y={=a}\\cdot 1{=signed(q)}={=yv}$.",
+  "The $y$-intercept is $(0, {=yv})$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Basic: the entry point of the skill, whole-number a, b and q, no rounding. Same skeleton as book ex6-5-4a (y = 1/4.4^x - 1) with the coefficient a whole number so that no fraction or rounding enters. a is never 1 or -1 so the stem never prints '1\\cdot'. a + q is kept non-zero so the answer is never the origin. The answer is the point (0, a + q); the marker is a coordinates marker."
+}

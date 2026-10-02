@@ -1,0 +1,128 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m14s6-1-1:ticket-trio",
+ "kind": "family",
+ "lo_id": "lo:g10m14s6-1-1",
+ "parent_question_id": "q:g10m14s6-1-1:ex14-6-1",
+ "source_page": 486,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": "A ticket is chosen at random from tickets numbered 1 to N. Three events are described by the number on the ticket.",
+ "params": [
+  {
+   "name": "N",
+   "choice": [
+    36,
+    40
+   ]
+  },
+  {
+   "name": "a",
+   "randint": [
+    4,
+    9
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    4,
+    9
+   ],
+   "resample_while": "b == a"
+  },
+  {
+   "name": "c",
+   "randint": [
+    5,
+    9
+   ]
+  },
+  {
+   "name": "L",
+   "let": "lcm(a, b)"
+  },
+  {
+   "name": "mA",
+   "let": "(N // a) * a"
+  },
+  {
+   "name": "mB",
+   "let": "(N // b) * b"
+  },
+  {
+   "name": "SA",
+   "let": "[x for x in range(1, N + 1) if x % a == 0]"
+  },
+  {
+   "name": "SB",
+   "let": "[x for x in range(1, N + 1) if x % b == 0]"
+  },
+  {
+   "name": "SC",
+   "let": "[x for x in range(1, N + 1) if x < c]"
+  },
+  {
+   "name": "AB",
+   "let": "[x for x in SA if x % b == 0]"
+  },
+  {
+   "name": "AC",
+   "let": "[x for x in SA if x < c]"
+  },
+  {
+   "name": "BC",
+   "let": "[x for x in SB if x < c]"
+  },
+  {
+   "name": "eAB",
+   "let": "1 if len(AB) == 0 else 0"
+  },
+  {
+   "name": "eAC",
+   "let": "1 if len(AC) == 0 else 0"
+  },
+  {
+   "name": "eBC",
+   "let": "1 if len(BC) == 0 else 0"
+  },
+  {
+   "name": "n",
+   "let": "eAB + eAC + eBC"
+  },
+  {
+   "name": "relAB",
+   "let": "['is not more than', 'is more than'][eAB]"
+  },
+  {
+   "name": "relAC",
+   "let": "['is less than', 'is not less than'][eAC]"
+  },
+  {
+   "name": "relBC",
+   "let": "['is less than', 'is not less than'][eBC]"
+  },
+  {
+   "name": "vAB",
+   "let": "['So a ticket can be in both events, and A and B are not mutually exclusive.', 'So no ticket is in both events, and A and B are mutually exclusive.'][eAB]"
+  },
+  {
+   "name": "vAC",
+   "let": "['So a ticket can be in both events, and A and C are not mutually exclusive.', 'So no number of A is in C, and A and C are mutually exclusive.'][eAC]"
+  },
+  {
+   "name": "vBC",
+   "let": "['So a ticket can be in both events, and B and C are not mutually exclusive.', 'So no number of B is in C, and B and C are mutually exclusive.'][eBC]"
+  }
+ ],
+ "stem": "A ticket is chosen at random from tickets numbered 1 to {=N}. Event A: the number is a multiple of {=a}. Event B: the number is a multiple of {=b}. Event C: the number is less than {=c}. There are three pairs of events: A and B, A and C, B and C. How many of these three pairs are mutually exclusive?",
+ "answer": "n",
+ "solution": [
+  "Two events are mutually exclusive when they cannot happen together, that is, when no ticket number is in both event sets. Write the three event sets: $A = \\{ {=a}, {=2 * a}, {=3 * a}, \\ldots, {=mA} \\}$, $B = \\{ {=b}, {=2 * b}, {=3 * b}, \\ldots, {=mB} \\}$, and $C$ is every number from $1$ up to ${=c - 1}$.",
+  "A and B: a number in both is a multiple of {=a} and of {=b}. The smallest such number is the lowest common multiple, ${=L}$. The largest ticket number is ${=N}$, and ${=L}$ {=relAB} ${=N}$. {=vAB}",
+  "A and C: the smallest number in A is ${=a}$, and ${=a}$ {=relAC} ${=c}$. {=vAC}",
+  "B and C: the smallest number in B is ${=b}$, and ${=b}$ {=relBC} ${=c}$. {=vBC}",
+  "Count $1$ for each pair that is mutually exclusive and $0$ for each pair that is not: ${=eAB} + {=eAC} + {=eBC} = {=n}$."
+ ],
+ "notes": "Advanced tier: three events and three pairs to check, each by asking whether any ticket number is in both event sets. Pair A,B is decided by the lowest common multiple against the largest ticket number (the boundary lcm = N counts as overlapping: the ticket N itself is in both); pairs A,C and B,C by the smallest multiple against the strict bound c. A and B always have at least four members (a, b <= 9 <= N/4) and C is non-empty, so no event is empty. Checked against direct set intersection over 3000 simulated instances; the answer takes each of 0, 1, 2 and 3 (roughly 22%, 37%, 24%, 17%). Uses only holes with plain words and numbers (no set formatter, no string joins)."
+}

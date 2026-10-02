@@ -1,0 +1,1842 @@
+{
+ "stage": "S2-S4,S8",
+ "workflow": "lesson",
+ "prompts_version": "lesson-v3",
+ "book": "g10-math",
+ "embedded": {
+  "source": "runbook/lesson.workflow.js",
+  "source_sha256": "333ffdd010a87386b5a757e996ff3d7af7a534e6129072e93dc2cfbee4d01f7e",
+  "args_sha256": "7e0826cec7ecbbd70ac6a35064308a3ce3b2072210c66a2427ec3ea039cb43c3",
+  "generated_sha256": "5a215d2abede51dd46e6847e441c41d66697408b0df61dd03273e43ceb0a3d36",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "lessons": [
+  {
+   "lesson": "g10m8s1-1",
+   "claims": [
+    {
+     "lo": "lo:g10m8s1-1-1",
+     "type": "definition",
+     "text": "Analytical geometry is the study of geometric properties, relationships and measurement of points, lines and angles in the Cartesian plane.",
+     "anchor": "b03123",
+     "printed_page": 285,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "Analytical geometry is the study of geometric properties, relationships and measurement of points, lines and angles in the Cartesian plane.",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m8s1-1-1",
+     "type": "convention",
+     "text": "Analytical geometry is also called coordinate geometry or Cartesian geometry.",
+     "anchor": "b03123",
+     "printed_page": 285,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "also called coordinate or Cartesian geometry",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m8s1-1-1",
+     "type": "method",
+     "text": "A figure is drawn on the Cartesian plane by plotting each of its vertices at the given coordinates.",
+     "anchor": "b03126",
+     "printed_page": 284,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "If we are given the coordinates of the vertices of a figure, we can draw the figure on the Cartesian plane.",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m8s1-1-2",
+     "type": "convention",
+     "text": "A point's coordinates may be written with a comma separator, e.g. A(1,1), instead of a semicolon.",
+     "anchor": "b03128",
+     "printed_page": 284,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "You might also see coordinates written as $A(1,1)$ .",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m8s1-1-1",
+     "type": "rule",
+     "text": "The order of the letters in a figure's name indicates the order in which its vertices must be joined: A to B, B to C, C to D, and D back to A.",
+     "anchor": "b03130",
+     "printed_page": 284,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "The order of the letters for naming a figure is important. It indicates the order in which points must be joined: $A$ to $B$ , $B$ to $C$ , $C$ to $D$ and $D$ back to $A$ .",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m8s1-1-3",
+     "type": "convention",
+     "text": "Although a figure's vertices can be named in more than one valid order (e.g. ABCD, CBAD, BADC), the convention is to write the letters in alphabetical order, so the quadrilateral is referred to as ABCD.",
+     "anchor": "b03130",
+     "printed_page": 284,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "However it is conventional to write the letters in alphabetical order and so we only refer to the quadrilateral as $ABCD$ .",
+     "provenance": "containment"
+    }
+   ],
+   "claims_dropped": [],
+   "items": [
+    {
+     "ref": "Ex8-1:1",
+     "kind": "exercise",
+     "lo": "lo:g10m8s1-1-2",
+     "stem": "You are given the following diagram, with various points shown: [figure] Find the coordinates of point $D$ .",
+     "answer_type": "expression",
+     "answer": "(3;3)",
+     "choices": null,
+     "marker": {
+      "kind": "coordinates",
+      "key": "(3;3)",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "solution": [
+      "For this question, we are only interested in point $D$ . From the graph we can read off the $x$ and $y$ values. Point $D$ has the following coordinates: $(3;3)$ ."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(3; 3)",
+     "epub_final_answer": "Point $D$ has the following coordinates: $(3;3)$ .",
+     "blind_answer": null,
+     "verification": "disputed",
+     "tier": "basic",
+     "printed_page": 285,
+     "shortcode": "2GBK",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex8-1:1|blind~printed",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-1:1|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-1:1|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both give the point as (3;3); identical coordinate pair, just with/without surrounding sentence."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [
+      "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__e2fc2fa3cd9e49b7533ee8e0e735f3a6.png"
+     ],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex8-1:2",
+     "kind": "exercise",
+     "lo": "lo:g10m8s1-1-2",
+     "stem": "You are given the following diagram, with various points shown: [figure] Find the coordinates of all the labelled points.",
+     "answer_type": "expression",
+     "answer": "A(3;-4), B(3;-3), C(-3;-4), D(5;-3), E(5;-4)",
+     "choices": null,
+     "marker": {
+      "kind": "coordinates",
+      "key": "A(3;-4), B(3;-3), C(-3;-4), D(5;-3), E(5;-4)",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "solution": [
+      "From the graph we can read off the $x$ and $y$ values for each point. $A(3;-4)$ , $B(3;-3)$ , $C(-3;-4)$ , $D(5;-3)$ and $E(5;-4)$ ."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "A(3; −4), B(3; −3), C(−3; −4), D(5; −3) and E(5; −4).",
+     "epub_final_answer": "$A(3;-4)$ , $B(3;-3)$ , $C(-3;-4)$ , $D(5;-3)$ and $E(5;-4)$ .",
+     "blind_answer": null,
+     "verification": "disputed",
+     "tier": "standard",
+     "printed_page": 285,
+     "shortcode": "2GBM",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex8-1:2|blind~printed",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-1:2|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-1:2|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [
+      "the key \"A(3;-4), B(3;-3), C(-3;-4), D(5;-3), E(5;-4)\" does not read as the printed answer \"A(3; −4), B(3; −3), C(−3; −4), D(5; −3) and E(5; −4).\""
+     ],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [
+      "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__ca52645b6960c4835510a310067cfd50.png"
+     ],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex8-1:3",
+     "kind": "exercise",
+     "lo": "lo:g10m8s1-1-2",
+     "stem": "You are given the following diagram, with various points shown: [figure] Which point lies at the coordinates $(5;-4)$ ?",
+     "answer_type": "choice",
+     "answer": "E",
+     "choices": [
+      {
+       "key": "A",
+       "text": "A"
+      },
+      {
+       "key": "B",
+       "text": "B"
+      },
+      {
+       "key": "C",
+       "text": "C"
+      },
+      {
+       "key": "D",
+       "text": "D"
+      },
+      {
+       "key": "E",
+       "text": "E"
+      }
+     ],
+     "marker": null,
+     "solution": [
+      "For this question, we are must find point $(5;-4)$ . On the graph we can trace the $x$ and $y$ values to find which point lies at the coordinates $(5;-4)$ . Doing so we find that point $E$ lies at the coordinates $(5;-4)$ ."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "E",
+     "epub_final_answer": "Doing so we find that point $E$ lies at the coordinates $(5;-4)$ .",
+     "blind_answer": null,
+     "verification": "disputed",
+     "tier": "basic",
+     "printed_page": 286,
+     "shortcode": "2GBN",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex8-1:3|blind~printed",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-1:3|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-1:3|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both identify point E as the answer to 'which point'; one is embedded in a sentence, the other is the bare label."
+       }
+      ]
+     },
+     "typing_problems": [
+      "options said to be the stem's are not all in the stem"
+     ],
+     "unit": null,
+     "options_source": "stem",
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [
+      "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__3ea11f1d5693989954f7cc9d6a2e3779.png"
+     ],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex8-1:4",
+     "kind": "exercise",
+     "lo": "lo:g10m8s1-1-2",
+     "stem": "You are given the following diagram, with various points shown: [figure] Which point lies at the coordinates $(-4;-3)$ ?",
+     "answer_type": "choice",
+     "answer": "B",
+     "choices": [
+      {
+       "key": "A",
+       "text": "A"
+      },
+      {
+       "key": "B",
+       "text": "B"
+      },
+      {
+       "key": "C",
+       "text": "C"
+      },
+      {
+       "key": "D",
+       "text": "D"
+      },
+      {
+       "key": "E",
+       "text": "E"
+      }
+     ],
+     "marker": null,
+     "solution": [
+      "For this question, we are must find point $(-4;-3)$ . On the graph we can trace the $x$ and $y$ values to find which point lies at the coordinates $(-4;-3)$ . Doing so we find that point $B$ lies at the coordinates $(-4;-3)$ ."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "B",
+     "epub_final_answer": "Doing so we find that point $B$ lies at the coordinates $(-4;-3)$ .",
+     "blind_answer": null,
+     "verification": "disputed",
+     "tier": "basic",
+     "printed_page": 286,
+     "shortcode": "2GBP",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex8-1:4|blind~printed",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-1:4|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-1:4|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both identify point B as the answer; same content, one wrapped in a sentence."
+       }
+      ]
+     },
+     "typing_problems": [
+      "options said to be the stem's are not all in the stem"
+     ],
+     "unit": null,
+     "options_source": "stem",
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [
+      "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__ca470106e22c032748a702dfe2cafb4a.png"
+     ],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex8-1:5",
+     "kind": "exercise",
+     "lo": "lo:g10m8s1-1-3",
+     "stem": "You are given the following diagram, with 4 shapes drawn. All the shapes are identical, but each shape uses a different naming convention: [figure] Which shape uses the correct naming convention?",
+     "answer_type": "choice",
+     "answer": "D",
+     "choices": [
+      {
+       "key": "A",
+       "text": "shape W"
+      },
+      {
+       "key": "B",
+       "text": "shape X"
+      },
+      {
+       "key": "C",
+       "text": "shape Y"
+      },
+      {
+       "key": "D",
+       "text": "shape Z"
+      }
+     ],
+     "marker": null,
+     "solution": [
+      "We recall that the correct naming convention for a shape is in alphabetical order, either clockwise or anti-clockwise around the shape. From the diagram, we can see that only shape Z sticks to this naming convention. [figure]"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "shape Z",
+     "epub_final_answer": "From the diagram, we can see that only shape Z sticks to this naming convention. [figure]",
+     "blind_answer": null,
+     "verification": "disputed",
+     "tier": "basic",
+     "printed_page": 287,
+     "shortcode": "2GBQ",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex8-1:5|blind~printed",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-1:5|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-1:5|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both name shape Z as the correctly-labeled shape."
+       }
+      ]
+     },
+     "typing_problems": [
+      "options said to be the stem's are not all in the stem"
+     ],
+     "unit": null,
+     "options_source": "stem",
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [
+      "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__bb8c5d2e68666bae54dfb0736b4537cd.png"
+     ],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": true
+    },
+    {
+     "ref": "Ex8-1:6",
+     "kind": "exercise",
+     "lo": "lo:g10m8s1-1-3",
+     "stem": "You are given the following diagram, with 4 shapes drawn. All the shapes are identical, but each shape uses a different naming convention: Which shape uses the correct naming convention? [figure]",
+     "answer_type": "choice",
+     "answer": "D",
+     "choices": [
+      {
+       "key": "A",
+       "text": "shape W"
+      },
+      {
+       "key": "B",
+       "text": "shape X"
+      },
+      {
+       "key": "C",
+       "text": "shape Y"
+      },
+      {
+       "key": "D",
+       "text": "shape Z"
+      }
+     ],
+     "marker": null,
+     "solution": [
+      "We recall that the correct naming convention for a shape is in alphabetical order, either clockwise or anti-clockwise around the shape. From the diagram, we can see that only shape Z sticks to this naming convention. [figure]"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "shape Z",
+     "epub_final_answer": null,
+     "blind_answer": null,
+     "verification": "disputed",
+     "tier": "basic",
+     "printed_page": 287,
+     "shortcode": "2GBR",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex8-1:6|blind~printed",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-1:6|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-1:6|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ]
+     },
+     "typing_problems": [
+      "book_final is not in the book solution",
+      "options said to be the stem's are not all in the stem"
+     ],
+     "unit": null,
+     "options_source": "stem",
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [
+      "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__e600153ae85dce6edac491fa78bb9340.png"
+     ],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": true
+    },
+    {
+     "ref": "Ex8-6:1",
+     "kind": "exercise",
+     "lo": "lo:g10m8s1-1-2",
+     "stem": "You are given the following diagram, with various points shown: [figure] Find the coordinates of points $A$ , $B$ , $C$ , $D$ and $E$ .",
+     "answer_type": "expression",
+     "answer": "A(7;-4), B(3;-3), C(7;7), D(-2;-8), E(-5;4)",
+     "choices": null,
+     "marker": {
+      "kind": "coordinates",
+      "key": "A(7;-4), B(3;-3), C(7;7), D(-2;-8), E(-5;4)",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "solution": [
+      "From the graph we can read off the $x$ and $y$ values for each point. $A(7;-4)$ , $B(3;-3)$ , $C(7;7)$ , $D(-2;-8)$ and $E(-5;4)$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "A(7; −4), B(3; −3), C(7; 7), D(−2; −8) and E(−5; 4)",
+     "epub_final_answer": "$A(7;-4)$ , $B(3;-3)$ , $C(7;7)$ , $D(-2;-8)$ and $E(-5;4)$",
+     "blind_answer": null,
+     "verification": "disputed",
+     "tier": "standard",
+     "printed_page": 315,
+     "shortcode": "2GDR",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex8-6:1|blind~printed",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:1|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:1|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [
+      "the key \"A(7;-4), B(3;-3), C(7;7), D(-2;-8), E(-5;4)\" does not read as the printed answer \"A(7; −4), B(3; −3), C(7; 7), D(−2; −8) and E(−5; 4)\""
+     ],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [
+      "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__fce685296eebf3584340e4d9cf83fc94.png"
+     ],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex8-6:2",
+     "kind": "exercise",
+     "lo": "lo:g10m8s1-1-2",
+     "stem": "You are given the following diagram, with various points shown: [figure] Which point lies at the coordinates $(3;-5)$ ?",
+     "answer_type": "choice",
+     "answer": "A",
+     "choices": [
+      {
+       "key": "A",
+       "text": "A"
+      },
+      {
+       "key": "B",
+       "text": "B"
+      },
+      {
+       "key": "C",
+       "text": "C"
+      },
+      {
+       "key": "D",
+       "text": "D"
+      },
+      {
+       "key": "E",
+       "text": "E"
+      }
+     ],
+     "marker": null,
+     "solution": [
+      "For this question, we are must find point $(3;-5)$ . Therefore, on the graph we can trace the $x$ and $y$ values. Therefore, point $A$ lies at the coordinates: $(3;-5)$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "A",
+     "epub_final_answer": "Therefore, point $A$ lies at the coordinates: $(3;-5)$",
+     "blind_answer": null,
+     "verification": "disputed",
+     "tier": "basic",
+     "printed_page": 315,
+     "shortcode": "2GDS",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex8-6:2|blind~printed",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:2|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:2|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both identify point A as the answer; same content, one wrapped in a sentence."
+       }
+      ]
+     },
+     "typing_problems": [
+      "options said to be the stem's are not all in the stem"
+     ],
+     "unit": null,
+     "options_source": "stem",
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [
+      "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__1c5e66b8cb8c13d5719d20dbe5e26987.png"
+     ],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex8-6:3",
+     "kind": "exercise",
+     "lo": "lo:g10m8s1-1-3",
+     "stem": "You are given the following diagram, with 4 shapes drawn. All the shapes are identical, but each shape uses a different naming convention: [figure] Which shape uses the correct naming convention?",
+     "answer_type": "choice",
+     "answer": "D",
+     "choices": [
+      {
+       "key": "A",
+       "text": "Shape W"
+      },
+      {
+       "key": "B",
+       "text": "Shape X"
+      },
+      {
+       "key": "C",
+       "text": "Shape Y"
+      },
+      {
+       "key": "D",
+       "text": "Shape Z"
+      }
+     ],
+     "marker": null,
+     "solution": [
+      "We recall that the correct naming convention for a shape is in alphabetical order, either clockwise or anti-clockwise around the shape. From the diagram, we can see that only Shape Z sticks to this naming convention. [figure]"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "Shape Z",
+     "epub_final_answer": "From the diagram, we can see that only Shape Z sticks to this naming convention. [figure]",
+     "blind_answer": null,
+     "verification": "disputed",
+     "tier": "basic",
+     "printed_page": 316,
+     "shortcode": "2GDT",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex8-6:3|blind~printed",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:3|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:3|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both name Shape Z as the correctly-labeled shape."
+       }
+      ]
+     },
+     "typing_problems": [
+      "options said to be the stem's are not all in the stem"
+     ],
+     "unit": null,
+     "options_source": "stem",
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [
+      "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__528b18103fa17b17a0d8df3b88b65cdc.png"
+     ],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": true
+    },
+    {
+     "ref": "Ex8-6:4a",
+     "kind": "exercise",
+     "lo": "lo:g10m8s1-1-1",
+     "stem": "Represent the following figures in the Cartesian plane: Triangle $DEF$ with $D(1;2)$ , $E(3;2)$ and $F(2;4)$ .",
+     "answer_type": "not_markable",
+     "answer": null,
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "[figure]"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": null,
+     "epub_final_answer": "[figure]",
+     "blind_answer": null,
+     "verification": "no_printed_answer",
+     "tier": "basic",
+     "printed_page": 316,
+     "shortcode": "2GDV",
+     "verify": {
+      "agreed_with_book_solution": false,
+      "pairs": [
+       {
+        "pair_id": "Ex8-6:4a|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": "sketch or drawing",
+     "tier_source": "typing",
+     "printed_answer_scope": null,
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex8-6:4b",
+     "kind": "exercise",
+     "lo": "lo:g10m8s1-1-1",
+     "stem": "Represent the following figures in the Cartesian plane: Quadrilateral $GHIJ$ with $G(2;-1)$ , $H(0;2)$ , $I(-2;-2)$ and $J(1;-3)$ .",
+     "answer_type": "not_markable",
+     "answer": null,
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "[figure]"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": null,
+     "epub_final_answer": "[figure]",
+     "blind_answer": null,
+     "verification": "no_printed_answer",
+     "tier": "basic",
+     "printed_page": 316,
+     "shortcode": "2GDW",
+     "verify": {
+      "agreed_with_book_solution": false,
+      "pairs": [
+       {
+        "pair_id": "Ex8-6:4b|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": "sketch or drawing",
+     "tier_source": "typing",
+     "printed_answer_scope": null,
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex8-6:4c",
+     "kind": "exercise",
+     "lo": "lo:g10m8s1-1-1",
+     "stem": "Represent the following figures in the Cartesian plane: Quadrilateral $MNOP$ with $M(1;1)$ , $N(-1;3)$ , $O(-2;3)$ and $P(-4;1)$ .",
+     "answer_type": "not_markable",
+     "answer": null,
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "[figure]"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": null,
+     "epub_final_answer": "[figure]",
+     "blind_answer": null,
+     "verification": "no_printed_answer",
+     "tier": "basic",
+     "printed_page": 316,
+     "shortcode": "2GDX",
+     "verify": {
+      "agreed_with_book_solution": false,
+      "pairs": [
+       {
+        "pair_id": "Ex8-6:4c|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": "sketch or drawing",
+     "tier_source": "typing",
+     "printed_answer_scope": null,
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex8-6:4d",
+     "kind": "exercise",
+     "lo": "lo:g10m8s1-1-1",
+     "stem": "Represent the following figures in the Cartesian plane: Quadrilateral $WXYZ$ with $W(1;-2)$ , $X(-1;-3)$ , $Y(2;-4)$ and $Z(3;-2)$ .",
+     "answer_type": "not_markable",
+     "answer": null,
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "[figure]"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": null,
+     "epub_final_answer": "[figure]",
+     "blind_answer": null,
+     "verification": "no_printed_answer",
+     "tier": "basic",
+     "printed_page": 316,
+     "shortcode": "2GDY",
+     "verify": {
+      "agreed_with_book_solution": false,
+      "pairs": [
+       {
+        "pair_id": "Ex8-6:4d|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": "sketch or drawing",
+     "tier_source": "typing",
+     "printed_answer_scope": null,
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex8-6:20a",
+     "kind": "exercise",
+     "lo": "lo:g10m8s1-1-1",
+     "stem": "Consider a quadrilateral $ABCD$ with vertices $A(3;2)$ , $B(4;5)$ , $C(1;7)$ and $D(1;3)$ . Draw the quadrilateral.",
+     "answer_type": "not_markable",
+     "answer": null,
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "[figure]"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": null,
+     "epub_final_answer": "[figure]",
+     "blind_answer": null,
+     "verification": "no_printed_answer",
+     "tier": "basic",
+     "printed_page": 321,
+     "shortcode": "2GFJ",
+     "verify": {
+      "agreed_with_book_solution": false,
+      "pairs": [
+       {
+        "pair_id": "Ex8-6:20a|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": "sketch or drawing",
+     "tier_source": "typing",
+     "printed_answer_scope": null,
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex8-6:25a",
+     "kind": "exercise",
+     "lo": "lo:g10m8s1-1-1",
+     "stem": "Consider triangle $ABC$ with vertices $A(1;3)$ , $B(4;1)$ and $C(6;4)$ . Sketch triangle $ABC$ on the Cartesian plane.",
+     "answer_type": "not_markable",
+     "answer": null,
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "[figure]"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": null,
+     "epub_final_answer": "[figure]",
+     "blind_answer": null,
+     "verification": "no_printed_answer",
+     "tier": "basic",
+     "printed_page": 322,
+     "shortcode": "2GFQ",
+     "verify": {
+      "agreed_with_book_solution": false,
+      "pairs": [
+       {
+        "pair_id": "Ex8-6:25a|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": "sketch or drawing",
+     "tier_source": "typing",
+     "printed_answer_scope": null,
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    }
+   ],
+   "visuals": [
+    {
+     "n": 1,
+     "lo": "lo:g10m8s1-1-1",
+     "question": null,
+     "kind": "coordinate_plot",
+     "spec": {
+      "xRange": [
+       0,
+       5
+      ],
+      "yRange": [
+       0,
+       5
+      ],
+      "points": [
+       {
+        "x": 1,
+        "y": 1,
+        "label": "A"
+       },
+       {
+        "x": 3,
+        "y": 1,
+        "label": "B"
+       },
+       {
+        "x": 3,
+        "y": 3,
+        "label": "C"
+       },
+       {
+        "x": 1,
+        "y": 3,
+        "label": "D"
+       }
+      ],
+      "segments": [
+       [
+        0,
+        1
+       ],
+       [
+        1,
+        2
+       ],
+       [
+        2,
+        3
+       ],
+       [
+        3,
+        0
+       ]
+      ],
+      "animate": "plot-sequence",
+      "interactive": false
+     },
+     "caption": "Plot A, B, C and D, then join A to B, B to C, C to D and D back to A — that traces out rectangle ABCD, named in alphabetical order.",
+     "printed_page": 284,
+     "figure_id": "b03129:2",
+     "src": "tikzpicture/415fbceef549228b1dd7126a7100f585.png"
+    },
+    {
+     "n": 2,
+     "lo": "lo:g10m8s1-1-2",
+     "question": "Ex8-1:1",
+     "kind": "coordinate_plot",
+     "spec": {
+      "xRange": [
+       -9,
+       9
+      ],
+      "yRange": [
+       -9,
+       9
+      ],
+      "points": [
+       {
+        "x": 4,
+        "y": -3,
+        "label": "A"
+       },
+       {
+        "x": -3,
+        "y": -4,
+        "label": "B"
+       },
+       {
+        "x": 4,
+        "y": 5,
+        "label": "C"
+       },
+       {
+        "x": 3,
+        "y": 3,
+        "label": "D"
+       },
+       {
+        "x": -3,
+        "y": 3,
+        "label": "E"
+       }
+      ],
+      "animate": "plot-sequence",
+      "interactive": "click-to-plot"
+     },
+     "caption": "Read the coordinates of A, B, C, D and E straight off the grid.",
+     "printed_page": 285,
+     "figure_id": "b03132:3",
+     "src": "tikzpicture/e2fc2fa3cd9e49b7533ee8e0e735f3a6.png"
+    },
+    {
+     "n": 3,
+     "lo": "lo:g10m8s1-1-2",
+     "question": "Ex8-1:2",
+     "kind": "coordinate_plot",
+     "spec": {
+      "xRange": [
+       -9,
+       9
+      ],
+      "yRange": [
+       -9,
+       9
+      ],
+      "points": [
+       {
+        "x": -3,
+        "y": -4,
+        "label": "C"
+       },
+       {
+        "x": 3,
+        "y": -4,
+        "label": "A"
+       },
+       {
+        "x": 3,
+        "y": -3,
+        "label": "B"
+       },
+       {
+        "x": 5,
+        "y": -1,
+        "label": "D"
+       },
+       {
+        "x": 5,
+        "y": -4,
+        "label": "E"
+       }
+      ],
+      "animate": "plot-sequence",
+      "interactive": "click-to-plot"
+     },
+     "caption": "Read the coordinates of A, B, C, D and E straight off the grid.",
+     "printed_page": 285,
+     "figure_id": "b03133:4",
+     "src": "tikzpicture/ca52645b6960c4835510a310067cfd50.png"
+    },
+    {
+     "n": 4,
+     "lo": "lo:g10m8s1-1-2",
+     "question": "Ex8-1:3",
+     "kind": "coordinate_plot",
+     "spec": {
+      "xRange": [
+       -9,
+       9
+      ],
+      "yRange": [
+       -9,
+       9
+      ],
+      "points": [
+       {
+        "x": -3,
+        "y": 4,
+        "label": "B"
+       },
+       {
+        "x": 4,
+        "y": 5,
+        "label": "D"
+       },
+       {
+        "x": -5,
+        "y": -3,
+        "label": "C"
+       },
+       {
+        "x": -5,
+        "y": -5,
+        "label": "A"
+       },
+       {
+        "x": 5,
+        "y": -4,
+        "label": "E"
+       }
+      ],
+      "animate": "plot-sequence",
+      "interactive": "click-to-plot"
+     },
+     "caption": "Read the coordinates of A, B, C, D and E straight off the grid.",
+     "printed_page": 286,
+     "figure_id": "b03134:5",
+     "src": "tikzpicture/3ea11f1d5693989954f7cc9d6a2e3779.png"
+    },
+    {
+     "n": 5,
+     "lo": "lo:g10m8s1-1-2",
+     "question": "Ex8-1:4",
+     "kind": "coordinate_plot",
+     "spec": {
+      "xRange": [
+       -9,
+       9
+      ],
+      "yRange": [
+       -9,
+       9
+      ],
+      "points": [
+       {
+        "x": -5,
+        "y": 3,
+        "label": "A"
+       },
+       {
+        "x": -4,
+        "y": 4,
+        "label": "D"
+       },
+       {
+        "x": -4,
+        "y": -3,
+        "label": "B"
+       },
+       {
+        "x": 4,
+        "y": -4,
+        "label": "E"
+       },
+       {
+        "x": 5,
+        "y": -5,
+        "label": "C"
+       }
+      ],
+      "animate": "plot-sequence",
+      "interactive": "click-to-plot"
+     },
+     "caption": "Read the coordinates of A, B, C, D and E straight off the grid.",
+     "printed_page": 286,
+     "figure_id": "b03135:6",
+     "src": "tikzpicture/ca470106e22c032748a702dfe2cafb4a.png"
+    },
+    {
+     "n": 6,
+     "lo": "lo:g10m8s1-1-2",
+     "question": "Ex8-6:1",
+     "kind": "coordinate_plot",
+     "spec": {
+      "xRange": [
+       -9,
+       9
+      ],
+      "yRange": [
+       -9,
+       9
+      ],
+      "points": [
+       {
+        "x": 7,
+        "y": 7,
+        "label": "C"
+       },
+       {
+        "x": -5,
+        "y": 4,
+        "label": "E"
+       },
+       {
+        "x": 3,
+        "y": -3,
+        "label": "B"
+       },
+       {
+        "x": 7,
+        "y": -4,
+        "label": "A"
+       },
+       {
+        "x": -2,
+        "y": -8,
+        "label": "D"
+       }
+      ],
+      "animate": "plot-sequence",
+      "interactive": "click-to-plot"
+     },
+     "caption": "Read the coordinates of A, B, C, D and E straight off the grid.",
+     "printed_page": 315,
+     "figure_id": "b03287:9",
+     "src": "tikzpicture/fce685296eebf3584340e4d9cf83fc94.png"
+    },
+    {
+     "n": 7,
+     "lo": "lo:g10m8s1-1-2",
+     "question": "Ex8-6:2",
+     "kind": "coordinate_plot",
+     "spec": {
+      "xRange": [
+       -9,
+       9
+      ],
+      "yRange": [
+       -9,
+       9
+      ],
+      "points": [
+       {
+        "x": 3,
+        "y": 5,
+        "label": "D"
+       },
+       {
+        "x": 4,
+        "y": 4,
+        "label": "E"
+       },
+       {
+        "x": 3,
+        "y": 3,
+        "label": "C"
+       },
+       {
+        "x": 5,
+        "y": -3,
+        "label": "B"
+       },
+       {
+        "x": 3,
+        "y": -5,
+        "label": "A"
+       }
+      ],
+      "animate": "plot-sequence",
+      "interactive": "click-to-plot"
+     },
+     "caption": "Read the coordinates of A, B, C, D and E straight off the grid — notice how close C, D and E sit to each other.",
+     "printed_page": 315,
+     "figure_id": "b03288:10",
+     "src": "tikzpicture/1c5e66b8cb8c13d5719d20dbe5e26987.png"
+    }
+   ],
+   "viz_gaps": [
+    {
+     "figure_id": "b03124:1",
+     "src": "images/animation.png",
+     "ref": null,
+     "printed_page": 285,
+     "reason": "A decorative real-world scene (a cannon firing a ball across a field, person watching) used to motivate 'motion can be plotted on the Cartesian plane.' There is no axis, no grid, no numeric coordinates or equation in the image itself — just an illustrated parabolic arc over a grassy scene. There is nothing here to parametrize faithfully; picking arbitrary quadratic coefficients to force it into function_graph would show a different (invented) curve, not this figure.",
+     "needed_kind": "illustrative/photo-realistic scene (no listed kind fits a non-numeric motivational illustration)"
+    },
+    {
+     "figure_id": "b03136:7",
+     "src": "tikzpicture/bb8c5d2e68666bae54dfb0736b4537cd.png",
+     "ref": "Ex8-1:5",
+     "printed_page": 287,
+     "reason": "Four rings of ~20 lettered beads (shapes W, X, Y, Z), each a plain closed loop of letters with no coordinates, radius, chord or arc — it tests reading a cyclic order of labels around a loop, not circle geometry. geo_scene's vocabulary (circle/chord/radius/tangent/arc) doesn't describe an arbitrary lettered necklace, and coordinate_plot/arrow_map don't model a closed cyclic sequence either. Forcing it into any listed kind would drop the actual point of the exercise (reading order around a cycle).",
+     "needed_kind": "labeled-ring / cyclic-sequence diagram (not in the kind list)"
+    },
+    {
+     "figure_id": "b03137:8",
+     "src": "tikzpicture/e600153ae85dce6edac491fa78bb9340.png",
+     "ref": "Ex8-1:6",
+     "printed_page": 287,
+     "reason": "Same as b03136:7 — four rings of lettered beads (shapes W, X, Y, Z) testing cyclic reading order, with no coordinates or circle-geometry elements to map onto any listed kind.",
+     "needed_kind": "labeled-ring / cyclic-sequence diagram (not in the kind list)"
+    },
+    {
+     "figure_id": "b03289:11",
+     "src": "tikzpicture/528b18103fa17b17a0d8df3b88b65cdc.png",
+     "ref": "Ex8-6:3",
+     "printed_page": 316,
+     "reason": "Same bead-necklace format as b03136:7 and b03137:8 (shapes W, X, Y, Z), testing cyclic label order rather than coordinates or circle geometry — no listed kind fits.",
+     "needed_kind": "labeled-ring / cyclic-sequence diagram (not in the kind list)"
+    }
+   ],
+   "teacher_only": {
+    "seen": 2,
+    "dropped": 2,
+    "reached_claim": 0,
+    "caught_in_claims": 0
+   },
+   "verify": {
+    "disagreements": [
+     {
+      "ref": "Ex8-1:1",
+      "printed": "(3; 3)",
+      "book": "Point $D$ has the following coordinates: $(3;3)$ .",
+      "blind": null,
+      "pairs": [
+       {
+        "pair_id": "Ex8-1:1|blind~printed",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-1:1|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-1:1|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both give the point as (3;3); identical coordinate pair, just with/without surrounding sentence."
+       }
+      ],
+      "typing_problems": []
+     },
+     {
+      "ref": "Ex8-1:2",
+      "printed": "A(3; −4), B(3; −3), C(−3; −4), D(5; −3) and E(5; −4).",
+      "book": "$A(3;-4)$ , $B(3;-3)$ , $C(-3;-4)$ , $D(5;-3)$ and $E(5;-4)$ .",
+      "blind": null,
+      "pairs": [
+       {
+        "pair_id": "Ex8-1:2|blind~printed",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-1:2|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-1:2|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ],
+      "typing_problems": [
+       "the key \"A(3;-4), B(3;-3), C(-3;-4), D(5;-3), E(5;-4)\" does not read as the printed answer \"A(3; −4), B(3; −3), C(−3; −4), D(5; −3) and E(5; −4).\""
+      ]
+     },
+     {
+      "ref": "Ex8-1:3",
+      "printed": "E",
+      "book": "Doing so we find that point $E$ lies at the coordinates $(5;-4)$ .",
+      "blind": null,
+      "pairs": [
+       {
+        "pair_id": "Ex8-1:3|blind~printed",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-1:3|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-1:3|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both identify point E as the answer to 'which point'; one is embedded in a sentence, the other is the bare label."
+       }
+      ],
+      "typing_problems": [
+       "options said to be the stem's are not all in the stem"
+      ]
+     },
+     {
+      "ref": "Ex8-1:4",
+      "printed": "B",
+      "book": "Doing so we find that point $B$ lies at the coordinates $(-4;-3)$ .",
+      "blind": null,
+      "pairs": [
+       {
+        "pair_id": "Ex8-1:4|blind~printed",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-1:4|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-1:4|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both identify point B as the answer; same content, one wrapped in a sentence."
+       }
+      ],
+      "typing_problems": [
+       "options said to be the stem's are not all in the stem"
+      ]
+     },
+     {
+      "ref": "Ex8-1:5",
+      "printed": "shape Z",
+      "book": "From the diagram, we can see that only shape Z sticks to this naming convention. [figure]",
+      "blind": null,
+      "pairs": [
+       {
+        "pair_id": "Ex8-1:5|blind~printed",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-1:5|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-1:5|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both name shape Z as the correctly-labeled shape."
+       }
+      ],
+      "typing_problems": [
+       "options said to be the stem's are not all in the stem"
+      ]
+     },
+     {
+      "ref": "Ex8-1:6",
+      "printed": "shape Z",
+      "book": null,
+      "blind": null,
+      "pairs": [
+       {
+        "pair_id": "Ex8-1:6|blind~printed",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-1:6|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-1:6|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ],
+      "typing_problems": [
+       "book_final is not in the book solution",
+       "options said to be the stem's are not all in the stem"
+      ]
+     },
+     {
+      "ref": "Ex8-6:1",
+      "printed": "A(7; −4), B(3; −3), C(7; 7), D(−2; −8) and E(−5; 4)",
+      "book": "$A(7;-4)$ , $B(3;-3)$ , $C(7;7)$ , $D(-2;-8)$ and $E(-5;4)$",
+      "blind": null,
+      "pairs": [
+       {
+        "pair_id": "Ex8-6:1|blind~printed",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:1|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:1|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ],
+      "typing_problems": [
+       "the key \"A(7;-4), B(3;-3), C(7;7), D(-2;-8), E(-5;4)\" does not read as the printed answer \"A(7; −4), B(3; −3), C(7; 7), D(−2; −8) and E(−5; 4)\""
+      ]
+     },
+     {
+      "ref": "Ex8-6:2",
+      "printed": "A",
+      "book": "Therefore, point $A$ lies at the coordinates: $(3;-5)$",
+      "blind": null,
+      "pairs": [
+       {
+        "pair_id": "Ex8-6:2|blind~printed",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:2|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:2|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both identify point A as the answer; same content, one wrapped in a sentence."
+       }
+      ],
+      "typing_problems": [
+       "options said to be the stem's are not all in the stem"
+      ]
+     },
+     {
+      "ref": "Ex8-6:3",
+      "printed": "Shape Z",
+      "book": "From the diagram, we can see that only Shape Z sticks to this naming convention. [figure]",
+      "blind": null,
+      "pairs": [
+       {
+        "pair_id": "Ex8-6:3|blind~printed",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:3|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:3|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both name Shape Z as the correctly-labeled shape."
+       }
+      ],
+      "typing_problems": [
+       "options said to be the stem's are not all in the stem"
+      ]
+     }
+    ],
+    "no_printed_answer": [
+     {
+      "ref": "Ex8-6:4a",
+      "book": "[figure]",
+      "blind": null,
+      "agreed_with_book_solution": false,
+      "answer_type": "not_markable"
+     },
+     {
+      "ref": "Ex8-6:4b",
+      "book": "[figure]",
+      "blind": null,
+      "agreed_with_book_solution": false,
+      "answer_type": "not_markable"
+     },
+     {
+      "ref": "Ex8-6:4c",
+      "book": "[figure]",
+      "blind": null,
+      "agreed_with_book_solution": false,
+      "answer_type": "not_markable"
+     },
+     {
+      "ref": "Ex8-6:4d",
+      "book": "[figure]",
+      "blind": null,
+      "agreed_with_book_solution": false,
+      "answer_type": "not_markable"
+     },
+     {
+      "ref": "Ex8-6:20a",
+      "book": "[figure]",
+      "blind": null,
+      "agreed_with_book_solution": false,
+      "answer_type": "not_markable"
+     },
+     {
+      "ref": "Ex8-6:25a",
+      "book": "[figure]",
+      "blind": null,
+      "agreed_with_book_solution": false,
+      "answer_type": "not_markable"
+     }
+    ],
+    "typing_problems": [
+     {
+      "ref": "Ex8-1:2",
+      "problems": [
+       "the key \"A(3;-4), B(3;-3), C(-3;-4), D(5;-3), E(5;-4)\" does not read as the printed answer \"A(3; −4), B(3; −3), C(−3; −4), D(5; −3) and E(5; −4).\""
+      ]
+     },
+     {
+      "ref": "Ex8-1:3",
+      "problems": [
+       "options said to be the stem's are not all in the stem"
+      ]
+     },
+     {
+      "ref": "Ex8-1:4",
+      "problems": [
+       "options said to be the stem's are not all in the stem"
+      ]
+     },
+     {
+      "ref": "Ex8-1:5",
+      "problems": [
+       "options said to be the stem's are not all in the stem"
+      ]
+     },
+     {
+      "ref": "Ex8-1:6",
+      "problems": [
+       "book_final is not in the book solution",
+       "options said to be the stem's are not all in the stem"
+      ]
+     },
+     {
+      "ref": "Ex8-6:1",
+      "problems": [
+       "the key \"A(7;-4), B(3;-3), C(7;7), D(-2;-8), E(-5;4)\" does not read as the printed answer \"A(7; −4), B(3; −3), C(7; 7), D(−2; −8) and E(−5; 4)\""
+      ]
+     },
+     {
+      "ref": "Ex8-6:2",
+      "problems": [
+       "options said to be the stem's are not all in the stem"
+      ]
+     },
+     {
+      "ref": "Ex8-6:3",
+      "problems": [
+       "options said to be the stem's are not all in the stem"
+      ]
+     }
+    ],
+    "printed_not_in_asked_form": [],
+    "forms_from_book_rules": [],
+    "forms_the_marker_cannot_check": [],
+    "tier_checks": [
+     {
+      "ref": "Ex8-1:5",
+      "typing": "basic",
+      "check": "basic"
+     }
+    ]
+   },
+   "figure_blocked": [
+    "Ex8-1:5",
+    "Ex8-1:6",
+    "Ex8-6:3"
+   ],
+   "oracle": {
+    "tally": {
+     "claims": 6,
+     "questions": 9,
+     "worked_examples_kept_as_teaching": 6,
+     "by_objective": [
+      {
+       "lo": "lo:g10m8s1-1-1",
+       "claims": 4,
+       "items": 6
+      },
+      {
+       "lo": "lo:g10m8s1-1-2",
+       "claims": 1,
+       "items": 6
+      },
+      {
+       "lo": "lo:g10m8s1-1-3",
+       "claims": 1,
+       "items": 3
+      }
+     ]
+    },
+    "verdict": "RED",
+    "subheadings": [
+     {
+      "anchor": "g10m8s1-1",
+      "status": "thin",
+      "missing_items": [
+       "b03123: the clause 'Geometrical shapes are defined using a coordinate system and algebraic principles' is not represented as a claim (only the preceding definition and the alternate-names claim were produced)",
+       "b03123: the historical aside that the introduction of analytical geometry is considered by some to be 'the beginning of modern mathematics' is omitted entirely",
+       "b03131 (box:note:visit): the mathsisfun.com online plotting-tool recommendation is omitted (plausibly an intentional exclusion of an external resource link rather than a coverage gap, since it has no canonical content to teach or test)"
+      ]
+     }
+    ]
+   },
+   "counts": {
+    "claims": 6,
+    "claims_dropped": 0,
+    "items": 15,
+    "worked_examples": 0,
+    "exercises": 15,
+    "by_answer_type": {
+     "expression": 3,
+     "choice": 6,
+     "not_markable": 6
+    },
+    "by_solution_provenance": {
+     "book_worked_epub": 15
+    },
+    "by_verification": {
+     "disputed": 9,
+     "no_printed_answer": 6
+    },
+    "visuals": 7,
+    "viz_gaps": 4,
+    "figure_blocked": 3,
+    "unmapped_worked_examples": 0
+   },
+   "failed": {
+    "s2": false,
+    "s3": false
+   }
+  }
+ ],
+ "failed_lessons": [],
+ "calls": {
+  "by_phase": {
+   "S2 Claims": 1,
+   "S3 Typing": 1,
+   "S3 Blind re-solve": 1,
+   "S3 Tier check": 1,
+   "S3 Judge": 1,
+   "S4 Visuals": 1,
+   "S4 Compare": 1,
+   "S8 Oracle": 1
+  },
+  "per_lesson": {
+   "g10m8s1-1": 8
+  },
+  "total": 8
+ },
+ "meter": {
+  "stage": "S2-S4,S8",
+  "record": "uv run meter_run.py record --book g10-math --stage S2-S4,S8 --run <runId>",
+  "by_stage": "uv run meter_run.py summary --book g10-math --by phase",
+  "by_lesson": "uv run meter_run.py summary --book g10-math --by lesson",
+  "note": "Phase titles start with their stage (S2, S3, S4, S8), so `--by phase` is the per-stage cost; every label carries the lesson slug (S3:blind:<slug>:1), so `--by lesson` is the per-lesson cost."
+ },
+ "run_id": "wf_73acc1d0-255"
+}

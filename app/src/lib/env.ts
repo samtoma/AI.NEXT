@@ -184,14 +184,21 @@ export const INTERNAL_SURFACES: boolean = resolveInternalSurfaces();
  * ======================================================================== */
 
 /**
- * Whether the per-(course, grade) availability gate applies at all.
+ * Whether the operators' per-(course, grade) availability RULES apply.
  *
- * ⚠ NO REQUIREMENT COVERS THE FEATURE THIS SWITCHES. See `lib/catalog.ts`.
+ * Requirements: FR-2709, as 003's FR-4015 amends it (decision A). (This note
+ * used to say no requirement covered the gate; FR-2701…FR-2711 exist.)
  *
- * `on` — the gate applies: a student sees a course only when a rule (or a
- * personal override) says `live`. `off`, or unset — `visibleCoursesFor`
- * answers "everything", and every student surface behaves exactly as it did
- * before migration 023 existed.
+ * `on` — the rules apply: a student sees a course of her own curriculum only
+ * when a rule for her grade says `live`, or a personal exception does.
+ * `off`, or unset — the rules are SUSPENDED, but curriculum scoping is not:
+ * a student sees every LOADED course of her own curriculum, plus any
+ * exception (`lib/catalog.ts`, `lib/catalog-queries.ts` `resolveStudentScope`).
+ * Before 003, off meant "every course to every student"; with a second
+ * curriculum's book loaded, that would have shown the American book to every
+ * National student, so the switch no longer reaches that far. For a stack
+ * serving one curriculum, off still behaves exactly as it did before
+ * migration 023 existed.
  *
  * ---------------------------------------------------------------------------
  * THE ASYMMETRY IS THE POINT, AND IT IS THE OPPOSITE OF THE GATE'S OWN DEFAULT

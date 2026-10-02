@@ -19,13 +19,15 @@ import { test } from "node:test";
 import { fileURLToPath } from "node:url";
 
 import {
+  COURSE_RANK,
   LO_MODULE_JOIN,
   MODULE_ORDER,
   MODULE_RANK,
   SUBJECT_RANK,
   catalogueObjectivesSql,
 } from "./module-order.ts";
-import { SUBJECTS, SUBJECT_IDS } from "./subjects.ts";
+import { COURSE_IDS, COURSES } from "./courses.ts";
+import { SUBJECT_IDS } from "./subjects.ts";
 import { SPINE_LO_SQL, SPINE_LO_SQL_NO_SUBJECT_VIEW } from "./spine-lo-query.ts";
 
 const src = (rel: string) =>
@@ -80,14 +82,28 @@ test("MODULE_RANK is the same order for modules: the same term rank and position
   assert.doesNotMatch(MODULE_RANK, /\blo\./, "no objective alias in a module-level order");
 });
 
-test("SUBJECT_RANK is the subject registry's order, read from lib/subjects.ts — not a second list", () => {
-  const r = squash(SUBJECT_RANK);
-  const courses = SUBJECT_IDS.map((id) => SUBJECTS[id].courseId);
-  // what the registry says today (lib/subjects.ts, "the order subjects appear
-  // in the graph territories, the subject filter and the student home")
-  assert.deepEqual(courses, ["course:prep3-math-en", "course:prep3-social-ar", "course:prep3-arabic-ar"]);
+test("COURSE_RANK is the course registry's order, read from lib/courses.ts — not a second list (003)", () => {
+  const r = squash(COURSE_RANK);
+  const courses: readonly string[] = COURSE_IDS;
+  // What the registry says today (lib/courses.ts): curriculum, then subject,
+  // then course. The three National courses keep the positions the subject
+  // registry gave them — maths, Social Studies, Arabic — so every list a
+  // National student sees is ordered as it was; the American course follows.
+  assert.deepEqual(courses, [
+    "course:prep3-math-en",
+    "course:prep3-social-ar",
+    "course:prep3-arabic-ar",
+    "course:us-g10-math-en",
+  ]);
+  assert.deepEqual(
+    courses.slice(0, 3).map((c) => COURSES[c as keyof typeof COURSES].subject),
+    SUBJECT_IDS,
+    "the National courses in subject-registry order"
+  );
   const whens = [...r.matchAll(/WHEN '([^']+)' THEN (\d+)/g)].map((m) => [m[1], Number(m[2])]);
   assert.deepEqual(whens, courses.map((c, i) => [c, i]), "one WHEN per registry course, in registry order");
+  // the pre-003 name is the same SQL, kept for one release (plan A1)
+  assert.equal(SUBJECT_RANK, COURSE_RANK);
   // no course, or a course the registry does not know: after every subject
   assert.ok(r.endsWith(`), ${courses.length})`), "coalesce(…, n): unknown sorts last");
   // the module's own OPEN part_of edges; only the m alias every reader has
@@ -95,12 +111,12 @@ test("SUBJECT_RANK is the subject registry's order, read from lib/subjects.ts �
   assert.doesNotMatch(r, /\blo\./);
 });
 
-test("catalogueObjectivesSql: every objective, LEFT JOINed to its module, subject first, then MODULE_ORDER", () => {
+test("catalogueObjectivesSql: every objective, LEFT JOINed to its module, course first, then MODULE_ORDER", () => {
   const s = squash(catalogueObjectivesSql("lo.id, lo.label"));
   assert.ok(s.startsWith("SELECT lo.id, lo.label FROM graph_nodes lo "), s);
   assert.ok(
-    s.endsWith(`ORDER BY ${squash(SUBJECT_RANK)}, ${squash(MODULE_ORDER)}`),
-    "the subject, then the one order"
+    s.endsWith(`ORDER BY ${squash(COURSE_RANK)}, ${squash(MODULE_ORDER)}`),
+    "the course, then the one order"
   );
   assert.match(
     s,
@@ -160,35 +176,37 @@ test("/pipeline's mini-map reads its objectives through the same helper", () => 
 });
 
 test("the console Overview's heatmap rows: the shared join, ORDER BY MODULE_ORDER", () => {
+  // One COURSE since 003 (FR-4104): `ns.course_id`, never `ns.subject`, so
+  // two maths courses are never one heatmap.
   const sql = squash(templateWith("lib/overview-queries.ts", "AS module_ordinal"));
-  assert.match(sql, /FROM node_subject ns JOIN graph_nodes lo ON lo\.id = ns\.node_id\$\{LO_MODULE_JOIN\} WHERE ns\.subject = \$1 ORDER BY \$\{MODULE_ORDER\}$/);
+  assert.match(sql, /FROM node_subject ns JOIN graph_nodes lo ON lo\.id = ns\.node_id\$\{LO_MODULE_JOIN\} WHERE ns\.course_id = \$1 ORDER BY \$\{MODULE_ORDER\}$/);
   assert.match(
     code("lib/overview-queries.ts"),
     /import \{ LO_MODULE_JOIN, MODULE_ORDER \} from "@\/lib\/module-order";/
   );
 });
 
-test("/gallery: every subject's figures — subject first, then MODULE_ORDER, then the figure's id", () => {
+test("/gallery: every course's figures — course first, then MODULE_ORDER, then the figure's id", () => {
   const body = squash(bodyOf("lib/visuals.ts", "export async function getGalleryData("));
-  assert.match(body, /`\$\{BASE_SELECT\} ORDER BY \$\{SUBJECT_RANK\}, \$\{MODULE_ORDER\}, v\.id`/);
+  assert.match(body, /`\$\{BASE_SELECT\} ORDER BY \$\{COURSE_RANK\}, \$\{MODULE_ORDER\}, v\.id`/);
   // BASE_SELECT carries the aliases MODULE_ORDER reads
   const base = squash(templateWith("lib/visuals.ts", "FROM visuals v"));
   assert.match(base, /JOIN graph_nodes lo ON lo\.id = v\.lo_id/);
   assert.match(base, /LEFT JOIN graph_nodes m ON m\.id = e\.src_id AND m\.kind = 'module'/);
 });
 
-test("the progress page: started topics first, weakest first, then subject, then MODULE_RANK", () => {
+test("the progress page: started topics first, weakest first, then course, then MODULE_RANK", () => {
   const sql = squash(templateWith("lib/dashboard.ts", "WITH module_lo AS"));
   assert.match(sql, /FROM ranked r JOIN graph_nodes m ON m\.id = r\.module_id GROUP BY m\.id, m\.label, m\.order_in_parent/);
-  assert.match(sql, /ORDER BY \(coalesce\(sum\(r\.attempts\), 0\) = 0\), mastery ASC, \$\{SUBJECT_RANK\}, \$\{MODULE_RANK\}$/);
+  assert.match(sql, /ORDER BY \(coalesce\(sum\(r\.attempts\), 0\) = 0\), mastery ASC, \$\{COURSE_RANK\}, \$\{MODULE_RANK\}$/);
   assert.doesNotMatch(sql, /\bmod\./, "the old alias is gone, so MODULE_RANK's m is the module");
-  assert.match(code("lib/dashboard.ts"), /import \{ MODULE_RANK, SUBJECT_RANK \} from "@\/lib\/module-order";/);
+  assert.match(code("lib/dashboard.ts"), /import \{ COURSE_RANK, MODULE_RANK \} from "@\/lib\/module-order";/);
 });
 
-test("the lesson catalogue lists every subject: subject first, then MODULE_ORDER", () => {
+test("the lesson catalogue lists every course: course first, then MODULE_ORDER", () => {
   const body = squash(bodyOf("lib/lesson.ts", "export async function getLessonCatalog("));
-  assert.match(body, /db\.query\(`\$\{LO_MODULE_SELECT\} ORDER BY \$\{SUBJECT_RANK\}, \$\{MODULE_ORDER\}`\)/);
-  assert.match(code("lib/lesson.ts"), /import \{ MODULE_ORDER, SUBJECT_RANK \} from "\.\/module-order";/);
+  assert.match(body, /db\.query\(`\$\{LO_MODULE_SELECT\} ORDER BY \$\{COURSE_RANK\}, \$\{MODULE_ORDER\}`\)/);
+  assert.match(code("lib/lesson.ts"), /import \{ COURSE_RANK, MODULE_ORDER \} from "\.\/module-order";/);
 });
 
 test("the single-subject readers keep MODULE_ORDER alone — the order progression walks is untouched", () => {
@@ -196,7 +214,7 @@ test("the single-subject readers keep MODULE_ORDER alone — the order progressi
   assert.match(code("lib/subject-queries.ts"), /WHERE lo\.kind = 'learning_objective'\s+ORDER BY \$\{MODULE_ORDER\}`/);
 });
 
-test("the ask context (lib/ask.ts): every subject — subject first, then the one order; edges fixed", () => {
+test("the ask context (lib/ask.ts): every course — course first, then the one order; edges fixed", () => {
   // Samuel, 2026-09-25, lifting ADR-0020's hold for this ordering: "yes for
   // sure, for decision 2, it is part of the overall consistency".
   const body = squash(bodyOf("lib/ask.ts", "async function askContextOn("));
@@ -206,7 +224,7 @@ test("the ask context (lib/ask.ts): every subject — subject first, then the on
   );
   assert.match(
     body,
-    /SELECT m\.id, m\.label FROM graph_nodes m WHERE m\.kind = 'module' ORDER BY \$\{SUBJECT_RANK\}, \$\{MODULE_RANK\}/
+    /SELECT m\.id, m\.label FROM graph_nodes m WHERE m\.kind = 'module' ORDER BY \$\{COURSE_RANK\}, \$\{MODULE_RANK\}/
   );
   assert.doesNotMatch(body, /order_in_parent/, "no bare position sort left");
   // the catalogue rank is the row index of the ordered, GATED objective read
@@ -223,10 +241,10 @@ test("the ask context (lib/ask.ts): every subject — subject first, then the on
     /\.sort\( \(a, b\) => byCatalogue\(a\.src_id, b\.src_id\) \|\| byCatalogue\(a\.dst_id, b\.dst_id\) \|\| Number\(a\.id\) - Number\(b\.id\) \)/
   );
   assert.match(body, /SELECT id, src_id, dst_id FROM graph_edges WHERE edge_type = 'prerequisite_of' AND system_to IS NULL/);
-  assert.match(code("lib/ask.ts"), /import \{ MODULE_RANK, SUBJECT_RANK, catalogueObjectivesSql \} from "\.\/module-order";/);
+  assert.match(code("lib/ask.ts"), /import \{ COURSE_RANK, MODULE_RANK, catalogueObjectivesSql \} from "\.\/module-order";/);
 });
 
-test("getAllVisuals (the ask context's figure catalogue): subject first, then MODULE_ORDER, then the figure's id", () => {
+test("getAllVisuals (the ask context's figure catalogue): course first, then MODULE_ORDER, then the figure's id", () => {
   const body = squash(bodyOf("lib/visuals.ts", "export async function getAllVisuals("));
-  assert.match(body, /`\$\{BASE_SELECT\} ORDER BY \$\{SUBJECT_RANK\}, \$\{MODULE_ORDER\}, v\.id`/);
+  assert.match(body, /`\$\{BASE_SELECT\} ORDER BY \$\{COURSE_RANK\}, \$\{MODULE_ORDER\}, v\.id`/);
 });

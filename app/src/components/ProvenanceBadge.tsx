@@ -26,7 +26,7 @@ export function ProvenanceBadge({
   question,
   size = "sm",
 }: {
-  question: { source: string | null; reviewedBy?: string | null };
+  question: { source: string | null; reviewedBy?: string | null; aiCheckedBy?: string | null };
   size?: "sm" | "md";
 }) {
   const v = questionProvenance(question);

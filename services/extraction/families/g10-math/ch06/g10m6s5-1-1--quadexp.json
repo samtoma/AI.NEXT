@@ -1,0 +1,54 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s5-1-1:quadexp",
+ "kind": "family",
+ "lo_id": "lo:g10m6s5-1-1",
+ "parent_question_id": "q:g10m6s5-1-1:ex6-8-50e",
+ "source_page": 230,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "b",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "a",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "m",
+   "randint": [
+    1,
+    2
+   ]
+  },
+  {
+   "name": "fb",
+   "let": "b ** m"
+  },
+  {
+   "name": "gm",
+   "let": "1 - a * m ** 2"
+  }
+ ],
+ "constraints": [],
+ "stem": "The graphs of $f(x)={=b}^{x}$ and $g(x)=-{=a}x^{2}+q$ are drawn on the same system of axes. Both graphs pass through the point $A$ on the $y$-axis. The point $B$ lies on the graph of $f$ and the point $C$ lies on the graph of $g$; both points have $x$-coordinate ${=m}$. Calculate the length of $BC$.",
+ "answer": "b ** m + a * m ** 2 - 1",
+ "solution": [
+  "$f(0)={=b}^{0}=1$, so $A=(0, 1)$. (Every graph of the form $y=b^{x}$ passes through $(0, 1)$.)",
+  "$A$ also lies on $g$: $g(0)=-{=a}(0)^{2}+q=q$, so $q=1$ and $g(x)=-{=a}x^{2}+1$.",
+  "$B$ is on $f$: $f({=m})={=b}^{{=m}}={=fb}$, so $B=({=m}, {=fb})$.",
+  "$C$ is on $g$: $g({=m})=-{=a}({=m})^{2}+1={=gm}$, so $C=({=m}, {=gm})$.",
+  "$B$ and $C$ have the same $x$-coordinate, so $BC$ is vertical and $BC={=fb}-({=gm})={=fb - gm}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced: the book's own twist from Ex 6.8 Q50 (f(x) = 4^x and g(x) = -4x^2 + q meeting at A(0, 1), with B on f and C on g above the same x). The only exponential-graph fact needed is the common y-intercept (0, 1), which fixes q; g is then only evaluated, never analysed, so no quadratic-graph technique beyond substitution is used. The stem is written out in words, so the book's figure is not needed (it was read: it shows f, g, A on the y-axis, B on f, C on g, with BC vertical and dashed). b and a are drawn from 2..5 (a >= 2 avoids a printed coefficient of 1) and m from 1..2, giving 32 distinct stems with answers 5 to 44. g(m) = 1 - a m^2 is always negative, so C is always below B and the subtraction is always B minus C with brackets. Reviewers: if quadratics are judged out of scope for this objective, drop this family; the other two stand without it."
+}

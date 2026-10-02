@@ -1,0 +1,41 @@
+{
+  "author:lo:zz1s1-1-1": {
+    "lo": "lo:zz1s1-1-1",
+    "entries": [
+      {"slug": "exponents-multiplied", "label": "Exponents multiplied instead of added",
+       "description": "Multiplies the exponents when multiplying powers of the same base.",
+       "signal": "The exponent in the answer is the product of the two exponents.",
+       "sources": [{"type": "caution", "ref": "b:zz1s1:caution-1"}, {"type": "distractor", "ref": "q:zz1s1-1-1:ex1-1"}],
+       "refutation": [
+         {"step": 1, "text_md": "You kept the base, which is right — the only question is what happens to the exponents."},
+         {"step": 2, "text_md": "$3^2 \\times 3^4$ is $(3 \\times 3) \\times (3 \\times 3 \\times 3 \\times 3)$: six threes, so $3^6$, not $3^8$."},
+         {"step": 3, "text_md": "Same base, multiply the powers: ADD the exponents, $a^m \\times a^n = a^{m+n}$."}]},
+      {"slug": "bases-multiplied", "label": "Bases multiplied as well",
+       "description": "Multiplies the bases together as well as combining the exponents.",
+       "sources": [{"type": "distractor", "ref": "q:zz1s1-1-1:ex1-1"}],
+       "refutation": [
+         {"step": 1, "text_md": "Multiplying the numbers you see is a natural first move."},
+         {"step": 2, "text_md": "Here the base stays the base: $3^2 \\times 3^4 = 3^6$, not $9^6$."}]}
+    ],
+    "assignments": [
+      {"distractor": 0, "entry": "exponents-multiplied", "reason": "3^8 multiplies 2 and 4"},
+      {"distractor": 1, "entry": "bases-multiplied", "reason": "9 = 3 x 3"}
+    ],
+    "flags": []
+  },
+  "author:lo:zz1s1-1-2": {
+    "lo": "lo:zz1s1-1-2",
+    "entries": [
+      {"slug": "exponents-added", "label": "Exponents added for a power of a power",
+       "description": "Adds the exponents when raising a power to a power.",
+       "signal": "The exponent in the answer is the sum of the two exponents.",
+       "sources": [{"type": "resolve_disagreement", "ref": "q:zz1s1-1-2:ex2-1"}],
+       "refutation": [
+         {"step": 1, "text_md": "Adding exponents is the rule you just learned for a product, so it is a reasonable thing to reach for."},
+         {"step": 2, "text_md": "$(x^3)^2$ is $x^3 \\times x^3$: that is $x^{3+3} = x^6$, two lots of three."},
+         {"step": 3, "text_md": "A power of a power MULTIPLIES the exponents: $(a^m)^n = a^{mn}$."}]}
+    ],
+    "assignments": [],
+    "flags": [{"kind": "terminology", "text": "'power of a power' — check the book's own wording"}]
+  }
+}

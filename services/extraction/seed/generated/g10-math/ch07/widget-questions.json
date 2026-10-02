@@ -1,0 +1,189 @@
+{
+  "generator": "services/extraction/generate_widget_questions.py (ADR-0009) --templates",
+  "question_type": "widget",
+  "book": "work/g10-math/fanout/books/ch07/g10-math.json",
+  "course_id": "course:us-g10-math-en",
+  "templates": {
+    "wt:g10m7s3-1-5:build-kite": "f425bc6ed760db8c8f70304485c4252e135835d2ad8da19b445e9142fec09ae8",
+    "wt:g10m7s3-1-5:build-rectangle-and-rhombus": "2b1a8321d8f94fff771457206af96d85667445e48a0ee246aa03ee8e0cc02c86",
+    "wt:g10m7s3-1-5:build-rhombus": "0b79f8cf5f70430bdb8c52c301eb60f48b4da600790141d559d0d6bac9d680c4"
+  },
+  "rejected_templates": {
+    "wt:g10m7s4-1-1:midsegment-converse": [
+      "not shipped: every mapping names a misconception S5 did not keep (mc:g10m7s4-1-1:any-line-across-triangle-is-parallel), so no widget of it could say why an answer is wrong"
+    ],
+    "wt:g10m7s4-1-1:midsegment-parallel-and-half": [
+      "not shipped: every mapping names a misconception S5 did not keep (mc:g10m7s4-1-1:any-line-across-triangle-is-parallel), so no widget of it could say why an answer is wrong"
+    ]
+  },
+  "questions": [
+    {
+      "id": "q:g10m7s3-1-5:w001",
+      "lo_id": "lo:g10m7s3-1-5",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "Drag the corners to make a kite. Any kite counts: any size, anywhere on the grid, tilted or not.",
+      "choices": {
+        "kind": "polygon_builder",
+        "spec": {
+          "mode": "construct",
+          "shape": "kite"
+        },
+        "diagnostics": [
+          {
+            "predicate": "sides-not-equal",
+            "misconception_id": "mc:g10m7s3-1-5:names-trapezium-or-kite-by-look"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "A kite has two pairs of equal sides, and the equal sides in each pair are next to each other: $AB = AD$ and $CB = CD$."
+        },
+        {
+          "step": 2,
+          "text_md": "Choose the two corners where the pairs meet: $A(0, 4)$ and $C(0, -1)$, one above the other."
+        },
+        {
+          "step": 3,
+          "text_md": "Put $B(-2, 1)$ and $D(2, 1)$ on either side, level with each other. Then $AB = AD = \\sqrt{2^2 + 3^2} = \\sqrt{13}$ and $CB = CD = \\sqrt{2^2 + 2^2} = \\sqrt{8}$."
+        },
+        {
+          "step": 4,
+          "text_md": "The two pairs are different lengths, so this kite is not a rhombus. A parallelogram with unequal sides fails the test, because its equal sides are opposite each other, not next to each other."
+        }
+      ],
+      "parent_question_id": "q:g10m7s3-1-5:ex7-6-4",
+      "source_note": "Generated from template family wt:g10m7s3-1-5:build-kite.",
+      "family": "wt:g10m7s3-1-5:build-kite",
+      "template_sha": "f425bc6ed760db8c8f70304485c4252e135835d2ad8da19b445e9142fec09ae8"
+    },
+    {
+      "id": "q:g10m7s3-1-5:w002",
+      "lo_id": "lo:g10m7s3-1-5",
+      "tier": "advanced",
+      "question_type": "widget",
+      "stem": "Drag the corners to make one shape that is both a rectangle and a rhombus. Any such shape counts, in any size and any position.",
+      "choices": {
+        "kind": "polygon_builder",
+        "spec": {
+          "mode": "construct",
+          "shape": "square"
+        },
+        "diagnostics": [
+          {
+            "predicate": "sides-not-equal",
+            "misconception_id": "mc:g10m7s3-1-5:mixes-rectangle-rhombus-square"
+          },
+          {
+            "predicate": "no-right-angle",
+            "misconception_id": "mc:g10m7s3-1-5:mixes-rectangle-rhombus-square"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "A rectangle needs four right angles and a rhombus needs four equal sides, so the shape must have both."
+        },
+        {
+          "step": 2,
+          "text_md": "Start from a rectangle: $(-2, -2)$, $(2, -2)$, $(2, 2)$ and $(-2, 2)$. Every corner is a right angle."
+        },
+        {
+          "step": 3,
+          "text_md": "Its width and its height are both 4, so all four sides are equal and it is a rhombus as well."
+        },
+        {
+          "step": 4,
+          "text_md": "A shape that is a rectangle and a rhombus at once is a square, so a square keeps every name of both. A tilted square such as $(0, -2)$, $(2, 0)$, $(0, 2)$ and $(-2, 0)$ is equally correct."
+        }
+      ],
+      "parent_question_id": "q:g10m7s3-1-5:ex7-6-5",
+      "source_note": "Generated from template family wt:g10m7s3-1-5:build-rectangle-and-rhombus.",
+      "family": "wt:g10m7s3-1-5:build-rectangle-and-rhombus",
+      "template_sha": "2b1a8321d8f94fff771457206af96d85667445e48a0ee246aa03ee8e0cc02c86"
+    },
+    {
+      "id": "q:g10m7s3-1-5:w003",
+      "lo_id": "lo:g10m7s3-1-5",
+      "tier": "basic",
+      "question_type": "widget",
+      "stem": "Drag the corners to make a rhombus. Any rhombus counts: any size, anywhere on the grid, tilted or not.",
+      "choices": {
+        "kind": "polygon_builder",
+        "spec": {
+          "mode": "construct",
+          "shape": "rhombus"
+        },
+        "diagnostics": [
+          {
+            "predicate": "sides-not-equal",
+            "misconception_id": "mc:g10m7s3-1-5:mixes-rectangle-rhombus-square"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "A rhombus is a quadrilateral whose four sides are all equal, so the target is $AB = BC = CD = DA$."
+        },
+        {
+          "step": 2,
+          "text_md": "Place the corners at $A(-2, 0)$, $B(0, 3)$, $C(2, 0)$ and $D(0, -3)$, joined in that order."
+        },
+        {
+          "step": 3,
+          "text_md": "Check the sides: each one runs 2 across and 3 up or down, so $AB = BC = CD = DA = \\sqrt{2^2 + 3^2} = \\sqrt{13}$."
+        },
+        {
+          "step": 4,
+          "text_md": "Equal sides are the whole test. The angles need not be right angles (here $AB$ and $BC$ do not meet at $90^{\\circ}$), and a rectangle that is not a square fails the test because its neighbouring sides differ."
+        }
+      ],
+      "parent_question_id": "q:g10m7s3-1-5:ex7-6-2",
+      "source_note": "Generated from template family wt:g10m7s3-1-5:build-rhombus.",
+      "family": "wt:g10m7s3-1-5:build-rhombus",
+      "template_sha": "0b79f8cf5f70430bdb8c52c301eb60f48b4da600790141d559d0d6bac9d680c4"
+    }
+  ],
+  "misconceptions": [
+    {
+      "id": "mc:g10m7s3-1-5:mixes-rectangle-rhombus-square",
+      "lo_id": "lo:g10m7s3-1-5",
+      "label": "Mixes up what makes a rectangle, a rhombus and a square",
+      "description": "The student has the family right (four sides, both pairs of opposite sides parallel) but lets right angles and equal sides stand in for each other or hangs them on the wrong name, so a right-angled shape with unequal sides becomes a square or a rhombus, an equal-sided shape with no right angles becomes a square or a rectangle, or the adjacent sides of a rhombus are allowed to differ."
+    },
+    {
+      "id": "mc:g10m7s3-1-5:names-trapezium-or-kite-by-look",
+      "lo_id": "lo:g10m7s3-1-5",
+      "label": "Names a trapezium or a kite without checking its property",
+      "description": "The student picks trapezium or kite for a shape that does not pass that name's test, because the shape as a whole seems to suit the name, without checking for a pair of parallel opposite sides or for two pairs of equal adjacent sides."
+    }
+  ],
+  "mapping_review": {
+    "rule": "decision 47",
+    "verifier_runs": [
+      "verify-ch07-wf_783d65e5-6bf"
+    ],
+    "counts": {
+      "active": 4,
+      "held": 0,
+      "kept_by_review": 0,
+      "dropped_by_review": 0
+    },
+    "reviews": []
+  },
+  "s5_reconciled": {
+    "runs": [
+      "final-ch07-wf_636b2939-1d8.json"
+    ],
+    "catalogue": "g10-math-misconceptions",
+    "refused_attachments_stripped": [],
+    "widgets_left_out": []
+  }
+}

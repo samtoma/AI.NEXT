@@ -1,0 +1,82 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m1s7-2-3:common-factor-monic",
+ "kind": "family",
+ "lo_id": "lo:g10m1s7-2-3",
+ "parent_question_id": "q:g10m1s7-2-3:ex1-8-11",
+ "source_page": 27,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "k",
+   "choice": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "p",
+   "randint": [
+    1,
+    6
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    "p + 1",
+    9
+   ]
+  },
+  {
+   "require": "k * p * q <= 120",
+   "why": "keeps every coefficient of the printed trinomial small, as in the book's 2x^2 + 22x + 20"
+  },
+  {
+   "name": "s",
+   "choice": [
+    1,
+    -1
+   ]
+  },
+  {
+   "name": "sg",
+   "let": "'+' if s == 1 else '-'"
+  },
+  {
+   "name": "m",
+   "let": "k * (p + q)"
+  },
+  {
+   "name": "c",
+   "let": "k * p * q"
+  }
+ ],
+ "constraints": [
+  "p < q",
+  "gcd(k, gcd(m, c)) == k"
+ ],
+ "stem": "Factorise the following completely: ${=k}x^2{=sg}{=m}x+{=c}$",
+ "solution": [
+  "The highest common factor of the coefficients ${=k}$, ${=s * m}$ and ${=c}$ is ${=k}$, so take ${=k}$ out as a common factor first.",
+  "Divide each term by ${=k}$: ${=k}x^2{=sg}{=m}x+{=c} = {=k}(x^2{=sg}{=p + q}x+{=p * q})$.",
+  "Now factorise the trinomial $x^2{=sg}{=p + q}x+{=p * q}$. Look for two numbers whose product is ${=p * q}$ and whose sum is ${=s * (p + q)}$.",
+  "The numbers are ${=s * p}$ and ${=s * q}$, so $x^2{=sg}{=p + q}x+{=p * q} = (x{=sg}{=p})(x{=sg}{=q})$.",
+  "Put the common factor back in front: ${=k}x^2{=sg}{=m}x+{=c} = {=k}(x{=sg}{=p})(x{=sg}{=q})$."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "{=k}*(x {=sg} {=p})*(x {=sg} {=q})",
+  "form": "factorised",
+  "variables": [
+   "x"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Entry point of the skill: the common factor k is an integer and the trinomial left inside the brackets is monic (x^2 + bx + c) with c > 0 and two DISTINCT roots of the same sign, so the signs are never a source of ambiguity and p + q != 0 (no difference of squares) and p != q (no perfect square, so the answer has one unambiguous factorised shape). Both the all-plus case (as in the book's 2x^2 + 22x + 20) and the all-minus case (x - p)(x - q) are generated from one skeleton. Constraint gcd(k, gcd(m, c)) == k asserts that k really is the highest common factor, because the inner trinomial is monic. The stem says 'completely' so a blind solver does not stop at (2x + 2)(x + 10). The parent q:g10m1s7-2-3:ex1-8-11 is printed as 2x^2 - 22x + 20 but its book solution works on 2x^2 + 22x + 20 (printing slip); this family is internally consistent in both signs. Trinomials with a leading coefficient other than 1 inside the brackets, mixed-sign roots, and the 2(2y^2 - 5y) - 24 re-bracketing twist are left to the standard and advanced tiers, which are not listed as gaps. No distractors (expression answer), so no misconception ids are used; the objective's catalogue is empty."
+}

@@ -1,0 +1,121 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m9s3-1-1:compare-two-investments",
+ "kind": "family",
+ "lo_id": "lo:g10m9s3-1-1",
+ "parent_question_id": "q:g10m9s3-1-1:ex9-7-13b",
+ "source_page": 350,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": "Two friends, Thandi and Sipho, each put money into a savings account that pays compound interest, in Rand. The accounts have different principal amounts and different annual rates, but both investments run for the same number of whole years. The question asks how much more Thandi's accumulated amount is than Sipho's, to two decimal places, with no rounding until the end.",
+ "params": [
+  {
+   "name": "k1",
+   "randint": [
+    200,
+    900
+   ]
+  },
+  {
+   "name": "P1",
+   "let": "10 * k1"
+  },
+  {
+   "name": "r1t",
+   "randint": [
+    30,
+    150
+   ],
+   "resample_while": "r1t % 10 == 0"
+  },
+  {
+   "name": "k2",
+   "randint": [
+    200,
+    900
+   ]
+  },
+  {
+   "name": "P2",
+   "let": "10 * k2"
+  },
+  {
+   "name": "r2t",
+   "randint": [
+    30,
+    150
+   ],
+   "resample_while": "r2t % 10 == 0 or r2t == r1t"
+  },
+  {
+   "name": "n",
+   "randint": [
+    3,
+    7
+   ]
+  },
+  {
+   "name": "r1s",
+   "let": "fixed(r1t / 10, 1)"
+  },
+  {
+   "name": "r2s",
+   "let": "fixed(r2t / 10, 1)"
+  },
+  {
+   "name": "i1s",
+   "let": "fixed(r1t / 1000, 3)"
+  },
+  {
+   "name": "i2s",
+   "let": "fixed(r2t / 1000, 3)"
+  },
+  {
+   "name": "A1",
+   "let": "P1 * (1 + r1t / 1000) ** n"
+  },
+  {
+   "name": "A2",
+   "let": "P2 * (1 + r2t / 1000) ** n"
+  },
+  {
+   "name": "D",
+   "let": "A1 - A2"
+  },
+  {
+   "require": "D >= 100",
+   "why": "Thandi's investment must be clearly worth more, so the difference is a sensible positive amount of money."
+  },
+  {
+   "require": "abs(100 * A1 - floor(100 * A1) - 1/2) > 1/20",
+   "why": "Keep Thandi's accumulated amount away from a half-cent, so every solver rounds it to the same cent."
+  },
+  {
+   "require": "abs(100 * A2 - floor(100 * A2) - 1/2) > 1/20",
+   "why": "Keep Sipho's accumulated amount away from a half-cent, so every solver rounds it to the same cent."
+  },
+  {
+   "require": "abs(100 * D - floor(100 * D) - 1/2) > 1/20",
+   "why": "Keep the final difference away from a half-cent, so every solver rounds it to the same cent."
+  },
+  {
+   "require": "floor(100 * A1 + 1/2) - floor(100 * A2 + 1/2) == floor(100 * D + 1/2)",
+   "why": "Rounding each amount to the cent and then subtracting must give the same answer as subtracting first and rounding at the end, so the worked solution and any sensible solver agree."
+  }
+ ],
+ "constraints": [
+  "A1 > A2"
+ ],
+ "stem": "Thandi and Sipho each invest money in a savings account which pays compound interest. Thandi invests $\\text{R{=P1}}$ at a compound interest rate of ${=r1s}$ % p.a. and Sipho invests $\\text{R{=P2}}$ at a compound interest rate of ${=r2s}$ % p.a. Both investments run for ${=n}$ years. Calculate how much more Thandi's investment is worth than Sipho's at the end of the ${=n}$ years. As usual with financial calculations, round your answer to two decimal places, but do not round off until you have reached the solution.",
+ "answer": "fixed(D, 2)",
+ "solution": [
+  "Each investment needs its own accumulated amount, so write down the given information for Thandi's investment: $\\begin{aligned}P_1&={=P1}\\\\i_1&=\\frac{{=r1s}}{100}={=i1s}\\\\n&={=n}\\\\A_1&=?\\end{aligned}$",
+  "Write down the given information for Sipho's investment: $\\begin{aligned}P_2&={=P2}\\\\i_2&=\\frac{{=r2s}}{100}={=i2s}\\\\n&={=n}\\\\A_2&=?\\end{aligned}$",
+  "Thandi's accumulated amount is found with $A=P(1+i)^n$. Do not round part-way: use the full calculator value and round only the amount itself to two decimal places. $\\begin{aligned}A_1&=P_1(1+i_1)^n\\\\&={=P1}\\left(1+{=i1s}\\right)^{{=n}}\\\\&=\\text{R {=fixed(A1, 2)}}\\end{aligned}$",
+  "Sipho's accumulated amount is found the same way: $\\begin{aligned}A_2&=P_2(1+i_2)^n\\\\&={=P2}\\left(1+{=i2s}\\right)^{{=n}}\\\\&=\\text{R {=fixed(A2, 2)}}\\end{aligned}$",
+  "To see how much more Thandi's investment is worth, subtract Sipho's accumulated amount from Thandi's: $\\begin{aligned}A_1-A_2&={=fixed(A1, 2)}-{=fixed(A2, 2)}\\\\&=\\text{R {=fixed(D, 2)}}\\end{aligned}$",
+  "At the end of ${=n}$ years Thandi's investment is worth $\\text{R {=fixed(D, 2)}}$ more than Sipho's."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced gap: the book's own questions for this objective are one-investment, one-formula calculations (basic ex9-2-1; standard ex9-2-2, ex9-2-3, ex9-7-10) plus the A minus P compound-interest variant (ex9-7-13). This family needs the same method A = P(1+i)^n applied twice, rate percentages converted to decimals twice, and a final subtraction. Nothing outside the book's method is used. Parent is ex9-7-13b (p. 350) because it is the book's own question that combines the formula with a subtraction at the end. The 'do not round off until you have reached the solution' sentence is the book's own wording from ex9-2-2/ex9-2-3, so the catalogued mc:g10m9s3-1-1:rounds-before-the-end is the error this family is built to expose (numeric family, so no distractors). Rates always have exactly one non-zero tenth (3.1 to 14.9 percent, like the book's 7.5, 11.6, 8.3) so the decimal i always prints with exactly three places with no trailing zero. Both investments share one term n (3 to 7 years, the book's range), which removes any ambiguity about the date at which the two amounts are compared. All arithmetic is exact (whole-number division gives fractions), so no floating-point error. The four require lines (a) keep the difference positive and at least R100, (b) keep each of A1, A2 and the difference at least 0.05 of a cent from a half-cent boundary, and (c) force round(A1) - round(A2) to equal round(A1 - A2), so a solver who rounds each amount to the cent before subtracting, as the worked solution shows, and one who rounds only at the very end both reach the same answer. Principals run from R2000 to R9000 in steps of R10, so the largest amount is about R24000. Rand notation follows the book as $\\text{R3500}$. Answer is formatted with fixed(D, 2)."
+}

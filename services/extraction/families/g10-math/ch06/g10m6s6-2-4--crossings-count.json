@@ -1,0 +1,88 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s6-2-4:crossings-count",
+ "kind": "family",
+ "lo_id": "lo:g10m6s6-2-4",
+ "parent_question_id": "q:g10m6s6-2-4:ex6-6-18b",
+ "source_page": 206,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "lo",
+   "choice": [
+    -360,
+    -270,
+    -180,
+    -90,
+    0,
+    90,
+    180
+   ]
+  },
+  {
+   "name": "w",
+   "choice": [
+    4,
+    5,
+    6,
+    7,
+    8
+   ]
+  },
+  {
+   "name": "hi",
+   "let": "lo + 90 * w"
+  },
+  {
+   "require": "hi <= 720",
+   "why": "keep the interval within two periods of 0 to 720 degrees"
+  },
+  {
+   "name": "xs",
+   "let": "[45 + 180 * k for k in range(-6, 9) if lo <= 45 + 180 * k and 45 + 180 * k <= hi]"
+  },
+  {
+   "name": "n",
+   "let": "len(xs)"
+  },
+  {
+   "require": "n >= 2",
+   "why": "an interval of at least 360 degrees always holds at least two crossings"
+  },
+  {
+   "name": "first",
+   "let": "xs[0]"
+  },
+  {
+   "name": "last",
+   "let": "xs[n - 1]"
+  }
+ ],
+ "constraints": [],
+ "stem": "The graphs of $f(x) = {=a}\\sin x + {=q}$ and $g(x) = {=a}\\cos x + {=q}$ are drawn on the same set of axes for ${=lo}^\\circ \\le x \\le {=hi}^\\circ$. How many times do the two graphs intersect in this interval?",
+ "answer": "n",
+ "solution": [
+  "The graphs meet where $f(x) = g(x)$, that is ${=a}\\sin x + {=q} = {=a}\\cos x + {=q}$. The amplitude and the vertical shift are the same for both graphs, so they cancel and the equation becomes $\\sin x = \\cos x$.",
+  "The sine and cosine graphs cross where they have the same value. In one period, $0^\\circ \\le x \\le 360^\\circ$, this happens at $x = 45^\\circ$ and at $x = 225^\\circ$. These crossings are $180^\\circ$ apart and the pattern repeats every $360^\\circ$, so there is a crossing at every $x = 45^\\circ + 180^\\circ k$ for whole numbers $k$.",
+  "In the interval ${=lo}^\\circ \\le x \\le {=hi}^\\circ$ the first crossing is at $x = {=first}^\\circ$ and the last is at $x = {=last}^\\circ$, a distance of ${=last - first}^\\circ$ apart.",
+  "With one crossing every $180^\\circ$ the number of crossings is $\\frac{{=last - first}}{180} + 1 = {=n}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "No figure. The book's basic questions count intersections of two drawn sine/cosine curves on 0 to 360 degrees; this is the same question asked of the algebraic pair over a longer interval, so the learner must know where sine and cosine cross (45 and 225 degrees) and that the crossings repeat every 180 degrees. f and g share the same amplitude and vertical shift, so the intersection set is exactly the solutions of sin x = cos x, i.e. x = 45 + 180k, independent of a and q. All interval ends are multiples of 90 degrees, which are never crossings (those are odd multiples of 45), so no endpoint ambiguity. Answers over the 32 admissible intervals are 2, 3 or 4 (counts confirmed by brute-force sign-change scan). The solution uses the special-angle values sin 45 = cos 45 that Grade 10 already has; it does not introduce tan x = 1."
+}

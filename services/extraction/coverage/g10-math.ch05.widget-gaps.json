@@ -1,0 +1,487 @@
+{
+  "format": "ainext.widget-gaps/1",
+  "book": "g10-math",
+  "course_id": "course:us-g10-math-en",
+  "rule": "FR-4306 / FR-1201: every chapter has at least one widget question, or a gap a human has signed. A new kind is built only after Samuel approves it (decision 11, T356).",
+  "chapters": [
+    {
+      "module": "module:g10m-c01",
+      "label": "Chapter 1 — Algebraic expressions",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c02",
+      "label": "Chapter 2 — Exponents",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c03",
+      "label": "Chapter 3 — Number patterns",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c04",
+      "label": "Chapter 4 — Equations and inequalities",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c05",
+      "label": "Chapter 5 — Trigonometry",
+      "status": "covered",
+      "widgets": 6,
+      "kinds": [
+        "pair_plotter",
+        "triangle_ratio"
+      ],
+      "objectives_with_widgets": [
+        "lo:g10m5s3-1-2",
+        "lo:g10m5s8-1-3"
+      ],
+      "gaps": 20
+    },
+    {
+      "module": "module:g10m-c08",
+      "label": "Chapter 8 — Analytical geometry",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    }
+  ],
+  "uncovered_chapters": [
+    "module:g10m-c01",
+    "module:g10m-c02",
+    "module:g10m-c03",
+    "module:g10m-c04",
+    "module:g10m-c08"
+  ],
+  "proposed_kinds": {
+    "side_labeller": {
+      "modules": [
+        "module:g10m-c05"
+      ],
+      "objectives": [
+        "lo:g10m5s3-1-1"
+      ],
+      "why": [
+        "No existing kind genuinely fits: triangle_ratio never names a side and keeps theta at one fixed vertex, so naming-by-position cannot be told apart from naming-by-angle; polygon_builder's 'right' construct only checks that a right angle exists and says nothing about labelling sides relative to an angle. The anchor questions (Ex 5.1 Q2 a-f) are pure labelling tasks that depend on figures, which a widget stem may not point at, so forcing them into an answer box or a mismatched instrument would not teach the idea."
+      ]
+    },
+    "triangle_ratio extended with ask: csc | sec | cot": {
+      "modules": [
+        "module:g10m-c05"
+      ],
+      "objectives": [
+        "lo:g10m5s3-1-3"
+      ],
+      "why": [
+        "triangle_ratio only accepts ask sin | cos | tan, so no template can be authored for the reciprocal ratios. Lower priority than the labelling gap: this objective has no anchor book question in the lesson file, so a widget here would also need a parent question assigned before it could be authored."
+      ]
+    },
+    "calculator_keypad": {
+      "modules": [
+        "module:g10m-c05"
+      ],
+      "objectives": [
+        "lo:g10m5s5-1-1",
+        "lo:g10m5s5-1-2"
+      ],
+      "why": [
+        "The objective is a calculator skill and its only listed misconception is a mode setting. triangle_ratio builds a ratio from a triangle and never involves a calculator, a mode or an angle in degrees as a typed input. Using it would be an answer box in disguise and none of its predicates could fire mc:g10m5s5-1-1:calculator-not-in-degrees-mode.",
+        "triangle_ratio only has ask values sin, cos and tan. Its ratio-inverted predicate fires only when tan is asked, and it cannot say anything about cosec, sec or cot or about keying a reciprocal on a calculator. The objective's own misconception is about a missing calculator key, which no existing widget can show."
+      ]
+    },
+    "statement_tester": {
+      "modules": [
+        "module:g10m-c05"
+      ],
+      "objectives": [
+        "lo:g10m5s5-1-3"
+      ],
+      "why": [
+        "No existing kind lets the student evaluate the two sides of a trigonometric statement and compare them. triangle_ratio builds one ratio from one right triangle, and curve_sketcher can neither sketch cos 2y nor compare cos(x + y) with cos x + cos y, because the period is fixed and not a parameter. The anchor questions are true or false multiple choice, so any existing kind would only restate the answer box."
+      ]
+    },
+    "inverse_trig_dial": {
+      "modules": [
+        "module:g10m-c05"
+      ],
+      "objectives": [
+        "lo:g10m5s5-1-4"
+      ],
+      "why": [
+        "This objective has no anchor question in the lesson file, so no template can name a parent_question_id. Its only listed misconception (power-through-a-sum, from Chapter 2) is unrelated to solving a trig equation and is own=false, so it cannot be diagnosed honestly. triangle_ratio is graded on the ratio, not on the angle, which is the quantity the objective asks the student to find. Samuel should decide whether to add an anchor question and a solving-trig-equations misconception to this objective before any widget is built."
+      ]
+    },
+    "exact_ratio_builder": {
+      "modules": [
+        "module:g10m-c05"
+      ],
+      "objectives": [
+        "lo:g10m5s6-1-1",
+        "lo:g10m5s6-1-2"
+      ],
+      "why": [
+        "triangle_ratio is the closest kind but grades only ratios a whole-number leg drag can reach. Equal legs give the 45 degree values exactly (used in the 45 degree template), but 30 and 60 degrees need legs in the ratio 1:sqrt(3), which no lattice drag can produce, so a 30 or 60 degree target would be a question nobody can answer (FR-1207). triangle_ratio also has no angle input, so the stem cannot even ask for 'the value at 60 degrees'. The objective is the recall of nine exact values across two triangles, and only three of them are reachable.",
+        "The book's questions give the triangle and ask for the ratio, and its triangles (6, 6sqrt(3), 12; 9, 3sqrt(3), 6sqrt(3); 7, 7/sqrt(3), 14/sqrt(3)) have irrational leg ratios, so triangle_ratio cannot build them. The one template written for this objective only runs the skill backwards on a non-special 1-2-sqrt(5) triangle. Nothing existing practises reading surd sides, finding a missing side and simplifying to surd form, which is the objective itself."
+      ]
+    },
+    "identity_substituter": {
+      "modules": [
+        "module:g10m-c05"
+      ],
+      "objectives": [
+        "lo:g10m5s6-1-3"
+      ],
+      "why": [
+        "No existing kind evaluates or compares exact expressions: triangle_ratio and curve_sketcher have no way to take special angles or compare two sides of an identity. A widget would help here only modestly (the work is substitution and simplification), so treat this as the lowest priority of the four gaps. This objective also has no anchor book question, so even a fitting kind could not be given a parent_question_id until one is added to the lesson."
+      ]
+    },
+    "ratio_bounds_explorer": {
+      "modules": [
+        "module:g10m-c05"
+      ],
+      "objectives": [
+        "lo:g10m5s6-1-4"
+      ],
+      "why": [
+        "triangle_ratio nearly fits the tan half (a tan target of up to 12 shows that tan exceeds 1), but its sin and cos targets must be below 1 and are graded by equality, so 'sin and cos cannot exceed 1' can be neither asked nor graded, and a bound is an inequality, not a target value. The objective is about explaining from the definitions, which an equality-graded construction cannot test. This objective also has no anchor book question to parent a template."
+      ]
+    },
+    "trig_side_finder": {
+      "modules": [
+        "module:g10m-c05"
+      ],
+      "objectives": [
+        "lo:g10m5s7-1-1"
+      ],
+      "why": [
+        "triangle_ratio is the only trigonometry instrument and it does not fit. The student drags the legs until a live readout matches a target ratio. There is no marked angle, no known or unknown side, no side lengths and nothing to rearrange, and it is graded on the ratio alone. It could not ask for a length, and a student could meet its target by watching the live sin, cos and tan readout without ever naming a side, so the two own misconceptions (naming sides from the wrong angle, and the wrong operation when rearranging) cannot be reported by it. Its ratio-inverted and used-cosine predicates are near-misses at best. Building a triangle to a given ratio is the idea of lesson s3 (a ratio does not depend on size), not this objective. Using it here would be an answer box in disguise."
+      ]
+    },
+    "trig_angle_finder": {
+      "modules": [
+        "module:g10m-c05"
+      ],
+      "objectives": [
+        "lo:g10m5s7-1-2"
+      ],
+      "why": [
+        "triangle_ratio shows sin, cos and tan of the triangle but never an angle, so there is no angle in the instrument to find. Its construction runs from a target ratio to a triangle, whereas this objective runs from the known sides to the angle through the INVERSE function, which is a direction the instrument has no way to express. The own misconception (the plain key pressed instead of the inverse) has no predicate in any existing kind. angle_setter is about circle theorems, not right-triangle ratios, and line_drawer's slope is not the trigonometric ratio this lesson teaches."
+      ]
+    },
+    "trig_equation_solver": {
+      "modules": [
+        "module:g10m-c05"
+      ],
+      "objectives": [
+        "lo:g10m5s7-1-3"
+      ],
+      "why": [
+        "No existing kind fits solving a trigonometric equation with no triangle, and the 'no solution' case cannot be expressed at all. triangle_ratio is the only trigonometric instrument and its validator requires sin and cos targets below 1, so it cannot even pose sin theta = 1.4, which is the out-of-range case this objective asks for. It also never shows an angle and has no way to rewrite sec, cosec or cot. number_line_marker takes whole-number targets only, so it cannot show the range of a ratio like 2/3. curve_sketcher draws the sine and cosine graphs, which belong to a later chapter and not to a calculator-and-inverse-function lesson. A small extension to triangle_ratio that allowed a sin or cos target of 1 or more, flagged unreachable, would cover only the out-of-range sub-skill and not the solving."
+      ]
+    },
+    "slope_triangle_angle": {
+      "modules": [
+        "module:g10m-c05"
+      ],
+      "objectives": [
+        "lo:g10m5s8-1-1"
+      ],
+      "why": [
+        "triangle_ratio drags two positive legs with no coordinate plane and no angle readout, so the step this objective teaches (coordinates to opposite and adjacent) and its own negative-coordinate error can never appear. line_drawer in equation mode runs the book's question backwards (tan to a line) and never asks for an angle; in points mode it grades only the two named points. angle_setter is circle-only. I considered line_drawer for 'tan is the gradient', but it is the gradient question from the previous grade with trig vocabulary on it, so I did not write it."
+      ]
+    },
+    "point_ratio_builder": {
+      "modules": [
+        "module:g10m-c05"
+      ],
+      "objectives": [
+        "lo:g10m5s8-1-2"
+      ],
+      "why": [
+        "pair_plotter places a point but cannot read a ratio off it. triangle_ratio is first-quadrant only: its legs are positive, it has no signed coordinates, no r found by Pythagoras, and no cosec, sec or cot. Neither can emit either of this objective's two own misconceptions (negative r and the letter-matched reciprocals), so any template built on them would diagnose only prerequisite errors. The anchor questions are all 'point to ratios', which no existing instrument runs in that direction."
+      ]
+    },
+    "special_triangle_builder": {
+      "modules": [
+        "module:g10m-c05"
+      ],
+      "objectives": [
+        "lo:g10m5s8-1-4"
+      ],
+      "why": [
+        "triangle_ratio is the nearest kind, but its legs are dragged to lattice values. The 30-60-90 triangle needs a leg of root 3, so sin 30 = 0.5 and tan 60 = root 3 cannot be built exactly, a target the instrument cannot reach (FR-1207). Only tan 45 = 1 is reachable, which is the trivial case of one angle out of five, and sin cannot be asked for it. Its targets must be above 0, so it cannot show 0 or 90 degrees or an undefined tan. No other kind involves a triangle."
+      ]
+    }
+  },
+  "gaps": [
+    {
+      "module": "module:g10m-c05",
+      "lo_id": "lo:g10m5s3-1-1",
+      "need_kind": "side_labeller",
+      "description": "A right-angled triangle drawn at an arbitrary rotation or reflection (right angle marked, one acute angle marked theta), with three draggable labels (hypotenuse, opposite, adjacent) that the student drops onto the sides. After a correct labelling the theta marker jumps to the other acute vertex, or the triangle is turned, and the student must relabel: the hypotenuse stays, opposite and adjacent trade places. Spec sketch: {rotation, flip, theta:'first'|'second', variant:'right'|'not-right'}. Predicates it could emit: hypotenuse-on-a-shorter-side (a leg labelled hypotenuse, so the hypotenuse is not the longest side), labels-by-position (the labelling matches 'flat bottom side is adjacent, upright side is opposite' rather than the angle, which shows up as soon as the triangle is rotated or theta moves), and, in a 'not-right' variant where the student first taps whether the three names apply at all, names-applied-without-a-right-angle. These map onto the three own misconceptions of the objective (hypotenuse-not-longest-side, opposite-adjacent-fixed-by-position, names-on-non-right-triangle). The same instrument with a 'write the ratio' mode (assemble sin, cos or tan from the labelled sides, theta at either acute vertex) would also close the two misconceptions of lo:g10m5s3-1-2 that triangle_ratio cannot reveal because its angle is fixed (reads-sides-from-other-angle in its pure form, ratio-at-the-right-angle) and the second half of book Ex 5.1 Q1 (sin, cos, tan of the other angle).",
+      "why": "No existing kind genuinely fits: triangle_ratio never names a side and keeps theta at one fixed vertex, so naming-by-position cannot be told apart from naming-by-angle; polygon_builder's 'right' construct only checks that a right angle exists and says nothing about labelling sides relative to an angle. The anchor questions (Ex 5.1 Q2 a-f) are pure labelling tasks that depend on figures, which a widget stem may not point at, so forcing them into an answer box or a mismatched instrument would not teach the idea.",
+      "source": "author-merged-ch05.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c05",
+      "lo_id": "lo:g10m5s3-1-3",
+      "need_kind": "triangle_ratio extended with ask: csc | sec | cot",
+      "description": "The existing triangle_ratio instrument (drag the two legs, live readout) with three more asks for the reciprocal ratios. The student would build a right-angled triangle in which, say, $\\csc\\theta = 1.25$ (hypotenuse over opposite, so hypotenuse 5, opposite 4), while the readout shows both the ratio and its reciprocal sin, cos or tan. Targets would be above 1. Errors it could diagnose: the reciprocal not taken (a triangle with sin equal to the csc target, which is impossible above 1, so for sec and cot a triangle with cos or tan equal to the target), the wrong reciprocal pairing (csc built as 1 over cos, or sec as 1 over sin), and the fraction written the right way up for the wrong ratio. It would run the 'cosecant is 1 over sine, and equals hypotenuse over opposite' relationship as a thing the student builds.",
+      "why": "triangle_ratio only accepts ask sin | cos | tan, so no template can be authored for the reciprocal ratios. Lower priority than the labelling gap: this objective has no anchor book question in the lesson file, so a widget here would also need a parent question assigned before it could be authored.",
+      "source": "author-merged-ch05.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c05",
+      "lo_id": "lo:g10m5s5-1-1",
+      "need_kind": "calculator_keypad",
+      "description": "A simulated scientific calculator with a visible DEG / RAD / GRAD mode indicator and the real keys sin, cos, tan, a bracket pair, a decimal point and the shift key. The student is given an angle (for example sin 38°) and must set the mode, key the expression and enter the display value rounded to 2 decimal places. The widget grades the final value and also knows the value the same keystrokes give in radian and gradian mode, so it can tell a wrong-mode answer from a mistyped one. Predicates it would emit: wrong-mode-radians (the answer equals the radian-mode value, which diagnoses mc:g10m5s5-1-1:calculator-not-in-degrees-mode), wrong-mode-gradians (same misconception), rounding-wrong (right value, not 2 d.p.), wrong-function (sin keyed where cos or tan was asked), off-target.",
+      "why": "The objective is a calculator skill and its only listed misconception is a mode setting. triangle_ratio builds a ratio from a triangle and never involves a calculator, a mode or an angle in degrees as a typed input. Using it would be an answer box in disguise and none of its predicates could fire mc:g10m5s5-1-1:calculator-not-in-degrees-mode.",
+      "source": "author-merged-ch05.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c05",
+      "lo_id": "lo:g10m5s5-1-2",
+      "need_kind": "calculator_keypad",
+      "description": "The same calculator simulator for this objective, but with no cosec, sec or cot keys, as on the student's real calculator. The student is asked for a reciprocal ratio such as sec 65° and must assemble the keystroke sequence, which is 1 ÷ cos 65 =. The student builds the sequence on the keypad and the widget grades the resulting value to 2 d.p. Predicates it would emit: no-reciprocal-key (the student presses a sec, cosec or cot key, or searches for one, which the simulator reports as absent; this diagnoses mc:g10m5s5-1-2:looks-for-reciprocal-key), paired-with-wrong-ratio (1 ÷ sin used for sec, so the s-s pairing was assumed), forgot-to-invert (cos 65 keyed alone), inverted-twice-or-wrong-way (cot taken as 1 ÷ tan versus tan taken as 1 ÷ cot), off-target.",
+      "why": "triangle_ratio only has ask values sin, cos and tan. Its ratio-inverted predicate fires only when tan is asked, and it cannot say anything about cosec, sec or cot or about keying a reciprocal on a calculator. The objective's own misconception is about a missing calculator key, which no existing widget can show.",
+      "source": "author-merged-ch05.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c05",
+      "lo_id": "lo:g10m5s5-1-3",
+      "need_kind": "statement_tester",
+      "description": "A two-sided statement probe. The student is given a trigonometric statement in x and y, for example cos(x + y) = cos x + cos y or cos 2y = cos y + cos y, with sliders for x and y in degrees. Both sides are shown live as two bars, or two number readouts, and the question asks: find angles x and y for which the statement is false, or show that it holds for the given x = 39° and y = 21°. For a false statement any pair of angles where the two sides differ is accepted (a property, not a position). The widget would also mark which side of the equation was evaluated first. Predicates it would emit: split-function-over-sum (the student's chosen angles or claimed-true verdict treat the function as shared out over the angle, which diagnoses mc:g10m5s5-1-3:splits-trig-function-over-angle), only-special-angles (the student tested only x = 0 or y = 0, where the two sides happen to agree), wrong-mode-reading (readouts off because the angle was read in radians, mc:g10m5s5-1-1:calculator-not-in-degrees-mode), off-target.",
+      "why": "No existing kind lets the student evaluate the two sides of a trigonometric statement and compare them. triangle_ratio builds one ratio from one right triangle, and curve_sketcher can neither sketch cos 2y nor compare cos(x + y) with cos x + cos y, because the period is fixed and not a parameter. The anchor questions are true or false multiple choice, so any existing kind would only restate the answer box.",
+      "source": "author-merged-ch05.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c05",
+      "lo_id": "lo:g10m5s5-1-4",
+      "need_kind": "inverse_trig_dial",
+      "description": "A right triangle with a draggable angle, or an angle dial, with the three ratios shown live. The student is given an equation such as 3 sin θ = 1.5, or 5 tan θ − 2 = 8. The student first isolates the ratio (sin θ = 0.5) and then drags the angle until the ratio matches. The widget grades the angle in degrees to the stated accuracy, and any equivalent route is accepted, since the property is the ratio on the dial. It would also take the angle typed in after a shift-sin step. Predicates it would emit: ratio-not-isolated (the coefficient was left in, so the dial was matched to 1.5 and not 0.5, which diagnoses mc:g10m2s2-1-1:power-through-a-sum only if the error is an algebraic splitting, so a more specific solving-equations misconception would be needed), ratio-used-as-angle (θ set equal to 0.5, as in θ = 0.5°), complementary-angle (the cos value taken as the sin angle, giving 90° − θ), wrong-mode (radian mode value), off-target.",
+      "why": "This objective has no anchor question in the lesson file, so no template can name a parent_question_id. Its only listed misconception (power-through-a-sum, from Chapter 2) is unrelated to solving a trig equation and is own=false, so it cannot be diagnosed honestly. triangle_ratio is graded on the ratio, not on the angle, which is the quantity the objective asks the student to find. Samuel should decide whether to add an anchor question and a solving-trig-equations misconception to this objective before any widget is built.",
+      "source": "author-merged-ch05.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c05",
+      "lo_id": "lo:g10m5s6-1-1",
+      "need_kind": "exact_ratio_builder",
+      "description": "A special-triangle builder (mode \"special\" of one exact_ratio_builder kind, which also serves the next gap). The student is shown the two triangles the special values come from: a square of side 1 cut along its diagonal (45, 45, 90 degrees) and an equilateral triangle of side 2 cut along its altitude (30, 60, 90 degrees). For an angle named in the stem (30, 45 or 60 degrees) and a ratio (sin, cos or tan), the student drags the exact side lengths (1, sqrt(2), sqrt(3), 2, in surd form, each tagged opposite, adjacent or hypotenuse for that angle) into the numerator and denominator of a fraction. The instrument grades the exact value, so equivalent forms such as 1/sqrt(3) and sqrt(3)/3 are both accepted, and shows the decimal beside the surd so the calculator value and the surd are seen to be one number. It would diagnose: the fraction the wrong way up (sqrt(2) for 1/sqrt(2)), another ratio of the same angle (the cos value given for sin at 60 degrees, the tan value for sin at 45 degrees), and a value taken from the wrong triangle (the sqrt(3) sides used at 45 degrees).",
+      "why": "triangle_ratio is the closest kind but grades only ratios a whole-number leg drag can reach. Equal legs give the 45 degree values exactly (used in the 45 degree template), but 30 and 60 degrees need legs in the ratio 1:sqrt(3), which no lattice drag can produce, so a 30 or 60 degree target would be a question nobody can answer (FR-1207). triangle_ratio also has no angle input, so the stem cannot even ask for 'the value at 60 degrees'. The objective is the recall of nine exact values across two triangles, and only three of them are reachable.",
+      "source": "author-merged-ch05.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c05",
+      "lo_id": "lo:g10m5s6-1-2",
+      "need_kind": "exact_ratio_builder",
+      "description": "The same exact_ratio_builder kind in mode \"given\". The stem lists a right-angled triangle's sides in exact form, one possibly withheld (for example 5, 5, 5sqrt(2); 6, 12 and a withheld leg; or 9, 3sqrt(3), 6sqrt(3)). The student finds any withheld side with the Theorem of Pythagoras, then drags the two sides named for theta into a fraction and simplifies it to surd form (9/(6sqrt(3)) to 3/(2sqrt(3))), with equivalent surd forms accepted. It would diagnose: opposite and adjacent read from the other angle, sine built as opposite over adjacent, the fraction the wrong way up, and Pythagoras misapplied (adding where a hypotenuse is subtracted from, or not squaring a surd side).",
+      "why": "The book's questions give the triangle and ask for the ratio, and its triangles (6, 6sqrt(3), 12; 9, 3sqrt(3), 6sqrt(3); 7, 7/sqrt(3), 14/sqrt(3)) have irrational leg ratios, so triangle_ratio cannot build them. The one template written for this objective only runs the skill backwards on a non-special 1-2-sqrt(5) triangle. Nothing existing practises reading surd sides, finding a missing side and simplifying to surd form, which is the objective itself.",
+      "source": "author-merged-ch05.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c05",
+      "lo_id": "lo:g10m5s6-1-3",
+      "need_kind": "identity_substituter",
+      "description": "A substitution checker. The stem names an identity to verify at a special angle (for example sin^2 45 + cos^2 45 = 1, tan 60 = sin 60 / cos 60, or sin 30 cos 60 + cos 30 sin 60 = 1). The student drags tiles of exact special-angle values (1/2, sqrt(3)/2, 1/sqrt(2), 1/sqrt(3), sqrt(3), 1) into each trigonometric slot of the identity, and the instrument evaluates both sides in surd form side by side and grades that every slot holds the right value and that the two sides agree. It would diagnose: the wrong ratio's value placed in a slot (the cos value in a sin slot), a value from the other triangle, a value upside down, and a decimal check (0.866 squared plus 0.5 squared, about 1) offered as proof, which the instrument could contrast with the exact result.",
+      "why": "No existing kind evaluates or compares exact expressions: triangle_ratio and curve_sketcher have no way to take special angles or compare two sides of an identity. A widget would help here only modestly (the work is substitution and simplification), so treat this as the lowest priority of the four gaps. This objective also has no anchor book question, so even a fitting kind could not be given a parent_question_id until one is added to the lesson.",
+      "source": "author-merged-ch05.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c05",
+      "lo_id": "lo:g10m5s6-1-4",
+      "need_kind": "ratio_bounds_explorer",
+      "description": "A bounds explorer. The student drags the legs of a right-angled triangle with the hypotenuse drawn, and is set property targets rather than equality targets: 'make sin theta as large as you can' (the instrument shows the hypotenuse stays longer than each leg, so sin and cos stay below 1, and the student is asked to say why), and 'make tan theta greater than 10' (shrink the adjacent leg; any construction with the property is correct, and there is no largest value). It would diagnose: the hypotenuse not being the longest side, and legs read from the other angle (swapped legs give the reciprocal tangent, so tan comes out small).",
+      "why": "triangle_ratio nearly fits the tan half (a tan target of up to 12 shows that tan exceeds 1), but its sin and cos targets must be below 1 and are graded by equality, so 'sin and cos cannot exceed 1' can be neither asked nor graded, and a bound is an inequality, not a target value. The objective is about explaining from the definitions, which an equality-graded construction cannot test. This objective also has no anchor book question to parent a template.",
+      "source": "author-merged-ch05.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c05",
+      "lo_id": "lo:g10m5s7-1-1",
+      "need_kind": "trig_side_finder",
+      "description": "A right triangle drawn in a varied orientation (right angle at the left, the right or the top, as in the book's six figures), with one acute angle marked, one side given a length and one side marked as the unknown. The student builds the solution in three moves. (1) Drag the labels opposite, adjacent and hypotenuse onto the three sides, as seen from the MARKED angle. (2) Choose the ratio that links the known side to the unknown one (sin, cos or tan) and set it up as a tile equation, ratio = side over side. (3) Isolate the unknown by choosing the operation (multiply or divide) and the order of the tiles. The widget then moves the unknown vertex to the length that equation gives and shows whether the picture stays consistent: a leg longer than the hypotenuse, or a side that has not moved. Grading is on the PROPERTY, so any equivalent route is correct (g = 32 cos 23 and g/32 = cos 23 are the same), and the final value is checked to 2 decimal places. It would diagnose: labelling the sides from the other acute angle or by page position (mc:g10m5s7-1-1:names-sides-from-the-wrong-angle, seen as opposite and adjacent swapped); the right ratio with the wrong operation, multiplying when the unknown is underneath or dividing when it is on top (mc:g10m5s7-1-1:rearranges-with-the-wrong-operation, seen as f = 31 x cos 22 where 31 / cos 22 is needed); sine written as opposite over adjacent (mc:g10m5s3-1-2:sine-as-opposite-over-adjacent, seen as a ratio with no hypotenuse in it); and a final value that matches the calculator in the wrong angle mode (mc:g10m5s5-1-1:calculator-not-in-degrees-mode).",
+      "why": "triangle_ratio is the only trigonometry instrument and it does not fit. The student drags the legs until a live readout matches a target ratio. There is no marked angle, no known or unknown side, no side lengths and nothing to rearrange, and it is graded on the ratio alone. It could not ask for a length, and a student could meet its target by watching the live sin, cos and tan readout without ever naming a side, so the two own misconceptions (naming sides from the wrong angle, and the wrong operation when rearranging) cannot be reported by it. Its ratio-inverted and used-cosine predicates are near-misses at best. Building a triangle to a given ratio is the idea of lesson s3 (a ratio does not depend on size), not this objective. Using it here would be an answer box in disguise.",
+      "source": "author-merged-ch05.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c05",
+      "lo_id": "lo:g10m5s7-1-2",
+      "need_kind": "trig_angle_finder",
+      "description": "A right triangle with two sides given and an unknown angle alpha marked (opposite and adjacent, or opposite and hypotenuse, or adjacent and hypotenuse, in varied orientations, including a surd side such as 1 and root 2). The student works in three moves. (1) Label the two known sides from alpha and pick which ratio they make (sin, cos or tan); the widget fills in the quotient, for example 12 / 15 = 0.8. (2) Choose the direction on a small key-pad restricted to the function keys: the plain function key (angle to ratio) or its inverse (ratio to angle). The widget shows what each choice does, and the plain key on 0.8 returns a nonsense value such as cos 0.8 degrees = 0.99990, which cannot match. (3) Drag an angle arc on the triangle until the live sin, cos and tan readout of the arc agrees with the ratio, and read off alpha to 2 decimal places. Any route that reaches an angle whose ratio matches is accepted, so the property is graded, not a key sequence. It would diagnose: the plain tan, sin or cos key pressed on the ratio instead of the inverse (mc:g10m5s7-1-2:ratio-key-instead-of-inverse, seen as the plain key chosen in move 2); sine written as opposite over adjacent (mc:g10m5s3-1-2:sine-as-opposite-over-adjacent, seen as a ratio with no hypotenuse in it); opposite and adjacent read from the other acute angle (mc:g10m5s3-1-2:reads-sides-from-other-angle, seen as the answer 90 minus alpha); and a ratio taken at the right angle (mc:g10m5s3-1-2:ratio-at-the-right-angle).",
+      "why": "triangle_ratio shows sin, cos and tan of the triangle but never an angle, so there is no angle in the instrument to find. Its construction runs from a target ratio to a triangle, whereas this objective runs from the known sides to the angle through the INVERSE function, which is a direction the instrument has no way to express. The own misconception (the plain key pressed instead of the inverse) has no predicate in any existing kind. angle_setter is about circle theorems, not right-triangle ratios, and line_drawer's slope is not the trigonometric ratio this lesson teaches.",
+      "source": "author-merged-ch05.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c05",
+      "lo_id": "lo:g10m5s7-1-3",
+      "need_kind": "trig_equation_solver",
+      "description": "A bare equation with no triangle, for example tan theta = 1.7, sin theta = 2/3, sec theta = 2, cot theta = 0.5 or sin theta = 1.4. The student builds the solution in a short chain. (1) If the equation is sec, cosec or cot, rewrite it with tiles as 1 over cos, 1 over sin or 1 over tan, and rearrange to the plain ratio; the widget offers no sec, cosec or cot key. (2) Place the resulting ratio value on a gauge that shows the range a sine or cosine can take (0 to 1 for an acute angle, up to 1 for the value itself) or, for tan, a gauge with no upper limit. A value outside the range can only be finished with the explicit answer 'no solution'. (3) Otherwise choose the inverse key and enter the angle to 1 decimal place, which the widget checks by taking the function of the answer and comparing with the original equation. Grading is on the PROPERTY: the final claim must either be an angle whose ratio satisfies the equation or the correct statement of no solution. It would diagnose: leaving the calculator's error message as the answer, or entering it as a value, where 'no solution' is needed (mc:g10m5s7-1-3:writes-math-error-for-no-solution); looking for a sec, cosec or cot key (mc:g10m5s5-1-2:looks-for-reciprocal-key, seen as the student tapping the missing key); the plain function key used on the ratio (mc:g10m5s7-1-2:ratio-key-instead-of-inverse); and for equations of the form 5 - 7 / sin theta = 3, multiplying only the fraction terms when clearing the denominator (mc:g10m4s2-1-2:multiplies-only-the-fractions).",
+      "why": "No existing kind fits solving a trigonometric equation with no triangle, and the 'no solution' case cannot be expressed at all. triangle_ratio is the only trigonometric instrument and its validator requires sin and cos targets below 1, so it cannot even pose sin theta = 1.4, which is the out-of-range case this objective asks for. It also never shows an angle and has no way to rewrite sec, cosec or cot. number_line_marker takes whole-number targets only, so it cannot show the range of a ratio like 2/3. curve_sketcher draws the sine and cosine graphs, which belong to a later chapter and not to a calculator-and-inverse-function lesson. A small extension to triangle_ratio that allowed a sin or cos target of 1 or more, flagged unreachable, would cover only the out-of-range sub-skill and not the solving.",
+      "source": "author-merged-ch05.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c05",
+      "lo_id": "lo:g10m5s8-1-1",
+      "need_kind": "slope_triangle_angle",
+      "description": "A Cartesian plane showing two named points and the line through them, for example A(5; 0) and B(11; 4), or C(0; -13) and D(-12; 14). The student completes the right triangle on the line by dragging its right-angle vertex (to (11; 0) for the first pair), so that the legs are the run and the rise read from the coordinates. They then choose which leg is opposite and which adjacent to the angle asked (the angle with the x-axis, or with the y-axis as in the second anchor). The widget shows tan of the angle from the two legs and the angle itself, and when the line leans back it also shows the angle in standard position (180 degrees minus the reference angle). Graded on the property: the legs are the correct lengths and the angle read out is the one asked, whichever lattice triangle is used. Errors it would diagnose: a negative coordinate used as a leg length (the leg -12 gives a negative ratio and a negative angle, the objective's own misconception); rise and run inverted (the angle with the wrong axis, 56.31 degrees for 33.69); the angle taken against the wrong axis; and the reference angle given where the standard-position angle was asked.",
+      "why": "triangle_ratio drags two positive legs with no coordinate plane and no angle readout, so the step this objective teaches (coordinates to opposite and adjacent) and its own negative-coordinate error can never appear. line_drawer in equation mode runs the book's question backwards (tan to a line) and never asks for an angle; in points mode it grades only the two named points. angle_setter is circle-only. I considered line_drawer for 'tan is the gradient', but it is the gradient question from the previous grade with trig vocabulary on it, so I did not write it.",
+      "source": "author-merged-ch05.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c05",
+      "lo_id": "lo:g10m5s8-1-2",
+      "need_kind": "point_ratio_builder",
+      "description": "A point P(x; y) shown on the Cartesian plane in any of the four quadrants (the anchor has B(1; -3), with the perpendicular dropped to the x-axis), with x and y drawn as signed legs and r as the length OP, always positive. The student assembles each ratio by dragging the three labelled quantities x, y and r into the numerator and denominator slots, for sin, cos, tan and then cosec, sec, cot. r is first found by completing x squared plus y squared equals r squared, with the square root left as a surd. Graded on the fraction as a value, with the sign carried on the coordinate. Errors it would diagnose: r given a minus sign because the point is left of the y-axis or below the x-axis (r-takes-sign-of-point); cosec built as r over x and sec as r over y because the names resemble cos and sin (reciprocal-named-by-letters); a ratio built the wrong way up; and the sign dropped from y or x. Points would be varied across quadrants so that every ratio's sign is a consequence of the point.",
+      "why": "pair_plotter places a point but cannot read a ratio off it. triangle_ratio is first-quadrant only: its legs are positive, it has no signed coordinates, no r found by Pythagoras, and no cosec, sec or cot. Neither can emit either of this objective's two own misconceptions (negative r and the letter-matched reciprocals), so any template built on them would diagnose only prerequisite errors. The anchor questions are all 'point to ratios', which no existing instrument runs in that direction.",
+      "source": "author-merged-ch05.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c05",
+      "lo_id": "lo:g10m5s8-1-4",
+      "need_kind": "special_triangle_builder",
+      "description": "The student builds the two special triangles and reads exact values off them. For 45 degrees they cut a square of side 1 along its diagonal, giving legs 1, 1 and hypotenuse root 2. For 30 and 60 degrees they cut an equilateral triangle of side 2 along its altitude, giving sides 1, root 3 and 2 (the altitude is found with Pythagoras). Then they assemble sin, cos and tan of the angle asked, in surd form, from the labelled sides. For 0 and 90 degrees they drag the angle down to zero and up to a right angle, watching which side shrinks to nothing, so that sin 0 = 0, cos 90 = 0 and tan 90 being undefined (a zero denominator) come from the picture. Errors it would diagnose: a value taken from the other triangle (a 30-60 value used at 45 degrees); the fraction the wrong way up (root 3 for 1 over root 3); the sin and cos values swapped at 60 degrees; the value of a different ratio of the same angle; and a calculator decimal offered in place of the surd value.",
+      "why": "triangle_ratio is the nearest kind, but its legs are dragged to lattice values. The 30-60-90 triangle needs a leg of root 3, so sin 30 = 0.5 and tan 60 = root 3 cannot be built exactly, a target the instrument cannot reach (FR-1207). Only tan 45 = 1 is reachable, which is the trivial case of one angle out of five, and sin cannot be asked for it. Its targets must be above 0, so it cannot show 0 or 90 degrees or an undefined tan. No other kind involves a triangle.",
+      "source": "author-merged-ch05.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c05",
+      "lo_id": "lo:g10m5s6-1-1",
+      "need_kind": "no-diagnostic",
+      "description": "template wt:g10m5s6-1-1:cos-one-over-root-two (1 widget question(s)) was not shipped: it could not say why a wrong answer is wrong",
+      "why": "every misconception its mappings name was refused by S5's fail-closed verifier (mc:g10m5s6-1-1:wrong-ratio-same-angle); a widget with no diagnostic could mark an answer wrong and never say why (ADR-0009). Re-author it against a misconception S5 kept, or accept the lesson without it",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c01",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c02",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c03",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c04",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c08",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c05",
+      "lo_id": "lo:g10m5s3-1-2",
+      "need_kind": "no-diagnostic",
+      "description": "template wt:g10m5s3-1-2:build-cos (2 widget question(s)) was not shipped: it could not say why a wrong answer is wrong",
+      "why": "every misconception its mappings name was refused by S5's fail-closed verifier (mc:g10m5s3-1-2:reads-sides-from-other-angle); a widget with no diagnostic could mark an answer wrong and never say why (ADR-0009). Re-author it against a misconception S5 kept, or accept the lesson without it",
+      "source": "assemble_misconceptions.py",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c05",
+      "lo_id": "lo:g10m5s3-1-2",
+      "need_kind": "no-diagnostic",
+      "description": "template wt:g10m5s3-1-2:build-tan (2 widget question(s)) was not shipped: it could not say why a wrong answer is wrong",
+      "why": "every misconception its mappings name was refused by S5's fail-closed verifier (mc:g10m5s3-1-2:reads-sides-from-other-angle); a widget with no diagnostic could mark an answer wrong and never say why (ADR-0009). Re-author it against a misconception S5 kept, or accept the lesson without it",
+      "source": "assemble_misconceptions.py",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c05",
+      "lo_id": "lo:g10m5s6-1-2",
+      "need_kind": "no-diagnostic",
+      "description": "template wt:g10m5s6-1-2:sin-one-over-root-five (1 widget question(s)) was not shipped: it could not say why a wrong answer is wrong",
+      "why": "every misconception its mappings name was refused by S5's fail-closed verifier (mc:g10m5s3-1-2:reads-sides-from-other-angle, mc:g10m5s3-1-2:sine-as-opposite-over-adjacent); a widget with no diagnostic could mark an answer wrong and never say why (ADR-0009). Re-author it against a misconception S5 kept, or accept the lesson without it",
+      "source": "assemble_misconceptions.py",
+      "signed_off": null,
+      "scope": "lesson"
+    }
+  ]
+}

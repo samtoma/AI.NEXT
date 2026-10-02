@@ -1,0 +1,99 @@
+{
+  "config_version": 1,
+  "book": "prep3-arabic-ar",
+  "title": "اللغة العربية — لغتي حياتي، الصف الثالث الإعدادي",
+  "course_id": "course:prep3-arabic-ar",
+  "curriculum": "eg-national-en",
+  "subject": "arabic",
+  "grade": "prep-3",
+  "language": "ar",
+  "direction": "rtl",
+  "id_prefixes": ["ara"],
+  "load_order": 30,
+  "sources": {
+    "pdf": "docs/Source/Arabic_Prp3_Tr1_2.pdf",
+    "epub": null,
+    "teacher_pdf": null
+  },
+  "page_offsets": [
+    {
+      "label": "First Term",
+      "pdf_from": 9,
+      "pdf_to": 62,
+      "pdf_minus_printed": 1,
+      "verified_at": [],
+      "note": "Scout, verified at 30 sample pages (runbook/arabic-lesson.workflow.js). Carrying this rule into Term 2 cites a real but wrong page."
+    },
+    {
+      "label": "Second Term",
+      "pdf_from": 67,
+      "pdf_to": 119,
+      "pdf_minus_printed": 61,
+      "verified_at": [],
+      "note": "Scout, verified at 30 sample pages (runbook/arabic-lesson.workflow.js)."
+    }
+  ],
+  "objectives_mode": "printed",
+  "sacred_content": true,
+  "bundles": [
+    "services/extraction/seed/arabic-t1.json",
+    "services/extraction/seed/arabic-t2.json"
+  ],
+  "superseded_bundles": {},
+  "content_files": [
+    "services/extraction/seed/content/ara1-1.json",
+    "services/extraction/seed/content/ara1-2.json",
+    "services/extraction/seed/content/ara1-3.json",
+    "services/extraction/seed/content/ara2-1.json",
+    "services/extraction/seed/content/ara2-2.json",
+    "services/extraction/seed/content/ara2-3.json",
+    "services/extraction/seed/content/ara2-4.json",
+    "services/extraction/seed/content/ara3-1.json",
+    "services/extraction/seed/content/ara3-2.json",
+    "services/extraction/seed/content/ara3-3.json",
+    "services/extraction/seed/content/ara4-1.json",
+    "services/extraction/seed/content/ara4-2.json",
+    "services/extraction/seed/content/ara4-3.json",
+    "services/extraction/seed/content/ara5-1.json",
+    "services/extraction/seed/content/ara5-2.json",
+    "services/extraction/seed/content/ara5-3.json",
+    "services/extraction/seed/content/ara6-1.json",
+    "services/extraction/seed/content/ara6-2.json",
+    "services/extraction/seed/content/ara6-3.json",
+    "services/extraction/seed/content/ara6-4.json"
+  ],
+  "lesson_titles": {
+    "ara1-1": "عِبادُ الرَّحمنِ",
+    "ara1-2": "كُنْ جَمِيلًا",
+    "ara1-3": "قِصَّةُ أَثَرٍ",
+    "ara2-1": "رَحْمَةٌ ومَحَبَّةٌ",
+    "ara2-2": "سميرة موسى",
+    "ara2-3": "آياتُ العِلمِ",
+    "ara2-4": "طريقُ النورِ",
+    "ara3-1": "فَضْلُ العِلمِ",
+    "ara3-2": "زِراعةُ الفَضاءِ",
+    "ara3-3": "الكِتابُ",
+    "ara4-1": "سفينةُ نوحٍ عليه السلام",
+    "ara4-2": "الحياةُ دقائقُ وثوانٍ",
+    "ara4-3": "خِلالٌ كريمةٌ",
+    "ara5-1": "رسالةٌ إلى ابني",
+    "ara5-2": "وادي الكنانة",
+    "ara5-3": "فالقُ الحَبِّ والنَّوى",
+    "ara6-1": "استعِنْ باللهِ",
+    "ara6-2": "الحمامةُ المطوَّقةُ",
+    "ara6-3": "حُبُّ الوطنِ",
+    "ara6-4": "المشروعاتُ الصغيرةُ"
+  },
+  "lesson_titles_note": "The book's real printed lesson names (Samuel's answer 13, 2026-09-25), identical to the bundles' syllabus_ref titles and the content files' titles. The loader writes them to course_lessons.title; the app is switched to read them by the app agent (ADR-0020 exception for lesson titles).",
+  "manifest": null,
+  "generated": null,
+  "parity": {
+    "modules": 6,
+    "learning_objectives": 100,
+    "prerequisite_edges": 16,
+    "questions_total": 307,
+    "visuals": 0,
+    "require_all_live": false,
+    "note": "The sacred-content gate (ADR-0006) holds every Quran and hadith question at review, so live < total is the gate working, not drift."
+  }
+}

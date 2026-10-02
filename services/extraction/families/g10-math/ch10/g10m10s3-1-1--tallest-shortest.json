@@ -1,0 +1,262 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m10s3-1-1:tallest-shortest",
+ "kind": "family",
+ "lo_id": "lo:g10m10s3-1-1",
+ "parent_question_id": "q:g10m10s3-1-1:ex10-3-4",
+ "source_page": 367,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": "A group of 20 learners each count the number of stones they have. The 20 counts are grouped into four equal-width, non-overlapping ranges to draw a histogram.",
+ "params": [
+  {
+   "name": "s",
+   "choice": [
+    0,
+    1
+   ]
+  },
+  {
+   "name": "w",
+   "choice": [
+    4,
+    5
+   ]
+  },
+  {
+   "name": "l1",
+   "let": "s"
+  },
+  {
+   "name": "h1",
+   "let": "s + w - 1"
+  },
+  {
+   "name": "l2",
+   "let": "s + w"
+  },
+  {
+   "name": "h2",
+   "let": "s + 2 * w - 1"
+  },
+  {
+   "name": "l3",
+   "let": "s + 2 * w"
+  },
+  {
+   "name": "h3",
+   "let": "s + 3 * w - 1"
+  },
+  {
+   "name": "l4",
+   "let": "s + 3 * w"
+  },
+  {
+   "name": "h4",
+   "let": "s + 4 * w - 1"
+  },
+  {
+   "name": "d1",
+   "randint": [
+    "s",
+    "h4"
+   ]
+  },
+  {
+   "name": "d2",
+   "randint": [
+    "s",
+    "h4"
+   ]
+  },
+  {
+   "name": "d3",
+   "randint": [
+    "s",
+    "h4"
+   ]
+  },
+  {
+   "name": "d4",
+   "randint": [
+    "s",
+    "h4"
+   ]
+  },
+  {
+   "name": "d5",
+   "randint": [
+    "s",
+    "h4"
+   ]
+  },
+  {
+   "name": "d6",
+   "randint": [
+    "s",
+    "h4"
+   ]
+  },
+  {
+   "name": "d7",
+   "randint": [
+    "s",
+    "h4"
+   ]
+  },
+  {
+   "name": "d8",
+   "randint": [
+    "s",
+    "h4"
+   ]
+  },
+  {
+   "name": "d9",
+   "randint": [
+    "s",
+    "h4"
+   ]
+  },
+  {
+   "name": "d10",
+   "randint": [
+    "s",
+    "h4"
+   ]
+  },
+  {
+   "name": "d11",
+   "randint": [
+    "s",
+    "h4"
+   ]
+  },
+  {
+   "name": "d12",
+   "randint": [
+    "s",
+    "h4"
+   ]
+  },
+  {
+   "name": "d13",
+   "randint": [
+    "s",
+    "h4"
+   ]
+  },
+  {
+   "name": "d14",
+   "randint": [
+    "s",
+    "h4"
+   ]
+  },
+  {
+   "name": "d15",
+   "randint": [
+    "s",
+    "h4"
+   ]
+  },
+  {
+   "name": "d16",
+   "randint": [
+    "s",
+    "h4"
+   ]
+  },
+  {
+   "name": "d17",
+   "randint": [
+    "s",
+    "h4"
+   ]
+  },
+  {
+   "name": "d18",
+   "randint": [
+    "s",
+    "h4"
+   ]
+  },
+  {
+   "name": "d19",
+   "randint": [
+    "s",
+    "h4"
+   ]
+  },
+  {
+   "name": "d20",
+   "randint": [
+    "s",
+    "h4"
+   ]
+  },
+  {
+   "name": "data",
+   "let": "[d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, d13, d14, d15, d16, d17, d18, d19, d20]"
+  },
+  {
+   "name": "sd",
+   "let": "sorted(data)"
+  },
+  {
+   "name": "f1",
+   "let": "len([v for v in data if v >= l1 and v <= h1])"
+  },
+  {
+   "name": "f2",
+   "let": "len([v for v in data if v >= l2 and v <= h2])"
+  },
+  {
+   "name": "f3",
+   "let": "len([v for v in data if v >= l3 and v <= h3])"
+  },
+  {
+   "name": "f4",
+   "let": "len([v for v in data if v >= l4 and v <= h4])"
+  },
+  {
+   "require": "f1 >= 1 and f2 >= 1 and f3 >= 1 and f4 >= 1",
+   "why": "every range must hold at least one learner, so that each range really is a bar of the histogram"
+  },
+  {
+   "name": "fs",
+   "let": "sorted([f1, f2, f3, f4])"
+  },
+  {
+   "require": "fs[3] > fs[2] and fs[0] < fs[1]",
+   "why": "exactly one tallest bar and exactly one shortest bar, so the words 'the tallest bar' and 'the shortest bar' name a single bar"
+  },
+  {
+   "name": "mx",
+   "let": "fs[3]"
+  },
+  {
+   "name": "mn",
+   "let": "fs[0]"
+  },
+  {
+   "require": "mx - mn <= 8",
+   "why": "keep the histogram reasonably even, as a class's data would be"
+  }
+ ],
+ "constraints": [
+  "f1 + f2 + f3 + f4 == 20"
+ ],
+ "stem": "A group of $20$ learners count the number of stones they each have. This is the data they collect: $\\begin{aligned}\\begin{array}{ccccc} {=d1}&{=d2}&{=d3}&{=d4}&{=d5} \\\\ {=d6}&{=d7}&{=d8}&{=d9}&{=d10} \\\\ {=d11}&{=d12}&{=d13}&{=d14}&{=d15} \\\\ {=d16}&{=d17}&{=d18}&{=d19}&{=d20} \\end{array}\\end{aligned}$ Group the data into these four ranges and draw a histogram: ${=l1}\\le\\text{number of stones}\\le {=h1}$, ${=l2}\\le\\text{number of stones}\\le {=h2}$, ${=l3}\\le\\text{number of stones}\\le {=h3}$ and ${=l4}\\le\\text{number of stones}\\le {=h4}$. How many more learners are in the tallest bar of the histogram than in the shortest bar?",
+ "answer": "mx - mn",
+ "solution": [
+  "Firstly, sort the data from the smallest value to the largest.",
+  "$\\begin{aligned}\\begin{array}{ccccc} {=sd[0]}&{=sd[1]}&{=sd[2]}&{=sd[3]}&{=sd[4]} \\\\ {=sd[5]}&{=sd[6]}&{=sd[7]}&{=sd[8]}&{=sd[9]} \\\\ {=sd[10]}&{=sd[11]}&{=sd[12]}&{=sd[13]}&{=sd[14]} \\\\ {=sd[15]}&{=sd[16]}&{=sd[17]}&{=sd[18]}&{=sd[19]} \\end{array}\\end{aligned}$",
+  "Secondly, count how many of the sorted values fall in each range. A value on the edge of a range belongs to that range, because the signs are $\\le$. Each count is the height of one bar of the histogram.",
+  "${=l1}\\le\\text{number of stones}\\le {=h1}$: {=f1} learners; ${=l2}\\le\\text{number of stones}\\le {=h2}$: {=f2} learners; ${=l3}\\le\\text{number of stones}\\le {=h3}$: {=f3} learners; ${=l4}\\le\\text{number of stones}\\le {=h4}$: {=f4} learners.",
+  "Check: ${=f1}+{=f2}+{=f3}+{=f4}=20$, so every learner is counted in exactly one bar.",
+  "The tallest bar is {=mx} learners high and the shortest bar is {=mn} learners high.",
+  "${=mx}-{=mn}={=mx - mn}$, so the tallest bar has {=mx - mn} more learners than the shortest bar."
+ ],
+ "notes": "Advanced tier: the book's standard items (ex10-3-3/4, ex10-7-12/13) ask for ONE range of an unsorted 4x5 grid of 20 counts. Here the learner must group ALL 20 values into four given equal-width ranges (the book's inclusive form a <= number <= b), i.e. build the whole grouped frequency table, then compare the tallest and shortest bars: several steps, same method (sort, group, read the bar heights). Instances vary: start s in {0,1} and width w in {4,5} give ranges 0-3..12-15, 1-4..13-16, 0-4..15-19 or 1-5..16-20; the 20 data values are drawn independently and uniformly inside the four ranges, so repeats and edge values (e.g. 5, 6, 10, 11) are common, as in the book. Requires: every bar non-empty, a unique tallest and a unique shortest bar (so the wording names one bar each), and a gap of at most 8. The answer is the integer difference of the two heights, never a decimal. Counts were checked in a separate simulation against an independent bucketing (v - s) // w; the four counts always sum to 20. No distractors (numeric). The catalogued mc:g10m10s3-1-1:boundary-value-in-wrong-range is the likely wrong-answer source (an edge value placed in the neighbouring bar) but cannot be tagged on a typed numeric answer; the solution's step 3 states the edge rule explicitly."
+}

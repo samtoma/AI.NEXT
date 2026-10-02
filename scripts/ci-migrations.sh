@@ -269,6 +269,433 @@ END
 $owner$;
 SQL
   say "student_testers: removal once, never reopened or rewritten — proved"
+
+  proof_032 "$tree" "$db"
+  proof_033 "$tree" "$db"
+  proof_034 "$tree" "$db"
+}
+
+# ---------------------------------------------------------------------------
+# Migration 032 (v0.9.3 hotfix, FR-1207): the three q:t2u2-2-1:w001-w003
+# widget answer keys held the SHIFTS, not the ROOTS. Today only an opt-in app
+# test (app/src/lib/widget-excluded-values-db.test.mts, needs
+# AINEXT_SCRATCH_PG) covers this; this proof runs in CI with no opt-in. Runs
+# on the proofs database, before 033/034 (it touches ids under `questions`
+# and `graph_nodes` that neither of those proofs uses).
+# ---------------------------------------------------------------------------
+proof_032() {
+  tree=$1 db=$2
+  P="$PSQL"
+  m032="$tree/db/migrations/032-widget-excluded-values-sign.sql"
+  r032="$tree/db/migrations/rollback/032-widget-excluded-values-sign.down.sql"
+  [ -f "$m032" ] || { say "no migration 032 in $tree — nothing to prove"; return 0; }
+
+  hdr "proof: 032 — nothing to fix on a fresh database; the three sign-flipped rows are corrected; re-runs write nothing; rollback restores them; re-apply corrects again"
+
+  ids="'q:t2u2-2-1:w001','q:t2u2-2-1:w002','q:t2u2-2-1:w003','q:p032-decoy:w001'"
+
+  before=$(PGDATABASE=$db $P --tuples-only --no-align -c "SELECT count(*) FROM questions WHERE id IN ($ids)")
+  [ "$before" = 0 ] || fail "032 proof needs a database with none of $ids yet (found $before)"
+  PGDATABASE=$db $P -f "$m032" >/dev/null
+  after=$(PGDATABASE=$db $P --tuples-only --no-align -c "SELECT count(*) FROM questions WHERE id IN ($ids)")
+  [ "$after" = 0 ] || fail "032 wrote a row on a fresh database (none of the three ids existed yet): now $after present"
+  say "fresh: no q:t2u2-2-1:w* rows yet, migration finds nothing to fix"
+
+  # w001, w002, w003 exactly as v0.9.2 left them (the shift, not the root; no
+  # sign-flipped diagnosis yet), plus a decoy that holds w001's wrong key
+  # under a DIFFERENT id — 032 is scoped by id, so this must never move.
+  PGDATABASE=$db $P <<'SQL'
+INSERT INTO graph_nodes (id, kind, label) VALUES ('lo:t2u2-2-1', 'learning_objective', 'p032 proof LO')
+  ON CONFLICT (id) DO NOTHING;
+INSERT INTO questions (id, lo_id, tier, question_type, stem, choices, correct_answer, canonical_solution, status, source) VALUES
+  ('q:t2u2-2-1:w001', 'lo:t2u2-2-1', 'standard', 'widget', 'p032 proof stem 1',
+   '{"kind":"number_line_marker","spec":{"mode":"points","range":[-6,6],"targets":[-2,3]},"diagnostics":[{"predicate":"missed-values","misconception_id":"mc:t2u2-2-1:excluded-values-incomplete"}]}'::jsonb,
+   'ok', '[{"step":1,"text_md":"p032 proof"}]'::jsonb, 'live', 'seed'),
+  ('q:t2u2-2-1:w002', 'lo:t2u2-2-1', 'standard', 'widget', 'p032 proof stem 2',
+   '{"kind":"number_line_marker","spec":{"mode":"points","range":[-6,6],"targets":[-4,1]},"diagnostics":[{"predicate":"missed-values","misconception_id":"mc:t2u2-2-1:excluded-values-incomplete"}]}'::jsonb,
+   'ok', '[{"step":1,"text_md":"p032 proof"}]'::jsonb, 'live', 'seed'),
+  ('q:t2u2-2-1:w003', 'lo:t2u2-2-1', 'standard', 'widget', 'p032 proof stem 3',
+   '{"kind":"number_line_marker","spec":{"mode":"points","range":[-6,6],"targets":[-5,2]},"diagnostics":[{"predicate":"missed-values","misconception_id":"mc:t2u2-2-1:excluded-values-incomplete"}]}'::jsonb,
+   'ok', '[{"step":1,"text_md":"p032 proof"}]'::jsonb, 'live', 'seed'),
+  ('q:p032-decoy:w001', 'lo:t2u2-2-1', 'standard', 'widget', 'p032 proof decoy — w001''s wrong key, a different id',
+   '{"kind":"number_line_marker","spec":{"mode":"points","range":[-6,6],"targets":[-2,3]},"diagnostics":[{"predicate":"missed-values","misconception_id":"mc:t2u2-2-1:excluded-values-incomplete"}]}'::jsonb,
+   'ok', '[{"step":1,"text_md":"p032 proof"}]'::jsonb, 'live', 'seed');
+SQL
+  say "seeded: the three rows as v0.9.2 left them, and a decoy sharing w001's wrong key under a different id"
+
+  w1_wrong='{"kind":"number_line_marker","spec":{"mode":"points","range":[-6,6],"targets":[-2,3]},"diagnostics":[{"predicate":"missed-values","misconception_id":"mc:t2u2-2-1:excluded-values-incomplete"}]}'
+  w2_wrong='{"kind":"number_line_marker","spec":{"mode":"points","range":[-6,6],"targets":[-4,1]},"diagnostics":[{"predicate":"missed-values","misconception_id":"mc:t2u2-2-1:excluded-values-incomplete"}]}'
+  w3_wrong='{"kind":"number_line_marker","spec":{"mode":"points","range":[-6,6],"targets":[-5,2]},"diagnostics":[{"predicate":"missed-values","misconception_id":"mc:t2u2-2-1:excluded-values-incomplete"}]}'
+  w1_fixed='{"kind":"number_line_marker","spec":{"mode":"points","range":[-6,6],"targets":[-3,2]},"diagnostics":[{"predicate":"sign-flipped","misconception_id":"mc:u1-1-1:transposition-sign"},{"predicate":"missed-values","misconception_id":"mc:t2u2-2-1:excluded-values-incomplete"}]}'
+  w2_fixed='{"kind":"number_line_marker","spec":{"mode":"points","range":[-6,6],"targets":[-1,4]},"diagnostics":[{"predicate":"sign-flipped","misconception_id":"mc:u1-1-1:transposition-sign"},{"predicate":"missed-values","misconception_id":"mc:t2u2-2-1:excluded-values-incomplete"}]}'
+  w3_fixed='{"kind":"number_line_marker","spec":{"mode":"points","range":[-6,6],"targets":[-2,5]},"diagnostics":[{"predicate":"sign-flipped","misconception_id":"mc:u1-1-1:transposition-sign"},{"predicate":"missed-values","misconception_id":"mc:t2u2-2-1:excluded-values-incomplete"}]}'
+
+  PGDATABASE=$db $P -f "$m032" >/dev/null
+  check_032 "corrected, sign-flipped added first" "$w1_fixed" "$w2_fixed" "$w3_fixed" "$w1_wrong"
+
+  xmin_once=$(PGDATABASE=$db $P --tuples-only --no-align -c \
+    "SELECT string_agg(id || '=' || xmin::text, ',' ORDER BY id) FROM questions WHERE id IN ($ids)")
+  PGDATABASE=$db $P -f "$m032" >/dev/null
+  PGDATABASE=$db $P -f "$m032" >/dev/null
+  xmin_twice=$(PGDATABASE=$db $P --tuples-only --no-align -c \
+    "SELECT string_agg(id || '=' || xmin::text, ',' ORDER BY id) FROM questions WHERE id IN ($ids)")
+  [ "$xmin_once" = "$xmin_twice" ] || fail "032 re-applied twice moved a row's xmin (a write with no change): [$xmin_once] -> [$xmin_twice]"
+  say "re-applied twice more: no row's xmin moved — re-runs write nothing"
+
+  PGDATABASE=$db $P -f "$r032" >/dev/null
+  check_032 "rollback restores the pre-032 rows" "$w1_wrong" "$w2_wrong" "$w3_wrong" "$w1_wrong"
+  xmin_down1=$(PGDATABASE=$db $P --tuples-only --no-align -c \
+    "SELECT string_agg(id || '=' || xmin::text, ',' ORDER BY id) FROM questions WHERE id IN ($ids)")
+  PGDATABASE=$db $P -f "$r032" >/dev/null
+  xmin_down2=$(PGDATABASE=$db $P --tuples-only --no-align -c \
+    "SELECT string_agg(id || '=' || xmin::text, ',' ORDER BY id) FROM questions WHERE id IN ($ids)")
+  [ "$xmin_down1" = "$xmin_down2" ] || fail "rollback/032 re-run moved a row's xmin: [$xmin_down1] -> [$xmin_down2]"
+  say "rollback/032 (twice): the old rows are back, second run writes nothing"
+
+  PGDATABASE=$db $P -f "$m032" >/dev/null
+  check_032 "re-applied after rollback" "$w1_fixed" "$w2_fixed" "$w3_fixed" "$w1_wrong"
+  say "032: nothing to fix fresh; corrected once seeded; re-runs write nothing; rollback restores; re-apply corrects again — proved"
+}
+
+# <label> <w001-expected-jsonb> <w002-expected-jsonb> <w003-expected-jsonb> <decoy-expected-jsonb>
+check_032() {
+  got=$(PGDATABASE=$db $P --tuples-only --no-align -c "
+    SELECT (SELECT choices = '$2'::jsonb FROM questions WHERE id = 'q:t2u2-2-1:w001')
+        || ' ' || (SELECT choices = '$3'::jsonb FROM questions WHERE id = 'q:t2u2-2-1:w002')
+        || ' ' || (SELECT choices = '$4'::jsonb FROM questions WHERE id = 'q:t2u2-2-1:w003')
+        || ' ' || (SELECT choices = '$5'::jsonb FROM questions WHERE id = 'q:p032-decoy:w001')")
+  [ "$got" = "true true true true" ] || fail "032 proof, $1: expected w001/w002/w003/decoy to all match, got [$got]"
+  say "$1: w001, w002, w003 and the untouched decoy — all as expected"
+}
+
+# ---------------------------------------------------------------------------
+# Migration 033 (feature 003): only an operator changes a curriculum, by
+# privilege (FR-4017); the first-Google-sign-in step works once (FR-4014);
+# the rollback restores 017's grant and keeps students.curriculum_system.
+# Runs on the proofs database, after the 029/030 proofs (it reuses their
+# operators A and B).
+# ---------------------------------------------------------------------------
+proof_033() {
+  tree=$1 db=$2
+  P="$PSQL"
+  m033="$tree/db/migrations/033-curriculum-tracks.sql"
+  r033="$tree/db/migrations/rollback/033-curriculum-tracks.down.sql"
+  [ -f "$m033" ] || { say "no migration 033 in $tree — nothing to prove"; return 0; }
+
+  hdr "proof: 033 — the student surface cannot change a curriculum; the Google step works once; the console can"
+  PGDATABASE=$db $P <<'SQL'
+DO $prep$
+BEGIN
+  -- S: an ordinary student (a password sign-up). G: a first Google sign-in,
+  -- its grade-and-curriculum step still owed.
+  INSERT INTO students (display_name, grade, environment) VALUES ('p033 S', '9', 'mvp1');
+  INSERT INTO students (display_name, grade, environment, onboarding_pending)
+  VALUES ('p033 G', '9', 'mvp1', true);
+END
+$prep$;
+-- Resolved as the owner: under ainext_app with no principal yet, RLS hides
+-- both rows (017: an account-less student is invisible to the app role).
+SELECT id AS s_id FROM students WHERE display_name = 'p033 S' \gset
+SELECT id AS g_id FROM students WHERE display_name = 'p033 G' \gset
+
+SET ROLE ainext_app;
+SELECT set_config('app.student_id', :'s_id', false);
+DO $app$
+DECLARE s bigint := nullif(current_setting('app.student_id', true), '')::bigint;
+        n integer;
+BEGIN
+  IF s IS NULL THEN RAISE EXCEPTION 'PROOF BROKEN: no principal for S'; END IF;
+  BEGIN
+    UPDATE students SET curriculum_system = 'us-american-en' WHERE id = s;
+    RAISE EXCEPTION 'PROOF FAILED: the student surface changed its own curriculum';
+  EXCEPTION WHEN insufficient_privilege THEN RAISE NOTICE 'refused: ainext_app UPDATE curriculum_system';
+  END;
+  BEGIN
+    UPDATE students SET curriculum_source = 'chosen' WHERE id = s;
+    RAISE EXCEPTION 'PROOF FAILED: the student surface changed how its curriculum was set';
+  EXCEPTION WHEN insufficient_privilege THEN RAISE NOTICE 'refused: ainext_app UPDATE curriculum_source';
+  END;
+  BEGIN
+    UPDATE students SET onboarding_pending = true WHERE id = s;
+    RAISE EXCEPTION 'PROOF FAILED: the student surface re-opened its own Google step';
+  EXCEPTION WHEN insufficient_privilege THEN RAISE NOTICE 'refused: ainext_app UPDATE onboarding_pending';
+  END;
+  BEGIN
+    UPDATE students SET subscription_status = 'active' WHERE id = s;
+    RAISE EXCEPTION 'PROOF FAILED: the student surface wrote its own subscription status';
+  EXCEPTION WHEN insufficient_privilege THEN RAISE NOTICE 'refused: ainext_app UPDATE subscription_status';
+  END;
+  UPDATE students SET design_variant = 'play' WHERE id = s;
+  GET DIAGNOSTICS n = ROW_COUNT;
+  IF n <> 1 THEN RAISE EXCEPTION 'PROOF FAILED: design_variant updated % rows, not 1', n; END IF;
+  RAISE NOTICE 'allowed: ainext_app UPDATE design_variant (the one column it writes)';
+  BEGIN
+    INSERT INTO student_curriculum_changes
+      (environment, student_id, from_curriculum, to_curriculum, to_source, reason)
+    VALUES ('mvp1', s, 'eg-national-en', 'us-american-en', 'chosen', 'grade_change_reresolved');
+    RAISE EXCEPTION 'PROOF FAILED: the student surface wrote curriculum history';
+  EXCEPTION WHEN insufficient_privilege THEN RAISE NOTICE 'refused: ainext_app INSERT history';
+  END;
+  -- S never had a pending step: the definer refuses, loudly.
+  BEGIN
+    PERFORM complete_student_onboarding('10', 'us-american-en', 'chosen');
+    RAISE EXCEPTION 'PROOF FAILED: the Google step ran for an account that never owed it';
+  EXCEPTION WHEN SQLSTATE 'AN409' THEN RAISE NOTICE 'refused: onboarding for S (nothing pending)';
+  END;
+END
+$app$;
+
+-- G: the step works ONCE.
+SELECT set_config('app.student_id', :'g_id', false);
+DO $google$
+BEGIN
+  PERFORM complete_student_onboarding('10', 'us-american-en', 'chosen');
+  RAISE NOTICE 'allowed: the one Google step for G';
+  BEGIN
+    PERFORM complete_student_onboarding('9', 'eg-national-en', 'chosen');
+    RAISE EXCEPTION 'PROOF FAILED: the Google step ran twice';
+  EXCEPTION WHEN SQLSTATE 'AN409' THEN RAISE NOTICE 'refused: a second Google step for G';
+  END;
+END
+$google$;
+
+-- No principal: nothing to act on, and it says so.
+SELECT set_config('app.student_id', '', false);
+DO $nobody$
+BEGIN
+  PERFORM complete_student_onboarding('10', 'us-american-en', 'chosen');
+  RAISE EXCEPTION 'PROOF FAILED: the Google step ran with no principal';
+EXCEPTION WHEN insufficient_privilege THEN RAISE NOTICE 'refused: onboarding with no principal';
+END
+$nobody$;
+RESET ROLE;
+
+DO $check_g$
+DECLARE r record;
+BEGIN
+  SELECT grade, curriculum_system, curriculum_source, onboarding_pending INTO r
+    FROM students WHERE display_name = 'p033 G';
+  IF r.grade <> '10' OR r.curriculum_system <> 'us-american-en'
+     OR r.curriculum_source <> 'chosen' OR r.onboarding_pending THEN
+    RAISE EXCEPTION 'PROOF FAILED: G after its step is %', r;
+  END IF;
+  SELECT curriculum_system, curriculum_source INTO r FROM students WHERE display_name = 'p033 S';
+  IF r.curriculum_system <> 'eg-national-en' OR r.curriculum_source <> 'implied' THEN
+    RAISE EXCEPTION 'PROOF FAILED: S changed: %', r;
+  END IF;
+  RAISE NOTICE 'G: grade 10, us-american-en, chosen, step spent; S: eg-national-en, implied — unchanged';
+END
+$check_g$;
+
+-- The console: records the change as itself, then makes it. The ids are
+-- resolved as the owner and handed over in settings, so no policy on
+-- `operators` can quietly turn one into NULL.
+SELECT id AS a_id FROM operators WHERE email = 'p029-a@example.invalid' \gset
+SELECT id AS b_id FROM operators WHERE email = 'p029-b@example.invalid' \gset
+SELECT set_config('proof.student', :'s_id', false), set_config('proof.other_operator', :'b_id', false);
+SET ROLE ainext_operator;
+SELECT set_config('app.operator_id', :'a_id', false);
+DO $console$
+DECLARE s bigint := current_setting('proof.student')::bigint;
+        a bigint := nullif(current_setting('app.operator_id', true), '')::bigint;
+        b bigint := current_setting('proof.other_operator')::bigint;
+        h bigint;
+BEGIN
+  IF s IS NULL OR a IS NULL OR b IS NULL OR a = b THEN
+    RAISE EXCEPTION 'PROOF BROKEN: ids s=% a=% b=%', s, a, b;
+  END IF;
+  BEGIN
+    INSERT INTO student_curriculum_changes
+      (environment, student_id, from_curriculum, to_curriculum, to_source, changed_by, reason)
+    VALUES ('mvp1', s, 'eg-national-en', 'us-american-en', 'chosen', b, 'operator');
+    RAISE EXCEPTION 'PROOF FAILED: an operator recorded a change under another operator''s name';
+  EXCEPTION WHEN insufficient_privilege THEN RAISE NOTICE 'refused: history attributed to somebody else';
+  END;
+  INSERT INTO student_curriculum_changes
+    (environment, student_id, from_curriculum, to_curriculum, to_source, changed_by, reason, note)
+  VALUES ('mvp1', s, 'eg-national-en', 'us-american-en', 'chosen', a, 'operator', 'proof')
+  RETURNING id INTO h;
+  UPDATE students SET curriculum_system = 'us-american-en', curriculum_source = 'chosen' WHERE id = s;
+  RAISE NOTICE 'allowed: ainext_operator records and makes the change';
+  BEGIN
+    UPDATE student_curriculum_changes SET note = 'rewritten' WHERE id = h;
+    RAISE EXCEPTION 'PROOF FAILED: the history was edited';
+  EXCEPTION WHEN insufficient_privilege THEN RAISE NOTICE 'refused: UPDATE history';
+  END;
+  BEGIN
+    DELETE FROM student_curriculum_changes WHERE id = h;
+    RAISE EXCEPTION 'PROOF FAILED: the history was deleted';
+  EXCEPTION WHEN insufficient_privilege THEN RAISE NOTICE 'refused: DELETE history';
+  END;
+  BEGIN
+    UPDATE students SET onboarding_pending = true WHERE id = s;
+    RAISE EXCEPTION 'PROOF FAILED: the console re-opened a Google step';
+  EXCEPTION WHEN insufficient_privilege THEN RAISE NOTICE 'refused: ainext_operator UPDATE onboarding_pending';
+  END;
+  BEGIN
+    PERFORM complete_student_onboarding('10', 'us-american-en', 'chosen');
+    RAISE EXCEPTION 'PROOF FAILED: the console ran the student''s step';
+  EXCEPTION WHEN insufficient_privilege THEN RAISE NOTICE 'refused: ainext_operator EXECUTE complete_student_onboarding';
+  END;
+END
+$console$;
+RESET ROLE;
+SQL
+
+  # Rollback keeps the curriculum and restores 017's grant; re-applying 033
+  # narrows it again and brings the columns back at their defaults.
+  PGDATABASE=$db $P -f "$r033" >/dev/null
+  PGDATABASE=$db $P -f "$r033" >/dev/null
+  after=$(PGDATABASE=$db $P --tuples-only --no-align -c \
+    "SELECT string_agg(display_name || '=' || grade || '/' || curriculum_system, ' ' ORDER BY display_name)
+              || ' app-table-update=' || has_table_privilege('ainext_app', 'students', 'UPDATE')
+       FROM students WHERE display_name LIKE 'p033 %'")
+  [ "$after" = "p033 G=10/us-american-en p033 S=9/us-american-en app-table-update=true" ] \
+    || fail "033 rollback: expected curricula kept and 017's grant back, got [$after]"
+  say "rollback/033 (twice): curricula kept, table-wide grant restored — $after"
+  PGDATABASE=$db $P -f "$m033" >/dev/null
+  again=$(PGDATABASE=$db $P --tuples-only --no-align -c \
+    "SELECT string_agg(display_name || '=' || curriculum_source || '/' || onboarding_pending, ' ' ORDER BY display_name)
+              || ' app-table-update=' || has_table_privilege('ainext_app', 'students', 'UPDATE')
+              || ' app-curriculum-update=' || has_column_privilege('ainext_app', 'students', 'curriculum_system', 'UPDATE')
+       FROM students WHERE display_name LIKE 'p033 %'")
+  [ "$again" = "p033 G=implied/false p033 S=implied/false app-table-update=false app-curriculum-update=false" ] \
+    || fail "033 re-applied after rollback: got [$again]"
+  say "033 re-applied: columns back at their defaults, grant narrowed again — $again"
+  say "033: only the console changes a curriculum; the Google step works once — proved"
+}
+
+# ---------------------------------------------------------------------------
+# Migration 034 (feature 003, decision 18): the book-sections store. Content
+# written by the loader alone (FR-4311); its structural CHECKs and one-part-n
+# index refuse a malformed part; a re-run changes no row; `graph_edges` is
+# never written (FR-4317: part prerequisites are derived at read time); the
+# rollback drops the table and a re-apply brings it back empty. Runs on the
+# proofs database, after the 033 proof.
+# ---------------------------------------------------------------------------
+proof_034() {
+  tree=$1 db=$2
+  P="$PSQL"
+  m034="$tree/db/migrations/034-book-sections.sql"
+  r034="$tree/db/migrations/rollback/034-book-sections.down.sql"
+  [ -f "$m034" ] || { say "no migration 034 in $tree — nothing to prove"; return 0; }
+
+  hdr "proof: 034 — only the loader writes lesson provenance; a malformed part is refused; re-runs change nothing"
+  edges="SELECT count(*) || ':' || coalesce(md5(string_agg(src_id || '>' || dst_id || ':' || edge_type, ',' ORDER BY id)), '-') FROM graph_edges"
+  rows="SELECT count(*) || ':' || coalesce(md5(string_agg(course_id || '/' || lesson_slug || '/' || title || '/' || sections::text || '/' || section_titles::text || '/' || coalesce(part_n::text, '-') || '/' || coalesce(part_of::text, '-') || '/' || chapter_intro || '/' || group_key, ',' ORDER BY course_id, lesson_slug)), '-') FROM course_lessons"
+  edges_before=$(PGDATABASE=$db $P --tuples-only --no-align -c "$edges")
+
+  PGDATABASE=$db $P <<'SQL'
+-- The loader's role writes: a split section (1.7, three parts), a merge, a
+-- chapter introduction, and two National lessons whose printed references
+-- collide ("Lesson 3-1") — which the app never groups, having no part.
+SET ROLE ainext_maint;
+INSERT INTO course_lessons (course_id, lesson_slug, title, sections, section_titles, part_n, part_of, chapter_intro, group_key) VALUES
+  ('course:p034', 'p034m1s7-1', 'Factorisation', '{1.7}', '{Factorisation}', 1, 3, false, '1.7'),
+  ('course:p034', 'p034m1s7-2', 'Factorisation', '{1.7}', '{Factorisation}', 2, 3, false, '1.7'),
+  ('course:p034', 'p034m1s7-3', 'Factorisation', '{1.7}', '{Factorisation}', 3, 3, false, '1.7'),
+  ('course:p034', 'p034m1s3-1', 'The real number system', '{1.2,1.3}', '{"The real number system","Rational and irrational numbers"}', NULL, NULL, false, '1.2'),
+  ('course:p034', 'p034m6s1-1', 'Introduction', '{6.1}', '{Introduction}', NULL, NULL, true, '6.1'),
+  ('course:p034-nat', 'u3-1', 'Collecting data', '{"Lesson 3-1"}', '{"Collecting data"}', NULL, NULL, false, 'Lesson 3-1'),
+  ('course:p034-nat', 't2u3-1', 'Term 2, lesson 3-1', '{"Lesson 3-1"}', '{"Term 2, lesson 3-1"}', NULL, NULL, false, 'Lesson 3-1');
+DO $shape$
+BEGIN
+  BEGIN
+    INSERT INTO course_lessons (course_id, lesson_slug, title, sections, section_titles, part_n, part_of, group_key)
+    VALUES ('course:p034', 'p034-bad-1', 't', '{1.9}', '{t}', 2, NULL, '1.9');
+    RAISE EXCEPTION 'PROOF FAILED: a part number without its "of m"';
+  EXCEPTION WHEN check_violation THEN RAISE NOTICE 'refused: part_n without part_of';
+  END;
+  BEGIN
+    INSERT INTO course_lessons (course_id, lesson_slug, title, sections, section_titles, part_n, part_of, group_key)
+    VALUES ('course:p034', 'p034-bad-1', 't', '{1.9}', '{t}', 4, 3, '1.9');
+    RAISE EXCEPTION 'PROOF FAILED: part 4 of 3';
+  EXCEPTION WHEN check_violation THEN RAISE NOTICE 'refused: part 4 of 3';
+  END;
+  BEGIN
+    INSERT INTO course_lessons (course_id, lesson_slug, title, sections, section_titles, group_key)
+    VALUES ('course:p034', 'p034-bad-1', 't', '{1.9,1.10}', '{t}', '1.9');
+    RAISE EXCEPTION 'PROOF FAILED: two section numbers with one title';
+  EXCEPTION WHEN check_violation THEN RAISE NOTICE 'refused: a section number without its title';
+  END;
+  BEGIN
+    INSERT INTO course_lessons (course_id, lesson_slug, title, sections, section_titles, group_key)
+    VALUES ('course:p034', 'p034-bad-1', 't', '{}', '{}', '1.9');
+    RAISE EXCEPTION 'PROOF FAILED: a lesson with no printed section (FR-4311)';
+  EXCEPTION WHEN check_violation THEN RAISE NOTICE 'refused: no printed section';
+  END;
+  BEGIN
+    INSERT INTO course_lessons (course_id, lesson_slug, title, sections, section_titles, part_n, part_of, group_key)
+    VALUES ('course:p034', 'p034m1s7-9', 'Factorisation', '{1.7}', '{Factorisation}', 2, 3, '1.7');
+    RAISE EXCEPTION 'PROOF FAILED: two lessons are both part 2 of 1.7';
+  EXCEPTION WHEN unique_violation THEN RAISE NOTICE 'refused: a second part 2 of 1.7';
+  END;
+END
+$shape$;
+RESET ROLE;
+
+-- The student surface and the console read it, and write nothing.
+SET ROLE ainext_app;
+DO $app$
+BEGIN
+  IF (SELECT count(*) FROM course_lessons WHERE course_id = 'course:p034') <> 5 THEN
+    RAISE EXCEPTION 'PROOF FAILED: ainext_app cannot read the provenance rows';
+  END IF;
+  BEGIN
+    UPDATE course_lessons SET part_n = NULL, part_of = NULL WHERE lesson_slug = 'p034m1s7-2';
+    RAISE EXCEPTION 'PROOF FAILED: the student surface un-split a section';
+  EXCEPTION WHEN insufficient_privilege THEN RAISE NOTICE 'refused: ainext_app UPDATE course_lessons';
+  END;
+  BEGIN
+    INSERT INTO course_lessons (course_id, lesson_slug, title, sections, section_titles, group_key)
+    VALUES ('course:p034', 'p034-app-1', 't', '{9.9}', '{t}', '9.9');
+    RAISE EXCEPTION 'PROOF FAILED: the student surface wrote provenance';
+  EXCEPTION WHEN insufficient_privilege THEN RAISE NOTICE 'refused: ainext_app INSERT course_lessons';
+  END;
+END
+$app$;
+RESET ROLE;
+SET ROLE ainext_operator;
+DO $op$
+BEGIN
+  IF (SELECT count(*) FROM course_lessons WHERE course_id = 'course:p034') <> 5 THEN
+    RAISE EXCEPTION 'PROOF FAILED: the console cannot read the provenance rows';
+  END IF;
+  BEGIN
+    DELETE FROM course_lessons WHERE lesson_slug = 'p034m1s7-3';
+    RAISE EXCEPTION 'PROOF FAILED: the console deleted provenance';
+  EXCEPTION WHEN insufficient_privilege THEN RAISE NOTICE 'refused: ainext_operator DELETE course_lessons';
+  END;
+END
+$op$;
+RESET ROLE;
+SQL
+
+  before=$(PGDATABASE=$db $P --tuples-only --no-align -c "$rows")
+  PGDATABASE=$db $P --single-transaction -f "$m034" >/dev/null
+  PGDATABASE=$db $P --single-transaction -f "$m034" >/dev/null
+  again=$(PGDATABASE=$db $P --tuples-only --no-align -c "$rows")
+  [ "$before" = "$again" ] || fail "034 re-applied twice changed course_lessons: [$before] -> [$again]"
+  say "034 re-applied twice over 7 rows: unchanged — ${before%%:*} rows"
+  edges_after=$(PGDATABASE=$db $P --tuples-only --no-align -c "$edges")
+  [ "$edges_before" = "$edges_after" ] || fail "034 touched graph_edges: [$edges_before] -> [$edges_after]"
+  say "graph_edges untouched (part prerequisites are derived, never written): ${edges_after%%:*} edges"
+
+  PGDATABASE=$db $P -f "$r034" >/dev/null
+  PGDATABASE=$db $P -f "$r034" >/dev/null
+  gone=$(PGDATABASE=$db $P --tuples-only --no-align -c "SELECT to_regclass('public.course_lessons') IS NULL")
+  [ "$gone" = "t" ] || fail "034 rollback (twice): course_lessons still exists"
+  say "rollback/034 (twice): course_lessons dropped"
+  PGDATABASE=$db $P --single-transaction -f "$m034" >/dev/null
+  back=$(PGDATABASE=$db $P --tuples-only --no-align -c \
+    "SELECT (SELECT count(*) FROM course_lessons)
+            || ' app-select=' || has_table_privilege('ainext_app', 'course_lessons', 'SELECT')
+            || ' app-insert=' || has_table_privilege('ainext_app', 'course_lessons', 'INSERT')
+            || ' maint-insert=' || has_table_privilege('ainext_maint', 'course_lessons', 'INSERT')")
+  [ "$back" = "0 app-select=true app-insert=false maint-insert=true" ] \
+    || fail "034 re-applied after rollback: got [$back]"
+  say "034 re-applied after rollback: the table is back, empty until the loader runs — $back"
+  say "034: only the loader writes lesson provenance; a malformed part is refused — proved"
 }
 
 all() {

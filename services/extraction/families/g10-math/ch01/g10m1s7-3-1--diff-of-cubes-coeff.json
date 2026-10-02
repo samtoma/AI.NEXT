@@ -1,0 +1,71 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m1s7-3-1:diff-of-cubes-coeff",
+ "kind": "family",
+ "lo_id": "lo:g10m1s7-3-1",
+ "parent_question_id": "q:g10m1s7-3-1:ex1-11-35",
+ "source_page": 40,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    2,
+    6
+   ],
+   "resample_while": "gcd(p, q) != 1"
+  },
+  {
+   "name": "pcube",
+   "let": "p**3"
+  },
+  {
+   "name": "qcube",
+   "let": "q**3"
+  },
+  {
+   "name": "psq",
+   "let": "p*p"
+  },
+  {
+   "name": "qsq",
+   "let": "q*q"
+  },
+  {
+   "name": "pq",
+   "let": "p*q"
+  }
+ ],
+ "constraints": [
+  "gcd(p, q) == 1"
+ ],
+ "stem": "Factorise: ${=pcube}a^3 - {=qcube}b^3$",
+ "solution": [
+  "The binomial ${=pcube}a^3 - {=qcube}b^3$ has two terms that are perfect cubes, and the second is subtracted from the first, so it is a difference of two cubes. Use $x^3 - y^3 = (x - y)(x^2 + xy + y^2)$.",
+  "Find $x$ and $y$ as the cube roots of the two terms. Since $({=p}a)^3 = {=pcube}a^3$ and $({=q}b)^3 = {=qcube}b^3$, we have $x = {=p}a$ and $y = {=q}b$.",
+  "Substitute into the identity: ${=pcube}a^3 - {=qcube}b^3 = ({=p}a - {=q}b)[({=p}a)^2 + ({=p}a)({=q}b) + ({=q}b)^2]$.",
+  "Simplify the second bracket, using $({=p}a)^2 = {=psq}a^2$, $({=p}a)({=q}b) = {=pq}ab$ and $({=q}b)^2 = {=qsq}b^2$.",
+  "So ${=pcube}a^3 - {=qcube}b^3 = ({=p}a - {=q}b)({=psq}a^2 + {=pq}ab + {=qsq}b^2)$."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "({=p}*a - {=q}*b)*({=psq}*a**2 + {=pq}*a*b + {=qsq}*b**2)",
+  "form": "factorised",
+  "variables": [
+   "a",
+   "b"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Advanced tier. The book prints no advanced question for this objective, so this extends its own coefficient-and-two-variable case (ex1-11-35, where the second term is 8b^3 = (2b)^3) to the direct factorisation with BOTH terms carrying a coefficient that is a cube (8, 27, 64, 125, 216), so x and y are found as cube roots of whole terms, not just of a constant. Method and notation are the book's: the difference-of-cubes identity, x and y as cube roots, substitute, simplify. Choices for the reviewer: (1) p, q in 2..6 so no coefficient is 1 (a '1b^3' term would render badly) and no number is huge; (2) gcd(p, q) = 1 is enforced so the binomial has no common factor (e.g. 8a^3 - 64b^3 would invite taking out 8 first, and the book does not use common-factor-first in this objective), which also makes the factorised answer unique; the trinomial factor never factorises further over the rationals; (3) 12 coprime (p, q) pairs, so 12 distinct instances; (4) the sign is fixed per family (difference here, sum in the sibling family) because each identity is its own solution skeleton. Expression-type, so no 'answer' field and no distractors; the marker accepts any equivalent factorised form. Verified by hand for p=3, q=4: (3a-4b)(9a^2+12ab+16b^2) = 27a^3 - 64b^3. Basic and standard tiers were not gaps (the book's questions cover them), so none are authored."
+}

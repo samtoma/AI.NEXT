@@ -1,0 +1,105 @@
+{
+ "mode": "verify",
+ "book": "g10-math",
+ "prompts_version": "s7-v7",
+ "by_ref": {
+  "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/s7-verify-r2",
+  "stage": "S7 verify",
+  "shards_sha256": "ca3d001744248749db7546148f91984088fd2134e4c14504b6bdd9f31ae18231",
+  "files": 1
+ },
+ "embedded": {
+  "source": "runbook/widgets.workflow.js",
+  "source_sha256": "ed230f08ec96811f4eaa45379aabb16441ac259c0b6b19e018a7b0cfb19de1cf",
+  "args_sha256": "06589310a1c17e8bac183770eff143a43b360da4d2b9b4851556d35ad35f27a6",
+  "generated_sha256": "355c93d2f789c8d578ee52e3c476efbf70bb539f7dbd337982b1dcd222274c75",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "question_id": "q:g10m8s3-2-1:w001",
+   "template_sha": "3ba1b3a1dccd3d0f013abc4d6770853ea9e6b4cded796fdba6ee7276a167ac13",
+   "reading": {
+    "mode": "points",
+    "m": null,
+    "b": null,
+    "through": [
+     [
+      -3,
+      1
+     ],
+     [
+      3,
+      3
+     ]
+    ]
+   },
+   "construction": "Points mode: the two named points ARE the answer. Place the handles exactly at A(-3,1) and B(3,3). Both are distinct lattice points within ±5. Pipeline check: A's swap is (1,-3), B's swap is (3,3) (unchanged, since x=y=3) — neither the named points nor their swaps sit at the forbidden (-3,-2) or (1,1). Fully reachable.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "points-swapped",
+     "matches": false,
+     "why": "This predicate fires on a construction where the student drags the handles to (1,-3) and (3,3) — A's coordinates exchanged (B is unchanged by swapping since its x and y are both 3). That is a bare misreading of an already-given ordered pair while copying two named coordinates onto a grid; no equation or unknown is involved anywhere in this task. The claimed misconception is specifically about swapping x and y while substituting a point's values into y=mx+c to solve for c, or to find a missing coordinate. Here nothing is being solved for — both coordinates of both points are handed to the student outright — so the predicate would fire for a different reason (ordered-pair misreading, not equation substitution) than the one this misconception describes."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m8s3-2-1:w002",
+   "template_sha": "3ba1b3a1dccd3d0f013abc4d6770853ea9e6b4cded796fdba6ee7276a167ac13",
+   "reading": {
+    "mode": "points",
+    "m": null,
+    "b": null,
+    "through": [
+     [
+      -4,
+      -2
+     ],
+     [
+      2,
+      -5
+     ]
+    ]
+   },
+   "construction": "Points mode: place the handles exactly at A(-4,-2) and B(2,-5). Both are distinct lattice points within ±5. Pipeline check: A's swap is (-2,-4), B's swap is (-5,2) — neither the named points nor their swaps sit at the forbidden (-3,-2) or (1,1). Fully reachable.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "points-swapped",
+     "matches": false,
+     "why": "This predicate fires on a construction where the student plots (-2,-4) and (-5,2) — both named points with x and y exchanged. That is a plain misreading of two coordinate pairs the question already hands over in full; there is no substitution into an equation and no missing coordinate anywhere in this plotting task. The claimed misconception is specifically about swapping x/y while substituting into y=mx+c to solve for c or for a missing coordinate, neither of which applies here, so the predicate would fire for a different, more generic reason than this misconception's own mechanism."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m8s3-2-1:w003",
+   "template_sha": "3ba1b3a1dccd3d0f013abc4d6770853ea9e6b4cded796fdba6ee7276a167ac13",
+   "reading": {
+    "mode": "points",
+    "m": null,
+    "b": null,
+    "through": [
+     [
+      -3,
+      -4
+     ],
+     [
+      3,
+      2
+     ]
+    ]
+   },
+   "construction": "Points mode: place the handles exactly at A(-3,-4) and B(3,2). Both are distinct lattice points within ±5. Pipeline check: A's swap is (-4,-3), B's swap is (2,3) — neither the named points nor their swaps sit at the forbidden (-3,-2) or (1,1). Fully reachable.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "points-swapped",
+     "matches": false,
+     "why": "This predicate fires on a construction where the student plots (-4,-3) and (2,3) — both named points with x and y exchanged. Again this is a task where both coordinates of both points are given outright with no equation to substitute into and no missing coordinate to solve for, so a swapped-plot here is best explained as ordinary ordered-pair misreading, not as the specific substitution-into-y=mx+c error the misconception describes. The predicate would fire for the wrong reason."
+    }
+   ]
+  }
+ ],
+ "run_id": "wf_0276c362-c6a"
+}

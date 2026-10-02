@@ -1,120 +1,145 @@
 name: Content refresh (manual)
 
-# Getting newly extracted curriculum onto the live site — WITHOUT `down -v`
+# Changing the content of a course that is ALREADY LOADED — WITHOUT `down -v`
 # (which would destroy the claude_cfg volume holding the one-time Claude login).
+# A course that is not loaded yet goes through "Load a course (manual)" instead.
 #
-# MANUAL ONLY. There is no `push:` trigger here, and the compose service that
-# does the loading sits behind a `tools` profile, so `docker compose up -d` in
-# the deploy pipeline can never start it. A normal code deploy cannot touch data.
+# RETARGETED 2026-09-25 (feature 003, T326; FR-4210; privacy review F15). This
+# workflow used to act on the FROZEN BASELINE (/opt/reletix/AI.NEXT,
+# `ainext_poc`), so noor — the product — had no backed-up content path at all.
+# `stack` now defaults to noor (`mvp1`). On noor:
+#   * `course` is ADD-ONLY (it used to replace the course's subtree);
+#   * `update` applies bundle edits — confirm "UPDATE <course-id>";
+#   * `replace` also prunes — confirm "REPLACE <course-id> <N>", where N is the
+#     number of students with progress in the course, as `preview-replace`
+#     prints it. The loader never deletes a student row: it retires attempted
+#     questions and refuses, saying what would be lost, if progress would go;
+#   * `full-reseed` and `promote-poc` do not exist (promote-poc would mark the
+#     297 sacred-gated Arabic questions live).
+# `stack: poc` runs the frozen baseline's OWN script with its own modes.
 #
-# Every mutating run takes a pg_dump backup first and prints the one-line
-# rollback. Runbook: deploy/DEPLOY.md -> "Refreshing content".
+# NEITHER CHECKOUT IS MOVED. The refresh loads the bundles of the DEPLOYED
+# commit, and lesson prose lives in the running image: deploy first, then
+# refresh. (This workflow used to hard-reset the box's checkout to the
+# dispatched ref before running — on the baseline that meant checking the
+# product's `main` out into the frozen baseline's directory.)
+#
+# MANUAL ONLY. There is no `push:` trigger, and the loader sits behind a
+# `tools` profile, so a code deploy can never touch data. Every mutating run
+# takes a VERIFIED backup first and prints the one-line rollback.
+# Runbook: deploy/DEPLOY-MVP1.md -> "Content refresh and parity".
 
 on:
   workflow_dispatch:
     inputs:
+      stack:
+        description: "mvp1 = noor (the product). poc = the frozen baseline."
+        type: choice
+        required: true
+        default: mvp1
+        options: [mvp1, poc]
       mode:
-        description: "preview = rehearse and roll back (safe). course = replace one course. full-reseed = restore the committed dump."
+        description: "preview* = rehearse and roll back (safe). course = add-only. update / replace = typed confirmation. full-reseed / promote-poc = baseline only."
         type: choice
         required: true
         default: preview
-        options: [preview, course, full-reseed, status, promote-poc]
+        options: [status, preview, preview-update, preview-replace, course, update, replace, full-reseed, promote-poc]
       course:
-        description: "Course node id — for preview and course modes"
+        description: "Course node id — for every mode but status (e.g. course:prep3-math-en)"
         type: string
         required: false
-        default: "course:prep3-social-ar"
+        default: ""
       confirm:
-        description: "Guard. course mode: retype the course id. full-reseed: type FULL-RESEED. preview/status: leave empty."
+        description: "course: retype the course id. update: UPDATE <course-id>. replace: REPLACE <course-id> <N>. Baseline: FULL-RESEED / PROMOTE-POC. Previews: leave empty."
         type: string
         required: false
         default: ""
 
-# Same concurrency group as the deploy job in ci-cd.yml: a content refresh and a
-# code deploy can never run against the box at the same time.
+# Same concurrency group as the deploy job and "Load a course": two things
+# never change the box at once.
 concurrency:
   group: deploy-oci
   cancel-in-progress: false
+
+permissions:
+  contents: read
 
 jobs:
   refresh:
     runs-on: [self-hosted, oci]
     env:
-      APP_DIR: /opt/reletix/AI.NEXT
       # Inputs are passed as environment variables, never interpolated into a
       # shell script body — a workflow input is untrusted text.
+      STACK: ${{ inputs.stack }}
       MODE: ${{ inputs.mode }}
       COURSE: ${{ inputs.course }}
       CONFIRM: ${{ inputs.confirm }}
       REF: ${{ github.ref_name }}
+      MVP1_DIR: /opt/reletix/AI.NEXT-mvp1
+      POC_DIR: /opt/reletix/AI.NEXT
 
     steps:
-      - name: Check the confirmation phrase (before the box is touched at all)
+      - name: Check the inputs and the confirmation (before the box is touched at all)
         run: |
           set -euo pipefail
-          case "$MODE" in
-            status|preview) ;;
-            course)
-              if [ "$CONFIRM" != "$COURSE" ]; then
-                echo "::error::To replace the content of '$COURSE', retype it in the confirm box."
-                exit 1
-              fi ;;
-            full-reseed)
-              if [ "$CONFIRM" != "FULL-RESEED" ]; then
-                echo "::error::full-reseed replaces the WHOLE database (student attempts and mastery included). Type FULL-RESEED in the confirm box to proceed."
-                exit 1
-              fi ;;
-            promote-poc)
-              if [ "$CONFIRM" != "PROMOTE-POC" ]; then
-                echo "::error::promote-poc marks EVERY review question live, attributed to Samuel (PoC bulk). Type PROMOTE-POC in the confirm box to proceed."
-                exit 1
-              fi ;;
-            *) echo "::error::unknown mode '$MODE'"; exit 1 ;;
+          fail() { echo "::error::$*"; exit 1; }
+          case "$STACK:$MODE" in
+            mvp1:status|mvp1:preview|mvp1:preview-update|mvp1:preview-replace|mvp1:course|mvp1:update|mvp1:replace) ;;
+            poc:status|poc:preview|poc:course|poc:full-reseed|poc:promote-poc) ;;
+            mvp1:full-reseed|mvp1:promote-poc)
+              fail "'$MODE' does not exist on noor (it replaced the whole database / promoted every held question, sacred-gated Arabic included). Baseline only: stack=poc." ;;
+            *) fail "mode '$MODE' is not available on stack '$STACK'" ;;
           esac
-          # Exact match, anchored: a course id and nothing else. (refresh-content.sh
-          # applies the same rule again, and passes the value as a single argv
-          # element — but an input this wrong should fail before the box is touched.)
-          if [ "$MODE" = preview ] || [ "$MODE" = course ]; then
-            if ! [[ "$COURSE" =~ ^course:[a-z0-9-]+$ ]]; then
-              echo "::error::'$COURSE' is not a course node id (e.g. course:prep3-social-ar)"
-              exit 1
-            fi
-          fi
-          echo "mode=$MODE course=$COURSE ref=$REF"
+          # Exact match, anchored: a course id and nothing else. The script
+          # applies the same rule again, but an input this wrong should fail
+          # before the box is touched.
+          case "$MODE" in
+            status|full-reseed|promote-poc) ;;
+            *) [[ "$COURSE" =~ ^course:[a-z0-9-]+$ ]] || fail "'$COURSE' is not a course node id (e.g. course:prep3-math-en)" ;;
+          esac
+          case "$MODE" in
+            status|preview|preview-update|preview-replace) ;;
+            course)      [ "$CONFIRM" = "$COURSE" ] || fail "To change '$COURSE', retype it in the confirm box." ;;
+            update)      [ "$CONFIRM" = "UPDATE $COURSE" ] || fail "update edits existing rows. Type 'UPDATE $COURSE' in the confirm box (run preview-update first)." ;;
+            replace)
+              [[ "$CONFIRM" =~ ^REPLACE\ (course:[a-z0-9-]+)\ ([0-9]+)$ ]] && [ "${BASH_REMATCH[1]}" = "$COURSE" ] \
+                || fail "replace prunes content. Run preview-replace first; it prints the phrase to type: 'REPLACE $COURSE <students with progress>'." ;;
+            full-reseed) [ "$CONFIRM" = "FULL-RESEED" ] || fail "full-reseed replaces the WHOLE baseline database (student attempts and mastery included). Type FULL-RESEED to proceed." ;;
+            promote-poc) [ "$CONFIRM" = "PROMOTE-POC" ] || fail "promote-poc marks EVERY review question live on the baseline, attributed to Samuel. Type PROMOTE-POC to proceed." ;;
+          esac
+          echo "stack=$STACK mode=$MODE course=${COURSE:-—} ref=$REF"
           if [ "$REF" != "main" ]; then
-            echo "::warning::Dispatched from '$REF', not main. The box checkout will be moved to that ref (source only — the running image is unchanged). Prefer main."
+            echo "::warning::Dispatched from '$REF', not main. Only this workflow file comes from that ref: the box runs the DEPLOYED checkout's script and bundles, which this run does not move."
           fi
 
-      - name: Sync the checkout on the box (identical to the deploy job; preserves deploy/.env)
+      - name: The box's checkout (read, never moved)
         run: |
           set -euo pipefail
-          REPO_URL="https://github.com/${{ github.repository }}.git"
-          mkdir -p "$APP_DIR"
-          cd "$APP_DIR"
-          if [ ! -d .git ]; then
-            echo "::error::$APP_DIR is not a checkout yet — run the CI/CD deploy first."
+          # Noor's checkout carries the script in both cases: for stack=poc it
+          # hands over to the baseline's own copy without moving either.
+          [ -d "$MVP1_DIR/.git" ] || { echo "::error::$MVP1_DIR is not a checkout — deploy noor first."; exit 1; }
+          if ! grep -q '^# refresh-content interface: 2$' "$MVP1_DIR/deploy/refresh-content.sh" 2>/dev/null; then
+            echo "::error::the deployed noor checkout still has the OLD refresh-content.sh (it acted on the baseline). Deploy the release that carries the new one, then run this again."
             exit 1
           fi
-          git remote set-url origin "$REPO_URL"
-          git fetch --prune origin "+refs/heads/$REF:refs/remotes/origin/$REF"
-          git checkout -f -B "$REF" "origin/$REF"
-          git reset --hard "origin/$REF"
-          echo "Content + scripts come from commit: $(git rev-parse --short HEAD) on $REF"
+          echo "noor checkout:     $(git -C "$MVP1_DIR" log -1 --format='%h %s')"
+          if [ "$STACK" = poc ]; then
+            [ -d "$POC_DIR/.git" ] || { echo "::error::$POC_DIR is not a checkout."; exit 1; }
+            echo "baseline checkout: $(git -C "$POC_DIR" log -1 --format='%h %s')"
+          fi
 
       - name: Refresh
         id: run
         run: |
           set -uo pipefail
-          cd "$APP_DIR/deploy" || exit 1
+          cd "$MVP1_DIR/deploy" || exit 1
           case "$MODE" in
-            status)      set -- status ;;
-            preview)     set -- preview "$COURSE" ;;
-            course)      set -- course  "$COURSE" ;;
-            full-reseed) set -- full-reseed ;;
-            promote-poc) set -- promote-poc ;;
+            status|full-reseed|promote-poc) set -- "$MODE" ;;
+            replace) set -- replace "$COURSE" "${CONFIRM##* }" ;;   # the typed count
+            *)       set -- "$MODE" "$COURSE" ;;
           esac
           # `bash …`: immune to a lost exec bit. tee: the summary step reads the log.
-          bash ./refresh-content.sh "$@" 2>&1 | tee "$RUNNER_TEMP/refresh.log"
+          bash ./refresh-content.sh --stack "$STACK" "$@" 2>&1 | tee "$RUNNER_TEMP/refresh.log"
           status=${PIPESTATUS[0]}
           echo "refresh-content.sh exited $status"
           exit "$status"
@@ -125,12 +150,13 @@ jobs:
           set +e -u
           LOG="$RUNNER_TEMP/refresh.log"
           {
-            echo "### Content refresh — \`$MODE\`"
+            echo "### Content refresh — \`$STACK\` \`$MODE\`"
             echo ""
             echo "| | |"
             echo "|---|---|"
+            echo "| stack | \`$STACK\` |"
             echo "| mode | \`$MODE\` |"
-            if [ "$MODE" = preview ] || [ "$MODE" = course ]; then echo "| course | \`$COURSE\` |"; fi
+            [ -n "$COURSE" ] && echo "| course | \`$COURSE\` |"
             echo "| ref | \`$REF\` |"
             echo "| result | ${{ steps.run.outcome == 'success' && 'OK' || 'FAILED' }} |"
             echo ""
@@ -138,7 +164,6 @@ jobs:
               echo "**Roll back on the box with:**"
               echo ""
               echo '```'
-              echo "cd $APP_DIR/deploy"
               grep 'roll back with:' "$LOG" | tail -1 | sed 's|.*roll back with: *||'
               echo '```'
               echo ""
@@ -156,7 +181,11 @@ jobs:
         if: always()
         run: |
           set +e -u
-          cd "$APP_DIR/deploy" || exit 0
-          bash ./refresh-content.sh status || true
-          curl -sSf -o /dev/null -w 'app on :3100 -> HTTP %{http_code}\n' http://127.0.0.1:3100/ || \
-            echo "::warning::the app did not answer on :3100"
+          if [ "$STACK" = poc ]; then
+            cd "$POC_DIR/deploy" 2>/dev/null && bash ./refresh-content.sh status || true
+            curl -sS -o /dev/null -w 'baseline app on :3100 -> HTTP %{http_code}\n' http://127.0.0.1:3100/ || echo "::warning::the baseline app did not answer on :3100"
+          else
+            cd "$MVP1_DIR/deploy" 2>/dev/null && bash ./refresh-content.sh status || true
+            curl -sS -o /dev/null -w 'student app on :3101 -> HTTP %{http_code}\n' http://127.0.0.1:3101/ || echo "::warning::the student app did not answer on :3101"
+            curl -sS -o /dev/null -w 'console on :3102 -> HTTP %{http_code}\n' http://127.0.0.1:3102/ || echo "::warning::the console did not answer on :3102"
+          fi

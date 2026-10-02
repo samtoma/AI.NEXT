@@ -1,0 +1,86 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m11s1-1-1:flagpole-roof",
+ "kind": "family",
+ "lo_id": "lo:g10m11s1-1-1",
+ "parent_question_id": "q:g10m11s1-1-1:ex11-1-2",
+ "source_page": 397,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": "A flagpole stands vertically on the roof of a building, at the edge of the roof nearest to an observer on level ground. From the observer's point the angle of elevation of the top of the building and the angle of elevation of the top of the flagpole are both measured.",
+ "params": [
+  {
+   "name": "d",
+   "randint": [
+    30,
+    80
+   ]
+  },
+  {
+   "name": "a",
+   "randint": [
+    15,
+    40
+   ]
+  },
+  {
+   "name": "g",
+   "randint": [
+    3,
+    9
+   ]
+  },
+  {
+   "name": "b",
+   "let": "a + g"
+  },
+  {
+   "name": "tab",
+   "let": "[0, 174550649, 349207695, 524077793, 699268119, 874886635, 1051042353, 1227845609, 1405408347, 1583844403, 1763269807, 1943803091, 2125565617, 2308681911, 2493280028, 2679491924, 2867453858, 3057306815, 3249196962, 3443276133, 3639702343, 3838640350, 4040262258, 4244748162, 4452286853, 4663076582, 4877325886, 5095254495, 5317094317, 5543090515, 5773502692, 6008606190, 6248693519, 6494075932, 6745085168, 7002075382, 7265425280, 7535540501, 7812856265, 8097840332, 8390996312, 8692867378, 9004040443, 9325150861, 9656887748, 10000000000, 10355303138, 10723687100, 11106125148, 11503684072, 11917535926, 12348971565, 12799416322, 13270448216, 13763819205, 14281480067, 14825609685, 15398649638, 16003345290, 16642794824, 17320508076]"
+  },
+  {
+   "name": "h1",
+   "let": "d * tab[a] / 10000000000"
+  },
+  {
+   "name": "h2",
+   "let": "d * tab[b] / 10000000000"
+  },
+  {
+   "name": "hf",
+   "let": "h2 - h1"
+  },
+  {
+   "require": "hf >= 3 and hf <= 20",
+   "why": "the flagpole must have a sensible height"
+  },
+  {
+   "name": "fr",
+   "let": "hf * 10 - floor(hf * 10)"
+  },
+  {
+   "require": "abs(fr - 1/2) > 1/5",
+   "why": "keep the exact answer away from a rounding boundary, so a solver who keeps four decimals in each tangent still lands on the same one-decimal answer"
+  },
+  {
+   "name": "w",
+   "let": "d * tab[g] / 10000000000"
+  },
+  {
+   "require": "abs(w - hf) > 1",
+   "why": "the shortcut d*tan(b - a) must not give the same answer as the correct two-triangle method"
+  }
+ ],
+ "constraints": [],
+ "stem": "A flagpole stands vertically on the roof of a building, at the edge of the roof nearest to a point $P$ on level ground. Point $P$ is ${=d}$ m from the foot of the building. From $P$, the angle of elevation of the top of the building is ${=a}^\\circ$ and the angle of elevation of the top of the flagpole is ${=b}^\\circ$. Ignore the height of the observer. Calculate the height of the flagpole, correct to one decimal place. Do not round off before your final answer.",
+ "answer": "fixed(hf, 1)",
+ "solution": [
+  "Let $B$ be the foot of the building, $R$ the edge of the roof where the flagpole stands and $T$ the top of the flagpole. Triangles $PBR$ and $PBT$ are both right-angled at $B$, and in each of them $PB = {=d}$ m is the side adjacent to the angle at $P$. The flagpole is the part of $BT$ above the roof, so its height is $BT - BR$.",
+  "In triangle $PBR$ we know the angle ${=a}^\\circ$ and the adjacent side, and we want the opposite side $BR$, so we use tangent: $\\tan {=a}^\\circ = \\frac{BR}{{=d}}$, so $BR = {=d}\\tan {=a}^\\circ \\approx {=fixed(h1, 2)}$ m.",
+  "In triangle $PBT$ the same ratio applies with the larger angle ${=b}^\\circ$: $\\tan {=b}^\\circ = \\frac{BT}{{=d}}$, so $BT = {=d}\\tan {=b}^\\circ \\approx {=fixed(h2, 2)}$ m.",
+  "The height of the flagpole is $BT - BR \\approx {=fixed(h2, 2)} - {=fixed(h1, 2)} \\approx {=fixed(hf, 1)}$ m.",
+  "The flagpole is about ${=fixed(hf, 1)}$ m high."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced: two applications of the book's tangent step (ex11-1-2) in two right-angled triangles that share the horizontal side, then a subtraction. The stem fixes that the pole stands at the roof edge nearest P, so the horizontal distance to both tops is d, and tells the student to ignore the observer's height. Answer = d*(tan b - tan a), to one decimal place. The tangent table is tan(n degrees) * 10^10 as whole numbers, because the expression language has no trigonometric functions; the list index is the angle in degrees (entries 0 to 60). Requires keep the flagpole 3 to 20 m, keep the answer at least 0.02 from a rounding boundary (checked by simulation: 4-decimal tangents and 2-decimal intermediate heights give the same one-decimal answer for every surviving draw; the stem says not to round before the end), and make the common slip d*tan(b - a) give a different answer. The book's catalogued misconception (sides labelled from the wrong angle) is not in play here because both angles are elevations from the ground; no distractors, numeric family."
+}

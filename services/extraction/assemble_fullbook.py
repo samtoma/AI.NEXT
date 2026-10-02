@@ -3,11 +3,17 @@
   - seed/social-t1.json         (SeedBundle: nodes, edges, questions, visuals)
   - seed/content/<lessonId>.json (rich lesson_content for the frontend surface)
 
-Input: /tmp/fullbook_final.json  (14 merged, reviewed lessons from the rich pipeline).
+    uv run assemble_fullbook.py <merged-lessons.json> [--book prep3-social-ar]
+
+Input: the merged, reviewed lessons file merge_final.py writes (it used to be
+read from /tmp/fullbook_final.json, which is why the book cannot be rebuilt
+today — B20, G2). The course, the source document and the lesson order come from
+the book config (books/<book>.json).
 Validates the bundle with the real Pydantic SeedBundle before writing.
 """
-import json, os, re, collections
+import argparse, json, os, re, collections
 from schemas import SeedBundle
+import book_config
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 MAPS = os.path.join(ROOT, "app", "public", "maps")
@@ -15,7 +21,7 @@ SEED = os.path.join(os.path.dirname(__file__), "seed")
 CONTENT = os.path.join(SEED, "content")
 os.makedirs(CONTENT, exist_ok=True)
 
-COURSE = "course:prep3-social-ar"
+COURSE = "course:prep3-social-ar"   # checked against the book config in main()
 UNITS = {
     "u1": ("module:soc-t1-u1", "الوحدة الأولى — الجغرافيا الطبيعية للعالم", "topic:geography-social"),
     "u2": ("module:soc-t1-u2", "الوحدة الثانية — جغرافية سكان العالم", "topic:geography-social"),
@@ -25,8 +31,9 @@ UNITS = {
 def unit_of(lesson_id):   # soc1-3 -> u1
     return "u" + lesson_id[3]
 
-# ---- source-doc: reuse the existing social document ----
-SOURCE_FILE = "docs/Source/Social_prp3_T1_2.pdf"
+# ---- source-doc: reuse the existing social document (from the book config) ----
+_BOOK = book_config.load_book("prep3-social-ar")
+SOURCE_FILE = _BOOK.sources.pdf
 
 def load_gaz(base):
     p = os.path.join(MAPS, f"{base}.json")
@@ -109,10 +116,16 @@ def valid_visual(v):
     return v
 
 def main():
-    data = json.load(open("/tmp/fullbook_final.json"))
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("input", help="merged lessons file (merge_final.py --out)")
+    ap.add_argument("--book", default="prep3-social-ar")
+    a = ap.parse_args()
+    book = book_config.load_book(a.book)
+    if book.course_id != COURSE:
+        raise SystemExit(f"{a.book} builds {book.course_id}; this assembler is written for {COURSE}")
+    data = json.load(open(a.input))
     lessons = {L["lessonId"]: L for L in data["lessons"]}
-    ORDER = ["soc1-1","soc1-2","soc1-3","soc2-1","soc2-2","soc2-3",
-             "soc3-1","soc3-2","soc3-3","soc3-4","soc4-1","soc4-2","soc4-3","soc4-4"]
+    ORDER = [os.path.splitext(os.path.basename(p))[0] for p in book.content_files]
 
     nodes = [{"id": COURSE, "kind": "course", "label": "الدراسات الاجتماعية — الصف الثالث الإعدادي", "order_in_parent": 2}]
     nodes.append({"id": "topic:geography-social", "kind": "topic", "label": "الجغرافيا"})

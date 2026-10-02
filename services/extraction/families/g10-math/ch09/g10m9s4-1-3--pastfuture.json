@@ -1,0 +1,88 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m9s4-1-3:pastfuture",
+ "kind": "family",
+ "lo_id": "lo:g10m9s4-1-3",
+ "parent_question_id": "q:g10m9s4-1-3:ex9-4-2",
+ "source_page": 345,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": "The price of a bag of potatoes is known from some years ago, not from today. The inflation rate is constant, and the student finds the price some years from now, so the price grows for the sum of the two periods.",
+ "params": [
+  {
+   "name": "p0",
+   "randint": [
+    8,
+    40
+   ]
+  },
+  {
+   "name": "n",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "m",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "r",
+   "randint": [
+    6,
+    14
+   ]
+  },
+  {
+   "name": "tot",
+   "let": "n + m"
+  },
+  {
+   "name": "g",
+   "let": "1 + r / 100"
+  },
+  {
+   "name": "amt",
+   "let": "p0 * g ** tot"
+  },
+  {
+   "name": "fin",
+   "let": "floor(amt * 100 + 1/2) / 100"
+  },
+  {
+   "name": "today",
+   "let": "floor(p0 * g ** n * 100 + 1/2) / 100"
+  },
+  {
+   "name": "alt",
+   "let": "floor(today * g ** m * 100 + 1/2) / 100"
+  },
+  {
+   "require": "alt == fin",
+   "why": "a student who rounds today's price to the cent before growing it further must reach the same final cents"
+  },
+  {
+   "require": "abs(amt * 100 - floor(amt * 100) - 1/2) > 1/20",
+   "why": "keeps the final value away from a rounding boundary"
+  },
+  {
+   "name": "at",
+   "let": "fixed(fin, 2)"
+  }
+ ],
+ "constraints": [],
+ "stem": "A bag of potatoes cost $\\text{R{=p0}}$ ${=n}$ years ago. If the rate of inflation is $\\text{{=r}}$ % p.a. from then on, how much will a bag of potatoes cost ${=m}$ years from now? Round only your final answer to 2 decimal places.",
+ "answer": "fixed(fin, 2)",
+ "solution": [
+  "Write down the given information: $P=\\text{R{=p0}}$ (the price ${=n}$ years ago), $A=?$, $i=\\frac{{=r}}{100}$.",
+  "The price grows from ${=n}$ years ago to ${=m}$ years from now, so it grows for $n={=n}+{=m}={=tot}$ years in total.",
+  "To determine the future cost we use the compound interest formula: $A=P(1+i)^{n}$.",
+  "Substitute and calculate: $A=\\text{{=p0}}\\times\\left(1+\\frac{{=r}}{100}\\right)^{{=tot}}=\\text{R{=at}}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced = the twist that the starting price is not today's price. The student must see that the compounding period is (years ago) + (years ahead) and not just the years ahead. A student who first finds today's price and then grows it reaches the same answer, because the stem says to round only at the end and the second-to-last require rejects any instance where rounding today's price to the cent would change the final cents. Same method as ex9-4-2: A = P(1+i)^n with whole-number rates, now with a longer n (4 to 11). Worked instance: P=15, n=3, m=3, 12 % -> 15 x 1.12^6 = R29.61, which is the book's ex9-4-2 value. Answers stay below about R165. The misconception catalogue for this objective is empty, and a numeric family carries no distractors, so none is proposed."
+}

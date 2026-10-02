@@ -1,8 +1,11 @@
 import Link from "next/link";
 
 import { ConsoleRefusal } from "@/components/console/ConsoleRefusal";
+import { Chip } from "@/components/console/ui";
+import { gradeDisplayLabel } from "@/lib/catalog";
 import { consoleAccess } from "@/lib/console-auth";
 import { getStudentList, type StudentListRow } from "@/lib/console-queries";
+import { CURRICULA, asCurriculumId } from "@/lib/curricula";
 import { consoleRoute } from "@/lib/console-routes";
 
 /**
@@ -18,6 +21,12 @@ import { consoleRoute } from "@/lib/console-routes";
  * **FR-2211 is why this page is so wordy.** Every figure carries its unit and
  * its period; no column heading is a field name; every cost says *imputed at
  * list price*, never *spent*. A console view is readable without reading code.
+ *
+ * **The curriculum column is the full projection's alone** (feature 003,
+ * FR-4105; privacy review F7). `cost-billing` reads no per-student
+ * curriculum anywhere (FR-2406), so the cost projection's query does not even
+ * select it (`getStudentList`), and this page prints the column only when the
+ * row carries it.
  *
  * Sorting and filtering are deliberately absent in P2 rather than half-built:
  * at n ≤ 200 the list fits on a screen and a sort control that only sorts the
@@ -86,6 +95,7 @@ export default async function ConsoleStudentsPage() {
               <tr className="border-b border-line text-start text-ink-soft">
                 <Th>Name</Th>
                 <Th>Year group</Th>
+                {full && <Th>Curriculum</Th>}
                 {full && <Th>Gender</Th>}
                 <Th>Account</Th>
                 {full && <Th>Email confirmed</Th>}
@@ -144,7 +154,18 @@ function Row({ s, full }: { s: StudentListRow; full: boolean }) {
           </span>
         )}
       </td>
-      <td className="px-3 py-2 text-ink-soft">{s.grade}</td>
+      <td className="px-3 py-2 text-ink-soft">
+        {/* FR-4013: in her own curriculum's words in the full projection. The
+            cost projection prints the stored year as it always did: a
+            curriculum's word for it ("Grade 10") would say which curriculum
+            she follows (privacy review F7). */}
+        {full ? gradeDisplayLabel(s.grade, s.curriculum) : s.grade}
+      </td>
+      {full && (
+        <td className="px-3 py-2 text-ink-soft">
+          <CurriculumCell curriculum={s.curriculum} source={s.curriculumSource} />
+        </td>
+      )}
       {full && <td className="px-3 py-2 text-ink-soft">{s.gender ?? "not set"}</td>}
       <td className="px-3 py-2 text-ink-soft">{s.accountStatus ?? "no account"}</td>
       {full && (
@@ -157,6 +178,31 @@ function Row({ s, full }: { s: StudentListRow; full: boolean }) {
       <td className="px-3 py-2 text-end tabular-nums text-ink-soft">{s.sessionsInPeriod}</td>
       <td className="px-3 py-2 text-end tabular-nums text-ink-soft">{usd(s.costUsdInPeriod)}</td>
     </tr>
+  );
+}
+
+/**
+ * "American · chosen". A value the registry does not know is printed as it is
+ * stored and flagged (FR-4003, FR-4105), never shown as a curriculum.
+ */
+function CurriculumCell({
+  curriculum,
+  source,
+}: {
+  curriculum: string | null;
+  source: StudentListRow["curriculumSource"];
+}) {
+  const id = asCurriculumId(curriculum);
+  if (!id) {
+    return <Chip tone="attention">unknown: {curriculum ?? "—"}</Chip>;
+  }
+  return (
+    <>
+      {CURRICULA[id].label}
+      <span className="ms-1.5 font-mono text-[10.5px] uppercase tracking-[0.08em] text-ink-faint">
+        {source}
+      </span>
+    </>
   );
 }
 

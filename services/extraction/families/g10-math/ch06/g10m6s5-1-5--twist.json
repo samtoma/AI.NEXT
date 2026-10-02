@@ -1,0 +1,97 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s5-1-5:twist",
+ "kind": "family",
+ "lo_id": "lo:g10m6s5-1-5",
+ "parent_question_id": "q:g10m6s5-1-5:ex6-8-26a",
+ "source_page": 221,
+ "tier": "advanced",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "m",
+   "choice": [
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "a",
+   "choice": [
+    -5,
+    -4,
+    -3,
+    -2
+   ]
+  },
+  {
+   "name": "q",
+   "choice": [
+    -4,
+    -3,
+    -2,
+    -1,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ]
+  },
+  {
+   "require": "q > a",
+   "why": "the point (0, a) then lies below the line y = q, so the 'number in front' option reads as a possible curve below its asymptote"
+  },
+  {
+   "require": "a + q != 0",
+   "why": "the y-intercept is not the origin"
+  },
+  {
+   "name": "qs",
+   "let": "'+' if q > 0 else '-'"
+  },
+  {
+   "name": "qa",
+   "let": "abs(q)"
+  }
+ ],
+ "constraints": [
+  "a < 0",
+  "q != 0",
+  "a < q"
+ ],
+ "stem": "Which description matches the graph of $y = {=a}\\left(\\frac{1}{{=m}}\\right)^x {=qs} {=qa}$?",
+ "choices": {
+  "correct": "It rises as $x$ increases, lies below the line $y={=q}$ and cuts the $y$-axis at $(0, {=a+q})$.",
+  "distractors": [
+   {
+    "text": "It falls as $x$ increases, lies below the line $y={=q}$ and cuts the $y$-axis at $(0, {=a+q})$.",
+    "misconception_id": "mc:g10m6s5-1-5:rising-falling-mixed-up"
+   },
+   {
+    "text": "It falls as $x$ increases, lies above the line $y={=q}$ and cuts the $y$-axis at $(0, {=q-a})$.",
+    "misconception_id": "mc:g10m6s5-1-5:leaves-out-a"
+   },
+   {
+    "text": "It falls as $x$ increases, lies above the line $y={=q}$ and cuts the $y$-axis at $(0, {=1+q})$.",
+    "misconception_id": "mc:g10m6s5-1-5:leaves-out-a"
+   },
+   {
+    "text": "It rises as $x$ increases, lies below the line $y={=q}$ and cuts the $y$-axis at $(0, {=a})$.",
+    "misconception_id": "mc:g10m6s5-1-5:intercept-from-the-number"
+   }
+  ]
+ },
+ "proposed_misconceptions": [],
+ "solution": [
+  "Compare with $y = a\\cdot b^x + q$: here $a = {=a}$, $b = \\frac{1}{{=m}}$ and $q = {=q}$.",
+  "Direction: the base $\\frac{1}{{=m}}$ is between 0 and 1, so $\\left(\\frac{1}{{=m}}\\right)^x$ falls as $x$ increases. But $a = {=a}$ is negative, which turns the graph upside down, so this graph rises as $x$ increases.",
+  "Asymptote: as $x$ becomes very large, $\\left(\\frac{1}{{=m}}\\right)^x$ gets closer and closer to 0, so $y$ gets closer and closer to $q$. The horizontal asymptote is $y={=q}$. Because $a$ is negative, the graph lies below this line.",
+  "$y$-intercept: let $x=0$. Then $y = {=a}\\cdot 1 {=qs} {=qa} = {=a+q}$, so the graph cuts the $y$-axis at $(0, {=a+q})$.",
+  "The graph rises as $x$ increases, lies below the line $y={=q}$ and cuts the $y$-axis at $(0, {=a+q})$. That is the matching description."
+ ],
+ "notes": "The twist the book itself uses in its end-of-chapter question on y = -2(1/2)^x: a negative a together with a base between 0 and 1. The curve then RISES, yet lies BELOW its asymptote, which is the opposite of what a student who only looks at the base expects. a is always negative here so that the 'sign dropped' error (the graph drawn above the asymptote, falling, with y-intercept q - a) is always a real slip of this equation. q > a keeps every option a possible curve (a point (0, a) below the line y = q); a + q != 0 keeps the intercept off the origin; q != 0 and a != 1 make the five options distinct. Two distractors carry leaves-out-a: one drops only the minus sign, one drops a altogether. Checked by enumerating all 90 valid parameter sets: the correct option matches the numerically computed direction, side of the asymptote, asymptote and y-intercept, and every distractor differs in at least one."
+}

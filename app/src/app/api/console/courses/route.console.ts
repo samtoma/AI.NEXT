@@ -48,7 +48,7 @@ import { authorize } from "@/lib/auth/authorize";
 import { AuthError } from "@/lib/auth/principal";
 import { GRADES, type CourseState } from "@/lib/catalog";
 import { setGradeRule } from "@/lib/catalog-queries";
-import { SUBJECT_IDS, SUBJECTS } from "@/lib/subjects";
+import { COURSE_IDS as REGISTRY_COURSE_IDS } from "@/lib/courses";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -57,8 +57,11 @@ const STATES = ["live", "hidden"] as const;
 const isState = (v: unknown): v is CourseState =>
   typeof v === "string" && (STATES as readonly string[]).includes(v);
 
-/** Every course id the registry knows — the CLOSED list a rule may name. */
-const COURSE_IDS = new Set<string>(SUBJECT_IDS.map((id) => SUBJECTS[id].courseId));
+/** Every course id the course registry knows (`lib/courses.ts`) — the CLOSED
+ *  list a rule may name. Since 003 that includes a course of the American
+ *  curriculum; a rule for it still reaches only students of that curriculum
+ *  (or holding an exception for it) — `lib/catalog.ts`. */
+const COURSE_IDS = new Set<string>(REGISTRY_COURSE_IDS);
 
 /** Every grade the product knows — from `lib/catalog.ts`'s own `GRADES`, not a
  *  second hand-written list that could drift from it. */

@@ -1,0 +1,65 @@
+{
+  "format": "ainext.family/1",
+  "id": "tpl:u1-1-1:solve-mcq",
+  "kind": "family",
+  "lo_id": "lo:u1-1-1",
+  "parent_question_id": "q:u1-1-1:003",
+  "source_page": 7,
+  "tier": "advanced",
+  "answer_type": "mcq",
+  "context": null,
+  "params": [
+    {
+      "name": "a",
+      "randint": [
+        1,
+        9
+      ]
+    },
+    {
+      "name": "b",
+      "randint": [
+        1,
+        9
+      ]
+    },
+    {
+      "name": "x",
+      "randint": [
+        2,
+        14
+      ]
+    },
+    {
+      "name": "y",
+      "randint": [
+        2,
+        14
+      ]
+    }
+  ],
+  "stem": "If ${=pair('a - ' + num(a), 'b + ' + num(b))} = {=pair(num(x - a), num(y + b))}$, then the ordered pair $(a,\\ b) =$ ?",
+  "solution": [
+    "First components: $a - {=a} = {=x - a}$, so $a = {=x}$.",
+    "Second components: $b + {=b} = {=y + b}$, so $b = {=y}$.",
+    "The ordered pair is ${=pair(x, y)}$. Order matters: ${=pair(x, y)}$ and ${=pair(y, x)}$ are different pairs unless $a = b$."
+  ],
+  "choices": {
+    "correct": "${=pair(x, y)}$",
+    "distractors": [
+      {
+        "text": "${=pair(y, x)}$",
+        "misconception_id": "mc:u1-1-1:pair-order-ignored"
+      },
+      {
+        "text": "${=pair(x - 2 * a, y)}$",
+        "misconception_id": "mc:u1-1-1:transposition-sign"
+      },
+      {
+        "text": "${=pair(x, y + 2 * b)}$",
+        "misconception_id": "mc:u1-1-1:transposition-sign"
+      }
+    ]
+  },
+  "notes": "Reproduces the hand-written family tpl:u1-1-1:solve-mcq in generate_questions.py, item for item (decision 16 proof, tests/test_family_reproduction.py). Misconception ids are the catalogue's (seed/generated/misconceptions.json), which the live bank carries. Not loaded by anything: the live Prep-3 bank is the committed export."
+}

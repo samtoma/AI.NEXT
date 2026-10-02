@@ -1,0 +1,102 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m1s7-2-2:composite-a-negative-middle",
+ "kind": "family",
+ "lo_id": "lo:g10m1s7-2-2",
+ "parent_question_id": "q:g10m1s7-2-2:ex1-11-29v",
+ "source_page": 39,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "choice": [
+    2,
+    3
+   ]
+  },
+  {
+   "name": "r",
+   "choice": [
+    3,
+    5,
+    7
+   ],
+   "resample_while": "r <= p"
+  },
+  {
+   "name": "a",
+   "let": "p * r"
+  },
+  {
+   "name": "c",
+   "choice": [
+    2,
+    3,
+    5,
+    7
+   ],
+   "resample_while": "c == p or c == r"
+  },
+  {
+   "name": "pick",
+   "choice": [
+    1,
+    2
+   ]
+  },
+  {
+   "name": "u",
+   "let": "1 if pick == 1 else c"
+  },
+  {
+   "name": "w",
+   "let": "c if pick == 1 else 1"
+  },
+  {
+   "name": "t1",
+   "let": "a + c"
+  },
+  {
+   "name": "t2",
+   "let": "a * c + 1"
+  },
+  {
+   "name": "t3",
+   "let": "p * c + r"
+  },
+  {
+   "name": "t4",
+   "let": "p + r * c"
+  },
+  {
+   "name": "m",
+   "let": "p * w + u * r"
+  }
+ ],
+ "constraints": [
+  "t1 != t2 and t1 != t3 and t1 != t4 and t2 != t3 and t2 != t4 and t3 != t4",
+  "gcd(a, c) == 1"
+ ],
+ "stem": "Factorise: ${=a}x^{2}-{=m}x+{=c}$",
+ "solution": [
+  "Write down the factors. The first coefficient ${=a}$ has the factor pairs $1\\times{=a}$ and ${=p}\\times{=r}$. The constant term ${=c}$ has only the factor pair $1\\times{=c}$.",
+  "In ${=a}x^{2}-{=m}x+{=c}$ the constant term is positive and the middle term is negative. The two constants in the brackets multiply to give $+{=c}$, so they have the same sign, and a positive pair would give a positive middle term, so both constants are negative. Both brackets therefore contain minus signs.",
+  "Set out the possible pairs of brackets. Use each pair of first-term factors with the constants $1$ and ${=c}$ placed both ways round: $(x-1)({=a}x-{=c})$, $(x-{=c})({=a}x-1)$, $({=p}x-1)({=r}x-{=c})$ and $({=p}x-{=c})({=r}x-1)$.",
+  "Expand each pair of brackets to find its middle term. $(x-1)({=a}x-{=c})={=a}x^{2}-{=c}x-{=a}x+{=c}={=a}x^{2}-{=t1}x+{=c}$. $(x-{=c})({=a}x-1)={=a}x^{2}-x-{=a*c}x+{=c}={=a}x^{2}-{=t2}x+{=c}$. $({=p}x-1)({=r}x-{=c})={=a}x^{2}-{=p*c}x-{=r}x+{=c}={=a}x^{2}-{=t3}x+{=c}$. $({=p}x-{=c})({=r}x-1)={=a}x^{2}-{=p}x-{=r*c}x+{=c}={=a}x^{2}-{=t4}x+{=c}$.",
+  "The trinomial has middle term $-{=m}x$, and only the brackets $({=p}x-{=u})({=r}x-{=w})$ give this. So ${=a}x^{2}-{=m}x+{=c}=({=p}x-{=u})({=r}x-{=w})$.",
+  "Check by multiplying out. The first terms give ${=p}x\\times{=r}x={=a}x^{2}$, the last terms give $(-{=u})\\times(-{=w})={=c}$, and the middle term is $-({=p}\\times{=w}+{=u}\\times{=r})x=-({=p*w}+{=u*r})x=-{=m}x$. This is the original trinomial, so the factorisation is correct."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "({=p}*x - {=u})*({=r}*x - {=w})",
+  "form": "factorised",
+  "variables": [
+   "x"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Harder than the book's typical exercise because the first coefficient is composite: a = p*r with p < r distinct primes (6, 10, 14, 15, 21), so a has exactly two factor pairs (1 x a and p x r), and the constant c is a prime coprime to a (never p or r), so it has the single pair 1 x c. That gives exactly four candidate bracket pairs, all listed and expanded in the solution; their middle terms a+c, ac+1, pc+r and p+rc are pairwise different (checked over the whole parameter space) and the answer is always one of the last two, i.e. the (p, r) split, as in the book's 6a^2-17a+5 = (2a-5)(3a-1). The constant is positive and the middle term negative, so both brackets carry minus signs. gcd(a, c) = 1 makes the trinomial primitive, so the factorisation into primitive brackets is unique up to order. Modelled on book question ex1-11-29v (page 39). Marker is expression/factorised, either bracket order. Every equation in every rendered solution was checked by evaluation over the whole parameter space (20 instances)."
+}

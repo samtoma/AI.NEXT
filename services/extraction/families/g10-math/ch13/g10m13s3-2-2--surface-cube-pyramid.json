@@ -1,0 +1,41 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m13s3-2-2:surface-cube-pyramid",
+ "kind": "family",
+ "lo_id": "lo:g10m13s3-2-2",
+ "parent_question_id": "q:g10m13s3-2-2:ex13-7-20a",
+ "source_page": 462,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "s",
+   "randint": [
+    4,
+    14
+   ]
+  },
+  {
+   "name": "hs",
+   "randint": [
+    "s // 2 + 2",
+    "s + s // 2"
+   ]
+  }
+ ],
+ "constraints": [
+  "2 * hs > s"
+ ],
+ "stem": "A solid is made by placing a square-based pyramid on top of a cube. The edges of the cube are ${=s}\\text{ cm}$ long and the base of the pyramid is exactly the top face of the cube. Each triangular face of the pyramid has a slant height of ${=hs}\\text{ cm}$ (the height of that triangle, measured from the middle of its base edge up to the apex). Calculate the total surface area of the solid, that is, the area of all the faces on the outside of the solid. Give your answer in $\\text{cm}^{2}$.",
+ "answer": "5*s**2 + 2*s*hs",
+ "solution": [
+  "The top face of the cube is covered by the pyramid, and the base of the pyramid is covered by the cube, so neither is part of the outside of the solid. The exposed faces are the bottom face and the four side faces of the cube (five squares) and the four triangular faces of the pyramid.",
+  "Area of the five squares: $\\begin{aligned}A_{\\text{five squares}}&=5\\times s^{2}\\\\&=5\\times({=s})^{2}\\\\&={=5*s**2}\\text{ cm}^{2}\\end{aligned}$",
+  "Area of the four triangles (each has base ${=s}\\text{ cm}$ and height equal to the slant height ${=hs}\\text{ cm}$): $\\begin{aligned}A_{\\text{four triangles}}&=4\\times\\frac{1}{2}bh_{s}\\\\&=4\\times\\frac{1}{2}({=s})({=hs})\\\\&={=2*s*hs}\\text{ cm}^{2}\\end{aligned}$",
+  "Total surface area: $\\begin{aligned}A_{\\text{total}}&=A_{\\text{five squares}}+A_{\\text{four triangles}}\\\\&={=5*s**2}+{=2*s*hs}\\\\&={=5*s**2 + 2*s*hs}\\text{ cm}^{2}\\end{aligned}$",
+  "Therefore the total surface area of the solid is ${=5*s**2 + 2*s*hs}\\text{ cm}^{2}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Entry point for the surface-area half of the objective: the slant height is GIVEN (as in the book's we17), so there is no Pythagoras step, and the only decision is which faces are exposed: 5 squares + 4 triangles (the top of the cube and the pyramid's base are covered). Book model: ex13-7-20a, whose method (5 s^2 + 4 * 1/2 * b * h_s) this reuses, minus the height subtraction and the square root and rounding that make it advanced. hs is a whole number between s//2 + 2 and 1.5 s, always more than half the edge, so a real pyramid with that slant height exists; no pyramid height is mentioned, so uses-pyramid-height-for-triangular-faces cannot arise here. The likeliest wrong answer is mc:g10m13s3-2-2:counts-covered-faces (6 s^2 + 2 s hs, or also adding the pyramid's base). Numeric family, so no distractors carry the id."
+}

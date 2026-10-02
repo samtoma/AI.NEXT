@@ -54,6 +54,11 @@ const STUBS = {
     stub: pathToFileURL(path.join(HERE, "stubs", "next-headers.mjs")).href,
     entrypoints: [
       "capture-prompts.mts",
+      // renders the REAL lesson and Ask builders over the fake pool to prove
+      // an `answer_only` question's working never reaches the tutor (Samuel's
+      // G2 answer 22). Same `lib/lesson.ts` -> `auth/principal.ts` import; no
+      // student, so no principal.
+      "answer-only-prompts.test.mts",
       // renders the same prompt builders for each address register, and
       // reaches `lib/lesson.ts` -> `auth/principal.ts` to do it (P6)
       "prompt-address.test.mts",
@@ -92,6 +97,13 @@ const STUBS = {
       // narrowing resolve a lesson's course the same way (fix pass 2). Same
       // `lib/lesson.ts` -> `auth/principal.ts` import; no principal.
       "lesson-course.test.mts",
+      // drives the REAL `getLessonData` / `lessonCourseId` /
+      // `buildLessonContext` / `isUnpreparedLesson` against a fake PoolClient
+      // to prove a lesson the book's outline lists but whose content is not
+      // prepared is refused, never taught as another (migration 037). Same
+      // `lib/lesson.ts` -> `auth/principal.ts` import; the student id is a
+      // parameter, no principal.
+      "course-outline-guard.test.mts",
       // drives the REAL `getStudentPlan` (lib/queries.ts) over a fake
       // PoolClient to prove catalogue order breaks the plan's ties (FR-3217).
       // Reaches `lib/student-context.ts` -> `auth/principal.ts`; the student
@@ -106,6 +118,39 @@ const STUBS = {
       // `lib/student-context.ts` -> `auth/principal.ts`; the student id is a
       // parameter, no principal.
       "ask-order.test.mts",
+      // drives the REAL `getLessonCatalog` / `getLessonData` /
+      // `getSubjectSummaries` / `resolveStudentScope` with the course gate
+      // switched OFF over a fake PoolClient (003, FR-4015). Same import chain;
+      // the student id is a parameter, no principal.
+      "catalog-gate-off.test.mts",
+      // runs the REAL student scope and the readers it gates against a
+      // scratch database with a National and an American student (003,
+      // opt-in). Same import chain; the student id is a parameter.
+      "curriculum-scope-db.test.mts",
+      // runs the console's curriculum reads and write, the per-course Overview
+      // and /pipeline against a scratch database (003, WP-G, opt-in).
+      // `lib/pipeline-queries.ts` -> `lib/student-context.ts` ->
+      // `auth/principal.ts`; operator reads only, no student principal.
+      "console-curriculum-db.test.mts",
+      // render the REAL lesson, Ask and grader prompts over a fake pool (003,
+      // WP-E): the Grade 10 goldens, "the Grade 10 course never probes", and
+      // the National goldens captured from v0.9.2. Same `lib/lesson.ts` ->
+      // `auth/principal.ts` import; no student, no principal.
+      "g10-prompts.test.mts",
+      "g10-probing.test.mts",
+      "national-prompts.test.mts",
+      // drives the REAL `getLessonData` / `learnPrompt` over a fake pool
+      // (T417) to prove a G10 unit's live curve_sketcher bank decides between
+      // the "curve_sketcher" and "curve_sketcher_g10" widget-docs entries.
+      // Same `lib/lesson.ts` -> `auth/principal.ts` import; no student, no
+      // principal.
+      "g10-curve-sketcher-family.test.mts",
+      // runs the REAL `advanceIfMastered` / `getCurrentLesson` /
+      // `getSectionIndex` (lib/progression-db.ts) against a scratch database
+      // with book sections (003, US6, opt-in). `lib/progression-db.ts` ->
+      // `lib/student-context.ts` -> `auth/principal.ts`; the student id is a
+      // parameter, no principal.
+      "book-sections-db.test.mts",
     ],
   },
 };

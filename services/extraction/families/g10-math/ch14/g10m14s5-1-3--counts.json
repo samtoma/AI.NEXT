@@ -1,0 +1,97 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m14s5-1-3:counts",
+ "kind": "family",
+ "lo_id": "lo:g10m14s5-1-3",
+ "parent_question_id": "q:g10m14s5-1-3:ex14-8-24",
+ "source_page": 494,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "nS",
+   "choice": [
+    20,
+    25,
+    50,
+    100
+   ]
+  },
+  {
+   "name": "nA",
+   "randint": [
+    3,
+    10
+   ]
+  },
+  {
+   "name": "nB",
+   "randint": [
+    3,
+    10
+   ]
+  },
+  {
+   "name": "nI",
+   "randint": [
+    1,
+    "min(nA, nB) - 1"
+   ]
+  },
+  {
+   "name": "nU",
+   "let": "nA + nB - nI"
+  },
+  {
+   "require": "nU <= nS",
+   "why": "the union cannot have more outcomes than the sample space"
+  },
+  {
+   "name": "pA",
+   "let": "fixed(nA / nS, 2)"
+  },
+  {
+   "name": "pB",
+   "let": "fixed(nB / nS, 2)"
+  },
+  {
+   "name": "pU",
+   "let": "fixed(nU / nS, 2)"
+  },
+  {
+   "name": "ans",
+   "let": "fixed(nI / nS, 2)"
+  }
+ ],
+ "constraints": [
+  "nU > nA",
+  "nU > nB",
+  "nU <= nS"
+ ],
+ "stem": "In a probability experiment the sample space $S$ has $n(S)={=nS}$ equally likely outcomes. For two events $A$ and $B$ it is known that $n(A)={=nA}$, $n(B)={=nB}$ and $n(A\\cup B)={=nU}$. Calculate the value of $P(A\\cap B)$. Give your answer as a decimal number.",
+ "answer": "ans",
+ "solution": [
+  "The probability of a union is $P(A\\cup B)=P(A)+P(B)-P(A\\cap B)$.",
+  "Make $P(A\\cap B)$ the subject, and we get: $P(A\\cap B)=P(A)+P(B)-P(A\\cup B)$.",
+  "The probability of an event $X$ is $P(X)=\\frac{n(X)}{n(S)}$, and here $n(S)={=nS}$.",
+  "$P(A)=\\frac{{=nA}}{{=nS}}={=pA}$",
+  "$P(B)=\\frac{{=nB}}{{=nS}}={=pB}$",
+  "$P(A\\cup B)=\\frac{{=nU}}{{=nS}}={=pU}$",
+  "Calculate $P(A\\cap B)$: $P(A\\cap B)=P(A)+P(B)-P(A\\cup B)={=pA}+{=pB}-{=pU}={=ans}$.",
+  "Therefore, the value of $P(A\\cap B)$ is ${=ans}$."
+ ],
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m14s5-1-3:sum-as-intersection",
+   "label": "Adds P(A) and P(B) and stops",
+   "description": "Gives P(A) + P(B) as the answer and never subtracts P(A∪B), so the overlap is not isolated; the formula P(A∪B) = P(A) + P(B) − P(A∩B) is not rearranged."
+  },
+  {
+   "id": "mc:g10m14s5-1-3:union-as-sample-space",
+   "label": "Divides by n(A∪B) instead of n(S)",
+   "description": "Uses the size of the union as the denominator when turning counts into probabilities, instead of the size of the whole sample space."
+  }
+ ],
+ "notes": "Entry-point skill: the book's own rearrangement P(A∩B) = P(A) + P(B) − P(A∪B) (parent ex14-8-24), with the counts n(A), n(B), n(A∪B), n(S) given directly so the learner does not also have to read the event-set tables. n(S) is drawn from 20, 25, 50, 100 so every probability and the answer is an exact two-decimal number: no rounded-intermediate disagreement (the book's own 0.33 + 0.5 - 0.67 = 0.16 versus its stated 0.17 is exactly that trap). n(A) and n(B) are 3 to 10, the overlap is at least 1 and strictly smaller than both sets, so neither event sits inside the other and n(A∪B) ≤ 19 ≤ n(S). The key prints as two decimals (e.g. 0.40); the stem says only 'decimal number'. Checked by brute force over all 1072 parameter combinations: pA + pB - pU equals nI/nS exactly in every one."
+}

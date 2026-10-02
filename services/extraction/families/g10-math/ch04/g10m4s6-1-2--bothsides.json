@@ -1,0 +1,58 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m4s6-1-2:bothsides",
+ "kind": "family",
+ "lo_id": "lo:g10m4s6-1-2",
+ "parent_question_id": "q:g10m4s6-1-2:we16",
+ "source_page": 95,
+ "tier": "standard",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "b",
+   "randint": [
+    2,
+    8
+   ]
+  },
+  {
+   "name": "a",
+   "randint": [
+    "b + 2",
+    "b + 6"
+   ]
+  },
+  {
+   "name": "k",
+   "let": "a - b"
+  }
+ ],
+ "constraints": [
+  "k >= 2",
+  "a > b"
+ ],
+ "stem": "Make $x$ the subject of the formula ${=a}x - py = {=b}x + qy$.",
+ "solution": [
+  "Collect the terms containing $x$ on the left and the other terms on the right: ${=a}x - {=b}x = py + qy$.",
+  "Take out the common factor on each side: $x({=a} - {=b}) = y(p + q)$.",
+  "Simplify the bracket on the left: ${=k}x = y(p + q)$.",
+  "Divide both sides by ${=k}$: $x = \\frac{y(p + q)}{{=k}}$."
+ ],
+ "marker": {
+  "kind": "equation",
+  "answer": "x = (p + q)*y/{=k}",
+  "form": {
+   "subject": "x"
+  },
+  "variables": [
+   "x",
+   "y",
+   "p",
+   "q"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "The subject x appears in a term on each side, so the student must first collect the x-terms on one side (the book's method in we16: isolate, collect, factorise, divide) and only then take x out as the common factor. Parameters: b in 2..8 and a = b + 2 .. b + 6, so a - b = k is always 2..6: never 0 (no division by zero), never 1 (no '1x'), never negative. The right-hand side p y + q y factorises to y(p + q), so both sides are factorised before dividing by the number k. Letters p, q, y are fixed; only a and b change (about 35 distinct stems). The answer (p + q)y/k is a single expression, so any equivalent arrangement is acceptable. No mcq, so no distractors."
+}

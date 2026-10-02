@@ -1,0 +1,62 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m13s3-1-1:pythagoras-slant",
+ "kind": "family",
+ "lo_id": "lo:g10m13s3-1-1",
+ "parent_question_id": "q:g10m13s3-1-1:ex13-7-29b",
+ "source_page": 466,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "ms",
+   "let": "[3, 4, 5, 6, 7, 8, 8, 9, 10, 12, 12, 12, 15, 15]"
+  },
+  {
+   "name": "hs",
+   "let": "[4, 3, 12, 8, 24, 6, 15, 12, 24, 5, 9, 16, 8, 20]"
+  },
+  {
+   "name": "i",
+   "randint": [
+    0,
+    "len(ms) - 1"
+   ]
+  },
+  {
+   "name": "m",
+   "let": "ms[i]"
+  },
+  {
+   "name": "h",
+   "let": "hs[i]"
+  },
+  {
+   "name": "b",
+   "let": "2 * m"
+  },
+  {
+   "require": "is_square(m * m + h * h)",
+   "why": "the slant height must be a whole number, so that the working stays clean"
+  },
+  {
+   "name": "s",
+   "let": "isqrt(m * m + h * h)"
+  }
+ ],
+ "constraints": [
+  "s * s == m * m + h * h"
+ ],
+ "stem": "A pyramid has a square base with sides of ${=b}$ cm. Its apex is directly above the centre of the base, at a vertical height of ${=h}$ cm. The slant height is not given. Calculate the total surface area of the pyramid in $\\text{cm}^{2}$.",
+ "answer": "b * b + 2 * b * s",
+ "solution": [
+  "The four triangular faces need the slant height $h_s$, which is not given, so find it first. The slant height, the vertical height and half of a base side form a right-angled triangle, with the slant height as the hypotenuse.",
+  "Half of the base side: $\\frac{{=b}}{2}={=m}$ cm.",
+  "By the theorem of Pythagoras: $h_s^{2}={=h}^{2}+{=m}^{2}={=h*h}+{=m*m}={=h*h+m*m}$, so $h_s=\\sqrt{{=h*h+m*m}}={=s}$ cm.",
+  "Area of the base: ${=b}^{2}={=b*b}\\text{ cm}^{2}$.",
+  "Area of the four triangular faces: $4\\times\\frac{1}{2}\\times{=b}\\times{=s}={=2*b*s}\\text{ cm}^{2}$.",
+  "Total surface area: $\\text{base}+\\text{faces}={=b*b}+{=2*b*s}={=b*b+2*b*s}\\text{ cm}^{2}$."
+ ],
+ "notes": "Advanced: the slant height has to be found first (the book's own twist, ex13-7-29b: AF = sqrt(a^2 + h^2) with a = half of BC), then the total surface area is a second stage. The table gives 14 (half-base, height) pairs whose hypotenuse is a whole number, so every slant height and every answer is a whole number and nothing is rounded (a decimal version would let a solver that rounds the slant height early land on a different 1-decimal answer). Common error to watch for in review: using the full base side instead of half of it in the Pythagoras step."
+}

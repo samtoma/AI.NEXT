@@ -156,7 +156,6 @@ test("every student API call goes through authFetch; auth endpoints do not", () 
   const files = [
     "../../components/chat/ChatCore.tsx",
     "../../components/student/LessonSession.tsx",
-    "../../components/student/StudentLoop.tsx",
     "../attempts-client.ts",
     "../../components/chat/upload-attachment.tsx",
     "../../components/student/FeedbackPrompt.tsx",
@@ -170,6 +169,14 @@ test("every student API call goes through authFetch; auth endpoints do not", () 
     assert.doesNotMatch(src, /(?<![A-Za-z])fetch\([`"']\/api\/(?!auth\/)/, `${f} has a bare fetch to /api`);
     assert.match(src, /authFetch\(/, f);
   }
+  // The practice loop posts its answers through `submitAttempt` (lib/attempts-client.ts,
+  // listed above, which goes through authFetch) rather than calling the route
+  // itself — since feature 003 it shares that one seam with the chat so a typed
+  // maths answer can come back for re-entry (FR-4320). It must still make no
+  // bare fetch of its own.
+  const loop = read("../../components/student/StudentLoop.tsx");
+  assert.doesNotMatch(loop, /(?<![A-Za-z])fetch\([`"']\/api\//, "StudentLoop has a bare fetch to /api");
+  assert.match(loop, /await submitAttempt\(/, "StudentLoop posts through the shared client seam");
   // renewal itself uses plain fetch — authFetch on the refresh call would loop
   const lib = read("./client-session.ts");
   assert.match(lib, /await fetch\("\/api\/auth\/refresh"/);

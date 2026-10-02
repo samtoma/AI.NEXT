@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>G3 · Generated families and widgets</title>
+<style>
+:root{--play-bg-page:#FFF6E6;--play-bg-surface:#FFFFFF;--play-bg-warm:#FFE9BD;--play-ink:#241F3D;
+--play-text-dim:#4A4266;--play-text-muted:#5A5570;--play-text-label:#615B7D;--play-text-link:#136386;
+--play-action:#F0A22F;--play-on-action:#241F3D;--play-mastery:#2F9E8F;--play-on-mastery:#241F3D;
+--play-celebrate:#7B4FC9;--play-on-celebrate:#FFFFFF;--play-sky:#7FD1F0;--play-on-sky:#0F3D51;
+--play-berry:#FFA8C5;--play-on-berry:#7A2447;--play-leaf:#B6E88F;--play-on-leaf:#1F3D12;
+--play-text-amber:#A34F0A;--play-inactive-fill:#F6F5FA;--play-inactive-border:#9890B5;
+--play-stroke:3px;--play-stroke-sm:2.5px;--play-shadow:4px 4px 0 var(--play-ink);
+--play-shadow-sm:3px 3px 0 var(--play-ink);--play-radius-sm:14px;--play-radius:20px;
+--play-radius-lg:28px;--play-radius-pill:999px;--play-target-min:52px;
+--play-font-display:"Baloo Bhaijaan 2","Baloo 2",system-ui,sans-serif;
+--play-font-read:"Cairo",system-ui,sans-serif;--play-font-mono:"IBM Plex Mono",ui-monospace,monospace;
+--play-text-title:1.5rem;--play-text-ui:1.15rem;--play-text-label-size:.85rem;--play-text-read:1rem;
+--play-text-data:.72rem;--play-leading-latin:1.75;--play-press:90ms cubic-bezier(.2,.7,.3,1)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--play-bg-page);color:var(--play-ink);font-family:var(--play-font-read);
+font-size:var(--play-text-read);line-height:var(--play-leading-latin);-webkit-text-size-adjust:100%}
+.shell{max-width:860px;margin:0 auto;padding:0 16px}
+header.top{background:var(--play-bg-warm);border-bottom:var(--play-stroke) solid var(--play-ink);padding:24px 0 20px}
+h1,h2,h3{font-family:var(--play-font-display);font-weight:800;line-height:1.2;margin:0}
+h1{font-size:clamp(1.4rem,5vw,var(--play-text-title))}
+h2{font-size:var(--play-text-ui);margin:28px 0 8px}
+.meta{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:10px;font-family:var(--play-font-mono);
+font-size:var(--play-text-data);color:var(--play-text-dim)}
+.brief{margin:18px 0 0;color:var(--play-text-dim)}
+.brief p{margin:0 0 8px}
+.card{background:var(--play-bg-surface);border:var(--play-stroke) solid var(--play-ink);
+border-radius:var(--play-radius);box-shadow:var(--play-shadow);padding:16px;margin:18px 0}
+.card header{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-bottom:8px}
+.id{font-family:var(--play-font-mono);font-size:var(--play-text-data);color:var(--play-text-label);
+overflow-wrap:anywhere}
+.tag{font-family:var(--play-font-mono);font-size:var(--play-text-data);padding:2px 10px;
+border-radius:var(--play-radius-pill);border:var(--play-stroke-sm) solid var(--play-ink)}
+.tag.attention{background:var(--play-action);color:var(--play-on-action)}
+.tag.ok{background:var(--play-mastery);color:var(--play-on-mastery)}
+.tag.info{background:var(--play-sky);color:var(--play-on-sky)}
+.tag.sample{background:var(--play-celebrate);color:var(--play-on-celebrate)}
+.tag.plain{background:var(--play-inactive-fill);color:var(--play-text-muted);border-color:var(--play-inactive-border)}
+.stem{font-size:1.05rem;margin:4px 0 10px}
+.m{font-family:var(--play-font-mono);font-size:.95em;unicode-bidi:isolate;direction:ltr}
+code.tex{font-family:var(--play-font-mono);font-size:.85em;background:var(--play-inactive-fill);
+border-radius:6px;padding:0 4px;overflow-wrap:anywhere}
+table.answers{border-collapse:collapse;width:100%;margin:8px 0;font-size:.95rem}
+table.answers th,table.answers td{text-align:start;padding:6px 8px;border-bottom:1px solid var(--play-inactive-border);vertical-align:top}
+table.answers tr.disagree td{background:var(--play-bg-warm)}
+ul.list,ol.steps{margin:6px 0;padding-inline-start:22px}
+ul.choices{list-style:none;padding:0;margin:6px 0;display:grid;gap:6px}
+ul.choices li{padding:8px 10px;border-radius:var(--play-radius-sm);border:var(--play-stroke-sm) solid var(--play-inactive-border);background:var(--play-inactive-fill)}
+ul.choices li.key{border-color:var(--play-ink);background:var(--play-leaf);color:var(--play-on-leaf)}
+.note{font-size:.9rem;color:var(--play-text-dim)}
+.advice{border-inline-start:var(--play-stroke) solid var(--play-sky);padding:4px 10px;margin:8px 0;background:var(--play-bg-warm)}
+details{margin-top:8px}
+summary{cursor:pointer;color:var(--play-text-link);min-height:32px}
+.verdict{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;align-items:center}
+.verdict button{font-family:var(--play-font-display);font-weight:700;font-size:1rem;min-height:var(--play-target-min);
+min-width:var(--play-target-min);padding:0 16px;border-radius:var(--play-radius);border:var(--play-stroke) solid var(--play-ink);
+background:var(--play-bg-surface);color:var(--play-ink);box-shadow:var(--play-shadow-sm);cursor:pointer;
+transition:transform var(--play-press),box-shadow var(--play-press)}
+.verdict button:active{transform:translate(3px,3px);box-shadow:0 0 0 var(--play-ink)}
+.verdict button[aria-pressed="true"]{background:var(--play-action);color:var(--play-on-action)}
+.verdict button:focus-visible,textarea:focus-visible,input:focus-visible{outline:var(--play-stroke) solid var(--play-text-link);outline-offset:2px}
+textarea,input[type=text]{width:100%;font:inherit;border:var(--play-stroke-sm) solid var(--play-ink);border-radius:var(--play-radius-sm);
+padding:8px;background:var(--play-bg-surface);color:var(--play-ink);margin-top:8px}
+footer.bar{position:sticky;bottom:0;background:var(--play-bg-warm);border-top:var(--play-stroke) solid var(--play-ink);padding:10px 0;margin-top:24px}
+footer.bar .shell{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+footer.bar .count{font-family:var(--play-font-mono);font-size:var(--play-text-data);margin-inline-end:auto}
+.stat{display:inline-block;margin-inline-end:18px}
+.stat b{font-family:var(--play-font-display);font-size:1.4rem}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body data-page="g3-9325277a6872" data-gate="g3">
+<header class="top"><div class="shell">
+<h1>G3 · Generated families and widgets</h1>
+<div class="meta"><span><b>17</b> sampled of 130</span><span><b>17</b> families, every one read</span><span>seed 20260925</span></div>
+<div class="brief"><p>One item per family, then more at random to reach the sample size (ADR-0008). A verdict travels to the item's family: Reject retires the whole family, Needs a fix pulls back the item only (apply_review_verdicts.py).</p><p>Check the answer key against the worked solution, and that each distractor or widget diagnosis is really the mistake its misconception names.</p></div>
+<label for="reviewer" class="note">Reviewer (your name goes on every verdict)</label>
+<input id="reviewer" type="text" autocomplete="name">
+</div></header>
+<main class="shell"><article class="card"><header><span class="tag sample">wt:g10m8s1-1-2:plot-the-point</span>
+<span class="tag plain">widget</span><span class="tag plain">basic</span>
+<span class="id">q:g10m8s1-1-2:w001</span></header>
+<p class="stem">Plot the point with coordinates <span class="m">(5, -4)</span>.</p><p class="note">Widget <b>pair_plotter</b></p><pre class="note" style="white-space:pre-wrap;overflow-wrap:anywhere">{&quot;target&quot;: [5, -4]}</pre><p class="note">Wrong constructions it diagnoses:</p><ul class="list"><li><b>wrong-quadrant</b> → Flips the sign of one coordinate</li></ul>
+<details><summary>Worked solution — what the tutor teaches from</summary><ol class="steps"><li>Start at the origin <span class="m">(0, 0)</span>.</li><li>Move 5 units along the horizontal axis — right if 5 is positive, left if negative — to the vertical line <span class="m">x = 5</span>.</li><li>From there, move -4 units parallel to the vertical axis — up if -4 is positive, down if negative.</li><li>Mark the point where the two moves end: this is <span class="m">(5, -4)</span>.</li></ol>
+<p class="note">Parent book question: q:g10m8s1-1-2:ex8-1-3</p></details>
+<div class="verdict" data-id="q:g10m8s1-1-2:w001" role="group" aria-label="Verdict for q:g10m8s1-1-2:w001"><button type="button" data-v="accept" aria-pressed="false">Accept</button><button type="button" data-v="fix" aria-pressed="false">Needs a fix</button><button type="button" data-v="reject" aria-pressed="false">Reject family</button></div><textarea rows="2" aria-label="Note on q:g10m8s1-1-2:w001" placeholder="Note (optional)"></textarea></article><article class="card"><header><span class="tag sample">tpl:g10m8s1-1-3:quad-rotated-start</span>
+<span class="tag plain">mcq</span><span class="tag plain">standard</span>
+<span class="id">q:g10m8s1-1-3:g003-quad-r</span></header>
+<p class="stem">A quadrilateral has 4 vertices, each labelled with a different letter. Going around the shape clockwise, starting from one particular vertex, the labels are, in order: F, C, D, E. Applying the convention that a figure&#x27;s vertices are named in alphabetical order, what is the correct name for this quadrilateral?</p><p class="advice"><span class="tag attention">flagged</span> Ambiguous key and untagged distractors (consistency review 2026-09-27, A12; flagged by the data-engineer agent). The key is the name that starts at the alphabetically-first vertex (e.g. GHIJ), but option C (e.g. JGHI: the same four letters climbing from J with one wrap back to G) is judged a LEGITIMATE naming by S5 final (wf_ed8c8e80-51d stripped its tag &#x27;names-from-given-start&#x27;: &#x27;no named error… starting point is not required to be the alphabetically-first vertex&#x27;), and by the book&#x27;s own solutions to Ex8-1:5/1:6/6:3 (&#x27;alphabetical order, either clockwise or anti-clockwise around the shape&#x27;, with no rule on the starting vertex). So on all 10 questions two options can be defended as correct. Only option A (descending order) carries a misconception; B and C are untagged on every question — 20 untagged distractors. Recommendation: reject the family at G3 (retires it) and re-author it so exactly one option satisfies the convention, rather than keeping it with an ambiguous key.</p><ul class="choices"><li class="key">A. CDEF</li><li class="">B. FEDC<br><span class="note">encodes: Writes the letters in descending order</span></li><li class="">C. FCDE</li><li class="">D. CEDF</li></ul>
+<details><summary>Worked solution — what the tutor teaches from</summary><ol class="steps"><li>The four labels used are C, D, E and F — already consecutive letters of the alphabet.</li><li>The diagram happens to start listing them from F, partway around the shape, but the convention says to start naming from the alphabetically-first vertex, C, and keep going the same way around.</li><li>Reading clockwise from C, the vertices in order are C, D, E, F, so the correct name is CDEF.</li></ol>
+<p class="note">Parent book question: q:g10m8s1-1-3:ex8-1-5</p></details>
+<div class="verdict" data-id="q:g10m8s1-1-3:g003-quad-r" role="group" aria-label="Verdict for q:g10m8s1-1-3:g003-quad-r"><button type="button" data-v="accept" aria-pressed="false">Accept</button><button type="button" data-v="fix" aria-pressed="false">Needs a fix</button><button type="button" data-v="reject" aria-pressed="false">Reject family</button></div><textarea rows="2" aria-label="Note on q:g10m8s1-1-3:g003-quad-r" placeholder="Note (optional)"></textarea></article><article class="card"><header><span class="tag sample">tpl:g10m8s1-1-3:pentagon-partial-arc</span>
+<span class="tag plain">mcq</span><span class="tag plain">advanced</span>
+<span class="id">q:g10m8s1-1-3:g006-pentag</span></header>
+<p class="stem">A pentagon has 5 vertices, each labelled with a different letter. Going around the shape clockwise, the labels are, in order: C, D, E, F, M. A student checks the first four labels, sees that they climb the alphabet one letter at a time, and concludes that the pentagon is correctly named. Is the student right, and why?</p><ul class="choices"><li class="key">A. No — the convention requires the letters to climb one at a time all the way around the shape and back to the start. After F the next vertex is M, which does not continue the sequence, so the pentagon is not correctly named as given.</li><li class="">B. Yes — the first four vertices climb one letter at a time, so the pentagon is correctly named.<br><span class="note">encodes: Checks only part of the loop</span></li><li class="">C. No — the labels must be read going anticlockwise instead, since a clockwise reading is never the correct convention.<br><span class="note">encodes: Thinks only one direction counts</span></li><li class="">D. No — the naming is wrong because the sequence does not start with the letter A.<br><span class="note">encodes: Expects the labels to start at A</span></li></ul>
+<details><summary>Worked solution — what the tutor teaches from</summary><ol class="steps"><li>Check every consecutive pair of vertices going around the shape, not just the first few: C→D, D→E, E→F each climb one letter at a time.</li><li>The next edge, F→M, is where the pattern already breaks: for the naming to hold, M would have to be the very next letter after F, but it is not.</li><li>There is still one edge left in the cycle — the one that actually closes the loop back to the start, M→C — but a single break is already enough to fail the naming, so that edge cannot rescue it. The pentagon is not correctly named as given, and checking only the first four labels, as the student did, would have missed the break entirely.</li></ol>
+<p class="note">Parent book question: q:g10m8s1-1-3:ex8-6-3</p></details>
+<div class="verdict" data-id="q:g10m8s1-1-3:g006-pentag" role="group" aria-label="Verdict for q:g10m8s1-1-3:g006-pentag"><button type="button" data-v="accept" aria-pressed="false">Accept</button><button type="button" data-v="fix" aria-pressed="false">Needs a fix</button><button type="button" data-v="reject" aria-pressed="false">Reject family</button></div><textarea rows="2" aria-label="Note on q:g10m8s1-1-3:g006-pentag" placeholder="Note (optional)"></textarea></article><article class="card"><header><span class="tag sample">tpl:g10m8s2-1-2:isolate-both-roots-basic</span>
+<span class="tag plain">short</span><span class="tag plain">basic</span>
+<span class="id">q:g10m8s2-1-2:g002-isolat</span></header>
+<p class="stem">Point <span class="m">P(-5, 0)</span> and point <span class="m">Q(x, 3)</span> lie <span class="m">5</span> units apart. Find all possible values of <span class="m">x</span>.</p><p class="note">Answer: <span class="m">x = -9  or  x = -1</span></p>
+<details><summary>Worked solution — what the tutor teaches from</summary><ol class="steps"><li>Write down the distance formula and substitute the known values: <span class="m">d<sub>PQ</sub>=√((x-(-5))<sup>2</sup>+(3-(0))<sup>2</sup>)</span>, so <span class="m">5=√((x-(-5))<sup>2</sup>+(3-(0))<sup>2</sup>)</span>.</li><li>Square both sides: <span class="m">25=(x-(-5))<sup>2</sup>+(3-(0))<sup>2</sup></span>, and <span class="m">(3-(0))<sup>2</sup>=9</span>, so <span class="m">25=(x-(-5))<sup>2</sup>+9</span>.</li><li>Isolate the square: <span class="m">(x-(-5))<sup>2</sup>=25-9=16</span>.</li><li>Take the square root of both sides: <span class="m">x-(-5)=±√16=±4</span>.</li><li>So <span class="m">x=-5±4</span>, giving <span class="m">x=-9 or x=-1</span>.</li></ol>
+<p class="note">Parent book question: q:g10m8s2-1-2:ex8-2-7</p></details>
+<div class="verdict" data-id="q:g10m8s2-1-2:g002-isolat" role="group" aria-label="Verdict for q:g10m8s2-1-2:g002-isolat"><button type="button" data-v="accept" aria-pressed="false">Accept</button><button type="button" data-v="fix" aria-pressed="false">Needs a fix</button><button type="button" data-v="reject" aria-pressed="false">Reject family</button></div><textarea rows="2" aria-label="Note on q:g10m8s2-1-2:g002-isolat" placeholder="Note (optional)"></textarea></article><article class="card"><header><span class="tag sample">tpl:g10m8s2-1-2:constraint-picks-root-advanced</span>
+<span class="tag plain">numeric</span><span class="tag plain">advanced</span>
+<span class="id">q:g10m8s2-1-2:g009-constr</span></header>
+<p class="stem">Points <span class="m">C(5, -19)</span> and <span class="m">D(-2, k)</span> are such that <span class="m">CD=√625</span>, where <span class="m">k≥0</span>. Find the value of <span class="m">k</span>.</p><p class="note">Answer: <span class="m">5</span></p>
+<details><summary>Worked solution — what the tutor teaches from</summary><ol class="steps"><li>Write down the distance formula and substitute: <span class="m">CD=√((x<sub>D</sub>-x<sub>C</sub>)<sup>2</sup>+(y<sub>D</sub>-y<sub>C</sub>)<sup>2</sup>)</span>, so <span class="m">√625=√((-2-(5))<sup>2</sup>+(k-(-19))<sup>2</sup>)</span>.</li><li>Square both sides: <span class="m">625=(-2-(5))<sup>2</sup>+(k-(-19))<sup>2</sup></span>, and <span class="m">(-2-(5))<sup>2</sup>=49</span>, so <span class="m">625=49+(k-(-19))<sup>2</sup></span>.</li><li>Isolate the square: <span class="m">(k-(-19))<sup>2</sup>=625-49=576</span>.</li><li>Take the square root of both sides: <span class="m">k-(-19)=±√576=±24</span>.</li><li>So <span class="m">k=-19±24</span>, giving <span class="m">k=-43 or k=5</span>.</li><li>But <span class="m">k≥0</span>, therefore <span class="m">k=5</span>.</li></ol>
+<p class="note">Parent book question: q:g10m8s2-1-2:ex8-6-33b</p></details>
+<div class="verdict" data-id="q:g10m8s2-1-2:g009-constr" role="group" aria-label="Verdict for q:g10m8s2-1-2:g009-constr"><button type="button" data-v="accept" aria-pressed="false">Accept</button><button type="button" data-v="fix" aria-pressed="false">Needs a fix</button><button type="button" data-v="reject" aria-pressed="false">Reject family</button></div><textarea rows="2" aria-label="Note on q:g10m8s2-1-2:g009-constr" placeholder="Note (optional)"></textarea></article><article class="card"><header><span class="tag sample">wt:g10m8s2-1-2:missing-coord-number-line</span>
+<span class="tag plain">widget</span><span class="tag plain">standard</span>
+<span class="id">q:g10m8s2-1-2:w003</span></header>
+<p class="stem">One point is <span class="m">(0, -3)</span>. A second point&#x27;s y-coordinate is unknown; its other coordinate is <span class="m">8</span>. The distance between the two points is <span class="m">10</span> units. Mark every value the missing coordinate could be.</p><p class="note">Widget <b>number_line_marker</b></p><pre class="note" style="white-space:pre-wrap;overflow-wrap:anywhere">{&quot;mode&quot;: &quot;points&quot;, &quot;range&quot;: [-12, 10], &quot;targets&quot;: [3, -9]}</pre><p class="note">Wrong constructions it diagnoses:</p><ul class="list"><li><b>missed-values</b> → Only writes down one root</li></ul>
+<details><summary>Worked solution — what the tutor teaches from</summary><ol class="steps"><li>Write the distance formula: <span class="m">distance<sup>2</sup> = (Δ x)<sup>2</sup> + (Δ y)<sup>2</sup></span>.</li><li>Substitute the known coordinates and the given distance, then isolate the squared difference that holds the missing coordinate.</li><li>Take the square root of both sides, keeping both the positive and the negative root.</li><li>Add each root to the known coordinate to get the two candidate values, then drop any candidate a stated restriction rules out.</li><li>Mark every value that survives on the number line.</li></ol>
+<p class="note">Parent book question: q:g10m8s2-1-2:ex8-2-6a</p></details>
+<div class="verdict" data-id="q:g10m8s2-1-2:w003" role="group" aria-label="Verdict for q:g10m8s2-1-2:w003"><button type="button" data-v="accept" aria-pressed="false">Accept</button><button type="button" data-v="fix" aria-pressed="false">Needs a fix</button><button type="button" data-v="reject" aria-pressed="false">Reject family</button></div><textarea rows="2" aria-label="Note on q:g10m8s2-1-2:w003" placeholder="Note (optional)"></textarea></article><article class="card"><header><span class="tag sample">tpl:g10m8s3-1-1:algebraic-coeffs</span>
+<span class="tag plain">short</span><span class="tag plain">advanced</span>
+<span class="id">q:g10m8s3-1-1:g007-algebr</span></header>
+<p class="stem">Find the gradient of <span class="m">AB</span> if: <span class="m">A(5x-8, 2y-8)</span> and <span class="m">B(5x+8, 2y+2)</span>.</p><p class="note">Answer: <span class="m">5/8</span></p>
+<details><summary>Worked solution — what the tutor teaches from</summary><ol class="steps"><li>Let the coordinates of <span class="m">A</span> be <span class="m">(x<sub>1</sub>, y<sub>1</sub>)</span> and the coordinates of <span class="m">B</span> be <span class="m">(x<sub>2</sub>, y<sub>2</sub>)</span>.</li><li><span class="m">x<sub>1</sub>=5x-8, y<sub>1</sub>=2y-8, x<sub>2</sub>=5x+8, y<sub>2</sub>=2y+2</span></li><li><span class="m">m<sub>AB</sub>=(y<sub>2</sub>-y<sub>1</sub>)/(x<sub>2</sub>-x<sub>1</sub>)</span><br><span class="m">=((2y+2)-(2y-8))/((5x+8)-(5x-8))</span><br><span class="m">=(2+8)/(8+8)</span><br><span class="m">=10/16</span></li><li>Dividing the numerator and denominator by their common factor 2: <span class="m">m<sub>AB</sub>=5/8</span></li></ol>
+<p class="note">Parent book question: q:g10m8s3-1-1:ex8-3-1c</p></details>
+<div class="verdict" data-id="q:g10m8s3-1-1:g007-algebr" role="group" aria-label="Verdict for q:g10m8s3-1-1:g007-algebr"><button type="button" data-v="accept" aria-pressed="false">Accept</button><button type="button" data-v="fix" aria-pressed="false">Needs a fix</button><button type="button" data-v="reject" aria-pressed="false">Reject family</button></div><textarea rows="2" aria-label="Note on q:g10m8s3-1-1:g007-algebr" placeholder="Note (optional)"></textarea></article><article class="card"><header><span class="tag sample">tpl:g10m8s3-1-2:coefficient-unknown-point</span>
+<span class="tag plain">numeric</span><span class="tag plain">advanced</span>
+<span class="id">q:g10m8s3-1-2:g010-coeffi</span></header>
+<p class="stem">If the gradient of <span class="m">CD=-3/4</span>, find <span class="m">p</span> given: <span class="m">C(4, 4p)</span> and <span class="m">D(8, -11)</span>.</p><p class="note">Answer: <span class="m">-2</span></p>
+<details><summary>Worked solution — what the tutor teaches from</summary><ol class="steps"><li>Let the coordinates of <span class="m">C</span> be <span class="m">(x<sub>1</sub>, y<sub>1</sub>)</span> and the coordinates of <span class="m">D</span> be <span class="m">(x<sub>2</sub>, y<sub>2</sub>)</span></li><li>Assign values: <span class="m">x<sub>1</sub>=4  y<sub>1</sub>=4p  x<sub>2</sub>=8  y<sub>2</sub>=-11</span></li><li><span class="m">m<sub>CD</sub>=(y<sub>2</sub>-y<sub>1</sub>)/(x<sub>2</sub>-x<sub>1</sub>)</span><br><span class="m">-3/4=(-11-4p)/(8-(4))</span><br><span class="m">-3/4×(4)=-11-4p</span><br><span class="m">-3=-11-4p</span><br><span class="m">4p=-11-(-3)</span><br><span class="m">4p=-8</span></li><li>The coordinate is written as <span class="m">4p</span>, not <span class="m">p</span> itself, so divide both sides by <span class="m">4</span>: <span class="m">p=-8/4=-2</span></li></ol>
+<p class="note">Parent book question: q:g10m8s3-1-2:ex8-3-4b</p></details>
+<div class="verdict" data-id="q:g10m8s3-1-2:g010-coeffi" role="group" aria-label="Verdict for q:g10m8s3-1-2:g010-coeffi"><button type="button" data-v="accept" aria-pressed="false">Accept</button><button type="button" data-v="fix" aria-pressed="false">Needs a fix</button><button type="button" data-v="reject" aria-pressed="false">Reject family</button></div><textarea rows="2" aria-label="Note on q:g10m8s3-1-2:g010-coeffi" placeholder="Note (optional)"></textarea></article><article class="card"><header><span class="tag sample">tpl:g10m8s3-1-2:unknown-x-from-gradient</span>
+<span class="tag plain">numeric</span><span class="tag plain">basic</span>
+<span class="id">q:g10m8s3-1-2:g010-unknow</span></header>
+<p class="stem">Given <span class="m">A(0, 6)</span> and <span class="m">B(x, 4)</span>, with <span class="m">m<sub>AB</sub>=1</span>, find <span class="m">x</span>.</p><p class="note">Answer: <span class="m">-2</span></p>
+<details><summary>Worked solution — what the tutor teaches from</summary><ol class="steps"><li>Let the coordinates of <span class="m">A</span> be <span class="m">(x<sub>1</sub>, y<sub>1</sub>)</span> and the coordinates of <span class="m">B</span> be <span class="m">(x<sub>2</sub>, y<sub>2</sub>)</span></li><li>Assign values: <span class="m">x<sub>1</sub>=0  y<sub>1</sub>=6  x<sub>2</sub>=x  y<sub>2</sub>=4</span></li><li>Write down the formula for gradient: <span class="m">m=(y<sub>2</sub>-y<sub>1</sub>)/(x<sub>2</sub>-x<sub>1</sub>)</span></li><li>Substitute values and solve for <span class="m">x</span>: <span class="m">1=(4-(6))/(x-(0))</span><br><span class="m">1(x-(0))=4-(6)</span><br><span class="m">x-(0)=-2</span><br><span class="m">x=-2+(0)</span><br><span class="m">=-2</span></li><li>Write the final answer: the coordinates of <span class="m">B</span> are <span class="m">(-2, 4)</span>. Therefore <span class="m">x=-2</span>.</li></ol>
+<p class="note">Parent book question: q:g10m8s3-1-2:we04</p></details>
+<div class="verdict" data-id="q:g10m8s3-1-2:g010-unknow" role="group" aria-label="Verdict for q:g10m8s3-1-2:g010-unknow"><button type="button" data-v="accept" aria-pressed="false">Accept</button><button type="button" data-v="fix" aria-pressed="false">Needs a fix</button><button type="button" data-v="reject" aria-pressed="false">Reject family</button></div><textarea rows="2" aria-label="Note on q:g10m8s3-1-2:g010-unknow" placeholder="Note (optional)"></textarea></article><article class="card"><header><span class="tag sample">wt:g10m8s3-2-1:line-through-two-points</span>
+<span class="tag plain">widget</span><span class="tag plain">advanced</span>
+<span class="id">q:g10m8s3-2-1:w001</span></header>
+<p class="stem">Draw the straight line through <span class="m">A(-3, 1)</span> and <span class="m">B(3, 3)</span>.</p><p class="note">Widget <b>line_drawer</b></p><pre class="note" style="white-space:pre-wrap;overflow-wrap:anywhere">{&quot;mode&quot;: &quot;points&quot;, &quot;through&quot;: [[-3, 1], [3, 3]]}</pre><p class="note">Wrong constructions it diagnoses:</p><ul class="list"><li><b>points-swapped</b> → Swaps which number is $x$ and which is $y$</li></ul>
+<details><summary>Worked solution — what the tutor teaches from</summary><ol class="steps"><li>Find the gradient between A and B: m = (y2 − y1) / (x2 − x1).</li><li>Keep the sign of each difference exactly as it comes out — do not drop a sign when a coordinate is already negative.</li><li>Starting from A, step according to that gradient (rise over run) to fix the line&#x27;s direction.</li></ol>
+<p class="note">Parent book question: q:g10m8s3-2-1:ex8-6-10a</p></details>
+<div class="verdict" data-id="q:g10m8s3-2-1:w001" role="group" aria-label="Verdict for q:g10m8s3-2-1:w001"><button type="button" data-v="accept" aria-pressed="false">Accept</button><button type="button" data-v="fix" aria-pressed="false">Needs a fix</button><button type="button" data-v="reject" aria-pressed="false">Reject family</button></div><textarea rows="2" aria-label="Note on q:g10m8s3-2-1:w001" placeholder="Note (optional)"></textarea></article><article class="card"><header><span class="tag sample">wt:g10m8s3-2-2:parallel-perpendicular-line</span>
+<span class="tag plain">widget</span><span class="tag plain">standard</span>
+<span class="id">q:g10m8s3-2-2:w002</span></header>
+<p class="stem">Line <span class="m">L</span> has equation <span class="m">y = -3x + 2</span>. Draw the line through the point <span class="m">(1, -4)</span> that is parallel to <span class="m">L</span>.</p><p class="note">Widget <b>line_drawer</b></p><pre class="note" style="white-space:pre-wrap;overflow-wrap:anywhere">{&quot;mode&quot;: &quot;equation&quot;, &quot;m&quot;: -3, &quot;b&quot;: -1}</pre><p class="note">Wrong constructions it diagnoses:</p><ul class="list"></ul>
+<details><summary>Worked solution — what the tutor teaches from</summary><ol class="steps"><li>Read the gradient of L from its equation (the coefficient of x).</li><li>Apply the rule for the relationship asked: parallel keeps the same gradient; perpendicular takes the negative reciprocal.</li><li>Substitute the given point&#x27;s coordinates into y = mx + c with the new gradient and solve for c.</li><li>Draw the line with that gradient through the given point (or any other point lying on it).</li></ol>
+<p class="note">Parent book question: q:g10m8s3-2-2:ex8-4-13</p></details>
+<div class="verdict" data-id="q:g10m8s3-2-2:w002" role="group" aria-label="Verdict for q:g10m8s3-2-2:w002"><button type="button" data-v="accept" aria-pressed="false">Accept</button><button type="button" data-v="fix" aria-pressed="false">Needs a fix</button><button type="button" data-v="reject" aria-pressed="false">Reject family</button></div><textarea rows="2" aria-label="Note on q:g10m8s3-2-2:w002" placeholder="Note (optional)"></textarea></article><article class="card"><header><span class="tag sample">tpl:g10m8s3-2-3:third-point-via-line-equation</span>
+<span class="tag plain">numeric</span><span class="tag plain">advanced</span>
+<span class="id">q:g10m8s3-2-3:g004-third-</span></header>
+<p class="stem">On the Cartesian plane, <span class="m">A(1, 0)</span> , <span class="m">B(3, -6)</span> and <span class="m">C(-2, a)</span> are collinear. Determine the value of <span class="m">a</span> .</p><p class="note">Answer: <span class="m">9</span></p>
+<details><summary>Worked solution — what the tutor teaches from</summary><ol class="steps"><li>First find the gradient of <span class="m">AB</span> :
+<span class="m">m=(y<sub>2</sub>-y<sub>1</sub>)/(x<sub>2</sub>-x<sub>1</sub>)</span><br><span class="m">=(-6-0)/(3-1)</span><br><span class="m">=-3</span></li><li>Therefore we have <span class="m">y=-3x+c</span> . Now substitute in <span class="m">A</span> :
+<span class="m">0=-3(1)+c</span><br><span class="m">c=3</span></li><li>Now we can substitute in <span class="m">C</span> to solve for <span class="m">a</span> :
+<span class="m">a=-3(-2) + 3</span><br><span class="m">∴ a=9</span></li></ol>
+<p class="note">Parent book question: q:g10m8s3-2-3:ex8-6-47a</p></details>
+<div class="verdict" data-id="q:g10m8s3-2-3:g004-third-" role="group" aria-label="Verdict for q:g10m8s3-2-3:g004-third-"><button type="button" data-v="accept" aria-pressed="false">Accept</button><button type="button" data-v="fix" aria-pressed="false">Needs a fix</button><button type="button" data-v="reject" aria-pressed="false">Reject family</button></div><textarea rows="2" aria-label="Note on q:g10m8s3-2-3:g004-third-" placeholder="Note (optional)"></textarea></article><article class="card"><header><span class="tag sample">tpl:g10m8s4-1-1:unknown-coordinate-from-midpoint</span>
+<span class="tag plain">numeric</span><span class="tag plain">advanced</span>
+<span class="id">q:g10m8s4-1-1:g010-unknow</span></header>
+<p class="stem"><span class="m">P(t, 7)</span> and <span class="m">Q(-5, -9)</span> are points in the Cartesian plane. <span class="m">M(-6, -1)</span> is the mid-point of <span class="m">PQ</span>. Find the value of <span class="m">t</span>.</p><p class="advice"><span class="tag attention">flagged</span> Tier: tagged advanced, but since its re-author (revise wf_c8f00d37-c28, version 2) it asks only for t — one backward mid-point step, probably standard. Decide the tier; if it changes, the family&#x27;s spec changes and it is graded again.</p><p class="note">Answer: <span class="m">-7</span></p>
+<details><summary>Worked solution — what the tutor teaches from</summary><ol class="steps"><li>Let the coordinates of <span class="m">P</span> be <span class="m">(t, 7)</span> and the coordinates of <span class="m">Q</span> be <span class="m">(-5, -9)</span>, with mid-point <span class="m">M(-6, -1)</span>.</li><li>The mid-point formula is <span class="m">M(x, y)=((x<sub>1</sub>+x<sub>2</sub>)/2, (y<sub>1</sub>+y<sub>2</sub>)/2)</span>.</li><li>Using the <span class="m">x</span>-coordinates: <span class="m">(t+(-5))/2=-6</span>, so <span class="m">t=2(-6)-(-5)=-7</span>.</li><li>Therefore <span class="m">t=-7</span>.</li></ol>
+<p class="note">Parent book question: q:g10m8s4-1-1:ex8-6-17</p></details>
+<div class="verdict" data-id="q:g10m8s4-1-1:g010-unknow" role="group" aria-label="Verdict for q:g10m8s4-1-1:g010-unknow"><button type="button" data-v="accept" aria-pressed="false">Accept</button><button type="button" data-v="fix" aria-pressed="false">Needs a fix</button><button type="button" data-v="reject" aria-pressed="false">Reject family</button></div><textarea rows="2" aria-label="Note on q:g10m8s4-1-1:g010-unknow" placeholder="Note (optional)"></textarea></article><article class="card"><header><span class="tag sample">wt:g10m8s4-1-1:plot-midpoint</span>
+<span class="tag plain">widget</span><span class="tag plain">basic</span>
+<span class="id">q:g10m8s4-1-1:w001</span></header>
+<p class="stem">Points <span class="m">A(-1, 3)</span> and <span class="m">B(3, -3)</span> are the end points of a line segment. Plot the mid-point <span class="m">M</span> of <span class="m">AB</span>.</p><p class="note">Widget <b>pair_plotter</b></p><pre class="note" style="white-space:pre-wrap;overflow-wrap:anywhere">{&quot;target&quot;: [1, 0]}</pre><p class="note">Wrong constructions it diagnoses:</p><ul class="list"></ul>
+<details><summary>Worked solution — what the tutor teaches from</summary><ol class="steps"><li>Add the two x-coordinates and divide by 2: <span class="m">M<sub>x</sub> = (A<sub>x</sub> + B<sub>x</sub>)/2</span>.</li><li>Add the two y-coordinates and divide by 2: <span class="m">M<sub>y</sub> = (A<sub>y</sub> + B<sub>y</sub>)/2</span>.</li><li>Plot <span class="m">M(M<sub>x</sub>, M<sub>y</sub>)</span>.</li></ol>
+<p class="note">Parent book question: q:g10m8s4-1-1:ex8-5-3a</p></details>
+<div class="verdict" data-id="q:g10m8s4-1-1:w001" role="group" aria-label="Verdict for q:g10m8s4-1-1:w001"><button type="button" data-v="accept" aria-pressed="false">Accept</button><button type="button" data-v="fix" aria-pressed="false">Needs a fix</button><button type="button" data-v="reject" aria-pressed="false">Reject family</button></div><textarea rows="2" aria-label="Note on q:g10m8s4-1-1:w001" placeholder="Note (optional)"></textarea></article><article class="card"><header><span class="tag sample">tpl:g10m8s4-1-2:endpoint-from-midpoint</span>
+<span class="tag plain">short</span><span class="tag plain">basic</span>
+<span class="id">q:g10m8s4-1-2:g008-endpoi</span></header>
+<p class="stem"><span class="m">M(2, 3)</span> is the mid-point of <span class="m">AB</span> with point <span class="m">A(-6, -4)</span> . Determine the coordinates of <span class="m">B</span> .</p><p class="note">Answer: <span class="m">(10, 10)</span></p>
+<details><summary>Worked solution — what the tutor teaches from</summary><ol class="steps"><li>Write down the mid-point formula: <span class="m">M(x, y)=((x<sub>1</sub>+x<sub>2</sub>)/2, (y<sub>1</sub>+y<sub>2</sub>)/2)</span></li><li>Substitute <span class="m">A(-6, -4)</span> for <span class="m">(x<sub>1</sub>, y<sub>1</sub>)</span> and <span class="m">M(2, 3)</span> for <span class="m">M(x, y)</span>: <span class="m">2=(-6+x<sub>2</sub>)/23=(-4+y<sub>2</sub>)/2</span></li><li>Multiply both sides by 2: <span class="m">4=-6+x<sub>2</sub>6=-4+y<sub>2</sub></span></li><li>Solve for <span class="m">x<sub>2</sub></span> and <span class="m">y<sub>2</sub></span>: <span class="m">x<sub>2</sub>=4--6y<sub>2</sub>=6--4</span><br><span class="m">x<sub>2</sub>=10y<sub>2</sub>=10</span></li><li>The coordinates of point <span class="m">B</span> are <span class="m">(10, 10)</span> .</li></ol>
+<p class="note">Parent book question: q:g10m8s4-1-2:ex8-6-43a</p></details>
+<div class="verdict" data-id="q:g10m8s4-1-2:g008-endpoi" role="group" aria-label="Verdict for q:g10m8s4-1-2:g008-endpoi"><button type="button" data-v="accept" aria-pressed="false">Accept</button><button type="button" data-v="fix" aria-pressed="false">Needs a fix</button><button type="button" data-v="reject" aria-pressed="false">Reject family</button></div><textarea rows="2" aria-label="Note on q:g10m8s4-1-2:g008-endpoi" placeholder="Note (optional)"></textarea></article><article class="card"><header><span class="tag sample">wt:g10m8s4-1-2:plot-endpoint</span>
+<span class="tag plain">widget</span><span class="tag plain">basic</span>
+<span class="id">q:g10m8s4-1-2:w003</span></header>
+<p class="stem"><span class="m">M(0, 0)</span> is the mid-point of <span class="m">AB</span>. Given <span class="m">A(4, -3)</span>, plot the other end point <span class="m">B</span>.</p><p class="note">Widget <b>pair_plotter</b></p><pre class="note" style="white-space:pre-wrap;overflow-wrap:anywhere">{&quot;target&quot;: [-4, 3]}</pre><p class="note">Wrong constructions it diagnoses:</p><ul class="list"></ul>
+<details><summary>Worked solution — what the tutor teaches from</summary><ol class="steps"><li>Write the mid-point formula for each coordinate: <span class="m">M<sub>x</sub> = (A<sub>x</sub> + B<sub>x</sub>)/2</span> and <span class="m">M<sub>y</sub> = (A<sub>y</sub> + B<sub>y</sub>)/2</span>.</li><li>Multiply both sides by 2 first: <span class="m">2M<sub>x</sub> = A<sub>x</sub> + B<sub>x</sub></span> and <span class="m">2M<sub>y</sub> = A<sub>y</sub> + B<sub>y</sub></span>.</li><li>Solve for the unknown end point: <span class="m">B<sub>x</sub> = 2M<sub>x</sub> - A<sub>x</sub></span> and <span class="m">B<sub>y</sub> = 2M<sub>y</sub> - A<sub>y</sub></span>.</li><li>Plot <span class="m">B(B<sub>x</sub>, B<sub>y</sub>)</span>.</li></ol>
+<p class="note">Parent book question: q:g10m8s4-1-2:ex8-5-4</p></details>
+<div class="verdict" data-id="q:g10m8s4-1-2:w003" role="group" aria-label="Verdict for q:g10m8s4-1-2:w003"><button type="button" data-v="accept" aria-pressed="false">Accept</button><button type="button" data-v="fix" aria-pressed="false">Needs a fix</button><button type="button" data-v="reject" aria-pressed="false">Reject family</button></div><textarea rows="2" aria-label="Note on q:g10m8s4-1-2:w003" placeholder="Note (optional)"></textarea></article><article class="card"><header><span class="tag sample">tpl:g10m8s4-1-3:missing-vertex-bisect</span>
+<span class="tag plain">short</span><span class="tag plain">basic</span>
+<span class="id">q:g10m8s4-1-3:g007-missin</span></header>
+<p class="stem"><span class="m">EFGH</span> is a parallelogram with vertices <span class="m">E(6, -3)</span>, <span class="m">F(-5, 5)</span> and <span class="m">G(6, 4)</span>. Find the coordinates of <span class="m">H</span> by using the fact that the diagonals of a parallelogram bisect each other.</p><p class="note">Answer: <span class="m">(17, -4)</span></p>
+<details><summary>Worked solution — what the tutor teaches from</summary><ol class="steps"><li>Since the diagonals of a parallelogram bisect each other, the mid-point of <span class="m">EG</span> is equal to the mid-point of <span class="m">FH</span>. First find the mid-point of <span class="m">EG</span>, then use it together with <span class="m">F</span> to find the coordinates of <span class="m">H</span>.</li><li><span class="m">M<sub>EG</sub>=((x<sub>1</sub>+x<sub>2</sub>)/2, (y<sub>1</sub>+y<sub>2</sub>)/2)</span><br><span class="m">=((6 + 6)/2, (-3 + 4)/2)</span><br><span class="m">=(6, 1/2)</span><br><span class="m">M<sub>FH</sub>=((x<sub>1</sub>+x<sub>2</sub>)/2, (y<sub>1</sub>+y<sub>2</sub>)/2)</span><br><span class="m">=((-5+x)/2, (5+y)/2)</span><br><span class="m">(6, 1/2)=((-5+x)/2, (5+y)/2)</span></li><li>Solve for <span class="m">x</span>:</li><li><span class="m">6=(-5+x)/2</span><br><span class="m">12=-5+x</span><br><span class="m">x=17</span></li><li>Solve for <span class="m">y</span>:</li><li><span class="m">1/2=(5+y)/2</span><br><span class="m">1=5+y</span><br><span class="m">y=-4</span></li><li>Therefore <span class="m">H(17, -4)</span>.</li></ol>
+<p class="note">Parent book question: q:g10m8s4-1-3:ex8-6-23</p></details>
+<div class="verdict" data-id="q:g10m8s4-1-3:g007-missin" role="group" aria-label="Verdict for q:g10m8s4-1-3:g007-missin"><button type="button" data-v="accept" aria-pressed="false">Accept</button><button type="button" data-v="fix" aria-pressed="false">Needs a fix</button><button type="button" data-v="reject" aria-pressed="false">Reject family</button></div><textarea rows="2" aria-label="Note on q:g10m8s4-1-3:g007-missin" placeholder="Note (optional)"></textarea></article></main>
+<footer class="bar"><div class="shell">
+<span class="count"></span><span class="status note" aria-live="polite"></span>
+<div class="verdict" style="margin:0"><button type="button" id="copy">Copy verdicts</button>
+<button type="button" id="download">Download</button></div>
+</div></footer>
+<script type="application/json" id="meta">{"gate": "G3", "page": "g3-9325277a6872", "bundle": "generated-questions.json, widget-questions.json", "seed": 20260925, "sample_percent": 10, "sampled": ["q:g10m8s1-1-2:w001", "q:g10m8s1-1-3:g003-quad-r", "q:g10m8s1-1-3:g006-pentag", "q:g10m8s2-1-2:g002-isolat", "q:g10m8s2-1-2:g009-constr", "q:g10m8s2-1-2:w003", "q:g10m8s3-1-1:g007-algebr", "q:g10m8s3-1-2:g010-coeffi", "q:g10m8s3-1-2:g010-unknow", "q:g10m8s3-2-1:w001", "q:g10m8s3-2-2:w002", "q:g10m8s3-2-3:g004-third-", "q:g10m8s4-1-1:g010-unknow", "q:g10m8s4-1-1:w001", "q:g10m8s4-1-2:g008-endpoi", "q:g10m8s4-1-2:w003", "q:g10m8s4-1-3:g007-missin"]}</script>
+<script>
+(() => {
+  const PAGE = document.body.dataset.page, GATE = document.body.dataset.gate;
+  const KEY = 'review:' + PAGE;
+  let state = {reviewer: '', verdicts: {}, notes: {}};
+  try { state = Object.assign(state, JSON.parse(localStorage.getItem(KEY) || '{}')); } catch (_) {}
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (_) {} };
+  const boxes = [...document.querySelectorAll('.verdict[data-id]')];
+  const count = document.querySelector('.count');
+  const paint = () => {
+    boxes.forEach((b) => b.querySelectorAll('button').forEach((x) =>
+      x.setAttribute('aria-pressed', String(state.verdicts[b.dataset.id] === x.dataset.v))));
+    const n = boxes.filter((b) => state.verdicts[b.dataset.id]).length;
+    if (count) count.textContent = n + ' of ' + boxes.length + ' decided';
+  };
+  boxes.forEach((b) => {
+    b.querySelectorAll('button').forEach((x) => x.addEventListener('click', () => {
+      state.verdicts[b.dataset.id] = x.dataset.v; save(); paint(); }));
+    const t = b.parentElement.querySelector('textarea');
+    if (t) { t.value = state.notes[b.dataset.id] || '';
+             t.addEventListener('input', () => { state.notes[b.dataset.id] = t.value; save(); }); }
+  });
+  const who = document.querySelector('#reviewer');
+  if (who) { who.value = state.reviewer || '';
+             who.addEventListener('input', () => { state.reviewer = who.value; save(); }); }
+  const doc = () => JSON.stringify(Object.assign(JSON.parse(document.querySelector('#meta').textContent),
+    {reviewer: state.reviewer, verdicts: state.verdicts, notes: state.notes}), null, 2);
+  const status = document.querySelector('.status');
+  document.querySelector('#copy').addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(doc()); status.textContent = 'copied'; }
+    catch (_) { status.textContent = 'copy failed — use Download'; }
+  });
+  document.querySelector('#download').addEventListener('click', () => {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([doc()], {type: 'application/json'}));
+    a.download = PAGE + '.verdicts.json'; a.click(); URL.revokeObjectURL(a.href);
+  });
+  paint();
+})();
+</script>
+</body>
+</html>

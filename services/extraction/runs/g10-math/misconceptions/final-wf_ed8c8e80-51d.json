@@ -1,0 +1,2335 @@
+{
+ "book": "g10-math",
+ "stage": "final",
+ "prompts_version": "s5-v4",
+ "by_ref": {
+  "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/s5-final",
+  "stage": "S5 final",
+  "shards_sha256": "6d6ae57c0a5fb0cb89a6fe64f3be8eeedac3e6c198b54b898c7c4ed8e292cc7b",
+  "files": 18
+ },
+ "embedded": {
+  "source": "runbook/misconceptions.workflow.js",
+  "source_sha256": "20e66c0689e1608198e18ef983ae5cd4d90b9b88fe8249975e20189a64373ea2",
+  "args_sha256": "3aaf916ad77d38672f7919177bc71cb6fe431e9c9c471ab455cc2cf32faaa143",
+  "generated_sha256": "e1e394cbe34533eea4da4a71bae2389ff8fa54f95b2603c99e7d83568de2f664",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "max_per_objective": 4,
+ "records": [
+  {
+   "lo": "lo:g10m8s1-1-1",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No usable evidence for this objective: the packet has only 6 worked_example items (p.316, p.321, p.322), each solved as '[figure]' with no written method steps; no caution boxes, worked-example remarks, or re-solve wrong turns were supplied; and the distractor list is empty (no test-item wrong options exist yet for this LO). Writing a misconception entry would mean arguing against a generic plotting error (e.g. swapping x/y, sign/quadrant slips) from general mathematical knowledge rather than from this book's own cautions or an authored distractor, which the grounding rule forbids. Recommend: capture caution-box/remark text for this LO if the book has any near p.284/316/321/322, or author distractors for its test items, then re-run this catalogue pass."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m8s1-1-2",
+   "entries": [
+    {
+     "id": "mc:g10m8s1-1-2:flips-a-coordinate-sign",
+     "lo_id": "lo:g10m8s1-1-2",
+     "label": "Flips the sign of one coordinate",
+     "description": "The student reads the right size for one of the two numbers in the pair but gives it the wrong sign, so they look on the wrong side for that value instead of the right one.",
+     "signal": "The final coordinate given keeps one number's size correct but with the opposite sign to the canonical answer, while the other coordinate matches (or is close).",
+     "kind": "book_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You've got the right number for one of the two values, just with the wrong sign — you've treated a negative as if it were positive, or a positive as if it were negative, so you've counted the right distance but in the wrong direction."
+      },
+      {
+       "step": 2,
+       "text_md": "Take $q:g10m8s1-1-2:ex8-1-4$: the point you want is at $(-4, -3)$. Keep the $-4$ but flip the $-3$ to $+3$, and you're pointed to a spot on the opposite side of where the point actually is — that's a different point altogether, not the one at $(-4, -3)$."
+      },
+      {
+       "step": 3,
+       "text_md": "So once you've read off the $x$ and $y$ values, check the sign on each one on its own: a negative value means counting the other way from where a positive one of the same size would take you."
+      }
+     ],
+     "maps": [
+      {
+       "question_id": "q:g10m8s1-1-2:ex8-1-3",
+       "choice_text": "C"
+      },
+      {
+       "question_id": "q:g10m8s1-1-2:ex8-1-4",
+       "choice_text": "A"
+      },
+      {
+       "question_id": "q:g10m8s1-1-2:ex8-1-4",
+       "choice_text": "D"
+      },
+      {
+       "question_id": "q:g10m8s1-1-2:ex8-1-4",
+       "choice_text": "E"
+      },
+      {
+       "question_id": "q:g10m8s1-1-2:ex8-6-2",
+       "choice_text": "D"
+      },
+      {
+       "question_id": "q:g10m8s1-1-2:ex8-6-2",
+       "choice_text": "C"
+      },
+      {
+       "question_id": "q:g10m8s1-1-2:ex8-6-2",
+       "choice_text": "E"
+      }
+     ],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "distractor",
+       "ref": "D1"
+      },
+      {
+       "type": "distractor",
+       "ref": "D2"
+      },
+      {
+       "type": "distractor",
+       "ref": "D4"
+      },
+      {
+       "type": "distractor",
+       "ref": "D6"
+      },
+      {
+       "type": "distractor",
+       "ref": "D7"
+      },
+      {
+       "type": "distractor",
+       "ref": "D10"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m8s1-1-2:ex8-1-4"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "book",
+       "ref": "q:g10m8s1-1-2:ex8-1-3",
+       "question_id": "q:g10m8s1-1-2:ex8-1-3",
+       "text": "C",
+       "tagged": null
+      },
+      {
+       "origin": "book",
+       "ref": "q:g10m8s1-1-2:ex8-1-4",
+       "question_id": "q:g10m8s1-1-2:ex8-1-4",
+       "text": "A",
+       "tagged": null
+      },
+      {
+       "origin": "book",
+       "ref": "q:g10m8s1-1-2:ex8-1-4",
+       "question_id": "q:g10m8s1-1-2:ex8-1-4",
+       "text": "D",
+       "tagged": null
+      },
+      {
+       "origin": "book",
+       "ref": "q:g10m8s1-1-2:ex8-1-4",
+       "question_id": "q:g10m8s1-1-2:ex8-1-4",
+       "text": "E",
+       "tagged": null
+      },
+      {
+       "origin": "book",
+       "ref": "q:g10m8s1-1-2:ex8-6-2",
+       "question_id": "q:g10m8s1-1-2:ex8-6-2",
+       "text": "D",
+       "tagged": null
+      },
+      {
+       "origin": "S7",
+       "ref": "wt:g10m8s1-1-2:plot-the-point#wrong-quadrant",
+       "question_id": "q:g10m8s1-1-2:w004",
+       "text": "Right distances, wrong signs — the point is in the wrong quadrant",
+       "tagged": "mc:g10m8s1-1-2:flips-a-coordinate-sign"
+      },
+      {
+       "origin": "book",
+       "ref": "q:g10m8s1-1-2:ex8-6-2",
+       "question_id": "q:g10m8s1-1-2:ex8-6-2",
+       "text": "C",
+       "tagged": null
+      },
+      {
+       "origin": "book",
+       "ref": "q:g10m8s1-1-2:ex8-6-2",
+       "question_id": "q:g10m8s1-1-2:ex8-6-2",
+       "text": "E",
+       "tagged": null
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The error (flip the sign of one coordinate, keep the other) is real and mostly well-evidenced. Canonical targets checked against the figures: ex8-1-4 is (-4,-3) [Answer B] and ex8-6-2 is (3,-5) [Answer A], matching the refutation's worked example exactly. 8 of the 9 attached items are genuine matches: A(-5,3)/D(-4,4)/E(4,-4) on ex8-1-4 each sit within 1 grid unit of a one-sign-flip of (-4,-3), and D(3,5)/C(3,3)/E(4,4) on ex8-6-2 sit at or near the one-sign-flip of (3,-5) (D is an exact hit). The wrong-quadrant widget predicate is a valid generic consequence of a single flipped sign. Only index [1] (B on ex8-1-3) is a bad citation: B=(-3,4) is nowhere near either sign-flip of the ex8-1-3 target (5,-4) (off by 8 in one coordinate each way) — it is actually the point that sits almost exactly on the SWAPPED-coordinate location (-4,5), i.e. it belongs to the other entry, not this one."
+     }
+    }
+   ],
+   "dropped": [
+    {
+     "id": "mc:g10m8s1-1-2:swaps-x-and-y-values",
+     "lo_id": "lo:g10m8s1-1-2",
+     "label": "Swaps the x- and y-values",
+     "aliases": [],
+     "verdict": "UNSUPPORTED",
+     "reason": "The swap error is a real, well-known conceptual mistake and the refutation's arithmetic is correct and matches the book (ex8-6-2's canonical target really is (3,-5), Answer A, and swapping it really does give (-5,3)). But neither of the two concrete book-option citations attached to this entry actually supports it: D on ex8-1-3 is nowhere near the swapped location for that question (it is instead an almost-exact sign-flip distractor, which belongs to the other entry), and B on ex8-6-2 is the single worst-fitting of the four wrong options in that question relative to the swapped location. Only the generic widget predicate (which is true by definition for this error) survives. A genuine swap-fit distractor does exist in this LO's content — B on ex8-1-3, which sits almost exactly on the swapped point (-4,5) — but this entry never cites it (it was miscited under the sign-flip entry instead). As authored, the entry's concrete evidence fails to support the claim, so per the conservative rule it is not confirmed."
+    }
+   ],
+   "stripped": [
+    {
+     "lo": "lo:g10m8s1-1-2",
+     "origin": "book",
+     "ref": "q:g10m8s1-1-2:ex8-1-3",
+     "question_id": "q:g10m8s1-1-2:ex8-1-3",
+     "text": "A",
+     "tagged": null,
+     "reason": "no named error: Target point E on ex8-1-3 sits at (5, -4). Checked against every other labelled point in that diagram: flipping one sign gives (-5,-4) or (5,4), and swapping gives (-4,5) — none of B(-3,4), C(-5,-3) or D(4,5) sits exactly there (C is closest to the x-flip location but one unit off in y). Option A sits at (-3,-5), which is not the flip, swap, or near-neighbour of any of those transformed locations — it shares neither coordinate's magnitude with the target. There is no honest way to name a specific reading error behind this click, so it is left unassigned; the runtime falls back to the canonical solution."
+    },
+    {
+     "lo": "lo:g10m8s1-1-2",
+     "origin": "book",
+     "ref": "q:g10m8s1-1-2:ex8-1-4",
+     "question_id": "q:g10m8s1-1-2:ex8-1-4",
+     "text": "C",
+     "tagged": null,
+     "reason": "no named error: Target point B on ex8-1-4 sits at (-4,-3). The exact sign-flip locations are (4,-3) and (-4,3), and the swap location is (-3,-4); the diagram's other points (A, D, E) sit one unit off these at best (D and A each one unit from a flip location, E one unit from the other). Option C sits at (5,-5) — not the flip, swap, or a near neighbour of any of them, and not sharing a coordinate magnitude with the target. As with D0, no evidence-backed diagnosis applies; left unassigned, falling back to the canonical solution."
+    },
+    {
+     "lo": "lo:g10m8s1-1-2",
+     "origin": "book",
+     "ref": "q:g10m8s1-1-2:ex8-1-3",
+     "question_id": "q:g10m8s1-1-2:ex8-1-3",
+     "text": "B",
+     "tagged": null,
+     "reason": "does not encode mc:g10m8s1-1-2:flips-a-coordinate-sign: B on ex8-1-3 = (-3,4). Canonical target is (5,-4); its sign-flips are (-5,-4) and (5,4). B is far from both (squared distance 68 and 64) but very close to the SWAPPED point (-4,5) (squared distance 2) — this is a swap error, not a sign-flip, and is misattached here."
+    },
+    {
+     "lo": "lo:g10m8s1-1-2",
+     "origin": "book",
+     "ref": "q:g10m8s1-1-2:ex8-1-3",
+     "question_id": "q:g10m8s1-1-2:ex8-1-3",
+     "text": "D",
+     "tagged": null,
+     "reason": "its entry mc:g10m8s1-1-2:swaps-x-and-y-values was dropped (UNSUPPORTED)"
+    },
+    {
+     "lo": "lo:g10m8s1-1-2",
+     "origin": "book",
+     "ref": "q:g10m8s1-1-2:ex8-6-2",
+     "question_id": "q:g10m8s1-1-2:ex8-6-2",
+     "text": "B",
+     "tagged": null,
+     "reason": "its entry mc:g10m8s1-1-2:swaps-x-and-y-values was dropped (UNSUPPORTED)"
+    },
+    {
+     "lo": "lo:g10m8s1-1-2",
+     "origin": "S7",
+     "ref": "wt:g10m8s1-1-2:plot-the-point#swapped-coordinates",
+     "question_id": "q:g10m8s1-1-2:w003",
+     "text": "Plotted (y, x) — the pair read in the wrong order",
+     "tagged": "mc:g10m8s1-1-2:swaps-x-and-y-values",
+     "reason": "its entry mc:g10m8s1-1-2:swaps-x-and-y-values was dropped (UNSUPPORTED)"
+    }
+   ],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "Options A (ex8-1-3) and C (ex8-1-4) do not sit at the exact sign-flip or swap location of their question's target point, nor next to one — checked against every other labelled point in each diagram — so neither could be tied to a nameable error; both are assigned '' rather than stretched onto an existing entry."
+    },
+    {
+     "kind": "other",
+     "text": "The coordinates of every labelled option (not just the target) in the three figures for ex8-1-3, ex8-1-4 and ex8-6-2 were read off the diagram images, since the question text gives only the target point's coordinates. That reading is what supports the flips-a-coordinate-sign assignments on ex8-6-2 (D sits exactly at the y-sign-flip of the target, with C and E as its immediate neighbours) and what rules out an assignment on ex8-1-3/ex8-1-4 (no point sits at any transform of those targets)."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m8s1-1-3",
+   "entries": [
+    {
+     "id": "mc:g10m8s1-1-3:partial-arc-check",
+     "lo_id": "lo:g10m8s1-1-3",
+     "label": "Checks only part of the loop",
+     "description": "Confirms a shape's naming from a couple of neighbouring vertices whose letters happen to climb correctly, and stops before tracing the rest of the way around.",
+     "signal": null,
+     "kind": "book_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You looked at a couple of vertices sitting next to each other, saw their letters climb correctly, and treated that one climbing pair as enough proof the whole shape is alphabetically named."
+      },
+      {
+       "step": 2,
+       "text_md": "In ex8-1-6, shape Y opens exactly like that: it starts L, M, which climbs perfectly — but the very next label jumps straight to Q, skipping right over N, the letter that should really come next."
+      },
+      {
+       "step": 3,
+       "text_md": "The same trap appears again in ex8-6-3: shape Y there opens G, H, another correct-looking climb, before jumping to R just one step later. A convincing pair anywhere around the ring doesn't mean the rest of the shape keeps climbing."
+      },
+      {
+       "step": 4,
+       "text_md": "So don't stop at one pair. Pick a vertex, trace every single vertex around the shape in the same direction, and check that each label is exactly one letter after the last, all the way back to where you started — only a labelling that survives the whole loop is correctly named."
+      }
+     ],
+     "maps": [
+      {
+       "question_id": "q:g10m8s1-1-3:ex8-1-5",
+       "choice_text": "shape W"
+      },
+      {
+       "question_id": "q:g10m8s1-1-3:ex8-1-5",
+       "choice_text": "shape X"
+      },
+      {
+       "question_id": "q:g10m8s1-1-3:ex8-1-5",
+       "choice_text": "shape Y"
+      },
+      {
+       "question_id": "q:g10m8s1-1-3:ex8-1-6",
+       "choice_text": "shape W"
+      },
+      {
+       "question_id": "q:g10m8s1-1-3:ex8-1-6",
+       "choice_text": "shape X"
+      },
+      {
+       "question_id": "q:g10m8s1-1-3:ex8-1-6",
+       "choice_text": "shape Y"
+      },
+      {
+       "question_id": "q:g10m8s1-1-3:ex8-6-3",
+       "choice_text": "Shape W"
+      },
+      {
+       "question_id": "q:g10m8s1-1-3:ex8-6-3",
+       "choice_text": "Shape X"
+      },
+      {
+       "question_id": "q:g10m8s1-1-3:ex8-6-3",
+       "choice_text": "Shape Y"
+      }
+     ],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "distractor",
+       "ref": "D0"
+      },
+      {
+       "type": "distractor",
+       "ref": "D1"
+      },
+      {
+       "type": "distractor",
+       "ref": "D2"
+      },
+      {
+       "type": "distractor",
+       "ref": "D3"
+      },
+      {
+       "type": "distractor",
+       "ref": "D4"
+      },
+      {
+       "type": "distractor",
+       "ref": "D5"
+      },
+      {
+       "type": "distractor",
+       "ref": "D6"
+      },
+      {
+       "type": "distractor",
+       "ref": "D7"
+      },
+      {
+       "type": "distractor",
+       "ref": "D8"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "book",
+       "ref": "q:g10m8s1-1-3:ex8-1-5",
+       "question_id": "q:g10m8s1-1-3:ex8-1-5",
+       "text": "shape W",
+       "tagged": null
+      },
+      {
+       "origin": "book",
+       "ref": "q:g10m8s1-1-3:ex8-1-5",
+       "question_id": "q:g10m8s1-1-3:ex8-1-5",
+       "text": "shape X",
+       "tagged": null
+      },
+      {
+       "origin": "book",
+       "ref": "q:g10m8s1-1-3:ex8-1-5",
+       "question_id": "q:g10m8s1-1-3:ex8-1-5",
+       "text": "shape Y",
+       "tagged": null
+      },
+      {
+       "origin": "book",
+       "ref": "q:g10m8s1-1-3:ex8-1-6",
+       "question_id": "q:g10m8s1-1-3:ex8-1-6",
+       "text": "shape W",
+       "tagged": null
+      },
+      {
+       "origin": "book",
+       "ref": "q:g10m8s1-1-3:ex8-1-6",
+       "question_id": "q:g10m8s1-1-3:ex8-1-6",
+       "text": "shape X",
+       "tagged": null
+      },
+      {
+       "origin": "book",
+       "ref": "q:g10m8s1-1-3:ex8-1-6",
+       "question_id": "q:g10m8s1-1-3:ex8-1-6",
+       "text": "shape Y",
+       "tagged": null
+      },
+      {
+       "origin": "book",
+       "ref": "q:g10m8s1-1-3:ex8-6-3",
+       "question_id": "q:g10m8s1-1-3:ex8-6-3",
+       "text": "Shape W",
+       "tagged": null
+      },
+      {
+       "origin": "book",
+       "ref": "q:g10m8s1-1-3:ex8-6-3",
+       "question_id": "q:g10m8s1-1-3:ex8-6-3",
+       "text": "Shape X",
+       "tagged": null
+      },
+      {
+       "origin": "book",
+       "ref": "q:g10m8s1-1-3:ex8-6-3",
+       "question_id": "q:g10m8s1-1-3:ex8-6-3",
+       "text": "Shape Y",
+       "tagged": null
+      },
+      {
+       "origin": "S6",
+       "ref": "tpl:g10m8s1-1-3:pentagon-partial-arc#mc:g10m8s1-1-3:partial-arc-check",
+       "question_id": "q:g10m8s1-1-3:g001-pentag",
+       "text": "Yes — the first four vertices climb one letter at a time, so the pentagon is correctly named.",
+       "tagged": "mc:g10m8s1-1-3:partial-arc-check"
+      },
+      {
+       "origin": "S6",
+       "ref": "tpl:g10m8s1-1-3:quad-rotated-start#untagged",
+       "question_id": "q:g10m8s1-1-3:g001-quad-r",
+       "text": "GIHJ",
+       "tagged": null
+      },
+      {
+       "origin": "S6",
+       "ref": "tpl:g10m8s1-1-3:quad-rotated-start#untagged",
+       "question_id": "q:g10m8s1-1-3:g002-quad-r",
+       "text": "ACBD",
+       "tagged": null
+      },
+      {
+       "origin": "S6",
+       "ref": "tpl:g10m8s1-1-3:quad-rotated-start#untagged",
+       "question_id": "q:g10m8s1-1-3:g003-quad-r",
+       "text": "CEDF",
+       "tagged": null
+      },
+      {
+       "origin": "S6",
+       "ref": "tpl:g10m8s1-1-3:quad-rotated-start#untagged",
+       "question_id": "q:g10m8s1-1-3:g004-quad-r",
+       "text": "TVUW",
+       "tagged": null
+      },
+      {
+       "origin": "S6",
+       "ref": "tpl:g10m8s1-1-3:quad-rotated-start#untagged",
+       "question_id": "q:g10m8s1-1-3:g005-quad-r",
+       "text": "EGFH",
+       "tagged": null
+      },
+      {
+       "origin": "S6",
+       "ref": "tpl:g10m8s1-1-3:quad-rotated-start#untagged",
+       "question_id": "q:g10m8s1-1-3:g006-quad-r",
+       "text": "VXWY",
+       "tagged": null
+      },
+      {
+       "origin": "S6",
+       "ref": "tpl:g10m8s1-1-3:quad-rotated-start#untagged",
+       "question_id": "q:g10m8s1-1-3:g009-quad-r",
+       "text": "RTSU",
+       "tagged": null
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "Verified against the three figures directly. Canonical solution for ex8-1-5/8-1-6/8-6-3 is identical: the correct shape (Z) is the one whose 20 vertices climb A-T alphabetically all the way around (either rotational direction), wrapping T->A. Tracing shape Z clockwise in all three figures (top row L-to-R, right column top-to-bottom, bottom row R-to-L, left column bottom-to-top) gives a perfect unbroken climb in every case, confirming the book's rule and this reading convention. Checking the wrong shapes: in ex8-1-5 shape W the adjacent pairs B-C, Q-R and K-L each climb by exactly one letter although the rest of the ring does not; shape X there has H-I and S-T climbing pairs. In ex8-1-6, the top arc of shape Y reads I,S,L,M,Q — so L,M climbs, then jumps straight to Q, skipping N, exactly as claimed. In ex8-6-3, shape Y's top arc reads T,M,G,H,R — G,H climbs, then the very next vertex is R, exactly as claimed. So the refutation's own worked examples check out arithmetically against the actual diagrams. The corrective step (trace every vertex the whole way round in one consistent direction) is exactly the book's method, adding nothing beyond it, and it argues specifically against 'stopping after a locally-climbing pair' rather than restating the rule in the abstract."
+     }
+    },
+    {
+     "id": "mc:g10m8s1-1-3:expects-labels-to-start-at-a",
+     "lo_id": "lo:g10m8s1-1-3",
+     "label": "Expects the labels to start at A",
+     "description": "Judges a shape's naming by whether the first vertex noticed is labelled A, instead of checking that the labels climb one at a time all the way around from wherever they happen to start.",
+     "signal": null,
+     "kind": "generated_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You expect the correctly-labelled shape to start at A, the way the alphabet itself starts, so a shape whose first letter you notice is something else — like O, E, or T — looks like it can't be the right one."
+      },
+      {
+       "step": 2,
+       "text_md": "But the book's own correct answer never starts at A. In ex8-1-5, shape Z's labels run O, P, Q, R, S, T, A, B, C, D... — climbing one letter at a time and looping from T back round to A, exactly the pattern the rule asks for, even though the run begins at O."
+      },
+      {
+       "step": 3,
+       "text_md": "The same holds in ex8-1-6 (the correct shape starts at E) and in ex8-6-3 (it starts at T): across all three questions, the correct shape is never the one that happens to start at A — what makes it correct is that the climb never breaks, wherever it begins."
+      },
+      {
+       "step": 4,
+       "text_md": "So don't hunt for A. Pick any vertex, check that each next label is one letter further on (wrapping from T back to A), and follow that all the way round back to your start — if the climb holds the whole way, the shape is correctly named no matter which letter it starts on."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m8s1-1-3:ex8-1-5"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m8s1-1-3:ex8-1-6"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m8s1-1-3:ex8-6-3"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "S6",
+       "ref": "tpl:g10m8s1-1-3:pentagon-partial-arc#mc:g10m8s1-1-3:expects-labels-to-start-at-a",
+       "question_id": "q:g10m8s1-1-3:g001-pentag",
+       "text": "No — the naming is wrong because the sequence does not start with the letter A.",
+       "tagged": "mc:g10m8s1-1-3:expects-labels-to-start-at-a"
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "Reconstructed each correct shape (Z) directly from the figures. ex8-1-5: clockwise sequence is O,P,Q,R,S,T,A,B,C,D,E,F,G,H,I,J,K,L,M,N — a full climb that wraps T->A, never touching A except mid-cycle; matches the refutation's cited sequence exactly. ex8-1-6: clockwise sequence is C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,A,B — again a full climb wrapping T->A, and the apex/topmost vertex is E, matching the refutation's claim that this shape 'starts at E'. ex8-6-3: clockwise sequence is R,S,T,A,B,C,...,Q — full climb wrapping T->A, apex vertex T, matching the refutation's claim it 'starts at T'. In every case the correct shape is confirmed correct by the same T->A wraparound climb and none of them opens on A, so the refutation's central point (correctness depends on unbroken climbing, not on starting at A) is accurate and grounded in the actual canonical shapes, not an invented rule."
+     }
+    },
+    {
+     "id": "mc:g10m8s1-1-3:assumes-only-one-direction-counts",
+     "lo_id": "lo:g10m8s1-1-3",
+     "label": "Thinks only one direction counts",
+     "description": "Believes the vertices must be named going one specific way round the shape (usually clockwise), and doubts or rejects a shape that is correctly named going the other way.",
+     "signal": null,
+     "kind": "generated_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You've noticed that the correct shape's labels climb going clockwise, so you've settled on clockwise as the one fixed rule — and a shape labelled the other way round looks wrong on sight."
+      },
+      {
+       "step": 2,
+       "text_md": "But the rule the book states doesn't pick a side: a shape is named correctly if its labels climb alphabetically 'either clockwise or anti-clockwise around the shape.' Both directions count equally; clockwise isn't a stricter, separate requirement."
+      },
+      {
+       "step": 3,
+       "text_md": "It's true that in ex8-1-5, ex8-1-6 and ex8-6-3 the correct shape always happens to be drawn climbing clockwise — but that's just how those particular diagrams were drawn, not evidence that anti-clockwise fails the rule."
+      },
+      {
+       "step": 4,
+       "text_md": "So when you check a shape, follow whichever direction it's drawn in, clockwise or anti-clockwise, and confirm the labels climb by one letter the whole way round in that direction — either direction is a correct naming, as long as you follow it consistently all the way around."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m8s1-1-3:ex8-1-5"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m8s1-1-3:ex8-1-6"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m8s1-1-3:ex8-6-3"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "S6",
+       "ref": "tpl:g10m8s1-1-3:pentagon-partial-arc#mc:g10m8s1-1-3:assumes-only-one-direction-counts",
+       "question_id": "q:g10m8s1-1-3:g001-pentag",
+       "text": "No — the labels must be read going anticlockwise instead, since a clockwise reading is never the correct convention.",
+       "tagged": "mc:g10m8s1-1-3:assumes-only-one-direction-counts"
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The canonical solution's stated rule is verbatim 'alphabetical order, either clockwise or anti-clockwise around the shape' in all three questions, so the refutation quotes the book's own rule accurately rather than inventing one. Reconstructing the correct shape Z in each figure using the standard clockwise traversal (top row left-to-right, right side down, bottom row right-to-left, left side up) produces an unbroken alphabetical climb in all three cases, confirming that the book's own correct answers do happen to run clockwise, exactly as the refutation states (used only as an observation about these diagrams, not as evidence that anti-clockwise is disallowed). The corrective advice (follow whichever direction the shape is drawn in, consistently) restates nothing beyond the book's own bidirectional rule."
+     }
+    },
+    {
+     "id": "mc:g10m8s1-1-3:writes-descending-order",
+     "lo_id": "lo:g10m8s1-1-3",
+     "label": "Writes the letters in descending order",
+     "description": "Traces the shape's vertices in the direction that makes the labels count down instead of climb, ending up with a clean run of consecutive letters in reverse order, without checking that the final order is actually ascending.",
+     "signal": "The final answer is a straight run of consecutive letters running backwards (descending) rather than forwards (ascending).",
+     "kind": "generated_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You're on the right track that a correctly named shape's vertices use consecutive letters as you trace around it — that part of the approach is solid. The mix-up is the direction you traced it in: you went the way that makes the letters count down, rather than the way that makes them climb."
+      },
+      {
+       "step": 2,
+       "text_md": "The book's own check, in every one of its naming questions (ex8-1-5, ex8-1-6, ex8-6-3), is to look at a shape and ask whether tracing around it gives the letters in alphabetical order — meaning climbing, like stepping up, not counting down."
+      },
+      {
+       "step": 3,
+       "text_md": "Going around the very same four vertices in the opposite direction just reads that climbing order backwards. It still uses the right four letters and still moves one at a time, which is why it can feel right — but the convention specifically calls for the climbing direction, not the counting-down one."
+      },
+      {
+       "step": 4,
+       "text_md": "So once you've traced a shape's vertices and written the letters down, check which way they're going: if they climb, you're set; if they count down, retrace the same shape starting from the opposite end, and the letters will climb instead."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "distractor",
+       "ref": "D0"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m8s1-1-3:ex8-1-5"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "S6",
+       "ref": "tpl:g10m8s1-1-3:quad-rotated-start#mc:g10m8s1-1-3:writes-descending-order",
+       "question_id": "q:g10m8s1-1-3:g001-quad-r",
+       "text": "JIHG",
+       "tagged": "mc:g10m8s1-1-3:writes-descending-order"
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "Grounded in the same canonical rule (labels must climb, i.e. ascend, one letter at a time around the shape). Tracing any of the confirmed correct Z shapes in the reverse (anticlockwise-relative) direction produces the same set of consecutive letters read backwards, i.e. a descending run — the exact error this entry describes. It is a distinct, well-defined error (direction of traversal reversed, producing a real descending consecutive run) rather than a restatement of the checking method, and the fix (retrace from the opposite end) is the book's own convention applied correctly."
+     }
+    }
+   ],
+   "dropped": [],
+   "stripped": [
+    {
+     "lo": "lo:g10m8s1-1-3",
+     "origin": "S6",
+     "ref": "tpl:g10m8s1-1-3:quad-rotated-start#mc:g10m8s1-1-3:names-from-given-start",
+     "question_id": "q:g10m8s1-1-3:g001-quad-r",
+     "text": "JGHI",
+     "tagged": "mc:g10m8s1-1-3:names-from-given-start",
+     "reason": "no named error: D2 'JGHI' is G,H,I,J rotated to start at J (J then wraps to G,H,I) — a legitimate 'climbs all the way around from wherever it starts, with one wrap from the top letter back to the bottom' naming, matching the reasoning already captured in mc:g10m8s1-1-3:expects-labels-to-start-at-a (starting point is not required to be the alphabetically-first vertex). No honest error can be assigned; see flags."
+    }
+   ],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "The evidence section for this LO is empty (no caution boxes, worked-example remarks, or re-solve wrong turns). Every assignment above rests only on the three questions' identical canonical solutions ('alphabetical order, either clockwise or anti-clockwise around the shape') plus the wrong-option strings themselves — there is no book-printed caution to cite for any entry."
+    },
+    {
+     "kind": "other",
+     "text": "Two new tags were proposed upstream (D0: 'writes-descending-order', D2: 'names-from-given-start') but only one new entry is allowed. 'names-from-given-start' was not adopted: its own stated reasoning ('rotate to start at the alphabetically-first vertex') contradicts the already-established mc:g10m8s1-1-3:expects-labels-to-start-at-a, and D2 ('JGHI') checks out mathematically as a valid rotation-with-wrap of the ascending order, so it was left unassigned ('') rather than tagged with an error that would contradict an existing, correct entry. This is worth a human double-check against the actual figure, since D2 is listed among 'options that still need an error' yet appears to encode none."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m8s2-1-1",
+   "entries": [
+    {
+     "id": "mc:g10m8s2-1-1:reads-triangle-type-off-sketch",
+     "lo_id": "lo:g10m8s2-1-1",
+     "label": "Judges the triangle from the sketch, not the calculation",
+     "description": "Looks at how the triangle appears in a rough sketch of $P$, $Q$ and $R$ and calls it equilateral because it looks fairly even all round, instead of computing and comparing the three side lengths with the distance formula.",
+     "signal": null,
+     "kind": "book_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You looked at the sketch of $\\triangle PQR$ — it comes out looking roughly even all round — and went with equilateral. Sketching the triangle first is exactly what the book asks you to do; the slip is stopping at the picture instead of using it to check a calculation."
+      },
+      {
+       "step": 2,
+       "text_md": "The book always settles a triangle's type by calculating every side, not by eye. Here: $PQ=\\sqrt{(5-1)^2+(1-3)^2}=\\sqrt{16+4}=\\sqrt{20}=2\\sqrt5\\approx4.47$, $QR=\\sqrt{(1-1)^2+(3-(-2))^2}=\\sqrt{0+25}=5$, and $PR=\\sqrt{(5-1)^2+(1-(-2))^2}=\\sqrt{16+9}=\\sqrt{25}=5$. $PQ$ does not match the other two, so all three sides are not equal — the triangle cannot be equilateral, however even the sketch looks."
+      },
+      {
+       "step": 3,
+       "text_md": "Whenever you're asked to name a triangle from its coordinates, calculate all three side lengths first and only then compare the numbers: three matches is equilateral, exactly two matches (as here, $QR=PR=5$) is isosceles, and no matches is scalene."
+      }
+     ],
+     "maps": [
+      {
+       "question_id": "q:g10m8s2-1-1:ex8-6-39a",
+       "choice_text": "equilateral"
+      }
+     ],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "b03156"
+      },
+      {
+       "type": "distractor",
+       "ref": "D0"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m8s2-1-1:ex8-6-39a"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "book",
+       "ref": "q:g10m8s2-1-1:ex8-6-39a",
+       "question_id": "q:g10m8s2-1-1:ex8-6-39a",
+       "text": "equilateral",
+       "tagged": null
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "Canonical q:ex8-6-39a gives PQ=√((5-1)²+(1-3)²)=√20=2√5≈4.47, QR=√((1-1)²+(3-(-2))²)=√25=5, PR=√((5-1)²+(1-(-2))²)=√25=5, so QR=PR≠PQ → isosceles (book answer B). The refutation reproduces these three values exactly and correctly, correctly shows PQ breaks an all-equal reading, and correctly identifies QR=PR as the matching pair. The described error — reading 'looks fairly even all round' off the sketch as equilateral instead of computing — is a real, book-grounded failure mode: the book's own method (and its caution b03156 on sketching) is to sketch first, then verify by calculation, and the error is exactly skipping the second half. The closing rule (3 matches=equilateral, 2=isosceles, 0=scalene) is a direct restatement of the classification the book's own worked examples use (e.g. ex8-6-39a: two sides equal → isosceles; ex8-6-36c: four sides equal → square), not outside content."
+     }
+    },
+    {
+     "id": "mc:g10m8s2-1-1:drops-double-negative-sign",
+     "lo_id": "lo:g10m8s2-1-1",
+     "label": "Loses a sign subtracting a negative coordinate",
+     "description": "When a coordinate is negative, simplifies a subtraction like $3-(-2)$ straight to $3-2$ instead of $3+2$, so a genuine match between two side lengths disappears and the triangle looks like it has three different sides.",
+     "signal": null,
+     "kind": "book_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You're subtracting $R$'s $y$-coordinate, $-2$, and only one of its two negative signs made it into the calculation, so $3-(-2)$ landed as $3-2$ rather than $3+2$. It's an easy line to lose, especially sitting among simpler single subtractions in the same question."
+      },
+      {
+       "step": 2,
+       "text_md": "It matters here because $R(1,-2)$ appears in both $QR$ and $PR$. Done in full: $QR=\\sqrt{(1-1)^2+(3-(-2))^2}=\\sqrt{0+5^2}=5$ and $PR=\\sqrt{(5-1)^2+(1-(-2))^2}=\\sqrt{4^2+3^2}=5$ — they genuinely match. Drop the sign the same way in both, though, and $3-(-2)$ becomes $1$ so $QR\\to\\sqrt{0+1}=1$, while $1-(-2)$ becomes $-1$ so $PR\\to\\sqrt{16+1}=\\sqrt{17}\\approx4.12$ — now nothing lines up with $PQ\\approx4.47$ either, and the triangle looks scalene when two of its sides are really equal."
+      },
+      {
+       "step": 3,
+       "text_md": "Whenever a coordinate is negative, write the subtraction out before simplifying — $y_1-y_2$ with $y_2=-2$ is $y_1-(-2)=y_1+2$ — and square only after that sign is settled. Get that right on both $QR$ and $PR$ and the match between them shows up correctly."
+      }
+     ],
+     "maps": [
+      {
+       "question_id": "q:g10m8s2-1-1:ex8-6-39a",
+       "choice_text": "scalene"
+      }
+     ],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "distractor",
+       "ref": "D1"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m8s2-1-1:ex8-6-39a"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "book",
+       "ref": "q:g10m8s2-1-1:ex8-6-39a",
+       "question_id": "q:g10m8s2-1-1:ex8-6-39a",
+       "text": "scalene",
+       "tagged": null
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "Canonical values are QR=5 and PR=5 (matching), with PQ=2√5≈4.47. Applying the described slip consistently — treating y1-(-2) as y1-2 rather than y1+2 — to both occurrences of R's y=-2 gives QR→√(0+1²)=1 and PR→√(4²+(-1)²)=√17≈4.12, which the refutation computes correctly and which now differ from each other and from PQ≈4.47, producing an apparent scalene triangle where two sides are genuinely equal. The arithmetic in both the 'correct' and 'erroneous' branches checks out exactly against the canonical method (same distance formula, same coordinates), and the corrective instruction (write y1-(-2)=y1+2 before squaring) is the book's own method, not new content."
+     }
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m8s2-1-2",
+   "entries": [
+    {
+     "id": "mc:g10m8s2-1-2:stops-at-first-root",
+     "lo_id": "lo:g10m8s2-1-2",
+     "label": "Only writes down one root",
+     "description": "Clears the square root and reaches the quadratic correctly, then writes only one of its two solutions as the final answer, not realising a squared difference gives two values.",
+     "signal": "Final answer gives only one of the two values the quadratic produces (e.g. \"y = 21\" alone, no \"or\") for a question where nothing rules the other value out.",
+     "kind": "generated_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You cleared the square root and squared both sides correctly — that part is exactly right. The gap is stopping as soon as you find one value that fits, the way you would for an equation like $2y=6$, which really does have only one answer."
+      },
+      {
+       "step": 2,
+       "text_md": "But here the unknown sits inside a squared term, $(y_1-y_2)^2$, and a squared term doesn't point back to a single number. For $R(3, 9)$ and $S(8, y)$ with $d=13$, clearing the square root gives $0=y^2-18y-63=(y+3)(y-21)$ — a genuine quadratic, so it factors into two brackets and two roots."
+      },
+      {
+       "step": 3,
+       "text_md": "If you stopped at $y=21$ alone, you'd be leaving out $S(8, -3)$, which is just as real a point: $\\sqrt{(3-8)^2+(9-(-3))^2}=\\sqrt{25+144}=\\sqrt{169}=13$, exactly the distance given. Neither root is more correct than the other unless something else in the question says so."
+      },
+      {
+       "step": 4,
+       "text_md": "So once you reach a quadratic, factor it (or take $\\pm$ of a square root) and write down both values first, then check each one back in the distance formula, the way the book does for every worked example, before deciding whether to keep one or both."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "we02 caution box p.290"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "we02 canonical solution p.290"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "S7",
+       "ref": "wt:g10m8s2-1-2:missing-coord-number-line#missed-values",
+       "question_id": "q:g10m8s2-1-2:w003",
+       "text": "Part of the answer set was not marked",
+       "tagged": "mc:g10m8s2-1-2:stops-at-first-root"
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The error is real and book-supported: the caution box at p.290 explicitly warns that squaring (y1-y2)^2 yields a quadratic with two expected values, and WE02's canonical solution factors 0=y^2-18y-63=(y+3)(y-21) and checks both y=-3 and y=21 back into the distance formula. The refutation reproduces this algebra exactly (verified independently: (3-8)^2+(9-y)^2=169 gives y^2-18y-63=0, factoring to (y+3)(y-21)), and its check of the omitted root y=-3 (sqrt(25+144)=13) is correct. It argues specifically against stopping at one root rather than restating the general method, and its closing caveat ('unless something else in the question says so') correctly avoids contradicting the companion entry about restricted questions."
+     }
+    },
+    {
+     "id": "mc:g10m8s2-1-2:keeps-both-roots-ignores-restriction",
+     "lo_id": "lo:g10m8s2-1-2",
+     "label": "Keeps both roots when the question narrows it down",
+     "description": "Solves the quadratic and finds both values, then reports both even when the question's figure or a stated condition on the coordinate has already ruled one of them out.",
+     "signal": "Final answer gives both values with \"or\" (e.g. \"x = 1 or x = -3\") for a question that shows a figure fixing the point's location, or states a condition on the coordinate (like \"k >= 0\"), where the book keeps only one.",
+     "kind": "generated_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You solved the quadratic correctly and found the two values it produces — that's real progress, and for a question like $CD=5$ with $C(6, -2)$, $D(x, 2)$, both $x=3$ and $x=9$ really are the final answer. The gap is treating every question that way, even when the question has already told you which one it wants."
+      },
+      {
+       "step": 2,
+       "text_md": "Some of this objective's questions add a picture or a stated condition alongside the algebra. For the quadrilateral question, solving gives $k=-11$ or $k=1$, but the question states $k\\geq 0$, so $k=-11$ is thrown out before you ever write a final answer, leaving only $k=1$."
+      },
+      {
+       "step": 3,
+       "text_md": "For the picture questions, the diagram fixes where the point actually sits: for $A(-1, 3.5)$ and $B(x, 0.5)$, the algebra gives $x=1$ or $x=-3$, but the picture shows $B$ down and to the right of $A$, which is only true at $x=1$ — $x=-3$ would put $B$ down and to the left instead."
+      },
+      {
+       "step": 4,
+       "text_md": "So after finding both values algebraically, look back at the question before you answer: is there a figure showing where the point lies, or a condition on the coordinate like $k\\geq 0$? If yes, use it to drop the value it rules out. If neither is given, both values stand — check both back in the distance formula and keep them both, the way the book does for $CD=5$."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "remark",
+       "ref": "ex8-2-3 canonical solution remark p.292"
+      },
+      {
+       "type": "remark",
+       "ref": "ex8-2-4 canonical solution remark p.293"
+      },
+      {
+       "type": "remark",
+       "ref": "ex8-6-6 canonical solution remark p.317"
+      },
+      {
+       "type": "remark",
+       "ref": "ex8-6-33b canonical solution p.323"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "S7",
+       "ref": "wt:g10m8s2-1-2:missing-coord-number-line#extra-values",
+       "question_id": "q:g10m8s2-1-2:w004",
+       "text": "Marked values that the answer set does not contain",
+       "tagged": "mc:g10m8s2-1-2:keeps-both-roots-ignores-restriction"
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The error is real and supported by multiple canonical solutions in this LO's evidence: ex8-6-33b algebraically finds k=-11 or k=1 then drops k=-11 solely because the question states k>=0; ex8-2-3 algebraically finds x=1 or x=-3 then keeps only x=1 because the diagram (confirmed by reading the figure: A(-1,3.5) and B plotted at (1,0.5), i.e. down-and-right of A) fixes B's position. The refutation's worked numbers match the canonical solutions exactly in all three cited cases (CD=5 unrestricted case x=3 or 9, the k>=0 quadrilateral case, and the A/B picture case), and its reasoning is mathematically correct throughout. It specifically targets the 'report both regardless of restriction' error rather than merely restating method, and is scoped narrowly enough (figure or explicit coordinate condition) not to misfire on the unrestricted questions that entry 1 covers."
+     }
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m8s3-1-1",
+   "entries": [
+    {
+     "id": "mc:g10m8s3-1-1:gradient-mismatched-subscript-order",
+     "lo_id": "lo:g10m8s3-1-1",
+     "label": "Mismatched subscript order in the gradient formula",
+     "description": "The student subtracts the $y$-coordinates starting from one point but subtracts the $x$-coordinates starting from the other point, so the top and bottom of the fraction don't use the same point first.",
+     "signal": "The final gradient has the same magnitude as the canonical answer but the opposite sign.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You're finding the change in $y$ and the change in $x$ between the two points, which is the right idea — but you started from a different point in each subtraction: say $y_1-y_2$ on top, while the bottom is still $x_2-x_1$."
+      },
+      {
+       "step": 2,
+       "text_md": "That mix flips the sign of the answer, because $y_1-y_2$ is always $-(y_2-y_1)$. Unless the denominator is flipped to match, the whole fraction comes out with the wrong sign even though every number in it is correct."
+      },
+      {
+       "step": 3,
+       "text_md": "Take $A(7, 10)$ and $B(-4, 1)$ from the book. The book's method gives $m_{AB}=\\frac{y_{2}-y_{1}}{x_{2}-x_{1}}=\\frac{1-10}{-4-7}=\\frac{-9}{-11}=\\frac{9}{11}$. Mixing the order instead — $\\frac{y_{1}-y_{2}}{x_{2}-x_{1}}=\\frac{10-1}{-4-7}=\\frac{9}{-11}=-\\frac{9}{11}$ — gives the negative of the true gradient."
+      },
+      {
+       "step": 4,
+       "text_md": "So before you substitute, decide which point is $\\left(x_1, y_1\\right)$ and which is $\\left(x_2, y_2\\right)$, and keep that same order in both places: $m=\\frac{y_2-y_1}{x_2-x_1}$."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "b03177 p.294"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m8s3-1-1:ex8-3-1a"
+      }
+     ],
+     "covers": [],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The error (numerator y1−y2, denominator kept as x2−x1) is exactly the caution at b03177 p.294 warns against, which even states the wrong-formula pattern verbatim: m ≠ (y1−y2)/(x2−x1). Worked against the canonical solution for ex8-3-1a (A(7,10), B(-4,1)): canonical m_AB = (y2−y1)/(x2−x1) = (1−10)/(-4−7) = −9/−11 = 9/11, matching the book's stated answer '9 11'. The refutation's arithmetic for both the correct and mistaken computation is exact: correct gives 9/11, the mismatched-order version gives (10−1)/(-4−7) = 9/−11 = −9/11, i.e. the negative of the true value — verified by hand, not just restated. Algebraically, since y1−y2 ≡ −(y2−y1), keeping the denominator unchanged always negates the result regardless of the specific numbers, so the described signal (same magnitude, opposite sign) is a general and correct consequence of exactly this error, not an accident of the chosen example. The refutation stays inside the book's own method and notation (x1,y1/x2,y2 formula, same worked exercise) and introduces nothing external. It diagnoses the specific error (inconsistent point order between numerator and denominator) rather than just restating the procedure — steps 1–2 name the mistake, steps 3–4 falsify it with the book's own numbers and restate the fix."
+     }
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m8s3-1-2",
+   "entries": [
+    {
+     "id": "mc:g10m8s3-1-2:mismatched-point-order",
+     "lo_id": "lo:g10m8s3-1-2",
+     "label": "Takes the rise and the run from different point orders",
+     "description": "Writing $m=\\dfrac{y_2-y_1}{x_2-x_1}$, the student subtracts the two points one way round for the top and the opposite way round for the bottom, so the top and bottom no longer come from the same point pair.",
+     "signal": "the final answer matches what you'd get solving the same equation with the gradient's sign reversed (using $-m$ in place of the given $m$)",
+     "kind": "generated_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You've written a rise and a run for the gradient, and everything from there — the cross-multiplying, the solving — is done correctly. The only slip is that the two points aren't taken in the same order on the top as they are on the bottom."
+      },
+      {
+       "step": 2,
+       "text_md": "Take $G(7, -9)$ and $H(x, 0)$ with $m_{GH}=3$. The book's way round gives $\\dfrac{0-(-9)}{x-7}=\\dfrac{9}{x-7}=3$, so $x=10$. Swap only the top around, to $\\dfrac{-9-0}{x-7}=\\dfrac{-9}{x-7}$, and setting that equal to $3$ gives $x-7=-3$, so $x=4$ — a different point from the book's $10$."
+      },
+      {
+       "step": 3,
+       "text_md": "Swapping just one of the two differences is the same as solving the whole equation with $-3$ instead of $3$: same two points, opposite sign, wrong side of $H$."
+      },
+      {
+       "step": 4,
+       "text_md": "Pick one point to be $(x_1, y_1)$ and the other to be $(x_2, y_2)$, then keep that same choice for both the top and the bottom of $m=\\dfrac{y_2-y_1}{x_2-x_1}$ — either choice works, as long as top and bottom agree."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m8s3-1-2:we04"
+      },
+      {
+       "type": "resolve_disagreement",
+       "ref": "q:g10m8s3-1-2:we04"
+      },
+      {
+       "type": "resolve_disagreement",
+       "ref": "q:g10m8s3-1-2:ex8-3-4a"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "S7",
+       "ref": "wt:g10m8s3-1-2:gradient-to-missing-coord#slope-sign-flipped",
+       "question_id": "q:g10m8s3-1-2:w004",
+       "text": "Right gradient, wrong sign — the line leans the other way",
+       "tagged": "mc:g10m8s3-1-2:mismatched-point-order"
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "Worked through against we04 (G(7,-9), H(x,0), m=3, figure confirms these coordinates): the book's route gives (0-(-9))/(x-7)=9/(x-7)=3 -> x=10. Swapping only the numerator's point order gives (-9-0)/(x-7)=-9/(x-7)=3 -> x-7=-3 -> x=4, exactly reproducing this refutation's arithmetic. This is algebraically identical, in general, to solving (y2-y1)/(x2-x1)=-m instead of =m (flipping one side's subtraction order flips the sign of that difference and hence of the whole fraction), which is exactly the stated signal, and the same identity holds when checked against ex8-3-4a's numbers. The refutation isolates the single order-consistency slip, contrasts the two point-orderings side by side, gives a correct general final answer/reasoning, and its corrective instruction (pick an order for (x1,y1)/(x2,y2) and keep it for numerator and denominator alike) is exactly the book's own convention in every worked example — nothing taught beyond the book."
+     }
+    },
+    {
+     "id": "mc:g10m8s3-1-2:inverted-gradient-ratio",
+     "lo_id": "lo:g10m8s3-1-2",
+     "label": "Writes the gradient as run over rise",
+     "description": "The student sets up $\\dfrac{x_2-x_1}{y_2-y_1}=m$ instead of $\\dfrac{y_2-y_1}{x_2-x_1}=m$, putting the horizontal difference on top and the vertical difference on the bottom.",
+     "signal": "the final answer matches solving $\\dfrac{x_2-x_1}{y_2-y_1}=m$ for the unknown instead of $\\dfrac{y_2-y_1}{x_2-x_1}=m$",
+     "kind": "generated_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You know the gradient is one difference divided by another, and you've worked out both differences correctly — they've just landed in the wrong places, with the horizontal change on top and the vertical change on the bottom."
+      },
+      {
+       "step": 2,
+       "text_md": "Take $C(16, 2)$ and $D(8, p)$ with the gradient of $CD=\\dfrac{2}{3}$. The book's equation is $\\dfrac{p-2}{8-16}=\\dfrac{2}{3}$, giving $p=-\\dfrac{10}{3}$. Flip the fraction to $\\dfrac{8-16}{p-2}=\\dfrac{2}{3}$ instead, and solving that gives $p-2=\\dfrac{3}{2}\\times(-8)=-12$, so $p=-10$ — not the book's $-\\dfrac{10}{3}$."
+      },
+      {
+       "step": 3,
+       "text_md": "Because the fraction is upside down, the equation being solved isn't equivalent to the book's one at all, so no later step can bring it back to the right answer."
+      },
+      {
+       "step": 4,
+       "text_md": "Put the change in $y$ (second $y$-coordinate minus first) on top and the matching change in $x$ on the bottom — $m=\\dfrac{y_2-y_1}{x_2-x_1}$ — before cross-multiplying."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m8s3-1-2:ex8-3-4a"
+      },
+      {
+       "type": "resolve_disagreement",
+       "ref": "q:g10m8s3-1-2:ex8-3-4a"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "S7",
+       "ref": "wt:g10m8s3-1-2:gradient-to-missing-coord#slope-inverted",
+       "question_id": "q:g10m8s3-1-2:w001",
+       "text": "Slope taken as run over rise instead of rise over run",
+       "tagged": "mc:g10m8s3-1-2:inverted-gradient-ratio"
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "Checked against ex8-3-4a: book's equation (p-2)/(8-16)=2/3 gives p=-10/3. The inverted form (8-16)/(p-2)=2/3, solved either by cross-multiplying (3(8-16)=2(p-2) -> -24=2p-4 -> p=-10) or by the refutation's reciprocal step (p-2=(3/2)(8-16)=-12 -> p=-10), gives p=-10 in both cases, matching the refutation's stated result and confirming it is a genuinely different (wrong) answer from the canonical -10/3, as an error refutation should show. The signal ('solves run/rise=m instead of rise/run=m') is the exact, general algebraic definition of this mistake, so it cannot misdiagnose a different error. The refutation isolates only the flipped ratio (differences computed correctly, placement wrong) and its fix restates the book's own m=(y2-y1)/(x2-x1) convention, teaching nothing beyond it."
+     }
+    },
+    {
+     "id": "mc:g10m8s3-1-2:dropped-coefficient-on-unknown",
+     "lo_id": "lo:g10m8s3-1-2",
+     "label": "Drops the coefficient on the unknown coordinate",
+     "description": "When a point's coordinate is written as a multiple of the unknown, such as $C(3, 2p)$, the student solves the gradient equation and reports that value as $p$ itself, instead of recognising it as $2p$ and dividing by $2$.",
+     "signal": "the final answer is exactly the canonical value multiplied by the coefficient that was dropped (double it, when the coordinate is written as $2p$)",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You've solved the equation correctly and landed on the right number for what's actually written there — the only gap is that what's written is $2p$, not $p$, so there's one small step left."
+      },
+      {
+       "step": 2,
+       "text_md": "Take $C(3, 2p)$ and $D(9, 14)$ with the gradient of $CD=\\dfrac{2}{3}$. The equation is $\\dfrac{14-2p}{9-3}=\\dfrac{2}{3}$, which gives $14-2p=4$, so $2p=10$. Reading off '$p=10$' there reports the value of $2p$, not $p$ — the book's answer is $p=5$, exactly half of $10$."
+      },
+      {
+       "step": 3,
+       "text_md": "The point's coordinate was written as $2p$ so that solving the gradient equation would hand back the value of $2p$, not $p$ on its own — that division by $2$ is part of the question, not an optional extra."
+      },
+      {
+       "step": 4,
+       "text_md": "Once the equation gives a value for the expression as it's written — here $2p=10$ — do the one extra step that expression asks for, dividing by its coefficient, to reach the actual unknown: $p=5$."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m8s3-1-2:ex8-3-4b"
+      },
+      {
+       "type": "resolve_disagreement",
+       "ref": "q:g10m8s3-1-2:ex8-3-4b"
+      }
+     ],
+     "covers": [],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "Checked against ex8-3-4b: C(3,2p), D(9,14), m=2/3. Canonical: (14-2p)/6=2/3 -> 14-2p=4 -> 2p=10 -> p=5. The described error reads off '10' (the correctly-derived value of 2p) as if it were p itself, without the final divide-by-2 step -- exactly reproducing the refutation's worked arithmetic, and 10 is indeed exactly double the canonical p=5, matching the stated signal generally (answer = canonical value x dropped coefficient). The refutation's only addition to the book's worked steps is the explicit instruction to divide by the coefficient on the unknown once its equation is solved, which is inherent to the book's own algebra (2p=10 implies p=5 as the next necessary step), not new content."
+     }
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m8s3-2-1",
+   "entries": [
+    {
+     "id": "mc:g10m8s3-2-1:gradient-formula-inversion",
+     "lo_id": "lo:g10m8s3-2-1",
+     "label": "Inverts the gradient formula (swaps rise and run)",
+     "description": "The student writes the gradient as $\\dfrac{x_2-x_1}{y_2-y_1}$ — the reciprocal of $\\dfrac{y_2-y_1}{x_2-x_1}$ — putting the $x$-difference on top instead of the $y$-difference.",
+     "signal": "The final gradient is the reciprocal of the canonical one (e.g. $\\tfrac{2}{3}$ where the book gets $\\tfrac{3}{2}$), and the resulting line does not pass through the second given point.",
+     "kind": "generated_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You've correctly picked out the two differences between the points — you've just written them the wrong way up. It's an easy slip, because the formula is 'a difference over a difference' either way round."
+      },
+      {
+       "step": 2,
+       "text_md": "Look at $B(-6,-3)$ and $C(-2,3)$ from this objective's own question: the book's gradient is $m_{BC}=\\dfrac{3-(-3)}{-2-(-6)}=\\dfrac{6}{4}=\\dfrac{3}{2}$. Flipping the fraction gives $\\dfrac{4}{6}=\\dfrac{2}{3}$ instead."
+      },
+      {
+       "step": 3,
+       "text_md": "Using $\\tfrac{2}{3}$ with point $B$: $-3=\\tfrac{2}{3}(-6)+c$ gives $c=1$, so the line becomes $y=\\tfrac{2}{3}x+1$. Check it against $C(-2,3)$: $\\tfrac{2}{3}(-2)+1=-\\tfrac{1}{3}$, not $3$ — the flipped gradient misses the second point entirely, while the book's $y=\\tfrac{3}{2}x+6$ passes through both $B$ and $C$."
+      },
+      {
+       "step": 4,
+       "text_md": "Keep the $y$-difference on top every time: $m=\\dfrac{y_2-y_1}{x_2-x_1}$ — gradient is rise ($y$, up-down) over run ($x$, across), never the other way round."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m8s3-2-1:ex8-6-30d"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m8s3-2-1:ex8-6-32d"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "S7",
+       "ref": "wt:g10m8s3-2-1:line-through-two-points#slope-inverted",
+       "question_id": "q:g10m8s3-2-1:w002",
+       "text": "Slope taken as run over rise instead of rise over run",
+       "tagged": "mc:g10m8s3-2-1:gradient-formula-inversion"
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "Verified against ex8-6-30d: book gets m_BC=(3-(-3))/(-2-(-6))=6/4=3/2; the refutation's inverted value 2/3 is exactly the reciprocal. Using 2/3 with B(-6,-3) gives c=1, and y=2/3x+1 evaluated at C(-2,3) gives -1/3 (not 3), while the book's y=3/2x+6 checks out at both B (-9+6=-3) and C (-3+6=3). All arithmetic is correct, the refutation argues specifically against the inversion error, and it stays within the book's method (just names rise/run as a mnemonic for the same formula)."
+     }
+    },
+    {
+     "id": "mc:g10m8s3-2-1:negative-coordinate-subtraction-slip",
+     "lo_id": "lo:g10m8s3-2-1",
+     "label": "Loses a sign subtracting negative coordinates",
+     "description": "When working out $y_2-y_1$ or $x_2-x_1$ and one of the values is already negative, the student simplifies $a-(-b)$ as $a-b$ instead of $a+b$.",
+     "signal": null,
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You know how to subtract two coordinates — the trouble starts only when one of them is already negative, and the two minus signs sitting together get collapsed into one instead of cancelling to a plus."
+      },
+      {
+       "step": 2,
+       "text_md": "The book's own working for $B(-6,-3)$ and $C(-2,3)$ writes the gradient as $m_{BC}=\\dfrac{3-(-3)}{-2-(-6)}$ and turns it into $\\dfrac{3+3}{-2+6}=\\dfrac{6}{4}=\\dfrac{3}{2}$ — every $-(-\\,)$ becomes a $+$ before anything else happens."
+      },
+      {
+       "step": 3,
+       "text_md": "Skip that step instead and read $3-(-3)$ as $3-3$ and $-2-(-6)$ as $-2-6$: you'd get $\\dfrac{0}{-8}=0$ — a horizontal line, nowhere near the book's $y=\\tfrac{3}{2}x+6$."
+      },
+      {
+       "step": 4,
+       "text_md": "Whenever you see two minus signs next to each other, rewrite $a-(-b)$ as $a+b$ first, before you simplify anything else."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m8s3-2-1:ex8-6-30d"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m8s3-2-1:ex8-6-32d"
+      }
+     ],
+     "covers": [],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "Verified against ex8-6-30d: the book's own step turns 3-(-3) and -2-(-6) into 3+3 and -2+6 before simplifying (6/4=3/2). Misreading each a-(-b) as a-b instead gives 3-3=0 over -2-6=-8, i.e. 0/-8=0, exactly as the refutation states, versus the book's y=3/2x+6. The correction (rewrite a-(-b) as a+b before simplifying) is exactly the book's own step, so it teaches nothing beyond the canonical method."
+     }
+    },
+    {
+     "id": "mc:g10m8s3-2-1:swaps-coordinates-when-substituting",
+     "lo_id": "lo:g10m8s3-2-1",
+     "label": "Swaps which number is $x$ and which is $y$",
+     "description": "The student substitutes a point's two values into the wrong slots — putting the $y$-value where $x$ belongs, or the reverse — when solving for $c$ in $y=mx+c$ or for a missing coordinate.",
+     "signal": "The reported value equals what you'd get by putting the point's coordinates in the opposite slots — e.g. a constant of $-1$ instead of the book's $\\tfrac{5}{2}$ for a line through $P(-3,4)$.",
+     "kind": "generated_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You've got the right idea — substitute a known point into the equation — but the two numbers from the point have gone into the wrong places: the $y$-value where $x$ should be, or the other way round."
+      },
+      {
+       "step": 2,
+       "text_md": "This objective's question on $PQ$ finds $m=-\\tfrac12$ and uses point $P(-3,4)$. The book substitutes $x=-3,\\ y=4$: $4=-\\tfrac12(-3)+c$, so $c=\\tfrac{5}{2}$, giving $y=-\\tfrac12x+\\tfrac52$."
+      },
+      {
+       "step": 3,
+       "text_md": "Swap the two numbers instead — put $x=4,\\ y=-3$ — and you'd get $-3=-\\tfrac12(4)+c$, so $c=-1$: a completely different line, $y=-\\tfrac12x-1$, that doesn't even pass through $P$."
+      },
+      {
+       "step": 4,
+       "text_md": "The same mix-up shows up the other way in the 'find the missing coordinate' questions: the diagram for point $B(2, a)$ tells you $x=2$, so substitute it for $x$ in the equation and solve for $y$ — never plug the labelled number in for $y$ just because it's the one you're given first."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m8s3-2-1:ex8-6-34c"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m8s3-2-1:ex8-4-15"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "S7",
+       "ref": "wt:g10m8s3-2-1:line-through-two-points#points-swapped",
+       "question_id": "q:g10m8s3-2-1:w003",
+       "text": "The named points plotted with x and y exchanged",
+       "tagged": "mc:g10m8s3-2-1:swaps-coordinates-when-substituting"
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "Verified against ex8-6-34c: book substitutes x=-3,y=4 into y=-1/2x+c giving c=5/2 (matches canonical exactly). Swapping to x=4,y=-3 gives -3=-1/2(4)+c => c=-1, a different line that misses P, as the refutation and signal both state. The second part correctly reflects ex8-4-15's method (point B's known x=2 substituted for x, solved for y=a=0.5). No step deviates from or extends beyond the book's method."
+     }
+    },
+    {
+     "id": "mc:g10m8s3-2-1:sign-slip-converting-general-form",
+     "lo_id": "lo:g10m8s3-2-1",
+     "label": "Sign slip turning the given equation into $y=mx+c$",
+     "description": "When rearranging an equation such as $x-y-2=0$ into 'standard form' ($y=mx+c$, as the book calls it), the student mishandles a sign while isolating $y$, most often failing to flip the sign of the $x$-term.",
+     "signal": "The gradient (or $c$) typically comes out with the opposite sign from the book's, e.g. $m=-1$ where the canonical line has $m=1$.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You're moving the $-y$ across the equals sign as if it keeps its sign — a natural slip, since there's already a subtraction there to keep track of."
+      },
+      {
+       "step": 2,
+       "text_md": "This objective's own question gives $PR$ as $x-y-2=0$. The book adds $y$ to both sides: $x-2=y$, so $y=x-2$ and $m_{PR}=1$."
+      },
+      {
+       "step": 3,
+       "text_md": "Move things across without flipping that sign and you'd land on $y=-x-2$ or $y=-x+2$ instead — gradient $-1$, the exact opposite lean from the book's line."
+      },
+      {
+       "step": 4,
+       "text_md": "Isolate $y$ one term at a time: shift every other term across first, then, if $y$ is still negative, multiply (or divide) the whole equation by $-1$ — and check that flips the sign of the $x$-term too, not just the constant."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m8s3-2-1:ex8-6-40c"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m8s3-2-1:ex8-6-40a"
+      }
+     ],
+     "covers": [],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "Verified against ex8-6-40c: PR is x-y-2=0, and the book's own rearrangement gives y=x-2, m=1, matching the refutation's step 2 exactly. The two illustrated slip outcomes (y=-x-2, y=-x+2) both have gradient -1, consistent with the stated signal of an opposite-sign gradient, and both are plausible products of dropping/mishandling a sign while isolating y from -y=-x+2. The corrective guidance (move terms first, then multiply the whole equation by -1 if y is still negative) is exactly the book's method, nothing added."
+     }
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m8s3-2-2",
+   "entries": [
+    {
+     "id": "mc:g10m8s3-2-2:swaps-parallel-perpendicular-tests",
+     "lo_id": "lo:g10m8s3-2-2",
+     "label": "Mixes up the parallel test and the perpendicular test",
+     "description": "The student compares $m_{AB}$ and $m_{CD}$ but applies the wrong rule to the result — treating two equal gradients as proof of perpendicular lines, or treating gradients that are merely opposite in sign (rather than an exact product of $-1$) as enough to call the lines perpendicular — so parallel and perpendicular get swapped or blurred.",
+     "signal": null,
+     "kind": "book_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "They know there are two different gradient tests for these two relationships, and they know both involve comparing $m_{AB}$ and $m_{CD}$ — they've just crossed which numerical result belongs to which word."
+      },
+      {
+       "step": 2,
+       "text_md": "In ex8-4-1a, $m_{AB}=3$ and $m_{CD}=3$ — exactly equal, which is the book's whole test for **parallel**. It is not the test for perpendicular: $m_{AB}\\times m_{CD}=3\\times3=9$, nowhere near $-1$, so these lines cannot be perpendicular."
+      },
+      {
+       "step": 3,
+       "text_md": "In ex8-4-1b, $m_{AB}=3$ and $m_{CD}=-3$: they are not equal (so not parallel), and $m_{AB}\\times m_{CD}=3\\times(-3)=-9\\ne-1$ (so not perpendicular either) — that is exactly why the book answers 'neither' here, not because one test half-passed."
+      },
+      {
+       "step": 4,
+       "text_md": "Run the two book tests in this order on the actual numbers: first check $m_{AB}=m_{CD}$ for parallel; if that fails, multiply the two gradients — only an exact $-1$ means perpendicular, and anything else means neither."
+      }
+     ],
+     "maps": [
+      {
+       "question_id": "q:g10m8s3-2-2:ex8-4-1a",
+       "choice_text": "perpendicular"
+      },
+      {
+       "question_id": "q:g10m8s3-2-2:ex8-4-1b",
+       "choice_text": "perpendicular"
+      }
+     ],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "distractor",
+       "ref": "D0"
+      },
+      {
+       "type": "distractor",
+       "ref": "D1"
+      },
+      {
+       "type": "distractor",
+       "ref": "D2"
+      },
+      {
+       "type": "distractor",
+       "ref": "D3"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m8s3-2-2:ex8-4-1a"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m8s3-2-2:ex8-4-1b"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "book",
+       "ref": "q:g10m8s3-2-2:ex8-4-1a",
+       "question_id": "q:g10m8s3-2-2:ex8-4-1a",
+       "text": "perpendicular",
+       "tagged": null
+      },
+      {
+       "origin": "book",
+       "ref": "q:g10m8s3-2-2:ex8-4-1b",
+       "question_id": "q:g10m8s3-2-2:ex8-4-1b",
+       "text": "perpendicular",
+       "tagged": null
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The refutation's numbers match the canonical solutions exactly: ex8-4-1a has m_AB=m_CD=3 (equal → book's parallel test, product=9≠-1 so not perpendicular), and ex8-4-1b has m_AB=3, m_CD=-3 (not equal, product=-9≠-1, book answer 'neither'). It correctly targets the specific swap between the equal-gradient parallel test and the product=-1 perpendicular test, and adds nothing beyond the book's method."
+     }
+    },
+    {
+     "id": "mc:g10m8s3-2-2:judges-parallel-by-appearance",
+     "lo_id": "lo:g10m8s3-2-2",
+     "label": "Judges parallel sides by how the sketch looks, not by the gradients",
+     "description": "The student looks at the drawn quadrilateral and decides which sides 'look' parallel or equal, rather than computing and comparing each side's gradient the way the book does.",
+     "signal": "final answer calls a pair of sides parallel, or names a quadrilateral type, that matches how the figure looks rather than what the computed gradients show.",
+     "kind": "book_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "They're reading the diagram of $FGHI$ the way anyone first would — looking for sides that run in the same direction — and that instinct is a reasonable start, just not the book's finishing move."
+      },
+      {
+       "step": 2,
+       "text_md": "The book's own caution says it directly: some lines may look parallel but are not — appearance is only ever a first sketch, never the check."
+      },
+      {
+       "step": 3,
+       "text_md": "The actual gradients here are $m_{FG}=-5$, $m_{GH}=1$, $m_{HI}=-\\frac{5}{4}$ and $m_{FI}=\\frac{2}{5}$ — every one of these four numbers is different, so neither opposite pair ($FG,HI$ or $GH,FI$) is parallel, even though $GH$ and $FI$ both slope gently upward and can look similar in the sketch."
+      },
+      {
+       "step": 4,
+       "text_md": "Before naming any side 'parallel' or the shape a parallelogram or trapezium, compute each side's gradient from its two endpoints and compare the numbers — only a genuine match counts, however the picture looks."
+      }
+     ],
+     "maps": [
+      {
+       "question_id": "q:g10m8s3-2-2:ex8-6-19b",
+       "choice_text": "opposite sides are parallel"
+      },
+      {
+       "question_id": "q:g10m8s3-2-2:ex8-6-19d",
+       "choice_text": "parallelogram"
+      },
+      {
+       "question_id": "q:g10m8s3-2-2:ex8-6-19d",
+       "choice_text": "trapezium"
+      },
+      {
+       "question_id": "q:g10m8s3-2-2:ex8-6-19d",
+       "choice_text": "isosceles trapezium"
+      }
+     ],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "WE6 p.300"
+      },
+      {
+       "type": "distractor",
+       "ref": "D4"
+      },
+      {
+       "type": "distractor",
+       "ref": "D5"
+      },
+      {
+       "type": "distractor",
+       "ref": "D6"
+      },
+      {
+       "type": "distractor",
+       "ref": "D7"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m8s3-2-2:ex8-6-19b"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m8s3-2-2:ex8-6-19d"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "book",
+       "ref": "q:g10m8s3-2-2:ex8-6-19b",
+       "question_id": "q:g10m8s3-2-2:ex8-6-19b",
+       "text": "opposite sides are parallel",
+       "tagged": null
+      },
+      {
+       "origin": "book",
+       "ref": "q:g10m8s3-2-2:ex8-6-19d",
+       "question_id": "q:g10m8s3-2-2:ex8-6-19d",
+       "text": "parallelogram",
+       "tagged": null
+      },
+      {
+       "origin": "book",
+       "ref": "q:g10m8s3-2-2:ex8-6-19d",
+       "question_id": "q:g10m8s3-2-2:ex8-6-19d",
+       "text": "trapezium",
+       "tagged": null
+      },
+      {
+       "origin": "book",
+       "ref": "q:g10m8s3-2-2:ex8-6-19d",
+       "question_id": "q:g10m8s3-2-2:ex8-6-19d",
+       "text": "isosceles trapezium",
+       "tagged": null
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "Caution WE6 explicitly warns that lines can look parallel without being parallel. The refutation's four gradients (m_FG=-5, m_GH=1, m_HI=-5/4, m_FI=2/5) and its conclusion that neither opposite pair is parallel match canonical ex8-6-19b verbatim, and the 'ordinary quadrilateral' verdict matches ex8-6-19d. I read the referenced figure (F(2,0), G(1,5), H(3,7), I(7,2)): FG and HI are the two steep, falling sides while GH and FI are the two gentler, rising sides, which supports the claim that GH and FI could be visually mistaken for a matching pair."
+     }
+    },
+    {
+     "id": "mc:g10m8s3-2-2:stops-at-partial-quadrilateral-property",
+     "lo_id": "lo:g10m8s3-2-2",
+     "label": "Names the shape from only one of the properties that build up to it",
+     "description": "The student correctly checks one defining property of the quadrilateral (one pair of sides parallel, one pair of sides equal in length, or one right angle / one perpendicular or equal pair of diagonals) but doesn't go on to check the other property the book combines with it, so answers with the less-specific relative that matches only what was checked.",
+     "signal": "final answer names a related shape (parallelogram, trapezium, rhombus, rectangle or kite) that the working partly supports, rather than the single most specific shape (isosceles trapezium or square) the full check gives.",
+     "kind": "book_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "They did do a real, correct check — finding one pair of sides parallel, or the diagonals perpendicular, or one right angle — and that check is a genuine, useful piece of the answer, just not the whole of it."
+      },
+      {
+       "step": 2,
+       "text_md": "In ex8-6-21c, $AB\\parallel DC$ (both gradient $0$) is true and is the book's first fact — but the book then also compares the lengths of the other pair of opposite sides, $AD$ and $BC$, and finds them equal; only that second check earns 'isosceles.' Stopping after the parallel check alone gives 'trapezium'; assuming the other pair must also be parallel because it's equal in length gives 'parallelogram' — but $m_{AD}=4$ and $m_{BC}=-4$ are not equal, so that pair is not parallel."
+      },
+      {
+       "step": 3,
+       "text_md": "In ex8-6-36b, showing $m_{MP}\\times m_{LN}=-1$ (diagonals perpendicular) proves $LMNP$ is a rhombus — true, but only half the picture; the book goes on to also show $LM\\perp MN$, and only combining both facts earns 'square.' The book's own review note on ex8-6-42e makes the same point explicitly: 'rectangle', 'rhombus' and 'kite' are 'also true, less precisely' — not wrong, just not the finished answer."
+      },
+      {
+       "step": 4,
+       "text_md": "Once one property is confirmed, ask what shape it proves on its own — then go back and check the book's other property (the missing side-length, angle, or diagonal fact) before naming the quadrilateral, so the answer is the single most specific shape both facts together support."
+      }
+     ],
+     "maps": [
+      {
+       "question_id": "q:g10m8s3-2-2:ex8-6-21c",
+       "choice_text": "parallelogram"
+      },
+      {
+       "question_id": "q:g10m8s3-2-2:ex8-6-21c",
+       "choice_text": "trapezium"
+      },
+      {
+       "question_id": "q:g10m8s3-2-2:ex8-6-36b",
+       "choice_text": "rhombus"
+      },
+      {
+       "question_id": "q:g10m8s3-2-2:ex8-6-42e",
+       "choice_text": "rectangle"
+      },
+      {
+       "question_id": "q:g10m8s3-2-2:ex8-6-42e",
+       "choice_text": "rhombus"
+      },
+      {
+       "question_id": "q:g10m8s3-2-2:ex8-6-42e",
+       "choice_text": "kite"
+      }
+     ],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m8s3-2-2:ex8-6-21c"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "expl:g10m8s3-2-2:ex8-6-21b"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m8s3-2-2:ex8-6-22e"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m8s3-2-2:ex8-6-36b"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m8s3-2-2:ex8-6-42e"
+      },
+      {
+       "type": "resolve_disagreement",
+       "ref": "q:g10m8s3-2-2:ex8-6-42e p.325"
+      },
+      {
+       "type": "distractor",
+       "ref": "D8"
+      },
+      {
+       "type": "distractor",
+       "ref": "D9"
+      },
+      {
+       "type": "distractor",
+       "ref": "D10"
+      },
+      {
+       "type": "distractor",
+       "ref": "D11"
+      },
+      {
+       "type": "distractor",
+       "ref": "D12"
+      },
+      {
+       "type": "distractor",
+       "ref": "D13"
+      },
+      {
+       "type": "distractor",
+       "ref": "D17"
+      },
+      {
+       "type": "distractor",
+       "ref": "D18"
+      },
+      {
+       "type": "distractor",
+       "ref": "D19"
+      },
+      {
+       "type": "distractor",
+       "ref": "D20"
+      },
+      {
+       "type": "distractor",
+       "ref": "D21"
+      },
+      {
+       "type": "distractor",
+       "ref": "D22"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "book",
+       "ref": "q:g10m8s3-2-2:ex8-6-21c",
+       "question_id": "q:g10m8s3-2-2:ex8-6-21c",
+       "text": "parallelogram",
+       "tagged": null
+      },
+      {
+       "origin": "book",
+       "ref": "q:g10m8s3-2-2:ex8-6-21c",
+       "question_id": "q:g10m8s3-2-2:ex8-6-21c",
+       "text": "trapezium",
+       "tagged": null
+      },
+      {
+       "origin": "book",
+       "ref": "q:g10m8s3-2-2:ex8-6-36b",
+       "question_id": "q:g10m8s3-2-2:ex8-6-36b",
+       "text": "rhombus",
+       "tagged": null
+      },
+      {
+       "origin": "book",
+       "ref": "q:g10m8s3-2-2:ex8-6-42e",
+       "question_id": "q:g10m8s3-2-2:ex8-6-42e",
+       "text": "rectangle",
+       "tagged": null
+      },
+      {
+       "origin": "book",
+       "ref": "q:g10m8s3-2-2:ex8-6-42e",
+       "question_id": "q:g10m8s3-2-2:ex8-6-42e",
+       "text": "rhombus",
+       "tagged": null
+      },
+      {
+       "origin": "book",
+       "ref": "q:g10m8s3-2-2:ex8-6-42e",
+       "question_id": "q:g10m8s3-2-2:ex8-6-42e",
+       "text": "kite",
+       "tagged": null
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The refutation's core claims check out: ex8-6-21c's AB∥DC (both gradient 0) matches expl:ex8-6-21b verbatim, and AD=BC=√17 exactly (computed from the given vertices A(0,3),B(4,3),C(5,-1),D(-1,-1)), while m_AD=4≠m_BC=-4 confirms that pair isn't parallel — supporting both the 'trapezium' and 'parallelogram' partial-answer stories. ex8-6-36b's rhombus-then-square progression matches canonical steps 1-3 verbatim. The ex8-6-42e citation is strongly grounded by the resolve_disagreement note itself, which calls rectangle/rhombus/kite 'also true, less precisely' — the exact 'not wrong, just not the finished answer' framing the refutation uses. However, the ex8-6-22e citation is a mismatch: its own book answer is already the less-specific label ('trapezium', not isosceles), since I verified the legs QR=3 and SP=√10 are not equal, so picking 'isosceles trapezium' there would be an over-reach past the true answer, not an under-check — none of that question's three attached options actually instantiate this error's mechanism."
+     }
+    },
+    {
+     "id": "mc:g10m8s3-2-2:treats-contradiction-as-a-k-value",
+     "lo_id": "lo:g10m8s3-2-2",
+     "label": "Turns a 'no solution' equation into a numeric answer for k",
+     "description": "Setting the two gradients equal produces an equation where $k$ cancels out and leaves a false statement (like $-5=5$); rather than reading this as proof that no such $k$ exists, the student picks one of the leftover numbers from the working and reports it as the value of $k$.",
+     "signal": "final answer is a specific number for $k$ (such as $0$, $5$ or $10$) instead of 'no value of k'.",
+     "kind": "book_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "They set up the equation exactly the way the book does, $\\frac{k-5}{4}=\\frac{k+5}{4}$, and correctly cleared the denominators — the setup is right; what goes wrong is what to do with what's left."
+      },
+      {
+       "step": 2,
+       "text_md": "Clearing the equation gives $k-5=k+5$, and subtracting $k$ from both sides leaves $-5=5$ — a false statement with no $k$ in it at all. There is no number left to solve for; the $k$'s have already cancelled."
+      },
+      {
+       "step": 3,
+       "text_md": "This is exactly the trap the book itself flags on this question: a full, careful re-solve of this same equation still landed on a specific fraction for $k$, and had to be corrected back to 'no value of $k$', because $D$ is a common point of both line $AD$ and line $CD$, so $AD$ can never be parallel to $CD$."
+      },
+      {
+       "step": 4,
+       "text_md": "When clearing an equation for $k$ leaves the $k$'s cancelled and a false number statement behind, that is the answer — it means no value of $k$ works, not that one of the leftover numbers is $k$."
+      }
+     ],
+     "maps": [
+      {
+       "question_id": "q:g10m8s3-2-2:ex8-6-33a",
+       "choice_text": "k = 0"
+      },
+      {
+       "question_id": "q:g10m8s3-2-2:ex8-6-33a",
+       "choice_text": "k = 5"
+      },
+      {
+       "question_id": "q:g10m8s3-2-2:ex8-6-33a",
+       "choice_text": "k = 10"
+      }
+     ],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "resolve_disagreement",
+       "ref": "q:g10m8s3-2-2:ex8-6-33a p.323"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m8s3-2-2:ex8-6-33a"
+      },
+      {
+       "type": "distractor",
+       "ref": "D14"
+      },
+      {
+       "type": "distractor",
+       "ref": "D15"
+      },
+      {
+       "type": "distractor",
+       "ref": "D16"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "book",
+       "ref": "q:g10m8s3-2-2:ex8-6-33a",
+       "question_id": "q:g10m8s3-2-2:ex8-6-33a",
+       "text": "k = 0",
+       "tagged": null
+      },
+      {
+       "origin": "book",
+       "ref": "q:g10m8s3-2-2:ex8-6-33a",
+       "question_id": "q:g10m8s3-2-2:ex8-6-33a",
+       "text": "k = 5",
+       "tagged": null
+      },
+      {
+       "origin": "book",
+       "ref": "q:g10m8s3-2-2:ex8-6-33a",
+       "question_id": "q:g10m8s3-2-2:ex8-6-33a",
+       "text": "k = 10",
+       "tagged": null
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The algebra matches canonical exactly: (k-5)/4=(k+5)/4 → k-5=k+5 → 0=10 (equivalent to the refutation's '-5=5', just rearranged by adding 5 to both sides — not a contradiction). The cited resolve_disagreement note confirms an independent re-solve wrongly landed on a specific fraction (11/3) before being corrected back to 'no value of k', which is exactly the trap the refutation describes. This is grounded, addresses the specific error, and teaches nothing beyond the book's method."
+     }
+    }
+   ],
+   "dropped": [],
+   "stripped": [
+    {
+     "lo": "lo:g10m8s3-2-2",
+     "origin": "book",
+     "ref": "q:g10m8s3-2-2:ex8-4-1a",
+     "question_id": "q:g10m8s3-2-2:ex8-4-1a",
+     "text": "neither",
+     "tagged": null,
+     "reason": "does not encode mc:g10m8s3-2-2:swaps-parallel-perpendicular-tests: Neither described error variant (equal→perpendicular, or opposite-sign→perpendicular) produces 'neither' on this question; with equal gradients this student would say 'perpendicular', not 'neither'."
+    },
+    {
+     "lo": "lo:g10m8s3-2-2",
+     "origin": "book",
+     "ref": "q:g10m8s3-2-2:ex8-4-1b",
+     "question_id": "q:g10m8s3-2-2:ex8-4-1b",
+     "text": "parallel",
+     "tagged": null,
+     "reason": "does not encode mc:g10m8s3-2-2:swaps-parallel-perpendicular-tests: On ex8-4-1b the gradients (3,-3) are not equal, so no described path of this misconception leads to choosing 'parallel' here."
+    },
+    {
+     "lo": "lo:g10m8s3-2-2",
+     "origin": "book",
+     "ref": "q:g10m8s3-2-2:ex8-6-21c",
+     "question_id": "q:g10m8s3-2-2:ex8-6-21c",
+     "text": "ordinary quadrilateral",
+     "tagged": null,
+     "reason": "does not encode mc:g10m8s3-2-2:stops-at-partial-quadrilateral-property: A student who verified one real property (one parallel pair) would not say 'ordinary quadrilateral', which the entry's own signal excludes as a possible outcome of this error."
+    },
+    {
+     "lo": "lo:g10m8s3-2-2",
+     "origin": "book",
+     "ref": "q:g10m8s3-2-2:ex8-6-22e",
+     "question_id": "q:g10m8s3-2-2:ex8-6-22e",
+     "text": "parallelogram",
+     "tagged": null,
+     "reason": "does not encode mc:g10m8s3-2-2:stops-at-partial-quadrilateral-property: The 'equal length implies parallel' pathway needs QR and SP to actually compute as equal; here QR=3 and SP=√10≈3.16 are not equal, so a correctly-computing student would not be led to 'parallelogram' by this mechanism."
+    },
+    {
+     "lo": "lo:g10m8s3-2-2",
+     "origin": "book",
+     "ref": "q:g10m8s3-2-2:ex8-6-22e",
+     "question_id": "q:g10m8s3-2-2:ex8-6-22e",
+     "text": "isosceles trapezium",
+     "tagged": null,
+     "reason": "does not encode mc:g10m8s3-2-2:stops-at-partial-quadrilateral-property: The book's own correct answer for this question is already 'trapezium' (the less-specific label); choosing 'isosceles trapezium' requires wrongly assuming the legs ARE equal (an over-reach), which is the opposite direction from 'stopping at a partial check'."
+    },
+    {
+     "lo": "lo:g10m8s3-2-2",
+     "origin": "book",
+     "ref": "q:g10m8s3-2-2:ex8-6-22e",
+     "question_id": "q:g10m8s3-2-2:ex8-6-22e",
+     "text": "ordinary quadrilateral",
+     "tagged": null,
+     "reason": "does not encode mc:g10m8s3-2-2:stops-at-partial-quadrilateral-property: Same reasoning as index 36: having verified the parallel pair, a student would not fall back to 'ordinary quadrilateral', which the signal excludes."
+    },
+    {
+     "lo": "lo:g10m8s3-2-2",
+     "origin": "book",
+     "ref": "q:g10m8s3-2-2:ex8-6-36b",
+     "question_id": "q:g10m8s3-2-2:ex8-6-36b",
+     "text": "rectangle",
+     "tagged": null,
+     "reason": "does not encode mc:g10m8s3-2-2:stops-at-partial-quadrilateral-property: Nothing in the perpendicular-diagonals check leads to 'rectangle' (which needs equal, not perpendicular, diagonals); no resolve_disagreement note treats this as a valid partial answer here, unlike ex8-6-42e."
+    },
+    {
+     "lo": "lo:g10m8s3-2-2",
+     "origin": "book",
+     "ref": "q:g10m8s3-2-2:ex8-6-36b",
+     "question_id": "q:g10m8s3-2-2:ex8-6-36b",
+     "text": "kite",
+     "tagged": null,
+     "reason": "does not encode mc:g10m8s3-2-2:stops-at-partial-quadrilateral-property: The shape is already given as a parallelogram, and a parallelogram with perpendicular diagonals is classified as a rhombus, not a kite; no book evidence supports 'kite' as a partial-check outcome here."
+    }
+   ],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m8s3-2-3",
+   "entries": [
+    {
+     "id": "mc:g10m8s3-2-3:same-sign-gradients-mistaken-for-equal",
+     "lo_id": "lo:g10m8s3-2-3",
+     "label": "Same-sign gradients treated as equal",
+     "description": "The student finds that both gradients between the three points come out negative (or both positive) and concludes the points are collinear on that basis, without checking that the two gradient values are exactly the same fraction.",
+     "signal": null,
+     "kind": "book_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You saw that both gradients came out negative — sloping the same way — and took that as enough proof the three points sit on one line."
+      },
+      {
+       "step": 2,
+       "text_md": "But 'both negative' isn't the same as 'equal'. Here $m_{KL}=-\\frac{1}{3}$ and $m_{LM}=-\\frac{1}{2}$. Written over a common denominator that's $-\\frac{2}{6}$ against $-\\frac{3}{6}$ — close, both negative, but not the same fraction."
+      },
+      {
+       "step": 3,
+       "text_md": "The book's own test needs the gradients to match exactly, not just in sign. Compare with $E(0, 3)$, $F(-2, 5)$, $G(2, 1)$: there $m_{EF}=-1$ and $m_{FG}=-1$ are the exact same value — that exact match is what lets you call $E$, $F$, $G$ collinear."
+      },
+      {
+       "step": 4,
+       "text_md": "Since $m_{KL}\\neq m_{LM}$, $K$, $L$ and $M$ are not collinear. So after finding two gradients, write them as fractions over the same denominator (or cross-multiply) and check the values match exactly — the same sign is only a first clue, never the proof."
+      }
+     ],
+     "maps": [
+      {
+       "question_id": "q:g10m8s3-2-3:ex8-4-2c",
+       "choice_text": "collinear"
+      }
+     ],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "distractor",
+       "ref": "D2"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m8s3-2-3:ex8-4-2c"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m8s3-2-3:ex8-4-2a"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "book",
+       "ref": "q:g10m8s3-2-3:ex8-4-2c",
+       "question_id": "q:g10m8s3-2-3:ex8-4-2c",
+       "text": "collinear",
+       "tagged": null
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "Verified against canonical q:ex8-4-2c: m_KL=(1-2)/(-3-(-6))=-1/3=-2/6 and m_LM=(-1-1)/(1-(-3))=-2/4=-1/2=-3/6 — both negative, not equal, so K,L,M are not collinear (matches the canonical answer B exactly). The refutation's common-denominator conversion is arithmetically correct. Its contrast case (E,F,G) is pulled straight from canonical q:ex8-4-2a: m_EF=(5-3)/(-2-0)=-1 and m_FG=(1-5)/(2-(-2))=-1, an exact match, matching the canonical 'collinear' conclusion. The refutation targets the specific error (same-sign mistaken for equal) rather than just restating the gradient method, and every number and conclusion is consistent with the canonical solutions cited."
+     }
+    }
+   ],
+   "dropped": [
+    {
+     "id": "mc:g10m8s3-2-3:unsimplified-surds-look-unequal",
+     "lo_id": "lo:g10m8s3-2-3",
+     "label": "Uncombined surd distances look unequal",
+     "aliases": [],
+     "verdict": "UNSUPPORTED",
+     "reason": "The surd arithmetic is independently correct (√8+√8=2√8=√32 for E,F,G; √34+2√34=3√34=√306 for H,I,J — I verified both by direct computation from the coordinates), and it mirrors the canonical combining step in expl:we09 (√13+√13=2√13=√52, quoted verbatim correctly). But the entry cites canonical_solution q:ex8-4-2a and q:ex8-4-2b as evidence for these E,F,G and H,I,J distance-formula workings — and neither canonical item contains any distance-formula work at all; both solve those exact points exclusively via the gradient method (m_EF=m_FG=-1; m_HI=m_IJ=5/3). The refutation's central worked demonstrations for these two point-sets are therefore computed from scratch, not drawn from or verifiable against the canonical evidence actually cited, even though the arithmetic itself checks out. Per 'when in doubt, do not confirm,' this evidentiary gap disqualifies it."
+    }
+   ],
+   "stripped": [
+    {
+     "lo": "lo:g10m8s3-2-3",
+     "origin": "book",
+     "ref": "q:g10m8s3-2-3:ex8-4-2a",
+     "question_id": "q:g10m8s3-2-3:ex8-4-2a",
+     "text": "not collinear",
+     "tagged": null,
+     "reason": "its entry mc:g10m8s3-2-3:unsimplified-surds-look-unequal was dropped (UNSUPPORTED)"
+    },
+    {
+     "lo": "lo:g10m8s3-2-3",
+     "origin": "book",
+     "ref": "q:g10m8s3-2-3:ex8-4-2b",
+     "question_id": "q:g10m8s3-2-3:ex8-4-2b",
+     "text": "not collinear",
+     "tagged": null,
+     "reason": "its entry mc:g10m8s3-2-3:unsimplified-surds-look-unequal was dropped (UNSUPPORTED)"
+    }
+   ],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m8s4-1-1",
+   "entries": [
+    {
+     "id": "mc:g10m8s4-1-1:checks-only-one-coordinate",
+     "lo_id": "lo:g10m8s4-1-1",
+     "label": "Matches one coordinate, calls the mid-points equal",
+     "description": "Having correctly found the mid-points of both diagonals, the student sees the two mid-points share one coordinate and concludes they are the same point (so the diagonals bisect each other), without checking whether the other coordinate also matches.",
+     "signal": "Final answer says the diagonals bisect (the two mid-points are 'the same') on a question where the correct mid-points agree in one coordinate but differ in the other.",
+     "kind": "book_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You did the right thing first: you worked out the mid-point of each diagonal separately with the mid-point formula. Then, comparing the two results, you spotted that one of the two numbers matched — and took that as 'they're the same point'."
+      },
+      {
+       "step": 2,
+       "text_md": "A mid-point is a point $(x, y)$, and two points are only the same point when *both* coordinates agree, not just one. Look at $FGHI$: $F(2, 0)$, $G(1, 5)$, $H(3, 7)$, $I(7, 2)$. The mid-point of $GI$ is $(4, 3.5)$ and the mid-point of $FH$ is $(2.5, 3.5)$. The $y$-coordinate is $3.5$ both times — but the $x$-coordinate is $4$ in one and $2.5$ in the other."
+      },
+      {
+       "step": 3,
+       "text_md": "$(4, 3.5)$ and $(2.5, 3.5)$ are two different points on the page: the diagonals reach the same height, but at different places along it, so they don't cross at a shared mid-point. That is why the book's answer is that the diagonals of $FGHI$ do not bisect each other."
+      },
+      {
+       "step": 4,
+       "text_md": "So once you've calculated both mid-points, write out the full $(x, y)$ for each and compare them term by term — $x$ against $x$, then $y$ against $y$. They only bisect each other when every coordinate matches."
+      }
+     ],
+     "maps": [
+      {
+       "question_id": "q:g10m8s4-1-1:ex8-6-19c",
+       "choice_text": "bisect"
+      }
+     ],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "distractor",
+       "ref": "D0"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m8s4-1-1:ex8-6-19c"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "expl:g10m8s4-1-1:ex8-6-21d"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "book",
+       "ref": "q:g10m8s4-1-1:ex8-6-19c",
+       "question_id": "q:g10m8s4-1-1:ex8-6-19c",
+       "text": "bisect",
+       "tagged": null
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "Recomputed both diagonal mid-points for FGHI directly from the book's coordinates: M_GI=((1+7)/2,(5+2)/2)=(4,3.5) and M_FH=((3+2)/2,(7+0)/2)=(2.5,3.5), matching canonical solution q:g10m8s4-1-1:ex8-6-19c exactly (y agrees at 3.5, x differs 4 vs 2.5), and the book's answer is indeed 'do not bisect' (option B). The second cited canonical (expl:...ex8-6-21d) shows the identical partial-match pattern (y=1 both, x=5/2 vs 3/2), confirming this is a recurring structural feature of the book's diagonal-bisection questions, not invented. The refutation's arithmetic is exact, correctly explains why matching only one coordinate is insufficient, and targets this specific reasoning slip rather than merely restating the mid-point formula."
+     }
+    },
+    {
+     "id": "mc:g10m8s4-1-1:drops-sign-adding-negatives",
+     "lo_id": "lo:g10m8s4-1-1",
+     "label": "Adding two negative coordinates loses the sign",
+     "description": "When the two values being added in the mid-point formula are both negative, the student adds their sizes correctly but writes the total as positive instead of keeping it negative.",
+     "signal": "Final coordinate has the same size as the correct one but the opposite sign, on a mid-point where both endpoint coordinates being added were negative.",
+     "kind": "generated_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You added the sizes of the two numbers correctly — the slip is only in the sign you gave the total. That's an easy one to make when both coordinates you're adding are already negative."
+      },
+      {
+       "step": 2,
+       "text_md": "Look at $B(-1, -7)$ and $D(0, -2)$ from the book: the mid-point's $y$-coordinate needs $\\frac{y_1+y_2}{2} = \\frac{-7+(-2)}{2}$. Both $-7$ and $-2$ sit below zero, so their total has to sit below zero too: $-7 + (-2) = -9$, not $9$."
+      },
+      {
+       "step": 3,
+       "text_md": "Dividing by $2$ gives $y = -4.5$, which matches the book's mid-point $M(-0.5, -4.5)$. If the sign had been dropped, the mid-point would land at $y = 4.5$ — above the $x$-axis, even though $B$ and $D$ are both below it, exactly the kind of mismatch the worked example on page 310 tells you to catch by checking your answer against a quick sketch."
+      },
+      {
+       "step": 4,
+       "text_md": "So when both values you're adding are negative, add their sizes and keep the negative sign on the total — then check that the mid-point actually sits between the two points, not flipped onto the wrong side of the axis."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "caution WE11 p.310"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m8s4-1-1:we11"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m8s4-1-1:ex8-6-42b"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "S7",
+       "ref": "wt:g10m8s4-1-1:plot-midpoint#wrong-quadrant",
+       "question_id": "q:g10m8s4-1-1:w003",
+       "text": "Right distances, wrong signs — the point is in the wrong quadrant",
+       "tagged": "mc:g10m8s4-1-1:drops-sign-adding-negatives"
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "Verified against q:g10m8s4-1-1:ex8-6-42b: B(-1,-7), D(0,-2) give y=(-7+(-2))/2=-9/2=-4.5, matching the book's M(-0.5,-4.5) exactly. The refutation correctly shows a dropped sign would yield y=+4.5 and appropriately invokes the WE11 sketch-check caution (p.310) as the verification habit, without misattributing the two-negatives arithmetic to WE11's own (single-negative) sums. The mechanism described (sizes added correctly, sign of the total dropped) is precisely reproduced with book numbers and reaches the book's stated answer."
+     }
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m8s4-1-2",
+   "entries": [
+    {
+     "id": "mc:g10m8s4-1-2:averages-known-point-with-midpoint",
+     "lo_id": "lo:g10m8s4-1-2",
+     "label": "Averages the known point with the midpoint",
+     "description": "The student takes the known endpoint and the mid-point $M$ as if they were the segment's two endpoints and averages those two, instead of solving the mid-point formula for the true unknown endpoint.",
+     "signal": "Final answer equals the average of the known endpoint and $M$ — $\\left(\\frac{x_1+M_x}{2}, \\frac{y_1+M_y}{2}\\right)$ — rather than $\\left(2M_x-x_1,\\ 2M_y-y_1\\right)$.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You're using the mid-point formula the right way — 'average the two endpoints' — the mix-up is in which two points you're averaging. You've picked the known point and $M$, but $M$ isn't one of the segment's endpoints."
+      },
+      {
+       "step": 2,
+       "text_md": "In this lesson $M$ is already defined as the mid-point of the two actual endpoints: $M(x, y)=\\left(\\frac{x_1+x_2}{2}, \\frac{y_1+y_2}{2}\\right)$, where $(x_1, y_1)$ is the point you're given and $(x_2, y_2)$ is the one you're finding. Averaging the known point with $M$ instead lands you on a point between the known point and $M$ — not past $M$, where the missing endpoint actually is."
+      },
+      {
+       "step": 3,
+       "text_md": "Take $C(-2, 4)$ and $M(1, -3)$: averaging $C$ and $M$ gives $(-0.5, 0.5)$. The book's answer for $D$ is $(4, -10)$ — nowhere near it, because $D$ has to sit as far past $M$ as $C$ is before it."
+      },
+      {
+       "step": 4,
+       "text_md": "Instead, write $M$'s two coordinate equations, $M_x=\\frac{x_1+x_2}{2}$ and $M_y=\\frac{y_1+y_2}{2}$, put in the point you already know for $(x_1, y_1)$, and solve each equation for $x_2$ and $y_2$ — exactly as every worked example in this lesson does."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m8s4-1-2:we12"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m8s4-1-2:ex8-6-47b"
+      }
+     ],
+     "covers": [],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The error mechanism (treating the known point and M as the segment's two endpoints and averaging them) is a real, plausible confusion given this LO's method, and it is mathematically distinct from the correct approach. Checked against we12 (C(-2,4), M(1,-3), D=(4,-10)): the described wrong computation gives ((-2+1)/2,(4-3)/2)=(-0.5,0.5), which the refutation states correctly and correctly contrasts with the book's (4,-10). The refutation's geometric explanation (M is defined as the midpoint of the two true endpoints, not one of them; averaging the known point with M lands short of, not past, M) is correct and matches the canonical formula in we12/ex8-6-47b. Step 4 restates exactly the book's solve-for-the-unknown method, so it teaches nothing beyond the book. The signal ((x1+Mx)/2,(y1+My)/2) is algebraically distinct from both the correct answer (2Mx-x1, 2My-y1) and the other entry's signal (Mx-x1, My-y1), so it does not risk misdiagnosis against the other listed error."
+     }
+    },
+    {
+     "id": "mc:g10m8s4-1-2:skips-multiply-by-two-step",
+     "lo_id": "lo:g10m8s4-1-2",
+     "label": "Solves the mid-point formula without clearing the ÷2 first",
+     "description": "The student sets up the mid-point formula correctly, e.g. $M_x=\\frac{x_1+x_2}{2}$, but isolates the unknown coordinate directly against $M_x$ without first multiplying both sides by 2 — effectively computing $x_2=M_x-x_1$ (and the same for $y$) instead of $x_2=2M_x-x_1$.",
+     "signal": "Final answer equals $\\left(M_x-x_1,\\ M_y-y_1\\right)$ rather than $\\left(2M_x-x_1,\\ 2M_y-y_1\\right)$.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You've set up the mid-point formula correctly and you're solving for the right coordinate — the step that's gone missing is clearing the $\\div 2$ before you move the known coordinate across."
+      },
+      {
+       "step": 2,
+       "text_md": "$M_x=\\frac{x_1+x_2}{2}$ has the $\\div 2$ attached to the whole sum $x_1+x_2$, not just to $x_2$. Subtracting $x_1$ from $M_x$ straight away only undoes part of the equation and leaves an extra $\\div 2$ hiding in the answer."
+      },
+      {
+       "step": 3,
+       "text_md": "For $C(-2, 4)$ and $M(1, -3)$, the book's own working multiplies by 2 first — $1\\times2=-2+x_2$ — before moving anything across, getting $x_2=4$. Skip that multiplication and you get $x_2=1-(-2)=3$, and the same way $y_2=-3-4=-7$: the pair $(3, -7)$, not the book's $D(4, -10)$."
+      },
+      {
+       "step": 4,
+       "text_md": "Always multiply both sides by 2 first, the way every worked example here does — $2M_x=x_1+x_2$ — so the coordinate you're solving for stands alone, then move the known coordinate across: $x_2=2M_x-x_1$."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m8s4-1-2:we12"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m8s4-1-2:ex8-5-4"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m8s4-1-2:ex8-6-43a"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m8s4-1-2:ex8-6-47b"
+      }
+     ],
+     "covers": [],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "This is a well-grounded algebra slip: we12's canonical solution explicitly shows the '×2' clearing step ('1×2=-2+x2') before isolating the unknown, so omitting it is a plausible, book-evidenced failure point. Verified the claimed wrong result against we12: skipping the ×2 gives x2=Mx-x1=1-(-2)=3 and y2=My-y1=-3-4=-7, i.e. (3,-7), which the refutation states correctly and correctly contrasts with the book's D(4,-10); the refutation's step-3 arithmetic ('1×2=-2+x2 ... x2=4') is copied verbatim from the canonical working. Cross-checked the general signal (Mx-x1, My-y1) against the other cited canonicals (ex8-5-4, ex8-6-43a, ex8-6-47b) and it consistently differs from both the correct method's result and the other entry's signal, so it is diagnostically distinct. Step 4's corrective instruction (multiply both sides by 2 first, then move the known coordinate) is exactly the book's method, teaching nothing outside it."
+     }
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m8s4-1-3",
+   "entries": [
+    {
+     "id": "mc:g10m8s4-1-3:diagonal-vs-side-confusion",
+     "lo_id": "lo:g10m8s4-1-3",
+     "label": "Pairs adjacent named vertices as the diagonal",
+     "description": "The student sets the midpoint of two vertices that sit next to each other in the parallelogram's name (a side) equal to the midpoint of the other two, instead of using the two 'skip-one' pairs that are the actual diagonals.",
+     "signal": "Final coordinates match what equating the midpoints of two adjacent named vertices (a side) would give, rather than the true diagonal pairing — typically a very different point from the book's answer, not a small sign or rounding slip.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "It's natural to read the name $EFGH$ left to right and pair up the letters sitting next to each other — $E$ with $F$, $G$ with $H$ — and treat that pair as 'the diagonal' you need. The student is still reaching for the right idea, that two midpoints should match; they've just paired up the wrong two points."
+      },
+      {
+       "step": 2,
+       "text_md": "Try it on the book's own numbers: $E(-1, 0)$, $F(0, 3)$, $G(8, 11)$, $H(x, y)$. Pairing $E$ with $F$ gives $M_{EF} = \\left(\\frac{-1+0}{2}, \\frac{0+3}{2}\\right) = (-0.5, 1.5)$. Setting that equal to the midpoint of $G$ and $H$ gives $8+x=-1$ and $11+y=3$, so $H(-9, -8)$ — nowhere near the book's $H(7, 8)$."
+      },
+      {
+       "step": 3,
+       "text_md": "In a parallelogram named in order round the shape, $EF$, $FG$, $GH$ and $HE$ are the four sides — each joins two letters that are next to each other in the name. The diagonals are the two joins that skip a letter: $EG$ and $FH$. Only the diagonals bisect each other, so setting side-midpoints equal never lands on the vertex the book is asking for."
+      },
+      {
+       "step": 4,
+       "text_md": "Before finding any midpoint, write the four vertices in the order the parallelogram is named and cross out the two 'skip-one' pairs — those are the diagonals. For $EFGH$ that's $EG$ and $FH$; for $OAPB$ it's $OP$ and $AB$. Only those two midpoints get set equal to each other."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m8s4-1-3:we13"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m8s4-1-3:ex8-6-46e"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "expl:g10m8s4-1-3:ex8-6-31d"
+      }
+     ],
+     "covers": [],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "Error is real and plausible: EFGH names vertices in order so EF/GH are sides (adjacent-letter pairs) while EG/FH are the actual skip-letter diagonals. Refutation's arithmetic checks out on we13's own numbers: M_EF = ((-1+0)/2,(0+3)/2) = (-0.5,1.5); setting that equal to M_GH gives (8+x)/2=-0.5 -> x=-9 and (11+y)/2=1.5 -> y=-8, i.e. H(-9,-8), correctly contrasted with the book's H(7,8). Step 4's OAPB generalisation (diagonals OP, AB) matches ex8-6-46e's canonical method (M_AB = M_OP). expl:ex8-6-31d supports the general skip-letter diagonal identification (M_AC used to test ABCD). All steps use the book's own additive midpoint formula and diagonal concept; nothing is taught beyond the book."
+     }
+    },
+    {
+     "id": "mc:g10m8s4-1-3:midpoint-formula-subtraction",
+     "lo_id": "lo:g10m8s4-1-3",
+     "label": "Subtracts coordinates instead of averaging them",
+     "description": "The student finds the midpoint of the known diagonal by subtracting the two points' coordinates, the way you would for length or slope, instead of adding them and halving.",
+     "signal": "Final coordinates match a subtract-then-halve pattern, $\\left(\\frac{x_2-x_1}{2}, \\frac{y_2-y_1}{2}\\right)$, carried through the method, rather than the book's sum-then-halve midpoint — often a noticeably smaller or differently-signed answer than the book's.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "The student knows there's a formula with two given points and a division by 2, but reaches for subtraction — the move used to find a side's length or its slope — instead of addition. They've correctly spotted that both coordinates need combining and halving; it's which operation that's slipped."
+      },
+      {
+       "step": 2,
+       "text_md": "Take $E(-1, 2)$ and $G(2, 0)$ from the book's own question. The book's midpoint is $M_{EG} = \\left(\\frac{-1+2}{2}, \\frac{2+0}{2}\\right) = (0.5, 1)$. Subtracting instead gives $\\left(\\frac{2-(-1)}{2}, \\frac{0-2}{2}\\right) = (1.5, -1)$. Carrying that through the rest of the book's own method (matching it against $F(-2,-1)$) gives $H(5, -1)$, not the book's $H(3, 3)$."
+      },
+      {
+       "step": 3,
+       "text_md": "The midpoint formula $M(x, y) = \\left(\\frac{x_1+x_2}{2}, \\frac{y_1+y_2}{2}\\right)$ adds the two $x$'s and the two $y$'s before halving, because the midpoint sits halfway ALONG the segment joining the two points — that's an average. Subtracting measures how far apart the points are, which is a different question, useful for a length or a gradient but not for finding the point in between."
+      },
+      {
+       "step": 4,
+       "text_md": "Whenever the point exactly between two given points is needed, add the $x$'s, add the $y$'s, then halve each sum: $M(x, y) = \\left(\\frac{x_1+x_2}{2}, \\frac{y_1+y_2}{2}\\right)$, exactly as the book sets it out."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m8s4-1-3:we13"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m8s4-1-3:ex8-6-23"
+      }
+     ],
+     "covers": [],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "Error is a real, distinct arithmetic slip (subtract-then-halve vs add-then-halve). Verified against ex8-6-23's own numbers: book's M_EG=((-1+2)/2,(2+0)/2)=(0.5,1) matches canonical (1/2,1); the subtracted variant gives ((2-(-1))/2,(0-2)/2)=(1.5,-1); carrying that through F(-2,-1) to solve for H gives (-2+x)/2=1.5 -> x=5 and (-1+y)/2=-1 -> y=-1, i.e. H(5,-1), correctly contrasted with the book's H(3,3). The general formula restated in step 4 is exactly the book's own midpoint formula. Evidence (we13, ex8-6-23) both use the additive formula, supporting the contrast."
+     }
+    },
+    {
+     "id": "mc:g10m8s4-1-3:shared-midpoint-as-vertex",
+     "lo_id": "lo:g10m8s4-1-3",
+     "label": "Gives the shared midpoint as the missing vertex",
+     "description": "After correctly finding the midpoint of the fully-known diagonal, the student writes that midpoint down as the coordinates of the unknown vertex, without going on to solve for the vertex using the other known point on its diagonal.",
+     "signal": "The submitted point IS the midpoint of the fully-known diagonal — often a half-integer such as $(3.5, 5.5)$ — rather than the book's separate, usually whole-number, vertex.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "The student has done the hard part correctly — found the midpoint of the diagonal that's fully known — and since the question asked for a point and a point has now been produced, they hand that midpoint in as the answer. The midpoint calculation itself is right; it's mistaken for the finish line."
+      },
+      {
+       "step": 2,
+       "text_md": "In the book's worked example, the midpoint of $EG$ is $M\\left(\\frac{7}{2}, \\frac{11}{2}\\right)$ — but the book's answer for $H$ is $(7, 8)$, a different point. The same split shows up in another question: $M(1, 2)$ is only a mid-way step, and the book's actual answer for $S$ is $(1, 6)$, not $(1, 2)$."
+      },
+      {
+       "step": 3,
+       "text_md": "$M$ is the point diagonal $EG$ and diagonal $FH$ share — not a vertex itself. $F$ and $H$ still sit on opposite sides of $M$, the same distance from it, so $H$ is a different point from $M$ unless $F$ happened to be sitting at $M$ already, which it isn't here."
+      },
+      {
+       "step": 4,
+       "text_md": "Once $M$ is found, use it together with the OTHER known vertex on that same diagonal — here $F$ — and solve $M = \\left(\\frac{x_F+x}{2}, \\frac{y_F+y}{2}\\right)$ for $x$ and $y$. That second equation is what actually finds the missing vertex."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m8s4-1-3:we13"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m8s4-1-3:ex8-6-38e"
+      }
+     ],
+     "covers": [],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "Error is real and well-attested: two canonical solutions (we13, ex8-6-38e) both compute a mid-way diagonal midpoint that is numerically distinct from the final vertex answer. we13: M(7/2,11/2) = (3.5,5.5) vs final H(7,8) -- matches the refutation's own cited numbers and the signal's example half-integer (3.5, 5.5) exactly. ex8-6-38e: M(1,2) (midpoint of diagonal PR) vs final S(1,6) -- also matches. Step 4 correctly restates the book's actual next step (solve M = ((x_F+x)/2,(y_F+y)/2) using the other known point on the diagonal), which is exactly we13's method. Nothing taught beyond the book; the signal (submitted point equals the known diagonal's midpoint) is precise and would not misdiagnose another error."
+     }
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": []
+  }
+ ],
+ "totals": {
+  "objectives": 13,
+  "entries": 29,
+  "dropped": 2,
+  "stripped": 17,
+  "skipped": 0,
+  "flags": 5
+ },
+ "run_id": "wf_ed8c8e80-51d"
+}

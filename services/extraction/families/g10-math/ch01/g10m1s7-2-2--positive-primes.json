@@ -1,0 +1,82 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m1s7-2-2:positive-primes",
+ "kind": "family",
+ "lo_id": "lo:g10m1s7-2-2",
+ "parent_question_id": "q:g10m1s7-2-2:ex1-8-5",
+ "source_page": 27,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "choice": [
+    2,
+    3,
+    5,
+    7
+   ]
+  },
+  {
+   "name": "c",
+   "choice": [
+    2,
+    3,
+    5,
+    7
+   ],
+   "resample_while": "c == a"
+  },
+  {
+   "name": "pick",
+   "choice": [
+    1,
+    2
+   ]
+  },
+  {
+   "name": "q",
+   "let": "1 if pick == 1 else c"
+  },
+  {
+   "name": "s",
+   "let": "c if pick == 1 else 1"
+  },
+  {
+   "name": "m1",
+   "let": "a * c + 1"
+  },
+  {
+   "name": "m2",
+   "let": "a + c"
+  },
+  {
+   "name": "b",
+   "let": "m1 if pick == 1 else m2"
+  }
+ ],
+ "constraints": [
+  "a != c",
+  "m1 != m2"
+ ],
+ "stem": "Factorise: ${=a}x^{2}+{=b}x+{=c}$",
+ "solution": [
+  "Write down the factors of the first coefficient and of the constant term. The first coefficient is ${=a}$, and its only pair of factors is $1\\times{=a}$. The constant term is ${=c}$, and its only pair of factors is $1\\times{=c}$.",
+  "Every term of ${=a}x^{2}+{=b}x+{=c}$ is positive, so both brackets contain plus signs. The first terms of the brackets must multiply to give ${=a}x^{2}$ and the last terms must multiply to give ${=c}$, so there are two possible pairs of brackets: $({=a}x+1)(x+{=c})$ and $({=a}x+{=c})(x+1)$.",
+  "Expand each pair of brackets to find its middle term. $({=a}x+1)(x+{=c})={=a}x^{2}+{=a*c}x+x+{=c}={=a}x^{2}+{=m1}x+{=c}$, and $({=a}x+{=c})(x+1)={=a}x^{2}+{=a}x+{=c}x+{=c}={=a}x^{2}+{=m2}x+{=c}$.",
+  "The trinomial has middle term ${=b}x$, and only the brackets $({=a}x+{=q})(x+{=s})$ give this. So ${=a}x^{2}+{=b}x+{=c}=({=a}x+{=q})(x+{=s})$.",
+  "Check by multiplying out. The first terms give ${=a}x\\times x={=a}x^{2}$, the last terms give ${=q}\\times{=s}={=c}$, and the middle term is $({=a}\\times{=s}+{=q}\\times1)x=({=a*s}+{=q})x={=b}x$. This is the original trinomial, so the factorisation is correct."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "({=a}*x + {=q})*(x + {=s})",
+  "form": "factorised",
+  "variables": [
+   "x"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Entry point of the skill. Both a and c are drawn from the primes 2, 3, 5, 7 and are never equal, so each has exactly one factor pair (1 and itself) and the only two candidate bracket pairs are (ax+1)(x+c) and (ax+c)(x+1); the two middle terms ac+1 and a+c differ, and the trinomial is primitive (gcd(a,c)=1), so the answer is unique up to the order of the brackets. Modelled on book question ex1-8-5 (3x^2+4x+1, all terms positive) but with c > 1 so that there is a real choice between two arrangements. The solution never writes a coefficient of 1 in front of x. Marker is expression/factorised; either bracket order should be accepted by an equivalence check. Every equation in every rendered solution was checked by evaluation over the whole parameter space (24 instances)."
+}

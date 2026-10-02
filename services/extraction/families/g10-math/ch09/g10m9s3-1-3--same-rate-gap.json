@@ -1,0 +1,76 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m9s3-1-3:same-rate-gap",
+ "kind": "family",
+ "lo_id": "lo:g10m9s3-1-3",
+ "parent_question_id": "q:g10m9s3-1-3:ex9-7-17",
+ "source_page": 351,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": "Bianca invests an amount of money for 2 years. Bank A pays simple interest and Bank B pays compound interest (compounded annually), both at the same rate per annum. Amounts are in rand (R).",
+ "params": [
+  {
+   "name": "m",
+   "randint": [
+    2,
+    25
+   ]
+  },
+  {
+   "name": "r",
+   "choice": [
+    5,
+    10,
+    15,
+    20
+   ]
+  },
+  {
+   "name": "p",
+   "let": "400 * m"
+  },
+  {
+   "name": "sbal",
+   "let": "p * (1 + 2 * r / 100)"
+  },
+  {
+   "name": "cbal",
+   "let": "p * (1 + r / 100) ** 2"
+  },
+  {
+   "name": "d",
+   "let": "cbal - sbal"
+  },
+  {
+   "require": "is_int(sbal) and is_int(cbal)",
+   "why": "both closing balances must be whole rands so the answer needs no rounding"
+  },
+  {
+   "require": "d > 0",
+   "why": "the compound account must be the larger one, as the stem asks how much more it holds"
+  },
+  {
+   "name": "idec",
+   "let": "fixed(r / 100, 2)"
+  },
+  {
+   "name": "fdec",
+   "let": "fixed(1 + r / 100, 2)"
+  }
+ ],
+ "constraints": [
+  "cbal > sbal"
+ ],
+ "stem": "Bianca invests $\\text{R{=p}}$ for 2 years. Bank A pays simple interest at a rate of ${=r}$ % per annum, whereas Bank B pays compound interest, compounded annually, at the same rate of ${=r}$ % per annum. How much more money does Bianca have in the account at Bank B than in the account at Bank A at the end of the 2 years? Give your answer in rand.",
+ "answer": "d",
+ "solution": [
+  "Bank A pays simple interest, so use $A=P(1+in)$ with $P={=p}$, $i={=idec}$ and $n=2$.",
+  "$\\begin{aligned}A&={=p}(1+({=idec})(2))\\\\A&=\\text{R {=sbal}}\\end{aligned}$",
+  "Bank B pays compound interest, so use $A=P(1+i)^{n}$ with $P={=p}$, $i={=idec}$ and $n=2$.",
+  "$\\begin{aligned}A&={=p}(1+{=idec})^{2}\\\\A&={=p}({=fdec})^{2}\\\\A&=\\text{R {=cbal}}\\end{aligned}$",
+  "The difference between the two closing balances is $\\text{R {=cbal}}-\\text{R {=sbal}}=\\text{R {=d}}$.",
+  "Bianca has $\\text{R {=d}}$ more in the compound interest account at Bank B, because in the second year it also earns interest on the first year's interest."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Entry point of the skill: same rate, same 2-year period, so the only difference between the accounts is the type of interest. Uses the book's own formulas A = P(1 + in) and A = P(1 + i)^n and its layout (P, i, n, A). Principal is 400*m and the rate is 5, 10, 15 or 20 so that both closing balances AND the difference are whole rands (difference = m*r^2/25), meaning no rounding is needed and the answer is exact for any solver. 96 distinct (P, r) combinations. No distractors because it is numeric. The compounding period is stated as annual, which is the book's convention. Verified by exact-fraction enumeration: every instance has cbal > sbal and whole-number balances."
+}

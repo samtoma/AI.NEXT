@@ -1,0 +1,51 @@
+{
+  "format": "ainext.family/1",
+  "id": "tpl:g10m4s2-1-1:balance",
+  "kind": "family",
+  "lo_id": "lo:g10m4s2-1-1",
+  "parent_question_id": "q:g10m4s2-1-1:ex4-1-1a",
+  "source_page": 57,
+  "tier": "basic",
+  "answer_type": "numeric",
+  "context": null,
+  "params": [
+    {
+      "name": "x",
+      "randint": [
+        -9,
+        9
+      ],
+      "resample_while": "x == 0"
+    },
+    {
+      "name": "a",
+      "choice": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "name": "b",
+      "randint": [
+        -12,
+        12
+      ],
+      "resample_while": "b == 0"
+    },
+    {
+      "name": "c",
+      "let": "a * x + b"
+    }
+  ],
+  "stem": "Solve for $x$: ${=linear(a, b)} = {=c}$.",
+  "answer": "x",
+  "solution": [
+    "Subtract ${=paren(b)}$ from both sides: ${=a}x = {=c} - {=paren(b)} = {=c - b}$.",
+    "Divide both sides by ${=a}$: $x = \\frac{{=c - b}}{{=a}} = {=x}$.",
+    "Check: ${=a}({=x}){=signed(b)} = {=c}$."
+  ],
+  "notes": "Fixture: a G10 4.2 family (tests only)."
+}

@@ -1,0 +1,68 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s7-1-3:interval-range",
+ "kind": "family",
+ "lo_id": "lo:g10m6s7-1-3",
+ "parent_question_id": "q:g10m6s7-1-3:ex6-7-3a",
+ "source_page": 213,
+ "tier": "standard",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    -6,
+    6
+   ],
+   "resample_while": "q == 0"
+  },
+  {
+   "name": "t",
+   "randint": [
+    0,
+    1
+   ]
+  },
+  {
+   "name": "fn",
+   "let": "['sin', 'cos'][t]"
+  },
+  {
+   "name": "lo",
+   "let": "q - a"
+  },
+  {
+   "name": "hi",
+   "let": "q + a"
+  }
+ ],
+ "constraints": [
+  "q != 0"
+ ],
+ "stem": "Determine the range of $y = {=a}\\operatorname{{=fn}}\\theta {=signed(q)}$. Write your answer in the form $m \\le y \\le M$.",
+ "solution": [
+  "The sine and the cosine of any angle lie between $-1$ and $1$: $-1 \\le \\operatorname{{=fn}}\\theta \\le 1$.",
+  "Multiply every part by ${=a}$. Because ${=a}$ is positive, the inequality signs stay the same: $-{=a} \\le {=a}\\operatorname{{=fn}}\\theta \\le {=a}$.",
+  "Now add the constant ${=q}$ to every part. The lowest value of $y$ is ${=q} - {=a} = {=lo}$ and the highest value of $y$ is ${=q} + {=a} = {=hi}$.",
+  "So the range of $y = {=a}\\operatorname{{=fn}}\\theta {=signed(q)}$ is ${=lo} \\le y \\le {=hi}$."
+ ],
+ "marker": {
+  "kind": "interval",
+  "answer": "interval({=lo}, {=hi}, 1, 1)",
+  "form": null,
+  "variables": [
+   "y"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Standard tier: the book's own exercise (ex6-7-3a/b, 2 sin(theta)+1 and 2 cos(theta)-4) answered by writing the range rather than picking it. a is a whole number from 2 to 6 (never 1, so the coefficient always prints), q is a non-zero whole number from -6 to 6, and the function is sine or cosine at random. Range is q-a <= y <= q+a. The book's printed options write the range with theta where y is meant (a typo in the book); this family uses y throughout. The marker is the closed interval [q-a, q+a]; the stem asks for the book's inequality form m <= y <= M. The two closed-end flags are written as 1, 1 (true) so that they parse in any plain-maths reader. The function name is rendered with \\operatorname{...} so one template serves sine and cosine. Instances are distinct through a, q and the function (about 120)."
+}

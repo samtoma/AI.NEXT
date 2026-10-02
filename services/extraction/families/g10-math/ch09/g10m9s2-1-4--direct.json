@@ -1,0 +1,77 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m9s2-1-4:direct",
+ "kind": "family",
+ "lo_id": "lo:g10m9s2-1-4",
+ "parent_question_id": "q:g10m9s2-1-4:we04",
+ "source_page": 333,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": "Fritha wants a sum of money (in Rand) to grow to a larger target amount over a stated number of whole years in an account that pays simple interest at a fixed annual rate; the rate is unknown and must be found.",
+ "params": [
+  {
+   "name": "P",
+   "choice": [
+    1000,
+    1500,
+    2000,
+    2500,
+    3000,
+    4000,
+    5000,
+    6000,
+    8000,
+    10000
+   ]
+  },
+  {
+   "name": "r",
+   "randint": [
+    3,
+    15
+   ]
+  },
+  {
+   "name": "n",
+   "randint": [
+    2,
+    10
+   ]
+  },
+  {
+   "require": "r * n <= 90",
+   "why": "keeps the total growth to a believable size"
+  },
+  {
+   "name": "gain",
+   "let": "P // 100 * r * n"
+  },
+  {
+   "name": "A",
+   "let": "P + gain"
+  },
+  {
+   "name": "PN",
+   "let": "P * n"
+  },
+  {
+   "name": "idec",
+   "let": "fixed(r / 100, 2)"
+  }
+ ],
+ "constraints": [
+  "A > P",
+  "(A - P) % (P // 100 * n) == 0"
+ ],
+ "stem": "At what simple interest rate should Fritha invest if she wants to grow $\\text{R{=P}}$ to $\\text{R{=A}}$ in ${=n}$ years? Give the rate as a percentage per year, written as a number without the % sign.",
+ "answer": "r",
+ "solution": [
+  "Read the question and write down the given information: $\\begin{aligned}A&=\\text{R{=A}}\\\\P&=\\text{R{=P}}\\\\n&={=n}\\\\i&=?\\end{aligned}$",
+  "The question asks for a simple interest rate, so use the simple interest formula $A=P(1+in)$ and make $i$ the subject: $\\begin{aligned}A&=P(1+in)\\\\\\frac{A}{P}&=1+in\\\\\\frac{A}{P}-1&=in\\\\\\frac{\\frac{A}{P}-1}{n}&=i\\end{aligned}$",
+  "Substitute the values: $i=\\frac{\\frac{{=A}}{{=P}}-1}{{=n}}=\\frac{{=gain}}{{=PN}}={=idec}$",
+  "Write $i$ as a percentage: $i={=idec}\\times100={=r}\\%$ per year.",
+  "So Fritha must invest at a simple interest rate of ${=r}\\%$ per annum."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Basic entry point, modelled on we04 (Fritha, R2500 to R4000 in 5 years, 12%). n is given directly, the rate is a whole percent, and every amount is a whole number of Rand: P is a multiple of 100, so gain = (P/100)*r*n is an integer and A = P + gain is exact. The constraint checks that i comes out as exactly r/100. r*n is capped at 90 so total growth stays believable. The answer is the percentage as a plain number (12 for 12%), as the book prints it; the stem says so to keep a blind solver from answering 0.12. No misconceptions are catalogued for this objective and the family is numeric, so there are no distractors."
+}

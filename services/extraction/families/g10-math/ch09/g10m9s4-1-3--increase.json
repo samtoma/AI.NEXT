@@ -1,0 +1,101 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m9s4-1-3:increase",
+ "kind": "family",
+ "lo_id": "lo:g10m9s4-1-3",
+ "parent_question_id": "q:g10m9s4-1-3:ex9-4-7",
+ "source_page": 346,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": "The price of popcorn and a cooldrink at the movies is known today. The average rate of inflation over the past few years is given, and the student finds how many rand the price has risen by over that period (past price first, then the difference).",
+ "params": [
+  {
+   "name": "k",
+   "randint": [
+    8,
+    20
+   ]
+  },
+  {
+   "name": "now",
+   "let": "5 * k"
+  },
+  {
+   "name": "n",
+   "randint": [
+    3,
+    8
+   ]
+  },
+  {
+   "name": "r10",
+   "randint": [
+    61,
+    139
+   ]
+  },
+  {
+   "require": "r10 % 10 != 0",
+   "why": "the rate is a decimal such as 9.2 or 7.3, never a whole percentage, as in the book's own harder examples"
+  },
+  {
+   "name": "i",
+   "let": "r10 / 1000"
+  },
+  {
+   "name": "grow",
+   "let": "(1 + i) ** n"
+  },
+  {
+   "name": "past",
+   "let": "now / grow"
+  },
+  {
+   "name": "pr",
+   "let": "floor(past * 100 + 1/2) / 100"
+  },
+  {
+   "name": "d",
+   "let": "now - pr"
+  },
+  {
+   "name": "cents",
+   "let": "(now - past) * 100"
+  },
+  {
+   "require": "abs(cents - floor(cents) - 1/2) > 1/20",
+   "why": "keeps the cent digit away from a rounding boundary, so rounding the past price first or the difference last gives the same answer"
+  },
+  {
+   "name": "rt",
+   "let": "fixed(r10 / 10, 1)"
+  },
+  {
+   "name": "it",
+   "let": "fixed(i, 3)"
+  },
+  {
+   "name": "gt",
+   "let": "fixed(1 + i, 3)"
+  },
+  {
+   "name": "pt",
+   "let": "fixed(pr, 2)"
+  },
+  {
+   "name": "dt",
+   "let": "fixed(d, 2)"
+  }
+ ],
+ "constraints": [],
+ "stem": "The price of popcorn and a cooldrink at the movies is now $\\text{R{=now}}$. The average rate of inflation over the past ${=n}$ years was $\\text{{=rt}}$ % p.a. By how many rand has the price increased over these ${=n}$ years? Round your answer to 2 decimal places.",
+ "answer": "fixed(d, 2)",
+ "solution": [
+  "First find what the popcorn and cooldrink cost ${=n}$ years ago. Write down the given information: $A=\\text{R{=now}}$, $P=?$, $i=\\frac{{=rt}}{100}=\\text{{=it}}$, $n={=n}$.",
+  "Today's price is the amount $A$. Use the compound interest formula and make $P$ the subject: $A=P(1+i)^{n}$, so $P=\\frac{A}{(1+i)^{n}}$.",
+  "Substitute and calculate: $P=\\frac{{=now}}{(1+{=it})^{{=n}}}=\\frac{{=now}}{({=gt})^{{=n}}}=\\text{R{=pt}}$.",
+  "The increase is today's price minus the price ${=n}$ years ago: $\\text{R{=now}}-\\text{R{=pt}}=\\text{R{=dt}}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced = several steps plus the book's decimal-rate twist (ex9-4-7 uses 9.2 %, ex9-4-6 uses 7.3 %). The student must work BACKWARDS (make P the subject, divide by (1+i)^n) and then take a difference. Rounding is robust: today's price is a multiple of R5, so (today - past price rounded to cents) equals (exact difference rounded to cents); the second require removes instances where the exact value sits within 0.05 of a cent boundary. Worked instance: now=60, n=5, 9.2 % -> past price R38.64 (the book's own ex9-4-7 value), increase R21.36. Rate range 6.1 %-13.9 %, never a whole percent. The misconception catalogue for this objective is empty, and a numeric family carries no distractors, so none is proposed; the typical slips (multiplying by (1+i)^n instead of dividing, or stopping at the past price) give visibly wrong numbers."
+}

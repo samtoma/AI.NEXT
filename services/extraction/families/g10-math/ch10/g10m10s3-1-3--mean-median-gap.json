@@ -1,0 +1,112 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m10s3-1-3:mean-median-gap",
+ "kind": "family",
+ "lo_id": "lo:g10m10s3-1-3",
+ "parent_question_id": "q:g10m10s3-1-3:ex10-4-3d",
+ "source_page": 371,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": "Alfred's minibus taxi: the weekly passenger totals are grouped, and the estimated mean is compared with the estimated median.",
+ "params": [
+  {
+   "name": "start",
+   "choice": [
+    200,
+    300,
+    400,
+    500
+   ]
+  },
+  {
+   "name": "n",
+   "choice": [
+    20,
+    50
+   ]
+  },
+  {
+   "name": "cuts",
+   "sample": {
+    "from": "range(1, n)",
+    "k": 5
+   }
+  },
+  {
+   "name": "scuts",
+   "let": "sorted(cuts)"
+  },
+  {
+   "name": "edges",
+   "let": "[0 if i == 0 else (n if i == 6 else scuts[i - 1]) for i in range(7)]"
+  },
+  {
+   "name": "cs",
+   "let": "[edges[i + 1] - edges[i] for i in range(6)]"
+  },
+  {
+   "require": "len([c for c in cs if c == max(cs)]) == 1",
+   "why": "there must be one modal group so the data are not ambiguous"
+  },
+  {
+   "name": "lo",
+   "let": "[start + 100 * i for i in range(7)]"
+  },
+  {
+   "name": "mids",
+   "let": "[start + 50 + 100 * i for i in range(6)]"
+  },
+  {
+   "name": "cum",
+   "let": "[sum([cs[j] for j in range(i + 1)]) for i in range(6)]"
+  },
+  {
+   "name": "lowpos",
+   "let": "n // 2"
+  },
+  {
+   "name": "highpos",
+   "let": "n // 2 + 1"
+  },
+  {
+   "name": "g",
+   "let": "len([c for c in cum if c < lowpos])"
+  },
+  {
+   "require": "cum[g] >= highpos",
+   "why": "the two middle values must lie in the same group so that the median group is clear"
+  },
+  {
+   "name": "total",
+   "let": "sum([cs[i] * mids[i] for i in range(6)])"
+  },
+  {
+   "name": "mean",
+   "let": "total / n"
+  },
+  {
+   "name": "med",
+   "let": "mids[g]"
+  },
+  {
+   "require": "mean != med",
+   "why": "the two estimates must differ so there is a difference to find"
+  },
+  {
+   "name": "diff",
+   "let": "abs(mean - med)"
+  }
+ ],
+ "stem": "Alfred runs a minibus taxi. Over {=n} weeks he counted the passengers he carried each week and sorted the weekly totals into groups, where $x$ is the number of passengers in a week: ${=lo[0]}<x\\leq{=lo[1]}$ in {=cs[0]} weeks; ${=lo[1]}<x\\leq{=lo[2]}$ in {=cs[1]} weeks; ${=lo[2]}<x\\leq{=lo[3]}$ in {=cs[2]} weeks; ${=lo[3]}<x\\leq{=lo[4]}$ in {=cs[3]} weeks; ${=lo[4]}<x\\leq{=lo[5]}$ in {=cs[4]} weeks; ${=lo[5]}<x\\leq{=lo[6]}$ in {=cs[5]} weeks. Treat every week in a group as having the number of passengers at the centre of that group. Estimate the mean number of passengers per week, and estimate the median as the centre of the median group (the group that contains the middle value). Calculate the difference between these two estimates, that is, the larger estimate minus the smaller one.",
+ "answer": "diff",
+ "solution": [
+  "Treat every week in a group as having the number of passengers at the centre of its group. The centres of the six groups are {=mids[0]}, {=mids[1]}, {=mids[2]}, {=mids[3]}, {=mids[4]} and {=mids[5]}.",
+  "Estimate the total number of passengers: ${=cs[0]}({=mids[0]})+{=cs[1]}({=mids[1]})+{=cs[2]}({=mids[2]})+{=cs[3]}({=mids[3]})+{=cs[4]}({=mids[4]})+{=cs[5]}({=mids[5]})={=total}$.",
+  "There are {=n} weeks, so the estimated mean is ${=total}\\div{=n}={=mean}$ passengers per week.",
+  "For the median, there are {=n} values, so the median lies between the {=lowpos}th and {=highpos}th values. Adding the counts group by group gives the cumulative counts {=cum[0]}, {=cum[1]}, {=cum[2]}, {=cum[3]}, {=cum[4]} and {=cum[5]}. The cumulative count first reaches {=lowpos} in the group ${=lo[g]}<x\\leq{=lo[g + 1]}$ and is {=cum[g]} by the end of it, so the {=lowpos}th and {=highpos}th values both lie in this group. This is the median group.",
+  "The estimated median is the centre of the median group: {=med}.",
+  "The difference between the estimates is ${=max(mean, med)}-{=min(mean, med)}={=diff}$ passengers."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Mirrors book Ex 10.4 Q3(c) and (d): estimate of the mean from count x centre, and estimate of the median as the middle value (centre) of the median group, then compare the two. Six groups of width 100 written as a < x <= b with the counts as numbers of weeks, as in the histogram. n is 20 or 50 (a divisor of 100), so the estimated mean is always a whole number; n is even so the median lies between the (n/2)th and (n/2+1)th values and the family requires both to fall in one group, which keeps the median group unambiguous. Counts are made from 5 sorted cut points, so every group has at least 1 week and they total n; a single modal group is required. The stem states the median-estimate rule used by the book (centre of the median group), so a solver is not asked to interpolate. The mean-minus-median sign can go either way, so the stem asks for the larger minus the smaller."
+}

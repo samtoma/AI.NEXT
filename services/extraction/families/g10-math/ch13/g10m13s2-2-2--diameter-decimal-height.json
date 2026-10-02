@@ -1,0 +1,79 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m13s2-2-2:diameter-decimal-height",
+ "kind": "family",
+ "lo_id": "lo:g10m13s2-2-2",
+ "parent_question_id": "q:g10m13s2-2-2:ex13-7-8",
+ "source_page": 459,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "d",
+   "randint": [
+    5,
+    14
+   ]
+  },
+  {
+   "name": "hh",
+   "randint": [
+    4,
+    18
+   ]
+  },
+  {
+   "name": "h2",
+   "let": "2 * hh + 1"
+  },
+  {
+   "name": "m",
+   "let": "d * d * h2"
+  },
+  {
+   "name": "nd",
+   "let": "0 if m % 8 == 0 else (1 if m % 4 == 0 else 3)"
+  },
+  {
+   "name": "vp",
+   "let": "str(m // 8) if nd == 0 else fixed(m / 8, nd)"
+  },
+  {
+   "name": "rs",
+   "let": "str(d // 2) if d % 2 == 0 else fixed(d / 2, 1)"
+  },
+  {
+   "name": "rsq",
+   "let": "str(d * d // 4) if d % 2 == 0 else fixed(d * d / 4, 2)"
+  },
+  {
+   "name": "hs",
+   "let": "fixed(h2 / 2, 1)"
+  },
+  {
+   "name": "scaled",
+   "let": "pi * m * 100 / 8"
+  },
+  {
+   "name": "rem",
+   "let": "scaled - floor(scaled)"
+  },
+  {
+   "require": "abs(rem - 0.5) > 0.1",
+   "why": "keeps the volume well clear of a rounding boundary at 2 decimal places, so every correct use of the calculator's pi key rounds the same way"
+  }
+ ],
+ "constraints": [],
+ "stem": "A cylinder has a diameter of ${=d}$ cm and a height of ${=hs}$ cm. Calculate the volume of the cylinder in $\\text{cm}^3$, correct to 2 decimal places. Use the $\\pi$ button on your calculator and do not round until your final answer.",
+ "answer": "fixed(pi * m / 8, 2)",
+ "solution": [
+  "The formula uses the radius, so first halve the diameter: $r = {=d} \\div 2 = {=rs}$ cm",
+  "Find the area of the circular base: $\\text{area of base} = \\pi r^{2} = \\pi({=rs})^{2} = {=rsq}\\pi \\text{ cm}^{2}$",
+  "Multiply the area of the base by the height of the cylinder: $V = \\text{area of base} \\times \\text{height} = {=rsq}\\pi \\times {=hs} = {=vp}\\pi \\text{ cm}^{3}$",
+  "Use the $\\pi$ button on your calculator and round to 2 decimal places: $V = {=vp}\\pi \\approx {=fixed(pi * m / 8, 2)} \\text{ cm}^{3}$",
+  "Write the final answer: the volume of the cylinder is ${=fixed(pi * m / 8, 2)}$ $\\text{cm}^{3}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced tier. Same book method as ex13-7-8 (r = 7 cm, h = 12 cm, 2 d.p.; figure seen, radius labelled, height labelled) and we07, with two added twists: the DIAMETER is given, so the radius must be found by halving first (odd diameters give a radius ending in .5, for example d = 9 gives r = 4.5 and r^2 = 20.25), and the height is a half-integer such as 12.5 cm. Rounding is to 2 d.p., as in ex13-7-8. d is 5 to 14 and the height is 4.5 to 18.5 cm, so volumes run from about 88 to 2848 cm^3 (122 clean instances). Worked-step numbers are built as exact strings: rsq is r^2 (an integer or x.25), vp is r^2 x h (0, 1 or 3 decimals, exactly m/8 with m = d^2 x (2*hh+1)), and the final value is pi*m/8. A require keeps the volume at least 0.1 of a unit in the second decimal place away from a rounding tie, so a solver using the calculator's pi (or 3.14159) gets the same rounded answer. The stem tells the student to use the pi button and not to round early; an answer worked with 3.14 is not intended to be accepted. Numeric answer is unitless (cm^3 is stated in the stem). No mcq: the misconception list for this objective is empty, and a worked numeric answer is the natural response."
+}

@@ -1,0 +1,87 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m1s5-1-2:large-squares",
+ "kind": "family",
+ "lo_id": "lo:g10m1s5-1-2",
+ "parent_question_id": "q:g10m1s5-1-2:ex1-11-21b",
+ "source_page": 38,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    11,
+    25
+   ]
+  },
+  {
+   "name": "r",
+   "randint": [
+    1,
+    "2*a"
+   ]
+  },
+  {
+   "name": "n",
+   "let": "a*a + r"
+  },
+  {
+   "name": "w",
+   "let": "isqrt(10000*n)"
+  },
+  {
+   "require": "w % 10 < 3 or w % 10 > 6",
+   "why": "w is 100 times the surd, cut down to a whole number, so w % 10 is the hundredths digit of the surd. Digits 3 to 6 put the surd within 0.02 of a rounding boundary (x.x5), where an honest estimate could land on either tenth. Those radicands are thrown away so the answer is unambiguous."
+  },
+  {
+   "name": "t",
+   "let": "(isqrt(400*n) + 1) // 2"
+  },
+  {
+   "name": "s",
+   "let": "(20*r + 2*a + 1) // (2*(2*a + 1))"
+  },
+  {
+   "require": "t % 10 != 0",
+   "why": "t is the answer in tenths. A whole-number answer such as 12.0 is not an estimate the book would print, and it needs the surd to sit within 0.05 of a whole number."
+  },
+  {
+   "require": "10*a + s == t",
+   "why": "The book's own method (the radicand sits this fraction of the way between the two squares, so the surd sits the same fraction of the way between the two whole numbers) must land on the same tenth as the true value of the surd. This holds for every instance by construction and is checked here."
+  }
+ ],
+ "constraints": [
+  "n > a*a and n < (a + 1)*(a + 1)",
+  "t % 10 != 0",
+  "10*a + s == t"
+ ],
+ "stem": "Estimate the following surd to the nearest $1$ decimal place, without using a calculator. $\\sqrt{{=n}}$",
+ "answer": "fixed(t/10, 1)",
+ "solution": [
+  "Find the perfect squares on either side of ${=n}$: ${=a}^{2}={=a*a}$ and ${=a+1}^{2}={=(a+1)*(a+1)}$.",
+  "Since ${=a*a}<{=n}<{=(a+1)*(a+1)}$, $\\sqrt{{=n}}$ lies between ${=a}$ and ${=a+1}$.",
+  "The two squares are ${=(a+1)*(a+1)}-{=a*a}={=2*a+1}$ apart, and ${=n}$ is ${=n}-{=a*a}={=r}$ above ${=a*a}$. So ${=n}$ is $\\frac{{=r}}{{=2*a+1}}\\approx{=fixed(s/10, 1)}$ of the way from ${=a*a}$ up to ${=(a+1)*(a+1)}$.",
+  "$\\sqrt{{=n}}$ is about the same fraction of the way from ${=a}$ to ${=a+1}$, so $\\sqrt{{=n}}\\approx{=a}+{=fixed(s/10, 1)}={=fixed(t/10, 1)}$.",
+  "Therefore $\\sqrt{{=n}}\\approx{=fixed(t/10, 1)}$ to the nearest $1$ decimal place."
+ ],
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m1s5-1-2:remainder-as-decimal",
+   "label": "Writes the remainder as the decimal digits",
+   "description": "After finding the nearer square below, the student writes the whole number followed by the difference between the radicand and that square as the decimal part (for example 487 is 3 above 22 squared, so the estimate is given as 22.3). The difference is a count out of the gap between the two squares, not a decimal."
+  },
+  {
+   "id": "mc:g10m1s5-1-2:always-halfway",
+   "label": "Takes the middle of the bracket every time",
+   "description": "The student finds the two whole numbers the surd lies between and always answers with the point halfway, a.5, without checking how close the radicand is to either square."
+  },
+  {
+   "id": "mc:g10m1s5-1-2:nearer-whole-number",
+   "label": "Stops at the nearer whole number",
+   "description": "The student brackets the surd and names the nearer whole number, or gives a with .0 added, instead of locating the surd to one decimal place."
+  }
+ ],
+ "notes": "Advanced gap for lo:g10m1s5-1-2. The book's questions are one-step estimates with radicands up to 110 (integer part at most 10). This family keeps the book's exact method (bracket between two perfect squares, then judge how far the radicand sits between them, as in the book's 'almost exactly between' and 'about halfway' wording) but uses radicands between 11 squared and 26 squared (122 to 675), so the student must know or work out two-digit squares and quantify the position in the gap rather than say only 'closer to'. Answer = the true value of the surd correct to 1 d.p. Instance space: a = 11..25 and the radicand a^2 + r with 1 <= r <= 2a, 540 candidates, 299 admissible after the two filters. Checked exhaustively by script: (1) the answer equals the true square root rounded half-up to 1 d.p. for all 299 (isqrt(400n) form, no ties possible because 400n is even and (2t-1)^2 is odd); (2) the book-method estimate (a + r/(2a+1) rounded to 1 d.p.) lands on the same tenth for all 299, as expected since linear interpolation between consecutive squares is within 1/(8a), at most 0.0114, of the true value when a >= 11; (3) every admissible surd is at least 0.02 from a rounding boundary, so a sound estimate and a calculator value agree and a blind solver cannot split between two adjacent tenths (the book itself accepts two answers for its closest calls, such as sqrt(14) and sqrt(10), which a single-answer numeric item cannot). Instances whose answer would be a whole number (x.0) are excluded. Parent is the book's largest radicand (sqrt(110), page 38). NOTE ON THE PARENTS' ANSWER KEYS: two printed answers look like lost integer parts, not models for this family: ex1-3-2d gives 3.5 for sqrt(90) while its own solution says halfway between 9 and 10 (9.5), and ex1-11-21d gives 4.5 or 4.6 for sqrt(57) while its own solution says between 7 and 8 (7.5 or 7.6). The other seven keys match the true value (sqrt(10) printed 3.1 or 3.2 against true 3.2, and sqrt(14) printed 3.7 or 3.8 against true 3.7, are the book's two-answer cases). The objective's misconception catalogue is empty; three errors are proposed above for the catalogue. They are not attached to distractors because this item is numeric. Basic and standard tiers are covered by the book questions and were not listed as gaps, so no family was written for them."
+}

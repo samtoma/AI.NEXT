@@ -1,0 +1,213 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m8s1-1-3:quad-rotated-start",
+ "kind": "family",
+ "lo_id": "lo:g10m8s1-1-3",
+ "parent_question_id": "q:g10m8s1-1-3:ex8-1-5",
+ "source_page": 287,
+ "tier": "standard",
+ "answer_type": "mcq",
+ "context": null,
+ "version": 1,
+ "params": [
+  {
+   "name": "letters",
+   "choice": [
+    [
+     "A",
+     "B",
+     "C",
+     "D"
+    ],
+    [
+     "B",
+     "C",
+     "D",
+     "E"
+    ],
+    [
+     "C",
+     "D",
+     "E",
+     "F"
+    ],
+    [
+     "D",
+     "E",
+     "F",
+     "G"
+    ],
+    [
+     "E",
+     "F",
+     "G",
+     "H"
+    ],
+    [
+     "F",
+     "G",
+     "H",
+     "I"
+    ],
+    [
+     "G",
+     "H",
+     "I",
+     "J"
+    ],
+    [
+     "H",
+     "I",
+     "J",
+     "K"
+    ],
+    [
+     "I",
+     "J",
+     "K",
+     "L"
+    ],
+    [
+     "J",
+     "K",
+     "L",
+     "M"
+    ],
+    [
+     "K",
+     "L",
+     "M",
+     "N"
+    ],
+    [
+     "L",
+     "M",
+     "N",
+     "O"
+    ],
+    [
+     "M",
+     "N",
+     "O",
+     "P"
+    ],
+    [
+     "N",
+     "O",
+     "P",
+     "Q"
+    ],
+    [
+     "O",
+     "P",
+     "Q",
+     "R"
+    ],
+    [
+     "P",
+     "Q",
+     "R",
+     "S"
+    ],
+    [
+     "Q",
+     "R",
+     "S",
+     "T"
+    ],
+    [
+     "R",
+     "S",
+     "T",
+     "U"
+    ],
+    [
+     "S",
+     "T",
+     "U",
+     "V"
+    ],
+    [
+     "T",
+     "U",
+     "V",
+     "W"
+    ],
+    [
+     "U",
+     "V",
+     "W",
+     "X"
+    ],
+    [
+     "V",
+     "W",
+     "X",
+     "Y"
+    ],
+    [
+     "W",
+     "X",
+     "Y",
+     "Z"
+    ]
+   ]
+  },
+  {
+   "name": "r",
+   "choice": [
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "name": "given_order",
+   "let": "[letters[(i + r) % 4] for i in range(4)]"
+  },
+  {
+   "name": "reversed_letters",
+   "let": "list(reversed(letters))"
+  },
+  {
+   "name": "swapped",
+   "let": "[letters[0], letters[2], letters[1], letters[3]]"
+  }
+ ],
+ "stem": "A quadrilateral has 4 vertices, each labelled with a different letter. Going around the shape clockwise, starting from one particular vertex, the labels are, in order: {=given_order[0]}, {=given_order[1]}, {=given_order[2]}, {=given_order[3]}. Applying the convention that a figure's vertices are named in alphabetical order, what is the correct name for this quadrilateral?",
+ "solution": [
+  "The four labels used are {=letters[0]}, {=letters[1]}, {=letters[2]} and {=letters[3]} — already consecutive letters of the alphabet.",
+  "The diagram happens to start listing them from {=given_order[0]}, partway around the shape, but the convention says to start naming from the alphabetically-first vertex, {=letters[0]}, and keep going the same way around.",
+  "Reading clockwise from {=letters[0]}, the vertices in order are {=letters[0]}, {=letters[1]}, {=letters[2]}, {=letters[3]}, so the correct name is {=letters[0]}{=letters[1]}{=letters[2]}{=letters[3]}."
+ ],
+ "choices": {
+  "correct": "{=letters[0]}{=letters[1]}{=letters[2]}{=letters[3]}",
+  "distractors": [
+   {
+    "text": "{=given_order[0]}{=given_order[1]}{=given_order[2]}{=given_order[3]}",
+    "misconception_id": "mc:g10m8s1-1-3:names-from-given-start"
+   },
+   {
+    "text": "{=reversed_letters[0]}{=reversed_letters[1]}{=reversed_letters[2]}{=reversed_letters[3]}",
+    "misconception_id": "mc:g10m8s1-1-3:writes-descending-order"
+   },
+   {
+    "text": "{=swapped[0]}{=swapped[1]}{=swapped[2]}{=swapped[3]}",
+    "misconception_id": null
+   }
+  ]
+ },
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m8s1-1-3:names-from-given-start",
+   "label": "Names from the diagram's starting point",
+   "description": "Writes the vertices in the order the diagram happens to begin listing them, instead of rotating the same cyclic order to start at the alphabetically-first vertex."
+  },
+  {
+   "id": "mc:g10m8s1-1-3:writes-descending-order",
+   "label": "Writes the letters in descending order",
+   "description": "Lists the vertices going around the shape in the direction opposite to the ascending one, producing the letters in descending rather than ascending order, without checking that the result is actually alphabetical."
+  }
+ ],
+ "notes": "Textual analogue of the book's ring-diagrams (ex8-1-5/8-1-6/ex8-6-3, all p.287/316), which show four labelled rings and ask which uses the correct convention; I viewed all three figure PNGs and confirmed only 'shape Z' reads as a perfect consecutive alphabetical cycle. Since the family DSL has no letter/chr arithmetic, the cyclic vertex order is given as a literal list of pre-verified consecutive-letter windows (params 'letters', 'r') rather than a rendered diagram; the underlying skill (rotate to the alphabetically-first vertex, keep the given direction) is identical. Swap distractor is a plausible scramble with no single diagnosable cause (misconception_id null) per the rules."
+}

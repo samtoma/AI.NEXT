@@ -39,7 +39,11 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts",
     ".next-admin/types/**/*.ts",
-    ".next-admin/dev/types/**/*.ts"
+    ".next-admin/dev/types/**/*.ts",
+    ".next-pilot/types/**/*.ts",
+    ".next-pilot/dev/types/**/*.ts",
+    ".next-pilot-admin/types/**/*.ts",
+    ".next-pilot-admin/dev/types/**/*.ts"
   ],
   // `.next-admin` is the console build's distDir (ADR-0014). It is EXCLUDED and
   // must stay excluded: Next generates `types/routes.d.ts` per build, and each
@@ -57,6 +61,8 @@
   // build it is making, and CI runs both builds (ADR-0014, ci-cd.yml).
   "exclude": [
     "node_modules",
-    ".next-admin"
+    ".next-admin",
+    ".next-pilot",
+    ".next-pilot-admin"
   ]
 }

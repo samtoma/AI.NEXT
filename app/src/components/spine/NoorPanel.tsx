@@ -7,6 +7,7 @@ import { ChatCore } from "@/components/chat/ChatCore";
 import type { CiteInfo } from "@/components/chat/CitationChip";
 import { renderVizWidget } from "@/components/viz/render-viz-widget";
 import { NoorMark } from "@/components/NoorMark";
+import { plainMath } from "@/lib/math-text";
 import { HONEY_BAND, STROKE, STROKE_SM, cx } from "@/components/sticker";
 
 /** Starter questions (handoff §7); the last one names what is selected. */
@@ -55,7 +56,9 @@ export function NoorPanel({
   onAttemptResult: (r: AttemptResult, q: SpineQuestion) => void;
 }) {
   const prompts =
-    focus && focus.label ? [...BASE_PROMPTS, `What connects to ${focus.label}?`] : BASE_PROMPTS;
+    focus && focus.label
+      ? [...BASE_PROMPTS, `What connects to ${plainMath(focus.label)}?`] // an objective's label may carry maths (backlog #37)
+      : BASE_PROMPTS;
   return (
     <aside
       aria-label="Ask Noor"

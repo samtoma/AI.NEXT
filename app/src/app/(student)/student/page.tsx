@@ -4,10 +4,14 @@ import { getLessonCatalog, getLessonData } from "@/lib/lesson";
 import { getLessonContent } from "@/lib/lesson-content";
 import { getSubjectSummaries } from "@/lib/subject-queries";
 import { decideLanding } from "@/lib/student-landing";
-import { courseIdOfSpineKey } from "@/lib/subjects";
+import { resolveStudentScope, visibleCoursesFor } from "@/lib/catalog-queries";
+import { courseDef } from "@/lib/courses";
+import { subjectOfCourse } from "@/lib/subjects";
 import { resolveStudentContext } from "@/lib/student-context";
 import { getCurrentLesson, isCourseComplete } from "@/lib/progression-db";
 import { previousCompletedSlug, untriedObjectives } from "@/lib/progression";
+import { getCourseOutline } from "@/lib/course-outline-queries";
+import { hasUnpreparedLessons, preparedSlugs } from "@/lib/course-outline";
 import {
   deriveMasteryStage,
   deriveRecommendation,
@@ -90,7 +94,35 @@ export default async function StudentPage({
 
   if (mode === "practice") {
     const plan = await getStudentPlan(studentId);
-    return <StudentLoop plan={plan.items} studentName={plan.studentName} />;
+    const visibleIds = [...(await visibleCoursesFor(studentId))];
+    // How a [[page:N]] receipt names the book (backlog #36): the one citation
+    // every course she may see shares — "Ministry textbook" for a National
+    // student, the Grade 10 book's own name for a Grade 10 student — or none
+    // when her courses cite different books, so a page is never attributed
+    // to the wrong one.
+    const cites = visibleIds.map((id) => courseDef(id)?.cite).filter((c) => c != null);
+    const bookCite =
+      cites.length > 0 && cites.every((c) => c.name === cites[0]!.name && c.edition === cites[0]!.edition)
+        ? cites[0]!
+        : null;
+    // The loop's header is page chrome shared across every subject, not any
+    // one lesson's, so it cannot read `isRtlSubject` the way a lesson surface
+    // does. It shows Arabic unless every course she may see is explicitly
+    // Arabic-free (`CourseTutorFacts.arabicTouches`, Samuel's answer 35,
+    // 2026-10-01) — true for the American course, which is the only curriculum
+    // with no Arabic-carrying course at all today. An empty set (nothing
+    // assigned yet) keeps the header as it has always rendered.
+    const arabicTouches =
+      visibleIds.length === 0 ||
+      visibleIds.some((id) => courseDef(id)?.tutor.arabicTouches !== false);
+    return (
+      <StudentLoop
+        plan={plan.items}
+        studentName={plan.studentName}
+        bookCite={bookCite}
+        arabicTouches={arabicTouches}
+      />
+    );
   }
 
   if (mode === "learn" || mode === "review") {
@@ -114,15 +146,50 @@ export default async function StudentPage({
   // «شرح الدرس» — the readable rich-content surface (exposition, glossary,
   // enrichment, misconceptions, interactive beats). Falls through to the
   // check-in when the lesson has no content bundle yet.
+  //
+  // Through the course gate first (003). The bundle is read from disk by slug,
+  // and this door used to open it for ANY slug — a hidden course's teaching
+  // script, or another curriculum's, one hand-typed `?mode=read&lesson=` away.
+  // `getLessonData` is the gate every other `?lesson=` door already goes
+  // through; a refused or unknown lesson falls through to the check-in, which
+  // refuses it the way it always has (404).
   if (mode === "read") {
-    const content = await getLessonContent(lessonSlug ?? "");
+    const gated = lessonSlug ? await getLessonData(lessonSlug, studentId) : null;
+    const content =
+      gated && gated.slug === lessonSlug ? await getLessonContent(gated.slug) : null;
     if (content) return <LessonContentView content={content} />;
   }
 
-  // ?subject → course by EXACT registry lookup: an unknown value yields no
-  // course, never silently the maths one.
-  const courseId = courseIdOfSpineKey(subject) ?? null;
+  // ?subject → course, within THIS student's scope (003). `?subject=` names a
+  // subject, and a subject can now have more than one course (Prep-3 and
+  // Grade-10 maths); which one she means depends on her curriculum and what
+  // she may see — `courseForSubject` (lib/catalog.ts), the only subject →
+  // course lookup outside the registries. An unknown value yields no course,
+  // never silently the maths one; a known subject she may not see yields its
+  // course, which her gated catalogue does not hold, so the landing refuses
+  // it (404) exactly as before.
+  const named =
+    subject == null ? null : (await resolveStudentScope(studentId)).courseForSubject(subject);
   const allLessons = await getLessonCatalog(studentId);
+  // …and when the URL also names a lesson of ANOTHER course of that same
+  // subject, the lesson decides which course is meant (FR-4009, T372). Only a
+  // student who sees two courses of one subject can reach this — a tester's
+  // exception for the other curriculum's maths — and it is how her second
+  // maths card, and every lesson link inside that course's check-in, keep her
+  // in the book she chose instead of dropping her back into her own
+  // curriculum's. The lesson comes from her GATED catalogue, so this can only
+  // ever pick a course she may see; for every other student `named` stands.
+  const lessonCourse =
+    lessonSlug == null
+      ? null
+      : (allLessons.find((l) => l.slug === lessonSlug)?.courseId ?? null);
+  const courseId =
+    named != null &&
+    lessonCourse != null &&
+    lessonCourse !== named &&
+    subjectOfCourse(lessonCourse) === subjectOfCourse(named)
+      ? lessonCourse
+      : named;
 
   // **Which screen this is, decided in one place** (`lib/student-landing.ts`).
   //
@@ -227,6 +294,22 @@ export default async function StudentPage({
     lesson.courseId
   );
 
+  // THE WHOLE BOOK (migration 037, lib/course-outline.ts; Samuel 2026-10-01).
+  // The outline of the courses the picker shows — already gated, since
+  // `lessons` is her gated catalogue — so the picker lists every chapter and
+  // lesson of the book, the ones not prepared yet shown and not openable.
+  // Empty for every National course, which then renders exactly as before.
+  // Readiness is the catalogue: nothing here can make a lesson startable, and
+  // the lesson on the card, the pointer and the doors are decided above
+  // without it.
+  const outline = await getCourseOutline(
+    lessons.map((l) => l.courseId).filter((c): c is string => c != null)
+  );
+  // "That's the whole course" is not true while the book has lessons still
+  // being prepared: the terminal banner says so instead.
+  const morePreparing =
+    courseComplete && hasUnpreparedLessons(lesson.courseId, outline, preparedSlugs(allLessons));
+
   // Check-in card derivation (Noor Play brief). recommendationReason is
   // logged here and stops here — it must never become a prop, so a client
   // component can never render it (docs/design/handoffs/noor-play).
@@ -249,6 +332,7 @@ export default async function StudentPage({
     <LessonCheckIn
       lesson={lesson}
       lessons={lessons}
+      outline={outline}
       hasContent={hasContent}
       masteryStage={masteryStage}
       weakestSubskill={weakestSubskill?.label ?? null}
@@ -256,6 +340,7 @@ export default async function StudentPage({
       estimates={estimates}
       completedToday={false /* no real "attempted today" signal yet — never inferred from time of day */}
       courseComplete={courseComplete}
+      morePreparing={morePreparing}
       untriedSubskills={untried}
       justFinished={
         justFinished

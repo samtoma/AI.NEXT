@@ -1,0 +1,242 @@
+# G10 integration backlog (orchestrator's list)
+
+> **Numbering (note 2026-09-27).** Early items below cite Samuel's third-round questions by the number they
+> had in the orchestrator's question list ("decision 7", "decision #12" …). Those are **not** the numbers
+> in `specs/003-curriculum-tracks/decisions.md`. Each such item now carries its answer number from
+> `samuel-answers.md` and its decisions.md number (answer N = decision N + 21), and its status.
+
+## Pipeline integration (one agent, before the Chapter 8 pilot)
+1. coverage_report.py: count only `scope == "chapter"` signed widget gaps (families agent).
+2. load_generated_questions.py: accept typed answers (`short` + `choices.marker`), read `family` field, validate fresh bundles against the DB catalogue (don't overwrite `generated_by`).
+3. G2 verdicts apply step (book-question reviewer stamps reach the DB).
+4. S2 claims have no home: put them into lesson content bundles (`seed/content/<slug>.json`) where Noor reads them.
+5. Prep-3 printed lesson titles live only in app `courses.ts`: move into book configs; loader writes `course_lessons.title`.
+6. G10 book config `bundles`: `g10m-course.json` first (T364); parity constant null until T364.
+7. Format alignment: manifest `exercises[].item_refs`, module `excluded_pages` (P1 vs P4); S0b `runs/<book>/maths/summary.json` (P8 vs P4); widget-gaps shape (done).
+8. Prerequisite-edges stage for G10 (decision 7, pending Samuel). → **Answered** (answer 4 = decisions.md #25: find them in the book); **built** (T428, FR-4410), used in the Chapter 8 pilot.
+9. Static book-figure display kind (decision 8, pending Samuel) — pipeline side + frontend. → **Answered, and declined** (answer 5 = decisions.md #26): figures no kind can draw get **native** figure types, not static images (FR-4321; the figure-gap inventory is T429, open). The consolidated review of 2026-09-27 (D1) asked whether to reopen this for fan-out — **reopened, for students only, answer 37d (decision 58d), 2026-10-01**: until a native kind is built, a maths course MAY show the book's own image as a stand-in (`visuals.kind: "book_image"`, `stand_in: true`), each one a backlog item "needs native figure" (new FR-4508). The figure-gap inventory and kind-by-kind approval (FR-4321) are unchanged. **Built 2026-10-01** (`tasks.md` T442, read by the tech-writer: `assemble_lesson_bundle.py`, `BookImage.tsx`, `question-figures.ts`; 9 Chapter 8 questions held because the picture reveals the answer). Stale text left: see #88.
+10. Second blind mapper for chapter-distributed items (decision 9, pending Samuel). → **Answered** (answer 12 = decisions.md #33); **built** (T427), used in the Chapter 8 pilot.
+11. Real-data dry run of the whole line on Chapter 8 with stubbed model calls (no spend).
+
+## App integration
+12. Migration renumbering on g10 after hotfix v0.9.3 takes 032 on main: g10 032→033, 033→034 (+ rollback files, apply-migrations floor, ci-migrations proof names, docs).
+13. Local dev DB is behind (lacks 029–033; 029 fails until 014 re-run) — bring up to date once agents stop using it.
+14. Copy review (product-designer): sign-up curriculum question, /welcome copy, console strings; scan for JSX missing-space bug ("Americancurriculum").
+15. /welcome header shows study links + "Prep 3 · Mathematics"; contract status code 422 vs 400 alignment.
+16. CourseCompleteness beside the switch (FR-4309, T308) — unassigned.
+17. T423: CI proof for the misconception catalogue (run test DB class in migrations job).
+18. Guard test: package.json test list has no joined entries (`mts""`).
+19. Expression marker: wire into api/attempts + MathAnswerInput (T414–T417) after Samuel picks library (T413). → **Done**: T413 decided (answer 2 = decisions.md #23, ADR-0025); T414–T417 ticked.
+20. Marker keys for generated typed answers (values/interval/recurring) confirm with marker package.
+
+## Docs (tech-writer)
+21. Runbook: test command (`uv run --project services/extraction ...`), run paths, S7 two passes + flags, S5 args + assembler flags, `widgets/<book>/` dir owner.
+22. contracts/pipeline-handoff.md: block contract, run shapes; merged-lesson slug/group_key rule (slug_section).
+23. FR-4407 wording (decision 6); tier names basic/standard/advanced (not basic/core/stretch). → FR-4407 part **done**: amended in spec rev. 4 for the third reading (answer 11 = decisions.md #32). Tier names: status not recorded.
+24. Tick tasks + traceability rows for WP-D/E/G/H/P*, FR-1111 row, FR-4409 evidence, CODEOWNERS stub, DEPLOY docs.
+25. `traceability.py --write` for all gated specs at integration.
+
+## Content follow-ups (Samuel)
+26. Two new misconception entries: substitution-sign (lo:t2u1-1-3), vertex-sign (lo:u1-4-3).
+27. Live widget stem wording "y = 2x + -1", "y = 1x^2 + 0x + -4" (Prep-3) — cosmetic cleanup.
+28. Arabic phrases in G10 prompts (decision 4 pending). → **Answered** (answer 9 = decisions.md #30: English only, keep "Egyptian student"); **built** (T431). Follow-up: #53.
+
+## From the marker evaluation (2026-09-25)
+29. Decision #12 (T413 → ADR-0025) — that is answer 2 = decisions.md #23; **done** (see #19): built-in marker, no library (recommended). Then T414–T417: wire into api/attempts (dispatch on choices.marker only), MathAnswerInput UI, add answer-marker.test.mts to the test list.
+30. S3 prompt rules: raised dot = multiplication (write \cdot in keys); 5 printed answers not in the asked form (1-5/15, 1-11/29n, 1-6/14, 1-10/3h, 1-10/3i); "product of primes" items (1-11/28) must carry a form check.
+31. The 8 "write as a decimal" items need a decimal form requirement (per-question form flag).
+32. Pilot: log every unreadable-input return to learn real student typing.
+
+## From grouping-on-screens (2026-09-25)
+33. Progress page (`app/(student)/dashboard/page.tsx`) doesn't render the section roll-up yet (data is there: TopicRow.sections).
+34. LessonSession header: show the part ("1.7 Factorisation · part 2 of 3") — rest of T410; `lesson.provenance` is available.
+35. Merged lesson numbering: prompts say "section 1.3", check-in says "1.2–1.3" — align.
+36. BUG: check-in says "Ministry textbook" for Grade 10 — use the course's book reference.
+37. Objective labels with maths print raw LaTeX on check-in, subject home and skill map — render maths.
+38. Section roll-up line on RTL (Arabic) cards: wording for product-designer.
+39. tsc: answer-marker.ts uses BigInt literals — tsconfig target; fix at wiring (BigInt() or target ES2020).
+40. Decision #13 (Samuel) — answer 13 = decisions.md #34; **built** (T432, ADR-0020's ninth exception — the sixth until 2026-10-02; FR-4206's third expected difference). Follow-up: #52. Arabic lessons' real printed names (e.g. "عِبادُ الرَّحمنِ") instead of the first objective "فهم النص والاستماع" — changes National prompts (prompt hold).
+
+## From the docs agent's code verification (2026-09-26)
+41. **Done** (T372 ticked; isolation fixes 2026-09-26) — T372: SpineExplorer picks by subject, not course — a tester with a cross-curriculum exception sees two maths courses merged. Make it a course picker.
+42. T406: "continue <section>" recommendation not wired into the practice plan (only LessonCheckIn); getSectionIndex() may be dead code.
+43. (T305 still unticked with its note; T397 may be moot) — T305: SubjectDef.courseId alias skipped (end state T397 reached) — tick with a note.
+44. T387: full requirement status pass (OPEN → BUILT/PARTIAL/VERIFIED) for spec 003 after integration.
+45. T308/T410: being handled by the app-fixes agent (course completeness; LessonSession part label) — verify.
+46. CI: pin astral-sh/setup-uv@v5 to a commit SHA (supply chain); CI path filter widened to services/extraction/** (more CI minutes, intended).
+
+## From the marker wiring (2026-09-26)
+47. **Done** (see "Done by the maths-input agent") — Practice loop (`StudentLoop.tsx`, ?mode=practice) has no maths input; a re-entry shows as "API 422". Add MathAnswerInput + re-entry handling there (important for G10 practice).
+48. **Done** (see "Done by the maths-input agent") — ChatCore (answers typed in chat during Socratic probing): a re-entry is logged and dropped, not shown to the student. Show the message.
+49. Docs: contracts/answer-marker.md → "decimal" form, 422 {retry, form|reason, message}, extended exact/unit/coordinate rules, grade() now in lib/attempt-grading.ts; tick T414–T417; marker-evaluation.md §7.
+50. Decision for Samuel + privacy: log unreadable student inputs (text) to learn typing patterns? Today only question + reason are logged.
+51. Existing lint error ChatQuestionCard.tsx useRef(Date.now()) (also at HEAD).
+
+## From the app fixes (2026-09-26)
+52. Review question: Arabic prompts read "ara1-1 · عِبادُ الرَّحمنِ — عِبادُ الرَّحمنِ" (name twice, because the objective ref already carries it). Trim the ref? (a further prompt-hold change).
+53. Review question: added language-contract line for G10 — "English only in this course: write no Arabic at all … even if the student writes in Arabic". Confirm. → **Answered (answer 35, decision 56, 2026-10-01): KEPT** — and widened, the American course shows no Arabic anywhere, not only in its prompts (FR-4205 widened; built and verified, T435).
+54. devops: confirm the Dockerfile COPY of services/extraction/coverage into the image (console completeness panel reads it).
+55. Product-designer: Arabic roll-up wording «الأجزاء المتقنة: 2 من 3» (provisional).
+56. Cleanup at the end: scratch DBs ainext_fe_scratch, ainext_fe_scratch_ui, ainext_scratch_wpm_marker; delete scratch session token files (scratchpad/g10/fe/*-refresh-token.txt, scratchpad/wpm/).
+
+## From widgets A (2026-09-26)
+57. Pipeline `generate_widget_questions.py`: add polygon_builder / solid_scaler / box_plot_builder (and B's venn_builder / area_model / curve extensions) to `reachability()`, `READING_FIELDS`, `reading_agrees()` — mirror `widget-payloads.ts` cases + `widget-docs.ts` DOCS word for word.
+58. Run the full 438-file National prompt capture on a scratch DB migrated to 034 after all widget work lands (widgets A relied on the no-DB golden + BY_UNIT untouched).
+59. Box plot uses the book's quartile method (linear interpolation, rank = 1 + p(n−1)) — record in the pipeline doc / widget docs.
+
+## From widgets B (2026-09-26)
+60. **Done** (see "Done by the maths-input agent") — lib/lesson.ts: a G10 unit whose bank holds a new curve family (hyperbola/exponential/sine/cosine/tangent) should ask mathWidgetDocsNamed for "curve_sketcher_g10" instead of "curve_sketcher" (documented, not wired). National prompts must stay byte-identical.
+61. Predicate name `complement-inside-a` (lower-case, to pass the naming test), not the brief's `complement-inside-A` — make any spec text match.
+62. widget-emission.test.mts predicate scanner is a regex heuristic (first `predicate:` → first `given:`/+400 chars) — fragile; new grading modules can trip it. Consider a real parse.
+63. Pipeline reachability for B's kinds (extends #57): curveReachable() bounds; venn counts sum to total, no cOnly/complementC on 2 sets; area_model a,b whole, not both 0, |a|,|b|≤4.
+64. Someone's local-dev.sh --reset removed app/.env.local mid-session — check it is back before local runs.
+
+## In flight (2026-09-26, pilot day)
+- S0b ch8: pass A (wf_ace9e326-ddf), pass B (wf_e4887b3b-cbd), A50 calibration (wf_2648747c-cf6).
+- by-ref agent: packet-by-reference for S1/S2–S4/S5/S6/S7 (args ≤15 KB), dry run in by-ref mode.
+- maths-input agent: #47 practice loop, #48 ChatCore re-entry, #60 curve_sketcher_g10 in lesson.ts.
+
+## Done by the maths-input agent (2026-09-26)
+- #47 practice loop: MathAnswerInput + 422 re-entry via lib/attempts-client.ts (not an attempt). DONE.
+- #48 ChatCore: re-entry shown as a local note (never sent to model, not graded). DONE.
+- #60 lesson.ts: hasG10CurveFamily → curve_sketcher_g10 docs; National + G10 goldens unchanged. DONE.
+- T414–T417 ticked; traceability Rev. 4; FR-4320 left OPEN for T387. npm test 1353 pass / 45 skip / 0 fail; tsc clean; both builds OK.
+65. Review question (queue for Samuel's branch review): #60 has no FR of its own. (a) inherit under FR-1209 [agent default], (b) new FR in 003, (c) note on frozen 001 FR-1209 row.
+66. SC-212 DB replay (scripts/marker-eval/replay-attempts.mts) not run — needs a copy of the local DB.
+
+## From the by-ref agent (2026-09-26)
+- DONE: packet by reference (S1, S5 draft, S6, S7 ≤15 KB args); embedded-script copies for S2–S4 and S5 final
+  (embed_workflow.py); clips lifted in by-ref mode (s5-v3, s6-v3, s7-v3); inline unchanged. 404 tests + dry run both modes.
+67. AFTER S1 is assembled: make S0a's write of work/<book>/blocks.jsonl atomic AND stop the test suite / dry run from
+    rewriting the real work dir (use a temp copy). Record embedded hashes per lesson in lesson-runs.
+68. CLOSED (2026-10-01, the fan-out preparation) — Q3 deferred: S1 prior_objectives into a shard (needed around chapter 5–7 of a full book).
+    Built: by reference, `prior.txt` (the linker's list) and `prior/<id tail>.txt` (one statement, the link
+    checker's) are shards; the args keep the ids (`prior_by_ref`); splice-equal to inline
+    (`tests/test_packet_ref.py` S1PriorObjectivesByRef); a chapter with no prior objectives (Chapter 8) hashes as before.
+69. CLOSED (2026-10-01, adopted by the fan-out plan) — S2–S4: run per-lesson copies (first g10m8s2-1 as the size check), not one 230 KB run.
+    `runs/g10-math/fanout-plan.json` has one `lesson-<slug>` run per lesson (60), each its own embedded copy.
+
+## S1 fixes + answer 15 (2026-09-26) — built by the by-ref agent
+- Faults 1–4 fixed at cause (s1-v5): bracketed anchors (prompt + tolerant strip recorded as anchor_written; same in
+  lesson.workflow.js lesson-v3), "cite as:" kinds per line, Haiku per-kind "supports", reconciler evidence as plain text.
+- Answer 15: finders read in-scope end-of-chapter items; G1 verdict `outside_items` (named, coverage g1_exceptions).
+- 70. Orchestrator calls (to confirm at branch review): keep the extra G1 decision `unpractised` (owed, not a failure);
+     FR-4303 gained one sentence + traceability note (no new FR); answer 14 = decision 35, answer 15 = decision 36.
+
+## Isolation audit (2026-09-26, Samuel asked for reassurance)
+- Verified ISOLATED: subjects shown, lesson content, practice + /api/attempts re-check, next lesson/check-in (per course),
+  ask/chat content, mastery (ids can't collide: g10m prefix), no parent screen. Server-side filtering, not UI-only.
+- Production AINEXT_COURSE_GATING = on (GitHub var, 2026-09-22) → grade + curriculum both enforced.
+- Gaps → isolation-fix agent (in flight): 1 bridge hints ungated (lesson.ts:1515); 2 retrieval prereq hop ungated
+  + guard test misses seed subdirs + loader allows cross-course edges; 3 scope guard per-file not per-function;
+  4 /spine + subject card merge two maths courses for exception holders (T372); 5 session cache key lacks scope (3 h);
+  6 home copy "Egyptian Ministry textbook / syllabus 2025–2026" shown to American students.
+71. Code default AINEXT_COURSE_GATING=off (docker-compose) → with gate off, grade is ignored (curriculum still enforced).
+    Samuel's call whether to flip the default to on / refuse to start without it. → **Answered (answer 28, decision
+    49, 2026-10-01): "Refuse to start."** Built (`app/src/lib/env.ts` `resolveCourseGating`); production (already
+    `on`) unchanged.
+- Pilot: 8.2 lesson run wf_29588ac2-069 $2.28; 8.1/8.3a/8.3b/8.4 launched (wf_73acc1d0-255, wf_e927fd12-ec1,
+  wf_96486877-d35, wf_e23ef7b4-30b).
+
+## Isolation fixes — DONE (2026-09-26, uncommitted on top of 383510c)
+- All six gaps fixed (bridges gated + handoff rule; retrieval hop + seed guard subdirs + loader refuses cross-course
+  prereqs; per-function scope guard; /spine + subject home per course (T372); session-cache scope fingerprint;
+  home copy per course). Decisions 37 (FR-4011 next turn) and 38 (prompt-hold 7th exception — the 8th since ADR-0020 was renumbered 2026-09-27, and the 11th since 2026-10-02 — FR-4206) applied;
+  server-side handoff-card filter (handoff-filter.ts); inline align* → aligned (math-text.ts / TeXRenderer).
+  npm test 1422 / 0 fail; tsc clean; both builds OK; goldens unchanged; traceability OK.
+72. **Done 2026-09-27**: ADR-0020's exceptions are in one list, one to eight (the sign note stays the fourth, as on `main`; G10 prompts the fifth, Arabic lesson names the sixth, G10 English-only the seventh, the handoff line the eighth — **renumbered again 2026-10-02** when the branch moved onto `main` at v0.11.0, whose own fifth to seventh are Tamer's: now the eighth, ninth, tenth and eleventh). Was: ADR-0020 exception numbering: the ADR says "fourth" twice (G10 prompts + widget sign note) — tidy at review.
+73. Product-designer copy review: G10/neutral home wording; "official syllabus" + "Unit 1 · prerequisite DAG" fixed
+    text; tester's second maths card opens first lesson not saved place.
+74. (Same question as #71.) Open for Samuel: AINEXT_COURSE_GATING code default "off" (grade ignored when off) — default "on" / refuse to start? → **Answered, see #71** (decision 49).
+
+## G2, Chapter 8 (2026-09-26, Samuel's answers 18–22 → decisions 39–43)
+75. OPEN — **Ex8-5:5 excluded pending a detailed review later (Samuel, G2).** "PQRS is a parallelogram with P(5;3),
+    Q(2;1), R(7;−3). Find S." The book (and its printed answer) gives S(4;−5), which makes PQSR the parallelogram;
+    for PQRS named in order S = P + R − Q = (10;−1), the blind re-solve's answer. Excluded from practice in
+    `runs/g10-math/g2.json`; decide key and solution at the review.
+76. CLOSED (decision 44, Samuel's answer 23: one line appended to the solution) — **Ex8-6:36b: key "square" (decision 41), but the book's solution concludes "rhombus".** LMNP is a square,
+    and the grounded tutor teaches from the book's solution, which proves only MP ⊥ LN. A one-line addition to the
+    solution (LM ⊥ MN and all sides √26, so a square) needs Samuel's approval; until then a student who answers
+    "rhombus" is returned for re-entry while the stored solution says rhombus.
+77. CLOSED (the app agent built to the contract: `choiceOptions` reads `options`; `mcqChoices` and the attempt route's distractor lookup go through it) — App (parallel agent): an mcq with `less_specific` stores `choices` as an OBJECT
+    `{"options": [{key,text}…], "less_specific": [keys]}` (a JSON list cannot carry the field); `mcqChoices()` and
+    the attempt route's mcq diagnosis must read `options` from it. Marker questions may carry `"answer_only": true`
+    beside `"marker"`. Contract: `specs/003-curriculum-tracks/contracts/pipeline-handoff.md`.
+78. QUALITY GAP (for Samuel at the go/no-go): the three-way check compares FINAL answers only, so typos inside the
+    book's working (Ex8-6:32d, Ex8-6:45a) reach the tutor unless an S5 author happens to notice. Propose a step-level
+    "working checker" (one agent per canonical solution, flags inconsistent lines) — cost to be measured; decide before fan-out.
+    → **Answered (answer 30, decision 51, 2026-10-01): "Yes, add it."** One checking agent per book solution + a free
+    numeric pre-check; flagged steps go to G2, never silently corrected; ≈ $0.03–0.05/solution; re-run on Chapter 8
+    too. **BUILT 2026-10-01** (CLOSED as a build; its runs are in the fan-out plan): `services/extraction/working_check.py`
+    (packet builder, free numeric pre-check, collector), `runbook/working-check.workflow.js` (sw-v1, one blind Sonnet
+    agent per solution), `tests/test_working_check.py`. Flags → `runs/g10-math/working-check/chNN.flags.json` → the
+    console backlog (answer 37c), never corrected. The pre-check alone, on the pilot seed, flags 3 real book typos G2
+    missed (Ex8-6:42a, Ex8-6:38d, Ex8-6:42d). Chapter 8's run is prepared (`002-wcheck-ch08`, 192 solutions).
+    **Run done 2026-10-01** (`wf_957393ec-d74`): 21 solutions flagged (25 flags), $31.0 metered — 3–5× the estimate; now
+    **FR-4411** (spec rev. 9, `tasks.md` T447). Open: classify the 25 flags; calibration `sw-v2`; the console reading the flags (#87).
+79. CLOSED (`s7-v5`; `tests/test_widget_templates.py`) — **The six kinds of decision 27 were in the widget contract
+    but never registered for the pipeline**: S7 author `wf_816352f4-fbc` saw polygon_builder, solid_scaler,
+    box_plot_builder, venn_builder and area_model with an empty instrument, curve_sketcher with only linear and
+    quadratic, and the pipeline's reachability refused all five as unknown. Now every contract kind has its
+    instrument (the app's `widget-docs.ts` text word for word), `parseMathWidget`/`curveReachable` ported and
+    cross-checked kind by kind through node, and blind-reading rules. Re-author g10m8s3-2 only
+    (`--only-lessons`); `--merge-author-runs` keeps one record per lesson.
+80. OPEN (author) — **S6 family `unknown-coordinate-from-midpoint` (lo:g10m8s4-1-1) held for re-authoring**
+    (`families/g10-math/_held--…`). Its stem asks for t and b as separate values; a `values` marker compares a
+    sorted list, so it cannot tell t from b, and the two are coordinates of different points, so no
+    `coordinates` key fits either. The other two S6 refusals were mechanical and are normalised
+    (`families/normalise.py`, recorded in each spec's notes).
+    Joined by `pentagon-partial-arc` (lo:g10m8s1-1-3), refused by the S6 blind judge (wf_c9fa108d-2eb,
+    solution_ok: step 2 names the 4th→5th edge as the loop-closing one). Both re-authored together through the
+    shared revise prompt (`generate_questions.py --revise-args`, reasons per family; s6 prompts unchanged).
+81. CLOSED (orchestrator's decision (a) for both: `--normalise-templates`, recorded in each template's notes; s7-v6 prompt tightening for fan-out after the pilot's verify run) — **S7 pre-catalogue pass refused two templates** (author errors, caught fail-closed):
+    `wt:g10m8s3-2-2:parallel-perpendicular-line` names four lo:g10m8s3-2-1 misconceptions, and g10m8s3-2-1 is
+    not a prerequisite of g10m8s3-2-2 in the G1 graph (FR-1215); `wt:g10m8s4-1-2:plot-endpoint` maps
+    `off-target` to two misconceptions (one predicate, one misconception). The re-author of g10m8s3-2 also
+    replaced the earlier s3-2-3 template (third-point-collinear) with a collinearity_checker gap.
+82. CLOSED (plumbing) — **S6's deterministic gate refused two families the judge passed** (grade wf_c9fa108d-2eb):
+    the blind solver wrote right values with names, "x = [0, 8]" and "H = (3, 1)". The app's marker removes
+    names; the pipeline's comparison now does too (`generate_questions.blind_plain`, cross-checked against
+    answer-marker.ts), and s6-v5 asks for bare values. All 11 families pass `apply_grades` over both grade runs.
+    S5 now hears only about graded families (`--s5-distractors` with `--grades`) and verified widgets
+    (`--s5-distractors`/`--gap-report` with `--verdicts`).
+83. CLOSED (decision 47, Samuel's answer 26: keep all 7, hold the 23 refused claims for human review on the G3 held-mappings page; 20 confirmed claims active) — **S7 verify accepted 0 of 7 templates under the old rule** (wf_dbca7b50-327): all 25 widgets
+    reachable and read correctly (once a reading written as a string, "[3, -2]" or "-1/2", is read as its
+    value), but every template has at least one mapping the verifier refused, and the documented rule rejects
+    a template on ANY refused mapping. Option: drop refused mappings and keep a template with one mapping
+    confirmed on every instance (2 templates: s1-1-2 plot-the-point, s3-2-1 line-through-two-points).
+84. CLOSED (T430, Samuel's answer 27 "Build the safe restore"; decision 29; FR-4208/FR-4210 wording unchanged, now matched) —
+    **"Load a course" restore is a per-course bundle replay; the whole-database mode is `rollback`.** New modes
+    `restore-dry-run` → `restore-rehearse` → `restore [export_ref]` replay ONE course's committed export
+    (`restore_course_bundle.py`): provenance from the `export-record.json` that `export_generated_content.py --course`
+    now writes beside the three bundles; refuses — naming the row — if the replay would remove or re-word anything a
+    student's row names; one transaction that commits only if every student table is unchanged and the course
+    re-exports to the restored bytes. The old `restore <file.dump>` is `rollback`, behaviour unchanged, and the old
+    spelling is refused with the new one. Proof: `tests/test_load_course_restore.py` (21, incl. the real
+    `load-course.sh` end to end through `tests/fake_docker`), in `ci-cd.yml`'s migrations job. **Open for the box**:
+    no committed export has a record yet — each course's first restore point is its next `--course` export
+    (Prep-3 maths re-exports byte-identical plus the record; G10's generated dir still holds fresh generator
+    bundles). Not yet run on noor.
+85. OPEN — **Answer 40 / decision 61: a book teaching item as a family's parent** (FR-4304 amended; proposed wording for
+    001's FR-1101, which the tech-writer may not edit from this worktree — stamp `specs/001-student-mvp1-delta/spec.md`
+    FR-1101 and its traceability row when the code lands). **Code in progress, not built** (`tasks.md` T448): migration 038
+    (`questions.parent_kind`, a trigger in place of the `parent_question_id` foreign key), `families/spec.py`,
+    `generate_questions.py`, `load_generated_questions.py`, the review desk's "Generated from" line; the plan is the
+    family-parent handoff in README. Blocks fan-out run `001-s6-author-ch08-s111` and lo:g10m8s1-1-1's family. Also update
+    `data-model.md`'s "Planned, not built" section and `plan.md`'s 038 row in the same work.
+86. OPEN (test owners) — **No test declares `@covers` for the new requirements.** FR-4322…FR-4327 (`course-outline.test.mts`
+    and `whole-book-render.test.mts` declare nothing; `course-outline-guard.test.mts` says `@covers constitution II`;
+    `test_course_outline.py` nothing), FR-4411 (`test_working_check.py` nothing) and FR-4501…FR-4509 (the three
+    `review-gate*.test.mts` declare `@covers FR-2204` only). `scripts/traceability.py` therefore counts none of them as
+    test-declared. The tech-writer may not edit `app/` or `services/`.
+87. OPEN — **The console does not read the step checker's flags.** No app code references
+    `runs/<book>/working-check/*.flags.json` (`ainext.working-check/1`), so a flag is not yet a backlog item as FR-4411 and
+    FR-4501 require. Needs a derivation in `lib/review-gate-queries.ts` (a new item kind or a reason on `book_question` /
+    `worked_example`) and a widening of migration 036's `item_kind` CHECK — a new migration, never a re-run of 036.
+88. OPEN — **FR-4508 leftovers**: `services/extraction/coverage/g10-math.figure-gaps.json`'s rule text still says "never a
+    static book image" (answer 29, reversed for students by 37d); ~420 pictures from another run's default `--figures-out`
+    sit in `app/public/book-figures/g10-math/` (check with the fan-out agent); and the 9 held questions plus s4-1-2's
+    advanced tier are Samuel's to decide.
+89. OPEN — **Log "no leave it as it is" verbatim in `samuel-answers.md`**: Samuel's reply on whether Noor should be told
+    which lessons are still being prepared (decision 59 follow-up) was relayed by the coordinating session, not written
+    into the answers file. FR-4206 and decision 59 cite it as relayed.

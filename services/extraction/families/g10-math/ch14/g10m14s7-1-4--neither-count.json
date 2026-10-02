@@ -1,0 +1,62 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m14s7-1-4:neither-count",
+ "kind": "family",
+ "lo_id": "lo:g10m14s7-1-4",
+ "parent_question_id": "q:g10m14s7-1-4:ex14-8-30",
+ "source_page": 495,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": "A class of learners in which some play football, some play hockey, some play both sports and some play neither.",
+ "params": [
+  {
+   "name": "f",
+   "randint": [
+    12,
+    25
+   ]
+  },
+  {
+   "name": "h",
+   "randint": [
+    8,
+    20
+   ],
+   "resample_while": "h == f"
+  },
+  {
+   "name": "c",
+   "randint": [
+    3,
+    "min(f, h) - 3"
+   ]
+  },
+  {
+   "name": "n",
+   "randint": [
+    3,
+    12
+   ]
+  },
+  {
+   "name": "u",
+   "let": "f + h - c"
+  },
+  {
+   "name": "t",
+   "let": "u + n"
+  }
+ ],
+ "constraints": [
+  "c < min(f, h)",
+  "t > f and t > h"
+ ],
+ "stem": "A class has ${=t}$ learners. ${=f}$ of them play football and ${=h}$ of them play hockey, and ${=c}$ play both football and hockey. The numbers for football and for hockey each include the learners who play both. How many learners play neither football nor hockey?",
+ "answer": "t - (f + h - c)",
+ "solution": [
+  "The overlap of the two circles holds the ${=c}$ learners who play both. Football only is ${=f} - {=c} = {=f - c}$ and hockey only is ${=h} - {=c} = {=h - c}$.",
+  "Learners who play football or hockey (or both): ${=f - c} + {=c} + {=h - c} = {=u}$. The identity agrees: $n(F \\text{ or } H) = {=f} + {=h} - {=c} = {=u}$.",
+  "The rest of the ${=t}$ learners lie outside both circles: ${=t} - {=u} = {=n}$ learners play neither."
+ ],
+ "notes": "Uses the book's ex14-8-30 situation (football and hockey) but asks for the 'neither' region with the class total given, the other half of that question's Venn diagram. Two steps: union by the identity, then subtract from the total. The inclusive reading of the football and hockey totals is stated in the stem to avoid a blind-solver disagreement. No distractors (numeric)."
+}

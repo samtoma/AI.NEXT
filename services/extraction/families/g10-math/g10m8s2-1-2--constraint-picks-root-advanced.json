@@ -1,0 +1,108 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m8s2-1-2:constraint-picks-root-advanced",
+ "kind": "family",
+ "lo_id": "lo:g10m8s2-1-2",
+ "parent_question_id": "q:g10m8s2-1-2:ex8-6-33b",
+ "source_page": 323,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "cx",
+   "randint": [
+    -6,
+    6
+   ]
+  },
+  {
+   "name": "triple",
+   "choice": [
+    [
+     5,
+     12,
+     13
+    ],
+    [
+     8,
+     15,
+     17
+    ],
+    [
+     9,
+     12,
+     15
+    ],
+    [
+     7,
+     24,
+     25
+    ]
+   ]
+  },
+  {
+   "name": "leg_x",
+   "let": "triple[0]"
+  },
+  {
+   "name": "leg_y",
+   "let": "triple[1]"
+  },
+  {
+   "name": "dist",
+   "let": "triple[2]"
+  },
+  {
+   "name": "dir_x",
+   "choice": [
+    1,
+    -1
+   ]
+  },
+  {
+   "name": "dx",
+   "let": "cx + dir_x*leg_x"
+  },
+  {
+   "name": "cy",
+   "randint": [
+    "-leg_y + 1",
+    "leg_y - 1"
+   ]
+  },
+  {
+   "name": "dist_sq",
+   "let": "dist**2"
+  },
+  {
+   "name": "legx_sq",
+   "let": "leg_x**2"
+  },
+  {
+   "name": "r1",
+   "let": "cy + leg_y"
+  },
+  {
+   "name": "r2",
+   "let": "cy - leg_y"
+  }
+ ],
+ "constraints": [
+  "legx_sq + leg_y**2 == dist_sq",
+  "r1 >= 0",
+  "r2 < 0"
+ ],
+ "stem": "Points $C({=cx}, {=cy})$ and $D({=dx}, k)$ are such that $CD=\\sqrt{{=dist_sq}}$, where $k\\geq0$. Find the value of $k$.",
+ "answer": "r1",
+ "solution": [
+  "Write down the distance formula and substitute: $CD=\\sqrt{(x_{D}-x_{C})^{2}+(y_{D}-y_{C})^{2}}$, so $\\sqrt{{=dist_sq}}=\\sqrt{({=dx}-({=cx}))^{2}+(k-({=cy}))^{2}}$.",
+  "Square both sides: ${=dist_sq}=({=dx}-({=cx}))^{2}+(k-({=cy}))^{2}$, and $({=dx}-({=cx}))^{2}={=legx_sq}$, so ${=dist_sq}={=legx_sq}+(k-({=cy}))^{2}$.",
+  "Isolate the square: $(k-({=cy}))^{2}={=dist_sq}-{=legx_sq}={=leg_y**2}$.",
+  "Take the square root of both sides: $k-({=cy})=\\pm\\sqrt{{=leg_y**2}}=\\pm{=leg_y}$.",
+  "So $k={=cy}\\pm{=leg_y}$, giving $k={=r2}\\text{ or }k={=r1}$.",
+  "But $k\\geq0$, therefore $k={=r1}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Mirrors ex8-6-33b's twist: a stated inequality on the unknown coordinate eliminates one of the two algebraic roots, so the solver must reason about which root satisfies it (several steps beyond the basic family: expand/isolate, take both roots, then apply the constraint). Reporting both roots without applying k>=0 is the error already catalogued as mc:g10m8s2-1-2:keeps-both-roots-ignores-restriction. Parameters are built from Pythagorean triples and cy is bounded relative to leg_y so r1=cy+leg_y is always >=1 (satisfies k>=0) and r2=cy-leg_y is always <=-1 (fails it) — every instance is clean and unambiguous."
+}

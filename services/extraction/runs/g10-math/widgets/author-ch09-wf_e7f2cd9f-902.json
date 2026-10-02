@@ -1,0 +1,249 @@
+{
+ "mode": "author",
+ "book": "g10-math",
+ "prompts_version": "s7-v7",
+ "by_ref": {
+  "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/s7-author-ch09",
+  "stage": "S7 author",
+  "shards_sha256": "c43fccde65f719baaa7bbd3707b5edb9a21899f1117b329f99ba08982b656db6",
+  "files": 5
+ },
+ "embedded": {
+  "source": "runbook/widgets.workflow.js",
+  "source_sha256": "ed230f08ec96811f4eaa45379aabb16441ac259c0b6b19e018a7b0cfb19de1cf",
+  "args_sha256": "902577623b38f90c99fe7f37ddee5a8565e8577b5fcc1430b8f4a3de700da9c1",
+  "generated_sha256": "88c1c290035798b6ab8e9b94e47d8ad02036917af07ea29846fe906562c353e2",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "records": [
+  {
+   "lesson": "g10m9s2-1",
+   "templates": [],
+   "gaps": [
+    {
+     "lo_id": "lo:g10m9s2-1-1",
+     "need_kind": "balance_builder",
+     "description": "A stacked-bar account the student builds. Given a principal, a rate shown as a percentage and a time (sometimes in months), the student first enters the rate as a decimal and the time in years. They then stack one principal block plus n equal yearly interest slices (each P x i) until the balance bar equals A = P(1 + in). The live readout shows P, the interest slices and the total. The same bar can be set for a loan, so it is not only for savings. Errors it would diagnose: leaving the rate as a percentage (7.5 for 0.075, so the interest slice is 100 times too big); stacking only the interest slices and leaving off the principal block (giving I = Pin instead of A); using months as years; and growing the slice each year, which is the compound idea creeping in.",
+     "why": "The objective is substituting into a formula and computing a number. Every existing kind builds a geometric, graphical or set-based object, so nothing fits without becoming an answer box. line_drawer could draw A against n as a line (slope Pi, intercept P), but that is a graph representation and not this objective, and its slope rule (a whole number or the reciprocal of one) rules out any realistic rate. This objective's misconception list is also empty, so no template could carry a valid diagnostic (FR-1215) even if a kind fit; the errors above would need authoring as misconceptions first."
+    },
+    {
+     "lo_id": "lo:g10m9s2-1-2",
+     "need_kind": "inverse_operations_chain",
+     "description": "A flow of operation boxes. The student starts from the accumulated amount A and drags the undoing operations into place to recover the principal. The required step is dividing by (1 + in), after the factor (1 + in) has been built from the rate and time. The answer is graded on the chain, so any equivalent order that undoes the formula is accepted. The live value after each box lets the student see the principal come out. Errors it would diagnose: taking interest off A as A(1 - in) or A - Pin, which discounts on the wrong base; dividing by i or n alone and not by the whole factor (1 + in); and leaving the rate as a percentage. The same kind could serve LO 3 and LO 4 by changing which letter is unknown.",
+     "why": "No existing kind makes the student rearrange a formula. ratio_balance could show that interest is proportional to time, but the principal here is found by division by (1 + in) and not by a proportion, and its fourth term is capped at 24. Using it would be a forced fit. This objective also has no misconceptions listed, so a diagnosed template is impossible until some are authored."
+    },
+    {
+     "lo_id": "lo:g10m9s2-1-3",
+     "need_kind": "growth_timeline",
+     "description": "A year-by-year timeline of the account against a horizontal goal line. The student chooses a whole number of years n (stepping year by year, or typing the n their calculation gave) and sees the balance bar at that year compared with the goal. The task is to set the smallest whole number of years at which the balance reaches or passes the goal. The unrounded n from the rearranged formula is shown as a marker between two years, for example 19.3, so the student sees why the next whole year is needed. Errors it would diagnose: choosing the year below the goal because the decimal was rounded to the nearest (the balance bar visibly falls short, which is mc:g10m9s2-1-3:rounds-n-to-nearest-not-up); and choosing a year far off the marker. The other listed error, rounding partway through the calculation (mc:g10m9s2-1-3:rounds-too-early), is a calculator-chain error and the timeline cannot show it.",
+     "why": "This is the one objective in the lesson with a real, named misconception that a construction can refute: rounding to the nearest year leaves the balance short of the goal. None of the existing kinds can show a balance against a goal over discrete years. number_line_marker (points mode) could mark a year, but its graded set holds only the answer, so it cannot show the shortfall. It would be an answer box in disguise, and its predicates (missed-values, extra-values, sign-flipped) do not name rounding."
+    },
+    {
+     "lo_id": "lo:g10m9s2-1-4",
+     "need_kind": "inverse_operations_chain",
+     "description": "The same inverse_operations_chain kind as for LO 2, with the rate as the unknown. The student drags the undoing operations in order from A to the rate: divide by P, subtract 1, divide by n, then multiply by 100 to give a percentage. The graded result is the final rate and not one fixed order, so any chain that undoes the formula is accepted. Errors it would diagnose: skipping the 'subtract 1' step (so A/P/n is read as the rate); dividing by n before subtracting 1; forgetting to convert the decimal to a percentage; and giving the rate as 1 + i.",
+     "why": "Rearranging A = P(1 + in) for i is a sequence of operations. No existing kind is a rearrangement instrument, and ratio_balance or line_drawer would not teach it. The one misconception on this objective's list (mc:g10m1s4-1-2:round-to-nearest-when-whole-needed, own=false) concerns counting problems where the answer is rounded up. The book's rate questions ask for one decimal place, where rounding to the nearest is correct, so it does not clearly apply and could not be mapped to a rate construction. Samuel should decide whether this list entry belongs here at all."
+    }
+   ],
+   "notes": ""
+  },
+  {
+   "lesson": "g10m9s3-1",
+   "templates": [],
+   "gaps": [
+    {
+     "lo_id": "lo:g10m9s3-1-1",
+     "need_kind": "growth_ladder (mode: balance)",
+     "description": "The student is given P, i as a decimal and n, and builds the balance year by year on a ladder of bars. On each rung they set the multiplier applied to the previous balance (it should be 1 + i, not i), and the widget checks that the rungs chain to P(1 + i)^n. A separate 'calculator strip' lets them hold (1 + i)^n and then multiply by P. The widget shows the exact balance and what the balance becomes if the middle value is cut to k decimal places, so the drift in cents is visible. Grading is on the property 'the final balance matches P(1 + i)^n to the cent', so any valid sequence of rungs is accepted. Errors it would diagnose: (1) rounds-before-the-end, which is the objective's own misconception, reported when the final balance equals P times a pre-rounded (1 + i)^n and not the exact value; (2) multiplying by i instead of 1 + i, so the 'balance' collapses to the interest alone; (3) simple interest used for compound, P(1 + i·n); (4) the exponent used as a multiplier, P(1 + i)·n; (5) 7.5 entered where 0.075 is needed.",
+     "why": "No existing kind fits. curve_sketcher's exponential family only allows a base of 2, 3 or 0.5, which is 100% to 200% growth or halving, and cannot express 1.075. It is also scored freehand to about one grid square, so a gap of a few cents is invisible and rounding part-way cannot be told from not rounding. pair_plotter and number_line_marker would only be an answer box in disguise. No existing predicate can name rounds-before-the-end, so no honest diagnostic mapping exists."
+    },
+    {
+     "lo_id": "lo:g10m9s3-1-2",
+     "need_kind": "growth_ladder (mode: rate)",
+     "description": "The student is given P, n and a target accumulated amount A (for example R5000 growing to R10000 in 2 years), and drags a rate dial. The final-balance bar rises and falls against a fixed target line, and the dial must reach beyond 40% so that 41.42% is reachable. Any rate within a stated tolerance (for instance 0.1 of a percentage point) is accepted, so this grades the property 'P(1 + i)^n lands on A'. When the bar meets the line the widget shows the working chain (A/P)^(1/n) - 1, so the student sees that the high rate is what the goal requires and that the sums are right. Errors it would diagnose: (1) high-rate-means-wrong-working, the objective's own misconception, reported when the student reaches the correct dial position and then moves away from it, or abandons it for a 'realistic' rate that misses the target; (2) dividing the total growth by n (the simple-interest rate, 50% for R5000 to R10000 in 2 years); (3) stopping at A/P - 1 with no root taken (100%); (4) taking the root with the wrong index.",
+     "why": "No existing kind fits. line_drawer and number_line_marker would make the student state a number, with no dependence on n, and number_line_marker only accepts whole-number targets inside +/-20, which excludes rates such as 8.45% or 41.42%. curve_sketcher exponential cannot produce a base of 1.0845 or 1.4142. None of the existing predicates can fire for the misconception this objective names."
+    },
+    {
+     "lo_id": "lo:g10m9s3-1-3",
+     "need_kind": "growth_ladder (mode: compare)",
+     "description": "Two accounts start from the same principal. One is drawn as equal simple-interest steps and the other as compounding steps, each with its own rate. The student drags an end-of-term marker along the time axis while both balances update, and is asked to place the marker where the compound account first finishes ahead. This is graded as a property: any term at or beyond the crossover is accepted. Bianca's case shows why this is hard to do mentally: at 11% simple against 10.5% compound, simple leads at year 1 (1.11 against 1.105 times the principal), but compound has overtaken by year 2 (1.221025 against 1.22), and by year 3 it leads by about R28 on R1450. A second construction flips the same schedule to a loan, with a 'saver / borrower' switch, and the student chooses the account each person should want. Errors it would diagnose: bigger-rate-wins (the marker left at year 1, or the higher rate chosen at every term) and compound-better-for-everyone (compound chosen for the borrower as well as the saver), which are the objective's two own misconceptions.",
+     "why": "No existing kind fits, and this is the objective where a widget would help most. curve_sketcher cannot represent a 0.5 percentage-point difference in rate, because its tolerance is about one grid square and its exponential bases are limited to 2, 3 and 0.5. A freehand line against a freehand curve would not separate 11% simple from 10.5% compound. line_drawer in equation mode could draw only the simple-interest line, never the compound curve, and its amounts are limited to +/-5. Neither kind has any predicate that maps to bigger-rate-wins or compound-better-for-everyone."
+    },
+    {
+     "lo_id": "lo:g10m9s3-1-4",
+     "need_kind": "growth_ladder (mode: principal)",
+     "description": "The student starts from a target amount A at the end of n years and a rate i, and builds the principal in one of two ways. They can walk the bar backwards, dividing by (1 + i) on each rung, or they can drag the principal bar up until the final balance meets the target line. The widget then asks for the amount to be rounded up to the whole rand, since the amount invested must reach the target. The result is graded as a property: the final balance is at least A and the principal is the smallest whole rand that achieves it. Errors it would diagnose: (1) multiplying where it should divide, giving A(1 + i)^n, a principal larger than the target; (2) rounding to the nearest rand instead of up, so the balance ends a few cents short (R30000 at 11.8% over 2 years gives about 24001.46, which is 24002 rounded up and 24001 rounded to nearest); (3) dividing A by i·n as if simple interest applied; (4) rounding (1 + i)^n part-way, with the same drift as in objective 1.",
+     "why": "No existing kind fits: nothing in the contract takes a compound-growth relation, either forwards or backwards. One limit applies even once the kind exists. This objective's own misconceptions list in the lesson file is empty, so a template for it could not name any misconception from its own list (FR-1215). The prerequisite id mc:g10m1s4-1-2:round-to-nearest-when-whole-needed would fit the round-to-nearest error, but it is not on this objective's list. It needs either a misconception authored for this objective or the prerequisite id added to the list."
+    }
+   ],
+   "notes": ""
+  },
+  {
+   "lesson": "g10m9s4-1",
+   "templates": [],
+   "gaps": [
+    {
+     "lo_id": "lo:g10m9s4-1-1",
+     "need_kind": "loan_stack_builder",
+     "description": "A money-bar builder in three moves, on the book's own numbers (cash price R4400, 10% deposit, 12 months, 9% p.a.). (1) The student drags a divider along the cash-price bar to cut off the deposit, which leaves the principal. (2) She stretches an interest slab onto the principal until its length shows P x i x n (n in years, so 12 months is 1 year), and a live readout shows A = P(1 + in). (3) She cuts the accumulated bar into m equal slices; one slice is the monthly repayment. Grading is on properties, not on one picture: the deposit slice is d% of the cash price, the slab is simple interest on the principal, and the slices are equal and number m. Errors it would diagnose: the slab sized from the full cash price, which is too long by deposit x i x n (mc:g10m9s4-1-1:interest-on-full-cash-price); a slab built in growing layers, which is too long in the interest-on-interest pattern (mc:g10m9s4-1-1:interest-on-interest-formula); and months used as years in the interest step. A second mode would show two offers side by side and ask which costs less interest. The student orders them by slab length, and picking the smaller slice instead is the smaller-monthly-payment error (mc:g10m9s4-1-1:smaller-monthly-payment-looks-cheaper).",
+     "why": "The objective is a three-step money calculation (principal, then accumulated amount, then divide by months). No existing instrument builds that structure. line_drawer in equation mode could draw simple interest as a straight line, but only with invented numbers (m a whole number or its reciprocal, b within -5..5), and the lines would not carry the deposit step, the instalment division or any of the three misconceptions. Putting the answer in a numeric box is the answer box in disguise that the rules forbid."
+    },
+    {
+     "lo_id": "lo:g10m9s4-1-2",
+     "need_kind": "loan_stack_builder (premium layer)",
+     "description": "The same loan_stack_builder as for lo:g10m9s4-1-1, with a fourth move: after the accumulated bar is cut into m equal instalment slices, the student adds the fixed monthly insurance premium chip (for example R11.20) onto every slice, and the monthly payment is the slice plus its chip. Property grading: the premium is added to each month, not once to the total, and it earns no interest because it is added after the instalment is found. Errors it would diagnose: one premium added to the whole loan before dividing; the premium forgotten; and the inherited deposit-not-removed slab (mc:g10m9s4-1-1:interest-on-full-cash-price). The lesson file lists no misconception of its own for this objective, so a new one such as 'adds the premium once to the total' would have to be authored first (FR-1215). This is a reuse of the lo-1 kind and the lowest priority of the four.",
+     "why": "The new content in this objective is one addition per month, which none of the existing kinds can build or grade. area_model, product_builder and ratio_balance work on algebra tiles, ordered pairs and proportions, none of which are monthly repayments."
+    },
+    {
+     "lo_id": "lo:g10m9s4-1-3",
+     "need_kind": "compound_growth_stepper",
+     "description": "A year-by-year chain the student builds. A starting price bar (R12) sits on the left. She sets the number of years and picks the operation for each step, either x(1 + i) forward or divide by (1 + i) backward, and each step redraws the bar. Forward steps answer the future-cost questions (9 years at 12%) and backward steps answer the past-cost questions (R24 today, 4 years ago at 13%). A faint straight-line simple-growth ghost sits beside the compound bars to show the gap. The final bar is graded on its value P(1 + i)^n or P/(1 + i)^n, so any route with the right multiplier and step count is accepted. Errors it would diagnose: the 1 + in simple-growth formula (final bar too short); the multiplier i instead of 1 + i (the price collapses); the past price found by multiplying, or by P(1 - i)^n; a step count off by one; and rounding every step instead of only the end (mc:g10m9s3-1-1:rounds-before-the-end, the one listed misconception it can reveal). Most of these errors have no id in this objective's misconception list, which holds only two imported ones. Ids for 'simple instead of compound' and 'subtracts inflation to go back' need authoring before a template can name them (FR-1215).",
+     "why": "The nearest existing kind is curve_sketcher with fn 'exponential', and it does not genuinely fit. Its base is limited to {2, 3, 0.5}, so it cannot express 12%, 11% or 7.3% growth, and it grades a freehand shape to within a grid square. It cannot tell 1.12^9 from 1.13^9 and does not exercise the calculation the objective names. Its predicates (wrong-intercept, asymptote-crossed, vertically-displaced) map to neither misconception on this objective, so a template would carry a diagnostics list with nothing honest in it. Sketching y = 2^x is a different objective, the shape of exponential growth."
+    },
+    {
+     "lo_id": "lo:g10m9s4-1-4",
+     "need_kind": "compound_growth_stepper (population mode)",
+     "description": "The compound_growth_stepper for lo:g10m9s4-1-3 in a growth-only mode with large starting values (Durban 3 879 090 at 1.1% p.a. for 6 years). Bars are drawn on a scale that makes a 1.1% step visible, and the readout holds full precision until the final 'round to the nearest integer' step. The student sets n and the multiplier 1 + i, and she may round only at the end. Property grading: the multiplier is 1 + i, the count of steps is n, and rounding happens once. Errors it would diagnose: the 1 + in simple-growth formula; the percentage entered as 1.1 instead of 0.011 (a hundredfold overshoot); the exponent off by one; and rounding (1 + i)^n part-way through (mc:g10m9s3-1-1:rounds-before-the-end), which the readout would show moving the final integer. This is a reuse of the lo-3 kind and a lower priority.",
+     "why": "This is the same compound-growth calculation as lo:g10m9s4-1-3 with a population in place of a price, so it needs the same missing instrument. curve_sketcher's exponential family is limited to bases 2, 3 and 0.5 and freehand grading, so it cannot model growth of 0.4% to 1.1% a year, and no other kind builds or grades a compound multiplier."
+    }
+   ],
+   "notes": ""
+  },
+  {
+   "lesson": "g10m9s5-1",
+   "templates": [
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:g10m9s5-1-1:pounds-to-rand-balance",
+     "lo_id": "lo:g10m9s5-1-1",
+     "parent_question_id": "q:g10m9s5-1-1:ex9-6-1a",
+     "tier": "basic",
+     "kind": "ratio_balance",
+     "spec": {
+      "mode": "direct",
+      "a": 1,
+      "b": 8,
+      "c": 2
+     },
+     "stem": "The exchange rate is $\\text{£1} = \\text{R8}$. The beam is level when both sides give the same number of rand for each pound. Drag the right pan until it is level: how many rand is $\\text{£2}$ worth?",
+     "solution": [
+      "The exchange rate $\\text{£1} = \\text{R8}$ says that every pound is worth the same R8, so the rand per pound is fixed.",
+      "The beam is level when both sides show that same rate: $\\text{£1} : \\text{R8} = \\text{£2} : \\text{R}?$.",
+      "$\\text{£2}$ is two lots of $\\text{£1}$, so the rand side must be two lots of $\\text{R8}$.",
+      "To find the cost in rand, multiply the foreign amount by the rate: $2 \\times 8 = 16$, so drag the right pan to $\\text{R16}$.",
+      "Check: $\\text{R16} \\div 2 = \\text{R8}$ for each pound, the same rate as on the left, so the beam is level."
+     ],
+     "diagnostics": [
+      {
+       "predicate": "direct-solved-as-inverse",
+       "misconception_id": "mc:g10m9s5-1-1:multiplies-or-divides-the-wrong-way"
+      }
+     ],
+     "notes": "Fit: a fixed exchange rate IS a direct proportion (rand per pound is constant), and ratio_balance in direct mode grades exactly that, equal quotients, with live tilt feedback. This is a scaled-down analogue of ex9-6-1a (foreign amount to rand at the current rate), not a copy of its numbers: the instrument needs a whole-number fourth term from 1 to 24, so the book's R14 and 100 pounds cannot be used. Numbers were chosen so BOTH the correct fourth term (16 = 8 x 2) and the product-matching answer (4 = 8 / 2) are whole and on the beam; otherwise direct-solved-as-inverse could never fire. direct-solved-as-inverse is mapped to multiplies-or-divides-the-wrong-way because the student who lands on R4 has divided the rate by the number of pounds where it should be multiplied (it is also an inverse-proportion habit, i.e. 'more pounds, fewer rand'). off-target is deliberately NOT mapped: it fires for arithmetic slips, additive reasoning (R8 + 1 = R9, the difference carried across) and random drags alike, and no single error dominates; the additive error would be the closest to mixes-currencies-before-converting but does not match its description. uses-the-estimated-future-rate cannot be raised here at all because the pan shows the current rate, so no second rate is offered. NOT covered by this template: (1) the divide direction (rand to foreign currency), because the product-matching answer is not a whole number for any realistic rate, so no specific error could be diagnosed; (2) the chained conversion through an intermediate currency (ex9-6-8), which needs two linked conversions. More question instances can be added later with a = 1, b in {6, 8, 10}, c in {2, 3} so long as b x c is at most 24 and b is divisible by c, which keeps both answers whole.",
+     "parent_question_id_note": null
+    }
+   ],
+   "gaps": [
+    {
+     "lo_id": "lo:g10m9s5-1-2",
+     "need_kind": "rate_shift_bars",
+     "description": "A foreign-currency price is fixed (for example a 100-pound item) and the rand cost at the current rate is drawn as a bar on a rand scale. The student drags a rate handle to set the NEW rate and a second rand bar resizes live (cost = foreign amount x rate), with the gap between the two bars labelled 'saving' when the new bar is shorter and 'extra cost' when it is longer (a text label, never colour alone). Tasks: set the rate so the buyer saves exactly R200, or loses exactly R100, graded on the property (the rand difference and its direction), not on one position. It would diagnose: (a) giving the difference of the two RATES (R2) as the saving instead of scaling it by the foreign amount, which would need a new misconception such as 'saving-from-rate-difference-not-scaled'; (b) reading a fall in the rate as a loss, or a rise as a saving, which would need a new misconception such as 'saving-loss-direction-reversed'; (c) a 'cost now' bar sitting at the estimated later rate, which is the existing mc:g10m9s5-1-1:uses-the-estimated-future-rate (a prerequisite id, own=false on this objective); (d) a bar that comes out tiny because the rate was divided where it should be multiplied (mc:g10m9s5-1-1:multiplies-or-divides-the-wrong-way).",
+     "why": "No existing kind makes the comparison of two rand costs the construction. ratio_balance converts one amount per question and caps the fourth term at 24, so it cannot show a difference between two rates. number_line_marker holds whole numbers within +/-20, so R1400 and R1200 do not fit, and tapping two pre-computed values is an answer box in disguise whose missed-values/extra-values predicates cannot say why. line_drawer (|m| at most 5, grid -5..5) and curve_sketcher draw graphs, but the objective is a subtraction of two costs, not a graph. Note for Samuel: this objective lists no OWN misconceptions (all three ids are prerequisites from the first objective), so the sign and rate-difference errors above would need to be added to the graph before a widget could name them."
+    },
+    {
+     "lo_id": "lo:g10m9s5-1-3",
+     "need_kind": "rand_price_comparer",
+     "description": "Two or three offers for the same item are shown in different currencies (for example a car at R173 400, 12 200 pounds and 21 900 dollars) beside the exchange-rate table. The student converts each offer by dragging its bar to its rand value on ONE shared rand scale, so the bars become directly comparable, and then taps the cheapest (or the better tip, or the greatest, as the stem asks). Graded on the property: each bar within a tolerance of its true rand value, and the tapped offer being the minimum or maximum as asked, in any order the student works. It would diagnose: (a) bars left at the printed numbers, so the student compares 6 with 12 or 12 200 with 21 900, which is mc:g10m9s5-1-3:compare-without-converting; (b) every bar converted correctly but the longest one tapped when 'cheapest' was asked (or the shortest when 'better' was asked), which is mc:g10m9s5-1-3:converts-then-picks-largest; (c) a bar far too short because the rate was divided where it should be multiplied, which is mc:g10m9s5-1-1:multiplies-or-divides-the-wrong-way (a prerequisite id).",
+     "why": "No existing kind compares converted quantities. number_line_marker's range is capped at +/-20 whole numbers, so real prices such as R173 400 cannot be marked, and its predicates cannot separate 'did not convert' from an arithmetic slip. ratio_balance does one conversion per question with a fourth term of at most 24. bar_builder builds a data set to hit a statistic on a 0..10 scale, which is not a price comparison. A tap-the-cheapest answer without the shared scale would be an answer box in disguise. The same instrument could also serve the rate-change objective (see its gap) and the chained conversion through an intermediate currency in the first objective (ex9-6-8, rand to kwacha to shilling), so one 'rate board' kind may be worth building rather than three."
+    }
+   ],
+   "notes": ""
+  }
+ ],
+ "gaps": [
+  {
+   "lo_id": "lo:g10m9s2-1-1",
+   "need_kind": "balance_builder",
+   "description": "A stacked-bar account the student builds. Given a principal, a rate shown as a percentage and a time (sometimes in months), the student first enters the rate as a decimal and the time in years. They then stack one principal block plus n equal yearly interest slices (each P x i) until the balance bar equals A = P(1 + in). The live readout shows P, the interest slices and the total. The same bar can be set for a loan, so it is not only for savings. Errors it would diagnose: leaving the rate as a percentage (7.5 for 0.075, so the interest slice is 100 times too big); stacking only the interest slices and leaving off the principal block (giving I = Pin instead of A); using months as years; and growing the slice each year, which is the compound idea creeping in.",
+   "why": "The objective is substituting into a formula and computing a number. Every existing kind builds a geometric, graphical or set-based object, so nothing fits without becoming an answer box. line_drawer could draw A against n as a line (slope Pi, intercept P), but that is a graph representation and not this objective, and its slope rule (a whole number or the reciprocal of one) rules out any realistic rate. This objective's misconception list is also empty, so no template could carry a valid diagnostic (FR-1215) even if a kind fit; the errors above would need authoring as misconceptions first."
+  },
+  {
+   "lo_id": "lo:g10m9s2-1-2",
+   "need_kind": "inverse_operations_chain",
+   "description": "A flow of operation boxes. The student starts from the accumulated amount A and drags the undoing operations into place to recover the principal. The required step is dividing by (1 + in), after the factor (1 + in) has been built from the rate and time. The answer is graded on the chain, so any equivalent order that undoes the formula is accepted. The live value after each box lets the student see the principal come out. Errors it would diagnose: taking interest off A as A(1 - in) or A - Pin, which discounts on the wrong base; dividing by i or n alone and not by the whole factor (1 + in); and leaving the rate as a percentage. The same kind could serve LO 3 and LO 4 by changing which letter is unknown.",
+   "why": "No existing kind makes the student rearrange a formula. ratio_balance could show that interest is proportional to time, but the principal here is found by division by (1 + in) and not by a proportion, and its fourth term is capped at 24. Using it would be a forced fit. This objective also has no misconceptions listed, so a diagnosed template is impossible until some are authored."
+  },
+  {
+   "lo_id": "lo:g10m9s2-1-3",
+   "need_kind": "growth_timeline",
+   "description": "A year-by-year timeline of the account against a horizontal goal line. The student chooses a whole number of years n (stepping year by year, or typing the n their calculation gave) and sees the balance bar at that year compared with the goal. The task is to set the smallest whole number of years at which the balance reaches or passes the goal. The unrounded n from the rearranged formula is shown as a marker between two years, for example 19.3, so the student sees why the next whole year is needed. Errors it would diagnose: choosing the year below the goal because the decimal was rounded to the nearest (the balance bar visibly falls short, which is mc:g10m9s2-1-3:rounds-n-to-nearest-not-up); and choosing a year far off the marker. The other listed error, rounding partway through the calculation (mc:g10m9s2-1-3:rounds-too-early), is a calculator-chain error and the timeline cannot show it.",
+   "why": "This is the one objective in the lesson with a real, named misconception that a construction can refute: rounding to the nearest year leaves the balance short of the goal. None of the existing kinds can show a balance against a goal over discrete years. number_line_marker (points mode) could mark a year, but its graded set holds only the answer, so it cannot show the shortfall. It would be an answer box in disguise, and its predicates (missed-values, extra-values, sign-flipped) do not name rounding."
+  },
+  {
+   "lo_id": "lo:g10m9s2-1-4",
+   "need_kind": "inverse_operations_chain",
+   "description": "The same inverse_operations_chain kind as for LO 2, with the rate as the unknown. The student drags the undoing operations in order from A to the rate: divide by P, subtract 1, divide by n, then multiply by 100 to give a percentage. The graded result is the final rate and not one fixed order, so any chain that undoes the formula is accepted. Errors it would diagnose: skipping the 'subtract 1' step (so A/P/n is read as the rate); dividing by n before subtracting 1; forgetting to convert the decimal to a percentage; and giving the rate as 1 + i.",
+   "why": "Rearranging A = P(1 + in) for i is a sequence of operations. No existing kind is a rearrangement instrument, and ratio_balance or line_drawer would not teach it. The one misconception on this objective's list (mc:g10m1s4-1-2:round-to-nearest-when-whole-needed, own=false) concerns counting problems where the answer is rounded up. The book's rate questions ask for one decimal place, where rounding to the nearest is correct, so it does not clearly apply and could not be mapped to a rate construction. Samuel should decide whether this list entry belongs here at all."
+  },
+  {
+   "lo_id": "lo:g10m9s3-1-1",
+   "need_kind": "growth_ladder (mode: balance)",
+   "description": "The student is given P, i as a decimal and n, and builds the balance year by year on a ladder of bars. On each rung they set the multiplier applied to the previous balance (it should be 1 + i, not i), and the widget checks that the rungs chain to P(1 + i)^n. A separate 'calculator strip' lets them hold (1 + i)^n and then multiply by P. The widget shows the exact balance and what the balance becomes if the middle value is cut to k decimal places, so the drift in cents is visible. Grading is on the property 'the final balance matches P(1 + i)^n to the cent', so any valid sequence of rungs is accepted. Errors it would diagnose: (1) rounds-before-the-end, which is the objective's own misconception, reported when the final balance equals P times a pre-rounded (1 + i)^n and not the exact value; (2) multiplying by i instead of 1 + i, so the 'balance' collapses to the interest alone; (3) simple interest used for compound, P(1 + i·n); (4) the exponent used as a multiplier, P(1 + i)·n; (5) 7.5 entered where 0.075 is needed.",
+   "why": "No existing kind fits. curve_sketcher's exponential family only allows a base of 2, 3 or 0.5, which is 100% to 200% growth or halving, and cannot express 1.075. It is also scored freehand to about one grid square, so a gap of a few cents is invisible and rounding part-way cannot be told from not rounding. pair_plotter and number_line_marker would only be an answer box in disguise. No existing predicate can name rounds-before-the-end, so no honest diagnostic mapping exists."
+  },
+  {
+   "lo_id": "lo:g10m9s3-1-2",
+   "need_kind": "growth_ladder (mode: rate)",
+   "description": "The student is given P, n and a target accumulated amount A (for example R5000 growing to R10000 in 2 years), and drags a rate dial. The final-balance bar rises and falls against a fixed target line, and the dial must reach beyond 40% so that 41.42% is reachable. Any rate within a stated tolerance (for instance 0.1 of a percentage point) is accepted, so this grades the property 'P(1 + i)^n lands on A'. When the bar meets the line the widget shows the working chain (A/P)^(1/n) - 1, so the student sees that the high rate is what the goal requires and that the sums are right. Errors it would diagnose: (1) high-rate-means-wrong-working, the objective's own misconception, reported when the student reaches the correct dial position and then moves away from it, or abandons it for a 'realistic' rate that misses the target; (2) dividing the total growth by n (the simple-interest rate, 50% for R5000 to R10000 in 2 years); (3) stopping at A/P - 1 with no root taken (100%); (4) taking the root with the wrong index.",
+   "why": "No existing kind fits. line_drawer and number_line_marker would make the student state a number, with no dependence on n, and number_line_marker only accepts whole-number targets inside +/-20, which excludes rates such as 8.45% or 41.42%. curve_sketcher exponential cannot produce a base of 1.0845 or 1.4142. None of the existing predicates can fire for the misconception this objective names."
+  },
+  {
+   "lo_id": "lo:g10m9s3-1-3",
+   "need_kind": "growth_ladder (mode: compare)",
+   "description": "Two accounts start from the same principal. One is drawn as equal simple-interest steps and the other as compounding steps, each with its own rate. The student drags an end-of-term marker along the time axis while both balances update, and is asked to place the marker where the compound account first finishes ahead. This is graded as a property: any term at or beyond the crossover is accepted. Bianca's case shows why this is hard to do mentally: at 11% simple against 10.5% compound, simple leads at year 1 (1.11 against 1.105 times the principal), but compound has overtaken by year 2 (1.221025 against 1.22), and by year 3 it leads by about R28 on R1450. A second construction flips the same schedule to a loan, with a 'saver / borrower' switch, and the student chooses the account each person should want. Errors it would diagnose: bigger-rate-wins (the marker left at year 1, or the higher rate chosen at every term) and compound-better-for-everyone (compound chosen for the borrower as well as the saver), which are the objective's two own misconceptions.",
+   "why": "No existing kind fits, and this is the objective where a widget would help most. curve_sketcher cannot represent a 0.5 percentage-point difference in rate, because its tolerance is about one grid square and its exponential bases are limited to 2, 3 and 0.5. A freehand line against a freehand curve would not separate 11% simple from 10.5% compound. line_drawer in equation mode could draw only the simple-interest line, never the compound curve, and its amounts are limited to +/-5. Neither kind has any predicate that maps to bigger-rate-wins or compound-better-for-everyone."
+  },
+  {
+   "lo_id": "lo:g10m9s3-1-4",
+   "need_kind": "growth_ladder (mode: principal)",
+   "description": "The student starts from a target amount A at the end of n years and a rate i, and builds the principal in one of two ways. They can walk the bar backwards, dividing by (1 + i) on each rung, or they can drag the principal bar up until the final balance meets the target line. The widget then asks for the amount to be rounded up to the whole rand, since the amount invested must reach the target. The result is graded as a property: the final balance is at least A and the principal is the smallest whole rand that achieves it. Errors it would diagnose: (1) multiplying where it should divide, giving A(1 + i)^n, a principal larger than the target; (2) rounding to the nearest rand instead of up, so the balance ends a few cents short (R30000 at 11.8% over 2 years gives about 24001.46, which is 24002 rounded up and 24001 rounded to nearest); (3) dividing A by i·n as if simple interest applied; (4) rounding (1 + i)^n part-way, with the same drift as in objective 1.",
+   "why": "No existing kind fits: nothing in the contract takes a compound-growth relation, either forwards or backwards. One limit applies even once the kind exists. This objective's own misconceptions list in the lesson file is empty, so a template for it could not name any misconception from its own list (FR-1215). The prerequisite id mc:g10m1s4-1-2:round-to-nearest-when-whole-needed would fit the round-to-nearest error, but it is not on this objective's list. It needs either a misconception authored for this objective or the prerequisite id added to the list."
+  },
+  {
+   "lo_id": "lo:g10m9s4-1-1",
+   "need_kind": "loan_stack_builder",
+   "description": "A money-bar builder in three moves, on the book's own numbers (cash price R4400, 10% deposit, 12 months, 9% p.a.). (1) The student drags a divider along the cash-price bar to cut off the deposit, which leaves the principal. (2) She stretches an interest slab onto the principal until its length shows P x i x n (n in years, so 12 months is 1 year), and a live readout shows A = P(1 + in). (3) She cuts the accumulated bar into m equal slices; one slice is the monthly repayment. Grading is on properties, not on one picture: the deposit slice is d% of the cash price, the slab is simple interest on the principal, and the slices are equal and number m. Errors it would diagnose: the slab sized from the full cash price, which is too long by deposit x i x n (mc:g10m9s4-1-1:interest-on-full-cash-price); a slab built in growing layers, which is too long in the interest-on-interest pattern (mc:g10m9s4-1-1:interest-on-interest-formula); and months used as years in the interest step. A second mode would show two offers side by side and ask which costs less interest. The student orders them by slab length, and picking the smaller slice instead is the smaller-monthly-payment error (mc:g10m9s4-1-1:smaller-monthly-payment-looks-cheaper).",
+   "why": "The objective is a three-step money calculation (principal, then accumulated amount, then divide by months). No existing instrument builds that structure. line_drawer in equation mode could draw simple interest as a straight line, but only with invented numbers (m a whole number or its reciprocal, b within -5..5), and the lines would not carry the deposit step, the instalment division or any of the three misconceptions. Putting the answer in a numeric box is the answer box in disguise that the rules forbid."
+  },
+  {
+   "lo_id": "lo:g10m9s4-1-2",
+   "need_kind": "loan_stack_builder (premium layer)",
+   "description": "The same loan_stack_builder as for lo:g10m9s4-1-1, with a fourth move: after the accumulated bar is cut into m equal instalment slices, the student adds the fixed monthly insurance premium chip (for example R11.20) onto every slice, and the monthly payment is the slice plus its chip. Property grading: the premium is added to each month, not once to the total, and it earns no interest because it is added after the instalment is found. Errors it would diagnose: one premium added to the whole loan before dividing; the premium forgotten; and the inherited deposit-not-removed slab (mc:g10m9s4-1-1:interest-on-full-cash-price). The lesson file lists no misconception of its own for this objective, so a new one such as 'adds the premium once to the total' would have to be authored first (FR-1215). This is a reuse of the lo-1 kind and the lowest priority of the four.",
+   "why": "The new content in this objective is one addition per month, which none of the existing kinds can build or grade. area_model, product_builder and ratio_balance work on algebra tiles, ordered pairs and proportions, none of which are monthly repayments."
+  },
+  {
+   "lo_id": "lo:g10m9s4-1-3",
+   "need_kind": "compound_growth_stepper",
+   "description": "A year-by-year chain the student builds. A starting price bar (R12) sits on the left. She sets the number of years and picks the operation for each step, either x(1 + i) forward or divide by (1 + i) backward, and each step redraws the bar. Forward steps answer the future-cost questions (9 years at 12%) and backward steps answer the past-cost questions (R24 today, 4 years ago at 13%). A faint straight-line simple-growth ghost sits beside the compound bars to show the gap. The final bar is graded on its value P(1 + i)^n or P/(1 + i)^n, so any route with the right multiplier and step count is accepted. Errors it would diagnose: the 1 + in simple-growth formula (final bar too short); the multiplier i instead of 1 + i (the price collapses); the past price found by multiplying, or by P(1 - i)^n; a step count off by one; and rounding every step instead of only the end (mc:g10m9s3-1-1:rounds-before-the-end, the one listed misconception it can reveal). Most of these errors have no id in this objective's misconception list, which holds only two imported ones. Ids for 'simple instead of compound' and 'subtracts inflation to go back' need authoring before a template can name them (FR-1215).",
+   "why": "The nearest existing kind is curve_sketcher with fn 'exponential', and it does not genuinely fit. Its base is limited to {2, 3, 0.5}, so it cannot express 12%, 11% or 7.3% growth, and it grades a freehand shape to within a grid square. It cannot tell 1.12^9 from 1.13^9 and does not exercise the calculation the objective names. Its predicates (wrong-intercept, asymptote-crossed, vertically-displaced) map to neither misconception on this objective, so a template would carry a diagnostics list with nothing honest in it. Sketching y = 2^x is a different objective, the shape of exponential growth."
+  },
+  {
+   "lo_id": "lo:g10m9s4-1-4",
+   "need_kind": "compound_growth_stepper (population mode)",
+   "description": "The compound_growth_stepper for lo:g10m9s4-1-3 in a growth-only mode with large starting values (Durban 3 879 090 at 1.1% p.a. for 6 years). Bars are drawn on a scale that makes a 1.1% step visible, and the readout holds full precision until the final 'round to the nearest integer' step. The student sets n and the multiplier 1 + i, and she may round only at the end. Property grading: the multiplier is 1 + i, the count of steps is n, and rounding happens once. Errors it would diagnose: the 1 + in simple-growth formula; the percentage entered as 1.1 instead of 0.011 (a hundredfold overshoot); the exponent off by one; and rounding (1 + i)^n part-way through (mc:g10m9s3-1-1:rounds-before-the-end), which the readout would show moving the final integer. This is a reuse of the lo-3 kind and a lower priority.",
+   "why": "This is the same compound-growth calculation as lo:g10m9s4-1-3 with a population in place of a price, so it needs the same missing instrument. curve_sketcher's exponential family is limited to bases 2, 3 and 0.5 and freehand grading, so it cannot model growth of 0.4% to 1.1% a year, and no other kind builds or grades a compound multiplier."
+  },
+  {
+   "lo_id": "lo:g10m9s5-1-2",
+   "need_kind": "rate_shift_bars",
+   "description": "A foreign-currency price is fixed (for example a 100-pound item) and the rand cost at the current rate is drawn as a bar on a rand scale. The student drags a rate handle to set the NEW rate and a second rand bar resizes live (cost = foreign amount x rate), with the gap between the two bars labelled 'saving' when the new bar is shorter and 'extra cost' when it is longer (a text label, never colour alone). Tasks: set the rate so the buyer saves exactly R200, or loses exactly R100, graded on the property (the rand difference and its direction), not on one position. It would diagnose: (a) giving the difference of the two RATES (R2) as the saving instead of scaling it by the foreign amount, which would need a new misconception such as 'saving-from-rate-difference-not-scaled'; (b) reading a fall in the rate as a loss, or a rise as a saving, which would need a new misconception such as 'saving-loss-direction-reversed'; (c) a 'cost now' bar sitting at the estimated later rate, which is the existing mc:g10m9s5-1-1:uses-the-estimated-future-rate (a prerequisite id, own=false on this objective); (d) a bar that comes out tiny because the rate was divided where it should be multiplied (mc:g10m9s5-1-1:multiplies-or-divides-the-wrong-way).",
+   "why": "No existing kind makes the comparison of two rand costs the construction. ratio_balance converts one amount per question and caps the fourth term at 24, so it cannot show a difference between two rates. number_line_marker holds whole numbers within +/-20, so R1400 and R1200 do not fit, and tapping two pre-computed values is an answer box in disguise whose missed-values/extra-values predicates cannot say why. line_drawer (|m| at most 5, grid -5..5) and curve_sketcher draw graphs, but the objective is a subtraction of two costs, not a graph. Note for Samuel: this objective lists no OWN misconceptions (all three ids are prerequisites from the first objective), so the sign and rate-difference errors above would need to be added to the graph before a widget could name them."
+  },
+  {
+   "lo_id": "lo:g10m9s5-1-3",
+   "need_kind": "rand_price_comparer",
+   "description": "Two or three offers for the same item are shown in different currencies (for example a car at R173 400, 12 200 pounds and 21 900 dollars) beside the exchange-rate table. The student converts each offer by dragging its bar to its rand value on ONE shared rand scale, so the bars become directly comparable, and then taps the cheapest (or the better tip, or the greatest, as the stem asks). Graded on the property: each bar within a tolerance of its true rand value, and the tapped offer being the minimum or maximum as asked, in any order the student works. It would diagnose: (a) bars left at the printed numbers, so the student compares 6 with 12 or 12 200 with 21 900, which is mc:g10m9s5-1-3:compare-without-converting; (b) every bar converted correctly but the longest one tapped when 'cheapest' was asked (or the shortest when 'better' was asked), which is mc:g10m9s5-1-3:converts-then-picks-largest; (c) a bar far too short because the rate was divided where it should be multiplied, which is mc:g10m9s5-1-1:multiplies-or-divides-the-wrong-way (a prerequisite id).",
+   "why": "No existing kind compares converted quantities. number_line_marker's range is capped at +/-20 whole numbers, so real prices such as R173 400 cannot be marked, and its predicates cannot separate 'did not convert' from an arithmetic slip. ratio_balance does one conversion per question with a fourth term of at most 24. bar_builder builds a data set to hit a statistic on a 0..10 scale, which is not a price comparison. A tap-the-cheapest answer without the shared scale would be an answer box in disguise. The same instrument could also serve the rate-change objective (see its gap) and the chained conversion through an intermediate currency in the first objective (ex9-6-8, rand to kwacha to shilling), so one 'rate board' kind may be worth building rather than three."
+  }
+ ]
+}

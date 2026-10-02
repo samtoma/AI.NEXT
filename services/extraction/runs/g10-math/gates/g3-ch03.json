@@ -1,0 +1,153 @@
+{
+ "format": "ainext.gate-decision/1",
+ "gate": "G3",
+ "book": "g10-math",
+ "id": "g3-ch03",
+ "chapter": 3,
+ "decided_at": "2026-10-01T18:06:25Z",
+ "by": "auto-pass G3 (AI recommendation)",
+ "auto": true,
+ "outcome": "pass_with_holds",
+ "summary": "14 sampled item(s) accepted on the AI checks; 0 predicate claim(s) stay held, as the verifier recommends; 5 widget gap(s) accepted on the AI recommendation (the chapter ships without a widget question for now; 3 proposed kind(s) NOT approved, listed for Samuel)",
+ "decisions": [
+  {
+   "key": "q:g10m3s2-1-1:g004-differ",
+   "decision": "accept",
+   "basis": "its family passed S6's blind grade / S7's verifier"
+  },
+  {
+   "key": "q:g10m3s2-1-1:g006-latert",
+   "decision": "accept",
+   "basis": "its family passed S6's blind grade / S7's verifier"
+  },
+  {
+   "key": "q:g10m3s2-1-1:g006-linear",
+   "decision": "accept",
+   "basis": "its family passed S6's blind grade / S7's verifier"
+  },
+  {
+   "key": "q:g10m3s2-1-1:g009-pictur",
+   "decision": "accept",
+   "basis": "its family passed S6's blind grade / S7's verifier"
+  },
+  {
+   "key": "q:g10m3s2-1-3:g007-table-",
+   "decision": "accept",
+   "basis": "its family passed S6's blind grade / S7's verifier"
+  },
+  {
+   "key": "q:g10m3s2-1-3:g010-list-f",
+   "decision": "accept",
+   "basis": "its family passed S6's blind grade / S7's verifier"
+  },
+  {
+   "key": "q:g10m3s2-1-4:g002-calc-t",
+   "decision": "accept",
+   "basis": "its family passed S6's blind grade / S7's verifier"
+  },
+  {
+   "key": "q:g10m3s2-1-4:g003-quad-n",
+   "decision": "accept",
+   "basis": "its family passed S6's blind grade / S7's verifier"
+  },
+  {
+   "key": "q:g10m3s2-1-4:g004-times-",
+   "decision": "accept",
+   "basis": "its family passed S6's blind grade / S7's verifier"
+  },
+  {
+   "key": "q:g10m3s2-1-4:g010-find-n",
+   "decision": "accept",
+   "basis": "its family passed S6's blind grade / S7's verifier"
+  },
+  {
+   "key": "q:g10m3s2-1-5:g001-substi",
+   "decision": "accept",
+   "basis": "its family passed S6's blind grade / S7's verifier"
+  },
+  {
+   "key": "q:g10m3s2-1-5:g002-common",
+   "decision": "accept",
+   "basis": "its family passed S6's blind grade / S7's verifier"
+  },
+  {
+   "key": "q:g10m3s2-1-5:g003-fracti",
+   "decision": "accept",
+   "basis": "its family passed S6's blind grade / S7's verifier"
+  },
+  {
+   "key": "q:g10m3s2-1-5:g003-unknow",
+   "decision": "accept",
+   "basis": "its family passed S6's blind grade / S7's verifier"
+  },
+  {
+   "key": "widget gap lo:g10m3s2-1-1",
+   "decision": "accepted without a widget for now (auto-pass)",
+   "detail": "proposed kind: sequence_strip — NOT approved, needs Samuel (decision 11)",
+   "basis": "No existing kind shows consecutive differences. number_line_marker could only take the finished next terms as an unordered set, which is the book's answer box; its sign-flipped predicate would fire for the earlier-minus-later error only if the last given term is 0, and then the mirrored answer is in"
+  },
+  {
+   "key": "widget gap lo:g10m3s2-1-2",
+   "decision": "accepted without a widget for now (auto-pass)",
+   "detail": "proposed kind: sequence_strip — NOT approved, needs Samuel (decision 11)",
+   "basis": "The error is a confusion between a position and a value, and no kind has a position axis separate from a value axis. pair_plotter's swapped-coordinates would catch reversal of (n, T_n) but not value-minus-subscript, and it moves the question into graphing, which the objective does not mention. numbe"
+  },
+  {
+   "key": "widget gap lo:g10m3s2-1-3",
+   "decision": "accepted without a widget for now (auto-pass)",
+   "detail": "proposed kind: sequence_formula_builder — NOT approved, needs Samuel (decision 11)",
+   "basis": "line_drawer and curve_sketcher (linear) would turn the task into graphing the sequence, which is outside the book's vocabulary for this chapter. In equation mode the live equation also hands the formula to the student, and the only predicate that maps to a listed misconception is slope-sign-flipped;"
+  },
+  {
+   "key": "widget gap lo:g10m3s2-1-4",
+   "decision": "accepted without a widget for now (auto-pass)",
+   "detail": "proposed kind: sequence_formula_builder — NOT approved, needs Samuel (decision 11)",
+   "basis": "Evaluating T_25 is plain substitution and an answer box serves it well, so this is a want rather than a need. The solving-for-n half would benefit from seeing position and value as two different axes, which no existing kind provides; any use of an existing kind would be a numeric answer disguised as"
+  },
+  {
+   "key": "widget gap lo:g10m3s2-1-5",
+   "decision": "accepted without a widget for now (auto-pass)",
+   "detail": "proposed kind: difference_balance — NOT approved, needs Samuel (decision 11)",
+   "basis": "The construction is solving a linear equation in one unknown, with the two differences as the sides. ratio_balance balances a proportion with a whole-number fourth term and cannot carry an unknown in each term; area_model builds (x+a)(x+b) and has no equation to level. Nothing else offers a way to s"
+  }
+ ],
+ "checks": [
+  {
+   "name": "S6 blind grader, every family in the bundle",
+   "state": "pass"
+  },
+  {
+   "name": "S7 verifier, every template",
+   "state": "pass"
+  },
+  {
+   "name": "the app's marker on every typed key (load)",
+   "state": "pass"
+  },
+  {
+   "name": "S7 author examined the chapter (a gap with a reason, or a template)",
+   "state": "pass"
+  }
+ ],
+ "evidence": [
+  {
+   "label": "G3 verdicts (auto)",
+   "path": "services/extraction/runs/g10-math/g3-ch03.auto.json"
+  },
+  {
+   "label": "review queue generated-questions.review-queue.json",
+   "path": "services/extraction/seed/generated/g10-math/ch03/generated-questions.review-queue.json"
+  },
+  {
+   "label": "widget gaps (auto-passed)",
+   "path": "services/extraction/coverage/g10-math.ch03.widget-gaps.json"
+  }
+ ],
+ "blocked": [],
+ "course_id": "course:us-g10-math-en",
+ "for_review": [
+  "widget gap, chapter 3: the proposed kind 'difference_balance' needs your approval before anything is built (decision 11); nothing is built on this auto-pass",
+  "widget gap, chapter 3: the proposed kind 'sequence_formula_builder' needs your approval before anything is built (decision 11); nothing is built on this auto-pass",
+  "widget gap, chapter 3: the proposed kind 'sequence_strip' needs your approval before anything is built (decision 11); nothing is built on this auto-pass"
+ ]
+}

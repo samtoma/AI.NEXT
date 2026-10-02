@@ -1,0 +1,30 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m6s5-1-1:sketch-two-to-the-x",
+ "lo_id": "lo:g10m6s5-1-1",
+ "parent_question_id": "q:g10m6s5-1-1:ex6-5-6b",
+ "tier": "basic",
+ "kind": "curve_sketcher",
+ "spec": {
+  "fn": "exponential",
+  "coefs": [
+   1,
+   2,
+   0
+  ]
+ },
+ "stem": "Sketch the graph of $y = 2^{x}$ in one smooth stroke across the whole grid.",
+ "solution": [
+  "Choose some values of $x$ and work out $y = 2^{x}$: $x=-2$ gives $\\frac{1}{4}$, $x=-1$ gives $\\frac{1}{2}$, $x=0$ gives $1$, $x=1$ gives $2$ and $x=2$ gives $4$.",
+  "Plot $(-2, 0.25)$, $(-1, 0.5)$, $(0, 1)$, $(1, 2)$ and $(2, 4)$. The point $(0, 1)$ lies on every graph $y = b^{x}$, because $b^{0} = 1$.",
+  "Join the points with one smooth curve that rises from left to right and gets steeper: every step of $1$ to the right doubles the height.",
+  "Look at the left-hand end. $2^{x}$ is never $0$ and never negative, so the curve creeps closer and closer to the $x$-axis without touching or crossing it. The line $y = 0$ is an asymptote of this curve, the line it approaches and never reaches. It is not a mirror line for the curve: nothing of the graph lies below it."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "asymptote-crossed",
+   "misconception_id": "mc:g10m6s5-1-1:asymptote-read-as-axis-of-symmetry"
+  }
+ ],
+ "notes": "Genuine fit: the objective is to plot b^x, and the sketch is the plot. Assumption to check against the grader: for fn \"exponential\", asymptote-crossed means the stroke crosses the horizontal asymptote y = q (here y = 0). A student who treats the x-axis as a mirror line (the figure of y = 2^x and y = -2^x, which are reflections of each other in the x-axis) draws the curve through it, or draws both branches in one stroke. Deliberately NOT mapped: fails-vertical-line-test (the mirror-pair drawing would double back and fire it, but so does any accidental retrace, and the stem asks for one smooth stroke); wrong-intercept, vertically-displaced and partial-coverage (this objective's list has no misconception for them). The stem names no intercept and no asymptote, so the construction is the whole task. One sketch cannot put two values of b on the same axes, so the comparison part of the objective stays with the prose lesson. Target is y = 2^x with a = 1, b = 2, q = 0: all within the instrument's limits; the curve leaves the top of the grid near x = 2.3."
+}

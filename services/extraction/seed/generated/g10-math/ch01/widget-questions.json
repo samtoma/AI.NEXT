@@ -1,0 +1,477 @@
+{
+  "generator": "services/extraction/generate_widget_questions.py (ADR-0009) --templates",
+  "question_type": "widget",
+  "book": "work/g10-math/fanout/books/ch01/g10-math.json",
+  "course_id": "course:us-g10-math-en",
+  "templates": {
+    "wt:g10m1s3-1-1:minus-root-real": "d8aecee70591729a07018a858e709dca2939e064c69bba9005a4f4b760da787c",
+    "wt:g10m1s3-1-1:zero-top-vs-zero-bottom": "bd755c519d1e1de2e032e5b4dd3c4a9f2f1b1f4584fe9e3c08f94a1bf079e307",
+    "wt:g10m1s5-1-3:integers-between-negative-surds": "0b5d846b0ff42aaed0ae63558dad544c231d674eb08b876a1aad41e5c6ca8b7d"
+  },
+  "rejected_templates": {
+    "wt:g10m1s6-1-2:x-plus-k-times-x-minus-4": [
+      "not shipped: every mapping names a misconception S5 did not keep (mc:g10m1s6-1-2:x-term-subtracted-wrong-way-round), so no widget of it could say why an answer is wrong"
+    ],
+    "wt:g10m1s7-2-1:factor-by-tiles-positive": [
+      "not shipped: S5's verifier refused every mapping of it (middle-term-sign → mc:g10m1s7-2-1:factor-pair-middle-term-untested), so no widget of it could say why an answer is wrong"
+    ],
+    "wt:g10m1s7-2-1:factor-by-tiles-signs": [
+      "not shipped: S5's verifier refused every mapping of it (middle-term-sign → mc:g10m1s7-2-1:factor-pair-middle-term-untested), so no widget of it could say why an answer is wrong"
+    ]
+  },
+  "questions": [
+    {
+      "id": "q:g10m1s3-1-1:w001",
+      "lo_id": "lo:g10m1s3-1-1",
+      "tier": "basic",
+      "question_type": "widget",
+      "stem": "On the number line, mark every integer $n$ from $-3$ to $3$ for which $-\\sqrt{n}$ is a real number. Leave the other integers unmarked.",
+      "choices": {
+        "kind": "number_line_marker",
+        "spec": {
+          "mode": "points",
+          "range": [
+            -3,
+            3
+          ],
+          "targets": [
+            0,
+            1,
+            2,
+            3
+          ]
+        },
+        "diagnostics": [
+          {
+            "predicate": "extra-values",
+            "misconception_id": "mc:g10m1s3-1-1:negative-under-root-called-real"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "A square root is a real number exactly when the number under the root sign is zero or positive. Only the number under the root sign decides this: a minus sign written in front of the root sits outside it."
+        },
+        {
+          "step": 2,
+          "text_md": "Test the integers that are not negative: $-\\sqrt{0} = 0$, $-\\sqrt{1} = -1$, and $-\\sqrt{2}$ and $-\\sqrt{3}$ are real numbers too (irrational, but still real). Mark $0$, $1$, $2$ and $3$."
+        },
+        {
+          "step": 3,
+          "text_md": "Test the negative integers: $-\\sqrt{-1}$, $-\\sqrt{-2}$ and $-\\sqrt{-3}$ each need the square root of a negative number, which is non-real, and a minus sign in front cannot turn a non-real number into a real one. Leave $-3$, $-2$ and $-1$ unmarked."
+        },
+        {
+          "step": 4,
+          "text_md": "The marked set is $\\{0, 1, 2, 3\\}$, which is every integer $n \\geq 0$."
+        }
+      ],
+      "parent_question_id": "q:g10m1s3-1-1:ex1-1-3a",
+      "source_note": "Generated from template family wt:g10m1s3-1-1:minus-root-real.",
+      "family": "wt:g10m1s3-1-1:minus-root-real",
+      "template_sha": "d8aecee70591729a07018a858e709dca2939e064c69bba9005a4f4b760da787c"
+    },
+    {
+      "id": "q:g10m1s3-1-1:w002",
+      "lo_id": "lo:g10m1s3-1-1",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "On the number line, mark every integer $n$ from $-3$ to $3$ for which $\\dfrac{n-2}{n}$ is undefined. Leave the other integers unmarked.",
+      "choices": {
+        "kind": "number_line_marker",
+        "spec": {
+          "mode": "points",
+          "range": [
+            -3,
+            3
+          ],
+          "targets": [
+            0
+          ]
+        },
+        "diagnostics": [
+          {
+            "predicate": "missed-values",
+            "misconception_id": "mc:g10m1s3-1-1:fraction-judged-by-top"
+          },
+          {
+            "predicate": "extra-values",
+            "misconception_id": "mc:g10m1s3-1-1:fraction-judged-by-top"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "A fraction is undefined exactly when its denominator is zero. The top of the fraction plays no part in that test."
+        },
+        {
+          "step": 2,
+          "text_md": "The denominator is $n$, which is zero only when $n = 0$. Then the fraction is $\\dfrac{-2}{0}$, which is undefined. Mark $0$."
+        },
+        {
+          "step": 3,
+          "text_md": "Check the tempting value: the top, $n - 2$, is zero when $n = 2$. Then $\\dfrac{n-2}{n} = \\dfrac{0}{2} = 0$, a perfectly good real number, because a zero on top is not division by zero. Leave $2$ unmarked."
+        },
+        {
+          "step": 4,
+          "text_md": "Every other integer from $-3$ to $3$ gives a non-zero denominator and a real value. The marked set is $\\{0\\}$."
+        }
+      ],
+      "parent_question_id": "q:g10m1s3-1-1:ex1-1-3b",
+      "source_note": "Generated from template family wt:g10m1s3-1-1:zero-top-vs-zero-bottom.",
+      "family": "wt:g10m1s3-1-1:zero-top-vs-zero-bottom",
+      "template_sha": "bd755c519d1e1de2e032e5b4dd3c4a9f2f1b1f4584fe9e3c08f94a1bf079e307"
+    },
+    {
+      "id": "q:g10m1s5-1-3:w001",
+      "lo_id": "lo:g10m1s5-1-3",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "Without a calculator, mark on the number line every whole number $n$ that satisfies $ -\\sqrt{20} < n < -\\sqrt{\\frac{9}{4}} $.",
+      "choices": {
+        "kind": "number_line_marker",
+        "spec": {
+          "mode": "points",
+          "range": [
+            -6,
+            6
+          ],
+          "targets": [
+            -4,
+            -3,
+            -2
+          ]
+        },
+        "diagnostics": [],
+        "pending_review": [
+          {
+            "predicate": "sign-flipped",
+            "misconception_id": "mc:g10m1s5-1-3:negative-surds-ranked-by-size-ignoring-sign",
+            "why": "The predicate fires on the response {2,3,4}, the negatives of the correct set. A student who ranks -sqrt20 against -sqrt(9/4) by size, ignoring the sign, still believes she is working with negative numbers; her mistake is which of the two endpoints is further left. She would still tap integers in the negative region, so the set is unchanged and the ranking error leaves no sign-flipped trace in a points answer. A {2,3,4} response is far more likely a student who dropped the minus sign on n or misread the line, which is a different mistake, and the ranking refutation would be addressed to a mistake she did not make.",
+            "verifier_runs": [
+              "verify-ch01-wf_0b1937ba-165"
+            ]
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Bracket each surd between two consecutive whole numbers, using perfect squares (perfect cubes for a cube root). For instance $16 < 20 < 25$ gives $4 < \\sqrt{20} < 5$."
+        },
+        {
+          "step": 2,
+          "text_md": "Put the minus sign back. Negating reverses the order, so $-5 < -\\sqrt{20} < -4$: the surd with the bigger number under the root sits further to the left of zero."
+        },
+        {
+          "step": 3,
+          "text_md": "Now the whole numbers that fit are the ones strictly to the right of the left-hand bound and strictly to the left of the right-hand bound. A surd is never a whole number, but a bound of $0$ is itself left out because the inequality is strict."
+        },
+        {
+          "step": 4,
+          "text_md": "Mark exactly those points. Check each end: the leftmost mark must be greater than the lower bound, and the rightmost must be less than the upper bound."
+        }
+      ],
+      "parent_question_id": "q:g10m1s5-1-3:ex1-3-3",
+      "source_note": "Generated from template family wt:g10m1s5-1-3:integers-between-negative-surds.",
+      "family": "wt:g10m1s5-1-3:integers-between-negative-surds",
+      "template_sha": "0b5d846b0ff42aaed0ae63558dad544c231d674eb08b876a1aad41e5c6ca8b7d"
+    },
+    {
+      "id": "q:g10m1s5-1-3:w002",
+      "lo_id": "lo:g10m1s5-1-3",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "Without a calculator, mark on the number line every whole number $n$ that satisfies $ -\\sqrt{30} < n < -\\sqrt{10} $.",
+      "choices": {
+        "kind": "number_line_marker",
+        "spec": {
+          "mode": "points",
+          "range": [
+            -6,
+            6
+          ],
+          "targets": [
+            -5,
+            -4
+          ]
+        },
+        "diagnostics": [],
+        "pending_review": [
+          {
+            "predicate": "sign-flipped",
+            "misconception_id": "mc:g10m1s5-1-3:negative-surds-ranked-by-size-ignoring-sign",
+            "why": "The predicate fires on {4,5}. The claimed misconception is an error in ordering two negative surds, not an error in the sign of the integers the student marks. A student who ranks by size ignoring sign still places the answers among negative numbers, and the ordering error does not change which negative integers lie between the two endpoints. Marking {4,5} would come from dropping the minus on n, a different mistake, so the diagnosis would mostly misfire.",
+            "verifier_runs": [
+              "verify-ch01-wf_0b1937ba-165"
+            ]
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Bracket each surd between two consecutive whole numbers, using perfect squares (perfect cubes for a cube root). For instance $16 < 20 < 25$ gives $4 < \\sqrt{20} < 5$."
+        },
+        {
+          "step": 2,
+          "text_md": "Put the minus sign back. Negating reverses the order, so $-5 < -\\sqrt{20} < -4$: the surd with the bigger number under the root sits further to the left of zero."
+        },
+        {
+          "step": 3,
+          "text_md": "Now the whole numbers that fit are the ones strictly to the right of the left-hand bound and strictly to the left of the right-hand bound. A surd is never a whole number, but a bound of $0$ is itself left out because the inequality is strict."
+        },
+        {
+          "step": 4,
+          "text_md": "Mark exactly those points. Check each end: the leftmost mark must be greater than the lower bound, and the rightmost must be less than the upper bound."
+        }
+      ],
+      "parent_question_id": "q:g10m1s5-1-3:ex1-3-3",
+      "source_note": "Generated from template family wt:g10m1s5-1-3:integers-between-negative-surds.",
+      "family": "wt:g10m1s5-1-3:integers-between-negative-surds",
+      "template_sha": "0b5d846b0ff42aaed0ae63558dad544c231d674eb08b876a1aad41e5c6ca8b7d"
+    },
+    {
+      "id": "q:g10m1s5-1-3:w003",
+      "lo_id": "lo:g10m1s5-1-3",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "Without a calculator, mark on the number line every whole number $n$ that satisfies $ -\\sqrt{14} < n < -\\sqrt{3} $.",
+      "choices": {
+        "kind": "number_line_marker",
+        "spec": {
+          "mode": "points",
+          "range": [
+            -6,
+            6
+          ],
+          "targets": [
+            -3,
+            -2
+          ]
+        },
+        "diagnostics": [],
+        "pending_review": [
+          {
+            "predicate": "sign-flipped",
+            "misconception_id": "mc:g10m1s5-1-3:negative-surds-ranked-by-size-ignoring-sign",
+            "why": "The predicate fires on {2,3}, the negatives of the correct set. The claimed misconception, putting -sqrt(big) to the right of -sqrt(small), is a mistake about the order of the endpoints on the negative side. It does not by itself move the student's taps to the positive side. A {2,3} response comes from reading n as positive or dropping all minus signs, which is a different cause, so this diagnosis would refute a mistake she did not make.",
+            "verifier_runs": [
+              "verify-ch01-wf_0b1937ba-165"
+            ]
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Bracket each surd between two consecutive whole numbers, using perfect squares (perfect cubes for a cube root). For instance $16 < 20 < 25$ gives $4 < \\sqrt{20} < 5$."
+        },
+        {
+          "step": 2,
+          "text_md": "Put the minus sign back. Negating reverses the order, so $-5 < -\\sqrt{20} < -4$: the surd with the bigger number under the root sits further to the left of zero."
+        },
+        {
+          "step": 3,
+          "text_md": "Now the whole numbers that fit are the ones strictly to the right of the left-hand bound and strictly to the left of the right-hand bound. A surd is never a whole number, but a bound of $0$ is itself left out because the inequality is strict."
+        },
+        {
+          "step": 4,
+          "text_md": "Mark exactly those points. Check each end: the leftmost mark must be greater than the lower bound, and the rightmost must be less than the upper bound."
+        }
+      ],
+      "parent_question_id": "q:g10m1s5-1-3:ex1-3-3",
+      "source_note": "Generated from template family wt:g10m1s5-1-3:integers-between-negative-surds.",
+      "family": "wt:g10m1s5-1-3:integers-between-negative-surds",
+      "template_sha": "0b5d846b0ff42aaed0ae63558dad544c231d674eb08b876a1aad41e5c6ca8b7d"
+    },
+    {
+      "id": "q:g10m1s5-1-3:w004",
+      "lo_id": "lo:g10m1s5-1-3",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "Without a calculator, mark on the number line every whole number $n$ that satisfies $ -\\sqrt{20} < n < 0 $.",
+      "choices": {
+        "kind": "number_line_marker",
+        "spec": {
+          "mode": "points",
+          "range": [
+            -6,
+            6
+          ],
+          "targets": [
+            -4,
+            -3,
+            -2,
+            -1
+          ]
+        },
+        "diagnostics": [],
+        "pending_review": [
+          {
+            "predicate": "sign-flipped",
+            "misconception_id": "mc:g10m1s5-1-3:negative-surds-ranked-by-size-ignoring-sign",
+            "why": "The predicate fires on {1,2,3,4}. This question compares one negative surd with 0, not two negative surds, so the claimed misconception (ranking two negative surds by size ignoring the sign) has nothing to act on. Nothing in it would send the student to the positive integers; that response would come from dropping the minus signs altogether, so the diagnosis would not be what a student holding this misconception builds.",
+            "verifier_runs": [
+              "verify-ch01-wf_0b1937ba-165"
+            ]
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Bracket each surd between two consecutive whole numbers, using perfect squares (perfect cubes for a cube root). For instance $16 < 20 < 25$ gives $4 < \\sqrt{20} < 5$."
+        },
+        {
+          "step": 2,
+          "text_md": "Put the minus sign back. Negating reverses the order, so $-5 < -\\sqrt{20} < -4$: the surd with the bigger number under the root sits further to the left of zero."
+        },
+        {
+          "step": 3,
+          "text_md": "Now the whole numbers that fit are the ones strictly to the right of the left-hand bound and strictly to the left of the right-hand bound. A surd is never a whole number, but a bound of $0$ is itself left out because the inequality is strict."
+        },
+        {
+          "step": 4,
+          "text_md": "Mark exactly those points. Check each end: the leftmost mark must be greater than the lower bound, and the rightmost must be less than the upper bound."
+        }
+      ],
+      "parent_question_id": "q:g10m1s5-1-3:ex1-3-3",
+      "source_note": "Generated from template family wt:g10m1s5-1-3:integers-between-negative-surds.",
+      "family": "wt:g10m1s5-1-3:integers-between-negative-surds",
+      "template_sha": "0b5d846b0ff42aaed0ae63558dad544c231d674eb08b876a1aad41e5c6ca8b7d"
+    },
+    {
+      "id": "q:g10m1s5-1-3:w005",
+      "lo_id": "lo:g10m1s5-1-3",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "Without a calculator, mark on the number line every whole number $n$ that satisfies $ -\\sqrt[3]{30} < n < -\\sqrt{2} $.",
+      "choices": {
+        "kind": "number_line_marker",
+        "spec": {
+          "mode": "points",
+          "range": [
+            -6,
+            6
+          ],
+          "targets": [
+            -3,
+            -2
+          ]
+        },
+        "diagnostics": [],
+        "pending_review": [
+          {
+            "predicate": "sign-flipped",
+            "misconception_id": "mc:g10m1s5-1-3:negative-surds-ranked-by-size-ignoring-sign",
+            "why": "The predicate fires on {2,3}. The claimed misconception is about ordering two negative surds, and here one of them is a cube root, which the misconception text never describes. Even for the intended case, the ordering error does not move the student's taps to the positive side. A {2,3} response is a different slip, dropping the sign of n or of both endpoints, so the diagnosis would mostly fire for another reason.",
+            "verifier_runs": [
+              "verify-ch01-wf_0b1937ba-165"
+            ]
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Bracket each surd between two consecutive whole numbers, using perfect squares (perfect cubes for a cube root). For instance $16 < 20 < 25$ gives $4 < \\sqrt{20} < 5$."
+        },
+        {
+          "step": 2,
+          "text_md": "Put the minus sign back. Negating reverses the order, so $-5 < -\\sqrt{20} < -4$: the surd with the bigger number under the root sits further to the left of zero."
+        },
+        {
+          "step": 3,
+          "text_md": "Now the whole numbers that fit are the ones strictly to the right of the left-hand bound and strictly to the left of the right-hand bound. A surd is never a whole number, but a bound of $0$ is itself left out because the inequality is strict."
+        },
+        {
+          "step": 4,
+          "text_md": "Mark exactly those points. Check each end: the leftmost mark must be greater than the lower bound, and the rightmost must be less than the upper bound."
+        }
+      ],
+      "parent_question_id": "q:g10m1s5-1-3:ex1-3-3",
+      "source_note": "Generated from template family wt:g10m1s5-1-3:integers-between-negative-surds.",
+      "family": "wt:g10m1s5-1-3:integers-between-negative-surds",
+      "template_sha": "0b5d846b0ff42aaed0ae63558dad544c231d674eb08b876a1aad41e5c6ca8b7d"
+    }
+  ],
+  "misconceptions": [
+    {
+      "id": "mc:g10m1s3-1-1:fraction-judged-by-top",
+      "lo_id": "lo:g10m1s3-1-1",
+      "label": "Checks the top of a fraction instead of its denominator",
+      "description": "The student tests the top of the fraction for the problem, so either misses a zero denominator because the top looks fine, or treats a zero on top as if it were division by zero."
+    },
+    {
+      "id": "mc:g10m1s3-1-1:negative-under-root-called-real",
+      "lo_id": "lo:g10m1s3-1-1",
+      "label": "Treats the square root of a negative number as a real number",
+      "description": "The student calls a number such as $\\sqrt{-9}$ real, treating a square root with a minus sign under it like any other square root."
+    }
+  ],
+  "mapping_review": {
+    "rule": "decision 47",
+    "verifier_runs": [
+      "verify-ch01-wf_0b1937ba-165"
+    ],
+    "counts": {
+      "active": 13,
+      "held": 8,
+      "kept_by_review": 0,
+      "dropped_by_review": 0
+    },
+    "reviews": []
+  },
+  "s5_reconciled": {
+    "runs": [
+      "final-ch01-wf_bf3bd255-7bf.json"
+    ],
+    "catalogue": "g10-math-misconceptions",
+    "refused_attachments_stripped": [
+      [
+        "lo:g10m1s3-1-1",
+        "S7",
+        "wt:g10m1s3-1-1:minus-root-real#sign-flipped",
+        "mc:g10m1s3-1-1:minus-outside-root-read-as-inside",
+        "Right sizes, wrong signs — a value marked as its negative, as when (x − a) = 0 is read as x = −a"
+      ],
+      [
+        "lo:g10m1s7-2-1",
+        "S7",
+        "wt:g10m1s7-2-1:factor-by-tiles-positive#middle-term-sign",
+        "mc:g10m1s7-2-1:factor-pair-middle-term-untested",
+        "The constant term is right and the linear (x) term is not — usually its sign"
+      ],
+      [
+        "lo:g10m1s7-2-1",
+        "S7",
+        "wt:g10m1s7-2-1:factor-by-tiles-signs#middle-term-sign",
+        "mc:g10m1s7-2-1:factor-pair-middle-term-untested",
+        "The constant term is right and the linear (x) term is not — usually its sign"
+      ]
+    ],
+    "widgets_left_out": [
+      "q:g10m1s7-2-1:w001",
+      "q:g10m1s7-2-1:w002",
+      "q:g10m1s7-2-1:w003",
+      "q:g10m1s7-2-1:w004",
+      "q:g10m1s7-2-1:w005",
+      "q:g10m1s7-2-1:w006",
+      "q:g10m1s7-2-1:w007",
+      "q:g10m1s7-2-1:w008",
+      "q:g10m1s7-2-1:w009",
+      "q:g10m1s7-2-1:w010",
+      "q:g10m1s7-2-1:w011",
+      "q:g10m1s7-2-1:w012"
+    ]
+  }
+}

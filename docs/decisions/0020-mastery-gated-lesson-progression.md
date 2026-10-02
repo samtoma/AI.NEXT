@@ -134,7 +134,22 @@ move teaching behaviour, and ADR-0010 keeps metrics unpooled across solutions, s
 a mid-stream prompt change wants its own deliberate cut. **Samuel, 2026-09-22:
 "do not make changes to the prompt for now."** The check-in card and the tutor
 therefore disagree about the premise until that follow-up lands; this is a known,
-accepted, temporary inconsistency. *(This hold has one recorded exception: [ADR-0021](./0021-runtime-teaching-toggle-and-testers.md)'s
+accepted, temporary inconsistency.
+
+**The hold's exceptions, in one list.** *(Put in one place and one numbering on 2026-09-27: until then
+two exceptions were both called "the fourth", and the last four sat under the book-section note below.
+The first seven keep the wording they have on `main`; the first was written when it was the only one.
+Eleven as of 2026-10-02. **The numbers follow the order in which each exception reached `main`, not the
+date Samuel decided it, and a number that has been released never moves.** The fifth, sixth and seventh are
+Tamer's v0.10.0 and v0.11.0 work (decided 2026-10-01 and 2026-10-02, released). The eighth to eleventh are
+feature 003's four for the Grade 10 course (decided 2026-09-25 and 2026-09-26; not released): they were the
+fifth to eighth on the feature branch from 2026-09-27 until 2026-10-02, when it moved onto `main` at v0.11.0
+and `main`'s own fifth, sixth and seventh took those numbers, so the unreleased four were renumbered
+(eighth, ninth, tenth, eleventh, in the relative order they already had on the branch) and each carries a
+dated note saying so. The list below is in number order. Each is a named, narrow lift — none reopens the
+hold, and the self-paced reframing of the school-day premise is still held for every course.)*
+
+*(This hold has one recorded exception: [ADR-0021](./0021-runtime-teaching-toggle-and-testers.md)'s
 2026-09-24 "reveal threshold" amendment, Samuel authorising one specific rule — not a reopening of the hold generally.)*
 *(A second exception, narrower still — Samuel, 2026-09-25: "OK". The hold is lifted for **one label string
 only**: `module:geo-u1`'s "Term 2 · Unit 4 — The Circle", which was "Unit 4 — The Circle" (FR-3218, migration
@@ -178,11 +193,98 @@ server-side from the curriculum the student can see (`lib/ask.ts` `mapFocusNote`
 kind and an id. 3 of 234 captured prompt files change, by that one rule line. Every other prompt is
 unchanged.)*
 
+*(An eighth exception, for one new course's prompts only — Samuel, 2026-09-25: "I would take your
+recommendations", spec 003 [decisions.md](../../specs/003-curriculum-tracks/decisions.md) #10. **Accepted
+("ok for all").** Written as "a fourth exception" on the feature branch before v0.9.3's took that number
+on `main`; renumbered the fifth on 2026-09-27. **Numbered the fifth until 2026-10-02, when the feature
+branch moved onto v0.11.0 and `main`'s own fifth, sixth and seventh took those numbers; it is the eighth.**
+The hold is lifted for the prompts of the **Grade 10 American Mathematics course**
+(`course:us-g10-math-en`, [ADR-0024](./0024-curriculum-as-a-visibility-dimension.md)) and for nothing
+else. Its lessons, reviews, grader and Ask context refer to "this book" and its pages, name its own
+source and syllabus, and offer only that course's own widgets and figures. Those are **new** capture
+files. **Every existing prompt path — Prep-3 maths, Social Studies and Arabic — must stay
+byte-identical**, proven with `app/scripts/capture-prompts.mts` (spec 003 FR-4205, FR-4206). The
+per-course facts this needs (book name, fallback figure, lesson titles, the geometry test) move out of
+the maths prompt kit into the course registry, and Prep-3 keeps the exact string "Egyptian ministry
+textbook". This is not a reopening of the hold: the self-paced reframing of the school-day premise
+is still held for every course, this one included. **One consequence reaches National prompts, and is stated here rather than hidden**: the privacy
+review (spec 003 `privacy-review.md` §5.1) requires the Ask context's list of source books to name only
+books behind courses the student can see. Where a student sees every loaded course the line is
+byte-identical; where she sees fewer, the hidden books' titles drop out. It is a privacy fix, not a
+teaching change. **Samuel acknowledged it on 2026-09-25.** Within this exception, 2026-09-26 (spec 003
+decisions.md #43, Samuel's G2 answer 22): a Grade 10 question flagged `answer_only` — the book prints no
+working for it — reaches the tutor with an instruction to confirm, give the answer and point to the
+lesson's worked examples, in place of solution steps, in the lesson question bank, the Ask context's
+question in scope and the Socratic probe's live-event note (`app/src/lib/question-flags.ts`, spec 003
+FR-4302). The code path is shared, but no National question carries the flag, so every National prompt
+stays byte-identical (`answer-only-prompts.test.mts`).)*
+
+*(A ninth exception — Samuel, 2026-09-25, third round, answer 13: "Use the book's names (Recommended)"
+[decisions.md](../../specs/003-curriculum-tracks/decisions.md) decision 34. The hold is lifted for
+**National Arabic lesson titles**: where a lesson's working title differs from the book's own printed
+section name, the printed name is used. This is curriculum data reaching the prompt the same way the
+Unit 4 Circle label did (the second exception, above) — the lesson-data block, `learnPrompt` and
+`reviewPrompt` for the retitled lessons, and any Ask-the-Spine surface that lists lesson titles. Every
+lesson whose title already matched the book is untouched, and so is every maths and Social Studies
+prompt. It needed code as well as content: the printed names are in the Arabic book config
+(`services/extraction/books/prep3-arabic-ar.json`, `lesson_titles`), the loader writes them to
+`course_lessons.title`, and the course registry's `CourseTutorFacts.bookLessonTitles` — on for the Arabic
+course only — makes the app read them. No prompt *template* changed; `national-prompts.test.mts` proves
+that exactly five Arabic renders change, each by the title only. Spec 003 FR-4206 and SC-207 name it as
+the third expected National difference. (Corrected 2026-09-27: this note first said "no prompt code
+changes … a content change, not a code change", and was numbered the fifth. Numbered the sixth from
+2026-09-27 until 2026-10-02, when the feature branch moved onto v0.11.0 and `main`'s own fifth, sixth and
+seventh took those numbers; it is the ninth.)*
+
+*(A tenth exception, the same round — Samuel, 2026-09-25, answer 9: "English only (Recommended)"
+[decisions.md](../../specs/003-curriculum-tracks/decisions.md) decision 30. For the **Grade 10 American
+Mathematics course's prompts only** (the eighth exception, above), the hold is narrowed rather than
+widened: no Egyptian-Arabic phrase or colloquialism reaches those prompts, while the address term
+"Egyptian student" is kept — the audience is still an Egyptian student, following a book written for
+another curriculum. This is a per-course setting (`CourseDef`'s "Arabic touches" flag), on for every
+National course exactly as before, off for G10 only. National prompts are unaffected; this narrows what
+the eighth exception's own new G10 captures may say, it does not add a new prompt path. (Numbered the
+sixth until 2026-09-27, and the seventh from then until 2026-10-02, when the feature branch moved onto
+v0.11.0 and `main`'s own fifth, sixth and seventh took those numbers; it is the tenth.)*
+
+*(An eleventh exception — Samuel, 2026-09-26, answer 17: "Allow (Recommended)",
+[decisions.md](../../specs/003-curriculum-tracks/decisions.md) decision 38; the curriculum-isolation audit.
+(Numbered the seventh until 2026-09-27, and the eighth from then until 2026-10-02, when the feature branch
+moved onto v0.11.0 and `main`'s own fifth, sixth and seventh took those numbers; it is the eleventh.)
+The hold is lifted for **two things in a lesson prompt, and only
+for a student who cannot see the course they point at**: the cross-subject rule's handoff line offers no
+`{{switch_subject:…}}` to a subject with no course open to her — narrowed to the open ones, or, when none
+is, a line that acknowledges, declines and returns to the lesson — and a curated cross-subject connection
+into a course she cannot see is not given to the tutor. Every student who can see the courses involved gets a
+byte-identical prompt, and so do both goldens (`national-prompts.test.mts`, `g10-prompts.test.mts`, whose
+fixtures render with no student). It is a privacy and dead-end fix of the same shape as the Ask book-list
+difference the eighth exception records, and it is written into spec 003 FR-4206 beside it. With it, a
+handoff card to a closed subject that a reply still carries is removed on the server
+(`app/src/lib/handoff-filter.ts`), so a student never lands on a not-found page.)*
+
 **Revisit when**: a date or school-calendar signal enters the system (the pointer
 would then compete with it for authority over "today's lesson"); or the
 prerequisite graph gains real lesson-level edges, at which point book order can
 be replaced by a genuine topological walk; or the tutor-prompt reframing lands
 and the self-paced framing becomes consistent end to end.
+
+## Note — Samuel, 2026-09-25: a book section's parts are one unit
+
+**Accepted** (*"ok for all"*, spec 003 [decisions.md](../../specs/003-curriculum-tracks/decisions.md)
+#18). On the feature branch only, as unreviewed WIP snapshots — not merged to `main`. Samuel: *"need good taging and understanding that it is like that, so when we
+recommend or suggest scoring etc... we consider them very related"*.
+
+When a book section is split into parts (the Grade 10 book has five, from G0), **the pointer never
+moves past the section until every part has passed the gate**. Inside the section it moves to the
+first part not yet passed. A recommendation into a section the student has started names the section
+("Continue Factorisation"). Part *n*−1 is a prerequisite of part *n*, derived automatically and never
+written into the book's own edges. The section also gets a roll-up, "*k* of *m* parts mastered", and
+reads mastered only when every part is.
+
+This **extends** the advance rule above (FR-3202, now with spec 003 FR-4313). It changes nothing for a
+course whose lessons are each exactly one section, which is every National course today. It holds for
+every curriculum. The prompt hold is not touched: the Ask context ranks sibling parts first
+(FR-4316), and a course with no parts gets exactly the context it gets today.
 
 ## Amendment 2026-09-23 — no backfill, and what "complete" means
 

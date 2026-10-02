@@ -1,0 +1,1270 @@
+{
+ "mode": "author",
+ "book": "g10-math",
+ "prompts_version": "s6-v4",
+ "by_ref": {
+  "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/s6-author",
+  "stage": "S6 author",
+  "shards_sha256": "88e0b77e16e7e9528169c039eea5ffcf5c118570851926d08b80d959f5a318f1",
+  "files": 20
+ },
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "9243f7fee136769dc3488515c3893477583d83fe626216504dbfec8129b64cf3",
+  "args_sha256": "1cafff4aec536a053e7c5e01c0c36c68c098507746917b88b5fce222d5daff8b",
+  "generated_sha256": "5d41fb38206c159199aa86caf047c5de0e7c0b35f2275dd478e68490f399740d",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "records": [
+  {
+   "lo_id": "lo:g10m8s1-1-1",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "No book questions were supplied for this objective (g10m8s1-1-1.book-questions.txt is empty: '[]'). Every family/authored item requires a parent_question_id that is an actual book question of this objective, with its printed source_page, and must model the book's own method, vocabulary and notation for drawing a figure from given vertex coordinates. With zero book questions on file there is nothing to point to and nothing to model from, so no basic-tier item can be authored honestly."
+    },
+    {
+     "tier": "standard",
+     "reason": "Same blocker as basic: g10m8s1-1-1.book-questions.txt contains no book questions at all, so there is no parent_question_id, no source_page, and no book-canonical worked method to derive a solution skeleton from for a typical-exercise-level item."
+    },
+    {
+     "tier": "advanced",
+     "reason": "Same blocker as basic/standard: with no book questions on file for this objective, there is no harder book exercise to model an advanced twist on, and no canonical solution to verify a multi-step version against. Authoring one would mean inventing a technique the book never uses for this LO, which the rules forbid."
+    }
+   ],
+   "notes": "Both required source files for lo:g10m8s1-1-1 (book-questions.txt and misconceptions.txt) contain only '[]' -- confirmed by file size (2 bytes each) as well as content. This objective's authoring packet appears to not have been populated with book questions during extraction (upstream of this authoring step); no families can be responsibly written until at least one book question with a canonical solution is available for this LO. Flagging for the extraction/authoring pipeline to backfill the packet rather than padding with invented content."
+  },
+  {
+   "lo_id": "lo:g10m8s1-1-2",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "standard",
+     "reason": "All four book questions catalogued for this LO (ex8-1-1, ex8-1-3, ex8-1-4, ex8-6-2) are tier 'basic' and every one depends on a rendered figure -- a labelled scatter of off-axis integer points on a Cartesian grid that the student reads from or matches against to find/identify a coordinate pair. The family/authored spec I was given has no field to attach, generate, or vary such a diagram per instance (only stem/params/solution/marker text-and-LaTeX interpolation), so I cannot show a student a fresh plotted-points grid for a generated instance -- not even the book's own basic-tier task reproduces this way. There is also no book example for this LO that goes beyond this one basic-tier point-reading task, so I have no evidence of what the book's own 'typical' (standard) version of this skill looks like. Writing one anyway would mean substituting a diagram-free technique (e.g. a worded 'x units right, y units down' description) that the book does not use for this objective, which the rules forbid. Reporting the gap rather than papering over it with an ungrounded technique."
+    },
+    {
+     "tier": "advanced",
+     "reason": "Same diagram-mechanism gap as the standard tier (no way to attach or vary a plotted-points figure in the family spec), compounded by there being zero book examples of a harder twist on this specific skill anywhere in this LO's material: every catalogued question uses an identical off-axis integer point on a 5-point labelled scatter diagram at basic difficulty -- no axis-lying point, no non-integer coordinate, no multi-step or compound task is ever demonstrated. Inventing an 'advanced' version (harder numbers, a new presentation, or a multi-step wrapper) would not be modelled on anything the book actually does for this objective, so it cannot be authored honestly."
+    }
+   ],
+   "notes": "Both gaps declared infeasible: this LO's book questions are all basic-tier and diagram-dependent (a rendered scatter of labelled integer points to read from or match against), and the family/authored spec has no mechanism for attaching or varying such a diagram per instance. There is also no book precedent for a harder or more-typical variant of this specific skill to model. Zero families returned rather than substituting an ungrounded diagram-free technique."
+  },
+  {
+   "lo_id": "lo:g10m8s1-1-3",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m8s1-1-3:quad-rotated-start",
+     "kind": "family",
+     "lo_id": "lo:g10m8s1-1-3",
+     "parent_question_id": "q:g10m8s1-1-3:ex8-1-5",
+     "source_page": 287,
+     "tier": "standard",
+     "answer_type": "mcq",
+     "context": null,
+     "version": 1,
+     "params": [
+      {
+       "name": "letters",
+       "choice": [
+        [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        [
+         "B",
+         "C",
+         "D",
+         "E"
+        ],
+        [
+         "C",
+         "D",
+         "E",
+         "F"
+        ],
+        [
+         "D",
+         "E",
+         "F",
+         "G"
+        ],
+        [
+         "E",
+         "F",
+         "G",
+         "H"
+        ],
+        [
+         "F",
+         "G",
+         "H",
+         "I"
+        ],
+        [
+         "G",
+         "H",
+         "I",
+         "J"
+        ],
+        [
+         "H",
+         "I",
+         "J",
+         "K"
+        ],
+        [
+         "I",
+         "J",
+         "K",
+         "L"
+        ],
+        [
+         "J",
+         "K",
+         "L",
+         "M"
+        ],
+        [
+         "K",
+         "L",
+         "M",
+         "N"
+        ],
+        [
+         "L",
+         "M",
+         "N",
+         "O"
+        ],
+        [
+         "M",
+         "N",
+         "O",
+         "P"
+        ],
+        [
+         "N",
+         "O",
+         "P",
+         "Q"
+        ],
+        [
+         "O",
+         "P",
+         "Q",
+         "R"
+        ],
+        [
+         "P",
+         "Q",
+         "R",
+         "S"
+        ],
+        [
+         "Q",
+         "R",
+         "S",
+         "T"
+        ],
+        [
+         "R",
+         "S",
+         "T",
+         "U"
+        ],
+        [
+         "S",
+         "T",
+         "U",
+         "V"
+        ],
+        [
+         "T",
+         "U",
+         "V",
+         "W"
+        ],
+        [
+         "U",
+         "V",
+         "W",
+         "X"
+        ],
+        [
+         "V",
+         "W",
+         "X",
+         "Y"
+        ],
+        [
+         "W",
+         "X",
+         "Y",
+         "Z"
+        ]
+       ]
+      },
+      {
+       "name": "r",
+       "choice": [
+        1,
+        2,
+        3
+       ]
+      },
+      {
+       "name": "given_order",
+       "let": "[letters[(i + r) % 4] for i in range(4)]"
+      },
+      {
+       "name": "reversed_letters",
+       "let": "list(reversed(letters))"
+      },
+      {
+       "name": "swapped",
+       "let": "[letters[0], letters[2], letters[1], letters[3]]"
+      }
+     ],
+     "stem": "A quadrilateral has 4 vertices, each labelled with a different letter. Going around the shape clockwise, starting from one particular vertex, the labels are, in order: {=given_order[0]}, {=given_order[1]}, {=given_order[2]}, {=given_order[3]}. Applying the convention that a figure's vertices are named in alphabetical order, what is the correct name for this quadrilateral?",
+     "solution": [
+      "The four labels used are {=letters[0]}, {=letters[1]}, {=letters[2]} and {=letters[3]} — already consecutive letters of the alphabet.",
+      "The diagram happens to start listing them from {=given_order[0]}, partway around the shape, but the convention says to start naming from the alphabetically-first vertex, {=letters[0]}, and keep going the same way around.",
+      "Reading clockwise from {=letters[0]}, the vertices in order are {=letters[0]}, {=letters[1]}, {=letters[2]}, {=letters[3]}, so the correct name is {=letters[0]}{=letters[1]}{=letters[2]}{=letters[3]}."
+     ],
+     "choices": {
+      "correct": "{=letters[0]}{=letters[1]}{=letters[2]}{=letters[3]}",
+      "distractors": [
+       {
+        "text": "{=given_order[0]}{=given_order[1]}{=given_order[2]}{=given_order[3]}",
+        "misconception_id": "mc:g10m8s1-1-3:names-from-given-start"
+       },
+       {
+        "text": "{=reversed_letters[0]}{=reversed_letters[1]}{=reversed_letters[2]}{=reversed_letters[3]}",
+        "misconception_id": "mc:g10m8s1-1-3:writes-descending-order"
+       },
+       {
+        "text": "{=swapped[0]}{=swapped[1]}{=swapped[2]}{=swapped[3]}",
+        "misconception_id": null
+       }
+      ]
+     },
+     "proposed_misconceptions": [
+      {
+       "id": "mc:g10m8s1-1-3:names-from-given-start",
+       "label": "Names from the diagram's starting point",
+       "description": "Writes the vertices in the order the diagram happens to begin listing them, instead of rotating the same cyclic order to start at the alphabetically-first vertex."
+      },
+      {
+       "id": "mc:g10m8s1-1-3:writes-descending-order",
+       "label": "Writes the letters in descending order",
+       "description": "Lists the vertices going around the shape in the direction opposite to the ascending one, producing the letters in descending rather than ascending order, without checking that the result is actually alphabetical."
+      }
+     ],
+     "notes": "Textual analogue of the book's ring-diagrams (ex8-1-5/8-1-6/ex8-6-3, all p.287/316), which show four labelled rings and ask which uses the correct convention; I viewed all three figure PNGs and confirmed only 'shape Z' reads as a perfect consecutive alphabetical cycle. Since the family DSL has no letter/chr arithmetic, the cyclic vertex order is given as a literal list of pre-verified consecutive-letter windows (params 'letters', 'r') rather than a rendered diagram; the underlying skill (rotate to the alphabetically-first vertex, keep the given direction) is identical. Swap distractor is a plausible scramble with no single diagnosable cause (misconception_id null) per the rules."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m8s1-1-3:pentagon-partial-arc",
+     "kind": "family",
+     "lo_id": "lo:g10m8s1-1-3",
+     "parent_question_id": "q:g10m8s1-1-3:ex8-6-3",
+     "source_page": 316,
+     "tier": "advanced",
+     "answer_type": "mcq",
+     "context": null,
+     "version": 1,
+     "params": [
+      {
+       "name": "v",
+       "choice": [
+        [
+         "E",
+         "F",
+         "G",
+         "H",
+         "B"
+        ],
+        [
+         "C",
+         "D",
+         "E",
+         "F",
+         "M"
+        ],
+        [
+         "G",
+         "H",
+         "I",
+         "J",
+         "A"
+        ],
+        [
+         "K",
+         "L",
+         "M",
+         "N",
+         "C"
+        ],
+        [
+         "P",
+         "Q",
+         "R",
+         "S",
+         "F"
+        ],
+        [
+         "B",
+         "C",
+         "D",
+         "E",
+         "T"
+        ],
+        [
+         "M",
+         "N",
+         "O",
+         "P",
+         "B"
+        ],
+        [
+         "S",
+         "T",
+         "U",
+         "V",
+         "D"
+        ],
+        [
+         "D",
+         "E",
+         "F",
+         "G",
+         "Q"
+        ],
+        [
+         "N",
+         "O",
+         "P",
+         "Q",
+         "H"
+        ]
+       ]
+      }
+     ],
+     "stem": "A pentagon has 5 vertices, each labelled with a different letter. Going around the shape clockwise, the labels are, in order: {=v[0]}, {=v[1]}, {=v[2]}, {=v[3]}, {=v[4]}. A student checks the first four labels, sees that they climb the alphabet one letter at a time, and concludes that the pentagon is correctly named. Is the student right, and why?",
+     "solution": [
+      "Check every consecutive pair of vertices going around the shape, not just the first few: {=v[0]}→{=v[1]}, {=v[1]}→{=v[2]}, {=v[2]}→{=v[3]} each climb one letter at a time.",
+      "The last step closes the loop back to the start: {=v[3]}→{=v[4]}. For the naming to be correct, {=v[4]} would have to be the very next letter after {=v[3]}, but it is not.",
+      "Because the pattern breaks on that last vertex, the pentagon is not correctly named as given — checking only part of the loop, as the student did, would have missed this."
+     ],
+     "choices": {
+      "correct": "No — the convention requires the letters to climb one at a time all the way around the shape and back to the start. After {=v[3]} the next vertex is {=v[4]}, which does not continue the sequence, so the pentagon is not correctly named as given.",
+      "distractors": [
+       {
+        "text": "Yes — the first four vertices climb one letter at a time, so the pentagon is correctly named.",
+        "misconception_id": "mc:g10m8s1-1-3:partial-arc-check"
+       },
+       {
+        "text": "No — the labels must be read going anticlockwise instead, since a clockwise reading is never the correct convention.",
+        "misconception_id": "mc:g10m8s1-1-3:assumes-only-one-direction-counts"
+       },
+       {
+        "text": "No — the naming is wrong because the sequence does not start with the letter A.",
+        "misconception_id": "mc:g10m8s1-1-3:expects-labels-to-start-at-a"
+       }
+      ]
+     },
+     "proposed_misconceptions": [],
+     "notes": "Advanced twist on the same book device (ex8-6-3, p.316, viewed its figure): four of five vertices climb consecutively but the loop-closing step breaks, so a partial check (misconception already catalogued) looks correct. All three distractors reuse the three catalogued misconceptions for this LO verbatim; no new ids needed. The five-letter tuples are hand-verified literals (no chr()/letter-arithmetic exists in the family DSL) so every instance is guaranteed clean: first four strictly consecutive ascending, fifth distinct from all four and never the true next letter."
+    }
+   ],
+   "infeasible": [],
+   "notes": "Read both source files plus all three figure PNGs (tikzpicture__bb8c5d2e..., __e600153a..., __528b1810...) referenced by the three book questions (all mcq, tier basic, p.287/p.287/p.316): each shows four 20-point labelled rings (shapes W/X/Y/Z) and only one ring per figure reads as a perfect consecutive alphabetical cycle going one direction; that is the book's own model for 'correct naming.' The generated-family DSL (ainext.family/1) has no chr()/letter-increment function, so cyclic vertex letter-orders are supplied as pre-verified literal choice lists rather than computed from indices — every instance is still checked-by-construction for cleanliness. Filled only the two requested gaps (standard, advanced); basic was not on the gap list and the three existing book questions already cover that tier directly, so no basic family was authored (not reported as infeasible, since it wasn't a requested gap)."
+  },
+  {
+   "lo_id": "lo:g10m8s2-1-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m8s2-1-2:isolate-both-roots-basic",
+     "kind": "family",
+     "lo_id": "lo:g10m8s2-1-2",
+     "parent_question_id": "q:g10m8s2-1-2:ex8-2-7",
+     "source_page": 293,
+     "tier": "basic",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "p_x",
+       "randint": [
+        -6,
+        6
+       ]
+      },
+      {
+       "name": "p_y",
+       "randint": [
+        -6,
+        6
+       ]
+      },
+      {
+       "name": "triple",
+       "choice": [
+        [
+         3,
+         4,
+         5
+        ],
+        [
+         6,
+         8,
+         10
+        ]
+       ]
+      },
+      {
+       "name": "leg_y",
+       "let": "triple[0]"
+      },
+      {
+       "name": "leg_x",
+       "let": "triple[1]"
+      },
+      {
+       "name": "dist",
+       "let": "triple[2]"
+      },
+      {
+       "name": "dir_y",
+       "choice": [
+        1,
+        -1
+       ]
+      },
+      {
+       "name": "q_y",
+       "let": "p_y + dir_y*leg_y"
+      },
+      {
+       "name": "dist_sq",
+       "let": "dist**2"
+      },
+      {
+       "name": "legy_sq",
+       "let": "leg_y**2"
+      },
+      {
+       "name": "legx_sq",
+       "let": "leg_x**2"
+      },
+      {
+       "name": "r1",
+       "let": "p_x + leg_x"
+      },
+      {
+       "name": "r2",
+       "let": "p_x - leg_x"
+      }
+     ],
+     "constraints": [
+      "legx_sq + legy_sq == dist_sq",
+      "r1 != r2"
+     ],
+     "stem": "Point $P({=p_x}, {=p_y})$ and point $Q(x, {=q_y})$ lie ${=dist}$ units apart. Find all possible values of $x$.",
+     "answer": "x = {=r2} or x = {=r1}",
+     "solution": [
+      "Write down the distance formula and substitute the known values: $d_{PQ}=\\sqrt{(x-({=p_x}))^{2}+({=q_y}-({=p_y}))^{2}}$, so ${=dist}=\\sqrt{(x-({=p_x}))^{2}+({=q_y}-({=p_y}))^{2}}$.",
+      "Square both sides: ${=dist_sq}=(x-({=p_x}))^{2}+({=q_y}-({=p_y}))^{2}$, and $({=q_y}-({=p_y}))^{2}={=legy_sq}$, so ${=dist_sq}=(x-({=p_x}))^{2}+{=legy_sq}$.",
+      "Isolate the square: $(x-({=p_x}))^{2}={=dist_sq}-{=legy_sq}={=legx_sq}$.",
+      "Take the square root of both sides: $x-({=p_x})=\\pm\\sqrt{{=legx_sq}}=\\pm{=leg_x}$.",
+      "So $x={=p_x}\\pm{=leg_x}$, giving $x={=r2}\\text{ or }x={=r1}$."
+     ],
+     "marker": {
+      "kind": "values",
+      "answer": "[{=r2}, {=r1}]",
+      "form": null,
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Entry-point version of the skill: same isolate-and-square-root method the book uses in ex8-2-3/ex8-2-4/ex8-6-6, but (like ex8-2-7, this family's parent) there is no diagram to narrow the two roots, so both values are the correct complete answer, matching the objective's own 'solving for all valid values'. A solver who states only one root is making the error already catalogued as mc:g10m8s2-1-2:stops-at-first-root — worth flagging in grading even though this is not an mcq family."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m8s2-1-2:constraint-picks-root-advanced",
+     "kind": "family",
+     "lo_id": "lo:g10m8s2-1-2",
+     "parent_question_id": "q:g10m8s2-1-2:ex8-6-33b",
+     "source_page": 323,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "cx",
+       "randint": [
+        -6,
+        6
+       ]
+      },
+      {
+       "name": "triple",
+       "choice": [
+        [
+         5,
+         12,
+         13
+        ],
+        [
+         8,
+         15,
+         17
+        ],
+        [
+         9,
+         12,
+         15
+        ],
+        [
+         7,
+         24,
+         25
+        ]
+       ]
+      },
+      {
+       "name": "leg_x",
+       "let": "triple[0]"
+      },
+      {
+       "name": "leg_y",
+       "let": "triple[1]"
+      },
+      {
+       "name": "dist",
+       "let": "triple[2]"
+      },
+      {
+       "name": "dir_x",
+       "choice": [
+        1,
+        -1
+       ]
+      },
+      {
+       "name": "dx",
+       "let": "cx + dir_x*leg_x"
+      },
+      {
+       "name": "cy",
+       "randint": [
+        "-leg_y + 1",
+        "leg_y - 1"
+       ]
+      },
+      {
+       "name": "dist_sq",
+       "let": "dist**2"
+      },
+      {
+       "name": "legx_sq",
+       "let": "leg_x**2"
+      },
+      {
+       "name": "r1",
+       "let": "cy + leg_y"
+      },
+      {
+       "name": "r2",
+       "let": "cy - leg_y"
+      }
+     ],
+     "constraints": [
+      "legx_sq + leg_y**2 == dist_sq",
+      "r1 >= 0",
+      "r2 < 0"
+     ],
+     "stem": "Points $C({=cx}, {=cy})$ and $D({=dx}, k)$ are such that $CD=\\sqrt{{=dist_sq}}$, where $k\\geq0$. Find the value of $k$.",
+     "answer": "r1",
+     "solution": [
+      "Write down the distance formula and substitute: $CD=\\sqrt{(x_{D}-x_{C})^{2}+(y_{D}-y_{C})^{2}}$, so $\\sqrt{{=dist_sq}}=\\sqrt{({=dx}-({=cx}))^{2}+(k-({=cy}))^{2}}$.",
+      "Square both sides: ${=dist_sq}=({=dx}-({=cx}))^{2}+(k-({=cy}))^{2}$, and $({=dx}-({=cx}))^{2}={=legx_sq}$, so ${=dist_sq}={=legx_sq}+(k-({=cy}))^{2}$.",
+      "Isolate the square: $(k-({=cy}))^{2}={=dist_sq}-{=legx_sq}={=leg_y**2}$.",
+      "Take the square root of both sides: $k-({=cy})=\\pm\\sqrt{{=leg_y**2}}=\\pm{=leg_y}$.",
+      "So $k={=cy}\\pm{=leg_y}$, giving $k={=r2}\\text{ or }k={=r1}$.",
+      "But $k\\geq0$, therefore $k={=r1}$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Mirrors ex8-6-33b's twist: a stated inequality on the unknown coordinate eliminates one of the two algebraic roots, so the solver must reason about which root satisfies it (several steps beyond the basic family: expand/isolate, take both roots, then apply the constraint). Reporting both roots without applying k>=0 is the error already catalogued as mc:g10m8s2-1-2:keeps-both-roots-ignores-restriction. Parameters are built from Pythagorean triples and cy is bounded relative to leg_y so r1=cy+leg_y is always >=1 (satisfies k>=0) and r2=cy-leg_y is always <=-1 (fails it) — every instance is clean and unambiguous."
+    }
+   ],
+   "infeasible": [],
+   "notes": "Read both book-questions and misconceptions files, plus the four figures attached to ex8-2-3, ex8-2-4, ex8-6-6 and we02 (all show the standard two-point/one-unknown-coordinate diagram used across this objective; none needed for the two families below since neither rests on a diagram). Filled the two requested gaps: basic uses the book's simpler isolate-and-square-root method (parent ex8-2-7) reporting both valid values per the LO's own description; advanced adds the book's own inequality-constraint twist (parent ex8-6-33b) that narrows two algebraic roots to one. Standard tier was not requested and was left alone."
+  },
+  {
+   "lo_id": "lo:g10m8s3-1-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m8s3-1-1:algebraic-coeffs",
+     "kind": "family",
+     "lo_id": "lo:g10m8s3-1-1",
+     "parent_question_id": "q:g10m8s3-1-1:ex8-3-1c",
+     "source_page": 296,
+     "tier": "advanced",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "kx",
+       "choice": [
+        2,
+        3,
+        4,
+        5
+       ]
+      },
+      {
+       "name": "ky",
+       "choice": [
+        2,
+        3,
+        4,
+        5
+       ]
+      },
+      {
+       "name": "a",
+       "randint": [
+        1,
+        9
+       ]
+      },
+      {
+       "name": "b",
+       "randint": [
+        1,
+        9
+       ]
+      },
+      {
+       "name": "c",
+       "randint": [
+        1,
+        9
+       ]
+      },
+      {
+       "name": "d",
+       "randint": [
+        1,
+        9
+       ]
+      },
+      {
+       "name": "n",
+       "let": "d + b"
+      },
+      {
+       "name": "den",
+       "let": "c + a"
+      },
+      {
+       "name": "g",
+       "let": "gcd(n, den)"
+      },
+      {
+       "name": "rn",
+       "let": "n // g"
+      },
+      {
+       "name": "rd",
+       "let": "den // g"
+      }
+     ],
+     "constraints": [
+      "g > 1",
+      "rd > 1"
+     ],
+     "stem": "Find the gradient of $AB$ if: $A\\left({=kx}x-{=a},\\ {=ky}y-{=b}\\right)$ and $B\\left({=kx}x+{=c},\\ {=ky}y+{=d}\\right)$.",
+     "solution": [
+      "Let the coordinates of $A$ be $\\left(x_{1}, y_{1}\\right)$ and the coordinates of $B$ be $\\left(x_{2}, y_{2}\\right)$.",
+      "$x_{1}={=kx}x-{=a},\\ y_{1}={=ky}y-{=b},\\ x_{2}={=kx}x+{=c},\\ y_{2}={=ky}y+{=d}$",
+      "$\\begin{aligned}m_{AB}&=\\frac{y_{2}-y_{1}}{x_{2}-x_{1}}\\\\&=\\frac{\\left({=ky}y+{=d}\\right)-\\left({=ky}y-{=b}\\right)}{\\left({=kx}x+{=c}\\right)-\\left({=kx}x-{=a}\\right)}\\\\&=\\frac{{=d}+{=b}}{{=c}+{=a}}\\\\&=\\frac{{=n}}{{=den}}\\end{aligned}$",
+      "Dividing the numerator and denominator by their common factor {=g}: $m_{AB}=\\frac{{=rn}}{{=rd}}$"
+     ],
+     "marker": {
+      "kind": "expression",
+      "answer": "{=rn}/{=rd}",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Advanced twist on the objective's only algebraic-coordinate book question (ex8-3-1c, standard tier). Same skeleton (gradient formula applied to symbolic coordinates where the variable terms cancel) but harder in two book-consistent ways: (1) matching coefficients kx, ky on the x- and y-terms of A and B, which cancel regardless of their value, so the student must notice the cancellation rather than being handed a bare x/y difference; (2) two-term constant offsets on each side, so the numerator and denominator must each be formed by combining two constants before the fraction is even written, then that raw fraction must be reduced to lowest terms (g>1 and rd>1 are enforced so the reduction step is always genuine and the final gradient is never a whole number). No new method is introduced beyond ex8-3-1c's own cancellation idea and ordinary fraction simplification already used elsewhere in this objective's book answers (9/11, 11/8, 4/3)."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:g10m8s3-1-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m8s3-1-2:unknown-x-from-gradient",
+     "kind": "family",
+     "lo_id": "lo:g10m8s3-1-2",
+     "parent_question_id": "q:g10m8s3-1-2:we04",
+     "source_page": 295,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "x1",
+       "randint": [
+        -6,
+        6
+       ]
+      },
+      {
+       "name": "y1",
+       "randint": [
+        -6,
+        6
+       ]
+      },
+      {
+       "name": "m",
+       "choice": [
+        1,
+        2,
+        3,
+        4
+       ]
+      },
+      {
+       "name": "t",
+       "randint": [
+        -5,
+        5
+       ]
+      },
+      {
+       "require": "t != 0",
+       "why": "a zero step would put A and B at the same x-coordinate, giving a vertical line with no defined gradient"
+      },
+      {
+       "name": "x2",
+       "let": "x1 + t"
+      },
+      {
+       "name": "y2",
+       "let": "y1 + m*t"
+      }
+     ],
+     "constraints": [
+      "x2 != x1",
+      "m != 0"
+     ],
+     "stem": "Given $A({=x1}, {=y1})$ and $B(x, {=y2})$, with ${m}_{AB}={=m}$, find $x$.",
+     "answer": "x2",
+     "solution": [
+      "Let the coordinates of $A$ be $\\left({x}_{1}, {y}_{1}\\right)$ and the coordinates of $B$ be $\\left({x}_{2}, {y}_{2}\\right)$",
+      "Assign values: $x_{1}={=x1}\\quad y_{1}={=y1}\\quad x_{2}=x\\quad y_{2}={=y2}$",
+      "Write down the formula for gradient: $m=\\dfrac{y_{2}-y_{1}}{x_{2}-x_{1}}$",
+      "Substitute values and solve for $x$: $\\begin{aligned}{=m}&=\\dfrac{{=y2}-\\left({=y1}\\right)}{x-\\left({=x1}\\right)}\\\\{=m}\\left(x-\\left({=x1}\\right)\\right)&={=y2}-\\left({=y1}\\right)\\\\x-\\left({=x1}\\right)&={=t}\\\\x&={=t}+\\left({=x1}\\right)\\\\&={=x2}\\end{aligned}$",
+      "Write the final answer: the coordinates of $B$ are $\\left({=x2}, {=y2}\\right)$. Therefore $x={=x2}$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Entry-point version of the skill: one point fully known, gradient a positive whole number, the other point's y-coordinate known and x-coordinate the unknown to isolate — a direct single rearrangement of m=(y2-y1)/(x2-x1), same method as we04 (page 295) but generalised off H(x,0) to any known y2 so the family isn't stuck at y=0. Built from we04, whose figure (a segment from G(7,-9) to H(x,0) with mGH=3) I viewed to confirm the point/variable layout; this family drops the diagram and states both points as plain coordinates. Reviewer: check that m staying positive and small keeps this genuinely 'basic' relative to the advanced sibling family, and that t's sign is free (so B can sit left or right of A) without ever making x2==x1. Relevant catalogued errors a student could still make here even though there's no coefficient trick: mc:g10m8s3-1-2:mismatched-point-order and mc:g10m8s3-1-2:inverted-gradient-ratio (both apply to the plain gradient formula, not just to this family)."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m8s3-1-2:coefficient-unknown-point",
+     "kind": "family",
+     "lo_id": "lo:g10m8s3-1-2",
+     "parent_question_id": "q:g10m8s3-1-2:ex8-3-4b",
+     "source_page": 297,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "cx",
+       "randint": [
+        -6,
+        6
+       ]
+      },
+      {
+       "name": "num",
+       "choice": [
+        1,
+        2,
+        3
+       ]
+      },
+      {
+       "name": "den",
+       "choice": [
+        2,
+        3,
+        4
+       ]
+      },
+      {
+       "require": "gcd(num, den) == 1",
+       "why": "the gradient must already be in lowest terms, matching how the book always prints it"
+      },
+      {
+       "name": "sign",
+       "choice": [
+        1,
+        -1
+       ]
+      },
+      {
+       "name": "t2",
+       "randint": [
+        -3,
+        3
+       ]
+      },
+      {
+       "require": "t2 != 0",
+       "why": "a zero step would put C and D at the same x-coordinate, giving a vertical line with no defined gradient"
+      },
+      {
+       "name": "t",
+       "let": "den * t2"
+      },
+      {
+       "name": "dx",
+       "let": "cx + t"
+      },
+      {
+       "name": "k",
+       "choice": [
+        2,
+        3,
+        4
+       ]
+      },
+      {
+       "name": "p",
+       "randint": [
+        -4,
+        4
+       ]
+      },
+      {
+       "require": "p != 0",
+       "why": "p = 0 would make the unknown-coordinate point's y-value 0, hiding the coefficient step the family is built to test"
+      },
+      {
+       "name": "d",
+       "let": "sign * num * t2"
+      },
+      {
+       "name": "dy",
+       "let": "k*p + d"
+      }
+     ],
+     "constraints": [
+      "dx != cx",
+      "k != 1"
+     ],
+     "stem": "If the gradient of $CD={=frac(sign*num, den)}$, find $p$ given: $C({=cx}, {=k}p)$ and $D({=dx}, {=dy})$.",
+     "answer": "p",
+     "solution": [
+      "Let the coordinates of $C$ be $\\left({x}_{1}, {y}_{1}\\right)$ and the coordinates of $D$ be $\\left({x}_{2}, {y}_{2}\\right)$",
+      "Assign values: $x_{1}={=cx}\\quad y_{1}={=k}p\\quad x_{2}={=dx}\\quad y_{2}={=dy}$",
+      "$\\begin{aligned}m_{CD}&=\\dfrac{y_2-y_1}{x_2-x_1}\\\\{=frac(sign*num, den)}&=\\dfrac{{=dy}-{=k}p}{{=dx}-\\left({=cx}\\right)}\\\\{=frac(sign*num, den)}\\times\\left({=t}\\right)&={=dy}-{=k}p\\\\{=d}&={=dy}-{=k}p\\\\{=k}p&={=dy}-\\left({=d}\\right)\\\\{=k}p&={=k*p}\\end{aligned}$",
+      "The coordinate is written as ${=k}p$, not $p$ itself, so divide both sides by ${=k}$: $p=\\dfrac{{=k*p}}{{=k}}={=p}$"
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Advanced twist matching ex8-3-4b (page 297): one point has a coordinate written as a coefficient times the unknown (here k*p, k in {2,3,4} so it's never just 'p'), and the gradient is a signed fraction in lowest terms — so after the usual cross-multiplication there is one extra division-by-k step before p is isolated, which is exactly the twist ex8-3-4a/b use. p is constrained to be a whole number so the answer stays clean even though the gradient itself is fractional (mirrors ex8-3-4b's p=5, not ex8-3-4a's p=-10/3 case — that messier fractional-answer variant is closer to a different, harder family and I left it out rather than force it here). Reviewer: this family is the natural place a student would apply mc:g10m8s3-1-2:dropped-coefficient-on-unknown (reporting k*p's value as p itself) — since answer_type is numeric there's no distractor slot to pin it to, but it's worth a note in review guidance for this family. Also watch for mc:g10m8s3-1-2:mismatched-point-order and mc:g10m8s3-1-2:inverted-gradient-ratio, both still reachable on the plain gradient setup step."
+    }
+   ],
+   "infeasible": [],
+   "notes": "Filled the two requested gaps only (basic, advanced); left standard alone since no family was asked for there and none exists yet either, so it's future work, not a reported infeasibility. Both book-question files and all six figure images referenced by the book questions I might build on were read; I ended up building on we04 (has a figure, viewed to confirm G(7,-9)/H(x,0)/m=3 layout) and ex8-3-4b (no figure). The four figure-only exercises (ex8-3-5, ex8-3-6, ex8-6-8, ex8-6-9) were left unused as parents for these two families but their images were available if a future standard-tier family wants to stay closer to a diagrammed version of the skill."
+  },
+  {
+   "lo_id": "lo:g10m8s3-2-3",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m8s3-2-3:third-point-via-line-equation",
+     "kind": "family",
+     "lo_id": "lo:g10m8s3-2-3",
+     "parent_question_id": "q:g10m8s3-2-3:ex8-6-47a",
+     "source_page": 327,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "x1",
+       "randint": [
+        -6,
+        6
+       ]
+      },
+      {
+       "name": "dx",
+       "choice": [
+        -4,
+        -3,
+        -2,
+        -1,
+        1,
+        2,
+        3,
+        4
+       ]
+      },
+      {
+       "name": "x2",
+       "let": "x1 + dx"
+      },
+      {
+       "name": "y1",
+       "randint": [
+        -6,
+        6
+       ]
+      },
+      {
+       "name": "m",
+       "choice": [
+        -3,
+        -2,
+        -1,
+        1,
+        2,
+        3
+       ]
+      },
+      {
+       "name": "y2",
+       "let": "y1 + m*dx"
+      },
+      {
+       "name": "dx3",
+       "choice": [
+        -5,
+        -4,
+        -3,
+        -2,
+        -1,
+        1,
+        2,
+        3,
+        4,
+        5
+       ],
+       "resample_while": "dx3 == dx"
+      },
+      {
+       "name": "x3",
+       "let": "x1 + dx3"
+      },
+      {
+       "name": "c",
+       "let": "y1 - m*x1"
+      },
+      {
+       "name": "a",
+       "let": "m*x3 + c"
+      }
+     ],
+     "constraints": [
+      "abs(a) <= 30"
+     ],
+     "stem": "On the Cartesian plane, $A({=x1}, {=y1})$ , $B({=x2}, {=y2})$ and $C({=x3}, a)$ are collinear. Determine the value of $a$ .",
+     "answer": "a",
+     "solution": [
+      "First find the gradient of $AB$ :\n$\\begin{aligned}m&=\\frac{y_{2}-y_{1}}{x_{2}-x_{1}}\\\\&=\\frac{{=y2}-{=paren(y1)}}{{=x2}-{=paren(x1)}}\\\\&={=m}\\end{aligned}$",
+      "Therefore we have $y={=m}x+c$ . Now substitute in $A$ :\n$\\begin{aligned}{=y1}&={=m}({=x1})+c\\\\c&={=c}\\end{aligned}$",
+      "Now we can substitute in $C$ to solve for $a$ :\n$\\begin{aligned}a&={=m}({=x3}){=signed(c)}\\\\\\therefore a&={=a}\\end{aligned}$"
+     ],
+     "notes": "Fills the advanced-tier gap. Generalises the harder, multi-step method the book itself uses in ex8-6-47a (page 327): find the gradient from two known points, form the full line equation y = mx + c, solve for c by substituting the first point, then evaluate at the third point's x-coordinate to get its missing coordinate. This is a genuine step up from the standard-tier questions on this LO, which all resolve in one line via m_AB = m_BC; here the student must additionally derive and hold onto the y-intercept c before they can answer. Only the collinearity-relevant part of ex8-6-47a is used (finding a given A, B, C collinear) — the original book question's later sub-parts about a fourth point D and other properties belong to a different LO and are not reused here. dx (=x2-x1) and dx3 (=x3-x1) are both drawn nonzero and forced unequal to each other, so x1, x2 and x3 are always three distinct x-values: no repeated points and no division by zero when computing the gradient of AB. m is chosen directly as a nonzero integer and y2 is derived from it, so the fraction in the first solution step always simplifies exactly to the integer shown, matching the clean numbers the book prints. The signed() call in the final step renders c with its own sign (e.g. \"3(3)-22\" when c is negative, \"3(3)+15\" when c is positive), matching the book's own concatenated style rather than an explicit +(-22)."
+    }
+   ],
+   "infeasible": [],
+   "notes": "This pass targeted only the listed gap (advanced tier); basic and standard were not requested here (families that already exist: none, but only \"advanced\" was named as the gap to fill), so no families were authored for those tiers and none are marked infeasible for them. The one advanced family generalises q:g10m8s3-2-3:ex8-6-47a (source_page 327), the only book question among the eight given whose worked solution uses the fuller line-equation method (find gradient, form y=mx+c, solve for c, evaluate at the third x-value) rather than the direct one-line gradient-equality test (m_AB = m_BC) used by every other book question in this set — that extra derivational step is the \"twist the book itself uses\" that justifies the advanced tier. The catalogued misconception about unsimplified surds (mc:g10m8s3-2-3:unsimplified-surds-look-unequal) presumes a distance-formula-based worked example, but none of the eight given book questions for this objective solve via the distance formula (all eight use the gradient method) — per the rule to stay inside the book's own method for the chosen parent, no family was built on that misconception; it remains available for a future pass if a distance-formula book question for this objective is supplied. The same-sign-gradient misconception (mc:g10m8s3-2-3:same-sign-gradients-mistaken-for-equal) is a natural fit for an mcq-style standard-tier family (mirroring ex8-4-2a/b/c) but was left for whichever pass covers the standard tier, since that tier was not listed as a gap here."
+  },
+  {
+   "lo_id": "lo:g10m8s4-1-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m8s4-1-1:unknown-coordinate-from-midpoint",
+     "kind": "family",
+     "lo_id": "lo:g10m8s4-1-1",
+     "parent_question_id": "q:g10m8s4-1-1:ex8-6-17",
+     "source_page": 320,
+     "tier": "advanced",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "xQ",
+       "randint": [
+        -10,
+        10
+       ]
+      },
+      {
+       "name": "yP",
+       "randint": [
+        -10,
+        10
+       ]
+      },
+      {
+       "name": "yQ",
+       "randint": [
+        -10,
+        10
+       ],
+       "resample_while": "(yP + yQ) % 2 != 0"
+      },
+      {
+       "name": "t_true",
+       "randint": [
+        -10,
+        10
+       ],
+       "resample_while": "(t_true + xQ) % 2 != 0 or t_true == xQ"
+      },
+      {
+       "name": "xM",
+       "let": "(t_true + xQ) / 2"
+      },
+      {
+       "name": "b",
+       "let": "(yP + yQ) / 2"
+      }
+     ],
+     "constraints": [],
+     "stem": "$P(t, {=yP})$ and $Q({=xQ}, {=yQ})$ are points in the Cartesian plane. $M({=xM}, b)$ is the mid-point of $PQ$. Find the value of $t$ and the value of $b$.",
+     "solution": [
+      "Let the coordinates of $P$ be $(t, {=yP})$ and the coordinates of $Q$ be $({=xQ}, {=yQ})$, and let $M({=xM}, b)$ be the given mid-point of $PQ$.",
+      "The mid-point formula is $M(x, y)=\\left(\\frac{x_{1}+x_{2}}{2}, \\frac{y_{1}+y_{2}}{2}\\right)$.",
+      "For the $x$-coordinate: $\\frac{t+({=xQ})}{2}={=xM}$, so $t=2({=xM})-({=xQ})={=t_true}$.",
+      "For the $y$-coordinate: $b=\\frac{{=yP}+({=yQ})}{2}={=b}$.",
+      "Therefore $t={=t_true}$ and $b={=b}$."
+     ],
+     "marker": {
+      "kind": "values",
+      "answer": "t = {=t_true} and b = {=b}",
+      "form": null,
+      "variables": [
+       "t",
+       "b"
+      ],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Advanced-tier twist: runs the mid-point formula backwards. Combines two twists the book already uses on this LO — an unknown endpoint coordinate (as in ex8-5-3c) and solving for an unknown from a given mid-point (as in ex8-6-17) — into one two-step problem: solve a linear equation for t from the x-coordinate, then apply the formula directly for b. Parameters are constrained (via resample_while) so t, xM and b always land on whole numbers, keeping the extra algebra step the only new difficulty versus standard tier. Reviewer: check the sign handling in step 3 (2*xM - xQ) renders correctly when xQ is negative, e.g. '-(-3)'."
+    }
+   ],
+   "infeasible": [],
+   "notes": "Read both required files (book-questions and misconceptions for lo:g10m8s4-1-1) plus, per the figure rule, would have opened figure images for any book question used as a direct model — but the chosen parent (ex8-6-17, p.320) has no figure, so none were opened. The other candidate advanced twist (quadrilateral-diagonals-bisect, built on ex8-6-19c) was considered but dropped: it naturally has only two outcomes (bisect / do not bisect), which can't honestly support the required minimum of three distinct, diagnosable mcq distractors, so it was rejected as infeasible-by-format rather than padded. The 'checks-only-one-coordinate' and 'drops-sign-adding-negatives' misconceptions from the catalogue were reviewed but not used, since the accepted family is answer_type 'expression' (not mcq) and needed no distractors; they remain available for a future basic/standard mcq family on this LO if the orchestration calls for one."
+  },
+  {
+   "lo_id": "lo:g10m8s4-1-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m8s4-1-2:endpoint-from-midpoint",
+     "kind": "family",
+     "lo_id": "lo:g10m8s4-1-2",
+     "parent_question_id": "q:g10m8s4-1-2:ex8-6-43a",
+     "source_page": 325,
+     "tier": "basic",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "x1",
+       "randint": [
+        -6,
+        6
+       ]
+      },
+      {
+       "name": "y1",
+       "randint": [
+        -6,
+        6
+       ]
+      },
+      {
+       "name": "mx",
+       "randint": [
+        -6,
+        6
+       ]
+      },
+      {
+       "name": "my",
+       "randint": [
+        -6,
+        6
+       ]
+      },
+      {
+       "name": "x2",
+       "let": "2*mx - x1"
+      },
+      {
+       "name": "y2",
+       "let": "2*my - y1"
+      }
+     ],
+     "constraints": [
+      "[x1, y1] != [mx, my]"
+     ],
+     "stem": "$M({=mx}, {=my})$ is the mid-point of $AB$ with point $A({=x1}, {=y1})$ . Determine the coordinates of $B$ .",
+     "solution": [
+      "Write down the mid-point formula: $M(x, y)=(\\frac{x_{1}+x_{2}}{2}, \\frac{y_{1}+y_{2}}{2})$",
+      "Substitute $A({=x1}, {=y1})$ for $(x_{1}, y_{1})$ and $M({=mx}, {=my})$ for $M(x, y)$: $\\begin{aligned}{=mx}&=\\frac{{=x1}+x_{2}}{2}&{=my}&=\\frac{{=y1}+y_{2}}{2}\\end{aligned}$",
+      "Multiply both sides by 2: $\\begin{aligned}{=2*mx}&={=x1}+x_{2}&{=2*my}&={=y1}+y_{2}\\end{aligned}$",
+      "Solve for $x_{2}$ and $y_{2}$: $\\begin{aligned}x_{2}&={=2*mx}-{=x1}&y_{2}&={=2*my}-{=y1}\\\\x_{2}&={=x2}&y_{2}&={=y2}\\end{aligned}$",
+      "The coordinates of point $B$ are $({=x2}, {=y2})$ ."
+     ],
+     "marker": {
+      "kind": "coordinates",
+      "answer": "({=x2}, {=y2})",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "notes": "Basic-tier entry point: a single unknown-endpoint application with no fractions and small integer coordinates, so every instance is clean by construction (2*m - k is always an integer). Constraint blocks the degenerate case where the known endpoint equals the mid-point (B would equal A). Parent method mirrors ex8-6-43a (p.325); solution explicitly shows the 'multiply both sides by 2' step to model the correct method against the catalogued mc:g10m8s4-1-2:skips-multiply-by-two-step error, even though this family has no distractors (answer_type is expression/coordinates, not mcq)."
+    }
+   ],
+   "infeasible": [],
+   "notes": "Only the \"basic\" tier gap was requested for this objective, so a single family was authored for it (tier=basic, id tpl:g10m8s4-1-2:endpoint-from-midpoint), built on parent_question_id q:g10m8s4-1-2:ex8-6-43a (page 325). Standard and advanced tiers were left untouched since no gap was listed for them; the existing book questions (ex8-5-4, ex8-6-29c, ex8-6-31a, ex8-6-47b, we12) cover more elaborate variants (figure-based points, two-step composite midpoints, contextualised labelling) that a future pass could template separately if those tiers are later requested. No figures were needed for the chosen parent (ex8-6-43a has none); the figures for ex8-6-29c, ex8-6-31a and we12 were read but not used since those questions were not selected as the basic-tier parent."
+  },
+  {
+   "lo_id": "lo:g10m8s4-1-3",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m8s4-1-3:missing-vertex-bisect",
+     "kind": "family",
+     "lo_id": "lo:g10m8s4-1-3",
+     "parent_question_id": "q:g10m8s4-1-3:ex8-6-23",
+     "source_page": 322,
+     "tier": "basic",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "e_x",
+       "randint": [
+        -6,
+        6
+       ]
+      },
+      {
+       "name": "e_y",
+       "randint": [
+        -6,
+        6
+       ]
+      },
+      {
+       "name": "f_x",
+       "randint": [
+        -6,
+        6
+       ]
+      },
+      {
+       "name": "f_y",
+       "randint": [
+        -6,
+        6
+       ]
+      },
+      {
+       "name": "g_x",
+       "randint": [
+        -6,
+        6
+       ]
+      },
+      {
+       "name": "g_y",
+       "randint": [
+        -6,
+        6
+       ]
+      },
+      {
+       "name": "sum_x",
+       "let": "e_x + g_x"
+      },
+      {
+       "name": "sum_y",
+       "let": "e_y + g_y"
+      },
+      {
+       "name": "mid_x",
+       "let": "sum_x / 2"
+      },
+      {
+       "name": "mid_y",
+       "let": "sum_y / 2"
+      },
+      {
+       "name": "h_x",
+       "let": "sum_x - f_x"
+      },
+      {
+       "name": "h_y",
+       "let": "sum_y - f_y"
+      }
+     ],
+     "constraints": [
+      "(f_x - e_x) * (g_y - e_y) - (f_y - e_y) * (g_x - e_x) != 0"
+     ],
+     "stem": "$EFGH$ is a parallelogram with vertices $E({=e_x}, {=e_y})$, $F({=f_x}, {=f_y})$ and $G({=g_x}, {=g_y})$. Find the coordinates of $H$ by using the fact that the diagonals of a parallelogram bisect each other.",
+     "solution": [
+      "Since the diagonals of a parallelogram bisect each other, the mid-point of $EG$ is equal to the mid-point of $FH$. First find the mid-point of $EG$, then use it together with $F$ to find the coordinates of $H$.",
+      "$\\begin{aligned}M_{EG}&=\\left(\\frac{x_{1}+x_{2}}{2}, \\frac{y_{1}+y_{2}}{2}\\right)\\\\&=\\left(\\frac{{=e_x}{=signed(g_x)}}{2}, \\frac{{=e_y}{=signed(g_y)}}{2}\\right)\\\\&=({=mid_x}, {=mid_y})\\\\M_{FH}&=\\left(\\frac{x_{1}+x_{2}}{2}, \\frac{y_{1}+y_{2}}{2}\\right)\\\\&=\\left(\\frac{{=f_x}+x}{2}, \\frac{{=f_y}+y}{2}\\right)\\\\({=mid_x}, {=mid_y})&=\\left(\\frac{{=f_x}+x}{2}, \\frac{{=f_y}+y}{2}\\right)\\end{aligned}$",
+      "Solve for $x$:",
+      "$\\begin{aligned}{=mid_x}&=\\frac{{=f_x}+x}{2}\\\\{=sum_x}&={=f_x}+x\\\\x&={=h_x}\\end{aligned}$",
+      "Solve for $y$:",
+      "$\\begin{aligned}{=mid_y}&=\\frac{{=f_y}+y}{2}\\\\{=sum_y}&={=f_y}+y\\\\y&={=h_y}\\end{aligned}$",
+      "Therefore $H({=h_x}, {=h_y})$."
+     ],
+     "marker": {
+      "kind": "coordinates",
+      "answer": "({=h_x}, {=h_y})",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "notes": "Basic-tier entry point of the skill: the parallelogram is fully named (EFGH) with three vertices given in text, no diagram, mirroring q:g10m8s4-1-3:ex8-6-23's own template exactly (verified against its literal numbers: e_x=-1,e_y=2,f_x=-2,f_y=-1,g_x=2,g_y=0 reproduces H(3,3)). Diagonals are the 'skip-one' pairs EG and FH, the same fact the book's other five questions on this objective use (ex8-6-31e, ex8-6-36a uses a different, non-bisecting method and was therefore not used as a parent; we13, ex8-6-38e, ex8-6-46e all use this same bisecting method). Only the non-collinearity constraint is enforced, so the EG midpoint is sometimes a whole number and sometimes a genuine fraction (as in the book's own worked example, 1/2) — both are honest basic-tier outcomes since H itself is always a whole-number pair by construction (h_x = e_x+g_x-f_x has no division). signed(g_x)/signed(g_y) avoid a double sign such as '-1+-3' when the second addend is negative; f_x+x and f_y+y never need signed() since the second term is the literal unknown letter, not a signed number. Numeric range kept to [-6,6] to stay in the book's own magnitude (its examples range roughly -3 to 11) and avoid oversized coordinates for a first exposure to the skill. Answer type is 'expression'/coordinates rather than mcq: there is no natural finite set of plausible alternatives to choose from here (any error just produces a different, equally 'plausible-looking' wrong pair), so typing the pair is the honest format, consistent with the rule against using mcq to dodge typing. No new misconceptions were needed — the three already catalogued (diagonal-vs-side-confusion, midpoint-formula-subtraction, shared-midpoint-as-vertex) all describe numeric-answer errors a reviewer can recognise directly in a wrong (h_x, h_y) submission without needing a distractor list."
+    }
+   ],
+   "infeasible": [],
+   "notes": "Only the basic-tier gap was requested for this objective (families listed as none existing). I built one family, tpl:g10m8s4-1-3:missing-vertex-bisect, parented on q:g10m8s4-1-3:ex8-6-23 (page 322), the only book question on this objective that is fully self-contained in text (no [figure] dependency) and uses the objective's own stated method (diagonals bisect each other via the mid-point formula) rather than the slope/parallel-sides method that ex8-6-36a uses. I read all five figure images referenced by the other book questions on this objective (tikzpicture__cefb759f9539707727dce853ebb45447.png, __118b1cac59d083366970242771d6e4d4.png, __f2dd529924b594a4e73779683c066c84.png, __eda2a41b247014831065da41e7b426ff.png) before deciding not to build on any figure-bearing question for this basic family; standard/advanced tiers were not attempted since they were not named as a gap to fill in this task."
+  }
+ ],
+ "revised": [],
+ "run_id": "wf_41c0663f-36d"
+}

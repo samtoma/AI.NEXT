@@ -1,0 +1,80 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m9s2-1-2:round-cent",
+ "kind": "family",
+ "lo_id": "lo:g10m9s2-1-2",
+ "parent_question_id": "q:g10m9s2-1-2:ex9-1-6",
+ "source_page": 334,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": "A bank savings account pays simple interest at a whole-number percentage per annum. The amount wanted after a given number of years is given in rand, and the amount to invest now is asked for, correct to the cent.",
+ "params": [
+  {
+   "name": "r",
+   "choice": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ]
+  },
+  {
+   "name": "n",
+   "choice": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ]
+  },
+  {
+   "name": "k",
+   "randint": [
+    4,
+    60
+   ]
+  },
+  {
+   "name": "A",
+   "let": "500 * k"
+  },
+  {
+   "name": "d",
+   "let": "100 + r * n"
+  },
+  {
+   "name": "P",
+   "let": "A * 100 / d"
+  },
+  {
+   "name": "ds",
+   "let": "fixed(d / 100, 2) if d % 10 != 0 else fixed(d / 100, 1)"
+  },
+  {
+   "require": "(100 * A) % d != 0",
+   "why": "the principal is not already a whole number of rand, so the rounding step is real"
+  },
+  {
+   "require": "(20000 * A) % d != 0 or ((20000 * A) // d) % 2 == 0",
+   "why": "the principal never lies exactly half a cent from a cent, so the rounding is unambiguous"
+  }
+ ],
+ "constraints": [],
+ "stem": "A bank offers a savings account which pays simple interest at a rate of ${=r}$ % per annum. If you want to accumulate $\\text{R{=A}}$ in ${=n}$ years, how much should you invest now? Give your answer in rand, correct to two decimal places.",
+ "answer": "fixed(P, 2)",
+ "solution": [
+  "Read the question carefully and write down the given information: $\\begin{aligned}A&=\\text{R{=A}}\\\\P&=?\\\\i&=\\frac{{=r}}{100}=0.0{=r}\\\\n&={=n}\\end{aligned}$",
+  "Write down the simple interest formula: $A=P(1+in)$",
+  "Substitute the given values and work out the bracket: $\\begin{aligned}\\text{R{=A}}&=P\\left(1+0.0{=r}\\times{=n}\\right)\\\\\\text{R{=A}}&=P\\times{=ds}\\end{aligned}$",
+  "Divide both sides by ${=ds}$ to find $P$: $P=\\frac{\\text{R{=A}}}{{=ds}}$",
+  "Calculate and round to two decimal places: $P=\\text{R{=fixed(P, 2)}}$",
+  "You should invest $\\text{R{=fixed(P, 2)}}$ now."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "The book's typical exercise, a direct parametrisation of ex9-1-6 (R15000, 6 %, 5 years gives R11538.46 when r = 6, n = 5, k = 30). Not one of the listed gaps; added because the bank holds only two standard items for this objective. The requires keep P a non-integer and away from an exact half-cent tie (a tie occurs only when 20000A/d is an odd integer), so every instance rounds the same way for any solver. Rate is a single-digit whole percent. Numeric family, so no distractors and no misconception ids."
+}

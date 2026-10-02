@@ -1,0 +1,68 @@
+{
+  "_about": "S5 final-stage fixture. The test appends extra_distractors to s5-args.json's distractors (so their global indexes are 2..8) and passes the draft run's return value as args.draft.",
+  "extra_distractors": [
+    {"lo": "lo:zz1s1-1-1", "origin": "S6", "ref": "fam:zz1s1-1-1:product", "text": "a^(m*n)", "misconception_id": "mc:zz1s1-1-1:exponents-multiplied"},
+    {"lo": "lo:zz1s1-1-1", "origin": "S6", "ref": "fam:zz1s1-1-1:product", "text": "(a*a)^(m+n)", "misconception_id": "mc:zz1s1-1-1:bases-times",
+     "proposed": {"label": "Bases multiplied", "description": "Multiplies the two bases."}},
+    {"lo": "lo:zz1s1-1-1", "origin": "S6", "ref": "fam:zz1s1-1-1:product", "text": "a^(n-m)", "misconception_id": "mc:zz1s1-1-1:exponents-subtracted",
+     "proposed": {"label": "Exponents subtracted", "description": "Subtracts the exponents when multiplying."}},
+    {"lo": "lo:zz1s1-1-1", "origin": "S6", "ref": "fam:zz1s1-1-1:product", "text": "a^(m+n+2)", "misconception_id": "mc:zz1s1-1-1:random",
+     "proposed": {"label": "Off by two", "description": "No recognisable error."}},
+    {"lo": "lo:zz1s1-1-2", "origin": "S7", "ref": "tpl:zz1s1-1-2:power-builder", "text": "exponents-added", "misconception_id": "mc:zz1s1-1-2:exponents-added"},
+    {"lo": "lo:zz1s1-1-2", "origin": "S7", "ref": "tpl:zz1s1-1-2:power-builder", "text": "base-changed", "misconception_id": "mc:zz1s1-1-2:exponents-added"},
+    {"lo": "lo:zz1s1-1-1", "origin": "S6", "ref": "fam:zz1s1-1-1:product2", "text": "a^(mn)", "misconception_id": "mc:zz1s1-1-1:times-the-exponents",
+     "proposed": {"label": "Exponents multiplied", "description": "Multiplies the exponents."}}
+  ],
+  "responses": {
+    "author:lo:zz1s1-1-1": {
+      "lo": "lo:zz1s1-1-1",
+      "entries": [
+        {"slug": "exponents-subtracted", "label": "Exponents subtracted instead of added",
+         "description": "Subtracts one exponent from the other when multiplying powers of the same base.",
+         "signal": "The exponent in the answer is the difference of the two exponents.",
+         "sources": [{"type": "distractor", "ref": "fam:zz1s1-1-1:product"}],
+         "refutation": [
+           {"step": 1, "text_md": "Combining the exponents is the right instinct; subtracting belongs to division."},
+           {"step": 2, "text_md": "$3^2 \\times 3^4$ counts six threes multiplied together, so the exponent is $2 + 4 = 6$."},
+           {"step": 3, "text_md": "Multiplying powers of the same base: add the exponents."}]},
+        {"slug": "different-bases-added", "label": "Product rule used on different bases",
+         "description": "Adds exponents even when the bases differ, as in $2^3 \\times 3^4$.",
+         "sources": [{"type": "caution", "ref": "b:zz1s1:caution-1"}],
+         "refutation": [
+           {"step": 1, "text_md": "Reaching for the rule you know is sensible."},
+           {"step": 2, "text_md": "The rule $a^m \\times a^n = a^{m+n}$ needs the SAME base $a$ on both powers."},
+           {"step": 3, "text_md": "Check the bases first; only when they match do you add the exponents."}]},
+        {"slug": "one-too-many", "label": "An entry over the cap",
+         "description": "Should be trimmed by the capacity rule.",
+         "sources": [{"type": "caution", "ref": "b:zz1s1:caution-1"}],
+         "refutation": [{"step": 1, "text_md": "x"}, {"step": 2, "text_md": "y"}]}
+      ],
+      "assignments": [
+        {"distractor": 0, "entry": "mc:zz1s1-1-1:bases-multiplied", "reason": "same error as the existing entry"},
+        {"distractor": 1, "entry": "exponents-subtracted", "reason": "n - m"},
+        {"distractor": 2, "entry": "", "reason": "no recognisable error"},
+        {"distractor": 3, "entry": "mc:zz1s1-1-1:exponents-multiplied", "reason": "same error, another id"}
+      ],
+      "flags": []
+    },
+    "verify:lo:zz1s1-1-1": {
+      "lo": "lo:zz1s1-1-1",
+      "verdicts": [
+        {"id": "mc:zz1s1-1-1:exponents-multiplied", "verdict": "CONFIRMED", "reason": "matches the caution and the canonical method", "signal_ok": true,
+         "distractors": [{"index": 0, "fits": true, "reason": "2 x 4 = 8"}, {"index": 2, "fits": true, "reason": "m*n"}, {"index": 8, "fits": true, "reason": "mn"}]},
+        {"id": "mc:zz1s1-1-1:bases-multiplied", "verdict": "UNSUPPORTED", "reason": "the refutation never shows why the base stays; it restates", "signal_ok": true,
+         "distractors": [{"index": 1, "fits": true, "reason": "9 = 3 x 3"}, {"index": 3, "fits": true, "reason": "a*a"}]},
+        {"id": "mc:zz1s1-1-1:exponents-subtracted", "verdict": "CONFIRMED", "reason": "correct", "signal_ok": false,
+         "distractors": [{"index": 4, "fits": false, "reason": "n - m is negative or small; not what this family's option shows"}]},
+        {"id": "mc:zz1s1-1-1:different-bases-added", "verdict": "CONFIRMED", "reason": "within the book's rule", "signal_ok": true, "distractors": []}
+      ]
+    },
+    "verify:lo:zz1s1-1-2": {
+      "lo": "lo:zz1s1-1-2",
+      "verdicts": [
+        {"id": "mc:zz1s1-1-2:exponents-added", "verdict": "CONFIRMED", "reason": "matches the re-solve's wrong turn", "signal_ok": true,
+         "distractors": [{"index": 6, "fits": true, "reason": "x^5"}, {"index": 7, "fits": false, "reason": "changing the base is a different error"}]}
+      ]
+    }
+  }
+}

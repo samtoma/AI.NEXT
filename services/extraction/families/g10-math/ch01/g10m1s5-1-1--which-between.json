@@ -1,0 +1,83 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m1s5-1-1:which-between",
+ "kind": "family",
+ "lo_id": "lo:g10m1s5-1-1",
+ "parent_question_id": "q:g10m1s5-1-1:ex1-11-20d",
+ "source_page": 38,
+ "tier": "advanced",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "n",
+   "choice": [
+    3,
+    5,
+    6,
+    7,
+    8
+   ]
+  },
+  {
+   "name": "r",
+   "randint": [
+    1,
+    "2 * n"
+   ]
+  },
+  {
+   "name": "N",
+   "let": "n ** 2 + r"
+  },
+  {
+   "require": "N != 27",
+   "why": "the cube root of 27 is the integer 3, so the option would not be a surd"
+  }
+ ],
+ "stem": "Without using a calculator, decide which one of the following numbers lies between ${=n}$ and ${=n + 1}$.",
+ "solution": [
+  "A square root is located with perfect squares and a cube root with perfect cubes. Here ${=n}^{2} = {=n ** 2}$ and ${=n + 1}^{2} = {=(n + 1) ** 2}$, so a square root lies between ${=n}$ and ${=n + 1}$ exactly when its radicand is between ${=n ** 2}$ and ${=(n + 1) ** 2}$.",
+  "For $\\sqrt{{=N}}$: ${=n ** 2} < {=N} < {=(n + 1) ** 2}$, so ${=n} < \\sqrt{{=N}} < {=n + 1}$. This option works.",
+  "For $\\sqrt[3]{{=N}}$ use cubes: ${=n}^{3} = {=n ** 3}$ and ${=N} < {=n ** 3}$, so $\\sqrt[3]{{=N}} < {=n}$. It is too small.",
+  "For $\\sqrt{{=2 * n + 1}}$: ${=2 * n + 1} < {=n ** 2}$, so $\\sqrt{{=2 * n + 1}} < {=n}$. It is too small.",
+  "For $\\sqrt{{=n ** 3 + n}}$: ${=n ** 3 + n} > {=(n + 1) ** 2}$, so $\\sqrt{{=n ** 3 + n}} > {=n + 1}$. It is too big.",
+  "So the number that lies between ${=n}$ and ${=n + 1}$ is $\\sqrt{{=N}}$."
+ ],
+ "choices": {
+  "correct": "$\\sqrt{{=N}}$",
+  "distractors": [
+   {
+    "text": "$\\sqrt[3]{{=N}}$",
+    "misconception_id": "mc:g10m1s5-1-1:squares-for-cubes"
+   },
+   {
+    "text": "$\\sqrt{{=2 * n + 1}}$",
+    "misconception_id": "mc:g10m1s5-1-1:root-as-half"
+   },
+   {
+    "text": "$\\sqrt{{=n ** 3 + n}}$",
+    "misconception_id": "mc:g10m1s5-1-1:cubes-for-squares"
+   }
+  ]
+ },
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m1s5-1-1:squares-for-cubes",
+   "label": "Uses perfect squares to locate a cube root",
+   "description": "The learner sees that the radicand lies between two perfect squares and concludes that its cube root lies between the roots of those squares, instead of using perfect cubes. For example, 30 is between 25 and 36, so the cube root of 30 is wrongly placed between 5 and 6."
+  },
+  {
+   "id": "mc:g10m1s5-1-1:cubes-for-squares",
+   "label": "Uses perfect cubes to locate a square root",
+   "description": "The learner sees that the radicand lies between two perfect cubes and concludes that its square root lies between the roots of those cubes, instead of using perfect squares. For example, 30 is between 27 and 64, so the square root of 30 is wrongly placed between 3 and 4."
+  },
+  {
+   "id": "mc:g10m1s5-1-1:root-as-half",
+   "label": "Treats a square root as half of the radicand",
+   "description": "The learner believes the square root of a number is about half of it (squaring is doubling), so a surd between n and n + 1 is taken to have a radicand near 2n. For example, the square root of 11 is wrongly placed between 5 and 6 because 11 divided by 2 is 5.5."
+  }
+ ],
+ "notes": "Reverse of the book's question: instead of bounding one given surd, the learner tests four surds against a given pair of consecutive integers, so every option has to be located with the right kind of perfect power. Exactly one option is correct for every instance (checked for all n in {3,5,6,7,8}, all r): the correct option is sqrt(N) with n^2 < N < (n+1)^2; sqrt(2n+1) and cbrt(N) are both below n; sqrt(n^3+n) is above n+1. n skips 4 because 2*4+1 = 9 would make the halving option the integer 3, and N = 27 is excluded because cbrt(27) = 3. Each distractor is the answer a specific named error produces (squares used for a cube root, cubes used for a square root, root taken as half). The three misconception ids are new: the catalogue for this objective was empty.\n\nPIPELINE NORMALISATION (not an author edit): distinct-by-choices: the stem holds only n (five values), so the duplicate-stem filter kept five instances although the options (the surd N = n^2 + r and its three distractors) differ for every r; the duplicate filter now reads stem plus options. Nothing else changed.",
+ "distinct_by_choices": true
+}

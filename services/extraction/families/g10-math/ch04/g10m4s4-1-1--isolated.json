@@ -1,0 +1,72 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m4s4-1-1:isolated",
+ "kind": "family",
+ "lo_id": "lo:g10m4s4-1-1",
+ "parent_question_id": "q:g10m4s4-1-1:ex4-3-4d",
+ "source_page": 89,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "choice": [
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    1,
+    9
+   ]
+  },
+  {
+   "name": "xv",
+   "randint": [
+    1,
+    6
+   ]
+  },
+  {
+   "name": "yv",
+   "let": "a * xv + b"
+  },
+  {
+   "name": "total",
+   "let": "xv + yv"
+  },
+  {
+   "require": "yv <= 30",
+   "why": "keeps every number small enough to work with by hand"
+  }
+ ],
+ "constraints": [
+  "total == xv + yv",
+  "total - b == (a + 1) * xv"
+ ],
+ "stem": "Solve for $x$ and $y$: $y = {=a}x + {=b}$ and $x + y = {=total}$.",
+ "solution": [
+  "The first equation already gives $y$ in terms of $x$: $y = {=a}x + {=b}$.",
+  "Substitute this expression for $y$ into the second equation: $x + ({=a}x + {=b}) = {=total}$.",
+  "Collect the like terms: ${=a + 1}x + {=b} = {=total}$.",
+  "Subtract ${=b}$ from both sides: ${=a + 1}x = {=total - b}$.",
+  "Divide both sides by ${=a + 1}$: $x = {=xv}$.",
+  "Substitute $x = {=xv}$ back into the first equation to find $y$: $y = {=a}({=xv}) + {=b} = {=yv}$.",
+  "Therefore $x = {=xv}$ and $y = {=yv}$."
+ ],
+ "marker": {
+  "kind": "values",
+  "answer": "[{=xv}, {=yv}]",
+  "form": null,
+  "variables": [
+   "x",
+   "y"
+  ],
+  "tolerance": null
+ },
+ "notes": "Basic entry point of the skill. One equation already has y as its subject (y = ax + b, a in 2..4 so there is never a '1x'), the other is the simplest possible x + y = total, so the learner meets exactly the book's steps (ex4-3-4d, and ex4-7-6b/ex4-3-4c for the shape of the second equation): write y in terms of x, substitute, solve for x, substitute back for y. All coefficients and constants shown in the stem and the solution are positive and both solutions are positive whole numbers (x in 1..6, y = a*x + b <= 30), so every template sign is literal and no instance involves negative arithmetic, fractions or rearranging. Variation: 3 values of a x 9 of b x 6 of x gives well over 100 distinct stems. Answer is the ordered pair x then y, in the book's 'values' marker form. No mcq, so no misconception ids are used: none are catalogued for this objective. Standard and advanced tiers were not listed as gaps (the book's own exercises are standard), so no families were written for them."
+}

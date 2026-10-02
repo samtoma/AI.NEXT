@@ -1,0 +1,441 @@
+{
+ "format": "ainext.working-check/1",
+ "book": "g10-math",
+ "chapter": 14,
+ "prompts_version": "sw-v3",
+ "rule": "Each flag is a backlog item for a human (answer 30; answer 37c). Nothing here was corrected: the content stays as the book and G2 have it until a human decides.",
+ "passes": [
+  "A",
+  "B"
+ ],
+ "single_pass_ids": [],
+ "solutions": 115,
+ "skipped": [
+  {
+   "id": "expl:g10m14s3-1-1:we04",
+   "why": "no working to check (the solution is a drawing)"
+  },
+  {
+   "id": "expl:g10m14s3-1-1:ex14-3-3d",
+   "why": "no working to check (the solution is a drawing)"
+  },
+  {
+   "id": "expl:g10m14s3-1-1:ex14-3-4",
+   "why": "no working to check (the solution is a drawing)"
+  },
+  {
+   "id": "expl:g10m14s3-1-1:ex14-8-27d",
+   "why": "no working to check (the solution is a drawing)"
+  }
+ ],
+ "verdicts": {
+  "consistent": 100,
+  "flagged": 14,
+  "unclear": 1
+ },
+ "flags": [
+  {
+   "solution_id": "expl:g10m14s3-1-1:we05",
+   "lo": "lo:g10m14s3-1-1",
+   "step": 3,
+   "kind": "other",
+   "where": "working",
+   "quote": "[figure]",
+   "expected": "Q in R only; P holds 2, 4, 6, 8, 10",
+   "why": "The Venn diagram puts Q in the overlap of P and R, but Q is not an even diamond, so it is not in P.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m14s5-1-2:we06",
+   "lo": "lo:g10m14s5-1-2",
+   "step": 2,
+   "kind": "label",
+   "where": "working",
+   "quote": "\\text{RHS}&=\\frac{14}{36}",
+   "expected": "LHS = 14/36 (P(A∪B) is the left side)",
+   "why": "The identity has P(A∪B) on the left, so 14/36 is the LHS and the sum is the RHS; the labels are swapped.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m14s1-1-2:ex14-8-12b",
+   "lo": "lo:g10m14s1-1-2",
+   "step": 2,
+   "kind": "label",
+   "where": "working",
+   "quote": "P(\\text{male})&=\\frac{7}{30}",
+   "expected": "P(4 year old male)",
+   "why": "The quantity is a 4 year old male, but the working labels it P(male), which would be 15/30, not 7/30.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m14s2-1-1:ex14-2-1",
+   "lo": "lo:g10m14s2-1-1",
+   "step": 4,
+   "kind": "label",
+   "where": "working",
+   "quote": "f&=\\text{totalnumberoftrials}=\\text{44}",
+   "expected": "t = total number of trials",
+   "why": "f is defined in step 2 as the relative frequency, yet step 4 reuses f for the total number of trials, which is t.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m14s2-1-1:ex14-2-2",
+   "lo": "lo:g10m14s2-1-1",
+   "step": 4,
+   "kind": "label",
+   "where": "working",
+   "quote": "f&=\\text{total number of trials}=\\text{30}",
+   "expected": "t = total number of trials",
+   "why": "f is defined in step 2 as the relative frequency, yet step 4 reuses f for the total number of trials, which is t.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m14s2-1-1:ex14-2-3",
+   "lo": "lo:g10m14s2-1-1",
+   "step": 4,
+   "kind": "label",
+   "where": "working",
+   "quote": "f&=\\text{total number of trials}=\\text{27}",
+   "expected": "t = total number of trials",
+   "why": "f is defined in step 2 as the relative frequency, yet step 4 reuses f for the total number of trials, which is t.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m14s2-1-1:ex14-8-7",
+   "lo": "lo:g10m14s2-1-1",
+   "step": 4,
+   "kind": "label",
+   "where": "working",
+   "quote": "f&=\\text{total number of trials}=\\text{21}",
+   "expected": "t = total number of trials",
+   "why": "f is defined in step 2 as the relative frequency, yet step 4 reuses f for the total number of trials, which is t.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m14s2-1-1:ex14-8-8",
+   "lo": "lo:g10m14s2-1-1",
+   "step": 4,
+   "kind": "label",
+   "where": "working",
+   "quote": "f&=\\text{total number of trials}=\\text{44}",
+   "expected": "t = total number of trials",
+   "why": "f is defined in step 2 as the relative frequency, yet step 4 reuses f for the total number of trials, which is t.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m14s3-1-3:ex14-3-5c",
+   "lo": "lo:g10m14s3-1-3",
+   "step": 2,
+   "kind": "other",
+   "where": "question",
+   "quote": "41&=(6-x)+x+y+z",
+   "expected": "total of 79 learners",
+   "why": "The question gives 71 learners in total, but the regions used here sum to 79, so the stated total conflicts with the working and key.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m14s3-1-3:ex14-8-29a",
+   "lo": "lo:g10m14s3-1-3",
+   "step": 1,
+   "kind": "label",
+   "where": "working",
+   "quote": "so $80-10=70$ read neither",
+   "expected": "70 read at least one newspaper",
+   "why": "80-10=70 counts people who read at least one paper, not neither; step 2 then uses 70=d+s+x as at least one.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m14s5-1-1:ex14-5-1",
+   "lo": "lo:g10m14s5-1-1",
+   "step": 5,
+   "kind": "arithmetic",
+   "where": "working",
+   "quote": "=(\\text{0.17})+(\\text{0.67})-(\\text{0})\\\\&=\\text{0.83}",
+   "expected": "0.84 from the rounded values shown",
+   "why": "0.17 + 0.67 - 0 equals 0.84, not 0.83; 0.83 only comes from the unrounded 5/6.",
+   "sources": [
+    "agent",
+    "numeric"
+   ],
+   "passes": [
+    "B"
+   ],
+   "numeric": {
+    "left": "(\\text{0.17})+(\\text{0.67})-(\\text{0})",
+    "relation": "=",
+    "right": "\\text{0.83}",
+    "why": "(\\text{0.17})+(\\text{0.67})-(\\text{0}) = \\text{0.83} does not hold (0.84 vs 0.83)"
+   }
+  },
+  {
+   "solution_id": "q:g10m14s5-1-3:ex14-5-2",
+   "lo": "lo:g10m14s5-1-3",
+   "step": 1,
+   "kind": "copy",
+   "where": "working",
+   "quote": "P(A)+P(B)-P(A\\cup B)",
+   "expected": "P(A)+P(B)-P(A\\cap B)",
+   "why": "The formula subtracts P(A∪B) instead of P(A∩B); later steps then use the correct rearrangement, so step 1 contradicts them.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m14s5-1-3:ex14-5-2",
+   "lo": "lo:g10m14s5-1-3",
+   "step": 7,
+   "kind": "arithmetic",
+   "where": "working",
+   "quote": "=\\text{0.17}",
+   "expected": "0.16 from the rounded values",
+   "why": "0.33 + 0.5 - 0.67 equals 0.16, not 0.17, with the rounded values substituted.",
+   "sources": [
+    "agent",
+    "numeric"
+   ],
+   "passes": [
+    "B"
+   ],
+   "numeric": {
+    "left": "(\\text{0.33})+(\\text{0.5})-(\\text{0.67})",
+    "relation": "=",
+    "right": "\\text{0.17}",
+    "why": "(\\text{0.33})+(\\text{0.5})-(\\text{0.67}) = \\text{0.17} does not hold (0.16 vs 0.17)"
+   }
+  },
+  {
+   "solution_id": "q:g10m14s5-1-3:ex14-8-24",
+   "lo": "lo:g10m14s5-1-3",
+   "step": 7,
+   "kind": "arithmetic",
+   "where": "working",
+   "quote": "=(\\text{0.5})+(\\text{0.33})-(\\text{0.67})\\\\&=\\text{0.17}",
+   "expected": "0.5+0.33-0.67 = 0.16",
+   "why": "0.5+0.33-0.67 equals 0.16, not 0.17; the line's result does not follow from the substituted values.",
+   "sources": [
+    "agent",
+    "numeric"
+   ],
+   "passes": [
+    "B"
+   ],
+   "numeric": {
+    "left": "(\\text{0.5})+(\\text{0.33})-(\\text{0.67})",
+    "relation": "=",
+    "right": "\\text{0.17}",
+    "why": "(\\text{0.5})+(\\text{0.33})-(\\text{0.67}) = \\text{0.17} does not hold (0.16 vs 0.17)"
+   }
+  },
+  {
+   "solution_id": "q:g10m14s7-1-2:ex14-7-3",
+   "lo": "lo:g10m14s7-1-2",
+   "step": 1,
+   "kind": "wrong_value",
+   "where": "working",
+   "quote": "$\\{3, 4, 10, 12, 13\\}$",
+   "expected": "{3, 4, 6, 10, 12, 13}",
+   "why": "The figure shows 6 outside both circles, so it belongs in (A∪B)' but is omitted.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "A",
+    "B",
+    "B"
+   ]
+  }
+ ],
+ "flagged_solutions": 14,
+ "unclear": [
+  {
+   "id": "q:g10m14s1-1-2:ex14-8-21c",
+   "why": "The 10 purple sweets come from part (b), which is not visible, so the working cannot be judged."
+  }
+ ],
+ "unchecked": [],
+ "problems": [],
+ "checked_ids": [
+  "expl:g10m14s1-1-1:ex14-8-27a",
+  "expl:g10m14s1-1-1:ex14-8-27b",
+  "expl:g10m14s1-1-1:ex14-8-27c",
+  "expl:g10m14s1-1-2:we01",
+  "expl:g10m14s2-1-2:we02",
+  "expl:g10m14s3-1-1:we05",
+  "expl:g10m14s3-1-3:ex14-3-5a",
+  "expl:g10m14s3-1-3:ex14-8-20b",
+  "expl:g10m14s3-1-3:ex14-8-28a",
+  "expl:g10m14s3-1-3:ex14-8-31a",
+  "expl:g10m14s5-1-1:ex14-8-23a",
+  "expl:g10m14s5-1-2:ex14-8-26",
+  "expl:g10m14s5-1-2:we06",
+  "expl:g10m14s6-1-1:ex14-8-25a",
+  "expl:g10m14s6-1-1:we07",
+  "expl:g10m14s7-1-1:ex14-8-25b",
+  "expl:g10m14s7-1-3:ex14-8-21a",
+  "expl:g10m14s7-1-4:ex14-8-28b",
+  "expl:g10m14s7-1-4:ex14-8-31c",
+  "expl:g10m14s7-1-4:ex14-8-32b",
+  "expl:g10m14s7-1-4:we08",
+  "q:g10m14s1-1-1:ex14-1-1",
+  "q:g10m14s1-1-1:ex14-1-2",
+  "q:g10m14s1-1-1:ex14-8-1",
+  "q:g10m14s1-1-1:ex14-8-22a",
+  "q:g10m14s1-1-1:ex14-8-22b",
+  "q:g10m14s1-1-1:ex14-8-22c",
+  "q:g10m14s1-1-1:ex14-8-22d",
+  "q:g10m14s1-1-2:ex14-1-3",
+  "q:g10m14s1-1-2:ex14-1-4",
+  "q:g10m14s1-1-2:ex14-1-5",
+  "q:g10m14s1-1-2:ex14-1-6a",
+  "q:g10m14s1-1-2:ex14-1-6b",
+  "q:g10m14s1-1-2:ex14-1-6c",
+  "q:g10m14s1-1-2:ex14-1-6d",
+  "q:g10m14s1-1-2:ex14-1-7a",
+  "q:g10m14s1-1-2:ex14-1-7b",
+  "q:g10m14s1-1-2:ex14-1-7c",
+  "q:g10m14s1-1-2:ex14-1-7d",
+  "q:g10m14s1-1-2:ex14-8-11a",
+  "q:g10m14s1-1-2:ex14-8-12a",
+  "q:g10m14s1-1-2:ex14-8-12b",
+  "q:g10m14s1-1-2:ex14-8-13a",
+  "q:g10m14s1-1-2:ex14-8-13b",
+  "q:g10m14s1-1-2:ex14-8-13c",
+  "q:g10m14s1-1-2:ex14-8-13d",
+  "q:g10m14s1-1-2:ex14-8-13h",
+  "q:g10m14s1-1-2:ex14-8-16a",
+  "q:g10m14s1-1-2:ex14-8-17a",
+  "q:g10m14s1-1-2:ex14-8-17c",
+  "q:g10m14s1-1-2:ex14-8-19a",
+  "q:g10m14s1-1-2:ex14-8-21b",
+  "q:g10m14s1-1-2:ex14-8-21c",
+  "q:g10m14s1-1-2:ex14-8-23b",
+  "q:g10m14s1-1-2:ex14-8-6",
+  "q:g10m14s2-1-1:ex14-2-1",
+  "q:g10m14s2-1-1:ex14-2-2",
+  "q:g10m14s2-1-1:ex14-2-3",
+  "q:g10m14s2-1-1:ex14-8-7",
+  "q:g10m14s2-1-1:ex14-8-8",
+  "q:g10m14s2-1-1:we03",
+  "q:g10m14s3-1-1:ex14-3-3b",
+  "q:g10m14s3-1-1:ex14-3-3c",
+  "q:g10m14s3-1-1:ex14-8-14a",
+  "q:g10m14s3-1-2:ex14-3-2",
+  "q:g10m14s3-1-2:ex14-8-2",
+  "q:g10m14s3-1-3:ex14-3-5b",
+  "q:g10m14s3-1-3:ex14-3-5c",
+  "q:g10m14s3-1-3:ex14-3-5d",
+  "q:g10m14s3-1-3:ex14-8-10a",
+  "q:g10m14s3-1-3:ex14-8-20a",
+  "q:g10m14s3-1-3:ex14-8-20c",
+  "q:g10m14s3-1-3:ex14-8-29a",
+  "q:g10m14s3-1-3:ex14-8-29b",
+  "q:g10m14s3-1-3:ex14-8-29c",
+  "q:g10m14s3-1-3:ex14-8-31b",
+  "q:g10m14s3-1-3:ex14-8-32a",
+  "q:g10m14s3-1-3:ex14-8-9",
+  "q:g10m14s4-1-1:ex14-4-2",
+  "q:g10m14s4-1-1:ex14-8-3",
+  "q:g10m14s4-1-2:ex14-4-1",
+  "q:g10m14s5-1-1:ex14-5-1",
+  "q:g10m14s5-1-3:ex14-5-2",
+  "q:g10m14s5-1-3:ex14-8-13g",
+  "q:g10m14s5-1-3:ex14-8-24",
+  "q:g10m14s6-1-1:ex14-6-1",
+  "q:g10m14s6-1-1:ex14-6-2",
+  "q:g10m14s6-1-1:ex14-6-3",
+  "q:g10m14s6-1-1:ex14-6-4",
+  "q:g10m14s6-1-1:ex14-8-11c",
+  "q:g10m14s6-1-1:ex14-8-12d",
+  "q:g10m14s6-1-2:ex14-8-11b",
+  "q:g10m14s6-1-2:ex14-8-12c",
+  "q:g10m14s6-1-2:ex14-8-17e",
+  "q:g10m14s6-1-2:ex14-8-18a",
+  "q:g10m14s7-1-1:ex14-7-1",
+  "q:g10m14s7-1-1:ex14-7-2",
+  "q:g10m14s7-1-1:ex14-8-5",
+  "q:g10m14s7-1-2:ex14-7-3",
+  "q:g10m14s7-1-2:ex14-7-4",
+  "q:g10m14s7-1-2:ex14-8-4",
+  "q:g10m14s7-1-3:ex14-8-11d",
+  "q:g10m14s7-1-3:ex14-8-12e",
+  "q:g10m14s7-1-3:ex14-8-13e",
+  "q:g10m14s7-1-3:ex14-8-15",
+  "q:g10m14s7-1-3:ex14-8-16b",
+  "q:g10m14s7-1-3:ex14-8-17b",
+  "q:g10m14s7-1-3:ex14-8-17d",
+  "q:g10m14s7-1-3:ex14-8-17f",
+  "q:g10m14s7-1-3:ex14-8-18b",
+  "q:g10m14s7-1-3:ex14-8-19b",
+  "q:g10m14s7-1-4:ex14-8-10b",
+  "q:g10m14s7-1-4:ex14-8-14b",
+  "q:g10m14s7-1-4:ex14-8-14c",
+  "q:g10m14s7-1-4:ex14-8-30"
+ ],
+ "runs": [
+  "dc4b8bc9af13f5a4a744b6247980e09547c7ec2435232943a59f7f210f8d3782",
+  "0374b5885fc24a3ebb7534524351222ce4c7b1b5581336b7123fbf12b0de63c0"
+ ]
+}

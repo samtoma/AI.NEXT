@@ -19,7 +19,7 @@ import {
   FEEDBACK_LONG_SESSION_MINUTES,
   FEEDBACK_MIN_SITTINGS,
 } from "@/lib/feedback-rules";
-import { SUBJECTS, displayLabel, subjectOfCourse } from "@/lib/subjects";
+import { courseName } from "@/lib/console-course-names";
 
 /**
  * Feedback — what the students say about us (FR-2808…FR-2810, migration 025).
@@ -138,11 +138,6 @@ function ratingWord(rating: string | null): string {
 }
 
 /**
- * A course id to the name a person calls it, from the subject registry —
- * the same source `/courses` prints from, so the two pages cannot disagree
- * about what a course is called.
- */
-/**
  * "3rd", "2nd", "11th". Small, and here rather than inline because the number
  * it formats comes from `lib/feedback-rules.ts` — writing `{N}rd` would read
  * correctly today and print "2rd" the day somebody lowers the threshold, which
@@ -154,10 +149,15 @@ function ordinal(n: number): string {
   return `${n}${["th", "st", "nd", "rd"][n % 10] ?? "th"}`;
 }
 
+/**
+ * A course id to the name a person calls it — the course AND its curriculum,
+ * "Mathematics — Grade 10 (American)" (`lib/console-course-names.ts`), the
+ * same name `/courses` and every other console page print. Named by course
+ * since 003 (FR-4104): the subject alone would print two maths courses'
+ * feedback under one word, and the "By course" tally would read as one figure.
+ */
 function courseLabel(courseId: string | null): string {
-  if (!courseId) return "No course recorded";
-  const subject = subjectOfCourse(courseId);
-  return subject ? displayLabel(SUBJECTS[subject]) : courseId;
+  return courseName(courseId);
 }
 
 /* ----------------------------------------------------------------- page */

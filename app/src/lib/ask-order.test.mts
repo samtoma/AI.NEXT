@@ -18,7 +18,7 @@
  *
  * The fake client answers the objective read ONLY if it is exactly the
  * catalogue helper's SQL, and the unit read only if it is exactly
- * `SUBJECT_RANK, MODULE_RANK` — in the order Postgres returns for those
+ * `COURSE_RANK, MODULE_RANK` — in the order Postgres returns for those
  * statements (`catalogue-order-db.test.mts` proves that on a real database).
  * Any other curriculum read throws. `pool` answers the figure catalogue and
  * the explanation library (they read through it) and nothing else. A student
@@ -34,7 +34,7 @@ import { test } from "node:test";
 import type { PoolClient } from "pg";
 
 import { pool } from "./db.ts";
-import { MODULE_RANK, SUBJECT_RANK, catalogueObjectivesSql } from "./module-order.ts";
+import { COURSE_RANK, MODULE_RANK, catalogueObjectivesSql } from "./module-order.ts";
 import { loadCatalogueFixture } from "./spine-maths-fixture.mts";
 
 const { buildAskContext } = await import("./ask.ts");
@@ -47,7 +47,7 @@ const ALL = loadCatalogueFixture("all");
 const squash = (s: string) => s.replace(/\s+/g, " ").trim();
 const LO_SQL = catalogueObjectivesSql("lo.id, lo.label, lo.description, lo.syllabus_ref, lo.source_page");
 const MODULE_SQL = squash(
-  `SELECT m.id, m.label FROM graph_nodes m WHERE m.kind = 'module' ORDER BY ${SUBJECT_RANK}, ${MODULE_RANK}`
+  `SELECT m.id, m.label FROM graph_nodes m WHERE m.kind = 'module' ORDER BY ${COURSE_RANK}, ${MODULE_RANK}`
 );
 
 (pool as unknown as { connect: () => Promise<never> }).connect = async () => {
@@ -89,9 +89,19 @@ function fakeClient(
     if (sql.includes("FROM source_documents")) {
       return [{ sha256: "abc", title: "Book", publisher: "MOE", edition: null, grade: "9", subject: "math" }];
     }
-    // the course gate, switched off: every course, and the one walk
+    // the course gate, switched off (FR-4015): her exceptions (none), every
+    // loaded course, the one walk, and the book each course is built from —
+    // the one book here is the maths course's, so a student who sees maths
+    // is told about it (the scope's `doc`)
+    if (sql.startsWith("SELECT course_id, state FROM student_course_access")) return [];
     if (sql === "SELECT id FROM graph_nodes WHERE kind = 'course'") {
       return [...new Set(cur.los.map((l) => l.courseId).filter(Boolean))].map((id) => ({ id }));
+    }
+    if (sql === "SELECT id AS course_id, source_sha256 FROM graph_nodes WHERE kind = 'course'") {
+      return [...new Set(cur.los.map((l) => l.courseId).filter(Boolean))].map((id) => ({
+        course_id: id,
+        source_sha256: id === "course:prep3-math-en" ? "abc" : null,
+      }));
     }
     if (sql.includes("AS lo_id, m.id AS module_id, c.id AS course_id")) {
       return cur.los.map((l) => ({ lo_id: l.id, module_id: l.moduleId, course_id: l.courseId }));
@@ -102,6 +112,8 @@ function fakeClient(
         language_pref: "en", curriculum_system: "eg-national-en", gender: null }];
     }
     if (sql.startsWith("WITH focus AS") || sql.includes("FROM attempts")) return [];
+    // the book-section store (migration 034): no split section here
+    if (sql.includes("FROM course_lessons")) return [];
     return null; // anything else — above all another curriculum read — is a regression
   };
   const query = async (text: string) => {

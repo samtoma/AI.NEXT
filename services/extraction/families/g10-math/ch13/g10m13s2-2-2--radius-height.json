@@ -1,0 +1,51 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m13s2-2-2:radius-height",
+ "kind": "family",
+ "lo_id": "lo:g10m13s2-2-2",
+ "parent_question_id": "q:g10m13s2-2-2:we07",
+ "source_page": 430,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "r",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "h",
+   "randint": [
+    3,
+    12
+   ],
+   "resample_while": "h == r"
+  },
+  {
+   "name": "scaled",
+   "let": "pi * r ** 2 * h * 10"
+  },
+  {
+   "name": "rem",
+   "let": "scaled - floor(scaled)"
+  },
+  {
+   "require": "abs(rem - 0.5) > 0.1",
+   "why": "keeps the volume well clear of a rounding boundary at 1 decimal place, so every correct use of the calculator's pi key rounds the same way"
+  }
+ ],
+ "constraints": [],
+ "stem": "The volume of a cylinder is the area of its circular base multiplied by its height. A cylinder has a radius of ${=r}$ cm and a height of ${=h}$ cm. Calculate the volume of the cylinder in $\\text{cm}^3$, correct to 1 decimal place. Use the $\\pi$ button on your calculator.",
+ "answer": "fixed(pi * r ** 2 * h, 1)",
+ "solution": [
+  "Find the area of the circular base: $\\text{area of base} = \\pi r^{2} = \\pi({=r})^{2} = {=r * r}\\pi \\text{ cm}^{2}$",
+  "Multiply the area of the base by the height of the cylinder: $V = \\text{area of base} \\times \\text{height} = {=r * r}\\pi \\times {=h} = {=r * r * h}\\pi \\text{ cm}^{3}$",
+  "Use the $\\pi$ button on your calculator and round to 1 decimal place: $V = {=r * r * h}\\pi \\approx {=fixed(pi * r ** 2 * h, 1)} \\text{ cm}^{3}$",
+  "Write the final answer: the volume of the cylinder is ${=fixed(pi * r ** 2 * h, 1)}$ $\\text{cm}^{3}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Entry point of the skill, modelled on book worked example 7 (r = 4 cm, h = 15 cm, 1 d.p.; figure seen, radius labelled, height labelled). The figure cannot be sampled, so the stem gives both measurements in words. The stem states the book's own definition (area of base x height) as a scaffold; the solution follows the book's two steps exactly (base area, then multiply by the height). r is 2 to 6 and h is 3 to 12 (never equal to r), so volumes run from about 38 to 1357 cm^3 (40 clean instances). A require keeps the volume at least 0.1 of a unit in the first decimal place away from a rounding tie, so a solver using the calculator's pi (or 3.14159) gets the same rounded answer. The stem tells the student to use the pi button; an answer worked with 3.14 is not intended to be accepted. Numeric answer is unitless (cm^3 is stated in the stem). No mcq: the misconception list for this objective is empty."
+}

@@ -1,0 +1,282 @@
+{
+  "format": "ainext.widget-gaps/1",
+  "book": "g10-math",
+  "course_id": "course:us-g10-math-en",
+  "rule": "FR-4306 / FR-1201: every chapter has at least one widget question, or a gap a human has signed. A new kind is built only after Samuel approves it (decision 11, T356).",
+  "chapters": [
+    {
+      "module": "module:g10m-c01",
+      "label": "Chapter 1 — Algebraic expressions",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c02",
+      "label": "Chapter 2 — Exponents",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c03",
+      "label": "Chapter 3 — Number patterns",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c04",
+      "label": "Chapter 4 — Equations and inequalities",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c05",
+      "label": "Chapter 5 — Trigonometry",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c07",
+      "label": "Chapter 7 — Euclidean geometry",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c08",
+      "label": "Chapter 8 — Analytical geometry",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c10",
+      "label": "Chapter 10 — Statistics",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c11",
+      "label": "Chapter 11 — Trigonometry",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c12",
+      "label": "Chapter 12 — Euclidean geometry",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 3
+    }
+  ],
+  "uncovered_chapters": [
+    "module:g10m-c01",
+    "module:g10m-c02",
+    "module:g10m-c03",
+    "module:g10m-c04",
+    "module:g10m-c05",
+    "module:g10m-c07",
+    "module:g10m-c08",
+    "module:g10m-c10",
+    "module:g10m-c11",
+    "module:g10m-c12"
+  ],
+  "proposed_kinds": {
+    "parallelogram_criteria_tester (new kind: a counterexample builder on a four-vertex quadrilateral)": {
+      "modules": [
+        "module:g10m-c12"
+      ],
+      "objectives": [
+        "lo:g10m12s1-1-1"
+      ],
+      "why": [
+        "polygon_builder construct/parallelogram asks the student to build a parallelogram, which tests the definition and not the criterion; she can pass without using any of the three criteria this objective names. Its parallelogram predicates (only-one-pair-parallel, not-the-shape) cannot say which insufficient condition she relied on. No other kind lets her build a figure that satisfies a condition and see that it fails. Using an answer box for 'which conditions are enough' would be an answer box in disguise, so this is a gap and not a forced fit. This objective also has no anchor book question and no misconceptions in the lesson file, so a template could not name a parent or a diagnostic even if a kind fitted."
+      ]
+    },
+    "parallelogram_angle_chaser (new kind: marking angle pairs and a congruence condition on a drawn figure)": {
+      "modules": [
+        "module:g10m-c12"
+      ],
+      "objectives": [
+        "lo:g10m12s1-1-2"
+      ],
+      "why": [
+        "None of the existing kinds draws a given figure and has the student mark relationships on it. angle_setter works only on a circle, and polygon_builder grades the shape she builds, not the angle relations in a figure supplied to her. The anchor questions are figure-dependent numeric answers, and a numeric box for them would be an answer box in disguise."
+      ]
+    },
+    "polygon_builder:midsegment (existing kind; blocked, no misconception recorded on this objective to diagnose with)": {
+      "modules": [
+        "module:g10m-c12"
+      ],
+      "objectives": [
+        "lo:g10m12s1-1-2"
+      ],
+      "why": [
+        "A template needs at least one diagnostics entry whose misconception_id comes from this objective's own misconceptions list (FR-1215). Both objectives in this lesson have empty lists, and lo-1 has no anchor question either. Inventing an id would be refused by the validator, and mapping the predicate to a prerequisite's id is not possible because none exists in the packet. Samuel needs to add a misconception to lo-2 (and, if lo-1 is to get a widget, an anchor question as well). The midpoint theorem is also arguably outside the lo-2 description, which speaks only of parallelogram properties and congruent triangles. It is on this objective only because ex12-2-6b is among its anchors, so please confirm that the assignment is intended."
+      ]
+    }
+  },
+  "gaps": [
+    {
+      "module": "module:g10m-c12",
+      "lo_id": "lo:g10m12s1-1-1",
+      "need_kind": "parallelogram_criteria_tester (new kind: a counterexample builder on a four-vertex quadrilateral)",
+      "description": "The student gets a quadrilateral ABCD with four draggable lattice vertices and one stated condition, for example 'one pair of opposite sides equal', 'one pair of opposite sides parallel', 'diagonals equal', 'diagonals perpendicular', 'one diagonal bisected', 'both pairs of opposite sides parallel' or 'diagonals bisect each other'. The instrument shows live side lengths, parallel marks, angles, both diagonals and their midpoints. Task A asks the student to drag the vertices until the condition holds but the figure is NOT a parallelogram, so each insufficient condition is refuted by an example she builds herself: equal legs give an isosceles trapezium, one bisected diagonal gives a kite, perpendicular diagonals give a kite, equal diagonals give an isosceles trapezium. Task B asks her to make a sufficient condition (both pairs of opposite angles equal, both pairs of opposite sides parallel, diagonals bisecting each other) hold, and then shows that every such figure is a parallelogram. Grading is on the property, so any valid figure is accepted. Errors it would diagnose: one pair of equal sides taken as enough; one pair of parallel sides taken as enough (a trapezium); equal diagonals taken as a test; perpendicular diagonals taken as a test (a kite); a single bisected diagonal taken as a test.",
+      "why": "polygon_builder construct/parallelogram asks the student to build a parallelogram, which tests the definition and not the criterion; she can pass without using any of the three criteria this objective names. Its parallelogram predicates (only-one-pair-parallel, not-the-shape) cannot say which insufficient condition she relied on. No other kind lets her build a figure that satisfies a condition and see that it fails. Using an answer box for 'which conditions are enough' would be an answer box in disguise, so this is a gap and not a forced fit. This objective also has no anchor book question and no misconceptions in the lesson file, so a template could not name a parent or a diagnostic even if a kind fitted.",
+      "source": "author-merged-ch12.json",
+      "signed_off": {
+        "by": "auto-pass G3 (AI recommendation)",
+        "auto": true,
+        "at": "2026-10-02T07:06:14Z",
+        "note": "auto-pass G3 (AI recommendation): S7's author found no existing widget kind that fits this objective, so the chapter ships without a widget question for now; no new kind is approved by this (decision 11)"
+      },
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c12",
+      "lo_id": "lo:g10m12s1-1-2",
+      "need_kind": "parallelogram_angle_chaser (new kind: marking angle pairs and a congruence condition on a drawn figure)",
+      "description": "The instrument draws a parallelogram with a diagonal, or a triangle with a midsegment, with one or two angles given as numbers or as x and y expressions. The student taps pairs of angles and labels each pair equal or supplementary, giving the reason from a short list: alternate angles, co-interior angles, opposite angles of a parallelogram, or angles of congruent triangles. Where a proof needs it, she also picks the two congruent triangles and the condition (SSS, SAS, AAS or RHS) with the vertices matched in order. This is the angle-chasing the anchor questions ask for (ex12-1-6b, 6c, 7b and ex12-2-7b, 7c, each 'find x' or 'find y' in a figure), done by construction in the instrument's own figure and not by reading a [figure]. Errors it would diagnose: co-interior angles taken as equal; adjacent angles of a parallelogram taken as equal; alternate angles taken as supplementary; SSA offered as a congruence condition; triangle vertices matched in the wrong order.",
+      "why": "None of the existing kinds draws a given figure and has the student mark relationships on it. angle_setter works only on a circle, and polygon_builder grades the shape she builds, not the angle relations in a figure supplied to her. The anchor questions are figure-dependent numeric answers, and a numeric box for them would be an answer box in disguise.",
+      "source": "author-merged-ch12.json",
+      "signed_off": {
+        "by": "auto-pass G3 (AI recommendation)",
+        "auto": true,
+        "at": "2026-10-02T07:06:14Z",
+        "note": "auto-pass G3 (AI recommendation): S7's author found no existing widget kind that fits this objective, so the chapter ships without a widget question for now; no new kind is approved by this (decision 11)"
+      },
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c12",
+      "lo_id": "lo:g10m12s1-1-2",
+      "need_kind": "polygon_builder:midsegment (existing kind; blocked, no misconception recorded on this objective to diagnose with)",
+      "description": "polygon_builder in midsegment mode fits anchor ex12-2-6b. There S and T are the midpoints of MN and NR in triangle MNR, so ST is the midsegment opposite apex N, parallel to MR and half its length. The figure confirms this: ST is drawn inside triangle NMR, with the right angle at M. The student drags a segment onto the two sides that meet at the apex and is graded on parallel-and-half-length, not on a position. Proposed basic template, ready to author once an id exists: spec {\"mode\":\"midsegment\",\"triangle\":[[0,0],[6,0],[0,6]],\"apex\":0}. The instances table rotates apex 0, 1 and 2 and uses other non-collinear whole-number triangles within ±6. The stem asks her to place a segment with one end on each of the two sides that meet at the marked vertex, parallel to the third side and half as long. The solution steps are: mark the midpoint of each of the two sides; join them; check it is parallel to the third side; check its length is half the third side. Diagnostics to map once a misconception exists: midsegment-not-half (parallel, but the length is not half), then not-the-shape. A suitable misconception would be 'the segment joining two midpoints is taken as equal to the third side, or its length or the triangle's area is scaled by 1/2 instead of 1/2 and 1/4 respectively'.",
+      "why": "A template needs at least one diagnostics entry whose misconception_id comes from this objective's own misconceptions list (FR-1215). Both objectives in this lesson have empty lists, and lo-1 has no anchor question either. Inventing an id would be refused by the validator, and mapping the predicate to a prerequisite's id is not possible because none exists in the packet. Samuel needs to add a misconception to lo-2 (and, if lo-1 is to get a widget, an anchor question as well). The midpoint theorem is also arguably outside the lo-2 description, which speaks only of parallelogram properties and congruent triangles. It is on this objective only because ex12-2-6b is among its anchors, so please confirm that the assignment is intended.",
+      "source": "author-merged-ch12.json",
+      "signed_off": {
+        "by": "auto-pass G3 (AI recommendation)",
+        "auto": true,
+        "at": "2026-10-02T07:06:14Z",
+        "note": "auto-pass G3 (AI recommendation): S7's author found no existing widget kind that fits this objective, so the chapter ships without a widget question for now; no new kind is approved by this (decision 11)"
+      },
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c01",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c02",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c03",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c04",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c05",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c07",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c08",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c10",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c11",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m1s8-1-2:divide-common-factor-squares",
+ "kind": "family",
+ "lo_id": "lo:g10m1s8-1-2",
+ "parent_question_id": "q:g10m1s8-1-2:we19",
+ "source_page": 32,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "k",
+   "choice": [
+    2,
+    3,
+    4,
+    5,
+    6
+   ]
+  },
+  {
+   "name": "a",
+   "randint": [
+    1,
+    9
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    2,
+    9
+   ],
+   "resample_while": "b == a"
+  }
+ ],
+ "constraints": [
+  "a != b"
+ ],
+ "stem": "Simplify (assume all denominators are non-zero): $\\dfrac{{=k}x+{=k*a}}{x^2-{=b*b}}\\div\\dfrac{x+{=a}}{x+{=b}}$",
+ "marker": {
+  "kind": "expression",
+  "answer": "{=k}/(x - {=b})",
+  "form": "simplest",
+  "variables": [
+   "x"
+  ],
+  "tolerance": null
+ },
+ "solution": [
+  "Change the division to multiplication by the reciprocal, that is, flip the second fraction: $\\frac{{=k}x+{=k*a}}{x^2-{=b*b}}\\times\\frac{x+{=b}}{x+{=a}}$",
+  "Factorise: take out the common factor, ${=k}x+{=k*a}={=k}(x+{=a})$, and use the difference of two squares, $x^2-{=b*b}=(x-{=b})(x+{=b})$: $=\\frac{{=k}(x+{=a})}{(x-{=b})(x+{=b})}\\times\\frac{x+{=b}}{x+{=a}}$",
+  "Cancel the common factors $(x+{=a})$ and $(x+{=b})$: $=\\frac{{=k}}{x-{=b}}$"
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Entry point of the skill: the book's we19 method (flip the second fraction, factorise, cancel) with only two kinds of factorising, a common factor and a difference of two squares, and no trinomial. Instance = k(x+a)/(x^2-b^2) divided by (x+a)/(x+b); answer is always k/(x-b), a single reduced fraction, so the marker uses form 'simplest'. Constraint a != b keeps the two cancelled factors distinct (a == b would still be correct but muddles which factor cancels). b >= 2 so x^2 - b^2 never prints as x^2 - 1. Verified by exact rational evaluation at several x over all 320 parameter combinations. The stem keeps the book's 'assume all denominators are non-zero' wording (strictly the divisor is also non-zero, x != -a, which the book leaves implicit). 320 distinct instances."
+}

@@ -1,0 +1,67 @@
+{
+  "format": "ainext.family/1",
+  "id": "tpl:u3-2-2:stddev",
+  "kind": "family",
+  "lo_id": "lo:u3-2-2",
+  "parent_question_id": "q:u3-2-2:001",
+  "source_page": 57,
+  "tier": "advanced",
+  "answer_type": "numeric",
+  "context": null,
+  "params": [
+    {
+      "name": "mean",
+      "randint": [
+        5,
+        20
+      ]
+    },
+    {
+      "name": "offs",
+      "choice": [
+        [
+          -2,
+          -1,
+          0,
+          1,
+          2
+        ],
+        [
+          -4,
+          -2,
+          0,
+          2,
+          4
+        ],
+        [
+          -3,
+          -1,
+          0,
+          1,
+          3
+        ]
+      ]
+    },
+    {
+      "name": "vals",
+      "let": "[mean + o for o in offs]"
+    },
+    {
+      "name": "var",
+      "let": "float(sum([o * o for o in offs])) / len(offs)"
+    },
+    {
+      "name": "sd",
+      "let": "sqrt(var)"
+    }
+  ],
+  "stem": "Find the standard deviation of the values ${=setof(vals)}$, correct to two decimal places.",
+  "answer": "fixed(sd, 2)",
+  "solution": [
+    "The mean is $\\frac{{=sum(vals)}}{{=len(vals)}} = {=mean}$.",
+    "The deviations from the mean are ${=setof(offs)}$.",
+    "The mean of their squares is $\\frac{{=sum(o * o for o in offs)}}{{=len(offs)}} = {=num(round(var, 4))}$.",
+    "The standard deviation is $\\sqrt{{=num(round(var, 4))}} \\approx {=fixed(sd, 2)}$."
+  ],
+  "notes": "Reproduces the hand-written family tpl:u3-2-2:stddev in generate_questions.py, item for item (decision 16 proof, tests/test_family_reproduction.py). Misconception ids are the catalogue's (seed/generated/misconceptions.json), which the live bank carries. Not loaded by anything: the live Prep-3 bank is the committed export."
+}
