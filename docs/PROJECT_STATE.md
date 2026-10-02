@@ -58,8 +58,8 @@ Gate records (G0, T413, G1 and G2 for Chapter 8) are in the same decisions file.
   **built and verified, T435**). A change of curriculum is
   console-only, recorded, and loses nothing; an open chat reads the new scope on its next turn
   (decision 37).
-- **Filling the Grade 10 course**: the full fan-out to the other 13 chapters is approved, ≈ $0.85–1.1k
-  (decision 58e). Maths content now reaches students as if reviewed as it is extracted — gates G1–G4
+- **Filling the Grade 10 course**: the full fan-out to the other 13 chapters was approved, ≈ $0.85–1.1k
+  (decision 58e), and **has run** (2026-10-01/02; the whole course, pilot included, metered $952.70). Maths content now reaches students as if reviewed as it is extracted — gates G1–G4
   proceed on the AI checks' own recommendation rather than wait for a human per chapter (decision 58c);
   a new internal console backlog lets Samuel, Tamer and Kamil review every unstamped item afterwards, one
   at a time, goal zero (decision 58b, FR-4501…FR-4507); "reviewed" means only a human stamp (decision 54);
@@ -67,22 +67,33 @@ Gate records (G0, T413, G1 and G2 for Chapter 8) are in the same decisions file.
   lesson (decision 58d, FR-4508). **FR-4501…FR-4509 are built and read** (2026-10-01: migrations 035 and 036,
   the `/review` console page, the book-picture stand-ins, `auto_pass_gates.py`; `tasks.md` T436–T443
   ticked); their matrix rows stay OPEN until T387. G5 auto-passes too, each auto-passed gate decision marked
-  for Samuel and cleared only by his account (decision 60); passing deploys nothing.
+  for Samuel and cleared only by his account (decision 60); passing deploys nothing. Every gate after Chapter 8's G1 and G2 was
+  such an auto-pass, so no person has read the bank yet (WIP README, "Full book complete — 2026-10-02").
+- **A lesson may keep one objective after a ruling** (answer 44, decision 65, 2026-10-02): G1's rule 4 wants 2 to 5 objectives
+  per lesson; when G1 drops an objective under a recorded ruling and that would leave one, the lesson stands with a warning marked
+  CHECK LATER (`check_later`, first `for_review` entry of the gate record). Built (`assemble_objectives.rule4_check_later`); first use
+  Chapter 13's lesson 13.1, which Samuel is to check later. FR-4509 amended.
+- **Parity counts servable rows only** (answer 45, decision 66, 2026-10-02): `parity_check.py` does not count rejected or retired
+  questions, nor visuals attached only to them; rejected rows stay in the database. Built; FR-4207 amended, FR-904 cross-note.
 - **The student sees the whole book** (decision 59, answer 38, *"I want the students to see all chapters as
   well not only 8!"*): every chapter and lesson in the book's order; a lesson not yet prepared reads "Being
   prepared", is not startable and is refused on the server (404, no model call); readiness is derived, not
-  stored; the course card reads "5 of 65 lessons ready"; Noor's prompts are unchanged. **Built** (migration
-  037, `load_course_outline.py`; FR-4322…FR-4327, T444–T446).
-- **A step-level working checker** (decision 51, answer 30; FR-4411, T447): built; the Chapter 8 run flagged 21
-  of 192 solutions for a human and cost **$31.0, 3–5× the estimate** — a calibration pass (`sw-v2`) is in
-  progress, and the console does not yet read its flags.
+  stored; the course card reads "5 of 65 lessons ready" (in the local database all 65 lessons now have objectives loaded); Noor's
+  prompts are unchanged. **Built** (migration 037, `load_course_outline.py`; FR-4322…FR-4327, T444–T446).
+- **A step-level working checker** (decision 51, answer 30; FR-4411, T447): built. The first Chapter 8 run (`sw-v1`) flagged 21
+  of 192 solutions and cost **$31.0, 3–5× the estimate**; after calibration the book ran on `sw-v3` (two passes a solution,
+  ≈ $0.05 each), **2,556 solutions, 300 flags on 270 of them, $158.71 for the stage**. The console reads the flags as backlog
+  items (migration 039, `app/src/lib/review-gate-working.ts`); a flag is never a correction.
 - **A teaching item may be a family's parent** (decision 61, answer 40): a family may be modelled on a book
-  item marked teaching-only, with an explicit `parent_kind`; needed by lo:g10m8s1-1-1. **Code in progress, not
-  built** (T448; migration 038 planned).
+  item marked teaching-only, with an explicit `parent_kind`; needed by lo:g10m8s1-1-1. **Code built and applied to the local
+  database 2026-10-01** (migration 038, `families/spec.py`, `load_generated_questions.py`, the review desk); T448 is still unticked
+  and its spec records are pending. The three families for lo:g10m8s1-1-1 were authored and graded but **are not loaded**
+  — the objective still has no live item.
 - **The G10 course** is the only course live for grade 10 at launch; Play design, probing off, covered by
   ADR-0019 once switched on; its prompts name its own book and are English-only (decision 30).
-- **The prompt hold (ADR-0020)** has eight named exceptions, listed in one place in the ADR since
-  2026-09-27. Three touch National prompts on purpose (spec 003 FR-4206): the Ask book-list line, the
+- **The prompt hold (ADR-0020)** has eight named exceptions on this branch, listed in one place in the ADR since
+  2026-09-27. **`main` has since numbered its own fifth, sixth and seventh exceptions (Tamer's v0.10.0 and v0.11.0 work) for
+  different exceptions, and the two versions merge textually without a conflict — a silent numbering collision to resolve at merge.** Three touch National prompts on purpose (spec 003 FR-4206): the Ask book-list line, the
   handoff line for a student who cannot see a subject (decision 38), and the Arabic lessons' printed names
   (decision 34).
 - **The marker** is built in-house (ADR-0025). Wrong-form, unreadable and wrong-shape answers, and a "true
@@ -111,7 +122,8 @@ Gate records (G0, T413, G1 and G2 for Chapter 8) are in the same decisions file.
 - **S5** 29 misconceptions confirmed; **S6** 11 families (110 items); **S7** 7 templates, 25 widgets —
   17 mappings active, 22 held for review. All loaded as `status=review`. Coverage is RED on two items that
   wait for decisions (objective evidence for s1-1-1; the tier floor before G3); parity GREEN.
-- **Still to come**: G3 (the 10% family sample and the 22 held widget mappings), G4 (the catalogue),
+- **Still to come** *(as of 2026-09-27; since then G3, G4 and G5 for Chapter 8 were recorded as auto-passes on 2026-10-01, waiting in the
+  console for Samuel's account — decision 60)*: G3 (the 10% family sample and the 22 held widget mappings), G4 (the catalogue),
   G5 (go / no-go).
 - **Metered: $153.30** API-equivalent for the chapter (`services/extraction/runs/g10-math/cost.jsonl`),
   including first-chapter waste (≈ $36 of S0b lost to usage limits).
@@ -127,6 +139,11 @@ S0b **$250–520** (batch 50 vs 25), S1 ≈ $93, S2–S4 ≈ $146, S5–S7 ≈ $
 objective** on Chapter 8 ($17.13 for 13, including one superseded draft). The "$22–32" once labelled "per
 objective" was the planned whole-book S5 figure; "$0.70 per objective" was a projection before S5 ran;
 "$24–44" and "$210–230" were pre-pilot estimates.
+**Actual, 2026-10-02:** `meter_run.py summary --book g10-math` reads **$952.70** (284 runs, ≈ 1.2 billion tokens, API-equivalent at
+2026-10-01 prices, a floor because some S0b and step-checker tokens are unpriced) for the whole course, the $153 pilot included — about
+$800 for the fan-out, inside the approved range. By stage: S0b $285.94, step checker $158.71, S6 $134.65, S5 $122.79, S2–S4 $116.08,
+S1 $73.51, S7 $38.72, G2 recommendations $14.77. S0b cost $0.040 an image against the plan's $0.024; the step checker, after calibration,
+$158.71 against a projected ≈ $430 at its first rate.
 
 **Curriculum isolation** (audit 2026-09-26, Samuel: each curriculum and grade stays isolated while
 teaching): six gaps found and fixed server-side — tutor bridges and the retrieval hop gated, the loader
@@ -135,7 +152,9 @@ per course (T372), the chat snapshot keyed by scope, home-page wording per cours
 filter that strips a handoff card to a closed subject. Both prompt goldens unchanged. Production has
 `AINEXT_COURSE_GATING=on` (read 2026-09-26).
 
-**Build status (2026-10-01).** `tasks.md`: **99 of 143** ticked; the matrix **traced 95/95** (81 FRs and 14
+**Build status (2026-10-02).** `tasks.md` was still **99 of 143** ticked when read on 2026-10-02 (`traceability.py --check` passes); T448
+is built but unticked, and the matrix and FR text were being edited by other agents that day, so re-read them before quoting the figures
+below. **Build status (2026-10-01).** `tasks.md`: **99 of 143** ticked; the matrix **traced 95/95** (81 FRs and 14
 SCs; 1 BUILT, 94 OPEN). *Older figures follow, as of 2026-09-27:* `tasks.md`: 84 of 128 ticked (2026-09-27: T303, T304, T427, T428, T431, T432 and
 T433 ticked after their code and tests were read and run). The matrix: 65 FRs and 13 SCs, **traced
 78/78**; 1 BUILT (FR-4409), 77 OPEN — where OPEN now means **"not yet re-graded (T387)"**, not "not
