@@ -1,0 +1,426 @@
+{
+ "objectives_version": 1,
+ "book": "g10-math",
+ "chapter": 14,
+ "module": "module:g10m-c14",
+ "lesson": "g10m14s5-1",
+ "title": "Probability identities",
+ "provenance": {
+  "sections": [
+   {
+    "number": "14.5",
+    "title": "Probability identities"
+   }
+  ],
+  "part": null,
+  "chapter_intro": false
+ },
+ "status": "approved",
+ "g1": {
+  "approved_by": "auto-pass G1 (AI recommendation)",
+  "approved_at": "2026-10-02T07:07:16+00:00",
+  "verdicts": {
+   "auto": true,
+   "by": "auto-pass G1 (AI recommendation)",
+   "terminology": {
+    "event set": "keep",
+    "sample space": "keep",
+    "theoretical probability": "keep",
+    "simplified fraction": "keep",
+    "equally likely": "keep",
+    "relative frequency": "keep",
+    "trial": "keep",
+    "number of trials": "keep",
+    "n(s)": "keep",
+    "region": "keep",
+    "identity": "keep",
+    "union": "keep",
+    "intersection": "keep",
+    "mutually exclusive": "keep",
+    "complementary events": "keep",
+    "complement": "keep",
+    "empty set": "keep"
+   },
+   "move_items": {
+    "Ex14-8:13g": "lo:g10m14s5-1-3",
+    "Ex14-8:14b": "lo:g10m14s7-1-4",
+    "Ex14-8:14c": "lo:g10m14s7-1-4",
+    "Ex14-8:23b": "lo:g10m14s1-1-2",
+    "Ex14-8:29a": "lo:g10m14s3-1-3",
+    "Ex14-8:29b": "lo:g10m14s3-1-3",
+    "Ex14-8:29c": "lo:g10m14s3-1-3",
+    "Ex14-8:31b": "lo:g10m14s3-1-3"
+   },
+   "links": {},
+   "acknowledged": [],
+   "objectives": {},
+   "outside_items": {}
+  }
+ },
+ "source_run": {
+  "file": "runs/g10-math/objectives/ch14-wf_c0c84644-7b8.json",
+  "sha256": "082963d4b1d567ee41cec04c7d1e59a83a2b89f7b3a9fc58b7fb0977cdd374f9",
+  "prompts_version": "s1-v5",
+  "packet_sha256": "8b2011e2236ce86abe6a567c3e840dbeabe4f4c99eed062131fef3be9ecb9bdf"
+ },
+ "objectives": [
+  {
+   "id": "lo:g10m14s5-1-1",
+   "provisional_id": "lo:g10m14s5-1-1",
+   "n": 1,
+   "statement": "Calculate the probability of the union of two events, P(A∪B), from their event sets and the sample space using the identity P(A∪B) = P(A) + P(B) − P(A∩B)",
+   "label": "Probability of a union",
+   "evidence": [
+    {
+     "kind": "intro",
+     "anchor": "b04445",
+     "printed_page": 483,
+     "quote": "We can calculate the probability of the union of two events using",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "summary",
+     "anchor": "b04498",
+     "printed_page": 490,
+     "quote": "The probability of the union of two events is calculated using",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex14-5:1",
+     "printed_page": 484,
+     "quote": "calculate the value of $P(A\\cupB)$",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex14-8:23a",
+     "printed_page": 494,
+     "quote": "a diamond or a three",
+     "contained": true,
+     "present": true,
+     "supports": true
+    }
+   ],
+   "evidence_dropped": [],
+   "exercise_items": [
+    "Ex14-5:1",
+    "Ex14-8:12f",
+    "Ex14-8:13f",
+    "Ex14-8:23a"
+   ],
+   "worked_examples": [],
+   "confidence": "agreed",
+   "from": {
+    "a": [
+     "A2"
+    ],
+    "b": [
+     "B2"
+    ]
+   },
+   "derivation": "derived",
+   "terms": [
+    "probability",
+    "event",
+    "union",
+    "intersection",
+    "sample space",
+    "identity"
+   ],
+   "edited_at_g1": false,
+   "order_in_parent": 10,
+   "node": {
+    "id": "lo:g10m14s5-1-1",
+    "kind": "learning_objective",
+    "label": "Probability of a union",
+    "description": "Calculate the probability of the union of two events, P(A∪B), from their event sets and the sample space using the identity P(A∪B) = P(A) + P(B) − P(A∩B)",
+    "source_page": 483,
+    "syllabus_ref": "14.5",
+    "order_in_parent": 10
+   }
+  },
+  {
+   "id": "lo:g10m14s5-1-2",
+   "provisional_id": "lo:g10m14s5-1-2",
+   "n": 2,
+   "statement": "Verify the identity P(A∪B) = P(A) + P(B) − P(A∩B) for two events by calculating P(A), P(B), P(A∩B) and P(A∪B) from the counts in a Venn diagram, and use Venn diagrams to prove the identity",
+   "label": "Verify the union identity",
+   "evidence": [
+    {
+     "kind": "worked_example",
+     "anchor": "WE6",
+     "printed_page": 483,
+     "quote": "show that they satisfy the identity",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "intro",
+     "anchor": "b04447",
+     "printed_page": 483,
+     "quote": "We will prove this identity using the Venn diagrams",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex14-8:26",
+     "printed_page": 495,
+     "quote": "Use a Venn diagram to prove that the probability",
+     "contained": true,
+     "present": true,
+     "supports": true
+    }
+   ],
+   "evidence_dropped": [],
+   "exercise_items": [
+    "Ex14-8:26"
+   ],
+   "worked_examples": [
+    "WE6"
+   ],
+   "confidence": "agreed",
+   "from": {
+    "a": [
+     "A1"
+    ],
+    "b": [
+     "B1"
+    ]
+   },
+   "derivation": "derived",
+   "terms": [
+    "identity",
+    "Venn diagram",
+    "probability",
+    "event",
+    "union",
+    "intersection"
+   ],
+   "edited_at_g1": false,
+   "order_in_parent": 11,
+   "node": {
+    "id": "lo:g10m14s5-1-2",
+    "kind": "learning_objective",
+    "label": "Verify the union identity",
+    "description": "Verify the identity P(A∪B) = P(A) + P(B) − P(A∩B) for two events by calculating P(A), P(B), P(A∩B) and P(A∪B) from the counts in a Venn diagram, and use Venn diagrams to prove the identity",
+    "source_page": 483,
+    "syllabus_ref": "14.5",
+    "order_in_parent": 11
+   }
+  },
+  {
+   "id": "lo:g10m14s5-1-3",
+   "provisional_id": "lo:g10m14s5-1-3",
+   "n": 3,
+   "statement": "Determine the probability of the intersection of two events, P(A∩B), from the event sets of A, B and A∪B and the sample space",
+   "label": "Probability of an intersection",
+   "evidence": [
+    {
+     "kind": "summary",
+     "anchor": "b04496",
+     "printed_page": 490,
+     "quote": "all of the elements that are in both sets",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex14-5:2",
+     "printed_page": 484,
+     "quote": "calculate the value of $P(A\\capB)$",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex14-8:24",
+     "printed_page": 494,
+     "quote": "calculate the value of $P(A\\capB)$",
+     "contained": true,
+     "present": true,
+     "supports": true
+    }
+   ],
+   "evidence_dropped": [],
+   "exercise_items": [
+    "Ex14-5:2",
+    "Ex14-8:13g",
+    "Ex14-8:24"
+   ],
+   "worked_examples": [],
+   "confidence": "agreed",
+   "from": {
+    "a": [
+     "A3"
+    ],
+    "b": [
+     "B3"
+    ]
+   },
+   "derivation": "derived",
+   "terms": [
+    "probability",
+    "event",
+    "intersection",
+    "union",
+    "sample space"
+   ],
+   "edited_at_g1": false,
+   "order_in_parent": 12,
+   "node": {
+    "id": "lo:g10m14s5-1-3",
+    "kind": "learning_objective",
+    "label": "Probability of an intersection",
+    "description": "Determine the probability of the intersection of two events, P(A∩B), from the event sets of A, B and A∪B and the sample space",
+    "source_page": 484,
+    "syllabus_ref": "14.5",
+    "order_in_parent": 12
+   }
+  }
+ ],
+ "pool_items": [
+  "Ex14-8:12f",
+  "Ex14-8:13f",
+  "Ex14-8:13g",
+  "Ex14-8:23a",
+  "Ex14-8:24",
+  "Ex14-8:26"
+ ],
+ "prerequisites": [
+  {
+   "src": "lo:g10m1s4-1-1",
+   "dst": "lo:g10m14s5-1-1",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "exercise",
+     "anchor": "Ex14-5:1",
+     "printed_page": 484,
+     "quote": "rounded to two decimal places"
+    }
+   ],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "The exercise requires P(A∪B) rounded to two decimal places, so rounding is a required step."
+   },
+   "backward": false
+  },
+  {
+   "src": "lo:g10m1s4-1-1",
+   "dst": "lo:g10m14s5-1-3",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "exercise",
+     "anchor": "Ex14-5:2",
+     "printed_page": 484,
+     "quote": "rounded to two decimal value"
+    }
+   ],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "The exercise requires P(A∩B) rounded to two decimal places, so rounding is a required step."
+   },
+   "backward": false
+  },
+  {
+   "src": "lo:g10m14s4-1-2",
+   "dst": "lo:g10m14s5-1-2",
+   "signal": "reference",
+   "evidence": [
+    {
+     "kind": "text",
+     "anchor": "b04447",
+     "printed_page": 483,
+     "quote": "We will prove this identity using the Venn diagrams given above."
+    },
+    {
+     "kind": "worked_example",
+     "anchor": "WE6",
+     "printed_page": 483,
+     "quote": "From the Venn diagram in Example 4, we can count the number of outcomes in each event."
+    }
+   ],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "WE6 counts n(A∩B) and the other event sizes from the Venn diagram of Example 4, which uses the intersection-from-Venn skill."
+   },
+   "backward": false
+  },
+  {
+   "src": "lo:g10m14s1-1-2",
+   "dst": "lo:g10m14s5-1-1",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "worked_example",
+     "anchor": "WE6",
+     "printed_page": 483,
+     "quote": "we divide the size of the event by the size of the sample space"
+    }
+   ],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "WE6 divides the size of each event by n(S), which is P(E) = n(E)/n(S) used as a step."
+   },
+   "backward": false
+  },
+  {
+   "src": "lo:g10m14s1-1-2",
+   "dst": "lo:g10m14s5-1-2",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "worked_example",
+     "anchor": "WE6",
+     "printed_page": 483,
+     "quote": "we divide the size of the event by the size of the sample space"
+    }
+   ],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "WE6 calculates P(A), P(B), P(A∩B) and P(A∪B) by dividing each event size by n(S), which is the theoretical probability formula."
+   },
+   "backward": false
+  },
+  {
+   "src": "lo:g10m14s3-1-1",
+   "dst": "lo:g10m14s5-1-2",
+   "signal": "reference",
+   "evidence": [
+    {
+     "kind": "worked_example",
+     "anchor": "WE6",
+     "printed_page": 483,
+     "quote": "From the Venn diagram in Example 4, we can count the number of outcomes in each event."
+    }
+   ],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "WE6 counts n(A), n(B) and the other sizes from the Venn diagram of the sample space and events in Example 4, which uses the source skill."
+   },
+   "backward": false
+  }
+ ],
+ "checks": {
+  "ok": true,
+  "failures": [],
+  "warnings": [
+   "g10m14s5-1: objectives are not numbered in the order the book practises them (rule 6)"
+  ],
+  "check_later": []
+ },
+ "outside_items": []
+}

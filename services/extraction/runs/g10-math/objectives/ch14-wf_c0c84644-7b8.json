@@ -1,0 +1,4799 @@
+{
+ "stage": "S1",
+ "workflow": "objectives",
+ "prompts_version": "s1-v5",
+ "book": "g10-math",
+ "chapter": 14,
+ "module": "module:g10m-c14",
+ "packet_sha256": "8b2011e2236ce86abe6a567c3e840dbeabe4f4c99eed062131fef3be9ecb9bdf",
+ "by_ref": {
+  "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/s1-ch14",
+  "stage": "S1",
+  "shards_sha256": "64b462473c1936a1fea40e193ca7fcdb13f1e626fe4ac38cab0bfc5bcb969941",
+  "files": 445,
+  "pool_batch": 60
+ },
+ "embedded": {
+  "source": "runbook/objectives.workflow.js",
+  "source_sha256": "afabf5af79f22a7e2dcb3060c7a8c4596ec06170296f865fd40e76ce1e9fef52",
+  "args_sha256": "e8ebbf2b7ea808351ffbde45380e781339db94809bdc86df53de3145d65ceb92",
+  "generated_sha256": "af5f3d15565e8a6d8c8cd99929c6291156fae55df5262116b62184c5212dcb7a",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "teacher_only_dropped": 3,
+ "lessons": [
+  {
+   "slug": "g10m14s1-1",
+   "finders": {
+    "a": {
+     "objectives": [
+      {
+       "statement": "Identify an outcome, the sample space and an event of an experiment, and state their sizes n(S) and n(E).",
+       "label": "Sample space and event",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "b04357",
+         "printed_page": 471,
+         "quote": "the set of all possible outcomes of that experiment"
+        },
+        {
+         "kind": "definition",
+         "anchor": "b04366",
+         "printed_page": 472,
+         "quote": "a specific set of outcomes of an experiment that you are interested in"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-1:1",
+         "printed_page": 474,
+         "quote": "rolls 2 dice hoping to get a total of 8"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-1:2",
+         "printed_page": 474,
+         "quote": "rolls a die. Which of the following is the most appropriate example of the term"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-8:1",
+         "printed_page": 490,
+         "quote": "the most appropriate example of the term"
+        }
+       ],
+       "exercise_items": [
+        "Ex14-1:1",
+        "Ex14-1:2"
+       ],
+       "worked_examples": [],
+       "key": "A1"
+      },
+      {
+       "statement": "Write a probability as a simplified fraction, a decimal or a percentage.",
+       "label": "Probability as fraction, decimal, percentage",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "b04375",
+         "printed_page": 473,
+         "quote": "As a percentage. For example"
+        },
+        {
+         "kind": "summary",
+         "anchor": "b04492",
+         "printed_page": 490,
+         "quote": "A probability can also be written as a percentage or as a fraction."
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-1:3",
+         "printed_page": 474,
+         "quote": "Write your answer as a simplified fraction."
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-1:4",
+         "printed_page": 474,
+         "quote": "Write your answer as a decimal (correct to 2 decimal places)."
+        }
+       ],
+       "exercise_items": [
+        "Ex14-1:3",
+        "Ex14-1:4"
+       ],
+       "worked_examples": [],
+       "key": "A2"
+      },
+      {
+       "statement": "Calculate the theoretical probability P(E) = n(E)/n(S) of an event when all the outcomes of the experiment are equally likely.",
+       "label": "Calculate theoretical probability",
+       "evidence": [
+        {
+         "kind": "heading",
+         "anchor": "EMA7W",
+         "printed_page": 472,
+         "quote": "Theoretical probability"
+        },
+        {
+         "kind": "intro",
+         "anchor": "b04378",
+         "printed_page": 473,
+         "quote": "the ratio between the number of outcomes in the event set and the number of possible outcomes in the sample space"
+        },
+        {
+         "kind": "summary",
+         "anchor": "b04493",
+         "printed_page": 490,
+         "quote": "we can compute the exact theoretical probability of an event"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE1",
+         "printed_page": 473,
+         "quote": "Write down the size of the event set"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-1:5",
+         "printed_page": 474,
+         "quote": "What is the probability of selecting a multiple of"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-1:6a",
+         "printed_page": 474,
+         "quote": "A ball is picked at random. Determine the probability that it is"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-8:6",
+         "printed_page": 492,
+         "quote": "What is the probability that the card is a king?"
+        }
+       ],
+       "exercise_items": [
+        "Ex14-1:5",
+        "Ex14-1:6a",
+        "Ex14-1:6b",
+        "Ex14-1:6c",
+        "Ex14-1:6d",
+        "Ex14-1:7a",
+        "Ex14-1:7b",
+        "Ex14-1:7c",
+        "Ex14-1:7d",
+        "Ex14-1:7e"
+       ],
+       "worked_examples": [
+        "WE1"
+       ],
+       "key": "A3"
+      }
+     ]
+    },
+    "b": {
+     "objectives": [
+      {
+       "statement": "Identify the sample space and the event set of an experiment from a description of it, for example when two dice are rolled or a single die is rolled.",
+       "label": "Identify sample space and event",
+       "evidence": [
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-1:1",
+         "printed_page": 474,
+         "quote": "A learner wants to understand the term"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-1:2",
+         "printed_page": 474,
+         "quote": "most appropriate example of the term"
+        },
+        {
+         "kind": "definition",
+         "anchor": "b04357",
+         "printed_page": 471,
+         "quote": "is the set of all possible outcomes of that experiment"
+        },
+        {
+         "kind": "definition",
+         "anchor": "b04366",
+         "printed_page": 472,
+         "quote": "An event is a specific set of outcomes of an experiment that you are interested in"
+        }
+       ],
+       "exercise_items": [
+        "Ex14-1:1",
+        "Ex14-1:2"
+       ],
+       "worked_examples": [],
+       "key": "B1"
+      },
+      {
+       "statement": "Calculate the theoretical probability of an event when all outcomes are equally likely, using $P\\left(E\\right)=\\frac{n\\left(E\\right)}{n\\left(S\\right)}$, and give the answer as a simplified fraction or a decimal.",
+       "label": "Calculate theoretical probability",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE1",
+         "printed_page": 473,
+         "quote": "Compute the theoretical probability"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-1:6a",
+         "printed_page": 474,
+         "quote": "Determine the probability that it is"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-1:3",
+         "printed_page": 474,
+         "quote": "Write your answer as a simplified fraction"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-1:4",
+         "printed_page": 474,
+         "quote": "Write your answer as a decimal (correct to 2 decimal places)"
+        },
+        {
+         "kind": "heading",
+         "anchor": "EMA7W",
+         "printed_page": 472,
+         "quote": "Theoretical probability"
+        },
+        {
+         "kind": "intro",
+         "anchor": "b04378",
+         "printed_page": 473,
+         "quote": "the ratio between the number of outcomes in the event set"
+        },
+        {
+         "kind": "summary",
+         "anchor": "b04493",
+         "printed_page": 490,
+         "quote": "The probability of an event is the ratio between the number of outcomes in the event set"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-8:6",
+         "printed_page": 492,
+         "quote": "Write your answer as a decimal (correct to 2 decimal places)"
+        }
+       ],
+       "exercise_items": [
+        "Ex14-1:3",
+        "Ex14-1:4",
+        "Ex14-1:5",
+        "Ex14-1:6a",
+        "Ex14-1:6b",
+        "Ex14-1:6c",
+        "Ex14-1:6d",
+        "Ex14-1:7a",
+        "Ex14-1:7b",
+        "Ex14-1:7c",
+        "Ex14-1:7d",
+        "Ex14-1:7e"
+       ],
+       "worked_examples": [
+        "WE1"
+       ],
+       "key": "B2"
+      }
+     ]
+    }
+   },
+   "reconciled": {
+    "objectives": [
+     {
+      "statement": "Identify the sample space and the event set of an experiment from a description of it, for example when two dice are rolled or a single die is rolled.",
+      "label": "Identify sample space and event",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A1"
+       ],
+       "b": [
+        "B1"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "definition",
+        "anchor": "b04357",
+        "printed_page": 471,
+        "quote": "the set of all possible outcomes of that experiment"
+       },
+       {
+        "kind": "definition",
+        "anchor": "b04366",
+        "printed_page": 472,
+        "quote": "An event is a specific set of outcomes of an experiment that you are interested in"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex14-1:1",
+        "printed_page": 474,
+        "quote": "rolls 2 dice hoping to get a total of 8"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex14-1:2",
+        "printed_page": 474,
+        "quote": "rolls a die. Which of the following is the most appropriate example of the term"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex14-8:1",
+        "printed_page": 490,
+        "quote": "the most appropriate example of the term"
+       }
+      ],
+      "exercise_items": [
+       "Ex14-1:1",
+       "Ex14-1:2"
+      ],
+      "worked_examples": [],
+      "terms": [
+       "experiment",
+       "sample space",
+       "event",
+       "event set"
+      ],
+      "term_flags": [
+       {
+        "term": "sample space",
+        "why": "Some curricula call this the possibility space or outcome space."
+       },
+       {
+        "term": "event set",
+        "why": "Other curricula speak of the favourable outcomes or simply the event; the book treats the event as a set of outcomes."
+       }
+      ]
+     },
+     {
+      "statement": "Calculate the theoretical probability P(E) = n(E)/n(S) of an event when all the outcomes of the experiment are equally likely, and write it as a simplified fraction, a decimal or a percentage.",
+      "label": "Calculate theoretical probability",
+      "confidence": "merged",
+      "from": {
+       "a": [
+        "A2",
+        "A3"
+       ],
+       "b": [
+        "B2"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "heading",
+        "anchor": "EMA7W",
+        "printed_page": 472,
+        "quote": "Theoretical probability"
+       },
+       {
+        "kind": "intro",
+        "anchor": "b04378",
+        "printed_page": 473,
+        "quote": "the ratio between the number of outcomes in the event set and the number of possible outcomes in the sample space"
+       },
+       {
+        "kind": "intro",
+        "anchor": "b04375",
+        "printed_page": 473,
+        "quote": "As a percentage. For example"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE1",
+        "printed_page": 473,
+        "quote": "Compute the theoretical probability"
+       },
+       {
+        "kind": "summary",
+        "anchor": "b04493",
+        "printed_page": 490,
+        "quote": "The probability of an event is the ratio between the number of outcomes in the event set"
+       },
+       {
+        "kind": "summary",
+        "anchor": "b04492",
+        "printed_page": 490,
+        "quote": "A probability can also be written as a percentage or as a fraction."
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex14-1:3",
+        "printed_page": 474,
+        "quote": "Write your answer as a simplified fraction."
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex14-1:4",
+        "printed_page": 474,
+        "quote": "Write your answer as a decimal (correct to 2 decimal places)."
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex14-1:5",
+        "printed_page": 474,
+        "quote": "What is the probability of selecting a multiple of"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex14-1:6a",
+        "printed_page": 474,
+        "quote": "A ball is picked at random. Determine the probability that it is"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex14-8:6",
+        "printed_page": 492,
+        "quote": "What is the probability that the card is a king?"
+       }
+      ],
+      "exercise_items": [
+       "Ex14-1:3",
+       "Ex14-1:4",
+       "Ex14-1:5",
+       "Ex14-1:6a",
+       "Ex14-1:6b",
+       "Ex14-1:6c",
+       "Ex14-1:6d",
+       "Ex14-1:7a",
+       "Ex14-1:7b",
+       "Ex14-1:7c",
+       "Ex14-1:7d",
+       "Ex14-1:7e"
+      ],
+      "worked_examples": [
+       "WE1"
+      ],
+      "terms": [
+       "theoretical probability",
+       "event",
+       "outcomes",
+       "equally likely",
+       "simplified fraction",
+       "decimal",
+       "percentage"
+      ],
+      "term_flags": [
+       {
+        "term": "theoretical probability",
+        "why": "Other curricula may call this classical or a priori probability, in contrast with experimental or relative-frequency probability."
+       },
+       {
+        "term": "equally likely",
+        "why": "Some curricula say equiprobable outcomes or a fair/unbiased experiment."
+       },
+       {
+        "term": "simplified fraction",
+        "why": "Other curricula say a fraction in its simplest form or in lowest terms."
+       }
+      ]
+     }
+    ],
+    "rejected": [],
+    "unmapped_items": []
+   },
+   "evidence_check": {
+    "checks": [
+     {
+      "objective_n": 1,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 4,
+      "present": true,
+      "supports": false
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 4,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 5,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 6,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 7,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 8,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 9,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 10,
+      "present": true,
+      "supports": true
+     }
+    ]
+   }
+  },
+  {
+   "slug": "g10m14s2-1",
+   "finders": {
+    "a": {
+     "objectives": [
+      {
+       "statement": "Calculate the relative frequency of an event from experimental trials as the number of trials in which the event occurs divided by the total number of trials conducted.",
+       "label": "Calculate relative frequency",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "b04400",
+         "printed_page": 475,
+         "quote": "divided by the total number of trials conducted"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE3",
+         "printed_page": 476,
+         "quote": "What is the relative frequency of Team 1 winning?"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-2:1",
+         "printed_page": 477,
+         "quote": "What is the relative frequency of observing the die land on the number 3?"
+        },
+        {
+         "kind": "summary",
+         "anchor": "b04494",
+         "printed_page": 490,
+         "quote": "divided by the total number of trials conducted"
+        }
+       ],
+       "exercise_items": [
+        "Ex14-2:1",
+        "Ex14-2:2",
+        "Ex14-2:3"
+       ],
+       "worked_examples": [
+        "WE3"
+       ],
+       "key": "A1"
+      },
+      {
+       "statement": "Compare the relative frequency of an event with its theoretical probability and describe how the relative frequency gets closer to the theoretical probability as the number of trials increases.",
+       "label": "Compare with theoretical probability",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE2",
+         "printed_page": 475,
+         "quote": "The relative frequency is close to the theoretical probability of"
+        },
+        {
+         "kind": "intro",
+         "anchor": "b04406",
+         "printed_page": 477,
+         "quote": "the closer the observed relative frequency of an event will get to the theoretical probability"
+        },
+        {
+         "kind": "intro",
+         "anchor": "b04405",
+         "printed_page": 477,
+         "quote": "the difference between the theoretical probability of an event and the observed relative frequency"
+        }
+       ],
+       "exercise_items": [],
+       "worked_examples": [
+        "WE2"
+       ],
+       "key": "A2"
+      }
+     ]
+    },
+    "b": {
+     "objectives": [
+      {
+       "statement": "Calculate the relative frequency of an event from the results of experimental trials, as the number of positive trials divided by the total number of trials, and give it as a fraction or a decimal correct to 2 decimal places.",
+       "label": "Calculate relative frequency",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE3",
+         "printed_page": 476,
+         "quote": "What is the relative frequency of Team 1 winning?"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-2:1",
+         "printed_page": 477,
+         "quote": "What is the relative frequency of observing the die land on the number 3?"
+        },
+        {
+         "kind": "definition",
+         "anchor": "b04400",
+         "printed_page": 475,
+         "quote": "divided by the total number of trials conducted"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-8:7",
+         "printed_page": 492,
+         "quote": "What is the relative frequency of observing the die land on the number 3?"
+        }
+       ],
+       "exercise_items": [
+        "Ex14-2:1",
+        "Ex14-2:2",
+        "Ex14-2:3"
+       ],
+       "worked_examples": [
+        "WE3"
+       ],
+       "key": "B1"
+      },
+      {
+       "statement": "Calculate the relative frequency after each trial from a table of trial outcomes, and compare it with the theoretical probability, describing how it gets closer to the theoretical probability as the number of trials increases.",
+       "label": "Compare relative frequency with probability",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE2",
+         "printed_page": 475,
+         "quote": "how does it compare to the theoretical probability of observing heads"
+        },
+        {
+         "kind": "intro",
+         "anchor": "b04406",
+         "printed_page": 477,
+         "quote": "the closer the observed relative frequency of an event will get to the theoretical probability of the event"
+        },
+        {
+         "kind": "intro",
+         "anchor": "b04405",
+         "printed_page": 477,
+         "quote": "the difference between the theoretical probability of an event and the observed relative frequency of the event"
+        }
+       ],
+       "exercise_items": [],
+       "worked_examples": [
+        "WE2"
+       ],
+       "key": "B2"
+      }
+     ]
+    }
+   },
+   "reconciled": {
+    "objectives": [
+     {
+      "statement": "Calculate the relative frequency of an event from experimental trials as the number of trials in which the event occurs divided by the total number of trials conducted.",
+      "label": "Calculate relative frequency",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A1"
+       ],
+       "b": [
+        "B1"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "definition",
+        "anchor": "b04400",
+        "printed_page": 475,
+        "quote": "divided by the total number of trials conducted"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE3",
+        "printed_page": 476,
+        "quote": "What is the relative frequency of Team 1 winning?"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex14-2:1",
+        "printed_page": 477,
+        "quote": "What is the relative frequency of observing the die land on the number 3?"
+       },
+       {
+        "kind": "summary",
+        "anchor": "b04494",
+        "printed_page": 490,
+        "quote": "divided by the total number of trials conducted"
+       }
+      ],
+      "exercise_items": [
+       "Ex14-2:1",
+       "Ex14-2:2",
+       "Ex14-2:3"
+      ],
+      "worked_examples": [
+       "WE3"
+      ],
+      "terms": [
+       "relative frequency",
+       "event",
+       "trial",
+       "number of trials"
+      ],
+      "term_flags": [
+       {
+        "term": "relative frequency",
+        "why": "Other curricula often call the same quantity experimental probability or empirical probability; this book uses relative frequency for the ratio found from trials."
+       }
+      ]
+     },
+     {
+      "statement": "Calculate the relative frequency after each trial from a table of trial outcomes, and compare it with the theoretical probability, describing how it gets closer to the theoretical probability as the number of trials increases.",
+      "label": "Compare with theoretical probability",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A2"
+       ],
+       "b": [
+        "B2"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "worked_example",
+        "anchor": "WE2",
+        "printed_page": 475,
+        "quote": "how does it compare to the theoretical probability of observing heads"
+       },
+       {
+        "kind": "intro",
+        "anchor": "b04406",
+        "printed_page": 477,
+        "quote": "the closer the observed relative frequency of an event will get to the theoretical probability of the event"
+       },
+       {
+        "kind": "intro",
+        "anchor": "b04405",
+        "printed_page": 477,
+        "quote": "the difference between the theoretical probability of an event and the observed relative frequency of the event"
+       }
+      ],
+      "exercise_items": [],
+      "worked_examples": [
+       "WE2"
+      ],
+      "terms": [
+       "relative frequency",
+       "theoretical probability",
+       "event",
+       "trial",
+       "number of trials"
+      ],
+      "term_flags": [
+       {
+        "term": "theoretical probability",
+        "why": "Some curricula call this classical or expected probability, and may reserve probability for the experimental value; the book uses theoretical probability for the value predicted from equally likely outcomes."
+       },
+       {
+        "term": "relative frequency",
+        "why": "Other curricula often call the same quantity experimental probability or empirical probability."
+       }
+      ]
+     }
+    ],
+    "rejected": [],
+    "unmapped_items": [],
+    "notes": "A1/B1 are the same objective and A2/B2 are the same objective, so both are agreed. B2 adds calculating the relative frequency after each trial from a table. This is worked example WE2's task and part of the same compare-with-theoretical-probability skill, so I used B2's fuller wording for objective 2. For objective 1 I used A1's statement. B1's 'fraction or decimal correct to 2 decimal places' is not supported by any quoted evidence, so I left it out. Ex14-8:7 (cited by B1, end-of-chapter) is not used as evidence or placed in exercise_items. All three lesson exercise items go in objective 1, as both finders had them. WE3 goes to objective 1 and WE2 to objective 2. The book teaches calculation first, then the comparison with theoretical probability, so objective 1 comes first."
+   },
+   "evidence_check": {
+    "checks": [
+     {
+      "objective_n": 1,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true
+     }
+    ]
+   }
+  },
+  {
+   "slug": "g10m14s3-1",
+   "finders": {
+    "a": {
+     "objectives": [
+      {
+       "statement": "Draw a Venn diagram that represents a sample space as a rectangle and the events as circles inside it.",
+       "label": "Draw a Venn diagram",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "b04416",
+         "printed_page": 478,
+         "quote": "represented using a rectangle for $S$ and circles for each of $A$ and $B$"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE4",
+         "printed_page": 478,
+         "quote": "Represent the sample space of two rolled dice and the following two events using a Venn diagram"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-3:4",
+         "printed_page": 480,
+         "quote": "Draw a Venn diagram depicting $S$ , $X$ and $Y$"
+        }
+       ],
+       "exercise_items": [
+        "Ex14-3:3d",
+        "Ex14-3:4"
+       ],
+       "worked_examples": [
+        "WE4"
+       ],
+       "key": "A1"
+      },
+      {
+       "statement": "Write down the sample space and the event sets of an experiment as sets of outcomes and determine n(S), n(A) and n(B).",
+       "label": "Write sample space and events",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE5",
+         "printed_page": 479,
+         "quote": "$n\\left(S\\right)=13$"
+        },
+        {
+         "kind": "summary",
+         "anchor": "b04486",
+         "printed_page": 489,
+         "quote": "The sample space of an experiment is the set of all possible outcomes of that experiment"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-3:3a",
+         "printed_page": 480,
+         "quote": "What is the sample space, $S$ ?"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-3:3e",
+         "printed_page": 480,
+         "quote": "Find: $n(S)$ $n(A)$ $n(B)$"
+        }
+       ],
+       "exercise_items": [
+        "Ex14-3:3a",
+        "Ex14-3:3b",
+        "Ex14-3:3c",
+        "Ex14-3:3e"
+       ],
+       "worked_examples": [
+        "WE5"
+       ],
+       "key": "A2"
+      },
+      {
+       "statement": "Identify the event set of A or B from a Venn diagram of a sample space.",
+       "label": "Read event sets from diagram",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "b04413",
+         "printed_page": 478,
+         "quote": "region inside the curve represents the elements that belong to the set"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-3:1",
+         "printed_page": 480,
+         "quote": "They are asked to identify the event set of $B$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-8:2",
+         "printed_page": 491,
+         "quote": "identify the event set of $B$"
+        }
+       ],
+       "exercise_items": [
+        "Ex14-3:1",
+        "Ex14-3:2"
+       ],
+       "worked_examples": [],
+       "key": "A3"
+      },
+      {
+       "statement": "Draw a Venn diagram from given numbers of learners in overlapping groups and use it to calculate how many belong to a particular region.",
+       "label": "Solve group-count problems",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "b04414",
+         "printed_page": 478,
+         "quote": "Venn diagrams are helpful for thinking about probability"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-3:5a",
+         "printed_page": 481,
+         "quote": "Draw a Venn diagram to illustrate all this information"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-3:5b",
+         "printed_page": 481,
+         "quote": "How many learners take Maths and Geography but not History?"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-8:31a",
+         "printed_page": 496,
+         "quote": "Represent the information in a Venn diagram."
+        }
+       ],
+       "exercise_items": [
+        "Ex14-3:5a",
+        "Ex14-3:5b",
+        "Ex14-3:5c",
+        "Ex14-3:5d"
+       ],
+       "worked_examples": [],
+       "key": "A4"
+      }
+     ]
+    },
+    "b": {
+     "objectives": [
+      {
+       "statement": "Write down the sample space and the event sets of an experiment, find n(S), n(A) and n(B), and represent them in a Venn diagram (rectangle for S, circles for the events).",
+       "label": "Draw Venn diagrams of events",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE4",
+         "printed_page": 478,
+         "quote": "Represent the sample space of two rolled dice"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE5",
+         "printed_page": 479,
+         "quote": "Draw the Venn diagram"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-3:3d",
+         "printed_page": 480,
+         "quote": "Represent $A$ , $B$ and $S$ by means of a Venn diagram"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-3:4",
+         "printed_page": 480,
+         "quote": "Draw a Venn diagram depicting $S$ , $X$ and $Y$"
+        },
+        {
+         "kind": "intro",
+         "anchor": "b04416",
+         "printed_page": 478,
+         "quote": "The sets are represented using a rectangle for $S$ and circles for each of $A$ and $B$"
+        },
+        {
+         "kind": "heading",
+         "anchor": "EMA7Y",
+         "printed_page": 478,
+         "quote": "Venn diagrams"
+        }
+       ],
+       "exercise_items": [
+        "Ex14-3:3a",
+        "Ex14-3:3b",
+        "Ex14-3:3c",
+        "Ex14-3:3d",
+        "Ex14-3:3e",
+        "Ex14-3:4"
+       ],
+       "worked_examples": [
+        "WE4",
+        "WE5"
+       ],
+       "key": "B1"
+      },
+      {
+       "statement": "Identify the event set of A or B from a given Venn diagram of a sample space by reading which elements lie inside the circle.",
+       "label": "Read event sets from diagrams",
+       "evidence": [
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-3:1",
+         "printed_page": 480,
+         "quote": "identify the event set of $B$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-3:2",
+         "printed_page": 480,
+         "quote": "identify the event set of $A$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-8:2",
+         "printed_page": 491,
+         "quote": "identify the event set of $B$"
+        },
+        {
+         "kind": "intro",
+         "anchor": "b04413",
+         "printed_page": 478,
+         "quote": "The region inside the curve represents the elements that belong to the set"
+        }
+       ],
+       "exercise_items": [
+        "Ex14-3:1",
+        "Ex14-3:2"
+       ],
+       "worked_examples": [],
+       "key": "B2"
+      },
+      {
+       "statement": "Draw a Venn diagram from survey information about learners taking different subjects and use it to determine how many learners are in a given region.",
+       "label": "Solve Venn counting problems",
+       "evidence": [
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-3:5a",
+         "printed_page": 481,
+         "quote": "Draw a Venn diagram to illustrate all this information"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-3:5b",
+         "printed_page": 481,
+         "quote": "How many learners take Maths and Geography but not History?"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-8:31a",
+         "printed_page": 496,
+         "quote": "Represent the information in a Venn diagram"
+        },
+        {
+         "kind": "intro",
+         "anchor": "b04413",
+         "printed_page": 478,
+         "quote": "A Venn diagram is a graphical way of representing the relationships between sets"
+        }
+       ],
+       "exercise_items": [
+        "Ex14-3:5a",
+        "Ex14-3:5b",
+        "Ex14-3:5c",
+        "Ex14-3:5d"
+       ],
+       "worked_examples": [],
+       "key": "B3"
+      }
+     ]
+    }
+   },
+   "reconciled": {
+    "objectives": [
+     {
+      "statement": "Write down the sample space and the event sets of an experiment, find n(S), n(A) and n(B), and represent them in a Venn diagram (rectangle for S, circles for the events).",
+      "label": "Draw Venn diagrams of events",
+      "confidence": "merged",
+      "from": {
+       "a": [
+        "A1",
+        "A2"
+       ],
+       "b": [
+        "B1"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "heading",
+        "anchor": "EMA7Y",
+        "printed_page": 478,
+        "quote": "Venn diagrams"
+       },
+       {
+        "kind": "intro",
+        "anchor": "b04416",
+        "printed_page": 478,
+        "quote": "The sets are represented using a rectangle for $S$ and circles for each of $A$ and $B$"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE4",
+        "printed_page": 478,
+        "quote": "Represent the sample space of two rolled dice and the following two events using a Venn diagram"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE5",
+        "printed_page": 479,
+        "quote": "$n\\left(S\\right)=13$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex14-3:3a",
+        "printed_page": 480,
+        "quote": "What is the sample space, $S$ ?"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex14-3:3e",
+        "printed_page": 480,
+        "quote": "Find: $n(S)$ $n(A)$ $n(B)$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex14-3:3d",
+        "printed_page": 480,
+        "quote": "Represent $A$ , $B$ and $S$ by means of a Venn diagram"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex14-3:4",
+        "printed_page": 480,
+        "quote": "Draw a Venn diagram depicting $S$ , $X$ and $Y$"
+       }
+      ],
+      "exercise_items": [
+       "Ex14-3:3a",
+       "Ex14-3:3b",
+       "Ex14-3:3c",
+       "Ex14-3:3d",
+       "Ex14-3:3e",
+       "Ex14-3:4"
+      ],
+      "worked_examples": [
+       "WE4",
+       "WE5"
+      ],
+      "terms": [
+       "sample space",
+       "event",
+       "event set",
+       "outcome",
+       "n(S)",
+       "Venn diagram"
+      ],
+      "term_flags": [
+       {
+        "term": "n(S)",
+        "why": "The book writes the number of elements of a set as n(S), n(A), n(B). Other curricula use |S|, #S or card(S) for the same thing."
+       },
+       {
+        "term": "event set",
+        "why": "The book speaks of the 'event set' of A or B, meaning the set of outcomes in the event. Other curricula say just 'the event' or 'the subset of the sample space'."
+       },
+       {
+        "term": "sample space",
+        "why": "Some curricula call this the 'possibility space' or 'outcome space'."
+       }
+      ]
+     },
+     {
+      "statement": "Identify the event set of A or B from a given Venn diagram of a sample space by reading which elements lie inside the circle.",
+      "label": "Read event sets from diagrams",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A3"
+       ],
+       "b": [
+        "B2"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "intro",
+        "anchor": "b04413",
+        "printed_page": 478,
+        "quote": "The region inside the curve represents the elements that belong to the set"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex14-3:1",
+        "printed_page": 480,
+        "quote": "identify the event set of $B$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex14-3:2",
+        "printed_page": 480,
+        "quote": "identify the event set of $A$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex14-8:2",
+        "printed_page": 491,
+        "quote": "identify the event set of $B$"
+       }
+      ],
+      "exercise_items": [
+       "Ex14-3:1",
+       "Ex14-3:2"
+      ],
+      "worked_examples": [],
+      "terms": [
+       "event set",
+       "sample space",
+       "Venn diagram",
+       "element"
+      ],
+      "term_flags": [
+       {
+        "term": "event set",
+        "why": "The book speaks of the 'event set' of A or B, meaning the set of outcomes in the event. Other curricula say just 'the event' or 'the subset of the sample space'."
+       }
+      ]
+     },
+     {
+      "statement": "Draw a Venn diagram from survey information about learners taking different subjects and use it to determine how many learners are in a given region.",
+      "label": "Solve Venn counting problems",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A4"
+       ],
+       "b": [
+        "B3"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "intro",
+        "anchor": "b04413",
+        "printed_page": 478,
+        "quote": "A Venn diagram is a graphical way of representing the relationships between sets"
+       },
+       {
+        "kind": "intro",
+        "anchor": "b04414",
+        "printed_page": 478,
+        "quote": "Venn diagrams are helpful for thinking about probability"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex14-3:5a",
+        "printed_page": 481,
+        "quote": "Draw a Venn diagram to illustrate all this information"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex14-3:5b",
+        "printed_page": 481,
+        "quote": "How many learners take Maths and Geography but not History?"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex14-8:31a",
+        "printed_page": 496,
+        "quote": "Represent the information in a Venn diagram."
+       }
+      ],
+      "exercise_items": [
+       "Ex14-3:5a",
+       "Ex14-3:5b",
+       "Ex14-3:5c",
+       "Ex14-3:5d"
+      ],
+      "worked_examples": [],
+      "terms": [
+       "Venn diagram",
+       "set",
+       "region"
+      ],
+      "term_flags": []
+     }
+    ],
+    "rejected": [],
+    "unmapped_items": []
+   },
+   "evidence_check": {
+    "checks": [
+     {
+      "objective_n": 1,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 4,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 5,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 6,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 7,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 1,
+      "present": true,
+      "supports": false
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 4,
+      "present": true,
+      "supports": true
+     }
+    ]
+   }
+  },
+  {
+   "slug": "g10m14s4-1",
+   "finders": {
+    "a": {
+     "objectives": [
+      {
+       "statement": "Determine the intersection (A and B) of two event sets from a Venn diagram, writing down the elements that are in both sets.",
+       "label": "Determine an intersection",
+       "evidence": [
+        {
+         "kind": "heading",
+         "anchor": "EMA7Z",
+         "printed_page": 481,
+         "quote": "Union and intersection"
+        },
+        {
+         "kind": "definition",
+         "anchor": "b04437",
+         "printed_page": 481,
+         "quote": "all of the elements that are in both sets"
+        },
+        {
+         "kind": "summary",
+         "anchor": "b04496",
+         "printed_page": 490,
+         "quote": "elements that are in both sets"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-4:1",
+         "printed_page": 482,
+         "quote": "identify the event set of the intersection between event set $A$ and event set $B$"
+        }
+       ],
+       "exercise_items": [
+        "Ex14-4:1"
+       ],
+       "worked_examples": [],
+       "key": "A1"
+      },
+      {
+       "statement": "Determine the union (A or B) of two event sets from a Venn diagram, writing down the elements that are in at least one of the two sets.",
+       "label": "Determine a union",
+       "evidence": [
+        {
+         "kind": "heading",
+         "anchor": "EMA7Z",
+         "printed_page": 481,
+         "quote": "Union and intersection"
+        },
+        {
+         "kind": "definition",
+         "anchor": "b04436",
+         "printed_page": 481,
+         "quote": "all of the elements that are in at least one of the two sets"
+        },
+        {
+         "kind": "summary",
+         "anchor": "b04495",
+         "printed_page": 490,
+         "quote": "elements that are in at least one of the two sets"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-4:2",
+         "printed_page": 482,
+         "quote": "identify the event set of the union between event set $A$ and event set $B$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-8:3",
+         "printed_page": 491,
+         "quote": "Write down the event set that best describes $A\\cupB$"
+        }
+       ],
+       "exercise_items": [
+        "Ex14-4:2"
+       ],
+       "worked_examples": [],
+       "key": "A2"
+      }
+     ]
+    },
+    "b": {
+     "objectives": [
+      {
+       "statement": "Determine the union A ∪ B (\"A or B\") of two event sets by listing every element that is in at least one of the sets, using a Venn diagram of the sample space.",
+       "label": "Determine the union",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "b04436",
+         "printed_page": 481,
+         "quote": "all of the elements that are in at least one of the two sets"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-4:2",
+         "printed_page": 482,
+         "quote": "identify the event set of the union between event set"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-8:3",
+         "printed_page": 491,
+         "quote": "Write down the event set that best describes"
+        },
+        {
+         "kind": "summary",
+         "anchor": "b04495",
+         "printed_page": 490,
+         "quote": "all of the elements that are in at least one of the two sets"
+        }
+       ],
+       "exercise_items": [
+        "Ex14-4:2"
+       ],
+       "worked_examples": [],
+       "key": "B1"
+      },
+      {
+       "statement": "Determine the intersection A ∩ B (\"A and B\") of two event sets by listing only the elements that are in both sets, using a Venn diagram of the sample space.",
+       "label": "Determine the intersection",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "b04437",
+         "printed_page": 481,
+         "quote": "all of the elements that are in both sets"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-4:1",
+         "printed_page": 482,
+         "quote": "identify the event set of the intersection between event set"
+        },
+        {
+         "kind": "summary",
+         "anchor": "b04496",
+         "printed_page": 490,
+         "quote": "all of the elements that are in both sets"
+        }
+       ],
+       "exercise_items": [
+        "Ex14-4:1"
+       ],
+       "worked_examples": [],
+       "key": "B2"
+      }
+     ]
+    }
+   },
+   "reconciled": {
+    "objectives": [
+     {
+      "statement": "Determine the union (A or B) of two event sets from a Venn diagram, by writing down every element that is in at least one of the two sets.",
+      "label": "Determine the union",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A2"
+       ],
+       "b": [
+        "B1"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "heading",
+        "anchor": "EMA7Z",
+        "printed_page": 481,
+        "quote": "Union and intersection"
+       },
+       {
+        "kind": "definition",
+        "anchor": "b04436",
+        "printed_page": 481,
+        "quote": "all of the elements that are in at least one of the two sets"
+       },
+       {
+        "kind": "summary",
+        "anchor": "b04495",
+        "printed_page": 490,
+        "quote": "all of the elements that are in at least one of the two sets"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex14-4:2",
+        "printed_page": 482,
+        "quote": "identify the event set of the union between event set $A$ and event set $B$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex14-8:3",
+        "printed_page": 491,
+        "quote": "Write down the event set that best describes $A\\cupB$"
+       }
+      ],
+      "exercise_items": [
+       "Ex14-4:2"
+      ],
+      "worked_examples": [],
+      "terms": [
+       "union",
+       "event set",
+       "Venn diagram",
+       "element"
+      ],
+      "term_flags": [
+       {
+        "term": "event set",
+        "why": "Other curricula usually say just 'event' (a subset of the sample space); this book calls the set of outcomes an 'event set'."
+       }
+      ]
+     },
+     {
+      "statement": "Determine the intersection (A and B) of two event sets from a Venn diagram, by writing down only the elements that are in both sets.",
+      "label": "Determine the intersection",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A1"
+       ],
+       "b": [
+        "B2"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "heading",
+        "anchor": "EMA7Z",
+        "printed_page": 481,
+        "quote": "Union and intersection"
+       },
+       {
+        "kind": "definition",
+        "anchor": "b04437",
+        "printed_page": 481,
+        "quote": "all of the elements that are in both sets"
+       },
+       {
+        "kind": "summary",
+        "anchor": "b04496",
+        "printed_page": 490,
+        "quote": "all of the elements that are in both sets"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex14-4:1",
+        "printed_page": 482,
+        "quote": "identify the event set of the intersection between event set $A$ and event set $B$"
+       }
+      ],
+      "exercise_items": [
+       "Ex14-4:1"
+      ],
+      "worked_examples": [],
+      "terms": [
+       "intersection",
+       "event set",
+       "Venn diagram",
+       "element"
+      ],
+      "term_flags": [
+       {
+        "term": "event set",
+        "why": "Other curricula usually say just 'event' (a subset of the sample space); this book calls the set of outcomes an 'event set'."
+       }
+      ]
+     }
+    ],
+    "rejected": [],
+    "unmapped_items": []
+   },
+   "evidence_check": {
+    "checks": [
+     {
+      "objective_n": 1,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 4,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true
+     }
+    ]
+   }
+  },
+  {
+   "slug": "g10m14s5-1",
+   "finders": {
+    "a": {
+     "objectives": [
+      {
+       "statement": "Verify that $P\\left(A\\cupB\\right)=P\\left(A\\right)+P\\left(B\\right)-P\\left(A\\capB\\right)$ holds for two events, by finding each probability from a Venn diagram of the outcomes and by using Venn diagrams to prove the identity.",
+       "label": "Verify the union identity",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "b04447",
+         "printed_page": 483,
+         "quote": "We will prove this identity using the Venn diagrams"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE6",
+         "printed_page": 483,
+         "quote": "show that they satisfy the identity"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-8:26",
+         "printed_page": 495,
+         "quote": "Use a Venn diagram to prove that the probability"
+        }
+       ],
+       "exercise_items": [],
+       "worked_examples": [
+        "WE6"
+       ],
+       "key": "A1"
+      },
+      {
+       "statement": "Calculate the probability of the union of two events, $P(A\\cupB)$, from their event sets and the sample space using the identity $P\\left(A\\cupB\\right)=P\\left(A\\right)+P\\left(B\\right)-P\\left(A\\capB\\right)$.",
+       "label": "Probability of a union",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "b04445",
+         "printed_page": 483,
+         "quote": "We can calculate the probability of the union of two events using"
+        },
+        {
+         "kind": "summary",
+         "anchor": "b04498",
+         "printed_page": 490,
+         "quote": "The probability of the union of two events is calculated using"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-5:1",
+         "printed_page": 484,
+         "quote": "calculate the value of $P(A\\cupB)$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-8:23a",
+         "printed_page": 494,
+         "quote": "a diamond or a three"
+        }
+       ],
+       "exercise_items": [
+        "Ex14-5:1"
+       ],
+       "worked_examples": [],
+       "key": "A2"
+      },
+      {
+       "statement": "Determine the probability of the intersection of two events, $P(A\\capB)$, from the event sets of $A$, $B$ and $A\\cup B$ and the sample space.",
+       "label": "Probability of an intersection",
+       "evidence": [
+        {
+         "kind": "summary",
+         "anchor": "b04496",
+         "printed_page": 490,
+         "quote": "all of the elements that are in both sets"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-5:2",
+         "printed_page": 484,
+         "quote": "calculate the value of $P(A\\capB)$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-8:24",
+         "printed_page": 494,
+         "quote": "calculate the value of $P(A\\capB)$"
+        }
+       ],
+       "exercise_items": [
+        "Ex14-5:2"
+       ],
+       "worked_examples": [],
+       "key": "A3"
+      }
+     ]
+    },
+    "b": {
+     "objectives": [
+      {
+       "statement": "Verify the identity $P\\left(A\\cupB\\right)=P\\left(A\\right)+P\\left(B\\right)-P\\left(A\\capB\\right)$ by calculating P(A), P(B), P(A∩B) and P(A∪B) from the counts in a Venn diagram",
+       "label": "Verify the union identity",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE6",
+         "printed_page": 483,
+         "quote": "show that they satisfy the identity"
+        },
+        {
+         "kind": "intro",
+         "anchor": "b04447",
+         "printed_page": 483,
+         "quote": "prove this identity using the Venn diagrams"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-8:26",
+         "printed_page": 495,
+         "quote": "Use a Venn diagram to prove that"
+        }
+       ],
+       "exercise_items": [],
+       "worked_examples": [
+        "WE6"
+       ],
+       "key": "B1"
+      },
+      {
+       "statement": "Calculate the probability of the union of two events, P(A∪B), from their event sets and the sample space using the identity P(A∪B) = P(A) + P(B) − P(A∩B)",
+       "label": "Calculate P(A or B)",
+       "evidence": [
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-5:1",
+         "printed_page": 484,
+         "quote": "calculate the value of $P(A\\cupB)$"
+        },
+        {
+         "kind": "intro",
+         "anchor": "b04445",
+         "printed_page": 483,
+         "quote": "calculate the probability of the union of two events"
+        },
+        {
+         "kind": "summary",
+         "anchor": "b04498",
+         "printed_page": 490,
+         "quote": "The probability of the union of two events is calculated using"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-8:13f",
+         "printed_page": 493,
+         "quote": "is a multiple of $\\text{3}$ or $\\text{4}$"
+        }
+       ],
+       "exercise_items": [
+        "Ex14-5:1"
+       ],
+       "worked_examples": [],
+       "key": "B2"
+      },
+      {
+       "statement": "Calculate the probability of the intersection of two events, P(A∩B), from the event sets of A, B and A∪B and the sample space",
+       "label": "Calculate P(A and B)",
+       "evidence": [
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-5:2",
+         "printed_page": 484,
+         "quote": "calculate the value of $P(A\\capB)$"
+        },
+        {
+         "kind": "intro",
+         "anchor": "b04446",
+         "printed_page": 483,
+         "quote": "$P\\left(A\\right)+P\\left(B\\right)-P\\left(A\\capB\\right)$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-8:24",
+         "printed_page": 494,
+         "quote": "calculate the value of $P(A\\capB)$"
+        }
+       ],
+       "exercise_items": [
+        "Ex14-5:2"
+       ],
+       "worked_examples": [],
+       "key": "B3"
+      }
+     ]
+    }
+   },
+   "reconciled": {
+    "objectives": [
+     {
+      "statement": "Calculate the probability of the union of two events, P(A∪B), from their event sets and the sample space using the identity P(A∪B) = P(A) + P(B) − P(A∩B)",
+      "label": "Probability of a union",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A2"
+       ],
+       "b": [
+        "B2"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "intro",
+        "anchor": "b04445",
+        "printed_page": 483,
+        "quote": "We can calculate the probability of the union of two events using"
+       },
+       {
+        "kind": "summary",
+        "anchor": "b04498",
+        "printed_page": 490,
+        "quote": "The probability of the union of two events is calculated using"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex14-5:1",
+        "printed_page": 484,
+        "quote": "calculate the value of $P(A\\cupB)$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex14-8:23a",
+        "printed_page": 494,
+        "quote": "a diamond or a three"
+       }
+      ],
+      "exercise_items": [
+       "Ex14-5:1"
+      ],
+      "worked_examples": [],
+      "terms": [
+       "probability",
+       "event",
+       "union",
+       "intersection",
+       "sample space",
+       "identity"
+      ],
+      "term_flags": [
+       {
+        "term": "identity",
+        "why": "The book calls P(A∪B) = P(A) + P(B) − P(A∩B) an identity; readers from other curricula may know it as the addition rule for probability or the inclusion-exclusion formula."
+       },
+       {
+        "term": "union",
+        "why": "Other curricula may say 'A or B' (the label used by one finder) rather than 'union of two events'; the symbol ∪ is the same."
+       }
+      ]
+     },
+     {
+      "statement": "Verify the identity P(A∪B) = P(A) + P(B) − P(A∩B) for two events by calculating P(A), P(B), P(A∩B) and P(A∪B) from the counts in a Venn diagram, and use Venn diagrams to prove the identity",
+      "label": "Verify the union identity",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A1"
+       ],
+       "b": [
+        "B1"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "worked_example",
+        "anchor": "WE6",
+        "printed_page": 483,
+        "quote": "show that they satisfy the identity"
+       },
+       {
+        "kind": "intro",
+        "anchor": "b04447",
+        "printed_page": 483,
+        "quote": "We will prove this identity using the Venn diagrams"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex14-8:26",
+        "printed_page": 495,
+        "quote": "Use a Venn diagram to prove that the probability"
+       }
+      ],
+      "exercise_items": [],
+      "worked_examples": [
+       "WE6"
+      ],
+      "terms": [
+       "identity",
+       "Venn diagram",
+       "probability",
+       "event",
+       "union",
+       "intersection"
+      ],
+      "term_flags": [
+       {
+        "term": "identity",
+        "why": "Readers from other curricula may know this result as the addition rule for probability or the inclusion-exclusion formula."
+       }
+      ]
+     },
+     {
+      "statement": "Determine the probability of the intersection of two events, P(A∩B), from the event sets of A, B and A∪B and the sample space",
+      "label": "Probability of an intersection",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A3"
+       ],
+       "b": [
+        "B3"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "summary",
+        "anchor": "b04496",
+        "printed_page": 490,
+        "quote": "all of the elements that are in both sets"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex14-5:2",
+        "printed_page": 484,
+        "quote": "calculate the value of $P(A\\capB)$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex14-8:24",
+        "printed_page": 494,
+        "quote": "calculate the value of $P(A\\capB)$"
+       }
+      ],
+      "exercise_items": [
+       "Ex14-5:2"
+      ],
+      "worked_examples": [],
+      "terms": [
+       "probability",
+       "event",
+       "intersection",
+       "union",
+       "sample space"
+      ],
+      "term_flags": [
+       {
+        "term": "intersection",
+        "why": "Other curricula may say 'A and B' (the label used by one finder) rather than 'intersection of two events'; the symbol ∩ is the same."
+       }
+      ]
+     }
+    ],
+    "rejected": [],
+    "unmapped_items": [],
+    "notes": "All six keys are matched one-to-one (A1/B1, A2/B2, A3/B3), so nothing is rejected and all three objectives are marked agreed. I ordered them as the book teaches: the union calculation is introduced first (b04445), then the Venn-diagram proof and WE6 (b04447, p483), then the intersection (Ex14-5:2, p484). Evidence quotes keep the longer finder wording where the two lists differed, copied exactly. End-of-chapter items (Ex14-8:*) appear as evidence only; the lesson's exercise items Ex14-5:1 and Ex14-5:2 and worked example WE6 are each placed in exactly one objective."
+   },
+   "evidence_check": {
+    "checks": [
+     {
+      "objective_n": 1,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true
+     }
+    ]
+   }
+  },
+  {
+   "slug": "g10m14s6-1",
+   "finders": {
+    "a": {
+     "objectives": [
+      {
+       "statement": "State whether two events of an experiment are mutually exclusive by deciding whether they can occur at the same time.",
+       "label": "Identify mutually exclusive events",
+       "evidence": [
+        {
+         "kind": "heading",
+         "anchor": "EMA83",
+         "printed_page": 485,
+         "quote": "Mutually exclusive events"
+        },
+        {
+         "kind": "definition",
+         "anchor": "b04456",
+         "printed_page": 485,
+         "quote": "cannot occur at the same time"
+        },
+        {
+         "kind": "summary",
+         "anchor": "b04499",
+         "printed_page": 490,
+         "quote": "cannot occur at the same time"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-6:1",
+         "printed_page": 486,
+         "quote": "State whether the following events are mutually exclusive or not."
+        }
+       ],
+       "exercise_items": [
+        "Ex14-6:1",
+        "Ex14-6:2",
+        "Ex14-6:3",
+        "Ex14-6:4"
+       ],
+       "worked_examples": [],
+       "key": "A1"
+      },
+      {
+       "statement": "Show that two events are mutually exclusive by drawing the sample space and the two events and checking that their intersection has no elements.",
+       "label": "Show events mutually exclusive",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE7",
+         "printed_page": 485,
+         "quote": "there are no elements in common in A and B"
+        },
+        {
+         "kind": "intro",
+         "anchor": "b04457",
+         "printed_page": 485,
+         "quote": "cannot have any elements in common"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-8:4",
+         "printed_page": 491,
+         "quote": "mutually exclusive?"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-8:27e",
+         "printed_page": 495,
+         "quote": "Find any elements of $P$ in $N$"
+        }
+       ],
+       "exercise_items": [],
+       "worked_examples": [
+        "WE7"
+       ],
+       "key": "A2"
+      },
+      {
+       "statement": "Calculate the probability that one or other of two mutually exclusive events occurs by adding their probabilities, P(A or B) = P(A) + P(B).",
+       "label": "Add probabilities, exclusive events",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "b04459",
+         "printed_page": 485,
+         "quote": "the probability of the union is the sum of the probabilities of the events"
+        },
+        {
+         "kind": "intro",
+         "anchor": "b04461",
+         "printed_page": 485,
+         "quote": "This relationship is true for mutually exclusive events only."
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-8:18a",
+         "printed_page": 493,
+         "quote": "either a ginger biscuit or a Jambo"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-8:11b",
+         "printed_page": 492,
+         "quote": "purple or white"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-8:17e",
+         "printed_page": 493,
+         "quote": "orange or pink"
+        }
+       ],
+       "exercise_items": [],
+       "worked_examples": [],
+       "key": "A3"
+      }
+     ]
+    },
+    "b": {
+     "objectives": [
+      {
+       "statement": "Determine whether two events are mutually exclusive by checking whether the events can occur at the same time, that is, whether their event sets have any elements in common.",
+       "label": "Identify mutually exclusive events",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE7",
+         "printed_page": 485,
+         "quote": "Show that the events are mutually exclusive."
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-6:1",
+         "printed_page": 486,
+         "quote": "State whether the following events are mutually exclusive or not."
+        },
+        {
+         "kind": "definition",
+         "anchor": "b04456",
+         "printed_page": 485,
+         "quote": "Two events are called mutually exclusive if they cannot occur at the same time."
+        },
+        {
+         "kind": "intro",
+         "anchor": "b04457",
+         "printed_page": 485,
+         "quote": "cannot have any elements in common"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-8:4",
+         "printed_page": 491,
+         "quote": "mutually exclusive?"
+        },
+        {
+         "kind": "summary",
+         "anchor": "b04499",
+         "printed_page": 490,
+         "quote": "Mutually exclusive events are two events that cannot occur at the same time."
+        }
+       ],
+       "exercise_items": [
+        "Ex14-6:1",
+        "Ex14-6:2",
+        "Ex14-6:3",
+        "Ex14-6:4"
+       ],
+       "worked_examples": [
+        "WE7"
+       ],
+       "key": "B1"
+      },
+      {
+       "statement": "Calculate the probability of the union of two mutually exclusive events as the sum of their probabilities, P(A) + P(B).",
+       "label": "Add probabilities, exclusive events",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "b04459",
+         "printed_page": 485,
+         "quote": "the probability of the union is the sum of the probabilities of the events"
+        },
+        {
+         "kind": "intro",
+         "anchor": "b04461",
+         "printed_page": 485,
+         "quote": "This relationship is true for mutually exclusive events only."
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-8:18a",
+         "printed_page": 493,
+         "quote": "it is either a ginger biscuit or a Jambo"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-8:11b",
+         "printed_page": 492,
+         "quote": "purple or white"
+        }
+       ],
+       "exercise_items": [],
+       "worked_examples": [],
+       "key": "B2"
+      }
+     ]
+    }
+   },
+   "reconciled": {
+    "objectives": [
+     {
+      "statement": "Determine whether two events are mutually exclusive by checking whether the events can occur at the same time, that is, whether their event sets have any elements in common.",
+      "label": "Identify mutually exclusive events",
+      "confidence": "merged",
+      "from": {
+       "a": [
+        "A1",
+        "A2"
+       ],
+       "b": [
+        "B1"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "heading",
+        "anchor": "EMA83",
+        "printed_page": 485,
+        "quote": "Mutually exclusive events"
+       },
+       {
+        "kind": "definition",
+        "anchor": "b04456",
+        "printed_page": 485,
+        "quote": "Two events are called mutually exclusive if they cannot occur at the same time."
+       },
+       {
+        "kind": "intro",
+        "anchor": "b04457",
+        "printed_page": 485,
+        "quote": "cannot have any elements in common"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE7",
+        "printed_page": 485,
+        "quote": "Show that the events are mutually exclusive."
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex14-6:1",
+        "printed_page": 486,
+        "quote": "State whether the following events are mutually exclusive or not."
+       },
+       {
+        "kind": "summary",
+        "anchor": "b04499",
+        "printed_page": 490,
+        "quote": "Mutually exclusive events are two events that cannot occur at the same time."
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex14-8:4",
+        "printed_page": 491,
+        "quote": "mutually exclusive?"
+       }
+      ],
+      "exercise_items": [
+       "Ex14-6:1",
+       "Ex14-6:2",
+       "Ex14-6:3",
+       "Ex14-6:4"
+      ],
+      "worked_examples": [
+       "WE7"
+      ],
+      "terms": [
+       "event",
+       "mutually exclusive",
+       "element"
+      ],
+      "term_flags": [
+       {
+        "term": "mutually exclusive",
+        "why": "A reader from another curriculum may know this as \"disjoint\" events (events with an empty intersection)."
+       }
+      ]
+     },
+     {
+      "statement": "Calculate the probability of the union of two mutually exclusive events as the sum of their probabilities, P(A or B) = P(A) + P(B).",
+      "label": "Add probabilities, exclusive events",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A3"
+       ],
+       "b": [
+        "B2"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "intro",
+        "anchor": "b04459",
+        "printed_page": 485,
+        "quote": "the probability of the union is the sum of the probabilities of the events"
+       },
+       {
+        "kind": "intro",
+        "anchor": "b04461",
+        "printed_page": 485,
+        "quote": "This relationship is true for mutually exclusive events only."
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex14-8:11b",
+        "printed_page": 492,
+        "quote": "purple or white"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex14-8:17e",
+        "printed_page": 493,
+        "quote": "orange or pink"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex14-8:18a",
+        "printed_page": 493,
+        "quote": "it is either a ginger biscuit or a Jambo"
+       }
+      ],
+      "exercise_items": [],
+      "worked_examples": [],
+      "terms": [
+       "probability",
+       "union",
+       "mutually exclusive",
+       "event"
+      ],
+      "term_flags": [
+       {
+        "term": "union",
+        "why": "Other curricula may express this as \"A or B\" or the addition rule for probabilities, or write it as A ∪ B."
+       },
+       {
+        "term": "mutually exclusive",
+        "why": "A reader from another curriculum may know this as \"disjoint\" events; the addition rule P(A) + P(B) applies only to these."
+       }
+      ]
+     }
+    ],
+    "rejected": [],
+    "unmapped_items": []
+   },
+   "evidence_check": {
+    "checks": [
+     {
+      "objective_n": 1,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "Heading 'Mutually exclusive events' names the objective's topic and section."
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "Definition states what mutually exclusive events are and explains the constraint (cannot occur at same time)."
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "Intro text explains that event sets cannot have elements in common, with set notation P(A∩B)=∅."
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true,
+      "note": "Worked example with two dice events showing how to determine they are mutually exclusive by checking intersection is empty."
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 4,
+      "present": true,
+      "supports": true,
+      "note": "Exercise asks student to determine whether events are mutually exclusive—direct practice of the objective skill."
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 5,
+      "present": true,
+      "supports": true,
+      "note": "Summary states the definition of mutually exclusive events as a fact."
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 6,
+      "present": true,
+      "supports": true,
+      "note": "Exercise asks whether A∪B and (A∪B)' are mutually exclusive—practice determining mutual exclusivity."
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "Intro text states the relationship that the probability of union equals sum of probabilities."
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "Intro text clarifies this relationship holds only for mutually exclusive events—essential constraint."
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "Exercise about selecting colored blocks and calculating P(purple or white)—practices union probability calculation."
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true,
+      "note": "Exercise calculates P(orange or pink) socks—practices union probability for mutually exclusive events."
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 4,
+      "present": true,
+      "supports": true,
+      "note": "Exercise calculates P(ginger biscuit or Jambo)—practices union probability calculation for mutually exclusive events."
+     }
+    ]
+   }
+  },
+  {
+   "slug": "g10m14s7-1",
+   "finders": {
+    "a": {
+     "objectives": [
+      {
+       "statement": "Determine the complement of an event set, such as $B'$ or $(A\\cupB)'$, by listing the elements of the sample space that are not in the event",
+       "label": "Find complement of event",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "b04469",
+         "printed_page": 486,
+         "quote": "contains all of the elements that are not in $A$"
+        },
+        {
+         "kind": "heading",
+         "anchor": "EMA84",
+         "printed_page": 486,
+         "quote": "Complementary events"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-7:1",
+         "printed_page": 488,
+         "quote": "identify the complementary event set of $B$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-7:2",
+         "printed_page": 488,
+         "quote": "identify the complementary event set of $(A\\cupB)$"
+        }
+       ],
+       "exercise_items": [
+        "Ex14-7:1",
+        "Ex14-7:2"
+       ],
+       "worked_examples": [],
+       "key": "A1"
+      },
+      {
+       "statement": "Determine whether two events, including an event and its complement, are mutually exclusive by checking whether their intersection is empty",
+       "label": "Test mutually exclusive events",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "b04470",
+         "printed_page": 486,
+         "quote": "complementary events are mutually exclusive"
+        },
+        {
+         "kind": "summary",
+         "anchor": "b04501",
+         "printed_page": 490,
+         "quote": "Complementary events are mutually exclusive"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-7:3",
+         "printed_page": 489,
+         "quote": "Are $(A\\cupB)'$ and $A\\cupB$ mutually exclusive?"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-7:4",
+         "printed_page": 489,
+         "quote": "Are $A'$ and $B'$ mutually exclusive?"
+        }
+       ],
+       "exercise_items": [
+        "Ex14-7:3",
+        "Ex14-7:4"
+       ],
+       "worked_examples": [],
+       "key": "A2"
+      },
+      {
+       "statement": "Calculate the probability of an event or of its complement using the fact that $P\\left(A\\right)+P\\left(A'\\right)=1$",
+       "label": "Probability of a complement",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "b04474",
+         "printed_page": 486,
+         "quote": "the probabilities of complementary events sum to"
+        },
+        {
+         "kind": "summary",
+         "anchor": "b04503",
+         "printed_page": 490,
+         "quote": "Probabilities of complementary events sum to"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-8:15",
+         "printed_page": 493,
+         "quote": "The probability of taking out a pink sweet is $\\frac{7}{12}$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-8:16b",
+         "printed_page": 493,
+         "quote": "not an Opel"
+        }
+       ],
+       "exercise_items": [],
+       "worked_examples": [],
+       "key": "A3"
+      },
+      {
+       "statement": "Use a Venn diagram and the identity for the union of two events to work out how many elements are in only one event, in both events or in neither",
+       "label": "Reason with Venn diagrams",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE8",
+         "printed_page": 486,
+         "quote": "Use a Venn diagram to work out how many people"
+        },
+        {
+         "kind": "summary",
+         "anchor": "b04498",
+         "printed_page": 490,
+         "quote": "The probability of the union of two events is calculated using"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-8:28a",
+         "printed_page": 495,
+         "quote": "Represent this information with a Venn diagram"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-8:29a",
+         "printed_page": 495,
+         "quote": "Use a Venn diagram to find the percentage of people that read"
+        }
+       ],
+       "exercise_items": [],
+       "worked_examples": [
+        "WE8"
+       ],
+       "key": "A4"
+      }
+     ]
+    },
+    "b": {
+     "objectives": [
+      {
+       "statement": "Use a Venn diagram and the union identity to work out how many people or outcomes are in A only, in B only and in both A and B.",
+       "label": "Venn diagram region counts",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE8",
+         "printed_page": 486,
+         "quote": "Use a Venn diagram to work out how many people"
+        },
+        {
+         "kind": "summary",
+         "anchor": "b04498",
+         "printed_page": 490,
+         "quote": "The probability of the union of two events is calculated using"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-8:29a",
+         "printed_page": 495,
+         "quote": "Use a Venn diagram to find the percentage of people that read"
+        }
+       ],
+       "exercise_items": [],
+       "worked_examples": [
+        "WE8"
+       ],
+       "key": "B1"
+      },
+      {
+       "statement": "Identify the complement of an event set, such as B' or (A\\cupB)', from a Venn diagram.",
+       "label": "Complement of an event set",
+       "evidence": [
+        {
+         "kind": "heading",
+         "anchor": "EMA84",
+         "printed_page": 486,
+         "quote": "Complementary events"
+        },
+        {
+         "kind": "definition",
+         "anchor": "b04469",
+         "printed_page": 486,
+         "quote": "contains all of the elements that are not in $A$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-7:1",
+         "printed_page": 488,
+         "quote": "identify the complementary event set of $B$"
+        }
+       ],
+       "exercise_items": [
+        "Ex14-7:1",
+        "Ex14-7:2"
+       ],
+       "worked_examples": [],
+       "key": "B2"
+      },
+      {
+       "statement": "Determine whether two events, including an event and its complement, are mutually exclusive by checking whether their intersection is empty.",
+       "label": "Mutually exclusive events",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "b04470",
+         "printed_page": 486,
+         "quote": "we know that complementary events are mutually exclusive"
+        },
+        {
+         "kind": "intro",
+         "anchor": "b04471",
+         "printed_page": 486,
+         "quote": "$A\\capA'=\\varnothing$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-7:4",
+         "printed_page": 489,
+         "quote": "Are $A'$ and $B'$ mutually exclusive?"
+        }
+       ],
+       "exercise_items": [
+        "Ex14-7:3",
+        "Ex14-7:4"
+       ],
+       "worked_examples": [],
+       "key": "B3"
+      },
+      {
+       "statement": "Calculate the probability of an event not occurring from the probability that it does occur, using the fact that the probabilities of complementary events sum to 1.",
+       "label": "Probability of a complement",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "b04474",
+         "printed_page": 486,
+         "quote": "the probabilities of complementary events sum to"
+        },
+        {
+         "kind": "summary",
+         "anchor": "b04503",
+         "printed_page": 490,
+         "quote": "Probabilities of complementary events sum to"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-8:15",
+         "printed_page": 493,
+         "quote": "What is the probability of taking out a yellow sweet?"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex14-8:16b",
+         "printed_page": 493,
+         "quote": "not an Opel"
+        }
+       ],
+       "exercise_items": [],
+       "worked_examples": [],
+       "key": "B4"
+      }
+     ]
+    }
+   },
+   "reconciled": {
+    "objectives": [
+     {
+      "statement": "Determine the complement of an event set, such as $B'$ or $(A \\cup B)'$, as the elements of the sample space that are not in the event",
+      "label": "Complement of an event set",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A1"
+       ],
+       "b": [
+        "B2"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "heading",
+        "anchor": "EMA84",
+        "printed_page": 486,
+        "quote": "Complementary events"
+       },
+       {
+        "kind": "definition",
+        "anchor": "b04469",
+        "printed_page": 486,
+        "quote": "contains all of the elements that are not in $A$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex14-7:1",
+        "printed_page": 488,
+        "quote": "identify the complementary event set of $B$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex14-7:2",
+        "printed_page": 488,
+        "quote": "identify the complementary event set of $(A\\cupB)$"
+       }
+      ],
+      "exercise_items": [
+       "Ex14-7:1",
+       "Ex14-7:2"
+      ],
+      "worked_examples": [],
+      "terms": [
+       "complement",
+       "complementary events",
+       "event",
+       "event set",
+       "sample space"
+      ],
+      "term_flags": [
+       {
+        "term": "complement",
+        "why": "The book writes the complement of A as A'; other curricula commonly write A^c or a barred A (and some say 'not A')."
+       },
+       {
+        "term": "sample space",
+        "why": "Other curricula call this the 'possibility space' or 'outcome space', or use the universal set S or U."
+       }
+      ]
+     },
+     {
+      "statement": "Determine whether two events, including an event and its complement, are mutually exclusive by checking whether their intersection is empty",
+      "label": "Mutually exclusive events",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A2"
+       ],
+       "b": [
+        "B3"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "intro",
+        "anchor": "b04470",
+        "printed_page": 486,
+        "quote": "we know that complementary events are mutually exclusive"
+       },
+       {
+        "kind": "intro",
+        "anchor": "b04471",
+        "printed_page": 486,
+        "quote": "$A\\capA'=\\varnothing$"
+       },
+       {
+        "kind": "summary",
+        "anchor": "b04501",
+        "printed_page": 490,
+        "quote": "Complementary events are mutually exclusive"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex14-7:3",
+        "printed_page": 489,
+        "quote": "Are $(A\\cupB)'$ and $A\\cupB$ mutually exclusive?"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex14-7:4",
+        "printed_page": 489,
+        "quote": "Are $A'$ and $B'$ mutually exclusive?"
+       }
+      ],
+      "exercise_items": [
+       "Ex14-7:3",
+       "Ex14-7:4"
+      ],
+      "worked_examples": [],
+      "terms": [
+       "mutually exclusive",
+       "intersection",
+       "empty set",
+       "complementary events",
+       "union"
+      ],
+      "term_flags": [
+       {
+        "term": "mutually exclusive",
+        "why": "Other curricula often say 'disjoint' events (or 'incompatible' events) for the same idea."
+       },
+       {
+        "term": "empty set",
+        "why": "Written with the symbol for the empty set; some curricula call it the 'null set' and write {}."
+       }
+      ]
+     },
+     {
+      "statement": "Calculate the probability of an event or of its complement using the fact that $P\\left(A\\right)+P\\left(A'\\right)=1$",
+      "label": "Probability of a complement",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A3"
+       ],
+       "b": [
+        "B4"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "intro",
+        "anchor": "b04474",
+        "printed_page": 486,
+        "quote": "the probabilities of complementary events sum to"
+       },
+       {
+        "kind": "summary",
+        "anchor": "b04503",
+        "printed_page": 490,
+        "quote": "Probabilities of complementary events sum to"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex14-8:15",
+        "printed_page": 493,
+        "quote": "What is the probability of taking out a yellow sweet?"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex14-8:16b",
+        "printed_page": 493,
+        "quote": "not an Opel"
+       }
+      ],
+      "exercise_items": [],
+      "worked_examples": [],
+      "terms": [
+       "probability",
+       "complementary events",
+       "complement",
+       "event"
+      ],
+      "term_flags": [
+       {
+        "term": "complement",
+        "why": "The book writes P(A') for the probability that A does not occur; other curricula write P(A^c) or P(not A)."
+       }
+      ]
+     },
+     {
+      "statement": "Use a Venn diagram and the identity for the union of two events to work out how many elements are in only one event, in both events or in neither",
+      "label": "Venn diagram region counts",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A4"
+       ],
+       "b": [
+        "B1"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "worked_example",
+        "anchor": "WE8",
+        "printed_page": 486,
+        "quote": "Use a Venn diagram to work out how many people"
+       },
+       {
+        "kind": "summary",
+        "anchor": "b04498",
+        "printed_page": 490,
+        "quote": "The probability of the union of two events is calculated using"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex14-8:28a",
+        "printed_page": 495,
+        "quote": "Represent this information with a Venn diagram"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex14-8:29a",
+        "printed_page": 495,
+        "quote": "Use a Venn diagram to find the percentage of people that read"
+       }
+      ],
+      "exercise_items": [],
+      "worked_examples": [
+       "WE8"
+      ],
+      "terms": [
+       "Venn diagram",
+       "union",
+       "intersection",
+       "event"
+      ],
+      "term_flags": [
+       {
+        "term": "union",
+        "why": "The book may express the union of two events as 'A or B'; some curricula use that wording rather than the union symbol."
+       },
+       {
+        "term": "intersection",
+        "why": "The book may express the intersection of two events as 'A and B'; some curricula use that wording rather than the intersection symbol."
+       }
+      ]
+     }
+    ],
+    "rejected": [],
+    "unmapped_items": []
+   },
+   "evidence_check": {
+    "checks": [
+     {
+      "objective_n": 1,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 4,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 4,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 4,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 4,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 4,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true
+     }
+    ]
+   }
+  }
+ ],
+ "pool": {
+  "items": 77,
+  "batches": 2,
+  "mappers": [
+   {
+    "mapping": [
+     {
+      "item_id": "Ex14-8:1",
+      "objective": "lo:g10m14s1-1-1",
+      "reason": "Identifies an outcome of the die-rolling experiment, which is the sample-space and outcome vocabulary of 14.1."
+     },
+     {
+      "item_id": "Ex14-8:2",
+      "objective": "lo:g10m14s3-1-2",
+      "reason": "Reads the event set of B off a given Venn diagram."
+     },
+     {
+      "item_id": "Ex14-8:3",
+      "objective": "lo:g10m14s4-1-1",
+      "reason": "Writes the union A∪B from a Venn diagram."
+     },
+     {
+      "item_id": "Ex14-8:4",
+      "objective": "lo:g10m14s7-1-2",
+      "reason": "Decides whether an event and its complement are mutually exclusive by checking that their intersection is empty."
+     },
+     {
+      "item_id": "Ex14-8:5",
+      "objective": "lo:g10m14s7-1-1",
+      "reason": "Finds the complement set (A∩B)' as the elements of S that are not in A∩B."
+     },
+     {
+      "item_id": "Ex14-8:6",
+      "objective": "lo:g10m14s1-1-2",
+      "reason": "Simple theoretical probability n(E)/n(S) of a king in 52 cards, as a decimal."
+     },
+     {
+      "item_id": "Ex14-8:7",
+      "objective": "lo:g10m14s2-1-1",
+      "reason": "Relative frequency from experimental trials: 2 successes in 21 tosses."
+     },
+     {
+      "item_id": "Ex14-8:8",
+      "objective": "lo:g10m14s2-1-1",
+      "reason": "Relative frequency from experimental trials: 22 heads in 44 tosses."
+     },
+     {
+      "item_id": "Ex14-8:9",
+      "objective": "lo:g10m14s3-1-3",
+      "reason": "Survey of children eating two cereals; build the Venn diagram and find the count in the 'only Strawberry Pops' region."
+     },
+     {
+      "item_id": "Ex14-8:10a",
+      "objective": "lo:g10m14s3-1-3",
+      "reason": "Survey of learners with chips and cooldrink; the 'both' region of the Venn diagram gives the count."
+     },
+     {
+      "item_id": "Ex14-8:10b",
+      "objective": "lo:g10m14s7-1-4",
+      "reason": "Uses the union count (total minus neither) and the union identity to find the number in only one event (cooldrink only)."
+     },
+     {
+      "item_id": "Ex14-8:11a",
+      "objective": "lo:g10m14s1-1-2",
+      "reason": "Theoretical probability of one colour from a table of equally likely blocks."
+     },
+     {
+      "item_id": "Ex14-8:11b",
+      "objective": "lo:g10m14s6-1-2",
+      "reason": "Purple and white cannot occur together, so P(purple or white) is the sum of the two probabilities."
+     },
+     {
+      "item_id": "Ex14-8:11c",
+      "objective": "lo:g10m14s6-1-1",
+      "reason": "Pink and orange cannot occur at the same time (mutually exclusive), so the probability is 0."
+     },
+     {
+      "item_id": "Ex14-8:11d",
+      "objective": "lo:g10m14s7-1-3",
+      "reason": "P(not orange) is the complement, 1 - P(orange)."
+     },
+     {
+      "item_id": "Ex14-8:12a",
+      "objective": "lo:g10m14s1-1-2",
+      "reason": "Theoretical probability of female from a two-way table (15/30)."
+     },
+     {
+      "item_id": "Ex14-8:12b",
+      "objective": "lo:g10m14s1-1-2",
+      "reason": "Theoretical probability of one cell of a two-way table (4-year-old male)."
+     },
+     {
+      "item_id": "Ex14-8:12c",
+      "objective": "lo:g10m14s6-1-2",
+      "reason": "Age 3 and age 4 are mutually exclusive, so P(3 or 4) is the sum of the two probabilities."
+     },
+     {
+      "item_id": "Ex14-8:12d",
+      "objective": "lo:g10m14s6-1-1",
+      "reason": "A child cannot be aged 3 and 4 at once; the events are mutually exclusive, so the probability is 0."
+     },
+     {
+      "item_id": "Ex14-8:12e",
+      "objective": "lo:g10m14s7-1-3",
+      "reason": "P(not 5) is the complement of P(5), using P(A)+P(A')=1."
+     },
+     {
+      "item_id": "Ex14-8:12f",
+      "objective": "lo:g10m14s5-1-1",
+      "reason": "'3 or female' overlap, so P(A∪B) needs P(A)+P(B)-P(A∩B)."
+     },
+     {
+      "item_id": "Ex14-8:13a",
+      "objective": "lo:g10m14s1-1-2",
+      "reason": "Count the discs ending in 5 out of 85 and divide, equally likely outcomes."
+     },
+     {
+      "item_id": "Ex14-8:13b",
+      "objective": "lo:g10m14s1-1-2",
+      "reason": "Count the multiples of 3 out of 85 and divide, equally likely outcomes."
+     },
+     {
+      "item_id": "Ex14-8:13c",
+      "objective": "lo:g10m14s1-1-2",
+      "reason": "Count the multiples of 6 out of 85 and divide, equally likely outcomes."
+     },
+     {
+      "item_id": "Ex14-8:13d",
+      "objective": "lo:g10m14s1-1-2",
+      "reason": "Probability of a single outcome, 1/85."
+     },
+     {
+      "item_id": "Ex14-8:13e",
+      "objective": "lo:g10m14s7-1-3",
+      "reason": "P(not a multiple of 5) is the complement of P(multiple of 5)."
+     },
+     {
+      "item_id": "Ex14-8:13f",
+      "objective": "lo:g10m14s5-1-1",
+      "reason": "Multiples of 3 and of 4 overlap (multiples of 12), so use P(A∪B)=P(A)+P(B)-P(A∩B)."
+     },
+     {
+      "item_id": "Ex14-8:13g",
+      "objective": "lo:g10m14s5-1-3",
+      "reason": "Probability of the intersection of two events (multiple of 2 and of 6) from the event sets and the sample space."
+     },
+     {
+      "item_id": "Ex14-8:13h",
+      "objective": "lo:g10m14s1-1-2",
+      "reason": "Probability of a single outcome, 1/85."
+     },
+     {
+      "item_id": "Ex14-8:14a",
+      "objective": "lo:g10m14s3-1-1",
+      "reason": "Write the sample space and the two event sets for a die roll and put them in a Venn diagram to read the 'both' region."
+     },
+     {
+      "item_id": "Ex14-8:14b",
+      "objective": "lo:g10m14s7-1-4",
+      "reason": "Uses the Venn diagram to count the elements in neither event."
+     },
+     {
+      "item_id": "Ex14-8:14c",
+      "objective": "lo:g10m14s7-1-4",
+      "reason": "Uses the Venn diagram to count the elements in only one event (odd but not a multiple of 5)."
+     },
+     {
+      "item_id": "Ex14-8:15",
+      "objective": "lo:g10m14s7-1-3",
+      "reason": "P(yellow) = 1 - P(pink) by complement."
+     },
+     {
+      "item_id": "Ex14-8:16a",
+      "objective": "lo:g10m14s1-1-2",
+      "reason": "Theoretical probability 190/300."
+     },
+     {
+      "item_id": "Ex14-8:16b",
+      "objective": "lo:g10m14s7-1-3",
+      "reason": "P(not an Opel) is the complement of P(Opel)."
+     },
+     {
+      "item_id": "Ex14-8:17a",
+      "objective": "lo:g10m14s1-1-2",
+      "reason": "Theoretical probability 8/18."
+     },
+     {
+      "item_id": "Ex14-8:17b",
+      "objective": "lo:g10m14s7-1-3",
+      "reason": "P(not orange) is the complement of P(orange)."
+     },
+     {
+      "item_id": "Ex14-8:17c",
+      "objective": "lo:g10m14s1-1-2",
+      "reason": "Theoretical probability 2/18."
+     },
+     {
+      "item_id": "Ex14-8:17d",
+      "objective": "lo:g10m14s7-1-3",
+      "reason": "P(not pink) is the complement of P(pink)."
+     },
+     {
+      "item_id": "Ex14-8:17e",
+      "objective": "lo:g10m14s6-1-2",
+      "reason": "Orange and pink socks are mutually exclusive, so add the two probabilities."
+     },
+     {
+      "item_id": "Ex14-8:17f",
+      "objective": "lo:g10m14s7-1-3",
+      "reason": "P(neither) is 1 minus P(orange or pink), using the complement rule."
+     },
+     {
+      "item_id": "Ex14-8:18a",
+      "objective": "lo:g10m14s6-1-2",
+      "reason": "Ginger and Jambo are mutually exclusive biscuit types, so add their probabilities."
+     },
+     {
+      "item_id": "Ex14-8:18b",
+      "objective": "lo:g10m14s7-1-3",
+      "reason": "P(not shortbread) is the complement of P(shortbread)."
+     },
+     {
+      "item_id": "Ex14-8:19a",
+      "objective": "lo:g10m14s1-1-2",
+      "reason": "Theoretical probability 15/280."
+     },
+     {
+      "item_id": "Ex14-8:19b",
+      "objective": "lo:g10m14s7-1-3",
+      "reason": "P(does not win) is 1 - P(wins)."
+     },
+     {
+      "item_id": "Ex14-8:20a",
+      "objective": "lo:g10m14s3-1-3",
+      "reason": "Survey of hair and eye colour; add the Venn regions to find the total number of children."
+     },
+     {
+      "item_id": "Ex14-8:20b",
+      "objective": "lo:g10m14s3-1-3",
+      "reason": "Survey Venn diagram; read the 'both' region (14) over the total as a probability."
+     },
+     {
+      "item_id": "Ex14-8:20c",
+      "objective": "lo:g10m14s3-1-3",
+      "reason": "Survey Venn diagram; count the red-haired children among the 19 with brown eyes. This is conditional in flavour, but no conditional-probability objective is listed, so this is the nearest fit."
+     },
+     {
+      "item_id": "Ex14-8:21a",
+      "objective": "lo:g10m14s7-1-3",
+      "reason": "P(purple or blue) is 1 - P(green), using the sum of a probability and its complement."
+     },
+     {
+      "item_id": "Ex14-8:21b",
+      "objective": "lo:g10m14s1-1-2",
+      "reason": "Uses P(E)=n(E)/n(S) rearranged to find n(E)=P x n(S) = 10."
+     },
+     {
+      "item_id": "Ex14-8:21c",
+      "objective": "lo:g10m14s1-1-2",
+      "reason": "Follow-on of 21b: takes a fraction of the purple count found with P(E)=n(E)/n(S). Nearest objective in the chapter."
+     },
+     {
+      "item_id": "Ex14-8:22a",
+      "objective": "lo:g10m14s1-1-1",
+      "reason": "List the sample space of pairs from the two boxes (like two dice) and the event set 'sum is 4'."
+     },
+     {
+      "item_id": "Ex14-8:22b",
+      "objective": "lo:g10m14s1-1-1",
+      "reason": "List the pair sample space and the event set 'sum is prime'."
+     },
+     {
+      "item_id": "Ex14-8:22c",
+      "objective": "lo:g10m14s1-1-1",
+      "reason": "List the pair sample space and the event set 'product at least 3'."
+     },
+     {
+      "item_id": "Ex14-8:22d",
+      "objective": "lo:g10m14s1-1-1",
+      "reason": "List the pair sample space and the event set 'sum equals product'."
+     },
+     {
+      "item_id": "Ex14-8:23a",
+      "objective": "lo:g10m14s5-1-1",
+      "reason": "The parts include 'a diamond or a three', which overlap, so P(A∪B)=P(A)+P(B)-P(A∩B) is needed; this is the hardest part of the merged item."
+     },
+     {
+      "item_id": "Ex14-8:23b",
+      "objective": "lo:g10m14s1-1-2",
+      "reason": "After the first card is removed the sample space is 51 cards; count the non-diamonds and divide by 51."
+     },
+     {
+      "item_id": "Ex14-8:24",
+      "objective": "lo:g10m14s5-1-3",
+      "reason": "Finds P(A∩B) from the given event sets A, B and A∪B and the sample space."
+     },
+     {
+      "item_id": "Ex14-8:25a",
+      "objective": "lo:g10m14s6-1-1",
+      "reason": "Builds an example of two events with elements in common, which are not mutually exclusive, and draws the Venn diagram."
+     },
+     {
+      "item_id": "Ex14-8:25b",
+      "objective": "lo:g10m14s7-1-1",
+      "reason": "Builds an example of complementary events, where one is the elements of S not in the other, and draws the Venn diagram."
+     },
+     {
+      "item_id": "Ex14-8:26",
+      "objective": "lo:g10m14s5-1-2",
+      "reason": "Asks for a Venn-diagram proof of P(A∪B) = P(A) + P(B) − P(A∩B), which is the 'use Venn diagrams to prove the identity' skill."
+     },
+     {
+      "item_id": "Ex14-8:27a",
+      "objective": "lo:g10m14s1-1-1",
+      "reason": "Asks only for the sample space of a card-drawing experiment from its description."
+     },
+     {
+      "item_id": "Ex14-8:27b",
+      "objective": "lo:g10m14s1-1-1",
+      "reason": "Asks for the event set of drawing a picture card, which means identifying an event set from a description."
+     },
+     {
+      "item_id": "Ex14-8:27c",
+      "objective": "lo:g10m14s1-1-1",
+      "reason": "Asks for the event set of drawing a numbered card, identified from the experiment description."
+     },
+     {
+      "item_id": "Ex14-8:27d",
+      "objective": "lo:g10m14s3-1-1",
+      "reason": "Asks for the sample space and event sets to be drawn as a Venn diagram (rectangle for S, circles for events)."
+     },
+     {
+      "item_id": "Ex14-8:27e",
+      "objective": "lo:g10m14s6-1-1",
+      "reason": "Asks for a description of P and N after checking whether they share elements, i.e. whether the events are mutually exclusive."
+     },
+     {
+      "item_id": "Ex14-8:28a",
+      "objective": "lo:g10m14s3-1-3",
+      "reason": "Asks for a Venn diagram drawn from survey information about learners buying vetkoek and sweets."
+     },
+     {
+      "item_id": "Ex14-8:28b",
+      "objective": "lo:g10m14s7-1-4",
+      "reason": "Asks for probabilities of only one event, both, neither and either, read from the Venn diagram with the union identity."
+     },
+     {
+      "item_id": "Ex14-8:29a",
+      "objective": "lo:g10m14s3-1-3",
+      "reason": "Uses a Venn diagram built from survey information on newspaper readers to find the share in a given region (only the Daily Sun)."
+     },
+     {
+      "item_id": "Ex14-8:29b",
+      "objective": "lo:g10m14s3-1-3",
+      "reason": "Uses a Venn diagram built from the newspaper survey to find the share in a given region (only the Sowetan)."
+     },
+     {
+      "item_id": "Ex14-8:29c",
+      "objective": "lo:g10m14s3-1-3",
+      "reason": "Uses a Venn diagram built from the newspaper survey to find the share in the overlap region (both papers)."
+     },
+     {
+      "item_id": "Ex14-8:30",
+      "objective": "lo:g10m14s7-1-4",
+      "reason": "Uses the union identity with the counts for both, neither and each single event to work out the total number of learners."
+     },
+     {
+      "item_id": "Ex14-8:31a",
+      "objective": "lo:g10m14s3-1-3",
+      "reason": "Asks for a Venn diagram drawn from survey counts of people reading magazines and books."
+     },
+     {
+      "item_id": "Ex14-8:31b",
+      "objective": "lo:g10m14s3-1-3",
+      "reason": "Asks for the number of people in the 'neither' region, read from the Venn diagram built from the survey."
+     },
+     {
+      "item_id": "Ex14-8:31c",
+      "objective": "lo:g10m14s7-1-4",
+      "reason": "Asks for probabilities of both events, only one event and the complement of an event, taken from Venn diagram counts."
+     },
+     {
+      "item_id": "Ex14-8:32a",
+      "objective": "lo:g10m14s3-1-3",
+      "reason": "Asks for the unknown region values in a partly filled survey Venn diagram of learners taking Geography, French and History."
+     },
+     {
+      "item_id": "Ex14-8:32b",
+      "objective": "lo:g10m14s7-1-4",
+      "reason": "Asks for probabilities of 'only Geography' and 'French and History but not Geography', which are single-event and region counts read from the Venn diagram."
+     }
+    ]
+   },
+   {
+    "mapping": [
+     {
+      "item_id": "Ex14-8:1",
+      "objective": "lo:g10m14s1-1-1",
+      "reason": "Identifies an outcome of a die roll from a description of the experiment."
+     },
+     {
+      "item_id": "Ex14-8:2",
+      "objective": "lo:g10m14s3-1-2",
+      "reason": "Reads the event set of B from a given Venn diagram by seeing which elements lie inside the circle."
+     },
+     {
+      "item_id": "Ex14-8:3",
+      "objective": "lo:g10m14s4-1-1",
+      "reason": "Writes the union A or B from a Venn diagram by listing every element in at least one set."
+     },
+     {
+      "item_id": "Ex14-8:4",
+      "objective": "lo:g10m14s7-1-2",
+      "reason": "Decides whether an event and its complement are mutually exclusive by checking for an empty intersection."
+     },
+     {
+      "item_id": "Ex14-8:5",
+      "objective": "lo:g10m14s7-1-1",
+      "reason": "Finds the complement (A∩B)' as the sample space elements not in A∩B."
+     },
+     {
+      "item_id": "Ex14-8:6",
+      "objective": "lo:g10m14s1-1-2",
+      "reason": "Computes P(king) = 4/52 for equally likely outcomes, as a decimal."
+     },
+     {
+      "item_id": "Ex14-8:7",
+      "objective": "lo:g10m14s2-1-1",
+      "reason": "Relative frequency of a 3 from experimental trials: 2 out of 21."
+     },
+     {
+      "item_id": "Ex14-8:8",
+      "objective": "lo:g10m14s2-1-1",
+      "reason": "Relative frequency of heads from experimental trials: 22 out of 44."
+     },
+     {
+      "item_id": "Ex14-8:9",
+      "objective": "lo:g10m14s3-1-3",
+      "reason": "Builds a Venn diagram from survey counts and finds the only-Strawberry-Pops region, then gives the probability."
+     },
+     {
+      "item_id": "Ex14-8:10a",
+      "objective": "lo:g10m14s3-1-3",
+      "reason": "Survey Venn of chips and cooldrink; the both region is 7 of 42 learners."
+     },
+     {
+      "item_id": "Ex14-8:10b",
+      "objective": "lo:g10m14s7-1-4",
+      "reason": "Uses the survey Venn and the union count (42 minus 3 neither) to find the only-cooldrink region."
+     },
+     {
+      "item_id": "Ex14-8:11a",
+      "objective": "lo:g10m14s1-1-2",
+      "reason": "Theoretical probability n(purple)/n(S) from a table of counts."
+     },
+     {
+      "item_id": "Ex14-8:11b",
+      "objective": "lo:g10m14s6-1-2",
+      "reason": "Purple or white are mutually exclusive, so the probabilities are added."
+     },
+     {
+      "item_id": "Ex14-8:11c",
+      "objective": "lo:g10m14s6-1-1",
+      "reason": "Pink and orange cannot occur together, so the events are mutually exclusive and the probability is 0."
+     },
+     {
+      "item_id": "Ex14-8:11d",
+      "objective": "lo:g10m14s7-1-3",
+      "reason": "Probability of not orange as 1 minus P(orange)."
+     },
+     {
+      "item_id": "Ex14-8:12a",
+      "objective": "lo:g10m14s1-1-2",
+      "reason": "Theoretical probability of a female from a two-way table of counts."
+     },
+     {
+      "item_id": "Ex14-8:12b",
+      "objective": "lo:g10m14s1-1-2",
+      "reason": "Theoretical probability of a 4 year old male: 7 out of 30."
+     },
+     {
+      "item_id": "Ex14-8:12c",
+      "objective": "lo:g10m14s6-1-2",
+      "reason": "Aged 3 and aged 4 are mutually exclusive, so the probabilities are added for 'or'."
+     },
+     {
+      "item_id": "Ex14-8:12d",
+      "objective": "lo:g10m14s6-1-1",
+      "reason": "A child cannot be both 3 and 4, which shows the events are mutually exclusive, so the probability is 0."
+     },
+     {
+      "item_id": "Ex14-8:12e",
+      "objective": "lo:g10m14s7-1-3",
+      "reason": "Probability of not 5 as the complement, 1 minus P(5)."
+     },
+     {
+      "item_id": "Ex14-8:12f",
+      "objective": "lo:g10m14s5-1-1",
+      "reason": "Probability of age 3 or female, which overlap, so P(A)+P(B)-P(A∩B) is needed."
+     },
+     {
+      "item_id": "Ex14-8:13a",
+      "objective": "lo:g10m14s1-1-2",
+      "reason": "Counts discs ending in 5 out of 85 equally likely discs."
+     },
+     {
+      "item_id": "Ex14-8:13b",
+      "objective": "lo:g10m14s1-1-2",
+      "reason": "Counts multiples of 3 out of 85 for the theoretical probability."
+     },
+     {
+      "item_id": "Ex14-8:13c",
+      "objective": "lo:g10m14s1-1-2",
+      "reason": "Counts multiples of 6 out of 85 for the theoretical probability."
+     },
+     {
+      "item_id": "Ex14-8:13d",
+      "objective": "lo:g10m14s1-1-2",
+      "reason": "Probability of one specific disc, 1/85."
+     },
+     {
+      "item_id": "Ex14-8:13e",
+      "objective": "lo:g10m14s7-1-3",
+      "reason": "Not a multiple of 5 is the complement of a multiple of 5."
+     },
+     {
+      "item_id": "Ex14-8:13f",
+      "objective": "lo:g10m14s5-1-1",
+      "reason": "Multiple of 3 or 4 overlaps (multiples of 12), so P(A∪B) is found with the identity."
+     },
+     {
+      "item_id": "Ex14-8:13g",
+      "objective": "lo:g10m14s1-1-2",
+      "reason": "Multiples of both 2 and 6 are just the multiples of 6, so it is a direct count out of 85."
+     },
+     {
+      "item_id": "Ex14-8:13h",
+      "objective": "lo:g10m14s1-1-2",
+      "reason": "Probability of disc number 1 out of 85."
+     },
+     {
+      "item_id": "Ex14-8:14a",
+      "objective": "lo:g10m14s3-1-1",
+      "reason": "Writes the die sample space and the event sets, draws a Venn diagram, and reads off the both-events region."
+     },
+     {
+      "item_id": "Ex14-8:14b",
+      "objective": "lo:g10m14s7-1-1",
+      "reason": "Neither A nor B is the complement of the union, the elements outside both circles."
+     },
+     {
+      "item_id": "Ex14-8:14c",
+      "objective": "lo:g10m14s3-1-1",
+      "reason": "Draws the Venn diagram from the event descriptions and reads the odd-only region."
+     },
+     {
+      "item_id": "Ex14-8:15",
+      "objective": "lo:g10m14s7-1-3",
+      "reason": "P(yellow) = 1 - P(pink) using P(A)+P(A')=1."
+     },
+     {
+      "item_id": "Ex14-8:16a",
+      "objective": "lo:g10m14s1-1-2",
+      "reason": "Theoretical probability 190/300 for an Opel."
+     },
+     {
+      "item_id": "Ex14-8:16b",
+      "objective": "lo:g10m14s7-1-3",
+      "reason": "Not an Opel is the complement of an Opel."
+     },
+     {
+      "item_id": "Ex14-8:17a",
+      "objective": "lo:g10m14s1-1-2",
+      "reason": "Theoretical probability 8/18 for an orange sock."
+     },
+     {
+      "item_id": "Ex14-8:17b",
+      "objective": "lo:g10m14s7-1-3",
+      "reason": "Not orange is the complement, 1 minus P(orange)."
+     },
+     {
+      "item_id": "Ex14-8:17c",
+      "objective": "lo:g10m14s1-1-2",
+      "reason": "Theoretical probability 2/18 for a pink sock."
+     },
+     {
+      "item_id": "Ex14-8:17d",
+      "objective": "lo:g10m14s7-1-3",
+      "reason": "Not pink is the complement, 1 minus P(pink)."
+     },
+     {
+      "item_id": "Ex14-8:17e",
+      "objective": "lo:g10m14s6-1-2",
+      "reason": "Plain orange and plain pink socks are mutually exclusive, so P(orange or pink) is the sum."
+     },
+     {
+      "item_id": "Ex14-8:17f",
+      "objective": "lo:g10m14s7-1-3",
+      "reason": "Neither orange nor pink is the complement of orange or pink, 1 minus P(orange or pink)."
+     },
+     {
+      "item_id": "Ex14-8:18a",
+      "objective": "lo:g10m14s6-1-2",
+      "reason": "A ginger biscuit and a Jambo are mutually exclusive, so the probabilities are added for 'or'."
+     },
+     {
+      "item_id": "Ex14-8:18b",
+      "objective": "lo:g10m14s7-1-3",
+      "reason": "Not a shortbread cookie is the complement of shortbread."
+     },
+     {
+      "item_id": "Ex14-8:19a",
+      "objective": "lo:g10m14s1-1-2",
+      "reason": "Theoretical probability 15/280 of winning."
+     },
+     {
+      "item_id": "Ex14-8:19b",
+      "objective": "lo:g10m14s7-1-3",
+      "reason": "Not winning is the complement, 1 minus P(win)."
+     },
+     {
+      "item_id": "Ex14-8:20a",
+      "objective": "lo:g10m14s3-1-3",
+      "reason": "Builds a Venn diagram from survey counts and sums the regions to get the total number of children."
+     },
+     {
+      "item_id": "Ex14-8:20b",
+      "objective": "lo:g10m14s3-1-3",
+      "reason": "Reads the both-brown-eyes-and-red-hair region from the survey Venn and divides by the total."
+     },
+     {
+      "item_id": "Ex14-8:20c",
+      "objective": "lo:g10m14s3-1-3",
+      "reason": "Uses the survey Venn regions (14 of the 19 brown-eyed children); the conditional step has no separate objective."
+     },
+     {
+      "item_id": "Ex14-8:21a",
+      "objective": "lo:g10m14s7-1-3",
+      "reason": "P(purple or blue) = 1 - P(green), using the complement rule."
+     },
+     {
+      "item_id": "Ex14-8:21b",
+      "objective": "lo:g10m14s1-1-2",
+      "reason": "Uses P(E)=n(E)/n(S) in reverse: 1/7 of 70 sweets are purple."
+     },
+     {
+      "item_id": "Ex14-8:21c",
+      "objective": "lo:g10m14s1-1-2",
+      "reason": "Applies a fraction to the number of purple sweets found from P=n(E)/n(S); no better objective fits."
+     },
+     {
+      "item_id": "Ex14-8:22a",
+      "objective": "lo:g10m14s1-1-1",
+      "reason": "Lists the sample space of card pairs from two boxes and picks the outcomes with sum 4."
+     },
+     {
+      "item_id": "Ex14-8:22b",
+      "objective": "lo:g10m14s1-1-1",
+      "reason": "Lists the sample space of card pairs and identifies the event of a prime sum."
+     },
+     {
+      "item_id": "Ex14-8:22c",
+      "objective": "lo:g10m14s1-1-1",
+      "reason": "Lists the sample space of card pairs and identifies the event of a product of at least 3."
+     },
+     {
+      "item_id": "Ex14-8:22d",
+      "objective": "lo:g10m14s1-1-1",
+      "reason": "Lists the sample space of card pairs and identifies the event where sum equals product."
+     },
+     {
+      "item_id": "Ex14-8:23a",
+      "objective": "lo:g10m14s5-1-1",
+      "reason": "Cards drawn include 'a diamond or a three', which overlap, so P(A∪B) uses the identity."
+     },
+     {
+      "item_id": "Ex14-8:23b",
+      "objective": "lo:g10m14s7-1-3",
+      "reason": "Probability of not a diamond among the remaining 51 cards is a complement calculation."
+     },
+     {
+      "item_id": "Ex14-8:24",
+      "objective": "lo:g10m14s5-1-3",
+      "reason": "Finds P(A∩B) from the event sets of A, B and A∪B and the sample space."
+     },
+     {
+      "item_id": "Ex14-8:25a",
+      "objective": "lo:g10m14s6-1-1",
+      "reason": "Illustrates two events that can occur together, i.e. not mutually exclusive, with overlapping event sets."
+     },
+     {
+      "item_id": "Ex14-8:25b",
+      "objective": "lo:g10m14s7-1-1",
+      "reason": "Illustrates an event and its complement as the sample space elements not in the event."
+     },
+     {
+      "item_id": "Ex14-8:26",
+      "objective": "lo:g10m14s5-1-2",
+      "reason": "Asks for a Venn-diagram proof of P(A∪B)=P(A)+P(B)-P(A∩B), which is the 'use Venn diagrams to prove the identity' skill."
+     },
+     {
+      "item_id": "Ex14-8:27a",
+      "objective": "lo:g10m14s1-1-1",
+      "reason": "Skill: list the sample space of a card draw from a description of the experiment."
+     },
+     {
+      "item_id": "Ex14-8:27b",
+      "objective": "lo:g10m14s1-1-1",
+      "reason": "Skill: write the event set for 'picture card' from the experiment description."
+     },
+     {
+      "item_id": "Ex14-8:27c",
+      "objective": "lo:g10m14s1-1-1",
+      "reason": "Skill: write the event set for 'numbered card' from the experiment description."
+     },
+     {
+      "item_id": "Ex14-8:27d",
+      "objective": "lo:g10m14s3-1-1",
+      "reason": "Skill: represent the sample space and event sets P and N in a Venn diagram (rectangle for S, circles for events)."
+     },
+     {
+      "item_id": "Ex14-8:27e",
+      "objective": "lo:g10m14s6-1-1",
+      "reason": "Skill: check whether P and N share any elements to describe them as mutually exclusive."
+     },
+     {
+      "item_id": "Ex14-8:28a",
+      "objective": "lo:g10m14s3-1-3",
+      "reason": "Skill: draw a Venn diagram from survey information about learners."
+     },
+     {
+      "item_id": "Ex14-8:28b",
+      "objective": "lo:g10m14s7-1-4",
+      "reason": "Skill: use the Venn counts and the union identity to get only-one, both and neither groups, then convert them to probabilities."
+     },
+     {
+      "item_id": "Ex14-8:29a",
+      "objective": "lo:g10m14s7-1-4",
+      "reason": "Skill: use a Venn diagram and the union identity to find how many read only one paper (survey with a 'neither' group)."
+     },
+     {
+      "item_id": "Ex14-8:29b",
+      "objective": "lo:g10m14s7-1-4",
+      "reason": "Skill: use a Venn diagram and the union identity to find how many read only one paper (survey with a 'neither' group)."
+     },
+     {
+      "item_id": "Ex14-8:29c",
+      "objective": "lo:g10m14s7-1-4",
+      "reason": "Skill: use the union identity and a Venn diagram to find the number who read both papers."
+     },
+     {
+      "item_id": "Ex14-8:30",
+      "objective": "lo:g10m14s7-1-4",
+      "reason": "Skill: use a Venn diagram and the union identity with the 'both' and 'neither' counts to work out the class total."
+     },
+     {
+      "item_id": "Ex14-8:31a",
+      "objective": "lo:g10m14s3-1-3",
+      "reason": "Skill: draw a Venn diagram from survey information about people's reading interests."
+     },
+     {
+      "item_id": "Ex14-8:31b",
+      "objective": "lo:g10m14s7-1-4",
+      "reason": "Skill: find the 'neither' region of a two-event Venn diagram using the union identity."
+     },
+     {
+      "item_id": "Ex14-8:31c",
+      "objective": "lo:g10m14s7-1-4",
+      "reason": "Skill: read both, only-one and not-in-event regions from the Venn counts and turn them into probabilities."
+     },
+     {
+      "item_id": "Ex14-8:32a",
+      "objective": "lo:g10m14s3-1-3",
+      "reason": "Skill: use survey information about learners taking subjects to find the number in each region of a given Venn diagram."
+     },
+     {
+      "item_id": "Ex14-8:32b",
+      "objective": "lo:g10m14s7-1-4",
+      "reason": "Skill: read the only-one and in-two-sets regions from the Venn counts and convert to probabilities."
+     }
+    ]
+   }
+  ],
+  "second_mapper": true
+ },
+ "links": {
+  "asked": true,
+  "prior_objectives": 193,
+  "proposed": [
+   {
+    "src": "lo:g10m14s1-1-2",
+    "dst": "lo:g10m14s2-1-2",
+    "signal": "reference",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "b04405",
+      "printed_page": 477,
+      "quote": "The theoretical probability is a number that we can compute if we have enough information about the experiment"
+     },
+     {
+      "kind": "worked_example",
+      "anchor": "WE2",
+      "printed_page": 475,
+      "quote": "The relative frequency is close to the theoretical probability of"
+     }
+    ],
+    "reason": "The lesson compares relative frequency with the theoretical probability n(E)/n(S) that 14.1 taught, so the student must be able to compute P(E) first."
+   },
+   {
+    "src": "lo:g10m14s2-1-1",
+    "dst": "lo:g10m14s2-1-2",
+    "signal": "reference",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE2",
+      "printed_page": 475,
+      "quote": "Since the relative frequency is defined as the ratio between the number of positive trials and the total number of trials"
+     }
+    ],
+    "reason": "The worked example computes f = p/t after each trial, restating the definition of relative frequency taught in the same section."
+   },
+   {
+    "src": "lo:g10m1s4-1-1",
+    "dst": "lo:g10m14s2-1-1",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "exercise",
+      "anchor": "Ex14-2:1",
+      "printed_page": 477,
+      "quote": "Write your answer correct to 2 decimal places"
+     },
+     {
+      "kind": "exercise",
+      "anchor": "Ex14-2:2",
+      "printed_page": 477,
+      "quote": "Write your answer correct to 2 decimal places"
+     }
+    ],
+    "reason": "The exercises ask for a relative frequency written as a decimal rounded to 2 decimal places, using the rounding method of section 1.4."
+   },
+   {
+    "src": "lo:g10m1s4-1-1",
+    "dst": "lo:g10m14s1-1-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "exercise",
+      "anchor": "Ex14-1:4",
+      "printed_page": 474,
+      "quote": "correct to 2 decimal places"
+     }
+    ],
+    "reason": "Exercise 4 asks for the probability as a decimal correct to 2 decimal places, which uses rounding a fraction written as a decimal."
+   },
+   {
+    "src": "lo:g10m1s4-1-1",
+    "dst": "lo:g10m14s5-1-1",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "exercise",
+      "anchor": "Ex14-5:1",
+      "printed_page": 484,
+      "quote": "rounded to two decimal places"
+     }
+    ],
+    "reason": "The exercise asks for P(A∪B) as a decimal rounded to two decimal places."
+   },
+   {
+    "src": "lo:g10m1s4-1-1",
+    "dst": "lo:g10m14s5-1-3",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "exercise",
+      "anchor": "Ex14-5:2",
+      "printed_page": 484,
+      "quote": "rounded to two decimal value"
+     }
+    ],
+    "reason": "The exercise asks for P(A∩B) as a decimal rounded to two decimal places."
+   },
+   {
+    "src": "lo:g10m1s3-1-3",
+    "dst": "lo:g10m14s1-1-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE1",
+      "printed_page": 473,
+      "quote": "\\frac{5}{36}=\\text{0,13}\\dot{8}"
+     }
+    ],
+    "reason": "The worked example writes the probability 5/36 as a recurring decimal in dot notation without teaching the notation."
+   },
+   {
+    "src": "lo:g10m1s3-1-3",
+    "dst": "lo:g10m14s2-1-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE2",
+      "printed_page": 475,
+      "quote": "\\frac{13}{30}=\\text{0,4}\\dot{3}"
+     }
+    ],
+    "reason": "The worked example writes the relative frequency 13/30 as a recurring decimal using dot notation."
+   },
+   {
+    "src": "lo:g10m14s1-1-1",
+    "dst": "lo:g10m14s3-1-1",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE5",
+      "printed_page": 479,
+      "quote": "Write down the sample space S"
+     },
+     {
+      "kind": "exercise",
+      "anchor": "Ex14-3:3a",
+      "printed_page": 480,
+      "quote": "What is the sample space"
+     }
+    ],
+    "reason": "The Venn diagram examples and exercises start by writing down the sample space and event sets of an experiment, the skill taught in 14.1."
+   },
+   {
+    "src": "lo:g10m14s3-1-2",
+    "dst": "lo:g10m14s4-1-1",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "exercise",
+      "anchor": "Ex14-4:2",
+      "printed_page": 482,
+      "quote": "identify the event set of the union between event set"
+     }
+    ],
+    "reason": "To write the union the student must first read the elements of A and of B from the given Venn diagram."
+   },
+   {
+    "src": "lo:g10m14s3-1-2",
+    "dst": "lo:g10m14s4-1-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "exercise",
+      "anchor": "Ex14-4:1",
+      "printed_page": 482,
+      "quote": "identify the event set of the intersection between event set"
+     }
+    ],
+    "reason": "To write the intersection the student must read the elements of A and of B from the given Venn diagram."
+   },
+   {
+    "src": "lo:g10m14s4-1-1",
+    "dst": "lo:g10m14s5-1-2",
+    "signal": "reference",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "b04447",
+      "printed_page": 483,
+      "quote": "We will prove this identity using the Venn diagrams given above."
+     },
+     {
+      "kind": "text",
+      "anchor": "b04449",
+      "printed_page": 483,
+      "quote": "We will do this for the first column of the Venn diagram figure given previously."
+     }
+    ],
+    "reason": "The proof of the identity refers back to the union and intersection Venn diagrams of the previous section."
+   },
+   {
+    "src": "lo:g10m14s4-1-2",
+    "dst": "lo:g10m14s5-1-2",
+    "signal": "reference",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "b04447",
+      "printed_page": 483,
+      "quote": "We will prove this identity using the Venn diagrams given above."
+     },
+     {
+      "kind": "worked_example",
+      "anchor": "WE6",
+      "printed_page": 483,
+      "quote": "From the Venn diagram in Example 4, we can count the number of outcomes in each event."
+     }
+    ],
+    "reason": "The identity is verified from the counts of the union and the intersection in the Venn diagrams of 14.4."
+   },
+   {
+    "src": "lo:g10m14s4-1-2",
+    "dst": "lo:g10m14s5-1-3",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "exercise",
+      "anchor": "Ex14-5:2",
+      "printed_page": 484,
+      "quote": "P(A\\capB)"
+     },
+     {
+      "kind": "text",
+      "anchor": "b04449",
+      "printed_page": 483,
+      "quote": "We will do this for the first column of the Venn diagram figure given previously."
+     }
+    ],
+    "reason": "Finding P(A∩B) from the event sets of A, B and A∪B needs the intersection and union as defined in 14.4."
+   },
+   {
+    "src": "lo:g10m14s1-1-2",
+    "dst": "lo:g10m14s5-1-1",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE6",
+      "printed_page": 483,
+      "quote": "we divide the size of the event by the size of the sample space"
+     }
+    ],
+    "reason": "Each term in the union identity is found as n(event)/n(S), the theoretical probability formula."
+   },
+   {
+    "src": "lo:g10m14s1-1-2",
+    "dst": "lo:g10m14s5-1-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE6",
+      "printed_page": 483,
+      "quote": "we divide the size of the event by the size of the sample space"
+     }
+    ],
+    "reason": "The verification computes P(A), P(B), P(A∩B) and P(A∪B) as n(event)/n(S), the theoretical probability formula."
+   },
+   {
+    "src": "lo:g10m14s3-1-1",
+    "dst": "lo:g10m14s5-1-2",
+    "signal": "reference",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE6",
+      "printed_page": 483,
+      "quote": "From the Venn diagram in Example 4, we can count the number of outcomes in each event."
+     }
+    ],
+    "reason": "The worked example reuses the Venn diagram of two rolled dice drawn in Example 4 of the Venn diagrams section."
+   },
+   {
+    "src": "lo:g10m14s5-1-1",
+    "dst": "lo:g10m14s5-1-3",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "b04446",
+      "printed_page": 483,
+      "quote": "P\\left(A\\cupB\\right)=P\\left(A\\right)+P\\left(B\\right)-P\\left(A\\capB\\right)"
+     },
+     {
+      "kind": "exercise",
+      "anchor": "Ex14-5:2",
+      "printed_page": 484,
+      "quote": "They are asked to calculate the value of"
+     }
+    ],
+    "reason": "The exercise gives A, B and A∪B and asks for P(A∩B), which requires rearranging the union identity."
+   },
+   {
+    "src": "lo:g10m14s4-1-2",
+    "dst": "lo:g10m14s6-1-1",
+    "signal": "reference",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "b04457",
+      "printed_page": 485,
+      "quote": "We have already seen the Venn diagrams of mutually exclusive events in the middle column of the Venn diagrams provided earlier."
+     },
+     {
+      "kind": "text",
+      "anchor": "b04459",
+      "printed_page": 485,
+      "quote": "From this figure you can see that the intersection has no elements."
+     }
+    ],
+    "reason": "Mutual exclusivity is decided by whether the intersection is empty, and the section points back to the earlier intersection diagrams."
+   },
+   {
+    "src": "lo:g10m14s3-1-1",
+    "dst": "lo:g10m14s6-1-1",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE7",
+      "printed_page": 485,
+      "quote": "Draw the sample space and the two events"
+     },
+     {
+      "kind": "text",
+      "anchor": "b04457",
+      "printed_page": 485,
+      "quote": "We have already seen the Venn diagrams of mutually exclusive events in the middle column of the Venn diagrams provided earlier."
+     }
+    ],
+    "reason": "The worked example starts by drawing the sample space and the two events in a Venn diagram, and refers back to the earlier Venn diagrams."
+   },
+   {
+    "src": "lo:g10m14s6-1-1",
+    "dst": "lo:g10m14s6-1-2",
+    "signal": "reference",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "b04461",
+      "printed_page": 485,
+      "quote": "This relationship is true for mutually exclusive events only."
+     },
+     {
+      "kind": "text",
+      "anchor": "b04459",
+      "printed_page": 485,
+      "quote": "the probability of the union is the sum of the probabilities of the events"
+     }
+    ],
+    "reason": "The sum rule P(A∪B)=P(A)+P(B) applies only once the events are shown to be mutually exclusive."
+   },
+   {
+    "src": "lo:g10m14s3-1-2",
+    "dst": "lo:g10m14s7-1-1",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "exercise",
+      "anchor": "Ex14-7:1",
+      "printed_page": 488,
+      "quote": "identify the complementary event set of"
+     }
+    ],
+    "reason": "The complement B' is found by reading the elements of B from the Venn diagram and taking the rest of the sample space."
+   },
+   {
+    "src": "lo:g10m14s4-1-1",
+    "dst": "lo:g10m14s7-1-1",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "exercise",
+      "anchor": "Ex14-7:2",
+      "printed_page": 488,
+      "quote": "identify the complementary event set of"
+     }
+    ],
+    "reason": "The complement (A∪B)' is found by first determining the union A∪B."
+   },
+   {
+    "src": "lo:g10m14s6-1-1",
+    "dst": "lo:g10m14s7-1-2",
+    "signal": "reference",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "b04470",
+      "printed_page": 486,
+      "quote": "we know that complementary events are mutually exclusive"
+     },
+     {
+      "kind": "exercise",
+      "anchor": "Ex14-7:3",
+      "printed_page": 489,
+      "quote": "mutually exclusive?"
+     }
+    ],
+    "reason": "The section applies the definition of mutually exclusive events to an event and its complement."
+   },
+   {
+    "src": "lo:g10m14s7-1-1",
+    "dst": "lo:g10m14s7-1-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "exercise",
+      "anchor": "Ex14-7:4",
+      "printed_page": 489,
+      "quote": "Are $A'$ and $B'$ mutually exclusive?"
+     }
+    ],
+    "reason": "To test whether A' and B' are mutually exclusive the student must first find the complement sets."
+   },
+   {
+    "src": "lo:g10m14s7-1-2",
+    "dst": "lo:g10m14s7-1-3",
+    "signal": "reference",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "b04474",
+      "printed_page": 486,
+      "quote": "From the previous two identities, we also know that the probabilities of complementary events sum to"
+     }
+    ],
+    "reason": "P(A)+P(A')=1 is derived from the facts that A and A' are mutually exclusive and together cover the sample space."
+   },
+   {
+    "src": "lo:g10m14s6-1-2",
+    "dst": "lo:g10m14s7-1-3",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "b04475",
+      "printed_page": 486,
+      "quote": "P\\left(A\\right)+P\\left(A'\\right)=P\\left(A\\cup A'\\right)"
+     }
+    ],
+    "reason": "The step P(A)+P(A') = P(A∪A') is the sum rule for mutually exclusive events."
+   },
+   {
+    "src": "lo:g10m14s5-1-3",
+    "dst": "lo:g10m14s7-1-4",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE8",
+      "printed_page": 486,
+      "quote": "by using the identity for the union of two events"
+     }
+    ],
+    "reason": "The worked example finds n(A∩B) from n(A), n(B) and n(A∪B) with the union identity."
+   },
+   {
+    "src": "lo:g10m14s3-1-3",
+    "dst": "lo:g10m14s7-1-4",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE8",
+      "printed_page": 486,
+      "quote": "Use a Venn diagram to work out how many people"
+     }
+    ],
+    "reason": "The survey problem is solved by building a Venn diagram from survey counts and reading the number in each region."
+   },
+   {
+    "src": "lo:g10m14s6-1-1",
+    "dst": "lo:g10m14s7-1-4",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE8",
+      "printed_page": 486,
+      "quote": "the events are not mutually exclusive"
+     }
+    ],
+    "reason": "A step of the worked example decides that the events are not mutually exclusive because the intersection is not empty, so the circles overlap."
+   }
+  ],
+  "outside_book": [],
+  "checks": {
+   "checks": [
+    {
+     "i": 0,
+     "verdict": "CONFIRMED",
+     "note": "The relative-frequency example compares f with the theoretical probability 0.5, and the text recalls how that probability is computed by counting event outcomes against the sample space."
+    },
+    {
+     "i": 1,
+     "verdict": "CONFIRMED",
+     "note": "WE2 uses the definition f = p/t, positive trials over total trials, as the step for each row of the table."
+    },
+    {
+     "i": 2,
+     "verdict": "CONFIRMED",
+     "note": "Both exercises ask for the relative frequency correct to 2 decimal places, so rounding is a required step."
+    },
+    {
+     "i": 3,
+     "verdict": "CONFIRMED",
+     "note": "The probability exercise requires the answer as a decimal correct to 2 decimal places, so rounding is a required step."
+    },
+    {
+     "i": 4,
+     "verdict": "CONFIRMED",
+     "note": "The exercise requires P(A∪B) rounded to two decimal places, so rounding is a required step."
+    },
+    {
+     "i": 5,
+     "verdict": "CONFIRMED",
+     "note": "The exercise requires P(A∩B) rounded to two decimal places, so rounding is a required step."
+    },
+    {
+     "i": 6,
+     "verdict": "CONFIRMED",
+     "note": "WE1 writes 5/36 as 0,13 with a dot over the 8, which is the recurring-decimal dot notation, used as a step."
+    },
+    {
+     "i": 7,
+     "verdict": "CONFIRMED",
+     "note": "WE2 writes 13/30 as 0,4 with a dot over the 3, using recurring-decimal dot notation as a step."
+    },
+    {
+     "i": 8,
+     "verdict": "CONFIRMED",
+     "note": "WE5 and the exercise both start by writing down the sample space from a description, which is the source skill used as a step before the Venn diagram."
+    },
+    {
+     "i": 9,
+     "verdict": "CONFIRMED",
+     "note": "Finding the union from a Venn diagram requires reading off the elements in each circle first. This is implied by the exercise rather than stated."
+    },
+    {
+     "i": 10,
+     "verdict": "CONFIRMED",
+     "note": "Finding the intersection from a Venn diagram requires reading the elements of each event set from the circles. This is implied by the exercise rather than stated."
+    },
+    {
+     "i": 11,
+     "verdict": "UNCLEAR",
+     "note": "The two cited texts only say the identity will be proved with the Venn diagrams. Neither shows that determining a union from a Venn diagram is a step. WE6 does use the union, but it is not cited here."
+    },
+    {
+     "i": 12,
+     "verdict": "CONFIRMED",
+     "note": "WE6 counts n(A∩B) and the other event sizes from the Venn diagram of Example 4, which uses the intersection-from-Venn skill."
+    },
+    {
+     "i": 13,
+     "verdict": "UNCLEAR",
+     "note": "The exercise gives A, B and A∪B as lists. The cited texts do not show a Venn-based intersection step, and the common element could be found without the source skill."
+    },
+    {
+     "i": 14,
+     "verdict": "CONFIRMED",
+     "note": "WE6 divides the size of each event by n(S), which is P(E) = n(E)/n(S) used as a step."
+    },
+    {
+     "i": 15,
+     "verdict": "CONFIRMED",
+     "note": "WE6 calculates P(A), P(B), P(A∩B) and P(A∪B) by dividing each event size by n(S), which is the theoretical probability formula."
+    },
+    {
+     "i": 16,
+     "verdict": "CONFIRMED",
+     "note": "WE6 counts n(A), n(B) and the other sizes from the Venn diagram of the sample space and events in Example 4, which uses the source skill."
+    },
+    {
+     "i": 17,
+     "verdict": "UNCLEAR",
+     "note": "The cited texts are the bare identity and an exercise that gives A, B and A∪B. Neither text shows the identity being used, and the intersection could be read from the lists directly."
+    },
+    {
+     "i": 18,
+     "verdict": "CONFIRMED",
+     "note": "Mutual exclusivity is defined as an empty intersection, and the text refers back to earlier Venn diagrams and says the intersection has no elements."
+    },
+    {
+     "i": 19,
+     "verdict": "CONFIRMED",
+     "note": "WE7 draws the sample space and the two events before checking for common elements, and b04457 refers back to the earlier Venn diagrams."
+    },
+    {
+     "i": 20,
+     "verdict": "CONFIRMED",
+     "note": "The sum rule is stated to hold for mutually exclusive events only, and the text ties the empty intersection to the union probability being the sum."
+    },
+    {
+     "i": 21,
+     "verdict": "CONFIRMED",
+     "note": "Finding B' from a Venn diagram requires first reading which elements are in B, which is implied by the exercise rather than stated."
+    },
+    {
+     "i": 22,
+     "verdict": "CONFIRMED",
+     "note": "The exercise asks for (A∪B)', which requires the union A∪B to be found first and its complement taken."
+    },
+    {
+     "i": 23,
+     "verdict": "CONFIRMED",
+     "note": "The text states that complementary events are mutually exclusive, and the exercise asks whether (A∪B)' and A∪B are mutually exclusive."
+    },
+    {
+     "i": 24,
+     "verdict": "CONFIRMED",
+     "note": "The exercise asks whether A' and B' are mutually exclusive, which requires finding the complements and then checking their intersection."
+    },
+    {
+     "i": 25,
+     "verdict": "UNCLEAR",
+     "note": "The cited text only refers back to 'the previous two identities' without naming them. It does not show that mutual exclusivity of complements is the step relied on."
+    },
+    {
+     "i": 26,
+     "verdict": "CONFIRMED",
+     "note": "P(A)+P(A') = P(A∪A') is the sum rule for mutually exclusive events, applied to A and A'."
+    },
+    {
+     "i": 27,
+     "verdict": "CONFIRMED",
+     "note": "WE8 finds n(A∩B) from n(A), n(B) and n(A∪B) using the union identity, which is the same method as the source objective."
+    },
+    {
+     "i": 28,
+     "verdict": "CONFIRMED",
+     "note": "WE8 draws a Venn diagram from survey information and reads off how many people are in each region, which is the source skill used as a step."
+    },
+    {
+     "i": 29,
+     "verdict": "CONFIRMED",
+     "note": "WE8 checks whether the intersection is empty to conclude the events are not mutually exclusive, so the circles overlap in the diagram. That is a step in the example."
+    }
+   ]
+  }
+ },
+ "calls": {
+  "by_phase": {
+   "S1 Find": 14,
+   "S1 Reconcile": 7,
+   "S1 Evidence": 7,
+   "S1 Map": 4,
+   "S1 Links": 1,
+   "S1 Link check": 1
+  },
+  "per_lesson": {
+   "g10m14s1-1": 4,
+   "g10m14s2-1": 4,
+   "g10m14s3-1": 4,
+   "g10m14s4-1": 4,
+   "g10m14s5-1": 4,
+   "g10m14s6-1": 4,
+   "g10m14s7-1": 4
+  },
+  "total": 34
+ },
+ "meter": {
+  "stage": "S1",
+  "record": "uv run meter_run.py record --book g10-math --stage S1 --run <runId>",
+  "summary": "uv run meter_run.py summary --book g10-math --by lesson",
+  "note": "Each agent label carries its lesson slug (S1:findA:<slug>), so the ledger splits the cost per lesson; the S1 Map agents are chapter-level (\"(book)\")."
+ }
+}
