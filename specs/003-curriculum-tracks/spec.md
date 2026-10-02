@@ -100,6 +100,13 @@ Samuel*, below.
   block, with `tasks.md` T447. The console does not yet read its flag files into the backlog; named on the
   FR-4411 row.
 
+**2026-10-02 (answer 45; decision 66)**: FR-4207 now says what the drift guard counts. Asked how parity
+should treat rows a human removed from a course (Chapter 5's G5 was blocked: 1433 questions in the database
+against 1392 in the bundles, 212 visuals against 209 — the difference is 41 Chapters 1–4 book questions the G2
+recommendation runs rejected, kept for the audit trail, and the 3 book pictures attached to them), Samuel chose
+*"Count only servable (Recommended)"*: the guard counts the questions a student could be served — not
+`rejected`, not `retired` — and only the visuals attached to them.
+
 **Status of the code.** Committed only as unreviewed WIP snapshots on the pushed feature branch (an
 auto-snapshot job commits every 30 seconds, `[skip ci]`); nothing is reviewed by Samuel or merged to `main`.
 **Authority level**: a **derived spec** (Spec Kit). It turns Samuel's direction and his decisions of
@@ -814,9 +821,18 @@ through the attempts route and confirm identical outcomes.
   coordinating session; not yet logged verbatim in `samuel-answers.md`), so every prompt capture stays
   byte-identical. Render evidence is on the FR-4322…FR-4327 rows of
   [traceability.md](./traceability.md).
-- **FR-4207**: The solution's content drift guard MUST know this book, by its source fingerprint and
+- **FR-4207** *(changed 2026-10-02, decision 66)*: The solution's content drift guard MUST know this book, by its source fingerprint and
   its counts, and MUST fail loudly if the loaded course drifts from them. It MUST keep guarding the
-  Prep-3 Mathematics set exactly as it does today (Principle XI, FR-1103).
+  Prep-3 Mathematics set exactly as it does today (Principle XI, FR-1103). **Its question and visual
+  counts MUST be of servable rows only:** a question whose status is `rejected` or `retired` is not
+  counted, and a visual attached to such a question is not counted either; a visual attached to no
+  question is counted as before. Those rows stay in the database for the audit trail (a G2 exclusion
+  rejects a row an earlier load inserted; a question dropped from a bundle that a student had used is
+  retired, never deleted) and are never served. The expected side, the bundles, never carries them, so
+  the two sides count the same population. `draft`, `review` and `live` still count, so a question
+  demoted back to `review` is still caught by the live-versus-total comparison, and a servable row that
+  is missing, extra or changed still fails the check. Prep-3's constant (450 questions, 212 visuals) is
+  unchanged: none of its book questions is rejected or retired.
 - **FR-4208** *(changed rev. 2, decision 17; changed rev. 4, decision 29)*: The course MUST reach
   production through a separate **"Load a course" action that an operator starts by hand**, never
   through a code deploy. The action MUST decide whether to act by **that course's own presence**, never

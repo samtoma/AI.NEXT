@@ -538,7 +538,10 @@ document: a requirement whose code exists but has never been executed does not c
   content set it is supposed to serve, and an automated check MUST fail loudly when it does. For
   `PDR1-0` that set is still the Prep-3 book — 10 modules, 90 objectives, 112 prerequisite edges,
   450 questions, 212 visuals —
-  comparing live counts separately from totals. The check MUST treat generated questions
+  comparing live counts separately from totals. *(Amended 2026-10-02, decision 66 of spec 003, which
+  owns FR-4207: the totals are of **servable** rows — a `rejected` or `retired` question, and a visual
+  attached to one, is not counted; none of Prep-3's 450 is either, so its constant is unchanged.)* The
+  check MUST treat generated questions
   (`source='variant'`) as an environment-scoped extension: counted and disclosed, never
   compared, and a hard failure if found in the baseline (FR-1102, FR-1103).
 

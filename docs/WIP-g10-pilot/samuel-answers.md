@@ -151,3 +151,8 @@ Consistency-review decisions (2026-09-27), one at a time (decisions.md decisions
     but keep a note so we can check later": a lesson may keep one objective only when G1 dropped another under a
     recorded ruling; it is a warning marked CHECK LATER (machine-readable `check_later`, first `for_review`
     entry of the gate record), never with none left, never over 5, never without a ruling.
+45. (2026-10-02, decision 66) Chapter 5's G5 is blocked by parity: the database counts 1433 questions against the
+    bundles' expected 1392, and 212 visuals against 209 — the difference is the 41 Chapter 1-4 book questions the
+    G2 recommendation runs rejected (kept for the audit trail, never served) plus 3 book-picture visuals attached to
+    them. How should parity treat rejected rows? → "Count only servable (Recommended)": parity counts questions that
+    are not rejected/retired, and only the visuals attached to them; rejected rows stay in the database.
