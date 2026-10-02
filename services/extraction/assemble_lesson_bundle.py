@@ -256,6 +256,12 @@ def normalise(text: str | None) -> tuple[str | None, Counter]:
     out, n2 = _DEC_COMMA.subn(".", out)
     if n1 + n2:
         counts["decimal"] += n1 + n2
+    return _semicolon_pairs(out, counts), counts
+
+
+def _semicolon_pairs(out: str, counts: Counter) -> str:
+    """The book's `(x; y)` as the app's `(x, y)`: the `;` at the top level of every bracket group that reads as maths
+    (semicolon_groups) becomes ", ". Nothing else in the text is touched."""
     groups = semicolon_groups(out)
     if groups:
         positions = sorted(p for _, _, semis in groups for p in semis)
@@ -267,7 +273,21 @@ def normalise(text: str | None) -> tuple[str | None, Counter]:
             while b < len(out) and out[b] == " ":
                 b += 1
             out = out[:a] + ", " + out[b:]
-    return out, counts
+    return out
+
+
+def normalise_pairs(text: str | None) -> tuple[str | None, Counter]:
+    """`normalise`'s `;`-pair rule ALONE: no decimal commas, no align environments, no comma-pair-by-context.
+
+    For text that was never printed with the book's decimal commas and whose commas are a list's: a learning
+    objective's label and statement (S1 writes them in English from the section's own title — "Ratios of a point
+    (x;y)" — so "1,2,3" there is a list, never 1.23) and a widget template's own prose. The rule is the one
+    `normalise` applies to a question, so a coordinate pair, an interval and a set convert exactly as they do
+    there, and a prose parenthesis ("(see the table; then answer)"), a top-level `;` and a comma list do not."""
+    counts: Counter = Counter()
+    if not text:
+        return text, counts
+    return _semicolon_pairs(text, counts), counts
 
 
 _MATH_WRAPPED = re.compile(r"^\s*(\${1,2})([^$]+)\1\s*$")
@@ -773,8 +793,9 @@ class Report:
                 "stem_carry": {"carried": self.carried_stems, "unresolved": self.multipart_unresolved}}
 
 
-def _norm(text: str | None, where: str, report: Report) -> str | None:
-    out, c = normalise(text)
+def _norm(text: str | None, where: str, report: Report, pairs_only: bool = False) -> str | None:
+    """`normalise` (or, `pairs_only`, `normalise_pairs`) with what it changed recorded in the report."""
+    out, c = (normalise_pairs if pairs_only else normalise)(text)
     if c:
         report.notation.update(c)
         if c.get("decimal") or c.get("pair"):       # decision 15's items; `aligned` is presentation only
@@ -1387,11 +1408,18 @@ def _captioned(v, report: Report, slug: str) -> str | None:
     return fixed
 
 
+# The keys a figure's spec DRAWS text under: a point's, segment's or marker's `label` (coordinate_plot, function_graph,
+# number_line, geo_scene), and a geo_scene `label` element's `text` — the app reads `e.label ?? e.text`
+# (components/viz/GeoScene.tsx). Grade 10 Chapter 5 drew "Q(-2;3)" and "K(-5;y)" as `{"type": "label", "text": …}` and
+# only `label` was normalised, so the book's `;` reached the screen and the coverage audit's notation check refused it.
+SPEC_TEXT_KEYS = ("label", "text")
+
+
 def _norm_spec(spec, where: str, report: Report):
     """A figure's drawn text in the app's notation too (decision 15, FR-4308): the pilot's coordinate plots
-    labelled points "P(2;1)" — its `label` strings are shown on the figure. Nothing else in a spec is text."""
+    labelled points "P(2;1)" — its SPEC_TEXT_KEYS strings are shown on the figure. Nothing else in a spec is text."""
     if isinstance(spec, dict):
-        return {k: (_norm(x, where, report) if k == "label" and isinstance(x, str) else _norm_spec(x, where, report))
+        return {k: (_norm(x, where, report) if k in SPEC_TEXT_KEYS and isinstance(x, str) else _norm_spec(x, where, report))
                 for k, x in spec.items()}
     if isinstance(spec, list):
         return [_norm_spec(x, where, report) for x in spec]
@@ -1429,8 +1457,12 @@ def assemble_chapter(book, manifest: dict, mod: dict, lessons: list[Lesson],
         for o in obj.objectives:
             order += 1
             los_here.add(o.id)
-            nodes.append({"id": o.id, "kind": "learning_objective", "label": o.label,
-                          "description": o.statement, "syllabus_ref": sref,
+            # S1 writes an objective's label from the section's own title and its statement in English, so the book's
+            # `(x;y)` reaches both ("Ratios of a point (x;y)", Grade 10 Chapter 5); a `;` pair is the only notation they carry
+            nodes.append({"id": o.id, "kind": "learning_objective",
+                          "label": _norm(o.label, f"{o.id}:label", report, pairs_only=True),
+                          "description": _norm(o.statement, f"{o.id}:description", report, pairs_only=True),
+                          "syllabus_ref": sref,
                           "source_page": min(e.printed_page for e in o.evidence),
                           "order_in_parent": order})
             edges.append({"src": mod["id"], "dst": o.id, "type": "teaches"})
@@ -1634,7 +1666,7 @@ def lesson_content(book, les: Lesson, objectives: ObjectivesFile, claims: list[d
                       if c["claim_type"] in CLAIM_ORDER else len(CLAIM_ORDER))
         text = " ".join(c["claim"] for c in mine if c["claim_type"] != "caution")
         if text:
-            subtopics.append({"key": o.id, "title": o.label, "exposition": text})
+            subtopics.append({"key": o.id, "title": normalise_pairs(o.label)[0], "exposition": text})
     return {
         "lessonId": les.slug, "title": les.title, "language": book.language, "direction": book.direction,
         "provenance": {"sections": [s.model_dump() for s in les.sections],
