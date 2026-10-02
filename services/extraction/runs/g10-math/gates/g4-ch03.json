@@ -1,0 +1,58 @@
+{
+ "format": "ainext.gate-decision/1",
+ "gate": "G4",
+ "book": "g10-math",
+ "id": "g4-ch03",
+ "chapter": 3,
+ "run": "wf_b0cbb04a-743",
+ "decided_at": "2026-10-01T18:06:25Z",
+ "by": "auto-pass G4 (AI recommendation)",
+ "auto": true,
+ "outcome": "pass",
+ "summary": "4 catalogue entr(ies) kept by S5's verifier, 0 dropped by it",
+ "decisions": [
+  {
+   "key": "mc:g10m3s2-1-1:common-difference-without-checking",
+   "decision": "keep",
+   "basis": "S5's verifier confirmed it"
+  },
+  {
+   "key": "mc:g10m3s2-1-1:subtracts-earlier-minus-later",
+   "decision": "keep",
+   "basis": "S5's verifier confirmed it"
+  },
+  {
+   "key": "mc:g10m3s2-1-2:subtracts-from-value-not-position",
+   "decision": "keep",
+   "basis": "S5's verifier confirmed it"
+  },
+  {
+   "key": "mc:g10m3s2-1-3:different-looking-formula-must-be-wrong",
+   "decision": "keep",
+   "basis": "S5's verifier confirmed it"
+  }
+ ],
+ "checks": [
+  {
+   "name": "S5 author + fail-closed verifier",
+   "state": "pass"
+  },
+  {
+   "name": "load_generated_questions --catalogue-only",
+   "state": "pass"
+  }
+ ],
+ "evidence": [
+  {
+   "label": "catalogue",
+   "path": "services/extraction/seed/generated/g10-math/ch03/misconceptions.json"
+  },
+  {
+   "label": "S5 final",
+   "path": "services/extraction/runs/g10-math/misconceptions/final-ch03-wf_b0cbb04a-743.json"
+  }
+ ],
+ "blocked": [],
+ "course_id": "course:us-g10-math-en",
+ "for_review": []
+}

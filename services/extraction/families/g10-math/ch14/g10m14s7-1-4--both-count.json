@@ -1,0 +1,63 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m14s7-1-4:both-count",
+ "kind": "family",
+ "lo_id": "lo:g10m14s7-1-4",
+ "parent_question_id": "q:g10m14s7-1-4:ex14-8-30",
+ "source_page": 495,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": "A class of learners in which some play football, some play hockey, some play both sports and some play neither.",
+ "params": [
+  {
+   "name": "f",
+   "randint": [
+    12,
+    25
+   ]
+  },
+  {
+   "name": "h",
+   "randint": [
+    8,
+    20
+   ],
+   "resample_while": "h == f"
+  },
+  {
+   "name": "c",
+   "randint": [
+    3,
+    "min(f, h) - 3"
+   ]
+  },
+  {
+   "name": "n",
+   "randint": [
+    3,
+    12
+   ]
+  },
+  {
+   "name": "u",
+   "let": "f + h - c"
+  },
+  {
+   "name": "t",
+   "let": "u + n"
+  }
+ ],
+ "constraints": [
+  "c < min(f, h)",
+  "t > f and t > h"
+ ],
+ "stem": "A class has ${=t}$ learners. ${=f}$ of them play football and ${=h}$ of them play hockey, and ${=n}$ play neither football nor hockey. The numbers for football and for hockey each include the learners who play both. How many learners play both football and hockey?",
+ "answer": "f + h - (t - n)",
+ "solution": [
+  "The ${=n}$ learners who play neither lie outside both circles, so the other ${=t} - {=n} = {=t - n}$ learners play football or hockey (or both): $n(F \\text{ or } H) = {=t - n}$.",
+  "Use the identity $n(F \\text{ or } H) = n(F) + n(H) - n(F \\text{ and } H)$: ${=t - n} = {=f} + {=h} - n(F \\text{ and } H)$.",
+  "So $n(F \\text{ and } H) = {=f} + {=h} - {=t - n} = {=f + h - (t - n)}$ learners play both.",
+  "Check on the Venn diagram: football only ${=f} - {=c} = {=f - c}$, both ${=c}$, hockey only ${=h} - {=c} = {=h - c}$, neither ${=n}$, and ${=f - c} + {=c} + {=h - c} + {=n} = {=t}$."
+ ],
+ "notes": "The twist on the book's ex14-8-30 (which gives the overlap and asks for the class total): here the total and the 'neither' count are given and the overlap is the unknown, so the union identity has to be rearranged. Three steps plus a check on the diagram. The inclusive reading of the football and hockey totals is stated in the stem. No distractors (numeric)."
+}

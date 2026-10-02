@@ -1,0 +1,169 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m10s4-1-1:remove-outlier",
+ "kind": "family",
+ "lo_id": "lo:g10m10s4-1-1",
+ "parent_question_id": "q:g10m10s4-1-1:we10",
+ "source_page": 372,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": "Ten learners each count the number of marbles they have, and the counts are recorded as an unordered data set in which one count is far from all the others.",
+ "params": [
+  {
+   "name": "base",
+   "randint": [
+    20,
+    40
+   ]
+  },
+  {
+   "name": "v1",
+   "randint": [
+    "base",
+    "base + 10"
+   ]
+  },
+  {
+   "name": "v2",
+   "randint": [
+    "base",
+    "base + 10"
+   ]
+  },
+  {
+   "name": "v3",
+   "randint": [
+    "base",
+    "base + 10"
+   ]
+  },
+  {
+   "name": "v4",
+   "randint": [
+    "base",
+    "base + 10"
+   ]
+  },
+  {
+   "name": "v5",
+   "randint": [
+    "base",
+    "base + 10"
+   ]
+  },
+  {
+   "name": "v6",
+   "randint": [
+    "base",
+    "base + 10"
+   ]
+  },
+  {
+   "name": "v7",
+   "randint": [
+    "base",
+    "base + 10"
+   ]
+  },
+  {
+   "name": "v8",
+   "randint": [
+    "base",
+    "base + 10"
+   ]
+  },
+  {
+   "name": "v9",
+   "randint": [
+    "base",
+    "base + 10"
+   ]
+  },
+  {
+   "name": "core",
+   "let": "[v1, v2, v3, v4, v5, v6, v7, v8, v9]"
+  },
+  {
+   "name": "cs",
+   "let": "sorted(core)"
+  },
+  {
+   "name": "cmin",
+   "let": "cs[0]"
+  },
+  {
+   "name": "cmax",
+   "let": "cs[8]"
+  },
+  {
+   "require": "cmax - cmin >= 6",
+   "why": "the typical values must be spread enough that the range is still a real number once the outlier is removed"
+  },
+  {
+   "name": "side",
+   "choice": [
+    0,
+    1
+   ]
+  },
+  {
+   "name": "gap",
+   "randint": [
+    12,
+    19
+   ]
+  },
+  {
+   "name": "out",
+   "let": "(cmin - gap) if side == 0 else (cmax + gap)"
+  },
+  {
+   "name": "full",
+   "let": "[v1, v2, v3, v4, v5, v6, v7, v8, v9, out]"
+  },
+  {
+   "name": "s",
+   "shuffle": "full"
+  },
+  {
+   "name": "fs",
+   "let": "sorted(full)"
+  },
+  {
+   "name": "mx",
+   "let": "fs[9]"
+  },
+  {
+   "name": "mn",
+   "let": "fs[0]"
+  },
+  {
+   "name": "rng1",
+   "let": "mx - mn"
+  },
+  {
+   "name": "rng2",
+   "let": "cmax - cmin"
+  },
+  {
+   "name": "drop",
+   "let": "rng1 - rng2"
+  }
+ ],
+ "constraints": [
+  "out >= 1",
+  "drop == gap",
+  "mx - mn == rng1"
+ ],
+ "stem": "A group of $10$ learners count the number of marbles they each have. This is the data they collect: $\\left\\{ {=s[0]}, {=s[1]}, {=s[2]}, {=s[3]}, {=s[4]}, {=s[5]}, {=s[6]}, {=s[7]}, {=s[8]}, {=s[9]} \\right\\}$ Find the range of the data set. Then find by how much the range decreases when the value ${=out}$, which is not typical of the other values, is removed from the data set. Give this decrease in the range as your answer.",
+ "answer": "drop",
+ "solution": [
+  "Put the data set in order, from the smallest value to the largest: $\\left\\{ {=fs[0]}, {=fs[1]}, {=fs[2]}, {=fs[3]}, {=fs[4]}, {=fs[5]}, {=fs[6]}, {=fs[7]}, {=fs[8]}, {=fs[9]} \\right\\}$",
+  "The maximum value is ${=mx}$ and the minimum value is ${=mn}$.",
+  "The range is the maximum value minus the minimum value: $\\text{range} = {=mx} - {=mn} = {=rng1}$.",
+  "The value ${=out}$ is not typical of the other values, so remove it. The data set that is left is $\\left\\{ {=cs[0]}, {=cs[1]}, {=cs[2]}, {=cs[3]}, {=cs[4]}, {=cs[5]}, {=cs[6]}, {=cs[7]}, {=cs[8]} \\right\\}$",
+  "In this new data set the maximum value is ${=cmax}$ and the minimum value is ${=cmin}$, so the new range is ${=cmax} - {=cmin} = {=rng2}$.",
+  "The range goes from ${=rng1}$ to ${=rng2}$, so it decreases by ${=rng1} - {=rng2} = {=drop}$. The value ${=out}$ is an outlier and has a big influence on the range."
+ ],
+ "notes": "Advanced = the book's we10 twist (remove a value that is not typical, see the range change) joined to the ex10-7-18 style of data: ten UNORDERED values, order them, find max and min, find the range, remove the outlier, find the new range, take the difference. Whole data set is shuffled so the outlier sits anywhere in the list. The outlier (low or high, by 'side') is always the unique extreme: core values lie in a window of width 10 and the outlier is 12 to 19 beyond the nearest core extreme, so after removal the new max and min are unambiguous. Marbles cannot be negative: base >= 20 and gap <= 19 keep the low outlier at 1 or more. The decrease always equals the gap (checked by the constraint drop == gap); a solver who shortcuts to the gap still gets the right answer. The answer is the decrease only, one whole number, so there is no two-part marker. No distractors (numeric)."
+}

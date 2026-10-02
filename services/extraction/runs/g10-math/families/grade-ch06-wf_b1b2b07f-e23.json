@@ -1,0 +1,1530 @@
+{
+ "mode": "grade",
+ "book": "g10-math",
+ "prompts_version": "s6-v6",
+ "by_ref": {
+  "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/s6-grade-ch06",
+  "stage": "S6 grade",
+  "shards_sha256": "474fd16490625dd4e3e77c54548a1ce551d8e646b32ef3b240759ceae777c265",
+  "files": 312
+ },
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "ce14b9a275551596540559352d6e1137fc366251ecc65d4b7d34aa4599cbc0b6",
+  "args_sha256": "ab9d621b7b8e531d8194c3923b4b5d76f352208665882706dc86ac60abca0be7",
+  "generated_sha256": "ac050750c6caa3c9b866efc402b98dfd80342365abab48ec26fee2a2a857b9fd",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "family_id": "tpl:g10m6s5-1-5:twist",
+   "spec_sha": "117da5e10c55d27c27d34b6b5c5a72b6ef415cb2cbe3b1768b16e94bcaa91fb3",
+   "answers": [
+    {
+     "instance_id": "q:g10m6s5-1-5:g002-twist",
+     "stem_sha": "58640f31145f9dfb",
+     "answer": {
+      "choice": "B",
+      "choice_text": "It rises as $x$ increases, lies below the line $y=-2$ and cuts the $y$-axis at $(0, -6)$."
+     },
+     "working": "y = -4(1/4)^x - 2. Base 1/4 is between 0 and 1, so (1/4)^x falls as x increases. Multiplying by -4 flips it, so the curve rises. The asymptote is y = -2 and -4(1/4)^x is always negative, so the curve lies below y = -2. At x = 0: y = -4 - 2 = -6, so it cuts the y-axis at (0, -6). That is option B."
+    },
+    {
+     "instance_id": "q:g10m6s5-1-5:g006-twist",
+     "stem_sha": "e348a010622cedef",
+     "answer": {
+      "choice": "A",
+      "choice_text": "It rises as $x$ increases, lies below the line $y=-1$ and cuts the $y$-axis at $(0, -3)$."
+     },
+     "working": "y = -2(1/4)^x - 1. (1/4)^x falls, and the factor -2 flips it, so the curve rises. The asymptote is y = -1 and -2(1/4)^x < 0, so the curve lies below y = -1. At x = 0: y = -2 - 1 = -3, so it cuts the y-axis at (0, -3). That is option A."
+    },
+    {
+     "instance_id": "q:g10m6s5-1-5:g009-twist",
+     "stem_sha": "9e4c1b1ab824552b",
+     "answer": {
+      "choice": "C",
+      "choice_text": "It rises as $x$ increases, lies below the line $y=3$ and cuts the $y$-axis at $(0, 1)$."
+     },
+     "working": "y = -2(1/2)^x + 3. (1/2)^x falls, and the factor -2 flips it, so the curve rises. The asymptote is y = 3 and -2(1/2)^x < 0, so the curve lies below y = 3. At x = 0: y = -2 + 3 = 1, so it cuts the y-axis at (0, 1). That is option C."
+    }
+   ],
+   "judge": {
+    "distractors_ok": false,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [
+     {
+      "instance_id": "q:g10m6s5-1-5:g002-twist",
+      "option": "A",
+      "verdict": "WRONG_LABEL",
+      "why": "Tagged leaves-out-a, but (0,2) = |a|+q = 4-2, which is what you get by dropping the minus sign of a, not by leaving a out. Leaving a out gives 1+q = -1, which is option C. Direction and position (falls, above) are consistent with either slip. Wrong either way."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-5:g002-twist",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Leaving a out gives y = (1/4)^x - 2: falls, above y=-2, intercept 1-2 = -1. Exactly the option. Definitely wrong."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-5:g002-twist",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "A student who takes b=1/4 as rising, then flips for negative a, gets falls, below y=-2, with the correct intercept (0,-6). Matches rising-falling-mixed-up. Direction is wrong, so definitely wrong."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-5:g006-twist",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Only the direction is wrong (falls instead of rises), position and intercept (0,-3) are right. Fits rising-falling-mixed-up. Definitely wrong."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-5:g006-twist",
+      "option": "C",
+      "verdict": "WRONG_LABEL",
+      "why": "Tagged leaves-out-a, but (0,1) = |a|+q = 2-1, which is the sign of a dropped, not a left out. Leaving a out gives 1+q = 0, which is option D. Wrong either way."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-5:g006-twist",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Leaving a out gives y = (1/4)^x - 1: falls, above y=-1, intercept 1-1 = 0. Exactly the option. Definitely wrong."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-5:g009-twist",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Leaving a out gives y = (1/2)^x + 3: falls, above y=3, intercept 1+3 = 4. Exactly the option. Definitely wrong."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-5:g009-twist",
+      "option": "B",
+      "verdict": "WRONG_LABEL",
+      "why": "Tagged leaves-out-a, but (0,5) = |a|+q = 2+3, which is the sign of a dropped, not a left out (that would be (0,4), option A). Wrong either way."
+     },
+     {
+      "instance_id": "q:g10m6s5-1-5:g009-twist",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Falls, below y=3, correct intercept (0,1): the direction is mixed up (b<1 read as rising, then flipped by negative a). Matches rising-falling-mixed-up. Direction is wrong, so definitely wrong."
+     }
+    ],
+    "notes": "Maths is correct throughout. In all three instances the key is right (rises; below y=q; intercept a+q = -6, -3, 1), the stem is unambiguous, and each worked solution follows the book's method (a, b, q; direction from b then a; asymptote y=q with side set by sign of a; y-intercept at x=0) with correct arithmetic. No wrong option is also correct; each fails on direction, side of the asymptote or intercept. Rejected on the labels alone. Each instance carries two distractors tagged mc:g10m6s5-1-5:leaves-out-a. One is exactly leaves-out-a: a treated as 1, intercept 1+q (g002 C, g006 D, g009 A). The other is a different slip: the minus sign of a dropped, intercept |a|+q (g002 A, g006 C, g009 B). I could only read this one file, so I could not check the misconception definition. If leaves-out-a is defined as ignoring the sign of a, the three |a|+q options are fine and this should pass. If it means omitting the a factor, they carry the wrong tag and a student who picks one is told they left a out when they did not. The fix is to retag them (for example a sign-of-a misconception) or replace them with a second a-omitted variant, such as a=1 with a different q-handling slip. Nothing else needs changing."
+   }
+  },
+  {
+   "family_id": "tpl:g10m6s5-1-5:xcross",
+   "spec_sha": "6484ee4692cc6fd1e11fb727f43305ba9327584053eaba040ab3ac57e861b1bf",
+   "answers": [
+    {
+     "instance_id": "q:g10m6s5-1-5:g003-xcross",
+     "stem_sha": "6e5912f6972faf92",
+     "answer": {
+      "value": "2"
+     },
+     "working": "Set y = 0: -5*3^x + 45 = 0, so 5*3^x = 45, 3^x = 9 = 3^2, so x = 2."
+    },
+    {
+     "instance_id": "q:g10m6s5-1-5:g008-xcross",
+     "stem_sha": "15b0d9b1378a226a",
+     "answer": {
+      "value": "2"
+     },
+     "working": "Set y = 0: 3*2^x - 12 = 0, so 3*2^x = 12, 2^x = 4 = 2^2, so x = 2."
+    },
+    {
+     "instance_id": "q:g10m6s5-1-5:g010-xcross",
+     "stem_sha": "edcc6d832bfa122b",
+     "answer": {
+      "value": "2"
+     },
+     "working": "Set y = 0: -2*2^x + 8 = 0, so 2*2^x = 8, 2^x = 4 = 2^2, so x = 2."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "Numeric family, no options, so there are no distractors to judge. I re-solved all three instances independently.\n\n- g003, y = -5*3^x + 45: setting y = 0 gives -5*3^x = -45, so 3^x = 9 and x = 2. Key \"2\" is correct.\n- g008, y = 3*2^x - 12: setting y = 0 gives 3*2^x = 12, so 2^x = 4 and x = 2. Key \"2\" is correct.\n- g010, y = -2*2^x + 8: setting y = 0 gives -2*2^x = -8, so 2^x = 4 and x = 2. Key \"2\" is correct.\n\nKey form: the stem asks for the x-coordinate, and a bare integer \"2\" is exactly that. No answer_check was supplied to compare, but \"2\" is the only plausible form.\n\nContext: each stem is a pure graph-intercept question with no word problem. \"Cuts the x-axis at exactly one point\" is true in all three. In g003 and g010 the coefficient is negative and the asymptote is positive. In g008 the coefficient is positive and the asymptote is negative. Either way the curve crosses y = 0 once.\n\nSolutions: the five steps run set y = 0, isolate the exponential term, divide by the coefficient, write the constant as a power of the base, then equate exponents. Each step is arithmetically correct, signs are handled correctly (dividing -45 by -5 and -8 by -2 both give positive results), and all follow the book's same-base exponent method.\n\nObservation, not a defect: all three instances have answer x = 2, so the variants do not differ in their answers. A student who has seen one instance could guess \"2\" on the next. If the family is meant to be re-served, consider varying the target power so the answers differ."
+   }
+  },
+  {
+   "family_id": "tpl:g10m6s6-1-2:amplitude-range",
+   "spec_sha": "1582c5a4bfa96825ec447c74fe5686ac5da72fc884b1235f5ec163bdc4803660",
+   "answers": [
+    {
+     "instance_id": "q:g10m6s6-1-2:g006-amplit",
+     "stem_sha": "47f1c515c07f4882",
+     "answer": {
+      "choice": "A",
+      "choice_text": "Amplitude $3$; range $-2 \\le y \\le 4$"
+     },
+     "working": "For y = a sin θ + q, amplitude = |a| = |-3| = 3 (amplitude is never negative). The sine part spans -3 to 3. The reflection from the negative sign doesn't change that span. Adding 1 shifts it up: -3+1 = -2 and 3+1 = 4. Range is -2 ≤ y ≤ 4. This matches option A. Option D is wrong because it gives a negative amplitude."
+    },
+    {
+     "instance_id": "q:g10m6s6-1-2:g009-amplit",
+     "stem_sha": "6fd80020bc8b4305",
+     "answer": {
+      "choice": "D",
+      "choice_text": "Amplitude $5$; range $-3 \\le y \\le 7$"
+     },
+     "working": "Amplitude = |-5| = 5. The sine part spans -5 to 5. Adding 2 shifts it up: -5+2 = -3 and 5+2 = 7. Range is -3 ≤ y ≤ 7. This matches option D. Option A has the right range but a negative amplitude."
+    },
+    {
+     "instance_id": "q:g10m6s6-1-2:g010-amplit",
+     "stem_sha": "e94153a837406e29",
+     "answer": {
+      "choice": "D",
+      "choice_text": "Amplitude $5$; range $-4 \\le y \\le 6$"
+     },
+     "working": "Amplitude = |-5| = 5. The sine part spans -5 to 5. Adding 1 shifts it up: -5+1 = -4 and 5+1 = 6. Range is -4 ≤ y ≤ 6. This matches option D. Option B has the right range but a negative amplitude."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": false,
+    "notes": "The maths is correct in all three instances, and the single defect is pluralisation in the worked solution of g006 and g010.\n\nKeys:\n- g006, y = -3 sin θ + 1: amplitude 3, range -2 ≤ y ≤ 4 (A).\n- g009, y = -5 sin θ + 2: amplitude 5, range -3 ≤ y ≤ 7 (D).\n- g010, y = -5 sin θ + 1: amplitude 5, range -4 ≤ y ≤ 6 (D).\nEach key states both parts the stem asks for, in the asked form (a positive amplitude and an interval for the range).\n\nDistractors, each recomputed:\n- shift-ignored gives the range -|a| ≤ y ≤ |a|, which is exactly the option shown in each instance.\n- stretch-applied-to-shift reads the graph as y = a(sin θ + q), so the shift becomes a·q. g006: shift -3, range -6 to 0. g009: shift -10, range -15 to -5. g010: shift -5, range -10 to 0. All match the options shown.\n- negative-amplitude takes the amplitude to be a, giving -3 or -5, with the correct range. This is wrong because amplitude is a distance, as step 2 says.\n- Every wrong option is definitely wrong, and none coincides with the key. The options within each family are all distinct.\n\nDefect: solution step 3 says \"moves every point up $1$ units\" in g006 and g010. Every q = 1 instance will show \"1 units\", because the template does not handle the singular. A student reads this text, and it is a template bug. I set solution_ok to false for this reason alone; the fix is \"unit\" when q = 1. If the pluralisation is repaired, I would pass the family: no mathematical step is wrong.\n\nMinor, not blocking: the stem gives the domain 0° ≤ θ ≤ 360°. That covers a full period, so the range over the domain equals the range of the function and there is no ambiguity.",
+    "distractors": [
+     {
+      "instance_id": "q:g10m6s6-1-2:g006-amplit",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Amplitude 3 with range -3 to 3 is the vertical shift of +1 dropped, which is shift-ignored. It is wrong because the true range is -2 to 4."
+     },
+     {
+      "instance_id": "q:g10m6s6-1-2:g006-amplit",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Reading the equation as -3(sinθ + 1) multiplies the shift by a, giving a shift of -3 and a range of -6 to 0. This is stretch-applied-to-shift, and it is wrong."
+     },
+     {
+      "instance_id": "q:g10m6s6-1-2:g006-amplit",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Amplitude -3 takes a as the amplitude, which is negative-amplitude. The range -2 to 4 is correct, but amplitude is a distance, so -3 is wrong."
+     },
+     {
+      "instance_id": "q:g10m6s6-1-2:g009-amplit",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Amplitude -5 with the correct range -3 to 7 is negative-amplitude. It is wrong because the amplitude is 5."
+     },
+     {
+      "instance_id": "q:g10m6s6-1-2:g009-amplit",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "The shift becomes a·q = -10, so the range is -15 to -5. This is stretch-applied-to-shift, and it is wrong."
+     },
+     {
+      "instance_id": "q:g10m6s6-1-2:g009-amplit",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Range -5 to 5 drops the +2 shift, which is shift-ignored. It is wrong because the true range is -3 to 7."
+     },
+     {
+      "instance_id": "q:g10m6s6-1-2:g010-amplit",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "The shift becomes a·q = -5, so the range is -10 to 0. This is stretch-applied-to-shift, and it is wrong."
+     },
+     {
+      "instance_id": "q:g10m6s6-1-2:g010-amplit",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Amplitude -5 with the correct range -4 to 6 is negative-amplitude. It is wrong because the amplitude is 5."
+     },
+     {
+      "instance_id": "q:g10m6s6-1-2:g010-amplit",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Range -5 to 5 drops the +1 shift, which is shift-ignored. It is wrong because the true range is -4 to 6."
+     }
+    ]
+   }
+  },
+  {
+   "family_id": "tpl:g10m6s6-1-2:equation-from-points",
+   "spec_sha": "0e6a5fe9022c4f7782604ec26f33873b3f40ed9fb7e8119aec5e090063ab4a09",
+   "answers": [
+    {
+     "instance_id": "q:g10m6s6-1-2:g005-equati",
+     "stem_sha": "90ea8af65c0ee6ac",
+     "answer": {
+      "choice": "C",
+      "choice_text": "$y = -2\\sin\\theta + 2$"
+     },
+     "working": "The midline value q is the average of the two turning-point y-values: q = (0 + 4)/2 = 2. At θ = 90°, sin θ = 1, so y = a + q = 0, which gives a = -2. Check at 270°: sin θ = -1, so y = -a + q = 2 + 2 = 4, which matches. The equation is y = -2 sin θ + 2."
+    },
+    {
+     "instance_id": "q:g10m6s6-1-2:g007-equati",
+     "stem_sha": "de43b80d707b6a53",
+     "answer": {
+      "choice": "C",
+      "choice_text": "$y = -2\\sin\\theta - 3$"
+     },
+     "working": "q = (-5 + -1)/2 = -3. At θ = 90°, y = a + q = -5, which gives a = -2. Check at 270°: y = -a + q = 2 - 3 = -1, which matches. The equation is y = -2 sin θ - 3."
+    },
+    {
+     "instance_id": "q:g10m6s6-1-2:g008-equati",
+     "stem_sha": "0c6a2c27424c21c2",
+     "answer": {
+      "choice": "D",
+      "choice_text": "$y = -2\\sin\\theta + 1$"
+     },
+     "working": "q = (-1 + 3)/2 = 1. At θ = 90°, y = a + q = -1, which gives a = -2. Check at 270°: y = -a + q = 2 + 1 = 3, which matches. The equation is y = -2 sin θ + 1."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [
+     {
+      "instance_id": "q:g10m6s6-1-2:g005-equati",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "y = 2sinθ + 2 has the right |a| and q but a positive. This is the sign of a taken the wrong way round (reflection reversed). It is wrong: at θ=90° it gives 4, not 0."
+     },
+     {
+      "instance_id": "q:g10m6s6-1-2:g005-equati",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "y = -2sinθ - 2 has the right a and q with its sign flipped (shift direction reversed). It is wrong: at θ=90° it gives -4, not 0."
+     },
+     {
+      "instance_id": "q:g10m6s6-1-2:g005-equati",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "y = -4sinθ + 2 uses the full height 4 (max minus min) as the amplitude instead of half of it, with the correct sign and q. It is wrong: at θ=90° it gives -2, not 0."
+     },
+     {
+      "instance_id": "q:g10m6s6-1-2:g007-equati",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "y = -4sinθ - 3 uses the full height 4 as the amplitude, with the correct sign and q = -3. It is wrong: at θ=90° it gives -7, not -5."
+     },
+     {
+      "instance_id": "q:g10m6s6-1-2:g007-equati",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "y = -2sinθ + 3 has the correct a and the sign of q = -3 flipped. It is wrong: at θ=90° it gives 1, not -5."
+     },
+     {
+      "instance_id": "q:g10m6s6-1-2:g007-equati",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "y = 2sinθ - 3 has the correct |a| and q but a positive (reflection reversed). It is wrong: at θ=90° it gives -1, not -5."
+     },
+     {
+      "instance_id": "q:g10m6s6-1-2:g008-equati",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "y = 2sinθ + 1 has the correct |a| and q but a positive (reflection reversed). It is wrong: at θ=90° it gives 3, not -1."
+     },
+     {
+      "instance_id": "q:g10m6s6-1-2:g008-equati",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "y = -2sinθ - 1 has the correct a and the sign of q = 1 flipped. It is wrong: at θ=90° it gives -3, not -1."
+     },
+     {
+      "instance_id": "q:g10m6s6-1-2:g008-equati",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "y = -4sinθ + 1 uses the full height 4 as the amplitude, with the correct sign and q = 1. It is wrong: at θ=90° it gives -3, not -1."
+     }
+    ],
+    "notes": "I checked all three instances independently, and each solution reaches its key correctly.\n\n- g005, turning points (90°,0) and (270°,4): ymax = 4, ymin = 0, so |a| = 2 and q = 2. The value at 90° is the minimum, so a < 0. The equation is y = -2sinθ + 2, which is C. Checks: 90° gives 0, 270° gives 4.\n- g007, turning points (90°,-5) and (270°,-1): |a| = 2, q = -3, a < 0. The equation is y = -2sinθ - 3, which is C. Checks: 90° gives -5, 270° gives -1.\n- g008, turning points (90°,-1) and (270°,3): |a| = 2, q = 1, a < 0. The equation is y = -2sinθ + 1, which is D. Checks: 90° gives -1, 270° gives 3.\n\nEvery tagged wrong option fails the 90° check, so none is also correct. Each is exactly what a student making the tagged error would write. The tag mapping is consistent: reflection-reversed flips the sign of a, shift-direction-reversed flips the sign of q, and height-as-amplitude uses ymax - ymin as the amplitude.\n\nThe key letters match the correct option text in every instance, and each stem asks for an equation in the form y = a sinθ + q.\n\nContext: the stem says the graph is sketched, but no figure appears in the file. The text gives both turning points, so it is complete and unambiguous. If the item is meant to ship with a picture, that is a presentation choice for the visuals pipeline, not a defect in the question.\n\nMinor design observations, not defects: every instance has a < 0, so a student could learn that \"a is always negative\" in this family. The step-4 wording \"so a is negative, so the graph is reflected\" is slightly run-on but correct."
+   }
+  },
+  {
+   "family_id": "tpl:g10m6s6-1-2:lowest-value-90",
+   "spec_sha": "d38f043a07fec079d93705e7d301e8cbdacf783637f8e159be5df0c5c47128d9",
+   "answers": [
+    {
+     "instance_id": "q:g10m6s6-1-2:g003-lowest",
+     "stem_sha": "3ecf8b49ce6f21bd",
+     "answer": {
+      "value": "3"
+     },
+     "working": "Minimum of 4sinθ occurs at sinθ = -1, so the minimum of y is -4 + q. Setting -4 + q = -5 gives q = -1. At θ = 90°, sinθ = 1, so y = 4(1) - 1 = 3."
+    },
+    {
+     "instance_id": "q:g10m6s6-1-2:g004-lowest",
+     "stem_sha": "2b0170ae1b2265b3",
+     "answer": {
+      "value": "-1"
+     },
+     "working": "Minimum of 2sinθ occurs at sinθ = -1, so the minimum of y is -2 + q. Setting -2 + q = -5 gives q = -3. At θ = 90°, sinθ = 1, so y = 2(1) - 3 = -1."
+    },
+    {
+     "instance_id": "q:g10m6s6-1-2:g007-lowest",
+     "stem_sha": "690ca22db9470a91",
+     "answer": {
+      "value": "-4"
+     },
+     "working": "The coefficient is negative, so the minimum of -3sinθ occurs at sinθ = 1 (θ = 90°), giving y = -3 + q. Setting -3 + q = -4 gives q = -1. At θ = 90°, y = -3(1) - 1 = -4, which is the minimum itself."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": false,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The arithmetic and keys are correct. I set context_ok to false on a design-quality doubt, not an error.\n\nKeys (all numeric, no options, so no distractors to judge):\n- g003: y = 4 sin θ + q has a minimum of -4 + q = -5, so q = -1. At 90°, y = 4 - 1 = 3. The key 3 is correct.\n- g004: -2 + q = -5, so q = -3. At 90°, y = 2 - 3 = -1. The key -1 is correct.\n- g007: for a = -3 the minimum is -3 + q = -4, so q = -1. At 90°, y = -3 - 1 = -4. The key -4 is correct.\n\nWhy context_ok is false:\n- Whenever a is negative, y(90°) is the lowest point of the graph. The correct answer is then always the minimum quoted in the stem.\n- In g007 the answer, -4, is the number already given in the stem. A student can echo it with no understanding and be marked right.\n- That makes the negative-a branch a giveaway that cannot tell understanding from copying. I recommend moving the evaluation point for negative-a instances, for example to θ = 270°, or asking for q first, so the answer is not the given minimum.\n\nSmaller points (solution_ok left true):\n- g007 step 1 calls y = -3 sin θ \"the basic sine graph stretched by a factor of 3\" and leaves out the reflection. The range -3 to 3 is right, the parenthetical says the amplitude is the same for either sign, and step 4 states the reflection. It is imprecise, not wrong.\n- Steps 1 and 4 use the symbol a, but the stem writes the number (4 sin θ). It is acceptable if the lesson has introduced y = a sin θ + q, but it is slightly unanchored."
+   }
+  },
+  {
+   "family_id": "tpl:g10m6s6-1-2:turning-point-270",
+   "spec_sha": "e1f2d688dccff425fc7d3da5abc51f556a43ca6fadf5b39b3db01692e4408169",
+   "answers": [
+    {
+     "instance_id": "q:g10m6s6-1-2:g003-turnin",
+     "stem_sha": "4fbb82c08b162b74",
+     "answer": {
+      "value": "-1"
+     },
+     "working": "At θ = 270°, sin θ = -1, so y = 4(-1) + 3 = -4 + 3 = -1. This is the minimum of the graph."
+    },
+    {
+     "instance_id": "q:g10m6s6-1-2:g006-turnin",
+     "stem_sha": "1c2d7fc49fe21fec",
+     "answer": {
+      "value": "-4"
+     },
+     "working": "At θ = 270°, sin θ = -1, so y = 2(-1) - 2 = -2 - 2 = -4. This is the minimum of the graph."
+    },
+    {
+     "instance_id": "q:g10m6s6-1-2:g007-turnin",
+     "stem_sha": "0ba45c6b4092795b",
+     "answer": {
+      "value": "-6"
+     },
+     "working": "At θ = 270°, sin θ = -1, so y = 2(-1) - 4 = -2 - 4 = -6. This is the minimum of the graph."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "Numeric family with no options, so there are no distractors to judge and distractors_ok is true by default. I checked all three instances independently. For y = a sin(theta) + q with a > 0, the turning point at 270 degrees is the minimum, y = -a + q.\n- g003 (4 sin(theta) + 3): -4 + 3 = -1. The key -1 is correct.\n- g006 (2 sin(theta) - 2): -2 - 2 = -4. The key -4 is correct.\n- g007 (2 sin(theta) - 4): -2 - 4 = -6. The key -6 is correct.\nEach solution follows the book's method: read the base minimum (-1) at 270 degrees, apply the vertical stretch a, say that a > 0 means no reflection so the point stays a minimum, apply the vertical shift q, then state the result. The arithmetic and the sign handling are right.\nThe stems are unambiguous. The domain 0 to 360 degrees is given, the turning point at 270 degrees is a well-defined minimum, and the numbers are realistic for Grade 10.\nThe keys ask for a single y-value, which is what the stem asks for, so the form is right. The answer_check expression was not in the file, so I could not compare it with the key. The keys are plain signed integers, which is the natural numeric form.\nOne quality note, not an error: g003's key (-1) equals the base value of sin at 270 degrees. A student who ignores both a and q gets full credit by accident, so g003 discriminates weakly. The same weakness would apply to any member of this family where -a + q = -1. It is still correct and can ship, but the generator could avoid cases where the answer equals -1 so a \"no transformation\" error is not rewarded."
+   }
+  },
+  {
+   "family_id": "tpl:g10m6s6-1-3:amplitude",
+   "spec_sha": "5ac99db3584d0ba9d9cdcea2f881167f1806f347e0d6b8fe8f1ad623bb3b0d8d",
+   "answers": [
+    {
+     "instance_id": "q:g10m6s6-1-3:g003-amplit",
+     "stem_sha": "e3c4e2cc7e98bc98",
+     "answer": {
+      "value": "3"
+     },
+     "working": "For f(θ)=a sinθ + q the amplitude is |a|, half the distance between max and min. Max = 3+5 = 8, min = -3+5 = 2, so (8-2)/2 = 3. The +5 only shifts the graph up and does not change the amplitude."
+    },
+    {
+     "instance_id": "q:g10m6s6-1-3:g005-amplit",
+     "stem_sha": "25a0d05e9dd4f52a",
+     "answer": {
+      "value": "2"
+     },
+     "working": "For f(θ)=a sinθ + q the amplitude is |a|. Max = 2-4 = -2, min = -2-4 = -6, so (-2-(-6))/2 = 2. The -4 only shifts the graph down and does not change the amplitude."
+    },
+    {
+     "instance_id": "q:g10m6s6-1-3:g007-amplit",
+     "stem_sha": "7322846945ffb219",
+     "answer": {
+      "value": "6"
+     },
+     "working": "For f(θ)=a sinθ + q the amplitude is |a|. Max = 6+4 = 10, min = -6+4 = -2, so (10-(-2))/2 = 6. The +4 only shifts the graph up and does not change the amplitude."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "Family f048 is a numeric (typed-answer) family with no multiple-choice options. There are no wrong options to judge, so distractors_ok is true and the list is empty. All three instances (g003, g005, g007) check out.\n\nKeys: the amplitude of 3 sin(theta) + 5 is 3, of 2 sin(theta) - 4 is 2, and of 6 sin(theta) + 4 is 6. Each key is a bare number, which is the form the stem asks for. The vertical shift q (+5, -4, +4) is correctly ignored.\n\nWorked solutions: step 1 states amplitude = |a|, as the distance from the midline y = q to the maximum or minimum. It says explicitly that q does not change the amplitude and that the amplitude is never negative. Step 2 substitutes a and reaches the key. This is the standard method for Grade 10 sin graphs of the form a sin(theta) + q.\n\nContext: there is no word problem. The stem names the function and domain (0 to 360 degrees), and \"is drawn\" is only descriptive because the function is fully given. The numbers are all positive a, which suits the basic tier. The double spaces before the sign in the LaTeX do not render and are harmless. No ambiguity."
+   }
+  },
+  {
+   "family_id": "tpl:g10m6s6-1-3:rangepick",
+   "spec_sha": "8d0501c2e38cef18017271d9ac25b79469b331760de43bb9714d32fe6513d899",
+   "answers": [
+    {
+     "instance_id": "q:g10m6s6-1-3:g003-rangep",
+     "stem_sha": "0685e16367c8f8bd",
+     "answer": {
+      "choice": "B",
+      "choice_text": "$-8\\le f(\\theta)\\le -2$"
+     },
+     "working": "Over 0° to 360° sin θ takes every value from -1 (at 270°) to 1 (at 90°). So 3 sin θ runs from -3 to 3, and subtracting 5 gives -8 to -2."
+    },
+    {
+     "instance_id": "q:g10m6s6-1-3:g005-rangep",
+     "stem_sha": "05eaee38a76be138",
+     "answer": {
+      "choice": "B",
+      "choice_text": "$-7\\le f(\\theta)\\le 1$"
+     },
+     "working": "sin θ covers -1 to 1 on 0° to 360°. So 4 sin θ runs from -4 to 4, and subtracting 3 gives -7 to 1."
+    },
+    {
+     "instance_id": "q:g10m6s6-1-3:g010-rangep",
+     "stem_sha": "911ebeb3d4fc257a",
+     "answer": {
+      "choice": "A",
+      "choice_text": "$-1\\le f(\\theta)\\le 5$"
+     },
+     "working": "sin θ covers -1 to 1 on 0° to 360°. So 3 sin θ runs from -3 to 3, and adding 2 gives -1 to 5."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I checked all three instances by hand and found no defects.\n\nKeys:\n- g003: f = 3sinθ − 5 has range −8 ≤ f ≤ −2, so B is correct.\n- g005: f = 4sinθ − 3 has range −7 ≤ f ≤ 1, so B is correct.\n- g010: f = 3sinθ + 2 has range −1 ≤ f ≤ 5, so A is correct.\n- Each key is an inequality range, which is the form the stem asks for.\n\nDistractors, each checked against the claimed error:\n- range-wrong-shift is the shift applied with the wrong sign.\n  - g003 A: 2..8 is ±3 shifted by +5 instead of −5.\n  - g005 C: −1..7 is ±4 shifted by +3 instead of −3.\n  - g010 D: −5..1 is ±3 shifted by −2 instead of +2.\n- range-ignores-amp is the shift applied to −1..1 with no multiplication by a.\n  - g003 C: −6..−4 is (−1, 1) − 5.\n  - g005 D: −4..−2 is (−1, 1) − 3.\n  - g010 B: 1..3 is (−1, 1) + 2.\n- range-ignores-shift is the amplitude applied with no shift.\n  - g003 D: −3..3.\n  - g005 A: −4..4.\n  - g010 C: −3..3.\n- No wrong option equals the correct range, so none is also correct. The three distractors in each instance are distinct from each other.\n\nContext: the stem gives a full period (0° to 360°), so both extremes are attained. The numbers are small and realistic, and there is no word problem.\n\nSolutions: each follows the book's method for a sine graph with an amplitude a and a vertical shift q.\n1. Start from −1 ≤ sinθ ≤ 1.\n2. Multiply by a. a is positive, so the inequality signs keep their direction.\n3. Add q.\n4. State the range and the middle line y = q. The arithmetic is correct in all three.\n\nThe only blemish is a stray double space before the minus or plus sign in the LaTeX, which has no effect on rendering or meaning.",
+    "distractors": [
+     {
+      "instance_id": "q:g10m6s6-1-3:g003-rangep",
+      "option": "A: 2 ≤ f ≤ 8",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Shift added with the wrong sign: ±3 plus 5 gives 2..8."
+     },
+     {
+      "instance_id": "q:g10m6s6-1-3:g003-rangep",
+      "option": "C: −6 ≤ f ≤ −4",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Amplitude ignored: (−1, 1) shifted by −5 gives −6..−4."
+     },
+     {
+      "instance_id": "q:g10m6s6-1-3:g003-rangep",
+      "option": "D: −3 ≤ f ≤ 3",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Shift ignored: the amplitude is applied but q = −5 is dropped."
+     },
+     {
+      "instance_id": "q:g10m6s6-1-3:g005-rangep",
+      "option": "A: −4 ≤ f ≤ 4",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Shift ignored: the amplitude is applied but q = −3 is dropped."
+     },
+     {
+      "instance_id": "q:g10m6s6-1-3:g005-rangep",
+      "option": "C: −1 ≤ f ≤ 7",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Shift added with the wrong sign: ±4 plus 3 gives −1..7."
+     },
+     {
+      "instance_id": "q:g10m6s6-1-3:g005-rangep",
+      "option": "D: −4 ≤ f ≤ −2",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Amplitude ignored: (−1, 1) shifted by −3 gives −4..−2."
+     },
+     {
+      "instance_id": "q:g10m6s6-1-3:g010-rangep",
+      "option": "B: 1 ≤ f ≤ 3",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Amplitude ignored: (−1, 1) shifted by +2 gives 1..3."
+     },
+     {
+      "instance_id": "q:g10m6s6-1-3:g010-rangep",
+      "option": "C: −3 ≤ f ≤ 3",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Shift ignored: the amplitude is applied but q = 2 is dropped."
+     },
+     {
+      "instance_id": "q:g10m6s6-1-3:g010-rangep",
+      "option": "D: −5 ≤ f ≤ 1",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Shift added with the wrong sign: ±3 minus 2 gives −5..1."
+     }
+    ]
+   }
+  },
+  {
+   "family_id": "tpl:g10m6s6-1-3:reflected",
+   "spec_sha": "602fc52aba8ef713ba828a404c5ccc912347156166b5dc5e0485a8824a700c39",
+   "answers": [
+    {
+     "instance_id": "q:g10m6s6-1-3:g005-reflec",
+     "stem_sha": "2cc27867c1ff6984",
+     "answer": {
+      "value": "2"
+     },
+     "working": "y-intercept: f(0)=a sin0 + q = q = 0. Minimum at 90 deg: f(90)=a+q=-2, so a=-2. f(theta) = -2 sin(theta). Maximum occurs at 270 deg: -2(-1)=2."
+    },
+    {
+     "instance_id": "q:g10m6s6-1-3:g009-reflec",
+     "stem_sha": "f29ba36740311c7b",
+     "answer": {
+      "value": "4"
+     },
+     "working": "y-intercept: f(0)=q=3. Minimum at 90 deg: a+q=2, so a=-1. f(theta) = -sin(theta)+3. Maximum at 270 deg: -(-1)+3=4."
+    },
+    {
+     "instance_id": "q:g10m6s6-1-3:g010-reflec",
+     "stem_sha": "2d706f29b5b1a22f",
+     "answer": {
+      "value": "0"
+     },
+     "working": "y-intercept: f(0)=q=-2. Minimum at 90 deg: a+q=-4, so a=-2. f(theta) = -2 sin(theta)-2. Maximum at 270 deg: -2(-1)-2=0."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family has no options (numeric typed answer), so there are no distractors to judge. I recomputed all three instances. The maximum is 2q - min, because a < 0 puts the minimum at 90 degrees and the maximum at 270 degrees. g005 has q=0, min=-2, so a=-2 and the maximum is 2, which matches the key. g009 has q=3, min=2, so a=-1 and the maximum is (-1)(-1)+3 = 4, which matches. g010 has q=-2, min=-4, so a=-2 and the maximum is (-2)(-1)+(-2) = 0, which matches. Every key is a plain number, which is the form the stem asks for. I could not see answer_check, but the keys are bare integers, so there is no LaTeX form to disagree with. Each stem is self-consistent. The minimum at 90 degrees forces a < 0, and in all three instances the minimum lies below q. The domain is 0 to 360 degrees, so (0, q) is the y-intercept and the minimum at 90 degrees is the only minimum. The numbers are realistic, and a = -1 is a standard reflected sine. Each solution follows the book's method of finding q from the y-intercept, a from the turning point, then the maximum at 270 degrees. Steps 1 to 5 are correct, with sin 0 = 0, sin 90 = 1 and sin 270 = -1 used properly, and the signs in \"-4-(-2)=-2\" are handled correctly. The family is a single concept (a reflected sine) with a single question type, so instances do not vary in a way that breaks wording. For g010 the key \"0\" is a valid and non-trivial result."
+   }
+  },
+  {
+   "family_id": "tpl:g10m6s6-1-3:turning-point",
+   "spec_sha": "862c1176324a58c6185500aff5f9c247118fa536cdfdc1ce46096bd1cdf6b1f8",
+   "answers": [
+    {
+     "instance_id": "q:g10m6s6-1-3:g001-turnin",
+     "stem_sha": "b209bbd9329ea5f3",
+     "answer": {
+      "plain": "(270, 1)"
+     },
+     "working": "The minimum of sin(theta) is -1, reached at theta = 270 in the interval 0 to 360. Then y = 2*(-1) + 3 = 1."
+    },
+    {
+     "instance_id": "q:g10m6s6-1-3:g003-turnin",
+     "stem_sha": "3219181dee2fb7e2",
+     "answer": {
+      "plain": "(270, -4)"
+     },
+     "working": "The minimum of sin(theta) is -1, reached at theta = 270 in the interval 0 to 360. Then y = 2*(-1) - 2 = -4."
+    },
+    {
+     "instance_id": "q:g10m6s6-1-3:g004-turnin",
+     "stem_sha": "072b8788a555cfb5",
+     "answer": {
+      "plain": "(270, -1)"
+     },
+     "working": "The minimum of sin(theta) is -1, reached at theta = 270 in the interval 0 to 360. Then y = 6*(-1) + 5 = -1."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "Typed-answer family (coordinates), no options, so distractors are vacuously fine. I checked each instance. g001: f = 2 sin(theta) + 3 has its minimum where sin = -1, theta = 270, y = 2(-1) + 3 = 1, so (270, 1). g003: 2 sin(theta) - 2 gives (270, -4). g004: 6 sin(theta) + 5 gives (270, -1). All three keys are correct and in the asked (theta, y) form with degrees and no degree sign. In each, answer_check and marker.key are the same string as correct_answer. Over 0 to 360 degrees there is exactly one minimum turning point, at 270; the endpoints at 0 and 360 are not turning points, so the stem is unambiguous. The solutions follow the book's method for y = a sin(theta) + q: a > 0, so the graph starts on the middle line y = q, peaks at 90, and bottoms out at 270. Each step is arithmetically correct. Cosmetic only: the LaTeX has a double space before the +/- sign, and the solution uses a = 2 or 6 without defining it in the stem, but that is the book's y = a sin(theta) + q notation. Nothing blocks."
+   }
+  },
+  {
+   "family_id": "tpl:g10m6s6-2-1:findasign",
+   "spec_sha": "ed99966a5544e7fe6686d95f7691088b07f48ee20b5c795a49b333b78c9b708b",
+   "answers": [
+    {
+     "instance_id": "q:g10m6s6-2-1:g003-findas",
+     "stem_sha": "ef4709e1b1152546",
+     "answer": {
+      "value": "4"
+     },
+     "working": "f(0°)=a+q=-1 since cos0°=1. f(180°)=-a+q=-9 since cos180°=-1. Subtract the second from the first: 2a=8, so a=4 (q=-5)."
+    },
+    {
+     "instance_id": "q:g10m6s6-2-1:g004-findas",
+     "stem_sha": "443a191122181ccf",
+     "answer": {
+      "value": "-2"
+     },
+     "working": "f(0°)=a+q=-3. f(180°)=-a+q=1. Subtract the second from the first: 2a=-4, so a=-2 (q=-1)."
+    },
+    {
+     "instance_id": "q:g10m6s6-2-1:g005-findas",
+     "stem_sha": "bdb2a5cf44fbc324",
+     "answer": {
+      "value": "-5"
+     },
+     "working": "f(0°)=a+q=-8. f(180°)=-a+q=2. Subtract the second from the first: 2a=-10, so a=-5 (q=-3)."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family has no options (numeric answer), so there are no distractors to check.\n\nAll three keys were solved independently and match.\n- g003: a+q=-1 and -a+q=-9 give a=4, q=-5. Substituting back gives f(0)=-1 and f(180)=-9. Key 4 is correct.\n- g004: a+q=-3 and -a+q=1 give a=-2, q=-1. Substituting back gives f(0)=-3 and f(180)=1. Key -2 is correct.\n- g005: a+q=-8 and -a+q=2 give a=-5, q=-3. Substituting back gives f(0)=-8 and f(180)=2. Key -5 is correct.\n\nEach stem pins down a unique answer. Two unknowns (a, q) meet two independent conditions. The y-value of the 180-degree turning point settles whether it is a maximum or a minimum, so there is no sign ambiguity.\n\nThe step 3 arithmetic checks out in each instance: 2a = f(0) - f(180) gives -1-(-9)=8, -3-1=-4 and -8-2=-10.\n\nThe step 5 sanity check is correct in each instance: the extreme values are 8, 4 and 10 apart, so the amplitudes are 4, 2 and 5. The remark that a positive a starts the graph at its highest point and a negative a at its lowest is also correct for cosine.\n\nThe key is a plain number in the form the stem asks for (\"find the value of a\"). I could not compare it against answer_check, because the file does not include it.\n\nThe context is a bare function-fitting question with realistic integers and no word problem. The wording is clear for a Grade 10 student.\n\nMinor observation, not a defect: step 5 re-derives |a| from the range rather than checking q independently. It is still valid as a consistency check."
+   }
+  },
+  {
+   "family_id": "tpl:g10m6s6-2-1:midlinevalue",
+   "spec_sha": "0dd4c2e1c0c3948563c2c7b71b9fc42c581c2520090caffb3680ce4327f42885",
+   "answers": [
+    {
+     "instance_id": "q:g10m6s6-2-1:g004-midlin",
+     "stem_sha": "ecd134deb102d484",
+     "answer": {
+      "value": "2"
+     },
+     "working": "cos 0° = 1, so the graph starts at its lowest point only if a < 0. Amplitude = (8-0)/2 = 4, so a = -4. Midline q = (8+0)/2 = 4. f(θ) = -4cosθ + 4. f(60°) = -4(0.5) + 4 = 2."
+    },
+    {
+     "instance_id": "q:g10m6s6-2-1:g006-midlin",
+     "stem_sha": "01b634781194c57c",
+     "answer": {
+      "value": "-3"
+     },
+     "working": "Starting at the minimum at θ=0 means a < 0. Amplitude = (0-(-4))/2 = 2, so a = -2. Midline q = (0+(-4))/2 = -2. f(θ) = -2cosθ - 2. f(60°) = -2(0.5) - 2 = -3."
+    },
+    {
+     "instance_id": "q:g10m6s6-2-1:g010-midlin",
+     "stem_sha": "81dcf71ba47edfe0",
+     "answer": {
+      "value": "-6"
+     },
+     "working": "Starting at the minimum at θ=0 means a < 0. Amplitude = (6-(-10))/2 = 8, so a = -8. Midline q = (6+(-10))/2 = -2. f(θ) = -8cosθ - 2. f(60°) = -8(0.5) - 2 = -6."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "Numeric family with no options, so there are no distractors to judge. I re-derived all three keys independently. The lowest point at 0° means a + q equals the minimum, so a is negative, with |a| equal to half the range width and q equal to the midpoint of the range.\n- g004: range 0 to 8 gives a = -4, q = 4, and f(60°) = -4(0.5) + 4 = 2. Key \"2\" is correct.\n- g006: range -4 to 0 gives a = -2, q = -2, and f(60°) = -1 - 2 = -3. Key \"-3\" is correct.\n- g010: range -10 to 6 gives a = -8, q = -2, and f(60°) = -4 - 2 = -6. Key \"-6\" is correct. Check: f(0°) = -8 - 2 = -10, the stated minimum.\nEach key is a single number, which is what the stem asks for. The stems are unambiguous, since \"starts at its lowest point\" forces a < 0 and nothing else is left open. The numbers are realistic and no word-problem context is involved.\nThe worked solutions follow the book's route: amplitude from the range, then q as the midpoint, then the sign of a from the start point, then evaluation. Every line is arithmetically correct.\nOne small presentation weakness, not an error. Step 2 writes q = 8/2, -4/2 and -4/2 without showing the sum of the minimum and maximum (for example (-10+6)/2). In g010 the -4 appears unexplained. In g004 the 8/2 looks the same as the amplitude calculation in step 1, because the minimum is 0. A student could briefly wonder where the numerator comes from. Writing q = (min + max)/2 explicitly would be clearer, but nothing in the solutions is wrong or teaches a wrong method."
+   }
+  },
+  {
+   "family_id": "tpl:g10m6s6-2-1:rangepick",
+   "spec_sha": "e1e7fb20906709507300a6894cde4d9443c69b7d56b6fcd779611bcb59640490",
+   "answers": [
+    {
+     "instance_id": "q:g10m6s6-2-1:g001-rangep",
+     "stem_sha": "8677ec7c1ef459aa",
+     "answer": {
+      "choice": "C",
+      "choice_text": "$-6 \\leq f(\\theta) \\leq 2$"
+     },
+     "working": "cos(theta) takes every value from -1 to 1 over 0 to 360 degrees. With a = 4 and q = -2, f = 4cos(theta) - 2 runs from 4(-1) - 2 = -6 to 4(1) - 2 = 2. The range is -6 <= f <= 2."
+    },
+    {
+     "instance_id": "q:g10m6s6-2-1:g002-rangep",
+     "stem_sha": "30644659532bebc0",
+     "answer": {
+      "choice": "D",
+      "choice_text": "$1 \\leq f(\\theta) \\leq 7$"
+     },
+     "working": "cos(theta) runs from -1 to 1 over the full interval. With a = 3 and q = 4, f = 3cos(theta) + 4 runs from 3(-1) + 4 = 1 to 3(1) + 4 = 7. The range is 1 <= f <= 7."
+    },
+    {
+     "instance_id": "q:g10m6s6-2-1:g009-rangep",
+     "stem_sha": "0838061259e78f07",
+     "answer": {
+      "choice": "A",
+      "choice_text": "$-2 \\leq f(\\theta) \\leq 6$"
+     },
+     "working": "cos(theta) runs from -1 to 1 over the full interval. With a = 4 and q = 2, f = 4cos(theta) + 2 runs from 4(-1) + 2 = -2 to 4(1) + 2 = 6. The range is -2 <= f <= 6."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [
+     {
+      "instance_id": "q:g10m6s6-2-1:g001-rangep",
+      "option": "A: -4 <= f <= 4",
+      "verdict": "IS_THAT_ERROR",
+      "why": "range-ignores-q: a student who drops q = -2 gives -a..a = -4..4. Wrong, since the true range is -6..2."
+     },
+     {
+      "instance_id": "q:g10m6s6-2-1:g001-rangep",
+      "option": "B: -3 <= f <= -1",
+      "verdict": "IS_THAT_ERROR",
+      "why": "range-ignores-a: a student who treats cos as running -1..1 and adds q = -2 gets -3..-1. Wrong, since the true range is -6..2."
+     },
+     {
+      "instance_id": "q:g10m6s6-2-1:g001-rangep",
+      "option": "D: -2 <= f <= 6",
+      "verdict": "IS_THAT_ERROR",
+      "why": "range-shift-wrong-way: a student who shifts by +2 instead of -2 gets -4+2..4+2 = -2..6. Wrong, since the true range is -6..2."
+     },
+     {
+      "instance_id": "q:g10m6s6-2-1:g002-rangep",
+      "option": "A: -3 <= f <= 3",
+      "verdict": "IS_THAT_ERROR",
+      "why": "range-ignores-q: a student who drops q = 4 gives -3..3. Wrong, since the true range is 1..7."
+     },
+     {
+      "instance_id": "q:g10m6s6-2-1:g002-rangep",
+      "option": "B: 3 <= f <= 5",
+      "verdict": "IS_THAT_ERROR",
+      "why": "range-ignores-a: a student who uses amplitude 1 gets 4-1..4+1 = 3..5. Wrong, since the true range is 1..7."
+     },
+     {
+      "instance_id": "q:g10m6s6-2-1:g002-rangep",
+      "option": "C: -7 <= f <= -1",
+      "verdict": "IS_THAT_ERROR",
+      "why": "range-shift-wrong-way: a student who shifts by -4 instead of +4 gets -3-4..3-4 = -7..-1. Wrong, since the true range is 1..7."
+     },
+     {
+      "instance_id": "q:g10m6s6-2-1:g009-rangep",
+      "option": "B: 1 <= f <= 3",
+      "verdict": "IS_THAT_ERROR",
+      "why": "range-ignores-a: a student who uses amplitude 1 gets 2-1..2+1 = 1..3. Wrong, since the true range is -2..6."
+     },
+     {
+      "instance_id": "q:g10m6s6-2-1:g009-rangep",
+      "option": "C: -4 <= f <= 4",
+      "verdict": "IS_THAT_ERROR",
+      "why": "range-ignores-q: a student who drops q = 2 gives -4..4. Wrong, since the true range is -2..6."
+     },
+     {
+      "instance_id": "q:g10m6s6-2-1:g009-rangep",
+      "option": "D: -6 <= f <= 2",
+      "verdict": "IS_THAT_ERROR",
+      "why": "range-shift-wrong-way: a student who shifts by -2 instead of +2 gets -4-2..4-2 = -6..2. Wrong, since the true range is -2..6."
+     }
+    ],
+    "notes": "I recomputed all three instances. g001 (a=4, q=-2) has range -6..2 and key C. g002 (a=3, q=4) has range 1..7 and key D. g009 (a=4, q=2) has range -2..6 and key A. Each key is the exact range, written in the asked inequality form, and matches the final step of its worked solution. Each tagged wrong option is exactly what a student making that error would write, and none of them is also correct. Within each instance the four options are distinct.\n\nTwo minor points, neither a rejection:\n1. Step 3 of g001 reads \"moves every point of the graph up by q units (down if q is negative)\" with q = -2. That is a little clumsy, but it is correct and consistent with q - a = -6 and q + a = 2.\n2. Step 3 uses q - a and q + a, which only holds for a > 0. All three instances have a > 0, so it is fine here, but the template should not be reused with negative a without changing it.\n\nThe g009 wrong-way option D (-6..2) is the correct answer to g001. That is a harmless coincidence of the twin parameter sets, because the options are never shown together.\n\nThe stem is unambiguous: a and q are given, the domain is 0 to 360 degrees where cos reaches both its maximum and minimum, and the numbers are realistic."
+   }
+  },
+  {
+   "family_id": "tpl:g10m6s6-2-1:tablevalue",
+   "spec_sha": "593637ec0fa5620d930bf58af7ef29956daec66014e2b8fb7e405f330a084f42",
+   "answers": [
+    {
+     "instance_id": "q:g10m6s6-2-1:g006-tablev",
+     "stem_sha": "8010a5005fb8c951",
+     "answer": {
+      "value": "1"
+     },
+     "working": "cos 240° = -cos 60° = -1/2. f(240°) = 2(-1/2) + 2 = -1 + 2 = 1."
+    },
+    {
+     "instance_id": "q:g10m6s6-2-1:g007-tablev",
+     "stem_sha": "e12fd012d3537d9c",
+     "answer": {
+      "value": "7"
+     },
+     "working": "cos 60° = 1/2. f(60°) = 6(1/2) + 4 = 3 + 4 = 7."
+    },
+    {
+     "instance_id": "q:g10m6s6-2-1:g009-tablev",
+     "stem_sha": "b30671bf1f399675",
+     "answer": {
+      "value": "6"
+     },
+     "working": "cos 300° = cos 60° = 1/2 (fourth quadrant, cosine positive). f(300°) = 2(1/2) + 5 = 1 + 5 = 6."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The packet shows three numeric-answer instances (g006, g007, g009) and no answer options. There are no wrong options or misconception ids to judge, so distractors_ok is true by default. The answer_check field is not in the packet, so I could only check the printed keys as plain numbers. I recomputed each instance independently. g006: cos 240° = -0.5, so 2(-0.5) + 2 = 1, which matches the key \"1\". g007: cos 60° = 0.5, so 6(0.5) + 4 = 7, which matches \"7\". g009: cos 300° = 0.5, so 2(0.5) + 5 = 6, which matches \"6\". Each key is a single number, which is what \"the value of f(θ)\" asks for. Each worked solution follows the same three steps: calculator value of cos θ, multiply by a, add q. Every intermediate value is correct. The stems define a and q, state the degree domain, and ask for one table entry. The angles are in the domain, and the numbers and the calculator-table context are realistic for a Grade 10 student, with no ambiguity."
+   }
+  },
+  {
+   "family_id": "tpl:g10m6s6-2-2:findavalue",
+   "spec_sha": "a44fb321325eccb0280207d0fed156179bb4f7675783b3959fe78b4152f5ff29",
+   "answers": [
+    {
+     "instance_id": "q:g10m6s6-2-2:g001-findav",
+     "stem_sha": "c3ecb69cf4b67a9f",
+     "answer": {
+      "value": "-6"
+     },
+     "working": "Amplitude |a| = (11 - (-1))/2 = 6 and q = (11 + (-1))/2 = 5. At theta = 0, cos 0 = 1, so y = a + q = -1, which is the least value. That gives a + 5 = -1, so a = -6 (negative, so the graph is flipped). Check: y = -6cos(theta) + 5 gives -1 at 0 degrees and 11 at 180 degrees."
+    },
+    {
+     "instance_id": "q:g10m6s6-2-2:g005-findav",
+     "stem_sha": "27d2d3ef7563e5bc",
+     "answer": {
+      "value": "-6"
+     },
+     "working": "Amplitude |a| = (8 - (-4))/2 = 6 and q = (8 + (-4))/2 = 2. At theta = 0, y = a + q = -4, which is the least value. That gives a + 2 = -4, so a = -6. Check: y = -6cos(theta) + 2 gives -4 at 0 degrees and 8 at 180 degrees."
+    },
+    {
+     "instance_id": "q:g10m6s6-2-2:g008-findav",
+     "stem_sha": "0c88e80f169a08de",
+     "answer": {
+      "value": "6"
+     },
+     "working": "Amplitude |a| = (1 - (-11))/2 = 6 and q = (1 + (-11))/2 = -5. At theta = 0, y = a + q = 1, which is the greatest value. That gives a - 5 = 1, so a = 6 (positive). Check: y = 6cos(theta) - 5 gives 1 at 0 degrees and -11 at 180 degrees."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family is a numeric typed-answer family with no options, so there are no distractors to judge. I re-derived all three instances independently, and each key is correct.\n\n- g001: max 11 and min -1 give q = 5 and |a| = 6. The point (0°, -1) gives a + 5 = -1, so a = -6. Check: y = -6cosθ + 5 has range [-1, 11], with the least value at θ = 0°.\n- g005: max 8 and min -4 give q = 2 and |a| = 6. The point (0°, -4) gives a + 2 = -4, so a = -6.\n- g008: max 1 and min -11 give q = -5 and |a| = 6. The point (0°, 1) gives a - 5 = 1, so a = 6.\n\nKey form: the stem asks for the value of a, and the key is a plain signed integer, the form the stem asks for. No answer_check was shown, so I could not compare it to the keys; the keys themselves are unambiguous.\n\nSolution: the five steps are the same in every instance. They find the midline q as the mean of the extremes, then |a| as the distance from the midline to the maximum. They then use cos 0° = 1 to get a + q = y(0°), and solve for the signed a. Arithmetic is correct throughout, including the (-5) substitutions in g008. The sign rule in step 4 is true for cosine: a is positive if the graph starts at its maximum and negative if it starts at its minimum. This matches the book's y = a cos θ + q treatment.\n\nContext: it is a plain function question, not a word problem. \"Is sketched\" has no picture, but the stem states the maximum, the minimum and the point, so it is self-contained and unambiguous. Extremes of a cosine on [0°, 360°] occur at 0°, 180° and 360°, so the given maximum and minimum are well defined.\n\nMinor, not a defect: all three instances use |a| = 6, so the instances vary little in amplitude. Only q and the sign of a change."
+   }
+  },
+  {
+   "family_id": "tpl:g10m6s6-2-2:keypoints",
+   "spec_sha": "e3f6754db0dc9474c647fd0d8bcafafe327c7ded0dfc9bf97df8ee63c3a08962",
+   "answers": [
+    {
+     "instance_id": "q:g10m6s6-2-2:g003-keypoi",
+     "stem_sha": "18a227dad6a605ac",
+     "answer": {
+      "choice": "B",
+      "choice_text": "$(0^\\circ, -3)$, $(180^\\circ, 1)$, $(360^\\circ, -3)$"
+     },
+     "working": "y = -2cos θ - 1. At 0°: -2(1) - 1 = -3. At 180°: -2(-1) - 1 = 1. At 360°: -2(1) - 1 = -3. Points (0°,-3), (180°,1), (360°,-3), which is option B."
+    },
+    {
+     "instance_id": "q:g10m6s6-2-2:g007-keypoi",
+     "stem_sha": "aab705472e69960b",
+     "answer": {
+      "choice": "D",
+      "choice_text": "$(0^\\circ, -1)$, $(180^\\circ, -5)$, $(360^\\circ, -1)$"
+     },
+     "working": "y = 2cos θ - 3. At 0°: 2(1) - 3 = -1. At 180°: 2(-1) - 3 = -5. At 360°: 2(1) - 3 = -1. Points (0°,-1), (180°,-5), (360°,-1), which is option D."
+    },
+    {
+     "instance_id": "q:g10m6s6-2-2:g010-keypoi",
+     "stem_sha": "24021e578a749d8c",
+     "answer": {
+      "choice": "D",
+      "choice_text": "$(0^\\circ, -2)$, $(180^\\circ, 4)$, $(360^\\circ, -2)$"
+     },
+     "working": "y = -3cos θ + 1. At 0°: -3(1) + 1 = -2. At 180°: -3(-1) + 1 = 4. At 360°: -3(1) + 1 = -2. Points (0°,-2), (180°,4), (360°,-2), which is option D."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I recomputed all three instances from y = a cos θ + q at θ = 0°, 180° and 360°, and every key and every distractor checks out.\n\nKeys:\n- g003, y = -2cosθ - 1: the points are (0°, -3), (180°, 1) and (360°, -3), so B is right.\n- g007, y = 2cosθ - 3: the points are (0°, -1), (180°, -5) and (360°, -1), so D is right.\n- g010, y = -3cosθ + 1: the points are (0°, -2), (180°, 4) and (360°, -2), so D is right.\n\nEach key matches its worked solution, and the solutions use the book's method of reading values off the cos graph and then scaling, reflecting and shifting. Every step is arithmetically correct. The asked form (three key points) matches the key.\n\nDistractors:\n- shift-wrong-way is the same function with q's sign flipped. g003 A is -2cosθ + 1, g007 A is 2cosθ + 3, and g010 B is -3cosθ - 1. Each option equals that function's values exactly.\n- shift-ignored drops q. g003 C is -2cosθ, g007 C is 2cosθ, and g010 C is -3cosθ. Each matches.\n- reflection-reversed flips the sign of a. g003 D is 2cosθ - 1, g007 B is -2cosθ - 3, and g010 A is 3cosθ + 1. Each matches, and the tag covers both a < 0 (reflection missed) and a > 0 (reflection added).\n- No wrong option coincides with the key at any of the three points, so none is also correct.\n- All three options in each instance are distinct from one another.\n\nContext: there is no real word problem. \"A learner sketches ... without a table of values\" is clear, the numbers are small and realistic, and the stem is unambiguous. The double space before the minus or plus sign in the LaTeX is harmless.",
+    "distractors": [
+     {
+      "instance_id": "q:g10m6s6-2-2:g003-keypoi",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "y = -2cosθ + 1 gives (0°,-1), (180°,3), (360°,-1). This is the shift applied the wrong way."
+     },
+     {
+      "instance_id": "q:g10m6s6-2-2:g003-keypoi",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "y = -2cosθ with q dropped gives (0°,-2), (180°,2), (360°,-2). This is the shift ignored."
+     },
+     {
+      "instance_id": "q:g10m6s6-2-2:g003-keypoi",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "y = 2cosθ - 1 gives (0°,1), (180°,-3), (360°,1). The reflection is reversed or missed."
+     },
+     {
+      "instance_id": "q:g10m6s6-2-2:g007-keypoi",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "y = 2cosθ + 3 gives (0°,5), (180°,1), (360°,5). This is the shift applied the wrong way."
+     },
+     {
+      "instance_id": "q:g10m6s6-2-2:g007-keypoi",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "y = -2cosθ - 3 gives (0°,-5), (180°,-1), (360°,-5). A reflection was added that should not be there."
+     },
+     {
+      "instance_id": "q:g10m6s6-2-2:g007-keypoi",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "y = 2cosθ with q dropped gives (0°,2), (180°,-2), (360°,2). This is the shift ignored."
+     },
+     {
+      "instance_id": "q:g10m6s6-2-2:g010-keypoi",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "y = 3cosθ + 1 gives (0°,4), (180°,-2), (360°,4). The reflection is missed or reversed."
+     },
+     {
+      "instance_id": "q:g10m6s6-2-2:g010-keypoi",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "y = -3cosθ - 1 gives (0°,-4), (180°,2), (360°,-4). This is the shift applied the wrong way."
+     },
+     {
+      "instance_id": "q:g10m6s6-2-2:g010-keypoi",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "y = -3cosθ with q dropped gives (0°,-3), (180°,3), (360°,-3). This is the shift ignored."
+     }
+    ]
+   }
+  },
+  {
+   "family_id": "tpl:g10m6s6-2-2:minvalue",
+   "spec_sha": "6882f9ddc272a55f05f23297cc48bd1653e494420062950dfb3b38526f767657",
+   "answers": [
+    {
+     "instance_id": "q:g10m6s6-2-2:g001-minval",
+     "stem_sha": "048fe91c893c604c",
+     "answer": {
+      "value": "1"
+     },
+     "working": "y = -3cosθ + 4. On [0°,360°], cosθ ranges from -1 to 1. Because of the -3 factor, y is least when cosθ is greatest (cosθ = 1, at θ = 0° and 360°): y = -3(1) + 4 = 1. The sketch is an inverted cosine curve between 1 and 7."
+    },
+    {
+     "instance_id": "q:g10m6s6-2-2:g003-minval",
+     "stem_sha": "0c7e920f9fd43813",
+     "answer": {
+      "value": "-3"
+     },
+     "working": "y = -2cosθ - 1. y is least when cosθ = 1 (θ = 0° and 360°): y = -2(1) - 1 = -3. The sketch is an inverted cosine curve between -3 and 1."
+    },
+    {
+     "instance_id": "q:g10m6s6-2-2:g007-minval",
+     "stem_sha": "0b66cc173893d3f9",
+     "answer": {
+      "value": "0"
+     },
+     "working": "y = -5cosθ + 5. y is least when cosθ = 1 (θ = 0° and 360°): y = -5(1) + 5 = 0. The sketch is an inverted cosine curve between 0 and 10."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "I checked all three instances and found no defects. The family is numeric, with no answer options, so there are no distractors to judge.\n\nKeys, each worked out independently. The minimum of y = a cos θ + q is q - |a|, and it is attained inside [0°, 360°] at θ = 0° and 360° when a < 0.\n- g001, y = -3cos θ + 4: 4 - 3 = 1. The key \"1\" is correct.\n- g003, y = -2cos θ - 1: -1 - 2 = -3. The key \"-3\" is correct.\n- g007, y = -5cos θ + 5: 5 - 5 = 0. The key \"0\" is correct.\n\nKey form: each stem asks for the least value of y, and each key is a single plain number, which is the asked form. answer_check was not in the file, so I could not compare it to the keys.\n\nContext: the question is a pure graph-features question with no word problem, and the notation matches the book's y = a cos θ + q. The least value is well defined because 0° and 360° are in the domain. Every instance uses a < 0, so the reflected case is what the family drills. That seems intentional.\n\nSolutions: each follows amplitude, then midline, then midline minus amplitude, and the arithmetic is correct. The step 4 statement is also correct: for cosine, the minimum is at 180° when a > 0 and at 0° and 360° when a < 0. Two cosmetic nits, neither blocking. Step 1 uses |a| and step 4 uses the sign of a, but \"a = -3\" (or -2, -5) is never written out. A student has to read it off the stem. The stems also have a double space before the \"+\" or \"-\" sign, which is harmless in LaTeX."
+   }
+  },
+  {
+   "family_id": "tpl:g10m6s6-2-2:xaxiscuts",
+   "spec_sha": "f269d5ca6c04dbe2366e720bae28f2cf2dfb33e58cae8289dc11c51b31480f99",
+   "answers": [
+    {
+     "instance_id": "q:g10m6s6-2-2:g001-xaxisc",
+     "stem_sha": "16a0e1c3bfd063c0",
+     "answer": {
+      "value": "2"
+     },
+     "working": "x-intercepts occur where y = 0, so 5cosθ − 2 = 0, giving cosθ = 2/5 = 0.4. Since |0.4| ≤ 1, cosine takes this value twice on [0°, 360°]: θ ≈ 66.4° and θ ≈ 293.6°. The graph has amplitude 5, midline y = −2, max 3 and min −7, so it crosses the x-axis once on the way down and once on the way up."
+    },
+    {
+     "instance_id": "q:g10m6s6-2-2:g004-xaxisc",
+     "stem_sha": "4433041666811973",
+     "answer": {
+      "value": "0"
+     },
+     "working": "Set y = 0: −2cosθ + 3 = 0, so cosθ = 3/2 = 1.5, which is impossible because cosθ ≤ 1. The graph has midline y = 3 and amplitude 2, so y ranges from 1 to 5 and stays above the x-axis. No x-intercepts."
+    },
+    {
+     "instance_id": "q:g10m6s6-2-2:g009-xaxisc",
+     "stem_sha": "4a88d009571b1c0b",
+     "answer": {
+      "value": "2"
+     },
+     "working": "Set y = 0: −5cosθ − 2 = 0, so cosθ = −2/5 = −0.4. Since |−0.4| ≤ 1, there are two solutions in [0°, 360°]: θ ≈ 113.6° and θ ≈ 246.4°. The graph has midline y = −2 and amplitude 5, so y ranges from −7 to 3, which crosses the x-axis twice."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "I checked all three instances by hand. The family is numeric with no options, so distractors_ok is vacuously true. Each key is a count of x-intercepts of y = a cos θ + q on [0°, 360°]. Only the key and the answer_check/LaTeX match could not be checked, because the packet shows no answer_check.\n\n- g001, y = 5cosθ − 2: the range is [−7, 3]. cosθ = 0.4 gives θ ≈ 66.4° and 293.6°, both in the domain. Key 2 is correct.\n- g004, y = −2cosθ + 3: the range is [1, 5], so the graph never reaches 0. Key 0 is correct.\n- g009, y = −5cosθ − 2: the range is [−7, 3]. cosθ = −0.4 gives θ ≈ 113.6° and 246.4°. Key 2 is correct.\n\nThe worked solutions are correct and the same in all three. Midline q, least value q − |a| and greatest value q + |a| are right in each case (−7 and 3; 1 and 5; −7 and 3). The criterion |q| < |a| holds exactly when 0 lies strictly inside the range. The |q| and |a| values in step 4 match the stems. The instances avoid the boundary case |q| = |a|, so the one-intercept (tangent or endpoint) case is never tested, and the step 3 wording \"once on the way down and once on the way up\" is true for both signs of a.\n\nThe stem is unambiguous: a numeric count, and the sketch is the book's phrasing. g001 and g009 differ only in the sign of a and share the answer 2, which is fine as a deliberate invariance check. The double space in \"\\cos\\theta  - 2\" is cosmetic and renders the same in LaTeX."
+   }
+  },
+  {
+   "family_id": "tpl:g10m6s6-2-3:equation-pick",
+   "spec_sha": "1f55cc7360dd061a9ce5548617f3718be280350669917003bc7f05f64c87514f",
+   "answers": [
+    {
+     "instance_id": "q:g10m6s6-2-3:g001-equati",
+     "stem_sha": "289bb1af04245cf6",
+     "answer": {
+      "choice": "C",
+      "choice_text": "$y=5\\cos\\theta+7$"
+     },
+     "working": "cos(0°)=1 gives the maximum a+q=12. cos(180°)=-1 gives the minimum -a+q=2. Adding the two equations: 2q=14, so q=7. Then a=12-7=5. The equation is y=5cosθ+7."
+    },
+    {
+     "instance_id": "q:g10m6s6-2-3:g003-equati",
+     "stem_sha": "632d59d18119f258",
+     "answer": {
+      "choice": "D",
+      "choice_text": "$y=3\\cos\\theta+4$"
+     },
+     "working": "Maximum at 0°: a+q=7. Minimum at 180°: -a+q=1. Adding: 2q=8, so q=4. Then a=7-4=3. The equation is y=3cosθ+4."
+    },
+    {
+     "instance_id": "q:g10m6s6-2-3:g006-equati",
+     "stem_sha": "8fa9e08c3b51808a",
+     "answer": {
+      "choice": "B",
+      "choice_text": "$y=5\\cos\\theta+4$"
+     },
+     "working": "Maximum at 0°: a+q=9. Minimum at 180°: -a+q=-1. Adding: 2q=8, so q=4. Then a=9-4=5. The equation is y=5cosθ+4."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [
+     {
+      "instance_id": "q:g10m6s6-2-3:g001-equati",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "y=5cos+12 is q taken as the highest value 12 with a correct. Max would be 17, so it is wrong."
+     },
+     {
+      "instance_id": "q:g10m6s6-2-3:g001-equati",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "y=10cos+7 is a taken as max-min=10 (not halved) with the correct q=7. Max would be 17, so it is wrong."
+     },
+     {
+      "instance_id": "q:g10m6s6-2-3:g001-equati",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "y=7cos+5 swaps the correct a=5 and q=7. Its max at 0 degrees is 12 but its min is -2, not 2, so it is wrong."
+     },
+     {
+      "instance_id": "q:g10m6s6-2-3:g003-equati",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "y=4cos+3 swaps the correct a=3 and q=4. Its min is -1, not 1, so it is wrong."
+     },
+     {
+      "instance_id": "q:g10m6s6-2-3:g003-equati",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "y=6cos+4 uses a=7-1=6 (not halved) with the correct q=4. Max would be 10, so it is wrong."
+     },
+     {
+      "instance_id": "q:g10m6s6-2-3:g003-equati",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "y=3cos+7 is q taken as the highest value 7 with a correct. Max would be 10, so it is wrong."
+     },
+     {
+      "instance_id": "q:g10m6s6-2-3:g006-equati",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "y=5cos+9 is q taken as the highest value 9 with a correct. Max would be 14, so it is wrong."
+     },
+     {
+      "instance_id": "q:g10m6s6-2-3:g006-equati",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "y=10cos+4 is a taken as 9-(-1)=10 (not halved) with the correct q=4. Max would be 14, so it is wrong."
+     },
+     {
+      "instance_id": "q:g10m6s6-2-3:g006-equati",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "y=4cos+5 swaps the correct a=5 and q=4. Its max at 0 degrees is 9 but its min is 1, not -1, so it is wrong."
+     }
+    ],
+    "notes": "All three instances check out. With the highest point at (0 degrees, M) and the lowest at (180 degrees, m), a=(M-m)/2 and q=(M+m)/2. g001 (12, 2) gives 5cos+7 (key C). g003 (7, 1) gives 3cos+4 (key D). g006 (9, -1) gives 5cos+4 (key B). I substituted both extreme points into each key and each distractor. Every key reproduces both points and every distractor fails at least one, so none is ALSO_CORRECT. Each tagged distractor is exactly what its misconception produces. The three misconceptions are q taken as the highest value, a not halved, and a and q swapped. The worked solutions follow the book's method of a as half the distance, then q as the highest value minus a, with correct arithmetic, including 9-(-1)=10. The key matches the asked form y=a cosθ+q and no answer_check is involved. The stem is unambiguous: a highest point at 0 degrees forces a>0, and the numbers are realistic. The stem calls it 'the graph' with no picture, but the points given define it fully. Key positions vary across the family (C, D, B)."
+   }
+  },
+  {
+   "family_id": "tpl:g10m6s6-2-3:extremes",
+   "spec_sha": "a6858c51c58da93c9b7ac945550571b29a1df28454b132b3c68a28b98cad264d",
+   "answers": [
+    {
+     "instance_id": "q:g10m6s6-2-3:g005-extrem",
+     "stem_sha": "b84b717a918356a0",
+     "answer": {
+      "plain": "[5, 9]"
+     },
+     "working": "With a>0, the highest point of y=a*cos(theta)+q is at theta=0 (cos=1), so a+q=14. The lowest is at theta=180 (cos=-1), so -a+q=4. Adding gives 2q=18, so q=9. Then a=14-9=5. Check: 5*cos(0)+9=14 and 5*cos(180)+9=4."
+    },
+    {
+     "instance_id": "q:g10m6s6-2-3:g007-extrem",
+     "stem_sha": "11fe37972f7e5099",
+     "answer": {
+      "plain": "[1, 1]"
+     },
+     "working": "Highest point at theta=0 gives a+q=2. Lowest point at theta=180 gives -a+q=0. Adding gives 2q=2, so q=1. Then a=2-1=1. Check: cos(0)+1=2 and cos(180)+1=0."
+    },
+    {
+     "instance_id": "q:g10m6s6-2-3:g010-extrem",
+     "stem_sha": "add8b65b21b6bb8f",
+     "answer": {
+      "plain": "[1, 5]"
+     },
+     "working": "Highest point at theta=0 gives a+q=6. Lowest point at theta=180 gives -a+q=4. Adding gives 2q=10, so q=5. Then a=6-5=1. Check: cos(0)+5=6 and cos(180)+5=4."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "Family f061 has three typed-answer instances and no multiple-choice options, so there are no distractors to judge. I recomputed each from a+q = max (at 0°) and -a+q = min (at 180°). g005 gives a=5, q=9, which matches key \"5, 9\". g007 gives a=1, q=1, which matches \"1, 1\". g010 gives a=1, q=5, which matches \"1, 5\". In each case the key equals the answer_check list [a, q] in the order of marker.variables, so the key is the same answer as answer_check. The stem's \"a=... and q=...\" format is handled by the marker's variables field. A maximum at 0° and a minimum at 180° force a>0, so \"amplitude\" is unambiguous. The numbers are realistic and the context matches the book's usual wording. Each worked solution takes the range, halves it for a, compares with y=a cos θ to get the shift q, and checks a+q at θ=0°; all steps are correct. One cosmetic wording flaw: g007 step 4 says \"shifted up by 2-1=1 units\", a plural/singular slip. It does not affect the mathematics, so I did not fail the family, but the template could use \"unit(s)\"."
+   }
+  },
+  {
+   "family_id": "tpl:g10m6s6-2-3:intercept-range",
+   "spec_sha": "39a2a649e4064823d38285bfec266f1652e72b6fb009b575972e8268786a6d79",
+   "answers": [
+    {
+     "instance_id": "q:g10m6s6-2-3:g001-interc",
+     "stem_sha": "96f475ef9feee953",
+     "answer": {
+      "plain": "[-2, -4]"
+     },
+     "working": "y = a cos(theta) + q. At theta = 0, cos = 1, so a + q = -6. Range is [q - |a|, q + |a|] = [-6, -2], so q = (-6 + -2)/2 = -4 and |a| = 2. From a + q = -6, a = -2 (consistent with |a| = 2). Check: y = -2cos(theta) - 4 gives -6 at 0 degrees, range [-6, -2]."
+    },
+    {
+     "instance_id": "q:g10m6s6-2-3:g003-interc",
+     "stem_sha": "4c6b9d7118a33fb7",
+     "answer": {
+      "plain": "[-3, 1]"
+     },
+     "working": "At theta = 0, a + q = -2. Range [-2, 4] gives q = (-2 + 4)/2 = 1 and |a| = 3. From a + q = -2, a = -3 (consistent with |a| = 3). Check: y = -3cos(theta) + 1 gives -2 at 0 degrees, range [-2, 4]."
+    },
+    {
+     "instance_id": "q:g10m6s6-2-3:g008-interc",
+     "stem_sha": "a15b590b2aaf8a8d",
+     "answer": {
+      "plain": "[-4, 3]"
+     },
+     "working": "At theta = 0, a + q = -1. Range [-1, 7] gives q = (-1 + 7)/2 = 3 and |a| = 4. From a + q = -1, a = -4 (consistent with |a| = 4). Check: y = -4cos(theta) + 3 gives -1 at 0 degrees, range [-1, 7]."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "I checked all three instances by hand and each is correct.\n\n- **Typed answer, no options.** The family has no wrong options and no misconception tags, so there are no distractors to judge.\n- **Keys.**\n  - g001: y-intercept -6 and range [-6, -2] give q = -4 and a = -2. Check: y = -2cos(theta) - 4 is -6 at 0 degrees and -2 at 180 degrees, which matches.\n  - g003: y-intercept -2 and range [-2, 4] give q = 1 and a = -3. Check: y = -3cos(theta) + 1 is -2 at 0 degrees and 4 at 180 degrees.\n  - g008: y-intercept -1 and range [-1, 7] give q = 3 and a = -4. Check: y = -4cos(theta) + 3 is -1 at 0 degrees and 7 at 180 degrees.\n- **Unique answer.** In every instance the y-intercept equals the minimum of the range, so cos(0) = 1 forces a to be negative, and the stem has exactly one solution. The 0 to 360 degree domain contains both extremes, so the stated range is attainable.\n- **Key form.** The stem asks for \"a=... and q=...\" and the key is \"a, q\" in that order, matching marker.variables [\"a\",\"q\"]. The marker key and answer_check hold the same values in each instance ([-2,-4], [-3,1], [-4,3]).\n- **Solutions.**\n  - Steps 1 to 6 follow the same method in each instance: midpoint of the range gives q, a + q is the y-intercept, then substitute and state the result.\n  - The arithmetic is right at every step.\n  - The step 5 check numbers (2, 3, 4) are the half-heights actually present in each instance.\n  - The reflected-cosine explanation is correct.\n- **Context.** This is a pure graph-parameters question with no word problem, with clean integer values and unambiguous wording."
+   }
+  },
+  {
+   "family_id": "tpl:g10m6s6-2-3:midline-bottom",
+   "spec_sha": "cd68f34d74ca95037af0f17003ba1b006cfe139949b7a694f7d35f75071d0043",
+   "answers": [
+    {
+     "instance_id": "q:g10m6s6-2-3:g001-midlin",
+     "stem_sha": "ea235f741445b7a6",
+     "answer": {
+      "plain": "[1, 4]"
+     },
+     "working": "A(90°,4): cos90°=0, so y=q=4, hence q=4. Lowest point B(180°,3): cos180°=-1 is the minimum of cosine only if a>0, so y=-a+q=3 gives -a+4=3, a=1. Check: a=1>0, max 5, min 3 at 180°. Values listed in order [a, q]."
+    },
+    {
+     "instance_id": "q:g10m6s6-2-3:g006-midlin",
+     "stem_sha": "4e00e70bbe14a3df",
+     "answer": {
+      "plain": "[1, 0]"
+     },
+     "working": "A(90°,0): cos90°=0, so y=q=0. Lowest point B(180°,-1): y=-a+q=-1 gives -a+0=-1, a=1 (a>0 so the minimum is at 180°). Values listed in order [a, q]."
+    },
+    {
+     "instance_id": "q:g10m6s6-2-3:g010-midlin",
+     "stem_sha": "cb313e15b78a6fff",
+     "answer": {
+      "plain": "[4, 3]"
+     },
+     "working": "A(90°,3): cos90°=0, so q=3. Lowest point B(180°,-1): y=-a+q=-1 gives -a+3=-1, a=4 (a>0 so the minimum is at 180°). Check: max 7, min -1. Values listed in order [a, q]."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "Family f063 (midline-bottom, 3 instances: g001, g006, g010). The file lists no wrong options, so distractors_ok is vacuously true.\n\nKeys, checked independently from y = a cos θ + q:\n- g001: cos 90° = 0, so A(90°, 4) gives q = 4. cos 180° = -1, so B gives -a + 4 = 3 and a = 1. Key \"1, 4\" is correct.\n- g006: A(90°, 0) gives q = 0. B gives -a = -1, so a = 1. Key \"1, 0\" is correct.\n- g010: A(90°, 3) gives q = 3. B gives -a + 3 = -1, so a = 4. Key \"4, 3\" is correct.\n\nUniqueness: a lowest point at θ = 180° over 0..360° forces a > 0. If a < 0, 180° would be a maximum. So the answer is unique and \"amplitude\" matches a.\n\nKey form: the stem asks for \"a=… and q=…\". The key lists a first, then q, matching marker.variables [\"a\",\"q\"]. Each key string equals its answer_check list ([1,4], [1,0], [4,3]).\n\nSolutions: all five steps are correct in every instance. They find q from the point at 90° where the unshifted cosine is 0, then take the midline y = q, then a = midline minus the lowest y. This is the book's midline-and-bottom method, and the arithmetic is right in each instance, including the negative-bottom cases (0-(-1) and 3-(-1)).\n\nContext: no real-world setting. Numbers are small and sensible, and the wording is unambiguous for a Grade 10 student.\n\nMinor observation, not a defect: the family header says answer type \"expression\" while the marker kind is \"values\" with two variables. This looks like a pipeline convention, and the key and answer_check agree. Check that the typed-answer parser accepts the \"a=1 and q=4\" input form, since the key is the bare \"1, 4\"."
+   }
+  },
+  {
+   "family_id": "tpl:g10m6s6-2-4:crossings-count",
+   "spec_sha": "67b364d63f80cde79509c9c9a9e37aedd592ce48729eb23967ef357a943e8b48",
+   "answers": [
+    {
+     "instance_id": "q:g10m6s6-2-4:g008-crossi",
+     "stem_sha": "d1adbbe487859604",
+     "answer": {
+      "value": "4"
+     },
+     "working": "Intersections occur where 5sin x + 3 = 5cos x + 3, so sin x = cos x, so tan x = 1, giving x = 45° + 180°k. In -180° ≤ x ≤ 540°: k=-1 gives -135°, k=0 gives 45°, k=1 gives 225°, k=2 gives 405°. k=-2 gives -315° and k=3 gives 585°, both outside. That is 4 points."
+    },
+    {
+     "instance_id": "q:g10m6s6-2-4:g009-crossi",
+     "stem_sha": "6d61407a24504fe7",
+     "answer": {
+      "value": "3"
+     },
+     "working": "The vertical shift cancels, so sin x = cos x, so tan x = 1, giving x = 45° + 180°k. In -360° ≤ x ≤ 180°: k=-2 gives -315°, k=-1 gives -135°, k=0 gives 45°. k=1 gives 225° and k=-3 gives -495°, both outside. That is 3 points."
+    },
+    {
+     "instance_id": "q:g10m6s6-2-4:g010-crossi",
+     "stem_sha": "cd82827429b6d020",
+     "answer": {
+      "value": "4"
+     },
+     "working": "The shift of 5 cancels and the factor 3 divides out, so sin x = cos x, so tan x = 1, giving x = 45° + 180°k. In -360° ≤ x ≤ 360°: k=-2 gives -315°, k=-1 gives -135°, k=0 gives 45°, k=1 gives 225°. k=2 gives 405° and k=-3 gives -495°, both outside. That is 4 points."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family has no options, so there are no distractors to judge. I checked all three instances independently. The graphs meet where sin x = cos x, which gives x = 45° + 180°k. I counted the integer k that fall inside each interval. g008, [-180°, 540°]: k = -1, 0, 1, 2 gives x = -135°, 45°, 225°, 405°, so 4 crossings. The key is 4, which matches. g009, [-360°, 180°]: k = -2, -1, 0 gives x = -315°, -135°, 45°, so 3 crossings. The key is 3, which matches. g010, [-360°, 360°]: k = -2, -1, 0, 1 gives x = -315°, -135°, 45°, 225°, so 4 crossings. The key is 4, which matches. In every worked solution the first and last crossings are correct and so are the spans (540°, 360° and 540°). Each arithmetic line (540/180 + 1 = 4 and 360/180 + 1 = 3) is correct. Step 2 correctly gives 45° and 225° in one period. No crossing falls on an interval endpoint, so inclusive versus exclusive bounds does not matter. The stem is unambiguous: it states degrees, the interval and the exact question. The key is a plain integer, which is the form a numeric answer needs. Minor wording point only: step 1 says the amplitude and vertical shift cancel, when the common factor 5 or 3 actually cancels by division. That is harmless and the algebra is correct."
+   }
+  },
+  {
+   "family_id": "tpl:g10m6s6-2-4:direction-of-shift",
+   "spec_sha": "084e8b1dfd4ae3683d9735962ebfa7d7edd57f9dd1fc5729622c6e89137c9e52",
+   "answers": [
+    {
+     "instance_id": "q:g10m6s6-2-4:g002-direct",
+     "stem_sha": "bb54e31e2cf2183d",
+     "answer": {
+      "choice": "C",
+      "choice_text": "$30^\\circ$ to the left"
+     },
+     "working": "Use cos(u) = sin(u + 90°). Then cos(x − 60°) = sin(x − 60° + 90°) = sin(x + 30°). So g(x) = 4sin(x + 30°) + 3 = f(x + 30°). Replacing x with x + 30° shifts the graph 30° to the left."
+    },
+    {
+     "instance_id": "q:g10m6s6-2-4:g004-direct",
+     "stem_sha": "48a73a315f59acac",
+     "answer": {
+      "choice": "A",
+      "choice_text": "$60^\\circ$ to the left"
+     },
+     "working": "Use cos(u) = sin(u + 90°). Then cos(x − 30°) = sin(x − 30° + 90°) = sin(x + 60°). So g(x) = 4sin(x + 60°) + 2 = f(x + 60°). Replacing x with x + 60° shifts the graph 60° to the left."
+    },
+    {
+     "instance_id": "q:g10m6s6-2-4:g007-direct",
+     "stem_sha": "41cd91fa4c1473c1",
+     "answer": {
+      "choice": "B",
+      "choice_text": "$10^\\circ$ to the left"
+     },
+     "working": "Use cos(u) = sin(u + 90°). Then cos(x − 80°) = sin(x − 80° + 90°) = sin(x + 10°). So g(x) = 4sin(x + 10°) + 4 = f(x + 10°). Replacing x with x + 10° shifts the graph 10° to the left."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I checked all three instances by hand. In each, g(x) = 4cos(x - k) + c = 4sin(x + (90 - k)) + c = f(x + (90 - k)). That is a leftward shift of 90 - k degrees: 30 left for k=60, 60 left for k=30, 10 left for k=80. These match the keys C, A and B. The worked solutions use cos θ = sin(θ + 90°) and then read the x → x + p replacement as a move to the left. Each step is correct and the three solutions are consistent with each other.\n\nEvery wrong option is a genuine non-match. A right shift by s gives sin(x - s), which can equal sin(x + p) only if s + p is a multiple of 360. None of the listed right-shifts meets that. In particular the 90 + k right options give sin(x - 90 - k) = -sin(x + 90 - k), which is the negative of the correct curve, so they are definitely wrong. Nothing coincides with the correct shift modulo 360 either (for example 330° right in g002, which is not offered).\n\nEach tagged distractor is exactly what the named error produces:\n- ignores-90-offset: read the shift straight off cos(x - k), giving k right (60, 30, 80).\n- cos-is-sin-right: take cos x as sin(x - 90°), giving k + 90 right (150, 120, 170).\n- shift-direction: get the correct size but the wrong direction (30, 60, 10 right).\n\nThe stem asks for a single horizontal shift of f, and each key gives it as an angle with a direction. The vertical shift and amplitude match in f and g, so a pure horizontal shift is enough. There is no word problem, so context is fine.\n\nOne minor point, not a defect: \"single horizontal shift\" is not strictly unique, since adding 360° to a shift gives the same graph. This is harmless because exactly one option is a valid shift.",
+    "distractors": [
+     {
+      "instance_id": "q:g10m6s6-2-4:g002-direct",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "60° right is the shift read straight off cos(x - 60°) with the 90° conversion ignored. It is not equal to sin(x + 30°)."
+     },
+     {
+      "instance_id": "q:g10m6s6-2-4:g002-direct",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Treating cos x as sin(x - 90°) gives sin(x - 150°), a 150° right shift. This is the negative of the correct curve, so it is wrong."
+     },
+     {
+      "instance_id": "q:g10m6s6-2-4:g002-direct",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "The correct size of 30° but in the wrong direction, so it is wrong."
+     },
+     {
+      "instance_id": "q:g10m6s6-2-4:g004-direct",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "30 + 90 = 120° right under the cos-is-sin-right error. sin(x - 120°) = -sin(x + 60°), so it is wrong."
+     },
+     {
+      "instance_id": "q:g10m6s6-2-4:g004-direct",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "30° right is read directly off cos(x - 30°) with the 90° offset ignored. It is wrong."
+     },
+     {
+      "instance_id": "q:g10m6s6-2-4:g004-direct",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "The correct size of 60° but in the wrong direction. It is wrong."
+     },
+     {
+      "instance_id": "q:g10m6s6-2-4:g007-direct",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "80° right is read directly off cos(x - 80°) with the 90° offset ignored. It is wrong."
+     },
+     {
+      "instance_id": "q:g10m6s6-2-4:g007-direct",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "The correct size of 10° but in the wrong direction. It is wrong."
+     },
+     {
+      "instance_id": "q:g10m6s6-2-4:g007-direct",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "80 + 90 = 170° right under the cos-is-sin-right error. sin(x - 170°) = -sin(x + 10°), so it is wrong."
+     }
+    ]
+   }
+  },
+  {
+   "family_id": "tpl:g10m6s6-2-4:rewrite-shift",
+   "spec_sha": "937a665eea5e03c6d01b0dc4d1388d426412e983537efa2149f4ace9c7f03442",
+   "answers": [
+    {
+     "instance_id": "q:g10m6s6-2-4:g008-rewrit",
+     "stem_sha": "e1c7c1bd798b7d40",
+     "answer": {
+      "value": "-50"
+     },
+     "working": "cos(θ) = sin(θ + 90°). With θ = x − 140°: cos(x − 140°) = sin(x − 140° + 90°) = sin(x − 50°). So h = −50, which lies in (−180, 180]."
+    },
+    {
+     "instance_id": "q:g10m6s6-2-4:g009-rewrit",
+     "stem_sha": "eb6c938bc1d75cbb",
+     "answer": {
+      "value": "-20"
+     },
+     "working": "cos(x − 110°) = sin(x − 110° + 90°) = sin(x − 20°). So h = −20, which lies in (−180, 180]."
+    },
+    {
+     "instance_id": "q:g10m6s6-2-4:g010-rewrit",
+     "stem_sha": "8809ce0e2f127820",
+     "answer": {
+      "value": "20"
+     },
+     "working": "cos(x − 70°) = sin(x − 70° + 90°) = sin(x + 20°). So h = 20, which lies in (−180, 180]."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family is numeric with no options and no misconception tags, so there are no distractors to judge. I checked each instance independently using cos(theta) = sin(theta + 90 degrees).\n\n- g008: cos(x - 140) = sin(x - 50), so h = -50. This matches the key. The -180 < h <= 180 window admits only -50, because h is fixed modulo 360.\n- g009: -110 + 90 = -20. This matches the key.\n- g010: -70 + 90 = 20. This matches the key.\n\nEach stem asks for h in the form a sin(x + h) + d. The amplitude and vertical shift carry over unchanged, and the stems keep them consistent with the solutions: 3 and 5, then 5 and 3, then 5 and 1. The stated range removes any ambiguity from adding multiples of 360.\n\nThe three solutions use the same book method: the cosine graph is the sine graph shifted 90 degrees left. Every arithmetic step is correct. There is no word problem, so context is not an issue. I could not check answer_check against the LaTeX key, because only the stem, correct_answer and canonical_solution were supplied. Each correct_answer is a plain integer."
+   }
+  },
+  {
+   "family_id": "tpl:g10m6s6-3-3:domain-pick",
+   "spec_sha": "274b2bd8406ce706a6f13f6ec01e5d28b9aedd5e2e1c0c55a0d949e0c0d87bbf",
+   "answers": [
+    {
+     "instance_id": "q:g10m6s6-3-3:g002-domain",
+     "stem_sha": "2dcc392c1ccc1c89",
+     "answer": {
+      "choice": "B",
+      "choice_text": "$\\{\\theta : -180^{\\circ}\\le\\theta\\le180^{\\circ}, \\theta \\ne -90^{\\circ}, 90^{\\circ}\\}$"
+     },
+     "working": "g(θ)=4tanθ = 4sinθ/cosθ is undefined where cosθ=0, i.e. θ=90°+180°k. In [-180°,180°] that is θ=-90° and θ=90°. The multiplier 4 does not change where it is undefined. Domain excludes -90° and 90°."
+    },
+    {
+     "instance_id": "q:g10m6s6-3-3:g004-domain",
+     "stem_sha": "68063767500bbd2f",
+     "answer": {
+      "choice": "A",
+      "choice_text": "$\\{\\theta : 180^{\\circ}\\le\\theta\\le540^{\\circ}, \\theta \\ne 270^{\\circ}, 450^{\\circ}\\}$"
+     },
+     "working": "g(θ)=-4tanθ is undefined where cosθ=0, i.e. θ=90°+180°k. In [180°,540°] the values are 270° (k=1) and 450° (k=2); 90° and 630° are outside the interval. The sign and the factor 4 do not change the asymptotes. Domain excludes 270° and 450°."
+    },
+    {
+     "instance_id": "q:g10m6s6-3-3:g010-domain",
+     "stem_sha": "1fb9fa2a0e913be9",
+     "answer": {
+      "choice": "A",
+      "choice_text": "$\\{\\theta : 0^{\\circ}\\le\\theta\\le360^{\\circ}, \\theta \\ne 90^{\\circ}, 270^{\\circ}\\}$"
+     },
+     "working": "g(θ)=-3tanθ is undefined where cosθ=0, i.e. θ=90°+180°k. In [0°,360°] that is θ=90° and θ=270°. The sign and the factor 3 do not move the asymptotes. Domain excludes 90° and 270°."
+    }
+   ],
+   "judge": {
+    "distractors_ok": false,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [
+     {
+      "instance_id": "q:g10m6s6-3-3:g002-domain",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Excludes the zeros -180, 0 and 180, which is exactly the asymptote-at-zeros confusion. tan is defined at all three, and the set keeps the real asymptotes at ±90, so the option is wrong."
+     },
+     {
+      "instance_id": "q:g10m6s6-3-3:g002-domain",
+      "option": "C",
+      "verdict": "WRONG_LABEL",
+      "why": "The tag says the student thinks the period is 360°. Starting from the book's asymptote at 90° (step 1), that student would exclude only θ=90° (90+360k gives 90, since -270 and 450 are outside the window). The option excludes only -90° and leaves 90° in the domain, which is the very asymptote a period-360 student would exclude. The set is definitely wrong (it includes 90°), but it is not the product of the tagged error unless the student is assumed to start from the left asymptote at -90°."
+     },
+     {
+      "instance_id": "q:g10m6s6-3-3:g002-domain",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "The full interval with no exclusions is exactly the no-exclusions error. It is wrong because tan is undefined at ±90°."
+     },
+     {
+      "instance_id": "q:g10m6s6-3-3:g004-domain",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "The full interval with no exclusions is exactly the no-exclusions error. It is wrong because tan is undefined at 270° and 450°."
+     },
+     {
+      "instance_id": "q:g10m6s6-3-3:g004-domain",
+      "option": "C",
+      "verdict": "WRONG_LABEL",
+      "why": "Using the book's rule (asymptote at 90°, then every 360° under the tagged error), the period-360 student gets 90+360k, which is 450° in [180°,540°]. The option excludes 270° only and leaves 450° in, which is the asymptote the tagged error would produce. The set is wrong, but the label is not exact. It only fits a 'keep the leftmost asymptote' model. The correct key excludes both 270° and 450°."
+     },
+     {
+      "instance_id": "q:g10m6s6-3-3:g004-domain",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Excludes the zeros 180°, 360° and 540°, which is the asymptote-at-zeros error. tan is defined there, and 270° and 450° stay in the set, so it is wrong."
+     },
+     {
+      "instance_id": "q:g10m6s6-3-3:g010-domain",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "The full interval with no exclusions is exactly the no-exclusions error. It is wrong because tan is undefined at 90° and 270°."
+     },
+     {
+      "instance_id": "q:g10m6s6-3-3:g010-domain",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Excludes only 90°, which is exactly what period 360° gives from the asymptote at 90° (the next one would be 450°, outside the window). The set is wrong because 270° is also an asymptote."
+     },
+     {
+      "instance_id": "q:g10m6s6-3-3:g010-domain",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Excludes the zeros 0°, 180° and 360°, which is the asymptote-at-zeros error. tan is defined there, and 90° and 270° stay in the set, so it is wrong."
+     }
+    ],
+    "notes": "The keys, asymptote positions and zeros are all correct, and every key matches the final line of its worked solution. In g002 the asymptotes are ±90°, in g004 they are 270° and 450°, and in g010 they are 90° and 270°. The stems are unambiguous. Each solution is correct and follows the book's method: asymptote at 90° plus multiples of 180°, the vertical factor does not move the asymptotes, and the endpoints are included.\n\nI set distractors_ok to false because of the 'period-360' option C. The book's stated rule is an asymptote at 90° with a period of 180°. A student who wrongly uses 360° from that same asymptote gets θ≠90° in g002, θ≠450° in g004 and θ≠90° in g010. The generated C options exclude the leftmost asymptote in the window instead: -90° in g002, 270° in g004 and 90° in g010. Only g010-C matches the strict reading. In g002 and g004 the option leaves in the asymptote the tagged error would exclude, so the tag does not describe how a student would reach that option. The options are still definitely wrong, so this is a labelling and diagnostic problem, not a teaching-the-error problem.\n\nA fix would be to make C the 90°+360k set: θ≠90° for g002, θ≠450° for g004 and θ≠90° for g010. Alternatively, keep the current C options and change the tag to 'only one asymptote found'. All other distractors are exactly the tagged error and definitely wrong."
+   }
+  }
+ ]
+}

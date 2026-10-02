@@ -1,0 +1,36 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m10s5-1-1:five-numbers-nine-values",
+ "lo_id": "lo:g10m10s5-1-1",
+ "parent_question_id": "q:g10m10s5-1-1:ex10-6-3",
+ "tier": "basic",
+ "kind": "box_plot_builder",
+ "spec": {
+  "data": [
+   16,
+   9,
+   25,
+   4,
+   13,
+   7,
+   20,
+   11,
+   6
+  ]
+ },
+ "stem": "Lerato runs a small bakery. The number of cakes she sold on each of nine days was $\\left\\{16, 9, 25, 4, 13, 7, 20, 11, 6\\right\\}$. Drag the five markers to give the five number summary of her sales (minimum, first quartile, median, third quartile, maximum), finding the quartiles with the percentile formula.",
+ "solution": [
+  "Sort the nine values from smallest to largest: $4, 6, 7, 9, 11, 13, 16, 20, 25$. The minimum is $4$ and the maximum is $25$.",
+  "Median: rank $= 0.5 \\times (9 - 1) + 1 = 5$, so it is the 5th sorted value, $11$.",
+  "First quartile: rank $= 0.25 \\times (9 - 1) + 1 = 3$, so it is the 3rd sorted value, $7$.",
+  "Third quartile: rank $= 0.75 \\times (9 - 1) + 1 = 7$, so it is the 7th sorted value, $16$.",
+  "Drag the markers to $4$, $7$, $11$, $16$ and $25$. The five number summary is $4, 7, 11, 16, 25$; the box runs from $7$ to $16$ with the median line at $11$."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "median-of-unsorted",
+   "misconception_id": "mc:g10m10s4-1-2:rank-on-unsorted-data"
+  }
+ ],
+ "notes": "Isomorph of the anchor (nine values, whole-number ranks 3, 5, 7), with new numbers so the book's answer cannot simply be recalled. The list is printed unsorted and its middle entry as given is 13, while the true median is 11, so median-of-unsorted separates cleanly. No outlier on purpose: IQR = 9, upper fence = 29.5, max = 25, so the maximum marker is the true maximum, as this objective asks. Predicates deliberately NOT mapped: quartile-method (the median-of-halves method gives Q1 = 6.5 and Q3 = 18 here; with whole ranks no fractional rank is rounded, so mc:...fractional-rank-rounded-to-one-value would be a false diagnosis; the student just gets the stock hint), iqr-as-range (no misconception on this objective's list describes it), off-target (fires for many unrelated reasons), whisker-to-outlier (cannot fire: no outlier)."
+}

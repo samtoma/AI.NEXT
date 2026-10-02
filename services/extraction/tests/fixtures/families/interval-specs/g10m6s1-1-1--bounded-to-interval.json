@@ -1,0 +1,107 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s1-1-1:bounded-to-interval",
+ "kind": "family",
+ "lo_id": "lo:g10m6s1-1-1",
+ "parent_question_id": "q:g10m6s1-1-1:ex6-1-2b",
+ "source_page": 148,
+ "tier": "standard",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "v",
+   "choice": [
+    "x",
+    "y",
+    "k",
+    "p",
+    "t",
+    "w"
+   ]
+  },
+  {
+   "name": "a",
+   "randint": [
+    -15,
+    12
+   ]
+  },
+  {
+   "name": "d",
+   "randint": [
+    2,
+    14
+   ]
+  },
+  {
+   "name": "b",
+   "let": "a + d"
+  },
+  {
+   "name": "lc",
+   "choice": [
+    0,
+    1
+   ]
+  },
+  {
+   "name": "hc",
+   "choice": [
+    0,
+    1
+   ]
+  },
+  {
+   "name": "ls",
+   "let": "['<', '≤'][lc]"
+  },
+  {
+   "name": "hs",
+   "let": "['<', '≤'][hc]"
+  },
+  {
+   "name": "lb",
+   "let": "['(', '['][lc]"
+  },
+  {
+   "name": "rb",
+   "let": "[')', ']'][hc]"
+  },
+  {
+   "name": "lin",
+   "let": "['is not in', 'is in'][lc]"
+  },
+  {
+   "name": "hin",
+   "let": "['is not in', 'is in'][hc]"
+  },
+  {
+   "name": "lbn",
+   "let": "['round', 'square'][lc]"
+  },
+  {
+   "name": "hbn",
+   "let": "['round', 'square'][hc]"
+  }
+ ],
+ "constraints": [
+  "b - a >= 2"
+ ],
+ "stem": "Write the following in interval notation: $\\{{=v}:{=v}\\in\\mathbb{R},{=a}{=ls}{=v}{=hs}{=b}\\}$",
+ "solution": [
+  "The set holds every real number ${=v}$ from ${=a}$ up to ${=b}$, so the interval has the two ends ${=a}$ and ${=b}$, and the smaller number goes first.",
+  "At the left end the sign is ${=ls}$, so ${=a}$ {=lin} the set. This end therefore takes a {=lbn} bracket, ${=lb}$.",
+  "At the right end the sign is ${=hs}$, so ${=b}$ {=hin} the set. This end therefore takes a {=hbn} bracket, ${=rb}$.",
+  "Put the two ends together, separated by a comma: ${=lb}{=a}, {=b}{=rb}$."
+ ],
+ "marker": {
+  "kind": "interval",
+  "answer": "interval({=a}, {=b}, {=lc}, {=hc})",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Standard: set notation to interval notation, both ends finite, all four bracket patterns (the book's ex6-1-2b shape with the ends and brackets varied). Marker uses the documented interval(lo, hi, closed_lo, closed_hi) with 1 = square bracket and 0 = round bracket; if the engine wants true/false for the two flags, change the two flag holes only. Computed strings use the Unicode sign <= (U+2264) rather than a LaTeX command so no backslash sits inside an expression string literal; check that the renderer shows it inside $...$. Answer key printed by the engine will be the interval notation, which is what the stem asks for. Unbounded ends are not used here because the plain marker syntax for infinity is not given; they are covered by the mcq family on infinite ends."
+}

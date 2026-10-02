@@ -1,0 +1,191 @@
+{
+ "format": "ainext.gate-decision/1",
+ "gate": "G5",
+ "book": "g10-math",
+ "id": "g5-ch11",
+ "chapter": 11,
+ "decided_at": "2026-10-02T07:18:47Z",
+ "by": "auto-pass G5 (AI recommendation)",
+ "auto": true,
+ "outcome": "pass",
+ "summary": "GO for the fan-out on the dev/pilot database (deploys and promotes nothing); coverage GREEN, 0 completeness finding(s) for Samuel",
+ "decisions": [
+  {
+   "key": "go/no-go",
+   "decision": "go",
+   "basis": "parity GREEN for every course and no coverage safety check failing"
+  }
+ ],
+ "checks": [
+  {
+   "name": "drift guard course:prep3-math-en",
+   "state": "green"
+  },
+  {
+   "name": "drift guard course:prep3-social-ar",
+   "state": "green"
+  },
+  {
+   "name": "drift guard course:prep3-arabic-ar",
+   "state": "green"
+  },
+  {
+   "name": "drift guard course:us-g10-math-en",
+   "state": "green",
+   "detail": "matches its bundles: {'modules': 12, 'learning_objectives': 179, 'prerequisite_edges': 242, 'questions_total': 1985, 'visuals': 528}"
+  },
+  {
+   "name": "coverage pages",
+   "state": "green",
+   "detail": "13/13"
+  },
+  {
+   "name": "coverage worked_examples",
+   "state": "green",
+   "detail": "5/5"
+  },
+  {
+   "name": "coverage items_mapped_once",
+   "state": "green",
+   "detail": "33/33"
+  },
+  {
+   "name": "coverage mapped_items_accounted",
+   "state": "green",
+   "detail": "33/33"
+  },
+  {
+   "name": "coverage objective_evidence",
+   "state": "green",
+   "detail": "3/3"
+  },
+  {
+   "name": "coverage tier_floor",
+   "state": "green",
+   "detail": "9/9"
+  },
+  {
+   "name": "coverage module_widgets",
+   "state": "green",
+   "detail": "1/1"
+  },
+  {
+   "name": "coverage distractor_refutations (safety)",
+   "state": "green",
+   "detail": "1/1"
+  },
+  {
+   "name": "coverage misconception_refutations",
+   "state": "green",
+   "detail": "4/4"
+  },
+  {
+   "name": "coverage s5_catalogue (safety)",
+   "state": "green",
+   "detail": "4/4"
+  },
+  {
+   "name": "coverage figures",
+   "state": "green",
+   "detail": "20/20"
+  },
+  {
+   "name": "coverage maths_images",
+   "state": "green",
+   "detail": "174/174"
+  },
+  {
+   "name": "coverage items_typed_once",
+   "state": "green",
+   "detail": "33/33"
+  },
+  {
+   "name": "coverage solution_sources (safety)",
+   "state": "green",
+   "detail": "24/24"
+  },
+  {
+   "name": "coverage lesson_provenance",
+   "state": "green",
+   "detail": "1/1"
+  },
+  {
+   "name": "coverage teacher_only (safety)",
+   "state": "green",
+   "detail": "1/1"
+  },
+  {
+   "name": "coverage notation (safety)",
+   "state": "green",
+   "detail": "0/0"
+  },
+  {
+   "name": "coverage katex (safety)",
+   "state": "green",
+   "detail": "0/0"
+  },
+  {
+   "name": "coverage book_pictures (safety)",
+   "state": "green",
+   "detail": "0/0"
+  },
+  {
+   "name": "coverage captions (safety)",
+   "state": "green",
+   "detail": "0/0"
+  },
+  {
+   "name": "coverage answer_text (safety)",
+   "state": "green",
+   "detail": "0/0"
+  },
+  {
+   "name": "coverage asked_forms (safety)",
+   "state": "green",
+   "detail": "0/0"
+  },
+  {
+   "name": "coverage claims_served",
+   "state": "green",
+   "detail": "49/49"
+  },
+  {
+   "name": "cost ledger",
+   "state": "recorded",
+   "detail": "$821.95 metered for the book, $12.35 on this chapter's lessons"
+  }
+ ],
+ "evidence": [
+  {
+   "label": "coverage",
+   "path": "services/extraction/coverage/g10-math.ch11.json"
+  },
+  {
+   "label": "cost ledger",
+   "path": "services/extraction/runs/g10-math/cost.jsonl"
+  },
+  {
+   "label": "book config the drift guard compared the database with",
+   "path": "services/extraction/runs/g10-math/fanout/loaded/g10-math.json"
+  },
+  {
+   "label": "G1 record",
+   "path": "services/extraction/runs/g10-math/gates/g1-ch11.json"
+  },
+  {
+   "label": "G2 record",
+   "path": "services/extraction/runs/g10-math/gates/g2-ch11.json"
+  },
+  {
+   "label": "G3 record",
+   "path": "services/extraction/runs/g10-math/gates/g3-ch11.json"
+  },
+  {
+   "label": "G4 record",
+   "path": "services/extraction/runs/g10-math/gates/g4-ch11.json"
+  }
+ ],
+ "blocked": [],
+ "course_id": "course:us-g10-math-en",
+ "for_review": []
+}

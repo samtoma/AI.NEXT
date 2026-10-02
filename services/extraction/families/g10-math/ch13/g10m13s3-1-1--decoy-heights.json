@@ -1,0 +1,89 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m13s3-1-1:decoy-heights",
+ "kind": "family",
+ "lo_id": "lo:g10m13s3-1-1",
+ "parent_question_id": "q:g10m13s3-1-1:ex13-4-4",
+ "source_page": 440,
+ "tier": "standard",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "ms",
+   "let": "[3, 4, 5, 6, 7, 8, 8, 9, 10, 12, 12, 12, 15, 15]"
+  },
+  {
+   "name": "hs",
+   "let": "[4, 3, 12, 8, 24, 6, 15, 12, 24, 5, 9, 16, 8, 20]"
+  },
+  {
+   "name": "i",
+   "randint": [
+    0,
+    "len(ms) - 1"
+   ]
+  },
+  {
+   "name": "m",
+   "let": "ms[i]"
+  },
+  {
+   "name": "h",
+   "let": "hs[i]"
+  },
+  {
+   "name": "b",
+   "let": "2 * m"
+  },
+  {
+   "require": "is_square(m * m + h * h)",
+   "why": "the slant height must be a whole number, so that the working stays clean"
+  },
+  {
+   "name": "s",
+   "let": "isqrt(m * m + h * h)"
+  }
+ ],
+ "constraints": [
+  "s * s == m * m + h * h"
+ ],
+ "stem": "A pyramid has a square base with sides of ${=b}$ cm. Its vertical height (from the apex straight down to the centre of the base) is ${=h}$ cm, and each of its four identical triangular faces has a slant height of ${=s}$ cm. What is the total surface area of the pyramid?",
+ "choices": {
+  "correct": "${=b*b+2*b*s}\\text{ cm}^{2}$",
+  "distractors": [
+   {
+    "text": "${=b*b+2*b*h}\\text{ cm}^{2}$",
+    "misconception_id": "mc:g10m13s3-1-1:vertical-height-for-slant-height"
+   },
+   {
+    "text": "${=2*b*s}\\text{ cm}^{2}$",
+    "misconception_id": "mc:g10m13s3-1-1:base-left-out"
+   },
+   {
+    "text": "${=b*b+4*b*s}\\text{ cm}^{2}$",
+    "misconception_id": "mc:g10m13s3-1-1:triangle-without-half"
+   }
+  ]
+ },
+ "solution": [
+  "The surface area is the area of the square base plus the area of the four triangular faces.",
+  "The height of each triangular face is the slant height, ${=s}$ cm, because it is measured along the face. The vertical height of ${=h}$ cm runs inside the pyramid and is not the height of a face, so it is not used here.",
+  "Area of the base: ${=b}^{2}={=b*b}\\text{ cm}^{2}$.",
+  "Area of the four faces: $4\\times\\frac{1}{2}\\times{=b}\\times{=s}={=2*b*s}\\text{ cm}^{2}$.",
+  "Total surface area: ${=b*b}+{=2*b*s}={=b*b+2*b*s}\\text{ cm}^{2}$."
+ ],
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m13s3-1-1:base-left-out",
+   "label": "Base left out of the total surface area",
+   "description": "The student adds up only the four triangular faces and forgets the square base, so the answer is 2bh_s instead of b^2 + 2bh_s."
+  },
+  {
+   "id": "mc:g10m13s3-1-1:triangle-without-half",
+   "label": "Triangle area without the one half",
+   "description": "The student finds the area of each triangular face as base times slant height, leaving out the factor of one half, so the four faces come to 4bh_s instead of 2bh_s."
+  }
+ ],
+ "notes": "Standard tier, built on the book's own decoy: ex13-4-4 and ex13-7-10 print the vertical height beside the slant height. Every instance satisfies h^2 + (b/2)^2 = s^2 (table of Pythagorean triples, 14 of them, so the printed vertical height is true for the printed slant height). Three distractors, each a named error; all four options are proved distinct for every table row (b+2h = 2s is impossible because (m+h)^2 > m^2+h^2). The mcq earns its place because each distractor is diagnosable, and the existing catalogue id is used on the vertical-height option."
+}

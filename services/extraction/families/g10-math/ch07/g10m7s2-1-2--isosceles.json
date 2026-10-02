@@ -1,0 +1,86 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m7s2-1-2:isosceles",
+ "kind": "family",
+ "lo_id": "lo:g10m7s2-1-2",
+ "parent_question_id": "q:g10m7s2-1-2:ex7-2-6d",
+ "source_page": 250,
+ "tier": "standard",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "t",
+   "randint": [
+    0,
+    2
+   ]
+  },
+  {
+   "name": "h",
+   "randint": [
+    15,
+    55
+   ]
+  },
+  {
+   "name": "th",
+   "let": "2 * h"
+  },
+  {
+   "name": "ba",
+   "let": "90 - h"
+  },
+  {
+   "name": "s",
+   "let": "[['A', 'B', 'C', 'D', 'E'], ['P', 'Q', 'R', 'S', 'T'], ['F', 'G', 'H', 'J', 'K']][t]"
+  },
+  {
+   "name": "pa",
+   "let": "s[0]"
+  },
+  {
+   "name": "pb",
+   "let": "s[1]"
+  },
+  {
+   "name": "pc",
+   "let": "s[2]"
+  },
+  {
+   "name": "pd",
+   "let": "s[3]"
+  },
+  {
+   "name": "pe",
+   "let": "s[4]"
+  }
+ ],
+ "constraints": [],
+ "stem": "The straight lines ${=pb}{=pd}$ and ${=pa}{=pe}$ cross at ${=pc}$. In $\\triangle {=pa}{=pb}{=pc}$, ${=pc}{=pa} = {=pc}{=pb}$ and $\\angle {=pa}{=pc}{=pb} = {=th}^\\circ$. In $\\triangle {=pe}{=pd}{=pc}$, ${=pc}{=pe} = {=pc}{=pd}$. Nothing else is known about the lengths of the sides. Which conclusion can be drawn about $\\triangle {=pa}{=pb}{=pc}$ and $\\triangle {=pe}{=pd}{=pc}$?",
+ "solution": [
+  "${=pb}{=pd}$ and ${=pa}{=pe}$ are straight lines, so $\\angle {=pa}{=pc}{=pb}$ and $\\angle {=pe}{=pc}{=pd}$ are vertically opposite angles: $\\angle {=pe}{=pc}{=pd} = {=th}^\\circ$.",
+  "Each triangle is isosceles, so its base angles are equal: $(180^\\circ - {=th}^\\circ) \\div 2 = {=ba}^\\circ$ in both triangles. So the two triangles have the same angles: ${=th}^\\circ$, ${=ba}^\\circ$ and ${=ba}^\\circ$.",
+  "The equal sides we are told about are ${=pc}{=pa} = {=pc}{=pb}$ inside the first triangle and ${=pc}{=pe} = {=pc}{=pd}$ inside the second triangle. No side of the first triangle is given as equal to a side of the second triangle.",
+  "Equal angles are not enough to prove congruence: a larger and a smaller triangle can have the same angles. Without a pair of equal sides between the two triangles, none of SSS, SAS, AAS or RHS can be used. There is not enough information to decide."
+ ],
+ "choices": {
+  "correct": "There is not enough information to decide whether the triangles are congruent.",
+  "distractors": [
+   {
+    "text": "The triangles are congruent (AAS): they have equal angles and a pair of equal sides.",
+    "misconception_id": "mc:g10m7s2-1-2:marks-inside-one-triangle-read-as-matching-sides"
+   },
+   {
+    "text": "The triangles are congruent (SAS): they have two equal sides and the vertically opposite angles at ${=pc}$.",
+    "misconception_id": "mc:g10m7s2-1-2:marks-inside-one-triangle-read-as-matching-sides"
+   },
+   {
+    "text": "The triangles are not congruent, because no side of one triangle is shown to be equal to a side of the other.",
+    "misconception_id": "mc:g10m7s2-1-2:not-proved-means-not-congruent"
+   }
+  ]
+ },
+ "proposed_misconceptions": [],
+ "notes": "Mirrors book part 6d: two isosceles triangles whose equal sides are marked inside each triangle, not between them. The apex angle is given so the base angles, and so all the angles, can be worked out, as the book's solution says. The apex angle is even so the base angle is a whole number. Answer is constant (not enough information) as in both book items; the contrasting congruent case is the family tpl:g10m7s2-1-2:crossing. The two congruent distractors name the same error with two different rules a student might claim."
+}

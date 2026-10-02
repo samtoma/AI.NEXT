@@ -1,0 +1,644 @@
+{
+ "status": "RECOMMENDATION ONLY — an AI line's, never a review. `auto_pass_gates.py g2 --recommend` reads `items` and signs each verdict `auto-pass G2 (AI recommendation)`; a person's verdict in G2's file is never overwritten.",
+ "prepared_by": "g2_recommend.py g2rec-v1",
+ "prompts_version": "g2rec-v1",
+ "chapter": 7,
+ "from_runs": {
+  "runs/g10-math/g2rec/ch07-wf_8b3797fe-eb1.json": "58513eef6154e17dc13207ddb55c3ff04be3a508eb3b2dba547f39b22acf81e7"
+ },
+ "by": null,
+ "items": {
+  "g10m7s1-1:Ex7-1:5f": {
+   "verdict": "fix",
+   "class": "stem damaged",
+   "confidence": "low",
+   "note": "Figure: $a=50^\\circ$, $b=40^\\circ$, $d=40^\\circ$ (corresponding to $b$), so $PQ\\parallel NR$. Book key right. Stem and working print '\\parallelNR' with no space, which will not render. Conclusion marked; angle parts not marked. Verified independently: the verifier's own answer matches the key.",
+   "why_low": "Stem repair (adds a missing space in the LaTeX); only the final yes/no is marked, the angle parts a to e are not; parallel/not parallel options are a binary the typing agent supplied.",
+   "fields": {
+    "stem": "Find each of the unknown angles marked in the figure below. Find a reason that leads to the answer in a single step. [figure] Based on the results for the angles above, is $PQ \\parallel NR$ ?"
+   },
+   "stem_fix_by": "auto-pass G2 recommendation (g2rec-v1) — not Samuel",
+   "verified": {
+    "by": "g2rec-v1 independent verifier",
+    "own_answer": "parallel",
+    "verdict": "confirmed"
+   }
+  },
+  "g10m7s1-1:Ex7-1:6a": {
+   "verdict": "accept",
+   "class": "check too strict",
+   "confidence": "low",
+   "note": "Co-interior angles $115^\\circ+55^\\circ=170^\\circ\\neq180^\\circ$, so $OP$ is not parallel to $QR$. Key B matches the book. The complaint is only a text comparison with 'no parallel lines'. Verified independently: the verifier's own answer matches the key.",
+   "why_low": "Options parallel / not parallel are the typing agent's binary pair, not the stem's words; a person should confirm that is acceptable.",
+   "verified": {
+    "by": "g2rec-v1 independent verifier",
+    "own_answer": "not parallel",
+    "verdict": "confirmed"
+   }
+  },
+  "g10m7s1-1:Ex7-1:6c": {
+   "verdict": "fix",
+   "class": "typing error",
+   "confidence": "low",
+   "note": "$\\hat U_1=180^\\circ-95^\\circ=85^\\circ=\\hat V_4$, corresponding angles equal, so $TY\\parallel MN$. Book right. 'TY \\parallel MN' is not a figure label; retype as the lesson's parallel / not parallel pair. Verified independently: the verifier's own answer matches the key.",
+   "why_low": "The key re-types 'TY parallel MN' as the verdict 'parallel'; the pair of lines is dropped, a content decision for a person.",
+   "fields": {
+    "choices": [
+     {
+      "key": "A",
+      "text": "parallel"
+     },
+     {
+      "key": "B",
+      "text": "not parallel"
+     }
+    ],
+    "options_source": "lesson"
+   },
+   "verified": {
+    "by": "g2rec-v1 independent verifier",
+    "own_answer": "parallel",
+    "verdict": "confirmed"
+   }
+  },
+  "g10m7s1-1:Ex7-8:3a": {
+   "verdict": "fix",
+   "class": "typing error",
+   "confidence": "low",
+   "note": "Alternate angles $62^\\circ=62^\\circ$ give $AB\\parallel CD$; book right. But the stem asks to find pairs of lines, so the options 'AB \\parallel CD' / 'not parallel' are invented, and pair naming (CD or DC) cannot be text-compared. Keep as teaching example.",
+   "why_low": "Choice between not_markable and a retyped choice; a person should decide.",
+   "fields": {
+    "answer_type": "not_markable",
+    "answer": null,
+    "choices": null,
+    "not_markable_reason": "The answer names a pair of parallel lines with a reason; the same pair can be written several ways (AB||CD, DC||BA), which the marker cannot compare.",
+    "options_source": null
+   }
+  },
+  "g10m7s1-1:Ex7-8:3b": {
+   "verdict": "fix",
+   "class": "typing error",
+   "confidence": "low",
+   "note": "$M_1=43^\\circ$, $N_1=123^\\circ$ equals the $123^\\circ$ at $P$, so $MN\\parallel OP$ only; $NP$ is not parallel to $MO$. Book right. Options 'MN \\parallel OP' / 'not parallel' are invented for a find-all-pairs question.",
+   "why_low": "Choice between not_markable and a retyped choice; a person should decide.",
+   "fields": {
+    "answer_type": "not_markable",
+    "answer": null,
+    "choices": null,
+    "not_markable_reason": "The answer names a pair of parallel lines with a reason; the same pair can be written several ways, which the marker cannot compare.",
+    "options_source": null
+   }
+  },
+  "g10m7s1-1:Ex7-8:3c": {
+   "verdict": "fix",
+   "class": "compound answer",
+   "confidence": "low",
+   "note": "Figure: $\\hat H_1=60^\\circ$ equals the $60^\\circ$ at $L$ (corresponding), so $GH\\parallel KL$; $60^\\circ$ at $K$ and $L$ are alternate, so $GK\\parallel HL$. Book right. A values key of line-pair statements cannot be compared reliably (order of letters).",
+   "why_low": "Alternative is to keep the values typing if the marker reads the parallel symbol; a person should decide.",
+   "fields": {
+    "answer_type": "not_markable",
+    "answer": null,
+    "marker": null,
+    "not_markable_reason": "Two statements about line pairs, each writable in several letter orders; the marker cannot compare them."
+   }
+  },
+  "g10m7s1-1:Ex7-8:4b": {
+   "verdict": "exclude",
+   "class": "marker cannot check",
+   "confidence": "low",
+   "note": "NOT RECOMMENDED LIVE (the app's marker cannot read the key 'a = 80^{\\\\circ}; b = 80^{\\\\circ}; c = 80^{\\\\circ}; d = 80^{\\\\circ}': unreadable (unexpected \")\")). The agent's reading: $a=180-100=80$ (straight line), $b=80$ (alternate, $AB\\parallel CD$), $c=80$ (corresponding), $d=80$ (vertically opposite). Book $a=b=c=d=80^\\circ$; typed key lists the same four values. Complaint is a text comparison.",
+   "why_low": "the recommendation to put it live did not survive the checks: the app's marker cannot read the key 'a = 80^{\\\\circ}; b = 80^{\\\\circ}; c = 80^{\\\\circ}; d = 80^{\\\\circ}': unreadable (unexpected \")\")"
+  },
+  "g10m7s2-1:Ex7-2:6a": {
+   "verdict": "fix",
+   "class": "marker cannot check",
+   "confidence": "low",
+   "note": "Figure ticks: $AC=CE$, $BC=CD$, vertically opposite angles at $C$, so SAS gives $\\triangle ABC\\equiv\\triangle EDC$. Book right. The key is a congruence statement the algebra marker cannot read, and vertex orders vary. Keep as teaching example.",
+   "why_low": "The EPUB has no final answer line (only the working's last line), and not_markable is a content choice for a person.",
+   "fields": {
+    "answer_type": "not_markable",
+    "answer": null,
+    "marker": null,
+    "not_markable_reason": "The answer is a congruence statement with a reason (SAS); vertex orderings vary and the marker cannot compare triangles."
+   }
+  },
+  "g10m7s2-1:Ex7-2:6b": {
+   "verdict": "exclude",
+   "class": "book error",
+   "confidence": "high",
+   "note": "Figure: isosceles ABD (AB=BD, angle A = angle D), C on AD, BC common. That is SSA, which decides nothing: congruent if C is the midpoint, not otherwise. The book's own note says 'not necessarily', yet it concludes 'not congruent'. Right answer by the agent's own derivation: not enough information (SSA does not decide).",
+   "if_corrected": {
+    "answer": "not enough information (SSA does not decide)",
+    "defect": "The book's reasoning only shows the triangles cannot be proved congruent by SAS, and its own note says the angles are 'not necessarily' equal. It still concludes 'not congruent' where its own 6c and 6d answers use 'not enough information'. A key of 'not congruent' would mark a correct student answe…",
+    "status": "NOT APPLIED: correcting the book's own answer or working is Samuel's to approve (decisions 43–45)"
+   }
+  },
+  "g10m7s2-1:Ex7-2:6c": {
+   "verdict": "fix",
+   "class": "selected from a list",
+   "confidence": "low",
+   "note": "Figure: triangles ABC and EDC share vertex C; AC=DC and BC=EC are the only equal pairs. Two sides and no included angle gives no congruence test, so 'not enough information' is right and the book agrees. Only the options' source is wrong. Verified independently: the verifier's own answer matches the key.",
+   "why_low": "The three options are the exercise's own verdicts, but 'not congruent' is not written word for word in the stem, so options_source 'lesson' is a judgement for a person to confirm.",
+   "fields": {
+    "options_source": "lesson"
+   },
+   "verified": {
+    "by": "g2rec-v1 independent verifier",
+    "own_answer": "not enough information",
+    "verdict": "confirmed"
+   }
+  },
+  "g10m7s2-1:Ex7-2:6d": {
+   "verdict": "fix",
+   "class": "selected from a list",
+   "confidence": "low",
+   "note": "Figure: bowtie, CA=CB (double ticks) and CD=CE (single ticks). Vertical angles at C are equal, so both triangles are isosceles with equal apex angles: similar, but nothing says they are the same size. So 'not enough information' holds, and the blind 'not congruent' overstates it. Verified independently: the verifier's own answer matches the key.",
+   "why_low": "The three options are the exercise's own verdicts, but 'not congruent' is not written word for word in the stem, so options_source 'lesson' is a judgement for a person to confirm. The EPUB final answer is a stray sentence; the book quote comes from the workin…",
+   "fields": {
+    "options_source": "lesson"
+   },
+   "verified": {
+    "by": "g2rec-v1 independent verifier",
+    "own_answer": "not enough information",
+    "verdict": "confirmed"
+   }
+  },
+  "g10m7s2-1:Ex7-2:6e": {
+   "verdict": "fix",
+   "class": "marker cannot check",
+   "confidence": "low",
+   "note": "Figure: kite ABCD with AC common, angle BAC = angle DAC and angle B = angle D. That is AAS, so triangle ABC is congruent to triangle ADC, and the book's statement matches. The key is a congruence statement with a vertex order, which the algebra marker cannot compare reliably, so it should not be marked.",
+   "why_low": "A person decides between keeping this as a teaching-only example and retyping it as a congruent / not congruent choice. I could not confirm whether the marker can read triangle statements.",
+   "fields": {
+    "answer_type": "not_markable",
+    "answer": null,
+    "marker": null,
+    "not_markable_reason": "The answer is a congruence statement with vertex order and an AAS reason. The expression marker cannot check triangle symbols or vertex correspondence, so the item stays as a teaching example."
+   }
+  },
+  "g10m7s2-1:Ex7-8:8": {
+   "verdict": "exclude",
+   "class": "item wording",
+   "confidence": "low",
+   "note": "One angle (F=J) is marked and x and c are different labels, so the book's 'not enough information' is sound as logic. But the stem says the triangles are drawn to scale, and the second triangle is visibly larger, which points to 'not congruent'. The stem and the key pull apart. (kept out as exclude, not hold: its typed shape cannot be emitted — options said to be the stem's are not all in the stem: \"not congruent\", \"not enough information\")",
+   "why_low": "a hold needs a well-formed item; this one's typing is unusable"
+  },
+  "g10m7s2-1:Ex7-8:10a": {
+   "verdict": "fix",
+   "class": "marker cannot check",
+   "confidence": "low",
+   "note": "Figure: AB=DE (double ticks), AC=DF (triple), BC=EF (single). A matches D, B matches E, C matches F, so triangle ABC is congruent to DEF by SSS. The book is right. The key is a congruence statement, which the algebra marker cannot check, so the item should not be marked.",
+   "why_low": "A person decides between teaching-only and accepting the expression typing. I could not confirm that the marker reads the triangle and congruence symbols.",
+   "fields": {
+    "answer_type": "not_markable",
+    "answer": null,
+    "marker": null,
+    "not_markable_reason": "The answer is a congruence statement with ordered vertices plus an SSS reason. The expression marker cannot check triangle symbols or vertex correspondence, so the item stays as a teaching example."
+   }
+  },
+  "g10m7s2-1:Ex7-8:10b": {
+   "verdict": "fix",
+   "class": "marker cannot check",
+   "confidence": "low",
+   "note": "Figure: right angles at H and K, GH=JK (double ticks), hypotenuses GI=JL (single ticks). G matches J, H matches K, I matches L, so triangle GHI is congruent to JKL by RHS. The book is right. The key is a congruence statement the algebra marker cannot check, so the item should not be marked.",
+   "why_low": "A person decides between teaching-only and accepting the expression typing. I could not confirm that the marker reads the triangle and congruence symbols.",
+   "fields": {
+    "answer_type": "not_markable",
+    "answer": null,
+    "marker": null,
+    "not_markable_reason": "The answer is a congruence statement with ordered vertices plus an RHS reason. The expression marker cannot check triangle symbols or vertex correspondence, so the item stays as a teaching example."
+   }
+  },
+  "g10m7s2-1:Ex7-8:10c": {
+   "verdict": "fix",
+   "class": "marker cannot check",
+   "confidence": "low",
+   "note": "Figure: MO=QR (single ticks), angle M = angle R (single arc), angle N = angle P (double arc). M matches R, N matches P, O matches Q, so triangle MNO is congruent to RPQ by AAS (MO is not between the two angles). The book is right. The printed 'RP Q' is only a spacing artefact. The key is a congruence statement the algebra marker cannot check, so the item should not be marked.",
+   "why_low": "A person decides between teaching-only and accepting the expression typing. I could not confirm that the marker reads the triangle and congruence symbols.",
+   "fields": {
+    "answer_type": "not_markable",
+    "answer": null,
+    "marker": null,
+    "not_markable_reason": "The answer is a congruence statement with ordered vertices (MNO to RPQ) plus an AAS reason. The expression marker cannot check triangle symbols or vertex correspondence, so the item stays as a teaching example."
+   }
+  },
+  "g10m7s2-1:Ex7-8:10d": {
+   "verdict": "exclude",
+   "class": "book error",
+   "confidence": "high",
+   "note": "Figure marks QR=TU, QS=UV and angle Q = angle T, but the angle at T is not between TU and UV, so this is SSA. SSA proves neither congruence nor non-congruence. The book's 'not congruent' does not follow. Options 'congruent / not congruent' are not both in the stem, and the stem asks about 'pairs'. Right answer by the agent's own derivation: Not enough information: congruence cannot be concluded (angle is not the included angle, SSA).",
+   "if_corrected": {
+    "answer": "Not enough information: congruence cannot be concluded (angle is not the included angle, SSA)",
+    "defect": "The book's working shows only that SAS fails, then concludes 'not congruent'. That is a non sequitur: SSA does not show the triangles are non-congruent. The typed options 'congruent' and 'not congruent' were invented, as only 'congruent' is in the stem.",
+    "status": "NOT APPLIED: correcting the book's own answer or working is Samuel's to approve (decisions 43–45)"
+   }
+  },
+  "g10m7s3-1:Ex7-3:1b": {
+   "verdict": "exclude",
+   "class": "book error",
+   "confidence": "high",
+   "note": "With O on PQ: triangle QOR isosceles gives $\\hat{ORQ}=x$; triangle PSO isosceles gives $\\hat{P}=\\hat{POS}=180-96-x=84-x$. The book's step to $2x$ needs $\\hat{SRO}=x$, which it never justifies. The data force $x=28$, so $2x$ and $84-x$ agree only there. Right answer by the agent's own derivation: 84° − x (equal to 2x only at x = 28).",
+   "if_corrected": {
+    "answer": "84° − x (equal to 2x only at x = 28)",
+    "defect": "The working goes from $S\\hat{R}O+O\\hat{R}Q$ straight to $2x$ without showing $S\\hat{R}O=x$. The stem is over-determined (x is forced to 28). A key of 2x marks the natural answer 84° − x wrong, so one key cannot mark both.",
+    "status": "NOT APPLIED: correcting the book's own answer or working is Samuel's to approve (decisions 43–45)"
+   }
+  },
+  "g10m7s3-1:Ex7-6:1": {
+   "verdict": "fix",
+   "class": "selected from a list",
+   "confidence": "low",
+   "note": "Figure is a plain rectangle, about 298 by 120, with right angles and unequal sides. The book's key 'rectangle' is correct. The seven-option choice breaks the 5-option limit. The book's own working names exactly five categories, so the choice is re-typed with those five. Verified independently: the verifier's own answer matches the key.",
+   "why_low": "Content decision: the options are cut from the lesson's seven shape names to the five the book's working uses (quadrilateral, parallelogram, rectangle, rhombus, square). Trapezium and kite are dropped. A person should confirm that subset.",
+   "fields": {
+    "answer": "C",
+    "choices": [
+     {
+      "key": "A",
+      "text": "quadrilateral"
+     },
+     {
+      "key": "B",
+      "text": "parallelogram"
+     },
+     {
+      "key": "C",
+      "text": "rectangle"
+     },
+     {
+      "key": "D",
+      "text": "rhombus"
+     },
+     {
+      "key": "E",
+      "text": "square"
+     }
+    ],
+    "less_specific": [
+     "A",
+     "B"
+    ]
+   },
+   "verified": {
+    "by": "g2rec-v1 independent verifier",
+    "own_answer": "rectangle",
+    "verdict": "confirmed"
+   }
+  },
+  "g10m7s3-1:Ex7-6:2": {
+   "verdict": "fix",
+   "class": "selected from a list",
+   "confidence": "low",
+   "note": "Figure is a slanted parallelogram. Top and bottom sides are about 178 and the slanted sides about 175, so the sides are equal, and the angles are not 90°. That makes it a rhombus, matching the book's key. The seven-option choice is cut to the five categories the book's working names. Verified independently: the verifier's own answer matches the key.",
+   "why_low": "Content decision: the options are cut from the lesson's seven shape names to the five the book's working uses. Trapezium and kite are dropped. A person should confirm that subset.",
+   "fields": {
+    "answer": "D",
+    "choices": [
+     {
+      "key": "A",
+      "text": "quadrilateral"
+     },
+     {
+      "key": "B",
+      "text": "parallelogram"
+     },
+     {
+      "key": "C",
+      "text": "rectangle"
+     },
+     {
+      "key": "D",
+      "text": "rhombus"
+     },
+     {
+      "key": "E",
+      "text": "square"
+     }
+    ],
+    "less_specific": [
+     "A",
+     "B"
+    ]
+   },
+   "verified": {
+    "by": "g2rec-v1 independent verifier",
+    "own_answer": "rhombus",
+    "verdict": "confirmed"
+   }
+  },
+  "g10m7s3-1:Ex7-6:3": {
+   "verdict": "fix",
+   "class": "selected from a list",
+   "confidence": "low",
+   "note": "Figure is an irregular convex quadrilateral. No sides are parallel and no adjacent pair is equal (a kite needs two such pairs). Only 'quadrilateral' holds, matching the book. The seven-option choice is cut to the three names the book's working lists. Verified independently: the verifier's own answer matches the key.",
+   "why_low": "Content decision: the stem says 'list all the names' but the book's answer is a single name, so it is typed as one choice among the three names the working considers (trapezium, kite, quadrilateral). A person should confirm that.",
+   "fields": {
+    "choices": [
+     {
+      "key": "A",
+      "text": "quadrilateral"
+     },
+     {
+      "key": "B",
+      "text": "trapezium"
+     },
+     {
+      "key": "C",
+      "text": "kite"
+     }
+    ]
+   },
+   "verified": {
+    "by": "g2rec-v1 independent verifier",
+    "own_answer": "quadrilateral",
+    "verdict": "confirmed"
+   }
+  },
+  "g10m7s3-1:Ex7-6:5": {
+   "verdict": "accept",
+   "class": "check too strict",
+   "confidence": "low",
+   "note": "Figure is a square (about 120 by 120). The book's working lists square, rectangle, rhombus, parallelogram, kite, trapezium and quadrilateral. Each holds for a square, trapezium on the inclusive definition the book states here. The 'does not read as printed' complaint is only the hyphenation and the word 'and'. Verified independently: the verifier's own answer matches the key.",
+   "why_low": "Two points for a person: (1) trapezium needs the inclusive definition, which the book's own item 15 working seems not to use; (2) a values marker over seven typed words was not checked here.",
+   "verified": {
+    "by": "g2rec-v1 independent verifier",
+    "own_answer": "square, rectangle, rhombus, parallelogram, kite, trapezium, quadrilateral",
+    "verdict": "confirmed"
+   }
+  },
+  "g10m7s3-1:Ex7-8:2h": {
+   "verdict": "exclude",
+   "class": "book error",
+   "confidence": "high",
+   "note": "A parallelogram's diagonals are not lines of symmetry. Reflecting across a diagonal of a non-rhombus parallelogram does not map it to itself. Only a rhombus has its diagonals as axes. A general parallelogram has no line symmetry. The statement is false, the book's 'True' is wrong, and the blind answer is right. Right answer by the agent's own derivation: False.",
+   "if_corrected": {
+    "answer": "False",
+    "defect": "The book's printed answer and its working both say 'True'. A parallelogram has no axes of symmetry in general. Its diagonals are axes only for a rhombus.",
+    "status": "NOT APPLIED: correcting the book's own answer or working is Samuel's to approve (decisions 43–45)"
+   }
+  },
+  "g10m7s3-1:Ex7-8:15": {
+   "verdict": "fix",
+   "class": "selected from a list",
+   "confidence": "low",
+   "note": "Figure is a kite. The upper sides are about 92 each and the lower sides about 202 each, giving two adjacent equal pairs, with no parallel sides and not a rhombus. The book's key 'kite' is correct. The seven-option choice is cut to the three names the book's working lists. Verified independently: the verifier's own answer matches the key.",
+   "why_low": "Content decision: the options are cut from the lesson's seven shape names to the three named in the book's working (trapezium, kite, quadrilateral). A person should confirm that subset.",
+   "fields": {
+    "answer": "C",
+    "choices": [
+     {
+      "key": "A",
+      "text": "quadrilateral"
+     },
+     {
+      "key": "B",
+      "text": "trapezium"
+     },
+     {
+      "key": "C",
+      "text": "kite"
+     }
+    ],
+    "less_specific": [
+     "A"
+    ]
+   },
+   "verified": {
+    "by": "g2rec-v1 independent verifier",
+    "own_answer": "kite",
+    "verdict": "confirmed"
+   }
+  },
+  "g10m7s4-1:Ex7-7:1": {
+   "verdict": "exclude",
+   "class": "unconfirmed",
+   "confidence": "low",
+   "note": "NOT RECOMMENDED LIVE (the independent verifier said confirmed, and another answer is also correct (its own answer: ED (equivalently DE); CA is marked parallel to DE in triangle EDB with C and A the mid-points of BD and BE, so the third side is ED; DE is the same segment and should be accepted.)). The agent's reading: Figure: CA and DE carry parallel arrows, so the third side of EDB is DE (= ED). Book working accepts ED or DE. The options ED/DE are not figure labels, and a choice keyed ED would mark DE wrong. Retype as an expression.",
+   "why_low": "the recommendation to put it live did not survive the checks: the independent verifier said confirmed, and another answer is also correct (its own answer: ED (equivalently DE); CA is marked parallel to DE in triangle EDB with C and A the mid-points of BD and BE, so the third side is ED; DE is the same segment and should be accepted.)"
+  },
+  "g10m7s4-1:Ex7-7:2": {
+   "verdict": "exclude",
+   "class": "unconfirmed",
+   "confidence": "low",
+   "note": "NOT RECOMMENDED LIVE (the independent verifier said confirmed, and another answer is also correct (its own answer: TS (equivalently ST); PR is marked parallel to TS with R and P the mid-points of QS and QT, so the third side is TS; ST is the same segment.)). The agent's reading: Figure: PR and TS carry parallel arrows, so the third side of TSQ is TS (= ST). Book working says TS or ST. The options TS/ST are not figure labels, and keying TS alone would mark ST wrong. Retype as an expression.",
+   "why_low": "the recommendation to put it live did not survive the checks: the independent verifier said confirmed, and another answer is also correct (its own answer: TS (equivalently ST); PR is marked parallel to TS with R and P the mid-points of QS and QT, so the third side is TS; ST is the same segment.)"
+  },
+  "g10m7s4-1:Ex7-7:5b": {
+   "verdict": "exclude",
+   "class": "marker cannot check",
+   "confidence": "low",
+   "note": "NOT RECOMMENDED LIVE (the app's marker cannot read the key '\\\\triangle DEC ||| \\\\triangle DAB': unreadable (unknown command \\triangle)). The agent's reading: C and E are mid-points of BD and AD, so CE is parallel to BA. Then D to D, E to A, C to B, and the triangle is $DAB$. The figure's angles 26, 91, 63 fit. The complaint is only a text comparison with the flattened printed answer.",
+   "why_low": "the recommendation to put it live did not survive the checks: the app's marker cannot read the key '\\\\triangle DEC ||| \\\\triangle DAB': unreadable (unknown command \\triangle)"
+  },
+  "g10m7s4-1:Ex7-7:6b": {
+   "verdict": "exclude",
+   "class": "marker cannot check",
+   "confidence": "low",
+   "note": "NOT RECOMMENDED LIVE (the app's marker cannot read the key '\\\\triangle HKG ||| \\\\triangle JKL': unreadable (unknown command \\triangle)). The agent's reading: J and L are mid-points of HK and GK, so JL is parallel to HG. Then H to J, K to K, G to L, and the triangle is $JKL$. The figure's angles 22, 60, 98 sum to 180. The complaint is only a text comparison with the flattened printed answer.",
+   "why_low": "the recommendation to put it live did not survive the checks: the app's marker cannot read the key '\\\\triangle HKG ||| \\\\triangle JKL': unreadable (unknown command \\triangle)"
+  },
+  "g10m7s4-1:Ex7-8:19": {
+   "verdict": "exclude",
+   "class": "unconfirmed",
+   "confidence": "low",
+   "note": "NOT RECOMMENDED LIVE (the independent verifier said confirmed, and another answer is also correct (its own answer: TS (equivalently ST); The double arrows show PR parallel to TS, the third side of triangle TSQ; ST names the same segment.)). The agent's reading: Figure: PR and TS carry parallel arrows, so the third side of TSQ is TS (= ST). Book working says TS or ST. The options TS/ST are not figure labels, and keying TS alone would mark ST wrong. Retype as an expression.",
+   "why_low": "the recommendation to put it live did not survive the checks: the independent verifier said confirmed, and another answer is also correct (its own answer: TS (equivalently ST); The double arrows show PR parallel to TS, the third side of triangle TSQ; ST names the same segment.)"
+  },
+  "g10m7s4-1:Ex7-8:20": {
+   "verdict": "exclude",
+   "class": "unconfirmed",
+   "confidence": "low",
+   "note": "NOT RECOMMENDED LIVE (the independent verifier said confirmed, and another answer is also correct (its own answer: YZ is parallel to XV; X and V are the marked mid-points of WY and WZ, so XV is parallel to YZ; reversed letter orders (ZY, XV) and swapped pair order are equally valid.)). The agent's reading: Figure: X and V are the mid-points of WY and WZ (matching tick marks), so XV is parallel to YZ. Book names YZ and VX, as the key does. The complaint is only a text comparison with the flattened printed answer \"ZY and V X\".",
+   "why_low": "the recommendation to put it live did not survive the checks: the independent verifier said confirmed, and another answer is also correct (its own answer: YZ is parallel to XV; X and V are the marked mid-points of WY and WZ, so XV is parallel to YZ; reversed letter orders (ZY, XV) and swapped pair order are equally valid.)"
+  },
+  "g10m7s4-1:Ex7-8:21b": {
+   "verdict": "exclude",
+   "class": "marker cannot check",
+   "confidence": "low",
+   "note": "NOT RECOMMENDED LIVE (the app's marker cannot read the key '\\\\triangle DEC ||| \\\\triangle DAB': unreadable (unknown command \\triangle)). The agent's reading: C and E are mid-points of BD and AD, so CE is parallel to BA. Then D to D, E to A, C to B, giving $DAB$. Angles 26, 91, 63 sum to 180. The distractors DBA and ABD are the typing agent's inventions, so retype from the book's statement.",
+   "why_low": "the recommendation to put it live did not survive the checks: the app's marker cannot read the key '\\\\triangle DEC ||| \\\\triangle DAB': unreadable (unknown command \\triangle)"
+  },
+  "g10m7s4-1:Ex7-8:22b": {
+   "verdict": "exclude",
+   "class": "marker cannot check",
+   "confidence": "low",
+   "note": "NOT RECOMMENDED LIVE (the app's marker cannot read the key '\\\\triangle QMN ||| \\\\triangle QRP': unreadable (unknown command \\triangle)). The agent's reading: P and R are mid-points of NQ and MQ, so PR is parallel to NM. Then Q to Q, M to R, N to P, giving $QRP$. Angles 22, 98 and ? = 98 fit. The distractors RQP and PRQ are the typing agent's inventions, so retype from the book's statement.",
+   "why_low": "the recommendation to put it live did not survive the checks: the app's marker cannot read the key '\\\\triangle QMN ||| \\\\triangle QRP': unreadable (unknown command \\triangle)"
+  }
+ },
+ "unanswered": [],
+ "report": {
+  "items": 32,
+  "recommended": 32,
+  "unanswered": [],
+  "by_verdict": {
+   "fix": 16,
+   "accept": 2,
+   "exclude": 14
+  },
+  "by_class": {
+   "stem damaged": 1,
+   "check too strict": 2,
+   "typing error": 3,
+   "compound answer": 1,
+   "marker cannot check": 10,
+   "book error": 4,
+   "selected from a list": 6,
+   "item wording": 1,
+   "unconfirmed": 4
+  },
+  "by_confidence": {
+   "low": 28,
+   "high": 4
+  },
+  "live": [
+   "g10m7s1-1:Ex7-1:5f",
+   "g10m7s1-1:Ex7-1:6a",
+   "g10m7s1-1:Ex7-1:6c",
+   "g10m7s1-1:Ex7-8:3a",
+   "g10m7s1-1:Ex7-8:3b",
+   "g10m7s1-1:Ex7-8:3c",
+   "g10m7s2-1:Ex7-2:6a",
+   "g10m7s2-1:Ex7-2:6c",
+   "g10m7s2-1:Ex7-2:6d",
+   "g10m7s2-1:Ex7-2:6e",
+   "g10m7s2-1:Ex7-8:10a",
+   "g10m7s2-1:Ex7-8:10b",
+   "g10m7s2-1:Ex7-8:10c",
+   "g10m7s3-1:Ex7-6:1",
+   "g10m7s3-1:Ex7-6:2",
+   "g10m7s3-1:Ex7-6:3",
+   "g10m7s3-1:Ex7-6:5",
+   "g10m7s3-1:Ex7-8:15"
+  ],
+  "live_question_ids": [
+   "q:g10m7s1-1-3:ex7-1-5f",
+   "q:g10m7s1-1-3:ex7-1-6a",
+   "q:g10m7s1-1-3:ex7-1-6c",
+   "q:g10m7s2-1-2:ex7-2-6c",
+   "q:g10m7s2-1-2:ex7-2-6d",
+   "q:g10m7s3-1-5:ex7-6-1",
+   "q:g10m7s3-1-5:ex7-6-2",
+   "q:g10m7s3-1-5:ex7-6-3",
+   "q:g10m7s3-1-5:ex7-6-5",
+   "q:g10m7s3-1-5:ex7-8-15"
+  ],
+  "not_live": {
+   "g10m7s1-1:Ex7-8:4b": {
+    "agent_verdict": "accept",
+    "recommended": "exclude",
+    "kind": "marker cannot check",
+    "why": "the app's marker cannot read the key 'a = 80^{\\\\circ}; b = 80^{\\\\circ}; c = 80^{\\\\circ}; d = 80^{\\\\circ}': unreadable (unexpected \")\")"
+   },
+   "g10m7s4-1:Ex7-7:1": {
+    "agent_verdict": "fix",
+    "recommended": "exclude",
+    "kind": "unconfirmed",
+    "why": "the independent verifier said confirmed, and another answer is also correct (its own answer: ED (equivalently DE); CA is marked parallel to DE in triangle EDB with C and A the mid-points of BD and BE, so the third side is ED; DE is the same segment and should be accepted.)"
+   },
+   "g10m7s4-1:Ex7-7:2": {
+    "agent_verdict": "fix",
+    "recommended": "exclude",
+    "kind": "unconfirmed",
+    "why": "the independent verifier said confirmed, and another answer is also correct (its own answer: TS (equivalently ST); PR is marked parallel to TS with R and P the mid-points of QS and QT, so the third side is TS; ST is the same segment.)"
+   },
+   "g10m7s4-1:Ex7-7:5b": {
+    "agent_verdict": "accept",
+    "recommended": "exclude",
+    "kind": "marker cannot check",
+    "why": "the app's marker cannot read the key '\\\\triangle DEC ||| \\\\triangle DAB': unreadable (unknown command \\triangle)"
+   },
+   "g10m7s4-1:Ex7-7:6b": {
+    "agent_verdict": "accept",
+    "recommended": "exclude",
+    "kind": "marker cannot check",
+    "why": "the app's marker cannot read the key '\\\\triangle HKG ||| \\\\triangle JKL': unreadable (unknown command \\triangle)"
+   },
+   "g10m7s4-1:Ex7-8:19": {
+    "agent_verdict": "fix",
+    "recommended": "exclude",
+    "kind": "unconfirmed",
+    "why": "the independent verifier said confirmed, and another answer is also correct (its own answer: TS (equivalently ST); The double arrows show PR parallel to TS, the third side of triangle TSQ; ST names the same segment.)"
+   },
+   "g10m7s4-1:Ex7-8:20": {
+    "agent_verdict": "accept",
+    "recommended": "exclude",
+    "kind": "unconfirmed",
+    "why": "the independent verifier said confirmed, and another answer is also correct (its own answer: YZ is parallel to XV; X and V are the marked mid-points of WY and WZ, so XV is parallel to YZ; reversed letter orders (ZY, XV) and swapped pair order are equally valid.)"
+   },
+   "g10m7s4-1:Ex7-8:21b": {
+    "agent_verdict": "fix",
+    "recommended": "exclude",
+    "kind": "marker cannot check",
+    "why": "the app's marker cannot read the key '\\\\triangle DEC ||| \\\\triangle DAB': unreadable (unknown command \\triangle)"
+   },
+   "g10m7s4-1:Ex7-8:22b": {
+    "agent_verdict": "fix",
+    "recommended": "exclude",
+    "kind": "marker cannot check",
+    "why": "the app's marker cannot read the key '\\\\triangle QMN ||| \\\\triangle QRP': unreadable (unknown command \\triangle)"
+   }
+  },
+  "low_confidence": [
+   "g10m7s1-1:Ex7-1:5f",
+   "g10m7s1-1:Ex7-1:6a",
+   "g10m7s1-1:Ex7-1:6c",
+   "g10m7s1-1:Ex7-8:3a",
+   "g10m7s1-1:Ex7-8:3b",
+   "g10m7s1-1:Ex7-8:3c",
+   "g10m7s1-1:Ex7-8:4b",
+   "g10m7s2-1:Ex7-2:6a",
+   "g10m7s2-1:Ex7-2:6c",
+   "g10m7s2-1:Ex7-2:6d",
+   "g10m7s2-1:Ex7-2:6e",
+   "g10m7s2-1:Ex7-8:10a",
+   "g10m7s2-1:Ex7-8:10b",
+   "g10m7s2-1:Ex7-8:10c",
+   "g10m7s2-1:Ex7-8:8",
+   "g10m7s3-1:Ex7-6:1",
+   "g10m7s3-1:Ex7-6:2",
+   "g10m7s3-1:Ex7-6:3",
+   "g10m7s3-1:Ex7-6:5",
+   "g10m7s3-1:Ex7-8:15",
+   "g10m7s4-1:Ex7-7:1",
+   "g10m7s4-1:Ex7-7:2",
+   "g10m7s4-1:Ex7-7:5b",
+   "g10m7s4-1:Ex7-7:6b",
+   "g10m7s4-1:Ex7-8:19",
+   "g10m7s4-1:Ex7-8:20",
+   "g10m7s4-1:Ex7-8:21b",
+   "g10m7s4-1:Ex7-8:22b"
+  ],
+  "stem_repairs": [
+   "g10m7s1-1:Ex7-1:5f"
+  ],
+  "retyped": [
+   "g10m7s1-1:Ex7-8:3a",
+   "g10m7s1-1:Ex7-8:3b",
+   "g10m7s1-1:Ex7-8:3c",
+   "g10m7s2-1:Ex7-2:6a",
+   "g10m7s2-1:Ex7-2:6e",
+   "g10m7s2-1:Ex7-8:10a",
+   "g10m7s2-1:Ex7-8:10b",
+   "g10m7s2-1:Ex7-8:10c"
+  ],
+  "corrections_proposed": [
+   "g10m7s2-1:Ex7-2:6b",
+   "g10m7s2-1:Ex7-8:10d",
+   "g10m7s3-1:Ex7-3:1b",
+   "g10m7s3-1:Ex7-8:2h"
+  ],
+  "off_task": [],
+  "no_longer_owed": [],
+  "stale_items": [],
+  "by_state": {
+   "excluded": 30,
+   "held": 2
+  },
+  "app_marker_identity_of_the_typed_key": {
+   "equal": [],
+   "different": [],
+   "unreadable": []
+  }
+ }
+}

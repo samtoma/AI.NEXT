@@ -1,0 +1,270 @@
+{
+  "format": "ainext.widget-mapping-review/1",
+  "rule": "decision 47: a mapping the blind verifier did not confirm is held — never shown, never a diagnosis, never S5 evidence — until a human keeps or drops it",
+  "items": [
+    {
+      "key": "q:g10m6s2-1-2:w001#intercept-wrong",
+      "question_id": "q:g10m6s2-1-2:w001",
+      "template_id": "wt:g10m6s2-1-2:divide-by-the-y-coefficient",
+      "lo_id": "lo:g10m6s2-1-2",
+      "kind": "line_drawer",
+      "stem": "Draw the straight line $2y = x - 4$. Any two points on the line will do; the equation under the graph updates as you drag.",
+      "reading": {
+        "mode": "equation",
+        "m": 0.5,
+        "b": -2
+      },
+      "construction": "Rearrange 2y = x - 4 to y = x/2 - 2, so m = 1/2 and b = -2. Both are allowed (1/2 is the reciprocal of the whole number 2, and |m| <= 5; b = -2 is within -5..5). Drag the two handles to the lattice points (0,-2) and (4,0). Both sit on the line, they are distinct, and neither is at the opening handle positions (-3,-2) or (1,1). The live equation reads y = 0.5x - 2, which is the target. Other valid pairs include (2,-1) with (-2,-3) and (-4,-4) with (4,0).",
+      "predicate": "intercept-wrong",
+      "predicate_meaning": "Correct slope, wrong intercept — a line parallel to the answer",
+      "misconception_id": "mc:g10m6s2-1-2:read-m-before-y-is-alone",
+      "misconception_label": "Reads the gradient off the $x$-term while $y$ still has a number in front",
+      "misconception_description": "The student takes the gradient (or the $y$-intercept) from the equation exactly as it is printed, without first dividing every term by the number in front of $y$ (a 2, a 3, or the minus sign in $-y$), so the equation is not yet in $y=mx+c$.",
+      "why": "This predicate fires on a line with slope 1/2 and an intercept other than -2, such as y = x/2 - 4 through (0,-4) and (4,-2). A student with this misconception reads the gradient straight off the x-term of 2y = x - 4 and gets m = 1, not 1/2, so her slope is wrong as well. Her line y = x - 4 has both slope and intercept wrong. Keeping the right slope while botching only the constant would mean dividing the x-term by 2 but not the constant, which is a different, partial-division error. So intercept-wrong would mostly fire for that other mistake and not for this one."
+    },
+    {
+      "key": "q:g10m6s4-1-1:w001#wrong-quadrants",
+      "question_id": "q:g10m6s4-1-1:w001",
+      "template_id": "wt:g10m6s4-1-1:sketch-xy-negative-k",
+      "lo_id": "lo:g10m6s4-1-1",
+      "kind": "curve_sketcher",
+      "stem": "Sketch the graph of $xy=-6$. It has two branches: draw one, lift your finger, then draw the other. Show how each branch behaves near the two axes.",
+      "reading": {
+        "fn": "hyperbola",
+        "coefs": [
+          -6,
+          0
+        ]
+      },
+      "construction": "xy=-6 is y=-6/x, so a=-6, q=0 (inside |a|<=6, |q|<=3). Stroke 1, drawn in quadrant II and never touching x=0: (-5,1.2) -> (-4,1.5) -> (-3,2) -> (-2,3) -> (-1.5,4) -> (-1.2,5), hugging the x-axis on the left and rising steeply along the y-axis. The lattice points (-6,1), (-3,2), (-2,3) are on it. Lift the finger. Stroke 2, drawn in quadrant IV: (1.2,-5) -> (1.5,-4) -> (2,-3) -> (3,-2) -> (4,-1.5) -> (5,-1.2), hugging the y-axis on the way down and the x-axis on the right. The lattice points (6,-1), (3,-2), (2,-3) are on it. Neither stroke touches or crosses an axis, the two strokes are separate, and the whole curve stays mostly inside -5..5, so it scores within one grid square.",
+      "predicate": "wrong-quadrants",
+      "predicate_meaning": "The hyperbola's branches sit in the wrong pair of quadrants — the sign of a",
+      "misconception_id": "mc:g10m6s4-1-1:sign-lost-testing-point",
+      "misconception_label": "Loses the sign when testing a point",
+      "misconception_description": "When checking whether a point lies on $xy=-6$, the student multiplies the coordinates but treats a negative times a positive as positive, gets $6$ instead of $-6$, and decides the point is not on the graph.",
+      "why": "Fired by drawing the branches in quadrants I and III, the shape of xy=+6, instead of II and IV. sign-lost-testing-point is a point-membership checking error, where (-2,3) gives 6 instead of -6 and the student rejects a point that is on the graph. It never produces a sketch. It does not explain putting the whole curve in I and III, where the product is positive and the equation says -6 anyway. A quadrant swap would mostly come from ignoring the minus in -6 or confusing the sign of a. This pairing would refute a mistake the student did not make."
+    },
+    {
+      "key": "q:g10m6s4-1-1:w002#wrong-quadrants",
+      "question_id": "q:g10m6s4-1-1:w002",
+      "template_id": "wt:g10m6s4-1-1:sketch-xy-negative-k",
+      "lo_id": "lo:g10m6s4-1-1",
+      "kind": "curve_sketcher",
+      "stem": "Sketch the graph of $xy=-4$. It has two branches: draw one, lift your finger, then draw the other. Show how each branch behaves near the two axes.",
+      "reading": {
+        "fn": "hyperbola",
+        "coefs": [
+          -4,
+          0
+        ]
+      },
+      "construction": "xy=-4 is y=-4/x, so a=-4, q=0. Stroke 1, drawn in quadrant II: (-5,0.8) -> (-4,1) -> (-3,1.33) -> (-2,2) -> (-1,4) -> (-0.8,5). The lattice points (-4,1), (-2,2), (-1,4) are on it. Lift the finger. Stroke 2, drawn in quadrant IV: (0.8,-5) -> (1,-4) -> (2,-2) -> (3,-1.33) -> (4,-1) -> (5,-0.8). The lattice points (4,-1), (2,-2), (1,-4) are on it. Each branch approaches both axes without touching or crossing them, and all lattice points are inside -5..5.",
+      "predicate": "wrong-quadrants",
+      "predicate_meaning": "The hyperbola's branches sit in the wrong pair of quadrants — the sign of a",
+      "misconception_id": "mc:g10m6s4-1-1:sign-lost-testing-point",
+      "misconception_label": "Loses the sign when testing a point",
+      "misconception_description": "When checking whether a point lies on $xy=-6$, the student multiplies the coordinates but treats a negative times a positive as positive, gets $6$ instead of $-6$, and decides the point is not on the graph.",
+      "why": "Fired by branches in quadrants I and III, the shape of xy=+4. sign-lost-testing-point is an arithmetic slip when testing a point, a negative times a positive being read as positive, so the student wrongly rejects a point on the graph. It does not lead her to draw the curve in the wrong pair of quadrants. That error would mostly come from dropping the negative in -4 or misreading the sign of a, so the diagnosis would mostly fire for a different reason. The misconception text also quotes xy=-6, not this question's xy=-4."
+    },
+    {
+      "key": "q:g10m6s4-1-1:w003#wrong-quadrants",
+      "question_id": "q:g10m6s4-1-1:w003",
+      "template_id": "wt:g10m6s4-1-1:sketch-xy-negative-k",
+      "lo_id": "lo:g10m6s4-1-1",
+      "kind": "curve_sketcher",
+      "stem": "Sketch the graph of $xy=-3$. It has two branches: draw one, lift your finger, then draw the other. Show how each branch behaves near the two axes.",
+      "reading": {
+        "fn": "hyperbola",
+        "coefs": [
+          -3,
+          0
+        ]
+      },
+      "construction": "xy=-3 is y=-3/x, so a=-3, q=0. Stroke 1, drawn in quadrant II: (-5,0.6) -> (-3,1) -> (-2,1.5) -> (-1,3) -> (-0.6,5). The lattice points (-3,1), (-1,3) are on it. Lift the finger. Stroke 2, drawn in quadrant IV: (0.6,-5) -> (1,-3) -> (2,-1.5) -> (3,-1) -> (5,-0.6). The lattice points (3,-1), (1,-3) are on it. The branches approach both axes without touching or crossing them, are separate strokes, and stay inside -5..5.",
+      "predicate": "wrong-quadrants",
+      "predicate_meaning": "The hyperbola's branches sit in the wrong pair of quadrants — the sign of a",
+      "misconception_id": "mc:g10m6s4-1-1:sign-lost-testing-point",
+      "misconception_label": "Loses the sign when testing a point",
+      "misconception_description": "When checking whether a point lies on $xy=-6$, the student multiplies the coordinates but treats a negative times a positive as positive, gets $6$ instead of $-6$, and decides the point is not on the graph.",
+      "why": "Fired by branches in quadrants I and III, the xy=+3 shape. sign-lost-testing-point is an error in checking whether a point is on the graph (the sign of -2 times 3 is lost) and does not generate a sketch. The student who loses a sign when testing a point does not thereby choose quadrants I and III for the curve. A swap like that would mostly come from ignoring the minus sign in -3 or misreading the sign of a. The misconception text also quotes xy=-6, not this question's xy=-3."
+    },
+    {
+      "key": "q:g10m6s4-1-2:w001#off-target",
+      "question_id": "q:g10m6s4-1-2:w001",
+      "template_id": "wt:g10m6s4-1-2:sketch-y-a-over-x-sign-and-size",
+      "lo_id": "lo:g10m6s4-1-2",
+      "kind": "curve_sketcher",
+      "stem": "Sketch the graph of $y=\\dfrac{a}{x}$ when $a=4$. Draw each branch separately: lift your finger between them. Place the branches in the right quadrants and at the right distance from the axes.",
+      "reading": {
+        "fn": "hyperbola",
+        "coefs": [
+          4,
+          0
+        ]
+      },
+      "construction": "y=4/x, so a=4 and q=0. Two strokes, finger lifted between them, neither crossing x=0. Stroke 1 (first quadrant): (0.8,5), (1,4), (1.33,3), (2,2), (3,1.33), (4,1), (5,0.8). Stroke 2 (third quadrant, the mirror through the origin): (-5,-0.8), (-4,-1), (-3,-1.33), (-2,-2), (-1.33,-3), (-1,-4), (-0.8,-5). The exact lattice points (1,4), (2,2), (4,1) and their negatives lie on the curve, and the whole curve fits inside -5..5, so it is within about one grid square everywhere.",
+      "predicate": "off-target",
+      "predicate_meaning": "The sketch does not follow the curve",
+      "misconception_id": "mc:g10m6s4-1-2:bigger-a-closer-to-axes",
+      "misconception_label": "A bigger a is thought to pull the graph closer to the axes",
+      "misconception_description": "The student reads the size of $a$ backwards: they expect a bigger $a$ to bring the graph closer to the axes and a smaller $a$ to push it away, so they pick a graph in the right quadrants but at the wrong distance from the axes.",
+      "why": "off-target is a direction-blind catch-all, 'the sketch does not follow the curve'. The firing construction is right quadrants, hyperbola shape, but displaced more than about one grid square, for example hugging the axes through (1,1) instead of (2,2). A bigger-a-closer-to-axes student would build that, but so would a student who ignores a and draws y=1/x, a student who draws the branches too far from the axes, and any loose freehand sketch. Too-far curves are the opposite of this misconception, and the predicate cannot tell the two directions apart. It would mostly fire for other reasons and could serve the refutation of a mistake the student did not make. It is in the hyperbola can_emit list, but the match is not specific enough."
+    },
+    {
+      "key": "q:g10m6s4-1-2:w002#off-target",
+      "question_id": "q:g10m6s4-1-2:w002",
+      "template_id": "wt:g10m6s4-1-2:sketch-y-a-over-x-sign-and-size",
+      "lo_id": "lo:g10m6s4-1-2",
+      "kind": "curve_sketcher",
+      "stem": "Sketch the graph of $y=\\dfrac{a}{x}$ when $a=6$. Draw each branch separately: lift your finger between them. Place the branches in the right quadrants and at the right distance from the axes.",
+      "reading": {
+        "fn": "hyperbola",
+        "coefs": [
+          6,
+          0
+        ]
+      },
+      "construction": "y=6/x, so a=6 and q=0 (|a|<=6 and whole, allowed). Two strokes, finger lifted, neither crossing x=0. Stroke 1 (first quadrant): (1.2,5), (1.5,4), (2,3), (3,2), (4,1.5), (5,1.2). Stroke 2 (third quadrant): (-5,-1.2), (-4,-1.5), (-3,-2), (-2,-3), (-1.5,-4), (-1.2,-5). The lattice points (2,3), (3,2) and their negatives lie on the curve. (1,6) and (6,1) fall outside -5..5, so the strokes leave the window near the asymptotes, which the 'mostly inside -5..5' guidance allows. The target is reachable within about one grid square.",
+      "predicate": "off-target",
+      "predicate_meaning": "The sketch does not follow the curve",
+      "misconception_id": "mc:g10m6s4-1-2:bigger-a-closer-to-axes",
+      "misconception_label": "A bigger a is thought to pull the graph closer to the axes",
+      "misconception_description": "The student reads the size of $a$ backwards: they expect a bigger $a$ to bring the graph closer to the axes and a smaller $a$ to push it away, so they pick a graph in the right quadrants but at the wrong distance from the axes.",
+      "why": "This is the same direction-blind catch-all, 'the sketch does not follow the curve'. A curve hugging the axes (diagonal point near (1.2,1.2) instead of about (2.45,2.45)) fires it, and that is what the bigger-a-closer student would draw. But so would the y=1/x drawn by a student who ignores a, a curve drawn too far out (the opposite of the misconception), or plain freehand imprecision. It would mostly fire for other reasons and could serve the refutation of a mistake the student did not make, so the match is false."
+    },
+    {
+      "key": "q:g10m6s4-1-2:w003#off-target",
+      "question_id": "q:g10m6s4-1-2:w003",
+      "template_id": "wt:g10m6s4-1-2:sketch-y-a-over-x-sign-and-size",
+      "lo_id": "lo:g10m6s4-1-2",
+      "kind": "curve_sketcher",
+      "stem": "Sketch the graph of $y=\\dfrac{a}{x}$ when $a=5$. Draw each branch separately: lift your finger between them. Place the branches in the right quadrants and at the right distance from the axes.",
+      "reading": {
+        "fn": "hyperbola",
+        "coefs": [
+          5,
+          0
+        ]
+      },
+      "construction": "y=5/x, so a=5 and q=0. Two strokes, finger lifted, neither crossing x=0. Stroke 1 (first quadrant): (1,5), (1.25,4), (2,2.5), (2.5,2), (4,1.25), (5,1). Stroke 2 (third quadrant): (-5,-1), (-4,-1.25), (-2.5,-2), (-2,-2.5), (-1.25,-4), (-1,-5). The lattice points (1,5), (5,1) and their negatives lie exactly on the curve, and the rest of the curve sits within about one grid square of the other points. It all fits inside -5..5.",
+      "predicate": "off-target",
+      "predicate_meaning": "The sketch does not follow the curve",
+      "misconception_id": "mc:g10m6s4-1-2:bigger-a-closer-to-axes",
+      "misconception_label": "A bigger a is thought to pull the graph closer to the axes",
+      "misconception_description": "The student reads the size of $a$ backwards: they expect a bigger $a$ to bring the graph closer to the axes and a smaller $a$ to push it away, so they pick a graph in the right quadrants but at the wrong distance from the axes.",
+      "why": "off-target is a catch-all, 'the sketch does not follow the curve', and it does not know the direction of the error. A curve hugging the axes (through about (1,1) instead of (2.24,2.24)) fires it, and the bigger-a-closer-to-axes student would draw that. So would a student who ignores a and draws y=1/x, a student who draws the branches too far out (the opposite of this misconception), and any sloppy or imprecise sketch. Most firings would come from other causes, and a student told she read the size of a backwards would be given a mistake she did not make. The match is false."
+    },
+    {
+      "key": "q:g10m6s5-1-1:w001#asymptote-crossed",
+      "question_id": "q:g10m6s5-1-1:w001",
+      "template_id": "wt:g10m6s5-1-1:sketch-two-to-the-x",
+      "lo_id": "lo:g10m6s5-1-1",
+      "kind": "curve_sketcher",
+      "stem": "Sketch the graph of $y = 2^{x}$ in one smooth stroke across the whole grid.",
+      "reading": {
+        "fn": "exponential",
+        "coefs": [
+          1,
+          2,
+          0
+        ]
+      },
+      "construction": "Draw y = 2^x as one left-to-right stroke over the whole grid. Start at the far left at about (-5, 0.03), just above the x-axis. Pass through (-3, 0.125), (-2, 0.25) and (-1, 0.5), staying above y = 0 the whole way. Then cross the y-axis at (0, 1), go through the lattice points (1, 2) and (2, 4), and end near (2.3, 5) at the top of the grid. The left tail hugs y = 0 without touching or crossing it, and the stroke is a single-valued function of x, so it passes the vertical line test. The parameters are in range: a = 1 is a nonzero whole number, b = 2 is in {2, 3, 0.5}, and q = 0. The curve sits inside -5..5 apart from the far left tail, which is nearly flat on the axis, so the target is reachable within one grid square.",
+      "predicate": "asymptote-crossed",
+      "predicate_meaning": "The stroke runs straight through where the curve is undefined, as if it were continuous there",
+      "misconception_id": "mc:g10m6s5-1-1:asymptote-read-as-axis-of-symmetry",
+      "misconception_label": "Treats the x-axis as an axis of symmetry instead of an asymptote",
+      "misconception_description": "The student sees that the two graphs are reflections of each other and that both hug the x-axis, so they call the x-axis an axis of symmetry rather than the line the curves approach without touching.",
+      "why": "For an exponential, asymptote-crossed fires when the stroke dips below or crosses the horizontal asymptote y = q, here the x-axis. It is in the can_emit list for exponential, so it can fire. The claimed misconception is different: the student sees the graphs of y = 2^x and y = 2^-x or y = -2^x as reflections that both hug the x-axis, and so calls the x-axis an axis of symmetry. That is a mislabelling of the axis. It does not produce a single stroke that runs through y = 0. A student who really believed the x-axis was a mirror line would draw the mirror image below it, as a second curve or a doubled-back stroke. That would fail the vertical line test or partial-coverage, not asymptote-crossed. A stroke that crosses the axis comes from thinking the curve can reach zero and carry on into negative y, as a polynomial would, or from drawing carelessly. That is a different reason, so the diagnosis would serve the refutation of a mistake the student did not make."
+    },
+    {
+      "key": "q:g10m6s5-1-5:w001#asymptote-crossed",
+      "question_id": "q:g10m6s5-1-5:w001",
+      "template_id": "wt:g10m6s5-1-5:sketch-negative-shifted",
+      "lo_id": "lo:g10m6s5-1-5",
+      "kind": "curve_sketcher",
+      "stem": "Sketch the graph of $y = -2^{x} + 3$ in one smooth stroke across the whole grid.",
+      "reading": {
+        "fn": "exponential",
+        "coefs": [
+          -1,
+          2,
+          3
+        ]
+      },
+      "construction": "The question reads as y = -(2^x) + 3, so a = -1, b = 2, q = 3 (all inside the exponential limits: a nonzero whole with |a|<=3, b in {2,3,0.5}, q whole with |q|<=3). The asymptote is y = 3, the curve lies entirely below it and is decreasing, and the y-intercept is -1 + 3 = 2. Draw one left-to-right stroke through (-5, 3) (the true value is 2.97), (-4, 2.94), (-3, 2.88), (-2, 2.75), (-1, 2.5), (0, 2), (1, 1), (2, -1), then down to (3, -5) where it leaves the bottom of the grid. The stroke hugs y = 3 on the far left without touching or crossing it, passes through (0, 2), and is a function (single-valued in x). Every point is within a grid square of the true curve. The curve exits the grid at x = 3, so coverage runs from the left edge to where the curve leaves the grid, not the whole x-range.",
+      "predicate": "asymptote-crossed",
+      "predicate_meaning": "The stroke runs straight through where the curve is undefined, as if it were continuous there",
+      "misconception_id": "mc:g10m6s5-1-5:leaves-out-a",
+      "misconception_label": "Leaves out a when choosing the curve",
+      "misconception_description": "The student picks the curve from the $b^x$ part alone and does not use $a$, the minus sign or the number in front of it, which decides which side of the asymptote the curve lies on and where it meets the y-axis.",
+      "why": "The predicate fires when the stroke passes through the asymptote y = 3, with points on both sides of it. A student who leaves out a and draws 2^x + 3 has a curve that lies wholly above y = 3 and never crosses it. They have chosen the wrong side of the asymptote, which is a different thing from crossing it. A stroke that does cross y = 3 comes from a student who forgot the shift q (plain 2^x passes y = 3 near x = 1.6), who ignored the asymptote, or who wobbled across it. None of those is this misconception, so the predicate would mostly fire for a different reason."
+    },
+    {
+      "key": "q:g10m6s6-1-2:w003#vertical-shift-wrong",
+      "question_id": "q:g10m6s6-1-2:w003",
+      "template_id": "wt:g10m6s6-1-2:flip-then-drop",
+      "lo_id": "lo:g10m6s6-1-2",
+      "kind": "curve_sketcher",
+      "stem": "Sketch the graph of $y = -1\\sin\\theta - 2$ for $0^{\\circ} \\le \\theta \\le 360^{\\circ}$. Draw it in one smooth stroke from left to right.",
+      "reading": {
+        "fn": "sine",
+        "coefs": [
+          -1,
+          -2
+        ]
+      },
+      "construction": "Freehand, one stroke left to right: (0,-2), (45,-2.71), (90,-3), (135,-2.71), (180,-2), (225,-1.29), (270,-1), (315,-1.29), (360,-2). Midline y=-2, amplitude 1, inverted, one period. The range -3..-1 sits inside -5..5. It is buildable, but with amplitude 1 and a tolerance of about one grid square, the shape check is weak.",
+      "predicate": "vertical-shift-wrong",
+      "predicate_meaning": "The curve is centred on the wrong midline",
+      "misconception_id": "mc:g10m6s6-1-2:stretch-applied-to-shift",
+      "misconception_label": "Multiplies the shift by a, reading a sin θ + q as a(sin θ + q)",
+      "misconception_description": "The student shifts the basic sine graph first and then stretches the shifted graph, so the shift ends up multiplied by $a$ and moves the graph by $a\\times q$ units instead of $q$.",
+      "why": "Here a = -1, so a·q = +2 is exactly -q. The midline-at-+2 sketch (-sin θ + 2) fires the predicate, but it is the same sketch a student produces from a plain sign slip on the shift. It is also what she draws by reflecting the whole shifted graph in the x-axis. With |a| = 1 there is no stretch for the shift to be multiplied by, so the sketch cannot show the stretch-applied-to-shift reasoning and would mostly fire for a different reason. Serving 'you multiplied the shift by a' to a student who made a sign slip would refute a mistake she did not make."
+    },
+    {
+      "key": "q:g10m6s7-1-3:w001#interval-wrong",
+      "question_id": "q:g10m6s7-1-3:w001",
+      "template_id": "wt:g10m6s7-1-3:range-cosine-lowered",
+      "lo_id": "lo:g10m6s7-1-3",
+      "kind": "number_line_marker",
+      "stem": "Mark the range of $y = 2\\cos\\theta - 3$ on the $y$-number line: every $y$-value its graph reaches, from the lowest to the highest. Make an end filled if $y$ reaches that value and hollow if it only gets close.",
+      "reading": {
+        "mode": "interval",
+        "from": -5,
+        "to": -1,
+        "openFrom": false,
+        "openTo": false
+      },
+      "construction": "Since -1 <= cos(theta) <= 1, y = 2cos(theta) - 3 runs from 2(-1)-3 = -5 to 2(1)-3 = -1, and both values are attained (cos = -1 and cos = 1 occur). On the instrument (range [-6,6]), use interval mode with from = -5 and to = -1, both whole numbers inside the range, and set both ends FILLED (openFrom = false, openTo = false). This satisfies every limit.",
+      "predicate": "interval-wrong",
+      "predicate_meaning": "The interval does not run between the right endpoints",
+      "misconception_id": "mc:g10m6s7-1-3:ignores-added-number",
+      "misconception_label": "Leaves out the added number q",
+      "misconception_description": "The student finds the range of $a\\sin\\theta$ or $a\\cos\\theta$ on its own, from $-a$ to $a$, and never adds the number $q$ that the equation carries.",
+      "why": "This is an interval-mode predicate and it does fire for the claimed misconception's build. A student who finds the range of 2cos(theta) alone and never adds q builds [-2, 2], which is on the lattice and has endpoints other than -5 and -1. But the predicate is a catch-all ('endpoints are not the right ones'). It fires equally for [1, 5] (q added with the wrong sign), [-4, -2] (the factor 2 forgotten) and [-1, 1] (neither a nor q used). Those are equally plausible wrong builds for this equation, so most firings would come from other errors. Those students would be shown the refutation 'you left out the added number', which is wrong for them: the [1, 5] student did add q, and the [-4, -2] student did not forget q. Because the predicate cannot separate the claimed misconception from the other ways to get the endpoints wrong, I mark it false."
+    },
+    {
+      "key": "q:g10m6s7-1-3:w002#interval-wrong",
+      "question_id": "q:g10m6s7-1-3:w002",
+      "template_id": "wt:g10m6s7-1-3:range-sine-shifted",
+      "lo_id": "lo:g10m6s7-1-3",
+      "kind": "number_line_marker",
+      "stem": "The range of a function is the set of $y$-values its graph reaches. Mark the range of $y = 3\\sin\\theta + 2$ on the $y$-number line, from its lowest value to its highest. Make an end filled if $y$ reaches that value and hollow if it only gets close.",
+      "reading": {
+        "mode": "interval",
+        "from": -1,
+        "to": 5,
+        "openFrom": false,
+        "openTo": false
+      },
+      "construction": "Use interval mode on the [-6,6] line. Since -1 <= sin(theta) <= 1, y = 3sin(theta)+2 runs from 3(-1)+2 = -1 to 3(1)+2 = 5, and sin reaches both +-1, so y actually attains both values. Place the left endpoint at the lattice point -1 and the right endpoint at 5, and set both ends filled (included, <= on both sides). Both -1 and 5 are whole numbers inside the range, so the validator limits are satisfied.",
+      "predicate": "interval-wrong",
+      "predicate_meaning": "The interval does not run between the right endpoints",
+      "misconception_id": "mc:g10m6s7-1-3:ignores-added-number",
+      "misconception_label": "Leaves out the added number q",
+      "misconception_description": "The student finds the range of $a\\sin\\theta$ or $a\\cos\\theta$ on its own, from $-a$ to $a$, and never adds the number $q$ that the equation carries.",
+      "why": "The predicate is listed for interval mode and would fire on this question for any interval whose endpoints are not -1 and 5. A student who ignores q builds [-3, 3] (from -a to a), which does fire it. But the predicate is a catch-all with nothing in it that is specific to leaving out q. It fires just as readily for [-5, 1] (adds q with the wrong sign), [1, 3] (adds q but forgets to multiply by the amplitude 3), [0, 6] and others. Those students would be told they left out the added number when they did not. Since a wrong diagnosis hands a student the refutation of a mistake she did not make, this does not reliably map to mc:g10m6s7-1-3:ignores-added-number."
+    }
+  ]
+}

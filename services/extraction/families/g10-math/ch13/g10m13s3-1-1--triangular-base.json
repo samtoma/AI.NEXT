@@ -1,0 +1,47 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m13s3-1-1:triangular-base",
+ "kind": "family",
+ "lo_id": "lo:g10m13s3-1-1",
+ "parent_question_id": "q:g10m13s3-1-1:we08",
+ "source_page": 434,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "m",
+   "choice": [
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "b",
+   "let": "2 * m"
+  },
+  {
+   "name": "s",
+   "randint": [
+    "b",
+    "b + 8"
+   ]
+  },
+  {
+   "name": "X",
+   "let": "m * m * sqrt(3) + 3 * m * s"
+  }
+ ],
+ "stem": "A triangular pyramid has a base that is an equilateral triangle with sides of ${=b}$ cm. The apex is directly above the centre of the base, so its three triangular faces are identical, and each has a slant height of ${=s}$ cm (the height of the triangle, measured from the apex at right angles to a base edge). Calculate the total surface area of the pyramid, correct to 1 decimal place, in $\\text{cm}^{2}$.",
+ "answer": "fixed(X, 1)",
+ "solution": [
+  "The surface is the equilateral triangle base plus three identical triangular faces, so $\\text{surface area}=\\text{area of base}+3\\times\\text{area of one face}$.",
+  "To find the area of the base we need its perpendicular height $h_b$. It splits the base into two right-angled triangles, each with hypotenuse ${=b}$ cm and one short side $\\frac{{=b}}{2}={=m}$ cm.",
+  "By the theorem of Pythagoras: $h_b^{2}={=b}^{2}-{=m}^{2}={=b*b}-{=m*m}={=b*b-m*m}$, so $h_b=\\sqrt{{=b*b-m*m}}={=m}\\sqrt{3}\\approx{=fixed(m*sqrt(3), 3)}$ cm.",
+  "Area of the base: $\\frac{1}{2}\\times b\\times h_b=\\frac{1}{2}\\times{=b}\\times{=m}\\sqrt{3}={=m*m}\\sqrt{3}\\approx{=fixed(m*m*sqrt(3), 3)}\\text{ cm}^{2}$.",
+  "Area of the three faces: $3\\times\\frac{1}{2}\\times b\\times h_s=3\\times\\frac{1}{2}\\times{=b}\\times{=s}={=3*m*s}\\text{ cm}^{2}$.",
+  "Add the areas: $\\text{surface area}={=m*m}\\sqrt{3}+{=3*m*s}\\approx{=fixed(m*m*sqrt(3), 3)}+{=3*m*s}\\approx{=fixed(X, 3)}$, which is ${=fixed(X, 1)}\\text{ cm}^{2}$ correct to 1 decimal place."
+ ],
+ "notes": "Modelled on worked example 8 (we08: base 6 cm, face height 10 cm, answer 9*sqrt(3) + 90 = 105.6). The book solution is exact-then-round, which is what this does. The base side is 2m with m in {3, 4, 5} so that half of it is whole and h_b = m*sqrt(3). m = 6 and 8 were left out deliberately: m^2*sqrt(3) lies within 0.005 of a rounding boundary (62.354, 110.851) and a blind solver rounding sqrt(3) early could land on the other side. For m in {3, 4, 5} the unrounded value is at least 0.037 from a boundary, so rounding h_b to 2 or 3 decimal places first gives the same 1-decimal answer (checked: 15.588, 27.713, 43.301 for the base). Answers range from 69.6 to 313.3."
+}

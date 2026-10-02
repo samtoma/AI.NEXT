@@ -1,0 +1,34 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m5s3-1-2:build-cos",
+ "lo_id": "lo:g10m5s3-1-2",
+ "parent_question_id": "q:g10m5s3-1-2:ex5-1-1b",
+ "tier": "standard",
+ "kind": "triangle_ratio",
+ "instances": [
+  {
+   "t": 0.8
+  },
+  {
+   "t": 0.6
+  }
+ ],
+ "spec": {
+  "ask": "cos",
+  "target": "{=t}"
+ },
+ "stem": "Build a right-angled triangle in which $\\cos\\theta = {=t}$, where $\\theta$ is the marked angle. Drag the two legs; a triangle of any size with this cosine is correct.",
+ "solution": [
+  "Cosine compares the side adjacent to $\\theta$ with the hypotenuse: $\\cos\\theta = \\frac{\\text{adjacent}}{\\text{hypotenuse}}$.",
+  "Write the target ${=t}$ as a fraction of whole numbers, adjacent over hypotenuse: for example $0.8 = \\frac{4}{5}$ and $0.6 = \\frac{3}{5}$.",
+  "You drag the legs, not the hypotenuse. A hypotenuse of 5 with an adjacent leg of 4 leaves an opposite leg of 3 ($4^2 + 3^2 = 5^2$); with an adjacent leg of 3 the opposite leg is 4.",
+  "Check the live readout: $\\cos\\theta = {=t}$. Any enlargement of the triangle gives the same cosine, because only the ratio of the sides matters."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "used-sine",
+   "misconception_id": "mc:g10m5s3-1-2:reads-sides-from-other-angle"
+  }
+ ],
+ "notes": "Mirrors book Ex 5.1 Q1(b). used-sine is mapped to reads-sides-from-other-angle (opposite and adjacent swapped, so cos theta comes out as opposite over hypotenuse); it also fires on a plain SOH-CAH-TOA slip, which has no misconception of its own here. used-tangent can fire (cosine built as opposite over adjacent) but none of this objective's misconceptions names a cosine/tangent confusion (sine-as-opposite-over-adjacent is about sine), so it is left unmapped rather than forced; off-target likewise. Shares the 3-4-5 triangle with the sin template on purpose: cos 0.8 and sin 0.6 are the same triangle."
+}

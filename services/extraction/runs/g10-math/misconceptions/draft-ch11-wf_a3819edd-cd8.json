@@ -1,0 +1,279 @@
+{
+ "book": "g10-math",
+ "stage": "draft",
+ "prompts_version": "s5-v5",
+ "by_ref": {
+  "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/s5-draft-ch11",
+  "stage": "S5 draft",
+  "shards_sha256": "5f9ff7c828e65108e0e0f27afb51d439a72ff7205c10094c8e04dfadf64d02b7",
+  "files": 6
+ },
+ "embedded": {
+  "source": "runbook/misconceptions.workflow.js",
+  "source_sha256": "8a48496f9fb571481f131c340cefa1ee28d2d1a96b8ab5a348e2adf4166e0a0a",
+  "args_sha256": "d807188b17bd8ea94555d2ce11da827420163029b5c7d4c40b5ee1a0aa50e52b",
+  "generated_sha256": "8e38078668893de7c451c7632690f7c3d26fd0ef2c71dd3dc9feab5854d1ca65",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "max_per_objective": 4,
+ "records": [
+  {
+   "lo": "lo:g10m11s1-1-1",
+   "entries": [
+    {
+     "id": "mc:g10m11s1-1-1:sides-labelled-from-wrong-angle",
+     "lo_id": "lo:g10m11s1-1-1",
+     "label": "Labels the sides from the wrong angle",
+     "description": "The student pictures the given angle at the ground end of a sloping line (such as a ladder) when it is actually measured from the vertical, so opposite and adjacent swap and cosine is used where sine is needed (or the reverse).",
+     "signal": "For a 25 m ladder at 37° to the wall, the distance from the wall to the base of the ladder comes out as about 20 m instead of 15 m.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You read the angle as if it sat at the foot of the ladder. That is an easy slip, because ladders are usually drawn with their angle at the bottom, and the working that follows is tidy. It just belongs to a different triangle from the one in this problem."
+      },
+      {
+       "step": 2,
+       "text_md": "Opposite and adjacent depend on which angle you stand at. The opposite side is the one straight across from the angle. The adjacent side is the one that touches the angle, other than the hypotenuse. The hypotenuse is always across from the right angle, so it does not change."
+      },
+      {
+       "step": 3,
+       "text_md": "Here the $37^\\circ$ is the angle the ladder makes with the wall, so it sits at the top of the ladder, not on the ground. The distance from the wall to the base of the ladder is straight across from that angle, so it is the opposite side. The ladder itself, $25$ m, is the hypotenuse."
+      },
+      {
+       "step": 4,
+       "text_md": "Opposite and hypotenuse go together in sine: $\\sin 37^\\circ = \\frac{x}{25}$. If you had taken the angle to be at the ground, $x$ would have looked like the adjacent side, and cosine would have found the other leg, the one along the wall, instead of the distance you were asked for."
+      },
+      {
+       "step": 5,
+       "text_md": "Before you pick a ratio, sketch the triangle and mark the angle exactly where the problem puts it. Then name the sides from that angle: opposite, adjacent, hypotenuse. Choose the ratio that links the side you know to the side you want, and solve for it. Here that gives $x = 25\\sin 37^\\circ \\approx 15$ m."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "remark",
+       "ref": "q:g10m11s1-1-1:ex11-1-6"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "expl:g10m11s1-1-1:we01"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "The only caution in the evidence (the tape-measure remark in the building example) is motivation for using trigonometry, not a student error, so it supports no entry. The evidence file also lists no re-solve wrong turns and no wrong options or widget predicates, so there are no distractors to assign."
+    },
+    {
+     "kind": "evidence",
+     "text": "Possible error left out for lack of evidence: stopping at the intermediate side in a two-step problem (for example giving AC, about 0.4 m, as the wall height in the garage roof example instead of subtracting it from the garage height). The book's solution states the subtraction as its plan but prints no caution or remark about it, so I did not write an entry. Likewise there is nothing in the evidence on calculator mode (degrees or radians), so none was written."
+    },
+    {
+     "kind": "other",
+     "text": "The signal's 'about 20 m' is our own computation of the wrong path ($25\\cos 37^\\circ \\approx 19.97$). The book does not print it. Please confirm you are happy to show a wrong-path value, which the 'never solve anything the book has not solved' rule might discourage. It is left out of the refutation steps for that reason."
+    },
+    {
+     "kind": "evidence",
+     "text": "The ladder question has no figure image in the packet (its sketch is inline in the solution), so the triangle's geometry was read from the question text and the book's own working, $\\sin 37^\\circ = \\frac{x}{25}$. Step 5 gives the book's own final value ($x \\approx 15$ m) for that question."
+    },
+    {
+     "kind": "terminology",
+     "text": "I used 'opposite', 'adjacent', 'hypotenuse', 'sine' and 'ratio' as the book's solutions word them. The plain-words definitions of opposite and adjacent in step 2 are my wording, not a printed definition, so a human reviewer may want to check them against the book's own lesson text."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m11s1-1-2",
+   "entries": [
+    {
+     "id": "mc:g10m11s1-1-2:names-sides-from-wrong-angle",
+     "lo_id": "lo:g10m11s1-1-2",
+     "label": "Names the sides from the wrong angle",
+     "description": "The student labels opposite and adjacent from the other angle of the right-angled triangle (for example the angle at the ground when the angle with the wall is wanted), so the ratio chosen, and the angle found, belong to a different angle from the one asked for.",
+     "signal": "The angle found is the angle at the other end of the hypotenuse from the one the question asks about.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "Naming the sides is the right first move, and you did it. The slip is that you named them from the other angle: \"opposite\" and \"adjacent\" depend on which angle you are looking from, so the ratio you wrote belongs to a different angle from the one the question asks for."
+      },
+      {
+       "step": 2,
+       "text_md": "Only the hypotenuse stays put, because it is the side across from the right angle. The other two sides swap roles when you change the angle you look from."
+      },
+      {
+       "step": 3,
+       "text_md": "Take a ladder $15$ m long with its foot $5$ m from the wall, and suppose the angle wanted is the one between the ladder and the wall. From that angle, at the top of the ladder, the $5$ m along the ground is across from it, so it is the opposite side: $\\sin x=\\frac{5}{15}$, and the book gets $x\\approx 19.47^{\\circ}$."
+      },
+      {
+       "step": 4,
+       "text_md": "From the angle at the foot of the ladder, that same $5$ m touches the angle, so it becomes the adjacent side and the ratio would be cosine. That is a real angle of the same triangle, but it is the angle between the ladder and the ground, not the one asked for, so it gives a different answer."
+      },
+      {
+       "step": 5,
+       "text_md": "Sketch the triangle and mark the angle $x$ the question asks for. Then label from it: the opposite side is across from $x$, the adjacent side touches $x$ (and is not the hypotenuse), and the hypotenuse is across from the right angle. Choose the ratio that uses the two sides you know, such as $\\sin x=\\frac{\\text{opposite}}{\\text{hypotenuse}}$, and find $x$ on your calculator."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "remark",
+       "ref": "q:g10m11s1-1-2:ex11-2-1"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m11s1-1-2:ex11-2-7b"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    },
+    {
+     "id": "mc:g10m11s1-1-2:rounds-angle-too-coarsely",
+     "lo_id": "lo:g10m11s1-1-2",
+     "label": "Rounds the angle too coarsely",
+     "description": "The student sets up the ratio and finds the angle correctly, but rounds the calculator value to a whole degree (or one decimal place) when the question names no accuracy, for example giving 45 where the working reaches 44.99.",
+     "signal": "The answer is the calculator value rounded more coarsely than two decimal places, such as 45 for a display of 44.9913...",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "Your ratio and your calculator work were fine. The only difference is where you stopped rounding: you gave a whole number (or one decimal place), while the book's answer keeps two decimal places."
+      },
+      {
+       "step": 2,
+       "text_md": "Rounding early changes the number you hand in. A calculator display of $44.9913\\ldots$ is $45^{\\circ}$ to the nearest degree but $44.99^{\\circ}$ to two decimal places, and the book's working gives the second."
+      },
+      {
+       "step": 3,
+       "text_md": "Some questions name the accuracy they want, such as \"correct to the nearest degree\" or \"correct to one decimal place\", and then you give exactly that. When a question names none, the book's working keeps the full calculator value through the working ($0.3333\\ldots$, then $x=19.4712\\ldots$) and rounds only on the last line, to two decimal places: $19.47^{\\circ}$."
+      },
+      {
+       "step": 4,
+       "text_md": "So find $x$ on your calculator, write down the long value, and round only at the end: to the accuracy the question names, or to two decimal places when it names none, for example $44.9913\\ldots\\approx 44.99^{\\circ}$."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "resolve_disagreement",
+       "ref": "q:g10m11s1-1-2:ex11-2-4"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No wrong options or widget predicates were supplied for this objective (the distractor list was empty), so there are no assignments to make."
+    },
+    {
+     "kind": "evidence",
+     "text": "The only evidence of a wrong turn is the independent re-solve of the flag-pole question, which records the answer 45 against the book's 44.99 and not how it got there. The rounding entry is an inference: the 45 is read as stopping the rounding too early. It is our own check, not something the book says, and the entry never presents it as the book's."
+    },
+    {
+     "kind": "terminology",
+     "text": "The rounding entry relies on a default of two decimal places where a question names no accuracy. The evidence does not state this as a rule; it is read from the canonical answers (53.13, 35.30, 19.47, 48.59, 36.53, 44.99). The two questions that do name an accuracy ('nearest degree', 'one decimal place') are cited in the refutation as the exception. Please confirm this is the convention the book intends."
+    },
+    {
+     "kind": "terminology",
+     "text": "No term for the inverse function (sin^-1, 'shift sin', 'arcsin') appears in the evidence, so the refutations say 'find x on your calculator'. 'Cosine'/'sine' ratio, opposite, adjacent, hypotenuse and 'sketch' are used as the canonical solutions word them. The phrases 'the other angle of the triangle' and 'the angle at the other end of the hypotenuse' are my own wording, not the book's. 'Angle of elevation' is not defined in the evidence and is not defined in the entries."
+    },
+    {
+     "kind": "evidence",
+     "text": "The wrong-angle entry rests on the working note printed with the ladder-and-wall question (the angle with the wall, not the angle with the ground), plus the ground-angle ladder question as the mirror case. The refutation deliberately gives no number for the other angle (the angle between the 15 m ladder and the ground), because the book has not solved it."
+    },
+    {
+     "kind": "evidence",
+     "text": "Not used: the canonical solutions for the cliff question, the sun's-altitude question and the quadrilateral question carry no working (an answer only, a figure only, or a step starting from a hypotenuse of 11.21 that is never derived). No wrong-turn evidence exists for the two-step quadrilateral question (finding the hypotenuse first, then the angle), so no entry about choosing the wrong triangle or skipping the first step was written."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m11s1-1-3",
+   "entries": [
+    {
+     "id": "mc:g10m11s1-1-3:trusting-the-sketch",
+     "lo_id": "lo:g10m11s1-1-3",
+     "label": "Taking lengths and angles from the sketch",
+     "description": "The student measures or judges lengths and angles from the picture (with a ruler or by eye) instead of using the distance and angle given in the question with a trigonometric ratio.",
+     "signal": null,
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You treated the sketch as if it showed the real sizes, reading a length or an angle straight off the picture. Using a sketch is exactly the right instinct: it is where you see which angle is the angle of elevation or depression and which side is known."
+      },
+      {
+       "step": 2,
+       "text_md": "But a sketch is only there to show the positions of things. A problem like the cellphone tower one, where a block of flats stands $200$ m from a tower, warns that its diagram is not drawn to scale, so a measurement taken from the page cannot be trusted."
+      },
+      {
+       "step": 3,
+       "text_md": "The real sizes come from the numbers in the question. In the tower problem, the person looks up at the top of the tower at an angle of elevation of $34^\\circ$ and down at its foot at an angle of depression of $62^\\circ$. Both angles sit in right-angled triangles that share the $200$ m side. The part of the tower above is $200\\tan 34^\\circ \\approx 135$ m and the part below is $200\\tan 62^\\circ \\approx 376$ m, so the tower is $135 + 376 = 511$ m. No ruler on the page would give you that."
+      },
+      {
+       "step": 4,
+       "text_md": "So make your own sketch from the words of the question. Write the given lengths and angles on it, find the right-angled triangle that holds the known side, then use the tangent ratio and calculate."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "caution WE4 p.395"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m11s1-1-3:we04"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "The only evidence for this objective is one caution (the cellphone tower diagram is not drawn to scale). There are no wrong options, no widget predicates and no re-solve notes, so I wrote one entry and did not add others (for example confusing the angle of depression with the angle at the bottom, or forgetting to add the two heights). None of those is supported by anything printed or recorded here."
+    },
+    {
+     "kind": "evidence",
+     "text": "The two teaching items (draw a sketch of Nandi and the tower; draw a sketch of the hot air balloon) have only figures as solutions. They carry no reasoning about errors, so I used them for nothing."
+    },
+    {
+     "kind": "terminology",
+     "text": "The entry relies on 'angle of elevation', 'angle of depression' and 'tangent ratio', all of which the book's own question and solutions use. 'Not drawn to scale' is the book's own wording in the question note."
+    }
+   ],
+   "notes": []
+  }
+ ],
+ "totals": {
+  "objectives": 3,
+  "entries": 4,
+  "dropped": 0,
+  "stripped": 0,
+  "skipped": 0,
+  "flags": 14
+ }
+}

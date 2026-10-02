@@ -1,0 +1,79 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m1s7-1-1:common-factor-then-squares",
+ "kind": "family",
+ "lo_id": "lo:g10m1s7-1-1",
+ "parent_question_id": "q:g10m1s7-1-1:ex1-5-10",
+ "source_page": 21,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "c",
+   "choice": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "m",
+   "choice": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "n",
+   "choice": [
+    2,
+    3,
+    5,
+    6
+   ],
+   "resample_while": "gcd(m, n) != 1"
+  },
+  {
+   "name": "p",
+   "choice": [
+    2,
+    3
+   ]
+  },
+  {
+   "name": "q",
+   "choice": [
+    2,
+    3
+   ]
+  }
+ ],
+ "constraints": [
+  "gcd(m, n) == 1",
+  "not is_square(n)"
+ ],
+ "stem": "Factorise completely: ${=c*m**2}x^{{=2*p+1}}-{=c*n**2}xy^{{=2*q}}$",
+ "solution": [
+  "Look for the common factor of both terms. The numbers {=c*m**2} and {=c*n**2} have highest common factor {=c}, and the lowest power of $x$ in the two terms is $x$. So the highest common factor is ${=c}x$.",
+  "Take out ${=c}x$ by dividing each term by it: ${=c*m**2}x^{{=2*p+1}}-{=c*n**2}xy^{{=2*q}}={=c}x\\left({=m**2}x^{{=2*p}}-{=n**2}y^{{=2*q}}\\right)$",
+  "Look at the bracket. Each term is a perfect square: ${=m**2}x^{{=2*p}}=\\left({=m}x^{{=p}}\\right)^{2}$ and ${=n**2}y^{{=2*q}}=\\left({=n}y^{{=q}}\\right)^{2}$. So the bracket is a difference of two squares.",
+  "Factorise the difference of two squares with $a^{2}-b^{2}=(a-b)(a+b)$, where $a={=m}x^{{=p}}$ and $b={=n}y^{{=q}}$: ${=m**2}x^{{=2*p}}-{=n**2}y^{{=2*q}}=\\left({=m}x^{{=p}}-{=n}y^{{=q}}\\right)\\left({=m}x^{{=p}}+{=n}y^{{=q}}\\right)$",
+  "Put the common factor back in front: ${=c*m**2}x^{{=2*p+1}}-{=c*n**2}xy^{{=2*q}}={=c}x\\left({=m}x^{{=p}}-{=n}y^{{=q}}\\right)\\left({=m}x^{{=p}}+{=n}y^{{=q}}\\right)$"
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "{=c}*x*({=m}*x^{=p} - {=n}*y^{=q})*({=m}*x^{=p} + {=n}*y^{=q})",
+  "form": "factorised",
+  "variables": [
+   "x",
+   "y"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Modelled on book ex1-5-10 (125x^6 - 5y^2 = 5(5x^3-y)(5x^3+y)): take out the common factor first, then the bracket is a difference of two squares. Advanced because (a) the common factor includes a letter as well as a number, (b) the bracket must be recognised as a difference of squares with powers, (c) three moves in sequence. The stem says 'completely' so a solver who stops at c x (m^2 x^{2p} - n^2 y^{2q}) is not correct. Uniqueness guards: gcd(m, n) = 1 so the numeric highest common factor is exactly c (c*m^2 and c*n^2 have gcd c); n is never a perfect square, so neither linear factor m x^p -/+ n y^q can be split further (no cubes either: m in {2,3,4,5} and n in {2,3,5,6} are never cubes). The second term has exactly one x, so the common letter factor is x (first power). Largest coefficient is 5*36 = 180. REVIEWER NOTE: the difference-of-two-squares step is the book's own method for ex1-5-10, which the book files under this objective, but if the lesson order teaches difference of squares in a later lesson, a student on this objective may not have met it yet; drop or re-home this family in that case. 144 distinct parameter combinations."
+}

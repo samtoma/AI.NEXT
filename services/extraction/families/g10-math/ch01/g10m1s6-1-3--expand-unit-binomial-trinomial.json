@@ -1,0 +1,171 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m1s6-1-3:expand-unit-binomial-trinomial",
+ "kind": "family",
+ "lo_id": "lo:g10m1s6-1-3",
+ "parent_question_id": "q:g10m1s6-1-3:ex1-11-23e",
+ "source_page": 38,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "choice": [
+    -4,
+    -3,
+    -2,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "q",
+   "choice": [
+    -4,
+    -3,
+    -2,
+    -1,
+    1,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "r",
+   "choice": [
+    -4,
+    -3,
+    -2,
+    -1,
+    1,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "A",
+   "let": "p + q"
+  },
+  {
+   "require": "A != 0",
+   "why": "the two x^2 terms must not cancel, so the answer keeps four terms"
+  },
+  {
+   "name": "pq",
+   "let": "p * q"
+  },
+  {
+   "name": "B",
+   "let": "pq + r"
+  },
+  {
+   "require": "B != 0",
+   "why": "the two x terms must not cancel, so the answer keeps four terms"
+  },
+  {
+   "name": "C",
+   "let": "p * r"
+  },
+  {
+   "name": "ap",
+   "let": "abs(p)"
+  },
+  {
+   "name": "ar",
+   "let": "abs(r)"
+  },
+  {
+   "name": "apq",
+   "let": "abs(pq)"
+  },
+  {
+   "name": "aC",
+   "let": "abs(C)"
+  },
+  {
+   "name": "sp",
+   "let": "'+' if p > 0 else '-'"
+  },
+  {
+   "name": "sq",
+   "let": "'+' if q > 0 else '-'"
+  },
+  {
+   "name": "sr",
+   "let": "'+' if r > 0 else '-'"
+  },
+  {
+   "name": "spq",
+   "let": "'+' if pq > 0 else '-'"
+  },
+  {
+   "name": "sA",
+   "let": "'+' if A > 0 else '-'"
+  },
+  {
+   "name": "sB",
+   "let": "'+' if B > 0 else '-'"
+  },
+  {
+   "name": "sC",
+   "let": "'+' if C > 0 else '-'"
+  },
+  {
+   "name": "tx",
+   "let": "['x', '2x', '3x', '4x', '5x', '6x', '7x', '8x', '9x', '10x', '11x', '12x', '13x', '14x', '15x', '16x', '17x', '18x', '19x', '20x']"
+  },
+  {
+   "name": "tx2",
+   "let": "['x^2', '2x^2', '3x^2', '4x^2', '5x^2', '6x^2', '7x^2', '8x^2']"
+  },
+  {
+   "name": "bq1",
+   "let": "tx[abs(q) - 1]"
+  },
+  {
+   "name": "bq2",
+   "let": "tx2[abs(q) - 1]"
+  },
+  {
+   "name": "br1",
+   "let": "tx[abs(r) - 1]"
+  },
+  {
+   "name": "bA2",
+   "let": "tx2[abs(A) - 1]"
+  },
+  {
+   "name": "bB1",
+   "let": "tx[abs(B) - 1]"
+  }
+ ],
+ "constraints": [
+  "A != 0",
+  "B != 0",
+  "abs(A) <= 8",
+  "abs(B) <= 20"
+ ],
+ "stem": "Expand the following and give your answer in its simplest form, with the powers of $x$ in descending order: $(x {=sp} {=ap})(x^2 {=sq} {=bq1} {=sr} {=ar})$",
+ "solution": [
+  "Multiply every term of the trinomial by the first term of the binomial, $x$: $x(x^2 {=sq} {=bq1} {=sr} {=ar}) = x^3 {=sq} {=bq2} {=sr} {=br1}$.",
+  "Multiply every term of the trinomial by the second term of the binomial, ${=p}$: ${=p}(x^2 {=sq} {=bq1} {=sr} {=ar}) = {=p}x^2 {=spq} {=apq}x {=sC} {=aC}$.",
+  "Write all six products together, so that no product is left out: $(x {=sp} {=ap})(x^2 {=sq} {=bq1} {=sr} {=ar}) = x^3 {=sq} {=bq2} {=sr} {=br1} {=sp} {=ap}x^2 {=spq} {=apq}x {=sC} {=aC}$.",
+  "Collect the like terms. The coefficients of $x^2$ add up to ${=q} {=sp} {=ap} = {=A}$, and the coefficients of $x$ add up to ${=r} {=spq} {=apq} = {=B}$. The constant term is ${=C}$.",
+  "Write the answer in descending powers of $x$: $(x {=sp} {=ap})(x^2 {=sq} {=bq1} {=sr} {=ar}) = x^3 {=sA} {=bA2} {=sB} {=bB1} {=sC} {=aC}$."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "x^3 + ({=A})*x^2 + ({=B})*x + ({=C})",
+  "form": "expanded",
+  "variables": [
+   "x"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Basic tier: the entry point of the skill. One variable, a binomial x + p with leading coefficient 1 (p between 2 and 4 in size, either sign) times a trinomial x^2 + qx + r with leading coefficient 1 (q and r between 1 and 4 in size, either sign). Modelled on book question ex1-11-23e (page 38), without its outside factor of 2 and its second variable; the method is the book's own: write all six products, then collect like terms. The worked solution does that in four short steps (x times the trinomial, then the second binomial term times the trinomial, all six products together, collect), so a wrong answer can be traced to the catalogued errors: skips-some-products (step 3), loses-a-sign-on-negative-terms (step 2 whenever p is negative, and step 4), merges-unlike-terms (step 4). The outside-number misconception belongs to the standard tier (book 23e has the factor 2) and is not used here. Constraints: |p| is at least 2 so that step 2 never multiplies by 1; A = p + q and B = pq + r are never zero, so the answer always has four terms and both pairs of like terms really combine (neither pair cancels). The coefficients of x^2 and x in the answer, A and B, may be 1 or -1; the tables tx and tx2 supply the term text so that no instance prints 1x or 1x^2. All 322 accepted draws (of 384) were checked by script: every equality chain in every step holds for several test values of x, and the marker equals the stem's product. Largest values: |A| <= 8, |B| <= 20, |C| <= 16. The answer is requested in descending powers purely so a blind solver and the marker agree on form; the marker itself checks equivalence plus expanded form. No answer field is given because the answer type is expression and the marker carries the answer. Standard and advanced tiers are not authored here because the brief lists only basic as a gap."
+}

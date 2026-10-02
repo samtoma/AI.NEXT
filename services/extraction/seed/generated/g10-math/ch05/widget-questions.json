@@ -1,0 +1,428 @@
+{
+  "generator": "services/extraction/generate_widget_questions.py (ADR-0009) --templates",
+  "question_type": "widget",
+  "book": "work/g10-math/fanout/books/ch05/g10-math.json",
+  "course_id": "course:us-g10-math-en",
+  "templates": {
+    "wt:g10m5s3-1-2:build-sin": "1f496c4e5bba542cfb1dcb1dedd3f47c52e991523eb1a4d7e5cd7b08c6c34812",
+    "wt:g10m5s8-1-3:plot-point-from-ratio-and-quadrant": "b3ace5178f154250e7fc0984112c687eb86291a72c4195213dcf9b86c56aff09"
+  },
+  "rejected_templates": {
+    "wt:g10m5s6-1-1:cos-one-over-root-two": [
+      "not shipped: every mapping names a misconception S5 did not keep (mc:g10m5s6-1-1:wrong-ratio-same-angle), so no widget of it could say why an answer is wrong"
+    ],
+    "wt:g10m5s3-1-2:build-cos": [
+      "not shipped: S5's verifier refused every mapping of it (used-sine → mc:g10m5s3-1-2:reads-sides-from-other-angle), so no widget of it could say why an answer is wrong"
+    ],
+    "wt:g10m5s3-1-2:build-tan": [
+      "not shipped: S5's verifier refused every mapping of it (ratio-inverted → mc:g10m5s3-1-2:reads-sides-from-other-angle), so no widget of it could say why an answer is wrong"
+    ],
+    "wt:g10m5s6-1-2:sin-one-over-root-five": [
+      "not shipped: S5's verifier refused every mapping of it (used-cosine → mc:g10m5s3-1-2:reads-sides-from-other-angle, used-tangent → mc:g10m5s3-1-2:sine-as-opposite-over-adjacent), so no widget of it could say why an answer is wrong"
+    ]
+  },
+  "carried_verification": {
+    "wt:g10m5s8-1-3:plot-point-from-ratio-and-quadrant": "fbf6f592a04b83a2916c5c79383ed3f2da3f48737841ba2597302df1a468f18f"
+  },
+  "questions": [
+    {
+      "id": "q:g10m5s3-1-2:w003",
+      "lo_id": "lo:g10m5s3-1-2",
+      "tier": "basic",
+      "question_type": "widget",
+      "stem": "Build a right-angled triangle in which $\\sin\\theta = 0.6$, where $\\theta$ is the marked angle. Drag the two legs; a triangle of any size with this sine is correct.",
+      "choices": {
+        "kind": "triangle_ratio",
+        "spec": {
+          "ask": "sin",
+          "target": 0.6
+        },
+        "diagnostics": [
+          {
+            "predicate": "used-tangent",
+            "misconception_id": "mc:g10m5s3-1-2:sine-as-opposite-over-adjacent"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Sine compares the side opposite $\\theta$ with the hypotenuse: $\\sin\\theta = \\frac{\\text{opposite}}{\\text{hypotenuse}}$."
+        },
+        {
+          "step": 2,
+          "text_md": "Write the target $0.6$ as a fraction of whole numbers, opposite over hypotenuse: for example $0.6 = \\frac{3}{5}$ and $0.8 = \\frac{4}{5}$. The opposite side is the top, the hypotenuse the bottom."
+        },
+        {
+          "step": 3,
+          "text_md": "You drag the legs, not the hypotenuse. A hypotenuse of 5 with an opposite leg of 3 leaves an adjacent leg of 4 ($3^2 + 4^2 = 5^2$); with an opposite leg of 4 the adjacent leg is 3."
+        },
+        {
+          "step": 4,
+          "text_md": "Check the live readout: $\\sin\\theta = 0.6$. Doubling both legs gives the same sine, because only the ratio of the sides matters, not the size."
+        }
+      ],
+      "parent_question_id": "q:g10m5s3-1-2:ex5-1-1a",
+      "source_note": "Generated from template family wt:g10m5s3-1-2:build-sin.",
+      "family": "wt:g10m5s3-1-2:build-sin",
+      "template_sha": "1f496c4e5bba542cfb1dcb1dedd3f47c52e991523eb1a4d7e5cd7b08c6c34812"
+    },
+    {
+      "id": "q:g10m5s3-1-2:w004",
+      "lo_id": "lo:g10m5s3-1-2",
+      "tier": "basic",
+      "question_type": "widget",
+      "stem": "Build a right-angled triangle in which $\\sin\\theta = 0.8$, where $\\theta$ is the marked angle. Drag the two legs; a triangle of any size with this sine is correct.",
+      "choices": {
+        "kind": "triangle_ratio",
+        "spec": {
+          "ask": "sin",
+          "target": 0.8
+        },
+        "diagnostics": [
+          {
+            "predicate": "used-tangent",
+            "misconception_id": "mc:g10m5s3-1-2:sine-as-opposite-over-adjacent"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Sine compares the side opposite $\\theta$ with the hypotenuse: $\\sin\\theta = \\frac{\\text{opposite}}{\\text{hypotenuse}}$."
+        },
+        {
+          "step": 2,
+          "text_md": "Write the target $0.8$ as a fraction of whole numbers, opposite over hypotenuse: for example $0.6 = \\frac{3}{5}$ and $0.8 = \\frac{4}{5}$. The opposite side is the top, the hypotenuse the bottom."
+        },
+        {
+          "step": 3,
+          "text_md": "You drag the legs, not the hypotenuse. A hypotenuse of 5 with an opposite leg of 3 leaves an adjacent leg of 4 ($3^2 + 4^2 = 5^2$); with an opposite leg of 4 the adjacent leg is 3."
+        },
+        {
+          "step": 4,
+          "text_md": "Check the live readout: $\\sin\\theta = 0.8$. Doubling both legs gives the same sine, because only the ratio of the sides matters, not the size."
+        }
+      ],
+      "parent_question_id": "q:g10m5s3-1-2:ex5-1-1a",
+      "source_note": "Generated from template family wt:g10m5s3-1-2:build-sin.",
+      "family": "wt:g10m5s3-1-2:build-sin",
+      "template_sha": "1f496c4e5bba542cfb1dcb1dedd3f47c52e991523eb1a4d7e5cd7b08c6c34812"
+    },
+    {
+      "id": "q:g10m5s8-1-3:w001",
+      "lo_id": "lo:g10m5s8-1-3",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "$P$ is a point on the grid with whole-number coordinates, and $OP$ forms an angle $\\theta$ with the positive $x$-axis. Given that $\\sin\\theta = \\frac{3}{5}$ and $90^{\\circ} < \\theta < 180^{\\circ}$, plot $P$.",
+      "choices": {
+        "kind": "pair_plotter",
+        "spec": {
+          "target": [
+            -4,
+            3
+          ]
+        },
+        "diagnostics": [
+          {
+            "predicate": "wrong-quadrant",
+            "misconception_id": "mc:g10m5s8-1-3:sign-not-from-quadrant"
+          }
+        ],
+        "pending_review": [
+          {
+            "predicate": "swapped-coordinates",
+            "misconception_id": "mc:g10m5s3-1-2:reads-sides-from-other-angle",
+            "why": "Fires on (y,x) = (3,-4), which lands in quadrant IV. A student who sorts opposite and adjacent from the other angle swaps the magnitudes (x=3, y=4) and, using the quadrant or the positive sin, builds (-3,4) or (3,4). That is not the literal (3,-4). Plotting (3,-4) is mostly a coordinate-order slip, not this misconception.",
+            "verifier_runs": [
+              "verify-ch05-wf_ba93d1f4-0d1"
+            ]
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Read the given ratio as sides of the right triangle at $O$: $\\sin\\theta = \\frac{y}{r}$, $\\cos\\theta = \\frac{x}{r}$, $\\tan\\theta = \\frac{y}{x}$, where $r$ is a length and is never negative."
+        },
+        {
+          "step": 2,
+          "text_md": "Write down the two lengths the ratio gives you, then use the theorem of Pythagoras, $x^2 + y^2 = r^2$, to find the third. Taking the square root gives a plus-or-minus pair, so the value you have is only a size."
+        },
+        {
+          "step": 3,
+          "text_md": "Use the range of $\\theta$ to name the quadrant. The quadrant, not the ratio alone, tells you the sign of $x$ and the sign of $y$ (second quadrant: $x<0,\\ y>0$; third: both negative; fourth: $x>0,\\ y<0$)."
+        },
+        {
+          "step": 4,
+          "text_md": "Put the sign on the coordinate it belongs to, not on $r$, and plot $(x, y)$ on the grid."
+        },
+        {
+          "step": 5,
+          "text_md": "Check by reading $x$ and $y$ back off your point: the ratio you were given must come out with the sign the quadrant demands."
+        }
+      ],
+      "parent_question_id": "q:g10m5s8-1-3:ex5-7-2a",
+      "source_note": "Generated from template family wt:g10m5s8-1-3:plot-point-from-ratio-and-quadrant.",
+      "family": "wt:g10m5s8-1-3:plot-point-from-ratio-and-quadrant",
+      "template_sha": "b3ace5178f154250e7fc0984112c687eb86291a72c4195213dcf9b86c56aff09"
+    },
+    {
+      "id": "q:g10m5s8-1-3:w002",
+      "lo_id": "lo:g10m5s8-1-3",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "$P$ is a point on the grid with whole-number coordinates, and $OP$ forms an angle $\\theta$ with the positive $x$-axis. Given that $\\cos\\theta = \\frac{4}{5}$ and $270^{\\circ} < \\theta < 360^{\\circ}$, plot $P$.",
+      "choices": {
+        "kind": "pair_plotter",
+        "spec": {
+          "target": [
+            4,
+            -3
+          ]
+        },
+        "diagnostics": [
+          {
+            "predicate": "wrong-quadrant",
+            "misconception_id": "mc:g10m5s8-1-3:sign-not-from-quadrant"
+          }
+        ],
+        "pending_review": [
+          {
+            "predicate": "swapped-coordinates",
+            "misconception_id": "mc:g10m5s3-1-2:reads-sides-from-other-angle",
+            "why": "Fires on (y,x) = (-3,4), which lands in quadrant II. A holder of the other-angle misconception reads cos=4/5 as opposite/hypotenuse. They get y=4, x=3 and, with quadrant IV signs, plot (3,-4). That is not the literal (-3,4). The predicate would mostly fire on a pure order slip.",
+            "verifier_runs": [
+              "verify-ch05-wf_ba93d1f4-0d1"
+            ]
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Read the given ratio as sides of the right triangle at $O$: $\\sin\\theta = \\frac{y}{r}$, $\\cos\\theta = \\frac{x}{r}$, $\\tan\\theta = \\frac{y}{x}$, where $r$ is a length and is never negative."
+        },
+        {
+          "step": 2,
+          "text_md": "Write down the two lengths the ratio gives you, then use the theorem of Pythagoras, $x^2 + y^2 = r^2$, to find the third. Taking the square root gives a plus-or-minus pair, so the value you have is only a size."
+        },
+        {
+          "step": 3,
+          "text_md": "Use the range of $\\theta$ to name the quadrant. The quadrant, not the ratio alone, tells you the sign of $x$ and the sign of $y$ (second quadrant: $x<0,\\ y>0$; third: both negative; fourth: $x>0,\\ y<0$)."
+        },
+        {
+          "step": 4,
+          "text_md": "Put the sign on the coordinate it belongs to, not on $r$, and plot $(x, y)$ on the grid."
+        },
+        {
+          "step": 5,
+          "text_md": "Check by reading $x$ and $y$ back off your point: the ratio you were given must come out with the sign the quadrant demands."
+        }
+      ],
+      "parent_question_id": "q:g10m5s8-1-3:ex5-7-2a",
+      "source_note": "Generated from template family wt:g10m5s8-1-3:plot-point-from-ratio-and-quadrant.",
+      "family": "wt:g10m5s8-1-3:plot-point-from-ratio-and-quadrant",
+      "template_sha": "b3ace5178f154250e7fc0984112c687eb86291a72c4195213dcf9b86c56aff09"
+    },
+    {
+      "id": "q:g10m5s8-1-3:w003",
+      "lo_id": "lo:g10m5s8-1-3",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "$P$ is a point on the grid with whole-number coordinates, and $OP$ forms an angle $\\theta$ with the positive $x$-axis. Given that $\\tan\\theta = \\frac{3}{4}$ and $180^{\\circ} < \\theta < 270^{\\circ}$, plot $P$.",
+      "choices": {
+        "kind": "pair_plotter",
+        "spec": {
+          "target": [
+            -4,
+            -3
+          ]
+        },
+        "diagnostics": [
+          {
+            "predicate": "wrong-quadrant",
+            "misconception_id": "mc:g10m5s8-1-3:sign-not-from-quadrant"
+          },
+          {
+            "predicate": "swapped-coordinates",
+            "misconception_id": "mc:g10m5s3-1-2:reads-sides-from-other-angle"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Read the given ratio as sides of the right triangle at $O$: $\\sin\\theta = \\frac{y}{r}$, $\\cos\\theta = \\frac{x}{r}$, $\\tan\\theta = \\frac{y}{x}$, where $r$ is a length and is never negative."
+        },
+        {
+          "step": 2,
+          "text_md": "Write down the two lengths the ratio gives you, then use the theorem of Pythagoras, $x^2 + y^2 = r^2$, to find the third. Taking the square root gives a plus-or-minus pair, so the value you have is only a size."
+        },
+        {
+          "step": 3,
+          "text_md": "Use the range of $\\theta$ to name the quadrant. The quadrant, not the ratio alone, tells you the sign of $x$ and the sign of $y$ (second quadrant: $x<0,\\ y>0$; third: both negative; fourth: $x>0,\\ y<0$)."
+        },
+        {
+          "step": 4,
+          "text_md": "Put the sign on the coordinate it belongs to, not on $r$, and plot $(x, y)$ on the grid."
+        },
+        {
+          "step": 5,
+          "text_md": "Check by reading $x$ and $y$ back off your point: the ratio you were given must come out with the sign the quadrant demands."
+        }
+      ],
+      "parent_question_id": "q:g10m5s8-1-3:ex5-7-2a",
+      "source_note": "Generated from template family wt:g10m5s8-1-3:plot-point-from-ratio-and-quadrant.",
+      "family": "wt:g10m5s8-1-3:plot-point-from-ratio-and-quadrant",
+      "template_sha": "b3ace5178f154250e7fc0984112c687eb86291a72c4195213dcf9b86c56aff09"
+    },
+    {
+      "id": "q:g10m5s8-1-3:w004",
+      "lo_id": "lo:g10m5s8-1-3",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "$P$ is a point on the grid with whole-number coordinates, and $OP$ forms an angle $\\theta$ with the positive $x$-axis. Given that $\\tan\\theta = -\\frac{4}{3}$ and $270^{\\circ} < \\theta < 360^{\\circ}$, plot $P$.",
+      "choices": {
+        "kind": "pair_plotter",
+        "spec": {
+          "target": [
+            3,
+            -4
+          ]
+        },
+        "diagnostics": [
+          {
+            "predicate": "wrong-quadrant",
+            "misconception_id": "mc:g10m5s8-1-3:sign-not-from-quadrant"
+          }
+        ],
+        "pending_review": [
+          {
+            "predicate": "swapped-coordinates",
+            "misconception_id": "mc:g10m5s3-1-2:reads-sides-from-other-angle",
+            "why": "Fires on (y,x) = (-4,3), which lands in quadrant II. A holder of the other-angle misconception who respects quadrant IV swaps magnitudes and plots (4,-3), not (-4,3). The signs of the literal swap are also exchanged, so this predicate mostly fires on an order slip or a ratio-sign misreading, not this misconception.",
+            "verifier_runs": [
+              "verify-ch05-wf_ba93d1f4-0d1"
+            ]
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Read the given ratio as sides of the right triangle at $O$: $\\sin\\theta = \\frac{y}{r}$, $\\cos\\theta = \\frac{x}{r}$, $\\tan\\theta = \\frac{y}{x}$, where $r$ is a length and is never negative."
+        },
+        {
+          "step": 2,
+          "text_md": "Write down the two lengths the ratio gives you, then use the theorem of Pythagoras, $x^2 + y^2 = r^2$, to find the third. Taking the square root gives a plus-or-minus pair, so the value you have is only a size."
+        },
+        {
+          "step": 3,
+          "text_md": "Use the range of $\\theta$ to name the quadrant. The quadrant, not the ratio alone, tells you the sign of $x$ and the sign of $y$ (second quadrant: $x<0,\\ y>0$; third: both negative; fourth: $x>0,\\ y<0$)."
+        },
+        {
+          "step": 4,
+          "text_md": "Put the sign on the coordinate it belongs to, not on $r$, and plot $(x, y)$ on the grid."
+        },
+        {
+          "step": 5,
+          "text_md": "Check by reading $x$ and $y$ back off your point: the ratio you were given must come out with the sign the quadrant demands."
+        }
+      ],
+      "parent_question_id": "q:g10m5s8-1-3:ex5-7-2a",
+      "source_note": "Generated from template family wt:g10m5s8-1-3:plot-point-from-ratio-and-quadrant.",
+      "family": "wt:g10m5s8-1-3:plot-point-from-ratio-and-quadrant",
+      "template_sha": "b3ace5178f154250e7fc0984112c687eb86291a72c4195213dcf9b86c56aff09"
+    }
+  ],
+  "misconceptions": [
+    {
+      "id": "mc:g10m5s3-1-2:reads-sides-from-other-angle",
+      "lo_id": "lo:g10m5s3-1-2",
+      "label": "Reads opposite and adjacent from the other angle",
+      "description": "The student names one angle but sorts the sides into opposite and adjacent as they stand for the other angle, so the two sides trade places and the ratio they write belongs to the other angle."
+    },
+    {
+      "id": "mc:g10m5s3-1-2:sine-as-opposite-over-adjacent",
+      "lo_id": "lo:g10m5s3-1-2",
+      "label": "Writes sine as opposite over adjacent",
+      "description": "The student finds the opposite and adjacent sides correctly but writes sine as the opposite side over the adjacent side, which is the tangent's pair of sides, so no hypotenuse appears in the answer."
+    },
+    {
+      "id": "mc:g10m5s8-1-3:sign-not-from-quadrant",
+      "lo_id": "lo:g10m5s8-1-3",
+      "label": "Not using the quadrant to choose the sign of the missing coordinate",
+      "description": "After the theorem of Pythagoras gives $x=\\pm\\ldots$ or $y=\\pm\\ldots$, the student keeps the positive root (or reads the signs of $x$ and $y$ from the ratio alone) instead of using the quadrant or range in the question to decide the sign."
+    }
+  ],
+  "mapping_review": {
+    "rule": "decision 47",
+    "verifier_runs": [
+      "verify-ch05-wf_ba93d1f4-0d1"
+    ],
+    "counts": {
+      "active": 15,
+      "held": 3,
+      "kept_by_review": 0,
+      "dropped_by_review": 0
+    },
+    "reviews": []
+  },
+  "s5_reconciled": {
+    "runs": [
+      "final-ch05-wf_7f85d38b-00b.json"
+    ],
+    "catalogue": "g10-math-misconceptions",
+    "refused_attachments_stripped": [
+      [
+        "lo:g10m5s3-1-2",
+        "S7",
+        "wt:g10m5s3-1-2:build-cos#used-sine",
+        "mc:g10m5s3-1-2:reads-sides-from-other-angle",
+        "Built the sine where another ratio was asked for"
+      ],
+      [
+        "lo:g10m5s3-1-2",
+        "S7",
+        "wt:g10m5s3-1-2:build-sin#used-cosine",
+        "mc:g10m5s3-1-2:reads-sides-from-other-angle",
+        "Built the cosine where another ratio was asked for"
+      ],
+      [
+        "lo:g10m5s3-1-2",
+        "S7",
+        "wt:g10m5s3-1-2:build-tan#ratio-inverted",
+        "mc:g10m5s3-1-2:reads-sides-from-other-angle",
+        "The right pair of sides, the wrong way up"
+      ],
+      [
+        "lo:g10m5s6-1-2",
+        "S7",
+        "wt:g10m5s6-1-2:sin-one-over-root-five#used-cosine",
+        "mc:g10m5s3-1-2:reads-sides-from-other-angle",
+        "Built the cosine where another ratio was asked for"
+      ],
+      [
+        "lo:g10m5s6-1-2",
+        "S7",
+        "wt:g10m5s6-1-2:sin-one-over-root-five#used-tangent",
+        "mc:g10m5s3-1-2:sine-as-opposite-over-adjacent",
+        "Built the tangent where another ratio was asked for"
+      ]
+    ],
+    "widgets_left_out": [
+      "q:g10m5s3-1-2:w001",
+      "q:g10m5s3-1-2:w002",
+      "q:g10m5s3-1-2:w005",
+      "q:g10m5s3-1-2:w006",
+      "q:g10m5s6-1-2:w001"
+    ]
+  }
+}

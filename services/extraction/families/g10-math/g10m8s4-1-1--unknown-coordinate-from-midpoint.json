@@ -1,0 +1,63 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m8s4-1-1:unknown-coordinate-from-midpoint",
+ "kind": "family",
+ "lo_id": "lo:g10m8s4-1-1",
+ "parent_question_id": "q:g10m8s4-1-1:ex8-6-17",
+ "source_page": 320,
+ "tier": "advanced",
+ "version": 2,
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "xQ",
+   "randint": [
+    -10,
+    10
+   ]
+  },
+  {
+   "name": "yP",
+   "randint": [
+    -10,
+    10
+   ]
+  },
+  {
+   "name": "yQ",
+   "randint": [
+    -10,
+    10
+   ],
+   "resample_while": "(yP + yQ) % 2 != 0"
+  },
+  {
+   "name": "t_true",
+   "randint": [
+    -10,
+    10
+   ],
+   "resample_while": "(t_true + xQ) % 2 != 0 or t_true == xQ"
+  },
+  {
+   "name": "xM",
+   "let": "(t_true + xQ) / 2"
+  },
+  {
+   "name": "b",
+   "let": "(yP + yQ) / 2"
+  }
+ ],
+ "constraints": [],
+ "stem": "$P(t, {=yP})$ and $Q({=xQ}, {=yQ})$ are points in the Cartesian plane. $M({=xM}, {=b})$ is the mid-point of $PQ$. Find the value of $t$.",
+ "answer": "t_true",
+ "solution": [
+  "Let the coordinates of $P$ be $(t, {=yP})$ and the coordinates of $Q$ be $({=xQ}, {=yQ})$, with mid-point $M({=xM}, {=b})$.",
+  "The mid-point formula is $M(x, y)=\\left(\\frac{x_{1}+x_{2}}{2}, \\frac{y_{1}+y_{2}}{2}\\right)$.",
+  "Using the $x$-coordinates: $\\frac{t+({=xQ})}{2}={=xM}$, so $t=2({=xM})-({=xQ})={=t_true}$.",
+  "Therefore $t={=t_true}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "v2 fix (v1 was refused by --check and a reviewer). Two things were wrong, not the underlying maths: (1) marker.answer was 't = {=t_true} and b = {=b}', which after interpolation renders e.g. 't = 9 and b = -3' — the plain-maths parser (families/evaluator.py parse_plain) splits on top-level '=' and only accepts exactly two parts either side of ONE '=', so a string with two '=' and the word 'and' is Unreadable('more than one '='') on every attempt; no instance could evaluate, so the family produced no question. (2) Even had that parsed, marker.kind 'values' grades by sorting both the key and the submission (families/evaluator.py ~line 897) and comparing the sorted lists — it cannot tell a correct (t, b) from a swapped (b, t), so asking for two separate values this way is unmarkable, exactly as the reviewer said. Fix: ask for ONE thing, t, as answer_type 'numeric' with a plain 'answer': 't_true' (no marker, no choices, per families/spec.py's numeric rule) — this is the 'find t' resolution the refusal itself suggested. b is kept as a computed param and now simply renders as M's known y-coordinate in the stem/solution ('M({=xM}, {=b})'), the same way xM, xQ, yQ are already given as known numbers; it is no longer something the student must produce, so the marker ambiguity cannot recur. This keeps the intended advanced-tier twist — reversing the mid-point formula to recover P's unknown x-coordinate from a fully-given mid-point, per parent q:g10m8s4-1-1:ex8-6-17 and the unknown-endpoint pattern of ex8-5-3c, both listed under this LO's own exercise_items in objectives/g10-math/g10m8s4-1.json — while dropping the second, unaskable half. Verified by hand and by re-running families.spec.check_spec + generate_questions.spec_problems locally against this exact JSON: both return [] (schema OK, 30/30 sampled instances evaluate and none are rejected). Spot-checked two instantiated instances including one with xQ negative: stem 'P(t,-9), Q(-4,-7)... M(-6,-8)... Find t', solution step 't=2(-6)-(-4)=-8', correct_answer '-8' — the double-negative '-(-4)' renders correctly and 2*xM-xQ recovers t_true exactly, so the reviewer's original sign-handling concern is confirmed fine and no longer needs a standing flag."
+}

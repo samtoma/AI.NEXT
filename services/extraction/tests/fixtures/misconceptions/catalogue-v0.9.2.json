@@ -1,0 +1,2545 @@
+{
+ "_about": "The maths misconception catalogue as released in v0.9.2, the release before decision 22, reduced to what the tests compare. `entries` is the LOADED catalogue (seed/generated/misconceptions.json): every id, its objective, kind, aliases and book-distractor maps, and a sha256 digest of what the loader writes from it (lo_id, label, description, signal, refutation). `retired_generator` is the same for build_misconceptions.py, the second source decision 22 retired: its kinds and aliases, which the database export had dropped, and the six t2u3-1-2 entries only it held. test_misconception_catalogue.py proves the single source keeps every live id serving unchanged and loses nothing the generator held (FR-4409). Regenerate only for a new release baseline, never to make a failing test pass.",
+ "release": "v0.9.2",
+ "source": "git show v0.9.2:services/extraction/seed/generated/misconceptions.json",
+ "generator": "exported from the live comparison database — services/extraction/export_generated_content.py",
+ "count": 97,
+ "entries": [
+  {
+   "id": "mc:geo1-1-1:chord-endpoints-off-circle",
+   "lo_id": "lo:geo1-1-1",
+   "kind": "conceptual",
+   "aliases": [],
+   "maps": [],
+   "digest": "cec7c65361a48f504f091e4271a5d27979ce945d9e6d35149d8e291cb0991c10"
+  },
+  {
+   "id": "mc:geo1-1-1:radius-any-length",
+   "lo_id": "lo:geo1-1-1",
+   "kind": "conceptual",
+   "aliases": [],
+   "maps": [],
+   "digest": "5969445550728015ec7b48b0725022dbea54bdc94cb372996a769a1d925ac898"
+  },
+  {
+   "id": "mc:geo1-1-1:radius-not-from-centre",
+   "lo_id": "lo:geo1-1-1",
+   "kind": "conceptual",
+   "aliases": [],
+   "maps": [],
+   "digest": "0dc42d4bf17b96f98b55f2063242576ccf7da5f648618da2d234bbcc1409a976"
+  },
+  {
+   "id": "mc:geo1-1-2:chord-endpoints-off-circle",
+   "lo_id": "lo:geo1-1-2",
+   "kind": "conceptual",
+   "aliases": [],
+   "maps": [],
+   "digest": "fb3d03f49d5fdfdd65298711dae66bef901f9961d98f4d7b34b1a57765c08f7f"
+  },
+  {
+   "id": "mc:geo1-1-2:diameter-is-any-long-chord",
+   "lo_id": "lo:geo1-1-2",
+   "kind": "conceptual",
+   "aliases": [],
+   "maps": [],
+   "digest": "f893213c340cfe8b71a4ea1921a984295a08e83e7bb03bc81ac7978fa2e64e09"
+  },
+  {
+   "id": "mc:geo1-2-1:point-position-reversed",
+   "lo_id": "lo:geo1-2-1",
+   "kind": "conceptual",
+   "aliases": [],
+   "maps": [],
+   "digest": "9944c388b9d08d55c3b2e37cb3b33ae0a2a6e025f7987e6c51511f91daeca51d"
+  },
+  {
+   "id": "mc:geo1-2-2:tangent-cuts-circle",
+   "lo_id": "lo:geo1-2-2",
+   "kind": "conceptual",
+   "aliases": [],
+   "maps": [],
+   "digest": "11e8cba49bd1cd531a04ba745021a827011d8170fa77fafd746fac2d4b3c98a2"
+  },
+  {
+   "id": "mc:geo1-2-2:tangent-need-not-touch",
+   "lo_id": "lo:geo1-2-2",
+   "kind": "conceptual",
+   "aliases": [],
+   "maps": [],
+   "digest": "76ab8fd2eca624719b1b502127d1d16818b3362cdac212deddab913019f2a199"
+  },
+  {
+   "id": "mc:geo2-2-2:inscribed-angle-doubled",
+   "lo_id": "lo:geo2-2-2",
+   "kind": "conceptual",
+   "aliases": [],
+   "maps": [],
+   "digest": "c978ffea5317c9710928ce232bae61ddac1c22a8805bf36c5d87557b465bd266"
+  },
+  {
+   "id": "mc:geo2-5-1:cyclic-angles-equal",
+   "lo_id": "lo:geo2-5-1",
+   "kind": "conceptual",
+   "aliases": [],
+   "maps": [],
+   "digest": "9e5c70d6ff4fd39376633edb6555ed9ab36afcd21d0397f3d02a7ead46158681"
+  },
+  {
+   "id": "mc:t2u1-2-1:touch-means-two-roots",
+   "lo_id": "lo:t2u1-2-1",
+   "kind": "conceptual",
+   "aliases": [],
+   "maps": [],
+   "digest": "a0f5ac63f0046c1aa051cba4f20dad38544653e52ba913e7fdb919827b29c321"
+  },
+  {
+   "id": "mc:t2u1-2-2:discriminant-sign",
+   "lo_id": "lo:t2u1-2-2",
+   "kind": "conceptual",
+   "aliases": [],
+   "maps": [],
+   "digest": "65f2001c7a5c3c80bdc769de55a50d42014e163ae7a71caedb03cdbf80214bd1"
+  },
+  {
+   "id": "mc:t2u2-2-1:domain-from-numerator",
+   "lo_id": "lo:t2u2-2-1",
+   "kind": "conceptual",
+   "aliases": [],
+   "maps": [],
+   "digest": "820d67912d65d0caf2cb5b07d8edb8545e1c38e82057a0bbecdf5934fb63b503"
+  },
+  {
+   "id": "mc:t2u2-2-1:excluded-values-incomplete",
+   "lo_id": "lo:t2u2-2-1",
+   "kind": "conceptual",
+   "aliases": [],
+   "maps": [],
+   "digest": "6a4684ff9a8178e413ab0e53348344f107b2936009aac66769835b37682dd8b7"
+  },
+  {
+   "id": "mc:t2u3-1-1:compound-outcome-counted-once",
+   "lo_id": "lo:t2u3-1-1",
+   "kind": "conceptual",
+   "aliases": [],
+   "maps": [],
+   "digest": "992be60eacdb09a8db5336f3eeae249bd2a859c289c39f92a4508f7f29be67e3"
+  },
+  {
+   "id": "mc:t2u3-1-1:probability-denominator",
+   "lo_id": "lo:t2u3-1-1",
+   "kind": "conceptual",
+   "aliases": [],
+   "maps": [],
+   "digest": "56ad50c5f038f429eadf52f2deb64950aaf503a5b642fdf937b0a847d0ee67eb"
+  },
+  {
+   "id": "mc:t2u3-1-3:union-double-counts",
+   "lo_id": "lo:t2u3-1-3",
+   "kind": "conceptual",
+   "aliases": [],
+   "maps": [],
+   "digest": "a1be504d42b99f2b9d837c29780ce8e3097f94205c3f378ec66dc2765727a6f5"
+  },
+  {
+   "id": "mc:t2u3-2-1:complement-not-from-one",
+   "lo_id": "lo:t2u3-2-1",
+   "kind": "conceptual",
+   "aliases": [],
+   "maps": [],
+   "digest": "a491faf243be615576d4d7f6d48b268a2ab350f69249f22545552c64d9c5985b"
+  },
+  {
+   "id": "mc:u1-1-1:components-subtracted",
+   "lo_id": "lo:u1-1-1",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u1-1-1:001",
+     "choice_text": "2"
+    }
+   ],
+   "digest": "6fe59e6c8d7b5c2e89889e6cfc55415b73cf66078ef9c00d2abdb24b4fc40594"
+  },
+  {
+   "id": "mc:u1-1-1:digits-joined",
+   "lo_id": "lo:u1-1-1",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u1-1-1:001",
+     "choice_text": "35"
+    }
+   ],
+   "digest": "324c3b2ad8efa6080a5ac3035cb9c9858d695f3af4c272f732197846339f8b92"
+  },
+  {
+   "id": "mc:u1-1-1:multiplied-not-added",
+   "lo_id": "lo:u1-1-1",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u1-1-1:001",
+     "choice_text": "15"
+    }
+   ],
+   "digest": "9c58530926d3601635f25f235c37343ef3e8e989ebd4a9b01de6549660fafc79"
+  },
+  {
+   "id": "mc:u1-1-1:pair-order-ignored",
+   "lo_id": "lo:u1-1-1",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u1-1-1:003",
+     "choice_text": "$(2, 4)$"
+    }
+   ],
+   "digest": "6289da634bc5e3c2a1a102df32e055f09b794a9fd86ac224a99fe125257663ac"
+  },
+  {
+   "id": "mc:u1-1-1:transposition-sign",
+   "lo_id": "lo:u1-1-1",
+   "kind": "conceptual",
+   "aliases": [],
+   "maps": [],
+   "digest": "7aaf95b43449b4a6c5a57a577db267449f3952c5de279e34c3175230b65498c1"
+  },
+  {
+   "id": "mc:u1-1-2:product-commutes",
+   "lo_id": "lo:u1-1-2",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u1-1-2:001",
+     "choice_text": "$\\{(5,1), (5,2)\\}$"
+    }
+   ],
+   "digest": "d802d4dde0cc2ba62765c430adcf742218f9050368183a06b756316d75e9c0df"
+  },
+  {
+   "id": "mc:u1-1-2:product-is-union",
+   "lo_id": "lo:u1-1-2",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u1-1-2:001",
+     "choice_text": "$\\{1, 2, 5\\}$"
+    }
+   ],
+   "digest": "c3aa9206a862f3ce9b79879be43fbe639ea84994f1143661879c5ebc71c55d72"
+  },
+  {
+   "id": "mc:u1-1-3:arrow-starts-at-y",
+   "lo_id": "lo:u1-1-3",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u1-1-3:001",
+     "choice_text": "an element of $Y$ (the second projection)"
+    }
+   ],
+   "digest": "32dac4413afbb261a4750f5e1907efa6620e58acf2bb22826582793ef710a0b7"
+  },
+  {
+   "id": "mc:u1-1-3:points-vs-columns",
+   "lo_id": "lo:u1-1-3",
+   "kind": "conceptual",
+   "aliases": [],
+   "maps": [],
+   "digest": "55f815e7204962677b340bb7f6deb64997a88df2ed57006329b05796229823d9"
+  },
+  {
+   "id": "mc:u1-1-3:product-commutes",
+   "lo_id": "lo:u1-1-3",
+   "kind": "conceptual",
+   "aliases": [],
+   "maps": [],
+   "digest": "f7df810f14c1598496324872c4b939478817e10a972071cd7971fa10801d6e5b"
+  },
+  {
+   "id": "mc:u1-1-3:product-is-sum",
+   "lo_id": "lo:u1-1-3",
+   "kind": "conceptual",
+   "aliases": [],
+   "maps": [],
+   "digest": "c9ce2c631624f8810b4ea100931c488645b23f74ff7df89129095d0425ede9a1"
+  },
+  {
+   "id": "mc:u1-1-4:axis-point-given-a-quadrant",
+   "lo_id": "lo:u1-1-4",
+   "kind": "book_distractor",
+   "aliases": [
+    "mc:axis-points-counted"
+   ],
+   "maps": [
+    {
+     "question_id": "q:u1-1-4:002",
+     "choice_text": "in the third quadrant"
+    },
+    {
+     "question_id": "q:u1-1-4:002",
+     "choice_text": "in the fourth quadrant"
+    }
+   ],
+   "digest": "2817e5e933d2c84ce09cc35dce6cf0f5f61237d6930a53bd6dd3f1729d4f523c"
+  },
+  {
+   "id": "mc:u1-1-4:quadrant-from-x-alone",
+   "lo_id": "lo:u1-1-4",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u1-1-4:001",
+     "choice_text": "first quadrant"
+    },
+    {
+     "question_id": "q:u1-1-4:001",
+     "choice_text": "third quadrant"
+    }
+   ],
+   "digest": "b092c88d3d372bcb6516c9453da556fa60a9705da25479feba4a3e0f1b027c4c"
+  },
+  {
+   "id": "mc:u1-2-1:relation-subset-of-one-set",
+   "lo_id": "lo:u1-2-1",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u1-2-1:001",
+     "choice_text": "$X$"
+    },
+    {
+     "question_id": "q:u1-2-1:001",
+     "choice_text": "$Y$"
+    }
+   ],
+   "digest": "b1781afc4a3e84d88f3bb6f54bc2bccde3f496c9843dc150fa108e1367bd4a0a"
+  },
+  {
+   "id": "mc:u1-2-1:rule-applied-backwards",
+   "lo_id": "lo:u1-2-1",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u1-2-1:002",
+     "choice_text": "$\\{(2,1), (4,2)\\}$"
+    }
+   ],
+   "digest": "de738893bfbf25ba82721b2dfd0224286422145a0f8bebea6d3285c2f08673fc"
+  },
+  {
+   "id": "mc:divides-reversed",
+   "lo_id": "lo:u1-2-2",
+   "kind": "conceptual",
+   "aliases": [],
+   "maps": [],
+   "digest": "62806d1e6f329a55eff9e565e8475ca7ba314062356216dfef9056c0c5cd9084"
+  },
+  {
+   "id": "mc:u1-2-2:relation-subset-of-x",
+   "lo_id": "lo:u1-2-2",
+   "kind": "conceptual",
+   "aliases": [],
+   "maps": [],
+   "digest": "09b8b9b9d42d583140e0243aac37fedace2b9299bc89403f091eebc79cd72bda"
+  },
+  {
+   "id": "mc:u1-2-2:self-pairs-dropped",
+   "lo_id": "lo:u1-2-2",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u1-2-2:001",
+     "choice_text": "$\\{(-1,1), (1,-1)\\}$"
+    }
+   ],
+   "digest": "3448c4146b59be587bd8908a3d694085c031e027aa0405b45d1ff9b495dbb679"
+  },
+  {
+   "id": "mc:u1-3-1:domain-element-missing",
+   "lo_id": "lo:u1-3-1",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u1-3-1:002",
+     "choice_text": "$\\{(1,2), (2,3)\\}$"
+    }
+   ],
+   "digest": "9c2358c92bf1e826102918de23ca5b0c3179e9a9d53e463724fb25a04071c165"
+  },
+  {
+   "id": "mc:u1-3-1:domain-element-repeated",
+   "lo_id": "lo:u1-3-1",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u1-3-1:002",
+     "choice_text": "$\\{(1,2), (1,3), (2,1), (3,2)\\}$"
+    }
+   ],
+   "digest": "3a84ab6e6ef3ef92ee1735a2c1e48e15f2fb7f99e5e5295ffe508cbe94a20f25"
+  },
+  {
+   "id": "mc:u1-3-1:fails-vertical-line-test",
+   "lo_id": "lo:u1-3-1",
+   "kind": "conceptual",
+   "aliases": [],
+   "maps": [],
+   "digest": "6f9d9af227c53e551f02109340a4953e5530ee892aa712695c6fdfb6100db31c"
+  },
+  {
+   "id": "mc:u1-3-1:function-condition-on-y",
+   "lo_id": "lo:u1-3-1",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u1-3-1:001",
+     "choice_text": "each element of $Y$ appears exactly once as a second projection"
+    }
+   ],
+   "digest": "d70194a5aecec78ef30e2b237570a8b02153e6fb441b3a9a9973a6b377a73959"
+  },
+  {
+   "id": "mc:u1-3-2:range-is-codomain",
+   "lo_id": "lo:u1-3-2",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u1-3-2:002",
+     "choice_text": "The codomain must equal $\\{4, 6, 8\\}$"
+    },
+    {
+     "question_id": "q:u1-3-2:001",
+     "choice_text": "$\\{2, 3, 5, 7\\}$"
+    }
+   ],
+   "digest": "969b90e3767259a5f1e761f04c86cf54ff8229667693144665a38e5133ddbf4c"
+  },
+  {
+   "id": "mc:u1-3-2:range-is-domain",
+   "lo_id": "lo:u1-3-2",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u1-3-2:002",
+     "choice_text": "The domain is $\\{4, 6, 8\\}$"
+    },
+    {
+     "question_id": "q:u1-3-2:001",
+     "choice_text": "$\\{-1, 2, 3\\}$"
+    }
+   ],
+   "digest": "bac981de17b74694b8b0dae789757a68f28b2fac5c702daae7123418f5076443"
+  },
+  {
+   "id": "mc:u1-4-1:degree-read-before-expanding",
+   "lo_id": "lo:u1-4-1",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u1-4-1:004",
+     "choice_text": "2"
+    }
+   ],
+   "digest": "f29e53dd5435c626e7fdbac7410e7c574c42ce75759e7362a4d346e508deb6e5"
+  },
+  {
+   "id": "mc:u1-4-1:negative-or-fractional-power",
+   "lo_id": "lo:u1-4-1",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u1-4-1:001",
+     "choice_text": "$f(x) = x^3 + \\frac{1}{x} + 7$"
+    },
+    {
+     "question_id": "q:u1-4-1:001",
+     "choice_text": "$f(x) = x^2 + \\sqrt{x} + 8$"
+    },
+    {
+     "question_id": "q:u1-4-1:001",
+     "choice_text": "$f(x) = \\frac{2}{x^2}$"
+    }
+   ],
+   "digest": "bb8f216134bab607644f0ca2e85a97262904c1d817f6330cf76f5e531f7aa9b7"
+  },
+  {
+   "id": "mc:u1-4-2:constant-line-vertical",
+   "lo_id": "lo:u1-4-2",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u1-4-2:003",
+     "choice_text": "parallel to the y-axis"
+    }
+   ],
+   "digest": "d33ed277e6fc58190231bdf14bd5ece0901a9b49b4eb1510bb5bde502ff6163c"
+  },
+  {
+   "id": "mc:u1-4-2:constant-means-zero",
+   "lo_id": "lo:u1-4-2",
+   "kind": "conceptual",
+   "aliases": [],
+   "maps": [],
+   "digest": "22df51161b65b01b1602ffc6ff211910fe042a5731598a1a7990ec042bb0139e"
+  },
+  {
+   "id": "mc:u1-4-2:gradient-sign-misread",
+   "lo_id": "lo:u1-4-2",
+   "kind": "conceptual",
+   "aliases": [],
+   "maps": [],
+   "digest": "19b9beff7225aefc9080cedfce493bfd731dc87ae159d4cda8eb08243153b9c4"
+  },
+  {
+   "id": "mc:u1-4-2:intercept-is-slope",
+   "lo_id": "lo:u1-4-2",
+   "kind": "conceptual",
+   "aliases": [],
+   "maps": [],
+   "digest": "38c37ade26de4c85a7def69935784df8f902703f4853a3fe6d05f0d56dbf7598"
+  },
+  {
+   "id": "mc:u1-4-2:line-through-0-a",
+   "lo_id": "lo:u1-4-2",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u1-4-2:001",
+     "choice_text": "the point $(0, a)$"
+    },
+    {
+     "question_id": "q:u1-4-2:001",
+     "choice_text": "the point $(a, 0)$"
+    }
+   ],
+   "digest": "b6a0a708f73b66535630a11820e4fdc1b643f0a863c20e7292b16a1a0495dd9e"
+  },
+  {
+   "id": "mc:u1-4-2:point-coordinates-swapped",
+   "lo_id": "lo:u1-4-2",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u1-4-2:002",
+     "choice_text": "$(3, 2)$"
+    }
+   ],
+   "digest": "427af1ea53db920c66db86ceba1c6c70c5e56a51a014ad4abca63bd0d38ae14c"
+  },
+  {
+   "id": "mc:u1-4-3:max-min-confused",
+   "lo_id": "lo:u1-4-3",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u1-4-3:003",
+     "choice_text": "minimum value equal to 3"
+    }
+   ],
+   "digest": "5a22d0161e2396742b56e13a7483969a57f696cfbe75cd720ea0bbf3d64c25dd"
+  },
+  {
+   "id": "mc:u1-4-3:parabola-opens-wrong-way",
+   "lo_id": "lo:u1-4-3",
+   "kind": "conceptual",
+   "aliases": [],
+   "maps": [],
+   "digest": "70e80355f9e6a76b213fe82170cc6a522383263184d155719f150f4109330a46"
+  },
+  {
+   "id": "mc:u1-4-3:vertex-y-read-as-c",
+   "lo_id": "lo:u1-4-3",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u1-4-3:003",
+     "choice_text": "maximum value equal to $-1$"
+    }
+   ],
+   "digest": "27a5c27111c44a9ef4bbdab278dcdc03caddf6adf6b0e1b7b6de1e6c558e2ac4"
+  },
+  {
+   "id": "mc:u2-1-1:antecedent-consequent-swapped",
+   "lo_id": "lo:u2-1-1",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u2-1-1:001",
+     "choice_text": "9"
+    },
+    {
+     "question_id": "q:u2-1-1:002",
+     "choice_text": "$4 : 3$"
+    },
+    {
+     "question_id": "q:u2-1-1:003",
+     "choice_text": "$5 : 3$"
+    }
+   ],
+   "digest": "44aa7b8d9fac269c67a99fe52196df5c1c5711412c463cd77eb71dd0567d7fc0"
+  },
+  {
+   "id": "mc:u2-1-1:equal-ratio-by-difference",
+   "lo_id": "lo:u2-1-1",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u2-1-1:003",
+     "choice_text": "$5 : 7$"
+    }
+   ],
+   "digest": "0192f4549833431b800f4de68a5ca5874dd04317d0d91aef8a6706ddba8aad1d"
+  },
+  {
+   "id": "mc:u2-1-1:one-term-squared",
+   "lo_id": "lo:u2-1-1",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u2-1-1:003",
+     "choice_text": "$9 : 25$"
+    }
+   ],
+   "digest": "12e8bda6df24f0dee985ac00e0918636b2602ad923fe2c97a5a913c3dda0c99d"
+  },
+  {
+   "id": "mc:u2-1-1:ratio-fixes-the-values",
+   "lo_id": "lo:u2-1-1",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u2-1-1:004",
+     "choice_text": "$a = 2$ and $b = 7$"
+    },
+    {
+     "question_id": "q:u2-1-1:004",
+     "choice_text": "$a + b = 9$"
+    }
+   ],
+   "digest": "bf156e08923e33e20e90296ccb97b7249aa491e08d7cb3c7c6eed8baf812b0e8"
+  },
+  {
+   "id": "mc:u2-1-1:ratio-left-unreduced",
+   "lo_id": "lo:u2-1-1",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u2-1-1:002",
+     "choice_text": "$6 : 8$"
+    }
+   ],
+   "digest": "53bbc0f58e3db4b1120531a4ccda8dae19922efc6fa599586e1e820658877cc1"
+  },
+  {
+   "id": "mc:u2-1-1:ratio-terms-added",
+   "lo_id": "lo:u2-1-1",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u2-1-1:001",
+     "choice_text": "13"
+    }
+   ],
+   "digest": "20df4db49308b7086fcd0fc12c64075e7c0ec89ab41f3bb4688b8dbef40c2bb2"
+  },
+  {
+   "id": "mc:u2-1-2:adding-preserves-ratio",
+   "lo_id": "lo:u2-1-2",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u2-1-2:001",
+     "choice_text": "never changes"
+    }
+   ],
+   "digest": "7b79778329f4343d31d3d2de50c92253cb73b76f49fd54ed992474c95ab9593d"
+  },
+  {
+   "id": "mc:u2-2-1:means-extremes-swapped",
+   "lo_id": "lo:u2-2-1",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u2-2-1:002",
+     "choice_text": "$b$ and $c$"
+    }
+   ],
+   "digest": "c6534d1dfb9524db2c31269ceb096d43715c73f2a74180a2d89002c0406e5388"
+  },
+  {
+   "id": "mc:u2-2-1:proportion-is-a-sum-or-product",
+   "lo_id": "lo:u2-2-1",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u2-2-1:001",
+     "choice_text": "the sum of two ratios"
+    },
+    {
+     "question_id": "q:u2-2-1:001",
+     "choice_text": "the product of two ratios"
+    }
+   ],
+   "digest": "1c8d6093285b83f0b4ededd91faa92980b2d39f89a8486b4de6e70ca34ca1877"
+  },
+  {
+   "id": "mc:u2-2-2:cross-multiplication-reversed",
+   "lo_id": "lo:u2-2-2",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u2-2-2:001",
+     "choice_text": "$ab = cd$"
+    },
+    {
+     "question_id": "q:u2-2-2:001",
+     "choice_text": "$ac = bd$"
+    }
+   ],
+   "digest": "8c8e09eebd5e565be04215a6ffcd670a0047fa5e161ec8988a267fdf95c4ffbf"
+  },
+  {
+   "id": "mc:u2-3-1:direct-solved-as-inverse",
+   "lo_id": "lo:u2-3-1",
+   "kind": "conceptual",
+   "aliases": [],
+   "maps": [],
+   "digest": "abb256d598c4b21b9dc7aa97804ef53d5f195b8944e025a78d0b8c842d9445b3"
+  },
+  {
+   "id": "mc:u2-3-2:inverse-solved-as-direct",
+   "lo_id": "lo:u2-3-2",
+   "kind": "conceptual",
+   "aliases": [],
+   "maps": [],
+   "digest": "75be1ceb78a30a64a8cbefd2a67f35f32b6b961b3d341467c8a66901f0e678cf"
+  },
+  {
+   "id": "mc:u3-1-1:primary-assumed-cheap",
+   "lo_id": "lo:u3-1-1",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u3-1-1:003",
+     "choice_text": "They are the most accurate of all resources"
+    },
+    {
+     "question_id": "q:u3-1-1:004",
+     "choice_text": "low cost; give inaccurate outcomes"
+    }
+   ],
+   "digest": "1447c7bc38bbc3203dff87e5863ed63c06370e4d973e434953ded999b102c650"
+  },
+  {
+   "id": "mc:u3-1-1:secondary-called-primary",
+   "lo_id": "lo:u3-1-1",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u3-1-1:002",
+     "choice_text": "primary (field)"
+    },
+    {
+     "question_id": "q:u3-1-1:005",
+     "choice_text": "Hany, who copied population figures from a newspaper report"
+    },
+    {
+     "question_id": "q:u3-1-1:005",
+     "choice_text": "Omar, who downloaded last year's exam statistics from the ministry website"
+    },
+    {
+     "question_id": "q:u3-1-1:005",
+     "choice_text": "Sara, who used tables published by a statistics agency"
+    }
+   ],
+   "digest": "700df385dc2e09a08d93ce3d79d32a65d91d0176ba6a9def6b41563d27a45ae8"
+  },
+  {
+   "id": "mc:u3-1-2:sample-assumed-more-accurate",
+   "lo_id": "lo:u3-1-2",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u3-1-2:003",
+     "choice_text": "Because samples always give more accurate outcomes than a census"
+    }
+   ],
+   "digest": "ca5b023e6fcf4210e68bd3622a7d6c06a625789442880ff2f25ea012801701f2"
+  },
+  {
+   "id": "mc:u3-2-1:mean-built-as-median",
+   "lo_id": "lo:u3-2-1",
+   "kind": "conceptual",
+   "aliases": [],
+   "maps": [],
+   "digest": "71aa1b706ade4a023a1735ff2154b3bfe8edada46b53337da6effa5139a60f7a"
+  },
+  {
+   "id": "mc:u3-2-1:median-built-as-mean",
+   "lo_id": "lo:u3-2-1",
+   "kind": "conceptual",
+   "aliases": [],
+   "maps": [],
+   "digest": "aabcab6e4b24d9c48c2758b392b57ded58bfa7cc05fa0f2c3913571588afec36"
+  },
+  {
+   "id": "mc:u3-2-1:mode-assumed-to-exist",
+   "lo_id": "lo:u3-2-1",
+   "kind": "conceptual",
+   "aliases": [],
+   "maps": [],
+   "digest": "47768c36c462d64ecbd34bedc61046fef21d1e7e845e7ddb3b1294a542578b2c"
+  },
+  {
+   "id": "mc:u3-2-1:range-is-mean",
+   "lo_id": "lo:u3-2-1",
+   "kind": "conceptual",
+   "aliases": [],
+   "maps": [],
+   "digest": "5fdc5a9da169cf8a5d79501f7be4e7c6db25c01cfda2d813ae9a87c04e0b969e"
+  },
+  {
+   "id": "mc:u3-2-1:range-thought-to-use-all-values",
+   "lo_id": "lo:u3-2-1",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u3-2-1:004",
+     "choice_text": "the mean of the values"
+    },
+    {
+     "question_id": "q:u3-2-1:004",
+     "choice_text": "the number of the values"
+    },
+    {
+     "question_id": "q:u3-2-1:004",
+     "choice_text": "the middle value of the set"
+    }
+   ],
+   "digest": "9efb76595112d21e91675e2af5e4ac5fc7191b967b5cfc468c9076bcb7c23894"
+  },
+  {
+   "id": "mc:u3-2-1:zero-dispersion-means-zero-values",
+   "lo_id": "lo:u3-2-1",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u3-2-1:002",
+     "choice_text": "the set has no values"
+    },
+    {
+     "question_id": "q:u3-2-1:002",
+     "choice_text": "the greatest value is zero"
+    },
+    {
+     "question_id": "q:u3-2-1:002",
+     "choice_text": "the mean is zero"
+    }
+   ],
+   "digest": "071615ee9469fab4bdaa0ed624b63b5c6ce2f08e70e1ff484825e922ebc91ee6"
+  },
+  {
+   "id": "mc:u3-2-2:deviations-not-averaged",
+   "lo_id": "lo:u3-2-2",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u3-2-2:004",
+     "choice_text": "$\\sqrt{8}$"
+    }
+   ],
+   "digest": "f594b650d1aaccf12f45bdc10fc624e91ee11e8f52cee0619e8b5c01e5b3c622"
+  },
+  {
+   "id": "mc:u3-2-2:divisor-n-minus-one",
+   "lo_id": "lo:u3-2-2",
+   "kind": "conceptual",
+   "aliases": [],
+   "maps": [],
+   "digest": "c4e454a954eb7960b4bcb3ec7d32fe2f7fa1b553a21a41f538c4396dab859a1e"
+  },
+  {
+   "id": "mc:u3-2-2:sigma-as-range-or-mean",
+   "lo_id": "lo:u3-2-2",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u3-2-2:001",
+     "choice_text": "the sum of the values divided by their range"
+    },
+    {
+     "question_id": "q:u3-2-2:001",
+     "choice_text": "the difference between the greatest and smallest values"
+    },
+    {
+     "question_id": "q:u3-2-2:001",
+     "choice_text": "the mean of the values"
+    }
+   ],
+   "digest": "74adbcd479a11236d8f33454ba2fc80d382ddc79a0a257c15d9a77602ac60a16"
+  },
+  {
+   "id": "mc:u3-2-2:variance-not-rooted",
+   "lo_id": "lo:u3-2-2",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u3-2-2:004",
+     "choice_text": "$2$"
+    }
+   ],
+   "digest": "93a1ff52cf136d40cc7b77b16a505021f5f425e6fbbb394f859ff6604d74590a"
+  },
+  {
+   "id": "mc:u3-2-3:x-read-as-frequency",
+   "lo_id": "lo:u3-2-3",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u3-2-3:001",
+     "choice_text": "the frequency of the set"
+    }
+   ],
+   "digest": "17c18d3a515ba264b67ada6c252767ff57a87336ec648d057c214b613e797b0f"
+  },
+  {
+   "id": "mc:u4-1-1:degree-split-decimally",
+   "lo_id": "lo:u4-1-1",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u4-1-1:001",
+     "choice_text": "100 minutes"
+    },
+    {
+     "question_id": "q:u4-1-1:004",
+     "choice_text": "$20^\\circ\\ 25'$"
+    },
+    {
+     "question_id": "q:u4-1-1:006",
+     "choice_text": "$28^\\circ\\ 51'$"
+    },
+    {
+     "question_id": "q:u4-1-1:006",
+     "choice_text": "$28^\\circ\\ 5'\\ 1''$"
+    }
+   ],
+   "digest": "f406c23b2820ce042c18a325c42c288a78766d9263f65f131a7d3af6be70a75e"
+  },
+  {
+   "id": "mc:u4-1-1:minute-second-confused",
+   "lo_id": "lo:u4-1-1",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u4-1-1:001",
+     "choice_text": "60 seconds"
+    },
+    {
+     "question_id": "q:u4-1-1:004",
+     "choice_text": "$20^\\circ\\ 2.5'$"
+    },
+    {
+     "question_id": "q:u4-1-1:006",
+     "choice_text": "$28^\\circ\\ 30'\\ 6''$"
+    }
+   ],
+   "digest": "5541050eab0b4b0ba484623bad6cd8459075c4d7a4ff7c01968fd57cc80eff55"
+  },
+  {
+   "id": "mc:u4-1-2:opposite-adjacent-swapped",
+   "lo_id": "lo:u4-1-2",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u4-1-2:002",
+     "choice_text": "adjacent ÷ opposite"
+    },
+    {
+     "question_id": "q:u4-1-2:001",
+     "choice_text": "$\\frac{BC}{AC}$"
+    },
+    {
+     "question_id": "q:u4-1-2:004",
+     "choice_text": "$\\frac{4}{3}$"
+    },
+    {
+     "question_id": "q:u4-1-2:003",
+     "choice_text": "$\\frac{3}{5}$"
+    }
+   ],
+   "digest": "d5670f7e6f980777ea29bdbf08059625e24aabee57c3ffd59f1b88f6a50ec93b"
+  },
+  {
+   "id": "mc:u4-1-2:ratio-inverted",
+   "lo_id": "lo:u4-1-2",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u4-1-2:001",
+     "choice_text": "$\\frac{AC}{AB}$"
+    },
+    {
+     "question_id": "q:u4-1-2:003",
+     "choice_text": "$\\frac{5}{4}$"
+    }
+   ],
+   "digest": "f6a3d768d4da5ce85a1e01fd1938c09825139d8e62ed57fad082e7b8458cbf57"
+  },
+  {
+   "id": "mc:u4-1-2:tan-uses-hypotenuse",
+   "lo_id": "lo:u4-1-2",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u4-1-2:002",
+     "choice_text": "opposite ÷ hypotenuse"
+    },
+    {
+     "question_id": "q:u4-1-2:002",
+     "choice_text": "adjacent ÷ hypotenuse"
+    },
+    {
+     "question_id": "q:u4-1-2:004",
+     "choice_text": "$\\frac{3}{5}$"
+    },
+    {
+     "question_id": "q:u4-1-2:004",
+     "choice_text": "$\\frac{4}{5}$"
+    }
+   ],
+   "digest": "9bc2e612ea9765de0389f0eaa3c17330c9afc9cc5fbb3050c5ec92e5b1f27c5a"
+  },
+  {
+   "id": "mc:u4-1-3:opposite-adjacent-swapped",
+   "lo_id": "lo:u4-1-3",
+   "kind": "conceptual",
+   "aliases": [],
+   "maps": [],
+   "digest": "456686ce942ed996b7294ca154f47d231b374ae3c2a3157d3288f7ce4f1ff605"
+  },
+  {
+   "id": "mc:u5-1-1:coordinates-added",
+   "lo_id": "lo:u5-1-1",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u5-1-1:001",
+     "choice_text": "8"
+    }
+   ],
+   "digest": "20187c70a736a65f164beb6fd1b76371951850daa890ef4ec1b5fb42b3f789a3"
+  },
+  {
+   "id": "mc:u5-1-1:legs-added-before-squaring",
+   "lo_id": "lo:u5-1-1",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u5-1-1:004",
+     "choice_text": "14"
+    },
+    {
+     "question_id": "q:u5-1-1:004",
+     "choice_text": "$\\sqrt{14}$"
+    }
+   ],
+   "digest": "ac67a24e1397d8a4e0fdaeded2bd12b4b10caa87a620e9113ed33daf364bc81e"
+  },
+  {
+   "id": "mc:u5-1-1:one-coordinate-used",
+   "lo_id": "lo:u5-1-1",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u5-1-1:001",
+     "choice_text": "2"
+    },
+    {
+     "question_id": "q:u5-1-1:001",
+     "choice_text": "6"
+    }
+   ],
+   "digest": "7e00bef029b3ee2a3d21abe9a940b3a69d2968047bd7d55043889e4290b19bed"
+  },
+  {
+   "id": "mc:u5-1-1:root-not-taken",
+   "lo_id": "lo:u5-1-1",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u5-1-1:004",
+     "choice_text": "100"
+    }
+   ],
+   "digest": "860d448c802fc8690ed33d77e1ea4847fc2014c404a05b7565a2fb18ee3924ad"
+  },
+  {
+   "id": "mc:u5-1-2:collinear-read-as-triangle",
+   "lo_id": "lo:u5-1-2",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u5-1-2:005",
+     "choice_text": "vertices of a right triangle"
+    },
+    {
+     "question_id": "q:u5-1-2:005",
+     "choice_text": "vertices of an isosceles triangle"
+    }
+   ],
+   "digest": "9e72ebe184678d6bd0598496343493d3657013d3840dedf15298954d1c7bd3f7"
+  },
+  {
+   "id": "mc:u5-1-2:right-angle-at-wrong-vertex",
+   "lo_id": "lo:u5-1-2",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u5-1-2:001",
+     "choice_text": "$A$"
+    },
+    {
+     "question_id": "q:u5-1-2:001",
+     "choice_text": "$C$"
+    }
+   ],
+   "digest": "7c190d7e4d6a2d407e0aff4952f36d27b4aed4e574543ff9d746822391afa911"
+  },
+  {
+   "id": "mc:u5-2-1:midpoint-from-difference",
+   "lo_id": "lo:u5-2-1",
+   "kind": "book_distractor",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:u5-2-1:001",
+     "choice_text": "$(6, 6)$"
+    }
+   ],
+   "digest": "cadc35607ffa68c861140b10660f51d5e99a38112dffc85a86ba299aeb2b418e"
+  },
+  {
+   "id": "mc:u5-3-1:slope-inverted",
+   "lo_id": "lo:u5-3-1",
+   "kind": "conceptual",
+   "aliases": [],
+   "maps": [],
+   "digest": "54c013cc1a967a1b4be95b0f74c18267cf9269085b68fad445d7db64489e8586"
+  },
+  {
+   "id": "mc:u5-3-1:slope-sign-flipped",
+   "lo_id": "lo:u5-3-1",
+   "kind": "conceptual",
+   "aliases": [],
+   "maps": [],
+   "digest": "11f7be3e722ec0e48e88a8a52d6790e5f1839997a26e63525f36bce1f1ede379"
+  },
+  {
+   "id": "mc:u5-3-3:perpendicular-sign-only",
+   "lo_id": "lo:u5-3-3",
+   "kind": "conceptual",
+   "aliases": [],
+   "maps": [],
+   "digest": "76ecb93e55e8d123257400f9e5f02a020bfd545036bffac962c9b63f2ed47ce6"
+  },
+  {
+   "id": "mc:t2u1-2-1:no-meeting-read-as-every-x",
+   "lo_id": "lo:t2u1-2-1",
+   "kind": "conceptual",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:t2u1-2-1:g002",
+     "choice_text": "$\\mathbb{R}$"
+    }
+   ],
+   "digest": "e5f75407df5ab13320bc1647aa5ee975bc31b39ff7218142543f2b51960d10ab"
+  },
+  {
+   "id": "mc:t2u1-2-1:roots-read-from-coefficients",
+   "lo_id": "lo:t2u1-2-1",
+   "kind": "conceptual",
+   "aliases": [],
+   "maps": [
+    {
+     "question_id": "q:t2u1-2-1:g002",
+     "choice_text": "$\\{1,\\ 5\\}$"
+    }
+   ],
+   "digest": "717bb4cdb3f34abc2d7932cc91068cd67599c7490318ad871ed1c2250beec237"
+  }
+ ],
+ "retired_generator": {
+  "source": "git show v0.9.2:services/extraction/build_misconceptions.py",
+  "count": 99,
+  "entries": [
+   {
+    "id": "mc:u1-1-1:multiplied-not-added",
+    "lo_id": "lo:u1-1-1",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:u1-1-1:001",
+      "choice_text": "15"
+     }
+    ],
+    "digest": "9c58530926d3601635f25f235c37343ef3e8e989ebd4a9b01de6549660fafc79"
+   },
+   {
+    "id": "mc:u1-1-1:components-subtracted",
+    "lo_id": "lo:u1-1-1",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:u1-1-1:001",
+      "choice_text": "2"
+     }
+    ],
+    "digest": "6fe59e6c8d7b5c2e89889e6cfc55415b73cf66078ef9c00d2abdb24b4fc40594"
+   },
+   {
+    "id": "mc:u1-1-1:digits-joined",
+    "lo_id": "lo:u1-1-1",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:u1-1-1:001",
+      "choice_text": "35"
+     }
+    ],
+    "digest": "324c3b2ad8efa6080a5ac3035cb9c9858d695f3af4c272f732197846339f8b92"
+   },
+   {
+    "id": "mc:u1-1-1:pair-order-ignored",
+    "lo_id": "lo:u1-1-1",
+    "kind": "book_distractor",
+    "aliases": [
+     "mc:pair-components-swapped"
+    ],
+    "maps": [
+     {
+      "question_id": "q:u1-1-1:003",
+      "choice_text": "$(2, 4)$"
+     }
+    ],
+    "digest": "6289da634bc5e3c2a1a102df32e055f09b794a9fd86ac224a99fe125257663ac"
+   },
+   {
+    "id": "mc:u1-1-2:product-commutes",
+    "lo_id": "lo:u1-1-2",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:u1-1-2:001",
+      "choice_text": "$\\{(5,1), (5,2)\\}$"
+     }
+    ],
+    "digest": "d802d4dde0cc2ba62765c430adcf742218f9050368183a06b756316d75e9c0df"
+   },
+   {
+    "id": "mc:u1-1-2:product-is-union",
+    "lo_id": "lo:u1-1-2",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:u1-1-2:001",
+      "choice_text": "$\\{1, 2, 5\\}$"
+     }
+    ],
+    "digest": "c3aa9206a862f3ce9b79879be43fbe639ea84994f1143661879c5ebc71c55d72"
+   },
+   {
+    "id": "mc:u1-1-3:arrow-starts-at-y",
+    "lo_id": "lo:u1-1-3",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:u1-1-3:001",
+      "choice_text": "an element of $Y$ (the second projection)"
+     }
+    ],
+    "digest": "32dac4413afbb261a4750f5e1907efa6620e58acf2bb22826582793ef710a0b7"
+   },
+   {
+    "id": "mc:u1-1-4:quadrant-from-x-alone",
+    "lo_id": "lo:u1-1-4",
+    "kind": "book_distractor",
+    "aliases": [
+     "mc:quadrant-from-x-only",
+     "mc:quadrant-sign-order"
+    ],
+    "maps": [
+     {
+      "question_id": "q:u1-1-4:001",
+      "choice_text": "first quadrant"
+     },
+     {
+      "question_id": "q:u1-1-4:001",
+      "choice_text": "third quadrant"
+     }
+    ],
+    "digest": "b092c88d3d372bcb6516c9453da556fa60a9705da25479feba4a3e0f1b027c4c"
+   },
+   {
+    "id": "mc:u1-1-4:axis-point-given-a-quadrant",
+    "lo_id": "lo:u1-1-4",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:u1-1-4:002",
+      "choice_text": "in the third quadrant"
+     },
+     {
+      "question_id": "q:u1-1-4:002",
+      "choice_text": "in the fourth quadrant"
+     }
+    ],
+    "digest": "2817e5e933d2c84ce09cc35dce6cf0f5f61237d6930a53bd6dd3f1729d4f523c"
+   },
+   {
+    "id": "mc:u1-2-1:relation-subset-of-one-set",
+    "lo_id": "lo:u1-2-1",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:u1-2-1:001",
+      "choice_text": "$X$"
+     },
+     {
+      "question_id": "q:u1-2-1:001",
+      "choice_text": "$Y$"
+     }
+    ],
+    "digest": "b1781afc4a3e84d88f3bb6f54bc2bccde3f496c9843dc150fa108e1367bd4a0a"
+   },
+   {
+    "id": "mc:u1-2-1:rule-applied-backwards",
+    "lo_id": "lo:u1-2-1",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:u1-2-1:002",
+      "choice_text": "$\\{(2,1), (4,2)\\}$"
+     }
+    ],
+    "digest": "de738893bfbf25ba82721b2dfd0224286422145a0f8bebea6d3285c2f08673fc"
+   },
+   {
+    "id": "mc:u1-2-2:self-pairs-dropped",
+    "lo_id": "lo:u1-2-2",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:u1-2-2:001",
+      "choice_text": "$\\{(-1,1), (1,-1)\\}$"
+     }
+    ],
+    "digest": "3448c4146b59be587bd8908a3d694085c031e027aa0405b45d1ff9b495dbb679"
+   },
+   {
+    "id": "mc:u1-3-1:function-condition-on-y",
+    "lo_id": "lo:u1-3-1",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:u1-3-1:001",
+      "choice_text": "each element of $Y$ appears exactly once as a second projection"
+     }
+    ],
+    "digest": "d70194a5aecec78ef30e2b237570a8b02153e6fb441b3a9a9973a6b377a73959"
+   },
+   {
+    "id": "mc:u1-3-1:domain-element-repeated",
+    "lo_id": "lo:u1-3-1",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:u1-3-1:002",
+      "choice_text": "$\\{(1,2), (1,3), (2,1), (3,2)\\}$"
+     }
+    ],
+    "digest": "3a84ab6e6ef3ef92ee1735a2c1e48e15f2fb7f99e5e5295ffe508cbe94a20f25"
+   },
+   {
+    "id": "mc:u1-3-1:domain-element-missing",
+    "lo_id": "lo:u1-3-1",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:u1-3-1:002",
+      "choice_text": "$\\{(1,2), (2,3)\\}$"
+     }
+    ],
+    "digest": "9c2358c92bf1e826102918de23ca5b0c3179e9a9d53e463724fb25a04071c165"
+   },
+   {
+    "id": "mc:u1-3-2:range-is-codomain",
+    "lo_id": "lo:u1-3-2",
+    "kind": "book_distractor",
+    "aliases": [
+     "mc:range-is-codomain"
+    ],
+    "maps": [
+     {
+      "question_id": "q:u1-3-2:001",
+      "choice_text": "$\\{2, 3, 5, 7\\}$"
+     },
+     {
+      "question_id": "q:u1-3-2:002",
+      "choice_text": "The codomain must equal $\\{4, 6, 8\\}$"
+     }
+    ],
+    "digest": "969b90e3767259a5f1e761f04c86cf54ff8229667693144665a38e5133ddbf4c"
+   },
+   {
+    "id": "mc:u1-3-2:range-is-domain",
+    "lo_id": "lo:u1-3-2",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:u1-3-2:001",
+      "choice_text": "$\\{-1, 2, 3\\}$"
+     },
+     {
+      "question_id": "q:u1-3-2:002",
+      "choice_text": "The domain is $\\{4, 6, 8\\}$"
+     }
+    ],
+    "digest": "bac981de17b74694b8b0dae789757a68f28b2fac5c702daae7123418f5076443"
+   },
+   {
+    "id": "mc:u1-4-1:negative-or-fractional-power",
+    "lo_id": "lo:u1-4-1",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:u1-4-1:001",
+      "choice_text": "$f(x) = x^3 + \\frac{1}{x} + 7$"
+     },
+     {
+      "question_id": "q:u1-4-1:001",
+      "choice_text": "$f(x) = x^2 + \\sqrt{x} + 8$"
+     },
+     {
+      "question_id": "q:u1-4-1:001",
+      "choice_text": "$f(x) = \\frac{2}{x^2}$"
+     }
+    ],
+    "digest": "bb8f216134bab607644f0ca2e85a97262904c1d817f6330cf76f5e531f7aa9b7"
+   },
+   {
+    "id": "mc:u1-4-1:degree-read-before-expanding",
+    "lo_id": "lo:u1-4-1",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:u1-4-1:004",
+      "choice_text": "2"
+     }
+    ],
+    "digest": "f29e53dd5435c626e7fdbac7410e7c574c42ce75759e7362a4d346e508deb6e5"
+   },
+   {
+    "id": "mc:u1-4-2:line-through-0-a",
+    "lo_id": "lo:u1-4-2",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:u1-4-2:001",
+      "choice_text": "the point $(0, a)$"
+     },
+     {
+      "question_id": "q:u1-4-2:001",
+      "choice_text": "the point $(a, 0)$"
+     }
+    ],
+    "digest": "b6a0a708f73b66535630a11820e4fdc1b643f0a863c20e7292b16a1a0495dd9e"
+   },
+   {
+    "id": "mc:u1-4-2:point-coordinates-swapped",
+    "lo_id": "lo:u1-4-2",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:u1-4-2:002",
+      "choice_text": "$(3, 2)$"
+     }
+    ],
+    "digest": "427af1ea53db920c66db86ceba1c6c70c5e56a51a014ad4abca63bd0d38ae14c"
+   },
+   {
+    "id": "mc:u1-4-2:constant-line-vertical",
+    "lo_id": "lo:u1-4-2",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:u1-4-2:003",
+      "choice_text": "parallel to the y-axis"
+     }
+    ],
+    "digest": "d33ed277e6fc58190231bdf14bd5ece0901a9b49b4eb1510bb5bde502ff6163c"
+   },
+   {
+    "id": "mc:u1-4-3:max-min-confused",
+    "lo_id": "lo:u1-4-3",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:u1-4-3:003",
+      "choice_text": "minimum value equal to 3"
+     }
+    ],
+    "digest": "5a22d0161e2396742b56e13a7483969a57f696cfbe75cd720ea0bbf3d64c25dd"
+   },
+   {
+    "id": "mc:u1-4-3:vertex-y-read-as-c",
+    "lo_id": "lo:u1-4-3",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:u1-4-3:003",
+      "choice_text": "maximum value equal to $-1$"
+     }
+    ],
+    "digest": "27a5c27111c44a9ef4bbdab278dcdc03caddf6adf6b0e1b7b6de1e6c558e2ac4"
+   },
+   {
+    "id": "mc:u2-1-1:antecedent-consequent-swapped",
+    "lo_id": "lo:u2-1-1",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:u2-1-1:001",
+      "choice_text": "9"
+     },
+     {
+      "question_id": "q:u2-1-1:002",
+      "choice_text": "$4 : 3$"
+     },
+     {
+      "question_id": "q:u2-1-1:003",
+      "choice_text": "$5 : 3$"
+     }
+    ],
+    "digest": "44aa7b8d9fac269c67a99fe52196df5c1c5711412c463cd77eb71dd0567d7fc0"
+   },
+   {
+    "id": "mc:u2-1-1:ratio-terms-added",
+    "lo_id": "lo:u2-1-1",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:u2-1-1:001",
+      "choice_text": "13"
+     }
+    ],
+    "digest": "20df4db49308b7086fcd0fc12c64075e7c0ec89ab41f3bb4688b8dbef40c2bb2"
+   },
+   {
+    "id": "mc:u2-1-1:ratio-left-unreduced",
+    "lo_id": "lo:u2-1-1",
+    "kind": "book_distractor",
+    "aliases": [
+     "mc:ratio-not-reduced"
+    ],
+    "maps": [
+     {
+      "question_id": "q:u2-1-1:002",
+      "choice_text": "$6 : 8$"
+     }
+    ],
+    "digest": "53bbc0f58e3db4b1120531a4ccda8dae19922efc6fa599586e1e820658877cc1"
+   },
+   {
+    "id": "mc:u2-1-1:equal-ratio-by-difference",
+    "lo_id": "lo:u2-1-1",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:u2-1-1:003",
+      "choice_text": "$5 : 7$"
+     }
+    ],
+    "digest": "0192f4549833431b800f4de68a5ca5874dd04317d0d91aef8a6706ddba8aad1d"
+   },
+   {
+    "id": "mc:u2-1-1:one-term-squared",
+    "lo_id": "lo:u2-1-1",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:u2-1-1:003",
+      "choice_text": "$9 : 25$"
+     }
+    ],
+    "digest": "12e8bda6df24f0dee985ac00e0918636b2602ad923fe2c97a5a913c3dda0c99d"
+   },
+   {
+    "id": "mc:u2-1-1:ratio-fixes-the-values",
+    "lo_id": "lo:u2-1-1",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:u2-1-1:004",
+      "choice_text": "$a = 2$ and $b = 7$"
+     },
+     {
+      "question_id": "q:u2-1-1:004",
+      "choice_text": "$a + b = 9$"
+     }
+    ],
+    "digest": "bf156e08923e33e20e90296ccb97b7249aa491e08d7cb3c7c6eed8baf812b0e8"
+   },
+   {
+    "id": "mc:u2-1-2:adding-preserves-ratio",
+    "lo_id": "lo:u2-1-2",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:u2-1-2:001",
+      "choice_text": "never changes"
+     }
+    ],
+    "digest": "7b79778329f4343d31d3d2de50c92253cb73b76f49fd54ed992474c95ab9593d"
+   },
+   {
+    "id": "mc:u2-2-1:proportion-is-a-sum-or-product",
+    "lo_id": "lo:u2-2-1",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:u2-2-1:001",
+      "choice_text": "the sum of two ratios"
+     },
+     {
+      "question_id": "q:u2-2-1:001",
+      "choice_text": "the product of two ratios"
+     }
+    ],
+    "digest": "1c8d6093285b83f0b4ededd91faa92980b2d39f89a8486b4de6e70ca34ca1877"
+   },
+   {
+    "id": "mc:u2-2-1:means-extremes-swapped",
+    "lo_id": "lo:u2-2-1",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:u2-2-1:002",
+      "choice_text": "$b$ and $c$"
+     }
+    ],
+    "digest": "c6534d1dfb9524db2c31269ceb096d43715c73f2a74180a2d89002c0406e5388"
+   },
+   {
+    "id": "mc:u2-2-2:cross-multiplication-reversed",
+    "lo_id": "lo:u2-2-2",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:u2-2-2:001",
+      "choice_text": "$ab = cd$"
+     },
+     {
+      "question_id": "q:u2-2-2:001",
+      "choice_text": "$ac = bd$"
+     }
+    ],
+    "digest": "8c8e09eebd5e565be04215a6ffcd670a0047fa5e161ec8988a267fdf95c4ffbf"
+   },
+   {
+    "id": "mc:u3-1-1:secondary-called-primary",
+    "lo_id": "lo:u3-1-1",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:u3-1-1:002",
+      "choice_text": "primary (field)"
+     },
+     {
+      "question_id": "q:u3-1-1:005",
+      "choice_text": "Hany, who copied population figures from a newspaper report"
+     },
+     {
+      "question_id": "q:u3-1-1:005",
+      "choice_text": "Omar, who downloaded last year's exam statistics from the ministry website"
+     },
+     {
+      "question_id": "q:u3-1-1:005",
+      "choice_text": "Sara, who used tables published by a statistics agency"
+     }
+    ],
+    "digest": "700df385dc2e09a08d93ce3d79d32a65d91d0176ba6a9def6b41563d27a45ae8"
+   },
+   {
+    "id": "mc:u3-1-1:primary-assumed-cheap",
+    "lo_id": "lo:u3-1-1",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:u3-1-1:004",
+      "choice_text": "low cost; give inaccurate outcomes"
+     },
+     {
+      "question_id": "q:u3-1-1:003",
+      "choice_text": "They are the most accurate of all resources"
+     }
+    ],
+    "digest": "1447c7bc38bbc3203dff87e5863ed63c06370e4d973e434953ded999b102c650"
+   },
+   {
+    "id": "mc:u3-1-2:sample-assumed-more-accurate",
+    "lo_id": "lo:u3-1-2",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:u3-1-2:003",
+      "choice_text": "Because samples always give more accurate outcomes than a census"
+     }
+    ],
+    "digest": "ca5b023e6fcf4210e68bd3622a7d6c06a625789442880ff2f25ea012801701f2"
+   },
+   {
+    "id": "mc:u3-2-1:zero-dispersion-means-zero-values",
+    "lo_id": "lo:u3-2-1",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:u3-2-1:002",
+      "choice_text": "the set has no values"
+     },
+     {
+      "question_id": "q:u3-2-1:002",
+      "choice_text": "the greatest value is zero"
+     },
+     {
+      "question_id": "q:u3-2-1:002",
+      "choice_text": "the mean is zero"
+     }
+    ],
+    "digest": "071615ee9469fab4bdaa0ed624b63b5c6ce2f08e70e1ff484825e922ebc91ee6"
+   },
+   {
+    "id": "mc:u3-2-1:range-thought-to-use-all-values",
+    "lo_id": "lo:u3-2-1",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:u3-2-1:004",
+      "choice_text": "the mean of the values"
+     },
+     {
+      "question_id": "q:u3-2-1:004",
+      "choice_text": "the number of the values"
+     },
+     {
+      "question_id": "q:u3-2-1:004",
+      "choice_text": "the middle value of the set"
+     }
+    ],
+    "digest": "9efb76595112d21e91675e2af5e4ac5fc7191b967b5cfc468c9076bcb7c23894"
+   },
+   {
+    "id": "mc:u3-2-2:variance-not-rooted",
+    "lo_id": "lo:u3-2-2",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:u3-2-2:004",
+      "choice_text": "$2$"
+     }
+    ],
+    "digest": "93a1ff52cf136d40cc7b77b16a505021f5f425e6fbbb394f859ff6604d74590a"
+   },
+   {
+    "id": "mc:u3-2-2:deviations-not-averaged",
+    "lo_id": "lo:u3-2-2",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:u3-2-2:004",
+      "choice_text": "$\\sqrt{8}$"
+     }
+    ],
+    "digest": "f594b650d1aaccf12f45bdc10fc624e91ee11e8f52cee0619e8b5c01e5b3c622"
+   },
+   {
+    "id": "mc:u3-2-2:sigma-as-range-or-mean",
+    "lo_id": "lo:u3-2-2",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:u3-2-2:001",
+      "choice_text": "the difference between the greatest and smallest values"
+     },
+     {
+      "question_id": "q:u3-2-2:001",
+      "choice_text": "the mean of the values"
+     },
+     {
+      "question_id": "q:u3-2-2:001",
+      "choice_text": "the sum of the values divided by their range"
+     }
+    ],
+    "digest": "74adbcd479a11236d8f33454ba2fc80d382ddc79a0a257c15d9a77602ac60a16"
+   },
+   {
+    "id": "mc:u3-2-2:divisor-n-minus-one",
+    "lo_id": "lo:u3-2-2",
+    "kind": "conceptual",
+    "aliases": [],
+    "maps": [],
+    "digest": "c4e454a954eb7960b4bcb3ec7d32fe2f7fa1b553a21a41f538c4396dab859a1e"
+   },
+   {
+    "id": "mc:u3-2-3:x-read-as-frequency",
+    "lo_id": "lo:u3-2-3",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:u3-2-3:001",
+      "choice_text": "the frequency of the set"
+     }
+    ],
+    "digest": "17c18d3a515ba264b67ada6c252767ff57a87336ec648d057c214b613e797b0f"
+   },
+   {
+    "id": "mc:u4-1-1:degree-split-decimally",
+    "lo_id": "lo:u4-1-1",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:u4-1-1:001",
+      "choice_text": "100 minutes"
+     },
+     {
+      "question_id": "q:u4-1-1:004",
+      "choice_text": "$20^\\circ\\ 25'$"
+     },
+     {
+      "question_id": "q:u4-1-1:006",
+      "choice_text": "$28^\\circ\\ 51'$"
+     },
+     {
+      "question_id": "q:u4-1-1:006",
+      "choice_text": "$28^\\circ\\ 5'\\ 1''$"
+     }
+    ],
+    "digest": "f406c23b2820ce042c18a325c42c288a78766d9263f65f131a7d3af6be70a75e"
+   },
+   {
+    "id": "mc:u4-1-1:minute-second-confused",
+    "lo_id": "lo:u4-1-1",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:u4-1-1:001",
+      "choice_text": "60 seconds"
+     },
+     {
+      "question_id": "q:u4-1-1:004",
+      "choice_text": "$20^\\circ\\ 2.5'$"
+     },
+     {
+      "question_id": "q:u4-1-1:006",
+      "choice_text": "$28^\\circ\\ 30'\\ 6''$"
+     }
+    ],
+    "digest": "5541050eab0b4b0ba484623bad6cd8459075c4d7a4ff7c01968fd57cc80eff55"
+   },
+   {
+    "id": "mc:u4-1-2:opposite-adjacent-swapped",
+    "lo_id": "lo:u4-1-2",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:u4-1-2:001",
+      "choice_text": "$\\frac{BC}{AC}$"
+     },
+     {
+      "question_id": "q:u4-1-2:002",
+      "choice_text": "adjacent ÷ opposite"
+     },
+     {
+      "question_id": "q:u4-1-2:003",
+      "choice_text": "$\\frac{3}{5}$"
+     },
+     {
+      "question_id": "q:u4-1-2:004",
+      "choice_text": "$\\frac{4}{3}$"
+     }
+    ],
+    "digest": "d5670f7e6f980777ea29bdbf08059625e24aabee57c3ffd59f1b88f6a50ec93b"
+   },
+   {
+    "id": "mc:u4-1-2:ratio-inverted",
+    "lo_id": "lo:u4-1-2",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:u4-1-2:001",
+      "choice_text": "$\\frac{AC}{AB}$"
+     },
+     {
+      "question_id": "q:u4-1-2:003",
+      "choice_text": "$\\frac{5}{4}$"
+     }
+    ],
+    "digest": "f6a3d768d4da5ce85a1e01fd1938c09825139d8e62ed57fad082e7b8458cbf57"
+   },
+   {
+    "id": "mc:u4-1-2:tan-uses-hypotenuse",
+    "lo_id": "lo:u4-1-2",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:u4-1-2:002",
+      "choice_text": "opposite ÷ hypotenuse"
+     },
+     {
+      "question_id": "q:u4-1-2:002",
+      "choice_text": "adjacent ÷ hypotenuse"
+     },
+     {
+      "question_id": "q:u4-1-2:004",
+      "choice_text": "$\\frac{3}{5}$"
+     },
+     {
+      "question_id": "q:u4-1-2:004",
+      "choice_text": "$\\frac{4}{5}$"
+     }
+    ],
+    "digest": "9bc2e612ea9765de0389f0eaa3c17330c9afc9cc5fbb3050c5ec92e5b1f27c5a"
+   },
+   {
+    "id": "mc:u5-1-1:coordinates-added",
+    "lo_id": "lo:u5-1-1",
+    "kind": "book_distractor",
+    "aliases": [
+     "mc:distance-coords-added"
+    ],
+    "maps": [
+     {
+      "question_id": "q:u5-1-1:001",
+      "choice_text": "8"
+     }
+    ],
+    "digest": "20187c70a736a65f164beb6fd1b76371951850daa890ef4ec1b5fb42b3f789a3"
+   },
+   {
+    "id": "mc:u5-1-1:one-coordinate-used",
+    "lo_id": "lo:u5-1-1",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:u5-1-1:001",
+      "choice_text": "2"
+     },
+     {
+      "question_id": "q:u5-1-1:001",
+      "choice_text": "6"
+     }
+    ],
+    "digest": "7e00bef029b3ee2a3d21abe9a940b3a69d2968047bd7d55043889e4290b19bed"
+   },
+   {
+    "id": "mc:u5-1-1:root-not-taken",
+    "lo_id": "lo:u5-1-1",
+    "kind": "book_distractor",
+    "aliases": [
+     "mc:distance-root-dropped"
+    ],
+    "maps": [
+     {
+      "question_id": "q:u5-1-1:004",
+      "choice_text": "100"
+     }
+    ],
+    "digest": "860d448c802fc8690ed33d77e1ea4847fc2014c404a05b7565a2fb18ee3924ad"
+   },
+   {
+    "id": "mc:u5-1-1:legs-added-before-squaring",
+    "lo_id": "lo:u5-1-1",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:u5-1-1:004",
+      "choice_text": "14"
+     },
+     {
+      "question_id": "q:u5-1-1:004",
+      "choice_text": "$\\sqrt{14}$"
+     }
+    ],
+    "digest": "ac67a24e1397d8a4e0fdaeded2bd12b4b10caa87a620e9113ed33daf364bc81e"
+   },
+   {
+    "id": "mc:u5-2-1:midpoint-from-difference",
+    "lo_id": "lo:u5-2-1",
+    "kind": "book_distractor",
+    "aliases": [
+     "mc:midpoint-uses-difference"
+    ],
+    "maps": [
+     {
+      "question_id": "q:u5-2-1:001",
+      "choice_text": "$(6, 6)$"
+     }
+    ],
+    "digest": "cadc35607ffa68c861140b10660f51d5e99a38112dffc85a86ba299aeb2b418e"
+   },
+   {
+    "id": "mc:u5-1-2:right-angle-at-wrong-vertex",
+    "lo_id": "lo:u5-1-2",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:u5-1-2:001",
+      "choice_text": "$A$"
+     },
+     {
+      "question_id": "q:u5-1-2:001",
+      "choice_text": "$C$"
+     }
+    ],
+    "digest": "7c190d7e4d6a2d407e0aff4952f36d27b4aed4e574543ff9d746822391afa911"
+   },
+   {
+    "id": "mc:u5-1-2:collinear-read-as-triangle",
+    "lo_id": "lo:u5-1-2",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:u5-1-2:005",
+      "choice_text": "vertices of a right triangle"
+     },
+     {
+      "question_id": "q:u5-1-2:005",
+      "choice_text": "vertices of an isosceles triangle"
+     }
+    ],
+    "digest": "9e72ebe184678d6bd0598496343493d3657013d3840dedf15298954d1c7bd3f7"
+   },
+   {
+    "id": "mc:u5-3-1:slope-inverted",
+    "lo_id": "lo:u5-3-1",
+    "kind": "generated_distractor",
+    "aliases": [
+     "mc:slope-inverted"
+    ],
+    "maps": [],
+    "digest": "54c013cc1a967a1b4be95b0f74c18267cf9269085b68fad445d7db64489e8586"
+   },
+   {
+    "id": "mc:u5-3-3:perpendicular-sign-only",
+    "lo_id": "lo:u5-3-3",
+    "kind": "generated_distractor",
+    "aliases": [
+     "mc:perpendicular-not-reciprocal"
+    ],
+    "maps": [],
+    "digest": "76ecb93e55e8d123257400f9e5f02a020bfd545036bffac962c9b63f2ed47ce6"
+   },
+   {
+    "id": "mc:t2u1-2-2:discriminant-sign",
+    "lo_id": "lo:t2u1-2-2",
+    "kind": "generated_distractor",
+    "aliases": [
+     "mc:discriminant-misread",
+     "mc:discriminant-sign"
+    ],
+    "maps": [],
+    "digest": "65f2001c7a5c3c80bdc769de55a50d42014e163ae7a71caedb03cdbf80214bd1"
+   },
+   {
+    "id": "mc:t2u2-2-1:domain-from-numerator",
+    "lo_id": "lo:t2u2-2-1",
+    "kind": "generated_distractor",
+    "aliases": [
+     "mc:domain-from-numerator"
+    ],
+    "maps": [],
+    "digest": "820d67912d65d0caf2cb5b07d8edb8545e1c38e82057a0bbecdf5934fb63b503"
+   },
+   {
+    "id": "mc:t2u3-1-1:probability-denominator",
+    "lo_id": "lo:t2u3-1-1",
+    "kind": "generated_distractor",
+    "aliases": [
+     "mc:probability-denominator"
+    ],
+    "maps": [],
+    "digest": "56ad50c5f038f429eadf52f2deb64950aaf503a5b642fdf937b0a847d0ee67eb"
+   },
+   {
+    "id": "mc:t2u3-1-3:union-double-counts",
+    "lo_id": "lo:t2u3-1-3",
+    "kind": "conceptual",
+    "aliases": [],
+    "maps": [],
+    "digest": "a1be504d42b99f2b9d837c29780ce8e3097f94205c3f378ec66dc2765727a6f5"
+   },
+   {
+    "id": "mc:t2u3-2-1:complement-not-from-one",
+    "lo_id": "lo:t2u3-2-1",
+    "kind": "generated_distractor",
+    "aliases": [
+     "mc:complement-not-one-minus"
+    ],
+    "maps": [],
+    "digest": "a491faf243be615576d4d7f6d48b268a2ab350f69249f22545552c64d9c5985b"
+   },
+   {
+    "id": "mc:geo1-2-1:point-position-reversed",
+    "lo_id": "lo:geo1-2-1",
+    "kind": "generated_distractor",
+    "aliases": [
+     "mc:point-position-reversed"
+    ],
+    "maps": [],
+    "digest": "9944c388b9d08d55c3b2e37cb3b33ae0a2a6e025f7987e6c51511f91daeca51d"
+   },
+   {
+    "id": "mc:geo2-2-2:inscribed-angle-doubled",
+    "lo_id": "lo:geo2-2-2",
+    "kind": "generated_distractor",
+    "aliases": [
+     "mc:inscribed-doubled"
+    ],
+    "maps": [],
+    "digest": "c978ffea5317c9710928ce232bae61ddac1c22a8805bf36c5d87557b465bd266"
+   },
+   {
+    "id": "mc:geo2-5-1:cyclic-angles-equal",
+    "lo_id": "lo:geo2-5-1",
+    "kind": "generated_distractor",
+    "aliases": [
+     "mc:cyclic-angles-equal"
+    ],
+    "maps": [],
+    "digest": "9e5c70d6ff4fd39376633edb6555ed9ab36afcd21d0397f3d02a7ead46158681"
+   },
+   {
+    "id": "mc:u1-1-1:transposition-sign",
+    "lo_id": "lo:u1-1-1",
+    "kind": "generated_distractor",
+    "aliases": [
+     "mc:transposition-sign"
+    ],
+    "maps": [],
+    "digest": "7aaf95b43449b4a6c5a57a577db267449f3952c5de279e34c3175230b65498c1"
+   },
+   {
+    "id": "mc:u4-1-3:opposite-adjacent-swapped",
+    "lo_id": "lo:u4-1-3",
+    "kind": "generated_distractor",
+    "aliases": [
+     "mc:sin-cos-swapped"
+    ],
+    "maps": [],
+    "digest": "456686ce942ed996b7294ca154f47d231b374ae3c2a3157d3288f7ce4f1ff605"
+   },
+   {
+    "id": "mc:u3-2-1:range-is-mean",
+    "lo_id": "lo:u3-2-1",
+    "kind": "generated_distractor",
+    "aliases": [
+     "mc:range-is-mean"
+    ],
+    "maps": [],
+    "digest": "5fdc5a9da169cf8a5d79501f7be4e7c6db25c01cfda2d813ae9a87c04e0b969e"
+   },
+   {
+    "id": "mc:u1-2-2:relation-subset-of-x",
+    "lo_id": "lo:u1-2-2",
+    "kind": "generated_distractor",
+    "aliases": [
+     "mc:relation-subset-of-x"
+    ],
+    "maps": [],
+    "digest": "09b8b9b9d42d583140e0243aac37fedace2b9299bc89403f091eebc79cd72bda"
+   },
+   {
+    "id": "mc:u1-4-2:intercept-is-slope",
+    "lo_id": "lo:u1-4-2",
+    "kind": "generated_distractor",
+    "aliases": [
+     "mc:intercept-is-slope"
+    ],
+    "maps": [],
+    "digest": "38c37ade26de4c85a7def69935784df8f902703f4853a3fe6d05f0d56dbf7598"
+   },
+   {
+    "id": "mc:u1-4-2:constant-means-zero",
+    "lo_id": "lo:u1-4-2",
+    "kind": "generated_distractor",
+    "aliases": [
+     "mc:constant-means-zero"
+    ],
+    "maps": [],
+    "digest": "22df51161b65b01b1602ffc6ff211910fe042a5731598a1a7990ec042bb0139e"
+   },
+   {
+    "id": "mc:u1-1-3:product-commutes",
+    "lo_id": "lo:u1-1-3",
+    "kind": "generated_distractor",
+    "aliases": [
+     "mc:cartesian-commutes"
+    ],
+    "maps": [],
+    "digest": "f7df810f14c1598496324872c4b939478817e10a972071cd7971fa10801d6e5b"
+   },
+   {
+    "id": "mc:u1-1-3:points-vs-columns",
+    "lo_id": "lo:u1-1-3",
+    "kind": "generated_distractor",
+    "aliases": [
+     "mc:points-vs-columns"
+    ],
+    "maps": [],
+    "digest": "55f815e7204962677b340bb7f6deb64997a88df2ed57006329b05796229823d9"
+   },
+   {
+    "id": "mc:u1-1-3:product-is-sum",
+    "lo_id": "lo:u1-1-3",
+    "kind": "generated_distractor",
+    "aliases": [
+     "mc:product-is-sum"
+    ],
+    "maps": [],
+    "digest": "c9ce2c631624f8810b4ea100931c488645b23f74ff7df89129095d0425ede9a1"
+   },
+   {
+    "id": "mc:t2u1-2-1:touch-means-two-roots",
+    "lo_id": "lo:t2u1-2-1",
+    "kind": "generated_distractor",
+    "aliases": [
+     "mc:touch-means-two-roots"
+    ],
+    "maps": [],
+    "digest": "a0f5ac63f0046c1aa051cba4f20dad38544653e52ba913e7fdb919827b29c321"
+   },
+   {
+    "id": "mc:geo1-1-1:radius-not-from-centre",
+    "lo_id": "lo:geo1-1-1",
+    "kind": "conceptual",
+    "aliases": [],
+    "maps": [],
+    "digest": "0dc42d4bf17b96f98b55f2063242576ccf7da5f648618da2d234bbcc1409a976"
+   },
+   {
+    "id": "mc:geo1-1-1:radius-any-length",
+    "lo_id": "lo:geo1-1-1",
+    "kind": "conceptual",
+    "aliases": [],
+    "maps": [],
+    "digest": "5969445550728015ec7b48b0725022dbea54bdc94cb372996a769a1d925ac898"
+   },
+   {
+    "id": "mc:geo1-1-2:diameter-is-any-long-chord",
+    "lo_id": "lo:geo1-1-2",
+    "kind": "conceptual",
+    "aliases": [],
+    "maps": [],
+    "digest": "f893213c340cfe8b71a4ea1921a984295a08e83e7bb03bc81ac7978fa2e64e09"
+   },
+   {
+    "id": "mc:geo1-1-1:chord-endpoints-off-circle",
+    "lo_id": "lo:geo1-1-1",
+    "kind": "conceptual",
+    "aliases": [],
+    "maps": [],
+    "digest": "cec7c65361a48f504f091e4271a5d27979ce945d9e6d35149d8e291cb0991c10"
+   },
+   {
+    "id": "mc:geo1-2-2:tangent-cuts-circle",
+    "lo_id": "lo:geo1-2-2",
+    "kind": "conceptual",
+    "aliases": [],
+    "maps": [],
+    "digest": "11e8cba49bd1cd531a04ba745021a827011d8170fa77fafd746fac2d4b3c98a2"
+   },
+   {
+    "id": "mc:geo1-2-2:tangent-need-not-touch",
+    "lo_id": "lo:geo1-2-2",
+    "kind": "conceptual",
+    "aliases": [],
+    "maps": [],
+    "digest": "76ab8fd2eca624719b1b502127d1d16818b3362cdac212deddab913019f2a199"
+   },
+   {
+    "id": "mc:u3-2-1:mean-built-as-median",
+    "lo_id": "lo:u3-2-1",
+    "kind": "conceptual",
+    "aliases": [],
+    "maps": [],
+    "digest": "71aa1b706ade4a023a1735ff2154b3bfe8edada46b53337da6effa5139a60f7a"
+   },
+   {
+    "id": "mc:u3-2-1:median-built-as-mean",
+    "lo_id": "lo:u3-2-1",
+    "kind": "conceptual",
+    "aliases": [],
+    "maps": [],
+    "digest": "aabcab6e4b24d9c48c2758b392b57ded58bfa7cc05fa0f2c3913571588afec36"
+   },
+   {
+    "id": "mc:u3-2-1:mode-assumed-to-exist",
+    "lo_id": "lo:u3-2-1",
+    "kind": "conceptual",
+    "aliases": [],
+    "maps": [],
+    "digest": "47768c36c462d64ecbd34bedc61046fef21d1e7e845e7ddb3b1294a542578b2c"
+   },
+   {
+    "id": "mc:u2-3-2:inverse-solved-as-direct",
+    "lo_id": "lo:u2-3-2",
+    "kind": "conceptual",
+    "aliases": [],
+    "maps": [],
+    "digest": "75be1ceb78a30a64a8cbefd2a67f35f32b6b961b3d341467c8a66901f0e678cf"
+   },
+   {
+    "id": "mc:u2-3-1:direct-solved-as-inverse",
+    "lo_id": "lo:u2-3-1",
+    "kind": "conceptual",
+    "aliases": [],
+    "maps": [],
+    "digest": "abb256d598c4b21b9dc7aa97804ef53d5f195b8944e025a78d0b8c842d9445b3"
+   },
+   {
+    "id": "mc:u1-3-1:fails-vertical-line-test",
+    "lo_id": "lo:u1-3-1",
+    "kind": "conceptual",
+    "aliases": [],
+    "maps": [],
+    "digest": "6f9d9af227c53e551f02109340a4953e5530ee892aa712695c6fdfb6100db31c"
+   },
+   {
+    "id": "mc:u1-4-3:parabola-opens-wrong-way",
+    "lo_id": "lo:u1-4-3",
+    "kind": "conceptual",
+    "aliases": [],
+    "maps": [],
+    "digest": "70e80355f9e6a76b213fe82170cc6a522383263184d155719f150f4109330a46"
+   },
+   {
+    "id": "mc:u1-4-2:gradient-sign-misread",
+    "lo_id": "lo:u1-4-2",
+    "kind": "conceptual",
+    "aliases": [],
+    "maps": [],
+    "digest": "19b9beff7225aefc9080cedfce493bfd731dc87ae159d4cda8eb08243153b9c4"
+   },
+   {
+    "id": "mc:u5-3-1:slope-sign-flipped",
+    "lo_id": "lo:u5-3-1",
+    "kind": "conceptual",
+    "aliases": [],
+    "maps": [],
+    "digest": "11f7be3e722ec0e48e88a8a52d6790e5f1839997a26e63525f36bce1f1ede379"
+   },
+   {
+    "id": "mc:t2u3-1-1:compound-outcome-counted-once",
+    "lo_id": "lo:t2u3-1-1",
+    "kind": "conceptual",
+    "aliases": [],
+    "maps": [],
+    "digest": "992be60eacdb09a8db5336f3eeae249bd2a859c289c39f92a4508f7f29be67e3"
+   },
+   {
+    "id": "mc:t2u2-2-1:excluded-values-incomplete",
+    "lo_id": "lo:t2u2-2-1",
+    "kind": "conceptual",
+    "aliases": [],
+    "maps": [],
+    "digest": "6a4684ff9a8178e413ab0e53348344f107b2936009aac66769835b37682dd8b7"
+   },
+   {
+    "id": "mc:t2u3-1-2:intersection-read-as-union",
+    "lo_id": "lo:t2u3-1-2",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:t2u3-1-2:001",
+      "choice_text": "the occurrence of at least one of the two events"
+     }
+    ],
+    "digest": "9ae9d96d80ba9cd05fc3cfcd183208fe07e256ed0fd3dfe0f6b25e40383e672c"
+   },
+   {
+    "id": "mc:t2u3-1-2:intersection-as-a-only",
+    "lo_id": "lo:t2u3-1-2",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:t2u3-1-2:001",
+      "choice_text": "the occurrence of A only"
+     }
+    ],
+    "digest": "6838a5ea4c9b8e9375b1f09361ff47d42e772b123c361b48ddf4dea2c5358166"
+   },
+   {
+    "id": "mc:t2u3-1-2:exclusive-confused-with-exhaustive",
+    "lo_id": "lo:t2u3-1-2",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:t2u3-1-2:002",
+      "choice_text": "$A \\cup B = S$"
+     }
+    ],
+    "digest": "54c176f6cd169b0c14b81c0d052636f1acd54a6656ab2b0696745da1385382d5"
+   },
+   {
+    "id": "mc:t2u3-1-2:assumed-mutually-exclusive",
+    "lo_id": "lo:t2u3-1-2",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:t2u3-1-2:003",
+      "choice_text": "$0$"
+     },
+     {
+      "question_id": "q:t2u3-1-2:006",
+      "choice_text": "$0$"
+     }
+    ],
+    "digest": "44ea531cd36960000dc67502ee47cfd02e27bb604b06a00336f15feaa254a359"
+   },
+   {
+    "id": "mc:t2u3-1-2:union-counted-by-adding",
+    "lo_id": "lo:t2u3-1-2",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:t2u3-1-2:006",
+      "choice_text": "$\\frac{7}{12}$"
+     }
+    ],
+    "digest": "f603dde1e39261f7662bffc60b5a387dc550f05193ec4bae493b98d6d53794ae"
+   },
+   {
+    "id": "mc:t2u3-1-2:gave-single-event-probability",
+    "lo_id": "lo:t2u3-1-2",
+    "kind": "book_distractor",
+    "aliases": [],
+    "maps": [
+     {
+      "question_id": "q:t2u3-1-2:005",
+      "choice_text": "$\\frac{1}{2}$"
+     }
+    ],
+    "digest": "d56a8c7aa4df8e38433b2173a9ab8d0d716d3488e9181ad90f812171ebff97c6"
+   }
+  ]
+ }
+}

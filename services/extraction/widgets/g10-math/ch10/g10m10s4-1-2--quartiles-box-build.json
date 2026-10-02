@@ -1,0 +1,39 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m10s4-1-2:quartiles-box-build",
+ "lo_id": "lo:g10m10s4-1-2",
+ "parent_question_id": "q:g10m10s4-1-2:ex10-5-6d",
+ "tier": "basic",
+ "kind": "box_plot_builder",
+ "spec": {
+  "data": [
+   22,
+   8,
+   31,
+   14,
+   26,
+   10,
+   17
+  ]
+ },
+ "stem": "Seven learners timed how long they take to walk to school, in minutes: $22,\\ 8,\\ 31,\\ 14,\\ 26,\\ 10,\\ 17$. Build the box-and-whisker diagram for these times by dragging the minimum, lower quartile, median, upper quartile and maximum markers to their values. Find the quartiles with the percentile formula.",
+ "solution": [
+  "Sort the data from smallest to largest: $8,\\ 10,\\ 14,\\ 17,\\ 22,\\ 26,\\ 31$, so $n = 7$.",
+  "The minimum is $8$ and the maximum is $31$. Drag those two markers there.",
+  "Median (50th percentile): rank $= \\frac{50}{100}(7 - 1) + 1 = 4$, a whole number, so the median is the 4th value, $17$.",
+  "Lower quartile (25th percentile): rank $= \\frac{25}{100}(7 - 1) + 1 = 2.5$. This is not a whole number, so take the value halfway between the 2nd and 3rd values: $\\frac{10 + 14}{2} = 12$.",
+  "Upper quartile (75th percentile): rank $= \\frac{75}{100}(7 - 1) + 1 = 5.5$, so take the value halfway between the 5th and 6th values: $\\frac{22 + 26}{2} = 24$.",
+  "Place the five markers at $8,\\ 12,\\ 17,\\ 24,\\ 31$. The box runs from $12$ to $24$ with the median line at $17$."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "quartile-method",
+   "misconception_id": "mc:g10m10s4-1-2:fractional-rank-rounded-to-one-value"
+  },
+  {
+   "predicate": "median-of-unsorted",
+   "misconception_id": "mc:g10m10s4-1-2:rank-on-unsorted-data"
+  }
+ ],
+ "notes": "Data design: n = 7 so the quartile ranks are 2.5 and 5.5. Linear interpolation between ranks and the book's halfway-between-two-values rule give the same answer at a half rank, so the widget's grading and the book's method cannot disagree here. Every one of the five numbers is a whole number (8, 12, 17, 24, 31), so each lands on any snap grid. The data are given unsorted and the value in the middle position as printed is 14, not the true median 17, so median-of-unsorted can fire. The median of each half (the other quartile method) gives 10 and 26, single data values, where the book needs 12 and 24. quartile-method is mapped to fractional-rank-rounded-to-one-value because the two errors look the same on this data (a single data value read off where the value halfway between two was needed) and they have the same fix; a student who simply remembers the median-of-halves rule fires it too, and that is the likelier source in a class that met quartiles before. Not mapped: iqr-as-range (quartiles dragged to the minimum and maximum) because no misconception on this objective names it; off-target, because it diagnoses nothing specific. whisker-to-outlier cannot fire: IQR is 12, the fences are -6 and 42, and the data run 8 to 31, so there is no outlier. A student who rounds the half ranks up (3rd and 6th values, 14 and 26) matches neither quartile-method nor the true answer and will get off-target."
+}

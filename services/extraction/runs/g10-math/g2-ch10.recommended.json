@@ -1,0 +1,509 @@
+{
+ "status": "RECOMMENDATION ONLY — an AI line's, never a review. `auto_pass_gates.py g2 --recommend` reads `items` and signs each verdict `auto-pass G2 (AI recommendation)`; a person's verdict in G2's file is never overwritten.",
+ "prepared_by": "g2_recommend.py g2rec-v1",
+ "prompts_version": "g2rec-v1",
+ "chapter": 10,
+ "from_runs": {
+  "runs/g10-math/g2rec/ch10-wf_1dcfcd90-555.json": "99a10e977672eebad17e9649d30882bab2fc23bc72f1fa3d37fd83bcc9f84ae9"
+ },
+ "by": null,
+ "items": {
+  "g10m10s1-1:WE1": {
+   "verdict": "accept",
+   "class": "check too strict",
+   "confidence": "low",
+   "note": "20 SMS counts are whole numbers, so quantitative discrete, as the book says. The check only compared the key text with the book's full sentence. The options are the book's closed set of data categories. Verified independently: the verifier's own answer matches the key.",
+   "why_low": "The stem also says 'Explain your answer'. Only the classification is marked, not the explanation. The options come from the lesson, not the stem.",
+   "verified": {
+    "by": "g2rec-v1 independent verifier",
+    "own_answer": "quantitative discrete",
+    "verdict": "confirmed"
+   }
+  },
+  "g10m10s1-1:WE2": {
+   "verdict": "accept",
+   "class": "check too strict",
+   "confidence": "low",
+   "note": "Provider names are not numbers and come from a small set of possibilities, so qualitative categorical, as the book says. The key text is shorter than the book's sentence, which is all the check objected to. Verified independently: the verifier's own answer matches the key.",
+   "why_low": "The stem's data list is flattened into one run of provider names (\"Cell CVodacomVodacom...\"). Only the classification is marked, not the explanation. A person should confirm the flattened list is acceptable.",
+   "verified": {
+    "by": "g2rec-v1 independent verifier",
+    "own_answer": "qualitative categorical",
+    "verdict": "confirmed"
+   }
+  },
+  "g10m10s1-1:Ex10-1:1": {
+   "verdict": "accept",
+   "class": "book answer confirmed",
+   "confidence": "high",
+   "note": "The three quotes are short stories (anecdotal), not numbers, so qualitative anecdotal. The printed answer and the EPUB agree. The blind solver stopped at 'qualitative' and gave no subtype. Verified independently: the verifier's own answer matches the key.",
+   "verified": {
+    "by": "g2rec-v1 independent verifier",
+    "own_answer": "qualitative anecdotal",
+    "verdict": "confirmed"
+   }
+  },
+  "g10m10s2-1:Ex10-2:4d": {
+   "verdict": "exclude",
+   "class": "book error",
+   "confidence": "high",
+   "note": "Sorted data sums to $239$, so mean $=239/7\\approx34{,}14$, not 34,29 (the book's working says 34,3 and then 34,29). Median 31 is right. 31 occurs twice and no other value does, so the mode is 31, not 'none'.",
+   "if_corrected": {
+    "answer": "",
+    "defect": "The book gives mean 34,29 (its working says 34,3), but the mean is 239/7 ≈ 34,14. The book gives mode 'none', but 31 appears twice, so the mode is 31.",
+    "status": "NOT APPLIED: correcting the book's own answer or working is Samuel's to approve (decisions 43–45)"
+   }
+  },
+  "g10m10s2-1:Ex10-7:25b": {
+   "verdict": "exclude",
+   "class": "several accepted answers",
+   "confidence": "low",
+   "note": "Without $x$, 8 occurs twice and every other value once. So $x$ may be any value except 1, 3, 4, 5, 9, and the book's statement is right. It is an open condition, not one answer, so a single key would mark right answers (10, 8, 2...) wrong.",
+   "why_low": "A person could instead keep it as a teaching-only item (not_markable) rather than exclude it.",
+   "if_corrected": {
+    "answer": "",
+    "defect": "The book's answer is a condition with infinitely many valid values, not a single value. The key as typed is not a checkable answer.",
+    "status": "NOT APPLIED: correcting the book's own answer or working is Samuel's to approve (decisions 43–45)"
+   }
+  },
+  "g10m10s2-1:Ex10-7:27b": {
+   "verdict": "accept",
+   "class": "check too strict",
+   "confidence": "high",
+   "note": "The first 20 decimal digits sum to 109. Then $21\\times5{,}38095=112{,}99995\\approx113$, so the 21st digit is $113-109=4$. The book and the blind solver agree. The check only compared text against the working. Verified independently: the verifier's own answer matches the key.",
+   "verified": {
+    "by": "g2rec-v1 independent verifier",
+    "own_answer": "4",
+    "verdict": "confirmed",
+    "app_marker_book_answer": "equal"
+   }
+  },
+  "g10m10s2-1:Ex10-7:28c": {
+   "verdict": "exclude",
+   "class": "book error",
+   "confidence": "high",
+   "note": "The 14 ages sum to $653$, so the mean is $653/14\\approx46{,}64$. The book's working uses 597, giving 42,643, which is wrong. The blind solver's 46,64 matches my derivation.",
+   "if_corrected": {
+    "answer": "",
+    "defect": "The book's working gives $\\bar{x}=597/14=42{,}643$, but the ages sum to 653, so the mean is $653/14\\approx46{,}64$.",
+    "status": "NOT APPLIED: correcting the book's own answer or working is Samuel's to approve (decisions 43–45)"
+   }
+  },
+  "g10m10s3-1:Ex10-3:1": {
+   "verdict": "accept",
+   "class": "book answer confirmed",
+   "confidence": "high",
+   "note": "In the histogram the bar for 0-2 has height 1. The bars (1, 1, 2, 4, 2) total 10, matching the 10 learners. The printed answer 1 and the blind answer agree. The EPUB final line is only a method sentence. Verified independently: the verifier's own answer matches the key.",
+   "verified": {
+    "by": "g2rec-v1 independent verifier",
+    "own_answer": "1",
+    "verdict": "confirmed"
+   }
+  },
+  "g10m10s3-1:Ex10-3:2": {
+   "verdict": "accept",
+   "class": "book answer confirmed",
+   "confidence": "high",
+   "note": "Figure read: the 0-2 bar has height 1, so 1 learner has 0 to 2 stones. Printed answer, book working and blind answer all give 1. The EPUB 'final answer' is only a method sentence, which is why the check said unclear. Verified independently: the verifier's own answer matches the key.",
+   "verified": {
+    "by": "g2rec-v1 independent verifier",
+    "own_answer": "1",
+    "verdict": "confirmed"
+   }
+  },
+  "g10m10s3-1:Ex10-7:11": {
+   "verdict": "accept",
+   "class": "book answer confirmed",
+   "confidence": "high",
+   "note": "Figure read: the 0-1 bar has height 1, so 1 learner has 0 or 1 marbles. Printed answer, working and blind answer all give 1. The EPUB final answer is only a method sentence. Verified independently: the verifier's own answer matches the key.",
+   "verified": {
+    "by": "g2rec-v1 independent verifier",
+    "own_answer": "1",
+    "verdict": "confirmed"
+   }
+  },
+  "g10m10s3-1:Ex10-7:21a": {
+   "verdict": "exclude",
+   "class": "book error",
+   "confidence": "low",
+   "note": "The book's working uses 3, 8, 13 ... as class centres, giving $995/50=19{,}9$. The stem has distance in km (continuous), where the centre of $0<d\\le5$ is 2,5, etc. That gives $\\approx19{,}4$, as the blind solver found. A student using true midpoints would be marked wrong. Right answer by the agent's own derivation: 19,4.",
+   "why_low": "Content decision: the book may mean whole-km distances, and its key follows its own working. A person must decide whether 19,9 is acceptable and whether 19,4 should also be accepted.",
+   "if_corrected": {
+    "answer": "19,4",
+    "defect": "The book uses 3, 8, 13, ... as class centres for the classes 0<d<=5, 5<d<=10, ... A continuous distance has centres 2,5, 7,5, ...; its 19,9 is therefore the mean for whole-km data, not for the stem as printed.",
+    "status": "NOT APPLIED: correcting the book's own answer or working is Samuel's to approve (decisions 43–45)"
+   }
+  },
+  "g10m10s4-1:WE10": {
+   "verdict": "accept",
+   "class": "check too strict",
+   "confidence": "low",
+   "note": "Data 1 to 10: range $10-1=9$. Remove the 1, so the minimum is 4 and the range is $10-4=6$. The key '9; 6' as values holds both numbers from the book's working. The complaint is a text comparison against the final sentence. Verified independently: the verifier's own answer matches the key.",
+   "why_low": "Two-part answer (original range, then new range) typed as a list; a person may prefer to mark only the conclusion 6.",
+   "verified": {
+    "by": "g2rec-v1 independent verifier",
+    "own_answer": "9; 6",
+    "verdict": "confirmed"
+   }
+  },
+  "g10m10s4-1:WE11": {
+   "verdict": "accept",
+   "class": "check too strict",
+   "confidence": "high",
+   "note": "Sorted: 7,8,14,17,19,20,30,36,45; $n=9$, so min 7, max 45, median is the 5th value, 19. The key '7; 45; 19' matches the three results in the book's working; the complaint compares text with the last sentence only. Verified independently: the verifier's own answer matches the key.",
+   "verified": {
+    "by": "g2rec-v1 independent verifier",
+    "own_answer": "7; 45; 19",
+    "verdict": "confirmed"
+   }
+  },
+  "g10m10s4-1:WE12": {
+   "verdict": "exclude",
+   "class": "book error",
+   "confidence": "low",
+   "note": "Sorted data: 3,6,7,7,9,11,12,16,31,35,40,45. Ranks 3,75, 6,5, 9,25 give 7 and 11,5, but rank 9,25 is a quarter of the way from 31 to 35, so $31+0{,}25(4)=32$, not the midpoint 33. The book's key 33 does not follow from its own percentile working. Right answer by the agent's own derivation: 7; 11,5; 32.",
+   "why_low": "Median-of-halves method also gives 33, so the stem alone is ambiguous; but the book's own percentile working gives 32. A person should decide.",
+   "if_corrected": {
+    "answer": "7; 11,5; 32",
+    "defect": "For the 75th percentile at rank 9,25 the book takes the halfway point $(31+35)/2=33$; a quarter of the way gives 32.",
+    "status": "NOT APPLIED: correcting the book's own answer or working is Samuel's to approve (decisions 43–45)"
+   }
+  },
+  "g10m10s4-1:Ex10-5:6a": {
+   "verdict": "accept",
+   "class": "check too strict",
+   "confidence": "high",
+   "note": "Ranges: $24-9=15$, $16-7=9$, $24-11=13$. Matches the book and the blind answer. The key '15; 9; 13' as values is right; the complaint is a text comparison. Any-order marking does not check which data set each belongs to. Verified independently: the verifier's own answer matches the key.",
+   "verified": {
+    "by": "g2rec-v1 independent verifier",
+    "own_answer": "15; 9; 13",
+    "verdict": "confirmed"
+   }
+  },
+  "g10m10s4-1:Ex10-5:6b": {
+   "verdict": "exclude",
+   "class": "unconfirmed",
+   "confidence": "low",
+   "note": "NOT RECOMMENDED LIVE (the independent verifier said confirmed, and another answer is also correct (its own answer: 12; 7,5; 15,5; With the percentile formula (rank 2.5) the quartiles are 12, 7.5 and 15.5; another common median-of-lower-half method gives 12, 7 and 15, which a values marker would reject.)). The agent's reading: $n=7$, rank $r_{25}=\\frac{25}{100}(6)+1=2{,}5$, so halfway between 2nd and 3rd values: DS1 12, DS2 $(7+8)/2=7{,}5$, DS3 $(15+16)/2=15{,}5$. Book key matches. The blind 7 and 15 use another quartile method.",
+   "why_low": "the recommendation to put it live did not survive the checks: the independent verifier said confirmed, and another answer is also correct (its own answer: 12; 7,5; 15,5; With the percentile formula (rank 2.5) the quartiles are 12, 7.5 and 15.5; another common median-of-lower-half method gives 12, 7 and 15, which a values marker would reject.)"
+  },
+  "g10m10s4-1:Ex10-5:6c": {
+   "verdict": "accept",
+   "class": "typing error",
+   "confidence": "high",
+   "note": "Sorted sets, n=7, median is the 4th value: $14$, $11$, $17$. Matches the book working, the EPUB final answer and the blind solve. The complaint is only a text comparison over a right key. Verified independently: the verifier's own answer matches the key.",
+   "verified": {
+    "by": "g2rec-v1 independent verifier",
+    "own_answer": "14; 11; 17",
+    "verdict": "confirmed"
+   }
+  },
+  "g10m10s4-1:Ex10-5:6d": {
+   "verdict": "accept",
+   "class": "book answer confirmed",
+   "confidence": "low",
+   "note": "Rank $r_{75}=5{,}5$: set 1 $(16+22)/2=19$, set 2 $(13+15)/2=14$, set 3 $(19+22)/2=20{,}5$. Confirms the book. The blind solver used a different quartile method (22, 15, 22). Verified independently: the verifier's own answer matches the key.",
+   "why_low": "The stem does not name the quartile method. The key follows the book's percentile formula; a halves method gives different values. A person should confirm the lesson teaches only the percentile formula.",
+   "verified": {
+    "by": "g2rec-v1 independent verifier",
+    "own_answer": "19; 14; 20,5",
+    "verdict": "confirmed"
+   }
+  },
+  "g10m10s4-1:Ex10-5:6e": {
+   "verdict": "accept",
+   "class": "book answer confirmed",
+   "confidence": "low",
+   "note": "Q1 at rank 2,5 gives 12, 7,5, 15,5. With Q3 of 19, 14, 20,5 the IQR is $7$, $6{,}5$, $5$. Confirms the book. The blind answer (10, 8, 7) used another quartile method. Verified independently: the verifier's own answer matches the key.",
+   "why_low": "Quartile method is not stated in the stem. The key follows the book's percentile formula.",
+   "verified": {
+    "by": "g2rec-v1 independent verifier",
+    "own_answer": "7; 6,5; 5",
+    "verdict": "confirmed"
+   }
+  },
+  "g10m10s4-1:Ex10-5:6f": {
+   "verdict": "accept",
+   "class": "book answer confirmed",
+   "confidence": "low",
+   "note": "Half of the IQR: $7/2=3{,}5$, $6{,}5/2=3{,}25$, $5/2=2{,}5$. Confirms the book. The blind answer doubled the other-method IQR. Verified independently: the verifier's own answer matches the key.",
+   "why_low": "Depends on the book's percentile-formula quartiles, which the stem does not name.",
+   "verified": {
+    "by": "g2rec-v1 independent verifier",
+    "own_answer": "3,5; 3,25; 2,5",
+    "verdict": "confirmed"
+   }
+  },
+  "g10m10s4-1:Ex10-7:22a": {
+   "verdict": "accept",
+   "class": "book answer confirmed",
+   "confidence": "low",
+   "note": "Sorted both sets (15 values each). Ranks 4,5, 8, 11,5. Trained: $125{,}5$, 129, $131{,}5$. Untrained: $139{,}5$, 144, $148{,}5$. All match the book. The blind solver used another quartile method. Verified independently: the verifier's own answer matches the key.",
+   "why_low": "Quartile method is not in the stem. The values marker ignores order and does not separate trained from untrained.",
+   "verified": {
+    "by": "g2rec-v1 independent verifier",
+    "own_answer": "Trained: Q1 125,5, median 129, Q3 131,5; Untrained: Q1 139,5, median 144, Q3 148,5",
+    "verdict": "confirmed"
+   }
+  },
+  "g10m10s4-1:Ex10-7:22b": {
+   "verdict": "accept",
+   "class": "book answer confirmed",
+   "confidence": "low",
+   "note": "With the percentile-formula quartiles: trained $131{,}5-125{,}5=6$, untrained $148{,}5-139{,}5=9$. Confirms the book. The blind 7 and 10 come from another method. Verified independently: the verifier's own answer matches the key.",
+   "why_low": "Quartile method is not named in the stem. The key follows the book's percentile formula.",
+   "verified": {
+    "by": "g2rec-v1 independent verifier",
+    "own_answer": "6; 9",
+    "verdict": "confirmed"
+   }
+  },
+  "g10m10s4-1:Ex10-7:25a": {
+   "verdict": "exclude",
+   "class": "book error",
+   "confidence": "high",
+   "note": "Sorted known values 1 to 9. Range 16: if $x$ is the maximum, $x-1=16$ so $x=17$; if $x$ is the minimum, $9-x=16$ so $x=-7$. Both fit. The book rules out $x<1$ wrongly, so a single key marks a right answer wrong.",
+   "if_corrected": {
+    "answer": "",
+    "defect": "The book's step 'If x<9 the range would be 9-1=8' ignores x below 1. x=-7 also gives range 16, so the book omits a valid answer.",
+    "status": "NOT APPLIED: correcting the book's own answer or working is Samuel's to approve (decisions 43–45)"
+   }
+  },
+  "g10m10s5-1:Ex10-6:3": {
+   "verdict": "accept",
+   "class": "book answer confirmed",
+   "confidence": "low",
+   "note": "Sorted: 3,5,5,6,7,8,12,14,16, n=9. Percentile ranks 3, 5, 7 give $Q_1=5$, median 7, $Q_3=12$; min 3, max 16. Matches the book. The blind $Q_3=13$ comes from the halves method. Verified independently: the verifier's own answer matches the key.",
+   "why_low": "Quartile method is not in the stem (halves method gives 13). The values marker ignores order, so a summary in the wrong order would be marked right.",
+   "verified": {
+    "by": "g2rec-v1 independent verifier",
+    "own_answer": "min 3; Q1 5; median 7; Q3 12; max 16",
+    "verdict": "confirmed"
+   }
+  },
+  "g10m10s5-1:Ex10-6:4a": {
+   "verdict": "accept",
+   "class": "check too strict",
+   "confidence": "high",
+   "note": "Figure read: whiskers end at 15 and 35, box 22 to 28, median line at 25. Matches the book and the typed key. The complaint is only a text comparison between a bare list and the labelled sentence. Verified independently: the verifier's own answer matches the key.",
+   "verified": {
+    "by": "g2rec-v1 independent verifier",
+    "own_answer": "Min 15; Q1 22; median 25; Q3 28; max 35",
+    "verdict": "confirmed"
+   }
+  },
+  "g10m10s5-1:Ex10-6:4b": {
+   "verdict": "accept",
+   "class": "check too strict",
+   "confidence": "high",
+   "note": "Figure read: whiskers end at 88 and 101, box 92 to 100, median line at 98. Matches the book and the typed key. The complaint is only a text comparison between a bare list and the labelled sentence. Verified independently: the verifier's own answer matches the key.",
+   "verified": {
+    "by": "g2rec-v1 independent verifier",
+    "own_answer": "Min 88; Q1 92; median 98; Q3 100; max 101",
+    "verdict": "confirmed"
+   }
+  },
+  "g10m10s5-1:Ex10-7:25e": {
+   "verdict": "exclude",
+   "class": "book error",
+   "confidence": "high",
+   "note": "Tested the book's key against the plot: x=4 gives $Q_1=3{,}5\\neq 3$. x=3 gives Q1 3, median 4,5, Q3 8, min 1, max 9. The book's median-only step does not fix x. Book error, never to be accepted. Right answer by the agent's own derivation: x = 3.",
+   "if_corrected": {
+    "answer": "x = 3",
+    "defect": "The plot has min 1, Q1 3, median 4,5, Q3 8, max 9. The book uses the median alone and writes 4,5 = (5+x)/2, which gives x = 4. But the median also holds for any x between 3 and 4. With x = 4 the sorted list 1;3;4;4;5;8;8;9 has Q1 = (3+4)/2 = 3,5, not 3. With x = 3 the list 1;3;3;4;5;8;8;9 has Q1 =…",
+    "status": "NOT APPLIED: correcting the book's own answer or working is Samuel's to approve (decisions 43–45)"
+   }
+  },
+  "g10m10s5-1:Ex10-7:26": {
+   "verdict": "exclude",
+   "class": "several accepted answers",
+   "confidence": "low",
+   "note": "Figure read: min 2, Q1 5, median 7, Q3 = max = 10. The book's list {2;5;7;10;10} satisfies it, but the book accepts many lists, so no single key can mark it.",
+   "why_low": "Content decision: exclude, or keep as an unmarked teaching example (answer_type not_markable). The book's list does fit the plot: with n=5 the quartiles are 5 and 10, the median 7.",
+   "if_corrected": {
+    "answer": "",
+    "defect": "The stem asks for one list that fits the plot, and the book says any numbers with min 2, Q1 5, median 7, Q3 10, max 10 will do, with no limit on how many. A single typed key would mark other correct lists wrong.",
+    "status": "NOT APPLIED: correcting the book's own answer or working is Samuel's to approve (decisions 43–45)"
+   }
+  },
+  "g10m10s5-1:Ex10-7:27c": {
+   "verdict": "exclude",
+   "class": "several accepted answers",
+   "confidence": "low",
+   "note": "Figure read: 3; 4; 5; 8; 8. Checked both book sets with n=7: Q1 is the mean of values 2 and 3, giving 4; the median is 5; Q3 is the mean of values 5 and 6, giving 8. Both are valid, so the answer is not unique.",
+   "why_low": "Content decision: exclude, or keep as an unmarked teaching example (not_markable). The book's two sets are right for the plot: min 3, Q1 4, median 5, Q3 8, max 8.",
+   "if_corrected": {
+    "answer": "",
+    "defect": "The book itself gives two valid sets, and a student may also write either set in any order. A single key cannot mark all correct lists.",
+    "status": "NOT APPLIED: correcting the book's own answer or working is Samuel's to approve (decisions 43–45)"
+   }
+  },
+  "g10m10s5-1:Ex10-7:28a": {
+   "verdict": "exclude",
+   "class": "book error",
+   "confidence": "high",
+   "note": "Using the book's method: Q1 = (35+38)/2 = 36,5, median = (53+55)/2 = 54, Q3 = (55+55)/2 = 55, min 22, max 64. The final answer line has 50, a typo against its own working. The blind median 54 agrees. Right answer by the agent's own derivation: 22; 36,5; 54; 55; 64.",
+   "if_corrected": {
+    "answer": "22; 36,5; 54; 55; 64",
+    "defect": "The book's own working gives the median as (53+55)/2 = 54, but its final line and printed answer say 50. The data's 7th and 8th values are 53 and 55, so the median is 54. The printed and typed key 22; 36,5; 50; 55; 64 is wrong in the median.",
+    "status": "NOT APPLIED: correcting the book's own answer or working is Samuel's to approve (decisions 43–45)"
+   }
+  },
+  "g10m10s5-1:Ex10-7:29b": {
+   "verdict": "fix",
+   "class": "selected from a list",
+   "confidence": "low",
+   "note": "Figure read: for brand C the box runs 16 to 20 with the median line at 18, whiskers 15 and 22, so 18 mg is the median. The book's key is right. The options Q1 and Q3 were refused as non-categories, so re-type them in the book's words. Verified independently: the verifier's own answer matches the key.",
+   "why_low": "Content decision: the stem shows no options. The five summary terms (minimum, first quartile, median, third quartile, maximum) are the lesson's closed set, with 'first/third quartile' taken from the book's own wording. A person should confirm this is acceptab…",
+   "fields": {
+    "choices": [
+     {
+      "key": "A",
+      "text": "minimum"
+     },
+     {
+      "key": "B",
+      "text": "first quartile"
+     },
+     {
+      "key": "C",
+      "text": "median"
+     },
+     {
+      "key": "D",
+      "text": "third quartile"
+     },
+     {
+      "key": "E",
+      "text": "maximum"
+     }
+    ]
+   },
+   "verified": {
+    "by": "g2rec-v1 independent verifier",
+    "own_answer": "Median",
+    "verdict": "confirmed"
+   }
+  }
+ },
+ "unanswered": [],
+ "report": {
+  "items": 31,
+  "recommended": 31,
+  "unanswered": [],
+  "by_verdict": {
+   "accept": 19,
+   "exclude": 11,
+   "fix": 1
+  },
+  "by_class": {
+   "check too strict": 8,
+   "book answer confirmed": 10,
+   "book error": 7,
+   "several accepted answers": 3,
+   "unconfirmed": 1,
+   "typing error": 1,
+   "selected from a list": 1
+  },
+  "by_confidence": {
+   "low": 16,
+   "high": 15
+  },
+  "live": [
+   "g10m10s1-1:Ex10-1:1",
+   "g10m10s1-1:WE1",
+   "g10m10s1-1:WE2",
+   "g10m10s2-1:Ex10-7:27b",
+   "g10m10s3-1:Ex10-3:1",
+   "g10m10s3-1:Ex10-3:2",
+   "g10m10s3-1:Ex10-7:11",
+   "g10m10s4-1:Ex10-5:6a",
+   "g10m10s4-1:Ex10-5:6c",
+   "g10m10s4-1:Ex10-5:6d",
+   "g10m10s4-1:Ex10-5:6e",
+   "g10m10s4-1:Ex10-5:6f",
+   "g10m10s4-1:Ex10-7:22a",
+   "g10m10s4-1:Ex10-7:22b",
+   "g10m10s4-1:WE10",
+   "g10m10s4-1:WE11",
+   "g10m10s5-1:Ex10-6:3",
+   "g10m10s5-1:Ex10-6:4a",
+   "g10m10s5-1:Ex10-6:4b",
+   "g10m10s5-1:Ex10-7:29b"
+  ],
+  "live_question_ids": [
+   "q:g10m10s1-1-1:we01",
+   "q:g10m10s1-1-2:ex10-1-1",
+   "q:g10m10s1-1-2:we02",
+   "q:g10m10s2-1-4:ex10-7-27b",
+   "q:g10m10s3-1-2:ex10-3-1",
+   "q:g10m10s3-1-2:ex10-3-2",
+   "q:g10m10s3-1-2:ex10-7-11",
+   "q:g10m10s4-1-1:ex10-5-6a",
+   "q:g10m10s4-1-1:we10",
+   "q:g10m10s4-1-2:ex10-5-6c",
+   "q:g10m10s4-1-2:ex10-5-6d",
+   "q:g10m10s4-1-2:ex10-7-22a",
+   "q:g10m10s4-1-2:we11",
+   "q:g10m10s4-1-4:ex10-5-6e",
+   "q:g10m10s4-1-4:ex10-5-6f",
+   "q:g10m10s4-1-4:ex10-7-22b",
+   "q:g10m10s5-1-1:ex10-6-3",
+   "q:g10m10s5-1-3:ex10-6-4a",
+   "q:g10m10s5-1-3:ex10-6-4b",
+   "q:g10m10s5-1-3:ex10-7-29b"
+  ],
+  "not_live": {
+   "g10m10s4-1:Ex10-5:6b": {
+    "agent_verdict": "accept",
+    "recommended": "exclude",
+    "kind": "unconfirmed",
+    "why": "the independent verifier said confirmed, and another answer is also correct (its own answer: 12; 7,5; 15,5; With the percentile formula (rank 2.5) the quartiles are 12, 7.5 and 15.5; another common median-of-lower-half method gives 12, 7 and 15, which a values marker would reject.)"
+   }
+  },
+  "low_confidence": [
+   "g10m10s1-1:WE1",
+   "g10m10s1-1:WE2",
+   "g10m10s2-1:Ex10-7:25b",
+   "g10m10s3-1:Ex10-7:21a",
+   "g10m10s4-1:Ex10-5:6b",
+   "g10m10s4-1:Ex10-5:6d",
+   "g10m10s4-1:Ex10-5:6e",
+   "g10m10s4-1:Ex10-5:6f",
+   "g10m10s4-1:Ex10-7:22a",
+   "g10m10s4-1:Ex10-7:22b",
+   "g10m10s4-1:WE10",
+   "g10m10s4-1:WE12",
+   "g10m10s5-1:Ex10-6:3",
+   "g10m10s5-1:Ex10-7:26",
+   "g10m10s5-1:Ex10-7:27c",
+   "g10m10s5-1:Ex10-7:29b"
+  ],
+  "stem_repairs": [],
+  "retyped": [],
+  "corrections_proposed": [
+   "g10m10s2-1:Ex10-2:4d",
+   "g10m10s2-1:Ex10-7:25b",
+   "g10m10s2-1:Ex10-7:28c",
+   "g10m10s3-1:Ex10-7:21a",
+   "g10m10s4-1:Ex10-7:25a",
+   "g10m10s4-1:WE12",
+   "g10m10s5-1:Ex10-7:25e",
+   "g10m10s5-1:Ex10-7:26",
+   "g10m10s5-1:Ex10-7:27c",
+   "g10m10s5-1:Ex10-7:28a"
+  ],
+  "off_task": [],
+  "no_longer_owed": [],
+  "stale_items": [],
+  "by_state": {
+   "excluded": 21,
+   "held": 10
+  },
+  "app_marker_identity_of_the_typed_key": {
+   "equal": [],
+   "different": [],
+   "unreadable": []
+  }
+ }
+}

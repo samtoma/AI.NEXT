@@ -1,0 +1,60 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m4s6-1-4:binomial-denominator",
+ "kind": "family",
+ "lo_id": "lo:g10m4s6-1-4",
+ "parent_question_id": "q:g10m4s6-1-4:ex4-5-19",
+ "source_page": 96,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "u",
+   "randint": [
+    1,
+    9
+   ]
+  },
+  {
+   "name": "g",
+   "randint": [
+    1,
+    8
+   ]
+  },
+  {
+   "name": "k",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "v",
+   "let": "u + g"
+  },
+  {
+   "name": "f",
+   "let": "k * g"
+  },
+  {
+   "name": "fp",
+   "let": "k * v"
+  }
+ ],
+ "constraints": [
+  "v > u"
+ ],
+ "stem": "Solve for $u$ in $f'=f\\frac{v}{v-u}$ if $v={=v}$, $f={=f}$ and $f'={=fp}$.",
+ "answer": "u",
+ "solution": [
+  "The variable $u$ is in the denominator $v-u$, which is the only denominator, so it is the LCD. Multiply both sides of $f'=f\\frac{v}{v-u}$ by $(v-u)$: $f'(v-u)=fv$.",
+  "Divide both sides by $f'$: $v-u=\\frac{fv}{f'}$.",
+  "Subtract $v$ from both sides and multiply by $-1$: $u=v-\\frac{fv}{f'}$.",
+  "Substitute $v={=v}$, $f={=f}$ and $f'={=fp}$: $u={=v}-\\frac{{=f}\\times{=v}}{{=fp}}$.",
+  "Simplify the fraction: $u={=v}-\\frac{{=f*v}}{{=fp}}={=v}-{=g}$.",
+  "So $u={=u}$."
+ ],
+ "notes": "Same skeleton as the book's ex4-5-19 (f' = f v/(v-u), solve for u), with the numbers built backwards so everything is a whole number: choose u, the gap g = v - u and a multiplier k, then v = u + g, f = k*g, f' = k*v. This makes f*v/f' exactly g, so the answer u = v - g is whole (the book's own numbers give 2.6; that case is deliberately not reproduced, to avoid a rounding instruction). Always f' > f and v > u, so no zero or negative denominators."
+}

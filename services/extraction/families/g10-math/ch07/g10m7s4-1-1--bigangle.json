@@ -1,0 +1,81 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m7s4-1-1:bigangle",
+ "version": 1,
+ "kind": "family",
+ "lo_id": "lo:g10m7s4-1-1",
+ "parent_question_id": "q:g10m7s4-1-1:ex7-7-15b",
+ "source_page": 268,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "xval",
+   "randint": [
+    2,
+    14
+   ]
+  },
+  {
+   "name": "p",
+   "choice": [
+    2,
+    3,
+    4,
+    5,
+    6
+   ]
+  },
+  {
+   "name": "c",
+   "randint": [
+    3,
+    30
+   ]
+  },
+  {
+   "name": "bb",
+   "let": "p * xval + c"
+  },
+  {
+   "require": "bb >= 35 and bb <= 100",
+   "why": "angle B is a sensible triangle angle and leaves room for D and A"
+  },
+  {
+   "name": "d",
+   "randint": [
+    25,
+    "min(80, 155 - bb)"
+   ]
+  },
+  {
+   "name": "e",
+   "let": "180 - bb - d"
+  },
+  {
+   "require": "e <= 110",
+   "why": "keeps angle A (equal to angle DEC) a plain acute or mildly obtuse angle"
+  },
+  {
+   "name": "r",
+   "let": "bb - c"
+  }
+ ],
+ "constraints": [
+  "bb == p * xval + c",
+  "bb + d + e == 180",
+  "e >= 25"
+ ],
+ "stem": "In $\\triangle ABD$, the point $C$ is the mid-point of $BD$ and the point $E$ is the mid-point of $AD$. Three angles are given: $\\hat{D}={=d}^{\\circ}$, $D\\hat{E}C={=e}^{\\circ}$ and $\\hat{B}=({=p}x+{=c})^{\\circ}$. Solve for the value of $x$.",
+ "answer": "xval",
+ "solution": [
+  "$C$ is the mid-point of $BD$ and $E$ is the mid-point of $AD$, so the line joining them is parallel to the third side: $AB \\parallel EC$ (mid-point theorem).",
+  "$\\hat{A}$ and $D\\hat{E}C$ are corresponding angles, so $\\hat{A}=D\\hat{E}C={=e}^{\\circ}$ (corresp $\\angle$s; $AB \\parallel EC$).",
+  "The angles of $\\triangle ABD$ add up to $180^{\\circ}$, so $\\hat{B}=180^{\\circ}-{=e}^{\\circ}-{=d}^{\\circ}={=bb}^{\\circ}$ (sum of $\\angle$s in a $\\triangle$).",
+  "Both expressions are the size of $\\hat{B}$, so ${=p}x+{=c}={=bb}$.",
+  "Subtract ${=c}$ from both sides: ${=p}x={=r}$.",
+  "Divide both sides by ${=p}$: $x={=xval}$."
+ ],
+ "notes": "Second advanced skeleton, the reverse order of smallexpr: the angle given in the small triangle (angle DEC) must first be carried to the big triangle by the mid-point theorem and corresponding angles (as in book ex7-8-21a with letters ABD, C, E), and only then used with the angle sum to reach the algebraic angle B. The algebraic-angle-in-an-equation twist comes from the book's ex7-7-15b and ex7-7-16b (page 268). No figure: the stem names every point and angle in words. Built backwards from x so x is a whole number; p is 2 to 6 so the coefficient never renders as 1x. Uses only the theorem direction and corresponding angles, as the book's solutions do; no lengths and no converse."
+}

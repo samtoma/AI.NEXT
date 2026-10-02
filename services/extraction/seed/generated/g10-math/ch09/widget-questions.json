@@ -1,0 +1,88 @@
+{
+  "generator": "services/extraction/generate_widget_questions.py (ADR-0009) --templates",
+  "question_type": "widget",
+  "book": "work/g10-math/fanout/books/ch09/g10-math.json",
+  "course_id": "course:us-g10-math-en",
+  "templates": {
+    "wt:g10m9s5-1-1:pounds-to-rand-balance": "404a95f60f55396615ab14706f375ec2fbc8ceeb56832aa80dd7019c51e9575b"
+  },
+  "rejected_templates": {},
+  "questions": [
+    {
+      "id": "q:g10m9s5-1-1:w001",
+      "lo_id": "lo:g10m9s5-1-1",
+      "tier": "basic",
+      "question_type": "widget",
+      "stem": "The exchange rate is $\\text{£1} = \\text{R8}$. The beam is level when both sides give the same number of rand for each pound. Drag the right pan until it is level: how many rand is $\\text{£2}$ worth?",
+      "choices": {
+        "kind": "ratio_balance",
+        "spec": {
+          "mode": "direct",
+          "a": 1,
+          "b": 8,
+          "c": 2
+        },
+        "diagnostics": [],
+        "pending_review": [
+          {
+            "predicate": "direct-solved-as-inverse",
+            "misconception_id": "mc:g10m9s5-1-1:multiplies-or-divides-the-wrong-way",
+            "why": "This predicate fires when the student levels the beam by matching products, 1 x 8 = 2 x d, which puts the right pan at 4. That is a direct-versus-inverse proportion confusion ('more pounds, so fewer rand'). The claimed misconception is about multiplying or dividing by the rate the wrong way round. A student who divides £2 by the rate gets 2 / 8 = 0.25, not 4. The beam cannot show 0.25 because it only takes whole numbers from 1 to 24, so that error would not fire this predicate. Reaching 4 means dividing the rate by the amount (8 / 2) or reasoning that more pounds buy fewer rand, which is not the stated operation-direction slip. The predicate would mostly fire for a different reason, so matches is false.",
+            "verifier_runs": [
+              "verify-ch09-wf_03c6b50e-a80"
+            ]
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "The exchange rate $\\text{£1} = \\text{R8}$ says that every pound is worth the same R8, so the rand per pound is fixed."
+        },
+        {
+          "step": 2,
+          "text_md": "The beam is level when both sides show that same rate: $\\text{£1} : \\text{R8} = \\text{£2} : \\text{R}?$."
+        },
+        {
+          "step": 3,
+          "text_md": "$\\text{£2}$ is two lots of $\\text{£1}$, so the rand side must be two lots of $\\text{R8}$."
+        },
+        {
+          "step": 4,
+          "text_md": "To find the cost in rand, multiply the foreign amount by the rate: $2 \\times 8 = 16$, so drag the right pan to $\\text{R16}$."
+        },
+        {
+          "step": 5,
+          "text_md": "Check: $\\text{R16} \\div 2 = \\text{R8}$ for each pound, the same rate as on the left, so the beam is level."
+        }
+      ],
+      "parent_question_id": "q:g10m9s5-1-1:ex9-6-1a",
+      "source_note": "Generated from template family wt:g10m9s5-1-1:pounds-to-rand-balance.",
+      "family": "wt:g10m9s5-1-1:pounds-to-rand-balance",
+      "template_sha": "404a95f60f55396615ab14706f375ec2fbc8ceeb56832aa80dd7019c51e9575b"
+    }
+  ],
+  "misconceptions": [],
+  "mapping_review": {
+    "rule": "decision 47",
+    "verifier_runs": [
+      "verify-ch09-wf_03c6b50e-a80"
+    ],
+    "counts": {
+      "active": 0,
+      "held": 1,
+      "kept_by_review": 0,
+      "dropped_by_review": 0
+    },
+    "reviews": []
+  },
+  "s5_reconciled": {
+    "runs": [
+      "final-ch09-wf_253279cc-68a.json"
+    ],
+    "catalogue": "g10-math-misconceptions",
+    "refused_attachments_stripped": [],
+    "widgets_left_out": []
+  }
+}

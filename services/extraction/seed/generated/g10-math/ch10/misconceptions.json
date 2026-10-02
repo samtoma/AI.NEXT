@@ -1,0 +1,1750 @@
+{
+  "catalogue": "g10-math-misconceptions",
+  "course_id": "course:us-g10-math-en",
+  "book": "g10-math",
+  "reviewed": false,
+  "generator": "S5 runbook/misconceptions.workflow.js (Sonnet author, Sonnet fail-closed verifier) via assemble_misconceptions.py — runs final-ch10-wf_ba64d0e9-a82.json; 2 ALIAS LINK(S) STRIPPED on 2 entries (provenance.aliases_stripped says which and why; no entry was deleted); pipeline-generated, UNREVIEWED",
+  "misconceptions": [
+    {
+      "id": "mc:g10m10s1-1-1:count-called-continuous",
+      "lo_id": "lo:g10m10s1-1-1",
+      "label": "Calls a count continuous",
+      "description": "The student sees a data set of counts written as whole numbers (messages sent, sweets in a packet, questions answered correctly) and calls it continuous, instead of checking whether each value is a count written as an integer.",
+      "signal": "Chooses quantitative continuous for a data set of counts written as integers.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You were right that this data set is quantitative, because it is made of numbers. The slip comes at the next decision: calling it continuous because the numbers vary a lot or could be many different values, when the question to ask is what each number is."
+        },
+        {
+          "step": 2,
+          "text_md": "Take a class asked how many SMS messages they sent yesterday, with answers such as $3$, $0$, $14$ and $30$. Each answer is a count of messages, and a count is written as an integer. There is no answer like $13.5$ messages."
+        },
+        {
+          "step": 3,
+          "text_md": "The same is true of the number of sweets in a packet, $23, 25, 22$, or the number of questions answered correctly, $3, 5, 2$. Each value counts whole things and is written as an integer. A set of counts written as integers is discrete, however large or spread out the numbers are."
+        },
+        {
+          "step": 4,
+          "text_md": "Next time ask: is each value a count, written as an integer? If so, the data set is quantitative discrete. Keep continuous for values that cannot be represented by integers, such as measurements."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:g10m10s1-1-1:we01",
+          "choice_text": "quantitative continuous"
+        },
+        {
+          "question_id": "q:g10m10s1-1-1:ex10-1-2",
+          "choice_text": "quantitative continuous"
+        },
+        {
+          "question_id": "q:g10m10s1-1-1:ex10-1-3",
+          "choice_text": "quantitative continuous"
+        }
+      ],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch10-wf_ba64d0e9-a82.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real: quantitative continuous is the wrong option on the SMS, sweets and questions-correct questions, and all three canonical solutions say count, integer, discrete. The refutation grants quantitative (the book's 'set of numbers so quantitative'), then separates discrete from continuous the way the book does: a count is written as an integer, and continuous is for values that cannot be represented by integers. The values it quotes (3, 0, 14, 30; 23, 25, 22; 3, 5, 2) are the book's. 'No answer like 13.5 messages' is a plain illustration, not new content. No ids or page references appear. The 'numbers vary a lot' cause is speculative but not load-bearing.",
+        "sources": [
+          {
+            "type": "distractor",
+            "ref": "D2"
+          },
+          {
+            "type": "distractor",
+            "ref": "D5"
+          },
+          {
+            "type": "distractor",
+            "ref": "D8"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m10s1-1-1:we01"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m10s1-1-1:ex10-1-2"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m10s1-1-1:ex10-1-3"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "book",
+            "ref": "q:g10m10s1-1-1:we01",
+            "question_id": "q:g10m10s1-1-1:we01",
+            "text": "quantitative continuous",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m10s1-1-1:ex10-1-2",
+            "question_id": "q:g10m10s1-1-1:ex10-1-2",
+            "text": "quantitative continuous",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m10s1-1-1:ex10-1-3",
+            "question_id": "q:g10m10s1-1-1:ex10-1-3",
+            "text": "quantitative continuous",
+            "tagged": null
+          },
+          {
+            "origin": "S6",
+            "ref": "tpl:g10m10s1-1-1:counts-reason#mc:g10m10s1-1-1:count-called-continuous",
+            "question_id": "q:g10m10s1-1-1:g001-counts",
+            "text": "Quantitative continuous, because the values are numbers",
+            "tagged": "mc:g10m10s1-1-1:count-called-continuous"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m10s1-1-1:measurement-called-discrete",
+      "lo_id": "lo:g10m10s1-1-1",
+      "label": "Calls a measurement discrete",
+      "description": "The student sees a data set of measurements written as decimals (heights such as 1.70 m) and calls it discrete, perhaps because it is a short list of separate values, instead of noticing that the values are measurements that cannot be represented by integers.",
+      "signal": "Chooses quantitative discrete for a data set of measurements written as decimals.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You were right that heights are numbers, so the data set is quantitative. The slip is calling it discrete because it is a short list of separate values written down, when what matters is what kind of numbers they are."
+        },
+        {
+          "step": 2,
+          "text_md": "A discrete data set is a set of counts written as integers, like the number of sweets in a packet. Now look at heights such as $1.70\\text{ m}$, $1.41\\text{ m}$ and $1.32\\text{ m}$. Nobody counted these. They are measurements, and none of them is an integer."
+        },
+        {
+          "step": 3,
+          "text_md": "The length of the list does not decide the type. Six heights or six hundred, they are still measurements that cannot be represented by integers, so the data set is quantitative continuous."
+        },
+        {
+          "step": 4,
+          "text_md": "Next time ask: is each value a count written as an integer, or a measurement that cannot be represented by integers? A count is discrete; a measurement like a height is continuous."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:g10m10s1-1-1:ex10-7-1",
+          "choice_text": "quantitative discrete"
+        }
+      ],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch10-wf_ba64d0e9-a82.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real: quantitative discrete is the wrong option on the heights question, whose canonical answer is continuous because the data 'cannot be represented by integers'. The refutation matches the book: heights are numbers so quantitative; discrete means counts written as integers; heights such as 1.70, 1.41 and 1.32 are measurements and none is an integer; list length does not decide the type. The heights are the book's and none is an integer. It names no ids or pages. The 'short list of separate values' cause is a guess from the entry itself, but the maths stands without it. The signal says 'measurements written as decimals', which is accurate for this question.",
+        "sources": [
+          {
+            "type": "distractor",
+            "ref": "D11"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m10s1-1-1:ex10-7-1"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "book",
+            "ref": "q:g10m10s1-1-1:ex10-7-1",
+            "question_id": "q:g10m10s1-1-1:ex10-7-1",
+            "text": "quantitative discrete",
+            "tagged": null
+          },
+          {
+            "origin": "S6",
+            "ref": "tpl:g10m10s1-1-1:measure-reason#mc:g10m10s1-1-1:measurement-called-discrete",
+            "question_id": "q:g10m10s1-1-1:g001-measur",
+            "text": "Quantitative discrete, because the data set is a short list of separate values",
+            "tagged": "mc:g10m10s1-1-1:measurement-called-discrete"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m10s1-1-1:numbers-called-qualitative",
+      "lo_id": "lo:g10m10s1-1-1",
+      "label": "Calls a set of numbers qualitative",
+      "description": "The student treats a data set made of numbers as qualitative (anecdotal or categorical), reading the numbers as descriptions or group names because they come with a story about people, instead of recognising a set of numbers as quantitative.",
+      "signal": "Chooses a qualitative option (anecdotal or categorical) for a data set that is a list of numbers.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You have treated the numbers as if they were descriptions or names of groups rather than amounts. That is an easy thing to do when the numbers come with a story, such as classmates, shop visitors or a class of learners. You are right that the numbers describe people and things; the slip is letting the story decide."
+        },
+        {
+          "step": 2,
+          "text_md": "The first check is on the values themselves. A data set such as the sweets in a packet, $23, 25, 22, 26, 27, 25, 21, 28$, is a set of numbers, and so it must be quantitative. Each number says how many, not which group."
+        },
+        {
+          "step": 3,
+          "text_md": "The same holds for heights such as $1.70\\text{ m}$ and $1.41\\text{ m}$, and for counts such as $3$ questions answered correctly or $14$ SMS messages. Every value is a number, so each of these data sets is quantitative, whoever it was collected from."
+        },
+        {
+          "step": 4,
+          "text_md": "Look at the values first. If the data set is a set of numbers, call it quantitative, and only then decide whether it is discrete or continuous."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:g10m10s1-1-1:we01",
+          "choice_text": "qualitative anecdotal"
+        },
+        {
+          "question_id": "q:g10m10s1-1-1:we01",
+          "choice_text": "qualitative categorical"
+        },
+        {
+          "question_id": "q:g10m10s1-1-1:ex10-1-2",
+          "choice_text": "qualitative anecdotal"
+        },
+        {
+          "question_id": "q:g10m10s1-1-1:ex10-1-2",
+          "choice_text": "qualitative categorical"
+        },
+        {
+          "question_id": "q:g10m10s1-1-1:ex10-1-3",
+          "choice_text": "qualitative anecdotal"
+        },
+        {
+          "question_id": "q:g10m10s1-1-1:ex10-1-3",
+          "choice_text": "qualitative categorical"
+        },
+        {
+          "question_id": "q:g10m10s1-1-1:ex10-7-1",
+          "choice_text": "qualitative anecdotal"
+        },
+        {
+          "question_id": "q:g10m10s1-1-1:ex10-7-1",
+          "choice_text": "qualitative categorical"
+        }
+      ],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch10-wf_ba64d0e9-a82.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real. All four book questions offer qualitative anecdotal and qualitative categorical as wrong options for numeric data, and every canonical solution begins 'This data set is a set of numbers and so must be quantitative'. The refutation says the same thing and argues against the slip, not just the method. Its data are accurate: the sweets set {23,25,22,26,27,25,21,28}, heights of 1.70 m and 1.41 m, 3 questions correct and 14 SMS. It does not name any question id, page or figure. Its closing rule (numbers first mean quantitative, then decide discrete or continuous) is the book's own order. The 'because of the story' cause is the colleague's guess, not something the evidence shows, but the maths does not depend on it.",
+        "sources": [
+          {
+            "type": "distractor",
+            "ref": "D0"
+          },
+          {
+            "type": "distractor",
+            "ref": "D1"
+          },
+          {
+            "type": "distractor",
+            "ref": "D3"
+          },
+          {
+            "type": "distractor",
+            "ref": "D4"
+          },
+          {
+            "type": "distractor",
+            "ref": "D6"
+          },
+          {
+            "type": "distractor",
+            "ref": "D7"
+          },
+          {
+            "type": "distractor",
+            "ref": "D9"
+          },
+          {
+            "type": "distractor",
+            "ref": "D10"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m10s1-1-1:ex10-1-2"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m10s1-1-1:ex10-7-1"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "book",
+            "ref": "q:g10m10s1-1-1:we01",
+            "question_id": "q:g10m10s1-1-1:we01",
+            "text": "qualitative anecdotal",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m10s1-1-1:we01",
+            "question_id": "q:g10m10s1-1-1:we01",
+            "text": "qualitative categorical",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m10s1-1-1:ex10-1-2",
+            "question_id": "q:g10m10s1-1-1:ex10-1-2",
+            "text": "qualitative anecdotal",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m10s1-1-1:ex10-1-2",
+            "question_id": "q:g10m10s1-1-1:ex10-1-2",
+            "text": "qualitative categorical",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m10s1-1-1:ex10-1-3",
+            "question_id": "q:g10m10s1-1-1:ex10-1-3",
+            "text": "qualitative anecdotal",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m10s1-1-1:ex10-1-3",
+            "question_id": "q:g10m10s1-1-1:ex10-1-3",
+            "text": "qualitative categorical",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m10s1-1-1:ex10-7-1",
+            "question_id": "q:g10m10s1-1-1:ex10-7-1",
+            "text": "qualitative anecdotal",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m10s1-1-1:ex10-7-1",
+            "question_id": "q:g10m10s1-1-1:ex10-7-1",
+            "text": "qualitative categorical",
+            "tagged": null
+          },
+          {
+            "origin": "S6",
+            "ref": "tpl:g10m10s1-1-1:counts-reason#mc:g10m10s1-1-1:numbers-called-qualitative",
+            "question_id": "q:g10m10s1-1-1:g001-counts",
+            "text": "Qualitative anecdotal, because the values only describe what the learners did",
+            "tagged": "mc:g10m10s1-1-1:numbers-called-qualitative"
+          },
+          {
+            "origin": "S6",
+            "ref": "tpl:g10m10s1-1-1:measure-reason#mc:g10m10s1-1-1:numbers-called-qualitative",
+            "question_id": "q:g10m10s1-1-1:g001-measur",
+            "text": "Qualitative categorical, because the values only sort the learners into groups",
+            "tagged": "mc:g10m10s1-1-1:numbers-called-qualitative"
+          },
+          {
+            "origin": "S6",
+            "ref": "tpl:g10m10s1-1-1:wholenumbers-measure#mc:g10m10s1-1-1:numbers-called-qualitative",
+            "question_id": "q:g10m10s1-1-1:g001-wholen",
+            "text": "Qualitative anecdotal, because the values only describe the things measured",
+            "tagged": "mc:g10m10s1-1-1:numbers-called-qualitative"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m10s1-1-2:anecdotal-because-personal",
+      "lo_id": "lo:g10m10s1-1-2",
+      "label": "Calls a set of choices anecdotal because people gave them",
+      "description": "The student sees that the data comes from what learners say about themselves (their provider, their favourite spread) and calls it anecdotal, taking anecdotal to mean 'personal reports' rather than 'in the form of a story'.",
+      "signal": "Chooses qualitative anecdotal for a list of short answers that repeat, such as network names or sandwich fillings.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You are right that this data is qualitative, because it is not made of numbers. The slip is in the next decision: you called it anecdotal, perhaps because the learners are telling us about themselves, and that feels like a personal account."
+        },
+        {
+          "step": 2,
+          "text_md": "Who supplied the data does not decide its type. Anecdotal data takes the form of a story. Categorical data comes from a limited set of possibilities. So ask what each response looks like, not where it came from."
+        },
+        {
+          "step": 3,
+          "text_md": "Try it on the cellular providers. Each learner answers with one provider name, such as Vodacom or MTN, and the same few names turn up again and again. Nobody tells a story: every answer is one of a small number of possibilities. That is categorical."
+        },
+        {
+          "step": 4,
+          "text_md": "The sandwich spreads work the same way. In a list of five answers, cheese appears twice, and every answer is a single item from a limited set of fillings. Again categorical, not anecdotal."
+        },
+        {
+          "step": 5,
+          "text_md": "Once you have decided the data is qualitative, ask: does each response tell a story, or is it one of a limited set of possibilities? Short answers that repeat from a small set are categorical; stories are anecdotal."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:g10m10s1-1-2:we02",
+          "choice_text": "qualitative anecdotal"
+        },
+        {
+          "question_id": "q:g10m10s1-1-2:ex10-7-2",
+          "choice_text": "qualitative anecdotal"
+        }
+      ],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch10-wf_ba64d0e9-a82.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real: the book's we02 and ex10-7-2 both have 'qualitative anecdotal' as a wrong option, and the canonical answers are categorical. The refutation uses only the book's two tests (anecdotal = form of a story, categorical = limited set of possibilities). Its data facts check out: the providers repeat (Vodacom, MTN), and the five spreads have cheese twice. It leaves the student's reason as 'perhaps' and does not name any id, page or review history. It also stays consistent with ex10-1-1, where learner-supplied dreams are anecdotal because they are stories, so 'who supplied it' correctly does not decide the type. The signal is behavioural and does not misdiagnose.",
+        "sources": [
+          {
+            "type": "distractor",
+            "ref": "D0"
+          },
+          {
+            "type": "distractor",
+            "ref": "D6"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m10s1-1-2:we02"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m10s1-1-2:ex10-7-2"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "book",
+            "ref": "q:g10m10s1-1-2:we02",
+            "question_id": "q:g10m10s1-1-2:we02",
+            "text": "qualitative anecdotal",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m10s1-1-2:ex10-7-2",
+            "question_id": "q:g10m10s1-1-2:ex10-7-2",
+            "text": "qualitative anecdotal",
+            "tagged": null
+          },
+          {
+            "origin": "S6",
+            "ref": "tpl:g10m10s1-1-2:paired-questions#mc:g10m10s1-1-2:anecdotal-because-personal",
+            "question_id": "q:g10m10s1-1-2:g001-paired",
+            "text": "Both data sets are qualitative anecdotal, because both sets of answers come from the learners themselves.",
+            "tagged": "mc:g10m10s1-1-2:anecdotal-because-personal"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m10s1-1-2:quantitative-for-words",
+      "lo_id": "lo:g10m10s1-1-2",
+      "label": "Calls data made of words quantitative",
+      "description": "The student chooses quantitative (discrete or continuous) for a data set whose responses are names, items or sentences, without checking whether the data can be written as numbers.",
+      "signal": "Chooses quantitative discrete or quantitative continuous for a list of names, items or sentences.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You treated this data as numerical. That is an understandable first guess, because there are numbers around the data, such as how many learners were asked. But the question is about what the responses themselves are."
+        },
+        {
+          "step": 2,
+          "text_md": "The book's test is whether the data set can be written as numbers. Take the cellular providers: a learner's response is Vodacom, MTN or Cell C. None of these is a number, so quantitative cannot be right, whichever of discrete or continuous you picked."
+        },
+        {
+          "step": 3,
+          "text_md": "The same holds for the sandwich spreads (cheese, peanut butter, jam, honey) and for learners' dreams written as sentences. Responses that are names, items or sentences cannot be written as numbers, so these data sets are qualitative."
+        },
+        {
+          "step": 4,
+          "text_md": "Before you choose, read each response and ask: is this a number? If it is a name, an item or a sentence, the data is qualitative, and your next job is to decide whether it is categorical or anecdotal."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:g10m10s1-1-2:we02",
+          "choice_text": "quantitative discrete"
+        },
+        {
+          "question_id": "q:g10m10s1-1-2:we02",
+          "choice_text": "quantitative continuous"
+        },
+        {
+          "question_id": "q:g10m10s1-1-2:ex10-1-1",
+          "choice_text": "quantitative discrete"
+        },
+        {
+          "question_id": "q:g10m10s1-1-2:ex10-1-1",
+          "choice_text": "quantitative continuous"
+        },
+        {
+          "question_id": "q:g10m10s1-1-2:ex10-7-2",
+          "choice_text": "quantitative discrete"
+        },
+        {
+          "question_id": "q:g10m10s1-1-2:ex10-7-2",
+          "choice_text": "quantitative continuous"
+        }
+      ],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch10-wf_ba64d0e9-a82.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real: all three questions carry quantitative discrete and quantitative continuous as wrong options, and each canonical solution begins from 'cannot be written as numbers' (we02: 'not a number'). The refutation applies the book's own first test correctly. The responses (Vodacom, MTN, Cell C; cheese, jam, honey; the sentence dreams) are not numbers, so quantitative is wrong whichever of discrete or continuous was chosen. It then points the student to the second decision. It argues against this specific slip, not just the method. 'The book's test' is a generic remark, not a locator, so it does not break the no-reference rule. The remark about numbers around the data is a plausible gloss and harmless. The signal is behavioural and correct.",
+        "sources": [
+          {
+            "type": "distractor",
+            "ref": "D1"
+          },
+          {
+            "type": "distractor",
+            "ref": "D2"
+          },
+          {
+            "type": "distractor",
+            "ref": "D4"
+          },
+          {
+            "type": "distractor",
+            "ref": "D5"
+          },
+          {
+            "type": "distractor",
+            "ref": "D7"
+          },
+          {
+            "type": "distractor",
+            "ref": "D8"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m10s1-1-2:we02"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m10s1-1-2:ex10-1-1"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m10s1-1-2:ex10-7-2"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "book",
+            "ref": "q:g10m10s1-1-2:we02",
+            "question_id": "q:g10m10s1-1-2:we02",
+            "text": "quantitative discrete",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m10s1-1-2:we02",
+            "question_id": "q:g10m10s1-1-2:we02",
+            "text": "quantitative continuous",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m10s1-1-2:ex10-1-1",
+            "question_id": "q:g10m10s1-1-2:ex10-1-1",
+            "text": "quantitative discrete",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m10s1-1-2:ex10-1-1",
+            "question_id": "q:g10m10s1-1-2:ex10-1-1",
+            "text": "quantitative continuous",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m10s1-1-2:ex10-7-2",
+            "question_id": "q:g10m10s1-1-2:ex10-7-2",
+            "text": "quantitative discrete",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m10s1-1-2:ex10-7-2",
+            "question_id": "q:g10m10s1-1-2:ex10-7-2",
+            "text": "quantitative continuous",
+            "tagged": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m10s1-1-2:stops-at-qualitative",
+      "lo_id": "lo:g10m10s1-1-2",
+      "label": "Says 'qualitative' and stops",
+      "description": "The student sees that the data is descriptive rather than numerical and calls it qualitative, but does not say whether it is categorical or anecdotal, or why.",
+      "signal": "The final answer is only 'qualitative' (or 'descriptive, not numerical') with no categorical or anecdotal and no reason.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You are half way there. You spotted that the data is descriptive and not numerical, and that is exactly what makes it qualitative. But categorising the data set takes two decisions, and 'qualitative' is only the first."
+        },
+        {
+          "step": 2,
+          "text_md": "The word qualitative fits both a list of sandwich spreads (cheese, jam, honey) and a list of learners' dreams such as \"I want to help the sick.\" Yet these are different kinds of data. The spreads come from a limited set of possibilities, so they are categorical. The dreams take the form of a story, so they are anecdotal."
+        },
+        {
+          "step": 3,
+          "text_md": "An answer that only says 'qualitative' cannot tell those two data sets apart, so it does not yet describe either one. The second decision, categorical or anecdotal, is what finishes the job."
+        },
+        {
+          "step": 4,
+          "text_md": "Give both parts in one sentence, with the reason for each. For example: 'This data cannot be written as numbers, so it is qualitative; it comes from a limited set of possibilities, so it is categorical.' For a story-like data set, swap the second part for 'it takes the form of a story, so it is anecdotal'."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch10-wf_ba64d0e9-a82.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real and shown by the evidence: an independent solver answered only 'qualitative (descriptive/non-numerical)' where the canonical answer is 'qualitative anecdotal'. The objective itself requires a second decision, categorical or anecdotal, with an explanation. The refutation argues against stopping rather than restating the method. It shows that 'qualitative' alone cannot tell the spreads from the dreams, then models a two-part answer in the book's own wording ('cannot be written as numbers... limited set of possibilities... form of a story'). The examples come from the book's data and are correct. No ids, pages or review history appear in the label, description, signal or steps. Having no attached options is right, since no multiple-choice option can express this answer. The signal requires both no categorical/anecdotal and no reason, so it does not misdiagnose.",
+        "sources": [
+          {
+            "type": "resolve_disagreement",
+            "ref": "q:g10m10s1-1-2:ex10-1-1"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m10s1-1-2:ex10-1-1"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m10s1-1-2:ex10-7-2"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:g10m10s2-1-1:median-even-one-middle",
+      "lo_id": "lo:g10m10s2-1-1",
+      "label": "Picks one of the two middle values when there is an even number of values",
+      "description": "With an even number of values, the student chooses one of the two middle values as the median instead of finding the value halfway between them.",
+      "signal": "The answer is exactly one of the two middle values of the sorted data, and those two values are different (for 1;2;10;11;14;68;86;99 the answer 11 or 14 instead of 12.5).",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You sorted the values and went looking for the middle, which is the right start. The slip is in expecting one middle value: when the number of values is even, there are **two** values in the middle, and neither one is the middle on its own."
+        },
+        {
+          "step": 2,
+          "text_md": "Take the sorted set $1;2;10;11;14;68;86;99$. There are 8 values, so the middle falls between the fourth and fifth positions, where the values are $11$ and $14$. If you choose $11$, there are three values below it and four above it. If you choose $14$, there are four below and three above. Neither choice splits the data evenly."
+        },
+        {
+          "step": 3,
+          "text_md": "The median lies halfway between the two middle values: $\\text{median}=\\frac{11+14}{2}=12.5$. Here the median is not one of the values in the set, and that is fine."
+        },
+        {
+          "step": 4,
+          "text_md": "Your move: count the values. If the number is odd, take the single middle value. If it is even, take the two values in the middle, add them and divide by $2$."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch10-wf_ba64d0e9-a82.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real and matches the book's even-count method. For 1;2;10;11;14;68;86;99 there are 8 values, the middle falls between the fourth (11) and fifth (14) positions, and (11+14)/2 = 12.5, which is the book's answer. The below/above counts (3 and 4 for 11, 4 and 3 for 14) are correct for this tie-free example, and the closing step (odd: take the middle value; even: add the two middle values and divide by 2) is the book's method. The claim that the median here is not a member of the set is true for this data and is stated only for it. The signal is well guarded: the answer is one of the two middle values and the two are different, so cases like ex10-2-2 where both middle values are 13 are not misflagged. There are no ids, page numbers, figures or review history in the student-facing text.",
+        "sources": [
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m10s2-1-1:we05"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m10s2-1-1:ex10-2-4b"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:g10m10s2-1-1:mode-single-value-only",
+      "lo_id": "lo:g10m10s2-1-1",
+      "label": "Expects the mode to be exactly one value",
+      "description": "The student gives a single value as the mode even when two values appear equally often, or insists on naming a mode when no value appears more than once.",
+      "signal": "A single value given as the mode when two different values share the highest count (for ages in which 33 and 42 each appear twice and every other age appears once, the answer 33 alone or 42 alone).",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Looking for the value that appears most often is exactly the right idea. The part to check is whether only one value can earn that name. The mode is the value that appears most often, and nothing says only one value can do that."
+        },
+        {
+          "step": 2,
+          "text_md": "Think of 15 ages in which $33$ appears twice and $42$ appears twice, while every other age appears once. If you say the mode is $33$, you have left out $42$, which appears just as often. Neither has a better claim."
+        },
+        {
+          "step": 3,
+          "text_md": "When two values appear equally often and more often than any other, both are modes. Here the modal ages are $33$ and $42$."
+        },
+        {
+          "step": 4,
+          "text_md": "It works the other way too. If every value appears only once, as in a set of times that are all different, no value appears more than once, so there is no mode. You do not have to force one."
+        },
+        {
+          "step": 5,
+          "text_md": "Your move: count how many times each value appears, find the highest count, and write down every value that reaches it. If the highest count is $1$, there is no mode."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch10-wf_ba64d0e9-a82.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is supported by the book's own answers. The 15 marathon ages have 33 and 42 each appearing twice with every other age once, and the book gives two modes, 33 and 42. The book's motorbike times with no repeated value have no mode 'because there is no value that occurs more than once', which is exactly what step 4 and the closing step say. The refutation argues against the error (naming only one of two tied values, or forcing a mode where none exists) rather than just restating the method. It adds nothing beyond the book. The signal covers the first half of the description, a single value given when two tie, and that is a sound diagnosis that would not misflag a student. It does not detect the forced-mode half, which is a missed case rather than a misdiagnosis. The student-facing text names no question ids, pages or review history.",
+        "sources": [
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m10s2-1-1:ex10-2-5"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "expl:g10m10s2-1-1:ex10-7-20b"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:g10m10s2-1-2:expects-mean-equals-median",
+      "lo_id": "lo:g10m10s2-1-2",
+      "label": "Expects the mean and median to agree",
+      "description": "The student expects the mean and median to come out the same or nearly the same, so a gap between them is taken as an arithmetic slip, or only one of the two is worked out and the other is assumed to match.",
+      "signal": null,
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You expected the mean and the median to match, so when they differ you suspect you made a mistake, or you work out only one and assume the other would agree. That is a fair expectation for the bread data, because the two are close there. But close is not the same as equal."
+        },
+        {
+          "step": 2,
+          "text_md": "The two measures find the centre in different ways. The mean adds all ten masses and divides by $10$, so every value counts by its size. The median sorts the masses and takes the value in the middle; with $10$ masses that is halfway between the two middle numbers. Two different methods will seldom give exactly the same number."
+        },
+        {
+          "step": 3,
+          "text_md": "The results for the seven days show this. Thursday has a mean of $803.4\\ \\text{g}$ and a median of $800.8\\ \\text{g}$. Friday has a mean of $802.0\\ \\text{g}$ and a median of $804.3\\ \\text{g}$. On none of the seven days are the mean and median equal, and nothing has gone wrong. The book also warns that the mean and median are not always close to each other, so a difference is not a sign of an error, and one measure cannot stand in for the other."
+        },
+        {
+          "step": 4,
+          "text_md": "So work out both and set them side by side. Then compare them with the requirement. For the bread, $800\\ \\text{g}$ with $5$ percent under and $10$ percent over gives limits of $760\\ \\text{g}$ and $880\\ \\text{g}$. Both the mean and the median sit close to $800\\ \\text{g}$ on every day, and every individual measurement is inside the limits, so the supplier is reliable."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch10-wf_ba64d0e9-a82.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is supported by caution WE7 ('the mean and median are not always close') and by the canonical remark 'close to one another, but not quite equal'. I checked every figure against the canonical table. Thursday is 803.4 mean and 800.8 median, and Friday is 802.0 mean and 804.3 median. None of the seven days has equal mean and median. The limits are 760 g and 880 g, and every measurement lies between 776.7 and 826.0, so the conclusion that the supplier is reliable matches the canonical solution. The method is the book's: compute both, compare them with the requirement. The refutation argues against the specific error of expecting agreement and does not just restate the method. No question ids, page numbers, figures or review history appear. The entry has no signal, so signal_ok is true.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "WE7"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "expl:g10m10s2-1-2:we07"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:g10m10s2-1-2:mode-of-continuous-data",
+      "lo_id": "lo:g10m10s2-1-2",
+      "label": "Gives a mode for continuous measurements",
+      "description": "The student picks the mass that repeats in a day's bread data and reports it as the mode, instead of saying that a mode usually cannot be computed for continuous data.",
+      "signal": "A particular mass written as the mode of a day's bread masses, for example 789.0 g for Monday, or a table with a mode column filled in.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You looked for the value that appears most often and called it the mode. That is what a mode is, so your method is sound. The problem is the kind of data you are applying it to."
+        },
+        {
+          "step": 2,
+          "text_md": "Bread masses are continuous: a mass can be any real number, not just a few fixed values. When measurements can fall anywhere, two loaves matching exactly is usually a coincidence rather than a pattern, so a repeated value does not tell you which mass is typical. This is why the book says we can usually not compute the mode of a continuous data set."
+        },
+        {
+          "step": 3,
+          "text_md": "Here is what goes wrong in practice. Among Monday's ten masses, $789.0\\ \\text{g}$ appears twice, so you might call it the mode. But it is the lightest mass of the day, well below Monday's mean of $800.8\\ \\text{g}$ and median of $801.8\\ \\text{g}$. Two loaves happening to match tells you nothing about where the typical loaf sits."
+        },
+        {
+          "step": 4,
+          "text_md": "So for continuous data like these, do not report a mode. Write that the data are continuous, so the mode cannot be computed. Then work out the mean (add the ten masses and divide by $10$) and the median (sort the masses and take the value halfway between the two middle ones), and use those two to judge whether the loaves meet the requirement."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch10-wf_ba64d0e9-a82.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real and matches caution b03749 and the canonical step 'since the data are continuous we cannot compute the mode'. I re-solved Monday from the table: the masses sort to 789.0, 789.0, 796.2, 796.8, 801.2, 802.4, 802.4, 802.5, 808.8, 819.6. The sum is 8007.9, the mean is 800.8 and the median is 801.8, all matching the canonical solution. 789.0 appears twice and is the lightest mass of the day, so the example is true. The 'any real number' reasoning comes from the canonical text, and the final instruction (do not report a mode, use mean and median) is the book's method. It argues against the error and does not just restate the method. No question ids, page numbers, figures or review history appear. One minor imprecision: 802.4 also appears twice on Monday, and the refutation mentions only 789.0. That omission is not false and does not change the lesson.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "b03749"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "expl:g10m10s2-1-2:we07"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:g10m10s2-1-3:median-unaffected-by-outlier",
+      "lo_id": "lo:g10m10s2-1-3",
+      "label": "Thinks the median does not change at all when an outlier is added",
+      "description": "The student has learned that the median is not pulled by outliers and takes that to mean the median stays exactly the same, so reports no change after the extreme value is included.",
+      "signal": "States that the median is the same (for example $156.5$ cm) before and after the extreme value is included, or says the median is not affected at all.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Part of this is right: the median hardly reacts to one extreme value. The slip is going from \"hardly\" to \"not at all\". The claim is that the median is less affected than the mean, not that it stays put."
+        },
+        {
+          "step": 2,
+          "text_md": "See what adding one value does. With 10 learners the sorted list has an even number of values, so the median lies halfway between the fifth and sixth values: $\\frac{156+157}{2}=156.5$ cm."
+        },
+        {
+          "step": 3,
+          "text_md": "With the eleventh learner there are 11 values, an odd number, so the median is now the sixth value of the new sorted list, which is $157$ cm. The number of values changed, so the middle place moved, and the median moved with it."
+        },
+        {
+          "step": 4,
+          "text_md": "The median changed by $0.5$ cm, while the mean changed by $2.3$ cm. That is small compared with the mean, but it is not zero."
+        },
+        {
+          "step": 5,
+          "text_md": "To compare properly, sort the data again with the new value in it, find the middle of the new list, and write both medians and the change. Then say which measure moved less. Here it is the median."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch10-wf_ba64d0e9-a82.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is a plausible over-reading of the book's remark that the median is less affected by outliers. The canonical solution answers it directly: the median changes by only 0.5 cm, not by zero. The refutation is correct and consistent with the canonical method. With 10 values the median is (156+157)/2 = 156.5, the average of the fifth and sixth values. With 11 values it is the sixth value, 157. The changes of 0.5 for the median and 2.3 for the mean match the book. It argues against the specific slip, going from \"hardly\" to \"not at all\", rather than restating the method. It names no question id, page, figure or review history, and it introduces no measure or method the book lacks. The step 3 remark that the middle place moved is true here and is a mechanical reading of the book's own step. The signal (says the median is the same, or not affected at all) fits this error and would not misdiagnose a student who correctly says \"less affected\".",
+        "sources": [
+          {
+            "type": "canonical_solution",
+            "ref": "expl:g10m10s2-1-3:we08"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:g10m10s2-1-4:mode-not-most-frequent",
+      "lo_id": "lo:g10m10s2-1-4",
+      "label": "Puts the mode in the set, but not as the most frequent value",
+      "description": "The student builds a data set with the right mean and median but includes the stated mode only once, or lets two other values repeat as often as it does, as if being in the set were enough to make a value the mode.",
+      "signal": "A proposed data set in which the stated mode appears only once, or in which another value occurs as many times as the stated mode does.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Putting the age $2$ into your set is the right start, and your set may well have the right mean and median. But the mode is not just an age that appears in the set. It is the age that occurs most often."
+        },
+        {
+          "step": 2,
+          "text_md": "Try a set with a single $2$, such as $\\{1, 2, 3, 8, 11\\}$. Its total is $1+2+3+8+11=25$, so the mean is $\\frac{25}{5}=5$, and the middle value is $3$. But every age appears once, so nothing makes $2$ the age that occurs most often. The mode is not $2$."
+        },
+        {
+          "step": 3,
+          "text_md": "The median is $3$, so $3$ sits in the third position of the ordered set. Every age after it is $3$ or more, so the only positions left for a $2$ are the first two. One $2$ is not enough for the mode to be $2$, so both of those positions must be $2$."
+        },
+        {
+          "step": 4,
+          "text_md": "Take care with the last two ages as well. If $x_4$ and $x_5$ were the same age, that age would also occur twice, and then the mode would not be $2$."
+        },
+        {
+          "step": 5,
+          "text_md": "So write the mode in twice: $\\{2, 2, 3, x_4, x_5\\}$. The mean then gives $2+2+3+x_4+x_5=25$, so $x_4+x_5=18$. Choose two different ages that add to $18$, for example $4$ and $14$, which gives $\\{2, 2, 3, 4, 14\\}$."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch10-wf_ba64d0e9-a82.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real and is the book's own warning in the five-ages worked example: one 2 is not enough, both x1 and x2 must be 2, and x4 and x5 must differ or the mode is not 2. I checked every step. The set {1,2,3,8,11} sums to 25 (mean 5, median 3, no repeated age). Ordering forces positions 4 and 5 to be 3 or more. {2,2,3,x4,x5} gives x4+x5=18. The example {2,2,3,4,14} is the book's Data set 1. The refutation argues against the error with a counterexample rather than restating the method. It names no question id, page, figure or review history, and it teaches nothing outside the book. One nit: it warns only about x4=x5, and the pair 3 and 15 would also tie with 2 (the book's prose lists that pair too). Nothing the refutation literally says is false, so I confirm. The signal is mathematically sound: a stated mode appearing once, or tied by another value, is exactly the error.",
+        "sources": [
+          {
+            "type": "remark",
+            "ref": "expl:g10m10s2-1-4:ex10-2-10"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "S7",
+            "ref": "wt:g10m10s2-1-4:mode-most-frequent#no-mode",
+            "question_id": "q:g10m10s2-1-4:w006",
+            "text": "No value repeats, so the set has no mode at all",
+            "tagged": "mc:g10m10s2-1-4:mode-not-most-frequent"
+          },
+          {
+            "origin": "S7",
+            "ref": "wt:g10m10s2-1-4:mode-most-frequent#multi-modal",
+            "question_id": "q:g10m10s2-1-4:w006",
+            "text": "Two or more values tie at the top, so the set has more than one mode",
+            "tagged": "mc:g10m10s2-1-4:mode-not-most-frequent"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m10s3-1-2:edge-number-in-wrong-range",
+      "lo_id": "lo:g10m10s3-1-2",
+      "label": "Puts a number at the edge of a range into the neighbouring range",
+      "description": "The student sorts a value that sits at the edge of a range, such as a $4$ in ranges $0$–$3$ and $4$–$7$, into the next or previous range, so one column is counted one too many and its neighbour one too few.",
+      "signal": null,
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You may have put a number that sits at the edge of a range into its neighbour, for example a $4$ into the range $0$–$3$. Going range by range through the sorted list is the right plan. The slip is only in where the edge numbers go."
+        },
+        {
+          "step": 2,
+          "text_md": "Each range includes both numbers in its label, so $4$–$7$ holds $4$, $5$, $6$ and $7$. The next range starts at the very next whole number, so every whole number belongs to exactly one range."
+        },
+        {
+          "step": 3,
+          "text_md": "Say the sorted values of a group of learners begin $1, 4, 6, 6, 6, 6, 8$, and the ranges are $0$–$3$ and $4$–$7$. The range $0$–$3$ has just the $1$, so its count is $1$. The range $4$–$7$ has the $4$ and the four $6$s, so its count is $5$. Slip the $4$ into $0$–$3$ and you would count $2$ and $4$ instead, and both columns would come out wrong."
+        },
+        {
+          "step": 4,
+          "text_md": "To count a range, first write out the whole numbers it covers, for example $4, 5, 6, 7$. Then count every value in the sorted list that is one of those numbers. The edge numbers count."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:g10m10s3-1-2:ex10-7-14",
+          "choice_text": "D"
+        }
+      ],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch10-wf_ba64d0e9-a82.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Edge values are real in the book's data. For example, 4, the 8s, the 12s and 16 sit at range edges in the first 'which column is wrong' item, and the canonical grouping puts each in exactly one inclusive range. The book's own stem '0 <= number <= 2' supports the claim that both ends of a label are included. I recomputed the worked example: sorted 1,4,6,6,6,6,8 gives 0-3 count 1 and 4-7 count 5, and slipping the 4 gives 2 and 4. That is correct and matches the book's grouping. The advice to write out the whole numbers in a range is a way of applying the book's group-and-count method, not a different method. There are no forbidden references. Option D on the playing-cards item is the one column where this slip lands cleanly. Moving the two 11s from 8-11 into 12-15 makes C come to 3, which matches the drawn column, and D come to 5 against the drawn 3. D is then the only column that disagrees, so the student picks D.",
+        "sources": [
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m10s3-1-2:ex10-3-5"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m10s3-1-2:ex10-3-6"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m10s3-1-2:ex10-7-17"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "book",
+            "ref": "q:g10m10s3-1-2:ex10-7-14",
+            "question_id": "q:g10m10s3-1-2:ex10-7-14",
+            "text": "D",
+            "tagged": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m10s3-1-2:empty-range-skipped",
+      "lo_id": "lo:g10m10s3-1-2",
+      "label": "Skips a range that has no column",
+      "description": "The student checks only the ranges that have a column drawn, so a range with no column, which the histogram shows as $0$ values, is never compared with the data.",
+      "signal": null,
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "It is natural to check the columns you can see. But a range with no column drawn above it is still a range on the graph, and the empty space is telling you something: there are $0$ values in that range."
+        },
+        {
+          "step": 2,
+          "text_md": "So it has to be checked against the data like every other range. Say a range such as $16$–$19$ has no column, and the data holds $16, 17, 17, 18$ and $19$. That is $5$ values in the range, so the histogram says $0$ where the data says $5$."
+        },
+        {
+          "step": 3,
+          "text_md": "That changes how to search. Once the columns that are drawn each agree with the count from the grouped data, none of them is the incorrect one, and the mistake is in a range you have not compared yet."
+        },
+        {
+          "step": 4,
+          "text_md": "Next time, order the data, group it into every range along the bottom of the graph, and write each count beside its range, writing $0$ where there is no column. The range where the count and the column disagree is the incorrect one."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:g10m10s3-1-2:ex10-3-5",
+          "choice_text": "A"
+        },
+        {
+          "question_id": "q:g10m10s3-1-2:ex10-3-5",
+          "choice_text": "B"
+        },
+        {
+          "question_id": "q:g10m10s3-1-2:ex10-3-5",
+          "choice_text": "C"
+        },
+        {
+          "question_id": "q:g10m10s3-1-2:ex10-3-5",
+          "choice_text": "D"
+        }
+      ],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch10-wf_ba64d0e9-a82.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The book's own item hinges on this: the empty 16-19 column is drawn as 0 when the data has 16,17,17,18,19, which is 5. I recomputed the other four columns (1, 5, 3, 6) and they all agree with the data, so the statement that none of the drawn columns is the wrong one is true. The refutation's example (16, 17, 17, 18, 19 gives 5 where the graph says 0) is correct. Writing 0 for an empty range and comparing every range follows the canonical order-group-compare method. There are no forbidden references and nothing is taught beyond the book.",
+        "sources": [
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m10s3-1-2:ex10-3-5"
+          },
+          {
+            "type": "distractor",
+            "ref": "D0"
+          },
+          {
+            "type": "distractor",
+            "ref": "D1"
+          },
+          {
+            "type": "distractor",
+            "ref": "D2"
+          },
+          {
+            "type": "distractor",
+            "ref": "D3"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "book",
+            "ref": "q:g10m10s3-1-2:ex10-3-5",
+            "question_id": "q:g10m10s3-1-2:ex10-3-5",
+            "text": "A",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m10s3-1-2:ex10-3-5",
+            "question_id": "q:g10m10s3-1-2:ex10-3-5",
+            "text": "B",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m10s3-1-2:ex10-3-5",
+            "question_id": "q:g10m10s3-1-2:ex10-3-5",
+            "text": "C",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m10s3-1-2:ex10-3-5",
+            "question_id": "q:g10m10s3-1-2:ex10-3-5",
+            "text": "D",
+            "tagged": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m10s3-1-2:matches-some-ranges-only",
+      "lo_id": "lo:g10m10s3-1-2",
+      "label": "Accepts a data set that matches only some of the ranges",
+      "description": "The student takes a data set as the match once one or two of its ranges give the same counts as the columns, without grouping all of its values into every range.",
+      "signal": null,
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You found a range where the data set and the histogram agree, and that part is real: the data set does have the right number of values there. What is missing is the rest, because agreeing in some ranges does not make a data set the match."
+        },
+        {
+          "step": 2,
+          "text_md": "A data set matches a histogram only when every range gives the same count as its column, and a range with no column counts as $0$. One range that disagrees is enough to rule the data set out."
+        },
+        {
+          "step": 3,
+          "text_md": "For example, take a data set with $3, 2, 1$ and $3$ in the range $0$–$3$. That is $4$ values, which agrees with a column $4$ tall over that range. But the same data set has $5, 5, 6, 5$ and $4$ in the range $4$–$7$: that is $5$ values, and the column over that range is only $4$ tall. The first range agreed and the second did not, so this data set is not the match."
+        },
+        {
+          "step": 4,
+          "text_md": "So order each data set, group it into every range on the graph, and compare range by range. Cross a data set off the moment one range disagrees, and keep the one where every range agrees."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:g10m10s3-1-2:ex10-3-7",
+          "choice_text": "Data Set A"
+        },
+        {
+          "question_id": "q:g10m10s3-1-2:ex10-3-8",
+          "choice_text": "Data Set B"
+        },
+        {
+          "question_id": "q:g10m10s3-1-2:ex10-7-16",
+          "choice_text": "data set B"
+        },
+        {
+          "question_id": "q:g10m10s3-1-2:ex10-7-17",
+          "choice_text": "data set C"
+        }
+      ],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch10-wf_ba64d0e9-a82.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "I recomputed every data set against its histogram. Each attached option agrees with the drawn columns in some but not all ranges. The refutation's rule matches the canonical method: group each data set into every range, a range with no column counts as 0, and one disagreement rules the set out. Its example is arithmetically right (3,2,1,3 gives 4 in 0-3; 5,5,6,5,4 gives 5 in 4-7 against a column 4 high). It teaches nothing beyond the book and names no forbidden reference.",
+        "sources": [
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m10s3-1-2:ex10-7-16"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m10s3-1-2:ex10-7-17"
+          },
+          {
+            "type": "distractor",
+            "ref": "D8"
+          },
+          {
+            "type": "distractor",
+            "ref": "D11"
+          },
+          {
+            "type": "distractor",
+            "ref": "D21"
+          },
+          {
+            "type": "distractor",
+            "ref": "D23"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "book",
+            "ref": "q:g10m10s3-1-2:ex10-3-7",
+            "question_id": "q:g10m10s3-1-2:ex10-3-7",
+            "text": "Data Set A",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m10s3-1-2:ex10-3-8",
+            "question_id": "q:g10m10s3-1-2:ex10-3-8",
+            "text": "Data Set B",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m10s3-1-2:ex10-7-16",
+            "question_id": "q:g10m10s3-1-2:ex10-7-16",
+            "text": "data set B",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m10s3-1-2:ex10-7-17",
+            "question_id": "q:g10m10s3-1-2:ex10-7-17",
+            "text": "data set C",
+            "tagged": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m10s3-1-2:tall-column-means-big-values",
+      "lo_id": "lo:g10m10s3-1-2",
+      "label": "Reads a tall column as big numbers",
+      "description": "The student takes the height of a column to say how large the values in that range are, instead of how many values fall in that range.",
+      "signal": null,
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You are reading a tall column as meaning big numbers. That is a natural first guess, and you are right that the height tells you something about the values in that range. What it tells you is how many values are there, not how big they are."
+        },
+        {
+          "step": 2,
+          "text_md": "The numbers under the columns, like $12$–$15$, say which values a range covers. The height of the column says how many of the values in the data set land in that range. A tall column is the range where most of the values are, whether those values are small or large."
+        },
+        {
+          "step": 3,
+          "text_md": "For example, with $15$ learners counting their stones, a column over $12$–$15$ that is $6$ high means six learners have between $12$ and $15$ stones. It does not say that any of them has $6$ stones. All the column heights together add up to $15$, the number of learners, because each learner's value lands in exactly one column."
+        },
+        {
+          "step": 4,
+          "text_md": "To count the values in a range, find its column and read its height. That number is your count."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch10-wf_ba64d0e9-a82.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Real and common histogram error, and the book's caution (tall column = the range where most values lie) backs the correction. The refutation's example matches the book's 15-learner stones histogram: the 12-15 column is 6 high and the heights 1+4+1+3+6 sum to 15. It tells the student to read the column height as the count, which is the canonical method for the count-in-a-range questions. It names no question id, page, figure number or review history, and it teaches nothing beyond the book. The opening line 'you are right that the height tells you something' is loose but not wrong, since height does tell how many values are in the range.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "WE9 p.365"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m10s3-1-2:ex10-3-2"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:g10m10s3-1-3:grouped-mean-taken-as-exact",
+      "lo_id": "lo:g10m10s3-1-3",
+      "label": "Expects the grouped mean to be the exact mean",
+      "description": "The student treats the answer from grouped data as the true mean of the original values, or is puzzled that it can differ from the mean of the individual values.",
+      "signal": null,
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Your working can be spot on and still not give the exact mean, and that is fine. The number you get from grouped data is an **estimate** of the mean, not the exact mean of the original values."
+        },
+        {
+          "step": 2,
+          "text_md": "Grouping loses information. Once a value is placed in a range, all we know is that it lies somewhere in that range. In the taxi data, 16 weeks had between $700$ and $800$ passengers. One of those weeks could be $701$, another $799$, and the groups cannot tell us which."
+        },
+        {
+          "step": 3,
+          "text_md": "So the method treats every value in a group as lying at the centre of its range: all 16 of those weeks are counted as $750$. The book makes the same point: with grouped data the estimates of the centre change, because some information is lost."
+        },
+        {
+          "step": 4,
+          "text_md": "Use the method as it stands. Multiply each group's centre by its count, add these up, and divide by the total count: $\\frac{33600}{48}=700$. Then call it what it is, an estimate of the mean."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch10-wf_ba64d0e9-a82.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "I re-worked it from the histogram. The counts are 4, 6, 12, 16, 8 and 2, which total 48. The centres give 4(450)+6(550)+12(650)+16(750)+8(850)+2(950)=33600, and 33600/48=700. That matches canonical ex10-4-3b and ex10-4-3c. The error is real for this objective, which is an estimate of the mean of grouped data. Caution b03788 supports it: information is lost when values are placed in a range. The refutation argues against the error itself, that the grouped mean is the exact mean. It does not just restate the method. Its claims are mathematically right and stay inside the book: grouping loses information, every value is treated as sitting at the centre of its range, and the result is an estimate. It names no question id, page, numbered figure or review history. It uses the taxi data, which is the data the student sees in this objective's questions, and it states the numbers itself.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "b03788"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m10s3-1-3:ex10-4-3c"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:g10m10s3-1-3:modal-group-vs-single-value",
+      "lo_id": "lo:g10m10s3-1-3",
+      "label": "Looks for one most-common value instead of the modal group",
+      "description": "The student expects the mode to be a single most common value, as with ungrouped data, and is unsure why the answer for grouped data is a range.",
+      "signal": null,
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Looking for what occurs most often is the right idea for a mode. What changes with grouped data is what you are given: a count for each range, not the individual values."
+        },
+        {
+          "step": 2,
+          "text_md": "Because the values have been placed in ranges, you cannot see which single number occurs most often. That information is gone. What the table or histogram does show is how many values fall in each range."
+        },
+        {
+          "step": 3,
+          "text_md": "That is why we ask for the **modal group**: the group with the highest number of data values. The book notes that the grouped mode can be a better estimate of the mode than a single most common value, because the grouping shows the range in which the values are clustered."
+        },
+        {
+          "step": 4,
+          "text_md": "In the taxi data the groups hold $4$, $6$, $12$, $16$, $8$ and $2$ values. The highest count is $16$, in the group $700<x\\leq800$. The $16$ only tells you how many values lie in that group, so the modal group is the range itself."
+        },
+        {
+          "step": 5,
+          "text_md": "To find a modal group: compare the counts, pick the largest, and write down the range it belongs to."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch10-wf_ba64d0e9-a82.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The modal group is the group with the highest count. Here that is 16 in 700<x<=800, which matches canonical ex10-4-3a and the worked examples. The refutation states the six counts correctly and says the 16 is a count, so the answer is the range. Cautions b03792 and b03796 support it: the grouped mode shows where the values cluster, and the single-value mode is problematic for continuous data. The wording is hedged ('can be a better estimate') and does not go beyond the book. It argues against the 'one most common value' expectation and does not only restate the method. It contains no question id, page number, figure number or review history, and the numbers it uses are self-contained.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "b03792"
+          },
+          {
+            "type": "caution",
+            "ref": "b03796"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m10s3-1-3:ex10-4-3a"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:g10m10s4-1-1:range-ignores-outlier-effect",
+      "lo_id": "lo:g10m10s4-1-1",
+      "label": "Expects removing one value to leave the range unchanged",
+      "description": "When asked what happens to the range if the smallest or largest value is removed, or when a value that is not typical of the rest is present, the student expects the range to stay the same or hardly change, forgetting that the range is built only from the largest and the smallest values.",
+      "signal": "After the smallest value has been removed, the student gives the original range again as the new range (for the worked set, 9 instead of 6), or says the range stays the same.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "It is natural to think that taking away one number out of many should hardly change anything, and you are right that all the other values stay exactly as they were. The catch is that the range does not use all the values: it uses only the largest and the smallest."
+        },
+        {
+          "step": 2,
+          "text_md": "The range is the largest value minus the smallest value. In the set $\\{1, 4, 5, 8, 6, 7, 5, 6, 7, 4, 10, 9, 10\\}$ the smallest value is $1$ and the largest value is $10$, so the range is $10-1=9$."
+        },
+        {
+          "step": 3,
+          "text_md": "Now take the $1$ away. The smallest value left is $4$, so the range becomes $10-4=6$. Only one number was removed, yet the range dropped from $9$ to $6$, because the number removed was one of the two numbers the range is made from."
+        },
+        {
+          "step": 4,
+          "text_md": "The book calls a value that is not typical of the other values an outlier, and the $1$ here is one. An outlier has a big influence on the range: the range is very sensitive to outliers."
+        },
+        {
+          "step": 5,
+          "text_md": "So when you are asked what happens if a value is removed, cross it out, find the smallest and the largest values that are left, and subtract again. Here that gives $10-4=6$."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch10-wf_ba64d0e9-a82.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real and rests on the book's own remarks that the range is very sensitive to outliers and that a value not typical of the others has a big influence on the range. I re-solved the worked set: smallest 1 and largest 10 give 10-1=9. Removing the 1 makes the smallest 4, so 10-4=6. The refutation reaches both answers (9 and 6) and uses the book's method. It argues against the belief that the range stays put when one value goes, by pointing out that the range uses only the largest and smallest values. It names no question id, page, figure or review history, and teaches nothing beyond the book. The signal (the original range given again, 9 instead of 6, or 'the range stays the same') matches the error.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "b03812"
+          },
+          {
+            "type": "caution",
+            "ref": "WE10"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m10s4-1-1:we10"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "S6",
+            "ref": "tpl:g10m10s4-1-1:outlier-effect#mc:g10m10s4-1-1:range-ignores-outlier-effect",
+            "question_id": "q:g10m10s4-1-1:g001-outlie",
+            "text": "The range stays at $21$, because only one of the values is removed.",
+            "tagged": "mc:g10m10s4-1-1:range-ignores-outlier-effect"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m10s4-1-2:rank-on-unsorted-data",
+      "lo_id": "lo:g10m10s4-1-2",
+      "label": "Counts to the rank in the list as given, without sorting first",
+      "description": "The student works out the rank with the percentile formula but counts along the data in the order it was printed, instead of first sorting the values from smallest to largest.",
+      "signal": "Each answer is built from values at the right positions of the list as it was printed, so for a data set that is not already in order the median and quartiles come out wrong. For the twelve-value data set 3, 5, 1, 8, 9, 12, 25, 28, 24, 30, 41, 50 this gives 4.5, 18.5 and 27 instead of 6.5, 18 and 29.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You worked out the rank correctly and then counted to that position, which is the right instinct. The slip is that a rank is a position in the data set **after it has been sorted** from smallest to largest, and the list you are given is usually in no particular order."
+        },
+        {
+          "step": 2,
+          "text_md": "Take $\\{3, 5, 1, 8, 9, 12, 25, 28, 24, 30, 41, 50\\}$. The rank of the lower quartile is $r=\\frac{25}{100}(12-1)+1=3.75$, so it lies between the third and fourth values. Counting along the list as printed, those are $1$ and $8$, which gives $\\frac{1+8}{2}=4.5$. But $1$ is the smallest number in the whole set, so it cannot be the third smallest."
+        },
+        {
+          "step": 3,
+          "text_md": "The percentile formula only makes sense in sorted order. It gives rank $1$ for the minimum (the $0^{\\text{th}}$ percentile) and rank $n$ for the maximum (the $100^{\\text{th}}$ percentile). Those ranks only point to the smallest and largest values when the values are in order."
+        },
+        {
+          "step": 4,
+          "text_md": "Sort first: $\\{1, 3, 5, 8, 9, 12, 24, 25, 28, 30, 41, 50\\}$. Now the third and fourth values are $5$ and $8$, and the lower quartile is $\\frac{5+8}{2}=6.5$. Same rank, different values, different answer."
+        },
+        {
+          "step": 5,
+          "text_md": "Make sorting your first step every time: rewrite the data from smallest to largest, check that you still have all $n$ values, and only then use the percentile formula and count along the sorted list."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch10-wf_ba64d0e9-a82.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real for this objective, which says to sort first. The worked example and both exercises with unsorted data open by ordering the data. I re-ran the arithmetic on the unsorted list 3, 5, 1, 8, 9, 12, 25, 28, 24, 30, 41, 50. Ranks 3.75, 6.5 and 9.25 point at 1 and 8, then 12 and 25, then 24 and 30, which gives 4.5, 18.5 and 27 as the signal says. The sorted list gives 6.5, 18 and 29, matching the canonical answer for the same data set. The refutation steps all check out: 1 cannot be the third smallest; the formula gives rank 1 for the minimum and rank n for the maximum; sorted, the third and fourth values are 5 and 8, so 6.5. It argues against this error with a concrete contradiction instead of restating the method. It takes the halfway value as the book does. The student-facing text contains no question id, page, figure or review history. The sorting advice stays within the book's method. The signal is specific and would not misfire on a correct student.",
+        "sources": [
+          {
+            "type": "remark",
+            "ref": "q:g10m10s4-1-2:we11"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m10s4-1-2:ex10-5-4"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m10s4-1-2:ex10-7-22a"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "S7",
+            "ref": "wt:g10m10s4-1-2:quartiles-box-build#median-of-unsorted",
+            "question_id": "q:g10m10s4-1-2:w001",
+            "text": "The middle of the data as GIVEN, not the middle once it is sorted",
+            "tagged": "mc:g10m10s4-1-2:rank-on-unsorted-data"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m10s4-1-4:quartiles-from-unsorted-data",
+      "lo_id": "lo:g10m10s4-1-4",
+      "label": "Finds the middle of the data before putting it in order",
+      "description": "The student finds the median and the quartiles by counting to the middle of the data in the order it is printed, instead of first writing the values from smallest to largest.",
+      "signal": null,
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You are counting along the list to find the middle, and finding a quartile by its position is the right idea. The slip is doing that counting on the data in the order it was printed."
+        },
+        {
+          "step": 2,
+          "text_md": "A quartile is the 25th, 50th or 75th percentile, and the rank from the percentile formula counts places in the ordered list. With 12 values the 25th percentile has rank $3.75$, which means between the third and fourth smallest values. In a list that is not in order, the third and fourth entries are just whatever happened to be written there."
+        },
+        {
+          "step": 3,
+          "text_md": "See it go wrong with 15 timings printed in this order: $121, 137, 131, 135, 130, 128, 130, 126, 132, 127, 129, 120, 118, 125, 134$. The ranks are $4.5$ and $11.5$. In the printed order, the lower-quartile places hold $135$ and $130$, while the upper-quartile places hold $129$ and $120$. The \"upper\" quartile comes out smaller than the \"lower\" one, so $Q_3-Q_1$ would be negative. The upper quartile can never sit below the lower quartile, so that result tells you the data was not in order."
+        },
+        {
+          "step": 4,
+          "text_md": "Before you count anything, write all the values in order from smallest to largest. Then use the percentile formula for the ranks, read $Q_1$ and $Q_3$ from that ordered list, and subtract: $Q_3-Q_1$. For the semi-interquartile range, halve that result. Those same 15 timings, put in order first, give an interquartile range of $6$."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch10-wf_ba64d0e9-a82.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "I worked every number myself. With n=12 the book's percentile formula gives rank 3.75, between the 3rd and 4th values, as the book does. For the 15 timings, n=15 gives ranks 0.25*14+1=4.5 and 0.75*14+1=11.5. In the printed order, positions 4 and 5 hold 135 and 130, so Q1 would be 132.5. Positions 11 and 12 hold 129 and 120, so Q3 would be 124.5. That gives Q3-Q1=-8, which is negative, so the counterexample is real and the refutation's description of it is accurate. Sorted, the list is 118,120,121,125,126,127,128,129,130,130,131,132,134,135,137. Q1=(125+126)/2=125.5, Q3=(131+132)/2=131.5, and the IQR is 6, matching the canonical answer. I also checked the canonical answers for ex10-5-6e (7, 6.5, 5), ex10-5-6f (3.5, 3.25, 2.5) and the untrained set in ex10-7-22b (Q1=139.5, Q3=148.5, IQR 9). All agree with the percentile-rank-on-ordered-data method used in the refutation, so there is no contradiction. The error is real for this objective because ex10-7-22b hands the student 15 unsorted values, while the book's worked example begins from an ordered data set. The refutation argues against the specific slip: it shows the counting going wrong with a concrete negative result, and then gives the corrected route and the semi-interquartile halving step. It names no question id, page, figure, reviewer or review history. Two minor points against it, neither of which changes the verdict: the line that a negative result tells you the data was not in order slightly over-claims, since a negative could also come from subtracting the wrong way round. The Q3 >= Q1 sanity check is an elementary consequence of the definitions, not something the book states, though it is correct. The refutation also states the answer 6 for the same data as ex10-7-22b, which is harmless once the student has already answered.",
+        "sources": [
+          {
+            "type": "distractor",
+            "ref": "wt:g10m10s4-1-4:iqr-box-width#median-of-unsorted"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m10s4-1-4:ex10-7-22b"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "expl:g10m10s4-1-4:ex10-5-5"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "S7",
+            "ref": "wt:g10m10s4-1-4:iqr-box-width#median-of-unsorted",
+            "question_id": "q:g10m10s4-1-4:w001",
+            "text": "The middle of the data as GIVEN, not the middle once it is sorted",
+            "tagged": "mc:g10m10s4-1-2:rank-on-unsorted-data"
+          }
+        ],
+        "aliases_stripped": [
+          {
+            "alias": "mc:g10m10s4-1-2:rank-on-unsorted-data",
+            "reason": "it is a live entry of another objective (lo:g10m10s4-1-2); folding it would delete that entry"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m10s5-1-1:five-numbers-from-unsorted-list",
+      "lo_id": "lo:g10m10s5-1-1",
+      "label": "Reads the five numbers off the list as it was written, without ordering it first",
+      "description": "The student counts to the middle, the quarter and the three-quarter positions (and may take the first and last values as the minimum and maximum) in the data as it was GIVEN, instead of first putting the values in order from smallest to largest.",
+      "signal": "The median, or the average of the two middle values, is simply whatever sits in the middle of the list as it was written; the \"minimum\" and \"maximum\" are the first and last numbers written; or the five numbers do not increase from left to right (a first quartile larger than the median, say).",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You counted to the middle of the list, and counting by position is the right idea: with 9 values the median is the 5th value, the first quartile is the 3rd and the third quartile is the 7th. What is missing is a step that comes before the counting: putting the data in order."
+        },
+        {
+          "step": 2,
+          "text_md": "Position only means something once the values are lined up from smallest to largest. The median is the value with as many values below it as above it. The middle of a list that is still jumbled is just whichever number happened to be written there."
+        },
+        {
+          "step": 3,
+          "text_md": "Try it on the florist's bouquets: $16, 14, 8, 12, 6, 5, 3, 5, 7$. The 5th value as written is $6$. But only three values are below $6$ (the $5$, $3$ and $5$) and five are above it, so $6$ is not in the middle. Put the data in order first: $3, 5, 5, 6, 7, 8, 12, 14, 16$. Now the 5th value is $7$, with four values below it and four above it. The median is $7$, not $6$."
+        },
+        {
+          "step": 4,
+          "text_md": "The same trap catches the other three numbers. Read off the unordered list, the first value $16$ would be the \"minimum\" and the last value $7$ the \"maximum\", yet $3$ is in the list. The 3rd and 7th values as written, $8$ and $3$, would make the first quartile bigger than the third quartile. A five number summary has to increase from minimum to maximum, and that only happens once the data is ordered."
+        },
+        {
+          "step": 5,
+          "text_md": "So make ordering your first line of working every time: write the data from smallest to largest. Then the minimum is the first value and the maximum is the last. Count along the ordered list for the median and the quartiles. With an even number of values, the median lies between the two middle values, so you take their average."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch10-wf_ba64d0e9-a82.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Worked through every number myself. The book's first step is to order the data, and the exercise data (16, 14, 8, 12, 6, 5, 3, 5, 7) is given unsorted, so skipping that step is a real error for this objective. Canonical ordered list: 3, 5, 5, 6, 7, 8, 12, 14, 16, with median 7 (5th of 9), Q1 5 (3rd) and Q3 12 (7th). The refutation matches this throughout. Positions for 9 values (5th, 3rd, 7th) match the canonical. The unordered 5th value is 6, with three values below it (5, 3, 5) and five above (16, 14, 8, 12, 7); ordered, 7 has four below and four above. The unordered first and last values (16 and 7) would give a wrong minimum and maximum, since 3 and 16 are in the list. The unordered 3rd and 7th values (8 and 3) would put Q1 above Q3. The closing remark that an even count means averaging the two middle values for the median matches the book's 12-value example, whose figure I checked (median 3.65, Q1 2.5, Q3 4.775). The method is the book's own and the refutation argues against this specific error rather than restating the method. No question id, page number, figure reference or review history appears in the label, description, signal or refutation steps. The florist data is quoted in full, so it is self-contained. The signal is diagnostic: a middle taken from the written order, first and last values taken as minimum and maximum, or non-increasing five numbers. The evidence field is empty, but the canonical's first step and the unsorted question data support the error. The cited distractors D0 and D1 were not shown to me, so I did not rely on them.",
+        "sources": [
+          {
+            "type": "distractor",
+            "ref": "D0"
+          },
+          {
+            "type": "distractor",
+            "ref": "D1"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m10s5-1-1:ex10-6-3"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "S7",
+            "ref": "wt:g10m10s5-1-1:five-numbers-interpolated-ten-values#median-of-unsorted",
+            "question_id": "q:g10m10s5-1-1:w001",
+            "text": "The middle of the data as GIVEN, not the middle once it is sorted",
+            "tagged": "mc:g10m10s4-1-2:rank-on-unsorted-data"
+          },
+          {
+            "origin": "S7",
+            "ref": "wt:g10m10s5-1-1:five-numbers-nine-values#median-of-unsorted",
+            "question_id": "q:g10m10s5-1-1:w002",
+            "text": "The middle of the data as GIVEN, not the middle once it is sorted",
+            "tagged": "mc:g10m10s4-1-2:rank-on-unsorted-data"
+          }
+        ],
+        "aliases_stripped": [
+          {
+            "alias": "mc:g10m10s4-1-2:rank-on-unsorted-data",
+            "reason": "it is a live entry of another objective (lo:g10m10s4-1-2); folding it would delete that entry"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m10s5-1-3:inner-line-read-as-box-edge",
+      "lo_id": "lo:g10m10s5-1-3",
+      "label": "Takes the line inside the box for an end of the box",
+      "description": "The student treats the line inside the box as the first or third quartile, instead of seeing that the quartiles are the two ends of the box and the line inside is the median.",
+      "signal": null,
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "It looks like you took the number to be a quartile. That is a sensible place to look, because the box is where the quartiles live. The catch is which part of the box: a box has three vertical lines, and they do three different jobs."
+        },
+        {
+          "step": 2,
+          "text_md": "The book says the box shows the interquartile range, the distance between $Q_1$ and $Q_3$. So the two ends of the box are the quartiles. The line inside the box is the one that shows the median."
+        },
+        {
+          "step": 3,
+          "text_md": "Try it on a plot whose whiskers reach $15$ and $35$ and whose box runs from $22$ to $28$, with a line inside the box at $25$. The two ends of the box give $Q_1 = 22$ and $Q_3 = 28$, and the line inside gives the median, $25$. If the line at $25$ were a quartile, the median would be left with no mark on the plot at all."
+        },
+        {
+          "step": 4,
+          "text_md": "Next time, look at where your number sits. If it is on an end of the box, it is a quartile. If it is on the line inside the box, between the two ends, it is the median."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:g10m10s5-1-3:ex10-7-29b",
+          "choice_text": "first quartile"
+        },
+        {
+          "question_id": "q:g10m10s5-1-3:ex10-7-29b",
+          "choice_text": "third quartile"
+        }
+      ],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch10-wf_ba64d0e9-a82.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "I checked the figures for ex10-6-4a (whiskers 15 and 35, box 22 to 28, inner line 25) and ex10-7-29b (brand C: whiskers 15 and 22, box 16 to 20, inner line 18). In both, the box ends are Q1 and Q3 and the inner line is the median. The refutation matches the book's statement that the box shows the interquartile range between Q1 and Q3 and that a line inside it shows the median. Its worked example (15, 22, 25, 28, 35) agrees with the canonical answer. It argues against the specific error: the inner line cannot be a quartile, because the median would then have no mark. It adds no method outside the book. It cites no question id, page, numbered figure or review history; the example is described in text the student can follow. The error is plausible, since the wrong options are first and third quartile for the median line.",
+        "sources": [
+          {
+            "type": "distractor",
+            "ref": "D1"
+          },
+          {
+            "type": "distractor",
+            "ref": "D2"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m10s5-1-3:ex10-6-4a"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m10s5-1-3:ex10-7-29b"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "book",
+            "ref": "q:g10m10s5-1-3:ex10-7-29b",
+            "question_id": "q:g10m10s5-1-3:ex10-7-29b",
+            "text": "first quartile",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m10s5-1-3:ex10-7-29b",
+            "question_id": "q:g10m10s5-1-3:ex10-7-29b",
+            "text": "third quartile",
+            "tagged": null
+          },
+          {
+            "origin": "S6",
+            "ref": "tpl:g10m10s5-1-3:two-plots#mc:g10m10s5-1-3:inner-line-read-as-box-edge",
+            "question_id": "q:g10m10s5-1-3:g001-two-pl",
+            "text": "third quartile",
+            "tagged": "mc:g10m10s5-1-3:inner-line-read-as-box-edge"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m10s5-1-3:inner-line-read-as-extreme",
+      "lo_id": "lo:g10m10s5-1-3",
+      "label": "Takes the line inside the box for the smallest or largest value",
+      "description": "The student reads a mark in the middle of the plot as the minimum or the maximum, instead of looking to the ends of the whiskers for those two values.",
+      "signal": null,
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "It looks like you took the number to be the smallest or the largest value. The plot does show both of those, so looking for them was a sound idea. The catch is which marks they are."
+        },
+        {
+          "step": 2,
+          "text_md": "The book says the lines extending outside the box, the whiskers, show where the minimum and maximum values lie. So the minimum is where the lower whisker stops, and the maximum is where the upper whisker stops."
+        },
+        {
+          "step": 3,
+          "text_md": "Test it on a plot whose whiskers reach $15$ and $35$, with a line inside the box at $25$. The plot shows values below $25$, because the lower whisker goes down to $15$, and values above $25$, because the upper whisker goes up to $35$. A minimum has nothing below it and a maximum has nothing above it, so a mark in the middle of the box cannot be either one."
+        },
+        {
+          "step": 4,
+          "text_md": "Before you choose minimum or maximum, check that your number sits at the outer end of a whisker. A number on a line inside the box is not at a whisker's end, so look to the box instead: its two ends are the quartiles, and the line inside it is the median."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:g10m10s5-1-3:ex10-7-29b",
+          "choice_text": "minimum"
+        },
+        {
+          "question_id": "q:g10m10s5-1-3:ex10-7-29b",
+          "choice_text": "maximum"
+        }
+      ],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch10-wf_ba64d0e9-a82.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The refutation matches the book: the whiskers show where the minimum and maximum lie, and the quartiles are the box ends with the median inside. In the described plot (whiskers 15 and 35, line at 25), values lie below and above 25, so a middle line cannot be the minimum or maximum. That is mathematically sound and agrees with the canonical answer (15, 22, 25, 28, 35) and with ex10-7-29b, where 18 is the median. The final step points the student to the outer whisker ends, then to the box ends and the inner line. It argues against the error rather than only restating the method, and it cites no question ids, pages, figures or review history. The error is plausible, since the wrong options are minimum and maximum for a mark in the middle of the plot.",
+        "sources": [
+          {
+            "type": "distractor",
+            "ref": "D0"
+          },
+          {
+            "type": "distractor",
+            "ref": "D3"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m10s5-1-3:ex10-6-4a"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m10s5-1-3:ex10-7-29b"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "book",
+            "ref": "q:g10m10s5-1-3:ex10-7-29b",
+            "question_id": "q:g10m10s5-1-3:ex10-7-29b",
+            "text": "minimum",
+            "tagged": null
+          },
+          {
+            "origin": "book",
+            "ref": "q:g10m10s5-1-3:ex10-7-29b",
+            "question_id": "q:g10m10s5-1-3:ex10-7-29b",
+            "text": "maximum",
+            "tagged": null
+          },
+          {
+            "origin": "S6",
+            "ref": "tpl:g10m10s5-1-3:two-plots#mc:g10m10s5-1-3:inner-line-read-as-extreme",
+            "question_id": "q:g10m10s5-1-3:g001-two-pl",
+            "text": "minimum",
+            "tagged": "mc:g10m10s5-1-3:inner-line-read-as-extreme"
+          }
+        ]
+      }
+    }
+  ]
+}

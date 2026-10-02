@@ -1,0 +1,1403 @@
+{
+ "stage": "SW",
+ "workflow": "working-check",
+ "prompts_version": "sw-v3",
+ "book": "g10-math",
+ "chapter": 8,
+ "part": 1,
+ "parts": 1,
+ "batch": 5,
+ "agents": 39,
+ "effort": "high",
+ "model": "sonnet",
+ "pass_id": "B",
+ "order": "shuffled",
+ "by_ref": {
+  "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/wcheck-ch08-v2-B",
+  "stage": "SW",
+  "shards_sha256": "dcf792f9773c47a2948e0385fb12a855f6b1f61bc771b846eec9c3d50b7d80ff",
+  "files": 192
+ },
+ "embedded": {
+  "source": "runbook/working-check.workflow.js",
+  "source_sha256": "352a846920d85b4c224df7fb36d3f9a8ea598155cc2b4ee4ba9ef7e4791b6385",
+  "args_sha256": "c6285073b16732eb862bb9783b1e4d07c44229472ac050cbb84072e3e5ba49fa",
+  "generated_sha256": "e3a61ae22e382a53634b34a66a108230941af3ec025e62583ec04d8235a81486",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-4-20c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m8s4-1-1:ex8-6-28b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s4-1-1:ex8-6-19c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-6-33a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s2-1-1:ex8-6-19a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m8s2-1-1:ex8-6-21a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-1:ex8-6-32d",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-1-1:ex8-3-3",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m8s3-2-2:ex8-6-26",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 4,
+     "quote": "m_{PR}\\times m_{QR}&=-\\frac{1}{7}\\times\\frac{7}{1}",
+     "kind": "label",
+     "where": "working",
+     "expected": "m_PQ × m_QR",
+     "why": "The value -1/7 is m_PQ, not m_PR (which is -4/3 in step 2); the product is labelled with the wrong side."
+    },
+    {
+     "step": 5,
+     "quote": "PR\\perp QR",
+     "kind": "label",
+     "where": "working",
+     "expected": "PQ ⊥ QR",
+     "why": "The perpendicular sides are PQ and QR (right angle at Q), not PR and QR; PR was calculated as -4/3."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-1-1:we03",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-1-1:ex8-6-44e",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-1:ex8-6-10a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s4-1-1:we10",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 2,
+     "quote": "x_{1}=2",
+     "kind": "label",
+     "where": "working",
+     "expected": "x_{2}=2",
+     "why": "The assignment lists x_1 twice (-2 and 2); the second should be x_2, as the later substitution uses."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s4-1-1:ex8-5-3a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-1-2:we04",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s2-1-1:ex8-6-39a",
+   "verdict": null,
+   "flags": [],
+   "note": "no answer"
+  },
+  {
+   "solution_id": "expl:g10m8s3-2-3:ex8-6-30c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m8s3-2-2:ex8-6-38d",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "m_{QR}&=\\frac{-2-1}{1-4}",
+     "kind": "wrong_value",
+     "where": "working",
+     "expected": "R has x-coordinate 5, so denominator 1-5",
+     "why": "The denominator uses 4 instead of R's x-coordinate 5; 1-4 gives -3, not the -4 needed for 3/4."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-6-13",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-6-36b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-1:ex8-6-46b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s4-1-3:ex8-6-23",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s4-1-1:ex8-6-35a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m8s2-1-1:ex8-6-36c",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 3,
+     "quote": "Therefore $LMNP$ is a square, all the sides are equal in length.",
+     "kind": "other",
+     "where": "working",
+     "expected": "",
+     "why": "Four equal sides only show a rhombus; nothing computed (a right angle or equal diagonals) supports 'square'."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:we07",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m8s4-1-1:ex8-6-24d",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-3:ex8-6-41a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-6-37d",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m8s3-2-2:ex8-4-19a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-4-13",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-1-2:ex8-3-4a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-1:we05",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s1-1-2:ex8-1-1",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s2-1-1:ex8-6-5",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s2-1-1:ex8-6-37c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-4-20b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s4-1-2:ex8-6-31a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-1-1:ex8-6-30b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-4-17",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-6-44d",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 2,
+     "quote": "m&=\\frac{1}{-\\frac{1}{3}}",
+     "kind": "sign",
+     "where": "working",
+     "expected": "m = -1/(1/3)",
+     "why": "The formula gives m = -1/m_BD, and m_BD = (-3-0)/(-4-5) = 1/3, so the minus sign belongs on the numerator, not on the denominator 1/3."
+    },
+    {
+     "step": 2,
+     "quote": "-\\frac{3}{2}&=(3)(\\frac{1}{2})+c",
+     "kind": "sign",
+     "where": "working",
+     "expected": "(-3)(1/2)",
+     "why": "The gradient just found is -3, but it is substituted as +3; with +3 the next line c = -3/2 + 3/2 would not follow."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-3:ex8-4-2b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-3:ex8-4-5",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 5,
+     "quote": "$m_{PR}=m_{QR}=-\\frac{1}{2}$",
+     "kind": "label",
+     "where": "working",
+     "expected": "m_{PQ}=m_{QR}",
+     "why": "Step 1 and step 2 use the gradient of PQ, which is -1/2; the working then names PR, which was never calculated."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s2-1-2:we02",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m8s3-2-3:we08",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-6-11",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s2-1-2:ex8-6-33b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m8s3-2-2:ex8-6-46c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s4-1-1:ex8-6-38c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m8s4-1-1:ex8-6-37b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-6-35d",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-1:ex8-6-40a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-4-8",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-1:ex8-6-41b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s4-1-2:we12",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s2-1-1:ex8-2-5c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m8s3-2-1:ex8-6-29b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s1-1-3:ex8-6-3",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s2-1-1:ex8-6-32c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-6-14",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m8s4-1-1:ex8-6-21d",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s2-1-1:we01",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 2,
+     "quote": "the coordinates of $T$ be $\\left({x}_{2}, {y}_{2}\\right)$",
+     "kind": "label",
+     "where": "question",
+     "expected": "Q(7, -2)",
+     "why": "The question names the second point Q, but the working calls it T throughout (d_ST, final statement)."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s4-1-1:ex8-6-25c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-1-2:ex8-3-6",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-6-12",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-1:ex8-4-15",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-3:ex8-6-47a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s2-1-1:ex8-2-5b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s2-1-1:ex8-2-2",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "(1-(-1))^{2}+(1-2)^{2}",
+     "kind": "wrong_value",
+     "where": "working",
+     "expected": "B(-1, 2), A(1, 1)",
+     "why": "With x_B-x_A and y_B-y_A, the figure's B(-1;2) and A(1;1) give (-1-1) and (2-1); the working swaps the points' coordinates."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-4-12",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s4-1-3:ex8-6-38e",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-1:ex8-4-6",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s4-1-3:ex8-6-46e",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 2,
+     "quote": "(8, 12)&=\\left(\\frac{x_p}{2}, \\frac{y_p}{2}\\right)",
+     "kind": "arithmetic",
+     "where": "working",
+     "expected": "(4, 6) = (x_p/2, y_p/2)",
+     "why": "The previous line sets (4, 6) equal to (x_p/2, y_p/2); the next line wrongly writes (8, 12) on the left instead of multiplying through."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m8s3-2-2:ex8-6-40b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s1-1-2:ex8-1-3",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m8s2-1-1:ex8-6-22a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s4-1-2:ex8-6-43a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-1:ex8-6-18c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s4-1-3:ex8-6-36a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s2-1-1:ex8-2-1",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "(1-(-2))^{2}+(-3-(3))^{2}",
+     "kind": "label",
+     "where": "working",
+     "expected": "B(-2, 3), A(1, -3) per figure",
+     "why": "The working takes B as (1, -3) and A as (-2, 3), but the figure labels A(1;-3) and B(-2;3), so the subscripts are swapped."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-4-1b",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 5,
+     "quote": "m_{AB}\\times\\frac{1}{m_{CD}}\\ne-1",
+     "kind": "arithmetic",
+     "where": "working",
+     "expected": "3 × (1/(-3)) = -1",
+     "why": "With m_AB=3 and m_CD=-3, 3 × 1/(-3) equals -1, so the stated inequality is false and contradicts the perpendicularity test in step 1."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-1-1:ex8-6-7",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m8s1-1-2:ex8-1-2",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-3:ex8-4-2a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s2-1-1:ex8-6-22d",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s1-1-3:ex8-1-5",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s4-1-1:ex8-6-31c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s2-1-1:ex8-6-30a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s2-1-2:ex8-2-6b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s4-1-1:ex8-6-17",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "\\frac{-2-2}{2}",
+     "kind": "sign",
+     "where": "working",
+     "expected": "(-2+2)/2",
+     "why": "The x-coordinates are -2 and 2, so the sum is -2+2; writing -2-2 gives -2, not the 0 stated next."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m8s1-1-2:ex8-6-1",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-1:ex8-6-40c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-1:ex8-6-45a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m8s3-2-2:ex8-6-42c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s2-1-2:ex8-2-3",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-6-29a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-6-18b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-1-1:ex8-3-1b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s1-1-3:ex8-1-6",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-1-1:ex8-6-46a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s4-1-1:ex8-6-42b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s4-1-3:ex8-6-31e",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s2-1-1:ex8-6-10b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-1-1:ex8-6-25d",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s2-1-1:ex8-6-44g",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-1-2:ex8-6-8",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-1:ex8-6-44c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-1:ex8-6-34c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-1:ex8-6-37e",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-1-1:ex8-6-24b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-6-19b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-4-7",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m8s3-2-2:we06",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-1-1:ex8-6-32a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-1:ex8-6-15",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s4-1-3:we13",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s4-1-1:ex8-6-38b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-6-45b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-4-19b",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 2,
+     "quote": "(-5-2)^{2}+(2+4)^{2}",
+     "kind": "label",
+     "where": "working",
+     "expected": "B(2,-4) and C(8,3) for BC",
+     "why": "This uses A(-5,2) and B(2,-4), so it computes the length of AB, but step 1 introduces it as the length of BC."
+    },
+    {
+     "step": 4,
+     "quote": "(8-2)^{2}+(3+4)^{2}",
+     "kind": "label",
+     "where": "working",
+     "expected": "A(-5,2) and B(2,-4) for AB",
+     "why": "This uses B(2,-4) and C(8,3), so it computes the length of BC, but step 3 introduces it as the length of AB."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s4-1-1:ex8-6-24c",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "M_{QR}",
+     "kind": "label",
+     "where": "working",
+     "expected": "M_{PR}",
+     "why": "The question asks for the mid-point of PR, and the substituted values are the coordinates of P and R, not Q and R."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m8s3-2-2:ex8-6-32b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m8s3-2-2:ex8-6-39d",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "\\therefore ST\\parallel PR\\text{ (equal gradients)}",
+     "kind": "other",
+     "where": "working",
+     "expected": "m_ST computed and equal to 3/4",
+     "why": "Only m_PR is computed; no gradient of ST is found, so the conclusion of equal gradients is not supported."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m8s3-2-2:ex8-6-22b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s4-1-2:ex8-6-47b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s2-1-2:ex8-2-7",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s2-1-2:ex8-2-6a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-1-2:ex8-3-5",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-1:ex8-4-4",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-4-11",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-6-21c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-1-1:ex8-3-1a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-1-2:ex8-3-4b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m8s3-2-3:we09",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-6-35e",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m8s3-2-3:ex8-6-25e",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-1-1:ex8-6-35b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-3:ex8-4-18",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s2-1-1:ex8-6-38a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-1:ex8-4-16",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s4-1-1:we11",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-1-1:ex8-6-34b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m8s2-1-1:ex8-6-44f",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-4-1a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-1-1:ex8-6-37a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-1:ex8-4-3",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-4-9",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s2-1-1:ex8-2-5a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-3:ex8-6-34d",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s4-1-2:ex8-6-29c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s1-1-2:ex8-6-2",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s4-1-1:ex8-6-16",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m8s4-1-3:ex8-6-31d",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m8s3-2-3:ex8-6-42d",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "-2-(-\\text{0.5})",
+     "kind": "wrong_value",
+     "where": "working",
+     "expected": "2-(-0.5)",
+     "why": "The x-coordinate of C is 2, not -2; -2-(-0.5) is -1.5, not the 2.5 written next."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m8s3-2-2:ex8-6-30e",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m8s4-1-1:ex8-6-39b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-1:ex8-6-40e",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s4-1-2:ex8-5-4",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s4-1-1:ex8-5-3b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s2-1-1:ex8-6-42a",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "\\sqrt{5^2(-1)^2}",
+     "kind": "copy",
+     "where": "working",
+     "expected": "\\sqrt{5^2+(-1)^2}",
+     "why": "The sum of squares is written as a product with the plus sign missing, yet the next line is \\sqrt{25+1}."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s2-1-2:ex8-2-4",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "\\text{7.2111}&=\\sqrt{(1-(-3))^{2}+(y-(-\\text{2.5}))^{2}}",
+     "kind": "label",
+     "where": "question",
+     "expected": "A(1, y), B(-3, -2.5) per figure",
+     "why": "The figure labels the point with the missing y as A(1; y) and B as (-3; -2.5), but the working treats B as (1, y) and A as (-3, -2.5)."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-4-10",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 3,
+     "quote": "to solve for $x$",
+     "kind": "label",
+     "where": "working",
+     "expected": "solve for y",
+     "why": "The working substitutes x = 2 and solves for y, not x."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s4-1-1:ex8-5-1",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s2-1-1:ex8-6-22c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-1-1:ex8-6-39c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m8s3-2-2:ex8-6-21b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s4-1-1:ex8-5-3c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-1-1:ex8-3-1c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s2-1-1:ex8-6-20b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s2-1-2:ex8-6-6",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s2-1-1:ex8-6-24a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-6-19d",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-1:ex8-6-30d",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m8s4-1-1:ex8-6-27",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 2,
+     "quote": "N&=\\left(\\frac{-3+3}{2}, \\frac{4-2}{2}\\right)",
+     "kind": "wrong_value",
+     "where": "working",
+     "expected": "B(3,-2) and C(-5,-2), so N=(-1,-2)",
+     "why": "N is the mid-point of BC, but the working uses A(-3,4) and B(3,-2), the mid-point of AB, giving (0,1) instead of (-1,-2)."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-1-1:ex8-3-2",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-1:ex8-6-43c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-1-1:ex8-6-43b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m8s4-1-3:ex8-6-44b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-3:ex8-6-45c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-6-35c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-1:ex8-6-40d",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-6-43d",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m8s3-2-2:ex8-4-20a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-6-22e",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-3:ex8-4-2c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s2-1-1:ex8-6-34a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-6-31b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s4-1-1:ex8-5-2",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-1:ex8-6-18a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s4-1-1:ex8-6-44a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-1-2:ex8-6-9",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s1-1-2:ex8-1-4",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m8s2-1-1:ex8-6-25b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-6-42e",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "Since the diagonals are equal in length we know that the quadrilateral must be a square.",
+     "kind": "other",
+     "where": "working",
+     "expected": "",
+     "why": "Equal diagonals alone do not make a quadrilateral a square; rectangles and isosceles trapezia also have equal diagonals, so the conclusion is unsupported."
+    }
+   ],
+   "note": ""
+  }
+ ],
+ "problems": [
+  "batch 4: an answer names \"q:g10m8s3-2-1:ex8-6-39a\", which is not in this batch (ignored)",
+  "q:g10m8s2-1-1:ex8-6-39a: the checking agent gave no verdict for it (unchecked: re-run it)"
+ ],
+ "meter": {
+  "stage": "SW",
+  "record": "uv run meter_run.py record --book g10-math --stage SW --run <runId>"
+ }
+}

@@ -1,0 +1,805 @@
+{
+  "bundle": "generated-questions-v2",
+  "generator": "declarative families — services/extraction/generate_questions.py --families (decision 16)",
+  "course_id": "course:us-g10-math-en",
+  "book": "g10-math",
+  "reviewed": false,
+  "seed": 20260925,
+  "per_family": 10,
+  "note": "Declarative families: every key computed from the sampled parameters by the safe evaluator that writes the stem; each family blind-graded on sampled instances before it could reach this file (ADR-0008, decision 16).",
+  "families": {
+    "tpl:g10m12s1-1-2:midpoint-trapezium": 10,
+    "tpl:g10m12s1-1-2:parallelogram-angles": 10
+  },
+  "family_specs": {
+    "tpl:g10m12s1-1-2:midpoint-trapezium": "c6eebf13d40b09a3b0645e3af34faebc94a11f8fe35b0329fa509ca55ae16892",
+    "tpl:g10m12s1-1-2:parallelogram-angles": "183af289370c3fc3bb7cb6716887f2f2ac433c319719502929cabc2bf41cb84c"
+  },
+  "family_grades": {
+    "tpl:g10m12s1-1-2:midpoint-trapezium": {
+      "grades": [
+        "grade-ch12-wf_e76b855b-fc1.json"
+      ],
+      "graded_instances": 3
+    },
+    "tpl:g10m12s1-1-2:parallelogram-angles": {
+      "grades": [
+        "grade-ch12-wf_e76b855b-fc1.json"
+      ],
+      "graded_instances": 3
+    }
+  },
+  "rejected_families": {},
+  "untagged_distractors": [],
+  "misconceptions": [],
+  "questions": [
+    {
+      "id": "q:g10m12s1-1-2:g001-midpoi",
+      "lo_id": "lo:g10m12s1-1-2",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m12s1-1-2:ex12-2-6b",
+      "source_page": 412,
+      "source_note": "Generated from template family tpl:g10m12s1-1-2:midpoint-trapezium.",
+      "stem": "In $\\triangle MNR$, $\\hat{M} = 90^{\\circ}$. $S$ is the mid-point of $MN$ and $T$ is the mid-point of $NR$, and $ST$ is drawn. $ST = 3$ cm and the area of $\\triangle SNT$ is $6$ cm$^{2}$. Calculate the area of quadrilateral $MSTR$ in cm$^{2}$.",
+      "correct_answer": "18",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "$S$ is the mid-point of $MN$ and $T$ is the mid-point of $NR$, so $ST \\parallel MR$ and $ST = \\frac{1}{2}MR$ (mid-point theorem)."
+        },
+        {
+          "step": 2,
+          "text_md": "$N\\hat{S}T = \\hat{M} = 90^{\\circ}$ (corresp $\\angle$s; $ST \\parallel MR$), so $\\triangle SNT$ has a right angle at $S$ and its area is $\\frac{1}{2} \\times ST \\times SN$."
+        },
+        {
+          "step": 3,
+          "text_md": "$6 = \\frac{1}{2}(3) \\times SN$, so $SN = \\frac{2 \\times 6}{3} = 4$ cm. $S$ is the mid-point of $MN$, so $MN = 2 \\times 4 = 8$ cm."
+        },
+        {
+          "step": 4,
+          "text_md": "$MR = 2 \\times ST = 2 \\times 3 = 6$ cm."
+        },
+        {
+          "step": 5,
+          "text_md": "Area of $\\triangle MNR = \\frac{1}{2} \\times MR \\times MN = \\frac{1}{2}(6)(8) = 24$ cm$^{2}$."
+        },
+        {
+          "step": 6,
+          "text_md": "Area of $MSTR$ = area of $\\triangle MNR$ $-$ area of $\\triangle SNT = 24 - 6 = 18$ cm$^{2}$."
+        }
+      ],
+      "family": "tpl:g10m12s1-1-2:midpoint-trapezium",
+      "family_spec_sha": "c6eebf13d40b09a3b0645e3af34faebc94a11f8fe35b0329fa509ca55ae16892"
+    },
+    {
+      "id": "q:g10m12s1-1-2:g002-midpoi",
+      "lo_id": "lo:g10m12s1-1-2",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m12s1-1-2:ex12-2-6b",
+      "source_page": 412,
+      "source_note": "Generated from template family tpl:g10m12s1-1-2:midpoint-trapezium.",
+      "stem": "In $\\triangle MNR$, $\\hat{M} = 90^{\\circ}$. $S$ is the mid-point of $MN$ and $T$ is the mid-point of $NR$, and $ST$ is drawn. $ST = 8$ cm and the area of $\\triangle SNT$ is $12$ cm$^{2}$. Calculate the area of quadrilateral $MSTR$ in cm$^{2}$.",
+      "correct_answer": "36",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "$S$ is the mid-point of $MN$ and $T$ is the mid-point of $NR$, so $ST \\parallel MR$ and $ST = \\frac{1}{2}MR$ (mid-point theorem)."
+        },
+        {
+          "step": 2,
+          "text_md": "$N\\hat{S}T = \\hat{M} = 90^{\\circ}$ (corresp $\\angle$s; $ST \\parallel MR$), so $\\triangle SNT$ has a right angle at $S$ and its area is $\\frac{1}{2} \\times ST \\times SN$."
+        },
+        {
+          "step": 3,
+          "text_md": "$12 = \\frac{1}{2}(8) \\times SN$, so $SN = \\frac{2 \\times 12}{8} = 3$ cm. $S$ is the mid-point of $MN$, so $MN = 2 \\times 3 = 6$ cm."
+        },
+        {
+          "step": 4,
+          "text_md": "$MR = 2 \\times ST = 2 \\times 8 = 16$ cm."
+        },
+        {
+          "step": 5,
+          "text_md": "Area of $\\triangle MNR = \\frac{1}{2} \\times MR \\times MN = \\frac{1}{2}(16)(6) = 48$ cm$^{2}$."
+        },
+        {
+          "step": 6,
+          "text_md": "Area of $MSTR$ = area of $\\triangle MNR$ $-$ area of $\\triangle SNT = 48 - 12 = 36$ cm$^{2}$."
+        }
+      ],
+      "family": "tpl:g10m12s1-1-2:midpoint-trapezium",
+      "family_spec_sha": "c6eebf13d40b09a3b0645e3af34faebc94a11f8fe35b0329fa509ca55ae16892"
+    },
+    {
+      "id": "q:g10m12s1-1-2:g003-midpoi",
+      "lo_id": "lo:g10m12s1-1-2",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m12s1-1-2:ex12-2-6b",
+      "source_page": 412,
+      "source_note": "Generated from template family tpl:g10m12s1-1-2:midpoint-trapezium.",
+      "stem": "In $\\triangle MNR$, $\\hat{M} = 90^{\\circ}$. $S$ is the mid-point of $MN$ and $T$ is the mid-point of $NR$, and $ST$ is drawn. $ST = 2$ cm and the area of $\\triangle SNT$ is $6$ cm$^{2}$. Calculate the area of quadrilateral $MSTR$ in cm$^{2}$.",
+      "correct_answer": "18",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "$S$ is the mid-point of $MN$ and $T$ is the mid-point of $NR$, so $ST \\parallel MR$ and $ST = \\frac{1}{2}MR$ (mid-point theorem)."
+        },
+        {
+          "step": 2,
+          "text_md": "$N\\hat{S}T = \\hat{M} = 90^{\\circ}$ (corresp $\\angle$s; $ST \\parallel MR$), so $\\triangle SNT$ has a right angle at $S$ and its area is $\\frac{1}{2} \\times ST \\times SN$."
+        },
+        {
+          "step": 3,
+          "text_md": "$6 = \\frac{1}{2}(2) \\times SN$, so $SN = \\frac{2 \\times 6}{2} = 6$ cm. $S$ is the mid-point of $MN$, so $MN = 2 \\times 6 = 12$ cm."
+        },
+        {
+          "step": 4,
+          "text_md": "$MR = 2 \\times ST = 2 \\times 2 = 4$ cm."
+        },
+        {
+          "step": 5,
+          "text_md": "Area of $\\triangle MNR = \\frac{1}{2} \\times MR \\times MN = \\frac{1}{2}(4)(12) = 24$ cm$^{2}$."
+        },
+        {
+          "step": 6,
+          "text_md": "Area of $MSTR$ = area of $\\triangle MNR$ $-$ area of $\\triangle SNT = 24 - 6 = 18$ cm$^{2}$."
+        }
+      ],
+      "family": "tpl:g10m12s1-1-2:midpoint-trapezium",
+      "family_spec_sha": "c6eebf13d40b09a3b0645e3af34faebc94a11f8fe35b0329fa509ca55ae16892"
+    },
+    {
+      "id": "q:g10m12s1-1-2:g004-midpoi",
+      "lo_id": "lo:g10m12s1-1-2",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m12s1-1-2:ex12-2-6b",
+      "source_page": 412,
+      "source_note": "Generated from template family tpl:g10m12s1-1-2:midpoint-trapezium.",
+      "stem": "In $\\triangle MNR$, $\\hat{M} = 90^{\\circ}$. $S$ is the mid-point of $MN$ and $T$ is the mid-point of $NR$, and $ST$ is drawn. $ST = 6$ cm and the area of $\\triangle SNT$ is $9$ cm$^{2}$. Calculate the area of quadrilateral $MSTR$ in cm$^{2}$.",
+      "correct_answer": "27",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "$S$ is the mid-point of $MN$ and $T$ is the mid-point of $NR$, so $ST \\parallel MR$ and $ST = \\frac{1}{2}MR$ (mid-point theorem)."
+        },
+        {
+          "step": 2,
+          "text_md": "$N\\hat{S}T = \\hat{M} = 90^{\\circ}$ (corresp $\\angle$s; $ST \\parallel MR$), so $\\triangle SNT$ has a right angle at $S$ and its area is $\\frac{1}{2} \\times ST \\times SN$."
+        },
+        {
+          "step": 3,
+          "text_md": "$9 = \\frac{1}{2}(6) \\times SN$, so $SN = \\frac{2 \\times 9}{6} = 3$ cm. $S$ is the mid-point of $MN$, so $MN = 2 \\times 3 = 6$ cm."
+        },
+        {
+          "step": 4,
+          "text_md": "$MR = 2 \\times ST = 2 \\times 6 = 12$ cm."
+        },
+        {
+          "step": 5,
+          "text_md": "Area of $\\triangle MNR = \\frac{1}{2} \\times MR \\times MN = \\frac{1}{2}(12)(6) = 36$ cm$^{2}$."
+        },
+        {
+          "step": 6,
+          "text_md": "Area of $MSTR$ = area of $\\triangle MNR$ $-$ area of $\\triangle SNT = 36 - 9 = 27$ cm$^{2}$."
+        }
+      ],
+      "family": "tpl:g10m12s1-1-2:midpoint-trapezium",
+      "family_spec_sha": "c6eebf13d40b09a3b0645e3af34faebc94a11f8fe35b0329fa509ca55ae16892"
+    },
+    {
+      "id": "q:g10m12s1-1-2:g005-midpoi",
+      "lo_id": "lo:g10m12s1-1-2",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m12s1-1-2:ex12-2-6b",
+      "source_page": 412,
+      "source_note": "Generated from template family tpl:g10m12s1-1-2:midpoint-trapezium.",
+      "stem": "In $\\triangle MNR$, $\\hat{M} = 90^{\\circ}$. $S$ is the mid-point of $MN$ and $T$ is the mid-point of $NR$, and $ST$ is drawn. $ST = 6$ cm and the area of $\\triangle SNT$ is $15$ cm$^{2}$. Calculate the area of quadrilateral $MSTR$ in cm$^{2}$.",
+      "correct_answer": "45",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "$S$ is the mid-point of $MN$ and $T$ is the mid-point of $NR$, so $ST \\parallel MR$ and $ST = \\frac{1}{2}MR$ (mid-point theorem)."
+        },
+        {
+          "step": 2,
+          "text_md": "$N\\hat{S}T = \\hat{M} = 90^{\\circ}$ (corresp $\\angle$s; $ST \\parallel MR$), so $\\triangle SNT$ has a right angle at $S$ and its area is $\\frac{1}{2} \\times ST \\times SN$."
+        },
+        {
+          "step": 3,
+          "text_md": "$15 = \\frac{1}{2}(6) \\times SN$, so $SN = \\frac{2 \\times 15}{6} = 5$ cm. $S$ is the mid-point of $MN$, so $MN = 2 \\times 5 = 10$ cm."
+        },
+        {
+          "step": 4,
+          "text_md": "$MR = 2 \\times ST = 2 \\times 6 = 12$ cm."
+        },
+        {
+          "step": 5,
+          "text_md": "Area of $\\triangle MNR = \\frac{1}{2} \\times MR \\times MN = \\frac{1}{2}(12)(10) = 60$ cm$^{2}$."
+        },
+        {
+          "step": 6,
+          "text_md": "Area of $MSTR$ = area of $\\triangle MNR$ $-$ area of $\\triangle SNT = 60 - 15 = 45$ cm$^{2}$."
+        }
+      ],
+      "family": "tpl:g10m12s1-1-2:midpoint-trapezium",
+      "family_spec_sha": "c6eebf13d40b09a3b0645e3af34faebc94a11f8fe35b0329fa509ca55ae16892"
+    },
+    {
+      "id": "q:g10m12s1-1-2:g006-midpoi",
+      "lo_id": "lo:g10m12s1-1-2",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m12s1-1-2:ex12-2-6b",
+      "source_page": 412,
+      "source_note": "Generated from template family tpl:g10m12s1-1-2:midpoint-trapezium.",
+      "stem": "In $\\triangle MNR$, $\\hat{M} = 90^{\\circ}$. $S$ is the mid-point of $MN$ and $T$ is the mid-point of $NR$, and $ST$ is drawn. $ST = 2$ cm and the area of $\\triangle SNT$ is $2$ cm$^{2}$. Calculate the area of quadrilateral $MSTR$ in cm$^{2}$.",
+      "correct_answer": "6",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "$S$ is the mid-point of $MN$ and $T$ is the mid-point of $NR$, so $ST \\parallel MR$ and $ST = \\frac{1}{2}MR$ (mid-point theorem)."
+        },
+        {
+          "step": 2,
+          "text_md": "$N\\hat{S}T = \\hat{M} = 90^{\\circ}$ (corresp $\\angle$s; $ST \\parallel MR$), so $\\triangle SNT$ has a right angle at $S$ and its area is $\\frac{1}{2} \\times ST \\times SN$."
+        },
+        {
+          "step": 3,
+          "text_md": "$2 = \\frac{1}{2}(2) \\times SN$, so $SN = \\frac{2 \\times 2}{2} = 2$ cm. $S$ is the mid-point of $MN$, so $MN = 2 \\times 2 = 4$ cm."
+        },
+        {
+          "step": 4,
+          "text_md": "$MR = 2 \\times ST = 2 \\times 2 = 4$ cm."
+        },
+        {
+          "step": 5,
+          "text_md": "Area of $\\triangle MNR = \\frac{1}{2} \\times MR \\times MN = \\frac{1}{2}(4)(4) = 8$ cm$^{2}$."
+        },
+        {
+          "step": 6,
+          "text_md": "Area of $MSTR$ = area of $\\triangle MNR$ $-$ area of $\\triangle SNT = 8 - 2 = 6$ cm$^{2}$."
+        }
+      ],
+      "family": "tpl:g10m12s1-1-2:midpoint-trapezium",
+      "family_spec_sha": "c6eebf13d40b09a3b0645e3af34faebc94a11f8fe35b0329fa509ca55ae16892"
+    },
+    {
+      "id": "q:g10m12s1-1-2:g007-midpoi",
+      "lo_id": "lo:g10m12s1-1-2",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m12s1-1-2:ex12-2-6b",
+      "source_page": 412,
+      "source_note": "Generated from template family tpl:g10m12s1-1-2:midpoint-trapezium.",
+      "stem": "In $\\triangle MNR$, $\\hat{M} = 90^{\\circ}$. $S$ is the mid-point of $MN$ and $T$ is the mid-point of $NR$, and $ST$ is drawn. $ST = 8$ cm and the area of $\\triangle SNT$ is $28$ cm$^{2}$. Calculate the area of quadrilateral $MSTR$ in cm$^{2}$.",
+      "correct_answer": "84",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "$S$ is the mid-point of $MN$ and $T$ is the mid-point of $NR$, so $ST \\parallel MR$ and $ST = \\frac{1}{2}MR$ (mid-point theorem)."
+        },
+        {
+          "step": 2,
+          "text_md": "$N\\hat{S}T = \\hat{M} = 90^{\\circ}$ (corresp $\\angle$s; $ST \\parallel MR$), so $\\triangle SNT$ has a right angle at $S$ and its area is $\\frac{1}{2} \\times ST \\times SN$."
+        },
+        {
+          "step": 3,
+          "text_md": "$28 = \\frac{1}{2}(8) \\times SN$, so $SN = \\frac{2 \\times 28}{8} = 7$ cm. $S$ is the mid-point of $MN$, so $MN = 2 \\times 7 = 14$ cm."
+        },
+        {
+          "step": 4,
+          "text_md": "$MR = 2 \\times ST = 2 \\times 8 = 16$ cm."
+        },
+        {
+          "step": 5,
+          "text_md": "Area of $\\triangle MNR = \\frac{1}{2} \\times MR \\times MN = \\frac{1}{2}(16)(14) = 112$ cm$^{2}$."
+        },
+        {
+          "step": 6,
+          "text_md": "Area of $MSTR$ = area of $\\triangle MNR$ $-$ area of $\\triangle SNT = 112 - 28 = 84$ cm$^{2}$."
+        }
+      ],
+      "family": "tpl:g10m12s1-1-2:midpoint-trapezium",
+      "family_spec_sha": "c6eebf13d40b09a3b0645e3af34faebc94a11f8fe35b0329fa509ca55ae16892"
+    },
+    {
+      "id": "q:g10m12s1-1-2:g008-midpoi",
+      "lo_id": "lo:g10m12s1-1-2",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m12s1-1-2:ex12-2-6b",
+      "source_page": 412,
+      "source_note": "Generated from template family tpl:g10m12s1-1-2:midpoint-trapezium.",
+      "stem": "In $\\triangle MNR$, $\\hat{M} = 90^{\\circ}$. $S$ is the mid-point of $MN$ and $T$ is the mid-point of $NR$, and $ST$ is drawn. $ST = 2$ cm and the area of $\\triangle SNT$ is $8$ cm$^{2}$. Calculate the area of quadrilateral $MSTR$ in cm$^{2}$.",
+      "correct_answer": "24",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "$S$ is the mid-point of $MN$ and $T$ is the mid-point of $NR$, so $ST \\parallel MR$ and $ST = \\frac{1}{2}MR$ (mid-point theorem)."
+        },
+        {
+          "step": 2,
+          "text_md": "$N\\hat{S}T = \\hat{M} = 90^{\\circ}$ (corresp $\\angle$s; $ST \\parallel MR$), so $\\triangle SNT$ has a right angle at $S$ and its area is $\\frac{1}{2} \\times ST \\times SN$."
+        },
+        {
+          "step": 3,
+          "text_md": "$8 = \\frac{1}{2}(2) \\times SN$, so $SN = \\frac{2 \\times 8}{2} = 8$ cm. $S$ is the mid-point of $MN$, so $MN = 2 \\times 8 = 16$ cm."
+        },
+        {
+          "step": 4,
+          "text_md": "$MR = 2 \\times ST = 2 \\times 2 = 4$ cm."
+        },
+        {
+          "step": 5,
+          "text_md": "Area of $\\triangle MNR = \\frac{1}{2} \\times MR \\times MN = \\frac{1}{2}(4)(16) = 32$ cm$^{2}$."
+        },
+        {
+          "step": 6,
+          "text_md": "Area of $MSTR$ = area of $\\triangle MNR$ $-$ area of $\\triangle SNT = 32 - 8 = 24$ cm$^{2}$."
+        }
+      ],
+      "family": "tpl:g10m12s1-1-2:midpoint-trapezium",
+      "family_spec_sha": "c6eebf13d40b09a3b0645e3af34faebc94a11f8fe35b0329fa509ca55ae16892"
+    },
+    {
+      "id": "q:g10m12s1-1-2:g009-midpoi",
+      "lo_id": "lo:g10m12s1-1-2",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m12s1-1-2:ex12-2-6b",
+      "source_page": 412,
+      "source_note": "Generated from template family tpl:g10m12s1-1-2:midpoint-trapezium.",
+      "stem": "In $\\triangle MNR$, $\\hat{M} = 90^{\\circ}$. $S$ is the mid-point of $MN$ and $T$ is the mid-point of $NR$, and $ST$ is drawn. $ST = 8$ cm and the area of $\\triangle SNT$ is $8$ cm$^{2}$. Calculate the area of quadrilateral $MSTR$ in cm$^{2}$.",
+      "correct_answer": "24",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "$S$ is the mid-point of $MN$ and $T$ is the mid-point of $NR$, so $ST \\parallel MR$ and $ST = \\frac{1}{2}MR$ (mid-point theorem)."
+        },
+        {
+          "step": 2,
+          "text_md": "$N\\hat{S}T = \\hat{M} = 90^{\\circ}$ (corresp $\\angle$s; $ST \\parallel MR$), so $\\triangle SNT$ has a right angle at $S$ and its area is $\\frac{1}{2} \\times ST \\times SN$."
+        },
+        {
+          "step": 3,
+          "text_md": "$8 = \\frac{1}{2}(8) \\times SN$, so $SN = \\frac{2 \\times 8}{8} = 2$ cm. $S$ is the mid-point of $MN$, so $MN = 2 \\times 2 = 4$ cm."
+        },
+        {
+          "step": 4,
+          "text_md": "$MR = 2 \\times ST = 2 \\times 8 = 16$ cm."
+        },
+        {
+          "step": 5,
+          "text_md": "Area of $\\triangle MNR = \\frac{1}{2} \\times MR \\times MN = \\frac{1}{2}(16)(4) = 32$ cm$^{2}$."
+        },
+        {
+          "step": 6,
+          "text_md": "Area of $MSTR$ = area of $\\triangle MNR$ $-$ area of $\\triangle SNT = 32 - 8 = 24$ cm$^{2}$."
+        }
+      ],
+      "family": "tpl:g10m12s1-1-2:midpoint-trapezium",
+      "family_spec_sha": "c6eebf13d40b09a3b0645e3af34faebc94a11f8fe35b0329fa509ca55ae16892"
+    },
+    {
+      "id": "q:g10m12s1-1-2:g010-midpoi",
+      "lo_id": "lo:g10m12s1-1-2",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m12s1-1-2:ex12-2-6b",
+      "source_page": 412,
+      "source_note": "Generated from template family tpl:g10m12s1-1-2:midpoint-trapezium.",
+      "stem": "In $\\triangle MNR$, $\\hat{M} = 90^{\\circ}$. $S$ is the mid-point of $MN$ and $T$ is the mid-point of $NR$, and $ST$ is drawn. $ST = 4$ cm and the area of $\\triangle SNT$ is $14$ cm$^{2}$. Calculate the area of quadrilateral $MSTR$ in cm$^{2}$.",
+      "correct_answer": "42",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "$S$ is the mid-point of $MN$ and $T$ is the mid-point of $NR$, so $ST \\parallel MR$ and $ST = \\frac{1}{2}MR$ (mid-point theorem)."
+        },
+        {
+          "step": 2,
+          "text_md": "$N\\hat{S}T = \\hat{M} = 90^{\\circ}$ (corresp $\\angle$s; $ST \\parallel MR$), so $\\triangle SNT$ has a right angle at $S$ and its area is $\\frac{1}{2} \\times ST \\times SN$."
+        },
+        {
+          "step": 3,
+          "text_md": "$14 = \\frac{1}{2}(4) \\times SN$, so $SN = \\frac{2 \\times 14}{4} = 7$ cm. $S$ is the mid-point of $MN$, so $MN = 2 \\times 7 = 14$ cm."
+        },
+        {
+          "step": 4,
+          "text_md": "$MR = 2 \\times ST = 2 \\times 4 = 8$ cm."
+        },
+        {
+          "step": 5,
+          "text_md": "Area of $\\triangle MNR = \\frac{1}{2} \\times MR \\times MN = \\frac{1}{2}(8)(14) = 56$ cm$^{2}$."
+        },
+        {
+          "step": 6,
+          "text_md": "Area of $MSTR$ = area of $\\triangle MNR$ $-$ area of $\\triangle SNT = 56 - 14 = 42$ cm$^{2}$."
+        }
+      ],
+      "family": "tpl:g10m12s1-1-2:midpoint-trapezium",
+      "family_spec_sha": "c6eebf13d40b09a3b0645e3af34faebc94a11f8fe35b0329fa509ca55ae16892"
+    },
+    {
+      "id": "q:g10m12s1-1-2:g001-parall",
+      "lo_id": "lo:g10m12s1-1-2",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m12s1-1-2:ex12-1-6c",
+      "source_page": 407,
+      "source_note": "Generated from template family tpl:g10m12s1-1-2:parallelogram-angles.",
+      "stem": "$ABCD$ is a parallelogram with $\\hat{A} = (6x - 22)^{\\circ}$ and $\\hat{C} = (3x + 23)^{\\circ}$. Calculate the size of $\\hat{B}$ in degrees.",
+      "correct_answer": "112",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "$ABCD$ is a parallelogram, so $\\hat{A} = \\hat{C}$ and $\\hat{B} = \\hat{D}$ (opp $\\angle$s of $\\parallel$m)."
+        },
+        {
+          "step": 2,
+          "text_md": "Equate the two expressions: $6x - 22 = 3x + 23$, so $3x = 45$ and $x = 15$."
+        },
+        {
+          "step": 3,
+          "text_md": "$\\hat{A} = 6(15) - 22 = 68^{\\circ}$, and so $\\hat{C} = 68^{\\circ}$ too."
+        },
+        {
+          "step": 4,
+          "text_md": "Sum of $\\angle$s in a quad: $\\hat{A} + \\hat{B} + \\hat{C} + \\hat{D} = 360^{\\circ}$. With $\\hat{C} = \\hat{A}$ and $\\hat{D} = \\hat{B}$ this gives $136^{\\circ} + 2\\hat{B} = 360^{\\circ}$."
+        },
+        {
+          "step": 5,
+          "text_md": "$2\\hat{B} = 224^{\\circ}$, so $\\hat{B} = 112^{\\circ}$."
+        }
+      ],
+      "family": "tpl:g10m12s1-1-2:parallelogram-angles",
+      "family_spec_sha": "183af289370c3fc3bb7cb6716887f2f2ac433c319719502929cabc2bf41cb84c"
+    },
+    {
+      "id": "q:g10m12s1-1-2:g002-parall",
+      "lo_id": "lo:g10m12s1-1-2",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m12s1-1-2:ex12-1-6c",
+      "source_page": 407,
+      "source_note": "Generated from template family tpl:g10m12s1-1-2:parallelogram-angles.",
+      "stem": "$ABCD$ is a parallelogram with $\\hat{A} = (6x - 10)^{\\circ}$ and $\\hat{C} = (2x + 42)^{\\circ}$. Calculate the size of $\\hat{B}$ in degrees.",
+      "correct_answer": "112",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "$ABCD$ is a parallelogram, so $\\hat{A} = \\hat{C}$ and $\\hat{B} = \\hat{D}$ (opp $\\angle$s of $\\parallel$m)."
+        },
+        {
+          "step": 2,
+          "text_md": "Equate the two expressions: $6x - 10 = 2x + 42$, so $4x = 52$ and $x = 13$."
+        },
+        {
+          "step": 3,
+          "text_md": "$\\hat{A} = 6(13) - 10 = 68^{\\circ}$, and so $\\hat{C} = 68^{\\circ}$ too."
+        },
+        {
+          "step": 4,
+          "text_md": "Sum of $\\angle$s in a quad: $\\hat{A} + \\hat{B} + \\hat{C} + \\hat{D} = 360^{\\circ}$. With $\\hat{C} = \\hat{A}$ and $\\hat{D} = \\hat{B}$ this gives $136^{\\circ} + 2\\hat{B} = 360^{\\circ}$."
+        },
+        {
+          "step": 5,
+          "text_md": "$2\\hat{B} = 224^{\\circ}$, so $\\hat{B} = 112^{\\circ}$."
+        }
+      ],
+      "family": "tpl:g10m12s1-1-2:parallelogram-angles",
+      "family_spec_sha": "183af289370c3fc3bb7cb6716887f2f2ac433c319719502929cabc2bf41cb84c"
+    },
+    {
+      "id": "q:g10m12s1-1-2:g003-parall",
+      "lo_id": "lo:g10m12s1-1-2",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m12s1-1-2:ex12-1-6c",
+      "source_page": 407,
+      "source_note": "Generated from template family tpl:g10m12s1-1-2:parallelogram-angles.",
+      "stem": "$ABCD$ is a parallelogram with $\\hat{A} = (4x - 11)^{\\circ}$ and $\\hat{C} = (2x + 19)^{\\circ}$. Calculate the size of $\\hat{B}$ in degrees.",
+      "correct_answer": "131",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "$ABCD$ is a parallelogram, so $\\hat{A} = \\hat{C}$ and $\\hat{B} = \\hat{D}$ (opp $\\angle$s of $\\parallel$m)."
+        },
+        {
+          "step": 2,
+          "text_md": "Equate the two expressions: $4x - 11 = 2x + 19$, so $2x = 30$ and $x = 15$."
+        },
+        {
+          "step": 3,
+          "text_md": "$\\hat{A} = 4(15) - 11 = 49^{\\circ}$, and so $\\hat{C} = 49^{\\circ}$ too."
+        },
+        {
+          "step": 4,
+          "text_md": "Sum of $\\angle$s in a quad: $\\hat{A} + \\hat{B} + \\hat{C} + \\hat{D} = 360^{\\circ}$. With $\\hat{C} = \\hat{A}$ and $\\hat{D} = \\hat{B}$ this gives $98^{\\circ} + 2\\hat{B} = 360^{\\circ}$."
+        },
+        {
+          "step": 5,
+          "text_md": "$2\\hat{B} = 262^{\\circ}$, so $\\hat{B} = 131^{\\circ}$."
+        }
+      ],
+      "family": "tpl:g10m12s1-1-2:parallelogram-angles",
+      "family_spec_sha": "183af289370c3fc3bb7cb6716887f2f2ac433c319719502929cabc2bf41cb84c"
+    },
+    {
+      "id": "q:g10m12s1-1-2:g004-parall",
+      "lo_id": "lo:g10m12s1-1-2",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m12s1-1-2:ex12-1-6c",
+      "source_page": 407,
+      "source_note": "Generated from template family tpl:g10m12s1-1-2:parallelogram-angles.",
+      "stem": "$ABCD$ is a parallelogram with $\\hat{A} = (6x - 8)^{\\circ}$ and $\\hat{C} = (3x + 49)^{\\circ}$. Calculate the size of $\\hat{B}$ in degrees.",
+      "correct_answer": "74",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "$ABCD$ is a parallelogram, so $\\hat{A} = \\hat{C}$ and $\\hat{B} = \\hat{D}$ (opp $\\angle$s of $\\parallel$m)."
+        },
+        {
+          "step": 2,
+          "text_md": "Equate the two expressions: $6x - 8 = 3x + 49$, so $3x = 57$ and $x = 19$."
+        },
+        {
+          "step": 3,
+          "text_md": "$\\hat{A} = 6(19) - 8 = 106^{\\circ}$, and so $\\hat{C} = 106^{\\circ}$ too."
+        },
+        {
+          "step": 4,
+          "text_md": "Sum of $\\angle$s in a quad: $\\hat{A} + \\hat{B} + \\hat{C} + \\hat{D} = 360^{\\circ}$. With $\\hat{C} = \\hat{A}$ and $\\hat{D} = \\hat{B}$ this gives $212^{\\circ} + 2\\hat{B} = 360^{\\circ}$."
+        },
+        {
+          "step": 5,
+          "text_md": "$2\\hat{B} = 148^{\\circ}$, so $\\hat{B} = 74^{\\circ}$."
+        }
+      ],
+      "family": "tpl:g10m12s1-1-2:parallelogram-angles",
+      "family_spec_sha": "183af289370c3fc3bb7cb6716887f2f2ac433c319719502929cabc2bf41cb84c"
+    },
+    {
+      "id": "q:g10m12s1-1-2:g005-parall",
+      "lo_id": "lo:g10m12s1-1-2",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m12s1-1-2:ex12-1-6c",
+      "source_page": 407,
+      "source_note": "Generated from template family tpl:g10m12s1-1-2:parallelogram-angles.",
+      "stem": "$ABCD$ is a parallelogram with $\\hat{A} = (6x - 9)^{\\circ}$ and $\\hat{C} = (4x + 17)^{\\circ}$. Calculate the size of $\\hat{B}$ in degrees.",
+      "correct_answer": "111",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "$ABCD$ is a parallelogram, so $\\hat{A} = \\hat{C}$ and $\\hat{B} = \\hat{D}$ (opp $\\angle$s of $\\parallel$m)."
+        },
+        {
+          "step": 2,
+          "text_md": "Equate the two expressions: $6x - 9 = 4x + 17$, so $2x = 26$ and $x = 13$."
+        },
+        {
+          "step": 3,
+          "text_md": "$\\hat{A} = 6(13) - 9 = 69^{\\circ}$, and so $\\hat{C} = 69^{\\circ}$ too."
+        },
+        {
+          "step": 4,
+          "text_md": "Sum of $\\angle$s in a quad: $\\hat{A} + \\hat{B} + \\hat{C} + \\hat{D} = 360^{\\circ}$. With $\\hat{C} = \\hat{A}$ and $\\hat{D} = \\hat{B}$ this gives $138^{\\circ} + 2\\hat{B} = 360^{\\circ}$."
+        },
+        {
+          "step": 5,
+          "text_md": "$2\\hat{B} = 222^{\\circ}$, so $\\hat{B} = 111^{\\circ}$."
+        }
+      ],
+      "family": "tpl:g10m12s1-1-2:parallelogram-angles",
+      "family_spec_sha": "183af289370c3fc3bb7cb6716887f2f2ac433c319719502929cabc2bf41cb84c"
+    },
+    {
+      "id": "q:g10m12s1-1-2:g006-parall",
+      "lo_id": "lo:g10m12s1-1-2",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m12s1-1-2:ex12-1-6c",
+      "source_page": 407,
+      "source_note": "Generated from template family tpl:g10m12s1-1-2:parallelogram-angles.",
+      "stem": "$ABCD$ is a parallelogram with $\\hat{A} = (6x - 20)^{\\circ}$ and $\\hat{C} = (4x + 14)^{\\circ}$. Calculate the size of $\\hat{B}$ in degrees.",
+      "correct_answer": "98",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "$ABCD$ is a parallelogram, so $\\hat{A} = \\hat{C}$ and $\\hat{B} = \\hat{D}$ (opp $\\angle$s of $\\parallel$m)."
+        },
+        {
+          "step": 2,
+          "text_md": "Equate the two expressions: $6x - 20 = 4x + 14$, so $2x = 34$ and $x = 17$."
+        },
+        {
+          "step": 3,
+          "text_md": "$\\hat{A} = 6(17) - 20 = 82^{\\circ}$, and so $\\hat{C} = 82^{\\circ}$ too."
+        },
+        {
+          "step": 4,
+          "text_md": "Sum of $\\angle$s in a quad: $\\hat{A} + \\hat{B} + \\hat{C} + \\hat{D} = 360^{\\circ}$. With $\\hat{C} = \\hat{A}$ and $\\hat{D} = \\hat{B}$ this gives $164^{\\circ} + 2\\hat{B} = 360^{\\circ}$."
+        },
+        {
+          "step": 5,
+          "text_md": "$2\\hat{B} = 196^{\\circ}$, so $\\hat{B} = 98^{\\circ}$."
+        }
+      ],
+      "family": "tpl:g10m12s1-1-2:parallelogram-angles",
+      "family_spec_sha": "183af289370c3fc3bb7cb6716887f2f2ac433c319719502929cabc2bf41cb84c"
+    },
+    {
+      "id": "q:g10m12s1-1-2:g007-parall",
+      "lo_id": "lo:g10m12s1-1-2",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m12s1-1-2:ex12-1-6c",
+      "source_page": 407,
+      "source_note": "Generated from template family tpl:g10m12s1-1-2:parallelogram-angles.",
+      "stem": "$ABCD$ is a parallelogram with $\\hat{A} = (4x - 46)^{\\circ}$ and $\\hat{C} = (2x + 14)^{\\circ}$. Calculate the size of $\\hat{B}$ in degrees.",
+      "correct_answer": "106",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "$ABCD$ is a parallelogram, so $\\hat{A} = \\hat{C}$ and $\\hat{B} = \\hat{D}$ (opp $\\angle$s of $\\parallel$m)."
+        },
+        {
+          "step": 2,
+          "text_md": "Equate the two expressions: $4x - 46 = 2x + 14$, so $2x = 60$ and $x = 30$."
+        },
+        {
+          "step": 3,
+          "text_md": "$\\hat{A} = 4(30) - 46 = 74^{\\circ}$, and so $\\hat{C} = 74^{\\circ}$ too."
+        },
+        {
+          "step": 4,
+          "text_md": "Sum of $\\angle$s in a quad: $\\hat{A} + \\hat{B} + \\hat{C} + \\hat{D} = 360^{\\circ}$. With $\\hat{C} = \\hat{A}$ and $\\hat{D} = \\hat{B}$ this gives $148^{\\circ} + 2\\hat{B} = 360^{\\circ}$."
+        },
+        {
+          "step": 5,
+          "text_md": "$2\\hat{B} = 212^{\\circ}$, so $\\hat{B} = 106^{\\circ}$."
+        }
+      ],
+      "family": "tpl:g10m12s1-1-2:parallelogram-angles",
+      "family_spec_sha": "183af289370c3fc3bb7cb6716887f2f2ac433c319719502929cabc2bf41cb84c"
+    },
+    {
+      "id": "q:g10m12s1-1-2:g008-parall",
+      "lo_id": "lo:g10m12s1-1-2",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m12s1-1-2:ex12-1-6c",
+      "source_page": 407,
+      "source_note": "Generated from template family tpl:g10m12s1-1-2:parallelogram-angles.",
+      "stem": "$ABCD$ is a parallelogram with $\\hat{A} = (5x - 19)^{\\circ}$ and $\\hat{C} = (3x + 41)^{\\circ}$. Calculate the size of $\\hat{B}$ in degrees.",
+      "correct_answer": "49",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "$ABCD$ is a parallelogram, so $\\hat{A} = \\hat{C}$ and $\\hat{B} = \\hat{D}$ (opp $\\angle$s of $\\parallel$m)."
+        },
+        {
+          "step": 2,
+          "text_md": "Equate the two expressions: $5x - 19 = 3x + 41$, so $2x = 60$ and $x = 30$."
+        },
+        {
+          "step": 3,
+          "text_md": "$\\hat{A} = 5(30) - 19 = 131^{\\circ}$, and so $\\hat{C} = 131^{\\circ}$ too."
+        },
+        {
+          "step": 4,
+          "text_md": "Sum of $\\angle$s in a quad: $\\hat{A} + \\hat{B} + \\hat{C} + \\hat{D} = 360^{\\circ}$. With $\\hat{C} = \\hat{A}$ and $\\hat{D} = \\hat{B}$ this gives $262^{\\circ} + 2\\hat{B} = 360^{\\circ}$."
+        },
+        {
+          "step": 5,
+          "text_md": "$2\\hat{B} = 98^{\\circ}$, so $\\hat{B} = 49^{\\circ}$."
+        }
+      ],
+      "family": "tpl:g10m12s1-1-2:parallelogram-angles",
+      "family_spec_sha": "183af289370c3fc3bb7cb6716887f2f2ac433c319719502929cabc2bf41cb84c"
+    },
+    {
+      "id": "q:g10m12s1-1-2:g009-parall",
+      "lo_id": "lo:g10m12s1-1-2",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m12s1-1-2:ex12-1-6c",
+      "source_page": 407,
+      "source_note": "Generated from template family tpl:g10m12s1-1-2:parallelogram-angles.",
+      "stem": "$ABCD$ is a parallelogram with $\\hat{A} = (5x - 24)^{\\circ}$ and $\\hat{C} = (3x + 32)^{\\circ}$. Calculate the size of $\\hat{B}$ in degrees.",
+      "correct_answer": "64",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "$ABCD$ is a parallelogram, so $\\hat{A} = \\hat{C}$ and $\\hat{B} = \\hat{D}$ (opp $\\angle$s of $\\parallel$m)."
+        },
+        {
+          "step": 2,
+          "text_md": "Equate the two expressions: $5x - 24 = 3x + 32$, so $2x = 56$ and $x = 28$."
+        },
+        {
+          "step": 3,
+          "text_md": "$\\hat{A} = 5(28) - 24 = 116^{\\circ}$, and so $\\hat{C} = 116^{\\circ}$ too."
+        },
+        {
+          "step": 4,
+          "text_md": "Sum of $\\angle$s in a quad: $\\hat{A} + \\hat{B} + \\hat{C} + \\hat{D} = 360^{\\circ}$. With $\\hat{C} = \\hat{A}$ and $\\hat{D} = \\hat{B}$ this gives $232^{\\circ} + 2\\hat{B} = 360^{\\circ}$."
+        },
+        {
+          "step": 5,
+          "text_md": "$2\\hat{B} = 128^{\\circ}$, so $\\hat{B} = 64^{\\circ}$."
+        }
+      ],
+      "family": "tpl:g10m12s1-1-2:parallelogram-angles",
+      "family_spec_sha": "183af289370c3fc3bb7cb6716887f2f2ac433c319719502929cabc2bf41cb84c"
+    },
+    {
+      "id": "q:g10m12s1-1-2:g010-parall",
+      "lo_id": "lo:g10m12s1-1-2",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:g10m12s1-1-2:ex12-1-6c",
+      "source_page": 407,
+      "source_note": "Generated from template family tpl:g10m12s1-1-2:parallelogram-angles.",
+      "stem": "$ABCD$ is a parallelogram with $\\hat{A} = (6x - 101)^{\\circ}$ and $\\hat{C} = (2x + 11)^{\\circ}$. Calculate the size of $\\hat{B}$ in degrees.",
+      "correct_answer": "113",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "$ABCD$ is a parallelogram, so $\\hat{A} = \\hat{C}$ and $\\hat{B} = \\hat{D}$ (opp $\\angle$s of $\\parallel$m)."
+        },
+        {
+          "step": 2,
+          "text_md": "Equate the two expressions: $6x - 101 = 2x + 11$, so $4x = 112$ and $x = 28$."
+        },
+        {
+          "step": 3,
+          "text_md": "$\\hat{A} = 6(28) - 101 = 67^{\\circ}$, and so $\\hat{C} = 67^{\\circ}$ too."
+        },
+        {
+          "step": 4,
+          "text_md": "Sum of $\\angle$s in a quad: $\\hat{A} + \\hat{B} + \\hat{C} + \\hat{D} = 360^{\\circ}$. With $\\hat{C} = \\hat{A}$ and $\\hat{D} = \\hat{B}$ this gives $134^{\\circ} + 2\\hat{B} = 360^{\\circ}$."
+        },
+        {
+          "step": 5,
+          "text_md": "$2\\hat{B} = 226^{\\circ}$, so $\\hat{B} = 113^{\\circ}$."
+        }
+      ],
+      "family": "tpl:g10m12s1-1-2:parallelogram-angles",
+      "family_spec_sha": "183af289370c3fc3bb7cb6716887f2f2ac433c319719502929cabc2bf41cb84c"
+    }
+  ],
+  "s5_reconciled": {
+    "runs": [
+      "final-ch12-wf_1b2f6e8e-8f1.json"
+    ],
+    "catalogue": "g10-math-misconceptions",
+    "refused_attachments_stripped": [],
+    "widgets_left_out": []
+  }
+}

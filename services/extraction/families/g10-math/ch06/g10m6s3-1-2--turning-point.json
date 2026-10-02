@@ -1,0 +1,67 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s3-1-2:turning-point",
+ "kind": "family",
+ "lo_id": "lo:g10m6s3-1-2",
+ "parent_question_id": "q:g10m6s3-1-2:ex6-3-7d",
+ "source_page": 167,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "choice": [
+    -5,
+    -4,
+    -3,
+    -2,
+    -1,
+    1,
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    -9,
+    9
+   ],
+   "resample_while": "q == 0"
+  },
+  {
+   "name": "ac",
+   "let": "'' if a == 1 else ('-' if a == -1 else str(a))"
+  },
+  {
+   "name": "qs",
+   "let": "'+ ' if q > 0 else '- '"
+  },
+  {
+   "name": "qa",
+   "let": "abs(q)"
+  }
+ ],
+ "constraints": [
+  "a != 0",
+  "q != 0"
+ ],
+ "stem": "The parabola $g$ is given by $y = {=ac}x^2 {=qs}{=qa}$. Write down the coordinates of the turning point of $g$.",
+ "solution": [
+  "The parabola has the form $y = ax^2 + q$, with $q = {=q}$.",
+  "When $x = 0$ the term $ax^2$ is $0$, so $y = q = {=q}$. The turning point of $y = ax^2 + q$ lies on the $y$-axis, at $x = 0$.",
+  "So the turning point is $(0, {=q})$."
+ ],
+ "marker": {
+  "kind": "coordinates",
+  "answer": "(0, {=q})",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Basic entry point for the 'state its turning point' part of the objective. The book's solution to ex6-3-7d names the turning point (0, -9) as its first step; this family isolates that step for y = ax^2 + q. The sign of a is varied (never 0) so students see that the turning point is (0, q) whether the parabola opens up or down; the answer depends only on q. q is never 0 so the turning point is never at the origin and the x-coordinate 0 is not confused with the y-coordinate. The coefficient is written without a 1 when a = ±1 (ac table)."
+}

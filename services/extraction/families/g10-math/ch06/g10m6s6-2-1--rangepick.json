@@ -1,0 +1,76 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s6-2-1:rangepick",
+ "kind": "family",
+ "lo_id": "lo:g10m6s6-2-1",
+ "parent_question_id": "q:g10m6s6-2-1:ex6-6-20c",
+ "source_page": 206,
+ "tier": "standard",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "q",
+   "choice": [
+    -4,
+    -3,
+    -2,
+    -1,
+    1,
+    2,
+    3,
+    4
+   ]
+  }
+ ],
+ "constraints": [],
+ "stem": "Let $f(\\theta) = a\\cos\\theta + q$, where $a = {=a}$ and $q = {=q}$. The graph of $f$ is drawn for $0^\\circ \\leq \\theta \\leq 360^\\circ$. Which of the following is the range of $f$?",
+ "choices": {
+  "correct": "${=q - a} \\leq f(\\theta) \\leq {=q + a}$",
+  "distractors": [
+   {
+    "text": "${=0 - a} \\leq f(\\theta) \\leq {=a}$",
+    "misconception_id": "mc:g10m6s6-2-1:range-ignores-q"
+   },
+   {
+    "text": "${=q - 1} \\leq f(\\theta) \\leq {=q + 1}$",
+    "misconception_id": "mc:g10m6s6-2-1:range-ignores-a"
+   },
+   {
+    "text": "${=0 - a - q} \\leq f(\\theta) \\leq {=a - q}$",
+    "misconception_id": "mc:g10m6s6-2-1:range-shift-wrong-way"
+   }
+  ]
+ },
+ "solution": [
+  "For $y = \\cos\\theta$ the highest value is $1$ and the lowest value is $-1$.",
+  "Multiplying by $a = {=a}$ stretches the graph, so the amplitude is $|a| = {=a}$ and $a\\cos\\theta$ runs from ${=0 - a}$ up to ${=a}$.",
+  "Adding $q = {=q}$ moves every point of the graph up by $q$ units (down if $q$ is negative), so the lowest value is $q - a = {=q - a}$ and the highest value is $q + a = {=q + a}$.",
+  "The range is ${=q - a} \\leq f(\\theta) \\leq {=q + a}$."
+ ],
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m6s6-2-1:range-ignores-q",
+   "label": "Forgets the vertical shift q when stating the range",
+   "description": "Gives the range of a cos θ, from -a to a, without moving it up or down by q."
+  },
+  {
+   "id": "mc:g10m6s6-2-1:range-ignores-a",
+   "label": "Forgets the amplitude a when stating the range",
+   "description": "Shifts the range of cos θ, from -1 to 1, by q but does not stretch it by the factor a."
+  },
+  {
+   "id": "mc:g10m6s6-2-1:range-shift-wrong-way",
+   "label": "Moves the range the wrong way for q",
+   "description": "Subtracts q from both ends of the range of a cos θ, so a positive q moves the graph down and a negative q moves it up."
+  }
+ ],
+ "notes": "The book items of this objective read the amplitude off a drawn graph (two of them, 6-19c and 6-20c, have q not zero and a negative); no figure can be sampled, so the family asks for the range of a given f(θ) = a cos θ + q on 0 to 360 degrees. Range is written as an inequality, not interval notation, so no bracket or separator convention can mismatch. a is positive here (the reflected case is in the advanced families); q is never 0 and a is at least 2, so the four options are always different (D1 equals the correct option only if q = 0, D2 only if a = 1, D3 only if q = 0). The engine's range convention is the book's: lowest value q - |a|, highest value q + |a|."
+}

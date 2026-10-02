@@ -1,0 +1,48 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m7s4-1-2:parallelhalf",
+ "kind": "family",
+ "lo_id": "lo:g10m7s4-1-2",
+ "parent_question_id": "q:g10m7s4-1-2:ex7-7-9",
+ "source_page": 266,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "k",
+   "randint": [
+    2,
+    12
+   ]
+  },
+  {
+   "name": "m",
+   "randint": [
+    3,
+    20
+   ]
+  },
+  {
+   "name": "n",
+   "randint": [
+    "abs(m - k) + 1",
+    "m + k - 1"
+   ]
+  }
+ ],
+ "constraints": [
+  "abs(m - k) < n",
+  "n < m + k"
+ ],
+ "stem": "In triangle $VWY$, the point $Z$ lies on $VY$ and the point $X$ lies on $WY$, with $ZX\\parallel VW$. It is given that $VW={=2*k}$, $ZX={=k}$, $XY={=m}$ and $YZ={=n}$. Determine the length of $WY$.",
+ "answer": "2 * m",
+ "solution": [
+  "$ZX\\parallel VW$ and $ZX=\\frac{1}{2}VW$ (half of ${=2*k}$ is ${=k}$), so $Z$ is the mid-point of $VY$ and $X$ is the mid-point of $WY$.",
+  "Since $X$ is the mid-point of $WY$, $WY=2\\times XY$ (definition of mid-point).",
+  "Substitute: $WY=2\\times {=m}={=2*m}$.",
+  "The length $YZ={=n}$ is not needed to find $WY$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Modelled on ex7-7-9 and ex7-7-10 (parallel line half the length of the base; deduce that X and Z are mid-points; extra data given that is not needed). The book also gives an angle; it is left out here because a random angle could make the triangle impossible. YZ is kept as the extra datum and is drawn between |m-k|+1 and m+k-1, so triangle YZX (and therefore the doubled triangle YVW) always exists. The answer 2*m is also what similar triangles give (YX/YW = ZX/VW = 1/2), so a solver using either route agrees. The configuration is stated in words (Z on VY, X on WY, ZX parallel to VW) so no figure is needed."
+}

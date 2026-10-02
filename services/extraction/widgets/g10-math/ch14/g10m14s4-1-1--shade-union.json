@@ -1,0 +1,31 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m14s4-1-1:shade-union",
+ "lo_id": "lo:g10m14s4-1-1",
+ "parent_question_id": "q:g10m14s4-1-1:ex14-4-2",
+ "tier": "basic",
+ "kind": "venn_builder",
+ "spec": {
+  "sets": 2,
+  "labels": [
+   "A",
+   "B"
+  ],
+  "mode": "shade",
+  "target": "union"
+ },
+ "stem": "The sample space is the whole numbers from 1 to 15, drawn as the rectangle. Event $A$ and event $B$ are the two overlapping circles. Shade the region that holds every outcome of $A\\cup B$.",
+ "solution": [
+  "Read the symbol $A\\cup B$ as \"$A$ or $B$\": an outcome belongs to it if it is in $A$, or in $B$, or in both.",
+  "Shade the whole of circle $A$, including the part it shares with $B$.",
+  "Shade the whole of circle $B$ as well. The overlap is already shaded, and each outcome in it is still counted only once.",
+  "Leave the part of the rectangle outside both circles unshaded: those outcomes are in the sample space $S$ but in neither event, so they are not in $A\\cup B$."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "intersection-for-union",
+   "misconception_id": "mc:g10m14s4-1-1:union-as-overlap-only"
+  }
+ ],
+ "notes": "Genuine fit: the student builds the region for \"A or B\" by choosing which parts of the diagram belong to it, which is the idea behind writing the union out element by element. Listing the elements once the region is known is the prerequisite skill (reading an event set from a Venn diagram, s3-1-2), so it is not asked here. The widget's shade/union case can emit only intersection-for-union and off-target. intersection-for-union is mapped to union-as-overlap-only (shading just the overlap is the \"and\" for \"or\" confusion, the likeliest error). off-target is deliberately not mapped: it also fires for union-as-a-only-part (shading only A, or A without the overlap) and union-as-outside-both-circles (shading the rectangle outside the circles), and one predicate cannot separate them. Because neither-region-missed is not in the union case, the outside-both-circles error gets a plain \"not quite\". No figure is referenced: the instrument is the diagram."
+}

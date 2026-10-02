@@ -1,0 +1,323 @@
+{
+ "stage": "SW",
+ "workflow": "working-check",
+ "prompts_version": "sw-v3",
+ "book": "g10-math",
+ "chapter": 12,
+ "part": 1,
+ "parts": 1,
+ "batch": 5,
+ "agents": 8,
+ "effort": "high",
+ "model": "sonnet",
+ "pass_id": "A",
+ "order": "bundle",
+ "by_ref": {
+  "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/wcheck-ch12",
+  "stage": "SW",
+  "shards_sha256": "520b15489193370515c3e9c91bffcc266aa9fae00b46f0e374b7d652d1edbf6b",
+  "files": 39
+ },
+ "embedded": {
+  "source": "runbook/working-check.workflow.js",
+  "source_sha256": "352a846920d85b4c224df7fb36d3f9a8ea598155cc2b4ee4ba9ef7e4791b6385",
+  "args_sha256": "85dc21942cfda43d6a10a9661a9deffc95171b7fec32b20c6e082556fc7b0eae",
+  "generated_sha256": "1d1994a3e16beb77825663696458632449c9ccc60a978712ddd97c48c56ef8cb",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "solution_id": "q:g10m12s1-1-2:ex12-1-6b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m12s1-1-2:ex12-1-6c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m12s1-1-2:ex12-1-7b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m12s1-1-2:ex12-2-6b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m12s1-1-2:ex12-2-7b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m12s1-1-2:ex12-2-7c",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "180^{\\circ}-63^{\\circ}-79^{\\circ}=79^{\\circ}",
+     "kind": "arithmetic",
+     "where": "unsure",
+     "expected": "180-63-79 = 38",
+     "why": "180 minus 63 minus 79 equals 38, not 79, so the line does not equal the value it is set equal to."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m12s1-1-1:we01",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m12s1-1-1:ex12-1-1a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m12s1-1-1:ex12-1-1b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m12s1-1-2:ex12-1-2",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m12s1-1-2:ex12-1-3",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m12s1-1-1:ex12-1-4",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m12s1-1-1:ex12-1-5",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m12s1-1-1:ex12-1-6a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m12s1-1-1:ex12-1-7a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m12s1-1-1:ex12-1-9",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m12s1-1-2:ex12-1-10",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m12s1-1-1:ex12-2-1",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "AM=MO=ON=NO",
+     "kind": "label",
+     "where": "working",
+     "expected": "AM=MO=ON=NA",
+     "why": "The chain ends with NO, which is the same side as ON, so it never reaches the fourth side AN needed for a rhombus."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m12s1-1-2:ex12-2-2a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m12s1-1-2:ex12-2-2b",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "DF\\parallel HB\\quad\\text{(corresp }\\angle\\text{s equal)}",
+     "kind": "other",
+     "where": "working",
+     "expected": "alternate angles equal",
+     "why": "F2 and H2 lie on opposite sides of FH, so they are alternate angles, not corresponding angles."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m12s1-1-1:ex12-2-2c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m12s1-1-2:ex12-2-3a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m12s1-1-1:ex12-2-3b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m12s1-1-2:ex12-2-4a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m12s1-1-2:ex12-2-4b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m12s1-1-1:ex12-2-5a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m12s1-1-2:ex12-2-5b",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "$AN=NC$ (given)",
+     "kind": "label",
+     "where": "working",
+     "expected": "AN=ND",
+     "why": "The question gives N as the mid-point of AD, so the given is AN=ND; NC is not given and the next step needs AN=ND."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m12s1-1-2:ex12-2-6a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m12s1-1-2:ex12-2-6c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m12s1-1-1:ex12-2-7a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m12s1-1-1:ex12-2-8",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m12s1-1-1:ex12-2-9",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m12s1-1-1:ex12-2-10",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m12s1-1-1:ex12-2-11",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m12s1-1-1:ex12-2-12a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m12s1-1-1:ex12-2-12b",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 2,
+     "quote": "But $AE$ and $DF$ are diagonals of $ADCF$",
+     "kind": "label",
+     "where": "working",
+     "expected": "AC and DF",
+     "why": "The diagonals of ADCF are AC and DF; AE is only part of AC, and step 1 gave CE = EA."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m12s1-1-2:ex12-2-12c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m12s1-1-2:ex12-2-13",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "\\therefore EF&=ED",
+     "kind": "label",
+     "where": "working",
+     "expected": "EF = AD",
+     "why": "BC = EF and BC = AD give EF = AD, not ED; the later AD + DE = AE step needs AD."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m12s1-1-2:ex12-2-14",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  }
+ ],
+ "problems": [],
+ "meter": {
+  "stage": "SW",
+  "record": "uv run meter_run.py record --book g10-math --stage SW --run <runId>"
+ }
+}

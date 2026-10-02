@@ -1,0 +1,46 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m7s3-1-4:opposite-angles",
+ "kind": "family",
+ "lo_id": "lo:g10m7s3-1-4",
+ "parent_question_id": "q:g10m7s3-1-4:ex7-8-2j",
+ "source_page": 270,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    50,
+    140
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    40,
+    140
+   ],
+   "resample_while": "q == p or (p + q) % 2 == 1 or p + q > 280"
+  },
+  {
+   "name": "b",
+   "let": "(360 - p - q) // 2"
+  }
+ ],
+ "constraints": [
+  "p != q",
+  "p + q <= 280",
+  "b > 0 and b < 180"
+ ],
+ "stem": "$ABCD$ is a kite with $AB = AD$ and $CB = CD$. $B\\hat{A}D = {=p}^\\circ$ and $B\\hat{C}D = {=q}^\\circ$. Calculate the size of $A\\hat{B}C$, in degrees.",
+ "answer": "b",
+ "solution": [
+  "The equal sides meet at $A$ (where $AB = AD$) and at $C$ (where $CB = CD$). The angles at $B$ and $D$ are the pair of opposite angles of the kite that are equal, so $A\\hat{D}C = A\\hat{B}C$.",
+  "The interior angles of a quadrilateral add up to $360^\\circ$: $B\\hat{A}D + A\\hat{B}C + B\\hat{C}D + A\\hat{D}C = 360^\\circ$.",
+  "Replace $A\\hat{D}C$ by $A\\hat{B}C$: ${=p}^\\circ + 2 \\times A\\hat{B}C + {=q}^\\circ = 360^\\circ$, so $2 \\times A\\hat{B}C = 360^\\circ - {=p}^\\circ - {=q}^\\circ = {=360 - p - q}^\\circ$.",
+  "$A\\hat{B}C = {=b}^\\circ$."
+ ],
+ "notes": "Standard: the book's property 'one pair of opposite angles equal' plus the 360 degree angle sum of a quadrilateral. Diagram-free: the kite is fixed by naming AB = AD and CB = CD, so the equal angles are B and D. p + q is forced even so B is a whole number; p != q keeps the kite from being a rhombus; all four angles stay below 180 so the kite is convex. No mcq: both catalogued misconceptions are true/false judgements already covered by the book's basic questions."
+}

@@ -1,0 +1,113 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s5-1-2:reflect-after-point",
+ "kind": "family",
+ "lo_id": "lo:g10m6s5-1-2",
+ "parent_question_id": "q:g10m6s5-1-2:ex6-5-2",
+ "tier": "advanced",
+ "answer_type": "expression",
+ "source_page": 185,
+ "context": null,
+ "params": [
+  {
+   "name": "m",
+   "choice": [
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "name": "a",
+   "choice": [
+    -4,
+    -3,
+    -2,
+    -1,
+    1,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    -5,
+    5
+   ],
+   "resample_while": "q == 0"
+  },
+  {
+   "name": "w",
+   "let": "1 / 2 ** m"
+  },
+  {
+   "name": "v",
+   "let": "a * w + q"
+  },
+  {
+   "name": "vd",
+   "let": "float(v)"
+  },
+  {
+   "name": "wd",
+   "let": "float(w)"
+  },
+  {
+   "name": "dd",
+   "let": "float(a * w)"
+  },
+  {
+   "name": "na",
+   "let": "-a"
+  },
+  {
+   "name": "gq",
+   "let": "-q"
+  },
+  {
+   "name": "qabs",
+   "let": "abs(q)"
+  },
+  {
+   "name": "qop",
+   "let": "'+' if q > 0 else '-'"
+  },
+  {
+   "name": "qneg",
+   "let": "'-' if q > 0 else '+'"
+  },
+  {
+   "name": "gabs",
+   "let": "abs(gq)"
+  },
+  {
+   "name": "gop",
+   "let": "'+' if gq > 0 else '-'"
+  }
+ ],
+ "constraints": [],
+ "stem": "The graph of the exponential function $f(x)=a\\cdot 2^{x}+q$ has the horizontal asymptote $y={=q}$ and passes through the point $A(-{=m}, {=vd})$. The graph of $g$ is the reflection of the graph of $f$ in the $x$-axis. Determine the equation of $g$, in the form $g(x)=c\\cdot 2^{x}+d$.",
+ "solution": [
+  "The horizontal asymptote of $f(x)=a\\cdot 2^{x}+q$ is the line $y=q$. The asymptote is $y={=q}$, so $q={=q}$ and $f(x)=a\\cdot 2^{x} {=qop} {=qabs}$.",
+  "Substitute the point $A(-{=m}, {=vd})$: ${=vd}=a\\cdot 2^{-{=m}} {=qop} {=qabs}$.",
+  "Isolate the power of $2$: ${=vd} {=qneg} {=qabs}=a\\cdot 2^{-{=m}}$. Since $2^{-{=m}}={=wd}$, this gives ${=dd}=a\\cdot({=wd})$.",
+  "Divide by ${=wd}$: $a=\\frac{{=dd}}{{=wd}}={=a}$.",
+  "So $f(x)={=a}\\cdot 2^{x} {=qop} {=qabs}$.",
+  "Reflecting in the $x$-axis replaces every $y$-value by its negative, so $g(x)=-f(x)=-\\left({=a}\\cdot 2^{x} {=qop} {=qabs}\\right)$.",
+  "Remove the brackets: $g(x)={=na}\\cdot 2^{x} {=gop} {=gabs}$. Both $a$ and $q$ change sign, so the asymptote of $g$ is $y={=gq}$."
+ ],
+ "marker": {
+  "kind": "equation",
+  "answer": "y = {=na}*2^x {=gop} {=gabs}",
+  "form": null,
+  "variables": [
+   "x",
+   "y"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Joins two of the book's steps: finding a and q from the asymptote and one point near it on y=a*2^x+q (ex6-5-2, ex6-5-3, ex6-8-25, which use A(-3, 3.875), A(-3, 4.875), A(-3, -3.625)) and writing the equation of the reflection in the x-axis (ex6-5-7b). With a=-1,q=4,m=3 the stem reproduces ex6-5-2; with a=3,q=-4,m=3 it reproduces ex6-8-25. The point is given as an exact decimal (multiples of 0.125, 0.25 or 0.5), so no rounding instruction is needed and a, q are integers. The twist is that a reflection in the x-axis negates the WHOLE function: the asymptote moves from y=q to y=-q, so q changes sign as well as a. The book only reflects 3^x (q=0); the technique (negate f) is the same. Typical wrong answers: -a*2^x + q (keeps q; not catalogued), a*2^(-x) + q (reflection-axes-swapped), or a wrong-signed a (sign-of-a-lost). Reflection in the x-axis is chosen deliberately instead of vertical stretch: a vertical stretch of a function with q not 0 is ambiguous (does the asymptote move?), and the book never states it for q not 0. Parameters: m in {1,2,3}, a in +-1..4, q in -5..5 excluding 0, giving 240 distinct instances. Signs of q are rendered through let-params holding '+' or '-' (string literals); if the engine refuses string literals in let, replace them with signed(...).\n\nPIPELINE NORMALISATION (not an author edit): marker-equation-names-y: the marker answer was 'g(x) = {=na}*2^x {=gop} {=gabs}', with the variables ['x']. families/evaluator.py parse_plain allows only sqrt(), abs() and interval() as calls, so g(x) on the left of the '=' was refused and every attempt failed to evaluate ('only sqrt(), abs() and interval() may be used') instead of producing a key. The app's marker reads f(x) (or g(x)) on one side of an equation as y (answer-marker.ts fnName), so the key names the dependent variable the way the pipeline's parser can: 'y = {=na}*2^x {=gop} {=gabs}', with the variables ['x', 'y'] (as the sibling identify-function writes 'y = m*x + c'). A student's 'f(x) = ...' or 'y = ...' is marked the same. The stem (which still asks for the form f(x)=... / g(x)=...), the answer's value and the worked solution are unchanged."
+}

@@ -1,0 +1,92 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m14s4-1-2:overlap-pick",
+ "kind": "family",
+ "lo_id": "lo:g10m14s4-1-2",
+ "parent_question_id": "q:g10m14s4-1-2:ex14-4-1",
+ "source_page": 482,
+ "tier": "standard",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "nn",
+   "choice": [
+    14,
+    15,
+    16,
+    18,
+    20
+   ]
+  },
+  {
+   "name": "pool",
+   "sample": {
+    "from": "range(1, nn + 1)",
+    "k": 7
+   }
+  },
+  {
+   "name": "araw",
+   "let": "[pool[j] for j in range(0, 6)]"
+  },
+  {
+   "name": "braw",
+   "let": "[pool[0], pool[1], pool[6]]"
+  },
+  {
+   "name": "ash",
+   "shuffle": "araw"
+  },
+  {
+   "name": "bsh",
+   "shuffle": "braw"
+  },
+  {
+   "name": "inter",
+   "let": "sorted([pool[0], pool[1]])"
+  },
+  {
+   "name": "aset",
+   "let": "sorted([pool[j] for j in range(0, 6)])"
+  },
+  {
+   "name": "bset",
+   "let": "sorted([pool[0], pool[1], pool[6]])"
+  },
+  {
+   "name": "uset",
+   "let": "sorted([pool[j] for j in range(0, 7)])"
+  },
+  {
+   "name": "bonly",
+   "let": "pool[6]"
+  }
+ ],
+ "constraints": [],
+ "stem": "A group of learners are given a Venn diagram of the sample space $S=\\{n:n\\in\\mathbb{Z},1\\leq n\\leq {=nn}\\}$. The diagram has two overlapping circles, one for event set $A$ and one for event set $B$. The numbers written inside circle $A$ are {=ash[0]}, {=ash[1]}, {=ash[2]}, {=ash[3]}, {=ash[4]} and {=ash[5]}. The numbers written inside circle $B$ are {=bsh[0]}, {=bsh[1]} and {=bsh[2]}. A number in the overlap of the two circles is inside both circles, so it is written in both lists, and every other number of $S$ lies outside both circles. The learners are asked to identify the event set of the intersection of $A$ and $B$, also written $A\\cap B$. Which set best describes the event set of $A\\cap B$?",
+ "choices": {
+  "correct": "$\\{{=inter[0]}, {=inter[1]}\\}$",
+  "distractors": [
+   {
+    "text": "$\\{{=bset[0]}, {=bset[1]}, {=bset[2]}\\}$",
+    "misconception_id": "mc:g10m14s4-1-2:whole-set-not-intersection"
+   },
+   {
+    "text": "$\\{{=aset[0]}, {=aset[1]}, {=aset[2]}, {=aset[3]}, {=aset[4]}, {=aset[5]}\\}$",
+    "misconception_id": "mc:g10m14s4-1-2:whole-set-not-intersection"
+   },
+   {
+    "text": "$\\{{=uset[0]}, {=uset[1]}, {=uset[2]}, {=uset[3]}, {=uset[4]}, {=uset[5]}, {=uset[6]}\\}$",
+    "misconception_id": "mc:g10m14s4-1-2:either-set-not-both"
+   }
+  ]
+ },
+ "solution": [
+  "The intersection $A\\cap B$ is the set of numbers that are in circle $A$ and in circle $B$ at the same time. It can only contain numbers that are written inside circle $B$ as well as inside circle $A$.",
+  "Check the numbers of circle $B$, which are {=bset[0]}, {=bset[1]} and {=bset[2]}, against circle $A$. The numbers {=inter[0]} and {=inter[1]} are inside circle $A$ too, but {=bonly} is only in circle $B$, so it is left out.",
+  "Write down only the numbers that are in both circles: $A\\cap B=\\{{=inter[0]}, {=inter[1]}\\}$.",
+  "The other sets are not the intersection: $\\{{=bset[0]}, {=bset[1]}, {=bset[2]}\\}$ is the whole of $B$, $\\{{=aset[0]}, {=aset[1]}, {=aset[2]}, {=aset[3]}, {=aset[4]}, {=aset[5]}\\}$ is the whole of $A$, and $\\{{=uset[0]}, {=uset[1]}, {=uset[2]}, {=uset[3]}, {=uset[4]}, {=uset[5]}, {=uset[6]}\\}$ collects the numbers of both circles. The intersection keeps only the shared numbers."
+ ],
+ "notes": "Models the book question ex14-4-1 (p. 482). I read its figure: the book draws two overlapping circles with A holding many numbers, B holding {7, 10, 11}, the overlap {7, 10} and one number (8) outside both. Stems carry no figure, so the Venn diagram is described in words: each circle's contents are listed, an overlap number appears in both lists (the stem says so), and the numbers of S that are in neither circle are not listed. Each instance has A with 6 numbers, B with 3 and exactly 2 shared, like the book's 2-element answer. The lists are shuffled so the shared numbers do not sit in the same position every time. Distractors are the book's own error types: all of B (whole-set), all of A (whole-set), and the union of both circles (either-set). Sizes 2, 3, 6 and 7 make the four options always distinct. Reviewer check: pool entries 0-1 are shared, 2-5 are in A only, 6 is in B only, so A and B overlap in exactly the two numbers shown as the key."
+}

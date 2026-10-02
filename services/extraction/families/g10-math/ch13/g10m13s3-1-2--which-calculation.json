@@ -1,0 +1,81 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m13s3-1-2:which-calculation",
+ "kind": "family",
+ "lo_id": "lo:g10m13s3-1-2",
+ "parent_question_id": "q:g10m13s3-1-2:ex13-4-2",
+ "source_page": 439,
+ "tier": "basic",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "tab",
+   "let": "[[3, 4, 5], [4, 3, 5], [6, 8, 10], [8, 6, 10], [9, 12, 15], [12, 9, 15], [12, 16, 20], [16, 12, 20], [5, 12, 13], [12, 5, 13], [8, 15, 17], [15, 8, 17], [7, 24, 25], [10, 24, 26], [15, 20, 25]]"
+  },
+  {
+   "name": "i",
+   "randint": [
+    0,
+    "len(tab) - 1"
+   ]
+  },
+  {
+   "name": "r",
+   "let": "tab[i][0]"
+  },
+  {
+   "name": "hv",
+   "let": "tab[i][1]"
+  },
+  {
+   "name": "hs",
+   "let": "tab[i][2]"
+  }
+ ],
+ "constraints": [
+  "hs * hs == r * r + hv * hv"
+ ],
+ "stem": "A right cone has a base radius of ${=r}$ cm, a vertical height of ${=hv}$ cm and a slant height of ${=hs}$ cm. Which calculation gives the total surface area of the cone, that is, the area of the circular base plus the area of the walls?",
+ "choices": {
+  "correct": "$\\pi \\times {=r}^2 + \\pi \\times {=r} \\times {=hs}$",
+  "distractors": [
+   {
+    "text": "$\\pi \\times {=r} \\times {=hs}$",
+    "misconception_id": "mc:g10m13s3-1-2:omit-base"
+   },
+   {
+    "text": "$\\pi \\times {=r}^2 + \\pi \\times {=r} \\times {=hv}$",
+    "misconception_id": "mc:g10m13s3-1-2:vertical-height"
+   },
+   {
+    "text": "$\\pi \\times {=r}^2 + 2 \\times \\pi \\times {=r} \\times {=hs}$",
+    "misconception_id": "mc:g10m13s3-1-2:cylinder-walls"
+   }
+  ]
+ },
+ "solution": [
+  "The total surface area of the cone is the area of the circular base plus the area of the walls.",
+  "The base is a circle of radius ${=r}$ cm, so its area is $\\pi r^2 = \\pi \\times {=r}^2$.",
+  "The walls have area $\\pi r h$, where $h$ is the slant height, the length along the wall from the apex to the edge of the base. Here that is ${=hs}$ cm, not the vertical height of ${=hv}$ cm: $\\pi \\times {=r} \\times {=hs}$.",
+  "Adding the two areas gives $\\pi \\times {=r}^2 + \\pi \\times {=r} \\times {=hs}$. Leaving out the base, using the vertical height in place of the slant height, or using the cylinder's wall area $2\\pi r h$ would each give a different value."
+ ],
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m13s3-1-2:omit-base",
+   "label": "Leaves out the circular base",
+   "description": "Gives only the area of the walls, pi*r*h, when asked for the total surface area, which also includes the area of the base circle."
+  },
+  {
+   "id": "mc:g10m13s3-1-2:vertical-height",
+   "label": "Uses the vertical height for the walls",
+   "description": "Puts the vertical height (apex straight down to the centre of the base) into pi*r*h instead of the slant height measured along the wall."
+  },
+  {
+   "id": "mc:g10m13s3-1-2:cylinder-walls",
+   "label": "Uses the cylinder's wall area for the cone",
+   "description": "Writes the walls as 2*pi*r*h, the curved area of a cylinder, instead of pi*r*h for a cone."
+  }
+ ],
+ "notes": "A basic recognition item for the formula pi*r^2 + pi*r*h, a natural multiple choice because the point is choosing the right set-up and each distractor is one named error. The stem gives r, the vertical height and the slant height as the same Pythagorean triple (r, vertical height, slant height) so the geometry is real and the vertical-height distractor is tempting; the three distractors are never numerically equal to the correct option because the vertical height differs from the slant height. 15 distinct stems. No distinct_by_choices key needed because the stem holes differ between instances. The catalogue for this objective was empty, so all three ids are new."
+}

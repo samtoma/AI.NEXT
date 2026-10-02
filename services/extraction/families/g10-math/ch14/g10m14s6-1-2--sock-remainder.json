@@ -1,0 +1,85 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m14s6-1-2:sock-remainder",
+ "kind": "family",
+ "lo_id": "lo:g10m14s6-1-2",
+ "parent_question_id": "q:g10m14s6-1-2:ex14-8-17e",
+ "source_page": 493,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": "Nezi's drawer of loose plain socks in four colours: orange, pink, white and black. The total is stated, the orange, pink and white counts are stated, and the remaining socks are black. One sock is taken out at random.",
+ "params": [
+  {
+   "name": "T",
+   "choice": [
+    20,
+    24,
+    30,
+    36,
+    40,
+    48,
+    60
+   ]
+  },
+  {
+   "name": "o",
+   "randint": [
+    2,
+    "T // 3 - 1"
+   ]
+  },
+  {
+   "name": "p",
+   "randint": [
+    2,
+    "T // 3 - 1"
+   ]
+  },
+  {
+   "name": "w",
+   "randint": [
+    2,
+    "T // 3 - 1"
+   ]
+  },
+  {
+   "name": "k",
+   "let": "T - o - p - w"
+  },
+  {
+   "name": "s",
+   "let": "p + k"
+  },
+  {
+   "require": "gcd(s, T) > 1",
+   "why": "the answer must need simplifying, because the stem asks for simplest form"
+  },
+  {
+   "name": "n",
+   "let": "numerator(s / T)"
+  },
+  {
+   "name": "d",
+   "let": "denominator(s / T)"
+  }
+ ],
+ "constraints": [
+  "k >= 3",
+  "s < T"
+ ],
+ "stem": "Nezi has {=T} loose socks in a drawer. {=o} of them are plain orange, {=p} are plain pink and {=w} are plain white. The remaining socks are plain black. A sock is taken out at random. Calculate the probability that it is pink or black. Give your answer as a fraction in simplest form.",
+ "solution": [
+  "The black socks are the ones that remain: ${=T}-{=o}-{=p}-{=w}= {=k}$ black socks.",
+  "$P(\\text{pink})=\\frac{{=p}}{{=T}}$ and $P(\\text{black})=\\frac{{=k}}{{=T}}$.",
+  "A sock cannot be both pink and black, so the events are mutually exclusive and $P(\\text{pink or black})=P(\\text{pink})+P(\\text{black})$.",
+  "$P(\\text{pink or black})=\\frac{{=p}}{{=T}}+\\frac{{=k}}{{=T}}=\\frac{{=s}}{{=T}}=\\frac{{=n}}{{=d}}$"
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "{=n}/{=d}",
+  "form": "simplest",
+  "variables": [],
+  "tolerance": null
+ },
+ "notes": "Advanced twist taken from book 17e (the remaining socks are a group the stem never counts): the student first finds the black count by subtraction from the stated total, then adds two single-colour probabilities, then simplifies. The counts o, p, w are drawn at most T//3-1 each, so k = T-o-p-w is always at least 3. The require gcd(s, T) > 1 (equivalent to gcd(o+w, T) > 1) forces a genuine simplification step, so 'simplest form' in the stem is meaningful; every T offered is even, so the require is met in a large share of draws. The key is a plain fraction n/d in lowest terms. An alternative route (1 minus P(orange or white)) gives the same value, so blind solvers cannot legitimately disagree. No mcq is used, so no misconception ids are attached."
+}

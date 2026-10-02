@@ -1,0 +1,649 @@
+{
+ "mode": "verify",
+ "book": "g10-math",
+ "prompts_version": "s7-v5",
+ "by_ref": {
+  "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/s7-verify",
+  "stage": "S7 verify",
+  "shards_sha256": "6947c662c524b59e566eb82ba345a7459714e227d86da8f0426ea8ab5c28dd1d",
+  "files": 7
+ },
+ "embedded": {
+  "source": "runbook/widgets.workflow.js",
+  "source_sha256": "ab8dbc9eff4a1c5148d3e48a479814753b3f1f0aeb240cb259e813da97676f08",
+  "args_sha256": "7c66b5ab5df05f39b7f400451a81605fc8e2e2ccee29c5e8db5affbc75d4f641",
+  "generated_sha256": "97f8ebabfd0b1bc4d3ec2bc0bf166a15583b5e8b55a1e48b568b1fb179db7f8e",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "question_id": "q:g10m8s1-1-2:w001",
+   "template_sha": "085a06f70e4863f758fab3745314b7dd2ca4c1e693d78438baa5d0dcb5c44a72",
+   "reading": {
+    "target": [
+     5,
+     -4
+    ]
+   },
+   "construction": "Place the single point at lattice coordinates (5, -4): 5 units right of the origin, 4 units down.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "swapped-coordinates",
+     "matches": true,
+     "why": "A student who reverses the order reads '(5, -4)' as '(-4, 5)' and plots that point. (-4, 5) is a distinct, reachable lattice point (not equal to the correct (5, -4)), so the predicate correctly isolates this reading-order error."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "matches": true,
+     "why": "A student who keeps the right magnitudes but flips one sign plots either (-5, -4) or (5, 4) — same distances from the axes as the target, but landing in Quadrant III or I instead of the correct Quadrant IV. Either is distinct from both the correct point and the swapped point, so the predicate cleanly fires only for this single-sign-flip error."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m8s1-1-2:w002",
+   "template_sha": "085a06f70e4863f758fab3745314b7dd2ca4c1e693d78438baa5d0dcb5c44a72",
+   "reading": {
+    "target": [
+     -4,
+     -3
+    ]
+   },
+   "construction": "Place the single point at lattice coordinates (-4, -3): 4 units left of the origin, 3 units down.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "swapped-coordinates",
+     "matches": true,
+     "why": "Reversing the order gives (-3, -4), a distinct reachable point (not equal to the correct (-4, -3)), so the predicate correctly captures a reversed-order reading."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "matches": true,
+     "why": "Flipping one sign gives (4, -3) or (-4, 3) — same distances, but moved out of Quadrant III into IV or II respectively. Both are distinct from the correct point and from the swap point (-3, -4), so the predicate isolates the single-sign-flip error as intended."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m8s1-1-2:w003",
+   "template_sha": "085a06f70e4863f758fab3745314b7dd2ca4c1e693d78438baa5d0dcb5c44a72",
+   "reading": {
+    "target": [
+     3,
+     -5
+    ]
+   },
+   "construction": "Place the single point at lattice coordinates (3, -5): 3 units right of the origin, 5 units down (on the bottom edge of the grid).",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "swapped-coordinates",
+     "matches": true,
+     "why": "Reversing the order gives (-5, 3), a distinct reachable point (still within the ±5 grid, not equal to the correct (3, -5)), so the predicate correctly targets the reversed-order reading."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "matches": true,
+     "why": "Flipping one sign gives (-3, -5) or (3, 5) — same distances from the axes, but Quadrant III or I instead of the correct Quadrant IV. Both differ from the correct point and from the swap point (-5, 3), so the predicate isolates the sign-flip error cleanly."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m8s1-1-2:w004",
+   "template_sha": "085a06f70e4863f758fab3745314b7dd2ca4c1e693d78438baa5d0dcb5c44a72",
+   "reading": {
+    "target": [
+     3,
+     3
+    ]
+   },
+   "construction": "Place the single point at lattice coordinates (3, 3): 3 units right of the origin, 3 units up.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "swapped-coordinates",
+     "matches": false,
+     "why": "The target's x and y values are equal (3, 3), so reversing the order gives (3, 3) again — identical to the correct answer. A construction that fires this predicate cannot be distinguished from the correct construction: a student who plots the point correctly is indistinguishable from one who 'swapped' it, because the swap is a no-op here. This predicate would misfire on a student who plotted correctly, serving her a refutation of an error she did not make, so it does not match the claimed misconception for this widget."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "matches": true,
+     "why": "Flipping one sign gives (-3, 3) or (3, -3) — same distances from the axes, but Quadrant II or IV instead of the correct Quadrant I. Both are distinct from the correct point (and, unlike the swap case, distinct from each other and from (3,3)), so the predicate correctly isolates the single-sign-flip error even though x and y happen to be equal."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m8s2-1-2:w001",
+   "template_sha": "2c17b77e19dd5bb4b1a2175bbaed33bf5720e0bcd12db49feef2443961a3cb42",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     3,
+     9
+    ],
+    "from": null,
+    "to": null,
+    "openFrom": null,
+    "openTo": null
+   },
+   "construction": "Distance²=(x-6)²+(2-(-2))²=25 → (x-6)²=9 → x=3 or x=9. Both values are unrestricted valid answers. On a number line ranging 0 to 12 (width 12, within ±20 and ≤24 wide), mark the two points 3 and 9.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "missed-values",
+     "matches": true,
+     "why": "Both 3 and 9 are genuinely part of the correct answer (no restriction narrows the question to one root). A student who clears the squared difference, reaches (x-6)²=9, and writes only one of ±3 as the final x-value (e.g. marks only 9, or only 3) exactly reproduces 'stops-at-first-root': they solved correctly but didn't realize the squared difference yields two values. The refutation ('you missed a valid second value') is true here."
+    },
+    {
+     "predicate": "extra-values",
+     "matches": false,
+     "why": "There is no restriction in this question to ignore — {3,9} is the complete, unrestricted answer set. 'keeps-both-roots-ignores-restriction' describes a student who keeps a root a stated condition has ruled out; since no condition rules out either root here, any extra marked value (e.g. a stray 6 or 15) would come from an arithmetic/sign slip, not from ignoring a restriction that doesn't exist."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m8s2-1-2:w002",
+   "template_sha": "2c17b77e19dd5bb4b1a2175bbaed33bf5720e0bcd12db49feef2443961a3cb42",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     -5,
+     3
+    ],
+    "from": null,
+    "to": null,
+    "openFrom": null,
+    "openTo": null
+   },
+   "construction": "Distance²=(4-1)²+(y+1)²=25 → 9+(y+1)²=25 → (y+1)²=16 → y=3 or y=-5. Both are unrestricted valid answers. On a number line ranging -10 to 10 (width 20, within ±20), mark the two points -5 and 3.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "missed-values",
+     "matches": true,
+     "why": "No restriction narrows the answer; {-5,3} is the full correct set. A student who reaches (y+1)²=16 and writes only one of y+1=±4 (only -5, or only 3) is exactly 'stops-at-first-root' — correct algebra, incomplete final answer. The implied refutation (there is a second valid value) is true."
+    },
+    {
+     "predicate": "extra-values",
+     "matches": false,
+     "why": "The question states no condition that rules out either root, so there is nothing for 'keeps-both-roots-ignores-restriction' to ignore. A marked value outside {-5,3} would be a computational error, not a failure to apply a restriction that isn't there."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m8s2-1-2:w003",
+   "template_sha": "2c17b77e19dd5bb4b1a2175bbaed33bf5720e0bcd12db49feef2443961a3cb42",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     -9,
+     3
+    ],
+    "from": null,
+    "to": null,
+    "openFrom": null,
+    "openTo": null
+   },
+   "construction": "Distance²=(8-0)²+(y+3)²=100 → 64+(y+3)²=100 → (y+3)²=36 → y=3 or y=-9. Both are unrestricted valid answers. On a number line ranging -12 to 12 (width 24, within ±20), mark the two points -9 and 3.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "missed-values",
+     "matches": true,
+     "why": "No restriction applies; {-9,3} is the complete correct set. Writing only one of y+3=±6 (only -9, or only 3) is the textbook 'stops-at-first-root' pattern — correct quadratic, one solution dropped. The refutation that a second valid value exists is true for this question."
+    },
+    {
+     "predicate": "extra-values",
+     "matches": false,
+     "why": "No stated condition rules out either root here, so 'keeps-both-roots-ignores-restriction' has nothing to ignore — both roots are supposed to be kept. A stray extra value would stem from an unrelated arithmetic slip."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m8s2-1-2:w004",
+   "template_sha": "2c17b77e19dd5bb4b1a2175bbaed33bf5720e0bcd12db49feef2443961a3cb42",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     4
+    ],
+    "from": null,
+    "to": null,
+    "openFrom": null,
+    "openTo": null
+   },
+   "construction": "Distance²=(3-0)²+y²=25 → y²=16 → y=±4, then the stated restriction y≥0 rules out -4, leaving the single correct value y=4. On a number line ranging 0 to 10 (within ±20), mark the single point 4.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "missed-values",
+     "matches": false,
+     "why": "Unlike W1-W3, this question's restriction (y≥0) makes -4 an invalid answer, not a second correct value. 'stops-at-first-root' is diagnosed by telling the student they dropped a valid solution — but here the 'other' root (-4) is not valid, it was correctly excluded. Firing this predicate (e.g. because a student wrote only -4) would misinform the student that -4 was a value they should have kept, which is false; any construction missing the value 4 reflects a wrong-root/sign error or restriction misuse, not 'failed to realize there are two solutions'. This is the question the restriction was added to distinguish, and the intended diagnosis for a both-roots answer is the other predicate below."
+    },
+    {
+     "predicate": "extra-values",
+     "matches": true,
+     "why": "This is precisely the scenario the misconception describes: solve y²=16 to get both ±4, then report both even though the question explicitly states 'taking only the value with y≥0'. A student marking both 4 and -4 (extra value -4 outside the true one-element answer set {4}) is a direct, faithful construction of 'keeps-both-roots-ignores-restriction'."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m8s3-1-2:w001",
+   "template_sha": "86388bddd64f16312487d90a1b1b3c23dd065c00854f7270791b34e83ad8a79a",
+   "reading": {
+    "mode": "points",
+    "m": 2,
+    "b": null,
+    "through": [
+     [
+      -1,
+      0
+     ],
+     [
+      1,
+      4
+     ]
+    ]
+   },
+   "construction": "A=(-1,0) fixed by the question; correct B solves 2=(y-0)/(1-(-1)) → y=4. Place A=(-1,0), B=(1,4): both lattice points in [-5,5], slope=(4-0)/(1-(-1))=2. ✓",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "slope-inverted → mc:g10m8s3-1-2:inverted-gradient-ratio",
+     "matches": true,
+     "why": "Solving with the swapped ratio (x2-x1)/(y2-y1)=m gives 2/(y-0)=2 → y=1, so B=(1,1). That line's actual slope is (1-0)/(1-(-1))=0.5=1/m, the reciprocal signature of this exact misconception, and it lands on a valid lattice point distinct from the correct answer (1,4) and from the sign-flip answer (1,-4). A student who genuinely inverts rise/run would build exactly this."
+    },
+    {
+     "predicate": "slope-sign-flipped → mc:g10m8s3-1-2:mismatched-point-order",
+     "matches": true,
+     "why": "Solving with mismatched point order (y-0)/((-1)-1)=2 gives y=-4, so B=(1,-4), a valid lattice point. The drawn slope is (-4-0)/(1-(-1))=-2=-m — the right magnitude, wrong sign, exactly the described error — and it's distinct from both the correct point and the inverted-ratio point."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m8s3-1-2:w002",
+   "template_sha": "86388bddd64f16312487d90a1b1b3c23dd065c00854f7270791b34e83ad8a79a",
+   "reading": {
+    "mode": "points",
+    "m": 2,
+    "b": null,
+    "through": [
+     [
+      -2,
+      -2
+     ],
+     [
+      1,
+      4
+     ]
+    ]
+   },
+   "construction": "A=(-2,-2) fixed; correct B solves 2=(y+2)/3 → y=4. Place A=(-2,-2), B=(1,4): both lattice points in [-5,5], slope=(4-(-2))/(1-(-2))=2. ✓",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "slope-inverted → mc:g10m8s3-1-2:inverted-gradient-ratio",
+     "matches": false,
+     "why": "Following the question's own point (x=1), the inverted-ratio setup 3/(y+2)=2 gives y=-0.5 — not a lattice point, so this exact wrong value cannot be placed on this instrument at all. A student forced to snap to an integer y near x=1 (e.g. -1 or 0) produces a slope of 1/3 or 2/3 from A, neither of which is 1/m (0.5), m (2), nor -m (-2) — an unclassifiable answer, not the reciprocal-ratio signature. The predicate would essentially never fire cleanly for a student making this exact error on this widget, so diagnosing it here is unreliable."
+    },
+    {
+     "predicate": "slope-sign-flipped → mc:g10m8s3-1-2:mismatched-point-order",
+     "matches": false,
+     "why": "The mismatched-order setup (y+2)/(-3)=2 gives y=-8, which is outside the ±5 lattice entirely — this construction cannot be placed on the instrument at any x matching the question. There is no way for a student to express this exact misconception here, so the predicate cannot correspond to an actual student action for this question."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m8s3-1-2:w003",
+   "template_sha": "86388bddd64f16312487d90a1b1b3c23dd065c00854f7270791b34e83ad8a79a",
+   "reading": {
+    "mode": "points",
+    "m": -1,
+    "b": null,
+    "through": [
+     [
+      -4,
+      3
+     ],
+     [
+      2,
+      -3
+     ]
+    ]
+   },
+   "construction": "A=(-4,3) fixed; correct B solves -1=(y-3)/6 → y=-3. Place A=(-4,3), B=(2,-3): both lattice points in [-5,5], slope=(-3-3)/(2-(-4))=-1. ✓",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "slope-inverted → mc:g10m8s3-1-2:inverted-gradient-ratio",
+     "matches": false,
+     "why": "Because m=-1 is its own reciprocal, the inverted-ratio setup 6/(y-3)=-1 gives the SAME y=-3 as the correct method — the 'wrong' construction is literally the correct answer, B=(2,-3). This predicate would fire on a student who got the question exactly right, so it cannot discriminate this misconception here; flagging it would refute a mistake the student never made."
+    },
+    {
+     "predicate": "slope-sign-flipped → mc:g10m8s3-1-2:mismatched-point-order",
+     "matches": false,
+     "why": "The mismatched-order setup (y-3)/(-6)=-1 gives y=9, outside the ±5 lattice — unplaceable on this instrument. A student cannot express this exact error here, so the predicate would never fire for this misconception on this question."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m8s3-1-2:w004",
+   "template_sha": "86388bddd64f16312487d90a1b1b3c23dd065c00854f7270791b34e83ad8a79a",
+   "reading": {
+    "mode": "points",
+    "m": 0.5,
+    "b": null,
+    "through": [
+     [
+      -3,
+      -2
+     ],
+     [
+      1,
+      0
+     ]
+    ]
+   },
+   "construction": "A=(-3,-2) fixed; correct B solves 0.5=(y+2)/4 → y=0. Place A=(-3,-2), B=(1,0): both lattice points in [-5,5], slope=(0-(-2))/(1-(-3))=0.5. ✓",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "slope-inverted → mc:g10m8s3-1-2:inverted-gradient-ratio",
+     "matches": false,
+     "why": "The inverted-ratio setup 4/(y+2)=0.5 gives y=6, outside the ±5 lattice — this exact wrong value cannot be placed on the instrument at the question's own x=1. There is no clean lattice construction expressing this misconception here, so the predicate would not reliably fire for it."
+    },
+    {
+     "predicate": "slope-sign-flipped → mc:g10m8s3-1-2:mismatched-point-order",
+     "matches": true,
+     "why": "The mismatched-order setup (y+2)/(-4)=0.5 gives y=-4, a valid lattice point: B=(1,-4). Drawn slope is (-4-(-2))/(1-(-3))=-0.5=-m, the right-magnitude-wrong-sign signature described, and it's distinct from the correct point (1,0). This is what a student holding the mismatched-order misconception would actually build."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m8s3-2-1:w001",
+   "template_sha": "d826721d2535427f540530e3a1d2edc8bd7ffbb837772e33e255b040b5b0394f",
+   "reading": {
+    "mode": "points",
+    "through": [
+     [
+      -3,
+      1
+     ],
+     [
+      3,
+      3
+     ]
+    ],
+    "m": null,
+    "b": null,
+    "note": "Question names two points to draw through (A, B); equivalent equation would be m=1/3, b=2, but the wording puts this in 'points' mode."
+   },
+   "construction": "Place the two handles exactly at A(-3,1) and B(3,3) - both are lattice points within the +/-5 range, so the line through them is directly drawable.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "slope-inverted",
+     "matches": true,
+     "why": "Correct gradient is dy/dx = 2/6 = 1/3. The inverted-formula error gives dx/dy = 6/2 = 3, a clearly different, reachable line (e.g. through A(-3,1) and (-2,4)). That is exactly what a student computing gradient as (x2-x1)/(y2-y1) would draw."
+    },
+    {
+     "predicate": "points-swapped",
+     "matches": true,
+     "why": "Exchanging coordinates gives A'=(1,-3) and B'=(3,3) (B is symmetric under swap, but A is not, so the resulting line - slope 3 through (1,-3) and (3,3) - is genuinely different from the correct line and reachable on the lattice). Faithful rendering of 'plots x and y exchanged.'"
+    },
+    {
+     "predicate": "slope-sign-flipped",
+     "matches": false,
+     "why": "The named mechanism is x2-x1 = 3-(-3) miscomputed as a-(-b)->a-b, i.e. 3-3=0, since only the x-coordinate involves subtracting a negative here (y1=1 is positive, so dy=2 is unaffected). That yields dx=0 - a vertical/degenerate line - not a line with the same slope magnitude (1/3) and flipped sign (-1/3). A clean mirror-image line would only come from a different error (e.g. reversing subtraction order in just one difference), not from this misconception's actual arithmetic on these numbers."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m8s3-2-1:w002",
+   "template_sha": "d826721d2535427f540530e3a1d2edc8bd7ffbb837772e33e255b040b5b0394f",
+   "reading": {
+    "mode": "points",
+    "through": [
+     [
+      -4,
+      -2
+     ],
+     [
+      2,
+      -5
+     ]
+    ],
+    "m": null,
+    "b": null,
+    "note": "Question names two points to draw through; equivalent equation would be m=-1/2, b=-4."
+   },
+   "construction": "Place the two handles exactly at A(-4,-2) and B(2,-5) - both lattice points within +/-5.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "slope-inverted",
+     "matches": true,
+     "why": "Correct gradient is dy/dx = -3/6 = -1/2. Inverted gives dx/dy = 6/-3 = -2, a clearly different, reachable line (e.g. through A(-4,-2) and (-3,-4)). Matches the stated mechanism."
+    },
+    {
+     "predicate": "points-swapped",
+     "matches": true,
+     "why": "Swapped points A'=(-2,-4), B'=(-5,2) are both distinct from the originals and from each other, giving a different, reachable line (slope -2, vs the correct -1/2). Faithful to 'plots x and y exchanged.'"
+    },
+    {
+     "predicate": "slope-sign-flipped",
+     "matches": false,
+     "why": "Here both differences involve subtracting a negative (y1=-2, x1=-4), so the described slip (a-(-b)->a-b) gives dy_wrong = -5-2 = -7 and/or dx_wrong = 2-4 = -2. None of the resulting slopes (-7/6, -3/-2=1.5, or -7/-2=3.5) equal the clean sign-flip of the correct slope (+1/2). This misconception's actual arithmetic does not produce the mirrored line the predicate is meant to catch for these coordinates."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m8s3-2-1:w003",
+   "template_sha": "d826721d2535427f540530e3a1d2edc8bd7ffbb837772e33e255b040b5b0394f",
+   "reading": {
+    "mode": "points",
+    "through": [
+     [
+      -2,
+      -3
+     ],
+     [
+      4,
+      3
+     ]
+    ],
+    "m": null,
+    "b": null,
+    "note": "Question names two points to draw through; equivalent equation would be m=1, b=-1."
+   },
+   "construction": "Place the two handles exactly at A(-2,-3) and B(4,3) - both lattice points within +/-5.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "slope-inverted",
+     "matches": false,
+     "why": "Correct gradient is dy/dx = 6/6 = 1. Because dx and dy are numerically identical (both 6) for this pair of points, the inverted formula dx/dy also equals 6/6 = 1 - the exact same value as the correct slope. A student making this error would draw a line indistinguishable from the correct answer, so this predicate can never fire as a genuine, distinguishing signal on this particular problem."
+    },
+    {
+     "predicate": "points-swapped",
+     "matches": true,
+     "why": "Swapped points A'=(-3,-2), B'=(3,4) give a line with the same slope (1, by coincidental symmetry of this problem) but a different intercept (y=x+1 vs the correct y=x-1) - a distinct, reachable line. Still a faithful, distinguishable rendering of the misconception despite the slope coincidence."
+    },
+    {
+     "predicate": "slope-sign-flipped",
+     "matches": false,
+     "why": "Both differences involve subtracting a negative (y1=-3, x1=-2). The described slip gives dy_wrong = 3-3 = 0 and/or dx_wrong = 4-2 = 2, producing wrong slopes of 0/6=0, 6/2=3, or 0/2=0 - none equal the clean sign-flip of the correct slope (-1). As with W1 and W2, this misconception's arithmetic does not actually produce a mirrored-slope line for these coordinates, so the predicate would be firing (if at all) for reasons unrelated to this specific misconception."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m8s3-2-2:w001",
+   "template_sha": "03c31fc9a4e119f7ed00b9abb6a66294c758a82803c8e34c3ee1e0952ae11375",
+   "reading": {
+    "mode": "equation",
+    "m": "-1/2",
+    "b": 3,
+    "through": null,
+    "note": "L: y=2x-3 has slope 2; perpendicular slope is the negative reciprocal, -1/2; through (4,1): y-1=-1/2(x-4) => y=-1/2x+3."
+   },
+   "construction": "Equation mode: m = -1/2 (reciprocal of the whole number -2, |m|=0.5<=5), b = 3 (whole number within +/-5). Equivalently in points mode: handles at (4,1) and (0,3), both lattice points within -5..5, giving the same line y=-1/2x+3.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "off-target (\"Neither the slope nor the intercept matches\") -> mc:g10m8s3-2-2:swaps-parallel-perpendicular-tests",
+     "matches": false,
+     "why": "A student with this exact misconception would plausibly draw one of two specific lines: (a) m=2 (reusing L's own slope, believing equal gradients signal perpendicularity) giving y=2x-7 through (4,1), via handles e.g. (4,1) and (5,3); or (b) m=-2 (flipping the sign but not reciprocating, believing opposite sign alone proves perpendicularity) giving y=-2x+9, via handles e.g. (4,1) and (2,5). Both have neither slope (2 or -2) matching the correct -1/2 nor intercept (-7 or 9) matching 3, so both would indeed trip the 'off-target' predicate. But 'off-target' is defined only as the negative catch-all -- 'neither the slope nor the intercept matches' -- with no requirement that the drawn slope be +2, -2, or any value connected to a parallel/perpendicular test. It fires identically for a mis-substituted point, a transposed m/b, an arithmetic slip in the point-slope step, or a plain guess -- none of which reflect this misconception. Because the predicate cannot distinguish the test-swap construction from these unrelated wrong answers, it mostly fires for other reasons; a wrong diagnosis here would refute a mistake the student may not have made."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m8s3-2-2:w002",
+   "template_sha": "03c31fc9a4e119f7ed00b9abb6a66294c758a82803c8e34c3ee1e0952ae11375",
+   "reading": {
+    "mode": "equation",
+    "m": -3,
+    "b": -1,
+    "through": null,
+    "note": "L: y=-3x+2 has slope -3; parallel line has the same slope; through (1,-4): y+4=-3(x-1) => y=-3x-1."
+   },
+   "construction": "Equation mode: m = -3 (whole number, |m|=3<=5), b = -1 (whole number within +/-5). Equivalently in points mode: handles at (1,-4) and (0,-1), both lattice points within -5..5, giving the same line y=-3x-1.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "off-target (\"Neither the slope nor the intercept matches\") -> mc:g10m8s3-2-2:swaps-parallel-perpendicular-tests",
+     "matches": false,
+     "why": "A student with this misconception, asked for a parallel line, might apply the perpendicular test instead (believing it is the relevant one, or blurring the two): (a) m=1/3 (true negative reciprocal of -3), giving y=1/3x - 13/3 through (1,-4) -- not a whole number or clean reciprocal intercept, awkward but constructible in points mode via handles like (1,-4) and (4,-3); or (b) m=3 (just the opposite sign, no reciprocal), giving y=3x-7, via handles e.g. (1,-4) and (2,-1). Both have a slope (1/3 or 3) that doesn't match -3 and an intercept that doesn't match -1, so both would trip 'off-target'. But that predicate is only the negative catch-all -- it fires equally for an unrelated slip such as using the wrong point, arithmetic errors in the point-slope expansion, or a random guess, none of which is this test-swap misconception. Since the predicate can't isolate the test-swap construction from these other wrong-answer causes, it mostly fires for other reasons, so it does not reliably diagnose this misconception."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m8s4-1-1:w001",
+   "template_sha": "69d5b6190c717b11c543ec1fea2fa297f30f5101636d451e047b78c10f31ed13",
+   "reading": {
+    "target": "[1, 0], the midpoint of A(-1,3) and B(3,-3)"
+   },
+   "construction": "Plot the single point (1, 0): xM = (-1+3)/2 = 1, yM = (3+(-3))/2 = 0. This is an integer lattice point within the ±5 grid.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "wrong-quadrant → mc:g10m8s4-1-1:drops-sign-adding-negatives",
+     "matches": false,
+     "why": "The misconception fires only when a coordinate sum in the midpoint formula adds two negative numbers and the student drops the sign. Here neither sum qualifies: x1+x2 = -1+3 (one negative, one positive) and y1+y2 = 3+(-3) (one negative, one positive). There is no 'both negative' addition step for this error to act on, so a student holding exactly this misconception would compute the sums correctly and land on the true midpoint (1,0), not a wrong-quadrant point. (The correct midpoint also sits on the x-axis, not inside any quadrant, making a 'wrong quadrant' diagnosis doubly inapt.) Any wrong-quadrant plot here would come from some other error, so the predicate would fire for the wrong reason."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m8s4-1-1:w002",
+   "template_sha": "69d5b6190c717b11c543ec1fea2fa297f30f5101636d451e047b78c10f31ed13",
+   "reading": {
+    "target": "[-1, 1], the midpoint of A(2,5) and B(-4,-3)"
+   },
+   "construction": "Plot the single point (-1, 1): xM = (2+(-4))/2 = -1, yM = (5+(-3))/2 = 1. Integer lattice point within the ±5 grid.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "wrong-quadrant → mc:g10m8s4-1-1:drops-sign-adding-negatives",
+     "matches": false,
+     "why": "x1+x2 = 2+(-4) and y1+y2 = 5+(-3) each mix a positive and a negative addend — neither is a 'both negative' sum. The described misconception has no trigger condition here, so a student with exactly this misconception would still add correctly and reach the true midpoint (-1,1). A wrong-quadrant answer on this item would have to come from a different mistake, so the predicate misattributes the cause."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m8s4-1-1:w003",
+   "template_sha": "69d5b6190c717b11c543ec1fea2fa297f30f5101636d451e047b78c10f31ed13",
+   "reading": {
+    "target": "[-3, -3], the midpoint of A(-4,-2) and B(-2,-4)"
+   },
+   "construction": "Plot the single point (-3, -3): xM = (-4+(-2))/2 = -3, yM = (-2+(-4))/2 = -3. Integer lattice point within the ±5 grid.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "wrong-quadrant → mc:g10m8s4-1-1:drops-sign-adding-negatives",
+     "matches": true,
+     "why": "Both coordinate sums are genuine 'both negative' additions: x1+x2 = -4+(-2) = -6, y1+y2 = -2+(-4) = -6. A student with this misconception adds the magnitudes correctly (4+2=6, 2+4=6) but records each total as positive, getting x-sum=+6, y-sum=+6, then dividing by 2 to plot (3, 3) instead of the correct (-3, -3). That flips the point from quadrant III to quadrant I with identical magnitudes on both axes — exactly 'right distances, wrong signs, wrong quadrant.' This is the one item where the misconception's precondition (adding two negatives on both axes) actually holds, and its predicted construction matches the wrong-quadrant predicate precisely."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m8s4-1-1:w004",
+   "template_sha": "69d5b6190c717b11c543ec1fea2fa297f30f5101636d451e047b78c10f31ed13",
+   "reading": {
+    "target": "[1, -1], the midpoint of A(5,-5) and B(-3,3)"
+   },
+   "construction": "Plot the single point (1, -1): xM = (5+(-3))/2 = 1, yM = (-5+3)/2 = -1. Integer lattice point within the ±5 grid.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "wrong-quadrant → mc:g10m8s4-1-1:drops-sign-adding-negatives",
+     "matches": false,
+     "why": "x1+x2 = 5+(-3) and y1+y2 = -5+3 each combine one positive and one negative addend — never two negatives being added. The misconception's specific mechanism (dropping the sign when both addends are negative) has nothing to act on, so a student with exactly this misconception still computes the correct sums and correct midpoint (1,-1). Any wrong-quadrant plot on this item would trace to a different error, so the predicate would be firing for the wrong reason."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m8s4-1-2:w001",
+   "template_sha": "7a170a351c05963ac15f818787e48eabec310ef72e4faef14715a8f6d1ccfc7f",
+   "reading": {
+    "target": "[3, -2]"
+   },
+   "construction": "B = 2M − A = (2·2−1, 2·1−4) = (3, −2). Plot the single lattice point (3, −2) — within the ±5 grid, whole-number pair.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "off-target (\"Neither coordinate matches, with no recognisable pattern\")",
+     "matches": false,
+     "why": "The claimed misconception (averaging the known endpoint A with the midpoint M, i.e. treating A and M as the segment's two endpoints) is a specific, deterministic construction: avg(A,M) = ((1+2)/2,(4+1)/2) = (1.5, 2.5). That is a computable, recognisable point (off by a fixed, describable transformation from the correct answer), not a patternless miss. The 'off-target' predicate is defined as firing precisely when there IS no recognisable pattern — i.e. it is the residual/catch-all bucket for essentially any wrong click that isn't one of the named signature errors. A catch-all with no pattern requirement will fire for many different underlying mistakes (miscopied A, arithmetic slips, guesses) far more often than for this one specific averaging error, and it cannot distinguish this construction from those other causes. So the predicate does not target what this misconception actually produces; it mostly fires for other reasons."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m8s4-1-2:w002",
+   "template_sha": "7a170a351c05963ac15f818787e48eabec310ef72e4faef14715a8f6d1ccfc7f",
+   "reading": {
+    "target": "[1, -4]"
+   },
+   "construction": "B = 2M − A = (2·−1−(−3), 2·−1−2) = (1, −4). Plot the single lattice point (1, −4) — within the ±5 grid, whole-number pair.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "off-target (\"Neither coordinate matches, with no recognisable pattern\")",
+     "matches": false,
+     "why": "Averaging A(−3,2) and M(−1,−1) gives ((−3−1)/2,(2−1)/2) = (−2, 0.5): a specific, computable point (x-coordinate lands exactly on −2), not a patternless one. 'Off-target' is defined as the no-pattern case, so by construction it cannot be the signature check for a deterministic misconception like this — it is a generic catch-all that would also fire for unrelated slips (sign errors, transcription mistakes, random guesses). Attributing it specifically to the averaging misconception is unsupported."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m8s4-1-2:w003",
+   "template_sha": "7a170a351c05963ac15f818787e48eabec310ef72e4faef14715a8f6d1ccfc7f",
+   "reading": {
+    "target": "[-4, 3]"
+   },
+   "construction": "B = 2M − A = (2·0−4, 2·0−(−3)) = (−4, 3). Plot the single lattice point (−4, 3) — within the ±5 grid, whole-number pair.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "off-target (\"Neither coordinate matches, with no recognisable pattern\")",
+     "matches": false,
+     "why": "Averaging A(4,−3) and M(0,0) gives (2, −1.5) — again a specific, derivable (if half-integer) point, not one with 'no recognisable pattern'. The predicate's own definition (patternless miss) is the opposite of what this misconception produces, and as a catch-all it would trigger for many unrelated wrong placements too, so it isn't a reliable signature for this specific error."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m8s4-1-2:w004",
+   "template_sha": "7a170a351c05963ac15f818787e48eabec310ef72e4faef14715a8f6d1ccfc7f",
+   "reading": {
+    "target": "[-4, 2]"
+   },
+   "construction": "B = 2M − A = (2·−3−(−2), 2·−1−(−4)) = (−4, 2). Plot the single lattice point (−4, 2) — within the ±5 grid, whole-number pair.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "off-target (\"Neither coordinate matches, with no recognisable pattern\")",
+     "matches": false,
+     "why": "Averaging A(−2,−4) and M(−3,−1) gives (−2.5, −2.5): a specific, symmetric, computable point, not a patternless miss. Since 'off-target' is explicitly the bucket for answers with no discernible pattern, it structurally cannot be the targeted check for this well-defined arithmetic misconception, and as a broad catch-all it would fire for many other kinds of errors just as easily."
+    }
+   ]
+  }
+ ],
+ "run_id": "wf_dbca7b50-327"
+}

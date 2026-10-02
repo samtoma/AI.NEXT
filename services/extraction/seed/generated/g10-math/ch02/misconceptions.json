@@ -1,0 +1,413 @@
+{
+  "catalogue": "g10-math-misconceptions",
+  "course_id": "course:us-g10-math-en",
+  "book": "g10-math",
+  "reviewed": false,
+  "generator": "S5 runbook/misconceptions.workflow.js (Sonnet author, Sonnet fail-closed verifier) via assemble_misconceptions.py — runs final-ch02-wf_c6bef2ca-3bd.json; pipeline-generated, UNREVIEWED",
+  "misconceptions": [
+    {
+      "id": "mc:g10m2s2-1-1:power-through-a-sum",
+      "lo_id": "lo:g10m2s2-1-1",
+      "label": "Splits a power across a sum, or gathers a sum back into one power",
+      "description": "The student treats a sum of powers and the power of a sum as the same thing, so $(a+b)^2$ becomes $a^2+b^2$, or $\\dfrac{1}{a^{-1}+b^{-1}}$ becomes $a+b$.",
+      "signal": "A sum of separate powers where a bracket was squared, e.g. $a^2+b^2$ for $(a+b)^2$, or the bare sum $a+b$ for $\\dfrac{1}{a^{-1}+b^{-1}}$.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You shared a power out across a sum, or gathered separate powers back into one power of a sum. That move is correct when the bases are multiplied, so it is a natural one to reach for, but it does not work across a $+$."
+        },
+        {
+          "step": 2,
+          "text_md": "The book's reminder is that a sum of two powers is not the power of the sum of the bases. The power law shares an exponent across a product, and a sum is not a product."
+        },
+        {
+          "step": 3,
+          "text_md": "Multiply $(a+b)^2$ out and you get $a^2+2ab+b^2$. The middle term $2ab$ is missing from $a^2+b^2$, so the two expressions are not equal."
+        },
+        {
+          "step": 4,
+          "text_md": "The negative exponent case works the same way. The book writes $a+b$ as $\\dfrac{1}{(a+b)^{-1}}$, and that is not $\\dfrac{1}{a^{-1}+b^{-1}}$, because $a^{-1}+b^{-1}$ is not the same expression as $(a+b)^{-1}$."
+        },
+        {
+          "step": 5,
+          "text_md": "Next time, split a power only across a product or a quotient. When the base is a sum, keep the bracket together as one block, or multiply it out as the book does to get $a^2+2ab+b^2$."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch02-wf_c6bef2ca-3bd.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "This is a real error in this objective: the book's explain-why-false items give (a+b)^2 = a^2+b^2 and 1/(a^-1+b^-1) = a+b. Every refutation step is mathematically correct and agrees with the canonical solutions. The book's statement is 'the sum of two powers is not the power of the sum of the bases'. The expansion (a+b)^2 = a^2+2ab+b^2 shows the missing 2ab. The book's a+b = 1/(a+b)^-1, which is not 1/(a^-1+b^-1), covers the negative-exponent case. The advice to split a power only across a product or quotient is consistent with the power laws. It argues against the specific mistake and does not just restate the method, and it adds nothing beyond the book. No question ids, page numbers, figures or review history appear in the student-facing text; 'the book' is generic. The negative-exponent step is asserted rather than demonstrated, but it is correct and mirrors the book. The signal (a sum of separate powers where a bracket was squared, or a bare a+b) would diagnose a student making this error and would not misdiagnose others.",
+        "sources": [
+          {
+            "type": "canonical_solution",
+            "ref": "expl:g10m2s2-1-1:ex2-4-6b"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "expl:g10m2s2-1-1:ex2-4-6a"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:g10m2s2-1-3:powers-outside-algebra",
+      "lo_id": "lo:g10m2s2-1-3",
+      "label": "Thinks the usual algebra moves do not apply to powers",
+      "description": "The student treats a fraction made of powers as a separate kind of expression where taking out a common factor and cancelling do not apply, so they stall, or say it cannot be simplified because the exponents are different.",
+      "signal": null,
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "It is sensible to be careful with powers, because they do have their own laws. But those laws work alongside the ordinary algebra moves rather than replacing them: taking out a common factor and cancelling work on powers exactly as they work on letters."
+        },
+        {
+          "step": 2,
+          "text_md": "Take the fraction with $2^t-2^{t-2}$ on top and $3\\cdot2^t-2^t$ below. The powers look different, which is what makes it feel stuck. Use the exponent law backwards: $2^{t-2}$ is $2^t\\cdot2^{-2}$. Now every term, top and bottom, contains $2^t$."
+        },
+        {
+          "step": 3,
+          "text_md": "So $2^t$ is a common factor. Take it out of the top and out of the bottom, just as you would take out a letter: $\\dfrac{2^t(1-2^{-2})}{2^t(3-1)}$."
+        },
+        {
+          "step": 4,
+          "text_md": "Cancel the common factor $2^t$ and finish the numbers: $\\dfrac{1-\\frac{1}{4}}{2}=\\dfrac{3}{4}\\times\\dfrac{1}{2}=\\dfrac{3}{8}$. If you stop at \"the exponents are different, so nothing can be done\", you are left with $t$ in an expression that actually simplifies to a single number."
+        },
+        {
+          "step": 5,
+          "text_md": "The move to keep: when a term has a sum or difference in its exponent, such as $13^{c+2}$, split it with the exponent law into $13^c\\cdot13^2$. Then take out the common power from the top and from the bottom, cancel it, and work out what is left."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch02-wf_c6bef2ca-3bd.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real for this objective and is supported directly by the book's caution that all the laws of operation for algebra apply to exponents. The refutation is mathematically correct and follows the canonical method step for step. It rewrites 2^{t-2} as 2^t*2^{-2}, factors 2^t out of top and bottom as 2^t(1-2^{-2}) over 2^t(3-1), cancels, and gets (3/4)/2 = 3/8. That matches the book's worked example. Step 5 splits 13^{c+2} into 13^c*13^2, then takes out the common power and cancels, which matches the book's exercise on 13^c. Nothing is taught beyond the book. The refutation argues against the stall ('the exponents are different, so nothing can be done') and does not only restate the method. Its closing line, that the stalled student is left with t in what is really a single number, is correct for this example. No label, description or refutation step names a question id, page, figure or review history. The evidence line holds the ids, but the student never reads it. The entry has no signal, so there is nothing to misdiagnose.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "b00839"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m2s2-1-3:we04"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:g10m2s3-1-1:exponent-sign-kept-when-power-moves-up",
+      "lo_id": "lo:g10m2s3-1-1",
+      "label": "Exponent keeps its sign when a power moves up from the denominator",
+      "description": "A power is moved from the denominator to the numerator but its exponent is left positive, so $\\frac{1}{a^{2}}$ is treated as $a^{2}$ and the final exponent has the wrong sign.",
+      "signal": "A final answer such as $a^{\\frac{2}{3}}$ where $a^{-\\frac{2}{3}}$ is correct: the right size of exponent, but the minus sign is missing.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You moved the power out of the denominator, and that was the right idea. If you then multiplied the exponents to get $\\frac{2}{3}$, that part is right too. The one thing missing is a minus sign: the exponent should have changed sign when the power moved up."
+        },
+        {
+          "step": 2,
+          "text_md": "Test the first move with $a=2$. Then $\\frac{1}{a^{2}}=\\frac{1}{4}$, but $a^{2}=4$. A quarter and four are not equal, so $\\frac{1}{a^{2}}$ cannot simply become $a^{2}$."
+        },
+        {
+          "step": 3,
+          "text_md": "The rule is that when a power is moved from the denominator to the numerator, the sign of its exponent changes. So $\\frac{1}{a^{2}}=a^{-2}$."
+        },
+        {
+          "step": 4,
+          "text_md": "Now apply the outer power by multiplying the exponents: $\\left(\\frac{1}{a^{2}}\\right)^{\\frac{1}{3}}=\\left(a^{-2}\\right)^{\\frac{1}{3}}=a^{-\\frac{2}{3}}$. The minus sign stays in the answer."
+        },
+        {
+          "step": 5,
+          "text_md": "Next time, change the sign of the exponent as soon as a power crosses the fraction bar, and only then apply the outer exponent."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch02-wf_c6bef2ca-3bd.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is the one the book's teaching item on (1/a^2)^(1/3) = a^(2/3) addresses, and it is real for this objective. The refutation matches the canonical method and answer: when a power moves from the denominator to the numerator its exponent changes sign, so 1/a^2 = a^(-2), and (a^(-2))^(1/3) = a^(-2/3). I checked a=2: 1/4 is not 4, so the test is correct. It argues against this specific slip rather than restating the method. It names no question id, page, figure or review history. The a=2 check is a verification, not a new method. The 'only then apply the outer exponent' advice follows the book's own order.",
+        "sources": [
+          {
+            "type": "canonical_solution",
+            "ref": "expl:g10m2s3-1-1:ex2-4-6c"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:g10m2s3-1-1:minus-sign-moves-onto-base",
+      "lo_id": "lo:g10m2s3-1-1",
+      "label": "Minus sign of a negative exponent moved onto the base",
+      "description": "A negative exponent is removed by moving the power across the fraction bar, but the minus sign is carried over onto the base as well, giving $\\frac{1}{-x^{\\frac{1}{2}}}$ instead of $\\frac{1}{x^{\\frac{1}{2}}}$.",
+      "signal": "A denominator that has picked up a minus sign, such as $\\frac{1}{-x^{\\frac{1}{2}}}$ written for $x^{-\\frac{1}{2}}$.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You are right that a negative exponent sends the power to the other side of the fraction bar. The slip is that the minus sign travelled with it and ended up in front of the base, as in $\\frac{1}{-x^{\\frac{1}{2}}}$."
+        },
+        {
+          "step": 2,
+          "text_md": "The minus sign in $-\\frac{1}{2}$ belongs to the exponent, not to $x$. Its only job is to say that the power moves across the bar. Once the power has crossed, the exponent is positive and the base is exactly as it was."
+        },
+        {
+          "step": 3,
+          "text_md": "Test with $x=4$. The rule gives $4^{-\\frac{1}{2}}=\\frac{1}{4^{\\frac{1}{2}}}=\\frac{1}{2}$, which is positive. The version with the extra minus sign gives $\\frac{1}{-4^{\\frac{1}{2}}}=\\frac{1}{-2}=-\\frac{1}{2}$, which is negative. The two are not equal, so that minus sign cannot belong there."
+        },
+        {
+          "step": 4,
+          "text_md": "So write $x^{-\\frac{1}{2}}=\\frac{1}{x^{\\frac{1}{2}}}$. The exponent becomes positive as the power crosses the bar, and the sign of the base is not changed."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch02-wf_c6bef2ca-3bd.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real and is the one the book's teaching item on x^(-1/2) = 1/(-x^(1/2)) addresses. The refutation agrees with the canonical result x^(-1/2) = 1/x^(1/2), and with the book's point that the sign of the base is not changed when the power crosses the bar. I checked the x=4 test: 4^(-1/2) = 1/2, while 1/(-4^(1/2)) = 1/(-2) = -1/2. That is correct under the book's reading of -x^(1/2) as -(x^(1/2)). It argues against this slip, and the counterexample means it does more than restate the method. It names no question id, page, figure or review history. The signal, a denominator that has picked up a minus sign, is diagnostic and would not misdiagnose a student.",
+        "sources": [
+          {
+            "type": "canonical_solution",
+            "ref": "expl:g10m2s3-1-1:ex2-4-6e"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:g10m2s3-1-2:negative-exponent-ignored",
+      "lo_id": "lo:g10m2s3-1-2",
+      "label": "Dropping the minus sign of the exponent",
+      "description": "The student works out the power as if the exponent were positive, so the minus sign is lost and the power is never put underneath 1.",
+      "signal": "The answer is the value of the same power with a positive exponent.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You found the size of the power correctly, but the minus sign in the exponent went missing, so the power was worked out as if the exponent were positive. That sign changes the answer."
+        },
+        {
+          "step": 2,
+          "text_md": "Follow the minus sign through a worked case: $27^{-\\frac{1}{3}}=\\left(3^{3}\\right)^{-\\frac{1}{3}}=3^{-1}$. Multiplying the exponents gives $-1$, not $1$, and the sign stays on the exponent."
+        },
+        {
+          "step": 3,
+          "text_md": "Without the sign the working would end at $3^{1}=3$, but the answer is $3^{-1}=\\frac{1}{3}$. A negative exponent is how a power underneath 1 is written: the working for $(0.25)^{\\frac{1}{2}}$ rewrites $\\frac{1}{2^{2}}$ as $2^{-2}$."
+        },
+        {
+          "step": 4,
+          "text_md": "So keep the minus sign in the exponent while you multiply, and at the end put the power underneath 1, as in $3^{-1}=\\frac{1}{3}$."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch02-wf_c6bef2ca-3bd.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real and the maths holds. 27^(-1/3)=(3^3)^(-1/3)=3^(-1)=1/3 matches ex2-2-4, and the sign-dropped working ends at 3^1=3. Rewriting 1/2^2 as 2^(-2) matches ex2-2-3. The refutation argues specifically against losing the sign, by following the sign through the multiplication, and does not only restate the method. It teaches only the negative-exponent link the canonical solutions already use. No ids, pages, figures or review history appear.",
+        "sources": [
+          {
+            "type": "distractor",
+            "ref": "D1"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m2s3-1-2:ex2-2-4"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m2s3-1-2:ex2-2-3"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "S6",
+            "ref": "tpl:g10m2s3-1-2:negative-whole-pick#mc:g10m2s3-1-2:negative-exponent-ignored",
+            "question_id": "q:g10m2s3-1-2:g001-negati",
+            "text": "$243$",
+            "tagged": "mc:g10m2s3-1-2:negative-exponent-ignored"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m2s3-1-2:negative-exponent-negative-value",
+      "lo_id": "lo:g10m2s3-1-2",
+      "label": "Reading a negative exponent as a negative answer",
+      "description": "The student treats the minus sign in the exponent as a minus sign on the value, so a positive base gives a negative answer.",
+      "signal": "The answer has a minus sign although the base is positive.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You saw that the minus sign in the exponent matters, and it does, but it was read as a minus sign on the answer. The sign belongs to the exponent: it tells you how the power is written, not that the value is below zero."
+        },
+        {
+          "step": 2,
+          "text_md": "The worked case shows it: $27^{-\\frac{1}{3}}=\\left(3^{3}\\right)^{-\\frac{1}{3}}=3^{-1}=\\frac{1}{3}$. The exponent is negative, yet the answer is the positive number $\\frac{1}{3}$."
+        },
+        {
+          "step": 3,
+          "text_md": "The same link shows in the working for $(0.25)^{\\frac{1}{2}}$: the positive number $\\frac{1}{4}$ is written as $\\frac{1}{2^{2}}$, and then as $2^{-2}$. So the minus sign in $2^{-2}$ cannot be making the value negative."
+        },
+        {
+          "step": 4,
+          "text_md": "So take the minus sign off the answer. Multiply the exponents, keeping the sign on the exponent, then put the power underneath 1 as in $3^{-1}=\\frac{1}{3}$. With a positive base, the answer stays positive."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch02-wf_c6bef2ca-3bd.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real and the refutation is correct. Step 2 uses 27^(-1/3)=3^(-1)=1/3, which is positive despite the negative exponent and matches ex2-2-4. Step 3 uses the book's own rewrite of the positive 1/4 as 1/2^2=2^(-2), which shows the exponent's sign cannot make the value negative. Step 4 gives the correct repair (keep the sign on the exponent, then put the power under 1) and the true statement that a positive base stays positive. It argues against this error and goes no further than the book. No ids, pages, figures or review history appear.",
+        "sources": [
+          {
+            "type": "distractor",
+            "ref": "D2"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m2s3-1-2:ex2-2-4"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m2s3-1-2:ex2-2-3"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "S6",
+            "ref": "tpl:g10m2s3-1-2:negative-whole-pick#mc:g10m2s3-1-2:negative-exponent-negative-value",
+            "question_id": "q:g10m2s3-1-2:g001-negati",
+            "text": "$-243$",
+            "tagged": "mc:g10m2s3-1-2:negative-exponent-negative-value"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m2s3-1-2:numerator-ignored",
+      "lo_id": "lo:g10m2s3-1-2",
+      "label": "Leaving out the top number of the exponent",
+      "description": "The student uses only the bottom number of the rational exponent (and the minus sign), as if the exponent had a top number of 1, so the power is never raised to the top number.",
+      "signal": "The answer equals what the same power would give if the top number of the exponent were 1.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You dealt with the minus sign and the bottom number of the exponent, but the top number was left out, as if it were 1. The top number is part of the exponent, and it changes the answer."
+        },
+        {
+          "step": 2,
+          "text_md": "In the worked cases the base becomes a prime power $b^{k}$, and the exponent of the answer is $k$ times the whole exponent. For example, $27^{-\\frac{1}{3}}=\\left(3^{3}\\right)^{-\\frac{1}{3}}=3^{-1}$, because $3\\cdot\\left(-\\frac{1}{3}\\right)=-1$."
+        },
+        {
+          "step": 3,
+          "text_md": "Now see why the top number cannot be dropped. Solving $z^{\\frac{3}{2}}=64$, the working writes 64 as $4^{3}$ and raises it to $\\frac{2}{3}$: $\\left(4^{3}\\right)^{\\frac{2}{3}}=4^{2}=16$, because $3\\cdot\\frac{2}{3}=2$. Keeping only the bottom number 3 would multiply by $\\frac{1}{3}$ instead, leaving $4^{1}=4$. That is a different answer, because the 2 never got used."
+        },
+        {
+          "step": 4,
+          "text_md": "So multiply by the whole exponent, top number included. Write the base as a prime power $b^{k}$, multiply $k$ by the full fraction (with its minus sign, if it has one), and only then read off the answer."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch02-wf_c6bef2ca-3bd.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Checked against the canonical set. The error is real here, since the canonical method multiplies the prime-power exponent by the whole fraction. Ex2-4-3i uses (4^3)^(2/3)=4^2=16, and dropping the 2 leaves 4^1=4, as step 3 says. Step 2 matches ex2-2-4 (27^(-1/3)=3^(-1)=1/3, with 3*(-1/3)=-1). Step 3 argues against the error with a concrete contrast and does not just restate the method. Step 4 is the book's method, and the book also rewrites bases as fractions, so nothing is taught that the book does not. No question id, page, figure or review history is named. Weak spots that did not tip it: the step-2 example has top number 1, so it only shows the multiplication, and step 3 carries the contrast; 'prime power' is loose for 4^3 but true of 64 as a number.",
+        "sources": [
+          {
+            "type": "distractor",
+            "ref": "D0"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m2s3-1-2:ex2-4-3i"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m2s3-1-2:ex2-2-4"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "S6",
+            "ref": "tpl:g10m2s3-1-2:negative-whole-pick#mc:g10m2s3-1-2:numerator-ignored",
+            "question_id": "q:g10m2s3-1-2:g001-negati",
+            "text": "$\\frac{1}{3}$",
+            "tagged": "mc:g10m2s3-1-2:numerator-ignored"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:g10m2s4-1-3:solves-exponential-equal-to-negative",
+      "lo_id": "lo:g10m2s4-1-3",
+      "label": "Solves an exponential factor that equals a negative number",
+      "description": "After factorising, the student treats a factor such as $3^{x}+1=0$ like any other, rearranges it to $3^{x}=-1$ and goes looking for an $x$ that satisfies it, instead of rejecting the factor.",
+      "signal": "Two answers where the book keeps one: the correct value together with a second value produced from a factor that equals a negative number.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Factorising and then solving each factor separately is exactly the book's method, so that part is right. The trap is a factor like $3^{x}+1=0$: it leaves $3^{x}=-1$, and it is tempting to hunt for an $x$ that makes that true, the way you did for $3^{x}=81$."
+        },
+        {
+          "step": 2,
+          "text_md": "Test what $3^{x}$ can be. $3^{2}=9$, $3^{0}=1$, and a negative exponent gives a fraction: $3^{-2}=\\frac{1}{3^{2}}=\\frac{1}{9}$. Whatever $x$ you try, the answer stays positive, so it can never equal $-1$."
+        },
+        {
+          "step": 3,
+          "text_md": "That is the book's reason: a positive integer with an exponent is always positive. The book calls $3^{x}=-1$ undefined and rejects that factor, so $3^{2x}-80\\cdot3^{x}-81=0$ has one solution, $x=4$, not two. The same thing happens in $2^{2x}-16=0$: it factorises as $(2^{x}-4)(2^{x}+4)=0$, the factor giving $2^{x}=-4$ is rejected, and only $2^{x}=4=2^{2}$ is kept, so $x=2$."
+        },
+        {
+          "step": 4,
+          "text_md": "The move that works: after factorising, write each factor as a power equal to a number. If the number is negative, reject that factor and say why. For each factor that is left, write both sides with the same base, for example $3^{x}=81=3^{4}$, and read off $x$."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "final-ch02-wf_c6bef2ca-3bd.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real for this objective: the LO ends in 'rejecting factors that cannot be satisfied'. Every claim checks out against the canonical solutions. 3^{2x}-80*3^x-81=0 gives (3^x-81)(3^x+1)=0 with the single answer x=4. 2^{2x}-16=0 gives (2^x-4)(2^x+4)=0 with 2^x=-4 rejected and x=2. The positivity argument is correct: 3^2=9, 3^0=1, 3^-2=1/9, so 3^x is never -1. The 'undefined' wording and the 'always positive' reason are the book's own. The negative-exponent fraction is a prior skill the book uses elsewhere in this LO. The refutation argues against the trap, not just the method, and ends with a usable move. It names no question id, page, figure or review history. The generic 'the book' is acceptable. The signal (a second value from a factor equal to a negative number) is a reasonable diagnostic, for example x=-1 from 3^x=-1.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "WE11 p.53"
+          },
+          {
+            "type": "caution",
+            "ref": "WE13 p.54"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m2s4-1-3:we11"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m2s4-1-3:we13"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:g10m2s4-1-3:ex2-3-1n"
+          }
+        ],
+        "covers": []
+      }
+    }
+  ]
+}

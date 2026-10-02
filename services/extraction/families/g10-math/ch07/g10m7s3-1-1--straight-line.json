@@ -1,0 +1,44 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m7s3-1-1:straight-line",
+ "kind": "family",
+ "lo_id": "lo:g10m7s3-1-1",
+ "parent_question_id": "q:g10m7s3-1-1:ex7-3-1c",
+ "source_page": 254,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "t",
+   "randint": [
+    12,
+    38
+   ]
+  },
+  {
+   "require": "t != 28",
+   "why": "t = 28 reproduces the printed book question (SOR = 96); keep instances new"
+  },
+  {
+   "name": "s",
+   "let": "180 - 3 * t"
+  }
+ ],
+ "constraints": [
+  "s > 60",
+  "s < 150"
+ ],
+ "stem": "$PQRS$ is a parallelogram, with its vertices named in order round it. $O$ is a point on the side $PQ$ such that $PS=OS$ and $QO=QR$. $S\\hat{O}R={=s}^{\\circ}$ and $Q\\hat{O}R=x^{\\circ}$. Calculate the value of $x$.",
+ "answer": "t",
+ "solution": [
+  "Since $QO=QR$, $\\triangle QOR$ is isosceles, so $Q\\hat{R}O=Q\\hat{O}R=x^{\\circ}$ ($\\angle$s opp equal sides).",
+  "In $\\triangle QOR$: $\\hat{Q}=(180-2x)^{\\circ}$ (sum of $\\angle$s in a $\\triangle$).",
+  "$PS\\parallel QR$, so $\\hat{P}+\\hat{Q}=180^{\\circ}$ (co-int $\\angle$s; $PS\\parallel QR$). Therefore $\\hat{P}=180^{\\circ}-(180-2x)^{\\circ}=(2x)^{\\circ}$.",
+  "Since $PS=OS$, $S\\hat{O}P=\\hat{P}=(2x)^{\\circ}$ ($\\angle$s opp equal sides).",
+  "$P$, $O$ and $Q$ lie on a straight line, so $S\\hat{O}P+S\\hat{O}R+Q\\hat{O}R=180^{\\circ}$ (sum of $\\angle$s on a str line): $(2x)^{\\circ}+{=s}^{\\circ}+x^{\\circ}=180^{\\circ}$.",
+  "$3x={=180 - s}$, so $x={=t}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Standard: the book's ex7-3-1c (page 254) with its numbers made into a parameter. The given angle SOR is s = 180 - 3t and the answer is the angle QOR = t, found by the book's route (QOR = QRO, so Q = 180 - 2x, so P = 2x by co-interior angles, SOP = P, angles on a straight line). The book leaves the step P = 2x unexplained; the worked solution here gives the co-interior-angles reason. The book diagram is replaced by wording (O on side PQ, vertices in order). Geometry verified by coordinates for t = 12, 20, 28, 30, 38. t = 28 is excluded only so no instance is the printed question verbatim."
+}

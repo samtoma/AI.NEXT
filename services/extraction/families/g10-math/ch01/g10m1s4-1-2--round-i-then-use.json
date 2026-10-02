@@ -1,0 +1,125 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m1s4-1-2:round-i-then-use",
+ "kind": "family",
+ "lo_id": "lo:g10m1s4-1-2",
+ "parent_question_id": "q:g10m1s4-1-2:ex1-2-4b",
+ "source_page": 14,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "m",
+   "randint": [
+    31,
+    149
+   ],
+   "resample_while": "m % 3 == 0 or m % 10 == 0"
+  },
+  {
+   "name": "dp",
+   "choice": [
+    2,
+    3
+   ]
+  },
+  {
+   "name": "n",
+   "choice": [
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "P",
+   "choice": [
+    2000,
+    3000,
+    5000,
+    6000,
+    8000,
+    10000,
+    15000,
+    20000
+   ]
+  },
+  {
+   "name": "B",
+   "let": "10 ** dp"
+  },
+  {
+   "name": "k",
+   "let": "(2 * m * B + 6000) // 12000"
+  },
+  {
+   "name": "N",
+   "let": "P * (B + k) ** n"
+  },
+  {
+   "name": "D",
+   "let": "10 ** (dp * n - 2)"
+  },
+  {
+   "require": "N % D != 0 and 5 * abs(2 * (N % D) - D) >= D",
+   "why": "the final rounding to 2 decimal places must really change the value, and the value must not lie close to the halfway point between two cents"
+  },
+  {
+   "name": "rtxt",
+   "let": "fixed(m / 10, 1)"
+  },
+  {
+   "name": "itr",
+   "let": "fixed(((50 * m) // 3) / 100000, 5)"
+  },
+  {
+   "name": "d",
+   "let": "(m * B * 10 // 6000) % 10"
+  },
+  {
+   "name": "ir",
+   "let": "fixed(k / B, dp)"
+  },
+  {
+   "name": "Aapprox",
+   "let": "fixed(N / 10 ** (dp * n), 4)"
+  },
+  {
+   "name": "ansc",
+   "let": "(2 * N + D) // (2 * D)"
+  },
+  {
+   "name": "ans",
+   "let": "fixed(ansc / 100, 2)"
+  },
+  {
+   "name": "Xc",
+   "let": "(2 * P * 100 * (6000 + m) ** n + 6000 ** n) // (2 * 6000 ** n)"
+  },
+  {
+   "name": "Xs",
+   "let": "fixed(Xc / 100, 2)"
+  },
+  {
+   "name": "ds",
+   "let": "fixed(abs(Xc - ansc) / 100, 2)"
+  }
+ ],
+ "constraints": [
+  "m % 3 != 0",
+  "N % D != 0"
+ ],
+ "stem": "Given $i=\\frac{r}{600}$ ; $r={=rtxt}$ ; $n={=n}$ ; $P={=P}$ . Calculate $i$ correct to ${=dp}$ decimal places. Then use this rounded value of $i$ to calculate $A$ in $A=P(1+i)^{n}$ , correct to $2$ decimal places.",
+ "answer": "ans",
+ "solution": [
+  "First find $i$ from the formula: $i=\\frac{r}{600}=\\frac{{=rtxt}}{600}={=itr}...$",
+  "Round $i$ to ${=dp}$ decimal places. The digits up to decimal place ${=dp}$ are kept and the next digit is ${=d}$ . A digit of $5$ or more rounds the last kept digit up by $1$ ; a smaller digit leaves it as it is. So $i\\approx{=ir}$ .",
+  "Use the rounded value of $i$ in the formula, without rounding again until the end: $\\begin{aligned}A&=P(1+i)^{n}\\\\&={=P}\\left(1+{=ir}\\right)^{{=n}}\\\\&\\approx{=Aapprox}\\end{aligned}$",
+  "Round $A$ to $2$ decimal places: $A\\approx{=ans}$ .",
+  "For comparison, working with the unrounded value of $i$ all the way through gives $A\\approx{=Xs}$ , so rounding $i$ early changed the answer by ${=ds}$ ."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Standard step up from the basic family: round a value in the middle of the working, then USE the rounded value in a further calculation (the book's ex1-2-4a followed by ex1-2-4b, merged into one question so that the single answer A depends on the rounding of i). Same formulae as the book (i = r/600, A = P(1+i)^n) and the same two roundings; n is kept to 2, 3 or 4 (the book's 96 is not hand- or mental-checkable) and r runs over one-decimal values 3.1 to 14.9 leaving out the multiples of 0.3 and the whole numbers, so i = r/600 is a non-terminating decimal that is never exactly a rounding tie (the '...' in step 1 is always true, and the displayed value is i TRUNCATED to 5 decimal places, never rounded). i is rounded to 2 or 3 decimal places, stated in the stem. Everything is computed in exact integer arithmetic: k is the rounded i in units of 10^-dp, N/D is A in whole cents before the final rounding. The require keeps A away from the halfway point between two cents by at least 0.1 of a cent and ensures the last rounding really changes the value. Step 5 repeats the book's own lesson (ex1-2-4c: rounding i early changes the answer) with the figure computed exactly from the unrounded i = r/600; it is not asked for in the stem, so it cannot affect the answer. The stem tells the student to use the rounded value of i; this is the only reading under which the answer is a single number. Checked offline with Decimal arithmetic for 20 000 draws: the answer, the 4-decimal intermediate value, the unrounded comparison value and the difference all agree; the difference is never 0.",
+ "version": 1
+}

@@ -1,0 +1,66 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m5s8-1-1:second-quadrant",
+ "kind": "family",
+ "lo_id": "lo:g10m5s8-1-1",
+ "parent_question_id": "q:g10m5s8-1-1:ex5-8-21",
+ "source_page": 144,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "tbl",
+   "let": "[[1,4,7596],[13,7,2830],[10,9,4199],[11,14,5184],[10,13,5243],[14,11,3816],[1,6,8054],[1,12,8524],[3,8,6944],[4,3,3687],[3,4,5313],[4,15,7507],[8,13,5839],[3,2,3369],[11,15,5375],[2,5,6820],[12,5,2262],[10,3,1670],[1,10,8429],[7,10,5501],[15,11,3625],[7,15,6498],[13,11,4024],[9,2,1253]]"
+  },
+  {
+   "name": "i",
+   "randint": [
+    0,
+    "len(tbl) - 1"
+   ]
+  },
+  {
+   "name": "a",
+   "let": "tbl[i][0]"
+  },
+  {
+   "name": "b",
+   "let": "tbl[i][1]"
+  },
+  {
+   "name": "r",
+   "let": "tbl[i][2]"
+  },
+  {
+   "require": "a > 0 and b > 0 and a != b",
+   "why": "a and b are lengths, so P is truly in the second quadrant, and the reference angle is never exactly 45 degrees"
+  },
+  {
+   "name": "alpha",
+   "let": "fixed(r / 100, 2)"
+  },
+  {
+   "name": "theta",
+   "let": "fixed((18000 - r) / 100, 2)"
+  }
+ ],
+ "constraints": [
+  "a > 0",
+  "b > 0",
+  "a != b"
+ ],
+ "stem": "The point $P(-{=a}, {=b})$ lies in the second quadrant. The line from the origin $O(0, 0)$ to $P$ makes an angle $\\theta$ with the positive $x$-axis, measured anticlockwise from the positive $x$-axis (the angle in standard position). Find $\\theta$ in degrees, correct to two decimal places.",
+ "answer": "theta",
+ "solution": [
+  "Sketch $O(0, 0)$ and $P(-{=a}, {=b})$, which lies to the left of the $y$-axis and above the $x$-axis. Drop a perpendicular from $P$ to the $x$-axis, meeting it at $R(-{=a}, 0)$. Triangle $ORP$ has a right angle at $R$. Let $\\alpha$ be the angle at $O$ inside this triangle, between $OP$ and the negative $x$-axis.",
+  "The side opposite $\\alpha$ is $PR$, the distance from $P$ to the $x$-axis, so $PR = {=b}$ units.",
+  "The side adjacent to $\\alpha$ is $OR$. The $x$-coordinate of $P$ is $-{=a}$, but a length is never negative, so $OR = {=a}$ units.",
+  "Use the tangent ratio: $\\tan\\alpha = \\frac{\\text{opposite}}{\\text{adjacent}} = \\frac{{=b}}{{=a}}$.",
+  "Use the calculator to find the angle: $\\alpha = \\tan^{-1}\\left(\\frac{{=b}}{{=a}}\\right) = {=alpha}^{\\circ}$.",
+  "The angle in standard position is measured anticlockwise from the positive $x$-axis. The positive and negative $x$-axis together make a straight line of $180^{\\circ}$, so $\\theta = 180^{\\circ} - \\alpha = 180^{\\circ} - {=alpha}^{\\circ} = {=theta}^{\\circ}$.",
+  "Therefore the angle in standard position is $\\theta = {=theta}^{\\circ}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced: the second-quadrant case named in the objective, and the twist the book itself uses in ex5-8-21, where D(-12, 14) has a negative coordinate that must be taken as a positive distance. Steps: right-angled triangle, take the negative x-coordinate as a positive length, tan, calculator for the acute angle alpha, then subtract from 180 to get the standard-position angle. The stem defines theta precisely (positive x-axis, anticlockwise), so there is one answer. A solver who uses tan^-1(b / -a) gets -alpha, and adding 180 gives the same final answer, so both routes agree. The worked solution states outright that a length is never negative, which targets the catalogued mc:g10m5s8-1-1:negative-coordinate-as-length. It is numeric, so there are no distractors to tag. The calculator has no counterpart in the expression language, so the acute angle comes from a table of (a, b, alpha in hundredths of a degree) computed with atan2 in Python; 24 rows, a and b coprime, a != b, distinct angles, tail at least 0.001 degrees from a rounding boundary. theta is computed exactly as (18000 - r) / 100, which equals 180 minus the rounded alpha, so the solution's arithmetic is true for every instance and is not affected by double rounding. The book's own ex5-8-21 skeleton (two points, angle with the y-axis) is deliberately not reused here: the book prints it as standard tier."
+}

@@ -1,0 +1,564 @@
+{
+  "format": "ainext.widget-gaps/1",
+  "book": "g10-math",
+  "course_id": "course:us-g10-math-en",
+  "rule": "FR-4306 / FR-1201: every chapter has at least one widget question, or a gap a human has signed. A new kind is built only after Samuel approves it (decision 11, T356).",
+  "chapters": [
+    {
+      "module": "module:g10m-c01",
+      "label": "Chapter 1 — Algebraic expressions",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c02",
+      "label": "Chapter 2 — Exponents",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c03",
+      "label": "Chapter 3 — Number patterns",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c04",
+      "label": "Chapter 4 — Equations and inequalities",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c05",
+      "label": "Chapter 5 — Trigonometry",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c06",
+      "label": "Chapter 6 — Functions",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c07",
+      "label": "Chapter 7 — Euclidean geometry",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c08",
+      "label": "Chapter 8 — Analytical geometry",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c09",
+      "label": "Chapter 9 — Finance and growth",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c10",
+      "label": "Chapter 10 — Statistics",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c11",
+      "label": "Chapter 11 — Trigonometry",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c12",
+      "label": "Chapter 12 — Euclidean geometry",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c13",
+      "label": "Chapter 13 — Measurements",
+      "status": "covered",
+      "widgets": 1,
+      "kinds": [
+        "solid_scaler"
+      ],
+      "objectives_with_widgets": [
+        "lo:g10m13s4-1-3"
+      ],
+      "gaps": 15
+    },
+    {
+      "module": "module:g10m-c14",
+      "label": "Chapter 14 — Probability",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    }
+  ],
+  "uncovered_chapters": [
+    "module:g10m-c01",
+    "module:g10m-c02",
+    "module:g10m-c03",
+    "module:g10m-c04",
+    "module:g10m-c05",
+    "module:g10m-c06",
+    "module:g10m-c07",
+    "module:g10m-c08",
+    "module:g10m-c09",
+    "module:g10m-c10",
+    "module:g10m-c11",
+    "module:g10m-c12",
+    "module:g10m-c14"
+  ],
+  "proposed_kinds": {
+    "height_marker": {
+      "modules": [
+        "module:g10m-c13"
+      ],
+      "objectives": [
+        "lo:g10m13s1-1-1"
+      ],
+      "why": [
+        "Both misconceptions on this objective are about choosing the base and the height in a figure, which is a construction a student performs on the shape. No existing kind lets her mark them. polygon_builder's area mode only asks for any polygon whose area equals a target, and it reports just area-missing-half or not-the-shape. area-missing-half is not on this objective's misconception list. not-the-shape fires for every wrong area, so it cannot tell a slanted-side height from a part-of-base base, and mapping it to either would be a forced diagnosis. No other kind builds a base or a height."
+      ]
+    },
+    "net_builder (right-prism net; spec {solid:\"box\"|\"triangular-prism\", dims, ask:\"surface\"})": {
+      "modules": [
+        "module:g10m-c13"
+      ],
+      "objectives": [
+        "lo:g10m13s2-1-1"
+      ],
+      "why": [
+        "No existing kind fits. solid_scaler has the student drag a scale factor k to reach a target multiple (k squared for area, k cubed for volume). It never asks for the area of any individual face, so it tests the scaling objective, not 'sketch the net, find each face, add'. Its wrong-formula-part predicate cannot be honestly mapped to either misconception listed for this lesson. polygon_builder in area mode checks the area of one polygon, which is the prerequisite objective g10m13s1-1-1 (area of polygons), and does not assemble faces into a surface. Both would be an answer box in disguise for this objective. Note for Samuel: the lesson's misconception list for this objective is not-own only (part-of-base-as-base and slanted-side-as-height, both from s1-1-1). The predicates above would need own misconceptions authored (missing face, pair counted once) before a template could cite them (FR-1215)."
+      ]
+    },
+    "net_builder (cylinder unrolling; spec {solid:\"cylinder\", r, h, ask:\"surface\"})": {
+      "modules": [
+        "module:g10m-c13"
+      ],
+      "objectives": [
+        "lo:g10m13s2-1-2"
+      ],
+      "why": [
+        "No existing kind fits. solid_scaler (solid:\"cylinder\") only has the student scale a drawn cylinder by k to hit a ratio of areas or volumes. The student never unrolls the curved surface or finds the rectangle's length as the circumference, which is the point of this objective. Its face toggles diagnose a missing base only inside a scale-factor question. polygon_builder and circle_builder cannot build the unrolled rectangle, and circle_builder's radius/diameter/chord/tangent constructions are not about surface area. Note for Samuel: the misconception list for this objective is also not-own only (the two s1-1-1 trapezium/parallelogram area ones), so the predicates above have no own misconception to map to until new ones are authored (for example, the curved surface taken as one circle's circumference times nothing, or radius taken as diameter in the unrolled width)."
+      ]
+    },
+    "prism_stacker": {
+      "modules": [
+        "module:g10m-c13"
+      ],
+      "objectives": [
+        "lo:g10m13s2-2-1",
+        "lo:g10m13s2-2-2"
+      ],
+      "why": [
+        "No existing kind builds a solid's volume. solid_scaler only grades how a volume changes when every length is scaled by k (k cubed), which is a different objective (similar solids), and it never has the student multiply a base area by a height, so using it here would be a forced fit. polygon_builder in area mode builds the base area only. That is the prerequisite objective, not this one, and its target cap of 24 cannot reach the book's own 5-12-13 prism, whose base area is 30. Answering with a number would be an answer box in disguise. The lesson's misconception list also holds only two prerequisite ids (part-of-base-as-base, slanted-side-as-height) and no own ids, so a prism_stacker needs own misconceptions registered for this objective, for example 'triangle-base-missing-half' and 'base-area-as-volume'.",
+        "No existing kind builds a cylinder's volume. solid_scaler has a cylinder, but it only reads off k cubed or k squared for a scale factor, so the student never constructs the base-times-height idea or uses a radius or diameter, and the lesson's misconceptions never map to its predicates. circle_builder constructs radius, chord and diameter elements on a circle, not a solid's volume. The lesson's misconception list again holds only the two prerequisite area ids and no own ids, so 'diameter-as-radius' and 'radius-not-squared' would need registering for this objective before the widget could diagnose them."
+      ]
+    },
+    "solid_net_builder (square and triangular pyramid)": {
+      "modules": [
+        "module:g10m-c13"
+      ],
+      "objectives": [
+        "lo:g10m13s3-1-1"
+      ],
+      "why": [
+        "No existing kind fits. solid_scaler is about how a surface area changes when every length is multiplied by k. The student sets a factor and never meets a slant height or Pythagoras, which are the heart of this objective, and none of its predicates can fire mc:g10m13s3-1-1:vertical-height-for-slant-height, the objective's only own misconception. Its wrong-formula-part predicate (base missing) has no matching misconception in this objective's list, so the mapping would be invented. polygon_builder in area mode was also considered: a student could build a triangle of area 18 for a face with base 4 and slant height 9, but then the author has already done the slant-height step and the student is practising triangle area, an earlier objective. Forcing either kind would give the student a question about a different skill."
+      ]
+    },
+    "solid_net_builder (cone — same kind as the pyramid gap, with a sector-plus-circle net)": {
+      "modules": [
+        "module:g10m-c13"
+      ],
+      "objectives": [
+        "lo:g10m13s3-1-2"
+      ],
+      "why": [
+        "No existing kind fits. solid_scaler (cone, ask area) tests a scale factor and the base toggle only, and the student never works out or places a slant height. Its output is a multiple, not a surface area, so the question would be a different objective (effect of scaling). The lesson file also lists only two non-own misconceptions for this objective (slanted side as height of a trapezium or parallelogram, and part of the bottom edge as base), and neither is a cone error, so even a well-fitting kind could not cite a cone-specific misconception until one such as vertical height used for slant height or base omitted is authored for lo:g10m13s3-1-2. Under FR-1215 the pyramid objective's misconception id cannot be borrowed."
+      ]
+    },
+    "sphere_skin_tiler (lower priority: a modest gain over the numeric questions)": {
+      "modules": [
+        "module:g10m-c13"
+      ],
+      "objectives": [
+        "lo:g10m13s3-1-3"
+      ],
+      "why": [
+        "No existing kind fits. solid_scaler with solid sphere is about the factor k² and answers a question about scaling, not the area of one sphere from its radius. The objective is a single formula applied to a radius, so the most any widget could add is meaning for the '4' in 4πr². Be aware that the lesson file lists no misconceptions for this objective, so a diagnostic cannot be mapped to a misconception id until some are authored for lo:g10m13s3-1-3. Samuel may reasonably decide the numeric anchor questions are enough here."
+      ]
+    },
+    "solid_dimension_marker": {
+      "modules": [
+        "module:g10m-c13"
+      ],
+      "objectives": [
+        "lo:g10m13s3-2-1",
+        "lo:g10m13s3-2-3"
+      ],
+      "why": [
+        "No existing kind has the construction this objective turns on. Calculating a volume is substitution into a formula, which would only be an answer box in disguise. The one 3-D instrument, solid_scaler, scales an existing solid by a factor k and shows V0·k³ and A0·k²: that is similarity of solids, not choosing H over the slant height h. Its predicates (volume-scaled-by-k, area-scaled-by-k, wrong-formula-part) map to none of this objective's own misconceptions, so every diagnostic would have to be forced onto the wrong misconception, and the schema requires at least one. polygon_builder in area mode grades any triangle of the right area, so it cannot tell a perpendicular height from an edge, and area-missing-half is not an own misconception of this objective. All other kinds are 2-D or statistical.",
+        "Same reason as lo:g10m13s3-2-1: no existing kind lets a student construct or mark a length on a cone or pyramid. solid_scaler's area predicates (area-scaled-by-k, wrong-formula-part) never mention the slant height, so they cannot reach vertical-height-used-as-slant-height. In addition, this objective has no anchor book question (the anchor list is empty), so no widget template could carry a valid parent_question_id here even if a kind fitted. An anchor from the chapter's surface-area exercises would have to be linked first."
+      ]
+    },
+    "composite_solid_builder": {
+      "modules": [
+        "module:g10m-c13"
+      ],
+      "objectives": [
+        "lo:g10m13s3-2-2"
+      ],
+      "why": [
+        "The mathematics of this objective is deciding which faces are exposed and which height belongs to which part. None of the 19 existing kinds has an object of faces or parts to select. solid_scaler's face toggles only show whether a base counts in one solid's own surface area, with no second solid, no joint and no overall height, and it never emits anything about covered faces or a split height, so its predicates cannot reach counts-covered-faces, uses-total-height-for-pyramid or uses-pyramid-height-for-triangular-faces. venn_builder and sample_space select regions or outcomes but have no solid to hold the faces. A numeric answer box would reduce the question to computing 460.64, with no way to say which face was wrongly counted."
+      ]
+    },
+    "dimension_scaler": {
+      "modules": [
+        "module:g10m-c13"
+      ],
+      "objectives": [
+        "lo:g10m13s4-1-1",
+        "lo:g10m13s4-1-2"
+      ],
+      "why": [
+        "solid_scaler multiplies every dimension by one single k, so it can only show the all-three-dimensions case (anchor ex13-6-4b, which is really the next objective's law) and cannot show one or two dimensions changing, which is exactly what ex13-6-4a (length and breadth tripled) and the objective itself require. The objective's own misconception list also holds only two prerequisite ids (part of the base as the base, slanted side as the height), neither of which this construction reveals, so no honest diagnostic exists for a solid_scaler template here; new misconceptions (volume factor read as a sum of the factors, surface area scaled like the volume) would need to be added to the graph.",
+        "solid_scaler only ever scales every dimension together, so it cannot isolate one dimension, which is the whole of this objective. This objective also has no anchor book questions, so a template could not name a parent question, and its list holds only the two unrelated prerequisite misconceptions."
+      ]
+    },
+    "solid_scaler (extension: plane figures and unit-fraction factors)": {
+      "modules": [
+        "module:g10m-c13"
+      ],
+      "objectives": [
+        "lo:g10m13s4-1-3"
+      ],
+      "why": [
+        "Four of this objective's anchor questions cannot be reached by the existing instrument: ex13-6-1 (circle, radius a third) and ex13-7-16 (square, side a quarter) are plane figures, which solid_scaler does not draw, and ex13-7-17 (pyramid, side a third) needs k = 1/3 when the slider's lowest stop is 0.5. Only halving is expressible, so the book's most common shrink cases (a third, a quarter) have no widget, and the shrink misconception can only be probed at the edge of the slider."
+      ]
+    }
+  },
+  "gaps": [
+    {
+      "module": "module:g10m-c13",
+      "lo_id": "lo:g10m13s1-1-1",
+      "need_kind": "height_marker",
+      "description": "The instrument would draw a trapezium, parallelogram or triangle itself, with its measured sides labelled on the drawing. The student constructs the two things the area formula needs. First, the base: she drags a bracket along a parallel side, and it is accepted only if it spans the whole edge, including an edge split into labelled pieces such as 9 + 21 = 30 on the bottom of the book's trapezium. Second, the height: she drags a dashed segment between the parallel sides, and it is accepted only if it meets the base at a right angle (the right-angle square lights up when it does). A Pythagoras variant gives the slanted side (15) and the base piece beside it (9). The student drags the foot of the height until the right triangle closes, then reads h = 12 from 9² + h² = 15². The live readout then assembles ½(a + b)h or b × h from her own base and height, so a wrong construction visibly gives a wrong area. The widget grades the property, not a position: any base bracket and any perpendicular with the right lengths is correct. It would diagnose: base bracket covers one piece of a split edge (mc:g10m13s1-1-1:part-of-base-as-base); height segment laid along the slanted side, or not perpendicular to the base (mc:g10m13s1-1-1:slanted-side-as-height); and an off-target fallback for anything else.",
+      "why": "Both misconceptions on this objective are about choosing the base and the height in a figure, which is a construction a student performs on the shape. No existing kind lets her mark them. polygon_builder's area mode only asks for any polygon whose area equals a target, and it reports just area-missing-half or not-the-shape. area-missing-half is not on this objective's misconception list. not-the-shape fires for every wrong area, so it cannot tell a slanted-side height from a part-of-base base, and mapping it to either would be a forced diagnosis. No other kind builds a base or a height.",
+      "source": "author-merged-ch13.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c13",
+      "lo_id": "lo:g10m13s2-1-1",
+      "need_kind": "net_builder (right-prism net; spec {solid:\"box\"|\"triangular-prism\", dims, ask:\"surface\"})",
+      "description": "A hinged-net instrument for a right prism. A rectangular box and a triangular prism with its end triangle are the two solids the book's anchors use, e.g. the 6 x 7 x 10 box and the right-angled triangular prism with legs 7 and sqrt(32), hypotenuse 9, length 11. The student unfolds the solid by dragging a fold open and sees its net. They then build the surface area face by face. Each face of the net is tapped, and the two lengths that give its area are read from the dimensioned diagram: length x width for a rectangle, and half the base x the PERPENDICULAR height for a triangular end. A running total assembles live. The construction is complete when every face of the net is counted exactly once, each with the right two measurements. It is graded on that property, not on the order the faces are taken. Predicates it could report: face-missing (an end, or one of a pair of faces, never counted, which is lateral-area-only for a prism); pair-counted-once (one of two identical opposite faces counted once); triangle-missing-half (the end triangle's area left as base x height); slant-used-as-height (the slanted side of the triangular end used as the triangle's height instead of the perpendicular height, which is the existing misconception mc:g10m13s1-1-1:slanted-side-as-height meeting a new surface); end-edge-used-as-length (a triangle edge used where the prism length belongs on a lateral rectangle). The student constructs the net and the sum of its face areas, which is the whole mathematics of this objective, so a forced fit is not possible.",
+      "why": "No existing kind fits. solid_scaler has the student drag a scale factor k to reach a target multiple (k squared for area, k cubed for volume). It never asks for the area of any individual face, so it tests the scaling objective, not 'sketch the net, find each face, add'. Its wrong-formula-part predicate cannot be honestly mapped to either misconception listed for this lesson. polygon_builder in area mode checks the area of one polygon, which is the prerequisite objective g10m13s1-1-1 (area of polygons), and does not assemble faces into a surface. Both would be an answer box in disguise for this objective. Note for Samuel: the lesson's misconception list for this objective is not-own only (part-of-base-as-base and slanted-side-as-height, both from s1-1-1). The predicates above would need own misconceptions authored (missing face, pair counted once) before a template could cite them (FR-1215).",
+      "source": "author-merged-ch13.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c13",
+      "lo_id": "lo:g10m13s2-1-2",
+      "need_kind": "net_builder (cylinder unrolling; spec {solid:\"cylinder\", r, h, ask:\"surface\"})",
+      "description": "The same net_builder instrument with solid:\"cylinder\" and the book's r and h (e.g. r = 6 cm, h = 11 cm; r = 10 cm, h = 30 cm). The student peels the curved surface off the cylinder and unrolls it flat. They drag its free edge until it has been rolled out exactly once round the rim. The finished rectangle shows its height as h and its width as the length of the rim (the circumference 2 pi r). This is the book's net figure, with two circles and a rectangle, made as something the student does rather than looks at. Two disc tiles then attach to the long edges of the rectangle. The student selects which faces count and gives each one's area from the net: a disc is pi x r squared, the curved face is circumference x h. The running total assembles live. It is graded on the property: both discs, plus a rectangle whose width is the full circumference, and nothing else. Predicates it could report: unrolled-width-short (the roll-out stopped at r, d or pi r instead of a full turn, so the width is not 2 pi r); ends-omitted (curved face only, no discs); curved-face-omitted (only the circles); one-end-only (a single disc counted); disc-area-as-circumference (2 pi r used for the area of an end, where pi r squared belongs, the area and circumference mix-up). A cylinder is not a polygon, so polygon_builder cannot draw its net, and the rectangle-width-equals-circumference link is the key idea here.",
+      "why": "No existing kind fits. solid_scaler (solid:\"cylinder\") only has the student scale a drawn cylinder by k to hit a ratio of areas or volumes. The student never unrolls the curved surface or finds the rectangle's length as the circumference, which is the point of this objective. Its face toggles diagnose a missing base only inside a scale-factor question. polygon_builder and circle_builder cannot build the unrolled rectangle, and circle_builder's radius/diameter/chord/tangent constructions are not about surface area. Note for Samuel: the misconception list for this objective is also not-own only (the two s1-1-1 trapezium/parallelogram area ones), so the predicates above have no own misconception to map to until new ones are authored (for example, the curved surface taken as one circle's circumference times nothing, or radius taken as diameter in the unrolled width).",
+      "source": "author-merged-ch13.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c13",
+      "lo_id": "lo:g10m13s2-2-1",
+      "need_kind": "prism_stacker",
+      "description": "The student builds a right prism and watches the volume come out as base area times height. She picks a base (rectangle l by w, or a right triangle with legs b and h) from small lattice or whole-number sliders, then drags the height. The base is drawn as one flat layer, and the layers pile up as she raises the height, with the live readout 'base area x number of layers = volume'. Questions give a target volume, for example 'Build a prism with volume 360 cubic units on a 5-12 right-triangle base', and any base and height with that volume are accepted (grade the property, not the position). Errors it would diagnose: the half left off a triangular base (volume exactly double the target); the hypotenuse or another slanted side used as the triangle's height (the book's prerequisite error, slanted-side-as-height); only part of a split bottom edge used as the base (part-of-base-as-base); the base area read as the whole volume (height never applied); and the faces added instead of the base area multiplied by the height.",
+      "why": "No existing kind builds a solid's volume. solid_scaler only grades how a volume changes when every length is scaled by k (k cubed), which is a different objective (similar solids), and it never has the student multiply a base area by a height, so using it here would be a forced fit. polygon_builder in area mode builds the base area only. That is the prerequisite objective, not this one, and its target cap of 24 cannot reach the book's own 5-12-13 prism, whose base area is 30. Answering with a number would be an answer box in disguise. The lesson's misconception list also holds only two prerequisite ids (part-of-base-as-base, slanted-side-as-height) and no own ids, so a prism_stacker needs own misconceptions registered for this objective, for example 'triangle-base-missing-half' and 'base-area-as-volume'.",
+      "source": "author-merged-ch13.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c13",
+      "lo_id": "lo:g10m13s2-2-2",
+      "need_kind": "prism_stacker",
+      "description": "The same prism_stacker instrument with a circular base. The student sets the radius r (whole-number slider) and the height h. The circular base is drawn as one disc, and the discs stack into a cylinder as she raises h. The live readout shows 'pi r squared x h' next to the radius and the diameter, which are drawn side by side so they cannot be confused. Questions give a target volume or a comparison, for example 'Build a cylinder with volume about 754 cubic units, using radius 4' or 'Build a cylinder that holds twice as much as this one without changing its height', and any r and h that meet the property are accepted. Errors it would diagnose: the diameter used where the radius belongs (volume four times too large); r not squared (pi r h); the curved-surface rule 2 pi r h used (area confused with volume); the base disc area given with no height; and the radius squared but pi dropped.",
+      "why": "No existing kind builds a cylinder's volume. solid_scaler has a cylinder, but it only reads off k cubed or k squared for a scale factor, so the student never constructs the base-times-height idea or uses a radius or diameter, and the lesson's misconceptions never map to its predicates. circle_builder constructs radius, chord and diameter elements on a circle, not a solid's volume. The lesson's misconception list again holds only the two prerequisite area ids and no own ids, so 'diameter-as-radius' and 'radius-not-squared' would need registering for this objective before the widget could diagnose them.",
+      "source": "author-merged-ch13.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c13",
+      "lo_id": "lo:g10m13s3-1-1",
+      "need_kind": "solid_net_builder (square and triangular pyramid)",
+      "description": "The student is shown a pyramid with its base side and its vertical height, with no slant height given, and unfolds it into a net on a lattice. They drag the apex-end of each triangular face to set that face's height, and a live readout shows the base area, the area of each face and the running total. A small right triangle with vertical height, half the base and slant height as its sides stays visible beside the net. The student must build a net whose faces use the slant height, found with Pythagoras, and whose total equals the stated surface area. Any net with the right face heights and all five faces is accepted (grade the property, not one drawing). Errors it would diagnose: (1) vertical height used as the face height, which is the objective's own mc:g10m13s3-1-1:vertical-height-for-slant-height; (2) the base left out, so only the triangles are counted; (3) fewer than four triangular faces counted; (4) the half-base used where the whole base side belongs in the face's ½bh. Predicates would be roughly: face-height-is-vertical-height, base-missing, faces-miscounted, off-target.",
+      "why": "No existing kind fits. solid_scaler is about how a surface area changes when every length is multiplied by k. The student sets a factor and never meets a slant height or Pythagoras, which are the heart of this objective, and none of its predicates can fire mc:g10m13s3-1-1:vertical-height-for-slant-height, the objective's only own misconception. Its wrong-formula-part predicate (base missing) has no matching misconception in this objective's list, so the mapping would be invented. polygon_builder in area mode was also considered: a student could build a triangle of area 18 for a face with base 4 and slant height 9, but then the author has already done the slant-height step and the student is practising triangle area, an earlier objective. Forcing either kind would give the student a question about a different skill.",
+      "source": "author-merged-ch13.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c13",
+      "lo_id": "lo:g10m13s3-1-2",
+      "need_kind": "solid_net_builder (cone — same kind as the pyramid gap, with a sector-plus-circle net)",
+      "description": "The student is given a right cone's radius and either its slant height or its vertical height. They unroll the curved wall into a circular sector and place the base circle, so the two pieces make the net. The sector's radius is the slant height, and its arc must match the base circumference 2πr. A live readout shows the wall area, the base area and the total. The student sets the sector's radius (the slant height, found with Pythagoras where only the vertical height is given) and its angle so the arc fits the base, and the net is accepted when the total matches the target. Errors it would diagnose: (1) the vertical height used in place of the slant height in πrl; (2) the base circle left out; (3) the wall area taken as 2πrl or πr²; (4) the sector's arc not matching the base circumference (a net that cannot be folded).",
+      "why": "No existing kind fits. solid_scaler (cone, ask area) tests a scale factor and the base toggle only, and the student never works out or places a slant height. Its output is a multiple, not a surface area, so the question would be a different objective (effect of scaling). The lesson file also lists only two non-own misconceptions for this objective (slanted side as height of a trapezium or parallelogram, and part of the bottom edge as base), and neither is a cone error, so even a well-fitting kind could not cite a cone-specific misconception until one such as vertical height used for slant height or base omitted is authored for lo:g10m13s3-1-2. Under FR-1215 the pyramid objective's misconception id cannot be borrowed.",
+      "source": "author-merged-ch13.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c13",
+      "lo_id": "lo:g10m13s3-1-3",
+      "need_kind": "sphere_skin_tiler (lower priority: a modest gain over the numeric questions)",
+      "description": "Archimedes' tiling of the sphere's skin. The student is shown a sphere of radius r and a supply of flat discs of radius r (great circles). They drag discs onto the sphere's surface until it is exactly covered, and a live readout shows discs used, area per disc πr², and total. The widget grades the count and the resulting area, so the student discovers that the skin of a sphere is exactly four great-circle discs, which is where 4πr² comes from, then reads the area for a given radius. Errors it would diagnose: (1) one great circle, πr², taken as the surface; (2) two or three discs, as with 2πr² or a hemisphere; (3) the volume formula's ⁴⁄₃πr³ used for the surface; (4) r not squared (4πr), or the 4 and r squared together ((4r)²).",
+      "why": "No existing kind fits. solid_scaler with solid sphere is about the factor k² and answers a question about scaling, not the area of one sphere from its radius. The objective is a single formula applied to a radius, so the most any widget could add is meaning for the '4' in 4πr². Be aware that the lesson file lists no misconceptions for this objective, so a diagnostic cannot be mapped to a misconception id until some are authored for lo:g10m13s3-1-3. Samuel may reasonably decide the numeric anchor questions are enough here.",
+      "source": "author-merged-ch13.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c13",
+      "lo_id": "lo:g10m13s3-2-1",
+      "need_kind": "solid_dimension_marker",
+      "description": "A cone, a square pyramid and a triangular-base pyramid drawn in isometric, with nothing labelled. The student drags the two ends of a segment onto the solid to mark the named length. ask is one of: vertical height (apex to the centre of the base, perpendicular to it), slant height (apex to the rim, or to the midpoint of a base edge), radius, or, for the triangular-base pyramid, the perpendicular height of the base triangle (a vertex to the foot on the opposite side, not an edge). Grading is by property, as in circle_builder: any segment that meets the property is accepted, and the defining properties (right angle to the base, ends on apex and base centre) light up live. The errors it would diagnose are the two own misconceptions of this objective. First, a segment run from the apex down the sloping face when the vertical height was asked for fires slant-height-for-vertical-height, which is the book's repeated trap, since both 7 and 7.28 appear in the cone question and 8 and 8.94 in the pyramid question. Second, an edge of the triangular base marked where its perpendicular height was asked for fires triangle-side-for-triangle-height. The student then substitutes the marked length into V = 1/3·base area·H, so the instrument covers the choice that decides the answer rather than the arithmetic.",
+      "why": "No existing kind has the construction this objective turns on. Calculating a volume is substitution into a formula, which would only be an answer box in disguise. The one 3-D instrument, solid_scaler, scales an existing solid by a factor k and shows V0·k³ and A0·k²: that is similarity of solids, not choosing H over the slant height h. Its predicates (volume-scaled-by-k, area-scaled-by-k, wrong-formula-part) map to none of this objective's own misconceptions, so every diagnostic would have to be forced onto the wrong misconception, and the schema requires at least one. polygon_builder in area mode grades any triangle of the right area, so it cannot tell a perpendicular height from an edge, and area-missing-half is not an own misconception of this objective. All other kinds are 2-D or statistical.",
+      "source": "author-merged-ch13.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c13",
+      "lo_id": "lo:g10m13s3-2-2",
+      "need_kind": "composite_solid_builder",
+      "description": "The cube-plus-square-pyramid solid (and the triangular pyramid on a triangular prism) drawn in isometric, with every face individually tappable and a total-height bar down the side. Two modes. In a 'faces' mode the student taps exactly the faces that make up the outside surface. The cube's bottom and four sides and the pyramid's four triangles are correct; the cube's top face and the pyramid's base are covered where the two solids meet and must be left out. In a 'heights' mode the overall height is given (22 cm for the book's cube of side 7) and the student drags the joint between the two solids along the bar. The pyramid height must come out as the total minus the cube's height (15 cm), and the live readout shows the volume that results. The faces mode would diagnose counts-covered-faces, because the two meeting faces are selected, which is the likeliest error. The heights mode would diagnose uses-total-height-for-pyramid, because the joint is dragged to the cube's top and the pyramid takes the full 22. A marker on a triangular face, with its height set either to the vertical height H or to the slant height, would diagnose uses-pyramid-height-for-triangular-faces. Grading is by property, so any selection or joint position with the right faces or the right height is accepted.",
+      "why": "The mathematics of this objective is deciding which faces are exposed and which height belongs to which part. None of the 19 existing kinds has an object of faces or parts to select. solid_scaler's face toggles only show whether a base counts in one solid's own surface area, with no second solid, no joint and no overall height, and it never emits anything about covered faces or a split height, so its predicates cannot reach counts-covered-faces, uses-total-height-for-pyramid or uses-pyramid-height-for-triangular-faces. venn_builder and sample_space select regions or outcomes but have no solid to hold the faces. A numeric answer box would reduce the question to computing 460.64, with no way to say which face was wrongly counted.",
+      "source": "author-merged-ch13.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c13",
+      "lo_id": "lo:g10m13s3-2-3",
+      "need_kind": "solid_dimension_marker",
+      "description": "The same solid_dimension_marker as for lo:g10m13s3-2-1, used here with ask:'slant-height' on a cone and on a square pyramid. The student marks the length that runs down the sloping surface, from the apex to the rim or to the midpoint of a base edge. They see the vertical height set against it as the other leg of the right triangle through the centre of the base. A second step, 'build the surface', has the student tap which parts add to the total surface area: the base, plus the curved face for a cone or the four triangles for a pyramid, each measured with the slant height. The only own misconception of this objective is vertical-height-used-as-slant-height: a segment dropped straight down to the base centre when the slant height was asked for would be reported as that error. This lets a student see why the sloping surface needs the longer length, with no formula recited.",
+      "why": "Same reason as lo:g10m13s3-2-1: no existing kind lets a student construct or mark a length on a cone or pyramid. solid_scaler's area predicates (area-scaled-by-k, wrong-formula-part) never mention the slant height, so they cannot reach vertical-height-used-as-slant-height. In addition, this objective has no anchor book question (the anchor list is empty), so no widget template could carry a valid parent_question_id here even if a kind fitted. An anchor from the chapter's surface-area exercises would have to be linked first.",
+      "source": "author-merged-ch13.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c13",
+      "lo_id": "lo:g10m13s4-1-1",
+      "need_kind": "dimension_scaler",
+      "description": "A rectangular prism with three separate sliders, one each for length, breadth and height, each stepping through whole-number factors. The student is given a target (for example 'make the volume 9 times as large by changing only two dimensions', or 'triple the length and breadth only: by what factor does the volume change, and what happens to each of the six faces?') and sets the three factors herself. A live table shows each pair of faces (length by breadth, length by height, breadth by height) with its own factor, so she can see that tripling two dimensions multiplies the volume by 9 but multiplies the faces by 9, 3 and 3, so the surface area is not simply 9 times. Errors it would diagnose: volume factor taken as the sum or the single scale factor (3, not 9) when two dimensions are tripled; surface area given the same factor as the volume; a dimension that was not changed treated as if it had been scaled; the same factor applied to every face.",
+      "why": "solid_scaler multiplies every dimension by one single k, so it can only show the all-three-dimensions case (anchor ex13-6-4b, which is really the next objective's law) and cannot show one or two dimensions changing, which is exactly what ex13-6-4a (length and breadth tripled) and the objective itself require. The objective's own misconception list also holds only two prerequisite ids (part of the base as the base, slanted side as the height), neither of which this construction reveals, so no honest diagnostic exists for a solid_scaler template here; new misconceptions (volume factor read as a sum of the factors, surface area scaled like the volume) would need to be added to the graph.",
+      "source": "author-merged-ch13.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c13",
+      "lo_id": "lo:g10m13s4-1-2",
+      "need_kind": "dimension_scaler",
+      "description": "The same independent-dimension scaler, extended to the cylinder (radius and height as separate sliders) and with a symbolic readout in terms of k. The student scales exactly one dimension by a factor k and watches the volume and the area of each face update: scaling the height of a prism or cylinder by k multiplies the volume by k and the two end faces by 1, while the side faces scale by k; scaling the radius of a cylinder by k multiplies the volume by k squared. She completes statements such as 'new volume = ... times the old volume' with a value or expression in k. Errors it would diagnose: scaling the radius of a cylinder and taking the volume as multiplied by k (instead of k squared); applying k to the whole surface area when only the faces touching the scaled dimension change; treating a one-dimension change as if it were an all-dimensions change (k cubed).",
+      "why": "solid_scaler only ever scales every dimension together, so it cannot isolate one dimension, which is the whole of this objective. This objective also has no anchor book questions, so a template could not name a parent question, and its list holds only the two unrelated prerequisite misconceptions.",
+      "source": "author-merged-ch13.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c13",
+      "lo_id": "lo:g10m13s4-1-3",
+      "need_kind": "solid_scaler (extension: plane figures and unit-fraction factors)",
+      "description": "Extend solid_scaler in two ways: allow plane figures (a circle by its radius, a square by its side) with an area-only readout, and let the slider reach k = 1/3 and 1/4 as well as 1/2. The student drags k until the figure's area is a given multiple, for example 'make the new circle's radius a third of the original: what fraction of the original area is it?' or 'a square whose sides are a quarter as long'. Errors it would diagnose: area-scaled-by-k (a third of the radius taken as a third of the area), shrink-read-as-enlarge (a third read as a factor of 3, giving an area of 9), and the wrong power of k for what is asked.",
+      "why": "Four of this objective's anchor questions cannot be reached by the existing instrument: ex13-6-1 (circle, radius a third) and ex13-7-16 (square, side a quarter) are plane figures, which solid_scaler does not draw, and ex13-7-17 (pyramid, side a third) needs k = 1/3 when the slider's lowest stop is 0.5. Only halving is expressible, so the book's most common shrink cases (a third, a quarter) have no widget, and the shrink misconception can only be probed at the edge of the slider.",
+      "source": "author-merged-ch13.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c01",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c02",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c03",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c04",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c05",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c06",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c07",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c08",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c09",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c10",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c11",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c12",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c14",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c13",
+      "lo_id": "lo:g10m13s4-1-3",
+      "need_kind": "no-diagnostic",
+      "description": "template wt:g10m13s4-1-3:cylinder-volume-eighth (1 widget question(s)) was not shipped: it could not say why a wrong answer is wrong",
+      "why": "every misconception its mappings name was refused by S5's fail-closed verifier (mc:g10m13s4-1-3:shrink-read-as-enlarge); a widget with no diagnostic could mark an answer wrong and never say why (ADR-0009). Re-author it against a misconception S5 kept, or accept the lesson without it",
+      "source": "assemble_misconceptions.py",
+      "signed_off": null,
+      "scope": "lesson"
+    }
+  ]
+}

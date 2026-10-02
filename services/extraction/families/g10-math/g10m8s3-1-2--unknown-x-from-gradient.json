@@ -1,0 +1,70 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m8s3-1-2:unknown-x-from-gradient",
+ "kind": "family",
+ "lo_id": "lo:g10m8s3-1-2",
+ "parent_question_id": "q:g10m8s3-1-2:we04",
+ "source_page": 295,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "x1",
+   "randint": [
+    -6,
+    6
+   ]
+  },
+  {
+   "name": "y1",
+   "randint": [
+    -6,
+    6
+   ]
+  },
+  {
+   "name": "m",
+   "choice": [
+    1,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "t",
+   "randint": [
+    -5,
+    5
+   ]
+  },
+  {
+   "require": "t != 0",
+   "why": "a zero step would put A and B at the same x-coordinate, giving a vertical line with no defined gradient"
+  },
+  {
+   "name": "x2",
+   "let": "x1 + t"
+  },
+  {
+   "name": "y2",
+   "let": "y1 + m*t"
+  }
+ ],
+ "constraints": [
+  "x2 != x1",
+  "m != 0"
+ ],
+ "stem": "Given $A({=x1}, {=y1})$ and $B(x, {=y2})$, with ${m}_{AB}={=m}$, find $x$.",
+ "answer": "x2",
+ "solution": [
+  "Let the coordinates of $A$ be $\\left({x}_{1}, {y}_{1}\\right)$ and the coordinates of $B$ be $\\left({x}_{2}, {y}_{2}\\right)$",
+  "Assign values: $x_{1}={=x1}\\quad y_{1}={=y1}\\quad x_{2}=x\\quad y_{2}={=y2}$",
+  "Write down the formula for gradient: $m=\\dfrac{y_{2}-y_{1}}{x_{2}-x_{1}}$",
+  "Substitute values and solve for $x$: $\\begin{aligned}{=m}&=\\dfrac{{=y2}-\\left({=y1}\\right)}{x-\\left({=x1}\\right)}\\\\{=m}\\left(x-\\left({=x1}\\right)\\right)&={=y2}-\\left({=y1}\\right)\\\\x-\\left({=x1}\\right)&={=t}\\\\x&={=t}+\\left({=x1}\\right)\\\\&={=x2}\\end{aligned}$",
+  "Write the final answer: the coordinates of $B$ are $\\left({=x2}, {=y2}\\right)$. Therefore $x={=x2}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Entry-point version of the skill: one point fully known, gradient a positive whole number, the other point's y-coordinate known and x-coordinate the unknown to isolate — a direct single rearrangement of m=(y2-y1)/(x2-x1), same method as we04 (page 295) but generalised off H(x,0) to any known y2 so the family isn't stuck at y=0. Built from we04, whose figure (a segment from G(7,-9) to H(x,0) with mGH=3) I viewed to confirm the point/variable layout; this family drops the diagram and states both points as plain coordinates. Reviewer: check that m staying positive and small keeps this genuinely 'basic' relative to the advanced sibling family, and that t's sign is free (so B can sit left or right of A) without ever making x2==x1. Relevant catalogued errors a student could still make here even though there's no coefficient trick: mc:g10m8s3-1-2:mismatched-point-order and mc:g10m8s3-1-2:inverted-gradient-ratio (both apply to the plain gradient formula, not just to this family)."
+}

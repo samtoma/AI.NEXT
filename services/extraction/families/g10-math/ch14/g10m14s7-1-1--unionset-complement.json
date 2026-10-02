@@ -1,0 +1,64 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m14s7-1-1:unionset-complement",
+ "kind": "family",
+ "lo_id": "lo:g10m14s7-1-1",
+ "parent_question_id": "q:g10m14s7-1-1:ex14-7-2",
+ "source_page": 488,
+ "tier": "standard",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "pool",
+   "let": "list(range(1, 16))"
+  },
+  {
+   "name": "s",
+   "shuffle": "pool"
+  },
+  {
+   "name": "onlya",
+   "let": "sorted([s[i] for i in range(0, 2)])"
+  },
+  {
+   "name": "both",
+   "let": "sorted([s[i] for i in range(2, 6)])"
+  },
+  {
+   "name": "onlyb",
+   "let": "sorted([s[i] for i in range(6, 10)])"
+  },
+  {
+   "name": "ea",
+   "let": "sorted([s[i] for i in range(0, 6)])"
+  },
+  {
+   "name": "eb",
+   "let": "sorted([s[i] for i in range(2, 10)])"
+  },
+  {
+   "name": "uni",
+   "let": "sorted([s[i] for i in range(0, 10)])"
+  },
+  {
+   "name": "ans",
+   "let": "sorted([s[i] for i in range(10, 15)])"
+  }
+ ],
+ "constraints": [],
+ "stem": "A group of learners work with a sample space that can be described as $\\{n : n \\in \\mathbb{Z}, 1 \\leq n \\leq 15\\}$. Two events in this sample space are $A = \\{{=ea[0]}, {=ea[1]}, {=ea[2]}, {=ea[3]}, {=ea[4]}, {=ea[5]}\\}$ and $B = \\{{=eb[0]}, {=eb[1]}, {=eb[2]}, {=eb[3]}, {=eb[4]}, {=eb[5]}, {=eb[6]}, {=eb[7]}\\}$. They are asked to identify the complementary event set of $(A \\cup B)$, also known as $(A \\cup B)'$. Write down the elements of $(A \\cup B)'$ in increasing order, separated by commas.",
+ "solution": [
+  "$A \\cup B$ is the set of elements that are in $A$, in $B$, or in both: $A \\cup B = \\{{=uni[0]}, {=uni[1]}, {=uni[2]}, {=uni[3]}, {=uni[4]}, {=uni[5]}, {=uni[6]}, {=uni[7]}, {=uni[8]}, {=uni[9]}\\}$.",
+  "The complementary event set $(A \\cup B)'$ is every element of the sample space that is not in $A \\cup B$, that is, every element that is in neither $A$ nor $B$.",
+  "Checking each integer from 1 to 15 against $A \\cup B$, the integers that are not in it are $\\{{=ans[0]}, {=ans[1]}, {=ans[2]}, {=ans[3]}, {=ans[4]}\\}$, so $(A \\cup B)' = \\{{=ans[0]}, {=ans[1]}, {=ans[2]}, {=ans[3]}, {=ans[4]}\\}$."
+ ],
+ "marker": {
+  "kind": "values",
+  "answer": "[{=ans[0]}, {=ans[1]}, {=ans[2]}, {=ans[3]}, {=ans[4]}]",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "notes": "Book question ex14-7-2 shows A and B as circles in a Venn diagram on 1 to 15 and asks which listed set is (A union B)'. A family cannot carry a figure, so A and B are given as written-out sets (A = 'A only' plus 'both'; B = 'both' plus 'B only'); the numbers outside both circles in the book's figure are not listed anywhere and the student has to find them in S. Region sizes are fixed (A only 2, both 4, B only 4, neither 5, as in the book's figure) so the answer always has exactly 5 elements and the marker key can use indexed holes; only which numbers fall in which region changes. Typed answer in increasing order instead of the book's three-option choice. Worked solution computed from the same regions."
+}

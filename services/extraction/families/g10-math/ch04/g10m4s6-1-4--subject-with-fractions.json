@@ -1,0 +1,62 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m4s6-1-4:subject-with-fractions",
+ "kind": "family",
+ "lo_id": "lo:g10m4s6-1-4",
+ "parent_question_id": "q:g10m4s6-1-4:ex4-5-4",
+ "source_page": 95,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    2,
+    4
+   ]
+  },
+  {
+   "name": "c",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "d",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "require": "gcd(a, gcd(c, d)) == 1",
+   "why": "a common factor of all three coefficients would let the answer be simplified, so the key would have more than one natural form"
+  }
+ ],
+ "constraints": [
+  "gcd(a, gcd(c, d)) == 1"
+ ],
+ "stem": "Make $x$ the subject of the formula: $\\frac{{=a}}{b}+\\frac{{=c}b}{x}={=d}$.",
+ "solution": [
+  "The denominators are $b$ and $x$, so the LCD is $bx$. Multiply every term by $bx$: $\\frac{{=a}}{b}\\cdot bx+\\frac{{=c}b}{x}\\cdot bx={=d}\\cdot bx$, which simplifies to ${=a}x+{=c}b^{2}={=d}bx$.",
+  "Collect the terms containing $x$ on the left: ${=a}x-{=d}bx=-{=c}b^{2}$.",
+  "Factorise out $x$: $x({=a}-{=d}b)=-{=c}b^{2}$.",
+  "Divide both sides by ${=a}-{=d}b$: $x=\\frac{-{=c}b^{2}}{{=a}-{=d}b}$, which can also be written $x=\\frac{{=c}b^{2}}{{=d}b-{=a}}$.",
+  "Note restriction: ${=d}b\\ne{=a}$, because the denominator cannot be $0$."
+ ],
+ "marker": {
+  "kind": "equation",
+  "answer": "x = ({=c}*b^2)/({=d}*b - {=a})",
+  "form": {
+   "subject": "x"
+  },
+  "variables": [
+   "x",
+   "b"
+  ],
+  "tolerance": null
+ },
+ "notes": "Same skeleton as the book's ex4-5-4 (1/b + 2b/x = 2 gives x = -2b^2/(1-2b)), with the three numbers a/b + c*b/x = d varied. General result x = c*b^2/(d*b - a); the book's case is a = 1, c = 2, d = 2. a starts at 2 so that no instance prints a stray coefficient 1 (for example 1x). Whole-formula common factors are excluded by the gcd require, so the key is canonical; the equation marker should still accept the equivalent form x = -c*b^2/(a - d*b) that the book prints. Quick check: a=2, c=3, d=4, b=2 gives 1 + 6/x = 4, x = 2, and the formula gives 3*4/(8-2) = 2."
+}

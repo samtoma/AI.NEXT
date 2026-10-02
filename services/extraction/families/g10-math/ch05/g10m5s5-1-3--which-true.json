@@ -1,0 +1,180 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m5s5-1-3:which-true",
+ "kind": "family",
+ "lo_id": "lo:g10m5s5-1-3",
+ "parent_question_id": "q:g10m5s5-1-3:we03",
+ "source_page": 117,
+ "tier": "advanced",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "x",
+   "choice": [
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78
+   ]
+  },
+  {
+   "name": "y",
+   "let": "90 - x"
+  },
+  {
+   "name": "tab",
+   "let": "[0, 1745241, 3489950, 5233596, 6975647, 8715574, 10452846, 12186934, 13917310, 15643447, 17364818, 19080900, 20791169, 22495105, 24192190, 25881905, 27563736, 29237170, 30901699, 32556815, 34202014, 35836795, 37460659, 39073113, 40673664, 42261826, 43837115, 45399050, 46947156, 48480962, 50000000, 51503807, 52991926, 54463904, 55919290, 57357644, 58778525, 60181502, 61566148, 62932039, 64278761, 65605903, 66913061, 68199836, 69465837, 70710678, 71933980, 73135370, 74314483, 75470958, 76604444, 77714596, 78801075, 79863551, 80901699, 81915204, 82903757, 83867057, 84804810, 85716730, 86602540, 87461971, 88294759, 89100652, 89879405, 90630779, 91354546, 92050485, 92718385, 93358043, 93969262, 94551858, 95105652, 95630476, 96126170, 96592583, 97029573, 97437006, 97814760, 98162718, 98480775, 98768834, 99026807, 99254615, 99452190, 99619470, 99756405, 99862953, 99939083, 99984770, 100000000]"
+  },
+  {
+   "name": "sx",
+   "let": "tab[x] / 100000000"
+  },
+  {
+   "name": "cx",
+   "let": "tab[90 - x] / 100000000"
+  },
+  {
+   "name": "sy",
+   "let": "tab[y] / 100000000"
+  },
+  {
+   "name": "cy",
+   "let": "tab[90 - y] / 100000000"
+  },
+  {
+   "name": "v1a",
+   "let": "fixed(sx ** 2, 4)"
+  },
+  {
+   "name": "v1b",
+   "let": "fixed(cx ** 2, 4)"
+  },
+  {
+   "name": "v1",
+   "let": "fixed(sx ** 2 + cx ** 2, 2)"
+  },
+  {
+   "name": "v2b",
+   "let": "fixed(cy ** 2, 4)"
+  },
+  {
+   "name": "v2",
+   "let": "fixed(sx ** 2 + cy ** 2, 2)"
+  },
+  {
+   "name": "v3a",
+   "let": "fixed(cx, 4)"
+  },
+  {
+   "name": "v3b",
+   "let": "fixed(cy, 4)"
+  },
+  {
+   "name": "v3",
+   "let": "fixed(cx + cy, 2)"
+  },
+  {
+   "name": "v4a",
+   "let": "fixed(sy, 4)"
+  },
+  {
+   "name": "v4b",
+   "let": "fixed(sx, 4)"
+  }
+ ],
+ "constraints": [
+  "x + y == 90",
+  "x != y",
+  "abs(x - 45) >= 7"
+ ],
+ "stem": "If $x = {=x}^\\circ$ and $y = {=y}^\\circ$, use a calculator to determine which one of the following statements is true.",
+ "choices": {
+  "correct": "$\\sin^2 x + \\cos^2(90^\\circ - y) = 1$",
+  "distractors": [
+   {
+    "text": "$\\sin^2 x + \\cos^2 y = 1$",
+    "misconception_id": "mc:g10m5s5-1-3:drops-the-complement"
+   },
+   {
+    "text": "$\\cos(x + y) = \\cos x + \\cos y$",
+    "misconception_id": "mc:g10m5s5-1-3:splits-trig-function-over-angle"
+   },
+   {
+    "text": "$\\sin(90^\\circ - x) = \\sin x$",
+    "misconception_id": "mc:g10m5s5-1-3:complement-keeps-the-function"
+   }
+  ]
+ },
+ "solution": [
+  "Test each statement by substituting $x = {=x}^\\circ$ and $y = {=y}^\\circ$ and working out its left-hand side (LHS) and its right-hand side (RHS) on a calculator in degree mode. A statement is true only if the two sides are equal.",
+  "$\\sin^2 x + \\cos^2(90^\\circ - y) = 1$: LHS $= \\sin^2 {=x}^\\circ + \\cos^2(90^\\circ - {=y}^\\circ) = \\sin^2 {=x}^\\circ + \\cos^2 {=90 - y}^\\circ \\approx {=v1a} + {=v1b} \\approx {=v1}$ and RHS $= 1$. The two sides are equal, so this statement is true.",
+  "$\\sin^2 x + \\cos^2 y = 1$: LHS $= \\sin^2 {=x}^\\circ + \\cos^2 {=y}^\\circ \\approx {=v1a} + {=v2b} \\approx {=v2}$ but RHS $= 1$. The two sides are not equal, so this statement is false.",
+  "$\\cos(x + y) = \\cos x + \\cos y$: LHS $= \\cos({=x}^\\circ + {=y}^\\circ) = \\cos {=x + y}^\\circ = 0$ but RHS $= \\cos {=x}^\\circ + \\cos {=y}^\\circ \\approx {=v3a} + {=v3b} \\approx {=v3}$. The two sides are not equal, so this statement is false.",
+  "$\\sin(90^\\circ - x) = \\sin x$: LHS $= \\sin(90^\\circ - {=x}^\\circ) = \\sin {=90 - x}^\\circ \\approx {=v4a}$ but RHS $= \\sin {=x}^\\circ \\approx {=v4b}$. The two sides are not equal, so this statement is false.",
+  "Only $\\sin^2 x + \\cos^2(90^\\circ - y) = 1$ has two equal sides, so it is the true statement."
+ ],
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m5s5-1-3:drops-the-complement",
+   "label": "Drops the 90 degrees minus from a complementary-angle statement",
+   "description": "The student sees sin squared plus cos squared and takes the Pythagorean identity to hold, writing cos^2 y where the true statement needs cos^2(90 - y). They do not substitute both angles, so they never see that the two squared terms are not for the same angle."
+  },
+  {
+   "id": "mc:g10m5s5-1-3:complement-keeps-the-function",
+   "label": "Thinks the sine of the complement equals the sine of the angle",
+   "description": "The student treats 90 degrees minus x as if it changed nothing, so they accept sin(90 - x) = sin x without evaluating either side. The calculator shows sin(90 - x) equals cos x, which is not sin x unless x is 45 degrees."
+  }
+ ],
+ "notes": "Advanced tier, built on the book's worked example 3 (sin^2 x + cos^2(90 - y) = 1 with x = 25, y = 65). Every instance has x + y = 90 (constraint), so the first option is the book's true statement and the other three are false: sin^2 x + cos^2 y = 2 sin^2 x, cos(x + y) = cos 90 = 0 against cos x + cos y > 1, and sin(90 - x) = cos x against sin x. x avoids 39 to 51 degrees so that every false statement misses by at least 0.17 (checked for all 54 values of x); the two sides therefore differ at 2 decimal places and no instance has a second true option. The engine has no trig functions, so the sine of each whole degree is a table of integers in units of 1e-8 (tab) and cosine is read as the sine of the complement. Displayed values were checked against exact trig, rounded half-up, for every x: 4 d.p. for single terms, 2 d.p. for sides. The four options are fixed text and the stem (x and y) tells instances apart, so distinct_by_choices is left off. The solution names statements by their formula, not by position, because options may be shuffled."
+}

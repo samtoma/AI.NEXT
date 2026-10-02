@@ -1,0 +1,40 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m6s6-1-2:stretch-then-lift",
+ "lo_id": "lo:g10m6s6-1-2",
+ "parent_question_id": "q:g10m6s6-1-2:ex6-6-7c",
+ "tier": "standard",
+ "kind": "curve_sketcher",
+ "instances": [
+  {
+   "a": 3,
+   "q": 1
+  },
+  {
+   "a": 2,
+   "q": 2
+  }
+ ],
+ "spec": {
+  "fn": "sine",
+  "coefs": [
+   "{=a}",
+   "{=q}"
+  ]
+ },
+ "stem": "Sketch the graph of $y = {=a}\\sin\\theta + {=q}$ for $0^{\\circ} \\le \\theta \\le 360^{\\circ}$. Draw it in one smooth stroke from left to right.",
+ "solution": [
+  "Start from the basic graph $y = \\sin\\theta$ on $0^{\\circ} \\le \\theta \\le 360^{\\circ}$: it crosses the θ-axis at $0^{\\circ}$, $180^{\\circ}$ and $360^{\\circ}$, peaks at $(90^{\\circ}, 1)$ and bottoms out at $(270^{\\circ}, -1)$.",
+  "Multiply every height by $a$ to get $y = a\\sin\\theta$: the peak moves to $(90^{\\circ}, a)$ and the trough to $(270^{\\circ}, -a)$, while the crossings at $0^{\\circ}$, $180^{\\circ}$ and $360^{\\circ}$ stay where they are. The amplitude is $a$.",
+  "Now add $q$ to every height, which slides the whole stretched graph up by $q$ units. Only $q$ is added, so the shift is $q$ and not $a \\times q$: the line the curve oscillates about moves from the θ-axis to $y = q$.",
+  "Mark the five key points: $(0^{\\circ}, q)$, $(90^{\\circ}, a + q)$, $(180^{\\circ}, q)$, $(270^{\\circ}, q - a)$ and $(360^{\\circ}, q)$.",
+  "Join them in one smooth curve that rises first, because $a$ is positive."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "vertical-shift-wrong",
+   "misconception_id": "mc:g10m6s6-1-2:stretch-applied-to-shift"
+  }
+ ],
+ "notes": "Fit: the objective is literally 'sketch y = a sin θ + q by applying the effects of a and q to the basic sine graph', and curve_sketcher fn=sine takes coefs [a, q] with a nonzero whole |a|<=4 and q whole |q|<=3. Both rows keep the target inside -5..5 (3,1 spans -2..4; 2,2 spans 0..4). Rows are chosen so the stretch-applied-to-shift curve, y = a(sin θ + q) = a sin θ + a·q, sits |(a-1)·q| >= 2 units from the true midline (2 in both rows), clear of the instrument's roughly one-grid-square tolerance; a row such as (2,1) would put the error only one unit away and was avoided. That error curve has the right amplitude and period and only the wrong midline, which is why vertical-shift-wrong is the mapped predicate. Competing causes of the same predicate, left in this note because the misconception list holds nothing for them: q ignored altogether (midline left at 0), and q applied with the wrong sign. vertically-displaced can also fire for the same offset but fires equally for drawing imprecision and for an ignored q, so it is deliberately unmapped. amplitude-wrong, period-wrong, fails-vertical-line-test and partial-coverage are unmapped: none of the objective's misconceptions is revealed by them. Not covered by this instrument: a contraction such as a = 1/2 (a must be a whole number), so the book's y = ½ sin θ is not reachable; and a basic tier with q = 0, where no predicate maps to a listed misconception. Stem uses bare {=a} and {=q} placeholders (no formatting helper) and assumes the array form of coefs substitutes element-wise like a scalar spec value; q is positive in every row so no sign formatting is needed."
+}

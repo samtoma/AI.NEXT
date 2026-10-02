@@ -4,7 +4,7 @@
 #
 #   ./scripts/course-gating.sh status     what is in force right now
 #   ./scripts/course-gating.sh on         enforce the gate (students see only what is live)
-#   ./scripts/course-gating.sh off        suspend the gate; every course visible to everyone
+#   ./scripts/course-gating.sh off        suspend the rules; every loaded course of a student's OWN curriculum visible
 #   ./scripts/course-gating.sh rollback   drop the tables entirely (needs --yes)
 #
 # WHY THIS FILE EXISTS
@@ -17,12 +17,19 @@
 #              AINEXT_COURSE_GATING in app/.env.local. The console keeps working
 #              and says loudly that it is not in force. THIS IS THE ONE YOU WANT
 #              if the feature is in the way. Restart the dev server after.
+#              Since feature 003 (FR-4015) it suspends the RULES only: a student
+#              still sees only her own curriculum's courses (every loaded one),
+#              plus any per-student exception.
 #
 #   rollback   Drops course_availability and student_course_access. Loses every
 #              rule and override you configured; loses nothing a student made.
 #              The product returns to "every course visible to every student".
 #              Requires --yes because it is not undoable without re-running the
 #              migration and re-entering the configuration by hand.
+#              ⚠ Only with a build OLDER than feature 003 running: since 003 the
+#              student scope reads student_course_access even with the gate off
+#              (a per-student exception still applies, FR-4015), so a 003 build
+#              fails every student request once the table is gone.
 #
 #   the branch This work lives on its own git branch. Deleting the branch
 #              removes the code as well as the data. `git branch -D` is the
@@ -81,8 +88,8 @@ case "${1:-status}" in
   status)
     printf 'gate variable   : %s\n' "$(current)"
     printf 'gate in force   : %s\n' \
-      "$([[ "$(current)" == "on" ]] && echo 'YES — students see only courses set live' \
-                                    || echo 'no — every course is visible to every student')"
+      "$([[ "$(current)" == "on" ]] && echo 'YES — students see only courses set live for their grade, in their own curriculum' \
+                                    || echo 'rules suspended — every loaded course of a student'"'"'s own curriculum is visible (FR-4015)')"
     printf 'tables present  : %s of 2\n' "$(tables_present)"
     printf 'branch          : %s\n' "$(cd "$ROOT" && git rev-parse --abbrev-ref HEAD)"
     if [[ "$(tables_present)" == "2" ]]; then
@@ -100,7 +107,9 @@ case "${1:-status}" in
   rollback)
     [[ "${2:-}" == "--yes" ]] || die "rollback discards every rule and override you configured.
 Re-run as: ./scripts/course-gating.sh rollback --yes
-(If you only want to stop the gate taking effect, use 'off' — it keeps your configuration.)"
+(If you only want to stop the gate taking effect, use 'off' — it keeps your configuration.)
+Run it only with a build older than feature 003: a 003 build reads student_course_access
+even with the gate off, and fails every student request without it."
     [[ -f "$DOWN_SQL" ]] || die "missing $DOWN_SQL"
     psql "$(maint_url)" -v ON_ERROR_STOP=1 -f "$DOWN_SQL"
     set_var off

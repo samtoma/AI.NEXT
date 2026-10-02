@@ -1,0 +1,79 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s7-1-2:shared-intercept",
+ "kind": "family",
+ "lo_id": "lo:g10m6s7-1-2",
+ "parent_question_id": "q:g10m6s7-1-2:ex6-8-50b",
+ "source_page": 230,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "version": 1,
+ "params": [
+  {
+   "name": "b",
+   "choice": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "k",
+   "randint": [
+    1,
+    4
+   ]
+  },
+  {
+   "name": "a",
+   "randint": [
+    2,
+    4
+   ]
+  },
+  {
+   "name": "n",
+   "randint": [
+    1,
+    3
+   ]
+  },
+  {
+   "require": "b**n <= 27",
+   "why": "keeps the exponential values small"
+  },
+  {
+   "name": "q",
+   "let": "1 + k"
+  },
+  {
+   "name": "yb",
+   "let": "b**n + k"
+  },
+  {
+   "name": "yc",
+   "let": "q - a*n**2"
+  },
+  {
+   "name": "bc",
+   "let": "yb - yc"
+  }
+ ],
+ "constraints": [
+  "yb > yc",
+  "bc == b**n + a*n**2 - 1"
+ ],
+ "stem": "The graphs of $f(x)={=b}^{x}+{=k}$ and $g(x)=-{=a}x^{2}+q$, where $q$ is a constant, cut the $y$-axis at the same point $A$. The point $B$ lies on $f$ and the point $C$ lies on $g$, and both have $x$-coordinate ${=n}$, so $BC$ is a vertical line segment. Calculate the length of $BC$ in units.",
+ "answer": "bc",
+ "solution": [
+  "$A$ lies on the $y$-axis, so let $x=0$ in $f$: $f(0)={=b}^{0}+{=k}=1+{=k}={=q}$. So $A(0, {=q})$.",
+  "$A$ also lies on $g$, and $g(0)=q$. So $q={=q}$ and $g(x)=-{=a}x^{2}+{=q}$.",
+  "$B$ lies on $f$ at $x={=n}$: $y_B={=b}^{{=n}}+{=k}={=yb}$, so $B({=n}, {=yb})$.",
+  "$C$ lies on $g$ at $x={=n}$: $y_C=-{=a}({=n})^{2}+{=q}={=yc}$, so $C({=n}, {=yc})$.",
+  "$B$ is above $C$ (${=yb}>{=yc}$) and $BC$ is vertical, so $BC=y_B-y_C={=yb}-({=yc})={=bc}$ units."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Model: book ex6-8-50b (f(x) = 4^x and g(x) = -4x^2 + q, BC found by substituting x = 1 into both). In the book A(0, 1) is handed over; here the constant q is not given and f carries a vertical shift k, so the student must first let x = 0 to find the shared y-intercept (1 + k), deduce q, and only then evaluate both curves at x = n and subtract (several more steps than the book's standard question; the shift k cancels in the final length, which is deliberate). Wrong answers typically come from reading b^0 as b or as 0 when finding A, the catalogued errors mc:g10m6s7-1-2:power-at-zero-read-as-base and mc:g10m6s7-1-2:power-vanishes-at-zero. Parameters keep b^n <= 27 and n >= 1 so B is always above C and every answer is a whole number at most 62 (120 distinct instances). a starts at 2 so the coefficient is always printed."
+}

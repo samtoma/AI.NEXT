@@ -1,0 +1,411 @@
+{
+ "objectives_version": 1,
+ "book": "g10-math",
+ "chapter": 14,
+ "module": "module:g10m-c14",
+ "lesson": "g10m14s1-1",
+ "title": "Theoretical probability",
+ "provenance": {
+  "sections": [
+   {
+    "number": "14.1",
+    "title": "Theoretical probability"
+   }
+  ],
+  "part": null,
+  "chapter_intro": false
+ },
+ "status": "approved",
+ "g1": {
+  "approved_by": "auto-pass G1 (AI recommendation)",
+  "approved_at": "2026-10-02T07:07:16+00:00",
+  "verdicts": {
+   "auto": true,
+   "by": "auto-pass G1 (AI recommendation)",
+   "terminology": {
+    "event set": "keep",
+    "sample space": "keep",
+    "theoretical probability": "keep",
+    "simplified fraction": "keep",
+    "equally likely": "keep",
+    "relative frequency": "keep",
+    "trial": "keep",
+    "number of trials": "keep",
+    "n(s)": "keep",
+    "region": "keep",
+    "identity": "keep",
+    "union": "keep",
+    "intersection": "keep",
+    "mutually exclusive": "keep",
+    "complementary events": "keep",
+    "complement": "keep",
+    "empty set": "keep"
+   },
+   "move_items": {
+    "Ex14-8:13g": "lo:g10m14s5-1-3",
+    "Ex14-8:14b": "lo:g10m14s7-1-4",
+    "Ex14-8:14c": "lo:g10m14s7-1-4",
+    "Ex14-8:23b": "lo:g10m14s1-1-2",
+    "Ex14-8:29a": "lo:g10m14s3-1-3",
+    "Ex14-8:29b": "lo:g10m14s3-1-3",
+    "Ex14-8:29c": "lo:g10m14s3-1-3",
+    "Ex14-8:31b": "lo:g10m14s3-1-3"
+   },
+   "links": {},
+   "acknowledged": [],
+   "objectives": {},
+   "outside_items": {}
+  }
+ },
+ "source_run": {
+  "file": "runs/g10-math/objectives/ch14-wf_c0c84644-7b8.json",
+  "sha256": "082963d4b1d567ee41cec04c7d1e59a83a2b89f7b3a9fc58b7fb0977cdd374f9",
+  "prompts_version": "s1-v5",
+  "packet_sha256": "8b2011e2236ce86abe6a567c3e840dbeabe4f4c99eed062131fef3be9ecb9bdf"
+ },
+ "objectives": [
+  {
+   "id": "lo:g10m14s1-1-1",
+   "provisional_id": "lo:g10m14s1-1-1",
+   "n": 1,
+   "statement": "Identify the sample space and the event set of an experiment from a description of it, for example when two dice are rolled or a single die is rolled.",
+   "label": "Identify sample space and event",
+   "evidence": [
+    {
+     "kind": "definition",
+     "anchor": "b04357",
+     "printed_page": 471,
+     "quote": "the set of all possible outcomes of that experiment",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "definition",
+     "anchor": "b04366",
+     "printed_page": 472,
+     "quote": "An event is a specific set of outcomes of an experiment that you are interested in",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex14-1:1",
+     "printed_page": 474,
+     "quote": "rolls 2 dice hoping to get a total of 8",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex14-1:2",
+     "printed_page": 474,
+     "quote": "rolls a die. Which of the following is the most appropriate example of the term",
+     "contained": true,
+     "present": true,
+     "supports": true
+    }
+   ],
+   "evidence_dropped": [
+    {
+     "kind": "exercise",
+     "anchor": "Ex14-8:1",
+     "printed_page": 490,
+     "quote": "the most appropriate example of the term",
+     "contained": true,
+     "present": true,
+     "supports": false,
+     "dropped": "the evidence check says it does not support the objective:"
+    }
+   ],
+   "exercise_items": [
+    "Ex14-1:1",
+    "Ex14-1:2",
+    "Ex14-8:1",
+    "Ex14-8:22a",
+    "Ex14-8:22b",
+    "Ex14-8:22c",
+    "Ex14-8:22d",
+    "Ex14-8:27a",
+    "Ex14-8:27b",
+    "Ex14-8:27c"
+   ],
+   "worked_examples": [],
+   "confidence": "agreed",
+   "from": {
+    "a": [
+     "A1"
+    ],
+    "b": [
+     "B1"
+    ]
+   },
+   "derivation": "derived",
+   "terms": [
+    "experiment",
+    "sample space",
+    "event",
+    "event set"
+   ],
+   "edited_at_g1": false,
+   "order_in_parent": 1,
+   "node": {
+    "id": "lo:g10m14s1-1-1",
+    "kind": "learning_objective",
+    "label": "Identify sample space and event",
+    "description": "Identify the sample space and the event set of an experiment from a description of it, for example when two dice are rolled or a single die is rolled.",
+    "source_page": 471,
+    "syllabus_ref": "14.1",
+    "order_in_parent": 1
+   }
+  },
+  {
+   "id": "lo:g10m14s1-1-2",
+   "provisional_id": "lo:g10m14s1-1-2",
+   "n": 2,
+   "statement": "Calculate the theoretical probability P(E) = n(E)/n(S) of an event when all the outcomes of the experiment are equally likely, and write it as a simplified fraction, a decimal or a percentage.",
+   "label": "Calculate theoretical probability",
+   "evidence": [
+    {
+     "kind": "heading",
+     "anchor": "EMA7W",
+     "printed_page": 472,
+     "quote": "Theoretical probability",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "intro",
+     "anchor": "b04378",
+     "printed_page": 473,
+     "quote": "the ratio between the number of outcomes in the event set and the number of possible outcomes in the sample space",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "intro",
+     "anchor": "b04375",
+     "printed_page": 473,
+     "quote": "As a percentage. For example",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "worked_example",
+     "anchor": "WE1",
+     "printed_page": 473,
+     "quote": "Compute the theoretical probability",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "summary",
+     "anchor": "b04493",
+     "printed_page": 490,
+     "quote": "The probability of an event is the ratio between the number of outcomes in the event set",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "summary",
+     "anchor": "b04492",
+     "printed_page": 490,
+     "quote": "A probability can also be written as a percentage or as a fraction.",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex14-1:3",
+     "printed_page": 474,
+     "quote": "Write your answer as a simplified fraction.",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex14-1:4",
+     "printed_page": 474,
+     "quote": "Write your answer as a decimal (correct to 2 decimal places).",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex14-1:5",
+     "printed_page": 474,
+     "quote": "What is the probability of selecting a multiple of",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex14-1:6a",
+     "printed_page": 474,
+     "quote": "A ball is picked at random. Determine the probability that it is",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex14-8:6",
+     "printed_page": 492,
+     "quote": "What is the probability that the card is a king?",
+     "contained": true,
+     "present": true,
+     "supports": true
+    }
+   ],
+   "evidence_dropped": [],
+   "exercise_items": [
+    "Ex14-1:3",
+    "Ex14-1:4",
+    "Ex14-1:5",
+    "Ex14-1:6a",
+    "Ex14-1:6b",
+    "Ex14-1:6c",
+    "Ex14-1:6d",
+    "Ex14-1:7a",
+    "Ex14-1:7b",
+    "Ex14-1:7c",
+    "Ex14-1:7d",
+    "Ex14-1:7e",
+    "Ex14-8:6",
+    "Ex14-8:11a",
+    "Ex14-8:12a",
+    "Ex14-8:12b",
+    "Ex14-8:13a",
+    "Ex14-8:13b",
+    "Ex14-8:13c",
+    "Ex14-8:13d",
+    "Ex14-8:13h",
+    "Ex14-8:16a",
+    "Ex14-8:17a",
+    "Ex14-8:17c",
+    "Ex14-8:19a",
+    "Ex14-8:21b",
+    "Ex14-8:21c",
+    "Ex14-8:23b"
+   ],
+   "worked_examples": [
+    "WE1"
+   ],
+   "confidence": "merged",
+   "from": {
+    "a": [
+     "A2",
+     "A3"
+    ],
+    "b": [
+     "B2"
+    ]
+   },
+   "derivation": "derived",
+   "terms": [
+    "theoretical probability",
+    "event",
+    "outcomes",
+    "equally likely",
+    "simplified fraction",
+    "decimal",
+    "percentage"
+   ],
+   "edited_at_g1": false,
+   "order_in_parent": 2,
+   "node": {
+    "id": "lo:g10m14s1-1-2",
+    "kind": "learning_objective",
+    "label": "Calculate theoretical probability",
+    "description": "Calculate the theoretical probability P(E) = n(E)/n(S) of an event when all the outcomes of the experiment are equally likely, and write it as a simplified fraction, a decimal or a percentage.",
+    "source_page": 472,
+    "syllabus_ref": "14.1",
+    "order_in_parent": 2
+   }
+  }
+ ],
+ "pool_items": [
+  "Ex14-8:1",
+  "Ex14-8:11a",
+  "Ex14-8:12a",
+  "Ex14-8:12b",
+  "Ex14-8:13a",
+  "Ex14-8:13b",
+  "Ex14-8:13c",
+  "Ex14-8:13d",
+  "Ex14-8:13h",
+  "Ex14-8:16a",
+  "Ex14-8:17a",
+  "Ex14-8:17c",
+  "Ex14-8:19a",
+  "Ex14-8:21b",
+  "Ex14-8:21c",
+  "Ex14-8:22a",
+  "Ex14-8:22b",
+  "Ex14-8:22c",
+  "Ex14-8:22d",
+  "Ex14-8:23b",
+  "Ex14-8:27a",
+  "Ex14-8:27b",
+  "Ex14-8:27c",
+  "Ex14-8:6"
+ ],
+ "prerequisites": [
+  {
+   "src": "lo:g10m1s4-1-1",
+   "dst": "lo:g10m14s1-1-2",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "exercise",
+     "anchor": "Ex14-1:4",
+     "printed_page": 474,
+     "quote": "correct to 2 decimal places"
+    }
+   ],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "The probability exercise requires the answer as a decimal correct to 2 decimal places, so rounding is a required step."
+   },
+   "backward": false
+  },
+  {
+   "src": "lo:g10m1s3-1-3",
+   "dst": "lo:g10m14s1-1-2",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "worked_example",
+     "anchor": "WE1",
+     "printed_page": 473,
+     "quote": "\\frac{5}{36}=\\text{0,13}\\dot{8}"
+    }
+   ],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "WE1 writes 5/36 as 0,13 with a dot over the 8, which is the recurring-decimal dot notation, used as a step."
+   },
+   "backward": false
+  }
+ ],
+ "checks": {
+  "ok": true,
+  "failures": [],
+  "warnings": [
+   "g10m14s1-1: objectives are not numbered in the order the book practises them (rule 6)"
+  ],
+  "check_later": []
+ },
+ "outside_items": []
+}

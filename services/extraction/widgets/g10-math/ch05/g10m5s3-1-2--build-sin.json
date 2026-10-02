@@ -1,0 +1,38 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m5s3-1-2:build-sin",
+ "lo_id": "lo:g10m5s3-1-2",
+ "parent_question_id": "q:g10m5s3-1-2:ex5-1-1a",
+ "tier": "basic",
+ "kind": "triangle_ratio",
+ "instances": [
+  {
+   "t": 0.6
+  },
+  {
+   "t": 0.8
+  }
+ ],
+ "spec": {
+  "ask": "sin",
+  "target": "{=t}"
+ },
+ "stem": "Build a right-angled triangle in which $\\sin\\theta = {=t}$, where $\\theta$ is the marked angle. Drag the two legs; a triangle of any size with this sine is correct.",
+ "solution": [
+  "Sine compares the side opposite $\\theta$ with the hypotenuse: $\\sin\\theta = \\frac{\\text{opposite}}{\\text{hypotenuse}}$.",
+  "Write the target ${=t}$ as a fraction of whole numbers, opposite over hypotenuse: for example $0.6 = \\frac{3}{5}$ and $0.8 = \\frac{4}{5}$. The opposite side is the top, the hypotenuse the bottom.",
+  "You drag the legs, not the hypotenuse. A hypotenuse of 5 with an opposite leg of 3 leaves an adjacent leg of 4 ($3^2 + 4^2 = 5^2$); with an opposite leg of 4 the adjacent leg is 3.",
+  "Check the live readout: $\\sin\\theta = {=t}$. Doubling both legs gives the same sine, because only the ratio of the sides matters, not the size."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "used-cosine",
+   "misconception_id": "mc:g10m5s3-1-2:reads-sides-from-other-angle"
+  },
+  {
+   "predicate": "used-tangent",
+   "misconception_id": "mc:g10m5s3-1-2:sine-as-opposite-over-adjacent"
+  }
+ ],
+ "notes": "Mirrors book Ex 5.1 Q1(a) (write sin of an angle) by running it backwards: the student must know which two sides make a sine in order to build one. used-cosine is mapped to reads-sides-from-other-angle (opposite and adjacent trade places, so sin theta comes out as adjacent over hypotenuse); the same predicate also fires on a plain SOH-CAH-TOA recall slip, which has no misconception of its own in this objective's list. used-tangent means the triangle's opposite/adjacent ratio equals the target, i.e. sine written as opposite over adjacent, so no hypotenuse in the answer. off-target is deliberately unmapped (too many unrelated causes). ratio-at-the-right-angle and ratios-without-a-right-angle cannot fire here: theta is fixed at an acute vertex and the triangle is always right-angled. The 3-4-5 triangle is shared on purpose with the cos template (sin 0.6 and cos 0.8 are the same triangle). Targets 0.6 and 0.8 are reachable with legs 3 and 4 (or 4 and 3); worth a check that the leg handles reach those lengths and that the instrument marks the angle as theta."
+}

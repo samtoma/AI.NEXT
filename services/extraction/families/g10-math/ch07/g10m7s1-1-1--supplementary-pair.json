@@ -1,0 +1,115 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m7s1-1-1:supplementary-pair",
+ "kind": "family",
+ "lo_id": "lo:g10m7s1-1-1",
+ "parent_question_id": "q:g10m7s1-1-1:ex7-8-1g",
+ "source_page": 270,
+ "tier": "standard",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    20,
+    160
+   ],
+   "resample_while": "p == 90"
+  },
+  {
+   "name": "q",
+   "randint": [
+    15,
+    75
+   ],
+   "resample_while": "q == 45"
+  },
+  {
+   "name": "d",
+   "randint": [
+    110,
+    170
+   ]
+  },
+  {
+   "name": "e",
+   "randint": [
+    40,
+    140
+   ]
+  },
+  {
+   "name": "s",
+   "choice": [
+    -20,
+    -10,
+    10,
+    20
+   ]
+  },
+  {
+   "name": "f",
+   "let": "180 - e + s"
+  },
+  {
+   "name": "c",
+   "randint": [
+    30,
+    70
+   ],
+   "resample_while": "c == 45"
+  }
+ ],
+ "constraints": [
+  "p != 90",
+  "f > 0 and f < 180",
+  "c != 45"
+ ],
+ "stem": "Which one of the following pairs of angles is supplementary?",
+ "solution": [
+  "Supplementary angles are two angles that add up to $180^\\circ$ (together they make a straight angle).",
+  "Add the two angles in each pair: ${=p}^\\circ + {=180 - p}^\\circ = 180^\\circ$; ${=q}^\\circ + {=90 - q}^\\circ = 90^\\circ$; ${=d}^\\circ + {=360 - d}^\\circ = 360^\\circ$; ${=e}^\\circ + {=f}^\\circ = {=e + f}^\\circ$; ${=c}^\\circ + {=c}^\\circ = {=2 * c}^\\circ$.",
+  "Only ${=p}^\\circ$ and ${=180 - p}^\\circ$ add up to $180^\\circ$, so that is the supplementary pair. (A pair that adds up to $90^\\circ$ is complementary.)"
+ ],
+ "choices": {
+  "correct": "${=p}^\\circ$ and ${=180 - p}^\\circ$",
+  "distractors": [
+   {
+    "text": "${=q}^\\circ$ and ${=90 - q}^\\circ$",
+    "misconception_id": "mc:g10m7s1-1-1:complementary-for-supplementary"
+   },
+   {
+    "text": "${=d}^\\circ$ and ${=360 - d}^\\circ$",
+    "misconception_id": "mc:g10m7s1-1-1:supplementary-sums-to-360"
+   },
+   {
+    "text": "${=c}^\\circ$ and ${=c}^\\circ$",
+    "misconception_id": "mc:g10m7s1-1-1:equal-angles-called-supplementary"
+   },
+   {
+    "text": "${=e}^\\circ$ and ${=f}^\\circ$",
+    "misconception_id": null
+   }
+  ]
+ },
+ "distinct_by_choices": true,
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m7s1-1-1:complementary-for-supplementary",
+   "label": "Swaps complementary and supplementary",
+   "description": "The student checks for a sum of $90^\\circ$ (complementary) when asked for supplementary angles, which add up to $180^\\circ$."
+  },
+  {
+   "id": "mc:g10m7s1-1-1:supplementary-sums-to-360",
+   "label": "Takes a sum of 360 degrees as supplementary",
+   "description": "The student confuses the straight angle ($180^\\circ$) with the full turn ($360^\\circ$) and accepts a pair that adds up to $360^\\circ$."
+  },
+  {
+   "id": "mc:g10m7s1-1-1:equal-angles-called-supplementary",
+   "label": "Takes two equal angles for a supplementary pair",
+   "description": "The student mixes supplementary angles up with vertically opposite angles, which are equal, and picks a pair of equal angles."
+  }
+ ],
+ "notes": "Covers the 'supplementary and complementary angles' part of the objective by the definition of the names (sum 180 and sum 90); the book's own questions for this objective only name angle types, so this is a recognition item at the same level, with no diagram and no transversal. The stem never changes (distinct_by_choices set; the options carry the variation). Exactly one option sums to 180 by construction: complementary pair sums to 90, the 360 pair to 360, the near-miss pair to 160, 170, 190 or 200 (180 + s, s in -20, -10, 10, 20), the equal pair to 60..140 (c in 30..70, c not 45, so it is never 90 or 180). p is never 90 so the correct pair is never an equal pair. The near-miss option is an arithmetic-slip distractor with no catalogued error, so its id is null. No two options can show the same pair: sums differ."
+}

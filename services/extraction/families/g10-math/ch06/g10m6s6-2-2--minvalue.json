@@ -1,0 +1,48 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s6-2-2:minvalue",
+ "kind": "family",
+ "lo_id": "lo:g10m6s6-2-2",
+ "parent_question_id": "q:g10m6s6-2-2:ex6-8-35b",
+ "source_page": 223,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "choice": [
+    -5,
+    -4,
+    -3,
+    -2,
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    -5,
+    5
+   ],
+   "resample_while": "q == 0"
+  }
+ ],
+ "constraints": [
+  "q != 0"
+ ],
+ "stem": "Sketch the graph of $y = {=a}\\cos\\theta {=signed(q)}$ for $\\theta \\in [0^\\circ, 360^\\circ]$ without using a table of values. What is the least value of $y$ on your sketch?",
+ "answer": "q - abs(a)",
+ "solution": [
+  "The amplitude is $|a| = {=abs(a)}$: the graph of $y = \\cos\\theta$ is stretched vertically so that it rises ${=abs(a)}$ above, and falls ${=abs(a)}$ below, its midline.",
+  "The vertical shift $q = {=q}$ moves the whole graph, so its midline is the line $y = {=q}$.",
+  "The least value is the midline minus the amplitude: ${=q} - {=abs(a)} = {=q - abs(a)}$.",
+  "The sign of $a$ only decides where this lowest point is: at $\\theta = 180^\\circ$ when $a > 0$, and at $\\theta = 0^\\circ$ and $360^\\circ$ when $a < 0$ (the reflection in the $x$-axis). It does not change the value.",
+  "The least value of $y$ is ${=q - abs(a)}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Standard: range reasoning from amplitude and shift. a runs over both signs so the student must use |a|, not a, for the distance from the midline: least value = q - |a| in every case (verified numerically over the whole parameter space against the sampled curve). |a| >= 2 so the coefficient always prints as a number; q != 0 so the shift always prints. Answer is a whole number, possibly negative."
+}

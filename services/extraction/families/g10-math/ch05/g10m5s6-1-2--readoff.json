@@ -1,0 +1,62 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m5s6-1-2:readoff",
+ "kind": "family",
+ "lo_id": "lo:g10m5s6-1-2",
+ "parent_question_id": "q:g10m5s6-1-2:ex5-3-2",
+ "source_page": 119,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "require": "p != q",
+   "why": "unequal legs keep the instances varied (the isosceles case is the book's own special triangle)"
+  },
+  {
+   "require": "gcd(p, q) == 1",
+   "why": "coprime legs keep the hypotenuse root already in simplest form"
+  },
+  {
+   "require": "not is_square(p * p + q * q)",
+   "why": "the hypotenuse must be a genuine surd, not a whole number (excludes the 3, 4 pair)"
+  },
+  {
+   "name": "N",
+   "let": "p * p + q * q"
+  }
+ ],
+ "constraints": [
+  "p != q",
+  "gcd(p, q) == 1",
+  "not is_square(p * p + q * q)"
+ ],
+ "stem": "In the right-angled triangle $ABC$ the right angle is at $B$, $AB = {=p}$, $BC = {=q}$ and $AC = \\sqrt{{=N}}$. Let $\\theta$ be the angle at $A$. Solve for $\\cos{\\theta}$ in surd form.",
+ "marker": {
+  "kind": "surd",
+  "answer": "{=p}/sqrt({=N})",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "solution": [
+  "The right angle is at $B$, so $AC$ is the hypotenuse. For the angle $\\theta$ at $A$, the side $AB = {=p}$ is the adjacent side.",
+  "$\\cos{\\theta}=\\frac{\\text{adjacent}}{\\text{hypotenuse}}=\\frac{AB}{AC}$",
+  "Substitute the lengths: $\\cos{\\theta}=\\frac{{=p}}{\\sqrt{{=N}}}$. This is the answer in surd form."
+ ],
+ "notes": "Basic tier: all three sides are given (legs whole numbers, hypotenuse a surd), so the student only has to pick adjacent over hypotenuse and write the fraction. No Pythagoras and no cancelling. The book's figure is replaced by a verbal description with fixed vertex names: right angle at B, theta at A, so AB is adjacent, BC opposite, AC hypotenuse. Legs are drawn from 1..5, coprime and unequal, with p^2+q^2 not a square, which leaves 16 ordered pairs (N in 5, 10, 13, 17, 26, 29, 34, 41; all squarefree). Marker has form null on purpose: 1/sqrt(5) and sqrt(5)/5 are the same number and either is correct. Book model ex5-3-2 (cos theta = 5/(5 sqrt 2) = 1/sqrt 2); note the book's printed solution says 'opposite' where it means 'adjacent'. This family uses the correct word."
+}

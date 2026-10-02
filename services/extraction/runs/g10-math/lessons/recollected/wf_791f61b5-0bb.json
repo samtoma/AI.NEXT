@@ -1,0 +1,3654 @@
+{
+ "stage": "S2-S4,S8",
+ "workflow": "lesson",
+ "prompts_version": "lesson-v7",
+ "collect_version": "collect-6",
+ "book": "g10-math",
+ "embedded": {
+  "source": "runbook/lesson.workflow.js",
+  "source_sha256": "335591169602daefb63db78651e71c40c7cbac1cd61a492796bd2c27ebbfe83a",
+  "args_sha256": "aa8cf2d16ccd454611289814c2fea1dd216e8b5fb009d3aab0bd32e124d9ff95",
+  "generated_sha256": "7a5862a894931c31abf7cd4918938f8d7174858cb7da6a42f3d1bb9b123a2e11",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "lessons": [
+  {
+   "lesson": "g10m1s4-1",
+   "claims": [
+    {
+     "lo": "lo:g10m1s4-1-1",
+     "type": "definition",
+     "text": "Rounding off a decimal number to a given number of decimal places is the quickest way to approximate a number.",
+     "anchor": "b00120",
+     "printed_page": 12,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "Rounding off a decimal number to a given number of decimal places is the quickest way to approximate a number.",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m1s4-1-1",
+     "type": "method",
+     "text": "To round off to three decimal places, count three places after the decimal and place a | between the third and fourth numbers.",
+     "anchor": "b00121",
+     "printed_page": 12,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "count three places after the decimal and place a $|$ between the third and fourth numbers",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m1s4-1-1",
+     "type": "convention",
+     "text": "When rounding to three decimal places, round up the third digit if the fourth digit is greater than or equal to 5.",
+     "anchor": "b00121",
+     "printed_page": 12,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "round up the third digit if the fourth digit is greater than or equal to $\\text{5}$",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m1s4-1-1",
+     "type": "convention",
+     "text": "When rounding to three decimal places, leave the third digit unchanged if the fourth digit is less than 5.",
+     "anchor": "b00121",
+     "printed_page": 12,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "leave the third digit unchanged if the fourth digit is less than $\\text{5}$",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m1s4-1-1",
+     "type": "method",
+     "text": "If the third digit is 9 and needs to be rounded up, the 9 becomes a 0 and the second digit is rounded up.",
+     "anchor": "b00121",
+     "printed_page": 12,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "if the third digit is $\\text{9}$ and needs to be rounded up, then the $\\text{9}$ becomes a $\\text{0}$ and the second digit is rounded up",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m1s4-1-1",
+     "type": "method",
+     "text": "The first digit after the | decides the rounding: since it is a 5, the digit in the third decimal place is rounded up, so 2,6525272 rounded to three decimal places is 2,653.",
+     "anchor": "b00122",
+     "printed_page": 12,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "since the first digit after the $|$ is a $\\text{5,}$ we must round up the digit in the third decimal place to a $\\text{3}$",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m1s4-1-1",
+     "type": "method",
+     "text": "The first step of the worked-example method is to mark off the required number of decimal places.",
+     "anchor": "WE4",
+     "printed_page": 13,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "Mark off the required number of decimal places",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m1s4-1-1",
+     "type": "method",
+     "text": "If the number is not a decimal, first write the number as a decimal before marking off the decimal places.",
+     "anchor": "WE4",
+     "printed_page": 13,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "If the number is not a decimal you first need to write the number as a decimal.",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m1s4-1-1",
+     "type": "method",
+     "text": "A fraction such as 120/99 is written as a decimal and marked off at the required place: 120/99 = 1,212|121212... for three decimal places.",
+     "anchor": "WE4",
+     "printed_page": 13,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "$\\dfrac{120}{99}=\\text{1,212}|121212\\ldots$",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m1s4-1-1",
+     "type": "method",
+     "text": "An irrational number such as pi is written as a decimal and marked off at the required place: pi = 3,1415|92653... for four decimal places.",
+     "anchor": "WE4",
+     "printed_page": 13,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "$\\pi=\\text{3,1415}|92653\\ldots$",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m1s4-1-1",
+     "type": "method",
+     "text": "The second step is to check the next digit, the one after the |, to see whether the last digit must be rounded up or rounded down.",
+     "anchor": "WE4",
+     "printed_page": 13,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "Check the next digit to see if you must round up or round down",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m1s4-1-1",
+     "type": "method",
+     "text": "The last step is to write the final answer, stating the number of decimal places it is rounded to, for example 120/99 = 1,212 rounded to 3 decimal places.",
+     "anchor": "WE4",
+     "printed_page": 13,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "$\\frac{120}{99}=\\text{1,212}$ rounded to $\\text{3}$ decimal places.",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m1s4-1-1",
+     "type": "method",
+     "text": "For 120/99 = 1,212|121212..., the last digit is rounded down, giving 1,212 to 3 decimal places.",
+     "anchor": "WE4",
+     "printed_page": 13,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "The last digit of $\\frac{120}{99}=\\text{1,212}|121212\\dot{1}\\dot{2}$ must be rounded down.",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m1s4-1-1",
+     "type": "method",
+     "text": "For pi = 3,1415|92653..., the last digit is rounded up, giving 3,1416 to 4 decimal places.",
+     "anchor": "WE4",
+     "printed_page": 13,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "The last digit of $\\pi=\\text{3,1415}|92653\\ldots$ must be rounded up.",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m1s4-1-1",
+     "type": "method",
+     "text": "For the square root of 3 = 1,7320|508..., the last digit is rounded up, giving 1,7321 to 4 decimal places.",
+     "anchor": "WE4",
+     "printed_page": 13,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "The last digit of $\\sqrt{3}=\\text{1,7320}|\\text{508}\\ldots$ must be rounded up.",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m1s4-1-1",
+     "type": "method",
+     "text": "For 2,789|74526 the last digit is rounded up; since it is a 9 it is replaced with a 0 and the second last digit is rounded up, giving 2,790 to 3 decimal places.",
+     "anchor": "WE4",
+     "printed_page": 13,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "Since this is a $\\text{9}$ we replace it with a $\\text{0}$ and round up the second last digit.",
+     "provenance": "containment"
+    }
+   ],
+   "claims_dropped": [],
+   "items": [
+    {
+     "ref": "WE4",
+     "kind": "worked_example",
+     "lo": "lo:g10m1s4-1-1",
+     "stem": "Round off the following numbers to the indicated number of decimal places: $\\frac{120}{99}=\\text{1,}\\dot{1}\\dot{2}$ to $\\text{3}$ decimal places. $\\pi=\\text{3,141592653...}$ to $\\text{4}$ decimal places. $\\sqrt{3}=\\text{1,7320508...}$ to $\\text{4}$ decimal places. $\\text{2,78974526}$ to $\\text{3}$ decimal places.",
+     "answer_type": "not_markable",
+     "answer": null,
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "Mark off the required number of decimal places: If the number is not a decimal you first need to write the number as a decimal. $\\dfrac{120}{99}=\\text{1,212}|121212\\ldots$ $\\pi=\\text{3,1415}|92653\\ldots$ $\\sqrt{3}=\\text{1,7320}|\\text{508}\\ldots$ $\\text{2,789}|74526$",
+      "Check the next digit to see if you must round up or round down: The last digit of $\\frac{120}{99}=\\text{1,212}|121212\\dot{1}\\dot{2}$ must be rounded down. The last digit of $\\pi=\\text{3,1415}|92653\\ldots$ must be rounded up. The last digit of $\\sqrt{3}=\\text{1,7320}|\\text{508}\\ldots$ must be rounded up. The last digit of $\\text{2,789}|74526$ must be rounded up. Since this is a $\\text{9}$ we replace it with a $\\text{0}$ and round up the second last digit.",
+      "Write the final answer: $\\frac{120}{99}=\\text{1,212}$ rounded to $\\text{3}$ decimal places. $\\pi=\\text{3,1416}$ rounded to $\\text{4}$ decimal places. $\\sqrt{3}=\\text{1,7321}$ rounded to $\\text{4}$ decimal places. $\\text{2,790}$"
+     ],
+     "solution_provenance": "book_worked",
+     "printed_answer": null,
+     "epub_final_answer": null,
+     "blind_answer": "1{,}212;\\ 3{,}1416;\\ 1{,}7321;\\ 2{,}790",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 13,
+     "shortcode": null,
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "WE4|blind~book",
+        "route": "not_markable",
+        "verdict": "equivalent",
+        "reason": "typed not markable: nothing is marked, so the book's final is not compared"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": "worked example demonstrating rounding method for multiple numbers, no single markable answer",
+     "tier_source": "typing",
+     "printed_answer_scope": null,
+     "figures": [],
+     "figures_missing": [],
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-2:1a",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-1",
+     "stem": "Round off the following to $\\text{3}$ decimal places: $\\text{12,56637061...}$",
+     "answer_type": "numeric",
+     "answer": "12,566",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "Mark off the required number of decimal places: $\\text{12,566}|37061\\ldots$ . The next digit is a $\\text{3}$ and so we round down: $\\text{12,566}$ ."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "12,566",
+     "epub_final_answer": "12,566",
+     "blind_answer": "12{,}566",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 13,
+     "shortcode": "2DD9",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-2:1a|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-2:1a|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-2:1a|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-2:1b",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-1",
+     "stem": "Round off the following to $\\text{3}$ decimal places: $\\text{3,31662479...}$",
+     "answer_type": "numeric",
+     "answer": "3,317",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "Mark off the required number of decimal places: $\\text{3,316}|62479\\ldots$ . The next digit is a $\\text{6}$ and so we round up: $\\text{3,317}$ ."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "3,317",
+     "epub_final_answer": "3,317",
+     "blind_answer": "3{,}317",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 13,
+     "shortcode": "2DDB",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-2:1b|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-2:1b|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-2:1b|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-2:1c",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-1",
+     "stem": "Round off the following to $\\text{3}$ decimal places: $\\text{0,2666666...}$",
+     "answer_type": "numeric",
+     "answer": "0,267",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "Mark off the required number of decimal places: $\\text{0,266}|6666\\ldots$ . The next digit is a $\\text{6}$ and so we round up: $\\text{0,267}$ ."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "0,267",
+     "epub_final_answer": "0,267",
+     "blind_answer": "0{,}267",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 13,
+     "shortcode": "2DDC",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-2:1c|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-2:1c|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-2:1c|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-2:1d",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-1",
+     "stem": "Round off the following to $\\text{3}$ decimal places: $\\text{1,912931183...}$",
+     "answer_type": "numeric",
+     "answer": "1,913",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "Mark off the required number of decimal places: $\\text{1,912}|931183\\ldots$ . The next digit is a $\\text{9}$ and so we round up: $\\text{1,913}$ ."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "1,913",
+     "epub_final_answer": "1,913",
+     "blind_answer": "1{,}913",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 13,
+     "shortcode": "2DDD",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-2:1d|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-2:1d|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-2:1d|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-2:1e",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-1",
+     "stem": "Round off the following to $\\text{3}$ decimal places: $\\text{6,32455532...}$",
+     "answer_type": "numeric",
+     "answer": "6,325",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "Mark off the required number of decimal places: $\\text{6,324}|55532\\ldots$ . The next digit is a $\\text{5}$ and so we round up: $\\text{6,325}$ ."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "6,325",
+     "epub_final_answer": "6,325",
+     "blind_answer": "6{,}325",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 13,
+     "shortcode": "2DDF",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-2:1e|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-2:1e|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-2:1e|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-2:1f",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-1",
+     "stem": "Round off the following to $\\text{3}$ decimal places: $\\text{0,05555555...}$",
+     "answer_type": "numeric",
+     "answer": "0,056",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "Mark off the required number of decimal places: $\\text{0,055}|55555\\ldots$ . The next digit is a $\\text{5}$ and so we round up: $\\text{0,056}$ ."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "0,056",
+     "epub_final_answer": "0,056",
+     "blind_answer": "0{,}056",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 13,
+     "shortcode": "2DDG",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-2:1f|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-2:1f|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-2:1f|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-2:2a",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-1",
+     "stem": "Round off each of the following to the indicated number of decimal places: $\\text{345,04399906}$ to $\\text{4}$ decimal places.",
+     "answer_type": "numeric",
+     "answer": "345,0440",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "$\\text{345,04399906}\\approx\\text{345,0440}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "345,0440",
+     "epub_final_answer": "345,0440",
+     "blind_answer": "345{,}0440",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 13,
+     "shortcode": "2DDH",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-2:2a|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-2:2a|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-2:2a|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-2:2b",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-1",
+     "stem": "Round off each of the following to the indicated number of decimal places: $\\text{1361,72980445}$ to $\\text{2}$ decimal places.",
+     "answer_type": "numeric",
+     "answer": "1361,73",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "$\\text{1361,72980445}\\approx\\text{1361,73}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "1361,73",
+     "epub_final_answer": "1361,73",
+     "blind_answer": "1361{,}73",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 13,
+     "shortcode": "2DDJ",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-2:2b|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-2:2b|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-2:2b|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-2:2c",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-1",
+     "stem": "Round off each of the following to the indicated number of decimal places: $\\text{728,00905239}$ to $\\text{6}$ decimal places.",
+     "answer_type": "numeric",
+     "answer": "728,009052",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "$\\text{728,00905239}\\approx\\text{728,009052}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "728,009052",
+     "epub_final_answer": "728,009052",
+     "blind_answer": "728{,}009052",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 13,
+     "shortcode": "2DDK",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-2:2c|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-2:2c|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-2:2c|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-2:2d",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-1",
+     "stem": "Round off each of the following to the indicated number of decimal places: $\\dfrac{1}{27}$ to $\\text{4}$ decimal places.",
+     "answer_type": "numeric",
+     "answer": "0,0370",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "We first write the fraction as a decimal and then we can round off.",
+      "$\\begin{align*}\\frac{1}{27}&=\\text{0,037037...}\\\\&\\approx\\text{0,0370}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "0,0370",
+     "epub_final_answer": "0,0370",
+     "blind_answer": "0{,}0370",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 13,
+     "shortcode": "2DDM",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-2:2d|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-2:2d|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-2:2d|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "tier check",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-2:2e",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-1",
+     "stem": "Round off each of the following to the indicated number of decimal places: $\\frac{45}{99}$ to $\\text{5}$ decimal places.",
+     "answer_type": "numeric",
+     "answer": "0,45455",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "We first write the fraction as a decimal and then we can round off.",
+      "$\\begin{align*}\\frac{45}{99}&=\\text{0,45454545...}\\\\&\\approx\\text{0,45455}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "0,45455",
+     "epub_final_answer": "0,45455",
+     "blind_answer": "0{,}45455",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 13,
+     "shortcode": "2DDN",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-2:2e|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-2:2e|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-2:2e|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-2:2f",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-1",
+     "stem": "Round off each of the following to the indicated number of decimal places: $\\dfrac{1}{12}$ to $\\text{2}$ decimal places.",
+     "answer_type": "numeric",
+     "answer": "0,08",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "We first write the fraction as a decimal and then we can round off.",
+      "$\\begin{align*}\\frac{1}{12}&=\\text{0,08333...}\\\\&\\approx\\text{0,08}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "0,08",
+     "epub_final_answer": "0,08",
+     "blind_answer": "0{,}08",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 13,
+     "shortcode": "2DDP",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-2:2f|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-2:2f|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-2:2f|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-2:3a",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-2",
+     "stem": "Study the diagram below [figure] Calculate the area of $ABDE$ to $\\text{2}$ decimal places.",
+     "answer_type": "numeric",
+     "answer": "9,87",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "$ABDE$ is a square and so the area is just the length squared.",
+      "$\\begin{align*}A&=l^{2}\\\\&=\\pi^2\\\\&=\\text{9,86904...}\\\\&\\approx\\text{9,87}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "9,87",
+     "epub_final_answer": "9,87",
+     "blind_answer": "9{,}87",
+     "verification": "agreed",
+     "tier": "advanced",
+     "printed_page": 14,
+     "shortcode": "2DDQ",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-2:3a|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-2:3a|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-2:3a|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [
+      "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__4c51f3c776ad8f9abf6706b63943779f.png"
+     ],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": true
+    },
+    {
+     "ref": "Ex1-2:3b",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-2",
+     "stem": "Study the diagram below [figure] Calculate the area of $BCD$ to $\\text{2}$ decimal places.",
+     "answer_type": "numeric",
+     "answer": "4,93",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "$BCD$ is a right-angled triangle and so we have the perpendicular height. The area is:",
+      "$\\begin{align*}A&=\\frac{1}{2}bh\\\\&=\\frac{1}{2}\\pi^2\\\\&=\\text{4,934802...}\\\\&\\approx\\text{4,93}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "4,93",
+     "epub_final_answer": "4,93",
+     "blind_answer": "4{,}93",
+     "verification": "agreed",
+     "tier": "advanced",
+     "printed_page": 14,
+     "shortcode": "2DDQ",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-2:3b|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-2:3b|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-2:3b|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [
+      "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__4c51f3c776ad8f9abf6706b63943779f.png"
+     ],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-2:3c",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-2",
+     "stem": "Study the diagram below [figure] Using you answers in (a) and (b) calculate the area of $ABCDE$ .",
+     "answer_type": "numeric",
+     "answer": "14,80",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "The area of $ABCDE$ is the sum of the areas of $ABDE$ and $BCD$ .",
+      "$\\begin{align*}A&=\\text{9,87}+\\text{4,93}\\\\&\\approx\\text{14,80}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "14,80",
+     "epub_final_answer": "14,80",
+     "blind_answer": "14{,}80",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 14,
+     "shortcode": "2DDQ",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-2:3c|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-2:3c|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-2:3c|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [
+      "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__4c51f3c776ad8f9abf6706b63943779f.png"
+     ],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-2:3d",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-2",
+     "stem": "Study the diagram below [figure] Without rounding off, what is the area of $ABCDE$ ?",
+     "answer_type": "numeric",
+     "answer": "14,8044...",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "$\\begin{align*}A_{ABCDE}&=A_{ABDE}+A_{BCD}\\\\&=l^{2}+\\frac{1}{2}bh\\\\&=\\pi^2+\\frac{1}{2}\\pi^2\\\\&=\\text{14,8044...}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "14,8044...",
+     "epub_final_answer": "14,8044...",
+     "blind_answer": "\\frac{3\\pi^2}{2}",
+     "verification": "agreed",
+     "tier": "advanced",
+     "printed_page": 14,
+     "shortcode": "2DDQ",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-2:3d|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "3pi^2/2 = 14.80440..., which matches 14,8044... (unrounded decimal shown with an ellipsis)."
+       },
+       {
+        "pair_id": "Ex1-2:3d|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "3pi^2/2 = 14.80440..., which matches 14,8044... (unrounded decimal shown with an ellipsis)."
+       },
+       {
+        "pair_id": "Ex1-2:3d|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [
+      "numeric key \"14,8044...\" is not a number"
+     ],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [
+      "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__4c51f3c776ad8f9abf6706b63943779f.png"
+     ],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-2:4a",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-2",
+     "stem": "Given $i=\\frac{r}{600}$ ; $r=\\text{7,4}$ ; $n=96$ ; $P=\\text{200\\ 000}$ . Calculate $i$ correct to $\\text{2}$ decimal places.",
+     "answer_type": "numeric",
+     "answer": "0,01",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "$\\begin{align*}i&=\\frac{r}{600}\\\\&=\\frac{\\text{7,4}}{600}\\\\&=\\text{0,01233}\\\\&\\approx\\text{0,01}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "0,01",
+     "epub_final_answer": "0,01",
+     "blind_answer": "i \\approx 0,01",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 14,
+     "shortcode": "2DDR",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-2:4a|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-2:4a|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-2:4a|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-2:4b",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-2",
+     "stem": "Given $i=\\frac{r}{600}$ ; $r=\\text{7,4}$ ; $n=96$ ; $P=\\text{200\\ 000}$ . Using you answer from (a), calculate $A$ in $A=P(1+i)^n$ .",
+     "answer_type": "numeric",
+     "answer": "519 854,59",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "$\\begin{align*}A&=P(1+i)^{n}\\\\&=\\text{200 000}\\left(1+\\text{0,01}\\right)^{96}\\\\&=\\text{519 854,59}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "519 854,59",
+     "epub_final_answer": "519 854,59",
+     "blind_answer": "A = \\text{R}\\,519\\,854,59",
+     "verification": "agreed",
+     "tier": "advanced",
+     "printed_page": 14,
+     "shortcode": "2DDR",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-2:4b|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same number 519 854,59; answer 1 only adds the currency symbol R."
+       },
+       {
+        "pair_id": "Ex1-2:4b|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same number 519 854,59; answer 1 only adds the currency symbol R."
+       },
+       {
+        "pair_id": "Ex1-2:4b|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-2:4c",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-2",
+     "stem": "Given $i=\\frac{r}{600}$ ; $r=\\text{7,4}$ ; $n=96$ ; $P=\\text{200\\ 000}$ . Calculate $A$ without rounding off your answer in (a), compare this answer with your answer in (b).",
+     "answer_type": "numeric",
+     "answer": "648 768,22",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "$\\begin{align*}A&=P(1+i)^n\\\\A&=\\text{200 000}\\left(1+\\frac{\\text{7,4}}{600}\\right)^{96}\\\\&=\\text{648 768,22}\\end{align*}$",
+      "There is a $\\text{128\\ 913,63}$ difference between the answer in (b) and the one calculated without rounding until the final step."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "648 768,22",
+     "epub_final_answer": "648 768,22",
+     "blind_answer": "A = 648\\,768,22 ; the unrounded i gives an answer about 128\\,913,63 larger than the answer in (b)",
+     "verification": "agreed",
+     "tier": "advanced",
+     "printed_page": 14,
+     "shortcode": "2DDR",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-2:4c|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same value A = 648 768,22. Answer 1 also states the comparison, which is consistent: 648768.22 - 519854.59 = 128913.63."
+       },
+       {
+        "pair_id": "Ex1-2:4c|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same value A = 648 768,22. Answer 1 also states the comparison, which is consistent: 648768.22 - 519854.59 = 128913.63."
+       },
+       {
+        "pair_id": "Ex1-2:4c|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-2:5",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-2",
+     "stem": "If it takes $\\text{1}$ person to carry $\\text{3}$ boxes, how many people are needed to carry $\\text{31}$ boxes?",
+     "answer_type": "numeric",
+     "answer": "11",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "Each person can carry 3 boxes. So we need to divide 31 by 3 to find out how many people are needed to carry 31 boxes.",
+      "$\\frac{31}{3}=\\text{10,3333...}$",
+      "Therefore $\\text{11}$ people are needed to carry $\\text{31}$ boxes. We cannot have $\\text{0,333}$ of a person so we round up to the nearest whole number."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "11",
+     "epub_final_answer": "11",
+     "blind_answer": "11",
+     "verification": "agreed",
+     "tier": "advanced",
+     "printed_page": 14,
+     "shortcode": "2DDS",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-2:5|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-2:5|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-2:5|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-2:6",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-2",
+     "stem": "If $\\text{7}$ tickets cost $\\text{R35,20}$ , how much does one ticket cost?",
+     "answer_type": "numeric",
+     "answer": "5,03",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "Since 7 tickets cost $\\text{R35,20}$ , 1 ticket must cost $\\text{R35,20}$ divided by 7.",
+      "$\\frac{\\text{35,20}}{7}=\\text{5,028571429}\\\\$",
+      "Therefore one ticket costs $\\text{R5,03}$ . Money should be rounded off to $\\text{2}$ decimal places."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "R 5,03",
+     "epub_final_answer": "5,03",
+     "blind_answer": "\\text{R}5,03",
+     "verification": "agreed",
+     "tier": "advanced",
+     "printed_page": 14,
+     "shortcode": "2DDT",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-2:6|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-2:6|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "35,20/7 = 5,03 (to the nearest cent); both give 5,03, one with the R symbol."
+       },
+       {
+        "pair_id": "Ex1-2:6|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both 5,03; one has the currency prefix R."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": "R",
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "tier check",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:11a",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-1",
+     "stem": "Write the following rational numbers to 2 decimal places. $\\frac{1}{2}$",
+     "answer_type": "numeric",
+     "answer": "0,50",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "To write to two decimal places we must convert to decimal: $\\frac{1}{2}=\\text{0,50}$ ."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "0,50",
+     "epub_final_answer": "0,50",
+     "blind_answer": "0,50",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 37,
+     "shortcode": "2DS5",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:11a|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:11a|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:11a|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:11b",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-1",
+     "stem": "Write the following rational numbers to 2 decimal places. $\\text{1}$",
+     "answer_type": "numeric",
+     "answer": "1,00",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "To write to two decimal places just add a comma and two $\\text{0}$ 's: $\\text{1,00}$ ."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "1,00",
+     "epub_final_answer": "1,00",
+     "blind_answer": "1,00",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 37,
+     "shortcode": "2DS6",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:11b|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:11b|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:11b|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:11c",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-1",
+     "stem": "Write the following rational numbers to 2 decimal places. $\\text{0,11111}\\bar{1}$",
+     "answer_type": "numeric",
+     "answer": "0,11",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "We mark where the cut off point is, determine if it has to be rounded up or not and then write the answer. In this case there is a $\\text{1}$ after the cut off point so we do not round up. The final answer is: $\\text{0,11111}\\overline{1}\\approx\\text{0,11}$ ."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "0,11",
+     "epub_final_answer": "0,11",
+     "blind_answer": "0,11",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 37,
+     "shortcode": "2DS7",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:11c|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:11c|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:11c|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:11d",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-1",
+     "stem": "Write the following rational numbers to 2 decimal places. $\\text{0,99999}\\bar{1}$",
+     "answer_type": "numeric",
+     "answer": "1,00",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "We mark where the cut off point is, determine if it has to be rounded up or not and then write the answer. In this case there is a $\\text{9}$ after the cut off point so we round up. The final answer is: $\\text{0,99999}\\overline{1}\\approx\\text{1,00}$ ."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "1,00",
+     "epub_final_answer": "1,00",
+     "blind_answer": "1,00",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 37,
+     "shortcode": "2DS8",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:11d|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:11d|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:11d|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:12a",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-1",
+     "stem": "Round off the following irrational numbers to 3 decimal places. $\\text{3,141592654...}$",
+     "answer_type": "numeric",
+     "answer": "3,142",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "$\\text{3,142}$ (round up as there is a $\\text{5}$ after the cut off point)."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "3,142",
+     "epub_final_answer": "3,142",
+     "blind_answer": "3,142",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 37,
+     "shortcode": "2DS9",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:12a|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:12a|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:12a|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:12b",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-1",
+     "stem": "Round off the following irrational numbers to 3 decimal places. $\\text{1,618033989...}$",
+     "answer_type": "numeric",
+     "answer": "1,618",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "$\\text{1,618}$ (no rounding as there is a $\\text{0}$ after the cut off point)."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "1,618",
+     "epub_final_answer": "1,618",
+     "blind_answer": "1,618",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 37,
+     "shortcode": "2DSB",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:12b|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:12b|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:12b|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:12c",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-1",
+     "stem": "Round off the following irrational numbers to 3 decimal places. $\\text{1,41421356...}$",
+     "answer_type": "numeric",
+     "answer": "1,414",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "$\\text{1,414}$ (no rounding as there is a $\\text{2}$ after the cut off point)."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "1,414",
+     "epub_final_answer": "1,414",
+     "blind_answer": "1,414",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 37,
+     "shortcode": "2DSC",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:12c|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:12c|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:12c|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:12d",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-1",
+     "stem": "Round off the following irrational numbers to 3 decimal places. $\\text{2,71828182845904523536...}$",
+     "answer_type": "numeric",
+     "answer": "2,718",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "$\\text{2,718}$ (no rounding as there is a $\\text{2}$ after the cut off point)."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "2,718",
+     "epub_final_answer": "2,718",
+     "blind_answer": "2,718",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 37,
+     "shortcode": "2DSD",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:12d|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:12d|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:12d|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:13",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-1",
+     "stem": "Round off the number $\\text{1523,00195593}$ to $\\text{4}$ decimal places.",
+     "answer_type": "numeric",
+     "answer": "1523,0020",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "$\\text{1523,00195593}\\approx\\text{1523,0020}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "1523,0020",
+     "epub_final_answer": "1523,0020",
+     "blind_answer": "1523,0020",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 37,
+     "shortcode": "2DSF",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:13|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:13|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:13|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:14",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-1",
+     "stem": "Round off the number $\\text{1982,94028996}$ to $\\text{6}$ decimal places.",
+     "answer_type": "numeric",
+     "answer": "1982,940290",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "$\\text{1982,94028996}\\approx\\text{1982,940290}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "1982,940290",
+     "epub_final_answer": "1982,940290",
+     "blind_answer": "1982,940290",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 37,
+     "shortcode": "2DSG",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:14|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:14|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:14|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:15",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-1",
+     "stem": "Round off the number $\\text{101,52378984}$ to $\\text{4}$ decimal places.",
+     "answer_type": "numeric",
+     "answer": "101,5238",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "$\\text{101,52378984}\\approx\\text{101,5238}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "101,5238",
+     "epub_final_answer": "101,5238",
+     "blind_answer": "\\text{101,5238}",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 37,
+     "shortcode": "2DSH",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:15|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:15|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:15|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:16a",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-1",
+     "stem": "Use your calculator and write the following irrational numbers to 3 decimal places. $\\sqrt{2}$",
+     "answer_type": "numeric",
+     "answer": "1,414",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "$\\sqrt{2}\\approx\\text{1,414213562...}\\approx\\text{1,414}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "1,414",
+     "epub_final_answer": "1,414",
+     "blind_answer": "\\text{1,414}",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 37,
+     "shortcode": "2DSJ",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:16a|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:16a|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:16a|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:16b",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-1",
+     "stem": "Use your calculator and write the following irrational numbers to 3 decimal places. $\\sqrt{3}$",
+     "answer_type": "numeric",
+     "answer": "1,732",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "$\\sqrt{3}\\approx\\text{1,732050808...}\\approx\\text{1,732}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "1,732",
+     "epub_final_answer": "1,732",
+     "blind_answer": "\\text{1,732}",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 37,
+     "shortcode": "2DSK",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:16b|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:16b|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:16b|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:16c",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-1",
+     "stem": "Use your calculator and write the following irrational numbers to 3 decimal places. $\\sqrt{5}$",
+     "answer_type": "numeric",
+     "answer": "2,236",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "$\\sqrt{5}\\approx\\text{2,236067977...}\\approx\\text{2,236}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "2,236",
+     "epub_final_answer": "2,236",
+     "blind_answer": "\\text{2,236}",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 37,
+     "shortcode": "2DSM",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:16c|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:16c|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:16c|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:16d",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-1",
+     "stem": "Use your calculator and write the following irrational numbers to 3 decimal places. $\\sqrt{6}$",
+     "answer_type": "numeric",
+     "answer": "2,449",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "$\\sqrt{6}\\approx\\text{2,449489743...}\\approx\\text{2,449}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "2,449",
+     "epub_final_answer": "2,449",
+     "blind_answer": "\\text{2,449}",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 37,
+     "shortcode": "2DSN",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:16d|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:16d|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:16d|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:17a",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-1",
+     "stem": "Use your calculator (where necessary) and write the following numbers to 5 decimal places. State whether the numbers are irrational or rational. $\\sqrt{8}$",
+     "answer_type": "choice",
+     "answer": "A",
+     "choices": [
+      {
+       "key": "A",
+       "text": "Irrational number"
+      },
+      {
+       "key": "B",
+       "text": "Rational number"
+      }
+     ],
+     "marker": null,
+     "solution": [
+      "$\\sqrt{8}\\approx\\text{2,828427125...}\\approx\\text{2,82843}$",
+      "Irrational number."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "Irrational number.",
+     "epub_final_answer": "Irrational number.",
+     "blind_answer": "\\text{2,82843}; irrational",
+     "verification": "disputed",
+     "tier": "standard",
+     "printed_page": 37,
+     "shortcode": "2DSP",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:17a|blind~printed",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "The problem asks for sqrt8 to 5 d.p. and a classification. Answer 1 gives 2,82843 (correct) and irrational. Answer 2 gives only the classification, which agrees, but no 5 d.p. value."
+       },
+       {
+        "pair_id": "Ex1-11:17a|blind~book",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "The problem asks for sqrt8 to 5 d.p. and a classification. Answer 1 gives 2,82843 (correct) and irrational. Answer 2 gives only the classification, which agrees, but no 5 d.p. value."
+       },
+       {
+        "pair_id": "Ex1-11:17a|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": "lesson",
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:17b",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-1",
+     "stem": "Use your calculator (where necessary) and write the following numbers to 5 decimal places. State whether the numbers are irrational or rational. $\\sqrt{768}$",
+     "answer_type": "choice",
+     "answer": "A",
+     "choices": [
+      {
+       "key": "A",
+       "text": "Irrational number"
+      },
+      {
+       "key": "B",
+       "text": "Rational number"
+      }
+     ],
+     "marker": null,
+     "solution": [
+      "$\\sqrt{768}\\approx\\text{27,71281292...}\\approx\\text{27,71281}$",
+      "Irrational number."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "Irrational number.",
+     "epub_final_answer": "Irrational number.",
+     "blind_answer": "\\text{27,71281}; irrational",
+     "verification": "disputed",
+     "tier": "standard",
+     "printed_page": 37,
+     "shortcode": "2DSQ",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:17b|blind~printed",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "The problem asks for sqrt768 to 5 d.p. and a classification. Answer 1 gives 27,71281 (correct) and irrational. Answer 2 gives only the classification, which agrees, but no 5 d.p. value."
+       },
+       {
+        "pair_id": "Ex1-11:17b|blind~book",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "The problem asks for sqrt768 to 5 d.p. and a classification. Answer 1 gives 27,71281 (correct) and irrational. Answer 2 gives only the classification, which agrees, but no 5 d.p. value."
+       },
+       {
+        "pair_id": "Ex1-11:17b|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": "lesson",
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:17c",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-1",
+     "stem": "Use your calculator (where necessary) and write the following numbers to 5 decimal places. State whether the numbers are irrational or rational. $\\sqrt{\\text{0,49}}$",
+     "answer_type": "choice",
+     "answer": "B",
+     "choices": [
+      {
+       "key": "A",
+       "text": "Irrational number"
+      },
+      {
+       "key": "B",
+       "text": "Rational number"
+      }
+     ],
+     "marker": null,
+     "solution": [
+      "$\\sqrt{\\text{0,49}}=\\text{0,70000}$",
+      "Rational number."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "Rational number.",
+     "epub_final_answer": "Rational number.",
+     "blind_answer": "\\text{0,70000}; rational",
+     "verification": "disputed",
+     "tier": "standard",
+     "printed_page": 37,
+     "shortcode": "2DSR",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:17c|blind~printed",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "The problem asks for sqrt(0,49) to 5 d.p. and a classification. Answer 1 gives 0,70000 and rational (correct). Answer 2 gives only the classification, which agrees, but no 5 d.p. value."
+       },
+       {
+        "pair_id": "Ex1-11:17c|blind~book",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "The problem asks for sqrt(0,49) to 5 d.p. and a classification. Answer 1 gives 0,70000 and rational (correct). Answer 2 gives only the classification, which agrees, but no 5 d.p. value."
+       },
+       {
+        "pair_id": "Ex1-11:17c|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": "lesson",
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:17d",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-1",
+     "stem": "Use your calculator (where necessary) and write the following numbers to 5 decimal places. State whether the numbers are irrational or rational. $\\sqrt{\\text{0,0016}}$",
+     "answer_type": "choice",
+     "answer": "B",
+     "choices": [
+      {
+       "key": "A",
+       "text": "Irrational number"
+      },
+      {
+       "key": "B",
+       "text": "Rational number"
+      }
+     ],
+     "marker": null,
+     "solution": [
+      "$\\sqrt{\\text{0,0016}}=\\text{0,04000}$",
+      "Rational number."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "Rational number.",
+     "epub_final_answer": "Rational number.",
+     "blind_answer": "\\text{0,04000}; rational",
+     "verification": "disputed",
+     "tier": "standard",
+     "printed_page": 37,
+     "shortcode": "2DSS",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:17d|blind~printed",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "The problem asks for sqrt(0,0016) to 5 d.p. and a classification. Answer 1 gives 0,04000 and rational (correct). Answer 2 gives only the classification, which agrees, but no 5 d.p. value."
+       },
+       {
+        "pair_id": "Ex1-11:17d|blind~book",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "The problem asks for sqrt(0,0016) to 5 d.p. and a classification. Answer 1 gives 0,04000 and rational (correct). Answer 2 gives only the classification, which agrees, but no 5 d.p. value."
+       },
+       {
+        "pair_id": "Ex1-11:17d|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": "lesson",
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:17e",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-1",
+     "stem": "Use your calculator (where necessary) and write the following numbers to 5 decimal places. State whether the numbers are irrational or rational. $\\sqrt{\\text{0,25}}$",
+     "answer_type": "choice",
+     "answer": "B",
+     "choices": [
+      {
+       "key": "A",
+       "text": "Irrational number"
+      },
+      {
+       "key": "B",
+       "text": "Rational number"
+      }
+     ],
+     "marker": null,
+     "solution": [
+      "$\\sqrt{\\text{0,25}}=\\text{0,50000}$",
+      "Rational number."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "Rational number.",
+     "epub_final_answer": "Rational number.",
+     "blind_answer": "\\text{0,50000}; rational",
+     "verification": "disputed",
+     "tier": "standard",
+     "printed_page": 37,
+     "shortcode": "2DST",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:17e|blind~printed",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "The problem asks for sqrt(0,25) to 5 d.p. and a classification. Answer 1 gives 0,50000 and rational (correct). Answer 2 gives only the classification, which agrees, but no 5 d.p. value."
+       },
+       {
+        "pair_id": "Ex1-11:17e|blind~book",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "The problem asks for sqrt(0,25) to 5 d.p. and a classification. Answer 1 gives 0,50000 and rational (correct). Answer 2 gives only the classification, which agrees, but no 5 d.p. value."
+       },
+       {
+        "pair_id": "Ex1-11:17e|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": "lesson",
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:17f",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-1",
+     "stem": "Use your calculator (where necessary) and write the following numbers to 5 decimal places. State whether the numbers are irrational or rational. $\\sqrt{36}$",
+     "answer_type": "choice",
+     "answer": "B",
+     "choices": [
+      {
+       "key": "A",
+       "text": "Irrational number"
+      },
+      {
+       "key": "B",
+       "text": "Rational number"
+      }
+     ],
+     "marker": null,
+     "solution": [
+      "$\\sqrt{36}=\\text{6,00000}$",
+      "Rational number."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "Rational number.",
+     "epub_final_answer": "Rational number.",
+     "blind_answer": "\\text{6,00000}; rational",
+     "verification": "disputed",
+     "tier": "standard",
+     "printed_page": 37,
+     "shortcode": "2DSV",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:17f|blind~printed",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "The problem asks for sqrt36 to 5 d.p. and a classification. Answer 1 gives 6,00000 and rational (correct). Answer 2 gives only the classification, which agrees, but no 5 d.p. value."
+       },
+       {
+        "pair_id": "Ex1-11:17f|blind~book",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "The problem asks for sqrt36 to 5 d.p. and a classification. Answer 1 gives 6,00000 and rational (correct). Answer 2 gives only the classification, which agrees, but no 5 d.p. value."
+       },
+       {
+        "pair_id": "Ex1-11:17f|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": "lesson",
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:17g",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-1",
+     "stem": "Use your calculator (where necessary) and write the following numbers to 5 decimal places. State whether the numbers are irrational or rational. $\\sqrt{1960}$",
+     "answer_type": "choice",
+     "answer": "A",
+     "choices": [
+      {
+       "key": "A",
+       "text": "Irrational number"
+      },
+      {
+       "key": "B",
+       "text": "Rational number"
+      }
+     ],
+     "marker": null,
+     "solution": [
+      "$\\sqrt{1960}\\approx\\text{44,27188724...}\\approx\\text{44,27189}$",
+      "Irrational number."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "Irrational number.",
+     "epub_final_answer": "Irrational number.",
+     "blind_answer": "\\text{44,27189}; irrational",
+     "verification": "disputed",
+     "tier": "standard",
+     "printed_page": 37,
+     "shortcode": "2DSW",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:17g|blind~printed",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "The problem asks for sqrt1960 to 5 d.p. and a classification. Answer 1 gives 44,27189 (correct) and irrational. Answer 2 gives only the classification, which agrees, but no 5 d.p. value."
+       },
+       {
+        "pair_id": "Ex1-11:17g|blind~book",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "The problem asks for sqrt1960 to 5 d.p. and a classification. Answer 1 gives 44,27189 (correct) and irrational. Answer 2 gives only the classification, which agrees, but no 5 d.p. value."
+       },
+       {
+        "pair_id": "Ex1-11:17g|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": "lesson",
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:17h",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-1",
+     "stem": "Use your calculator (where necessary) and write the following numbers to 5 decimal places. State whether the numbers are irrational or rational. $\\sqrt{\\text{0,0036}}$",
+     "answer_type": "choice",
+     "answer": "B",
+     "choices": [
+      {
+       "key": "A",
+       "text": "Irrational number"
+      },
+      {
+       "key": "B",
+       "text": "Rational number"
+      }
+     ],
+     "marker": null,
+     "solution": [
+      "$\\sqrt{\\text{0,0036}}=\\text{0,06000}$",
+      "Rational number."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "Rational number.",
+     "epub_final_answer": "Rational number.",
+     "blind_answer": "\\text{0,06000}; rational",
+     "verification": "disputed",
+     "tier": "standard",
+     "printed_page": 37,
+     "shortcode": "2DSX",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:17h|blind~printed",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "The problem asks for sqrt(0,0036) to 5 d.p. and a classification. Answer 1 gives 0,06000 and rational (correct). Answer 2 gives only the classification, which agrees, but no 5 d.p. value."
+       },
+       {
+        "pair_id": "Ex1-11:17h|blind~book",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "The problem asks for sqrt(0,0036) to 5 d.p. and a classification. Answer 1 gives 0,06000 and rational (correct). Answer 2 gives only the classification, which agrees, but no 5 d.p. value."
+       },
+       {
+        "pair_id": "Ex1-11:17h|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": "lesson",
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:17i",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-1",
+     "stem": "Use your calculator (where necessary) and write the following numbers to 5 decimal places. State whether the numbers are irrational or rational. $-8\\sqrt{\\text{0,04}}$",
+     "answer_type": "choice",
+     "answer": "B",
+     "choices": [
+      {
+       "key": "A",
+       "text": "Irrational number"
+      },
+      {
+       "key": "B",
+       "text": "Rational number"
+      }
+     ],
+     "marker": null,
+     "solution": [
+      "$-8\\sqrt{\\text{0,04}}=-8(\\text{0,20000})=-\\text{1,60000}$",
+      "Rational number."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "Rational number.",
+     "epub_final_answer": "Rational number.",
+     "blind_answer": "-\\text{1,60000}; rational",
+     "verification": "disputed",
+     "tier": "standard",
+     "printed_page": 37,
+     "shortcode": "2DSY",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:17i|blind~printed",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "The problem asks for -8*sqrt(0,04) to 5 d.p. and a classification. Answer 1 gives -1,60000 and rational (correct). Answer 2 gives only the classification, which agrees, but no 5 d.p. value."
+       },
+       {
+        "pair_id": "Ex1-11:17i|blind~book",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "The problem asks for -8*sqrt(0,04) to 5 d.p. and a classification. Answer 1 gives -1,60000 and rational (correct). Answer 2 gives only the classification, which agrees, but no 5 d.p. value."
+       },
+       {
+        "pair_id": "Ex1-11:17i|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": "lesson",
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:17j",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-1",
+     "stem": "Use your calculator (where necessary) and write the following numbers to 5 decimal places. State whether the numbers are irrational or rational. $5\\sqrt{80}$",
+     "answer_type": "choice",
+     "answer": "A",
+     "choices": [
+      {
+       "key": "A",
+       "text": "Irrational number"
+      },
+      {
+       "key": "B",
+       "text": "Rational number"
+      }
+     ],
+     "marker": null,
+     "solution": [
+      "$5\\sqrt{80}\\approx5(\\text{8,94427191...})\\approx\\text{44,72136}$",
+      "Irrational number."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "Irrational number.",
+     "epub_final_answer": "Irrational number.",
+     "blind_answer": "\\text{44,72136}; irrational",
+     "verification": "disputed",
+     "tier": "standard",
+     "printed_page": 37,
+     "shortcode": "2DSZ",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:17j|blind~printed",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "The problem asks for 5*sqrt80 to 5 d.p. and a classification. Answer 1 gives 44,72136 (correct) and irrational. Answer 2 gives only the classification, which agrees, but no 5 d.p. value."
+       },
+       {
+        "pair_id": "Ex1-11:17j|blind~book",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "The problem asks for 5*sqrt80 to 5 d.p. and a classification. Answer 1 gives 44,72136 (correct) and irrational. Answer 2 gives only the classification, which agrees, but no 5 d.p. value."
+       },
+       {
+        "pair_id": "Ex1-11:17j|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": "lesson",
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:18a",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-1",
+     "stem": "Round off: $\\frac{\\sqrt{2}}{2}$ to the nearest $\\text{2}$ decimal places.",
+     "answer_type": "numeric",
+     "answer": "0,71",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "$\\begin{align*}\\frac{\\sqrt{2}}{2}&\\approx\\text{0,7071...}\\\\&\\approx\\text{0,71}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "0,71",
+     "epub_final_answer": "0,71",
+     "blind_answer": "\\text{0,71}",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 37,
+     "shortcode": "2DT2",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:18a|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:18a|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:18a|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:18b",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-1",
+     "stem": "Round off: $\\sqrt{14}$ to the nearest $\\text{3}$ decimal places.",
+     "answer_type": "numeric",
+     "answer": "3,742",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "$\\begin{align*}\\sqrt{14}&\\approx\\text{3,741657...}\\\\&\\approx\\text{3,742}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "3,742",
+     "epub_final_answer": "3,742",
+     "blind_answer": "3,742",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 37,
+     "shortcode": "2DT3",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:18b|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:18b|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex1-11:18b|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:19a",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-1",
+     "stem": "Write the following irrational numbers to 3 decimal places and then write each one as a rational number to get an approximation of the irrational number. $\\text{3,141592654...}$",
+     "answer_type": "expression",
+     "answer": "\\frac{1571}{500}",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "\\frac{1571}{500}",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}\\text{3,141592654...}&\\approx\\text{3,142}\\\\&\\approx3\\frac{142}{\\text{1000}}\\\\&\\approx\\frac{\\text{1571}}{\\text{500}}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": null,
+     "epub_final_answer": "$\\frac{\\text{1571}}{\\text{500}}$",
+     "blind_answer": "3,142 \\approx \\frac{3142}{1000}=\\frac{1571}{500}",
+     "verification": "no_printed_answer",
+     "tier": "advanced",
+     "printed_page": 38,
+     "shortcode": "2DT4",
+     "verify": {
+      "agreed_with_book_solution": true,
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:19a|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "The final rational approximation is the same: 1571/500 = 3,142. Answer 1 just shows the intermediate steps."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": null,
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:19b",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-1",
+     "stem": "Write the following irrational numbers to 3 decimal places and then write each one as a rational number to get an approximation of the irrational number. $\\text{1,618033989...}$",
+     "answer_type": "expression",
+     "answer": "\\frac{809}{500}",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "\\frac{809}{500}",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}\\text{1,618033989...}&\\approx\\text{1,618}\\\\&\\approx1\\frac{618}{\\text{1000}}\\\\&\\approx\\frac{\\text{809}}{\\text{500}}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": null,
+     "epub_final_answer": "$\\frac{\\text{809}}{\\text{500}}$",
+     "blind_answer": "1,618 \\approx \\frac{1618}{1000}=\\frac{809}{500}",
+     "verification": "no_printed_answer",
+     "tier": "advanced",
+     "printed_page": 38,
+     "shortcode": "2DT5",
+     "verify": {
+      "agreed_with_book_solution": true,
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:19b|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "The final rational approximation is the same: 809/500 = 1,618. Answer 1 just shows the intermediate steps."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": null,
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:19c",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-1",
+     "stem": "Write the following irrational numbers to 3 decimal places and then write each one as a rational number to get an approximation of the irrational number. $\\text{1,41421356...}$",
+     "answer_type": "expression",
+     "answer": "\\frac{707}{500}",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "\\frac{707}{500}",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}\\text{1,41421356...}&\\approx\\text{1,414}\\\\&\\approx1\\frac{414}{\\text{1000}}\\\\&\\approx\\frac{\\text{707}}{\\text{500}}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": null,
+     "epub_final_answer": "$\\frac{\\text{707}}{\\text{500}}$",
+     "blind_answer": "1,414 \\approx \\frac{1414}{1000}=\\frac{707}{500}",
+     "verification": "no_printed_answer",
+     "tier": "standard",
+     "printed_page": 38,
+     "shortcode": "2DT6",
+     "verify": {
+      "agreed_with_book_solution": true,
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:19c|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "The final rational approximation is the same: 707/500 = 1,414. Answer 1 just shows the intermediate steps."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "tier check",
+     "printed_answer_scope": null,
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex1-11:19d",
+     "kind": "exercise",
+     "lo": "lo:g10m1s4-1-1",
+     "stem": "Write the following irrational numbers to 3 decimal places and then write each one as a rational number to get an approximation of the irrational number. $\\text{2,71828182845904523536...}$",
+     "answer_type": "expression",
+     "answer": "\\frac{1359}{500}",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "\\frac{1359}{500}",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}\\text{2,71828182845904523536...}&\\approx\\text{2,718}\\\\&\\approx2\\frac{718}{\\text{1000}}\\\\&\\approx\\frac{\\text{1359}}{\\text{500}}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": null,
+     "epub_final_answer": "$\\frac{\\text{1359}}{\\text{500}}$",
+     "blind_answer": "2,718 \\approx \\frac{2718}{1000}=\\frac{1359}{500}",
+     "verification": "no_printed_answer",
+     "tier": "advanced",
+     "printed_page": 38,
+     "shortcode": "2DT7",
+     "verify": {
+      "agreed_with_book_solution": true,
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:19d|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "The final rational approximation is the same: 1359/500 = 2,718. Answer 1 just shows the intermediate steps."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": null,
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    }
+   ],
+   "visuals": [],
+   "viz_gaps": [
+    {
+     "figure_id": "b00139:1",
+     "src": "tikzpicture/4c51f3c776ad8f9abf6706b63943779f.png",
+     "ref": "Ex1-2:3a",
+     "printed_page": 14,
+     "reason": "The figure is a square ABDE (AB = AE = pi) with a right triangle BDC attached along BD, and DC = pi on the base line E-D-C. No existing kind draws a polygon scene: coordinate_plot would add a grid and axes that are not in the book figure and cannot carry the pi side-length labels, trig_triangle shows only a lone right triangle with an angle marked, and geo_scene is a circle-geometry kind that this brief lists as unable to show triangle or quadrilateral scenes. Forcing it into any of them would draw a different picture.",
+     "needed_kind": "polygon_scene: labelled polygon or composite shape (square plus right triangle) with lettered vertices and side-length labels such as pi on AB, AE and DC"
+    }
+   ],
+   "teacher_only": {
+    "seen": 0,
+    "dropped": 0,
+    "reached_claim": 0,
+    "caught_in_claims": 0
+   },
+   "verify": {
+    "disagreements": [
+     {
+      "ref": "Ex1-11:17a",
+      "printed": "Irrational number.",
+      "book": "Irrational number.",
+      "blind": "\\text{2,82843}; irrational",
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:17a|blind~printed",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "The problem asks for sqrt8 to 5 d.p. and a classification. Answer 1 gives 2,82843 (correct) and irrational. Answer 2 gives only the classification, which agrees, but no 5 d.p. value."
+       },
+       {
+        "pair_id": "Ex1-11:17a|blind~book",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "The problem asks for sqrt8 to 5 d.p. and a classification. Answer 1 gives 2,82843 (correct) and irrational. Answer 2 gives only the classification, which agrees, but no 5 d.p. value."
+       },
+       {
+        "pair_id": "Ex1-11:17a|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ],
+      "typing_problems": []
+     },
+     {
+      "ref": "Ex1-11:17b",
+      "printed": "Irrational number.",
+      "book": "Irrational number.",
+      "blind": "\\text{27,71281}; irrational",
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:17b|blind~printed",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "The problem asks for sqrt768 to 5 d.p. and a classification. Answer 1 gives 27,71281 (correct) and irrational. Answer 2 gives only the classification, which agrees, but no 5 d.p. value."
+       },
+       {
+        "pair_id": "Ex1-11:17b|blind~book",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "The problem asks for sqrt768 to 5 d.p. and a classification. Answer 1 gives 27,71281 (correct) and irrational. Answer 2 gives only the classification, which agrees, but no 5 d.p. value."
+       },
+       {
+        "pair_id": "Ex1-11:17b|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ],
+      "typing_problems": []
+     },
+     {
+      "ref": "Ex1-11:17c",
+      "printed": "Rational number.",
+      "book": "Rational number.",
+      "blind": "\\text{0,70000}; rational",
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:17c|blind~printed",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "The problem asks for sqrt(0,49) to 5 d.p. and a classification. Answer 1 gives 0,70000 and rational (correct). Answer 2 gives only the classification, which agrees, but no 5 d.p. value."
+       },
+       {
+        "pair_id": "Ex1-11:17c|blind~book",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "The problem asks for sqrt(0,49) to 5 d.p. and a classification. Answer 1 gives 0,70000 and rational (correct). Answer 2 gives only the classification, which agrees, but no 5 d.p. value."
+       },
+       {
+        "pair_id": "Ex1-11:17c|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ],
+      "typing_problems": []
+     },
+     {
+      "ref": "Ex1-11:17d",
+      "printed": "Rational number.",
+      "book": "Rational number.",
+      "blind": "\\text{0,04000}; rational",
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:17d|blind~printed",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "The problem asks for sqrt(0,0016) to 5 d.p. and a classification. Answer 1 gives 0,04000 and rational (correct). Answer 2 gives only the classification, which agrees, but no 5 d.p. value."
+       },
+       {
+        "pair_id": "Ex1-11:17d|blind~book",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "The problem asks for sqrt(0,0016) to 5 d.p. and a classification. Answer 1 gives 0,04000 and rational (correct). Answer 2 gives only the classification, which agrees, but no 5 d.p. value."
+       },
+       {
+        "pair_id": "Ex1-11:17d|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ],
+      "typing_problems": []
+     },
+     {
+      "ref": "Ex1-11:17e",
+      "printed": "Rational number.",
+      "book": "Rational number.",
+      "blind": "\\text{0,50000}; rational",
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:17e|blind~printed",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "The problem asks for sqrt(0,25) to 5 d.p. and a classification. Answer 1 gives 0,50000 and rational (correct). Answer 2 gives only the classification, which agrees, but no 5 d.p. value."
+       },
+       {
+        "pair_id": "Ex1-11:17e|blind~book",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "The problem asks for sqrt(0,25) to 5 d.p. and a classification. Answer 1 gives 0,50000 and rational (correct). Answer 2 gives only the classification, which agrees, but no 5 d.p. value."
+       },
+       {
+        "pair_id": "Ex1-11:17e|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ],
+      "typing_problems": []
+     },
+     {
+      "ref": "Ex1-11:17f",
+      "printed": "Rational number.",
+      "book": "Rational number.",
+      "blind": "\\text{6,00000}; rational",
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:17f|blind~printed",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "The problem asks for sqrt36 to 5 d.p. and a classification. Answer 1 gives 6,00000 and rational (correct). Answer 2 gives only the classification, which agrees, but no 5 d.p. value."
+       },
+       {
+        "pair_id": "Ex1-11:17f|blind~book",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "The problem asks for sqrt36 to 5 d.p. and a classification. Answer 1 gives 6,00000 and rational (correct). Answer 2 gives only the classification, which agrees, but no 5 d.p. value."
+       },
+       {
+        "pair_id": "Ex1-11:17f|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ],
+      "typing_problems": []
+     },
+     {
+      "ref": "Ex1-11:17g",
+      "printed": "Irrational number.",
+      "book": "Irrational number.",
+      "blind": "\\text{44,27189}; irrational",
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:17g|blind~printed",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "The problem asks for sqrt1960 to 5 d.p. and a classification. Answer 1 gives 44,27189 (correct) and irrational. Answer 2 gives only the classification, which agrees, but no 5 d.p. value."
+       },
+       {
+        "pair_id": "Ex1-11:17g|blind~book",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "The problem asks for sqrt1960 to 5 d.p. and a classification. Answer 1 gives 44,27189 (correct) and irrational. Answer 2 gives only the classification, which agrees, but no 5 d.p. value."
+       },
+       {
+        "pair_id": "Ex1-11:17g|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ],
+      "typing_problems": []
+     },
+     {
+      "ref": "Ex1-11:17h",
+      "printed": "Rational number.",
+      "book": "Rational number.",
+      "blind": "\\text{0,06000}; rational",
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:17h|blind~printed",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "The problem asks for sqrt(0,0036) to 5 d.p. and a classification. Answer 1 gives 0,06000 and rational (correct). Answer 2 gives only the classification, which agrees, but no 5 d.p. value."
+       },
+       {
+        "pair_id": "Ex1-11:17h|blind~book",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "The problem asks for sqrt(0,0036) to 5 d.p. and a classification. Answer 1 gives 0,06000 and rational (correct). Answer 2 gives only the classification, which agrees, but no 5 d.p. value."
+       },
+       {
+        "pair_id": "Ex1-11:17h|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ],
+      "typing_problems": []
+     },
+     {
+      "ref": "Ex1-11:17i",
+      "printed": "Rational number.",
+      "book": "Rational number.",
+      "blind": "-\\text{1,60000}; rational",
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:17i|blind~printed",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "The problem asks for -8*sqrt(0,04) to 5 d.p. and a classification. Answer 1 gives -1,60000 and rational (correct). Answer 2 gives only the classification, which agrees, but no 5 d.p. value."
+       },
+       {
+        "pair_id": "Ex1-11:17i|blind~book",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "The problem asks for -8*sqrt(0,04) to 5 d.p. and a classification. Answer 1 gives -1,60000 and rational (correct). Answer 2 gives only the classification, which agrees, but no 5 d.p. value."
+       },
+       {
+        "pair_id": "Ex1-11:17i|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ],
+      "typing_problems": []
+     },
+     {
+      "ref": "Ex1-11:17j",
+      "printed": "Irrational number.",
+      "book": "Irrational number.",
+      "blind": "\\text{44,72136}; irrational",
+      "pairs": [
+       {
+        "pair_id": "Ex1-11:17j|blind~printed",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "The problem asks for 5*sqrt80 to 5 d.p. and a classification. Answer 1 gives 44,72136 (correct) and irrational. Answer 2 gives only the classification, which agrees, but no 5 d.p. value."
+       },
+       {
+        "pair_id": "Ex1-11:17j|blind~book",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "The problem asks for 5*sqrt80 to 5 d.p. and a classification. Answer 1 gives 44,72136 (correct) and irrational. Answer 2 gives only the classification, which agrees, but no 5 d.p. value."
+       },
+       {
+        "pair_id": "Ex1-11:17j|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ],
+      "typing_problems": []
+     }
+    ],
+    "unchecked": [],
+    "off_task": [],
+    "no_printed_answer": [
+     {
+      "ref": "Ex1-11:19a",
+      "book": "$\\frac{\\text{1571}}{\\text{500}}$",
+      "blind": "3,142 \\approx \\frac{3142}{1000}=\\frac{1571}{500}",
+      "agreed_with_book_solution": true,
+      "answer_type": "expression"
+     },
+     {
+      "ref": "Ex1-11:19b",
+      "book": "$\\frac{\\text{809}}{\\text{500}}$",
+      "blind": "1,618 \\approx \\frac{1618}{1000}=\\frac{809}{500}",
+      "agreed_with_book_solution": true,
+      "answer_type": "expression"
+     },
+     {
+      "ref": "Ex1-11:19c",
+      "book": "$\\frac{\\text{707}}{\\text{500}}$",
+      "blind": "1,414 \\approx \\frac{1414}{1000}=\\frac{707}{500}",
+      "agreed_with_book_solution": true,
+      "answer_type": "expression"
+     },
+     {
+      "ref": "Ex1-11:19d",
+      "book": "$\\frac{\\text{1359}}{\\text{500}}$",
+      "blind": "2,718 \\approx \\frac{2718}{1000}=\\frac{1359}{500}",
+      "agreed_with_book_solution": true,
+      "answer_type": "expression"
+     }
+    ],
+    "typing_problems": [
+     {
+      "ref": "Ex1-2:3d",
+      "problems": [
+       "numeric key \"14,8044...\" is not a number"
+      ]
+     }
+    ],
+    "printed_not_in_asked_form": [],
+    "forms_from_book_rules": [],
+    "forms_the_marker_cannot_check": [],
+    "retyped": [],
+    "tier_checks": [
+     {
+      "ref": "Ex1-2:2c",
+      "typing": "basic",
+      "check": "basic"
+     },
+     {
+      "ref": "Ex1-2:2d",
+      "typing": "standard",
+      "check": "basic"
+     },
+     {
+      "ref": "Ex1-2:6",
+      "typing": "standard",
+      "check": "advanced"
+     },
+     {
+      "ref": "Ex1-11:11b",
+      "typing": "basic",
+      "check": "basic"
+     },
+     {
+      "ref": "Ex1-11:12c",
+      "typing": "basic",
+      "check": "basic"
+     },
+     {
+      "ref": "Ex1-11:17e",
+      "typing": "standard",
+      "check": "standard"
+     },
+     {
+      "ref": "Ex1-11:17j",
+      "typing": "standard",
+      "check": "standard"
+     },
+     {
+      "ref": "Ex1-11:19c",
+      "typing": "advanced",
+      "check": "standard"
+     }
+    ]
+   },
+   "figure_blocked": [
+    "Ex1-2:3a"
+   ],
+   "oracle": {
+    "tally": {
+     "claims": 16,
+     "questions": 52,
+     "worked_examples_kept_as_teaching": 1,
+     "by_objective": [
+      {
+       "lo": "lo:g10m1s4-1-1",
+       "claims": 16,
+       "items": 44
+      },
+      {
+       "lo": "lo:g10m1s4-1-2",
+       "claims": 0,
+       "items": 9
+      }
+     ]
+    },
+    "verdict": "GREEN",
+    "subheadings": [
+     {
+      "anchor": "g10m1s4-1",
+      "status": "covered",
+      "missing_items": []
+     }
+    ]
+   },
+   "counts": {
+    "claims": 16,
+    "claims_dropped": 0,
+    "items": 53,
+    "worked_examples": 1,
+    "exercises": 52,
+    "by_answer_type": {
+     "not_markable": 1,
+     "numeric": 38,
+     "choice": 10,
+     "expression": 4
+    },
+    "by_solution_provenance": {
+     "book_worked": 1,
+     "book_worked_epub": 52
+    },
+    "by_verification": {
+     "agreed": 39,
+     "disputed": 10,
+     "no_printed_answer": 4
+    },
+    "visuals": 0,
+    "viz_gaps": 1,
+    "figure_blocked": 1,
+    "unmapped_worked_examples": 0
+   },
+   "failed": {
+    "s2": false,
+    "s3": false
+   }
+  }
+ ],
+ "failed_lessons": [],
+ "calls": {
+  "by_phase": {
+   "S2 Claims": 1,
+   "S3 Typing": 2,
+   "S3 Blind re-solve": 4,
+   "S3 Tier check": 1,
+   "S3 Judge": 1,
+   "S4 Visuals": 1,
+   "S8 Oracle": 1
+  },
+  "per_lesson": {
+   "g10m1s4-1": 11
+  },
+  "total": 11
+ },
+ "meter": {
+  "stage": "S2-S4,S8",
+  "record": "uv run meter_run.py record --book g10-math --stage S2-S4,S8 --run <runId>",
+  "by_stage": "uv run meter_run.py summary --book g10-math --by phase",
+  "by_lesson": "uv run meter_run.py summary --book g10-math --by lesson",
+  "note": "Phase titles start with their stage (S2, S3, S4, S8), so `--by phase` is the per-stage cost; every label carries the lesson slug (S3:blind:<slug>:1), so `--by lesson` is the per-lesson cost."
+ },
+ "run_id": "wf_791f61b5-0bb",
+ "recollected": {
+  "from_run": "wf_791f61b5-0bb",
+  "journal": "/Users/samueltoma/.claude/projects/-Users-samueltoma-Documents-Claude-Projects-AI-Enthusiasts-PoC-Tutor-School-V1/5dd6b4ce-c4c4-4eab-b8f8-5465c092db24/subagents/workflows/wf_791f61b5-0bb/journal.jsonl",
+  "script": {
+   "source": "runbook/lesson.workflow.js",
+   "source_sha256": "335591169602daefb63db78651e71c40c7cbac1cd61a492796bd2c27ebbfe83a",
+   "args_sha256": "aa8cf2d16ccd454611289814c2fea1dd216e8b5fb009d3aab0bd32e124d9ff95",
+   "generated_sha256": "7a5862a894931c31abf7cd4918938f8d7174858cb7da6a42f3d1bb9b123a2e11"
+  },
+  "collect_version": "collect-6",
+  "prompts_version": "lesson-v7",
+  "calls": [
+   {
+    "label": "S2:claims:g10m1s4-1",
+    "reused": true
+   },
+   {
+    "label": "S3:type:g10m1s4-1:1",
+    "reused": true
+   },
+   {
+    "label": "S3:type:g10m1s4-1:2",
+    "reused": true
+   },
+   {
+    "label": "S3:blind:g10m1s4-1:1",
+    "reused": true
+   },
+   {
+    "label": "S3:blind:g10m1s4-1:2",
+    "reused": true
+   },
+   {
+    "label": "S3:blind:g10m1s4-1:3",
+    "reused": true
+   },
+   {
+    "label": "S3:blind:g10m1s4-1:4",
+    "reused": true
+   },
+   {
+    "label": "S3:tier:g10m1s4-1",
+    "reused": true
+   },
+   {
+    "label": "S3:judge:g10m1s4-1:1",
+    "reused": "pair by pair"
+   },
+   {
+    "label": "S4:viz:g10m1s4-1:1",
+    "reused": true
+   },
+   {
+    "label": "S8:oracle:g10m1s4-1",
+    "reused": true
+   }
+  ],
+  "judge_pairs_reused": 32,
+  "judge_pairs_unjudged": [],
+  "missing_calls": [],
+  "tool": "services/extraction/recollect_lessons.py"
+ }
+}

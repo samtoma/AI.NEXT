@@ -1,0 +1,41 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m7s3-1-4:bisect-perp",
+ "kind": "family",
+ "lo_id": "lo:g10m7s3-1-4",
+ "parent_question_id": "q:g10m7s3-1-4:ex7-8-2j",
+ "source_page": 270,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "h",
+   "randint": [
+    20,
+    70
+   ]
+  },
+  {
+   "name": "p",
+   "let": "2 * h"
+  },
+  {
+   "name": "t",
+   "let": "90 - h"
+  }
+ ],
+ "constraints": [
+  "p == 2 * h",
+  "t > 0 and t < 90"
+ ],
+ "stem": "$ABCD$ is a kite with $AB = AD$ and $CB = CD$. The diagonals $AC$ and $BD$ intersect at $E$. $B\\hat{A}D = {=p}^\\circ$. Calculate the size of $A\\hat{B}D$, in degrees.",
+ "answer": "t",
+ "solution": [
+  "$AC$ is the diagonal between the equal sides $AB$ and $AD$, so it bisects $B\\hat{A}D$: $B\\hat{A}E = {=p}^\\circ \\div 2 = {=h}^\\circ$.",
+  "The diagonals of a kite intersect at right angles, so $A\\hat{E}B = 90^\\circ$.",
+  "The angles of $\\triangle ABE$ add up to $180^\\circ$: $A\\hat{B}E = 180^\\circ - 90^\\circ - {=h}^\\circ = {=t}^\\circ$.",
+  "$E$ lies on $BD$, so $A\\hat{B}D = A\\hat{B}E = {=t}^\\circ$."
+ ],
+ "notes": "Standard: combines two of the three book properties (the diagonal between the equal sides bisects the interior angle; the diagonals meet at right angles) with the triangle angle sum. p is built as 2h so the half-angle is a whole number. The answer also equals (180 - p)/2 by the isosceles triangle ABD, so a solver using either route agrees. Convex kite assumed (the diagonals intersect at E)."
+}

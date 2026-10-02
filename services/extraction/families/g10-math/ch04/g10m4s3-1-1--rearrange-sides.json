@@ -1,0 +1,255 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m4s3-1-1:rearrange-sides",
+ "kind": "family",
+ "lo_id": "lo:g10m4s3-1-1",
+ "parent_question_id": "q:g10m4s3-1-1:ex4-2-1b",
+ "source_page": 80,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    1,
+    3
+   ]
+  },
+  {
+   "name": "c",
+   "randint": [
+    2,
+    3
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    -5,
+    5
+   ],
+   "resample_while": "b == 0"
+  },
+  {
+   "name": "d",
+   "randint": [
+    -5,
+    5
+   ],
+   "resample_while": "d == 0"
+  },
+  {
+   "name": "e",
+   "randint": [
+    1,
+    "a * c - 1"
+   ]
+  },
+  {
+   "name": "f",
+   "randint": [
+    -5,
+    5
+   ],
+   "resample_while": "f == 0"
+  },
+  {
+   "name": "g",
+   "randint": [
+    -9,
+    9
+   ],
+   "resample_while": "g == 0"
+  },
+  {
+   "name": "ac",
+   "let": "a * c"
+  },
+  {
+   "name": "ad",
+   "let": "a * d"
+  },
+  {
+   "name": "bc",
+   "let": "b * c"
+  },
+  {
+   "name": "bd",
+   "let": "b * d"
+  },
+  {
+   "name": "ka",
+   "let": "ac - e"
+  },
+  {
+   "name": "kb",
+   "let": "ad + bc - f"
+  },
+  {
+   "name": "kc",
+   "let": "bd - g"
+  },
+  {
+   "require": "kb != 0 or kc != 0",
+   "why": "at least one of the x term and the constant must survive, otherwise the answer is just a multiple of x^2"
+  },
+  {
+   "require": "gcd(gcd(ka, abs(kb)), abs(kc)) == 1",
+   "why": "no common factor in the three coefficients, so the standard form is the only one and nobody needs to divide through"
+  },
+  {
+   "name": "at",
+   "let": "'' if a == 1 else str(a)"
+  },
+  {
+   "name": "bs",
+   "let": "'+' if b > 0 else '-'"
+  },
+  {
+   "name": "bm",
+   "let": "abs(b)"
+  },
+  {
+   "name": "ds",
+   "let": "'+' if d > 0 else '-'"
+  },
+  {
+   "name": "dm",
+   "let": "abs(d)"
+  },
+  {
+   "name": "et",
+   "let": "'' if e == 1 else str(e)"
+  },
+  {
+   "name": "fs",
+   "let": "'+' if f > 0 else '-'"
+  },
+  {
+   "name": "ft",
+   "let": "'' if abs(f) == 1 else str(abs(f))"
+  },
+  {
+   "name": "gs",
+   "let": "'+' if g > 0 else '-'"
+  },
+  {
+   "name": "gm",
+   "let": "abs(g)"
+  },
+  {
+   "name": "ads",
+   "let": "'+' if ad > 0 else '-'"
+  },
+  {
+   "name": "adt",
+   "let": "'' if abs(ad) == 1 else str(abs(ad))"
+  },
+  {
+   "name": "bcs",
+   "let": "'+' if bc > 0 else '-'"
+  },
+  {
+   "name": "bct",
+   "let": "'' if abs(bc) == 1 else str(abs(bc))"
+  },
+  {
+   "name": "bds",
+   "let": "'+' if bd > 0 else '-'"
+  },
+  {
+   "name": "bdm",
+   "let": "abs(bd)"
+  },
+  {
+   "name": "fns",
+   "let": "'-' if f > 0 else '+'"
+  },
+  {
+   "name": "gns",
+   "let": "'-' if g > 0 else '+'"
+  },
+  {
+   "name": "kat",
+   "let": "'' if ka == 1 else str(ka)"
+  },
+  {
+   "name": "kbs",
+   "let": "'' if kb == 0 else ('+' if kb > 0 else '-')"
+  },
+  {
+   "name": "kbt",
+   "let": "'' if kb == 0 or abs(kb) == 1 else str(abs(kb))"
+  },
+  {
+   "name": "kbx",
+   "let": "'' if kb == 0 else 'x'"
+  },
+  {
+   "name": "kcs",
+   "let": "'' if kc == 0 else ('+' if kc > 0 else '-')"
+  },
+  {
+   "name": "kcm",
+   "let": "'' if kc == 0 else str(abs(kc))"
+  },
+  {
+   "name": "mbs",
+   "let": "'+' if kb >= 0 else '-'"
+  },
+  {
+   "name": "mbm",
+   "let": "abs(kb)"
+  },
+  {
+   "name": "mcs",
+   "let": "'+' if kc >= 0 else '-'"
+  },
+  {
+   "name": "mcm",
+   "let": "abs(kc)"
+  },
+  {
+   "name": "zn",
+   "let": "'' if kb != 0 and kc != 0 else ' A term whose coefficient is zero is simply left out.'"
+  }
+ ],
+ "constraints": [
+  "ka >= 1",
+  "kb != 0 or kc != 0",
+  "gcd(gcd(ka, abs(kb)), abs(kc)) == 1"
+ ],
+ "stem": "Write $({=at}x {=bs} {=bm})({=c}x {=ds} {=dm}) = {=et}x^{2} {=fs} {=ft}x {=gs} {=gm}$ in standard form $ax^{2}+bx+c=0$, with every term on the left-hand side.",
+ "solution": [
+  "Expand the brackets on the left-hand side by multiplying each term in the first bracket by each term in the second: $({=at}x {=bs} {=bm})({=c}x {=ds} {=dm}) = {=ac}x^{2} {=ads} {=adt}x {=bcs} {=bct}x {=bds} {=bdm}$.",
+  "Write the equation with the expanded left-hand side: ${=ac}x^{2} {=ads} {=adt}x {=bcs} {=bct}x {=bds} {=bdm} = {=et}x^{2} {=fs} {=ft}x {=gs} {=gm}$.",
+  "Standard form has $0$ on the right-hand side, so subtract every term of the right-hand side from both sides. Each one changes sign as it crosses the equals sign: ${=ac}x^{2} {=ads} {=adt}x {=bcs} {=bct}x {=bds} {=bdm} - {=et}x^{2} {=fns} {=ft}x {=gns} {=gm} = 0$.",
+  "Collect the $x^{2}$ terms: ${=ac}x^{2} - {=et}x^{2} = {=kat}x^{2}$.",
+  "Collect the $x$ terms. Their coefficients add up to $({=ad}) + ({=bc}) - ({=f}) = {=kb}$.",
+  "Collect the constants: $({=bd}) - ({=g}) = {=kc}$.",
+  "Put the three results together. The equation in standard form is ${=kat}x^{2} {=kbs} {=kbt}{=kbx} {=kcs} {=kcm} = 0$.{=zn}"
+ ],
+ "marker": {
+  "kind": "equation",
+  "answer": "{=ka}*x^2 {=mbs} {=mbm}*x {=mcs} {=mcm} = 0",
+  "form": null,
+  "variables": [
+   "x"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m4s3-1-1:first-term-sign-only",
+   "label": "Changes the sign of only the first term when moving several terms",
+   "description": "Moving the right-hand side x^2 + fx + g across the equals sign, subtracts the x^2 term but adds fx and g, so the x coefficient and the constant come out wrong."
+  },
+  {
+   "id": "mc:g10m4s3-1-1:rhs-x2-left-out",
+   "label": "Leaves the x^2 term on the right-hand side out of the collection",
+   "description": "Treats the x^2 term on the right as something that stays there, so the leading coefficient is the product of the two x coefficients (ac) instead of ac minus the right-hand coefficient."
+  }
+ ],
+ "notes": "Advanced tier: a product on the left and a quadratic trinomial on the right, so the book's expand-and-subtract method (ex4-2-1) needs three sign changes and three collections, and the x^2 terms do not stay as they were. Constraints: a in 1..3 and c in 2..3 so a*c >= 2 and e is drawn from 1..a*c-1, hence the leading coefficient ka = a*c - e is at least 1 (no negative a, no degenerate linear equation). The coefficients of the answer have gcd 1, so the standard form is unique and a blind solver has no reason to divide through; the stem fixes the side (all terms on the left). About one instance in thirteen has a zero coefficient (the x term or the constant cancels), which the book itself uses in ex4-2-1a; the solution then says a zero term is left out, and the marker answer carries it as + 0*x or + 0, which the engine should read as the same equation. b, d, f, g are never 0 so every factor and every right-hand term is present as printed. Checked by simulation: 600 draws, 600 distinct stems, every solution step and the marker answer agree with an independent expansion, and no draw needed more than 3 attempts."
+}

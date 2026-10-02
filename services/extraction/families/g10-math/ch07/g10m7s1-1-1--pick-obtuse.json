@@ -1,0 +1,76 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m7s1-1-1:pick-obtuse",
+ "kind": "family",
+ "lo_id": "lo:g10m7s1-1-1",
+ "parent_question_id": "q:g10m7s1-1-1:ex7-8-1b",
+ "source_page": 269,
+ "tier": "standard",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "o",
+   "randint": [
+    91,
+    179
+   ]
+  },
+  {
+   "name": "a",
+   "randint": [
+    10,
+    85
+   ]
+  },
+  {
+   "name": "r",
+   "randint": [
+    181,
+    300
+   ]
+  }
+ ],
+ "constraints": [
+  "o > 90 and o < 180",
+  "a < 90",
+  "r > 180"
+ ],
+ "stem": "Which one of the following angles is an obtuse angle?",
+ "solution": [
+  "An obtuse angle is bigger than $90^\\circ$ and smaller than $180^\\circ$.",
+  "Test the options against these two limits: $90^\\circ$ is exactly a right angle and $180^\\circ$ is exactly a straight angle, so neither of them is obtuse.",
+  "${=a}^\\circ$ is smaller than $90^\\circ$, so it is an acute angle, and ${=r}^\\circ$ is bigger than $180^\\circ$, so it is a reflex angle.",
+  "Only ${=o}^\\circ$ lies between $90^\\circ$ and $180^\\circ$, so it is the obtuse angle."
+ ],
+ "choices": {
+  "correct": "${=o}^\\circ$",
+  "distractors": [
+   {
+    "text": "$180^\\circ$",
+    "misconception_id": "mc:g10m7s1-1-1:obtuse-for-any-wide-angle"
+   },
+   {
+    "text": "${=r}^\\circ$",
+    "misconception_id": "mc:g10m7s1-1-1:obtuse-for-any-wide-angle"
+   },
+   {
+    "text": "${=a}^\\circ$",
+    "misconception_id": "mc:g10m7s1-1-1:swaps-acute-and-obtuse"
+   },
+   {
+    "text": "$90^\\circ$",
+    "misconception_id": "mc:g10m7s1-1-1:right-taken-as-obtuse"
+   }
+  ]
+ },
+ "distinct_by_choices": true,
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m7s1-1-1:right-taken-as-obtuse",
+   "label": "Counts a right angle as obtuse",
+   "description": "The student takes 'obtuse' to start at $90^\\circ$ instead of just above it, so an angle of exactly $90^\\circ$ is called obtuse (the open lower limit of the obtuse range is missed)."
+  }
+ ],
+ "notes": "Reverses the book's direction: the book gives an angle and asks for its type (ex 7.8 no. 1b, 1f); here the type is given and the student picks the size. The stem never changes, so distinct_by_choices is set; the options carry the variation (o, a, r are drawn independently, thousands of distinct option sets). Each option is a different type: obtuse (correct, 91 to 179 so near-boundary values such as 91 and 179 occur), straight 180, right 90, acute a, reflex r. The two 'wide angle' distractors (180 and a reflex) share the catalogued id obtuse-for-any-wide-angle; the acute option carries swaps-acute-and-obtuse. The 90 option carries a newly proposed id. Exactly one option can be obtuse by construction (bands are disjoint)."
+}

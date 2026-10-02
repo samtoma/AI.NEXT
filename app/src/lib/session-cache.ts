@@ -80,6 +80,22 @@ export function snapshotKey(k: {
    * when true, so every key with probing off is the key v0.6.0 built.
    */
   probing?: boolean;
+  /**
+   * THE STUDENT'S SCOPE, as `scopeFingerprint` renders it — read this turn,
+   * never cached across turns (the 2026-09-26 isolation audit; FR-2705,
+   * FR-4006). Required, so no caller can build a key without it.
+   *
+   * The replayed snapshot IS what the tutor is given: the lesson's data, the
+   * cross-subject bridges, the handoff rule, the prerequisite neighbourhood,
+   * and — on the Ask surfaces — every objective and book of every course she
+   * may see. Keyed without the scope, an operator revoking an exception,
+   * switching a course off for her grade or changing her curriculum reached an
+   * open chat only when the three-hour TTL ran out: the tutor went on teaching
+   * a course she could no longer open. With the scope in the key the next turn
+   * misses once and rebuilds under the new scope, and a lesson whose course is
+   * now hidden is refused (`snapshotContext` never caches a refusal).
+   */
+  scope: string;
 }): string {
   return [
     k.surface,
@@ -91,7 +107,24 @@ export function snapshotKey(k: {
     k.uploadId ?? "",
     addressForms(k.gender).key,
     ...(k.probing === true ? ["probe"] : []),
+    k.scope,
   ].join("|");
+}
+
+/**
+ * One student scope as a cache-key component: her grade, her curriculum and
+ * the courses she may see, sorted. Everything the gate decides from, and
+ * nothing it does not — two students with the same scope get the same string,
+ * and the student id is keyed separately. `courses === null` (the ungated
+ * harness scope) is its own value, never "no courses". Pure.
+ */
+export function scopeFingerprint(scope: {
+  grade: string | null;
+  curriculum: string | null;
+  courses: ReadonlySet<string> | null;
+}): string {
+  const courses = scope.courses === null ? "*" : [...scope.courses].sort().join(",");
+  return `scope:${scope.grade ?? ""}/${scope.curriculum ?? ""}/${courses}`;
 }
 
 /**

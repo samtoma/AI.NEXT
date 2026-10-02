@@ -1,0 +1,75 @@
+{
+ "format": "ainext.gate-decision/1",
+ "gate": "G1",
+ "book": "g10-math",
+ "id": "g1-ch11",
+ "chapter": 11,
+ "decided_at": "2026-10-02T06:33:16Z",
+ "by": "auto-pass G1 (AI recommendation)",
+ "auto": true,
+ "outcome": "pass_with_holds",
+ "summary": "4 owed objective decision(s) taken on the AI line's recommendation",
+ "decisions": [
+  {
+   "key": "term:right-angled triangle",
+   "decision": "keep",
+   "detail": "right-angled triangle: American and some other curricula say \"right triangle\"; it is the same shape, with one 90 degree angle.",
+   "basis": "a flag on a term the book itself uses"
+  },
+  {
+   "key": "term:angle of elevation",
+   "decision": "keep",
+   "detail": "angle of elevation: not in the Egyptian Prep-3 maths book's vocabulary",
+   "basis": "a flag on a term the book itself uses"
+  },
+  {
+   "key": "term:angle of depression",
+   "decision": "keep",
+   "detail": "angle of depression: not in the Egyptian Prep-3 maths book's vocabulary",
+   "basis": "a flag on a term the book itself uses"
+  },
+  {
+   "key": "pool:Ex11-2:15a",
+   "decision": "place on lo:g10m11s1-1-1",
+   "detail": "Ex11-2:15a: mapper 1 says lo:g10m11s1-1-1, mapper 2 says None",
+   "basis": "the primary blind mapper's placement (mapper 1)"
+  }
+ ],
+ "checks": [
+  {
+   "name": "S1 two blind finders + reconciler",
+   "state": "done"
+  },
+  {
+   "name": "S1 independent evidence check",
+   "state": "done"
+  },
+  {
+   "name": "two blind end-of-chapter mappers",
+   "state": "done"
+  },
+  {
+   "name": "independent prerequisite-link checker",
+   "state": "done"
+  }
+ ],
+ "evidence": [
+  {
+   "label": "G1 check",
+   "path": "services/extraction/objectives/g10-math/ch11.check.json"
+  },
+  {
+   "label": "G1 verdicts (auto)",
+   "path": "services/extraction/runs/g10-math/objectives/g1-ch11.auto.json"
+  },
+  {
+   "label": "G1 page",
+   "path": "services/extraction/objectives/g10-math/ch11.review.html"
+  }
+ ],
+ "blocked": [],
+ "course_id": "course:us-g10-math-en",
+ "for_review": [
+  "pool:Ex11-2:15a"
+ ]
+}

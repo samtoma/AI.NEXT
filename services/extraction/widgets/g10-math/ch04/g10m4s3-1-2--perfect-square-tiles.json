@@ -1,0 +1,67 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m4s3-1-2:perfect-square-tiles",
+ "lo_id": "lo:g10m4s3-1-2",
+ "parent_question_id": "q:g10m4s3-1-2:ex4-2-2a",
+ "tier": "standard",
+ "kind": "area_model",
+ "instances": [
+  {
+   "a": 2,
+   "b": 2,
+   "expr": "x^2+4x+4",
+   "prod": 4,
+   "sum": 4,
+   "f": "x+2",
+   "r": -2
+  },
+  {
+   "a": -3,
+   "b": -3,
+   "expr": "x^2-6x+9",
+   "prod": 9,
+   "sum": -6,
+   "f": "x-3",
+   "r": 3
+  },
+  {
+   "a": -4,
+   "b": -4,
+   "expr": "x^2-8x+16",
+   "prod": 16,
+   "sum": -8,
+   "f": "x-4",
+   "r": 4
+  },
+  {
+   "a": 3,
+   "b": 3,
+   "expr": "x^2+6x+9",
+   "prod": 9,
+   "sum": 6,
+   "f": "x+3",
+   "r": -3
+  }
+ ],
+ "spec": {
+  "mode": "factor",
+  "a": "{=a}",
+  "b": "{=b}"
+ },
+ "stem": "Build a rectangle of algebra tiles whose tiles together make ${=expr}$, and look at the shape you get: its two sides are the factors. (Hatched tiles marked − are negative.)",
+ "solution": [
+  "Look for two numbers whose product is ${=prod}$ and whose sum is ${=sum}$.",
+  "Both numbers are ${=a}$: they multiply to ${=prod}$ and add to ${=sum}$.",
+  "Anchor the $x^2$ tile, then lay out $x$-tiles along its top edge and along its left edge to show ${=a}$ on each (a negative number is hatched and marked −).",
+  "Fill the corner block those two runs bound with the unit tiles: they make ${=prod}$.",
+  "The two runs are equal, so the rectangle is a square with side ${=f}$: ${=expr}=({=f})^2$.",
+  "Set the factor equal to 0: ${=f}=0$ gives $x={=r}$. Both factors are the same, so there is one solution only; there is no second value to look for, and writing $x={=r}$ twice adds nothing."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "middle-term-sign",
+   "misconception_id": "mc:g10m1s7-2-1:factor-pair-middle-term-untested"
+  }
+ ],
+ "notes": "FIT: same construction as the basic template, chosen so that the finished shape is literally a square. That makes the objective's perfect-square case visible: equal factors, one solution. The book's anchors 2a-2f contain no perfect square, so this is parented to the nearest monic anchor (2a) and the case comes from the objective's own description. All instances are inside the instrument (a = b, |a| <= 4; a = b is allowed, only both-zero is not) and were checked: a+b = sum, a*b = prod, (x+a)^2 expands to expr. OWN MISCONCEPTION: mc:g10m4s3-1-2:always-expects-two-solutions arises AFTER the factorising (writing the same root twice, hunting for a second root), so no area_model predicate can report it. The template is designed so the square shape and the last solution step contradict it, but it is not diagnosed; see the gap recorded for this objective. DIAGNOSTICS: middle-term-sign mapped to factor-pair-middle-term-untested, the likeliest cause (for x^2-6x+9 the only in-grid wrong build is (x+3)^2, a sign slip). Rival explanation for the same predicate, not mapped: a student forcing two DIFFERENT factors, e.g. (x+1)(x+4) for x^2+4x+4, which is also constant-right, x-term-wrong. A student who builds (x-3)(x+3) for x^2-6x+9 may fire missing-cross-term (no net x tiles); left unmapped because how the app counts cancelling x tiles is not documented. constant-sign, not-a-rectangle and off-target are unmapped as in the basic template."
+}

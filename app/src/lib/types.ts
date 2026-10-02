@@ -18,6 +18,13 @@ export type { Subject, SpineSubject } from "./subjects";
 
 import type { Subject, SpineSubject } from "./subjects";
 import type { Gender } from "./address";
+import type {
+  DerivedPrereqEdge,
+  LessonProvenance,
+  SectionRollup,
+} from "./book-sections";
+import type { PreparingChapter } from "./course-outline";
+import { choiceOptions } from "./question-flags";
 
 export interface Choice {
   key: string;
@@ -89,11 +96,11 @@ export interface WidgetQuestionSpec {
 /** The lettered options, or null when this question has none (numeric) or
  *  carries a construction instead (widget). Every site that renders options
  *  goes through this rather than asserting the array — the union exists
- *  precisely so the compiler asks. */
-export function mcqChoices(q: {
-  choices: Choice[] | WidgetQuestionSpec | null;
-}): Choice[] | null {
-  return Array.isArray(q.choices) ? q.choices : null;
+ *  precisely so the compiler asks. A choice question that carries a flag
+ *  (`less_specific`, `answer_only`) keeps its options under `options`
+ *  (`lib/question-flags.ts`); both shapes read the same here. */
+export function mcqChoices(q: { choices: unknown }): Choice[] | null {
+  return choiceOptions(q.choices);
 }
 
 export interface SpineQuestion {
@@ -113,6 +120,9 @@ export interface SpineQuestion {
   solutionVersion: number;
   status: string;
   provenance: Provenance;
+  /** the question's OWN stored figures (`visuals.question_id`), shown on its
+   *  card (lib/question-figures.ts); absent or empty when it has none */
+  figures?: string[];
 }
 
 export interface SpineLo {
@@ -148,6 +158,12 @@ export interface SpineLo {
    *  the objective hangs off no module (it then sits in its own chapter). */
   moduleId: string | null;
   moduleLabel: string | null;
+  /**
+   * The course this objective is taught in (FR-4009): the skill map shows ONE
+   * course at a time, so two courses of one subject — a tester's exception
+   * for the other curriculum's maths — are never merged into one map.
+   */
+  courseId: string | null;
 }
 
 /**
@@ -167,20 +183,88 @@ export interface SpineData {
   /** cross-subject associative links (rare) — rendered as gold bridges */
   bridges: SpineBridge[];
   questions: SpineQuestion[];
-  doc: {
-    title: string;
-    publisher: string;
-    edition: string;
-    grade: string;
-    subject: string;
-  };
+  /** the book of her first visible course — the map's fallback source */
+  doc: SpineBook;
+  /**
+   * Every course on the map, in course order, each with ITS OWN book (FR-4009,
+   * FR-4205): the course picker's entries, and the source a page citation or
+   * a question's provenance names — the book of the course being looked at,
+   * never the first course's. A National student has one course per subject,
+   * so her picker reads exactly as the subject picker did.
+   */
+  courses: SpineCourse[];
   syllabusVersion: string;
   baselineDate: string;
   currentDate: string;
   counts: { los: number; questions: number; edges: number; attempts: number };
   studentName: string;
   /** Short display name per lesson slug, where one exists (`lib/lesson-titles`). */
-  lessonTitles: Record<string, string>;
+  lessonTitles: Readonly<Record<string, string>>;
+  /**
+   * The book sections split into parts among these objectives (feature 003,
+   * FR-4315): the skill map draws each as one visible group, labelled by the
+   * section. Empty for a course with no split section — every National course
+   * — so the map it draws is exactly the one it drew before.
+   */
+  sectionGroups: SpineSectionGroup[];
+  /**
+   * Part n-1 → part n prerequisites, DERIVED from the book-section store and
+   * marked as the product's (FR-4317) — never in `edges`, which stays the
+   * book's own. Already folded into each objective's `layer` and `prereqIds`,
+   * so the map's columns and the topic panel respect them; drawn beside
+   * `edges`. Empty with no split section.
+   */
+  partEdges: DerivedPrereqEdge[];
+}
+
+/** One source book, as the skill map names it. */
+export interface SpineBook {
+  title: string;
+  publisher: string;
+  edition: string;
+  grade: string;
+  subject: string;
+}
+
+/** One course on the skill map (`SpineData.courses`). */
+export interface SpineCourse {
+  id: string;
+  /** the registry's own name — "Mathematics — Grade 10" (`lib/courses.ts`) */
+  label: string;
+  /** its graph territory, or `null` for a course the registry does not know */
+  subject: SpineSubject | null;
+  /** its own book; empty strings when the loader stamped none */
+  doc: SpineBook;
+  /**
+   * The chapters of its book with no lesson prepared yet (migration 037,
+   * `lib/course-outline.ts` `chaptersBeingPrepared`), in book order — the
+   * map lists them as placeholders beside the prepared topics, with no
+   * objective of their own. Absent for a course with no outline (every
+   * National course) and when every chapter has something prepared.
+   */
+  preparing?: PreparingChapter[];
+}
+
+/** One split book section as the skill map groups it (FR-4315). */
+export interface SpineSectionGroup {
+  /** `lib/book-sections.ts` `SectionGroup.key` */
+  key: string;
+  /** the printed section number ("1.7") */
+  number: string | null;
+  /** the printed section title ("Factorisation") */
+  title: string | null;
+  /** each part, in part order, with its objectives in catalogue order */
+  parts: { slug: string; n: number; of: number; loIds: string[] }[];
+}
+
+/**
+ * A split section's roll-up (FR-4314, `lib/book-sections.ts`
+ * `SectionRollup`), plus whether the student has started it — any objective
+ * of any part with evidence. What the subject home and the progress page
+ * read.
+ */
+export interface SectionProgress extends SectionRollup {
+  started: boolean;
 }
 
 export type PlanReason = "weakest" | "review" | "stretch";
@@ -201,6 +285,8 @@ export interface PlanItem {
   choices: Choice[] | WidgetQuestionSpec | null;
   reason: PlanReason;
   sourcePage: number | null;
+  /** the question's own stored figures, shown on the practice card */
+  figures?: string[];
 }
 
 /* ---- Ask the Spine (grounded chat) ---- */
@@ -269,6 +355,15 @@ export interface LessonInfo {
   /** registry lookup of `courseId`; `null` = course not in the registry */
   subject: Subject | null;
   los: LessonLo[];
+  /**
+   * Where the lesson comes from in its book (FR-4311, the `course_lessons`
+   * store): printed section number(s) and title, "part n of m", chapter
+   * introduction. Present only for a course whose book provenance changes
+   * what it shows — one with a split, merged or promoted lesson
+   * (`bookShapedCourses`, lib/section-label.ts). Absent for every National
+   * course, whose lessons keep exactly the number and title they had.
+   */
+  provenance?: LessonProvenance;
 }
 
 export interface LessonData {
@@ -303,6 +398,36 @@ export interface LessonData {
    *  profile query per turn, so a change lands on the next turn (FR-2606).
    *  `null` is "not recorded", which is NOT the masculine: see lib/address.ts. */
   gender: Gender;
+  /**
+   * The widgets of the lesson's own unit, for a course whose registry facts
+   * say its widgets come from its unit's live widget questions
+   * (`CourseTutorFacts.lessonWidgets === "module-questions"`, feature 003,
+   * FR-1209). Most used first. Absent for every other course, whose widget
+   * list is the unit map in `lib/widget-docs.ts` — so their prompts are
+   * unchanged.
+   */
+  unitWidgets?: readonly string[];
+  /**
+   * True when `unitWidgets` includes "curve_sketcher" AND this unit's live
+   * bank holds one drawn from one of the five families `curve_sketcher_g10`
+   * documents (hyperbola, exponential, sine, cosine, tangent) rather than only
+   * the original two (linear, quadratic) — set only for a course whose
+   * widgets come from its unit's live questions (feature 003, T417). The
+   * National unit map never sets it, so its prompts are unaffected.
+   */
+  hasG10CurveFamily?: boolean;
+  /** The lesson's book provenance — as `LessonInfo.provenance`, same rule. */
+  provenance?: LessonProvenance;
+  /**
+   * The subjects a `{{switch_subject:…}}` handoff may name for THIS student:
+   * those with a course she may see (FR-4006; the 2026-09-26 isolation
+   * audit). Set by `buildLessonContext` from her scope, so the tutor never
+   * offers a handoff that lands on a course she cannot open (an American
+   * student has no Social Studies; the old rule sent her to a 404). Absent =
+   * not narrowed — the prompt-capture harness, which has no student — and the
+   * rule then reads exactly as it always has.
+   */
+  handoffSubjects?: readonly SpineSubject[];
 }
 
 /**
@@ -333,6 +458,10 @@ export interface UnderstandingCheck {
 }
 
 export interface AttemptResult {
+  /** The question is `answer_only` (the book prints no working): `solution`
+   *  is empty, and the card shows the answer and a pointer to the lesson's
+   *  worked examples instead of steps (consistency review A6). */
+  answerOnly?: boolean;
   /** this attempt's own row id — carried back so a following attempt can
    *  link to it via `retry_of_attempt_id` (Socratic-probing confirmation
    *  retries; see api/attempts/route.ts). */
@@ -396,4 +525,18 @@ export interface SubjectSummary {
     mode: LessonMode;
     createdAt: string;
   } | null;
+  /**
+   * The subject's split book sections, "k of m parts mastered" each, in
+   * catalogue order (FR-4314). Empty for a course with no split section —
+   * every National course — so nothing its card shows changes.
+   */
+  sections: SectionProgress[];
+  /**
+   * For a course whose book has an outline (migration 037,
+   * `lib/course-outline.ts` `readyCount`): its prepared lessons of the book's
+   * total, for the card's "5 of 65 lessons ready" — growing by itself as
+   * chapters load. Absent for every course with no outline (every National
+   * course), whose card keeps "N lessons".
+   */
+  outline?: { ready: number; total: number };
 }

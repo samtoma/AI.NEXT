@@ -1,0 +1,87 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s4-1-5:both-values",
+ "kind": "family",
+ "lo_id": "lo:g10m6s4-1-5",
+ "parent_question_id": "q:g10m6s4-1-5:ex6-8-18",
+ "source_page": 219,
+ "tier": "standard",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "x0",
+   "choice": [
+    -2,
+    -1,
+    2
+   ]
+  },
+  {
+   "name": "a",
+   "choice": [
+    -4,
+    -3,
+    -2,
+    -1,
+    1,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "q",
+   "choice": [
+    -4,
+    -3,
+    -2,
+    -1,
+    1,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "qx",
+   "let": "q * x0"
+  },
+  {
+   "name": "xy",
+   "let": "qx + a"
+  },
+  {
+   "name": "y0",
+   "let": "(q + a // x0) if a % x0 == 0 else (q + a / x0)"
+  },
+  {
+   "require": "y0 != 0",
+   "why": "keeps A off the x-axis, so the point is read as an ordinary point of the graph"
+  }
+ ],
+ "constraints": [
+  "a != 0",
+  "q != 0",
+  "xy == x0 * y0"
+ ],
+ "stem": "The graph of a hyperbolic function of the form $y=\\dfrac{a}{x}+q$ has the horizontal asymptote $y={=q}$. Point A on the graph is at $\\left({=x0}, {=y0}\\right)$. Calculate the values of $a$ and $q$.",
+ "solution": [
+  "The horizontal asymptote of $y=\\frac{a}{x}+q$ is the line $y=q$. Here the asymptote is $y={=q}$, so $q={=q}$.",
+  "Substitute $q={=q}$ and the coordinates of A, $x={=x0}$ and $y={=y0}$, into $y=\\frac{a}{x}+q$: ${=y0}=\\frac{a}{{=x0}}{=signed(q)}$.",
+  "Multiply both sides by ${=x0}$ to clear the fraction: $\\left({=x0}\\right)\\times\\left({=y0}\\right)=\\left[\\frac{a}{{=x0}}{=signed(q)}\\right]\\times\\left({=x0}\\right)$, so ${=xy}=a{=signed(qx)}$.",
+  "Solve for $a$: $a={=xy}{=signed(-qx)}={=a}$.",
+  "Therefore $a={=a}$ and $q={=q}$."
+ ],
+ "marker": {
+  "kind": "values",
+  "answer": "[{=a}, {=q}]",
+  "form": null,
+  "variables": [
+   "a",
+   "q"
+  ],
+  "tolerance": null
+ },
+ "notes": "The book's typical exercise (ex6-4-1, ex6-4-2, ex6-8-18), same method and the same two-value answer format as the book's own marker ('a = -1; q = 2'). The figure is replaced by a sentence naming the horizontal asymptote. x in {-2, -1, 2}, so y is a whole number or a half (as in ex6-4-1 with A(-2, 5/2)); a and q are non-zero whole numbers in [-4, 4]. x is never 1 so multiplying by x is never vacuous.\n\nPIPELINE NORMALISATION (not an author edit): marker-values-plain-form: the marker answer was 'a = {=a}; q = {=q}', the book's printed form 'a = -1; q = 2'. The key is read by families/evaluator.py parse_plain, which splits an answer at ONE top-level '=' (a ';' reads as a ','), so 'a = 3, q = 2' has two and every attempt failed to evaluate ('more than one '='') instead of producing a key. The plain form for kind \"values\" with several variables is a list of the values, '[a, q]' (runbook/families.workflow.js: '[a, b] for several values'; the blind answer's names are stripped to that form by generate_questions.blind_plain, and the siblings tan-135, positive-q, negative-q already write it). The marker is now '[{=a}, {=q}]': the same two numbers, the same order, the same variables list. The stem (which still asks the student to write a=... and q=...), the answer values and the worked solution are unchanged."
+}

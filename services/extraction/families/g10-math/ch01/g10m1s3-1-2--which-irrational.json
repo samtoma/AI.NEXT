@@ -1,0 +1,141 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m1s3-1-2:which-irrational",
+ "kind": "family",
+ "lo_id": "lo:g10m1s3-1-2",
+ "parent_question_id": "q:g10m1s3-1-2:ex1-1-4i",
+ "source_page": 11,
+ "tier": "advanced",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "k",
+   "randint": [
+    3,
+    12
+   ]
+  },
+  {
+   "name": "n",
+   "let": "k * k"
+  },
+  {
+   "name": "q1",
+   "choice": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ]
+  },
+  {
+   "name": "p1",
+   "randint": [
+    1,
+    "q1 - 1"
+   ],
+   "resample_while": "gcd(p1, q1) != 1"
+  },
+  {
+   "name": "a",
+   "randint": [
+    1,
+    9
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    0,
+    9
+   ],
+   "resample_while": "b == a"
+  },
+  {
+   "name": "q2",
+   "choice": [
+    3,
+    6,
+    7,
+    9,
+    11,
+    13
+   ]
+  },
+  {
+   "name": "p2",
+   "randint": [
+    1,
+    "q2 - 1"
+   ],
+   "resample_while": "gcd(p2, q2) != 1"
+  },
+  {
+   "name": "w",
+   "randint": [
+    1,
+    9
+   ]
+  },
+  {
+   "name": "e1",
+   "randint": [
+    0,
+    9
+   ]
+  },
+  {
+   "name": "e2",
+   "randint": [
+    0,
+    9
+   ]
+  },
+  {
+   "name": "e3",
+   "randint": [
+    1,
+    9
+   ]
+  }
+ ],
+ "constraints": [
+  "gcd(p1, q1) == 1",
+  "gcd(p2, q2) == 1",
+  "a != b"
+ ],
+ "stem": "Exactly one of the four numbers in the choices is irrational. Which one? (In a recurring decimal, a dot over a digit marks the first and last digits of the block that repeats forever, so $0.\\dot{1}\\dot{3}$ means $0.131313\\ldots$)",
+ "choices": {
+  "correct": "$\\pi+{=w}.{=e1}{=e2}{=e3}$",
+  "distractors": [
+   {
+    "text": "$\\sqrt{{=n}}+\\frac{{=p1}}{{=q1}}$",
+    "misconception_id": "mc:g10m1s3-1-2:root-sign-means-irrational"
+   },
+   {
+    "text": "$0.\\dot{{=a}}\\dot{{=b}}$",
+    "misconception_id": "mc:g10m1s3-1-2:rational-must-come-out-neat"
+   },
+   {
+    "text": "$-\\frac{{=p2}}{{=q2}}$",
+    "misconception_id": "mc:g10m1s3-1-2:rational-must-come-out-neat"
+   }
+  ]
+ },
+ "solution": [
+  "A number is rational if it can be written as a fraction of integers, and irrational if it cannot. Check the four numbers one at a time.",
+  "$\\sqrt{{=n}}={=k}$ because ${=k}^2={=n}$. So $\\sqrt{{=n}}+\\frac{{=p1}}{{=q1}}={=k}+\\frac{{=p1}}{{=q1}}=\\frac{{=k*q1+p1}}{{=q1}}$, which is a fraction of integers. It is rational.",
+  "$0.\\dot{{=a}}\\dot{{=b}}$ is a recurring decimal: the digits {=a}{=b} repeat forever. A recurring decimal can be written as a fraction of integers (here $0.\\dot{{=a}}\\dot{{=b}}=\\frac{{=10*a+b}}{99}$), so it is rational.",
+  "$-\\frac{{=p2}}{{=q2}}$ is already a fraction of integers, so it is rational, even though its decimal goes on forever.",
+  "$\\pi$ is irrational. ${=w}.{=e1}{=e2}{=e3}$ is rational (it is a terminating decimal). Any rational number added to any irrational number is irrational. Therefore $\\pi+{=w}.{=e1}{=e2}{=e3}$ is irrational.",
+  "Three of the four numbers are rational, so the irrational number is $\\pi+{=w}.{=e1}{=e2}{=e3}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced because it is a four-way comparison where every option needs a different test, and the correct option uses the twist the book itself uses in ex1-1-4h and 4i: a terminating decimal (rational) added to pi (irrational) is irrational. Exactly one option is irrational in every instance: sqrt(k^2) + p/q = (kq+p)/q is rational; the recurring decimal 0.\\dot{a}\\dot{b} = (10a+b)/99 is rational; -p2/q2 is a fraction of integers (q2 is chosen so its decimal does not stop, which is the bait for rational-must-come-out-neat); pi + a 3-place decimal is irrational. The last decimal digit is never 0 so the terminating decimal prints with exactly three places; a != b so the recurring block is genuinely two digits; gcd conditions keep both fractions in lowest terms. Scope notes for the reviewer: (1) the recurring-decimal solution step quotes the value (10a+b)/99 as a fact, it does not teach the conversion method; if the reviewer thinks that goes beyond the book's treatment, delete the parenthesis. (2) The dot notation is explained in the stem because the printed book questions do not use it. (3) The solution uses the book's own wording for the rational-plus-irrational rule and its own wording for 'a fraction of integers'.\n\nPIPELINE NORMALISATION (not an author edit): distinct-by-choices: the stem has no {=…} hole, so it is the same sentence in every instance and only the options differ; the duplicate filter now reads stem plus options, so the family is not collapsed to one item.",
+ "distinct_by_choices": true
+}

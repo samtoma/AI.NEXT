@@ -1,0 +1,742 @@
+{
+ "format": "ainext.working-check/1",
+ "book": "g10-math",
+ "chapter": 8,
+ "prompts_version": "sw-v3",
+ "rule": "Each flag is a backlog item for a human (answer 30; answer 37c). Nothing here was corrected: the content stays as the book and G2 have it until a human decides.",
+ "passes": [
+  "A",
+  "B"
+ ],
+ "single_pass_ids": [
+  "q:g10m8s2-1-1:ex8-6-39a"
+ ],
+ "solutions": 192,
+ "skipped": [
+  {
+   "id": "expl:g10m8s1-1-1:ex8-6-4a",
+   "why": "no working to check (the solution is a drawing)"
+  },
+  {
+   "id": "expl:g10m8s1-1-1:ex8-6-4b",
+   "why": "no working to check (the solution is a drawing)"
+  },
+  {
+   "id": "expl:g10m8s1-1-1:ex8-6-4c",
+   "why": "no working to check (the solution is a drawing)"
+  },
+  {
+   "id": "expl:g10m8s1-1-1:ex8-6-4d",
+   "why": "no working to check (the solution is a drawing)"
+  },
+  {
+   "id": "expl:g10m8s1-1-1:ex8-6-20a",
+   "why": "no working to check (the solution is a drawing)"
+  },
+  {
+   "id": "expl:g10m8s1-1-1:ex8-6-25a",
+   "why": "no working to check (the solution is a drawing)"
+  }
+ ],
+ "verdicts": {
+  "consistent": 168,
+  "flagged": 24,
+  "unclear": 0
+ },
+ "flags": [
+  {
+   "solution_id": "expl:g10m8s2-1-1:ex8-6-36c",
+   "lo": "lo:g10m8s2-1-1",
+   "step": 3,
+   "kind": "other",
+   "where": "working",
+   "quote": "Therefore $LMNP$ is a square, all the sides are equal in length.",
+   "expected": "",
+   "why": "Four equal sides only show a rhombus; a square also needs a right angle or equal diagonals, which the steps never show.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m8s3-2-2:ex8-6-26",
+   "lo": "lo:g10m8s3-2-2",
+   "step": 4,
+   "kind": "wrong_value",
+   "where": "working",
+   "quote": "m_{PR}\\times m_{QR}&=-\\frac{1}{7}\\times\\frac{7}{1}",
+   "expected": "m_{PR} = -4/3 (step 2); -1/7 is m_{PQ}",
+   "why": "The value -1/7 is m_PQ, not m_PR, which step 2 gives as -4/3, so the product is mislabelled.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ],
+   "also_kinds": [
+    "label"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m8s3-2-2:ex8-6-26",
+   "lo": "lo:g10m8s3-2-2",
+   "step": 5,
+   "kind": "label",
+   "where": "working",
+   "quote": "$PR\\perp QR$",
+   "expected": "PQ ⊥ QR",
+   "why": "The perpendicular sides are PQ and QR (right angle at Q); PR is the hypotenuse and its gradient is -4/3.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m8s3-2-2:ex8-6-38d",
+   "lo": "lo:g10m8s3-2-2",
+   "step": 1,
+   "kind": "wrong_value",
+   "where": "working",
+   "quote": "\\frac{-2-1}{1-4}",
+   "expected": "R has x-coordinate 5, so 1-5",
+   "why": "The x-coordinate of R is 5, so the denominator should be 1-5=-4, not 1-4; the written 1-4=-3 would not give 3/4.",
+   "sources": [
+    "agent",
+    "numeric"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ],
+   "numeric": {
+    "left": "\\frac{-2-1}{1-4}",
+    "relation": "=",
+    "right": "\\frac{3}{4}",
+    "why": "\\frac{-2-1}{1-4} = \\frac{3}{4} does not hold (1 vs 0.75)"
+   }
+  },
+  {
+   "solution_id": "expl:g10m8s3-2-2:ex8-6-39d",
+   "lo": "lo:g10m8s3-2-2",
+   "step": 1,
+   "kind": "other",
+   "where": "working",
+   "quote": "\\therefore ST\\parallel PR\\text{ (equal gradients)}",
+   "expected": "m_ST computed and equal to 3/4",
+   "why": "Only m_PR is computed; no gradient of ST is found, so the conclusion of equal gradients is not supported.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "B"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m8s3-2-3:ex8-6-42d",
+   "lo": "lo:g10m8s3-2-3",
+   "step": 1,
+   "kind": "sign",
+   "where": "working",
+   "quote": "-2-(-\\text{0.5})",
+   "expected": "C has x = 2, so 2-(-0.5)",
+   "why": "The x-coordinate of C is 2, not -2, and -2-(-0.5) would not equal the 2.5 used next.",
+   "sources": [
+    "agent",
+    "numeric"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ],
+   "also_kinds": [
+    "wrong_value"
+   ],
+   "numeric": {
+    "left": "\\frac{-5-(-\\text{4.5})}{-2-(-\\text{0.5})}",
+    "relation": "=",
+    "right": "\\frac{-\\text{0.5}}{\\text{2.5}}",
+    "why": "\\frac{-5-(-\\text{4.5})}{-2-(-\\text{0.5})} = \\frac{-\\text{0.5}}{\\text{2.5}} does not hold (0.333333 vs -0.2)"
+   }
+  },
+  {
+   "solution_id": "expl:g10m8s4-1-1:ex8-6-27",
+   "lo": "lo:g10m8s4-1-1",
+   "step": 2,
+   "kind": "wrong_value",
+   "where": "working",
+   "quote": "N&=\\left(\\frac{-3+3}{2}, \\frac{4-2}{2}\\right)",
+   "expected": "B(3, -2) and C(-5, -2)",
+   "why": "N is the mid-point of BC, but the working uses the coordinates of A and B, which gives the mid-point of AB.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m8s2-1-1:ex8-2-1",
+   "lo": "lo:g10m8s2-1-1",
+   "step": 1,
+   "kind": "copy",
+   "where": "working",
+   "quote": "\\sqrt{(1-(-2))^{2}+(-3-(3))^{2}}",
+   "expected": "x_B=-2, x_A=1, y_B=3, y_A=-3",
+   "why": "The formula is (x_B-x_A) and (y_B-y_A), but the substitution uses x_A-x_B and y_A-y_B, the reverse order.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ],
+   "also_kinds": [
+    "label"
+   ]
+  },
+  {
+   "solution_id": "q:g10m8s2-1-1:ex8-2-2",
+   "lo": "lo:g10m8s2-1-1",
+   "step": 1,
+   "kind": "label",
+   "where": "working",
+   "quote": "(1-(-1))^{2}+(1-2)^{2}",
+   "expected": "x_B=-1, x_A=1, y_B=2, y_A=1",
+   "why": "The formula uses x_B-x_A, but the figure gives B(-1;2) and A(1;1), so A's and B's coordinates are swapped in the substitution.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ],
+   "also_kinds": [
+    "wrong_value"
+   ]
+  },
+  {
+   "solution_id": "q:g10m8s2-1-1:ex8-6-24a",
+   "lo": "lo:g10m8s2-1-1",
+   "step": 1,
+   "kind": "final_answer",
+   "where": "working",
+   "quote": "First draw a sketch of the quadrilateral:",
+   "expected": "",
+   "why": "the working shows no calculation and never states the key (the solution stops short of the answer)",
+   "sources": [
+    "stub"
+   ],
+   "passes": [],
+   "numeric": {
+    "why": "the working shows no calculation and never states the key (the solution stops short of the answer)"
+   }
+  },
+  {
+   "solution_id": "q:g10m8s2-1-1:ex8-6-42a",
+   "lo": "lo:g10m8s2-1-1",
+   "step": 1,
+   "kind": "copy",
+   "where": "working",
+   "quote": "\\sqrt{5^2(-1)^2}",
+   "expected": "\\sqrt{5^2+(-1)^2}",
+   "why": "The previous line has a sum under the root; this line drops the plus sign, so it reads as a product (25), not 26.",
+   "sources": [
+    "agent",
+    "numeric"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ],
+   "numeric": {
+    "left": "\\sqrt{(2-(-3))^2+(-5-(-4))^2}",
+    "relation": "=",
+    "right": "\\sqrt{5^2(-1)^2}",
+    "why": "\\sqrt{(2-(-3))^2+(-5-(-4))^2} = \\sqrt{5^2(-1)^2} does not hold (5.09902 vs 5)"
+   }
+  },
+  {
+   "solution_id": "q:g10m8s2-1-1:we01",
+   "lo": "lo:g10m8s2-1-1",
+   "step": 2,
+   "kind": "label",
+   "where": "question",
+   "quote": "the coordinates of $T$ be",
+   "expected": "Q(7, -2)",
+   "why": "The question names the second point Q, but the working and the final statement call it T.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m8s2-1-2:ex8-2-4",
+   "lo": "lo:g10m8s2-1-2",
+   "step": 1,
+   "kind": "label",
+   "where": "working",
+   "quote": "(1-(-3))^{2}+(y-(-\\text{2.5}))^{2}",
+   "expected": "x_B=-3, x_A=1, y_B=-2.5, y_A=y",
+   "why": "The formula uses x_B-x_A, but the figure gives A(1;y) and B(-3;-2.5), so A's and B's coordinates are swapped in the substitution.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m8s3-2-1:ex8-6-34c",
+   "lo": "lo:g10m8s3-2-1",
+   "step": 1,
+   "kind": "other",
+   "where": "working",
+   "quote": "y=-\\frac{1}{2}x+c",
+   "expected": "gradient from P(-3,4) and Q(7,-1)",
+   "why": "The gradient -1/2 is used without being calculated from P and Q or given earlier.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A"
+   ]
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-4-10",
+   "lo": "lo:g10m8s3-2-2",
+   "step": 3,
+   "kind": "label",
+   "where": "working",
+   "quote": "to solve for $x$",
+   "expected": "solve for y",
+   "why": "B is (2, y), so the unknown is y; the working then solves for y, not x.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-4-19b",
+   "lo": "lo:g10m8s3-2-2",
+   "step": 2,
+   "kind": "label",
+   "where": "working",
+   "quote": "d&=\\sqrt{(-5-2)^{2}+(2+4)^{2}}",
+   "expected": "BC uses B(2;-4) and C(8;3)",
+   "why": "These coordinates are A(-5;2) and B(2;-4), so this is the length of AB, not BC as the step introduces.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-4-19b",
+   "lo": "lo:g10m8s3-2-2",
+   "step": 4,
+   "kind": "label",
+   "where": "working",
+   "quote": "d&=\\sqrt{(8-2)^{2}+(3+4)^{2}}",
+   "expected": "AB uses A(-5;2) and B(2;-4)",
+   "why": "These coordinates are B(2;-4) and C(8;3), so this is the length of BC, not AB as the step introduces.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-4-1b",
+   "lo": "lo:g10m8s3-2-2",
+   "step": 5,
+   "kind": "other",
+   "where": "working",
+   "quote": "m_{AB}\\times\\frac{1}{m_{CD}}\\ne-1",
+   "expected": "m_AB × m_CD = -9, not -1",
+   "why": "With m_AB=3 and m_CD=-3, 3×(1/(-3)) equals -1, so the stated inequality is false and the perpendicularity test is wrong.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ],
+   "also_kinds": [
+    "arithmetic"
+   ]
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-4-8",
+   "lo": "lo:g10m8s3-2-2",
+   "step": 1,
+   "kind": "other",
+   "where": "unsure",
+   "quote": "y=-x+\\text{4.5}",
+   "expected": "y=-x+4.5",
+   "why": "The figure labels the dashed line y = x + 4,5 although it is drawn sloping down, while the question and working use y = -x + 4.5.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A"
+   ]
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-6-42e",
+   "lo": "lo:g10m8s3-2-2",
+   "step": 1,
+   "kind": "other",
+   "where": "working",
+   "quote": "Since the diagonals are equal in length we know that the quadrilateral must be a square.",
+   "expected": "",
+   "why": "Equal diagonals do not imply a square (a rectangle also has equal diagonals), so the conclusion is not supported by this step.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-6-44d",
+   "lo": "lo:g10m8s3-2-2",
+   "step": 2,
+   "kind": "sign",
+   "where": "working",
+   "quote": "-\\frac{3}{2}&=(3)(\\frac{1}{2})+c",
+   "expected": "m = -3, so (-3)(1/2)",
+   "why": "The gradient found is -3, but it is substituted as 3; the next line c = -3/2 + 3/2 only follows from -3.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "A",
+    "B",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m8s3-2-3:ex8-4-5",
+   "lo": "lo:g10m8s3-2-3",
+   "step": 5,
+   "kind": "label",
+   "where": "working",
+   "quote": "m_{PR}=m_{QR}=-\\frac{1}{2}",
+   "expected": "m_{PQ}=m_{QR}",
+   "why": "Step 1 and the computed gradient are for PQ, but this step names the gradient of PR instead.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m8s4-1-1:ex8-6-17",
+   "lo": "lo:g10m8s4-1-1",
+   "step": 1,
+   "kind": "sign",
+   "where": "working",
+   "quote": "\\frac{-2-2}{2}",
+   "expected": "(-2+2)/2",
+   "why": "x_B is 2, so the sum should be -2+2; as written -2-2 over 2 equals -2, not the 0 stated next.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m8s4-1-1:ex8-6-24c",
+   "lo": "lo:g10m8s4-1-1",
+   "step": 1,
+   "kind": "label",
+   "where": "working",
+   "quote": "M_{QR}",
+   "expected": "M_{PR}",
+   "why": "The question asks for the mid-point of PR, and the working uses P(0,-3) and R(3,2), but names it M_QR.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m8s4-1-1:we10",
+   "lo": "lo:g10m8s4-1-1",
+   "step": 2,
+   "kind": "label",
+   "where": "working",
+   "quote": "x_{1}=2y_{2}=1",
+   "expected": "x_2 = 2",
+   "why": "The second x-value is labelled x_1 again, duplicating the first; it should be x_2, as step 4 uses.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m8s4-1-3:ex8-6-38e",
+   "lo": "lo:g10m8s4-1-3",
+   "step": 2,
+   "kind": "label",
+   "where": "working",
+   "quote": "M(1, 2)=S\\left(\\frac{x+1}{2}, \\frac{y-2}{2}\\right)",
+   "expected": "M(1, 2) = M((x+1)/2, (y-2)/2)",
+   "why": "The midpoint expression of Q(1,-2) and S(x,y) is labelled S, but it is the midpoint M, not S.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A"
+   ]
+  },
+  {
+   "solution_id": "q:g10m8s4-1-3:ex8-6-46e",
+   "lo": "lo:g10m8s4-1-3",
+   "step": 2,
+   "kind": "arithmetic",
+   "where": "working",
+   "quote": "(8, 12)&=\\left(\\frac{x_p}{2}, \\frac{y_p}{2}\\right)",
+   "expected": "(4, 6) = (x_p/2, y_p/2)",
+   "why": "The previous line sets (4, 6) equal to (x_p/2, y_p/2); the next line wrongly writes (8, 12) on the left instead of multiplying through.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "B"
+   ]
+  }
+ ],
+ "flagged_solutions": 25,
+ "unclear": [],
+ "unchecked": [],
+ "problems": [],
+ "checked_ids": [
+  "expl:g10m8s1-1-2:ex8-1-2",
+  "expl:g10m8s1-1-2:ex8-6-1",
+  "expl:g10m8s2-1-1:ex8-6-21a",
+  "expl:g10m8s2-1-1:ex8-6-22a",
+  "expl:g10m8s2-1-1:ex8-6-25b",
+  "expl:g10m8s2-1-1:ex8-6-36c",
+  "expl:g10m8s2-1-1:ex8-6-44f",
+  "expl:g10m8s3-2-1:ex8-6-29b",
+  "expl:g10m8s3-2-2:ex8-4-19a",
+  "expl:g10m8s3-2-2:ex8-4-20a",
+  "expl:g10m8s3-2-2:ex8-6-21b",
+  "expl:g10m8s3-2-2:ex8-6-22b",
+  "expl:g10m8s3-2-2:ex8-6-26",
+  "expl:g10m8s3-2-2:ex8-6-30e",
+  "expl:g10m8s3-2-2:ex8-6-32b",
+  "expl:g10m8s3-2-2:ex8-6-38d",
+  "expl:g10m8s3-2-2:ex8-6-39d",
+  "expl:g10m8s3-2-2:ex8-6-40b",
+  "expl:g10m8s3-2-2:ex8-6-42c",
+  "expl:g10m8s3-2-2:ex8-6-46c",
+  "expl:g10m8s3-2-2:we06",
+  "expl:g10m8s3-2-3:ex8-6-25e",
+  "expl:g10m8s3-2-3:ex8-6-30c",
+  "expl:g10m8s3-2-3:ex8-6-42d",
+  "expl:g10m8s3-2-3:we08",
+  "expl:g10m8s3-2-3:we09",
+  "expl:g10m8s4-1-1:ex8-6-21d",
+  "expl:g10m8s4-1-1:ex8-6-24d",
+  "expl:g10m8s4-1-1:ex8-6-27",
+  "expl:g10m8s4-1-1:ex8-6-28b",
+  "expl:g10m8s4-1-1:ex8-6-37b",
+  "expl:g10m8s4-1-1:ex8-6-39b",
+  "expl:g10m8s4-1-3:ex8-6-31d",
+  "expl:g10m8s4-1-3:ex8-6-44b",
+  "q:g10m8s1-1-2:ex8-1-1",
+  "q:g10m8s1-1-2:ex8-1-3",
+  "q:g10m8s1-1-2:ex8-1-4",
+  "q:g10m8s1-1-2:ex8-6-2",
+  "q:g10m8s1-1-3:ex8-1-5",
+  "q:g10m8s1-1-3:ex8-1-6",
+  "q:g10m8s1-1-3:ex8-6-3",
+  "q:g10m8s2-1-1:ex8-2-1",
+  "q:g10m8s2-1-1:ex8-2-2",
+  "q:g10m8s2-1-1:ex8-2-5a",
+  "q:g10m8s2-1-1:ex8-2-5b",
+  "q:g10m8s2-1-1:ex8-2-5c",
+  "q:g10m8s2-1-1:ex8-6-10b",
+  "q:g10m8s2-1-1:ex8-6-19a",
+  "q:g10m8s2-1-1:ex8-6-20b",
+  "q:g10m8s2-1-1:ex8-6-22c",
+  "q:g10m8s2-1-1:ex8-6-22d",
+  "q:g10m8s2-1-1:ex8-6-24a",
+  "q:g10m8s2-1-1:ex8-6-30a",
+  "q:g10m8s2-1-1:ex8-6-32c",
+  "q:g10m8s2-1-1:ex8-6-34a",
+  "q:g10m8s2-1-1:ex8-6-37c",
+  "q:g10m8s2-1-1:ex8-6-38a",
+  "q:g10m8s2-1-1:ex8-6-39a",
+  "q:g10m8s2-1-1:ex8-6-42a",
+  "q:g10m8s2-1-1:ex8-6-44g",
+  "q:g10m8s2-1-1:ex8-6-5",
+  "q:g10m8s2-1-1:we01",
+  "q:g10m8s2-1-2:ex8-2-3",
+  "q:g10m8s2-1-2:ex8-2-4",
+  "q:g10m8s2-1-2:ex8-2-6a",
+  "q:g10m8s2-1-2:ex8-2-6b",
+  "q:g10m8s2-1-2:ex8-2-7",
+  "q:g10m8s2-1-2:ex8-6-33b",
+  "q:g10m8s2-1-2:ex8-6-6",
+  "q:g10m8s2-1-2:we02",
+  "q:g10m8s3-1-1:ex8-3-1a",
+  "q:g10m8s3-1-1:ex8-3-1b",
+  "q:g10m8s3-1-1:ex8-3-1c",
+  "q:g10m8s3-1-1:ex8-3-2",
+  "q:g10m8s3-1-1:ex8-3-3",
+  "q:g10m8s3-1-1:ex8-6-24b",
+  "q:g10m8s3-1-1:ex8-6-25d",
+  "q:g10m8s3-1-1:ex8-6-30b",
+  "q:g10m8s3-1-1:ex8-6-32a",
+  "q:g10m8s3-1-1:ex8-6-34b",
+  "q:g10m8s3-1-1:ex8-6-35b",
+  "q:g10m8s3-1-1:ex8-6-37a",
+  "q:g10m8s3-1-1:ex8-6-39c",
+  "q:g10m8s3-1-1:ex8-6-43b",
+  "q:g10m8s3-1-1:ex8-6-44e",
+  "q:g10m8s3-1-1:ex8-6-46a",
+  "q:g10m8s3-1-1:ex8-6-7",
+  "q:g10m8s3-1-1:we03",
+  "q:g10m8s3-1-2:ex8-3-4a",
+  "q:g10m8s3-1-2:ex8-3-4b",
+  "q:g10m8s3-1-2:ex8-3-5",
+  "q:g10m8s3-1-2:ex8-3-6",
+  "q:g10m8s3-1-2:ex8-6-8",
+  "q:g10m8s3-1-2:ex8-6-9",
+  "q:g10m8s3-1-2:we04",
+  "q:g10m8s3-2-1:ex8-4-15",
+  "q:g10m8s3-2-1:ex8-4-16",
+  "q:g10m8s3-2-1:ex8-4-3",
+  "q:g10m8s3-2-1:ex8-4-4",
+  "q:g10m8s3-2-1:ex8-4-6",
+  "q:g10m8s3-2-1:ex8-6-10a",
+  "q:g10m8s3-2-1:ex8-6-15",
+  "q:g10m8s3-2-1:ex8-6-18a",
+  "q:g10m8s3-2-1:ex8-6-18c",
+  "q:g10m8s3-2-1:ex8-6-30d",
+  "q:g10m8s3-2-1:ex8-6-32d",
+  "q:g10m8s3-2-1:ex8-6-34c",
+  "q:g10m8s3-2-1:ex8-6-37e",
+  "q:g10m8s3-2-1:ex8-6-40a",
+  "q:g10m8s3-2-1:ex8-6-40c",
+  "q:g10m8s3-2-1:ex8-6-40d",
+  "q:g10m8s3-2-1:ex8-6-40e",
+  "q:g10m8s3-2-1:ex8-6-41b",
+  "q:g10m8s3-2-1:ex8-6-43c",
+  "q:g10m8s3-2-1:ex8-6-44c",
+  "q:g10m8s3-2-1:ex8-6-45a",
+  "q:g10m8s3-2-1:ex8-6-46b",
+  "q:g10m8s3-2-1:we05",
+  "q:g10m8s3-2-2:ex8-4-10",
+  "q:g10m8s3-2-2:ex8-4-11",
+  "q:g10m8s3-2-2:ex8-4-12",
+  "q:g10m8s3-2-2:ex8-4-13",
+  "q:g10m8s3-2-2:ex8-4-17",
+  "q:g10m8s3-2-2:ex8-4-19b",
+  "q:g10m8s3-2-2:ex8-4-1a",
+  "q:g10m8s3-2-2:ex8-4-1b",
+  "q:g10m8s3-2-2:ex8-4-20b",
+  "q:g10m8s3-2-2:ex8-4-20c",
+  "q:g10m8s3-2-2:ex8-4-7",
+  "q:g10m8s3-2-2:ex8-4-8",
+  "q:g10m8s3-2-2:ex8-4-9",
+  "q:g10m8s3-2-2:ex8-6-11",
+  "q:g10m8s3-2-2:ex8-6-12",
+  "q:g10m8s3-2-2:ex8-6-13",
+  "q:g10m8s3-2-2:ex8-6-14",
+  "q:g10m8s3-2-2:ex8-6-18b",
+  "q:g10m8s3-2-2:ex8-6-19b",
+  "q:g10m8s3-2-2:ex8-6-19d",
+  "q:g10m8s3-2-2:ex8-6-21c",
+  "q:g10m8s3-2-2:ex8-6-22e",
+  "q:g10m8s3-2-2:ex8-6-29a",
+  "q:g10m8s3-2-2:ex8-6-31b",
+  "q:g10m8s3-2-2:ex8-6-33a",
+  "q:g10m8s3-2-2:ex8-6-35c",
+  "q:g10m8s3-2-2:ex8-6-35d",
+  "q:g10m8s3-2-2:ex8-6-35e",
+  "q:g10m8s3-2-2:ex8-6-36b",
+  "q:g10m8s3-2-2:ex8-6-37d",
+  "q:g10m8s3-2-2:ex8-6-42e",
+  "q:g10m8s3-2-2:ex8-6-43d",
+  "q:g10m8s3-2-2:ex8-6-44d",
+  "q:g10m8s3-2-2:ex8-6-45b",
+  "q:g10m8s3-2-2:we07",
+  "q:g10m8s3-2-3:ex8-4-18",
+  "q:g10m8s3-2-3:ex8-4-2a",
+  "q:g10m8s3-2-3:ex8-4-2b",
+  "q:g10m8s3-2-3:ex8-4-2c",
+  "q:g10m8s3-2-3:ex8-4-5",
+  "q:g10m8s3-2-3:ex8-6-34d",
+  "q:g10m8s3-2-3:ex8-6-41a",
+  "q:g10m8s3-2-3:ex8-6-45c",
+  "q:g10m8s3-2-3:ex8-6-47a",
+  "q:g10m8s4-1-1:ex8-5-1",
+  "q:g10m8s4-1-1:ex8-5-2",
+  "q:g10m8s4-1-1:ex8-5-3a",
+  "q:g10m8s4-1-1:ex8-5-3b",
+  "q:g10m8s4-1-1:ex8-5-3c",
+  "q:g10m8s4-1-1:ex8-6-16",
+  "q:g10m8s4-1-1:ex8-6-17",
+  "q:g10m8s4-1-1:ex8-6-19c",
+  "q:g10m8s4-1-1:ex8-6-24c",
+  "q:g10m8s4-1-1:ex8-6-25c",
+  "q:g10m8s4-1-1:ex8-6-31c",
+  "q:g10m8s4-1-1:ex8-6-35a",
+  "q:g10m8s4-1-1:ex8-6-38b",
+  "q:g10m8s4-1-1:ex8-6-38c",
+  "q:g10m8s4-1-1:ex8-6-42b",
+  "q:g10m8s4-1-1:ex8-6-44a",
+  "q:g10m8s4-1-1:we10",
+  "q:g10m8s4-1-1:we11",
+  "q:g10m8s4-1-2:ex8-5-4",
+  "q:g10m8s4-1-2:ex8-6-29c",
+  "q:g10m8s4-1-2:ex8-6-31a",
+  "q:g10m8s4-1-2:ex8-6-43a",
+  "q:g10m8s4-1-2:ex8-6-47b",
+  "q:g10m8s4-1-2:we12",
+  "q:g10m8s4-1-3:ex8-6-23",
+  "q:g10m8s4-1-3:ex8-6-31e",
+  "q:g10m8s4-1-3:ex8-6-36a",
+  "q:g10m8s4-1-3:ex8-6-38e",
+  "q:g10m8s4-1-3:ex8-6-46e",
+  "q:g10m8s4-1-3:we13"
+ ],
+ "runs": [
+  "bc94c4c5bf3bd1b7967580234aaac3bbda240508814506ff77b504b5e60faca9",
+  "e3a61ae22e382a53634b34a66a108230941af3ec025e62583ec04d8235a81486"
+ ]
+}

@@ -1,0 +1,55 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m4s6-1-2:twoterms",
+ "kind": "family",
+ "lo_id": "lo:g10m4s6-1-2",
+ "parent_question_id": "q:g10m4s6-1-2:ex4-5-9",
+ "source_page": 95,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    2,
+    9
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    2,
+    9
+   ],
+   "resample_while": "b == a"
+  }
+ ],
+ "constraints": [
+  "a != b",
+  "a >= 2",
+  "b >= 2"
+ ],
+ "stem": "Make $x$ the subject of the formula $y = {=a}px + {=b}qx$.",
+ "solution": [
+  "$x$ is in both terms on the right-hand side, so take it out as a common factor: $y = x({=a}p + {=b}q)$.",
+  "$x$ is now multiplied by the bracket. Divide both sides by $({=a}p + {=b}q)$: $\\frac{y}{{=a}p + {=b}q} = x$.",
+  "Write $x$ on the left: $x = \\frac{y}{{=a}p + {=b}q}$."
+ ],
+ "marker": {
+  "kind": "equation",
+  "answer": "x = y/({=a}*p + {=b}*q)",
+  "form": {
+   "subject": "x"
+  },
+  "variables": [
+   "x",
+   "y",
+   "p",
+   "q"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Entry point of the skill, modelled on book question ex4-5-9 (E = mgh + 1/2 mv^2, solve for m): the subject appears in exactly two terms, nothing else is on the subject's side, so the whole job is factorise then divide. Letters p, q, x, y are fixed; only the two coefficients a and b (2 to 9, different) change, giving 56 distinct stems. Coefficients are at least 2 so no '1px' is ever printed. Every instance's answer is x = y/(ap + bq); the denominator is never 0 because p and q are letters (the book's own note on restrictions, ex4-5-9, is not asked of the student here). No mcq, so no distractors and the catalogued misconception is not used."
+}

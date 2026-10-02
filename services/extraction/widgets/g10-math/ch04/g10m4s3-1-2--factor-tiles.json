@@ -1,0 +1,86 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m4s3-1-2:factor-tiles",
+ "lo_id": "lo:g10m4s3-1-2",
+ "parent_question_id": "q:g10m4s3-1-2:ex4-2-2a",
+ "tier": "basic",
+ "kind": "area_model",
+ "instances": [
+  {
+   "a": 3,
+   "b": -2,
+   "expr": "x^2+x-6",
+   "prod": -6,
+   "sum": 1,
+   "fa": "x+3",
+   "fb": "x-2",
+   "r1": -3,
+   "r2": 2
+  },
+  {
+   "a": -4,
+   "b": 1,
+   "expr": "x^2-3x-4",
+   "prod": -4,
+   "sum": -3,
+   "fa": "x-4",
+   "fb": "x+1",
+   "r1": 4,
+   "r2": -1
+  },
+  {
+   "a": 4,
+   "b": -2,
+   "expr": "x^2+2x-8",
+   "prod": -8,
+   "sum": 2,
+   "fa": "x+4",
+   "fb": "x-2",
+   "r1": -4,
+   "r2": 2
+  },
+  {
+   "a": -3,
+   "b": -1,
+   "expr": "x^2-4x+3",
+   "prod": 3,
+   "sum": -4,
+   "fa": "x-3",
+   "fb": "x-1",
+   "r1": 3,
+   "r2": 1
+  },
+  {
+   "a": 2,
+   "b": -4,
+   "expr": "x^2-2x-8",
+   "prod": -8,
+   "sum": -2,
+   "fa": "x+2",
+   "fb": "x-4",
+   "r1": -2,
+   "r2": 4
+  }
+ ],
+ "spec": {
+  "mode": "factor",
+  "a": "{=a}",
+  "b": "{=b}"
+ },
+ "stem": "To solve ${=expr}=0$ by factorising, first factorise the left-hand side. Build a rectangle of algebra tiles whose tiles together make ${=expr}$: its two sides are the factors. (Hatched tiles marked − are negative.)",
+ "solution": [
+  "Look for two numbers whose product is ${=prod}$ (the constant term) and whose sum is ${=sum}$ (the coefficient of $x$).",
+  "The numbers are ${=a}$ and ${=b}$: they multiply to ${=prod}$ and add to ${=sum}$.",
+  "Anchor the $x^2$ tile, then lay out $x$-tiles along its top edge to show ${=a}$ and along its left edge to show ${=b}$ (a negative number is hatched and marked −).",
+  "Fill the block those two runs bound with the unit tiles: they make ${=prod}$.",
+  "The tiles make ${=expr}$ and form a rectangle with sides ${=fa}$ and ${=fb}$, so ${=expr}=({=fa})({=fb})$.",
+  "Solve by setting each factor equal to 0: ${=fa}=0$ or ${=fb}=0$, so $x={=r1}$ or $x={=r2}$."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "middle-term-sign",
+   "misconception_id": "mc:g10m1s7-2-1:factor-pair-middle-term-untested"
+  }
+ ],
+ "notes": "FIT: factorising is the step of this objective where the diagnosable error lives, and the tile rectangle makes the student test the x term while placing the constant (the sum of the two runs IS the coefficient of x). Graded as the property (the tiles total the quadratic and tile a rectangle), so any equivalent arrangement is accepted (FR-1205). LIMITS: the instrument is monic only with |a|,|b| <= 4. The anchor 2a (x^2+2x-15, factors 5 and -3) and 2b (p^2-7p-18, factors 2 and -9) are out of range, so instances use same-type monic quadratics with small factors; anchors 2c-2f (non-monic) cannot be reached by this kind. Every instance was checked: a+b = sum, a*b = prod, and (x+a)(x+b) expands to expr. The grid also cannot hold a wrong factor pair with a number above 4, which quietly steers the student toward in-range pairs. DIAGNOSTICS: only middle-term-sign is mapped (constant right, x term wrong is the signature of a factor pair of c written down without testing the sum). Rival explanation for the same predicate, not mapped: mc:g10m1s6-1-2:x-term-from-k-alone (a student who lays x-tiles along one edge only, so the x term is one number alone). constant-sign (sum right, product wrong) is left unmapped: no misconception on this objective's list names it. missing-cross-term, not-a-rectangle and off-target fire for too many unrelated reasons to name one. SCOPE: the widget grades the factorisation only. The zero-product step (last solution step) is stated but not graded here; reading roots with the right signs is covered by the gap recorded for this objective."
+}

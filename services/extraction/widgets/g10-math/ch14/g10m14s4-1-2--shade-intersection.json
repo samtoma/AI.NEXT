@@ -1,0 +1,31 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m14s4-1-2:shade-intersection",
+ "lo_id": "lo:g10m14s4-1-2",
+ "parent_question_id": "q:g10m14s4-1-2:ex14-4-1",
+ "tier": "basic",
+ "kind": "venn_builder",
+ "spec": {
+  "sets": 2,
+  "labels": [
+   "A",
+   "B"
+  ],
+  "mode": "shade",
+  "target": "intersection"
+ },
+ "stem": "The sample space is the whole numbers from 1 to 15, drawn as the rectangle. Event $A$ and event $B$ are the two overlapping circles. Shade the region that holds every outcome of $A\\cap B$.",
+ "solution": [
+  "Read the symbol $A\\cap B$ as \"$A$ and $B$\": an outcome belongs to it only if it is in $A$ and also in $B$ at the same time.",
+  "The only part of the diagram that lies inside both circles is the overlap, so shade just that.",
+  "Do not shade the part of $A$ outside the overlap or the part of $B$ outside the overlap: each of those outcomes is in one event only.",
+  "Leave the part of the rectangle outside both circles unshaded too: those outcomes are in neither event."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "off-target",
+   "misconception_id": "mc:g10m14s4-1-2:either-set-not-both"
+  }
+ ],
+ "notes": "Genuine fit: the student picks out the one region inside both circles, which is what \"only the elements that are in both sets\" means. The widget's shade/intersection case can emit only off-target, so this template has one diagnostic and it is a judgement call. off-target is mapped to either-set-not-both because the stem names both events and the and/or confusion (shading everything inside either circle, the union) is the likeliest wrong shading by a wide margin. It also fires for whole-set-not-intersection (shading one whole circle, overlap included), which the student would wrongly be told is a both-circles error. Samuel may prefer to drop this diagnostic and ship the question with a plain \"not quite\" until venn_builder can name those two shadings apart (see top-level notes). No figure is referenced: the instrument is the diagram."
+}

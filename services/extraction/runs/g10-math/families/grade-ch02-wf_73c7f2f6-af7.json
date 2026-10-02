@@ -1,0 +1,648 @@
+{
+ "mode": "grade",
+ "book": "g10-math",
+ "prompts_version": "s6-v5",
+ "by_ref": {
+  "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/s6-grade-ch02",
+  "stage": "S6 grade",
+  "shards_sha256": "d9cb47de32ffbc47fb1b0b0aca5f1d1d095ff11c27127c9aff27320b5df54887",
+  "files": 60
+ },
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "acfc4775a565b22e6056f9f2e4f8b5b4b6f9eac7b95a046b7a0b0e8e1068095a",
+  "args_sha256": "731906fd49ea74263552e016c296be35885d963fc7783210f97643eafdffa0a9",
+  "generated_sha256": "8dec8a8148d6fc9bd582550c950aa7fc140718dbfd2dca5789bf154b716121b0",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "family_id": "tpl:g10m2s2-1-1:bracket-negative-quotient",
+   "spec_sha": "579dfea70a372d997fed15643c753a9f2a859b9973a2fe909e217328f4196667",
+   "answers": [
+    {
+     "instance_id": "q:g10m2s2-1-1:g001-bracke",
+     "stem_sha": "1cbd6cc83dabecbd",
+     "answer": {
+      "plain": "9*y^3/x^8"
+     },
+     "working": "(3x^-2 y^3)^3 = 27 x^-6 y^9. Divide by 3x^2y^6: 27/3 = 9, x^(-6-2) = x^-8, y^(9-6) = y^3. So 9x^-8 y^3; move x^-8 to the denominator for positive exponents."
+    },
+    {
+     "instance_id": "q:g10m2s2-1-1:g002-bracke",
+     "stem_sha": "f1e191c7dbcd6e90",
+     "answer": {
+      "plain": "9*y^3/x^9"
+     },
+     "working": "(3x^-2 y^2)^3 = 27 x^-6 y^6. Divide by 3x^3y^3: 27/3 = 9, x^(-6-3) = x^-9, y^(6-3) = y^3. So 9x^-9 y^3; move x^-9 to the denominator for positive exponents."
+    },
+    {
+     "instance_id": "q:g10m2s2-1-1:g006-bracke",
+     "stem_sha": "bde762485b12ce51",
+     "answer": {
+      "plain": "4*y^4/x^5"
+     },
+     "working": "(2x^-1 y^2)^3 = 8 x^-3 y^6. Divide by 2x^2y^2: 8/2 = 4, x^(-3-2) = x^-5, y^(6-2) = y^4. So 4x^-5 y^4; move x^-5 to the denominator for positive exponents."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family is typed-expression, so there are no wrong options and distractors_ok is vacuously true. I checked three instances (g001, g002, g006) by hand.\n\ng001: (3x^-2 y^3)^3 = 27x^-6 y^9. Dividing by 3x^2 y^6 gives 9x^-8 y^3, which is 9y^3/x^8. The key and answer_check \"(9*y**3)/(x**8)\" both match.\n\ng002: (3x^-2 y^2)^3 = 27x^-6 y^6. Dividing by 3x^3 y^3 gives 9x^-9 y^3, which is 9y^3/x^9. The key and answer_check \"(9*y**3)/(x**9)\" both match.\n\ng006: (2x^-1 y^2)^3 = 8x^-3 y^6. Dividing by 2x^2 y^2 gives 4x^-5 y^4, which is 4y^4/x^5. The key and answer_check \"(4*y**4)/(x**5)\" both match.\n\nkey_form_ok: each stem asks for positive exponents only. Each key is a single fraction with the y power in the numerator and the x power in the denominator, so no negative exponent remains. The LaTeX key and the sympy-style answer_check are the same expression in every instance I read.\n\nsolution_ok: all five steps are arithmetically correct in each instance. The steps apply the power law including the coefficient, rewrite the fraction, divide the coefficients, apply the quotient law per letter, then convert the negative exponent to a reciprocal. They reach the key.\n\ncontext_ok: there is no word problem. The numbers are small and the stems are unambiguous.\n\nOnly three instances were in the file; I could not check any others in the family."
+   }
+  },
+  {
+   "family_id": "tpl:g10m2s2-1-1:power-product-quotient",
+   "spec_sha": "b88736d80be36e0c3cd07231a50bef8c9b114be2d83962076f2c851908145feb",
+   "answers": [
+    {
+     "instance_id": "q:g10m2s2-1-1:g002-power-",
+     "stem_sha": "69f0b865dae3f3a3",
+     "answer": {
+      "value": "9"
+     },
+     "working": "(3^(x+3))^2 = 3^(2x+6). Multiply by 3^(2-x): exponent 2x+6+2-x = x+8. Divide by 3^(x+6): exponent x+8-(x+6) = 2. So 3^2 = 9."
+    },
+    {
+     "instance_id": "q:g10m2s2-1-1:g004-power-",
+     "stem_sha": "cc2db492f025fb76",
+     "answer": {
+      "value": "4"
+     },
+     "working": "(2^(x+3))^2 = 2^(2x+6). Multiply by 2^(1-x): exponent 2x+6+1-x = x+7. Divide by 2^(x+5): exponent x+7-(x+5) = 2. So 2^2 = 4."
+    },
+    {
+     "instance_id": "q:g10m2s2-1-1:g010-power-",
+     "stem_sha": "f19492b149c9e789",
+     "answer": {
+      "value": "81"
+     },
+     "working": "(3^(x+3))^2 = 3^(2x+6). Multiply by 3^(1-x): exponent 2x+6+1-x = x+7. Divide by 3^(x+3): exponent x+7-(x+3) = 4. So 3^4 = 81."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "I re-derived all three instances by hand and each key matches.\n\n- g002: (3^{x+3})^2 = 3^{2x+6}. Times 3^{2-x} gives 3^{x+8}. Dividing by 3^{x+6} leaves 3^2 = 9, which matches the key \"9\".\n- g004: (2^{x+3})^2 = 2^{2x+6}. Times 2^{1-x} gives 2^{x+7}. Dividing by 2^{x+5} leaves 2^2 = 4, which matches the key \"4\".\n- g010: (3^{x+3})^2 = 3^{2x+6}. Times 3^{1-x} gives 3^{x+7}. Dividing by 3^{x+3} leaves 3^4 = 81, which matches the key \"81\".\n\nEach worked solution uses the book's method: power law, then product law, then quotient law with the denominator's exponent bracketed so the subtraction of (x+k) is not mis-signed. Then the x terms cancel and the power is evaluated. Every step is correct and the final value equals the key.\n\nThe family has numeric answers and no options, so there are no wrong options or misconception tags to check. The stem asks to \"simplify\" and the exponent expressions collapse to a single integer, so a plain number is the form asked for. The file does not show answer_check, so I could not compare it with the key. The keys are plain integers, so there is no LaTeX form to mismatch.\n\nThere is no word problem and the stems are unambiguous. x is any real, since the x terms cancel exactly, so there is no domain issue."
+   }
+  },
+  {
+   "family_id": "tpl:g10m2s2-1-1:reciprocal-of-sum",
+   "spec_sha": "fcf5f59926e19be543cc387d050e88fb370b796d083354e2de9151c1ebff54c1",
+   "answers": [
+    {
+     "instance_id": "q:g10m2s2-1-1:g006-recipr",
+     "stem_sha": "da3b4fd9e9cf6f10",
+     "answer": {
+      "value": "4"
+     },
+     "working": "12^-1 = 1/12 and 6^-1 = 1/6 = 2/12. The sum is 3/12 = 1/4. Then 1 divided by 1/4 = 4."
+    },
+    {
+     "instance_id": "q:g10m2s2-1-1:g007-recipr",
+     "stem_sha": "2db532fa15e26756",
+     "answer": {
+      "value": "5"
+     },
+     "working": "6^-1 = 1/6 = 5/30 and 30^-1 = 1/30. The sum is 6/30 = 1/5. Then 1 divided by 1/5 = 5."
+    },
+    {
+     "instance_id": "q:g10m2s2-1-1:g008-recipr",
+     "stem_sha": "e5eb9457c972a0e7",
+     "answer": {
+      "value": "6"
+     },
+     "working": "24^-1 = 1/24 and 8^-1 = 1/8 = 3/24. The sum is 4/24 = 1/6. Then 1 divided by 1/6 = 6."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "I checked all three instances by hand and each key is right.\n\n- g006: 1/12 + 1/6 = 3/12 = 1/4, so 1/(1/4) = 4. Key \"4\" matches.\n- g007: 1/6 + 1/30 = 6/30 = 1/5, so the whole expression is 5. Key \"5\" matches.\n- g008: 1/24 + 1/8 = 4/24 = 1/6, so the whole expression is 6. Key \"6\" matches.\n\nThere are no options in this numeric family, so distractors is an empty list and distractors_ok is true by default. The stem asks for a simplified value without a calculator, and each key is a single integer in simplest form. No answer_check was in the file, so I could not compare it with the keys. The keys are plain integers, so there is little room for mismatch.\n\nEach solution follows the same method: negative-exponent identity, common denominator, simplify the sum, then divide by a fraction. Every intermediate fraction is correct and the common denominators are valid. Step 4 is a caution about (a+b)^-1 and sits after the answer, which is an unusual place for it, but it is correct and not misleading.\n\nThere is no word problem, so there are no realism or ambiguity concerns. The expressions are unambiguous and the numbers are small. The \"advanced\" tier label is mildly generous but not wrong."
+   }
+  },
+  {
+   "family_id": "tpl:g10m2s2-1-2:prime-base-cancel",
+   "spec_sha": "657158f8bf03901641a11ad010c3c638380d763eb222bf22de7747153ca48b44",
+   "answers": [
+    {
+     "instance_id": "q:g10m2s2-1-2:g001-prime-",
+     "stem_sha": "4a04e4ce7841cb9d",
+     "answer": {
+      "value": "27"
+     },
+     "working": "27 = 3^3, so 27^n = 3^(3n). The numerator is 3^(3n) x 3^3 and the denominator is 3^(3n). The 3^(3n) factors cancel, leaving 3^3 = 27."
+    },
+    {
+     "instance_id": "q:g10m2s2-1-2:g005-prime-",
+     "stem_sha": "05e077a533541291",
+     "answer": {
+      "value": "25"
+     },
+     "working": "25 = 5^2, so 25^n = 5^(2n). The numerator is 5^(2n) x 5^2 and the denominator is 5^(2n). The 5^(2n) factors cancel, leaving 5^2 = 25."
+    },
+    {
+     "instance_id": "q:g10m2s2-1-2:g006-prime-",
+     "stem_sha": "cef0e086c60e3678",
+     "answer": {
+      "value": "125"
+     },
+     "working": "125 = 5^3, so 125^n = 5^(3n). The numerator is 5^(3n) x 5^3 and the denominator is 5^(3n). The 5^(3n) factors cancel, leaving 5^3 = 125."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family is numeric (typed answer) and the file carries no options, so there are no distractors to judge. I judged the three instances (g001, g005, g006) independently.\n\nKeys, checked by hand:\n- g001: 27^n x 3^3 / 3^(3n) = 3^(3n) x 3^3 / 3^(3n) = 3^3 = 27. Key 27 is correct.\n- g005: 25^n x 5^2 / 5^(2n) = 5^2 = 25. Key 25 is correct.\n- g006: 125^n x 5^3 / 5^(3n) = 5^3 = 125. Key 125 is correct.\n\nKey form: each stem asks for \"a single whole number\", and the key is the evaluated integer (27, 25, 125), not the unevaluated power. The key's LaTeX form versus answer_check could not be compared because answer_check is not in the file. The correct_answer values are plain integers, so they carry no LaTeX ambiguity.\n\nSolutions: all three follow the same steps and each is correct.\n1. Reduce the composite base to the prime base.\n2. Apply (a^m)^n = a^(mn).\n3. Restate with a common base.\n4. Add exponents in the numerator.\n5. Subtract exponents, so the n terms cancel.\n6. Evaluate the power.\nThe exponent arithmetic is right in every step (3n+3-3n = 3, 2n+2-2n = 2, 3n+3-3n = 3). The step 1 wording \"bases are different, so reduce\" is accurate.\n\nContext: there is no word problem. The stem is unambiguous for any integer n, and \"without using a calculator\" suits the method. The three instances differ in numbers, not in structure, so the family is consistent. The answer is independent of n, which is the point of the exercise."
+   }
+  },
+  {
+   "family_id": "tpl:g10m2s2-1-3:common-factor-basic",
+   "spec_sha": "bcbb8aa5f7f85b96c48734daef1adc4cb59aae7b123667d98d05f22f8a7f2b74",
+   "answers": [
+    {
+     "instance_id": "q:g10m2s2-1-3:g004-common",
+     "stem_sha": "b0786c483690f1e6",
+     "answer": {
+      "value": "2"
+     },
+     "working": "Factor b^x from the numerator: 9^(x+1)+9^x = 9^x(9+1) = 10*9^x. Dividing by 5*9^x cancels 9^x, leaving 10/5 = 2."
+    },
+    {
+     "instance_id": "q:g10m2s2-1-3:g007-common",
+     "stem_sha": "e89e44e2ecf0212e",
+     "answer": {
+      "value": "3"
+     },
+     "working": "Factor b^x from the numerator: 8^(x+1)+8^x = 8^x(8+1) = 9*8^x. Dividing by 3*8^x cancels 8^x, leaving 9/3 = 3."
+    },
+    {
+     "instance_id": "q:g10m2s2-1-3:g008-common",
+     "stem_sha": "1b53692d361ce726",
+     "answer": {
+      "value": "4"
+     },
+     "working": "Factor b^x from the numerator: 11^(x+1)+11^x = 11^x(11+1) = 12*11^x. Dividing by 3*11^x cancels 11^x, leaving 12/3 = 4."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "I checked all three instances by hand and found no defects. The family is numeric with no options, so distractors_ok is vacuously true.\n\n- g004: (9^(x+1)+9^x)/(5*9^x) = 9^x(9+1)/(5*9^x) = 10/5 = 2. The key \"2\" is correct.\n- g007: (8^(x+1)+8^x)/(3*8^x) = 8^x(8+1)/(3*8^x) = 9/3 = 3. The key \"3\" is correct.\n- g008: (11^(x+1)+11^x)/(3*11^x) = 11^x(11+1)/(3*11^x) = 12/3 = 4. The key \"4\" is correct.\n\nEach stem asks for a whole number, and each key is one, so the key matches the asked form. The cancellation is valid for every real x because b^x is never 0.\n\nThe context is a bare algebra item with no word problem. The numbers are realistic and the instances are distinct, with unique answers 2, 3 and 4.\n\nEach worked solution uses the same method in the same order: split b^(x+1) with the product law for exponents, take out the common factor b^x, cancel it, then calculate. Every step is correct and the final value equals the key. The common factor in the third step is written once as b^x and cancelled cleanly, with no gap.\n\nThe checker only sees the stem and key, so I could not compare the LaTeX against answer_check. For a plain integer key there is no ambiguity."
+   }
+  },
+  {
+   "family_id": "tpl:g10m2s3-1-2:decimal-root",
+   "spec_sha": "19e92c2f89a51f1ea356166e36d81ccb904486921c68e10592389a9335c9b93f",
+   "answers": [
+    {
+     "instance_id": "q:g10m2s3-1-2:g001-decima",
+     "stem_sha": "ba3c8f64c47dee03",
+     "answer": {
+      "plain": "7/10"
+     },
+     "working": "0.49 = 49/100. The power 1/2 is the square root: sqrt(49/100) = 7/10, already in simplest form."
+    },
+    {
+     "instance_id": "q:g10m2s3-1-2:g004-decima",
+     "stem_sha": "937c7441b8e9fcb8",
+     "answer": {
+      "plain": "1/2"
+     },
+     "working": "0.25 = 25/100 = 1/4. The power 1/2 is the square root: sqrt(1/4) = 1/2."
+    },
+    {
+     "instance_id": "q:g10m2s3-1-2:g007-decima",
+     "stem_sha": "08ea46c057247d2f",
+     "answer": {
+      "plain": "3/10"
+     },
+     "working": "0.027 = 27/1000. The power 1/3 is the cube root: cube root of 27 is 3 and cube root of 1000 is 10, so the result is 3/10, already in simplest form."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family is a typed-expression family with no options, so there are no distractors to judge.\n\nI checked all three instances by hand.\n- g001: 0.49 = 49/100 = (7/10)^2, so (0.49)^(1/2) = 7/10. Correct.\n- g004: 0.25 = 1/4 = (1/2)^2, so (0.25)^(1/2) = 1/2. Correct.\n- g007: 0.027 = 27/1000 = (3/10)^3, so (0.027)^(1/3) = 3/10. Correct.\n\nKey form: each stem asks for a fraction in simplest form. 7/10, 1/2 and 3/10 are all fully reduced. In each instance marker.key is the LaTeX form of answer_check (\\frac{7}{10} and 7/10, and so on), so they are the same expression.\n\nContext: there is no word problem. The numbers are clean and the stems are unambiguous.\n\nSolutions: all five steps in each instance follow one method and are mathematically correct.\n1. Convert the decimal to a fraction.\n2. Write the numerator and denominator as powers with the root's index.\n3. Combine them into a power of a fraction.\n4. Use (a^m)^n = a^(mn) to get exponent 1.\n5. State the result.\n\nMinor cosmetic nits that do not make the family wrong:\n- g004 step 1 jumps straight from 0.25 to 1/4, skipping 25/100.\n- g004 step 2 writes 1^2/2^2, which is slightly odd with a numerator of 1."
+   }
+  },
+  {
+   "family_id": "tpl:g10m2s3-1-2:negative-whole-pick",
+   "spec_sha": "fb0d02bccbf194b8fe798b369c448fef28a3e6a8285e7080a9dff580a7b4e55b",
+   "answers": [
+    {
+     "instance_id": "q:g10m2s3-1-2:g004-negati",
+     "stem_sha": "18233858a42b958b",
+     "answer": {
+      "choice": "C",
+      "choice_text": "$\\frac{1}{125}$"
+     },
+     "working": "25^(-3/2) = 1/25^(3/2). 25^(1/2)=5, so 25^(3/2)=5^3=125. Result 1/125."
+    },
+    {
+     "instance_id": "q:g10m2s3-1-2:g005-negati",
+     "stem_sha": "80b6a59ed99bc2e2",
+     "answer": {
+      "choice": "B",
+      "choice_text": "$\\frac{1}{32}$"
+     },
+     "working": "4^(-5/2) = 1/4^(5/2). 4^(1/2)=2, so 4^(5/2)=2^5=32. Result 1/32."
+    },
+    {
+     "instance_id": "q:g10m2s3-1-2:g006-negati",
+     "stem_sha": "e1f775930550122d",
+     "answer": {
+      "choice": "B",
+      "choice_text": "$\\frac{1}{243}$"
+     },
+     "working": "9^(-5/2) = 1/9^(5/2). 9^(1/2)=3, so 9^(5/2)=3^5=243. Result 1/243."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [
+     {
+      "instance_id": "q:g10m2s3-1-2:g004-negati",
+      "option": "A: 125",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Ignoring the negative sign gives 25^(3/2) = 5^3 = 125. Wrong for the stem."
+     },
+     {
+      "instance_id": "q:g10m2s3-1-2:g004-negati",
+      "option": "B: -125",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Treating a negative exponent as a negative value gives -(5^3) = -125. Wrong for the stem."
+     },
+     {
+      "instance_id": "q:g10m2s3-1-2:g004-negati",
+      "option": "D: 1/5",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Dropping the numerator 3 leaves 25^(-1/2) = 1/5. Wrong for the stem, since the correct value is 1/125."
+     },
+     {
+      "instance_id": "q:g10m2s3-1-2:g005-negati",
+      "option": "A: 32",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Ignoring the negative sign gives 4^(5/2) = 2^5 = 32. Wrong for the stem."
+     },
+     {
+      "instance_id": "q:g10m2s3-1-2:g005-negati",
+      "option": "C: -32",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Treating a negative exponent as a negative value gives -32. Wrong for the stem."
+     },
+     {
+      "instance_id": "q:g10m2s3-1-2:g005-negati",
+      "option": "D: 1/2",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Dropping the numerator 5 leaves 4^(-1/2) = 1/2. Wrong for the stem, since the correct value is 1/32."
+     },
+     {
+      "instance_id": "q:g10m2s3-1-2:g006-negati",
+      "option": "A: -243",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Treating a negative exponent as a negative value gives -(3^5) = -243. Wrong for the stem."
+     },
+     {
+      "instance_id": "q:g10m2s3-1-2:g006-negati",
+      "option": "C: 243",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Ignoring the negative sign gives 9^(5/2) = 3^5 = 243. Wrong for the stem."
+     },
+     {
+      "instance_id": "q:g10m2s3-1-2:g006-negati",
+      "option": "D: 1/3",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Dropping the numerator 5 leaves 9^(-1/2) = 1/3. Wrong for the stem, since the correct value is 1/243."
+     }
+    ],
+    "notes": "I checked all three instances by hand and found no defects. g004: 25^(-3/2) = 5^(-3) = 1/125, key C. g005: 4^(-5/2) = 2^(-5) = 1/32, key B. g006: 9^(-5/2) = 3^(-5) = 1/243, key B. In each, the correct-answer letter matches the correct choice. Each stem and the key ask for the single value, which is the simplest form. The three tagged distractors are the same in every instance and each is the exact result of its misconception: negative-exponent-ignored gives the positive power, negative-exponent-negative-value gives the negated power, and numerator-ignored gives the reciprocal root, 1/sqrt(base). None of them equals the key. The worked solutions are correct at every step (base as a power with exponent 2, power of a power, 2 x (-m/2) = -m, then the reciprocal), and they compute the numbers correctly. I could not check the tag definitions against the bank, because only the packet file was allowed. I read each tag from its name, and those readings match the options. There are no word problems, so the context is just the numeric stem plus \"Do not use a calculator\", which is fine since all three bases are perfect squares."
+   }
+  },
+  {
+   "family_id": "tpl:g10m2s3-1-2:root-of-negative-decimal",
+   "spec_sha": "626bf84f4418ad16f2553e073c74a8b72fb75fcbcfb84bd1cb142578afdebd7d",
+   "answers": [
+    {
+     "instance_id": "q:g10m2s3-1-2:g003-root-o",
+     "stem_sha": "07f2c767add03d59",
+     "answer": {
+      "value": "125"
+     },
+     "working": "0.04 = 1/25, so (0.04)^(-3/2) = 25^(3/2) = (sqrt 25)^3 = 5^3 = 125."
+    },
+    {
+     "instance_id": "q:g10m2s3-1-2:g005-root-o",
+     "stem_sha": "61ff2af771d3a249",
+     "answer": {
+      "value": "100"
+     },
+     "working": "0.001 = 1/1000, so (0.001)^(-2/3) = 1000^(2/3) = (cube root of 1000)^2 = 10^2 = 100."
+    },
+    {
+     "instance_id": "q:g10m2s3-1-2:g007-root-o",
+     "stem_sha": "b40439e2bebdc08c",
+     "answer": {
+      "value": "1000"
+     },
+     "working": "0.01 = 1/100, so (0.01)^(-3/2) = 100^(3/2) = (sqrt 100)^3 = 10^3 = 1000."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "I checked all three instances by hand and found no errors.\n\nDistractors: the family is typed numeric with no options and no misconception_ids, so there is nothing to judge and distractors_ok is true by default.\n\nKeys:\n- g003: 0.04^(-3/2) = 25^(3/2) = 125. Correct.\n- g005: 0.001^(-2/3) = 1000^(2/3) = 100. Correct.\n- g007: 0.01^(-3/2) = 100^(3/2) = 1000. Correct.\nEach stem asks for a number, and each key is a plain integer in simplest form. The base is positive, so the principal root is unambiguous. The answer_check expression is not in the judge file, so I could not compare it to the LaTeX key. The keys are plain integers, so a mismatch is unlikely.\n\nContext: these are bare 'evaluate without a calculator' expressions with no word problem. The numbers are realistic, and the roots are perfect squares or cubes, so a calculator really is not needed.\n\nSolutions: all three follow the same six steps and every step is correct.\n1. Write the decimal as a fraction.\n2. Write the denominator as a power of the base.\n3. Rewrite as a negative exponent.\n4. Substitute the new base.\n5. Multiply the exponents, (-2)(-3/2) = 3 and (-3)(-2/3) = 2.\n6. Evaluate the power.\nNothing is skipped or mis-simplified.\n\nMinor point, not a defect: the book's more usual route is to invert the fraction first, e.g. (1/25)^(-3/2) = 25^(3/2). The solution goes through a negative-exponent base instead. It is valid and consistent with the exponent laws, so I did not mark it false."
+   }
+  },
+  {
+   "family_id": "tpl:g10m2s3-1-2:whole-base",
+   "spec_sha": "eb6af4a6f12fb5bb1236c3637ae818a92fb6d17d8b95e1c529add2c4980d9e99",
+   "answers": [
+    {
+     "instance_id": "q:g10m2s3-1-2:g002-whole-",
+     "stem_sha": "25562d2412d1d49b",
+     "answer": {
+      "value": "8"
+     },
+     "working": "4^(3/2) = (sqrt(4))^3 = 2^3 = 8."
+    },
+    {
+     "instance_id": "q:g10m2s3-1-2:g003-whole-",
+     "stem_sha": "ac812dec7ef54503",
+     "answer": {
+      "value": "2"
+     },
+     "working": "8^(1/3) is the cube root of 8, which is 2 because 2^3 = 8."
+    },
+    {
+     "instance_id": "q:g10m2s3-1-2:g009-whole-",
+     "stem_sha": "9f31a9a5c3fbbe2a",
+     "answer": {
+      "value": "7"
+     },
+     "working": "49^(1/2) is the square root of 49, which is 7."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "Numeric family with no options, so there are no distractors to judge. I checked all three instances by hand. 4^(3/2): 4 = 2^2, (2^2)^(3/2) = 2^(2*3/2) = 2^3 = 8, so key 8 is correct. 8^(1/3): 8 = 2^3, (2^3)^(1/3) = 2^1 = 2, so key 2 is correct. 49^(1/2): 49 = 7^2, (7^2)^(1/2) = 7^1 = 7, so key 7 is correct (principal root). The stem asks for an evaluation and each key is a single integer, which is the asked form; the answer_check expression was not in the file, but the numeric keys are unambiguous. There is no word problem, and the numbers are the clean perfect powers typical of the book's \"evaluate without a calculator\" exercises. Each worked solution follows one four-step method: write the base as a power whose exponent is the denominator, substitute, multiply exponents using (a^m)^n = a^(mn), then evaluate. The arithmetic in every step is correct. The wording of step 1 is a little stilted but accurate and consistent across instances."
+   }
+  },
+  {
+   "family_id": "tpl:g10m2s4-1-1:coefficient-composite-base",
+   "spec_sha": "141aab2ba7d9eb5f553ece440573be241bf520ee8501533f81b2b06b6931abca",
+   "answers": [
+    {
+     "instance_id": "q:g10m2s4-1-1:g001-coeffi",
+     "stem_sha": "d4eab99ea169b3ab",
+     "answer": {
+      "value": "9"
+     },
+     "working": "Multiply both sides by -2: 4^(x/3+1) = 256. Since 256 = 4^4, x/3 + 1 = 4, so x/3 = 3 and x = 9."
+    },
+    {
+     "instance_id": "q:g10m2s4-1-1:g005-coeffi",
+     "stem_sha": "fd9f74527a2007b1",
+     "answer": {
+      "value": "-4"
+     },
+     "working": "Divide both sides by -2: 9^(x/2+4) = 81. Since 81 = 9^2, x/2 + 4 = 2, so x/2 = -2 and x = -4."
+    },
+    {
+     "instance_id": "q:g10m2s4-1-1:g010-coeffi",
+     "stem_sha": "addc586a9659d1b0",
+     "answer": {
+      "value": "6"
+     },
+     "working": "Multiply both sides by 2: 4^(x/3+2) = 256. Since 256 = 4^4, x/3 + 2 = 4, so x/3 = 2 and x = 6."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": false,
+    "distractors": [],
+    "notes": "Verdict: the keys are all correct, but instance g005's worked solution is sloppy, so I am rejecting the family. The packet has numeric instances only (g001, g005, g010) and no options, so there are no distractors to judge.\n\nKeys, checked by substitution:\n- g001: x=9 gives 4^4=256, and -1/2*256=-128. Correct.\n- g005: x=-4 gives 9^2=81, and -2*81=-162. Correct.\n- g010: x=6 gives 4^4=256, and 1/2*256=128. Correct.\n\nEach key is a plain number and the stem only asks to solve for the variable, so the key form is fine. I did not see the answer_check expressions, so I cannot confirm they match the keys.\n\nThe numbers are realistic, nothing is ambiguous, and there is no word problem.\n\nSolution defect in g005. The multiplier 2 from 9=3^2 equals the denominator 2 in x/2, which makes step 5 read \"2x/2 + 8 = 4\" with the fraction left unsimplified. Step 6 then says \"Multiply both sides by 2 to clear the fraction\", although 2x/2 is just x. The arithmetic is valid, since 2x+16=8 gives x=-4, but the route is roundabout and the instruction misdescribes what is on the page. A Grade 10 student would be taught to leave 2x/2 unsimplified and to \"clear\" a fraction that is not there. The natural solution is x/2+4=2, then x=-4.\n\nThe other two solutions (g001, g010) are correct step by step. Their 2x/3 is a real fraction, so clearing it is legitimate.\n\nFix: either make the solution text simplify 2·(x/2) to x when the multiplier equals the denominator, or exclude combinations where the prime-power exponent equals the denominator of the x-term. Re-judging should be quick after that."
+   }
+  },
+  {
+   "family_id": "tpl:g10m2s4-1-2:shift-by-one",
+   "spec_sha": "009789df96c62032c6845a5d6ddd51ff9f151a835ef843cf6877a7899ef95bdd",
+   "answers": [
+    {
+     "instance_id": "q:g10m2s4-1-2:g003-shift-",
+     "stem_sha": "2d5a4a92d5475e58",
+     "answer": {
+      "value": "2"
+     },
+     "working": "5^(t+1) = 5·5^t, so 5^t + 5·5^t = 6·5^t = 150. Then 5^t = 25 = 5^2, so t = 2. Check: 25 + 125 = 150."
+    },
+    {
+     "instance_id": "q:g10m2s4-1-2:g007-shift-",
+     "stem_sha": "2d5e92414b209618",
+     "answer": {
+      "value": "2"
+     },
+     "working": "3^(t+1) = 3·3^t, so 3^t + 3·3^t = 4·3^t = 36. Then 3^t = 9 = 3^2, so t = 2. Check: 9 + 27 = 36."
+    },
+    {
+     "instance_id": "q:g10m2s4-1-2:g008-shift-",
+     "stem_sha": "d870c5ad7ca9eb24",
+     "answer": {
+      "value": "5"
+     },
+     "working": "2^(t+1) = 2·2^t, so 2^t + 2·2^t = 3·2^t = 96. Then 2^t = 32 = 2^5, so t = 5. Check: 32 + 64 = 96."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "Numeric family with no options, so there are no distractors to judge. I checked all three instances by substitution and each key is correct and unique, since the exponential is monotonic. g003: 5^2 + 5^3 = 25 + 125 = 150, key 2. g007: 3^2 + 3^3 = 9 + 27 = 36, key 2. g008: 2^5 + 2^6 = 32 + 64 = 96, key 5. The stems ask for t, and each key is a plain integer, which is the asked form. The packet shows no answer_check or LaTeX key, so there was nothing to compare against the typed answer. There is no word problem, so context is fine. Each worked solution follows the same method with correct arithmetic: write a^(t+1) as a^t times a, factor out the common a^t, simplify the bracket, divide, write the right-hand side as a power of the base, and equate exponents. The step 3 wording \"Simplify the bracket: 5^t(6)\" is slightly clumsy but not wrong. Two instances share the answer t=2, which is acceptable."
+   }
+  },
+  {
+   "family_id": "tpl:g10m2s4-1-2:three-terms",
+   "spec_sha": "bd46065abd61684665a40a5ecd3ebff228c1314e97e6509b5f31a128c95159c2",
+   "answers": [
+    {
+     "instance_id": "q:g10m2s4-1-2:g004-three-",
+     "stem_sha": "da9f482277f77b90",
+     "answer": {
+      "value": "4"
+     },
+     "working": "Factor out 3^(t-1): 3^(t-1)(1+3+9) = 13*3^(t-1) = 351. So 3^(t-1) = 27 = 3^3, so t-1 = 3. Check: 27+81+243 = 351."
+    },
+    {
+     "instance_id": "q:g10m2s4-1-2:g006-three-",
+     "stem_sha": "7b4b8055952e565a",
+     "answer": {
+      "value": "4"
+     },
+     "working": "Factor out 2^(t-1): 2^(t-1)(1+2+4) = 7*2^(t-1) = 56. So 2^(t-1) = 8 = 2^3, so t-1 = 3. Check: 8+16+32 = 56."
+    },
+    {
+     "instance_id": "q:g10m2s4-1-2:g010-three-",
+     "stem_sha": "23be26c9d6689102",
+     "answer": {
+      "value": "2"
+     },
+     "working": "Factor out 3^(t-1): 3^(t-1)(1+3+9) = 13*3^(t-1) = 39. So 3^(t-1) = 3, so t-1 = 1. Check: 3+9+27 = 39."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family is numeric with no multiple-choice options, so there are no distractors to judge. I checked the three instances by substitution into the stem, and all keys are correct. g004: 27+81+243=351, so t=4. g006: 8+16+32=56, so t=4. g010: 3+9+27=39, so t=2. Each stem asks \"Solve for t\" and the key is a single number, which is the asked form. The solution is unique because the exponential is strictly increasing. The worked solutions use the same method in all three: rewrite using a^(m+n)=a^m·a^n, factor out the smallest power, sum the bracket (13 or 7), divide, write the right side as a power of the base, and equate exponents. Every step is arithmetically correct and reaches the key. There is no word problem, so context is not at issue. The step-4 phrasing \"3^{t-1}(13)\" is slightly unusual but not wrong. I could not see answer_check, but the stated keys 4, 4 and 2 are numerically correct."
+   }
+  },
+  {
+   "family_id": "tpl:g10m2s4-1-3:trinomial-reject",
+   "spec_sha": "8eff0afa5b4d243a825e00d269f7387737531dbcb3775d1b015a7d5c7ff2765d",
+   "answers": [
+    {
+     "instance_id": "q:g10m2s4-1-3:g003-trinom",
+     "stem_sha": "c22c93c1bd68fc17",
+     "answer": {
+      "value": "2"
+     },
+     "working": "Let y = 2^x (y > 0). Then y^2 + 2y - 24 = 0, which factors as (y + 6)(y - 4) = 0. y = -6 is impossible since 2^x > 0, so y = 4 = 2^2, giving x = 2. Check: 16 + 8 - 24 = 0."
+    },
+    {
+     "instance_id": "q:g10m2s4-1-3:g006-trinom",
+     "stem_sha": "86c65f2874aec130",
+     "answer": {
+      "value": "3"
+     },
+     "working": "Let y = 2^x (y > 0). Then y^2 + 2y - 80 = 0, which factors as (y + 10)(y - 8) = 0. y = -10 is rejected, so y = 8 = 2^3, giving x = 3. Check: 64 + 16 - 80 = 0."
+    },
+    {
+     "instance_id": "q:g10m2s4-1-3:g009-trinom",
+     "stem_sha": "45369d844cb2143c",
+     "answer": {
+      "value": "3"
+     },
+     "working": "Let y = 2^x (y > 0). Then y^2 + 4y - 96 = 0, which factors as (y + 12)(y - 8) = 0. y = -12 is rejected, so y = 8 = 2^3, giving x = 3. Check: 64 + 32 - 96 = 0."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family has numeric answers and no options, so there are no distractors to judge. The file shows no answer_check, so I could only check the stated keys.\n\nI verified all three instances by hand, substituting y = 2^x.\n- g003: y^2 + 2y - 24 = (y+6)(y-4). The pair 6 and -4 has product -24 and sum 2. Rejecting y = -6 leaves y = 4, so x = 2, and the check gives 16 + 8 - 24 = 0. Key \"2\" is correct.\n- g006: y^2 + 2y - 80 = (y+10)(y-8). The pair 10 and -8 has product -80 and sum 2. Rejecting y = -10 leaves y = 8, so x = 3, and the check gives 64 + 16 - 80 = 0. Key \"3\" is correct.\n- g009: y^2 + 4y - 96 = (y+12)(y-8). The pair 12 and -8 has product -96 and sum 4. Rejecting y = -12 leaves y = 8, so x = 3, and the check gives 64 + 32 - 96 = 0. Key \"3\" is correct.\n\nEach equation has exactly one real solution, so \"give the one value of x\" is accurate. The stem and the asked form (a single value of x) match the key.\n\nThe worked solutions follow the same sequence in all three. They rewrite 2^{2x} as (2^x)^2, factorise the trinomial, set each factor to zero, reject the negative factor because a power of 2 is always positive, equate exponents, then check in the original equation. Each step is mathematically correct.\n\nThere is no word problem, so context is fine.\n\nTwo minor points, neither an error. The stem tells the student there is \"one value\", which hints that one factor will be rejected. g006 and g009 share the key 3, which is acceptable but gives little variety."
+   }
+  },
+  {
+   "family_id": "tpl:g10m2s4-1-4:coefficient-power",
+   "spec_sha": "1c182a84f679437528ce9591c7ab0e964c13a88ed26a3cb922d005ad70adfbd1",
+   "answers": [
+    {
+     "instance_id": "q:g10m2s4-1-4:g001-coeffi",
+     "stem_sha": "41e0de09993cfa42",
+     "answer": {
+      "value": "2.15"
+     },
+     "working": "5 x 3^x = 53 gives 3^x = 10.6. Trial and error: 3^2 = 9, 3^2.1 = 10.04, 3^2.15 = 10.60, 3^2.14 = 10.49. x is about 2.149, which rounds to 2.15. Checked with logs: ln 10.6 / ln 3 = 2.1489."
+    },
+    {
+     "instance_id": "q:g10m2s4-1-4:g003-coeffi",
+     "stem_sha": "a9cfface82316741",
+     "answer": {
+      "value": "3.18"
+     },
+     "working": "5 x 3^x = 165 gives 3^x = 33. Trial and error: 3^3 = 27, 3^3.2 = 33.6, 3^3.18 = 32.9, 3^3.19 = 33.3. x is about 3.1827, which rounds to 3.18. Checked with logs: ln 33 / ln 3 = 3.1827."
+    },
+    {
+     "instance_id": "q:g10m2s4-1-4:g008-coeffi",
+     "stem_sha": "363a87604c668398",
+     "answer": {
+      "value": "4.72"
+     },
+     "working": "5 x 2^x = 132 gives 2^x = 26.4. Trial and error: 2^4 = 16, 2^5 = 32, 2^4.7 = 26.0, 2^4.72 = 26.37, 2^4.73 = 26.5. x is about 4.7225, which rounds to 4.72. Checked with logs: ln 26.4 / ln 2 = 4.7225."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family has a numeric answer type with no options, so there are no distractors to judge. I recomputed every value in all three worked solutions with logarithms and each checks out.\n\ng001 (5·3^x = 53, key 2.15):\n- 3^x = 10.6, so x = 2.1490.\n- The bracketing values 50.226, 56.058, 52.482 and 53.062 are correct.\n- The midpoint 2.145 gives 52.771, which is below 53, so x > 2.145 and it rounds to 2.15. Correct.\n\ng003 (5·3^x = 165, key 3.18):\n- 3^x = 33, so x = 3.1828.\n- The values 150.677, 168.174, 164.519 and 166.336 are correct.\n- The midpoint 3.185 gives 165.43, which is above 165, so x < 3.185 and it rounds down to 3.18. Correct.\n\ng008 (5·2^x = 132, key 4.72):\n- 2^x = 26.4, so x = 4.7224.\n- The values 129.960, 139.288, 131.775 and 132.691 are correct.\n- The midpoint 4.725 gives 132.23, which is above 132, so x < 4.725 and it rounds down to 4.72. Correct.\n\nThe keys are in the asked form: a decimal correct to 2 d.p. Each solution follows the book's trial-and-error method in order: whole-number bracket, steps of 0.1, steps of 0.01, midpoint test to decide the rounding. A student who solves with logs would also get the same 2 d.p. value. The stem is unambiguous and there is no word problem.\n\nI could not see answer_check or the numeric tolerance. If the tolerance accepts only exactly 2 d.p. values, that matches these keys. If it were looser, such as 2.149, that would also be fine."
+   }
+  },
+  {
+   "family_id": "tpl:g10m2s4-1-4:hinted-power",
+   "spec_sha": "ead77344e9d63edc49d62afa8cfd7c0b8529377348830bd89f25df9a8d7db141",
+   "answers": [
+    {
+     "instance_id": "q:g10m2s4-1-4:g003-hinted",
+     "stem_sha": "8e0563569adbbfe1",
+     "answer": {
+      "value": "2.38"
+     },
+     "working": "5^2=25 and 5^3=125, so x is between 2 and 3. Trial: 5^2.4≈47.6 (too big), 5^2.38≈46.1, 5^2.37≈45.4, so x≈2.379 (checked: ln46/ln5 = 2.37887). Rounded to 2 d.p. = 2.38."
+    },
+    {
+     "instance_id": "q:g10m2s4-1-4:g005-hinted",
+     "stem_sha": "8a8d2eede9e71368",
+     "answer": {
+      "value": "1.65"
+     },
+     "working": "10^1=10 and 10^2=100, so x is between 1 and 2. Trial: 10^1.65≈44.67 (slightly low), 10^1.66≈45.7 (too high), so x is between 1.65 and 1.66; 10^1.653≈44.98, 10^1.654≈45.08, so x≈1.6532 (checked: log10 45 = 1.65321). Rounded to 2 d.p. = 1.65."
+    },
+    {
+     "instance_id": "q:g10m2s4-1-4:g006-hinted",
+     "stem_sha": "0bda4afed12b5b0a",
+     "answer": {
+      "value": "1.11"
+     },
+     "working": "5^1=5 and 5^2=25, so x is between 1 and 2, just above 1. Trial: 5^1.1≈5.87 (low), 5^1.12≈6.06 (high), 5^1.11≈5.97, 5^1.113≈5.9998, so x≈1.1133 (checked: ln6/ln5 = 1.11328). Rounded to 2 d.p. = 1.11."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family is numeric with no options, so there are no distractors to judge. I recomputed every figure in the three instances and each matches the worked solution to the 3 decimal places shown.\n\n- g003 (5^x = 46): the exact solution is 2.3789, so the key 2.38 is correct. The step-4 midpoint check is right: 5^2.375 = 45.714 < 46, so x > 2.375 and it rounds up.\n- g005 (10^x = 45): the exact solution is 1.6532, so the key 1.65 is correct. The midpoint check is right: 10^1.655 = 45.186 > 45, so x < 1.655 and it rounds down.\n- g006 (5^x = 6): the exact solution is 1.1133, so the key 1.11 is correct. The midpoint check is right: 5^1.115 = 6.017 > 6, so x < 1.115 and it rounds down.\n\nEach key is a 2 d.p. number, as the stem asks, and the stems use the hint and trial-and-error method the stem names. The brackets (hint, then steps of 0.1, then 0.01, then the midpoint) are valid in every step, and each target lies strictly between the hint powers. The stems are unambiguous and use ordinary numbers, with no word-problem context to go wrong. One caveat: the numeric answer_check (tolerance or format) was not in the judge file, so I could not compare it against the key."
+   }
+  }
+ ]
+}

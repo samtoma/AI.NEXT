@@ -1,0 +1,436 @@
+{
+  "generator": "services/extraction/generate_widget_questions.py (ADR-0009) --templates",
+  "question_type": "widget",
+  "book": "work/g10-math/fanout/books/ch10/g10-math.json",
+  "course_id": "course:us-g10-math-en",
+  "templates": {
+    "wt:g10m10s2-1-4:mode-most-frequent": "3073ffbabe7775dc56cb584051205434c8d5ed328d20c4800e15884843aa3a8c",
+    "wt:g10m10s4-1-2:quartiles-box-build": "e586725c3b32e6837c2a5ed0c5b16cdfe9f129ee11ae85cfc4a16568898a1de1",
+    "wt:g10m10s4-1-4:iqr-box-width": "2dfada95e70cd633fa7fed38057e1e0c4d1710bf17939a8a14191640c0a99b11",
+    "wt:g10m10s5-1-1:five-numbers-interpolated-ten-values": "f04c6f755956c758e63f8e5278a90f5797580c4767df4148dcff21a6fd6c09ec",
+    "wt:g10m10s5-1-1:five-numbers-nine-values": "e6303c52e9013b850cab9ca8da23128e770dce5d86a7da5667872e16864f81fa"
+  },
+  "rejected_templates": {
+    "wt:g10m10s2-1-4:median-in-order": [
+      "not shipped: every mapping names a misconception S5 did not keep (mc:g10m10s2-1-4:median-without-ordering), so no widget of it could say why an answer is wrong"
+    ]
+  },
+  "questions": [
+    {
+      "id": "q:g10m10s2-1-4:w004",
+      "lo_id": "lo:g10m10s2-1-4",
+      "tier": "basic",
+      "question_type": "widget",
+      "stem": "Use the bars to build a data set of $5$ values whose mode is $4$. Any data set with that mode counts.",
+      "choices": {
+        "kind": "bar_builder",
+        "spec": {
+          "ask": "mode",
+          "target": 4,
+          "n": 5
+        },
+        "diagnostics": [
+          {
+            "predicate": "no-mode",
+            "misconception_id": "mc:g10m10s2-1-4:mode-not-most-frequent"
+          },
+          {
+            "predicate": "multi-modal",
+            "misconception_id": "mc:g10m10s2-1-4:mode-not-most-frequent"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "The mode is the value that occurs most often, so the target value has to appear more times than any other value. Being in the set is not enough."
+        },
+        {
+          "step": 2,
+          "text_md": "Raise two of the bars to the target value, so it occurs twice."
+        },
+        {
+          "step": 3,
+          "text_md": "Fill the remaining bars with values that are different from the target and different from each other, so that none of them occurs as often as the target."
+        },
+        {
+          "step": 4,
+          "text_md": "Check the live readout: the mode shows the target on its own, with no tie."
+        }
+      ],
+      "parent_question_id": "q:g10m10s2-1-4:ex10-2-11",
+      "source_note": "Generated from template family wt:g10m10s2-1-4:mode-most-frequent.",
+      "family": "wt:g10m10s2-1-4:mode-most-frequent",
+      "template_sha": "3073ffbabe7775dc56cb584051205434c8d5ed328d20c4800e15884843aa3a8c"
+    },
+    {
+      "id": "q:g10m10s2-1-4:w005",
+      "lo_id": "lo:g10m10s2-1-4",
+      "tier": "basic",
+      "question_type": "widget",
+      "stem": "Use the bars to build a data set of $6$ values whose mode is $7$. Any data set with that mode counts.",
+      "choices": {
+        "kind": "bar_builder",
+        "spec": {
+          "ask": "mode",
+          "target": 7,
+          "n": 6
+        },
+        "diagnostics": [
+          {
+            "predicate": "no-mode",
+            "misconception_id": "mc:g10m10s2-1-4:mode-not-most-frequent"
+          },
+          {
+            "predicate": "multi-modal",
+            "misconception_id": "mc:g10m10s2-1-4:mode-not-most-frequent"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "The mode is the value that occurs most often, so the target value has to appear more times than any other value. Being in the set is not enough."
+        },
+        {
+          "step": 2,
+          "text_md": "Raise two of the bars to the target value, so it occurs twice."
+        },
+        {
+          "step": 3,
+          "text_md": "Fill the remaining bars with values that are different from the target and different from each other, so that none of them occurs as often as the target."
+        },
+        {
+          "step": 4,
+          "text_md": "Check the live readout: the mode shows the target on its own, with no tie."
+        }
+      ],
+      "parent_question_id": "q:g10m10s2-1-4:ex10-2-11",
+      "source_note": "Generated from template family wt:g10m10s2-1-4:mode-most-frequent.",
+      "family": "wt:g10m10s2-1-4:mode-most-frequent",
+      "template_sha": "3073ffbabe7775dc56cb584051205434c8d5ed328d20c4800e15884843aa3a8c"
+    },
+    {
+      "id": "q:g10m10s2-1-4:w006",
+      "lo_id": "lo:g10m10s2-1-4",
+      "tier": "basic",
+      "question_type": "widget",
+      "stem": "Use the bars to build a data set of $7$ values whose mode is $2$. Any data set with that mode counts.",
+      "choices": {
+        "kind": "bar_builder",
+        "spec": {
+          "ask": "mode",
+          "target": 2,
+          "n": 7
+        },
+        "diagnostics": [
+          {
+            "predicate": "no-mode",
+            "misconception_id": "mc:g10m10s2-1-4:mode-not-most-frequent"
+          },
+          {
+            "predicate": "multi-modal",
+            "misconception_id": "mc:g10m10s2-1-4:mode-not-most-frequent"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "The mode is the value that occurs most often, so the target value has to appear more times than any other value. Being in the set is not enough."
+        },
+        {
+          "step": 2,
+          "text_md": "Raise two of the bars to the target value, so it occurs twice."
+        },
+        {
+          "step": 3,
+          "text_md": "Fill the remaining bars with values that are different from the target and different from each other, so that none of them occurs as often as the target."
+        },
+        {
+          "step": 4,
+          "text_md": "Check the live readout: the mode shows the target on its own, with no tie."
+        }
+      ],
+      "parent_question_id": "q:g10m10s2-1-4:ex10-2-11",
+      "source_note": "Generated from template family wt:g10m10s2-1-4:mode-most-frequent.",
+      "family": "wt:g10m10s2-1-4:mode-most-frequent",
+      "template_sha": "3073ffbabe7775dc56cb584051205434c8d5ed328d20c4800e15884843aa3a8c"
+    },
+    {
+      "id": "q:g10m10s4-1-2:w001",
+      "lo_id": "lo:g10m10s4-1-2",
+      "tier": "basic",
+      "question_type": "widget",
+      "stem": "Seven learners timed how long they take to walk to school, in minutes: $22,\\ 8,\\ 31,\\ 14,\\ 26,\\ 10,\\ 17$. Build the box-and-whisker diagram for these times by dragging the minimum, lower quartile, median, upper quartile and maximum markers to their values. Find the quartiles with the percentile formula.",
+      "choices": {
+        "kind": "box_plot_builder",
+        "spec": {
+          "data": [
+            22,
+            8,
+            31,
+            14,
+            26,
+            10,
+            17
+          ]
+        },
+        "diagnostics": [
+          {
+            "predicate": "median-of-unsorted",
+            "misconception_id": "mc:g10m10s4-1-2:rank-on-unsorted-data"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Sort the data from smallest to largest: $8,\\ 10,\\ 14,\\ 17,\\ 22,\\ 26,\\ 31$, so $n = 7$."
+        },
+        {
+          "step": 2,
+          "text_md": "The minimum is $8$ and the maximum is $31$. Drag those two markers there."
+        },
+        {
+          "step": 3,
+          "text_md": "Median (50th percentile): rank $= \\frac{50}{100}(7 - 1) + 1 = 4$, a whole number, so the median is the 4th value, $17$."
+        },
+        {
+          "step": 4,
+          "text_md": "Lower quartile (25th percentile): rank $= \\frac{25}{100}(7 - 1) + 1 = 2.5$. This is not a whole number, so take the value halfway between the 2nd and 3rd values: $\\frac{10 + 14}{2} = 12$."
+        },
+        {
+          "step": 5,
+          "text_md": "Upper quartile (75th percentile): rank $= \\frac{75}{100}(7 - 1) + 1 = 5.5$, so take the value halfway between the 5th and 6th values: $\\frac{22 + 26}{2} = 24$."
+        },
+        {
+          "step": 6,
+          "text_md": "Place the five markers at $8,\\ 12,\\ 17,\\ 24,\\ 31$. The box runs from $12$ to $24$ with the median line at $17$."
+        }
+      ],
+      "parent_question_id": "q:g10m10s4-1-2:ex10-5-6d",
+      "source_note": "Generated from template family wt:g10m10s4-1-2:quartiles-box-build.",
+      "family": "wt:g10m10s4-1-2:quartiles-box-build",
+      "template_sha": "e586725c3b32e6837c2a5ed0c5b16cdfe9f129ee11ae85cfc4a16568898a1de1"
+    },
+    {
+      "id": "q:g10m10s4-1-4:w001",
+      "lo_id": "lo:g10m10s4-1-4",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "Eleven learners wrote a test marked out of $40$. Their marks were: $24,\\ 9,\\ 31,\\ 17,\\ 38,\\ 21,\\ 12,\\ 6,\\ 26,\\ 14,\\ 19$. Build the box-and-whisker diagram for these marks by dragging the minimum, lower quartile, median, upper quartile and maximum markers to their values. Find the quartiles with the percentile formula. The box runs from the lower quartile to the upper quartile, so its width is the interquartile range.",
+      "choices": {
+        "kind": "box_plot_builder",
+        "spec": {
+          "data": [
+            24,
+            9,
+            31,
+            17,
+            38,
+            21,
+            12,
+            6,
+            26,
+            14,
+            19
+          ]
+        },
+        "diagnostics": [
+          {
+            "predicate": "median-of-unsorted",
+            "misconception_id": "mc:g10m10s4-1-2:rank-on-unsorted-data"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Sort the marks from smallest to largest: $6,\\ 9,\\ 12,\\ 14,\\ 17,\\ 19,\\ 21,\\ 24,\\ 26,\\ 31,\\ 38$, so $n = 11$."
+        },
+        {
+          "step": 2,
+          "text_md": "The minimum is $6$ and the maximum is $38$."
+        },
+        {
+          "step": 3,
+          "text_md": "Median (50th percentile): rank $= \\frac{50}{100}(11 - 1) + 1 = 6$, so the median is the 6th value, $19$."
+        },
+        {
+          "step": 4,
+          "text_md": "Lower quartile (25th percentile): rank $= \\frac{25}{100}(11 - 1) + 1 = 3.5$. This is not a whole number, so take the value halfway between the 3rd and 4th values: $\\frac{12 + 14}{2} = 13$."
+        },
+        {
+          "step": 5,
+          "text_md": "Upper quartile (75th percentile): rank $= \\frac{75}{100}(11 - 1) + 1 = 8.5$, so take the value halfway between the 8th and 9th values: $\\frac{24 + 26}{2} = 25$."
+        },
+        {
+          "step": 6,
+          "text_md": "Place the five markers at $6,\\ 13,\\ 19,\\ 25,\\ 38$. The box runs from $13$ to $25$."
+        },
+        {
+          "step": 7,
+          "text_md": "The width of the box is the interquartile range: $Q_3 - Q_1 = 25 - 13 = 12$. The semi-interquartile range is half of that, $\\frac{12}{2} = 6$. The range of the marks is $38 - 6 = 32$, much larger than the interquartile range, because the interquartile range ignores the lowest and highest quarters of the data."
+        }
+      ],
+      "parent_question_id": "q:g10m10s4-1-4:ex10-5-6e",
+      "source_note": "Generated from template family wt:g10m10s4-1-4:iqr-box-width.",
+      "family": "wt:g10m10s4-1-4:iqr-box-width",
+      "template_sha": "2dfada95e70cd633fa7fed38057e1e0c4d1710bf17939a8a14191640c0a99b11"
+    },
+    {
+      "id": "q:g10m10s5-1-1:w001",
+      "lo_id": "lo:g10m10s5-1-1",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "Ten learners wrote a quiz marked out of $25$. In the order the teacher recorded them, their marks were $\\left\\{15, 6, 24, 12, 3, 19, 10, 21, 14, 5\\right\\}$. Drag the five markers to give the five number summary of the marks (minimum, first quartile, median, third quartile, maximum), finding the quartiles with the percentile formula.",
+      "choices": {
+        "kind": "box_plot_builder",
+        "spec": {
+          "data": [
+            15,
+            6,
+            24,
+            12,
+            3,
+            19,
+            10,
+            21,
+            14,
+            5
+          ]
+        },
+        "diagnostics": [
+          {
+            "predicate": "median-of-unsorted",
+            "misconception_id": "mc:g10m10s4-1-2:rank-on-unsorted-data"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Sort the ten marks from smallest to largest: $3, 5, 6, 10, 12, 14, 15, 19, 21, 24$. The minimum is $3$ and the maximum is $24$."
+        },
+        {
+          "step": 2,
+          "text_md": "Median: rank $= 0.5 \\times (10 - 1) + 1 = 5.5$, so it lies halfway between the 5th and 6th values: $\\dfrac{12 + 14}{2} = 13$."
+        },
+        {
+          "step": 3,
+          "text_md": "First quartile: rank $= 0.25 \\times (10 - 1) + 1 = 3.25$, so it lies a quarter of the way from the 3rd value ($6$) to the 4th value ($10$): $6 + 0.25 \\times (10 - 6) = 7$."
+        },
+        {
+          "step": 4,
+          "text_md": "Third quartile: rank $= 0.75 \\times (10 - 1) + 1 = 7.75$, so it lies three quarters of the way from the 7th value ($15$) to the 8th value ($19$): $15 + 0.75 \\times (19 - 15) = 18$."
+        },
+        {
+          "step": 5,
+          "text_md": "Drag the markers to $3$, $7$, $13$, $18$ and $24$. The five number summary is $3, 7, 13, 18, 24$."
+        }
+      ],
+      "parent_question_id": "q:g10m10s5-1-1:ex10-6-3",
+      "source_note": "Generated from template family wt:g10m10s5-1-1:five-numbers-interpolated-ten-values.",
+      "family": "wt:g10m10s5-1-1:five-numbers-interpolated-ten-values",
+      "template_sha": "f04c6f755956c758e63f8e5278a90f5797580c4767df4148dcff21a6fd6c09ec"
+    },
+    {
+      "id": "q:g10m10s5-1-1:w002",
+      "lo_id": "lo:g10m10s5-1-1",
+      "tier": "basic",
+      "question_type": "widget",
+      "stem": "Lerato runs a small bakery. The number of cakes she sold on each of nine days was $\\left\\{16, 9, 25, 4, 13, 7, 20, 11, 6\\right\\}$. Drag the five markers to give the five number summary of her sales (minimum, first quartile, median, third quartile, maximum), finding the quartiles with the percentile formula.",
+      "choices": {
+        "kind": "box_plot_builder",
+        "spec": {
+          "data": [
+            16,
+            9,
+            25,
+            4,
+            13,
+            7,
+            20,
+            11,
+            6
+          ]
+        },
+        "diagnostics": [
+          {
+            "predicate": "median-of-unsorted",
+            "misconception_id": "mc:g10m10s4-1-2:rank-on-unsorted-data"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Sort the nine values from smallest to largest: $4, 6, 7, 9, 11, 13, 16, 20, 25$. The minimum is $4$ and the maximum is $25$."
+        },
+        {
+          "step": 2,
+          "text_md": "Median: rank $= 0.5 \\times (9 - 1) + 1 = 5$, so it is the 5th sorted value, $11$."
+        },
+        {
+          "step": 3,
+          "text_md": "First quartile: rank $= 0.25 \\times (9 - 1) + 1 = 3$, so it is the 3rd sorted value, $7$."
+        },
+        {
+          "step": 4,
+          "text_md": "Third quartile: rank $= 0.75 \\times (9 - 1) + 1 = 7$, so it is the 7th sorted value, $16$."
+        },
+        {
+          "step": 5,
+          "text_md": "Drag the markers to $4$, $7$, $11$, $16$ and $25$. The five number summary is $4, 7, 11, 16, 25$; the box runs from $7$ to $16$ with the median line at $11$."
+        }
+      ],
+      "parent_question_id": "q:g10m10s5-1-1:ex10-6-3",
+      "source_note": "Generated from template family wt:g10m10s5-1-1:five-numbers-nine-values.",
+      "family": "wt:g10m10s5-1-1:five-numbers-nine-values",
+      "template_sha": "e6303c52e9013b850cab9ca8da23128e770dce5d86a7da5667872e16864f81fa"
+    }
+  ],
+  "misconceptions": [
+    {
+      "id": "mc:g10m10s2-1-4:mode-not-most-frequent",
+      "lo_id": "lo:g10m10s2-1-4",
+      "label": "Puts the mode in the set, but not as the most frequent value",
+      "description": "The student builds a data set with the right mean and median but includes the stated mode only once, or lets two other values repeat as often as it does, as if being in the set were enough to make a value the mode."
+    },
+    {
+      "id": "mc:g10m10s4-1-2:rank-on-unsorted-data",
+      "lo_id": "lo:g10m10s4-1-2",
+      "label": "Counts to the rank in the list as given, without sorting first",
+      "description": "The student works out the rank with the percentile formula but counts along the data in the order it was printed, instead of first sorting the values from smallest to largest."
+    }
+  ],
+  "mapping_review": {
+    "rule": "decision 47",
+    "verifier_runs": [
+      "verify-ch10-wf_ed5b608b-0c6"
+    ],
+    "counts": {
+      "active": 10,
+      "held": 0,
+      "kept_by_review": 0,
+      "dropped_by_review": 0
+    },
+    "reviews": []
+  },
+  "s5_reconciled": {
+    "runs": [
+      "final-ch10-wf_ba64d0e9-a82.json"
+    ],
+    "catalogue": "g10-math-misconceptions",
+    "refused_attachments_stripped": [],
+    "widgets_left_out": []
+  }
+}

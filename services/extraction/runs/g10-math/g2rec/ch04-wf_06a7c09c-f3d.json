@@ -1,0 +1,778 @@
+{
+ "stage": "G2R",
+ "workflow": "g2-recommend",
+ "prompts_version": "g2rec-v1",
+ "book": "g10-math",
+ "chapter": 4,
+ "part": 1,
+ "parts": 1,
+ "batch": 8,
+ "verify_batch": 8,
+ "model": "sonnet",
+ "effort": "high",
+ "items_sha256": "20e0880b391f30e647d3205f4874b72bac7868cfcfb7e4b0e527bfe2f46235ea",
+ "keys": [
+  "g10m4s2-1:Ex4-7:1h",
+  "g10m4s3-1:Ex4-2:3b",
+  "g10m4s3-1:Ex4-2:3e",
+  "g10m4s3-1:Ex4-7:2k",
+  "g10m4s3-1:Ex4-7:12e",
+  "g10m4s3-1:Ex4-7:12v",
+  "g10m4s4-1:Ex4-3:2",
+  "g10m4s4-1:Ex4-3:4l",
+  "g10m4s4-1:Ex4-3:4m",
+  "g10m4s4-1:Ex4-7:4",
+  "g10m4s4-1:Ex4-7:6m",
+  "g10m4s4-1:Ex4-7:6n",
+  "g10m4s4-1:Ex4-7:6o",
+  "g10m4s5-1:Ex4-4:19",
+  "g10m4s5-1:Ex4-4:20",
+  "g10m4s5-1:Ex4-4:21",
+  "g10m4s6-1:Ex4-5:5",
+  "g10m4s6-1:Ex4-5:7",
+  "g10m4s6-1:Ex4-5:9",
+  "g10m4s6-1:Ex4-5:13",
+  "g10m4s6-1:Ex4-5:15",
+  "g10m4s6-1:Ex4-7:8a",
+  "g10m4s6-1:Ex4-7:12s",
+  "g10m4s6-1:Ex4-7:12t",
+  "g10m4s7-1:Ex4-6:1a",
+  "g10m4s7-1:Ex4-6:1c",
+  "g10m4s7-1:Ex4-6:2i",
+  "g10m4s7-1:Ex4-6:2j",
+  "g10m4s7-1:Ex4-6:4b",
+  "g10m4s7-1:Ex4-6:4c",
+  "g10m4s7-1:Ex4-6:4d",
+  "g10m4s7-1:Ex4-7:9a",
+  "g10m4s7-1:Ex4-7:9c",
+  "g10m4s7-1:Ex4-7:11a",
+  "g10m4s7-1:Ex4-7:11b",
+  "g10m4s7-1:Ex4-7:11c",
+  "g10m4s7-1:Ex4-7:13"
+ ],
+ "agents": {
+  "recommend": 5,
+  "verify": 5
+ },
+ "embedded": {
+  "source": "runbook/g2-recommend.workflow.js",
+  "source_sha256": "5c0a9ef82f1f0643ac9935f6a60e6623730012cf2bd415344941c4a6a5e1b361",
+  "args_sha256": "034165623a885a157f42eef045c303b01f67cdbc8a7a93e7d1853941a101d634",
+  "generated_sha256": "59db27150f51e16df03f4881e30b45fbc97185d148179db1643c19fc9f31651f",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "key": "g10m4s2-1:Ex4-7:1h",
+   "state": "held",
+   "rec": {
+    "key": "g10m4s2-1:Ex4-7:1h",
+    "verdict": "fix",
+    "class": "stem damaged",
+    "confidence": "low",
+    "why_low": "The stem shows 2-3(k+2) but the book's own working starts from 2-3(k+3); a person should confirm the stem repair against the page image.",
+    "note": "As printed, $2k+3=2-3k-6$ gives $k=-\\frac75$ (blind is right for this stem). The book working expands $-3(k+3)=-3k-9$, giving $5k=-10$, $k=-2$, which follows. So the stem lost its '3': repair to $k+3$; key -2 unchanged.",
+    "own_value": "For the stem as shown: k=-7/5. For the stem the working proves (k+3): k=-2.",
+    "book_quote": "2k+3&=2-3(k+3)\\\\2k+3&=2-3k-9\\\\5k&=-10\\\\k&=-2",
+    "defect": "Stem shows (k+2); the book's working and answer need (k+3).",
+    "fix": {
+     "stem": "Solve: $2k+3=2-3(k+3)$"
+    }
+   },
+   "ver": {
+    "key": "g10m4s2-1:Ex4-7:1h",
+    "own_answer": "k = -2",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "2k+3 = -3k-7 gives 5k = -10, so k = -2, and substituting gives -1 on both sides."
+   }
+  },
+  {
+   "key": "g10m4s3-1:Ex4-2:3b",
+   "state": "held",
+   "rec": {
+    "key": "g10m4s3-1:Ex4-2:3b",
+    "verdict": "exclude",
+    "class": "book error",
+    "confidence": "high",
+    "note": "Multiplying by $3z$ gives $10z^2=3z-1$, so $10z^2-3z+1=0$, discriminant $9-40<0$: no real solution. The book's step $(5z+1)(2z-1)$ expands to $10z^2-3z-1$, which does not follow from the line above. Printed answer is wrong for this stem.",
+    "own_value": "No real solution (10z^2-3z+1=0 has discriminant -31).",
+    "correct_answer": "No real solution",
+    "defect": "Book factorises 10z^2-3z+1 as (5z+1)(2z-1), which equals 10z^2-3z-1; the roots -1/5 and 1/2 do not satisfy the stem (a sign was lost in the stem or the working)."
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m4s3-1:Ex4-2:3e",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m4s3-1:Ex4-2:3e",
+    "verdict": "accept",
+    "class": "typing error",
+    "confidence": "low",
+    "why_low": "The printed answer text carries a stray 'b' after the fraction (extraction artefact from the working); the key itself is right, a person may want to confirm.",
+    "note": "$6\\cdot$ both sides: $3(b-1)=2(\\frac2b+4)$, so $3b^2-11b-4=0=(3b+1)(b-4)$, $b=-\\frac13$ or $4$. Check $b=4$: both sides $\\frac32$. The typing complaint is only a text comparison against a flattened printed answer; key is right.",
+    "own_value": "b=-1/3 or b=4",
+    "book_quote": "(3b+1)(b-4)=&\\\\\\thereforeb=-\\frac{1}{3}b&\\text{or}b=4"
+   },
+   "ver": {
+    "key": "g10m4s3-1:Ex4-2:3e",
+    "own_answer": "b = -1/3 or b = 4",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "Clearing fractions gives 3b^2-11b-4=0 = (3b+1)(b-4); both roots check in the original and neither is the excluded b=0."
+   }
+  },
+  {
+   "key": "g10m4s3-1:Ex4-7:2k",
+   "state": "held",
+   "rec": {
+    "key": "g10m4s3-1:Ex4-7:2k",
+    "verdict": "exclude",
+    "class": "book error",
+    "confidence": "high",
+    "note": "$(2x+9)(x-2)=2x^2+5x-18$, not $2x^2-5x-18$. Correct factorisation $(2x-9)(x+2)$ gives $x=\\frac92$ or $-2$. Book's roots $-\\frac92$ and $2$ fail: at $x=2$, $8-10-18=-20\\neq0$. Blind solver is right.",
+    "own_value": "x=-2 or x=9/2",
+    "correct_answer": "x=-2 or x=\\frac{9}{2}",
+    "defect": "Book factorises 2x^2-5x-18 as (2x+9)(x-2) (sign error); roots -9/2 and 2 do not satisfy the equation."
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m4s3-1:Ex4-7:12e",
+   "state": "held",
+   "rec": {
+    "key": "g10m4s3-1:Ex4-7:12e",
+    "verdict": "fix",
+    "class": "stem damaged",
+    "confidence": "low",
+    "why_low": "Stem shows +1 but the book's working uses -1; the repair rests on the working's first line, a person should confirm against the page image.",
+    "note": "Stem as shown gives $a^2-5a-12=0$, not the book's roots. The working's first line has $2(\\frac6a-1)$, then $a^2-a-12=(a-4)(a+3)=0$, $a=4,-3$; check $a=4$: $1=2(1.5-1)=1$. So the '+' was garbled; repair to '-'. Key unchanged.",
+    "own_value": "For the stem as shown: a=(5±√73)/2. For the stem the working proves (-1): a=4 or a=-3.",
+    "book_quote": "a-3&=2\\left(\\frac{6}{a}-1\\right)\\\\a-3&=\\frac{12}{a}-2",
+    "defect": "Stem shows +1 inside the bracket; the book's working and answer need -1.",
+    "fix": {
+     "stem": "Solve for the unknown variable $a-3=2\\left(\\frac{6}{a}-1\\right)$"
+    }
+   },
+   "ver": {
+    "key": "g10m4s3-1:Ex4-7:12e",
+    "own_answer": "a = 4 or a = -3",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "Gives a^2-a-12=0 = (a-4)(a+3); both roots satisfy the original equation (1=1 and -6=-6) and a is not 0."
+   }
+  },
+  {
+   "key": "g10m4s3-1:Ex4-7:12v",
+   "state": "held",
+   "rec": {
+    "key": "g10m4s3-1:Ex4-7:12v",
+    "verdict": "fix",
+    "class": "printed text damaged",
+    "confidence": "low",
+    "why_low": "The book's own working and EPUB final answer carry a stray 'y' after 1/2 (extraction artefact); removing it from the key is a content decision a person should confirm.",
+    "note": "$2x^2+x-1=(2x-1)(x+1)=0$, so $x=\\frac12$ or $-1$. The stem has no $y$; the 'y' after the fraction is a stray character. Retype the key as values $\\frac12;-1$ with variable $x$ only.",
+    "own_value": "x=1/2 or x=-1",
+    "book_quote": "(2x-1)(x+1)&=0\\\\\\therefore x=\\frac{1}{2}y&\\text{or}x=-1",
+    "defect": "Stray 'y' after 1/2 in printed answer, EPUB final answer and working; the pipeline typed it into the key.",
+    "fix": {
+     "answer_type": "expression",
+     "key": "\\frac{1}{2}; -1",
+     "marker_kind": "values",
+     "form": "",
+     "variables": [
+      "x"
+     ]
+    }
+   },
+   "ver": {
+    "key": "g10m4s3-1:Ex4-7:12v",
+    "own_answer": "x = 1/2 or x = -1",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "2x^2+x-1=0 = (2x-1)(x+1); both roots check (1/2*2=1 and -1*-1=1)."
+   }
+  },
+  {
+   "key": "g10m4s4-1:Ex4-3:2",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m4s4-1:Ex4-3:2",
+    "verdict": "hold",
+    "class": "selected from a list",
+    "confidence": "low",
+    "why_low": "A person may prefer to keep it as a not_markable teaching example; the book's own words give no closed set of options to choose from.",
+    "note": "Figure shows parallel lines $y=2x+1$ and $y=2x-1$, so there is no solution; book answer is right. But the typed options 'one solution' and 'infinitely many solutions' are the typing agent's inventions, not in the stem or the book; 'no solution' is not a value the marker can read.",
+    "own_value": "No solution (parallel lines, same gradient 2, different intercepts).",
+    "book_quote": "The lines are parallel. Therefore there is no solution to $x$ and $y$ ."
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m4s4-1:Ex4-3:4l",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m4s4-1:Ex4-3:4l",
+    "verdict": "exclude",
+    "class": "partial answer",
+    "confidence": "low",
+    "why_low": "The book's range statement is true but is not the solution set; a person may choose to keep the item as a not_markable teaching example instead.",
+    "note": "Simplifying: $\\frac{2(x^2+2)-3}{x^2+2}=2-\\frac3{x^2+2}$, so the equations are identical and the solutions are all $(x,y)$ with $y=2-\\frac3{x^2+2}$. Book gives only 'x any real, $\\frac12\\le y<2$' (a strip, not the relation); its working also says $\\le2$ then $<2$. Unmarkable as typed.",
+    "own_value": "Identical equations: infinitely many solutions, all (x,y) with y=2-3/(x^2+2); y ranges over [1/2, 2).",
+    "correct_answer": "All real x with y=2-\\frac{3}{x^2+2} (so \\frac12\\le y<2)",
+    "defect": "Book's answer states only the range of y and x any real, not the solution relation; it describes a strip that includes non-solutions such as (0,1). Working also contradicts itself (\\le 2 then <2)."
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m4s4-1:Ex4-3:4m",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m4s4-1:Ex4-3:4m",
+    "verdict": "exclude",
+    "class": "book error",
+    "confidence": "high",
+    "note": "$3a+b=\\frac{6}{2a}=\\frac{3}{a}$, so $3a^2+ab=3$, the same as the second equation. The system is one equation: $b=\\frac{3}{a}-3a$, $a\\neq0$. The book's 'a and b any real except 0' is wrong: $(1,0)$ solves it, $(1,1)$ does not.",
+    "own_value": "infinitely many solutions: all (a, b) with a != 0 and b = 3/a - 3a",
+    "correct_answer": "Infinitely many solutions: $b=\\frac{3}{a}-3a$ for any $a\\neq0$",
+    "defect": "The book rightly shows the two equations are identical, but its conclusion 'a and b can be any real number except 0' is wrong. b is fixed by a, and b=0 is allowed (a=1 or -1). The stem also asks for x and y while the equations use a and b."
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m4s4-1:Ex4-7:4",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m4s4-1:Ex4-7:4",
+    "verdict": "hold",
+    "class": "selected from a list",
+    "confidence": "low",
+    "note": "Figure checked: $y=-x+1$ and $y=-x-1$ are parallel, so no solution; the book is right. But the typed choice has invented options ('one solution', 'infinitely many solutions'), and the stem and book give none. The marker cannot read a words-only answer.",
+    "own_value": "no solution (parallel lines, same gradient -1, different intercepts)",
+    "correct_answer": "no solution",
+    "defect": "Book answer is sound. Typed options are the typing agent's inventions, and the marker has no way to check 'no solution' as an expression.",
+    "why_low": "A person must choose between keeping it as a teaching-only (not_markable) item and excluding it; no book-own options exist.",
+    "why_low_note": ""
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m4s4-1:Ex4-7:6m",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m4s4-1:Ex4-7:6m",
+    "verdict": "hold",
+    "class": "selected from a list",
+    "confidence": "low",
+    "note": "$4y=2x-44$ gives $2y=x-22$; subtracting from $2y=x+8$ gives $0=-22$, so no solution; the book is right. The typed options (A no solution, B infinite solutions) are invented, and the marker cannot read a words-only key.",
+    "own_value": "no solution",
+    "correct_answer": "no solution",
+    "defect": "Book answer is sound, but the options were invented by the typing step and no marker reads 'no solution' as an expression.",
+    "why_low": "A person must decide between a teaching-only (not_markable) retype and exclusion; the book gives no options."
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m4s4-1:Ex4-7:6n",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m4s4-1:Ex4-7:6n",
+    "verdict": "exclude",
+    "class": "book error",
+    "confidence": "high",
+    "note": "First equation: $2a^2-2a-4+a-b=0\\Rightarrow 2a^2-a=b+4$, identical to the second. So infinitely many solutions, $b=2a^2-a-4$. The book's 'any real number except 0' is wrong: $a=0,b=-4$ is a solution.",
+    "own_value": "infinitely many solutions: b = 2a^2 - a - 4",
+    "correct_answer": "Infinitely many solutions: $b=2a^2-a-4$ for any real $a$",
+    "defect": "The book rightly shows the equations coincide, but its stated answer 'a and b can be any real number except 0' is wrong. b depends on a, and a=0 is allowed. The typed choice also uses invented options."
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m4s4-1:Ex4-7:6o",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m4s4-1:Ex4-7:6o",
+    "verdict": "exclude",
+    "class": "book error",
+    "confidence": "high",
+    "note": "Second equation: $x^2+3x-y=7x-4\\Rightarrow y=x^2-4x+4=(x-2)^2$, identical to the first. So infinitely many solutions on the parabola. The book's 'any real except 0' is wrong: $(2,0)$ is a solution, $(0,1)$ is not.",
+    "own_value": "infinitely many solutions: all (x, y) with y = (x-2)^2",
+    "correct_answer": "Infinitely many solutions: all $(x;y)$ with $y=(x-2)^2$",
+    "defect": "The book rightly shows the equations coincide, but its stated answer 'x and y can be any real number except 0' is wrong. y is fixed by x, and 0 is allowed. The typed choice also uses invented options."
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m4s5-1:Ex4-4:19",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m4s5-1:Ex4-4:19",
+    "verdict": "accept",
+    "class": "check too strict",
+    "confidence": "high",
+    "note": "$x+y=40$, $150x+100y=5250$ gives $-50y=-750$, $y=15$ mealie meal. Check: $25\\cdot150+15\\cdot100=5250$. Book's working and printed answer agree. The complaint is only that the EPUB gives no separate final answer.",
+    "own_value": "15",
+    "correct_answer": "15",
+    "defect": "",
+    "book_quote": "y&=15\\\\\\therefore\\text{15sacksofmeliemealwerebought}"
+   },
+   "ver": {
+    "key": "g10m4s5-1:Ex4-4:19",
+    "own_answer": "15",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "With r rice and m mealie sacks, r+m=40 and 150r+100m=5250 give 6000-50m=5250 so m=15 (r=25: 3750+1500=5250), matching the key."
+   }
+  },
+  {
+   "key": "g10m4s5-1:Ex4-4:20",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m4s5-1:Ex4-4:20",
+    "verdict": "accept",
+    "class": "check too strict",
+    "confidence": "high",
+    "note": "$x+y=100$, $50x+40y=4660$ gives $-10y=-340$, $y=34$ green bars. Check: $66\\cdot50+34\\cdot40=4660$. Working and printed answer agree; its closing sentence wrongly says 'sacks of mealie meal' but the value is right. No EPUB final line exists.",
+    "own_value": "34",
+    "correct_answer": "34",
+    "defect": "",
+    "book_quote": "-10y&=-340\\\\y&=34"
+   },
+   "ver": {
+    "key": "g10m4s5-1:Ex4-4:20",
+    "own_answer": "34",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "4,66 kg = 4660 g; b+g=100 and 50b+40g=4660 give 5000-10g=4660 so g=34 (b=66: 3300+1360=4660), matching the key."
+   }
+  },
+  {
+   "key": "g10m4s5-1:Ex4-4:21",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m4s5-1:Ex4-4:21",
+    "verdict": "exclude",
+    "class": "book error",
+    "confidence": "high",
+    "note": "$y=2x$, $3x+z=170$, $21x+8z=1216$ gives $x=48$, $y=96$, $z=26$ (sum 170; $624+384+208=1216$). The book's working shows $z=26$ but its conclusion and printed answer say 36 purple, which gives 180 beads.",
+    "own_value": "48 blue, 96 red, 26 purple",
+    "correct_answer": "48 blue, 96 red and 26 purple beads",
+    "defect": "The book's own working gives z=170-3x=26, but its final sentence and printed answer state 36 purple beads, which breaks the 170 total. The typed key 48; 96; 36 carries the error."
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m4s6-1:Ex4-5:5",
+   "state": "held",
+   "rec": {
+    "key": "g10m4s6-1:Ex4-5:5",
+    "verdict": "accept",
+    "class": "book answer confirmed",
+    "confidence": "high",
+    "note": "From $V=\\pi r^2h$: $r^2=\\frac{V}{\\pi h}$, so $r=\\pm\\sqrt{\\frac{V}{\\pi h}}$. Matches printed, EPUB final and working; blind only added a positive-root comment. Typing as an equation is right.",
+    "own_value": "r=\\pm\\sqrt{\\frac{V}{\\pi h}}",
+    "book_quote": "$r=\\pm\\sqrt{\\frac{V}{\\pi h}}$"
+   },
+   "ver": {
+    "key": "g10m4s6-1:Ex4-5:5",
+    "own_answer": "r = ±sqrt(V/(pi h)), with h not 0",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "r^2 = V/(pi h) gives r = ±sqrt(V/(pi h)), which matches the key; the question text contains the unspaced macro \\pir (and \\pir^{2}h), so check that it renders as pi r rather than a LaTeX error."
+   }
+  },
+  {
+   "key": "g10m4s6-1:Ex4-5:7",
+   "state": "held",
+   "rec": {
+    "key": "g10m4s6-1:Ex4-5:7",
+    "verdict": "accept",
+    "class": "book answer confirmed",
+    "confidence": "high",
+    "note": "$A-2\\pi r=2\\pi rh$, so $h=\\frac{A-2\\pi r}{2\\pi r}$. Book working, printed and EPUB agree; blind gave an equivalent form. Key is typed as the book's own answer.",
+    "own_value": "h=\\frac{A-2\\pi r}{2\\pi r}",
+    "book_quote": "$h=\\frac{A-2\\pi r}{2\\pi r}$"
+   },
+   "ver": {
+    "key": "g10m4s6-1:Ex4-5:7",
+    "own_answer": "h = (A - 2 pi r)/(2 pi r), with r not 0",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "A - 2 pi r = 2 pi r h gives h = (A - 2 pi r)/(2 pi r), which is the key; the question text has the unspaced macros \\pirh and \\pir, so check they render properly."
+   }
+  },
+  {
+   "key": "g10m4s6-1:Ex4-5:9",
+   "state": "held",
+   "rec": {
+    "key": "g10m4s6-1:Ex4-5:9",
+    "verdict": "accept",
+    "class": "book answer confirmed",
+    "confidence": "high",
+    "note": "Factor $m$: $E=m(gh+\\frac12v^2)$, so $m=\\frac{E}{gh+\\frac12v^2}$. Book working, printed and EPUB agree; blind's $\\frac{2E}{2gh+v^2}$ is equivalent. Key as typed is the book's answer.",
+    "own_value": "m=\\frac{E}{gh+\\frac{1}{2}v^{2}}",
+    "book_quote": "$m=\\frac{E}{gh+\\frac{1}{2}v^{2}}$"
+   },
+   "ver": {
+    "key": "g10m4s6-1:Ex4-5:9",
+    "own_answer": "m = E/(gh + v^2/2)",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "Factoring m out of mgh + (1/2)mv^2 and dividing gives exactly the key; equivalent forms such as 2E/(2gh + v^2) are equal by value."
+   }
+  },
+  {
+   "key": "g10m4s6-1:Ex4-5:13",
+   "state": "held",
+   "rec": {
+    "key": "g10m4s6-1:Ex4-5:13",
+    "verdict": "exclude",
+    "class": "book error",
+    "confidence": "high",
+    "note": "From $A=\\pi R^2-\\pi r^2$: $\\pi r^2=\\pi R^2-A$, so $r^2=\\frac{\\pi R^2-A}{\\pi}$. The book's second line writes $A-\\pi R^2=\\pi r^2$, a sign slip, so its radicand has the wrong sign. Blind is right here; the book is not.",
+    "own_value": "r=\\pm\\sqrt{\\frac{\\pi R^{2}-A}{\\pi}}",
+    "correct_answer": "r=\\pm\\sqrt{\\frac{\\pi R^{2}-A}{\\pi}}",
+    "defect": "Line 2 of the working has $A-\\pi R^2=\\pi r^2$, but moving $\\pi r^2$ and $A$ across gives $\\pi R^2-A=\\pi r^2$. The printed and EPUB answers inherit the sign error."
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m4s6-1:Ex4-5:15",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m4s6-1:Ex4-5:15",
+    "verdict": "fix",
+    "class": "typing error",
+    "confidence": "high",
+    "note": "$V=\\frac43\\pi r^3$ gives $r^3=\\frac{3V}{4\\pi}$; the book's $\\frac{\\frac34V}{\\pi}$ is equal. The typed key is the same value but not the book's own form, and the EPUB has no final line; re-type from the working's last line.",
+    "own_value": "r=\\sqrt[3]{\\frac{3V}{4\\pi}}",
+    "book_quote": "$r=\\sqrt[3]{\\frac{\\frac{3}{4}V}{\\pi}}$",
+    "fix": {
+     "answer_type": "expression",
+     "key": "r=\\sqrt[3]{\\frac{\\frac{3}{4}V}{\\pi}}",
+     "marker_kind": "equation",
+     "form": "",
+     "variables": [
+      "r",
+      "V"
+     ]
+    }
+   },
+   "ver": {
+    "key": "g10m4s6-1:Ex4-5:15",
+    "own_answer": "r = cube root of (3V/(4 pi))",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "Solving V = (4/3) pi r^3 gives r^3 = 3V/(4 pi), and the key's cube root of ((3/4)V/pi) is the same quantity; the question text has the unspaced macro \\pir^{3}, so check it renders."
+   }
+  },
+  {
+   "key": "g10m4s6-1:Ex4-7:8a",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m4s6-1:Ex4-7:8a",
+    "verdict": "accept",
+    "class": "check too strict",
+    "confidence": "high",
+    "note": "$a-bx=c$ gives $-bx=c-a$, so $x=\\frac{a-c}{b}$. Printed, EPUB, working and blind all agree; the complaint is only the printed ', b≠0' note, which is a restriction, not part of the answer. Typed key is right.",
+    "own_value": "x=\\frac{a-c}{b}",
+    "book_quote": "$x=\\frac{a-c}{b}, b\\neq 0$"
+   },
+   "ver": {
+    "key": "g10m4s6-1:Ex4-7:8a",
+    "own_answer": "x = (a - c)/b, with b not 0",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "a - bx = c gives bx = a - c, so x = (a - c)/b, which is the key."
+   }
+  },
+  {
+   "key": "g10m4s6-1:Ex4-7:12s",
+   "state": "held",
+   "rec": {
+    "key": "g10m4s6-1:Ex4-7:12s",
+    "verdict": "exclude",
+    "class": "book error",
+    "confidence": "high",
+    "note": "LHS $2ax+2a$, RHS $5ax-6a$, so $3ax-8a=0$, $a(3x-8)=0$, $x=\\frac83$ for $a\\ne0$. The book's own line $3ax-8a=0$ gives $\\frac83$, yet it states $\\frac38$. Blind is right.",
+    "own_value": "x=\\frac{8}{3}",
+    "correct_answer": "x=\\frac{8}{3}\\ (a\\ne0)",
+    "defect": "The last line writes $x=\\frac38$, but $3ax-8a=0$ gives $x=\\frac83$. Printed answer repeats the inverted fraction."
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m4s6-1:Ex4-7:12t",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m4s6-1:Ex4-7:12t",
+    "verdict": "accept",
+    "class": "check too strict",
+    "confidence": "low",
+    "note": "Multiplying by $ab$: $x(a-b)(a+b)=a(a+b)$, so $x=\\frac{a}{a-b}$. Matches printed and the working's last line; the complaints are text comparison. Book's conditions omit $a\\ne-b$ (then any $x$ works), but the marked value is right.",
+    "own_value": "x=\\frac{a}{a-b}",
+    "book_quote": "$\\therefore x=\\frac{a}{(a-b)}$",
+    "why_low": "Content decision: the book's restriction list lacks $a+b\\ne0$ (dividing by $a+b$), though the key value is correct. A person may prefer to exclude or add the caveat."
+   },
+   "ver": {
+    "key": "g10m4s6-1:Ex4-7:12t",
+    "own_answer": "x = a/(a - b), valid for a, b not 0 and a not equal to ±b",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "Multiplying by ab gives x(a-b)(a+b) = a(a+b), so x = a/(a-b) when a+b is not 0 (the book's restriction omits a not equal to -b, where every x works), but the key itself is correct; a student who types 'x = ...' with the expression marker may be marked wrong."
+   }
+  },
+  {
+   "key": "g10m4s7-1:Ex4-6:1a",
+   "state": "held",
+   "rec": {
+    "key": "g10m4s7-1:Ex4-6:1a",
+    "verdict": "exclude",
+    "class": "book error",
+    "confidence": "low",
+    "note": "Figure: open circle at -1 shaded left, closed circle at 6 shaded right, so $x<-1$ or $x\\geq6$. The book writes 'and', which read literally is the empty set. The key is not the right answer as printed.",
+    "correct_answer": "x<-1 or x\\geq 6; x\\in\\mathbb{R}",
+    "own_value": "x<-1 or x>=6",
+    "defect": "The book joins the two rays with 'and' where the figure needs 'or' (union). As written the answer is the empty set.",
+    "why_low": "The book may only be using 'and' loosely. A person should decide whether to accept the loose wording or keep it excluded."
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m4s7-1:Ex4-6:1c",
+   "state": "held",
+   "rec": {
+    "key": "g10m4s7-1:Ex4-6:1c",
+    "verdict": "accept",
+    "class": "book answer confirmed",
+    "confidence": "low",
+    "note": "Figure: open circles at 3 and 6 on a fully shaded line, so all reals except 3 and 6: $x\\neq3;x\\neq6$. Book, printed answer and EPUB agree and match the figure. The blind answer misses the exclusions.",
+    "correct_answer": "x\\neq3;x\\neq6;x\\in\\mathbb{R}",
+    "own_value": "x != 3 and x != 6, x in R",
+    "book_quote": "$x\\neq3;x\\neq6;x\\in\\mathbb{R}$",
+    "why_low": "The key is typed with marker kind 'interval' and uses not-equal signs. A person should confirm the marker reads this key and marks a correct student answer right."
+   },
+   "ver": {
+    "key": "g10m4s7-1:Ex4-6:1c",
+    "own_answer": "x ≠ 3, x ≠ 6, x ∈ R (open circles at 3 and 6, the rest of the line is shaded)",
+    "verdict": "confirmed",
+    "other_correct_answers": true,
+    "note": "The figure shows open circles at 3 and 6 on an otherwise fully drawn line, so x≠3 and x≠6 with x real is right; the equivalent form x<3 or 3<x<6 or x>6 is also correct."
+   }
+  },
+  {
+   "key": "g10m4s7-1:Ex4-6:2i",
+   "state": "held",
+   "rec": {
+    "key": "g10m4s7-1:Ex4-6:2i",
+    "verdict": "exclude",
+    "class": "book error",
+    "confidence": "high",
+    "note": "Multiplying by $-6$ flips the sign: $5x-1\\le-2(1-2x)=-2+4x$, so $x\\le-1$. The book keeps $\\ge$ and gets $[-1;\\infty)$. The blind answer is right and the book is wrong.",
+    "correct_answer": "(-\\infty;-1]",
+    "own_value": "x<=-1, (-inf;-1]",
+    "defect": "The book multiplies both sides by $-6$ but does not reverse the inequality sign, so the interval points the wrong way."
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m4s7-1:Ex4-6:2j",
+   "state": "held",
+   "rec": {
+    "key": "g10m4s7-1:Ex4-6:2j",
+    "verdict": "exclude",
+    "class": "book error",
+    "confidence": "high",
+    "note": "$3\\le4-x\\le16$ gives $-1\\le -x\\le12$. Multiplying by $-1$ gives $-12\\le x\\le1$, so $[-12;1]$. The book's working line says $-12$ at the bottom but its interval is $[1;12]$, which does not follow.",
+    "correct_answer": "[-12;1]",
+    "own_value": "-12<=x<=1, [-12;1]",
+    "defect": "The book's working ends at $1\\ge x\\ge-12$, but its interval is written as $[1;12]$ instead of $[-12;1]$."
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m4s7-1:Ex4-6:4b",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m4s7-1:Ex4-6:4b",
+    "verdict": "accept",
+    "class": "printed answer misaligned",
+    "confidence": "low",
+    "note": "$3a-1<4a+6$ gives $-a<7$, so $a>-7$. With $a\\in\\mathbb{N}$ the book states $a>0$, which is correct. The printed answer text is mixed with number-line labels and reads 'a>7'. The typing check complaint is a text comparison.",
+    "correct_answer": "a>0; a\\in\\mathbb{N}",
+    "own_value": "a>-7 with a in N, i.e. a>0",
+    "book_quote": "However we are told that $a\\in\\mathbb{N}$ and so $a>0$ .",
+    "why_low": "The printed answer reads 'a>7' (probably a lost minus sign, a>-7), while the working gives a>0. A person should check the page image. The key a>0 is right either way."
+   },
+   "ver": {
+    "key": "g10m4s7-1:Ex4-6:4b",
+    "own_answer": "3a-1<4a+6 gives a>-7, and with a in N (1,2,3,...) this is a>0, a in N",
+    "verdict": "confirmed",
+    "other_correct_answers": true,
+    "note": "Algebra gives a>-7 and restricting to N (as the book defines it, without 0) gives a>0; the unrestricted a>-7 with a in N is also a valid form, and the key's a>0 matches the book's own working."
+   }
+  },
+  {
+   "key": "g10m4s7-1:Ex4-6:4c",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m4s7-1:Ex4-6:4c",
+    "verdict": "accept",
+    "class": "typing error",
+    "confidence": "high",
+    "note": "$\\frac{b-3}{2}+1<\\frac{b}{4}-4$. Multiplying by 4 gives $2b-6+4<b-16$, so $b<-14$. This matches the book and the printed answer. The typing check only compared text against number-line labels.",
+    "correct_answer": "b<-14",
+    "own_value": "b<-14",
+    "book_quote": "$b<-14$"
+   },
+   "ver": {
+    "key": "g10m4s7-1:Ex4-6:4c",
+    "own_answer": "b < -14",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "Multiplying by 4 gives 2b-2<b-16, so b<-14, and b=-15 checks (-8 < -7.75)."
+   }
+  },
+  {
+   "key": "g10m4s7-1:Ex4-6:4d",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m4s7-1:Ex4-6:4d",
+    "verdict": "accept",
+    "class": "typing error",
+    "confidence": "high",
+    "note": "$\\frac{4a+7}{3}-5>a-\\frac{2}{3}$. Multiplying by 3 gives $4a+7-15>3a-2$, so $a>6$. This matches the book and the printed answer. The typing check only compared text against number-line labels.",
+    "correct_answer": "a>6",
+    "own_value": "a>6",
+    "book_quote": "$a>6$"
+   },
+   "ver": {
+    "key": "g10m4s7-1:Ex4-6:4d",
+    "own_answer": "a > 6 (a in N)",
+    "verdict": "confirmed",
+    "other_correct_answers": true,
+    "note": "Multiplying by 3 gives 4a-8>3a-2, so a>6, with a=6 giving equality and a=7 giving 6.67>6.33; the equivalent a>=7 for a in N is also acceptable."
+   }
+  },
+  {
+   "key": "g10m4s7-1:Ex4-7:9a",
+   "state": "held",
+   "rec": {
+    "key": "g10m4s7-1:Ex4-7:9a",
+    "verdict": "exclude",
+    "class": "book error",
+    "confidence": "low",
+    "note": "Figure: open circle at -1 shaded left, closed circle at 4 shaded right, so $x<-1$ or $x\\geq4$. The book writes 'and', which read literally is the empty set.",
+    "correct_answer": "x<-1 or x\\geq 4; x\\in\\mathbb{R}",
+    "own_value": "x<-1 or x>=4",
+    "defect": "The book joins the two rays with 'and' where the figure needs 'or' (union). As written the answer is the empty set.",
+    "why_low": "The book may only be using 'and' loosely. A person should decide whether to accept the loose wording or keep it excluded."
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m4s7-1:Ex4-7:9c",
+   "state": "held",
+   "rec": {
+    "key": "g10m4s7-1:Ex4-7:9c",
+    "verdict": "exclude",
+    "class": "book error",
+    "confidence": "high",
+    "note": "The figure shows an open circle at $-1$ and a filled circle at $2$, so the inequality is $-1<x\\le 2$. The book's $-1<x\\le-2$ is an empty set and does not match its own figure. The blind answer matches the figure, but only the book's text is authoritative.",
+    "correct_answer": "-1 < x \\le 2; x \\in \\mathbb{R}",
+    "defect": "The printed answer and the EPUB final answer both write the upper bound as $-2$. The figure's filled circle sits at $+2$, so a minus sign was added by mistake. $-1<x\\le-2$ has no solutions.",
+    "own_value": "$-1<x\\le 2$"
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m4s7-1:Ex4-7:11a",
+   "state": "held",
+   "rec": {
+    "key": "g10m4s7-1:Ex4-7:11a",
+    "verdict": "accept",
+    "class": "book answer confirmed",
+    "confidence": "low",
+    "note": "$2x-3<\\frac{3x-2}{2}\\Rightarrow 4x-6<3x-2\\Rightarrow x<4$, with $x\\in\\mathbb{N}$. This matches the book's working, the EPUB final answer and the printed answer. The blind solver gave nothing. The key marks the solution; the number line is only a representation of it.",
+    "book_quote": "$x<4$",
+    "own_value": "$x<4$, $x\\in\\mathbb{N}$",
+    "why_low": "The stem also asks the student to draw the answer on a number line. That part is not marked; only the inequality is. A person should confirm that is acceptable."
+   },
+   "ver": {
+    "key": "g10m4s7-1:Ex4-7:11a",
+    "own_answer": "x < 4 with x in N, i.e. x = 1, 2, 3 (0 as well if N includes 0)",
+    "verdict": "confirmed",
+    "other_correct_answers": true,
+    "note": "Multiplying by 2 gives 4x-6 < 3x-2, so x < 4, and the key x<4 with x in N is correct; a student listing {1,2,3} (or {0,1,2,3}) is equally correct but may not match an interval marker."
+   }
+  },
+  {
+   "key": "g10m4s7-1:Ex4-7:11b",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m4s7-1:Ex4-7:11b",
+    "verdict": "exclude",
+    "class": "book error",
+    "confidence": "high",
+    "note": "$3(1-b)-4+b=-1-2b$, so $-1-2b>7+b$ gives $-3b>8$ and $b<-\\frac{8}{3}$. For integers that is $b\\le-3$. The book's line $-2b>8$ drops the $+b$ on the right, giving $b<-4$. The printed answer $b>4$ contradicts the EPUB's $b<-4$.",
+    "correct_answer": "b < -8/3 (for b in Z: b <= -3)",
+    "defect": "The step from $3-3b-4+b>7+b$ to $-2b>8$ loses the $b$ from the right-hand side. The correct step is $-3b>8$, so $b<-\\frac{8}{3}$, not $b<-4$. The printed answer $b>4$ also disagrees with the EPUB's $b<-4$.",
+    "own_value": "$b<-\\frac{8}{3}$, so $b\\le -3$ for $b\\in\\mathbb{Z}$"
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m4s7-1:Ex4-7:11c",
+   "state": "held",
+   "rec": {
+    "key": "g10m4s7-1:Ex4-7:11c",
+    "verdict": "accept",
+    "class": "book answer confirmed",
+    "confidence": "low",
+    "note": "$1-5x>4x+4-3=4x+1\\Rightarrow -9x>0\\Rightarrow x<0$. This matches the book's working, the EPUB final answer and the printed answer. The printed text only adds the axis and the domain $x\\in\\mathbb{R}$. The blind solver gave nothing.",
+    "book_quote": "$x<0$",
+    "own_value": "$x<0$, $x\\in\\mathbb{R}$",
+    "why_low": "The stem also asks for the answer on a number line. That drawing is not marked; only the inequality is. A person should confirm that is acceptable."
+   },
+   "ver": {
+    "key": "g10m4s7-1:Ex4-7:11c",
+    "own_answer": "x < 0, x in R",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "1-5x > 4x+1 gives -9x > 0, so x < 0 (inequality flips on dividing by -9), matching the key."
+   }
+  },
+  {
+   "key": "g10m4s7-1:Ex4-7:13",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m4s7-1:Ex4-7:13",
+    "verdict": "fix",
+    "class": "marker cannot check",
+    "confidence": "low",
+    "note": "A value rounded to $4{,}5$ at one decimal lies in $4.45\\le x<4.55$, which matches the book's printed answer. But the stem asks the student to show the interval on a number line, and the EPUB gives only a figure with no final answer. The inequality is not what the stem asks for, so the item is a teaching example.",
+    "book_quote": "4.45 ≤x < 4.55",
+    "own_value": "$4.45\\le x<4.55$",
+    "fix": {
+     "answer_type": "not_markable",
+     "not_markable_reason": "The stem asks the student to draw the interval on a number line and the book's working is that figure, so the answer cannot be typed and marked. The inequality $4.45\\le x<4.55$ is shown as the teaching explanation."
+    },
+    "why_low": "A person decides whether to keep this as an unmarked teaching example or type the printed inequality $4.45\\le x<4.55$ as the key. The EPUB gives no final answer, so the inequality rests on the PDF text only."
+   },
+   "ver": null
+  }
+ ],
+ "tally": {
+  "fix/confirmed": 4,
+  "exclude": 15,
+  "accept/confirmed": 14,
+  "hold": 3,
+  "fix": 1
+ },
+ "problems": [],
+ "meter": {
+  "stage": "G2R",
+  "record": "uv run meter_run.py record --book g10-math --stage G2R --run <runId>"
+ }
+}

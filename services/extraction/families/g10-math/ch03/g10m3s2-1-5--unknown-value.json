@@ -1,0 +1,145 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m3s2-1-5:unknown-value",
+ "kind": "family",
+ "lo_id": "lo:g10m3s2-1-5",
+ "parent_question_id": "q:g10m3s2-1-5:ex3-1-17a",
+ "source_page": 67,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "a1",
+   "choice": [
+    -6,
+    -5,
+    -4,
+    -3,
+    -2,
+    2,
+    3,
+    4,
+    5,
+    6
+   ]
+  },
+  {
+   "name": "d1",
+   "choice": [
+    -4,
+    -3,
+    -2,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "A",
+   "choice": [
+    -4,
+    -3,
+    -2,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "d2",
+   "let": "d1 + A"
+  },
+  {
+   "name": "a2",
+   "let": "a1 + d1"
+  },
+  {
+   "name": "a3",
+   "let": "a2 + d2"
+  },
+  {
+   "require": "abs(d2) >= 2 and abs(a2) >= 2 and abs(a3) >= 2 and abs(a2) <= 9 and abs(a3) <= 9",
+   "why": "every coefficient of k, in the terms and after subtracting, is between 2 and 9 in size, so it prints as ak"
+  },
+  {
+   "name": "e1",
+   "randint": [
+    -9,
+    9
+   ],
+   "resample_while": "e1 == 0"
+  },
+  {
+   "name": "e2",
+   "randint": [
+    -9,
+    9
+   ],
+   "resample_while": "e2 == 0 or e2 == e1"
+  },
+  {
+   "name": "k",
+   "randint": [
+    -6,
+    6
+   ],
+   "resample_while": "k == 0"
+  },
+  {
+   "name": "e3",
+   "let": "2 * e2 - e1 - A * k"
+  },
+  {
+   "require": "e3 != 0 and e3 != e2 and abs(e3) <= 30",
+   "why": "no constant is 0, no difference of constants is 0, and nothing is large"
+  },
+  {
+   "name": "f1",
+   "let": "e2 - e1"
+  },
+  {
+   "name": "f2",
+   "let": "e3 - e2"
+  },
+  {
+   "name": "t1",
+   "let": "a1 * k + e1"
+  },
+  {
+   "name": "t2",
+   "let": "a2 * k + e2"
+  },
+  {
+   "name": "t3",
+   "let": "a3 * k + e3"
+  },
+  {
+   "name": "dd",
+   "let": "d1 * k + f1"
+  },
+  {
+   "require": "dd != 0",
+   "why": "a constant sequence would leave the question of whether it counts as linear"
+  },
+  {
+   "require": "abs(t1) <= 50 and abs(t2) <= 50 and abs(t3) <= 50",
+   "why": "keep the numbers in the check small"
+  }
+ ],
+ "constraints": [
+  "(a2 - a1) * k + (e2 - e1) == (a3 - a2) * k + (e3 - e2)",
+  "t2 - t1 == t3 - t2"
+ ],
+ "stem": "If the following terms make a linear sequence: ${=a1}k {=signed(e1)}\\;;\\;{=a2}k {=signed(e2)}\\;;\\;{=a3}k {=signed(e3)}\\;;\\;\\ldots$ determine the value of $k$.",
+ "answer": "k",
+ "solution": [
+  "In a linear sequence the common difference is the same all the way along, so $T_{2} - T_{1} = T_{3} - T_{2}$.",
+  "Put in the terms: $({=a2}k {=signed(e2)}) - ({=a1}k {=signed(e1)}) = ({=a3}k {=signed(e3)}) - ({=a2}k {=signed(e2)})$.",
+  "Simplify each side: ${=d1}k {=signed(f1)} = {=d2}k {=signed(f2)}$.",
+  "Collect the terms in $k$ on one side and the numbers on the other: ${=d1 - d2}k = {=f2 - f1}$.",
+  "Divide both sides by ${=d1 - d2}$: $k = \\frac{{=f2 - f1}}{{=d1 - d2}} = {=k}$.",
+  "Check: with $k = {=k}$ the first three terms are ${=t1}$, ${=t2}$ and ${=t3}$, and the differences are $T_{2} - T_{1} = {=t2 - t1}$ and $T_{3} - T_{2} = {=t3 - t2}$, which are equal."
+ ],
+ "notes": "Book ex3-1-16a / 17a: the terms make a linear sequence, so T2 - T1 = T3 - T2, which gives a linear equation in the unknown. The family is built backwards from k: the coefficients and the constants e1 and e2 are drawn, then e3 = 2*e2 - e1 - A*k is solved for, so k is always a non-zero whole number in [-6, 6] and the equation has exactly one solution (A = d2 - d1 is never 0). Coefficients of k are never 0 or +-1 anywhere in the working, and no constant or difference of constants is 0, so the printed steps have no special cases. The common difference at the solution is never 0. The book's fractional terms and non-integer answers are kept for the advanced family."
+}

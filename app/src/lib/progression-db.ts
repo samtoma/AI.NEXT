@@ -25,6 +25,14 @@
  * transaction just wrote) and otherwise opens its own `withPrincipal` unit
  * through `scoped`. Queries on one client run one at a time (`sequential`,
  * pg@9), never `Promise.all`.
+ *
+ * BOOK SECTIONS (feature 003, FR-4313). The advance reads the course's rows of
+ * `course_lessons` (migration 034) and hands them to the walk, so a student is
+ * never moved past a split section with a part not passed. It reads them only
+ * on the rare path where a lesson has just passed the gate, next to the
+ * prerequisite read, and only for the ONE course being walked — a course the
+ * attempt route has already gated. A course with no split section — every
+ * National course — is walked exactly as before.
  */
 import type { PoolClient } from "pg";
 import { sequential } from "./db";
@@ -39,6 +47,12 @@ import {
   type ProgressionLesson,
   type ProgressionLo,
 } from "./progression";
+import {
+  BOOK_SECTIONS_SQL,
+  sectionIndexFromRows,
+  type BookSectionRow,
+  type SectionIndex,
+} from "./book-sections";
 
 /**
  * The lessons of every course, in catalogue order, with this student's current
@@ -97,6 +111,31 @@ async function prereqMap(db: Db): Promise<Map<string, string[]>> {
     m.set(e.dst_id, list);
   }
   return m;
+}
+
+/**
+ * The book sections of the given courses (`course_lessons`, migration 034),
+ * indexed (lib/book-sections.ts). Content, not student data — but it holds
+ * lesson titles, so the caller passes only course ids it has already gated.
+ */
+async function sectionIndexOn(db: Db, courseIds: readonly string[]): Promise<SectionIndex> {
+  const r = await db.query(BOOK_SECTIONS_SQL, [courseIds]);
+  return sectionIndexFromRows(r.rows as BookSectionRow[]);
+}
+
+/**
+ * `sectionIndexOn` for a caller outside a unit of work — the check-in page
+ * asking whether the pointer's lesson is a part of a started section, to name
+ * the recommendation by the section (FR-4313), or what a lesson's printed
+ * section is (FR-4318). `courseIds` must come from the student's GATED
+ * catalogue.
+ */
+export async function getSectionIndex(
+  studentId: number | null,
+  courseIds: readonly string[],
+  client?: PoolClient
+): Promise<SectionIndex> {
+  return scoped(studentId, client, (db) => sectionIndexOn(db, courseIds));
 }
 
 /**
@@ -177,10 +216,16 @@ export async function advanceIfMastered(
   // the course's first lesson, exactly as `getCurrentLesson` shows it); it must
   // pass the gate; and a later lesson must be ready. The prerequisite read is
   // skipped unless the first two already hold — it is the expensive one.
+  //
+  // The book sections of this course come with it (FR-4313): with a split
+  // section in them, a part moves to its section's first part not yet passed,
+  // and the pointer never moves past a section with a part not passed. With
+  // none — every National course — the walk is the one it always was.
   if (resolvePointer(inCourse, stored) !== slug) return null;
   if (!lessonGatePassed(lesson.los)) return null;
   const prereqs = await prereqMap(db);
-  const next = advanceTarget(inCourse, stored, slug, mastery, prereqs);
+  const sections = await sectionIndexOn(db, [courseId]);
+  const next = advanceTarget(inCourse, stored, slug, mastery, prereqs, sections);
   // Nothing ready after this lesson: PARK. At the course's last lesson that
   // is the terminal state; mid-course it waits for a prerequisite. Either way
   // the pointer stays put, and only `isCourseComplete` decides what the card

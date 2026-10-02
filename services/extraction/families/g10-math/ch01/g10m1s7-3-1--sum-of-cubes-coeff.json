@@ -1,0 +1,71 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m1s7-3-1:sum-of-cubes-coeff",
+ "kind": "family",
+ "lo_id": "lo:g10m1s7-3-1",
+ "parent_question_id": "q:g10m1s7-3-1:ex1-11-36",
+ "source_page": 40,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    2,
+    6
+   ],
+   "resample_while": "gcd(p, q) != 1"
+  },
+  {
+   "name": "pcube",
+   "let": "p**3"
+  },
+  {
+   "name": "qcube",
+   "let": "q**3"
+  },
+  {
+   "name": "psq",
+   "let": "p*p"
+  },
+  {
+   "name": "qsq",
+   "let": "q*q"
+  },
+  {
+   "name": "pq",
+   "let": "p*q"
+  }
+ ],
+ "constraints": [
+  "gcd(p, q) == 1"
+ ],
+ "stem": "Factorise: ${=pcube}m^3 + {=qcube}n^3$",
+ "solution": [
+  "The binomial ${=pcube}m^3 + {=qcube}n^3$ has two terms that are perfect cubes, and they are added, so it is a sum of two cubes. Use $x^3 + y^3 = (x + y)(x^2 - xy + y^2)$.",
+  "Find $x$ and $y$ as the cube roots of the two terms. Since $({=p}m)^3 = {=pcube}m^3$ and $({=q}n)^3 = {=qcube}n^3$, we have $x = {=p}m$ and $y = {=q}n$.",
+  "Substitute into the identity: ${=pcube}m^3 + {=qcube}n^3 = ({=p}m + {=q}n)[({=p}m)^2 - ({=p}m)({=q}n) + ({=q}n)^2]$.",
+  "Simplify the second bracket, using $({=p}m)^2 = {=psq}m^2$, $({=p}m)({=q}n) = {=pq}mn$ and $({=q}n)^2 = {=qsq}n^2$.",
+  "So ${=pcube}m^3 + {=qcube}n^3 = ({=p}m + {=q}n)({=psq}m^2 - {=pq}mn + {=qsq}n^2)$."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "({=p}*m + {=q}*n)*({=psq}*m**2 - {=pq}*m*n + {=qsq}*n**2)",
+  "form": "factorised",
+  "variables": [
+   "m",
+   "n"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Advanced tier, sum-of-cubes sibling of tpl:g10m1s7-3-1:diff-of-cubes-coeff. It extends the book's ex1-11-36 (27x^3 + 1 = (3x + 1)(9x^2 - 3x + 1), coefficient cube) to two variables with BOTH terms carrying a cube coefficient (8, 27, 64, 125, 216). Same method and notation as the book: the sum-of-cubes identity, x and y as cube roots of whole terms, substitute, simplify. The middle term of the trinomial is negative (the book's pattern: sign of the first factor flips in the trinomial). Same choices as the sibling: p, q in 2..6 (no '1n^3', no huge numbers), gcd(p, q) = 1 so there is no common factor and the factorised answer is unique, 12 coprime (p, q) pairs. Variables are m and n (not x and y) so the generic x and y of the identity in the solution are not confused with the student's letters. Expression-type, so no 'answer' field and no distractors; the marker accepts any equivalent factorised form. Verified by hand for p=2, q=3: (2m+3n)(4m^2-6mn+9n^2) = 8m^3 + 27n^3."
+}

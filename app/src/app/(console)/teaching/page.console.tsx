@@ -5,7 +5,9 @@ import { TeachingSwitch } from "@/components/console/TeachingSwitch";
 import { Chip, Empty, Panel, Td, Th, stamp } from "@/components/console/ui";
 import { crossStudentReadAllowed } from "@/lib/auth/authorize";
 import { consoleAccess } from "@/lib/console-auth";
+import { courseName } from "@/lib/console-course-names";
 import { consoleRoute } from "@/lib/console-routes";
+import { COURSES, COURSE_IDS } from "@/lib/courses";
 import {
   PROBING_COURSE_ID,
   PROBING_EVERYONE_LOCK_NOTE,
@@ -41,6 +43,15 @@ export const metadata = { title: "Teaching — Noor Console" };
  * (fix pass 2). The page says so beside the control, in those words.
  */
 const PATH = "/teaching";
+
+/**
+ * Which courses probing can reach, from the course registry's own
+ * `CourseDef.probing` (003, FR-4212, decision 7) — never a list typed here, so
+ * the page cannot disagree with what the tutor does. The Grade 10 American
+ * course says `false` at launch whatever the switch's position.
+ */
+const PROBING_REACHES = COURSE_IDS.filter((id) => COURSES[id].probing).map(courseName);
+const PROBING_NEVER = COURSE_IDS.filter((id) => !COURSES[id].probing).map(courseName);
 
 const LABEL: Record<ProbingSetting, string> = {
   off: "Off",
@@ -93,6 +104,12 @@ export default async function TeachingConsolePage() {
             <code className="font-mono text-[11.5px]">{PROBING_COURSE_ID}</code>) — review mode,
             practice and the other two subjects never probe, because nothing in the probing
             instructions is translated yet (issue #53).
+            <span className="mt-1.5 block">
+              <strong>Socratic probing can reach:</strong>{" "}
+              {PROBING_REACHES.length > 0 ? PROBING_REACHES.join(", ") : "no course"}.{" "}
+              <strong>Not:</strong> {PROBING_NEVER.length > 0 ? PROBING_NEVER.join(", ") : "none"}
+              {" "}— whatever the switch says.
+            </span>
           </>
         }
         right={

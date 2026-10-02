@@ -1,0 +1,83 @@
+{
+ "format": "ainext.family/1",
+ "version": 1,
+ "id": "tpl:g10m4s2-1-3:sum-of-two-fractions",
+ "kind": "family",
+ "lo_id": "lo:g10m4s2-1-3",
+ "parent_question_id": "q:g10m4s2-1-3:ex4-1-32",
+ "source_page": 78,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "choice": [
+    2,
+    3,
+    4,
+    5,
+    6
+   ]
+  },
+  {
+   "name": "b",
+   "choice": [
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "resample_while": "lcm(a, b) == a or lcm(a, b) == b"
+  },
+  {
+   "name": "d",
+   "let": "lcm(a, b)"
+  },
+  {
+   "name": "m",
+   "let": "d // a"
+  },
+  {
+   "name": "n",
+   "let": "d // b"
+  },
+  {
+   "name": "k",
+   "randint": [
+    1,
+    "min(4, 60 // d)"
+   ]
+  },
+  {
+   "name": "r",
+   "let": "k * d"
+  },
+  {
+   "name": "c",
+   "let": "k * (m + n)"
+  },
+  {
+   "name": "t",
+   "let": "d * c"
+  }
+ ],
+ "constraints": [
+  "(m + n) * r == t",
+  "r // a + r // b == c",
+  "gcd(m, n) == 1"
+ ],
+ "stem": "Solve for $x$: $\\frac{x}{{=a}}+\\frac{x}{{=b}}={=c}$",
+ "answer": "r",
+ "solution": [
+  "The denominators are ${=a}$ and ${=b}$, so the common denominator is ${=d}$.",
+  "Multiply every term on both sides by ${=d}$: ${=d}\\times\\frac{x}{{=a}}+{=d}\\times\\frac{x}{{=b}}={=d}\\times{=c}$",
+  "Cancel the denominators, because ${=d}\\div{=a}={=m}$ and ${=d}\\div{=b}={=n}$: ${=m}x+{=n}x={=t}$",
+  "Collect the like terms: ${=m+n}x={=t}$",
+  "Divide both sides by ${=m+n}$: $x=\\frac{{=t}}{{=m+n}}={=r}$",
+  "Check by substituting $x={=r}$: $\\frac{{=r}}{{=a}}+\\frac{{=r}}{{=b}}={=r//a}+{=r//b}={=c}$, which equals the right-hand side."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Entry point of the skill, modelled on book ex4-1-32 (x over two denominators, constant on the right). Denominators are drawn from 2..6 and never one dividing the other, so both multipliers m and n are at least 2 (no '1x' is ever printed) and the common denominator is a genuine lcm. The answer is built as k times the lcm and the right-hand side computed from it, so every instance has a whole-number answer (6 to 60). Hand-checked: a=2, b=3, k=1 gives x/2 + x/3 = 5, x = 6; a=4, b=6, k=2 gives x/4 + x/6 = 10, x = 24."
+}

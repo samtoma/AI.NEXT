@@ -1,0 +1,39 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m1s6-1-2:x-plus-k-times-x-minus-4",
+ "lo_id": "lo:g10m1s6-1-2",
+ "parent_question_id": "q:g10m1s6-1-2:ex1-11-22c",
+ "tier": "standard",
+ "kind": "area_model",
+ "instances": [
+  {
+   "a": 1
+  },
+  {
+   "a": 2
+  },
+  {
+   "a": 3
+  }
+ ],
+ "spec": {
+  "mode": "expand",
+  "a": "{=a}",
+  "b": -4
+ },
+ "stem": "Build the rectangle with sides $x + {=a}$ and $x - 4$ from algebra tiles (negative tiles are hatched and marked −). The tiles that fill it are the expansion of $(x + {=a})(x - 4)$.",
+ "solution": [
+  "Anchor the single $x^2$ tile. It is $x \\times x$, the product of the two $x$ terms.",
+  "Along the top edge, lay one positive $x$ tile for each unit added to $x$ in the first bracket. Together they are $x \\times (\\text{that number})$.",
+  "Down the left edge, lay four negative $x$ tiles (hatched, marked −), one for each unit in $-4$. Together they are $x \\times (-4)$.",
+  "Fill the block that the two runs bound with unit tiles. Each unit is positive times negative, so every unit tile is negative.",
+  "Read the rectangle. Positive and negative $x$ tiles cancel in pairs. The four negative ones outnumber the positive ones, so the $x$ term is $(\\text{number} - 4)x$, which is negative whenever the number is less than 4. The expansion is $x^2$, plus the net $x$ tiles, plus the unit tiles."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "middle-term-sign",
+   "misconception_id": "mc:g10m1s6-1-2:x-term-subtracted-wrong-way-round"
+  }
+ ],
+ "notes": "Parent is (d-4)^2 (ex1-11-22c); this is the same factor x-4 with the other number left free (k = -4 gives the book's question). The three own misconceptions on this objective come from asking when the x coefficient of (x+k)(x-4) is positive, and all three predict a POSITIVE x term for k = 1, 2, 3, whereas the tiles show it is negative (-3x, -2x, -x). So the build refutes 'any positive k makes b positive' and 'k below 4 makes b positive' directly. Why only middle-term-sign is mapped: giving the two runs the opposite signs (-k on top, +4 down the side) is a valid rectangle with the right constant -4k and a flipped x term (4-k)x, which is exactly the predicate's description and exactly the reversal 'kx - 4x read as 4 - k'. Not mapped: (1) x-term-from-k-alone (leaves the -4x tiles out): dropping a run leaves a gap, which would fire not-a-rectangle, and that predicate also fires for a stray tile, so it does not diagnose this one error. When both signs are flipped the student lands on middle-term-sign, and the likelier error there is the reversal. For a = 2 'k alone' and 'reversed' give the same wrong x term (+2x). (2) x-term-taken-from-constant-product concerns reading b off the constant -4k, which the tile build does not exercise. (3) constant-sign, missing-cross-term and off-target have no own misconception to name. Instrument limits: |a|, |b| <= 4 and b is fixed at -4, so the net x term never exceeds 0 here; the 'b is positive when k > 4' half of the original question cannot be built with this widget. a = 4 is left out on purpose: the x tiles cancel to nothing, so a student who skips the cross term is right by accident, and a sign reversal also gives 0."
+}

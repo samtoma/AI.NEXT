@@ -1,0 +1,38 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m14s3-1-1:die-multiple-of-5-and-odd",
+ "lo_id": "lo:g10m14s3-1-1",
+ "parent_question_id": "q:g10m14s3-1-1:ex14-8-14a",
+ "tier": "basic",
+ "kind": "venn_builder",
+ "spec": {
+  "mode": "counts",
+  "sets": 2,
+  "labels": [
+   "Multiple of 5",
+   "Odd number"
+  ],
+  "regions": {
+   "a": 0,
+   "b": 2,
+   "ab": 1,
+   "n": 3
+  }
+ },
+ "stem": "A die is rolled once. Let $A$ be the event 'a multiple of $5$' and $B$ the event 'an odd number'. The rectangle is the whole sample space $S$. Fill in the Venn diagram: how many outcomes lie in $A$ only, in both $A$ and $B$, in $B$ only, and in neither circle?",
+ "solution": [
+  "Write down the sample space: $S = \\{1, 2, 3, 4, 5, 6\\}$, so $n(S) = 6$. The rectangle holds all six outcomes.",
+  "List the event sets: $A = \\{5\\}$ (the only multiple of $5$ on a die) and $B = \\{1, 3, 5\\}$.",
+  "The outcome $5$ is in both events, so the overlap $A \\cap B$ holds $1$ outcome.",
+  "$A$ has no other outcome, so 'A only' holds $0$. The other outcomes of $B$, namely $1$ and $3$, go in 'B only': $2$ outcomes.",
+  "The outcomes in neither event, $2$, $4$ and $6$, sit inside the rectangle but outside both circles: $3$ outcomes.",
+  "Check: $0 + 1 + 2 + 3 = 6 = n(S)$, so every outcome of the sample space has been placed exactly once."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "neither-region-missed",
+   "misconception_id": "mc:g10m14s1-1-1:sample-space-as-an-event"
+  }
+ ],
+ "notes": "Counts mode with NO clues and NO total, on purpose: for this objective the student must derive the sample space and both event sets herself, so no set size is handed over (and 'overlap-counted-twice' cannot fire, which is right, since no own misconception names it). What it fits: the Venn representation of an experiment, n(S) and the exclusive count of each region; what it does not do: the student does not write the sets out in braces (that stays written work, see the gap). 'A only' = 0 is deliberate: A lies wholly inside B, which the book's own anchor (ex14-8-14a, answer 1/6) has. neither-region-missed is mapped to sample-space-as-an-event as the nearest id this objective owns: the student whose outside region is empty has treated the union of the events as the whole sample space. off-target is left unmapped because it fires for several unrelated slips (a dropped outcome in B, the overlap counted into 'B only') and none dominates; the 'counts a set's full size in its exclusive region' error has no id on this objective."
+}

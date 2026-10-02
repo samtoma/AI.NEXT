@@ -1,0 +1,75 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m7s3-1-4:algebra-opposite",
+ "kind": "family",
+ "lo_id": "lo:g10m7s3-1-4",
+ "parent_question_id": "q:g10m7s3-1-4:ex7-8-2j",
+ "source_page": 270,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "m",
+   "randint": [
+    4,
+    6
+   ]
+  },
+  {
+   "name": "r",
+   "randint": [
+    2,
+    "m - 2"
+   ]
+  },
+  {
+   "name": "xv",
+   "randint": [
+    5,
+    15
+   ]
+  },
+  {
+   "name": "n",
+   "randint": [
+    "max(5, 40 - m * xv)",
+    "min(40, 130 - m * xv)"
+   ]
+  },
+  {
+   "name": "s",
+   "let": "n + (m - r) * xv"
+  },
+  {
+   "name": "bb",
+   "let": "m * xv + n"
+  },
+  {
+   "name": "q",
+   "randint": [
+    "max(40, 200 - 2 * bb)",
+    "min(140, 330 - 2 * bb)"
+   ],
+   "resample_while": "360 - q - 2 * bb == q"
+  },
+  {
+   "name": "cc",
+   "let": "360 - q - 2 * bb"
+  }
+ ],
+ "constraints": [
+  "m * xv + n == r * xv + s",
+  "cc > 0 and cc < 180",
+  "cc != q"
+ ],
+ "stem": "$ABCD$ is a kite with $AB = AD$ and $CB = CD$. $A\\hat{B}C = ({=m}x + {=n})^\\circ$, $A\\hat{D}C = ({=r}x + {=s})^\\circ$ and $B\\hat{A}D = {=q}^\\circ$. Calculate the size of $B\\hat{C}D$, in degrees.",
+ "answer": "cc",
+ "solution": [
+  "The unequal sides meet at $B$ and at $D$, so $A\\hat{B}C$ and $A\\hat{D}C$ are the pair of opposite angles of the kite that are equal: ${=m}x + {=n} = {=r}x + {=s}$.",
+  "Collect the terms in $x$: ${=m - r}x = {=s - n}$, so $x = {=xv}$.",
+  "$A\\hat{B}C = {=m}({=xv}) + {=n} = {=bb}^\\circ$, so $A\\hat{D}C = {=bb}^\\circ$ as well.",
+  "The interior angles of a quadrilateral add up to $360^\\circ$: $B\\hat{C}D = 360^\\circ - {=q}^\\circ - {=bb}^\\circ - {=bb}^\\circ = {=cc}^\\circ$."
+ ],
+ "notes": "Advanced: algebra to use 'one pair of opposite angles equal', then the quadrilateral angle sum for the remaining angle. m - r >= 2 so no coefficient of 1 is ever printed; both constants are positive; s is computed so x is a whole number between 5 and 15. The bounds on n and q keep the angle at B between 40 and 130 and the angle at C between 30 and 160, so the kite is convex; C != A keeps it from being a rhombus. The answer is unique: the equal pair is fixed by naming AB = AD and CB = CD."
+}

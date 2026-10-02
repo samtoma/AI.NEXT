@@ -1,0 +1,33 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m11s1-1-3:depression-from-the-cliff",
+ "lo_id": "lo:g10m11s1-1-3",
+ "parent_question_id": "q:g10m11s1-1-3:we04",
+ "tier": "standard",
+ "kind": "triangle_ratio",
+ "spec": {
+  "ask": "tan",
+  "target": 0.75
+ },
+ "stem": "From the top of a $\\text{30}$ $\\text{m}$ cliff, a boat on the level sea is seen at an angle of depression $\\theta$. The boat is $\\text{40}$ $\\text{m}$ from the foot of the cliff. Build a right triangle, of any size, whose marked angle $\\theta$ equals this angle of depression.",
+ "solution": [
+  "Draw the cliff as a vertical line 30 m tall and the sea as a horizontal line. The boat is 40 m from the foot of the cliff, along the sea.",
+  "The angle of depression is measured DOWN from the horizontal line through the observer's eye (the cliff top) to the line of sight. It is not measured from the cliff face.",
+  "The horizontal line at the top of the cliff is parallel to the sea, so the angle of depression equals the angle of elevation of the cliff top as seen from the boat (alternate angles). So $\\theta$ is the angle at the boat.",
+  "Read the sides from $\\theta$ at the boat: the cliff's height (30 m) is opposite, the 40 m along the sea is adjacent, and the line of sight is the hypotenuse.",
+  "The two sides we know are both legs, so the ratio is the tangent: $\\tan\\theta = \\frac{30}{40} = 0.75$.",
+  "Triangles with the same angle have the same tangent, so drag the legs until the tangent reads 0.75: legs 3 and 4, 6 and 8, or the cliff's own 30 and 40 all work.",
+  "Check: $\\theta = \\tan^{-1}(0.75) \\approx 36.87^\\circ$. The angle at the top of the cliff, between the cliff face and the line of sight, is the other acute angle, $90^\\circ - \\theta \\approx 53.13^\\circ$."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "ratio-inverted",
+   "misconception_id": "mc:g10m5s3-1-2:reads-sides-from-other-angle"
+  },
+  {
+   "predicate": "used-sine",
+   "misconception_id": "mc:g10m5s3-1-1:hypotenuse-not-opposite-right-angle"
+  }
+ ],
+ "notes": "Why it fits LO3, and how far: identifying the angle of depression is the objective's own skill. The student must see that the depression is measured from the horizontal at the observer and equals the triangle's angle at the boat (the book's we04 figure draws exactly this, with a dashed horizontal at B and 62 degrees below it), and then use it with the tangent. The classic slip is to take the angle at the cliff top, between the cliff face and the sight line. That is the other acute angle, so the two legs trade places and the tangent comes out upside down: ratio-inverted, mapped to reads-sides-from-other-angle, the nearest listed record for 'the angle is read from the other vertex'. used-sine is mapped to hypotenuse-not-opposite-right-angle: a student who takes the 40 m, which touches the angle, as the longest side has built sin = 0.75 instead of tan. A student who reads 'distance from the foot' as the line-of-sight distance fires the same predicate, and that cause is not separately named. used-cosine can only be reached by combining both errors and is left unmapped, as is off-target. This lesson's own misconception (trusting-the-sketch) cannot be tested by a construction that is generated rather than drawn to scale. The sketch-versus-data check lives in the gap below. Only 'opposite' and 'next to' the marked angle are used, never a screen position. tan 0.75 (3:4) is inside the validator's limits. NOT covered: the two-angle composition of we04 and ex11-2-20 (elevation to the top plus depression to the base from one eye), and distinguishing depression from elevation by direction. See the LO3 gap."
+}

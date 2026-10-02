@@ -1,0 +1,167 @@
+{
+ "status": "RECOMMENDATION ONLY — an AI line's, never a review. `auto_pass_gates.py g2 --recommend` reads `items` and signs each verdict `auto-pass G2 (AI recommendation)`; a person's verdict in G2's file is never overwritten.",
+ "prepared_by": "g2_recommend.py g2rec-v1",
+ "prompts_version": "g2rec-v1",
+ "chapter": 2,
+ "from_runs": {
+  "runs/g10-math/g2rec/ch02-wf_4a4cf562-7e2.json": "3e1ee442ff70cc9865268ba6d52ec880ed51a42d185f80cad1a2d0b0d26e0c3f"
+ },
+ "by": null,
+ "items": {
+  "g10m2s2-1:WE5": {
+   "verdict": "accept",
+   "class": "check too strict",
+   "confidence": "high",
+   "note": "$9^x=3^{2x}=(3^x)^2$, so $(3^{2x}-1)/(3^x+1)=(3^x-1)(3^x+1)/(3^x+1)=3^x-1$. Matches the working's last line and the typed key. The complaint is only that no EPUB final exists to compare with. Verified independently: the verifier's own answer matches the key.",
+   "verified": {
+    "by": "g2rec-v1 independent verifier",
+    "own_answer": "3^x - 1",
+    "verdict": "confirmed",
+    "app_marker_identity": "equal",
+    "app_marker_book_answer": "equal"
+   }
+  },
+  "g10m2s2-1:Ex2-1:38": {
+   "verdict": "exclude",
+   "class": "book error",
+   "confidence": "high",
+   "note": "The working shows a minus in the denominator, the stem shows plus. Even with minus, $1+\\frac{1}{49}=\\frac{50}{49}$, not $\\frac{51}{49}$. With the stem as shown the value is $\\frac{50}{343}$. The book's answer is wrong either way. Right answer by the agent's own derivation: \\frac{50}{343} for the stem as printed.",
+   "if_corrected": {
+    "answer": "\\frac{50}{343} for the stem as printed",
+    "defect": "Book adds $1+\\frac{1}{49}$ and gets $\\frac{51}{49}$; the sum is $\\frac{50}{49}$. The stem also lost a minus sign in the denominator (working has $4\\times7^b-3\\times7^b$).",
+    "status": "NOT APPLIED: correcting the book's own answer or working is Samuel's to approve (decisions 43–45)"
+   }
+  },
+  "g10m2s2-1:Ex2-1:39": {
+   "verdict": "exclude",
+   "class": "book error",
+   "confidence": "high",
+   "note": "$12^y=3^y4^y$, $96^y=3^y32^y$, $6^y=3^y2^y$. So the denominator is $3^y(1+2^y)$, not $3^y(2+1)$ as the book writes. Correct result is $\\frac{4^y-2^{5y}}{1+2^y}$, which does not simplify further. Right answer by the agent's own derivation: \\frac{4^{y}-2^{5y}}{1+2^{y}}.",
+   "if_corrected": {
+    "answer": "\\frac{4^{y}-2^{5y}}{1+2^{y}}",
+    "defect": "Book writes $3^y+6^y=3^y(2+1)$; it should be $3^y(1+2^y)$. The denominator 3 in the printed answer is wrong.",
+    "status": "NOT APPLIED: correcting the book's own answer or working is Samuel's to approve (decisions 43–45)"
+   }
+  },
+  "g10m2s2-1:Ex2-4:1m": {
+   "verdict": "accept",
+   "class": "check too strict",
+   "confidence": "high",
+   "note": "$6^{5p}/9^p=2^{5p}3^{5p}/3^{2p}=2^{5p}3^{3p}$. The key matches the EPUB final answer; the complaint is a text comparison against the flattened PDF answer, where the dot means multiplication. Verified independently: the verifier's own answer matches the key.",
+   "verified": {
+    "by": "g2rec-v1 independent verifier",
+    "own_answer": "2^{5p}\\cdot 3^{3p}",
+    "verdict": "confirmed",
+    "app_marker_identity": "equal",
+    "app_marker_book_answer": "equal"
+   }
+  },
+  "g10m2s2-1:Ex2-4:7": {
+   "verdict": "accept",
+   "class": "check too strict",
+   "confidence": "high",
+   "note": "$2^{2013}5^{2015}=25\\cdot10^{2013}$, which is 25 followed by 2013 zeros: 2015 digits. Key 2015 is one number and right. The complaint is only a text comparison with the flattened printed answer. Verified independently: the verifier's own answer matches the key.",
+   "verified": {
+    "by": "g2rec-v1 independent verifier",
+    "own_answer": "2015",
+    "verdict": "confirmed"
+   }
+  },
+  "g10m2s3-1:Ex2-2:9": {
+   "verdict": "exclude",
+   "class": "book error",
+   "confidence": "high",
+   "note": "$(16x^{12}b^6)^{1/3}=2\\cdot2^{1/3}x^4b^2$. The book's working and answer print $a^4$ where the stem has $x^{12}$, so its key does not match the stem (marker NOT EQUAL). Typo in the book. Right answer by the agent's own derivation: 2\\cdot2^{\\frac{1}{3}}x^{4}b^{2}.",
+   "if_corrected": {
+    "answer": "2\\cdot2^{\\frac{1}{3}}x^{4}b^{2}",
+    "defect": "The book's answer (and working) write a^4 instead of x^4: the variable a does not occur in the stem. Correct answer is 2\\cdot2^{1/3}x^4b^2. A person can decide whether to correct the typo.",
+    "status": "NOT APPLIED: correcting the book's own answer or working is Samuel's to approve (decisions 43–45)"
+   }
+  },
+  "g10m2s4-1:Ex2-4:3p": {
+   "verdict": "exclude",
+   "class": "book error",
+   "confidence": "low",
+   "note": "As printed, with $y=16^x$ the equation is $\\frac{y-1}{y+1}=3$, so $y=-2$: no real solution. $x=\\frac12$ gives $\\frac{3}{5}$, not 3. The working's line 2 factorises a numerator $16^{2x}-1$ that the stem (and working line 1) do not show.",
+   "why_low": "A person could decide to repair the stem to $\\frac{16^{2x}-1}{4^{2x}+1}=3$ (answer $\\frac12$), but the working's first line does not show that text, so I did not repair it.",
+   "if_corrected": {
+    "answer": "",
+    "defect": "The stem as printed ($16^x-1$ over $4^2x+1$) does not give $x=\\frac12$. The working's first line repeats the same text, then silently uses $(4^{2x}-1)(4^{2x}+1)$ in the numerator. The book's stem is wrong, or its working is.",
+    "status": "NOT APPLIED: correcting the book's own answer or working is Samuel's to approve (decisions 43–45)"
+   }
+  }
+ },
+ "unanswered": [],
+ "report": {
+  "items": 7,
+  "recommended": 7,
+  "unanswered": [],
+  "by_verdict": {
+   "accept": 3,
+   "exclude": 4
+  },
+  "by_class": {
+   "check too strict": 3,
+   "book error": 4
+  },
+  "by_confidence": {
+   "high": 6,
+   "low": 1
+  },
+  "live": [
+   "g10m2s2-1:Ex2-4:1m",
+   "g10m2s2-1:Ex2-4:7",
+   "g10m2s2-1:WE5"
+  ],
+  "live_question_ids": [
+   "q:g10m2s2-1-1:ex2-4-7",
+   "q:g10m2s2-1-2:ex2-4-1m",
+   "q:g10m2s2-1-3:we05"
+  ],
+  "not_live": {},
+  "low_confidence": [
+   "g10m2s4-1:Ex2-4:3p"
+  ],
+  "stem_repairs": [],
+  "retyped": [],
+  "corrections_proposed": [
+   "g10m2s2-1:Ex2-1:38",
+   "g10m2s2-1:Ex2-1:39",
+   "g10m2s3-1:Ex2-2:9",
+   "g10m2s4-1:Ex2-4:3p"
+  ],
+  "off_task": [],
+  "no_longer_owed": [
+   "g10m2s2-1:Ex2-4:1q",
+   "g10m2s2-1:Ex2-4:1r",
+   "g10m2s2-1:Ex2-4:1s",
+   "g10m2s2-1:Ex2-4:1z",
+   "g10m2s2-1:Ex2-4:2a",
+   "g10m2s2-1:Ex2-4:2b",
+   "g10m2s2-1:Ex2-4:2l",
+   "g10m2s4-1:Ex2-3:4",
+   "g10m2s4-1:Ex2-4:3d",
+   "g10m2s4-1:Ex2-4:3g",
+   "g10m2s4-1:Ex2-4:3n",
+   "g10m2s4-1:Ex2-4:4",
+   "g10m2s4-1:Ex2-4:5"
+  ],
+  "stale_items": [],
+  "by_state": {
+   "excluded": 3,
+   "held": 4
+  },
+  "app_marker_identity_of_the_typed_key": {
+   "equal": [
+    "g10m2s2-1:Ex2-4:1m",
+    "g10m2s2-1:WE5"
+   ],
+   "different": [
+    "g10m2s2-1:Ex2-1:38",
+    "g10m2s2-1:Ex2-1:39",
+    "g10m2s3-1:Ex2-2:9"
+   ],
+   "unreadable": []
+  }
+ }
+}

@@ -1,0 +1,109 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m9s4-1-4:increase-years",
+ "kind": "family",
+ "lo_id": "lo:g10m9s4-1-4",
+ "parent_question_id": "q:g10m9s4-1-4:ex9-5-3",
+ "source_page": 347,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": "The population of a city grows at a constant average percentage rate each year.",
+ "params": [
+  {
+   "name": "m",
+   "randint": [
+    2,
+    4
+   ]
+  },
+  {
+   "name": "t",
+   "randint": [
+    100,
+    999
+   ]
+  },
+  {
+   "name": "u",
+   "randint": [
+    100,
+    999
+   ]
+  },
+  {
+   "name": "rt",
+   "choice": [
+    4,
+    6,
+    7,
+    9,
+    11,
+    13,
+    14,
+    16,
+    18,
+    19,
+    21,
+    22,
+    24,
+    26,
+    28
+   ]
+  },
+  {
+   "name": "n",
+   "randint": [
+    5,
+    10
+   ]
+  },
+  {
+   "name": "P",
+   "let": "m * 1000000 + t * 1000 + u"
+  },
+  {
+   "name": "top",
+   "let": "P * (1000 + rt) ** n"
+  },
+  {
+   "name": "bottom",
+   "let": "1000 ** n"
+  },
+  {
+   "require": "abs(2 * (top % bottom) - bottom) * 20 > bottom",
+   "why": "keep the unrounded population at least 0.05 away from a .5 boundary so the rounded answer is unambiguous"
+  },
+  {
+   "name": "Ar",
+   "let": "(2 * top + bottom) // (2 * bottom)"
+  },
+  {
+   "name": "inc",
+   "let": "Ar - P"
+  },
+  {
+   "name": "rate",
+   "let": "fixed(rt / 10, 1)"
+  },
+  {
+   "name": "i3",
+   "let": "fixed(rt / 1000, 3)"
+  },
+  {
+   "name": "Afix",
+   "let": "fixed(top / bottom, 2)"
+  }
+ ],
+ "stem": "The current population of a city is $\\text{{=m}\\ {=t}\\ {=u}}$ and the average rate of population growth is ${=rate}$ % p.a. Use the compound interest formula to calculate by how many people the population is expected to increase over the next ${=n}$ years. Do not round off until your final answer, and round that to the nearest integer.",
+ "answer": "inc",
+ "solution": [
+  "Write down the known values: $P=\\text{{=m}\\ {=t}\\ {=u}}$, $i=\\frac{{=rate}}{100}={=i3}$, $n={=n}$ and $A=?$",
+  "Write down the compound interest formula: $A=P(1+i)^{n}$",
+  "Substitute the values: $A=\\text{{=m}\\ {=t}\\ {=u}}\\left(1+{=i3}\\right)^{{=n}}$",
+  "Calculate, rounding only at the end: $A={=Afix}$",
+  "Round to the nearest integer: $A\\approx{=Ar}$",
+  "The increase is the future population minus the current population: ${=Ar}-{=P}={=inc}$",
+  "The population is expected to increase by about ${=inc}$ people over the next ${=n}$ years."
+ ],
+ "notes": "Advanced: the book's own twist from exercise 9.5 question 3 (page 347), where the answer is the increase A - P, not the new population. Adds three things beyond the standard book question: a rate with a decimal (0.4 to 2.8 %), a seven-digit population, and the final subtraction. P is built from millions, thousands and units parts (each of the last two 100 to 999) so the stem prints it in the book's spaced style without leading-zero problems. The exact value is computed in integers (top / bottom); the require keeps its fractional part at least 0.05 from .5, and the stem forbids intermediate rounding, so a calculator solver agrees. Rounding A then subtracting P gives the same integer as rounding A - P because P is an integer. Book check of the formula: 3 879 090 x 1.011^6 = 4 142 255 (page 347). Increases range from about 43 thousand to 1.96 million.\n\nPIPELINE NORMALISATION (not an author edit): bound-exact-power-below-the-evaluator-ceiling: n was drawn from 5..12 and the family computes the exact integer top = P * (1000 + rt) ** n (P is up to 4 999 999, so a 7-digit population). The evaluator refuses any integer above 10**40 (families/evaluator.py MAX_INT): at n = 12 top has 43 digits for every draw, at n = 11 it has 40 and 2 * top + bottom, in Ar, goes over, so those draws failed to evaluate ('integer too large') instead of being rejected by a require. n is now drawn from 5..10, where top has at most 37 digits and nothing can overflow. The question, its answer logic and its worked solution are unchanged; the largest increase the family now sets is about 1.59 million, not the 1.96 million the author's notes give (n = 11 and 12 could never have been instantiated)."
+}

@@ -1,0 +1,313 @@
+{
+  "coverage_version": 1,
+  "book": "g10-math",
+  "course_id": "course:us-g10-math-en",
+  "chapters": [
+    2
+  ],
+  "status": "RED",
+  "summary": {
+    "checks": 23,
+    "hold": 20,
+    "excepted": 0,
+    "auto_passed": 1,
+    "fail": 2
+  },
+  "checks": [
+    {
+      "id": "pages",
+      "title": "Body pages = pages assigned to lessons + pages excluded with a reason",
+      "want": 16,
+      "got": 16,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "worked_examples",
+      "title": "Manifest worked examples = worked-example items accounted for",
+      "want": 13,
+      "got": 13,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "items_mapped_once",
+      "title": "Exercise items = items mapped to exactly one objective",
+      "want": 152,
+      "got": 152,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "mapped_items_accounted",
+      "title": "Mapped exercise items = book questions + items excluded with a reason",
+      "want": 152,
+      "got": 152,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": [],
+      "notes": [
+        "exercise items by fate: excluded 16, held 3, teaching 8, verified 125"
+      ]
+    },
+    {
+      "id": "objective_evidence",
+      "title": "Objectives = objectives with a claim, a book question and worked-example-or-exercise evidence (two kinds or more)",
+      "want": 9,
+      "got": 8,
+      "state": "fails",
+      "failures": [
+        {
+          "scope": "lo:g10m2s4-1-4",
+          "detail": "no claim"
+        }
+      ],
+      "excepted_scopes": []
+    },
+    {
+      "id": "tier_floor",
+      "title": "Objectives × tiers = cells with at least one live item, book or generated (FR-4305)",
+      "want": 27,
+      "got": 26,
+      "state": "fails",
+      "failures": [
+        {
+          "scope": "lo:g10m2s4-1-1",
+          "detail": "no live item at tier(s) advanced"
+        }
+      ],
+      "excepted_scopes": [],
+      "notes": [
+        "generated items live: 139 of 139 (0 by the row's own status, the rest by the loader's rule: a maths course loads its bundle live, answer 37a — review_policy.generated_item_is_live)"
+      ]
+    },
+    {
+      "id": "module_widgets",
+      "title": "Modules = modules with a widget question + signed-off widget gaps (FR-4306)",
+      "want": 1,
+      "got": 1,
+      "state": "auto_passed",
+      "failures": [],
+      "excepted_scopes": [],
+      "auto_passed": [
+        {
+          "scope": "module:g10m-c02",
+          "by": "auto-pass G3 (AI recommendation)",
+          "at": "2026-10-01T17:24:22Z",
+          "detail": "no widget question; 9 widget gap(s) of the chapter were AUTO-PASSED (auto-pass G3 (AI recommendation)), not signed by a person — in Samuel's backlog; no new kind is approved"
+        }
+      ],
+      "notes": [
+        "1 chapter(s) covered ONLY by an auto-passed widget gap, 0 widget questions: module:g10m-c02"
+      ]
+    },
+    {
+      "id": "distractor_refutations",
+      "title": "Tagged distractors and predicates = those whose misconception has a refutation (FR-1112)",
+      "want": 30,
+      "got": 30,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "misconception_refutations",
+      "title": "Catalogue entries = entries with a refutation",
+      "want": 8,
+      "got": 8,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "s5_catalogue",
+      "title": "Entries S5 kept = entries in the catalogue; no dropped entry in it",
+      "want": 8,
+      "got": 8,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": [],
+      "notes": [
+        "4 entr(ies) dropped by the verifier"
+      ]
+    },
+    {
+      "id": "figures",
+      "title": "Manifest figures = visuals + viz gaps with a reason + figures withheld for giving the answer away (per chapter); a gap whose reason is a pipeline error is a failure (consistency review A3)",
+      "want": 0,
+      "got": 0,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "maths_images",
+      "title": "Maths images to transcribe = accepted by hash + by agreement + by the third reading + resolved at G0b; unresolved = 0",
+      "want": 419,
+      "got": 419,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": [],
+      "notes": [
+        "by route: hash 361, agreement 58, third_reading 0, resolved_at_g0b 0"
+      ]
+    },
+    {
+      "id": "items_typed_once",
+      "title": "Exercise items = numeric + choice + expression + not_markable",
+      "want": 152,
+      "got": 152,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": [],
+      "notes": [
+        "by type: expression 85, not_markable 8, numeric 59"
+      ]
+    },
+    {
+      "id": "solution_sources",
+      "title": "Book questions = book_worked + book_worked_epub + teachers_guide (+ answer_anchored)",
+      "want": 139,
+      "got": 139,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": [],
+      "notes": [
+        "by source: book_worked 11, book_worked_epub 128"
+      ]
+    },
+    {
+      "id": "lesson_provenance",
+      "title": "Lessons = lessons carrying book provenance; parts consecutive and numbered 1..m",
+      "want": 3,
+      "got": 3,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "teacher_only",
+      "title": "Teacher-only blocks = blocks dropped at S2; reaching a claim = 0 (FR-4408)",
+      "want": 2,
+      "got": 2,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "notation",
+      "title": "Un-normalised decimal commas and (x; y) pairs left in the bundles = 0 (decision 15); no display-only environment (align*) inside the app's inline maths",
+      "want": 0,
+      "got": 0,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": [],
+      "notes": [
+        "11 S3 item(s) printed in the book's notation were normalised"
+      ]
+    },
+    {
+      "id": "katex",
+      "title": "Maths segments in student-facing text the app's KaTeX cannot parse = 0 (A2)",
+      "want": 0,
+      "got": 0,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "book_pictures",
+      "title": "Book-picture stand-ins (answer 37d) that are not servable = 0: each stands in for a question of its own objective, carries alt text and stand_in, and its image is in app/public at its /book-figures/ path",
+      "want": 0,
+      "got": 0,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "captions",
+      "title": "Figure captions that describe a withheld point (the exercise's unknown) as marked or shown = 0",
+      "want": 0,
+      "got": 0,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "answer_text",
+      "title": "Typed questions whose answer text is not their marker key, rendered = 0 (A1)",
+      "want": 0,
+      "got": 0,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "asked_forms",
+      "title": "Typed questions whose stem asks for a form the book's rules name, and whose marker does not check it = 0 (A9)",
+      "want": 0,
+      "got": 0,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "claims_served",
+      "title": "Claims in the bundles = claims in the lessons' content files",
+      "want": 77,
+      "got": 77,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    }
+  ],
+  "g1_exceptions": [],
+  "widgets_per_chapter": {
+    "module:g10m-c02": 0
+  },
+  "refutations_per_misconception": {
+    "mc:g10m2s2-1-1:power-through-a-sum": 5,
+    "mc:g10m2s2-1-3:powers-outside-algebra": 5,
+    "mc:g10m2s3-1-1:exponent-sign-kept-when-power-moves-up": 5,
+    "mc:g10m2s3-1-1:minus-sign-moves-onto-base": 4,
+    "mc:g10m2s3-1-2:negative-exponent-ignored": 4,
+    "mc:g10m2s3-1-2:negative-exponent-negative-value": 4,
+    "mc:g10m2s3-1-2:numerator-ignored": 4,
+    "mc:g10m2s4-1-3:solves-exponential-equal-to-negative": 4
+  },
+  "notation": {
+    "items_printed_in_book_notation": 11,
+    "residual_in_bundles": 0
+  },
+  "auto_passed": [
+    {
+      "check": "module_widgets",
+      "scope": "module:g10m-c02",
+      "by": "auto-pass G3 (AI recommendation)",
+      "at": "2026-10-01T17:24:22Z"
+    }
+  ],
+  "missing_inputs": [],
+  "inputs": {
+    "content/g10m2s2-1.json": "ac866d0adefc5a597cde56138e7b31bab80120d8b144f1b0e709dd9825e0d399",
+    "content/g10m2s3-1.json": "2340acc8bf38f28b08b7e97b90fbc50709de8ec3fb1bb750fac38fc3a89464aa",
+    "content/g10m2s4-1.json": "d01d821d22fa25c2d3b61284484ed0cd56c1209eb2f24844b0e4d89a9111f675",
+    "generated/generated-questions.json": "f53fb17a112a50899a1081d5b3b1edbdffc31d936a1b61e6994b8d35f88d4f1b",
+    "generated/misconceptions.json": "e2f73b4ebbfd29f6a9890baa627a7d39092ffa75ebfa4c6f80819756715482f5",
+    "manifest": "d749f7d1c4052342298d122b82bcea3117e4303b74e16b75062fd6606146c7b1",
+    "maths": "8ce1ca2be529ab1db90c525e422fae57d0863df1ac2e2523a8c69b111ced483a",
+    "objectives/g10m2s2-1.json": "ff99c73800e9984f89051b444ceba83b72036a0e61d8afa6bc0b2c16af982fa2",
+    "objectives/g10m2s3-1.json": "fc679cf8d6ae1de800805f66f1a5300d9f9e3622b2300e4e84fad9cd6a42886f",
+    "objectives/g10m2s4-1.json": "0e953643263ee4c0adb1354f7c649b36d1ec5483940870cef9e5448d2c90397c",
+    "runs/lesson/g10m2s2-1.json": "2600c82cc0719174da1c18cbf6faa18af05bdf9d17e5ae02bf2e4b8c0853341b",
+    "runs/lesson/g10m2s3-1.json": "9c5de27e13e7f3d80cc8eaaa9855d9da91e9a71369e1c6b764335c9daa41e1eb",
+    "runs/lesson/g10m2s4-1.json": "a69369e7cba55826c7a56562b7f4882183b69ffc8ea09b7c1fd53f7eb6efea03",
+    "s5/final-ch02-wf_c6bef2ca-3bd.json": "9ae1ee3b48ba73b6d2c63adc388b4f7b8fd1ccde5bdfbbd04abe8aa5db7278d4",
+    "seed/g10m-c02.json": "a8dd517b99d6aa41252750df48dc35bbfdb550844cec671b738f3673b970a075",
+    "widget-gaps": "1116c482cf0980dff9716be5b894b050b287afa5fd88a97e042098702631a2cc"
+  },
+  "exceptions": []
+}

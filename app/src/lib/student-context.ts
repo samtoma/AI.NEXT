@@ -45,6 +45,7 @@ import type { Pool, PoolClient } from "pg";
 import { pool, withPrincipal } from "@/lib/db";
 import { currentPrincipal } from "@/lib/auth/principal";
 import type { Gender } from "@/lib/address";
+import { asCurriculumId, type CurriculumId } from "@/lib/curricula";
 import { asDesignVariant, type DesignVariant } from "@/lib/design-variant";
 
 /** Either connection shape a query in this codebase can run on. */
@@ -102,6 +103,26 @@ export type StudentContext = {
    */
   grade: string | null;
   designVariant: DesignVariant | null;
+  /**
+   * Her curriculum as stored (`students.curriculum_system`, feature 003) —
+   * read in the same SELECT, for the one thing the shell does with it: naming
+   * her grade in her curriculum's words (FR-4013; `gradeDisplayLabel`). What
+   * she may SEE is never decided from this field; that is the student scope
+   * (`lib/catalog-queries.ts`), which validates it.
+   */
+  curriculum: string | null;
+  /**
+   * Whether the registry knows that stored value (`lib/curricula.ts`). An
+   * unknown one is shown as stored and matches no course (FR-4003); it is
+   * never read as National.
+   */
+  curriculumKnown: boolean;
+  /**
+   * A first Google sign-in whose grade-and-curriculum step is still owed
+   * (FR-4014). From the principal — the same read that says who she is — never
+   * a second query that could disagree with it, like `emailVerified`.
+   */
+  onboardingPending: boolean;
 };
 
 const GENDERS = ["female", "male", "unspecified"] as const;
@@ -133,7 +154,7 @@ export const resolveStudentContext = cache(async function resolveStudentContext(
   try {
     const row = await withPrincipal(me.studentId, async (c) => {
       const res = await c.query(
-        `SELECT display_name, gender, grade, design_variant
+        `SELECT display_name, gender, grade, design_variant, curriculum_system
            FROM students WHERE id = $1`,
         [me.studentId]
       );
@@ -151,6 +172,9 @@ export const resolveStudentContext = cache(async function resolveStudentContext(
       // and an unmatched value renders the frozen baseline's identity, which
       // is the one appearance that is supposed to mean "nobody chose".
       designVariant: asDesignVariant(row.design_variant),
+      curriculum: (row.curriculum_system as string | null) ?? null,
+      curriculumKnown: asCurriculumId(row.curriculum_system) !== null,
+      onboardingPending: me.onboardingPending === true,
     };
   } catch (err) {
     console.error("resolveStudentContext failed:", err);
@@ -177,7 +201,22 @@ export type StudentProfile = {
   interests: string[];
   interestDetail: Record<string, unknown> | null;
   languagePref: string;
+  /** As stored; `eg-national-en` when the column is NULL (it never is: 009's
+   *  default). Kept for the readers that already take it. */
   curriculumSystem: string;
+  /**
+   * Feature 003 (contracts/student-api.md): the stored value validated
+   * against the registry, `null` when the registry does not know it — never a
+   * guess (FR-4003) — and whether it knew it. What she may SEE is decided by
+   * the student scope, not by these. Optional in the TYPE only, so the
+   * hand-built profiles of the prompt tests stay valid; `getStudentProfile`
+   * always sets all three.
+   */
+  curriculum?: CurriculumId | null;
+  curriculumKnown?: boolean;
+  /** The first-Google-sign-in step is still owed (FR-4014). A tutor turn
+   *  never reaches this while it is: `requireStudent()` answers 403 first. */
+  onboardingPending?: boolean;
   /**
    * How the tutor addresses them (FR-2602). It rides on the profile — not on a
    * fourth query, and not on a cache — because `getStudentProfile` is read once
@@ -201,7 +240,7 @@ export async function getStudentProfile(
     return await scoped(studentId, c, async (db) => {
       const res = await db.query(
         `SELECT id, display_name, grade, interests, interest_detail,
-                language_pref, curriculum_system, gender
+                language_pref, curriculum_system, gender, onboarding_pending
            FROM students WHERE id = $1`,
         [studentId]
       );
@@ -215,6 +254,9 @@ export async function getStudentProfile(
         interestDetail: (r.interest_detail as Record<string, unknown> | null) ?? null,
         languagePref: (r.language_pref as string) ?? "en",
         curriculumSystem: (r.curriculum_system as string) ?? "eg-national-en",
+        curriculum: asCurriculumId(r.curriculum_system),
+        curriculumKnown: asCurriculumId(r.curriculum_system) !== null,
+        onboardingPending: r.onboarding_pending === true,
         gender: asGender(r.gender),
       };
     });

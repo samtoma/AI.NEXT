@@ -178,6 +178,15 @@ export const CROSS_STUDENT_READS: ReadonlyArray<{
   // per-student time series is drawn from, which `ainext_app` cannot read at all.
   { name: "cost_daily", role: "cost-billing", owner: "Samuel" },
   { name: "security_events", role: "student-data", owner: "Samuel" },
+  // Feature 003 (FR-4103; privacy review F9; tasks T374). Before a rule change
+  // on `/courses` hides the last live course of a curriculum for a grade, the
+  // page states HOW MANY students it leaves with nothing to study. A count per
+  // (curriculum, grade) and nothing else — no name, no id, no row that
+  // narrows to one child — because `/courses` is `content-review`'s page and
+  // that role must not learn a student from a content decision (FR-2707).
+  // `lastLiveCourseHeadcount` in `lib/console-queries.ts` asks this entry
+  // before it queries; `course-count-guard.test.mts` scans the view.
+  { name: "last_live_course_headcount", role: "content-review", owner: "Samuel" },
 ] as const;
 
 /** Is this named read permitted for this role? The console asks before querying. */

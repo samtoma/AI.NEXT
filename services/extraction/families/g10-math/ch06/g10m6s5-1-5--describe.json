@@ -1,0 +1,126 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s5-1-5:describe",
+ "kind": "family",
+ "lo_id": "lo:g10m6s5-1-5",
+ "parent_question_id": "q:g10m6s5-1-5:ex6-5-5c",
+ "source_page": 186,
+ "tier": "standard",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "choice": [
+    -5,
+    -4,
+    -3,
+    -2,
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "b",
+   "choice": [
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "q",
+   "choice": [
+    -4,
+    -3,
+    -2,
+    -1,
+    1,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "require": "a * (a - q) > 0",
+   "why": "the point (0, a) then lies on the side of the line y = q that a curve with that direction needs, so the 'number in front' option is a drawable curve"
+  },
+  {
+   "require": "a * (a + q) > 0",
+   "why": "the y-intercept a + q then lies on the same side of the x-axis as a, so the 'asymptote y = 0' option is a drawable curve and the intercept is never the origin"
+  },
+  {
+   "require": "a != 1 + q",
+   "why": "the 'number in front' option and the 'a left out' option must not coincide"
+  },
+  {
+   "name": "dw",
+   "let": "'rises' if a > 0 else 'falls'"
+  },
+  {
+   "name": "dx",
+   "let": "'falls' if a > 0 else 'rises'"
+  },
+  {
+   "name": "sg",
+   "let": "'positive' if a > 0 else 'negative'"
+  },
+  {
+   "name": "eff",
+   "let": "'the graph keeps that direction' if a > 0 else 'the graph is turned upside down'"
+  },
+  {
+   "name": "qs",
+   "let": "'+' if q > 0 else '-'"
+  },
+  {
+   "name": "qa",
+   "let": "abs(q)"
+  }
+ ],
+ "constraints": [
+  "q != 0",
+  "b > 1",
+  "abs(a) > 1",
+  "abs(q) < abs(a)"
+ ],
+ "stem": "Which description matches the graph of $y = {=a}\\cdot {=b}^x {=qs} {=qa}$?",
+ "choices": {
+  "correct": "It {=dw} as $x$ increases, has the horizontal asymptote $y={=q}$ and cuts the $y$-axis at $(0, {=a+q})$.",
+  "distractors": [
+   {
+    "text": "It {=dx} as $x$ increases, has the horizontal asymptote $y={=q}$ and cuts the $y$-axis at $(0, {=a+q})$.",
+    "misconception_id": "mc:g10m6s5-1-5:rising-falling-mixed-up"
+   },
+   {
+    "text": "It rises as $x$ increases, has the horizontal asymptote $y={=q}$ and cuts the $y$-axis at $(0, {=1+q})$.",
+    "misconception_id": "mc:g10m6s5-1-5:leaves-out-a"
+   },
+   {
+    "text": "It {=dw} as $x$ increases, has the horizontal asymptote $y={=q}$ and cuts the $y$-axis at $(0, {=a})$.",
+    "misconception_id": "mc:g10m6s5-1-5:intercept-from-the-number"
+   },
+   {
+    "text": "It {=dw} as $x$ increases, has the horizontal asymptote $y=0$ and cuts the $y$-axis at $(0, {=a+q})$.",
+    "misconception_id": "mc:g10m6s5-1-5:asymptote-ignores-q"
+   }
+  ]
+ },
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m6s5-1-5:asymptote-ignores-q",
+   "label": "Takes the x-axis as the asymptote whatever q is",
+   "description": "The student treats $y=0$ as the horizontal asymptote of $y=ab^x+q$ and does not move it to $y=q$, so the asymptote is read from the shape $b^x$ alone and the number $q$ is only used, if at all, for the intercept."
+  }
+ ],
+ "solution": [
+  "Compare $y = {=a}\\cdot {=b}^x {=qs} {=qa}$ with $y = a\\cdot b^x + q$: here $a = {=a}$, $b = {=b}$ and $q = {=q}$.",
+  "Direction: the base $b = {=b}$ is greater than 1, so $b^x$ rises as $x$ increases. Since $a = {=a}$ is {=sg}, {=eff}: it {=dw} as $x$ increases.",
+  "Asymptote: as $x$ becomes very negative, $b^x$ gets closer and closer to 0, so $y$ gets closer and closer to $q$. The horizontal asymptote is $y={=q}$.",
+  "$y$-intercept: let $x=0$. Then $y = {=a}\\cdot {=b}^0 {=qs} {=qa} = {=a}\\cdot 1 {=qs} {=qa} = {=a+q}$, so the graph cuts the $y$-axis at $(0, {=a+q})$.",
+  "The graph {=dw} as $x$ increases, has the horizontal asymptote $y={=q}$ and cuts the $y$-axis at $(0, {=a+q})$. That is the matching description."
+ ],
+ "notes": "The book's questions in this objective match an equation to one of four printed graphs; a generated family has no figure, so the same skill is asked in words: the student reads the sign of a, the value of q and the y-intercept from the equation and picks the description of the curve. Base greater than 1 only, so the direction is set by the sign of a alone; the base below 1 and the twist it brings are in the advanced family twist. The y-intercept is a + q, never the number in front of the power, and the asymptote is y = q. Every distractor is one catalogued or declared error, and every option is a drawable curve (|q| < |a| puts the point (0, a) and the y-intercept on the side of the line each option needs); the five options are always distinct (q != 0, a != 1, a != 1 + q). Checked by enumerating all 108 valid parameter sets: every correct option matches the numerically computed direction, asymptote and y-intercept, and every distractor differs from it in at least one."
+}

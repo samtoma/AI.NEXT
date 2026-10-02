@@ -1,0 +1,594 @@
+{
+ "objectives_version": 1,
+ "book": "g10-math",
+ "chapter": 14,
+ "module": "module:g10m-c14",
+ "lesson": "g10m14s7-1",
+ "title": "Complementary events",
+ "provenance": {
+  "sections": [
+   {
+    "number": "14.7",
+    "title": "Complementary events"
+   }
+  ],
+  "part": null,
+  "chapter_intro": false
+ },
+ "status": "approved",
+ "g1": {
+  "approved_by": "auto-pass G1 (AI recommendation)",
+  "approved_at": "2026-10-02T07:07:16+00:00",
+  "verdicts": {
+   "auto": true,
+   "by": "auto-pass G1 (AI recommendation)",
+   "terminology": {
+    "event set": "keep",
+    "sample space": "keep",
+    "theoretical probability": "keep",
+    "simplified fraction": "keep",
+    "equally likely": "keep",
+    "relative frequency": "keep",
+    "trial": "keep",
+    "number of trials": "keep",
+    "n(s)": "keep",
+    "region": "keep",
+    "identity": "keep",
+    "union": "keep",
+    "intersection": "keep",
+    "mutually exclusive": "keep",
+    "complementary events": "keep",
+    "complement": "keep",
+    "empty set": "keep"
+   },
+   "move_items": {
+    "Ex14-8:13g": "lo:g10m14s5-1-3",
+    "Ex14-8:14b": "lo:g10m14s7-1-4",
+    "Ex14-8:14c": "lo:g10m14s7-1-4",
+    "Ex14-8:23b": "lo:g10m14s1-1-2",
+    "Ex14-8:29a": "lo:g10m14s3-1-3",
+    "Ex14-8:29b": "lo:g10m14s3-1-3",
+    "Ex14-8:29c": "lo:g10m14s3-1-3",
+    "Ex14-8:31b": "lo:g10m14s3-1-3"
+   },
+   "links": {},
+   "acknowledged": [],
+   "objectives": {},
+   "outside_items": {}
+  }
+ },
+ "source_run": {
+  "file": "runs/g10-math/objectives/ch14-wf_c0c84644-7b8.json",
+  "sha256": "082963d4b1d567ee41cec04c7d1e59a83a2b89f7b3a9fc58b7fb0977cdd374f9",
+  "prompts_version": "s1-v5",
+  "packet_sha256": "8b2011e2236ce86abe6a567c3e840dbeabe4f4c99eed062131fef3be9ecb9bdf"
+ },
+ "objectives": [
+  {
+   "id": "lo:g10m14s7-1-1",
+   "provisional_id": "lo:g10m14s7-1-1",
+   "n": 1,
+   "statement": "Determine the complement of an event set, such as $B'$ or $(A \\cup B)'$, as the elements of the sample space that are not in the event",
+   "label": "Complement of an event set",
+   "evidence": [
+    {
+     "kind": "heading",
+     "anchor": "EMA84",
+     "printed_page": 486,
+     "quote": "Complementary events",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "definition",
+     "anchor": "b04469",
+     "printed_page": 486,
+     "quote": "contains all of the elements that are not in $A$",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex14-7:1",
+     "printed_page": 488,
+     "quote": "identify the complementary event set of $B$",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex14-7:2",
+     "printed_page": 488,
+     "quote": "identify the complementary event set of $(A\\cupB)$",
+     "contained": true,
+     "present": true,
+     "supports": true
+    }
+   ],
+   "evidence_dropped": [],
+   "exercise_items": [
+    "Ex14-7:1",
+    "Ex14-7:2",
+    "Ex14-8:5",
+    "Ex14-8:25b"
+   ],
+   "worked_examples": [],
+   "confidence": "agreed",
+   "from": {
+    "a": [
+     "A1"
+    ],
+    "b": [
+     "B2"
+    ]
+   },
+   "derivation": "derived",
+   "terms": [
+    "complement",
+    "complementary events",
+    "event",
+    "event set",
+    "sample space"
+   ],
+   "edited_at_g1": false,
+   "order_in_parent": 15,
+   "node": {
+    "id": "lo:g10m14s7-1-1",
+    "kind": "learning_objective",
+    "label": "Complement of an event set",
+    "description": "Determine the complement of an event set, such as $B'$ or $(A \\cup B)'$, as the elements of the sample space that are not in the event",
+    "source_page": 486,
+    "syllabus_ref": "14.7",
+    "order_in_parent": 15
+   }
+  },
+  {
+   "id": "lo:g10m14s7-1-2",
+   "provisional_id": "lo:g10m14s7-1-2",
+   "n": 2,
+   "statement": "Determine whether two events, including an event and its complement, are mutually exclusive by checking whether their intersection is empty",
+   "label": "Mutually exclusive events",
+   "evidence": [
+    {
+     "kind": "intro",
+     "anchor": "b04470",
+     "printed_page": 486,
+     "quote": "we know that complementary events are mutually exclusive",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "intro",
+     "anchor": "b04471",
+     "printed_page": 486,
+     "quote": "$A\\capA'=\\varnothing$",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "summary",
+     "anchor": "b04501",
+     "printed_page": 490,
+     "quote": "Complementary events are mutually exclusive",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex14-7:3",
+     "printed_page": 489,
+     "quote": "Are $(A\\cupB)'$ and $A\\cupB$ mutually exclusive?",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex14-7:4",
+     "printed_page": 489,
+     "quote": "Are $A'$ and $B'$ mutually exclusive?",
+     "contained": true,
+     "present": true,
+     "supports": true
+    }
+   ],
+   "evidence_dropped": [],
+   "exercise_items": [
+    "Ex14-7:3",
+    "Ex14-7:4",
+    "Ex14-8:4"
+   ],
+   "worked_examples": [],
+   "confidence": "agreed",
+   "from": {
+    "a": [
+     "A2"
+    ],
+    "b": [
+     "B3"
+    ]
+   },
+   "derivation": "derived",
+   "terms": [
+    "mutually exclusive",
+    "intersection",
+    "empty set",
+    "complementary events",
+    "union"
+   ],
+   "edited_at_g1": false,
+   "order_in_parent": 16,
+   "node": {
+    "id": "lo:g10m14s7-1-2",
+    "kind": "learning_objective",
+    "label": "Mutually exclusive events",
+    "description": "Determine whether two events, including an event and its complement, are mutually exclusive by checking whether their intersection is empty",
+    "source_page": 486,
+    "syllabus_ref": "14.7",
+    "order_in_parent": 16
+   }
+  },
+  {
+   "id": "lo:g10m14s7-1-3",
+   "provisional_id": "lo:g10m14s7-1-3",
+   "n": 3,
+   "statement": "Calculate the probability of an event or of its complement using the fact that $P\\left(A\\right)+P\\left(A'\\right)=1$",
+   "label": "Probability of a complement",
+   "evidence": [
+    {
+     "kind": "intro",
+     "anchor": "b04474",
+     "printed_page": 486,
+     "quote": "the probabilities of complementary events sum to",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "summary",
+     "anchor": "b04503",
+     "printed_page": 490,
+     "quote": "Probabilities of complementary events sum to",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex14-8:15",
+     "printed_page": 493,
+     "quote": "What is the probability of taking out a yellow sweet?",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex14-8:16b",
+     "printed_page": 493,
+     "quote": "not an Opel",
+     "contained": true,
+     "present": true,
+     "supports": true
+    }
+   ],
+   "evidence_dropped": [],
+   "exercise_items": [
+    "Ex14-8:11d",
+    "Ex14-8:12e",
+    "Ex14-8:13e",
+    "Ex14-8:15",
+    "Ex14-8:16b",
+    "Ex14-8:17b",
+    "Ex14-8:17d",
+    "Ex14-8:17f",
+    "Ex14-8:18b",
+    "Ex14-8:19b",
+    "Ex14-8:21a"
+   ],
+   "worked_examples": [],
+   "confidence": "agreed",
+   "from": {
+    "a": [
+     "A3"
+    ],
+    "b": [
+     "B4"
+    ]
+   },
+   "derivation": "derived",
+   "terms": [
+    "probability",
+    "complementary events",
+    "complement",
+    "event"
+   ],
+   "edited_at_g1": false,
+   "order_in_parent": 17,
+   "node": {
+    "id": "lo:g10m14s7-1-3",
+    "kind": "learning_objective",
+    "label": "Probability of a complement",
+    "description": "Calculate the probability of an event or of its complement using the fact that $P\\left(A\\right)+P\\left(A'\\right)=1$",
+    "source_page": 486,
+    "syllabus_ref": "14.7",
+    "order_in_parent": 17
+   }
+  },
+  {
+   "id": "lo:g10m14s7-1-4",
+   "provisional_id": "lo:g10m14s7-1-4",
+   "n": 4,
+   "statement": "Use a Venn diagram and the identity for the union of two events to work out how many elements are in only one event, in both events or in neither",
+   "label": "Venn diagram region counts",
+   "evidence": [
+    {
+     "kind": "worked_example",
+     "anchor": "WE8",
+     "printed_page": 486,
+     "quote": "Use a Venn diagram to work out how many people",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "summary",
+     "anchor": "b04498",
+     "printed_page": 490,
+     "quote": "The probability of the union of two events is calculated using",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex14-8:28a",
+     "printed_page": 495,
+     "quote": "Represent this information with a Venn diagram",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex14-8:29a",
+     "printed_page": 495,
+     "quote": "Use a Venn diagram to find the percentage of people that read",
+     "contained": true,
+     "present": true,
+     "supports": true
+    }
+   ],
+   "evidence_dropped": [],
+   "exercise_items": [
+    "Ex14-8:10b",
+    "Ex14-8:14b",
+    "Ex14-8:14c",
+    "Ex14-8:28b",
+    "Ex14-8:30",
+    "Ex14-8:31c",
+    "Ex14-8:32b"
+   ],
+   "worked_examples": [
+    "WE8"
+   ],
+   "confidence": "agreed",
+   "from": {
+    "a": [
+     "A4"
+    ],
+    "b": [
+     "B1"
+    ]
+   },
+   "derivation": "derived",
+   "terms": [
+    "Venn diagram",
+    "union",
+    "intersection",
+    "event"
+   ],
+   "edited_at_g1": false,
+   "order_in_parent": 18,
+   "node": {
+    "id": "lo:g10m14s7-1-4",
+    "kind": "learning_objective",
+    "label": "Venn diagram region counts",
+    "description": "Use a Venn diagram and the identity for the union of two events to work out how many elements are in only one event, in both events or in neither",
+    "source_page": 486,
+    "syllabus_ref": "14.7",
+    "order_in_parent": 18
+   }
+  }
+ ],
+ "pool_items": [
+  "Ex14-8:10b",
+  "Ex14-8:11d",
+  "Ex14-8:12e",
+  "Ex14-8:13e",
+  "Ex14-8:14b",
+  "Ex14-8:14c",
+  "Ex14-8:15",
+  "Ex14-8:16b",
+  "Ex14-8:17b",
+  "Ex14-8:17d",
+  "Ex14-8:17f",
+  "Ex14-8:18b",
+  "Ex14-8:19b",
+  "Ex14-8:21a",
+  "Ex14-8:25b",
+  "Ex14-8:28b",
+  "Ex14-8:30",
+  "Ex14-8:31c",
+  "Ex14-8:32b",
+  "Ex14-8:4",
+  "Ex14-8:5"
+ ],
+ "prerequisites": [
+  {
+   "src": "lo:g10m14s3-1-2",
+   "dst": "lo:g10m14s7-1-1",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "exercise",
+     "anchor": "Ex14-7:1",
+     "printed_page": 488,
+     "quote": "identify the complementary event set of"
+    }
+   ],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "Finding B' from a Venn diagram requires first reading which elements are in B, which is implied by the exercise rather than stated."
+   },
+   "backward": false
+  },
+  {
+   "src": "lo:g10m14s4-1-1",
+   "dst": "lo:g10m14s7-1-1",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "exercise",
+     "anchor": "Ex14-7:2",
+     "printed_page": 488,
+     "quote": "identify the complementary event set of"
+    }
+   ],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "The exercise asks for (A∪B)', which requires the union A∪B to be found first and its complement taken."
+   },
+   "backward": false
+  },
+  {
+   "src": "lo:g10m14s6-1-1",
+   "dst": "lo:g10m14s7-1-2",
+   "signal": "reference",
+   "evidence": [
+    {
+     "kind": "text",
+     "anchor": "b04470",
+     "printed_page": 486,
+     "quote": "we know that complementary events are mutually exclusive"
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex14-7:3",
+     "printed_page": 489,
+     "quote": "mutually exclusive?"
+    }
+   ],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "The text states that complementary events are mutually exclusive, and the exercise asks whether (A∪B)' and A∪B are mutually exclusive."
+   },
+   "backward": false
+  },
+  {
+   "src": "lo:g10m14s7-1-1",
+   "dst": "lo:g10m14s7-1-2",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "exercise",
+     "anchor": "Ex14-7:4",
+     "printed_page": 489,
+     "quote": "Are $A'$ and $B'$ mutually exclusive?"
+    }
+   ],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "The exercise asks whether A' and B' are mutually exclusive, which requires finding the complements and then checking their intersection."
+   },
+   "backward": false
+  },
+  {
+   "src": "lo:g10m14s6-1-2",
+   "dst": "lo:g10m14s7-1-3",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "text",
+     "anchor": "b04475",
+     "printed_page": 486,
+     "quote": "P\\left(A\\right)+P\\left(A'\\right)=P\\left(A\\cup A'\\right)"
+    }
+   ],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "P(A)+P(A') = P(A∪A') is the sum rule for mutually exclusive events, applied to A and A'."
+   },
+   "backward": false
+  },
+  {
+   "src": "lo:g10m14s5-1-3",
+   "dst": "lo:g10m14s7-1-4",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "worked_example",
+     "anchor": "WE8",
+     "printed_page": 486,
+     "quote": "by using the identity for the union of two events"
+    }
+   ],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "WE8 finds n(A∩B) from n(A), n(B) and n(A∪B) using the union identity, which is the same method as the source objective."
+   },
+   "backward": false
+  },
+  {
+   "src": "lo:g10m14s3-1-3",
+   "dst": "lo:g10m14s7-1-4",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "worked_example",
+     "anchor": "WE8",
+     "printed_page": 486,
+     "quote": "Use a Venn diagram to work out how many people"
+    }
+   ],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "WE8 draws a Venn diagram from survey information and reads off how many people are in each region, which is the source skill used as a step."
+   },
+   "backward": false
+  },
+  {
+   "src": "lo:g10m14s6-1-1",
+   "dst": "lo:g10m14s7-1-4",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "worked_example",
+     "anchor": "WE8",
+     "printed_page": 486,
+     "quote": "the events are not mutually exclusive"
+    }
+   ],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "WE8 checks whether the intersection is empty to conclude the events are not mutually exclusive, so the circles overlap in the diagram. That is a step in the example."
+   },
+   "backward": false
+  }
+ ],
+ "checks": {
+  "ok": true,
+  "failures": [],
+  "warnings": [
+   "g10m14s7-1: objectives are not numbered in the order the book practises them (rule 6)"
+  ],
+  "check_later": []
+ },
+ "outside_items": []
+}

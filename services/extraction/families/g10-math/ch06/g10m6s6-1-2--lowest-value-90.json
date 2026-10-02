@@ -1,0 +1,69 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s6-1-2:lowest-value-90",
+ "kind": "family",
+ "lo_id": "lo:g10m6s6-1-2",
+ "parent_question_id": "q:g10m6s6-1-2:ex6-6-7b",
+ "source_page": 202,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "choice": [
+    -4,
+    -3,
+    -2,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "m",
+   "randint": [
+    -5,
+    1
+   ]
+  },
+  {
+   "name": "b",
+   "let": "abs(a)"
+  },
+  {
+   "name": "q",
+   "let": "m + b"
+  },
+  {
+   "require": "q != 0",
+   "why": "the graph is then genuinely shifted and q is a non-zero shift"
+  },
+  {
+   "name": "qs",
+   "let": "'+' if q > 0 else '-'"
+  },
+  {
+   "name": "qa",
+   "let": "abs(q)"
+  },
+  {
+   "name": "note",
+   "let": "'Check: $a$ is negative, so the graph is reflected and its lowest point is at 90 degrees, which is why this value equals the given minimum.' if a < 0 else 'Check: $a$ is positive, so the graph is not reflected and its highest point is at 90 degrees, which is why this value is above the given minimum.'"
+  },
+  {
+   "name": "ans",
+   "let": "a + q"
+  }
+ ],
+ "constraints": [],
+ "stem": "For $0^\\circ \\le \\theta \\le 360^\\circ$, the graph of $y = {=a}\\sin\\theta + q$ has a minimum value of ${=m}$. Determine the value of $y$ when $\\theta = 90^\\circ$.",
+ "answer": "ans",
+ "solution": [
+  "Without the shift, $y = {=a}\\sin\\theta$ is the basic sine graph stretched by a factor of ${=b}$ (its amplitude is ${=b}$ whether $a$ is positive or negative), so it runs from ${=-b}$ to ${=b}$.",
+  "The shift $q$ moves the lowest value to $-{=b} + q$. This is the given minimum, so $-{=b} + q = {=m}$ and $q = {=m} + {=b} = {=q}$.",
+  "At $\\theta = 90^\\circ$, $\\sin 90^\\circ = 1$, so $y = {=a} \\times 1 {=qs} {=qa} = {=a + q}$.",
+  "{=note}"
+ ],
+ "notes": "Advanced: the twist is the reflection. The minimum of y = a sin θ + q is q - |a| whether a is positive or negative, so q = m + |a|. Then y(90°) = a + q: for a < 0 this equals m (the lowest point moves to 90°), for a > 0 it is m + 2a. One skeleton covers both signs. q = 0 is excluded so every instance has a real shift. Verified numerically over a full period for every parameter pair. Let-strings contain no backslashes; the final step is a plain-words check."
+}

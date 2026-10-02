@@ -1,0 +1,36 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m13s3-1-1:square-slant",
+ "kind": "family",
+ "lo_id": "lo:g10m13s3-1-1",
+ "parent_question_id": "q:g10m13s3-1-1:ex13-7-10",
+ "source_page": 460,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "b",
+   "randint": [
+    4,
+    14
+   ]
+  },
+  {
+   "name": "s",
+   "randint": [
+    "b // 2 + 3",
+    "b + 8"
+   ]
+  }
+ ],
+ "stem": "A pyramid has a square base with sides of ${=b}$ cm. Its four triangular faces are identical, and each has a slant height of ${=s}$ cm (the height of the triangle, measured up the face from the middle of a base edge to the apex). Calculate the total surface area of the pyramid in $\\text{cm}^{2}$.",
+ "answer": "b * b + 2 * b * s",
+ "solution": [
+  "The surface of the pyramid is the square base together with four identical triangular faces, so $\\text{surface area}=\\text{area of base}+4\\times\\text{area of one triangular face}$.",
+  "Area of the base: $b^{2}={=b}^{2}={=b*b}\\text{ cm}^{2}$.",
+  "Each triangular face has base ${=b}$ cm and height equal to the slant height ${=s}$ cm, so the four faces together have area $4\\times\\frac{1}{2}\\times b\\times h_s=4\\times\\frac{1}{2}\\times{=b}\\times{=s}={=2*b*s}\\text{ cm}^{2}$.",
+  "Add the areas: $\\text{surface area}={=b*b}+{=2*b*s}={=b*b+2*b*s}\\text{ cm}^{2}$."
+ ],
+ "notes": "Entry point of the skill, modelled on ex13-7-10 and ex13-4-4: square base plus four triangles, with the slant height given and no vertical height to confuse it. Whole numbers throughout; b from 4 to 14, slant height always above half the base so the pyramid exists. Stem defines slant height in words because no figure is available."
+}
