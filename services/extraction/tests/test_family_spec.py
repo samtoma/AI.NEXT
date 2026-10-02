@@ -594,32 +594,30 @@ class IntervalKeysShowTheirBrackets(unittest.TestCase):
             flipped = key_as_plain(flip_brackets(q["correct_answer"]))
             self.assertFalse(G.answer_agrees(q, {"plain": flipped})[0], (q["answer_check"], flipped))
 
-    def test_a_clean_blind_grade_no_longer_rejects_the_family(self):
-        with tempfile.TemporaryDirectory() as d:
-            gs_path = Path(d, "gs.json")
-            rc, _ = quiet(G.main_families, ["--families", str(FIX / "interval-specs"), "--per-family", "6",
-                                            "--grading-set", str(gs_path), "--check"])
-            self.assertEqual(rc, 0)
-            grading_set = json.loads(gs_path.read_text())
-        by_id = {q["id"]: q for q in run([self.spec], 6)[0]}
-        grades = good_grades([self.spec], list(by_id.values()), grading_set)
+    def test_a_blind_solver_who_writes_true_false_agrees_with_a_family_that_wrote_1_0(self):
+        qs = self.qs[:8]
+        gs = G.grading_set([self.spec], qs, SEED)
+        grades = good_grades([self.spec], qs, gs)
+        by_id = {q["id"]: q for q in qs}
         for r in grades["results"]:                       # the blind solver wrote true/false, the spec says 1/0
             for a in r["answers"]:
                 a["answer"] = {"plain": key_as_plain(by_id[a["instance_id"]]["correct_answer"])}
-        verdicts = FS.apply_grades([self.spec], list(by_id.values()), grades)
-        self.assertEqual(verdicts[0] if isinstance(verdicts, tuple) else verdicts, verdicts[0], "apply_grades ran")
-        rejected = verdicts[1] if isinstance(verdicts, tuple) and len(verdicts) > 1 else {}
-        self.assertNotIn(self.spec.id, rejected)
+        with tempfile.TemporaryDirectory() as d:
+            gp = Path(d, "grade.json")
+            gp.write_text(json.dumps(grades))
+            accepted, rejected = G.apply_grades([self.spec], qs, [gp])
+        self.assertEqual(rejected, {})
+        self.assertEqual(set(accepted), {self.spec.id})
 
     @unittest.skipUnless(NODE and APP_MARKER.exists(), "node runs the app's own marker")
     def test_the_apps_marker_reads_every_key_and_marks_the_flipped_brackets_wrong(self):
         keys = sorted({q["correct_answer"] for q in self.qs})
-        cases = {k: (k, k.replace(", ", ","), flip_brackets(k)) for k in keys}
+        cases = {k: (k, k.replace(", ", "; "), flip_brackets(k)) for k in keys}   # the book's own "; " is read too
         out = app_marks(cases)
         for k in keys:
             self.assertIsNone(out[k][""], f"the app's marker cannot read the key {k!r}: {out[k]['']}")
             self.assertEqual(out[k][k], "correct", k)
-            self.assertEqual(out[k][k.replace(", ", ",")], "correct", k)
+            self.assertEqual(out[k][k.replace(", ", "; ")], "correct", k)
             self.assertEqual(out[k][flip_brackets(k)], "incorrect", k)
 
     def test_a_key_prints_its_flags_not_its_spelling_and_an_infinite_end_is_round(self):
@@ -645,4 +643,4 @@ class IntervalKeysShowTheirBrackets(unittest.TestCase):
                          ["correct", "correct", "incorrect", "incorrect"])
         self.assertEqual([out[r"[3, \infty)"][t] for t in (r"[3, \infty)", "[3, inf)", r"(3, \infty)")],
                          ["correct", "correct", "incorrect"])
-        self.assertEqual([out[r"(-\infty, 4]"][t] for t in (r"(-\infty, 4]", r"(-\infty, 4)")), ["correct", "incorrect"])
+        self.assertEqual([out[r"(-\infty, 4]"][t] for t in (r"(-\infty, 4]", r"(-\infty, 4)")], ["correct", "incorrect"])
