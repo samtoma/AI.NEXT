@@ -377,6 +377,125 @@ class ObjectivesStage(unittest.TestCase):
         self.assertIn("g10m8s3-1: 1 objective(s); rule 4 wants 2–5",
                       "\n".join(self.assemble(run2)["check"]["failures"]))
 
+    # ------------------------------------------------------------------ rule 4's one exception
+    # Samuel, 2026-10-02: "Allow 1 after ruling, but keep a note so we can check later". A lesson G1 leaves
+    # with ONE objective, because it dropped an objective under a recorded ruling, passes with a warning and
+    # a machine-readable `check_later`. Everything else about rule 4 is as it was.
+    RULING = {"key": "lo:g10m8s2-1-2", "decision": "drop objective", "by": "orchestrator (AI), not a human",
+              "why": "fixture"}
+
+    def ruled_drop_verdicts(self, check, rulings):
+        """g10m8s2-1's second objective dropped, its one item (Ex8-2:3) placed on the first."""
+        v = self.verdicts_for(check)
+        v["objectives"]["lo:g10m8s2-1-2"] = {"action": "drop", "why": "fixture"}
+        v["move_items"] = {"Ex8-2:3": "lo:g10m8s2-1-1"}
+        if rulings is not None:
+            v["rulings"] = rulings
+        return v
+
+    def rule4(self, ev_):
+        return [f for f in ev_["failures"] if "rule 4 wants" in f]
+
+    def test_rule4_a_ruled_drop_may_leave_one_objective_with_a_check_later(self):
+        _, run = self.run_s1(good_responses(self.args))
+        v = self.ruled_drop_verdicts(self.assemble(run)["check"], [self.RULING])
+        ev_ = ao.evaluate_chapter(self.args["chapter"], run, self.vocab, v)
+        self.assertEqual(ev_["failures"], [])
+        self.assertEqual(ao.undecided(ev_["decisions"], v), [])
+        lesson = next(l for l in ev_["lessons"] if l["slug"] == "g10m8s2-1")
+        self.assertEqual([o["id"] for o in lesson["objectives"]], ["lo:g10m8s2-1-1"])
+        warn = next(w for w in lesson["warnings"] if "rule 4 wants" in w)
+        for text in ("g10m8s2-1: 1 objective(s)", "2026-10-02", "Samuel", "CHECKED LATER", "lo:g10m8s2-1-2"):
+            self.assertIn(text, warn)
+        later = ev_["check_later"]
+        self.assertEqual(len(later), 1)
+        self.assertEqual((later[0]["kind"], later[0]["lesson"], later[0]["dropped"], later[0]["allowed_on"]),
+                         ("rule4_min_objectives", "g10m8s2-1", ["lo:g10m8s2-1-2"], "2026-10-02"))
+        self.assertEqual((later[0]["objectives_found"], later[0]["objectives_kept"]), (2, 1))
+        # it reaches the records: approved, the chapter check, and the lesson's own file
+        g1 = {"approved_by": "fixture reviewer", "approved_at": "2026-10-02T00:00:00+00:00"}
+        res = self.assemble(run, v, g1)
+        self.assertEqual(res["status"], "approved")
+        self.assertEqual(res["check"]["failures"], [])
+        self.assertEqual(res["check"]["check_later"], later)
+        self.assertEqual(json.loads((self.f["objectives"] / "ch08.check.json").read_text())["check_later"], later)
+        rec = json.loads((self.f["objectives"] / "g10m8s2-1.json").read_text())
+        self.assertEqual(rec["checks"]["check_later"], later)
+        self.assertTrue(rec["checks"]["ok"])
+        self.assertEqual(json.loads((self.f["objectives"] / "g10m8s3-1.json").read_text())["checks"]["check_later"], [])
+
+    def test_rule4_without_a_ruling_one_objective_still_fails(self):
+        _, run = self.run_s1(good_responses(self.args))
+        check = self.assemble(run)["check"]
+        wrong = [dict(self.RULING, key="lo:g10m8s2-1-1"),                       # a ruling about another objective
+                 dict(self.RULING, decision="place on lo:g10m8s2-1-1"),         # a ruling that is not a drop
+                 {"key": "lo:g10m8s2-1-2", "why": "no decision named"}]
+        for rulings in (None, [], wrong):
+            v = self.ruled_drop_verdicts(check, rulings)
+            ev_ = ao.evaluate_chapter(self.args["chapter"], run, self.vocab, v)
+            self.assertEqual(self.rule4(ev_), ["g10m8s2-1: 1 objective(s); rule 4 wants 2–5"], rulings)
+            self.assertEqual(ev_["check_later"], [])
+            res = self.assemble(run, v, {"approved_by": "x", "approved_at": "2026-10-02T00:00:00+00:00"})
+            self.assertEqual(res["status"], "rejected")
+
+    def test_rule4_a_ruled_drop_that_leaves_none_still_fails(self):
+        _, run = self.run_s1(good_responses(self.args))
+        v = self.ruled_drop_verdicts(self.assemble(run)["check"], [self.RULING, dict(self.RULING, key="lo:g10m8s2-1-1")])
+        v["objectives"]["lo:g10m8s2-1-1"] = {"action": "drop", "why": "fixture"}
+        v["move_items"] = {}
+        ev_ = ao.evaluate_chapter(self.args["chapter"], run, self.vocab, v)
+        self.assertEqual(self.rule4(ev_), ["g10m8s2-1: 0 objective(s); rule 4 wants 2–5"])
+        self.assertEqual(ev_["check_later"], [])
+
+    def test_rule4_every_drop_needs_its_ruling_and_the_reconciler_cannot_be_the_one_who_left_it_short(self):
+        r = good_responses(self.args)
+        # a third objective G1 also drops, WITHOUT a ruling: the two drops leave one, only one is ruled
+        extra = copy.deepcopy(r["S1:reconcile:g10m8s2-1"]["objectives"][1])
+        extra.update(statement="State the coordinates of a point", exercise_items=[])
+        r["S1:reconcile:g10m8s2-1"]["objectives"].append(extra)
+        r["S1:evidence:g10m8s2-1"]["checks"] += [{"objective_n": 3, "evidence_index": j, "present": True, "supports": True}
+                                                for j in range(2)]
+        _, run = self.run_s1(r)
+        v = self.ruled_drop_verdicts(self.assemble(run)["check"], [self.RULING])
+        v["objectives"]["lo:g10m8s2-1-3"] = {"action": "drop", "why": "fixture"}
+        ev_ = ao.evaluate_chapter(self.args["chapter"], run, self.vocab, v)
+        self.assertEqual(self.rule4(ev_), ["g10m8s2-1: 1 objective(s); rule 4 wants 2–5"])
+        v["rulings"].append(dict(self.RULING, key="lo:g10m8s2-1-3"))              # both ruled: now it is allowed
+        ev_ = ao.evaluate_chapter(self.args["chapter"], run, self.vocab, v)
+        self.assertEqual((self.rule4(ev_), [c["dropped"] for c in ev_["check_later"]]),
+                         ([], [["lo:g10m8s2-1-2", "lo:g10m8s2-1-3"]]))
+        # a lesson the reconciler itself returned with one objective has no drop to blame: a ruling for some
+        # other objective of the chapter does not excuse it
+        r2 = good_responses(self.args)
+        one = r2["S1:reconcile:g10m8s3-1"]
+        one["objectives"] = one["objectives"][:1]
+        one["objectives"][0]["exercise_items"] = ["Ex8-3:1", "Ex8-3:2"]
+        one["rejected"] = [{"key": "A2", "reason": "fixture"}, {"key": "B2", "reason": "fixture"}]
+        r2["S1:evidence:g10m8s3-1"]["checks"] = r2["S1:evidence:g10m8s3-1"]["checks"][:3]
+        _, run2 = self.run_s1(r2, "ch08b.json")
+        v2 = self.ruled_drop_verdicts(self.assemble(run2)["check"], [self.RULING])
+        ev2 = ao.evaluate_chapter(self.args["chapter"], run2, self.vocab, v2)
+        self.assertEqual(self.rule4(ev2), ["g10m8s3-1: 1 objective(s); rule 4 wants 2–5"])
+        self.assertEqual([c["lesson"] for c in ev2["check_later"]], ["g10m8s2-1"])
+
+    def test_rule4_a_lesson_over_the_maximum_still_fails(self):
+        r = good_responses(self.args)
+        objs = r["S1:reconcile:g10m8s2-1"]["objectives"]
+        for n in range(3, 7):                                                     # six objectives: over the 5
+            extra = copy.deepcopy(objs[1])
+            extra.update(statement=f"Extra objective {n}", exercise_items=[], **{"from": {"a": [f"A{n}"], "b": [f"B{n}"]}})
+            objs.append(extra)
+        r["S1:evidence:g10m8s2-1"]["checks"] += [{"objective_n": n, "evidence_index": j, "present": True, "supports": True}
+                                                for n in range(3, 7) for j in range(2)]
+        _, run = self.run_s1(r)
+        ev_ = ao.evaluate_chapter(self.args["chapter"], run, self.vocab, {})
+        self.assertEqual(self.rule4(ev_), ["g10m8s2-1: 6 objective(s); rule 4 wants 2–5"])
+        # a ruling elsewhere in the lesson does not lift the maximum
+        v = {"rulings": [self.RULING], "objectives": {"lo:g10m8s2-1-2": {"action": "drop"}}}
+        ev_ = ao.evaluate_chapter(self.args["chapter"], run, self.vocab, v)
+        self.assertEqual(self.rule4(ev_), [])                                     # 5 left: inside the band
+        self.assertEqual(ev_["check_later"], [])
+
     def test_rule5_single_and_silently_dropped_finder_objectives_are_g1_decisions(self):
         r = good_responses(self.args)
         r["S1:reconcile:g10m8s3-1"]["objectives"][1]["from"] = {"a": ["A2"], "b": []}   # B2 dropped, no reason
