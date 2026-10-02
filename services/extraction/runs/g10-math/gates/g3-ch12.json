@@ -1,0 +1,81 @@
+{
+ "format": "ainext.gate-decision/1",
+ "gate": "G3",
+ "book": "g10-math",
+ "id": "g3-ch12",
+ "chapter": 12,
+ "decided_at": "2026-10-02T07:06:14Z",
+ "by": "auto-pass G3 (AI recommendation)",
+ "auto": true,
+ "outcome": "pass_with_holds",
+ "summary": "2 sampled item(s) accepted on the AI checks; 0 predicate claim(s) stay held, as the verifier recommends; 3 widget gap(s) accepted on the AI recommendation (the chapter ships without a widget question for now; 3 proposed kind(s) NOT approved, listed for Samuel)",
+ "decisions": [
+  {
+   "key": "q:g10m12s1-1-2:g004-midpoi",
+   "decision": "accept",
+   "basis": "its family passed S6's blind grade / S7's verifier"
+  },
+  {
+   "key": "q:g10m12s1-1-2:g006-parall",
+   "decision": "accept",
+   "basis": "its family passed S6's blind grade / S7's verifier"
+  },
+  {
+   "key": "widget gap lo:g10m12s1-1-1",
+   "decision": "accepted without a widget for now (auto-pass)",
+   "detail": "proposed kind: parallelogram_criteria_tester (new kind: a counterexample builder on a four-vertex quadrilateral) — NOT approved, needs Samuel (decision 11)",
+   "basis": "polygon_builder construct/parallelogram asks the student to build a parallelogram, which tests the definition and not the criterion; she can pass without using any of the three criteria this objective names. Its parallelogram predicates (only-one-pair-parallel, not-the-shape) cannot say which insuff"
+  },
+  {
+   "key": "widget gap lo:g10m12s1-1-2",
+   "decision": "accepted without a widget for now (auto-pass)",
+   "detail": "proposed kind: parallelogram_angle_chaser (new kind: marking angle pairs and a congruence condition on a drawn figure) — NOT approved, needs Samuel (decision 11)",
+   "basis": "None of the existing kinds draws a given figure and has the student mark relationships on it. angle_setter works only on a circle, and polygon_builder grades the shape she builds, not the angle relations in a figure supplied to her. The anchor questions are figure-dependent numeric answers, and a nu"
+  },
+  {
+   "key": "widget gap lo:g10m12s1-1-2",
+   "decision": "accepted without a widget for now (auto-pass)",
+   "detail": "proposed kind: polygon_builder:midsegment (existing kind; blocked, no misconception recorded on this objective to diagnose with) — NOT approved, needs Samuel (decision 11)",
+   "basis": "A template needs at least one diagnostics entry whose misconception_id comes from this objective's own misconceptions list (FR-1215). Both objectives in this lesson have empty lists, and lo-1 has no anchor question either. Inventing an id would be refused by the validator, and mapping the predicate "
+  }
+ ],
+ "checks": [
+  {
+   "name": "S6 blind grader, every family in the bundle",
+   "state": "pass"
+  },
+  {
+   "name": "S7 verifier, every template",
+   "state": "pass"
+  },
+  {
+   "name": "the app's marker on every typed key (load)",
+   "state": "pass"
+  },
+  {
+   "name": "S7 author examined the chapter (a gap with a reason, or a template)",
+   "state": "pass"
+  }
+ ],
+ "evidence": [
+  {
+   "label": "G3 verdicts (auto)",
+   "path": "services/extraction/runs/g10-math/g3-ch12.auto.json"
+  },
+  {
+   "label": "review queue generated-questions.review-queue.json",
+   "path": "services/extraction/seed/generated/g10-math/ch12/generated-questions.review-queue.json"
+  },
+  {
+   "label": "widget gaps (auto-passed)",
+   "path": "services/extraction/coverage/g10-math.ch12.widget-gaps.json"
+  }
+ ],
+ "blocked": [],
+ "course_id": "course:us-g10-math-en",
+ "for_review": [
+  "widget gap, chapter 12: the proposed kind 'parallelogram_angle_chaser (new kind: marking angle pairs and a congruence condition on a drawn figure)' needs your approval before anything is built (decision 11); nothing is built on this auto-pass",
+  "widget gap, chapter 12: the proposed kind 'parallelogram_criteria_tester (new kind: a counterexample builder on a four-vertex quadrilateral)' needs your approval before anything is built (decision 11); nothing is built on this auto-pass",
+  "widget gap, chapter 12: the proposed kind 'polygon_builder:midsegment (existing kind; blocked, no misconception recorded on this objective to diagnose with)' needs your approval before anything is built (decision 11); nothing is built on this auto-pass"
+ ]
+}
