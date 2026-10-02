@@ -1,0 +1,1568 @@
+{
+ "mode": "grade",
+ "book": "g10-math",
+ "prompts_version": "s6-v6",
+ "by_ref": {
+  "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/s6-grade-ch14",
+  "stage": "S6 grade",
+  "shards_sha256": "b6aaa23ba4eaf7e7e1cf712055ef970929ec14984a9c858e2a2c3896c33e6fd9",
+  "files": 128
+ },
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "ce14b9a275551596540559352d6e1137fc366251ecc65d4b7d34aa4599cbc0b6",
+  "args_sha256": "0e232311dc53221fb183cbfba0192ac58d8c3aa43f6da5d8574135aa619d40b7",
+  "generated_sha256": "66774ed0d0949c81f50a7fde269fc192da5911ed0f8c3c486a97c2cd846db7dd",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "family_id": "tpl:g10m14s1-1-2:colour-fraction",
+   "spec_sha": "00ef53a2357b69e55796e7714e917d76c6edc5b1d210d3ef61a5f9ab975028f7",
+   "answers": [
+    {
+     "instance_id": "q:g10m14s1-1-2:g004-colour",
+     "stem_sha": "d0a0a8961d2cfbf0",
+     "answer": {
+      "choice": "A",
+      "choice_text": "$\\frac{38}{135}$"
+     },
+     "working": "Total blocks = 38 + 39 + 25 + 33 = 135. P(purple) = 38/135."
+    },
+    {
+     "instance_id": "q:g10m14s1-1-2:g009-colour",
+     "stem_sha": "31b3cd9794b76ac2",
+     "answer": {
+      "choice": "C",
+      "choice_text": "$\\frac{39}{121}$"
+     },
+     "working": "Total blocks = 39 + 38 + 32 + 12 = 121. P(purple) = 39/121."
+    },
+    {
+     "instance_id": "q:g10m14s1-1-2:g010-colour",
+     "stem_sha": "352a45448453da1d",
+     "answer": {
+      "choice": "B",
+      "choice_text": "$\\frac{22}{105}$"
+     },
+     "working": "Total blocks = 22 + 36 + 31 + 16 = 105. P(purple) = 22/105."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I checked all three instances by hand and found no defects.\n\nTotals and keys:\n- g004: 38+39+25+33 = 135 and non-purple = 97. The key is 38/135 (A). gcd(38,135)=1, so it is already in simplest form.\n- g009: 39+38+32+12 = 121 and non-purple = 82. The key is 39/121 (C). gcd(39,121)=1.\n- g010: 22+36+31+16 = 105 and non-purple = 83. The key is 22/105 (B). gcd(22,105)=1.\n\nEach stem asks for the probability that the block is purple. The key is n(E)/n(S) as a fraction in simplest form, which is the form asked for and the form the book's method gives.\n\nDistractors: every tagged option is exactly what a student making that error would write, and every one is definitely wrong.\n- unequal-outcomes-counted-as-equal gives 1/4. This is wrong because the colour counts differ, and the counts are not equal in any instance.\n- event-over-the-rest gives n(E)/(n(S)-n(E)), e.g. 38/97, 39/82 and 22/83. This is the odds-for-purple confusion, with the correct non-purple count each time.\n- opposite-event-counted gives n(not E)/n(S), e.g. 97/135, 82/121 and 83/105. This is P(not purple).\n- No distractor equals the key, none duplicates another, and none equals the key in an unsimplified form.\n\nContext: this is a Grade 10 probability question with a single clear event. The counts are realistic and the stem matches the fixed context (purple, orange, white, pink). The only reading is \"the block selected at random is purple\".\n\nSolutions: each follows the book's steps. It finds the sample space n(S) by summing the colours, then n(E) for purple, then P(E)=n(E)/n(S). Every sum is correct and the simplest-form claim is true each time. Step 4 explicitly rejects 1/4 and warns against the opposite-event and event-over-rest errors. Its wording (\"counts all the blocks, not only the ones that are not purple\") is slightly clumsy but correct.",
+    "distractors": [
+     {
+      "instance_id": "q:g10m14s1-1-2:g004-colour",
+      "option": "B 38/97",
+      "verdict": "IS_THAT_ERROR",
+      "why": "n(E)/(n(S)-n(E)) = 38/(135-38) = 38/97. This is exactly the event-over-the-rest error. It is wrong because the denominator should be 135."
+     },
+     {
+      "instance_id": "q:g10m14s1-1-2:g004-colour",
+      "option": "C 1/4",
+      "verdict": "IS_THAT_ERROR",
+      "why": "The student treats the four colours as equally likely. The colour counts are unequal (38, 39, 25, 33), so 1/4 is wrong."
+     },
+     {
+      "instance_id": "q:g10m14s1-1-2:g004-colour",
+      "option": "D 97/135",
+      "verdict": "IS_THAT_ERROR",
+      "why": "The student counts the non-purple blocks (39+25+33=97) over the total. That is P(not purple) = 1 - 38/135, not P(purple)."
+     },
+     {
+      "instance_id": "q:g10m14s1-1-2:g009-colour",
+      "option": "A 1/4",
+      "verdict": "IS_THAT_ERROR",
+      "why": "The colours are treated as equally likely, but the counts (39, 38, 32, 12) are unequal. Wrong as a probability."
+     },
+     {
+      "instance_id": "q:g10m14s1-1-2:g009-colour",
+      "option": "B 82/121",
+      "verdict": "IS_THAT_ERROR",
+      "why": "The non-purple count is 38+32+12=82, so this is P(not purple), the opposite event."
+     },
+     {
+      "instance_id": "q:g10m14s1-1-2:g009-colour",
+      "option": "D 39/82",
+      "verdict": "IS_THAT_ERROR",
+      "why": "The purple count over the non-purple count (121-39=82) is the event-over-the-rest error. It is wrong because the denominator should be 121."
+     },
+     {
+      "instance_id": "q:g10m14s1-1-2:g010-colour",
+      "option": "A 1/4",
+      "verdict": "IS_THAT_ERROR",
+      "why": "The colours are treated as equally likely, but the counts (22, 36, 31, 16) are unequal. Wrong."
+     },
+     {
+      "instance_id": "q:g10m14s1-1-2:g010-colour",
+      "option": "C 22/83",
+      "verdict": "IS_THAT_ERROR",
+      "why": "The purple count over the non-purple count (36+31+16=83) is the event-over-the-rest error. It is wrong because the denominator should be 105."
+     },
+     {
+      "instance_id": "q:g10m14s1-1-2:g010-colour",
+      "option": "D 83/105",
+      "verdict": "IS_THAT_ERROR",
+      "why": "This is the non-purple count over the total, P(not purple), the opposite event. It is wrong."
+     }
+    ]
+   }
+  },
+  {
+   "family_id": "tpl:g10m14s1-1-2:nursery-older",
+   "spec_sha": "25aa124e6af6df59d0fd108c4b2e7b1c57010648a5f3c4779345671cc532da3b",
+   "answers": [
+    {
+     "instance_id": "q:g10m14s1-1-2:g003-nurser",
+     "stem_sha": "27dfbc917f60fbff",
+     "answer": {
+      "plain": "1/2"
+     },
+     "working": "Total children = 12 + 9 + 11 = 32. Girls aged 4: 9 - 2 = 7. Girls aged 5: 11 - 2 = 9. Girls at least 4 = 7 + 9 = 16. Probability = 16/32 = 1/2."
+    },
+    {
+     "instance_id": "q:g10m14s1-1-2:g005-nurser",
+     "stem_sha": "1e4b1bfbfa1b7592",
+     "answer": {
+      "plain": "2/5"
+     },
+     "working": "Total children = 12 + 8 + 10 = 30. Girls aged 4: 8 - 4 = 4. Girls aged 5: 10 - 2 = 8. Girls at least 4 = 4 + 8 = 12. Probability = 12/30 = 2/5."
+    },
+    {
+     "instance_id": "q:g10m14s1-1-2:g007-nurser",
+     "stem_sha": "10ab505915456e76",
+     "answer": {
+      "plain": "5/13"
+     },
+     "working": "Total children = 7 + 10 + 9 = 26. Girls aged 4: 10 - 7 = 3. Girls aged 5: 9 - 2 = 7. Girls at least 4 = 3 + 7 = 10. Probability = 10/26 = 5/13."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family is typed-expression with no options, so distractors_ok is vacuously true. I rechecked all three instances by hand.\n\ng003: n(S)=12+9+11=32. Girls aged 4 are 9-2=7 and girls aged 5 are 11-2=9, so n(E)=16. 16/32 reduces by 16 to 1/2. The key is 1/2 and answer_check is 1/2.\n\ng005: n(S)=12+8+10=30. Girls aged 4 are 8-4=4 and girls aged 5 are 10-2=8, so n(E)=12. 12/30 reduces by 6 to 2/5. The key is 2/5 and answer_check is 2/5.\n\ng007: n(S)=7+10+9=26. Girls aged 4 are 10-7=3 and girls aged 5 are 9-2=7, so n(E)=10. 10/26 reduces by 2 to 5/13. The key is 5/13 and answer_check is 5/13.\n\nKey form: the stem asks for a fraction in simplest form. All three keys are in lowest terms (gcd 1), and the LaTeX key matches answer_check in each instance.\n\nContext: the numbers are realistic. Boy counts never exceed the age-group totals, so every group has at least zero girls, and the 3-year-old boys are never the target. \"At least 4 years old\" reads unambiguously as ages 4 and 5. The solution steps follow the book's sequence: n(S), the girl counts, n(E), P(E)=n(E)/n(S), then simplify. Each gcd quoted in the simplification step (16, 6, 2) is correct."
+   }
+  },
+  {
+   "family_id": "tpl:g10m14s1-1-2:shifted-multiples",
+   "spec_sha": "d36566091618085ba30489d622b5441215b587cec1deee13883ae3bbcce567af",
+   "answers": [
+    {
+     "instance_id": "q:g10m14s1-1-2:g001-shifte",
+     "stem_sha": "ce425c4e3f9e1717",
+     "answer": {
+      "value": "0.10"
+     },
+     "working": "Discs 22 to 62 inclusive: 62-22+1 = 41. Multiples of 9 in range: 27, 36, 45, 54 (63 is too big, 18 too small) = 4. P = 4/41 = 0.09756..., which is 0.10 to 2 d.p."
+    },
+    {
+     "instance_id": "q:g10m14s1-1-2:g002-shifte",
+     "stem_sha": "9c5bf536043cf656",
+     "answer": {
+      "value": "0.12"
+     },
+     "working": "Discs 21 to 69 inclusive: 69-21+1 = 49. Multiples of 8 in range: 24, 32, 40, 48, 56, 64 (16 too small, 72 too big) = 6. P = 6/49 = 0.12245..., which is 0.12 to 2 d.p."
+    },
+    {
+     "instance_id": "q:g10m14s1-1-2:g006-shifte",
+     "stem_sha": "3b69bdef52de3ad8",
+     "answer": {
+      "value": "0.24"
+     },
+     "working": "Discs 11 to 51 inclusive: 51-11+1 = 41. Multiples of 4 in range: 12, 16, 20, 24, 28, 32, 36, 40, 44, 48 (8 too small, 52 too big) = 10. P = 10/41 = 0.2439..., which is 0.24 to 2 d.p."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "I recomputed all three instances by hand and each one is correct. The family is numeric with no options, so there are no distractors to judge.\n\ng001 (22 to 62, multiples of 9):\n- n(S) = 62 - 22 + 1 = 41.\n- 18 is below the range and 63 is above it, so the multiples are 27, 36, 45, 54, which gives n(E) = 4.\n- 4/41 = 0.0976, which rounds to 0.10 and matches the key.\n\ng002 (21 to 69, multiples of 8):\n- n(S) = 49.\n- 16 is below the range and 72 is above it, so the multiples are 24, 32, 40, 48, 56, 64, which gives n(E) = 6.\n- 6/49 = 0.1224, which rounds to 0.12 and matches the key.\n\ng006 (11 to 51, multiples of 4):\n- n(S) = 41.\n- The multiples run from 12 to 48, so n(E) = (48 - 12)/4 + 1 = 10, matching the listed set of ten.\n- 10/41 = 0.2439, which rounds to 0.24 and matches the key.\n\nNone of the three values sits near a rounding boundary, so the 2 d.p. keys are safe.\n\nEach solution follows the same method: count outcomes with end - start + 1, bound the multiples from the range, list the set, then take n(E)/n(S). The stems ask for a decimal to 2 d.p., and each key is given that way. The context is a plain discs-from-a-range problem with a range that does not start at 1, as the fixed context requires.\n\nI could not see the answer_check for these numeric keys. Check that it accepts 0.10 and 0.1 as equal and rejects an unrounded value such as 0.0976."
+   }
+  },
+  {
+   "family_id": "tpl:g10m14s2-1-1:scores-not-lose",
+   "spec_sha": "13cc6446a8dc873b729641b4402f3c254f4ef037d055c9371d1308f8acfb3993",
+   "answers": [
+    {
+     "instance_id": "q:g10m14s2-1-1:g007-scores",
+     "stem_sha": "dd03f6b87b44a61c",
+     "answer": {
+      "value": "0.5"
+     },
+     "working": "Classified each of the 10 scores for Team 1. Wins: 4-1, 4-0, 3-2, 4-3 (4). Draws: 2-2 (1). Losses: 2-4, 1-2, 1-3, 3-4, 1-4 (5). Not losing = 4 + 1 = 5 out of 10, so 5/10 = 0.5."
+    },
+    {
+     "instance_id": "q:g10m14s2-1-1:g009-scores",
+     "stem_sha": "2af1e7b9437e6907",
+     "answer": {
+      "value": "0.6"
+     },
+     "working": "Classified each of the 10 scores for Team 1. Wins: 4-2, 4-3, 4-3, 2-0, 3-2 (5). Draws: 1-1 (1). Losses: 3-4, 0-2, 1-4, 0-4 (4). Not losing = 5 + 1 = 6 out of 10, so 6/10 = 0.6."
+    },
+    {
+     "instance_id": "q:g10m14s2-1-1:g010-scores",
+     "stem_sha": "6688cc56c6281e62",
+     "answer": {
+      "value": "0.5"
+     },
+     "working": "Classified each of the 10 scores for Team 1. Wins: 3-0, 4-1, 4-2 (3). Draws: 2-2, 3-3 (2). Losses: 1-2, 1-4, 0-2, 0-2, 0-4 (5). Not losing = 3 + 2 = 5 out of 10, so 5/10 = 0.5."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family is numeric, so there are no options and distractors_ok is vacuously true. I recomputed all three instances from the stems. g007: differences 3,-2,-1,-2,-1,4,-3,1,1,0 give 4 wins and 1 draw, so p=5 and f=0.5 (key 0.5 is correct). g009: differences 2,1,-1,0,1,2,-2,1,-3,-4 give 5 wins and 1 draw, so p=6 and f=0.6 (key 0.6 is correct). g010: differences -1,3,0,-3,3,2,-2,-2,-4,0 give 3 wins and 2 draws, so p=5 and f=0.5 (key 0.5 is correct). Every listed difference matches its stem. The method is the book's f=p/t with each match as one trial, t=10, and \"not losing\" counted as win or draw. The key is a decimal, which is the form the stem asks for. The context is the book's football-matches example, with realistic scores and an unambiguous event. Minor wording nit, not a correctness error: step 4 of g007 and g009 reads \"drew 1 matches\" (singular count with plural noun). It is worth fixing in the template, for example with \"match(es)\" or a plural-aware renderer, but it does not affect the key or the method."
+   }
+  },
+  {
+   "family_id": "tpl:g10m14s3-1-1:factors-count",
+   "spec_sha": "50c3b90f9e14ae3c3597b03a5445daf499ee9e96ae119e004c547c637fb9fe08",
+   "answers": [
+    {
+     "instance_id": "q:g10m14s3-1-1:g003-factor",
+     "stem_sha": "02e61691483dd944",
+     "answer": {
+      "value": "6"
+     },
+     "working": "Factors of 28 in 1 to 28: 28 = 1x28 = 2x14 = 4x7. So A = {1, 2, 4, 7, 14, 28}, which has 6 elements."
+    },
+    {
+     "instance_id": "q:g10m14s3-1-1:g006-factor",
+     "stem_sha": "252a763c5d8522fd",
+     "answer": {
+      "value": "4"
+     },
+     "working": "Factors of 39 in 1 to 39: 39 = 1x39 = 3x13. So A = {1, 3, 13, 39}, which has 4 elements."
+    },
+    {
+     "instance_id": "q:g10m14s3-1-1:g007-factor",
+     "stem_sha": "a630f23ad314bf4a",
+     "answer": {
+      "value": "4"
+     },
+     "working": "Factors of 38 in 1 to 38: 38 = 1x38 = 2x19. So A = {1, 2, 19, 38}, which has 4 elements."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family is a typed numeric answer with no options, so there are no distractors to judge. I checked each instance independently. g003 (28): the factors are 1, 2, 4, 7, 14, 28, so n(A) = 6 and the key \"6\" is correct. g006 (39 = 3 x 13): the factors are 1, 3, 13, 39, so n(A) = 4 and the key \"4\" is correct. g007 (38 = 2 x 19): the factors are 1, 2, 19, 38, so n(A) = 4 and the key \"4\" is correct. In all three the worked solution follows the book's method. It states S and n(S), then says A holds the members of S that divide the number exactly. It lists A by checking one by one, notes that 1 and the number itself are both factors, and counts the elements. Each listed set is complete and correct. The context (slips labelled 1 to N, one drawn and replaced, event A being a factor of N) is realistic and unambiguous at Grade 10. The numbers are sensible and the book's box-of-papers context is kept. One minor observation: the stem asks the student to \"write down the set A and use it to find n(A)\", but a typed numeric key can only check n(A). The set appears only in the worked solution. That is acceptable because the final quantity asked for is n(A). It is not a defect, but the key is graded on n(A) alone. No answer_check was shown in the packet, so I could not compare it with the key."
+   }
+  },
+  {
+   "family_id": "tpl:g10m14s3-1-1:neither-region",
+   "spec_sha": "658072e6c74d671e40c8e0bb1c8f60683a51882512aa2880a953639872e3d63c",
+   "answers": [
+    {
+     "instance_id": "q:g10m14s3-1-1:g001-neithe",
+     "stem_sha": "e8acca33ee8ecc18",
+     "answer": {
+      "value": "26"
+     },
+     "working": "Numbers 1 to 38. Multiples of 6: 6, 12, 18, 24, 30, 36 gives 6. Multiples of 5: 5, 10, ..., 35 gives 7. In both (multiples of 30): 30 gives 1. Inside at least one circle = 6 + 7 - 1 = 12. Outside both circles = 38 - 12 = 26."
+    },
+    {
+     "instance_id": "q:g10m14s3-1-1:g002-neithe",
+     "stem_sha": "5a8f1356208eafce",
+     "answer": {
+      "value": "20"
+     },
+     "working": "Numbers 1 to 30. Multiples of 7: 7, 14, 21, 28 gives 4. Multiples of 4: 4, 8, ..., 28 gives 7. In both (multiples of 28): 28 gives 1. Inside at least one circle = 4 + 7 - 1 = 10. Outside both circles = 30 - 10 = 20."
+    },
+    {
+     "instance_id": "q:g10m14s3-1-1:g004-neithe",
+     "stem_sha": "6fb12f0503ad845e",
+     "answer": {
+      "value": "33"
+     },
+     "working": "Numbers 1 to 49. Multiples of 5: 5, 10, ..., 45 gives 9. Multiples of 6: 6, 12, ..., 48 gives 8. In both (multiples of 30): 30 gives 1. Inside at least one circle = 9 + 8 - 1 = 16. Outside both circles = 49 - 16 = 33."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": false,
+    "distractors": [],
+    "notes": "The mathematics is correct in all three instances, and I re-derived each key independently. g001 (1 to 38, multiples of 6 and 5): n(A)=6, n(B)=7, overlap {30}, union 12, answer 26. g002 (1 to 30, multiples of 7 and 4): n(A)=4, n(B)=7, overlap {28}, union 10, answer 20. g004 (1 to 49, multiples of 5 and 6): n(A)=9, n(B)=8, overlap {30}, union 16, answer 33. Every set listing, count and subtraction checks out. The method is the book's: fill the overlap first, take away-only counts, add up the circles, subtract from n(S). The stems are unambiguous and self-contained. The family has no options, so there are no distractors to judge, and the numeric key is the count the stem asks for.\n\nI set solution_ok to false for one reason, a template defect in step 4 of every instance. It reads \"That is $1$ numbers\", which should be \"1 number\". The overlap is exactly 1 in all three instances, so every student who opens the worked solution sees the error. Fix: pluralise from the overlap count, or word it without a count (\"the overlap holds ...\").\n\nNot blocking, but worth knowing: the overlap is always exactly 1 (lcm 30 or 28 in a range under 60). That is fine for the \"neither region\" skill, but it makes the family narrow and is why the glitch shows every time."
+   }
+  },
+  {
+   "family_id": "tpl:g10m14s3-1-2:inside-circle",
+   "spec_sha": "3c069ae1a75c4116aba413c904ae3293ab177aaec26488d94e48c307a37b6c5a",
+   "answers": [
+    {
+     "instance_id": "q:g10m14s3-1-2:g007-inside",
+     "stem_sha": "7f1260eac0301191",
+     "answer": {
+      "choice": "A",
+      "choice_text": "$\\{1,\\ 5,\\ 6,\\ 8,\\ 9\\}$"
+     },
+     "working": "The event set of A is everything inside circle A: the A-only region plus the overlap. A-only = {6, 9}; overlap = {1, 5, 8}. Union = {1, 5, 6, 8, 9}. This matches option A. B-only {2, 4} and outside {3, 7} are excluded."
+    },
+    {
+     "instance_id": "q:g10m14s3-1-2:g008-inside",
+     "stem_sha": "0c84a362b66e6860",
+     "answer": {
+      "choice": "A",
+      "choice_text": "$\\{1,\\ 2,\\ 5,\\ 6\\}$"
+     },
+     "working": "A = A-only plus overlap = {2, 6} ∪ {1, 5} = {1, 2, 5, 6}. B-only {4, 7} and outside {3} are not in A. This matches option A."
+    },
+    {
+     "instance_id": "q:g10m14s3-1-2:g010-inside",
+     "stem_sha": "7f7ff94166230a30",
+     "answer": {
+      "choice": "B",
+      "choice_text": "$\\{3,\\ 4,\\ 5\\}$"
+     },
+     "working": "A = A-only plus overlap = {4, 5} ∪ {3} = {3, 4, 5}. B-only {1, 7} and outside {2, 6} are not in A. This matches option B."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [
+     {
+      "instance_id": "q:g10m14s3-1-2:g007-inside",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "{1,2,4,5,8} is the overlap {1,5,8} plus B-only {2,4}, i.e. all of circle B. This is exactly reads-the-other-circle. It is not A, since 2 and 4 are B-only."
+     },
+     {
+      "instance_id": "q:g10m14s3-1-2:g007-inside",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "{1,5,8} is exactly the overlap region. This is reads-only-the-overlap. It is wrong because it omits 6 and 9."
+     },
+     {
+      "instance_id": "q:g10m14s3-1-2:g007-inside",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "{2,3,4,7} is B-only {2,4} plus outside-both {3,7}, i.e. everything outside circle A. This is reads-outside-the-circle. It is definitely wrong."
+     },
+     {
+      "instance_id": "q:g10m14s3-1-2:g008-inside",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "{3,4,7} is outside-both {3} plus B-only {4,7}, i.e. everything outside circle A. This is reads-outside-the-circle. It is definitely wrong."
+     },
+     {
+      "instance_id": "q:g10m14s3-1-2:g008-inside",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "{1,5} is exactly the overlap. This is reads-only-the-overlap. It is wrong because it omits 2 and 6."
+     },
+     {
+      "instance_id": "q:g10m14s3-1-2:g008-inside",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "{1,4,5,7} is the overlap {1,5} plus B-only {4,7}, i.e. all of circle B. This is reads-the-other-circle. It is wrong because it includes 4 and 7 and omits 2 and 6."
+     },
+     {
+      "instance_id": "q:g10m14s3-1-2:g010-inside",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "{3} is exactly the overlap. This is reads-only-the-overlap. It is wrong because it omits 4 and 5."
+     },
+     {
+      "instance_id": "q:g10m14s3-1-2:g010-inside",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "{1,3,7} is the overlap {3} plus B-only {1,7}, i.e. all of circle B. This is reads-the-other-circle. It is wrong because it includes 1 and 7 and omits 4 and 5."
+     },
+     {
+      "instance_id": "q:g10m14s3-1-2:g010-inside",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "{1,2,6,7} is B-only {1,7} plus outside-both {2,6}, i.e. everything outside circle A. This is reads-outside-the-circle. It is definitely wrong."
+     }
+    ],
+    "notes": "Checked all three instances (g007, g008, g010) by rebuilding each Venn partition. In every instance the four regions are disjoint and together cover the whole sample space (g007 gives 9 numbers for S = 1..9, g008 and g010 give 7 for S = 1..7). Keys: g007 = {1,5,6,8,9} (A), g008 = {1,2,5,6} (A), g010 = {3,4,5} (B). Each equals A-only plus the overlap, and the correct_answer letter matches the choice text. Each of the three misconception types (other circle, overlap only, outside A) is built exactly as the tagged option shows, and none of the wrong options equals the event set of A. Worked solutions: steps 1 to 3 give A = A-only union overlap, and step 4 labels the three wrong sets correctly. Sets are in ascending order and the notation is consistent. There is no word problem, and the stem fully describes the diagram in words, so it is unambiguous for a Grade 10 student. No issues found."
+   }
+  },
+  {
+   "family_id": "tpl:g10m14s3-1-2:paired-sets",
+   "spec_sha": "c4b3c61e816af712403fd3be1553673d8ea2a5dff6cec2feb20f0a9291efce03",
+   "answers": [
+    {
+     "instance_id": "q:g10m14s3-1-2:g004-paired",
+     "stem_sha": "17fbfac0a64d86e2",
+     "answer": {
+      "choice": "D",
+      "choice_text": "$A = \\{2,\\ 3,\\ 5,\\ 6,\\ 7,\\ 8,\\ 9,\\ 11\\}$ and $B = \\{1,\\ 4,\\ 7,\\ 8,\\ 9,\\ 11,\\ 12\\}$"
+     },
+     "working": "A is everything inside circle A, so it is the A-only region plus the overlap: {2,3,5,6} ∪ {7,8,9,11} = {2,3,5,6,7,8,9,11}. B is the B-only region plus the overlap: {1,4,12} ∪ {7,8,9,11} = {1,4,7,8,9,11,12}. Option D matches. Option A has the two sets swapped, and C and B leave out the overlap."
+    },
+    {
+     "instance_id": "q:g10m14s3-1-2:g008-paired",
+     "stem_sha": "bd3ace21a3e79ff1",
+     "answer": {
+      "choice": "C",
+      "choice_text": "$A = \\{2,\\ 4,\\ 5,\\ 6,\\ 7,\\ 8,\\ 9\\}$ and $B = \\{4,\\ 6,\\ 10,\\ 11\\}$"
+     },
+     "working": "A = A-only plus overlap = {2,5,7,8,9} ∪ {4,6} = {2,4,5,6,7,8,9}. B = B-only plus overlap = {10,11} ∪ {4,6} = {4,6,10,11}. Option C matches. Option B has the two sets swapped."
+    },
+    {
+     "instance_id": "q:g10m14s3-1-2:g009-paired",
+     "stem_sha": "1d044c105686a5d5",
+     "answer": {
+      "choice": "C",
+      "choice_text": "$A = \\{1,\\ 2,\\ 3,\\ 5,\\ 6,\\ 7,\\ 10\\}$ and $B = \\{3,\\ 4,\\ 5,\\ 6,\\ 7,\\ 9,\\ 11\\}$"
+     },
+     "working": "A = A-only plus overlap = {1,2,10} ∪ {3,5,6,7} = {1,2,3,5,6,7,10}. B = B-only plus overlap = {4,9,11} ∪ {3,5,6,7} = {3,4,5,6,7,9,11}. Option C matches. Option D has the two sets swapped."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [
+     {
+      "instance_id": "q:g10m14s3-1-2:g004-paired",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Swaps the two circles: A gets B's set {1,4,7,8,9,11,12} and B gets A's set. Matches reads-the-other-circle."
+     },
+     {
+      "instance_id": "q:g10m14s3-1-2:g004-paired",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Lists only the exclusive parts {2,3,5,6} and {1,4,12}, leaving out the overlap. Matches omits-the-overlap."
+     },
+     {
+      "instance_id": "q:g10m14s3-1-2:g004-paired",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "A = S minus A = {1,4,10,12} and B = S minus B = {2,3,5,6,10}; both complements are correct. Matches reads-outside-the-circle."
+     },
+     {
+      "instance_id": "q:g10m14s3-1-2:g008-paired",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Only the exclusive parts {2,5,7,8,9} and {10,11}, no overlap {4,6}. Matches omits-the-overlap."
+     },
+     {
+      "instance_id": "q:g10m14s3-1-2:g008-paired",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Swapped: A = {4,6,10,11} and B = {2,4,5,6,7,8,9}. Matches reads-the-other-circle."
+     },
+     {
+      "instance_id": "q:g10m14s3-1-2:g008-paired",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "A = S minus A = {1,3,10,11} and B = S minus B = {1,2,3,5,7,8,9}; both complements are correct. Matches reads-outside-the-circle."
+     },
+     {
+      "instance_id": "q:g10m14s3-1-2:g009-paired",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "A = S minus A = {4,8,9,11,12} and B = S minus B = {1,2,8,10,12}; both complements are correct. Matches reads-outside-the-circle."
+     },
+     {
+      "instance_id": "q:g10m14s3-1-2:g009-paired",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Exclusive parts only, {1,2,10} and {4,9,11}, no overlap {3,5,6,7}. Matches omits-the-overlap."
+     },
+     {
+      "instance_id": "q:g10m14s3-1-2:g009-paired",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Swapped: A = {3,4,5,6,7,9,11} and B = {1,2,3,5,6,7,10}. Matches reads-the-other-circle."
+     }
+    ],
+    "notes": "I checked all three instances by hand. In each one the four regions partition the stated sample space with no gaps and no repeats: g004 has 4+3+4+1 = 12 numbers, g008 has 2+2+5+2 = 11, and g009 has 4+3+3+2 = 12. The key in each is the correct union of the exclusive part and the overlap, with both sets listed in ascending order. Each tagged distractor is exactly what its misconception produces, including the complements for reads-outside-the-circle, and each is definitely wrong. Each question has exactly one correct option, and the three keys (D, C, C) are spread across positions. Solution steps 1-4 are correct and follow the stated method. Step 5 only describes the distractors in general terms and is accurate for all three. The stem describes the Venn diagram in words, so it is self-contained. A minor observation, not a defect: this is a basic read-off for an 'advanced' tier."
+   }
+  },
+  {
+   "family_id": "tpl:g10m14s4-1-1:bigdiagram",
+   "spec_sha": "55216cac91c63e11cd235735a32214ff45cbf7b1691cfd840de1025227b6850f",
+   "answers": [
+    {
+     "instance_id": "q:g10m14s4-1-1:g003-bigdia",
+     "stem_sha": "f3c1be3c92d32ffd",
+     "answer": {
+      "plain": "[2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]"
+     },
+     "working": "A∪B is every element in circle A only, the overlap, or circle B only. A only {2,4,5,6}, both {8,11,13}, B only {3,7,9,10,12}. Leave out the outside region {1,14}. Sort ascending."
+    },
+    {
+     "instance_id": "q:g10m14s4-1-1:g004-bigdia",
+     "stem_sha": "1880c4d2897c9317",
+     "answer": {
+      "plain": "[1, 2, 3, 5, 6, 7, 8, 9, 10, 12, 13, 14]"
+     },
+     "working": "A only {1,8,10}, both {2,3,6,13,14}, B only {5,7,9,12}. Union is these three regions together; leave out the outside region {4,11}. Sort ascending. Check: 3+5+4+2 = 14 elements of S."
+    },
+    {
+     "instance_id": "q:g10m14s4-1-1:g010-bigdia",
+     "stem_sha": "0c0d283664eed538",
+     "answer": {
+      "plain": "[1, 2, 3, 4, 5, 7, 8, 9, 13, 14, 15, 16]"
+     },
+     "working": "A only {1,3,4,5,8}, both {9,13,14}, B only {2,7,15,16}. Union is these three regions together; leave out the outside region {6,10,11,12}. Sort ascending. Check: 5+3+4+4 = 16 elements of S."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "Family tpl:g10m14s4-1-1:bigdiagram has no options (typed expression answer), so distractors_ok is true by default. I checked all three instances by hand.\n\ng003 (S = 1..14): the regions hold 4+3+5+2 = 14 elements and every n from 1 to 14 appears exactly once. A∪B = S minus {1,14} = {2..13}, which matches the key and answer_check.\n\ng004 (S = 1..14): 3+5+4+2 = 14, each element appears once. A∪B = S minus {4,11} = {1,2,3,5,6,7,8,9,10,12,13,14}, which matches the key and answer_check. The solution count 3+5+4 = 12 is correct.\n\ng010 (S = 1..16): 5+3+4+4 = 16, each element appears once. A∪B = S minus {6,10,11,12} = {1,2,3,4,5,7,8,9,13,14,15,16}, which matches the key and answer_check. The solution count 5+3+4 = 12 is correct.\n\nSolutions: all five steps in each instance are correct and follow the book's method. They define the union, collect circle A's elements (A-only plus overlap) and circle B's, count the overlap once, exclude the outside region, then list in ascending order.\n\nKey form (minor, not blocking): the stem asks for the form {a, b, c, ...}, but the key and answer_check are a bare comma list and a bracketed list without braces. They hold the same elements in the same order, and the solution's final step shows the braces. This is acceptable if the 'values' checker parses a list of numbers.\n\nContext: the Venn region lists are given in text, every element of S sits in exactly one region, and the numbers are realistic. The phrase \"you offer to help them find it\" is slightly awkward but not ambiguous."
+   }
+  },
+  {
+   "family_id": "tpl:g10m14s4-1-1:unionpick",
+   "spec_sha": "719923c3a7930dd610c989f14c1acc4ab2e9eb27b4b7396ce94cb3d7941fbde1",
+   "answers": [
+    {
+     "instance_id": "q:g10m14s4-1-1:g001-unionp",
+     "stem_sha": "6dd82ceb0e6c1a27",
+     "answer": {
+      "choice": "C",
+      "choice_text": "$\\{1,\\ 3,\\ 4,\\ 5,\\ 6,\\ 7,\\ 8\\}$"
+     },
+     "working": "A union B is everything inside at least one circle: A only {3,6}, overlap {1,4}, B only {5,7,8}. Together that is {1,3,4,5,6,7,8}. The outside elements {2,9} are excluded."
+    },
+    {
+     "instance_id": "q:g10m14s4-1-1:g002-unionp",
+     "stem_sha": "ce3602d3f4248035",
+     "answer": {
+      "choice": "A",
+      "choice_text": "$\\{2,\\ 4,\\ 6,\\ 7,\\ 8,\\ 9\\}$"
+     },
+     "working": "A union B is A only {2,8}, overlap {4,6} and B only {7,9}. Together that is {2,4,6,7,8,9}. The outside elements {1,3,5} are excluded."
+    },
+    {
+     "instance_id": "q:g10m14s4-1-1:g006-unionp",
+     "stem_sha": "db058402b0934ea6",
+     "answer": {
+      "choice": "D",
+      "choice_text": "$\\{3,\\ 4,\\ 5,\\ 7,\\ 8,\\ 9,\\ 10\\}$"
+     },
+     "working": "A union B is A only {3,5,9}, overlap {4,8} and B only {7,10}. Together that is {3,4,5,7,8,9,10}. The outside elements {1,2,6} are excluded."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [
+     {
+      "instance_id": "q:g10m14s4-1-1:g001-unionp",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "{1,4} is the overlap A∩B, exactly what a student who confuses union with intersection writes. It is not A∪B."
+     },
+     {
+      "instance_id": "q:g10m14s4-1-1:g001-unionp",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "{3,6} is the A-only region, exactly what the 'a-only-part' error produces. It is wrong because it omits the overlap and all of B."
+     },
+     {
+      "instance_id": "q:g10m14s4-1-1:g001-unionp",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "{2,9} is the region outside both circles, which is what the 'outside-both-circles' error produces. It is wrong because it is the complement of the union."
+     },
+     {
+      "instance_id": "q:g10m14s4-1-1:g002-unionp",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "{4,6} is the overlap, which is the union-as-overlap error. It is wrong."
+     },
+     {
+      "instance_id": "q:g10m14s4-1-1:g002-unionp",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "{2,8} is the A-only region, which is the a-only-part error. It is wrong."
+     },
+     {
+      "instance_id": "q:g10m14s4-1-1:g002-unionp",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "{1,3,5} is the region outside both circles, which is the outside-both-circles error. It is wrong."
+     },
+     {
+      "instance_id": "q:g10m14s4-1-1:g006-unionp",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "{1,2,6} is the region outside both circles, which is the outside-both-circles error. It is wrong."
+     },
+     {
+      "instance_id": "q:g10m14s4-1-1:g006-unionp",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "{3,5,9} is the A-only region, which is the a-only-part error. It is wrong."
+     },
+     {
+      "instance_id": "q:g10m14s4-1-1:g006-unionp",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "{4,8} is the overlap, which is the union-as-overlap error. It is wrong."
+     }
+    ],
+    "notes": "I checked all three instances. In each, every element of S appears in exactly one region (g001: 9 of 9, g002: 9 of 9, g006: 10 of 10), so the stems are consistent. The keys are right: g001 C = {1,3,4,5,6,7,8}, g002 A = {2,4,6,7,8,9}, g006 D = {3,4,5,7,8,9,10}. Each is the union of the A-only, overlap and B-only regions, listed in ascending order with the overlap counted once, as the stem asks. Each worked solution follows the same five steps (define the union, collect circle A, collect circle B, exclude the outside, merge in order) and reaches its key with no arithmetic or set slips. The three tagged distractors per instance are exactly the overlap A∩B, the A-only region and the outside region, which are the named errors. None of them equals the union, so none is also correct. The keys sit in different positions (C, A, D). The stem's wording (\"a group of learners... you offer to help them\") is a little awkward but not ambiguous. There is no numeric word problem, and the numbers are small integers."
+   }
+  },
+  {
+   "family_id": "tpl:g10m14s4-1-2:overlap-pick",
+   "spec_sha": "913cc6187641c95c2adc7c00585e49fb27bf30736c784fadd95b764f993652c6",
+   "answers": [
+    {
+     "instance_id": "q:g10m14s4-1-2:g002-overla",
+     "stem_sha": "cb864915b3e7df24",
+     "answer": {
+      "choice": "D",
+      "choice_text": "$\\{6, 12\\}$"
+     },
+     "working": "A = {12, 7, 6, 8, 10, 11}, B = {12, 6, 13}. A∩B is the numbers in both lists: 12 and 6 (7, 8, 10, 11 are only in A; 13 is only in B). So A∩B = {6, 12}."
+    },
+    {
+     "instance_id": "q:g10m14s4-1-2:g004-overla",
+     "stem_sha": "6833a8884083224e",
+     "answer": {
+      "choice": "A",
+      "choice_text": "$\\{6, 11\\}$"
+     },
+     "working": "A = {8, 15, 6, 2, 11, 18}, B = {11, 5, 6}. Numbers in both lists: 6 and 11 (5 is only in B; 8, 15, 2, 18 are only in A). So A∩B = {6, 11}."
+    },
+    {
+     "instance_id": "q:g10m14s4-1-2:g009-overla",
+     "stem_sha": "eb3bfb499de8f88f",
+     "answer": {
+      "choice": "B",
+      "choice_text": "$\\{1, 3\\}$"
+     },
+     "working": "A = {6, 14, 20, 1, 3, 10}, B = {16, 1, 3}. Numbers in both lists: 1 and 3 (16 is only in B; 6, 14, 20, 10 are only in A). So A∩B = {1, 3}."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [
+     {
+      "instance_id": "q:g10m14s4-1-2:g002-overla",
+      "option": "A {6, 12, 13}",
+      "verdict": "IS_THAT_ERROR",
+      "why": "This is exactly circle B (12, 6, 13). It is a student listing the whole of one circle instead of the overlap, which is whole-set-not-intersection. It is wrong because 13 is not in A."
+     },
+     {
+      "instance_id": "q:g10m14s4-1-2:g002-overla",
+      "option": "B {6, 7, 8, 10, 11, 12}",
+      "verdict": "IS_THAT_ERROR",
+      "why": "This is exactly circle A sorted. It is the whole-set-not-intersection error and is wrong because 7, 8, 10 and 11 are not in B."
+     },
+     {
+      "instance_id": "q:g10m14s4-1-2:g002-overla",
+      "option": "C {6, 7, 8, 10, 11, 12, 13}",
+      "verdict": "IS_THAT_ERROR",
+      "why": "This is A union B exactly, which a student produces by reading 'and' as 'or' (either-set-not-both). It is definitely not the intersection."
+     },
+     {
+      "instance_id": "q:g10m14s4-1-2:g004-overla",
+      "option": "B {5, 6, 11}",
+      "verdict": "IS_THAT_ERROR",
+      "why": "This is exactly circle B. It is the whole-set-not-intersection error and is wrong because 5 is not in A."
+     },
+     {
+      "instance_id": "q:g10m14s4-1-2:g004-overla",
+      "option": "C {2, 5, 6, 8, 11, 15, 18}",
+      "verdict": "IS_THAT_ERROR",
+      "why": "This is A union B exactly, which is the either-set-not-both error. It is wrong as an intersection."
+     },
+     {
+      "instance_id": "q:g10m14s4-1-2:g004-overla",
+      "option": "D {2, 6, 8, 11, 15, 18}",
+      "verdict": "IS_THAT_ERROR",
+      "why": "This is exactly circle A sorted. It is the whole-set-not-intersection error and is wrong because 2, 8, 15 and 18 are not in B."
+     },
+     {
+      "instance_id": "q:g10m14s4-1-2:g009-overla",
+      "option": "A {1, 3, 16}",
+      "verdict": "IS_THAT_ERROR",
+      "why": "This is exactly circle B. It is the whole-set-not-intersection error and is wrong because 16 is not in A."
+     },
+     {
+      "instance_id": "q:g10m14s4-1-2:g009-overla",
+      "option": "C {1, 3, 6, 10, 14, 16, 20}",
+      "verdict": "IS_THAT_ERROR",
+      "why": "This is A union B exactly, which is the either-set-not-both error. It is wrong as an intersection."
+     },
+     {
+      "instance_id": "q:g10m14s4-1-2:g009-overla",
+      "option": "D {1, 3, 6, 10, 14, 20}",
+      "verdict": "IS_THAT_ERROR",
+      "why": "This is exactly circle A sorted. It is the whole-set-not-intersection error and is wrong because 6, 10, 14 and 20 are not in B."
+     }
+    ],
+    "notes": "I recomputed all three instances by hand.\n\ng002 (S=1..16): A={6,7,8,10,11,12}, B={6,12,13}. A∩B={6,12}, which is option D.\ng004 (S=1..18): A={2,6,8,11,15,18}, B={5,6,11}. A∩B={6,11}, which is option A.\ng009 (S=1..20): A={1,3,6,10,14,20}, B={1,3,16}. A∩B={1,3}, which is option B.\n\nEach family has exactly one correct option. Every wrong option is exactly circle A, circle B or A∪B, so each one matches its misconception tag. Both whole-set options share one tag, which is fine because A and B are separate wrong picks. No wrong option is also correct.\n\nThe key is a letter that points to a roster-form set in ascending order, as the stem asks.\n\nThe stem is unambiguous. It says outright that an overlap number appears in both lists. Every number lies within the stated sample space. The numbers are realistic. The unsorted listing in the stem is deliberate for a diagram-reading task.\n\nEach worked solution checks B's elements against A, drops the one that is only in B, writes the intersection, then names the three distractor sets correctly. Every set quoted in step 4 matches the option text.\n\nNo defects found."
+   }
+  },
+  {
+   "family_id": "tpl:g10m14s4-1-2:shared-typed",
+   "spec_sha": "c73a7bde79c6ea5d8ce21e8612d4f25ba0ba67c9edd0123822b4c74773ee6173",
+   "answers": [
+    {
+     "instance_id": "q:g10m14s4-1-2:g001-shared",
+     "stem_sha": "646da3368eb758aa",
+     "answer": {
+      "plain": "[4, 8, 19, 24]"
+     },
+     "working": "A = {16,3,13,8,19,2,24,4,21}, B = {8,4,20,19,14,24,10}. Numbers in both lists: 4, 8, 19, 24."
+    },
+    {
+     "instance_id": "q:g10m14s4-1-2:g004-shared",
+     "stem_sha": "b503fb2f2e36c505",
+     "answer": {
+      "plain": "[10, 24, 25, 26]"
+     },
+     "working": "A = {24,23,25,10,7,26,22,27,8}, B = {15,25,26,1,6,24,10}. Numbers in both lists: 10, 24, 25, 26."
+    },
+    {
+     "instance_id": "q:g10m14s4-1-2:g010-shared",
+     "stem_sha": "4518f31afd029d04",
+     "answer": {
+      "plain": "[3, 5, 8, 17]"
+     },
+     "working": "A = {16,3,22,5,20,17,1,8,9}, B = {8,5,12,21,17,10,3}. Numbers in both lists: 3, 5, 8, 17."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "I checked all three instances by hand against their own stems. The family is typed-answer with no options, so there are no distractors to judge.\n\nIntersections:\n- g001: A = {16,3,13,8,19,2,24,4,21}, B = {8,4,20,19,14,24,10}. A∩B = {4,8,19,24}, which matches the key. The leftovers in B (10, 14, 20) are not in A.\n- g004: A = {24,23,25,10,7,26,22,27,8}, B = {15,25,26,1,6,24,10}. A∩B = {10,24,25,26}, which matches the key. The leftovers in B (1, 6, 15) are not in A.\n- g010: A = {16,3,22,5,20,17,1,8,9}, B = {8,5,12,21,17,10,3}. A∩B = {3,5,8,17}, which matches the key. The leftovers in B (10, 12, 21) are not in A.\n\nKey form: the stem asks for the elements from smallest to largest, comma-separated, without brackets. Each key is in that form, and each answer_check is the same set written as a list. The marker kind is \"values\" with the same string as the key.\n\nSolutions: all four steps are correct and consistent with the stem. The sorted B lists in step 2 are right. The \"B only\" elements in step 3 are exactly the B elements missing from A.\n\nContext: each stem is self-contained and unambiguous. All listed numbers lie inside S, and the circle-A list includes the overlap numbers, as the stem says. One minor point: \"A Venn diagram shows...\" is described in text, with no figure referenced. The lists make it fully answerable without one, so I don't count it as a defect."
+   }
+  },
+  {
+   "family_id": "tpl:g10m14s5-1-1:counts",
+   "spec_sha": "3ffdedb7935864fd001a0a1314b24608500ce13c7a6fe3c629cb126cd4d5a6ce",
+   "answers": [
+    {
+     "instance_id": "q:g10m14s5-1-1:g005-counts",
+     "stem_sha": "0b26b2d0560d3b9f",
+     "answer": {
+      "value": "0.35"
+     },
+     "working": "P(A∪B) = [n(A)+n(B)-n(A∩B)]/n(S) = (2+6-1)/20 = 7/20 = 0.35"
+    },
+    {
+     "instance_id": "q:g10m14s5-1-1:g007-counts",
+     "stem_sha": "9024f09784209a7b",
+     "answer": {
+      "value": "0.64"
+     },
+     "working": "P(A∪B) = (9+10-3)/25 = 16/25 = 0.64"
+    },
+    {
+     "instance_id": "q:g10m14s5-1-1:g010-counts",
+     "stem_sha": "83019846e3eb4a55",
+     "answer": {
+      "value": "0.70"
+     },
+     "working": "P(A∪B) = (5+4-2)/10 = 7/10 = 0.70"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family is a typed numeric answer with no options, so there are no distractors to judge. The packet shows only correct_answer, not answer_check, so I checked the keys against the stems and not against answer_check.\n\nI recomputed each instance with P(A∪B) = (n(A) + n(B) - n(A∩B)) / n(S).\n- g005: (2+6-1)/20 = 7/20 = 0.35. The key 0.35 is correct. Worked values 0.10, 0.30, 0.05 and 0.10+0.30-0.05 = 0.35 are all correct.\n- g007: (9+10-3)/25 = 16/25 = 0.64. The key 0.64 is correct. Worked values 0.36, 0.40, 0.12 and 0.36+0.40-0.12 = 0.64 are all correct.\n- g010: (5+4-2)/10 = 7/10 = 0.70. The key 0.70 is correct and has the two decimal places the stem asks for. Worked values 0.50, 0.40, 0.20 and 0.50+0.40-0.20 = 0.70 are all correct.\n\nEach key is a decimal rounded to two decimal places, which is what every stem asks for. Each division is exact, so rounding changes nothing.\n\nContext is consistent in all three instances. The overlap is no larger than either event (1≤2, 3≤9, 2≤4). The union is no larger than n(S) (7≤20, 16≤25, 7≤10). The numbers are realistic and the stems are unambiguous.\n\nThe solutions follow the inclusion-exclusion identity (the book's addition rule). They give a correct rationale for subtracting the overlap, convert each count to a probability, substitute and evaluate. The steps are in order and the arithmetic is correct. There is no wrong step to teach a child."
+   }
+  },
+  {
+   "family_id": "tpl:g10m14s5-1-1:listed",
+   "spec_sha": "82aa3cbb31f9063812ae2e37d9ba613b535d7f31135d15aaeac7792048fe0e62",
+   "answers": [
+    {
+     "instance_id": "q:g10m14s5-1-1:g002-listed",
+     "stem_sha": "b1a4c77440830174",
+     "answer": {
+      "value": "0.28"
+     },
+     "working": "n(S)=25. A has 5 elements, B has 4. A∩B={5,22}, so n(A∩B)=2. n(A∪B)=5+4-2=7. P=7/25=0.28."
+    },
+    {
+     "instance_id": "q:g10m14s5-1-1:g006-listed",
+     "stem_sha": "6be1996bd9693e8b",
+     "answer": {
+      "value": "0.07"
+     },
+     "working": "n(S)=100. A has 5 elements, B has 4. A∩B={9,80}, so n(A∩B)=2. n(A∪B)=5+4-2=7. P=7/100=0.07."
+    },
+    {
+     "instance_id": "q:g10m14s5-1-1:g007-listed",
+     "stem_sha": "3ad826ace3d8587f",
+     "answer": {
+      "value": "0.28"
+     },
+     "working": "n(S)=25. A has 5 elements, B has 4. A∩B={1,19}, so n(A∩B)=2. n(A∪B)=5+4-2=7. P=7/25=0.28."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family is numeric with no options, so there are no distractors to judge. I recomputed all three instances by hand. g002: A={5,12,18,19,22}, B={1,3,5,22}, S=1..25, A∩B={5,22}, so P(A∪B)=(5+4-2)/25=7/25=0.28. g006: S=1..100, A∩B={9,80}, so (5+4-2)/100=0.07. g007: S=1..25, A∩B={1,19}, so (5+4-2)/25=0.28. Every listed element lies inside its sample space. Each intersection in the worked solutions is correct. Every key is exact at two decimal places (0.28, 0.07, 0.28), so the rounding instruction does not distort it. The method is the book's addition rule P(A∪B)=P(A)+P(B)-P(A∩B), and each solution applies it step by step with correct arithmetic. The stems are unambiguous. The \"event sets\" wording is slightly stilted but clear. Two minor non-blocking observations. g002 and g007 have the same structure and the same key (0.28). The tier is labelled advanced, but the task is a routine count and inclusion-exclusion, so it is easy for that label."
+   }
+  },
+  {
+   "family_id": "tpl:g10m14s5-1-3:counts",
+   "spec_sha": "5bcb01c6a7e7e1fac52b9b88ee7023a9c1a6ed9b046610233701de11a090a7c3",
+   "answers": [
+    {
+     "instance_id": "q:g10m14s5-1-3:g005-counts",
+     "stem_sha": "a683956574a887d0",
+     "answer": {
+      "value": "0.04"
+     },
+     "working": "n(A∩B) = n(A)+n(B)−n(A∪B) = 5+3−6 = 2. P(A∩B) = 2/50 = 0.04."
+    },
+    {
+     "instance_id": "q:g10m14s5-1-3:g008-counts",
+     "stem_sha": "d84e5e763e43b0fb",
+     "answer": {
+      "value": "0.1"
+     },
+     "working": "n(A∩B) = 4+4−6 = 2. P(A∩B) = 2/20 = 0.1."
+    },
+    {
+     "instance_id": "q:g10m14s5-1-3:g010-counts",
+     "stem_sha": "ca073bc512c0e7eb",
+     "answer": {
+      "value": "0.2"
+     },
+     "working": "n(A∩B) = 7+10−12 = 5. P(A∩B) = 5/25 = 0.2."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family is numeric with no options, so there are no distractors to judge. I recomputed all three instances from the counts.\n\n- g005: n(A∩B)=5+3-6=2, so P=2/50=0.04. The key 0.04 matches. Every worked step is right: 0.10+0.06-0.12=0.04.\n- g008: n(A∩B)=4+4-6=2, so P=2/20=0.10. The key 0.10 matches. Every worked step is right: 0.20+0.20-0.30=0.10.\n- g010: n(A∩B)=7+10-12=5, so P=5/25=0.20. The key 0.20 matches. Every worked step is right: 0.28+0.40-0.48=0.20.\n\nThe counts are consistent in each instance. The union is at least as big as each event, and the intersection is no bigger than the smaller event. The stem asks for P(A∩B) as a decimal and the key is a decimal. The solutions use the book's addition rule P(A∪B)=P(A)+P(B)-P(A∩B), rearranged, with P(X)=n(X)/n(S).\n\nOne minor point: the keys carry trailing zeros (\"0.10\", \"0.20\"). Confirm answer_check, which I could not see, accepts 0.1 and 0.2 as equal; it should if it compares numerically. Step 2's wording (\"Make ... the subject, and we get:\") is slightly clumsy but correct."
+   }
+  },
+  {
+   "family_id": "tpl:g10m14s5-1-3:multiples",
+   "spec_sha": "dade39f2532b19dbec71aa5bf89144e755820479c32c7a034f7fdea1168bb803",
+   "answers": [
+    {
+     "instance_id": "q:g10m14s5-1-3:g002-multip",
+     "stem_sha": "e36bb06997b9b0c4",
+     "answer": {
+      "value": "0.24"
+     },
+     "working": "A number that is a multiple of both 2 and 4 is a multiple of lcm(2,4)=4. Multiples of 4 from 1 to 74: floor(74/4)=18. P = 18/74 = 0.2432..., which rounds to 0.24."
+    },
+    {
+     "instance_id": "q:g10m14s5-1-3:g004-multip",
+     "stem_sha": "f5b1b0281f8f81c2",
+     "answer": {
+      "value": "0.06"
+     },
+     "working": "A multiple of both 3 and 15 is a multiple of lcm(3,15)=15. Multiples of 15 from 1 to 113: floor(113/15)=7 (15 to 105). P = 7/113 = 0.0619..., which rounds to 0.06."
+    },
+    {
+     "instance_id": "q:g10m14s5-1-3:g008-multip",
+     "stem_sha": "574b26dc99789966",
+     "answer": {
+      "value": "0.16"
+     },
+     "working": "A multiple of both 3 and 6 is a multiple of lcm(3,6)=6. Multiples of 6 from 1 to 117: floor(117/6)=19 (6 to 114). P = 19/117 = 0.1624..., which rounds to 0.16."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family has three numeric typed-answer instances and no options, so there are no distractors to judge. I checked each key by hand.\n\n- g002: the multiples of both 2 and 4 are the multiples of 4. 18 x 4 = 72 <= 74 and 19 x 4 = 76 > 74, so n = 18. 18/74 = 0.2432, which rounds to 0.24. The key matches.\n- g004: the multiples of both 3 and 15 are the multiples of 15. 7 x 15 = 105 <= 113 and 8 x 15 = 120 > 113, so n = 7. 7/113 = 0.0619, which rounds to 0.06. The key matches.\n- g008: the multiples of both 3 and 6 are the multiples of 6. 19 x 6 = 114 <= 117 and 20 x 6 = 120 > 117, so n = 19. 19/117 = 0.1624, which rounds to 0.16. The key matches.\n\nNone of the three values sits near a rounding boundary. The stem asks for a decimal rounded to two decimal places, and every key is in that form. The stems are unambiguous: \"numbered 1 to N\" fixes the sample space, and \"both\" means the intersection. The worked solutions all follow the same seven steps (define A and B, show one number is a multiple of the other, reduce to multiples of the larger, count, divide, round). Every step is correct, with no arithmetic slips and no unjustified jumps.\n\nOne observation, not a defect. All three instances use nested pairs (2 and 4, 3 and 15, 3 and 6), so the intersection collapses to the multiples of the larger number. This makes the \"advanced\" tier fairly easy. The solutions justify the collapse explicitly (4 = 2 x 2, 15 = 3 x 5, 6 = 3 x 2), so they do not teach a wrong rule. If the learning outcome is about common multiples through the LCM, the family would be stronger with at least one non-nested pair such as 4 and 6. I could not check that against the learning outcome, because I may only open the one file."
+   }
+  },
+  {
+   "family_id": "tpl:g10m14s6-1-1:cricket-not",
+   "spec_sha": "8a3fe9a667f6402b57d1c9546b0afe2a50d739ee701adc76da97d17d2aac7805",
+   "answers": [
+    {
+     "instance_id": "q:g10m14s6-1-1:g004-cricke",
+     "stem_sha": "6ed39e5c12692061",
+     "answer": {
+      "choice": "D",
+      "choice_text": "Event A: the team does not lose. Event B: the team does not win."
+     },
+     "working": "Outcomes are win, loss, tie, exactly one occurs. A: tie vs win, exclusive. B: not a tie (win or loss) vs tie, exclusive. C: loss vs tie, exclusive. D: does not lose (win or tie) vs does not win (loss or tie), and both happen when the game is a tie, so not mutually exclusive."
+    },
+    {
+     "instance_id": "q:g10m14s6-1-1:g007-cricke",
+     "stem_sha": "6ed39e5c12692061",
+     "answer": {
+      "choice": "B",
+      "choice_text": "Event A: the game is not a tie. Event B: the team wins."
+     },
+     "working": "A: win vs not win, exclusive. B: not a tie (win or loss) vs win, and both happen when the team wins, so not mutually exclusive. C: win vs loss, exclusive. D: tie vs win, exclusive."
+    },
+    {
+     "instance_id": "q:g10m14s6-1-1:g010-cricke",
+     "stem_sha": "6ed39e5c12692061",
+     "answer": {
+      "choice": "B",
+      "choice_text": "Event A: the team loses. Event B: the game is not a tie."
+     },
+     "working": "A: loss vs tie, exclusive. B: loss vs not a tie (win or loss), and both happen when the team loses, so not mutually exclusive. C: tie vs win, exclusive. D: win vs not win, exclusive."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [
+     {
+      "instance_id": "q:g10m14s6-1-1:g004-cricke",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "{tie} and {win} share no outcome, so the pair is exclusive. Only a student who counts the unused outcome (loss) as a reason for 'not exclusive' picks it."
+     },
+     {
+      "instance_id": "q:g10m14s6-1-1:g004-cricke",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "{win, loss} and {tie} are disjoint, so the pair is exclusive. Both events can happen on their own, which is the 'both possible' slip."
+     },
+     {
+      "instance_id": "q:g10m14s6-1-1:g004-cricke",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "{loss} and {tie} are disjoint, so the pair is exclusive. Win is left over, which is the leftover-outcomes error."
+     },
+     {
+      "instance_id": "q:g10m14s6-1-1:g007-cricke",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "'Wins' and 'does not win' are complements, so the pair is exclusive. The 'both possible' label fits because there is no leftover outcome here."
+     },
+     {
+      "instance_id": "q:g10m14s6-1-1:g007-cricke",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "{win} and {loss} are disjoint, so the pair is exclusive. Tie is left over, which is the leftover-outcomes error."
+     },
+     {
+      "instance_id": "q:g10m14s6-1-1:g007-cricke",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "{tie} and {win} are disjoint, so the pair is exclusive. Loss is left over, which is the leftover-outcomes error."
+     },
+     {
+      "instance_id": "q:g10m14s6-1-1:g010-cricke",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "{loss} and {tie} are disjoint, so the pair is exclusive. Win is left over, which is the leftover-outcomes error."
+     },
+     {
+      "instance_id": "q:g10m14s6-1-1:g010-cricke",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "{tie} and {win} are disjoint, so the pair is exclusive. Loss is left over, which is the leftover-outcomes error."
+     },
+     {
+      "instance_id": "q:g10m14s6-1-1:g010-cricke",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "'Wins' and 'does not win' are complements, so the pair is exclusive. The 'both possible' label fits because there is no leftover outcome here."
+     }
+    ],
+    "notes": "I checked all three instances against the sample space {win, loss, tie}.\n\n- g004: the key D (not lose = {W,T}, not win = {L,T}) shares T. The other three pairs are disjoint.\n- g007: the key B (not a tie = {W,L}, wins = {W}) shares W. The other three pairs are disjoint.\n- g010: the key B (loses = {L}, not a tie = {W,L}) shares L. The other three pairs are disjoint.\n\nEach instance has exactly one non-exclusive pair, so no wrong option is also correct. The keys match the pair the stem asks for, and step 6 of each solution names the same pair as the key option.\n\nEach solution lists the outcomes covered by every pair, so the working is correct. The 'each event can happen, but not both in the same game' and 'in neither event, but that does not matter' lines address the two tagged misconceptions directly.\n\nTag fit: the 'leftover' tag sits only on non-complementary pairs, where an unused outcome exists. The 'both-possible' tag sits only on complementary pairs (win / not win, tie / not a tie), where no outcome is left over. The label scheme is consistent. A student with the 'both possible' error could in principle pick any pair, but the tag is reasonable for the complementary pairs.\n\nThe stem is clear and uses the book's cricket context. It adds 'a tie is neither a win nor a loss' to remove any ambiguity. The negative phrasing ('which is not mutually exclusive') is acceptable at the advanced tier. The answer positions vary (D, B, B)."
+   }
+  },
+  {
+   "family_id": "tpl:g10m14s6-1-1:deck-pair",
+   "spec_sha": "8a9df434c10ce26208b60a9fa382e6e19105ef31b83194e7ea2e46865f08cfdd",
+   "answers": [
+    {
+     "instance_id": "q:g10m14s6-1-1:g006-deck-p",
+     "stem_sha": "1c66ddbcb8acac30",
+     "answer": {
+      "choice": "D",
+      "choice_text": "Event A: the card is a black card. Event B: the card is a red card."
+     },
+     "working": "Mutually exclusive means the two events cannot both happen on one card. A: the queen of spades is both a spade and a queen, so not exclusive. B: every queen is a picture card, so not exclusive. C: the ace of diamonds is both a diamond and an ace, so not exclusive. D: a card cannot be both black and red, so exclusive."
+    },
+    {
+     "instance_id": "q:g10m14s6-1-1:g007-deck-p",
+     "stem_sha": "1c66ddbcb8acac30",
+     "answer": {
+      "choice": "B",
+      "choice_text": "Event A: the card is a club. Event B: the card is a diamond."
+     },
+     "working": "A: the king of spades is a king and black, so not exclusive. B: a card cannot be both a club and a diamond, so exclusive. C: the jack of hearts is red and a picture card, so not exclusive. D: every club is black, so not exclusive."
+    },
+    {
+     "instance_id": "q:g10m14s6-1-1:g008-deck-p",
+     "stem_sha": "1c66ddbcb8acac30",
+     "answer": {
+      "choice": "D",
+      "choice_text": "Event A: the card is a heart. Event B: the card is a black card."
+     },
+     "working": "A: the jack of diamonds is a diamond and a jack, so not exclusive. B: the ace of hearts is an ace and a heart, so not exclusive. C: every heart is red, so not exclusive. D: hearts are red, so a heart can never be black, so exclusive."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [
+     {
+      "instance_id": "q:g10m14s6-1-1:g006-deck-p",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Spade and queen: different features (suit vs rank), so a student wrongly calls them exclusive. The queen of spades is in both, so the option is definitely wrong."
+     },
+     {
+      "instance_id": "q:g10m14s6-1-1:g006-deck-p",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Queen and picture card: one event sits inside the other, the nested-events error. Every queen is a picture card, so the option is wrong."
+     },
+     {
+      "instance_id": "q:g10m14s6-1-1:g006-deck-p",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Diamond and ace: different features (suit vs rank). The ace of diamonds is in both, so the option is wrong."
+     },
+     {
+      "instance_id": "q:g10m14s6-1-1:g007-deck-p",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "King and black card: different features (rank vs colour). The king of spades is in both, so the option is wrong."
+     },
+     {
+      "instance_id": "q:g10m14s6-1-1:g007-deck-p",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Red card and picture card: different features (colour vs rank group). The jack of hearts is in both, so the option is wrong."
+     },
+     {
+      "instance_id": "q:g10m14s6-1-1:g007-deck-p",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Black card and club: the club event sits inside the black event. Every club is black, so the option is wrong."
+     },
+     {
+      "instance_id": "q:g10m14s6-1-1:g008-deck-p",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Diamond and jack: different features (suit vs rank). The jack of diamonds is in both, so the option is wrong."
+     },
+     {
+      "instance_id": "q:g10m14s6-1-1:g008-deck-p",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Ace and heart: different features (rank vs suit). The ace of hearts is in both, so the option is wrong."
+     },
+     {
+      "instance_id": "q:g10m14s6-1-1:g008-deck-p",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Heart and red card: the heart event sits inside the red event. Every heart is red, so the option is wrong."
+     }
+    ],
+    "notes": "All three instances (g006, g007, g008) pass. In each, exactly one pair has no card in common, and it matches the keyed letter: g006 D (black, red), g007 B (club, diamond), g008 D (heart, black). I checked every wrong pair against the 52-card deck and each shares at least one card (queen of spades, ace of diamonds, queen of clubs, 7 of clubs, king of spades, jack of hearts, ace of hearts, jack of diamonds), so no option is also correct. The two misconception tags fit their options. different-features-so-exclusive sits on pairs that mix suit, rank or colour. inside-so-exclusive sits on nested pairs: queen/picture card, club/black card and heart/red card. I could not open the misconception definitions, so I read inside-so-exclusive from its id as the nested-events error; that is the one residual uncertainty. The stem defines the colours, the suits and the picture cards, so no outside knowledge is needed, and there is no ambiguity about whether an ace counts as a picture card. The worked solutions are correct. Each states the definition, tests every pair with a named card in the overlap, and ends on the keyed pair. They name the same overlap cards used above and match the option text. The stems are identical across the three instances and only the option sets differ, which is acceptable for a family."
+   }
+  },
+  {
+   "family_id": "tpl:g10m14s6-1-1:ticket-trio",
+   "spec_sha": "0d0e1fc4ba0767a6ef4cd0f7d05b8d6225cadbfca514c92e280126eb8206ddb3",
+   "answers": [
+    {
+     "instance_id": "q:g10m14s6-1-1:g002-ticket",
+     "stem_sha": "0fea5b98eb3651db",
+     "answer": {
+      "value": "0"
+     },
+     "working": "A (multiples of 4) = {4,8,...,40}, B (multiples of 7) = {7,14,21,28,35}, C (<9) = {1..8}. A and B share 28, A and C share 4 and 8, B and C share 7. Every pair overlaps, so none are mutually exclusive."
+    },
+    {
+     "instance_id": "q:g10m14s6-1-1:g003-ticket",
+     "stem_sha": "919bd75e45be78cb",
+     "answer": {
+      "value": "1"
+     },
+     "working": "A (multiples of 8) = {8,16,24,32,40}, B (multiples of 4) = {4,8,...,40}, C (<6) = {1..5}. A and B share 8 (A is inside B), so not exclusive. A and C: smallest A is 8, C stops at 5, so no overlap and they are exclusive. B and C share 4, so not exclusive. Only 1 pair is mutually exclusive."
+    },
+    {
+     "instance_id": "q:g10m14s6-1-1:g009-ticket",
+     "stem_sha": "0edc02666ebeacd6",
+     "answer": {
+      "value": "1"
+     },
+     "working": "A (multiples of 9) = {9,18,27,36}, B (multiples of 4) = {4,8,...,40}, C (<7) = {1..6}. A and B share 36, so not exclusive. A and C: smallest A is 9, C stops at 6, so no overlap and they are exclusive. B and C share 4, so not exclusive. Only 1 pair is mutually exclusive."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "Numeric family with no options, so there are no distractors to check. I recomputed all three instances by listing the sets and found no errors.\n\ng002 (1 to 40, A = multiples of 4, B = multiples of 7, C = less than 9):\n- A and B share 28, A and C share 4 and 8, B and C share 7.\n- No pair is mutually exclusive, so the key 0 is right.\n- The sets as written in the solution are correct (B ends at 35).\n\ng003 (A = multiples of 8, B = multiples of 4, C = less than 6):\n- A and B share 8, and B and C share 4.\n- A starts at 8, so A and C share nothing. That is exactly one exclusive pair, so the key 1 is right.\n\ng009 (A = multiples of 9, B = multiples of 4, C = less than 7):\n- A and B share 36, which is at most 40, and B and C share 4.\n- A starts at 9, so A and C share nothing. The key 1 is right.\n- A = {9, 18, 27, 36} is correct.\n\nSolution method:\n- The \"smallest element\" test is valid for events of the form \"less than k\".\n- The LCM test is valid for \"multiple of a\" with \"multiple of b\", because a common ticket exists exactly when the LCM is at most N.\n- The steps are in order, the arithmetic is right, and the 0 + 0 + 0 and 0 + 1 + 0 totals match the keys.\n- The key is a plain count, which is what \"how many\" asks for. The stem is unambiguous: tickets start at 1, so no multiple-of-zero issue, and \"less than k\" gives 1 to k-1.\n\nMinor, not a defect: a count of 0 to 3 is easy to guess for a typed numeric answer, and the family only seems to produce 0 or 1. If this ships as a quiz item, mix the instances so that 2 and 3 also appear as keys."
+   }
+  },
+  {
+   "family_id": "tpl:g10m14s6-1-2:block-box",
+   "spec_sha": "8e0c36ebd3aa6476fbcb8f571e15ee30fc5ccc14abdc039b176d17730a4e6d70",
+   "answers": [
+    {
+     "instance_id": "q:g10m14s6-1-2:g004-block-",
+     "stem_sha": "38c81a2e7d22ffdb",
+     "answer": {
+      "value": "0.76"
+     },
+     "working": "Counts 15+12+23 = 50. Purple or white are mutually exclusive, so add: 15 + 23 = 38. P = 38/50 = 0.76."
+    },
+    {
+     "instance_id": "q:g10m14s6-1-2:g005-block-",
+     "stem_sha": "fac63c11fb8ea1a6",
+     "answer": {
+      "value": "0.94"
+     },
+     "working": "Counts 8+3+39 = 50. Purple or white are mutually exclusive, so add: 8 + 39 = 47. P = 47/50 = 0.94."
+    },
+    {
+     "instance_id": "q:g10m14s6-1-2:g008-block-",
+     "stem_sha": "43c96b8077603416",
+     "answer": {
+      "value": "0.74"
+     },
+     "working": "Counts 16+13+21 = 50. Purple or white are mutually exclusive, so add: 16 + 21 = 37. P = 37/50 = 0.74."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "Numeric family with no options, so there are no distractors to judge. I checked all three instances by hand.\n\n- g004: 15+12+23 = 50, and 15/50 + 23/50 = 38/50 = 0.76. Key 0.76 is correct.\n- g005: 8+3+39 = 50, and 8/50 + 39/50 = 47/50 = 0.94. Key 0.94 is correct.\n- g008: 16+13+21 = 50, and 16/50 + 21/50 = 37/50 = 0.74. Key 0.74 is correct.\n\nKey form: the stem asks for a decimal and each key is a decimal, with the fraction shown in the solution. I was not shown the answer_check field, so I could not confirm it matches the key.\n\nContext: the box of coloured blocks, one selected at random, is unambiguous. The colour counts add up to the stated total in every instance, and the numbers are realistic.\n\nSolution: each worked solution follows the same three steps.\n1. Find the single-colour probabilities.\n2. Say the events are mutually exclusive, so P(purple and white) = 0 and the addition rule reduces to P(purple) + P(white).\n3. Add and convert to a decimal.\n\nThe arithmetic is correct in all three instances, and the step 2 reasoning is sound, since a block cannot be both purple and white."
+   }
+  },
+  {
+   "family_id": "tpl:g10m14s6-1-2:sock-remainder",
+   "spec_sha": "01f8a5943a6e16b325fffdccf672d69acfdca8f4c0b52cdf9d4b8b74fb90c4fa",
+   "answers": [
+    {
+     "instance_id": "q:g10m14s6-1-2:g002-sock-r",
+     "stem_sha": "30208d0e95f0365e",
+     "answer": {
+      "plain": "3/4"
+     },
+     "working": "Black socks = 20 - (3 + 4 + 2) = 11. Pink or black = 4 + 11 = 15 out of 20. 15/20 simplifies (divide by 5) to 3/4."
+    },
+    {
+     "instance_id": "q:g10m14s6-1-2:g005-sock-r",
+     "stem_sha": "859dd9ad91799170",
+     "answer": {
+      "plain": "5/9"
+     },
+     "working": "Black socks = 36 - (8 + 9 + 8) = 11. Pink or black = 9 + 11 = 20 out of 36. 20/36 simplifies (divide by 4) to 5/9."
+    },
+    {
+     "instance_id": "q:g10m14s6-1-2:g007-sock-r",
+     "stem_sha": "1c6c0ebf1aaed61e",
+     "answer": {
+      "plain": "7/15"
+     },
+     "working": "Black socks = 60 - (14 + 3 + 18) = 25. Pink or black = 3 + 25 = 28 out of 60. 28/60 simplifies (divide by 4) to 7/15."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family is typed-answer (expression) and has no options, so there are no distractors to judge. I rechecked all three instances by hand.\n\n- g002: 20-3-4-2 = 11 black. P(pink) + P(black) = 4/20 + 11/20 = 15/20 = 3/4. The key and answer_check \"3/4\" match.\n- g005: 36-8-9-8 = 11 black. 9/36 + 11/36 = 20/36 = 5/9. The key and answer_check \"5/9\" match.\n- g007: 60-14-3-18 = 25 black. 3/60 + 25/60 = 28/60 = 7/15. The key and answer_check \"7/15\" match.\n\nEach key is a fraction in lowest terms, as the stem asks (15/20, 20/36 and 28/60 are fully reduced to 3/4, 5/9 and 7/15). Each LaTeX key is the same value as its answer_check.\n\nThe context is clear and the numbers are realistic: a drawer of 20 to 60 loose plain socks in four colours, with the black count found by subtraction. Black is always a positive count and the colours cannot overlap. Pink-or-black is unambiguous, and the solution correctly justifies adding the probabilities because the events are mutually exclusive.\n\nThe worked solutions follow the same four steps in every instance: find the remainder, give each single-event probability, justify mutual exclusivity, then add and simplify. The arithmetic is correct at each step."
+   }
+  },
+  {
+   "family_id": "tpl:g10m14s7-1-1:notboth-complement",
+   "spec_sha": "63cec4fb4915b242108c3b8788253e4c5b1aab64d43df44bd705ff5a5734c673",
+   "answers": [
+    {
+     "instance_id": "q:g10m14s7-1-1:g002-notbot",
+     "stem_sha": "ff6efaa0de60bb29",
+     "answer": {
+      "plain": "[4, 5, 8, 9, 12, 13, 14, 15, 17, 18]"
+     },
+     "working": "S = {4,...,18}. A ∩ B = elements in both A and B = {6, 7, 10, 11, 16}. The complement is every element of S not in A ∩ B: remove 6, 7, 10, 11, 16 from 4..18."
+    },
+    {
+     "instance_id": "q:g10m14s7-1-1:g003-notbot",
+     "stem_sha": "52ed96316c91cd46",
+     "answer": {
+      "plain": "[4, 5, 6, 7, 8, 14, 15, 16, 17, 18]"
+     },
+     "working": "S = {4,...,18}. A ∩ B = elements in both A and B = {9, 10, 11, 12, 13}. The complement is every element of S not in A ∩ B: remove 9, 10, 11, 12, 13 from 4..18."
+    },
+    {
+     "instance_id": "q:g10m14s7-1-1:g006-notbot",
+     "stem_sha": "f400bad1b8e1bdbe",
+     "answer": {
+      "plain": "[2, 5, 6, 7, 8, 9, 10, 11, 13, 16]"
+     },
+     "working": "S = {2,...,16}. A ∩ B = elements in both A and B = {3, 4, 12, 14, 15}. The complement is every element of S not in A ∩ B: remove 3, 4, 12, 14, 15 from 2..16."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "Typed-answer family with no options, so distractors_ok is true by default. I recomputed all three instances by hand.\n\ng002 (S = 4..18, 15 elements): A∩B = {6,7,10,11,16}. A only = {12,15,17}, B only = {9,13,18}, neither = {4,5,8,14}. These 5 + 3 + 3 + 4 elements make 15 in total. (A∩B)' = {4,5,8,9,12,13,14,15,17,18}, which matches the key and answer_check.\n\ng003 (S = 4..18): A∩B = {9,10,11,12,13}. A only = {4,15,17}, B only = {6,7,16}, neither = {5,8,14,18}. (A∩B)' = {4,5,6,7,8,14,15,16,17,18}, which matches the key and answer_check.\n\ng006 (S = 2..16, 15 elements): A∩B = {3,4,12,14,15}. A only = {5,7,9}, B only = {2,6,8}, neither = {10,11,13,16}. (A∩B)' = {2,5,6,7,8,9,10,11,13,16}, which matches the key and answer_check.\n\nKey form: the stem asks for the elements in increasing order, separated by commas. Each key is a comma-separated ascending list, and the answer_check list holds the same values in the same order.\n\nContext: all three stems are abstract set questions, with no word-problem realism to fault. A and B are subsets of S in every instance.\n\nSolutions: the five steps are correct and use the same partition method (intersection, then A only, B only and neither, then the union as the complement). The step 1 element count is correct in all three."
+   }
+  },
+  {
+   "family_id": "tpl:g10m14s7-1-1:single-complement",
+   "spec_sha": "191184381f2ef592dba7a9422eee8423fb1d6af172ee205cab9fac87e5620c01",
+   "answers": [
+    {
+     "instance_id": "q:g10m14s7-1-1:g002-single",
+     "stem_sha": "6c7b4feb19c7b582",
+     "answer": {
+      "choice": "D",
+      "choice_text": "$\\{1, 6, 9, 10, 11, 12, 13, 15\\}$"
+     },
+     "working": "Sample space S = {1,...,15}. B = {2,3,4,5,7,8,14}. B' is every element of S not in B: 1, 6, 9, 10, 11, 12, 13, 15. This matches option D. A is not used."
+    },
+    {
+     "instance_id": "q:g10m14s7-1-1:g004-single",
+     "stem_sha": "31f97787e214197e",
+     "answer": {
+      "choice": "C",
+      "choice_text": "$\\{1, 3, 4, 6, 7, 11, 12, 14\\}$"
+     },
+     "working": "S = {1,...,15}. B = {2,5,8,9,10,13,15}. B' is every element of S not in B: 1, 3, 4, 6, 7, 11, 12, 14. This matches option C. A is not used."
+    },
+    {
+     "instance_id": "q:g10m14s7-1-1:g005-single",
+     "stem_sha": "fab424ca233af7e5",
+     "answer": {
+      "choice": "A",
+      "choice_text": "$\\{1, 2, 3, 4, 7, 8, 9, 12\\}$"
+     },
+     "working": "S = {1,...,15}. B = {5,6,10,11,13,14,15}. B' is every element of S not in B: 1, 2, 3, 4, 7, 8, 9, 12. This matches option A. A is not used."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [
+     {
+      "instance_id": "q:g10m14s7-1-1:g002-single",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "{1,6,9,12,15} is exactly the elements outside both A and B (checked: A∪B={2,3,4,5,7,8,10,11,13,14}). That is (A∪B)', the 'outside all circles' error. It is not B', since 10, 11, 13 are not in B."
+     },
+     {
+      "instance_id": "q:g10m14s7-1-1:g002-single",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Identical to B, so it is the event listed instead of its complement. Wrong, since every element is in B."
+     },
+     {
+      "instance_id": "q:g10m14s7-1-1:g002-single",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Identical to A, so it is the other event taken as the complement. Wrong, since A contains 2, 4 and 7, which are in B."
+     },
+     {
+      "instance_id": "q:g10m14s7-1-1:g004-single",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Identical to B={2,5,8,9,10,13,15}, so it is the event listed instead of its complement. Wrong."
+     },
+     {
+      "instance_id": "q:g10m14s7-1-1:g004-single",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Identical to A={2,6,7,8,10,14}, so it is the other event taken as the complement. Wrong, since 2, 8 and 10 are in B."
+     },
+     {
+      "instance_id": "q:g10m14s7-1-1:g004-single",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "{1,3,4,11,12} is the elements in neither A nor B (A∪B={2,5,6,7,8,9,10,13,14,15}), the 'outside all circles' error. It omits 6, 7 and 14, which are in B', so it is wrong."
+     },
+     {
+      "instance_id": "q:g10m14s7-1-1:g005-single",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Identical to B={5,6,10,11,13,14,15}, so it is the event listed instead of its complement. Wrong."
+     },
+     {
+      "instance_id": "q:g10m14s7-1-1:g005-single",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "{2,3,4,7,12} is the elements in neither A nor B (A∪B={1,5,6,8,9,10,11,13,14,15}), the 'outside all circles' error. It omits 1, 8 and 9, which are in B', so it is wrong."
+     },
+     {
+      "instance_id": "q:g10m14s7-1-1:g005-single",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Identical to A={1,5,6,8,9,10}, so it is the other event taken as the complement. Wrong, since 5, 6 and 10 are in B."
+     }
+    ],
+    "notes": "I recomputed all three instances against the sample space {1..15}. g002: B'={1,6,9,10,11,12,13,15}, key D. g004: B'={1,3,4,6,7,11,12,14}, key C. g005: B'={1,2,3,4,7,8,9,12}, key A. Each key is the full complement of B, listed as a set, which is the form the stem asks for. The worked solutions are correct throughout. In each one, the A-only, neither, both and B-only partitions match the stem's sets, and the steps reach the key by taking everything not in B. All nine wrong options are distinct from the key and definitely wrong. Each equals B, A, or (A∪B)', matching its misconception tag exactly. No wrong option is untagged. The context is a bare set question with no word problem, realistic and unambiguous, and the A event is needed for the 'other event' distractor. The only blemish is wording: 'complementary event set' and 'A group of learners work with...' read slightly stiffly, but they are not ambiguous."
+   }
+  },
+  {
+   "family_id": "tpl:g10m14s7-1-1:unionset-complement",
+   "spec_sha": "ad12736fd95d2de0f68126d1a122d6586cf25615e2b6faca62fec77b06d668ee",
+   "answers": [
+    {
+     "instance_id": "q:g10m14s7-1-1:g003-unions",
+     "stem_sha": "c3a7fdc00ea4c520",
+     "answer": {
+      "plain": "[1, 3, 7, 9, 12]"
+     },
+     "working": "Sample space is the integers 1 to 15. A union B = {2,4,5,6,8,10,11,13,14,15}. The elements of 1 to 15 not in that union are 1, 3, 7, 9, 12."
+    },
+    {
+     "instance_id": "q:g10m14s7-1-1:g004-unions",
+     "stem_sha": "2c919a9719a6327a",
+     "answer": {
+      "plain": "[4, 6, 8, 11, 14]"
+     },
+     "working": "Sample space is the integers 1 to 15. A union B = {1,2,3,5,7,9,10,12,13,15}. The elements of 1 to 15 not in that union are 4, 6, 8, 11, 14."
+    },
+    {
+     "instance_id": "q:g10m14s7-1-1:g006-unions",
+     "stem_sha": "a6173a9ea1508a5a",
+     "answer": {
+      "plain": "[2, 3, 8, 11, 15]"
+     },
+     "working": "Sample space is the integers 1 to 15. A union B = {1,4,5,6,7,9,10,12,13,14}. The elements of 1 to 15 not in that union are 2, 3, 8, 11, 15."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family is typed-answer with no options, so there are no distractors to judge. I recomputed all three instances by hand over the sample space {1..15}.\n\n- g003: A∪B = {2,4,5,6,8,10,11,13,14,15} (10 elements), so (A∪B)' = {1,3,7,9,12}. This matches the key, and 10 + 5 = 15.\n- g004: A∪B = {1,2,3,5,7,9,10,12,13,15} (10 elements), so (A∪B)' = {4,6,8,11,14}. This matches the key.\n- g006: A∪B = {1,4,5,6,7,9,10,12,13,14} (10 elements), so (A∪B)' = {2,3,8,11,15}. This matches the key.\n\nKey form: the stem asks for the elements in increasing order, separated by commas, and each key is exactly that (for example \"1, 3, 7, 9, 12\"). It is the same set as answer_check \"[1, 3, 7, 9, 12]\". The \"expression\" answer type pairs with a marker of kind \"values\", which is a labelling quirk only. The checker presumably accepts a comma-separated list.\n\nContext: no word problem, and the wording is clear. A, B and the sample space are all stated, and every listed set is in increasing order. \"Complementary event set\" is slightly unusual phrasing, but it is unambiguous because the stem also gives (A∪B)'.\n\nSolutions: all three use the same three steps. Step 1 builds the union correctly for each instance. Step 2 defines the complement as in neither A nor B. Step 3 checks 1 to 15 against the union and reaches the key. Each union listing and each final set is correct."
+   }
+  },
+  {
+   "family_id": "tpl:g10m14s7-1-2:disjoint-event",
+   "spec_sha": "ebd740f418d74d5ad8eb665b8d822111ed23a4189d279751490e6216c1d4094f",
+   "answers": [
+    {
+     "instance_id": "q:g10m14s7-1-2:g001-disjoi",
+     "stem_sha": "88770c72db14d4f2",
+     "answer": {
+      "choice": "B",
+      "choice_text": "$\\{ 7, 9, 11 \\}$"
+     },
+     "working": "Mutually exclusive means no shared elements with A = {2, 4, 6, 10}. A: shares 2 and 4. B {7, 9, 11}: shares nothing. C {6, 8, 12}: shares 6. D {1, 5, 10}: shares 10. Only B is disjoint from A."
+    },
+    {
+     "instance_id": "q:g10m14s7-1-2:g004-disjoi",
+     "stem_sha": "e958a42d99699773",
+     "answer": {
+      "choice": "A",
+      "choice_text": "$\\{ 1, 8, 12 \\}$"
+     },
+     "working": "A = {3, 5, 6, 9}. A {1, 8, 12}: no common element. B {6, 10, 11}: shares 6. C {2, 3, 5}: shares 3 and 5. D {4, 7, 9}: shares 9. Only A is disjoint from event A."
+    },
+    {
+     "instance_id": "q:g10m14s7-1-2:g008-disjoi",
+     "stem_sha": "17e6bb6d4bbb5e81",
+     "answer": {
+      "choice": "C",
+      "choice_text": "$\\{ 4, 5, 9 \\}$"
+     },
+     "working": "A = {6, 7, 10, 11}. A {1, 8, 10}: shares 10. B {2, 3, 11}: shares 11. C {4, 5, 9}: no common element. D {6, 7, 12}: shares 6 and 7. Only C is disjoint from event A."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [
+     {
+      "instance_id": "q:g10m14s7-1-2:g001-disjoi",
+      "option": "A",
+      "verdict": "UNTAGGED_OK",
+      "why": "{2,3,4} shares 2 and 4 with A={2,4,6,10}, so it is not mutually exclusive."
+     },
+     {
+      "instance_id": "q:g10m14s7-1-2:g001-disjoi",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "{6,8,12} shares exactly one outcome (6) with A. A student who ignores a single shared outcome would pick it. It is definitely wrong."
+     },
+     {
+      "instance_id": "q:g10m14s7-1-2:g001-disjoi",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "{1,5,10} shares exactly one outcome (10) with A. It matches the one-shared-outcome-ignored error and is definitely wrong."
+     },
+     {
+      "instance_id": "q:g10m14s7-1-2:g004-disjoi",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "{6,10,11} shares exactly one outcome (6) with A={3,5,6,9}. It matches the tagged error and is definitely wrong."
+     },
+     {
+      "instance_id": "q:g10m14s7-1-2:g004-disjoi",
+      "option": "C",
+      "verdict": "UNTAGGED_OK",
+      "why": "{2,3,5} shares 3 and 5 with A, so it is not mutually exclusive."
+     },
+     {
+      "instance_id": "q:g10m14s7-1-2:g004-disjoi",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "{4,7,9} shares exactly one outcome (9) with A. It matches the tagged error and is definitely wrong."
+     },
+     {
+      "instance_id": "q:g10m14s7-1-2:g008-disjoi",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "{1,8,10} shares exactly one outcome (10) with A={6,7,10,11}. It matches the tagged error and is definitely wrong."
+     },
+     {
+      "instance_id": "q:g10m14s7-1-2:g008-disjoi",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "{2,3,11} shares exactly one outcome (11) with A. It matches the tagged error and is definitely wrong."
+     },
+     {
+      "instance_id": "q:g10m14s7-1-2:g008-disjoi",
+      "option": "D",
+      "verdict": "UNTAGGED_OK",
+      "why": "{6,7,12} shares 6 and 7 with A, so it is not mutually exclusive."
+     }
+    ],
+    "notes": "I checked all three instances set by set against S={1..12}. In each, exactly one option has an empty intersection with A: {7,9,11} in g001, {1,8,12} in g004 and {4,5,9} in g008. Each stored key matches that option, so there is no ALSO_CORRECT risk. Every option tagged one-shared-outcome-ignored shares exactly one outcome with A, which is what a student who overlooks a single overlap would choose. The untagged wrong options each share two outcomes, so they are plainly wrong. The stems ask for the event mutually exclusive with A, and the key answers that directly. The sample space and set sizes are realistic. The worked solutions define mutual exclusivity as an empty intersection, test every option in turn with the correct shared outcomes named, and end on the correct option. They refer to options by content rather than letter, so they hold under shuffled choices."
+   }
+  },
+  {
+   "family_id": "tpl:g10m14s7-1-2:pairs-count",
+   "spec_sha": "4f10bebd221ddc88608966f577d2848880a69fef9cf0e519607de78019afe8ac",
+   "answers": [
+    {
+     "instance_id": "q:g10m14s7-1-2:g001-pairs-",
+     "stem_sha": "e0c00fba85d6b961",
+     "answer": {
+      "value": "1"
+     },
+     "working": "S={1..11}. (i) A∩B={1}, not empty, so not mutually exclusive. (ii) A'={3,6,7,8,10,11}, B'={2,4,5,6,9,11}; A'∩B'={6,11}, not empty, so not mutually exclusive. (iii) An event and its complement never share an outcome, so (A∪B) and (A∪B)' are mutually exclusive. Count = 1."
+    },
+    {
+     "instance_id": "q:g10m14s7-1-2:g003-pairs-",
+     "stem_sha": "f17597a968ac3412",
+     "answer": {
+      "value": "3"
+     },
+     "working": "S={1..10}. (i) A∩B is empty (A and B share no element), so mutually exclusive. (ii) A and B partition S, so A'=B and B'=A, and A'∩B' is empty, so mutually exclusive. (iii) An event and its complement are always mutually exclusive. Count = 3."
+    },
+    {
+     "instance_id": "q:g10m14s7-1-2:g010-pairs-",
+     "stem_sha": "3bc99c63c72428a3",
+     "answer": {
+      "value": "3"
+     },
+     "working": "S={1..10}. (i) A∩B is empty, so mutually exclusive. (ii) A and B partition S, so A'=B and B'=A, and A'∩B' is empty, so mutually exclusive. (iii) An event and its complement are always mutually exclusive. Count = 3."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": false,
+    "distractors": [],
+    "notes": "The keys are all correct, but solution step 5 has a wording defect in g003 and g010, so I am rejecting on solution_ok.\n\nI recomputed each instance by hand.\n- g001: A∩B = {1}, so (i) is not exclusive. A∪B = {1,2,3,4,5,7,8,9,10}, so A'∩B' = {6,11}, so (ii) is not exclusive. (iii) is always exclusive. The count is 1, matching the key.\n- g003: A = {1,4,5,6,9} and B = {2,3,7,8,10} are disjoint and together cover S = 1..10. So (i) is exclusive, A'∩B' is empty so (ii) is exclusive, and (iii) is exclusive. The count is 3, matching the key.\n- g010: A = {2,3,4,7,9} and B = {1,5,6,8,10} are disjoint and together cover S = 1..10. The same reasoning gives 3, matching the key.\n\nThe step 2 to 4 checks in each solution are correct. There are no multiple-choice options (numeric answer), so distractors is empty and distractors_ok is vacuously true. The key is a bare whole number, which is the form the stem asks for. No answer_check was in the file, so I could not compare it with the key.\n\nDefect: step 5 is a fixed sentence reused in every instance: \"this pair is mutually exclusive, even though A and B may overlap.\" In g003 and g010, step 2 has just shown that A and B do not overlap, so the \"even though\" clause contradicts the worked solution. It is hedged with \"may\", so it is not strictly false, and I do not think it teaches a wrong fact. It is still confusing for a Grade 10 reader. The fix is to make the clause conditional: include it only when A∩B is non-empty, as in g001, and otherwise drop it or say that here (A∪B)' is empty.\n\nMinor, non-blocking points on context:\n- Pair (iii) is exclusive in every instance, so the question really tests (i) and (ii). That is acceptable for an advanced-tier conceptual item.\n- In g003 and g010 the complement (A∪B)' is the empty event and A∪B = S. The solution never says so. This is mathematically fine, but a student may wonder whether an empty event counts. The solution could name it, for example \"(A∪B)' = {}, the impossible event\"."
+   }
+  },
+  {
+   "family_id": "tpl:g10m14s7-1-3:neither-colour",
+   "spec_sha": "85787004d95fffde5467c89d9dd58e31e6d32cf4159203480566ef97eb16a34b",
+   "answers": [
+    {
+     "instance_id": "q:g10m14s7-1-3:g005-neithe",
+     "stem_sha": "89cb9a038db1ae0b",
+     "answer": {
+      "plain": "44/107"
+     },
+     "working": "Total = 23+25+40+19 = 107. Neither purple nor white = orange + pink = 25+19 = 44. P = 44/107. 107 is prime and does not divide 44, so it is already in simplest form."
+    },
+    {
+     "instance_id": "q:g10m14s7-1-3:g006-neithe",
+     "stem_sha": "2381a149816b5ca0",
+     "answer": {
+      "plain": "25/82"
+     },
+     "working": "Total = 33+13+24+12 = 82. Neither purple nor white = orange + pink = 13+12 = 25. P = 25/82. 25 = 5^2 and 82 = 2*41 share no factor, so it is already in simplest form."
+    },
+    {
+     "instance_id": "q:g10m14s7-1-3:g010-neithe",
+     "stem_sha": "9668c37406d86232",
+     "answer": {
+      "plain": "35/94"
+     },
+     "working": "Total = 32+25+27+10 = 94. Neither purple nor white = orange + pink = 25+10 = 35. P = 35/94. 35 = 5*7 and 94 = 2*47 share no factor, so it is already in simplest form."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "Typed-expression family with no multiple-choice options, so distractors_ok is true by default. I checked all three instances arithmetically.\n- g005: 23+25+40+19 = 107. Purple or white is 63, so the complement is 44/107. The orange plus pink check gives 25+19 = 44. 107 is prime, so 44/107 is in simplest form.\n- g006: 33+13+24+12 = 82. Purple or white is 57, so the complement is 25/82. The check gives 13+12 = 25. 82 = 2*41 and 25 = 5^2 share no factor, so it is simplest.\n- g010: 32+25+27+10 = 94. Purple or white is 59, so the complement is 35/94. The check gives 25+10 = 35. 94 = 2*47 and 35 = 5*7 share no factor, so it is simplest.\nKey form: the stem asks for a fraction in simplest form and each key is an irreducible fraction. Each LaTeX key matches its answer_check string (44/107, 25/82, 35/94) as the same expression.\nContext: the stem is unambiguous. The colours are mutually exclusive, one block is drawn at random, and the counts are realistic, so adding purple and white counts is valid.\nSolution: the steps count the total, take the complement of \"purple or white\", subtract from 1, then cross-check with orange plus pink. Every step is correct and ends on the key."
+   }
+  }
+ ]
+}
