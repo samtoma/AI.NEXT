@@ -12,6 +12,12 @@
  "summary": "42 owed decisions taken on the AI line's recommendation (40 terminology keep, 2 mapper disagreements placed on mapper 1); 2 rule failures (one objective, one item) resolved by orchestrator (AI) rulings: lo:g10m13s1-1-2 dropped, its 7 items and Ex13-7:27a placed on lo:g10m13s1-1-1; rule 4's minimum then relaxed for lesson g10m13s1-1 (one objective) by Samuel's decision of 2026-10-02: CHECK LATER",
  "decisions": [
   {
+   "key": "rule4:g10m13s1-1",
+   "decision": "CHECK LATER: allow one objective (rule 4)",
+   "detail": "g10m13s1-1: 1 objective(s); rule 4 wants 2–5. The drop of lo:g10m13s1-1-2 leaves lesson 13.1 with one objective, lo:g10m13s1-1-1.",
+   "basis": "SAMUEL'S DECISION of 2026-10-02 (decisions.md, decision 65, verbatim): \"Allow 1 after ruling, but keep a note so we can check later\". Applies only because the drop has a recorded ruling and the lesson had two objectives before it; recorded as `check_later` in objectives/g10-math/ch13.check.json and g10m13s1-1.json."
+  },
+  {
    "key": "term:area formula",
    "decision": "keep",
    "detail": "area formula: not in the Egyptian Prep-3 maths book's vocabulary",
@@ -268,12 +274,6 @@
    "decision": "drop objective",
    "detail": "'Find an expression for the area of a figure whose dimensions are algebraic terms (and π where a circle is involved), and write the answer in expanded form.' Only exercise evidence (7 items); one of the two rule failures of this chapter (rule 1).",
    "basis": "ORCHESTRATOR (AI) RULING, not a human stamp and not in the auto-pass rule set: section 13.1 never demonstrates writing an area as an algebraic expression. Its teaching text is the area definition (b04117), the formula list (b04119) and WE1 (a parallelogram's area by formula, numbers only); the skill appears only in exercises (Ex13-1:2-3, Ex13-7:2, 29a), which is one evidence kind (rule 1). Each of those items substitutes algebraic lengths into the same formulas and expands the product (Chapter 1's skill), so it practises lo:g10m13s1-1-1's formulas. Same precedent as chapters 1, 5, 7 and 12 (an objective the book never demonstrates is dropped, its items placed on the objective whose taught skill they apply). Exercise-only objectives policy is open with Samuel."
-  },
-  {
-   "key": "rule4:g10m13s1-1",
-   "decision": "allow one objective (CHECK LATER)",
-   "detail": "g10m13s1-1: 1 objective(s); rule 4 wants 2–5. The drop of lo:g10m13s1-1-2 leaves lesson 13.1 with one objective, lo:g10m13s1-1-1.",
-   "basis": "SAMUEL'S DECISION of 2026-10-02 (decisions.md, decision 65, verbatim): \"Allow 1 after ruling, but keep a note so we can check later\". Applies only because the drop has a recorded ruling and the lesson had two objectives before it; recorded as `check_later` in objectives/g10-math/ch13.check.json and g10m13s1-1.json."
   },
   {
    "key": "Ex13-1:2a",
