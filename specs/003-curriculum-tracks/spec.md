@@ -1261,6 +1261,17 @@ through the attempts route and confirm identical outcomes.
   decision. **G5 passing does not deploy or promote anything**: production still changes only on
   Samuel's explicit go, through CI.
 
+  *(Amended 2026-10-02, decision 65, answer 44.)* G1's pipeline rules are not requirements (decision 12;
+  `docs/specs/extraction-pipeline.md` §3.4), but one exception to them is a G1 decision this FR governs.
+  Rule 4 asks for 2 to 5 objectives per lesson; when G1 drops an objective of a lesson under a **recorded
+  ruling** and that leaves the lesson with exactly **one**, the chapter MAY pass, with a warning. It MUST NOT
+  pass with none left, with a lesson the finders themselves left with fewer than two, with a drop that has
+  no ruling, or over the maximum of 5. The exception MUST NOT pass unmarked: the gate record lists it
+  **first** among the decisions marked for Samuel's review, flagged "CHECK LATER", and the lesson's objective
+  file and the chapter's check carry a machine-readable `check_later` entry, so the console can show that the
+  lesson holds only by this decision. This says nothing about what an objective is or how many a lesson
+  should have.
+
 ### The whole-book outline (FR-4322…FR-4327) **[ADDED 2026-10-01, decision 59, answer 38; built]**
 
 > Samuel, 2026-10-01: *"I want the students to see all chapters as well not only 8! you did ingest the
