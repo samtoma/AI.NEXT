@@ -243,14 +243,37 @@ def _pair_commas(text: str, counts: Counter) -> str:
     return "".join(rows)
 
 
+_SET_ELEMENT_PAIR = re.compile(r"^(\s*\(\s*[-−]?\d+)\s*,\s*([-−]?\d+\s*\)\s*)$")
+
+
+def _set_pair_commas(text: str, counts: Counter) -> str:
+    r"""`\{(1,1);(1,2);(2,1)\}`: a set the book separates with `;` whose EVERY element is an integer pair `(a,b)` written with a
+    comma (Ex14-8:22a, Chapter 14) — the pairs' commas are written `, ` BEFORE the decimal rule reads `(1,1)` as the bracketed
+    decimal (1.1) and `;` becomes `, `: `\{(1, 1), (1, 2), (2, 1)\}`. Only when every element is such a pair — a set with any other
+    element (`\{0,5; 1,5\}`, `\{(1,5); 2\}`) keeps its commas for the decimal rule, as before."""
+    groups = [(o, c, semis) for o, c, semis in semicolon_groups(text) if text.startswith("\\{", o)]
+    for o, c, semis in sorted(groups, reverse=True):
+        cuts = [o + 2, *[p + 1 for p in semis]]
+        ends = [*semis, c - 1]            # c is the index of the closing `}`; the body ends before its backslash
+        parts = [text[a:b] for a, b in zip(cuts, ends)]
+        if not all(_SET_ELEMENT_PAIR.match(x) for x in parts):
+            continue
+        fixed = [_SET_ELEMENT_PAIR.sub(lambda m: f"{m.group(1)}, {m.group(2)}", x) for x in parts]
+        for (a, b), x in sorted(zip(zip(cuts, ends), fixed), reverse=True):
+            text = text[:a] + x + text[b:]
+        counts["pair_in_set"] += len(parts)
+    return text
+
+
 def normalise(text: str | None) -> tuple[str | None, Counter]:
-    """(normalised text, Counter of what changed: decimal, pair, pair_by_context; pair_ambiguous is listed)."""
+    """(normalised text, Counter of what changed: decimal, pair, pair_by_context, pair_in_set; pair_ambiguous is listed)."""
     counts: Counter = Counter()
     if not text:
         return text, counts
     text, n0 = _ALIGN_ENV.subn(lambda m: f"\\{m.group(1)}{{{_INLINE_ENV[m.group(2)]}}}", text)
     if n0:
         counts["aligned"] += n0 // 2 or 1
+    text = _set_pair_commas(text, counts)
     text = _pair_commas(text, counts)
     out, n1 = _DEC_LATEX.subn(".", text)
     out, n2 = _DEC_COMMA.subn(".", out)
