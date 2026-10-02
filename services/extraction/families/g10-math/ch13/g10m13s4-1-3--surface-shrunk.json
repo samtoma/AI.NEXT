@@ -1,0 +1,44 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m13s4-1-3:surface-shrunk",
+ "kind": "family",
+ "lo_id": "lo:g10m13s4-1-3",
+ "parent_question_id": "q:g10m13s4-1-3:ex13-7-17",
+ "source_page": 461,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "n",
+   "choice": [
+    2,
+    3,
+    4,
+    5,
+    6
+   ]
+  },
+  {
+   "name": "m",
+   "randint": [
+    3,
+    20
+   ]
+  },
+  {
+   "name": "S",
+   "let": "m * n ** 2"
+  }
+ ],
+ "constraints": [],
+ "stem": "The total surface area of a cone is ${=S}\\ \\text{cm}^{2}$. The length of its base radius and the length of its height are each made $\\frac{1}{{=n}}$ of their original size. By how many $\\text{cm}^{2}$ is the total surface area of the new cone smaller than the total surface area of the original cone?",
+ "answer": "S - m",
+ "solution": [
+  "Both the radius and the height are multiplied by the scale factor $k = \\frac{1}{{=n}}$. The cone gets smaller, so $k$ is a fraction, not {=n}.",
+  "When every length is multiplied by $k$, the surface area is multiplied by $k^{2}$. So $k^{2} = \\left(\\frac{1}{{=n}}\\right)^{2} = \\frac{1}{{=n ** 2}}$.",
+  "$A_{\\text{new}} = \\frac{1}{{=n ** 2}} \\times {=S} = {=m}\\ \\text{cm}^{2}$.",
+  "The surface area decreases by the original area minus the new area: ${=S} - {=m} = {=S - m}\\ \\text{cm}^{2}$."
+ ],
+ "notes": "Advanced counterpart of shrunk-volume for the area rule: the book's shrink twist (ex13-7-17, every length of a square pyramid a third, surface area scales by 1/9; ex13-6-2, the cone figure shows radius r, height H and slant height h) with a concrete original surface area and one extra step (the decrease). Radius and height of the cone are both scaled, so the slant height scales too and the cone stays similar to the original; the total surface area therefore scales by k^2. S is built as m * n^2 so the new area m and the answer S - m are whole numbers; largest S is 720. Typical wrong answers: reading the fraction as an enlargement (shrink-read-as-enlarge), S - S/n (scale-factor-applied-once), S - S/n^3 (wrong-power-for-measure), or giving the new area without subtracting. Numeric family, so no distractor options carry those ids."
+}

@@ -1,0 +1,48 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m13s3-1-2:slant-given",
+ "kind": "family",
+ "lo_id": "lo:g10m13s3-1-2",
+ "parent_question_id": "q:g10m13s3-1-2:ex13-4-2",
+ "source_page": 439,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "r",
+   "randint": [
+    2,
+    9
+   ]
+  },
+  {
+   "name": "h",
+   "randint": [
+    "r + 2",
+    16
+   ]
+  },
+  {
+   "name": "area",
+   "let": "pi * r * (r + h)"
+  },
+  {
+   "require": "abs(area * 10 - floor(area * 10) - 0.5) > 0.05",
+   "why": "keep the exact answer clear of a 1 dp rounding boundary so that a solver using a slightly different pi still rounds to the same value"
+  }
+ ],
+ "constraints": [
+  "h > r"
+ ],
+ "stem": "A right cone has a base radius of ${=r}$ cm and a slant height of ${=h}$ cm. Calculate the total surface area of the cone in cm$^2$, that is, the area of the circular base plus the area of the walls. Use the value of $\\pi$ on your calculator and round your answer to 1 decimal place.",
+ "answer": "fixed(area, 1)",
+ "solution": [
+  "The total surface area of a cone is the area of the circular base plus the area of the walls: $\\pi r^2 + \\pi r h$, where $r$ is the radius and $h$ is the slant height.",
+  "Area of the base: $\\pi r^2 = \\pi \\times {=r}^2 = {=r*r}\\pi$ cm$^2$.",
+  "Area of the walls, using the slant height: $\\pi r h = \\pi \\times {=r} \\times {=h} = {=r*h}\\pi$ cm$^2$.",
+  "Add the two areas: ${=r*r}\\pi + {=r*h}\\pi = {=r*r + r*h}\\pi \\approx {=fixed(area, 1)}$ cm$^2$.",
+  "The total surface area of the cone is {=fixed(area, 1)} cm$^2$."
+ ],
+ "notes": "Entry point of the skill: the slant height is GIVEN, so the student only has to add the base circle and the walls (the book's wording in we09: area of base plus area of walls; ex13-4-2 writes the same sum as pi*r*(r+h)). The book's ex13-4-2 also prints the vertical height as a spare datum; the basic tier leaves it out so only r and h appear. Answer is pi*r*(r+h) rounded to 1 dp, as in we09 and ex13-4-1c; the stem tells the student to use the calculator's pi, and a require drops the instances whose exact value sits within 0.005 of a rounding boundary (about 16 percent of the draws). h runs from r+2 to 16, so h > r always and the cone is geometrically valid. About 64 distinct (r, h) instances survive. Typical wrong answers, for the reviewer: leaving out the base (pi*r*h), or using 2*pi*r*h for the walls."
+}

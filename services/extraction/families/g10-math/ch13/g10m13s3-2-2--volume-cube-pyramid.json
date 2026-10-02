@@ -1,0 +1,45 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m13s3-2-2:volume-cube-pyramid",
+ "kind": "family",
+ "lo_id": "lo:g10m13s3-2-2",
+ "parent_question_id": "q:g10m13s3-2-2:ex13-7-20b",
+ "source_page": 462,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "s",
+   "randint": [
+    4,
+    12
+   ]
+  },
+  {
+   "name": "m",
+   "randint": [
+    2,
+    "min(8, s)"
+   ]
+  },
+  {
+   "name": "H",
+   "let": "3 * m"
+  }
+ ],
+ "constraints": [
+  "H <= 3 * s"
+ ],
+ "stem": "A solid is made by placing a square-based pyramid on top of a cube. The edges of the cube are ${=s}\\text{ cm}$ long. The base of the pyramid is exactly the top face of the cube, and the height of the pyramid itself (from its base up to its apex) is ${=H}\\text{ cm}$. Calculate the volume of the whole solid, in $\\text{cm}^{3}$.",
+ "answer": "s**3 + s**2*m",
+ "solution": [
+  "The solid is a cube with a pyramid on top of it, so its volume is the volume of the cube plus the volume of the pyramid.",
+  "Volume of the cube: $\\begin{aligned}V_{\\text{cube}}&=l^{3}\\\\&=({=s})^{3}\\\\&={=s**3}\\text{ cm}^{3}\\end{aligned}$",
+  "The base of the pyramid is the top face of the cube, a square with side ${=s}\\text{ cm}$. Volume of the pyramid: $\\begin{aligned}V_{\\text{pyramid}}&=\\frac{1}{3}b^{2}H\\\\&=\\frac{1}{3}({=s})^{2}({=H})\\\\&={=s**2*m}\\text{ cm}^{3}\\end{aligned}$",
+  "Total volume: $\\begin{aligned}V_{\\text{total}}&=V_{\\text{cube}}+V_{\\text{pyramid}}\\\\&={=s**3}+{=s**2*m}\\\\&={=s**3 + s**2*m}\\text{ cm}^{3}\\end{aligned}$",
+  "Therefore the total volume of the solid is ${=s**3 + s**2*m}\\text{ cm}^{3}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Entry point of the skill: the pyramid's own height is GIVEN, so the student only adds V_cube = s^3 and V_pyramid = (1/3)b^2 H, exactly the book's method in ex13-7-20b (which is advanced because it first asks for H = 22 - 7). H is drawn as 3m so the pyramid volume s^2*m is a whole number and the answer is an integer; m <= s keeps the pyramid no taller than 3 edge lengths. s = 7, m = 5 reproduces the book's 588. The stem is fully worded (no figure) and states that the height is the pyramid's own, so uses-total-height-for-pyramid cannot arise at this tier. The likeliest wrong answer is forgetting the 1/3 (s^3 + s^2*H)."
+}

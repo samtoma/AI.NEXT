@@ -1,0 +1,57 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m13s3-1-2:pythagoras-slant",
+ "kind": "family",
+ "lo_id": "lo:g10m13s3-1-2",
+ "parent_question_id": "q:g10m13s3-1-2:we09",
+ "source_page": 435,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "tab",
+   "let": "[[3, 4, 5], [4, 3, 5], [6, 8, 10], [8, 6, 10], [9, 12, 15], [12, 9, 15], [12, 16, 20], [16, 12, 20], [5, 12, 13], [12, 5, 13], [8, 15, 17], [15, 8, 17], [7, 24, 25], [10, 24, 26], [15, 20, 25]]"
+  },
+  {
+   "name": "i",
+   "randint": [
+    0,
+    "len(tab) - 1"
+   ]
+  },
+  {
+   "name": "r",
+   "let": "tab[i][0]"
+  },
+  {
+   "name": "hv",
+   "let": "tab[i][1]"
+  },
+  {
+   "name": "hs",
+   "let": "tab[i][2]"
+  },
+  {
+   "name": "area",
+   "let": "pi * r * (r + hs)"
+  },
+  {
+   "require": "abs(area * 10 - floor(area * 10) - 0.5) > 0.05",
+   "why": "keep the exact answer clear of a 1 dp rounding boundary so that a solver using a slightly different pi still rounds to the same value"
+  }
+ ],
+ "constraints": [
+  "hs * hs == r * r + hv * hv"
+ ],
+ "stem": "A right cone has a base radius of ${=r}$ cm and a vertical height of ${=hv}$ cm. Its slant height is not given. Calculate the total surface area of the cone in cm$^2$, that is, the area of the circular base plus the area of the walls. Use the value of $\\pi$ on your calculator and round your answer to 1 decimal place.",
+ "answer": "fixed(area, 1)",
+ "solution": [
+  "The slant height $h$ is the hypotenuse of a right-angled triangle whose other two sides are the radius and the vertical height. By the theorem of Pythagoras: $h^2 = r^2 + H^2 = {=r}^2 + {=hv}^2 = {=r*r + hv*hv}$, so $h = {=hs}$ cm.",
+  "Area of the base: $\\pi r^2 = \\pi \\times {=r}^2 = {=r*r}\\pi$ cm$^2$.",
+  "Area of the walls: $\\pi r h = \\pi \\times {=r} \\times {=hs} = {=r*hs}\\pi$ cm$^2$.",
+  "Total surface area = area of the base + area of the walls = ${=r*r}\\pi + {=r*hs}\\pi = {=r*r + r*hs}\\pi \\approx {=fixed(area, 1)}$ cm$^2$.",
+  "The total surface area of the cone is {=fixed(area, 1)} cm$^2$."
+ ],
+ "notes": "Follows the book's we09 (radius and vertical height given, slant height found with the theorem of Pythagoras, then base plus walls, rounded to 1 dp). we09 itself uses r = 4 and H = 14, where the slant height is the surd sqrt(212); here (r, vertical height, slant height) is always a Pythagorean triple so the slant height is a whole number and no solver can drift by rounding it halfway through. The skill is unchanged: the student must still recognise the right-angled triangle formed by the radius, the vertical height and the slant height. Both orientations (radius the shorter or the longer leg) are included so the radius is not always the small number. A require drops draws whose exact answer is within 0.005 of a 1 dp rounding boundary; all 15 table rows survive it (checked), giving 15 distinct instances. Typical wrong answers, for the reviewer: using the vertical height as the slant height (pi*r*(r+H)), or leaving out the base."
+}
