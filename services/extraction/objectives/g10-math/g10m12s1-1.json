@@ -15,8 +15,51 @@
   "part": null,
   "chapter_intro": false
  },
- "status": "rejected",
- "g1": null,
+ "status": "approved",
+ "g1": {
+  "approved_by": "auto-pass G1 (AI recommendation)",
+  "approved_at": "2026-10-02T06:39:11+00:00",
+  "verdicts": {
+   "auto": true,
+   "by": "auto-pass G1 (AI recommendation)",
+   "terminology": {
+    "congruent triangles": "keep",
+    "bisect": "keep"
+   },
+   "move_items": {
+    "Ex12-1:6b": "lo:g10m12s1-1-2",
+    "Ex12-1:6c": "lo:g10m12s1-1-2",
+    "Ex12-1:7b": "lo:g10m12s1-1-2",
+    "Ex12-1:7c": "lo:g10m12s1-1-2",
+    "Ex12-2:3a": "lo:g10m12s1-1-2",
+    "Ex12-2:7b": "lo:g10m12s1-1-2",
+    "Ex12-2:7c": "lo:g10m12s1-1-2"
+   },
+   "links": {},
+   "acknowledged": [],
+   "objectives": {
+    "lo:g10m12s1-1-3": {
+     "action": "drop",
+     "why": "orchestrator/AI ruling (G1 auto-pass, answer 37c; not a human stamp): section 12.1 never teaches calculating an unknown angle in a parallelogram as a skill of its own. Its teaching text is proving that a quadrilateral is a parallelogram (b04026, WE1) and the parallelogram's properties (the opposite-angles video note b04029; summary b04049-b04052). The objective's only valid evidence is the summary line 'Both pairs of opposite angles are equal' (b04051), a property lo:g10m12s1-1-2 already carries; the evidence check rejected both exercise quotes ('Find the value of y', 'Determine the value of x') as not showing the skill, and there is no worked example. Same precedent as chapters 1, 5 and 7 (an objective the book never demonstrates is dropped, its items placed on the objective whose taught skill they apply). Exercise-only objectives policy is open with Samuel."
+    }
+   },
+   "outside_items": {},
+   "rulings": [
+    {
+     "key": "lo:g10m12s1-1-3",
+     "decision": "drop objective",
+     "by": "orchestrator (AI), not a human",
+     "why": "orchestrator/AI ruling (G1 auto-pass, answer 37c; not a human stamp): section 12.1 never teaches calculating an unknown angle in a parallelogram as a skill of its own. Its teaching text is proving that a quadrilateral is a parallelogram (b04026, WE1) and the parallelogram's properties (the opposite-angles video note b04029; summary b04049-b04052). The objective's only valid evidence is the summary line 'Both pairs of opposite angles are equal' (b04051), a property lo:g10m12s1-1-2 already carries; the evidence check rejected both exercise quotes ('Find the value of y', 'Determine the value of x') as not showing the skill, and there is no worked example. Same precedent as chapters 1, 5 and 7 (an objective the book never demonstrates is dropped, its items placed on the objective whose taught skill they apply). Exercise-only objectives policy is open with Samuel."
+    },
+    {
+     "key": "Ex12-1:6b, Ex12-1:6c, Ex12-1:7b, Ex12-1:7c, Ex12-2:3a, Ex12-2:7b, Ex12-2:7c",
+     "decision": "place on lo:g10m12s1-1-2",
+     "by": "orchestrator (AI), not a human",
+     "why": "each finds an angle of a quadrilateral already given or proved to be a parallelogram (6b/6c, 7b/7c, Ex12-2:7b/7c are the parts after 'prove QRST is a parallelogram'; Ex12-2:3a writes all interior angles of parallelogram ABCD in terms of y): the working reads the parallelogram's properties (opposite angles equal, opposite sides parallel giving alternate or co-interior angles), which is lo-2's skill (b04029, summary b04050/b04051). Parallel-line angle facts are taught in chapter 7; the step that belongs here is the property, so lo-2, not lo-1 (proving it is a parallelogram)."
+    }
+   ]
+  }
+ },
  "source_run": {
   "file": "runs/g10-math/objectives/ch12-wf_6aa8c239-a2e.json",
   "sha256": "77dd142766a2f392a221a235fd4bdec711512a7d6f34ce6155e2bc11dc3b4acf",
@@ -229,14 +272,21 @@
     "Ex12-1:2",
     "Ex12-1:3",
     "Ex12-1:10",
+    "Ex12-1:6b",
+    "Ex12-1:6c",
+    "Ex12-1:7b",
+    "Ex12-1:7c",
     "Ex12-2:2a",
     "Ex12-2:2b",
+    "Ex12-2:3a",
     "Ex12-2:4a",
     "Ex12-2:4b",
     "Ex12-2:5b",
     "Ex12-2:6a",
     "Ex12-2:6b",
     "Ex12-2:6c",
+    "Ex12-2:7b",
+    "Ex12-2:7c",
     "Ex12-2:12c",
     "Ex12-2:13",
     "Ex12-2:14"
@@ -270,82 +320,6 @@
     "syllabus_ref": "12.1",
     "order_in_parent": 2
    }
-  },
-  {
-   "id": "lo:g10m12s1-1-3",
-   "provisional_id": "lo:g10m12s1-1-3",
-   "n": 3,
-   "statement": "Calculate unknown angle values in a quadrilateral shown to be a parallelogram, using the equal opposite angles and the angles in the given figure.",
-   "label": "Calculate angles in parallelogram",
-   "evidence": [
-    {
-     "kind": "summary",
-     "anchor": "b04051",
-     "printed_page": 409,
-     "quote": "Both pairs of opposite angles are equal.",
-     "contained": true,
-     "present": true,
-     "supports": true
-    }
-   ],
-   "evidence_dropped": [
-    {
-     "kind": "exercise",
-     "anchor": "Ex12-1:6b",
-     "printed_page": 407,
-     "quote": "Find the value of $y$",
-     "contained": true,
-     "present": true,
-     "supports": false,
-     "dropped": "the evidence check says it does not support the objective:"
-    },
-    {
-     "kind": "exercise",
-     "anchor": "Ex12-1:7c",
-     "printed_page": 407,
-     "quote": "Determine the value of $x$",
-     "contained": true,
-     "present": true,
-     "supports": false,
-     "dropped": "the evidence check says it does not support the objective:"
-    }
-   ],
-   "exercise_items": [
-    "Ex12-1:6b",
-    "Ex12-1:6c",
-    "Ex12-1:7b",
-    "Ex12-1:7c",
-    "Ex12-2:3a",
-    "Ex12-2:7b",
-    "Ex12-2:7c"
-   ],
-   "worked_examples": [],
-   "confidence": "agreed",
-   "from": {
-    "a": [
-     "A3"
-    ],
-    "b": [
-     "B4"
-    ]
-   },
-   "derivation": "derived",
-   "terms": [
-    "parallelogram",
-    "quadrilateral",
-    "opposite angles"
-   ],
-   "edited_at_g1": false,
-   "order_in_parent": 3,
-   "node": {
-    "id": "lo:g10m12s1-1-3",
-    "kind": "learning_objective",
-    "label": "Calculate angles in parallelogram",
-    "description": "Calculate unknown angle values in a quadrilateral shown to be a parallelogram, using the equal opposite angles and the angles in the given figure.",
-    "source_page": 409,
-    "syllabus_ref": "12.1",
-    "order_in_parent": 3
-   }
   }
  ],
  "pool_items": [
@@ -377,11 +351,8 @@
  ],
  "prerequisites": [],
  "checks": {
-  "ok": false,
-  "failures": [
-   "lo:g10m12s1-1-3: 1 kind(s) of valid evidence (summary); rule 1 needs two different kinds",
-   "lo:g10m12s1-1-3: no valid worked-example or exercise evidence; an objective the book never demonstrates or practises cannot be assessed"
-  ],
+  "ok": true,
+  "failures": [],
   "warnings": []
  },
  "outside_items": []

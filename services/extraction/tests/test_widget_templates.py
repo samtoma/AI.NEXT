@@ -1127,8 +1127,12 @@ class CoordinateNotationNormalised(unittest.TestCase):
     def test_the_chapter_5_template_the_audit_refused_is_now_clean(self):
         f = EX / "widgets" / "g10-math" / "ch05" / "g10m5s8-1-3--plot-point-from-ratio-and-quadrant.json"
         raw = json.loads(f.read_text())
-        self.assertEqual([x for x in re.findall(r"\([^()]*;[^()]*\)", json.dumps(raw["solution"]))], [])
+        import assemble_lesson_bundle as alb
+        left = [r for t in [raw["stem"], *raw["solution"]] for r in alb.residual_notation(t)]
+        self.assertEqual(left, [], "the coverage audit's own probe")
         self.assertIn("coordinate-notation", raw["notes"])
+        self.assertIn("(x, y)", " ".join(raw["solution"]))
+        self.assertEqual(GW._pair_notation(copy.deepcopy(raw)), [], "nothing of this rule is left to do")
 
 
 if __name__ == "__main__":
