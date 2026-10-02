@@ -290,6 +290,110 @@ def normalise_pairs(text: str | None) -> tuple[str | None, Counter]:
     return _semicolon_pairs(text, counts), counts
 
 
+# A set written as a list. The American course writes its comma with a space after it — `\{1, 2, 3, 4, 5, 6\}` — and so does
+# the app's `(x, y)`. Unspaced, `\{1,2,5,6\}` is the book's own South-African decimal comma to any reader of that notation
+# (1,2 = 1.2), and the coverage audit's `notation` check (RESIDUAL_DECIMAL) refuses it for that reason. Inside a set's braces
+# a comma IS a list separator, so there, and only there, the missing space is added (Grade 10 Chapter 14, 2026-10-02).
+_EXPLICIT_SPACE = re.compile(r"\\(?:q?quad|enspace|hspace|thinspace|medspace|thickspace|negthinspace)(?![A-Za-z])")
+_SET_BUILDER = ("\\mid", "\\vert", "\\colon", "|", ":")
+
+
+def _comma_wants_space(text: str, i: int) -> bool:
+    """The comma at `text[i]` has no space after it and is not one the author spaced (`,\\,`, `,\\ `, `,\\quad`) or
+    ended a list with (`,\\}`, `,)`)."""
+    nxt = text[i + 1:i + 2]
+    if not nxt or nxt.isspace() or nxt in "})]":
+        return False
+    if nxt == "\\":
+        after = text[i + 2:i + 3]
+        if after in ("", " ", ",", ";", ":", "!", ">", "}") or _EXPLICIT_SPACE.match(text, i + 1):
+            return False
+    return True
+
+
+def set_list_commas(text: str) -> list[int]:
+    r"""Positions of the unspaced commas that separate the elements of a maths set `\{ … \}`.
+
+    The same small scanner as `semicolon_groups` (a regex cannot balance the braces of `\frac{1}{2}`): `\{` opens a set
+    and `\}` closes it (`\left\{` and `\right\}` too), `(` opens an ordered pair or tuple that is an element of its set,
+    and a LaTeX group `{ … }` is transparent: its commas belong to it (`3{,}317`, `\text{a,b}`, a template's `{=hole}`) and
+    are never listed. What is left alone, so that it is still the audit's to see:
+      * any comma outside a set — a decimal comma (`0,75`) is the decimal rule's, a bare list, an interval `[1,2]`
+        or a pair `(1,2)` that is not an element of a set;
+      * an interval written inside a set (`[` … `]`), a set-builder (`\{x \mid x>2\}`: its commas are not a list's);
+      * a comma already followed by a space, an explicit TeX space, or a closing bracket;
+      * a set that does not close (unbalanced text is left alone)."""
+    out: list[int] = []
+    stack: list[list] = []          # [kind, commas, set-builder?]; kind in set | pair | square | group
+    i, n = 0, len(text)
+
+    def close(kind: str) -> None:
+        if not stack or stack[-1][0] != kind:
+            return
+        _, commas, builder = stack.pop()
+        if kind == "set":
+            if not builder:
+                out.extend(commas)
+        elif kind == "pair" and stack and stack[-1][0] in ("set", "pair"):
+            stack[-1][1].extend(commas)          # an element of the enclosing set: its commas are the set's to space
+
+    while i < n:
+        ch = text[i]
+        if ch == "\\":
+            if text.startswith("\\{", i):
+                stack.append(["set", [], False])
+                i += 2
+            elif text.startswith("\\}", i):
+                while stack and stack[-1][0] in ("group", "pair", "square"):
+                    stack.pop()                   # an unclosed bracket inside a set: the set still closes
+                close("set")
+                i += 2
+            else:
+                m = re.match(r"\\[A-Za-z]+|\\.", text[i:])
+                tok = m.group(0)
+                if tok in _SET_BUILDER:
+                    for fr in reversed(stack):
+                        if fr[0] == "set":
+                            fr[2] = True
+                            break
+                        if fr[0] != "pair":
+                            break
+                i += len(tok)
+            continue
+        if ch == "{":
+            stack.append(["group", [], False])
+        elif ch == "}":
+            close("group")
+        elif ch == "(":
+            stack.append(["pair", [], False])
+        elif ch == ")":
+            close("pair")
+        elif ch == "[":
+            stack.append(["square", [], False])
+        elif ch == "]":
+            close("square")
+        elif ch in "|:" and stack and stack[-1][0] == "set":
+            stack[-1][2] = True
+        elif ch == "," and stack and stack[-1][0] in ("set", "pair") and _comma_wants_space(text, i):
+            stack[-1][1].append(i)
+        i += 1
+    return sorted(out)
+
+
+def space_set_lists(text: str | None) -> tuple[str | None, Counter]:
+    r"""`text` with `, ` where a set's list elements were separated by a bare comma: `\{1,2,5,6\}` is `\{1, 2, 5, 6\}` and
+    `\{(2,6),(3,5)\}` is `\{(2, 6), (3, 5)\}`. Counter key `set_list`: how many commas. Whitespace in maths changes no word,
+    number or sign (KaTeX draws a comma's thin space either way). See `set_list_commas` for what is never touched."""
+    counts: Counter = Counter()
+    if not text or "\\{" not in text or "," not in text:
+        return text, counts
+    positions = set_list_commas(text)
+    if not positions:
+        return text, counts
+    counts["set_list"] += len(positions)
+    return "".join(", " if i in positions else c for i, c in ((i, c) for i, c in enumerate(text))).replace(",  ", ", "), counts
+
+
 _MATH_WRAPPED = re.compile(r"^\s*(\${1,2})([^$]+)\1\s*$")
 
 
