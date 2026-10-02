@@ -757,6 +757,7 @@ class Report:
         self.entities = 0                      # Chapter 5: numeric HTML character references the EPUB left in the text ("&#176;" for °)
         self.dollars = 0                       # Chapter 9: escaped dollar signs (`\\$`) the app's maths splitter cannot carry, written without a `$`
         self.nested_dollars = 0                # Chapter 13: a `$…$` inside a `\\text{}` inside maths (`\\text{cm$^{3}$}`), written in maths mode (`\\text{cm}^{3}`)
+        self.stray_environments = 0            # Chapter 13: a doubled `\\begin{align*}` closed by `\\end{answer}` (the book's markup slip), written as one block
         self.katex_errors: list[dict] = []     # A2: segments the app's KaTeX cannot parse (must be 0)
         self.forms_from_rules: list[dict] = [] # A9: marker forms set from the book's form rules
         self.visuals_dropped: list[dict] = []  # A8: a figure that draws the question's unknown
@@ -786,7 +787,7 @@ class Report:
                 "marker_check": self.marker_check, "held_by_marker": self.held_by_marker,
                 "marker_keys_unwrapped": self.keys_unwrapped,
                 "ambiguous_pairs_for_g2": sorted(set(self.ambiguous_pairs)), "latex_respaced": self.respaced,
-                "html_entities_unescaped": self.entities, "escaped_dollars_normalised": self.dollars, "nested_dollars_normalised": self.nested_dollars, "assignments_split": self.assignments_split, "katex_errors": self.katex_errors,
+                "html_entities_unescaped": self.entities, "escaped_dollars_normalised": self.dollars, "nested_dollars_normalised": self.nested_dollars, "stray_environments_repaired": self.stray_environments, "assignments_split": self.assignments_split, "katex_errors": self.katex_errors,
                 "forms_from_rules": self.forms_from_rules, "visuals_dropped": self.visuals_dropped,
                 "held_for_figure": self.held_for_figure, "captions_fixed": self.captions_fixed,
                 "book_pictures": "on" if self.book_pictures else "off (--no-book-pictures)",
@@ -947,6 +948,20 @@ _MATH_SEG = re.compile(r"\$[^$]+\$")
 
 
 _TEXT_CMD = re.compile(r"\\(?:text|textrm|textbf|textit|textsf|texttt|textnormal|mbox|hbox)(?![A-Za-z])\s*\{")
+
+
+_DOUBLED_ENV = re.compile(r"\\begin\{(aligned|align\*?)\}(\s*)\\begin\{\1\}((?:(?!\\(?:begin|end)\{).)*?)\\end\{answer\}(\s*)\\end\{\1\}", re.S)
+
+
+def repair_stray_environment(text: str) -> tuple[str, int]:
+    """(text, environments repaired). One solution of Chapter 13 (Exercise 13.4 question 1b) reaches us as the book's own markup slip, the closing line of an
+    aligned block written `\\begin{align*}\\begin{align*}…\\end{answer}\\end{align*}`: the opener doubled and the inner closer named `answer`, which is no environment.
+    KaTeX refuses it ("\\begin{aligned} matched by \\end{answer}"). It is one block: the doubled opener is dropped and `\\end{answer}` is the closer it stands for,
+    so the text is `\\begin{aligned}…\\end{aligned}`. Only that exact shape is touched (a doubled opener of the same environment, whose body holds no other
+    environment, closed by `\\end{answer}` and then the outer closer)."""
+    if not isinstance(text, str) or "\\end{answer}" not in text:
+        return text, 0
+    return _DOUBLED_ENV.subn(lambda m: f"\\begin{{{m.group(1)}}}{m.group(2)}{m.group(3)}{m.group(4)}\\end{{{m.group(1)}}}", text)
 
 
 def _group_end(text: str, start: int) -> int:
@@ -1124,6 +1139,8 @@ def unescape_entities(text: str) -> tuple[str, int]:
 def respace_tree(obj, report: Report):
     """Every student-facing string of a bundle or a lesson-content file, re-spaced (metadata keys skipped)."""
     if isinstance(obj, str):
+        obj, se = repair_stray_environment(obj)
+        report.stray_environments += se
         obj, nd = normalise_nested_dollars(obj)   # first: a `$…$` inside a `\\text{}` inside maths cuts the segment in two for every later pass and for the app
         report.nested_dollars += nd
         obj, d = normalise_dollars(obj)      # then: every later pass splits maths on `$…$`, which a `\\$` would cut in two
@@ -2029,6 +2046,7 @@ def main(argv: list[str] | None = None) -> int:
     print(f"  LaTeX: {rep['latex_respaced']} glued command(s) re-spaced, {rep['assignments_split']} assignment "
           f"chain(s) split"
           + (f", {rep['nested_dollars_normalised']} `$…$` inside a `\\text{{}}` written in maths mode" if rep["nested_dollars_normalised"] else "")
+          + (f", {rep['stray_environments_repaired']} doubled aligned block(s) repaired" if rep["stray_environments_repaired"] else "")
           + f"; the app's KaTeX: {len(rep['katex_errors'])} error(s)")
     for x in rep["katex_errors"][:12]:
         print(f"    KaTeX: {x['where']}: {x['segment'][:80]} — {x['why'][:100]}")
