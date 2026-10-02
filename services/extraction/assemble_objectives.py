@@ -64,7 +64,14 @@ THE RULES (§3.4), checked here
   3 terminology  the book's terms are kept. A term missing from the Egyptian maths book's own
                  words (the English-medium Prep-3 bundles), or one the reconciler flags, goes to
                  terminology-flags.json for G1. No statement is rewritten.
-  4 granularity  2 to 5 objectives per lesson; "understand"-type verbs are warned.
+  4 granularity  2 to 5 objectives per lesson; "understand"-type verbs are warned. ONE exception, for
+                 the minimum only (Samuel, 2026-10-02: "Allow 1 after ruling, but keep a note so we can
+                 check later"): a lesson left with 1 objective is a WARNING, not a failure, when G1's
+                 verdicts drop objective(s) and EVERY dropped one has a recorded ruling (verdicts
+                 `rulings`: key = the objective, decision "drop objective") and the lesson had 2 or more
+                 before the drop. Never with 0 left, never over 5, never without a ruling. The warning
+                 says so, and a machine-readable `check_later` entry goes into chNN.check.json and the
+                 lesson file's checks, for the console and the gate record.
   5 independence confidence is recomputed from which finders found each objective. None =
                  failure (invented). `single`, a finder objective dropped without a reason, and
                  an item the two mappers placed differently are decisions G1 owes. The
@@ -119,6 +126,9 @@ OBJECTIVES_VERSION = 1
 EVIDENCE_KINDS = ("heading", "intro", "summary", "definition", "worked_example", "exercise")
 PRACTICE_KINDS = ("worked_example", "exercise")
 MIN_OBJECTIVES, MAX_OBJECTIVES = 2, 5
+# Samuel, 2026-10-02 (spec 003 decisions.md, decision 65): "Allow 1 after ruling, but keep a note so we
+# can check later". Rule 4's MINIMUM is relaxed to a warning in exactly one case (rule4_check_later).
+RULE4_ALLOWED_ON = "2026-10-02"
 VAGUE_VERBS = ("understand", "know", "appreciate", "be aware", "learn about", "grasp",
                "comprehend")
 MATH_REF_RE = re.compile(r"⟦m:([0-9a-f]{32})⟧")
@@ -970,14 +980,41 @@ def id_map(slug: str, run_lesson: dict | None, verdicts: dict) -> dict[str, str 
     return out
 
 
+def rule4_check_later(slug: str, found: int, kept: int, dropped: list[str], verdicts: dict) -> dict | None:
+    """Rule 4's one exception (Samuel, 2026-10-02): a lesson left with fewer than MIN_OBJECTIVES (but at least
+    one) is a WARNING to check later, not a failure, when the shortfall is caused by objectives G1 drops and
+    EVERY dropped objective of the lesson has a recorded ruling (`rulings`: key = the objective's id in the run,
+    decision = "drop objective"). Without a ruling, with none left, with a lesson the reconciler itself left
+    short (no drop to blame), or over the maximum, it returns None and the rule fails exactly as before.
+    Returns the machine-readable `check_later` entry (its `warning` is the text the check records)."""
+    if not dropped or kept < 1 or kept >= MIN_OBJECTIVES or found < MIN_OBJECTIVES:
+        return None
+    ruled = {}
+    for r in verdicts.get("rulings") or []:
+        if isinstance(r, dict) and str(r.get("decision", "")).strip().lower() == "drop objective":
+            ruled.setdefault(str(r.get("key", "")).strip(), r)
+    if any(pid not in ruled for pid in dropped):
+        return None
+    rulings = [{"key": pid, "decision": "drop objective", "by": ruled[pid].get("by")} for pid in dropped]
+    warning = (f"{slug}: {kept} objective(s); rule 4 wants {MIN_OBJECTIVES}–{MAX_OBJECTIVES}. ALLOWED by Samuel's "
+               f"decision of {RULE4_ALLOWED_ON} (G1 dropped {', '.join(dropped)} under a recorded ruling; "
+               f"{found} were found, {kept} remain) and to be CHECKED LATER")
+    return {"key": f"check_later:rule4_min_objectives:{slug}", "kind": "rule4_min_objectives", "lesson": slug,
+            "objectives_found": found, "objectives_kept": kept, "dropped": list(dropped), "rulings": rulings,
+            "allowed_by": "Samuel", "allowed_on": RULE4_ALLOWED_ON, "status": "check_later",
+            "check": "Is this lesson really one learning objective, or should the dropped objective come back "
+                     "(a new S1 run for the lesson) or the lesson merge into a neighbour?",
+            "warning": warning}
+
+
 def evaluate_lesson(lp: dict, run_lesson: dict | None, idx: dict, ids: dict,
                     pool_items: dict[str, str | None], vocab: str, verdicts: dict) -> dict:
     """The rules for one lesson (pure). `pool_items`: distributed item -> final objective id."""
     slug = lp["slug"]
-    failures, warnings, decisions, terms = [], [], [], []
+    failures, warnings, decisions, terms, check_later = [], [], [], [], []
     rec = (run_lesson or {}).get("reconciled") or {}
     if not rec.get("objectives"):
-        return {"slug": slug, "objectives": [], "terms": [], "warnings": [], "decisions": [],
+        return {"slug": slug, "objectives": [], "terms": [], "warnings": [], "decisions": [], "check_later": [],
                 "failures": [f"{slug}: the reconciler returned nothing (re-run S1 for this lesson)"]}
     finders = run_lesson.get("finders") or {}
     ov = verdicts.get("objectives") or {}
@@ -1114,7 +1151,14 @@ def evaluate_lesson(lp: dict, run_lesson: dict | None, idx: dict, ids: dict,
         if w not in we_owner:
             warnings.append(f"{slug}: worked example {w} maps to no objective, so S3 cannot attach it")
     if not (MIN_OBJECTIVES <= len(objs) <= MAX_OBJECTIVES):
-        failures.append(f"{slug}: {len(objs)} objective(s); rule 4 wants {MIN_OBJECTIVES}–{MAX_OBJECTIVES}")
+        dropped = [lo_id(slug, i) for i, _ in enumerate(rec["objectives"], 1)
+                   if (ov.get(lo_id(slug, i)) or {}).get("action") == "drop"]
+        later = rule4_check_later(slug, len(rec["objectives"]), len(objs), dropped, verdicts)
+        if later:
+            warnings.append(later["warning"])
+            check_later.append(later)
+        else:
+            failures.append(f"{slug}: {len(objs)} objective(s); rule 4 wants {MIN_OBJECTIVES}–{MAX_OBJECTIVES}")
     order = {a: i for i, a in enumerate(lesson_wes + lesson_items)}
     pos = [order[o["_practice"]] for o in objs if o["_practice"] in order]
     if pos != sorted(pos):
@@ -1123,7 +1167,7 @@ def evaluate_lesson(lp: dict, run_lesson: dict | None, idx: dict, ids: dict,
         decisions.append({"key": f"term:{t['term'].lower()}", "kind": "terminology", "lesson": slug,
                           "objective": t["objective"], "detail": f"{t['term']}: {t['why']}"})
     return {"slug": slug, "objectives": objs, "failures": failures, "warnings": warnings,
-            "decisions": decisions, "terms": terms}
+            "decisions": decisions, "terms": terms, "check_later": check_later}
 
 
 def outside_verdicts(verdicts: dict) -> dict[str, str]:
@@ -1382,7 +1426,8 @@ def evaluate_chapter(packet: dict, run: dict, vocab: str, verdicts: dict | None 
     return {"lessons": lessons, "pool": pool, "ids": ids, "decisions": decisions, "links": links,
             "outside": outside, "mapper_empty_rows": empty_rows,
             "failures": [f for l in lessons for f in l["failures"]] + pool_fail + links["failures"],
-            "warnings": [w for l in lessons for w in l["warnings"]]}
+            "warnings": [w for l in lessons for w in l["warnings"]],
+            "check_later": [c for l in lessons for c in l["check_later"]]}
 
 
 def undecided(decisions: list[dict], verdicts: dict | None) -> list[dict]:
@@ -1448,7 +1493,9 @@ def lesson_record(book, packet: dict, lp: dict, ev: dict, run_ref: dict, status:
         "prerequisites": [{"src": k["src"], "dst": k["dst"], "signal": k["signal"], "evidence": k["evidence"],
                            "check": k["check"], "backward": k["backward"]}
                           for k in (links or []) if book_config.lesson_slug(k["dst"]) == lp["slug"]],
-        "checks": {"ok": not ev["failures"], "failures": ev["failures"], "warnings": ev["warnings"]},
+        # check_later: a rule that held only by a named exception of Samuel's (rule 4's minimum, 2026-10-02)
+        "checks": {"ok": not ev["failures"], "failures": ev["failures"], "warnings": ev["warnings"],
+                   "check_later": ev["check_later"]},
         # answer 15 (b): the end-of-chapter items in this lesson's scope G1 ruled outside the chapter's
         # objectives: kept out of practice, named here with who, when and why, and in the coverage audit
         "outside_items": [{"item": x["item"], "why": x["why"],
@@ -1665,7 +1712,8 @@ def assemble(book, packet_args: dict, run: dict, out_dir: Path, vocab: str,
     ch = f"ch{int(packet['n']):02d}"
     objs = [o for l in ev["lessons"] for o in l["objectives"]]
     check = {"chapter": packet["n"], "status": status, "failures": ev["failures"],
-             "warnings": ev["warnings"], "decisions": ev["decisions"], "undecided": owed,
+             "warnings": ev["warnings"], "check_later": ev["check_later"], "decisions": ev["decisions"],
+             "undecided": owed,
              "pool": ev["pool"], "source_run": run_ref, "outside_items": ev["outside"],
              "links": {"kept": ev["links"]["kept"], "dropped": ev["links"]["dropped"],
                        "outside_book": ev["links"]["outside_book"]},
@@ -2060,6 +2108,8 @@ def cmd_assemble(a) -> int:
           f"evidence item(s) dropped · {len(c['undecided'])} G1 decision(s) owed")
     for f in c["failures"]:
         print(f"  FAIL {f}")
+    for x in c["check_later"]:
+        print(f"  CHECK LATER {x['warning']}")
     print(f"  review page: {p['objectives'] / ('ch%02d.review.html' % c['chapter'])}")
     return 1 if c["failures"] else 0
 
@@ -2092,6 +2142,8 @@ def cmd_approve(a) -> int:
     print(f"G1 recorded for chapter {a.chapter} by {a.by}: {res['check']['counts']['objectives']} "
           f"objectives approved. Record the gate in the feature's decisions.md → Gate record, and "
           f"commit {p['objectives']}.")
+    for x in res["check"]["check_later"]:
+        print(f"  CHECK LATER {x['warning']}")
     return 0
 
 
