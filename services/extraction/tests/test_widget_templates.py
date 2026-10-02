@@ -1135,6 +1135,127 @@ class CoordinateNotationNormalised(unittest.TestCase):
         self.assertEqual(GW._pair_notation(copy.deepcopy(raw)), [], "nothing of this rule is left to do")
 
 
+class SetListNotationNormalised(unittest.TestCase):
+    r"""set-list-spacing (Grade 10 Chapter 14, 2026-10-02): `\{1,2,5,6\}` in a template's student-facing text is written
+    `\{1, 2, 5, 6\}` (assemble_lesson_bundle.space_set_lists), recorded in the notes. It is whitespace inside maths, so the
+    blind verifier's verdicts carry across it in a stem AS WELL AS a solution step; across any other stem edit they do not.
+    Holes, decimal commas, intervals and set-builders are never touched."""
+
+    def setUp(self):
+        self.tmp = Path(tempfile.mkdtemp(prefix="wt_"))
+        self.good = json.loads((TEMPLATES / "g10m8s3-1-2--gradient-line.json").read_text())
+
+    def tearDown(self):
+        shutil.rmtree(self.tmp)
+
+    build = CoordinateNotationNormalised.build
+    verdicts = CoordinateNotationNormalised.verdicts
+
+    def with_sets(self, stem=True, step=True):
+        raw = copy.deepcopy(self.good)
+        if stem:
+            raw["stem"] = self.good["stem"] + r" The sample space is $S=\{1,2,3,4,5,6\}$ and $A=\{(2,6),(3,5)\}$."
+        if step:
+            raw["solution"] = raw["solution"] + [r"So $A\cap B=\{6,12,18\}$ and the overlap holds 3."]
+        return raw
+
+    def test_a_set_in_the_stem_and_a_step_is_spaced_and_nothing_else_changes(self):
+        raw = self.with_sets()
+        out, done = GW.normalise_template(raw, graph())
+        self.assertEqual([x.split(":")[0] for x in done], ["set-list-spacing"])
+        self.assertIn("stem", done[0])
+        self.assertIn(f"solution step {len(raw['solution'])}", done[0])
+        self.assertTrue(out["stem"].endswith(r"$S=\{1, 2, 3, 4, 5, 6\}$ and $A=\{(2, 6), (3, 5)\}$."))
+        self.assertEqual(out["solution"][-1], r"So $A\cap B=\{6, 12, 18\}$ and the overlap holds 3.")
+        self.assertEqual(out["solution"][:-1], self.good["solution"])
+        self.assertEqual({k: v for k, v in out.items() if k not in ("stem", "solution", "notes", "verified_as")},
+                         {k: v for k, v in self.good.items() if k not in ("stem", "solution", "notes")})
+        self.assertIn(f"{GW.NORMALISED}: set-list-spacing", out["notes"])
+        self.assertTrue(out["notes"].startswith(self.good["notes"]), "appended, not rewritten")
+        self.assertEqual(out["verified_as"]["sha"], GW.template_sha(raw))
+        self.assertEqual(GW.normalise_template(out, graph())[1], [], "a fixpoint")
+        templates, qs = self.build(out)
+        self.assertEqual(GW.check_questions(copy.deepcopy(qs), graph())[0], [])
+        import assemble_lesson_bundle as alb
+        shown = [qs[0]["stem"]] + [x["text_md"] for q in qs for x in q["canonical_solution"]]
+        self.assertEqual([r for t in shown for r in alb.residual_notation(t)], [], "the coverage audit's own probe")
+
+    def test_the_verdicts_carry_across_the_spacing_in_a_stem_and_a_step(self):
+        raw = self.with_sets()
+        _, old_qs = self.build(raw)
+        verify = self.verdicts(old_qs, GW.template_sha(raw))
+        out, _ = GW.normalise_template(raw, graph())
+        templates, qs = self.build(out)
+        self.assertNotEqual(templates[0]["_sha"], GW.template_sha(raw))
+        self.assertEqual(GW.apply_verdicts(templates, qs, [verify]), ({out["id"]}, {}))
+        self.assertEqual(GW.carried_verification(templates, qs), ({out["id"]: GW.template_sha(raw)}, {}))
+
+    def test_the_verdicts_do_not_carry_across_any_other_stem_or_step_edit(self):
+        raw = self.with_sets()
+        _, old_qs = self.build(raw)
+        verify = self.verdicts(old_qs, GW.template_sha(raw))
+        for key, edit in (("stem", lambda t: t.replace("sample space", "outcome space")),
+                          ("stem", lambda t: t.replace("{1, 2,", "{1, 3,")),            # a number moved: not whitespace
+                          ("solution", lambda t: t.replace("holds 3", "holds 4"))):
+            out, _ = GW.normalise_template(raw, graph())
+            if key == "stem":
+                out["stem"] = edit(out["stem"])
+            else:
+                out["solution"][-1] = edit(out["solution"][-1])
+            templates, qs = self.build(out)
+            accepted, rejected = GW.apply_verdicts(templates, qs, [verify])
+            self.assertEqual(accepted, set(), key)
+            self.assertIn("since verification", " ".join(rejected[out["id"]]), key)
+
+    def test_a_pair_in_the_stem_still_means_a_new_verification_even_beside_a_set(self):
+        raw = self.with_sets(step=False)
+        raw["stem"] = self.good["stem"].replace("A({=x1}, {=y1})", "A({=x1}; {=y1})") + r" Use $\{1,2\}$."
+        _, old_qs = self.build(raw)
+        verify = self.verdicts(old_qs, GW.template_sha(raw))
+        out, done = GW.normalise_template(raw, graph())
+        self.assertEqual([x.split(":")[0] for x in done], ["coordinate-notation", "set-list-spacing"])
+        templates, qs = self.build(out)
+        self.assertEqual(GW.apply_verdicts(templates, qs, [verify])[0], set(), "the pair rewrite is not whitespace")
+
+    def test_a_solution_step_with_both_notations_keeps_the_verdicts(self):
+        raw = copy.deepcopy(self.good)
+        raw["solution"] = raw["solution"] + [r"Plot $(x; y)$ with $S=\{(1,2);(3,4)\}$ and $\{1,2\}$."]
+        _, old_qs = self.build(raw)
+        verify = self.verdicts(old_qs, GW.template_sha(raw))
+        out, done = GW.normalise_template(raw, graph())
+        self.assertEqual([x.split(":")[0] for x in done], ["coordinate-notation", "set-list-spacing"])
+        self.assertEqual(out["solution"][-1], r"Plot $(x, y)$ with $S=\{(1, 2), (3, 4)\}$ and $\{1, 2\}$.")
+        templates, qs = self.build(out)
+        self.assertEqual(GW.apply_verdicts(templates, qs, [verify]), ({out["id"]}, {}))
+
+    def test_holes_and_everything_that_is_not_a_set_list_are_not_touched(self):
+        untouched = [r"Join $\{{=x1},{=y1}\}$" and "A hole {=x1},{=y1} outside a set", "0,75 of it and R 3,50", "the interval $[1,2]$ and $(1,2)$",
+                     r"$\{x \mid x \in [1,2]\}$", r"$3{,}5$ and $\text{a,b}$", r"$\{1, 2, 3\}$", "(sin, cos)"]
+        for src in untouched:
+            raw = dict(self.good, solution=[src])
+            self.assertEqual(GW.normalise_template(raw, graph()), (raw, []), src)
+        # a hole between set elements: the space goes between, the holes stay as written
+        out, done = GW.normalise_template(dict(self.good, solution=[r"The set $\{{=x1},{=y1}\}$ has two elements."]), graph())
+        self.assertEqual(out["solution"], [r"The set $\{{=x1}, {=y1}\}$ has two elements."])
+        self.assertEqual([x.split(":")[0] for x in done], ["set-list-spacing"])
+
+    def test_instance_and_spec_strings_are_covered(self):
+        raw = copy.deepcopy(self.good)
+        raw["instances"] = [{"x1": -2, "y1": -4, "x2": 2, "y2": 4, "note": r"$\{1,2\}$"}]
+        out, done = GW.normalise_template(raw, graph())
+        self.assertEqual(out["instances"][0]["note"], r"$\{1, 2\}$")
+        self.assertIn("instances[0].note", done[0])
+
+    def test_the_chapter_14_templates_the_audit_refused_are_now_clean(self):
+        import assemble_lesson_bundle as alb
+        for name, want in (("venn-union-die", r"\{1, 2, 5, 6\}"), ("venn-union-discs", r"\{6, 12, 18\}")):
+            raw = json.loads((EX / "widgets" / "g10-math" / "ch14" / f"g10m14s5-1-1--{name}.json").read_text())
+            texts = [raw["stem"], *raw["solution"]]
+            self.assertIn(want, " ".join(texts))
+            self.assertEqual([r for t in texts for r in alb.residual_notation(t)], [], name)
+            self.assertIn("set-list-spacing", raw["notes"])
+            self.assertEqual(GW._set_notation(copy.deepcopy(raw)), [], "nothing of this rule is left to do")
+
 if __name__ == "__main__":
     with contextlib.redirect_stdout(io.StringIO()):
         unittest.main()
