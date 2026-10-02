@@ -1295,6 +1295,16 @@ are never touched) is unchanged; it now runs wherever the book's notation can ar
 | a figure's drawn text | `_norm_spec`, keys `SPEC_TEXT_KEYS = ("label", "text")` (a geo_scene `label` element draws `text`: `components/viz/GeoScene.tsx`) | the full `normalise`, as for `label` before |
 | a widget template's stem, solution, instances, spec | `generate_widget_questions.normalise_template`, pipeline normalisation `coordinate-notation`, recorded in the template's `notes` | `normalise_pairs`, `{=…}` holes never touched; `h_s7_author` runs it on every new template, before the blind verifier |
 
+- **A set's list commas (2026-10-02, Chapter 14): `\{1,2,5,6\}` is written `\{1, 2, 5, 6\}`.** The American course writes a list's comma with a space, and an
+  unspaced `1,2` is the book's own decimal comma to the `notation` check (`RESIDUAL_DECIMAL`), which refused Chapter 14's two Venn templates (10 spans: a
+  stem and two solution steps). A second pipeline normalisation, `set-list-spacing` (`generate_widget_questions.normalise_template`, recorded in the notes
+  beside `coordinate-notation`; `assemble_lesson_bundle.space_set_lists` / `set_list_commas`), adds the missing space after a comma **inside a maths set
+  `\{ … \}` and the ordered pairs inside it** (`\{(2,6),(3,5)\}` is `\{(2, 6), (3, 5)\}`), and nowhere else: a decimal comma (`0,75`), an interval, a
+  set-builder (`\mid`, `|`, `:`), a `{=…}` hole, a LaTeX group (`{,}`), a comma the author spaced (`,\,`) and an unclosed set are never touched. It is whitespace
+  inside maths, so unlike the pair rule the verdicts carry across it in a **stem** as well as a solution step (`verified_version`, `carried_verification`);
+  a stem the pair rule rewrites, or any other stem edit, still means the verifier must run again. `h_s7_author` applies it to every new template.
+  The book path needs no new rule: the book writes a set with `;` (`\{1; 2; 3\}` is `\{1, 2, 3\}`, already spaced) and no assembled bundle, lesson-content file,
+  generated family question or other chapter's widget carries the pattern (scan, 2026-10-02: 0 outside the Chapter 14 templates).
 - **A solution step keeps the blind verifier's verdicts across it** (it never sees the solution): `verified_version` treats a step that equals
   `normalise_pairs` of the verified one as the same step, and the template carries `verified_as` (`carried_verification` in the widget bundle).
   A stem, instance or spec it rewrites was READ by the verifier, so that template is verified again. Apply it by hand to a template already
