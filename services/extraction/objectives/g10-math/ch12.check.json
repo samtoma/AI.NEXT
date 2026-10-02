@@ -1,0 +1,255 @@
+{
+ "chapter": 12,
+ "status": "rejected",
+ "failures": [
+  "lo:g10m12s1-1-3: 1 kind(s) of valid evidence (summary); rule 1 needs two different kinds",
+  "lo:g10m12s1-1-3: no valid worked-example or exercise evidence; an objective the book never demonstrates or practises cannot be assessed"
+ ],
+ "warnings": [],
+ "decisions": [
+  {
+   "key": "term:congruent triangles",
+   "kind": "terminology",
+   "lesson": "g10m12s1-1",
+   "objective": "lo:g10m12s1-1-1",
+   "detail": "congruent triangles: not in the Egyptian Prep-3 maths book's vocabulary"
+  },
+  {
+   "key": "term:bisect",
+   "kind": "terminology",
+   "lesson": "g10m12s1-1",
+   "objective": "lo:g10m12s1-1-1",
+   "detail": "bisect: 'Diagonals bisect each other' means each diagonal cuts the other into two equal parts; some curricula phrase this as 'cut each other in half'."
+  }
+ ],
+ "undecided": [
+  {
+   "key": "term:congruent triangles",
+   "kind": "terminology",
+   "lesson": "g10m12s1-1",
+   "objective": "lo:g10m12s1-1-1",
+   "detail": "congruent triangles: not in the Egyptian Prep-3 maths book's vocabulary"
+  },
+  {
+   "key": "term:bisect",
+   "kind": "terminology",
+   "lesson": "g10m12s1-1",
+   "objective": "lo:g10m12s1-1-1",
+   "detail": "bisect: 'Diagonals bisect each other' means each diagonal cuts the other into two equal parts; some curricula phrase this as 'cut each other in half'."
+  }
+ ],
+ "pool": {
+  "Ex12-2:1": "lo:g10m12s1-1-1",
+  "Ex12-2:2a": "lo:g10m12s1-1-2",
+  "Ex12-2:2b": "lo:g10m12s1-1-2",
+  "Ex12-2:2c": "lo:g10m12s1-1-1",
+  "Ex12-2:3a": "lo:g10m12s1-1-3",
+  "Ex12-2:3b": "lo:g10m12s1-1-1",
+  "Ex12-2:4a": "lo:g10m12s1-1-2",
+  "Ex12-2:4b": "lo:g10m12s1-1-2",
+  "Ex12-2:5a": "lo:g10m12s1-1-1",
+  "Ex12-2:5b": "lo:g10m12s1-1-2",
+  "Ex12-2:6a": "lo:g10m12s1-1-2",
+  "Ex12-2:6b": "lo:g10m12s1-1-2",
+  "Ex12-2:6c": "lo:g10m12s1-1-2",
+  "Ex12-2:7a": "lo:g10m12s1-1-1",
+  "Ex12-2:7b": "lo:g10m12s1-1-3",
+  "Ex12-2:7c": "lo:g10m12s1-1-3",
+  "Ex12-2:8": "lo:g10m12s1-1-1",
+  "Ex12-2:9": "lo:g10m12s1-1-1",
+  "Ex12-2:10": "lo:g10m12s1-1-1",
+  "Ex12-2:11": "lo:g10m12s1-1-1",
+  "Ex12-2:12a": "lo:g10m12s1-1-1",
+  "Ex12-2:12b": "lo:g10m12s1-1-1",
+  "Ex12-2:12c": "lo:g10m12s1-1-2",
+  "Ex12-2:13": "lo:g10m12s1-1-2",
+  "Ex12-2:14": "lo:g10m12s1-1-2"
+ },
+ "source_run": {
+  "file": "runs/g10-math/objectives/ch12-wf_6aa8c239-a2e.json",
+  "sha256": "77dd142766a2f392a221a235fd4bdec711512a7d6f34ce6155e2bc11dc3b4acf",
+  "prompts_version": "s1-v5",
+  "packet_sha256": "6c098c99713131ea67bd09017b16d370eb0d89180efe132ccfd4f7fcb12aaab7"
+ },
+ "outside_items": [],
+ "links": {
+  "kept": [],
+  "dropped": [
+   {
+    "key": "g10m7s2-1-2->g10m12s1-1-1",
+    "src": "g10m7s2-1-2",
+    "dst": "g10m12s1-1-1",
+    "signal": "uses_method",
+    "reason": "The worked example proves a quadrilateral is a parallelogram by showing pairs of triangles congruent (AAS) and then reading off equal sides and angles; it applies the congruence rules and does not teach them again.",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE1",
+      "printed_page": 404,
+      "quote": "\\triangleCDZ&\\equiv\\triangleABX&&\\text{(AAS)}"
+     },
+     {
+      "kind": "exercise",
+      "anchor": "Ex12-1:9",
+      "printed_page": 408,
+      "quote": "Two triangles in the figure are congruent"
+     }
+    ],
+    "check": {
+     "verdict": "UNCLEAR",
+     "note": "Both quotes are in the anchors. WE1 uses AAS congruence as a step, but the exercise only gives the congruence as a given. The src objective has no description, so the text cannot show that it is the congruence skill being relied on."
+    },
+    "dropped": "g10m12s1-1-1 is not an objective of this chapter"
+   },
+   {
+    "key": "g10m7s2-1-2->g10m12s1-1-2",
+    "src": "g10m7s2-1-2",
+    "dst": "g10m12s1-1-2",
+    "signal": "uses_method",
+    "reason": "Using parallelogram properties together with congruent triangles is the lesson's method. The worked example proves triangles congruent by AAS and then concludes CZ = AX. Exercise 10 asks for a congruence proof inside a parallelogram figure.",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE1",
+      "printed_page": 404,
+      "quote": "\\triangleCDZ&\\equiv\\triangleABX&&\\text{(AAS)}"
+     },
+     {
+      "kind": "exercise",
+      "anchor": "Ex12-1:10",
+      "printed_page": 408,
+      "quote": "You need to prove that $\\triangleTVU\\equiv\\triangleSVW$"
+     }
+    ],
+    "check": {
+     "verdict": "UNCLEAR",
+     "note": "Both quotes are in the anchors. WE1 uses AAS congruence as a step, and Ex12-1:10 asks for a congruence proof. The src objective is not described, so I cannot tie the reliance to it from the text."
+    },
+    "dropped": "g10m12s1-1-2 is not an objective of this chapter"
+   },
+   {
+    "key": "g10m7s3-1-1->g10m12s1-1-2",
+    "src": "g10m7s3-1-1",
+    "dst": "g10m12s1-1-2",
+    "signal": "uses_method",
+    "reason": "The first step of the worked example is to use the known parallelogram properties (equal opposite sides and angles). Exercise 2 needs them to show AD = EF across two parallelograms. The lesson intro says it applies what was learnt about the properties of polygons.",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE1",
+      "printed_page": 404,
+      "quote": "Use properties of the parallelogram $ABCD$ to fill in on the diagram all equal sides and angles."
+     },
+     {
+      "kind": "exercise",
+      "anchor": "Ex12-1:2",
+      "printed_page": 405,
+      "quote": "Parallelogram $ABCD$ and $BEFC$ are shown below. Prove $AD=EF$"
+     },
+     {
+      "kind": "text",
+      "anchor": "b04026",
+      "printed_page": 404,
+      "quote": "We will now apply what we have learnt about geometry and the properties of polygons"
+     }
+    ],
+    "check": {
+     "verdict": "UNCLEAR",
+     "note": "All three quotes are in the anchors. WE1 says to use properties of the parallelogram ABCD, and b04026 refers back to properties of quadrilaterals. That shows reliance on parallelogram properties in general, but nothing shows src g10m7s3-1-1 is that skill, so not CONFIRMED."
+    },
+    "dropped": "g10m12s1-1-2 is not an objective of this chapter"
+   },
+   {
+    "key": "g10m7s3-1-1->g10m12s1-1-3",
+    "src": "g10m7s3-1-1",
+    "dst": "g10m12s1-1-3",
+    "signal": "uses_method",
+    "reason": "After the quadrilateral is shown to be a parallelogram, the exercises ask for an unknown angle (y) that is the opposite angle to a given 34 degrees or 36 degrees. This uses the equal-opposite-angles property of a parallelogram as a step.",
+    "evidence": [
+     {
+      "kind": "exercise",
+      "anchor": "Ex12-1:6b",
+      "printed_page": 407,
+      "quote": "Find the value of $y$"
+     },
+     {
+      "kind": "exercise",
+      "anchor": "Ex12-1:7b",
+      "printed_page": 407,
+      "quote": "Determine the value of $y$"
+     }
+    ],
+    "check": {
+     "verdict": "REJECTED",
+     "note": "Both quotes are in the anchors, but they are only 'Find the value of y' and 'Determine the value of y'. The text names no parallelogram, property, method or earlier skill, so it shows no reliance on src."
+    },
+    "dropped": "g10m12s1-1-3 is not an objective of this chapter"
+   },
+   {
+    "key": "g10m7s3-1-2->g10m12s1-1-1",
+    "src": "g10m7s3-1-2",
+    "dst": "g10m12s1-1-1",
+    "signal": "uses_method",
+    "reason": "The worked example ends by using the criterion that equal opposite angles make a parallelogram. Exercise 1 supplies diagonals that bisect each other and asks for a parallelogram proof. Both apply the conditions for a parallelogram from the earlier section.",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE1",
+      "printed_page": 404,
+      "quote": "Both pairs of opposite angles of $MNOP$ are equal. Therefore $MNOP$ is a parallelogram."
+     },
+     {
+      "kind": "exercise",
+      "anchor": "Ex12-1:1a",
+      "printed_page": 405,
+      "quote": "$AC$ and $EF$ bisect each other at $G$"
+     }
+    ],
+    "check": {
+     "verdict": "UNCLEAR",
+     "note": "Both quotes are in the anchors. The WE1 conclusion uses 'both pairs of opposite angles equal means parallelogram', and Ex12-1:1a gives diagonals that bisect each other. That suggests a parallelogram-test fact is used, but the src objective is not described, so I cannot tie it to src."
+    },
+    "dropped": "g10m12s1-1-1 is not an objective of this chapter"
+   },
+   {
+    "key": "g10m7s1-1-2->g10m12s1-1-1",
+    "src": "g10m7s1-1-2",
+    "dst": "g10m12s1-1-1",
+    "signal": "uses_method",
+    "reason": "The worked example gives vertically opposite angles as the reason for a step, without teaching it again. It uses the angle reasoning from the earlier angles section.",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE1",
+      "printed_page": 404,
+      "quote": "\\text{(vert opp }\\angle\\text{s }=\\text{)}"
+     }
+    ],
+    "check": {
+     "verdict": "UNCLEAR",
+     "note": "The quote is in the anchor. It cites 'vert opp angles =' as a reason in the proof, so vertically opposite angles are used. The text does not say that src g10m7s1-1-2 is that objective, and this is only a passing justification."
+    },
+    "dropped": "g10m12s1-1-1 is not an objective of this chapter"
+   }
+  ],
+  "outside_book": []
+ },
+ "counts": {
+  "lessons": 1,
+  "objectives": 3,
+  "agreed": 2,
+  "merged": 1,
+  "single": 0,
+  "evidence_kept": 15,
+  "evidence_dropped": 2,
+  "items_mapped": 40,
+  "items_distributed": 25,
+  "items_outside": 0,
+  "mapper_empty_rows_set_aside": 0,
+  "mappers": 2,
+  "links_proposed": 6,
+  "links_kept": 0,
+  "links_dropped": 6,
+  "teacher_only_dropped": 1
+ }
+}

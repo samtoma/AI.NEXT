@@ -1,0 +1,1095 @@
+{
+ "stage": "S1",
+ "workflow": "objectives",
+ "prompts_version": "s1-v5",
+ "book": "g10-math",
+ "chapter": 12,
+ "module": "module:g10m-c12",
+ "packet_sha256": "6c098c99713131ea67bd09017b16d370eb0d89180efe132ccfd4f7fcb12aaab7",
+ "by_ref": {
+  "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/s1-ch12",
+  "stage": "S1",
+  "shards_sha256": "3769f8cd075e0bd137b306ab70f99db2fd12e6afe5dfc15007568d652fca55db",
+  "files": 264,
+  "pool_batch": 60
+ },
+ "embedded": {
+  "source": "runbook/objectives.workflow.js",
+  "source_sha256": "afabf5af79f22a7e2dcb3060c7a8c4596ec06170296f865fd40e76ce1e9fef52",
+  "args_sha256": "8eab6914d3a435bd76fd4f6eb081ef53d37399c864972bb6ff5b922c42479327",
+  "generated_sha256": "c1d6432b40f03a951f34e359e0d9b6819242d88aedb5b49f012ea61eb9e0ee09",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "teacher_only_dropped": 1,
+ "lessons": [
+  {
+   "slug": "g10m12s1-1",
+   "finders": {
+    "a": {
+     "objectives": [
+      {
+       "statement": "Prove that a given quadrilateral is a parallelogram, using equal opposite angles, diagonals that bisect each other, or both pairs of opposite sides parallel, with congruent triangles where needed.",
+       "label": "Prove a parallelogram",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "b04026",
+         "printed_page": 404,
+         "quote": "prove a particular quadrilateral is one of the special quadrilaterals"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE1",
+         "printed_page": 404,
+         "quote": "Prove that $MNOP$ is a parallelogram."
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex12-1:4",
+         "printed_page": 406,
+         "quote": "prove that the quadrilateral $ABCD$ is a parallelogram"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex12-1:1a",
+         "printed_page": 405,
+         "quote": "Prove $AECF$ is a parallelogram."
+        },
+        {
+         "kind": "summary",
+         "anchor": "b04049",
+         "printed_page": 409,
+         "quote": "A parallelogram is a quadrilateral with both pairs of opposite sides parallel."
+        }
+       ],
+       "exercise_items": [
+        "Ex12-1:1a",
+        "Ex12-1:1b",
+        "Ex12-1:4",
+        "Ex12-1:5",
+        "Ex12-1:6a",
+        "Ex12-1:7a",
+        "Ex12-1:8",
+        "Ex12-1:9"
+       ],
+       "worked_examples": [
+        "WE1"
+       ],
+       "key": "A1"
+      },
+      {
+       "statement": "Use the properties of a parallelogram, together with congruent triangles, to prove that sides, angles or triangles in a figure are equal or congruent.",
+       "label": "Prove using parallelogram properties",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "b04026",
+         "printed_page": 404,
+         "quote": "prove some of these properties"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex12-1:2",
+         "printed_page": 405,
+         "quote": "Prove $AD=EF$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex12-1:10",
+         "printed_page": 408,
+         "quote": "prove that $\\triangleTVU\\equiv\\triangleSVW$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex12-2:13",
+         "printed_page": 414,
+         "quote": "Prove that $AE=DF$"
+        },
+        {
+         "kind": "summary",
+         "anchor": "b04050",
+         "printed_page": 409,
+         "quote": "Both pairs of opposite sides are equal in length."
+        }
+       ],
+       "exercise_items": [
+        "Ex12-1:2",
+        "Ex12-1:3",
+        "Ex12-1:10"
+       ],
+       "worked_examples": [],
+       "key": "A2"
+      },
+      {
+       "statement": "Calculate unknown angle values in a quadrilateral shown to be a parallelogram, using the equal opposite angles and the angles in the given figure.",
+       "label": "Calculate angles in parallelogram",
+       "evidence": [
+        {
+         "kind": "exercise",
+         "anchor": "Ex12-1:6b",
+         "printed_page": 407,
+         "quote": "Find the value of $y$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex12-1:7c",
+         "printed_page": 407,
+         "quote": "Determine the value of $x$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex12-2:7b",
+         "printed_page": 412,
+         "quote": "Calculate the value of $y$"
+        },
+        {
+         "kind": "summary",
+         "anchor": "b04051",
+         "printed_page": 409,
+         "quote": "Both pairs of opposite angles are equal."
+        }
+       ],
+       "exercise_items": [
+        "Ex12-1:6b",
+        "Ex12-1:6c",
+        "Ex12-1:7b",
+        "Ex12-1:7c"
+       ],
+       "worked_examples": [],
+       "key": "A3"
+      }
+     ]
+    },
+    "b": {
+     "objectives": [
+      {
+       "statement": "Prove that a quadrilateral is a parallelogram by proving triangles congruent and deducing that both pairs of opposite angles are equal.",
+       "label": "Congruent triangles to prove parallelogram",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE1",
+         "printed_page": 404,
+         "quote": "Therefore $MNOP$ is a parallelogram"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex12-1:8",
+         "printed_page": 407,
+         "quote": "Prove that the quadrilateral $MNOP$ is a parallelogram"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex12-1:9",
+         "printed_page": 408,
+         "quote": "You need to prove that $NPTS$ is a parallelogram"
+        },
+        {
+         "kind": "intro",
+         "anchor": "b04026",
+         "printed_page": 404,
+         "quote": "how we can prove a particular quadrilateral is one of the special quadrilaterals"
+        }
+       ],
+       "exercise_items": [
+        "Ex12-1:8",
+        "Ex12-1:9"
+       ],
+       "worked_examples": [
+        "WE1"
+       ],
+       "key": "B1"
+      },
+      {
+       "statement": "Prove that a quadrilateral is a parallelogram by showing that its opposite angles are equal, its opposite sides are parallel, or its diagonals bisect each other.",
+       "label": "Prove a quadrilateral is a parallelogram",
+       "evidence": [
+        {
+         "kind": "exercise",
+         "anchor": "Ex12-1:1a",
+         "printed_page": 405,
+         "quote": "Prove $AECF$ is a parallelogram"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex12-1:4",
+         "printed_page": 406,
+         "quote": "Fill in the missing reasons and steps to prove that the quadrilateral $ABCD$ is a parallelogram"
+        },
+        {
+         "kind": "summary",
+         "anchor": "b04052",
+         "printed_page": 409,
+         "quote": "Both diagonals bisect each other."
+        },
+        {
+         "kind": "summary",
+         "anchor": "b04049",
+         "printed_page": 409,
+         "quote": "A parallelogram is a quadrilateral with both pairs of opposite sides parallel."
+        }
+       ],
+       "exercise_items": [
+        "Ex12-1:1a",
+        "Ex12-1:1b",
+        "Ex12-1:4",
+        "Ex12-1:5",
+        "Ex12-1:6a",
+        "Ex12-1:7a"
+       ],
+       "worked_examples": [],
+       "key": "B2"
+      },
+      {
+       "statement": "Use the properties of a parallelogram to prove that sides or angles are equal and that triangles are congruent.",
+       "label": "Use parallelogram properties in proofs",
+       "evidence": [
+        {
+         "kind": "exercise",
+         "anchor": "Ex12-1:2",
+         "printed_page": 405,
+         "quote": "Prove $AD=EF$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex12-1:3",
+         "printed_page": 405,
+         "quote": "Prove $\\hat{Q_1}=\\hat{R}$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex12-1:10",
+         "printed_page": 408,
+         "quote": "You need to prove that $\\triangleTVU\\equiv\\triangleSVW$"
+        },
+        {
+         "kind": "intro",
+         "anchor": "b04029",
+         "printed_page": 405,
+         "quote": "prove that the opposite angles of a parallelogram are equal"
+        },
+        {
+         "kind": "summary",
+         "anchor": "b04050",
+         "printed_page": 409,
+         "quote": "Both pairs of opposite sides are equal in length."
+        }
+       ],
+       "exercise_items": [
+        "Ex12-1:2",
+        "Ex12-1:3",
+        "Ex12-1:10"
+       ],
+       "worked_examples": [],
+       "key": "B3"
+      },
+      {
+       "statement": "Determine unknown angle values in a quadrilateral that has been shown to be a parallelogram.",
+       "label": "Find unknown angles in parallelogram",
+       "evidence": [
+        {
+         "kind": "exercise",
+         "anchor": "Ex12-1:6b",
+         "printed_page": 407,
+         "quote": "Find the value of $y$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex12-1:7c",
+         "printed_page": 407,
+         "quote": "Determine the value of $x$"
+        },
+        {
+         "kind": "summary",
+         "anchor": "b04051",
+         "printed_page": 409,
+         "quote": "Both pairs of opposite angles are equal."
+        }
+       ],
+       "exercise_items": [
+        "Ex12-1:6b",
+        "Ex12-1:6c",
+        "Ex12-1:7b",
+        "Ex12-1:7c"
+       ],
+       "worked_examples": [],
+       "key": "B4"
+      }
+     ]
+    }
+   },
+   "reconciled": {
+    "objectives": [
+     {
+      "statement": "Prove that a quadrilateral is a parallelogram by showing that both pairs of opposite angles are equal, both pairs of opposite sides are parallel, or the diagonals bisect each other, using congruent triangles where needed.",
+      "label": "Prove a quadrilateral is a parallelogram",
+      "confidence": "merged",
+      "from": {
+       "a": [
+        "A1"
+       ],
+       "b": [
+        "B1",
+        "B2"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "intro",
+        "anchor": "b04026",
+        "printed_page": 404,
+        "quote": "prove a particular quadrilateral is one of the special quadrilaterals"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE1",
+        "printed_page": 404,
+        "quote": "Prove that $MNOP$ is a parallelogram."
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex12-1:1a",
+        "printed_page": 405,
+        "quote": "Prove $AECF$ is a parallelogram."
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex12-1:4",
+        "printed_page": 406,
+        "quote": "prove that the quadrilateral $ABCD$ is a parallelogram"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex12-1:8",
+        "printed_page": 407,
+        "quote": "Prove that the quadrilateral $MNOP$ is a parallelogram"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex12-1:9",
+        "printed_page": 408,
+        "quote": "You need to prove that $NPTS$ is a parallelogram"
+       },
+       {
+        "kind": "summary",
+        "anchor": "b04049",
+        "printed_page": 409,
+        "quote": "A parallelogram is a quadrilateral with both pairs of opposite sides parallel."
+       },
+       {
+        "kind": "summary",
+        "anchor": "b04052",
+        "printed_page": 409,
+        "quote": "Both diagonals bisect each other."
+       }
+      ],
+      "exercise_items": [
+       "Ex12-1:1a",
+       "Ex12-1:1b",
+       "Ex12-1:4",
+       "Ex12-1:5",
+       "Ex12-1:6a",
+       "Ex12-1:7a",
+       "Ex12-1:8",
+       "Ex12-1:9"
+      ],
+      "worked_examples": [
+       "WE1"
+      ],
+      "terms": [
+       "parallelogram",
+       "quadrilateral",
+       "opposite angles",
+       "opposite sides",
+       "parallel",
+       "diagonals",
+       "bisect",
+       "congruent triangles"
+      ],
+      "term_flags": [
+       {
+        "term": "congruent triangles",
+        "why": "The book writes congruence with the symbol $\\equiv$; other curricula may say 'equal triangles' or 'identical triangles' for the same idea."
+       },
+       {
+        "term": "bisect",
+        "why": "'Diagonals bisect each other' means each diagonal cuts the other into two equal parts; some curricula phrase this as 'cut each other in half'."
+       }
+      ]
+     },
+     {
+      "statement": "Use the properties of a parallelogram, together with congruent triangles, to prove that sides, angles or triangles in a figure are equal or congruent.",
+      "label": "Prove using parallelogram properties",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A2"
+       ],
+       "b": [
+        "B3"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "intro",
+        "anchor": "b04026",
+        "printed_page": 404,
+        "quote": "prove some of these properties"
+       },
+       {
+        "kind": "intro",
+        "anchor": "b04029",
+        "printed_page": 405,
+        "quote": "prove that the opposite angles of a parallelogram are equal"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex12-1:2",
+        "printed_page": 405,
+        "quote": "Prove $AD=EF$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex12-1:3",
+        "printed_page": 405,
+        "quote": "Prove $\\hat{Q_1}=\\hat{R}$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex12-1:10",
+        "printed_page": 408,
+        "quote": "You need to prove that $\\triangleTVU\\equiv\\triangleSVW$"
+       },
+       {
+        "kind": "summary",
+        "anchor": "b04050",
+        "printed_page": 409,
+        "quote": "Both pairs of opposite sides are equal in length."
+       }
+      ],
+      "exercise_items": [
+       "Ex12-1:2",
+       "Ex12-1:3",
+       "Ex12-1:10"
+      ],
+      "worked_examples": [],
+      "terms": [
+       "parallelogram",
+       "congruent triangles",
+       "opposite sides",
+       "opposite angles",
+       "equal in length"
+      ],
+      "term_flags": [
+       {
+        "term": "congruent triangles",
+        "why": "The book writes congruence with the symbol $\\equiv$; other curricula may say 'equal triangles' or 'identical triangles' for the same idea."
+       }
+      ]
+     },
+     {
+      "statement": "Calculate unknown angle values in a quadrilateral shown to be a parallelogram, using the equal opposite angles and the angles in the given figure.",
+      "label": "Calculate angles in parallelogram",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A3"
+       ],
+       "b": [
+        "B4"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "exercise",
+        "anchor": "Ex12-1:6b",
+        "printed_page": 407,
+        "quote": "Find the value of $y$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex12-1:7c",
+        "printed_page": 407,
+        "quote": "Determine the value of $x$"
+       },
+       {
+        "kind": "summary",
+        "anchor": "b04051",
+        "printed_page": 409,
+        "quote": "Both pairs of opposite angles are equal."
+       }
+      ],
+      "exercise_items": [
+       "Ex12-1:6b",
+       "Ex12-1:6c",
+       "Ex12-1:7b",
+       "Ex12-1:7c"
+      ],
+      "worked_examples": [],
+      "terms": [
+       "parallelogram",
+       "quadrilateral",
+       "opposite angles"
+      ],
+      "term_flags": []
+     }
+    ],
+    "rejected": [],
+    "unmapped_items": [],
+    "notes": "A1 covers both B1 (congruent triangles route, WE1, Ex12-1:8-9) and B2 (angle, parallel-sides and diagonal criteria), so they merge into one objective. A2/B3 and A3/B4 are one-to-one matches. All 7 keys appear in a \"from\" list and all 15 exercise items and WE1 are placed once. The end-of-chapter items finders cited (Ex12-2:13 and Ex12-2:7b) were left out of the evidence because the other cited items already support each objective."
+   },
+   "evidence_check": {
+    "checks": [
+     {
+      "objective_n": 1,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 4,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 5,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 6,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 7,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 4,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 5,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 0,
+      "present": true,
+      "supports": false
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 1,
+      "present": true,
+      "supports": false
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true
+     }
+    ]
+   }
+  }
+ ],
+ "pool": {
+  "items": 25,
+  "batches": 1,
+  "mappers": [
+   {
+    "mapping": [
+     {
+      "item_id": "Ex12-2:1",
+      "objective": "lo:g10m12s1-1-1",
+      "reason": "Proving ANOM is a rhombus first requires showing it is a parallelogram (opposite sides equal/parallel) before using the equal adjacent sides."
+     },
+     {
+      "item_id": "Ex12-2:2a",
+      "objective": "lo:g10m12s1-1-2",
+      "reason": "Uses parallelogram properties (opposite sides/angles equal) to prove two triangles congruent."
+     },
+     {
+      "item_id": "Ex12-2:2b",
+      "objective": "lo:g10m12s1-1-2",
+      "reason": "Uses the congruent triangles from 2a and parallelogram properties to show the sides are parallel."
+     },
+     {
+      "item_id": "Ex12-2:2c",
+      "objective": "lo:g10m12s1-1-1",
+      "reason": "Prove DFBH is a parallelogram from the established equal/parallel opposite sides."
+     },
+     {
+      "item_id": "Ex12-2:3a",
+      "objective": "lo:g10m12s1-1-3",
+      "reason": "Calculating the interior angles of a parallelogram in terms of y using equal opposite angles and the bisectors."
+     },
+     {
+      "item_id": "Ex12-2:3b",
+      "objective": "lo:g10m12s1-1-1",
+      "reason": "Prove that quadrilateral AFCE is a parallelogram."
+     },
+     {
+      "item_id": "Ex12-2:4a",
+      "objective": "lo:g10m12s1-1-2",
+      "reason": "Uses given equal sides/angles and parallel lines to prove an angle bisected, relying on congruent triangles/parallelogram properties."
+     },
+     {
+      "item_id": "Ex12-2:4b",
+      "objective": "lo:g10m12s1-1-2",
+      "reason": "Proves WY = XZ using congruent triangles and properties of the figure."
+     },
+     {
+      "item_id": "Ex12-2:5a",
+      "objective": "lo:g10m12s1-1-1",
+      "reason": "Prove OBMN is a parallelogram."
+     },
+     {
+      "item_id": "Ex12-2:5b",
+      "objective": "lo:g10m12s1-1-2",
+      "reason": "Uses parallelogram properties established in 5a to prove a side-length relationship."
+     },
+     {
+      "item_id": "Ex12-2:6a",
+      "objective": "lo:g10m12s1-1-2",
+      "reason": "Uses parallel/midpoint relationships (parallelogram and congruent-triangle reasoning) to prove U is a midpoint."
+     },
+     {
+      "item_id": "Ex12-2:6b",
+      "objective": "lo:g10m12s1-1-2",
+      "reason": "Best fit: applies the proved midpoint/parallelogram side relationships to find the area of a larger triangle."
+     },
+     {
+      "item_id": "Ex12-2:6c",
+      "objective": "lo:g10m12s1-1-2",
+      "reason": "Best fit: general proof that one triangle is four times another using the parallelogram/midpoint side relationships."
+     },
+     {
+      "item_id": "Ex12-2:7a",
+      "objective": "lo:g10m12s1-1-1",
+      "reason": "Complete the proof that QRST is a parallelogram from both pairs of opposite sides parallel."
+     },
+     {
+      "item_id": "Ex12-2:7b",
+      "objective": "lo:g10m12s1-1-3",
+      "reason": "Calculate unknown angle y in a shown parallelogram using equal opposite angles."
+     },
+     {
+      "item_id": "Ex12-2:7c",
+      "objective": "lo:g10m12s1-1-3",
+      "reason": "Calculate unknown angle x in a shown parallelogram using the angles in the figure."
+     },
+     {
+      "item_id": "Ex12-2:8",
+      "objective": "lo:g10m12s1-1-1",
+      "reason": "Prove QRST is a parallelogram by showing both pairs of opposite angles are equal."
+     },
+     {
+      "item_id": "Ex12-2:9",
+      "objective": "lo:g10m12s1-1-1",
+      "reason": "Prove QRST is a parallelogram by showing both pairs of opposite angles are equal."
+     },
+     {
+      "item_id": "Ex12-2:10",
+      "objective": "lo:g10m12s1-1-1",
+      "reason": "Prove that JKLM is a parallelogram."
+     },
+     {
+      "item_id": "Ex12-2:11",
+      "objective": "lo:g10m12s1-1-1",
+      "reason": "Prove ABFE is a parallelogram using the given congruent triangles."
+     },
+     {
+      "item_id": "Ex12-2:12a",
+      "objective": "lo:g10m12s1-1-1",
+      "reason": "Show BCDF is a parallelogram."
+     },
+     {
+      "item_id": "Ex12-2:12b",
+      "objective": "lo:g10m12s1-1-1",
+      "reason": "Show ADCF is a parallelogram."
+     },
+     {
+      "item_id": "Ex12-2:12c",
+      "objective": "lo:g10m12s1-1-2",
+      "reason": "Uses parallelogram properties (diagonals bisect each other) to prove AE = EC."
+     },
+     {
+      "item_id": "Ex12-2:13",
+      "objective": "lo:g10m12s1-1-2",
+      "reason": "Uses properties of two parallelograms to prove two segments are equal."
+     },
+     {
+      "item_id": "Ex12-2:14",
+      "objective": "lo:g10m12s1-1-2",
+      "reason": "Uses parallelogram properties and congruent triangles to prove collinearity (EF is a straight line)."
+     }
+    ]
+   },
+   {
+    "mapping": [
+     {
+      "item_id": "Ex12-2:1",
+      "objective": "lo:g10m12s1-1-1",
+      "reason": "Proving the quadrilateral ANOM is a rhombus (a special parallelogram) from equal sides; the skill is proving a quadrilateral is a parallelogram."
+     },
+     {
+      "item_id": "Ex12-2:2a",
+      "objective": "lo:g10m12s1-1-2",
+      "reason": "Proving two triangles congruent using parallelogram properties and the given AF=HC."
+     },
+     {
+      "item_id": "Ex12-2:2b",
+      "objective": "lo:g10m12s1-1-2",
+      "reason": "Proving DF parallel to HB from the congruent triangles (equal angles) using parallelogram properties."
+     },
+     {
+      "item_id": "Ex12-2:2c",
+      "objective": "lo:g10m12s1-1-1",
+      "reason": "Proving the quadrilateral DFBH is a parallelogram (opposite sides equal and parallel)."
+     },
+     {
+      "item_id": "Ex12-2:3a",
+      "objective": "lo:g10m12s1-1-3",
+      "reason": "Finding all interior angles of a parallelogram in terms of y using equal opposite angles and the bisected angles."
+     },
+     {
+      "item_id": "Ex12-2:3b",
+      "objective": "lo:g10m12s1-1-1",
+      "reason": "Proving the quadrilateral AFCE is a parallelogram."
+     },
+     {
+      "item_id": "Ex12-2:4a",
+      "objective": "lo:g10m12s1-1-2",
+      "reason": "Proving an angle bisected using equal sides, parallel lines and equal angles in the figure (equal angles via parallelogram/triangle properties)."
+     },
+     {
+      "item_id": "Ex12-2:4b",
+      "objective": "lo:g10m12s1-1-2",
+      "reason": "Proving WY=XZ by congruent triangles built from the given equal sides and angles."
+     },
+     {
+      "item_id": "Ex12-2:5a",
+      "objective": "lo:g10m12s1-1-1",
+      "reason": "Proving OBMN is a parallelogram from midpoints and parallel sides."
+     },
+     {
+      "item_id": "Ex12-2:5b",
+      "objective": "lo:g10m12s1-1-2",
+      "reason": "Proving a side relationship BC=2MR using the parallelogram just established and equal sides."
+     },
+     {
+      "item_id": "Ex12-2:6a",
+      "objective": "lo:g10m12s1-1-2",
+      "reason": "Proving U is the midpoint of NP (sides equal) using parallelogram/congruent-triangle properties and midpoints."
+     },
+     {
+      "item_id": "Ex12-2:6b",
+      "objective": "lo:g10m12s1-1-2",
+      "reason": "Calculating an area from the proven relationship between triangles SNT and MNR (triangle equality/similarity reasoning)."
+     },
+     {
+      "item_id": "Ex12-2:6c",
+      "objective": "lo:g10m12s1-1-2",
+      "reason": "Proving the area of MNR is four times that of SNT using the figure's proven side and triangle relationships."
+     },
+     {
+      "item_id": "Ex12-2:7a",
+      "objective": "lo:g10m12s1-1-1",
+      "reason": "Completing the proof that QRST is a parallelogram."
+     },
+     {
+      "item_id": "Ex12-2:7b",
+      "objective": "lo:g10m12s1-1-3",
+      "reason": "Calculating y in a parallelogram using equal opposite angles (Q = S = 63)."
+     },
+     {
+      "item_id": "Ex12-2:7c",
+      "objective": "lo:g10m12s1-1-3",
+      "reason": "Calculating x in a parallelogram using angle relationships in the figure."
+     },
+     {
+      "item_id": "Ex12-2:8",
+      "objective": "lo:g10m12s1-1-1",
+      "reason": "Proving QRST is a parallelogram because both pairs of opposite angles are equal."
+     },
+     {
+      "item_id": "Ex12-2:9",
+      "objective": "lo:g10m12s1-1-1",
+      "reason": "Proving QRST is a parallelogram because both pairs of opposite angles are equal."
+     },
+     {
+      "item_id": "Ex12-2:10",
+      "objective": "lo:g10m12s1-1-1",
+      "reason": "Proving the quadrilateral JKLM formed by the angle bisectors is a parallelogram."
+     },
+     {
+      "item_id": "Ex12-2:11",
+      "objective": "lo:g10m12s1-1-1",
+      "reason": "Proving ABFE is a parallelogram using the congruent triangles CDE and CBF."
+     },
+     {
+      "item_id": "Ex12-2:12a",
+      "objective": "lo:g10m12s1-1-1",
+      "reason": "Showing BCDF is a parallelogram."
+     },
+     {
+      "item_id": "Ex12-2:12b",
+      "objective": "lo:g10m12s1-1-1",
+      "reason": "Showing ADCF is a parallelogram."
+     },
+     {
+      "item_id": "Ex12-2:12c",
+      "objective": "lo:g10m12s1-1-2",
+      "reason": "Proving AE=EC using the properties of the parallelograms (diagonals bisect each other)."
+     },
+     {
+      "item_id": "Ex12-2:13",
+      "objective": "lo:g10m12s1-1-2",
+      "reason": "Proving AE=DF using the equal opposite sides of the two given parallelograms."
+     },
+     {
+      "item_id": "Ex12-2:14",
+      "objective": "lo:g10m12s1-1-2",
+      "reason": "Proving EF is a straight line using parallelogram angle properties and the equal sides given."
+     }
+    ]
+   }
+  ],
+  "second_mapper": true
+ },
+ "links": {
+  "asked": true,
+  "prior_objectives": 177,
+  "proposed": [
+   {
+    "src": "g10m7s2-1-2",
+    "dst": "g10m12s1-1-1",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE1",
+      "printed_page": 404,
+      "quote": "\\triangleCDZ&\\equiv\\triangleABX&&\\text{(AAS)}"
+     },
+     {
+      "kind": "exercise",
+      "anchor": "Ex12-1:9",
+      "printed_page": 408,
+      "quote": "Two triangles in the figure are congruent"
+     }
+    ],
+    "reason": "The worked example proves a quadrilateral is a parallelogram by showing pairs of triangles congruent (AAS) and then reading off equal sides and angles; it applies the congruence rules and does not teach them again."
+   },
+   {
+    "src": "g10m7s2-1-2",
+    "dst": "g10m12s1-1-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE1",
+      "printed_page": 404,
+      "quote": "\\triangleCDZ&\\equiv\\triangleABX&&\\text{(AAS)}"
+     },
+     {
+      "kind": "exercise",
+      "anchor": "Ex12-1:10",
+      "printed_page": 408,
+      "quote": "You need to prove that $\\triangleTVU\\equiv\\triangleSVW$"
+     }
+    ],
+    "reason": "Using parallelogram properties together with congruent triangles is the lesson's method. The worked example proves triangles congruent by AAS and then concludes CZ = AX. Exercise 10 asks for a congruence proof inside a parallelogram figure."
+   },
+   {
+    "src": "g10m7s3-1-1",
+    "dst": "g10m12s1-1-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE1",
+      "printed_page": 404,
+      "quote": "Use properties of the parallelogram $ABCD$ to fill in on the diagram all equal sides and angles."
+     },
+     {
+      "kind": "exercise",
+      "anchor": "Ex12-1:2",
+      "printed_page": 405,
+      "quote": "Parallelogram $ABCD$ and $BEFC$ are shown below. Prove $AD=EF$"
+     },
+     {
+      "kind": "text",
+      "anchor": "b04026",
+      "printed_page": 404,
+      "quote": "We will now apply what we have learnt about geometry and the properties of polygons"
+     }
+    ],
+    "reason": "The first step of the worked example is to use the known parallelogram properties (equal opposite sides and angles). Exercise 2 needs them to show AD = EF across two parallelograms. The lesson intro says it applies what was learnt about the properties of polygons."
+   },
+   {
+    "src": "g10m7s3-1-1",
+    "dst": "g10m12s1-1-3",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "exercise",
+      "anchor": "Ex12-1:6b",
+      "printed_page": 407,
+      "quote": "Find the value of $y$"
+     },
+     {
+      "kind": "exercise",
+      "anchor": "Ex12-1:7b",
+      "printed_page": 407,
+      "quote": "Determine the value of $y$"
+     }
+    ],
+    "reason": "After the quadrilateral is shown to be a parallelogram, the exercises ask for an unknown angle (y) that is the opposite angle to a given 34 degrees or 36 degrees. This uses the equal-opposite-angles property of a parallelogram as a step."
+   },
+   {
+    "src": "g10m7s3-1-2",
+    "dst": "g10m12s1-1-1",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE1",
+      "printed_page": 404,
+      "quote": "Both pairs of opposite angles of $MNOP$ are equal. Therefore $MNOP$ is a parallelogram."
+     },
+     {
+      "kind": "exercise",
+      "anchor": "Ex12-1:1a",
+      "printed_page": 405,
+      "quote": "$AC$ and $EF$ bisect each other at $G$"
+     }
+    ],
+    "reason": "The worked example ends by using the criterion that equal opposite angles make a parallelogram. Exercise 1 supplies diagonals that bisect each other and asks for a parallelogram proof. Both apply the conditions for a parallelogram from the earlier section."
+   },
+   {
+    "src": "g10m7s1-1-2",
+    "dst": "g10m12s1-1-1",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE1",
+      "printed_page": 404,
+      "quote": "\\text{(vert opp }\\angle\\text{s }=\\text{)}"
+     }
+    ],
+    "reason": "The worked example gives vertically opposite angles as the reason for a step, without teaching it again. It uses the angle reasoning from the earlier angles section."
+   }
+  ],
+  "outside_book": [],
+  "checks": {
+   "checks": [
+    {
+     "i": 0,
+     "verdict": "UNCLEAR",
+     "note": "Both quotes are in the anchors. WE1 uses AAS congruence as a step, but the exercise only gives the congruence as a given. The src objective has no description, so the text cannot show that it is the congruence skill being relied on."
+    },
+    {
+     "i": 1,
+     "verdict": "UNCLEAR",
+     "note": "Both quotes are in the anchors. WE1 uses AAS congruence as a step, and Ex12-1:10 asks for a congruence proof. The src objective is not described, so I cannot tie the reliance to it from the text."
+    },
+    {
+     "i": 2,
+     "verdict": "UNCLEAR",
+     "note": "All three quotes are in the anchors. WE1 says to use properties of the parallelogram ABCD, and b04026 refers back to properties of quadrilaterals. That shows reliance on parallelogram properties in general, but nothing shows src g10m7s3-1-1 is that skill, so not CONFIRMED."
+    },
+    {
+     "i": 3,
+     "verdict": "REJECTED",
+     "note": "Both quotes are in the anchors, but they are only 'Find the value of y' and 'Determine the value of y'. The text names no parallelogram, property, method or earlier skill, so it shows no reliance on src."
+    },
+    {
+     "i": 4,
+     "verdict": "UNCLEAR",
+     "note": "Both quotes are in the anchors. The WE1 conclusion uses 'both pairs of opposite angles equal means parallelogram', and Ex12-1:1a gives diagonals that bisect each other. That suggests a parallelogram-test fact is used, but the src objective is not described, so I cannot tie it to src."
+    },
+    {
+     "i": 5,
+     "verdict": "UNCLEAR",
+     "note": "The quote is in the anchor. It cites 'vert opp angles =' as a reason in the proof, so vertically opposite angles are used. The text does not say that src g10m7s1-1-2 is that objective, and this is only a passing justification."
+    }
+   ]
+  }
+ },
+ "calls": {
+  "by_phase": {
+   "S1 Find": 2,
+   "S1 Reconcile": 1,
+   "S1 Evidence": 1,
+   "S1 Map": 2,
+   "S1 Links": 1,
+   "S1 Link check": 1
+  },
+  "per_lesson": {
+   "g10m12s1-1": 4
+  },
+  "total": 8
+ },
+ "meter": {
+  "stage": "S1",
+  "record": "uv run meter_run.py record --book g10-math --stage S1 --run <runId>",
+  "summary": "uv run meter_run.py summary --book g10-math --by lesson",
+  "note": "Each agent label carries its lesson slug (S1:findA:<slug>), so the ledger splits the cost per lesson; the S1 Map agents are chapter-level (\"(book)\")."
+ }
+}
