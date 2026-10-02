@@ -1,17 +1,31 @@
 # Project State — AI Tutor MVP
 
 > Living document. Read at session start; update when progress or decisions land.
-> Last updated: 2026-10-01 (`main` at `v0.9.3`, **deployed** to noor 2026-09-25; constitution **v3.4.0**;
-> **v0.10 — spec 003 on its feature branch, committed only as unreviewed WIP snapshots; the Chapter 8 pilot
-> has passed G1 and G2; the full fan-out to the rest of the book is approved (decision 58e) and **held on
-> Samuel's word (2026-10-01)**; the internal review backlog, the whole-book outline and the step checker are
-> built; nothing of Grade 10 is in production**)
+> Last updated: 2026-10-02 (this branch carries `main` only up to `v0.9.3`; **`origin/main` is at `v0.11.0`**,
+> released 2026-10-02 per its own `PROJECT_STATE.md`, so this branch is 16 commits behind it; constitution **v3.4.0** on this branch
+> (main's copy says v3.3.0). **Feature 003 / the Grade 10 course: the extraction pipeline has now run to the end of the book — all 14
+> chapters have a G5 record — on a LOCAL database only. Nothing is deployed, nothing is on `main`, the branch is not merged, and every
+> gate after Chapter 8's G1 and G2 was an AI auto-pass that no person has read.** The full-book record and its open-decisions list are in
+> [`docs/WIP-g10-pilot/README.md`](WIP-g10-pilot/README.md), "Full book complete — 2026-10-02".)
 
-## 🧭 v0.10 — curriculum tracks and the Grade 10 American maths course (IN PROGRESS, not reviewed, not merged)
+## 🧭 Feature 003 — curriculum tracks and the Grade 10 American maths course (pipeline finished on a local database; not reviewed, not merged, not deployed; its version number is still to be assigned — `v0.10.0` and `v0.11.0` are already taken on `main`)
+
+**State on 2026-10-02 (dev database only).** The full-book fan-out (approved 2026-10-01, decision 58e) ran 2026-10-01 to 2026-10-02 and
+every one of the 14 chapters has a G5 record, in the local pilot database `ainext_pilot_g10_ch08`. Course `course:us-g10-math-en` there holds
+**65 lessons, 211 objectives, 294 prerequisite edges**; **book questions 2,090 live / 64 held for review / 41 rejected**; **3,137 generated
+questions live**; **99 widget questions live (4 retired)**; **300 misconception entries**; parity GREEN (2,154 questions in the bundles — live
+and held, rejected rows not counted, answer 45 — and 616 visuals). Thirteen chapters are RED on completeness only (33 objectives lack
+evidence, 33 lack a tier; every safety check passes); Chapter 11 is GREEN. The step checker ran on the whole book (2,556 solutions, 300
+flags, in the console backlog). The AI line's errata list holds 102 printed answers that look wrong and 20 damaged questions
+([`docs/WIP-g10-pilot/errata-g10.md`](WIP-g10-pilot/errata-g10.md)). Metered cost **$952.70** for the course including the $153 pilot, 284
+runs, ≈ 1.2 billion tokens (the orchestrator reported ≈ $943 and 280 runs earlier the same day — not reconciled). **Not done:** the book-level
+closing steps (Chapter 8's seed is only in the gitignored `work/` tree; no whole-book export; `books/g10-math.json` is still `ingest`), the
+merge with `main` (15 conflicts on a trial merge), a human read of any of it, and a deploy. **Where to look for what is open:** the WIP
+README's "Open decisions after the full-book run" (29 items, grouped; it, not this file, is kept current).
 
 **Where it is.** Worktree `.claude/worktrees/g10`, branch `feat/003-curriculum-tracks-g10-american-math`
-(from `main` at v0.9.2, brought up to v0.9.3 on 2026-09-25; migrations **033** curriculum tracks and **034**
-book sections). **Commit status:** after the WIP pushes `1f92655` and `383510c`, an auto-snapshot job
+(from `main` at v0.9.2, brought up to v0.9.3 on 2026-09-25; migrations **033** curriculum tracks, **034**
+book sections, then **035–039** below). **Commit status:** after the WIP pushes `1f92655` and `383510c`, an auto-snapshot job
 commits the worktree every 30 seconds as `wip(003): auto-snapshot … [skip ci]`, and those commits are on the
 pushed branch. None of it is reviewed by Samuel or merged; there is no version bump. **Branch CI is red and
 hidden:** the last CI run on the branch (`383510c`, 2026-09-26) failed `traceability` and `build`, and no CI
@@ -24,11 +38,13 @@ Curriculum, Math" — and *"When the user sign up for grade 10, they can have at
 American, National, etc.. … and consider that in the console, to choose which subject for which grade,
 should be done also per curriculum."*
 
-**Decisions: 61, in eight rounds** (`specs/003-curriculum-tracks/decisions.md`; 46 is unused). 1–17, the
+**Decisions: 1–61, then 65 and 66, in nine rounds** (`specs/003-curriculum-tracks/decisions.md`; 46 is unused, and **62–64 are
+answers 41–43 of 2026-10-01 that are not yet entered in the decisions table** — a numbering gap flagged 2026-10-02). 1–17, the
 first round (*"I would take your recommendations"*); 18–22 and A–E, the second (*"ok for all"*); 23–34, the
 third, one question at a time; 35–36, the Chapter 8 pilot; 37–38, the curriculum-isolation audit; 39–45,
 gate G2 for Chapter 8; 47, the widget verifier; 48–61, the consistency review, filling the Grade 10
-course and showing the whole book (2026-09-27/2026-10-01). From the third round on, Samuel's words are in
+course and showing the whole book (2026-09-27/2026-10-01); 65–66, the two answers of 2026-10-02 (a lesson may keep one
+objective after a ruling, marked CHECK LATER; the drift guard counts servable rows only). From the third round on, Samuel's words are in
 [`docs/WIP-g10-pilot/samuel-answers.md`](WIP-g10-pilot/samuel-answers.md): **answer N is decision N + 21**.
 Gate records (G0, T413, G1 and G2 for Chapter 8) are in the same decisions file.
 

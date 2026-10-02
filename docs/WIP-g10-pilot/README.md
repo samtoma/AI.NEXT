@@ -236,7 +236,7 @@ C is engineering and records. Where to look is in brackets.*
 22. **`lo:g10m8s1-1-1` still has nothing live.** Under answer 40 three families (`plot-a-vertex`, `vertex-on-axis`, `vertical-side`; 30 items) were authored and graded
     (`work/g10-math/fanout/families-s111/`), but the database holds no row for the objective, and Chapter 8's G5 (2026-10-01 07:16Z) still lists it with no book question and no live item
     at any tier. They need loading (the code is built: migration 038, `parent_kind`), then G3 and coverage again. T448 is still unticked and its spec records are pending: FR-1101 (spec 001),
-    FR-4304, `data-model.md`, `plan.md` migration 038 row, ADR-0008 §4, `extraction-pipeline.md` §3.9/§3.10, the constitution's line about parents (this file, "Done — 2026-10-01 (family-parent agent)").
+    FR-4304, `data-model.md`, `plan.md` migration 038 row, ADR-0008 §4, `extraction-pipeline.md` §3.9/§3.10, the constitution line ~203 (this file, "Done — 2026-10-01 (family-parent agent)").
 23. **Book-level closing steps were not run** (`runs/g10-math/fanout-plan.json` → `closing_steps`). (a) Chapter 8's bundle is only at `services/extraction/work/g10-math/pilot/seed/g10m-c08.json`;
     `work/` is gitignored, so **Chapter 8's seed is not on the branch**, and `seed/g10-math/` holds Chapters 1–7 and 9–14 only (decision in the plan: copy it as reviewed, or re-assemble it
     with the book-picture stand-ins). (b) The whole-book export `seed/generated/g10-math/book-export/` does not exist; `seed/generated/g10-math/export/` is the pilot's 13-objective export.
