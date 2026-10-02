@@ -5,19 +5,19 @@
  "book": "g10-math",
  "chapter": 11,
  "module": "module:g10m-c11",
- "packet_sha256": "46e537783f725b0493d241fd6b02d67295ba8c730db30248d002da2cbc484285",
+ "packet_sha256": "62798b586b7f69f1e6d9169325c0db371463b7de01d943c63dfa026921a15e0c",
  "by_ref": {
   "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/s1-ch11",
   "stage": "S1",
-  "shards_sha256": "a4d228b7c9c980e21e7d081c8062dfdae78280b42b8d219642feb8c3d2e3b8a1",
+  "shards_sha256": "0c67bc7f123730951f4ffcd05d968b6ba8461379078d04bcf9b9cf5137e05b8a",
   "files": 243,
   "pool_batch": 60
  },
  "embedded": {
   "source": "runbook/objectives.workflow.js",
   "source_sha256": "afabf5af79f22a7e2dcb3060c7a8c4596ec06170296f865fd40e76ce1e9fef52",
-  "args_sha256": "e6e84133d80bd2e169a5593e8c69a3f90401798eee8d0ed2982a3cc62e05fd52",
-  "generated_sha256": "eec3d6aeb8b5c123981eea6f6e55829b16266d91df25cffe70fe9dc2c71e45af",
+  "args_sha256": "c4c2b56cdbe89b5934cbac18fdc6cb5fd6b61575202572926ef273fb167d3265",
+  "generated_sha256": "ab406ac234eb58196d5c2e7f396b3da89e5b2b900404d9ad72d3a900f3d67a3f",
   "generator": "services/extraction/embed_workflow.py v1"
  },
  "teacher_only_dropped": 1,
@@ -28,47 +28,42 @@
     "a": {
      "objectives": [
       {
-       "statement": "Calculate the length of an unknown side of a right-angled triangle, given an angle and one side, using the sine, cosine or tangent ratio (and the theorem of Pythagoras where needed).",
-       "label": "Find sides using trigonometric ratios",
+       "statement": "Calculate an unknown side of a right-angled triangle in a practical two-dimensional problem, using sine, cosine or tangent (and the theorem of Pythagoras where needed).",
+       "label": "Calculate sides using ratios",
        "evidence": [
         {
          "kind": "intro",
          "anchor": "b03953",
          "printed_page": 390,
-         "quote": "use these three ratios and the theorem of Pythagoras"
-        },
-        {
-         "kind": "summary",
-         "anchor": "b03984",
-         "printed_page": 397,
-         "quote": "three trigonometric ratios"
+         "quote": "We will use these three ratios and the theorem of Pythagoras"
         },
         {
          "kind": "worked_example",
          "anchor": "WE1",
          "printed_page": 392,
-         "quote": "height, $h$ , of the kite"
+         "quote": "What is the height, $h$ , of the kite above the ground?"
         },
         {
          "kind": "worked_example",
          "anchor": "WE5",
          "printed_page": 396,
-         "quote": "how high must he build the wall $BD$"
+         "quote": "how high must he build the wall $BD$ ?"
         },
         {
          "kind": "exercise",
          "anchor": "Ex11-1:6",
          "printed_page": 397,
-         "quote": "distance between the wall and the base of the ladder"
+         "quote": "Find the distance between the wall and the base of the ladder"
         },
         {
-         "kind": "exercise",
-         "anchor": "Ex11-2:6",
-         "printed_page": 398,
-         "quote": "Through what height would a person be lifted by travelling on the escalator?"
+         "kind": "summary",
+         "anchor": "b03984",
+         "printed_page": 397,
+         "quote": "We can define three trigonometric ratios for right-angled triangles"
         }
        ],
        "exercise_items": [
+        "Ex11-1:1",
         "Ex11-1:6"
        ],
        "worked_examples": [
@@ -78,15 +73,196 @@
        "key": "A1"
       },
       {
-       "statement": "Calculate the size of an angle in a right-angled triangle from two known sides by choosing sin, cos or tan and applying its inverse.",
-       "label": "Find angles using trigonometric ratios",
+       "statement": "Calculate an unknown angle of a right-angled triangle from two given sides, by choosing the appropriate trigonometric ratio and solving for the angle.",
+       "label": "Calculate angles from sides",
        "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "b03951",
+         "printed_page": 390,
+         "quote": "As revision the three trigonometric ratios can be defined for right-angled triangles as:"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE2",
+         "printed_page": 393,
+         "quote": "The hypotenuse and opposite side are given for both triangles"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex11-1:3",
+         "printed_page": 397,
+         "quote": "find the angle of elevation of the kite"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex11-2:2a",
+         "printed_page": 398,
+         "quote": "Calculate the angle of elevation from the boat to the top of the cliff"
+        }
+       ],
+       "exercise_items": [
+        "Ex11-1:3",
+        "Ex11-1:4"
+       ],
+       "worked_examples": [
+        "WE2"
+       ],
+       "key": "A2"
+      },
+      {
+       "statement": "Calculate the height of a building or other object from a horizontal distance and the angle of elevation, using tangent.",
+       "label": "Find heights from elevation",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "b03958",
+         "printed_page": 390,
+         "quote": "the angle formed by the line of sight and the horizontal plane for an object above the horizontal plane"
+        },
+        {
+         "kind": "intro",
+         "anchor": "b03972",
+         "printed_page": 394,
+         "quote": "using trigonometry to find the height of a building"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE3",
+         "printed_page": 394,
+         "quote": "Calculate the height of the building, correct to the nearest metre."
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex11-1:5",
+         "printed_page": 397,
+         "quote": "Determine the height of the lighthouse to the nearest metre."
+        },
+        {
+         "kind": "summary",
+         "anchor": "b03985",
+         "printed_page": 397,
+         "quote": "such as finding the height of a building"
+        }
+       ],
+       "exercise_items": [
+        "Ex11-1:2",
+        "Ex11-1:5"
+       ],
+       "worked_examples": [
+        "WE3"
+       ],
+       "key": "A3"
+      },
+      {
+       "statement": "Solve a problem that involves both an angle of elevation and an angle of depression, by working in two right-angled triangles and adding the lengths found.",
+       "label": "Use elevation and depression",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "b03963",
+         "printed_page": 391,
+         "quote": "the angle formed by the line of sight and the horizontal plane for an object below the horizontal plane"
+        },
+        {
+         "kind": "intro",
+         "anchor": "b03965",
+         "printed_page": 391,
+         "quote": "Notice that $\\alpha=\\theta$"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE4",
+         "printed_page": 395,
+         "quote": "What is the height of the cellphone tower"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex11-2:18",
+         "printed_page": 400,
+         "quote": "the angle of depression ( $a$ )"
+        },
+        {
+         "kind": "summary",
+         "anchor": "b03987",
+         "printed_page": 397,
+         "quote": "The angle of depression is the angle formed by the line of sight"
+        }
+       ],
+       "exercise_items": [],
+       "worked_examples": [
+        "WE4"
+       ],
+       "key": "A4"
+      }
+     ]
+    },
+    "b": {
+     "objectives": [
+      {
+       "statement": "Calculate the length of an unknown side in a right-angled triangle problem, such as the height of a kite, a building or a wall, by choosing sine, cosine or tangent from a given angle and one given side.",
+       "label": "Calculate sides with trig ratios",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE1",
+         "printed_page": 392,
+         "quote": "What is the height, $h$ , of the kite above the ground?"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE3",
+         "printed_page": 394,
+         "quote": "Calculate the height of the building, correct to the nearest metre."
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE5",
+         "printed_page": 396,
+         "quote": "how high must he build the wall $BD$ ?"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex11-1:1",
+         "printed_page": 396,
+         "quote": "Calculate the height of the building ( $x$ )"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex11-1:6",
+         "printed_page": 397,
+         "quote": "Find the distance between the wall and the base of the ladder"
+        },
         {
          "kind": "intro",
          "anchor": "b03951",
          "printed_page": 390,
          "quote": "the three trigonometric ratios can be defined for right-angled triangles"
         },
+        {
+         "kind": "summary",
+         "anchor": "b03985",
+         "printed_page": 397,
+         "quote": "such as finding the height of a building"
+        }
+       ],
+       "exercise_items": [
+        "Ex11-1:1",
+        "Ex11-1:2",
+        "Ex11-1:5",
+        "Ex11-1:6"
+       ],
+       "worked_examples": [
+        "WE1",
+        "WE3",
+        "WE5"
+       ],
+       "key": "B1"
+      },
+      {
+       "statement": "Calculate the size of an unknown angle in a right-angled triangle from two known sides, by choosing sine, cosine or tangent and using the theorem of Pythagoras where a side is not given.",
+       "label": "Calculate angles with trig ratios",
+       "evidence": [
         {
          "kind": "worked_example",
          "anchor": "WE2",
@@ -101,151 +277,6 @@
         },
         {
          "kind": "exercise",
-         "anchor": "Ex11-2:1",
-         "printed_page": 398,
-         "quote": "Find the angle between the wall and the ladder."
-        }
-       ],
-       "exercise_items": [
-        "Ex11-1:3",
-        "Ex11-1:4"
-       ],
-       "worked_examples": [
-        "WE2"
-       ],
-       "key": "A2"
-      },
-      {
-       "statement": "Calculate heights and distances in two-dimensional problems that use the angle of elevation or the angle of depression.",
-       "label": "Angles of elevation and depression",
-       "evidence": [
-        {
-         "kind": "definition",
-         "anchor": "b03958",
-         "printed_page": 390,
-         "quote": "the angle formed by the line of sight and the horizontal plane"
-        },
-        {
-         "kind": "definition",
-         "anchor": "b03963",
-         "printed_page": 391,
-         "quote": "for an object below the horizontal plane"
-        },
-        {
-         "kind": "summary",
-         "anchor": "b03986",
-         "printed_page": 397,
-         "quote": "The angle of elevation is the angle formed by the line of sight"
-        },
-        {
-         "kind": "worked_example",
-         "anchor": "WE3",
-         "printed_page": 394,
-         "quote": "measure the angle of elevation from the ground to the top of the building"
-        },
-        {
-         "kind": "worked_example",
-         "anchor": "WE4",
-         "printed_page": 395,
-         "quote": "(the angle of depression)"
-        },
-        {
-         "kind": "exercise",
-         "anchor": "Ex11-1:5",
-         "printed_page": 397,
-         "quote": "Determine the height of the lighthouse to the nearest metre."
-        },
-        {
-         "kind": "exercise",
-         "anchor": "Ex11-2:18",
-         "printed_page": 400,
-         "quote": "the angle of depression ( $a$ ) is equal to 15°"
-        }
-       ],
-       "exercise_items": [
-        "Ex11-1:1",
-        "Ex11-1:2",
-        "Ex11-1:5"
-       ],
-       "worked_examples": [
-        "WE3",
-        "WE4"
-       ],
-       "key": "A3"
-      }
-     ]
-    },
-    "b": {
-     "objectives": [
-      {
-       "statement": "Calculate an unknown side of a right-angled triangle in a practical problem, using sin, cos or tan with a given angle and one given side.",
-       "label": "Calculate sides using ratios",
-       "evidence": [
-        {
-         "kind": "worked_example",
-         "anchor": "WE1",
-         "printed_page": 392,
-         "quote": "Use given information and appropriate ratio to solve for"
-        },
-        {
-         "kind": "worked_example",
-         "anchor": "WE5",
-         "printed_page": 396,
-         "quote": "how high must he build the wall $BD$ ?"
-        },
-        {
-         "kind": "intro",
-         "anchor": "b03953",
-         "printed_page": 390,
-         "quote": "We will use these three ratios and the theorem of Pythagoras to help us solve two-dimensional problems."
-        },
-        {
-         "kind": "exercise",
-         "anchor": "Ex11-1:6",
-         "printed_page": 397,
-         "quote": "Find the distance between the wall and the base of the ladder to the nearest metre."
-        },
-        {
-         "kind": "exercise",
-         "anchor": "Ex11-1:1",
-         "printed_page": 396,
-         "quote": "Calculate the height of the building ( $x$ )"
-        }
-       ],
-       "exercise_items": [
-        "Ex11-1:1",
-        "Ex11-1:6"
-       ],
-       "worked_examples": [
-        "WE1",
-        "WE5"
-       ],
-       "key": "B1"
-      },
-      {
-       "statement": "Calculate an unknown angle of a right-angled triangle from two known sides, by choosing sin, cos or tan and using the inverse function (with the theorem of Pythagoras where a side is missing).",
-       "label": "Calculate angles using ratios",
-       "evidence": [
-        {
-         "kind": "worked_example",
-         "anchor": "WE2",
-         "printed_page": 393,
-         "quote": "The hypotenuse and opposite side are given for both triangles"
-        },
-        {
-         "kind": "intro",
-         "anchor": "b03951",
-         "printed_page": 390,
-         "quote": "the three trigonometric ratios can be defined for right-angled triangles"
-        },
-        {
-         "kind": "exercise",
-         "anchor": "Ex11-1:3",
-         "printed_page": 397,
-         "quote": "find the angle of elevation of the kite."
-        },
-        {
-         "kind": "exercise",
          "anchor": "Ex11-1:4",
          "printed_page": 397,
          "quote": "What is the angle of elevation of the sun"
@@ -255,6 +286,12 @@
          "anchor": "Ex11-2:1",
          "printed_page": 398,
          "quote": "Find the angle between the wall and the ladder."
+        },
+        {
+         "kind": "intro",
+         "anchor": "b03953",
+         "printed_page": 390,
+         "quote": "the theorem of Pythagoras to help us solve two-dimensional problems"
         }
        ],
        "exercise_items": [
@@ -267,14 +304,26 @@
        "key": "B2"
       },
       {
-       "statement": "Use the angle of elevation or the angle of depression to calculate a height or a distance in a two-dimensional problem.",
-       "label": "Elevation and depression problems",
+       "statement": "Identify the angle of elevation and the angle of depression from a description or sketch, and use both, with right-angled triangles, to calculate a height or distance.",
+       "label": "Use angles of elevation and depression",
        "evidence": [
         {
-         "kind": "worked_example",
-         "anchor": "WE3",
-         "printed_page": 394,
-         "quote": "Calculate the height of the building, correct to the nearest metre."
+         "kind": "definition",
+         "anchor": "b03958",
+         "printed_page": 390,
+         "quote": "the angle formed by the line of sight and the horizontal plane for an object above the horizontal plane"
+        },
+        {
+         "kind": "definition",
+         "anchor": "b03963",
+         "printed_page": 391,
+         "quote": "the angle formed by the line of sight and the horizontal plane for an object below the horizontal plane"
+        },
+        {
+         "kind": "intro",
+         "anchor": "b03965",
+         "printed_page": 391,
+         "quote": "Notice that $\\alpha=\\theta$ ."
         },
         {
          "kind": "worked_example",
@@ -283,48 +332,20 @@
          "quote": "(the angle of depression)"
         },
         {
-         "kind": "definition",
-         "anchor": "b03958",
-         "printed_page": 390,
-         "quote": "The angle of elevation is the angle formed by the line of sight and the horizontal plane for an object above the horizontal plane."
-        },
-        {
-         "kind": "definition",
-         "anchor": "b03963",
-         "printed_page": 391,
-         "quote": "The angle of depression is the angle formed by the line of sight and the horizontal plane for an object below the horizontal plane."
-        },
-        {
-         "kind": "summary",
-         "anchor": "b03986",
-         "printed_page": 397,
-         "quote": "The angle of elevation is the angle formed by the line of sight and the horizontal plane"
-        },
-        {
-         "kind": "exercise",
-         "anchor": "Ex11-1:5",
-         "printed_page": 397,
-         "quote": "The angle of elevation is $\\text{5}$ °."
-        },
-        {
-         "kind": "exercise",
-         "anchor": "Ex11-1:2",
-         "printed_page": 397,
-         "quote": "the angle of elevation to the top of the pole is $65^\\circ$"
-        },
-        {
          "kind": "exercise",
          "anchor": "Ex11-2:18",
          "printed_page": 400,
          "quote": "the angle of depression ( $a$ ) is equal to 15°"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex11-2:17b",
+         "printed_page": 400,
+         "quote": "Calculate the increase in height between 11:00 am and 11:02 am."
         }
        ],
-       "exercise_items": [
-        "Ex11-1:2",
-        "Ex11-1:5"
-       ],
+       "exercise_items": [],
        "worked_examples": [
-        "WE3",
         "WE4"
        ],
        "key": "B3"
@@ -335,12 +356,13 @@
    "reconciled": {
     "objectives": [
      {
-      "statement": "Calculate the length of an unknown side of a right-angled triangle, given an angle and one side, using the sine, cosine or tangent ratio (and the theorem of Pythagoras where needed).",
-      "label": "Find sides using trigonometric ratios",
-      "confidence": "agreed",
+      "statement": "Calculate the length of an unknown side in a right-angled triangle problem, such as the height of a kite, a building or a wall, by choosing sine, cosine or tangent from a given angle and one given side.",
+      "label": "Calculate sides with trig ratios",
+      "confidence": "merged",
       "from": {
        "a": [
-        "A1"
+        "A1",
+        "A3"
        ],
        "b": [
         "B1"
@@ -351,25 +373,31 @@
         "kind": "intro",
         "anchor": "b03953",
         "printed_page": 390,
-        "quote": "We will use these three ratios and the theorem of Pythagoras to help us solve two-dimensional problems."
-       },
-       {
-        "kind": "summary",
-        "anchor": "b03984",
-        "printed_page": 397,
-        "quote": "three trigonometric ratios"
+        "quote": "We will use these three ratios and the theorem of Pythagoras"
        },
        {
         "kind": "worked_example",
         "anchor": "WE1",
         "printed_page": 392,
-        "quote": "height, $h$ , of the kite"
+        "quote": "What is the height, $h$ , of the kite above the ground?"
+       },
+       {
+        "kind": "intro",
+        "anchor": "b03972",
+        "printed_page": 394,
+        "quote": "using trigonometry to find the height of a building"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE3",
+        "printed_page": 394,
+        "quote": "Calculate the height of the building, correct to the nearest metre."
        },
        {
         "kind": "worked_example",
         "anchor": "WE5",
         "printed_page": 396,
-        "quote": "how high must he build the wall $BD$"
+        "quote": "how high must he build the wall $BD$ ?"
        },
        {
         "kind": "exercise",
@@ -379,23 +407,32 @@
        },
        {
         "kind": "exercise",
-        "anchor": "Ex11-1:6",
+        "anchor": "Ex11-1:5",
         "printed_page": 397,
-        "quote": "Find the distance between the wall and the base of the ladder to the nearest metre."
+        "quote": "Determine the height of the lighthouse to the nearest metre."
        },
        {
         "kind": "exercise",
-        "anchor": "Ex11-2:6",
-        "printed_page": 398,
-        "quote": "Through what height would a person be lifted by travelling on the escalator?"
+        "anchor": "Ex11-1:6",
+        "printed_page": 397,
+        "quote": "Find the distance between the wall and the base of the ladder"
+       },
+       {
+        "kind": "summary",
+        "anchor": "b03985",
+        "printed_page": 397,
+        "quote": "such as finding the height of a building"
        }
       ],
       "exercise_items": [
        "Ex11-1:1",
+       "Ex11-1:2",
+       "Ex11-1:5",
        "Ex11-1:6"
       ],
       "worked_examples": [
        "WE1",
+       "WE3",
        "WE5"
       ],
       "terms": [
@@ -403,27 +440,18 @@
        "sine",
        "cosine",
        "tangent",
-       "trigonometric ratios",
-       "theorem of Pythagoras"
+       "trigonometric ratios"
       ],
       "term_flags": [
        {
         "term": "right-angled triangle",
-        "why": "Called a \"right triangle\" in American usage."
-       },
-       {
-        "term": "theorem of Pythagoras",
-        "why": "Also known as the Pythagorean theorem or Pythagoras' theorem in other curricula."
-       },
-       {
-        "term": "trigonometric ratios",
-        "why": "Some curricula call sine, cosine and tangent \"trig functions\"; the book also says \"function\" in worked examples."
+        "why": "American and some other curricula say \"right triangle\"; it is the same shape, with one 90 degree angle."
        }
       ]
      },
      {
-      "statement": "Calculate the size of an angle in a right-angled triangle from two known sides by choosing sin, cos or tan and applying its inverse.",
-      "label": "Find angles using trigonometric ratios",
+      "statement": "Calculate an unknown angle of a right-angled triangle from two given sides, by choosing the appropriate trigonometric ratio and solving for the angle.",
+      "label": "Calculate angles with trig ratios",
       "confidence": "agreed",
       "from": {
        "a": [
@@ -438,19 +466,19 @@
         "kind": "intro",
         "anchor": "b03951",
         "printed_page": 390,
-        "quote": "the three trigonometric ratios can be defined for right-angled triangles"
-       },
-       {
-        "kind": "worked_example",
-        "anchor": "WE2",
-        "printed_page": 393,
-        "quote": "therefore use the $\\sin$ function"
+        "quote": "As revision the three trigonometric ratios can be defined for right-angled triangles as:"
        },
        {
         "kind": "worked_example",
         "anchor": "WE2",
         "printed_page": 393,
         "quote": "The hypotenuse and opposite side are given for both triangles"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE2",
+        "printed_page": 393,
+        "quote": "therefore use the $\\sin$ function"
        },
        {
         "kind": "exercise",
@@ -469,6 +497,12 @@
         "anchor": "Ex11-2:1",
         "printed_page": 398,
         "quote": "Find the angle between the wall and the ladder."
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex11-2:2a",
+        "printed_page": 398,
+        "quote": "Calculate the angle of elevation from the boat to the top of the cliff"
        }
       ],
       "exercise_items": [
@@ -480,31 +514,22 @@
       ],
       "terms": [
        "right-angled triangle",
-       "sin",
-       "cos",
-       "tan",
-       "inverse",
-       "hypotenuse",
-       "opposite side"
+       "trigonometric ratio"
       ],
       "term_flags": [
        {
-        "term": "inverse",
-        "why": "The inverse of sin, cos or tan is written sin⁻¹, cos⁻¹, tan⁻¹ or called arcsin, arccos, arctan in other curricula."
-       },
-       {
         "term": "right-angled triangle",
-        "why": "Called a \"right triangle\" in American usage."
+        "why": "American and some other curricula say \"right triangle\"; it is the same shape, with one 90 degree angle."
        }
       ]
      },
      {
-      "statement": "Use the angle of elevation or the angle of depression to calculate a height or a distance in a two-dimensional problem.",
-      "label": "Angles of elevation and depression",
+      "statement": "Identify the angle of elevation and the angle of depression from a description or sketch, and use both, with right-angled triangles, to calculate a height or distance.",
+      "label": "Use angles of elevation and depression",
       "confidence": "agreed",
       "from": {
        "a": [
-        "A3"
+        "A4"
        ],
        "b": [
         "B3"
@@ -515,25 +540,25 @@
         "kind": "definition",
         "anchor": "b03958",
         "printed_page": 390,
-        "quote": "The angle of elevation is the angle formed by the line of sight and the horizontal plane for an object above the horizontal plane."
+        "quote": "the angle formed by the line of sight and the horizontal plane for an object above the horizontal plane"
        },
        {
         "kind": "definition",
         "anchor": "b03963",
         "printed_page": 391,
-        "quote": "The angle of depression is the angle formed by the line of sight and the horizontal plane for an object below the horizontal plane."
+        "quote": "the angle formed by the line of sight and the horizontal plane for an object below the horizontal plane"
        },
        {
-        "kind": "summary",
-        "anchor": "b03986",
-        "printed_page": 397,
-        "quote": "The angle of elevation is the angle formed by the line of sight and the horizontal plane"
+        "kind": "intro",
+        "anchor": "b03965",
+        "printed_page": 391,
+        "quote": "Notice that $\\alpha=\\theta$"
        },
        {
         "kind": "worked_example",
-        "anchor": "WE3",
-        "printed_page": 394,
-        "quote": "Calculate the height of the building, correct to the nearest metre."
+        "anchor": "WE4",
+        "printed_page": 395,
+        "quote": "What is the height of the cellphone tower"
        },
        {
         "kind": "worked_example",
@@ -543,53 +568,43 @@
        },
        {
         "kind": "exercise",
-        "anchor": "Ex11-1:2",
-        "printed_page": 397,
-        "quote": "the angle of elevation to the top of the pole is $65^\\circ$"
-       },
-       {
-        "kind": "exercise",
-        "anchor": "Ex11-1:5",
-        "printed_page": 397,
-        "quote": "Determine the height of the lighthouse to the nearest metre."
-       },
-       {
-        "kind": "exercise",
         "anchor": "Ex11-2:18",
         "printed_page": 400,
         "quote": "the angle of depression ( $a$ ) is equal to 15°"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex11-2:17b",
+        "printed_page": 400,
+        "quote": "Calculate the increase in height between 11:00 am and 11:02 am."
+       },
+       {
+        "kind": "summary",
+        "anchor": "b03987",
+        "printed_page": 397,
+        "quote": "The angle of depression is the angle formed by the line of sight"
        }
       ],
-      "exercise_items": [
-       "Ex11-1:2",
-       "Ex11-1:5"
-      ],
+      "exercise_items": [],
       "worked_examples": [
-       "WE3",
        "WE4"
       ],
       "terms": [
        "angle of elevation",
        "angle of depression",
-       "line of sight",
-       "horizontal plane",
-       "two-dimensional problem"
+       "right-angled triangle"
       ],
       "term_flags": [
        {
-        "term": "horizontal plane",
-        "why": "Many curricula say \"horizontal line\" or \"horizontal\" for the reference from which these angles are measured."
-       },
-       {
-        "term": "line of sight",
-        "why": "Some curricula say \"line of vision\"."
+        "term": "right-angled triangle",
+        "why": "American and some other curricula say \"right triangle\"; it is the same shape, with one 90 degree angle."
        }
       ]
      }
     ],
     "rejected": [],
     "unmapped_items": [],
-    "notes": "All six keys align one-to-one (A1/B1 sides, A2/B2 angles, A3/B3 elevation and depression), so every objective is agreed and nothing is rejected. The finders disagreed on Ex11-1:1: A put it under A3, B under B1. The only quote on file for it (\"Calculate the height of the building ( $x$ )\") mentions no angle of elevation or depression, so I placed it in the sides objective, where it appears once. The worked examples and the other five exercise items were placed the same way by both finders. Ex11-2:6, Ex11-2:1 and Ex11-2:18 are end-of-chapter items, used as evidence only."
+    "notes": "Every A and B key is accounted for in an objective's \"from\"; nothing is rejected and every exercise item and worked example sits in exactly one objective. A3 (height of a building from the angle of elevation, using tangent) is folded into the sides objective, because B1 explicitly covers heights of a kite, building or wall and puts WE3, Ex11-1:2 and Ex11-1:5 there; A3's definition evidence for the angle of elevation is reused as evidence for the elevation/depression objective. The statement for the angles objective is A2's wording rather than B2's, since B2's Pythagoras clause does not fit \"from two known sides\". The elevation/depression objective has no Ex11-1 items: both finders agree that none of Ex11-1:1-6 tests it, and its exercise evidence comes from end-of-chapter items only."
    },
    "evidence_check": {
     "checks": [
@@ -636,22 +651,34 @@
       "supports": true
      },
      {
+      "objective_n": 1,
+      "evidence_index": 7,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 8,
+      "present": true,
+      "supports": true
+     },
+     {
       "objective_n": 2,
       "evidence_index": 0,
       "present": true,
-      "supports": false
+      "supports": true
      },
      {
       "objective_n": 2,
       "evidence_index": 1,
-      "present": true,
-      "supports": true
+      "present": false,
+      "supports": false
      },
      {
       "objective_n": 2,
       "evidence_index": 2,
-      "present": true,
-      "supports": true
+      "present": false,
+      "supports": false
      },
      {
       "objective_n": 2,
@@ -668,6 +695,12 @@
      {
       "objective_n": 2,
       "evidence_index": 5,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 6,
       "present": true,
       "supports": true
      },
@@ -732,137 +765,137 @@
      {
       "item_id": "Ex11-2:1",
       "objective": "lo:g10m11s1-1-2",
-      "reason": "Hypotenuse 15 m and adjacent side 5 m are known; the angle is found with inverse cosine."
+      "reason": "Opposite (5 m) and hypotenuse (15 m) are given and the angle between wall and ladder is unknown, so an inverse ratio finds the angle."
      },
      {
       "item_id": "Ex11-2:2a",
       "objective": "lo:g10m11s1-1-2",
-      "reason": "Opposite 10 m and adjacent 30 m are known; the angle comes from inverse tangent. The angle is the unknown, so this is not the elevation-to-length skill."
+      "reason": "Cliff height 10 m and distance 30 m are the two given sides, and the angle is found with inverse tan; the elevation is the unknown, not the tool."
      },
      {
       "item_id": "Ex11-2:2b",
       "objective": "lo:g10m11s1-1-2",
-      "reason": "The distance becomes 23 m and the height stays 10 m; the new angle comes from inverse tangent."
+      "reason": "The new adjacent side is 30 - 7 = 23 m with opposite 10 m, so the new angle is again found by inverse tan from two sides."
      },
      {
       "item_id": "Ex11-2:3",
       "objective": "lo:g10m11s1-1-3",
-      "reason": "A 45 degree angle of elevation is given and used to find the horizontal distance between the poles."
+      "reason": "A given 45 degree angle of elevation is read from the diagram and used with the 8 m height to find a horizontal distance."
      },
      {
       "item_id": "Ex11-2:4",
       "objective": "lo:g10m11s1-1-2",
-      "reason": "Two sides are known (5,0 m and 7,07 m) and the angle of elevation x is found with an inverse ratio."
+      "reason": "The adjacent side (5,0 m) and hypotenuse (7,07 m) are given and the unknown angle x is found with inverse cosine."
      },
      {
       "item_id": "Ex11-2:5",
       "objective": "lo:g10m11s1-1-2",
-      "reason": "Opposite 3,4 m and adjacent 24 m are known; the launch angle is found with inverse tangent."
+      "reason": "The crossbar height 3,4 m and ground distance 24 m are the two sides, and the launch angle is found with inverse tan."
      },
      {
       "item_id": "Ex11-2:6",
       "objective": "lo:g10m11s1-1-1",
-      "reason": "Angle 30 degrees and hypotenuse 20 m are known; the height is the opposite side, found with sine."
+      "reason": "The 30 degree angle and the 20 m hypotenuse are given and the opposite side (the height lifted) is found with sine."
      },
      {
       "item_id": "Ex11-2:7a",
       "objective": "lo:g10m11s1-1-2",
-      "reason": "The sketch is the setup step for part (b), where the ladder angle is found from hypotenuse 8 m and opposite 6 m. It has no trig skill of its own."
+      "reason": "This is the modelling sketch for the ladder problem whose solution (7b) finds an angle from two given sides; it has no calculation of its own."
      },
      {
       "item_id": "Ex11-2:7b",
       "objective": "lo:g10m11s1-1-2",
-      "reason": "Hypotenuse 8 m and opposite side 6 m are known; the angle with the ground is found with inverse sine."
+      "reason": "The opposite (6 m) and hypotenuse (8 m) are given and the angle with the ground is found with inverse sine."
      },
      {
       "item_id": "Ex11-2:8a",
       "objective": "lo:g10m11s1-1-3",
-      "reason": "The sketch is the setup step for an angle-of-elevation problem whose part (b) asks for the tower height. It has no trig skill of its own."
+      "reason": "Asks for a sketch built from a verbal description that states an angle of elevation, which is identifying the angle of elevation."
      },
      {
       "item_id": "Ex11-2:8b",
       "objective": "lo:g10m11s1-1-3",
-      "reason": "A 38 degree angle of elevation and a 70 m distance are given; tan gives the tower height."
+      "reason": "The angle of elevation 38 degrees and the 70 m distance are used with tan to find the height of the tower."
      },
      {
       "item_id": "Ex11-2:9",
       "objective": "lo:g10m11s1-1-1",
-      "reason": "Cable (hypotenuse) 12 m and a 40 degree angle with the horizontal are given; sine gives the pole height. The word 'elevation' is not used."
+      "reason": "The 40 degree angle and the 12 m hypotenuse (cable) are given and the opposite side (pole height) is found with sine."
      },
      {
       "item_id": "Ex11-2:10",
       "objective": "lo:g10m11s1-1-3",
-      "reason": "A 0,7 degree angle of elevation and a 35 m height give the horizontal distance, which is compared with 4 km."
+      "reason": "The measured angle of elevation of 0,7 degrees and the 35 m height give the horizontal distance, which is compared with 4 km."
      },
      {
       "item_id": "Ex11-2:11",
       "objective": "lo:g10m11s1-1-1",
-      "reason": "Only the text is available, not the figure. The item is assigned on the likely skill: an angle and one side of a right triangle in the rectangle give the unknown sides, which give the perimeter."
+      "reason": "The perimeter of the rectangle needs unknown side lengths found from a given angle and a given side in a right-angled triangle (figure not visible, inferred)."
      },
      {
       "item_id": "Ex11-2:12",
       "objective": "lo:g10m11s1-1-2",
-      "reason": "Half-diagonals 3 cm and 4,5 cm are the two known sides of a right triangle; the vertex angles come from inverse tangent."
+      "reason": "The rhombus diagonals bisect at right angles, giving right triangles with legs 3 cm and 4,5 cm, and the vertex angles come from inverse tan."
      },
      {
       "item_id": "Ex11-2:13",
       "objective": "lo:g10m11s1-1-1",
-      "reason": "Side 7 cm and a 70 degree vertex angle (half-angle 35 degrees) give the half-diagonals by sine and cosine."
+      "reason": "The 7 cm side and the 70 degree angle in the right triangles formed by the diagonals give half-diagonals by sine and cosine."
      },
      {
       "item_id": "Ex11-2:14",
       "objective": "lo:g10m11s1-1-1",
-      "reason": "Side 5 cm and a 58 degree angle give the perpendicular height by sine."
+      "reason": "The 5 cm side and the 58 degree angle give the perpendicular distance (the height) with sine."
      },
      {
       "item_id": "Ex11-2:15a",
       "objective": "lo:g10m11s1-1-1",
-      "reason": "The side length is perimeter/4. This is the setup step for part (b), whose side-from-angle work uses the 30 degree angle."
+      "reason": "The side is the perimeter divided by 4 with no trig of its own; it is the setup step for the side-and-angle problem in 15b."
      },
      {
       "item_id": "Ex11-2:15b",
       "objective": "lo:g10m11s1-1-1",
-      "reason": "Side 5 cm and a 30 degree angle (half-angle 15 degrees) give the diagonal lengths using sine and cosine."
+      "reason": "The side 5 cm and the 30 degree angle give the half-diagonals in right triangles with sine and cosine."
      },
      {
       "item_id": "Ex11-2:16a",
       "objective": "lo:g10m11s1-1-2",
-      "reason": "Opposite 1 m and adjacent 1,35 m are known; the sun's altitude is found with inverse tangent."
+      "reason": "The 1 m stick and 1,35 m shadow are the two given sides, and the sun's altitude is found with inverse tan."
      },
      {
       "item_id": "Ex11-2:16b",
       "objective": "lo:g10m11s1-1-1",
-      "reason": "The angle from part (a) and the 47 m shadow give the building height by tan. The text calls it altitude, not angle of elevation, so it is treated as a side-from-angle problem."
+      "reason": "The sun's altitude from 16a and the 47 m shadow are used with tan to find the building height."
      },
      {
       "item_id": "Ex11-2:17a",
       "objective": "lo:g10m11s1-1-3",
-      "reason": "The sketch is the setup step for the balloon angle-of-elevation problem whose part (b) finds the height gained. It has no trig skill of its own."
+      "reason": "Asks for a sketch showing two angles of elevation of a balloon from one observation point, which is identifying angles of elevation from a description."
      },
      {
       "item_id": "Ex11-2:17b",
       "objective": "lo:g10m11s1-1-3",
-      "reason": "Angles of elevation of 25 and 60 degrees at a 300 m distance give two heights, and their difference is the height gained."
+      "reason": "Two angles of elevation (25 and 60 degrees) and the 300 m distance give two heights, and the increase is their difference."
      },
      {
       "item_id": "Ex11-2:18",
       "objective": "lo:g10m11s1-1-3",
-      "reason": "An angle of depression of 15 degrees and an angle of elevation of 10 degrees are used to find the mountain height."
+      "reason": "It uses both an angle of depression and an angle of elevation, identified from the description, to find the mountain height."
      },
      {
       "item_id": "Ex11-2:19a",
       "objective": "lo:g10m11s1-1-1",
-      "reason": "In right triangle PQR, angle R = 42 degrees and PQ = 7,5 cm give PR by sine."
+      "reason": "The 42 degree angle R and the side PS = 6,2 cm in a right triangle give the hypotenuse PR with sine."
      },
      {
       "item_id": "Ex11-2:19b",
       "objective": "lo:g10m11s1-1-2",
-      "reason": "Two sides of right triangle PSR are known (PS and PR from part a), so the marked angle comes from an inverse ratio."
+      "reason": "The angle x is found from two known sides of a right-angled triangle with an inverse ratio."
      },
      {
       "item_id": "Ex11-2:20",
       "objective": "lo:g10m11s1-1-3",
-      "reason": "A 27 degree angle of elevation to the top of a lighthouse on a cliff (total height 85 m) gives the horizontal distance to the boat."
+      "reason": "The 27 degree angle of elevation to the lighthouse top and the total height 85 m give the horizontal distance of the boat."
      }
     ]
    },
@@ -871,137 +904,137 @@
      {
       "item_id": "Ex11-2:1",
       "objective": "lo:g10m11s1-1-2",
-      "reason": "Angle from two known sides (15 m hypotenuse, 5 m base) via an inverse trig ratio."
+      "reason": "Find the angle between wall and ladder from hypotenuse 15 and adjacent/opposite side 5 (inverse ratio from two sides)."
      },
      {
       "item_id": "Ex11-2:2a",
       "objective": "lo:g10m11s1-1-2",
-      "reason": "Angle is the unknown; height 10 m and distance 30 m give tan, then inverse tan."
+      "reason": "Unknown angle (of elevation) found from opposite 10 and adjacent 30 using inverse tangent."
      },
      {
       "item_id": "Ex11-2:2b",
       "objective": "lo:g10m11s1-1-2",
-      "reason": "Same skill: new horizontal distance 23 m and height 10 m, find the angle with inverse tan."
+      "reason": "New angle found from opposite 10 and adjacent 23 (30 minus 7) using inverse tangent."
      },
      {
       "item_id": "Ex11-2:3",
       "objective": "lo:g10m11s1-1-3",
-      "reason": "Uses a 45 degree angle of elevation with a known height to calculate a horizontal distance."
+      "reason": "Uses a given 45 degree angle of elevation to calculate a horizontal distance between poles."
      },
      {
       "item_id": "Ex11-2:4",
       "objective": "lo:g10m11s1-1-2",
-      "reason": "Find angle x from the adjacent side 5,0 and hypotenuse 7,07 using inverse cos."
+      "reason": "Unknown angle of elevation x calculated from given sides (5,0 and 7,07) via an inverse ratio."
      },
      {
       "item_id": "Ex11-2:5",
       "objective": "lo:g10m11s1-1-2",
-      "reason": "Launch angle from the bar height 3,4 m and distance 24 m using inverse tan."
+      "reason": "Launch angle found from opposite 3,4 and adjacent 24 using inverse tangent."
      },
      {
       "item_id": "Ex11-2:6",
       "objective": "lo:g10m11s1-1-1",
-      "reason": "Unknown side (vertical height) from a 30 degree angle and the 20 m hypotenuse using sine."
+      "reason": "Unknown side (height) from a given 30 degree angle and hypotenuse 20 using sine."
      },
      {
       "item_id": "Ex11-2:7a",
       "objective": "lo:g10m11s1-1-2",
-      "reason": "Sketch step for the ladder (8 m, reaches 6 m) whose purpose is to find the angle from two known sides."
+      "reason": "Sketch of the ladder triangle (8 m, 6 m) that sets up the angle calculation in 7b."
      },
      {
       "item_id": "Ex11-2:7b",
       "objective": "lo:g10m11s1-1-2",
-      "reason": "Angle with the ground from hypotenuse 8 m and opposite side 6 m using inverse sin."
+      "reason": "Angle with the ground from hypotenuse 8 and opposite side 6 via inverse sine."
      },
      {
       "item_id": "Ex11-2:8a",
       "objective": "lo:g10m11s1-1-3",
-      "reason": "Sketch step for an angle-of-elevation problem whose purpose is to find a tower height."
+      "reason": "Sketch showing the 38 degree angle of elevation to the top of the tower."
      },
      {
       "item_id": "Ex11-2:8b",
       "objective": "lo:g10m11s1-1-3",
-      "reason": "Tower height from a 38 degree angle of elevation at 70 m, using tan."
+      "reason": "Use the angle of elevation 38 degrees and 70 m distance to find the height of the tower."
      },
      {
       "item_id": "Ex11-2:9",
       "objective": "lo:g10m11s1-1-1",
-      "reason": "Unknown side (pole height) from a 40 degree angle and the 12 m cable (hypotenuse) using sine."
+      "reason": "Height of pole from hypotenuse (cable 12 m) and a 40 degree angle using sine."
      },
      {
       "item_id": "Ex11-2:10",
       "objective": "lo:g10m11s1-1-3",
-      "reason": "Uses a 0,7 degree angle of elevation and a 35 m height to find a horizontal distance, then compares it to 4 km."
+      "reason": "Use angle of elevation 0,7 degrees and height 35 m to calculate horizontal distance from the shore."
      },
      {
       "item_id": "Ex11-2:11",
       "objective": "lo:g10m11s1-1-1",
-      "reason": "Rectangle perimeter needs side lengths found from a given angle and a side in a right-angled triangle (the figure is not visible, so this is inferred)."
+      "reason": "Perimeter needs unknown rectangle side lengths found by trig from a given angle and a side (figure not visible; best fit)."
      },
      {
       "item_id": "Ex11-2:12",
       "objective": "lo:g10m11s1-1-2",
-      "reason": "Rhombus diagonals 6 cm and 9 cm give the half-diagonals as two legs, and inverse tan gives the vertex angles."
+      "reason": "Rhombus angles found from half-diagonals 3 and 4,5 (two sides of a right triangle) via inverse tangent."
      },
      {
       "item_id": "Ex11-2:13",
       "objective": "lo:g10m11s1-1-1",
-      "reason": "Diagonal lengths come from a 7 cm side and a 35 degree half-angle in right triangles using sin and cos."
+      "reason": "Diagonal lengths from side 7 cm and half-angle 35 degrees in right triangles using sine/cosine."
      },
      {
       "item_id": "Ex11-2:14",
       "objective": "lo:g10m11s1-1-1",
-      "reason": "Perpendicular height from a 5 cm side and a 58 degree angle using sine."
+      "reason": "Perpendicular height of a parallelogram from side 5 cm and 58 degree angle using sine."
      },
      {
       "item_id": "Ex11-2:15a",
-      "objective": "lo:g10m11s1-1-1",
-      "reason": "Setup step for the rhombus (side = perimeter/4 = 5 cm); no trig in this part, so this is the nearest fit as the first step of the side-from-angle problem in 15b."
+      "objective": "none",
+      "reason": "Side length is just perimeter divided by 4; no trigonometric skill practised, so no listed objective states it."
      },
      {
       "item_id": "Ex11-2:15b",
       "objective": "lo:g10m11s1-1-1",
-      "reason": "Diagonals from side 5 cm and the 30 degree angle (half-angles 15 and 75 degrees) using sin and cos."
+      "reason": "Diagonal lengths from side 5 cm and the 30 degree angle (half-angles 15 and 75) using sine/cosine."
      },
      {
       "item_id": "Ex11-2:16a",
       "objective": "lo:g10m11s1-1-2",
-      "reason": "Sun's altitude angle from a 1 m stick and 1,35 m shadow using inverse tan."
+      "reason": "Sun's altitude angle found from opposite 1 m and adjacent 1,35 m via inverse tangent."
      },
      {
       "item_id": "Ex11-2:16b",
       "objective": "lo:g10m11s1-1-1",
-      "reason": "Building height from the sun's altitude angle and a 47 m shadow using tan; the text does not say elevation or depression, so it is the generic side-from-angle skill."
+      "reason": "Building height from the known altitude angle and shadow length 47 m using tangent."
      },
      {
       "item_id": "Ex11-2:17a",
       "objective": "lo:g10m11s1-1-3",
-      "reason": "Sketch step for a balloon problem with angles of elevation 25 and 60 degrees at 300 m, to find heights."
+      "reason": "Sketch of a balloon observed at angles of elevation 25 and 60 degrees from a point 300 m away."
      },
      {
       "item_id": "Ex11-2:17b",
       "objective": "lo:g10m11s1-1-3",
-      "reason": "Increase in balloon height from two angles of elevation (25 and 60 degrees) at a 300 m distance."
+      "reason": "Two angles of elevation and 300 m distance used to find heights and their difference."
      },
      {
       "item_id": "Ex11-2:18",
       "objective": "lo:g10m11s1-1-3",
-      "reason": "Mountain height from an angle of depression (15 degrees) and an angle of elevation (10 degrees)."
+      "reason": "Uses both an angle of depression and an angle of elevation to calculate the mountain's height."
      },
      {
       "item_id": "Ex11-2:19a",
       "objective": "lo:g10m11s1-1-1",
-      "reason": "Length PR from PQ = 7,5 and the 42 degree angle at R in right triangle PQR using sine."
+      "reason": "Find side PR from given side PQ and angle R = 42 degrees using sine."
      },
      {
       "item_id": "Ex11-2:19b",
       "objective": "lo:g10m11s1-1-2",
-      "reason": "Angle x in a right triangle from two known sides (PS and PR) using inverse cos."
+      "reason": "Find the marked angle x from two known sides (e.g. PS and PR) using an inverse ratio."
      },
      {
       "item_id": "Ex11-2:20",
       "objective": "lo:g10m11s1-1-3",
-      "reason": "Distance from a boat to a cliff base from a 27 degree angle of elevation to the lighthouse top at 85 m above sea level."
+      "reason": "Uses 27 degree angle of elevation from the boat to the lighthouse top to calculate a horizontal distance."
      }
     ]
    }
@@ -1021,16 +1054,16 @@
       "kind": "text",
       "anchor": "b03951",
       "printed_page": 390,
-      "quote": "As revision the three trigonometric ratios can be defined for right-angled triangles as:"
+      "quote": "As revision the three trigonometric ratios can be defined for right-angled triangles as"
      },
      {
-      "kind": "text",
-      "anchor": "b03953",
-      "printed_page": 390,
-      "quote": "We will use these three ratios and the theorem of Pythagoras to help us solve two-dimensional problems."
+      "kind": "worked_example",
+      "anchor": "WE1",
+      "printed_page": 392,
+      "quote": "Use given information and appropriate ratio to solve for $h$ and $d$"
      }
     ],
-    "reason": "The lesson opens by revising sin, cos and tan as side ratios, which is what g10m5s3-1-2 teaches, and then uses them to find sides."
+    "reason": "The chapter opens by revising the definitions of sine, cosine and tangent as side ratios, which WE1 then applies to find h and d."
    },
    {
     "src": "lo:g10m5s3-1-2",
@@ -1041,16 +1074,16 @@
       "kind": "text",
       "anchor": "b03951",
       "printed_page": 390,
-      "quote": "As revision the three trigonometric ratios can be defined for right-angled triangles as:"
+      "quote": "As revision the three trigonometric ratios can be defined for right-angled triangles as"
      },
      {
       "kind": "worked_example",
       "anchor": "WE2",
       "printed_page": 393,
-      "quote": "The hypotenuse and opposite side are given for both triangles"
+      "quote": "The hypotenuse and opposite side are given for both triangles, therefore use the $\\sin$ function."
      }
     ],
-    "reason": "The ratio definitions are revised before the lesson, and WE2 picks sin or cos from the two known sides to find an angle."
+    "reason": "Finding an angle from two sides needs the ratio definitions that the lesson recalls as revision; WE2 picks sin from the sides given."
    },
    {
     "src": "lo:g10m5s3-1-2",
@@ -1061,16 +1094,16 @@
       "kind": "text",
       "anchor": "b03951",
       "printed_page": 390,
-      "quote": "As revision the three trigonometric ratios can be defined for right-angled triangles as:"
+      "quote": "As revision the three trigonometric ratios can be defined for right-angled triangles as"
      },
      {
-      "kind": "text",
-      "anchor": "b03950",
-      "printed_page": 390,
-      "quote": "We can use the trigonometric ratios to solve problems in two dimensions that involve right-angled triangles."
+      "kind": "worked_example",
+      "anchor": "WE4",
+      "printed_page": 395,
+      "quote": "\\tanD\\hat{B}E&=\\frac{DE}{BD}"
      }
     ],
-    "reason": "The elevation and depression problems are solved with the revised ratios, for example tan in WE3 and WE4."
+    "reason": "The elevation and depression problems use the revised tangent ratio, as WE4 writes tan of each angle as a ratio of sides."
    },
    {
     "src": "lo:g10m5s3-1-1",
@@ -1085,26 +1118,26 @@
      },
      {
       "kind": "worked_example",
+      "anchor": "WE5",
+      "printed_page": 396,
+      "quote": "Identify opposite and adjacent sides and hypotenuse"
+     }
+    ],
+    "reason": "The first step of WE1 and WE5 is to label the opposite, adjacent and hypotenuse sides, used without being retaught."
+   },
+   {
+    "src": "lo:g10m5s3-1-1",
+    "dst": "lo:g10m11s1-1-3",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
       "anchor": "WE3",
       "printed_page": 394,
       "quote": "Identify the opposite and adjacent sides and the hypotenuse"
      }
     ],
-    "reason": "The worked examples label opposite, adjacent and hypotenuse as a first step without teaching it again."
-   },
-   {
-    "src": "lo:g10m5s3-1-1",
-    "dst": "lo:g10m11s1-1-2",
-    "signal": "uses_method",
-    "evidence": [
-     {
-      "kind": "worked_example",
-      "anchor": "WE2",
-      "printed_page": 393,
-      "quote": "The hypotenuse and opposite side are given for both triangles"
-     }
-    ],
-    "reason": "WE2 names the hypotenuse and opposite side of each triangle to choose the ratio, using side labelling as a given skill."
+    "reason": "WE3, the angle of elevation building problem, starts by labelling the sides relative to the angle."
    },
    {
     "src": "lo:g10m5s7-1-1",
@@ -1115,16 +1148,16 @@
       "kind": "worked_example",
       "anchor": "WE1",
       "printed_page": 392,
-      "quote": "Use given information and appropriate ratio to solve for"
+      "quote": "Use given information and appropriate ratio to solve for $h$ and $d$"
      },
      {
-      "kind": "worked_example",
-      "anchor": "WE3",
-      "printed_page": 394,
-      "quote": "We have a right-angled triangle and know the length of one side and an angle."
+      "kind": "exercise",
+      "anchor": "Ex11-1:1",
+      "printed_page": 396,
+      "quote": "Calculate the height of the building ( $x$ )"
      }
     ],
-    "reason": "WE1 and WE3 find a side from an angle and one side by choosing a ratio and rearranging, using this method as a step without teaching it."
+    "reason": "WE1 and the exercises find an unknown side by choosing a ratio, rearranging and using a calculator, applied to a kite or a building."
    },
    {
     "src": "lo:g10m5s7-1-1",
@@ -1135,16 +1168,16 @@
       "kind": "worked_example",
       "anchor": "WE3",
       "printed_page": 394,
-      "quote": "Calculate the height of the building, correct to the nearest metre."
+      "quote": "We have a right-angled triangle and know the length of one side and an angle."
      },
      {
-      "kind": "exercise",
-      "anchor": "Ex11-1:5",
-      "printed_page": 397,
-      "quote": "Determine the height of the lighthouse to the nearest metre."
+      "kind": "worked_example",
+      "anchor": "WE4",
+      "printed_page": 395,
+      "quote": "Therefore we can calculate the sides of the triangles."
      }
     ],
-    "reason": "Finding a height from an angle of elevation and a horizontal distance is done by calculating a side with a ratio."
+    "reason": "The height and distance calculations with elevation and depression angles use the side-length method as a step."
    },
    {
     "src": "lo:g10m5s7-1-2",
@@ -1155,42 +1188,16 @@
       "kind": "worked_example",
       "anchor": "WE2",
       "printed_page": 393,
-      "quote": "The hypotenuse and opposite side are given for both triangles"
+      "quote": "The hypotenuse and opposite side are given for both triangles, therefore use the $\\sin$ function."
      },
      {
       "kind": "exercise",
       "anchor": "Ex11-1:3",
       "printed_page": 397,
       "quote": "find the angle of elevation of the kite"
-     },
-     {
-      "kind": "exercise",
-      "anchor": "Ex11-1:4",
-      "printed_page": 397,
-      "quote": "What is the angle of elevation of the sun"
      }
     ],
-    "reason": "WE2 and the exercises find an angle from two known sides by taking the inverse ratio, which is the method of 5.7."
-   },
-   {
-    "src": "lo:g10m7s2-1-1",
-    "dst": "lo:g10m11s1-1-1",
-    "signal": "uses_method",
-    "evidence": [
-     {
-      "kind": "text",
-      "anchor": "b03953",
-      "printed_page": 390,
-      "quote": "We will use these three ratios and the theorem of Pythagoras to help us solve two-dimensional problems."
-     },
-     {
-      "kind": "worked_example",
-      "anchor": "WE1",
-      "printed_page": 392,
-      "quote": "Note that the third side of the triangle can also be calculated using the theorem of Pythagoras"
-     }
-    ],
-    "reason": "The lesson uses the theorem of Pythagoras as an alternative step for a missing side without teaching it."
+    "reason": "WE2 finds each angle from two known sides with the inverse trigonometric function on a calculator, without teaching it again."
    },
    {
     "src": "lo:g10m7s2-1-1",
@@ -1198,13 +1205,19 @@
     "signal": "uses_method",
     "evidence": [
      {
+      "kind": "text",
+      "anchor": "b03953",
+      "printed_page": 390,
+      "quote": "We will use these three ratios and the theorem of Pythagoras"
+     },
+     {
       "kind": "worked_example",
       "anchor": "WE2",
       "printed_page": 393,
-      "quote": "Use the theorem of Pythagoras to determine"
+      "quote": "Use the theorem of Pythagoras to determine $BE$"
      }
     ],
-    "reason": "WE2 applies the theorem of Pythagoras to find BE before using cosine to find the second angle."
+    "reason": "WE2 uses the theorem of Pythagoras to find BE before it takes the cosine of the second angle."
    },
    {
     "src": "lo:g10m7s1-1-2",
@@ -1221,10 +1234,10 @@
       "kind": "text",
       "anchor": "b03965",
       "printed_page": 391,
-      "quote": "is parallel to the line from the top of the cliffs to"
+      "quote": "Notice that $\\alpha=\\theta$"
      }
     ],
-    "reason": "The lesson shows the angle of elevation equals the angle of depression by pointing out the parallel lines, relying on equal angles between parallel lines."
+    "reason": "The angles of elevation and depression are shown equal because the two lines are parallel, using the parallel-line angle facts as a step."
    }
   ],
   "outside_book": [],
@@ -1233,57 +1246,52 @@
     {
      "i": 0,
      "verdict": "CONFIRMED",
-     "note": "a0009 opens with 'As revision' and restates sin/cos/tan as ratios of the sides, which is the src skill. a0011 says these ratios are used to solve the problems."
+     "note": "a0009 opens 'As revision' and recalls the three trig ratios; solving for a side in the kite example (a0026) uses sin/cos as ratios of opposite, adjacent and hypotenuse."
     },
     {
      "i": 1,
      "verdict": "CONFIRMED",
-     "note": "a0009 recalls the three ratios. a0027 (WE2) applies sin = opposite/hypotenuse as the step before the inverse to find the angle."
+     "note": "The same 'As revision' recall of the ratios (a0009). WE2 (a0027) writes sin ABE = opposite/hypotenuse = 3/4 to find an angle, so it uses the ratio definition."
     },
     {
      "i": 2,
      "verdict": "CONFIRMED",
-     "note": "a0009 recalls the ratios. a0008 says the ratios are used for two-dimensional right-angled-triangle problems, which include the elevation and depression ones."
+     "note": "The revision of the ratios (a0009) is recalled. WE4 (a0029) applies tan DBE = DE/BD, the ratio definition, inside the elevation/depression problem."
     },
     {
      "i": 3,
      "verdict": "CONFIRMED",
-     "note": "a0026 (WE1) and a0028 (WE3) both make 'identify the opposite and adjacent sides and the hypotenuse' an explicit first step. That is the src labelling skill."
+     "note": "WE1 (a0026) and WE5 (a0030) both start with the step of identifying the opposite, adjacent and hypotenuse sides. That is the labelling skill, used as a step. Both quotes are present."
     },
     {
      "i": 4,
      "verdict": "CONFIRMED",
-     "note": "a0027 (WE2) reads which sides are given ('hypotenuse and opposite') and picks sin from that. This uses side labelling as a step, though only implicitly."
+     "note": "WE3 (a0028) has the explicit step 'Identify the opposite and adjacent sides and the hypotenuse' before applying tan, in an angle-of-elevation problem. The quote is present."
     },
     {
      "i": 5,
      "verdict": "CONFIRMED",
-     "note": "a0026 (WE1) and a0028 (WE3) choose the ratio, write it as opposite/hypotenuse or similar, rearrange and calculate. That is the src method. dst is a close restatement of src, but the text does use the method."
+     "note": "WE1 (a0026) chooses the appropriate ratio and solves for h and d, which is the side-calculation method. Ex11-1:1 (a0031) asks for a height, which needs that method. Both quotes are present."
     },
     {
      "i": 6,
      "verdict": "CONFIRMED",
-     "note": "a0028 (WE3) finds a building height by choosing tan, rearranging and solving for the side. That is the src method inside an elevation problem. The a0035 exercise quote is present, but WE3 is what shows the reliance."
+     "note": "WE3 (a0028) has a known side and an angle, and sets up tan with 'rearrange and solve for h'. WE4 (a0029) computes the sides with tan after saying 'we can calculate the sides', so it uses the side-calculation method as a step."
     },
     {
      "i": 7,
      "verdict": "CONFIRMED",
-     "note": "a0027 (WE2) uses sin of the known sides and then the inverse to get the angle. The a0033 and a0034 exercises ask for an angle of elevation from two known lengths, which needs the same inverse-ratio method."
+     "note": "WE2 (a0027) picks sin from the given sides, then inverts it to get the angle (48,59...), which is the inverse-ratio method for angles. Ex11-1:3 (a0033) asks for the angle of elevation from two sides. Both quotes are present."
     },
     {
      "i": 8,
      "verdict": "CONFIRMED",
-     "note": "a0011 says the ratios and the theorem of Pythagoras are used together. a0026 (WE1) says the third side can also be found with Pythagoras. The dst objective itself names Pythagoras, and src includes it."
+     "note": "a0011 says the ratios and 'the theorem of Pythagoras' will be used to solve problems. WE2 (a0027) uses Pythagoras to find BE as a step in an angle problem. Both quotes are present."
     },
     {
      "i": 9,
      "verdict": "CONFIRMED",
-     "note": "a0027 (WE2) contains the step 'Use the theorem of Pythagoras to determine' BE, which feeds the cosine-inverse step. That is the Pythagoras part of src used as a step."
-    },
-    {
-     "i": 10,
-     "verdict": "CONFIRMED",
-     "note": "The quotes are in a0021 and a0022. The text uses parallel lines to conclude that the angle of elevation equals the angle of depression (alpha = theta), which is the parallel-lines angle result from src. It does not name 'alternate angles', so the reliance is implicit, but it is clearly the step in use."
+     "note": "a0021 and a0022 state that two lines are parallel, and 'Notice that alpha=theta' follows from that parallelism. This is the alternate-angles fact applied as a step, although the text does not name it. Both quotes are present. This is the least explicit link of the ten."
     }
    ]
   }
