@@ -766,7 +766,13 @@
    "figures_missing": [],
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false
+   "blocked_on_figure": false,
+   "g2": {
+    "verdict": "exclude",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): Side triangle figure: hypotenuse 12, base 4, so $H=\\sqrt{144-16}=\\sqrt{128}$, not the book's $\\sqrt{130}$. Then $V=\\frac13\\cdot16\\sqrt3\\cdot8\\sqrt2\\approx104.5$, not 105,3. Blind 110.9 also differs and is not used.",
+    "auto": true
+   }
   },
   {
    "ref": "WE14",
@@ -1127,7 +1133,7 @@
    "lo": "lo:g10m13s3-2-1",
    "stem": "Find the volume of the following objects (round off to 1 decimal place if needed): [figure]",
    "answer_type": "numeric",
-   "answer": "314,16",
+   "answer": "314,2",
    "choices": null,
    "marker": null,
    "solution": [
@@ -1137,7 +1143,7 @@
     "$\\begin{align*}V&=\\frac{1}{3}\\times\\pi(r)^{2}\\timesH\\\\&=\\frac{1}{3}\\pi(\\text{5})^{2}(\\text{12})\\\\&=100\\pi\\\\&\\approx\\text{314,2}\\text{ cm}^{3}\\end{align*}$"
    ],
    "solution_provenance": "book_worked_epub",
-   "printed_answer": "314,16 cm3",
+   "printed_answer": "314,2 cm3",
    "epub_final_answer": "$\\approx\\text{314,2}\\text{ cm}^{3}$",
    "blind_answer": "V \\approx 314.2\\ \\text{cm}^3",
    "verification": "disputed",
@@ -1179,7 +1185,17 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": true
+   "blocked_on_figure": true,
+   "g2": {
+    "verdict": "fix",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): Cone r=5, slant 13, $H=12$, $V=\\frac13\\pi\\cdot25\\cdot12=100\\pi=314.159$, so 314,2 to 1 dp. The EPUB and working say 314,2 and the blind answer agrees. The typed 314,16 is the wrong number of places for the stem. Verified independently: the verifier's own answer matches the key.",
+    "auto": true,
+    "changed": [
+     "answer",
+     "printed_answer"
+    ]
+   }
   },
   {
    "ref": "Ex13-5:4b",
@@ -1239,7 +1255,13 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": true
+   "blocked_on_figure": true,
+   "g2": {
+    "verdict": "accept",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): Figure: equilateral base side 6, vertical height 10. $h=\\sqrt{27}$, base area $=3\\sqrt{27}=15.59$, $V=\\frac13\\cdot15.59\\cdot10=51.96\\approx52.0$. Book, EPUB and printed agree. The blind 144 is the answer to 4c. Verified independently: the verifier's own answer matches the key.",
+    "auto": true
+   }
   },
   {
    "ref": "Ex13-5:4c",
@@ -1296,7 +1318,13 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": true
+   "blocked_on_figure": true,
+   "g2": {
+    "verdict": "hold",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): NOT RECOMMENDED LIVE (the app's own marker finds the typed key NOT equal to the answer the book states (its EPUB answer, the quoted span, the last line of its working): a key the typing agent corrected is not the book's, and correcting a book's answer is Samuel's to approve). The agent's reading: Figure: square base 6, vertical height 12 with right-angle mark in the base. $V=\\frac13\\cdot36\\cdot12=144$ exactly. Book, EPUB and printed agree. The blind 52.0 is the answer to 4b, so the blind solver is wrong here.",
+    "auto": true
+   }
   },
   {
    "ref": "Ex13-5:4d",
@@ -1477,7 +1505,13 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": true
+   "blocked_on_figure": true,
+   "g2": {
+    "verdict": "exclude",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): Figure: equilateral base of side 4, slant height 9. Surface area = $\\frac12(4)\\sqrt{12}+3\\cdot\\frac12(4)(9)=6.93+54=60.93$. Book's working uses $b=6$ in $\\frac12 b(h_b+3h_s)$, though its own $h_b$ line uses side 4. 91,39 is wrong. Right answer by the agent's own derivation: 60.93 cm^2.",
+    "auto": true
+   }
   },
   {
    "ref": "Ex13-5:6b",
@@ -1538,7 +1572,13 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false
+   "blocked_on_figure": false,
+   "g2": {
+    "verdict": "exclude",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): Base is equilateral, side 4, area $2\\sqrt3\\approx6.93$. Apex height from slant 9 and inradius $\\sqrt{12}/3$: $H=\\sqrt{81-\\frac43}\\approx8.93$. $V=\\frac13(6.93)(8.93)\\approx20.61$. Book uses 3 as inradius and 6 as base, so 29,39 is wrong. Right answer by the agent's own derivation: 20.61 cm^3.",
+    "auto": true
+   }
   },
   {
    "ref": "Ex13-5:7",
@@ -2492,7 +2532,7 @@
     "options said to be the stem's are not all in the stem"
    ],
    "unit": null,
-   "options_source": "stem",
+   "options_source": "lesson",
    "not_markable_reason": null,
    "tier_source": "typing",
    "printed_answer_scope": "item",
@@ -2504,10 +2544,13 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "fix",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (options said to be the stem's are not all in the stem); a fix needs fields a person or a recommendation must write",
-    "auto": true
+    "note": "auto-pass G2 (AI recommendation): Cone $V=\\frac{\\pi(3)^2(12)}{3}=36\\pi\\approx113.1$; hemisphere $\\frac23\\pi(3)^3=18\\pi\\approx56.5<113.1$, so Yes. Book's working prints $(3)^3$ in the cone line but the value $36\\pi$ is right. Typed options 'No' is not in the stem; retype as the closed yes/no set. Verified independently: the verifier's own answer matches the key.",
+    "auto": true,
+    "changed": [
+     "options_source"
+    ]
    }
   },
   {
@@ -2747,7 +2790,13 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": true
+   "blocked_on_figure": true,
+   "g2": {
+    "verdict": "exclude",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): Square with diagonal 12: $12^2=2AB^2$ gives $AB^2=72$, not 77. $H=\\sqrt{100-36}=8$. Pyramid volume $\\frac13(72)(8)=192$. Book writes 77 and wrongly includes $\\pi$, giving 645,07. Blind answer 192 matches my derivation. Right answer by the agent's own derivation: 192 cm^3.",
+    "auto": true
+   }
   },
   {
    "ref": "Ex13-7:28a",
@@ -2868,7 +2917,7 @@
    "g2": {
     "verdict": "exclude",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (book_final is not in the book solution); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): From figure: $UI=18\\cos33.557^\\circ=15$, $JU\\approx9.95$, $CU=UI=15$, $CI=7$, base area $\\approx51.05$, $V\\approx169.3$, juice $0.8815\\times169.3\\approx149.2$. Book's total 84,661 is half that; its working never derives it, so 74,626 is wrong. Right answer by the agent's own derivation: about 149.2 cm^3.",
     "auto": true
    }
   },

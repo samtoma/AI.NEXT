@@ -763,14 +763,9 @@
    "kind": "exercise",
    "lo": "lo:g10m13s4-1-2",
    "stem": "If the height of a prism is doubled, how much will its volume increase by?",
-   "answer_type": "choice",
-   "answer": "A",
-   "choices": [
-    {
-     "key": "A",
-     "text": "doubles"
-    }
-   ],
+   "answer_type": "not_markable",
+   "answer": null,
+   "choices": null,
    "marker": null,
    "solution": [
     "We do not know if we have a rectangular prism or a triangular prism. However we do know that the volume of a prism is given by:",
@@ -814,7 +809,7 @@
    ],
    "unit": null,
    "options_source": null,
-   "not_markable_reason": null,
+   "not_markable_reason": "The book's answer is a verbal statement (the volume doubles); equivalent forms (doubles, factor 2, 100% increase) cannot be marked reliably and no book options exist.",
    "tier_source": "typing",
    "printed_answer_scope": "item",
    "figures": [],
@@ -825,10 +820,16 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "fix",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (a choice needs 2–5 options with the key among them); a fix needs fields a person or a recommendation must write",
-    "auto": true
+    "note": "auto-pass G2 (AI recommendation): New volume $=\\text{base}\\times2h=2V$: it doubles. Book answer is right. Typed choice has one option 'doubles' with no book alternatives; options cannot be invented. The verbal answer (doubles, factor 2, 100%) cannot be marked reliably, so keep it as a teaching example.",
+    "auto": true,
+    "changed": [
+     "answer",
+     "answer_type",
+     "choices",
+     "not_markable_reason"
+    ]
    }
   },
   {

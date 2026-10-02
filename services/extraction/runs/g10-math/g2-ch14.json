@@ -3,106 +3,264 @@
  "auto": true,
  "items": {
   "g10m14s1-1:Ex14-1:1": {
-   "verdict": "exclude",
+   "verdict": "fix",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (options said to be the stem's are not all in the stem; the key \"\\{(2;6);(3;5);(4;4);(5;3);(6;2)\\}\" does not read as the printed answer \"event set = {(2; 6); (3; 5); (4; 4); (5; 3); (6; 2)}\"); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): Total 8 on two dice: (2;6),(3;5),(4;4),(5;3),(6;2); an event is the set of all outcomes of interest, so the 5-element set. Key matches book. Check failed only on \\left/\\right and the 'event set =' prefix; options re-typed verbatim from the stem. Verified independently: the verifier's own answer matches the key.",
+   "fields": {
+    "choices": [
+     {
+      "key": "A",
+      "text": "\\left\\{(4;4)\\right\\}"
+     },
+     {
+      "key": "B",
+      "text": "\\left\\{(2;6);(3;5);(4;4);(5;3);(6;2)\\right\\}"
+     },
+     {
+      "key": "C",
+      "text": "\\left\\{(2;6);(6;2)\\right\\}"
+     }
+    ]
+   }
   },
   "g10m14s1-1:Ex14-8:1": {
-   "verdict": "exclude",
+   "verdict": "fix",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (a choice needs 2–5 options with the key among them); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): A die landing on 5 is a single result, which is the book's definition of an outcome; the other two are not results of the die roll. Key was lost only because of capital letter and full stop. Options re-typed as the stem's own alternatives. Verified independently: the verifier's own answer matches the key.",
+   "fields": {
+    "answer": "B",
+    "choices": [
+     {
+      "key": "A",
+      "text": "A teacher walks into the class room"
+     },
+     {
+      "key": "B",
+      "text": "The die lands on the number 5"
+     },
+     {
+      "key": "C",
+      "text": "The clock strikes 3 pm"
+     }
+    ]
+   }
   },
   "g10m14s1-1:Ex14-8:27a": {
-   "verdict": "exclude",
+   "verdict": "fix",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"\\{\\text{deck without clubs}\\}\" does not read as the printed answer \"e) Mutually exclusive and comple- mentary.\"); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): Without the clubs, 39 cards remain, so the book's sample space is right (blind agrees: 39 cards of hearts, diamonds, spades). The printed answer is stray text from another question; re-typed from the EPUB. Descriptive set, not markable.",
+   "fields": {
+    "answer_type": "not_markable",
+    "answer": null,
+    "marker": null,
+    "not_markable_reason": "The book's answer is a verbal description of a set (the deck without clubs), which the marker cannot compare.",
+    "printed_answer": "\\{\\text{deck without clubs}\\}"
+   }
   },
   "g10m14s1-1:Ex14-8:27b": {
-   "verdict": "exclude",
+   "verdict": "fix",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"P = \\{J;Q;K\\text{ of hearts, diamonds or spades}\\}\" does not read as the printed answer \"e) Mutually exclusive and comple- mentary.\"); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): Picture cards are J, Q, K; with clubs removed, 3 suits, 9 cards. Book and blind agree. The printed answer is stray text from another question; re-typed from the EPUB. Verbal set, not markable.",
+   "fields": {
+    "answer_type": "not_markable",
+    "answer": null,
+    "marker": null,
+    "not_markable_reason": "The book's answer is a set described in words (J, Q, K of three suits), which the marker cannot compare.",
+    "printed_answer": "P=\\{J;Q;K\\text{ of hearts, diamonds or spades}\\}"
+   }
   },
   "g10m14s1-1:Ex14-8:27c": {
-   "verdict": "exclude",
+   "verdict": "fix",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"N = \\{A;2;3;4;5;6;7;8;9;10\\text{ of hearts, diamonds or spades}\\}\" does not read as the printed answer \"e) Mutually exclusive and comple- mentary.\"); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): Book set includes A with 2 to 10 in three suits (30 cards), consistent with its treatment of the ace as 1 elsewhere (q7e). Blind left the ace out. Printed answer is stray text; re-typed from the EPUB. Verbal set, not markable.",
+   "fields": {
+    "answer_type": "not_markable",
+    "answer": null,
+    "marker": null,
+    "not_markable_reason": "The book's answer is a set described in words (A and 2 to 10 of three suits), which the marker cannot compare.",
+    "printed_answer": "N=\\{A;2;3;4;5;6;7;8;9;10\\text{ of hearts, diamonds or spades}\\}"
+   }
   },
   "g10m14s3-1:Ex14-3:1": {
    "verdict": "exclude",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (a choice needs 2–5 options with the key among them; options said to be the stem's are not all in the stem); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): Figure: A∩B holds 2,3,4,5,8,9,10,11,12,13,14,15; B-only holds 1,7; 6 is outside. So B = {1;2;3;4;5;7;8;9;10;11;12;13;14;15}, matching the book's answer but no option as shown. A student cannot select the right set. Right answer by the agent's own derivation: {1;2;3;4;5;7;8;9;10;11;12;13;14;15}."
   },
   "g10m14s3-1:Ex14-3:2": {
-   "verdict": "exclude",
+   "verdict": "fix",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (a choice needs 2–5 options with the key among them; options said to be the stem's are not all in the stem); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): Figure: A-only 1,2,5,6,9,11,13; A∩B 4,7,10,14,15; so A = {1;2;4;5;6;7;9;10;11;13;14;15}. This equals the fourth option and the book's answer. Key was lost only because the book's answer is a sentence. Typed as a choice over the stem's five own options. Verified independently: the verifier's own answer matches the key.",
+   "fields": {
+    "answer": "D",
+    "choices": [
+     {
+      "key": "A",
+      "text": "\\{1;2;3;4;5;6;7;8;9;10;11;12;14;15\\}"
+     },
+     {
+      "key": "B",
+      "text": "\\{3;8;12\\}"
+     },
+     {
+      "key": "C",
+      "text": "\\{3;4;7;10;14;15\\}"
+     },
+     {
+      "key": "D",
+      "text": "\\{1;2;4;5;6;7;9;10;11;13;14;15\\}"
+     },
+     {
+      "key": "E",
+      "text": "\\{4;7;10;14;15\\}"
+     }
+    ]
+   }
   },
   "g10m14s3-1:Ex14-3:3a": {
    "verdict": "exclude",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"\\{1;2;\\ldots;12\\}\" does not read as the printed answer \"{1; 2; . . . ; 12}\"); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): NOT RECOMMENDED LIVE (the app's marker cannot read the key '\\\\{1;2;\\\\ldots;12\\\\}': unreadable (unexpected character \".\")). The agent's reading: The sample space of slips numbered 1 to 12 is $\\{1;2;\\ldots;12\\}$. The key matches the book's second form and the printed answer. The complaint is only that the typed LaTeX differs from the flattened printed text."
   },
   "g10m14s3-1:Ex14-3:3e": {
    "verdict": "exclude",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (book_final is not in the book solution; the key \"12; 6; 5\" does not read as the book final answer \"$\\text{12}$ $\\text{6}$ $\\text{5}$\"); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): $n(S)=12$ checks out for slips 1 to 12. A and B are never defined in the stem, so $n(A)=6$ and $n(B)=5$ cannot be derived or checked. A student could not answer it as shown, and the book's working gives no way to repair it."
   },
   "g10m14s3-1:Ex14-8:2": {
-   "verdict": "exclude",
+   "verdict": "fix",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (a choice needs 2–5 options with the key among them; options said to be the stem's are not all in the stem); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): I read the figure. B is the blue circle including the overlap: 1,3,5,7,10 and 2,4,8,9,11,12,14,15. 6 and 13 lie outside both circles. This is option D, the book's key. The pipeline typed no key and options that did not match the stem text, so the typing is rebuilt with the stem's own options. Verified independently: the verifier's own answer matches the key.",
+   "fields": {
+    "answer": "D",
+    "choices": [
+     {
+      "key": "A",
+      "text": "\\{6;13\\}"
+     },
+     {
+      "key": "B",
+      "text": "\\{1;3;5;7;10\\}"
+     },
+     {
+      "key": "C",
+      "text": "\\{2;4;6;8;9;11;12;13;14;15\\}"
+     },
+     {
+      "key": "D",
+      "text": "\\{1;2;3;4;5;7;8;9;10;11;12;14;15\\}"
+     }
+    ]
+   }
   },
   "g10m14s5-1:Ex14-5:1": {
-   "verdict": "exclude",
+   "verdict": "accept",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (book_final is not in the book solution); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): $P(A\\cup B)=\\frac{4}{6}+\\frac{1}{6}-0=\\frac{5}{6}=0{,}83$ to 2 d.p. The book's last line gives 0,83, so the complaint that the final answer is not in the working is wrong. The rounded intermediates 0,67+0,17 would give 0,84, but the book's stated result is correct. Verified independently: the verifier's own answer matches the key."
   },
   "g10m14s5-1:Ex14-5:2": {
-   "verdict": "exclude",
+   "verdict": "accept",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (book_final is not in the book solution); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): $A\\cap B=\\{1\\}$, so $P=\\frac{1}{6}=0{,}17$ to 2 d.p. The book's last line states 0,17, so the complaint that the final answer is not in the working is wrong. The first working line has a typo (the last term should be $A\\cap B$). The rounded intermediates sum to 0,16, but the result stands. Verified independently: the verifier's own answer matches the key."
   },
   "g10m14s5-1:Ex14-8:24": {
-   "verdict": "exclude",
+   "verdict": "accept",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (book_final is not in the book solution); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): $A=\\{3,4\\}$, $B=\\{2,4,5\\}$, $S$ has 6 elements. $P(A\\cap B)=\\frac{2}{6}+\\frac{3}{6}-\\frac{4}{6}=\\frac16\\approx0,17$; also $A\\cap B=\\{4\\}$ gives $\\frac16$. Working's last line states 0,17. The complaint is only a text comparison (EPUB has no final line). Stem writes \\capB without a space, a rendering matter only. Verified independently: the verifier's own answer matches the key."
   },
   "g10m14s6-1:Ex14-8:27e": {
    "verdict": "exclude",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (options said to be the lesson's closed set are not categories: \"mutually exclusive and complementary\", \"mutually exclusive and not complementary\", \"not mutually exclusive and complementary\" — numbers, pairs, values and combinations are the book's answer to type, never options to invent; the key \"mut); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): The stem asks about sets $P$ and $N$ but never defines them (the lead-in naming $P$ and $N$ was not copied), so it cannot be answered as it reads. The book's 'Mutually exclusive and complementary' cannot be checked, and the four options are invented combinations, not the book's own words."
   },
   "g10m14s7-1:Ex14-7:1": {
-   "verdict": "exclude",
+   "verdict": "fix",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (a choice needs 2–5 options with the key among them; options said to be the stem's are not all in the stem); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): From the figure: $B=\\{1,5,7,8,9,13,14,15\\}$, so $B'=\\{2,3,4,6,10,11,12\\}$, matching the book. The three sets are in the stem; the typing took the book's sentence as key. Re-type as a choice over the stem's own sets, key the second. Verified independently: the verifier's own answer matches the key.",
+   "fields": {
+    "answer": "B",
+    "choices": [
+     {
+      "key": "A",
+      "text": "$\\{1;5;13;14\\}$"
+     },
+     {
+      "key": "B",
+      "text": "$\\{2;3;4;6;10;11;12\\}$"
+     },
+     {
+      "key": "C",
+      "text": "$\\{3;4;6;11;12\\}$"
+     }
+    ]
+   }
   },
   "g10m14s7-1:Ex14-7:2": {
-   "verdict": "exclude",
+   "verdict": "fix",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (a choice needs 2–5 options with the key among them; options said to be the stem's are not all in the stem); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): From the figure: outside both circles are 2, 4, 9, 11, 13, 15, so $(A\\cup B)'=\\{2,4,9,11,13,15\\}$, matching the book. The three sets are in the stem; the typing took the book's sentence as key. Re-type as a choice over the stem's own sets. Verified independently: the verifier's own answer matches the key.",
+   "fields": {
+    "answer": "A",
+    "choices": [
+     {
+      "key": "A",
+      "text": "$\\{2;4;9;11;13;15\\}$"
+     },
+     {
+      "key": "B",
+      "text": "$\\{1;3;5;6;7;8;10;12;14\\}$"
+     },
+     {
+      "key": "C",
+      "text": "$\\{6;8;12\\}$"
+     }
+    ]
+   }
   },
   "g10m14s7-1:Ex14-8:30": {
+   "verdict": "accept",
+   "auto": true,
+   "by": "auto-pass G2 (AI recommendation)",
+   "note": "auto-pass G2 (AI recommendation): Reading $n(F)=19$, $n(H)=13$ as totals, $n(F\\cap H)=8$, neither 7: $19+13-8+7=31$, equal to the printed answer and the blind answer. The complaint is a text comparison, since the working has no final line. Verified independently: the verifier's own answer matches the key."
+  },
+  "g10m14s1-1:Ex14-1:7e": {
    "verdict": "exclude",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (book_final is not in the book solution); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): Book working counts A, 2, 3 per suit: 12 of 52, so 3/13, and printed and EPUB agree. But the stem says only 'a number less than 4', and an ace is not normally a number card. Read that way the count is 8 and the answer 2/13, as the blind solver found. A student could be marked wrong."
+  },
+  "g10m14s3-1:Ex14-8:9": {
+   "verdict": "hold",
+   "auto": true,
+   "by": "auto-pass G2 (AI recommendation)",
+   "note": "auto-pass G2 (AI recommendation): NOT RECOMMENDED LIVE (the independent verifier said confirmed, and another answer is also correct (its own answer: 8/45; 45 - 6 - 31 = 8 eat only Strawberry Pops, so 8/45; the book prints 0,18 (about 0.178), so a student who types the rounded decimal may be marked wrong by a by-value marker.)). The agent's reading: $45-6-31=8$, so $P=\\frac{8}{45}\\approx0{,}178$. The book's 0,18 is a rounding of that fraction. The stem does not ask for rounding, so a numeric key of 0,18 would mark the exact answer wrong. I retyped the key as the book's own fraction $\\frac{8}{45}$."
+  },
+  "g10m14s5-1:Ex14-8:12f": {
+   "verdict": "exclude",
+   "auto": true,
+   "by": "auto-pass G2 (AI recommendation)",
+   "note": "auto-pass G2 (AI recommendation): From the table, 8 are aged 3, 15 are female and 6 are both. $P=\\frac{8+15-6}{30}=\\frac{17}{30}=0{,}5667$. The book prints 0,56, which is truncated, not rounded. The key is wrong by the book's own working. Right answer by the agent's own derivation: 17/30 (0,57 to 2 d.p.)."
+  },
+  "g10m14s5-1:Ex14-8:13f": {
+   "verdict": "exclude",
+   "auto": true,
+   "by": "auto-pass G2 (AI recommendation)",
+   "note": "auto-pass G2 (AI recommendation): $\\frac{28}{85}+\\frac{21}{85}-\\frac{7}{85}=\\frac{42}{85}\\approx0{,}49$. The book lists 21 multiples of 4 but writes 28. It also subtracts $\\frac13\\cdot\\frac{28}{85}$ instead of the multiples of 12. Its 0,55 is wrong. Right answer by the agent's own derivation: 42/85 (0,49 to 2 d.p.)."
   }
  }
 }

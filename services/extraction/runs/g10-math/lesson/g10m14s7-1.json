@@ -330,19 +330,19 @@
    "lo": "lo:g10m14s7-1-1",
    "stem": "A group of learners are given the following Venn diagram: [figure] The sample space can be described as $\\{n:n\\epsilon\\mathbb{Z},1\\leq n\\leq15\\}$ . They are asked to identify the complementary event set of $B$ , also known as $B'$ . They get stuck, and you offer to help them find it. Which of the following sets best describes the event set of $B'$ ? $\\{1;5;13;14\\}$ $\\{2;3;4;6;10;11;12\\}$ $\\{3;4;6;11;12\\}$",
    "answer_type": "choice",
-   "answer": null,
+   "answer": "B",
    "choices": [
     {
      "key": "A",
-     "text": "{1;5;13;14}"
+     "text": "$\\{1;5;13;14\\}$"
     },
     {
      "key": "B",
-     "text": "{2;3;4;6;10;11;12}"
+     "text": "$\\{2;3;4;6;10;11;12\\}$"
     },
     {
      "key": "C",
-     "text": "{3;4;6;11;12}"
+     "text": "$\\{3;4;6;11;12\\}$"
     }
    ],
    "marker": null,
@@ -397,10 +397,14 @@
    "form_unsupported": null,
    "blocked_on_figure": true,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "fix",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (a choice needs 2–5 options with the key among them; options said to be the stem's are not all in the stem); a fix needs fields a person or a recommendation must write",
-    "auto": true
+    "note": "auto-pass G2 (AI recommendation): From the figure: $B=\\{1,5,7,8,9,13,14,15\\}$, so $B'=\\{2,3,4,6,10,11,12\\}$, matching the book. The three sets are in the stem; the typing took the book's sentence as key. Re-type as a choice over the stem's own sets, key the second. Verified independently: the verifier's own answer matches the key.",
+    "auto": true,
+    "changed": [
+     "answer",
+     "choices"
+    ]
    }
   },
   {
@@ -409,19 +413,19 @@
    "lo": "lo:g10m14s7-1-1",
    "stem": "A group of learners are given the following Venn diagram: [figure] The sample space can be described as $\\{n:n\\epsilon\\mathbb{Z},1\\leq n\\leq15\\}$ . They are asked to identify the complementary event set of $(A\\cupB)$ , also known as $(A\\cupB)'$ . They get stuck, and you offer to help them find it. Which of the following sets best describes the event set of $(A\\cupB)'$ ? $\\{2;4;9;11;13;15\\}$ $\\{1;3;5;6;7;8;10;12;14\\}$ $\\{6;8;12\\}$",
    "answer_type": "choice",
-   "answer": null,
+   "answer": "A",
    "choices": [
     {
      "key": "A",
-     "text": "{2;4;9;11;13;15}"
+     "text": "$\\{2;4;9;11;13;15\\}$"
     },
     {
      "key": "B",
-     "text": "{1;3;5;6;7;8;10;12;14}"
+     "text": "$\\{1;3;5;6;7;8;10;12;14\\}$"
     },
     {
      "key": "C",
-     "text": "{6;8;12}"
+     "text": "$\\{6;8;12\\}$"
     }
    ],
    "marker": null,
@@ -476,10 +480,14 @@
    "form_unsupported": null,
    "blocked_on_figure": true,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "fix",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (a choice needs 2–5 options with the key among them; options said to be the stem's are not all in the stem); a fix needs fields a person or a recommendation must write",
-    "auto": true
+    "note": "auto-pass G2 (AI recommendation): From the figure: outside both circles are 2, 4, 9, 11, 13, 15, so $(A\\cup B)'=\\{2,4,9,11,13,15\\}$, matching the book. The three sets are in the stem; the typing took the book's sentence as key. Re-type as a choice over the stem's own sets. Verified independently: the verifier's own answer matches the key.",
+    "auto": true,
+    "changed": [
+     "answer",
+     "choices"
+    ]
    }
   },
   {
@@ -1716,9 +1724,9 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "accept",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (book_final is not in the book solution); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): Reading $n(F)=19$, $n(H)=13$ as totals, $n(F\\cap H)=8$, neither 7: $19+13-8+7=31$, equal to the printed answer and the blind answer. The complaint is a text comparison, since the working has no final line. Verified independently: the verifier's own answer matches the key.",
     "auto": true
    }
   },

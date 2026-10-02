@@ -320,9 +320,9 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "accept",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (book_final is not in the book solution); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): $P(A\\cup B)=\\frac{4}{6}+\\frac{1}{6}-0=\\frac{5}{6}=0{,}83$ to 2 d.p. The book's last line gives 0,83, so the complaint that the final answer is not in the working is wrong. The rounded intermediates 0,67+0,17 would give 0,84, but the book's stated result is correct. Verified independently: the verifier's own answer matches the key.",
     "auto": true
    }
   },
@@ -391,9 +391,9 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "accept",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (book_final is not in the book solution); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): $A\\cap B=\\{1\\}$, so $P=\\frac{1}{6}=0{,}17$ to 2 d.p. The book's last line states 0,17, so the complaint that the final answer is not in the working is wrong. The first working line has a typo (the last term should be $A\\cap B$). The rounded intermediates sum to 0,16, but the result stands. Verified independently: the verifier's own answer matches the key.",
     "auto": true
    }
   },
@@ -451,7 +451,13 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false
+   "blocked_on_figure": false,
+   "g2": {
+    "verdict": "exclude",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): From the table, 8 are aged 3, 15 are female and 6 are both. $P=\\frac{8+15-6}{30}=\\frac{17}{30}=0{,}5667$. The book prints 0,56, which is truncated, not rounded. The key is wrong by the book's own working. Right answer by the agent's own derivation: 17/30 (0,57 to 2 d.p.).",
+    "auto": true
+   }
   },
   {
    "ref": "Ex14-8:13f",
@@ -507,7 +513,13 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false
+   "blocked_on_figure": false,
+   "g2": {
+    "verdict": "exclude",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): $\\frac{28}{85}+\\frac{21}{85}-\\frac{7}{85}=\\frac{42}{85}\\approx0{,}49$. The book lists 21 multiples of 4 but writes 28. It also subtracts $\\frac13\\cdot\\frac{28}{85}$ instead of the multiples of 12. Its 0,55 is wrong. Right answer by the agent's own derivation: 42/85 (0,49 to 2 d.p.).",
+    "auto": true
+   }
   },
   {
    "ref": "Ex14-8:13g",
@@ -688,9 +700,9 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "accept",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (book_final is not in the book solution); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): $A=\\{3,4\\}$, $B=\\{2,4,5\\}$, $S$ has 6 elements. $P(A\\cap B)=\\frac{2}{6}+\\frac{3}{6}-\\frac{4}{6}=\\frac16\\approx0,17$; also $A\\cap B=\\{4\\}$ gives $\\frac16$. Working's last line states 0,17. The complaint is only a text comparison (EPUB has no final line). Stem writes \\capB without a space, a rendering matter only. Verified independently: the verifier's own answer matches the key.",
     "auto": true
    }
   },

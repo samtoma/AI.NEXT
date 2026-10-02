@@ -516,15 +516,15 @@
    "choices": [
     {
      "key": "A",
-     "text": "\\{(4;4)\\}"
+     "text": "\\left\\{(4;4)\\right\\}"
     },
     {
      "key": "B",
-     "text": "\\{(2;6);(3;5);(4;4);(5;3);(6;2)\\}"
+     "text": "\\left\\{(2;6);(3;5);(4;4);(5;3);(6;2)\\right\\}"
     },
     {
      "key": "C",
-     "text": "\\{(2;6);(6;2)\\}"
+     "text": "\\left\\{(2;6);(6;2)\\right\\}"
     }
    ],
    "marker": null,
@@ -575,10 +575,13 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "fix",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (options said to be the stem's are not all in the stem; the key \"\\{(2;6);(3;5);(4;4);(5;3);(6;2)\\}\" does not read as the printed answer \"event set = {(2; 6); (3; 5); (4; 4); (5; 3); (6; 2)}\"); a fix needs fields a person or a recommendation must write",
-    "auto": true
+    "note": "auto-pass G2 (AI recommendation): Total 8 on two dice: (2;6),(3;5),(4;4),(5;3),(6;2); an event is the set of all outcomes of interest, so the 5-element set. Key matches book. Check failed only on \\left/\\right and the 'event set =' prefix; options re-typed verbatim from the stem. Verified independently: the verifier's own answer matches the key.",
+    "auto": true,
+    "changed": [
+     "choices"
+    ]
    }
   },
   {
@@ -1361,7 +1364,13 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false
+   "blocked_on_figure": false,
+   "g2": {
+    "verdict": "exclude",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): Book working counts A, 2, 3 per suit: 12 of 52, so 3/13, and printed and EPUB agree. But the stem says only 'a number less than 4', and an ace is not normally a number card. Read that way the count is 8 and the answer 2/13, as the blind solver found. A student could be marked wrong.",
+    "auto": true
+   }
   },
   {
    "ref": "Ex14-8:1",
@@ -1369,19 +1378,19 @@
    "lo": "lo:g10m14s1-1-1",
    "stem": "A learner wants to understand the term “outcome”. So the learner rolls a die. Which of the following is the most appropriate example of the term “outcome”? A teacher walks into the class room. The die lands on the number 5. The clock strikes 3 pm.",
    "answer_type": "choice",
-   "answer": null,
+   "answer": "B",
    "choices": [
     {
      "key": "A",
-     "text": "A teacher walks into the class room."
+     "text": "A teacher walks into the class room"
     },
     {
      "key": "B",
-     "text": "The die lands on the number 5."
+     "text": "The die lands on the number 5"
     },
     {
      "key": "C",
-     "text": "The clock strikes 3 pm."
+     "text": "The clock strikes 3 pm"
     }
    ],
    "marker": null,
@@ -1434,10 +1443,14 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "fix",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (a choice needs 2–5 options with the key among them); a fix needs fields a person or a recommendation must write",
-    "auto": true
+    "note": "auto-pass G2 (AI recommendation): A die landing on 5 is a single result, which is the book's definition of an outcome; the other two are not results of the die roll. Key was lost only because of capital letter and full stop. Options re-typed as the stem's own alternatives. Verified independently: the verifier's own answer matches the key.",
+    "auto": true,
+    "changed": [
+     "answer",
+     "choices"
+    ]
    }
   },
   {
@@ -2596,21 +2609,15 @@
    "kind": "exercise",
    "lo": "lo:g10m14s1-1-1",
    "stem": "All the clubs are taken out of a pack of cards. The remaining cards are then shuffled and one card chosen. After being chosen, the card is replaced before the next card is chosen. What is the sample space?",
-   "answer_type": "expression",
-   "answer": "\\{\\text{deck without clubs}\\}",
+   "answer_type": "not_markable",
+   "answer": null,
    "choices": null,
-   "marker": {
-    "kind": "expression",
-    "key": "\\{\\text{deck without clubs}\\}",
-    "form": null,
-    "variables": [],
-    "tolerance": null
-   },
+   "marker": null,
    "solution": [
     "$\\{\\text{deck without clubs}\\}$"
    ],
    "solution_provenance": "book_worked_epub",
-   "printed_answer": "e) Mutually exclusive and comple- mentary.",
+   "printed_answer": "\\{\\text{deck without clubs}\\}",
    "epub_final_answer": "\\{\\text{deck without clubs}\\}",
    "blind_answer": "S=\\{A,2,3,4,5,6,7,8,9,10,J,Q,K\\}\\text{ of each of }\\heartsuit,\\diamondsuit,\\spadesuit\\text{ (39 cards)}",
    "verification": "disputed",
@@ -2644,7 +2651,7 @@
    ],
    "unit": null,
    "options_source": null,
-   "not_markable_reason": null,
+   "not_markable_reason": "The book's answer is a verbal description of a set (the deck without clubs), which the marker cannot compare.",
    "tier_source": "typing",
    "printed_answer_scope": "question",
    "figures": [],
@@ -2655,10 +2662,17 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "fix",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"\\{\\text{deck without clubs}\\}\" does not read as the printed answer \"e) Mutually exclusive and comple- mentary.\"); a fix needs fields a person or a recommendation must write",
-    "auto": true
+    "note": "auto-pass G2 (AI recommendation): Without the clubs, 39 cards remain, so the book's sample space is right (blind agrees: 39 cards of hearts, diamonds, spades). The printed answer is stray text from another question; re-typed from the EPUB. Descriptive set, not markable.",
+    "auto": true,
+    "changed": [
+     "answer",
+     "answer_type",
+     "marker",
+     "not_markable_reason",
+     "printed_answer"
+    ]
    }
   },
   {
@@ -2666,23 +2680,15 @@
    "kind": "exercise",
    "lo": "lo:g10m14s1-1-1",
    "stem": "All the clubs are taken out of a pack of cards. The remaining cards are then shuffled and one card chosen. After being chosen, the card is replaced before the next card is chosen. Find a set to represent the event, $P$ , of drawing a picture card.",
-   "answer_type": "expression",
-   "answer": "P = \\{J;Q;K\\text{ of hearts, diamonds or spades}\\}",
+   "answer_type": "not_markable",
+   "answer": null,
    "choices": null,
-   "marker": {
-    "kind": "expression",
-    "key": "P = \\{J;Q;K\\text{ of hearts, diamonds or spades}\\}",
-    "form": null,
-    "variables": [
-     "P"
-    ],
-    "tolerance": null
-   },
+   "marker": null,
    "solution": [
     "$P=\\{J;Q;K\\text{ of hearts, diamonds or spades}\\}$"
    ],
    "solution_provenance": "book_worked_epub",
-   "printed_answer": "e) Mutually exclusive and comple- mentary.",
+   "printed_answer": "P=\\{J;Q;K\\text{ of hearts, diamonds or spades}\\}",
    "epub_final_answer": "P=\\{J;Q;K\\text{ of hearts, diamonds or spades}\\}",
    "blind_answer": "P=\\{J\\heartsuit,Q\\heartsuit,K\\heartsuit,J\\diamondsuit,Q\\diamondsuit,K\\diamondsuit,J\\spadesuit,Q\\spadesuit,K\\spadesuit\\}",
    "verification": "disputed",
@@ -2716,7 +2722,7 @@
    ],
    "unit": null,
    "options_source": null,
-   "not_markable_reason": null,
+   "not_markable_reason": "The book's answer is a set described in words (J, Q, K of three suits), which the marker cannot compare.",
    "tier_source": "typing",
    "printed_answer_scope": "question",
    "figures": [],
@@ -2727,10 +2733,17 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "fix",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"P = \\{J;Q;K\\text{ of hearts, diamonds or spades}\\}\" does not read as the printed answer \"e) Mutually exclusive and comple- mentary.\"); a fix needs fields a person or a recommendation must write",
-    "auto": true
+    "note": "auto-pass G2 (AI recommendation): Picture cards are J, Q, K; with clubs removed, 3 suits, 9 cards. Book and blind agree. The printed answer is stray text from another question; re-typed from the EPUB. Verbal set, not markable.",
+    "auto": true,
+    "changed": [
+     "answer",
+     "answer_type",
+     "marker",
+     "not_markable_reason",
+     "printed_answer"
+    ]
    }
   },
   {
@@ -2738,23 +2751,15 @@
    "kind": "exercise",
    "lo": "lo:g10m14s1-1-1",
    "stem": "All the clubs are taken out of a pack of cards. The remaining cards are then shuffled and one card chosen. After being chosen, the card is replaced before the next card is chosen. Find a set for the event, $N$ , of drawing a numbered card.",
-   "answer_type": "expression",
-   "answer": "N = \\{A;2;3;4;5;6;7;8;9;10\\text{ of hearts, diamonds or spades}\\}",
+   "answer_type": "not_markable",
+   "answer": null,
    "choices": null,
-   "marker": {
-    "kind": "expression",
-    "key": "N = \\{A;2;3;4;5;6;7;8;9;10\\text{ of hearts, diamonds or spades}\\}",
-    "form": null,
-    "variables": [
-     "N"
-    ],
-    "tolerance": null
-   },
+   "marker": null,
    "solution": [
     "$N=\\{A;2;3;4;5;6;7;8;9;10\\text{ of hearts, diamonds or spades}\\}$"
    ],
    "solution_provenance": "book_worked_epub",
-   "printed_answer": "e) Mutually exclusive and comple- mentary.",
+   "printed_answer": "N=\\{A;2;3;4;5;6;7;8;9;10\\text{ of hearts, diamonds or spades}\\}",
    "epub_final_answer": "N=\\{A;2;3;4;5;6;7;8;9;10\\text{ of hearts, diamonds or spades}\\}",
    "blind_answer": "N=\\{2,3,4,5,6,7,8,9,10\\}\\text{ of each of }\\heartsuit,\\diamondsuit,\\spadesuit\\text{ (27 cards)}",
    "verification": "disputed",
@@ -2788,7 +2793,7 @@
    ],
    "unit": null,
    "options_source": null,
-   "not_markable_reason": null,
+   "not_markable_reason": "The book's answer is a set described in words (A and 2 to 10 of three suits), which the marker cannot compare.",
    "tier_source": "typing",
    "printed_answer_scope": "question",
    "figures": [],
@@ -2799,10 +2804,17 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "fix",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"N = \\{A;2;3;4;5;6;7;8;9;10\\text{ of hearts, diamonds or spades}\\}\" does not read as the printed answer \"e) Mutually exclusive and comple- mentary.\"); a fix needs fields a person or a recommendation must write",
-    "auto": true
+    "note": "auto-pass G2 (AI recommendation): Book set includes A with 2 to 10 in three suits (30 cards), consistent with its treatment of the ace as 1 elsewhere (q7e). Blind left the ace out. Printed answer is stray text; re-typed from the EPUB. Verbal set, not markable.",
+    "auto": true,
+    "changed": [
+     "answer",
+     "answer_type",
+     "marker",
+     "not_markable_reason",
+     "printed_answer"
+    ]
    }
   }
  ],

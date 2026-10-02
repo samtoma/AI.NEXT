@@ -5,56 +5,65 @@
  "id": "g2-ch14",
  "chapter": 14,
  "run": "wf_4880230c-95f, wf_c44d2617-d9a, wf_eb41e8fb-75b, wf_b14360fe-9e9, wf_4b749229-2fa, wf_491052c0-91d, wf_27f1b695-dfb",
- "decided_at": "2026-10-02T07:15:21Z",
+ "decided_at": "2026-10-02T07:17:05Z",
  "by": "auto-pass G2 (AI recommendation)",
  "auto": true,
  "outcome": "pass_with_holds",
- "summary": "17 book item(s) decided on the AI recommendation (0 from the recommendation file, 17 by the checks' own rule); 4 held for a person; 0 already decided by a person; 10 typed not markable (teaching only, no verdict owed); 3 item(s) typed again, each with its reason (a choice from the book's printed key, a fraction typed as a number, a marker kind the key or its form cannot be read under)",
+ "summary": "21 book item(s) decided on the AI recommendation (21 from the recommendation file, 0 by the checks' own rule); 0 held for a person; 0 already decided by a person; 15 recommended with low confidence (your call); 10 typed not markable (teaching only, no verdict owed); 3 item(s) typed again, each with its reason (a choice from the book's printed key, a fraction typed as a number, a marker kind the key or its form cannot be read under)",
  "decisions": [
   {
    "key": "g10m14s1-1:Ex14-1:1",
-   "decision": "exclude",
-   "basis": "the answer-typing check flagged it (options said to be the stem's are not all in the stem; the key \"\\{(2;6);(3;5);(4;4);(5;3);(6;2)\\}\" does not read as the printed answer \"event set = {(2; 6); (3; 5); (4; 4); (5; 3); (6; 2)}\"); a fix needs fields a person or a recommendation must write"
+   "decision": "fix",
+   "detail": "Total 8 on two dice: (2;6),(3;5),(4;4),(5;3),(6;2); an event is the set of all outcomes of interest, so the 5-element set. Key matches book. Check failed only on \\left/\\right and the 'event set =' prefix; options re-typed verbatim from the stem. Verified independently: the verifier's own answer matches the key.",
+   "basis": "check too strict · confidence low"
   },
   {
    "key": "g10m14s1-1:Ex14-1:7e",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "exclude",
+   "detail": "Book working counts A, 2, 3 per suit: 12 of 52, so 3/13, and printed and EPUB agree. But the stem says only 'a number less than 4', and an ace is not normally a number card. Read that way the count is 8 and the answer 2/13, as the blind solver found. A student could be marked wrong.",
+   "basis": "item wording · confidence low"
   },
   {
    "key": "g10m14s1-1:Ex14-8:1",
-   "decision": "exclude",
-   "basis": "the answer-typing check flagged it (a choice needs 2–5 options with the key among them); a fix needs fields a person or a recommendation must write"
+   "decision": "fix",
+   "detail": "A die landing on 5 is a single result, which is the book's definition of an outcome; the other two are not results of the die roll. Key was lost only because of capital letter and full stop. Options re-typed as the stem's own alternatives. Verified independently: the verifier's own answer matches the key.",
+   "basis": "check too strict · confidence high"
   },
   {
    "key": "g10m14s1-1:Ex14-8:27a",
-   "decision": "exclude",
-   "basis": "the answer-typing check flagged it (the key \"\\{\\text{deck without clubs}\\}\" does not read as the printed answer \"e) Mutually exclusive and comple- mentary.\"); a fix needs fields a person or a recommendation must write"
+   "decision": "fix",
+   "detail": "Without the clubs, 39 cards remain, so the book's sample space is right (blind agrees: 39 cards of hearts, diamonds, spades). The printed answer is stray text from another question; re-typed from the EPUB. Descriptive set, not markable.",
+   "basis": "printed answer misaligned · confidence low"
   },
   {
    "key": "g10m14s1-1:Ex14-8:27b",
-   "decision": "exclude",
-   "basis": "the answer-typing check flagged it (the key \"P = \\{J;Q;K\\text{ of hearts, diamonds or spades}\\}\" does not read as the printed answer \"e) Mutually exclusive and comple- mentary.\"); a fix needs fields a person or a recommendation must write"
+   "decision": "fix",
+   "detail": "Picture cards are J, Q, K; with clubs removed, 3 suits, 9 cards. Book and blind agree. The printed answer is stray text from another question; re-typed from the EPUB. Verbal set, not markable.",
+   "basis": "printed answer misaligned · confidence low"
   },
   {
    "key": "g10m14s1-1:Ex14-8:27c",
-   "decision": "exclude",
-   "basis": "the answer-typing check flagged it (the key \"N = \\{A;2;3;4;5;6;7;8;9;10\\text{ of hearts, diamonds or spades}\\}\" does not read as the printed answer \"e) Mutually exclusive and comple- mentary.\"); a fix needs fields a person or a recommendation must write"
+   "decision": "fix",
+   "detail": "Book set includes A with 2 to 10 in three suits (30 cards), consistent with its treatment of the ace as 1 elsewhere (q7e). Blind left the ace out. Printed answer is stray text; re-typed from the EPUB. Verbal set, not markable.",
+   "basis": "printed answer misaligned · confidence low"
   },
   {
    "key": "g10m14s3-1:Ex14-3:1",
    "decision": "exclude",
-   "basis": "the answer-typing check flagged it (a choice needs 2–5 options with the key among them; options said to be the stem's are not all in the stem); a fix needs fields a person or a recommendation must write"
+   "detail": "Figure: A∩B holds 2,3,4,5,8,9,10,11,12,13,14,15; B-only holds 1,7; 6 is outside. So B = {1;2;3;4;5;7;8;9;10;11;12;13;14;15}, matching the book's answer but no option as shown. A student cannot select the right set. Right answer by the agent's own derivation: {1;2;3;4;5;7;8;9;10;11;12;13;14;15}.",
+   "basis": "stem damaged · confidence low"
   },
   {
    "key": "g10m14s3-1:Ex14-3:2",
-   "decision": "exclude",
-   "basis": "the answer-typing check flagged it (a choice needs 2–5 options with the key among them; options said to be the stem's are not all in the stem); a fix needs fields a person or a recommendation must write"
+   "decision": "fix",
+   "detail": "Figure: A-only 1,2,5,6,9,11,13; A∩B 4,7,10,14,15; so A = {1;2;4;5;6;7;9;10;11;13;14;15}. This equals the fourth option and the book's answer. Key was lost only because the book's answer is a sentence. Typed as a choice over the stem's five own options. Verified independently: the verifier's own answer matches the key.",
+   "basis": "selected from a list · confidence high"
   },
   {
    "key": "g10m14s3-1:Ex14-3:3a",
    "decision": "exclude",
-   "basis": "the answer-typing check flagged it (the key \"\\{1;2;\\ldots;12\\}\" does not read as the printed answer \"{1; 2; . . . ; 12}\"); a fix needs fields a person or a recommendation must write"
+   "detail": "NOT RECOMMENDED LIVE (the app's marker cannot read the key '\\\\{1;2;\\\\ldots;12\\\\}': unreadable (unexpected character \".\")). The agent's reading: The sample space of slips numbered 1 to 12 is $\\{1;2;\\ldots;12\\}$. The key matches the book's second form and the printed answer. The complaint is only that the typed LaTeX differs from the flattened printed text.",
+   "basis": "marker cannot check · confidence low"
   },
   {
    "key": "g10m14s3-1:Ex14-3:3d",
@@ -64,7 +73,8 @@
   {
    "key": "g10m14s3-1:Ex14-3:3e",
    "decision": "exclude",
-   "basis": "the answer-typing check flagged it (book_final is not in the book solution; the key \"12; 6; 5\" does not read as the book final answer \"$\\text{12}$ $\\text{6}$ $\\text{5}$\"); a fix needs fields a person or a recommendation must write"
+   "detail": "$n(S)=12$ checks out for slips 1 to 12. A and B are never defined in the stem, so $n(A)=6$ and $n(B)=5$ cannot be derived or checked. A student could not answer it as shown, and the book's working gives no way to repair it.",
+   "basis": "stem damaged · confidence high"
   },
   {
    "key": "g10m14s3-1:Ex14-3:4",
@@ -78,8 +88,9 @@
   },
   {
    "key": "g10m14s3-1:Ex14-8:2",
-   "decision": "exclude",
-   "basis": "the answer-typing check flagged it (a choice needs 2–5 options with the key among them; options said to be the stem's are not all in the stem); a fix needs fields a person or a recommendation must write"
+   "decision": "fix",
+   "detail": "I read the figure. B is the blue circle including the overlap: 1,3,5,7,10 and 2,4,8,9,11,12,14,15. 6 and 13 lie outside both circles. This is option D, the book's key. The pipeline typed no key and options that did not match the stem text, so the typing is rebuilt with the stem's own options. Verified independently: the verifier's own answer matches the key.",
+   "basis": "typing error · confidence low"
   },
   {
    "key": "g10m14s3-1:Ex14-8:20b",
@@ -93,33 +104,39 @@
   },
   {
    "key": "g10m14s3-1:Ex14-8:9",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "hold",
+   "detail": "NOT RECOMMENDED LIVE (the independent verifier said confirmed, and another answer is also correct (its own answer: 8/45; 45 - 6 - 31 = 8 eat only Strawberry Pops, so 8/45; the book prints 0,18 (about 0.178), so a student who types the rounded decimal may be marked wrong by a by-value marker.)). The agent's reading: $45-6-31=8$, so $P=\\frac{8}{45}\\approx0{,}178$. The book's 0,18 is a rounding of that fraction. The stem does not ask for rounding, so a numeric key of 0,18 would mark the exact answer wrong. I retyped the key as the book's own fraction $\\frac{8}{45}$.",
+   "basis": "unconfirmed · confidence low"
   },
   {
    "key": "g10m14s5-1:Ex14-5:1",
-   "decision": "exclude",
-   "basis": "the answer-typing check flagged it (book_final is not in the book solution); a fix needs fields a person or a recommendation must write"
+   "decision": "accept",
+   "detail": "$P(A\\cup B)=\\frac{4}{6}+\\frac{1}{6}-0=\\frac{5}{6}=0{,}83$ to 2 d.p. The book's last line gives 0,83, so the complaint that the final answer is not in the working is wrong. The rounded intermediates 0,67+0,17 would give 0,84, but the book's stated result is correct. Verified independently: the verifier's own answer matches the key.",
+   "basis": "check too strict · confidence low"
   },
   {
    "key": "g10m14s5-1:Ex14-5:2",
-   "decision": "exclude",
-   "basis": "the answer-typing check flagged it (book_final is not in the book solution); a fix needs fields a person or a recommendation must write"
+   "decision": "accept",
+   "detail": "$A\\cap B=\\{1\\}$, so $P=\\frac{1}{6}=0{,}17$ to 2 d.p. The book's last line states 0,17, so the complaint that the final answer is not in the working is wrong. The first working line has a typo (the last term should be $A\\cap B$). The rounded intermediates sum to 0,16, but the result stands. Verified independently: the verifier's own answer matches the key.",
+   "basis": "check too strict · confidence low"
   },
   {
    "key": "g10m14s5-1:Ex14-8:12f",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "exclude",
+   "detail": "From the table, 8 are aged 3, 15 are female and 6 are both. $P=\\frac{8+15-6}{30}=\\frac{17}{30}=0{,}5667$. The book prints 0,56, which is truncated, not rounded. The key is wrong by the book's own working. Right answer by the agent's own derivation: 17/30 (0,57 to 2 d.p.).",
+   "basis": "book error · confidence high"
   },
   {
    "key": "g10m14s5-1:Ex14-8:13f",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "exclude",
+   "detail": "$\\frac{28}{85}+\\frac{21}{85}-\\frac{7}{85}=\\frac{42}{85}\\approx0{,}49$. The book lists 21 multiples of 4 but writes 28. It also subtracts $\\frac13\\cdot\\frac{28}{85}$ instead of the multiples of 12. Its 0,55 is wrong. Right answer by the agent's own derivation: 42/85 (0,49 to 2 d.p.).",
+   "basis": "book error · confidence high"
   },
   {
    "key": "g10m14s5-1:Ex14-8:24",
-   "decision": "exclude",
-   "basis": "the answer-typing check flagged it (book_final is not in the book solution); a fix needs fields a person or a recommendation must write"
+   "decision": "accept",
+   "detail": "$A=\\{3,4\\}$, $B=\\{2,4,5\\}$, $S$ has 6 elements. $P(A\\cap B)=\\frac{2}{6}+\\frac{3}{6}-\\frac{4}{6}=\\frac16\\approx0,17$; also $A\\cap B=\\{4\\}$ gives $\\frac16$. Working's last line states 0,17. The complaint is only a text comparison (EPUB has no final line). Stem writes \\capB without a space, a rendering matter only. Verified independently: the verifier's own answer matches the key.",
+   "basis": "check too strict · confidence high"
   },
   {
    "key": "g10m14s5-1:Ex14-8:26",
@@ -134,17 +151,20 @@
   {
    "key": "g10m14s6-1:Ex14-8:27e",
    "decision": "exclude",
-   "basis": "the answer-typing check flagged it (options said to be the lesson's closed set are not categories: \"mutually exclusive and complementary\", \"mutually exclusive and not complementary\", \"not mutually exclusive and complementary\" — numbers, pairs, values and combinations are the book's answer to type, never options to invent; the key \"mut); a fix needs fields a person or a recommendation must write"
+   "detail": "The stem asks about sets $P$ and $N$ but never defines them (the lead-in naming $P$ and $N$ was not copied), so it cannot be answered as it reads. The book's 'Mutually exclusive and complementary' cannot be checked, and the four options are invented combinations, not the book's own words.",
+   "basis": "stem damaged · confidence low"
   },
   {
    "key": "g10m14s7-1:Ex14-7:1",
-   "decision": "exclude",
-   "basis": "the answer-typing check flagged it (a choice needs 2–5 options with the key among them; options said to be the stem's are not all in the stem); a fix needs fields a person or a recommendation must write"
+   "decision": "fix",
+   "detail": "From the figure: $B=\\{1,5,7,8,9,13,14,15\\}$, so $B'=\\{2,3,4,6,10,11,12\\}$, matching the book. The three sets are in the stem; the typing took the book's sentence as key. Re-type as a choice over the stem's own sets, key the second. Verified independently: the verifier's own answer matches the key.",
+   "basis": "selected from a list · confidence low"
   },
   {
    "key": "g10m14s7-1:Ex14-7:2",
-   "decision": "exclude",
-   "basis": "the answer-typing check flagged it (a choice needs 2–5 options with the key among them; options said to be the stem's are not all in the stem); a fix needs fields a person or a recommendation must write"
+   "decision": "fix",
+   "detail": "From the figure: outside both circles are 2, 4, 9, 11, 13, 15, so $(A\\cup B)'=\\{2,4,9,11,13,15\\}$, matching the book. The three sets are in the stem; the typing took the book's sentence as key. Re-type as a choice over the stem's own sets. Verified independently: the verifier's own answer matches the key.",
+   "basis": "selected from a list · confidence low"
   },
   {
    "key": "g10m14s7-1:Ex14-8:21a",
@@ -163,8 +183,9 @@
   },
   {
    "key": "g10m14s7-1:Ex14-8:30",
-   "decision": "exclude",
-   "basis": "the answer-typing check flagged it (book_final is not in the book solution); a fix needs fields a person or a recommendation must write"
+   "decision": "accept",
+   "detail": "Reading $n(F)=19$, $n(H)=13$ as totals, $n(F\\cap H)=8$, neither 7: $19+13-8+7=31$, equal to the printed answer and the blind answer. The complaint is a text comparison, since the working has no final line. Verified independently: the verifier's own answer matches the key.",
+   "basis": "check too strict · confidence low"
   },
   {
    "key": "g10m14s3-1:Ex14-3:3a",
@@ -192,6 +213,10 @@
    "state": "done"
   },
   {
+   "name": "G2 recommendation run: recommender + independent verifier (g2_recommend.py)",
+   "state": "done"
+  },
+  {
    "name": "the app's marker on every typed key (assembly)",
    "state": "on load"
   }
@@ -200,6 +225,10 @@
   {
    "label": "G2 verdicts",
    "path": "services/extraction/runs/g10-math/g2-ch14.json"
+  },
+  {
+   "label": "recommendation",
+   "path": "services/extraction/runs/g10-math/g2-ch14.recommended.json"
   },
   {
    "label": "S2–S4 run wf_4880230c-95f",
@@ -233,24 +262,21 @@
  "blocked": [],
  "course_id": "course:us-g10-math-en",
  "for_review": [
-  "g10m14s1-1:Ex14-1:1",
   "g10m14s1-1:Ex14-1:7e",
-  "g10m14s1-1:Ex14-8:1",
+  "g10m14s3-1:Ex14-3:1",
+  "g10m14s3-1:Ex14-3:3a",
+  "g10m14s3-1:Ex14-3:3e",
+  "g10m14s3-1:Ex14-8:9",
+  "g10m14s5-1:Ex14-8:12f",
+  "g10m14s5-1:Ex14-8:13f",
+  "g10m14s6-1:Ex14-8:27e",
+  "g10m14s1-1:Ex14-1:1",
   "g10m14s1-1:Ex14-8:27a",
   "g10m14s1-1:Ex14-8:27b",
   "g10m14s1-1:Ex14-8:27c",
-  "g10m14s3-1:Ex14-3:1",
-  "g10m14s3-1:Ex14-3:2",
-  "g10m14s3-1:Ex14-3:3a",
-  "g10m14s3-1:Ex14-3:3e",
   "g10m14s3-1:Ex14-8:2",
-  "g10m14s3-1:Ex14-8:9",
   "g10m14s5-1:Ex14-5:1",
   "g10m14s5-1:Ex14-5:2",
-  "g10m14s5-1:Ex14-8:12f",
-  "g10m14s5-1:Ex14-8:13f",
-  "g10m14s5-1:Ex14-8:24",
-  "g10m14s6-1:Ex14-8:27e",
   "g10m14s7-1:Ex14-7:1",
   "g10m14s7-1:Ex14-7:2",
   "g10m14s7-1:Ex14-8:30"
