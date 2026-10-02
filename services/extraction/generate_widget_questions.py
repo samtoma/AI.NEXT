@@ -1416,10 +1416,12 @@ def _predicate_of(text, claimed: set) -> str | None:
 
 def verified_version(tpl: dict) -> tuple[dict | None, str]:
     """The template exactly as the blind verifier judged it, when a pipeline normalisation since then only REMOVED
-    diagnostics, instances or solution steps (recorded in "verified_as"), else (None, why). The verifier never sees
-    the solution, and a removal cannot make a verified construction unreachable or a confirmed mapping wrong. Any
-    other difference — a changed stem, spec or tier, an added or altered diagnostic, instance or step, notes
-    rewritten rather than appended — and the verdicts do not carry: the template must be verified again."""
+    diagnostics, instances or solution steps, or wrote the book's `(x; y)` as `(x, y)` in a solution step (recorded
+    in "verified_as"), else (None, why). The verifier never sees the solution, and a removal cannot make a verified
+    construction unreachable or a confirmed mapping wrong, nor can a notation that changes no word, number or sign.
+    Any other difference — a changed stem, spec or tier (a stem or spec in the other notation too: the verifier read
+    it), an added or altered diagnostic, instance or step, notes rewritten rather than appended — and the verdicts do
+    not carry: the template must be verified again."""
     va = tpl.get("verified_as")
     if not va:
         return None, ""
@@ -1436,7 +1438,10 @@ def verified_version(tpl: dict) -> tuple[dict | None, str]:
         return None, "a diagnostic was added or changed since verification"
     for k, none in (("instances", [{}]), ("solution", [])):
         rest = iter(old.get(k) or none)
-        if not all(any(x == y for y in rest) for x in cur.get(k) or none):
+        # a solution step the coordinate-notation normalisation rewrote (`(x; y)` -> `(x, y)`) is the SAME step: the
+        # verifier never sees the solution, and that rule changes no word, number or sign of it
+        same = (lambda x, y: x == y or x == _template_pairs(y)) if k == "solution" else (lambda x, y: x == y)  # noqa: E731
+        if not all(any(same(x, y) for y in rest) for x in cur.get(k) or none):
             return None, f"{k}: an entry was added or changed since verification"
     if not str(cur.get("notes") or "").startswith(str(old.get("notes") or "")):
         return None, "notes were rewritten, not appended to, since verification"
@@ -1829,7 +1834,7 @@ def only_lessons(args: dict, lessons) -> dict:
 
 
 # ---- pipeline normalisations of an S7 author's template ---------------------
-# Two author errors that --templates refuses are fixed the same way every time, and each fix is recorded in the
+# Author errors that --templates (or the coverage audit) refuses are fixed the same way every time, and each fix is recorded in the
 # template's "notes" (the same style as families/normalise.py for S6). Applied by an operator on named files
 # (--normalise-templates), never inside the checks, which keep refusing the raw author output:
 #   drop-foreign-diagnostic   a diagnostic naming a misconception of an objective that is neither the template's
@@ -1842,11 +1847,62 @@ def only_lessons(args: dict, lessons) -> dict:
 #                             diagnostic remains; a template left with none goes back to the author
 #   drop-opening-instance     (A10) an instance whose "points" target, or its swap, sits on a handle's opening
 #                             position (OPENING_HANDLES) — only while another instance remains
-# The last two were first applied AFTER the blind verifier had judged the Chapter 8 templates. So when either
-# applies, the template records itself as it was in "verified_as" (its sha and its whole text): a change that only
-# REMOVED diagnostics or instances cannot make a verified construction unreachable or a confirmed mapping wrong,
-# and verdict_scan carries the verdicts across it (carried_verification) — never across any other edit.
+#   coordinate-notation       (Grade 10 Chapter 5, 2026-10-02) the book's `(x; y)` in the student-facing text — the stem,
+#                             the solution steps, the instances' and the spec's strings — written `(x, y)`, the notation
+#                             every book question is written in (decision 15; assemble_lesson_bundle.normalise_pairs, the
+#                             `;`-pair rule alone: no decimal commas). `{=…}` holes are never touched.
+# The last two and coordinate-notation were first applied AFTER the blind verifier had judged the Chapter 8 and
+# Chapter 5 templates. So when any applies, the template records itself as it was in "verified_as" (its sha and its
+# whole text): a change that only REMOVED diagnostics or instances cannot make a verified construction unreachable or
+# a confirmed mapping wrong, nor can the notation in a SOLUTION step (the verifier never sees the solution), and
+# verdict_scan carries the verdicts across it (carried_verification) — never across any other edit: a stem, instance
+# or spec that coordinate-notation rewrites was read by the verifier, so that template is verified again.
 NORMALISED = "PIPELINE NORMALISATION (not an author edit)"
+
+
+def _template_pairs(text):
+    """`assemble_lesson_bundle.normalise_pairs` over one template string, its `{=…}` holes set aside (a pair may run
+    through them: "({=x}; {=y})"). A string with no `;`, a non-string, and a string that does not scan are returned as they are."""
+    if not isinstance(text, str) or ";" not in text:
+        return text
+    from families import evaluator as FE
+    import assemble_lesson_bundle as alb
+    try:
+        spans = [(a, b) for a, b, _ in FE._scan(text)]
+    except FE.EvalError:
+        return text                      # a template that does not parse is the checks' to refuse, not ours
+    holes, out, last = [], [], 0
+    for a, b in spans:
+        out += [text[last:a], f"\x00{len(holes)}\x00"]
+        holes.append(text[a:b])
+        last = b
+    out.append(text[last:])
+    masked = alb.normalise_pairs("".join(out))[0]
+    for i, h in enumerate(holes):
+        masked = masked.replace(f"\x00{i}\x00", h)
+    return masked
+
+
+def _pair_notation(out: dict) -> list[str]:
+    """Rewrite `out`'s student-facing strings in place; the places that changed ("stem", "solution step 4", …)."""
+    where: list[str] = []
+
+    def fix(v, path, label):
+        if isinstance(v, str):
+            w = _template_pairs(v)
+            if w != v:
+                where.append(label)
+            return w
+        if isinstance(v, list):
+            return [fix(x, f"{path}[{i}]", f"{path} step {i + 1}" if path == "solution" else f"{label}[{i}]")
+                    for i, x in enumerate(v)]
+        if isinstance(v, dict):
+            return {k: fix(x, f"{path}.{k}", f"{label}.{k}") for k, x in v.items()}
+        return v
+    for key in ("stem", "solution", "instances", "spec"):
+        if key in out:
+            out[key] = fix(out[key], key, key)
+    return where
 
 
 def normalise_template(raw: dict, graph) -> tuple[dict, list[str]]:
@@ -1854,6 +1910,10 @@ def normalise_template(raw: dict, graph) -> tuple[dict, list[str]]:
     import copy
     out = copy.deepcopy(raw)
     done: list[str] = []
+    notation = _pair_notation(out)
+    if notation:
+        done.append("coordinate-notation: the book's (x; y) written (x, y) in " + ", ".join(notation)
+                    + " (assemble_lesson_bundle.normalise_pairs, the rule every book question goes through; decision 15)")
     ds = [d for d in out.get("diagnostics") or [] if isinstance(d, dict)]
     mcs = graph.misconceptions()
     allowed = graph.closure(out.get("lo_id"))
@@ -1881,7 +1941,7 @@ def normalise_template(raw: dict, graph) -> tuple[dict, list[str]]:
         out["diagnostics"] = ds
         stamp = f"{NORMALISED}: " + "; ".join(done) + "."
         out["notes"] = (out.get("notes") or "").rstrip() + ("\n\n" if out.get("notes") else "") + stamp
-        if later and "verified_as" not in raw:
+        if (later or notation) and "verified_as" not in raw:
             before = {k: v for k, v in raw.items() if k != "_sha"}
             out["verified_as"] = {"sha": template_sha(before), "template": copy.deepcopy(before)}
     return out, done
