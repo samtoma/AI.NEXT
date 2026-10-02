@@ -756,6 +756,7 @@ class Report:
         self.assignments_split = 0             # A2: "x_1=…y_1=…" chains written as separate assignments
         self.entities = 0                      # Chapter 5: numeric HTML character references the EPUB left in the text ("&#176;" for °)
         self.dollars = 0                       # Chapter 9: escaped dollar signs (`\\$`) the app's maths splitter cannot carry, written without a `$`
+        self.nested_dollars = 0                # Chapter 13: a `$…$` inside a `\\text{}` inside maths (`\\text{cm$^{3}$}`), written in maths mode (`\\text{cm}^{3}`)
         self.katex_errors: list[dict] = []     # A2: segments the app's KaTeX cannot parse (must be 0)
         self.forms_from_rules: list[dict] = [] # A9: marker forms set from the book's form rules
         self.visuals_dropped: list[dict] = []  # A8: a figure that draws the question's unknown
@@ -785,7 +786,7 @@ class Report:
                 "marker_check": self.marker_check, "held_by_marker": self.held_by_marker,
                 "marker_keys_unwrapped": self.keys_unwrapped,
                 "ambiguous_pairs_for_g2": sorted(set(self.ambiguous_pairs)), "latex_respaced": self.respaced,
-                "html_entities_unescaped": self.entities, "escaped_dollars_normalised": self.dollars, "assignments_split": self.assignments_split, "katex_errors": self.katex_errors,
+                "html_entities_unescaped": self.entities, "escaped_dollars_normalised": self.dollars, "nested_dollars_normalised": self.nested_dollars, "assignments_split": self.assignments_split, "katex_errors": self.katex_errors,
                 "forms_from_rules": self.forms_from_rules, "visuals_dropped": self.visuals_dropped,
                 "held_for_figure": self.held_for_figure, "captions_fixed": self.captions_fixed,
                 "book_pictures": "on" if self.book_pictures else "off (--no-book-pictures)",
@@ -948,6 +949,106 @@ _MATH_SEG = re.compile(r"\$[^$]+\$")
 _TEXT_CMD = re.compile(r"\\(?:text|textrm|textbf|textit|textsf|texttt|textnormal|mbox|hbox)(?![A-Za-z])\s*\{")
 
 
+def _group_end(text: str, start: int) -> int:
+    """Index of the `}` that closes the brace group whose content begins at `start` (the "{" is just before it), or -1. A backslash makes the next
+    character an ordinary one (`\\{`, `\\}`, `\\$`, `\\\\`), as in normalise_dollars."""
+    depth, i, n = 1, start, len(text)
+    while i < n:
+        c = text[i]
+        if c == "\\":
+            i += 2
+            continue
+        if c == "{":
+            depth += 1
+        elif c == "}":
+            depth -= 1
+            if depth == 0:
+                return i
+        i += 1
+    return -1
+
+
+def _balanced(piece: str) -> bool:
+    depth, i, n = 0, 0, len(piece)
+    while i < n:
+        c = piece[i]
+        if c == "\\":
+            i += 2
+            continue
+        depth += (c == "{") - (c == "}")
+        if depth < 0:
+            return False
+        i += 1
+    return depth == 0
+
+
+def _unnest_text_group(cmd: str, inner: str) -> str | None:
+    """The maths-mode spelling of `cmd{inner}` when `inner` carries `$…$` (the book's `\\text{cm$^{3}$}`), or None when it does not, or when it cannot be read as
+    text, maths, text, … with every piece's braces balanced (an odd number of `$`, an empty or unbalanced `$…$`): that is left for the validator to flag."""
+    pieces, cur, i, n = [], [], 0, len(inner)
+    while i < n:
+        c = inner[i]
+        if c == "\\":
+            cur.append(inner[i:i + 2])
+            i += 2
+            continue
+        if c == "$":
+            pieces.append("".join(cur))
+            cur = []
+        else:
+            cur.append(c)
+        i += 1
+    pieces.append("".join(cur))
+    if len(pieces) < 3 or len(pieces) % 2 == 0 or not all(_balanced(x) for x in pieces):
+        return None
+    if any(not x.strip() for x in pieces[1::2]):
+        return None
+    out = []
+    for k, piece in enumerate(pieces):
+        if k % 2 == 0:
+            if piece:
+                out.append(f"{cmd}{piece}}}")
+        else:
+            piece = piece.strip()
+            out.append(piece + (" " if re.search(r"\\[A-Za-z]+$", piece) else ""))
+    return "".join(out)
+
+
+def normalise_nested_dollars(text: str) -> tuple[str, int]:
+    """(text, `$…$` groups rewritten). Chapter 13's solutions put the unit inside the maths as the EPUB's MathJax writes it, `\\text{cm$^{3}$}`: inside a `\\text{}`
+    a `$` switches back to maths for the exponent. MathJax and KaTeX read that; the app's maths splitter, TeXRenderer's `text.split(/(\\$[^$]+\\$)/g)`, knows no
+    nesting, so the inner `$` closes the segment: KaTeX is handed `\\begin{aligned}…\\text{cm` (half a command) and `}\\end{aligned}` (the rest), and the
+    prose between the two is read as maths. The group is written in maths mode, `\\text{cm}^{3}` (`\\text{x$y$ z}` is `\\text{x}y\\text{ z}`; a piece of
+    text that would be empty is dropped), so no `$` stands inside a maths segment; the exponent sits on the unit as it did. Only a `$…$` pair inside a
+    `\\text{…}`-family group that is itself inside maths is rewritten; an escaped `\\$` (a currency sign, normalise_dollars' business), a real delimiter and
+    a group whose `$` do not pair up are left exactly as they are."""
+    if not isinstance(text, str) or "$" not in text or "\\" not in text:
+        return text, 0
+    out, i, n, k = [], 0, len(text), 0
+    in_math = False
+    while i < n:
+        c = text[i]
+        if c == "\\" and i + 1 < n:
+            m = _TEXT_CMD.match(text, i) if in_math else None
+            end = _group_end(text, m.end()) if m else -1
+            new = _unnest_text_group(m.group(0), text[m.end():end]) if end > 0 else None
+            if new is None:
+                out.append(text[i:i + 2])                    # a control symbol (`\\$` included) or the start of a command: never a delimiter
+                i += 2
+                continue
+            if new == "" or (out and out[-1][-1:] in "^_"):  # `x^\\text{a$b$}`: the exponent is the whole group
+                new = "{" + new + "}"
+            out.append(new)
+            k += 1
+            i = end + 1
+            continue
+        if c == "$":
+            in_math = not in_math
+        out.append(c)
+        i += 1
+    return "".join(out), k
+
+
 def normalise_dollars(text: str) -> tuple[str, int]:
     """(text, escaped dollar signs rewritten). Chapter 9's exchange-rate lessons carry a dollar sign the book writes `\\$` ("$\\text{\\$ 7.00}$",
     "$\\text{\\$1}&=\\text{R11.42}$", "( $\\$$ )"). The app's maths splitter, TeXRenderer's `text.split(/(\\$[^$]+\\$)/g)`, knows no escape: the `$` of a `\\$`
@@ -1023,7 +1124,9 @@ def unescape_entities(text: str) -> tuple[str, int]:
 def respace_tree(obj, report: Report):
     """Every student-facing string of a bundle or a lesson-content file, re-spaced (metadata keys skipped)."""
     if isinstance(obj, str):
-        obj, d = normalise_dollars(obj)      # first: every later pass splits maths on `$…$`, which a `\\$` would cut in two
+        obj, nd = normalise_nested_dollars(obj)   # first: a `$…$` inside a `\\text{}` inside maths cuts the segment in two for every later pass and for the app
+        report.nested_dollars += nd
+        obj, d = normalise_dollars(obj)      # then: every later pass splits maths on `$…$`, which a `\\$` would cut in two
         report.dollars += d
         obj, e = unescape_entities(obj)
         report.entities += e
@@ -1924,7 +2027,9 @@ def main(argv: list[str] | None = None) -> int:
     for x in rep["held_by_marker"][:12]:
         print(f"    held: {x['id']} key {x['key']!r} — {x['why']}")
     print(f"  LaTeX: {rep['latex_respaced']} glued command(s) re-spaced, {rep['assignments_split']} assignment "
-          f"chain(s) split; the app's KaTeX: {len(rep['katex_errors'])} error(s)")
+          f"chain(s) split"
+          + (f", {rep['nested_dollars_normalised']} `$…$` inside a `\\text{{}}` written in maths mode" if rep["nested_dollars_normalised"] else "")
+          + f"; the app's KaTeX: {len(rep['katex_errors'])} error(s)")
     for x in rep["katex_errors"][:12]:
         print(f"    KaTeX: {x['where']}: {x['segment'][:80]} — {x['why'][:100]}")
     if rep["ambiguous_pairs_for_g2"]:

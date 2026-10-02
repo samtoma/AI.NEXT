@@ -1,0 +1,263 @@
+{
+ "mode": "verify",
+ "book": "g10-math",
+ "prompts_version": "s7-v7",
+ "by_ref": {
+  "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/s7-verify-ch10",
+  "stage": "S7 verify",
+  "shards_sha256": "9530e232af783a541d0831137df476b0b2b5744b70aad1c1b23c849a5185d921",
+  "files": 6
+ },
+ "embedded": {
+  "source": "runbook/widgets.workflow.js",
+  "source_sha256": "ed230f08ec96811f4eaa45379aabb16441ac259c0b6b19e018a7b0cfb19de1cf",
+  "args_sha256": "4c9c5005b307347495ed1d8ac257cd0fbcaabc3b6cdce02a2d2d8c33154bd349",
+  "generated_sha256": "87097298d37dc2b8417e1bb9ca6e5218e0f7a6c1ff5d95a9d80be67500fd4c40",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "question_id": "q:g10m10s2-1-4:w001",
+   "template_sha": "62f4e781e6dd8a00c25f0f1fc63f3a3dccd88a69bb66f09c4c4fcd1e0ee91161",
+   "reading": {
+    "ask": "median",
+    "target": 6,
+    "n": 5
+   },
+   "construction": "Set the five bars to 2, 4, 6, 8, 10. Sorted, the middle (3rd) value is 6, so the live median readout shows 6. Every value is inside 0..10, n = 5 is within 3-8, and the target 6 is within 0-10. A second valid build is 6, 6, 6, 6, 6. Any set with two values at or below 6 and two at or above 6 around a 6 works.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "off-target",
+     "matches": false,
+     "why": "The question asks for ask=median, so off-target is a listed emit, but it is the residual catch-all: it fires on any set whose median is not 6, and the mean-for-median predicate is the only sibling that carves anything out. A student holding median-without-ordering would put 6 in the middle bar of an unbalanced row, such as 1, 2, 6, 0, 3 (median 2), and that does fire it. The same predicate fires equally for a student who is chasing the mean, who uses the mode or midrange, who leaves the bars untouched or half-built, or who drags carelessly. Nothing in the predicate checks that the middle bar equals the target while the sorted median differs, which is the actual signature of the ordering error. The instrument also shows the median live from the sorted data, so a student who reads it sees the contradiction and corrects it. Most off-target fires would therefore be for other reasons, and the diagnosis would serve a student a refutation of a mistake she may not have made."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m10s2-1-4:w002",
+   "template_sha": "62f4e781e6dd8a00c25f0f1fc63f3a3dccd88a69bb66f09c4c4fcd1e0ee91161",
+   "reading": {
+    "ask": "median",
+    "target": 3,
+    "n": 7
+   },
+   "construction": "Set the seven bars to 0, 1, 2, 3, 5, 7, 9. Sorted, the middle (4th) value is 3, so the live median reads 3. All values are in 0..10, n = 7 is within 3-8, and the target 3 is within 0-10. Another valid build is 3, 3, 3, 3, 3, 3, 3, or any set with three values at or below 3 and three at or above 3 around a 3.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "off-target",
+     "matches": false,
+     "why": "For ask=median the table lists off-target, but it fires on any median that is not 3. Only some of those are a median-without-ordering error, for example 3 placed in the 4th bar of 8, 9, 7, 3, 6, 5, 4 (sorted median 6). Others come from chasing the mean (which has its own predicate), from using the mode or midrange, from half-built sets, or from careless dragging. With n = 7 and a low target of 3, a student who puts a few small bars next to the target gets a wrong median for many reasons unrelated to ordering. The predicate does not test the ordering signature (middle bar equals target but the sorted median differs), and the live median readout contradicts the error immediately. It would mostly fire for other reasons."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m10s2-1-4:w003",
+   "template_sha": "62f4e781e6dd8a00c25f0f1fc63f3a3dccd88a69bb66f09c4c4fcd1e0ee91161",
+   "reading": {
+    "ask": "median",
+    "target": 8,
+    "n": 5
+   },
+   "construction": "Set the five bars to 6, 7, 8, 9, 10. Sorted, the 3rd value is 8, so the live median reads 8. All values are in 0..10, n = 5 is within 3-8, and the target 8 is within 0-10. A second valid build is 2, 5, 8, 9, 10. A target of 8 needs at least two bars at 8 or above and two at or below it, so it is reachable but sits near the top of the 0..10 range.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "off-target",
+     "matches": false,
+     "why": "For ask=median the table lists off-target, so it can fire, but it is the catch-all for every median that is not 8. The ordering error would give a set such as 1, 2, 8, 3, 4 (8 in the middle bar, sorted median 3), and that fires it. A student who sets the bars to average 8, who raises one tall bar and leaves the rest low, who uses the mode or midrange, or who has not finished building also fires it. Because 8 is high, a student who sets only a single tall bar is common and has nothing to do with sorting. The predicate does not discriminate the ordering error, and the live sorted-median readout would expose that error to the student directly. It would mostly fire for a different reason, so it is not a safe diagnosis of median-without-ordering."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m10s2-1-4:w004",
+   "template_sha": "3073ffbabe7775dc56cb584051205434c8d5ed328d20c4800e15884843aa3a8c",
+   "reading": {
+    "ask": "mode",
+    "target": 4,
+    "n": 5
+   },
+   "construction": "Five bars [4,4,1,2,6]: 4 appears twice, every other value once, so the only mode is 4. n=5 is within 3-8, target 4 is a whole number in 0-10, and every bar is within 0..10.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "no-mode",
+     "matches": true,
+     "why": "It fires on an all-distinct set such as [4,1,2,6,9]. That is what a student builds when she puts the stated mode in once and treats being present as enough, or builds around a mean or median of 4. Both are covered by the claimed misconception ('includes the stated mode only once'). The can_emit table lists no-mode for ask=mode."
+    },
+    {
+     "predicate": "multi-modal",
+     "matches": true,
+     "why": "It fires on a tie at the top such as [4,4,6,6,1] or [4,6,6,8,8]. The claimed misconception names the tie variant ('lets two other values repeat as often as it does'), and a student who thinks any repeated or present value qualifies would build it. The can_emit table lists multi-modal for ask=mode. Doubt is small but real: a student who ties 4 with another value may only be careless about uniqueness."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m10s2-1-4:w005",
+   "template_sha": "3073ffbabe7775dc56cb584051205434c8d5ed328d20c4800e15884843aa3a8c",
+   "reading": {
+    "ask": "mode",
+    "target": 7,
+    "n": 6
+   },
+   "construction": "Six bars [7,7,7,2,3,5]: 7 appears three times, the others once each, so the unique mode is 7. [7,7,1,2,3,4] also works. n=6 is within 3-8, target 7 is a whole number in 0-10, and every bar is within 0..10.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "no-mode",
+     "matches": true,
+     "why": "It fires on six distinct values including 7 once, e.g. [7,1,2,3,5,9]. That is the student who thinks 7 only has to be in the set, which is the 'only once' variant of the claimed misconception. The can_emit table lists no-mode for ask=mode."
+    },
+    {
+     "predicate": "multi-modal",
+     "matches": true,
+     "why": "It fires on a tie at the top such as [7,7,3,3,1,2] or [7,3,3,9,9,1]. The claimed misconception explicitly includes other values repeating as often as the stated mode. The can_emit table lists multi-modal for ask=mode. Same small caveat as W1 about carelessness over uniqueness."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m10s2-1-4:w006",
+   "template_sha": "3073ffbabe7775dc56cb584051205434c8d5ed328d20c4800e15884843aa3a8c",
+   "reading": {
+    "ask": "mode",
+    "target": 2,
+    "n": 7
+   },
+   "construction": "Seven bars [2,2,2,5,6,8,9]: 2 appears three times, the others once each, so the unique mode is 2. n=7 is within 3-8, target 2 is a whole number in 0-10, and every bar is within 0..10.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "no-mode",
+     "matches": true,
+     "why": "It fires on seven distinct values including 2 once, e.g. [2,3,4,5,6,8,9]. This is 'in the set, once, not most frequent' as the claimed misconception describes. The can_emit table lists no-mode for ask=mode."
+    },
+    {
+     "predicate": "multi-modal",
+     "matches": true,
+     "why": "It fires on a tie at the top such as [2,2,5,5,8,1,9] or [2,2,5,5,8,8,1]. This is the tie variant the claimed misconception names. The can_emit table lists multi-modal for ask=mode. Same small caveat as W1."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m10s4-1-2:w001",
+   "template_sha": "e586725c3b32e6837c2a5ed0c5b16cdfe9f129ee11ae85cfc4a16568898a1de1",
+   "reading": {
+    "data": [
+     22,
+     8,
+     31,
+     14,
+     26,
+     10,
+     17
+    ]
+   },
+   "construction": "Sort the data: 8, 10, 14, 17, 22, 26, 31 (n = 7). Using the percentile formula (linear interpolation between ranks, rank = 1 + p(n-1), the form consistent with the book's 3.75 / 9.25 example ranks): minimum = 8; Q1 rank = 1 + 0.25*6 = 2.5, so Q1 is halfway between the 2nd and 3rd values = (10+14)/2 = 12; median rank = 4, so median = 17; Q3 rank = 1 + 0.75*6 = 5.5, so Q3 is halfway between the 5th and 6th values = (22+26)/2 = 24; maximum = 31. Place the markers at 8, 12, 17, 24, 31. All are whole numbers within +-500 and no value is an outlier (IQR 12, fences -6 and 42), so the whiskers reach 8 and 31. Reachable. (If the grader used rank = p(n+1) instead, Q1 = 10 and Q3 = 26; the interpolation wording and the 3.75 / 9.25 example point to the 1 + p(n-1) form.)",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "quartile-method",
+     "matches": false,
+     "why": "This predicate fires when the quartiles equal those of the split-at-the-median method (excluding the median for odd n): Q1 = 10 and Q3 = 26 here. A student with the claimed misconception (rounding a fractional rank to one position) has fractional ranks 2.5 and 5.5; rounding half up gives Q1 = 14 and Q3 = 26, and truncating gives Q1 = 10 and Q3 = 22. Neither pair is (10, 26), so the predicate would not fire for that student. Where it does fire, the cause is a different method, not a rounded rank. Only the inconsistent banker's-rounding pair (2.5 to 2, 5.5 to 6) would give (10, 26), and no student does that. The predicate and the misconception describe different errors."
+    },
+    {
+     "predicate": "median-of-unsorted",
+     "matches": true,
+     "why": "A student who works out the median rank (4) with the formula but counts along the list as printed (22, 8, 31, 14, ...) lands on the 4th value, 14, and drags the median marker to 14 instead of 17. That is exactly the 'middle of the data as given' construction this predicate fires on. A median of 14 has no more plausible cause here: it is the 4th value in printed order, and an unsorted-count student would also not reach it by averaging or by any quartile-method confusion. The predicate applies to this question because the median marker is one of the five markers the student must place."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m10s4-1-4:w001",
+   "template_sha": "2dfada95e70cd633fa7fed38057e1e0c4d1710bf17939a8a14191640c0a99b11",
+   "reading": {
+    "data": [
+     24,
+     9,
+     31,
+     17,
+     38,
+     21,
+     12,
+     6,
+     26,
+     14,
+     19
+    ]
+   },
+   "construction": "Sort the 11 marks: 6, 9, 12, 14, 17, 19, 21, 24, 26, 31, 38. With the book's percentile formula, rank = 1 + p(n-1) with n = 11. Q1 has rank 1 + 0.25*10 = 3.5, which is halfway between the 3rd value (12) and the 4th (14), so Q1 = 13. The median has rank 6, so it is 19. Q3 has rank 1 + 0.75*10 = 8.5, halfway between the 8th value (24) and the 9th (26), so Q3 = 25. Minimum 6, maximum 38 (there is no outlier: 38 is below Q3 + 1.5*IQR = 43). Drag the markers to [6, 13, 19, 25, 38]. All five are whole numbers within +-500 and sit on the snap grid. The box runs 13 to 25, so IQR = 12. Assumption: I use rank = 1 + p(n-1) rather than p(n+1). The instrument says the book grades by interpolation between ranks, and the claimed rank examples 3.75 and 9.25 only arise from 1 + p(n-1) with n = 12. If the grader used p(n+1) the targets would be 12 and 26 instead.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "quartile-method",
+     "matches": false,
+     "why": "This predicate fires when the markers match the split-at-the-median construction. For n = 11 that gives Q1 = 12 and Q3 = 26 with the median excluded, or Q1 = 13 and Q3 = 25 with it included, and the latter is the correct answer. A student with the claimed misconception rounds a fractional rank (3.5 and 8.5) to one position. Rounding up gives [14, 26] and rounding down gives [12, 24], and neither equals the split-at-median pair [12, 26] except by an inconsistent mix. The predicate would mostly fire for a student who deliberately used the other textbook method, which is a different reason, so it would serve a rounding refutation to someone who did not round. If the grader used p(n+1), the ranks are whole and nothing is rounded, so the claimed misconception cannot arise at all."
+    },
+    {
+     "predicate": "median-of-unsorted",
+     "matches": true,
+     "why": "This fires when the median marker sits at the middle of the list as given. The data are printed unsorted, so the 6th printed value is 21 and the marker goes at 21 instead of 19. A student who computes median rank 6 correctly but counts along the printed order lands exactly there. That is the claimed misconception, rank-on-unsorted-data. 21 is not the mean (about 19.7) or any other common slip, so the construction is specific to this error. The predicate is in the can_emit table and applies, because the question asks for the median marker."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m10s5-1-1:w001",
+   "template_sha": "f04c6f755956c758e63f8e5278a90f5797580c4767df4148dcff21a6fd6c09ec",
+   "reading": {
+    "data": [
+     15,
+     6,
+     24,
+     12,
+     3,
+     19,
+     10,
+     21,
+     14,
+     5
+    ]
+   },
+   "construction": "Sort the ten marks first: 3, 5, 6, 10, 12, 14, 15, 19, 21, 24 (n = 10). Use the percentile formula, rank = 1 + p(n-1), which is the interpolation between ranks that fits the 3.75 and 9.25 example ranks in the misconception text. The rank for Q1 is 1 + 0.25*9 = 3.25, so Q1 sits a quarter of the way from the 3rd value (6) to the 4th value (10), giving 7. The median rank is 5.5, so the median is halfway between 12 and 14, giving 13. The rank for Q3 is 1 + 0.75*9 = 7.75, so Q3 sits three quarters of the way from the 7th value (15) to the 8th value (19), giving 18. Minimum 3 and maximum 24. Place the markers at [3, 7, 13, 18, 24]. All five are whole numbers, inside +/-500, and on any snap grid. IQR = 11, so the fences are -9.5 and 34.5 and there are no outliers; the whiskers run to 3 and 24. If the other (n+1) rank convention were intended, the answer would be [3, 5.75, 13, 19.5, 24]. The whole-number result above, with both quartile gaps equal to 4, points to the rank = 1 + p(n-1) convention.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "quartile-method",
+     "matches": false,
+     "why": "The predicate fires when Q1 and Q3 equal the median of the lower and upper halves. Here that is lower half {3,5,6,10,12} giving 6 and upper half {14,15,19,21,24} giving 19, with the correct median 13 and the correct extremes. The split-at-median construction is [3, 6, 13, 19, 24]. A student who rounds fractional ranks would round 3.25 to 3 (value 6) and 7.75 to 8 (value 19), so Q1 and Q3 do coincide with the split-at-median values on this data. But that student must also round the median rank 5.5, to 6 (value 14) or to 5 (value 12). So her markers are [3, 6, 14, 19, 24] or [3, 6, 12, 19, 24], not [3, 6, 13, 19, 24], and the median marker is a different value. Truncating the ranks gives Q3 = 15 and ceiling gives Q1 = 10, neither of which matches the predicate. The predicate describes someone who deliberately used the other textbook method of splitting at the median, which is a different error from rounding a rank. The match on Q1 and Q3 here is a coincidence of this data set. The predicate would mostly fire for median-splitters, so attaching the rounding refutation to it would address a mistake she did not make."
+    },
+    {
+     "predicate": "median-of-unsorted",
+     "matches": true,
+     "why": "The predicate fires when the median marker sits at the middle of the data in the order given. The given order is 15, 6, 24, 12, 3, 19, 10, 21, 14, 5, whose 5th and 6th entries are 3 and 19, so the unsorted middle is 11, against the true median of 13. A student who computes the percentile rank correctly (5.5 for the median) but counts along the unsorted list lands on (3+19)/2 = 11. Her Q1 and Q3 markers come out at 21 and 18.25 (ranks 3.25 and 7.75 on the unsorted list). The median marker of 11 is exactly what fires the predicate, and the root cause (not sorting before counting to the rank) is the same as the claimed misconception. The question asks for the median, so the predicate can fire here."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m10s5-1-1:w002",
+   "template_sha": "e6303c52e9013b850cab9ca8da23128e770dce5d86a7da5667872e16864f81fa",
+   "reading": {
+    "data": [
+     16,
+     9,
+     25,
+     4,
+     13,
+     7,
+     20,
+     11,
+     6
+    ]
+   },
+   "construction": "Sort the data: 4, 6, 7, 9, 11, 13, 16, 20, 25 (n = 9). Rank = 1 + (n-1)p. That gives Q1 at rank 3 (value 7), the median at rank 5 (value 11) and Q3 at rank 7 (value 16). Markers: minimum 4, Q1 7, median 11, Q3 16, maximum 25. All are whole numbers within +/-500, in order, and reachable on the number-line snap grid. If the book's formula were rank = p(n+1) instead, Q1 would be 6.5 and Q3 18, with min, median and max unchanged. Those values are also on the quarter-step grid, so the target is reachable either way.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "median-of-unsorted",
+     "matches": true,
+     "why": "The question asks for all five markers, and median-of-unsorted is in the can_emit list for it. The construction that fires it puts the median marker at 13 (the middle element of the list as printed: 16, 9, 25, 4, 13, 7, 20, 11, 6) instead of the sorted median 11, so the two values are clearly different. A student who works out rank 5 correctly but counts along the unsorted list lands exactly on 13. That is the claimed misconception, rank-on-unsorted-data. The same student would get Q1 = 25 and Q3 = 20 by the same counting, which cannot sit in order around a median of 13. She would still place the median at the as-given middle, so the median marker is where the error shows. The mean is 12.33, not 13, so it is not mistaken for that. The only other route to 13 is an off-by-one miscount to sorted rank 6, which is much rarer than skipping the sort."
+    }
+   ]
+  }
+ ]
+}
