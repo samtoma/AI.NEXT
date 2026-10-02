@@ -1,0 +1,30 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m6s5-1-2:reflect-in-the-y-axis",
+ "lo_id": "lo:g10m6s5-1-2",
+ "parent_question_id": "q:g10m6s5-1-2:ex6-5-7d",
+ "tier": "standard",
+ "kind": "curve_sketcher",
+ "spec": {
+  "fn": "exponential",
+  "coefs": [
+   1,
+   0.5,
+   0
+  ]
+ },
+ "stem": "The graph of $f(x) = 2^{x}$ is reflected in the $y$-axis to give a new graph $g$. Sketch $g$ in one smooth stroke across the whole grid.",
+ "solution": [
+  "Reflecting in the $y$-axis swaps left and right and leaves heights alone: a point $(x, y)$ on $f$ moves to $(-x, y)$.",
+  "Take points on $f$: $(-1, 0.5)$, $(0, 1)$, $(1, 2)$ and $(2, 4)$. Their reflections are $(1, 0.5)$, $(0, 1)$, $(-1, 2)$ and $(-2, 4)$. The point $(0, 1)$ is on the $y$-axis, so it does not move.",
+  "Plot the reflected points and join them with one smooth curve: it falls from left to right, passes through $(0, 1)$ and gets closer and closer to the $x$-axis on the right.",
+  "Write it as an equation to check: $g(x) = f(-x) = 2^{-x} = \\left(\\frac{1}{2}\\right)^{x}$. The minus sign belongs on the exponent for a reflection in the $y$-axis. A minus sign in front of the whole function, $-2^{x}$, would be a reflection in the $x$-axis and would put the curve below the axis, through $(0, -1)$."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "wrong-intercept",
+   "misconception_id": "mc:g10m6s5-1-2:reflection-axes-swapped"
+  }
+ ],
+ "notes": "Covers only the reflection strand of this objective (the book's ex6-5-7b/7d family). Determining a and q from points on a given graph is the other, larger strand and is NOT covered here: it can be set through a curve_sketcher stem that names the asymptote and one point, but the only predicate that would fire (wrong-intercept) cannot tell a lost sign of a from an arithmetic slip in the size of a, so no one error dominates and no template was written. The y-axis reflection was chosen over the x-axis one on purpose: the correct curve passes through (0, 1), so the x-axis reflection (through (0, -1), two squares away) is the only common error that moves the intercept. Were the x-axis asked for, the unchanged curve and the y-axis reflection would both fire wrong-intercept and could not be told apart (reflection-axes-swapped versus sign-of-a-lost). The unchanged curve y = 2^x here shares the correct intercept, so it comes back as off-target, which is left unmapped because no misconception on the list names it. The stem gives no equation for g, so the student has to reflect, not copy. The target is the same curve as y = (1/2)^x; that is the point of the objective's reflection claim. Spec: a = 1, b = 0.5 (an allowed base), q = 0."
+}

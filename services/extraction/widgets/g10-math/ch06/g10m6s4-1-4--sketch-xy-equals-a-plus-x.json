@@ -1,0 +1,49 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m6s4-1-4:sketch-xy-equals-a-plus-x",
+ "lo_id": "lo:g10m6s4-1-4",
+ "parent_question_id": "q:g10m6s4-1-4:ex6-8-57b",
+ "tier": "advanced",
+ "kind": "curve_sketcher",
+ "instances": [
+  {
+   "a": 3
+  },
+  {
+   "a": 4
+  },
+  {
+   "a": -3
+  }
+ ],
+ "spec": {
+  "fn": "hyperbola",
+  "coefs": [
+   "{=a}",
+   1
+  ]
+ },
+ "stem": "Sketch the graph of $xy={=a}+x$. It has two branches: draw one, lift your finger, then draw the other. Your sketch must sit where the graph really is relative to both asymptotes.",
+ "solution": [
+  "Get $y$ on its own: divide every term by $x$, so $xy=a+x$ becomes $y=\\dfrac{a}{x}+1$, where $a$ is the number written in the equation. Compare with $y=\\dfrac{a}{x}+q$: the number added on the end, with its sign, is $q=1$. The number on top is $a$, and it is not the asymptote.",
+  "The asymptotes are the vertical line $x=0$ and the horizontal line $y=q$, here $y=1$. Think of both as dashed lines that the curve approaches and never meets.",
+  "The sign of $a$ decides which two regions the branches fill, measured from where the asymptotes cross, at $(0, 1)$: for $a>0$ they lie above-right and below-left of $(0, 1)$; for $a<0$ they lie above-left and below-right.",
+  "There is no $y$-intercept, because $x=0$ is not allowed. For the $x$-intercept put $y=0$: $0=\\dfrac{a}{x}+1$ gives $x=-a$. Mark the point $(-a, 0)$.",
+  "Add one or two more points to guide each branch, then draw one smooth branch through the $x$-intercept, lift your finger, and draw the other. Neither branch crosses $x=0$ or the line $y=1$."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "vertically-displaced",
+   "misconception_id": "mc:g10m6s4-1-4:asymptote-sign-flipped"
+  },
+  {
+   "predicate": "wrong-quadrants",
+   "misconception_id": "mc:g10m6s4-1-2:sign-of-a-ignored"
+  },
+  {
+   "predicate": "asymptote-crossed",
+   "misconception_id": "mc:g10m6s4-1-1:asymptote-is-met"
+  }
+ ],
+ "notes": "Instrument fit: the objective is to sketch y = a/x + q from the sign of a, the intercepts and the asymptotes, and the anchor (ex6-8-57b, the asymptote of xy = 3 + x) needs the same rewrite to y = 3/x + 1. The freehand hyperbola grades the outcome of that whole chain, and the stem asks for the property (both branches, right relation to both asymptotes), not a drawing from memory. q is fixed at 1 and a varies. vertically-displaced is the predicate for a wrong horizontal asymptote: a sign-flipped asymptote draws y = a/x - 1, two units below the true curve, which is outside the one-square tolerance. Other errors on this objective also fire it and are not separable by the instrument: numerator-a-as-asymptote (the curve is drawn about y = a, a units above/below) and intercept-as-asymptote (the curve is drawn about the x-intercept, y = -a). asymptote-sign-flipped is mapped because the slip arises naturally when the x term is moved across (x(y - 1) = a, then y - 1 = a/x), but the other two are named here so that the console does not over-read it. Misconceptions from objectives 1-2 and 1-1 are used because they appear on this objective's own list (marked own=false). For a = 3 and a = 4 the branches are in the upper-right/lower-left of the crossing; a = -3 reverses that, so wrong-quadrants is meaningful for both signs. Grid fit: a = 4 gives (1, 5) and (-4, 0); a = -3 gives (3, 0) and (-3, 2), all within -5..5 for the main part of the curve. Anchor ex6-8-57b is xy = 3 + x, the first row."
+}

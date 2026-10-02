@@ -1,0 +1,33 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m6s7-1-3:range-sine-shifted",
+ "lo_id": "lo:g10m6s7-1-3",
+ "parent_question_id": "q:g10m6s7-1-3:ex6-7-3a",
+ "tier": "basic",
+ "kind": "number_line_marker",
+ "spec": {
+  "mode": "interval",
+  "range": [
+   -6,
+   6
+  ],
+  "from": -1,
+  "to": 5,
+  "openFrom": false,
+  "openTo": false
+ },
+ "stem": "The range of a function is the set of $y$-values its graph reaches. Mark the range of $y = 3\\sin\\theta + 2$ on the $y$-number line, from its lowest value to its highest. Make an end filled if $y$ reaches that value and hollow if it only gets close.",
+ "solution": [
+  "The sine never goes below $-1$ and never above $1$, and it reaches both: $-1 \\le \\sin\\theta \\le 1$.",
+  "Multiply every part by $3$ (positive, so the inequality signs keep their direction): $-3 \\le 3\\sin\\theta \\le 3$.",
+  "Add $2$ to every part, because $q = 2$ lifts the whole graph: $-1 \\le 3\\sin\\theta + 2 \\le 5$.",
+  "So the range is $-1 \\le y \\le 5$. Mark $-1$ and $5$ with filled circles, since $y$ reaches both values, and shade between them."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "interval-wrong",
+   "misconception_id": "mc:g10m6s7-1-3:ignores-added-number"
+  }
+ ],
+ "notes": "Fit: the range is literally a set of y-values with closed ends (the graph attains its lowest and highest values), which is what the interval mode of number_line_marker builds; the question is the book's own multiple choice turned into a construction. The instrument is inside its limits: range [-6,6] is 12 wide, both ends whole numbers inside it, from <= to. Numbers deliberately differ from the book's 2 sin(theta) + 1. Wrong intervals for this question: ignores-added-number gives [-3, 3] (mapped, as the likeliest error); ends-are-the-equation-numbers gives [2, 3]; sine-cosine-start-at-zero gives [2, 5]; adds-q-to-one-end gives [-1, 3] or [-3, 5]. All of them fire the same predicate (interval-wrong), so only the likeliest is mapped and the student who made one of the other three errors will be told about the added number, which is wrong for them. Per-end predicates would split these (see the top-level notes). endpoint-inclusion-wrong (hollow ends) is left unmapped on purpose: this objective's own list has no misconception about inclusion, so that student gets the plain 'not quite'."
+}

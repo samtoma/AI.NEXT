@@ -1,0 +1,33 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m6s7-1-3:range-cosine-lowered",
+ "lo_id": "lo:g10m6s7-1-3",
+ "parent_question_id": "q:g10m6s7-1-3:ex6-7-3b",
+ "tier": "standard",
+ "kind": "number_line_marker",
+ "spec": {
+  "mode": "interval",
+  "range": [
+   -6,
+   6
+  ],
+  "from": -5,
+  "to": -1,
+  "openFrom": false,
+  "openTo": false
+ },
+ "stem": "Mark the range of $y = 2\\cos\\theta - 3$ on the $y$-number line: every $y$-value its graph reaches, from the lowest to the highest. Make an end filled if $y$ reaches that value and hollow if it only gets close.",
+ "solution": [
+  "The cosine never goes below $-1$ and never above $1$, and it reaches both: $-1 \\le \\cos\\theta \\le 1$.",
+  "Multiply every part by $2$ (positive, so the inequality signs keep their direction): $-2 \\le 2\\cos\\theta \\le 2$.",
+  "Subtract $3$ from every part, because $q = -3$ lowers the whole graph: $-5 \\le 2\\cos\\theta - 3 \\le -1$.",
+  "So the range is $-5 \\le y \\le -1$. Mark $-5$ and $-1$ with filled circles, since $y$ reaches both values, and shade between them."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "interval-wrong",
+   "misconception_id": "mc:g10m6s7-1-3:ignores-added-number"
+  }
+ ],
+ "notes": "Same instrument and mapping as the sine template, with cosine and a negative q so the shift runs downwards and the whole range sits below zero (the book's 3b is 2 cos(theta) - 4, so different numbers are used). Limits: range [-6,6], ends -5 and -1 are whole and inside it. Wrong intervals here: ignores-added-number gives [-2, 2] (mapped, likeliest); ends-are-the-equation-numbers gives [-3, 2]; sine-cosine-start-at-zero gives [-3, -1]; adds-q-to-one-end gives [-5, 2] or [-2, -1]. One predicate fires for all of them, so the three unmapped errors are named here, not diagnosed. endpoint-inclusion-wrong is unmapped for the same reason as in the sine template."
+}

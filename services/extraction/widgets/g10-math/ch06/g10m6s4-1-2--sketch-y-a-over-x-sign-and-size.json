@@ -1,0 +1,44 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m6s4-1-2:sketch-y-a-over-x-sign-and-size",
+ "lo_id": "lo:g10m6s4-1-2",
+ "parent_question_id": "q:g10m6s4-1-2:ex6-4-5b",
+ "tier": "standard",
+ "kind": "curve_sketcher",
+ "instances": [
+  {
+   "a": 4
+  },
+  {
+   "a": 6
+  },
+  {
+   "a": 5
+  }
+ ],
+ "spec": {
+  "fn": "hyperbola",
+  "coefs": [
+   "{=a}",
+   0
+  ]
+ },
+ "stem": "Sketch the graph of $y=\\dfrac{a}{x}$ when $a={=a}$. Draw each branch separately: lift your finger between them. Place the branches in the right quadrants and at the right distance from the axes.",
+ "solution": [
+  "The sign of $a$ decides the quadrants. Here $a>0$, so $x$ and $y$ always have the same sign and the branches lie in quadrants I and III.",
+  "The size of $a$ decides how far the branches sit from the axes. At $x=1$ the curve is at $y=a$, at $x=2$ it is at $y=\\dfrac{a}{2}$, at $x=3$ it is at $y=\\dfrac{a}{3}$: a larger $a$ gives a larger $y$ at every $x$, so the curve lies further from the axes, not closer.",
+  "Plot a few pairs such as $(2, \\tfrac{a}{2})$ and $(3, \\tfrac{a}{3})$, together with their mirror images through the origin, $(-2, -\\tfrac{a}{2})$ and $(-3, -\\tfrac{a}{3})$.",
+  "Draw one smooth branch through the points in quadrant I, lift your finger, and draw the other through the points in quadrant III. Neither branch may touch or cross the axes, which are the asymptotes."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "wrong-quadrants",
+   "misconception_id": "mc:g10m6s4-1-2:sign-of-a-ignored"
+  },
+  {
+   "predicate": "off-target",
+   "misconception_id": "mc:g10m6s4-1-2:bigger-a-closer-to-axes"
+  }
+ ],
+ "notes": "Instrument fit: sign and size of a on y = a/x are exactly what a freehand hyperbola shows; the book's own exercise (ex6-4-5) matches graphs of 2/x, 4/x, 8/x and -2/x to their equations, and this is the same knowledge run in the other direction (equation to graph, no figure). wrong-quadrants maps cleanly to sign-of-a-ignored (II/IV drawn for positive a). off-target is mapped to bigger-a-closer-to-axes only because the template is built so that one error dominates it: q is fixed at 0, a is large (4 to 6), a stroke through x = 0 is reported as asymptote-crossed instead, and a curve in the right quadrants that still fails is almost always at the wrong distance from the axes; a sloppy stroke can also land here, and the console should read this mapping as 'probable', not certain. asymptote-crossed is deliberately left unmapped on this objective: it could be hyperbola-called-exponential (an exponential curve crossing the y-axis) or simply joining the branches, and nothing tells them apart. Rows are positive so wrong-quadrants is II/IV; the negative case is covered by the objective 1-1 template and the third row of the objective 1-4 template. Specific predicates are listed before the catch-all off-target. The effect of q is not constructed here (no q misconception exists on this objective); see the gap recorded for it. Anchor ex6-4-5b is y = 4/x, the first row."
+}

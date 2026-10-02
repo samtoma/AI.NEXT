@@ -1,0 +1,52 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m6s1-1-1:left-open-right-closed",
+ "lo_id": "lo:g10m6s1-1-1",
+ "parent_question_id": "q:g10m6s1-1-1:ex6-1-1a",
+ "tier": "standard",
+ "kind": "number_line_marker",
+ "instances": [
+  {
+   "from_v": -7,
+   "to": 2
+  },
+  {
+   "from_v": -3,
+   "to": 5
+  },
+  {
+   "from_v": 0,
+   "to": 7
+  },
+  {
+   "from_v": -9,
+   "to": -4
+  }
+ ],
+ "spec": {
+  "mode": "interval",
+  "range": [
+   -10,
+   10
+  ],
+  "from": "{=from_v}",
+  "to": "{=to}",
+  "openFrom": true,
+  "openTo": false
+ },
+ "stem": "Mark the interval $({=from_v}, {=to}]$ on the number line. Put a filled circle on an end number that belongs to the interval and a hollow circle on one that does not.",
+ "solution": [
+  "Read each end bracket on its own: a square bracket keeps its end number in the interval, a round bracket leaves its end number out.",
+  "The left bracket is round, so the left end number does not belong to the interval: set the left end to a hollow circle.",
+  "The right bracket is square, so the right end number belongs to the interval: set the right end to a filled circle.",
+  "Every real number between the two ends is in the interval, so the stretch from the left end to the right end is the interval.",
+  "In set notation the hollow end is written with $<$ and the filled end with $\\le$: $\\{x : x \\in \\mathbb{R}, \\text{left end} < x \\le \\text{right end}\\}$."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "endpoint-inclusion-wrong",
+   "misconception_id": "mc:g10m6s1-1-1:brackets-swapped-for-signs"
+  }
+ ],
+ "notes": "The mirror of the basic template: round on the left, square on the right, so a student who has learned one pattern by position (left square, right round) is caught on this one. It is the finite counterpart of anchor ex6-1-1a, $(-\\infty, 7]$, whose unbounded end the instrument cannot draw (see the gap). Rows include an interval with both ends negative and one that starts at 0. Same single diagnostic and same reasoning as the basic template: interval-wrong is unmapped because no own misconception describes it, and interval-notation-for-non-real-set cannot be fired by this construction. The solution is token-free on purpose. PIPELINE NORMALISATION (main session, 2026-10-02): the instance field `from` is a reserved word in the template expression language, so it was renamed `from_v` (instances and every {=from} hole, 2 holes); nothing else changed. Same fix as the chapter 4 double-inequality templates."
+}

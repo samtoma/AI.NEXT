@@ -1,0 +1,1154 @@
+{
+ "mode": "author",
+ "book": "g10-math",
+ "prompts_version": "s7-v7",
+ "by_ref": {
+  "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/s7-author-ch06",
+  "stage": "S7 author",
+  "shards_sha256": "7a788ed5e8f086a9214e21d9f91baafddf54b699570a4bf18eb29b81ba55717b",
+  "files": 10
+ },
+ "embedded": {
+  "source": "runbook/widgets.workflow.js",
+  "source_sha256": "ed230f08ec96811f4eaa45379aabb16441ac259c0b6b19e018a7b0cfb19de1cf",
+  "args_sha256": "29a241303a927e4e45538c271f4c0f2f184696a7ba2ea26a8f0f86b61a596b81",
+  "generated_sha256": "5c665ec11711abaefde821100b24ffc1edbf9bb3fd218d9c9a9de20058245acd",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "records": [
+  {
+   "lesson": "g10m6s1-1",
+   "templates": [
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:g10m6s1-1-1:left-closed-right-open",
+     "lo_id": "lo:g10m6s1-1-1",
+     "parent_question_id": "q:g10m6s1-1-1:ex6-1-1b",
+     "tier": "basic",
+     "kind": "number_line_marker",
+     "instances": [
+      {
+       "from": -4,
+       "to": 3
+      },
+      {
+       "from": 1,
+       "to": 8
+      },
+      {
+       "from": -8,
+       "to": -2
+      },
+      {
+       "from": -1,
+       "to": 6
+      },
+      {
+       "from": 2,
+       "to": 9
+      }
+     ],
+     "spec": {
+      "mode": "interval",
+      "range": [
+       -10,
+       10
+      ],
+      "from": "{=from}",
+      "to": "{=to}",
+      "openFrom": false,
+      "openTo": true
+     },
+     "stem": "Mark the interval $[{=from}, {=to})$ on the number line. Put a filled circle on an end number that belongs to the interval and a hollow circle on one that does not.",
+     "solution": [
+      "Read each end bracket on its own: a square bracket keeps its end number in the interval, a round bracket leaves its end number out.",
+      "The left bracket is square, so the left end number belongs to the interval: set the left end to a filled circle.",
+      "The right bracket is round, so the right end number does not belong to the interval: set the right end to a hollow circle.",
+      "Every real number between the two ends is in the interval, so the stretch from the left end to the right end is the interval.",
+      "In set notation the filled end is written with $\\le$ and the hollow end with $<$: $\\{x : x \\in \\mathbb{R}, \\text{left end} \\le x < \\text{right end}\\}$."
+     ],
+     "diagnostics": [
+      {
+       "predicate": "endpoint-inclusion-wrong",
+       "misconception_id": "mc:g10m6s1-1-1:brackets-swapped-for-signs"
+      }
+     ],
+     "notes": "Interval mode, the one number_line_marker mode that can carry this objective. The stem gives INTERVAL notation on purpose: with a bracket on the page, a right-ends-wrong-circles answer is the bracket paired with the wrong inclusion, which is brackets-swapped-for-signs (a stem in set notation would test the < versus hollow link instead). Left-closed and right-open is the form of the anchor ex6-1-1b. Mixed ends are deliberate: a student who fills both circles, or hollows both, is caught as well as one who swaps them, and all of these fire the same predicate. interval-wrong (wrong end numbers, e.g. a sign slip on -4) is left unmapped: no listed misconception on this objective describes it. interval-notation-for-non-real-set cannot be fired by any construction here, because a shaded stretch always means every real number in it. The solution is token-free on purpose so it reads the same for every row. Endpoints stay off the range ends so both circles are easy to tap. What this builds is the MEANING of the bracket; the book's written conversion to set notation stays with the anchor question."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:g10m6s1-1-1:left-open-right-closed",
+     "lo_id": "lo:g10m6s1-1-1",
+     "parent_question_id": "q:g10m6s1-1-1:ex6-1-1a",
+     "tier": "standard",
+     "kind": "number_line_marker",
+     "instances": [
+      {
+       "from": -7,
+       "to": 2
+      },
+      {
+       "from": -3,
+       "to": 5
+      },
+      {
+       "from": 0,
+       "to": 7
+      },
+      {
+       "from": -9,
+       "to": -4
+      }
+     ],
+     "spec": {
+      "mode": "interval",
+      "range": [
+       -10,
+       10
+      ],
+      "from": "{=from}",
+      "to": "{=to}",
+      "openFrom": true,
+      "openTo": false
+     },
+     "stem": "Mark the interval $({=from}, {=to}]$ on the number line. Put a filled circle on an end number that belongs to the interval and a hollow circle on one that does not.",
+     "solution": [
+      "Read each end bracket on its own: a square bracket keeps its end number in the interval, a round bracket leaves its end number out.",
+      "The left bracket is round, so the left end number does not belong to the interval: set the left end to a hollow circle.",
+      "The right bracket is square, so the right end number belongs to the interval: set the right end to a filled circle.",
+      "Every real number between the two ends is in the interval, so the stretch from the left end to the right end is the interval.",
+      "In set notation the hollow end is written with $<$ and the filled end with $\\le$: $\\{x : x \\in \\mathbb{R}, \\text{left end} < x \\le \\text{right end}\\}$."
+     ],
+     "diagnostics": [
+      {
+       "predicate": "endpoint-inclusion-wrong",
+       "misconception_id": "mc:g10m6s1-1-1:brackets-swapped-for-signs"
+      }
+     ],
+     "notes": "The mirror of the basic template: round on the left, square on the right, so a student who has learned one pattern by position (left square, right round) is caught on this one. It is the finite counterpart of anchor ex6-1-1a, $(-\\infty, 7]$, whose unbounded end the instrument cannot draw (see the gap). Rows include an interval with both ends negative and one that starts at 0. Same single diagnostic and same reasoning as the basic template: interval-wrong is unmapped because no own misconception describes it, and interval-notation-for-non-real-set cannot be fired by this construction. The solution is token-free on purpose."
+    }
+   ],
+   "gaps": [
+    {
+     "lo_id": "lo:g10m6s1-1-1",
+     "need_kind": "number_line_marker (extension: an unbounded end, and non-whole ends)",
+     "description": "Interval mode that accepts a ray: the student drags one end to the edge of the line and it becomes an arrow, with no circle, meaning the interval has no end there. The same mode would accept an end that is a fraction or a surd, such as $\\frac{3}{4}$ or $-\\sqrt{3}$, snapped to a labelled tick. The student marks $(-\\infty, 7]$, $(35, \\infty)$ or $(-\\sqrt{3}, \\infty)$ and sets the one finite end filled or hollow. It would diagnose a circle or square bracket put on an infinite end (a bracket on $\\infty$ is never square), the finite end paired with the wrong inclusion, and the ray pointed the wrong way.",
+     "why": "Three of the six anchor questions for this objective (ex6-1-1a, c, f) are rays, and ex6-1-1d, e and f have fraction or surd ends. number_line_marker's interval mode needs two whole-number ends inside +/-20, so the objective's most typical cases cannot be asked and the two templates cover only finite, whole-number intervals."
+    },
+    {
+     "lo_id": "lo:g10m6s1-1-4",
+     "need_kind": "graph_reader (new kind): the instrument draws the graph itself, the student bounds domain and range on the axes",
+     "description": "The instrument draws the graph of a function in context, such as a straight segment from (0, 10) to (20, 0) for the rolling ball, or a segment ending in a filled point at (120, 100) for the car, on axes that run past the curve. The student drags a shaded span along the horizontal axis to set the domain and another along the vertical axis to set the range, and sets each end filled or hollow. A vertical guide the student drags along the horizontal axis reads off the function value live, which covers the 'after 6 s' style of question. The student constructs the two spans. Graded on the property: each span must run exactly over the curve's extent on its axis. It would diagnose domain and range swapped (the vertical extent given as the domain), the span taken as the whole visible window instead of the curve's extent, an end included or excluded wrongly, and a value read off the wrong axis.",
+     "why": "All six anchor questions read a graph. A question may not point at a [figure], and no existing kind draws a function for the student to read, so number_line_marker would reduce this to marking numbers the stem has already given. This lesson's graph has no misconception recorded for this objective, so even with this kind the diagnostics could not be filled until some are authored (for example: domain and range swapped, reading the plot window instead of the curve)."
+    },
+    {
+     "lo_id": "lo:g10m6s1-1-2",
+     "need_kind": "function_machine (new kind): an input dial into a named rule, with the output shown live",
+     "description": "The student sees a function written in notation, such as $f(x)=x^{2}+1$, and an input dial. Dragging the dial shows the value substituted and the output. Tasks: set the input so that $f$ gives a target value ('find x with f(x) = 5': both -2 and 2 are accepted, graded on the property), and for compositions and sums, chain two machines so the output of one feeds the other. It would diagnose a negative input squared without brackets ($-1^2$ read as $-1$), $f(x+1)$ read as $f(x)+1$, the input put into the wrong place in the rule, and one of two inputs given when two exist.",
+     "why": "Evaluating $f(-1)$ is a typed number and no existing kind builds the substitution, so pair_plotter would only be an answer box with a grid. This objective has no misconception recorded in the graph either, so the kind would also need entries to be authored before its diagnostics could be filled."
+    }
+   ],
+   "notes": "Two templates, both number_line_marker in interval mode, both for lo:g10m6s1-1-1 (set and interval notation). They are the only templates this lesson can carry, because lo:g10m6s1-1-2, -3 and -4 each have an EMPTY misconception list, so a template for them would have no valid diagnostic: every template needs at least one, and an id from another objective's list is refused (FR-1215). In particular lo:g10m6s1-1-3 (tables and graphs) IS genuinely fitted by existing kinds: pair_plotter for plotting ordered pairs from a completed table, and curve_sketcher with fn linear for graphing y = x - 4 after the table is made. Those two templates should be authored as soon as misconceptions are added for that objective (candidates: x and y swapped when plotting; reading y = x - 4 as y = 4 - x; a table completed by the wrong rule). I did not record that as a gap because no new kind is needed. What the two templates do and do not cover: the number line builds what a bracket MEANS (round leaves the end number out, square keeps it), so it targets brackets-swapped-for-signs through endpoint-inclusion-wrong; the written conversion to set notation stays with the anchor questions. The other own misconception, interval-notation-for-non-real-set, cannot be fired by this instrument: a shaded stretch means every real number in it. Rows are whole numbers within -9..9 inside range [-10, 10], so they satisfy the validator (range at most 24 wide, ends whole and inside the range, from at most to). The stem takes its two numbers from {=from} and {=to}; the bracket pattern is fixed per template (one template per pattern) so nothing but numbers needs substitution. Solutions are token-free on purpose."
+  },
+  {
+   "lesson": "g10m6s2-1",
+   "templates": [
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:g10m6s2-1-2:rearranged-moved-term",
+     "lo_id": "lo:g10m6s2-1-2",
+     "parent_question_id": "q:g10m6s2-1-2:ex6-2-5c",
+     "tier": "basic",
+     "kind": "line_drawer",
+     "spec": {
+      "mode": "equation",
+      "m": 2,
+      "b": -3
+     },
+     "stem": "Draw the straight line $y + 3 = 2x$. Any two points on the line will do; the equation under the graph updates as you drag.",
+     "solution": [
+      "Get $y$ on its own: subtract $3$ from both sides, so $y = 2x - 3$. The $3$ changes sign when it crosses the equals sign.",
+      "Read $y = mx + c$: the gradient is $m = 2$ and the $y$-intercept is $c = -3$.",
+      "Drag the first point onto the $y$-intercept, $(0, -3)$.",
+      "Use the gradient: $m = 2$ means up 2 for every 1 across, so the second point is $(1, -1)$.",
+      "Check the live equation reads $y = 2x - 3$, which is the same line as $y + 3 = 2x$."
+     ],
+     "diagnostics": [
+      {
+       "predicate": "intercept-wrong",
+       "misconception_id": "mc:g10m6s2-1-2:moved-term-keeps-its-sign"
+      },
+      {
+       "predicate": "off-target",
+       "misconception_id": "mc:g10m6s2-1-2:gradient-and-intercept-swapped"
+      }
+     ],
+     "notes": "Draws the book's ex6-2-5 theme in reverse (equation to graph). Reading the printed '+3' as the intercept gives y = 2x + 3: slope right, intercept wrong, so intercept-wrong is a clean signature of the moved-term sign error. Off-target is mapped to the swap (y = 3x + 2 or y = -3x + 2) because the other named errors fire intercept-wrong here; off-target is a residual predicate, so this mapping is the weakest of the three. The slope is 2, an integer within the |m| <= 5 limit, and the intercept -3 is within -5..5."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:g10m6s2-1-2:divide-by-the-y-coefficient",
+     "lo_id": "lo:g10m6s2-1-2",
+     "parent_question_id": "q:g10m6s2-1-2:ex6-2-5a",
+     "tier": "standard",
+     "kind": "line_drawer",
+     "spec": {
+      "mode": "equation",
+      "m": 0.5,
+      "b": -2
+     },
+     "stem": "Draw the straight line $2y = x - 4$. Any two points on the line will do; the equation under the graph updates as you drag.",
+     "solution": [
+      "The equation is not yet in the form $y = mx + c$: $y$ has a $2$ in front of it.",
+      "Divide every term by $2$: $y = \\frac{1}{2}x - 2$.",
+      "Read the gradient $m = \\frac{1}{2}$ and the $y$-intercept $c = -2$.",
+      "Drag the first point onto the $y$-intercept, $(0, -2)$.",
+      "Use the gradient: up 1 for every 2 across, so the second point is $(2, -1)$.",
+      "Check the live equation reads $y = \\frac{1}{2}x - 2$."
+     ],
+     "diagnostics": [
+      {
+       "predicate": "intercept-wrong",
+       "misconception_id": "mc:g10m6s2-1-2:read-m-before-y-is-alone"
+      },
+      {
+       "predicate": "off-target",
+       "misconception_id": "mc:g10m6s2-1-2:read-m-before-y-is-alone"
+      }
+     ],
+     "notes": "Mirrors ex6-2-5a (2y = 3x - 1), with numbers chosen so the true gradient is the reciprocal of a whole number, which the instrument requires (3/2 would be refused). Two ways to skip the division: (1) divide the x-term only, giving y = x/2 - 4, which has the right slope and the wrong intercept, so it fires intercept-wrong; (2) read m = 1 and c = -4 as printed, which matches neither, so it fires off-target. Both are the read-m-before-y-is-alone error. The swapped gradient and intercept (m = -4, c = 1) also fire off-target; the printed-reading error is likelier here because the 2y is the whole point of the question, so off-target maps to it. A student who multiplies by 2 instead of dividing gets slope 2 and would fire slope-inverted; it is left unmapped because no listed misconception names it. The missing-x-term-gradient-one misconception needs a horizontal line (m = 0), which the line_drawer spec does not accept, so it cannot be covered."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:g10m6s2-1-3:intercepts-and-direction",
+     "lo_id": "lo:g10m6s2-1-3",
+     "parent_question_id": "q:g10m6s2-1-3:ex6-8-4b",
+     "tier": "standard",
+     "kind": "line_drawer",
+     "spec": {
+      "mode": "equation",
+      "m": -2,
+      "b": 4
+     },
+     "stem": "Draw the straight line $y + 2x = 4$. Find where it crosses each axis first. Any two points on the line will do.",
+     "solution": [
+      "Find the $y$-intercept by letting $x = 0$: $y = 4$, so the line passes through $(0, 4)$.",
+      "Find the $x$-intercept by letting $y = 0$: $2x = 4$, so $x = 2$ and the line passes through $(2, 0)$.",
+      "Drag one point onto $(0, 4)$ and the other onto $(2, 0)$; the line through them is the graph.",
+      "Check the direction: $y = -2x + 4$ has $m = -2$, which is negative, so the graph is decreasing and falls from left to right, as drawn.",
+      "Check the live equation reads $y = -2x + 4$."
+     ],
+     "diagnostics": [
+      {
+       "predicate": "slope-sign-flipped",
+       "misconception_id": "mc:g10m6s2-1-3:direction-from-unrearranged-sign"
+      },
+      {
+       "predicate": "slope-inverted",
+       "misconception_id": "mc:g10m6s2-1-3:y-intercept-from-y-zero"
+      }
+     ],
+     "notes": "Parent is ex6-8-4b (y = 2x + 4); this is a close variant (same y-intercept 4, both intercepts on the lattice) written with the x-term on the left so the direction trap exists. Slope-sign-flipped: reading '+2x' as rising gives y = 2x + 4, which has the right intercept and the line leaning the wrong way. Slope-inverted: a student who swaps the two intercept rules reads the y-intercept as the x-value (2) and the x-intercept as the y-value (4), so plots (0, 2) and (4, 0), whose slope is -1/2, the reciprocal of -2; swapping the intercept rules reflects the line in y = x, so the slope always inverts for |m| not equal to 1. That is why m = -2 and not -1 (for m = -1 the swap draws the same line and is undetectable). The slope-inverted diagnostic assumes the grader reports slope-inverted from the slope alone; if it also requires the intercept to match, that diagnostic would never fire and the student gets a plain 'not quite'. Reading the gradient as printed (the -2 objective's read-m-before-y-is-alone error) fires the same predicate as the direction error, so slope-sign-flipped is mapped to the -3 objective's own direction error, the likelier of the two here. The stem's 'find where it crosses each axis first' is a cue only: grading accepts any two points on the line."
+    }
+   ],
+   "gaps": [
+    {
+     "lo_id": "lo:g10m6s2-1-1",
+     "need_kind": "table_plotter",
+     "description": "A grid with a table of values for a straight-line rule, for example $y = 2x - 1$ for $x = -2, -1, 0, 1, 2$. The student places one point per x-value, tapping the grid above or below each column, then joins them. The widget would show whether the placed points are collinear and let the student join them into the line. A second step would ask for the domain and range, either as the set of all real numbers for the whole line, or as an interval when the stem restricts the x-values, for example $-2 \\le x \\le 3$ (the student marks the resulting y-interval). Diagnostics it could emit: swapped-coordinates on any point, a sign slip when evaluating the rule at a negative x (the point sits on the wrong side of the line), a missing point or an extra point, points that are not collinear, and, in the range step, the interval endpoints taken from the x-values rather than the y-values.",
+     "why": "pair_plotter takes a single point, so the table-to-points-to-line sequence the objective is about cannot be built. line_drawer in equation mode accepts any two points on the line, so it skips the table and never touches domain and range. number_line_marker's interval mode needs finite whole-number endpoints, so it cannot state an unrestricted domain or range. The objective also has no anchor question or listed misconceptions, so no template could be attached to it even if a kind fitted."
+    }
+   ],
+   "notes": "Three line_drawer templates, all equation mode: two for lo:g10m6s2-1-2 and one for lo:g10m6s2-1-3. Each asks for the graph of an equation that is not yet in y = mx + c, so reading m and c correctly is what the construction tests. I read both figures for the -2 anchors (ex6-2-2 is y = 3x - 1 through A(0, -1) and B(1, 2); ex6-2-3 is y = x - 1 through A(0, -1) and B(1, 0)). No stem points at a figure. Two objectives get no template. lo:g10m6s2-1-4 (sketch by the gradient-intercept method) is a natural fit for line_drawer in equation mode, but it has no anchor question in the lesson file, so there is no parent_question_id to cite. It needs an anchor, not a new kind, so it is not entered as a gap; the -2 templates above exercise the same drag-two-points construction. lo:g10m6s2-1-1 is a gap (above). The -3 anchors ask only for the intercepts as numbers; the -3 template draws the line from them. I used no instances, because the stem helper known to me, linear(m, b), only prints y = mx + b, and these questions need the rearranged forms; each template is one fixed question. All limits hold: |m| is at most 5, m is a whole number or the reciprocal of one, and b is a whole number within -5..5."
+  },
+  {
+   "lesson": "g10m6s3-1",
+   "templates": [
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:g10m6s3-1-1:sketch-down-parabola-shifted-up",
+     "lo_id": "lo:g10m6s3-1-1",
+     "parent_question_id": "q:g10m6s3-1-1:ex6-3-5d",
+     "tier": "basic",
+     "kind": "curve_sketcher",
+     "spec": {
+      "fn": "quadratic",
+      "coefs": [
+       -1,
+       0,
+       3
+      ]
+     },
+     "stem": "Sketch the graph of $y = -x^2 + 3$ with your finger, as one smooth curve that runs right across the grid.",
+     "solution": [
+      "The number in front of $x^2$ is $a = -1$. It is negative, so the parabola opens downward, like $y = -x^2$ in the book's graph.",
+      "The number added at the end is $q = 3$. It lifts every point of $y = -x^2$ up by 3, so the turning point moves from $(0, 0)$ up to $(0, 3)$.",
+      "Check two points on each side of the $y$-axis: $x = \\pm 1$ gives $y = -1 + 3 = 2$ and $x = \\pm 2$ gives $y = -4 + 3 = -1$.",
+      "Draw one smooth curve through $(-2, -1)$, $(-1, 2)$, $(0, 3)$, $(1, 2)$ and $(2, -1)$, opening downward and symmetric about the $y$-axis."
+     ],
+     "diagnostics": [
+      {
+       "predicate": "vertically-displaced",
+       "misconception_id": "mc:g10m6s3-1-1:q-ignored"
+      },
+      {
+       "predicate": "opens-wrong-way",
+       "misconception_id": "mc:g10m6s3-1-1:sign-of-a-ignored"
+      }
+     ],
+     "notes": "Basic tier: |a| = 1 so steepness is not what is being tested, and off-target is deliberately left unmapped here (a freehand miss at |a| = 1 has no dominant cause). vertically-displaced fires both for a parabola left with its turning point at the origin (q ignored, mapped) and for one shifted down instead of up (q-shift-wrong-direction, not mapped because the same predicate cannot name two misconceptions; the sketcher cannot tell the two apart). I chose q-ignored as the likelier slip because the bank's own multiple-choice errors centre on the origin-vertex curve. |q| = 3 keeps either error well beyond the one-grid-square tolerance. The curve stays inside the -5..5 window for |x| up to about 2.8. partial-coverage and fails-vertical-line-test can fire but name no misconception, so they get the instrument's generic message."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:g10m6s3-1-1:sketch-narrow-parabola-shifted-down",
+     "lo_id": "lo:g10m6s3-1-1",
+     "parent_question_id": "q:g10m6s3-1-1:ex6-3-2",
+     "tier": "standard",
+     "kind": "curve_sketcher",
+     "spec": {
+      "fn": "quadratic",
+      "coefs": [
+       2,
+       0,
+       -4
+      ]
+     },
+     "stem": "Sketch the graph of $y = 2x^2 - 4$ with your finger, as one smooth curve that runs right across the grid.",
+     "solution": [
+      "The number in front of $x^2$ is $a = 2$. It is positive, so the parabola opens upward.",
+      "Its size is bigger than 1, so the curve is narrower than $y = x^2$: at $x = 1$ it is already 2 high, not 1.",
+      "The number added at the end is $q = -4$. It lowers every point of $y = 2x^2$ by 4, so the turning point is $(0, -4)$.",
+      "Check points on each side of the $y$-axis: $x = \\pm 1$ gives $y = 2 - 4 = -2$, $x = \\pm 1.5$ gives $y = 0.5$ and $x = \\pm 2$ gives $y = 8 - 4 = 4$.",
+      "Draw one smooth curve through $(0, -4)$, $(\\pm 1, -2)$, $(\\pm 1.5, 0.5)$ and $(\\pm 2, 4)$, opening upward and symmetric about the $y$-axis."
+     ],
+     "diagnostics": [
+      {
+       "predicate": "off-target",
+       "misconception_id": "mc:g10m6s3-1-1:steepness-of-a-misjudged"
+      },
+      {
+       "predicate": "vertically-displaced",
+       "misconception_id": "mc:g10m6s3-1-1:q-ignored"
+      },
+      {
+       "predicate": "opens-wrong-way",
+       "misconception_id": "mc:g10m6s3-1-1:sign-of-a-ignored"
+      }
+     ],
+     "notes": "Standard tier, the forward form of the book's ex6-3-2 (there the student reads a = 2, q = -3 off the graph; here she draws a = 2, q = -4). Steepness is the new thing: a = 2 against the default-looking a = 1 puts the curve 4 grid squares apart at x = 2, far beyond the tolerance. off-target is mapped to steepness-of-a-misjudged only because the sign (opens-wrong-way) and the vertical position (vertically-displaced) have their own predicates, so the residual miss with the right orientation and roughly the right turning point is a wrong width. A random scribble also lands on off-target and would be told it misjudged the steepness; accepted as the lesser harm, but Samuel may prefer to drop that mapping. vertically-displaced fires for both q-ignored (mapped, the likelier) and q-shift-wrong-direction (not mapped; same predicate). The curve leaves the -5..5 window at |x| about 2.1, as any a = 2 parabola must; the coefficient is within the validator's +-10."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:g10m6s3-1-1:sketch-wide-down-parabola-shifted-up",
+     "lo_id": "lo:g10m6s3-1-1",
+     "parent_question_id": "q:g10m6s3-1-1:ex6-3-1",
+     "tier": "advanced",
+     "kind": "curve_sketcher",
+     "spec": {
+      "fn": "quadratic",
+      "coefs": [
+       -0.5,
+       0,
+       4
+      ]
+     },
+     "stem": "Sketch the graph of $y = -0.5x^2 + 4$ with your finger, as one smooth curve that runs right across the grid.",
+     "solution": [
+      "The number in front of $x^2$ is $a = -0.5$. It is negative, so the parabola opens downward.",
+      "Its size is less than 1, so the curve is wider than $y = -x^2$: at $x = 2$ it has dropped only 2 below the turning point, not 4.",
+      "The number added at the end is $q = 4$. It lifts every point of $y = -0.5x^2$ up by 4, so the turning point is $(0, 4)$.",
+      "Check points: $x = \\pm 2$ gives $y = -2 + 4 = 2$ and $x = \\pm 4$ gives $y = -8 + 4 = -4$. The curve crosses the $x$-axis where $0.5x^2 = 4$, so at about $x = \\pm 2.83$.",
+      "Draw one smooth curve through $(0, 4)$, $(\\pm 2, 2)$ and $(\\pm 4, -4)$, opening downward and symmetric about the $y$-axis."
+     ],
+     "diagnostics": [
+      {
+       "predicate": "off-target",
+       "misconception_id": "mc:g10m6s3-1-1:steepness-of-a-misjudged"
+      },
+      {
+       "predicate": "opens-wrong-way",
+       "misconception_id": "mc:g10m6s3-1-1:sign-of-a-ignored"
+      },
+      {
+       "predicate": "vertically-displaced",
+       "misconception_id": "mc:g10m6s3-1-1:q-ignored"
+      }
+     ],
+     "notes": "Advanced tier, the forward form of the book's ex6-3-1 (a = -1/3, q = 4; -1/3 is not a tidy decimal, so -0.5 stands in with the same signs and the same shape of problem). Combines a negative a, a positive q and a flat curve. It is the one template where a bigger |a| meaning a flatter curve is visible: the common wrong sketch is y = -x^2 + 4, 2 grid squares off at x = 2 and 4.5 at x = 3. The -0.5 coefficient is inside the stated +-10 limit and is the book's own decimal style (ex6-3-5a uses 0.5), but the limits text does not say 'whole' for linear and quadratic as it does for the other families; if the validator rejects a non-whole a, swap in {fn: quadratic, coefs: [-1, 0, 4]}. Same off-target and vertically-displaced caveats as the standard template. The curve stays inside the -5..5 window for |x| up to about 4.2, the best fit of the three."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:g10m6s3-1-3:mark-both-x-intercepts",
+     "lo_id": "lo:g10m6s3-1-3",
+     "parent_question_id": "q:g10m6s3-1-3:ex6-3-3b",
+     "tier": "standard",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "points",
+      "range": [
+       -6,
+       6
+      ],
+      "targets": [
+       -3,
+       3
+      ]
+     },
+     "stem": "The parabola $y = 2x^2 - 18$ meets the $x$-axis at its $x$-intercepts. Work them out, then mark the $x$-coordinate of every $x$-intercept on the number line.",
+     "solution": [
+      "Every point on the $x$-axis has $y = 0$, so put $y = 0$: $2x^2 - 18 = 0$.",
+      "Add 18 to both sides: $2x^2 = 18$. Divide both sides by 2: $x^2 = 9$.",
+      "Take the square root of both sides. A number and its negative both give 9 when squared, so $x = 3$ or $x = -3$.",
+      "The parabola crosses the $x$-axis at $(-3, 0)$ and $(3, 0)$, on either side of the $y$-axis. Mark both $-3$ and $3$."
+     ],
+     "diagnostics": [
+      {
+       "predicate": "missed-values",
+       "misconception_id": "mc:g10m4s6-1-3:only-positive-root"
+      }
+     ],
+     "notes": "Covers only a slice of the objective: x-intercepts that are whole numbers. The book's own answers are irrational to 2 d.p. and the objective includes recognising 'no x-intercepts' (an empty set); number_line_marker takes 1-4 whole-number targets, so neither can be asked, and the y-intercept is not on this instrument at all (see the gap for lo:g10m6s3-1-3). What the number line does honestly show is that the answer is a SET of two values symmetric about 0, and marking only one is visibly incomplete. The answer is symmetric, so sign-flipped cannot fire and is not mapped. The range [-6, 6] is chosen on purpose: the quotient x^2 = 9 and the constant 18 are off the line, so the error of writing x = +-9 (no-root-taken) cannot be tapped in. If it could be, the same answer would fire missed-values and extra-values and the instrument does not say which one is reported, so a missed-values mapping to only-positive-root could wrongly refute a student who made the no-root-taken slip. extra-values is left unmapped: no single error dominates it here. Honest weakness: the student does the working on paper and taps the result, so this is the closest this lesson gets to an answer box, kept because the missing-negative-root error is real and the grading is on a set."
+    }
+   ],
+   "gaps": [
+    {
+     "lo_id": "lo:g10m6s3-1-2",
+     "need_kind": "domain_range_shader",
+     "description": "A parabola y = ax^2 + q is drawn on a grid (the student does not draw it). Each axis carries a draggable shading handle pair. On the x-axis the student shades the stretch the curve lies over (the domain). On the y-axis she shades the stretch of values it reaches (the range). Each end can be set open, closed, or running off to infinity with an arrow. She also places the turning point and drags a line to the axis of symmetry, and marks the stretch of x where the curve is increasing. The widget would report: domain and range swapped; range given as [0, infinity) when q was ignored; range given as (-infinity, q] for an upward parabola, or [q, infinity) for a downward one (the sign of a); a closed end where the turning point is included and a hollow one where it is not; the axis of symmetry drawn as the x-axis or at x = q; increasing and decreasing swapped.",
+     "why": "number_line_marker's interval mode needs both endpoints to be whole numbers inside a finite range, so the book's own answers (-infinity, infinity) and [-4, infinity) cannot be built, and a bounded stand-in would teach that the range stops somewhere. pair_plotter takes a single lattice point and shows no parabola, so asking for the turning point turns into typing (0, q) on a grid, an answer box in disguise. curve_sketcher grades a drawn stroke, not a domain, a range or an axis of symmetry. The listed misconceptions for this objective are all prerequisite ones (bracket notation, inequality signs), which the unbounded-interval instrument above would also be able to diagnose."
+    },
+    {
+     "lo_id": "lo:g10m6s3-1-3",
+     "need_kind": "parabola_intercept_finder",
+     "description": "The plane for y = ax^2 + q is shown with its equation. The student drags one marker onto each point where the curve meets the y-axis and each point where it meets the x-axis, snapping to a 0.05 grid so a 2 d.p. answer such as (0.63, 0) is reachable. A 'no x-intercepts' switch is available for cases such as y = x^2 + 2. The curve is shown as the student places markers, so a marker that is off the curve is visibly off. It would report: only the positive x-intercept given; a y-intercept marked on the x-axis (y = 0 used for the y-intercept); x-intercepts claimed for a parabola that never reaches the axis (-q/a is negative); x-intercepts at plus or minus the quotient (the square root never taken); q taken as the gradient or the intercept swapped.",
+     "why": "The one template written for this objective (mark both x-intercepts on a number line) holds only whole-number x-intercepts. number_line_marker cannot take an empty set, so 'recognise when there are no x-intercepts' is not expressible. It cannot take irrational values at 2 d.p., which are the book's actual answers (-0.63, 0.63 and so on). It carries no y-intercept at all. Those parts of the objective and the misconceptions that go with them (y-intercept-from-y-zero, no-root-taken, root-of-part) have no instrument."
+    }
+   ],
+   "notes": ""
+  },
+  {
+   "lesson": "g10m6s4-1",
+   "templates": [
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:g10m6s4-1-1:sketch-xy-negative-k",
+     "lo_id": "lo:g10m6s4-1-1",
+     "parent_question_id": "q:g10m6s4-1-1:ex6-4-6e",
+     "tier": "basic",
+     "kind": "curve_sketcher",
+     "instances": [
+      {
+       "a": -6
+      },
+      {
+       "a": -4
+      },
+      {
+       "a": -3
+      }
+     ],
+     "spec": {
+      "fn": "hyperbola",
+      "coefs": [
+       "{=a}",
+       0
+      ]
+     },
+     "stem": "Sketch the graph of $xy={=a}$. It has two branches: draw one, lift your finger, then draw the other. Show how each branch behaves near the two axes.",
+     "solution": [
+      "Write $xy=k$ as $y=\\dfrac{k}{x}$. The number on the right of $xy=$ is $a$, and it is negative here.",
+      "Because $a<0$, $x$ and $y$ always have opposite signs, so one branch lies in quadrant II ($x<0$, $y>0$) and the other in quadrant IV ($x>0$, $y<0$).",
+      "Complete a short table, for example $x=\\pm1,\\pm2,\\pm3$ (and any other value that divides $a$ exactly), and plot each pair. Check that $x$ and $y$ have opposite signs in every row.",
+      "$x=0$ gives no $y$-value (division by $0$) and $y=0$ is never produced (a fraction with a non-zero top is never $0$), so the graph has no point on either axis.",
+      "Join the points in each quadrant with a smooth curve. Each branch gets closer and closer to the axes but never touches or crosses them, so the axes ($x=0$ and $y=0$) are the asymptotes."
+     ],
+     "diagnostics": [
+      {
+       "predicate": "asymptote-crossed",
+       "misconception_id": "mc:g10m6s4-1-1:asymptote-is-met"
+      },
+      {
+       "predicate": "wrong-quadrants",
+       "misconception_id": "mc:g10m6s4-1-1:sign-lost-testing-point"
+      }
+     ],
+     "notes": "Instrument fit: the book asks the student to join table points into two smooth curves and then describe the asymptotes; the freehand two-branch stroke is exactly that, and the widget rejects a stroke that runs through x = 0. asymptote-crossed is the only misconception this construction can show of the asymptote-is-met kind: joining the branches into one curve through the y-axis is the belief that the graph reaches its asymptote. Rows are negative so that wrong-quadrants means one thing here (the curve drawn in quadrants I and III, as when a negative divided by a negative or a negative times a positive loses its sign); it is mapped to sign-lost-testing-point because that is the only sign-handling error on this objective's list, though the likelier conceptual cause, sign-of-a-ignored, belongs to lesson objective 1-2 and is not on this list. continuous-means-has-breaks is a vocabulary reversal that a sketch cannot reveal, so it is not mapped. partial-coverage (one branch only), vertically-displaced and off-target are left unmapped: they have no single dominant cause. Grading is within about one grid square, so |a| of 3, 4 and 6 are used for clear separation; a = -6 puts the points at x = ±1 off the visible grid, which the stem tolerates (the curve is mostly inside). Anchor is ex6-4-6e (xy = -6, give the asymptotes); the first row is that exact function."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:g10m6s4-1-2:sketch-y-a-over-x-sign-and-size",
+     "lo_id": "lo:g10m6s4-1-2",
+     "parent_question_id": "q:g10m6s4-1-2:ex6-4-5b",
+     "tier": "standard",
+     "kind": "curve_sketcher",
+     "instances": [
+      {
+       "a": 4
+      },
+      {
+       "a": 6
+      },
+      {
+       "a": 5
+      }
+     ],
+     "spec": {
+      "fn": "hyperbola",
+      "coefs": [
+       "{=a}",
+       0
+      ]
+     },
+     "stem": "Sketch the graph of $y=\\dfrac{a}{x}$ when $a={=a}$. Draw each branch separately: lift your finger between them. Place the branches in the right quadrants and at the right distance from the axes.",
+     "solution": [
+      "The sign of $a$ decides the quadrants. Here $a>0$, so $x$ and $y$ always have the same sign and the branches lie in quadrants I and III.",
+      "The size of $a$ decides how far the branches sit from the axes. At $x=1$ the curve is at $y=a$, at $x=2$ it is at $y=\\dfrac{a}{2}$, at $x=3$ it is at $y=\\dfrac{a}{3}$: a larger $a$ gives a larger $y$ at every $x$, so the curve lies further from the axes, not closer.",
+      "Plot a few pairs such as $(2, \\tfrac{a}{2})$ and $(3, \\tfrac{a}{3})$, together with their mirror images through the origin, $(-2, -\\tfrac{a}{2})$ and $(-3, -\\tfrac{a}{3})$.",
+      "Draw one smooth branch through the points in quadrant I, lift your finger, and draw the other through the points in quadrant III. Neither branch may touch or cross the axes, which are the asymptotes."
+     ],
+     "diagnostics": [
+      {
+       "predicate": "wrong-quadrants",
+       "misconception_id": "mc:g10m6s4-1-2:sign-of-a-ignored"
+      },
+      {
+       "predicate": "off-target",
+       "misconception_id": "mc:g10m6s4-1-2:bigger-a-closer-to-axes"
+      }
+     ],
+     "notes": "Instrument fit: sign and size of a on y = a/x are exactly what a freehand hyperbola shows; the book's own exercise (ex6-4-5) matches graphs of 2/x, 4/x, 8/x and -2/x to their equations, and this is the same knowledge run in the other direction (equation to graph, no figure). wrong-quadrants maps cleanly to sign-of-a-ignored (II/IV drawn for positive a). off-target is mapped to bigger-a-closer-to-axes only because the template is built so that one error dominates it: q is fixed at 0, a is large (4 to 6), a stroke through x = 0 is reported as asymptote-crossed instead, and a curve in the right quadrants that still fails is almost always at the wrong distance from the axes; a sloppy stroke can also land here, and the console should read this mapping as 'probable', not certain. asymptote-crossed is deliberately left unmapped on this objective: it could be hyperbola-called-exponential (an exponential curve crossing the y-axis) or simply joining the branches, and nothing tells them apart. Rows are positive so wrong-quadrants is II/IV; the negative case is covered by the objective 1-1 template and the third row of the objective 1-4 template. Specific predicates are listed before the catch-all off-target. The effect of q is not constructed here (no q misconception exists on this objective); see the gap recorded for it. Anchor ex6-4-5b is y = 4/x, the first row."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:g10m6s4-1-4:sketch-xy-equals-a-plus-x",
+     "lo_id": "lo:g10m6s4-1-4",
+     "parent_question_id": "q:g10m6s4-1-4:ex6-8-57b",
+     "tier": "advanced",
+     "kind": "curve_sketcher",
+     "instances": [
+      {
+       "a": 3
+      },
+      {
+       "a": 4
+      },
+      {
+       "a": -3
+      }
+     ],
+     "spec": {
+      "fn": "hyperbola",
+      "coefs": [
+       "{=a}",
+       1
+      ]
+     },
+     "stem": "Sketch the graph of $xy={=a}+x$. It has two branches: draw one, lift your finger, then draw the other. Your sketch must sit where the graph really is relative to both asymptotes.",
+     "solution": [
+      "Get $y$ on its own: divide every term by $x$, so $xy=a+x$ becomes $y=\\dfrac{a}{x}+1$, where $a$ is the number written in the equation. Compare with $y=\\dfrac{a}{x}+q$: the number added on the end, with its sign, is $q=1$. The number on top is $a$, and it is not the asymptote.",
+      "The asymptotes are the vertical line $x=0$ and the horizontal line $y=q$, here $y=1$. Think of both as dashed lines that the curve approaches and never meets.",
+      "The sign of $a$ decides which two regions the branches fill, measured from where the asymptotes cross, at $(0, 1)$: for $a>0$ they lie above-right and below-left of $(0, 1)$; for $a<0$ they lie above-left and below-right.",
+      "There is no $y$-intercept, because $x=0$ is not allowed. For the $x$-intercept put $y=0$: $0=\\dfrac{a}{x}+1$ gives $x=-a$. Mark the point $(-a, 0)$.",
+      "Add one or two more points to guide each branch, then draw one smooth branch through the $x$-intercept, lift your finger, and draw the other. Neither branch crosses $x=0$ or the line $y=1$."
+     ],
+     "diagnostics": [
+      {
+       "predicate": "vertically-displaced",
+       "misconception_id": "mc:g10m6s4-1-4:asymptote-sign-flipped"
+      },
+      {
+       "predicate": "wrong-quadrants",
+       "misconception_id": "mc:g10m6s4-1-2:sign-of-a-ignored"
+      },
+      {
+       "predicate": "asymptote-crossed",
+       "misconception_id": "mc:g10m6s4-1-1:asymptote-is-met"
+      }
+     ],
+     "notes": "Instrument fit: the objective is to sketch y = a/x + q from the sign of a, the intercepts and the asymptotes, and the anchor (ex6-8-57b, the asymptote of xy = 3 + x) needs the same rewrite to y = 3/x + 1. The freehand hyperbola grades the outcome of that whole chain, and the stem asks for the property (both branches, right relation to both asymptotes), not a drawing from memory. q is fixed at 1 and a varies. vertically-displaced is the predicate for a wrong horizontal asymptote: a sign-flipped asymptote draws y = a/x - 1, two units below the true curve, which is outside the one-square tolerance. Other errors on this objective also fire it and are not separable by the instrument: numerator-a-as-asymptote (the curve is drawn about y = a, a units above/below) and intercept-as-asymptote (the curve is drawn about the x-intercept, y = -a). asymptote-sign-flipped is mapped because the slip arises naturally when the x term is moved across (x(y - 1) = a, then y - 1 = a/x), but the other two are named here so that the console does not over-read it. Misconceptions from objectives 1-2 and 1-1 are used because they appear on this objective's own list (marked own=false). For a = 3 and a = 4 the branches are in the upper-right/lower-left of the crossing; a = -3 reverses that, so wrong-quadrants is meaningful for both signs. Grid fit: a = 4 gives (1, 5) and (-4, 0); a = -3 gives (3, 0) and (-3, 2), all within -5..5 for the main part of the curve. Anchor ex6-8-57b is xy = 3 + x, the first row."
+    }
+   ],
+   "gaps": [
+    {
+     "lo_id": "lo:g10m6s4-1-2",
+     "need_kind": "hyperbola_fitter",
+     "description": "A live hyperbola y = a/x + q drawn on a grid with its two dashed asymptotes, controlled by two steppers or sliders (a, whole numbers from about -6 to 6; q, whole numbers from -3 to 3). A fainter target graph is shown on the grid, or a second hyperbola, and the student sets a and q until the two coincide, or sets them to carry one given curve onto another ('what moves y = 2/x onto y = 2/x - 3?'). The student constructs the effect of each parameter by seeing it move: the sign of a flips the pair of quadrants, the size of a pushes the branches away from or toward the axes, q slides the whole graph and its horizontal asymptote up or down. It would diagnose the sign of a not deciding the quadrants (the right size with the wrong sign), a read backwards (the student first moves a down to push the curve away from the axes), and q mis-read as a sideways shift or with its sign flipped (the curve is the right shape at the mirror height).",
+     "why": "curve_sketcher fits only part of this objective. It can show the sign of a (wrong-quadrants) and, with a catch-all off-target, the size of a, but it cannot construct the effect of q with a diagnosable misconception (vertically-displaced has no q error to map to on this objective's list, and a freehand stroke cannot say whether the student knows which way q moves the graph). The book's own questions are 'which graph matches this equation' and 'describe the transformation between two curves'; those need two live curves to compare, and a widget question may not point at a figure. This is a gap, not a forced fit."
+    },
+    {
+     "lo_id": "lo:g10m6s4-1-3",
+     "need_kind": "hyperbola_probe",
+     "description": "A hyperbola y = a/x + q is drawn with a draggable marker constrained to the graph and a live readout of (x, y). The student drags the marker toward the y-axis and watches y run off the grid without the curve ever reaching x = 0; then drops a horizontal test line at different heights and counts how many times it meets the curve (once for most heights, never at y = q); finally lays a vertical test line along the y-axis to see that it meets the curve nowhere. The construction is the student's own marking of the excluded values on each axis (domain: every x except 0; range: every y except q) and, separately, of the x-intercept as the place where the horizontal test line at y = 0 meets the curve. It would diagnose assuming a y-intercept exists (the student insists on a point on the y-axis, or reports a value for it), the range given as y not equal to 0 instead of y not equal to q, and the x-intercept found by setting x = 0.",
+     "why": "No existing kind builds this without becoming an answer box. pair_plotter could ask for the x-intercept, but the student only types a point, so it cannot refuse to plot the y-intercept and cannot express 'there is none', which is the key idea; its intercepts would also need whole numbers, whereas the book's are fractions (-3/2). number_line_marker could ask the student to mark the excluded x-value, but tapping 0 on a line is a recalled fact, not a construction. curve_sketcher would grade a stroke within one grid square, which cannot tell a y-intercept at (0, 2) from none, and it does not mark intercepts at all."
+    },
+    {
+     "lo_id": "lo:g10m6s4-1-5",
+     "need_kind": "hyperbola_fitter",
+     "description": "The same hyperbola_fitter instrument as the gap recorded for objective 1-2, but here the graph is part of the widget rather than a figure: the grid shows a target hyperbola drawn with its dashed horizontal asymptote and one labelled point A on it, plus a live curve y = a/x + q controlled by two steppers for a and q. The student reads q off the dashed asymptote, then finds a so that the live curve passes through A (the working 'a = (y - q) times x' can be shown beside the steppers as the student's own notes), until the live curve covers the target. The graph and the point are exactly what the book's questions show (for example point A at (-2, 5/2) with asymptote y = 2, or A at (-1, -5) with asymptote y = -3). It would diagnose q taken as the y-coordinate of A instead of the asymptote height, a taken as the x- or y-coordinate of A, and a with the wrong sign (the live curve lands in the wrong quadrants).",
+     "why": "The book's questions give a printed graph and a point and ask for a and q, and a widget question may not point at a [figure], so the graph itself must live inside the widget. No existing kind shows a given graph and lets the student set parameters against it. curve_sketcher could be given the asymptote and a point in the stem and asked for a sketch, but then the student can draw the curve through the point without ever calculating a or q, which is not the mathematics of this objective, and a point such as (-2, 5/2) is not on its whole-number snap. This objective also has no misconception ids recorded yet, so the three errors above would need to be added to the lesson's list before they can be mapped."
+    }
+   ],
+   "notes": "Lesson g10m6s4-1 (hyperbolas) has one instrument that genuinely fits: curve_sketcher with fn \"hyperbola\". Three templates are written, one each for objectives 1-1 (basic), 1-2 (standard) and 1-4 (advanced); each has instances so a student can retake without repeating a question. I deliberately limited the mappings to predicates a hyperbola sketch can emit and to misconception ids on each objective's own list (the 1-4 template uses own=false entries from 1-1 and 1-2 that appear on 1-4's list). Weak mappings are flagged in each template's notes: wrong-quadrants to sign-lost-testing-point on 1-1 (nearest own error, though sign-of-a-ignored is the likelier cause), off-target to bigger-a-closer-to-axes on 1-2 (justified by how the template is built, but 'probable'), and vertically-displaced on 1-4 (three misconceptions fire it; the instrument cannot separate them). Gaps: 1-2 (the effect of q, and size and graph-matching without a figure), 1-3 (a hyperbola has no y-intercept; intercepts, domain and range), and 1-5 (calculate a and q from a graph and a point). 1-2 and 1-5 share one proposed new kind, hyperbola_fitter. Objective 1-5 has an empty misconceptions list, so the errors that new widget would diagnose would need to be added to the list first. The five figures for objectives 1-2 and 1-5 were read; no widget stem points at a figure. continuous-means-has-breaks (a vocabulary reversal) is not constructible and is left unmapped. Stems use only {=name} substitutions in plain positions (no unknown formatters), and solutions are written generically (no placeholders) so they read correctly for every instance row."
+  },
+  {
+   "lesson": "g10m6s5-1",
+   "templates": [
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:g10m6s5-1-1:sketch-two-to-the-x",
+     "lo_id": "lo:g10m6s5-1-1",
+     "parent_question_id": "q:g10m6s5-1-1:ex6-5-6b",
+     "tier": "basic",
+     "kind": "curve_sketcher",
+     "spec": {
+      "fn": "exponential",
+      "coefs": [
+       1,
+       2,
+       0
+      ]
+     },
+     "stem": "Sketch the graph of $y = 2^{x}$ in one smooth stroke across the whole grid.",
+     "solution": [
+      "Choose some values of $x$ and work out $y = 2^{x}$: $x=-2$ gives $\\frac{1}{4}$, $x=-1$ gives $\\frac{1}{2}$, $x=0$ gives $1$, $x=1$ gives $2$ and $x=2$ gives $4$.",
+      "Plot $(-2, 0.25)$, $(-1, 0.5)$, $(0, 1)$, $(1, 2)$ and $(2, 4)$. The point $(0, 1)$ lies on every graph $y = b^{x}$, because $b^{0} = 1$.",
+      "Join the points with one smooth curve that rises from left to right and gets steeper: every step of $1$ to the right doubles the height.",
+      "Look at the left-hand end. $2^{x}$ is never $0$ and never negative, so the curve creeps closer and closer to the $x$-axis without touching or crossing it. The line $y = 0$ is an asymptote of this curve, the line it approaches and never reaches. It is not a mirror line for the curve: nothing of the graph lies below it."
+     ],
+     "diagnostics": [
+      {
+       "predicate": "asymptote-crossed",
+       "misconception_id": "mc:g10m6s5-1-1:asymptote-read-as-axis-of-symmetry"
+      }
+     ],
+     "notes": "Genuine fit: the objective is to plot b^x, and the sketch is the plot. Assumption to check against the grader: for fn \"exponential\", asymptote-crossed means the stroke crosses the horizontal asymptote y = q (here y = 0). A student who treats the x-axis as a mirror line (the figure of y = 2^x and y = -2^x, which are reflections of each other in the x-axis) draws the curve through it, or draws both branches in one stroke. Deliberately NOT mapped: fails-vertical-line-test (the mirror-pair drawing would double back and fire it, but so does any accidental retrace, and the stem asks for one smooth stroke); wrong-intercept, vertically-displaced and partial-coverage (this objective's list has no misconception for them). The stem names no intercept and no asymptote, so the construction is the whole task. One sketch cannot put two values of b on the same axes, so the comparison part of the objective stays with the prose lesson. Target is y = 2^x with a = 1, b = 2, q = 0: all within the instrument's limits; the curve leaves the top of the grid near x = 2.3."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:g10m6s5-1-2:reflect-in-the-y-axis",
+     "lo_id": "lo:g10m6s5-1-2",
+     "parent_question_id": "q:g10m6s5-1-2:ex6-5-7d",
+     "tier": "standard",
+     "kind": "curve_sketcher",
+     "spec": {
+      "fn": "exponential",
+      "coefs": [
+       1,
+       0.5,
+       0
+      ]
+     },
+     "stem": "The graph of $f(x) = 2^{x}$ is reflected in the $y$-axis to give a new graph $g$. Sketch $g$ in one smooth stroke across the whole grid.",
+     "solution": [
+      "Reflecting in the $y$-axis swaps left and right and leaves heights alone: a point $(x, y)$ on $f$ moves to $(-x, y)$.",
+      "Take points on $f$: $(-1, 0.5)$, $(0, 1)$, $(1, 2)$ and $(2, 4)$. Their reflections are $(1, 0.5)$, $(0, 1)$, $(-1, 2)$ and $(-2, 4)$. The point $(0, 1)$ is on the $y$-axis, so it does not move.",
+      "Plot the reflected points and join them with one smooth curve: it falls from left to right, passes through $(0, 1)$ and gets closer and closer to the $x$-axis on the right.",
+      "Write it as an equation to check: $g(x) = f(-x) = 2^{-x} = \\left(\\frac{1}{2}\\right)^{x}$. The minus sign belongs on the exponent for a reflection in the $y$-axis. A minus sign in front of the whole function, $-2^{x}$, would be a reflection in the $x$-axis and would put the curve below the axis, through $(0, -1)$."
+     ],
+     "diagnostics": [
+      {
+       "predicate": "wrong-intercept",
+       "misconception_id": "mc:g10m6s5-1-2:reflection-axes-swapped"
+      }
+     ],
+     "notes": "Covers only the reflection strand of this objective (the book's ex6-5-7b/7d family). Determining a and q from points on a given graph is the other, larger strand and is NOT covered here: it can be set through a curve_sketcher stem that names the asymptote and one point, but the only predicate that would fire (wrong-intercept) cannot tell a lost sign of a from an arithmetic slip in the size of a, so no one error dominates and no template was written. The y-axis reflection was chosen over the x-axis one on purpose: the correct curve passes through (0, 1), so the x-axis reflection (through (0, -1), two squares away) is the only common error that moves the intercept. Were the x-axis asked for, the unchanged curve and the y-axis reflection would both fire wrong-intercept and could not be told apart (reflection-axes-swapped versus sign-of-a-lost). The unchanged curve y = 2^x here shares the correct intercept, so it comes back as off-target, which is left unmapped because no misconception on the list names it. The stem gives no equation for g, so the student has to reflect, not copy. The target is the same curve as y = (1/2)^x; that is the point of the objective's reflection claim. Spec: a = 1, b = 0.5 (an allowed base), q = 0."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:g10m6s5-1-5:sketch-negative-shifted",
+     "lo_id": "lo:g10m6s5-1-5",
+     "parent_question_id": "q:g10m6s5-1-5:ex6-5-5b",
+     "tier": "advanced",
+     "kind": "curve_sketcher",
+     "spec": {
+      "fn": "exponential",
+      "coefs": [
+       -1,
+       2,
+       3
+      ]
+     },
+     "stem": "Sketch the graph of $y = -2^{x} + 3$ in one smooth stroke across the whole grid.",
+     "solution": [
+      "Read off the pieces of $y = a\\cdot b^{x} + q$: $a = -1$ (the minus sign in front of $2^{x}$), $b = 2$ and $q = 3$.",
+      "The horizontal asymptote is $y = q$, so $y = 3$. The curve will get closer to this line and never cross it.",
+      "Because $a < 0$, the curve lies below the asymptote everywhere, and it falls as $x$ increases.",
+      "Find the $y$-intercept by letting $x = 0$: $y = -2^{0} + 3 = -1 + 3 = 2$, so the curve cuts the $y$-axis at $(0, 2)$. Note that $q = 3$ is the height of the asymptote, not the point where the curve cuts the $y$-axis.",
+      "Check two more points: $x = 1$ gives $y = -2 + 3 = 1$ and $x = 2$ gives $y = -4 + 3 = -1$. The curve therefore crosses the $x$-axis between $x = 1$ and $x = 2$.",
+      "Draw one smooth curve: just under $y = 3$ on the far left, through $(0, 2)$, $(1, 1)$ and $(2, -1)$, and dropping steeply on the right."
+     ],
+     "diagnostics": [
+      {
+       "predicate": "wrong-intercept",
+       "misconception_id": "mc:g10m6s5-1-5:leaves-out-a"
+      },
+      {
+       "predicate": "asymptote-crossed",
+       "misconception_id": "mc:g10m6s5-1-5:leaves-out-a"
+      }
+     ],
+     "notes": "Genuine fit: sketching y = ab^x + q from the sign of a, the value of q, the intercepts and the asymptote is the objective, and it needs both a < 0 and q != 0. The figure behind the parent (ex6-5-5, curves f, g, h, k) is not referred to; the instrument is all the student sees. Both mapped predicates are the footprint of leaves-out-a, which picks the curve from the 2^x part alone: a rising curve through (0, 1) runs up through y = 3 (asymptote-crossed), and 2^x + 3 (a ignored, q used) lands on (0, 4), two squares above the true (0, 2) (wrong-intercept). The two predicates are different, so neither is listed twice. Assumption to check against the grader: asymptote-crossed on the exponential family means the stroke crosses y = q. A falling curve that starts above y = 3 would also fire it and is the lo1 error (asymptote-read-as-axis-of-symmetry), but the rising curve is the likelier cause here. NOT mapped: vertically-displaced, which fires when q is forgotten (y = -2^x, three squares low); the objective's list has no misconception for leaving q out, and one should be added. intercept-from-the-number cannot be told apart here: reading q = 3 as the intercept gives (0, 3), within a square of the true (0, 2). looks-for-axis-of-symmetry and rising-falling-mixed-up have no predicate on the exponential family (a left-right copy of the curve and a mirror-direction curve both come back as off-target, which diagnoses nothing specific), so this widget cannot name them. Spec: a = -1, b = 2, q = 3, inside |a| <= 3, |q| <= 3. The curve stays on the grid up to x = 3 (y = -5)."
+    }
+   ],
+   "gaps": [
+    {
+     "lo_id": "lo:g10m6s5-1-3",
+     "need_kind": "range_interval_marker (a number-line interval that supports an unbounded ray)",
+     "description": "The student is given an exponential function in the form y = ab^x + q (for example y = -2^x + 3) and builds its range on a vertical number line: she drops one endpoint at a chosen height, sets it hollow or filled, and drags a ray from it toward +infinity or -infinity. A second, simpler control states the domain as all real numbers. The grader accepts exactly one ray: its endpoint at y = q, hollow (the curve never reaches the asymptote), pointing up when a > 0 and down when a < 0. It would name these errors: a filled endpoint (the asymptote counted as a value of y), the ray on the wrong side of q (the sign of a ignored), the endpoint put at the y-intercept instead of at q, and the domain and range exchanged (range answered as all reals, domain as y > q).",
+     "why": "number_line_marker's interval mode needs a finite whole-number from and to inside a range of at most 24, so an unbounded range such as (-infinity, 3) cannot be specified, and parking the far end at the edge of the line would make the end handle a false answer. curve_sketcher is graded against one specific curve, not against a range, and a sketch of the curve does not make the student state the range. The lesson's list for this objective also holds no misconception of its own (only three inequality-direction ones from g10m4s7-1-1), so a new kind would need new misconceptions naming the range errors above."
+    },
+    {
+     "lo_id": "lo:g10m6s5-1-4",
+     "need_kind": "intercept_probe (drag a point along the curve and choose which variable to set to zero)",
+     "description": "The curve y = ab^x + q is drawn from an equation in the stem (for example y = 2^x - 4, or y = 2^x + 3 for the no-intercept case). The student drags a probe point along the curve with a live (x, y) readout, and chooses which substitution to make from two toggles, 'let x = 0' and 'let y = 0', which show the equation with that value put in. To finish she must park the probe on the y-axis and on the x-axis and write down the readings; for a curve that never reaches y = 0 (a and q of the same sign) the probe closes in on the asymptote and the readout stays above 0, so the only correct finish is to declare 'no x-intercept'. It would diagnose: using y = 0 to find the y-intercept (the two rules swapped), claiming an x-intercept on the asymptote, reading the intercept off the number written in the equation, and swapping the coordinates of the point.",
+     "why": "pair_plotter would be an answer box in disguise: the student calculates the intercept on paper and then taps the lattice point that records her answer, and most exponential x-intercepts are not lattice points at all. curve_sketcher grades the whole curve, not an intercept, and no existing kind can represent 'there is no x-intercept' as a thing the student does."
+    }
+   ],
+   "notes": "Three templates, all curve_sketcher with fn exponential, one each for lo5 (sketch from a, q and the asymptote), lo1 (plot y = 2^x) and lo2 (reflection strand only). No instances were given: the spec's coefs is an array, and I could not confirm that a row value \\\"{=b}\\\" is substituted inside an array element, so each question is fixed. Every error I rely on to fire a predicate lands at least two grid squares from the true curve at the y-axis, because the instrument scores within about one square. Two assumptions I could not check: (1) that asymptote-crossed on the exponential family means a stroke crossing the horizontal asymptote y = q (the contract lists it for exponential but only describes the vertical-gap meaning for hyperbola and tangent); (2) that wrong-intercept fires whenever the y-intercept is more than the tolerance away, whatever else is also wrong. Not reachable by any predicate of this kind: lo5's looks-for-axis-of-symmetry and rising-falling-mixed-up (mirror-direction and left-right-copy curves both return off-target, which I did not map); intercept-from-the-number (separable only with a base whose value is two or more from the true intercept, such as y = 3^x, which I did not add so as to stay near the zero-to-two guidance). The lo2 strand of finding a and q from points on a given graph is not covered by any template (see the T2 note). The lo5 list lacks a misconception for forgetting q, which is the error vertically-displaced would catch.\""
+  },
+  {
+   "lesson": "g10m6s6-1",
+   "templates": [
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:g10m6s6-1-2:stretch-then-lift",
+     "lo_id": "lo:g10m6s6-1-2",
+     "parent_question_id": "q:g10m6s6-1-2:ex6-6-7c",
+     "tier": "standard",
+     "kind": "curve_sketcher",
+     "instances": [
+      {
+       "a": 3,
+       "q": 1
+      },
+      {
+       "a": 2,
+       "q": 2
+      }
+     ],
+     "spec": {
+      "fn": "sine",
+      "coefs": [
+       "{=a}",
+       "{=q}"
+      ]
+     },
+     "stem": "Sketch the graph of $y = {=a}\\sin\\theta + {=q}$ for $0^{\\circ} \\le \\theta \\le 360^{\\circ}$. Draw it in one smooth stroke from left to right.",
+     "solution": [
+      "Start from the basic graph $y = \\sin\\theta$ on $0^{\\circ} \\le \\theta \\le 360^{\\circ}$: it crosses the θ-axis at $0^{\\circ}$, $180^{\\circ}$ and $360^{\\circ}$, peaks at $(90^{\\circ}, 1)$ and bottoms out at $(270^{\\circ}, -1)$.",
+      "Multiply every height by $a$ to get $y = a\\sin\\theta$: the peak moves to $(90^{\\circ}, a)$ and the trough to $(270^{\\circ}, -a)$, while the crossings at $0^{\\circ}$, $180^{\\circ}$ and $360^{\\circ}$ stay where they are. The amplitude is $a$.",
+      "Now add $q$ to every height, which slides the whole stretched graph up by $q$ units. Only $q$ is added, so the shift is $q$ and not $a \\times q$: the line the curve oscillates about moves from the θ-axis to $y = q$.",
+      "Mark the five key points: $(0^{\\circ}, q)$, $(90^{\\circ}, a + q)$, $(180^{\\circ}, q)$, $(270^{\\circ}, q - a)$ and $(360^{\\circ}, q)$.",
+      "Join them in one smooth curve that rises first, because $a$ is positive."
+     ],
+     "diagnostics": [
+      {
+       "predicate": "vertical-shift-wrong",
+       "misconception_id": "mc:g10m6s6-1-2:stretch-applied-to-shift"
+      }
+     ],
+     "notes": "Fit: the objective is literally 'sketch y = a sin θ + q by applying the effects of a and q to the basic sine graph', and curve_sketcher fn=sine takes coefs [a, q] with a nonzero whole |a|<=4 and q whole |q|<=3. Both rows keep the target inside -5..5 (3,1 spans -2..4; 2,2 spans 0..4). Rows are chosen so the stretch-applied-to-shift curve, y = a(sin θ + q) = a sin θ + a·q, sits |(a-1)·q| >= 2 units from the true midline (2 in both rows), clear of the instrument's roughly one-grid-square tolerance; a row such as (2,1) would put the error only one unit away and was avoided. That error curve has the right amplitude and period and only the wrong midline, which is why vertical-shift-wrong is the mapped predicate. Competing causes of the same predicate, left in this note because the misconception list holds nothing for them: q ignored altogether (midline left at 0), and q applied with the wrong sign. vertically-displaced can also fire for the same offset but fires equally for drawing imprecision and for an ignored q, so it is deliberately unmapped. amplitude-wrong, period-wrong, fails-vertical-line-test and partial-coverage are unmapped: none of the objective's misconceptions is revealed by them. Not covered by this instrument: a contraction such as a = 1/2 (a must be a whole number), so the book's y = ½ sin θ is not reachable; and a basic tier with q = 0, where no predicate maps to a listed misconception. Stem uses bare {=a} and {=q} placeholders (no formatting helper) and assumes the array form of coefs substitutes element-wise like a scalar spec value; q is positive in every row so no sign formatting is needed."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:g10m6s6-1-2:flip-then-drop",
+     "lo_id": "lo:g10m6s6-1-2",
+     "parent_question_id": "q:g10m6s6-1-2:ex6-6-7d",
+     "tier": "advanced",
+     "kind": "curve_sketcher",
+     "instances": [
+      {
+       "a": -2,
+       "q": -1,
+       "p": 1
+      },
+      {
+       "a": -3,
+       "q": -1,
+       "p": 1
+      },
+      {
+       "a": -1,
+       "q": -2,
+       "p": 2
+      }
+     ],
+     "spec": {
+      "fn": "sine",
+      "coefs": [
+       "{=a}",
+       "{=q}"
+      ]
+     },
+     "stem": "Sketch the graph of $y = {=a}\\sin\\theta - {=p}$ for $0^{\\circ} \\le \\theta \\le 360^{\\circ}$. Draw it in one smooth stroke from left to right.",
+     "solution": [
+      "Start from the basic graph $y = \\sin\\theta$ on $0^{\\circ} \\le \\theta \\le 360^{\\circ}$: it crosses the θ-axis at $0^{\\circ}$, $180^{\\circ}$ and $360^{\\circ}$, peaks at $(90^{\\circ}, 1)$ and bottoms out at $(270^{\\circ}, -1)$.",
+      "Multiply every height by $a$. Because $a$ is negative, the graph also flips over the θ-axis and falls first: the trough is at $(90^{\\circ}, a)$ and the peak at $(270^{\\circ}, -a)$. The amplitude is the distance $|a|$ from the midline to a peak, so it is never negative.",
+      "Now add $q$ to every height, where $q$ is the negative number written as '$- p$' in the equation. This slides the whole flipped graph down by $|q|$ units. The shift is $q$ itself and not $a \\times q$: the midline moves from the θ-axis to $y = q$.",
+      "Mark the five key points: $(0^{\\circ}, q)$, $(90^{\\circ}, q + a)$, $(180^{\\circ}, q)$, $(270^{\\circ}, q - a)$ and $(360^{\\circ}, q)$.",
+      "Join them in one smooth curve that falls first, because $a$ is negative."
+     ],
+     "diagnostics": [
+      {
+       "predicate": "vertical-shift-wrong",
+       "misconception_id": "mc:g10m6s6-1-2:stretch-applied-to-shift"
+      }
+     ],
+     "notes": "Fit: same instrument and same objective as the standard template, now with the reflection about the θ-axis (a < 0) and a downward shift, which is the rest of the objective's 'effects of a and q'. The row field p is |q|, carried only so the stem can print '- p' without a sign helper; the spec uses q. Targets stay inside -5..5 (-2,-1 spans -3..1; -3,-1 spans -4..2; -1,-2 spans -3..-1). The stretch-applied-to-shift curve, y = a(sin θ + q), has midline a·q: for the rows this is 2, 3 and 2 against true midlines -1, -1 and -2, so the offsets (3, 4, 4) are well outside the one-grid-square tolerance, and for (-2,-1) and (-1,-2) the wrong curve also fits on the grid so the student can actually draw it. Mapped predicate and unmapped ones exactly as in the standard template (vertical-shift-wrong only; q ignored or wrong-signed named as the competing causes; vertically-displaced left unmapped because it fires for imprecision as well). A student who forgets the reflection draws a curve with the right midline and amplitude that rises first; the widget will most likely report off-target, which diagnoses nothing, so nothing is mapped for it. mc:g10m6s6-1-2:negative-amplitude is deliberately NOT mapped to amplitude-wrong or off-target: it is a wrong NUMBER stated for the amplitude (-2 instead of 2), which a freehand sketch of the correct reflected curve cannot reveal; that error needs a numeric answer and is already tested by the book's ex6-8-46c style questions."
+    }
+   ],
+   "gaps": [
+    {
+     "lo_id": "lo:g10m6s6-1-3",
+     "need_kind": "graph_property_reader",
+     "description": "A sine graph y = a sin θ + q (the app draws it, so no [figure] is needed) sits over a labelled θ-axis from 0° to 360° with ticks every 30°. The student answers by CONSTRUCTING on that graph, not by typing: dragging the two ends of a highlighted stretch of the θ-axis (each end hollow or filled) to mark where the function is positive, negative, increasing or decreasing, and dragging a marker onto each turning point and each intercept. The stem names the property and the answer is graded as a set of intervals or points, so any construction with that property is accepted. Errors it would diagnose: marking the increasing/decreasing boundaries at the zeros (60° and 300°) instead of at the turning points (90° and 270°), which is confusing 'positive' with 'increasing'; giving 'decreasing' as the single interval 0° to 180° because the curve starts at the axis; the θ-coordinate of the maximum given as its height; and endpoints included where the function is strictly positive.",
+     "why": "The anchors (ex6-6-17, ex6-8-42, ex6-8-43) ask where a drawn graph is positive, increasing or decreasing. number_line_marker's interval mode cannot reach this: its range is whole numbers within ±20 and at most 24 wide, so θ from 0° to 360° does not fit except by an artificial unit of 30° that the student never sees in the book, and it shows no curve, so the student would be answering from recall or a typed rule, an answer box in disguise. curve_sketcher draws a curve, it does not read one. This objective also has no misconceptions on file, so diagnostics would have to be authored first."
+    },
+    {
+     "lo_id": "lo:g10m6s6-1-4",
+     "need_kind": "curve_fitter",
+     "description": "A target sine curve y = a sin θ + q is drawn on a θ-axis (0° to 360°, ticks every 30°) with two labelled points on it, as in ex6-6-1 and ex6-6-2, and the equation is hidden. The student drags two handles, one for a and one for q (each stepping in halves), and a live curve updates on top of the target until the two coincide. The grade is on the pair (a, q), so every route to it is accepted. Errors it would diagnose: reading a as the height of the peak instead of half the distance from trough to peak (a = 3 where the peak is 3 but the midline is 1.5); reading a as the full peak-to-peak distance; taking q from a turning point (the minimum or the maximum) instead of the midline; a and q exchanged; the sign of a lost for a graph that falls first.",
+     "why": "The anchors ask the student to determine a and q FROM a drawn graph. curve_sketcher runs the other way (equation to curve), takes only whole-number a, and cannot carry the book's own values (a = 3/2 in ex6-6-1 and ex6-8-32). A sketch 'through two given features' with curve_sketcher is possible for whole-number cases such as ex6-6-2 (a = 4, q = -2), but that range reaches -6, past the instrument's -5..5 guidance, and the objective has no misconceptions on file, so no diagnostic could be authored. A parameter-fitting instrument is the construction the objective actually needs."
+    }
+   ],
+   "notes": "Two templates, both curve_sketcher fn=sine, both on lo:g10m6s6-1-2, the only objective of lesson g10m6s6-1 that carries misconceptions. Both map a single predicate (vertical-shift-wrong) to mc:g10m6s6-1-2:stretch-applied-to-shift; the other own misconception, mc:g10m6s6-1-2:negative-amplitude, is a wrong stated number that no freehand sketch can reveal, so it is deliberately unmapped. No template for lo:g10m6s6-1-1 (Plot the basic sine graph): curve_sketcher fn=sine with coefs [1, 0] fits it genuinely, but the objective has no anchor question to name as parent_question_id and no misconception on file to put in the required diagnostics list, so a valid template cannot be written. That is missing authoring data, not a missing kind; once an anchor and a misconception exist, a [1, 0] template can be added. No template for lo:g10m6s6-1-3 or lo:g10m6s6-1-4: the genuine need is a new kind (see gaps), and both also have an empty misconceptions list. Authoring assumptions for the validator and instantiator to confirm: bare {=a}, {=q}, {=p} placeholders in the stem, and {=a}/{=q} inside the coefs array substituting element-wise as typed numbers; the 'p' row field exists only to print a subtracted shift in the stem. The anchors of ex6-6-7 are pure stretches with no q; the templates add q because that is what the objective's a sin θ + q requires and what makes the listed misconception reachable. Neither template points at a [figure]: the instrument's own axes are all the student sees."
+  },
+  {
+   "lesson": "g10m6s6-2",
+   "templates": [
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:g10m6s6-2-2:reflected-cosine",
+     "lo_id": "lo:g10m6s6-2-2",
+     "parent_question_id": "q:g10m6s6-2-2:ex6-8-35c",
+     "tier": "standard",
+     "kind": "curve_sketcher",
+     "spec": {
+      "fn": "cosine",
+      "coefs": [
+       -4,
+       0
+      ]
+     },
+     "stem": "Sketch the graph of $y = -4\\cos\\theta$ for $0^\\circ \\le \\theta \\le 360^\\circ$ in one smooth stroke, from $\\theta = 0^\\circ$ to $\\theta = 360^\\circ$.",
+     "solution": [
+      "Start from the shape of $y = \\cos\\theta$: it begins at its maximum at $\\theta = 0^\\circ$, crosses the $\\theta$-axis at $90^\\circ$, has its minimum at $180^\\circ$, crosses again at $270^\\circ$ and is back at its maximum at $360^\\circ$.",
+      "The size of $a$ sets the amplitude. Here $|a| = 4$, so the amplitude is $4$ (an amplitude is a distance, so it is never negative) and the curve reaches $4$ above and $4$ below the midline $y = 0$.",
+      "The minus sign in $a = -4$ is not part of the amplitude. It reflects the curve in the $\\theta$-axis, so the graph now begins at its minimum, $y = -4$, instead of its maximum.",
+      "Mark the key points $(0^\\circ; -4)$, $(90^\\circ; 0)$, $(180^\\circ; 4)$, $(270^\\circ; 0)$ and $(360^\\circ; -4)$.",
+      "Join them with one smooth curve. Check: the range is $-4 \\le y \\le 4$, the period is $360^\\circ$, and the curve is the mirror image of $y = 4\\cos\\theta$ in the $\\theta$-axis."
+     ],
+     "diagnostics": [
+      {
+       "predicate": "off-target",
+       "misconception_id": "mc:g10m6s6-2-2:negative-amplitude"
+      }
+     ],
+     "notes": "Genuine fit: the construction is the objective itself (sketch y = a cos θ + q from the effects of a and q), freehand, one stroke, a = -4 and q = 0 inside the cosine limits (|a| <= 4, |q| <= 3) and the curve stays within -4..4. Negative a is deliberate: it is the book's own example of the one misconception this objective lists, and the anchor's 4 cos θ curve (k(x) in the book's figure) reflected. DIAGNOSTIC CAVEAT: curve_sketcher has no reflection predicate for sine/cosine (opens-wrong-way exists only for quadratic). A student who reads the minus sign as part of the amplitude and so draws 4 cos θ, not -4 cos θ, gets the amplitude, the midline and the period right, so none of amplitude-wrong, vertical-shift-wrong or period-wrong can fire for them; what remains is off-target. I map off-target to negative-amplitude because, in this q = 0 template, an unreflected cosine is the dominant way to fail while the three named properties are right. The same predicate would also fire for a sine-shaped or scribbled stroke (a phase error that the instrument does not name); if the scorer reports reflection under another predicate, re-map. The misconception as worded (STATING the amplitude as -4) is an answer-box error; the sketch can only expose its consequence. See the gap recorded for this objective. Other predicates a sketch could fire (amplitude-wrong, period-wrong, partial-coverage, fails-vertical-line-test) are not mapped: this objective's own misconception list holds no error they reveal."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:g10m6s6-2-2:reflected-shifted-cosine",
+     "lo_id": "lo:g10m6s6-2-2",
+     "parent_question_id": "q:g10m6s6-2-2:ex6-8-35d",
+     "tier": "advanced",
+     "kind": "curve_sketcher",
+     "spec": {
+      "fn": "cosine",
+      "coefs": [
+       -3,
+       1
+      ]
+     },
+     "stem": "Sketch the graph of $y = -3\\cos\\theta + 1$ for $0^\\circ \\le \\theta \\le 360^\\circ$ in one smooth stroke, from $\\theta = 0^\\circ$ to $\\theta = 360^\\circ$.",
+     "solution": [
+      "Read the two parameters separately. $a = -3$ gives the amplitude and the reflection. $q = 1$ gives the vertical shift, so the midline is $y = 1$.",
+      "The amplitude is $|a| = 3$ (never $-3$), so the curve reaches $3$ above and $3$ below the midline: its highest value is $1 + 3 = 4$ and its lowest is $1 - 3 = -2$.",
+      "The minus sign is a reflection in the $\\theta$-axis, not part of the amplitude, so the curve starts at its lowest value: $y = a + q = -3 + 1 = -2$ at $\\theta = 0^\\circ$.",
+      "Mark the key points $(0^\\circ; -2)$, $(90^\\circ; 1)$, $(180^\\circ; 4)$, $(270^\\circ; 1)$ and $(360^\\circ; -2)$. At $90^\\circ$ and $270^\\circ$ the curve crosses its midline $y = 1$.",
+      "Join them with one smooth curve. Check: the range is $-2 \\le y \\le 4$ and the period is $360^\\circ$."
+     ],
+     "diagnostics": [
+      {
+       "predicate": "off-target",
+       "misconception_id": "mc:g10m6s6-2-2:negative-amplitude"
+      }
+     ],
+     "notes": "Genuine fit, one step harder than the q = 0 template: the student must apply the reflection (a < 0) and the vertical shift (q = 1) together. a = -3 and q = 1 are inside the cosine limits and the curve spans -2..4, inside the grid. Ties to the book's 3 cos θ anchor. The same DIAGNOSTIC CAVEAT as the other template applies: an unreflected curve 3 cos θ + 1 has the right amplitude, midline and period, so none of amplitude-wrong, vertical-shift-wrong or period-wrong fires, and the residual is off-target, which I map to negative-amplitude. Here off-target is less dominant than at q = 0 (a wrong-shift stroke fires vertical-shift-wrong or vertically-displaced first, which this objective's list does not cover; a sine-shaped stroke also lands in off-target), so this mapping is the weaker of the two; use the q = 0 template where one clean read is wanted. A student who also mis-places the shift would see a plain 'not quite' because no misconception on this objective names a shift error."
+    }
+   ],
+   "gaps": [
+    {
+     "lo_id": "lo:g10m6s6-2-2",
+     "need_kind": "curve_sketcher predicate for sine/cosine: reflected-in-x-axis (the sign of a), reporting an unreflected stroke when a < 0",
+     "description": "Not a new kind but a missing predicate on curve_sketcher. For fn sine or cosine with a negative a, the scorer would report that the stroke has the right amplitude, midline and period but is the mirror image of the target (it starts at the maximum where the target starts at the minimum), analogous to opens-wrong-way for the quadratic and slope-sign-flipped for the line. The student would still sketch freehand exactly as in the two templates; what changes is that the refutation names the reflection, so 'the minus sign is a reflection in the x-axis, not part of the amplitude' fires on that cause and not on every unmatched stroke.",
+     "why": "The only misconception this objective lists, negative-amplitude (reading the minus sign in y = -4 cos θ as part of the amplitude), has no predicate of its own on the cosine sketcher. Today the two templates have to map the residual off-target to it, which also fires for a sine-shaped or scribbled stroke. A dedicated predicate would make the diagnosis exact."
+    },
+    {
+     "lo_id": "lo:g10m6s6-2-4",
+     "need_kind": "phase_shifter: slide one trig graph horizontally onto another",
+     "description": "The student sees y = sin θ and the target y = cos θ (or the reverse) on axes from 0° to 360°, and drags a handle that slides one curve left or right by a shift h, snapped to 15° steps, with the live rule updating, for example y = sin(θ + 30°). The task is stated by the property: 'slide the sine graph until it lies exactly on the cosine graph', and any h that is congruent mod 360° to the right shift is accepted (+90°, or −270°). A second prompt runs it the other way: 'cos θ = sin(θ + 90°); now slide cosine onto sine and write the shift'. The errors it would diagnose are: the shift in the wrong direction, which lands on sin(θ − 90°) = −cos θ (sign of the shift mis-read, as in (θ − a) read as θ + a); a shift of 180° (gives −sin θ, the 'upside down' graph); a half-way or 45° shift that matches neither; and sliding the wrong graph and reading the sign of the shift off the wrong curve.",
+     "why": "The objective asks for the sine and cosine graphs as horizontal shifts of each other. curve_sketcher fixes the period and has coefficients [a, q] only, with no phase parameter, so it cannot ask for or grade sin(θ + 90°). Its freehand sketch of cos θ rebuilds the previous objectives, not the shift relationship; the other kinds are not trigonometric at all. The anchors here are all 'read off the two graphs' with a [figure]. Note also that the lesson file lists no misconception for this objective, so the errors above would need to be seeded before a template could carry diagnostics."
+    },
+    {
+     "lo_id": "lo:g10m6s6-2-3",
+     "need_kind": "cosine_fitter: set a and q so the live curve passes through two marked points",
+     "description": "The widget shows two labelled points on the axes, such as A (180°; −1.5) and B (0°; −0.5), given by the stem's own numbers. The student sets a and q with two steppers (a in steps of 0.5, positive or negative; q in steps of 0.5) and the curve y = a cos θ + q redraws live. It is correct when the curve passes through both points, so any equivalent route (the y-intercept a + q and the range, or the turning points) is accepted. The errors it would diagnose are: taking the y-intercept as a (so ignoring q); reading the full height from minimum to maximum as the amplitude instead of half of it; the sign error from cos 180° = −1 (a read from the minimum with the wrong sign); and a and q swapped.",
+     "why": "The objective is to find a and q from two points, and the book's numbers include a = 1/2 (exercises 6-6-3 and 6-6-4) and q = −1 or −0.5. curve_sketcher's coefficients must be whole numbers and it scores a freehand stroke only 'within about one grid square', so it cannot tell a = 0.5 from a = 0 or 1 and cannot grade the book's own values. The question would also be an answer-box question in a sketch's clothing: the student would first calculate a and q, then draw. Seeding misconceptions for this objective (it has none listed) is also a precondition for any diagnostics."
+    }
+   ],
+   "notes": "Coverage: curve_sketcher (cosine) genuinely fits lo:g10m6s6-2-2, whose construction is the objective itself; two templates (standard, advanced) are emitted. Both have negative a, because the only misconception in the whole lesson (mc:g10m6s6-2-2:negative-amplitude) can only arise from a negative a; a positive-a template would have nothing honest to diagnose, and diagnostics must not be empty. Both rest on one candid assumption, spelled out in each template's notes: an unreflected cosine has the right amplitude, midline and period, so the sketcher can only report it as off-target (it has no reflection predicate), and I map off-target to negative-amplitude as the dominant residual. That is the weak point of this lesson's widgets; a dedicated reflection predicate is recorded as a gap. lo:g10m6s6-2-1 (plot cosine, state characteristics) has no template, but not for want of a fit: curve_sketcher with {fn:cosine, coefs:[2,-2]} (anchor ex6-6-20c, g(x) = 2 cos θ − 2, amplitude 2) would fit the plotting half. The lesson lists no misconception for lo:g10m6s6-2-1, lo:g10m6s6-2-3 or lo:g10m6s6-2-4, and diagnostics require at least one id from the objective's OWN list, so no valid template can be written for them. Natural candidates to seed for lo:g10m6s6-2-1, from the figures read (the f curves in ex6-6-18 and ex6-6-19 span 0 to 4): amplitude read as the maximum value or as the full height (max − min) rather than half of it; and for the stated characteristics, amplitude confused with range. If those are seeded, a cosine curve_sketcher template for lo:g10m6s6-2-1 can follow without any new kind. Figures read before designing: the ex6-8-35 family graph (0.75, 2.3, 3, 4 cos θ), the ex6-6-3 two-point graph (a = 1/2, q = −1), and the ex6-6-18, 19 and 20 sine and cosine overlays; no stem here points at a figure. The non-integer a values in the book's own exercises (2.3 and 0.75 in ex6-8-35, 1/2 in ex6-6-3 and ex6-6-4) are why the templates use whole numbers of my own choosing within the cosine limits rather than the book's values."
+  },
+  {
+   "lesson": "g10m6s6-3",
+   "templates": [],
+   "gaps": [
+    {
+     "lo_id": "lo:g10m6s6-3-1",
+     "need_kind": "No new kind. curve_sketcher (fn: tangent) fits; blocked by the data, not the instrument (no anchor question, no tangent-graph misconception)",
+     "description": "The student would draw y = tan θ freehand over 0° to 360° (coefs [1, 0]), lifting the finger at θ = 90° and 270° and drawing each branch separately. That is the objective's own construction: join the plotted points with a smooth curve and mark where tan θ is undefined. The predicates that would matter are asymptote-crossed (drew straight through 90° or 270°), partial-coverage (stopped early or skipped a branch), period-wrong (drew one 360° wave instead of two 180° branches), fails-vertical-line-test and vertically-displaced. The calculator table-of-values step is arithmetic with a device. No existing kind builds it, and it should stay a worked step.",
+     "why": "The lesson file lists no anchor questions for this objective, so there is no parent_question_id to cite. Its only misconceptions are seven prerequisite ids about right-triangle ratios: choosing the hypotenuse, naming opposite and adjacent, sine written as opposite over adjacent. None of them is something a tangent sketch can reveal. Mapping asymptote-crossed or period-wrong onto one of them would show a student feedback about the wrong error. The diagnostics array must hold at least one honest entry, so no valid template exists."
+    },
+    {
+     "lo_id": "lo:g10m6s6-3-2",
+     "need_kind": "No new kind. curve_sketcher (fn: tangent) fits exactly; blocked by the data (zero anchors, zero misconceptions on this objective)",
+     "description": "This is the best fit in the lesson. The student sketches y = a tan θ + q freehand for 0° to 360° (for example coefs [2, 1], or [-1, -2]) and lifts the finger at each asymptote. The question isolates the two effects the objective names. q is a vertical shift, and a sets how steeply the branches rise. The widget can report vertical-shift-wrong (wrong midline, so q misapplied), amplitude-wrong (wrong steepness, so a misapplied), asymptote-crossed, period-wrong, partial-coverage, vertically-displaced and fails-vertical-line-test. Within the instrument limits, a is a nonzero whole number with |a| ≤ 3 and q is a whole number with |q| ≤ 3.",
+     "why": "The lesson file gives this objective an empty anchor_questions list and an empty misconceptions list. A template therefore has no parent_question_id to name and no own misconception id to put in diagnostics. FR-1215 refuses an id borrowed from another objective's list. Inventing an id or borrowing a parent from objective 6-3-4 would be forgery, so this is left for Samuel. Once the catalogue carries tangent-graph misconceptions and an anchor question, this objective should be the first to get a widget."
+    },
+    {
+     "lo_id": "lo:g10m6s6-3-3",
+     "need_kind": "No new kind. curve_sketcher (fn: tangent) fits; blocked because the inherited misconceptions are all right-triangle ratio errors that no tangent-sketch predicate can reveal",
+     "description": "The anchor (ex6-8-55a) asks for the domain of g(θ) = −tan θ. The student would sketch g over 0° to 360° (coefs [-1, 0]), lifting the finger at 90° and 270°. The domain exclusions, the asymptotes, the period of 180°, the intercepts at 0°, 180° and 360° and the unbounded range are then all constructed rather than recited. The widget's own refusal to let a stroke cross θ = 90° or 270° is the domain restriction made physical. The stem would say 'Sketch g(θ) = −tan θ for 0° ≤ θ ≤ 360°', never 'as in the diagram', because the anchor's [figure] must not be pointed at. Predicates that would be worth mapping are asymptote-crossed, period-wrong, partial-coverage, vertical-shift-wrong and amplitude-wrong.",
+     "why": "Every misconception listed for this objective is own=false and about right-triangle ratios: hypotenuse-not-longest-side, hypotenuse-not-opposite-right-angle, opposite-adjacent-fixed-by-position, ratio-at-the-right-angle, ratios-without-a-right-angle, reads-sides-from-other-angle and sine-as-opposite-over-adjacent. The nearest pairing, asymptote-crossed to sine-as-opposite-over-adjacent, would tell a student who drew one continuous wave that she mixed up sine's ratio. That is probably not her error: she more likely does not know that tangent breaks at 90°. Because of the one-predicate-one-misconception rule and the minimum of one diagnostic, no honest template can be written. A forced mapping would show a student wrong feedback."
+    },
+    {
+     "lo_id": "lo:g10m6s6-3-4",
+     "need_kind": "curve_sketcher (fn: tangent), used in reverse, covers two of three anchors; a small parameter-fitting kind would cover all three. Both are blocked until this objective has misconceptions",
+     "description": "Reverse construction: 'Draw the tangent curve y = a tan θ + q that passes through (0°, −3) and (45°, −2)', which is anchor ex6-8-34 with coefs [1, -3]. Anchor ex6-6-6 gives [1, 0]. The student has to read q from the y-intercept, because tan 0° = 0, and then get a as the rise from the intercept to the second point, a = y(45°) − q. Errors that would show are vertical-shift-wrong (q taken from the wrong point) and amplitude-wrong (a taken as the y-value at 45° without subtracting q, giving −2 where 1 is right). The third anchor, ex6-6-5 (q = 1/3, a = 3), cannot be expressed: curve_sketcher takes only whole-number q with |q| ≤ 3. Grading is also coarse, about one grid square, so a non-whole a would be hard to tell apart. A dedicated kind would give two drag handles: the y-axis handle sets q, and the second sets a. A live curve would be graded on passing through two labelled points, with rational a and q allowed. It would name 'a forgot to subtract q' as a specific miss.",
+     "why": "The lesson file gives this objective an empty misconceptions list, so any diagnostics id would be refused (FR-1215). The 'a read as the y-value at 45° with q not subtracted' error is the dominant real error here, but the catalogue does not carry it. The template schema also requires at least one diagnostic. The anchors exist; the misconception ids do not."
+    }
+   ],
+   "notes": "Result for g10m6s6-3: zero templates, four gaps. For this lesson curve_sketcher with fn \"tangent\" is the right instrument. It fits 6-3-2 exactly, fits 6-3-3 and 6-3-1 (with the sketch standing in for the table-then-join step), and fits 6-3-4 in reverse for the whole-number anchors. It cannot be used yet, because the data the template schema demands does not exist.\n\n1. Objectives 6-3-1 and 6-3-2 have no anchor questions, so there is no parent_question_id to cite.\n2. Objectives 6-3-2 and 6-3-4 have empty misconception lists. Objectives 6-3-1 and 6-3-3 carry only seven inherited prerequisite ids about right-triangle ratios, all own=false.\n3. Each template needs at least one diagnostic, and FR-1215 refuses ids from other objectives' lists. I will not invent an id or borrow one.\n\nOptions I rejected as forced fits:\n- Mapping asymptote-crossed to mc:g10m5s3-1-2:sine-as-opposite-over-adjacent. A student who draws tangent as one continuous wave has not got sine's ratio wrong. She probably does not know the graph breaks at 90°.\n- triangle_ratio ask:\"sin\" with used-tangent mapped to that same misconception. It is the exact error, but it belongs to the right-triangle-ratios objective, not to the tangent graph's domain, range, period, intercepts and asymptotes. Using it here would be an answer box in disguise.\n- number_line_marker for the domain exclusions {90°, 270°}. Its range is limited to ±20, so degrees do not fit. Rescaling to units of 90° would be a disguise.\n- pair_plotter. The grid is −5 to 5 on whole numbers, so it cannot plot (45°, 1) or any degree-axis table of values.\n\nTo unblock this lesson, Samuel (or the earlier pipeline stage) would add tangent-graph misconceptions to the catalogue, each already matched to a predicate curve_sketcher can emit for fn \"tangent\":\n- Treats tan like sin and cos: continuous with no breaks, so the stroke runs through 90° and 270°. Predicate: asymptote-crossed.\n- Gives every trig graph a period of 360°. Predicate: period-wrong.\n- Confuses the two parameters: q is the shift and a the steepness. Predicates: vertical-shift-wrong and amplitude-wrong.\n- Reads a as the y-value at 45° without subtracting q (objective 6-3-4). Predicate: amplitude-wrong.\n- Tangent has no sign-of-a predicate. Drawing tan θ for −tan θ would likely fall to off-target or amplitude-wrong. I cannot promise which, so I would not map it.\n\nAnchors for 6-3-1 and 6-3-2 are also needed. With those in place, the first template would be 6-3-2, curve_sketcher fn \"tangent\", coefs such as [2, 1] and [-1, -2], graded on shape. Stems would state the equation and say to lift the finger at each asymptote. No stem would reference a [figure]."
+  },
+  {
+   "lesson": "g10m6s7-1",
+   "templates": [
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:g10m6s7-1-3:range-sine-shifted",
+     "lo_id": "lo:g10m6s7-1-3",
+     "parent_question_id": "q:g10m6s7-1-3:ex6-7-3a",
+     "tier": "basic",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "interval",
+      "range": [
+       -6,
+       6
+      ],
+      "from": -1,
+      "to": 5,
+      "openFrom": false,
+      "openTo": false
+     },
+     "stem": "The range of a function is the set of $y$-values its graph reaches. Mark the range of $y = 3\\sin\\theta + 2$ on the $y$-number line, from its lowest value to its highest. Make an end filled if $y$ reaches that value and hollow if it only gets close.",
+     "solution": [
+      "The sine never goes below $-1$ and never above $1$, and it reaches both: $-1 \\le \\sin\\theta \\le 1$.",
+      "Multiply every part by $3$ (positive, so the inequality signs keep their direction): $-3 \\le 3\\sin\\theta \\le 3$.",
+      "Add $2$ to every part, because $q = 2$ lifts the whole graph: $-1 \\le 3\\sin\\theta + 2 \\le 5$.",
+      "So the range is $-1 \\le y \\le 5$. Mark $-1$ and $5$ with filled circles, since $y$ reaches both values, and shade between them."
+     ],
+     "diagnostics": [
+      {
+       "predicate": "interval-wrong",
+       "misconception_id": "mc:g10m6s7-1-3:ignores-added-number"
+      }
+     ],
+     "notes": "Fit: the range is literally a set of y-values with closed ends (the graph attains its lowest and highest values), which is what the interval mode of number_line_marker builds; the question is the book's own multiple choice turned into a construction. The instrument is inside its limits: range [-6,6] is 12 wide, both ends whole numbers inside it, from <= to. Numbers deliberately differ from the book's 2 sin(theta) + 1. Wrong intervals for this question: ignores-added-number gives [-3, 3] (mapped, as the likeliest error); ends-are-the-equation-numbers gives [2, 3]; sine-cosine-start-at-zero gives [2, 5]; adds-q-to-one-end gives [-1, 3] or [-3, 5]. All of them fire the same predicate (interval-wrong), so only the likeliest is mapped and the student who made one of the other three errors will be told about the added number, which is wrong for them. Per-end predicates would split these (see the top-level notes). endpoint-inclusion-wrong (hollow ends) is left unmapped on purpose: this objective's own list has no misconception about inclusion, so that student gets the plain 'not quite'."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:g10m6s7-1-3:range-cosine-lowered",
+     "lo_id": "lo:g10m6s7-1-3",
+     "parent_question_id": "q:g10m6s7-1-3:ex6-7-3b",
+     "tier": "standard",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "interval",
+      "range": [
+       -6,
+       6
+      ],
+      "from": -5,
+      "to": -1,
+      "openFrom": false,
+      "openTo": false
+     },
+     "stem": "Mark the range of $y = 2\\cos\\theta - 3$ on the $y$-number line: every $y$-value its graph reaches, from the lowest to the highest. Make an end filled if $y$ reaches that value and hollow if it only gets close.",
+     "solution": [
+      "The cosine never goes below $-1$ and never above $1$, and it reaches both: $-1 \\le \\cos\\theta \\le 1$.",
+      "Multiply every part by $2$ (positive, so the inequality signs keep their direction): $-2 \\le 2\\cos\\theta \\le 2$.",
+      "Subtract $3$ from every part, because $q = -3$ lowers the whole graph: $-5 \\le 2\\cos\\theta - 3 \\le -1$.",
+      "So the range is $-5 \\le y \\le -1$. Mark $-5$ and $-1$ with filled circles, since $y$ reaches both values, and shade between them."
+     ],
+     "diagnostics": [
+      {
+       "predicate": "interval-wrong",
+       "misconception_id": "mc:g10m6s7-1-3:ignores-added-number"
+      }
+     ],
+     "notes": "Same instrument and mapping as the sine template, with cosine and a negative q so the shift runs downwards and the whole range sits below zero (the book's 3b is 2 cos(theta) - 4, so different numbers are used). Limits: range [-6,6], ends -5 and -1 are whole and inside it. Wrong intervals here: ignores-added-number gives [-2, 2] (mapped, likeliest); ends-are-the-equation-numbers gives [-3, 2]; sine-cosine-start-at-zero gives [-3, -1]; adds-q-to-one-end gives [-5, 2] or [-2, -1]. One predicate fires for all of them, so the three unmapped errors are named here, not diagnosed. endpoint-inclusion-wrong is unmapped for the same reason as in the sine template."
+    }
+   ],
+   "gaps": [
+    {
+     "lo_id": "lo:g10m6s7-1-1",
+     "need_kind": "equation_fitter",
+     "description": "The student would find the general-form equation that fits a graph. A grid shows a fixed target curve from one of the chapter's families (parabola y = ax^2 + q, hyperbola y = a/x + q, exponential y = a·b^x + q, sine or cosine y = a sin(theta) + q), with one or two lattice points on it labelled by the instrument itself, never by a stem figure. The general form is printed above the grid with a and q as stepper controls (b fixed for the exponential). A second curve is drawn live from the student's current a and q, and the answer is accepted when it coincides with the target, so any route to a and q is accepted and the property graded is 'passes through the marked points with the target's shape'. A 'substitute a marked point' readout shows both sides of the equation for the point the student picks, so the substitution step of the objective is something she does rather than recites. Errors it would diagnose: the sign of a wrong (the curve opens the other way, or lies in the other quadrants, or is reflected) -> mc:g10m6s3-1-1:sign-of-a-ignored; q left at 0 (turning point, asymptote or midline stays on the axis) -> mc:g10m6s3-1-1:q-ignored; q's sign flipped (shifted the wrong way) -> mc:g10m6s3-1-1:q-shift-wrong-direction; right orientation but wrong size of a (taking a bigger a as flatter) -> mc:g10m6s3-1-1:steepness-of-a-misjudged.",
+     "why": "The objective runs graph -> equation, and no existing kind does that. curve_sketcher runs the opposite way (equation -> freehand curve) and is scored within about one grid square, so it would accept a, q, or a-and-q off by one, which are exactly the near-miss equations this objective exists to separate; used with the points given in the stem it also tests the earlier 'sketch a parabola' skill, not the determination of a and q. line_drawer is linear only, and pair_plotter only places a point. A sketch-based fit would be a forced one. Note also that the lesson file lists only the four parabola misconceptions (g10m6s3-1-1) under this objective, although it covers hyperbola, exponential and trigonometric graphs; the hyperbola, exponential and trig families would need their own misconception ids added to this objective's list before a fitter could name their errors."
+    },
+    {
+     "lo_id": "lo:g10m6s7-1-2",
+     "need_kind": "intercept_plotter",
+     "description": "The student would calculate an intercept or intersection by substitution and then place the result. The function (for example y = 2^x + 1, or a line and a parabola for intersections) is printed with NO curve drawn, so the answer cannot be read off a picture. The student chooses the substitution that gives the point asked for (x = 0 for the y-intercept, y = 0 for an x-intercept, equate the two expressions for an intersection) and plots the resulting point on a coordinate grid; a live check substitutes the plotted point into each function and shows which side fails to balance. In intersection mode the answer is a SET of points (graded as missed or extra points), so finding only one of two crossings is reported as that. The author names the likely wrong points, and the widget reports each one as its own predicate: for y = 2^x + 1, (0,3) -> mc:g10m6s7-1-2:power-at-zero-read-as-base (2^0 taken as 2), (0,1) -> mc:g10m6s7-1-2:power-vanishes-at-zero (2^0 taken as 0), (0,0) -> mc:g10m6s7-1-2:zero-reported-as-intercept (the 0 put in given as the 0 that comes out); for a line or parabola, the x-intercept plotted when the y-intercept was asked -> mc:g10m6s2-1-3:y-intercept-from-y-zero.",
+     "why": "pair_plotter is the nearest kind but can only report swapped-coordinates, wrong-quadrant or off-target. All three of this objective's own misconceptions plot a point (0, k), so all of them land in off-target and cannot be told apart; mapping that one predicate would name the wrong error for two students in three. It also shows no function and no check, so plotting would be the answer typed on a grid, an answer box in disguise. curve_sketcher's exponential 'wrong-intercept' has the same flaw: the freehand tolerance of about one square cannot separate y = 2^x + 1 from y = 2^x + 2, and it does not name which wrong value was used. line_drawer handles one line at a time and cannot show an intersection of a line with a parabola or exponential. No existing kind fits without forcing it."
+    }
+   ],
+   "notes": ""
+  }
+ ],
+ "gaps": [
+  {
+   "lo_id": "lo:g10m6s1-1-1",
+   "need_kind": "number_line_marker (extension: an unbounded end, and non-whole ends)",
+   "description": "Interval mode that accepts a ray: the student drags one end to the edge of the line and it becomes an arrow, with no circle, meaning the interval has no end there. The same mode would accept an end that is a fraction or a surd, such as $\\frac{3}{4}$ or $-\\sqrt{3}$, snapped to a labelled tick. The student marks $(-\\infty, 7]$, $(35, \\infty)$ or $(-\\sqrt{3}, \\infty)$ and sets the one finite end filled or hollow. It would diagnose a circle or square bracket put on an infinite end (a bracket on $\\infty$ is never square), the finite end paired with the wrong inclusion, and the ray pointed the wrong way.",
+   "why": "Three of the six anchor questions for this objective (ex6-1-1a, c, f) are rays, and ex6-1-1d, e and f have fraction or surd ends. number_line_marker's interval mode needs two whole-number ends inside +/-20, so the objective's most typical cases cannot be asked and the two templates cover only finite, whole-number intervals."
+  },
+  {
+   "lo_id": "lo:g10m6s1-1-4",
+   "need_kind": "graph_reader (new kind): the instrument draws the graph itself, the student bounds domain and range on the axes",
+   "description": "The instrument draws the graph of a function in context, such as a straight segment from (0, 10) to (20, 0) for the rolling ball, or a segment ending in a filled point at (120, 100) for the car, on axes that run past the curve. The student drags a shaded span along the horizontal axis to set the domain and another along the vertical axis to set the range, and sets each end filled or hollow. A vertical guide the student drags along the horizontal axis reads off the function value live, which covers the 'after 6 s' style of question. The student constructs the two spans. Graded on the property: each span must run exactly over the curve's extent on its axis. It would diagnose domain and range swapped (the vertical extent given as the domain), the span taken as the whole visible window instead of the curve's extent, an end included or excluded wrongly, and a value read off the wrong axis.",
+   "why": "All six anchor questions read a graph. A question may not point at a [figure], and no existing kind draws a function for the student to read, so number_line_marker would reduce this to marking numbers the stem has already given. This lesson's graph has no misconception recorded for this objective, so even with this kind the diagnostics could not be filled until some are authored (for example: domain and range swapped, reading the plot window instead of the curve)."
+  },
+  {
+   "lo_id": "lo:g10m6s1-1-2",
+   "need_kind": "function_machine (new kind): an input dial into a named rule, with the output shown live",
+   "description": "The student sees a function written in notation, such as $f(x)=x^{2}+1$, and an input dial. Dragging the dial shows the value substituted and the output. Tasks: set the input so that $f$ gives a target value ('find x with f(x) = 5': both -2 and 2 are accepted, graded on the property), and for compositions and sums, chain two machines so the output of one feeds the other. It would diagnose a negative input squared without brackets ($-1^2$ read as $-1$), $f(x+1)$ read as $f(x)+1$, the input put into the wrong place in the rule, and one of two inputs given when two exist.",
+   "why": "Evaluating $f(-1)$ is a typed number and no existing kind builds the substitution, so pair_plotter would only be an answer box with a grid. This objective has no misconception recorded in the graph either, so the kind would also need entries to be authored before its diagnostics could be filled."
+  },
+  {
+   "lo_id": "lo:g10m6s2-1-1",
+   "need_kind": "table_plotter",
+   "description": "A grid with a table of values for a straight-line rule, for example $y = 2x - 1$ for $x = -2, -1, 0, 1, 2$. The student places one point per x-value, tapping the grid above or below each column, then joins them. The widget would show whether the placed points are collinear and let the student join them into the line. A second step would ask for the domain and range, either as the set of all real numbers for the whole line, or as an interval when the stem restricts the x-values, for example $-2 \\le x \\le 3$ (the student marks the resulting y-interval). Diagnostics it could emit: swapped-coordinates on any point, a sign slip when evaluating the rule at a negative x (the point sits on the wrong side of the line), a missing point or an extra point, points that are not collinear, and, in the range step, the interval endpoints taken from the x-values rather than the y-values.",
+   "why": "pair_plotter takes a single point, so the table-to-points-to-line sequence the objective is about cannot be built. line_drawer in equation mode accepts any two points on the line, so it skips the table and never touches domain and range. number_line_marker's interval mode needs finite whole-number endpoints, so it cannot state an unrestricted domain or range. The objective also has no anchor question or listed misconceptions, so no template could be attached to it even if a kind fitted."
+  },
+  {
+   "lo_id": "lo:g10m6s3-1-2",
+   "need_kind": "domain_range_shader",
+   "description": "A parabola y = ax^2 + q is drawn on a grid (the student does not draw it). Each axis carries a draggable shading handle pair. On the x-axis the student shades the stretch the curve lies over (the domain). On the y-axis she shades the stretch of values it reaches (the range). Each end can be set open, closed, or running off to infinity with an arrow. She also places the turning point and drags a line to the axis of symmetry, and marks the stretch of x where the curve is increasing. The widget would report: domain and range swapped; range given as [0, infinity) when q was ignored; range given as (-infinity, q] for an upward parabola, or [q, infinity) for a downward one (the sign of a); a closed end where the turning point is included and a hollow one where it is not; the axis of symmetry drawn as the x-axis or at x = q; increasing and decreasing swapped.",
+   "why": "number_line_marker's interval mode needs both endpoints to be whole numbers inside a finite range, so the book's own answers (-infinity, infinity) and [-4, infinity) cannot be built, and a bounded stand-in would teach that the range stops somewhere. pair_plotter takes a single lattice point and shows no parabola, so asking for the turning point turns into typing (0, q) on a grid, an answer box in disguise. curve_sketcher grades a drawn stroke, not a domain, a range or an axis of symmetry. The listed misconceptions for this objective are all prerequisite ones (bracket notation, inequality signs), which the unbounded-interval instrument above would also be able to diagnose."
+  },
+  {
+   "lo_id": "lo:g10m6s3-1-3",
+   "need_kind": "parabola_intercept_finder",
+   "description": "The plane for y = ax^2 + q is shown with its equation. The student drags one marker onto each point where the curve meets the y-axis and each point where it meets the x-axis, snapping to a 0.05 grid so a 2 d.p. answer such as (0.63, 0) is reachable. A 'no x-intercepts' switch is available for cases such as y = x^2 + 2. The curve is shown as the student places markers, so a marker that is off the curve is visibly off. It would report: only the positive x-intercept given; a y-intercept marked on the x-axis (y = 0 used for the y-intercept); x-intercepts claimed for a parabola that never reaches the axis (-q/a is negative); x-intercepts at plus or minus the quotient (the square root never taken); q taken as the gradient or the intercept swapped.",
+   "why": "The one template written for this objective (mark both x-intercepts on a number line) holds only whole-number x-intercepts. number_line_marker cannot take an empty set, so 'recognise when there are no x-intercepts' is not expressible. It cannot take irrational values at 2 d.p., which are the book's actual answers (-0.63, 0.63 and so on). It carries no y-intercept at all. Those parts of the objective and the misconceptions that go with them (y-intercept-from-y-zero, no-root-taken, root-of-part) have no instrument."
+  },
+  {
+   "lo_id": "lo:g10m6s4-1-2",
+   "need_kind": "hyperbola_fitter",
+   "description": "A live hyperbola y = a/x + q drawn on a grid with its two dashed asymptotes, controlled by two steppers or sliders (a, whole numbers from about -6 to 6; q, whole numbers from -3 to 3). A fainter target graph is shown on the grid, or a second hyperbola, and the student sets a and q until the two coincide, or sets them to carry one given curve onto another ('what moves y = 2/x onto y = 2/x - 3?'). The student constructs the effect of each parameter by seeing it move: the sign of a flips the pair of quadrants, the size of a pushes the branches away from or toward the axes, q slides the whole graph and its horizontal asymptote up or down. It would diagnose the sign of a not deciding the quadrants (the right size with the wrong sign), a read backwards (the student first moves a down to push the curve away from the axes), and q mis-read as a sideways shift or with its sign flipped (the curve is the right shape at the mirror height).",
+   "why": "curve_sketcher fits only part of this objective. It can show the sign of a (wrong-quadrants) and, with a catch-all off-target, the size of a, but it cannot construct the effect of q with a diagnosable misconception (vertically-displaced has no q error to map to on this objective's list, and a freehand stroke cannot say whether the student knows which way q moves the graph). The book's own questions are 'which graph matches this equation' and 'describe the transformation between two curves'; those need two live curves to compare, and a widget question may not point at a figure. This is a gap, not a forced fit."
+  },
+  {
+   "lo_id": "lo:g10m6s4-1-3",
+   "need_kind": "hyperbola_probe",
+   "description": "A hyperbola y = a/x + q is drawn with a draggable marker constrained to the graph and a live readout of (x, y). The student drags the marker toward the y-axis and watches y run off the grid without the curve ever reaching x = 0; then drops a horizontal test line at different heights and counts how many times it meets the curve (once for most heights, never at y = q); finally lays a vertical test line along the y-axis to see that it meets the curve nowhere. The construction is the student's own marking of the excluded values on each axis (domain: every x except 0; range: every y except q) and, separately, of the x-intercept as the place where the horizontal test line at y = 0 meets the curve. It would diagnose assuming a y-intercept exists (the student insists on a point on the y-axis, or reports a value for it), the range given as y not equal to 0 instead of y not equal to q, and the x-intercept found by setting x = 0.",
+   "why": "No existing kind builds this without becoming an answer box. pair_plotter could ask for the x-intercept, but the student only types a point, so it cannot refuse to plot the y-intercept and cannot express 'there is none', which is the key idea; its intercepts would also need whole numbers, whereas the book's are fractions (-3/2). number_line_marker could ask the student to mark the excluded x-value, but tapping 0 on a line is a recalled fact, not a construction. curve_sketcher would grade a stroke within one grid square, which cannot tell a y-intercept at (0, 2) from none, and it does not mark intercepts at all."
+  },
+  {
+   "lo_id": "lo:g10m6s4-1-5",
+   "need_kind": "hyperbola_fitter",
+   "description": "The same hyperbola_fitter instrument as the gap recorded for objective 1-2, but here the graph is part of the widget rather than a figure: the grid shows a target hyperbola drawn with its dashed horizontal asymptote and one labelled point A on it, plus a live curve y = a/x + q controlled by two steppers for a and q. The student reads q off the dashed asymptote, then finds a so that the live curve passes through A (the working 'a = (y - q) times x' can be shown beside the steppers as the student's own notes), until the live curve covers the target. The graph and the point are exactly what the book's questions show (for example point A at (-2, 5/2) with asymptote y = 2, or A at (-1, -5) with asymptote y = -3). It would diagnose q taken as the y-coordinate of A instead of the asymptote height, a taken as the x- or y-coordinate of A, and a with the wrong sign (the live curve lands in the wrong quadrants).",
+   "why": "The book's questions give a printed graph and a point and ask for a and q, and a widget question may not point at a [figure], so the graph itself must live inside the widget. No existing kind shows a given graph and lets the student set parameters against it. curve_sketcher could be given the asymptote and a point in the stem and asked for a sketch, but then the student can draw the curve through the point without ever calculating a or q, which is not the mathematics of this objective, and a point such as (-2, 5/2) is not on its whole-number snap. This objective also has no misconception ids recorded yet, so the three errors above would need to be added to the lesson's list before they can be mapped."
+  },
+  {
+   "lo_id": "lo:g10m6s5-1-3",
+   "need_kind": "range_interval_marker (a number-line interval that supports an unbounded ray)",
+   "description": "The student is given an exponential function in the form y = ab^x + q (for example y = -2^x + 3) and builds its range on a vertical number line: she drops one endpoint at a chosen height, sets it hollow or filled, and drags a ray from it toward +infinity or -infinity. A second, simpler control states the domain as all real numbers. The grader accepts exactly one ray: its endpoint at y = q, hollow (the curve never reaches the asymptote), pointing up when a > 0 and down when a < 0. It would name these errors: a filled endpoint (the asymptote counted as a value of y), the ray on the wrong side of q (the sign of a ignored), the endpoint put at the y-intercept instead of at q, and the domain and range exchanged (range answered as all reals, domain as y > q).",
+   "why": "number_line_marker's interval mode needs a finite whole-number from and to inside a range of at most 24, so an unbounded range such as (-infinity, 3) cannot be specified, and parking the far end at the edge of the line would make the end handle a false answer. curve_sketcher is graded against one specific curve, not against a range, and a sketch of the curve does not make the student state the range. The lesson's list for this objective also holds no misconception of its own (only three inequality-direction ones from g10m4s7-1-1), so a new kind would need new misconceptions naming the range errors above."
+  },
+  {
+   "lo_id": "lo:g10m6s5-1-4",
+   "need_kind": "intercept_probe (drag a point along the curve and choose which variable to set to zero)",
+   "description": "The curve y = ab^x + q is drawn from an equation in the stem (for example y = 2^x - 4, or y = 2^x + 3 for the no-intercept case). The student drags a probe point along the curve with a live (x, y) readout, and chooses which substitution to make from two toggles, 'let x = 0' and 'let y = 0', which show the equation with that value put in. To finish she must park the probe on the y-axis and on the x-axis and write down the readings; for a curve that never reaches y = 0 (a and q of the same sign) the probe closes in on the asymptote and the readout stays above 0, so the only correct finish is to declare 'no x-intercept'. It would diagnose: using y = 0 to find the y-intercept (the two rules swapped), claiming an x-intercept on the asymptote, reading the intercept off the number written in the equation, and swapping the coordinates of the point.",
+   "why": "pair_plotter would be an answer box in disguise: the student calculates the intercept on paper and then taps the lattice point that records her answer, and most exponential x-intercepts are not lattice points at all. curve_sketcher grades the whole curve, not an intercept, and no existing kind can represent 'there is no x-intercept' as a thing the student does."
+  },
+  {
+   "lo_id": "lo:g10m6s6-1-3",
+   "need_kind": "graph_property_reader",
+   "description": "A sine graph y = a sin θ + q (the app draws it, so no [figure] is needed) sits over a labelled θ-axis from 0° to 360° with ticks every 30°. The student answers by CONSTRUCTING on that graph, not by typing: dragging the two ends of a highlighted stretch of the θ-axis (each end hollow or filled) to mark where the function is positive, negative, increasing or decreasing, and dragging a marker onto each turning point and each intercept. The stem names the property and the answer is graded as a set of intervals or points, so any construction with that property is accepted. Errors it would diagnose: marking the increasing/decreasing boundaries at the zeros (60° and 300°) instead of at the turning points (90° and 270°), which is confusing 'positive' with 'increasing'; giving 'decreasing' as the single interval 0° to 180° because the curve starts at the axis; the θ-coordinate of the maximum given as its height; and endpoints included where the function is strictly positive.",
+   "why": "The anchors (ex6-6-17, ex6-8-42, ex6-8-43) ask where a drawn graph is positive, increasing or decreasing. number_line_marker's interval mode cannot reach this: its range is whole numbers within ±20 and at most 24 wide, so θ from 0° to 360° does not fit except by an artificial unit of 30° that the student never sees in the book, and it shows no curve, so the student would be answering from recall or a typed rule, an answer box in disguise. curve_sketcher draws a curve, it does not read one. This objective also has no misconceptions on file, so diagnostics would have to be authored first."
+  },
+  {
+   "lo_id": "lo:g10m6s6-1-4",
+   "need_kind": "curve_fitter",
+   "description": "A target sine curve y = a sin θ + q is drawn on a θ-axis (0° to 360°, ticks every 30°) with two labelled points on it, as in ex6-6-1 and ex6-6-2, and the equation is hidden. The student drags two handles, one for a and one for q (each stepping in halves), and a live curve updates on top of the target until the two coincide. The grade is on the pair (a, q), so every route to it is accepted. Errors it would diagnose: reading a as the height of the peak instead of half the distance from trough to peak (a = 3 where the peak is 3 but the midline is 1.5); reading a as the full peak-to-peak distance; taking q from a turning point (the minimum or the maximum) instead of the midline; a and q exchanged; the sign of a lost for a graph that falls first.",
+   "why": "The anchors ask the student to determine a and q FROM a drawn graph. curve_sketcher runs the other way (equation to curve), takes only whole-number a, and cannot carry the book's own values (a = 3/2 in ex6-6-1 and ex6-8-32). A sketch 'through two given features' with curve_sketcher is possible for whole-number cases such as ex6-6-2 (a = 4, q = -2), but that range reaches -6, past the instrument's -5..5 guidance, and the objective has no misconceptions on file, so no diagnostic could be authored. A parameter-fitting instrument is the construction the objective actually needs."
+  },
+  {
+   "lo_id": "lo:g10m6s6-2-2",
+   "need_kind": "curve_sketcher predicate for sine/cosine: reflected-in-x-axis (the sign of a), reporting an unreflected stroke when a < 0",
+   "description": "Not a new kind but a missing predicate on curve_sketcher. For fn sine or cosine with a negative a, the scorer would report that the stroke has the right amplitude, midline and period but is the mirror image of the target (it starts at the maximum where the target starts at the minimum), analogous to opens-wrong-way for the quadratic and slope-sign-flipped for the line. The student would still sketch freehand exactly as in the two templates; what changes is that the refutation names the reflection, so 'the minus sign is a reflection in the x-axis, not part of the amplitude' fires on that cause and not on every unmatched stroke.",
+   "why": "The only misconception this objective lists, negative-amplitude (reading the minus sign in y = -4 cos θ as part of the amplitude), has no predicate of its own on the cosine sketcher. Today the two templates have to map the residual off-target to it, which also fires for a sine-shaped or scribbled stroke. A dedicated predicate would make the diagnosis exact."
+  },
+  {
+   "lo_id": "lo:g10m6s6-2-4",
+   "need_kind": "phase_shifter: slide one trig graph horizontally onto another",
+   "description": "The student sees y = sin θ and the target y = cos θ (or the reverse) on axes from 0° to 360°, and drags a handle that slides one curve left or right by a shift h, snapped to 15° steps, with the live rule updating, for example y = sin(θ + 30°). The task is stated by the property: 'slide the sine graph until it lies exactly on the cosine graph', and any h that is congruent mod 360° to the right shift is accepted (+90°, or −270°). A second prompt runs it the other way: 'cos θ = sin(θ + 90°); now slide cosine onto sine and write the shift'. The errors it would diagnose are: the shift in the wrong direction, which lands on sin(θ − 90°) = −cos θ (sign of the shift mis-read, as in (θ − a) read as θ + a); a shift of 180° (gives −sin θ, the 'upside down' graph); a half-way or 45° shift that matches neither; and sliding the wrong graph and reading the sign of the shift off the wrong curve.",
+   "why": "The objective asks for the sine and cosine graphs as horizontal shifts of each other. curve_sketcher fixes the period and has coefficients [a, q] only, with no phase parameter, so it cannot ask for or grade sin(θ + 90°). Its freehand sketch of cos θ rebuilds the previous objectives, not the shift relationship; the other kinds are not trigonometric at all. The anchors here are all 'read off the two graphs' with a [figure]. Note also that the lesson file lists no misconception for this objective, so the errors above would need to be seeded before a template could carry diagnostics."
+  },
+  {
+   "lo_id": "lo:g10m6s6-2-3",
+   "need_kind": "cosine_fitter: set a and q so the live curve passes through two marked points",
+   "description": "The widget shows two labelled points on the axes, such as A (180°; −1.5) and B (0°; −0.5), given by the stem's own numbers. The student sets a and q with two steppers (a in steps of 0.5, positive or negative; q in steps of 0.5) and the curve y = a cos θ + q redraws live. It is correct when the curve passes through both points, so any equivalent route (the y-intercept a + q and the range, or the turning points) is accepted. The errors it would diagnose are: taking the y-intercept as a (so ignoring q); reading the full height from minimum to maximum as the amplitude instead of half of it; the sign error from cos 180° = −1 (a read from the minimum with the wrong sign); and a and q swapped.",
+   "why": "The objective is to find a and q from two points, and the book's numbers include a = 1/2 (exercises 6-6-3 and 6-6-4) and q = −1 or −0.5. curve_sketcher's coefficients must be whole numbers and it scores a freehand stroke only 'within about one grid square', so it cannot tell a = 0.5 from a = 0 or 1 and cannot grade the book's own values. The question would also be an answer-box question in a sketch's clothing: the student would first calculate a and q, then draw. Seeding misconceptions for this objective (it has none listed) is also a precondition for any diagnostics."
+  },
+  {
+   "lo_id": "lo:g10m6s6-3-1",
+   "need_kind": "No new kind. curve_sketcher (fn: tangent) fits; blocked by the data, not the instrument (no anchor question, no tangent-graph misconception)",
+   "description": "The student would draw y = tan θ freehand over 0° to 360° (coefs [1, 0]), lifting the finger at θ = 90° and 270° and drawing each branch separately. That is the objective's own construction: join the plotted points with a smooth curve and mark where tan θ is undefined. The predicates that would matter are asymptote-crossed (drew straight through 90° or 270°), partial-coverage (stopped early or skipped a branch), period-wrong (drew one 360° wave instead of two 180° branches), fails-vertical-line-test and vertically-displaced. The calculator table-of-values step is arithmetic with a device. No existing kind builds it, and it should stay a worked step.",
+   "why": "The lesson file lists no anchor questions for this objective, so there is no parent_question_id to cite. Its only misconceptions are seven prerequisite ids about right-triangle ratios: choosing the hypotenuse, naming opposite and adjacent, sine written as opposite over adjacent. None of them is something a tangent sketch can reveal. Mapping asymptote-crossed or period-wrong onto one of them would show a student feedback about the wrong error. The diagnostics array must hold at least one honest entry, so no valid template exists."
+  },
+  {
+   "lo_id": "lo:g10m6s6-3-2",
+   "need_kind": "No new kind. curve_sketcher (fn: tangent) fits exactly; blocked by the data (zero anchors, zero misconceptions on this objective)",
+   "description": "This is the best fit in the lesson. The student sketches y = a tan θ + q freehand for 0° to 360° (for example coefs [2, 1], or [-1, -2]) and lifts the finger at each asymptote. The question isolates the two effects the objective names. q is a vertical shift, and a sets how steeply the branches rise. The widget can report vertical-shift-wrong (wrong midline, so q misapplied), amplitude-wrong (wrong steepness, so a misapplied), asymptote-crossed, period-wrong, partial-coverage, vertically-displaced and fails-vertical-line-test. Within the instrument limits, a is a nonzero whole number with |a| ≤ 3 and q is a whole number with |q| ≤ 3.",
+   "why": "The lesson file gives this objective an empty anchor_questions list and an empty misconceptions list. A template therefore has no parent_question_id to name and no own misconception id to put in diagnostics. FR-1215 refuses an id borrowed from another objective's list. Inventing an id or borrowing a parent from objective 6-3-4 would be forgery, so this is left for Samuel. Once the catalogue carries tangent-graph misconceptions and an anchor question, this objective should be the first to get a widget."
+  },
+  {
+   "lo_id": "lo:g10m6s6-3-3",
+   "need_kind": "No new kind. curve_sketcher (fn: tangent) fits; blocked because the inherited misconceptions are all right-triangle ratio errors that no tangent-sketch predicate can reveal",
+   "description": "The anchor (ex6-8-55a) asks for the domain of g(θ) = −tan θ. The student would sketch g over 0° to 360° (coefs [-1, 0]), lifting the finger at 90° and 270°. The domain exclusions, the asymptotes, the period of 180°, the intercepts at 0°, 180° and 360° and the unbounded range are then all constructed rather than recited. The widget's own refusal to let a stroke cross θ = 90° or 270° is the domain restriction made physical. The stem would say 'Sketch g(θ) = −tan θ for 0° ≤ θ ≤ 360°', never 'as in the diagram', because the anchor's [figure] must not be pointed at. Predicates that would be worth mapping are asymptote-crossed, period-wrong, partial-coverage, vertical-shift-wrong and amplitude-wrong.",
+   "why": "Every misconception listed for this objective is own=false and about right-triangle ratios: hypotenuse-not-longest-side, hypotenuse-not-opposite-right-angle, opposite-adjacent-fixed-by-position, ratio-at-the-right-angle, ratios-without-a-right-angle, reads-sides-from-other-angle and sine-as-opposite-over-adjacent. The nearest pairing, asymptote-crossed to sine-as-opposite-over-adjacent, would tell a student who drew one continuous wave that she mixed up sine's ratio. That is probably not her error: she more likely does not know that tangent breaks at 90°. Because of the one-predicate-one-misconception rule and the minimum of one diagnostic, no honest template can be written. A forced mapping would show a student wrong feedback."
+  },
+  {
+   "lo_id": "lo:g10m6s6-3-4",
+   "need_kind": "curve_sketcher (fn: tangent), used in reverse, covers two of three anchors; a small parameter-fitting kind would cover all three. Both are blocked until this objective has misconceptions",
+   "description": "Reverse construction: 'Draw the tangent curve y = a tan θ + q that passes through (0°, −3) and (45°, −2)', which is anchor ex6-8-34 with coefs [1, -3]. Anchor ex6-6-6 gives [1, 0]. The student has to read q from the y-intercept, because tan 0° = 0, and then get a as the rise from the intercept to the second point, a = y(45°) − q. Errors that would show are vertical-shift-wrong (q taken from the wrong point) and amplitude-wrong (a taken as the y-value at 45° without subtracting q, giving −2 where 1 is right). The third anchor, ex6-6-5 (q = 1/3, a = 3), cannot be expressed: curve_sketcher takes only whole-number q with |q| ≤ 3. Grading is also coarse, about one grid square, so a non-whole a would be hard to tell apart. A dedicated kind would give two drag handles: the y-axis handle sets q, and the second sets a. A live curve would be graded on passing through two labelled points, with rational a and q allowed. It would name 'a forgot to subtract q' as a specific miss.",
+   "why": "The lesson file gives this objective an empty misconceptions list, so any diagnostics id would be refused (FR-1215). The 'a read as the y-value at 45° with q not subtracted' error is the dominant real error here, but the catalogue does not carry it. The template schema also requires at least one diagnostic. The anchors exist; the misconception ids do not."
+  },
+  {
+   "lo_id": "lo:g10m6s7-1-1",
+   "need_kind": "equation_fitter",
+   "description": "The student would find the general-form equation that fits a graph. A grid shows a fixed target curve from one of the chapter's families (parabola y = ax^2 + q, hyperbola y = a/x + q, exponential y = a·b^x + q, sine or cosine y = a sin(theta) + q), with one or two lattice points on it labelled by the instrument itself, never by a stem figure. The general form is printed above the grid with a and q as stepper controls (b fixed for the exponential). A second curve is drawn live from the student's current a and q, and the answer is accepted when it coincides with the target, so any route to a and q is accepted and the property graded is 'passes through the marked points with the target's shape'. A 'substitute a marked point' readout shows both sides of the equation for the point the student picks, so the substitution step of the objective is something she does rather than recites. Errors it would diagnose: the sign of a wrong (the curve opens the other way, or lies in the other quadrants, or is reflected) -> mc:g10m6s3-1-1:sign-of-a-ignored; q left at 0 (turning point, asymptote or midline stays on the axis) -> mc:g10m6s3-1-1:q-ignored; q's sign flipped (shifted the wrong way) -> mc:g10m6s3-1-1:q-shift-wrong-direction; right orientation but wrong size of a (taking a bigger a as flatter) -> mc:g10m6s3-1-1:steepness-of-a-misjudged.",
+   "why": "The objective runs graph -> equation, and no existing kind does that. curve_sketcher runs the opposite way (equation -> freehand curve) and is scored within about one grid square, so it would accept a, q, or a-and-q off by one, which are exactly the near-miss equations this objective exists to separate; used with the points given in the stem it also tests the earlier 'sketch a parabola' skill, not the determination of a and q. line_drawer is linear only, and pair_plotter only places a point. A sketch-based fit would be a forced one. Note also that the lesson file lists only the four parabola misconceptions (g10m6s3-1-1) under this objective, although it covers hyperbola, exponential and trigonometric graphs; the hyperbola, exponential and trig families would need their own misconception ids added to this objective's list before a fitter could name their errors."
+  },
+  {
+   "lo_id": "lo:g10m6s7-1-2",
+   "need_kind": "intercept_plotter",
+   "description": "The student would calculate an intercept or intersection by substitution and then place the result. The function (for example y = 2^x + 1, or a line and a parabola for intersections) is printed with NO curve drawn, so the answer cannot be read off a picture. The student chooses the substitution that gives the point asked for (x = 0 for the y-intercept, y = 0 for an x-intercept, equate the two expressions for an intersection) and plots the resulting point on a coordinate grid; a live check substitutes the plotted point into each function and shows which side fails to balance. In intersection mode the answer is a SET of points (graded as missed or extra points), so finding only one of two crossings is reported as that. The author names the likely wrong points, and the widget reports each one as its own predicate: for y = 2^x + 1, (0,3) -> mc:g10m6s7-1-2:power-at-zero-read-as-base (2^0 taken as 2), (0,1) -> mc:g10m6s7-1-2:power-vanishes-at-zero (2^0 taken as 0), (0,0) -> mc:g10m6s7-1-2:zero-reported-as-intercept (the 0 put in given as the 0 that comes out); for a line or parabola, the x-intercept plotted when the y-intercept was asked -> mc:g10m6s2-1-3:y-intercept-from-y-zero.",
+   "why": "pair_plotter is the nearest kind but can only report swapped-coordinates, wrong-quadrant or off-target. All three of this objective's own misconceptions plot a point (0, k), so all of them land in off-target and cannot be told apart; mapping that one predicate would name the wrong error for two students in three. It also shows no function and no check, so plotting would be the answer typed on a grid, an answer box in disguise. curve_sketcher's exponential 'wrong-intercept' has the same flaw: the freehand tolerance of about one square cannot separate y = 2^x + 1 from y = 2^x + 2, and it does not name which wrong value was used. line_drawer handles one line at a time and cannot show an intersection of a line with a parabola or exponential. No existing kind fits without forcing it."
+  }
+ ]
+}

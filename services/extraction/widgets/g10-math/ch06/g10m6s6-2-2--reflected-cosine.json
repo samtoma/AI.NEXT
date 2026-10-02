@@ -1,0 +1,63 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m6s6-2-2:reflected-cosine",
+ "lo_id": "lo:g10m6s6-2-2",
+ "parent_question_id": "q:g10m6s6-2-2:ex6-8-35c",
+ "tier": "standard",
+ "kind": "curve_sketcher",
+ "spec": {
+  "fn": "cosine",
+  "coefs": [
+   -4,
+   0
+  ]
+ },
+ "stem": "Sketch the graph of $y = -4\\cos\\theta$ for $0^\\circ \\le \\theta \\le 360^\\circ$ in one smooth stroke, from $\\theta = 0^\\circ$ to $\\theta = 360^\\circ$.",
+ "solution": [
+  "Start from the shape of $y = \\cos\\theta$: it begins at its maximum at $\\theta = 0^\\circ$, crosses the $\\theta$-axis at $90^\\circ$, has its minimum at $180^\\circ$, crosses again at $270^\\circ$ and is back at its maximum at $360^\\circ$.",
+  "The size of $a$ sets the amplitude. Here $|a| = 4$, so the amplitude is $4$ (an amplitude is a distance, so it is never negative) and the curve reaches $4$ above and $4$ below the midline $y = 0$.",
+  "The minus sign in $a = -4$ is not part of the amplitude. It reflects the curve in the $\\theta$-axis, so the graph now begins at its minimum, $y = -4$, instead of its maximum.",
+  "Mark the key points $(0^\\circ, -4)$, $(90^\\circ, 0)$, $(180^\\circ, 4)$, $(270^\\circ, 0)$ and $(360^\\circ, -4)$.",
+  "Join them with one smooth curve. Check: the range is $-4 \\le y \\le 4$, the period is $360^\\circ$, and the curve is the mirror image of $y = 4\\cos\\theta$ in the $\\theta$-axis."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "off-target",
+   "misconception_id": "mc:g10m6s6-2-2:negative-amplitude"
+  }
+ ],
+ "notes": "Genuine fit: the construction is the objective itself (sketch y = a cos θ + q from the effects of a and q), freehand, one stroke, a = -4 and q = 0 inside the cosine limits (|a| <= 4, |q| <= 3) and the curve stays within -4..4. Negative a is deliberate: it is the book's own example of the one misconception this objective lists, and the anchor's 4 cos θ curve (k(x) in the book's figure) reflected. DIAGNOSTIC CAVEAT: curve_sketcher has no reflection predicate for sine/cosine (opens-wrong-way exists only for quadratic). A student who reads the minus sign as part of the amplitude and so draws 4 cos θ, not -4 cos θ, gets the amplitude, the midline and the period right, so none of amplitude-wrong, vertical-shift-wrong or period-wrong can fire for them; what remains is off-target. I map off-target to negative-amplitude because, in this q = 0 template, an unreflected cosine is the dominant way to fail while the three named properties are right. The same predicate would also fire for a sine-shaped or scribbled stroke (a phase error that the instrument does not name); if the scorer reports reflection under another predicate, re-map. The misconception as worded (STATING the amplitude as -4) is an answer-box error; the sketch can only expose its consequence. See the gap recorded for this objective. Other predicates a sketch could fire (amplitude-wrong, period-wrong, partial-coverage, fails-vertical-line-test) are not mapped: this objective's own misconception list holds no error they reveal.\n\nPIPELINE NORMALISATION (not an author edit): coordinate-notation: the book's (x; y) written (x, y) in solution step 4 (assemble_lesson_bundle.normalise_pairs, the rule every book question goes through; decision 15).",
+ "verified_as": {
+  "sha": "9cdbc2a7bcbf441fe44771a6cd9544efc2f4e0d8ec073a0721413dc4ab2a2bc6",
+  "template": {
+   "format": "ainext.widget-template/1",
+   "id": "wt:g10m6s6-2-2:reflected-cosine",
+   "lo_id": "lo:g10m6s6-2-2",
+   "parent_question_id": "q:g10m6s6-2-2:ex6-8-35c",
+   "tier": "standard",
+   "kind": "curve_sketcher",
+   "spec": {
+    "fn": "cosine",
+    "coefs": [
+     -4,
+     0
+    ]
+   },
+   "stem": "Sketch the graph of $y = -4\\cos\\theta$ for $0^\\circ \\le \\theta \\le 360^\\circ$ in one smooth stroke, from $\\theta = 0^\\circ$ to $\\theta = 360^\\circ$.",
+   "solution": [
+    "Start from the shape of $y = \\cos\\theta$: it begins at its maximum at $\\theta = 0^\\circ$, crosses the $\\theta$-axis at $90^\\circ$, has its minimum at $180^\\circ$, crosses again at $270^\\circ$ and is back at its maximum at $360^\\circ$.",
+    "The size of $a$ sets the amplitude. Here $|a| = 4$, so the amplitude is $4$ (an amplitude is a distance, so it is never negative) and the curve reaches $4$ above and $4$ below the midline $y = 0$.",
+    "The minus sign in $a = -4$ is not part of the amplitude. It reflects the curve in the $\\theta$-axis, so the graph now begins at its minimum, $y = -4$, instead of its maximum.",
+    "Mark the key points $(0^\\circ; -4)$, $(90^\\circ; 0)$, $(180^\\circ; 4)$, $(270^\\circ; 0)$ and $(360^\\circ; -4)$.",
+    "Join them with one smooth curve. Check: the range is $-4 \\le y \\le 4$, the period is $360^\\circ$, and the curve is the mirror image of $y = 4\\cos\\theta$ in the $\\theta$-axis."
+   ],
+   "diagnostics": [
+    {
+     "predicate": "off-target",
+     "misconception_id": "mc:g10m6s6-2-2:negative-amplitude"
+    }
+   ],
+   "notes": "Genuine fit: the construction is the objective itself (sketch y = a cos θ + q from the effects of a and q), freehand, one stroke, a = -4 and q = 0 inside the cosine limits (|a| <= 4, |q| <= 3) and the curve stays within -4..4. Negative a is deliberate: it is the book's own example of the one misconception this objective lists, and the anchor's 4 cos θ curve (k(x) in the book's figure) reflected. DIAGNOSTIC CAVEAT: curve_sketcher has no reflection predicate for sine/cosine (opens-wrong-way exists only for quadratic). A student who reads the minus sign as part of the amplitude and so draws 4 cos θ, not -4 cos θ, gets the amplitude, the midline and the period right, so none of amplitude-wrong, vertical-shift-wrong or period-wrong can fire for them; what remains is off-target. I map off-target to negative-amplitude because, in this q = 0 template, an unreflected cosine is the dominant way to fail while the three named properties are right. The same predicate would also fire for a sine-shaped or scribbled stroke (a phase error that the instrument does not name); if the scorer reports reflection under another predicate, re-map. The misconception as worded (STATING the amplitude as -4) is an answer-box error; the sketch can only expose its consequence. See the gap recorded for this objective. Other predicates a sketch could fire (amplitude-wrong, period-wrong, partial-coverage, fails-vertical-line-test) are not mapped: this objective's own misconception list holds no error they reveal."
+  }
+ }
+}
