@@ -4,11 +4,11 @@
  "book": "g10-math",
  "id": "g1-ch12",
  "chapter": 12,
- "decided_at": "2026-10-02T06:38:14Z",
+ "decided_at": "2026-10-02T06:45:00Z",
  "by": "auto-pass G1 (AI recommendation)",
  "auto": true,
- "outcome": "blocked",
- "summary": "G1 not auto-passed: 2 item(s) need the pipeline fixed or a person",
+ "outcome": "pass_with_holds",
+ "summary": "2 owed terminology decisions taken on the AI line's recommendation (2 keep); 2 rule failures (one objective) resolved by an orchestrator (AI) ruling: lo:g10m12s1-1-3 dropped and its 7 items re-homed to lo:g10m12s1-1-2",
  "decisions": [
   {
    "key": "term:congruent triangles",
@@ -21,6 +21,54 @@
    "decision": "keep",
    "detail": "bisect: 'Diagonals bisect each other' means each diagonal cuts the other into two equal parts; some curricula phrase this as 'cut each other in half'.",
    "basis": "a flag on a term the book itself uses"
+  },
+  {
+   "key": "lo:g10m12s1-1-3",
+   "decision": "drop objective",
+   "detail": "'Calculate unknown angle values in a quadrilateral shown to be a parallelogram, using the equal opposite angles and the angles in the given figure.' Valid evidence: one summary line only; the rule failures of this chapter (rule 1).",
+   "basis": "ORCHESTRATOR (AI) RULING, not a human stamp and not in the auto-pass rule set: section 12.1 never teaches calculating an unknown angle in a parallelogram as a skill of its own. Its teaching text is proving that a quadrilateral is a parallelogram (b04026, WE1) and the parallelogram's properties (the opposite-angles video note b04029; summary b04049-b04052). The objective's only valid evidence is the summary line 'Both pairs of opposite angles are equal' (b04051), a property lo:g10m12s1-1-2 already carries; the evidence check rejected both exercise quotes ('Find the value of y', 'Determine the value of x') as not showing the skill, and there is no worked example. Same precedent as chapters 1, 5 and 7 (an objective the book never demonstrates is dropped, its items placed on the objective whose taught skill they apply). Exercise-only objectives policy is open with Samuel."
+  },
+  {
+   "key": "Ex12-1:6b",
+   "decision": "place on lo:g10m12s1-1-2",
+   "detail": "Ex12-1:6b: was on the dropped lo:g10m12s1-1-3",
+   "basis": "ORCHESTRATOR (AI) RULING: each finds an angle of a quadrilateral already given or proved to be a parallelogram (6b/6c, 7b/7c, Ex12-2:7b/7c are the parts after 'prove QRST is a parallelogram'; Ex12-2:3a writes all interior angles of parallelogram ABCD in terms of y): the working reads the parallelogram's properties (opposite angles equal, opposite sides parallel giving alternate or co-interior angles), which is lo-2's skill (b04029, summary b04050/b04051). Parallel-line angle facts are taught in chapter 7; the step that belongs here is the property, so lo-2, not lo-1 (proving it is a parallelogram)."
+  },
+  {
+   "key": "Ex12-1:6c",
+   "decision": "place on lo:g10m12s1-1-2",
+   "detail": "Ex12-1:6c: was on the dropped lo:g10m12s1-1-3",
+   "basis": "ORCHESTRATOR (AI) RULING: each finds an angle of a quadrilateral already given or proved to be a parallelogram (6b/6c, 7b/7c, Ex12-2:7b/7c are the parts after 'prove QRST is a parallelogram'; Ex12-2:3a writes all interior angles of parallelogram ABCD in terms of y): the working reads the parallelogram's properties (opposite angles equal, opposite sides parallel giving alternate or co-interior angles), which is lo-2's skill (b04029, summary b04050/b04051). Parallel-line angle facts are taught in chapter 7; the step that belongs here is the property, so lo-2, not lo-1 (proving it is a parallelogram)."
+  },
+  {
+   "key": "Ex12-1:7b",
+   "decision": "place on lo:g10m12s1-1-2",
+   "detail": "Ex12-1:7b: was on the dropped lo:g10m12s1-1-3",
+   "basis": "ORCHESTRATOR (AI) RULING: each finds an angle of a quadrilateral already given or proved to be a parallelogram (6b/6c, 7b/7c, Ex12-2:7b/7c are the parts after 'prove QRST is a parallelogram'; Ex12-2:3a writes all interior angles of parallelogram ABCD in terms of y): the working reads the parallelogram's properties (opposite angles equal, opposite sides parallel giving alternate or co-interior angles), which is lo-2's skill (b04029, summary b04050/b04051). Parallel-line angle facts are taught in chapter 7; the step that belongs here is the property, so lo-2, not lo-1 (proving it is a parallelogram)."
+  },
+  {
+   "key": "Ex12-1:7c",
+   "decision": "place on lo:g10m12s1-1-2",
+   "detail": "Ex12-1:7c: was on the dropped lo:g10m12s1-1-3",
+   "basis": "ORCHESTRATOR (AI) RULING: each finds an angle of a quadrilateral already given or proved to be a parallelogram (6b/6c, 7b/7c, Ex12-2:7b/7c are the parts after 'prove QRST is a parallelogram'; Ex12-2:3a writes all interior angles of parallelogram ABCD in terms of y): the working reads the parallelogram's properties (opposite angles equal, opposite sides parallel giving alternate or co-interior angles), which is lo-2's skill (b04029, summary b04050/b04051). Parallel-line angle facts are taught in chapter 7; the step that belongs here is the property, so lo-2, not lo-1 (proving it is a parallelogram)."
+  },
+  {
+   "key": "Ex12-2:3a",
+   "decision": "place on lo:g10m12s1-1-2",
+   "detail": "Ex12-2:3a: was on the dropped lo:g10m12s1-1-3",
+   "basis": "ORCHESTRATOR (AI) RULING: each finds an angle of a quadrilateral already given or proved to be a parallelogram (6b/6c, 7b/7c, Ex12-2:7b/7c are the parts after 'prove QRST is a parallelogram'; Ex12-2:3a writes all interior angles of parallelogram ABCD in terms of y): the working reads the parallelogram's properties (opposite angles equal, opposite sides parallel giving alternate or co-interior angles), which is lo-2's skill (b04029, summary b04050/b04051). Parallel-line angle facts are taught in chapter 7; the step that belongs here is the property, so lo-2, not lo-1 (proving it is a parallelogram)."
+  },
+  {
+   "key": "Ex12-2:7b",
+   "decision": "place on lo:g10m12s1-1-2",
+   "detail": "Ex12-2:7b: was on the dropped lo:g10m12s1-1-3",
+   "basis": "ORCHESTRATOR (AI) RULING: each finds an angle of a quadrilateral already given or proved to be a parallelogram (6b/6c, 7b/7c, Ex12-2:7b/7c are the parts after 'prove QRST is a parallelogram'; Ex12-2:3a writes all interior angles of parallelogram ABCD in terms of y): the working reads the parallelogram's properties (opposite angles equal, opposite sides parallel giving alternate or co-interior angles), which is lo-2's skill (b04029, summary b04050/b04051). Parallel-line angle facts are taught in chapter 7; the step that belongs here is the property, so lo-2, not lo-1 (proving it is a parallelogram)."
+  },
+  {
+   "key": "Ex12-2:7c",
+   "decision": "place on lo:g10m12s1-1-2",
+   "detail": "Ex12-2:7c: was on the dropped lo:g10m12s1-1-3",
+   "basis": "ORCHESTRATOR (AI) RULING: each finds an angle of a quadrilateral already given or proved to be a parallelogram (6b/6c, 7b/7c, Ex12-2:7b/7c are the parts after 'prove QRST is a parallelogram'; Ex12-2:3a writes all interior angles of parallelogram ABCD in terms of y): the working reads the parallelogram's properties (opposite angles equal, opposite sides parallel giving alternate or co-interior angles), which is lo-2's skill (b04029, summary b04050/b04051). Parallel-line angle facts are taught in chapter 7; the step that belongs here is the property, so lo-2, not lo-1 (proving it is a parallelogram)."
   }
  ],
  "checks": [
@@ -38,7 +86,13 @@
   },
   {
    "name": "independent prerequisite-link checker",
-   "state": "done"
+   "state": "done",
+   "detail": "6 links proposed, 0 kept (all 6 judged UNCLEAR: the source objectives have no description, so the text cannot show which skill is relied on) - chapter 12 enters the graph with no prerequisite edges"
+  },
+  {
+   "name": "G1 rules (assemble_objectives)",
+   "state": "done",
+   "detail": "two rule-1 failures on lo:g10m12s1-1-3 (summary evidence only; both exercise quotes rejected by the evidence check, no worked example) resolved by the ruling; after it: 0 failures, 0 decisions owed, 2 objectives in 1 lesson"
   }
  ],
  "evidence": [
@@ -49,12 +103,17 @@
   {
    "label": "G1 page",
    "path": "services/extraction/objectives/g10-math/ch12.review.html"
+  },
+  {
+   "label": "G1 verdicts (auto + the orchestrator rulings)",
+   "path": "services/extraction/runs/g10-math/objectives/g1-ch12.auto.json"
   }
  ],
- "blocked": [
-  "failure: lo:g10m12s1-1-3: 1 kind(s) of valid evidence (summary); rule 1 needs two different kinds",
-  "failure: lo:g10m12s1-1-3: no valid worked-example or exercise evidence; an objective the book never demonstrates or practises cannot be assessed"
- ],
+ "blocked": [],
  "course_id": "course:us-g10-math-en",
- "for_review": []
+ "for_review": [
+  "lo:g10m12s1-1-3 dropped by an orchestrator ruling (rule 1: summary evidence only; the evidence check rejected its two exercise quotes as too generic - 'Find the value of y'); its 7 angle items re-homed to lo:g10m12s1-1-2 (use the parallelogram's properties). Read the reasoning on that decision first. Same exercise-only-objective policy question as chapters 1, 5 and 7.",
+  "chapter 12 has NO prerequisite links: the checker judged all 6 proposed links UNCLEAR (it could not see the chapter-7 congruence objective's description). An S1 link re-check with descriptions would likely keep the congruence -> parallelogram-proof link; a model call, not made."
+ ],
+ "run": "wf_6aa8c239-a2e"
 }
