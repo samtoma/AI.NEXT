@@ -45,10 +45,14 @@ ENV NODE_ENV=production \
     HOME=/home/node \
     PORT=3000 \
     AINEXT_THINKING_BUDGET=1024
-# the app spawns `claude -p …` for every AI turn — it must be on PATH
+# the app spawns `claude -p …` for every AI turn — it must be on PATH.
+# /tmp/ainext-uploads is the uploads volume's mount point (compose): it must
+# exist in the image owned by `node`, or Docker creates a fresh named volume
+# root-owned and every student upload fails with EACCES (500) — live only,
+# because `npm run dev` writes to the host's own temp dir.
 RUN npm i -g @anthropic-ai/claude-code \
- && mkdir -p /repo/.claude /home/node \
- && chown -R node:node /repo /home/node
+ && mkdir -p /repo/.claude /home/node /tmp/ainext-uploads \
+ && chown -R node:node /repo /home/node /tmp/ainext-uploads
 WORKDIR /repo/app
 COPY --from=build --chown=node:node /repo/app ./
 # content read at request time (lesson_content) — mirror the repo layout

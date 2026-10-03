@@ -10,6 +10,23 @@ requirement names it.
 
 ## [Unreleased]
 
+### Fixed — a lesson stopped halfway can be picked up again (FR-204)
+- **Pressing Finish in the middle of a lesson no longer loses the student's place.** She still
+  gets her report, but the next time she opens that lesson she is asked "You stopped at step X
+  of N — pick up where you left off?", with Continue and Start over. Finishing after the lesson
+  is over still starts the next visit fresh. Found in live testing of v0.11.0.
+- **The place survives closing the tab** and lasts a week on that device (it used to vanish
+  with the tab). Signing out clears it, for shared family devices. Another device still starts
+  fresh — that needs the saved place on the server (issue #25).
+- **An early Finish is no longer recorded as a finished lesson.** The console's sessions list
+  shows it as "went quiet for 30 minutes" unless she carries on within that time (FR-2302).
+
+### Fixed — uploads on the live site
+- **Photo and PDF uploads failed on the live site** while working locally: the folder they are
+  saved to was owned by the wrong user inside the container. The image now creates it with the
+  right owner. The volume that already exists on the server needs a one-time ownership fix —
+  see the commit message.
+
 ## [v0.11.0] — 2026-10-02
 
 The Your Progress page has a new map, built by Tamer on 1 October and accepted by Samuel on

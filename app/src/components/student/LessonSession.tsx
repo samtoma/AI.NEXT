@@ -68,6 +68,14 @@ import {
   cx,
 } from "@/components/sticker";
 import { authFetch } from "@/lib/auth/client-session";
+import {
+  SAVE_VERSION,
+  isEarlyFinish,
+  parseSaved,
+  resumeStep,
+  storeKey,
+  type SavedSession as SavedLesson,
+} from "@/lib/lesson-resume";
 
 /**
  * The adaptive lesson surface — same engine, two temperaments.
@@ -79,8 +87,9 @@ import { authFetch } from "@/lib/auth/client-session";
  * review : non-annoying 3-minute lock-it-in (3 questions, 1 widget); Finish is
  *          offered after 5 replies — a nudge, never a block (ADR-0023).
  * Both run in FOCUS MODE (body[data-focus] hides the global nav) and end in
- * the honest report card. An in-progress session survives reloads via
- * sessionStorage ("استكمل الدرس؟").
+ * the honest report card. An in-progress session survives reloads, closing
+ * the tab and an early Finish via localStorage ("استكمل الدرس؟"; FR-204,
+ * lib/lesson-resume.ts).
  */
 
 /**
@@ -236,26 +245,9 @@ function PassageExcerptInline({
   return <PassageExcerptCard passage={passage} excerpt={excerpt} />;
 }
 
-/* ---------------- session persistence (sessionStorage) ---------------- */
+/* ---------------- session persistence (localStorage, FR-204) ---------------- */
 
-const SAVE_VERSION = 1;
-
-interface SavedSession {
-  v: number;
-  sid: string;
-  messages: ChatMsg[];
-  board: BoardItem[];
-  focusKey: string | null;
-  covered: string[];
-  at: number;
-}
-
-// Scoped by STUDENT as well as mode+lesson: without the id, switching the
-// demo student and opening the same lesson resumed the previous student's
-// transcript (and inherited their server-side turn count) — found by the
-// release review, 2026-07-30.
-const storeKey = (mode: LessonMode, slug: string, studentId: number) =>
-  `ainext-lesson:${mode}:${slug}:s${studentId}`;
+type SavedSession = SavedLesson<ChatMsg, BoardItem>;
 
 /* Defensive readers for `{{widget:…}}` payloads. The directives are authored by
    a model, so every field is untrusted: a malformed payload must render nothing
@@ -363,24 +355,16 @@ export function LessonSession({
   useEffect(() => {
     let saved: SavedSession | null = null;
     try {
-      const raw = sessionStorage.getItem(storeKey(mode, lesson.slug, lesson.studentId));
-      if (raw) {
-        const j = JSON.parse(raw) as SavedSession;
-        if (
-          j &&
-          j.v === SAVE_VERSION &&
-          typeof j.sid === "string" &&
-          Array.isArray(j.messages) &&
-          j.messages.some((m) => m.role === "assistant" && m.text)
-        ) {
-          saved = j;
-        }
-      }
+      const key = storeKey(mode, lesson.slug, lesson.studentId);
+      const raw = localStorage.getItem(key);
+      saved = parseSaved(raw, Date.now()) as SavedSession | null;
+      // expired or corrupt — don't leave it lying on a shared device
+      if (raw && !saved) localStorage.removeItem(key);
     } catch {
-      /* corrupt save — start fresh */
+      /* storage unavailable — start fresh */
     }
     setBoot(saved ? { state: "prompt", saved } : { state: "ready", seed: null });
-  }, [mode, lesson.slug]);
+  }, [mode, lesson.slug, lesson.studentId]);
 
   const resumeSaved = useCallback((saved: SavedSession) => {
     const restoredBoard = Array.isArray(saved.board) ? saved.board : [];
@@ -396,12 +380,12 @@ export function LessonSession({
 
   const startFresh = useCallback(() => {
     try {
-      sessionStorage.removeItem(storeKey(mode, lesson.slug, lesson.studentId));
+      localStorage.removeItem(storeKey(mode, lesson.slug, lesson.studentId));
     } catch {
       /* noop */
     }
     setBoot({ state: "ready", seed: null });
-  }, [mode, lesson.slug]);
+  }, [mode, lesson.slug, lesson.studentId]);
 
   /* ---------------- sealed passages on the board ---------------- */
 
@@ -472,11 +456,14 @@ export function LessonSession({
   focusKeyRef.current = focusKey;
   const coveredRef = useRef(covered);
   coveredRef.current = covered;
+  const readyRef = useRef(readyToFinish);
+  readyRef.current = readyToFinish;
   const sessionIdRef = useRef<string | undefined>(sessionId);
   sessionIdRef.current = sessionId;
 
-  const doSave = useCallback(() => {
-    if (finishing.current || !sessionIdRef.current) return;
+  /** Write the save now. `endedEarly` is the one write Finish itself makes. */
+  const writeSave = useCallback((endedEarly?: boolean) => {
+    if (!sessionIdRef.current) return;
     const messages = msgsRef.current
       .filter((m) => !m.streaming)
       .map((m) => {
@@ -493,15 +480,21 @@ export function LessonSession({
         focusKey: focusKeyRef.current,
         covered: coveredRef.current,
         at: Date.now(),
+        ...(endedEarly ? { endedEarly: true } : {}),
       };
-      sessionStorage.setItem(
+      localStorage.setItem(
         storeKey(mode, lesson.slug, lesson.studentId),
         JSON.stringify(saved)
       );
     } catch {
       /* storage full/unavailable — resume is best-effort */
     }
-  }, [mode, lesson.slug]);
+  }, [mode, lesson.slug, lesson.studentId]);
+
+  const doSave = useCallback(() => {
+    if (finishing.current) return;
+    writeSave();
+  }, [writeSave]);
 
   const scheduleSave = useCallback(() => {
     if (saveTimer.current) return; // throttle: at most one write per 900ms
@@ -575,6 +568,19 @@ export function LessonSession({
 
   const finish = useCallback(async () => {
     if (finishing.current) return;
+    // Finishing before the lesson is over is a STOP, not an ending (FR-204):
+    // she still gets her report, but her place is kept for next time and the
+    // server leaves the sitting open rather than recording it as completed.
+    const early = isEarlyFinish({
+      readyToFinish: readyRef.current,
+      coveredCount: coveredRef.current.length,
+      loCount: lesson.los.length,
+    });
+    if (saveTimer.current) {
+      clearTimeout(saveTimer.current);
+      saveTimer.current = null;
+    }
+    if (early) writeSave(true);
     finishing.current = true;
     stopSpeaking();
     setPhase("rating");
@@ -590,6 +596,7 @@ export function LessonSession({
           lesson: lesson.slug,
           transcript,
           turns: turnsRef.current,
+          early,
         }),
       });
       if (!res.ok) throw new Error(`API ${res.status}`);
@@ -597,11 +604,14 @@ export function LessonSession({
         check: UnderstandingCheck;
         costUsd: number;
       };
-      // the session is complete — a finished lesson never offers a resume
-      try {
-        sessionStorage.removeItem(storeKey(mode, lesson.slug, lesson.studentId));
-      } catch {
-        /* noop */
+      // a lesson that is over never offers a resume; an early stop keeps the
+      // save written above, so the next visit offers Continue / Start over
+      if (!early) {
+        try {
+          localStorage.removeItem(storeKey(mode, lesson.slug, lesson.studentId));
+        } catch {
+          /* noop */
+        }
       }
       setCheck(j.check);
       setRatingCost(j.costUsd);
@@ -610,7 +620,7 @@ export function LessonSession({
       finishing.current = false;
       setPhase("error");
     }
-  }, [mode, lesson.slug]);
+  }, [mode, lesson.slug, lesson.studentId, lesson.los.length, writeSave]);
 
   // student-initiated only (the header Finish button) — the timer is just a
   // double-tap guard now that nothing calls this automatically.
@@ -1276,6 +1286,12 @@ export function LessonSession({
       {boot.state === "prompt" ? (
         <ResumePrompt
           rtl={rtl}
+          stoppedAt={
+            boot.saved.endedEarly
+              ? resumeStep(boot.saved.covered ?? [], lesson.los.length)
+              : null
+          }
+          stepCount={lesson.los.length}
           onResume={() => resumeSaved(boot.saved)}
           onFresh={startFresh}
         />
@@ -1484,10 +1500,15 @@ export function LessonSession({
 /** A saved session exists for this lesson — resume or start over. */
 function ResumePrompt({
   rtl,
+  stoppedAt,
+  stepCount,
   onResume,
   onFresh,
 }: {
   rtl: boolean;
+  /** the step she pressed Finish on, or null if she just left */
+  stoppedAt: number | null;
+  stepCount: number;
   onResume: () => void;
   onFresh: () => void;
 }) {
@@ -1501,9 +1522,13 @@ function ResumePrompt({
           dir={rtl ? "rtl" : "ltr"}
           className="mt-2 text-[1rem] text-ink-soft"
         >
-          {rtl
-            ? "كان معاك درس شغّال هنا قبل كده — تحب تكمّل من حيث وقفت؟"
-            : "You had a lesson running here before — pick up where you left off?"}
+          {stoppedAt !== null
+            ? rtl
+              ? `وقفت عند خطوة ${arDigits(stoppedAt)} من ${arDigits(stepCount)} — تحب تكمّل من حيث وقفت؟`
+              : `You stopped at step ${stoppedAt} of ${stepCount} — pick up where you left off?`
+            : rtl
+              ? "كان معاك درس شغّال هنا قبل كده — تحب تكمّل من حيث وقفت؟"
+              : "You had a lesson running here before — pick up where you left off?"}
         </p>
         <div className="mt-5 grid gap-2">
           <button
