@@ -1,0 +1,958 @@
+{
+  "schema": "book-record",
+  "schema_version": 1,
+  "source_document": {
+    "title": "Everything Maths, Grade 10 Mathematics, Version 1.1 CAPS (learner's book)",
+    "publisher": "Siyavula",
+    "edition": "Version 1.1 CAPS",
+    "licence": "CC BY-ND 4.0 (copyright page, PDF p.3). The EPUB file name says 'CC-BY', but the printed licence is NoDerivatives. Open question for Samuel: what does ND allow for extracted claims, generated questions and paraphrased content?",
+    "attribution": "Everything Maths Grade 10, Siyavula Education, www.everythingmaths.co.za",
+    "sha256": "c85561eca415a2c4288388f313e0a62a5a25fc8a21c12b7351e13866cfe4453c",
+    "pages_total": 535,
+    "page_offset": 11,
+    "text_layer": "present, but recurring-decimal dots and bars are lost; page images checked for notation",
+    "course_id": "course:us-g10-math-en",
+    "file_path": "docs/Source/Gr10_Mathematics_Learner_Eng_v11.pdf"
+  },
+  "lesson": {
+    "slug": "g10-1-2",
+    "syllabus_ref": "1.2 The real number system; 1.3 Rational and irrational numbers",
+    "title": "The real number system; Rational and irrational numbers",
+    "module": "Chapter 1 Algebraic expressions",
+    "pages": [
+      6,
+      12
+    ],
+    "module_intro": {
+      "source_page": 6,
+      "note": "1.1 Introduction: motivational text and a tally-stick photo; previews the chapter (real numbers, surds, rounding, factorisation). No teaching items."
+    },
+    "notes": "The exercise mixes objectives within single questions (Q7 spans obj-1 and obj-2). Each exercise is mapped to its main objective; verifiers may split parts.",
+    "provenance": {
+      "by": "Claude, from the PDF text layer and page images, 2026-10-07"
+    }
+  },
+  "items": [
+    {
+      "id": "g10-1-2:link-1",
+      "type": "linking_text",
+      "source_page": 6,
+      "quote": "we will begin by revising the real number system",
+      "text": "Chapter plan: revise the real number system, then surds and rounding, then factorisation.",
+      "provenance": {
+        "by": "Claude, from the PDF text layer and page images, 2026-10-07"
+      }
+    },
+    {
+      "id": "g10-1-2:fig-sets",
+      "type": "figure",
+      "lo": "g10-1-2:obj-1",
+      "source_page": 6,
+      "quote": "Real R",
+      "caption": "Nested diagram of the real numbers: N inside N0 inside Z inside Q, with Q' (irrational) beside Q, all inside R.",
+      "provenance": {
+        "by": "Claude, from the PDF text layer and page images, 2026-10-07"
+      }
+    },
+    {
+      "id": "g10-1-2:def-n",
+      "type": "definition",
+      "lo": "g10-1-2:obj-1",
+      "source_page": 6,
+      "quote": "N: natural numbers are {1; 2; 3; . . .}",
+      "claim": "Natural numbers N = {1; 2; 3; ...}.",
+      "notation": {
+        "printed": "{1; 2; 3; ...}",
+        "normalised": "{1, 2, 3, ...}"
+      },
+      "provenance": {
+        "by": "Claude, from the PDF text layer and page images, 2026-10-07"
+      }
+    },
+    {
+      "id": "g10-1-2:def-n0",
+      "type": "definition",
+      "lo": "g10-1-2:obj-1",
+      "source_page": 6,
+      "quote": "N0: whole numbers are {0; 1; 2; 3; . . .}",
+      "claim": "Whole numbers N0 = {0; 1; 2; 3; ...}.",
+      "provenance": {
+        "by": "Claude, from the PDF text layer and page images, 2026-10-07"
+      }
+    },
+    {
+      "id": "g10-1-2:def-z",
+      "type": "definition",
+      "lo": "g10-1-2:obj-1",
+      "source_page": 6,
+      "quote": "Z: integers are {. . . ; −3; −2; −1; 0; 1; 2; 3; . . .}",
+      "claim": "Integers Z = {...; -3; -2; -1; 0; 1; 2; 3; ...}.",
+      "provenance": {
+        "by": "Claude, from the PDF text layer and page images, 2026-10-07"
+      }
+    },
+    {
+      "id": "g10-1-2:note-nonreal",
+      "type": "caution",
+      "lo": "g10-1-2:obj-1",
+      "source_page": 7,
+      "quote": "Not all numbers are real numbers.",
+      "claim": "The square root of a negative number is non-real (imaginary), e.g. √−1, √−28, √−5.",
+      "provenance": {
+        "by": "Claude, from the PDF text layer and page images, 2026-10-07"
+      }
+    },
+    {
+      "id": "g10-1-2:def-q",
+      "type": "definition",
+      "lo": "g10-1-2:obj-2",
+      "source_page": 7,
+      "quote": "A rational number (Q) is any number which can be written as",
+      "claim": "A rational number is any number a/b with a and b integers and b ≠ 0.",
+      "formula": "$\\frac{a}{b},\\ a,b \\in \\mathbb{Z},\\ b \\neq 0$",
+      "examples": [
+        "10/1",
+        "21/7",
+        "-1/-3",
+        "10/20",
+        "-3/6"
+      ],
+      "provenance": {
+        "by": "Claude, from the PDF text layer and page images, 2026-10-07"
+      }
+    },
+    {
+      "id": "g10-1-2:rule-int-rational",
+      "type": "rule",
+      "lo": "g10-1-2:obj-2",
+      "source_page": 7,
+      "quote": "all integers are rational numbers",
+      "claim": "All integers are rational, because they can be written with denominator 1.",
+      "provenance": {
+        "by": "Claude, from the PDF text layer and page images, 2026-10-07"
+      }
+    },
+    {
+      "id": "g10-1-2:def-qprime",
+      "type": "definition",
+      "lo": "g10-1-2:obj-2",
+      "source_page": 7,
+      "quote": "Irrational numbers (Q′) are numbers that cannot be written as a fraction",
+      "claim": "Irrational numbers cannot be written as a fraction with integer numerator and denominator.",
+      "examples": [
+        "√2",
+        "√3",
+        "∛4",
+        "π",
+        "(1 + √5)/2"
+      ],
+      "provenance": {
+        "by": "Claude, from the PDF text layer and page images, 2026-10-07"
+      }
+    },
+    {
+      "id": "g10-1-2:caution-zero",
+      "type": "caution",
+      "lo": "g10-1-2:obj-1",
+      "source_page": 7,
+      "quote": "when the denominator of a fraction is zero then the fraction is undefined",
+      "claim": "A fraction with denominator zero is undefined.",
+      "provenance": {
+        "by": "Claude, from the PDF text layer and page images, 2026-10-07"
+      }
+    },
+    {
+      "id": "g10-1-2:rule-decimals",
+      "type": "rule",
+      "lo": "g10-1-2:obj-3",
+      "source_page": 7,
+      "quote": "not all decimal numbers are rational numbers",
+      "claim": "Every rational number can be written as a decimal, but not every decimal is rational. Rational decimals terminate (4/10 = 0,4), repeat one digit (1/3 = 0,3̇), or repeat a block (2/11 = 0,(18) with a bar).",
+      "provenance": {
+        "by": "Claude, from the PDF text layer and page images, 2026-10-07"
+      }
+    },
+    {
+      "id": "g10-1-2:notation-comma",
+      "type": "convention",
+      "lo": "g10-1-2:obj-3",
+      "source_page": 7,
+      "quote": "You may see a full stop instead of a comma",
+      "claim": "The book writes decimals with a comma (0,4); a full stop (0.4) is also accepted.",
+      "notation": {
+        "printed": "0,4",
+        "normalised": "0.4",
+        "notes": "The book says a full stop may be seen instead of the comma."
+      },
+      "provenance": {
+        "by": "Claude, from the PDF text layer and page images, 2026-10-07"
+      }
+    },
+    {
+      "id": "g10-1-2:notation-recurring",
+      "type": "convention",
+      "lo": "g10-1-2:obj-3",
+      "source_page": 8,
+      "quote": "You can use a dot or a bar over the repeated digits",
+      "claim": "A dot or a bar over repeated digits marks a recurring decimal; a bar over several digits means all of them recur. Dot and bar are equivalent: 0,3̇ = 0,3̄ = 0,333...",
+      "notation": {
+        "printed": [
+          "0,3̇",
+          "0,3̄",
+          "0,(18) with bar",
+          "5,4̇3̇2̇ (dot on each recurring digit)"
+        ],
+        "normalised": "repeating block marked explicitly, e.g. 0.(18)"
+      },
+      "provenance": {
+        "by": "Claude, from the PDF text layer and page images, 2026-10-07"
+      }
+    },
+    {
+      "id": "g10-1-2:method-identify",
+      "type": "rule",
+      "lo": "g10-1-2:obj-2",
+      "source_page": 8,
+      "quote": "first write the number in decimal form",
+      "claim": "To decide rational or irrational: write it as a decimal. Terminating means rational; otherwise look for a repeated pattern; no repeated pattern means irrational.",
+      "provenance": {
+        "by": "Claude, from the PDF text layer and page images, 2026-10-07"
+      }
+    },
+    {
+      "id": "g10-1-2:note-rounding",
+      "type": "caution",
+      "lo": "g10-1-2:obj-2",
+      "source_page": 8,
+      "quote": "Rounding off an irrational number makes the number a rational number",
+      "claim": "Rounding an irrational number gives a rational approximation of it.",
+      "provenance": {
+        "by": "Claude, from the PDF text layer and page images, 2026-10-07"
+      }
+    },
+    {
+      "id": "g10-1-2:we-1",
+      "type": "worked_example",
+      "lo": "g10-1-2:obj-2",
+      "source_page": 8,
+      "quote": "Which of the following are not rational numbers?",
+      "stem": "Worked example 1: which are not rational?",
+      "parts": [
+        {
+          "label": "1",
+          "stem": "π = 3,14159265358979323846...",
+          "answer": "irrational: does not terminate, no repeated pattern",
+          "solution_provenance": "book_worked"
+        },
+        {
+          "label": "2",
+          "stem": "1,4",
+          "answer": "rational: terminates",
+          "solution_provenance": "book_worked"
+        },
+        {
+          "label": "3",
+          "stem": "1,618033989...",
+          "answer": "irrational: does not terminate, no repeated pattern",
+          "solution_provenance": "book_worked"
+        },
+        {
+          "label": "4",
+          "stem": "100",
+          "answer": "rational: all integers are rational",
+          "solution_provenance": "book_worked"
+        },
+        {
+          "label": "5",
+          "stem": "1,7373737373...",
+          "answer": "rational: repeated pattern",
+          "solution_provenance": "book_worked"
+        },
+        {
+          "label": "6",
+          "stem": "0,02 with a bar over 02",
+          "answer": "rational: repeated pattern",
+          "solution_provenance": "book_worked",
+          "notes": "The text layer drops the bar; without it the item reads as a terminating decimal."
+        }
+      ],
+      "provenance": {
+        "by": "Claude, from the PDF text layer and page images, 2026-10-07"
+      }
+    },
+    {
+      "id": "g10-1-2:method-terminating",
+      "type": "rule",
+      "lo": "g10-1-2:obj-4",
+      "source_page": 8,
+      "quote": "Each digit after the decimal point is a fraction with a denominator in increasing powers of 10.",
+      "claim": "Digits after the decimal comma are tenths, hundredths, thousandths, ..., so 0,1 = 1/10, 0,01 = 1/100, 0,001 = 1/1000.",
+      "provenance": {
+        "by": "Claude, from the PDF text layer and page images, 2026-10-07"
+      }
+    },
+    {
+      "id": "g10-1-2:example-10589",
+      "type": "worked_example",
+      "lo": "g10-1-2:obj-4",
+      "source_page": 9,
+      "pages": [
+        8,
+        9
+      ],
+      "quote": "10,589 = 10 + 5/10 + 8/100 + 9/1000",
+      "stem": "Inline example: 10,589 = 10 + 5/10 + 8/100 + 9/1000 = 10589/1000.",
+      "answer": "10589/1000",
+      "solution_provenance": "book_worked",
+      "provenance": {
+        "by": "Claude, from the PDF text layer and page images, 2026-10-07"
+      }
+    },
+    {
+      "id": "g10-1-2:link-recurring",
+      "type": "linking_text",
+      "lo": "g10-1-2:obj-5",
+      "source_page": 9,
+      "quote": "When the decimal is a recurring decimal, a bit more work is needed",
+      "text": "The book's bridge from terminating to recurring decimals.",
+      "provenance": {
+        "by": "Claude, from the PDF text layer and page images, 2026-10-07"
+      }
+    },
+    {
+      "id": "g10-1-2:we-2",
+      "type": "worked_example",
+      "lo": "g10-1-2:obj-5",
+      "source_page": 9,
+      "quote": "Write 0,˙3 in the form a/b",
+      "stem": "Worked example 2: write 0,3̇ as a/b.",
+      "solution": [
+        "Let x = 0,33333...",
+        "10x = 3,33333...",
+        "Subtract: 9x = 3",
+        "x = 3/9 = 1/3"
+      ],
+      "answer": "1/3",
+      "solution_provenance": "book_worked",
+      "provenance": {
+        "by": "Claude, from the PDF text layer and page images, 2026-10-07"
+      }
+    },
+    {
+      "id": "g10-1-2:we-3",
+      "type": "worked_example",
+      "lo": "g10-1-2:obj-5",
+      "source_page": 10,
+      "quote": "as a rational fraction",
+      "stem": "Worked example 3: write 5,4̇3̇2̇ as a rational fraction.",
+      "solution": [
+        "x = 5,432432432...",
+        "1000x = 5432,432432432...",
+        "Subtract: 999x = 5427",
+        "x = 5427/999 = 201/37 = 5 16/37"
+      ],
+      "answer": "201/37 (= 5 16/37)",
+      "solution_provenance": "book_worked",
+      "provenance": {
+        "by": "Claude, from the PDF text layer and page images, 2026-10-07"
+      }
+    },
+    {
+      "id": "g10-1-2:rule-power",
+      "type": "rule",
+      "lo": "g10-1-2:obj-5",
+      "source_page": 10,
+      "quote": "if you have one digit recurring, then multiply by 10",
+      "claim": "One recurring digit: multiply by 10; two: by 100; three: by 1000; and so on.",
+      "provenance": {
+        "by": "Claude, from the PDF text layer and page images, 2026-10-07"
+      }
+    },
+    {
+      "id": "g10-1-2:rule-irrational-decimal",
+      "type": "rule",
+      "lo": "g10-1-2:obj-2",
+      "source_page": 10,
+      "quote": "Not all decimal numbers can be written as rational numbers. Why?",
+      "claim": "Irrational decimals such as √2 = 1,4142135... neither terminate nor repeat, so they cannot be written as integer over integer. The book answers its own 'Why?' here.",
+      "provenance": {
+        "by": "Claude, from the PDF text layer and page images, 2026-10-07"
+      }
+    },
+    {
+      "id": "g10-1-2:ex-1",
+      "type": "exercise",
+      "lo": "g10-1-2:obj-1",
+      "source_page": 10,
+      "pages": [
+        10,
+        11
+      ],
+      "quote": "The figure here shows the Venn diagram for the special sets",
+      "text": "Exercise 1-1 Q1: Venn diagram of N, N0, Z inside X.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "$-\\frac{12}{3}$",
+          "code": "2DBM"
+        },
+        {
+          "label": "b",
+          "stem": "Which is true: every integer is natural / every natural number is whole / no decimals in the whole numbers",
+          "code": "2DBM",
+          "notes": "Statement iii is arguable; the book says only one is true."
+        }
+      ],
+      "provenance": {
+        "by": "Claude, from the PDF text layer and page images, 2026-10-07"
+      }
+    },
+    {
+      "id": "g10-1-2:ex-2",
+      "type": "exercise",
+      "lo": "g10-1-2:obj-1",
+      "source_page": 11,
+      "quote": "Where does the number −1/2 belong in the diagram?",
+      "text": "Exercise 1-1 Q2: same Venn diagram.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "$-\\frac{1}{2}$",
+          "code": "2DBN"
+        },
+        {
+          "label": "b",
+          "stem": "Which is true: every integer is natural / every whole number is an integer / no decimals in the whole numbers",
+          "code": "2DBN"
+        }
+      ],
+      "provenance": {
+        "by": "Claude, from the PDF text layer and page images, 2026-10-07"
+      }
+    },
+    {
+      "id": "g10-1-2:ex-3",
+      "type": "exercise",
+      "lo": "g10-1-2:obj-1",
+      "source_page": 11,
+      "quote": "State whether the following numbers are real, non-real or undefined.",
+      "text": "Exercise 1-1 Q3: real, non-real or undefined.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "$-\\sqrt{3}$",
+          "code": "2DBP"
+        },
+        {
+          "label": "b",
+          "stem": "$\\frac{0}{\\sqrt{2}}$",
+          "code": "2DBQ"
+        },
+        {
+          "label": "c",
+          "stem": "$\\sqrt{-9}$",
+          "code": "2DBR"
+        },
+        {
+          "label": "d",
+          "stem": "$\\frac{-\\sqrt{7}}{0}$",
+          "code": "2DBS"
+        },
+        {
+          "label": "e",
+          "stem": "$-\\sqrt{-16}$",
+          "code": "2DBT"
+        },
+        {
+          "label": "f",
+          "stem": "$\\sqrt{2}$",
+          "code": "2DBV"
+        }
+      ],
+      "provenance": {
+        "by": "Claude, from the PDF text layer and page images, 2026-10-07"
+      }
+    },
+    {
+      "id": "g10-1-2:ex-4",
+      "type": "exercise",
+      "lo": "g10-1-2:obj-2",
+      "source_page": 11,
+      "quote": "State whether the following numbers are rational or irrational.",
+      "text": "Exercise 1-1 Q4: rational or irrational; if rational, natural, whole or integer?",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "$-\\frac{1}{3}$",
+          "code": "2DBX"
+        },
+        {
+          "label": "b",
+          "stem": "0,651268962154862...",
+          "code": "2DBY"
+        },
+        {
+          "label": "c",
+          "stem": "$\\frac{\\sqrt{9}}{3}$",
+          "code": "2DC2"
+        },
+        {
+          "label": "d",
+          "stem": "$\\pi^2$",
+          "code": "2DC3"
+        },
+        {
+          "label": "e",
+          "stem": "$\\pi^4$",
+          "code": "2DC4"
+        },
+        {
+          "label": "f",
+          "stem": "$\\sqrt[3]{19}$",
+          "code": "2DC5"
+        },
+        {
+          "label": "g",
+          "stem": "$\\left(\\sqrt[3]{1}\\right)^7$",
+          "code": "2DC6"
+        },
+        {
+          "label": "h",
+          "stem": "$\\pi + 3$",
+          "code": "2DBZ"
+        },
+        {
+          "label": "i",
+          "stem": "$\\pi + 0{,}858408346$",
+          "code": "2DBW"
+        }
+      ],
+      "provenance": {
+        "by": "Claude, from the PDF text layer and page images, 2026-10-07"
+      }
+    },
+    {
+      "id": "g10-1-2:ex-5",
+      "type": "exercise",
+      "lo": "g10-1-2:obj-2",
+      "source_page": 11,
+      "quote": "If a is an integer, b is an integer and c is irrational",
+      "text": "Exercise 1-1 Q5: which are rational?",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "$\\frac{5}{6}$",
+          "code": "2DC7"
+        },
+        {
+          "label": "b",
+          "stem": "$\\frac{a}{3}$",
+          "code": "2DC7"
+        },
+        {
+          "label": "c",
+          "stem": "$\\frac{-2}{b}$",
+          "code": "2DC7",
+          "notes": "The book does not say b ≠ 0. Check the online answer."
+        },
+        {
+          "label": "d",
+          "stem": "$\\frac{1}{c}$",
+          "code": "2DC7"
+        }
+      ],
+      "provenance": {
+        "by": "Claude, from the PDF text layer and page images, 2026-10-07"
+      }
+    },
+    {
+      "id": "g10-1-2:ex-6",
+      "type": "exercise",
+      "lo": "g10-1-2:obj-2",
+      "source_page": 11,
+      "quote": "For each of the following values of a state whether a/14 is rational",
+      "text": "Exercise 1-1 Q6: is a/14 rational or irrational?",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "a = 1",
+          "code": "2DC8"
+        },
+        {
+          "label": "b",
+          "stem": "a = -10",
+          "code": "2DC8"
+        },
+        {
+          "label": "c",
+          "stem": "a = √2",
+          "code": "2DC8"
+        },
+        {
+          "label": "d",
+          "stem": "a = 2,1",
+          "code": "2DC8"
+        }
+      ],
+      "provenance": {
+        "by": "Claude, from the PDF text layer and page images, 2026-10-07"
+      }
+    },
+    {
+      "id": "g10-1-2:ex-7",
+      "type": "exercise",
+      "lo": "g10-1-2:obj-1",
+      "source_page": 11,
+      "quote": "Consider the following list of numbers:",
+      "text": "Exercise 1-1 Q7: classify the list −3; 0; √−1; −8 4/5; −√8; 22/7; 14/0; 7; 1,(34 with bar); 3,3231089...; 3 + √2; 9 7/10; π; 11.",
+      "parts": [
+        {
+          "label": "a natural"
+        },
+        {
+          "label": "b irrational"
+        },
+        {
+          "label": "c non-real"
+        },
+        {
+          "label": "d rational"
+        },
+        {
+          "label": "e integers"
+        },
+        {
+          "label": "f undefined"
+        }
+      ],
+      "code": "2DC9",
+      "provenance": {
+        "by": "Claude, from the PDF text layer and page images, 2026-10-07"
+      }
+    },
+    {
+      "id": "g10-1-2:ex-8",
+      "type": "exercise",
+      "lo": "g10-1-2:obj-2",
+      "source_page": 12,
+      "quote": "write the next three digits and",
+      "text": "Exercise 1-1 Q8: write the next three digits; rational or irrational?",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "1,15̇ (dot on 5)",
+          "code": "2DCB"
+        },
+        {
+          "label": "b",
+          "stem": "2,121314...",
+          "code": "2DCC"
+        },
+        {
+          "label": "c",
+          "stem": "1,242244246...",
+          "code": "2DCD"
+        },
+        {
+          "label": "d",
+          "stem": "3,324354...",
+          "code": "2DCF"
+        },
+        {
+          "label": "e",
+          "stem": "3,32435̇4̇ (dots on 5 and 4)",
+          "code": "2DCG"
+        }
+      ],
+      "provenance": {
+        "by": "Claude, from the PDF text layer and page images, 2026-10-07"
+      }
+    },
+    {
+      "id": "g10-1-2:ex-9",
+      "type": "exercise",
+      "lo": "g10-1-2:obj-4",
+      "source_page": 12,
+      "quote": "Write the following as fractions:",
+      "text": "Exercise 1-1 Q9: terminating decimals as fractions.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "0,1",
+          "code": "2DCH"
+        },
+        {
+          "label": "b",
+          "stem": "0,12",
+          "code": "2DCJ"
+        },
+        {
+          "label": "c",
+          "stem": "0,58",
+          "code": "2DCK"
+        },
+        {
+          "label": "d",
+          "stem": "0,2589",
+          "code": "2DCM"
+        }
+      ],
+      "provenance": {
+        "by": "Claude, from the PDF text layer and page images, 2026-10-07"
+      }
+    },
+    {
+      "id": "g10-1-2:ex-10",
+      "type": "exercise",
+      "lo": "g10-1-2:obj-3",
+      "source_page": 12,
+      "quote": "Write the following using the recurring decimal notation:",
+      "text": "Exercise 1-1 Q10: write with recurring notation.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "0,1111111...",
+          "code": "2DCN"
+        },
+        {
+          "label": "b",
+          "stem": "0,1212121212...",
+          "code": "2DCP"
+        },
+        {
+          "label": "c",
+          "stem": "0,123123123123...",
+          "code": "2DCQ"
+        },
+        {
+          "label": "d",
+          "stem": "0,11414541454145...",
+          "code": "2DCR",
+          "notes": "Non-recurring part 11, then 4145 repeats. Check the online answer."
+        }
+      ],
+      "provenance": {
+        "by": "Claude, from the PDF text layer and page images, 2026-10-07"
+      }
+    },
+    {
+      "id": "g10-1-2:ex-11",
+      "type": "exercise",
+      "lo": "g10-1-2:obj-3",
+      "source_page": 12,
+      "quote": "Write the following in decimal form, using the recurring decimal notation:",
+      "text": "Exercise 1-1 Q11: fractions to recurring decimals.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "$\\frac{25}{45}$",
+          "code": "2DCS"
+        },
+        {
+          "label": "b",
+          "stem": "$\\frac{10}{18}$",
+          "code": "2DCT"
+        },
+        {
+          "label": "c",
+          "stem": "$\\frac{7}{33}$",
+          "code": "2DCV"
+        },
+        {
+          "label": "d",
+          "stem": "$\\frac{2}{3}$",
+          "code": "2DCW"
+        },
+        {
+          "label": "e",
+          "stem": "$1\\frac{3}{11}$",
+          "code": "2DCX"
+        },
+        {
+          "label": "f",
+          "stem": "$4\\frac{5}{6}$",
+          "code": "2DCY"
+        },
+        {
+          "label": "g",
+          "stem": "$2\\frac{1}{9}$",
+          "code": "2DCZ"
+        }
+      ],
+      "provenance": {
+        "by": "Claude, from the PDF text layer and page images, 2026-10-07"
+      }
+    },
+    {
+      "id": "g10-1-2:ex-12",
+      "type": "exercise",
+      "lo": "g10-1-2:obj-5",
+      "source_page": 12,
+      "quote": "Write the following decimals in fractional form:",
+      "text": "Exercise 1-1 Q12: recurring decimals to fractions.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "0,5̇",
+          "code": "2DD2"
+        },
+        {
+          "label": "b",
+          "stem": "0,63̇ (dot on 3 only)",
+          "code": "2DD3"
+        },
+        {
+          "label": "c",
+          "stem": "0,4̇",
+          "code": "2DD4"
+        },
+        {
+          "label": "d",
+          "stem": "5,(31) with bar",
+          "code": "2DD5"
+        },
+        {
+          "label": "e",
+          "stem": "4,(93) with bar",
+          "code": "2DD6"
+        },
+        {
+          "label": "f",
+          "stem": "3,(93) with bar",
+          "code": "2DD7"
+        }
+      ],
+      "provenance": {
+        "by": "Claude, from the PDF text layer and page images, 2026-10-07"
+      }
+    },
+    {
+      "id": "g10-1-2:resources",
+      "type": "linking_text",
+      "source_page": 7,
+      "quote": "See video: 2DBH",
+      "text": "Videos 2DBH, 2DBJ, 2DBK and online practice. Out of scope for extraction; listed so they are not mistaken for missing content.",
+      "provenance": {
+        "by": "Claude, from the PDF text layer and page images, 2026-10-07"
+      }
+    },
+    {
+      "id": "g10-1-2:prior",
+      "type": "prior_knowledge",
+      "source_page": 6,
+      "quote": "revising the real number system",
+      "text": "Number sets, fractions and decimals from earlier grades; the section is framed as revision.",
+      "provenance": {
+        "by": "Claude, from the PDF text layer and page images, 2026-10-07"
+      }
+    }
+  ],
+  "learning_objectives": [
+    {
+      "id": "g10-1-2:obj-1",
+      "provenance": {
+        "by": "Claude, from the PDF text layer and page images, 2026-10-07"
+      },
+      "label": "Classify numbers into sets",
+      "description": "Classify numbers as natural, whole, integer, rational, irrational, non-real or undefined, and place them in the number-set diagram.",
+      "order_in_parent": 1,
+      "evidence": [
+        "g10-1-2:fig-sets",
+        "g10-1-2:def-n",
+        "g10-1-2:def-n0",
+        "g10-1-2:def-z",
+        "g10-1-2:note-nonreal",
+        "g10-1-2:caution-zero",
+        "g10-1-2:ex-1",
+        "g10-1-2:ex-2",
+        "g10-1-2:ex-3",
+        "g10-1-2:ex-7"
+      ]
+    },
+    {
+      "id": "g10-1-2:obj-2",
+      "provenance": {
+        "by": "Claude, from the PDF text layer and page images, 2026-10-07"
+      },
+      "label": "Rational or irrational",
+      "description": "Determine whether a number is rational or irrational, using the definitions and its decimal form.",
+      "order_in_parent": 2,
+      "evidence": [
+        "g10-1-2:def-q",
+        "g10-1-2:def-qprime",
+        "g10-1-2:rule-int-rational",
+        "g10-1-2:method-identify",
+        "g10-1-2:rule-irrational-decimal",
+        "g10-1-2:we-1",
+        "g10-1-2:ex-4",
+        "g10-1-2:ex-5",
+        "g10-1-2:ex-6",
+        "g10-1-2:ex-8"
+      ]
+    },
+    {
+      "id": "g10-1-2:obj-3",
+      "provenance": {
+        "by": "Claude, from the PDF text layer and page images, 2026-10-07"
+      },
+      "label": "Recurring decimal notation",
+      "description": "Write recurring decimals with dot or bar notation, and write fractions as recurring decimals.",
+      "order_in_parent": 3,
+      "evidence": [
+        "g10-1-2:rule-decimals",
+        "g10-1-2:notation-recurring",
+        "g10-1-2:notation-comma",
+        "g10-1-2:ex-10",
+        "g10-1-2:ex-11"
+      ]
+    },
+    {
+      "id": "g10-1-2:obj-4",
+      "provenance": {
+        "by": "Claude, from the PDF text layer and page images, 2026-10-07"
+      },
+      "label": "Terminating decimals to fractions",
+      "description": "Convert terminating decimals to fractions using powers of 10.",
+      "order_in_parent": 4,
+      "evidence": [
+        "g10-1-2:method-terminating",
+        "g10-1-2:example-10589",
+        "g10-1-2:ex-9"
+      ]
+    },
+    {
+      "id": "g10-1-2:obj-5",
+      "provenance": {
+        "by": "Claude, from the PDF text layer and page images, 2026-10-07"
+      },
+      "label": "Recurring decimals to fractions",
+      "description": "Convert recurring decimals to fractions by multiplying by the right power of 10 and subtracting.",
+      "order_in_parent": 5,
+      "evidence": [
+        "g10-1-2:link-recurring",
+        "g10-1-2:we-2",
+        "g10-1-2:we-3",
+        "g10-1-2:rule-power",
+        "g10-1-2:ex-12"
+      ]
+    }
+  ],
+  "provenance": {
+    "by": "Claude, from the PDF text layer and page images, 2026-10-07"
+  },
+  "review": {
+    "status": "draft",
+    "reviewed_by": null,
+    "reviewed_at": null
+  },
+  "open_questions": [
+    "Licence is CC BY-ND 4.0 (no derivatives). What does that permit for extracted claims, generated questions and paraphrases? (Samuel / legal)"
+  ],
+  "history": [
+    "2026-10-08: converted to schema 2 (field names aligned with the extraction data); content unchanged.",
+    "2026-10-08: schema 3: one reviewer; field names aligned with the extraction data (learning_objectives, edges, stem, slug, module); comparisons with today's data removed.",
+    "2026-10-08: schema 4: answer verdicts moved onto the item or part they test (also_correct, wrong_answers); repeats of the book's answer dropped.",
+    "2026-10-08: schema 5: book only. Worked-out answers, wrong answers, misconceptions, prerequisite edges, callbacks and tutor behaviour removed (generated content needs its own review).",
+    "2026-10-08: converted to book record v1, the format proposed for both ground truth and ingestion (items, provenance and review on every record, formulas as $...$)."
+  ]
+}

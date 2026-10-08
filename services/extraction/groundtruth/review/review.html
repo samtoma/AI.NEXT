@@ -1,0 +1,555 @@
+<!doctype html>
+<html lang="en" data-ds="play">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ground-truth review</title>
+<link rel="stylesheet" href="/tokens.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    background: var(--paper); color: var(--ink);
+    font-family: var(--stack-sans), system-ui, sans-serif; font-size: 15px;
+  }
+  header {
+    display: flex; flex-wrap: wrap; gap: 12px; align-items: center;
+    padding: 10px 16px; background: var(--card-warm);
+    border-bottom: var(--play-stroke-sm) solid var(--line);
+  }
+  header h1 { font-size: 17px; margin: 0 8px 0 0; }
+  select, input, textarea, button { font: inherit; color: var(--ink); }
+  select, input, textarea {
+    background: var(--card); border: var(--play-stroke-sm) solid var(--line);
+    border-radius: var(--play-radius-sm); padding: 6px 10px;
+  }
+  input:focus, select:focus, textarea:focus, button:focus-visible { outline: none; box-shadow: var(--noor-focus-ring); }
+  button {
+    background: var(--card); border: var(--play-stroke-sm) solid var(--line);
+    border-radius: var(--play-radius-sm); padding: 6px 12px; cursor: pointer;
+    box-shadow: var(--play-shadow-sm);
+  }
+  button:active { transform: translate(2px, 2px); box-shadow: none; }
+  button:disabled { color: var(--play-disabled-text); border-color: var(--play-disabled-border); box-shadow: none; cursor: not-allowed; }
+  button.confirm { background: var(--noor-progress); color: var(--noor-on-progress); }
+  button.dispute { background: var(--noor-action); color: var(--noor-on-action); }
+  .grow { flex: 1; }
+  .muted { color: var(--ink-soft); }
+  .progress { min-width: 200px; }
+  .bar { height: 10px; background: var(--paper-deep); border: var(--play-stroke-sm) solid var(--line); border-radius: var(--play-radius-pill); overflow: hidden; }
+  .bar > div { height: 100%; background: var(--noor-progress); }
+  main { display: grid; grid-template-columns: 300px minmax(0, 1fr) minmax(0, 1fr); height: calc(100% - 62px); }
+  .pane { overflow: auto; padding: 12px 16px; }
+  #list { border-right: var(--play-stroke-sm) solid var(--line-soft); padding: 8px; }
+  #list h3 { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-faint); margin: 14px 6px 4px; }
+  .rec {
+    display: flex; gap: 8px; align-items: center; width: 100%; text-align: left;
+    padding: 6px 8px; border: 0; border-radius: var(--play-radius-sm); box-shadow: none; background: transparent;
+  }
+  .rec:active { transform: none; }
+  .rec.sel { background: var(--accent-wash); }
+  .rec .t { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; font-size: 13px; }
+  .dot {
+    flex: none; min-width: 26px; text-align: center; font-size: 11px; font-weight: 700;
+    border: var(--play-stroke-sm) solid var(--line); border-radius: var(--play-radius-pill); padding: 1px 4px;
+  }
+  .s-none { background: var(--paper-deep); color: var(--ink); }
+  .s-one { background: var(--card-warm); color: var(--ink); }
+  .s-done { background: var(--noor-progress); color: var(--noor-on-progress); }
+  .s-disp { background: var(--noor-action); color: var(--noor-on-action); }
+  .card {
+    background: var(--card); border: var(--play-stroke) solid var(--line);
+    border-radius: var(--play-radius); box-shadow: var(--play-shadow); padding: 16px; margin-bottom: 16px;
+  }
+  .card h2 { margin: 0 0 4px; font-size: 18px; }
+  .quote { font-size: 17px; background: var(--card-warm); border-radius: var(--play-radius-sm); padding: 8px 12px; margin: 10px 0; }
+  .warn { background: var(--gold-wash); color: var(--play-text-amber-warm); border-radius: var(--play-radius-sm); padding: 8px 12px; margin: 10px 0; }
+  dl { display: grid; grid-template-columns: 140px 1fr; gap: 6px 12px; margin: 0; }
+  dt { color: var(--ink-soft); font-size: 13px; padding-top: 2px; }
+  dd { margin: 0; overflow-wrap: anywhere; }
+  dd ul, dd ol { margin: 0; padding-left: 18px; }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; }
+  th, td { text-align: left; border-bottom: var(--play-stroke-sm) solid var(--line-soft); padding: 4px 6px; vertical-align: top; }
+  .tag { display: inline-block; font-size: 12px; padding: 0 8px; border-radius: var(--play-radius-pill); border: var(--play-stroke-sm) solid var(--line); }
+  a.ref { color: var(--play-text-link); cursor: pointer; text-decoration: underline; }
+  .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .who { font-size: 13px; margin-top: 10px; }
+  form.flag-form { display: none; margin-top: 12px; gap: 8px; flex-direction: column; }
+  form.flag-form.open { display: flex; }
+  .edit-row { display: grid; grid-template-columns: 140px 1fr 32px; gap: 8px; align-items: start; margin-bottom: 8px; }
+  .edit-row label { color: var(--ink-soft); font-size: 13px; padding-top: 8px; overflow-wrap: anywhere; }
+  .edit-row textarea, .edit-row input, .edit-row select { width: 100%; }
+  .edit-row .x { padding: 4px 0; }
+  textarea.json { font-family: var(--stack-mono), monospace; font-size: 13px; }
+  .part { border-top: var(--play-stroke-sm) solid var(--line-soft); padding: 8px 0; }
+  .part:first-child { border-top: 0; padding-top: 0; }
+  .sub { margin-top: 6px; font-size: 13px; font-weight: 700; color: var(--ink-soft); }
+  ul.answers { margin: 4px 0 0; padding-left: 18px; }
+  ul.answers li { margin-bottom: 4px; }
+  .err { color: var(--play-text-amber-warm); background: var(--gold-wash); border-radius: var(--play-radius-sm); padding: 6px 10px; margin-top: 8px; }
+  #pdfbar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 8px; }
+  #pdfbar input { width: 70px; }
+  #canvas { width: 100%; border: var(--play-stroke-sm) solid var(--line); border-radius: var(--play-radius-sm); background: var(--card); }
+  .kbd { font-family: var(--stack-mono), monospace; font-size: 12px; }
+  @media (max-width: 900px) {
+    main { grid-template-columns: 1fr; height: auto; }
+    #list { max-height: 40vh; border-right: 0; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Ground-truth review</h1>
+  <select id="file" aria-label="Ground-truth file"></select>
+  <label>Your initials <input id="me" size="4" maxlength="6" placeholder="e.g. SA"></label>
+  <select id="filter" aria-label="Filter">
+    <option value="all">All records</option>
+    <option value="todo">Not reviewed yet</option>
+    <option value="flagged">Flagged</option>
+    <option value="edited">Edited</option>
+  </select>
+  <div class="progress"><div class="bar"><div id="barfill" style="width:0"></div></div><div id="ptext" class="muted"></div></div>
+  <span class="grow"></span>
+  <span id="saved" class="muted"></span>
+  <span class="kbd muted">j/k move · c confirm · f flag · e edit · u undo</span>
+</header>
+<main>
+  <nav id="list" class="pane" aria-label="Records"></nav>
+  <section id="detail" class="pane"></section>
+  <section class="pane">
+    <div id="pdfbar">
+      <button id="prev" aria-label="Previous page">‹</button>
+      <span>printed p.</span><input id="pg" type="number">
+      <button id="next" aria-label="Next page">›</button>
+      <span id="pdfinfo" class="muted"></span>
+    </div>
+    <canvas id="canvas"></canvas>
+  </section>
+</main>
+<script>
+pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+const $ = (s) => document.querySelector(s);
+const today = () => new Date().toISOString().slice(0, 10);
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const store = { get(k) { try { return localStorage.getItem(k); } catch { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch {} } };
+const meNow = () => $("#me").value.trim();
+
+let path = null, data = null, records = [], idx = 0, offset = 0, pdf = null, pdfPath = null, page = 1, rendering = null, editing = false;
+
+/* ---------- sections and kinds ---------- */
+// [section title, path in the file, single object?]
+const SECTIONS = [
+  ["Lesson", "lesson", true],
+  ["Items", "items"],
+  ["Learning objectives", "learning_objectives"],
+];
+const ITEM_TYPES = ["printed_objective", "key_term", "definition", "rule", "caution", "convention", "method", "open_prompt",
+  "worked_example", "exercise", "activity", "figure", "linking_text", "prior_knowledge"];
+const KINDS = [...ITEM_TYPES, "learning_objective"];
+const MOVABLE = new Set(["items", "learning_objectives"]);
+// the field that holds a record's main text, by kind (names follow the extraction data)
+const MAIN = (k) => ({ definition: "claim", rule: "claim", caution: "claim", convention: "claim", method: "claim", key_term: "term", figure: "caption",
+  worked_example: "stem", learning_objective: "description" }[k] || "text");
+const kindOf = (sec, r) => sec === "learning_objectives" ? "learning_objective" : r.type;
+const sectionOfKind = (k) => k === "learning_objective" ? "learning_objectives" : "items";
+
+function getAt(p, create) {
+  let o = data; const parts = p.split(".");
+  for (let i = 0; i < parts.length - 1; i++) o = o[parts[i]] ||= {};
+  const last = parts.at(-1);
+  if (create && o[last] === undefined) o[last] = [];
+  return o[last];
+}
+const byId = () => Object.fromEntries([...(data.items || []), ...(data.learning_objectives || [])].map((r) => [r.id, r]));
+const short = (id) => String(id || "").split(":").pop();
+
+function titleOf(sec, r) {
+  switch (sec) {
+    case "lesson": return `${r.syllabus_ref || ""} ${r.title || ""}`;
+    case "items": return `${r.type} · ${short(r.id)}`;
+    case "learning_objectives": return r.label || short(r.id);
+    default: return r.text || "";
+  }
+}
+function pageOf(sec, r) {
+  const ids = byId(), seen = new Set();
+  const pg = (id) => { if (!id || seen.has(id)) return null; seen.add(id); const x = ids[id]; return x?.source_page ?? (x?.evidence ? pg([].concat(x.evidence)[0]) : null); };
+  if (r.source_page) return r.source_page;
+  if (sec === "lesson") return r.pages_printed?.[0];
+  if (sec === "learning_objectives") return pg(r.evidence?.[0]);
+  return pg(r.lo);
+}
+function build() {
+  records = [];
+  for (const [, p, single] of SECTIONS) {
+    const v = getAt(p);
+    if (single) { if (v) records.push({ sec: p, r: v }); }
+    else (v || []).forEach((r) => records.push({ sec: p, r }));
+  }
+}
+const SEC_TITLE = Object.fromEntries(SECTIONS.map(([t, p]) => [p, t]));
+
+/* ---------- review state (one reviewer) ---------- */
+const status = (r) => r.review?.status || null;
+const edited = (r) => (r.review?.edits || []).length > 0;
+
+/* ---------- list ---------- */
+function visible() {
+  const f = $("#filter").value;
+  return records.map((x, i) => ({ ...x, i })).filter(({ r }) =>
+    f === "all" ? true : f === "todo" ? !status(r) : f === "flagged" ? status(r) === "flagged" : edited(r));
+}
+function renderList() {
+  const el = $("#list"); el.innerHTML = "";
+  let last = null;
+  for (const { sec, r, i } of visible()) {
+    if (sec !== last) { el.insertAdjacentHTML("beforeend", `<h3>${esc(SEC_TITLE[sec])}</h3>`); last = sec; }
+    const s = status(r);
+    const cls = s === "confirmed" ? "s-done" : s === "flagged" ? "s-disp" : "s-none";
+    const label = s === "confirmed" ? "✓" : s === "flagged" ? "!" : "·";
+    const b = document.createElement("button");
+    b.className = "rec" + (i === idx ? " sel" : "");
+    b.innerHTML = `<span class="dot ${cls}" title="${s || "not reviewed"}">${label}</span><span class="t">${esc(titleOf(sec, r))}</span>${edited(r) ? '<span class="muted" title="edited">✎</span>' : ""}`;
+    b.onclick = () => select(i);
+    el.appendChild(b);
+  }
+  const done = records.filter(({ r }) => status(r) === "confirmed").length;
+  const flagged = records.filter(({ r }) => status(r) === "flagged").length;
+  $("#barfill").style.width = `${records.length ? (100 * done) / records.length : 0}%`;
+  $("#ptext").textContent = `${done}/${records.length} confirmed · ${flagged} flagged`;
+}
+
+/* ---------- read view ---------- */
+const HIDE = new Set(["review", "provenance", "id"]);
+function value(k, v, ids) {
+  if (v === null || v === undefined || v === "") return '<span class="muted">—</span>';
+  if (typeof v === "string") return ids[v] ? `<a class="ref" data-id="${esc(v)}">${esc(v)}</a>` : esc(v);
+  if (typeof v !== "object") return esc(v);
+  if (k === "parts" && Array.isArray(v)) return v.map((p) => partBlock(p, ids)).join("");
+  if (Array.isArray(v)) return `<ol>${v.map((x) => `<li>${value(k, x, ids)}</li>`).join("")}</ol>`;
+  return `<dl>${Object.entries(v).map(([a, b]) => `<dt>${esc(a)}</dt><dd>${value(a, b, ids)}</dd>`).join("")}</dl>`;
+}
+
+const prov = (x) => `<span class="tag">${esc(x)}</span>`;
+function partBlock(p, ids) {
+  const rest = Object.entries(p).filter(([k]) => !["label", "stem", "answer", "solution_provenance"].includes(k));
+  return `<div class="part">
+    <div><b>${esc(p.label ?? "")}</b> ${p.stem ? esc(p.stem) : ""}</div>
+    ${p.answer != null ? `<div>Answer: <b>${esc(p.answer)}</b> ${p.solution_provenance ? prov(p.solution_provenance) : ""}</div>` : '<div class="muted">No answer printed</div>'}
+    ${rest.map(([k, x]) => `<div class="muted">${esc(k)}: ${value(k, x, ids)}</div>`).join("")}
+  </div>`;
+}
+
+function renderDetail() {
+  const el = $("#detail");
+  if (!records.length) { el.innerHTML = renderFileCard(); bindFileCard(); return; }
+  const { sec, r } = records[idx], ids = byId(), me = meNow();
+  const v = r.review || {};
+  const head = `<div class="muted">${esc(SEC_TITLE[sec])} · ${idx + 1} of ${records.length}${r.id ? " · " + esc(r.id) : ""}</div>
+      <h2>${esc(titleOf(sec, r))}</h2>`;
+  if (editing) { el.innerHTML = `<div class="card">${head}${editForm(sec, r)}</div>${renderFileCard()}`; bindEdit(sec, r); bindFileCard(); return; }
+  const fields = Object.entries(r).filter(([k]) => !HIDE.has(k) && k !== "quote");
+  el.innerHTML = `
+    <div class="card">
+      ${head}
+      ${r.quote ? `<div class="quote">“${esc(r.quote)}”</div><div class="muted">Find these words on the page, then check everything below against the book.</div>` : ""}
+      <dl style="margin-top:12px">${fields.map(([k, x]) => `<dt>${esc(k)}</dt><dd>${value(k, x, ids)}</dd>`).join("")}</dl>
+      <div class="who">
+        ${r.provenance?.by ? `<div class="muted">Drafted by ${esc(r.provenance.by)}</div>` : ""}
+        ${v.status === "confirmed" ? `<b>Confirmed</b> by ${esc(v.by)} on ${esc(v.at)}` : v.status === "flagged" ? `<div class="warn"><b>Flagged</b> by ${esc(v.by)} on ${esc(v.at)}: ${esc(v.reason || "")}</div>` : "Not reviewed yet"}
+        ${(v.edits || []).map((e) => `<div class="muted">✎ ${esc(e.by)}, ${esc(e.at)}: ${esc(e.fields.join(", "))}</div>`).join("")}
+      </div>
+      <div class="actions">
+        <button class="confirm" id="bconfirm" ${!me || v.status === "confirmed" ? "disabled" : ""}>Confirm (c)</button>
+        <button id="bedit" ${!me ? "disabled" : ""}>Edit (e)</button>
+        <button class="dispute" id="bflag" ${!me ? "disabled" : ""}>Flag (f)</button>
+        <button id="bundo" ${!v.status ? "disabled" : ""}>Undo (u)</button>
+        <span class="grow"></span>
+        <button id="bprev">‹ Prev (k)</button><button id="bnext">Next (j) ›</button>
+      </div>
+      ${!me ? '<div class="muted" style="margin-top:8px">Type your initials at the top to review.</div>' : ""}
+      <form class="flag-form" id="fform">
+        <label>What needs deciding, and by whom? <textarea id="freason" rows="2" required style="width:100%"></textarea></label>
+        <div class="actions"><button class="dispute" type="submit">Flag it</button><button type="button" id="fcancel">Cancel</button></div>
+      </form>
+    </div>
+    ${renderFileCard()}`;
+  renderMathInElement(el, { delimiters: [{ left: "$", right: "$", display: false }], throwOnError: false, ignoredClasses: ["noformat"] });
+  el.querySelectorAll("a.ref").forEach((a) => (a.onclick = () => { const j = records.findIndex(({ r }) => r.id === a.dataset.id); if (j >= 0) select(j); }));
+  $("#bconfirm").onclick = confirm_; $("#bflag").onclick = openFlag; $("#bundo").onclick = undo; $("#bedit").onclick = startEdit;
+  $("#bprev").onclick = () => move(-1); $("#bnext").onclick = () => move(1);
+  $("#fcancel").onclick = () => $("#fform").classList.remove("open");
+  $("#fform").onsubmit = (e) => { e.preventDefault(); flag($("#freason").value.trim()); };
+  bindFileCard();
+}
+
+/* ---------- edit view ---------- */
+const rows = (s) => Math.min(12, Math.max(1, Math.ceil(String(s).length / 60) + String(s).split("\n").length - 1));
+function fieldInput(k, v) {
+  const isJson = v !== null && typeof v === "object";
+  if (typeof v === "number") return `<input data-k="${esc(k)}" data-t="number" type="number" value="${esc(v)}">`;
+  if (isJson || typeof v === "boolean" || v === null) {
+    const s = JSON.stringify(v, null, 2);
+    return `<textarea class="json" data-k="${esc(k)}" data-t="json" rows="${rows(s)}">${esc(s)}</textarea>`;
+  }
+  return `<textarea data-k="${esc(k)}" data-t="string" rows="${rows(v)}">${esc(v)}</textarea>`;
+}
+function editForm(sec, r) {
+  const kind = MOVABLE.has(sec) ? kindOf(sec, r) : null;
+  const fields = Object.entries(r).filter(([k]) => k !== "review" && k !== "provenance" && k !== "id" && (k !== "type" || !kind));
+  return `
+    ${kind ? `<div class="edit-row"><label>type</label><select id="ekind">${KINDS.map((k) => `<option ${k === kind ? "selected" : ""}>${k}</option>`).join("")}</select><span></span></div>` : ""}
+    <div id="efields">${fields.map(([k, v]) => `<div class="edit-row"><label>${esc(k)}</label>${fieldInput(k, v)}<button type="button" class="x" data-del="${esc(k)}" title="Remove field">×</button></div>`).join("")}</div>
+    <div class="edit-row"><input id="enewk" placeholder="new field name"><textarea id="enewv" rows="1" placeholder="value (text, or JSON for a list)"></textarea><button type="button" class="x" id="eadd" title="Add field">+</button></div>
+    <div id="eerr"></div>
+    <div class="actions">
+      <button class="confirm" id="esaveconfirm">Save and confirm</button>
+      <button id="esave">Save</button>
+      <button id="ecancel">Cancel</button>
+      <span class="grow"></span>
+      ${sec === "lesson" ? "" : '<button id="edelete">Delete record</button>'}
+    </div>
+    <div class="muted" style="margin-top:8px">Changing the type to learning_objective moves the record to that section and renames its main text field to match. Record only what the book prints.</div>`;
+}
+function bindEdit(sec, r) {
+  $("#efields").querySelectorAll("[data-del]").forEach((b) => (b.onclick = () => b.closest(".edit-row").remove()));
+  $("#eadd").onclick = () => {
+    const k = $("#enewk").value.trim(); if (!k) return;
+    let v = $("#enewv").value; try { if (/^\s*[\[{]/.test(v)) v = JSON.parse(v); } catch {}
+    $("#efields").insertAdjacentHTML("beforeend", `<div class="edit-row"><label>${esc(k)}</label>${fieldInput(k, v)}<button type="button" class="x" data-del="${esc(k)}">×</button></div>`);
+    $("#efields").lastElementChild.querySelector("[data-del]").onclick = (e) => e.target.closest(".edit-row").remove();
+    $("#enewk").value = ""; $("#enewv").value = "";
+  };
+  $("#esave").onclick = () => saveEdit(sec, r, false);
+  $("#esaveconfirm").onclick = () => saveEdit(sec, r, true);
+  $("#ecancel").onclick = () => { editing = false; renderDetail(); };
+  const del = $("#edelete"); if (del) del.onclick = () => deleteRecord(sec, r);
+  $("#efields").querySelector("textarea, input")?.focus();
+}
+function saveEdit(sec, r, andConfirm) {
+  const next = {}; let bad = null;
+  if (r.id) next.id = r.id;
+  if (MOVABLE.has(sec) && r.type) next.type = r.type; // the type select handles it
+  $("#efields").querySelectorAll("[data-k]").forEach((el) => {
+    const k = el.dataset.k, t = el.dataset.t;
+    if (t === "number") next[k] = el.value === "" ? null : Number(el.value);
+    else if (t === "json") { try { next[k] = JSON.parse(el.value); } catch { bad = k; } }
+    else next[k] = el.value;
+  });
+  if (bad) { $("#eerr").innerHTML = `<div class="err">“${esc(bad)}” is not valid JSON. Check brackets, commas and quotes.</div>`; return; }
+  const changed = [...new Set([...Object.keys(r), ...Object.keys(next)])].filter((k) => k !== "review" && k !== "provenance" && JSON.stringify(r[k]) !== JSON.stringify(next[k]));
+  let target = { sec, r };
+  const ek = $("#ekind");
+  // apply field edits in place, keeping the record's position
+  const { review: ver, provenance: madeBy } = r;
+  Object.keys(r).forEach((k) => delete r[k]);
+  Object.assign(r, next);
+  if (madeBy) r.provenance = madeBy;
+  if (ver) r.review = ver;
+  if (ek && ek.value !== kindOf(sec, r)) { const from = kindOf(sec, r); target = changeKind(sec, r, ek.value); changed.push(`type: ${from} → ${ek.value}`); }
+  if (changed.length) {
+    const v = (target.r.review ||= {});
+    (v.edits ||= []).push({ by: meNow(), at: today(), fields: changed });
+  }
+  if (andConfirm) Object.assign(target.r.review ||= {}, { status: "confirmed", by: meNow(), at: today() }, { reason: undefined });
+  editing = false;
+  build(); idx = Math.max(0, records.findIndex((x) => x.r === target.r));
+  save(); renderAll();
+}
+
+/* change a record's kind; moves it between sections when needed, renaming the main text field and the objective link */
+function changeKind(sec, r, to) {
+  const from = kindOf(sec, r), fromMain = MAIN(from), toMain = MAIN(to);
+  if (fromMain !== toMain && r[fromMain] !== undefined) { r[toMain] = r[fromMain]; delete r[fromMain]; }
+  const toSec = sectionOfKind(to);
+  if (toSec === "items") r.type = to; else delete r.type;
+  if (sec === toSec) return { sec, r };
+  if (toSec === "learning_objectives") {
+    r.label ??= String(r.description || "").slice(0, 60);
+    r.order_in_parent ??= (data.learning_objectives || []).length + 1;
+    r.evidence ??= [];
+    delete r.lo;
+  }
+  const arr = getAt(sec); arr.splice(arr.indexOf(r), 1);
+  const oldId = r.id, nid = newId(toSec);
+  r.id = nid;
+  const ordered = { id: nid, ...(r.type ? { type: r.type } : {}) };
+  Object.entries(r).forEach(([k, v]) => { if (!(k in ordered)) ordered[k] = v; });
+  Object.keys(r).forEach((k) => delete r[k]); Object.assign(r, ordered);
+  getAt(toSec, true).push(r);
+  if (oldId) renameRefs(oldId, nid);
+  return { sec: toSec, r };
+}
+function newId(sec) {
+  const slug = data.lesson?.slug || "gt", tag = sec === "learning_objectives" ? "obj" : "item";
+  const ids = new Set(Object.keys(byId()));
+  let n = 1; while (ids.has(`${slug}:${tag}-${n}`)) n++;
+  return `${slug}:${tag}-${n}`;
+}
+function renameRefs(oldId, nid) {
+  const walk = (x) => {
+    if (Array.isArray(x)) x.forEach((v, i) => (v === oldId ? (x[i] = nid) : walk(v)));
+    else if (x && typeof x === "object") Object.entries(x).forEach(([k, v]) => (k !== "id" && v === oldId ? (x[k] = nid) : walk(v)));
+  };
+  walk(data);
+}
+function deleteRecord(sec, r) {
+  if (!confirm(`Delete ${r.id || titleOf(sec, r)}? Links to it elsewhere in the file are left for you to fix.`)) return;
+  const arr = getAt(sec); arr.splice(arr.indexOf(r), 1);
+  (data.history ||= []).push(`${today()}: ${meNow()} deleted ${r.id || sec + " record"}: ${titleOf(sec, r)}`);
+  editing = false; build(); idx = Math.min(idx, records.length - 1);
+  save(); renderAll();
+}
+function addRecord(kind, pageNo) {
+  const sec = sectionOfKind(kind), id = newId(sec);
+  const base = sec === "learning_objectives" ? { id, label: "", description: "", order_in_parent: (data.learning_objectives || []).length + 1, evidence: [] }
+    : { id, type: kind, lo: "", source_page: pageNo || null, quote: "", [MAIN(kind)]: "" };
+  if (kind === "worked_example") Object.assign(base, { solution: [], answer: "", solution_provenance: "book_worked" });
+  if (["exercise", "activity", "open_prompt"].includes(kind)) base.parts = [{ label: "a", stem: "" }];
+  base.provenance = { by: `reviewer ${meNow()}, ${today()}` };
+  base.review = { edits: [{ by: meNow(), at: today(), fields: ["added"] }] };
+  getAt(sec, true).push(base);
+  build(); idx = records.findIndex((x) => x.r === base); editing = true;
+  save(); renderAll();
+}
+
+/* ---------- whole file ---------- */
+function renderFileCard() {
+  const v = data.review || {}, me = meNow(), oq = data.open_questions || [];
+  return `<div class="card">
+    <h2>Whole file</h2>
+    <dl><dt>status</dt><dd>${esc(v.status || "")}</dd><dt>drafted by</dt><dd>${esc(data.provenance?.by || "")}</dd>
+    <dt>reviewed by</dt><dd>${esc(v.reviewed_by || "—")}${v.reviewed_at ? ", " + esc(v.reviewed_at) : ""}</dd></dl>
+    ${oq.length ? `<p><b>Open questions</b></p><ol>${oq.map((q) => `<li>${esc(q)}</li>`).join("")}</ol>` : ""}
+    <p><b>Something on these pages is missing?</b> Add it as a record.</p>
+    <form id="addform" class="actions">
+      <select id="addkind">${KINDS.map((k) => `<option>${k}</option>`).join("")}</select>
+      <input id="addpage" type="number" placeholder="printed page" style="width:130px">
+      <button type="submit" ${me ? "" : "disabled"}>Add record</button>
+    </form>
+  </div>`;
+}
+function bindFileCard() {
+  const f = $("#addform"); if (f) f.onsubmit = (e) => { e.preventDefault(); addRecord($("#addkind").value, Number($("#addpage").value) || page); };
+}
+
+/* ---------- actions ---------- */
+function confirm_() {
+  const r = records[idx].r; if (!meNow()) return;
+  const v = (r.review ||= {});
+  Object.assign(v, { status: "confirmed", by: meNow(), at: today() }); delete v.reason;
+  save(); move(1, true);
+}
+function openFlag() { if (!meNow()) return; $("#fform").classList.add("open"); $("#freason").focus(); }
+function flag(reason) {
+  const r = records[idx].r; if (!meNow() || !reason) return;
+  Object.assign(r.review ||= {}, { status: "flagged", by: meNow(), at: today(), reason });
+  save(); move(1, true);
+}
+function undo() {
+  const v = records[idx].r.review; if (!v?.status) return;
+  ["status", "by", "at", "reason"].forEach((k) => delete v[k]);
+  if (!Object.keys(v).length) delete records[idx].r.review;
+  save(); renderAll();
+}
+function startEdit() { if (!meNow()) return; editing = true; renderDetail(); }
+
+function rollup() {
+  const v = (data.review ||= {});
+  const st = records.map(({ r }) => status(r));
+  if (meNow() && st.some(Boolean)) v.reviewed_by = meNow();
+  v.status = st.includes("flagged") ? "flagged" : st.every((s) => s === "confirmed") ? "reviewed" : st.some(Boolean) ? "in_review" : "draft";
+  v.reviewed_at = v.status === "reviewed" ? today() : null;
+}
+async function save() {
+  rollup();
+  $("#saved").textContent = "Saving…";
+  const res = await fetch(`/api/file?path=${encodeURIComponent(path)}`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) });
+  $("#saved").textContent = res.ok ? `Saved ${new Date().toLocaleTimeString()}` : "Save failed: " + (await res.text());
+}
+
+/* ---------- navigation ---------- */
+function move(d, afterAction) {
+  const vis = visible().map((x) => x.i);
+  if (!vis.length) return renderAll();
+  let p = vis.indexOf(idx);
+  if (p < 0) p = vis.findIndex((i) => i > idx) - (d > 0 ? 1 : 0);
+  const next = vis[Math.min(Math.max(p + d, 0), vis.length - 1)];
+  if (afterAction && next === idx) return renderAll();
+  select(next ?? idx);
+}
+function select(i) {
+  idx = i; editing = false; renderAll();
+  const pg = records[idx] && pageOf(records[idx].sec, records[idx].r);
+  if (pg) showPage(pg);
+  document.querySelector(".rec.sel")?.scrollIntoView({ block: "nearest" });
+}
+function renderAll() { renderList(); renderDetail(); }
+
+/* ---------- PDF ---------- */
+async function loadPdf() {
+  if (pdfPath === path) return;
+  pdfPath = path; pdf = null;
+  $("#pdfinfo").textContent = "Loading the book…";
+  try {
+    pdf = await pdfjsLib.getDocument({ url: `/pdf?path=${encodeURIComponent(path)}`, disableAutoFetch: true, disableStream: true }).promise;
+    $("#pdfinfo").textContent = "";
+    showPage(page);
+  } catch (e) {
+    $("#pdfinfo").textContent = "Book PDF not found. Put it in docs/Source/, or start the server with --pdf-dir.";
+  }
+}
+async function showPage(printed) {
+  page = printed; $("#pg").value = printed;
+  if (!pdf) return;
+  const n = Math.min(Math.max(printed + offset, 1), pdf.numPages);
+  $("#pdfinfo").textContent = `PDF page ${n} of ${pdf.numPages}`;
+  if (rendering) { try { rendering.cancel(); } catch {} }
+  const p = await pdf.getPage(n);
+  const c = $("#canvas"), w = c.parentElement.clientWidth - 32;
+  const vp0 = p.getViewport({ scale: 1 }), scale = (w / vp0.width) * (window.devicePixelRatio || 1);
+  const vp = p.getViewport({ scale });
+  c.width = vp.width; c.height = vp.height;
+  rendering = p.render({ canvasContext: c.getContext("2d"), viewport: vp });
+  try { await rendering.promise; } catch {}
+}
+$("#prev").onclick = () => showPage(page - 1);
+$("#next").onclick = () => showPage(page + 1);
+$("#pg").onchange = () => showPage(Number($("#pg").value));
+
+/* ---------- boot ---------- */
+async function openFile(p) {
+  path = p; store.set("gt-file", p);
+  data = await (await fetch(`/api/file?path=${encodeURIComponent(p)}`)).json();
+  const m = /printed_page\s*([+-])\s*(\d+)/.exec(data.source_document?.page_offset || "");
+  offset = m ? (m[1] === "-" ? -1 : 1) * Number(m[2]) : 0;
+  build(); page = data.lesson?.pages_printed?.[0] || 1;
+  select(0); loadPdf();
+}
+
+(async () => {
+  $("#me").value = store.get("gt-me") || "";
+  $("#me").oninput = () => { store.set("gt-me", meNow()); renderAll(); };
+  $("#filter").onchange = () => { $("#filter").blur(); renderList(); };
+  const files = await (await fetch("/api/files")).json();
+  $("#file").innerHTML = files.map((f) => `<option value="${esc(f.path)}">${esc(f.path)} · ${esc(f.title)} (${esc(f.status)})</option>`).join("");
+  const last = store.get("gt-file");
+  if (last && files.some((f) => f.path === last)) $("#file").value = last;
+  $("#file").onchange = () => { $("#file").blur(); openFile($("#file").value); };
+  if (files.length) openFile($("#file").value);
+})();
+
+document.addEventListener("keydown", (e) => {
+  if (["INPUT", "TEXTAREA", "SELECT"].includes(e.target.tagName) || editing || e.metaKey || e.ctrlKey) return;
+  if (e.key === "j") move(1); else if (e.key === "k") move(-1);
+  else if (e.key === "c") confirm_(); else if (e.key === "f") { e.preventDefault(); openFlag(); }
+  else if (e.key === "e") { e.preventDefault(); startEdit(); }
+  else if (e.key === "u") undo();
+});
+</script>
+</body>
+</html>

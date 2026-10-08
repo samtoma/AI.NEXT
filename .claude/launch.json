@@ -98,6 +98,16 @@
         "AINEXT_DEV_OPERATOR_PICKER": "on",
         "AINEXT_DIST_DIR": ".next-pilot-admin"
       }
+    },
+    {
+      "name": "groundtruth-review",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "services/extraction/groundtruth/review/server.py",
+        "--port",
+        "3020"
+      ],
+      "port": 3020
     }
   ]
 }

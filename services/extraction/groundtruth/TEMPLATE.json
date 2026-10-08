@@ -1,0 +1,196 @@
+{
+  "schema": "book-record",
+  "schema_version": 1,
+  "source_document": {
+    "title": "<full title as printed>",
+    "publisher": "<publisher>",
+    "edition": "<edition printed on the cover>",
+    "language": "<en | ar>",
+    "grade": "<e.g. prep-3, 10>",
+    "subject": "<e.g. mathematics>",
+    "file_path": "docs/Source/<file name>.pdf",
+    "sha256": "<shasum -a 256 of the PDF>",
+    "licence": "<as printed on the copyright page, or 'none printed'>",
+    "pages_total": 0,
+    "page_offset": 0,
+    "text_layer": "<usable | partial | empty, prose drawn as images>",
+    "course_id": "course:<id>",
+    "page_offset_note": "pdf_page = printed_page + page_offset"
+  },
+  "lesson": {
+    "slug": "<prefix, e.g. g9-1-1>",
+    "syllabus_ref": "<as printed, e.g. Lesson 1-1>",
+    "title": "<as printed>",
+    "module": "<unit or chapter title, as printed>",
+    "pages": [
+      0,
+      0
+    ],
+    "module_intro": {
+      "source_page": 0,
+      "note": "<optional: what the unit opener shows>"
+    },
+    "notes": "<optional>",
+    "provenance": {
+      "by": "<extractor and version, or person, and date>"
+    }
+  },
+  "items": [
+    {
+      "id": "<prefix>:learn-1",
+      "type": "printed_objective",
+      "source_page": 0,
+      "quote": "<a few exact words that locate it>",
+      "text": "<what it says>",
+      "provenance": {
+        "by": "<extractor and version, or person, and date>"
+      },
+      "anchor": "<extractor's block reference, if any (quote or anchor required)>",
+      "review": {
+        "status": "confirmed | flagged",
+        "by": "<initials>",
+        "at": "<date>",
+        "reason": "<for flagged>",
+        "edits": [
+          {
+            "by": "<initials>",
+            "at": "<date>",
+            "fields": [
+              "<field>"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "<prefix>:term-1",
+      "type": "key_term",
+      "source_page": 0,
+      "quote": "<exact words>",
+      "term": "<the term>",
+      "provenance": {
+        "by": "<extractor and version, or person, and date>"
+      }
+    },
+    {
+      "id": "<prefix>:def-1",
+      "type": "definition | rule | caution | convention | method",
+      "lo": "<prefix>:obj-n",
+      "source_page": 0,
+      "quote": "<exact words>",
+      "claim": "<the statement, in your words>",
+      "formula": "<optional: the printed formula, as $...$>",
+      "notation": {
+        "printed": "<as printed>",
+        "normalised": "<what it means, written plainly>"
+      },
+      "notes": "<optional, e.g. no reason printed>",
+      "provenance": {
+        "by": "<extractor and version, or person, and date>"
+      }
+    },
+    {
+      "id": "<prefix>:prompt-1",
+      "type": "open_prompt",
+      "lo": "<prefix>:obj-n",
+      "source_page": 0,
+      "quote": "<exact words, e.g. ..., Why?>",
+      "text": "<the question; say that no answer is printed>",
+      "parts": [
+        {
+          "label": "1",
+          "stem": "<the question as printed>"
+        }
+      ],
+      "provenance": {
+        "by": "<extractor and version, or person, and date>"
+      }
+    },
+    {
+      "id": "<prefix>:ex-1",
+      "type": "worked_example",
+      "lo": "<prefix>:obj-n",
+      "source_page": 0,
+      "quote": "<exact words of the question>",
+      "stem": "<Example n: the task, maths in $...$>",
+      "solution": [
+        "<printed step 1>",
+        "<printed step 2>"
+      ],
+      "answer": "<final printed answer>",
+      "solution_provenance": "book_worked",
+      "provenance": {
+        "by": "<extractor and version, or person, and date>"
+      }
+    },
+    {
+      "id": "<prefix>:drill-1",
+      "type": "exercise | activity",
+      "lo": "<prefix>:obj-n",
+      "source_page": 0,
+      "quote": "<exact words of the instruction>",
+      "text": "<what the exercise asks>",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "<the part, maths in $...$>",
+          "answer": "<only if the book prints it; otherwise leave answer and solution_provenance out>",
+          "solution_provenance": "book_printed | book_worked | book_online",
+          "code": "<Siyavula practice code, if printed instead of an answer>"
+        }
+      ],
+      "provenance": {
+        "by": "<extractor and version, or person, and date>"
+      }
+    },
+    {
+      "id": "<prefix>:fig-1",
+      "type": "figure",
+      "lo": "<prefix>:obj-n",
+      "source_page": 0,
+      "quote": "<caption or label>",
+      "caption": "<what the figure shows, with every value read from it>",
+      "notation": {
+        "printed": "<as printed>",
+        "normalised": "<what it means, written plainly>"
+      },
+      "provenance": {
+        "by": "<extractor and version, or person, and date>"
+      }
+    },
+    {
+      "id": "<prefix>:link-1",
+      "type": "linking_text | prior_knowledge",
+      "source_page": 0,
+      "quote": "<exact words>",
+      "text": "<what it does or assumes>",
+      "provenance": {
+        "by": "<extractor and version, or person, and date>"
+      }
+    }
+  ],
+  "learning_objectives": [
+    {
+      "id": "<prefix>:obj-1",
+      "provenance": {
+        "by": "<extractor and version, or person, and date>"
+      },
+      "label": "<short name a student would recognise>",
+      "description": "<can do ...>",
+      "order_in_parent": 1,
+      "evidence": [
+        "<at least two inventory ids, of different types>"
+      ]
+    }
+  ],
+  "provenance": {
+    "by": "<extractor and version, or the person who drafted it, and date>"
+  },
+  "review": {
+    "status": "draft | in_review | flagged | reviewed",
+    "reviewed_by": null,
+    "reviewed_at": null
+  },
+  "open_questions": [],
+  "history": []
+}
