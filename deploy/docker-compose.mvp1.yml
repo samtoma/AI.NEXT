@@ -115,6 +115,35 @@ services:
         condition: service_healthy
     mem_limit: 256m
 
+  # ---- the uploads volume belongs to the app's user ------------------------
+  #
+  # The app runs as `node` (uid 1000) and writes every student upload under
+  # /tmp/ainext-uploads. Until v0.11.1 the image never created that folder, so
+  # Docker created the named volume owned by root, and every POST /api/uploads
+  # failed with EACCES (a 500) on the live box. `npm run dev` writes to the
+  # host's own temp dir, which is why it was never seen locally.
+  #
+  # The Dockerfile now creates the folder owned by `node`, but that only seeds
+  # a volume created AFTER it; Docker never re-copies ownership onto one that
+  # exists. So this one-shot sets the owner of the volume's top directory on
+  # every `up`: idempotent, about a second, and the reason nobody has to SSH in
+  # and run `chown` by hand. Top directory only — `node` creates everything
+  # below it, so there is nothing else to fix and no tree to walk.
+  #
+  # The same `postgres:17-alpine` image the `db` and `migrate` services already
+  # pull, so it adds no image to the shared daemon (talent.reletix.com lives
+  # here too). It runs as root because changing an owner needs root; it mounts
+  # this one volume and nothing else, and has no network.
+  uploads-owner:
+    image: postgres:17-alpine
+    restart: "no" # a one-shot that restarts is an infinite loop
+    user: "0:0"
+    network_mode: none
+    entrypoint: ["chown", "1000:1000", "/uploads"]
+    volumes:
+      - ainext_mvp1_uploads:/uploads
+    mem_limit: 64m
+
   app:
     build:
       context: .. # repo root — see Dockerfile note
@@ -307,6 +336,9 @@ services:
         # NOT `service_started`. The app must not exist as a running process
         # until every migration has applied cleanly; anything weaker is a race
         # that resolves correctly on a fast box and wrongly on a slow one.
+        condition: service_completed_successfully
+      uploads-owner:
+        # the uploads volume is `node`'s before the first upload can arrive
         condition: service_completed_successfully
     ports:
       # localhost ONLY — cloudflared fronts it. 3100 belongs to the baseline;

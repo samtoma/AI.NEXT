@@ -1,9 +1,19 @@
 # Project State — AI Tutor MVP
 
 > Living document. Read at session start; update when progress or decisions land.
-> Last updated: 2026-10-02 (`main`; `v0.10.0` deployed; `v0.11.0` released, deploy approved by Samuel; constitution v3.3.0)
+> Last updated: 2026-10-08 (`main`; `v0.11.0` deployed 2026-10-02; `v0.11.1` uploads hotfix released; constitution v3.3.0)
 
-## 🗺️ v0.11.0 — the Your Progress Map (released 2026-10-02; Samuel: "I approve both, merge it as v0.11.0")
+## 🩹 v0.11.1 hotfix — uploads work on the live site (released 2026-10-08)
+
+Every POST /api/uploads on the box failed with EACCES: the uploads volume was created root-owned
+because the image never created its mount point, and the app runs as `node`. Fixed in
+`deploy/Dockerfile` (the folder is created owned by `node`) and by a new one-shot compose service,
+`uploads-owner`, that `chown`s the volume's top directory to 1000:1000 before `app` starts, on every
+`up` — so the existing volume is repaired by the deploy, with no manual command. Reproduced and
+verified with Docker locally; **not yet confirmed on the box until a student upload succeeds after
+the deploy.**
+
+## 🗺️ v0.11.0 — the Your Progress Map (released and deployed 2026-10-02; Samuel: "I approve both, merge it as v0.11.0")
 
 Tamer's `tamer-graph-test` (2 commits, 2026-10-01) merged onto `main` with its history. **FR-3224**
 (chapter clusters, semantic zoom, selection-aware Ask Noor) **supersedes FR-3216** (the column map,

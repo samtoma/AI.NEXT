@@ -10,6 +10,25 @@ requirement names it.
 
 ## [Unreleased]
 
+## [v0.11.1] — 2026-10-08
+
+Hotfix. Students could not upload a photo or a PDF on the live site; they can again. Deploy-only:
+no app code changes, no migration.
+
+### Fixed — uploads on the live site
+- **Every upload on noor.reletix.com failed with a server error.** The app runs as the `node`
+  user and saves uploads in `/tmp/ainext-uploads`, which in production is a Docker volume. The
+  image never created that folder, so Docker created the volume owned by `root`, and the app was
+  refused permission to write into it. It never showed up in development, which saves uploads to
+  the computer's own temp folder.
+- The image now creates the folder owned by `node`, which fixes any volume created from now on.
+- That alone does not repair the existing volume, so the deploy now runs a one-second step before
+  the app starts that makes the uploads volume belong to `node`. It runs on every deploy, changes
+  nothing when the owner is already right, and means nobody has to log in to the server to fix it
+  by hand. It uses an image the server already has.
+- Reproduced with Docker: on a fresh volume the old setup's write fails with "Permission denied";
+  after the step it succeeds, and running the step again is harmless.
+
 ## [v0.11.0] — 2026-10-02
 
 The Your Progress page has a new map, built by Tamer on 1 October and accepted by Samuel on
