@@ -13,6 +13,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { parseMessage } from "./chat-parse.ts";
+import { renderInlineMarkdown } from "./inline-markdown.ts";
 import {
   GATE_MIN_WORDS,
   chunkingViolations,
@@ -53,6 +54,27 @@ test("FR-3502: {{ask}} turns everything after it into one ask block", () => {
 test("FR-3502: an unmarked trailing question after a beat is promoted to the ask", () => {
   const blocks = parseMessage("Nearly.\n{{beat}}\nWhich pairs follow the rule?", false);
   assert.equal(blocks[blocks.length - 1].t, "ask");
+});
+
+test("FR-3502: a bold closing question is promoted too — the ? sits inside the **", () => {
+  // lesson 1-1's opener, 2026-10-09: no {{ask}}, question bolded
+  const opener =
+    "An **ordered pair** has two slots.\n{{beat}}\nIf $(a - 2,\\ b + 1) = (b - 4,\\ 3)$, **what do you get when you match the second components first?**";
+  assert.equal(parseMessage(opener, false).at(-1)?.t, "ask");
+});
+
+test("FR-3502: bold around maths renders as one bold run, never as literal asterisks", () => {
+  const html = renderInlineMarkdown(
+    "Substitute $b = 2$ in there. **What do you get for $a$?**",
+    (tex) => `<m>${tex}</m>`
+  );
+  assert.equal(
+    html,
+    "Substitute <m>b = 2</m> in there. <strong>What do you get for <m>a</m>?</strong>"
+  );
+  assert.ok(!html.includes("*"));
+  // multiplication stays literal, maths is never markdown
+  assert.equal(renderInlineMarkdown("3 * 4 and $2*x*y$", (t) => `[${t}]`), "3 * 4 and [2*x*y]");
 });
 
 test("FR-3502: a one-beat reply ending in a question is left as text, and nothing is promoted while streaming", () => {
