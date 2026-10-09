@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { parseMathWidget, MATH_WIDGETS, type MathWidget } from "./widget-payloads.ts";
+import { parseMathWidget, namesPoint, MATH_WIDGETS, type MathWidget } from "./widget-payloads.ts";
 
 /**
  * @covers FR-1207, FR-1208
@@ -348,4 +348,24 @@ test("every registered widget from feature 003's own list still validates its sa
   for (const name of ["curve_sketcher", "venn_builder", "area_model"]) {
     assert.ok((MATH_WIDGETS as readonly string[]).includes(name), `${name} is not registered`);
   }
+});
+
+/* ---- pair_plotter: the prompt must name the point it grades ---- */
+
+test("pair_plotter: a prompt describing a family of points is replaced by the point the grader checks", () => {
+  // lesson 1-1, 2026-10-09: the student plotted (2,-1) — a right answer to
+  // this prompt — and was marked wrong against the hidden (3,-4)
+  const w = parseMathWidget("pair_plotter", {
+    prompt: "Plot a point that has a positive first number and a negative second number",
+    target: [3, -4],
+  });
+  assert.equal(w?.name === "pair_plotter" && w.prompt, "Plot the point (3,-4)");
+});
+
+test("pair_plotter: a prompt that names its point is kept, whatever its spacing or minus sign", () => {
+  for (const prompt of ["Plot the point (3,-4)", "Now plot (3, −4) on the grid", "Where is ( 3 , -4 )?"]) {
+    const w = parseMathWidget("pair_plotter", { prompt, target: [3, -4] });
+    assert.equal(w?.name === "pair_plotter" && w.prompt, prompt);
+  }
+  assert.ok(!namesPoint("Plot (-3,4)", [3, -4]));
 });
