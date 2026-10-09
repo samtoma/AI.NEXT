@@ -517,6 +517,7 @@ function promoteTrailingQuestion(blocks: Block[]) {
   const lastBlock = blocks[blocks.length - 1];
   if (lastBlock?.t !== "para") return;
   if (!blocks.some((b) => b.t === "beat")) return;
-  if (!/[?؟]\s*$/.test(inlineText(lastBlock.inlines))) return;
+  // the question mark may sit inside closing bold or quotes: "**…?**"
+  if (!/[?؟][*_"'”’)\]]*\s*$/.test(inlineText(lastBlock.inlines))) return;
   blocks[blocks.length - 1] = { t: "ask", paras: [lastBlock.inlines] };
 }

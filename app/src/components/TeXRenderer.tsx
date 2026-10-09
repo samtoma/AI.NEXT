@@ -9,6 +9,7 @@ import katex from "katex";
 // lessons, which render no maths at all.
 import "katex/dist/katex.min.css";
 import { inlineSafeTex } from "@/lib/math-text";
+import { renderInlineMarkdown } from "@/lib/inline-markdown";
 
 /**
  * Renders a string containing inline $...$ LaTeX segments (the format used by
@@ -33,40 +34,17 @@ export function TeXRenderer({
   );
 }
 
-function escapeHtml(s: string): string {
-  return s
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
+function renderMixed(text: string): string {
+  return renderInlineMarkdown(text, (tex) => {
+    try {
+      // `align*` is display-only and fails inline; `aligned` is the same
+      // layout, legal here (lib/math-text.ts `inlineSafeTex`).
+      return katex.renderToString(inlineSafeTex(tex), { throwOnError: false, output: "html" });
+    } catch {
+      return escapeTex(tex);
+    }
+  });
 }
 
-function renderMixed(text: string): string {
-  // Defensive: never crash on a missing/non-string field (e.g. a social
-  // claim-step has no text_md). Render nothing rather than throw.
-  if (typeof text !== "string" || text.length === 0) return "";
-  // split on $...$ (non-greedy, no escaped-dollar handling needed for this corpus)
-  const parts = text.split(/(\$[^$]+\$)/g);
-  return parts
-    .map((part) => {
-      if (part.startsWith("$") && part.endsWith("$") && part.length > 2) {
-        try {
-          // `align*` is display-only and fails inline; `aligned` is the same
-          // layout, legal here (lib/math-text.ts `inlineSafeTex`).
-          return katex.renderToString(inlineSafeTex(part.slice(1, -1)), {
-            throwOnError: false,
-            output: "html",
-          });
-        } catch {
-          return escapeHtml(part);
-        }
-      }
-      // minimal markdown: **bold** and *emphasis*. Emphasis requires the
-      // asterisks to hug non-space text (common markdown rule), so
-      // multiplication like "3 * 4" stays literal.
-      return escapeHtml(part)
-        .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
-        .replace(/\*([^\s*](?:[^*]*[^\s*])?)\*/g, "<em>$1</em>");
-    })
-    .join("");
-}
+const escapeTex = (tex: string) =>
+  `$${tex}$`.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");

@@ -41,5 +41,5 @@ test("everything else is returned exactly as it came", () => {
 
 test("the renderer applies it before KaTeX", () => {
   const src = readFileSync(fileURLToPath(new URL("../components/TeXRenderer.tsx", import.meta.url)), "utf8");
-  assert.match(src, /katex\.renderToString\(inlineSafeTex\(part\.slice\(1, -1\)\)/);
+  assert.match(src, /katex\.renderToString\(inlineSafeTex\(tex\)/);
 });
