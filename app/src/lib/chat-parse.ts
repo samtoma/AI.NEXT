@@ -487,32 +487,50 @@ const inlineText = (inlines: Inline[]) =>
  * held back, since whether it is a second question is not yet known.
  */
 export function oneQuestionAsk(text: string, streaming = false): string {
+  return splitAsk(text, streaming).kept;
+}
+
+/**
+ * The follow-up `oneQuestionAsk` dropped, as plain text ("Why do you think
+ * so?"), or null when nothing was dropped. ChatCore hands it back to the
+ * tutor as a [live event], so dropping it from the screen never drops it
+ * from the lesson: the tutor asks it next, after the student's answer.
+ */
+export function droppedFollowUp(text: string): string | null {
+  const { dropped } = splitAsk(text, false);
+  if (!dropped) return null;
+  const q = dropped.replace(/\*\*/g, "").replace(/\s+/g, " ").trim();
+  return q || null;
+}
+
+function splitAsk(text: string, streaming: boolean): { kept: string; dropped: string | null } {
+  const none = { kept: text, dropped: null };
   let start = text.indexOf(ASK);
   if (start >= 0) {
     start += ASK.length;
   } else {
-    if (!text.includes(BEAT)) return text;
+    if (!text.includes(BEAT)) return none;
     const trimmed = text.trimEnd();
     const para = trimmed.lastIndexOf("\n\n");
     const beat = trimmed.lastIndexOf(BEAT);
     // the last paragraph starts after whichever break comes last
     start = beat > para ? beat + BEAT.length : para + 2;
-    if (!/[?؟][*_"'”’)\]]*$/.test(trimmed)) return text;
+    if (!/[?؟][*_"'”’)\]]*$/.test(trimmed)) return none;
   }
   // the ask ends at the next directive, if any follows it
   const next = text.indexOf("{{", start);
   const end = next < 0 ? text.length : next;
   const region = text.slice(start, end);
   const q = /[?؟][*_"'”’)\]]*/.exec(region);
-  if (!q) return text;
+  if (!q) return none;
   const cut = q.index + q[0].length;
   const rest = region.slice(cut);
-  if (!rest.trim()) return text;
-  if (!streaming && !/[?؟]/.test(rest)) return text;
+  if (!rest.trim()) return none;
+  if (!streaming && !/[?؟]/.test(rest)) return none;
   let head = region.slice(0, cut);
   // a bold run that opened before the cut is closed at it
   if ((head.split("**").length - 1) % 2 === 1) head += "**";
-  return text.slice(0, start) + head + text.slice(end);
+  return { kept: text.slice(0, start) + head + text.slice(end), dropped: rest };
 }
 
 /** Full message → renderable blocks. Streaming ⇒ incomplete tail withheld. */

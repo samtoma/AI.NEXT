@@ -24,6 +24,7 @@ import {
   directiveEndAt,
   extractAnswerSubmitted,
   extractCites,
+  droppedFollowUp,
   extractHighlights,
   oneQuestionAsk,
   parseMessage,
@@ -954,6 +955,7 @@ export function ChatCore({
           if (stoppedAt != null) acc = acc.slice(0, stoppedAt).trimEnd();
           // FR-3503: the transcript keeps the one question the student was
           // shown, so the tutor's next turn reads one question asked
+          const followUp = droppedFollowUp(acc);
           const oneAsk = oneQuestionAsk(acc);
           const trimmedAsk = oneAsk !== acc;
           acc = oneAsk;
@@ -964,6 +966,19 @@ export function ChatCore({
             gated: undefined,
             ...(stoppedAt != null || trimmedAsk ? { text: acc } : {}),
           });
+          // ...but the follow-up is not lost: it goes back to the tutor as a
+          // [live event] (never shown to the student), to ask after the
+          // student's answer unless that answer already gives the reason
+          if (followUp && stoppedAt == null) {
+            setMessages((prev) => [
+              ...prev,
+              {
+                role: "note",
+                kind: "event",
+                text: `Held back so the student sees one question at a time — your follow-up "${followUp}". After reacting to their answer to your question, ask it as your next ask, unless their answer already explains it.`,
+              },
+            ]);
+          }
           emitNewCites(acc);
           onAssistantDone?.(acc);
           if (acc.includes("{{finish_lesson}}")) onFinishDirective?.();
