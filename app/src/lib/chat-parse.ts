@@ -357,6 +357,10 @@ export function stripIncompleteTail(s: string): string {
     }
   }
   if (dollars % 2 === 1) s = s.slice(0, lastDollar);
+  // an unclosed **bold** run is still being streamed — hold it back, so the
+  // student never sees the opening asterisks before the closing pair lands
+  const bolds = s.split("**").length - 1;
+  if (bolds % 2 === 1) s = s.slice(0, s.lastIndexOf("**"));
   return s;
 }
 

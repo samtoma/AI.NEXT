@@ -85,6 +85,13 @@ test("FR-3502: a one-beat reply ending in a question is left as text, and nothin
   );
 });
 
+test("an unclosed **bold** run is held back while streaming, shown once it closes", () => {
+  const streaming = parseMessage("Look again.\n{{ask}}\n**Can you point", true);
+  assert.ok(!JSON.stringify(streaming).includes("**"));
+  const done = parseMessage("Look again.\n{{ask}}\n**Can you point?**", true);
+  assert.ok(JSON.stringify(done).includes("**Can you point?**"));
+});
+
 test("the {{ask}} marker is held back while it is still streaming in", () => {
   const blocks = parseMessage("Exactly.\n{{as", true);
   assert.deepEqual(
