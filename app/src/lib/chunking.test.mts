@@ -247,6 +247,31 @@ test("FR-3503: the dropped follow-up is kept for the tutor, to ask after the stu
   assert.match(core, /kind: "event",\s*text: `Held back so the student sees one question at a time/);
 });
 
+test("FR-3503: a bare 'Why or why not?' ask lifts the real question out of the prose", () => {
+  // lesson 2-1 opener, 2026-10-09: the highlighted block said only "Why or why not?"
+  const raw =
+    "A ratio compares two quantities. [[lo:u2-1-1]]\n{{beat}}\nHere's a sharper one: if $\\frac{a}{b} = \\frac{2}{7}$, does that force $a = 2$ and $b = 7$ exactly?\n{{ask}}\n**Why or why not?**";
+  const kept = oneQuestionAsk(raw);
+  assert.ok(kept.endsWith("{{ask}}\nHere's a sharper one: if $\\frac{a}{b} = \\frac{2}{7}$, does that force $a = 2$ and $b = 7$ exactly?"), kept);
+  assert.ok(!kept.includes("Why or why not"));
+  assert.equal(droppedFollowUp(raw), "Why or why not?");
+  const blocks = parseMessage(raw, false);
+  const ask = blocks.at(-1);
+  assert.equal(ask?.t, "ask");
+  assert.ok(JSON.stringify(ask).includes("exactly?"));
+  // and the question is no longer in the prose above it
+  assert.equal(blocks.filter((b) => JSON.stringify(b).includes("exactly?")).length, 1);
+  // unmarked: two trailing paragraphs, the last a bare follow-up
+  const unmarked = "Look.\n{{beat}}\nDoes the ratio change?\n\nWhy or why not?";
+  assert.ok(oneQuestionAsk(unmarked).endsWith("{{ask}}\nDoes the ratio change?"));
+  assert.ok(chunkingViolations(raw, { lesson: true }).rules.includes("compound_question"));
+});
+
+test("FR-3503: a real question in the ask is never replaced by the prose before it", () => {
+  const t = "Is 2:3 the same as 4:6?\n{{beat}}\n{{ask}}\n**Which ratio is 6:9 equal to?**";
+  assert.equal(oneQuestionAsk(t), t);
+});
+
 test("FR-3503: one question, or a question with a plain sentence after it, is left alone", () => {
   for (const t of [
     "Look.\n{{beat}}\n{{ask}}\n**Which pairs follow the rule?**",

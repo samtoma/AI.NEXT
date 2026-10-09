@@ -503,7 +503,64 @@ export function droppedFollowUp(text: string): string | null {
   return q || null;
 }
 
+/** A follow-up with no question of its own: "Why or why not?", "Why?",
+ *  "How do you know?" — short, and only meaningful after another question. */
+const BARE_FOLLOW_UP =
+  /^(why( or why not)?|why not|how do you know|how can you tell|how did you (know|decide)|what makes you (think|say) (so|that)|why do you think( so)?|explain( why)?|can you explain( why)?)\b[^?؟]{0,40}[?؟.]?$/i;
+
+const QUESTION_END = /[?؟][*_"'”’)\]]*$/;
+
+/** Where the paragraph that ends at `end` begins: after the last blank
+ *  line or `{{beat}}` before it, whichever is later. */
+function paragraphStart(text: string, end: number): number {
+  const head = text.slice(0, end);
+  const blank = head.lastIndexOf("\n\n");
+  const beat = head.lastIndexOf(BEAT);
+  return Math.max(blank < 0 ? 0 : blank + 2, beat < 0 ? 0 : beat + BEAT.length);
+}
+
+/**
+ * The other way a reply carries two questions: the real one sits in the
+ * prose and the ask holds only a bare follow-up ("…does that force a = 2
+ * exactly?" then {{ask}} "Why or why not?"). The question is lifted into the
+ * ask and the follow-up dropped, so the highlighted question is the one to
+ * answer first.
+ */
+function liftQuestionIntoAsk(text: string): { kept: string; dropped: string | null } | null {
+  const marker = text.indexOf(ASK);
+  let askStart: number;
+  let prefixEnd: number;
+  if (marker >= 0) {
+    askStart = marker + ASK.length;
+    prefixEnd = marker;
+  } else {
+    if (!text.includes(BEAT)) return null;
+    const trimmed = text.trimEnd();
+    if (!QUESTION_END.test(trimmed)) return null;
+    askStart = paragraphStart(trimmed, trimmed.length);
+    prefixEnd = askStart;
+  }
+  const next = text.indexOf("{{", askStart);
+  const askEnd = next < 0 ? text.length : next;
+  const ask = text.slice(askStart, askEnd).trim();
+  if (!BARE_FOLLOW_UP.test(ask.replace(/\*\*/g, "").trim())) return null;
+
+  // the paragraph right before the ask, past any {{beat}} between them
+  const before = text.slice(0, prefixEnd).replace(/(\s|\{\{beat\}\})+$/, "");
+  if (!QUESTION_END.test(before)) return null;
+  const qStart = paragraphStart(before, before.length);
+  const question = before.slice(qStart).trim();
+  if (!question || question.includes("{{")) return null;
+
+  const head = before.slice(0, qStart).replace(/(\s|\{\{beat\}\})+$/, "");
+  const kept =
+    (head ? `${head}\n{{beat}}\n` : "") + `${ASK}\n${question}` + text.slice(askEnd);
+  return { kept, dropped: ask };
+}
+
 function splitAsk(text: string, streaming: boolean): { kept: string; dropped: string | null } {
+  const lifted = liftQuestionIntoAsk(text);
+  if (lifted) return lifted;
   const none = { kept: text, dropped: null };
   let start = text.indexOf(ASK);
   if (start >= 0) {
