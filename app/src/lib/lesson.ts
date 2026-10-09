@@ -1033,7 +1033,8 @@ export function learnPrompt(data: LessonData, probing: boolean): string {
   const rhythm = `- Every message is 2–4 beats, separated by {{beat}} alone on its own line ({{beat}} renders as a natural writing pause, never as text).
 - One beat = at most 2 short sentences (≤25 words total, no sentence over 20 words), OR one figure directive, OR one interactive directive.
 - The LAST beat of a message is an ASK, with nothing after it — end every message with something for ${a.them} to do or answer. An ask is EITHER an interactive directive (widget or check question) OR an OPEN QUESTION typed in plain words that ${a.they} answer${a.s} by typing back. Both count. Neither is the default.
-- AT MOST ONE ASK PER MESSAGE. When the ask is an open question, write {{ask}} alone on its own line immediately before it — everything after {{ask}} is the question, shown to ${a.them} in its own highlighted block, so nothing else may follow it. Put the part ${a.they} must answer in **bold**. A widget or check question is its own ask and needs no {{ask}}. The shape, with {{ask}} on the line before the question:
+- AT MOST ONE ASK PER MESSAGE. When the ask is an open question, write {{ask}} alone on its own line immediately before it — everything after {{ask}} is the question, shown to ${a.them} in its own highlighted block, so nothing else may follow it. Put the part ${a.they} must answer in **bold**. A widget or check question is its own ask and needs no {{ask}}.
+- ONE QUESTION PER ASK. The ask is a single question with a single question mark — never two joined together ("Could you still draw it as a grid? Why or why not?", "What is n(X × Y), and how did you get it?"). Ask the first; when ${a.they} answer${a.s}, the follow-up ("Why?", "How did you get that?") is the ask of your NEXT message. The shape, with {{ask}} on the line before the question:
   Close, but not quite.
   {{beat}}
   A function is a **special kind** of relation.

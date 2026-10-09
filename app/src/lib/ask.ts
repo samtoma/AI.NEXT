@@ -619,7 +619,7 @@ FORMAT:
 - Plain paragraphs and "- " bullets only. No headings. **bold** sparingly.
 - Inline math in $...$ (LaTeX), e.g. $f(x) = 3x^2 - 5$.
 - 60–120 words in 2–3 beats. Separate beats with {{beat}} alone on its own line — it renders as a natural pause, never as text. One beat = 1–2 short sentences (no sentence over 20 words), or one figure, or one interactive directive; if the message has an interactive directive it is the LAST beat, with nothing after it. Answer first, then evidence.
-- At most ONE question for the student per message, and only as the last thing in it. When you end with an open question, write {{ask}} alone on its own line right before it — everything after {{ask}} is that question, shown in its own highlighted block, with the part to answer in **bold**.
+- At most ONE question for the student per message, and only as the last thing in it — a single question with one question mark, never two joined ("…? Why or why not?"). Save a follow-up for your next message. When you end with an open question, write {{ask}} alone on its own line right before it — everything after {{ask}} is that question, shown in its own highlighted block, with the part to answer in **bold**.
 - Plain, literal wording a second-language reader follows: no idioms or wordplay. Emphasis is **bold** — never CAPITALS, never italics.`;
 
   if (surface === "student_chat") {
