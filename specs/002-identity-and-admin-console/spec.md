@@ -1236,11 +1236,15 @@ context: *"yes for sure, for decision 2, it is part of the overall consistency, 
 > **no "Still with me?" card** between topics; emphasis is **bold, never ALL CAPS**.
 
 - **FR-3501**: A tutor reply of more than one beat with **40 or more words** of prose MUST be shown
-  one beat at a time: each beat after the first MUST appear only after the student taps a **Next**
-  control under the previous one, and earlier beats MUST stay visible. A reply below that length
-  MUST be shown without the control (its beats keep the timed pause). The control MUST use the Noor
-  Play tokens and hold the touch-target minimum, MUST work with reduced motion on, and MUST cost no
-  model call.
+  one beat at a time: each beat after the first MUST appear only after the student taps
+  **Continue**, and earlier beats MUST stay visible. A reply below that length MUST be shown without
+  pausing (its beats keep the timed pause). **[AMENDED 2026-10-09 — Tamer chose option D]** While a
+  reply is paused, the chip row above the typing box MUST hold exactly two chips — **Say it another
+  way** and **Continue** — in place of the surface's suggestions, and the tutor's bubble MUST gain no
+  control. *Say it another way* MUST end the reply at the beats already shown — on screen and in the
+  transcript the model sees next — and then send the student's request for another explanation.
+  The chips MUST use the Noor Play tokens and hold the touch-target minimum, MUST work with reduced
+  motion on, and MUST cost no model call of their own.
 - **FR-3502**: An open question that ends a reply (`{{ask}}`) MUST be rendered as a tinted block —
   the Honey fill with its paired ink, no border of its own — at the foot of the **same** tutor
   bubble, never as a separate message, with 16px of space above it. It MUST NOT appear before every
@@ -1255,7 +1259,7 @@ context: *"yes for sure, for decision 2, it is part of the overall consistency, 
   carry no citation. The next objective MUST start in a later reply. The tutor MUST NOT be told to
   emit `{{check_in}}` between objectives.
 - **FR-3505**: A figure MUST be a beat of its own, and when anything follows it in the same reply
-  the **Next** control MUST sit between them, whatever the reply's length.
+  the reply MUST pause for **Continue** between them, whatever the reply's length.
 - **FR-3506**: The tutor prompts MUST state the writing rules of `docs/design/chunking.md` §3–§4:
   sentences of at most 20 words, beats of at most 25 words and one idea, at most 4 beats, plain
   literal English with no idioms or wordplay (replacing the "upbeat, playful" tone line), emphasis
@@ -1265,9 +1269,10 @@ context: *"yes for sure, for decision 2, it is part of the overall consistency, 
   `chunking_violation` analytics event naming the surface, the rules broken and their counts —
   never the reply's text — per environment (constitution XI). The check MUST NOT delay, alter or
   regenerate the reply.
-- **FR-3508**: Each tap on the **Next** control MUST be recorded as a `button_click` event named
-  `chunk_next`, carrying the surface and the beat reached, so how far students read through a
-  reply can be measured.
+- **FR-3508**: Each tap on **Continue** MUST be recorded as a `button_click` event named
+  `chunk_next`, and each *Say it another way* at a pause as `chunk_another`, carrying the surface and
+  the beat reached, so how far students read through a reply — and where they stop — can be
+  measured.
 
 ### Deferred by design — architecture only (FR-2901…)
 

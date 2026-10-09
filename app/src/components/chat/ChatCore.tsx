@@ -477,8 +477,13 @@ export function ChatCore({
   const scheduleContinueRef = useRef<() => void>(() => {});
   // cancel hook for the active paced reveal (unmount safety)
   const revealCancelRef = useRef<() => void>(() => {});
-  // FR-3501: resumes a reveal stopped at a beat — the Next control's handler
+  // FR-3501: resumes a reveal stopped at a beat — the Continue chip's handler
   const gateResumeRef = useRef<() => void>(() => {});
+  // FR-3501: ends a paused reply where it stands — "Say it another way"
+  const gateStopRef = useRef<() => void>(() => {});
+  // a turn the student asked for while the reply was still open; sent the
+  // moment it closes (send() refuses while a stream is open)
+  const queuedSendRef = useRef<string | null>(null);
   // sticky auto-scroll: cleared when the user scrolls away from the bottom.
   // A surface with `leading` content (the sealed passage cards) starts a FRESH
   // session unstuck and scrolled to the top, so the student actually sees the
@@ -713,12 +718,16 @@ export function ChatCore({
       let beatsShown = 1;
       /** a boundary already stopped at — resuming must step past it */
       let openedGateAt = -1;
+      /** "Say it another way" at a pause: the reply ends where the student
+       *  stopped reading, and the transcript keeps only what was shown */
+      let stoppedAt: number | null = null;
 
       const cancelReveal = () => {
         if (revealFinished) return;
         revealFinished = true;
         if (revealTimer) clearTimeout(revealTimer);
         gateResumeRef.current = () => {};
+        gateStopRef.current = () => {};
         revealResolve();
       };
       revealCancelRef.current = cancelReveal;
@@ -778,16 +787,28 @@ export function ChatCore({
         return dwell(TICK_MS);
       };
 
-      /** FR-3501: the student tapped Next — step past the boundary. */
+      /** FR-3501: the student asked for it another way at a pause — what
+       *  they have not read is dropped, from the screen and from the
+       *  transcript the model sees next, so the re-explanation answers what
+       *  they actually saw. */
+      const stopAtGate = () => {
+        if (revealFinished) return;
+        stoppedAt = cursor;
+        recordChunkAction("chunk_another", surface, beatsShown);
+        cancelReveal();
+      };
+
+      /** FR-3501: the student tapped Continue — step past the boundary. */
       const resumeFromGate = () => {
         if (revealFinished) return;
         gateResumeRef.current = () => {};
+        gateStopRef.current = () => {};
         openedGateAt = cursor;
         revealedSinceGate = false;
         figureSinceGate = false;
         beatsShown++;
         patchLast({ gated: false });
-        recordChunkNext(surface, beatsShown);
+        recordChunkAction("chunk_next", surface, beatsShown);
         revealTimer = setTimeout(tick, 0);
       };
 
@@ -806,7 +827,8 @@ export function ChatCore({
           patchLast({ reveal: cursor, gated: true });
           emitNewCites(acc.slice(0, cursor));
           gateResumeRef.current = resumeFromGate;
-          return; // no timer: the Next control resumes the reveal
+          gateStopRef.current = stopAtGate;
+          return; // no timer: the Continue chip resumes the reveal
         }
         patchLast({ reveal: cursor });
         emitNewCites(acc.slice(0, cursor));
@@ -927,8 +949,15 @@ export function ChatCore({
         streamEnded = true;
 
         if (metaBuf) {
-          await revealDone; // also waits out any Next the student has not tapped
-          patchLast({ streaming: false, meta: metaBuf, reveal: undefined, gated: undefined });
+          await revealDone; // also waits out any Continue not yet tapped
+          if (stoppedAt != null) acc = acc.slice(0, stoppedAt).trimEnd();
+          patchLast({
+            streaming: false,
+            meta: metaBuf,
+            reveal: undefined,
+            gated: undefined,
+            ...(stoppedAt != null ? { text: acc } : {}),
+          });
           emitNewCites(acc);
           onAssistantDone?.(acc);
           if (acc.includes("{{finish_lesson}}")) onFinishDirective?.();
@@ -1002,8 +1031,15 @@ export function ChatCore({
         cancelReveal();
         streamingRef.current = false;
         setStreaming(false);
+        // the student asked for something while the reply was paused
+        const queued = queuedSendRef.current;
+        if (queued) {
+          queuedSendRef.current = null;
+          pendingContinue.current = false;
+          setTimeout(() => sendRef.current(queued), 0);
+        }
         // an auto-continue was blocked by this open stream — fire it now
-        if (pendingContinue.current) {
+        else if (pendingContinue.current) {
           pendingContinue.current = false;
           scheduleContinueRef.current();
         }
@@ -1218,8 +1254,13 @@ export function ChatCore({
     [onCiteClick]
   );
 
-  // FR-3501: the Next control resumes whichever reveal is stopped at a beat
-  const handleNext = useCallback(() => gateResumeRef.current(), []);
+  // FR-3501: the paused reply's two chips
+  const handleContinue = useCallback(() => gateResumeRef.current(), []);
+  const handleSayAnotherWay = useCallback(() => {
+    queuedSendRef.current = arabicUi ? SAY_ANOTHER_WAY_AR : SAY_ANOTHER_WAY_EN;
+    gateStopRef.current();
+  }, [arabicUi]);
+  const gatedNow = messages.some((m) => m.streaming && m.gated);
 
   const paced = !prefersReducedMotion();
 
@@ -1278,7 +1319,6 @@ export function ChatCore({
             renderPassage={renderPassage}
             onWidgetNote={handleWidgetNote}
             onCheckIn={handleCheckIn}
-            onNext={handleNext}
             onOpenQuestion={handleOpenQuestion}
             interceptWidget={interceptWidget}
             onDirective={onDirective}
@@ -1287,9 +1327,19 @@ export function ChatCore({
         ))}
       </div>
 
+      {/* FR-3501: a reply paused at a beat puts its two moves where the
+          student's thumb already is — the bubble itself gains nothing */}
+      {gatedNow && (
+        <GateChips
+          onContinue={handleContinue}
+          onSayAnotherWay={handleSayAnotherWay}
+          arabicUi={arabicUi}
+        />
+      )}
+
       {/* suggestion chips — stay clickable after every stream, unless the
           surface retires them once the conversation is under way */}
-      {suggestions.length > 0 &&
+      {!gatedNow && suggestions.length > 0 &&
         (suggestionsUntil == null ||
           messages.filter((m) => !m.hidden && (m.role === "user" || m.role === "assistant")).length <
             suggestionsUntil) && (
@@ -1449,7 +1499,6 @@ const MessageRow = memo(function MessageRow({
   renderPassage,
   onWidgetNote,
   onCheckIn,
-  onNext,
   interceptWidget,
   onDirective,
   onSwitchSubject,
@@ -1482,8 +1531,6 @@ const MessageRow = memo(function MessageRow({
   renderPassage?: ChatCoreProps["renderPassage"];
   onWidgetNote?: (note: string) => void;
   onCheckIn?: (choice: string) => void;
-  /** FR-3501: step the reply being revealed past the beat it stopped at */
-  onNext?: () => void;
   interceptWidget?: ChatCoreProps["interceptWidget"];
   onDirective?: ChatCoreProps["onDirective"];
   onSwitchSubject?: ChatCoreProps["onSwitchSubject"];
@@ -1667,13 +1714,8 @@ const MessageRow = memo(function MessageRow({
           },
         })}
 
-        {m.streaming && m.gated ? (
-          <NextBeat onNext={onNext} arabicUi={arabicUi} />
-        ) : (
-          m.streaming &&
-          visibleText.length > 0 && (
-            <span className="ms-0.5 inline-block h-3.5 w-[7px] translate-y-[2px] animate-pulse rounded-full bg-accent" />
-          )
+        {m.streaming && !m.gated && visibleText.length > 0 && (
+          <span className="ms-0.5 inline-block h-3.5 w-[7px] translate-y-[2px] animate-pulse rounded-full bg-accent" />
         )}
 
         {debug && m.meta && (
@@ -1835,42 +1877,64 @@ function BoardChip({
  */
 const CHECK_IN_PICKED = "bg-card-warm! border-solid! border-ink! text-ink!";
 
-/** FR-3508: one Next tap, to the first-party record — the surface and the
- *  beat reached, nothing the student wrote. Fire-and-forget. */
-function recordChunkNext(surface: string, beat: number) {
+/** FR-3508: one move at a paused reply, to the first-party record — which
+ *  move, the surface and the beat reached, nothing the student wrote.
+ *  Fire-and-forget. */
+function recordChunkAction(name: "chunk_next" | "chunk_another", surface: string, beat: number) {
   void authFetch("/api/analytics", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       event: "button_click",
-      properties: { name: "chunk_next", surface, beat },
+      properties: { name, surface, beat },
     }),
     keepalive: true,
   }).catch(() => {});
 }
 
+const SAY_ANOTHER_WAY_EN = "I don't get it — say it another way";
+const SAY_ANOTHER_WAY_AR = "لسه مش فاهم — اشرحها بطريقة تانية";
+
 /**
- * FR-3501: the reveal has stopped at a beat. One secondary sticker button,
- * end-aligned under the beat it follows, at the touch-target minimum. It
- * takes focus when it appears so a keyboard or switch user lands on it, and
- * its arrow points the way the text reads.
+ * FR-3501: the reply has stopped at a beat. Its two moves take the chip row
+ * above the composer: "Say it another way" ends the reply where the student
+ * stopped and asks again; Continue — the screen's one amber while the
+ * composer's send is idle — shows the next beat. Continue takes focus when it
+ * appears, so Enter or a switch lands on it.
  */
-function NextBeat({ onNext, arabicUi }: { onNext?: () => void; arabicUi: boolean }) {
+function GateChips({
+  onContinue,
+  onSayAnotherWay,
+  arabicUi,
+}: {
+  onContinue: () => void;
+  onSayAnotherWay: () => void;
+  arabicUi: boolean;
+}) {
   const ref = useRef<HTMLButtonElement>(null);
   useEffect(() => {
     ref.current?.focus({ preventScroll: true });
   }, []);
   return (
-    <div className="mt-3 flex justify-end">
+    <div
+      dir={arabicUi ? "rtl" : "ltr"}
+      className="flex flex-wrap gap-2 border-t border-line-soft px-4 pb-2 pt-3"
+    >
+      <button type="button" onClick={onSayAnotherWay} data-chunk-another="" className={CHIP_CONTROL}>
+        {arabicUi ? "اشرحها بطريقة تانية" : "Say it another way"}
+      </button>
       <button
         ref={ref}
         type="button"
-        dir={arabicUi ? "rtl" : "ltr"}
-        onClick={onNext}
+        onClick={onContinue}
         data-chunk-next=""
-        className={cx(BUTTON_SECONDARY, "anim-pop px-5")}
+        className={cx(
+          CHIP_CONTROL,
+          "anim-pop bg-[var(--noor-action)]! text-[color:var(--noor-on-action)]!"
+        )}
       >
-        {arabicUi ? "التالي ‹" : "Next ›"}
+        {arabicUi ? "كمّل" : "Continue"}
+        <span aria-hidden>↓</span>
       </button>
     </div>
   );
