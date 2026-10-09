@@ -178,11 +178,8 @@ const AR_MODE_COPY: Record<
 };
 
 const AR_SUGGESTIONS = ["لسه مش فاهم — اشرحها بطريقة تانية", "فهمت — كمّل ✓"];
-/** Shown as the lesson chat handoff's short links; sent as the same student turns as before. */
-const EN_SUGGESTIONS: ChatSuggestion[] = [
-  { label: "Say it another way", message: "I don't get it — say it another way" },
-  "Got it — next ✓",
-];
+/** Shown as the lesson chat handoff's short links. The first sends the paused reply's chip words. */
+const EN_SUGGESTIONS: ChatSuggestion[] = ["Say it another way", "Got it — next ✓"];
 
 /**
  * {{show_passage:…}} renders as a REFOCUS CHIP, not a second copy of the text.

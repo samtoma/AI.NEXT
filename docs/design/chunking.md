@@ -33,7 +33,7 @@ Now a long reply **pauses after each beat**:
   **Say it another way** and an amber **Continue ↓**. The bubble itself gains nothing.
 - **Continue** shows the next beat. Earlier beats stay visible.
 - **Say it another way** ends the reply where the student stopped reading — the unread beats are
-  dropped from the screen and from what the tutor sees next — and asks for another explanation.
+  dropped from the screen and from what the tutor sees next — and sends "Say it another way" — the same words as the lesson's default chip, so the two never disagree.
 - The question appears only once every beat before it has been shown, so it is always the last thing
   on screen and is never above text the student hasn't reached.
 - No model call is involved. It costs nothing and adds no waiting.

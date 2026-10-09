@@ -2064,7 +2064,7 @@ function recordChunkAction(name: "chunk_next" | "chunk_another", surface: string
   }).catch(() => {});
 }
 
-const SAY_ANOTHER_WAY_EN = "I don't get it — say it another way";
+const SAY_ANOTHER_WAY_EN = "Say it another way";
 const SAY_ANOTHER_WAY_AR = "لسه مش فاهم — اشرحها بطريقة تانية";
 
 /**
