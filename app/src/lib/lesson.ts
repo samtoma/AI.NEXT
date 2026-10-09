@@ -16,6 +16,7 @@ import { getVisualsForLos } from "./visuals";
 import { mcqChoices } from "./types";
 import { ANSWER_ONLY_INSTRUCTION, isAnswerOnly } from "./question-flags";
 import { figuresByQuestion, noteFigureless } from "./question-figures";
+import { EXPECTS_MATH_RULE } from "./math-keys";
 import { effectiveProbing, learnWrongAnswerRules, PROBING_SURFACE } from "./socratic-probing";
 import { COURSE_RANK, MODULE_ORDER } from "./module-order";
 import { DEFAULT_LESSON_SLUG, sanitizeLessonSlug, slugOfLo } from "./lesson-slug";
@@ -1171,6 +1172,7 @@ ${widgetDocs}
 - ${figureDirectivesDoc(exViz)}
   A figure counts as the ONE directive of its message. ${vizGuidance}
 - {{finish_lesson}} — arms ${a.their} Finish button (shown both in the header and as a chat chip); tapping it is what triggers the comprehension report, not this marker. Emit it alone on the final line of your LAST message only.
+${EXPECTS_MATH_RULE(a.them)}
 Results of widgets and questions arrive as "[live event]" lines — ALWAYS adapt your next beat to the latest result.
 
 ${crossSubjectRule(data)}

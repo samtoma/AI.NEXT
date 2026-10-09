@@ -169,6 +169,7 @@ export function WhiteboardPanel({
   onAttempt,
   debug,
   arabicUi = false,
+  symbols = false,
   vizMeta,
   collapsed,
   onToggleCollapsed,
@@ -192,6 +193,8 @@ export function WhiteboardPanel({
   onAttempt: (r: AttemptResult, q: SpineQuestion) => void;
   debug: boolean;
   /** RTL/Arabic-script subject — forwarded to the question card's strings */
+  /** a maths lesson: a typed question on the board gets the "∑ Symbols" pill (prototype) */
+  symbols?: boolean;
   arabicUi?: boolean;
   /** lesson figure library metadata (captions/pages without a fetch) */
   vizMeta: ReadonlyMap<string, LessonViz>;
@@ -390,6 +393,7 @@ export function WhiteboardPanel({
               (focusedQ ? (
                 <ChatQuestionCard
                   question={focusedQ}
+                  symbols={symbols}
                   debug={debug}
                   lang={arabicUi ? "ar" : "en"}
                   onResult={onAttempt}

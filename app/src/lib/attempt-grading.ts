@@ -18,7 +18,7 @@
  *
  * Pure: no database, no request, no clock. The route owns the unit of work around it.
  */
-import { evaluateArithmeticExpression } from "./arithmetic";
+import { evaluateArithmeticExpression, normalizeMathSigns } from "./arithmetic";
 import { mark, readMarkerSpec, reentryMessage, type MarkerEngine } from "./answer-marker";
 import { LESS_SPECIFIC_MESSAGE, lessSpecificKeys } from "./question-flags";
 
@@ -82,7 +82,13 @@ export function markAnswer(
 ): AnswerVerdict {
   const spec = q.question_type === "widget" ? null : readMarkerSpec(q.choices);
   if (!spec) {
-    const isCorrect = grade(q.question_type, q.correct_answer, given);
+    // the symbol picker's signs (− ² √ …) read as the arithmetic they mean — here, so
+    // grade() stays the replay's frozen copy
+    const isCorrect = grade(
+      q.question_type,
+      q.correct_answer,
+      q.question_type === "numeric" ? normalizeMathSigns(given) : given
+    );
     // A TRUE option that is less precise than the key (Samuel's G2 answer 20): not wrong, not an
     // attempt — asked again, as the marker's re-entry is. Read only for a wrong pick on a question
     // that carries the flag, so every other answer is graded exactly as before (FR-C03).

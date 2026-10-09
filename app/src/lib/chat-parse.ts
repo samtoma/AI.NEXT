@@ -9,6 +9,7 @@
  *   {{widget:viz:{"kind":"ratio_bars","spec":{"parts":[…]},"caption":"…"}}}
  *   {{widget:viz_ref:v:geo1-1:001}}   (stored figure by id — no JSON payload)
  *   {{finish_lesson}}
+ *   {{expects_math}}   (the message asks for a value, step or equation: show the symbol tray)
  *
  * Widget payloads are JSON objects and may nest (the viz directive carries a
  * full primitive spec), so directives are scanned with a small string-aware
@@ -87,6 +88,14 @@ export function hasFinishDirective(text: string): boolean {
   return text.includes("{{finish_lesson}}");
 }
 
+/**
+ * True when the (complete) text carries {{expects_math}}: the tutor has asked for a value, step or
+ * equation, so the composer shows the maths symbol tray. Absent means hidden.
+ */
+export function hasExpectsMath(text: string): boolean {
+  return text.includes(EXPECTS_MATH);
+}
+
 /** The extracted answer of a complete {{answer_submitted:<given>}}, or null
  *  when the message carries none. */
 export function extractAnswerSubmitted(text: string): string | null {
@@ -120,6 +129,7 @@ const SWITCH_RE = new RegExp(
   `^\\{\\{switch_subject:(${SPINE_SUBJECT_KEYS.join("|")})\\}\\}`
 );
 const FINISH = "{{finish_lesson}}";
+const EXPECTS_MATH = "{{expects_math}}";
 const BEAT = "{{beat}}";
 const CHECK_IN = "{{check_in}}";
 const REVEAL_ANSWER = "{{reveal_answer}}";
@@ -213,6 +223,10 @@ function parseActionAt(s: string, i: number): Action | null {
               };
     return { start: i, end: i + m[0].length, block };
   }
+  if (head.startsWith(EXPECTS_MATH)) {
+    // a signal to the composer, never anything a student reads
+    return { start: i, end: i + EXPECTS_MATH.length, block: null };
+  }
   if (head.startsWith(FINISH)) {
     return { start: i, end: i + FINISH.length, block: { t: "finish" } };
   }
@@ -302,6 +316,7 @@ const DIRECTIVE_KEYWORDS = [
   "highlight:",
   "widget:",
   "finish_lesson}}",
+  "expects_math}}",
   "beat}}",
   "check_in}}",
   "switch_subject:",

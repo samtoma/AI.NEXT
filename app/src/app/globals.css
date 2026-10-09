@@ -1171,6 +1171,9 @@ body[data-focus="lesson"] > footer {
   /* tokens.css --play-text-muted, 6.9:1 on white: labels, option letters,
      and the text of a wrong answer, which is still a live control */
   --play-text-muted: #5a5570;
+  /* tokens.css --play-text-dim, 8.9:1: secondary body copy. The maths symbol
+     picker's key names and group captions (handoff: no grey lighter than this). */
+  --play-text-dim: #4a4266;
   /* the chat bubble's tail corner — `18px 6px 18px 18px` in the handoff's
      Chat bubbles spec, the notch toward the speaker */
   --play-radius-notch: 6px;
@@ -1358,4 +1361,19 @@ body[data-focus="lesson"] > footer {
   .skillmap-wiggle {
     animation: none;
   }
+}
+
+/* The maths symbol picker's card appearing over the chat (symbol-picker handoff
+   §3): 150ms ease-out, translateY(6px) scale(.97) → none, opacity 0 → 1.
+   Prototype, feat/proto-math-symbol-keys. */
+@keyframes math-picker-in {
+  from { opacity: 0; transform: translateY(6px) scale(0.97); }
+  to { opacity: 1; transform: none; }
+}
+.math-picker-in {
+  animation: math-picker-in 150ms ease-out;
+  transform-origin: bottom right;
+}
+@media (prefers-reduced-motion: reduce) {
+  .math-picker-in { animation: none; }
 }
