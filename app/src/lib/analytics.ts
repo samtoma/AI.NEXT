@@ -50,6 +50,9 @@ export type AnalyticsEvent =
   | "parent_view_opened"
   // safety — flag type only, never detail (FR-802)
   | "safety_flag_raised"
+  // a delivered tutor reply that broke a chunking rule — rule ids and counts,
+  // never the reply's text (FR-3507)
+  | "chunking_violation"
   | "button_click";
 
 export type AnalyticsProperties = Record<string, unknown>;

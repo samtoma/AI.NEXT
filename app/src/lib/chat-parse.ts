@@ -9,6 +9,7 @@
  *   {{widget:viz:{"kind":"ratio_bars","spec":{"parts":[…]},"caption":"…"}}}
  *   {{widget:viz_ref:v:geo1-1:001}}   (stored figure by id — no JSON payload)
  *   {{finish_lesson}}
+ *   {{ask}}   (FR-3502: everything after it is the reply's closing question)
  *
  * Widget payloads are JSON objects and may nest (the viz directive carries a
  * full primitive spec), so directives are scanned with a small string-aware
@@ -40,6 +41,11 @@ export type Block =
   | { t: "highlight"; ids: string[] }
   | { t: "widget"; name: string; props: Record<string, unknown> }
   | { t: "beat" }
+  /** FR-3502: the open question that ends a reply. Written as `{{ask}}` alone
+   *  on its own line; every paragraph after it belongs to the ask. A finished
+   *  reply of more than one beat that ends in a question without the marker
+   *  is promoted to one (`parseMessage`). */
+  | { t: "ask"; paras: Inline[][] }
   | { t: "check_in" }
   | { t: "switch_subject"; subject: SpineSubject }
   | { t: "finish" }
@@ -121,6 +127,7 @@ const SWITCH_RE = new RegExp(
 );
 const FINISH = "{{finish_lesson}}";
 const BEAT = "{{beat}}";
+const ASK = "{{ask}}";
 const CHECK_IN = "{{check_in}}";
 const REVEAL_ANSWER = "{{reveal_answer}}";
 const MAX_PAYLOAD = 4000;
@@ -216,6 +223,9 @@ function parseActionAt(s: string, i: number): Action | null {
   if (head.startsWith(FINISH)) {
     return { start: i, end: i + FINISH.length, block: { t: "finish" } };
   }
+  if (head.startsWith(ASK)) {
+    return { start: i, end: i + ASK.length, block: { t: "ask", paras: [] } };
+  }
   if (head.startsWith(BEAT)) {
     return { start: i, end: i + BEAT.length, block: { t: "beat" } };
   }
@@ -303,6 +313,7 @@ const DIRECTIVE_KEYWORDS = [
   "widget:",
   "finish_lesson}}",
   "beat}}",
+  "ask}}",
   "check_in}}",
   "switch_subject:",
   "answer_submitted:",
@@ -446,16 +457,51 @@ function parseTextChunk(chunk: string, blocks: Block[]) {
   }
 }
 
+/** Text after an `{{ask}}` belongs to the ask, one line per line written:
+ *  the givens and the question itself stay on separate lines rather than
+ *  being run together into a paragraph. */
+function parseAskChunk(chunk: string, ask: Extract<Block, { t: "ask" }>) {
+  for (const line of chunk.split("\n")) {
+    const trimmed = line.trim().replace(/^[-•]\s+/, "");
+    if (trimmed) ask.paras.push(parseInlines(trimmed));
+  }
+}
+
+const inlineText = (inlines: Inline[]) =>
+  inlines.map((x) => (x.t === "text" ? x.v : "")).join("");
+
 /** Full message → renderable blocks. Streaming ⇒ incomplete tail withheld. */
 export function parseMessage(text: string, streaming: boolean): Block[] {
   const s = streaming ? stripIncompleteTail(text) : text;
   const blocks: Block[] = [];
+  let ask: Extract<Block, { t: "ask" }> | null = null;
   let last = 0;
+  const chunk = (t: string) => (ask ? parseAskChunk(t, ask) : parseTextChunk(t, blocks));
   for (const a of scanActions(s)) {
-    if (a.start > last) parseTextChunk(s.slice(last, a.start), blocks);
-    if (a.block) blocks.push(a.block);
+    if (a.start > last) chunk(s.slice(last, a.start));
+    if (a.block?.t === "ask") {
+      // one ask per reply (FR-3503): a second marker continues the first
+      if (!ask) {
+        ask = a.block;
+        blocks.push(ask);
+      }
+    } else if (a.block) {
+      blocks.push(a.block);
+    }
     last = a.end;
   }
-  if (last < s.length) parseTextChunk(s.slice(last), blocks);
+  if (last < s.length) chunk(s.slice(last));
+  if (!streaming && !ask) promoteTrailingQuestion(blocks);
   return blocks;
+}
+
+/** FR-3502's fallback: a finished reply of more than one beat whose last
+ *  block is a paragraph ending in a question mark shows that paragraph as
+ *  the ask, so a forgotten marker never buries the question. */
+function promoteTrailingQuestion(blocks: Block[]) {
+  const lastBlock = blocks[blocks.length - 1];
+  if (lastBlock?.t !== "para") return;
+  if (!blocks.some((b) => b.t === "beat")) return;
+  if (!/[?؟]\s*$/.test(inlineText(lastBlock.inlines))) return;
+  blocks[blocks.length - 1] = { t: "ask", paras: [lastBlock.inlines] };
 }

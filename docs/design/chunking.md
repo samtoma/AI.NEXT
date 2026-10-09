@@ -168,6 +168,7 @@ message text, tagged by environment.
 | `missing_ask_marker` | the reply ends in a question with no `{{ask}}` |
 | `multiple_objectives` | a lesson reply cites more than one learning objective |
 | `figure_and_ask_same_beat` | a beat holds a figure and the ask together |
+| `figure_not_alone` | a beat holds a figure and prose together |
 | `all_caps` | a word of 3+ letters in capitals that isn't a known acronym |
 | `dash_overuse` | a sentence with more than one — |
 | `italics` | single-asterisk emphasis |
@@ -196,7 +197,7 @@ Close, but not quite.
 {{beat}}
 A function is a **special kind** of relation. [[lo:u1-1-2]]
 {{beat}}
-A **relation** from X to Y is any set of pairs (a, b), where a is in X and b is in Y.
+A **relation** from X to Y is any set of pairs (a, b). Here a is in X and b is in Y.
 {{beat}}
 {{ask}}
 X = {1, 2} and Y = {2, 4, 6}.

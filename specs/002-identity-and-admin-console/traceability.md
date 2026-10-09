@@ -652,20 +652,29 @@ needs a database. That is why several rows below distinguish "proved once" from 
 
 ## 7h. Chunked tutor turns — FR-3501…FR-3508 **[ADDED 2026-10-09 — proposed, pending Samuel's triage]**
 
-> Written on `req/FR-3501-chunked-tutor-turns` before the code, per `docs/BRANCHING.md`. Every row is
-> OPEN until the implementation lands on the same branch. Design reasoning:
-> [`docs/design/chunking.md`](../../docs/design/chunking.md).
+> Written on `req/FR-3501-chunked-tutor-turns` — the requirements first (`4254f83`), then the code on
+> the same branch. Design reasoning: [`docs/design/chunking.md`](../../docs/design/chunking.md).
+> **The prompt half needs Samuel's sign-off as ADR-0020's eighth exception**: his 2026-09-22 hold
+> ("do not make changes to the prompt for now") covers `learnPrompt`, and FR-3504/FR-3506 change it.
+> `probing-prompts.golden.json` was regenerated for that reason, as it was for the fifth exception.
+> Live evidence is a **local** dev server against the local database, signed in as the seeded
+> `omar@local.test`, lesson 2-2, interactions #372–#374 — not the box.
+>
+> **Known, not caused here:** in `next dev` the lesson's *opening* reply appears all at once. React's
+> development double-mount runs ChatCore's unmount cleanup, which cancels the opener's paced reveal
+> (pre-existing — the timed reveal never ran on the dev opener either), so the Next control cannot
+> appear on it in dev. Every later reply is paced and gated. Not checked on a production build.
 
 | FR | Requirement | Status | Implementation | Proof |
 |---|---|---|---|---|
-| FR-3501 | A reply of 2+ beats and 40+ words is stepped through with a Next control; shorter replies keep the timed pause; works with reduced motion; no model call | **OPEN** | — | — |
-| FR-3502 | The `{{ask}}` question renders as a Honey block inside the same bubble, only after every beat before it; replay renders it the same way; an unmarked trailing question is promoted | **OPEN** | — | — |
-| FR-3503 | At most one ask per reply, always last | **OPEN** | — | — |
-| FR-3504 | A lesson reply teaches at most one learning objective; no `{{check_in}}` between objectives | **OPEN** | — | — |
-| FR-3505 | A figure is its own beat, and a Next control always follows it when more comes after | **OPEN** | — | — |
-| FR-3506 | The tutor prompts state the chunking writing rules; the playful tone line is replaced | **OPEN** | — | — |
-| FR-3507 | Every delivered reply is checked; breaches logged as `chunking_violation` with rules and counts, no text, per environment; never delays or regenerates | **OPEN** | — | — |
-| FR-3508 | Each Next tap is recorded as `button_click` `chunk_next` with surface and beat | **OPEN** | — | — |
+| FR-3501 | A reply of 2+ beats and 40+ words is stepped through with a Next control; shorter replies keep the timed pause; works with reduced motion; no model call | **BUILT** | `app/src/lib/chunking.ts` — `gateAtBoundary`, `GATE_MIN_WORDS = 40`; `app/src/components/chat/ChatCore.tsx` — the reveal engine stops at `{{beat}}`/`{{ask}}` (`GATED`), `gateResumeRef`, `NextBeat`; reduced motion now runs the engine at zero delay instead of skipping it | `chunking.test.mts` (gate: stops, pauses, waits, never stops before nothing, never stops twice). **Rendered live**: reply #373 (65 words, 5 beats) showed one beat, then four Next taps, each revealing one beat, the typing box disabled until the last. Reduced motion **not exercised** in a browser — hence BUILT. |
+| FR-3502 | The `{{ask}}` question renders as a Honey block inside the same bubble, only after every beat before it; replay renders it the same way; an unmarked trailing question is promoted | **BUILT** | `app/src/lib/chat-parse.ts` — `{ t: "ask" }`, `parseAskChunk`, `promoteTrailingQuestion`; `app/src/components/chat/message-blocks.tsx` — the ask block (`bg-card-warm` / `text-ink`, no border), shared with the console replay | `chunking.test.mts` (parse, promotion, streaming hold-back, source scan for the token). **Rendered live**: #372 and #373 (promoted — no marker) and #374 (`{{ask}}`) each showed the Honey block last, after the final Next. The console replay was **not opened** — hence BUILT. Replays of turns from before this change will show a promoted question in the block; ADR-0015's `renderer_version` already marks such turns. |
+| FR-3503 | At most one ask per reply, always last | **BUILT** | Prompts: `lesson.ts` rhythm ("AT MOST ONE ASK PER MESSAGE"), `ask.ts` FORMAT; checked by `chunkingViolations` (`multiple_asks`, `ask_not_last`) | `chunking.test.mts`. #372–#374 each carried one ask, last. A model rule — adherence is measured by FR-3507, not guaranteed. |
+| FR-3504 | A lesson reply teaches at most one learning objective; no `{{check_in}}` between objectives | **BUILT** | `lesson.ts` rhythm ("ONE LEARNING OBJECTIVE PER MESSAGE … Never use {{check_in}}"); `multiple_objectives` in `chunkingViolations` (lesson surfaces only) | `chunking.test.mts` (prompt states it; checker catches two, spares the Your Progress chat). #372–#374 cited one objective each. |
+| FR-3505 | A figure is its own beat, and a Next control always follows it when more comes after | **BUILT** | `gateAtBoundary`'s `figureSinceGate`, set by `FIGURE_DIRECTIVE_RE` in the engine; `lesson.ts` "A FIGURE IS A BEAT OF ITS OWN"; `figure_and_ask_same_beat`, `figure_not_alone` | `chunking.test.mts`; #372's beats run through the gate in isolation give *gate* after the figure. **Not seen live** — both figure replies were openers (see the dev note above). #374 put its figure beside a sentence: `figure_not_alone` was added to catch that. |
+| FR-3506 | The tutor prompts state the chunking writing rules; the playful tone line is replaced | **VERIFIED** | `lesson.ts` (rhythm WRITING line, the shape example, TONE), `subjects.ts` (`MATH_EN_CONTRACT`), `ask.ts` (FORMAT), `checkin.ts` (the "playful" job line) | `chunking.test.mts` renders `learnPrompt` (probing off and on) and both Ask surfaces and asserts the rules and the absence of "playful". `probing-prompts.golden.json` regenerated. The example was added after #372 and #373 both ignored the bare `{{ask}}` rule; #374, the first reply after it, used the marker. |
+| FR-3507 | Every delivered reply is checked; breaches logged as `chunking_violation` with rules and counts, no text, per environment; never delays or regenerates | **VERIFIED** | `app/src/app/api/ask/route.ts` — `chunkingViolations` after `logTurn`, `void emit(...)`; `analytics.ts` — the event name | Local `analytics_events`: #372 → `missing_ask_marker`; #373 → `too_many_beats`, `missing_ask_marker`; #374 → none. Properties carry surface, interaction id, rules, counts, words, beats — no text. |
+| FR-3508 | Each Next tap is recorded as `button_click` `chunk_next` with surface and beat | **VERIFIED** | `ChatCore.tsx` — `recordChunkNext` via `/api/analytics` | Local `analytics_events`: four `button_click` rows, `chunk_next`, `lesson_learn`, beats 2–5, from the #373 walk-through. |
 
 ---
 
@@ -737,16 +746,16 @@ Items 10, 13 and 14 are engineering's.
 | Functional requirements | **168** |
 | Success criteria | **14** |
 | Traced (every one needs a row) | **182 / 182** |
-| — verified | 100 |
-| — built | 22 |
+| — verified | 103 |
+| — built | 27 |
 | — partial | 44 |
-| — open | 10 |
+| — open | 2 |
 | — blocked | 1 |
 | — deferred | 5 |
-| Requirements a test declares | **98** |
+| Requirements a test declares | **106** |
 | Tasks complete / total | **0 / 0** |
 
-**Of 100 requirements marked VERIFIED, 54 have an automated test declaring them.** The remaining 46 were verified by running the product — a browser session, a query against a loaded database — which is real evidence and is not re-checked on any later commit. That gap is the honest measure of this build's regression risk, and it is the number to drive down.
+**Of 103 requirements marked VERIFIED, 57 have an automated test declaring them.** The remaining 46 were verified by running the product — a browser session, a query against a loaded database — which is real evidence and is not re-checked on any later commit. That gap is the honest measure of this build's regression risk, and it is the number to drive down.
 
 Counted from the artifacts by `scripts/traceability.py`, which fails CI when the spec, the matrix and the tests disagree. The hand-maintained table this replaced had drifted five requirements out of date, and an entire deferred block had no row at all.
 
