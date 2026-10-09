@@ -357,10 +357,6 @@ export function stripIncompleteTail(s: string): string {
     }
   }
   if (dollars % 2 === 1) s = s.slice(0, lastDollar);
-  // an unclosed **bold** run is still being streamed — hold it back, so the
-  // student never sees the opening asterisks before the closing pair lands
-  const bolds = s.split("**").length - 1;
-  if (bolds % 2 === 1) s = s.slice(0, s.lastIndexOf("**"));
   return s;
 }
 
@@ -474,141 +470,9 @@ function parseAskChunk(chunk: string, ask: Extract<Block, { t: "ask" }>) {
 const inlineText = (inlines: Inline[]) =>
   inlines.map((x) => (x.t === "text" ? x.v : "")).join("");
 
-/**
- * FR-3503: an ask is ONE question. When the model joins a second one onto it
- * ("Does the ratio stay 2:3, or does it change? Why do you think so?"), only
- * the first is kept — the follow-up belongs to the next reply, and the tutor,
- * which reads its own message back from the transcript, sees one question
- * asked. A plain sentence after the question ("Take your time.") is kept.
- *
- * The ask is the text after `{{ask}}`, or — with no marker — the last
- * paragraph of a multi-beat reply when it is a question (FR-3502's
- * promotion). While streaming, anything after the first question mark is
- * held back, since whether it is a second question is not yet known.
- */
-export function oneQuestionAsk(text: string, streaming = false): string {
-  return splitAsk(text, streaming).kept;
-}
-
-/**
- * The follow-up `oneQuestionAsk` dropped, as plain text ("Why do you think
- * so?"), or null when nothing was dropped. ChatCore hands it back to the
- * tutor as a [live event], so dropping it from the screen never drops it
- * from the lesson: the tutor asks it next, after the student's answer.
- */
-export function droppedFollowUp(text: string): string | null {
-  const { dropped } = splitAsk(text, false);
-  if (!dropped) return null;
-  const q = dropped.replace(/\*\*/g, "").replace(/\s+/g, " ").trim();
-  return q || null;
-}
-
-/** A follow-up with no question of its own: "Why or why not?", "Why?",
- *  "How do you know?" — short, and only meaningful after another question. */
-const BARE_FOLLOW_UP =
-  /^(why( or why not)?|why not|how do you know|how can you tell|how did you (know|decide)|what makes you (think|say) (so|that)|why do you think( so)?|explain( why)?|can you explain( why)?)\b[^?؟]{0,40}[?؟.]?$/i;
-
-const QUESTION_END = /[?؟][*_"'”’)\]]*$/;
-
-/** "…, and why do you think that" / "— and how do you know" at the end of a
- *  question: a second question joined into the first. Group 1 is the
- *  follow-up itself. */
-const JOINED_WHY =
-  /\s*(?:[—–]|-|,|;)\s*(?:and|but)\s+((?:why|how (?:do|did|can|would) you|what makes you)\b[^?؟]*)$/i;
-
-/** Where the paragraph that ends at `end` begins: after the last blank
- *  line or `{{beat}}` before it, whichever is later. */
-function paragraphStart(text: string, end: number): number {
-  const head = text.slice(0, end);
-  const blank = head.lastIndexOf("\n\n");
-  const beat = head.lastIndexOf(BEAT);
-  return Math.max(blank < 0 ? 0 : blank + 2, beat < 0 ? 0 : beat + BEAT.length);
-}
-
-/**
- * The other way a reply carries two questions: the real one sits in the
- * prose and the ask holds only a bare follow-up ("…does that force a = 2
- * exactly?" then {{ask}} "Why or why not?"). The question is lifted into the
- * ask and the follow-up dropped, so the highlighted question is the one to
- * answer first.
- */
-function liftQuestionIntoAsk(text: string): { kept: string; dropped: string | null } | null {
-  const marker = text.indexOf(ASK);
-  let askStart: number;
-  let prefixEnd: number;
-  if (marker >= 0) {
-    askStart = marker + ASK.length;
-    prefixEnd = marker;
-  } else {
-    if (!text.includes(BEAT)) return null;
-    const trimmed = text.trimEnd();
-    if (!QUESTION_END.test(trimmed)) return null;
-    askStart = paragraphStart(trimmed, trimmed.length);
-    prefixEnd = askStart;
-  }
-  const next = text.indexOf("{{", askStart);
-  const askEnd = next < 0 ? text.length : next;
-  const ask = text.slice(askStart, askEnd).trim();
-  if (!BARE_FOLLOW_UP.test(ask.replace(/\*\*/g, "").trim())) return null;
-
-  // the paragraph right before the ask, past any {{beat}} between them
-  const before = text.slice(0, prefixEnd).replace(/(\s|\{\{beat\}\})+$/, "");
-  if (!QUESTION_END.test(before)) return null;
-  const qStart = paragraphStart(before, before.length);
-  const question = before.slice(qStart).trim();
-  if (!question || question.includes("{{")) return null;
-
-  const head = before.slice(0, qStart).replace(/(\s|\{\{beat\}\})+$/, "");
-  const kept =
-    (head ? `${head}\n{{beat}}\n` : "") + `${ASK}\n${question}` + text.slice(askEnd);
-  return { kept, dropped: ask };
-}
-
-function splitAsk(text: string, streaming: boolean): { kept: string; dropped: string | null } {
-  const lifted = liftQuestionIntoAsk(text);
-  if (lifted) return lifted;
-  const none = { kept: text, dropped: null };
-  let start = text.indexOf(ASK);
-  if (start >= 0) {
-    start += ASK.length;
-  } else {
-    if (!text.includes(BEAT)) return none;
-    const trimmed = text.trimEnd();
-    const para = trimmed.lastIndexOf("\n\n");
-    const beat = trimmed.lastIndexOf(BEAT);
-    // the last paragraph starts after whichever break comes last
-    start = beat > para ? beat + BEAT.length : para + 2;
-    if (!/[?؟][*_"'”’)\]]*$/.test(trimmed)) return none;
-  }
-  // the ask ends at the next directive, if any follows it
-  const next = text.indexOf("{{", start);
-  const end = next < 0 ? text.length : next;
-  const region = text.slice(start, end);
-  const q = /[?؟][*_"'”’)\]]*/.exec(region);
-  if (!q) return none;
-  // a follow-up joined INSIDE the one sentence: "Does it stay the same, or
-  // change — and why do you think that?" is two questions with one mark
-  const joined = JOINED_WHY.exec(region.slice(0, q.index));
-  if (joined && !streaming) {
-    let head = region.slice(0, joined.index).trimEnd() + region[q.index];
-    if ((head.split("**").length - 1) % 2 === 1) head += "**";
-    const follow = joined[1];
-    const dropped = follow.charAt(0).toUpperCase() + follow.slice(1) + region[q.index];
-    return { kept: text.slice(0, start) + head + text.slice(end), dropped };
-  }
-  const cut = q.index + q[0].length;
-  const rest = region.slice(cut);
-  if (!rest.trim()) return none;
-  if (!streaming && !/[?؟]/.test(rest)) return none;
-  let head = region.slice(0, cut);
-  // a bold run that opened before the cut is closed at it
-  if ((head.split("**").length - 1) % 2 === 1) head += "**";
-  return { kept: text.slice(0, start) + head + text.slice(end), dropped: rest };
-}
-
 /** Full message → renderable blocks. Streaming ⇒ incomplete tail withheld. */
 export function parseMessage(text: string, streaming: boolean): Block[] {
-  const s = oneQuestionAsk(streaming ? stripIncompleteTail(text) : text, streaming);
+  const s = streaming ? stripIncompleteTail(text) : text;
   const blocks: Block[] = [];
   let ask: Extract<Block, { t: "ask" }> | null = null;
   let last = 0;

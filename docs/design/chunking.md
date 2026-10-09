@@ -123,7 +123,6 @@ If the model forgets `{{ask}}`, a finished reply whose last paragraph is a quest
 | Beat | 1–2 sentences, ≤ 25 words, **one idea** |
 | Beats per reply | ≤ 4, counting the ask |
 | Asks per reply | ≤ 1, always last |
-| Questions per ask | exactly 1 — the follow-up ("Why?") waits for the next reply |
 | Learning objectives cited per reply (lessons) | ≤ 1 |
 | Figures per reply | ≤ 1, in a beat of its own |
 | Bold phrases | ≤ 1 per beat |
@@ -138,21 +137,6 @@ If the model forgets `{{ask}}`, a finished reply whose last paragraph is a quest
 2. **Feedback is short and comes first.** "Exactly." / "Close, but not quite." One sentence, its own
    beat, no citation.
 3. **One idea per beat.** If a beat needs "and also", it's two beats.
-3a. **One question per ask.** "Could you still draw X × Y as a grid of dots? Why or why not?" is two
-   questions. Ask "Could you still draw X × Y as a grid of dots?"; when the student answers, "Why?"
-   is the next reply's ask. The model does not always comply, so the app enforces it: only the
-   first question of an ask is shown, and the tutor's transcript keeps only that one. A plain
-   sentence after the question ("Take your time.") is kept. Each slip is still logged. The dropped
-   follow-up is not thrown away: it goes back to the tutor as a hidden [live event] note, so the
-   tutor asks "Why?" after the student's answer — unless the answer already explained why.
-   The same applies when the model puts the real question in the prose and leaves only a bare
-   follow-up ("Why or why not?", "How do you know?") in the ask: the question is lifted into the
-   highlighted block and the follow-up goes back to the tutor. A follow-up joined inside one
-   sentence ("…stay the same, or change — and why do you think that?") is split off the same way.
-3b. **A bare answer gets a "Why?" before any explanation.** When the student answers a yes/no or
-   this-or-that question with no reason ("no", "it changes"), the reply is one line confirming or
-   correcting, then the ask is for the reason. The tutor does not explain the reason first — finding
-   it is the student's job.
 4. **Plain, literal English (CEFR B1).** No idioms or wordplay: not "close cousin", "make the cut",
    "nice catch", "piece of cake". Warmth comes from short, kind sentences. This replaces the old
    "upbeat, playful" tone line in the lesson prompt.
@@ -191,7 +175,6 @@ message text, tagged by environment.
 | `multiple_objectives` | a lesson reply cites more than one learning objective |
 | `figure_and_ask_same_beat` | a beat holds a figure and the ask together |
 | `figure_not_alone` | a beat holds a figure and prose together |
-| `compound_question` | an ask holds more than one question mark, or "why or why not" |
 | `all_caps` | a word of 3+ letters in capitals that isn't a known acronym |
 | `dash_overuse` | a sentence with more than one — |
 | `italics` | single-asterisk emphasis |

@@ -12,7 +12,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { droppedFollowUp, oneQuestionAsk, parseMessage } from "./chat-parse.ts";
+import { parseMessage } from "./chat-parse.ts";
 import { renderInlineMarkdown } from "./inline-markdown.ts";
 import {
   GATE_MIN_WORDS,
@@ -83,13 +83,6 @@ test("FR-3502: a one-beat reply ending in a question is left as text, and nothin
     parseMessage("Nearly.\n{{beat}}\nWhich pairs follow it?", true).at(-1)?.t,
     "para"
   );
-});
-
-test("an unclosed **bold** run is held back while streaming, shown once it closes", () => {
-  const streaming = parseMessage("Look again.\n{{ask}}\n**Can you point", true);
-  assert.ok(!JSON.stringify(streaming).includes("**"));
-  const done = parseMessage("Look again.\n{{ask}}\n**Can you point?**", true);
-  assert.ok(JSON.stringify(done).includes("**Can you point?**"));
 });
 
 test("the {{ask}} marker is held back while it is still streaming in", () => {
@@ -217,97 +210,6 @@ test("FR-3503: two asks, or anything after the ask, are caught", () => {
   assert.ok(chunkingViolations(after, { lesson: true }).rules.includes("ask_not_last"));
 });
 
-test("FR-3503: an ask holding two questions is caught; one question is not", () => {
-  const two = "Look again.\n{{beat}}\n{{ask}}\nCould you still draw X × Y as a grid of dots? **Why or why not?**";
-  assert.ok(chunkingViolations(two, { lesson: true }).rules.includes("compound_question"));
-  const one = "Look again.\n{{beat}}\n{{ask}}\n**Could you still draw X × Y as a grid of dots?**";
-  assert.ok(!chunkingViolations(one, { lesson: true }).rules.includes("compound_question"));
-});
-
-test("FR-3503: a second question joined onto the ask is dropped — on screen and in the transcript", () => {
-  // lesson 2-1, 2026-10-09
-  const two =
-    "Now double both parts.\n{{beat}}\n{{ask}}\n**Does the ratio stay 2:3, or does it change? Why do you think so?**";
-  const one = oneQuestionAsk(two);
-  assert.ok(one.endsWith("{{ask}}\n**Does the ratio stay 2:3, or does it change?**"), one);
-  const ask = parseMessage(two, false).at(-1);
-  assert.equal(ask?.t, "ask");
-  assert.ok(!JSON.stringify(ask).includes("Why"));
-  // unmarked, promoted ask
-  assert.ok(!oneQuestionAsk("Look.\n{{beat}}\nCould you still draw it as a grid? Why or why not?").includes("Why"));
-});
-
-test("FR-3503: the dropped follow-up is kept for the tutor, to ask after the student answers", () => {
-  const two =
-    "Now double both parts.\n{{beat}}\n{{ask}}\n**Does the ratio stay 2:3, or does it change? Why do you think so?**";
-  assert.equal(droppedFollowUp(two), "Why do you think so?");
-  assert.equal(droppedFollowUp("Look.\n{{ask}}\n**Which pairs follow it?**"), null);
-  const core = read("../components/chat/ChatCore.tsx");
-  assert.match(core, /droppedFollowUp\(acc\)/);
-  assert.match(core, /kind: "event",\s*text: `Held back so the student sees one question at a time/);
-  assert.match(core, /do not explain the reason yourself first/);
-});
-
-test("FR-3503: a bare 'Why or why not?' ask lifts the real question out of the prose", () => {
-  // lesson 2-1 opener, 2026-10-09: the highlighted block said only "Why or why not?"
-  const raw =
-    "A ratio compares two quantities. [[lo:u2-1-1]]\n{{beat}}\nHere's a sharper one: if $\\frac{a}{b} = \\frac{2}{7}$, does that force $a = 2$ and $b = 7$ exactly?\n{{ask}}\n**Why or why not?**";
-  const kept = oneQuestionAsk(raw);
-  assert.ok(kept.endsWith("{{ask}}\nHere's a sharper one: if $\\frac{a}{b} = \\frac{2}{7}$, does that force $a = 2$ and $b = 7$ exactly?"), kept);
-  assert.ok(!kept.includes("Why or why not"));
-  assert.equal(droppedFollowUp(raw), "Why or why not?");
-  const blocks = parseMessage(raw, false);
-  const ask = blocks.at(-1);
-  assert.equal(ask?.t, "ask");
-  assert.ok(JSON.stringify(ask).includes("exactly?"));
-  // and the question is no longer in the prose above it
-  assert.equal(blocks.filter((b) => JSON.stringify(b).includes("exactly?")).length, 1);
-  // unmarked: two trailing paragraphs, the last a bare follow-up
-  const unmarked = "Look.\n{{beat}}\nDoes the ratio change?\n\nWhy or why not?";
-  assert.ok(oneQuestionAsk(unmarked).endsWith("{{ask}}\nDoes the ratio change?"));
-  assert.ok(chunkingViolations(raw, { lesson: true }).rules.includes("compound_question"));
-});
-
-test("FR-3503: a follow-up joined inside one sentence ('— and why …?') is split off too", () => {
-  // lesson 2-1 opener, 2026-10-09
-  const raw =
-    "Take 2:3 and add 3 to each term, giving 5:6.\n{{beat}}\n{{ask}}\n**Does the ratio stay the same, or change — and why do you think that?**";
-  assert.ok(oneQuestionAsk(raw).endsWith("{{ask}}\n**Does the ratio stay the same, or change?**"), oneQuestionAsk(raw));
-  assert.equal(droppedFollowUp(raw), "Why do you think that?");
-  const promoted = "Look.\n{{beat}}\nIs 2:3 equal to 4:6, and how do you know?";
-  assert.ok(oneQuestionAsk(promoted).endsWith("Is 2:3 equal to 4:6?"));
-  // "why" as part of the one question is left alone
-  const one = "Look.\n{{ask}}\nWhy does doubling keep the ratio?";
-  assert.equal(oneQuestionAsk(one), one);
-});
-
-test("FR-3503: a real question in the ask is never replaced by the prose before it", () => {
-  const t = "Is 2:3 the same as 4:6?\n{{beat}}\n{{ask}}\n**Which ratio is 6:9 equal to?**";
-  assert.equal(oneQuestionAsk(t), t);
-});
-
-test("FR-3503: one question, or a question with a plain sentence after it, is left alone", () => {
-  for (const t of [
-    "Look.\n{{beat}}\n{{ask}}\n**Which pairs follow the rule?**",
-    "Look.\n{{beat}}\n{{ask}}\nWhich pairs follow it? Take your time.",
-    "Why? Because the order matters.\n{{beat}}\nSo (2,3) and (3,2) differ.",
-    "X = {1, 2}.\n{{ask}}\nWhich pairs?\n{{show_question:q:u1-1-1:001}}",
-  ]) {
-    assert.equal(oneQuestionAsk(t), t);
-  }
-});
-
-test("FR-3503: while streaming, nothing after the ask's first question mark is shown yet", () => {
-  const blocks = parseMessage("Look.\n{{ask}}\nDoes it change? Why do", true);
-  assert.ok(!JSON.stringify(blocks).includes("Why"));
-});
-
-test("FR-3503: the prompts ask for one question per ask, the follow-up next turn", () => {
-  assert.match(learnPrompt(LESSON, false), /ONE QUESTION PER ASK/);
-  const a = addressForms("female", "Nour Adel");
-  assert.match(askSystemPrompt("student_chat", "Nour Adel", "math-en", a), /never two joined/);
-});
-
 test("FR-3505: a figure and the ask in one beat are caught", () => {
   const same = "Look.\n{{widget:viz_ref:v:u1-1:001}}\n{{ask}}\nWhat do you see?";
   assert.ok(chunkingViolations(same, { lesson: true }).rules.includes("figure_and_ask_same_beat"));
@@ -363,7 +265,6 @@ test("FR-3504, FR-3506: the lesson prompt states the chunking rules and drops th
     assert.match(p, /no sentence over 20 words/);
     assert.doesNotMatch(p, /playful/);
     assert.match(p, /Never use \{\{check_in\}\}/);
-    assert.match(p, /A BARE ANSWER GETS A "WHY\?" BEFORE ANY EXPLANATION/);
   }
 });
 
