@@ -165,7 +165,7 @@ const AR_MODE_COPY: Record<
 };
 
 const AR_SUGGESTIONS = ["لسه مش فاهم — اشرحها بطريقة تانية", "فهمت — كمّل ✓"];
-const EN_SUGGESTIONS = ["I don't get it — say it another way", "Got it — next ✓"];
+const EN_SUGGESTIONS = ["Say it another way", "Got it — next ✓"];
 
 /**
  * {{show_passage:…}} renders as a REFOCUS CHIP, not a second copy of the text.
