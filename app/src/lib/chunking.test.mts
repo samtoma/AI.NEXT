@@ -12,7 +12,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { parseMessage } from "./chat-parse.ts";
+import { oneQuestionAsk, parseMessage } from "./chat-parse.ts";
 import { renderInlineMarkdown } from "./inline-markdown.ts";
 import {
   GATE_MIN_WORDS,
@@ -222,6 +222,35 @@ test("FR-3503: an ask holding two questions is caught; one question is not", () 
   assert.ok(chunkingViolations(two, { lesson: true }).rules.includes("compound_question"));
   const one = "Look again.\n{{beat}}\n{{ask}}\n**Could you still draw X × Y as a grid of dots?**";
   assert.ok(!chunkingViolations(one, { lesson: true }).rules.includes("compound_question"));
+});
+
+test("FR-3503: a second question joined onto the ask is dropped — on screen and in the transcript", () => {
+  // lesson 2-1, 2026-10-09
+  const two =
+    "Now double both parts.\n{{beat}}\n{{ask}}\n**Does the ratio stay 2:3, or does it change? Why do you think so?**";
+  const one = oneQuestionAsk(two);
+  assert.ok(one.endsWith("{{ask}}\n**Does the ratio stay 2:3, or does it change?**"), one);
+  const ask = parseMessage(two, false).at(-1);
+  assert.equal(ask?.t, "ask");
+  assert.ok(!JSON.stringify(ask).includes("Why"));
+  // unmarked, promoted ask
+  assert.ok(!oneQuestionAsk("Look.\n{{beat}}\nCould you still draw it as a grid? Why or why not?").includes("Why"));
+});
+
+test("FR-3503: one question, or a question with a plain sentence after it, is left alone", () => {
+  for (const t of [
+    "Look.\n{{beat}}\n{{ask}}\n**Which pairs follow the rule?**",
+    "Look.\n{{beat}}\n{{ask}}\nWhich pairs follow it? Take your time.",
+    "Why? Because the order matters.\n{{beat}}\nSo (2,3) and (3,2) differ.",
+    "X = {1, 2}.\n{{ask}}\nWhich pairs?\n{{show_question:q:u1-1-1:001}}",
+  ]) {
+    assert.equal(oneQuestionAsk(t), t);
+  }
+});
+
+test("FR-3503: while streaming, nothing after the ask's first question mark is shown yet", () => {
+  const blocks = parseMessage("Look.\n{{ask}}\nDoes it change? Why do", true);
+  assert.ok(!JSON.stringify(blocks).includes("Why"));
 });
 
 test("FR-3503: the prompts ask for one question per ask, the follow-up next turn", () => {

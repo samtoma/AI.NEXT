@@ -1255,7 +1255,9 @@ context: *"yes for sure, for decision 2, it is part of the overall consistency, 
   interactive widget — and, when it carries one, the ask MUST be its last element. The Your
   Progress chat and a lesson's closing message MAY carry none. **[AMENDED 2026-10-09 — Tamer]** An
   open-question ask MUST be **one** question: never two joined ("…? Why or why not?"); the
-  follow-up is the ask of the tutor's next reply.
+  follow-up is the ask of the tutor's next reply. When a reply joins a second question onto its
+  ask anyway, the student MUST be shown only the first — and the transcript the tutor reads next
+  MUST hold only the first, so it asks the follow-up itself.
 - **FR-3504**: In a lesson, a tutor reply MUST teach **at most one learning objective**: its
   citations MUST name at most one, and the one-line reaction to the student's previous answer MUST
   carry no citation. The next objective MUST start in a later reply. The tutor MUST NOT be told to

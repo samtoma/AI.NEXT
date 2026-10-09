@@ -13,7 +13,7 @@
  * "the ask" mean exactly what the student was shown.
  */
 
-import { parseMessage, type Block, type Inline } from "./chat-parse";
+import { oneQuestionAsk, parseMessage, type Block, type Inline } from "./chat-parse";
 
 /** FR-3501: a reply of more than one beat with at least this many words of
  *  prose is stepped through with Next; a shorter one keeps the timed pause. */
@@ -211,13 +211,12 @@ export function chunkingViolations(text: string, opts: { lesson: boolean }): Chu
     const firstAsk = blocks.indexOf(asks[0]);
     if (blocks.slice(firstAsk + 1).some(rendersSomething)) hit("ask_not_last");
   }
-  // FR-3503: an ask is ONE question — "…? Why or why not?" is two
-  for (const b of blocks) {
-    if (b.t !== "ask") continue;
-    const q = plain(blockText(b));
-    if ((q.match(/[?؟]/g) ?? []).length > 1 || /\bwhy or why not\b/i.test(q)) {
-      hit("compound_question");
-    }
+  // FR-3503: an ask is ONE question — "…? Why or why not?" is two. Read
+  // from the RAW text: parseMessage already shows the student only the
+  // first, and the point of this rule is to count how often the model
+  // needed that.
+  if (oneQuestionAsk(text) !== text || /\bwhy or why not\b/i.test(text)) {
+    hit("compound_question");
   }
   if (!text.includes("{{ask}}") && blocks.some((b) => b.t === "ask")) {
     hit("missing_ask_marker");
