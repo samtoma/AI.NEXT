@@ -147,7 +147,12 @@ If the model forgets `{{ask}}`, a finished reply whose last paragraph is a quest
    tutor asks "Why?" after the student's answer — unless the answer already explained why.
    The same applies when the model puts the real question in the prose and leaves only a bare
    follow-up ("Why or why not?", "How do you know?") in the ask: the question is lifted into the
-   highlighted block and the follow-up goes back to the tutor.
+   highlighted block and the follow-up goes back to the tutor. A follow-up joined inside one
+   sentence ("…stay the same, or change — and why do you think that?") is split off the same way.
+3b. **A bare answer gets a "Why?" before any explanation.** When the student answers a yes/no or
+   this-or-that question with no reason ("no", "it changes"), the reply is one line confirming or
+   correcting, then the ask is for the reason. The tutor does not explain the reason first — finding
+   it is the student's job.
 4. **Plain, literal English (CEFR B1).** No idioms or wordplay: not "close cousin", "make the cut",
    "nice catch", "piece of cake". Warmth comes from short, kind sentences. This replaces the old
    "upbeat, playful" tone line in the lesson prompt.

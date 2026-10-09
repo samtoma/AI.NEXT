@@ -1259,7 +1259,8 @@ context: *"yes for sure, for decision 2, it is part of the overall consistency, 
   ask anyway, the student MUST be shown only the first — and the transcript the tutor reads next
   MUST hold only the first. The dropped follow-up MUST NOT be lost: it MUST reach the tutor, unseen
   by the student, as a follow-up to ask after the student answers — unless their answer already
-  gives the reason.
+  gives the reason. When a student answers a yes/no or this-or-that question with no reason, the
+  tutor's next reply MUST ask for the reason before explaining it.
 - **FR-3504**: In a lesson, a tutor reply MUST teach **at most one learning objective**: its
   citations MUST name at most one, and the one-line reaction to the student's previous answer MUST
   carry no citation. The next objective MUST start in a later reply. The tutor MUST NOT be told to
