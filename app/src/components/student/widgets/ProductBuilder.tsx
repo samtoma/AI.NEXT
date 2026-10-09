@@ -207,7 +207,7 @@ export function ProductBuilder({
           <div className={cx("mt-3 px-3 py-2", WIDGET_RESULT[allGood ? "correct" : "wrong"])}>
             <span className="font-display text-[13.5px] font-bold">
               {allGood
-                ? `برافو! X×Y complete — all ${n} pairs ✓`
+                ? `Well done — X×Y complete, all ${n} pairs ✓`
                 : "Check the marks — first from X, second from Y. Order matters!"}
             </span>
           </div>

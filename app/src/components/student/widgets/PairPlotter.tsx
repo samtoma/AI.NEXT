@@ -29,14 +29,17 @@ const SIZE = R * 2 * UNIT + PAD * 2; // 264
 const px = (x: number) => PAD + (x + R) * UNIT;
 const py = (y: number) => PAD + (R - y) * UNIT;
 
-function quadrant(x: number, y: number): { en: string; ar: string } {
-  if (x === 0 && y === 0) return { en: "the origin", ar: "نقطة الأصل" };
-  if (x === 0) return { en: "on the y-axis", ar: "على محور الصادات" };
-  if (y === 0) return { en: "on the x-axis", ar: "على محور السينات" };
-  if (x > 0 && y > 0) return { en: "Quadrant I", ar: "الربع الأول" };
-  if (x < 0 && y > 0) return { en: "Quadrant II", ar: "الربع الثاني" };
-  if (x < 0 && y < 0) return { en: "Quadrant III", ar: "الربع الثالث" };
-  return { en: "Quadrant IV", ar: "الربع الرابع" };
+/** Where a point sits, in the lesson's language (English, constitution V —
+ *  the maths course; the Arabic quadrant names were left over from the
+ *  frozen baseline and showed beside the English one). */
+function quadrant(x: number, y: number): { en: string } {
+  if (x === 0 && y === 0) return { en: "the origin" };
+  if (x === 0) return { en: "on the y-axis" };
+  if (y === 0) return { en: "on the x-axis" };
+  if (x > 0 && y > 0) return { en: "Quadrant I" };
+  if (x < 0 && y > 0) return { en: "Quadrant II" };
+  if (x < 0 && y < 0) return { en: "Quadrant III" };
+  return { en: "Quadrant IV" };
 }
 
 export function PairPlotter({
@@ -210,11 +213,11 @@ export function PairPlotter({
           <div className={cx("mt-2.5 px-3 py-2", WIDGET_RESULT[correct ? "correct" : "wrong"])}>
             <span className="font-display text-[13.5px] font-bold">
               {correct
-                ? `تمام! (${target[0]},${target[1]}) ✓`
+                ? `Correct — (${target[0]},${target[1]}) ✓`
                 : `Not quite — that's (${picked![0]},${picked![1]}). The target is shown in green.`}
             </span>
             <span className="ms-2 font-mono text-[10px] font-medium">
-              {q.en} · <span className="ar-label font-display font-bold">{q.ar}</span>
+              {q.en}
             </span>
           </div>
         )}
