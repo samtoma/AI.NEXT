@@ -525,6 +525,12 @@ const BARE_FOLLOW_UP =
 
 const QUESTION_END = /[?؟][*_"'”’)\]]*$/;
 
+/** "…, and why do you think that" / "— and how do you know" at the end of a
+ *  question: a second question joined into the first. Group 1 is the
+ *  follow-up itself. */
+const JOINED_WHY =
+  /\s*(?:[—–]|-|,|;)\s*(?:and|but)\s+((?:why|how (?:do|did|can|would) you|what makes you)\b[^?؟]*)$/i;
+
 /** Where the paragraph that ends at `end` begins: after the last blank
  *  line or `{{beat}}` before it, whichever is later. */
 function paragraphStart(text: string, end: number): number {
@@ -595,6 +601,16 @@ function splitAsk(text: string, streaming: boolean): { kept: string; dropped: st
   const region = text.slice(start, end);
   const q = /[?؟][*_"'”’)\]]*/.exec(region);
   if (!q) return none;
+  // a follow-up joined INSIDE the one sentence: "Does it stay the same, or
+  // change — and why do you think that?" is two questions with one mark
+  const joined = JOINED_WHY.exec(region.slice(0, q.index));
+  if (joined && !streaming) {
+    let head = region.slice(0, joined.index).trimEnd() + region[q.index];
+    if ((head.split("**").length - 1) % 2 === 1) head += "**";
+    const follow = joined[1];
+    const dropped = follow.charAt(0).toUpperCase() + follow.slice(1) + region[q.index];
+    return { kept: text.slice(0, start) + head + text.slice(end), dropped };
+  }
   const cut = q.index + q[0].length;
   const rest = region.slice(cut);
   if (!rest.trim()) return none;

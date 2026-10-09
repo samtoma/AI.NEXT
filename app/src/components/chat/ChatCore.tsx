@@ -1013,7 +1013,7 @@ export function ChatCore({
               {
                 role: "note",
                 kind: "event",
-                text: `Held back so the student sees one question at a time — your follow-up "${followUp}". After reacting to their answer to your question, ask it as your next ask, unless their answer already explains it.`,
+                text: `Held back so the student sees one question at a time — your follow-up "${followUp}". When they answer, if their answer gives no reason, your next ask is this follow-up, and do not explain the reason yourself first.`,
               },
             ]);
           }

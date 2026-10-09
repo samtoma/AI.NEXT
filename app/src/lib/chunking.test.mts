@@ -245,6 +245,7 @@ test("FR-3503: the dropped follow-up is kept for the tutor, to ask after the stu
   const core = read("../components/chat/ChatCore.tsx");
   assert.match(core, /droppedFollowUp\(acc\)/);
   assert.match(core, /kind: "event",\s*text: `Held back so the student sees one question at a time/);
+  assert.match(core, /do not explain the reason yourself first/);
 });
 
 test("FR-3503: a bare 'Why or why not?' ask lifts the real question out of the prose", () => {
@@ -265,6 +266,19 @@ test("FR-3503: a bare 'Why or why not?' ask lifts the real question out of the p
   const unmarked = "Look.\n{{beat}}\nDoes the ratio change?\n\nWhy or why not?";
   assert.ok(oneQuestionAsk(unmarked).endsWith("{{ask}}\nDoes the ratio change?"));
   assert.ok(chunkingViolations(raw, { lesson: true }).rules.includes("compound_question"));
+});
+
+test("FR-3503: a follow-up joined inside one sentence ('— and why …?') is split off too", () => {
+  // lesson 2-1 opener, 2026-10-09
+  const raw =
+    "Take 2:3 and add 3 to each term, giving 5:6.\n{{beat}}\n{{ask}}\n**Does the ratio stay the same, or change — and why do you think that?**";
+  assert.ok(oneQuestionAsk(raw).endsWith("{{ask}}\n**Does the ratio stay the same, or change?**"), oneQuestionAsk(raw));
+  assert.equal(droppedFollowUp(raw), "Why do you think that?");
+  const promoted = "Look.\n{{beat}}\nIs 2:3 equal to 4:6, and how do you know?";
+  assert.ok(oneQuestionAsk(promoted).endsWith("Is 2:3 equal to 4:6?"));
+  // "why" as part of the one question is left alone
+  const one = "Look.\n{{ask}}\nWhy does doubling keep the ratio?";
+  assert.equal(oneQuestionAsk(one), one);
 });
 
 test("FR-3503: a real question in the ask is never replaced by the prose before it", () => {
@@ -349,6 +363,7 @@ test("FR-3504, FR-3506: the lesson prompt states the chunking rules and drops th
     assert.match(p, /no sentence over 20 words/);
     assert.doesNotMatch(p, /playful/);
     assert.match(p, /Never use \{\{check_in\}\}/);
+    assert.match(p, /A BARE ANSWER GETS A "WHY\?" BEFORE ANY EXPLANATION/);
   }
 });
 
