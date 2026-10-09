@@ -28,6 +28,7 @@ import {
   extractCites,
   extractHighlights,
   hasExpectsMath,
+  oneQuestionAsk,
   parseMessage,
   stripIncompleteTail,
   type Cite,
@@ -989,12 +990,17 @@ export function ChatCore({
         if (metaBuf) {
           await revealDone; // also waits out any Continue not yet tapped
           if (stoppedAt != null) acc = acc.slice(0, stoppedAt).trimEnd();
+          // FR-3503: the transcript keeps the one question the student was
+          // shown, so the tutor's next turn reads one question asked
+          const oneAsk = oneQuestionAsk(acc);
+          const trimmedAsk = oneAsk !== acc;
+          acc = oneAsk;
           patchLast({
             streaming: false,
             meta: metaBuf,
             reveal: undefined,
             gated: undefined,
-            ...(stoppedAt != null ? { text: acc } : {}),
+            ...(stoppedAt != null || trimmedAsk ? { text: acc } : {}),
           });
           emitNewCites(acc);
           onAssistantDone?.(acc);

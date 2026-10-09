@@ -140,7 +140,9 @@ If the model forgets `{{ask}}`, a finished reply whose last paragraph is a quest
 3. **One idea per beat.** If a beat needs "and also", it's two beats.
 3a. **One question per ask.** "Could you still draw X × Y as a grid of dots? Why or why not?" is two
    questions. Ask "Could you still draw X × Y as a grid of dots?"; when the student answers, "Why?"
-   is the next reply's ask.
+   is the next reply's ask. The model does not always comply, so the app enforces it: only the
+   first question of an ask is shown, and the tutor's transcript keeps only that one. A plain
+   sentence after the question ("Take your time.") is kept. Each slip is still logged.
 4. **Plain, literal English (CEFR B1).** No idioms or wordplay: not "close cousin", "make the cut",
    "nice catch", "piece of cake". Warmth comes from short, kind sentences. This replaces the old
    "upbeat, playful" tone line in the lesson prompt.

@@ -489,9 +489,50 @@ function parseAskChunk(chunk: string, ask: Extract<Block, { t: "ask" }>) {
 const inlineText = (inlines: Inline[]) =>
   inlines.map((x) => (x.t === "text" ? x.v : "")).join("");
 
+/**
+ * FR-3503: an ask is ONE question. When the model joins a second one onto it
+ * ("Does the ratio stay 2:3, or does it change? Why do you think so?"), only
+ * the first is kept — the follow-up belongs to the next reply, and the tutor,
+ * which reads its own message back from the transcript, sees one question
+ * asked. A plain sentence after the question ("Take your time.") is kept.
+ *
+ * The ask is the text after `{{ask}}`, or — with no marker — the last
+ * paragraph of a multi-beat reply when it is a question (FR-3502's
+ * promotion). While streaming, anything after the first question mark is
+ * held back, since whether it is a second question is not yet known.
+ */
+export function oneQuestionAsk(text: string, streaming = false): string {
+  let start = text.indexOf(ASK);
+  if (start >= 0) {
+    start += ASK.length;
+  } else {
+    if (!text.includes(BEAT)) return text;
+    const trimmed = text.trimEnd();
+    const para = trimmed.lastIndexOf("\n\n");
+    const beat = trimmed.lastIndexOf(BEAT);
+    // the last paragraph starts after whichever break comes last
+    start = beat > para ? beat + BEAT.length : para + 2;
+    if (!/[?؟][*_"'”’)\]]*$/.test(trimmed)) return text;
+  }
+  // the ask ends at the next directive, if any follows it
+  const next = text.indexOf("{{", start);
+  const end = next < 0 ? text.length : next;
+  const region = text.slice(start, end);
+  const q = /[?؟][*_"'”’)\]]*/.exec(region);
+  if (!q) return text;
+  const cut = q.index + q[0].length;
+  const rest = region.slice(cut);
+  if (!rest.trim()) return text;
+  if (!streaming && !/[?؟]/.test(rest)) return text;
+  let head = region.slice(0, cut);
+  // a bold run that opened before the cut is closed at it
+  if ((head.split("**").length - 1) % 2 === 1) head += "**";
+  return text.slice(0, start) + head + text.slice(end);
+}
+
 /** Full message → renderable blocks. Streaming ⇒ incomplete tail withheld. */
 export function parseMessage(text: string, streaming: boolean): Block[] {
-  const s = streaming ? stripIncompleteTail(text) : text;
+  const s = oneQuestionAsk(streaming ? stripIncompleteTail(text) : text, streaming);
   const blocks: Block[] = [];
   let ask: Extract<Block, { t: "ask" }> | null = null;
   let last = 0;
