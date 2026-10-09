@@ -85,6 +85,13 @@ test("FR-3502: a one-beat reply ending in a question is left as text, and nothin
   );
 });
 
+test("an unclosed **bold** run is held back while streaming, shown once it closes", () => {
+  const streaming = parseMessage("Look again.\n{{ask}}\n**Can you point", true);
+  assert.ok(!JSON.stringify(streaming).includes("**"));
+  const done = parseMessage("Look again.\n{{ask}}\n**Can you point?**", true);
+  assert.ok(JSON.stringify(done).includes("**Can you point?**"));
+});
+
 test("the {{ask}} marker is held back while it is still streaming in", () => {
   const blocks = parseMessage("Exactly.\n{{as", true);
   assert.deepEqual(
@@ -208,6 +215,19 @@ test("FR-3503: two asks, or anything after the ask, are caught", () => {
   assert.ok(chunkingViolations(two, { lesson: true }).rules.includes("multiple_asks"));
   const after = "Try this.\n{{ask}}\nWhy?\n{{show_question:q:u1-1-1:001}}";
   assert.ok(chunkingViolations(after, { lesson: true }).rules.includes("ask_not_last"));
+});
+
+test("FR-3503: an ask holding two questions is caught; one question is not", () => {
+  const two = "Look again.\n{{beat}}\n{{ask}}\nCould you still draw X × Y as a grid of dots? **Why or why not?**";
+  assert.ok(chunkingViolations(two, { lesson: true }).rules.includes("compound_question"));
+  const one = "Look again.\n{{beat}}\n{{ask}}\n**Could you still draw X × Y as a grid of dots?**";
+  assert.ok(!chunkingViolations(one, { lesson: true }).rules.includes("compound_question"));
+});
+
+test("FR-3503: the prompts ask for one question per ask, the follow-up next turn", () => {
+  assert.match(learnPrompt(LESSON, false), /ONE QUESTION PER ASK/);
+  const a = addressForms("female", "Nour Adel");
+  assert.match(askSystemPrompt("student_chat", "Nour Adel", "math-en", a), /never two joined/);
 });
 
 test("FR-3505: a figure and the ask in one beat are caught", () => {

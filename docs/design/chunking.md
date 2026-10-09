@@ -123,6 +123,7 @@ If the model forgets `{{ask}}`, a finished reply whose last paragraph is a quest
 | Beat | 1–2 sentences, ≤ 25 words, **one idea** |
 | Beats per reply | ≤ 4, counting the ask |
 | Asks per reply | ≤ 1, always last |
+| Questions per ask | exactly 1 — the follow-up ("Why?") waits for the next reply |
 | Learning objectives cited per reply (lessons) | ≤ 1 |
 | Figures per reply | ≤ 1, in a beat of its own |
 | Bold phrases | ≤ 1 per beat |
@@ -137,6 +138,9 @@ If the model forgets `{{ask}}`, a finished reply whose last paragraph is a quest
 2. **Feedback is short and comes first.** "Exactly." / "Close, but not quite." One sentence, its own
    beat, no citation.
 3. **One idea per beat.** If a beat needs "and also", it's two beats.
+3a. **One question per ask.** "Could you still draw X × Y as a grid of dots? Why or why not?" is two
+   questions. Ask "Could you still draw X × Y as a grid of dots?"; when the student answers, "Why?"
+   is the next reply's ask.
 4. **Plain, literal English (CEFR B1).** No idioms or wordplay: not "close cousin", "make the cut",
    "nice catch", "piece of cake". Warmth comes from short, kind sentences. This replaces the old
    "upbeat, playful" tone line in the lesson prompt.
@@ -175,6 +179,7 @@ message text, tagged by environment.
 | `multiple_objectives` | a lesson reply cites more than one learning objective |
 | `figure_and_ask_same_beat` | a beat holds a figure and the ask together |
 | `figure_not_alone` | a beat holds a figure and prose together |
+| `compound_question` | an ask holds more than one question mark, or "why or why not" |
 | `all_caps` | a word of 3+ letters in capitals that isn't a known acronym |
 | `dash_overuse` | a sentence with more than one — |
 | `italics` | single-asterisk emphasis |

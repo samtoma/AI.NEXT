@@ -110,6 +110,7 @@ export type ChunkingRule =
   | "multiple_objectives"
   | "figure_and_ask_same_beat"
   | "figure_not_alone"
+  | "compound_question"
   | "all_caps"
   | "dash_overuse"
   | "italics"
@@ -209,6 +210,14 @@ export function chunkingViolations(text: string, opts: { lesson: boolean }): Chu
   if (asks.length > 0) {
     const firstAsk = blocks.indexOf(asks[0]);
     if (blocks.slice(firstAsk + 1).some(rendersSomething)) hit("ask_not_last");
+  }
+  // FR-3503: an ask is ONE question — "…? Why or why not?" is two
+  for (const b of blocks) {
+    if (b.t !== "ask") continue;
+    const q = plain(blockText(b));
+    if ((q.match(/[?؟]/g) ?? []).length > 1 || /\bwhy or why not\b/i.test(q)) {
+      hit("compound_question");
+    }
   }
   if (!text.includes("{{ask}}") && blocks.some((b) => b.t === "ask")) {
     hit("missing_ask_marker");
