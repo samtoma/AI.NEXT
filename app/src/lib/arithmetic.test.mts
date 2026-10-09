@@ -5,7 +5,7 @@
 import { strict as assert } from "node:assert";
 import { test } from "node:test";
 
-import { evaluateArithmeticExpression } from "./arithmetic.ts";
+import { evaluateArithmeticExpression, normalizeMathSigns } from "./arithmetic.ts";
 
 test("multiplication written with x, X, × or ⋅ between numbers", () => {
   assert.equal(evaluateArithmeticExpression("3x4"), 12);
@@ -56,4 +56,16 @@ test("garbage, algebra and injection attempts are rejected, never thrown", () =>
 test("division by zero is not a valid grade-able answer", () => {
   const result = evaluateArithmeticExpression("3/0");
   assert.ok(result === null || !Number.isFinite(result));
+});
+
+test("the maths symbol picker's signs read as the arithmetic they mean", () => {
+  // − is U+2212, the picker's minus key; a bare "−3" is normalised, then read as a plain number
+  assert.equal(evaluateArithmeticExpression("5\u22122"), 3);
+  assert.equal(normalizeMathSigns("\u22123"), "-3");
+  assert.equal(evaluateArithmeticExpression("2\u00b2"), 4);
+  assert.equal(evaluateArithmeticExpression("2\u00b3 + 1"), 9);
+  assert.equal(evaluateArithmeticExpression("2·3"), 6);
+  assert.equal(evaluateArithmeticExpression("\u221a(16)"), 4);
+  assert.equal(evaluateArithmeticExpression("\u221a16 + 1"), 5);
+  assert.equal(evaluateArithmeticExpression("(1)/(2)"), 0.5);
 });

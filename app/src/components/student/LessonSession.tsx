@@ -17,7 +17,7 @@ import type {
   SpineQuestion,
   UnderstandingCheck,
 } from "@/lib/types";
-import { isRtlSubject } from "@/lib/subjects";
+import { isRtlSubject, spineKeyOf } from "@/lib/subjects";
 import { TURN_THRESHOLDS } from "@/lib/turn-thresholds";
 import { addressForms } from "@/lib/address";
 import { track } from "@/lib/ga";
@@ -569,6 +569,11 @@ export function LessonSession({
   // the chips; logical CSS below keeps LTR subjects unchanged. The flip now
   // follows the subject's registered direction rather than a social-ar test.
   const rtl = isRtlSubject(lesson.subject);
+  // The maths symbol bar (prototype): the lesson's own question stems are its fallback context.
+  const lessonMathKeys = useMemo(
+    () => (spineKeyOf(lesson.subject) === "math" ? { context: lesson.questions.map((q) => q.stem) } : undefined),
+    [lesson.subject, lesson.questions]
+  );
   const arCopy = AR_MODE_COPY[mode];
 
   /* ---------------- finish → honest rating ---------------- */
@@ -1302,6 +1307,7 @@ export function LessonSession({
                 onAttempt={boardAttempt}
                 debug={debug}
                 arabicUi={rtl}
+                symbols={!!lessonMathKeys}
                 vizMeta={vizMeta}
                 collapsed={!sheetOpen}
                 onToggleCollapsed={() => setSheetOpen((o) => !o)}
@@ -1441,6 +1447,7 @@ export function LessonSession({
               onTotalChange={onTotalChange}
               onMessagesChange={onMessagesChange}
               onSwitchSubject={(subj) => router.push(`/student?subject=${subj}`)}
+              mathKeys={lessonMathKeys}
               inputAccessory={
                 VOICE_UI_ENABLED && sttOK
                   ? (api) => <MicButton setInput={api.setInput} />

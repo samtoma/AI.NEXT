@@ -17,6 +17,8 @@ import type {
   TurnMeta,
 } from "@/lib/types";
 import { stepText } from "@/lib/types";
+import { lessonKeyIds, pushRecent } from "@/lib/math-keys";
+import { MathSymbolPicker } from "./MathSymbolPicker";
 import { displayLabelOfSpineKey, labelArOfSpineKey } from "@/lib/subjects";
 import { track } from "@/lib/ga";
 import { masteryLabel } from "@/lib/mastery";
@@ -25,6 +27,7 @@ import {
   extractAnswerSubmitted,
   extractCites,
   extractHighlights,
+  hasExpectsMath,
   parseMessage,
   stripIncompleteTail,
   type Cite,
@@ -237,6 +240,12 @@ export interface ChatCoreProps {
   onMessagesChange?: (msgs: ChatMsg[]) => void;
   /** extra control rendered beside the input (mic button) */
   inputAccessory?: (api: { setInput: (v: string) => void }) => React.ReactNode;
+  /**
+   * Maths lessons only (prototype, `feat/proto-math-symbol-keys`): the symbol picker's pill inside the
+   * input, shown only under a tutor message carrying {{expects_math}}. Its lesson keys are read
+   * from that message, the question cards it pushed, then `context` (e.g. the lesson's question stems).
+   */
+  mathKeys?: { context?: readonly string[] };
 }
 
 /* ---------------- paced reveal tuning ---------------- */
@@ -304,6 +313,7 @@ export function ChatCore({
   onSwitchSubject,
   onMessagesChange,
   inputAccessory,
+  mathKeys,
 }: ChatCoreProps) {
   const lessonSurface = surface === "lesson_learn" || surface === "lesson_review";
   /**
@@ -335,7 +345,19 @@ export function ChatCore({
         : []
   );
   const [input, setInput] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
   const [streaming, setStreaming] = useState(false);
+  // The maths symbol picker: its ∑ shows only when the tutor's latest settled message asks for maths
+  // ({{expects_math}}; absent means hidden), its lesson keys read from that message first.
+  const lastTutorText = [...messages].reverse().find((m) => m.role === "assistant" && !m.streaming)?.text ?? "";
+  const showPicker = !!mathKeys && hasExpectsMath(lastTutorText);
+  const pickerLessonKeys = useMemo(() => {
+    if (!mathKeys) return [];
+    const pushed = [...lastTutorText.matchAll(/\{\{show_question:(q:[^}]+)\}\}/g)].map((m) => lookupQuestion?.(m[1])?.stem);
+    return lessonKeyIds([lastTutorText, ...pushed, ...(mathKeys.context ?? [])]);
+  }, [mathKeys, lastTutorText, lookupQuestion]);
+  // the student's two most recent keys lead the picker; per chat session (a new session remounts)
+  const [pickerRecents, setPickerRecents] = useState<string[]>([]);
   /**
    * This chat's stable session id, computed once.
    *
@@ -1196,6 +1218,7 @@ export function ChatCore({
             key={i}
             msg={m}
             questionCards={questionCards}
+            symbols={!!mathKeys}
             tutorAvatar={tutorAvatar}
             debug={debug}
             arabicUi={arabicUi}
@@ -1314,20 +1337,38 @@ export function ChatCore({
         {/* Deliberately NOT disabled while a parse runs: sending a photograph
             is not an AI turn. */}
         {uploadsOn && attachment.controls}
-        <input
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && send(input)}
-          placeholder={placeholder}
-          disabled={streaming}
-          className={cx(
-            STROKE,
-            // 1rem, not 13px: the read scale, and the size below which iPad
-            // Safari zooms the page on focus
-            "min-h-[var(--noor-touch-min)] min-w-0 flex-1 rounded-[var(--play-radius-sm)] bg-card px-4 text-[1rem] text-ink outline-none placeholder:text-ink-faint sticker-shadow-sm"
+        {/* the input, with the maths symbol picker's "∑ Symbols" pill inside its inline end
+            when the tutor has asked for maths (symbol-picker handoff §2) */}
+        <div className="relative min-w-0 flex-1">
+          <input
+            ref={inputRef}
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && send(input)}
+            placeholder={placeholder}
+            disabled={streaming}
+            className={cx(
+              STROKE,
+              // 1rem, not 13px: the read scale, and the size below which iPad
+              // Safari zooms the page on focus
+              "min-h-[var(--noor-touch-min)] w-full min-w-0 rounded-[var(--play-radius-sm)] bg-card px-4 text-[1rem] text-ink outline-none placeholder:text-ink-faint sticker-shadow-sm",
+              // typed text never runs under the pill
+              showPicker && "pe-32"
+            )}
+          />
+          {showPicker && (
+            <MathSymbolPicker
+              lessonKeyIds={pickerLessonKeys}
+              recents={pickerRecents}
+              onUse={(id) => setPickerRecents((r) => pushRecent(r, id))}
+              field={inputRef}
+              value={input}
+              onChange={setInput}
+              disabled={streaming}
+            />
           )}
-        />
+        </div>
         {inputAccessory?.({ setInput })}
         <button
           onClick={() => send(input)}
@@ -1365,6 +1406,7 @@ export function ChatCore({
 const MessageRow = memo(function MessageRow({
   msg: m,
   questionCards,
+  symbols,
   tutorAvatar,
   debug,
   arabicUi,
@@ -1391,6 +1433,8 @@ const MessageRow = memo(function MessageRow({
   msg: ChatMsg;
   /** see ChatCoreProps.questionCards */
   questionCards: boolean;
+  /** a maths surface: typed question cards get the "∑ Symbols" pill (see ChatCoreProps.mathKeys) */
+  symbols: boolean;
   /** see ChatCoreProps.tutorAvatar */
   tutorAvatar: boolean;
   debug: boolean;
@@ -1537,6 +1581,7 @@ const MessageRow = memo(function MessageRow({
                 <div key={i} {...{ [CHAT_INTERACTIVE_ATTR]: "" }}>
                 <ChatQuestionCard
                   question={q}
+                  symbols={symbols}
                   debug={debug}
                   lang={arabicUi ? "ar" : "en"}
                   onResult={onAttempt}

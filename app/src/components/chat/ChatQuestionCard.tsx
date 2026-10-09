@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { mcqChoices, stepText } from "@/lib/types";
 import type { AttemptResult, SpineQuestion, WidgetQuestionSpec } from "@/lib/types";
 import { MathWidget } from "@/components/student/widgets/render-math-widget";
@@ -22,6 +22,8 @@ import {
   cx,
 } from "@/components/sticker";
 import { cardWithholdsAnswer } from "@/lib/socratic-probing";
+import { lessonKeyIds, pushRecent } from "@/lib/math-keys";
+import { MathSymbolPicker } from "./MathSymbolPicker";
 
 /**
  * Live question card pushed into the chat by a {{show_question:…}} directive.
@@ -38,6 +40,7 @@ export function ChatQuestionCard({
   revealAnswer = false,
   retryOfAttemptId,
   externalResult,
+  symbols = false,
 }: {
   question: SpineQuestion;
   /** false = student mode: no db ids, soft failure state, no mastery deltas */
@@ -75,9 +78,18 @@ export function ChatQuestionCard({
    * card's OWN display catch up. Matched by question id.
    */
   externalResult?: { questionId: string; result: AttemptResult };
+  /**
+   * Maths only (prototype, `feat/proto-math-symbol-keys`): the "∑ Symbols" pill inside a typed
+   * answer's field, its keys read from this question's stem. A typed question always asks for a
+   * specific answer, so no {{expects_math}} is needed here.
+   */
+  symbols?: boolean;
 }) {
   const [choice, setChoice] = useState<string | null>(null);
   const [numeric, setNumeric] = useState("");
+  const numericField = useRef<HTMLInputElement>(null);
+  const symbolKeys = useMemo(() => (symbols ? lessonKeyIds([q.stem]) : []), [symbols, q.stem]);
+  const [symbolRecents, setSymbolRecents] = useState<string[]>([]);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   // Seeded from a chat-typed attempt that already matches (see the sync
@@ -246,18 +258,34 @@ export function ChatQuestionCard({
                 ))}
               </div>
             ) : (
-              <input
-                type="text"
-                inputMode="decimal"
-                value={numeric}
-                onChange={(e) => setNumeric(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && submit()}
-                placeholder="Type the answer…"
-                className={cx(
-                  STROKE,
-                  "min-h-[var(--noor-touch-min)] w-full rounded-[var(--play-radius-sm)] bg-card px-4 font-mono text-[1rem] text-ink outline-none placeholder:text-ink-faint sticker-shadow-sm"
+              <div className="relative">
+                <input
+                  ref={numericField}
+                  type="text"
+                  inputMode="decimal"
+                  value={numeric}
+                  onChange={(e) => setNumeric(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && submit()}
+                  placeholder="Type the answer…"
+                  className={cx(
+                    STROKE,
+                    "min-h-[var(--noor-touch-min)] w-full rounded-[var(--play-radius-sm)] bg-card px-4 font-mono text-[1rem] text-ink outline-none placeholder:text-ink-faint sticker-shadow-sm",
+                    // typed text never runs under the pill
+                    symbols && "pe-32"
+                  )}
+                />
+                {symbols && (
+                  <MathSymbolPicker
+                    lessonKeyIds={symbolKeys}
+                    recents={symbolRecents}
+                    onUse={(id) => setSymbolRecents((r) => pushRecent(r, id))}
+                    field={numericField}
+                    value={numeric}
+                    onChange={setNumeric}
+                    disabled={busy}
+                  />
                 )}
-              />
+              </div>
             )}
             {/* A widget question has nothing to submit: the construction IS
                 the answer and posts itself the moment the student commits to

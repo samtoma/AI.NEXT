@@ -8,7 +8,7 @@ import { emit } from "@/lib/analytics";
 import { getLibraryEntries, flagAuthoringGap } from "@/lib/explanations";
 import { currentSessionSnapshot } from "@/lib/sessions";
 import type { AttemptResult, SolutionStep } from "@/lib/types";
-import { evaluateArithmeticExpression } from "@/lib/arithmetic";
+import { evaluateArithmeticExpression, normalizeMathSigns } from "@/lib/arithmetic";
 import {
   acceptedRetryOf,
   attemptProbingDeclaration,
@@ -45,7 +45,8 @@ function grade(
   if (questionType === "numeric") {
     const a = parseFloat(correct);
     if (!Number.isNaN(a)) {
-      const trimmedGiven = given.trim();
+      // the symbol picker's signs (− ² √ …) read as the arithmetic they mean
+      const trimmedGiven = normalizeMathSigns(given).trim();
       // The common case: a clean numeric literal, no working shown.
       if (/^[+-]?\d+(\.\d+)?$/.test(trimmedGiven)) {
         return Math.abs(a - parseFloat(trimmedGiven)) < 1e-6;

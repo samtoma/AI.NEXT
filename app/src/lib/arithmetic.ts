@@ -13,9 +13,22 @@
 
 const MULTIPLY_X = /(?<=[0-9)])\s*[xX]\s*(?=[0-9(])/g;
 
+/**
+ * The signs the maths symbol picker inserts (`lib/math-keys.ts`), as the plain arithmetic they mean:
+ * the true minus (U+2212) and dashes as "-", the middle dot as "*", superscript ² and ³ as powers.
+ * Shared with `grade()` so a bare "−3" typed with the minus key is the number −3.
+ */
+export function normalizeMathSigns(raw: string): string {
+  return raw
+    .replace(/[\u2212\u2013\u2014]/g, "-")
+    .replace(/·/g, "*")
+    .replace(/²/g, "^2")
+    .replace(/³/g, "^3");
+}
+
 /** Returns the expression's value, or null if `raw` isn't a parseable arithmetic expression. */
 export function evaluateArithmeticExpression(raw: string): number | null {
-  const normalized = raw
+  const normalized = normalizeMathSigns(raw)
     .trim()
     .replace(/[×✕⋅]/g, "*")
     .replace(/÷/g, "/")
@@ -23,8 +36,8 @@ export function evaluateArithmeticExpression(raw: string): number | null {
 
   // No operator at all: this isn't "steps", it's a bare token — let the
   // caller's own plain-number handling deal with it instead.
-  if (!/[+\-*/^]/.test(normalized)) return null;
-  if (!/^[0-9+\-*/^().\s]+$/.test(normalized)) return null;
+  if (!/[+\-*/^√]/.test(normalized)) return null;
+  if (!/^[0-9+\-*/^().\s√]+$/.test(normalized)) return null;
 
   let i = 0;
   const peek = (): string | undefined => normalized[i];
@@ -42,6 +55,11 @@ export function evaluateArithmeticExpression(raw: string): number | null {
 
   function parsePrimary(): number {
     skipSpace();
+    // √ binds to the bracket or number right after it: √(16), √16
+    if (peek() === "√") {
+      i++;
+      return Math.sqrt(parsePrimary());
+    }
     if (peek() === "(") {
       i++;
       const value = parseExpr();
