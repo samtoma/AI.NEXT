@@ -275,10 +275,12 @@ test("FR-3503: the Ask surfaces mark their closing question with {{ask}}", () =>
   }
 });
 
-test("FR-3501, FR-3502: the student surface renders the Next control and the ask through the shared renderer", () => {
+test("FR-3501, FR-3502: the student surface renders the Continue chip and the ask through the shared renderer", () => {
   const core = read("../components/chat/ChatCore.tsx");
   assert.match(core, /gateAtBoundary\(/);
-  assert.match(core, /name: "chunk_next"/, "FR-3508: each Next tap is recorded");
+  assert.match(core, /recordChunkAction\("chunk_next"/, "FR-3508: each Continue tap is recorded");
+  assert.match(core, /<GateChips/, "the paused reply's moves live in the chip row, not the bubble");
+  assert.doesNotMatch(core, /NextBeat/);
   const blocks = read("../components/chat/message-blocks.tsx");
   assert.match(blocks, /b\.t === "ask"/);
   assert.match(blocks, /bg-card-warm/, "the ask is a Honey fill, a token not a literal colour");

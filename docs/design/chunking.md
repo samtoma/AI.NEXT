@@ -27,17 +27,23 @@ checked isn't here.
 The tutor already writes in **beats** — short parts separated by a `{{beat}}` marker on its own line.
 Until now a beat was only a timed pause; the whole reply then sat in one bubble.
 
-Now, in a long reply, **a beat ends with a "Next" button**:
+Now a long reply **pauses after each beat**:
 
-- Only the first beat appears. A small **Next ›** sits under it.
-- Tapping it shows the next beat. Earlier beats stay visible.
+- Only the first beat appears. The chip row above the typing box swaps to two chips:
+  **Say it another way** and an amber **Continue ↓**. The bubble itself gains nothing.
+- **Continue** shows the next beat. Earlier beats stay visible.
+- **Say it another way** ends the reply where the student stopped reading — the unread beats are
+  dropped from the screen and from what the tutor sees next — and asks for another explanation.
 - The question appears only once every beat before it has been shown, so it is always the last thing
   on screen and is never above text the student hasn't reached.
 - No model call is involved. It costs nothing and adds no waiting.
 
-**When the button appears** (FR-3501):
+Why the chip row (option D, Tamer, 2026-10-09): it is where the student's thumb already is, it keeps
+the bubble clean, and the two moves a stuck reader actually has sit side by side.
 
-| Reply | Next button? |
+**When a reply pauses** (FR-3501):
+
+| Reply | Pauses for Continue? |
 |---|---|
 | One beat (e.g. "Exactly." + a question) | No — shown at once |
 | Several beats, fewer than **40 words** of prose in total | No — timed pauses, as today |
@@ -47,8 +53,8 @@ Now, in a long reply, **a beat ends with a "Next" button**:
 The 40-word line exists because teenagers asked to tap after every sentence feel patronised. The
 button is for real reading load, not for ceremony.
 
-While a reply is waiting on **Next**, the typing box stays disabled, as it already is while a reply is
-arriving. The button is the one thing to do.
+While a reply is paused, the typing box stays disabled, as it already is while a reply is arriving.
+The two chips are the things to do.
 
 ### The question looks different — inside the same bubble
 
@@ -81,8 +87,8 @@ objectives.
 
 ### A figure gets its own step
 
-A figure is a beat of its own. If a question follows it, the **Next** button always sits between
-them (FR-3505), so the student has looked at the figure before reading what to do with it. The figure
+A figure is a beat of its own. If a question follows it, the reply always pauses for **Continue**
+between them (FR-3505), so the student has looked at the figure before reading what to do with it. The figure
 stays on screen while they answer.
 
 ---
@@ -174,8 +180,9 @@ message text, tagged by environment.
 | `italics` | single-asterisk emphasis |
 | `idiom` | a phrase from the idiom list |
 
-Each tap on **Next** is recorded as a `button_click` (`name: "chunk_next"`) (FR-3508), so the effect
-can be measured: how many beats students read through, and how often a reply is left unfinished.
+Each **Continue** is recorded as a `button_click` (`name: "chunk_next"`), and each **Say it another
+way** at a pause as `chunk_another` (FR-3508), so the effect can be measured: how many beats students
+read through, and where they stop.
 
 ## 7. Worked example: before → after
 
@@ -204,8 +211,8 @@ X = {1, 2} and Y = {2, 4, 6}.
 **Can you list a few pairs in X × Y?**
 ```
 
-**What the student sees:** "Close, but not quite." → **Next ›** → the function sentence →
-**Next ›** → the relation sentence → **Next ›** → the honey question block.
+**What the student sees:** "Close, but not quite." → **Continue** → the function sentence →
+**Continue** → the relation sentence → **Continue** → the honey question block.
 
 ## 8. Out of scope here
 
