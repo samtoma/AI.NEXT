@@ -650,6 +650,23 @@ needs a database. That is why several rows below distinguish "proved once" from 
 | FR-3408 | The old daily number survives as one named, observed threshold, `DAILY_UPLOAD_THRESHOLD = 10` per student per day | **BUILT** | `app/src/lib/turn-thresholds.ts` — `DAILY_UPLOAD_THRESHOLD`, `uploadThresholdStatus`, `uploadChipLabel`; the window is the old cap's own, reproduced exactly: the rolling 24 hours before each upload (`created_at - 1 day, created_at]`), not a calendar day, so no timezone enters it — a burst spanning UTC midnight can mark two student-days | `turn-thresholds.test.mts` (11, the upload-threshold functions). Checked against a scratch database with a 10-upload burst across UTC midnight, and a baseline-environment student excluded by `$1`. |
 | FR-3409 | The Cost page shows photo-upload monitoring: uploads, students who uploaded, parse outcomes, upload/OCR spend and its per-upload average kept separate from tutoring (FR-2402); student-days that reached/went past the daily threshold, highlighted. The student-day list is shown, and queried, only for an operator who also holds `student-data` (FR-2406) | **BUILT** | `app/src/lib/upload-threshold-queries.ts` — `readUploadsView(db, periodDays, access)` (uploads and uploaders over `UPLOAD_TOTALS_SQL`, parse outcomes over `PARSE_OUTCOMES_SQL` keyed on `surface_kind = 'upload_parse'`, the per-student-day aggregate over `STUDENT_DAY_SUMMARY_SQL(withHighest)`, the list over `STUDENT_DAYS_SQL` only `withDetail`); spend itself is **not** recomputed here — it reuses the photo/OCR figure `cost-queries.ts` already prices (FR-2402); wired into `app/src/app/(console)/cost/page.console.tsx`'s `PhotoUploads`/`ReachedStudentDays` in `36765e9`, gated the same day by the same `costDetailAccess` FR-3403/3404 use | `upload-threshold-queries.test.mts` (13): *"the summary counts with uploadThresholdStatus's rule, and the highest only on request"*, *"readUploadsView with student-data: four queries, this environment, this period, the threshold from the module"*, *"readUploadsView without student-data: aggregates only, no list query, no highest (FR-2406)"*. Checked against a scratch database with a 12-upload burst, a 10-upload burst across UTC midnight, and a baseline-environment student. Rendered against a scratch database as a billing-only operator and as a full operator, same as FR-3403; no browser has opened the page. |
 
+## 7h. Chunked tutor turns — FR-3501…FR-3508 **[ADDED 2026-10-09 — proposed, pending Samuel's triage]**
+
+> Written on `req/FR-3501-chunked-tutor-turns` before the code, per `docs/BRANCHING.md`. Every row is
+> OPEN until the implementation lands on the same branch. Design reasoning:
+> [`docs/design/chunking.md`](../../docs/design/chunking.md).
+
+| FR | Requirement | Status | Implementation | Proof |
+|---|---|---|---|---|
+| FR-3501 | A reply of 2+ beats and 40+ words is stepped through with a Next control; shorter replies keep the timed pause; works with reduced motion; no model call | **OPEN** | — | — |
+| FR-3502 | The `{{ask}}` question renders as a Honey block inside the same bubble, only after every beat before it; replay renders it the same way; an unmarked trailing question is promoted | **OPEN** | — | — |
+| FR-3503 | At most one ask per reply, always last | **OPEN** | — | — |
+| FR-3504 | A lesson reply teaches at most one learning objective; no `{{check_in}}` between objectives | **OPEN** | — | — |
+| FR-3505 | A figure is its own beat, and a Next control always follows it when more comes after | **OPEN** | — | — |
+| FR-3506 | The tutor prompts state the chunking writing rules; the playful tone line is replaced | **OPEN** | — | — |
+| FR-3507 | Every delivered reply is checked; breaches logged as `chunking_violation` with rules and counts, no text, per environment; never delays or regenerates | **OPEN** | — | — |
+| FR-3508 | Each Next tap is recorded as `button_click` `chunk_next` with surface and beat | **OPEN** | — | — |
+
 ---
 
 ## 8. Deferred by design — architecture only — FR-2901…
@@ -717,13 +734,13 @@ Items 10, 13 and 14 are engineering's.
 
 | | Count |
 |---|---|
-| Functional requirements | **160** |
+| Functional requirements | **168** |
 | Success criteria | **14** |
-| Traced (every one needs a row) | **174 / 174** |
+| Traced (every one needs a row) | **182 / 182** |
 | — verified | 100 |
 | — built | 22 |
 | — partial | 44 |
-| — open | 2 |
+| — open | 10 |
 | — blocked | 1 |
 | — deferred | 5 |
 | Requirements a test declares | **98** |

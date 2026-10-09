@@ -6,7 +6,7 @@
 `feat/002-identity-and-admin-console` on 2026-09-21. *(Was "Draft — requirements only, no
 implementation"; corrected 2026-09-22, when this spec also gained the course-availability
 requirements, which were written after their code and are stamped as such.)*
-**Last amended**: 2026-10-02 (the Your Progress Map — `tamer-graph-test`, accepted by Samuel 2026-10-02, **released in v0.11.0**) — **FR-3224** added; **FR-3216** superseded by it (Samuel, 2026-10-02); FR-3208, FR-3209, FR-3210 and FR-3219 amended in place, each marked. Before that, 2026-10-01 (student header, home page and the lesson gate — `tamer-mvp-fixes`, accepted by Samuel 2026-10-01, **released in v0.10.0**) — **FR-2016** and **FR-3219…FR-3222** added; **FR-3202** and **FR-3203** amended in place, each marked; FR-3221 is ADR-0020's 2026-09-30 amendment, accepted by Samuel 2026-10-01. Before that, 2026-09-25 (one curriculum order, v0.9.2 — **not committed**, awaiting Samuel's
+**Last amended**: 2026-10-09 (chunked tutor turns — `req/FR-3501-chunked-tutor-turns`, proposed by Tamer from issue #23, **pending Samuel's triage**) — **FR-3501…FR-3508** added. Before that, 2026-10-02 (the Your Progress Map — `tamer-graph-test`, accepted by Samuel 2026-10-02, **released in v0.11.0**) — **FR-3224** added; **FR-3216** superseded by it (Samuel, 2026-10-02); FR-3208, FR-3209, FR-3210 and FR-3219 amended in place, each marked. Before that, 2026-10-01 (student header, home page and the lesson gate — `tamer-mvp-fixes`, accepted by Samuel 2026-10-01, **released in v0.10.0**) — **FR-2016** and **FR-3219…FR-3222** added; **FR-3202** and **FR-3203** amended in place, each marked; FR-3221 is ADR-0020's 2026-09-30 amendment, accepted by Samuel 2026-10-01. Before that, 2026-09-25 (one curriculum order, v0.9.2 — **not committed**, awaiting Samuel's
 review) — **FR-3217, FR-3218** added: every reader of curriculum order uses the one catalogue order
 (`MODULE_ORDER`), a list of several subjects splits by subject first (Samuel, 2026-09-25), guarded by a
 source test, the tutor's Ask-the-Spine context included (Samuel lifted ADR-0020's hold for that ordering
@@ -1223,6 +1223,51 @@ context: *"yes for sure, for decision 2, it is part of the overall consistency, 
   an operator without it MUST see a note citing FR-2406 in the list's place, and the list MUST NOT be
   queried on their behalf. The data MUST be per environment (constitution XI) and MUST carry no
   upload content (FR-2406) regardless of role.
+
+### Chunked tutor turns (FR-3501…) **[ADDED 2026-10-09 — proposed, pending Samuel's triage]**
+
+> Students miss the question at the end of a long reply, get two topics in one reply, and read a
+> question before looking at the figure it is about (issue #23, Prototype 1.1 review). The tutor
+> already writes in `{{beat}}`s, but a beat was only a timed pause: the whole reply then sat in one
+> bubble with the question as its last paragraph. These requirements make a beat something the
+> student steps through and make the question visibly separate. Rationale, house style and the
+> worked example: [`docs/design/chunking.md`](../../docs/design/chunking.md). Tamer's three decisions
+> on the draft, 2026-10-09: the question stays **inside** the tutor's bubble, not a separate message;
+> **no "Still with me?" card** between topics; emphasis is **bold, never ALL CAPS**.
+
+- **FR-3501**: A tutor reply of more than one beat with **40 or more words** of prose MUST be shown
+  one beat at a time: each beat after the first MUST appear only after the student taps a **Next**
+  control under the previous one, and earlier beats MUST stay visible. A reply below that length
+  MUST be shown without the control (its beats keep the timed pause). The control MUST use the Noor
+  Play tokens and hold the touch-target minimum, MUST work with reduced motion on, and MUST cost no
+  model call.
+- **FR-3502**: An open question that ends a reply (`{{ask}}`) MUST be rendered as a tinted block —
+  the Honey fill with its paired ink, no border of its own — at the foot of the **same** tutor
+  bubble, never as a separate message, with 16px of space above it. It MUST NOT appear before every
+  beat preceding it has been shown. The console's replay MUST render it the same way, through the
+  shared block renderer (ADR-0015 §3). A finished reply of more than one beat whose last paragraph
+  ends in a question mark and that carries no `{{ask}}` MUST be rendered the same way.
+- **FR-3503**: A tutor reply MUST carry **at most one ask** — an `{{ask}}`, a question card or an
+  interactive widget — and, when it carries one, the ask MUST be its last element. The Your
+  Progress chat and a lesson's closing message MAY carry none.
+- **FR-3504**: In a lesson, a tutor reply MUST teach **at most one learning objective**: its
+  citations MUST name at most one, and the one-line reaction to the student's previous answer MUST
+  carry no citation. The next objective MUST start in a later reply. The tutor MUST NOT be told to
+  emit `{{check_in}}` between objectives.
+- **FR-3505**: A figure MUST be a beat of its own, and when anything follows it in the same reply
+  the **Next** control MUST sit between them, whatever the reply's length.
+- **FR-3506**: The tutor prompts MUST state the writing rules of `docs/design/chunking.md` §3–§4:
+  sentences of at most 20 words, beats of at most 25 words and one idea, at most 4 beats, plain
+  literal English with no idioms or wordplay (replacing the "upbeat, playful" tone line), emphasis
+  in **bold** and never in capitals or italics, words before symbols on first use.
+- **FR-3507**: Every delivered tutor reply MUST be checked on the server against the rules of
+  `docs/design/chunking.md` §6, and each reply that breaks any MUST be recorded as one
+  `chunking_violation` analytics event naming the surface, the rules broken and their counts —
+  never the reply's text — per environment (constitution XI). The check MUST NOT delay, alter or
+  regenerate the reply.
+- **FR-3508**: Each tap on the **Next** control MUST be recorded as a `button_click` event named
+  `chunk_next`, carrying the surface and the beat reached, so how far students read through a
+  reply can be measured.
 
 ### Deferred by design — architecture only (FR-2901…)
 
