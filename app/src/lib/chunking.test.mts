@@ -12,7 +12,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { oneQuestionAsk, parseMessage } from "./chat-parse.ts";
+import { droppedFollowUp, oneQuestionAsk, parseMessage } from "./chat-parse.ts";
 import { renderInlineMarkdown } from "./inline-markdown.ts";
 import {
   GATE_MIN_WORDS,
@@ -235,6 +235,16 @@ test("FR-3503: a second question joined onto the ask is dropped — on screen an
   assert.ok(!JSON.stringify(ask).includes("Why"));
   // unmarked, promoted ask
   assert.ok(!oneQuestionAsk("Look.\n{{beat}}\nCould you still draw it as a grid? Why or why not?").includes("Why"));
+});
+
+test("FR-3503: the dropped follow-up is kept for the tutor, to ask after the student answers", () => {
+  const two =
+    "Now double both parts.\n{{beat}}\n{{ask}}\n**Does the ratio stay 2:3, or does it change? Why do you think so?**";
+  assert.equal(droppedFollowUp(two), "Why do you think so?");
+  assert.equal(droppedFollowUp("Look.\n{{ask}}\n**Which pairs follow it?**"), null);
+  const core = read("../components/chat/ChatCore.tsx");
+  assert.match(core, /droppedFollowUp\(acc\)/);
+  assert.match(core, /kind: "event",\s*text: `Held back so the student sees one question at a time/);
 });
 
 test("FR-3503: one question, or a question with a plain sentence after it, is left alone", () => {

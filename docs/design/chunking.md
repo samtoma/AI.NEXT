@@ -142,7 +142,9 @@ If the model forgets `{{ask}}`, a finished reply whose last paragraph is a quest
    questions. Ask "Could you still draw X × Y as a grid of dots?"; when the student answers, "Why?"
    is the next reply's ask. The model does not always comply, so the app enforces it: only the
    first question of an ask is shown, and the tutor's transcript keeps only that one. A plain
-   sentence after the question ("Take your time.") is kept. Each slip is still logged.
+   sentence after the question ("Take your time.") is kept. Each slip is still logged. The dropped
+   follow-up is not thrown away: it goes back to the tutor as a hidden [live event] note, so the
+   tutor asks "Why?" after the student's answer — unless the answer already explained why.
 4. **Plain, literal English (CEFR B1).** No idioms or wordplay: not "close cousin", "make the cut",
    "nice catch", "piece of cake". Warmth comes from short, kind sentences. This replaces the old
    "upbeat, playful" tone line in the lesson prompt.
