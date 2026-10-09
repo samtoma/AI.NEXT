@@ -1245,7 +1245,7 @@ export function ChatCore({
                 text: r.isCorrect
                   ? arabicUi
                     ? "برافو ✓ — شايف إجابتك…"
-                    : "Nice ✓ — check your answer…"
+                    : nextCheckingLine()
                   : arabicUi
                     ? "ولا يهمك — بص هنا…"
                     : "No worries — look here…",
@@ -1278,7 +1278,7 @@ export function ChatCore({
                 localOnly: true,
                 text: arabicUi
                   ? "✓ شايف إجابتك… ثانية واحدة"
-                  : "✓ check your answer… one second",
+                  : nextCheckingLine(),
               } satisfies ChatMsg,
             ]
           : []),
@@ -2065,6 +2065,14 @@ function recordChunkAction(name: "chunk_next" | "chunk_another", surface: string
 }
 
 const SAY_ANOTHER_WAY_EN = "Say it another way";
+
+/** The line shown while an answer is being checked — two phrasings, taken in
+ *  turn so the same words don't repeat on every answer (Tamer, 2026-10-09). */
+const CHECKING_LINES = ["Checking your answer. One second…", "Let me check your answer ⏳"];
+let checkingTurn = 0;
+function nextCheckingLine(): string {
+  return CHECKING_LINES[checkingTurn++ % CHECKING_LINES.length];
+}
 const SAY_ANOTHER_WAY_AR = "لسه مش فاهم — اشرحها بطريقة تانية";
 
 /**
