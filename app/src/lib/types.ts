@@ -321,6 +321,8 @@ export interface ChatMsg {
   kind?: "event" | "say";
   /** paced reveal: number of chars of `text` currently revealed (streaming) */
   reveal?: number;
+  /** FR-3501: the reveal is stopped at a beat, waiting for the student's Next */
+  gated?: boolean;
 }
 
 /* ---- Adaptive lesson modes (learn / review) ---- */

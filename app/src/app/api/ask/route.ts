@@ -25,6 +25,9 @@ import { coerceUploadId } from "@/lib/upload-contract";
 import { getStudentProfile } from "@/lib/student-context";
 import { resolveStudentScope } from "@/lib/catalog-queries";
 import { currentSessionSnapshot } from "@/lib/sessions";
+// aliased: the stream below has its own `emit` for reply text
+import { emit as emitEvent } from "@/lib/analytics";
+import { chunkingViolations } from "@/lib/chunking";
 import {
   ZERO_TOKENS,
   costFor,
@@ -853,6 +856,28 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
           latencyMs,
           citations,
         });
+
+        // FR-3507: what the delivered reply broke of docs/design/chunking.md,
+        // by rule — never its text. Logged, never regenerated: the student is
+        // already reading it. Fire-and-forget like every other emit.
+        const chunking = chunkingViolations(fullText, {
+          lesson: surface === "lesson_learn" || surface === "lesson_review",
+        });
+        if (chunking.rules.length > 0) {
+          void emitEvent({
+            event: "chunking_violation",
+            studentId,
+            sessionRef: sessionId,
+            properties: {
+              surface,
+              interaction_id: interactionId,
+              rules: chunking.rules,
+              counts: chunking.counts,
+              words: chunking.words,
+              beats: chunking.beats,
+            },
+          });
+        }
 
         // guard-mode emission runs behind the holdback window — release the
         // clean tail before closing the turn

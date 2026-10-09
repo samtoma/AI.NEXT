@@ -87,6 +87,10 @@ const STUBS = {
       // question chat (2026-09-30: no quizzing, addressed to the student).
       // `lib/ask.ts` -> `auth/principal.ts`; no principal.
       "ask-progress-chat.test.mts",
+      // renders `learnPrompt` and `askSystemPrompt` to prove the chunking
+      // rules are stated (FR-3504, FR-3506). Same `lib/lesson.ts` /
+      // `lib/ask.ts` -> `auth/principal.ts` import; no principal.
+      "chunking.test.mts",
       // drives the REAL `currentSession` (lib/sessions.ts) against a fake
       // PoolClient to prove the per-lesson snapshot is resolved once, stored,
       // and handed back on reuse (ADR-0021). Reaches `lib/student-context.ts`

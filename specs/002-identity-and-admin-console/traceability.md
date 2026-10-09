@@ -743,7 +743,7 @@ Items 10, 13 and 14 are engineering's.
 | — open | 10 |
 | — blocked | 1 |
 | — deferred | 5 |
-| Requirements a test declares | **105** |
+| Requirements a test declares | **113** |
 | Tasks complete / total | **0 / 0** |
 
 **Of 100 requirements marked VERIFIED, 58 have an automated test declaring them.** The remaining 42 were verified by running the product — a browser session, a query against a loaded database — which is real evidence and is not re-checked on any later commit. That gap is the honest measure of this build's regression risk, and it is the number to drive down.
