@@ -179,7 +179,7 @@ function pageOf(sec, r) {
   const ids = byId(), seen = new Set();
   const pg = (id) => { if (!id || seen.has(id)) return null; seen.add(id); const x = ids[id]; return x?.source_page ?? (x?.evidence ? pg([].concat(x.evidence)[0]) : null); };
   if (r.source_page) return r.source_page;
-  if (sec === "lesson") return r.pages_printed?.[0];
+  if (sec === "lesson") return r.pages?.[0];
   if (sec === "learning_objectives") return pg(r.evidence?.[0]);
   return pg(r.lo);
 }
@@ -525,9 +525,11 @@ $("#pg").onchange = () => showPage(Number($("#pg").value));
 async function openFile(p) {
   path = p; store.set("gt-file", p);
   data = await (await fetch(`/api/file?path=${encodeURIComponent(p)}`)).json();
-  const m = /printed_page\s*([+-])\s*(\d+)/.exec(data.source_document?.page_offset || "");
-  offset = m ? (m[1] === "-" ? -1 : 1) * Number(m[2]) : 0;
-  build(); page = data.lesson?.pages_printed?.[0] || 1;
+  // book record v1 stores the offset as a number; older files had "pdf_page = printed_page + 1"
+  const po = data.source_document?.page_offset;
+  const m = typeof po === "string" ? /printed_page\s*([+-])\s*(\d+)/.exec(po) : null;
+  offset = Number.isInteger(po) ? po : m ? (m[1] === "-" ? -1 : 1) * Number(m[2]) : 0;
+  build(); page = data.lesson?.pages?.[0] || 1;
   select(0); loadPdf();
 }
 
