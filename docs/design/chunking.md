@@ -145,6 +145,9 @@ If the model forgets `{{ask}}`, a finished reply whose last paragraph is a quest
    sentence after the question ("Take your time.") is kept. Each slip is still logged. The dropped
    follow-up is not thrown away: it goes back to the tutor as a hidden [live event] note, so the
    tutor asks "Why?" after the student's answer — unless the answer already explained why.
+   The same applies when the model puts the real question in the prose and leaves only a bare
+   follow-up ("Why or why not?", "How do you know?") in the ask: the question is lifted into the
+   highlighted block and the follow-up goes back to the tutor.
 4. **Plain, literal English (CEFR B1).** No idioms or wordplay: not "close cousin", "make the cut",
    "nice catch", "piece of cake". Warmth comes from short, kind sentences. This replaces the old
    "upbeat, playful" tone line in the lesson prompt.
