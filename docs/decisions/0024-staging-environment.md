@@ -4,6 +4,7 @@
 **Amends**: [ADR-0010](./0010-one-branch-per-solution.md) Amendment — `main` is the single *development* branch. `staging` is **not** a second development branch; it is a deployment target that carries `main` plus its own deploy configuration. · `deploy/TAKEOVER.md` — a third stack now shares the box, and the runbook's "what runs here" inventory grows by one.
 **Affects**: `deploy/docker-compose.staging.yml` (new) · `.github/workflows/deploy-staging.yml` (new) · `deploy/STAGING.md` (new) · `app/src/lib/env.ts` (the environment set gains a third member) · `db/migrations/033-staging-environment-seed.sql` (new) · `docs/BRANCHING.md` · `deploy/TAKEOVER.md`
 **Depends on**: [ADR-0007](./0007-student-mvp1-comparison-build.md) (the environment tag on every row), [ADR-0018](./0018-course-availability.md) (the course gate is per-environment), [ADR-0022](./0022-console-signin-from-cloudflare-access.md) (the console's identity comes from the Access assertion, so a staging console needs its own Access application and its own AUD)
+**Amended**: 2026-10-11, the same day, during the setup itself — the access posture. This ADR first put **both** staging hostnames behind Cloudflare Access; Samuel settled it the other way once the applications were in front of him, and staging now mirrors production exactly: **student surface open, console gated**. See [Access — staging mirrors production's posture](#access--staging-mirrors-productions-posture-student-open-and-console-gated), which also records the two Cloudflare distinctions that made the original setup confusing.
 
 ## Context
 
@@ -154,17 +155,54 @@ So: `Environment` gains `"staging"`, and two consequences are settled with it.
    a set, so that admitting an environment stays a deliberate edit rather than an automatic grant of
    `!== "baseline"`. Without this, staging's content load fails at step 10 of every deploy.
 
-### Access, and what staging is not
+### Access — staging mirrors production's posture, student open and console gated
 
-Both staging hostnames sit behind a Cloudflare Access application with an allow-list policy.
-`noor.reletix.com` is deliberately open (ADR-0019); staging is deliberately not — it runs unreviewed
-work in front of nobody, and "only users who have permission" was the instruction.
+**Amended 2026-10-11, the same day, during the setup itself.** This section first said *both*
+staging hostnames sit behind an Access application, on the reading that "only users who has
+permission can access" meant the whole environment. Samuel settled it the other way once the
+applications were in front of him: the **student surface is open** and only the **console is gated**
+— exactly production's arrangement, where `noor.reletix.com` is open by ADR-0019 and
+`admin-noor.reletix.com` is gated by its own application.
 
-The tunnel is token-managed, so the public hostnames and the Access applications are created in the
-Zero Trust dashboard, by hand, by Samuel, and the Access application must exist **before** the
-hostname is added (`deploy/cloudflared-ingress.example.yml` §3). Nothing in this repo can prove
-Access is in place; `deploy/STAGING.md` carries the off-box `curl` that verifies it, where a 200 is
-the failure.
+That is the better answer, and for a reason worth recording rather than merely accepting: staging
+exists to show the product as production serves it, and an access posture that differs from
+production's is one more way staging can disagree with the thing it is meant to predict. A gate on
+the student surface would have made every staging visit pass through a challenge no real visitor
+meets.
+
+The console stays gated on its own merits, and not only out of caution: ADR-0022 has the console
+take operator identity **from** the verified Access assertion, so with Access off it falls back to a
+password whose reset mail, on staging, is written to a container log rather than sent
+(`AINEXT_MAIL_TRANSPORT=console`). An ungated staging console is therefore both more exposed and
+less usable. `AINEXT_STAGING_CF_ACCESS_AUD` is the console application's AUD, not the student one's.
+
+**Two Cloudflare distinctions cost time here, and both are written down so they cost nobody time
+twice.**
+
+1. **An application with no policy is not "open" — it is "closed to everyone, after asking."** The
+   application is what intercepts a request and challenges for identity; policies only decide who
+   passes. A policy-less application prompts for an email and then denies every address. Making a
+   hostname genuinely open means **deleting the application**, which is what ADR-0019 actually did
+   to `noor.reletix.com` — it has no application, rather than an empty one.
+2. **An Access application creates no DNS record.** The tunnel's *public hostname* is what makes a
+   name exist and routes it to the origin port; the application only protects a name. Creating the
+   application alone leaves the hostname `NXDOMAIN`, which looks like a broken gate and is in fact a
+   missing route.
+
+The tunnel is token-managed, so both are dashboard acts, by hand, by Samuel. Order still matters
+wherever a gate is wanted: the application must exist **before** the hostname, or the hostname is
+briefly live and unprotected (`deploy/cloudflared-ingress.example.yml` §3).
+
+Nothing in this repo can prove any of it. `deploy/STAGING.md` carries the off-box `curl` that
+verifies the result — **and the expected answers now differ per hostname**: a 302 to
+`cloudflareaccess.com` for the console, a plain 200 for the student surface. On the console a 200 is
+the failure; on the student surface a 302 is the failure.
+
+An Access application's AUD can be read without the dashboard at all, which is how this environment's
+was obtained: the redirect to `cloudflareaccess.com` carries a `meta` JWT whose `aud` claim *is* the
+application's AUD tag. Verified against production before being relied on —
+`admin-noor.reletix.com`'s redirect yields `d810c05d…77c004`, byte-identical to the
+`AINEXT_CF_ACCESS_AUD` already in production's `deploy/.env`.
 
 Staging is **not** a release gate, not a QA sign-off, and not something a student or a family is
 ever pointed at. It is a place to look at the product on the real box before production is asked to

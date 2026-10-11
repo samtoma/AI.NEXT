@@ -49,6 +49,7 @@ Not care — nothing is shared, and the deploy refuses to run if it is.
 | Volumes | `ainext-mvp1_{ainext_mvp1_pg,ainext_mvp1_uploads,claude_cfg}` | `ainext-staging_{staging_pg,staging_uploads,claude_cfg}` |
 | Environment tag | `mvp1` | `staging` |
 | `down -v` | **forbidden** — a student's history | **normal** — every deploy |
+| Access | student open, console gated | **the same**: student open, console gated |
 
 `deploy-staging.yml`'s first step is a guard that exits non-zero unless the project is
 `ainext-staging` and the deploy directory is `/opt/reletix/AI.NEXT-staging`. It runs **before** any
@@ -68,61 +69,106 @@ never be on the box at once.
 
 Everything else is automated. These are not, and the stack is only half-useful until they are done.
 
-### 3.1 Cloudflare — the Access applications FIRST, then the hostnames
+### 3.1 Cloudflare — student surface open, console gated
 
 The tunnel is **token-managed** (`TUNNEL_TOKEN` in
 `/opt/reletix/infrastructure/cloudflared/docker-compose.yml`, `network_mode: host`). There is no
 local `config.yml`: public hostnames live in the Cloudflare Zero Trust dashboard, and nothing in this
 repo can create or verify them.
 
-**Order matters.** Create the Access application before you add the public hostname, or the hostname
-is briefly live and unprotected.
+**Staging mirrors production's access posture** (Samuel, 2026-10-11 — ADR-0024's Access amendment):
 
-**Step 1 — Zero Trust → Access → Applications → Add → Self-hosted.** Two applications:
-
-| | Application 1 | Application 2 |
+| Hostname | Posture | Mirrors |
 |---|---|---|
-| Name | `Noor Staging` | `Noor Staging Console` |
-| Domain | `staging-noor.reletix.com` | `admin-staging-noor.reletix.com` |
-| Session duration | 24h (or your preference) | 24h |
-| Policy | Action **Allow**, Include → **Emails** → the founders' addresses | same |
+| `staging-noor.reletix.com` | **open — no Access application at all** | `noor.reletix.com` (ADR-0019) |
+| `admin-staging-noor.reletix.com` | **gated**, allow-list policy | `admin-noor.reletix.com` (ADR-0022) |
 
-Both get an allow-list policy. Unlike `noor.reletix.com` — which is deliberately open
-([ADR-0019](../docs/decisions/0019-serve-the-whole-maths-bank.md)) — staging runs unreviewed work in
-front of nobody and stays closed.
+#### Two Cloudflare distinctions that cost an hour the first time
 
-**Step 2 — copy each application's AUD tag** (Application → Overview → *Application Audience (AUD)
-Tag*, 64 hex characters).
+Read these before clicking anything; each produced a confusing symptom during the original setup.
 
-**Step 3 — set the repo variable** so the console can verify the Access JWT
-([ADR-0022](../docs/decisions/0022-console-signin-from-cloudflare-access.md)):
+1. **An application with no policy is not "open" — it is "closed to everyone, after asking."** The
+   *application* intercepts the request and challenges for identity; *policies* only decide who
+   passes. A policy-less application prompts for an email and then denies every address. To make a
+   hostname genuinely open you **delete the application** — which is exactly what ADR-0019 did to
+   `noor.reletix.com`: it has no application, not an empty one.
+2. **An Access application creates no DNS record.** The tunnel's *public hostname* is what makes a
+   name exist and routes it to a port. Create only the application and the hostname stays
+   `NXDOMAIN` — which looks like a broken gate and is really a missing route.
+
+#### The console (gated) — application FIRST, then the hostname
+
+Order matters here, or the hostname is briefly live and unprotected.
+
+**Step 1 — Zero Trust → Access → Applications → Add → Self-hosted**
+
+| Field | Value |
+|---|---|
+| Name | `Noor Staging Console` |
+| Domain | `admin-staging-noor.reletix.com` |
+| Session duration | 24h (or your preference) |
+| Policy | name `Founders`, Action **Allow**, Include → **Emails** → the founders' addresses |
+
+**Step 2 — Networks → Tunnels → (the tunnel) → Public Hostname → Add**, **Type: HTTP** (TLS
+terminates at Cloudflare's edge; HTTPS here would fail):
+
+| Hostname | Service |
+|---|---|
+| `admin-staging-noor.reletix.com` | `http://localhost:3202` |
+
+**Step 3 — set the repo variable** to the **console application's** AUD, so the console can verify
+the Access JWT ([ADR-0022](../docs/decisions/0022-console-signin-from-cloudflare-access.md)):
 
 ```bash
 gh variable set AINEXT_STAGING_CF_ACCESS_AUD --body '<the Noor Staging Console AUD>'
 # AINEXT_CF_ACCESS_TEAM_DOMAIN already defaults to https://reletix.cloudflareaccess.com
 ```
 
-**Step 4 — Networks → Tunnels → (the tunnel) → Public Hostname → Add.** Two entries, **Type: HTTP**
-(TLS terminates at Cloudflare's edge; HTTPS here would fail):
+It is written into `deploy/.env` at deploy time, so **it needs one more deploy to take effect**.
+
+You do not have to find the AUD in the dashboard. Once the hostname is live, read it from the
+redirect — the `meta` JWT's `aud` claim *is* the application's AUD tag:
+
+```bash
+h=admin-staging-noor.reletix.com
+curl -sS -o /dev/null -m 20 -w '%{redirect_url}' "https://$h/" \
+  | sed -n 's/.*meta=\([^&]*\).*/\1/p' | cut -d. -f2 \
+  | tr '_-' '/+' | base64 -d 2>/dev/null | python3 -c 'import json,sys;print(json.load(sys.stdin)["aud"])'
+```
+
+Verified against production before being trusted: `admin-noor.reletix.com` yields
+`d810c05d…77c004`, byte-identical to the `AINEXT_CF_ACCESS_AUD` already in production's `deploy/.env`.
+
+#### The student surface (open)
+
+Add only the tunnel public hostname, **Type: HTTP**:
 
 | Hostname | Service |
 |---|---|
 | `staging-noor.reletix.com` | `http://localhost:3201` |
-| `admin-staging-noor.reletix.com` | `http://localhost:3202` |
 
-Each is **one DNS label deep** on purpose: Universal SSL on `*.reletix.com` covers one label only, so
-`staging.noor.reletix.com` would need the paid Advanced Certificate Manager. Same reasoning as the
-production hostnames (2026-09-22).
+No Access application. If one exists, delete it — leaving it without a policy locks everybody out.
 
-**Step 5 — verify from OFF the box**, on a machine with no Access session:
+Both names are **one DNS label deep** on purpose: Universal SSL on `*.reletix.com` covers one label
+only, so `staging.noor.reletix.com` would need the paid Advanced Certificate Manager. Same reasoning
+as the production hostnames (2026-09-22).
+
+#### Verify from OFF the box, on a machine with no Access session
 
 ```bash
 curl -sS -o /dev/null -w '%{http_code} %{redirect_url}\n' https://staging-noor.reletix.com
 curl -sS -o /dev/null -w '%{http_code} %{redirect_url}\n' https://admin-staging-noor.reletix.com
 ```
 
-Expect **302** to `*.cloudflareaccess.com` for both. **A 200 here is the failure** — it means the
-hostname is live and the Access policy is not in front of it.
+**The expected answers differ per hostname, and each one's failure is the other's success:**
+
+| Hostname | Expect | Failure |
+|---|---|---|
+| `staging-noor.reletix.com` | **200** | a **302** means an Access application is still in front of it |
+| `admin-staging-noor.reletix.com` | **302** to `*.cloudflareaccess.com` | a **200** means the console is exposed — treat as urgent |
+
+If your resolver has cached `NXDOMAIN` from before the hostname existed, query Cloudflare directly
+rather than concluding it is missing: `dig +short @1.1.1.1 <host> A`.
 
 ### 3.2 The one-time Claude login
 
@@ -222,7 +268,8 @@ dcs exec db psql -U ainext -d ainext_staging -c '\dt'
 | App refuses to start, *"AINEXT_ENVIRONMENT=… is not one of baseline \| mvp1 \| staging"* | Typo in the env file | Fix it; the refusal is deliberate — it prevents mis-attributed data |
 | Content loader exits 2, *"REFUSING: AINEXT_ENVIRONMENT is …"* | The loader's own bound, widened to `{mvp1, staging}` by ADR-0024 | Check the variable is `staging`, not blank |
 | 502 at the hostname | The stack is down, or the tunnel points at the wrong port | `dcs ps`, then check the dashboard hostname maps to `localhost:3201` |
-| 200 from off-box with no Access prompt | **The Access policy is missing.** Treat as urgent | §3.1, and remove the public hostname until it is fixed |
+| **Console** 200 from off-box with no Access prompt | **The console's Access application or policy is missing.** Treat as urgent | §3.1, and remove the public hostname until it is fixed |
+| **Student surface** 302 to cloudflareaccess | An Access application is still in front of a surface that is meant to be open | Delete it; a policy-less application locks everyone out rather than opening it |
 | Claude features fail | No login in this stack's volume | §3.2 |
 
 **Nuclear option, and it is cheap here.** Staging holds nothing worth keeping:
