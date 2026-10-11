@@ -293,11 +293,11 @@ test("the rollback is 032 mirrored: the old key back and the added diagnostic re
   assert.doesNotMatch(rollback, /\b(INSERT|DELETE|ALTER|CREATE|DROP|TRUNCATE|GRANT)\b/i);
 });
 
-test("the deploy's migration floor counts 032", () => {
+test("the deploy's migration floor counts 033", () => {
   const files = readdirSync(join(REPO, "db/migrations")).filter((f) => f.endsWith(".sql"));
   const floor = Number(
     readFileSync(join(REPO, "deploy/apply-migrations.sh"), "utf8").match(/\[ "\$applied" -ge (\d+) \]/)?.[1]
   );
-  assert.ok(files.includes("032-widget-excluded-values-sign.sql"));
+  assert.ok(files.includes("033-staging-environment-seed.sql"));
   assert.equal(floor, files.length, "apply-migrations.sh's floor is the number of migration files");
 });

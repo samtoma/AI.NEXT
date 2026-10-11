@@ -14,6 +14,7 @@ nobody deploys from was costing more than it bought.
 | Branch | What it is | Rule |
 |---|---|---|
 | `main` | **the product** — student-facing, English default, the identity/console/courses line | Default branch, and the only one anybody develops on. Carries the workflow and the deploy trigger. |
+| `staging` | **a deployment target, not a development line** — `main` plus the staging deploy files | Added 2026-10-11 ([ADR-0024](decisions/0024-staging-environment.md)). Deploys `staging-noor.reletix.com` + `admin-staging-noor.reletix.com` **on every push**. Nobody develops here: it is fast-forwarded from `main`, or carries a merge of the change being proven. |
 | `family-tutor` | Founding Families — parent-sold, Arabic RTL, three subjects, Elo | **The frozen baseline, and the backup of the old `main`.** Byte-identical to what `main` held at `f0cb192` before the move. Keep indefinitely. Nobody works on it. |
 | ~~`PDR1-0`~~ | — | **Retired 2026-09-22.** `main` was a strict ancestor of it (0 ahead, 119 behind), so the move was a fast-forward: no merge, no force push, and all 119 commits are intact on `main` as the record. |
 
@@ -39,6 +40,27 @@ can never change what another deploys. The cost is unchanged: the shared-box
 safety rails exist in one copy per branch — **change a rail on every branch that
 still deploys**, or the copy that drifts is the one that prunes production's
 images.
+
+### `staging` is the one branch where a push deploys
+
+Production is manual-only on purpose (`workflow_dispatch`, Samuel's 2026-09-13 call, T139). `staging`
+is the deliberate opposite: `.github/workflows/deploy-staging.yml` fires on every push to it, because a
+proving ground nobody can reach cheaply is a proving ground nobody uses.
+
+Two consequences follow, and both are rules rather than observations:
+
+1. **Never use `staging` as a scratch branch.** A push is a deploy. Work happens on a feature branch
+   off `main` and arrives here as a merge or a fast-forward.
+2. **The shared-box safety rails now exist in three copies** — `ci-cd.yml` on `main`, the same file on
+   `family-tutor`, and `deploy-staging.yml` here. The rule from the move still holds, with one more
+   place to apply it: change a rail on every branch that still deploys. `deploy-staging.yml` carries a
+   guard step that refuses to run unless the compose project is `ainext-staging` and the deploy
+   directory is `/opt/reletix/AI.NEXT-staging`, precisely because this is the only workflow in the repo
+   that runs `down -v` — an operation that is normal on staging and forbidden on production.
+
+Staging holds no data worth keeping and no secret of ours: its database is destroyed and rebuilt on
+every deploy, and its credentials are generated per run. The single thing that survives is the
+interactive `claude` login, in an `external` volume Compose will not delete.
 
 ## What gets a branch
 

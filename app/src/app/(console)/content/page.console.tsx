@@ -18,7 +18,7 @@ import { ConsoleRefusal } from "@/components/console/ConsoleRefusal";
 import { TeX } from "@/components/TeX";
 import { consoleAccess } from "@/lib/console-auth";
 import { consoleRoute } from "@/lib/console-routes";
-import { IS_MVP1 } from "@/lib/env";
+import { IS_BASELINE } from "@/lib/env";
 
 export const dynamic = "force-dynamic";
 
@@ -103,7 +103,7 @@ async function ContentAdminPage({
         </p>
       </header>
 
-      {!IS_MVP1 && (
+      {IS_BASELINE && (
         <div
           className="mb-6 rounded-xl border px-4 py-3 text-[14px]"
           style={{ borderColor: "var(--gold)", background: "var(--gold-wash)" }}
