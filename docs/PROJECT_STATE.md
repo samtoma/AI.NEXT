@@ -58,7 +58,7 @@ route-manifest gates pass. Migration **033** seeds staging's course-gate row (AD
 explicit-allow, so without it every student sees an empty catalogue and the deploy correctly fails).
 
 **Not yet done, and three of them need Samuel:** nothing is pushed or deployed; the Cloudflare public
-hostnames and the two Access applications must be created in the dashboard (`deploy/STAGING.md` §3.1
+hostnames must be created in the dashboard (`deploy/STAGING.md` §3.1
 has the exact values, and the Access app must exist *before* the hostname); the repo variable
 `AINEXT_STAGING_CF_ACCESS_AUD` must be set from the console app's AUD; and the one-time interactive
 `claude` login must be run inside the staging container. **Open debt:** the `env.ts` and migration-033
