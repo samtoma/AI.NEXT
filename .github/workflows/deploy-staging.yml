@@ -321,6 +321,42 @@ jobs:
           echo "deploying $RELEASE_TAG"
 
       # ---------------------------------------------------------------------
+      # Ensure the Claude credential volume exists.
+      # ---------------------------------------------------------------------
+      # `docker volume create` is idempotent — a no-op after the first deploy,
+      # and what creates `ainext-staging_claude_cfg` on the very first one.
+      # It is declared `external: true` in the compose file precisely so the
+      # `down -v` BELOW cannot remove it; this step is what guarantees it
+      # exists AT ALL, both before `up` tries to attach to it and before that
+      # teardown asserts it survived.
+      #
+      # IT RUNS BEFORE THE TEARDOWN, AND THAT ORDERING IS THE FIX FOR A REAL
+      # FAILURE. It used to run after, and the very first deploy failed on the
+      # teardown's own "the Claude volume survived" assertion — correctly, in
+      # the sense that nothing was destroyed, but for a silly reason: on a
+      # first run there was no volume yet for anything to have survived. The
+      # check was sound and the order was wrong. Creating it first makes that
+      # assertion unconditional and therefore worth making: from here on, if
+      # the volume is missing after `down -v`, Compose's external-volume
+      # protection genuinely failed.
+      #
+      # This step NEVER prints the credential file's contents — only whether
+      # it is there. `alpine` runs once (`docker run --rm`), mounted
+      # read-only, and is gone the moment the test finishes.
+      - name: Ensure the Claude credential volume exists
+        run: |
+          set -euo pipefail
+          docker volume create "$CLAUDE_VOLUME" >/dev/null
+          if docker run --rm -v "$CLAUDE_VOLUME:/claude-cfg:ro" alpine \
+               test -f /claude-cfg/.credentials.json; then
+            echo "Claude login present in $CLAUDE_VOLUME"
+            echo "CLAUDE_LOGIN_PRESENT=true" >> "$GITHUB_ENV"
+          else
+            echo "::warning::NO CLAUDE LOGIN — $CLAUDE_VOLUME has no .credentials.json. Run the one-time interactive login, see deploy/STAGING.md."
+            echo "CLAUDE_LOGIN_PRESENT=false" >> "$GITHUB_ENV"
+          fi
+
+      # ---------------------------------------------------------------------
       # Destroy the previous staging stack.
       # ---------------------------------------------------------------------
       # Staging is EPHEMERAL BY DESIGN (see docker-compose.staging.yml's own
@@ -372,8 +408,10 @@ jobs:
             exit 1
           fi
 
-          # The claude_cfg volume IS external — Compose must have refused to
-          # remove it regardless of `-v`. If it is gone anyway, Compose's
+          # The claude_cfg volume IS external, and the step before this one
+          # has just guaranteed it exists — so Compose must have refused to
+          # remove it regardless of `-v`, and this assertion has no innocent
+          # explanation for failing. If it is gone anyway, Compose's
           # external-volume protection failed, or the volume's name/label
           # drifted out from under this file, and a human now has to run the
           # one-time interactive Claude login again (deploy/STAGING.md) before
@@ -384,32 +422,6 @@ jobs:
             exit 1
           fi
           echo "ok: $CLAUDE_VOLUME survived; the pg and uploads volumes are gone"
-
-      # ---------------------------------------------------------------------
-      # Ensure the Claude credential volume exists.
-      # ---------------------------------------------------------------------
-      # `docker volume create` is idempotent — a no-op after the first deploy,
-      # and what creates `ainext-staging_claude_cfg` on the very first one.
-      # It is declared `external: true` in the compose file precisely so the
-      # `down -v` above could never remove it even if it already existed;
-      # this step is what guarantees it exists AT ALL before `up` tries to
-      # attach to it.
-      #
-      # This step NEVER prints the credential file's contents — only whether
-      # it is there. `alpine` runs once (`docker run --rm`), mounted
-      # read-only, and is gone the moment the test finishes.
-      - name: Ensure the Claude credential volume exists
-        run: |
-          set -euo pipefail
-          docker volume create "$CLAUDE_VOLUME" >/dev/null
-          if docker run --rm -v "$CLAUDE_VOLUME:/claude-cfg:ro" alpine \
-               test -f /claude-cfg/.credentials.json; then
-            echo "Claude login present in $CLAUDE_VOLUME"
-            echo "CLAUDE_LOGIN_PRESENT=true" >> "$GITHUB_ENV"
-          else
-            echo "::warning::NO CLAUDE LOGIN — $CLAUDE_VOLUME has no .credentials.json. Run the one-time interactive login, see deploy/STAGING.md."
-            echo "CLAUDE_LOGIN_PRESENT=false" >> "$GITHUB_ENV"
-          fi
 
       # ---------------------------------------------------------------------
       # Bring the staging stack up.
