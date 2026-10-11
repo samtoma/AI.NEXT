@@ -38,13 +38,40 @@ Proven locally: `tsc --noEmit` clean, **1048 tests pass / 0 fail**, both surface
 route-manifest gates pass. Migration **033** seeds staging's course-gate row (ADR-0018's rule is
 explicit-allow, so without it every student sees an empty catalogue and the deploy correctly fails).
 
-**Not yet done, and three of them need Samuel:** nothing is pushed or deployed; the Cloudflare public
-hostnames must be created in the dashboard (`deploy/STAGING.md` §3.1
-has the exact values, and the Access app must exist *before* the hostname); the repo variable
-`AINEXT_STAGING_CF_ACCESS_AUD` must be set from the console app's AUD; and the one-time interactive
-`claude` login must be run inside the staging container. **Open debt:** the `env.ts` and migration-033
-changes are product code and should merge to `main` so the two branches differ only in deploy files —
-§9 item 18 of the 001 matrix.
+**LIVE as of 2026-10-11 20:30 UTC.** `staging-noor.reletix.com` → 200 open,
+`admin-staging-noor.reletix.com` → 302 gated (aud `4ed5f5f2…`, set as the repo variable
+`AINEXT_STAGING_CF_ACCESS_AUD`), both verified from off-box against the authoritative nameserver.
+Stack healthy on 3201/3202 at `v0.11.1+cef78b9-staging`; 274 learning objectives, 20 modules, 8
+topics, 3 courses — identical to production's graph. The interactive `claude` login is done and
+**proved to survive a real `down -v`**: the second deploy tore the stack down and found
+`.credentials.json` still there, which is the `external` volume mechanism working rather than being
+asserted. Three independent Claude credentials now exist, one per stack, with three different
+timestamps — exactly the isolation ADR-0024 wanted.
+
+**Production was verified untouched throughout**, including across the first deploy's failure:
+`:3101` → 200, `:3102` → 307, container uptimes unmoved at 3 days and 2 weeks.
+
+**The first deploy failed, safely, and the fix is worth remembering**: the teardown step asserted the
+Claude volume survived `down -v` *before* the step that creates it had ever run, so on a first deploy
+there was nothing to survive. Nothing was destroyed — the guard passed, the pre-teardown scan found
+no production volume in scope, and `down -v` was a no-op against a project that did not exist. The
+check was sound and the order was wrong (`40c5fc0b`).
+
+**Two Cloudflare distinctions cost an hour** and are now in `deploy/STAGING.md` §3.1 so they cost
+nobody an hour twice: an Access application with **no policy** is not "open" but "closed to everyone,
+after asking" (deleting the application is what opens a hostname — which is what ADR-0019 actually
+did to `noor.reletix.com`), and an Access application **creates no DNS record** (the tunnel's public
+hostname is what makes a name exist, so an app alone leaves it `NXDOMAIN`). An application's AUD can
+also be read without the dashboard: the redirect's `meta` JWT carries it as the `aud` claim, verified
+against production's own configured value before being relied on.
+
+**Still open.** ⚠️ **Debt:** the `env.ts` rename and migration 033 are product code living only on
+`staging`; they should merge to `main` so the two branches differ only in deploy files — §9 item 18
+of the 001 matrix, and the divergence ADR-0010 exists to prevent. Untested by anyone but its author:
+whether the console's `Allow` policy actually admits the founders (a 302 looks identical with or
+without a working policy, so only a real sign-in proves it). And every push to `staging` redeploys,
+documentation-only pushes included — deliberate simplicity, about a minute each, narrowable with
+`paths-ignore` if it ever grates.
 
 ## 🩹 v0.11.1 hotfix — uploads work on the live site (released 2026-10-08)
 
