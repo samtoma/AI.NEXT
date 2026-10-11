@@ -1,0 +1,681 @@
+name: Deploy (staging)
+
+# THIS FILE DEPLOYS https://staging-noor.reletix.com AND
+# https://admin-staging-noor.reletix.com — A THIRD, FULLY ISOLATED STACK
+# (project `ainext-staging`) ON THE SAME BOX AS PRODUCTION (`ainext-mvp1`,
+# noor.reletix.com) AND THE FROZEN BASELINE (`ainext`). It is the sibling of
+# the `deploy` job in `ci-cd.yml`; read that job before changing this one —
+# the two must keep the same shared-box safety rails (dangling-only image
+# pruning, never `system prune`, a health gate before anything is called
+# healthy), and ci-cd.yml's own comment about the cost of that duplication
+# (more than one copy of each rail to keep in sync) applies here too.
+#
+# THE ONE THING THIS FILE IS NOT ALLOWED TO DO, EVER, UNDER ANY EDIT: touch
+# `/opt/reletix/AI.NEXT` (the frozen baseline) or `/opt/reletix/AI.NEXT-mvp1`
+# (production, noor.reletix.com). The very first step of the job below exists
+# only to make that true before anything else in this file runs, and it is
+# deliberately the loudest, most defensive step here. A mistake in this
+# workflow taking down noor.reletix.com is the primary risk this file is
+# written against.
+#
+# UNLIKE ci-cd.yml's deploy job (manual-dispatch-only — see its own comment on
+# why), THIS JOB DEPLOYS ON EVERY PUSH TO `staging`, with no human gate.
+# Staging exists to be disposable and current, not to wait for someone to
+# press a button. Everything downstream of that trigger — destroying the
+# previous stack, regenerating every credential, reloading the whole
+# curriculum — is written on the assumption that this is normal, frequent,
+# and safe to automate SPECIFICALLY BECAUSE staging carries no student, no
+# history and no secret worth keeping between runs. (See "Destroy the
+# previous staging stack" and "Write deploy/.env.staging" below for why that
+# pair, taken together, is what makes the rest of this file safe.)
+#
+# NO `needs:` ON A BUILD/TEST JOB HERE, and that is deliberate, not an
+# omission: `build`, `traceability` and `migrations` live in this file's
+# sibling, ci-cd.yml, and already run independently, on every branch and PR —
+# gating this job on them would mean either duplicating them into this file
+# just to get a job id to reference, or reaching across workflow files, which
+# Actions does not support. The deploy itself still is not unguarded: the
+# image build on the box runs `next build` as part of `docker compose … up
+# --build` below (step "Bring the staging stack up"), so a compile error
+# already fails THIS job, on THIS branch, without a `needs:` edge to a job
+# that ran somewhere else.
+on:
+  push:
+    branches: [staging]
+  workflow_dispatch: {}
+
+jobs:
+  deploy:
+    # `push` already scopes the trigger to `staging`, and `workflow_dispatch`
+    # can be fired against ANY branch from the Actions UI — this is what stops
+    # a dispatch picked against the wrong ref from deploying under the staging
+    # stack's name using a different branch's code.
+    if: github.ref == 'refs/heads/staging'
+    runs-on: [self-hosted, oci]
+    # THE SAME GROUP ci-cd.yml's `deploy` job and refresh-content.yml use.
+    # DO NOT RENAME THIS GROUP — that is deliberate, not a placeholder name.
+    # It is shared repo-wide on purpose: a staging deploy, a production
+    # deploy, and a manual content refresh must never run against the box at
+    # the same time, because all three drive `docker`/`docker compose`
+    # against the same daemon and the same shared resources (disk, the Mailu
+    # network, the BuildKit cache). Giving this job its own group would let it
+    # race one of the others instead of queuing behind it.
+    concurrency:
+      group: deploy-oci
+      cancel-in-progress: false
+    env:
+      APP_DIR: /opt/reletix/AI.NEXT-staging
+      PROJECT: ainext-staging
+      COMPOSE_FILE_REL: deploy/docker-compose.staging.yml
+      APP_PORT: "3201"
+      CONSOLE_PORT: "3202"
+      DB_NAME: ainext_staging
+      CLAUDE_VOLUME: ainext-staging_claude_cfg
+    steps:
+      # =====================================================================
+      # GUARD — THE MOST IMPORTANT STEP IN THIS FILE.
+      # =====================================================================
+      # Runs BEFORE the checkout and before anything else touches the box.
+      # ci-cd.yml's deploy job gets to assume it is the only workflow
+      # targeting the box's production stack; this one does not get that
+      # assumption for free, because a single wrong value in the `env:` block
+      # above — a stray edit, a copy-paste from ci-cd.yml that didn't finish —
+      # is how a staging deploy tears down noor.reletix.com instead of its own
+      # stack. `down -v` (a few steps below) is destructive BY DESIGN on this
+      # project; the only thing standing between that and a production outage
+      # is this step proving, before anything is cloned or run, that every
+      # value this job is about to act on names staging and nothing else.
+      - name: Guard — refuse to run against production
+        run: |
+          set -euo pipefail
+          die() { echo "::error::GUARD FAILED — refusing to run: $*"; exit 1; }
+
+          [ "$PROJECT" = "ainext-staging" ] \
+            || die "PROJECT is '$PROJECT', not 'ainext-staging'"
+
+          [ "$APP_DIR" = "/opt/reletix/AI.NEXT-staging" ] \
+            || die "APP_DIR is '$APP_DIR', not '/opt/reletix/AI.NEXT-staging'"
+
+          # Belt-and-suspenders on top of the exact-match check above: even if
+          # a future edit ever loosens that check, APP_DIR must NEVER resolve
+          # to either path a real stack lives in. These are the two
+          # directories this job must never clone into, never rewrite
+          # deploy/.env in, and never run `docker compose down -v` against.
+          case "$APP_DIR" in
+            /opt/reletix/AI.NEXT|/opt/reletix/AI.NEXT-mvp1)
+              die "APP_DIR resolves to a PRODUCTION directory ($APP_DIR)" ;;
+          esac
+
+          case "$CLAUDE_VOLUME" in
+            *-staging_claude_cfg) ;;
+            *) die "CLAUDE_VOLUME is '$CLAUDE_VOLUME', which does not end in '-staging_claude_cfg'" ;;
+          esac
+
+          [ "$APP_PORT" = "3201" ] || die "APP_PORT is '$APP_PORT', not '3201'"
+          [ "$CONSOLE_PORT" = "3202" ] || die "CONSOLE_PORT is '$CONSOLE_PORT', not '3202'"
+          # Named explicitly rather than only trusting the two checks above:
+          # the ports that must NEVER appear here are the baseline's (3100)
+          # and production's (3101, 3102), and that is worth asserting by name
+          # rather than by implication.
+          for p in "$APP_PORT" "$CONSOLE_PORT"; do
+            case "$p" in
+              3100|3101|3102) die "port '$p' belongs to the baseline or production stack" ;;
+            esac
+          done
+
+          echo "guard passed — PROJECT=$PROJECT APP_DIR=$APP_DIR APP_PORT=$APP_PORT CONSOLE_PORT=$CONSOLE_PORT CLAUDE_VOLUME=$CLAUDE_VOLUME"
+
+      # ---------------------------------------------------------------------
+      # Sync the staging checkout.
+      # ---------------------------------------------------------------------
+      # First deploy ever: $APP_DIR does not exist, so this creates it and
+      # does the equivalent of a fresh clone. Every deploy after that: fetch
+      # and hard-reset onto whatever `staging` points at right now — this job
+      # never trusts a stale working tree left over from a previous run or a
+      # human's `git pull` by hand.
+      #
+      # SAME remote/auth shape as ci-cd.yml's "Sync code into persistent app
+      # dir" step: `git init` + `remote add` rather than a literal `git
+      # clone`, which is what lets one script handle "directory doesn't exist
+      # yet" and "directory exists from a previous deploy" with the same few
+      # lines — it does not rely on the directory pre-existing. The URL is
+      # `${{ github.server_url }}/${{ github.repository }}.git` with NO
+      # embedded token, exactly as ci-cd.yml's deploy job does it: that job has
+      # run this same construction against this same self-hosted runner for
+      # weeks, so whatever lets it authenticate (the runner's own git
+      # credential configuration — same box, same user) already covers this
+      # job too. If that assumption is ever wrong, production's deploy job
+      # breaks at the same time this one would, which is the kind of failure
+      # that gets noticed immediately rather than silently.
+      - name: Sync the staging checkout
+        run: |
+          set -euo pipefail
+          REPO_URL="${{ github.server_url }}/${{ github.repository }}.git"
+          mkdir -p "$APP_DIR"
+          cd "$APP_DIR"
+          if [ ! -d .git ]; then
+            git init -q
+            git remote add origin "$REPO_URL"
+          else
+            git remote set-url origin "$REPO_URL"
+          fi
+          # `--tags` for the same reason ci-cd.yml fetches them: "Compute
+          # RELEASE_TAG" below needs `git describe --tags` to be able to find
+          # a release tag on the deployed commit.
+          git fetch --prune --tags origin "+refs/heads/staging:refs/remotes/origin/staging"
+          git checkout -f -B staging origin/staging
+          git reset --hard origin/staging
+          echo "DEPLOYED_SHA=$(git rev-parse --short HEAD)" >> "$GITHUB_ENV"
+          echo "Deploying commit: $(git rev-parse --short HEAD) on staging"
+
+          # ---- second half of the production guard -------------------------
+          # The static guard step above checked this WORKFLOW's own `env:`
+          # block; it could not check the compose file, because before this
+          # sync ran, the checkout — and therefore the file — did not exist.
+          # This closes that gap, and still runs well before the destructive
+          # `down -v` step below: deploy/docker-compose.staging.yml must
+          # declare `name: ainext-staging` at its own top level, so a checkout
+          # gone wrong (wrong branch, a stray local edit left on the box) can
+          # never make `-p ainext-staging` and the file's own idea of its
+          # project disagree.
+          COMPOSE_PATH="$APP_DIR/$COMPOSE_FILE_REL"
+          [ -f "$COMPOSE_PATH" ] \
+            || { echo "::error::$COMPOSE_PATH does not exist after sync — is deploy/docker-compose.staging.yml committed on staging?"; exit 1; }
+          NAME_LINE="$(grep -m1 '^name:' "$COMPOSE_PATH" || true)"
+          [ "$NAME_LINE" = "name: ainext-staging" ] \
+            || { echo "::error::$COMPOSE_PATH's own 'name:' key is '$NAME_LINE', expected 'name: ainext-staging'"; exit 1; }
+          echo "ok: $COMPOSE_FILE_REL declares $NAME_LINE"
+
+      # ---------------------------------------------------------------------
+      # Write deploy/.env.staging — generated fresh on EVERY deploy.
+      # ---------------------------------------------------------------------
+      # Staging needs no GitHub secrets at all. The three database role
+      # passwords, the auth signing secret, and POSTGRES_PASSWORD itself are
+      # all generated right here with `openssl rand -hex 32` and thrown away
+      # the moment the job ends — there is nothing to rotate and nothing worth
+      # keeping, because "Destroy the previous staging stack" below deletes
+      # the Postgres volume before any container ever reads this file again.
+      # THAT deletion is what makes generating fresh secrets safe: if the pg
+      # volume ever survived a deploy while this step kept handing out new
+      # passwords, the cluster would still be initialised with the OLD
+      # password and the app would be unable to authenticate against its own
+      # database. Fresh secrets and a destroyed volume are a matched pair —
+      # never change one without the other.
+      #
+      # WHERE THIS FILE LIVES, DECIDED AND MADE EXPLICIT: every `docker
+      # compose` invocation from here on in this job `cd`s into $APP_DIR first
+      # and then passes BOTH `-f deploy/docker-compose.staging.yml` AND
+      # `--env-file deploy/.env` explicitly. That means this step writes the
+      # file to `$APP_DIR/deploy/.env` (which also happens to be where Compose
+      # would look by default, since the project directory for a relative
+      # `-f deploy/...` path is the directory of that file) — but nothing
+      # downstream relies on that default: the `--env-file` flag says so on
+      # every command, so a change to how any single step is invoked can never
+      # silently stop picking up this file. (NOT `.env.staging` as a literal
+      # filename — that name is this STEP's label, describing what the file is
+      # for; the path written is `deploy/.env` inside the STAGING checkout,
+      # which is a separate directory tree from production's `deploy/.env`,
+      # so there is no collision between the two.)
+      - name: Write deploy/.env in the staging checkout (generated fresh every deploy)
+        env:
+          AINEXT_CF_ACCESS_TEAM_DOMAIN: ${{ vars.AINEXT_CF_ACCESS_TEAM_DOMAIN || 'https://reletix.cloudflareaccess.com' }}
+          AINEXT_CF_ACCESS_AUD: ${{ vars.AINEXT_STAGING_CF_ACCESS_AUD }}
+        run: |
+          set -euo pipefail
+          umask 077   # the file is 0600 from the moment it exists, not after a later chmod
+
+          gen() { openssl rand -hex 32; }
+          POSTGRES_PASSWORD="$(gen)"
+          AINEXT_AUTH_SECRET="$(gen)"
+          AINEXT_APP_PASSWORD="$(gen)"
+          AINEXT_OPERATOR_PASSWORD="$(gen)"
+          AINEXT_MAINT_PASSWORD="$(gen)"
+
+          # MASK IMMEDIATELY, before anything else in this step — or any later
+          # step — could print one by accident. `::add-mask::` needs the
+          # literal value to redact and applies to every line this JOB prints
+          # from this point on, not only this step; there must be no window
+          # between generating a secret and registering its mask.
+          for v in "$POSTGRES_PASSWORD" "$AINEXT_AUTH_SECRET" "$AINEXT_APP_PASSWORD" \
+                   "$AINEXT_OPERATOR_PASSWORD" "$AINEXT_MAINT_PASSWORD"; do
+            echo "::add-mask::$v"
+          done
+
+          # `deploy/apply-migrations.sh` (§3a') hard-fails the whole deploy if
+          # any two of these three are equal — `ainext_maint` is BYPASSRLS, so
+          # a password shared with the app role would make every row-level-
+          # security policy decorative. Checking it here too means a collision
+          # is reported by THIS step's name, not three steps later from inside
+          # a migrate-container log.
+          if [ "$AINEXT_APP_PASSWORD" = "$AINEXT_OPERATOR_PASSWORD" ] \
+             || [ "$AINEXT_APP_PASSWORD" = "$AINEXT_MAINT_PASSWORD" ] \
+             || [ "$AINEXT_OPERATOR_PASSWORD" = "$AINEXT_MAINT_PASSWORD" ]; then
+            echo "::error::two of the three freshly generated role passwords collided (astronomically unlikely with 32 random bytes each) — re-run the job"
+            exit 1
+          fi
+
+          # Surfaced to later steps (masked, like everything else above) only
+          # because "Bootstrap the first operator" needs it by name to
+          # URL-encode and hand to the console container. Nothing else in this
+          # job needs any of the other four outside this file.
+          echo "AINEXT_MAINT_PASSWORD=$AINEXT_MAINT_PASSWORD" >> "$GITHUB_ENV"
+
+          # The Cloudflare Access application for staging is a dashboard
+          # action Samuel has not done yet (the same was once true of
+          # production's console AUD). Empty is a SUPPORTED state here — the
+          # console falls back to password sign-in — so this WARNS rather than
+          # failing the deploy.
+          if [ -z "$AINEXT_CF_ACCESS_AUD" ]; then
+            echo "::warning::AINEXT_CF_ACCESS_AUD is empty for staging — the console will accept password sign-in only until Samuel creates the staging Cloudflare Access application and sets the AINEXT_STAGING_CF_ACCESS_AUD repository variable."
+            echo "CF_ACCESS_AUD_CONFIGURED=false" >> "$GITHUB_ENV"
+          else
+            echo "CF_ACCESS_AUD_CONFIGURED=true" >> "$GITHUB_ENV"
+          fi
+
+          ENV_FILE="$APP_DIR/deploy/.env"
+          mkdir -p "$APP_DIR/deploy"
+          {
+            echo "# GENERATED BY .github/workflows/deploy-staging.yml on $(date -u +%FT%TZ)."
+            echo "# Do not hand-edit — every value here is regenerated on the next deploy,"
+            echo "# and the database this points at is destroyed before that deploy writes it."
+            printf "POSTGRES_PASSWORD='%s'\n"            "$POSTGRES_PASSWORD"
+            printf "AINEXT_AUTH_SECRET='%s'\n"           "$AINEXT_AUTH_SECRET"
+            printf "AINEXT_APP_PASSWORD='%s'\n"          "$AINEXT_APP_PASSWORD"
+            printf "AINEXT_OPERATOR_PASSWORD='%s'\n"     "$AINEXT_OPERATOR_PASSWORD"
+            printf "AINEXT_MAINT_PASSWORD='%s'\n"        "$AINEXT_MAINT_PASSWORD"
+            printf "AINEXT_PUBLIC_URL='%s'\n"            "https://staging-noor.reletix.com"
+            printf "AINEXT_CONSOLE_URL='%s'\n"           "https://admin-staging-noor.reletix.com"
+            printf "AINEXT_ENVIRONMENT='%s'\n"           "staging"
+            printf "AINEXT_COURSE_GATING='%s'\n"         "on"
+            printf "AINEXT_MAIL_TRANSPORT='%s'\n"        "console"
+            printf "AINEXT_CF_ACCESS_TEAM_DOMAIN='%s'\n" "$AINEXT_CF_ACCESS_TEAM_DOMAIN"
+            printf "AINEXT_CF_ACCESS_AUD='%s'\n"         "$AINEXT_CF_ACCESS_AUD"
+            printf "AINEXT_GA_MEASUREMENT_ID='%s'\n"     ""
+            printf "AINEXT_ALERT_EMAIL='%s'\n"           ""
+          } > "$ENV_FILE.tmp"
+          mv "$ENV_FILE.tmp" "$ENV_FILE"
+          chmod 600 "$ENV_FILE"
+          # Presence only, never a value — same rule as ci-cd.yml's equivalent step.
+          echo "wrote $ENV_FILE with $(grep -c '^[A-Z]' "$ENV_FILE") key(s), mode $(stat -c %a "$ENV_FILE")"
+
+      # ---------------------------------------------------------------------
+      # Compute RELEASE_TAG.
+      # ---------------------------------------------------------------------
+      # Same logic as ci-cd.yml's deploy job: the git tag on this exact commit
+      # if there is one, else `v<package version>+<short sha>`. A `-staging`
+      # suffix is then appended UNCONDITIONALLY, to either form, so a stamp
+      # that ends up in `sessions.release_tag` or
+      # `ai_interactions.renderer_version` can never be mistaken for a
+      # production release — even on the rare deploy where `staging` happens
+      # to be sitting on a commit that also carries a real `vX.Y.Z` tag.
+      - name: Compute RELEASE_TAG
+        run: |
+          set -euo pipefail
+          cd "$APP_DIR"
+          VERSION="$(sed -n 's/.*"version": *"\([^"]*\)".*/\1/p' app/package.json | head -1)"
+          SHA="$(git rev-parse --short HEAD)"
+          TAG="$(git describe --tags --exact-match 2>/dev/null || true)"
+          BASE_TAG="${TAG:-v${VERSION}+${SHA}}"
+          RELEASE_TAG="${BASE_TAG}-staging"
+          echo "RELEASE_TAG=$RELEASE_TAG" >> "$GITHUB_ENV"
+          echo "deploying $RELEASE_TAG"
+
+      # ---------------------------------------------------------------------
+      # Destroy the previous staging stack.
+      # ---------------------------------------------------------------------
+      # Staging is EPHEMERAL BY DESIGN (see docker-compose.staging.yml's own
+      # header comment) — `down -v` is the normal, expected operation here,
+      # unlike on `ainext-mvp1` or `ainext`, where the identical command would
+      # destroy a family's history. That is exactly why this is the single
+      # most dangerous line in this file, and why BOTH `-p` and `-f` below are
+      # written as the LITERAL strings `ainext-staging` and
+      # `deploy/docker-compose.staging.yml` rather than through the `$PROJECT`
+      # / `$COMPOSE_FILE_REL` variables every other step in this file uses.
+      # Those variables are already guarded (see the first two steps above),
+      # but this one command gets to be correct even if every other line in
+      # this file were wrong — reading this line alone, in isolation, is
+      # enough to know what it destroys.
+      - name: Destroy the previous staging stack
+        run: |
+          set -euo pipefail
+          cd "$APP_DIR"
+
+          echo "staging-prefixed volumes BEFORE down -v:"
+          docker volume ls --filter "name=ainext-staging" --format '  {{.Name}}'
+
+          # Belt-and-suspenders: the --filter above already scopes to names
+          # CONTAINING "ainext-staging", which cannot match production's
+          # `ainext-mvp1_*` or the frozen baseline's `ainext_ainext_*` volume
+          # prefixes — but "cannot" is exactly the kind of claim worth
+          # checking rather than trusted, for the one time a filter's
+          # behaviour (or this script) changes under us.
+          if docker volume ls --filter "name=ainext-staging" --format '{{.Name}}' \
+               | grep -E '^(ainext-mvp1_|ainext_ainext_)'; then
+            echo "::error::a volume matching a PRODUCTION/baseline prefix showed up under the staging filter — refusing to run 'down -v'"
+            exit 1
+          fi
+
+          docker compose -p ainext-staging -f deploy/docker-compose.staging.yml --env-file deploy/.env down -v --remove-orphans
+
+          echo "staging-prefixed volumes AFTER down -v:"
+          docker volume ls --filter "name=ainext-staging" --format '  {{.Name}}'
+          REMAINING="$(docker volume ls --filter "name=ainext-staging" --format '{{.Name}}')"
+
+          # The pg and uploads volumes are NOT external in the compose file —
+          # `down -v` must have removed them. If either survived, something is
+          # wrong with the compose file or this command, and continuing would
+          # mean the next `up` starts the app against a database and an
+          # uploads directory from a PREVIOUS deploy while believing it is
+          # starting fresh.
+          if printf '%s\n' "$REMAINING" | grep -E '_pg$|_uploads$'; then
+            echo "::error::a staging pg/uploads volume survived 'down -v' — investigate before continuing; the next 'up' would not be starting from a clean database"
+            exit 1
+          fi
+
+          # The claude_cfg volume IS external — Compose must have refused to
+          # remove it regardless of `-v`. If it is gone anyway, Compose's
+          # external-volume protection failed, or the volume's name/label
+          # drifted out from under this file, and a human now has to run the
+          # one-time interactive Claude login again (deploy/STAGING.md) before
+          # anything that spawns the CLI works. That is the one outcome this
+          # check exists to catch loudly instead of silently.
+          if ! printf '%s\n' "$REMAINING" | grep -qx "$CLAUDE_VOLUME"; then
+            echo "::error::$CLAUDE_VOLUME is GONE after 'down -v'. It is declared external specifically so this could never happen; a human must now re-run the one-time interactive Claude login (see deploy/STAGING.md) before anything using the CLI works on staging again."
+            exit 1
+          fi
+          echo "ok: $CLAUDE_VOLUME survived; the pg and uploads volumes are gone"
+
+      # ---------------------------------------------------------------------
+      # Ensure the Claude credential volume exists.
+      # ---------------------------------------------------------------------
+      # `docker volume create` is idempotent — a no-op after the first deploy,
+      # and what creates `ainext-staging_claude_cfg` on the very first one.
+      # It is declared `external: true` in the compose file precisely so the
+      # `down -v` above could never remove it even if it already existed;
+      # this step is what guarantees it exists AT ALL before `up` tries to
+      # attach to it.
+      #
+      # This step NEVER prints the credential file's contents — only whether
+      # it is there. `alpine` runs once (`docker run --rm`), mounted
+      # read-only, and is gone the moment the test finishes.
+      - name: Ensure the Claude credential volume exists
+        run: |
+          set -euo pipefail
+          docker volume create "$CLAUDE_VOLUME" >/dev/null
+          if docker run --rm -v "$CLAUDE_VOLUME:/claude-cfg:ro" alpine \
+               test -f /claude-cfg/.credentials.json; then
+            echo "Claude login present in $CLAUDE_VOLUME"
+            echo "CLAUDE_LOGIN_PRESENT=true" >> "$GITHUB_ENV"
+          else
+            echo "::warning::NO CLAUDE LOGIN — $CLAUDE_VOLUME has no .credentials.json. Run the one-time interactive login, see deploy/STAGING.md."
+            echo "CLAUDE_LOGIN_PRESENT=false" >> "$GITHUB_ENV"
+          fi
+
+      # ---------------------------------------------------------------------
+      # Bring the staging stack up.
+      # ---------------------------------------------------------------------
+      # `up` runs the `migrate` one-shot FIRST — `app`, `console` and the
+      # loader all declare `service_completed_successfully` on it in
+      # docker-compose.staging.yml, so a migration failure fails THIS step
+      # and neither the app nor the console ever starts against a
+      # half-migrated, freshly-emptied database.
+      #
+      # RELEASE_TAG is already a job-level environment variable (exported by
+      # "Compute RELEASE_TAG" above via $GITHUB_ENV), so Compose picks it up
+      # from the process environment for the `${RELEASE_TAG:-}` substitution
+      # in the compose file without anything extra on this command line.
+      - name: Bring the staging stack up
+        run: |
+          set -euo pipefail
+          cd "$APP_DIR"
+          C="docker compose -p $PROJECT -f $COMPOSE_FILE_REL --env-file deploy/.env"
+          $C up -d --build --remove-orphans
+          $C ps
+
+      # ALWAYS, immediately after `up`, win or lose — see ci-cd.yml's
+      # identical step for why: a one-shot container's log is the only record
+      # of what ran, and it is gone the next time somebody types `up`.
+      - name: Migration log
+        if: always()
+        run: |
+          cd "$APP_DIR"
+          C="docker compose -p $PROJECT -f $COMPOSE_FILE_REL --env-file deploy/.env"
+          $C logs --no-log-prefix migrate || true
+
+      - name: Health check — student surface (127.0.0.1:$APP_PORT)
+        run: |
+          cd "$APP_DIR"
+          C="docker compose -p $PROJECT -f $COMPOSE_FILE_REL --env-file deploy/.env"
+          for i in $(seq 1 40); do
+            if curl -sSf "http://127.0.0.1:$APP_PORT/" >/dev/null; then
+              echo "app healthy on :$APP_PORT ($PROJECT)"; exit 0
+            fi
+            sleep 3
+          done
+          echo "::error::$PROJECT did not become healthy on :$APP_PORT"
+          $C ps
+          $C logs --tail=120 app
+          exit 1
+
+      # The console is gated at the edge, not on the box, so from loopback it
+      # answers like any other page: `/` redirects an unauthenticated visitor
+      # to /signin. `curl -f` treats a 3xx as success, which is what we want —
+      # this asks "is the second process serving", not "is it protected".
+      # Nothing in CI can answer the second question for staging any more
+      # than it can for production.
+      - name: Health check — admin console (127.0.0.1:$CONSOLE_PORT)
+        run: |
+          cd "$APP_DIR"
+          C="docker compose -p $PROJECT -f $COMPOSE_FILE_REL --env-file deploy/.env"
+          for i in $(seq 1 40); do
+            if curl -sSf "http://127.0.0.1:$CONSOLE_PORT/" >/dev/null; then
+              echo "console healthy on :$CONSOLE_PORT ($PROJECT)"; exit 0
+            fi
+            sleep 3
+          done
+          echo "::error::$PROJECT console did not become healthy on :$CONSOLE_PORT"
+          $C ps
+          $C logs --tail=120 console
+          exit 1
+
+      # ---------------------------------------------------------------------
+      # Content load on a fresh database.
+      # ---------------------------------------------------------------------
+      # The next three steps reproduce ci-cd.yml's "Curriculum", "Generated
+      # maths content" and "Misconception catalogue" steps verbatim — same
+      # loader invocations, same gate shapes, same thresholds — pointed at the
+      # staging project/compose file/database instead of production's. On
+      # `ainext-mvp1` those gates protect a database that accumulates history
+      # between deploys; on staging, "Destroy the previous staging stack"
+      # above means every one of these tables is ALWAYS empty by the time
+      # this runs, so the gate conditions fire EVERY SINGLE DEPLOY, by
+      # construction. They stay, unchanged, because this is the tested shape
+      # and because the day staging's teardown step is ever removed (it
+      # should not be) these steps must already behave correctly without
+      # being rewritten.
+      - name: Curriculum (only when none is loaded)
+        run: |
+          set -euo pipefail
+          cd "$APP_DIR"
+          C="docker compose -p $PROJECT -f $COMPOSE_FILE_REL --env-file deploy/.env"
+          N=$($C exec -T db psql -U ainext -d "$DB_NAME" -tAc \
+                "select count(*) from graph_nodes where kind='course'")
+          if [ "$N" -ge 3 ]; then
+            echo "curriculum already loaded ($N courses) — not touching it"; exit 0
+          fi
+          L="$C --profile tools run --rm loader"
+          # The same four steps local-dev.sh and ci-cd.yml's deploy job run.
+          # Social Studies takes two passes: social-t1 names its book but does
+          # not define it, the skeleton does, and a scoped load excludes the
+          # skeleton because social-t1 supersedes it — so the skeleton goes
+          # first to register the book.
+          $L --all --course course:prep3-math-en
+          $L --all --course course:prep3-arabic-ar
+          $L seed/social-skeleton.json --course course:prep3-social-ar
+          $L --all --course course:prep3-social-ar
+          # What a student will actually get, in the log. Held questions stay
+          # held: nothing here promotes them.
+          $C exec -T db psql -U ainext -d "$DB_NAME" -c "
+            select ns.course_id,
+                   count(distinct ns.node_id) as objectives,
+                   count(distinct q.id) filter (where q.status='live')   as live,
+                   count(distinct q.id) filter (where q.status='review') as held
+              from node_subject ns
+              left join questions q on q.lo_id = ns.node_id
+             group by 1 order by 1"
+
+      # ONE-TIME, like the curriculum step: acts only while the generated bank
+      # is missing, so a later run never reloads over live data. On
+      # production this guards against re-promoting a question somebody held
+      # back since the last deploy; on staging the database is always empty
+      # here, so the guard is vacuous by construction — kept anyway, same
+      # reasoning as above.
+      - name: Generated maths content (only when none is loaded)
+        run: |
+          set -euo pipefail
+          cd "$APP_DIR"
+          C="docker compose -p $PROJECT -f $COMPOSE_FILE_REL --env-file deploy/.env"
+          Q() { $C exec -T db psql -U ainext -d "$DB_NAME" -tAc "$1"; }
+          GEN=$(Q "select count(*) from questions where source='variant'")
+          if [ "$GEN" -ge 590 ]; then
+            echo "generated maths content already loaded ($GEN questions) — not touching it"; exit 0
+          fi
+          PY="$C --profile tools run --rm -e AINEXT_ENVIRONMENT=staging --entrypoint python loader"
+          # The catalogue first: a restore refuses to run against an empty
+          # one, because every distractor that names an entry would be
+          # unknown.
+          MC=$(Q "select count(*) from misconceptions")
+          if [ "$MC" -lt 90 ]; then
+            $PY load_misconceptions.py seed/generated/misconceptions.json
+          fi
+          for bundle in generated-questions.json widget-questions.json; do
+            $PY load_generated_questions.py "seed/generated/$bundle" --restore --sample 0
+          done
+          # The maths book questions still at 'review' go live WITHOUT a
+          # reviewer stamp (ADR-0019 — Samuel's rule, reproduced here exactly
+          # as production applies it). A materialised inline widget can never
+          # be live (CHECK questions_materialised_not_live).
+          $C exec -T db psql -U ainext -d "$DB_NAME" -c "
+            update questions q set status = 'live'
+             where q.status = 'review' and q.materialised_from is null
+               and exists (select 1 from node_subject ns
+                            where ns.node_id = q.lo_id
+                              and ns.course_id = 'course:prep3-math-en')"
+          $C exec -T db psql -U ainext -d "$DB_NAME" -c "
+            select q.source, q.status,
+                   count(*) filter (where q.reviewed_by is null) as unreviewed,
+                   count(*) as total
+              from questions q join node_subject ns on ns.node_id = q.lo_id
+             where ns.course_id = 'course:prep3-math-en'
+             group by 1, 2 order by 1, 2"
+          echo "misconceptions: $(Q 'select count(*) from misconceptions')"
+
+      # EVERY deploy, unlike the two one-time steps above: the misconception
+      # catalogue in the repo is the source of truth, and the loader is
+      # idempotent — it upserts entries and explanations and never touches
+      # the reviewed flag or any question's status.
+      - name: Misconception catalogue (every deploy — idempotent)
+        run: |
+          set -euo pipefail
+          cd "$APP_DIR"
+          C="docker compose -p $PROJECT -f $COMPOSE_FILE_REL --env-file deploy/.env"
+          $C --profile tools run --rm -e AINEXT_ENVIRONMENT=staging --entrypoint python loader \
+            load_misconceptions.py seed/generated/misconceptions.json
+          $C exec -T db psql -U ainext -d "$DB_NAME" -tAc "
+            select 'misconceptions: ' || count(*) || ', without an explanation: ' ||
+                   count(*) filter (where not exists (
+                     select 1 from explanation_library e where e.misconception_id = m.id))
+              from misconceptions m"
+
+      # ---------------------------------------------------------------------
+      # Bootstrap the first operator.
+      # ---------------------------------------------------------------------
+      # Same shape as ci-cd.yml's "First operator (only when none exists)"
+      # step, pointed at staging's database and console container. Gated on
+      # "none exist", not merely re-run because the script is idempotent — an
+      # ungated run would silently hand back a role an operator had
+      # deliberately removed.
+      - name: Bootstrap the first operator
+        env:
+          # Same default list production uses — read from ci-cd.yml's "First
+          # operator" step, not invented here: the three founders.
+          BOOTSTRAP_EMAILS: ${{ vars.AINEXT_BOOTSTRAP_OPERATOR_EMAILS || 'samuel.s.toma@gmail.com t.deifa@gmail.com ksayour@gmail.com' }}
+        run: |
+          set -euo pipefail
+          cd "$APP_DIR"
+          C="docker compose -p $PROJECT -f $COMPOSE_FILE_REL --env-file deploy/.env"
+          N=$($C exec -T db psql -U ainext -d "$DB_NAME" -tAc "select count(*) from operators")
+          if [ "$N" -gt 0 ]; then
+            echo "operators already exist ($N) — not touching them"; exit 0
+          fi
+          # It SETS NO PASSWORD, on purpose: the operator obtains one through
+          # the ordinary reset flow. PERCENT-ENCODE the password before it
+          # goes inside a URL — $AINEXT_MAINT_PASSWORD was generated with
+          # `openssl rand -hex 32` so it happens to be URL-safe already, but
+          # encoding it anyway costs nothing and matches production exactly
+          # in case that ever changes.
+          MAINT_ENC=$($C exec -T -e P="$AINEXT_MAINT_PASSWORD" console \
+                        node -e 'process.stdout.write(encodeURIComponent(process.env.P))')
+          for email in $BOOTSTRAP_EMAILS; do
+            $C exec -T \
+              -e DATABASE_URL_MAINT="postgres://ainext_maint:${MAINT_ENC}@db:5432/$DB_NAME" \
+              -e AINEXT_BOOTSTRAP_OPERATOR_EMAIL="$email" \
+              console npm run --silent bootstrap:operator
+            echo "operator ready: $email"
+          done
+          echo "Each sets their own password at https://admin-staging-noor.reletix.com/forgot-password"
+          echo "— after passing Cloudflare Access, once the staging Access application exists and lists them."
+
+      # ---------------------------------------------------------------------
+      # Seed the staging course gate — VERIFICATION ONLY.
+      # ---------------------------------------------------------------------
+      # AINEXT_COURSE_GATING=on (written into deploy/.env above) means a
+      # student sees a course only when `course_availability` has a `live`
+      # row for (environment='staging', course_id, grade). Migration 023
+      # seeds rows for `baseline` and `mvp1` only; db/migrations/033 — a
+      # separate change — is what is expected to seed the `staging` rows, and
+      # `deploy/apply-migrations.sh`'s own post-flight (§3d) already refuses
+      # to let `migrate` finish if NO live row exists for this environment
+      # while the gate is on. That already ran, INSIDE the migrate container,
+      # before the app and console were even allowed to start.
+      #
+      # This step re-checks the same fact from outside the container and
+      # PRINTS the rows, so a look at this job's log is enough to see what a
+      # staging student can actually see, without an SSH session.
+      - name: Seed the staging course gate
+        run: |
+          set -euo pipefail
+          cd "$APP_DIR"
+          C="docker compose -p $PROJECT -f $COMPOSE_FILE_REL --env-file deploy/.env"
+          ROWS=$($C exec -T db psql -U ainext -d "$DB_NAME" -tAc \
+                   "select count(*) from course_availability where environment = 'staging' and state = 'live'")
+          echo "course_availability rows for environment='staging', state='live': $ROWS"
+          $C exec -T db psql -U ainext -d "$DB_NAME" -c \
+            "select course_id, grade, state, note from course_availability where environment = 'staging' order by 1, 2"
+          if [ "$ROWS" = "0" ]; then
+            echo "::error::no 'live' course_availability row for environment='staging' — every staging student would see nothing. apply-migrations.sh should already have refused to finish in this state; if you're reading this, something upstream let it through anyway."
+            exit 1
+          fi
+
+      - name: Trim dangling images (untagged rebuild leftovers only — talent-safe)
+        if: always()
+        run: |
+          # Same rule as ci-cd.yml's identical step: this box also runs
+          # talent.reletix.com and the Mailu mail stack. ONLY untagged
+          # (<none>) leftovers from our own rebuilds are removed; tagged and
+          # running images belonging to every other stack are untouched. We
+          # deliberately never run `docker image prune -a` or
+          # `docker system prune` here.
+          docker image prune -f
+          echo "Post-deploy ainext images:"
+          docker images --format '  {{.Repository}}:{{.Tag}}  {{.Size}}' | grep -i ainext || true
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "student surface: https://staging-noor.reletix.com (127.0.0.1:$APP_PORT)"
+          echo "admin console:   https://admin-staging-noor.reletix.com (127.0.0.1:$CONSOLE_PORT)"
+          echo "commit:          ${DEPLOYED_SHA:-unknown}"
+          echo "release tag:     ${RELEASE_TAG:-unknown}"
+          echo "claude login present:      ${CLAUDE_LOGIN_PRESENT:-unknown}"
+          echo "Cloudflare Access AUD set: ${CF_ACCESS_AUD_CONFIGURED:-unknown}"

@@ -9,7 +9,7 @@ import { NoorMark } from "@/components/NoorMark";
 import { VerificationBanner } from "@/components/auth/VerificationBanner";
 import { SessionKeepAlive } from "@/components/auth/SessionKeepAlive";
 import { documentVariant } from "@/lib/design-variant-queries";
-import { IS_CONSOLE, IS_MVP1 } from "@/lib/env";
+import { IS_BASELINE, IS_CONSOLE } from "@/lib/env";
 import { resolveStudentContext } from "@/lib/student-context";
 
 /* ------------------------- the type stack lives in ./fonts -----------------
@@ -42,7 +42,7 @@ import { resolveStudentContext } from "@/lib/student-context";
 // build time and baking a permanently signed-out shell onto every 404.
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = IS_MVP1
+export const metadata: Metadata = !IS_BASELINE
   ? {
       title: "Noor — study with what you already have",
       description:
@@ -145,11 +145,11 @@ export default async function RootLayout({
                     Noor
                   </span>
                   <span className="font-mono text-[10px] uppercase tracking-[0.06em] text-ink-faint">
-                    {IS_MVP1 ? "Prep 3 · Mathematics" : "Tutor PoC · Data Spine"}
+                    {!IS_BASELINE ? "Prep 3 · Mathematics" : "Tutor PoC · Data Spine"}
                   </span>
                 </Link>
                 <NavLinks
-                  mvp1={IS_MVP1}
+                  mvp1={!IS_BASELINE}
                   signedIn={student !== null}
                   studentName={student?.studentName ?? null}
                 />
@@ -163,7 +163,7 @@ export default async function RootLayout({
             <footer className="relative z-10 border-t border-line-soft">
               <div className="mx-auto flex max-w-[1400px] items-center justify-between px-6 py-4 font-mono text-[10px] uppercase tracking-[0.16em] text-ink-faint">
                 <span>
-                  {IS_MVP1
+                  {!IS_BASELINE
                     ? "Noor · Student MVP 1.0 — comparison environment"
                     : "Noor · Agent-Native Data Spine — investor preview"}
                 </span>

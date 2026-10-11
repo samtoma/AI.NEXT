@@ -21,9 +21,9 @@
 // the script even though the bundler accepts it. This form works in both.
 import pkg from "../../package.json" with { type: "json" };
 
-export type Environment = "baseline" | "mvp1";
+export type Environment = "baseline" | "mvp1" | "staging";
 
-const VALID: readonly Environment[] = ["baseline", "mvp1"] as const;
+const VALID: readonly Environment[] = ["baseline", "mvp1", "staging"] as const;
 
 function resolve(): Environment {
   const raw = (process.env.AINEXT_ENVIRONMENT ?? "").trim().toLowerCase();
@@ -37,8 +37,34 @@ function resolve(): Environment {
 
 export const ENVIRONMENT: Environment = resolve();
 
-/** True on the comparison build. Use for env-gated behaviour, never for data attribution. */
-export const IS_MVP1 = ENVIRONMENT === "mvp1";
+/**
+ * True on the FROZEN BASELINE, and false on every stack that serves the current
+ * product. Use for env-gated behaviour, never for data attribution.
+ *
+ * **Renamed from `IS_MVP1` on 2026-10-11 (ADR-0024), and the rename is the
+ * point rather than tidying.** It was `ENVIRONMENT === "mvp1"`, and every one of
+ * its five call sites used it to ask the opposite question — each of their
+ * comments says "the frozen baseline" in so many words. With exactly two
+ * environments the two questions had the same answer, so nothing distinguished
+ * them. A third environment separated them, and separated them *silently*: a
+ * `staging` stack read as "not mvp1" would have taken the baseline branch
+ * everywhere — no `data-ds` attribute and so no Noor Play design system at all
+ * (`design-variant-queries.ts`), the investor-preview ledger instead of
+ * `/student` for a signed-in student (`student-nav.ts`), the old Overview nav
+ * (`NavLinks.tsx`), the investor-preview title and footer (`layout.tsx`), and a
+ * console banner declaring the stack to be the baseline and forbidden to carry
+ * generated content (`content/page.console.tsx`). None of that would have
+ * thrown; staging would simply have been a different product.
+ *
+ * Asking about the baseline — the one stack that is frozen and whose behaviour
+ * is therefore settled forever — is the form that stays correct when a fourth
+ * environment arrives. `=== "baseline"` has one right answer; `!== "baseline"`
+ * grows with the product.
+ *
+ * Behaviour-preserving for both pre-existing stacks by construction: while only
+ * `baseline` and `mvp1` exist, `IS_BASELINE` is exactly the old `!IS_MVP1`.
+ */
+export const IS_BASELINE = ENVIRONMENT === "baseline";
 
 /* ===========================================================================
  * Which surface this build IS (ADR-0014, plan A4, research R9).
@@ -174,7 +200,7 @@ function resolveInternalSurfaces(): boolean {
   }
   if (raw === "on" || raw === "true" || raw === "1") return true;
   if (raw === "off" || raw === "false" || raw === "0") return false;
-  return !IS_MVP1;
+  return IS_BASELINE;
 }
 
 export const INTERNAL_SURFACES: boolean = resolveInternalSurfaces();

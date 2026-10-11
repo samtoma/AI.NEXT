@@ -129,6 +129,18 @@ def validate(
     return problems, notes
 
 
+# Which environments may hold generated, unreviewed teaching content.
+#
+# Constitution III and ADR-0008 bound this content away from the FROZEN BASELINE,
+# where Principle IV's hold still stands. The check was written as
+# `env != "mvp1"` when `mvp1` was the only stack that was not the baseline, so
+# the set and the single value were indistinguishable. ADR-0024 added `staging`
+# — a throwaway stack, behind Cloudflare Access, with no student on it — and the
+# bound it must respect is the baseline one, not the literal string. Widened to
+# a set rather than negating `baseline`, so that adding an environment is a
+# deliberate edit here rather than an automatic grant.
+GENERATED_CONTENT_ENVIRONMENTS = frozenset({"mvp1", "staging"})
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("bundle", type=Path)
@@ -210,12 +222,14 @@ def main() -> int:
         # already exists on ai_interactions; the presence of mvp1 rows is not
         # proof, so this reads the loader's own env var and refuses the default.
         env = (os.environ.get("AINEXT_ENVIRONMENT") or "").strip().lower()
-        if env != "mvp1":
+        if env not in GENERATED_CONTENT_ENVIRONMENTS:
+            allowed = " | ".join(sorted(GENERATED_CONTENT_ENVIRONMENTS))
             print(
-                f"REFUSING: AINEXT_ENVIRONMENT is {env or '<unset>'}, not 'mvp1'.\n"
-                "Generated questions are bounded to the comparison environment "
+                f"REFUSING: AINEXT_ENVIRONMENT is {env or '<unset>'}, not one of "
+                f"{allowed}.\n"
+                "Generated questions are bounded away from the frozen baseline "
                 "(constitution III, ADR-0008). Set it explicitly if this really "
-                "is the mvp1 database.",
+                "is one of those databases.",
                 file=sys.stderr,
             )
             return 2

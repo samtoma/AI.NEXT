@@ -40,6 +40,18 @@ import sys
 from pathlib import Path
 
 
+# Which environments may hold generated, unreviewed teaching content.
+#
+# Constitution III and ADR-0008 bound this content away from the FROZEN BASELINE,
+# where Principle IV's hold still stands. The check was written as
+# `env != "mvp1"` when `mvp1` was the only stack that was not the baseline, so
+# the set and the single value were indistinguishable. ADR-0024 added `staging`
+# — a throwaway stack, behind Cloudflare Access, with no student on it — and the
+# bound it must respect is the baseline one, not the literal string. Widened to
+# a set rather than negating `baseline`, so that adding an environment is a
+# deliberate edit here rather than an automatic grant.
+GENERATED_CONTENT_ENVIRONMENTS = frozenset({"mvp1", "staging"})
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("catalogue", type=Path)
@@ -61,11 +73,12 @@ def main() -> int:
     with psycopg.connect(args.dsn) as conn, conn.cursor() as cur:
         skipped_refutations: list[str] = []
         env = (os.environ.get("AINEXT_ENVIRONMENT") or "").strip().lower()
-        if env != "mvp1" and not args.dry_run:
+        if env not in GENERATED_CONTENT_ENVIRONMENTS and not args.dry_run:
+            allowed = " | ".join(sorted(GENERATED_CONTENT_ENVIRONMENTS))
             print(
-                f"REFUSING: AINEXT_ENVIRONMENT is {env or '<unset>'}, not 'mvp1'. "
-                "Unreviewed teaching content is bounded to the comparison "
-                "environment (constitution III, ADR-0008).",
+                f"REFUSING: AINEXT_ENVIRONMENT is {env or '<unset>'}, not one of "
+                f"{allowed}. Unreviewed teaching content is bounded away from the "
+                "frozen baseline (constitution III, ADR-0008).",
                 file=sys.stderr,
             )
             return 2

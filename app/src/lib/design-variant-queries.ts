@@ -2,7 +2,7 @@ import { cache } from "react";
 
 import { currentPrincipal } from "@/lib/auth/principal";
 import { authPool, withOperator, withPrincipal } from "@/lib/db";
-import { ENVIRONMENT, IS_CONSOLE, IS_MVP1 } from "@/lib/env";
+import { ENVIRONMENT, IS_BASELINE, IS_CONSOLE } from "@/lib/env";
 import {
   MASTER_VARIANT_ENABLED,
   asDesignVariant,
@@ -87,7 +87,7 @@ export const documentVariant = cache(async function documentVariant(): Promise<
 > {
   // The frozen baseline keeps the attribute absent. Checked FIRST, before any
   // database work, because on that stack there is nothing to resolve.
-  if (!IS_MVP1) return undefined;
+  if (IS_BASELINE) return undefined;
   return IS_CONSOLE ? consoleVariant() : studentVariant();
 });
 

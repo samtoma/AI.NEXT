@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { IS_MVP1 } from "@/lib/env";
+import { IS_BASELINE } from "@/lib/env";
 import { rootDestination } from "@/lib/student-nav";
 import { getHomeStats } from "@/lib/queries";
 import { resolveStudentContext } from "@/lib/student-context";
@@ -48,7 +48,7 @@ export default async function Home() {
   // FR-3220: on the student build a signed-in visitor never sees the ledger
   // below — it is the investor preview, not her page. `redirect` throws, so
   // nothing after this line runs for her.
-  const dest = rootDestination({ mvp1: IS_MVP1, signedIn: !!me });
+  const dest = rootDestination({ mvp1: !IS_BASELINE, signedIn: !!me });
   if (dest === "welcome" || !me) return <SignedOutLanding />;
   if (dest === "/student") redirect("/student");
 

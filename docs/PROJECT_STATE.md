@@ -1,7 +1,50 @@
 # Project State — AI Tutor MVP
 
 > Living document. Read at session start; update when progress or decisions land.
-> Last updated: 2026-10-08 (`main`; `v0.11.0` deployed 2026-10-02; `v0.11.1` uploads hotfix released; constitution v3.3.0)
+> Last updated: 2026-10-11 (`staging` branch created; `main` at `v0.11.1`; constitution v3.3.0)
+
+## 🧪 A STAGING ENVIRONMENT — `staging-noor.reletix.com` (2026-10-11, new branch `staging`)
+
+Samuel: *"now I want to create staging branch … only users who has permission can access … we don't
+care about migration and keeping the data … the only persistent thing is the claude authentication"*.
+Recorded as **[ADR-0024](decisions/0024-staging-environment.md)**; runbook in
+[`deploy/STAGING.md`](../deploy/STAGING.md).
+
+A fourth stack on the same box, isolated by construction from `noor.reletix.com`: project
+`ainext-staging`, database `ainext_staging`, directory `/opt/reletix/AI.NEXT-staging`, loopback
+**3201** student / **3202** console (verified free on the box — Talent owns `3xxxx`/`4xxxx`, Noor
+owns `31xx`). Every push to `staging` runs `down -v` and rebuilds from nothing, so **the
+from-scratch install is exercised on every push** — the one path production's own deploy never runs.
+Staging reads **no GitHub secret**: its credentials are generated per deploy, which is only safe
+because the volume is destroyed first.
+
+The one survivor is the Claude login, in `claude_cfg` declared `external` so Compose *refuses* to
+delete it. It is staging's **own** login, not a copy of production's — the OAuth refresh rotates, so
+two stacks sharing one credential means whichever refreshes first can invalidate the other, and the
+other could be the live site.
+
+**`AINEXT_ENVIRONMENT` gained a third member, `staging`** (FR-901 is the reason: borrowing the `mvp1`
+tag needed no code change and was rejected because every staging row would then mis-identify its
+environment). That exposed a latent conflation worth knowing about on `main` too: **`IS_MVP1` was
+used at all five of its call sites to mean "not the frozen baseline"**, so a third environment would
+have silently given staging the baseline's behaviour — no `data-ds` attribute and therefore **no Noor
+Play design system at all**, the investor-preview ledger instead of `/student`, the old nav, and a
+console banner declaring the stack to be the baseline. It is now `IS_BASELINE`, which is exactly the
+old `!IS_MVP1` while two environments exist, so both existing stacks are unchanged. The same
+conflation in the two Python content loaders (`env != "mvp1"`, which exists to protect the baseline)
+is now a set, `{mvp1, staging}`.
+
+Proven locally: `tsc --noEmit` clean, **1048 tests pass / 0 fail**, both surfaces build and both
+route-manifest gates pass. Migration **033** seeds staging's course-gate row (ADR-0018's rule is
+explicit-allow, so without it every student sees an empty catalogue and the deploy correctly fails).
+
+**Not yet done, and three of them need Samuel:** nothing is pushed or deployed; the Cloudflare public
+hostnames and the two Access applications must be created in the dashboard (`deploy/STAGING.md` §3.1
+has the exact values, and the Access app must exist *before* the hostname); the repo variable
+`AINEXT_STAGING_CF_ACCESS_AUD` must be set from the console app's AUD; and the one-time interactive
+`claude` login must be run inside the staging container. **Open debt:** the `env.ts` and migration-033
+changes are product code and should merge to `main` so the two branches differ only in deploy files —
+§9 item 18 of the 001 matrix.
 
 ## 🩹 v0.11.1 hotfix — uploads work on the live site (released 2026-10-08)
 
