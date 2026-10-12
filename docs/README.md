@@ -4,7 +4,9 @@ Start here. This repository is the single reference for what we are building,
 why, what is proven, and what is next. If a decision is not written down here,
 it is not decided.
 
-Regenerated 2026-09-20. The counts in this file are produced by
+Regenerated 2026-09-20; the release line, the spec 003 entries, the ADR-0024/0025 rows and the architecture explainers were updated
+2026-10-12 for v0.12.0 (T390) and the rest of the map has not been re-read since 2026-09-20, so treat an older detail here as
+unchecked. The counts in this file are produced by
 `./scripts/traceability.py`, which fails CI when they drift — an earlier
 hand-maintained version of this map spent six weeks naming a superseded PRD and
 a constitution two major versions out of date.
@@ -16,6 +18,7 @@ a constitution two major versions out of date.
 | Know where the project stands today | [`PROJECT_STATE.md`](PROJECT_STATE.md) — living status, updated as work lands |
 | Know what we promised to build | [`specs/001-student-mvp1-delta/spec.md`](../specs/001-student-mvp1-delta/spec.md) — 90 functional requirements + 6 success criteria |
 | Know what is actually **proven** | [`specs/001-student-mvp1-delta/traceability.md`](../specs/001-student-mvp1-delta/traceability.md) — every requirement, its status, and the evidence |
+| Know what **curriculum tracks and the Grade 10 course** promised and what is proven | [`specs/003-curriculum-tracks/`](../specs/003-curriculum-tracks/) — 81 requirements + 14 success criteria; [`traceability.md`](../specs/003-curriculum-tracks/traceability.md) rev. 10 (6 verified, 1 built, 88 open); the Grade 10 pipeline record is [`WIP-g10-pilot/README.md`](WIP-g10-pilot/README.md) |
 | Know **why** something is built that way | [`decisions/`](decisions/) — ADR-0001…0016 |
 | Give feedback or report a problem | [`FEEDBACK.md`](FEEDBACK.md) |
 | See what is coming next | [`ROADMAP.md`](ROADMAP.md) |
@@ -54,7 +57,7 @@ be reproduced, and a requirement with no target cannot be scheduled. Neither
 changes the spec: triage does, and every issue leaves triage with exactly one
 outcome written on it ([FEEDBACK.md](FEEDBACK.md)).
 
-Current release: **`PDR1-0-v0.4.0`**. History: [`CHANGELOG.md`](../CHANGELOG.md); per-release explainers in [`releases/`](releases/).
+Current release: **`v0.12.0`** (2026-10-12; curriculum tracks and the Grade 10 course machinery — [explainer](releases/v0.12.0.html); **the Grade 10 content is not loaded by a deploy**). History: [`CHANGELOG.md`](../CHANGELOG.md); per-release explainers in [`releases/`](releases/) (one for each minor release from `v0.6.0` to `v0.12.0`, plus `PDR1-0-v0.3.0` and `v0.4.0`; patch releases have none).
 Branching rules: [BRANCHING.md](BRANCHING.md). Versioning: [VERSIONING.md](VERSIONING.md).
 
 ## Two products, one repository
@@ -93,6 +96,13 @@ The Spec Kit baseline set — the full as-built requirements of the shipped prod
   only Samuel can provide**, `decisions.md` (Samuel's D1–D11), and
   `constitution-amendment-proposal.md` — Principle VII, v3.1.1 → v3.2.0, **awaiting his
   approval**, which the voice and audit work now assumes.
+- [`specs/003-curriculum-tracks/`](../specs/003-curriculum-tracks/) — **curriculum tracks and
+  the Grade 10 American maths course** (specced 2026-09-25, **merged into `main` 2026-10-12, released as
+  `v0.12.0`**; not deployed, content not loaded): `spec.md` (81 FRs, 14 SCs), `plan.md`, `tasks.md`,
+  [`traceability.md`](../specs/003-curriculum-tracks/traceability.md) (rev. 10), `decisions.md` (Samuel's
+  answers, decisions 1–69), `privacy-review.md`, `data-model.md`, `contracts/`, and the T424 rehearsal report
+  `rehearsal-t424-2026-10-12.md` when it is committed. Resume doc for the Grade 10 content run:
+  [`WIP-g10-pilot/README.md`](WIP-g10-pilot/README.md).
 - [`specs/000-baseline/plan.md`](../specs/000-baseline/plan.md) — as-built
   architecture, constitution check, runtime/content flows, deployment topology.
 - [`specs/000-baseline/data-model.md`](../specs/000-baseline/data-model.md) —
@@ -129,8 +139,8 @@ feature gets its own `specs/NNN-slug/` set, checked against the constitution.
 | [0021](decisions/0021-runtime-teaching-toggle-and-testers.md) | Socratic probing becomes a console switch — On at the next sitting, Off at the next message — for test accounts first; Everyone locked until #53; the `teaching-controls` role |
 | [0022](decisions/0022-console-signin-from-cloudflare-access.md) | Console sign-in from the Cloudflare Access identity — the verified JWT, never the plain header; fails closed; password kept as the fallback; a triple-locked dev picker locally *(amends ADR-0014)* |
 | [0023](decisions/0023-turn-limits-observed-not-enforced.md) | Turn and upload limits become observed thresholds, not an enforced cap — no surface refuses a turn or upload for count; the numbers survive in `turn-thresholds.ts`, watched in the console *(constitution v3.3.0, supersedes FR-051 and T047's cap clause)* |
-| [0024](decisions/0024-curriculum-as-a-visibility-dimension.md) | Curriculum as a second visibility dimension alongside (course, grade) — one course per curriculum, sign-up asks only when a grade offers two or more, the kill switch suspends rules but not curriculum scoping *(amends ADR-0018; accepted 2026-09-25, not committed)* |
-| [0025](decisions/0025-answer-marker-build-in-house.md) | The maths-expression marker is built in-house, no third-party computer-algebra library — the built-in engine scores 100% on 8,620 labelled cases at sub-millisecond latency with no added dependency, behind a pluggable `MarkerEngine` seam *(spec 003 FR-4320, gate T413; accepted 2026-09-25, not committed)* |
+| [0024](decisions/0024-curriculum-as-a-visibility-dimension.md) | Curriculum as a second visibility dimension alongside (course, grade) — one course per curriculum, sign-up always asks which curriculum *(amended 2026-10-01, answer 36; the original "only when a grade offers two or more" is reversed)*, the kill switch suspends rules but not curriculum scoping *(amends ADR-0018; accepted 2026-09-25; in `main` since 2026-10-12)* |
+| [0025](decisions/0025-answer-marker-build-in-house.md) | The maths-expression marker is built in-house, no third-party computer-algebra library — the built-in engine scores 100% on 8,620 labelled cases at sub-millisecond latency with no added dependency, behind a pluggable `MarkerEngine` seam *(spec 003 FR-4320, gate T413; accepted 2026-09-25; in `main` since 2026-10-12)* |
 
 ## 3. Architecture (`docs/architecture/`)
 
@@ -141,6 +151,11 @@ feature gets its own `specs/NNN-slug/` set, checked against the constitution.
   architecture derives from the thesis.
 - [graph-store-comparison.md](architecture/graph-store-comparison.md) — the ADR-0003
   evaluation record.
+- [anatomy-of-a-tutor-turn.md](architecture/anatomy-of-a-tutor-turn.md) ([html](architecture/anatomy-of-a-tutor-turn.html)) —
+  one maths learn-mode turn traced end to end, with file:line for every step and a debugging guide
+  (added 2026-10-12).
+- [real-tutor-prompt.md](architecture/real-tutor-prompt.md) ([html](architecture/real-tutor-prompt.html)) — the exact system
+  prompt for lesson `u1-1`, annotated with the code and data behind each segment (added 2026-10-12).
 
 ## 4. Feature & vertical specs (`docs/specs/`)
 

@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Noor v0.12.0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@700;800&family=Cairo:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+  /* Tokens from the product's Noor Play layer. No red anywhere (FR-1002):
+     attention is amber, done is teal, open is slate. */
+  :root {
+    --ink: #241f3d; --ink-soft: #574f75; --paper: #fff6e6; --card: #ffffff;
+    --honey: #ffe9bd; --amber: #a34f0a; --teal: #1f7a6e; --slate: #5a5570;
+    --line: #241f3d; --hair: rgba(36, 31, 61, 0.14); --shadow: 4px 4px 0 var(--ink);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ink: #f3eee1; --ink-soft: #c0b8d4; --paper: #17142a; --card: #221d3c;
+      --honey: #3a2f1c; --amber: #e8a93f; --teal: #5cc4b3; --slate: #a79fc4;
+      --line: #f3eee1; --hair: rgba(243, 238, 225, 0.18); --shadow: 4px 4px 0 rgba(243, 238, 225, 0.85);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #f3eee1; --ink-soft: #c0b8d4; --paper: #17142a; --card: #221d3c;
+    --honey: #3a2f1c; --amber: #e8a93f; --teal: #5cc4b3; --slate: #a79fc4;
+    --line: #f3eee1; --hair: rgba(243, 238, 225, 0.18); --shadow: 4px 4px 0 rgba(243, 238, 225, 0.85);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 400 17px/1.7 "Cairo", system-ui, sans-serif; }
+  main { max-width: 900px; margin: 0 auto; padding: 48px 16px 80px; }
+  h1, h2 { font-family: "Baloo Bhaijaan 2", system-ui, sans-serif; line-height: 1.2; margin: 0; }
+  h1 { font-size: 2.4rem; font-weight: 800; }
+  h2 { font-size: 1.45rem; font-weight: 800; margin-top: 44px; }
+  .eyebrow { font: 500 0.78rem/1.4 "IBM Plex Mono", monospace; letter-spacing: 0.08em; color: var(--ink-soft); text-transform: uppercase; }
+  .lead { font-size: 1.1rem; color: var(--ink-soft); margin: 12px 0 0; }
+  .card { background: var(--card); border: 3px solid var(--line); border-radius: 20px; box-shadow: var(--shadow); padding: 20px 22px; margin-top: 18px; }
+  .card h3 { font: 700 1.1rem/1.35 "Cairo", sans-serif; margin: 0 0 6px; }
+  .row { display: grid; grid-template-columns: 140px 1fr; gap: 6px 16px; margin: 0; }
+  .row dt { font: 500 0.78rem/1.9 "IBM Plex Mono", monospace; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .row dd { margin: 0; }
+  .tag { display: inline-block; font: 700 0.8rem/1 "Cairo", sans-serif; padding: 5px 10px; border-radius: 999px; border: 2px solid var(--line); margin-right: 6px; }
+  .done { background: var(--teal); color: #fff; border-color: var(--teal); }
+  .off { background: var(--honey); color: var(--ink); }
+  .open { background: transparent; color: var(--slate); border-color: var(--slate); }
+  table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 0.95rem; }
+  th, td { text-align: start; padding: 8px 10px; border-bottom: 1px solid var(--hair); vertical-align: top; }
+  th { font: 500 0.75rem/1.4 "IBM Plex Mono", monospace; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-soft); }
+  code { font: 500 0.88em "IBM Plex Mono", monospace; }
+  a { color: var(--teal); }
+  @media (max-width: 600px) { .row { grid-template-columns: 1fr; } h1 { font-size: 1.9rem; } }
+</style>
+</head>
+<body>
+<main>
+  <p class="eyebrow">Noor · release v0.12.0 · 2026-10-12</p>
+  <h1>Students now say which curriculum they follow</h1>
+  <p class="lead">Samuel asked for two things on 25 September: digest the Siyavula Grade 10 maths book, and let a student choose "American" or "National" when they sign up. This release is the second thing in full, and the machinery for the first. The book's content itself is not in this release.</p>
+
+  <h2>Read this first</h2>
+  <div class="card">
+    <h3><span class="tag off">Not included</span> A deploy does not put the Grade 10 course on the site</h3>
+    <dl class="row">
+      <dt>What a deploy does</dt><dd>Runs seven database changes, builds the new app, and adds six entries to the Prep-3 mistakes catalogue (below). It loads no course and switches nothing on for any student.</dd>
+      <dt>How a course gets on the site</dt><dd>A separate, manual step in GitHub: <strong>Load a course</strong>. You deploy first, then run it as dry-run, rehearse, load. Even after it loads, the course stays hidden until someone switches it on for a grade on the Courses page.</dd>
+      <dt>Where the content is</dt><dd>Only in a local pilot database. It holds 65 lessons, 211 objectives and about 5,300 live questions across the 14 chapters. The repository carries 13 of the 14 chapters' bundles (Chapter 8's sits in an untracked working folder), no whole-book export, and the book's config still says "ingest". So Load a course cannot yet load the whole book from this release.</dd>
+      <dt>Who has read it</dt><dd>Nobody. Chapter 8's first two checkpoints were decided by Samuel; every other checkpoint was passed automatically by the AI checks. The new Review page is how a person will read it.</dd>
+    </dl>
+  </div>
+
+  <h2>What changes for a student</h2>
+  <div class="card">
+    <h3><span class="tag done">New</span> Sign-up asks which curriculum your school follows</h3>
+    <dl class="row">
+      <dt>Before</dt><dd>Everyone was stored as "National" without being asked.</dd>
+      <dt>Now</dt><dd>After the grade, sign-up asks "Which curriculum does your school follow?" National or American, neither pre-selected, and the account is not created without an answer. If nothing is live for that grade in a curriculum, it is still offered, with the note "Nothing to study here yet for Grade 10".</dd>
+      <dt>Why</dt><dd>Samuel, 1 October, after seeing sign-up skip the question for grade 10: "yes the sign up should always ask".</dd>
+    </dl>
+  </div>
+  <div class="card">
+    <h3><span class="tag done">New</span> A first Google sign-in gets one "Welcome" screen</h3>
+    <dl class="row">
+      <dt>Why</dt><dd>Google tells us a name and an email, not a grade.</dd>
+      <dt>Now</dt><dd>The student answers grade and curriculum once, before any lesson. Until they do, every student page sends them back to that screen. A second try is refused, so it can never become a way to change a curriculum.</dd>
+    </dl>
+  </div>
+  <div class="card">
+    <h3><span class="tag done">Same</span> Students who already study see exactly what they saw</h3>
+    <dl class="row">
+      <dt>Their curriculum</dt><dd>National, recorded as "implied" because they were never asked.</dd>
+      <dt>Proof</dt><dd>The database change gives every existing student the "implied" label and alters nothing else. Tests pin what the course gate shows a National student, and CI's migration proof reads an ordinary student back as National, implied.</dd>
+    </dl>
+  </div>
+  <div class="card">
+    <h3><span class="tag off">Heads-up</span> A student who picks American sees an empty home, for now</h3>
+    <dl class="row">
+      <dt>What they see</dt><dd>"[Name], nothing's ready here yet. This isn't anything you did — the moment a subject is ready, it'll show up on this page by itself." Their header reads "Grade 10 · American" and carries no ministry-syllabus line.</dd>
+      <dt>Why</dt><dd>A student sees only the courses of their own curriculum, and no American course is loaded or switched on. This is also what a grade-10 student sees today, picking either curriculum.</dd>
+    </dl>
+  </div>
+  <div class="card">
+    <h3><span class="tag done">Changed</span> Two Prep-3 widgets behave a little differently</h3>
+    <dl class="row">
+      <dt>Angle setter</dt><dd>It used to open on one fixed position, which was already the correct answer to a "35°" inscribed-angle question, so pressing Check without touching anything counted as right. It now opens somewhere that question's answer is not. Nine Prep-3 widget questions use it.</dd>
+      <dt>Line drawer</dt><dd>It said "you swapped the coordinates" even when a point had never been moved. Now it says it only when both points were moved and both are swapped. Four Prep-3 widget questions use it.</dd>
+      <dt>Curve sketcher</dt><dd>Unchanged for the linear and quadratic sketches: the old marking is kept as a frozen copy and replayed against every live curve question, and the two must agree.</dd>
+    </dl>
+  </div>
+  <div class="card">
+    <h3><span class="tag done">Changed</span> What the tutor can offer a student who cannot see a subject</h3>
+    <dl class="row">
+      <dt>Before</dt><dd>The tutor could offer a "switch to another subject" card to a student who had no access to that subject, and she landed on a not-found page.</dd>
+      <dt>Now</dt><dd>It offers only subjects the student can open, and the server removes any card that slips through. A student who sees all three Prep-3 subjects gets the same prompt as before. Samuel approved this and two smaller prompt differences: the tutor's list of source books names only books the student can see, and the Arabic lessons' printed names, which only appear once the Arabic course is reloaded.</dd>
+    </dl>
+  </div>
+  <div class="card">
+    <h3><span class="tag done">Fixed</span> Two doors that should have been closed</h3>
+    <dl class="row">
+      <dt>Lesson script</dt><dd>Typing <code>?mode=read&amp;lesson=…</code> by hand opened the teaching script of a hidden course. It now goes through the same course gate as everything else.</dd>
+      <dt>Figures</dt><dd>Any signed-in student could fetch any figure by its number, including a hidden course's or another curriculum's. A figure is now served only when it belongs to a course that student may see. A refused figure looks exactly like one that does not exist.</dd>
+    </dl>
+  </div>
+
+  <h2>What changes for an operator</h2>
+  <div class="card">
+    <h3><span class="tag done">Changed</span> Courses is organised by curriculum</h3>
+    <dl class="row">
+      <dt>Layout</dt><dd>Each curriculum has its own section, with grades named in its own words ("Secondary 1" for National, "Grade 10" for American), and a line per grade showing which curricula have something live. The American Grade 10 course is listed, hidden by default.</dd>
+      <dt>Beside each switch</dt><dd>How complete the course is: objectives, questions, the book-section checks and the pipeline's coverage audit.</dd>
+      <dt>Safety</dt><dd>Before you hide a curriculum's last live course for a grade, the page says how many students that leaves with nothing to study. A number, never a name. Switching on a course with nothing loaded warns: "Students would see an empty course."</dd>
+    </dl>
+  </div>
+  <div class="card">
+    <h3><span class="tag done">New</span> The student record shows and changes the curriculum</h3>
+    <dl class="row">
+      <dt>Who</dt><dd>Operators with the student-data role only.</dd>
+      <dt>Shows</dt><dd>The curriculum, whether it was chosen or implied, a flag for a value the product does not know, the change history with the operator's name, and which courses the student can see and why. An exception for a course outside their curriculum is labelled as exactly that.</dd>
+      <dt>Changing it</dt><dd>The page asks first and names which courses the student will stop and start seeing and that progress is kept. Nothing is deleted: change it and change it back, and mastery, attempts and saved places are exactly as they were. The students list gains a curriculum column.</dd>
+    </dl>
+  </div>
+  <div class="card">
+    <h3><span class="tag done">Changed</span> No figure mixes two maths courses</h3>
+    <dl class="row">
+      <dt>Where</dt><dd>The Overview, Content, <code>/pipeline</code> and <code>/gallery</code> each name the course they count. The Teaching page says which courses Socratic probing can reach (never the Grade 10 course at launch).</dd>
+    </dl>
+  </div>
+  <div class="card">
+    <h3><span class="tag done">New</span> A Review page, aiming at zero</h3>
+    <dl class="row">
+      <dt>What it is</dt><dd>Every maths item that no human has signed, one at a time: questions and their worked solutions, widget claims, misconceptions, worked examples, objectives, prerequisite links, figure stand-ins, the automatic checkpoint decisions, and any step the working checker flagged. For Samuel, Tamer and Kamil (the content-review role).</dd>
+      <dt>Verdicts</dt><dd>Approve (the human stamp), ask for a fix, or reject (the question stops reaching students; it is never deleted). Two reviewers never get the same item, and every verdict is kept with who and when in a record nobody can edit.</dd>
+      <dt>Heads-up</dt><dd>"Reviewed" now means a person signed it, nothing else. It covers Prep-3 maths too, so items there that were promoted in bulk or passed only an AI check appear in the backlog from the first day. The size of production's backlog has not been counted.</dd>
+    </dl>
+  </div>
+  <div class="card">
+    <h3><span class="tag done">Changed</span> Loading and refreshing content, on noor</h3>
+    <dl class="row">
+      <dt>Load a course</dt><dd>New. Adds one course that is not there yet. It backs up and checks the backup first, refuses rather than delete any student data, and can replay one course's reviewed export while keeping every student's progress.</dd>
+      <dt>Content refresh</dt><dd>It used to act on the frozen baseline's stack. It now acts on noor. Its "course" mode only adds; "update" edits; "replace" prunes and makes you type the number of affected students. The two modes that could wipe the database or promote held questions are gone from noor.</dd>
+    </dl>
+  </div>
+
+  <h2>What happens to production's data on deploy</h2>
+  <table>
+    <tr><th>Migration</th><th>What it does</th></tr>
+    <tr><td>033 curriculum tracks</td><td>Two new columns on students (how the curriculum was set; whether the Google step is owed). An append-only history of changes. The once-only Google-step function. The student app loses the right to update a student record except one column.</td></tr>
+    <tr><td>034 book sections</td><td>A table of every lesson's place in its book (printed section number, "part 2 of 3"). Empty until a course load writes it.</td></tr>
+    <tr><td>035 human review stamps</td><td>Four new columns on questions. A one-time backfill moves AI checks and bulk promotions out of the "reviewed by" field, so it holds human stamps only. No question's status changes and no student sees a difference.</td></tr>
+    <tr><td>036 review gate</td><td>The record of every review verdict, which nobody can edit, and the short claim that stops two reviewers holding one item.</td></tr>
+    <tr><td>037 course outline</td><td>A table for a book's chapters and lessons before they are loaded. Empty until its loader runs.</td></tr>
+    <tr><td>038 teaching parent</td><td>A generated question family may be modelled on a book teaching example. The old link becomes three equivalent checks.</td></tr>
+    <tr><td>039 review gate</td><td>The review record accepts one more kind of item, a flagged working step.</td></tr>
+  </table>
+  <div class="card">
+    <h3><span class="tag off">Watch</span> The Prep-3 mistakes catalogue changes in production</h3>
+    <dl class="row">
+      <dt>What</dt><dd>The deploy re-syncs the Prep-3 misconception catalogue, as it does on every deploy. This time it adds six entries for the probability lesson on combined events (each with a refutation), gives 26 existing entries an alias list, and re-labels the kind of 19. No entry is removed or renamed. The sync can also re-point the mistake tag on a book question's answer choices, never a question's status.</dd>
+      <dt>Proof so far</dt><dd>CI replays the deploy on a real database, twice, with students' attempts citing mistakes, and checks nothing live is lost. That step was green on the merge. The rehearsal against a copy of the actual Prep-3 bank (T424) is the second check.</dd>
+      <dt>T424</dt><dd>
+        <span id="t424-result"><strong>Passed (12 October).</strong> On a copy of the Prep-3 database, the deploy took the catalogue from 97 to 103 entries (only the six new ones), added 7 answer links on five probability questions and changed none, kept all 17 recorded student mistakes resolving, and left every Prep-3 question, status and picture as it was. Running it twice changed nothing, and the rollback worked. Two things to expect after the deploy: the console will show every live book question as not yet reviewed by a person (the old "AI dual-check" stamps move to their own field), and 14 old widget links that can never fire stay in the live data until a later clean-up. Full report: <code>specs/003-curriculum-tracks/rehearsal-t424-2026-10-12.md</code>.</span></dd>
+    </dl>
+  </div>
+
+  <h2>What is built but not switched on</h2>
+  <table>
+    <tr><th>Piece</th><th>What it does once the Grade 10 course is loaded</th></tr>
+    <tr><td>The course itself</td><td>Siyavula <em>Everything Maths</em>, Grade 10, in book order with no school terms. The tutor names "this book" and its pages, speaks English only and uses no Arabic anywhere for an American student. No Socratic probing. Hidden until switched on.</td></tr>
+    <tr><td>The whole book, visible</td><td>The picker lists every chapter and lesson. A lesson not yet prepared reads "Being prepared" and cannot be opened; the moment a chapter loads, its lessons open. The course card reads "5 of 65 lessons ready".</td></tr>
+    <tr><td>Parts of a section stay together</td><td>A section the book splits into parts is taught in order, and the student's place stays in it until every part passes. On the Your Progress Map such a section gets a frame. National maps are unchanged to the byte.</td></tr>
+    <tr><td>Typed maths answers</td><td>Marked by what they mean: factorised and expanded forms are the same expression; several values in any order; intervals, coordinate pairs, surds. If a form is asked for, the other form is "wrong form". An answer the marker cannot read is asked for again, never marked wrong. No AI marks. No Prep-3 question carries a marker, so Prep-3 is marked as before.</td></tr>
+    <tr><td>Five new interactive widgets</td><td>Area model, box plot, polygon builder, solid scaler, Venn builder. The curve sketcher also learns hyperbola, exponential, sine, cosine and tangent.</td></tr>
+    <tr><td>The line that produced it</td><td>Objectives, prerequisite links, generated questions, widget questions and the mistakes catalogue come out of one gated, metered run, documented well enough to ingest the next book. Metered spend for this course: about $953 in all (API-equivalent, a floor), of which the full-book run, about $800, was inside the approved range of $0.85–1.1k.</td></tr>
+  </table>
+
+  <h2>What proves it</h2>
+  <table>
+    <tr><th>Check</th><th>Result</th></tr>
+    <tr><td>App tests, with a scratch database</td><td>1661 of 1661 pass, none skipped (run on 2026-10-12). Without a database, 66 of them skip.</td></tr>
+    <tr><td>Pipeline tests, with a scratch database</td><td>1268 passed, 1 skipped, none failed (run on 2026-10-12).</td></tr>
+    <tr><td>CI on the merge</td><td>Green: type-check, both builds, tests, requirements check, and the migrations job (fresh ×3, upgrade from the previous release, rollback, the catalogue replay, and Load a course end to end). The deploy step is manual by design.</td></tr>
+    <tr><td>Requirements</td><td>Of feature 003's 95: <strong>6 verified</strong> (FR-4002, 4009, 4011, 4012, 4015, 4017), 1 built, 88 open. In that file "open" means "not yet re-graded", not "not started". The six are the ones where every clause has a test that exists and passed; the file lists the near misses and why each stayed open.</td></tr>
+  </table>
+
+  <h2>What Samuel needs to do</h2>
+  <table>
+    <tr><th>Item</th><th>Where</th></tr>
+    <tr><td><span class="tag off">Wait for</span> The T424 result above, then deploy by hand from GitHub (CI/CD, manual run). Nothing deploys by itself.</td><td><code>docs/VERSIONING.md</code></td></tr>
+    <tr><td><span class="tag off">Decide</span> What "k of m parts mastered" means in a split section. As built it means "passes the lesson gate" (v0.10.0's rule), so the roll-up and the student's place can never disagree. The other option is a mastery of 0.75, a one-line change that lets "Continue" keep showing after the place has moved on.</td><td>FR-4314; open decision 30</td></tr>
+    <tr><td><span class="tag off">Answer</span> The open decisions that need you, 15 of the 30 listed: exercise-only objectives, the lesson with one objective, completeness holds, widget gaps and new widget kinds, and others.</td><td><code>docs/WIP-g10-pilot/README.md</code></td></tr>
+    <tr><td><span class="tag off">Tell</span> Tamer, as PRD owner, that the curriculum, which the student MVP held constant, now varies.</td><td>T391</td></tr>
+    <tr><td><span class="tag off">Try it</span> Sign up a grade-10 test account on iPad Safari and walk sign-up, the Welcome step and, once loaded, the Grade 10 lessons.</td><td>T393</td></tr>
+  </table>
+
+  <h2>Still open</h2>
+  <table>
+    <tr><th>Item</th><th>Where</th></tr>
+    <tr><td><span class="tag open">Commit the whole Grade 10 course</span> Chapter 8's bundle, a whole-book export, and the book's config (<code>status</code>, <code>parity</code>) must be in the repository before Load a course can load it. Then deploy, load, and switch it on for grade 10.</td><td>Open decision 23; T392</td></tr>
+    <tr><td><span class="tag open">A person reads the Grade 10 bank</span> 2,090 live book questions, 3,137 generated, 99 widget questions and 300 misconception entries in the pilot database, plus the errata list of 102 printed answers that look wrong.</td><td>Review page; <code>errata-g10.md</code></td></tr>
+    <tr><td><span class="tag open">No grade-change path</span> Nothing yet re-resolves an implied curriculum when a grade changes (the profile editor does not exist). A student cannot change their own curriculum; only an operator can.</td><td>FR-4008; FR-2013</td></tr>
+    <tr><td><span class="tag open">Not tried on an iPad</span> No run of any of this on iPad Safari is recorded.</td><td>T393</td></tr>
+  </table>
+</main>
+</body>
+</html>

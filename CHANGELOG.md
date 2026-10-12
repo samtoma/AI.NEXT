@@ -10,6 +10,220 @@ requirement names it.
 
 ## [Unreleased]
 
+## [v0.12.0] — 2026-10-12
+
+Feature 003: the product learns that students follow different school curricula, and gets everything
+it needs to teach a second one, the Grade 10 American maths course. **The course's content is not in
+this release.** Deploying it loads no course; loading is a separate manual step, and the Grade 10
+content cannot yet be loaded from this commit (see "Read this first"). Student-facing and
+operator-facing; seven migrations (033–039). It is v0.12.0 and not v0.10.0, the number the feature
+was planned under, because `main` had already used v0.10.0 and v0.11.0 (Samuel, answer 47). The
+requirement ids below say what a line is about; only six moved to VERIFIED (see Governance).
+
+### Read this first — what deploying v0.12.0 does and does not do
+- **A deploy runs migrations 033–039, builds the new image, and syncs the Prep-3 misconception
+  catalogue (below). It loads no course, and it writes no rule that shows a course to anyone.**
+  Putting a course into the database is the manual "Load a course" action in GitHub Actions (ADR-0024,
+  `.github/workflows/load-course.yml`): deploy first, then dry-run, rehearse, load. After a load the
+  course stays hidden until an operator switches it on for a grade in the console.
+- **Before any course is loaded, the new code is already live, and this is what changes** for a
+  student: sign-up and the first Google sign-in ask for a curriculum; a student who picks "American"
+  sees "nothing's ready here yet", because no American course exists to show; everyone who already
+  studies is unchanged except for the small Prep-3 widget and tutor changes listed under "Changed".
+  For an operator: the Courses page, the Student record, the Overview and Content figures and a new
+  Review page change (below).
+- **The Grade 10 content is not loadable from this commit.** It exists in a local pilot database
+  only (65 lessons, 211 objectives, 294 prerequisite links; 2,090 live book questions, 3,137 generated
+  questions, 99 widget questions, 300 misconception entries, counted there on 2026-10-02). The
+  repository carries 13 of the book's 14 chapter bundles (Chapter 8's is in an untracked working
+  folder), no whole-book export, and `books/g10-math.json` still reads `status: ingest`.
+- **No person has read the Grade 10 content.** Chapter 8's first two gates (G1 and G2) are the only
+  gate decisions a person made; every other one was an AI auto-pass (decisions 58c and 60). The
+  review page below is how a person will.
+
+### Added — a curriculum on every student (FR-4001…FR-4017)
+- **Sign-up asks "Which curriculum does your school follow?"** straight after the grade: National or
+  American, neither pre-selected, and the account is not created without an answer. A curriculum with
+  nothing live for the chosen grade is still offered, with the note "Nothing to study here yet for
+  Grade 10" (Samuel, 2026-10-01: "yes the sign up should always ask", answer 36).
+- **A first Google sign-in lands on a one-screen "Welcome" step** that asks grade and curriculum, once,
+  before any lesson. Until it is done every student page redirects to it and every student API answers
+  403; a second submission is refused, never ignored. (Google gives no grade, so the account is created
+  holding a placeholder.)
+- **Students who already exist read as National, recorded as "implied" (never asked), and see exactly
+  what they saw before.** Migration 033 gives every existing row the "implied" default and changes
+  nothing else; tests pin what the gate shows a National student; and CI's migration proof reads a
+  plain student back as National and implied (FR-4003).
+- **A student's curriculum scopes everything she reads:** the lesson list, the home page's counts and
+  book, the progress page, the Your Progress Map, the practice plan, the tutor's list of source books,
+  the figures a lesson shows, and a request for another curriculum's lesson by pasted address (which
+  answers exactly like a lesson that does not exist). With the course gate switched off, curriculum
+  scoping still applies (FR-4015).
+- **Only an operator changes a curriculum, and the database enforces it.** Migration 033 removes the
+  student app's right to update a student record except one column (the design variant), and the
+  Google step runs through a once-only database function. Changing it later loses
+  nothing: attempts, mastery and saved places stay with the course they were earned in, and every
+  change is kept as history with the operator's name (FR-4010…FR-4012, FR-4017).
+- **The curriculum is never sent to the anonymous analytics stream** (a test fails if it ever is), is
+  labelled flatly ("National", "American", never a tier), and a grade is named in the curriculum's own
+  words: grade 10 is "Secondary 1" for National and "Grade 10" for American (FR-4013, FR-4016).
+- **The page chrome follows the curriculum.** A student who is not National sees her own grade and
+  curriculum in the header ("Grade 10 · American") and no ministry-syllabus line in the footer.
+
+### Added — the console decides per curriculum (FR-4101…FR-4105, FR-4309)
+- **Courses** groups every course under its curriculum, names grades in that curriculum's words, shows
+  per grade which curricula have something live, and puts each course's completeness (objectives,
+  questions, book-section checks, the pipeline's coverage audit on record) beside its switch. The
+  American Grade 10 course is listed from this release, hidden by default, with an honest zero. Before
+  an operator hides a curriculum's last live course for a grade, the page says how many students that
+  leaves with nothing to study: a number, never a name (FR-4103).
+- **Student record** (needs the `student-data` role): the student's curriculum, whether chosen or
+  implied, a flag for a value the product does not know, the change history, which courses she can see
+  and why (an exception for a course outside her curriculum is labelled as exactly that), and the
+  control to change it, which asks in the page and names what she will stop and start seeing. The
+  Students list gains a curriculum column for the same role.
+- **No console figure combines two courses of one subject.** The Overview's cohorts, the Content page,
+  `/pipeline` and `/gallery` each name the course they count. The Teaching page says which courses
+  Socratic probing can reach (never the Grade 10 course at launch).
+
+### Added — the review page (FR-4501…FR-4509, migrations 035, 036, 039)
+- **Review** (new, `content-review` role) lists every maths item no human has signed, one at a time, for
+  Samuel, Tamer and Kamil, aiming at zero: questions and their worked solutions, widget claims,
+  misconceptions, worked examples, objectives, prerequisite links, figure stand-ins, the pipeline's
+  auto-passed gate decisions and the step-level checker's flagged working. A reviewer approves (the
+  human stamp), asks for a fix, or rejects (the question stops reaching students, never deleted). Two
+  reviewers never hold one item; every decision is kept, with who and when, in a table nobody can edit.
+- **"Reviewed" now means a human signed it, and only that** (Samuel, answer 33). An AI check shows as
+  "AI-checked, awaiting human". Students see neither word.
+- **It covers every maths course, Prep-3 included.** Prep-3 maths items that were promoted in bulk or
+  passed only an AI check have no human stamp, so they appear in the backlog from the first day.
+
+### Added — the Grade 10 course, as machinery (FR-4201…FR-4212, FR-4301…FR-4327, FR-4320)
+- **The course is registered**: *Everything Maths — Grade 10* (Siyavula), American curriculum, in book
+  order with no school terms, hidden until switched on. Its tutor prompts name its own book and pages,
+  are English only, and use no Arabic anywhere for an American student; Socratic probing is off for it.
+  The four named exceptions to the prompt hold are ADR-0020's eighth to eleventh.
+- **The whole book is shown, prepared or not.** Once a course has an outline, its picker lists every
+  chapter and lesson in book order; a lesson not yet prepared reads "Being prepared", is not startable
+  and is refused on the server before any model call; readiness is derived from the objectives that are
+  loaded, so a chapter becomes startable the moment it is loaded. The course card reads "5 of 65
+  lessons ready". A course with no outline renders as before.
+- **Parts of one book section stay together** (FR-4311…FR-4319). A section the book splits into parts
+  is taught consecutively, the student's place never leaves it until every part passes the lesson gate,
+  and it is rolled up "k of m parts". Section frames appear on the Your Progress Map **only** for a
+  course with split sections; the National maps are unchanged to the byte (a golden file made from
+  v0.11.0's own code proves it).
+- **Typed maths answers are marked by what they mean** (FR-4320, ADR-0025): a factorised and an
+  expanded form are the same expression, several values in any order, intervals, coordinate pairs,
+  surds. Where a form is asked for, the other form is "wrong form"; an answer the marker cannot read is
+  asked for again and never marked wrong. No language model marks. It runs only for a question that
+  carries a marker spec, and no Prep-3 question does, so Prep-3 is graded exactly as before
+  (`attempt-grading.test.mts` pins the old grader; the replay of recorded production attempts,
+  SC-212, has not been run).
+- **Five new interactive widgets** (area model, box plot, polygon builder, solid scaler, Venn builder)
+  and five new curve families for the curve sketcher (hyperbola, exponential, sine, cosine, tangent).
+  The widget contract moves to version 2.
+- **A step-level check of every worked solution** and a **book-picture stand-in** for a figure with no
+  native renderer yet: both feed the review page; neither changes a student's screen by itself.
+- **The extraction line for the next book**: objectives and prerequisite links found in the book,
+  generated questions, widget questions and the misconception library produced as part of one run,
+  gated, metered and documented (`docs/specs/extraction-pipeline.md`).
+- **"Load a course"** (new) and **content refresh** (repointed). Load is add-only, backed up and
+  verified first, refuses rather than deleting a student's data, and can replay one course's reviewed
+  export while keeping every student's progress. `refresh-content` now acts on noor, not on the frozen
+  baseline's stack; its `course` mode only adds, `update` edits, `replace` prunes and needs the count of
+  affected students typed back. `full-reseed` and `promote-poc` are gone from noor.
+
+### Changed — for students who study Prep 3 today
+- **The angle setter no longer opens on the answer.** It used to open at one fixed position, which was
+  already the answer to an inscribed-angle question of 35° (found in the consistency review of
+  2026-09-27). It now opens where that question's answer is not, so pressing Check without touching
+  anything is never marked right. Nine Prep-3 widget questions use this widget.
+- **The line drawer says "you swapped the coordinates" only when both points were moved and both are
+  swapped**, so an untouched point can no longer produce that diagnosis. Four Prep-3 widget questions
+  use this widget.
+- **The curve sketcher's linear and quadratic marking is byte-identical** to v0.11.1's: a frozen copy of
+  the old arithmetic is replayed against every live curve question and must agree.
+- **The tutor's prompts for National students are unchanged** on the golden captures, with three
+  deliberate, named differences (ADR-0020, eighth, ninth and eleventh exceptions; Samuel approved
+  each): the Ask context's list of source books names only books the student can see (identical for a
+  student who sees all three Prep-3 subjects); a student who cannot see a subject is no longer offered a
+  "switch to it" card, and a card that slips through is removed on the server; and the Arabic lessons'
+  printed names appear once the Arabic course is reloaded (not at deploy).
+
+### Changed — production data on deploy
+- **Migrations 033–039**, all additive and safe to re-run, each with a rollback file:
+  - 033 curriculum tracks: two new columns on students (how the curriculum was set; whether the Google
+    step is owed), an append-only change history, the once-only Google-step function, and the student
+    side's loss of the right to update curriculum.
+  - 034 book sections: a `course_lessons` table, one row per lesson with its printed section and
+    "part n of m"; empty until a course load writes it.
+  - 035 human review stamps: four new columns on questions; a one-time backfill moves AI checks and
+    bulk promotions out of `reviewed_by` so it holds human stamps only. No question's status changes
+    and no student sees a difference; the console now counts those items as not yet signed.
+  - 036 review gate: the append-only decision record and the short claim a reviewer holds.
+  - 037 course outline: a table for a book's chapters and lessons before they are loaded; empty
+    until its loader runs.
+  - 038 teaching parent: a generated family may be modelled on a book teaching item; the parent
+    foreign key becomes three equivalent constraint triggers.
+  - 039 review gate: the decision record accepts one more kind of item, a flagged working step.
+- **The Prep-3 misconception catalogue is synced on this deploy** (the "every deploy" step; Grade 10's
+  waits for its course to be loaded). Six new probability entries (`t2u3-1-2`), each with a refutation,
+  go live; 26 existing entries gain an alias list and 19 change their kind label; **no id is removed or
+  renamed**. The sync may also re-point the misconception tag on a book question's answer choices (never
+  a question's status), and a recorded attempt that cites an alias keeps its row. CI replays this on
+  Postgres, twice, with students' attempts citing misconceptions, and asserts nothing live is lost.
+  T424 rehearses the same change against a copy of the Prep-3 bank; its result goes on the next line.
+  **T424 result (2026-10-12): PASS** ([report](specs/003-curriculum-tracks/rehearsal-t424-2026-10-12.md)). On a copy of the local
+  Prep-3 database brought to v0.11.1, the v0.12.0 deploy (migrations 033–039, then the catalogue sync, run twice) took the
+  catalogue from 97 to 103 entries (only the six `t2u3-1-2` additions; the 97 existing rows byte-identical), added 7 answer-choice
+  stamps on five `t2u3-1-2` questions and changed none, kept every student-recorded misconception id resolving (17 of 17) and left
+  the Prep-3 questions, statuses and visuals unchanged (drift guard GREEN for all three subjects); a second run changed nothing,
+  and the rollback held three ways. **Watch on deploy:** migration 035 moves the old "AI dual-check (pending Samuel)" stamps out of
+  `reviewed_by`, so every live book question shows unreviewed in the console (the review backlog jumps; students see nothing);
+  the 14 dead widget-to-misconception mappings removed from the committed bank stay in production's rows (no migration removes
+  them; they cannot fire), so the content export check will report them; `rollback/039` is not re-runnable after 036's down
+  (in-order rollback is clean).
+- **The image carries a label** (`org.ainext.features="curriculum-scope"`) that "Load a course" checks
+  before it will load anything, and the Courses page can now read the pipeline's coverage audits.
+
+### Fixed
+- **A hidden course's lesson script could be opened by typing its address** (`?mode=read&lesson=…`).
+  That door now goes through the course gate like every other.
+- **Any signed-in student could fetch any figure by its id**, including a hidden course's or another
+  curriculum's. A figure is served only when its objective is in the student's scope; otherwise the
+  answer is the same as for a figure that does not exist.
+- **The tutor's list of source books, the progress page, the home page's counts, and the bridges and
+  prerequisite hops the tutor draws on now name only what the student may see**; before, they named
+  every loaded course whatever the gate said (the curriculum-isolation audit of 2026-09-26).
+
+### Governance
+- **Constitution v3.4.0** (Samuel, 2026-09-25): curriculum truth is, per course, the book that course
+  is built from; curriculum sits with grade and is never paired with a school; the maths bank means
+  every maths course's bank; a second manual content path, "Load a course", is additive only.
+- ADR-0024 (curriculum as a visibility dimension, amended 2026-10-01) and ADR-0025 (the marker is built
+  in-house) are accepted; ADR-0020 now lists eleven named exceptions to the prompt hold.
+- **Requirements:** six of feature 003's 95 move to VERIFIED, each with a named test that passed on
+  2026-10-12 (FR-4002, FR-4009, FR-4011, FR-4012, FR-4015, FR-4017); one is BUILT (FR-4409); 88 are still
+  OPEN, which in that file means "not yet re-graded", not "not started". FR-4314 ("k of m parts
+  mastered") is built but its meaning is an open question for Samuel: it follows the lesson gate
+  accepted in v0.10.0 (ADR-0020's amendment), not mastery 0.75.
+- Also on `main` since v0.11.1, documentation only: an explainer of one tutor turn and the real tutor
+  prompt (`docs/architecture/anatomy-of-a-tutor-turn.md`, `real-tutor-prompt.md`).
+
+### Not in this release, and what comes next
+- **The Grade 10 content load**: Chapter 8's bundle, a whole-book export and the book's config
+  (`status`, `parity`) must be committed first; then deploy, then "Load a course" (dry-run, rehearse,
+  load), then switch the course on for grade 10 in the console.
+- **A person reading the Grade 10 bank** through the Review page, and Samuel's answers to the 30 open
+  decisions in `docs/WIP-g10-pilot/README.md` (15 need him: exercise-only objectives, the lesson with one
+  objective, completeness holds, widget gaps, and others).
+- **T424**, the rehearsal of the catalogue change against a copy of the Prep-3 bank (above).
+- **The meaning of "parts mastered"** (FR-4314), and a founder's run on iPad Safari of sign-up, the
+  Welcome step and the Grade 10 lessons (T393); no iPad run of any of this is recorded.
+- Known gaps: no grade-change path re-resolves a curriculum yet (FR-4008). A student cannot change her
+  own curriculum; that is by design at launch (decision 4), and only an operator can.
+
 ## [v0.11.1] — 2026-10-08
 
 Hotfix. Students could not upload a photo or a PDF on the live site; they can again. Deploy-only:
