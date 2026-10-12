@@ -179,3 +179,9 @@ Consistency-review decisions (2026-09-27), one at a time (decisions.md decisions
     it is merged into `main` by pull request once CI passes. Merging is not releasing or deploying: the deploy job runs only on a manual
     dispatch on `main`, the release is still `v0.12.0` (answer 47), and T424 is owed before that deploy.
     (decisions.md decision 69.)
+49. (2026-10-12, decision 70) After v0.12.0 was deployed and a Grade 10 · American student saw "nothing ready here yet" → "please do it
+    all! I need the full book on prod now": close the book out in the repo (Chapter 8's bundle and prose, the whole-book export, the
+    book config `loadable` with its drift constant), rehearse the load, release it as `v0.12.1`, deploy, run **Load a course** (dry-run,
+    rehearse, load) and open the course for Grade 10 · American. The content goes live as the AI line left it (every gate but Chapter
+    8's G1/G2 an AI auto-pass; ADR-0019 lets the maths bank be served unreviewed); the human review stays the next job.
+    (decisions.md decision 70.)

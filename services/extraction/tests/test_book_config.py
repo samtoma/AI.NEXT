@@ -20,11 +20,11 @@ class ConfigsTest(unittest.TestCase):
         books = book_config.all_books()
         self.assertEqual([b.book for b in books],
                          ["prep3-math-en", "prep3-social-ar", "prep3-arabic-ar", "g10-math"])
-        self.assertEqual([b.status for b in books], ["loadable", "loadable", "loadable", "ingest"])
-        # the repository's own check: green, with the Grade 10 book still going through the line
+        # all four loadable since 2026-10-12 (Samuel's answer 49: the whole Grade 10 book on production)
+        self.assertEqual([b.status for b in books], ["loadable", "loadable", "loadable", "loadable"])
         self.assertEqual(book_config.check_all(), [])
-        # a load asks the strict question: the shipped books pass it, and G10 has nothing to load yet
-        for b in books[:3]:
+        # a load asks the strict question, and every book passes it
+        for b in books:
             self.assertEqual(book_config.check_book(b, books), [], b.book)
 
     def test_every_path_in_a_config_is_repo_relative(self):
@@ -63,23 +63,28 @@ class Grade10ConfigTest(unittest.TestCase):
         self.assertEqual(g.maths_source, "epub-images-md5")
         self.assertEqual(g.manifest, "services/extraction/manifest/g10-math-american.json")
 
-    def test_ingest_status_is_green_for_the_repo_check_and_refused_for_a_load(self):
+    def test_the_whole_book_is_loadable_and_its_constant_matches_its_bundles(self):
+        # T364 (2026-10-12): every chapter bundle committed (Chapter 8 from the pilot), the course
+        # bundle first; the drift constant is what the bundles hold; the generated bank is the
+        # whole-book export of the pilot database.
         books = book_config.all_books()
-        self.assertEqual(self.g10.status, "ingest")
-        # backlog 6: the PLANNED bundles, in load order, the course bundle first (T364); they need
-        # not exist while the book is going through the line, and nothing loads them yet
+        self.assertEqual(self.g10.status, "loadable")
         self.assertEqual([Path(x).name for x in self.g10.bundles],
                          ["g10m-course.json"] + [f"g10m-c{c:02d}.json" for c in range(1, 15)])
         self.assertEqual(len(self.g10.content_files), 65)
-        self.assertNotIn(self.g10.bundle_paths()[0], book_config.bundle_order())
-        self.assertIsNone(self.g10.parity, "the drift constant comes from the approved bundles (T364)")
-        self.assertEqual(book_config.check_book(self.g10, books, allow_ingest=True), [])
-        strict = book_config.check_book(self.g10, books)
-        self.assertEqual(len(strict), 1)
-        self.assertIn("nothing to load", strict[0])
+        self.assertIn(self.g10.bundle_paths()[0], book_config.bundle_order())
+        self.assertEqual(self.g10.parity.expected(), book_config.expected_from_bundles(self.g10))
+        self.assertEqual(self.g10.parity.expected(),
+                         {"modules": 14, "learning_objectives": 211, "prerequisite_edges": 294,
+                          "questions_total": 2154, "visuals": 616})
+        self.assertFalse(self.g10.parity.require_all_live)  # 64 book questions are held for review
+        self.assertEqual([Path(x).name for x in [self.g10.generated.misconceptions, *self.g10.generated.questions]],
+                         ["misconceptions.json", "generated-questions.json", "widget-questions.json"])
+        self.assertEqual(book_config.check_book(self.g10, books), [])
 
     def test_an_ingest_books_planned_bundles_load_the_course_first(self):
         data = json.loads(self.g10.path.read_text())
+        data["status"] = "ingest"  # the rule is about a book still going through the line
         data["bundles"] = data["bundles"][1:] + data["bundles"][:1]
         b = book_config.Book.model_validate(data)
         self.assertTrue(any("loads first" in p
@@ -105,7 +110,7 @@ class Grade10ConfigTest(unittest.TestCase):
 
     def test_an_ingest_book_may_not_share_a_prefix(self):
         data = json.loads(self.g10.path.read_text())
-        data.update(book="rival-g10", course_id="course:rival-g10")
+        data.update(book="rival-g10", course_id="course:rival-g10", status="ingest")
         rival = book_config.Book.model_validate(data)
         problems = book_config.check_book(rival, book_config.all_books(), allow_ingest=True)
         self.assertTrue(any("also g10-math's" in p for p in problems), problems)

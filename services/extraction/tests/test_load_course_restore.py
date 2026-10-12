@@ -60,7 +60,9 @@ import restore_course_bundle as rcb
 
 ZZ = "course:zz-test-en"
 FAKE = Path(__file__).resolve().parent / "fake_docker"
-EXPORT_DIR = "services/extraction/seed/generated/g10-math"
+# Where load-course.sh reads the course's export: the directory of the book config's
+# generated.misconceptions (since v0.12.1, seed/generated/g10-math/export/).
+EXPORT_DIR = "services/extraction/seed/generated/g10-math/export"
 
 # the golden database, built once per run; each test gets a copy (CREATE DATABASE … TEMPLATE)
 _golden: dict = {}
@@ -442,6 +444,17 @@ class LoadCourseScriptTest(unittest.TestCase):
                      ["tag", "export-e0"], ["rm", "-q", f"{EXPORT_DIR}/export-record.json"],
                      ["commit", "-qm", "a fresh bundle, no record"]):
             subprocess.run([*git, *args], check=True, capture_output=True)
+        # The fixture's Grade 10 is a 13-objective mini-book (the Chapter 8 pilot's shape), not the
+        # whole book the committed drift constant describes (v0.12.1). The script runs on the
+        # fixture's own copy of the configs: Grade 10 without a constant, as before v0.12.1, so the
+        # drift guard skips it and checks every other course.
+        cls.books = cls.work / "books"
+        cls.books.mkdir()
+        for p in book_config.HERE.joinpath("books").glob("*.json"):
+            data = json.loads(p.read_text())
+            if data.get("book") == "g10-math":
+                data["parity"] = None
+            (cls.books / p.name).write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n")
         cls.http = http.server.ThreadingHTTPServer(("127.0.0.1", 0), _Ok)
         threading.Thread(target=cls.http.serve_forever, daemon=True).start()
 
@@ -463,7 +476,8 @@ class LoadCourseScriptTest(unittest.TestCase):
                    FAKE_LOG=str(self.work / "fake-docker.log"),
                    AINEXT_BACKUP_DIR=str(self.backups), TMPDIR=str(self.work),
                    AINEXT_APP_PORT=str(self.http.server_port),
-                   AINEXT_CONSOLE_PORT=str(self.http.server_port))
+                   AINEXT_CONSOLE_PORT=str(self.http.server_port),
+                   AINEXT_BOOKS_DIR=str(self.books))
         env.pop("CONFIRM", None)
         if confirm is not None:
             env["CONFIRM"] = confirm

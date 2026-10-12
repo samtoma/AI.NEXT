@@ -237,6 +237,8 @@ C is engineering and records. Where to look is in brackets.*
     Chapter 7 one, and eight in Chapter 8 from the multi-part carry-over. The Chapter 1 item `q:g10m1s8-1-2:ex1-10-2p` changes a digit (7 to 11): read it first.
     [this file, "The G2 recommendations applied to Chapters 1–4", (d); "Multi-part exercises"]
 17. **20 live generated questions whose model question was rejected**: the 10 variants of family `common-factor-monic` (parent Ex1-8:11, whose printed answer is wrong) and 10 of
+    *(2026-10-12: left out of the production book — a fresh database has no rejected parent for them, so they cannot load; removed from the pilot database
+    after a backup, decision 70. A reader can still bring the families back with a corrected parent.)*
     `factor-a` (parent Ex4-7:12s). [same section, (a)]
 18. **Ex1-9:17 has no correct key in the book** (the extra `abc` term is in the EPUB's own worked line too); the typing agent's correction was refused. [`errata-g10.md`]
 19. **Smaller flags from the run log, not traced to a fix:** the Chapter 2 teaching text of `2s4-1-3` states 2(1)^{1/2} + 1 = 2 (should be 3; a book or transcription slip); Chapter 4 Ex4-7:1h
@@ -255,6 +257,8 @@ C is engineering and records. Where to look is in brackets.*
     at any tier. They need loading (the code is built: migration 038, `parent_kind`), then G3 and coverage again. T448 is still unticked and its spec records are pending: FR-1101 (spec 001),
     FR-4304, `data-model.md`, `plan.md` migration 038 row, ADR-0008 §4, `extraction-pipeline.md` §3.9/§3.10, the constitution line ~203 (this file, "Done — 2026-10-01 (family-parent agent)").
 23. **Book-level closing steps were not run** (`runs/g10-math/fanout-plan.json` → `closing_steps`). (a) Chapter 8's bundle is only at `services/extraction/work/g10-math/pilot/seed/g10m-c08.json`;
+    **DONE 2026-10-12 (decision 70, T364):** Chapter 8's bundle and prose committed, the whole-book export in `seed/generated/g10-math/export/`,
+    `books/g10-math.json` `loadable` with its drift constant; released as `v0.12.1`. (d) the whole-book coverage report is still not written.
     `work/` is gitignored, so **Chapter 8's seed is not on the branch**, and `seed/g10-math/` holds Chapters 1–7 and 9–14 only (decision in the plan: copy it as reviewed, or re-assemble it
     with the book-picture stand-ins). (b) The whole-book export `seed/generated/g10-math/book-export/` does not exist; `seed/generated/g10-math/export/` is the pilot's 13-objective export.
     (c) `books/g10-math.json` still has `status: ingest` and `parity: null` (T364), so `parity_check.py --all-courses` skips this course; G5 reads the loaded config

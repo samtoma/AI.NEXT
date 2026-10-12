@@ -10,6 +10,39 @@ requirement names it.
 
 ## [Unreleased]
 
+## [v0.12.1] — 2026-10-12
+
+The whole Grade 10 American maths book is ready for "Load a course", and a lesson stopped halfway can be
+picked up again. **A deploy still loads no course**: the book reaches students only after "Load a course"
+(dry-run, rehearsal on a copy of production, load) and after the course is opened for Grade 10 · American on
+the console's Courses page (Samuel's answer 49, decision 70).
+
+### Added — the whole Grade 10 book, loadable (T364)
+- **`books/g10-math.json` is `loadable`**: all 14 chapter bundles are committed (Chapter 8, the pilot, from
+  its pilot seed, with its five lesson-prose files), the drift constant is the bundles' own
+  (**14 modules, 211 objectives, 294 prerequisite links, 2,154 book questions, 616 visuals**), and the
+  generated bank is the **whole-book export** of the pilot database in `seed/generated/g10-math/export/`:
+  **3,117 generated questions, 99 widget questions, a 300-entry misconception catalogue**, each row with its
+  own status and review stamp, and its `export-record.json` (the provenance a later restore checks).
+- **Rehearsed locally** on a copy of the Prep-3 database brought to production's schema, with the exact
+  three steps "Load a course" runs: the course loads hidden (0 visibility rows); 2,089 book questions live
+  and 65 held; the drift guard is GREEN for all four courses; every Prep-3, Social Studies and Arabic
+  question, misconception, student and attempt is byte-identical before and after; the only other row
+  added is the curriculum's program node (`program:us-american-en`); a second load changes nothing.
+- **Left out of the production book, on purpose:** the 20 generated variants of two book questions the
+  G2 review rejected for a wrong printed answer (Ex1-8:11, Ex4-7:12s; open item 17): a fresh database
+  has no rejected parent for them, so they cannot load; and the 4 retired Chapter 8 widget questions
+  (`q:g10m8s3-1-2:w001–w004`), which the loader refuses for a widget that cannot say why an answer is
+  wrong (ADR-0009). Neither was ever served or attempted. The pilot database was backed up first.
+- **One more question is held on a fresh load than on the pilot:** Ex6-6:17, whose key has a degree sign
+  inside an inequality the marker cannot read (open decision 8a). Held is the safe side.
+- **Tests that used a part of the Grade 10 book as their fixture now say so.** The "Load a course" restore
+  test runs on its own copy of the book configs (Grade 10 without the whole-book constant, as before; the new
+  `AINEXT_BOOKS_DIR` is a test seam only, unset everywhere else) and reads the export where the config now
+  points (`export/`); the chapter dry run loads every OTHER course first and leaves this book's whole-book
+  constant out of its one-chapter drift line (it checks the chapter against the chapter's own constant).
+
+
 ### Fixed — a lesson stopped halfway can be picked up again (FR-204)
 - **Pressing Finish in the middle of a lesson no longer loses the student's place.** She still
   gets her report, but the next time she opens that lesson she is asked "You stopped at step X
