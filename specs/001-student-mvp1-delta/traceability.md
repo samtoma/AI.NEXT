@@ -375,7 +375,7 @@ ADR-0008 bounds the rest. That is T122.
 | — open | 6 |
 | — blocked | 3 |
 | — deferred | 12 |
-| Requirements a test declares | **13** |
+| Requirements a test declares | **14** |
 | Tasks complete / total | **99 / 143** |
 
 **Of 56 requirements marked VERIFIED, 13 have an automated test declaring them.** The remaining 43 were verified by running the product — a browser session, a query against a loaded database — which is real evidence and is not re-checked on any later commit. That gap is the honest measure of this build's regression risk, and it is the number to drive down.

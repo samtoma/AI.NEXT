@@ -252,6 +252,8 @@ export async function POST(req: Request) {
     turns?: number;
     /** lesson slug (e.g. "geo1-2") */
     lesson?: string;
+    /** Finish pressed before the lesson was over (FR-204) */
+    early?: boolean;
   };
   try {
     body = await req.json();
@@ -262,6 +264,7 @@ export async function POST(req: Request) {
   const transcript = (body.transcript ?? []).slice(-60);
   const turns = Math.max(0, Math.round(Number(body.turns ?? 0)));
   const chatSession = String(body.chatSession ?? "").slice(0, 64);
+  const early = body.early === true;
   if (transcript.length === 0) {
     return NextResponse.json({ error: "empty transcript" }, { status: 400 });
   }
@@ -545,15 +548,20 @@ export async function POST(req: Request) {
       return checkId;
     });
 
-    // The rating IS the end of the lesson — the client discards its resume key
-    // on the same response (LessonSession.tsx:568). Closing here is the only
-    // place `completed` is ever written; without it every sitting would end up
-    // swept as `inactivity`, and FR-2302's "did she finish, or walk away"
-    // would have one answer for both.
+    // A rating after the lesson is over IS the end of the lesson — the client
+    // discards its resume key on the same response (LessonSession `finish`).
+    // Closing here is the only place `completed` is ever written; without it
+    // every sitting would end up swept as `inactivity`, and FR-2302's "did she
+    // finish, or walk away" would have one answer for both.
+    //
+    // An EARLY Finish is not that (FR-204): the student stopped halfway and
+    // keeps her place. The sitting is left open, so continuing within the idle
+    // window carries on in it and otherwise the sweep closes it as
+    // `inactivity` — a stop recorded as one, never as `completed`.
     //
     // Its own unit, deliberately: a failure to close must not undo the rating
     // the student is waiting to read.
-    if (sessionId !== null) {
+    if (sessionId !== null && !early) {
       try {
         await closeSession(studentId, sessionId, "completed");
       } catch (e) {
