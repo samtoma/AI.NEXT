@@ -1,17 +1,60 @@
 # Project State — AI Tutor MVP
 
 > Living document. Read at session start; update when progress or decisions land.
-> Last updated: 2026-10-12 (`main`; `v0.11.0` deployed 2026-10-02; `v0.11.1` uploads hotfix released 2026-10-08). **Feature 003
-> (curriculum tracks and the Grade 10 American maths course) is merged into `main` on 2026-10-12** (Samuel: "merge the g10 american
-> now"; answer 48). Its branch `feat/003-curriculum-tracks-g10-american-math` had been rebuilt on 2026-10-02 as ONE squashed commit on
-> `v0.11.0` (answer 46, tag `g10-progress-map`; the old 678-commit history is kept under the tag `g10-old-graph-view`), then rebased onto
-> `v0.11.1` with a CI fix and merged by pull request. With it `main`'s constitution is **v3.4.0**. **Merged is not released and not
-> deployed:** production stays on `v0.11.1` until a deploy is run by hand (the deploy job runs only on a manual dispatch on `main`); the
-> release is to be **`v0.12.0`** (answer 47, T390), and **T424** (rehearse the misconception-catalogue change against the Prep-3 bank) is
-> owed before that deploy. The Grade 10
+> Last updated: 2026-10-12 (`main` at the feature 003 merge, `482a6aca`; **the `v0.12.0` release commit is prepared on
+> `release/v0.12.0` and the tag is pending**; production runs `v0.11.1`, deployed 2026-10-08, and `v0.11.0` was deployed 2026-10-02).
+> **Feature 003 (curriculum tracks and the Grade 10 American maths course) is merged into `main` on 2026-10-12** (Samuel: "merge the g10
+> american now"; answer 48). Its branch `feat/003-curriculum-tracks-g10-american-math` had been rebuilt on 2026-10-02 as ONE squashed
+> commit on `v0.11.0` (answer 46, tag `g10-progress-map`; the old 678-commit history is kept under the tag `g10-old-graph-view`), then
+> rebased onto `v0.11.1` with a CI fix and merged by pull request #67. With it `main`'s constitution is **v3.4.0**. **Merged and
+> released are not deployed, and deploying is not loading:** production stays on `v0.11.1` until a deploy is run by hand (the deploy job
+> runs only on a manual dispatch on `main`); a deploy loads no course; and **T424** (rehearse the misconception-catalogue change against
+> the Prep-3 bank) is owed before that deploy. The Grade 10
 > content exists in a LOCAL pilot database only: the pipeline has run to the end of the book (all 14 chapters have a G5 record), and every
 > gate decision except Chapter 8's G1 and G2 was an AI auto-pass that no person has read. The full-book record and its open-decisions
 > list are in [`docs/WIP-g10-pilot/README.md`](WIP-g10-pilot/README.md), "Full book complete — 2026-10-02".
+
+## 🏷️ v0.12.0 — curriculum tracks and the Grade 10 machinery (release commit prepared 2026-10-12; tag and deploy pending)
+
+Feature 003 as one release: the squashed commit `cd156ef9`, the CI fix `f6506fbb` and the docs `d6109a35`, merged by PR #67 on
+2026-10-12; the push CI run on the merge commit (`482a6aca`, run 38249325504) is green for `traceability`, `build` and `migrations`
+(`deploy` is skipped by design). The number is Samuel's (answer 47, decision 68: `main` had already used v0.10.0 and v0.11.0).
+`app/package.json` and `package-lock.json` read 0.12.0; `CHANGELOG.md`, [`docs/releases/v0.12.0.html`](releases/v0.12.0.html), the docs
+map and spec 003's `traceability.md` (rev. 10) are written; `tasks.md` T390 is annotated and **stays unticked until the tag exists**
+(`docs/VERSIONING.md` step 3: once the release commit is on `main`, `git fetch origin main && git tag -a v0.12.0 origin/main -m … && git push origin v0.12.0`).
+
+**What a deploy of v0.12.0 does (read in the code and workflows, 2026-10-12).** It applies migrations **033–039** (curriculum
+columns, history and once-only Google step; book sections; human review stamps, with a one-time rewrite of existing `questions.reviewed_by`
+strings so AI checks and bulk promotions leave it; the review gate; the course outline; a teaching-item parent for generated families; one more
+review-gate item kind), builds the image (label `org.ainext.features="curriculum-scope"`, which "Load a course" requires), and runs the
+every-deploy **Prep-3 misconception sync**: six new `t2u3-1-2` entries, 26 entries gain aliases, 19 change kind, no id removed, and
+choice tags may be re-pointed (T424 owed). **It loads no course and writes no visibility rule** (no migration touches
+`course_availability`; the deploy's course steps are by-id and Prep-3 only). **The Grade 10 course needs the manual "Load a course" action
+after the deploy, and cannot be loaded from this commit:** 13 of 14 chapter bundles are committed (Chapter 8's is only in the untracked
+`work/` tree), there is no whole-book export, and `books/g10-math.json` still reads `status: ingest`, `parity: null` (WIP README, open
+decision 23). No person has read the Grade 10 bank (decision 60).
+
+**What changes on deploy, before any course is loaded (each read in the code).** Students: sign-up and the first-Google-sign-in `/welcome`
+step always ask for a curriculum (`SignupForm.tsx`, `CurriculumChoice.tsx`, `OnboardingForm.tsx`); a student who picks American sees "nothing's
+ready here yet" (`SubjectHome.tsx`), because no American course is loaded or live; National students are unchanged except the angle setter
+(opens off the answer), the line drawer (swap diagnosis needs both points moved), the handoff card filter, and two doors closed (`?mode=read`
+and `/api/visuals` now go through the course gate). Operators: Courses by curriculum with completeness beside each switch, the Student record's
+Curriculum panel and list column (`student-data`), figures named by course, and the new **Review** page (`content-review`), whose backlog
+covers **every maths course, Prep-3 included**; production's backlog size has not been counted.
+
+**Verification (2026-10-12, this pass).** `npm test` with a scratch Postgres: **1661 of 1661** (1595 and 66 skipped without one);
+`services/extraction` pytest with a scratch Postgres: **1268 passed, 1 skipped**. Spec 003's matrix moves **0 → 6 VERIFIED** (FR-4002, 4009,
+4011, 4012, 4015, 4017), 1 BUILT (FR-4409, until T424), 88 OPEN ("not yet re-graded", T387); 47 rows still say "planned:" in their
+Implementation cell and are stale. `python3 scripts/traceability.py --check` passes. **Two comments in the code contradict the shipped behaviour
+and were left alone (this pass may not edit `app/src`):** `app/(auth)/signup/page.student.tsx` and `app/(auth)/welcome/page.student.tsx` still
+say the form asks only after a grade that offers two or more curricula (superseded by answer 36).
+
+**Open before or after the tag.** (1) **T424**, then a deploy by hand (CI/CD, `workflow_dispatch`). (2) The Grade 10 content path: commit
+Chapter 8's bundle, a whole-book export and the config; deploy; Load a course (dry-run, rehearse, load); switch it on for grade 10
+(**T392**, Samuel). (3) **T391** (tell Tamer the curriculum is now a variable) and **T393** (a founder's iPad Safari walk). (4) FR-4314,
+what "k of m parts mastered" means: open for Samuel (item 30 in the WIP README). (5) The 15 open decisions that need Samuel (WIP README,
+group A). (6) Doc debt noticed, not fixed: this file runs to ~1,700 lines against its own two-screen rule; `docs/README.md`'s map is older
+than its date suggests (rewritten only where T390 named it).
 
 ## 🩹 v0.11.1 hotfix — uploads work on the live site (released 2026-10-08)
 
@@ -46,7 +89,7 @@ a message's top when a widget grows after the student answers it (found in revie
 Safari run of any of it. *(The tag `v0.10.0` exists on GitHub, on `8d1f2b1d`; checked 2026-10-02 — this line used to say "the tag
 needs a human".)*
 
-## 🧭 Feature 003 — curriculum tracks and the Grade 10 American maths course (pipeline finished on a local database; one squashed commit, tagged `g10-progress-map` 2026-10-02, rebased onto `v0.11.1` and merged into `main` 2026-10-12, answer 48; not reviewed, not released, not deployed; release to be `v0.12.0`, answer 47)
+## 🧭 Feature 003 — curriculum tracks and the Grade 10 American maths course (pipeline finished on a local database; one squashed commit, tagged `g10-progress-map` 2026-10-02, rebased onto `v0.11.1` and merged into `main` 2026-10-12, answer 48; released as `v0.12.0` (answer 47; release commit prepared 2026-10-12, tag pending); not deployed; the content not read by a person)
 
 **State on 2026-10-02 (dev database only).** The full-book fan-out (approved 2026-10-01, decision 58e) ran 2026-10-01 to 2026-10-02 and
 every one of the 14 chapters has a G5 record, in the local pilot database `ainext_pilot_g10_ch08`. Course `course:us-g10-math-en` there holds
@@ -68,9 +111,9 @@ plus **one** squashed commit carrying all of feature 003 (answer 46a, "One commi
 lease to GitHub together with the tag the same day (answer 46d, "Push once checks pass"). The old history — cut from `main` at `v0.9.2` and brought
 up to `v0.9.3` on 2026-09-25, 678 commits, almost all 30-second `wip(003): auto-snapshot … [skip ci]` commits (that snapshot job was stopped for the
 rewrite) — is kept whole under the tag **`g10-old-graph-view`** (`ca855eba`, on GitHub too), named for what it still has: the old skill-map view
-(`GraphCanvas`, `LoPanel`, the FR-4315 section frames) that the Your Progress Map replaced on `main`. None of it is reviewed by Samuel, merged to
-`main`, released or deployed. **Release number: `v0.12.0`** (answer 47, "T390 should be v0.12.0"): `main` already used v0.10.0 and v0.11.0, so the
-v0.10.0 that `tasks.md` T390 planned was taken; `app/package.json` still reads 0.11.0, and T390 stays unticked until the release is made.
+(`GraphCanvas`, `LoPanel`, the FR-4315 section frames) that the Your Progress Map replaced on `main`. *(As of 2026-10-02 none of it was reviewed by Samuel, merged to
+`main`, released or deployed. Since then: merged 2026-10-12; the `v0.12.0` release commit prepared 2026-10-12, tag pending; still not deployed, and the content still unread by a person.)* **Release number: `v0.12.0`** (answer 47, "T390 should be v0.12.0"): `main` already used v0.10.0 and v0.11.0, so the
+v0.10.0 that `tasks.md` T390 planned was taken; `app/package.json` read 0.11.0 then and reads 0.12.0 on `release/v0.12.0` (2026-10-12); T390 stays unticked until the tag exists.
 **What the rebuild did (15 conflicts, all resolved):** the two documents (this file and spec 002's traceability) and ADR-0020's numbering, which
 merged with no conflict and wrongly (the feature's four prompt-hold exceptions are now the eighth to eleventh), were resolved by the tech-writer;
 the other 13 are app code (`package.json`, `ask.ts`, `lesson.ts`, `progression.ts`, `queries.ts`, `types.ts`, `attempts-client.ts`,
