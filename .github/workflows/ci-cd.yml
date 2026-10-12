@@ -81,6 +81,17 @@ jobs:
       # worse format, so this is the gate that gives the other 122 any meaning.
       - name: Tests
         run: npm test
+      # "Load a course" step 1 runs load_seed.py in THIS image, and load_seed.py renders
+      # every maths string with the app's KaTeX on node before it loads a bundle. The
+      # first Grade 10 dry run on the box refused because the image had no node
+      # (2026-10-12, v0.12.2). Build the image exactly as the box does and validate the
+      # whole Grade 10 book in it — unprivileged, on a read-only mount, as the load does.
+      - name: The content loader image runs the KaTeX check ("Load a course" step 1)
+        working-directory: .
+        run: |
+          docker build -q -f deploy/Dockerfile.loader -t ainext-loader-ci deploy
+          docker run --rm -v "$PWD:/repo:ro" ainext-loader-ci \
+            seed/g10-math/g10m-course.json $(cd services/extraction && ls seed/g10-math/g10m-c*.json) --validate-only
 
   # ---- The repository is the reference for requirements, so it has to be true.
   #      Fails when a requirement in the active spec has no row, or a row names a

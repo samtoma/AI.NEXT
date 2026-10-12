@@ -10,6 +10,20 @@ requirement names it.
 
 ## [Unreleased]
 
+## [v0.12.2] — 2026-10-12
+
+### Fixed — "Load a course" can check the book's maths on the box
+- **The content loader image now has node and the app's KaTeX.** Before it loads a bundle, the loader renders
+  every student-facing maths string with the app's own KaTeX (`katex_check.mjs`, consistency review A1/A2).
+  The box's loader image had only Python, so the first Grade 10 dry run on production (2026-10-12) refused at
+  step 1 — "the KaTeX check needs node" — and wrote nothing. Every other precondition held: the book config
+  and files, no visibility rule, the curriculum-scope label on the running app and console, all 65 lesson
+  files served, and the drift guard GREEN for the three loaded courses. `deploy/Dockerfile.loader` now copies
+  node 22 in and installs katex at the app's locked version (0.17.0) where node finds it from `/repo/app`.
+- **CI builds the loader image and validates the whole Grade 10 book inside it**, unprivileged on a read-only
+  mount, as "Load a course" does — so a loader image that cannot run the check fails CI, not a production load.
+
+
 ## [v0.12.1] — 2026-10-12
 
 The whole Grade 10 American maths book is ready for "Load a course", and a lesson stopped halfway can be
