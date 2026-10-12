@@ -10,6 +10,20 @@ v1 = the nine math kinds. v2 adds the three social-studies kinds (ADR-0004
 Wave 0): `map_scene`, `timeline`, `flow_chain` — see the v2 section below.
 v1 kinds and rules are unchanged.
 
+**Scope: this file covers only figures (`visuals[]`).** Two other kinds of
+interactive have their own contracts:
+- **Widget questions** (ADR-0009): the 11 maths widget kinds and their
+  predicates live in `contracts/widget-predicates.json`, which is read by
+  `widget_spec.py` and generates `app/src/lib/widget-predicates.ts`.
+- **Lesson-content interactives** (`locate_on_map`, `term_match`,
+  `timeline_builder`, `chain_builder`, and the Arabic `extract_spans`,
+  `hamza_seat`, `style_purpose`, `irab_builder`) are stored in
+  `seed/content/<lesson>.json` and read by `app/src/lib/lesson-content.ts`.
+
+A figure that no kind below can express is recorded as a viz gap, not
+forced into the nearest kind (see `docs/specs/extraction-pipeline.md`
+§3.7).
+
 Seed JSON shape:
 ```json
 {"id": "v:u2-1:001", "lo": "lo:u2-1-1", "question": null,

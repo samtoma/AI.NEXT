@@ -1,0 +1,241 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m10s4-1-4:trained-comparison",
+ "kind": "family",
+ "lo_id": "lo:g10m10s4-1-4",
+ "parent_question_id": "q:g10m10s4-1-4:ex10-7-22b",
+ "source_page": 386,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": "Trained and untrained factory employees were timed, in seconds, on the same task.",
+ "params": [
+  {
+   "name": "tq",
+   "randint": [
+    124,
+    132
+   ]
+  },
+  {
+   "name": "tsr",
+   "randint": [
+    3,
+    5
+   ]
+  },
+  {
+   "name": "tp",
+   "randint": [
+    0,
+    2
+   ]
+  },
+  {
+   "name": "tr",
+   "randint": [
+    0,
+    2
+   ]
+  },
+  {
+   "name": "ta",
+   "randint": [
+    0,
+    3
+   ]
+  },
+  {
+   "name": "tb",
+   "randint": [
+    0,
+    4
+   ]
+  },
+  {
+   "name": "tc",
+   "randint": [
+    0,
+    3
+   ]
+  },
+  {
+   "name": "td",
+   "randint": [
+    0,
+    4
+   ]
+  },
+  {
+   "name": "tm1",
+   "randint": [
+    "tq + tp",
+    "tq + 2*tsr - tr"
+   ]
+  },
+  {
+   "name": "tm2",
+   "randint": [
+    "tq + tp",
+    "tq + 2*tsr - tr"
+   ]
+  },
+  {
+   "name": "tm3",
+   "randint": [
+    "tq + tp",
+    "tq + 2*tsr - tr"
+   ]
+  },
+  {
+   "name": "tsort",
+   "let": "sorted([tq - tp - ta - tb, tq - tp - ta, tq - tp, tq + tp, tm1, tm2, tm3, tq + 2*tsr - tr, tq + 2*tsr + tr, tq + 2*tsr + tr + tc, tq + 2*tsr + tr + tc + td])"
+  },
+  {
+   "name": "tdata",
+   "shuffle": "tsort"
+  },
+  {
+   "name": "uq",
+   "randint": [
+    "tq + 8",
+    "tq + 16"
+   ]
+  },
+  {
+   "name": "usr",
+   "randint": [
+    "tsr + 1",
+    "tsr + 5"
+   ]
+  },
+  {
+   "name": "up",
+   "randint": [
+    0,
+    2
+   ]
+  },
+  {
+   "name": "ur",
+   "randint": [
+    0,
+    2
+   ]
+  },
+  {
+   "name": "ua",
+   "randint": [
+    0,
+    3
+   ]
+  },
+  {
+   "name": "ub",
+   "randint": [
+    0,
+    4
+   ]
+  },
+  {
+   "name": "uc",
+   "randint": [
+    0,
+    3
+   ]
+  },
+  {
+   "name": "ud",
+   "randint": [
+    0,
+    4
+   ]
+  },
+  {
+   "name": "um1",
+   "randint": [
+    "uq + up",
+    "uq + 2*usr - ur"
+   ]
+  },
+  {
+   "name": "um2",
+   "randint": [
+    "uq + up",
+    "uq + 2*usr - ur"
+   ]
+  },
+  {
+   "name": "um3",
+   "randint": [
+    "uq + up",
+    "uq + 2*usr - ur"
+   ]
+  },
+  {
+   "name": "usort",
+   "let": "sorted([uq - up - ua - ub, uq - up - ua, uq - up, uq + up, um1, um2, um3, uq + 2*usr - ur, uq + 2*usr + ur, uq + 2*usr + ur + uc, uq + 2*usr + ur + uc + ud])"
+  },
+  {
+   "name": "udata",
+   "shuffle": "usort"
+  },
+  {
+   "name": "tq1",
+   "let": "(tsort[2] + tsort[3]) // 2"
+  },
+  {
+   "name": "tq3",
+   "let": "(tsort[7] + tsort[8]) // 2"
+  },
+  {
+   "name": "tsiqr",
+   "let": "(tq3 - tq1) // 2"
+  },
+  {
+   "name": "uq1",
+   "let": "(usort[2] + usort[3]) // 2"
+  },
+  {
+   "name": "uq3",
+   "let": "(usort[7] + usort[8]) // 2"
+  },
+  {
+   "name": "usiqr",
+   "let": "(uq3 - uq1) // 2"
+  },
+  {
+   "name": "diff",
+   "let": "usiqr - tsiqr"
+  },
+  {
+   "require": "(tsort[2] + tsort[3]) % 2 == 0 and (tsort[7] + tsort[8]) % 2 == 0 and (tq3 - tq1) % 2 == 0",
+   "why": "the trained quartiles and their difference are whole numbers"
+  },
+  {
+   "require": "(usort[2] + usort[3]) % 2 == 0 and (usort[7] + usort[8]) % 2 == 0 and (uq3 - uq1) % 2 == 0",
+   "why": "the untrained quartiles and their difference are whole numbers"
+  },
+  {
+   "require": "diff >= 1",
+   "why": "the untrained semi-interquartile range is the larger one"
+  }
+ ],
+ "constraints": [
+  "len(tsort) == 11",
+  "len(usort) == 11",
+  "tq1 < tq3",
+  "uq1 < uq3"
+ ],
+ "stem": "A company wanted to evaluate the training programme in its factory. They gave the same task to trained and untrained employees and timed each one in seconds. Trained: ${=tdata[0]}, {=tdata[1]}, {=tdata[2]}, {=tdata[3]}, {=tdata[4]}, {=tdata[5]}, {=tdata[6]}, {=tdata[7]}, {=tdata[8]}, {=tdata[9]}, {=tdata[10]}$ Untrained: ${=udata[0]}, {=udata[1]}, {=udata[2]}, {=udata[3]}, {=udata[4]}, {=udata[5]}, {=udata[6]}, {=udata[7]}, {=udata[8]}, {=udata[9]}, {=udata[10]}$ Take the lower quartile as the median of the lower half of the ordered data and the upper quartile as the median of the upper half; when there is an odd number of values, the median belongs to both halves. By how many seconds is the semi-interquartile range of the untrained employees greater than that of the trained employees?",
+ "answer": "diff",
+ "solution": [
+  "Arrange the trained times in ascending order: ${=tsort[0]}, {=tsort[1]}, {=tsort[2]}, {=tsort[3]}, {=tsort[4]}, {=tsort[5]}, {=tsort[6]}, {=tsort[7]}, {=tsort[8]}, {=tsort[9]}, {=tsort[10]}$.",
+  "There are 11 trained times, so the median is the 6th value. It belongs to both halves, so each half has 6 values. The lower quartile is the median of the 1st to 6th values, the average of the 3rd and 4th: $Q_1=\\frac{{=tsort[2]}+{=tsort[3]}}{2}={=tq1}$. The upper quartile is the median of the 6th to 11th values, the average of the 8th and 9th: $Q_3=\\frac{{=tsort[7]}+{=tsort[8]}}{2}={=tq3}$.",
+  "The semi-interquartile range is half the interquartile range: $\\frac{Q_3-Q_1}{2}=\\frac{{=tq3}-{=tq1}}{2}={=tsiqr}$ seconds for the trained employees.",
+  "Arrange the untrained times in ascending order: ${=usort[0]}, {=usort[1]}, {=usort[2]}, {=usort[3]}, {=usort[4]}, {=usort[5]}, {=usort[6]}, {=usort[7]}, {=usort[8]}, {=usort[9]}, {=usort[10]}$.",
+  "There are 11 untrained times, so the median is the 6th value. It belongs to both halves, so each half has 6 values. The lower quartile is the median of the 1st to 6th values, the average of the 3rd and 4th: $Q_1=\\frac{{=usort[2]}+{=usort[3]}}{2}={=uq1}$. The upper quartile is the median of the 6th to 11th values, the average of the 8th and 9th: $Q_3=\\frac{{=usort[7]}+{=usort[8]}}{2}={=uq3}$.",
+  "The semi-interquartile range is half the interquartile range: $\\frac{Q_3-Q_1}{2}=\\frac{{=uq3}-{=uq1}}{2}={=usiqr}$ seconds for the untrained employees.",
+  "Subtract: $\\text{untrained}-\\text{trained}={=usiqr}-{=tsiqr}={=diff}$ seconds."
+ ],
+ "notes": "Models ex10-7-22b (trained vs untrained times) and extends it: the book finds the interquartile range of both unsorted sets; here the learner finds the semi-interquartile range of both and compares them. The book's own answers for its odd-sized sets (ex10-5-6e/f, ex10-7-22b) take the median into BOTH halves when n is odd (e.g. {9,12,12,14,16,22,24}: Q1=12, Q3=19; trained times: IQR 6, not 7), so the stem states that rule and the family uses 11 values per group (the book prints 15) to keep the stem short. Every instance is built from its quartiles outwards so that both quartiles, both interquartile ranges and both semi-interquartile ranges are whole numbers, and the untrained SIQR always exceeds the trained one. The two lists are shuffled, so the learner must order them. Only the answer is checked: the difference of the two SIQRs. Checked against an independent quartile routine over 20000 simulated instances: no disagreement, 20000 distinct stems, answers spread evenly over 1 to 5. The excluded-median convention would give a different answer in about 77 percent of instances, which is why the rule is in the stem."
+}

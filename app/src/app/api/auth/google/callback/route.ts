@@ -13,6 +13,15 @@
  * existing password account rather than erroring on it. A different
  * `google_sub` on the same address is the one refusal — `?error=account_conflict`
  * plus `suspicious_activity`.
+ *
+ * **A first Google sign-in goes to `/welcome`, not `/student`** (feature 003,
+ * FR-4014; contracts/student-api.md). Google gives us no grade, so the account
+ * is created `onboarding_pending` and the one-screen step asks for grade and,
+ * when that grade offers a choice, curriculum. A returning sign-in whose step
+ * is done lands where it always did; one that left before finishing is sent
+ * back to the step. `account_created` is recorded when the step completes
+ * (`api/auth/onboarding`), with the grade and curriculum she gave — not here,
+ * where all we have is the placeholder grade.
  */
 
 import {
@@ -24,15 +33,10 @@ import {
   refreshCookie,
 } from "@/lib/auth/cookies";
 import { recordAuthEvent, requestMeta } from "@/lib/auth/events";
-import {
-  GOOGLE_DEFAULT_GRADE,
-  completeGoogleLogin,
-  googleConfigured,
-  upsertGoogleAccount,
-} from "@/lib/auth/google";
+import { completeGoogleLogin, googleConfigured, upsertGoogleAccount } from "@/lib/auth/google";
+import { WELCOME_PATH } from "@/lib/auth/onboarding";
 import { createAuthSession, withAuthTx } from "@/lib/auth/session";
 import { signAccessToken, verifyStateToken } from "@/lib/auth/tokens";
-import { emit } from "@/lib/analytics";
 import { ENVIRONMENT, PUBLIC_URL } from "@/lib/env";
 import { cookies } from "next/headers";
 
@@ -106,16 +110,12 @@ export async function GET(req: Request) {
       reason: "google",
       ...meta,
     });
-    if (outcome.created) {
-      void emit({
-        event: "account_created",
-        studentId: outcome.studentId,
-        properties: { method: "google", grade: GOOGLE_DEFAULT_GRADE },
-      });
-    }
+    // Still owed its first step (created now, or created earlier and left
+    // unfinished): the step, and nothing else, until it is done (FR-4014).
+    const landing = outcome.onboardingPending ? WELCOME_PATH : "/student";
 
     return applyCookies(
-      new Response(null, { status: 302, headers: { Location: `${PUBLIC_URL}/student` } }),
+      new Response(null, { status: 302, headers: { Location: `${PUBLIC_URL}${landing}` } }),
       [
         accessCookie(token),
         refreshCookie(outcome.session.token, outcome.session.expiresAt),

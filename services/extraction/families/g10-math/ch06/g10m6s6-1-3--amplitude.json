@@ -1,0 +1,58 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s6-1-3:amplitude",
+ "kind": "family",
+ "lo_id": "lo:g10m6s6-1-3",
+ "parent_question_id": "q:g10m6s6-1-3:ex6-8-46c",
+ "source_page": 229,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "m",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "s",
+   "choice": [
+    1,
+    -1
+   ]
+  },
+  {
+   "name": "a",
+   "let": "s * m"
+  },
+  {
+   "name": "qm",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "t",
+   "choice": [
+    1,
+    -1
+   ]
+  },
+  {
+   "name": "q",
+   "let": "t * qm"
+  }
+ ],
+ "constraints": [],
+ "stem": "The graph of $f(\\theta)={=a}\\sin\\theta {=signed(q)}$ is drawn for $0^{\\circ}\\le\\theta\\le360^{\\circ}$. What is the amplitude of $f$?",
+ "answer": "abs(a)",
+ "solution": [
+  "For $f(\\theta)=a\\sin\\theta+q$ the amplitude is $|a|$: the distance from the middle line $y=q$ up to the maximum (or down to the minimum). It is never negative, and $q$ only moves the graph up or down, so it does not change the amplitude.",
+  "Here $a={=a}$, so the amplitude is $|{=a}|={=abs(a)}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Entry point: read a off the equation. a is negative in half of the instances (the book's own f(x) = -sin x + 2 has amplitude 1, not -1) and q is always non-zero so the equation prints with a sign. Answer is |a|; q is the decoy. Params give 100 distinct instances."
+}

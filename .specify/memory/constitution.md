@@ -1,6 +1,20 @@
 <!--
 Sync Impact Report
-- Version change: 3.2.0 → 3.3.0 (MINOR — Principle VI's standing bound on
+- Version change: 3.3.0 → 3.4.0 (MINOR — Additional Constraints' "curriculum
+  truth" materially expanded from the Egyptian ministry book to "per course, the
+  book that course is built from", with a per-course content constant; plus
+  three clarifications: VII (curriculum sits with grade, never paired with a
+  school), III (the maths bank means every maths course's bank), X (a second
+  manual content path, load-course, additive only). No principle removed or
+  redefined.)
+- Amended by: Samuel (CTO, solution architect), 2026-09-25 — "Yes, update it
+  (Recommended)" (third round, answer 7; specs/003-curriculum-tracks/decisions.md
+  decision 28), approving specs/003-curriculum-tracks/constitution-amendment-proposal.md
+  in full. Also that day, "I would take your recommendations" put the underlying
+  design to him as seventeen decisions, and "ok for all" confirmed the written
+  spec, plan and ADR-0024 (curriculum as a visibility dimension) plus notes on
+  ADR-0005, ADR-0019 and ADR-0020.
+- Previous: 3.2.0 → 3.3.0 (MINOR — Principle VI's standing bound on
   worst-case spend materially changed, in the same pattern as the 3.1.1 →
   3.2.0 bump below: an existing bound is lifted and replaced with a
   visibility-only alternative, and nothing else in the principle moves. The
@@ -112,6 +126,8 @@ Sync Impact Report
   - ✅ .specify/templates/spec-template.md — compatible as-is
   - ✅ .specify/templates/tasks-template.md — compatible as-is
 - Follow-up TODOs:
+  - (3.4.0) Each new course's content constant MUST be recorded in
+    `parity_check.py` from its approved manifest before its first load.
   - Principle III's suspension is reversible and MUST be revisited before any
     audience wider than the invited pilot cohort
   - Principle VI's numeric ceiling MUST be restored once the PRD §10 price point lands
@@ -208,7 +224,10 @@ with an explicitly invited audience" is **lifted**. Samuel owns the
 distribution of that site directly and takes responsibility for what it
 serves. Until he revokes it:
 
-- **everything in the maths bank is live**: book questions still at `review`,
+- **everything in the maths bank is live** — *clarified 2026-09-25, v3.4.0: every
+  maths course's bank, Prep-3 Mathematics and the Grade 10 American Mathematics
+  course alike (ADR-0019 note, 2026-09-25), where switching the course on in
+  the console is the gate* —: book questions still at `review`,
   pipeline-generated questions, widget questions and the misconception
   catalogue, whether a human has read them or not;
 - **review status is kept, not erased**: every row keeps its attribution, its
@@ -292,6 +311,15 @@ every request, and MUST never be presented to a user as a login. Student
 conversations are never exposed to other students, and what a parent sees is
 limited to performance data, never transcripts.
 
+**Clarified, authorized by Samuel 2026-09-25 (v3.4.0):** **curriculum sits with
+grade.** Which curriculum a student follows — which book serves her school
+year — is part of "grade", not a new category of personal data. It is asked
+only when it changes what she is offered, and it is labelled flatly
+("American", "National"), never as a tier. It is never sent to an anonymous
+analytics stream, and only an operator changes it. **It is never paired with a
+free-text school name, a school's address or any other fact that would
+identify the school a child attends.**
+
 ### VIII. MVP Non-Goals Are Binding
 Per the new PRD §14, MVP 1.0 ships without: teacher tooling and classroom
 features, content-authoring/rubric tools, voice or video tutoring, gamification
@@ -315,9 +343,14 @@ deliberately authored.
 
 ### X. Operational Safety
 Pushing `main` deploys to the live site — merges to main are deliberate acts.
-Database content mutations happen only through the manual `refresh-content`
-workflow with typed confirmation phrases; every mutating run takes a pg_dump
-backup first and prints its one-line rollback. On the box: never
+Database content mutations happen only through **a manual content workflow** —
+`refresh-content` (replace or refresh a course that is already loaded) or
+**`load-course`** *(named 2026-09-25, v3.4.0)* (add a course that is absent,
+and never touch one that is present; the same action's `restore` mode replays
+a previously exported, reviewed bundle, keeping its status and review stamps,
+gated by a typed confirmation of the course id) — each with typed confirmation
+phrases; every mutating run takes a pg_dump backup first, **verifies it can be
+read back**, and prints its one-line rollback. On the box: never
 `docker compose down -v` (it destroys the volume holding the one-time Claude
 login). A normal code deploy can never touch data. Whenever more than one
 stack shares a box, every operation MUST name its target environment
@@ -407,12 +440,22 @@ resolved tokens, paired foregrounds and per-component guidelines.)*
   GitHub runner. Each solution deploys from its own long-lived branch on its
   own schedule (ADR-0010); where stacks share a box they stay isolated by
   compose project, port and volume.
-- Curriculum truth is the Egyptian ministry book, ingested by the sealed
-  extraction pipeline with a coverage oracle; the graph carries prerequisite
-  edges and human-curated cross-subject bridges only.
-- Comparison constant: Prep-3 Mathematics (English), 2025-2026 ministry
-  edition — 10 modules, 90 learning objectives, 112 prerequisite edges, 450
-  questions, 212 visuals.
+- **Curriculum truth is, per course, the book that course is built from**
+  *(amended 2026-09-25, v3.4.0)* — the Egyptian ministry book for every
+  National course, and for any other curriculum's course the book its course
+  record names (for the Grade 10 American Mathematics course, Siyavula
+  *Everything Maths* Grade 10, written for South Africa's CAPS curriculum).
+  Each book is ingested by the extraction pipeline with a coverage oracle
+  (ADR-0005, amended 2026-09-25), and the book's statement wins for its own
+  course (Principle II). The graph carries prerequisite edges and
+  human-curated cross-subject bridges only. A course belongs to exactly one
+  curriculum (ADR-0024).
+- **Content constants are per course** *(amended 2026-09-25, v3.4.0)*. The
+  drift guard (`parity_check.py`) holds each course to its own source
+  fingerprint and counts. Prep-3 Mathematics (English), 2025-2026 ministry
+  edition, keeps its constant: 10 modules, 90 learning objectives, 112
+  prerequisite edges, 450 questions, 212 visuals. Each new course's constant is
+  fixed from its approved manifest when it is loaded.
 - Target cohort: 10–20 invited pilot students behind Cloudflare Access.
 
 ## Development Workflow & Quality Gates
@@ -442,4 +485,4 @@ PATCH = clarification), and obtain Samuel's approval. Exceptions MUST be
 time-boxed or condition-boxed, attributed, reversible, and recorded here or in
 an ADR — Principle III's suspension is the current example.
 
-**Version**: 3.3.0 | **Ratified**: 2026-08-02 | **Last Amended**: 2026-09-24
+**Version**: 3.4.0 | **Ratified**: 2026-08-02 | **Last Amended**: 2026-09-25

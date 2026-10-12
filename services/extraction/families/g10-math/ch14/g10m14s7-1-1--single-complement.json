@@ -1,0 +1,82 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m14s7-1-1:single-complement",
+ "kind": "family",
+ "lo_id": "lo:g10m14s7-1-1",
+ "parent_question_id": "q:g10m14s7-1-1:ex14-7-1",
+ "source_page": 488,
+ "tier": "basic",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "pool",
+   "let": "list(range(1, 16))"
+  },
+  {
+   "name": "s",
+   "shuffle": "pool"
+  },
+  {
+   "name": "onlya",
+   "let": "sorted([s[i] for i in range(0, 3)])"
+  },
+  {
+   "name": "both",
+   "let": "sorted([s[i] for i in range(3, 6)])"
+  },
+  {
+   "name": "onlyb",
+   "let": "sorted([s[i] for i in range(6, 10)])"
+  },
+  {
+   "name": "neither",
+   "let": "sorted([s[i] for i in range(10, 15)])"
+  },
+  {
+   "name": "ea",
+   "let": "sorted([s[i] for i in range(0, 6)])"
+  },
+  {
+   "name": "eb",
+   "let": "sorted([s[i] for i in range(3, 10)])"
+  },
+  {
+   "name": "ans",
+   "let": "sorted([s[i] for i in range(0, 15) if i < 3 or i > 9])"
+  }
+ ],
+ "constraints": [],
+ "stem": "A group of learners work with a sample space that can be described as $\\{n : n \\in \\mathbb{Z}, 1 \\leq n \\leq 15\\}$. Two events in this sample space are $A = \\{{=ea[0]}, {=ea[1]}, {=ea[2]}, {=ea[3]}, {=ea[4]}, {=ea[5]}\\}$ and $B = \\{{=eb[0]}, {=eb[1]}, {=eb[2]}, {=eb[3]}, {=eb[4]}, {=eb[5]}, {=eb[6]}\\}$. They are asked to identify the complementary event set of $B$, also known as $B'$. Which of the following sets best describes the event set of $B'$?",
+ "solution": [
+  "The event set $B$ is $\\{{=eb[0]}, {=eb[1]}, {=eb[2]}, {=eb[3]}, {=eb[4]}, {=eb[5]}, {=eb[6]}\\}$. The complementary event set $B'$ is every element of the sample space that is not in $B$.",
+  "The elements of the sample space that are in $A$ but not in $B$ are $\\{{=onlya[0]}, {=onlya[1]}, {=onlya[2]}\\}$, and the elements that are in neither $A$ nor $B$ are $\\{{=neither[0]}, {=neither[1]}, {=neither[2]}, {=neither[3]}, {=neither[4]}\\}$. None of these is in $B$, so all of them belong to $B'$.",
+  "The elements that are in both events ($\\{{=both[0]}, {=both[1]}, {=both[2]}\\}$) and the elements in $B$ only ($\\{{=onlyb[0]}, {=onlyb[1]}, {=onlyb[2]}, {=onlyb[3]}\\}$) are in $B$, so they are left out.",
+  "Therefore $B' = \\{{=ans[0]}, {=ans[1]}, {=ans[2]}, {=ans[3]}, {=ans[4]}, {=ans[5]}, {=ans[6]}, {=ans[7]}\\}$."
+ ],
+ "choices": {
+  "correct": "$\\{{=ans[0]}, {=ans[1]}, {=ans[2]}, {=ans[3]}, {=ans[4]}, {=ans[5]}, {=ans[6]}, {=ans[7]}\\}$",
+  "distractors": [
+   {
+    "text": "$\\{{=neither[0]}, {=neither[1]}, {=neither[2]}, {=neither[3]}, {=neither[4]}\\}$",
+    "misconception_id": "mc:g10m14s7-1-1:complement-only-outside-all-circles"
+   },
+   {
+    "text": "$\\{{=eb[0]}, {=eb[1]}, {=eb[2]}, {=eb[3]}, {=eb[4]}, {=eb[5]}, {=eb[6]}\\}$",
+    "misconception_id": "mc:g10m14s7-1-1:lists-event-instead-of-complement"
+   },
+   {
+    "text": "$\\{{=ea[0]}, {=ea[1]}, {=ea[2]}, {=ea[3]}, {=ea[4]}, {=ea[5]}\\}$",
+    "misconception_id": "mc:g10m14s7-1-1:complement-is-other-event"
+   }
+  ]
+ },
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m14s7-1-1:complement-is-other-event",
+   "label": "Takes the other event as the complement",
+   "description": "The student treats the complement of B as the other event A, as if 'not B' meant 'A', instead of every element of the sample space that is not in B. This leaves out the elements that lie in neither event, and wrongly includes the elements of A that are also in B."
+  }
+ ],
+ "notes": "Book question ex14-7-1 shows A and B as circles in a Venn diagram on 1 to 15 and asks for B'. A family cannot carry a figure, so A and B are given as written-out sets (A = 'A only' plus 'both'; B = 'both' plus 'B only'); the numbers outside both circles in the book's figure are not listed anywhere and the student has to find them in S. Region sizes are fixed (A only 3, both 3, B only 4, neither 5) so the correct set always has 8 elements and the three distractors always differ from it and from each other (5, 7 and 6 elements). Distractors: only the numbers outside both circles (catalogued), B itself (catalogued, lists the event instead of its complement), and A (new, takes the other event as the complement). The stem changes with the numbers, so no distinct_by_choices key."
+}

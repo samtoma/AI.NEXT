@@ -1,0 +1,49 @@
+{
+  "format": "ainext.family/1",
+  "id": "tpl:geo2-1-2:arc",
+  "kind": "family",
+  "lo_id": "lo:geo2-1-2",
+  "parent_question_id": "q:geo2-1-2:001",
+  "source_page": 44,
+  "tier": "advanced",
+  "answer_type": "numeric",
+  "context": null,
+  "params": [
+    {
+      "name": "r",
+      "choice": [
+        7,
+        14,
+        21,
+        28
+      ]
+    },
+    {
+      "name": "ang",
+      "choice": [
+        30,
+        45,
+        60,
+        90,
+        120,
+        180
+      ]
+    },
+    {
+      "name": "circ",
+      "let": "Fraction(2 * 22 * r, 7)"
+    },
+    {
+      "name": "arc",
+      "let": "circ * Fraction(ang, 360)"
+    }
+  ],
+  "stem": "A circle has radius ${=r}$ cm. Find the length of an arc subtending a central angle of ${=ang}^\\circ$, taking $\\pi = \\frac{22}{7}$.",
+  "answer": "num(float(arc)) if denominator(arc) != 1 else num(numerator(arc))",
+  "solution": [
+    "The circumference is $2\\pi r = 2 \\times \\frac{22}{7} \\times {=r} = {=circ}$ cm.",
+    "An arc is the same fraction of the circumference as its angle is of $360^\\circ$.",
+    "Arc $= {=circ} \\times \\frac{{=ang}}{360} = {=arc}$ cm."
+  ],
+  "notes": "Reproduces the hand-written family tpl:geo2-1-2:arc in generate_questions.py, item for item (decision 16 proof, tests/test_family_reproduction.py). Misconception ids are the catalogue's (seed/generated/misconceptions.json), which the live bank carries. Not loaded by anything: the live Prep-3 bank is the committed export."
+}

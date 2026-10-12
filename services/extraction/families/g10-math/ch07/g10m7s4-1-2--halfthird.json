@@ -1,0 +1,37 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m7s4-1-2:halfthird",
+ "kind": "family",
+ "lo_id": "lo:g10m7s4-1-2",
+ "parent_question_id": "q:g10m7s4-1-2:ex7-7-8",
+ "source_page": 265,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "h",
+   "randint": [
+    3,
+    30
+   ]
+  },
+  {
+   "name": "a",
+   "let": "2 * h"
+  }
+ ],
+ "constraints": [
+  "a == 2 * h"
+ ],
+ "stem": "In triangle $ABC$, $D$ is the mid-point of $AB$ and $E$ is the mid-point of $AC$. The side $BC$ has length ${=a}$. Determine the length of $DE$.",
+ "answer": "h",
+ "solution": [
+  "$D$ is the mid-point of $AB$ and $E$ is the mid-point of $AC$, so $DE$ is the line joining the mid-points of two sides of the triangle, and $BC$ is the third side.",
+  "From the mid-point theorem we know that the third side is twice the line joining the mid-points: $BC=2\\times DE$.",
+  "Substitute the length of $BC$: ${=a}=2\\times DE$.",
+  "Divide both sides by 2: $DE=\\frac{1}{2}\\times {=a}={=h}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Entry point of the skill, modelled on ex7-7-8 (third side given, line joining the mid-points asked for). The book's figure is replaced by a stem that names both mid-points and both sides, so the configuration is fully stated in words and no diagram is needed. BC is always even so DE is a whole number. Numeric answer, so no distractors: the catalogued misconceptions (factor of 2 on the wrong segment, theorem used without mid-points) are not used here."
+}

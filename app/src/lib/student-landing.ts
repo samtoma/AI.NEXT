@@ -79,17 +79,22 @@ export type Landing =
   | { screen: "refused" };
 
 /**
- * How many subjects this catalogue covers.
+ * How many cards the home would show: the courses of this catalogue that
+ * belong to a subject the registry knows.
  *
- * Counted over the REGISTRY subject rather than over `courseId`, so it matches
- * `getSubjectSummaries` exactly: a course `lib/subjects.ts` does not know rolls
- * up into no subject there, and must not be counted as one here either — or the
- * home would be shown with a card missing from it.
+ * Counted per COURSE, because `getSubjectSummaries` rolls up per course
+ * (FR-4009, T371): a tester who sees Prep-3 maths and, by exception, the
+ * Grade 10 book has two maths courses and two cards, where a count of
+ * subjects said "one" and sent her straight into a check-in whose picker
+ * mixed both books. For every student with one course per subject the two
+ * counts are the same number. A course `lib/subjects.ts` does not know still
+ * rolls up into nothing there, and is not counted here either — or the home
+ * would be shown with a card missing from it.
  */
 function subjectCount(lessons: readonly LandingLesson[]): number {
-  const subjects = new Set<string>();
-  for (const l of lessons) if (l.subject != null) subjects.add(l.subject);
-  return subjects.size;
+  const courses = new Set<string>();
+  for (const l of lessons) if (l.subject != null && l.courseId != null) courses.add(l.courseId);
+  return courses.size;
 }
 
 export function decideLanding(input: {

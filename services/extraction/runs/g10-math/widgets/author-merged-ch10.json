@@ -1,0 +1,449 @@
+{
+  "mode": "author",
+  "book": "g10-math",
+  "merged_from": [
+    {
+      "file": "author-ch10-wf_34b92f1a-d35.json",
+      "run_id": null,
+      "prompts_version": "s7-v7",
+      "lessons": [
+        "g10m10s1-1",
+        "g10m10s2-1",
+        "g10m10s3-1",
+        "g10m10s4-1",
+        "g10m10s5-1"
+      ]
+    }
+  ],
+  "rule": "oldest first; a lesson's record in a later run replaces its earlier one whole",
+  "records": [
+    {
+      "lesson": "g10m10s1-1",
+      "templates": [],
+      "gaps": [
+        {
+          "lo_id": "lo:g10m10s1-1-1",
+          "need_kind": "data_classifier (a decision-tree sorter with a 'can a value sit between?' probe)",
+          "description": "The student is shown a data set from the lesson's own contexts (sweets in a packet, SMS messages sent, questions answered correctly, learners' heights in metres). They work down a two-level tree. Level 1: numbers or words, so quantitative or qualitative. Level 2, for quantitative data: discrete or continuous. To reach level 2 they must run a probe, not just pick a label. They choose two neighbouring values, such as 25 and 26 sweets or 1.60 m and 1.70 m, and try to insert a value between them that this variable could really take. The widget reports whether a legitimate in-between value exists: 25.5 sweets does not, 1.65 m does. The student then files the whole data set under discrete (counts, integers) or continuous (measurements, real numbers). Grading is on the property, so any correct filing is accepted whichever probe pair was used. Errors it would diagnose: calling a count continuous because the values are plain numbers (mc:g10m10s1-1-1:count-called-continuous), calling a measurement discrete because the list is short and looks like separate values (mc:g10m10s1-1-1:measurement-called-discrete), and refusing the quantitative branch altogether because the numbers come with a story about people (mc:g10m10s1-1-1:numbers-called-qualitative).",
+          "why": "None of the 17 existing kinds classifies a data set by type. bar_builder builds a set to hit a mean, median, mode or range, so it needs the type already known. number_line_marker grades a set of marked values or an interval, not a label for the data. venn_builder shades regions for the fixed targets union, intersection, aOnly and complement, which have nothing to do with discrete versus continuous. Using any of them here would be an answer box in disguise: the student would still just pick discrete or continuous, with no construction to show why."
+        },
+        {
+          "lo_id": "lo:g10m10s1-1-2",
+          "need_kind": "data_classifier (the same sorter, run on word-valued data sets: categories versus stories)",
+          "description": "The student is shown a data set whose responses are words, such as cellular providers, sandwich spreads, or learners' dreams in their own sentences. They first test whether the responses can be written as numbers. This is a yes/no check run by the widget, and it rules out quantitative. Then they test whether the responses fall into a short list of named groups. They drag each response into a group they create, or into a 'does not fit a group' bin. If almost every response lands in one of a few shared groups, such as Vodacom, MTN, Cell C or Virgin Mobile, the data is categorical. If each response is a one-off sentence that needs its own group, the data is anecdotal. The widget counts groups against responses live, so the student sees why 'I want to build a bridge!' cannot be a category. They then file the data set under categorical or anecdotal. Errors it would diagnose: calling provider or spread choices anecdotal because people reported them (mc:g10m10s1-1-2:anecdotal-because-personal), calling sentences categorical just because they are words (mc:g10m10s1-1-2:categorical-for-any-words), picking discrete or continuous for word data (mc:g10m10s1-1-2:quantitative-for-words), and stopping at 'qualitative' without taking the second step (mc:g10m10s1-1-2:stops-at-qualitative, fired when the student tries to submit before filing a sub-type).",
+          "why": "No existing kind gets the student to sort data into categorical and anecdotal. venn_builder shades regions of a fixed diagram, but it takes the sets as given and never asks the student to decide which kind of data they hold. Its predicates (overlap-counted-twice, intersection-for-union and so on) cannot name any of this objective's misconceptions. The other kinds work on numbers, points, lines or shapes, and this data is words. Any attempt would reduce to a multiple-choice label, which the contract rules out as an answer box in disguise."
+        }
+      ],
+      "notes": "",
+      "source": "author-ch10-wf_34b92f1a-d35.json",
+      "run_id": null
+    },
+    {
+      "lesson": "g10m10s2-1",
+      "templates": [
+        {
+          "format": "ainext.widget-template/1",
+          "id": "wt:g10m10s2-1-4:mode-most-frequent",
+          "lo_id": "lo:g10m10s2-1-4",
+          "parent_question_id": "q:g10m10s2-1-4:ex10-2-11",
+          "tier": "basic",
+          "kind": "bar_builder",
+          "instances": [
+            {
+              "n": 5,
+              "t": 4
+            },
+            {
+              "n": 6,
+              "t": 7
+            },
+            {
+              "n": 7,
+              "t": 2
+            }
+          ],
+          "spec": {
+            "ask": "mode",
+            "target": "{=t}",
+            "n": "{=n}"
+          },
+          "stem": "Use the bars to build a data set of ${=n}$ values whose mode is ${=t}$. Any data set with that mode counts.",
+          "solution": [
+            "The mode is the value that occurs most often, so the target value has to appear more times than any other value. Being in the set is not enough.",
+            "Raise two of the bars to the target value, so it occurs twice.",
+            "Fill the remaining bars with values that are different from the target and different from each other, so that none of them occurs as often as the target.",
+            "Check the live readout: the mode shows the target on its own, with no tie."
+          ],
+          "diagnostics": [
+            {
+              "predicate": "no-mode",
+              "misconception_id": "mc:g10m10s2-1-4:mode-not-most-frequent"
+            },
+            {
+              "predicate": "multi-modal",
+              "misconception_id": "mc:g10m10s2-1-4:mode-not-most-frequent"
+            }
+          ],
+          "notes": "Builds the part of this objective that the registered misconception is about: a data set made to fit a STATED mode. no-mode is the student who places the target once among all-different values; multi-modal is the student who lets other values repeat as often as the target. Both are the same registered error (mode-not-most-frequent), listed no-mode first as the likelier build. off-target is deliberately NOT mapped: for ask:mode it also fires when the target is absent altogether or when a different single value is the mode, which is a mixed bag. The other error that fires it (target present but outranked by another value) is also this misconception, so a later pass could add off-target if Samuel accepts that residual. Targets are 2-7 (never 0, where a zero-height bar looks like a missing bar); n 5-7 stays inside the instrument's 3-8. The anchor questions of this objective are all mean questions; none uses a mode, so the parent is the objective's simplest anchor (ex10-2-11)."
+        },
+        {
+          "format": "ainext.widget-template/1",
+          "id": "wt:g10m10s2-1-4:median-in-order",
+          "lo_id": "lo:g10m10s2-1-4",
+          "parent_question_id": "q:g10m10s2-1-4:ex10-2-9a",
+          "tier": "standard",
+          "kind": "bar_builder",
+          "instances": [
+            {
+              "n": 5,
+              "t": 6
+            },
+            {
+              "n": 7,
+              "t": 3
+            },
+            {
+              "n": 5,
+              "t": 8
+            }
+          ],
+          "spec": {
+            "ask": "median",
+            "target": "{=t}",
+            "n": "{=n}"
+          },
+          "stem": "Use the bars to build a data set of ${=n}$ values whose median is ${=t}$. Any data set with that median counts.",
+          "solution": [
+            "The median is the middle value once the data are in order, so it is the order of the values that matters, not where the bars happen to stand in the row.",
+            "Pick one bar for the target value. Half of the other values (one fewer than the number of values, divided by 2) must be at or below it, and the other half at or above it.",
+            "Set the bars that way. The target bar does not have to be the middle bar of the row.",
+            "Check the live readout: put the values in order in your head and the middle one is the target, and the median readout agrees."
+          ],
+          "diagnostics": [
+            {
+              "predicate": "off-target",
+              "misconception_id": "mc:g10m10s2-1-4:median-without-ordering"
+            }
+          ],
+          "notes": "Constructs a data set that fits a STATED median, the second half of this objective's registered misconception. The student who puts the target on the middle bar of the row and leaves the rest unordered gets a median that is not the target, which arrives as off-target. The mapping assumes the bars sit in a fixed row in the order the student built them, and the widget sorts only to compute the median; if the bars are shown sorted automatically, the error cannot occur and this mapping should be dropped. off-target is mapped despite the usual caution because, for a median build, the unordered-middle-bar build is the dominant way to miss. mean-for-median (mean built where the median was asked) is left unmapped on purpose: LO g10m10s2-1-4 has no misconception for it (the nearest, expects-mean-equals-median, belongs to g10m10s2-1-2 and would be refused). n is odd in every row so the median is a single value in the set; an even n would ask for the mean of two middle values, which belongs to a harder template. The parent is ex10-2-9a because no anchor of this objective asks for a median."
+        }
+      ],
+      "gaps": [
+        {
+          "lo_id": "lo:g10m10s2-1-2",
+          "need_kind": "measures_in_context probe (a continuous-data summary widget)",
+          "description": "A context with a stated requirement (for example loaf masses, with a rule that the bread must average at least a given mass) and a handful of CONTINUOUS measurements drawn as dots on a number line. The student drags one marker to the mean, which shows as the balance point of the dots, and a second marker to the median, the middle once ordered, then judges whether the requirement is met. A third step asks for a mode: the widget shows that no measurement repeats (or that a repeat is coincidence), so a mode is not a useful summary of continuous data. Diagnoses: the mean and median markers placed at the same spot, or one copied from the other (expects-mean-equals-median); a repeated or nearest-looking value picked as the mode (mode-of-continuous-data); the requirement judged by the wrong measure.",
+          "why": "bar_builder grades ONE statistic on whole-number bars 0 to 10 with n of 3 to 8, so it cannot show continuous measurements, cannot hold a stated requirement, cannot compare two statistics in one question, and has no judgement step. It would be a stretch to make 'build a set with mean T' stand in for interpreting measures in context. The objective also has no anchor book question in the graph, so no parent_question_id could be named for any template."
+        },
+        {
+          "lo_id": "lo:g10m10s2-1-3",
+          "need_kind": "outlier_balance (before-and-after mean and median on a fixed data set)",
+          "description": "A fixed base data set shown as dots on a number line with live mean and median markers, plus ONE extra draggable value. The student drags the new value out to an extreme and watches the two markers: the mean follows it, the median hardly moves. Graded on a property, for example 'choose a value that raises the mean by at least 5 while the median moves by at most one place', then 'which measure was less affected?'. Errors it would diagnose (these need registering on the objective first): the median believed to move as much as the mean; the mean believed unaffected by one extreme value; the outlier dropped from the data instead of included, so no before-and-after comparison is made.",
+          "why": "The objective is a before-and-after comparison on the same data, which needs a fixed base set and an added value. bar_builder builds a whole set from scratch, grades one statistic, and its bars stop at 10, so a genuine outlier cannot exist. box_plot_builder deals with outliers only as whiskers on a five-number summary (a different objective). The objective has no anchor book question and no registered misconceptions, so no template could name a parent or a diagnostic."
+        }
+      ],
+      "notes": "Two templates, both for lo:g10m10s2-1-4 and both bar_builder. Each builds a data set to fit a stated statistic, which is the construction that objective's two registered misconceptions are about (mode-not-most-frequent, median-without-ordering). Blocked, not forced:\n\n1. lo:g10m10s2-1-1 (mean, median, mode). bar_builder genuinely fits, since it is the book's own question run backwards. But the objective's misconceptions list is empty, and a template needs at least one diagnostic whose id comes from that objective's own list, so none can be authored. Fix: register misconceptions on this objective, for example 'treats the median as the mean', 'reads the median off the unsorted list' and 'takes the mode of a set with no repeats'. Then a mean, median and mode builder can be written from ex10-2-1 to ex10-2-4c.\n\n2. The core of lo:g10m10s2-1-4 is 'total = mean x n' (ex10-2-11, 6, 7, 8, 9a, 9b). bar_builder ask:mean with n fits it exactly. Its reachable predicates are total-wrong and median-for-mean. Neither matches the two misconceptions registered on this objective (median-without-ordering, mode-not-most-frequent), and ids from other objectives are refused (FR-1215), so no mean template can be emitted. Fix: register 'uses the mean as one of the values, or forgets to multiply by n' and 'builds a set whose middle value, not whose total, matches the mean' on this objective, then author the mean template. It is the most valuable widget for this lesson.\n\n3. lo:g10m10s2-1-2 and lo:g10m10s2-1-3 have no anchor question, so no parent_question_id could be named. Neither has a kind that fits; see the gaps.\n\nThe LO 4 anchors are all mean questions, so the two mode and median templates take the nearest chained anchors as parent (ex10-2-11 and ex10-2-9a).",
+      "source": "author-ch10-wf_34b92f1a-d35.json",
+      "run_id": null
+    },
+    {
+      "lesson": "g10m10s3-1",
+      "templates": [],
+      "gaps": [
+        {
+          "lo_id": "lo:g10m10s3-1-1",
+          "need_kind": "histogram_builder (mode: bin)",
+          "description": "The widget shows a raw data set of about 20 whole numbers, never pre-sorted, with several values deliberately sitting on range edges (4 and 7 when the ranges are 0 to 3, 4 to 7, 8 to 11). The ranges are written with the book's inequality signs, for example $4 \\le x \\le 7$. The student drags each value token into the range it belongs to, or sets each column's height, and a histogram builds live under her hands, with the total count shown against $n$. Grading is on the property (every range holds exactly the values its inequality admits), so any order of placing the tokens is correct. It must also take the left-open form the book uses for continuous data, $700 < x \\le 800$, where the edge rule is different. Diagnostics: an edge value placed in the neighbouring range, so one column is one too many and its neighbour one too few, maps to mc:g10m10s3-1-1:boundary-value-in-wrong-range. A second predicate, column heights that no longer sum to $n$ (a value dropped or counted twice), would have no misconception on this objective and would be left unmapped.",
+          "why": "No existing kind builds a frequency-per-range chart. bar_builder's bars ARE the data values (0 to 10) and it reports mean, median, mode and range, so a bar there is a value, not a count of values in a range, and nothing about ranges or edge values can be diagnosed. number_line_marker (points mode) could ask the student to tap which distinct values lie in a range, but a set loses the repeats that a frequency is made of, never produces a count or a column, and its predicates (missed-values, extra-values) cannot tell an edge-value slip from any other. That would be an answer box in disguise, not the grouping the objective is about."
+        },
+        {
+          "lo_id": "lo:g10m10s3-1-2",
+          "need_kind": "histogram_builder (mode: check, with a match variant)",
+          "description": "The widget draws the histogram itself, so the question never points at a [figure], and shows the raw data beside it. In check mode one column has been drawn wrongly (the book's own pattern: one column off by one, or a column of height 0 where values exist). The student taps the incorrect column and may then drag its top to the right height; the instrument shows each range's inequality and highlights the data values that fall in it as she hovers. In match mode the student is given a histogram and builds a small data set of $n$ values (tokens on a 0 to 20 line) that would produce it, graded on the count per range, so every valid data set is accepted. Diagnostics: tapping or editing the neighbour of the faulty column, or sorting an edge value into the adjacent range when matching, maps to mc:g10m10s3-1-2:edge-number-in-wrong-range. Reading height as size of the values (one token whose value equals the column height, or putting the largest values under the tallest column) maps to mc:g10m10s3-1-2:tall-column-means-big-values.",
+          "why": "The anchor questions (ex10-3-1 to ex10-3-8) are all histogram reading, error-finding and matching, and the histogram is the whole instrument. No existing kind draws or edits one. bar_builder's bars are data values, not range counts, and has no notion of a range; box_plot_builder places a five-number summary for raw data; number_line_marker has no columns. Using any of them would mean the student is not looking at a histogram at all."
+        },
+        {
+          "lo_id": "lo:g10m10s3-1-3",
+          "need_kind": "histogram_builder (mode: centre)",
+          "description": "The widget draws a histogram of grouped data (for example passengers per week in ranges of 100, as in ex10-4-3) with the counts readable. The student does three constructions on it. First, she taps the modal group (the tallest column), which asks the range, not a value. Second, she drags a marker along a running cumulative-count strip to the column that holds the middle (the $n/2$-th) value; the strip shows how many values lie below, so counting columns can be seen to differ from counting values. Third, she places one point at the centre of each range and the widget computes $\\sum f m / n$ live; a build variant asks her to set the column counts so the grouped estimate hits a target mean, and shows that many different raw data sets share one histogram but have different true means. Grading is on the property (the right group, the right midpoints, a total that matches the target). Diagnostics: choosing the middle column of the list as the median group maps to mc:g10m10s3-1-3:median-group-middle-of-the-list; asking for a single value when the modal group is wanted, or placing a point on one bar's top, maps to mc:g10m10s3-1-3:modal-group-vs-single-value; the build variant, where one raw set with the same grouped estimate gives a different exact mean, targets mc:g10m10s3-1-3:grouped-mean-taken-as-exact.",
+          "why": "bar_builder computes the exact mean, median and mode of ungrouped values and has no range or midpoint at all, so it can only teach the thing this objective says the grouped estimate is not. number_line_marker could ask the student to mark each range's midpoint, but that tests only midpoint arithmetic (one step of the method) and none of its predicates (sign-flipped, missed-values, extra-values) can name the three misconceptions this objective actually owns. box_plot_builder is for raw data. A forced fit here would diagnose nothing the objective cares about."
+        }
+      ],
+      "notes": "",
+      "source": "author-ch10-wf_34b92f1a-d35.json",
+      "run_id": null
+    },
+    {
+      "lesson": "g10m10s4-1",
+      "templates": [
+        {
+          "format": "ainext.widget-template/1",
+          "id": "wt:g10m10s4-1-2:quartiles-box-build",
+          "lo_id": "lo:g10m10s4-1-2",
+          "parent_question_id": "q:g10m10s4-1-2:ex10-5-6d",
+          "tier": "basic",
+          "kind": "box_plot_builder",
+          "spec": {
+            "data": [
+              22,
+              8,
+              31,
+              14,
+              26,
+              10,
+              17
+            ]
+          },
+          "stem": "Seven learners timed how long they take to walk to school, in minutes: $22,\\ 8,\\ 31,\\ 14,\\ 26,\\ 10,\\ 17$. Build the box-and-whisker diagram for these times by dragging the minimum, lower quartile, median, upper quartile and maximum markers to their values. Find the quartiles with the percentile formula.",
+          "solution": [
+            "Sort the data from smallest to largest: $8,\\ 10,\\ 14,\\ 17,\\ 22,\\ 26,\\ 31$, so $n = 7$.",
+            "The minimum is $8$ and the maximum is $31$. Drag those two markers there.",
+            "Median (50th percentile): rank $= \\frac{50}{100}(7 - 1) + 1 = 4$, a whole number, so the median is the 4th value, $17$.",
+            "Lower quartile (25th percentile): rank $= \\frac{25}{100}(7 - 1) + 1 = 2.5$. This is not a whole number, so take the value halfway between the 2nd and 3rd values: $\\frac{10 + 14}{2} = 12$.",
+            "Upper quartile (75th percentile): rank $= \\frac{75}{100}(7 - 1) + 1 = 5.5$, so take the value halfway between the 5th and 6th values: $\\frac{22 + 26}{2} = 24$.",
+            "Place the five markers at $8,\\ 12,\\ 17,\\ 24,\\ 31$. The box runs from $12$ to $24$ with the median line at $17$."
+          ],
+          "diagnostics": [
+            {
+              "predicate": "quartile-method",
+              "misconception_id": "mc:g10m10s4-1-2:fractional-rank-rounded-to-one-value"
+            },
+            {
+              "predicate": "median-of-unsorted",
+              "misconception_id": "mc:g10m10s4-1-2:rank-on-unsorted-data"
+            }
+          ],
+          "notes": "Data design: n = 7 so the quartile ranks are 2.5 and 5.5. Linear interpolation between ranks and the book's halfway-between-two-values rule give the same answer at a half rank, so the widget's grading and the book's method cannot disagree here. Every one of the five numbers is a whole number (8, 12, 17, 24, 31), so each lands on any snap grid. The data are given unsorted and the value in the middle position as printed is 14, not the true median 17, so median-of-unsorted can fire. The median of each half (the other quartile method) gives 10 and 26, single data values, where the book needs 12 and 24. quartile-method is mapped to fractional-rank-rounded-to-one-value because the two errors look the same on this data (a single data value read off where the value halfway between two was needed) and they have the same fix; a student who simply remembers the median-of-halves rule fires it too, and that is the likelier source in a class that met quartiles before. Not mapped: iqr-as-range (quartiles dragged to the minimum and maximum) because no misconception on this objective names it; off-target, because it diagnoses nothing specific. whisker-to-outlier cannot fire: IQR is 12, the fences are -6 and 42, and the data run 8 to 31, so there is no outlier. A student who rounds the half ranks up (3rd and 6th values, 14 and 26) matches neither quartile-method nor the true answer and will get off-target."
+        },
+        {
+          "format": "ainext.widget-template/1",
+          "id": "wt:g10m10s4-1-4:iqr-box-width",
+          "lo_id": "lo:g10m10s4-1-4",
+          "parent_question_id": "q:g10m10s4-1-4:ex10-5-6e",
+          "tier": "standard",
+          "kind": "box_plot_builder",
+          "spec": {
+            "data": [
+              24,
+              9,
+              31,
+              17,
+              38,
+              21,
+              12,
+              6,
+              26,
+              14,
+              19
+            ]
+          },
+          "stem": "Eleven learners wrote a test marked out of $40$. Their marks were: $24,\\ 9,\\ 31,\\ 17,\\ 38,\\ 21,\\ 12,\\ 6,\\ 26,\\ 14,\\ 19$. Build the box-and-whisker diagram for these marks by dragging the minimum, lower quartile, median, upper quartile and maximum markers to their values. Find the quartiles with the percentile formula. The box runs from the lower quartile to the upper quartile, so its width is the interquartile range.",
+          "solution": [
+            "Sort the marks from smallest to largest: $6,\\ 9,\\ 12,\\ 14,\\ 17,\\ 19,\\ 21,\\ 24,\\ 26,\\ 31,\\ 38$, so $n = 11$.",
+            "The minimum is $6$ and the maximum is $38$.",
+            "Median (50th percentile): rank $= \\frac{50}{100}(11 - 1) + 1 = 6$, so the median is the 6th value, $19$.",
+            "Lower quartile (25th percentile): rank $= \\frac{25}{100}(11 - 1) + 1 = 3.5$. This is not a whole number, so take the value halfway between the 3rd and 4th values: $\\frac{12 + 14}{2} = 13$.",
+            "Upper quartile (75th percentile): rank $= \\frac{75}{100}(11 - 1) + 1 = 8.5$, so take the value halfway between the 8th and 9th values: $\\frac{24 + 26}{2} = 25$.",
+            "Place the five markers at $6,\\ 13,\\ 19,\\ 25,\\ 38$. The box runs from $13$ to $25$.",
+            "The width of the box is the interquartile range: $Q_3 - Q_1 = 25 - 13 = 12$. The semi-interquartile range is half of that, $\\frac{12}{2} = 6$. The range of the marks is $38 - 6 = 32$, much larger than the interquartile range, because the interquartile range ignores the lowest and highest quarters of the data."
+          ],
+          "diagnostics": [
+            {
+              "predicate": "quartile-method",
+              "misconception_id": "mc:g10m10s4-1-2:fractional-rank-rounded-to-one-value"
+            },
+            {
+              "predicate": "median-of-unsorted",
+              "misconception_id": "mc:g10m10s4-1-2:rank-on-unsorted-data"
+            }
+          ],
+          "notes": "Data design: n = 11 so the quartile ranks are 3.5 and 8.5, again half ranks where linear interpolation and the book's halfway rule agree. All five numbers are whole (6, 13, 19, 25, 38). Raw middle of the list as printed is 21, true median 19. The median of each half gives 12 and 26, where the book needs 13 and 25. IQR is 12 and the data run 6 to 38, so the range (32) is far larger than the IQR; the fences are -5 and 43, so 38 is not an outlier and the whiskers end at the minimum and maximum. The construction shows the box width as the IQR, the reading the book's own box-plot exercises ask for. The widget grades the five-number summary, not the IQR or semi-interquartile value; the subtraction and the halving are in the solution, and the live box width is what the student reads. Same diagnostic mappings and same reasoning as wt:g10m10s4-1-2:quartiles-box-build. iqr-as-range (quartiles dragged to the extremes) is the characteristic error for this objective but no misconception on lo-4's list names it, so it is left unmapped (see top-level notes). Not mapped: off-target. whisker-to-outlier cannot fire on this data."
+        }
+      ],
+      "gaps": [
+        {
+          "lo_id": "lo:g10m10s4-1-1",
+          "need_kind": "outlier_probe (a dot strip of a given data set whose values the student can drag or remove, with range, median, mean and interquartile range updating live)",
+          "description": "The student gets a small data set drawn as dots on a number line, one of them far from the rest. A task asks for an effect, for example: \"Move or remove ONE value so that the range falls from 18 to 6\", or \"Change the data so the range doubles but the median stays put\". The student drags or deletes dots and watches the statistics respond. The construction is graded on the property (the range ends at the target) and diagnoses: choosing a middle value, which cannot change the range (range-ignores-outlier-effect: the range is thought to depend on all the values); removing an extreme and expecting the range to stay the same; and moving the extreme the wrong way. Predicates would be things like middle-value-moved, extreme-removed-range-unchanged-expected and range-shrunk-too-little.",
+          "why": "bar_builder with ask \"range\" exists, but the only predicate it can emit for that ask is off-target, and a build-to-target-range task fails for many reasons that are not the outlier misconception (range read as the maximum, an arithmetic slip, an extra bar left high). Mapping off-target to mc:g10m10s4-1-1:range-ignores-outlier-effect would be a forced fit. No other existing kind constructs anything about the spread of a data set."
+        },
+        {
+          "lo_id": "lo:g10m10s4-1-3",
+          "need_kind": "cumulative_interval_locator (a cumulative-frequency strip over class intervals in which the student finds a percentile's rank and picks the interval it falls in)",
+          "description": "The student is shown a grouped frequency table as a stacked strip, with the interval frequencies and the running cumulative count growing along it. For a stated percentile or quartile they place a marker at the rank given by the percentile formula and tap the class interval that contains it. The strip lights up the cumulative count under the marker, so the student sees why the answer is the interval whose cumulative count first reaches the rank, not the interval with the largest frequency. Predicates: used-frequency-not-cumulative (picked the interval whose own frequency is largest or covers the rank on its own), off-by-one-interval (rank equal to a cumulative total, so it lies on a boundary), and rank-from-total-not-formula (used P% of n as the rank without the percentile formula). It would diagnose the fractional-rank-rounded-to-one-value misconception in its grouped form.",
+          "why": "No existing kind works with grouped data: bar_builder builds raw values, box_plot_builder takes ungrouped whole numbers, and number_line_marker's interval mode marks an inequality, not a class interval. The objective also has no anchor book question in the lesson file, so no template could name a parent."
+        }
+      ],
+      "notes": "Two box_plot_builder templates (lo-2 and lo-4); gaps for lo-1 and lo-3. Method check: the book's anchor answers (for example 6.5, 18, 29 for the 12-value set, and 19, 14, 20.5 for the upper quartiles of the three 7-value sets) follow the rule rank = P/100 x (n - 1) + 1, then the value halfway between the two neighbouring values when the rank is not whole. That is NOT true linear interpolation: the 12-value anchor has a lower quartile rank of 3.75, which linear interpolation would read as 7.25, while the book answers 6.5. The box_plot_builder contract says it grades by linear interpolation between ranks. I avoided the disagreement by choosing n = 7 and n = 11, where both quartile ranks end in .5 and the two methods give the same number, and every value is a whole number. Samuel may want to check the widget against the 12-value anchor (3, 5, 1, 8, 9, 12, 25, 28, 24, 30, 41, 50): if the widget accepts 7.25 and refuses 6.5 for the lower quartile, it will refuse the book's own answer. Misconception inventory gap: there is no misconception for \\\"interquartile range taken as the full range\\\" (quartiles placed at the minimum and maximum, the iqr-as-range predicate) on lo-4 or lo-2; it is the characteristic error of lo-4. Suggested id: mc:g10m10s4-1-4:iqr-confused-with-range. quartile-method is mapped to mc:g10m10s4-1-2:fractional-rank-rounded-to-one-value in both templates as the nearest available home (a single data value read off where a halfway value was needed), not an exact match; see each template's notes. Neither template points at a figure. The book's ex10-7-29c, which does, only confirmed that the box width is the interquartile range in this book's box plots.",
+      "source": "author-ch10-wf_34b92f1a-d35.json",
+      "run_id": null
+    },
+    {
+      "lesson": "g10m10s5-1",
+      "templates": [
+        {
+          "format": "ainext.widget-template/1",
+          "id": "wt:g10m10s5-1-1:five-numbers-nine-values",
+          "lo_id": "lo:g10m10s5-1-1",
+          "parent_question_id": "q:g10m10s5-1-1:ex10-6-3",
+          "tier": "basic",
+          "kind": "box_plot_builder",
+          "spec": {
+            "data": [
+              16,
+              9,
+              25,
+              4,
+              13,
+              7,
+              20,
+              11,
+              6
+            ]
+          },
+          "stem": "Lerato runs a small bakery. The number of cakes she sold on each of nine days was $\\left\\{16, 9, 25, 4, 13, 7, 20, 11, 6\\right\\}$. Drag the five markers to give the five number summary of her sales (minimum, first quartile, median, third quartile, maximum), finding the quartiles with the percentile formula.",
+          "solution": [
+            "Sort the nine values from smallest to largest: $4, 6, 7, 9, 11, 13, 16, 20, 25$. The minimum is $4$ and the maximum is $25$.",
+            "Median: rank $= 0.5 \\times (9 - 1) + 1 = 5$, so it is the 5th sorted value, $11$.",
+            "First quartile: rank $= 0.25 \\times (9 - 1) + 1 = 3$, so it is the 3rd sorted value, $7$.",
+            "Third quartile: rank $= 0.75 \\times (9 - 1) + 1 = 7$, so it is the 7th sorted value, $16$.",
+            "Drag the markers to $4$, $7$, $11$, $16$ and $25$. The five number summary is $4, 7, 11, 16, 25$; the box runs from $7$ to $16$ with the median line at $11$."
+          ],
+          "diagnostics": [
+            {
+              "predicate": "median-of-unsorted",
+              "misconception_id": "mc:g10m10s4-1-2:rank-on-unsorted-data"
+            }
+          ],
+          "notes": "Isomorph of the anchor (nine values, whole-number ranks 3, 5, 7), with new numbers so the book's answer cannot simply be recalled. The list is printed unsorted and its middle entry as given is 13, while the true median is 11, so median-of-unsorted separates cleanly. No outlier on purpose: IQR = 9, upper fence = 29.5, max = 25, so the maximum marker is the true maximum, as this objective asks. Predicates deliberately NOT mapped: quartile-method (the median-of-halves method gives Q1 = 6.5 and Q3 = 18 here; with whole ranks no fractional rank is rounded, so mc:...fractional-rank-rounded-to-one-value would be a false diagnosis; the student just gets the stock hint), iqr-as-range (no misconception on this objective's list describes it), off-target (fires for many unrelated reasons), whisker-to-outlier (cannot fire: no outlier)."
+        },
+        {
+          "format": "ainext.widget-template/1",
+          "id": "wt:g10m10s5-1-1:five-numbers-interpolated-ten-values",
+          "lo_id": "lo:g10m10s5-1-1",
+          "parent_question_id": "q:g10m10s5-1-1:ex10-6-3",
+          "tier": "standard",
+          "kind": "box_plot_builder",
+          "spec": {
+            "data": [
+              15,
+              6,
+              24,
+              12,
+              3,
+              19,
+              10,
+              21,
+              14,
+              5
+            ]
+          },
+          "stem": "Ten learners wrote a quiz marked out of $25$. In the order the teacher recorded them, their marks were $\\left\\{15, 6, 24, 12, 3, 19, 10, 21, 14, 5\\right\\}$. Drag the five markers to give the five number summary of the marks (minimum, first quartile, median, third quartile, maximum), finding the quartiles with the percentile formula.",
+          "solution": [
+            "Sort the ten marks from smallest to largest: $3, 5, 6, 10, 12, 14, 15, 19, 21, 24$. The minimum is $3$ and the maximum is $24$.",
+            "Median: rank $= 0.5 \\times (10 - 1) + 1 = 5.5$, so it lies halfway between the 5th and 6th values: $\\dfrac{12 + 14}{2} = 13$.",
+            "First quartile: rank $= 0.25 \\times (10 - 1) + 1 = 3.25$, so it lies a quarter of the way from the 3rd value ($6$) to the 4th value ($10$): $6 + 0.25 \\times (10 - 6) = 7$.",
+            "Third quartile: rank $= 0.75 \\times (10 - 1) + 1 = 7.75$, so it lies three quarters of the way from the 7th value ($15$) to the 8th value ($19$): $15 + 0.75 \\times (19 - 15) = 18$.",
+            "Drag the markers to $3$, $7$, $13$, $18$ and $24$. The five number summary is $3, 7, 13, 18, 24$."
+          ],
+          "diagnostics": [
+            {
+              "predicate": "quartile-method",
+              "misconception_id": "mc:g10m10s4-1-2:fractional-rank-rounded-to-one-value"
+            },
+            {
+              "predicate": "median-of-unsorted",
+              "misconception_id": "mc:g10m10s4-1-2:rank-on-unsorted-data"
+            }
+          ],
+          "notes": "Ten values make the ranks fractional (3.25, 5.5, 7.75), so interpolation is the point of the question. The data are built so every interpolated quartile is a whole number (v4 - v3 = 4 and v8 - v7 = 4, v5 + v6 even): five number summary 3, 7, 13, 18, 24, all on any snap grid. No outlier: IQR = 11, upper fence = 34.5, max = 24. quartile-method mapping: for n = 10 the median-of-halves quartiles (6 and 19) are exactly the values at the rounded ranks 3 and 8, so on this data set the split-at-the-median method and the round-the-rank error are the same placement and cannot be told apart; the predicate is mapped to the rank-rounding misconception because the stem asks for the percentile formula, whose fractional ranks 3.25 and 7.75 are being read as single positions. The other reading (a student who knowingly uses median of halves) is named here, not mapped. The list is unsorted, and its middle as given is (3 + 19) / 2 = 11, against a true median of 13, so median-of-unsorted separates. Not mapped: iqr-as-range (no misconception on this objective's list describes it), off-target (many causes), whisker-to-outlier (cannot fire)."
+        }
+      ],
+      "gaps": [
+        {
+          "lo_id": "lo:g10m10s5-1-2",
+          "need_kind": "box_plot_builder with the five number summary given instead of the data (a summary-input mode of the existing kind)",
+          "description": "The stem states a five number summary, for example minimum 15, Q1 22, median 25, Q3 28, maximum 35. The student drags five markers (or drags the box edges, median line and whisker ends) onto a number line whose spacing is true to scale, and the plot draws itself as she places them. Any plot with those five values is accepted. Errors it would diagnose: the box drawn from minimum to maximum (the existing iqr-as-range predicate), the median line missing or placed at the middle of the box instead of at the median value, whiskers stopped at the quartiles, and the marks spaced evenly instead of by value (15, 22, 25, 28, 35 are not equally far apart).",
+          "why": "box_plot_builder always supplies the data and asks for the summary, so it fuses LO1's computing with the drawing and cannot isolate drawing a plot from a given five number summary. Separately, this objective has an empty anchor_questions list, so no template could be parented to a book question in any case: the book's draw-the-plot exercises need to be attached to lo:g10m10s5-1-2 first. Until then the two LO1 templates already exercise the drawing half, because the plot builds as the markers are placed. This is a modest gap, lower priority than LO3."
+        },
+        {
+          "lo_id": "lo:g10m10s5-1-3",
+          "need_kind": "box_plot_reader: the instrument draws one box-and-whisker plot (or two to four stacked on one axis) on a labelled number line, and the student identifies its parts",
+          "description": "The widget itself draws the plot, since a question may never point at a [figure]. The student then either taps the part that shows the minimum, Q1, the median, Q3 or the maximum, or drags five name labels onto the matching marks and reads each value off the axis. Grading is on which part of the plot was chosen, not on a pixel position. A comparison mode stacks several plots on a shared axis, as in the book's detergent question, and asks what one marked value represents for one of them. Errors it would diagnose: the line inside the box labelled Q1 or Q3 (inner-line-read-as-box-edge), the line inside the box labelled the minimum or maximum (inner-line-read-as-extreme), the whisker ends and box ends swapped, and, in comparison mode, reading a longer box or whisker as a larger median.",
+          "why": "The anchors (ex10-6-4a, ex10-6-4b, ex10-7-29b) all rest on a drawn plot, and reading a plot is the reverse of what box_plot_builder does: that kind goes from data to markers, so the student never meets a plot to read and neither of this objective's own misconceptions can arise in it. number_line_marker shows no plot and accepts at most 4 targets, while a five number summary has 5. Using box_plot_builder under lo:g10m10s5-1-3 would be an answer box in disguise, so it is a gap, not a template."
+        }
+      ],
+      "notes": "Lesson g10m10s5-1 has three objectives. LO1 (five number summary from data) is a genuine fit for box_plot_builder, so it gets two templates (basic: nine values with whole ranks, an isomorph of the anchor ex10-6-3; standard: ten values with fractional ranks 3.25, 5.5, 7.75, whose interpolated quartiles are whole numbers by design). Both templates use data printed unsorted. No outlier is included, because this objective's maximum and minimum are the data's own extremes, and the widget's whisker-to-outlier predicate would pull the maximum marker in. The stems name the percentile formula without printing it, so the method is part of the question but the rank error stays diagnosable. The quartile convention used for the solutions is rank = p/100 x (n - 1) + 1 with linear interpolation, which reproduces the anchor's answer 3, 5, 7, 12, 16 and the 3.75 and 9.25 ranks in the prerequisite misconception text for n = 12. Note that the anchor does not by itself distinguish this convention from Tukey's hinges (both give 5 and 12 for that data), so it is worth confirming the widget's grader uses the interpolated ranks on the n = 10 template, where the two methods differ (Q1 = 7 and Q3 = 18 versus 6 and 19). LO2 has no anchor question, so it could not take a template; LO3 is a reading task that box_plot_builder does not fit. Both are recorded as gaps with the second the more important. All misconception ids are from the own list of LO1, which holds only the two g10m10s4-1-2 prerequisite misconceptions, so iqr-as-range has no id to map to.",
+      "source": "author-ch10-wf_34b92f1a-d35.json",
+      "run_id": null
+    }
+  ],
+  "gaps": [
+    {
+      "lo_id": "lo:g10m10s1-1-1",
+      "need_kind": "data_classifier (a decision-tree sorter with a 'can a value sit between?' probe)",
+      "description": "The student is shown a data set from the lesson's own contexts (sweets in a packet, SMS messages sent, questions answered correctly, learners' heights in metres). They work down a two-level tree. Level 1: numbers or words, so quantitative or qualitative. Level 2, for quantitative data: discrete or continuous. To reach level 2 they must run a probe, not just pick a label. They choose two neighbouring values, such as 25 and 26 sweets or 1.60 m and 1.70 m, and try to insert a value between them that this variable could really take. The widget reports whether a legitimate in-between value exists: 25.5 sweets does not, 1.65 m does. The student then files the whole data set under discrete (counts, integers) or continuous (measurements, real numbers). Grading is on the property, so any correct filing is accepted whichever probe pair was used. Errors it would diagnose: calling a count continuous because the values are plain numbers (mc:g10m10s1-1-1:count-called-continuous), calling a measurement discrete because the list is short and looks like separate values (mc:g10m10s1-1-1:measurement-called-discrete), and refusing the quantitative branch altogether because the numbers come with a story about people (mc:g10m10s1-1-1:numbers-called-qualitative).",
+      "why": "None of the 17 existing kinds classifies a data set by type. bar_builder builds a set to hit a mean, median, mode or range, so it needs the type already known. number_line_marker grades a set of marked values or an interval, not a label for the data. venn_builder shades regions for the fixed targets union, intersection, aOnly and complement, which have nothing to do with discrete versus continuous. Using any of them here would be an answer box in disguise: the student would still just pick discrete or continuous, with no construction to show why."
+    },
+    {
+      "lo_id": "lo:g10m10s1-1-2",
+      "need_kind": "data_classifier (the same sorter, run on word-valued data sets: categories versus stories)",
+      "description": "The student is shown a data set whose responses are words, such as cellular providers, sandwich spreads, or learners' dreams in their own sentences. They first test whether the responses can be written as numbers. This is a yes/no check run by the widget, and it rules out quantitative. Then they test whether the responses fall into a short list of named groups. They drag each response into a group they create, or into a 'does not fit a group' bin. If almost every response lands in one of a few shared groups, such as Vodacom, MTN, Cell C or Virgin Mobile, the data is categorical. If each response is a one-off sentence that needs its own group, the data is anecdotal. The widget counts groups against responses live, so the student sees why 'I want to build a bridge!' cannot be a category. They then file the data set under categorical or anecdotal. Errors it would diagnose: calling provider or spread choices anecdotal because people reported them (mc:g10m10s1-1-2:anecdotal-because-personal), calling sentences categorical just because they are words (mc:g10m10s1-1-2:categorical-for-any-words), picking discrete or continuous for word data (mc:g10m10s1-1-2:quantitative-for-words), and stopping at 'qualitative' without taking the second step (mc:g10m10s1-1-2:stops-at-qualitative, fired when the student tries to submit before filing a sub-type).",
+      "why": "No existing kind gets the student to sort data into categorical and anecdotal. venn_builder shades regions of a fixed diagram, but it takes the sets as given and never asks the student to decide which kind of data they hold. Its predicates (overlap-counted-twice, intersection-for-union and so on) cannot name any of this objective's misconceptions. The other kinds work on numbers, points, lines or shapes, and this data is words. Any attempt would reduce to a multiple-choice label, which the contract rules out as an answer box in disguise."
+    },
+    {
+      "lo_id": "lo:g10m10s2-1-2",
+      "need_kind": "measures_in_context probe (a continuous-data summary widget)",
+      "description": "A context with a stated requirement (for example loaf masses, with a rule that the bread must average at least a given mass) and a handful of CONTINUOUS measurements drawn as dots on a number line. The student drags one marker to the mean, which shows as the balance point of the dots, and a second marker to the median, the middle once ordered, then judges whether the requirement is met. A third step asks for a mode: the widget shows that no measurement repeats (or that a repeat is coincidence), so a mode is not a useful summary of continuous data. Diagnoses: the mean and median markers placed at the same spot, or one copied from the other (expects-mean-equals-median); a repeated or nearest-looking value picked as the mode (mode-of-continuous-data); the requirement judged by the wrong measure.",
+      "why": "bar_builder grades ONE statistic on whole-number bars 0 to 10 with n of 3 to 8, so it cannot show continuous measurements, cannot hold a stated requirement, cannot compare two statistics in one question, and has no judgement step. It would be a stretch to make 'build a set with mean T' stand in for interpreting measures in context. The objective also has no anchor book question in the graph, so no parent_question_id could be named for any template."
+    },
+    {
+      "lo_id": "lo:g10m10s2-1-3",
+      "need_kind": "outlier_balance (before-and-after mean and median on a fixed data set)",
+      "description": "A fixed base data set shown as dots on a number line with live mean and median markers, plus ONE extra draggable value. The student drags the new value out to an extreme and watches the two markers: the mean follows it, the median hardly moves. Graded on a property, for example 'choose a value that raises the mean by at least 5 while the median moves by at most one place', then 'which measure was less affected?'. Errors it would diagnose (these need registering on the objective first): the median believed to move as much as the mean; the mean believed unaffected by one extreme value; the outlier dropped from the data instead of included, so no before-and-after comparison is made.",
+      "why": "The objective is a before-and-after comparison on the same data, which needs a fixed base set and an added value. bar_builder builds a whole set from scratch, grades one statistic, and its bars stop at 10, so a genuine outlier cannot exist. box_plot_builder deals with outliers only as whiskers on a five-number summary (a different objective). The objective has no anchor book question and no registered misconceptions, so no template could name a parent or a diagnostic."
+    },
+    {
+      "lo_id": "lo:g10m10s3-1-1",
+      "need_kind": "histogram_builder (mode: bin)",
+      "description": "The widget shows a raw data set of about 20 whole numbers, never pre-sorted, with several values deliberately sitting on range edges (4 and 7 when the ranges are 0 to 3, 4 to 7, 8 to 11). The ranges are written with the book's inequality signs, for example $4 \\le x \\le 7$. The student drags each value token into the range it belongs to, or sets each column's height, and a histogram builds live under her hands, with the total count shown against $n$. Grading is on the property (every range holds exactly the values its inequality admits), so any order of placing the tokens is correct. It must also take the left-open form the book uses for continuous data, $700 < x \\le 800$, where the edge rule is different. Diagnostics: an edge value placed in the neighbouring range, so one column is one too many and its neighbour one too few, maps to mc:g10m10s3-1-1:boundary-value-in-wrong-range. A second predicate, column heights that no longer sum to $n$ (a value dropped or counted twice), would have no misconception on this objective and would be left unmapped.",
+      "why": "No existing kind builds a frequency-per-range chart. bar_builder's bars ARE the data values (0 to 10) and it reports mean, median, mode and range, so a bar there is a value, not a count of values in a range, and nothing about ranges or edge values can be diagnosed. number_line_marker (points mode) could ask the student to tap which distinct values lie in a range, but a set loses the repeats that a frequency is made of, never produces a count or a column, and its predicates (missed-values, extra-values) cannot tell an edge-value slip from any other. That would be an answer box in disguise, not the grouping the objective is about."
+    },
+    {
+      "lo_id": "lo:g10m10s3-1-2",
+      "need_kind": "histogram_builder (mode: check, with a match variant)",
+      "description": "The widget draws the histogram itself, so the question never points at a [figure], and shows the raw data beside it. In check mode one column has been drawn wrongly (the book's own pattern: one column off by one, or a column of height 0 where values exist). The student taps the incorrect column and may then drag its top to the right height; the instrument shows each range's inequality and highlights the data values that fall in it as she hovers. In match mode the student is given a histogram and builds a small data set of $n$ values (tokens on a 0 to 20 line) that would produce it, graded on the count per range, so every valid data set is accepted. Diagnostics: tapping or editing the neighbour of the faulty column, or sorting an edge value into the adjacent range when matching, maps to mc:g10m10s3-1-2:edge-number-in-wrong-range. Reading height as size of the values (one token whose value equals the column height, or putting the largest values under the tallest column) maps to mc:g10m10s3-1-2:tall-column-means-big-values.",
+      "why": "The anchor questions (ex10-3-1 to ex10-3-8) are all histogram reading, error-finding and matching, and the histogram is the whole instrument. No existing kind draws or edits one. bar_builder's bars are data values, not range counts, and has no notion of a range; box_plot_builder places a five-number summary for raw data; number_line_marker has no columns. Using any of them would mean the student is not looking at a histogram at all."
+    },
+    {
+      "lo_id": "lo:g10m10s3-1-3",
+      "need_kind": "histogram_builder (mode: centre)",
+      "description": "The widget draws a histogram of grouped data (for example passengers per week in ranges of 100, as in ex10-4-3) with the counts readable. The student does three constructions on it. First, she taps the modal group (the tallest column), which asks the range, not a value. Second, she drags a marker along a running cumulative-count strip to the column that holds the middle (the $n/2$-th) value; the strip shows how many values lie below, so counting columns can be seen to differ from counting values. Third, she places one point at the centre of each range and the widget computes $\\sum f m / n$ live; a build variant asks her to set the column counts so the grouped estimate hits a target mean, and shows that many different raw data sets share one histogram but have different true means. Grading is on the property (the right group, the right midpoints, a total that matches the target). Diagnostics: choosing the middle column of the list as the median group maps to mc:g10m10s3-1-3:median-group-middle-of-the-list; asking for a single value when the modal group is wanted, or placing a point on one bar's top, maps to mc:g10m10s3-1-3:modal-group-vs-single-value; the build variant, where one raw set with the same grouped estimate gives a different exact mean, targets mc:g10m10s3-1-3:grouped-mean-taken-as-exact.",
+      "why": "bar_builder computes the exact mean, median and mode of ungrouped values and has no range or midpoint at all, so it can only teach the thing this objective says the grouped estimate is not. number_line_marker could ask the student to mark each range's midpoint, but that tests only midpoint arithmetic (one step of the method) and none of its predicates (sign-flipped, missed-values, extra-values) can name the three misconceptions this objective actually owns. box_plot_builder is for raw data. A forced fit here would diagnose nothing the objective cares about."
+    },
+    {
+      "lo_id": "lo:g10m10s4-1-1",
+      "need_kind": "outlier_probe (a dot strip of a given data set whose values the student can drag or remove, with range, median, mean and interquartile range updating live)",
+      "description": "The student gets a small data set drawn as dots on a number line, one of them far from the rest. A task asks for an effect, for example: \"Move or remove ONE value so that the range falls from 18 to 6\", or \"Change the data so the range doubles but the median stays put\". The student drags or deletes dots and watches the statistics respond. The construction is graded on the property (the range ends at the target) and diagnoses: choosing a middle value, which cannot change the range (range-ignores-outlier-effect: the range is thought to depend on all the values); removing an extreme and expecting the range to stay the same; and moving the extreme the wrong way. Predicates would be things like middle-value-moved, extreme-removed-range-unchanged-expected and range-shrunk-too-little.",
+      "why": "bar_builder with ask \"range\" exists, but the only predicate it can emit for that ask is off-target, and a build-to-target-range task fails for many reasons that are not the outlier misconception (range read as the maximum, an arithmetic slip, an extra bar left high). Mapping off-target to mc:g10m10s4-1-1:range-ignores-outlier-effect would be a forced fit. No other existing kind constructs anything about the spread of a data set."
+    },
+    {
+      "lo_id": "lo:g10m10s4-1-3",
+      "need_kind": "cumulative_interval_locator (a cumulative-frequency strip over class intervals in which the student finds a percentile's rank and picks the interval it falls in)",
+      "description": "The student is shown a grouped frequency table as a stacked strip, with the interval frequencies and the running cumulative count growing along it. For a stated percentile or quartile they place a marker at the rank given by the percentile formula and tap the class interval that contains it. The strip lights up the cumulative count under the marker, so the student sees why the answer is the interval whose cumulative count first reaches the rank, not the interval with the largest frequency. Predicates: used-frequency-not-cumulative (picked the interval whose own frequency is largest or covers the rank on its own), off-by-one-interval (rank equal to a cumulative total, so it lies on a boundary), and rank-from-total-not-formula (used P% of n as the rank without the percentile formula). It would diagnose the fractional-rank-rounded-to-one-value misconception in its grouped form.",
+      "why": "No existing kind works with grouped data: bar_builder builds raw values, box_plot_builder takes ungrouped whole numbers, and number_line_marker's interval mode marks an inequality, not a class interval. The objective also has no anchor book question in the lesson file, so no template could name a parent."
+    },
+    {
+      "lo_id": "lo:g10m10s5-1-2",
+      "need_kind": "box_plot_builder with the five number summary given instead of the data (a summary-input mode of the existing kind)",
+      "description": "The stem states a five number summary, for example minimum 15, Q1 22, median 25, Q3 28, maximum 35. The student drags five markers (or drags the box edges, median line and whisker ends) onto a number line whose spacing is true to scale, and the plot draws itself as she places them. Any plot with those five values is accepted. Errors it would diagnose: the box drawn from minimum to maximum (the existing iqr-as-range predicate), the median line missing or placed at the middle of the box instead of at the median value, whiskers stopped at the quartiles, and the marks spaced evenly instead of by value (15, 22, 25, 28, 35 are not equally far apart).",
+      "why": "box_plot_builder always supplies the data and asks for the summary, so it fuses LO1's computing with the drawing and cannot isolate drawing a plot from a given five number summary. Separately, this objective has an empty anchor_questions list, so no template could be parented to a book question in any case: the book's draw-the-plot exercises need to be attached to lo:g10m10s5-1-2 first. Until then the two LO1 templates already exercise the drawing half, because the plot builds as the markers are placed. This is a modest gap, lower priority than LO3."
+    },
+    {
+      "lo_id": "lo:g10m10s5-1-3",
+      "need_kind": "box_plot_reader: the instrument draws one box-and-whisker plot (or two to four stacked on one axis) on a labelled number line, and the student identifies its parts",
+      "description": "The widget itself draws the plot, since a question may never point at a [figure]. The student then either taps the part that shows the minimum, Q1, the median, Q3 or the maximum, or drags five name labels onto the matching marks and reads each value off the axis. Grading is on which part of the plot was chosen, not on a pixel position. A comparison mode stacks several plots on a shared axis, as in the book's detergent question, and asks what one marked value represents for one of them. Errors it would diagnose: the line inside the box labelled Q1 or Q3 (inner-line-read-as-box-edge), the line inside the box labelled the minimum or maximum (inner-line-read-as-extreme), the whisker ends and box ends swapped, and, in comparison mode, reading a longer box or whisker as a larger median.",
+      "why": "The anchors (ex10-6-4a, ex10-6-4b, ex10-7-29b) all rest on a drawn plot, and reading a plot is the reverse of what box_plot_builder does: that kind goes from data to markers, so the student never meets a plot to read and neither of this objective's own misconceptions can arise in it. number_line_marker shows no plot and accepts at most 4 targets, while a five number summary has 5. Using box_plot_builder under lo:g10m10s5-1-3 would be an answer box in disguise, so it is a gap, not a template."
+    }
+  ]
+}

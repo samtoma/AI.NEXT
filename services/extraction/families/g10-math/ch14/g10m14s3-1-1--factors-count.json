@@ -1,0 +1,40 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m14s3-1-1:factors-count",
+ "kind": "family",
+ "lo_id": "lo:g10m14s3-1-1",
+ "parent_question_id": "q:g10m14s3-1-1:ex14-3-3b",
+ "source_page": 480,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": "Pieces of paper labelled with the whole numbers from 1 up to a given number are placed in a box and the box is shaken. One piece of paper is taken out and then replaced. The event A is taking a piece of paper labelled with a factor of that largest number.",
+ "params": [
+  {
+   "name": "n",
+   "randint": [
+    10,
+    40
+   ]
+  },
+  {
+   "name": "fs",
+   "let": "[d for d in range(1, n + 1) if n % d == 0]"
+  },
+  {
+   "require": "len(fs) >= 4",
+   "why": "a prime, or the square of a prime, has only two or three factors, which makes too thin a set to write down and count"
+  }
+ ],
+ "constraints": [
+  "len(fs) >= 4"
+ ],
+ "stem": "Pieces of paper labelled with the numbers $1$ to ${=n}$ are placed in a box and the box is shaken. One piece of paper is taken out and then replaced. The event $A$ is taking a piece of paper labelled with a factor of ${=n}$. Write down the set $A$ and use it to find $n(A)$, the number of elements in $A$.",
+ "answer": "len(fs)",
+ "solution": [
+  "The sample space $S$ is all the numbers that can be on the piece of paper: the whole numbers from $1$ to ${=n}$, so $n(S) = {=n}$.",
+  "The event $A$ contains the numbers in $S$ that are factors of ${=n}$, that is, the numbers that divide ${=n}$ exactly with no remainder.",
+  "Checking the numbers from $1$ to ${=n}$ one by one gives $A = {=setof(fs)}$. Notice that $1$ and ${=n}$ are both factors of ${=n}$, so both belong in $A$.",
+  "Counting the elements of $A$ gives $n(A) = {=len(fs)}$."
+ ],
+ "notes": "Mirrors ex14-3-3b (S = 1 to 12, A = factors of 12) with the top number varied from 10 to 40; 22 non-prime, non-prime-square values give 22 distinct stems. The book asks the student to write the set A; a set cannot be marked reliably as a typed answer, so the family asks for n(A), and the worked solution writes the set out. Uses setof(list) from the function list to print the set, so the reviewer should confirm it renders as {1, 2, 3, ...} with proper braces. Every instance was checked by brute force outside the engine. Blind-solve risk is low: the only judgement is that 1 and the number itself count as factors, which the book's own solution to ex14-3-3b does too. No distractors, so no misconception ids are used."
+}

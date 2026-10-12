@@ -12,6 +12,7 @@ import {
   COL_GAP,
   OBJECTIVE_R,
   LESSON_R,
+  annularSectorPath,
   fitView,
   focusOf,
   lessonStage,
@@ -19,6 +20,7 @@ import {
   linkDestinationLabel,
   linkStyle,
   objectiveStage,
+  sectionNameOf,
   viewFor,
   zoomLevel,
   type MapChapter,
@@ -30,6 +32,8 @@ import {
 import { MASTERY_LEGEND, masteryPhrase } from "@/lib/mastery";
 import { declutter, labelCandidates, type Rect } from "@/lib/skill-map-labels";
 import { STROKE, cx } from "@/components/sticker";
+import { MathText } from "@/components/MathText";
+import { plainMath } from "@/lib/math-text";
 
 /**
  * The Your Progress Map canvas (FR-3224) — semantic zoom over the model built
@@ -40,6 +44,16 @@ import { STROKE, cx } from "@/components/sticker";
  * stroke, arrowhead, shadow and label size is a constant screen value. That is
  * the Play rule "these values never scale" — a transform on a world-space group
  * would make outlines cartoonish when zoomed in and invisible when zoomed out.
+ *
+ * A split book section (FR-4315) is drawn as a TRAY: the arc of the chapter's
+ * ring that its parts occupy, as a band behind their objectives in the page's
+ * card colour with the map's thin muted outline, and named — "1.7
+ * Factorisation" — from the lessons level on, by the same measured-and-
+ * decluttered rule as every other name. A part lesson's own name carries its
+ * "part n of m", and every framed lesson and objective says its section in its
+ * accessible name and tooltip. The tray is decoration for the eye (aria-hidden,
+ * no pointer events): it adds no control and no tab stop. A map with no split
+ * section — every National subject — draws none of it.
  *
  * Selection is owned by the page (`SpineExplorer`): it drives the breadcrumb,
  * the topic panel and what the chat is told. This component animates to the
@@ -72,6 +86,9 @@ const fill = (s: Stage) => MASTERY_LEGEND[s]!.color;
 /** Every objective box is this wide; lesson names are LESSON_LABEL_W. */
 const OBJECTIVE_BOX_W = 170;
 const LESSON_LABEL_W = 118;
+/** A split section's name tag (FR-4315): one line, at most this wide, this tall. */
+const SECTION_LABEL_MAX_W = 230;
+const SECTION_LABEL_H = 24;
 
 /** Text width in px for a CSS font, from one shared offscreen canvas; a
  *  character-count estimate where there is no canvas (server render). */
@@ -467,10 +484,12 @@ export function SkillMap({
     : 160;
   const labels: {
     key: string;
-    kind: "chapter" | "lesson" | "objective";
+    kind: "chapter" | "lesson" | "objective" | "section";
     id: string;
     priority: number;
     rect: Rect;
+    /** a section tag is placed from this point, outward by `fx`/`fy` of its OWN size (CSS translate), so its real width — which the font decides — never clips it */
+    anchor?: { x: number; y: number; fx: number; fy: number };
   }[] = [];
   if (v && size) {
     for (const pick of labelCandidates(model, selection, level)) {
@@ -494,7 +513,7 @@ export function SkillMap({
         const l = model.lessonBySlug.get(pick.id)!;
         const [x, y] = S(l.x, l.y);
         const w = LESSON_LABEL_W;
-        const h = linesFor(l.title, "800 13px 'Baloo 2'", w) * 15 + 13;
+        const h = linesFor(plainMath(l.title), "800 13px 'Baloo 2'", w) * 15 + 13;
         const above = l.index % 2 === 0;
         const r = lr * (selectedLesson === l.slug ? 1.25 : 1);
         const top = above ? y - r - 6 - h : y + r + 6;
@@ -504,6 +523,32 @@ export function SkillMap({
           id: l.slug,
           priority: pick.priority,
           rect: { x: x - w / 2, y: top, w, h },
+        });
+      } else if (pick.kind === "section") {
+        const sec = model.sectionById.get(pick.id)!;
+        const c = model.chapterById.get(sec.chapterId)!;
+        const [cx0, cy0] = S(c.cx, c.cy);
+        const cos = Math.cos(sec.mid);
+        const sin = Math.sin(sec.mid);
+        // just outside the tray, on the bisector of its arc
+        const out = c.ro * v.scale + or + 5 + 8;
+        const ax = cx0 + cos * out;
+        const ay = cy0 + sin * out;
+        // an estimate, for `declutter` only: the tag itself is as wide as its text
+        const w = Math.min(
+          SECTION_LABEL_MAX_W,
+          Math.ceil(measureText(plainMath(sec.label), "700 12px 'Baloo 2'") * 1.15) + 26,
+        );
+        const h = SECTION_LABEL_H;
+        const fx = cos > 0.35 ? 0 : cos < -0.35 ? -1 : -0.5;
+        const fy = sin > 0.35 ? 0 : sin < -0.35 ? -1 : -0.5;
+        labels.push({
+          key: `sec-${sec.id}`,
+          kind: "section",
+          id: sec.id,
+          priority: pick.priority,
+          rect: { x: ax + fx * w, y: ay + fy * h, w, h },
+          anchor: { x: ax, y: ay, fx, fy },
         });
       } else {
         const o = model.objectiveById.get(pick.id)!;
@@ -515,7 +560,7 @@ export function SkillMap({
         const ay = y + sin * gap;
         // One width for every box, so they read as a set (Tamer, 2026-10-01).
         const w = OBJECTIVE_BOX_W;
-        const all = linesFor(o.label, "700 12.5px 'Baloo 2'", w - 26);
+        const all = linesFor(plainMath(o.label), "700 12.5px 'Baloo 2'", w - 26);
         const lines = selectedObjective === o.id ? all : Math.min(2, all);
         const dest = linkDestinationLabel(model, o.id);
         const h = 13 + lines * 15.3 + 14 + (dest ? 14 : 0) + 4;
@@ -535,19 +580,27 @@ export function SkillMap({
 
   // The tooltip names a hovered or focused node that has no label showing.
   const tipId = hovered ?? focused;
-  let tooltip: { x: number; y: number; title: string; word: string } | null =
-    null;
+  let tooltip: {
+    x: number;
+    y: number;
+    title: string;
+    word: string;
+    /** a split section's name for a framed lesson or objective (FR-4315) */
+    section?: string;
+  } | null = null;
   if (v && tipId) {
     if (tipId.startsWith("lesson:")) {
       const slug = tipId.slice(7);
       const l = model.lessonBySlug.get(slug);
       if (l && !kept.has(`ln-${slug}`)) {
         const [x, y] = S(l.x, l.y);
+        const section = sectionNameOf(model, slug);
         tooltip = {
           x,
           y: y - lr - 8,
           title: l.title,
           word: masteryPhrase(lessonStage(model, slug, asOf)),
+          ...(section ? { section } : {}),
         };
       }
     } else if (tipId.startsWith("obj:")) {
@@ -555,11 +608,13 @@ export function SkillMap({
       const o = model.objectiveById.get(id);
       if (o && !kept.has(`ob-${id}`)) {
         const [x, y] = S(o.x, o.y);
+        const section = sectionNameOf(model, o.lessonSlug);
         tooltip = {
           x,
           y: y - or - 8,
           title: o.label,
           word: masteryPhrase(objectiveStage(o, asOf)),
+          ...(section ? { section } : {}),
         };
       }
     } else if (tipId.startsWith("chapter:")) {
@@ -664,6 +719,47 @@ export function SkillMap({
             );
           })}
 
+          {/* Book sections' trays (FR-4315): the arc of a chapter's ring that a
+              split section's parts occupy, behind their objectives — the page's
+              card colour on the honey disc, with the map's thin muted outline.
+              Decoration for the eye only: no pointer events, hidden from
+              assistive technology, because every lesson and objective on one
+              also says its section in its own accessible name. */}
+          {model.sections.map((sec) => {
+            const c = model.chapterById.get(sec.chapterId)!;
+            const [x, y] = S(c.cx, c.cy);
+            const R = c.ro * v.scale;
+            const half = or + 5;
+            const pad = Math.max(sec.step / 2, (or + 3) / Math.max(R, 1));
+            const faded =
+              !!focus && !sec.lessons.some((slug) => focus.lessons.has(slug));
+            return (
+              <g
+                key={sec.id}
+                className="skillmap-fade"
+                opacity={faded ? 0.3 : 1}
+                aria-hidden
+                pointerEvents="none"
+              >
+                <path
+                  d={annularSectorPath(
+                    x,
+                    y,
+                    Math.max(R - half, 0),
+                    R + half,
+                    sec.a0 - pad,
+                    sec.a1 + pad,
+                  )}
+                  fillRule="evenodd"
+                  fill="var(--card)"
+                  stroke="var(--play-disabled-border)"
+                  strokeLinejoin="round"
+                  style={{ strokeWidth: "var(--skillmap-stroke-objective)" }}
+                />
+              </g>
+            );
+          })}
+
           {/* spokes: lesson → its objectives */}
           {[...model.lessonBySlug.values()].map((l) => {
             const [lx, ly] = S(l.x, l.y);
@@ -696,7 +792,7 @@ export function SkillMap({
               level (Tamer, 2026-10-01): prerequisites are defined between
               objectives, and a lesson arrow would only restate them. */}
           {model.links.map((link) => {
-            const style = linkStyle(link, focus);
+            const style = linkStyle(link, focus, selection);
             if (style === "hidden") return null;
             const a = model.objectiveById.get(link.a)!;
             const b = model.objectiveById.get(link.b)!;
@@ -768,7 +864,9 @@ export function SkillMap({
                   style={{ strokeWidth: sel ? "var(--skillmap-stroke-selected)" : "var(--play-stroke-sm)" }}
                   role="button"
                   tabIndex={level >= 1 ? 0 : -1}
-                  aria-label={`Lesson: ${l.title} — ${masteryPhrase(stage)}`}
+                  aria-label={`Lesson: ${plainMath(l.title)} — ${masteryPhrase(stage)}${
+                    sectionNameOf(model, l.slug) ? `, ${sectionNameOf(model, l.slug)}` : ""
+                  }`}
                   onClick={(e) => tap({ kind: "lesson", slug: l.slug }, e)}
                   onKeyDown={(e) => key({ kind: "lesson", slug: l.slug }, e)}
                   onFocus={() => setFocused(id)}
@@ -830,7 +928,9 @@ export function SkillMap({
                   style={{ strokeWidth: sel ? "var(--play-stroke)" : "var(--skillmap-stroke-objective)" }}
                   role="button"
                   tabIndex={level >= 2 ? 0 : -1}
-                  aria-label={`${o.label} — ${masteryPhrase(stage)}`}
+                  aria-label={`${plainMath(o.label)} — ${masteryPhrase(stage)}${
+                    sectionNameOf(model, o.lessonSlug) ? `, ${sectionNameOf(model, o.lessonSlug)}` : ""
+                  }`}
                   onClick={(e) => tap({ kind: "objective", id: o.id }, e)}
                   onKeyDown={(e) => key({ kind: "objective", id: o.id }, e)}
                   onFocus={() => setFocused(id)}
@@ -916,10 +1016,39 @@ export function SkillMap({
                   }}
                 >
                   <span className="font-display text-[13px] font-extrabold leading-[1.15] text-ink text-balance">
-                    {lesson.title}
+                    <MathText text={lesson.title} />
                   </span>
                   <span className="font-display text-[11px] font-bold leading-[1.15] text-ink-soft">
                     {masteryPhrase(stage)}
+                  </span>
+                </div>
+              );
+            }
+            if (l.kind === "section") {
+              // A split section's name tag (FR-4315): the tray's label, in the
+              // page's card colour with ink text — the pairing the map's
+              // tooltip and breadcrumb already use.
+              const sec = model.sectionById.get(l.id)!;
+              return (
+                <div
+                  key={l.key}
+                  aria-hidden
+                  className={cx(
+                    STROKE,
+                    "skillmap-fade pointer-events-none absolute flex items-center whitespace-nowrap rounded-[var(--play-radius-pill)] bg-card px-2.5 font-display text-[12px] font-bold leading-none text-ink",
+                  )}
+                  style={{
+                    left: l.anchor!.x,
+                    top: l.anchor!.y,
+                    transform: `translate(${l.anchor!.fx * 100}%, ${l.anchor!.fy * 100}%)`,
+                    maxWidth: SECTION_LABEL_MAX_W,
+                    height: l.rect.h,
+                    borderWidth: "var(--play-stroke-sm)",
+                    opacity: !focus || sec.lessons.some((slug) => focus.lessons.has(slug)) ? 1 : 0.3,
+                  }}
+                >
+                  <span className="min-w-0 truncate">
+                    <MathText text={sec.label} />
                   </span>
                 </div>
               );
@@ -936,7 +1065,7 @@ export function SkillMap({
                 data-objective={o.id}
                 onClick={onBoxClick}
                 onPointerDown={(e) => e.stopPropagation()}
-                title={o.label}
+                title={plainMath(o.label)}
                 className={cx(
                   STROKE,
                   "skillmap-fade absolute rounded-[var(--play-radius-sm)] px-2.5 py-1.5 text-start",
@@ -958,14 +1087,20 @@ export function SkillMap({
                     !sel && "line-clamp-2",
                   )}
                 >
-                  {o.label}
+                  {/* An objective label may carry maths (backlog #37). The box's
+                      height is fixed and its text clamps at two lines, so a
+                      formula is set a size down: at full size a superscript's
+                      taller line box pushed the last line past the box's edge.
+                      Important (`!`): `globals.css` sizes `.katex` in an
+                      unlayered rule, which outranks any layered utility. */}
+                  <MathText text={o.label} className="[&_.katex]:text-[0.9em]!" />
                 </span>
                 <span className="mt-0.5 block font-display text-[11px] font-bold leading-[1.2] text-ink">
                   {masteryPhrase(stage)}
                 </span>
                 {dest && (
                   <span className="mt-0.5 block font-display text-[11px] font-bold leading-[1.2] text-ink">
-                    → {dest}
+                    → <MathText text={dest} />
                   </span>
                 )}
               </button>
@@ -988,11 +1123,16 @@ export function SkillMap({
           }}
         >
           <span className="block font-display text-[12.5px] font-bold leading-[1.22] text-ink">
-            {tooltip.title}
+            <MathText text={tooltip.title} />
           </span>
           <span className="block font-display text-[11px] font-bold leading-[1.2] text-ink-soft">
             {tooltip.word}
           </span>
+          {tooltip.section && (
+            <span className="block font-display text-[11px] font-bold leading-[1.2] text-ink-soft">
+              {tooltip.section}
+            </span>
+          )}
         </div>
       )}
 

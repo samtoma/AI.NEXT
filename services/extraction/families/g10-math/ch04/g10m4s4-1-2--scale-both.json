@@ -1,0 +1,139 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m4s4-1-2:scale-both",
+ "kind": "family",
+ "lo_id": "lo:g10m4s4-1-2",
+ "parent_question_id": "q:g10m4s4-1-2:ex4-3-4e",
+ "source_page": 89,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "x",
+   "randint": [
+    -5,
+    5
+   ],
+   "resample_while": "x == 0"
+  },
+  {
+   "name": "y",
+   "randint": [
+    -5,
+    5
+   ],
+   "resample_while": "y == 0"
+  },
+  {
+   "name": "a",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "c",
+   "randint": [
+    2,
+    6
+   ],
+   "resample_while": "c == a"
+  },
+  {
+   "name": "b",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "d",
+   "randint": [
+    2,
+    5
+   ],
+   "resample_while": "gcd(b, d) != 1"
+  },
+  {
+   "name": "k1",
+   "let": "a * x + b * y"
+  },
+  {
+   "name": "k2",
+   "let": "c * x - d * y"
+  },
+  {
+   "require": "k1 != 0 and k2 != 0",
+   "why": "keep both right-hand sides non-zero so neither equation looks degenerate"
+  },
+  {
+   "name": "ad",
+   "let": "a * d"
+  },
+  {
+   "name": "bd",
+   "let": "b * d"
+  },
+  {
+   "name": "dk1",
+   "let": "d * k1"
+  },
+  {
+   "name": "bc",
+   "let": "b * c"
+  },
+  {
+   "name": "bk2",
+   "let": "b * k2"
+  },
+  {
+   "name": "tot",
+   "let": "ad + bc"
+  },
+  {
+   "name": "rhs",
+   "let": "dk1 + bk2"
+  },
+  {
+   "name": "ax",
+   "let": "a * x"
+  },
+  {
+   "name": "rem",
+   "let": "k1 - a * x"
+  }
+ ],
+ "constraints": [
+  "gcd(b, d) == 1",
+  "a != c",
+  "rhs == tot * x",
+  "rem == b * y"
+ ],
+ "stem": "Use elimination to solve for $x$ and $y$ : ${=a}x+{=b}y={=k1}$ and ${=c}x-{=d}y={=k2}$",
+ "solution": [
+  "No variable has equal or opposite coefficients yet. The coefficients of $y$ are ${=b}$ and ${=d}$, which share no common factor, so we multiply the first equation by ${=d}$ and the second equation by ${=b}$. Both equations then contain a $y$-term of size ${=bd}y$, one positive and one negative.",
+  "Multiply the first equation by ${=d}$ :",
+  "$\\begin{aligned} {=d}({=a}x+{=b}y)&= {=d}({=k1})\\\\ {=ad}x+{=bd}y&= {=dk1}\\end{aligned}$",
+  "Multiply the second equation by ${=b}$ :",
+  "$\\begin{aligned} {=b}({=c}x-{=d}y)&= {=b}({=k2})\\\\ {=bc}x-{=bd}y&= {=bk2}\\end{aligned}$",
+  "The $y$-terms are now ${=bd}y$ and $-{=bd}y$, so adding the two new equations eliminates $y$ :",
+  "$\\begin{aligned}\\begin{array}{cccc}&{=ad}x+{=bd}y&=&{=dk1}\\\\ +&({=bc}x-{=bd}y&=&{=bk2})\\\\ \\hline&{=tot}x&=&{=rhs}\\end{array}\\end{aligned}$",
+  "Solve for $x$ :",
+  "$\\begin{aligned} {=tot}x&= {=rhs}\\\\ x&=\\frac{{=rhs}}{{=tot}}\\\\ &= {=x}\\end{aligned}$",
+  "Substitute $x={=x}$ into the first equation and solve for $y$ :",
+  "$\\begin{aligned} {=a}x+{=b}y&= {=k1}\\\\ {=a}({=x})+{=b}y&= {=k1}\\\\ {=ax}+{=b}y&= {=k1}\\\\ {=b}y&= {=rem}\\\\ y&=\\frac{{=rem}}{{=b}}\\\\ &= {=y}\\end{aligned}$",
+  "Therefore $x={=x}$ and $y={=y}$ ."
+ ],
+ "marker": {
+  "kind": "values",
+  "answer": "[{=x}, {=y}]",
+  "form": null,
+  "variables": [
+   "x",
+   "y"
+  ],
+  "tolerance": null
+ },
+ "notes": "Advanced, modelled on book ex4-3-4e (5x-4y=69 and 2x+3y=23), whose twist is that BOTH equations must be multiplied before they can be added: the y-coefficients b and d are chosen coprime and both at least 2, so neither divides the other and the lowest common multiple is b*d. Multiplying the first equation by d and the second by b gives +b*d*y and -b*d*y, and the equations are added (the book's ex4-3-4g/ex4-7-6a use the same layout). The book's own worked solution to ex4-3-4e uses substitution; the elimination method shown here is the one this objective teaches and is the same method as the book's solution to ex4-3-4g (multiply, then add/subtract, solve, substitute back). Sign pattern is fixed in the template (+b y in the first equation, -d y in the second), so every hole coefficient is positive and at least 2. a != c, so the x-coefficients are never equal. x and y are non-zero integers in [-5, 5], so the answers are whole numbers (possibly negative); the determinant -(a*d + b*c) is never zero, so the solution is unique. I checked all about 18,000 admissible parameter sets: (a*d+b*c)*x equals the added right-hand sides d*k1 + b*k2 and b*y equals k1 - a*x in every one; the largest intermediate number is 250."
+}

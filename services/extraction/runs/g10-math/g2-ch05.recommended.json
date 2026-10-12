@@ -1,0 +1,649 @@
+{
+ "status": "RECOMMENDATION ONLY — an AI line's, never a review. `auto_pass_gates.py g2 --recommend` reads `items` and signs each verdict `auto-pass G2 (AI recommendation)`; a person's verdict in G2's file is never overwritten.",
+ "prepared_by": "g2_recommend.py g2rec-v1",
+ "prompts_version": "g2rec-v1",
+ "chapter": 5,
+ "from_runs": {
+  "runs/g10-math/g2rec/ch05-wf_77f55ce1-8b5.json": "1056bb708cf487c1aa27bbf9c9c0cda2cd4f3e5c5fe8cbcfb6f72ceb2c164009"
+ },
+ "by": null,
+ "items": {
+  "g10m5s3-1:Ex5-1:3a": {
+   "verdict": "exclude",
+   "class": "book error",
+   "confidence": "high",
+   "note": "Figure: right angle at N, n = OM hypotenuse, m = ON adjacent, o = MN opposite. So $\\cos\\hat{O}=m/n$. Book's working names n as hypotenuse, then writes $m/o$. Book error in both printed answer and EPUB. The blind answer $m/n$ is right, but a book error is excluded, not repaired. Right answer by the agent's own derivation: \\cos\\hat{O}=\\frac{m}{n}.",
+   "if_corrected": {
+    "answer": "\\cos\\hat{O}=\\frac{m}{n}",
+    "defect": "The figure shows right angle at N, n = OM (hypotenuse), m = ON (adjacent to O), o = MN (opposite). The book's own working says n is the hypotenuse and m the adjacent side, then writes cos O = adjacent/hypotenuse = m/o. Its last step swaps n for o; the printed answer repeats the error.",
+    "status": "NOT APPLIED: correcting the book's own answer or working is Samuel's to approve (decisions 43–45)"
+   }
+  },
+  "g10m5s3-1:Ex5-1:4": {
+   "verdict": "fix",
+   "class": "compound answer",
+   "confidence": "low",
+   "note": "Figure: opposite 4, hypotenuse 5, adjacent 3. Book's working gives all three: $\\sin x=4/5$, $\\cos x=3/5$, $\\tan x=4/3$; the EPUB final line keeps only tan. The key typed from the working is right but a list of three, so not safely markable.",
+   "why_low": "Content decision: teaching-only retype versus a values marker over the three equations (the app marker's ability to read equations as values is unchecked). Also the stem's first figure is the unlabelled lead-in triangle ABC copied from another part, which cou…",
+   "fields": {
+    "answer_type": "not_markable",
+    "answer": null,
+    "marker": null,
+    "not_markable_reason": "The book answers with three different ratios for x (sin, cos, tan), in any order; a single key would mark a correct single ratio wrong. Kept as a teaching example."
+   }
+  },
+  "g10m5s3-1:Ex5-1:6": {
+   "verdict": "fix",
+   "class": "selected from a list",
+   "confidence": "low",
+   "note": "Figure: opposite 4, hypotenuse 5, adjacent 3 for the angle α. $\\sin\\alpha=4/5$ is correct. $\\cos(3/5)=\\alpha$ is malformed, $\\tan\\alpha=5/4$ is wrong (4/3), $\\cos 0,8=\\alpha$ is wrong (cos α = 0,6). Key A stands; only the option text mismatched the stem. Verified independently: the verifier's own answer matches the key.",
+   "why_low": "Option text was re-typed to match the stem character for character (\\cos\\text{0,8}). The stem's option C reads tan = 5/4 while the book's working prints 3/4; it is wrong either way (true value 4/3), so the key is unaffected, but a person may want to check the…",
+   "fields": {
+    "choices": [
+     {
+      "key": "A",
+      "text": "\\sin\\alpha=\\frac{4}{5}"
+     },
+     {
+      "key": "B",
+      "text": "\\cos\\left(\\frac{3}{5}\\right)=\\alpha"
+     },
+     {
+      "key": "C",
+      "text": "\\tan\\alpha=\\frac{5}{4}"
+     },
+     {
+      "key": "D",
+      "text": "\\cos\\text{0,8}=\\alpha"
+     }
+    ]
+   },
+   "verified": {
+    "by": "g2rec-v1 independent verifier",
+    "own_answer": "sin α = 4/5 (opposite 4, adjacent 3, hypotenuse 5)",
+    "verdict": "confirmed"
+   }
+  },
+  "g10m5s3-1:Ex5-8:1a": {
+   "verdict": "fix",
+   "class": "selected from a list",
+   "confidence": "low",
+   "note": "$\\sin\\theta=\\text{opposite}/\\text{hypotenuse}$, so hypotenuse/adjacent is wrong. Book answer 'not written correctly' is right. The typing options 'been / not been written correctly' are not both in the stem, hence the flag. Re-typed in the book's own words. Verified independently: the verifier's own answer matches the key.",
+   "why_low": "Content decision: the two options are the book's own answer wording for this yes/no set, but the 'not' form is not in the stem, so the stem-source check may still object; a person decides if that wording is acceptable.",
+   "fields": {
+    "choices": [
+     {
+      "key": "A",
+      "text": "has been written correctly"
+     },
+     {
+      "key": "B",
+      "text": "has not been written correctly"
+     }
+    ],
+    "options_source": "lesson"
+   },
+   "verified": {
+    "by": "g2rec-v1 independent verifier",
+    "own_answer": "has not been written correctly",
+    "verdict": "confirmed"
+   }
+  },
+  "g10m5s3-1:Ex5-8:1b": {
+   "verdict": "fix",
+   "class": "selected from a list",
+   "confidence": "low",
+   "note": "$\\tan\\theta=\\text{opposite}/\\text{adjacent}$ is the correct definition, so the book's 'written correctly' is right. Typing options are not both in the stem; re-typed in the book's own words. Verified independently: the verifier's own answer matches the key.",
+   "why_low": "Content decision: the two options are the book's own answer wording for this yes/no set, but the 'not' form is not in the stem, so the stem-source check may still object; a person decides if that wording is acceptable.",
+   "fields": {
+    "choices": [
+     {
+      "key": "A",
+      "text": "has been written correctly"
+     },
+     {
+      "key": "B",
+      "text": "has not been written correctly"
+     }
+    ],
+    "options_source": "lesson"
+   },
+   "verified": {
+    "by": "g2rec-v1 independent verifier",
+    "own_answer": "has been written correctly",
+    "verdict": "confirmed"
+   }
+  },
+  "g10m5s3-1:Ex5-8:1c": {
+   "verdict": "exclude",
+   "class": "book error",
+   "confidence": "high",
+   "note": "$\\sec\\theta=1/\\cos\\theta=\\text{hyp}/\\text{adj}$, so the stem's ratio is right. The book confuses secant with cosecant (hyp/opp) and says 'not correct'. The blind answer 'Correct' is right, but this is a book error: excluded. Right answer by the agent's own derivation: has been written correctly.",
+   "if_corrected": {
+    "answer": "has been written correctly",
+    "defect": "Book's working recalls $\\sec\\theta=\\text{hypotenuse}/\\text{opposite}$. That is cosecant. Secant is $1/\\cos\\theta=\\text{hypotenuse}/\\text{adjacent}$, exactly as the stem writes it, so the stem's ratio is correct and the book's 'not written correctly' is wrong.",
+    "status": "NOT APPLIED: correcting the book's own answer or working is Samuel's to approve (decisions 43–45)"
+   }
+  },
+  "g10m5s5-1:Ex5-2:1v": {
+   "verdict": "hold",
+   "class": "marker cannot check",
+   "confidence": "high",
+   "note": "$\\sin90^\\circ=1$, $\\cos90^\\circ=0$, so the quotient is $1/0$, undefined. The book is right and all three sources agree. The key cannot be marked as typed: 'undefined' is not a readable value and the options are invented."
+  },
+  "g10m5s5-1:Ex5-2:1y": {
+   "verdict": "hold",
+   "class": "marker cannot check",
+   "confidence": "low",
+   "note": "$\\cos99^\\circ<0$, so $4\\sec99^\\circ\\approx-25{,}57$ and its square root is non-real. Book, printed answer and blind answer agree in meaning. Only the options typing is unverified, so I hold rather than accept.",
+   "why_low": "Content decision: whether real / non-real counts as the lesson's closed set (the rules allow it) or the item stays teaching-only; needs the lesson text."
+  },
+  "g10m5s5-1:Ex5-2:1z": {
+   "verdict": "fix",
+   "class": "stem damaged",
+   "confidence": "low",
+   "note": "Stem as shown: cot103°+sin1090° ≈ -0,23+0,17 < 0, so the root is undefined. The working starts from cot85°: 0,2611/6,0154=0,0434, root 0,2083, so 0,21. The key fits only the cot85 stem. Repair 103 to 85, key unchanged. Verified independently: the verifier's own answer matches the key.",
+   "why_low": "The stem prints cot103 but the book's own working starts from cot85; a person should decide whether this is an extraction slip or a book erratum. Repairing the stem to match the working is a content decision.",
+   "fields": {
+    "stem": "Use your calculator to determine the value of the following (correct to $\\text{2}$ decimal places): $\\sqrt{\\dfrac{\\cot85^{\\circ}+\\sin1090^{\\circ}}{\\sec10^{\\circ}+5}}$"
+   },
+   "stem_fix_by": "auto-pass G2 recommendation (g2rec-v1) — not Samuel",
+   "verified": {
+    "by": "g2rec-v1 independent verifier",
+    "own_answer": "0,21",
+    "verdict": "confirmed",
+    "app_marker_book_answer": "equal"
+   }
+  },
+  "g10m5s5-1:Ex5-2:3": {
+   "verdict": "exclude",
+   "class": "partial answer",
+   "confidence": "low",
+   "note": "$5^{\\tan x}=5^3$ gives $\\tan x=3$, $x=71{,}565°$ plus any multiple of 180°. The book gives only the principal value and the stem sets no interval, so a correct student answer such as 251,57 would be marked wrong by a single key. Right answer by the agent's own derivation: x ≈ 71,57° + k·180°, k an integer (book gives only 71,57).",
+   "why_low": "The stem gives no interval or unit; a person could instead choose to add the book's intended restriction (acute angle in degrees) to the stem, which I may not invent.",
+   "if_corrected": {
+    "answer": "x ≈ 71,57° + k·180°, k an integer (book gives only 71,57)",
+    "defect": "Stem has no domain or unit, but the book's key is only the principal value; other correct solutions would be marked wrong.",
+    "status": "NOT APPLIED: correcting the book's own answer or working is Samuel's to approve (decisions 43–45)"
+   }
+  },
+  "g10m5s5-1:Ex5-8:18c": {
+   "verdict": "exclude",
+   "class": "book error",
+   "confidence": "high",
+   "note": "$29\\times38\\times47=51794$, and $51794-143\\cdot360=314$, so $\\sin314°\\approx-0{,}72$. The book writes $\\sin(114)$, which is the sum $29+38+47$, not the product, so $0{,}91$ is wrong for the stem as written. Right answer by the agent's own derivation: -0,72.",
+   "if_corrected": {
+    "answer": "-0,72",
+    "defect": "Working replaces the product 29×38×47 = 51794 by 114 (the sum a+b+c); sin 114° = 0,91 is the answer to a different expression.",
+    "status": "NOT APPLIED: correcting the book's own answer or working is Samuel's to approve (decisions 43–45)"
+   }
+  },
+  "g10m5s6-1:Ex5-3:5b": {
+   "verdict": "fix",
+   "class": "typing error",
+   "confidence": "high",
+   "note": "$\\tan30°-\\sin60°=\\frac1{\\sqrt3}-\\frac{\\sqrt3}2=\\frac{2-3}{2\\sqrt3}=-\\frac1{2\\sqrt3}\\approx-0{,}29$, which is among the stem's own five options. The typing only failed to match the key to option D; the options are the stem's own list. Verified independently: the verifier's own answer matches the key.",
+   "fields": {
+    "answer": "D"
+   },
+   "verified": {
+    "by": "g2rec-v1 independent verifier",
+    "own_answer": "-1/(2√3)",
+    "verdict": "confirmed"
+   }
+  },
+  "g10m5s7-1:WE7": {
+   "verdict": "accept",
+   "class": "book answer confirmed",
+   "confidence": "low",
+   "note": "Figure: right angle at lower right, opposite 50, adjacent 100 to $\\theta$. $\\tan\\theta=50/100=0{,}5$, $\\theta=26{,}565°\\approx26{,}6°$. Book working and EPUB answer agree; the blind 26.57 is the same angle to more places. Verified independently: the verifier's own answer matches the key.",
+   "why_low": "The stem states no precision; the book rounds to 1 decimal place (26,6) while a student giving 26,57 is also right. A person should decide whether the marker tolerance covers this.",
+   "verified": {
+    "by": "g2rec-v1 independent verifier",
+    "own_answer": "26,6",
+    "verdict": "confirmed"
+   }
+  },
+  "g10m5s7-1:Ex5-4:1a": {
+   "verdict": "exclude",
+   "class": "book error",
+   "confidence": "high",
+   "note": "Figure: right angle at top, hypotenuse 62 (bottom side), 37° at right vertex, $a$ opposite it. $a=62\\sin37°=62(0{,}6018)=37{,}31$. The book's $36{,}1089$ is an arithmetic slip: $62\\times0{,}6018\\ne36{,}11$. Blind 37.31 is right. Right answer by the agent's own derivation: 37,31.",
+   "if_corrected": {
+    "answer": "37,31",
+    "defect": "Book's multiplication 62 × 0,6018 is given as 36,10890; the correct product is 37,31.",
+    "status": "NOT APPLIED: correcting the book's own answer or working is Samuel's to approve (decisions 43–45)"
+   }
+  },
+  "g10m5s7-1:Ex5-4:1e": {
+   "verdict": "exclude",
+   "class": "book error",
+   "confidence": "high",
+   "note": "Figure: right angle at left, leg 12 opposite the 17° angle, $e$ is the hypotenuse. $\\sin17°=12/e$, so $e=12/0{,}29237=41{,}04$. The book multiplies $12\\times0{,}29237$, writing $\\sin17°=e/12$, treating $e$ as the opposite side. Right answer by the agent's own derivation: 41,04.",
+   "if_corrected": {
+    "answer": "41,04",
+    "defect": "Book writes sin17° = e/12, but e is the hypotenuse and 12 is the opposite side; correct is e = 12/sin17° = 41,04.",
+    "status": "NOT APPLIED: correcting the book's own answer or working is Samuel's to approve (decisions 43–45)"
+   }
+  },
+  "g10m5s7-1:Ex5-4:1h": {
+   "verdict": "accept",
+   "class": "book answer confirmed",
+   "confidence": "high",
+   "note": "Figure: right angle top right, 20 is the hypotenuse, 30° at top left, $h$ is opposite it. $h=20\\sin30°=20(0{,}5)=10$. Book, printed answer and blind 10.00 all agree. Verified independently: the verifier's own answer matches the key.",
+   "verified": {
+    "by": "g2rec-v1 independent verifier",
+    "own_answer": "10 (10,00)",
+    "verdict": "confirmed"
+   }
+  },
+  "g10m5s7-1:Ex5-4:1j": {
+   "verdict": "exclude",
+   "class": "book error",
+   "confidence": "high",
+   "note": "Figure read: x is opposite 65 degrees, 4,23 adjacent, so $x=4{,}23\\tan65^{\\circ}=9{,}0713\\approx9{,}07$. Book's working and printed answer both give 9,06, which is wrong at 2 d.p. Blind 9,07 matches my derivation. Book error. Right answer by the agent's own derivation: 9,07.",
+   "if_corrected": {
+    "answer": "9,07",
+    "defect": "Figure: right angle at top right, x is the top side (opposite the 65 degree angle), 4,23 is the vertical side (adjacent). x = 4,23 tan65 = 4,23 x 2,14451 = 9,0713, so 9,07 to 2 d.p. The book prints 9,06 (rounded tan65 too early, or an arithmetic slip).",
+    "status": "NOT APPLIED: correcting the book's own answer or working is Samuel's to approve (decisions 43–45)"
+   }
+  },
+  "g10m5s7-1:Ex5-4:2a": {
+   "verdict": "exclude",
+   "class": "refused",
+   "confidence": "low",
+   "note": "NOT RECOMMENDED LIVE (the item would not pass the pipeline's own checks: the marker spec is not coherent: marker variable 'AC' is not a single letter, a subscripted letter or a LaTeX Greek name; marker variable 'AC' is not a single letter, a subscripted letter or a LaTeX Greek name). The agent's reading: Figure: right angle at A and at C (AC perpendicular to BD). In $\\triangle ABC$, $\\sin B=AC/AB$; in $\\triangle ABD$, $\\sin B=AD/BD$. Book is right. The stem asks for two ratios, so retype as two values in any order.",
+   "why_low": "the recommendation to put it live did not survive the checks: the item would not pass the pipeline's own checks: the marker spec is not coherent: marker variable 'AC' is not a single letter, a subscripted letter or a LaTeX Greek name; marker variable 'AC' is not a single letter, a subscripted letter or a LaTeX Greek name"
+  },
+  "g10m5s7-1:Ex5-4:2b": {
+   "verdict": "exclude",
+   "class": "marker cannot check",
+   "confidence": "low",
+   "note": "Figure: right angles at A and C. $\\triangle ABD$: $\\cos D=AD/BD$; $\\triangle ACD$: $\\cos D=CD/AD$. Book is right. But the stem lists the side as DC while the key writes CD; the marker cannot know DC and CD are the same segment, so a correct DC/AD would be marked wrong. (kept out as exclude, not hold: its typed shape cannot be emitted — the marker spec is not coherent: marker variable 'AD' is not a single letter, a subscripted letter or a LaTeX Greek name)",
+   "why_low": "a hold needs a well-formed item; this one's typing is unusable"
+  },
+  "g10m5s7-1:Ex5-4:2c": {
+   "verdict": "exclude",
+   "class": "refused",
+   "confidence": "low",
+   "note": "NOT RECOMMENDED LIVE (the item would not pass the pipeline's own checks: the marker spec is not coherent: marker variable 'AC' is not a single letter, a subscripted letter or a LaTeX Greek name; marker variable 'AC' is not a single letter, a subscripted letter or a LaTeX Greek name). The agent's reading: Figure: right angles at A and C. $\\triangle ABC$: $\\tan B=AC/BC$; $\\triangle ABD$: $\\tan B=AD/AB$. Book is right. Retype as two ratios as values, any order.",
+   "why_low": "the recommendation to put it live did not survive the checks: the item would not pass the pipeline's own checks: the marker spec is not coherent: marker variable 'AC' is not a single letter, a subscripted letter or a LaTeX Greek name; marker variable 'AC' is not a single letter, a subscripted letter or a LaTeX Greek name"
+  },
+  "g10m5s7-1:Ex5-4:3": {
+   "verdict": "exclude",
+   "class": "refused",
+   "confidence": "low",
+   "note": "NOT RECOMMENDED LIVE (the item would not pass the pipeline's own checks: the marker spec is not coherent: marker variable 'MN' is not a single letter, a subscripted letter or a LaTeX Greek name; marker variable 'MN' is not a single letter, a subscripted letter or a LaTeX Greek name). The agent's reading: MP is the hypotenuse (right angle at N). $MN=20\\sin40^{\\circ}=12{,}8557\\approx12{,}86$; $NP=20\\cos40^{\\circ}=15{,}3209\\approx15{,}32$. Book, printed answer and blind agree.",
+   "why_low": "the recommendation to put it live did not survive the checks: the item would not pass the pipeline's own checks: the marker spec is not coherent: marker variable 'MN' is not a single letter, a subscripted letter or a LaTeX Greek name; marker variable 'MN' is not a single letter, a subscripted letter or a LaTeX Greek name"
+  },
+  "g10m5s7-1:Ex5-6:1g": {
+   "verdict": "hold",
+   "class": "marker cannot check",
+   "confidence": "low",
+   "note": "$\\cos\\beta=1{,}2$ is impossible since $|\\cos\\beta|\\le1$; book's 'no solution' is right. The typed choice uses an invented option 'solution exists' that is not in the stem or lesson, and a text key cannot be read by the marker.",
+   "why_low": "Decide whether to show this as a teaching-only (not marked) item or give the lesson a real closed option set."
+  },
+  "g10m5s7-1:Ex5-6:1k": {
+   "verdict": "hold",
+   "class": "marker cannot check",
+   "confidence": "low",
+   "note": "$2\\sin\\theta+5=0{,}8$ gives $\\sin\\theta=-2{,}1$, outside $[-1,1]$, so no solution; book is right. The typed choice has an invented option 'solution exists' and the key is text the marker cannot read.",
+   "why_low": "Decide whether to show this as a teaching-only (not marked) item or give the lesson a real closed option set."
+  },
+  "g10m5s7-1:Ex5-6:1m": {
+   "verdict": "hold",
+   "class": "marker cannot check",
+   "confidence": "low",
+   "note": "$\\sin3\\alpha=1{,}2$ is impossible since $|\\sin|\\le1$; book's 'no solution' is right. The typed choice has an invented option 'solution exists' and the key is text the marker cannot read.",
+   "why_low": "Decide whether to show this as a teaching-only (not marked) item or give the lesson a real closed option set."
+  },
+  "g10m5s7-1:Ex5-6:3e": {
+   "verdict": "hold",
+   "class": "unconfirmed",
+   "confidence": "low",
+   "note": "NOT RECOMMENDED LIVE (the independent verifier said confirmed, and another answer is also correct (its own answer: -18,97 (principal solution: 2x+45 = arcsin 0,123 = 7,065 deg, so x = -18,97); The key is the principal-value solution and is correct, but sin(2x+45)=0,123 has other solutions such as x=63,97 that the marker would reject.)). The agent's reading: $\\sin^{-1}(0{,}123)=7{,}0653^{\\circ}$, so $2x=-37{,}9347$ and $x=-18{,}967\\approx-18{,}97$. Matches the printed answer, the EPUB and the working. The blind solver agrees on the main value. Typing as one number is correct.",
+   "why_low": "the recommendation to put it live did not survive the checks: the independent verifier said confirmed, and another answer is also correct (its own answer: -18,97 (principal solution: 2x+45 = arcsin 0,123 = 7,065 deg, so x = -18,97); The key is the principal-value solution and is correct, but sin(2x+45)=0,123 has other solutions such as x=63,97 that the marker would reject.)"
+  },
+  "g10m5s7-1:Ex5-6:3f": {
+   "verdict": "hold",
+   "class": "unconfirmed",
+   "confidence": "low",
+   "note": "NOT RECOMMENDED LIVE (the independent verifier said confirmed, and another answer is also correct (its own answer: 43 (cos 57 = sin 33, so x-10 = 33, x = 43); x = 43 is correct (43,00 to two decimals); x = 157 (x-10 = 147) also satisfies the equation but is not the key.)). The agent's reading: $\\cos57^{\\circ}=\\sin33^{\\circ}=0{,}5446$, so $x-10=33$ and $x=43$, which is exactly 43,00 to 2 d.p. The printed answer, the EPUB and the working agree, and the blind answer 43,00 is the same value.",
+   "why_low": "the recommendation to put it live did not survive the checks: the independent verifier said confirmed, and another answer is also correct (its own answer: 43 (cos 57 = sin 33, so x-10 = 33, x = 43); x = 43 is correct (43,00 to two decimals); x = 157 (x-10 = 147) also satisfies the equation but is not the key.)"
+  },
+  "g10m5s7-1:Ex5-8:9": {
+   "verdict": "exclude",
+   "class": "book error",
+   "confidence": "high",
+   "note": "$a=13\\sin50^{\\circ}=9{,}9586$ and $b=13\\cos50^{\\circ}=8{,}3562\\approx8{,}36$. The book's own working reaches 8,36, but its final line and printed answer say 8,35. The key 9,96; 8,35 would mark the right answer 8,36 wrong.",
+   "if_corrected": {
+    "answer": "",
+    "defect": "The book's final sentence and printed answer give 8,35 mm, but its own working gives $b=8{,}3562\\approx8{,}36$ mm. The correct pair is 9,96 mm and 8,36 mm.",
+    "status": "NOT APPLIED: correcting the book's own answer or working is Samuel's to approve (decisions 43–45)"
+   }
+  },
+  "g10m5s7-1:Ex5-8:10a": {
+   "verdict": "accept",
+   "class": "book answer confirmed",
+   "confidence": "high",
+   "note": "The figure shows x at the base with 8,19 adjacent and hypotenuse 10. $\\cos x=0{,}819$ gives $x=35{,}015^{\\circ}\\approx35$. Matches the printed answer, the EPUB and the working. Typing as numeric 35 is fine. Verified independently: the verifier's own answer matches the key.",
+   "verified": {
+    "by": "g2rec-v1 independent verifier",
+    "own_answer": "35 (cos x = 8,19/10 = 0,819, x = 35,02)",
+    "verdict": "confirmed"
+   }
+  },
+  "g10m5s7-1:Ex5-8:10f": {
+   "verdict": "accept",
+   "class": "book answer confirmed",
+   "confidence": "high",
+   "note": "The figure shows x at the top vertex, opposite side 4,24, hypotenuse 6. $\\sin x=0{,}7067$ gives $x=44{,}96^{\\circ}\\approx45$. Matches the printed answer, the EPUB and the working. Verified independently: the verifier's own answer matches the key.",
+   "verified": {
+    "by": "g2rec-v1 independent verifier",
+    "own_answer": "45 (sin x = 4,24/6 = 0,7067, x = 44,96)",
+    "verdict": "confirmed"
+   }
+  },
+  "g10m5s7-1:Ex5-8:10g": {
+   "verdict": "accept",
+   "class": "book answer confirmed",
+   "confidence": "high",
+   "note": "The figure shows x at the top left, opposite side 5,73, hypotenuse 7. $\\sin x=0{,}81857$ gives $x=54{,}94^{\\circ}\\approx55$. Matches the printed answer, the EPUB and the working. Verified independently: the verifier's own answer matches the key.",
+   "verified": {
+    "by": "g2rec-v1 independent verifier",
+    "own_answer": "55 (sin x = 5,73/7 = 0,8186, x = 54,94)",
+    "verdict": "confirmed"
+   }
+  },
+  "g10m5s7-1:Ex5-8:10h": {
+   "verdict": "accept",
+   "class": "book answer confirmed",
+   "confidence": "high",
+   "note": "The figure shows x at the bottom right, opposite side 5,44, adjacent 2,54. $\\tan x=2{,}1417$ gives $x=64{,}97^{\\circ}\\approx65$. Matches the printed answer, the EPUB and the working. Verified independently: the verifier's own answer matches the key.",
+   "verified": {
+    "by": "g2rec-v1 independent verifier",
+    "own_answer": "65 (tan x = 5,44/2,54 = 2,1417, x = 64,97)",
+    "verdict": "confirmed"
+   }
+  },
+  "g10m5s7-1:Ex5-8:12c": {
+   "verdict": "accept",
+   "class": "book answer confirmed",
+   "confidence": "high",
+   "note": "$PX=20\\sin30^{\\circ}=10$, $XR=20\\cos30^{\\circ}=17{,}32$, $QX=4{,}68$. Then $\\tan(Q\\hat{P}X)=0{,}468$ gives $25{,}08^{\\circ}$. The exact $QX=4{,}6795$ also gives 25,08. The stem is self-contained, and the blind answer matches. Verified independently: the verifier's own answer matches the key.",
+   "verified": {
+    "by": "g2rec-v1 independent verifier",
+    "own_answer": "25,08 (PX = 10, XR = 17,32, QX = 4,68, tan QPX = 0,468, angle = 25,08 degrees)",
+    "verdict": "confirmed"
+   }
+  },
+  "g10m5s7-1:Ex5-8:13": {
+   "verdict": "exclude",
+   "class": "book error",
+   "confidence": "high",
+   "note": "Figure: right angle at C, AC=9, D=41°, DB=17. tan41° = 9/DC gives $DC=9/\\tan41°\\approx10{,}353$, not $9\\tan41°$. Then $BC\\approx6{,}647$, $\\tan B=9/6{,}647$, $\\hat{B}\\approx53{,}55°$. The blind answer is right. Right answer by the agent's own derivation: 53,55°.",
+   "if_corrected": {
+    "answer": "53,55°",
+    "defect": "The book's working writes $DC=9\\tan41°=7{,}8235$ but $\\tan41°=9/DC$ gives $DC=9/\\tan41°=10{,}353$. Printed 44,44° is wrong; the right value is about 53,55°.",
+    "status": "NOT APPLIED: correcting the book's own answer or working is Samuel's to approve (decisions 43–45)"
+   }
+  },
+  "g10m5s7-1:Ex5-8:14": {
+   "verdict": "exclude",
+   "class": "book error",
+   "confidence": "low",
+   "note": "Figure: right angle at B, AB=9, ACB=35°, CAD=15°. $BC=9/\\tan35°=12{,}8535$, $BD=9\\tan70°=24{,}7273$, so $CD=11{,}8738\\approx11{,}87$. The book's 11,88 is a rounding accumulation. Right answer by the agent's own derivation: 11,87.",
+   "why_low": "The book's 11,88 comes only from rounding intermediate values to 2 d.p. (24,73 and 12,85). A person must decide whether 11,87 and 11,88 should both be marked right; a single key would mark one of them wrong.",
+   "if_corrected": {
+    "answer": "11,87",
+    "defect": "Book rounds BC and BD to 2 d.p. before subtracting (24,73-12,85=11,88). Exact working gives 11,8738, so 11,87.",
+    "status": "NOT APPLIED: correcting the book's own answer or working is Samuel's to approve (decisions 43–45)"
+   }
+  },
+  "g10m5s7-1:Ex5-8:15c": {
+   "verdict": "accept",
+   "class": "book answer confirmed",
+   "confidence": "low",
+   "note": "Figure: right angle at F, EG=8 (hypotenuse), FG=3 adjacent to θ at G. $\\cos\\theta=3/8$, $\\theta=\\cos^{-1}0{,}375=67{,}976°$. Matches the book. Blind 67,98 is the same value, rounded. Verified independently: the verifier's own answer matches the key.",
+   "why_low": "The stem gives no rounding instruction and the key has 3 decimals (67,976); a student who answers 67,98 depends on the marker's tolerance. The maths is correct.",
+   "verified": {
+    "by": "g2rec-v1 independent verifier",
+    "own_answer": "theta = arccos(3/8) = 67,976 degrees",
+    "verdict": "confirmed",
+    "app_marker_book_answer": "equal"
+   }
+  },
+  "g10m5s7-1:Ex5-8:16": {
+   "verdict": "accept",
+   "class": "book answer confirmed",
+   "confidence": "high",
+   "note": "Figure: B right angle, B-C-D collinear, $\\hat{C}_1=ACB$ is the exterior angle of triangle ACD, so $A_2=x$ and $CD=AC=\\sqrt{24{,}6^2+12{,}2^2}=\\sqrt{754}\\approx27{,}46$. Matches the book and the blind answer. Verified independently: the verifier's own answer matches the key.",
+   "verified": {
+    "by": "g2rec-v1 independent verifier",
+    "own_answer": "CD = 27,46 cm",
+    "verdict": "confirmed"
+   }
+  },
+  "g10m5s7-1:Ex5-8:17f": {
+   "verdict": "exclude",
+   "class": "book error",
+   "confidence": "high",
+   "note": "$\\sin3\\theta+5=4$ gives $\\sin3\\theta=-1$, so $3\\theta=270°$ and $\\theta=90°$, which is not acute. The book's $3\\theta=90$ gives $\\sin90°=1$, not $-1$. No acute solution exists. Right answer by the agent's own derivation: No solution (the only solution is 90°, not acute).",
+   "if_corrected": {
+    "answer": "No solution (the only solution is 90°, not acute)",
+    "defect": "The book takes $\\sin3\\theta=-1$ and writes $3\\theta=90$, but $\\sin90°=+1$. 30° gives $\\sin90°+5=6\\ne4$. The stem or the book is in error.",
+    "status": "NOT APPLIED: correcting the book's own answer or working is Samuel's to approve (decisions 43–45)"
+   }
+  },
+  "g10m5s7-1:Ex5-8:17g": {
+   "verdict": "accept",
+   "class": "book answer confirmed",
+   "confidence": "high",
+   "note": "$\\cos(4+\\theta)=0{,}45$ gives $4+\\theta=\\cos^{-1}0{,}45=63{,}2563°$, so $\\theta=59{,}2563\\approx59{,}26$, which is acute and positive. Matches the book and the blind answer. Verified independently: the verifier's own answer matches the key.",
+   "verified": {
+    "by": "g2rec-v1 independent verifier",
+    "own_answer": "theta = 59,26 degrees",
+    "verdict": "confirmed"
+   }
+  },
+  "g10m5s7-1:Ex5-8:23": {
+   "verdict": "exclude",
+   "class": "book error",
+   "confidence": "high",
+   "note": "Law of sines with perimeter 20: $a=20\\sin40°/(2\\sin40°+\\sin100°)=5{,}662$, $b=20-2a=8{,}675$. The book rounds $\\cos40°$ to 0,77 (true 0,766), giving 5,65 and 8,7, which are off. Right answer by the agent's own derivation: 5,66 cm, 5,66 cm and 8,68 cm.",
+   "if_corrected": {
+    "answer": "5,66 cm, 5,66 cm and 8,68 cm",
+    "defect": "The book uses $\\cos40°\\approx0{,}77$ (it is 0,7660), so $a=5{,}65$ instead of 5,66, and $b=8{,}7$ instead of 8,68. The printed lengths are inaccurate.",
+    "status": "NOT APPLIED: correcting the book's own answer or working is Samuel's to approve (decisions 43–45)"
+   }
+  },
+  "g10m5s7-1:Ex5-8:24": {
+   "verdict": "exclude",
+   "class": "book error",
+   "confidence": "low",
+   "note": "Figure: right angle at D, BD=280, A=55°, C=75°. $AD=280/\\tan55°=196{,}0581$, $CD=280/\\tan75°=75{,}0258$, $AC=121{,}0323$, area $=140\\times121{,}0323=16944{,}53\\approx16945$. The book's 16944 is a rounding artefact. Right answer by the agent's own derivation: 16945 units² (exact 16944,53).",
+   "why_low": "The book's 16944 comes from rounding AD, CD and AC to 3 d.p. before multiplying (121,032x140=16944,48). Exact value is 16944,53, which rounds to 16945. A person must decide whether to accept 16944 or 16945 for a single key.",
+   "if_corrected": {
+    "answer": "16945 units² (exact 16944,53)",
+    "defect": "Book rounds intermediate lengths to 3 d.p., so 121,032x140 gives 16944. Unrounded working gives 16944,53, which rounds to 16945.",
+    "status": "NOT APPLIED: correcting the book's own answer or working is Samuel's to approve (decisions 43–45)"
+   }
+  },
+  "g10m5s8-1:Ex5-7:4b": {
+   "verdict": "exclude",
+   "class": "book error",
+   "confidence": "high",
+   "note": "$\\cos\\beta=-4/5$, third quadrant, $x=-4,y=-3,r=5$. $\\tan\\beta=3/4$ so $3/\\tan\\beta=4$, and $2\\sin^2\\beta=18/25$. Sum is $118/25$. The book's line $\\frac{3(-4)}{-3}=\\frac{-12}{3}$ drops a sign. Right answer by the agent's own derivation: \\frac{118}{25}.",
+   "if_corrected": {
+    "answer": "\\frac{118}{25}",
+    "defect": "Sign error in the book's working: $\\frac{3(-4)}{-3}$ equals $+4$, but the book writes $\\frac{-12}{3}=-4$. So its final $\\frac{-82}{25}$ is wrong; the right value is $\\frac{118}{25}$ (4,72), which is also the blind answer.",
+    "status": "NOT APPLIED: correcting the book's own answer or working is Samuel's to approve (decisions 43–45)"
+   }
+  },
+  "g10m5s8-1:Ex5-8:22": {
+   "verdict": "exclude",
+   "class": "book error",
+   "confidence": "low",
+   "note": "$\\vec{EF}=(1,2)$, $\\vec{EG}=(3,-2)$. The angle is $\\arctan2+\\arctan(2/3)=63{,}435^{\\circ}+33{,}690^{\\circ}=97{,}125^{\\circ}$, which is 97,13 to 2 d.p. The book adds two rounded angles and prints 97,12. Right answer by the agent's own derivation: 97,13.",
+   "why_low": "The book's error is rounding accumulation. A person may prefer to keep the item with a tolerance or a key of 97,13; I may not write that answer myself.",
+   "if_corrected": {
+    "answer": "97,13",
+    "defect": "The book adds the rounded part-angles 63,43 and 33,69 to get 97,12. The exact angle is 97,125, so rounded to 2 d.p. it is 97,13. A key of 97,12 would mark a correctly rounded answer wrong.",
+    "status": "NOT APPLIED: correcting the book's own answer or working is Samuel's to approve (decisions 43–45)"
+   }
+  }
+ },
+ "unanswered": [],
+ "report": {
+  "items": 42,
+  "recommended": 42,
+  "unanswered": [],
+  "by_verdict": {
+   "exclude": 19,
+   "fix": 6,
+   "hold": 7,
+   "accept": 10
+  },
+  "by_class": {
+   "book error": 14,
+   "compound answer": 1,
+   "selected from a list": 3,
+   "marker cannot check": 6,
+   "stem damaged": 1,
+   "partial answer": 1,
+   "typing error": 1,
+   "book answer confirmed": 10,
+   "refused": 3,
+   "unconfirmed": 2
+  },
+  "by_confidence": {
+   "high": 21,
+   "low": 21
+  },
+  "live": [
+   "g10m5s3-1:Ex5-1:4",
+   "g10m5s3-1:Ex5-1:6",
+   "g10m5s3-1:Ex5-8:1a",
+   "g10m5s3-1:Ex5-8:1b",
+   "g10m5s5-1:Ex5-2:1z",
+   "g10m5s6-1:Ex5-3:5b",
+   "g10m5s7-1:Ex5-4:1h",
+   "g10m5s7-1:Ex5-8:10a",
+   "g10m5s7-1:Ex5-8:10f",
+   "g10m5s7-1:Ex5-8:10g",
+   "g10m5s7-1:Ex5-8:10h",
+   "g10m5s7-1:Ex5-8:12c",
+   "g10m5s7-1:Ex5-8:15c",
+   "g10m5s7-1:Ex5-8:16",
+   "g10m5s7-1:Ex5-8:17g",
+   "g10m5s7-1:WE7"
+  ],
+  "live_question_ids": [
+   "q:g10m5s3-1-2:ex5-1-6",
+   "q:g10m5s3-1-2:ex5-8-1a",
+   "q:g10m5s3-1-2:ex5-8-1b",
+   "q:g10m5s5-1-2:ex5-2-1z",
+   "q:g10m5s6-1-1:ex5-3-5b",
+   "q:g10m5s7-1-1:ex5-4-1h",
+   "q:g10m5s7-1-1:ex5-8-10a",
+   "q:g10m5s7-1-1:ex5-8-10f",
+   "q:g10m5s7-1-1:ex5-8-10g",
+   "q:g10m5s7-1-1:ex5-8-10h",
+   "q:g10m5s7-1-1:ex5-8-16",
+   "q:g10m5s7-1-2:ex5-8-12c",
+   "q:g10m5s7-1-2:ex5-8-15c",
+   "q:g10m5s7-1-2:we07",
+   "q:g10m5s7-1-3:ex5-8-17g"
+  ],
+  "not_live": {
+   "g10m5s7-1:Ex5-4:2a": {
+    "agent_verdict": "fix",
+    "recommended": "exclude",
+    "kind": "refused",
+    "why": "the item would not pass the pipeline's own checks: the marker spec is not coherent: marker variable 'AC' is not a single letter, a subscripted letter or a LaTeX Greek name; marker variable 'AC' is not a single letter, a subscripted letter or a LaTeX Greek name"
+   },
+   "g10m5s7-1:Ex5-4:2c": {
+    "agent_verdict": "fix",
+    "recommended": "exclude",
+    "kind": "refused",
+    "why": "the item would not pass the pipeline's own checks: the marker spec is not coherent: marker variable 'AC' is not a single letter, a subscripted letter or a LaTeX Greek name; marker variable 'AC' is not a single letter, a subscripted letter or a LaTeX Greek name"
+   },
+   "g10m5s7-1:Ex5-4:3": {
+    "agent_verdict": "accept",
+    "recommended": "exclude",
+    "kind": "refused",
+    "why": "the item would not pass the pipeline's own checks: the marker spec is not coherent: marker variable 'MN' is not a single letter, a subscripted letter or a LaTeX Greek name; marker variable 'MN' is not a single letter, a subscripted letter or a LaTeX Greek name"
+   },
+   "g10m5s7-1:Ex5-6:3e": {
+    "agent_verdict": "accept",
+    "recommended": "hold",
+    "kind": "unconfirmed",
+    "why": "the independent verifier said confirmed, and another answer is also correct (its own answer: -18,97 (principal solution: 2x+45 = arcsin 0,123 = 7,065 deg, so x = -18,97); The key is the principal-value solution and is correct, but sin(2x+45)=0,123 has other solutions such as x=63,97 that the marker would reject.)"
+   },
+   "g10m5s7-1:Ex5-6:3f": {
+    "agent_verdict": "accept",
+    "recommended": "hold",
+    "kind": "unconfirmed",
+    "why": "the independent verifier said confirmed, and another answer is also correct (its own answer: 43 (cos 57 = sin 33, so x-10 = 33, x = 43); x = 43 is correct (43,00 to two decimals); x = 157 (x-10 = 147) also satisfies the equation but is not the key.)"
+   }
+  },
+  "low_confidence": [
+   "g10m5s3-1:Ex5-1:4",
+   "g10m5s3-1:Ex5-1:6",
+   "g10m5s3-1:Ex5-8:1a",
+   "g10m5s3-1:Ex5-8:1b",
+   "g10m5s5-1:Ex5-2:1y",
+   "g10m5s5-1:Ex5-2:1z",
+   "g10m5s5-1:Ex5-2:3",
+   "g10m5s7-1:Ex5-4:2a",
+   "g10m5s7-1:Ex5-4:2b",
+   "g10m5s7-1:Ex5-4:2c",
+   "g10m5s7-1:Ex5-4:3",
+   "g10m5s7-1:Ex5-6:1g",
+   "g10m5s7-1:Ex5-6:1k",
+   "g10m5s7-1:Ex5-6:1m",
+   "g10m5s7-1:Ex5-6:3e",
+   "g10m5s7-1:Ex5-6:3f",
+   "g10m5s7-1:Ex5-8:14",
+   "g10m5s7-1:Ex5-8:15c",
+   "g10m5s7-1:Ex5-8:24",
+   "g10m5s7-1:WE7",
+   "g10m5s8-1:Ex5-8:22"
+  ],
+  "stem_repairs": [
+   "g10m5s5-1:Ex5-2:1z"
+  ],
+  "retyped": [
+   "g10m5s3-1:Ex5-1:4"
+  ],
+  "corrections_proposed": [
+   "g10m5s3-1:Ex5-1:3a",
+   "g10m5s3-1:Ex5-8:1c",
+   "g10m5s5-1:Ex5-2:3",
+   "g10m5s5-1:Ex5-8:18c",
+   "g10m5s7-1:Ex5-4:1a",
+   "g10m5s7-1:Ex5-4:1e",
+   "g10m5s7-1:Ex5-4:1j",
+   "g10m5s7-1:Ex5-8:13",
+   "g10m5s7-1:Ex5-8:14",
+   "g10m5s7-1:Ex5-8:17f",
+   "g10m5s7-1:Ex5-8:23",
+   "g10m5s7-1:Ex5-8:24",
+   "g10m5s7-1:Ex5-8:9",
+   "g10m5s8-1:Ex5-7:4b",
+   "g10m5s8-1:Ex5-8:22"
+  ],
+  "off_task": [],
+  "no_longer_owed": [],
+  "stale_items": [],
+  "by_state": {
+   "held": 27,
+   "excluded": 15
+  },
+  "app_marker_identity_of_the_typed_key": {
+   "equal": [],
+   "different": [],
+   "unreadable": []
+  }
+ }
+}

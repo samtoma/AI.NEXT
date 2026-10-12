@@ -1,0 +1,127 @@
+{
+ "stage": "S2-S4,S8",
+ "workflow": "lesson",
+ "prompts_version": "lesson-v5",
+ "collect_version": "collect-5",
+ "book": "g10-math",
+ "mode": "visuals",
+ "embedded": {
+  "source": "runbook/lesson.workflow.js",
+  "source_sha256": "a1ec5de207d18f0f0a7198f23346adcd585e1f984a8290ee4cabd7ecf62749bd",
+  "args_sha256": "6a6f434b31bd1122aed9453155c28e15a75bc6a19bb9524cd14e026dad829591",
+  "generated_sha256": "5c930ded4ab99d2086d9978b296b9cde8a09434c62f444e0abebf77473f66a91",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "lessons": [
+  {
+   "lesson": "g10m8s3-1",
+   "mode": "visuals",
+   "rerun_figures": [
+    "b03190:7",
+    "b03191:8",
+    "b03298:10",
+    "b03299:11",
+    "b03180:4"
+   ],
+   "visuals": [],
+   "viz_gaps": [
+    {
+     "figure_id": "b03190:7",
+     "src": "tikzpicture/1e20844ee903416550ff478159f03242.png",
+     "ref": "Ex8-3:5",
+     "printed_page": 297,
+     "reason": "the figure would draw the unknown",
+     "needed_kind": "coordinate_plot"
+    },
+    {
+     "figure_id": "b03191:8",
+     "src": "tikzpicture/cc336ad929bda6251658967781136f60.png",
+     "ref": "Ex8-3:6",
+     "printed_page": 297,
+     "reason": "the figure would draw the unknown",
+     "needed_kind": "coordinate_plot"
+    },
+    {
+     "figure_id": "b03298:10",
+     "src": "tikzpicture/7c5f98f613dbcdafcee61d1d6a5f7aef.png",
+     "ref": "Ex8-6:8",
+     "printed_page": 317,
+     "reason": "the figure would draw the unknown",
+     "needed_kind": "coordinate_plot"
+    },
+    {
+     "figure_id": "b03299:11",
+     "src": "tikzpicture/739c8475712445081b664acfb20639b9.png",
+     "ref": "Ex8-6:9",
+     "printed_page": 317,
+     "reason": "the figure would draw the unknown",
+     "needed_kind": "coordinate_plot"
+    },
+    {
+     "figure_id": "b03180:4",
+     "src": "tikzpicture/fa8f615a576d2b7381b992aa48d1e32f.png",
+     "ref": "WE4",
+     "printed_page": 295,
+     "reason": "the spec does not match the figure: Spec is missing the 'mGH = 3' slope label that appears in the figure",
+     "rejected_spec": {
+      "kind": "coordinate_plot",
+      "spec": {
+       "xRange": [
+        -2,
+        10
+       ],
+       "yRange": [
+        -10,
+        2
+       ],
+       "points": [
+        {
+         "x": 7,
+         "y": -9,
+         "label": "G(7; -9)"
+        },
+        {
+         "x": 10,
+         "y": 0,
+         "label": "H(x; 0)"
+        }
+       ],
+       "segments": [
+        [
+         0,
+         1
+        ]
+       ],
+       "animate": "plot-sequence",
+       "interactive": false
+      }
+     }
+    }
+   ],
+   "counts": {
+    "visuals": 0,
+    "viz_gaps": 5,
+    "compared": 1
+   }
+  }
+ ],
+ "failed_lessons": [],
+ "calls": {
+  "by_phase": {
+   "S4 Visuals": 1,
+   "S4 Compare": 1
+  },
+  "per_lesson": {
+   "g10m8s3-1": 2
+  },
+  "total": 2
+ },
+ "meter": {
+  "stage": "S2-S4,S8",
+  "record": "uv run meter_run.py record --book g10-math --stage S2-S4,S8 --run <runId>",
+  "by_stage": "uv run meter_run.py summary --book g10-math --by phase",
+  "by_lesson": "uv run meter_run.py summary --book g10-math --by lesson",
+  "note": "Phase titles start with their stage (S2, S3, S4, S8), so `--by phase` is the per-stage cost; every label carries the lesson slug (S3:blind:<slug>:1), so `--by lesson` is the per-lesson cost."
+ },
+ "run_id": "wf_f2998b98-934"
+}

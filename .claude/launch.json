@@ -4,26 +4,99 @@
     {
       "name": "tutor-poc",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeArgs": [
+        "run",
+        "dev"
+      ],
       "cwd": "app",
       "port": 3000
     },
     {
       "name": "tutor-poc-q3q4",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev", "--", "-p", "3001"],
+      "runtimeArgs": [
+        "run",
+        "dev",
+        "--",
+        "-p",
+        "3001"
+      ],
       "cwd": "app",
       "port": 3001
     },
     {
       "name": "tutor-console",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev", "--", "-H", "127.0.0.1"],
+      "runtimeArgs": [
+        "run",
+        "dev",
+        "--",
+        "-H",
+        "127.0.0.1"
+      ],
       "cwd": "app",
       "port": 3002,
       "env": {
         "AINEXT_SURFACE": "admin",
         "PORT": "3002"
+      }
+    },
+    {
+      "name": "g10-pilot-student",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "dev",
+        "--",
+        "-p",
+        "3010"
+      ],
+      "cwd": "app",
+      "port": 3010,
+      "env": {
+        "DATABASE_URL": "postgres://ainext_app:ainext_app@127.0.0.1:5432/ainext_pilot_g10_ch08",
+        "DATABASE_URL_OPERATOR": "postgres://ainext_operator:ainext_operator@127.0.0.1:5432/ainext_pilot_g10_ch08",
+        "DATABASE_URL_MAINT": "postgres://ainext_maint:ainext_maint@127.0.0.1:5432/ainext_pilot_g10_ch08",
+        "AINEXT_ENVIRONMENT": "mvp1",
+        "AINEXT_COURSE_GATING": "on",
+        "AINEXT_PUBLIC_URL": "http://localhost:3010",
+        "AINEXT_CONSOLE_URL": "http://localhost:3011",
+        "AINEXT_MAIL_TRANSPORT": "console",
+        "AINEXT_BOOTSTRAP_OPERATOR_EMAIL": "samuel.s.toma@gmail.com",
+        "NEXT_TELEMETRY_DISABLED": "1",
+        "PORT": "3010",
+        "AINEXT_DIST_DIR": ".next-pilot"
+      }
+    },
+    {
+      "name": "g10-pilot-console",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "dev",
+        "--",
+        "-p",
+        "3011",
+        "-H",
+        "127.0.0.1"
+      ],
+      "cwd": "app",
+      "port": 3011,
+      "env": {
+        "DATABASE_URL": "postgres://ainext_app:ainext_app@127.0.0.1:5432/ainext_pilot_g10_ch08",
+        "DATABASE_URL_OPERATOR": "postgres://ainext_operator:ainext_operator@127.0.0.1:5432/ainext_pilot_g10_ch08",
+        "DATABASE_URL_MAINT": "postgres://ainext_maint:ainext_maint@127.0.0.1:5432/ainext_pilot_g10_ch08",
+        "AINEXT_ENVIRONMENT": "mvp1",
+        "AINEXT_COURSE_GATING": "on",
+        "AINEXT_PUBLIC_URL": "http://localhost:3010",
+        "AINEXT_CONSOLE_URL": "http://localhost:3011",
+        "AINEXT_MAIL_TRANSPORT": "console",
+        "AINEXT_BOOTSTRAP_OPERATOR_EMAIL": "samuel.s.toma@gmail.com",
+        "NEXT_TELEMETRY_DISABLED": "1",
+        "PORT": "3011",
+        "AINEXT_SURFACE": "admin",
+        "AINEXT_DEV_OPERATOR_PICKER": "on",
+        "AINEXT_DIST_DIR": ".next-pilot-admin"
       }
     }
   ]

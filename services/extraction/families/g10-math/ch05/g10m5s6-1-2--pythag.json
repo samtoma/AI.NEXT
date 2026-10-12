@@ -1,0 +1,77 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m5s6-1-2:pythag",
+ "kind": "family",
+ "lo_id": "lo:g10m5s6-1-2",
+ "parent_question_id": "q:g10m5s6-1-2:ex5-8-7",
+ "source_page": 140,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "i",
+   "randint": [
+    0,
+    17
+   ]
+  },
+  {
+   "name": "row",
+   "let": "[[2, 2, 7, 4, 2], [2, 2, 11, 4, 3], [2, 4, 11, 6, 5], [2, 6, 3, 4, 7], [6, 2, 3, 4, 3], [6, 2, 11, 4, 5], [8, 2, 2, 6, 2], [8, 2, 11, 6, 3], [9, 3, 3, 6, 3], [9, 3, 11, 6, 5], [10, 2, 2, 6, 3], [10, 2, 3, 4, 7], [10, 2, 7, 8, 2], [10, 4, 5, 6, 5], [10, 6, 3, 4, 13], [12, 3, 2, 9, 2], [12, 4, 3, 8, 3], [12, 4, 11, 8, 5]][i]"
+  },
+  {
+   "name": "P",
+   "let": "row[0]"
+  },
+  {
+   "name": "Q",
+   "let": "row[1]"
+  },
+  {
+   "name": "m",
+   "let": "row[2]"
+  },
+  {
+   "name": "c",
+   "let": "row[3]"
+  },
+  {
+   "name": "r",
+   "let": "row[4]"
+  },
+  {
+   "name": "D",
+   "let": "Q * Q * m + P * P"
+  },
+  {
+   "require": "c * c * r == D",
+   "why": "D = c^2 x r with r squarefree, so the hypotenuse is c root r"
+  },
+  {
+   "name": "g",
+   "let": "gcd(P, c)"
+  }
+ ],
+ "constraints": [
+  "c * c * r == Q * Q * m + P * P",
+  "gcd(P, c) > 1",
+  "c // gcd(P, c) > 1"
+ ],
+ "stem": "In the right-angled triangle $ABC$ the right angle is at $B$, $AB = {=Q}\\sqrt{{=m}}$ and $BC = {=P}$. Let $\\theta$ be the angle at $A$. Solve for $\\sin{\\theta}$ in surd form.",
+ "marker": {
+  "kind": "surd",
+  "answer": "{=P // g}/({=c // g}*sqrt({=r}))",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "solution": [
+  "The hypotenuse $AC$ is not given, so find it with the Theorem of Pythagoras: $AC^2=AB^2+BC^2$.",
+  "$AC^2=({=Q}\\sqrt{{=m}})^2+{=P}^2={=Q * Q * m}+{=P * P}={=D}$",
+  "Simplify the surd: $AC=\\sqrt{{=D}}=\\sqrt{{=c * c}\\times{=r}}={=c}\\sqrt{{=r}}$",
+  "$\\sin{\\theta}=\\frac{\\text{opposite}}{\\text{hypotenuse}}=\\frac{BC}{AC}=\\frac{{=P}}{{=c}\\sqrt{{=r}}}$",
+  "The whole numbers ${=P}$ and ${=c}$ have the highest common factor ${=g}$. Cancel it: $\\sin{\\theta}=\\frac{{=P // g}}{{=c // g}\\sqrt{{=r}}}$"
+ ],
+ "notes": "Advanced tier, modelled on ex5-8-7 (legs 3 root 3 and 9, hypotenuse 6 root 3, sin = 9/(6 root 3) = 3/(2 root 3)): here the hypotenuse is NOT given, so the student must apply Pythagoras and simplify the surd root(D) = c root r before taking the ratio, then cancel. The book's own triangle is row (9,3,3). Table rows are (BC, Q, m, c, r) with BC = P: AB = Q root m (Q >= 2, so never '1 root m'), AC^2 = Q^2 m + P^2 = c^2 r with r squarefree and r >= 2, c >= 2 (a real simplification), gcd(P, c) >= 2 and c / gcd >= 2 (a real cancellation, and the denominator coefficient never prints as 1). Every row checked by script. 18 stems, answers P/g over (c/g) root r, e.g. 3/(2 root 3), 4/(3 root 2), 5/(2 root 7). The denominator is left unrationalised, as the book prints it; marker form null so an equivalent rationalised form (root 3 over 2) is accepted too. D never exceeds 320 and no square of a given side exceeds 144."
+}

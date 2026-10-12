@@ -1,0 +1,98 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m1s6-1-1:difference-of-products",
+ "kind": "family",
+ "lo_id": "lo:g10m1s6-1-1",
+ "parent_question_id": "q:g10m1s6-1-1:ex1-11-22q",
+ "source_page": 38,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "k",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "a",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "c",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "h",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "r",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "s",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "X3",
+   "let": "k * a - h * r"
+  },
+  {
+   "name": "X2",
+   "let": "k * b + h * s"
+  },
+  {
+   "name": "X1",
+   "let": "k * c"
+  },
+  {
+   "require": "X3 >= 2",
+   "why": "the x^3 coefficient must be at least 2, so the answer never prints 1x^3, zero or a negative leading term"
+  }
+ ],
+ "constraints": [],
+ "stem": "Expand and simplify: ${=k}x({=a}x^2-{=b}x+{=c})-{=h}x^2({=r}x+{=s})$",
+ "solution": [
+  "Expand the first product by multiplying every term in the bracket by ${=k}x$: ${=k}x({=a}x^2-{=b}x+{=c})={=k*a}x^3-{=k*b}x^2+{=k*c}x$.",
+  "Expand the second product by multiplying every term in the bracket by ${=h}x^2$: ${=h}x^2({=r}x+{=s})={=h*r}x^3+{=h*s}x^2$.",
+  "The second product is subtracted, so every term of it changes sign: $\\begin{aligned}{=k}x({=a}x^2-{=b}x+{=c})-{=h}x^2({=r}x+{=s})&={=k*a}x^3-{=k*b}x^2+{=k*c}x-{=h*r}x^3-{=h*s}x^2\\end{aligned}$",
+  "Collect like terms. For $x^3$: ${=k*a}x^3-{=h*r}x^3={=X3}x^3$. For $x^2$: $-{=k*b}x^2-{=h*s}x^2=-{=X2}x^2$. The $x$ term stays ${=X1}x$.",
+  "So the expression simplifies to ${=X3}x^3-{=X2}x^2+{=X1}x$."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "{=X3}*x^3 - {=X2}*x^2 + {=X1}*x",
+  "form": "expanded",
+  "variables": [
+   "x"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Harder than the book's printed sums of two products (ex1-11-22q/r/s, ex1-4-2s) in three ways: one bracket is a trinomial with a negative middle term, the two products are subtracted rather than added (the objective description names 'sums and differences of such products'), and the answer has three terms of three different degrees. The method is the book's own: multiply every term of the bracket by the monomial, then collect like terms. Parameters: first monomial kx with bracket (a x^2 - b x + c); second monomial h x^2 with bracket (r x + s). x^3 coefficient k*a - h*r is required to be at least 2; the x^2 coefficient is -(k*b + h*s), always negative; the x coefficient is k*c. All inputs are at least 2 so no instance prints a coefficient of 1. Answer is printed in descending powers (the book sometimes prints in unsorted order; the marker is order-insensitive). Rejection rate of the require is about one half, so sampling stays cheap. I checked 3000 sampled instances numerically: stem, every equality in the solution steps, and the marker answer agree at four test points. Subtracting a product is the one step the printed book questions of this objective do not show; it is in scope through the objective description, and a reviewer who wants the family held to the printed sums only can reject it without affecting the other family."
+}

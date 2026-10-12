@@ -1,0 +1,103 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s4-1-3:yintercept-check",
+ "kind": "family",
+ "lo_id": "lo:g10m6s4-1-3",
+ "parent_question_id": "q:g10m6s4-1-3:ex6-4-3a",
+ "source_page": 175,
+ "tier": "basic",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "aabs",
+   "randint": [
+    1,
+    6
+   ]
+  },
+  {
+   "name": "asgn",
+   "choice": [
+    1,
+    -1
+   ]
+  },
+  {
+   "name": "a",
+   "let": "aabs * asgn"
+  },
+  {
+   "name": "qabs",
+   "randint": [
+    1,
+    6
+   ]
+  },
+  {
+   "name": "qsgn",
+   "choice": [
+    1,
+    -1
+   ]
+  },
+  {
+   "name": "q",
+   "let": "qabs * qsgn"
+  },
+  {
+   "name": "pa",
+   "let": "'-' if a < 0 else ''"
+  },
+  {
+   "name": "pq",
+   "let": "'+' if q > 0 else '-'"
+  },
+  {
+   "name": "x0",
+   "let": "-a / q"
+  },
+  {
+   "require": "x0 != q",
+   "why": "keeps the options (0, q) and (0, x0) different from each other"
+  }
+ ],
+ "constraints": [],
+ "stem": "Given the following equation: $y={=pa}\\frac{{=aabs}}{x}{=pq}{=qabs}$ Determine the location of the $y$-intercept.",
+ "choices": {
+  "correct": "There is no $y$-intercept.",
+  "distractors": [
+   {
+    "text": "$(0, {=q})$",
+    "misconception_id": "mc:g10m6s4-1-3:assumes-y-intercept-exists"
+   },
+   {
+    "text": "$(0, 0)$",
+    "misconception_id": "mc:g10m6s4-1-3:y-intercept-at-origin"
+   },
+   {
+    "text": "$(0, {=x0})$",
+    "misconception_id": "mc:g10m6s4-1-3:swaps-intercept-roles"
+   }
+  ]
+ },
+ "solution": [
+  "The $y$-intercept is where the graph crosses the $y$-axis, so substitute $x=0$ into the equation.",
+  "$y={=pa}\\frac{{=aabs}}{(0)}{=pq}{=qabs}$",
+  "The denominator is $0$, and division by zero is undefined, so there is no value of $y$ when $x=0$.",
+  "The graph never meets the $y$-axis: there is no $y$-intercept."
+ ],
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m6s4-1-3:y-intercept-at-origin",
+   "label": "Placing the hyperbola's $y$-intercept at the origin",
+   "description": "The student pictures the basic hyperbola as passing through or centred on the origin and gives $(0, 0)$ as the $y$-intercept, instead of noticing that $x=0$ makes the fraction undefined."
+  },
+  {
+   "id": "mc:g10m6s4-1-3:swaps-intercept-roles",
+   "label": "Reporting the $x$-intercept's value as the $y$-intercept",
+   "description": "The student sets $y=0$, solves for $x$, and then writes that value as a point on the $y$-axis, $(0, x)$, so they confuse which variable is set to zero for which intercept."
+  }
+ ],
+ "notes": "Basic = the book's entry question (y-intercept of y = a/x + q does not exist), as in ex6-4-3a, ex6-4-4a and ex6-8-19a. The book offers two options ('no y-intercept' / 'y-intercept exists'); this family needs at least three distractors, so each wrong option is a specific point a student might report: (0, q) from reading the constant as the y-intercept (the catalogued misconception, since it ignores the 0 in the denominator), (0, 0) from assuming the graph passes through the origin, and (0, x0) from swapping the roles of the intercepts. None of these points can be on the graph, because x = 0 is not in the domain. Constraints: a and q are non-zero (magnitude 1 to 6, either sign), and q != x0 so the two coordinate options never coincide. The equation is built with sign tokens: pa is '-' or empty, pq is '+' or '-'. If the engine does not accept string literals in a 'let', replace pa and pq with signed() or move the signs into the numbers."
+}

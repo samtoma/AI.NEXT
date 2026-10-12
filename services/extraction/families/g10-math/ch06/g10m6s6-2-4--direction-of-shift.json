@@ -1,0 +1,102 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s6-2-4:direction-of-shift",
+ "kind": "family",
+ "lo_id": "lo:g10m6s6-2-4",
+ "parent_question_id": "q:g10m6s6-2-4:ex6-6-18d",
+ "source_page": 206,
+ "tier": "advanced",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "p",
+   "choice": [
+    10,
+    20,
+    30,
+    40,
+    50,
+    60,
+    70,
+    80
+   ]
+  },
+  {
+   "name": "s",
+   "let": "90 - p"
+  },
+  {
+   "name": "t",
+   "let": "90 + p"
+  }
+ ],
+ "constraints": [
+  "p != 45",
+  "p < 90"
+ ],
+ "stem": "On the same set of axes, the graph of $f(x) = {=a}\\sin x + {=q}$ and the graph of $g(x) = {=a}\\cos(x - {=p}^\\circ) + {=q}$ are drawn. Which single horizontal shift of the graph of $f$ gives the graph of $g$?",
+ "choices": {
+  "correct": "${=s}^\\circ$ to the left",
+  "distractors": [
+   {
+    "text": "${=s}^\\circ$ to the right",
+    "misconception_id": "mc:g10m6s6-2-4:shift-direction"
+   },
+   {
+    "text": "${=p}^\\circ$ to the right",
+    "misconception_id": "mc:g10m6s6-2-4:ignores-90-offset"
+   },
+   {
+    "text": "${=t}^\\circ$ to the right",
+    "misconception_id": "mc:g10m6s6-2-4:cos-is-sin-right"
+   },
+   {
+    "text": "${=t}^\\circ$ to the left",
+    "misconception_id": "mc:g10m6s6-2-4:minus-means-left"
+   }
+  ]
+ },
+ "solution": [
+  "Use $\\cos\\theta = \\sin(\\theta + 90^\\circ)$ with $\\theta = x - {=p}^\\circ$: $g(x) = {=a}\\sin(x - {=p}^\\circ + 90^\\circ) + {=q} = {=a}\\sin(x + {=s}^\\circ) + {=q}$.",
+  "So $g(x) = f(x + {=s}^\\circ)$. Replacing $x$ by $x + {=s}^\\circ$ moves every point of the graph of $f$ ${=s}^\\circ$ to the left.",
+  "The graph of $g$ is the graph of $f$ shifted ${=s}^\\circ$ to the left."
+ ],
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m6s6-2-4:shift-direction",
+   "label": "Reverses the direction of the horizontal shift",
+   "description": "Finds the right size of shift between the sine and cosine graphs but reads the sign the wrong way, so a leftward shift is reported as rightward (or the reverse)."
+  },
+  {
+   "id": "mc:g10m6s6-2-4:ignores-90-offset",
+   "label": "Ignores that cosine is already a 90 degree shift of sine",
+   "description": "Reads cos(x - p) as 'the graph of f shifted right by p', using the number inside the bracket as the whole shift and forgetting that the sine and cosine graphs are themselves 90 degrees apart."
+  },
+  {
+   "id": "mc:g10m6s6-2-4:cos-is-sin-right",
+   "label": "Believes cosine is sine shifted 90 degrees to the right",
+   "description": "Uses cos(theta) = sin(theta - 90 degrees) instead of sin(theta + 90 degrees), so the 90 degrees is added to the other shift in the wrong direction."
+  },
+  {
+   "id": "mc:g10m6s6-2-4:minus-means-left",
+   "label": "Reads x - p as a shift to the left",
+   "description": "Knows cosine is sine shifted 90 degrees to the left but takes the minus sign in (x - p) to mean a further leftward shift, so adds 90 and p instead of subtracting."
+  }
+ ],
+ "notes": "No figure. Natural mcq: a choice of direction and size of one shift, and every distractor is one specific, diagnosable slip (direction reversed; forgets the 90 degree offset; wrong sign in the identity; minus read as left). The correct answer is 'left' for every instance because p is kept below 90 (p = 45 is excluded so the 'p right' and 's right' options are never the same text). All five option texts are distinct for every p in the list and exactly one is correct, checked numerically: sin(x + 90 - p) = cos(x - p), and each distractor equals a shifted sine that differs from cos(x - p). Shares the identity with tpl:g10m6s6-2-4:rewrite-shift but asks for the direction and size of a graph shift, which is the other half of the objective sentence (a horizontal shift of one graph into the other)."
+}

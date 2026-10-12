@@ -16,7 +16,7 @@ import {
 import { getCostView, type CostView } from "@/lib/cost-queries";
 import { costDetailAccess, type ThresholdConversation } from "@/lib/turn-threshold-queries";
 import { OUTCOME_LABEL, PRICE_BASIS_LABEL, type Outcome } from "@/lib/pricing";
-import { SUBJECTS, displayLabel, subjectOfCourse } from "@/lib/subjects";
+import { courseName } from "@/lib/console-course-names";
 import { anyThresholdReached, thresholdChipLabel, uploadChipLabel } from "@/lib/turn-thresholds";
 
 /**
@@ -658,10 +658,15 @@ function ReachedStudentDays({
   );
 }
 
-/** The course, the lesson slug and the first objective the conversation was grounded on. */
+/**
+ * The course, the lesson slug and the first objective the conversation was
+ * grounded on. Rendered only in the `student-data` detail list (FR-2406): it
+ * is a fact about one student's conversation, so `cost-billing` alone never
+ * sees it (privacy review F7). Named by course AND curriculum since 003
+ * (FR-4104) — "Mathematics" alone would be either maths book.
+ */
 function LessonLabel({ c }: { c: ThresholdConversation }) {
-  const subject = subjectOfCourse(c.courseId);
-  const course = subject ? displayLabel(SUBJECTS[subject]) : c.courseId;
+  const course = c.courseId ? courseName(c.courseId) : null;
   const head = [course, c.lessonSlug ? `lesson ${c.lessonSlug}` : null].filter(Boolean).join(" · ");
   if (!head && !c.loLabel) return <span className="text-[12px] text-ink-faint">not recorded</span>;
   return (

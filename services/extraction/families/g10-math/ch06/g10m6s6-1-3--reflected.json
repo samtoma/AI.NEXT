@@ -1,0 +1,43 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s6-1-3:reflected",
+ "kind": "family",
+ "lo_id": "lo:g10m6s6-1-3",
+ "parent_question_id": "q:g10m6s6-1-3:ex6-8-46c",
+ "source_page": 229,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "q0",
+   "randint": [
+    -3,
+    4
+   ]
+  },
+  {
+   "name": "d",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "m",
+   "let": "q0 - d"
+  }
+ ],
+ "constraints": [],
+ "stem": "The graph of $f(\\theta)=a\\sin\\theta+q$ is drawn for $0^{\\circ}\\le\\theta\\le360^{\\circ}$. It cuts the $y$-axis at $(0, {=q0})$ and its minimum turning point is at $(90^{\\circ}, {=m})$. What is the maximum value of $f$?",
+ "answer": "q0 + d",
+ "solution": [
+  "Since $\\sin0^{\\circ}=0$, $f(0^{\\circ})=q$, so the $y$-intercept gives $q={=q0}$.",
+  "Since $\\sin90^{\\circ}=1$, $f(90^{\\circ})=a+q$. With $q={=q0}$ and $f(90^{\\circ})={=m}$ we get $a={=m}-({=q0})={=m - q0}$.",
+  "The value of $a$ is negative, so this is a reflected sine graph: it falls from the middle line $y={=q0}$ to its minimum at $\\theta=90^{\\circ}$ and rises to its maximum at $\\theta=270^{\\circ}$. The amplitude is $|a|={=d}$.",
+  "At $\\theta=270^{\\circ}$, $\\sin270^{\\circ}=-1$, so $f(270^{\\circ})=a(-1)+q=({=m - q0})(-1)+({=q0})={=q0 + d}$.",
+  "The maximum value of $f$ is ${=q0 + d}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced: the book's own twist (figure of ex6-8-46c is f(x) = -sin x + 2, with minimum A at 90 degrees and y-intercept 2). The minimum turning point sitting at 90 degrees forces a < 0; the student must find q from the y-intercept, a from the turning point, then the maximum at 270 degrees. Answer is q0 + d (equivalently 2*q0 - m). Brute-force check over all 40 instances confirmed the maximum and the minimum position. q0 in -3..4, d in 1..5."
+}

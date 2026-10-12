@@ -1,0 +1,65 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s6-2-1:findasign",
+ "kind": "family",
+ "lo_id": "lo:g10m6s6-2-1",
+ "parent_question_id": "q:g10m6s6-2-1:ex6-8-47c",
+ "source_page": 229,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "m",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "s",
+   "choice": [
+    1,
+    -1
+   ]
+  },
+  {
+   "name": "a",
+   "let": "s * m"
+  },
+  {
+   "name": "q",
+   "choice": [
+    -5,
+    -4,
+    -3,
+    -2,
+    -1,
+    1,
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "v0",
+   "let": "a + q"
+  },
+  {
+   "name": "v180",
+   "let": "q - a"
+  }
+ ],
+ "constraints": [],
+ "stem": "The graph of $f(\\theta) = a\\cos\\theta + q$ is drawn for $0^\\circ \\leq \\theta \\leq 360^\\circ$. It passes through the point $(0^\\circ, {=v0})$ and has a turning point at $(180^\\circ, {=v180})$. Find the value of $a$.",
+ "answer": "a",
+ "solution": [
+  "Use $\\cos 0^\\circ = 1$ and $\\cos 180^\\circ = -1$: $f(0^\\circ) = a + q$ and $f(180^\\circ) = -a + q$.",
+  "The two given points say $a + q = {=v0}$ and $-a + q = {=v180}$.",
+  "Subtract the second equation from the first: $2a = f(0^\\circ) - f(180^\\circ) = {=v0 - v180}$.",
+  "Divide by 2: $a = {=a}$.",
+  "Check: the highest and lowest values of the graph are ${=abs(v0 - v180)}$ units apart, so the amplitude is half of that, ${=m}$, and this equals $|a|$. A positive $a$ makes the graph start at its highest point and a negative $a$ makes it start at its lowest point."
+ ],
+ "notes": "Twist taken from the book's own graph in 6-8-47c, g(x) = -3cos x + 1 (starts at its lowest point, amplitude 3 although the maximum is 4): the sign of a has to be found as well as the amplitude. Sampled over a positive and a negative a (|a| from 2 to 6), q never 0, so v0 differs from v180 and a is always a whole number. The solution uses only cos 0 = 1 and cos 180 = -1, the values on the plotted table, then the book's amplitude idea as a check. 5 x 2 x 10 = 100 instances."
+}

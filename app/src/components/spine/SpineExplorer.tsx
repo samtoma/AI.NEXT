@@ -4,12 +4,16 @@ import { useCallback, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import type {
   AttemptResult,
+  SpineCourse,
   SpineData,
   SpineQuestion,
   SpineSubject,
 } from "@/lib/types";
 import type { Cite } from "@/lib/chat-parse";
 import { SkillMap } from "./SkillMap";
+import { displayStem } from "@/lib/question-figures";
+import { MathText } from "@/components/MathText";
+import { plainMath } from "@/lib/math-text";
 import { QuestionModal } from "./QuestionModal";
 import { NoorPanel } from "./NoorPanel";
 import type { CiteInfo } from "@/components/chat/CitationChip";
@@ -22,12 +26,9 @@ import {
   type AsOf,
   type Selection,
 } from "@/lib/skill-map";
-import {
-  SPINE_SUBJECT_KEYS,
-  displayLabelOfSpineKey,
-  spineSubjectDef,
-} from "@/lib/subjects";
+import { displayLabelOfSpineKey, spineSubjectDef } from "@/lib/subjects";
 import { HEADING, HONEY_BAND, STROKE, STROKE_SM, cx } from "@/components/sticker";
+import { BEING_PREPARED, type PreparingChapter } from "@/lib/course-outline";
 
 /** "mathematics" → "Mathematics". The subject, never a unit name. */
 const titleCase = (s: string) =>
@@ -81,32 +82,59 @@ const segment = (on: boolean) =>
  * the map shows ONE subject at a time, as this design intends, with a subject
  * picker when more than one is visible to her. It never mixes subjects in one
  * tree; the branch's version would have, the moment a second course went live.
+ * Since 003 the unit is the COURSE, not the subject (FR-4009): two maths
+ * books are two maps, each in its own book's order and citing its own book.
  */
 export function SpineExplorer({ data }: { data: SpineData }) {
   const router = useRouter();
   const [asOf, setAsOf] = useState<AsOf>("today");
-  // Subjects present in what the gate let through, registry order.
-  const subjectsPresent = useMemo(() => {
-    const present = new Set(data.los.map((l) => l.subject));
-    return SPINE_SUBJECT_KEYS.filter((k) => present.has(k));
-  }, [data.los]);
-  const [subjectPick, setSubjectPick] = useState<SpineSubject | null>(null);
-  const subject: SpineSubject | null =
-    subjectPick && subjectsPresent.includes(subjectPick)
-      ? subjectPick
-      : (subjectsPresent[0] ?? null);
+  /* COURSE, NOT SUBJECT (FR-4009, T372). The courses on the map, in course
+     order, each with its own book (`getSpineData`). A National student sees
+     one course per subject, so this is the subject picker she always had —
+     same entries, same order, same labels. A tester whose exception shows her
+     the other curriculum's maths gets TWO maths entries, named by their
+     course labels, and never one "Mathematics" map merging two books. */
+  const coursesPresent = data.courses;
+  /** a course's picker label: its subject's, unless another course shares it */
+  const courseLabel = useCallback(
+    (c: SpineCourse) =>
+      c.subject !== null &&
+      coursesPresent.filter((o) => o.subject === c.subject).length === 1
+        ? displayLabelOfSpineKey(c.subject)
+        : c.label,
+    [coursesPresent]
+  );
+  const [coursePick, setCoursePick] = useState<string | null>(null);
+  const course: SpineCourse | null =
+    coursesPresent.find((c) => c.id === coursePick) ?? coursesPresent[0] ?? null;
+  const subject: SpineSubject | null = course?.subject ?? null;
+  /** the book of the course being looked at — never the first course's */
+  const courseDoc = course?.doc ?? data.doc;
   const visibleLos = useMemo(
     () =>
-      subject === null || subjectsPresent.length <= 1
+      course === null || coursesPresent.length <= 1
         ? data.los
-        : data.los.filter((l) => l.subject === subject),
-    [data.los, subject, subjectsPresent.length]
+        : data.los.filter((l) => l.courseId === course.id),
+    [data.los, course, coursesPresent.length]
+  );
+  /* The prerequisites the map draws: the book's own, plus — for a course with a
+     split book section — the part n-1 → part n ones the product derives
+     (FR-4317, `SpineData.partEdges`). With no split section — every National
+     course — it is `data.edges` itself, the very array it always was. */
+  const mapEdges = useMemo(
+    () => (data.partEdges.length === 0 ? data.edges : [...data.edges, ...data.partEdges]),
+    [data.edges, data.partEdges]
   );
   const [selection, setSelection] = useState<Selection>(null);
   const [level, setLevel] = useState<0 | 1 | 2>(0);
   const model = useMemo(
-    () => buildSkillMap(visibleLos, data.edges, data.lessonTitles),
-    [visibleLos, data.edges, data.lessonTitles]
+    // `data.sectionGroups` — the book sections split into parts (FR-4315): the
+    // model groups each one's parts on its chapter's ring and the canvas draws
+    // the tray and names it. Groups whose objectives are not on the map (another
+    // course's) place nothing; with no split section — every National course —
+    // the model is the one main builds.
+    () => buildSkillMap(visibleLos, mapEdges, data.lessonTitles, data.sectionGroups),
+    [visibleLos, mapEdges, data.lessonTitles, data.sectionGroups]
   );
   // Selecting an objective just selects it: the topic panel that used to open
   // here is gone (Tamer, 2026-10-01 — "remove it for now").
@@ -130,6 +158,14 @@ export function SpineExplorer({ data }: { data: SpineData }) {
   const losById = useMemo(
     () => new Map(data.los.map((l) => [l.id, l])),
     [data.los]
+  );
+  /** the book a question's own course is built from (its provenance plate) */
+  const docOfLo = useCallback(
+    (loId: string) => {
+      const id = losById.get(loId)?.courseId;
+      return data.courses.find((c) => c.id === id)?.doc ?? courseDoc;
+    },
+    [losById, data.courses, courseDoc]
   );
 
   const started = useMemo(() => objectivesStarted(model, asOf), [model, asOf]);
@@ -191,7 +227,7 @@ export function SpineExplorer({ data }: { data: SpineData }) {
         if (!lo) return null;
         const stage = masteryStage(lo.current, lo.current > 0);
         return {
-          title: lo.label,
+          title: plainMath(lo.label),
           sub: `${masteryPhrase(stage)}${lo.sourcePage ? ` · book p.${lo.sourcePage}` : ""}`,
         };
       }
@@ -199,19 +235,22 @@ export function SpineExplorer({ data }: { data: SpineData }) {
         const q = questionsById.get(c.id);
         return q
           ? {
-              title: q.stem.length > 90 ? `${q.stem.slice(0, 90)}…` : q.stem,
+              title: ((s) => (s.length > 90 ? `${s.slice(0, 90)}…` : s))(displayStem(q.stem)),
               sub: q.provenance.sourcePage
                 ? `From the book, p.${q.provenance.sourcePage}`
                 : "From the book",
             }
           : null;
       }
+      // A page is a page of the book of the course on screen (FR-4205): Noor's
+      // answer here is about the map being looked at, and naming the first
+      // course's book for another course's page is a wrong citation.
       return {
-        title: data.doc.title,
-        sub: `${data.doc.publisher} · page ${c.id}`,
+        title: courseDoc.title,
+        sub: `${courseDoc.publisher} · page ${c.id}`,
       };
     },
-    [losById, questionsById, data.doc]
+    [losById, questionsById, courseDoc]
   );
 
   const handleChatAttempt = useCallback(
@@ -223,8 +262,14 @@ export function SpineExplorer({ data }: { data: SpineData }) {
     [pulseLo, router]
   );
 
-  const subjectLabel = subject
-    ? (spineSubjectDef(subject)?.label ?? displayLabelOfSpineKey(subject))
+  // What the title row and Ask Noor call the map: the subject's own name when
+  // it is the only course of that subject (exactly what a National student has
+  // always read), the course's name when two courses share it.
+  const subjectLabel = course
+    ? subject &&
+      coursesPresent.filter((o) => o.subject === subject).length === 1
+      ? (spineSubjectDef(subject)?.label ?? displayLabelOfSpineKey(subject))
+      : course.label
     : titleCase(data.doc.subject);
   const path = selectionPath(model, selection);
   const mapSub =
@@ -247,20 +292,20 @@ export function SpineExplorer({ data }: { data: SpineData }) {
           <span dir="ltr">{started.total}</span> objectives started
         </span>
         <span className="flex-1" />
-        {subjectsPresent.length > 1 && (
+        {coursesPresent.length > 1 && (
           <div className={SEGMENTED} role="group" aria-label="Subject">
-            {subjectsPresent.map((key) => (
+            {coursesPresent.map((c) => (
               <button
-                key={key}
+                key={c.id}
                 onClick={() => {
-                  setSubjectPick(key);
-                  // a topic from another subject is about to leave the view
+                  setCoursePick(c.id);
+                  // a topic from another course is about to leave the view
                   setSelection(null);
                 }}
-                aria-pressed={subject === key}
-                className={segment(subject === key)}
+                aria-pressed={course?.id === c.id}
+                className={segment(course?.id === c.id)}
               >
-                {displayLabelOfSpineKey(key)}
+                {courseLabel(c)}
               </button>
             ))}
           </div>
@@ -285,6 +330,16 @@ export function SpineExplorer({ data }: { data: SpineData }) {
       </div>
 
       <Legend />
+
+      {/* THE REST OF THE BOOK (migration 037, lib/course-outline.ts): the
+          chapters of this course's book with no lesson prepared yet, in book
+          order — one placeholder each, named and nothing more. No objective
+          is invented for them and nothing here opens or starts anything; a
+          chapter joins the map below by itself, as a cluster, the moment its
+          content is loaded (FR-4327). Absent for every course with no outline. */}
+      {course?.preparing && course.preparing.length > 0 && (
+        <ChaptersBeingPrepared chapters={course.preparing} />
+      )}
 
       <div className="flex flex-wrap items-stretch gap-[22px]">
         {/* the map panel */}
@@ -350,7 +405,7 @@ export function SpineExplorer({ data }: { data: SpineData }) {
         <QuestionModal
           question={openQuestion}
           lo={data.los.find((l) => l.id === openQuestion.loId) ?? null}
-          doc={data.doc}
+          doc={docOfLo(openQuestion.loId)}
           onClose={() => setOpenQuestion(null)}
         />
       )}
@@ -359,6 +414,58 @@ export function SpineExplorer({ data }: { data: SpineData }) {
 }
 
 /* ------------------------------------------------------------------ */
+
+/**
+ * The chapters still being prepared, as one quiet row above the map.
+ *
+ * Placeholders, not topics: each is a chapter's name in the design system's
+ * "not ready yet" anatomy — a dashed `--play-disabled-border` outline, no
+ * fill, no shadow, no press (globals.css; SubjectHome's MoreSubjectsComing) —
+ * with its text in `--play-text-muted` (6.9:1), because they are not
+ * controls. They sit OUTSIDE the map: the map is a graph of objectives and
+ * their prerequisites, and an unprepared chapter has neither, so a cluster for
+ * it on the canvas would be a fake objective. One row that scrolls sideways,
+ * so thirteen chapters cost the map one short strip rather than a block.
+ *
+ * "Chapter 1 — Algebraic expressions" arrives as one label; split on the em
+ * dash like the check-in's units, the reference as a mono eyebrow.
+ */
+function ChaptersBeingPrepared({ chapters }: { chapters: readonly PreparingChapter[] }) {
+  return (
+    <section
+      aria-labelledby="chapters-being-prepared"
+      className="thin-scroll flex shrink-0 items-center gap-3 overflow-x-auto py-1"
+    >
+      <h2
+        id="chapters-being-prepared"
+        className="shrink-0 font-display text-[0.78rem] font-bold leading-none text-[color:var(--play-text-muted)]"
+      >
+        {BEING_PREPARED}
+      </h2>
+      <ul className="flex gap-2">
+        {chapters.map((c) => {
+          const [ref, ...rest] = c.label.split(" — ");
+          const name = rest.join(" — ") || c.label;
+          return (
+            <li
+              key={c.id}
+              className="flex shrink-0 items-center gap-2 rounded-[var(--play-radius-sm)] border-[length:var(--play-stroke-sm)] border-dashed border-[color:var(--play-disabled-border)] px-3 py-1.5"
+            >
+              {ref !== name && (
+                <span className="font-mono text-[0.66rem] uppercase leading-none tracking-[0.06em] text-[color:var(--play-text-muted)]">
+                  {ref}
+                </span>
+              )}
+              <span className="whitespace-nowrap font-display text-[0.8rem] font-bold leading-none text-[color:var(--play-text-muted)]">
+                {name}
+              </span>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  );
+}
 
 /** Both panel headers are this bar: 79px, honey, ink rule underneath. */
 export function PanelHeader({ children }: { children: React.ReactNode }) {
@@ -449,7 +556,8 @@ function Breadcrumb({
               )}
               style={current ? { boxShadow: "2px 2px 0 var(--ink)" } : undefined}
             >
-              {c.label}
+              {/* a lesson's name may carry maths when it falls back to its first objective (backlog #37) */}
+              <MathText text={c.label} />
             </button>
           </span>
         );

@@ -1,0 +1,84 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s4-1-4:rewrite",
+ "kind": "family",
+ "lo_id": "lo:g10m6s4-1-4",
+ "parent_question_id": "q:g10m6s4-1-4:ex6-8-57b",
+ "source_page": 233,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "choice": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "k",
+   "choice": [
+    -5,
+    -4,
+    -3,
+    -2,
+    -1,
+    1,
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "a",
+   "choice": [
+    -6,
+    -5,
+    -4,
+    -3,
+    -2,
+    -1,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ]
+  },
+  {
+   "require": "abs(a) != abs(k)",
+   "why": "so that giving the numerator, or the opposite sign, can never coincide with the right asymptote"
+  },
+  {
+   "name": "m",
+   "let": "p * k"
+  },
+  {
+   "name": "c",
+   "let": "p * a"
+  },
+  {
+   "name": "sg",
+   "let": "'-' if m > 0 else '+'"
+  },
+  {
+   "name": "sk",
+   "let": "'+' if k > 0 else '-'"
+  }
+ ],
+ "constraints": [],
+ "stem": "The graph of ${=p}xy {=sg} {=abs(m)}x = {=c}$ is a hyperbola with horizontal asymptote $y = k$. Determine the value of $k$.",
+ "answer": "k",
+ "solution": [
+  "To get $y$ on its own, first move the $x$-term to the right-hand side: ${=p}xy = {=c} {=sk} {=abs(m)}x$.",
+  "Divide every term by ${=p}x$: $y = \\frac{{=c}}{{=p}x} {=sk} \\frac{{=abs(m)}}{{=p}}$.",
+  "Simplify each fraction: $y = \\frac{{=a}}{x} {=sk} {=abs(k)}$.",
+  "This has the form $y = \\frac{a}{x} + q$ with $q = {=k}$, so the horizontal asymptote is $y = {=k}$ (the vertical asymptote is $x = 0$). Hence $k = {=k}$."
+ ],
+ "notes": "Advanced tier: the book's twist from ex6-8-57b (the hyperbola is given as an xy-equation, not as y = a/x + q) with two extra steps the book's version does not need: the q-term starts on the left, so its sign must flip when it moves across (the asymptote-sign-flipped slip), and the whole equation carries a coefficient p on xy, so every term is divided by p x. Parameters make m = p*k and c = p*a exact multiples of p, so after dividing by p x the equation is y = a/x + k with whole numbers. |m| >= 2 so the x-term never prints as 1x; a and k are nonzero and |a| != |k|. The answer is the signed integer k, which is the book's 'the number added on the end', not the numerator a."
+}

@@ -5,8 +5,9 @@ import { NoorMark } from "@/components/NoorMark";
 import { ConsoleNav } from "@/components/console/ConsoleNav";
 import { ConsoleRefusal } from "@/components/console/ConsoleRefusal";
 import { consoleShellAccess } from "@/lib/console-auth";
-import { getOperatorCard } from "@/lib/console-queries";
+import { getOperatorCard, loadedCurricula } from "@/lib/console-queries";
 import { navFor } from "@/lib/console-routes";
+import { CURRICULA } from "@/lib/curricula";
 import { ENVIRONMENT, RELEASE_TAG } from "@/lib/env";
 import { getTeachingStateOrNull } from "@/lib/teaching-queries";
 
@@ -72,6 +73,21 @@ export default async function ConsoleLayout({ children }: { children: React.Reac
           ? "test accounts"
           : "everyone";
   const releaseTag = teaching?.releaseTag ?? RELEASE_TAG;
+  // The loaded curricula, for the footer (003, FR-4104): it used to print
+  // "Prep-3 Mathematics" whatever the database held. A side fact, so a failed
+  // read prints "curricula unknown" rather than a 500 on every page.
+  const loaded = await loadedCurricula(access.operatorId).catch(() => null);
+  const loadedLine =
+    loaded === null
+      ? "curricula unknown"
+      : loaded.length === 0
+        ? "no course loaded"
+        : loaded
+            .map(
+              (g) =>
+                `${CURRICULA[g.curriculum].label} · ${g.courses.length} course${g.courses.length === 1 ? "" : "s"}`
+            )
+            .join(" — ");
   const links = navFor(access.roles).map((r) => ({
     href: r.path,
     label: r.nav!,
@@ -141,7 +157,7 @@ export default async function ConsoleLayout({ children }: { children: React.Reac
           <span>
             Noor Console · {ENVIRONMENT} environment · {releaseTag} · operator reads are recorded
           </span>
-          <span>Prep-3 Mathematics · MOETE 2025–2026</span>
+          <span>Loaded: {loadedLine}</span>
         </div>
       </footer>
     </div>

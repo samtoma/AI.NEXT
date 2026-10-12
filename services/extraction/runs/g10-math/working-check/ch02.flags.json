@@ -1,0 +1,398 @@
+{
+ "format": "ainext.working-check/1",
+ "book": "g10-math",
+ "chapter": 2,
+ "prompts_version": "sw-v3",
+ "rule": "Each flag is a backlog item for a human (answer 30; answer 37c). Nothing here was corrected: the content stays as the book and G2 have it until a human decides.",
+ "passes": [
+  "A",
+  "B"
+ ],
+ "single_pass_ids": [],
+ "solutions": 164,
+ "skipped": [],
+ "verdicts": {
+  "consistent": 158,
+  "flagged": 6,
+  "unclear": 0
+ },
+ "flags": [
+  {
+   "solution_id": "expl:g10m2s4-1-3:ex2-4-3x",
+   "lo": "lo:g10m2s4-1-3",
+   "step": 2,
+   "kind": "arithmetic",
+   "where": "working",
+   "quote": "2(1)^{\\frac{1}{2}}+1=2",
+   "expected": "3",
+   "why": "2(1)^{1/2}+1 equals 2+1 = 3, not 2.",
+   "sources": [
+    "agent",
+    "numeric"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ],
+   "numeric": {
+    "left": "2(1)^{\\frac{1}{2}}+1",
+    "relation": "=",
+    "right": "2",
+    "why": "2(1)^{\\frac{1}{2}}+1 = 2 does not hold (3 vs 2)"
+   }
+  },
+  {
+   "solution_id": "q:g10m2s2-1-3:ex2-1-38",
+   "lo": "lo:g10m2s2-1-3",
+   "step": 1,
+   "kind": "sign",
+   "where": "unsure",
+   "quote": "4\\times7^{b}-3\\times7^{b}",
+   "expected": "4\\times7^{b}+3\\times7^{b}",
+   "why": "The working's denominator has a minus between the terms, but the question's denominator has a plus.",
+   "sources": [
+    "agent",
+    "numeric"
+   ],
+   "passes": [
+    "A",
+    "A",
+    "B",
+    "B"
+   ],
+   "also_kinds": [
+    "arithmetic"
+   ],
+   "numeric": {
+    "left": "\\frac{1+\\frac{1}{49}}{1}",
+    "relation": "=",
+    "right": "\\frac{51}{49}",
+    "why": "\\frac{1+\\frac{1}{49}}{1} = \\frac{51}{49} does not hold (1.02041 vs 1.04082)"
+   }
+  },
+  {
+   "solution_id": "q:g10m2s2-1-3:ex2-1-39",
+   "lo": "lo:g10m2s2-1-3",
+   "step": 1,
+   "kind": "arithmetic",
+   "where": "working",
+   "quote": "3^{y}\\left(2+1\\right)",
+   "expected": "3^y(1+2^y)",
+   "why": "Factoring 3^y out of 3^y + (2·3)^y leaves 1 + 2^y, not 2 + 1.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m2s3-1-1:ex2-2-9",
+   "lo": "lo:g10m2s3-1-1",
+   "step": 1,
+   "kind": "label",
+   "where": "question",
+   "quote": "2\\cdot2^{\\frac{1}{3}}a^4b^2",
+   "expected": "x^4",
+   "why": "The question's variable is x (x^{12}), but the working and key give the result in a instead of x.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m2s4-1-1:ex2-4-3s",
+   "lo": "lo:g10m2s4-1-1",
+   "step": 1,
+   "kind": "other",
+   "where": "question",
+   "quote": "5.2^{x^{2}+1}&=20\\\\2^{x^{2}+1}&=4",
+   "expected": "5 \\cdot 2^{x^2+1}=20",
+   "why": "As typeset, base 5.2 does not reduce to 2^{x^2+1}=4; the working only follows if the term is 5 times 2^{x^2+1}, a lost multiplication dot.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m2s4-1-4:ex2-3-3",
+   "lo": "lo:g10m2s4-1-4",
+   "step": 1,
+   "kind": "arithmetic",
+   "where": "working",
+   "quote": "2^{\\text{2.809}} = \\text{7.007}",
+   "expected": "",
+   "why": "2^{\\text{2.809}} = \\text{7.007} does not hold (7.00799 vs 7.007)",
+   "sources": [
+    "numeric"
+   ],
+   "passes": [],
+   "numeric": {
+    "left": "2^{\\text{2.809}}",
+    "relation": "=",
+    "right": "\\text{7.007}",
+    "why": "2^{\\text{2.809}} = \\text{7.007} does not hold (7.00799 vs 7.007)"
+   }
+  },
+  {
+   "solution_id": "q:g10m2s4-1-4:ex2-3-4",
+   "lo": "lo:g10m2s4-1-4",
+   "step": 1,
+   "kind": "arithmetic",
+   "where": "working",
+   "quote": "5^{\\text{1.4}} = \\text{9.51}",
+   "expected": "",
+   "why": "5^{\\text{1.4}} = \\text{9.51} does not hold (9.51827 vs 9.51)",
+   "sources": [
+    "numeric"
+   ],
+   "passes": [],
+   "numeric": {
+    "left": "5^{\\text{1.4}}",
+    "relation": "=",
+    "right": "\\text{9.51}",
+    "why": "5^{\\text{1.4}} = \\text{9.51} does not hold (9.51827 vs 9.51)"
+   }
+  },
+  {
+   "solution_id": "q:g10m2s4-1-4:ex2-4-5",
+   "lo": "lo:g10m2s4-1-4",
+   "step": 1,
+   "kind": "arithmetic",
+   "where": "working",
+   "quote": "3^{\\text{3.1}}&=\\text{30.014}",
+   "expected": "3^3.1 ≈ 30.135",
+   "why": "3^3.1 is about 30.135, not 30.014; the printed value does not equal the power.",
+   "sources": [
+    "agent",
+    "numeric"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ],
+   "numeric": {
+    "left": "3^{\\text{3.1}}",
+    "relation": "=",
+    "right": "\\text{30.014}",
+    "why": "3^{\\text{3.1}} = \\text{30.014} does not hold (30.1353 vs 30.014)"
+   }
+  }
+ ],
+ "flagged_solutions": 8,
+ "unclear": [],
+ "unchecked": [],
+ "problems": [],
+ "checked_ids": [
+  "expl:g10m2s2-1-1:ex2-4-6a",
+  "expl:g10m2s2-1-1:ex2-4-6b",
+  "expl:g10m2s2-1-1:ex2-4-6f",
+  "expl:g10m2s2-1-1:we01",
+  "expl:g10m2s2-1-2:ex2-4-6d",
+  "expl:g10m2s2-1-3:ex2-4-8",
+  "expl:g10m2s3-1-1:ex2-4-6c",
+  "expl:g10m2s3-1-1:ex2-4-6e",
+  "expl:g10m2s4-1-3:ex2-4-3x",
+  "q:g10m2s2-1-1:ex2-1-1",
+  "q:g10m2s2-1-1:ex2-1-10",
+  "q:g10m2s2-1-1:ex2-1-11",
+  "q:g10m2s2-1-1:ex2-1-12",
+  "q:g10m2s2-1-1:ex2-1-13",
+  "q:g10m2s2-1-1:ex2-1-14",
+  "q:g10m2s2-1-1:ex2-1-15",
+  "q:g10m2s2-1-1:ex2-1-16",
+  "q:g10m2s2-1-1:ex2-1-17",
+  "q:g10m2s2-1-1:ex2-1-18",
+  "q:g10m2s2-1-1:ex2-1-19",
+  "q:g10m2s2-1-1:ex2-1-2",
+  "q:g10m2s2-1-1:ex2-1-20",
+  "q:g10m2s2-1-1:ex2-1-21",
+  "q:g10m2s2-1-1:ex2-1-22",
+  "q:g10m2s2-1-1:ex2-1-23",
+  "q:g10m2s2-1-1:ex2-1-24",
+  "q:g10m2s2-1-1:ex2-1-25",
+  "q:g10m2s2-1-1:ex2-1-26",
+  "q:g10m2s2-1-1:ex2-1-27",
+  "q:g10m2s2-1-1:ex2-1-28",
+  "q:g10m2s2-1-1:ex2-1-29",
+  "q:g10m2s2-1-1:ex2-1-3",
+  "q:g10m2s2-1-1:ex2-1-30",
+  "q:g10m2s2-1-1:ex2-1-4",
+  "q:g10m2s2-1-1:ex2-1-5",
+  "q:g10m2s2-1-1:ex2-1-6",
+  "q:g10m2s2-1-1:ex2-1-7",
+  "q:g10m2s2-1-1:ex2-1-8",
+  "q:g10m2s2-1-1:ex2-1-9",
+  "q:g10m2s2-1-1:ex2-4-1a",
+  "q:g10m2s2-1-1:ex2-4-1b",
+  "q:g10m2s2-1-1:ex2-4-1c",
+  "q:g10m2s2-1-1:ex2-4-1d",
+  "q:g10m2s2-1-1:ex2-4-1e",
+  "q:g10m2s2-1-1:ex2-4-1f",
+  "q:g10m2s2-1-1:ex2-4-1g",
+  "q:g10m2s2-1-1:ex2-4-1h",
+  "q:g10m2s2-1-1:ex2-4-1i",
+  "q:g10m2s2-1-1:ex2-4-1j",
+  "q:g10m2s2-1-1:ex2-4-1k",
+  "q:g10m2s2-1-1:ex2-4-1l",
+  "q:g10m2s2-1-1:ex2-4-1n",
+  "q:g10m2s2-1-1:ex2-4-1o",
+  "q:g10m2s2-1-1:ex2-4-1p",
+  "q:g10m2s2-1-1:ex2-4-1t",
+  "q:g10m2s2-1-1:ex2-4-1u",
+  "q:g10m2s2-1-1:ex2-4-1v",
+  "q:g10m2s2-1-1:ex2-4-1y",
+  "q:g10m2s2-1-1:ex2-4-1z",
+  "q:g10m2s2-1-1:ex2-4-7",
+  "q:g10m2s2-1-2:ex2-1-31",
+  "q:g10m2s2-1-2:ex2-1-33",
+  "q:g10m2s2-1-2:ex2-1-35",
+  "q:g10m2s2-1-2:ex2-1-36",
+  "q:g10m2s2-1-2:ex2-1-37",
+  "q:g10m2s2-1-2:ex2-4-1m",
+  "q:g10m2s2-1-2:ex2-4-1q",
+  "q:g10m2s2-1-2:ex2-4-1r",
+  "q:g10m2s2-1-2:ex2-4-1s",
+  "q:g10m2s2-1-2:ex2-4-1w",
+  "q:g10m2s2-1-2:ex2-4-1x",
+  "q:g10m2s2-1-2:ex2-4-2a",
+  "q:g10m2s2-1-2:ex2-4-2b",
+  "q:g10m2s2-1-2:ex2-4-2h",
+  "q:g10m2s2-1-2:ex2-4-2j",
+  "q:g10m2s2-1-2:ex2-4-2k",
+  "q:g10m2s2-1-2:ex2-4-2l",
+  "q:g10m2s2-1-2:ex2-4-2r",
+  "q:g10m2s2-1-2:we02",
+  "q:g10m2s2-1-2:we03",
+  "q:g10m2s2-1-3:ex2-1-32",
+  "q:g10m2s2-1-3:ex2-1-34",
+  "q:g10m2s2-1-3:ex2-1-38",
+  "q:g10m2s2-1-3:ex2-1-39",
+  "q:g10m2s2-1-3:ex2-4-2c",
+  "q:g10m2s2-1-3:ex2-4-2d",
+  "q:g10m2s2-1-3:ex2-4-2g",
+  "q:g10m2s2-1-3:ex2-4-2i",
+  "q:g10m2s2-1-3:ex2-4-2p",
+  "q:g10m2s2-1-3:we04",
+  "q:g10m2s2-1-3:we05",
+  "q:g10m2s3-1-1:ex2-2-1",
+  "q:g10m2s3-1-1:ex2-2-2",
+  "q:g10m2s3-1-1:ex2-2-5",
+  "q:g10m2s3-1-1:ex2-2-6",
+  "q:g10m2s3-1-1:ex2-2-7",
+  "q:g10m2s3-1-1:ex2-2-8",
+  "q:g10m2s3-1-1:ex2-2-9",
+  "q:g10m2s3-1-1:ex2-4-2e",
+  "q:g10m2s3-1-1:ex2-4-2f",
+  "q:g10m2s3-1-1:ex2-4-2n",
+  "q:g10m2s3-1-1:ex2-4-2o",
+  "q:g10m2s3-1-1:ex2-4-2q",
+  "q:g10m2s3-1-1:ex2-4-2s",
+  "q:g10m2s3-1-1:we06",
+  "q:g10m2s3-1-2:ex2-2-3",
+  "q:g10m2s3-1-2:ex2-2-4",
+  "q:g10m2s3-1-2:ex2-4-2m",
+  "q:g10m2s3-1-2:ex2-4-3i",
+  "q:g10m2s3-1-2:ex2-4-3j",
+  "q:g10m2s3-1-2:we07",
+  "q:g10m2s4-1-1:ex2-3-1a",
+  "q:g10m2s4-1-1:ex2-3-1b",
+  "q:g10m2s4-1-1:ex2-3-1c",
+  "q:g10m2s4-1-1:ex2-3-1d",
+  "q:g10m2s4-1-1:ex2-3-1e",
+  "q:g10m2s4-1-1:ex2-3-1f",
+  "q:g10m2s4-1-1:ex2-3-1g",
+  "q:g10m2s4-1-1:ex2-3-1h",
+  "q:g10m2s4-1-1:ex2-3-1i",
+  "q:g10m2s4-1-1:ex2-3-1q",
+  "q:g10m2s4-1-1:ex2-3-1r",
+  "q:g10m2s4-1-1:ex2-3-1s",
+  "q:g10m2s4-1-1:ex2-3-1t",
+  "q:g10m2s4-1-1:ex2-3-2",
+  "q:g10m2s4-1-1:ex2-4-3a",
+  "q:g10m2s4-1-1:ex2-4-3b",
+  "q:g10m2s4-1-1:ex2-4-3c",
+  "q:g10m2s4-1-1:ex2-4-3d",
+  "q:g10m2s4-1-1:ex2-4-3e",
+  "q:g10m2s4-1-1:ex2-4-3f",
+  "q:g10m2s4-1-1:ex2-4-3g",
+  "q:g10m2s4-1-1:ex2-4-3h",
+  "q:g10m2s4-1-1:ex2-4-3k",
+  "q:g10m2s4-1-1:ex2-4-3m",
+  "q:g10m2s4-1-1:ex2-4-3s",
+  "q:g10m2s4-1-1:ex2-4-3t",
+  "q:g10m2s4-1-1:ex2-4-3v",
+  "q:g10m2s4-1-1:ex2-4-3w",
+  "q:g10m2s4-1-1:we08",
+  "q:g10m2s4-1-1:we09",
+  "q:g10m2s4-1-2:ex2-3-1j",
+  "q:g10m2s4-1-2:we10",
+  "q:g10m2s4-1-3:ex2-3-1k",
+  "q:g10m2s4-1-3:ex2-3-1l",
+  "q:g10m2s4-1-3:ex2-3-1m",
+  "q:g10m2s4-1-3:ex2-3-1n",
+  "q:g10m2s4-1-3:ex2-3-1o",
+  "q:g10m2s4-1-3:ex2-3-1p",
+  "q:g10m2s4-1-3:ex2-3-1u",
+  "q:g10m2s4-1-3:ex2-3-1v",
+  "q:g10m2s4-1-3:ex2-4-3l",
+  "q:g10m2s4-1-3:ex2-4-3n",
+  "q:g10m2s4-1-3:ex2-4-3o",
+  "q:g10m2s4-1-3:ex2-4-3q",
+  "q:g10m2s4-1-3:ex2-4-3r",
+  "q:g10m2s4-1-3:ex2-4-3u",
+  "q:g10m2s4-1-3:we11",
+  "q:g10m2s4-1-3:we12",
+  "q:g10m2s4-1-3:we13",
+  "q:g10m2s4-1-4:ex2-3-3",
+  "q:g10m2s4-1-4:ex2-3-4",
+  "q:g10m2s4-1-4:ex2-4-4",
+  "q:g10m2s4-1-4:ex2-4-5"
+ ],
+ "runs": [
+  "10c070f0eaa374a7fa64da3135528c03a69b16bacafc050f17140b26cc99048f",
+  "a2b53fbf51823f24e69e8257955e1ad6d0662c5753da7552060e0aa59818a45d",
+  "92b244842d775d8e9339d3abad9a4b5e96886c4b64fa5b76fdcbc35946340317",
+  "5ffedd2140cc4cf9cd35bc8b2c69b0db6e69e0653198fc5079f5067e98ef1730"
+ ],
+ "delta_runs": [
+  {
+   "file": "ch02.g2rec.flags.json",
+   "runs": [
+    "92b244842d775d8e9339d3abad9a4b5e96886c4b64fa5b76fdcbc35946340317",
+    "5ffedd2140cc4cf9cd35bc8b2c69b0db6e69e0653198fc5079f5067e98ef1730"
+   ],
+   "prompts_version": "sw-v3",
+   "passes": [
+    "A",
+    "B"
+   ],
+   "solutions": 16,
+   "flagged_solutions": 2,
+   "solution_ids": [
+    "q:g10m2s2-1-1:ex2-4-1z",
+    "q:g10m2s2-1-1:ex2-4-7",
+    "q:g10m2s2-1-2:ex2-4-1m",
+    "q:g10m2s2-1-2:ex2-4-1q",
+    "q:g10m2s2-1-2:ex2-4-1r",
+    "q:g10m2s2-1-2:ex2-4-1s",
+    "q:g10m2s2-1-2:ex2-4-2a",
+    "q:g10m2s2-1-2:ex2-4-2b",
+    "q:g10m2s2-1-2:ex2-4-2l",
+    "q:g10m2s2-1-3:we05",
+    "q:g10m2s4-1-1:ex2-4-3d",
+    "q:g10m2s4-1-1:ex2-4-3g",
+    "q:g10m2s4-1-3:ex2-4-3n",
+    "q:g10m2s4-1-4:ex2-3-4",
+    "q:g10m2s4-1-4:ex2-4-4",
+    "q:g10m2s4-1-4:ex2-4-5"
+   ]
+  }
+ ]
+}

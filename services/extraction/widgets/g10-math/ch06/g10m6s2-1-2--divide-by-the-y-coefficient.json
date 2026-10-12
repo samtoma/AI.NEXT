@@ -1,0 +1,33 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m6s2-1-2:divide-by-the-y-coefficient",
+ "lo_id": "lo:g10m6s2-1-2",
+ "parent_question_id": "q:g10m6s2-1-2:ex6-2-5a",
+ "tier": "standard",
+ "kind": "line_drawer",
+ "spec": {
+  "mode": "equation",
+  "m": 0.5,
+  "b": -2
+ },
+ "stem": "Draw the straight line $2y = x - 4$. Any two points on the line will do; the equation under the graph updates as you drag.",
+ "solution": [
+  "The equation is not yet in the form $y = mx + c$: $y$ has a $2$ in front of it.",
+  "Divide every term by $2$: $y = \\frac{1}{2}x - 2$.",
+  "Read the gradient $m = \\frac{1}{2}$ and the $y$-intercept $c = -2$.",
+  "Drag the first point onto the $y$-intercept, $(0, -2)$.",
+  "Use the gradient: up 1 for every 2 across, so the second point is $(2, -1)$.",
+  "Check the live equation reads $y = \\frac{1}{2}x - 2$."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "intercept-wrong",
+   "misconception_id": "mc:g10m6s2-1-2:read-m-before-y-is-alone"
+  },
+  {
+   "predicate": "off-target",
+   "misconception_id": "mc:g10m6s2-1-2:read-m-before-y-is-alone"
+  }
+ ],
+ "notes": "Mirrors ex6-2-5a (2y = 3x - 1), with numbers chosen so the true gradient is the reciprocal of a whole number, which the instrument requires (3/2 would be refused). Two ways to skip the division: (1) divide the x-term only, giving y = x/2 - 4, which has the right slope and the wrong intercept, so it fires intercept-wrong; (2) read m = 1 and c = -4 as printed, which matches neither, so it fires off-target. Both are the read-m-before-y-is-alone error. The swapped gradient and intercept (m = -4, c = 1) also fire off-target; the printed-reading error is likelier here because the 2y is the whole point of the question, so off-target maps to it. A student who multiplies by 2 instead of dividing gets slope 2 and would fire slope-inverted; it is left unmapped because no listed misconception names it. The missing-x-term-gradient-one misconception needs a horizontal line (m = 0), which the line_drawer spec does not accept, so it cannot be covered."
+}

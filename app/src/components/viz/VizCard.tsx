@@ -35,7 +35,7 @@ export function VizCard({
     <div className={FRAME}>
       <div className={HEAD}>
         <span className="font-mono text-[0.72rem] font-medium uppercase tracking-[0.12em] text-[color:var(--play-text-amber-warm)]">
-          ✦ figure · {kind.replace(/_/g, " ")}
+          ✦ figure · {kind === "book_image" ? "the book\u2019s picture" : kind.replace(/_/g, " ")}
         </span>
         <span className="flex items-center gap-2">
           {(refId || sourcePage != null) && (

@@ -1,0 +1,39 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m6s3-1-1:sketch-narrow-parabola-shifted-down",
+ "lo_id": "lo:g10m6s3-1-1",
+ "parent_question_id": "q:g10m6s3-1-1:ex6-3-2",
+ "tier": "standard",
+ "kind": "curve_sketcher",
+ "spec": {
+  "fn": "quadratic",
+  "coefs": [
+   2,
+   0,
+   -4
+  ]
+ },
+ "stem": "Sketch the graph of $y = 2x^2 - 4$ with your finger, as one smooth curve that runs right across the grid.",
+ "solution": [
+  "The number in front of $x^2$ is $a = 2$. It is positive, so the parabola opens upward.",
+  "Its size is bigger than 1, so the curve is narrower than $y = x^2$: at $x = 1$ it is already 2 high, not 1.",
+  "The number added at the end is $q = -4$. It lowers every point of $y = 2x^2$ by 4, so the turning point is $(0, -4)$.",
+  "Check points on each side of the $y$-axis: $x = \\pm 1$ gives $y = 2 - 4 = -2$, $x = \\pm 1.5$ gives $y = 0.5$ and $x = \\pm 2$ gives $y = 8 - 4 = 4$.",
+  "Draw one smooth curve through $(0, -4)$, $(\\pm 1, -2)$, $(\\pm 1.5, 0.5)$ and $(\\pm 2, 4)$, opening upward and symmetric about the $y$-axis."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "off-target",
+   "misconception_id": "mc:g10m6s3-1-1:steepness-of-a-misjudged"
+  },
+  {
+   "predicate": "vertically-displaced",
+   "misconception_id": "mc:g10m6s3-1-1:q-ignored"
+  },
+  {
+   "predicate": "opens-wrong-way",
+   "misconception_id": "mc:g10m6s3-1-1:sign-of-a-ignored"
+  }
+ ],
+ "notes": "Standard tier, the forward form of the book's ex6-3-2 (there the student reads a = 2, q = -3 off the graph; here she draws a = 2, q = -4). Steepness is the new thing: a = 2 against the default-looking a = 1 puts the curve 4 grid squares apart at x = 2, far beyond the tolerance. off-target is mapped to steepness-of-a-misjudged only because the sign (opens-wrong-way) and the vertical position (vertically-displaced) have their own predicates, so the residual miss with the right orientation and roughly the right turning point is a wrong width. A random scribble also lands on off-target and would be told it misjudged the steepness; accepted as the lesser harm, but Samuel may prefer to drop that mapping. vertically-displaced fires for both q-ignored (mapped, the likelier) and q-shift-wrong-direction (not mapped; same predicate). The curve leaves the -5..5 window at |x| about 2.1, as any a = 2 parabola must; the coefficient is within the validator's +-10."
+}

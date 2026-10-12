@@ -1,0 +1,934 @@
+{
+ "mode": "grade",
+ "book": "g10-math",
+ "prompts_version": "s6-v6",
+ "by_ref": {
+  "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/s6-grade-ch13",
+  "stage": "S6 grade",
+  "shards_sha256": "5ba79acbb1d13a5c3ff63ee77a6f37bf8dca661d9d9ea9bac5e374d394c600b5",
+  "files": 84
+ },
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "ce14b9a275551596540559352d6e1137fc366251ecc65d4b7d34aa4599cbc0b6",
+  "args_sha256": "9252ad5483fff3d66671f3f064c03b54ac53327f6e211f9ed839a6c153154eb0",
+  "generated_sha256": "ae616a10fb2527b523c29fbe247de429afdc66405cc4d91407df3c5e29ea7dc1",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "family_id": "tpl:g10m13s2-1-1:rectprism",
+   "spec_sha": "cf4cd01fe0b9ce2c41ca98191be87250edf9677d37d09ff59a9e20ffa387fd59",
+   "answers": [
+    {
+     "instance_id": "q:g10m13s2-1-1:g001-rectpr",
+     "stem_sha": "9d77c5861aa994e0",
+     "answer": {
+      "value": "292"
+     },
+     "working": "Total surface area = 2(lb + lh + bh) = 2(7*8 + 7*6 + 8*6) = 2(56 + 42 + 48) = 2*146 = 292 cm^2."
+    },
+    {
+     "instance_id": "q:g10m13s2-1-1:g005-rectpr",
+     "stem_sha": "63896f5c0fabc10e",
+     "answer": {
+      "value": "232"
+     },
+     "working": "Total surface area = 2(lb + lh + bh) = 2(7*8 + 7*4 + 8*4) = 2(56 + 28 + 32) = 2*116 = 232 cm^2."
+    },
+    {
+     "instance_id": "q:g10m13s2-1-1:g009-rectpr",
+     "stem_sha": "e626cf70adba2282",
+     "answer": {
+      "value": "104"
+     },
+     "working": "Total surface area = 2(lb + lh + bh) = 2(6*5 + 6*2 + 5*2) = 2(30 + 12 + 10) = 2*52 = 104 cm^2."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family is numeric with no options, so there are no distractors to judge. The packet shows only correct_answer, not an answer_check, so I could not compare a typed LaTeX key against one. All three keys are plain integers and the stems ask for a number in cm^2, so the form matches.\n\nI recomputed each instance independently with SA = 2(lb + lh + bh):\n- g001 (7, 8, 6): 2(56 + 42 + 48) = 2 x 146 = 292. The key is 292 and the steps 112 + 84 + 96 = 292 agree.\n- g005 (7, 8, 4): 2(56 + 28 + 32) = 2 x 116 = 232. The key is 232 and the steps 112 + 56 + 64 = 232 agree.\n- g009 (6, 5, 2): 2(30 + 12 + 10) = 2 x 52 = 104. The key is 104 and the steps 60 + 24 + 20 = 104 agree.\n\nEach solution follows the same net-and-three-pairs method: top and bottom (length x breadth), front and back (length x height), two sides (breadth x height). The face pairings and every intermediate product are correct in all three. The stems are unambiguous: they say \"total surface area, that is, the area of all six faces\" and give the unit. The dimensions are realistic whole centimetres, and the prism is a rectangular box, so there is no cube or open-top trap."
+   }
+  },
+  {
+   "family_id": "tpl:g10m13s2-1-2:curved",
+   "spec_sha": "13fea9f33c491025a8c9e85aa471fdf81ed661341621b6ac66f85199c6dc0ccf",
+   "answers": [
+    {
+     "instance_id": "q:g10m13s2-1-2:g001-curved",
+     "stem_sha": "c8fa0a2ba94db28c",
+     "answer": {
+      "value": "301.6"
+     },
+     "working": "Curved surface area = circumference x height = 2*pi*r*h = 2*pi*4*12 = 96*pi = 301.5929 cm^2, which rounds to 301.6."
+    },
+    {
+     "instance_id": "q:g10m13s2-1-2:g002-curved",
+     "stem_sha": "e16327039695fb88",
+     "answer": {
+      "value": "150.8"
+     },
+     "working": "Curved surface area = 2*pi*r*h = 2*pi*6*4 = 48*pi = 150.7964 cm^2, which rounds to 150.8."
+    },
+    {
+     "instance_id": "q:g10m13s2-1-2:g007-curved",
+     "stem_sha": "52b387b3ada03e33",
+     "answer": {
+      "value": "483.8"
+     },
+     "working": "Curved surface area = 2*pi*r*h = 2*pi*11*7 = 154*pi = 483.8053 cm^2, which rounds to 483.8."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family is numeric and has no options, so there are no distractors to judge. I recomputed each key to full precision. g001 (r=4, h=12): 2π(4)=8π, and 8π×12=96π=301.5929, which rounds to 301.6. g002 (r=6, h=4): 12π×4=48π=150.7964, which rounds to 150.8. g007 (r=11, h=7): 22π×7=154π=483.8053, which rounds to 483.8. Each worked solution follows the unrolled-rectangle method the stem describes: circumference × height. Each ends at the stated key, and the 1 dp rounding matches the stem's instruction. All three stems ask for the curved surface only (no end circles). Radius and height are different in every instance, so the area cannot be confused with the circumference. The numbers are realistic. The only blemish is wording: step 1 says the other side \"went once round the base\" (tense slip, should be \"goes\"). It does not affect correctness."
+   }
+  },
+  {
+   "family_id": "tpl:g10m13s2-1-2:netlength",
+   "spec_sha": "416cbbac96db86316748ae49d48bbb60063b80b03465cfe9f9d609309541dbef",
+   "answers": [
+    {
+     "instance_id": "q:g10m13s2-1-2:g002-netlen",
+     "stem_sha": "8f9cd8129e1a2a75",
+     "answer": {
+      "value": "1143.5"
+     },
+     "working": "The 14π side is the circumference, so 2πr = 14π and r = 7. The other side is the height, h = 19. Total surface area = 2πr² + 2πrh = 2π(49) + 2π(7)(19) = 98π + 266π = 364π ≈ 1143.54, which is 1143.5 cm² to 1 d.p."
+    },
+    {
+     "instance_id": "q:g10m13s2-1-2:g005-netlen",
+     "stem_sha": "73a73b0c7c0cf58d",
+     "answer": {
+      "value": "201.1"
+     },
+     "working": "The 8π side is the circumference, so 2πr = 8π and r = 4. The other side is the height, h = 4. Total surface area = 2π(16) + 2π(4)(4) = 32π + 32π = 64π ≈ 201.06, which is 201.1 cm² to 1 d.p."
+    },
+    {
+     "instance_id": "q:g10m13s2-1-2:g007-netlen",
+     "stem_sha": "611dc359c1f0805b",
+     "answer": {
+      "value": "2004.3"
+     },
+     "working": "The 22π side is the circumference, so 2πr = 22π and r = 11. The other side is the height, h = 18. Total surface area = 2π(121) + 2π(11)(18) = 242π + 396π = 638π ≈ 2004.34, which is 2004.3 cm² to 1 d.p."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "Numeric family with no options, so there are no distractors to judge. I recomputed all three instances. g002 gives r=7, 266π + 98π = 364π = 1143.54, so 1143.5. g005 gives r=4, 32π + 32π = 64π = 201.06, so 201.1. g007 gives r=11, 396π + 242π = 638π = 2004.34, so 2004.3. Each key matches the asked form: total surface area, 1 d.p., cm². Each solution follows the net method correctly. The side that went round the base equals the circumference, so 2πr gives r. The rectangle is the curved surface, and the two circles are 2πr². The three are summed and rounded once at the end, with no premature rounding. The stems are unambiguous: they say which rectangle side is the circumference, so the height is clear, and the radii and heights are realistic. The stem says to use the π button, which matches the rounding. Not checked: the file does not show answer_check, so I could not compare it with the key."
+   }
+  },
+  {
+   "family_id": "tpl:g10m13s2-2-2:diameter-decimal-height",
+   "spec_sha": "826ccd5aa4987d1f3f127678f392a983cc63004c932ef16e6b4f86bf66add505",
+   "answers": [
+    {
+     "instance_id": "q:g10m13s2-2-2:g002-diamet",
+     "stem_sha": "011c4b90f4c62c8c",
+     "answer": {
+      "value": "1413.72"
+     },
+     "working": "V = pi r^2 h. Diameter 12 so r = 6. V = pi x 36 x 12.5 = 450 pi = 1413.7167 cm^3, which is 1413.72 to 2 d.p."
+    },
+    {
+     "instance_id": "q:g10m13s2-2-2:g003-diamet",
+     "stem_sha": "4fcb2cc5b38f59ba",
+     "answer": {
+      "value": "265.07"
+     },
+     "working": "V = pi r^2 h. Diameter 5 so r = 2.5. V = pi x 6.25 x 13.5 = 84.375 pi = 265.0719 cm^3, which is 265.07 to 2 d.p."
+    },
+    {
+     "instance_id": "q:g10m13s2-2-2:g010-diamet",
+     "stem_sha": "1e0580d47bf11ceb",
+     "answer": {
+      "value": "2232.10"
+     },
+     "working": "V = pi r^2 h. Diameter 14 so r = 7. V = pi x 49 x 14.5 = 710.5 pi = 2232.1016 cm^3, which is 2232.10 to 2 d.p."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "Numeric-answer family with no options, so there are no distractors to judge. I recomputed all three instances. g002 (d=12, h=12.5) gives 36π x 12.5 = 450π = 1413.7167, key 1413.72. g003 (d=5, h=13.5) gives 6.25π x 13.5 = 84.375π = 265.0719, key 265.07. g010 (d=14, h=14.5) gives 49π x 14.5 = 710.5π = 2232.1016, key 2232.10. The keys are correctly rounded to 2 d.p. and the trailing zero in 2232.10 is appropriate for \"correct to 2 decimal places\". The unit cm^3 sits in the stem, so a bare number is the right key. The stem is unambiguous, says to use the calculator pi button and not to round early, and the numbers are realistic. Each solution follows the book's method in the same steps (halve the diameter to get the radius, find the base area pi r^2, multiply by the height for the exact multiple of pi, then evaluate on the calculator and round). The arithmetic is correct at every step. I could not check answer_check against the LaTeX key because the packet does not show it, but the displayed keys are consistent with the working."
+   }
+  },
+  {
+   "family_id": "tpl:g10m13s2-2-2:radius-height",
+   "spec_sha": "481de2ac32ec971f61520a8073e0efea4a082e7aca17982bb60722c00e6c9598",
+   "answers": [
+    {
+     "instance_id": "q:g10m13s2-2-2:g001-radius",
+     "stem_sha": "1a330e4968bbde95",
+     "answer": {
+      "value": "50.3"
+     },
+     "working": "V = pi r^2 h = pi x 2^2 x 4 = 16 pi = 50.265... cm^3, which is 50.3 to 1 d.p."
+    },
+    {
+     "instance_id": "q:g10m13s2-2-2:g003-radius",
+     "stem_sha": "52a37beb9811370b",
+     "answer": {
+      "value": "88.0"
+     },
+     "working": "V = pi r^2 h = pi x 2^2 x 7 = 28 pi = 87.9646... cm^3, which is 88.0 to 1 d.p."
+    },
+    {
+     "instance_id": "q:g10m13s2-2-2:g008-radius",
+     "stem_sha": "9d79dda50e796254",
+     "answer": {
+      "value": "402.1"
+     },
+     "working": "V = pi r^2 h = pi x 4^2 x 8 = 128 pi = 402.1238... cm^3, which is 402.1 to 1 d.p."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family is numeric-answer with no options, so there are no distractors to judge. I recomputed the three instances against their keys. g001 (r=2, h=4): V = pi*4*4 = 16pi = 50.2655, which rounds to 50.3. g003 (r=2, h=7): V = 28pi = 87.9646, which rounds to 88.0. g008 (r=4, h=8): V = 128pi = 402.1239, which rounds to 402.1. Each key matches the stem's ask: volume in cm^3 to 1 decimal place, with 88.0 keeping its trailing zero as 1 d.p. requires. Each stem states the radius directly, so there is no radius/diameter ambiguity, and the numbers are realistic. The stem also gives the volume definition (base area times height), which fits the book's pi*r^2*h method. The worked solutions follow the book's method: base area pi r^2, then multiply by the height, then use the calculator pi button and round. The intermediate values (4pi, 16pi, 28pi, 128pi) are all correct, and the final step restates the key with units. No issues found."
+   }
+  },
+  {
+   "family_id": "tpl:g10m13s3-1-1:decoy-heights",
+   "spec_sha": "ab72610d34818c5cabe3e49b08f14fb4cc9df8ab6a4e53388475915db05cc4be",
+   "answers": [
+    {
+     "instance_id": "q:g10m13s3-1-1:g003-decoy-",
+     "stem_sha": "e43db72e03e784f1",
+     "answer": {
+      "choice": "A",
+      "choice_text": "$96\\text{ cm}^{2}$"
+     },
+     "working": "Checked the slant height: half the base is 3, the height is 4, so slant = sqrt(3^2+4^2) = 5, which matches. Each triangular face has area 1/2 * 6 * 5 = 15 cm^2, so four faces give 60 cm^2. The base is 6 * 6 = 36 cm^2. Total = 60 + 36 = 96 cm^2."
+    },
+    {
+     "instance_id": "q:g10m13s3-1-1:g005-decoy-",
+     "stem_sha": "94429a78629e3900",
+     "answer": {
+      "choice": "C",
+      "choice_text": "$1536\\text{ cm}^{2}$"
+     },
+     "working": "Checked the slant height: half the base is 12, the height is 16, so slant = sqrt(144+256) = 20, which matches. Each face has area 1/2 * 24 * 20 = 240 cm^2, so four faces give 960 cm^2. The base is 24 * 24 = 576 cm^2. Total = 960 + 576 = 1536 cm^2."
+    },
+    {
+     "instance_id": "q:g10m13s3-1-1:g007-decoy-",
+     "stem_sha": "303982ce6749fc22",
+     "answer": {
+      "choice": "D",
+      "choice_text": "$1440\\text{ cm}^{2}$"
+     },
+     "working": "Checked the slant height: half the base is 10, the height is 24, so slant = sqrt(100+576) = 26, which matches. Each face has area 1/2 * 20 * 26 = 260 cm^2, so four faces give 1040 cm^2. The base is 20 * 20 = 400 cm^2. Total = 1040 + 400 = 1440 cm^2."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [
+     {
+      "instance_id": "q:g10m13s3-1-1:g003-decoy-",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "36 + 4*(1/2)*6*4 = 84: uses the vertical height 4 as the face height."
+     },
+     {
+      "instance_id": "q:g10m13s3-1-1:g003-decoy-",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "36 + 4*6*5 = 156: triangle area without the 1/2."
+     },
+     {
+      "instance_id": "q:g10m13s3-1-1:g003-decoy-",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "4*(1/2)*6*5 = 60: the base is left out."
+     },
+     {
+      "instance_id": "q:g10m13s3-1-1:g005-decoy-",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "576 + 4*(1/2)*24*16 = 576 + 768 = 1344: vertical height used for the face."
+     },
+     {
+      "instance_id": "q:g10m13s3-1-1:g005-decoy-",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "4*(1/2)*24*20 = 960: base left out."
+     },
+     {
+      "instance_id": "q:g10m13s3-1-1:g005-decoy-",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "576 + 4*24*20 = 576 + 1920 = 2496: the 1/2 missing."
+     },
+     {
+      "instance_id": "q:g10m13s3-1-1:g007-decoy-",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "400 + 4*(1/2)*20*24 = 400 + 960 = 1360: vertical height used for the face."
+     },
+     {
+      "instance_id": "q:g10m13s3-1-1:g007-decoy-",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "4*(1/2)*20*26 = 1040: base left out."
+     },
+     {
+      "instance_id": "q:g10m13s3-1-1:g007-decoy-",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "400 + 4*20*26 = 400 + 2080 = 2480: the 1/2 missing."
+     }
+    ],
+    "notes": "I recomputed all three instances and found no problems. Geometry is consistent in each: the slant height equals sqrt(h^2 + (s/2)^2) in every case (3-4-5, 12-16-20 and 10-24-26 triples). The keys are right: 36 + 60 = 96, 576 + 960 = 1536 and 400 + 1040 = 1440. The key is the total surface area, which the stem asks for, so it correctly includes the base. Each tagged distractor is exactly the value its error produces: vertical height for slant height, triangle area without the 1/2, and base left out. No wrong option equals the key, and the options within each instance are distinct. The wording is unambiguous because \"slant height of each triangular face\" is clearly the face height, and the vertical height is explicitly defined as the decoy. The numbers are realistic. The worked solutions follow the same five steps in each instance: base plus four faces, why the slant height and not the vertical height, base area, face area, total. The arithmetic checks out and each reaches its key."
+   }
+  },
+  {
+   "family_id": "tpl:g10m13s3-1-1:pythagoras-slant",
+   "spec_sha": "9610961fba182a5f2fb1550eaa1725f2b5b074af428e7ed4367655d25bcefe0e",
+   "answers": [
+    {
+     "instance_id": "q:g10m13s3-1-1:g002-pythag",
+     "stem_sha": "0815234ef32b3549",
+     "answer": {
+      "value": "144"
+     },
+     "working": "Slant height of a face = sqrt(h^2 + (side/2)^2) = sqrt(3^2 + 4^2) = 5 cm. Four triangular faces: 4 x (1/2) x 8 x 5 = 80 cm^2. Base: 8^2 = 64 cm^2. Total = 80 + 64 = 144."
+    },
+    {
+     "instance_id": "q:g10m13s3-1-1:g005-pythag",
+     "stem_sha": "a01ba4a519cdf597",
+     "answer": {
+      "value": "1440"
+     },
+     "working": "Slant height = sqrt(24^2 + 10^2) = sqrt(676) = 26 cm. Four triangular faces: 4 x (1/2) x 20 x 26 = 1040 cm^2. Base: 20^2 = 400 cm^2. Total = 1040 + 400 = 1440."
+    },
+    {
+     "instance_id": "q:g10m13s3-1-1:g009-pythag",
+     "stem_sha": "d25cb3790e78e1e4",
+     "answer": {
+      "value": "576"
+     },
+     "working": "Slant height = sqrt(6^2 + 8^2) = 10 cm. Four triangular faces: 4 x (1/2) x 16 x 10 = 320 cm^2. Base: 16^2 = 256 cm^2. Total = 320 + 256 = 576."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "Numeric family with no options, so there are no distractors to judge. I recomputed all three instances and each key matches. g002: half-base 4, slant sqrt(9+16)=5, base 64, four faces 4x(1/2)x8x5=80, total 144. g005: half-base 10, slant sqrt(576+100)=sqrt(676)=26, base 400, four faces 1040, total 1440. g009: half-base 8, slant sqrt(36+64)=10, base 256, four faces 320, total 576. Every step is correct and follows the book's method (Pythagoras on vertical height and half-base to get the slant height, then base plus four triangles). The stem asks for the total surface area in cm^2, and the key is that value in a single number. The stem says \"total\" and the solution adds the base, so there is no open-base ambiguity. The numbers are realistic and come from Pythagorean triples (3-4-5, 10-24-26, 6-8-10), so each slant height is a whole number. Two small points, neither a defect. The stem does not define \"slant height\" and relies on the standard meaning (height of a triangular face), which step 1 states explicitly. I could not check answer_check against the key because it is not in the judge file, but the plain integer keys have no form problem."
+   }
+  },
+  {
+   "family_id": "tpl:g10m13s3-1-1:square-slant",
+   "spec_sha": "4708fec16078f182b1d739d4a1bb1a3a12e105ce4a9a5468f393ee4a7c381e5a",
+   "answers": [
+    {
+     "instance_id": "q:g10m13s3-1-1:g004-square",
+     "stem_sha": "415bc2638978d944",
+     "answer": {
+      "value": "217"
+     },
+     "working": "Base area = 7*7 = 49. Each triangular face = 1/2 * 7 * 12 = 42, so four faces = 168. Total = 49 + 168 = 217 cm^2."
+    },
+    {
+     "instance_id": "q:g10m13s3-1-1:g006-square",
+     "stem_sha": "0bfd45544111bd67",
+     "answer": {
+      "value": "75"
+     },
+     "working": "Base area = 5*5 = 25. Each triangular face = 1/2 * 5 * 5 = 12.5, so four faces = 50. Total = 25 + 50 = 75 cm^2."
+    },
+    {
+     "instance_id": "q:g10m13s3-1-1:g008-square",
+     "stem_sha": "1a2b018770a3b77d",
+     "answer": {
+      "value": "189"
+     },
+     "working": "Base area = 7*7 = 49. Each triangular face = 1/2 * 7 * 10 = 35, so four faces = 140. Total = 49 + 140 = 189 cm^2."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "I accept all three instances of this numeric family (g004, g006, g008). The judge file has no options and no answer_check field, so there are no distractors to judge, and I could not check a typed-answer LaTeX key against an answer_check. The stem fixes the unit (cm^2), so a bare numeric key is the asked form.\n\nI recomputed each instance:\n- g004 (base 7, slant 12): 49 + 4*(1/2)*7*12 = 49 + 168 = 217. This matches the key.\n- g006 (base 5, slant 5): 25 + 4*(1/2)*5*5 = 25 + 50 = 75. This matches the key.\n- g008 (base 7, slant 10): 49 + 4*(1/2)*7*10 = 49 + 140 = 189. This matches the key.\n\nThe stem defines slant height as the height of the triangular face, from the middle of a base edge to the apex. That avoids confusion with the slant edge or the perpendicular height. All three slant heights exceed half the base, so the pyramids are geometrically possible. The numbers are realistic.\n\nThe worked solutions give base area plus four triangular faces, using the face height as the slant height, with correct arithmetic at every step. They follow the book's surface-area method (base + faces)."
+   }
+  },
+  {
+   "family_id": "tpl:g10m13s3-1-1:triangular-base",
+   "spec_sha": "bf176477f5f8ce8d392a569b4897f057344d935b4d12bf02814e4bdc9214c629",
+   "answers": [
+    {
+     "instance_id": "q:g10m13s3-1-1:g005-triang",
+     "stem_sha": "df89d148332d309e",
+     "answer": {
+      "value": "298.3"
+     },
+     "working": "Base area = (sqrt3/4)*10^2 = 25*sqrt3 = 43.301. Each lateral face is a triangle with base 10 and height 17: area = 0.5*10*17 = 85, so 3 faces = 255. Total = 43.301 + 255 = 298.301, which is 298.3 to 1 d.p."
+    },
+    {
+     "instance_id": "q:g10m13s3-1-1:g008-triang",
+     "stem_sha": "ff44e6df7bb699e7",
+     "answer": {
+      "value": "238.3"
+     },
+     "working": "Base area = 25*sqrt3 = 43.301. Each lateral face: 0.5*10*13 = 65, so 3 faces = 195. Total = 43.301 + 195 = 238.301, which is 238.3 to 1 d.p."
+    },
+    {
+     "instance_id": "q:g10m13s3-1-1:g010-triang",
+     "stem_sha": "ebbb51d6f464a879",
+     "answer": {
+      "value": "114.6"
+     },
+     "working": "Base area = (sqrt3/4)*6^2 = 9*sqrt3 = 15.588. Each lateral face: 0.5*6*11 = 33, so 3 faces = 99. Total = 15.588 + 99 = 114.588, which is 114.6 to 1 d.p."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "I found no problems in family tpl:g10m13s3-1-1:triangular-base. It is numeric with no options, so there are no distractors to judge. I recomputed all three instances.\n\n- g005 (base 10, slant 17): base area 25√3 ≈ 43.3013 and faces 3·½·10·17 = 255. The total is 298.3013, which rounds to 298.3 and matches the key.\n- g008 (base 10, slant 13): faces 195, so the total is 238.3013, which rounds to 238.3 and matches the key.\n- g010 (base 6, slant 11): base area 9√3 ≈ 15.5885 and faces 3·½·6·11 = 99. The total is 114.5885, which rounds to 114.6 and matches the key.\n\nKey form: each stem asks for the total surface area to 1 decimal place in cm², and each key is a plain 1-dp number. No answer_check was supplied, so there is no LaTeX-versus-check mismatch to test.\n\nContext: the stems are unambiguous. They say the apex is above the centre, the three faces are identical, and the slant height is the height of a face triangle measured at right angles to a base edge. Every slant height (17, 13, 11) exceeds the base's inradius (2.89 and 1.73), so each pyramid is geometrically valid. The 17 cm and 13 cm slants on a 10 cm base give tall, thin pyramids, but they are not unrealistic.\n\nSolution: all three solutions follow the same method.\n\n1. Surface area is the base plus three identical faces.\n2. Split the equilateral base into two right triangles to get its height.\n3. Use Pythagoras for the base height: √75 = 5√3 and √27 = 3√3.\n4. Compute the base area.\n5. Compute the area of the three faces.\n6. Add and round.\n\nThe intermediate figures are correct and the final rounding is justified."
+   }
+  },
+  {
+   "family_id": "tpl:g10m13s3-1-2:pythagoras-slant",
+   "spec_sha": "bee011ec616fba377f29fa0049584019fba27c1390dc17b958d9ee28c4dc3613",
+   "answers": [
+    {
+     "instance_id": "q:g10m13s3-1-2:g004-pythag",
+     "stem_sha": "5683fb920d18f012",
+     "answer": {
+      "value": "75.4"
+     },
+     "working": "Slant height l = sqrt(3^2 + 4^2) = 5. Total surface area = pi*r^2 + pi*r*l = pi*9 + pi*15 = 24*pi = 75.398..., which rounds to 75.4."
+    },
+    {
+     "instance_id": "q:g10m13s3-1-2:g006-pythag",
+     "stem_sha": "f5f1d22692087ddb",
+     "answer": {
+      "value": "452.4"
+     },
+     "working": "Slant height l = sqrt(8^2 + 6^2) = 10. Total surface area = pi*r^2 + pi*r*l = pi*64 + pi*80 = 144*pi = 452.389..., which rounds to 452.4."
+    },
+    {
+     "instance_id": "q:g10m13s3-1-2:g008-pythag",
+     "stem_sha": "5e5c54339eff9350",
+     "answer": {
+      "value": "1131.0"
+     },
+     "working": "Slant height l = sqrt(10^2 + 24^2) = 26. Total surface area = pi*r^2 + pi*r*l = pi*100 + pi*260 = 360*pi = 1130.973..., which rounds to 1131.0."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The file holds three typed numeric instances and no options, so there are no distractors to judge. I checked the numbers by hand. g004: r=3, H=4 gives slant h=5, so 9π+15π = 24π = 75.398, which rounds to 75.4. g006: r=8, H=6 gives h=10, so 64π+80π = 144π = 452.389, which rounds to 452.4. g008: r=10, H=24 gives h=26, so 100π+260π = 360π = 1130.973, which rounds to 1131.0. All three keys match the stem's request for the total surface area (base plus walls) to 1 d.p. using the calculator's π. The triples (3,4,5), (8,6,10) and (10,24,26) are exact, so the Pythagoras step gives an integer slant height. The method follows the book: slant height by Pythagoras, then πr² + πrh, with h for slant and H for vertical height. Two minor points, neither a defect. The solution uses H without defining it, though the stem says \"vertical height\" and step 1 describes it. The key \"1131.0\" has a trailing zero, so answer_check must compare it numerically or tolerate \"1131\"; I could not see answer_check in the file."
+   }
+  },
+  {
+   "family_id": "tpl:g10m13s3-1-2:slant-given",
+   "spec_sha": "020ac847d00b05ab9cd0b655701ee2c94fa305c479c85617c5a149fd5c3904a2",
+   "answers": [
+    {
+     "instance_id": "q:g10m13s3-1-2:g002-slant-",
+     "stem_sha": "fc54896d34e04e36",
+     "answer": {
+      "value": "395.8"
+     },
+     "working": "Total surface area = base + walls = pi*r^2 + pi*r*l = pi*r*(r+l) = pi*6*(6+15) = 126*pi = 395.84... cm^2, rounded to 1 d.p."
+    },
+    {
+     "instance_id": "q:g10m13s3-1-2:g003-slant-",
+     "stem_sha": "b56048f7339ab61a",
+     "answer": {
+      "value": "358.1"
+     },
+     "working": "Total surface area = pi*r^2 + pi*r*l = pi*r*(r+l) = pi*6*(6+13) = 114*pi = 358.14... cm^2, rounded to 1 d.p."
+    },
+    {
+     "instance_id": "q:g10m13s3-1-2:g007-slant-",
+     "stem_sha": "32ec6b3a1e583535",
+     "answer": {
+      "value": "251.3"
+     },
+     "working": "Total surface area = pi*r^2 + pi*r*l = pi*r*(r+l) = pi*5*(5+11) = 80*pi = 251.327... cm^2, rounded to 1 d.p."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "Numeric family with no options, so there are no distractors to judge. The file lists three instances: g002, g003 and g007.\n\nI checked each key by hand.\n- g002 (r=6, slant 15): 36π + 90π = 126π = 395.84, which rounds to 395.8. Matches the key.\n- g003 (r=6, slant 13): 36π + 78π = 114π = 358.14, which rounds to 358.1. Matches the key.\n- g007 (r=5, slant 11): 25π + 55π = 80π = 251.33, which rounds to 251.3. Matches the key.\n\nKey form: each stem asks for the total surface area in cm² to 1 decimal place using the calculator value of π. Each key is a bare number to 1 d.p. The unit is in the stem, which is fine for a numeric answer.\n\nContext: the stem defines total surface area explicitly (base plus walls), so there is no ambiguity about whether the base is included. The slant height exceeds the radius in every instance, so the cones are geometrically valid, and the numbers are realistic.\n\nSolution: all five steps are correct and go formula, base area, wall area, sum, conclusion. Step 4 rounds only at the end, which is correct.\n\nOne notation point, not a failure: step 1 writes the slant height as h, as in \"πrh ... h is the slant height\". It is defined on the spot, so the working is correct. But h usually means perpendicular height in the cone volume formula, so a student could later confuse the two. If the book writes the slant height as s or l, align it. I could not check the book, since only the judge file was open to me. The risk is low because the stem says \"slant height\" every time."
+   }
+  },
+  {
+   "family_id": "tpl:g10m13s3-1-2:which-calculation",
+   "spec_sha": "081510b1a9aa6c090aec7da688988448c6b2c8aba19872dbc93fa588e873e098",
+   "answers": [
+    {
+     "instance_id": "q:g10m13s3-1-2:g003-which-",
+     "stem_sha": "91ab0847f4fb585e",
+     "answer": {
+      "choice": "A",
+      "choice_text": "$\\pi \\times 7^2 + \\pi \\times 7 \\times 25$"
+     },
+     "working": "Total surface area of a cone = base area + curved wall area = pi r^2 + pi r l, where l is the slant height. r = 7, slant height l = 25 (the vertical height 24 is not used). So pi x 7^2 + pi x 7 x 25. This is option A. Option C uses the height 24 instead of the slant height, B leaves out the base, and D doubles the wall area."
+    },
+    {
+     "instance_id": "q:g10m13s3-1-2:g008-which-",
+     "stem_sha": "b0d5828116c5fb1f",
+     "answer": {
+      "choice": "B",
+      "choice_text": "$\\pi \\times 9^2 + \\pi \\times 9 \\times 15$"
+     },
+     "working": "Total surface area = pi r^2 + pi r l with l the slant height. r = 9, l = 15 (the vertical height 12 is a distractor). So pi x 9^2 + pi x 9 x 15. This is option B. Option D uses the height 12, A leaves out the base, and C doubles the wall area."
+    },
+    {
+     "instance_id": "q:g10m13s3-1-2:g010-which-",
+     "stem_sha": "d33babd88e674942",
+     "answer": {
+      "choice": "D",
+      "choice_text": "$\\pi \\times 16^2 + \\pi \\times 16 \\times 20$"
+     },
+     "working": "Total surface area = pi r^2 + pi r l with l the slant height. r = 16, l = 20 (the vertical height 12 is a distractor; 12^2 + 16^2 = 400 = 20^2 confirms 20 is the slant). So pi x 16^2 + pi x 16 x 20. This is option D. Option C uses the height 12, B leaves out the base, and A doubles the wall area."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [
+     {
+      "instance_id": "q:g10m13s3-1-2:g003-which-",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "pi*7*25 is the wall area alone. It is what a student who forgets the base produces, and it is wrong because the stem defines the total as base plus walls."
+     },
+     {
+      "instance_id": "q:g10m13s3-1-2:g003-which-",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Base plus pi*7*24 swaps in the vertical height 24 for the slant height 25. This is exactly the vertical-height slip, and it is wrong."
+     },
+     {
+      "instance_id": "q:g10m13s3-1-2:g003-which-",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Base plus 2*pi*7*25 uses the cylinder wall formula 2*pi*r*h with the correct slant length. It isolates the single cylinder-formula error and is wrong."
+     },
+     {
+      "instance_id": "q:g10m13s3-1-2:g008-which-",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "pi*9*15 omits the base. It is what the omit-base error produces, and it is wrong."
+     },
+     {
+      "instance_id": "q:g10m13s3-1-2:g008-which-",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Base plus 2*pi*9*15 is the cylinder wall formula with the slant height. It matches the cylinder-walls error and is wrong."
+     },
+     {
+      "instance_id": "q:g10m13s3-1-2:g008-which-",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Base plus pi*9*12 uses the vertical height 12 instead of the slant height 15. It matches the vertical-height error and is wrong."
+     },
+     {
+      "instance_id": "q:g10m13s3-1-2:g010-which-",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Base plus 2*pi*16*20 is the cylinder wall formula with the slant height. It matches the cylinder-walls error and is wrong."
+     },
+     {
+      "instance_id": "q:g10m13s3-1-2:g010-which-",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "pi*16*20 is the wall area alone, with the base omitted. It matches the omit-base error and is wrong."
+     },
+     {
+      "instance_id": "q:g10m13s3-1-2:g010-which-",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Base plus pi*16*12 uses the vertical height 12 instead of the slant height 20. It matches the vertical-height error and is wrong."
+     }
+    ],
+    "notes": "All three instances pass. Checked in each:\n\n- Data: the Pythagorean triples are consistent (7-24-25, 9-12-15, 16-12-20), so the stated slant heights are correct for the given radius and vertical height.\n- Key: option A, B and D respectively is the only expression equal to pi*r^2 + pi*r*s. Each wrong option differs from it in exactly one way: base dropped, vertical height used, or wall term doubled. No option is numerically equal to the key.\n- Stem: it asks for a calculation (an expression), not a number, and the key is an expression, so the form matches. The context is a plain geometry setup with realistic numbers and no ambiguity.\n- Solutions: each reaches the key in the same four steps. Step 3 uses h for the slant height, which could briefly clash with the stem's \"vertical height\", but the solution says explicitly which is meant, so it does not mislead. Step 4's claim that each wrong route \"would give a different value\" is true.\n\nTwo minor observations, neither enough to reject:\n1. Because the stem defines total surface area as base plus walls, the omit-base option is easy to rule out from the stem alone. It is still a valid wrong option.\n2. A student confusing the cone with a cylinder might use the vertical height rather than the slant height. The cylinder-walls option takes the slant height, which isolates the formula slip from the height slip, so it is a reasonable realisation of that error.\n\nI could not check the book's own notation for the cone formula, since only the family file was open to me."
+   }
+  },
+  {
+   "family_id": "tpl:g10m13s3-1-3:twospheres",
+   "spec_sha": "7f719e1cfda77c4317f4c18304664aa719917175fa860dae53fbb08f62e9b620",
+   "answers": [
+    {
+     "instance_id": "q:g10m13s3-1-3:g002-twosph",
+     "stem_sha": "d4e1cc22dc63dcbf",
+     "answer": {
+      "value": "655.1"
+     },
+     "working": "Total SA = 4π(r1² + r2²) = 4π(4.3² + 5.8²) = 4π(18.49 + 33.64) = 4π(52.13) = 208.52π ≈ 655.085 cm², rounded to 1 d.p."
+    },
+    {
+     "instance_id": "q:g10m13s3-1-3:g005-twosph",
+     "stem_sha": "e8861ebbf615a2c1",
+     "answer": {
+      "value": "199.3"
+     },
+     "working": "Total SA = 4π(3.1² + 2.5²) = 4π(9.61 + 6.25) = 4π(15.86) = 63.44π ≈ 199.303 cm², rounded to 1 d.p."
+    },
+    {
+     "instance_id": "q:g10m13s3-1-3:g007-twosph",
+     "stem_sha": "6f0367af446dc400",
+     "answer": {
+      "value": "571.3"
+     },
+     "working": "Total SA = 4π(5.5² + 3.9²) = 4π(30.25 + 15.21) = 4π(45.46) = 181.84π ≈ 571.267 cm², rounded to 1 d.p."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family is numeric with no options, so there are no distractors to judge. I recomputed all three instances with A = 4*pi*r^2 and the calculator value of pi.\n\n- g002 (r = 4.3 and 5.8): 73.96 + 134.56 = 208.52, and 208.52 * pi = 655.085, which rounds to 655.1. This matches the key.\n- g005 (r = 3.1 and 2.5): 38.44 + 25.00 = 63.44, and 63.44 * pi = 199.303, which rounds to 199.3. This matches the key.\n- g007 (r = 5.5 and 3.9): 121.00 + 60.84 = 181.84, and 181.84 * pi = 571.267, which rounds to 571.3. This matches the key.\n\nKey form: each key is a plain number to 1 decimal place, in cm^2 as the stem asks. The stem tells the student to use calculator pi and round only at the end, so there is no ambiguity from 3.14 versus the calculator value. For g002, 3.14 would give 654.8 and 3.142 would give 655.2, so the stem's instruction matters. The explicit instruction makes the key unique.\n\nSolutions: every step is correct and uses the book's method. Each sphere's area is worked out as 4*pi*r^2 and left as a multiple of pi, the coefficients are added, and the total is rounded once at the end. The intermediate squares and products are all correct. The solutions show no rounding before the last step.\n\nContext: the two-sphere question is a plain, unambiguous Grade 10 mensuration question with realistic radii.\n\nNot checked: the answer_check expression for the typed answer was not in the judge file. The LaTeX key, if any, should be confirmed to equal the same 1 d.p. numeric value."
+   }
+  },
+  {
+   "family_id": "tpl:g10m13s3-2-2:surface-cube-pyramid",
+   "spec_sha": "cb547d6bff91d8b9550b0d77178eba1accb797cf70912165e6254b91a80309af",
+   "answers": [
+    {
+     "instance_id": "q:g10m13s3-2-2:g006-surfac",
+     "stem_sha": "42414869ce1c2c2e",
+     "answer": {
+      "value": "432"
+     },
+     "working": "Outside faces: the cube's top face is covered by the pyramid base, so 5 cube faces show: 5 x 8^2 = 320. Pyramid has 4 triangles, each 1/2 x 8 x 7 = 28, so 112. Total = 320 + 112 = 432."
+    },
+    {
+     "instance_id": "q:g10m13s3-2-2:g007-surfac",
+     "stem_sha": "29ea0ee50ee3077f",
+     "answer": {
+      "value": "112"
+     },
+     "working": "5 exposed cube faces: 5 x 4^2 = 80. 4 triangles, each 1/2 x 4 x 4 = 8, so 32. Total = 80 + 32 = 112."
+    },
+    {
+     "instance_id": "q:g10m13s3-2-2:g008-surfac",
+     "stem_sha": "d9615b7f8c02cfce",
+     "answer": {
+      "value": "513"
+     },
+     "working": "5 exposed cube faces: 5 x 9^2 = 405. 4 triangles, each 1/2 x 9 x 6 = 27, so 108. Total = 405 + 108 = 513."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family is numeric with no answer options, so there are no distractors to check. I recomputed all three keys with SA = 5s² + 4·(1/2)·s·l (five cube squares plus four pyramid triangles).\n\n- g006: s=8, l=7 gives 320 + 112 = 432. The key is 432.\n- g007: s=4, l=4 gives 80 + 32 = 112. The key is 112.\n- g008: s=9, l=6 gives 405 + 108 = 513. The key is 513.\n\nKey form: each stem asks for the total outside surface area in cm², and each key is a bare number in that unit.\n\nContext: the stem defines slant height as the height of the triangular face, measured from the midpoint of its base edge to the apex, so a student cannot confuse it with the pyramid's vertical height or the sloping edge. The geometry is realistic in all three: l=7 > s/2=4, l=4 > 2 and l=6 > 4.5, so every pyramid has a real vertical height. This is the book's cube-plus-pyramid composite-solid context.\n\nSolutions: all five steps are the same in each instance and are correct. They first exclude the cube's top face and the pyramid's base, because those two faces are hidden where the solids join. They then take five squares, four triangles with b = s and h = slant height, and sum them. The arithmetic in each step matches the key."
+   }
+  },
+  {
+   "family_id": "tpl:g10m13s3-2-2:volume-cube-pyramid",
+   "spec_sha": "8d526b35f99c92de410fecac70c1d8f4734d79a73dcc6138cb9fb93f6603e553",
+   "answers": [
+    {
+     "instance_id": "q:g10m13s3-2-2:g001-volume",
+     "stem_sha": "21e91bf57611d888",
+     "answer": {
+      "value": "2057"
+     },
+     "working": "Cube volume = 11^3 = 1331. Pyramid base is the 11 x 11 top face (area 121), height 18, so pyramid volume = (1/3)(121)(18) = 726. Total = 1331 + 726 = 2057."
+    },
+    {
+     "instance_id": "q:g10m13s3-2-2:g006-volume",
+     "stem_sha": "58731c471d66128f",
+     "answer": {
+      "value": "768"
+     },
+     "working": "Cube volume = 8^3 = 512. Pyramid base is the 8 x 8 top face (area 64), height 12, so pyramid volume = (1/3)(64)(12) = 256. Total = 512 + 256 = 768."
+    },
+    {
+     "instance_id": "q:g10m13s3-2-2:g008-volume",
+     "stem_sha": "98fae41f73dbc568",
+     "answer": {
+      "value": "1400"
+     },
+     "working": "Cube volume = 10^3 = 1000. Pyramid base is the 10 x 10 top face (area 100), height 12, so pyramid volume = (1/3)(100)(12) = 400. Total = 1000 + 400 = 1400."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family is numeric with no options, so there are no distractors to judge. I recomputed all three instances and each key and worked solution is right. g001: cube 11^3 = 1331, pyramid (1/3)(121)(18) = 726, total 2057. g006: cube 8^3 = 512, pyramid (1/3)(64)(12) = 256, total 768. g008: cube 10^3 = 1000, pyramid (1/3)(100)(12) = 400, total 1400. Each key is the single number the stem asks for, in cm^3. The pyramid divides exactly by 3 in every instance, so no rounding is needed. The stem is unambiguous: the pyramid's base is the cube's top face, and \"height of the pyramid itself\" is its own apex-to-base height, so a student is not tempted to use the combined height. The numbers are realistic, and the steps follow the book's method of adding the cube volume to the pyramid volume. Minor, not blocking: step 2 writes l^3 without saying l is the cube's edge, though the stem makes that clear."
+   }
+  },
+  {
+   "family_id": "tpl:g10m13s4-1-1:single-dimension",
+   "spec_sha": "6891f5a3097c7088c8a7dd21c2d86496b32b980e99fa797b427b58e2b56d8df2",
+   "answers": [
+    {
+     "instance_id": "q:g10m13s4-1-1:g003-single",
+     "stem_sha": "aebb4bb85b69a590",
+     "answer": {
+      "value": "164"
+     },
+     "working": "V = length x breadth x height. Doubling the height with length and breadth unchanged doubles the volume. New volume = 82 x 2 = 164."
+    },
+    {
+     "instance_id": "q:g10m13s4-1-1:g004-single",
+     "stem_sha": "f4cdb48e925eb19a",
+     "answer": {
+      "value": "210"
+     },
+     "working": "Volume is proportional to height when length and breadth are fixed. New volume = 105 x 2 = 210."
+    },
+    {
+     "instance_id": "q:g10m13s4-1-1:g008-single",
+     "stem_sha": "0f92e97fbba502df",
+     "answer": {
+      "value": "297"
+     },
+     "working": "Tripling the height triples the volume. New volume = 99 x 3 = 297."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family has no options (numeric typed answer), so there are no distractors to judge. I checked all three instances. g003: 2 x 82 = 164. g004: 2 x 105 = 210. g008: 3 x 99 = 297. Each key is the bare number that the stem's \"in cm^3\" asks for. No answer_check was supplied in the file, so I could not compare the key to it. The stems are unambiguous: only the height changes, and the length and breadth are stated to stay the same. The numbers are abstract volumes with no unrealistic context. Each solution follows the book's method: V = l x b x h, then l x b x (kh) = kV, then the substitution. The wording of step 3 (\"increases by a factor of k\") is correct for k = 2 and k = 3. The arithmetic is correct in every step."
+   }
+  },
+  {
+   "family_id": "tpl:g10m13s4-1-1:volume-to-area",
+   "spec_sha": "904cc541e7b95e19477025db8825fccfa828d3125e03254d287be90c5fca394b",
+   "answers": [
+    {
+     "instance_id": "q:g10m13s4-1-1:g001-volume",
+     "stem_sha": "da01f2d2009f86d0",
+     "answer": {
+      "value": "846"
+     },
+     "working": "Volume ratio 1620/60 = 27, so the linear scale factor k = cube root of 27 = 3. Surface area scales by k^2 = 9. New surface area = 94 x 9 = 846."
+    },
+    {
+     "instance_id": "q:g10m13s4-1-1:g002-volume",
+     "stem_sha": "ad8a5c33c70550c1",
+     "answer": {
+      "value": "1024"
+     },
+     "working": "Volume ratio 2048/32 = 64, so the linear scale factor k = cube root of 64 = 4. Surface area scales by k^2 = 16. New surface area = 64 x 16 = 1024."
+    },
+    {
+     "instance_id": "q:g10m13s4-1-1:g010-volume",
+     "stem_sha": "f21114bf6d856ae3",
+     "answer": {
+      "value": "468"
+     },
+     "working": "Volume ratio 648/24 = 27, so the linear scale factor k = cube root of 27 = 3. Surface area scales by k^2 = 9. New surface area = 52 x 9 = 468."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family is numeric with no options, so there are no distractors to judge.\n\nI checked all three instances by hand.\n- g001: 1620/60 = 27, so k = 3 and k^2 = 9. 9 x 94 = 846, which matches the key.\n- g002: 2048/32 = 64, so k = 4 and k^2 = 16. 16 x 64 = 1024, which matches the key.\n- g010: 648/24 = 27, so k = 3 and k^2 = 9. 9 x 52 = 468, which matches the key.\n\nThe surface-area and volume pairs are realistic and each has an integer-sided prism behind it. 3x4x5 gives V = 60 and S = 94. 2x4x4 gives V = 32 and S = 64. 2x3x4 gives V = 24 and S = 52. The new prisms are also consistent: 9x12x15 gives V = 1620 and S = 846, and 8x16x16 gives V = 2048 and S = 1024.\n\nThe stem asks for the new surface area in cm^2. The key is the plain number, and the unit is in the stem and the last solution step.\n\nThe worked solution is correct and in the same order for every instance. It shows V scales by k^3, takes the cube root of the volume ratio to get k, shows S scales by k^2, then multiplies. The step that derives S_new = k^2 S from S = 2(lb + lh + bh) is correct. No integer-factor trap exists, since k is a perfect cube root in all three."
+   }
+  },
+  {
+   "family_id": "tpl:g10m13s4-1-3:enlarged-area",
+   "spec_sha": "f2f325738e6a64c42d8aaf5a630d3390da2b450019cbd3bd097e1988e5a26083",
+   "answers": [
+    {
+     "instance_id": "q:g10m13s4-1-3:g001-enlarg",
+     "stem_sha": "6c8ebac88013edc2",
+     "answer": {
+      "value": "81"
+     },
+     "working": "Scaling both length and width by 3 multiplies the area by 3^2 = 9. New area = 9 * 9 = 81 cm^2."
+    },
+    {
+     "instance_id": "q:g10m13s4-1-3:g006-enlarg",
+     "stem_sha": "725dfe9c00052518",
+     "answer": {
+      "value": "700"
+     },
+     "working": "Scaling both length and width by 5 multiplies the area by 5^2 = 25. New area = 28 * 25 = 700 cm^2."
+    },
+    {
+     "instance_id": "q:g10m13s4-1-3:g008-enlarg",
+     "stem_sha": "ba6f58309bd09951",
+     "answer": {
+      "value": "475"
+     },
+     "working": "Scaling both length and width by 5 multiplies the area by 5^2 = 25. New area = 19 * 25 = 475 cm^2."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "Numeric family with no options, so there are no distractors to check. I checked all three instances.\n- g001: k=3, k^2=9, 9x9=81. Correct.\n- g006: k=5, k^2=25, 25x28=700. Correct.\n- g008: k=5, k^2=25, 25x19=475. Correct.\n\nThe keys are plain numbers, and the stem gives the unit (cm^2), so the asked form is met. The stems are unambiguous: both dimensions are scaled by the same factor, so the area is scaled by k^2. The numbers are realistic and the rectangle context is simple. The worked solution follows the book's method: identify the scale factor, then scale the area by k^2, then multiply.\n\nOne minor weakness, not an error. In g001 the area (9) equals k^2 (9), so squaring the original area (9^2) or taking k^4 also gives 81. A student using either wrong method would get the key by accident. If this family is regenerated, avoid an instance where A = k^2. g001 is not wrong as it stands."
+   }
+  },
+  {
+   "family_id": "tpl:g10m13s4-1-3:shrunk-volume",
+   "spec_sha": "c7641ce7ff566697f6d57b4f44fc69f551445c4b3ba697bcd407ba96c268b5f8",
+   "answers": [
+    {
+     "instance_id": "q:g10m13s4-1-3:g001-shrunk",
+     "stem_sha": "6266e1d932b2bbc4",
+     "answer": {
+      "value": "182"
+     },
+     "working": "Volume = pi r^2 h, so scaling r and h by 1/3 scales the volume by (1/3)^3 = 1/27. New volume = 189/27 = 7. Decrease = 189 - 7 = 182."
+    },
+    {
+     "instance_id": "q:g10m13s4-1-3:g002-shrunk",
+     "stem_sha": "a354a34aa56f7786",
+     "answer": {
+      "value": "234"
+     },
+     "working": "Volume scales by (1/3)^3 = 1/27. New volume = 243/27 = 9. Decrease = 243 - 9 = 234."
+    },
+    {
+     "instance_id": "q:g10m13s4-1-3:g005-shrunk",
+     "stem_sha": "4b4ebca938304b4f",
+     "answer": {
+      "value": "252"
+     },
+     "working": "Volume scales by (1/4)^3 = 1/64. New volume = 256/64 = 4. Decrease = 256 - 4 = 252."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "Numeric family with no options, so there are no distractors to judge. I rechecked all three instances by hand. g001: k^3 = 1/27, 189/27 = 7, 189 - 7 = 182, matching the key. g002: 243/27 = 9, 243 - 9 = 234, matching the key. g005: k = 1/4, k^3 = 1/64, 256/64 = 4, 256 - 4 = 252, matching the key. Each key is the decrease in volume (original minus new), which is what the stem asks, in cm^3, as a plain integer. I could not compare against the book's worked method, because the judge file was the only file I was allowed to open. The method used (every length scaled by k, so volume scales by k^3) is mathematically correct and consistent across all steps. Scaling both radius and height by k gives V/k^-3 correctly for a cylinder. The stem is unambiguous and the numbers are realistic, with the original volume chosen to be divisible by 27 or 64. The wording \"the length of its base radius and the length of its height\" is slightly clumsy but not misleading. I found no defects."
+   }
+  },
+  {
+   "family_id": "tpl:g10m13s4-1-3:surface-shrunk",
+   "spec_sha": "649772cec5cc94a1be573b01faaf9ebad351dcd286fcabab9279ce9acd2a8c5f",
+   "answers": [
+    {
+     "instance_id": "q:g10m13s4-1-3:g001-surfac",
+     "stem_sha": "cf0e6cf84d0eacfb",
+     "answer": {
+      "value": "280"
+     },
+     "working": "Total surface area of a cone is pi*r*(r + l), where the slant height l = sqrt(r^2 + h^2). If r and h are both multiplied by 1/6, then l is also multiplied by 1/6, so the area is multiplied by (1/6)^2 = 1/36. New area = 288/36 = 8 cm^2. Decrease = 288 - 8 = 280."
+    },
+    {
+     "instance_id": "q:g10m13s4-1-3:g004-surfac",
+     "stem_sha": "8e567e72ba461d90",
+     "answer": {
+      "value": "104"
+     },
+     "working": "Total surface area = pi*r*(r + l), and l = sqrt(r^2 + h^2) scales with r and h. Scaling r and h by 1/3 scales the area by (1/3)^2 = 1/9. New area = 117/9 = 13 cm^2. Decrease = 117 - 13 = 104."
+    },
+    {
+     "instance_id": "q:g10m13s4-1-3:g007-surfac",
+     "stem_sha": "b7298d6da24026ae",
+     "answer": {
+      "value": "210"
+     },
+     "working": "Total surface area = pi*r*(r + l), and l scales with r and h. Scaling r and h by 1/6 scales the area by 1/36. New area = 216/36 = 6 cm^2. Decrease = 216 - 6 = 210."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "Numeric family with no options, so the distractor check is vacuously true. I recomputed all three instances. g001: 288/36 = 8, 288 - 8 = 280. g004: 117/9 = 13, 117 - 13 = 104. g007: 216/36 = 6, 216 - 6 = 210. Each key matches the stem, which asks for the decrease in cm², not the new area. Scaling radius and height by the same k also scales the slant height by k, so the cone stays similar and the total surface area scales by k². The statement in step 2 therefore holds for the total (not just the curved) surface area. The stems are unambiguous and use clean numbers. Each solution walks through scale factor, k², new area and the subtraction, and the fraction-vs-whole-number note in step 1 matches the stem's \"made 1/k of their original size\"."
+   }
+  },
+  {
+   "family_id": "tpl:g10m13s4-1-3:volume-prism",
+   "spec_sha": "157fdfc81ecff261a8edee6157bbf49e30eaeb34051ab2019373df8ff94d4b0a",
+   "answers": [
+    {
+     "instance_id": "q:g10m13s4-1-3:g007-volume",
+     "stem_sha": "b9df83c4609696b2",
+     "answer": {
+      "value": "297"
+     },
+     "working": "Multiplying length, width and height each by 3 multiplies the volume by 3 x 3 x 3 = 27. New volume = 11 x 27 = 297."
+    },
+    {
+     "instance_id": "q:g10m13s4-1-3:g009-volume",
+     "stem_sha": "14b996f7c32bcb7d",
+     "answer": {
+      "value": "432"
+     },
+     "working": "Each of the three dimensions is multiplied by 3, so the volume is multiplied by 3^3 = 27. New volume = 16 x 27 = 432."
+    },
+    {
+     "instance_id": "q:g10m13s4-1-3:g010-volume",
+     "stem_sha": "73d586c1c3f54d7b",
+     "answer": {
+      "value": "128"
+     },
+     "working": "Each of the three dimensions is multiplied by 2, so the volume is multiplied by 2^3 = 8. New volume = 16 x 8 = 128."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "Numeric-answer family with no options, so there are no distractors to judge and distractors_ok is true by default. All three instances (g007, g009, g010) were checked. Keys: g007 is 3^3 x 11 = 27 x 11 = 297. g009 is 27 x 16 = 432. g010 is 2^3 x 16 = 8 x 16 = 128. Each stem asks for the new volume in cm^3, and each key is a bare number that matches that unit. The stems are unambiguous: all three dimensions are scaled by the same k, so the volume scales by k^3. The starting volumes (11 and 16 cm^3) and scale factors (2 and 3) are realistic and keep the book's volume-scaling context. Each worked solution follows the same three steps: state k, show that volume scales by k^3, then multiply by the original volume. The arithmetic is correct in every step, and the only trap, scaling volume by k instead of k^3, is avoided. No answer_check was in the file, so I could not compare the LaTeX key to one. The key is a plain integer, so no mismatch is possible there."
+   }
+  }
+ ]
+}

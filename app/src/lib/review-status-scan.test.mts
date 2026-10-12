@@ -149,3 +149,31 @@ test("the /spine question pop-up is never opened in its debug mode", () => {
   const branch = modal.lastIndexOf("{debug ?", badge);
   assert.ok(badge > 0 && branch > 0 && badge - branch < 400, "the provenance badge is not inside the debug branch");
 });
+
+test("the console counts only a human stamp as reviewed (answer 33, migration 035)", async () => {
+  // An AI check is "AI-checked, awaiting human" — for a book question too, which used to read as
+  // "reviewed through the normal gate" by being a book question. Review status stays an operator fact.
+  const { questionProvenance, tallyProvenance } = await import("./provenance.ts");
+  const human = questionProvenance({ source: "seed", reviewedBy: "Samuel Toma (G2 accept)" });
+  assert.equal(human.humanChecked, true);
+  assert.equal(human.aiCheckedOnly, false);
+  const ai = questionProvenance({ source: "seed", reviewedBy: null, aiCheckedBy: "ai dual-check" });
+  assert.equal(ai.humanChecked, false);
+  assert.equal(ai.aiCheckedOnly, true);
+  assert.match(ai.label, /AI-checked, awaiting human/);
+  const gen = questionProvenance({ source: "variant", ai_checked_by: "auto-pass G3 (AI recommendation) (sampled)" });
+  assert.equal(gen.humanChecked, false);
+  assert.equal(gen.aiCheckedOnly, true);
+  assert.equal(questionProvenance({ source: "variant", reviewedBy: "Samuel (family t via q)" }).viaFamily, true);
+  assert.equal(questionProvenance({ source: "variant" }).short, "Generated · unchecked");
+  const t = tallyProvenance([
+    { source: "seed", reviewedBy: "Samuel Toma (G2 fix)" },
+    { source: "seed", aiCheckedBy: "ai dual-check" },
+    { source: "authored" },
+    { source: "variant", aiCheckedBy: "ai blind grade (S6)" },
+  ]);
+  assert.deepEqual(
+    [t.book, t.bookHumanChecked, t.generatedChecked, t.generatedUnchecked, t.total],
+    [3, 1, 0, 1, 4]
+  );
+});

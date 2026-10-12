@@ -1,0 +1,161 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m11s1-1-2:shared-hypotenuse",
+ "kind": "family",
+ "lo_id": "lo:g10m11s1-1-2",
+ "parent_question_id": "q:g10m11s1-1-2:ex11-2-19b",
+ "source_page": 401,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "alpha",
+   "randint": [
+    28,
+    62
+   ]
+  },
+  {
+   "name": "a10",
+   "randint": [
+    70,
+    120
+   ]
+  },
+  {
+   "name": "c10",
+   "randint": [
+    40,
+    110
+   ]
+  },
+  {
+   "require": "a10 % 10 != 0 and c10 % 10 != 0",
+   "why": "both lengths are printed with one decimal place, so neither may end in .0"
+  },
+  {
+   "name": "ctab",
+   "let": "[float(v) for v in [1.0, 0.9998476952, 0.999390827, 0.9986295348, 0.9975640503, 0.9961946981, 0.9945218954, 0.9925461516, 0.9902680687, 0.9876883406, 0.984807753, 0.9816271834, 0.9781476007, 0.9743700648, 0.9702957263, 0.9659258263, 0.9612616959, 0.956304756, 0.9510565163, 0.9455185756, 0.9396926208, 0.9335804265, 0.9271838546, 0.9205048535, 0.9135454576, 0.906307787, 0.8987940463, 0.8910065242, 0.8829475929, 0.8746197071, 0.8660254038, 0.8571673007, 0.8480480962, 0.8386705679, 0.8290375726, 0.8191520443, 0.8090169944, 0.79863551, 0.7880107536, 0.7771459615, 0.7660444431, 0.7547095802, 0.7431448255, 0.7313537016, 0.7193398003, 0.7071067812, 0.6946583705, 0.6819983601, 0.6691306064, 0.656059029, 0.6427876097, 0.629320391, 0.6156614753, 0.6018150232, 0.5877852523, 0.5735764364, 0.5591929035, 0.544639035, 0.5299192642, 0.5150380749, 0.5, 0.4848096202, 0.4694715628, 0.4539904997, 0.4383711468, 0.4226182617, 0.4067366431, 0.3907311285, 0.3746065934, 0.3583679495, 0.3420201433, 0.3255681545, 0.3090169944, 0.2923717047, 0.2756373558, 0.2588190451, 0.2419218956, 0.2249510543, 0.2079116908, 0.1908089954, 0.1736481777, 0.156434465, 0.139173101, 0.1218693434, 0.1045284633, 0.0871557427, 0.0697564737, 0.0523359562, 0.0348994967, 0.0174524064, 0.0]]"
+  },
+  {
+   "name": "ttab",
+   "let": "[ctab[90 - j] / ctab[j] for j in range(0, 89)]"
+  },
+  {
+   "name": "sa",
+   "let": "ctab[90 - alpha]"
+  },
+  {
+   "name": "pq",
+   "let": "float(a10) / 10"
+  },
+  {
+   "name": "ps",
+   "let": "float(c10) / 10"
+  },
+  {
+   "name": "r",
+   "let": "ps * sa / pq"
+  },
+  {
+   "require": "r >= 0.35 and r <= 0.85",
+   "why": "keeps cos x between 0.35 and 0.85, so x lies between about 32 and 70 degrees and PS is shorter than PR"
+  },
+  {
+   "name": "pr",
+   "let": "pq / sa"
+  },
+  {
+   "name": "n",
+   "let": "1 - r * r"
+  },
+  {
+   "name": "q0",
+   "let": "(1 + n) / 2"
+  },
+  {
+   "name": "q1",
+   "let": "(q0 + n / q0) / 2"
+  },
+  {
+   "name": "q2",
+   "let": "(q1 + n / q1) / 2"
+  },
+  {
+   "name": "q3",
+   "let": "(q2 + n / q2) / 2"
+  },
+  {
+   "name": "q4",
+   "let": "(q3 + n / q3) / 2"
+  },
+  {
+   "name": "tx",
+   "let": "q4 / r"
+  },
+  {
+   "name": "kg",
+   "let": "len([1 for v in ttab if v <= tx]) - 1"
+  },
+  {
+   "name": "tg",
+   "let": "ttab[kg]"
+  },
+  {
+   "name": "ug",
+   "let": "(tx - tg) / (1 + tx * tg)"
+  },
+  {
+   "name": "xdeg",
+   "let": "kg + 57.29577951308232 * (ug - ug ** 3 / 3 + ug ** 5 / 5)"
+  },
+  {
+   "name": "y",
+   "let": "xdeg * 10"
+  },
+  {
+   "name": "f",
+   "let": "y - floor(y)"
+  },
+  {
+   "name": "sa4",
+   "let": "float(floor(sa * 10000 + 0.5)) / 10000"
+  },
+  {
+   "name": "pra",
+   "let": "float(floor(pr * 100 + 0.5)) / 100"
+  },
+  {
+   "name": "prb",
+   "let": "float(floor(pq / sa4 * 100 + 0.5)) / 100"
+  },
+  {
+   "name": "dr",
+   "let": "max(abs(ps / pra - r), abs(ps / prb - r), abs(ps / (pq / sa4) - r))"
+  },
+  {
+   "name": "dxa",
+   "let": "dr / (q4 * 0.017453292519943295)"
+  },
+  {
+   "name": "dist",
+   "let": "abs(f - 0.5) / 10"
+  },
+  {
+   "require": "dist >= dxa + 0.004",
+   "why": "a solver who rounds PR to two decimals, or sin to four decimals first, moves x by dxa degrees at most; the exact x must be further than that from a one-decimal rounding boundary, so every route reaches the same answer"
+  }
+ ],
+ "constraints": [],
+ "stem": "In quadrilateral $PQRS$ the diagonal $PR$ is drawn. The angles at $Q$ and $S$ are right angles. $PQ = \\text{{=fixed(pq, 1)}}$ $\\text{cm}$, $PS = \\text{{=fixed(ps, 1)}}$ $\\text{cm}$ and $\\angle PRQ = {=alpha}^{\\circ}$. Let $x$ be the size of $\\angle SPR$. Calculate $x$ in degrees, correct to one decimal place. Do not round off until the last step.",
+ "answer": "fixed(xdeg, 1)",
+ "solution": [
+  "Triangle $PQR$ has a right angle at $Q$, so $PR$ is its hypotenuse and $PQ$ is the side opposite $\\angle PRQ$. Use the sine ratio: $\\sin {=alpha}^{\\circ} = \\frac{PQ}{PR}$.",
+  "$PR = \\frac{{=fixed(pq, 1)}}{\\sin {=alpha}^{\\circ}} = {=fixed(pr, 2)}$ cm.",
+  "Triangle $PSR$ has a right angle at $S$, and $PR$ is also its hypotenuse. $PS$ is the side adjacent to $x$, so use the cosine ratio: $\\cos x = \\frac{PS}{PR} = \\frac{{=fixed(ps, 1)}}{{=fixed(pr, 2)}}$.",
+  "$x = \\cos^{-1}\\left(\\frac{{=fixed(ps, 1)}}{{=fixed(pr, 2)}}\\right) = {=fixed(xdeg, 1)}^{\\circ}$ (this uses the unrounded value of $PR$ from the calculator)."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Text-only rendering of the book's quadrilateral (ex11-2-19b, p. 401; I read the figure): two right-angled triangles PQR and PSR share the hypotenuse PR. Step one finds PR from the side PQ opposite the given angle (sine); step two finds angle SPR from the adjacent side PS and PR (cosine). The book's figure marks the 42 degrees at R between RQ and the diagonal PR, so the stem names it angle PRQ rather than 'angle R' (which would read as the whole interior angle of the quadrilateral and change the problem). The book files ex11-2-19b as standard; I tier this family advanced because it is the objective's multi-step exercise (two triangles, two ratios), the only one the book has. The template language has no inverse trig, so the key is computed from a 1-degree cosine table (generated with Python, 10 decimals), a Newton square root, and the tan addition formula with a short arctan series; I emulated the expressions in Python and checked them against math.acos on 3000 draws, error under 1e-7 degrees. The final require keeps the exact x further from a one-decimal rounding boundary than the first-order shift caused by rounding PR to 2 decimals (the book's own route) or sin to 4 decimals, so the book's rounded route and the exact route give the same key. Acceptance is about 45 percent per attempt. Note the template relies on float arithmetic and on max with three arguments."
+}

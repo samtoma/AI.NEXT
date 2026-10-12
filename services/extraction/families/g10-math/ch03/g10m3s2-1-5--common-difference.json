@@ -1,0 +1,122 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m3s2-1-5:common-difference",
+ "kind": "family",
+ "lo_id": "lo:g10m3s2-1-5",
+ "parent_question_id": "q:g10m3s2-1-5:ex3-1-15a",
+ "source_page": 67,
+ "tier": "standard",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    -6,
+    6
+   ]
+  },
+  {
+   "name": "p",
+   "choice": [
+    -5,
+    -4,
+    -3,
+    -2,
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    -9,
+    9
+   ]
+  },
+  {
+   "name": "q",
+   "choice": [
+    -6,
+    -5,
+    -4,
+    -3,
+    -2,
+    -1,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ]
+  },
+  {
+   "require": "min([abs(a + i * p) for i in range(4)]) >= 2",
+   "why": "no coefficient of y is 0, 1 or -1, so every term prints as ay + b"
+  },
+  {
+   "require": "min([abs(b + i * q) for i in range(4)]) >= 1",
+   "why": "no constant is 0, so every term prints with a signed constant"
+  },
+  {
+   "name": "c1",
+   "let": "a"
+  },
+  {
+   "name": "c2",
+   "let": "a + p"
+  },
+  {
+   "name": "c3",
+   "let": "a + 2 * p"
+  },
+  {
+   "name": "c4",
+   "let": "a + 3 * p"
+  },
+  {
+   "name": "e1",
+   "let": "b"
+  },
+  {
+   "name": "e2",
+   "let": "b + q"
+  },
+  {
+   "name": "e3",
+   "let": "b + 2 * q"
+  },
+  {
+   "name": "e4",
+   "let": "b + 3 * q"
+  }
+ ],
+ "constraints": [
+  "c2 - c1 == p",
+  "c3 - c2 == p",
+  "c4 - c3 == p",
+  "e2 - e1 == q",
+  "e3 - e2 == q",
+  "e4 - e3 == q"
+ ],
+ "stem": "Consider the following list: ${=c1}y {=signed(e1)}\\;;\\;{=c2}y {=signed(e2)}\\;;\\;{=c3}y {=signed(e3)}\\;;\\;{=c4}y {=signed(e4)}\\;;\\;\\ldots$ The terms form a linear sequence. Find the common difference $d$ of the sequence, writing $d$ as an expression in $y$.",
+ "solution": [
+  "In a linear sequence the same amount is added to get from each term to the next, so the common difference is $d = T_{2} - T_{1}$.",
+  "Subtract, taking care to change every sign inside the second bracket: $d = ({=c2}y {=signed(e2)}) - ({=c1}y {=signed(e1)}) = {=p}y {=signed(q)}$.",
+  "Check with the next pair of terms: $T_{3} - T_{2} = ({=c3}y {=signed(e3)}) - ({=c2}y {=signed(e2)}) = {=p}y {=signed(q)}$, which is the same.",
+  "The common difference is $d = {=p}y {=signed(q)}$."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "{=p}*y + ({=q})",
+  "form": null,
+  "variables": [
+   "y"
+  ],
+  "tolerance": null
+ },
+ "notes": "Book ex3-1-15a / 19a: the common difference of terms that contain an unknown is an expression in that unknown, found as T2 - T1 and checked on the next pair. Every instance is genuinely linear (both the y-coefficients and the constants step by a constant), so the 'no common difference' branch of the book's stem is not used. y-coefficients are never 0 or +-1 and constants are never 0, so every term prints as 'ay + b'; p is never 0, so d always contains y. The marker answer is d without the 'd =' prefix, as in the book's 15a, and is written with the constant in brackets so it parses whatever its sign."
+}

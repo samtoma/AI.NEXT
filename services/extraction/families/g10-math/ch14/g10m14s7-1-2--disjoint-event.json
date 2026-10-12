@@ -1,0 +1,161 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m14s7-1-2:disjoint-event",
+ "kind": "family",
+ "lo_id": "lo:g10m14s7-1-2",
+ "parent_question_id": "q:g10m14s7-1-2:ex14-7-3",
+ "source_page": 489,
+ "tier": "basic",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "pool",
+   "let": "list(range(1, 13))"
+  },
+  {
+   "name": "v",
+   "shuffle": "pool"
+  },
+  {
+   "name": "aset",
+   "let": "sorted([v[0], v[1], v[2], v[3]])"
+  },
+  {
+   "name": "cs",
+   "let": "sorted([v[4], v[5], v[6]])"
+  },
+  {
+   "name": "d1",
+   "let": "sorted([v[0], v[7], v[8]])"
+  },
+  {
+   "name": "d2",
+   "let": "sorted([v[1], v[2], v[9]])"
+  },
+  {
+   "name": "d3",
+   "let": "sorted([v[3], v[10], v[11]])"
+  },
+  {
+   "name": "sh2",
+   "let": "sorted([v[1], v[2]])"
+  },
+  {
+   "name": "a1",
+   "let": "aset[0]"
+  },
+  {
+   "name": "a2",
+   "let": "aset[1]"
+  },
+  {
+   "name": "a3",
+   "let": "aset[2]"
+  },
+  {
+   "name": "a4",
+   "let": "aset[3]"
+  },
+  {
+   "name": "c1",
+   "let": "cs[0]"
+  },
+  {
+   "name": "c2",
+   "let": "cs[1]"
+  },
+  {
+   "name": "c3",
+   "let": "cs[2]"
+  },
+  {
+   "name": "x1",
+   "let": "d1[0]"
+  },
+  {
+   "name": "x2",
+   "let": "d1[1]"
+  },
+  {
+   "name": "x3",
+   "let": "d1[2]"
+  },
+  {
+   "name": "y1",
+   "let": "d2[0]"
+  },
+  {
+   "name": "y2",
+   "let": "d2[1]"
+  },
+  {
+   "name": "y3",
+   "let": "d2[2]"
+  },
+  {
+   "name": "z1",
+   "let": "d3[0]"
+  },
+  {
+   "name": "z2",
+   "let": "d3[1]"
+  },
+  {
+   "name": "z3",
+   "let": "d3[2]"
+  },
+  {
+   "name": "s1",
+   "let": "v[0]"
+  },
+  {
+   "name": "s2a",
+   "let": "sh2[0]"
+  },
+  {
+   "name": "s2b",
+   "let": "sh2[1]"
+  },
+  {
+   "name": "s3",
+   "let": "v[3]"
+  }
+ ],
+ "constraints": [],
+ "stem": "A number is chosen from the sample space $S = \\{1, 2, 3, \\ldots, 12\\}$. Event $A = \\{ {=a1}, {=a2}, {=a3}, {=a4} \\}$. Which one of the following events is mutually exclusive with $A$?",
+ "solution": [
+  "Two events are mutually exclusive when they cannot occur at the same time. This means that no outcome is in both events: their intersection is empty.",
+  "Event $A = \\{ {=a1}, {=a2}, {=a3}, {=a4} \\}$. Check each option for an outcome that is also in $A$.",
+  "The option $\\{ {=x1}, {=x2}, {=x3} \\}$ has the outcome {=s1} in common with $A$. Both events occur if {=s1} is chosen, so they are not mutually exclusive.",
+  "The option $\\{ {=y1}, {=y2}, {=y3} \\}$ has the outcomes {=s2a} and {=s2b} in common with $A$, so they are not mutually exclusive.",
+  "The option $\\{ {=z1}, {=z2}, {=z3} \\}$ has the outcome {=s3} in common with $A$. Both events occur if {=s3} is chosen, so they are not mutually exclusive.",
+  "The option $\\{ {=c1}, {=c2}, {=c3} \\}$ has no outcome in common with $A$: none of {=c1}, {=c2} and {=c3} is in $A$. So $A \\cap \\{ {=c1}, {=c2}, {=c3} \\} = \\varnothing$.",
+  "Because the intersection is empty, the two events can never occur at the same time. The event that is mutually exclusive with $A$ is $\\{ {=c1}, {=c2}, {=c3} \\}$."
+ ],
+ "choices": {
+  "correct": "$\\{ {=c1}, {=c2}, {=c3} \\}$",
+  "distractors": [
+   {
+    "text": "$\\{ {=x1}, {=x2}, {=x3} \\}$",
+    "misconception_id": "mc:g10m14s7-1-2:one-shared-outcome-ignored"
+   },
+   {
+    "text": "$\\{ {=y1}, {=y2}, {=y3} \\}$",
+    "misconception_id": null
+   },
+   {
+    "text": "$\\{ {=z1}, {=z2}, {=z3} \\}$",
+    "misconception_id": "mc:g10m14s7-1-2:one-shared-outcome-ignored"
+   }
+  ]
+ },
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m14s7-1-2:one-shared-outcome-ignored",
+   "label": "Treats events that share only one outcome as mutually exclusive",
+   "description": "The student sees that most outcomes of the two events differ and judges them 'almost' or 'mostly' exclusive. Mutually exclusive means that NO outcome is in both events, so a single shared outcome is enough to make them not mutually exclusive."
+  }
+ ],
+ "notes": "Entry-level version of the book's Venn-diagram questions (ex14-7-3, ex14-8-4): the figure is replaced by the sets written out, so the student only has to look for a shared outcome. Built from a shuffled 1..12 so by construction exactly one option (cs) is disjoint from A; the other three share 1, 2 and 1 outcomes with A (checked by brute force over 20000 draws). The two single-overlap options carry the one-shared-outcome-ignored error (new id, declared above); the two-overlap option is a plain wrong option. Sets are fixed-size (4 for A, 3 per option) so the solution needs no set-formatting helper. The catalogued misconceptions about complements and unions are exercised by the advanced family, not this one."
+}

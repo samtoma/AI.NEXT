@@ -1,0 +1,86 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m5s8-1-2:product-ratios",
+ "kind": "family",
+ "lo_id": "lo:g10m5s8-1-2",
+ "parent_question_id": "q:g10m5s8-1-2:ex5-7-8h",
+ "source_page": 137,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    1,
+    9
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    1,
+    9
+   ]
+  },
+  {
+   "require": "gcd(a, b) == 1",
+   "why": "keeps the product in lowest terms"
+  },
+  {
+   "name": "s1",
+   "choice": [
+    -1,
+    1
+   ]
+  },
+  {
+   "name": "s2",
+   "choice": [
+    -1,
+    1
+   ]
+  },
+  {
+   "name": "x",
+   "let": "s1 * a"
+  },
+  {
+   "name": "y",
+   "let": "s2 * b"
+  },
+  {
+   "name": "r2",
+   "let": "x * x + y * y"
+  },
+  {
+   "name": "sqf",
+   "let": "sum([1 for d in range(2, 14) if r2 % (d * d) == 0])"
+  },
+  {
+   "require": "not is_square(r2) and sqf == 0",
+   "why": "r is a surd in lowest terms, never a whole number"
+  }
+ ],
+ "constraints": [
+  "gcd(abs(x), abs(y)) == 1",
+  "not is_square(x * x + y * y)"
+ ],
+ "stem": "$P$ is a point with co-ordinates $({=x}, {=y})$ on a Cartesian plane, and $O$ is the origin. $OP$ forms an angle, $\\theta$, measured anticlockwise from the positive $x$-axis. Without using a calculator, determine the value of $\\sin\\theta\\cos\\theta$. Give your answer as a fraction in simplest form.",
+ "solution": [
+  "Read off the co-ordinates of $P$ and keep their signs: $x={=x}$ and $y={=y}$.",
+  "We find $r=OP$ with the theorem of Pythagoras. $r$ is a length, so it is positive: $\\begin{aligned}r^{2}&=x^{2}+y^{2}\\\\&=({=x})^{2}+({=y})^{2}\\\\&={=r2}\\\\r&=\\sqrt{{=r2}}\\end{aligned}$",
+  "Write each ratio with $x$, $y$ and $r$: $\\begin{aligned}\\sin\\theta&=\\frac{y}{r}=\\frac{{=y}}{\\sqrt{{=r2}}}\\\\\\cos\\theta&=\\frac{x}{r}=\\frac{{=x}}{\\sqrt{{=r2}}}\\end{aligned}$",
+  "Multiply the two ratios. $\\sqrt{{=r2}}\\times\\sqrt{{=r2}}={=r2}$, so the surds disappear: $\\begin{aligned}\\sin\\theta\\cos\\theta&=\\frac{{=y}}{\\sqrt{{=r2}}}\\times\\frac{{=x}}{\\sqrt{{=r2}}}\\\\&=\\frac{{=x*y}}{{=r2}}\\end{aligned}$",
+  "The numerator and the denominator have no common factor, so the fraction is in simplest form: $\\sin\\theta\\cos\\theta={=(x*y)/r2}$"
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "{=x*y}/{=r2}",
+  "form": "simplest",
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Advanced tier: the twist of the book's ex5-7-8h (combine two ratios of one point, with r squared giving the whole number r2) but with a product, so the signs of x and y matter and the surd has to be cleared. P may be in any quadrant. gcd(|x|,|y|) = 1 guarantees xy/r2 is already in lowest terms (any prime dividing xy and x^2+y^2 would divide both x and y). r2 is never a perfect square and never has a square factor. The answer is a fraction, so the marker is an expression in simplest form, and the stem says so. Instances: 204 distinct points."
+}

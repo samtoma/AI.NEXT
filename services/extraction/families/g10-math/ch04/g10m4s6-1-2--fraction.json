@@ -1,0 +1,54 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m4s6-1-2:fraction",
+ "kind": "family",
+ "lo_id": "lo:g10m4s6-1-2",
+ "parent_question_id": "q:g10m4s6-1-2:we16",
+ "source_page": 95,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    2,
+    9
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    2,
+    9
+   ]
+  }
+ ],
+ "constraints": [
+  "a >= 2",
+  "b >= 2"
+ ],
+ "stem": "Make $x$ the subject of the formula $y = \\frac{{=a}x}{x + {=b}k^{2}}$.",
+ "solution": [
+  "Multiply both sides by the denominator $x + {=b}k^{2}$ to clear the fraction: $y(x + {=b}k^{2}) = {=a}x$.",
+  "Expand the bracket: $yx + {=b}yk^{2} = {=a}x$.",
+  "Get every term containing $x$ on one side: ${=b}yk^{2} = {=a}x - yx$.",
+  "Take out $x$ as a common factor: ${=b}yk^{2} = x({=a} - y)$.",
+  "Divide both sides by $({=a} - y)$: $x = \\frac{{=b}yk^{2}}{{=a} - y}$."
+ ],
+ "marker": {
+  "kind": "equation",
+  "answer": "x = {=b}*y*k**2/({=a} - y)",
+  "form": {
+   "subject": "x"
+  },
+  "variables": [
+   "x",
+   "y",
+   "k"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Same skeleton as book question we16 (h = R x H/(R + r^2), make R the subject): clear the fraction, expand, collect the subject's terms, take the subject out as a common factor, divide. The book's H and r^2 become the numeric coefficient a and the term b k^2, so only numbers change (a and b in 2..9, 64 distinct stems). The book's note about restrictions is not asked; the final expression is x = b y k^2/(a - y), which is equivalent to -b y k^2/(y - a), so either arrangement should be accepted. Verified by substitution for random values that the answer returns the original y. No mcq."
+}

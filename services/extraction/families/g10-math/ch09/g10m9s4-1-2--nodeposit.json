@@ -1,0 +1,123 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m9s4-1-2:nodeposit",
+ "kind": "family",
+ "lo_id": "lo:g10m9s4-1-2",
+ "parent_question_id": "q:g10m9s4-1-2:we08",
+ "source_page": 342,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": "Thandi buys a fridge on hire purchase. She pays no deposit, the whole cash price is repaid over a whole number of years with simple interest, and a fixed insurance premium is added to every monthly payment.",
+ "params": [
+  {
+   "name": "k",
+   "randint": [
+    20,
+    90
+   ]
+  },
+  {
+   "name": "cash",
+   "let": "k * 100"
+  },
+  {
+   "name": "yrs",
+   "choice": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "r",
+   "choice": [
+    8,
+    9,
+    10,
+    12,
+    14,
+    15,
+    18,
+    20
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    200,
+    700
+   ]
+  },
+  {
+   "name": "prem_c",
+   "let": "q * 5"
+  },
+  {
+   "name": "m",
+   "let": "yrs * 12"
+  },
+  {
+   "name": "acc_c",
+   "let": "cash * (100 + r * yrs)"
+  },
+  {
+   "require": "((2 * acc_c) % m != 0) or (((2 * acc_c) // m) % 2 == 0)",
+   "why": "the monthly repayment must not fall exactly on a half cent, so rounding to the nearest cent is unambiguous"
+  },
+  {
+   "require": "acc_c > 2 * prem_c * m",
+   "why": "keeps the insurance premium realistically small next to the monthly repayment (at most half of it)"
+  },
+  {
+   "name": "acc",
+   "let": "acc_c / 100"
+  },
+  {
+   "name": "inst",
+   "let": "acc / m"
+  },
+  {
+   "name": "prem",
+   "let": "prem_c / 100"
+  },
+  {
+   "name": "tot",
+   "let": "inst + prem"
+  },
+  {
+   "name": "i_t",
+   "let": "fixed(r / 100, 2)"
+  },
+  {
+   "name": "acc_t",
+   "let": "fixed(acc, 2)"
+  },
+  {
+   "name": "inst_t",
+   "let": "fixed(inst, 2)"
+  },
+  {
+   "name": "prem_t",
+   "let": "fixed(prem, 2)"
+  },
+  {
+   "name": "tot_t",
+   "let": "fixed(tot, 2)"
+  }
+ ],
+ "constraints": [
+  "2 * prem <= inst"
+ ],
+ "stem": "Thandi buys a fridge on hire purchase. The cash price of the fridge is $\\text{R{=cash}}$. She pays no deposit and pays the fridge off over ${=yrs}$ years at an interest rate of ${=r}\\%$ p.a., charged as simple interest. An insurance premium of $\\text{R{=prem_t}}$ is added to every monthly payment. Calculate Thandi's monthly payment in rand, correct to the nearest cent.",
+ "answer": "fixed(tot, 2)",
+ "solution": [
+  "There is no deposit, so the amount financed is the cash price: $P = \\text{R{=cash}}$. The interest rate is $i = {=i_t}$ and the period is $n = {=yrs}$ years.",
+  "Calculate the accumulated amount: $A = P(1 + in) = {=cash}(1 + {=i_t} \\times {=yrs}) = \\text{R{=acc_t}}$.",
+  "The agreement runs for ${=yrs} \\times 12 = {=m}$ months, so the monthly repayment on the hire purchase agreement is $\\frac{{=acc_t}}{{=m}} = \\text{R{=inst_t}}$ (to the nearest cent).",
+  "Add the insurance premium to the monthly repayment: $\\text{R{=inst_t}} + \\text{R{=prem_t}} = \\text{R{=tot_t}}$.",
+  "Thandi's monthly payment is $\\text{R{=tot_t}}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Entry point of the skill: the book's we08 method (A = P(1 + in), divide by the number of months, add the premium) with the deposit removed and the term a whole number of years, so n needs no conversion from months. Simple interest is stated in the stem so a blind solver cannot reach for compound interest; the book leaves it implicit. Cash price is a multiple of R100 so A is a whole number of rand. Premium is in 5-cent steps (R10.00 to R35.00) and is kept at no more than half the monthly repayment. Tie check keeps the repayment off an exact half cent; because the premium is an exact number of cents, rounding the repayment first (as the book does) and rounding the sum give the same answer. I checked 20 000 sampled instances against an independent step-by-step calculation that rounds as the book does: they agree, about 99.5% of draws are accepted, and answers run from about R57 to R560. Typical errors to watch for in review or blind solves: adding the premium once instead of to every month, dividing by the number of years instead of months, using compound interest. No misconceptions are catalogued for this objective and a numeric family has no distractors to tag, so none are proposed."
+}

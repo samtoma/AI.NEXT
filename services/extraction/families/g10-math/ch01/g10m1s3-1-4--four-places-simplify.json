@@ -1,0 +1,99 @@
+{
+ "format": "ainext.family/1",
+ "version": 1,
+ "id": "tpl:g10m1s3-1-4:four-places-simplify",
+ "kind": "family",
+ "lo_id": "lo:g10m1s3-1-4",
+ "parent_question_id": "q:g10m1s3-1-4:ex1-1-9d",
+ "source_page": 12,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    1,
+    9
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    1,
+    9
+   ]
+  },
+  {
+   "name": "c",
+   "randint": [
+    1,
+    9
+   ]
+  },
+  {
+   "name": "d",
+   "choice": [
+    2,
+    4,
+    5,
+    6,
+    8
+   ]
+  },
+  {
+   "name": "big",
+   "let": "1000 * a + 100 * b + 10 * c + d"
+  },
+  {
+   "name": "h",
+   "let": "gcd(big, 10000)"
+  },
+  {
+   "require": "h >= 4",
+   "why": "the simplifying step must divide by a real common factor of 4 or more, not just 2, so every instance needs the full simplification step the book models in 0.12 and 0.58"
+  },
+  {
+   "name": "p",
+   "let": "big // h"
+  },
+  {
+   "name": "q",
+   "let": "10000 // h"
+  },
+  {
+   "name": "ta",
+   "let": "a * 1000"
+  },
+  {
+   "name": "tb",
+   "let": "b * 100"
+  },
+  {
+   "name": "tc",
+   "let": "c * 10"
+  }
+ ],
+ "constraints": [
+  "gcd(p, q) == 1",
+  "q > 1",
+  "p < q"
+ ],
+ "stem": "Write the decimal $0.{=a}{=b}{=c}{=d}$ as a simple fraction, in its simplest form.",
+ "solution": [
+  "Write each digit of $0.{=a}{=b}{=c}{=d}$ over its place value: tenths, hundredths, thousandths and ten-thousandths. $0.{=a}{=b}{=c}{=d}=\\frac{{=a}}{10}+\\frac{{=b}}{100}+\\frac{{=c}}{1000}+\\frac{{=d}}{\\text{10 000}}$",
+  "Give every fraction the common denominator $\\text{10 000}$. $0.{=a}{=b}{=c}{=d}=\\frac{{=ta}}{\\text{10 000}}+\\frac{{=tb}}{\\text{10 000}}+\\frac{{=tc}}{\\text{10 000}}+\\frac{{=d}}{\\text{10 000}}$",
+  "Add the numerators. $0.{=a}{=b}{=c}{=d}=\\frac{{=big}}{\\text{10 000}}$",
+  "Simplify by dividing the numerator and the denominator by {=h}, the highest common factor of {=big} and $\\text{10 000}$. $\\frac{{=big}}{\\text{10 000}}=\\frac{{=p}}{{=q}}$",
+  "So $0.{=a}{=b}{=c}{=d}=\\frac{{=p}}{{=q}}$."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "{=p}/{=q}",
+  "form": "simplest",
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Modelled on ex1-1-9d (0.2589 over 10 000, four place values added) with the simplifying step of ex1-1-9b/9c (0.12 and 0.58), joined into one longer chain: four place-value fractions, common denominator 10 000, add, then simplify. The answer is always a proper fraction in lowest terms, so the marker is the plain value p/q with form 'simplest' (the book's own marker form for this objective); no mixed numbers, so there is no ambiguity about how the answer is written. Parameters: tenths, hundredths and thousandths digits run 1-9 (no zero digit, so no 0/10 term appears in the expansion); the last digit is 2, 4, 5, 6 or 8 so the decimal really has four places and is divisible by 2 or 5; the require keeps only instances whose highest common factor with 10 000 is 4 or more (4, 5, 8, 16, 25, 125 or 625), which gives 2187 instances, reduced denominators from 16 to 2500, e.g. 0.1375 = 11/80, 0.2584 = 323/1250, 0.4625 = 37/80. The 'answer' key is omitted because the family is an expression answer checked by the marker (answer is for numeric only). No distractors, so no catalogued misconception ids are used (the catalogue for this objective is empty). The whole-number-part twist (1.59 = 1 59/100) is deliberately not used here: it would need a mixed-number marker whose handling of 'simplest' is not specified, and it is tiered basic in the book anyway."
+}

@@ -1,0 +1,74 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m14s4-1-2:shared-typed",
+ "kind": "family",
+ "lo_id": "lo:g10m14s4-1-2",
+ "parent_question_id": "q:g10m14s4-1-2:ex14-4-1",
+ "source_page": 482,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "nn",
+   "choice": [
+    24,
+    25,
+    28,
+    30,
+    32
+   ]
+  },
+  {
+   "name": "pool",
+   "sample": {
+    "from": "range(1, nn + 1)",
+    "k": 12
+   }
+  },
+  {
+   "name": "araw",
+   "let": "[pool[j] for j in range(0, 9)]"
+  },
+  {
+   "name": "braw",
+   "let": "[pool[j] for j in [0, 1, 2, 3, 9, 10, 11]]"
+  },
+  {
+   "name": "ash",
+   "shuffle": "araw"
+  },
+  {
+   "name": "bsh",
+   "shuffle": "braw"
+  },
+  {
+   "name": "inter",
+   "let": "sorted([pool[j] for j in range(0, 4)])"
+  },
+  {
+   "name": "bset",
+   "let": "sorted([pool[j] for j in [0, 1, 2, 3, 9, 10, 11]])"
+  },
+  {
+   "name": "bonly",
+   "let": "sorted([pool[j] for j in range(9, 12)])"
+  }
+ ],
+ "constraints": [],
+ "stem": "The sample space is $S=\\{n:n\\in\\mathbb{Z},1\\leq n\\leq {=nn}\\}$. A Venn diagram shows two overlapping circles, one for event set $A$ and one for event set $B$. The numbers written inside circle $A$ are {=ash[0]}, {=ash[1]}, {=ash[2]}, {=ash[3]}, {=ash[4]}, {=ash[5]}, {=ash[6]}, {=ash[7]} and {=ash[8]}. The numbers written inside circle $B$ are {=bsh[0]}, {=bsh[1]}, {=bsh[2]}, {=bsh[3]}, {=bsh[4]}, {=bsh[5]} and {=bsh[6]}. A number in the overlap of the two circles is written in both lists, and every other number of $S$ lies outside both circles. Determine the event set of the intersection $A\\cap B$. Give its elements from smallest to largest, separated by commas, without brackets.",
+ "solution": [
+  "The intersection $A\\cap B$ contains only the numbers that lie in circle $A$ and in circle $B$ at the same time, so a number that is in just one of the circles does not belong in it.",
+  "Take the numbers of circle $B$, which are {=bset[0]}, {=bset[1]}, {=bset[2]}, {=bset[3]}, {=bset[4]}, {=bset[5]} and {=bset[6]}, one at a time and look for each one in circle $A$. The numbers {=inter[0]}, {=inter[1]}, {=inter[2]} and {=inter[3]} are inside circle $A$ as well.",
+  "The numbers {=bonly[0]}, {=bonly[1]} and {=bonly[2]} are in circle $B$ only, so they are left out.",
+  "Write down only the shared numbers, from smallest to largest: $A\\cap B=\\{{=inter[0]}, {=inter[1]}, {=inter[2]}, {=inter[3]}\\}$, so the answer is {=inter[0]}, {=inter[1]}, {=inter[2]}, {=inter[3]}."
+ ],
+ "marker": {
+  "kind": "values",
+  "answer": "[{=inter[0]}, {=inter[1]}, {=inter[2]}, {=inter[3]}]",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "notes": "Advanced tier for ex14-4-1 (p. 482), the book's only question here, so this is the same skill at a harder level, not a new technique. It differs from the standard family in three ways: the answer is typed instead of picked from options, the circles are larger (A has 9 numbers, B has 7, 4 are shared), and the sample space reaches 24 to 32 so the numbers are mostly two-digit and the student has to check every number of the smaller circle against the other. As in the standard family, the Venn diagram is described in words and the lists are shuffled, so shared numbers are not in fixed positions. Pool entries 0-3 are shared, 4-8 are in A only, 9-11 are in B only. The stem asks for plain comma-separated numbers without brackets so the values marker can compare a typed answer reliably. A student who types braces may need the marker to tolerate them; please check this when sampling. Typical wrong answers to expect from the catalogue are all of one circle (whole-set-not-intersection) and the numbers of both circles (either-set-not-both). Not padded: it adds typed production and larger sets, but if the reviewer thinks that is too small a step beyond standard, drop it."
+}

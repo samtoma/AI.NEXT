@@ -1,0 +1,27 @@
+{
+  "format": "ainext.widget-mapping-review/1",
+  "rule": "decision 47: a mapping the blind verifier did not confirm is held — never shown, never a diagnosis, never S5 evidence — until a human keeps or drops it",
+  "items": [
+    {
+      "key": "q:g10m9s5-1-1:w001#direct-solved-as-inverse",
+      "question_id": "q:g10m9s5-1-1:w001",
+      "template_id": "wt:g10m9s5-1-1:pounds-to-rand-balance",
+      "lo_id": "lo:g10m9s5-1-1",
+      "kind": "ratio_balance",
+      "stem": "The exchange rate is $\\text{£1} = \\text{R8}$. The beam is level when both sides give the same number of rand for each pound. Drag the right pan until it is level: how many rand is $\\text{£2}$ worth?",
+      "reading": {
+        "mode": "direct",
+        "a": 1,
+        "b": 8,
+        "c": 2
+      },
+      "construction": "Left side is £1 : R8, so the quotient a/b is 1/8. Drag the right pan to 16: 2/16 = 1/8, which matches, and the products 1x8 and 2x16 are irrelevant in direct mode. The beam levels at 16. That is a whole number between 1 and 24, so it is on the instrument, and 16 = 2 x 8 is the correct answer to the question.",
+      "predicate": "direct-solved-as-inverse",
+      "predicate_meaning": "Matched the products where the quotients should match",
+      "misconception_id": "mc:g10m9s5-1-1:multiplies-or-divides-the-wrong-way",
+      "misconception_label": "Multiplies or divides by the exchange rate the wrong way round",
+      "misconception_description": "The student uses the exchange rate in the right place but with the wrong operation, multiplying when the amount should be divided by the rate, or dividing when it should be multiplied.",
+      "why": "This predicate fires when the student levels the beam by matching products, 1 x 8 = 2 x d, which puts the right pan at 4. That is a direct-versus-inverse proportion confusion ('more pounds, so fewer rand'). The claimed misconception is about multiplying or dividing by the rate the wrong way round. A student who divides £2 by the rate gets 2 / 8 = 0.25, not 4. The beam cannot show 0.25 because it only takes whole numbers from 1 to 24, so that error would not fire this predicate. Reaching 4 means dividing the rate by the amount (8 / 2) or reasoning that more pounds buy fewer rand, which is not the stated operation-direction slip. The predicate would mostly fire for a different reason, so matches is false."
+    }
+  ]
+}

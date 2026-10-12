@@ -8,7 +8,9 @@ import { emit } from "@/lib/analytics";
 import { getLibraryEntries, flagAuthoringGap } from "@/lib/explanations";
 import { currentSessionSnapshot } from "@/lib/sessions";
 import type { AttemptResult, SolutionStep } from "@/lib/types";
-import { evaluateArithmeticExpression } from "@/lib/arithmetic";
+import { markAnswer, type AttemptRetry } from "@/lib/attempt-grading";
+import { MarkerKeyError } from "@/lib/answer-marker";
+import { ANSWER_ONLY_CARD_NOTE, choiceOptions, isAnswerOnly } from "@/lib/question-flags";
 import {
   acceptedRetryOf,
   attemptProbingDeclaration,
@@ -37,29 +39,17 @@ class HttpError extends Error {
   }
 }
 
-function grade(
-  questionType: string,
-  correct: string,
-  given: string
-): boolean {
-  if (questionType === "numeric") {
-    const a = parseFloat(correct);
-    if (!Number.isNaN(a)) {
-      const trimmedGiven = given.trim();
-      // The common case: a clean numeric literal, no working shown.
-      if (/^[+-]?\d+(\.\d+)?$/.test(trimmedGiven)) {
-        return Math.abs(a - parseFloat(trimmedGiven)) < 1e-6;
-      }
-      // The student typed the steps that lead to the answer ("3x4" for 12)
-      // instead of the final value. Evaluate deterministically — no model
-      // call — before falling back to treating it as text.
-      const evaluated = evaluateArithmeticExpression(trimmedGiven);
-      if (evaluated !== null) return Math.abs(a - evaluated) < 1e-6;
-      const b = parseFloat(trimmedGiven);
-      if (!Number.isNaN(b)) return Math.abs(a - b) < 1e-6;
-    }
+/**
+ * An answer the maths-expression marker sends back for re-entry (T416, FR-4320): in a form the question
+ * does not ask for, or not readable as maths. It is NOT a verdict, so it leaves the unit of work by
+ * throwing — `withPrincipal` rolls back, and nothing this request touched survives: no attempt row, no
+ * mastery change, no learning session opened. Answered 422 with the marker's message, so a client that
+ * does not know the shape fails safe (an error, never "wrong").
+ */
+class ReentryRequested extends Error {
+  constructor(readonly body: AttemptRetry) {
+    super(body.retry);
   }
-  return correct.trim().toLowerCase() === given.trim().toLowerCase();
 }
 
 export async function POST(req: Request) {
@@ -215,9 +205,29 @@ export async function POST(req: Request) {
           error: "a widget attempt must report a predicate",
         });
       }
+      // THE MARKER (T416, FR-4320). A question carrying `choices.marker` is
+      // marked by mathematical equivalence (lib/answer-marker.ts, ADR-0025);
+      // every other question by today's `grade()`, unchanged (FR-C03) —
+      // `markAnswer` decides which, and the replay proves the second half on
+      // every recorded attempt (SC-212). A re-entry is decided HERE, before
+      // the session below is adopted or opened and before any write, and it
+      // leaves by throwing so the unit of work rolls back whole. The same
+      // re-entry answers a choice question's TRUE but less precise option
+      // (`choices.less_specific`, Samuel's G2 answer 20; lib/question-flags.ts):
+      // not wrong, not an attempt, asked again. A malformed flag is ignored
+      // with a server-log warning, never a failed request.
+      const verdict = isWidget ? null : markAnswer(q, givenAnswer);
+      if (verdict?.verdict === "retry") {
+        throw new ReentryRequested({
+          retry: verdict.retry,
+          ...(verdict.form ? { form: verdict.form } : {}),
+          ...(verdict.reason ? { reason: verdict.reason } : {}),
+          message: verdict.message,
+        });
+      }
       const isCorrect = isWidget
         ? predicate === q.correct_answer
-        : grade(q.question_type, q.correct_answer, givenAnswer);
+        : verdict!.isCorrect;
 
       // THE DIAGNOSIS. On a multiple-choice question the distractors are not
       // filler — somebody chose each one to encode a specific error, and the
@@ -229,9 +239,9 @@ export async function POST(req: Request) {
       // thing she clicked. A numeric answer gets no diagnosis at all rather than
       // an invented one.
       const chosenOption: { text?: string; misconception_id?: string } | null =
-        !isCorrect && q.question_type === "mcq" && Array.isArray(q.choices)
-          ? (q.choices.find(
-              (c: { key?: string }) => c.key === givenAnswer.trim().toUpperCase()
+        !isCorrect && q.question_type === "mcq"
+          ? ((choiceOptions(q.choices) as { key?: string; text?: string; misconception_id?: string }[] | null)?.find(
+              (c) => c.key === givenAnswer.trim().toUpperCase()
             ) ?? null)
           : null;
 
@@ -403,12 +413,19 @@ export async function POST(req: Request) {
         ]
       );
 
-      // 3. wrong answer → log the canonical-grounded explanation
-      const solution: SolutionStep[] = q.canonical_solution ?? [];
+      // 3. wrong answer → log the canonical-grounded explanation. An
+      // `answer_only` question (the book prints no working; Samuel's G2
+      // answer 22) has none to give: its steps are never sent to a card, and
+      // the log records what the card shows instead — the answer and where
+      // the method is (consistency review A6; lib/question-flags.ts).
+      const answerOnly = isAnswerOnly(q.choices);
+      const solution: SolutionStep[] = answerOnly ? [] : (q.canonical_solution ?? []);
       if (!isCorrect) {
-        const outputMd = solution
-          .map((s) => `**Step ${s.step}.** ${s.text_md}`)
-          .join("\n\n");
+        const outputMd = answerOnly
+          ? `**Answer:** ${q.correct_answer}\n\n${ANSWER_ONLY_CARD_NOTE}`
+          : solution
+              .map((s) => `**Step ${s.step}.** ${s.text_md}`)
+              .join("\n\n");
         await client.query(
           `INSERT INTO explanation_log
              (attempt_id, question_id, solution_version, model, prompt_version,
@@ -467,6 +484,7 @@ export async function POST(req: Request) {
         oldScore,
         newScore,
         solution,
+        answerOnly,
       };
     });
 
@@ -483,6 +501,7 @@ export async function POST(req: Request) {
       oldScore,
       newScore,
       solution,
+      answerOnly,
     } = outcome;
 
     // Fire-and-forget, and deliberately AFTER commit: an analytics failure must
@@ -509,7 +528,10 @@ export async function POST(req: Request) {
       steps: { step: number; text_md: string }[];
     } | null = null;
 
-    if (!isCorrect) {
+    if (!isCorrect && !answerOnly) {
+      // (An `answer_only` question gets no stored explanation of any kind on
+      // its card — A6 — so no library entry is looked up for it either.)
+      //
       // Ask for THE refutation of the error she actually made, not whichever
       // entry this objective happens to have first. Serving a refutation of a
       // mistake the student did not make is worse than serving the plain
@@ -548,7 +570,9 @@ export async function POST(req: Request) {
               misconception_id: misconceptionId,
               // The question's own review stamp (ADR-0019 keeps it in the
               // data): SC-011 counts unreviewed teaching SEEN, and a worked
-              // solution nobody has read is exactly that.
+              // solution nobody has read is exactly that. Since migration 035
+              // `reviewed_by` is a HUMAN stamp only (answer 33): an AI check
+              // (`ai_checked_by`) is not a review and counts as unreviewed here.
               reviewed: q.solution_reviewed === true,
             },
           });
@@ -597,6 +621,7 @@ export async function POST(req: Request) {
     });
 
     const result: AttemptResult = {
+      ...(answerOnly ? { answerOnly: true } : {}),
       attemptId,
       isCorrect,
       correctAnswer: q.correct_answer,
@@ -631,6 +656,24 @@ export async function POST(req: Request) {
   } catch (err) {
     if (err instanceof HttpError) {
       return NextResponse.json(err.body, { status: err.status });
+    }
+    if (err instanceof ReentryRequested) {
+      // Which question and why, never what was typed: the list of unreadable
+      // answers is the parser's to-do list (marker-evaluation §7), but a
+      // minor's free text is not ours to log without a privacy review.
+      console.info("[marker] re-entry, nothing recorded:", {
+        question_id: questionId,
+        retry: err.body.retry,
+        ...(err.body.form ? { form: err.body.form } : { reason: err.body.reason }),
+      });
+      return NextResponse.json(err.body, { status: 422 });
+    }
+    if (err instanceof MarkerKeyError) {
+      // The question's key or spec cannot be marked: a content defect for the
+      // loader's check (validateKey), never the student's. Logged, and no
+      // attempt recorded — the transaction rolled back with the throw.
+      console.error("[marker] key defect, no attempt recorded:", { question_id: questionId, error: err.message });
+      return NextResponse.json({ error: "internal error" }, { status: 500 });
     }
     // A write the POLICY refused — someone else's ids on this student's
     // request. 403, and the one security event whose alert threshold is zero

@@ -1,0 +1,139 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m1s7-3-2:coefficient-cubes",
+ "version": 1,
+ "kind": "family",
+ "lo_id": "lo:g10m1s7-3-2",
+ "parent_question_id": "q:g10m1s7-3-2:ex1-9-19",
+ "source_page": 30,
+ "tier": "standard",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "c",
+   "choice": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "d",
+   "choice": [
+    1,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "e",
+   "choice": [
+    1,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "require": "gcd(d, e) == 1 and d + e > 2",
+   "why": "the highest common factor of the two coefficients must be exactly c, and the cubes must not both be plain x^3 and y^3 (that is the basic family)"
+  },
+  {
+   "name": "s",
+   "choice": [
+    0,
+    1
+   ]
+  },
+  {
+   "name": "op",
+   "let": "['+', '-'][s]"
+  },
+  {
+   "name": "op2",
+   "let": "['-', '+'][s]"
+  },
+  {
+   "name": "kind",
+   "let": "['sum', 'difference'][s]"
+  },
+  {
+   "name": "A",
+   "let": "c * d ** 3"
+  },
+  {
+   "name": "B",
+   "let": "c * e ** 3"
+  },
+  {
+   "name": "dc",
+   "let": "'' if d == 1 else str(d)"
+  },
+  {
+   "name": "ec",
+   "let": "'' if e == 1 else str(e)"
+  },
+  {
+   "name": "d3c",
+   "let": "'' if d == 1 else str(d ** 3)"
+  },
+  {
+   "name": "e3c",
+   "let": "'' if e == 1 else str(e ** 3)"
+  },
+  {
+   "name": "d2c",
+   "let": "'' if d == 1 else str(d * d)"
+  },
+  {
+   "name": "e2c",
+   "let": "'' if e == 1 else str(e * e)"
+  },
+  {
+   "name": "dec",
+   "let": "d * e"
+  }
+ ],
+ "constraints": [
+  "gcd(d, e) == 1",
+  "d + e > 2"
+ ],
+ "stem": "Factorise: ${=A}x^{3} {=op} {=B}y^{3}$",
+ "solution": [
+  "The largest number that divides both ${=A}$ and ${=B}$ is ${=c}$, so take out the common factor ${=c}$ first: ${=A}x^{3} {=op} {=B}y^{3} = {=c}({=d3c}x^{3} {=op} {=e3c}y^{3})$",
+  "Write each term in the bracket as a cube: ${=d3c}x^{3} = ({=dc}x)^{3}$ and ${=e3c}y^{3} = ({=ec}y)^{3}$. The bracket is a {=kind} of two cubes with cube roots ${=dc}x$ and ${=ec}y$.",
+  "Use $a^{3} {=op} b^{3} = (a {=op} b)(a^{2} {=op2} ab + b^{2})$ with the cube roots in place of $a$ and $b$: ${=d3c}x^{3} {=op} {=e3c}y^{3} = ({=dc}x {=op} {=ec}y)[({=dc}x)^{2} {=op2} ({=dc}x)({=ec}y) + ({=ec}y)^{2}]$",
+  "Simplify the second bracket and keep the common factor in front: ${=A}x^{3} {=op} {=B}y^{3} = {=c}({=dc}x {=op} {=ec}y)({=d2c}x^{2} {=op2} {=dec}xy + {=e2c}y^{2})$"
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "{=c}*({=d}*x {=op} {=e}*y)*({=d*d}*x^2 {=op2} {=d*e}*x*y + {=e*e}*y^2)",
+  "form": "factorised",
+  "variables": [
+   "x",
+   "y"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m1s7-3-2:drops-common-factor",
+   "label": "Drops the common factor",
+   "description": "Takes the common factor out and factorises the bracket, but leaves the factor out of the final answer."
+  },
+  {
+   "id": "mc:g10m1s7-3-2:cube-root-of-coefficient",
+   "label": "Wrong cube root of a coefficient",
+   "description": "Writes the cube coefficient itself, or its square root, as the term in the first bracket, e.g. 64m^3 gives (64m + f) or (8m + f) instead of (4m + f)."
+  },
+  {
+   "id": "mc:g10m1s7-3-2:coefficient-not-squared",
+   "label": "Coefficient not squared in the trinomial",
+   "description": "Squares only the letter when building the trinomial, so (2x)^2 becomes 2x^2 instead of 4x^2, and the middle term and last term are built from the unsquared coefficients."
+  }
+ ],
+ "notes": "Models ex1-9-19 (128m^3+2f^3 = 2(4m+f)(16m^2-4mf+f^2)) and ex1-9-7. d and e are the cube roots of the two coefficients left after the common factor c is taken out; they are coprime so the HCF of the two printed coefficients is exactly c (a solver cannot legitimately take out more). d=e=1 is excluded because that is the basic family. When d or e is 1 the template drops the 1 (x^3, not 1x^3). c is never 1 or 8. Instances: 4 values of c, 10 coprime pairs, sum or difference = 80. Largest coefficient 5*64 = 320."
+}

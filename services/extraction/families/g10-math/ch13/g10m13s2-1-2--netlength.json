@@ -1,0 +1,50 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m13s2-1-2:netlength",
+ "kind": "family",
+ "lo_id": "lo:g10m13s2-1-2",
+ "parent_question_id": "q:g10m13s2-1-2:we04",
+ "source_page": 424,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "r",
+   "randint": [
+    3,
+    12
+   ]
+  },
+  {
+   "name": "h",
+   "randint": [
+    4,
+    20
+   ]
+  },
+  {
+   "name": "tenths",
+   "let": "2*pi*r*(r+h)*10"
+  },
+  {
+   "name": "fp",
+   "let": "tenths - floor(tenths)"
+  },
+  {
+   "require": "abs(fp - 0.5) > 0.1",
+   "why": "keeps the 1-decimal-place answer well away from a rounding boundary, so a calculator's pi and a slightly rounded pi cannot give different printed answers"
+  }
+ ],
+ "constraints": [],
+ "stem": "A closed cylinder is cut open and flattened into a net made of two identical circles and one rectangle. The rectangle measures ${=2*r}\\pi$ $\\text{cm}$ by ${=h}$ $\\text{cm}$, and its ${=2*r}\\pi$ $\\text{cm}$ side is the part that went right round the base of the cylinder. Find the total surface area of the cylinder. Use the $\\pi$ button on your calculator and give your answer correct to 1 decimal place, in $\\text{cm}^{2}$.",
+ "answer": "fixed(2*pi*r*(r+h), 1)",
+ "solution": [
+  "The ${=2*r}\\pi$ $\\text{cm}$ side of the rectangle went once round the base, so it equals the circumference of the base circle: $2\\pi r={=2*r}\\pi$.",
+  "Divide both sides by $2\\pi$ to find the radius of the circles: $r={=r}$ $\\text{cm}$.",
+  "Area of the rectangle (the curved surface) $=({=2*r}\\pi)\\times({=h})={=2*r*h}\\pi$ $\\text{cm}^{2}$.",
+  "Area of the two circular ends $=2\\pi r^{2}=2\\pi({=r})^{2}={=2*r*r}\\pi$ $\\text{cm}^{2}$.",
+  "Surface area = rectangle + two circles $={=2*r*h}\\pi+{=2*r*r}\\pi={=2*r*(r+h)}\\pi\\approx{=fixed(2*pi*r*(r+h), 1)}$ $\\text{cm}^{2}$."
+ ],
+ "notes": "Advanced twist: the net is described by its rectangle only, and the circles' radius is not given. The student must use the book's own key fact (the rectangle's length is the circumference of the base) in reverse, 2*pi*r = length, to recover r, then add the rectangle and the two circles as in we04. The length is given in terms of pi (2r*pi) so r is an exact whole number and no intermediate rounding can make solvers disagree. The stem says which side wrapped round the base, so the height cannot be confused with the circumference even when h exceeds 2*pi*r (e.g. r=3, h=20). Check against the book: r=10, h=30 gives 2*pi*10*40 = 800*pi = 2513.3, matching we04. Same rounding guard as the basic family; 130 of the 170 (r,h) pairs pass; answers range from about 150.8 to 2142.6. No distractors, so no misconception ids are used."
+}

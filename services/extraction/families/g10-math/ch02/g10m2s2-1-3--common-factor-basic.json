@@ -1,0 +1,46 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m2s2-1-3:common-factor-basic",
+ "kind": "family",
+ "lo_id": "lo:g10m2s2-1-3",
+ "parent_question_id": "q:g10m2s2-1-3:ex2-4-2c",
+ "source_page": 57,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "m",
+   "randint": [
+    2,
+    7
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    2,
+    "14 // m"
+   ]
+  },
+  {
+   "name": "a",
+   "let": "m * q - 1"
+  }
+ ],
+ "constraints": [
+  "a <= 13",
+  "q >= 2",
+  "(a + 1) % m == 0"
+ ],
+ "stem": "Simplify: $\\dfrac{{=a}^{x+1}+{=a}^{x}}{{=m}\\times{=a}^{x}}$. Give your answer as a whole number.",
+ "answer": "q",
+ "solution": [
+  "Rewrite the first power with the exponent law $b^{m+n}=b^{m}\\cdot b^{n}$: ${=a}^{x+1}={=a}^{x}\\cdot{=a}$. The fraction becomes $\\dfrac{{=a}^{x}\\cdot{=a}+{=a}^{x}}{{=m}\\times{=a}^{x}}$.",
+  "Take out the common factor ${=a}^{x}$ in the numerator: $\\dfrac{{=a}^{x}({=a}+1)}{{=m}\\times{=a}^{x}}$.",
+  "Cancel the common factor ${=a}^{x}$ from the top and the bottom: $\\dfrac{{=a}+1}{{=m}}$.",
+  "Calculate: $\\dfrac{{=a}+1}{{=m}} = \\dfrac{{=a + 1}}{{=m}} = {=q}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Basic entry point of the skill: the numerator has just two terms, the exponent is shifted by exactly 1 (the book's ex2-4-2c shifts by 3), the common factor is the single power a^x, and the arithmetic after cancelling is small. Same skeleton as the parent (split a^(x+1) with the multiplication law, take out the common factor, cancel, evaluate) and the book's own notation (\\times in the denominator, answer a whole number). Parameters are built backwards so every instance is clean: pick the divisor m and the answer q, then base a = m*q - 1, so (a+1)/m = q is always a whole number >= 2 and a <= 13 (14 distinct instances; bases 3, 5, 7, 8, 9, 11, 13). The variable is fixed as x. Plus sign only, so the factor is always (a + 1). Numeric answer, so no distractors and no misconception ids are attached; mc:g10m2s2-1-3:powers-outside-algebra is not targeted here. The difference-of-squares method is left to the standard and advanced tiers, where the book's questions sit (ex2-4-2i, ex2-1-34)."
+}

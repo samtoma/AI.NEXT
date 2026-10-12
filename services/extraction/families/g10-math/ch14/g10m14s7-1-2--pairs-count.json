@@ -1,0 +1,144 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m14s7-1-2:pairs-count",
+ "kind": "family",
+ "lo_id": "lo:g10m14s7-1-2",
+ "parent_question_id": "q:g10m14s7-1-2:ex14-7-4",
+ "source_page": 489,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "ov",
+   "choice": [
+    0,
+    1
+   ]
+  },
+  {
+   "name": "gap",
+   "choice": [
+    0,
+    1
+   ]
+  },
+  {
+   "name": "n",
+   "let": "10 - ov + 2 * gap"
+  },
+  {
+   "name": "pool",
+   "let": "list(range(1, n + 1))"
+  },
+  {
+   "name": "v",
+   "shuffle": "pool"
+  },
+  {
+   "name": "aset",
+   "let": "sorted([v[0], v[1], v[2], v[3], v[4]])"
+  },
+  {
+   "name": "kb",
+   "let": "0 if ov == 1 else 9"
+  },
+  {
+   "name": "bset",
+   "let": "sorted([v[kb], v[5], v[6], v[7], v[8]])"
+  },
+  {
+   "name": "outs",
+   "let": "sorted([v[n - 2], v[n - 1]])"
+  },
+  {
+   "name": "a1",
+   "let": "aset[0]"
+  },
+  {
+   "name": "a2",
+   "let": "aset[1]"
+  },
+  {
+   "name": "a3",
+   "let": "aset[2]"
+  },
+  {
+   "name": "a4",
+   "let": "aset[3]"
+  },
+  {
+   "name": "a5",
+   "let": "aset[4]"
+  },
+  {
+   "name": "b1",
+   "let": "bset[0]"
+  },
+  {
+   "name": "b2",
+   "let": "bset[1]"
+  },
+  {
+   "name": "b3",
+   "let": "bset[2]"
+  },
+  {
+   "name": "b4",
+   "let": "bset[3]"
+  },
+  {
+   "name": "b5",
+   "let": "bset[4]"
+  },
+  {
+   "name": "cnt",
+   "let": "3 - ov - gap"
+  },
+  {
+   "name": "cm",
+   "let": "\"none\" if ov == 0 else str(v[0])"
+  },
+  {
+   "name": "e1",
+   "let": "\"empty\" if ov == 0 else \"not empty\""
+  },
+  {
+   "name": "m1",
+   "let": "\"are\" if ov == 0 else \"are not\""
+  },
+  {
+   "name": "oa",
+   "let": "\"none\" if gap == 0 else str(outs[0])"
+  },
+  {
+   "name": "osep",
+   "let": "\"\" if gap == 0 else \" and \""
+  },
+  {
+   "name": "ob",
+   "let": "\"\" if gap == 0 else str(outs[1])"
+  },
+  {
+   "name": "e2",
+   "let": "\"empty\" if gap == 0 else \"not empty\""
+  },
+  {
+   "name": "m2",
+   "let": "\"are\" if gap == 0 else \"are not\""
+  }
+ ],
+ "constraints": [],
+ "stem": "A number is chosen from the sample space $S = \\{1, 2, 3, \\ldots, {=n}\\}$. Two events are given: $A = \\{ {=a1}, {=a2}, {=a3}, {=a4}, {=a5} \\}$ and $B = \\{ {=b1}, {=b2}, {=b3}, {=b4}, {=b5} \\}$. The complement of an event $E$, written $E'$, contains every outcome of $S$ that is not in $E$. Consider these three pairs of events: (i) $A$ and $B$; (ii) $A'$ and $B'$; (iii) $A \\cup B$ and $(A \\cup B)'$. How many of these three pairs are mutually exclusive? Give your answer as a whole number.",
+ "answer": "cnt",
+ "solution": [
+  "Two events are mutually exclusive when they cannot occur at the same time, so their intersection must be empty. Check each of the three pairs.",
+  "(i) The outcomes in both $A$ and $B$: {=cm}. So $A \\cap B$ is {=e1}, and $A$ and $B$ {=m1} mutually exclusive.",
+  "(ii) An outcome is in both $A'$ and $B'$ exactly when it is in neither $A$ nor $B$. The outcomes of $S$ in neither $A$ nor $B$: {=oa}{=osep}{=ob}.",
+  "So $A' \\cap B'$ is {=e2}, and $A'$ and $B'$ {=m2} mutually exclusive.",
+  "(iii) $(A \\cup B)'$ contains exactly the outcomes of $S$ that are not in $A \\cup B$, so no outcome is in both $A \\cup B$ and $(A \\cup B)'$. An event and its complement can never occur together, so this pair is mutually exclusive, even though $A$ and $B$ may overlap.",
+  "Counting the pairs that are mutually exclusive gives {=cnt}."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced: the book's twist questions (ex14-7-3, ex14-7-4, ex14-8-4) rolled into one count. Pair (iii) is always exclusive (an event and its complement); pair (i) is exclusive only when ov = 0 (A and B share no outcome); pair (ii) is exclusive only when gap = 0 (A union B is all of S, so A' and B' share nothing). So the answer is 3 - ov - gap, taking the values 1, 2, 2, 3 across the four cases (checked by brute force set arithmetic over 20000 draws, including that the stated shared and outside outcomes match). |A| = |B| = 5 and S has 9 to 12 outcomes, so every region has a fixed size and the solution lists outcomes without a set-formatting helper; string pieces are conditional text only. Numeric rather than mcq so there is no 50% guess and the correct pair does not repeat. The catalogued errors (reading the circle overlap instead of the named events; treating any two complements as exclusive) show up as wrong counts, so this family is numeric and carries no distractor ids. The book's figures are replaced by the sets written out in the stem. Note for the reviewer: the book's printed solution of ex14-7-3 lists 6 inside A union B although its figure places 6 outside both circles; the answer (yes) is unaffected and nothing here is copied from that list."
+}

@@ -1,0 +1,90 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m4s7-1-1:divneg",
+ "kind": "family",
+ "lo_id": "lo:g10m4s7-1-1",
+ "parent_question_id": "q:g10m4s7-1-1:ex4-6-2b",
+ "source_page": 100,
+ "tier": "basic",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "s",
+   "randint": [
+    -9,
+    9
+   ],
+   "resample_while": "s == 0"
+  },
+  {
+   "name": "d",
+   "choice": [
+    0,
+    1
+   ]
+  },
+  {
+   "name": "c",
+   "let": "-a * s"
+  },
+  {
+   "name": "sym",
+   "let": "[\"<\", \">\"][d]"
+  },
+  {
+   "name": "fsym",
+   "let": "[\">\", \"<\"][d]"
+  },
+  {
+   "name": "t",
+   "let": "s - 1 if d == 1 else s + 1"
+  },
+  {
+   "name": "pv",
+   "let": "-a * t"
+  }
+ ],
+ "constraints": [
+  "s != 0"
+ ],
+ "stem": "Solve for $x$: $-{=a}x {=sym} {=c}$. Which one of the following is the solution?",
+ "solution": [
+  "To get $x$ on its own, divide both sides of $-{=a}x {=sym} {=c}$ by $-{=a}$.",
+  "Dividing both sides of an inequality by a negative number reverses the inequality sign, so ${=sym}$ becomes ${=fsym}$.",
+  "$x {=fsym} \\dfrac{{=c}}{-{=a}}$, which is $x {=fsym} {=s}$.",
+  "Check with $x = {=t}$: $-{=a} \\cdot ({=t}) = {=pv}$, and ${=pv} {=sym} {=c}$ is true, so the solution is $x {=fsym} {=s}$."
+ ],
+ "choices": {
+  "correct": "$x {=fsym} {=s}$",
+  "distractors": [
+   {
+    "text": "$x {=sym} {=s}$",
+    "misconception_id": "mc:g10m4s7-1-1:keeps-sign-after-negative"
+   },
+   {
+    "text": "$x {=sym} {=-s}$",
+    "misconception_id": "mc:g10m4s7-1-1:ignores-negative-coefficient"
+   },
+   {
+    "text": "$x {=fsym} {=-s}$",
+    "misconception_id": null
+   }
+  ]
+ },
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m4s7-1-1:ignores-negative-coefficient",
+   "label": "Ignores the minus sign on the coefficient of x",
+   "description": "The student reads $-ax$ as $ax$ and divides both sides by the positive number $a$, so the sign is not reversed and the boundary value comes out with the wrong sign (for example $-3x>12$ becomes $x>4$)."
+  }
+ ],
+ "notes": "Entry-point skill: one division by a negative coefficient, modelled on the book's own steps in ex4-6-2b (-3x <= 9 gives x >= -3), 2d and 2k, which divide by a negative number and reverse the sign. The inequality symbol is drawn as < or > (d), so the instances are not always answered with the same sign; coefficient a in 2..6 (a = 1 is left out so the stem never prints -1x), boundary s in -9..9 excluding 0 so the four options are always four different statements. The RHS is built backwards (c = -a*s) so the boundary is always a whole number and the working is exact. Options: correct x fsym s; keeps the sign (catalogued mc keeps-sign-after-negative); reads -ax as ax, giving x sym -s (new mc ignores-negative-coefficient); reverses the sign but divides the constant by +a, giving x fsym -s (no named error, null). Multiple choice is used because every wrong option is a specific sign error and the answer is an inequality; I did not use the plain interval marker for this family because I could not confirm how the marker syntax writes the infinite endpoint, and the book's interval-notation answers are all unbounded. Only the listed basic gap is filled. The book's standard exercises ask for interval notation, which needs that infinite-endpoint syntax confirmed, so no standard or advanced family was written."
+}

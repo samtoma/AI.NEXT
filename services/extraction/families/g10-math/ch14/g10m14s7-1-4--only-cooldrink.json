@@ -1,0 +1,59 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m14s7-1-4:only-cooldrink",
+ "kind": "family",
+ "lo_id": "lo:g10m14s7-1-4",
+ "parent_question_id": "q:g10m14s7-1-4:ex14-8-10b",
+ "source_page": 492,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": "A group of learners in which some had a packet of chips, some had a cooldrink, some had both and a few had neither.",
+ "params": [
+  {
+   "name": "x",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "a",
+   "randint": [
+    14,
+    28
+   ]
+  },
+  {
+   "name": "c",
+   "randint": [
+    3,
+    10
+   ]
+  },
+  {
+   "name": "d",
+   "randint": [
+    6,
+    24
+   ],
+   "resample_while": "d == a - c"
+  },
+  {
+   "name": "t",
+   "let": "x + a + d"
+  }
+ ],
+ "constraints": [
+  "c < a",
+  "t - x > a"
+ ],
+ "stem": "In a group of ${=t}$ learners, all but ${=x}$ had a packet of chips or a cooldrink or both. ${=a}$ had a packet of chips and ${=c}$ of these also had a cooldrink. How many learners had only a cooldrink?",
+ "answer": "t - x - a",
+ "solution": [
+  "All but ${=x}$ of the ${=t}$ learners had at least one of the two items, so ${=t} - {=x} = {=t - x}$ learners are inside the circles of the Venn diagram.",
+  "The overlap holds the ${=c}$ learners who had both. The ${=a}$ learners with chips include these, so only chips is ${=a} - {=c} = {=a - c}$.",
+  "Only cooldrink is what is left inside the circles: ${=t - x} - {=a - c} - {=c} = {=t - x - a}$.",
+  "The same answer comes directly from ${=t - x} - {=a} = {=t - x - a}$, because the ${=a}$ with chips already include the ${=c}$ in the overlap."
+ ],
+ "notes": "Count version of the book's ex14-8-10b (the book then converts to a probability; this family stops at the region count, which is what the objective asks for). As in the book, the 'both' figure is not needed for the final subtraction, but it is used when the Venn diagram is filled in, and 'of these' makes clear that the chips total includes the overlap. resample_while keeps only-chips and only-cooldrink from being equal so a mix-up of the two regions cannot give the right number by accident. No distractors (numeric)."
+}

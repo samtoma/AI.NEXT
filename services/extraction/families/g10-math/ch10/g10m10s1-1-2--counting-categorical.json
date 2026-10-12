@@ -1,0 +1,73 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m10s1-1-2:counting-categorical",
+ "kind": "family",
+ "lo_id": "lo:g10m10s1-1-2",
+ "parent_question_id": "q:g10m10s1-1-2:ex10-7-2",
+ "source_page": 382,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "desc",
+   "let": "['the cellular provider each of five learners uses: Vodacom; MTN; Vodacom; Cell C; MTN', 'the sport each of five learners plays: netball; soccer; soccer; rugby; netball', 'how each of five learners travels to school: walk; bus; taxi; walk; bus', 'the favourite colour of each of five learners: blue; red; blue; green; red', 'what three learners said about the school concert, each in a sentence of their own: The singing gave me goosebumps; I was too nervous to enjoy it; My friends and I danced at the end', 'the wish each of three learners made for the new year, each in a sentence of their own: I wish I could join the choir; I hope my team wins the league; I want to learn how to swim', 'what three learners said about their favourite teacher, each in a sentence of their own: She makes every lesson feel like a story; He never gets cross with us; She stayed after school to help me', 'how three learners described their street, each in a sentence of their own: It is noisy in the morning and quiet at night; There is a big tree where we play; My neighbours greet each other every day', 'the number of books each of five learners read last term: 3; 5; 2; 4; 5', 'the height, in centimetres, of each of five learners: 152.4; 160.1; 148.9; 155.0; 158.3', 'the age, in years, of each of five learners: 15; 16; 15; 14; 16', 'the time, in minutes, that each of five learners takes to walk to school: 12; 25; 8; 15; 20']"
+  },
+  {
+   "name": "kinds",
+   "let": "[0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2]"
+  },
+  {
+   "name": "labels",
+   "let": "['qualitative categorical', 'qualitative anecdotal', 'quantitative']"
+  },
+  {
+   "name": "whys",
+   "let": "['the data cannot be written as numbers, and every response comes from a limited set of possibilities', 'the data cannot be written as numbers, and the responses take the form of a story in the words of the learners', 'the data are numbers']"
+  },
+  {
+   "name": "pick",
+   "sample": {
+    "from": "range(12)",
+    "k": 4
+   }
+  },
+  {
+   "name": "ka",
+   "let": "kinds[pick[0]]"
+  },
+  {
+   "name": "kb",
+   "let": "kinds[pick[1]]"
+  },
+  {
+   "name": "kc",
+   "let": "kinds[pick[2]]"
+  },
+  {
+   "name": "kd",
+   "let": "kinds[pick[3]]"
+  },
+  {
+   "name": "ans",
+   "let": "len([x for x in [ka, kb, kc, kd] if x == 0])"
+  },
+  {
+   "require": "ans >= 1 and ans <= 3",
+   "why": "at least one and at most three of the four data sets are categorical, so the count is a real decision and never 0 or 4"
+  }
+ ],
+ "constraints": [],
+ "stem": "A teacher collects four data sets from her class. (a) {=desc[pick[0]]}. (b) {=desc[pick[1]]}. (c) {=desc[pick[2]]}. (d) {=desc[pick[3]]}. How many of these four data sets are qualitative categorical?",
+ "answer": "ans",
+ "solution": [
+  "For each data set, first decide whether it can be written as numbers. If it cannot, it is qualitative, and then decide whether it is categorical or anecdotal.",
+  "Data set (a) is {=labels[ka]}, because {=whys[ka]}.",
+  "Data set (b) is {=labels[kb]}, because {=whys[kb]}.",
+  "Data set (c) is {=labels[kc]}, because {=whys[kc]}.",
+  "Data set (d) is {=labels[kd]}, because {=whys[kd]}.",
+  "Count the data sets that are qualitative categorical: there are {=ans} of them, so the answer is {=ans}."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced tier: several steps. Four data sets are drawn from a fixed bank of twelve (four categorical lists of short answers, four anecdotal sets of three learner sentences, four sets of numbers) and the student must make the book's two-stage decision on each (numbers or not; if not, limited set of possibilities or story) and count the categorical ones. The numeric sets are there so that the first step of the book's solution ('cannot be written as numbers') is exercised; the question never asks discrete versus continuous, which belongs to another objective. The count is restricted to 1 to 3 by a require. Descriptors such as 'each in a sentence of their own' are part of the fixed bank and make the anecdotal sets unambiguous; all data sets are printed with semicolons and no quotes so form is the same across types. The answer is a plain whole number."
+}

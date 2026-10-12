@@ -1,0 +1,2881 @@
+{
+ "stage": "S2-S4,S8",
+ "workflow": "lesson",
+ "prompts_version": "lesson-v3",
+ "book": "g10-math",
+ "embedded": {
+  "source": "runbook/lesson.workflow.js",
+  "source_sha256": "333ffdd010a87386b5a757e996ff3d7af7a534e6129072e93dc2cfbee4d01f7e",
+  "args_sha256": "b6e7b95a7464ce7a1ecc8065d8a9715180c60e370d15ce77dfac85256306e73c",
+  "generated_sha256": "1947bad6bedb3d36cab1565021652bcf75070857d54d1fd62ffc121027e7b2eb",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "lessons": [
+  {
+   "lesson": "g10m8s3-1",
+   "claims": [
+    {
+     "lo": "lo:g10m8s3-1-1",
+     "type": "definition",
+     "text": "The gradient of a line is the ratio of vertical change to horizontal change.",
+     "anchor": "b03170",
+     "printed_page": 293,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "The gradient of a line is determined by the ratio of vertical change to horizontal change.",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m8s3-1-1",
+     "type": "convention",
+     "text": "The symbol m denotes the gradient of a line, describing the slope or steepness of the line joining two points.",
+     "anchor": "b03171",
+     "printed_page": 293,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "Gradient ( $m$ ) describes the slope or steepness of the line joining two points.",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m8s3-1-1",
+     "type": "rule",
+     "text": "In the right-angled triangle used to derive the gradient, the vertical side length equals the difference in y-values of the two points, and the horizontal side length equals the difference in x-values of the two points.",
+     "anchor": "b03173",
+     "printed_page": 294,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "The length of the vertical side of the triangle is the difference in $y$ -values of points $A$ and $B$ . The length of the horizontal side of the triangle is the difference in $x$ -values of points $A$ and $B$ .",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m8s3-1-1",
+     "type": "convention",
+     "text": "Point coordinates are written with a semicolon separating the x- and y-values, e.g. A(x1;y1).",
+     "anchor": "b03173",
+     "printed_page": 294,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "$A\\left(x_{1};{y}_{1}\\right)$",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m8s3-1-1",
+     "type": "rule",
+     "text": "Gradient m = (y2 - y1)/(x2 - x1), or equivalently m = (y1 - y2)/(x1 - x2).",
+     "anchor": "b03176",
+     "printed_page": 294,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "Gradient $(m)=\\dfrac{y_2-y_1}{x_2-x_1}$ or $\\dfrac{y_1-y_2}{x_1-x_2}$",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m8s3-1-1",
+     "type": "caution",
+     "text": "The point order must be applied consistently in numerator and denominator: m is not equal to (y1-y2)/(x2-x1).",
+     "anchor": "b03177",
+     "printed_page": 294,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "Remember to be consistent: $m\\neq\\dfrac{y_1-y_2}{x_2-x_1}$",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m8s3-1-1",
+     "type": "method",
+     "text": "To find the gradient between two given points, assign them as (x1;y1) and (x2;y2), write the gradient formula m=(y2-y1)/(x2-x1), substitute the known coordinate values, and simplify to state the gradient.",
+     "anchor": "WE3",
+     "printed_page": 294,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "Write down the formula for gradient: $m=\\frac{y_{2}-y_{1}}{x_{2}-x_{1}}$",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m8s3-1-2",
+     "type": "method",
+     "text": "To determine an unknown coordinate given the gradient, assign the known and unknown coordinates as (x1;y1) and (x2;y2), write the gradient formula m=(y2-y1)/(x2-x1), substitute the known values and the given gradient, and solve the resulting equation for the unknown.",
+     "anchor": "WE4",
+     "printed_page": 295,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "Substitute values and solve for x: $\\begin{align*}3&=\\frac{0-(-9)}{x-7}\\\\3(x-7)&=9\\\\x-7&=\\frac{9}{3}\\\\x-7&=3\\\\x&=3+7\\\\&=10\\end{align*}$",
+     "provenance": "containment"
+    }
+   ],
+   "claims_dropped": [],
+   "items": [
+    {
+     "ref": "WE3",
+     "kind": "worked_example",
+     "lo": "lo:g10m8s3-1-1",
+     "stem": "Find the gradient of the line between points $E\\left(2;5\\right)$ and $F\\left(-3;9\\right)$ .",
+     "answer_type": "expression",
+     "answer": "-\\frac{4}{5}",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "-\\frac{4}{5}",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "solution": [
+      "Draw a sketch: [figure]",
+      "Assign values to and: Let the coordinates of $E$ be $\\left({x}_{1};{y}_{1}\\right)$ and the coordinates of $F$ be $\\left({x}_{2};{y}_{2}\\right)$ . $x_{1}=2y_{1}=5x_{2}=-3y_{2}=9$",
+      "Write down the formula for gradient: $m=\\frac{y_{2}-y_{1}}{x_{2}-x_{1}}$",
+      "Substitute known values: $\\begin{align*}m_{EF}&=\\frac{9-5}{-3-2}\\\\&=\\frac{4}{-5}\\end{align*}$",
+      "Write the final answer: The gradient of $EF=-\\frac{4}{5}$"
+     ],
+     "solution_provenance": "book_worked",
+     "printed_answer": null,
+     "epub_final_answer": "The gradient of $EF=-\\frac{4}{5}$",
+     "blind_answer": "$-\\dfrac{4}{5}$",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 294,
+     "shortcode": null,
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "WE3|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both give the gradient as -4/5 (slope check: (9-5)/(-3-2) = -4/5); answer 2 is just the same value with a label sentence."
+       }
+      ]
+     },
+     "typing_problems": [
+      "the key \"-\\frac{4}{5}\" does not read as the book final answer \"The gradient of $EF=-\\frac{4}{5}$\""
+     ],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": null,
+     "figures": [
+      "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__e791c46775c13d889f1a637379ec901c.png"
+     ],
+     "figures_missing": [],
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "WE4",
+     "kind": "worked_example",
+     "lo": "lo:g10m8s3-1-2",
+     "stem": "Given $G\\left(7;-9\\right)$ and $H\\left(x;0\\right)$ , with ${m}_{GH}=3$ , find $x$ .",
+     "answer_type": "numeric",
+     "answer": "10",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "Draw a sketch: [figure]",
+      "Assign values to and: Let the coordinates of $G$ be $\\left({x}_{1};{y}_{1}\\right)$ and the coordinates of $H$ be $\\left({x}_{2};{y}_{2}\\right)$ $x_{1}=7y_{1}=-9x_{2}=xy_{2}=0$",
+      "Write down the formula for gradient: $m=\\frac{y_{2}-y_{1}}{x_{2}-x_{1}}$",
+      "Substitute values and solve for x: $\\begin{align*}3&=\\frac{0-(-9)}{x-7}\\\\3(x-7)&=9\\\\x-7&=\\frac{9}{3}\\\\x-7&=3\\\\x&=3+7\\\\&=10\\end{align*}$",
+      "Write the final answer: The coordinates of $H$ are $\\left(10;0\\right)$ . Therefore $x=10$ ."
+     ],
+     "solution_provenance": "book_worked",
+     "printed_answer": null,
+     "epub_final_answer": "Therefore $x=10$",
+     "blind_answer": "$x=10$",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 295,
+     "shortcode": null,
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "WE4|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both give x=10; answer 2 is the same value with a 'Therefore' label."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": null,
+     "figures": [
+      "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__fa8f615a576d2b7381b992aa48d1e32f.png"
+     ],
+     "figures_missing": [],
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex8-3:1a",
+     "kind": "exercise",
+     "lo": "lo:g10m8s3-1-1",
+     "stem": "Find the gradient of $AB$ if: $A(7;10)$ and $B(-4;1)$",
+     "answer_type": "expression",
+     "answer": "\\frac{9}{11}",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "\\frac{9}{11}",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "solution": [
+      "Let the coordinates of $A$ be $\\left({x}_{1};{y}_{1}\\right)$ and the coordinates of $B$ be $\\left({x}_{2};{y}_{2}\\right)$",
+      "$x_{1}=7y_{1}=10x_{2}=-4y_{2}=1$",
+      "$\\begin{align*}m_{AB}&=\\frac{y_{2}-y_{1}}{x_{2}-x_{1}}\\\\&=\\frac{1-10}{-4-7}\\\\&=\\frac{9}{11}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "9 11",
+     "epub_final_answer": null,
+     "blind_answer": "$\\dfrac{9}{11}$",
+     "verification": "disputed",
+     "tier": "basic",
+     "printed_page": 296,
+     "shortcode": "2GC7",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex8-3:1a|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex8-3:1a|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-3:1a|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ]
+     },
+     "typing_problems": [
+      "book_final is not in the book solution"
+     ],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex8-3:1b",
+     "kind": "exercise",
+     "lo": "lo:g10m8s3-1-1",
+     "stem": "Find the gradient of $AB$ if: $A(-5;-9)$ and $B(3;2)$",
+     "answer_type": "expression",
+     "answer": "\\frac{11}{8}",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "\\frac{11}{8}",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "solution": [
+      "Let the coordinates of $A$ be $\\left({x}_{1};{y}_{1}\\right)$ and the coordinates of $B$ be $\\left({x}_{2};{y}_{2}\\right)$",
+      "$x_{1}=-5y_{1}=-9x_{2}=3y_{2}=2$",
+      "$\\begin{align*}m_{AB}&=\\frac{y_{2}-y_{1}}{x_{2}-x_{1}}\\\\&=\\frac{2-(-9)}{3-(-5)}\\\\&=\\frac{11}{8}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "11 8",
+     "epub_final_answer": null,
+     "blind_answer": "$\\dfrac{11}{8}$",
+     "verification": "disputed",
+     "tier": "basic",
+     "printed_page": 296,
+     "shortcode": "2GC8",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex8-3:1b|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex8-3:1b|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-3:1b|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ]
+     },
+     "typing_problems": [
+      "book_final is not in the book solution"
+     ],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex8-3:1c",
+     "kind": "exercise",
+     "lo": "lo:g10m8s3-1-1",
+     "stem": "Find the gradient of $AB$ if: $A(x-3;y)$ and $B(x;y+4)$",
+     "answer_type": "expression",
+     "answer": "\\frac{4}{3}",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "\\frac{4}{3}",
+      "form": null,
+      "variables": [
+       "x",
+       "y"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "Let the coordinates of $A$ be $\\left({x}_{1};{y}_{1}\\right)$ and the coordinates of $B$ be $\\left({x}_{2};{y}_{2}\\right)$",
+      "$x_{1}=x-3y_{1}=yx_{2}=xy_{2}=y+4$",
+      "$\\begin{align*}m_{AB}&=\\frac{y_{2}-y_{1}}{x_{2}-x_{1}}\\\\&=\\frac{y+4-y}{x-(x-3)}\\\\&=\\frac{4}{3}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "4 3",
+     "epub_final_answer": null,
+     "blind_answer": "$\\dfrac{4}{3}$",
+     "verification": "disputed",
+     "tier": "standard",
+     "printed_page": 296,
+     "shortcode": "2GC9",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex8-3:1c|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex8-3:1c|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-3:1c|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ]
+     },
+     "typing_problems": [
+      "book_final is not in the book solution"
+     ],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex8-3:2",
+     "kind": "exercise",
+     "lo": "lo:g10m8s3-1-1",
+     "stem": "You are given the following diagram: [figure] Calculate the gradient ( $m$ ) of line $AB$ .",
+     "answer_type": "numeric",
+     "answer": "-0,5",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "Let the coordinates of $A$ be $\\left({x}_{1};{y}_{1}\\right)$ and the coordinates of $B$ be $\\left({x}_{2};{y}_{2}\\right)$",
+      "$x_{1}=-1y_{1}=2x_{2}=2y_{2}=\\text{0,5}$",
+      "$\\begin{align*}m&=\\frac{y_{B}-y_{A}}{x_{B}-x_{A}}\\\\&=\\frac{(\\text{0,5})-(2)}{(2)-(-1)}\\\\&=\\frac{-\\text{1,5}}{3}\\\\&=-\\text{0,5}\\end{align*}$",
+      "Therefore the gradient $m$ of the line $AB$ is $-\\text{0,5}$ ."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "−0,5",
+     "epub_final_answer": "Therefore the gradient $m$ of the line $AB$ is $-\\text{0,5}$",
+     "blind_answer": "$-\\dfrac{1}{2}$",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 296,
+     "shortcode": "2GCB",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex8-3:2|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "-1/2 equals -0,5 (decimal comma notation for -0.5); same value, different notation."
+       },
+       {
+        "pair_id": "Ex8-3:2|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "-1/2 equals -0,5; answer 2 is the same value with a label sentence and decimal-comma formatting."
+       },
+       {
+        "pair_id": "Ex8-3:2|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both state -0,5 (same decimal-comma value), one with a label sentence, one bare."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "tier check",
+     "printed_answer_scope": "item",
+     "figures": [
+      "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__ede6615b58d289638823399ac5b77803.png"
+     ],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": true
+    },
+    {
+     "ref": "Ex8-3:3",
+     "kind": "exercise",
+     "lo": "lo:g10m8s3-1-1",
+     "stem": "You are given the following diagram: [figure] Calculate the gradient ( $m$ ) of line $AB$ .",
+     "answer_type": "numeric",
+     "answer": "1,5",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "Let the coordinates of $A$ be $\\left({x}_{1};{y}_{1}\\right)$ and the coordinates of $B$ be $\\left({x}_{2};{y}_{2}\\right)$",
+      "$x_{1}=-2y_{1}=-\\text{1,5}x_{2}=1y_{2}=3$",
+      "$\\begin{align*}m&=\\frac{y_{B}-y_{A}}{x_{B}-x_{A}}\\\\&=\\frac{(\\text{3})-(\\text{-1,5})}{(\\text{1})-(\\text{-2})}\\\\&=\\frac{\\text{4,5}}{\\text{3}}\\\\&=\\text{1,5}\\end{align*}$",
+      "Therefore the gradient $m$ of the line $AB$ is $\\text{1,5}$ ."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "1,5",
+     "epub_final_answer": "Therefore the gradient $m$ of the line $AB$ is $\\text{1,5}$",
+     "blind_answer": "$\\dfrac{3}{2}$",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 296,
+     "shortcode": "2GCC",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex8-3:3|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "3/2 equals 1,5 (decimal comma for 1.5); same value, different notation."
+       },
+       {
+        "pair_id": "Ex8-3:3|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "3/2 equals 1,5; answer 2 is the same value with a label sentence."
+       },
+       {
+        "pair_id": "Ex8-3:3|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both state 1,5, one with a label sentence, one bare."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [
+      "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__0e2003602a007d6b3861dd1090e5231e.png"
+     ],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": true
+    },
+    {
+     "ref": "Ex8-3:4a",
+     "kind": "exercise",
+     "lo": "lo:g10m8s3-1-2",
+     "stem": "If the gradient of $CD=\\frac{2}{3}$ , find $p$ given: $C(16;2)$ and $D(8;p)$ .",
+     "answer_type": "expression",
+     "answer": "-\\frac{10}{3}",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "-\\frac{10}{3}",
+      "form": null,
+      "variables": [
+       "p"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "Let the coordinates of $C$ be $\\left({x}_{1};{y}_{1}\\right)$ and the coordinates of $D$ be $\\left({x}_{2};{y}_{2}\\right)$",
+      "$x_{1}=16y_{1}=2x_{2}=8y_{2}=p$",
+      "$\\begin{align*}m_{CD}&=\\frac{y_2-y_1}{x_2-x_1}\\\\\\frac{2}{3}&=\\frac{p-2}{8-16}\\\\\\frac{2}{3}\\times(-8)&=p-2\\\\\\frac{-16}{3}+2&=p\\\\\\frac{-16+6}{3}&=p\\\\\\frac{-10}{3}&=p\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "−10 3",
+     "epub_final_answer": null,
+     "blind_answer": "$p=-\\dfrac{10}{3}$",
+     "verification": "disputed",
+     "tier": "standard",
+     "printed_page": 297,
+     "shortcode": "2GCD",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex8-3:4a|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex8-3:4a|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-3:4a|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ]
+     },
+     "typing_problems": [
+      "book_final is not in the book solution"
+     ],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex8-3:4b",
+     "kind": "exercise",
+     "lo": "lo:g10m8s3-1-2",
+     "stem": "If the gradient of $CD=\\frac{2}{3}$ , find $p$ given: $C(3;2p)$ and $D(9;14)$ .",
+     "answer_type": "numeric",
+     "answer": "5",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "Let the coordinates of $C$ be $\\left({x}_{1};{y}_{1}\\right)$ and the coordinates of $D$ be $\\left({x}_{2};{y}_{2}\\right)$",
+      "$x_{1}=3y_{1}=2px_{2}=9y_{2}=14$",
+      "$\\begin{align*}m_{CD}&=\\frac{y_2-y_1}{x_2-x_1}\\\\\\frac{2}{3}&=\\frac{14-2p}{9-3}\\\\\\frac{2}{3}\\times(6)&=14-2p\\\\4&=14-2p\\\\2p&=14-4\\\\p&=\\frac{10}{2}\\\\&=5\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "5",
+     "epub_final_answer": null,
+     "blind_answer": "$p=5$",
+     "verification": "disputed",
+     "tier": "standard",
+     "printed_page": 297,
+     "shortcode": "2GCF",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex8-3:4b|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex8-3:4b|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-3:4b|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ]
+     },
+     "typing_problems": [
+      "book_final is not in the book solution"
+     ],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex8-3:5",
+     "kind": "exercise",
+     "lo": "lo:g10m8s3-1-2",
+     "stem": "You are given the following diagram: [figure] You are also told that line $AB$ has a gradient ( $m$ ) of $\\text{2}$ . Calculate the missing co-ordinate of point $B$ .",
+     "answer_type": "numeric",
+     "answer": "4",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "Let the coordinates of $A$ be $\\left({x}_{1};{y}_{1}\\right)$ and the coordinates of $B$ be $\\left({x}_{2};{y}_{2}\\right)$",
+      "$x_{1}=-1y_{1}=0x_{2}=1y_{2}=y$",
+      "$\\begin{align*}m_{AB}&=\\frac{y_{2}-y_{1}}{x_{2}-x_{1}}\\\\2&=\\frac{y-0}{1-(-1)}\\\\2&=\\frac{y}{2}\\\\4&=y\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "4",
+     "epub_final_answer": null,
+     "blind_answer": "$y=4$",
+     "verification": "disputed",
+     "tier": "standard",
+     "printed_page": 297,
+     "shortcode": "2GCG",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex8-3:5|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex8-3:5|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-3:5|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ]
+     },
+     "typing_problems": [
+      "book_final is not in the book solution"
+     ],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [
+      "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__1e20844ee903416550ff478159f03242.png"
+     ],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": true
+    },
+    {
+     "ref": "Ex8-3:6",
+     "kind": "exercise",
+     "lo": "lo:g10m8s3-1-2",
+     "stem": "You are given the following diagram: [figure] You are also told that line $AB$ has a gradient ( $m$ ) of $-\\text{1,5}$ . Calculate the missing co-ordinate of point $B$ .",
+     "answer_type": "numeric",
+     "answer": "3",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "Let the coordinates of $A$ be $\\left({x}_{1};{y}_{1}\\right)$ and the coordinates of $B$ be $\\left({x}_{2};{y}_{2}\\right)$",
+      "$x_{1}=-1y_{1}=3x_{2}=xy_{2}=-3$",
+      "$\\begin{align*}m_{AB}&=\\frac{y_2-y_1}{x_2-x_1}\\\\\\text{-1,5}&=\\frac{-3-3}{x-(-1)}\\\\\\text{-1,5}&=\\frac{-6}{x+1}\\\\\\text{-1,5}(x+1)&=-6\\\\\\text{-1,5}x-\\text{1,5}&=-6\\\\\\text{1,5}x&=\\text{4,5}\\\\x&=3\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "3",
+     "epub_final_answer": null,
+     "blind_answer": "$x=3$",
+     "verification": "disputed",
+     "tier": "standard",
+     "printed_page": 297,
+     "shortcode": "2GCH",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex8-3:6|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex8-3:6|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-3:6|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ]
+     },
+     "typing_problems": [
+      "book_final is not in the book solution"
+     ],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [
+      "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__cc336ad929bda6251658967781136f60.png"
+     ],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": true
+    },
+    {
+     "ref": "Ex8-6:7",
+     "kind": "exercise",
+     "lo": "lo:g10m8s3-1-1",
+     "stem": "You are given the following diagram: [figure] Calculate the gradient ( $m$ ) of line $AB$ . The coordinates are $A(-1;-\\text{3,5})$ and $B(2;\\text{2,5})$ respectively.",
+     "answer_type": "numeric",
+     "answer": "2",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "$\\begin{align*}m&=\\left(\\frac{y_B-y_A}{x_B-x_A}\\right)\\\\&=\\left(\\frac{(2,5)-(-3,5)}{(2)-(-1)}\\right)\\\\&=2\\end{align*}$ Therefore the gradient, $m$ , of the line $AB$ is $\\text{2}$ ."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "2",
+     "epub_final_answer": "Therefore the gradient, $m$, of the line $AB$ is $\\text{2}$",
+     "blind_answer": "$2$",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 317,
+     "shortcode": "2GF3",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex8-6:7|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex8-6:7|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Gradient = (2,5-(-3,5))/(2-(-1)) = 6/3 = 2; both answers state 2, one with a label sentence."
+       },
+       {
+        "pair_id": "Ex8-6:7|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both state the gradient is 2, one with a label sentence, one bare."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [
+      "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__db68da13a3b8f0395c995deb64398b3f.png"
+     ],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": true
+    },
+    {
+     "ref": "Ex8-6:8",
+     "kind": "exercise",
+     "lo": "lo:g10m8s3-1-2",
+     "stem": "You are given the following diagram: [figure] You are also told that line $AB$ has a gradient, $m$ , of $\\text{0,5}$ . Calculate the missing co-ordinate of point $B$ .",
+     "answer_type": "numeric",
+     "answer": "4",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "$\\begin{align*}m&=\\left(\\frac{y_{B}-y_{A}}{x_{B}-x_{A}}\\right)\\\\\\text{0,5}&=\\left(\\frac{(\\text{3,5})-(\\text{0,5})}{x-(-2)}\\right)\\\\\\text{0,5}(x+2)&=3\\\\x+2&=6\\\\x&=4\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "4",
+     "epub_final_answer": null,
+     "blind_answer": "$x=4$",
+     "verification": "disputed",
+     "tier": "standard",
+     "printed_page": 317,
+     "shortcode": "2GF4",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex8-6:8|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex8-6:8|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:8|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ]
+     },
+     "typing_problems": [
+      "book_final is not in the book solution"
+     ],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [
+      "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__7c5f98f613dbcdafcee61d1d6a5f7aef.png"
+     ],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": true
+    },
+    {
+     "ref": "Ex8-6:9",
+     "kind": "exercise",
+     "lo": "lo:g10m8s3-1-2",
+     "stem": "You are given the following diagram: [figure] You are also told that line $AB$ has a gradient, $m$ , of $\\text{2}$ . Calculate the missing co-ordinate of point $B$ .",
+     "answer_type": "numeric",
+     "answer": "4",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "$\\begin{align*}m&=\\left(\\frac{y_{B}-y_{A}}{x_{B}-x_{A}}\\right)\\\\2&=\\left(\\frac{y-(-2)}{(1)-(-2)}\\right)\\\\2(3)&=y+2\\\\6&=y+2\\\\4&=y\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "4",
+     "epub_final_answer": null,
+     "blind_answer": "$y=4$",
+     "verification": "disputed",
+     "tier": "standard",
+     "printed_page": 317,
+     "shortcode": "2GF5",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex8-6:9|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex8-6:9|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:9|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ]
+     },
+     "typing_problems": [
+      "book_final is not in the book solution"
+     ],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [
+      "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__739c8475712445081b664acfb20639b9.png"
+     ],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": true
+    },
+    {
+     "ref": "Ex8-6:24b",
+     "kind": "exercise",
+     "lo": "lo:g10m8s3-1-1",
+     "stem": "$PQRS$ is a quadrilateral with points $P(0;-3)$ , $Q(-2;5)$ , $R(3;2)$ and $S(3;-2)$ in the Cartesian plane. Find the gradient of $PS$ .",
+     "answer_type": "expression",
+     "answer": "\\frac{1}{3}",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "\\frac{1}{3}",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}m_{PS}&=\\frac{y_{2}-y_{1}}{x_{2}-x_{1}}\\\\&=\\frac{\\text{-3}+\\text{2}}{\\text{0}-\\text{3}}\\\\&=\\frac{\\text{-1}}{\\text{-3}}\\\\&=\\frac{\\text{1}}{\\text{3}}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "1 3",
+     "epub_final_answer": null,
+     "blind_answer": "$\\dfrac{1}{3}$",
+     "verification": "disputed",
+     "tier": "standard",
+     "printed_page": 322,
+     "shortcode": "2GFP",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex8-6:24b|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex8-6:24b|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:24b|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ]
+     },
+     "typing_problems": [
+      "book_final is not in the book solution"
+     ],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex8-6:25d",
+     "kind": "exercise",
+     "lo": "lo:g10m8s3-1-1",
+     "stem": "Consider triangle $ABC$ with vertices $A(1;3)$ , $B(4;1)$ and $C(6;4)$ . Determine the gradient of $AB$ .",
+     "answer_type": "expression",
+     "answer": "-\\frac{2}{3}",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "-\\frac{2}{3}",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}m_{AB}&=\\frac{y_{2}-y_{1}}{x_{2}-x_{1}}\\\\&=\\frac{1-3}{4-1}\\\\&=\\frac{-2}{3}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "−2 3",
+     "epub_final_answer": null,
+     "blind_answer": "$-\\dfrac{2}{3}$",
+     "verification": "disputed",
+     "tier": "basic",
+     "printed_page": 322,
+     "shortcode": "2GFQ",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex8-6:25d|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex8-6:25d|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:25d|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ]
+     },
+     "typing_problems": [
+      "book_final is not in the book solution"
+     ],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex8-6:30b",
+     "kind": "exercise",
+     "lo": "lo:g10m8s3-1-1",
+     "stem": "$A(4;-1)$ , $B(-6;-3)$ and $C(-2;3)$ are the vertices of $\\triangleABC$ . Calculate the gradient of $AC$ .",
+     "answer_type": "expression",
+     "answer": "-\\frac{2}{3}",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "-\\frac{2}{3}",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}m_{AC}&=\\frac{3+1}{-2-4}\\\\&=\\frac{4}{-6}\\\\&=\\frac{-2}{3}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "−2 3",
+     "epub_final_answer": null,
+     "blind_answer": null,
+     "verification": "disputed",
+     "tier": "basic",
+     "printed_page": 322,
+     "shortcode": "2GFW",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex8-6:30b|blind~printed",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:30b|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:30b|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ]
+     },
+     "typing_problems": [
+      "book_final is not in the book solution"
+     ],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex8-6:32a",
+     "kind": "exercise",
+     "lo": "lo:g10m8s3-1-1",
+     "stem": "A triangle has vertices $A(-1;7)$ , $B(8;4)$ and $C(5;-5)$ . Calculate the gradient of $AB$ .",
+     "answer_type": "expression",
+     "answer": "-\\frac{1}{3}",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "-\\frac{1}{3}",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}m_{AB}&=\\frac{4-7}{8+1}\\\\&=\\frac{-3}{9}\\\\&=-\\frac{1}{3}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "−1 3",
+     "epub_final_answer": null,
+     "blind_answer": null,
+     "verification": "disputed",
+     "tier": "basic",
+     "printed_page": 323,
+     "shortcode": "2GFY",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex8-6:32a|blind~printed",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:32a|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:32a|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ]
+     },
+     "typing_problems": [
+      "book_final is not in the book solution"
+     ],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex8-6:34b",
+     "kind": "exercise",
+     "lo": "lo:g10m8s3-1-1",
+     "stem": "On the Cartesian plane, the three points $P(-3;4)$ , $Q(7;-1)$ and $R(3;b)$ are collinear. Find the gradient of $PQ$ .",
+     "answer_type": "expression",
+     "answer": "-\\frac{1}{2}",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "-\\frac{1}{2}",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}m_{PQ}&=\\frac{-1-4}{7+3}\\\\&=\\frac{-5}{10}\\\\&=-\\frac{1}{2}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "−1 2",
+     "epub_final_answer": null,
+     "blind_answer": null,
+     "verification": "disputed",
+     "tier": "basic",
+     "printed_page": 323,
+     "shortcode": "2GG2",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex8-6:34b|blind~printed",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:34b|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:34b|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ]
+     },
+     "typing_problems": [
+      "book_final is not in the book solution"
+     ],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex8-6:35b",
+     "kind": "exercise",
+     "lo": "lo:g10m8s3-1-1",
+     "stem": "Given $A(4;9)$ and $B(-2;-3)$ . Find the gradient of $AB$ .",
+     "answer_type": "numeric",
+     "answer": "2",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "$\\begin{align*}m_{AB}&=\\frac{-3-9}{-2-4}\\\\&=\\frac{-12}{-6}\\\\&=2\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "2",
+     "epub_final_answer": null,
+     "blind_answer": null,
+     "verification": "disputed",
+     "tier": "basic",
+     "printed_page": 323,
+     "shortcode": "2GG3",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex8-6:35b|blind~printed",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:35b|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:35b|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ]
+     },
+     "typing_problems": [
+      "book_final is not in the book solution"
+     ],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex8-6:37a",
+     "kind": "exercise",
+     "lo": "lo:g10m8s3-1-1",
+     "stem": "$A(-2;4)$ , $B(-4;-2)$ and $C(4;0)$ are the vertices of $\\triangleABC$ . $D$ and $E(1;2)$ are the mid-points of $AB$ and $AC$ respectively. [figure] Find the gradient of $BC$ .",
+     "answer_type": "expression",
+     "answer": "\\frac{1}{4}",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "\\frac{1}{4}",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}m_{BC}&=\\frac{0+2}{4+4}\\\\&=\\frac{2}{8}\\\\&=\\frac{1}{4}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "1 4",
+     "epub_final_answer": null,
+     "blind_answer": null,
+     "verification": "disputed",
+     "tier": "standard",
+     "printed_page": 324,
+     "shortcode": "2GG5",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex8-6:37a|blind~printed",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:37a|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:37a|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ]
+     },
+     "typing_problems": [
+      "book_final is not in the book solution"
+     ],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": true
+    },
+    {
+     "ref": "Ex8-6:39c",
+     "kind": "exercise",
+     "lo": "lo:g10m8s3-1-1",
+     "stem": "The coordinates of $\\trianglePQR$ are as follows: $P(5;1)$ , $Q(1;3)$ and $R(1;-2)$ . Determine the gradient of the line $ST$ .",
+     "answer_type": "expression",
+     "answer": "\\frac{3}{4}",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "\\frac{3}{4}",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}m_{ST}&=\\frac{2-\\frac{1}{2}}{3-1}\\\\&=\\frac{\\frac{3}{2}}{2}\\\\&=\\frac{3}{4}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "3 4",
+     "epub_final_answer": null,
+     "blind_answer": null,
+     "verification": "disputed",
+     "tier": "standard",
+     "printed_page": 324,
+     "shortcode": "2GG7",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex8-6:39c|blind~printed",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:39c|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:39c|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ]
+     },
+     "typing_problems": [
+      "book_final is not in the book solution"
+     ],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex8-6:43b",
+     "kind": "exercise",
+     "lo": "lo:g10m8s3-1-1",
+     "stem": "$M(2;-2)$ is the mid-point of $AB$ with point $A(3;1)$ . Determine: the gradient of $AM$ .",
+     "answer_type": "numeric",
+     "answer": "3",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "$\\begin{align*}m&=\\frac{y_{2}-y_{1}}{x_{2}-x_{1}}\\\\m_{AM}&=\\frac{-2-1}{2-3}\\\\&=\\frac{-3}{-1}\\\\&=3\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "3",
+     "epub_final_answer": null,
+     "blind_answer": null,
+     "verification": "disputed",
+     "tier": "basic",
+     "printed_page": 325,
+     "shortcode": "2GGC",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex8-6:43b|blind~printed",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:43b|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:43b|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ]
+     },
+     "typing_problems": [
+      "book_final is not in the book solution"
+     ],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex8-6:44e",
+     "kind": "exercise",
+     "lo": "lo:g10m8s3-1-1",
+     "stem": "ABCD is a quadrilateral with $A(-3;6),B(5;0),C(4;-9),D(-4;-3)$ . [figure] Determine the gradient of $AC$ .",
+     "answer_type": "expression",
+     "answer": "-\\frac{15}{7}",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "-\\frac{15}{7}",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}m&=\\frac{y_{2}-y_{1}}{x_{2}-x_{1}}\\\\&=\\frac{6-(-9)}{-3-4}\\\\m_{AC}&=-\\frac{15}{7}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "mAC = −15 7",
+     "epub_final_answer": null,
+     "blind_answer": null,
+     "verification": "disputed",
+     "tier": "standard",
+     "printed_page": 326,
+     "shortcode": "2GGD",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex8-6:44e|blind~printed",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:44e|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:44e|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ]
+     },
+     "typing_problems": [
+      "book_final is not in the book solution",
+      "the key \"-\\frac{15}{7}\" does not read as the printed answer \"mAC = −15 7\""
+     ],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex8-6:46a",
+     "kind": "exercise",
+     "lo": "lo:g10m8s3-1-1",
+     "stem": "In the diagram below, $M$ and $N$ are the mid-points of $OA$ and $OB$ respectively. [figure] Calculate the gradient of $MN$ .",
+     "answer_type": "expression",
+     "answer": "-\\frac{1}{3}",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "-\\frac{1}{3}",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}m&=\\frac{y_{2}-y_{1}}{x_{2}-x_{1}}\\\\&=\\frac{\\text{4}-\\text{2}}{\\text{-1}-\\text{5}}\\\\m_{MN}&=\\frac{\\text{2}}{\\text{-6}}\\\\m_{MN}&=-\\frac{\\text{1}}{\\text{3}}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "mMN = −1 3",
+     "epub_final_answer": null,
+     "blind_answer": null,
+     "verification": "disputed",
+     "tier": "standard",
+     "printed_page": 326,
+     "shortcode": "2GGG",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex8-6:46a|blind~printed",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:46a|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:46a|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ]
+     },
+     "typing_problems": [
+      "book_final is not in the book solution",
+      "the key \"-\\frac{1}{3}\" does not read as the printed answer \"mMN = −1 3\""
+     ],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": true
+    }
+   ],
+   "visuals": [],
+   "viz_gaps": [
+    {
+     "figure_id": "b03392:12",
+     "src": "tikzpicture/cd96fded5973b0e425a66a67c662b220.png",
+     "ref": "Ex8-6:37a",
+     "printed_page": 324,
+     "reason": "A symbolic triangle ABC with points D and E marked on its sides, drawn on bare axes — no vertex carries a numeric coordinate, so there is nothing to plot faithfully. It is a generic triangle/quadrilateral scene (an explicit gap case), not a coordinate-pair figure.",
+     "needed_kind": "triangle_scene — a generic labeled-polygon diagram that does not require numeric coordinates"
+    },
+    {
+     "figure_id": "b03441:13",
+     "src": "tikzpicture/f2dd529924b594a4e73779683c066c84.png",
+     "ref": "Ex8-6:46a",
+     "printed_page": 326,
+     "reason": "A triangle O-A-B with midpoints M(-1;4) and N(5;2) marked, but two of the triangle's three vertices (A and B) carry no numeric coordinates at all — the figure's point is the triangle shape itself, which none of the listed kinds represent faithfully (coordinate_plot assumes every plotted point has known x,y; this one is missing them by design).",
+     "needed_kind": "triangle_scene — a generic labeled-polygon diagram supporting a mix of known and unknown vertex coordinates"
+    },
+    {
+     "figure_id": "b03172:1",
+     "src": "tikzpicture/166c82b8f4728abc6441ed4b6f650ed4.png",
+     "ref": null,
+     "printed_page": 293,
+     "reason": "the spec does not match the figure: no compare verdict",
+     "rejected_spec": {
+      "kind": "coordinate_plot",
+      "spec": {
+       "xRange": [
+        -1,
+        5
+       ],
+       "yRange": [
+        -1.5,
+        4.5
+       ],
+       "points": [
+        {
+         "x": 0,
+         "y": 0,
+         "label": "O"
+        },
+        {
+         "x": 1,
+         "y": 3.5,
+         "label": "T"
+        },
+        {
+         "x": 3,
+         "y": 3.5,
+         "label": "S"
+        },
+        {
+         "x": 3,
+         "y": 2,
+         "label": "R"
+        },
+        {
+         "x": 3,
+         "y": 0.6,
+         "label": "Q"
+        }
+       ],
+       "segments": [
+        [
+         0,
+         1
+        ],
+        [
+         0,
+         2
+        ],
+        [
+         0,
+         3
+        ],
+        [
+         0,
+         4
+        ]
+       ],
+       "animate": "plot-sequence",
+       "interactive": false
+      }
+     }
+    },
+    {
+     "figure_id": "b03174:2",
+     "src": "tikzpicture/e1d297f9deda3e456401ab2f9d76e09b.png",
+     "ref": null,
+     "printed_page": 294,
+     "reason": "the spec does not match the figure: no compare verdict",
+     "rejected_spec": {
+      "kind": "coordinate_plot",
+      "spec": {
+       "xRange": [
+        -3,
+        3
+       ],
+       "yRange": [
+        -3,
+        3
+       ],
+       "points": [
+        {
+         "x": -2,
+         "y": -2,
+         "label": "A(x₁;y₁)"
+        },
+        {
+         "x": 2,
+         "y": 1,
+         "label": "B(x₂;y₂)"
+        },
+        {
+         "x": 2,
+         "y": -2,
+         "label": "C"
+        }
+       ],
+       "segments": [
+        [
+         0,
+         1
+        ],
+        [
+         0,
+         2
+        ],
+        [
+         2,
+         1
+        ]
+       ],
+       "animate": "plot-sequence",
+       "interactive": false
+      }
+     }
+    },
+    {
+     "figure_id": "b03179:3",
+     "src": "tikzpicture/e791c46775c13d889f1a637379ec901c.png",
+     "ref": "WE3",
+     "printed_page": 294,
+     "reason": "the spec does not match the figure: no compare verdict",
+     "rejected_spec": {
+      "kind": "coordinate_plot",
+      "spec": {
+       "xRange": [
+        -4,
+        4
+       ],
+       "yRange": [
+        0,
+        9
+       ],
+       "points": [
+        {
+         "x": -3,
+         "y": 9,
+         "label": "F(-3;9)"
+        },
+        {
+         "x": 2,
+         "y": 5,
+         "label": "E(2;5)"
+        }
+       ],
+       "segments": [
+        [
+         0,
+         1
+        ]
+       ],
+       "animate": "plot-sequence",
+       "interactive": false
+      }
+     }
+    },
+    {
+     "figure_id": "b03180:4",
+     "src": "tikzpicture/fa8f615a576d2b7381b992aa48d1e32f.png",
+     "ref": "WE4",
+     "printed_page": 295,
+     "reason": "the spec does not match the figure: no compare verdict",
+     "rejected_spec": {
+      "kind": "coordinate_plot",
+      "spec": {
+       "xRange": [
+        -2,
+        10
+       ],
+       "yRange": [
+        -10,
+        2
+       ],
+       "points": [
+        {
+         "x": 7,
+         "y": -9,
+         "label": "G(7;-9)"
+        },
+        {
+         "x": 10,
+         "y": 0,
+         "label": "H(x;0)"
+        }
+       ],
+       "segments": [
+        [
+         0,
+         1
+        ]
+       ],
+       "animate": "plot-sequence",
+       "interactive": false
+      }
+     }
+    },
+    {
+     "figure_id": "b03185:5",
+     "src": "tikzpicture/ede6615b58d289638823399ac5b77803.png",
+     "ref": "Ex8-3:2",
+     "printed_page": 296,
+     "reason": "the spec does not match the figure: no compare verdict",
+     "rejected_spec": {
+      "kind": "coordinate_plot",
+      "spec": {
+       "xRange": [
+        -2,
+        3
+       ],
+       "yRange": [
+        -1,
+        3
+       ],
+       "points": [
+        {
+         "x": -1,
+         "y": 2,
+         "label": "A(-1;2)"
+        },
+        {
+         "x": 2,
+         "y": 0.5,
+         "label": "B(2;0,5)"
+        }
+       ],
+       "segments": [
+        [
+         0,
+         1
+        ]
+       ],
+       "animate": "plot-sequence",
+       "interactive": false
+      }
+     }
+    },
+    {
+     "figure_id": "b03186:6",
+     "src": "tikzpicture/0e2003602a007d6b3861dd1090e5231e.png",
+     "ref": "Ex8-3:3",
+     "printed_page": 296,
+     "reason": "the spec does not match the figure: no compare verdict",
+     "rejected_spec": {
+      "kind": "coordinate_plot",
+      "spec": {
+       "xRange": [
+        -3,
+        2
+       ],
+       "yRange": [
+        -2,
+        4
+       ],
+       "points": [
+        {
+         "x": -2,
+         "y": -1.5,
+         "label": "A(-2;-1,5)"
+        },
+        {
+         "x": 1,
+         "y": 3,
+         "label": "B(1;3)"
+        }
+       ],
+       "segments": [
+        [
+         0,
+         1
+        ]
+       ],
+       "animate": "plot-sequence",
+       "interactive": false
+      }
+     }
+    },
+    {
+     "figure_id": "b03190:7",
+     "src": "tikzpicture/1e20844ee903416550ff478159f03242.png",
+     "ref": "Ex8-3:5",
+     "printed_page": 297,
+     "reason": "the spec does not match the figure: no compare verdict",
+     "rejected_spec": {
+      "kind": "coordinate_plot",
+      "spec": {
+       "xRange": [
+        -2,
+        2
+       ],
+       "yRange": [
+        -1,
+        5
+       ],
+       "points": [
+        {
+         "x": -1,
+         "y": 0,
+         "label": "A(-1;0)"
+        },
+        {
+         "x": 1,
+         "y": 4,
+         "label": "B(1;y)"
+        }
+       ],
+       "segments": [
+        [
+         0,
+         1
+        ]
+       ],
+       "animate": "plot-sequence",
+       "interactive": false
+      }
+     }
+    },
+    {
+     "figure_id": "b03191:8",
+     "src": "tikzpicture/cc336ad929bda6251658967781136f60.png",
+     "ref": "Ex8-3:6",
+     "printed_page": 297,
+     "reason": "the spec does not match the figure: no compare verdict",
+     "rejected_spec": {
+      "kind": "coordinate_plot",
+      "spec": {
+       "xRange": [
+        -2,
+        4
+       ],
+       "yRange": [
+        -4,
+        4
+       ],
+       "points": [
+        {
+         "x": -1,
+         "y": 3,
+         "label": "A(-1;3)"
+        },
+        {
+         "x": 3,
+         "y": -3,
+         "label": "B(x;-3)"
+        }
+       ],
+       "segments": [
+        [
+         0,
+         1
+        ]
+       ],
+       "animate": "plot-sequence",
+       "interactive": false
+      }
+     }
+    },
+    {
+     "figure_id": "b03297:9",
+     "src": "tikzpicture/db68da13a3b8f0395c995deb64398b3f.png",
+     "ref": "Ex8-6:7",
+     "printed_page": 317,
+     "reason": "the spec does not match the figure: no compare verdict",
+     "rejected_spec": {
+      "kind": "coordinate_plot",
+      "spec": {
+       "xRange": [
+        -2,
+        3
+       ],
+       "yRange": [
+        -4,
+        3
+       ],
+       "points": [
+        {
+         "x": -1,
+         "y": -3.5,
+         "label": "A(-1;-3,5)"
+        },
+        {
+         "x": 2,
+         "y": 2.5,
+         "label": "B(2;2,5)"
+        }
+       ],
+       "segments": [
+        [
+         0,
+         1
+        ]
+       ],
+       "animate": "plot-sequence",
+       "interactive": false
+      }
+     }
+    },
+    {
+     "figure_id": "b03298:10",
+     "src": "tikzpicture/7c5f98f613dbcdafcee61d1d6a5f7aef.png",
+     "ref": "Ex8-6:8",
+     "printed_page": 317,
+     "reason": "the spec does not match the figure: no compare verdict",
+     "rejected_spec": {
+      "kind": "coordinate_plot",
+      "spec": {
+       "xRange": [
+        -3,
+        5
+       ],
+       "yRange": [
+        -1,
+        4
+       ],
+       "points": [
+        {
+         "x": -2,
+         "y": 0.5,
+         "label": "A(-2;0,5)"
+        },
+        {
+         "x": 4,
+         "y": 3.5,
+         "label": "B(x;3,5)"
+        }
+       ],
+       "segments": [
+        [
+         0,
+         1
+        ]
+       ],
+       "animate": "plot-sequence",
+       "interactive": false
+      }
+     }
+    },
+    {
+     "figure_id": "b03299:11",
+     "src": "tikzpicture/739c8475712445081b664acfb20639b9.png",
+     "ref": "Ex8-6:9",
+     "printed_page": 317,
+     "reason": "the spec does not match the figure: no compare verdict",
+     "rejected_spec": {
+      "kind": "coordinate_plot",
+      "spec": {
+       "xRange": [
+        -3,
+        2
+       ],
+       "yRange": [
+        -3,
+        5
+       ],
+       "points": [
+        {
+         "x": -2,
+         "y": -2,
+         "label": "A(-2;-2)"
+        },
+        {
+         "x": 1,
+         "y": 4,
+         "label": "B(1;y)"
+        }
+       ],
+       "segments": [
+        [
+         0,
+         1
+        ]
+       ],
+       "animate": "plot-sequence",
+       "interactive": false
+      }
+     }
+    }
+   ],
+   "teacher_only": {
+    "seen": 0,
+    "dropped": 0,
+    "reached_claim": 0,
+    "caught_in_claims": 0
+   },
+   "verify": {
+    "disagreements": [
+     {
+      "ref": "Ex8-3:1a",
+      "printed": "9 11",
+      "book": null,
+      "blind": "$\\dfrac{9}{11}$",
+      "pairs": [
+       {
+        "pair_id": "Ex8-3:1a|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex8-3:1a|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-3:1a|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ],
+      "typing_problems": [
+       "book_final is not in the book solution"
+      ]
+     },
+     {
+      "ref": "Ex8-3:1b",
+      "printed": "11 8",
+      "book": null,
+      "blind": "$\\dfrac{11}{8}$",
+      "pairs": [
+       {
+        "pair_id": "Ex8-3:1b|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex8-3:1b|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-3:1b|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ],
+      "typing_problems": [
+       "book_final is not in the book solution"
+      ]
+     },
+     {
+      "ref": "Ex8-3:1c",
+      "printed": "4 3",
+      "book": null,
+      "blind": "$\\dfrac{4}{3}$",
+      "pairs": [
+       {
+        "pair_id": "Ex8-3:1c|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex8-3:1c|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-3:1c|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ],
+      "typing_problems": [
+       "book_final is not in the book solution"
+      ]
+     },
+     {
+      "ref": "Ex8-3:4a",
+      "printed": "−10 3",
+      "book": null,
+      "blind": "$p=-\\dfrac{10}{3}$",
+      "pairs": [
+       {
+        "pair_id": "Ex8-3:4a|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex8-3:4a|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-3:4a|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ],
+      "typing_problems": [
+       "book_final is not in the book solution"
+      ]
+     },
+     {
+      "ref": "Ex8-3:4b",
+      "printed": "5",
+      "book": null,
+      "blind": "$p=5$",
+      "pairs": [
+       {
+        "pair_id": "Ex8-3:4b|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex8-3:4b|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-3:4b|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ],
+      "typing_problems": [
+       "book_final is not in the book solution"
+      ]
+     },
+     {
+      "ref": "Ex8-3:5",
+      "printed": "4",
+      "book": null,
+      "blind": "$y=4$",
+      "pairs": [
+       {
+        "pair_id": "Ex8-3:5|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex8-3:5|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-3:5|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ],
+      "typing_problems": [
+       "book_final is not in the book solution"
+      ]
+     },
+     {
+      "ref": "Ex8-3:6",
+      "printed": "3",
+      "book": null,
+      "blind": "$x=3$",
+      "pairs": [
+       {
+        "pair_id": "Ex8-3:6|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex8-3:6|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-3:6|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ],
+      "typing_problems": [
+       "book_final is not in the book solution"
+      ]
+     },
+     {
+      "ref": "Ex8-6:8",
+      "printed": "4",
+      "book": null,
+      "blind": "$x=4$",
+      "pairs": [
+       {
+        "pair_id": "Ex8-6:8|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex8-6:8|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:8|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ],
+      "typing_problems": [
+       "book_final is not in the book solution"
+      ]
+     },
+     {
+      "ref": "Ex8-6:9",
+      "printed": "4",
+      "book": null,
+      "blind": "$y=4$",
+      "pairs": [
+       {
+        "pair_id": "Ex8-6:9|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex8-6:9|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:9|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ],
+      "typing_problems": [
+       "book_final is not in the book solution"
+      ]
+     },
+     {
+      "ref": "Ex8-6:24b",
+      "printed": "1 3",
+      "book": null,
+      "blind": "$\\dfrac{1}{3}$",
+      "pairs": [
+       {
+        "pair_id": "Ex8-6:24b|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex8-6:24b|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:24b|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ],
+      "typing_problems": [
+       "book_final is not in the book solution"
+      ]
+     },
+     {
+      "ref": "Ex8-6:25d",
+      "printed": "−2 3",
+      "book": null,
+      "blind": "$-\\dfrac{2}{3}$",
+      "pairs": [
+       {
+        "pair_id": "Ex8-6:25d|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex8-6:25d|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:25d|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ],
+      "typing_problems": [
+       "book_final is not in the book solution"
+      ]
+     },
+     {
+      "ref": "Ex8-6:30b",
+      "printed": "−2 3",
+      "book": null,
+      "blind": null,
+      "pairs": [
+       {
+        "pair_id": "Ex8-6:30b|blind~printed",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:30b|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:30b|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ],
+      "typing_problems": [
+       "book_final is not in the book solution"
+      ]
+     },
+     {
+      "ref": "Ex8-6:32a",
+      "printed": "−1 3",
+      "book": null,
+      "blind": null,
+      "pairs": [
+       {
+        "pair_id": "Ex8-6:32a|blind~printed",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:32a|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:32a|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ],
+      "typing_problems": [
+       "book_final is not in the book solution"
+      ]
+     },
+     {
+      "ref": "Ex8-6:34b",
+      "printed": "−1 2",
+      "book": null,
+      "blind": null,
+      "pairs": [
+       {
+        "pair_id": "Ex8-6:34b|blind~printed",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:34b|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:34b|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ],
+      "typing_problems": [
+       "book_final is not in the book solution"
+      ]
+     },
+     {
+      "ref": "Ex8-6:35b",
+      "printed": "2",
+      "book": null,
+      "blind": null,
+      "pairs": [
+       {
+        "pair_id": "Ex8-6:35b|blind~printed",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:35b|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:35b|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ],
+      "typing_problems": [
+       "book_final is not in the book solution"
+      ]
+     },
+     {
+      "ref": "Ex8-6:37a",
+      "printed": "1 4",
+      "book": null,
+      "blind": null,
+      "pairs": [
+       {
+        "pair_id": "Ex8-6:37a|blind~printed",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:37a|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:37a|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ],
+      "typing_problems": [
+       "book_final is not in the book solution"
+      ]
+     },
+     {
+      "ref": "Ex8-6:39c",
+      "printed": "3 4",
+      "book": null,
+      "blind": null,
+      "pairs": [
+       {
+        "pair_id": "Ex8-6:39c|blind~printed",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:39c|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:39c|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ],
+      "typing_problems": [
+       "book_final is not in the book solution"
+      ]
+     },
+     {
+      "ref": "Ex8-6:43b",
+      "printed": "3",
+      "book": null,
+      "blind": null,
+      "pairs": [
+       {
+        "pair_id": "Ex8-6:43b|blind~printed",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:43b|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:43b|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ],
+      "typing_problems": [
+       "book_final is not in the book solution"
+      ]
+     },
+     {
+      "ref": "Ex8-6:44e",
+      "printed": "mAC = −15 7",
+      "book": null,
+      "blind": null,
+      "pairs": [
+       {
+        "pair_id": "Ex8-6:44e|blind~printed",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:44e|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:44e|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ],
+      "typing_problems": [
+       "book_final is not in the book solution",
+       "the key \"-\\frac{15}{7}\" does not read as the printed answer \"mAC = −15 7\""
+      ]
+     },
+     {
+      "ref": "Ex8-6:46a",
+      "printed": "mMN = −1 3",
+      "book": null,
+      "blind": null,
+      "pairs": [
+       {
+        "pair_id": "Ex8-6:46a|blind~printed",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:46a|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex8-6:46a|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ],
+      "typing_problems": [
+       "book_final is not in the book solution",
+       "the key \"-\\frac{1}{3}\" does not read as the printed answer \"mMN = −1 3\""
+      ]
+     }
+    ],
+    "no_printed_answer": [],
+    "typing_problems": [
+     {
+      "ref": "WE3",
+      "problems": [
+       "the key \"-\\frac{4}{5}\" does not read as the book final answer \"The gradient of $EF=-\\frac{4}{5}$\""
+      ]
+     },
+     {
+      "ref": "Ex8-3:1a",
+      "problems": [
+       "book_final is not in the book solution"
+      ]
+     },
+     {
+      "ref": "Ex8-3:1b",
+      "problems": [
+       "book_final is not in the book solution"
+      ]
+     },
+     {
+      "ref": "Ex8-3:1c",
+      "problems": [
+       "book_final is not in the book solution"
+      ]
+     },
+     {
+      "ref": "Ex8-3:4a",
+      "problems": [
+       "book_final is not in the book solution"
+      ]
+     },
+     {
+      "ref": "Ex8-3:4b",
+      "problems": [
+       "book_final is not in the book solution"
+      ]
+     },
+     {
+      "ref": "Ex8-3:5",
+      "problems": [
+       "book_final is not in the book solution"
+      ]
+     },
+     {
+      "ref": "Ex8-3:6",
+      "problems": [
+       "book_final is not in the book solution"
+      ]
+     },
+     {
+      "ref": "Ex8-6:8",
+      "problems": [
+       "book_final is not in the book solution"
+      ]
+     },
+     {
+      "ref": "Ex8-6:9",
+      "problems": [
+       "book_final is not in the book solution"
+      ]
+     },
+     {
+      "ref": "Ex8-6:24b",
+      "problems": [
+       "book_final is not in the book solution"
+      ]
+     },
+     {
+      "ref": "Ex8-6:25d",
+      "problems": [
+       "book_final is not in the book solution"
+      ]
+     },
+     {
+      "ref": "Ex8-6:30b",
+      "problems": [
+       "book_final is not in the book solution"
+      ]
+     },
+     {
+      "ref": "Ex8-6:32a",
+      "problems": [
+       "book_final is not in the book solution"
+      ]
+     },
+     {
+      "ref": "Ex8-6:34b",
+      "problems": [
+       "book_final is not in the book solution"
+      ]
+     },
+     {
+      "ref": "Ex8-6:35b",
+      "problems": [
+       "book_final is not in the book solution"
+      ]
+     },
+     {
+      "ref": "Ex8-6:37a",
+      "problems": [
+       "book_final is not in the book solution"
+      ]
+     },
+     {
+      "ref": "Ex8-6:39c",
+      "problems": [
+       "book_final is not in the book solution"
+      ]
+     },
+     {
+      "ref": "Ex8-6:43b",
+      "problems": [
+       "book_final is not in the book solution"
+      ]
+     },
+     {
+      "ref": "Ex8-6:44e",
+      "problems": [
+       "book_final is not in the book solution",
+       "the key \"-\\frac{15}{7}\" does not read as the printed answer \"mAC = −15 7\""
+      ]
+     },
+     {
+      "ref": "Ex8-6:46a",
+      "problems": [
+       "book_final is not in the book solution",
+       "the key \"-\\frac{1}{3}\" does not read as the printed answer \"mMN = −1 3\""
+      ]
+     }
+    ],
+    "printed_not_in_asked_form": [],
+    "forms_from_book_rules": [],
+    "forms_the_marker_cannot_check": [],
+    "tier_checks": [
+     {
+      "ref": "WE4",
+      "typing": "standard",
+      "check": "standard"
+     },
+     {
+      "ref": "Ex8-3:2",
+      "typing": "standard",
+      "check": "basic"
+     },
+     {
+      "ref": "Ex8-6:35b",
+      "typing": "basic",
+      "check": "basic"
+     },
+     {
+      "ref": "Ex8-6:43b",
+      "typing": "basic",
+      "check": "basic"
+     }
+    ]
+   },
+   "figure_blocked": [
+    "Ex8-3:2",
+    "Ex8-3:3",
+    "Ex8-3:5",
+    "Ex8-3:6",
+    "Ex8-6:7",
+    "Ex8-6:8",
+    "Ex8-6:9",
+    "Ex8-6:37a",
+    "Ex8-6:46a"
+   ],
+   "oracle": {
+    "tally": {
+     "claims": 8,
+     "questions": 25,
+     "worked_examples_kept_as_teaching": 0,
+     "by_objective": [
+      {
+       "lo": "lo:g10m8s3-1-1",
+       "claims": 7,
+       "items": 18
+      },
+      {
+       "lo": "lo:g10m8s3-1-2",
+       "claims": 1,
+       "items": 7
+      }
+     ]
+    },
+    "verdict": "RED",
+    "subheadings": [
+     {
+      "anchor": "EMA6B",
+      "status": "thin",
+      "missing_items": [
+       "b03171: the comparative steepness illustration (\"line OQ is the least steep and line OT is the steepest\") is dropped — production keeps only the abstract m=slope/steepness claim, not the worked comparison that grounds what 'steeper' means",
+       "b03178: the book's 'watch a video to learn more' pointer (Video: 2GC6) has no corresponding claim or reference in production"
+      ]
+     }
+    ]
+   },
+   "counts": {
+    "claims": 8,
+    "claims_dropped": 0,
+    "items": 25,
+    "worked_examples": 2,
+    "exercises": 23,
+    "by_answer_type": {
+     "expression": 14,
+     "numeric": 11
+    },
+    "by_solution_provenance": {
+     "book_worked": 2,
+     "book_worked_epub": 23
+    },
+    "by_verification": {
+     "agreed": 5,
+     "disputed": 20
+    },
+    "visuals": 0,
+    "viz_gaps": 13,
+    "figure_blocked": 9,
+    "unmapped_worked_examples": 0
+   },
+   "failed": {
+    "s2": false,
+    "s3": false
+   }
+  }
+ ],
+ "failed_lessons": [],
+ "calls": {
+  "by_phase": {
+   "S2 Claims": 1,
+   "S3 Typing": 1,
+   "S3 Blind re-solve": 2,
+   "S3 Tier check": 1,
+   "S3 Judge": 1,
+   "S4 Visuals": 1,
+   "S4 Compare": 1,
+   "S8 Oracle": 1
+  },
+  "per_lesson": {
+   "g10m8s3-1": 9
+  },
+  "total": 9
+ },
+ "meter": {
+  "stage": "S2-S4,S8",
+  "record": "uv run meter_run.py record --book g10-math --stage S2-S4,S8 --run <runId>",
+  "by_stage": "uv run meter_run.py summary --book g10-math --by phase",
+  "by_lesson": "uv run meter_run.py summary --book g10-math --by lesson",
+  "note": "Phase titles start with their stage (S2, S3, S4, S8), so `--by phase` is the per-stage cost; every label carries the lesson slug (S3:blind:<slug>:1), so `--by lesson` is the per-lesson cost."
+ },
+ "run_id": "wf_e927fd12-ec1"
+}

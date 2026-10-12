@@ -1,0 +1,67 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m13s4-1-1:volume-to-area",
+ "kind": "family",
+ "lo_id": "lo:g10m13s4-1-1",
+ "parent_question_id": "q:g10m13s4-1-1:ex13-6-4b",
+ "source_page": 455,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "l",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "h",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "k",
+   "choice": [
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "v",
+   "let": "l * b * h"
+  },
+  {
+   "name": "s",
+   "let": "2 * (l * b + l * h + b * h)"
+  },
+  {
+   "name": "n",
+   "let": "k ** 3 * v"
+  }
+ ],
+ "constraints": [],
+ "stem": "A rectangular prism has a surface area of {=s} cm$^2$ and a volume of {=v} cm$^3$. Its length, breadth and height are all multiplied by the same constant factor, and the volume of the new prism is {=n} cm$^3$. Calculate the surface area of the new prism, in cm$^2$.",
+ "answer": "k * k * s",
+ "solution": [
+  "Let each of the length, breadth and height be multiplied by a constant factor of $k$, so the new dimensions are $kl$, $kb$ and $kh$.",
+  "The new volume is $V_{\\text{new}}=(kl)\\times(kb)\\times(kh)=k^3\\times l\\times b\\times h=k^3V$.",
+  "So $k^3=\\frac{{=n}}{{=v}}={=k**3}$, which gives $k={=k}$.",
+  "The surface area of a rectangular prism is $S=2(lb+lh+bh)$, so $S_{\\text{new}}=2(kl\\times kb+kl\\times kh+kb\\times kh)=k^2\\times2(lb+lh+bh)=k^2S$.",
+  "So the surface area is multiplied by a factor of $k^2={=k}^2={=k*k}$.",
+  "$S_{\\text{new}}={=k*k}\\times{=s}={=k*k*s}$ cm$^2$."
+ ],
+ "notes": "Advanced: links the two factors of this objective. Book Ex 13.6 Q4b gives the all-three-dimensions case (V_new = k^3 V); here the student must run it backwards (k^3 = V_new / V, so k, a perfect cube 8, 27 or 64) and then carry k into the surface area (S_new = k^2 S, from S = 2(lb + lh + bh)). The inverse step is an extension of the book's method, not a new technique: same substitution kl, kb, kh, only the unknown has moved. The numbers are consistent by construction: l, b, h are drawn first and the stated surface area and volume are computed from them, so no impossible prism is ever shown (the student never needs l, b, h themselves). Worked check: l=2, b=3, h=4, k=2 gives S=52, V=24, new volume 192, k^3=8, k=2, new surface area 4 x 52 = 208, which equals the direct computation with sides 4, 6, 8: 2(24+32+48)=208. Largest values: new volume 8000, new surface area under 1700. Whole-number answers always, since k is an integer and S is an integer.",
+ "proposed_misconceptions": []
+}

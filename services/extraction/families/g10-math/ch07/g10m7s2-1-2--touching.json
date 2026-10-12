@@ -1,0 +1,86 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m7s2-1-2:touching",
+ "kind": "family",
+ "lo_id": "lo:g10m7s2-1-2",
+ "parent_question_id": "q:g10m7s2-1-2:ex7-2-6c",
+ "source_page": 250,
+ "tier": "standard",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "t",
+   "randint": [
+    0,
+    2
+   ]
+  },
+  {
+   "name": "x",
+   "randint": [
+    3,
+    9
+   ]
+  },
+  {
+   "name": "y",
+   "randint": [
+    3,
+    9
+   ],
+   "resample_while": "y == x"
+  },
+  {
+   "name": "s",
+   "let": "[['A', 'B', 'C', 'D', 'E'], ['P', 'Q', 'R', 'S', 'T'], ['F', 'G', 'H', 'J', 'K']][t]"
+  },
+  {
+   "name": "pa",
+   "let": "s[0]"
+  },
+  {
+   "name": "pb",
+   "let": "s[1]"
+  },
+  {
+   "name": "pc",
+   "let": "s[2]"
+  },
+  {
+   "name": "pd",
+   "let": "s[3]"
+  },
+  {
+   "name": "pe",
+   "let": "s[4]"
+  }
+ ],
+ "constraints": [],
+ "stem": "$\\triangle {=pa}{=pb}{=pc}$ and $\\triangle {=pd}{=pe}{=pc}$ have only the point ${=pc}$ in common. The points ${=pa}$, ${=pc}$, ${=pd}$ are not in a straight line, and neither are ${=pb}$, ${=pc}$, ${=pe}$. ${=pa}{=pc} = {=pd}{=pc} = {=x}$ cm and ${=pb}{=pc} = {=pe}{=pc} = {=y}$ cm. Nothing else is known about the two triangles. Which conclusion can be drawn?",
+ "solution": [
+  "In $\\triangle {=pa}{=pb}{=pc}$ and $\\triangle {=pd}{=pe}{=pc}$ we know two pairs of equal sides: ${=pa}{=pc} = {=pd}{=pc}$ and ${=pb}{=pc} = {=pe}{=pc}$.",
+  "To use SAS we would also need the angles between these sides to be equal, $\\angle {=pa}{=pc}{=pb} = \\angle {=pd}{=pc}{=pe}$. Those angles would be vertically opposite only if ${=pa}$, ${=pc}$, ${=pd}$ were in a straight line and so were ${=pb}$, ${=pc}$, ${=pe}$, and we are told they are not. So nothing is known about these angles.",
+  "We are given no third pair of sides for SSS and no other angles for AAS or RHS. We have only two facts about each triangle, and at least three are needed.",
+  "The triangles may or may not be congruent, so there is not enough information to decide."
+ ],
+ "choices": {
+  "correct": "There is not enough information to decide whether the triangles are congruent.",
+  "distractors": [
+   {
+    "text": "The triangles are congruent (SAS): they have two equal sides and the vertically opposite angles at ${=pc}$.",
+    "misconception_id": "mc:g10m7s2-1-2:angles-at-shared-point-assumed-vertically-opposi"
+   },
+   {
+    "text": "The triangles are not congruent, because ${=pa}{=pc}$ and ${=pb}{=pc}$ have different lengths.",
+    "misconception_id": "mc:g10m7s2-1-2:not-proved-means-not-congruent"
+   },
+   {
+    "text": "The triangles are not congruent, because they do not have all three pairs of sides equal.",
+    "misconception_id": "mc:g10m7s2-1-2:not-proved-means-not-congruent"
+   }
+  ]
+ },
+ "proposed_misconceptions": [],
+ "notes": "Mirrors book part 6c: the triangles touch at C, two sides of one equal two sides of the other, and the lines through C are not straight so the vertically opposite angle is not available. Lengths x and y differ so the stem cannot be read as one isosceles triangle. No angle is given anywhere, so the lengths are always consistent. Answer is constant (not enough information) as in the book item; the contrasting straight-line case is the family tpl:g10m7s2-1-2:crossing. The stem says the points are not collinear, which is the book's 'not straight lines'."
+}

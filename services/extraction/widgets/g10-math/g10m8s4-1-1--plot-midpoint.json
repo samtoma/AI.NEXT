@@ -1,0 +1,61 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m8s4-1-1:plot-midpoint",
+ "lo_id": "lo:g10m8s4-1-1",
+ "parent_question_id": "q:g10m8s4-1-1:ex8-5-3a",
+ "tier": "basic",
+ "kind": "pair_plotter",
+ "instances": [
+  {
+   "Ax": -1,
+   "Ay": 3,
+   "Bx": 3,
+   "By": -3,
+   "Mx": 1,
+   "My": 0
+  },
+  {
+   "Ax": 2,
+   "Ay": 5,
+   "Bx": -4,
+   "By": -3,
+   "Mx": -1,
+   "My": 1
+  },
+  {
+   "Ax": -4,
+   "Ay": -2,
+   "Bx": -2,
+   "By": -4,
+   "Mx": -3,
+   "My": -3
+  },
+  {
+   "Ax": 5,
+   "Ay": -5,
+   "Bx": -3,
+   "By": 3,
+   "Mx": 1,
+   "My": -1
+  }
+ ],
+ "spec": {
+  "target": [
+   "{=Mx}",
+   "{=My}"
+  ]
+ },
+ "stem": "Points $A({=Ax}, {=Ay})$ and $B({=Bx}, {=By})$ are the end points of a line segment. Plot the mid-point $M$ of $AB$.",
+ "solution": [
+  "Add the two x-coordinates and divide by 2: $M_x = \\dfrac{A_x + B_x}{2}$.",
+  "Add the two y-coordinates and divide by 2: $M_y = \\dfrac{A_y + B_y}{2}$.",
+  "Plot $M(M_x, M_y)$."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "wrong-quadrant",
+   "misconception_id": "mc:g10m8s4-1-1:drops-sign-adding-negatives"
+  }
+ ],
+ "notes": "Rows are chosen (unlike the book's own ex8-5-1/2 and ex8-6-16, whose answers are non-integer or the ±5 window) so M lands on a whole-number lattice point within ±5, as pair_plotter requires. Row 3 (both endpoints negative in both coordinates) is the one built to surface the sign-dropping slip as wrong-quadrant. checks-only-one-coordinate is not diagnosable here: it describes comparing two already-computed midpoints (e.g. to confirm diagonals bisect each other), not placing one midpoint, so no anchor question in this LO's list actually exercises it."
+}

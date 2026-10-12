@@ -1,0 +1,55 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m1s7-2-1:factor-by-tiles-positive",
+ "lo_id": "lo:g10m1s7-2-1",
+ "parent_question_id": "q:g10m1s7-2-1:ex1-8-1",
+ "tier": "basic",
+ "kind": "area_model",
+ "instances": [
+  {
+   "a": 2,
+   "b": 3,
+   "t": "x^2 + 5x + 6"
+  },
+  {
+   "a": 3,
+   "b": 4,
+   "t": "x^2 + 7x + 12"
+  },
+  {
+   "a": 2,
+   "b": 4,
+   "t": "x^2 + 6x + 8"
+  },
+  {
+   "a": 1,
+   "b": 4,
+   "t": "x^2 + 5x + 4"
+  },
+  {
+   "a": 2,
+   "b": 2,
+   "t": "x^2 + 4x + 4"
+  }
+ ],
+ "spec": {
+  "mode": "factor",
+  "a": "{=a}",
+  "b": "{=b}"
+ },
+ "stem": "Build a rectangle from algebra tiles whose area is ${=t}$. The two sides of your rectangle are the factors: read them off to factorise the trinomial.",
+ "solution": [
+  "The constant term and the middle term are both positive, so both numbers in the brackets are positive. List the pairs of positive whole numbers whose product is the constant term.",
+  "Lay the $x^2$ tile. For one pair, run that many $x$ tiles along the top edge and the other number along the left edge. The block those two runs bound takes the unit tiles, and its count is the product of the pair, so the constant term is right.",
+  "Count all the $x$ tiles: the two runs added together. If that total is not the middle coefficient, this pair is not the one, however well it fits the constant term. Try another pair.",
+  "Keep the pair whose total is the middle coefficient. The sides of the rectangle are $(x + p)$ and $(x + q)$, and these are the factors.",
+  "Check by multiplying out $(x + p)(x + q)$: it must give back the trinomial."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "middle-term-sign",
+   "misconception_id": "mc:g10m1s7-2-1:factor-pair-middle-term-untested"
+  }
+ ],
+ "notes": "Kind fit: in factor mode the student builds the rectangle, the unit block holds c and the two x-runs must total b. That is the book's 'factor pair of c, then test the middle term' as a construction. Instrument limit: |a| and |b| are at most 4, so none of the six book anchors can be an instance (each needs a number of 5 or more, e.g. x^2+8x+15 needs 5 and 3). The rows are parallel questions inside the grid, and each is a monic trinomial with c > 0 and b > 0. The parent is the nearest anchor. middle-term-sign is the one predicate that carries the misconception: constant right, x term wrong, which is the signature of a factor pair of c written in untested. Where c has a second buildable positive pair (rows x^2+5x+4 and x^2+4x+4) the wrong pair is a magnitude error; on the other rows the grid cannot hold the other pair (6, 8 and 12 have no second pair with both numbers at most 4), so the reachable form of the error is the sign variant, such as (x-2)(x-3) for x^2+5x+6. NOT mapped, deliberately: constant-sign fires when the sum is right and the product is wrong (the mirror error), and no misconception on this objective's list describes it. missing-cross-term has no matching misconception either. not-a-rectangle and off-target diagnose nothing specific. The prerequisite mc:g10m1s6-1-2:x-term-from-k-alone would fire the same predicate if the student counted only one x-run; middle-term-sign goes to the likelier error, the untested pair. Stem: t is a pre-rendered trinomial string in each row. If the stem engine only exposes helper functions and not bare row names, replace {=t} with the equivalent helper."
+}

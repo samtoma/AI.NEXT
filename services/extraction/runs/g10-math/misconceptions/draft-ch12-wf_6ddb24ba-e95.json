@@ -1,0 +1,83 @@
+{
+ "book": "g10-math",
+ "stage": "draft",
+ "prompts_version": "s5-v5",
+ "by_ref": {
+  "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/s5-draft-ch12",
+  "stage": "S5 draft",
+  "shards_sha256": "ceefe89d1bf16a611e2b3163bf9e90b6c28733b15fcce50e4e06e43efc909e67",
+  "files": 2
+ },
+ "embedded": {
+  "source": "runbook/misconceptions.workflow.js",
+  "source_sha256": "8a48496f9fb571481f131c340cefa1ee28d2d1a96b8ab5a348e2adf4166e0a0a",
+  "args_sha256": "f410279a5a45e0c4bd653b64f294f1583cec5e766dec302a7dd61ca90560b3aa",
+  "generated_sha256": "e3bed3153a05a3c90bbf5b976496a41108ffed741e8d3f4480f925e123043ad5",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "max_per_objective": 4,
+ "records": [
+  {
+   "lo": "lo:g10m12s1-1-1",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No evidence was supplied for this objective: no caution boxes, no worked-example remarks, no re-solve wrong turns, no wrong options or widget predicates (D0, D1, ... is empty), and no existing entries. The book's questions are all worked examples with fully proved solutions, and none of them prints a warning about a common error. Any entry I wrote would rest on my own general knowledge of how students misuse parallelogram tests (for example treating one pair of equal sides plus one pair of parallel sides as enough, or treating equal diagonals as enough), not on this book. I left the entries empty rather than invent errors the evidence does not support. The runtime will fall back to the canonical solutions, which is the correct outcome."
+    },
+    {
+     "kind": "terminology",
+     "text": "The solutions use several shorthand reasons that I could not verify as the book's preferred wording for a student-facing refutation: 'co-int angles', 'opp sides of quad parallel', 'opp. sides of quad are =', 'diagonals bisect each other', 'two sides are parallel and equal' and 'one pair opp sides equal and parallel', 'Midpt Theorem', 'alt angles', and 'both pairs opp. sides parallel'. If entries are added later, keep these exact phrasings. Do not substitute others (for example 'consecutive angles' or 'same-side interior angles')."
+    },
+    {
+     "kind": "other",
+     "text": "Several solutions could not be used even as context: the solutions to ex12-1-8, ex12-2-10, ex12-1-9 and ex12-2-11 are only a '[figure]' placeholder or a 'redraw the diagram' instruction, so the book's actual proof method for them is not available as text. The solution to ex12-2-1 contains an apparent typo ('AM=MO=ON=NO'). The solution to ex12-1-6a gives reason 'AAS' for both pairs of angles plus a common side, which I also left unused."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m12s1-1-2",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No evidence was supplied for this objective: no book caution boxes or worked-example remarks, no wrong turns from an independent re-solve, no existing entries and no wrong options or widget predicates (D0, D1, ...). Every possible entry would have been invented from general knowledge of parallelogram proofs rather than supported by the evidence, so none was written. The runtime falls back to the canonical solutions, which is the intended behaviour here."
+    },
+    {
+     "kind": "other",
+     "text": "Canonical solution for q:g10m12s1-1-2:ex12-2-7c (answer 79) does not add up as printed: it writes x = 180 - 63 - 79 = 79, but 180 - 63 - 79 = 38. The stated answer and the working disagree, so this question should be checked against the book before any refutation or hint draws on it. It was not used here."
+    },
+    {
+     "kind": "other",
+     "text": "Stem and solution of expl:g10m12s1-1-2:ex12-2-5b disagree. The stem makes N the mid-point of AD, but the solution begins AN = NC (given) and then applies the Midpoint Theorem to DR = RC. The labels look garbled in extraction, so this item should not be used as grounding until checked."
+    },
+    {
+     "kind": "other",
+     "text": "Stem and solution of ex12-2-6b and expl:g10m12s1-1-2:ex12-2-6a/6c use inconsistent labels: the stem says T is the mid-point of NR and the triangle is MNP, while the solutions use MR and NP. Likely an extraction or labelling slip; check the figure before using these items."
+    },
+    {
+     "kind": "other",
+     "text": "Several worked examples (ex12-2-3a, ex12-2-4a, ex12-2-12c) have a canonical solution that is only 'First number the angles' or 'proved above', with no working. They give nothing to argue against or from, so they were not used."
+    },
+    {
+     "kind": "terminology",
+     "text": "Reason abbreviations seen in the canonical solutions (not used in any entry, listed for review): 'opp sides of ∥m' / 'opp ∠s of ∥m', 'alt ∠s', 'corresp ∠s', 'Midpt Theorem' and 'converse of Midpt Theorem', 'vert opp ∠s', '∠s opp equal sides', 'sum of ∠s in △', 'parm eq' (a garbled form of the parallelogram opposite-sides-equal reason), and 'str line'. The book writes the parallelogram reason as 'opp sides of ∥m', not 'opposite sides of a parallelogram'; keep the book's wording if any entry is added later."
+    }
+   ],
+   "notes": []
+  }
+ ],
+ "totals": {
+  "objectives": 2,
+  "entries": 0,
+  "dropped": 0,
+  "stripped": 0,
+  "skipped": 0,
+  "flags": 9
+ }
+}

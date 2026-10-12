@@ -1,0 +1,519 @@
+{
+ "stage": "G2R",
+ "workflow": "g2-recommend",
+ "prompts_version": "g2rec-v1",
+ "book": "g10-math",
+ "chapter": 2,
+ "part": 1,
+ "parts": 1,
+ "batch": 8,
+ "verify_batch": 8,
+ "model": "sonnet",
+ "effort": "high",
+ "items_sha256": "e6dd8ca29de3ed9d85809fab244232e5f2f9a465b335ab4113f1b6807a24ef38",
+ "keys": [
+  "g10m2s2-1:WE5",
+  "g10m2s2-1:Ex2-1:38",
+  "g10m2s2-1:Ex2-1:39",
+  "g10m2s2-1:Ex2-4:1m",
+  "g10m2s2-1:Ex2-4:1q",
+  "g10m2s2-1:Ex2-4:1r",
+  "g10m2s2-1:Ex2-4:1s",
+  "g10m2s2-1:Ex2-4:1z",
+  "g10m2s2-1:Ex2-4:2a",
+  "g10m2s2-1:Ex2-4:2b",
+  "g10m2s2-1:Ex2-4:2l",
+  "g10m2s2-1:Ex2-4:7",
+  "g10m2s3-1:Ex2-2:9",
+  "g10m2s4-1:Ex2-3:4",
+  "g10m2s4-1:Ex2-4:3d",
+  "g10m2s4-1:Ex2-4:3g",
+  "g10m2s4-1:Ex2-4:3n",
+  "g10m2s4-1:Ex2-4:3p",
+  "g10m2s4-1:Ex2-4:4",
+  "g10m2s4-1:Ex2-4:5"
+ ],
+ "agents": {
+  "recommend": 3,
+  "verify": 3
+ },
+ "embedded": {
+  "source": "runbook/g2-recommend.workflow.js",
+  "source_sha256": "5c0a9ef82f1f0643ac9935f6a60e6623730012cf2bd415344941c4a6a5e1b361",
+  "args_sha256": "a9d46facf3278a5ff5de536786a41e7af868a5fc8997e33fe0c3c5d58ce4d246",
+  "generated_sha256": "3e1ee442ff70cc9865268ba6d52ec880ed51a42d185f80cad1a2d0b0d26e0c3f",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "key": "g10m2s2-1:WE5",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m2s2-1:WE5",
+    "verdict": "accept",
+    "class": "check too strict",
+    "confidence": "high",
+    "note": "$9^x=3^{2x}=(3^x)^2$, so $(3^{2x}-1)/(3^x+1)=(3^x-1)(3^x+1)/(3^x+1)=3^x-1$. Matches the working's last line and the typed key. The complaint is only that no EPUB final exists to compare with.",
+    "own_value": "3^{x}-1",
+    "book_quote": "={3}^{x}-1",
+    "correct_answer": "3^{x}-1"
+   },
+   "ver": {
+    "key": "g10m2s2-1:WE5",
+    "own_answer": "3^x - 1",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "9^x-1 = (3^x)^2-1 = (3^x-1)(3^x+1), so the quotient is 3^x-1, matching the key."
+   }
+  },
+  {
+   "key": "g10m2s2-1:Ex2-1:38",
+   "state": "held",
+   "rec": {
+    "key": "g10m2s2-1:Ex2-1:38",
+    "verdict": "exclude",
+    "class": "book error",
+    "confidence": "high",
+    "note": "The working shows a minus in the denominator, the stem shows plus. Even with minus, $1+\\frac{1}{49}=\\frac{50}{49}$, not $\\frac{51}{49}$. With the stem as shown the value is $\\frac{50}{343}$. The book's answer is wrong either way.",
+    "own_value": "\\frac{50}{343} (stem as shown); \\frac{50}{49} (stem with minus as in the working)",
+    "correct_answer": "\\frac{50}{343} for the stem as printed",
+    "defect": "Book adds $1+\\frac{1}{49}$ and gets $\\frac{51}{49}$; the sum is $\\frac{50}{49}$. The stem also lost a minus sign in the denominator (working has $4\\times7^b-3\\times7^b$)."
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m2s2-1:Ex2-1:39",
+   "state": "held",
+   "rec": {
+    "key": "g10m2s2-1:Ex2-1:39",
+    "verdict": "exclude",
+    "class": "book error",
+    "confidence": "high",
+    "note": "$12^y=3^y4^y$, $96^y=3^y32^y$, $6^y=3^y2^y$. So the denominator is $3^y(1+2^y)$, not $3^y(2+1)$ as the book writes. Correct result is $\\frac{4^y-2^{5y}}{1+2^y}$, which does not simplify further.",
+    "own_value": "\\frac{4^{y}-2^{5y}}{1+2^{y}}",
+    "correct_answer": "\\frac{4^{y}-2^{5y}}{1+2^{y}}",
+    "defect": "Book writes $3^y+6^y=3^y(2+1)$; it should be $3^y(1+2^y)$. The denominator 3 in the printed answer is wrong."
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m2s2-1:Ex2-4:1m",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m2s2-1:Ex2-4:1m",
+    "verdict": "accept",
+    "class": "check too strict",
+    "confidence": "high",
+    "note": "$6^{5p}/9^p=2^{5p}3^{5p}/3^{2p}=2^{5p}3^{3p}$. The key matches the EPUB final answer; the complaint is a text comparison against the flattened PDF answer, where the dot means multiplication.",
+    "own_value": "2^{5p}\\cdot3^{3p}",
+    "book_quote": "2^{5p}.3^{3p}",
+    "correct_answer": "2^{5p}\\cdot 3^{3p}"
+   },
+   "ver": {
+    "key": "g10m2s2-1:Ex2-4:1m",
+    "own_answer": "2^{5p}\\cdot 3^{3p}",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "6^{5p}/9^p = 2^{5p}3^{5p}/3^{2p} = 2^{5p}3^{3p}, matching the key (equivalent forms like 32^p*27^p are less simple)."
+   }
+  },
+  {
+   "key": "g10m2s2-1:Ex2-4:1q",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m2s2-1:Ex2-4:1q",
+    "verdict": "fix",
+    "class": "selected from a list",
+    "confidence": "high",
+    "note": "$2^{-2}\\cdot3^3=27/4$. The book's answer is right but a fraction is not a single number, so it must be typed as an expression.",
+    "own_value": "\\frac{27}{4}",
+    "book_quote": "=\\frac{27}{4}",
+    "correct_answer": "\\frac{27}{4}",
+    "fix": {
+     "answer_type": "expression",
+     "key": "\\frac{27}{4}",
+     "marker_kind": "expression",
+     "form": "simplest",
+     "variables": []
+    }
+   },
+   "ver": {
+    "key": "g10m2s2-1:Ex2-4:1q",
+    "own_answer": "27/4",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "2^{a-2-a}3^{a+3-a} = 2^{-2}*3^3 = 27/4, matching the key."
+   }
+  },
+  {
+   "key": "g10m2s2-1:Ex2-4:1r",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m2s2-1:Ex2-4:1r",
+    "verdict": "fix",
+    "class": "selected from a list",
+    "confidence": "high",
+    "note": "Exponent $n+2n-6-3n+3=-3$, so $3^{-3}=\\frac{1}{27}$. Book answer is right; a fraction is not numeric, so retype as an expression.",
+    "own_value": "\\frac{1}{27}",
+    "book_quote": "=3^{-3}\\\\&=\\frac{1}{27}",
+    "correct_answer": "\\frac{1}{27}",
+    "fix": {
+     "answer_type": "expression",
+     "key": "\\frac{1}{27}",
+     "marker_kind": "expression",
+     "form": "simplest",
+     "variables": []
+    }
+   },
+   "ver": {
+    "key": "g10m2s2-1:Ex2-4:1r",
+    "own_answer": "1/27",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "Exponent: n+2n-6-(3n-3) = -3, so 3^{-3} = 1/27, matching the key."
+   }
+  },
+  {
+   "key": "g10m2s2-1:Ex2-4:1s",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m2s2-1:Ex2-4:1s",
+    "verdict": "fix",
+    "class": "selected from a list",
+    "confidence": "high",
+    "note": "$27/729=\\frac{1}{27}$. Book answer is right; a fraction is not numeric, so retype as an expression.",
+    "own_value": "\\frac{1}{27}",
+    "book_quote": "=\\frac{1}{3^3}\\\\&=\\frac{1}{27}",
+    "correct_answer": "\\frac{1}{27}",
+    "fix": {
+     "answer_type": "expression",
+     "key": "\\frac{1}{27}",
+     "marker_kind": "expression",
+     "form": "simplest",
+     "variables": []
+    }
+   },
+   "ver": {
+    "key": "g10m2s2-1:Ex2-4:1s",
+    "own_answer": "1/27",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "3^3/9^3 = 27/729 = 1/27, matching the key."
+   }
+  },
+  {
+   "key": "g10m2s2-1:Ex2-4:1z",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m2s2-1:Ex2-4:1z",
+    "verdict": "fix",
+    "class": "selected from a list",
+    "confidence": "high",
+    "note": "$(\\frac13+\\frac12)^{-1}=(\\frac56)^{-1}=\\frac65$. Book answer is right; a fraction is not numeric, so retype as an expression.",
+    "own_value": "\\frac{6}{5}",
+    "book_quote": "=\\frac{5^{-1}}{6^{-1}}\\\\&=\\frac{6}{5}",
+    "correct_answer": "\\frac{6}{5}",
+    "fix": {
+     "answer_type": "expression",
+     "key": "\\frac{6}{5}",
+     "marker_kind": "expression",
+     "form": "simplest",
+     "variables": []
+    }
+   },
+   "ver": {
+    "key": "g10m2s2-1:Ex2-4:1z",
+    "own_answer": "6/5",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "(1/3+1/2)^{-1} = (5/6)^{-1} = 6/5, matching the key."
+   }
+  },
+  {
+   "key": "g10m2s2-1:Ex2-4:2a",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m2s2-1:Ex2-4:2a",
+    "verdict": "fix",
+    "class": "book answer confirmed",
+    "confidence": "high",
+    "note": "Exponents: $(2n-2)+(9-6n)-(8-4n)=-1$, so $3^{-1}=\\frac13$. Matches printed, EPUB and blind. Only the typing is wrong: a fraction typed as numeric.",
+    "own_value": "\\frac{1}{3}",
+    "book_quote": "$\\frac{1}{3}$",
+    "fix": {
+     "answer_type": "expression",
+     "key": "\\frac{1}{3}",
+     "marker_kind": "expression",
+     "form": "",
+     "variables": []
+    }
+   },
+   "ver": {
+    "key": "g10m2s2-1:Ex2-4:2a",
+    "own_answer": "1/3",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "Exponent is 2n-2+9-6n-8+4n = -1, so 3^(-1) = 1/3, matching the key."
+   }
+  },
+  {
+   "key": "g10m2s2-1:Ex2-4:2b",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m2s2-1:Ex2-4:2b",
+    "verdict": "fix",
+    "class": "book answer confirmed",
+    "confidence": "high",
+    "note": "Exponent: $3n+2+3n-9-6n+4=-3$, so $2^{-3}=\\frac18$. Matches printed, EPUB and blind. Fraction was typed as numeric; retype as expression.",
+    "own_value": "\\frac{1}{8}",
+    "book_quote": "$\\frac{1}{8}$",
+    "fix": {
+     "answer_type": "expression",
+     "key": "\\frac{1}{8}",
+     "marker_kind": "expression",
+     "form": "",
+     "variables": []
+    }
+   },
+   "ver": {
+    "key": "g10m2s2-1:Ex2-4:2b",
+    "own_answer": "1/8",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "Exponent is 3n+2+3n-9-6n+4 = -3, so 2^(-3) = 1/8, matching the key."
+   }
+  },
+  {
+   "key": "g10m2s2-1:Ex2-4:2l",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m2s2-1:Ex2-4:2l",
+    "verdict": "fix",
+    "class": "book answer confirmed",
+    "confidence": "high",
+    "note": "$10^8=2^85^8$, $9^6=3^{12}$, so the quotient is $\\frac{3^4}{2\\cdot5^2}=\\frac{81}{50}$. All sources agree. Fraction typed as numeric; retype as expression.",
+    "own_value": "\\frac{81}{50}",
+    "book_quote": "$\\frac{81}{50}$",
+    "fix": {
+     "answer_type": "expression",
+     "key": "\\frac{81}{50}",
+     "marker_kind": "expression",
+     "form": "",
+     "variables": []
+    }
+   },
+   "ver": {
+    "key": "g10m2s2-1:Ex2-4:2l",
+    "own_answer": "81/50",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "Numerator and denominator reduce to 3^4/(2*5^2) = 81/50, matching the key."
+   }
+  },
+  {
+   "key": "g10m2s2-1:Ex2-4:7",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m2s2-1:Ex2-4:7",
+    "verdict": "accept",
+    "class": "check too strict",
+    "confidence": "high",
+    "note": "$2^{2013}5^{2015}=25\\cdot10^{2013}$, which is 25 followed by 2013 zeros: 2015 digits. Key 2015 is one number and right. The complaint is only a text comparison with the flattened printed answer.",
+    "own_value": "2015",
+    "book_quote": "25×10^{2013} has 2015 digits"
+   },
+   "ver": {
+    "key": "g10m2s2-1:Ex2-4:7",
+    "own_answer": "2015",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "2^2013*5^2015 = 25*10^2013, which is 25 followed by 2013 zeros, giving 2015 digits."
+   }
+  },
+  {
+   "key": "g10m2s3-1:Ex2-2:9",
+   "state": "held",
+   "rec": {
+    "key": "g10m2s3-1:Ex2-2:9",
+    "verdict": "exclude",
+    "class": "book error",
+    "confidence": "high",
+    "note": "$(16x^{12}b^6)^{1/3}=2\\cdot2^{1/3}x^4b^2$. The book's working and answer print $a^4$ where the stem has $x^{12}$, so its key does not match the stem (marker NOT EQUAL). Typo in the book.",
+    "own_value": "2\\cdot2^{\\frac13}x^{4}b^{2}",
+    "defect": "The book's answer (and working) write a^4 instead of x^4: the variable a does not occur in the stem. Correct answer is 2\\cdot2^{1/3}x^4b^2. A person can decide whether to correct the typo.",
+    "correct_answer": "2\\cdot2^{\\frac{1}{3}}x^{4}b^{2}"
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m2s4-1:Ex2-3:4",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m2s4-1:Ex2-3:4",
+    "verdict": "accept",
+    "class": "check too strict",
+    "confidence": "high",
+    "note": "$x=\\log_5 11=1.4899\\ldots\\approx1.49$; the book's test $5^{1.49}\\approx11.001$ agrees. Printed answer and blind agree; EPUB has no separate final, so the check complaint is only a text comparison. Key 1,49 is one number to 2 d.p.",
+    "own_value": "1,49",
+    "book_quote": "x ≈1,49"
+   },
+   "ver": {
+    "key": "g10m2s4-1:Ex2-3:4",
+    "own_answer": "1.49",
+    "verdict": "confirmed",
+    "other_correct_answers": true,
+    "note": "x = ln11/ln5 is about 1.4899, which is 1.49 to 2 dp; the key uses a decimal comma (1,49), so a student typing 1.49 must be accepted by the marker."
+   }
+  },
+  {
+   "key": "g10m2s4-1:Ex2-4:3d",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m2s4-1:Ex2-4:3d",
+    "verdict": "fix",
+    "class": "book answer confirmed",
+    "confidence": "high",
+    "note": "$7^{3x}=49=7^2$, so $3x=2$, $x=\\frac23$. All sources agree. Fraction typed as numeric; retype as expression.",
+    "own_value": "\\frac{2}{3}",
+    "book_quote": "x = \\frac{2}{3}",
+    "fix": {
+     "answer_type": "expression",
+     "key": "\\frac{2}{3}",
+     "marker_kind": "expression",
+     "form": "",
+     "variables": []
+    }
+   },
+   "ver": {
+    "key": "g10m2s4-1:Ex2-4:3d",
+    "own_answer": "2/3",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "7^(3x)=49=7^2 gives 3x=2, so x=2/3, matching the key."
+   }
+  },
+  {
+   "key": "g10m2s4-1:Ex2-4:3g",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m2s4-1:Ex2-4:3g",
+    "verdict": "fix",
+    "class": "book answer confirmed",
+    "confidence": "high",
+    "note": "$0.5^{m-2}=2^{2-m}$, so $m+1=2-m$, $m=\\frac12$. All sources agree. Fraction typed as numeric; retype as expression.",
+    "own_value": "\\frac{1}{2}",
+    "book_quote": "m = \\frac{1}{2}",
+    "fix": {
+     "answer_type": "expression",
+     "key": "\\frac{1}{2}",
+     "marker_kind": "expression",
+     "form": "",
+     "variables": []
+    }
+   },
+   "ver": {
+    "key": "g10m2s4-1:Ex2-4:3g",
+    "own_answer": "1/2",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "2^(m+1)=2^(2-m) gives m+1=2-m, so m=1/2; checks as 2^1.5 on both sides."
+   }
+  },
+  {
+   "key": "g10m2s4-1:Ex2-4:3n",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m2s4-1:Ex2-4:3n",
+    "verdict": "fix",
+    "class": "typing error",
+    "confidence": "high",
+    "note": "With $u=k^{-1/2}$: $u^2-7u-18=0$, $u=9$ or $-2$. $u=9$ gives $k=\\frac{1}{81}$; $u=-2$ gives $k=\\frac14$, which fails ($4-14-18\\neq0$). The book's key $\\frac{1}{81}$ is right, but a fraction is typed as numeric.",
+    "own_value": "k = 1/81 (only solution)",
+    "book_quote": "k = \\frac{1}{81} is the only solution",
+    "defect": "Key $\\frac{1}{81}$ was typed as a numeric answer; a fraction is an expression.",
+    "fix": {
+     "answer_type": "expression",
+     "key": "\\frac{1}{81}",
+     "marker_kind": "expression",
+     "form": "",
+     "variables": []
+    }
+   },
+   "ver": {
+    "key": "g10m2s4-1:Ex2-4:3n",
+    "own_answer": "k = 1/81 (u = k^(-1/2): u^2 - 7u - 18 = 0 gives u = 9 or u = -2; u = -2 is impossible since k^(-1/2) > 0, so k = 1/81)",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "k = 1/81 checks (81 - 63 - 18 = 0); the root k = 1/4 is extraneous because k^(-1/2) = 2 gives 4 - 14 - 18 ≠ 0, so the key is the only solution."
+   }
+  },
+  {
+   "key": "g10m2s4-1:Ex2-4:3p",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m2s4-1:Ex2-4:3p",
+    "verdict": "exclude",
+    "class": "book error",
+    "confidence": "low",
+    "note": "As printed, with $y=16^x$ the equation is $\\frac{y-1}{y+1}=3$, so $y=-2$: no real solution. $x=\\frac12$ gives $\\frac{3}{5}$, not 3. The working's line 2 factorises a numerator $16^{2x}-1$ that the stem (and working line 1) do not show.",
+    "own_value": "No real solution as printed. The book's $x=\\frac12$ fits only $\\frac{16^{2x}-1}{4^{2x}+1}=3$.",
+    "book_quote": "",
+    "defect": "The stem as printed ($16^x-1$ over $4^2x+1$) does not give $x=\\frac12$. The working's first line repeats the same text, then silently uses $(4^{2x}-1)(4^{2x}+1)$ in the numerator. The book's stem is wrong, or its working is.",
+    "why_low": "A person could decide to repair the stem to $\\frac{16^{2x}-1}{4^{2x}+1}=3$ (answer $\\frac12$), but the working's first line does not show that text, so I did not repair it."
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m2s4-1:Ex2-4:4",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m2s4-1:Ex2-4:4",
+    "verdict": "accept",
+    "class": "check too strict",
+    "confidence": "high",
+    "note": "$x=\\ln44/\\ln4\\approx2.7298\\to2.73$. The book's working gives $4^{2,73}=44{,}017$ and ends $x\\approx2,73$; the printed answer agrees. The complaint is only that the EPUB gave no separate final-answer line.",
+    "own_value": "2,73",
+    "book_quote": "\\therefore x\\approx 2,73",
+    "defect": ""
+   },
+   "ver": {
+    "key": "g10m2s4-1:Ex2-4:4",
+    "own_answer": "x = ln44/ln4 ≈ 2.7299, so 2.73",
+    "verdict": "confirmed",
+    "other_correct_answers": true,
+    "note": "2.73 is correct to 2 dp (4^2.73 ≈ 44.02); the key is written with a decimal comma, so a student typing 2.73 with a point must be accepted by the marker, which is the only risk here."
+   }
+  },
+  {
+   "key": "g10m2s4-1:Ex2-4:5",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m2s4-1:Ex2-4:5",
+    "verdict": "accept",
+    "class": "check too strict",
+    "confidence": "high",
+    "note": "$x=\\ln30/\\ln3\\approx3.0959\\to3.10$ to 2 d.p. The book's working shows $3^{3,096}=30{,}003$ and ends $x\\approx3,10$; the printed answer agrees. The complaint is only that the EPUB gave no separate final-answer line.",
+    "own_value": "3,10",
+    "book_quote": "\\therefore x\\approx 3,10",
+    "defect": ""
+   },
+   "ver": {
+    "key": "g10m2s4-1:Ex2-4:5",
+    "own_answer": "x = ln30/ln3 ≈ 3.0959, so 3.10",
+    "verdict": "confirmed",
+    "other_correct_answers": true,
+    "note": "3.0959 rounds to 3.10 at 2 dp; the key uses a decimal comma, so a student typing 3.10, 3.1 or 3.10 with a point must be accepted by value."
+   }
+  }
+ ],
+ "tally": {
+  "accept/confirmed": 6,
+  "exclude": 4,
+  "fix/confirmed": 10
+ },
+ "problems": [],
+ "meter": {
+  "stage": "G2R",
+  "record": "uv run meter_run.py record --book g10-math --stage G2R --run <runId>"
+ }
+}

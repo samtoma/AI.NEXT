@@ -1,0 +1,47 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m6s6-1-2:flip-then-drop",
+ "lo_id": "lo:g10m6s6-1-2",
+ "parent_question_id": "q:g10m6s6-1-2:ex6-6-7d",
+ "tier": "advanced",
+ "kind": "curve_sketcher",
+ "instances": [
+  {
+   "a": -2,
+   "q": -1,
+   "p": 1
+  },
+  {
+   "a": -3,
+   "q": -1,
+   "p": 1
+  },
+  {
+   "a": -1,
+   "q": -2,
+   "p": 2
+  }
+ ],
+ "spec": {
+  "fn": "sine",
+  "coefs": [
+   "{=a}",
+   "{=q}"
+  ]
+ },
+ "stem": "Sketch the graph of $y = {=a}\\sin\\theta - {=p}$ for $0^{\\circ} \\le \\theta \\le 360^{\\circ}$. Draw it in one smooth stroke from left to right.",
+ "solution": [
+  "Start from the basic graph $y = \\sin\\theta$ on $0^{\\circ} \\le \\theta \\le 360^{\\circ}$: it crosses the θ-axis at $0^{\\circ}$, $180^{\\circ}$ and $360^{\\circ}$, peaks at $(90^{\\circ}, 1)$ and bottoms out at $(270^{\\circ}, -1)$.",
+  "Multiply every height by $a$. Because $a$ is negative, the graph also flips over the θ-axis and falls first: the trough is at $(90^{\\circ}, a)$ and the peak at $(270^{\\circ}, -a)$. The amplitude is the distance $|a|$ from the midline to a peak, so it is never negative.",
+  "Now add $q$ to every height, where $q$ is the negative number written as '$- p$' in the equation. This slides the whole flipped graph down by $|q|$ units. The shift is $q$ itself and not $a \\times q$: the midline moves from the θ-axis to $y = q$.",
+  "Mark the five key points: $(0^{\\circ}, q)$, $(90^{\\circ}, q + a)$, $(180^{\\circ}, q)$, $(270^{\\circ}, q - a)$ and $(360^{\\circ}, q)$.",
+  "Join them in one smooth curve that falls first, because $a$ is negative."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "vertical-shift-wrong",
+   "misconception_id": "mc:g10m6s6-1-2:stretch-applied-to-shift"
+  }
+ ],
+ "notes": "Fit: same instrument and same objective as the standard template, now with the reflection about the θ-axis (a < 0) and a downward shift, which is the rest of the objective's 'effects of a and q'. The row field p is |q|, carried only so the stem can print '- p' without a sign helper; the spec uses q. Targets stay inside -5..5 (-2,-1 spans -3..1; -3,-1 spans -4..2; -1,-2 spans -3..-1). The stretch-applied-to-shift curve, y = a(sin θ + q), has midline a·q: for the rows this is 2, 3 and 2 against true midlines -1, -1 and -2, so the offsets (3, 4, 4) are well outside the one-grid-square tolerance, and for (-2,-1) and (-1,-2) the wrong curve also fits on the grid so the student can actually draw it. Mapped predicate and unmapped ones exactly as in the standard template (vertical-shift-wrong only; q ignored or wrong-signed named as the competing causes; vertically-displaced left unmapped because it fires for imprecision as well). A student who forgets the reflection draws a curve with the right midline and amplitude that rises first; the widget will most likely report off-target, which diagnoses nothing, so nothing is mapped for it. mc:g10m6s6-1-2:negative-amplitude is deliberately NOT mapped to amplitude-wrong or off-target: it is a wrong NUMBER stated for the amplitude (-2 instead of 2), which a freehand sketch of the correct reflected curve cannot reveal; that error needs a numeric answer and is already tested by the book's ex6-8-46c style questions."
+}

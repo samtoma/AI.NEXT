@@ -1,0 +1,35 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m4s5-1-3:rule-out-the-negative-breadth",
+ "lo_id": "lo:g10m4s5-1-3",
+ "parent_question_id": "q:g10m4s5-1-3:ex4-4-9",
+ "tier": "standard",
+ "kind": "number_line_marker",
+ "spec": {
+  "mode": "points",
+  "range": [
+   -10,
+   10
+  ],
+  "targets": [
+   8
+  ]
+ },
+ "stem": "The length of a rectangle is twice its breadth, and its area is $128\\ \\text{cm}^2$. Let the breadth be $b$ cm. Mark on the number line every value of $b$ that is possible for this rectangle.",
+ "solution": [
+  "Let the breadth be $b$ cm, so the length is $2b$ cm.",
+  "Area = length $\\times$ breadth, so $2b \\times b = 128$, which is $2b^2 = 128$.",
+  "Bring every term to one side and divide both sides by $2$: $b^2 - 64 = 0$.",
+  "Factorise as a difference of squares: $(b - 8)(b + 8) = 0$.",
+  "A product is zero only when a factor is zero, so $b = 8$ or $b = -8$.",
+  "Check each solution against the story. The breadth is a length, and a length cannot be negative, so $b = -8$ is ruled out. $b = 8$ gives a length of $16$ cm and an area of $8 \\times 16 = 128\\ \\text{cm}^2$, which fits.",
+  "Mark only $8$ on the number line."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "extra-values",
+   "misconception_id": "mc:g10m4s5-1-3:keeps-solution-the-problem-rules-out"
+  }
+ ],
+ "notes": "The contrast partner of keep-every-solution-that-fits: here the negative root is ruled out by the context (a breadth is a length), so a student who has absorbed \"keep both solutions\" from the first template is refuted by extra-values on -8. A student who has the opposite reflex (always drop the negative) gets this one right, which is why the pair must be served together. Only extra-values is mapped. sign-flipped (marking only -8) is also the misconception's \"or the wrong one\" reading, but it needs a student to choose the negative root alone and is rare, so it is left unmapped rather than listing the same misconception twice. missed-values (8 not marked) comes from a bad solve and diagnoses nothing specific. The widget asks for the breadth only so the target stays inside the instrument's range (the length 16 would not fit in a 24-wide range centred on 0 with room for the negative root). Limits: range [-10,10] is 20 wide and within +-20; the single target 8 is a whole number inside it, and -8 is inside it so the error can be made."
+}

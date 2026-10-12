@@ -1,0 +1,935 @@
+{
+ "mode": "grade",
+ "book": "g10-math",
+ "prompts_version": "s6-v6",
+ "by_ref": {
+  "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/s6-grade-ch05",
+  "stage": "S6 grade",
+  "shards_sha256": "4a31879846c4f62fc9d19468c002342c112fb9a3727f1d98df803c3cffb22903",
+  "files": 64
+ },
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "ce14b9a275551596540559352d6e1137fc366251ecc65d4b7d34aa4599cbc0b6",
+  "args_sha256": "a4d967bdb237fa1cefeb8ebb13fe2e6ffcadfdf16546160469bd9bcde7c23ef7",
+  "generated_sha256": "feb1bcd8767146fc230b3fbb59ac09d7981b135b0b050872d366a1cbe9db178b",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "family_id": "tpl:g10m5s3-1-1:lengthclue",
+   "spec_sha": "943d5fa5bcda4f87ff11fc2c3c5be1853175121d7431c84edc03a082e9be92df",
+   "answers": [
+    {
+     "instance_id": "q:g10m5s3-1-1:g002-length",
+     "stem_sha": "86294233857cfd0d",
+     "answer": {
+      "value": "10"
+     },
+     "working": "10^2+24^2=100+576=676=26^2, so 26 is the hypotenuse. The angle between the 24 and 26 sides sits at the vertex they share. The side opposite is the one not touching that vertex, which is the 10 cm side."
+    },
+    {
+     "instance_id": "q:g10m5s3-1-1:g005-length",
+     "stem_sha": "e8c7c27f86b3cb1d",
+     "answer": {
+      "value": "7"
+     },
+     "working": "7^2+24^2=49+576=625=25^2, so 25 is the hypotenuse. The angle between the 24 and 25 sides sits at their shared vertex. The side opposite is the remaining side, 7 cm."
+    },
+    {
+     "instance_id": "q:g10m5s3-1-1:g009-length",
+     "stem_sha": "bae0cce7ceeeb8e4",
+     "answer": {
+      "value": "15"
+     },
+     "working": "8^2+15^2=64+225=289=17^2, so 17 is the hypotenuse. The angle between the 8 and 17 sides sits at their shared vertex. The side opposite is the remaining side, 15 cm."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "Numeric family with no options, so no distractors to judge. I checked all three instances.\n\nTriangles are valid Pythagorean triples:\n- g002: 10, 24, 26. 100+576=676=26².\n- g005: 7, 24, 25. 49+576=625=25².\n- g009: 8, 15, 17. 64+225=289=17².\n\nKeys:\n- g002: θ is formed by the 24 cm side and the 26 cm hypotenuse, so the opposite side is 10. Key \"10\" is correct.\n- g005: θ is formed by 24 and 25, so the opposite side is 7. Key \"7\" is correct.\n- g009: θ is formed by 8 and 17, so the opposite side is 15. Key \"15\" is correct.\n- Each stem asks for a length in cm, and each key is a bare number, which matches.\n- No answer_check or LaTeX key is shown, so there is nothing to compare.\n\nSolutions:\n- The method is the same in all three: identify the hypotenuse as the longest side, then the adjacent side as the leg that forms θ, then the opposite side as the remaining side.\n- Each step is correct and ends on the stated key.\n- Step 1 names the legs around the right angle correctly in every instance.\n\nContext: the stems are unambiguous. The side order in the stem is shuffled, which avoids a positional cue. The numbers are realistic and no word-problem context is needed.\n\nMinor, not a defect: the question can be answered by elimination without Pythagoras or any trigonometry. The tier label \"advanced\" may be generous for what is a definitions-recognition item."
+   }
+  },
+  {
+   "family_id": "tpl:g10m5s3-1-1:sidenames",
+   "spec_sha": "9121e6f07829c5c7bc76564679536be5c516cda8a8ff6d256e5253c1342db720",
+   "answers": [
+    {
+     "instance_id": "q:g10m5s3-1-1:g003-sidena",
+     "stem_sha": "91d503782e5a119f",
+     "answer": {
+      "choice": "A",
+      "choice_text": "hypotenuse $KM$, opposite $LM$, adjacent $KL$"
+     },
+     "working": "Right angle at L, so the hypotenuse is the side opposite L, which is KM. The angle theta is at K. The side opposite K is LM. The side adjacent to K, other than the hypotenuse, is KL. This matches option A."
+    },
+    {
+     "instance_id": "q:g10m5s3-1-1:g004-sidena",
+     "stem_sha": "26522f4959cce76a",
+     "answer": {
+      "choice": "B",
+      "choice_text": "hypotenuse $YZ$, opposite $XY$, adjacent $XZ$"
+     },
+     "working": "Right angle at X, so the hypotenuse is the side opposite X, which is YZ. The angle theta is at Z. The side opposite Z is XY. The side adjacent to Z, other than the hypotenuse, is XZ. This matches option B."
+    },
+    {
+     "instance_id": "q:g10m5s3-1-1:g005-sidena",
+     "stem_sha": "eec7ef387c5111b0",
+     "answer": {
+      "choice": "A",
+      "choice_text": "hypotenuse $DF$, opposite $DE$, adjacent $EF$"
+     },
+     "working": "Right angle at E, so the hypotenuse is the side opposite E, which is DF. The angle theta is at F. The side opposite F is DE. The side adjacent to F, other than the hypotenuse, is EF. This matches option A."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I re-derived all three instances independently and every key, distractor and worked solution checks out.\n\nKeys:\n- g003: right angle at L, so the hypotenuse is KM. The side opposite the angle at K is LM and the adjacent side is KL. Key A is correct.\n- g004: right angle at X, so the hypotenuse is YZ. The side opposite the angle at Z is XY and the adjacent side is XZ. Key B is correct.\n- g005: right angle at E, so the hypotenuse is DF. The side opposite the angle at F is DE and the adjacent side is EF. Key A is correct.\n\nDistractors:\n- opposite-adjacent-swapped keeps the true hypotenuse and swaps the two legs. This is g003 C, g004 C and g005 D, and each is exactly that.\n- hypotenuse-and-opposite-mixed swaps the true hypotenuse with the true opposite side and keeps the adjacent side. This is g003 D, g004 A and g005 B, and each is exactly that.\n- hypotenuse-not-opposite-right-angle names the leg adjacent to the angle as the hypotenuse, keeps the true opposite side, and pushes the true hypotenuse into the adjacent slot. This is g003 B, g004 D and g005 C. The pattern is the same in all three and is a plausible way to hold that error.\n- Within each family the four options are four distinct orderings of the same three sides, and none is also correct.\n\nSolutions: the four steps are correct in each instance, and the names in the prose match the keys. Step 3's reasoning, that the adjacent side forms the angle together with the hypotenuse, is correct in all three.\n\nContext: this is a pure labelling question with no word problem. The stem fully specifies the triangle, so no diagram is needed, and the non-standard labels (right angle at L, X or E) are deliberate and unambiguous.\n\nKey form: the stem asks for all three side names, and each key gives them in that order.",
+    "distractors": [
+     {
+      "instance_id": "q:g10m5s3-1-1:g003-sidena",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Names the leg KL (adjacent to the angle at K) as the hypotenuse, keeps opposite LM, and leaves the true hypotenuse KM as adjacent. That is the error 'hypotenuse not opposite the right angle'. It is definitely wrong."
+     },
+     {
+      "instance_id": "q:g10m5s3-1-1:g003-sidena",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Hypotenuse KM is right, but opposite and adjacent are swapped (KL and LM). That is exactly the swap error."
+     },
+     {
+      "instance_id": "q:g10m5s3-1-1:g003-sidena",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "The true hypotenuse KM and the true opposite side LM are swapped, and adjacent KL is unchanged. That is exactly the hypotenuse/opposite mix-up."
+     },
+     {
+      "instance_id": "q:g10m5s3-1-1:g004-sidena",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "The true hypotenuse YZ and the true opposite side XY are swapped, and adjacent XZ is unchanged. That is exactly the hypotenuse/opposite mix-up."
+     },
+     {
+      "instance_id": "q:g10m5s3-1-1:g004-sidena",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Hypotenuse YZ is right, but opposite and adjacent are swapped (XZ and XY). That is exactly the swap error."
+     },
+     {
+      "instance_id": "q:g10m5s3-1-1:g004-sidena",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Names the leg XZ (adjacent to the angle at Z) as the hypotenuse, keeps opposite XY, and leaves the true hypotenuse YZ as adjacent. That is the error 'hypotenuse not opposite the right angle'. It is definitely wrong."
+     },
+     {
+      "instance_id": "q:g10m5s3-1-1:g005-sidena",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "The true hypotenuse DF and the true opposite side DE are swapped, and adjacent EF is unchanged. That is exactly the hypotenuse/opposite mix-up."
+     },
+     {
+      "instance_id": "q:g10m5s3-1-1:g005-sidena",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Names the leg EF (adjacent to the angle at F) as the hypotenuse, keeps opposite DE, and leaves the true hypotenuse DF as adjacent. That is the error 'hypotenuse not opposite the right angle'. It is definitely wrong."
+     },
+     {
+      "instance_id": "q:g10m5s3-1-1:g005-sidena",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Hypotenuse DF is right, but opposite and adjacent are swapped (EF and DE). That is exactly the swap error."
+     }
+    ]
+   }
+  },
+  {
+   "family_id": "tpl:g10m5s3-1-1:switchangle",
+   "spec_sha": "788d2746220a27dbd99e398a14442fa0a568a66b7ecf84719a005c3231478d2f",
+   "answers": [
+    {
+     "instance_id": "q:g10m5s3-1-1:g006-switch",
+     "stem_sha": "db3f89c02b996994",
+     "answer": {
+      "choice": "B",
+      "choice_text": "hypotenuse $DE$, opposite $DF$, adjacent $EF$"
+     },
+     "working": "Right angle at F, so the hypotenuse is the side opposite F, which is DE (unchanged). For the angle at E, the opposite side is the one not touching E, which is DF. The adjacent leg is the other leg touching E, which is EF."
+    },
+    {
+     "instance_id": "q:g10m5s3-1-1:g007-switch",
+     "stem_sha": "bd3804ad454d5e5c",
+     "answer": {
+      "choice": "D",
+      "choice_text": "hypotenuse $GJ$, opposite $GH$, adjacent $HJ$"
+     },
+     "working": "Right angle at H, so the hypotenuse is GJ (unchanged). For the angle at J, the opposite side is the one not touching J, which is GH. The adjacent leg is the other leg touching J, which is HJ."
+    },
+    {
+     "instance_id": "q:g10m5s3-1-1:g010-switch",
+     "stem_sha": "29b071369916abb2",
+     "answer": {
+      "choice": "B",
+      "choice_text": "hypotenuse $QR$, opposite $PQ$, adjacent $PR$"
+     },
+     "working": "Right angle at P, so the hypotenuse is QR (unchanged). For the angle at R, the opposite side is the one not touching R, which is PQ. The adjacent leg is the other leg touching R, which is PR."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [
+     {
+      "instance_id": "q:g10m5s3-1-1:g006-switch",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "hyp DF, opp DE, adj EF: the hypotenuse and the opposite side are swapped (the right adjacent EF is kept). That is exactly the hypotenuse-and-opposite-mixed error. Definitely wrong."
+     },
+     {
+      "instance_id": "q:g10m5s3-1-1:g006-switch",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "hyp EF, opp DF, adj DE: the opposite side is right, but the hypotenuse is named as EF (a leg that touches the right angle F) and the true hypotenuse DE is called adjacent. The hypotenuse is not the side opposite the right angle, so it fits hypotenuse-not-opposite-right-angle. The label is broad, because option A's hypotenuse is also not opposite the right angle, but this option is a clean instance and is definitely wrong."
+     },
+     {
+      "instance_id": "q:g10m5s3-1-1:g006-switch",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "hyp DE, opp EF, adj DF: the original names with respect to D carried over unchanged. That is exactly opposite-adjacent-fixed-by-position. Wrong for the angle at E."
+     },
+     {
+      "instance_id": "q:g10m5s3-1-1:g007-switch",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "hyp GH, opp GJ, adj HJ: hypotenuse and opposite swapped, adjacent kept. Matches hypotenuse-and-opposite-mixed. Definitely wrong."
+     },
+     {
+      "instance_id": "q:g10m5s3-1-1:g007-switch",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "hyp GJ, opp HJ, adj GH: the original names with respect to G, unchanged. Matches opposite-adjacent-fixed-by-position. Wrong for the angle at J."
+     },
+     {
+      "instance_id": "q:g10m5s3-1-1:g007-switch",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "hyp HJ, opp GH, adj GJ: the opposite side is right, but the hypotenuse is given as the leg HJ (it touches the right angle H) and the true hypotenuse GJ is called adjacent. Fits hypotenuse-not-opposite-right-angle, with the same mild breadth of label as in g006. Definitely wrong."
+     },
+     {
+      "instance_id": "q:g10m5s3-1-1:g010-switch",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "hyp PR, opp PQ, adj QR: the opposite side is right, the hypotenuse is given as the leg PR (it touches the right angle P) and the true hypotenuse QR is called adjacent. Fits hypotenuse-not-opposite-right-angle. Definitely wrong."
+     },
+     {
+      "instance_id": "q:g10m5s3-1-1:g010-switch",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "hyp PQ, opp QR, adj PR: hypotenuse and opposite swapped, adjacent kept. Matches hypotenuse-and-opposite-mixed. Definitely wrong."
+     },
+     {
+      "instance_id": "q:g10m5s3-1-1:g010-switch",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "hyp QR, opp PR, adj PQ: the original names with respect to Q, unchanged. Matches opposite-adjacent-fixed-by-position. Wrong for the angle at R."
+     }
+    ],
+    "notes": "I checked all three instances (g006 DEF, g007 GHJ, g010 PQR) by hand. In each stem the given naming for the first acute angle is correct, with the right angle at the middle-lettered or first vertex as stated. The key is the correct re-naming for the other acute angle: the hypotenuse stays the same and the two legs swap roles. The keys are B, D and B, and each matches the correct choice text. Each worked solution is correct and ordered: hypotenuse opposite the right angle, then opposite as the side not touching the new angle, then adjacent as the remaining side, then the swap. Each wrong option is definitely wrong, none is also correct, and the three misconception patterns are applied consistently across the instances. Only one minor flag: hypotenuse-not-opposite-right-angle is realised as hypotenuse and adjacent swapped (the hypotenuse is named as the leg touching the new angle), and option A in each instance also has a hypotenuse that is not opposite the right angle. The misconception catalogue is not visible to me, so I judged by name. Each option is still a genuine instance of its tagged error, so I did not fail it. The context has no word problem and needs no figure, because the stem fully specifies the triangle in text. It uses the book's theta notation and contains no ambiguity."
+   }
+  },
+  {
+   "family_id": "tpl:g10m5s5-1-1:fraction",
+   "spec_sha": "a892650d6e21e2298251cc7ee6afedcd8b494bc423d877111c4f11ad53a04474",
+   "answers": [
+    {
+     "instance_id": "q:g10m5s5-1-1:g001-fracti",
+     "stem_sha": "83ae58d0a7824859",
+     "answer": {
+      "value": "-4.67"
+     },
+     "working": "Degrees mode, no intermediate rounding. Numerator 4sin18 + 7cos39 = 1.23607 + 5.44012 = 6.67619. tan305 = -1.42815. Ratio = -4.67465, which rounds to -4.67. Checked by computing in Python with radians conversion."
+    },
+    {
+     "instance_id": "q:g10m5s5-1-1:g003-fracti",
+     "stem_sha": "28dc85a6f54860dc",
+     "answer": {
+      "value": "2.88"
+     },
+     "working": "Degrees mode, no intermediate rounding. Numerator 8sin262 + 4cos18 = -7.92197 + 3.80423 = -4.11774. tan305 = -1.42815. Ratio = 2.88340, which rounds to 2.88. Checked by computing in Python."
+    },
+    {
+     "instance_id": "q:g10m5s5-1-1:g006-fracti",
+     "stem_sha": "dadc86a584366d7c",
+     "answer": {
+      "value": "1.12"
+     },
+     "working": "Degrees mode, no intermediate rounding. Numerator 5sin82 + 7cos114 = 4.95134 - 2.84730 = 2.10404. tan62 = 1.88073. Ratio = 1.11881, which rounds to 1.12. Checked by computing in Python."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family has three numeric instances and no options, so there are no distractors to judge. I recomputed all three in double precision. g001: numerator 6.676090, tan 305° = -1.428148, quotient -4.67465, key -4.67. g003: numerator -4.117918, quotient 2.88340, key 2.88. g006: numerator 2.104184, tan 62° = 1.880726, quotient 1.11881, key 1.12. Every 6-dp intermediate in the worked steps matches. No final value is near a rounding boundary, so intermediate rounding cannot change the 2-dp key. Each key is the asked form (2 d.p.), and the stems say to carry full calculator precision and round only at the end, which the solutions do. The method (degrees mode, evaluate each ratio, combine the numerator, divide, round last) is correct. There is no word problem. The only thing I could not check is whether the source LO covers angles beyond 90° (262°, 305°, 114°). I could not open the book, but these are plain calculator evaluations and the tier is \"advanced\", so I treated it as acceptable."
+   }
+  },
+  {
+   "family_id": "tpl:g10m5s5-1-1:rootpower",
+   "spec_sha": "a2064ca70bf8ae11420bad7327a6202fabf4de0f66d90f47d993684a32ef5e4a",
+   "answers": [
+    {
+     "instance_id": "q:g10m5s5-1-1:g002-rootpo",
+     "stem_sha": "268a06204dd52d4d",
+     "answer": {
+      "value": "1.92"
+     },
+     "working": "Degrees mode, no intermediate rounding: cos77° = 0.22495, sqrt = 0.47referred 0.4743; 5 x 0.4743 = 2.3716; sin347° = -0.22495, squared = 0.05060, x9 = 0.4554; 2.3716 - 0.4554 = 1.91602 (computed 1.9160234...), rounds to 1.92."
+    },
+    {
+     "instance_id": "q:g10m5s5-1-1:g003-rootpo",
+     "stem_sha": "445b55c42d3d67b1",
+     "answer": {
+      "value": "-0.56"
+     },
+     "working": "cos77° = 0.22495, sqrt = 0.47427; 3 x 0.47427 = 1.42281; sin28° = 0.46947, squared = 0.22040, x9 = 1.98357; 1.42281 - 1.98357 = -0.56076 (computed -0.5607617...), rounds to -0.56."
+    },
+    {
+     "instance_id": "q:g10m5s5-1-1:g004-rootpo",
+     "stem_sha": "3e06e56c5f3c5dfd",
+     "answer": {
+      "value": "3.66"
+     },
+     "working": "cos73° = 0.29237, sqrt = 0.54071; 7 x 0.54071 = 3.78499; sin12° = 0.20791, squared = 0.04323, x3 = 0.12968; 3.78499 - 0.12968 = 3.65532 (computed 3.6553166...), rounds to 3.66."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family is numeric with no options, so there are no distractors to judge. I recomputed all three instances in double precision (degrees mode). Every intermediate value in the worked solutions matches to the 6 decimals shown. g002: cos77 = 0.224951, its root = 0.474290, sin347 = -0.224951, squared = 0.050603, final 1.91602, so 1.92. g003: sin28 = 0.469472, squared = 0.220404, final -0.56076, so -0.56. g004: cos73 = 0.292372, its root = 0.540714, sin12 = 0.207912, squared = 0.043227, final 3.65532, so 3.66. Each key is correct to 2 decimal places, as the stem asks. No answer sits near a rounding boundary, so rounding intermediates to 6 decimals could not change the result. Each solution follows the same sequence: degrees mode, the root's argument is positive, evaluate each part, combine, round at the end. For g002, sin347 is negative but is squared, so the sign handling is right. Minor, non-blocking observations. First, the solutions show intermediates rounded to 6 decimals while the stem says not to round intermediates; step 1 clarifies this by saying to keep all calculator digits. Second, g002 uses sin 347 (a 4th-quadrant angle), which is only a calculator key-press and is fine. I was only given the stems, keys and solutions, so I could not check answer_check against the keys."
+   }
+  },
+  {
+   "family_id": "tpl:g10m5s5-1-3:which-true",
+   "spec_sha": "d922219aaf57b7979db8033e0f06b501ddc80f6688e389e4a529d8e2e5b65b6f",
+   "answers": [
+    {
+     "instance_id": "q:g10m5s5-1-3:g004-which-",
+     "stem_sha": "172bf32b7042d5d3",
+     "answer": {
+      "choice": "C",
+      "choice_text": "$\\sin^2 x + \\cos^2(90^\\circ - y) = 1$"
+     },
+     "working": "x=75, y=15, so x+y=90. A: cos(90)=0 but cos75+cos15 is about 1.22, false. B: sin(90-75)=sin15 (0.259) vs sin75 (0.966), false. C: cos(90-y)=sin y, so LHS = sin²75+sin²15 = 0.933+0.067 = 1, true. D: sin²75+cos²15 = 0.933+0.933 = 1.87, false."
+    },
+    {
+     "instance_id": "q:g10m5s5-1-3:g005-which-",
+     "stem_sha": "91c095e66b286f49",
+     "answer": {
+      "choice": "C",
+      "choice_text": "$\\sin^2 x + \\cos^2(90^\\circ - y) = 1$"
+     },
+     "working": "x=71, y=19, so x+y=90. A: sin(90-71)=sin19 (0.326) vs sin71 (0.946), false. B: cos(90)=0 vs cos71+cos19 about 1.27, false. C: cos(90-19)=cos71, so LHS = sin²71+cos²71 = 1, true. D: sin²71+cos²19 = 0.895+0.895 = 1.79, false."
+    },
+    {
+     "instance_id": "q:g10m5s5-1-3:g006-which-",
+     "stem_sha": "d1c415eb3bc8ab18",
+     "answer": {
+      "choice": "C",
+      "choice_text": "$\\sin^2 x + \\cos^2(90^\\circ - y) = 1$"
+     },
+     "working": "x=38, y=52, so x+y=90. A: sin²38+cos²52 = 0.379+0.379 = 0.76, not 1, false. B: cos(90)=0 vs cos38+cos52 about 1.40, false. C: cos(90-52)=cos38, so LHS = sin²38+cos²38 = 1, true. D: sin(90-38)=sin52 (0.788) vs sin38 (0.616), false."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [
+     {
+      "instance_id": "q:g10m5s5-1-3:g004-which-",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "cos(x+y)=cos x+cos y is exactly distributing cos over a sum. With x+y=90, LHS=0 and RHS≈1.22, so it is definitely false."
+     },
+     {
+      "instance_id": "q:g10m5s5-1-3:g004-which-",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "sin(90-x)=sin x is the student who thinks the complement keeps the function (true value is cos x). sin 15 ≈ 0.2588 vs sin 75 ≈ 0.9659, so false."
+     },
+     {
+      "instance_id": "q:g10m5s5-1-3:g004-which-",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Writing cos^2 y in place of cos^2(90-y) is dropping the complement. It equals 2 sin^2 75 ≈ 1.87, not 1, so false."
+     },
+     {
+      "instance_id": "q:g10m5s5-1-3:g005-which-",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "sin(90-x)=sin x with x=71: sin 19 ≈ 0.3256 vs sin 71 ≈ 0.9455. This is the complement-keeps-the-function error and the statement is false."
+     },
+     {
+      "instance_id": "q:g10m5s5-1-3:g005-which-",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "cos(x+y)=cos x+cos y is the split-over-the-angle error. LHS=cos 90=0 and RHS≈1.27, so false."
+     },
+     {
+      "instance_id": "q:g10m5s5-1-3:g005-which-",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "cos^2 y without the complement is drops-the-complement. sin^2 71 + cos^2 19 ≈ 1.79, not 1, so false."
+     },
+     {
+      "instance_id": "q:g10m5s5-1-3:g006-which-",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "sin^2 x + cos^2 y with the complement dropped gives ≈0.76, not 1, so false. x=38, y=52 is not 45/45, so there is no accidental equality."
+     },
+     {
+      "instance_id": "q:g10m5s5-1-3:g006-which-",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "cos(x+y)=cos x+cos y. 0 vs ≈1.40, so false. This is the split-over-the-angle error."
+     },
+     {
+      "instance_id": "q:g10m5s5-1-3:g006-which-",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "sin(90-x)=sin x with x=38 gives sin 52 ≈ 0.7880 vs sin 38 ≈ 0.6157, so false. This is the complement-keeps-the-function error."
+     }
+    ],
+    "notes": "All three instances are sound. In each, x+y=90, so the key C reduces to sin^2 x + cos^2 x = 1, which is true for any x. Exactly one statement is true per instance. I recomputed every number in the solutions and all match to the stated rounding: 75/15 (0.9330, 0.0670, 0.2588, 0.9659, 1.22, 1.87), 71/19 (0.8940, 0.1060, 0.3256, 0.9455, 1.27, 1.79) and 38/52 (0.3790, 0.6210, 0.7880, 0.6157, 1.40, 0.76). None of the instances uses x=45, so D and B cannot be true by accident. Each tagged distractor is what a student making the named error would write: A splits cos over the sum, B keeps sin instead of switching to cos, D drops the (90-) from the cos^2 term. The key text is the same expression as the true statement and is not tagged. The solutions work the statements in a different order from the options, but they name each statement by its content, so nothing is mislabelled. The stem is a pure calculator check with no word problem, and the angles are realistic. The wording matches the book's style."
+   }
+  },
+  {
+   "family_id": "tpl:g10m5s6-1-1:crossratio",
+   "spec_sha": "760666a1cb909514fe76476c2f49f1b756b9ed6b376c1caf62054b0a5d8d8cc0",
+   "answers": [
+    {
+     "instance_id": "q:g10m5s6-1-1:g003-crossr",
+     "stem_sha": "a64f71757492cee0",
+     "answer": {
+      "choice": "D",
+      "choice_text": "\\frac{\\sqrt{3}}{\\mathrm{2}}"
+     },
+     "working": "tan θ = 1/√3 and θ is acute, so θ = 30°. Equivalently, take opposite = 1 and adjacent = √3, so hypotenuse = √(1+3) = 2. Then cos θ = adjacent/hypotenuse = √3/2, which is option D."
+    },
+    {
+     "instance_id": "q:g10m5s6-1-1:g004-crossr",
+     "stem_sha": "03dd544d1fc6af07",
+     "answer": {
+      "choice": "A",
+      "choice_text": "\\frac{\\sqrt{3}}{\\mathrm{2}}"
+     },
+     "working": "tan θ = √3/1 and θ is acute, so θ = 60°. Equivalently, take opposite = √3 and adjacent = 1, so hypotenuse = √(3+1) = 2. Then sin θ = opposite/hypotenuse = √3/2, which is option A."
+    },
+    {
+     "instance_id": "q:g10m5s6-1-1:g006-crossr",
+     "stem_sha": "3db925305468b661",
+     "answer": {
+      "choice": "D",
+      "choice_text": "\\frac{\\sqrt{3}}{\\mathrm{2}}"
+     },
+     "working": "cos θ = 1/2 and θ is acute, so θ = 60°. Equivalently, take adjacent = 1 and hypotenuse = 2, so opposite = √(4-1) = √3. Then sin θ = opposite/hypotenuse = √3/2, which is option D."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [
+     {
+      "instance_id": "q:g10m5s6-1-1:g003-crossr",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "1/sqrt3 is the given tan30 value, so this is the student who answers with the wrong ratio (tan) at the same 30 degree angle. Not cos30 = sqrt3/2, so wrong."
+     },
+     {
+      "instance_id": "q:g10m5s6-1-1:g003-crossr",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "1/sqrt2 is cos45, the value read from the 1,1,sqrt2 triangle instead of the 1,2,sqrt3 triangle. Not equal to sqrt3/2, so wrong."
+     },
+     {
+      "instance_id": "q:g10m5s6-1-1:g003-crossr",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "1/2 is sin30, the wrong ratio (sin for cos) at the same angle. Not equal to sqrt3/2, so wrong."
+     },
+     {
+      "instance_id": "q:g10m5s6-1-1:g003-crossr",
+      "option": "D",
+      "verdict": "UNTAGGED_OK",
+      "why": "Key: tan theta = 1/sqrt3 gives theta = 30 degrees, cos30 = sqrt3/2. Correct."
+     },
+     {
+      "instance_id": "q:g10m5s6-1-1:g004-crossr",
+      "option": "A",
+      "verdict": "UNTAGGED_OK",
+      "why": "Key: tan theta = sqrt3 gives theta = 60 degrees, sin60 = sqrt3/2. Correct."
+     },
+     {
+      "instance_id": "q:g10m5s6-1-1:g004-crossr",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "sqrt3/1 is the given tan60 value, i.e. the wrong ratio (tan) at the same 60 degree angle. Not sin60, so wrong."
+     },
+     {
+      "instance_id": "q:g10m5s6-1-1:g004-crossr",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "1/2 is cos60, the wrong ratio (cos for sin) at the same angle. Not equal to sqrt3/2, so wrong."
+     },
+     {
+      "instance_id": "q:g10m5s6-1-1:g004-crossr",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "1/sqrt2 is sin45, the value from the 1,1,sqrt2 triangle rather than the 1,2,sqrt3 triangle. Not equal to sqrt3/2, so wrong."
+     },
+     {
+      "instance_id": "q:g10m5s6-1-1:g006-crossr",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "1/sqrt2 is sin45, the value from the 1,1,sqrt2 triangle instead of the 1,2,sqrt3 triangle. Not equal to sqrt3/2, so wrong."
+     },
+     {
+      "instance_id": "q:g10m5s6-1-1:g006-crossr",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "1/2 is the given cos60 value, so this is the wrong ratio (cos for sin) at the same 60 degree angle. Not sin60, so wrong."
+     },
+     {
+      "instance_id": "q:g10m5s6-1-1:g006-crossr",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "sqrt3/1 is tan60, the wrong ratio (tan for sin) at the same angle. Not equal to sqrt3/2, so wrong."
+     },
+     {
+      "instance_id": "q:g10m5s6-1-1:g006-crossr",
+      "option": "D",
+      "verdict": "UNTAGGED_OK",
+      "why": "Key: cos theta = 1/2 gives theta = 60 degrees, sin60 = sqrt3/2. Correct."
+     }
+    ],
+    "notes": "All three instances (g003, g004, g006) checked against the standard special-angle values (30/45/60: sin 1/2, 1/sqrt2, sqrt3/2; cos sqrt3/2, 1/sqrt2, 1/2; tan 1/sqrt3, 1, sqrt3). Each key is correct and matches correct_answer. In each question exactly one option is correct: the four values per question are distinct, and no wrong option equals the asked ratio. Every tagged distractor matches its misconception id. wrong-ratio-same-angle options are the given ratio's value or the other ratio at the same angle. wrong-triangle-for-angle options are always 1/sqrt2, the 45 degree triangle value, which is unambiguous because sin45 = cos45. Context is unambiguous: with an acute theta, tan or cos fixes theta uniquely, so no special-angle assumption is needed. Keys are in the asked form (a single exact value), and the book's tan30 = 1/sqrt3 and tan60 = sqrt3/1 forms are kept. Worked solutions are correct step by step and end by saying the given value belongs to a different ratio. Minor non-blocking points: step 3 states cos30, sin60 and so on without re-deriving them from the triangle sides, and the \\mathrm{1} and sqrt3/1 forms are cosmetically odd but mathematically fine."
+   }
+  },
+  {
+   "family_id": "tpl:g10m5s6-1-2:fracsides",
+   "spec_sha": "4da1bfbedde36edf64ff2fdc97f0bd93b84c12a3369475328343e8742d2a77a2",
+   "answers": [
+    {
+     "instance_id": "q:g10m5s6-1-2:g003-fracsi",
+     "stem_sha": "788a4e55d51303f0",
+     "answer": {
+      "plain": "sqrt(33)/4"
+     },
+     "working": "Right angle at B, so at A the opposite side is BC and the adjacent side is AB. tan(theta) = BC/AB = 9 / (36/sqrt(33)) = 9*sqrt(33)/36 = sqrt(33)/4. Check: AB^2 + BC^2 = 1296/33 + 81 = 3969/33 = AC^2."
+    },
+    {
+     "instance_id": "q:g10m5s6-1-2:g005-fracsi",
+     "stem_sha": "5a53ea651934ee63",
+     "answer": {
+      "plain": "sqrt(21)/2"
+     },
+     "working": "tan(theta) = BC/AB = 2 / (4/sqrt(21)) = 2*sqrt(21)/4 = sqrt(21)/2. Check: AB^2 + BC^2 = 16/21 + 4 = 100/21 = AC^2."
+    },
+    {
+     "instance_id": "q:g10m5s6-1-2:g007-fracsi",
+     "stem_sha": "7254bf97ccfb9b2e",
+     "answer": {
+      "plain": "sqrt(5)/2"
+     },
+     "working": "tan(theta) = BC/AB = 6 / (12/sqrt(5)) = 6*sqrt(5)/12 = sqrt(5)/2. Check: AB^2 + BC^2 = 144/5 + 36 = 324/5 = AC^2."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family is a typed expression with no options, so there are no distractors to judge. I checked all three instances by hand.\n\nPythagoras holds for every triangle, so each is a genuine right-angled triangle with the right angle at B and AC as the longest side:\n- g003: (36/√33)² + 9² = 1296/33 + 2673/33 = 3969/33 = (63/√33)².\n- g005: (4/√21)² + 2² = 16/21 + 84/21 = 100/21 = (10/√21)².\n- g007: (12/√5)² + 6² = 144/5 + 180/5 = 324/5 = (18/√5)².\n\nKeys:\n- tan θ at A is opposite/adjacent = BC/AB, and each key is the simplified surd: g003 √33/4, g005 √21/2, g007 √5/2.\n- Each LaTeX key is the same expression as its answer_check: sqrt(33)/4, sqrt(21)/2 and sqrt(5)/2.\n- Each key is fully cancelled with no radical left in a denominator, which is what \"in surd form\" asks for.\n\nSolutions: each follows the same four steps and is correct throughout. Step 1 identifies opposite and adjacent and says the hypotenuse is not needed. Step 2 writes tan as BC divided by AB. Step 3 multiplies by the reciprocal, and step 4 cancels the common factor (9, 2 and 6 respectively).\n\nContext: the stem is unambiguous, because the right angle is at B and the angle is at A. The side lengths are plausible, about 6.3, 9 and 11 in g003. Giving AC is a harmless extra, and the solution says it is unused. The only wording quibble is \"Solve for tan θ\", where \"Find\" would read more naturally; I judged it not worth rejecting."
+   }
+  },
+  {
+   "family_id": "tpl:g10m5s6-1-2:pythag",
+   "spec_sha": "a6c934621db3d89322e6886b3c970d516471fa626729b1da85e27bdcb17b9d48",
+   "answers": [
+    {
+     "instance_id": "q:g10m5s6-1-2:g006-pythag",
+     "stem_sha": "a5754a10cc930ffc",
+     "answer": {
+      "plain": "5*sqrt(13)/26"
+     },
+     "working": "Right angle at B, so AC is the hypotenuse and BC is opposite angle A. AC^2 = (6*sqrt(3))^2 + 10^2 = 108 + 100 = 208, so AC = 4*sqrt(13). sin(theta) = BC/AC = 10/(4*sqrt(13)) = 5/(2*sqrt(13)) = 5*sqrt(13)/26."
+    },
+    {
+     "instance_id": "q:g10m5s6-1-2:g007-pythag",
+     "stem_sha": "ea8f0b98dff6fed6",
+     "answer": {
+      "plain": "5*sqrt(2)/8"
+     },
+     "working": "AC is the hypotenuse and BC is opposite angle A. AC^2 = (2*sqrt(7))^2 + 10^2 = 28 + 100 = 128, so AC = 8*sqrt(2). sin(theta) = 10/(8*sqrt(2)) = 5/(4*sqrt(2)) = 5*sqrt(2)/8."
+    },
+    {
+     "instance_id": "q:g10m5s6-1-2:g008-pythag",
+     "stem_sha": "c7b492a9fab35cfe",
+     "answer": {
+      "plain": "sqrt(3)/2"
+     },
+     "working": "AC is the hypotenuse and BC is opposite angle A. AC^2 = (3*sqrt(3))^2 + 9^2 = 27 + 81 = 108, so AC = 6*sqrt(3). sin(theta) = 9/(6*sqrt(3)) = 3/(2*sqrt(3)) = sqrt(3)/2."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": false,
+    "context_ok": true,
+    "solution_ok": false,
+    "notes": "The family is typed-answer (expression) with no options, so distractors_ok is true by default and the distractors list is empty. I recomputed all three instances. The arithmetic is correct. BC is opposite the angle at A, so sin(theta) = BC/AC. g006 gives AC^2 = 108+100 = 208, AC = 4*sqrt(13), sin = 10/(4*sqrt(13)) = 5/(2*sqrt(13)). g007 gives AC^2 = 28+100 = 128, AC = 8*sqrt(2), sin = 5/(4*sqrt(2)). g008 gives AC^2 = 27+81 = 108, AC = 6*sqrt(3), sin = 9/(6*sqrt(3)). Each answer_check string is the same expression as its LaTeX key.\n\nPROBLEM (blocks key_form_ok and solution_ok), instance q:g10m5s6-1-2:g008-pythag. The key 3/(2*sqrt(3)) equals sqrt(3)/2, so it is not in simplest surd form. The worked solution stops after cancelling the whole-number HCF (9/(6*sqrt(3)) -> 3/(2*sqrt(3))) and never finishes. The surd in the denominator is cancelled against the 3 in the numerator (3 = sqrt(3)*sqrt(3)), or the denominator is rationalised. A student who answers sqrt(3)/2, the correct simplest form (theta = 60 degrees), is shown a key that looks different. The stem asks for 'surd form', and a non-simplified key teaches an incomplete simplification. Fix: either key g008 as \\frac{\\sqrt{3}}{2} with a step that shows the cancellation, or drop g008 from the family.\n\nSECONDARY CONCERN, g006 and g007. Their keys, 5/(2*sqrt(13)) and 5/(4*sqrt(2)), leave an irrational denominator. 'In surd form' does not say whether the denominator must be rationalised (5*sqrt(13)/26, 5*sqrt(2)/8). If the book's convention is to rationalise, these keys are not in the asked form. If not, the stem should say 'simplest form' or 'leave the denominator as a surd', and answer_check must accept the rationalised equivalent. I could not check the book's convention, so I count this against key_form_ok.\n\ncontext_ok: the numbers are realistic, the right angle at B and the angle at A are unambiguous, and the right-triangle context is standard. The only wording nit is 'Solve for sin(theta)', which should be 'Find'. It is not an ambiguity, so context_ok is true."
+   }
+  },
+  {
+   "family_id": "tpl:g10m5s6-1-2:readoff",
+   "spec_sha": "7ff131939e1178ee2fa0a672d99491c850fa4e34abd7e3f1c6b512742bda0a07",
+   "answers": [
+    {
+     "instance_id": "q:g10m5s6-1-2:g002-readof",
+     "stem_sha": "0672a1837e40e19a",
+     "answer": {
+      "plain": "5*sqrt(41)/41"
+     },
+     "working": "Right angle at B, so AC is the hypotenuse. For the angle at A the adjacent side is AB = 5. cos(theta) = AB/AC = 5/sqrt(41). Check: 25 + 16 = 41. Rationalise: 5*sqrt(41)/41."
+    },
+    {
+     "instance_id": "q:g10m5s6-1-2:g006-readof",
+     "stem_sha": "e11d9b44cf3ca161",
+     "answer": {
+      "plain": "sqrt(26)/26"
+     },
+     "working": "Right angle at B, so AC is the hypotenuse. For the angle at A the adjacent side is AB = 1. cos(theta) = AB/AC = 1/sqrt(26). Check: 1 + 25 = 26. Rationalise: sqrt(26)/26."
+    },
+    {
+     "instance_id": "q:g10m5s6-1-2:g007-readof",
+     "stem_sha": "10b1382d1d264f86",
+     "answer": {
+      "plain": "3*sqrt(13)/13"
+     },
+     "working": "Right angle at B, so AC is the hypotenuse. For the angle at A the adjacent side is AB = 3. cos(theta) = AB/AC = 3/sqrt(13). Check: 9 + 4 = 13. Rationalise: 3*sqrt(13)/13."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family is typed-answer (expression) and has no options, so there are no distractors to judge. I checked all three instances (g002, g006, g007). Each triangle satisfies Pythagoras: 25+16=41, 1+25=26 and 9+4=13, so the stated hypotenuse AC is correct. The right angle is at B, so AC is the hypotenuse. For the angle at A, AB is the adjacent side and BC is the opposite side. So cos(theta) = AB/AC, which gives 5/sqrt(41), 1/sqrt(26) and 3/sqrt(13). Each key matches its answer_check string and its marker key. Each three-step worked solution identifies the hypotenuse, picks the adjacent side correctly, applies cos = adjacent/hypotenuse and substitutes the lengths. Nothing in the solutions is wrong. The stem wording \"Solve for cos(theta)\" is slightly odd but not ambiguous, and the labels are enough without a diagram. One thing to confirm outside this file: the key is left unrationalised (5/sqrt(41)), which I read as what \"in surd form\" asks for. The typed-answer checker should accept the rationalised equivalent (5*sqrt(41)/41) as well. I couldn't see that checker from here."
+   }
+  },
+  {
+   "family_id": "tpl:g10m5s6-1-2:scaled",
+   "spec_sha": "60ad8150a9974b7f08216d74f3f2290a8f79021377500347ea09e223e161c665",
+   "answers": [
+    {
+     "instance_id": "q:g10m5s6-1-2:g004-scaled",
+     "stem_sha": "b0706d9a2967e9cd",
+     "answer": {
+      "plain": "2*sqrt(21)/21"
+     },
+     "working": "Right angle at B, so AC is the hypotenuse. Check: (4sqrt(21))^2 + 8^2 = 336 + 64 = 400 = 20^2. At A, opposite side is BC = 8 and adjacent side is AB = 4sqrt(21). tan(theta) = 8/(4sqrt(21)) = 2/sqrt(21) = 2sqrt(21)/21 after rationalising."
+    },
+    {
+     "instance_id": "q:g10m5s6-1-2:g007-scaled",
+     "stem_sha": "dec57a32415a4ce3",
+     "answer": {
+      "plain": "3*sqrt(7)/7"
+     },
+     "working": "Check: (5sqrt(7))^2 + 15^2 = 175 + 225 = 400 = 20^2. At A, opposite is BC = 15 and adjacent is AB = 5sqrt(7). tan(theta) = 15/(5sqrt(7)) = 3/sqrt(7) = 3sqrt(7)/7 after rationalising."
+    },
+    {
+     "instance_id": "q:g10m5s6-1-2:g009-scaled",
+     "stem_sha": "a15e1c4d1a9e971a",
+     "answer": {
+      "plain": "2*sqrt(21)/21"
+     },
+     "working": "Check: (8sqrt(21))^2 + 16^2 = 1344 + 256 = 1600 = 40^2. At A, opposite is BC = 16 and adjacent is AB = 8sqrt(21). tan(theta) = 16/(8sqrt(21)) = 2/sqrt(21) = 2sqrt(21)/21 after rationalising."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "Typed-expression family with no options, so distractors_ok is true by default.\n\nGeometry checked for all three instances; each is a valid right triangle at B.\n- g004: (4√21)² + 8² = 336 + 64 = 400 = 20².\n- g007: (5√7)² + 15² = 175 + 225 = 400 = 20².\n- g009: (8√21)² + 16² = 1344 + 256 = 1600 = 40².\n\nKeys and solutions are correct.\n- For θ at A, opposite is BC and adjacent is AB, so tan θ = BC/AB.\n- g004: 8/(4√21) = 2/√21.\n- g007: 15/(5√7) = 3/√7.\n- g009: 16/(8√21) = 2/√21.\n- Each step cancels the stated common factor correctly and notes that the hypotenuse AC is not needed.\n\nIn each instance the LaTeX key and answer_check are the same expression, e.g. \\frac{2}{\\sqrt{21}} and 2/sqrt(21).\n\nResidual risks, none enough to reject:\n1. The stem says only \"surd form\" and does not ask for the denominator to be rationalised. The key leaves √21 in the denominator. I could not open the book, so this rests on recall that Siyavula's Grade 10 trig tables give values like 1/√2 and 1/√3 unrationalised. If answer_check compares by equivalence, a student's 2√21/21 should also be accepted. If it compares by form, that student would be marked wrong. Worth confirming the checker is equivalence-based.\n2. g004 and g009 are the same triangle scaled by 2 and have the identical key, so the family has little variety. This is not an error.\n3. \"Solve for tan θ\" is slightly odd phrasing; \"Determine\" would be more natural. Cosmetic."
+   }
+  },
+  {
+   "family_id": "tpl:g10m5s8-1-1:origin-angle",
+   "spec_sha": "7be9ead957fe666358d343ce5b0e983ef48fbf63029e06c6e1c26bf38d3bdbd1",
+   "answers": [
+    {
+     "instance_id": "q:g10m5s8-1-1:g001-origin",
+     "stem_sha": "29ae1d233e475294",
+     "answer": {
+      "value": "51.34"
+     },
+     "working": "The line OP makes angle θ with the x-axis, where tan θ = rise/run = 5/4. θ = arctan(1.25) = 51.3402°, which rounds to 51.34°."
+    },
+    {
+     "instance_id": "q:g10m5s8-1-1:g009-origin",
+     "stem_sha": "fbaa0c8b3d8eddd5",
+     "answer": {
+      "value": "4.76"
+     },
+     "working": "tan θ = 1/12. θ = arctan(0.08333) = 4.7636°, which rounds to 4.76°."
+    },
+    {
+     "instance_id": "q:g10m5s8-1-1:g010-origin",
+     "stem_sha": "63ff2c0ced091317",
+     "answer": {
+      "value": "21.80"
+     },
+     "working": "tan θ = 2/5 = 0.4. θ = arctan(0.4) = 21.8014°, which rounds to 21.80°."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "Three numeric instances, no multiple-choice options, so there are no distractors to judge.\n\nKeys checked by hand with the arctangent series, matching the stated two-decimal answers:\n- g001, P(4,5): arctan(5/4) = 51.3402 degrees, so 51.34 is correct.\n- g009, P(12,1): arctan(1/12) = 0.083141 rad = 4.7636 degrees, so 4.76 is correct.\n- g010, P(5,2): arctan(2/5) = 21.8014 degrees, so 21.80 is correct. The trailing zero is kept, as \"two decimal places\" requires.\n\nKey form: the stem asks for the angle in degrees to two decimal places, and each key is a plain number in that form. All three points are in the first quadrant, so the acute angle with the x-axis is unambiguous.\n\nContext: there is no word problem. Coordinates are small and realistic, and the stem is unambiguous.\n\nSolutions: the six steps are the same in all three instances. Drop a perpendicular to R on the x-axis, name opposite and adjacent, write tan(theta) = opp/adj, and take the inverse tangent. In each case the opposite side is the y-coordinate and the adjacent side is the x-coordinate, which is correct. Every number substituted is correct.\n\nOne cosmetic defect, which does not affect correctness. In g009 step 2 the template produces \"PR = 1 units\", because the plural is fixed. Singular/plural handling would fix it. The solution wording also assumes the calculator is in degree mode, but the book's method does not need that spelled out."
+   }
+  },
+  {
+   "family_id": "tpl:g10m5s8-1-1:second-quadrant",
+   "spec_sha": "1c6d4a418bee9d036b8cbfaf44d5402f524aa8c57d60744f9586a3bd0be32be4",
+   "answers": [
+    {
+     "instance_id": "q:g10m5s8-1-1:g001-second",
+     "stem_sha": "d99fa5392e14ff34",
+     "answer": {
+      "value": "146.31"
+     },
+     "working": "P(-3,2) is in quadrant II, so theta = 180° - arctan(2/3) = 180° - 33.6901° = 146.3099°. Checked with atan2."
+    },
+    {
+     "instance_id": "q:g10m5s8-1-1:g003-second",
+     "stem_sha": "c9bdf711bd507d2a",
+     "answer": {
+      "value": "99.46"
+     },
+     "working": "P(-1,6) is in quadrant II, so theta = 180° - arctan(6/1) = 180° - 80.5377° = 99.4623°. Checked with atan2."
+    },
+    {
+     "instance_id": "q:g10m5s8-1-1:g010-second",
+     "stem_sha": "370658936eecf180",
+     "answer": {
+      "value": "163.30"
+     },
+     "working": "P(-10,3) is in quadrant II, so theta = 180° - arctan(3/10) = 180° - 16.6992° = 163.3008°. Checked with atan2."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family is numeric and has no options, so there are no distractors to judge. I recomputed all three keys independently.\n\n- g001, P(-3,2): atan(2/3) = 33.690 deg, and 180 - 33.69 = 146.31. The key 146.31 is correct.\n- g003, P(-1,6): atan(6) = 80.538 deg, and 180 - 80.54 = 99.46. The key 99.46 is correct.\n- g010, P(-10,3): atan(0.3) = 16.699 deg, and 180 - 16.70 = 163.30. The key 163.30 is correct.\n\nIn each case the second-quadrant angle is correctly computed as 180 minus the reference angle, so the rounded keys match the unrounded values.\n\nThe stem asks for theta, the angle in standard position from the positive x-axis, in degrees to 2 d.p. Each key is that angle, not the reference angle alpha. The trailing zero in 163.30 is fine for a numeric check, as long as answer_check compares by value and not by string.\n\nThere is no word problem, so context_ok is true.\n\nThe worked solutions follow the book's method in the same order every time:\n1. Drop a perpendicular to the x-axis to form a right triangle.\n2. Take the opposite side as |y|.\n3. Take the adjacent side as |x|, with the point that a length is never negative.\n4. Apply tan(alpha) = opposite/adjacent and use the calculator.\n5. Take theta = 180 - alpha.\n\nThe arithmetic is correct at every step.\n\nOne cosmetic defect, which does not affect correctness: g003 step 3 reads \"OR = 1 units\" (plural with 1). The template should pluralise correctly, for example \"1 unit\". I did not fail the family for this, but it is worth fixing in the template."
+   }
+  },
+  {
+   "family_id": "tpl:g10m5s8-1-2:cosec-of-point",
+   "spec_sha": "b6a7dd699cc3aec16ad563df961167c78599a2e588c52e74e1e4ddeee88debc4",
+   "answers": [
+    {
+     "instance_id": "q:g10m5s8-1-2:g003-cosec-",
+     "stem_sha": "0ea24f5080ea7017",
+     "answer": {
+      "plain": "-sqrt(65)/4"
+     },
+     "working": "P(-7,-4): x=-7, y=-4. r = sqrt((-7)^2+(-4)^2) = sqrt(49+16) = sqrt(65). cosec(theta) = r/y = sqrt(65)/(-4)."
+    },
+    {
+     "instance_id": "q:g10m5s8-1-2:g008-cosec-",
+     "stem_sha": "d51b19b4de4075b2",
+     "answer": {
+      "plain": "-sqrt(41)/5"
+     },
+     "working": "P(4,-5): x=4, y=-5. r = sqrt(4^2+(-5)^2) = sqrt(16+25) = sqrt(41). cosec(theta) = r/y = sqrt(41)/(-5)."
+    },
+    {
+     "instance_id": "q:g10m5s8-1-2:g010-cosec-",
+     "stem_sha": "a54a2f096e71f571",
+     "answer": {
+      "plain": "sqrt(37)/6"
+     },
+     "working": "P(-1,6): x=-1, y=6. r = sqrt((-1)^2+6^2) = sqrt(1+36) = sqrt(37). cosec(theta) = r/y = sqrt(37)/6."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "Typed-expression family with no options, so distractors_ok is vacuously true. I checked all three instances. g003 (-7,-4): r^2=49+16=65, quadrant 3, cosec=sqrt65/(-4). g008 (4,-5): r^2=16+25=41, quadrant 4, cosec=sqrt41/(-5). g010 (-1,6): r^2=1+36=37, quadrant 2, cosec=sqrt37/6. Quadrants, r values and signs are all correct. Each worked solution follows the book's method of reading off signed coordinates, finding r by Pythagoras and taking r over y. Each answer_check parses to the same value as its LaTeX key. The stem is unambiguous: anticlockwise from the positive x-axis, no calculator, and exact surds with no rationalisation needed. Style flag only: g003 and g008 keep the negative sign in the denominator (sqrt65/-4) instead of writing -sqrt65/4. It is the same value and matches the substituted r/y working, and answer_check is symbolic, so a student's -sqrt(65)/4 should be accepted. I accepted it, but the form is not the conventional simplest one. Fixing it would mean the key -\\frac{\\sqrt{65}}{4} and answer_check -sqrt(65)/4. Check that the surd marker with form null does not compare the typed string literally."
+   }
+  },
+  {
+   "family_id": "tpl:g10m5s8-1-2:product-ratios",
+   "spec_sha": "1e5a183a31a547037816e5acd2adf86c91d6db1e533b95826a51a09441ee364d",
+   "answers": [
+    {
+     "instance_id": "q:g10m5s8-1-2:g005-produc",
+     "stem_sha": "a28465e2a8872ba3",
+     "answer": {
+      "plain": "35/74"
+     },
+     "working": "P=(5,7), x=5, y=7. r = sqrt(25+49) = sqrt(74). sin = 7/sqrt(74), cos = 5/sqrt(74). Product = 35/74 (gcd 1)."
+    },
+    {
+     "instance_id": "q:g10m5s8-1-2:g007-produc",
+     "stem_sha": "c964736e610f1458",
+     "answer": {
+      "plain": "-3/10"
+     },
+     "working": "P=(3,-1), x=3, y=-1. r = sqrt(9+1) = sqrt(10). sin = -1/sqrt(10), cos = 3/sqrt(10). Product = -3/10."
+    },
+    {
+     "instance_id": "q:g10m5s8-1-2:g008-produc",
+     "stem_sha": "41b1aca15fb3d7a8",
+     "answer": {
+      "plain": "-28/65"
+     },
+     "working": "P=(7,-4), x=7, y=-4. r = sqrt(49+16) = sqrt(65). sin = -4/sqrt(65), cos = 7/sqrt(65). Product = -28/65 (gcd 1)."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family has three typed-expression instances (g005, g007, g008) and no options, so there are no distractors to judge. I checked each by hand.\n\n- g005, P(5,7): r² = 25 + 49 = 74, sin = 7/√74, cos = 5/√74, product = 35/74. gcd(35,74) = 1, so it is already in simplest form. Key `\\frac{35}{74}` matches answer_check `35/74`.\n- g007, P(3,-1): r² = 9 + 1 = 10, sin = -1/√10, cos = 3/√10, product = -3/10. gcd(3,10) = 1. Key `-\\frac{3}{10}` matches answer_check `-3/10`.\n- g008, P(7,-4): r² = 49 + 16 = 65, sin = -4/√65, cos = 7/√65, product = -28/65. 28 = 2²·7 and 65 = 5·13 share no factor. Key `-\\frac{28}{65}` matches answer_check `-28/65`.\n\nKey form: each key is a single fraction in simplest form, with the sign on the fraction as the stem asks. The marker (`expression`, form `simplest`, no variables, no tolerance) fits.\n\nContext: there is no word problem. The stem is unambiguous and the angle convention (anticlockwise from the positive x-axis) is stated. \"Without using a calculator\" is consistent with the surd-cancelling method. The points are realistic, and the negative-y cases exercise the sign rule.\n\nSolutions: each follows the same book method (read x and y with signs, find r by Pythagoras with r positive, write sin = y/r and cos = x/r, multiply so √n × √n = n, check simplest form). Every step is arithmetically correct and the final line equals the key in all three. Step 2 skips the intermediate sum (25 + 49) but shows the substituted squares and the result, so it is not a gap."
+   }
+  },
+  {
+   "family_id": "tpl:g10m5s8-1-2:sec-choice",
+   "spec_sha": "0b4b0aba0b2727cd61d19da391348c6c07cb0a18b0b288ab0f4c17c82270bb3b",
+   "answers": [
+    {
+     "instance_id": "q:g10m5s8-1-2:g002-sec-ch",
+     "stem_sha": "80609f2305d297d3",
+     "answer": {
+      "choice": "C",
+      "choice_text": "$\\frac{\\sqrt{73}}{8}$"
+     },
+     "working": "P = (8, -3), so x = 8, y = -3. r = sqrt(8^2 + (-3)^2) = sqrt(64 + 9) = sqrt(73). sec(theta) = r/x = sqrt(73)/8, which is positive because x > 0. This matches option C."
+    },
+    {
+     "instance_id": "q:g10m5s8-1-2:g003-sec-ch",
+     "stem_sha": "e693e00342d2affb",
+     "answer": {
+      "choice": "D",
+      "choice_text": "$\\frac{\\sqrt{73}}{-8}$"
+     },
+     "working": "P = (-8, -3), so x = -8, y = -3. r = sqrt(64 + 9) = sqrt(73). sec(theta) = r/x = sqrt(73)/(-8), which is negative because x < 0. Option A equals +sqrt(73)/8, so it is wrong. Option D matches."
+    },
+    {
+     "instance_id": "q:g10m5s8-1-2:g009-sec-ch",
+     "stem_sha": "568e8223ab13efb0",
+     "answer": {
+      "choice": "C",
+      "choice_text": "$\\frac{\\sqrt{145}}{-9}$"
+     },
+     "working": "P = (-9, -8), so x = -9, y = -8. r = sqrt(81 + 64) = sqrt(145). sec(theta) = r/x = sqrt(145)/(-9), which is negative because x < 0. Option A equals +sqrt(145)/9, so it is wrong. Option C matches."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [
+     {
+      "instance_id": "q:g10m5s8-1-2:g002-sec-ch",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "sqrt(73)/(-3) is r/y, which is what a student gets by pairing sec with sin because both start with s. It is definitely wrong because sec = r/x."
+     },
+     {
+      "instance_id": "q:g10m5s8-1-2:g002-sec-ch",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "8/sqrt(73) is x/r, which is cos θ. This is the unturned ratio, and it is definitely wrong."
+     },
+     {
+      "instance_id": "q:g10m5s8-1-2:g002-sec-ch",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "-sqrt(73)/8 comes from giving r a negative sign because the point has a negative coordinate (y = -3, quadrant 4). That is the error. It is wrong because sec is positive in quadrant 4. The label is slightly ambiguous when the signs are mixed, but this output matches a 'r takes the sign of y' reading."
+     },
+     {
+      "instance_id": "q:g10m5s8-1-2:g003-sec-ch",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "-sqrt(73)/-8 equals +sqrt(73)/8, which is the result of taking r negative. It is wrong because sec is negative in quadrant 3, and it is not equal to the key (-sqrt(73)/8)."
+     },
+     {
+      "instance_id": "q:g10m5s8-1-2:g003-sec-ch",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "-8/sqrt(73) is cos θ, the unturned ratio. Definitely wrong."
+     },
+     {
+      "instance_id": "q:g10m5s8-1-2:g003-sec-ch",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "sqrt(73)/(-3) is r/y, which is the sin pairing. Definitely wrong."
+     },
+     {
+      "instance_id": "q:g10m5s8-1-2:g009-sec-ch",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "-sqrt(145)/-9 equals +sqrt(145)/9, the result of taking r negative. Wrong, since sec is negative in quadrant 3, and distinct from the key."
+     },
+     {
+      "instance_id": "q:g10m5s8-1-2:g009-sec-ch",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "sqrt(145)/(-8) is r/y (the sin pairing). Definitely wrong."
+     },
+     {
+      "instance_id": "q:g10m5s8-1-2:g009-sec-ch",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "-9/sqrt(145) is cos θ, the unturned ratio. Definitely wrong."
+     }
+    ],
+    "notes": "I checked all three instances and found no defects. The numbers work: 8^2+3^2 = 73, and 9^2+8^2 = 145. The quadrants are right: (8,-3) is Q4, and (-8,-3) and (-9,-8) are Q3. The key is sec θ = r/x in every instance: sqrt(73)/8, sqrt(73)/(-8) and sqrt(145)/(-9). No distractor equals its key. The three error types give clearly different, definitely wrong values, and each is what its misconception would produce: r/y for reciprocal-named-by-letters, x/r (which is cos) for ratio-not-turned-over, and a negative r for r-takes-sign-of-point. Each worked solution follows the same method (read the signs, find r by Pythagoras with r positive, then sec = r/x) and reaches its key. The key's form, sqrt(73)/(-8), is not the tidiest way to write the answer. It is mathematically identical to -sqrt(73)/8 and consistent across the options, so I treated it as acceptable for an MCQ. One residual ambiguity: in g002 (mixed signs) the r-takes-sign-of-point output is -sqrt(73)/8, which matches a 'sign of y' reading of the label but not a 'sign of x' reading. It is still definitely wrong, so the option stands. There is no word problem, and the stem reproduces the book's phrasing."
+   }
+  }
+ ]
+}

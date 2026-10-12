@@ -1,0 +1,63 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m3s2-1-1:pictures",
+ "kind": "family",
+ "lo_id": "lo:g10m3s2-1-1",
+ "parent_question_id": "q:g10m3s2-1-1:ex3-2-16a",
+ "source_page": 69,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": "A pattern of pictures is built from square tiles; the number of tiles grows by the same amount from each picture to the next.",
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    1,
+    9
+   ]
+  },
+  {
+   "name": "d",
+   "randint": [
+    2,
+    7
+   ]
+  },
+  {
+   "name": "t1",
+   "let": "a"
+  },
+  {
+   "name": "t2",
+   "let": "a + d"
+  },
+  {
+   "name": "t3",
+   "let": "a + 2 * d"
+  },
+  {
+   "name": "t4",
+   "let": "a + 3 * d"
+  },
+  {
+   "name": "t5",
+   "let": "a + 4 * d"
+  },
+  {
+   "name": "t6",
+   "let": "a + 5 * d"
+  }
+ ],
+ "constraints": [],
+ "stem": "A pattern of pictures is built from square tiles. Pictures 1, 2, 3 and 4 use ${=t1}\\;;\\;{=t2}\\;;\\;{=t3}\\;;\\;{=t4}$ tiles, and the number of tiles follows a linear sequence. How many tiles will picture 6 use?",
+ "answer": "t6",
+ "solution": [
+  "Find the common difference by subtracting the number of tiles in each picture from the number in the next picture: $d=T_{2}-T_{1}=({=t2})-({=t1})={=d}$.",
+  "$d=T_{3}-T_{2}=({=t3})-({=t2})={=d}$ and $d=T_{4}-T_{3}=({=t4})-({=t3})={=d}$. All of the results are the same, so {=d} tiles are added each time.",
+  "Picture 5 uses ${=t4}+{=d}={=t5}$ tiles.",
+  "Picture 6 uses ${=t5}+{=d}={=t6}$ tiles.",
+  "Picture 6 will use ${=t6}$ tiles."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Standard: the book's typical figure-pattern exercise (Q16a: 2; 5; 8; 11, then the sixth picture). The book reads the tile counts off a drawing; a sampled instance cannot redraw, so the counts are given in words, which is the step the book's own solution starts from. The skill that remains is the common difference and continuing two more terms. The asked picture is always the sixth so the solution is one fixed skeleton (list picture 5, then picture 6). a is 1 to 9 and d is 2 to 7, so the answer is at most 44."
+}

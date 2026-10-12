@@ -1,0 +1,105 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m14s4-1-1:unionpick",
+ "kind": "family",
+ "lo_id": "lo:g10m14s4-1-1",
+ "parent_question_id": "q:g10m14s4-1-1:ex14-4-2",
+ "source_page": 482,
+ "tier": "basic",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "N",
+   "choice": [
+    9,
+    10,
+    11,
+    12
+   ]
+  },
+  {
+   "name": "na",
+   "randint": [
+    2,
+    3
+   ]
+  },
+  {
+   "name": "nab",
+   "randint": [
+    1,
+    2
+   ]
+  },
+  {
+   "name": "nb",
+   "randint": [
+    2,
+    3
+   ]
+  },
+  {
+   "name": "nout",
+   "let": "N - na - nab - nb"
+  },
+  {
+   "require": "nout >= 1 and nout <= 3",
+   "why": "every element of S is drawn in exactly one place, and one to three of them lie outside both circles, as in the book's diagram"
+  },
+  {
+   "name": "pool",
+   "let": "list(range(1, N + 1))"
+  },
+  {
+   "name": "w",
+   "shuffle": "pool"
+  },
+  {
+   "name": "aonly",
+   "let": "sorted([w[i] for i in range(na)])"
+  },
+  {
+   "name": "both",
+   "let": "sorted([w[i] for i in range(na, na + nab)])"
+  },
+  {
+   "name": "bonly",
+   "let": "sorted([w[i] for i in range(na + nab, na + nab + nb)])"
+  },
+  {
+   "name": "outs",
+   "let": "sorted([w[i] for i in range(na + nab + nb, N)])"
+  },
+  {
+   "name": "uni",
+   "let": "sorted([w[i] for i in range(na + nab + nb)])"
+  }
+ ],
+ "stem": "A group of learners are given a Venn diagram. The sample space is $S=\\{n : n\\in\\mathbb{Z}, 1\\leq n\\leq {=N}\\}$. The diagram shows two overlapping circles, the event sets $A$ and $B$, and every element of $S$ is written in exactly one place. Inside circle $A$ only: ${=setof(aonly)}$. In the overlap $A\\cap B$, inside both circles: ${=setof(both)}$. Inside circle $B$ only: ${=setof(bonly)}$. Outside both circles: ${=setof(outs)}$. They are asked to identify the union of event set $A$ and event set $B$, also written as $A\\cup B$. They get stuck, and you offer to help them find it. Which set best describes the event set of $A\\cup B$?",
+ "choices": {
+  "correct": "${=setof(uni)}$",
+  "distractors": [
+   {
+    "text": "${=setof(aonly)}$",
+    "misconception_id": "mc:g10m14s4-1-1:union-as-a-only-part"
+   },
+   {
+    "text": "${=setof(both)}$",
+    "misconception_id": "mc:g10m14s4-1-1:union-as-overlap-only"
+   },
+   {
+    "text": "${=setof(outs)}$",
+    "misconception_id": "mc:g10m14s4-1-1:union-as-outside-both-circles"
+   }
+  ]
+ },
+ "solution": [
+  "The union $A\\cup B$ is the set of every element that is in $A$ or in $B$ (or in both). So we need every element that lies inside at least one of the two circles.",
+  "Circle $A$ holds the elements in $A$ only, ${=setof(aonly)}$, together with the overlap, ${=setof(both)}$.",
+  "Circle $B$ holds the overlap, ${=setof(both)}$, together with the elements in $B$ only, ${=setof(bonly)}$.",
+  "The elements outside both circles, ${=setof(outs)}$, are in neither $A$ nor $B$, so they are left out.",
+  "Write every element inside the circles once (the overlap counts once, not twice), in ascending order: $A\\cup B={=setof(uni)}$."
+ ],
+ "notes": "Basic entry point, modelled on the book's ex14-4-2 (a four-option choice of sets for A union B). The family engine cannot draw the Venn diagram, so the stem gives the diagram as its four regions in words (A only, overlap, B only, outside both), every element of S in exactly one region, exactly as the book's figure does. The sample space, the region sizes and which numbers sit where are all sampled. The three distractors are the book's own three wrong options, each tied to the catalogued misconception: only the A-only part, only the overlap, only the element(s) outside both circles. All four options are always distinct because the regions are disjoint and non-empty. Please check that setof() prints the sets with escaped braces inside the $...$ and that the four options come out as sets."
+}

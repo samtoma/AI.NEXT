@@ -1,0 +1,26 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m7s3-1-5:build-rhombus",
+ "lo_id": "lo:g10m7s3-1-5",
+ "parent_question_id": "q:g10m7s3-1-5:ex7-6-2",
+ "tier": "basic",
+ "kind": "polygon_builder",
+ "spec": {
+  "mode": "construct",
+  "shape": "rhombus"
+ },
+ "stem": "Drag the corners to make a rhombus. Any rhombus counts: any size, anywhere on the grid, tilted or not.",
+ "solution": [
+  "A rhombus is a quadrilateral whose four sides are all equal, so the target is $AB = BC = CD = DA$.",
+  "Place the corners at $A(-2, 0)$, $B(0, 3)$, $C(2, 0)$ and $D(0, -3)$, joined in that order.",
+  "Check the sides: each one runs 2 across and 3 up or down, so $AB = BC = CD = DA = \\sqrt{2^2 + 3^2} = \\sqrt{13}$.",
+  "Equal sides are the whole test. The angles need not be right angles (here $AB$ and $BC$ do not meet at $90^{\\circ}$), and a rectangle that is not a square fails the test because its neighbouring sides differ."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "sides-not-equal",
+   "misconception_id": "mc:g10m7s3-1-5:mixes-rectangle-rhombus-square"
+  }
+ ],
+ "notes": "The book's anchor ex7-6-2 is a rhombus drawn to scale (all four sides measure the same in the figure), asked as 'most specific name'. This widget runs that question backwards, from the name to the property. sides-not-equal is mapped to mixes-rectangle-rhombus-square because the likeliest failing build is a rectangle or a slanted parallelogram, i.e. right angles or parallel sides standing in for equal sides (that misconception's own text includes 'the adjacent sides of a rhombus are allowed to differ'). Left unmapped on purpose: only-one-pair-parallel (a trapezium-like build; the only candidate, judges-by-appearance from a prerequisite, rests on thin evidence) and not-the-shape (degenerate or self-crossing figures; no single error). The rhombus predicates never test for a right angle, so a square should be accepted as a rhombus; I have not relied on that in the stem."
+}

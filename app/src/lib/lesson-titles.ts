@@ -2,25 +2,13 @@
  * Short display titles per lesson slug; fallback = the lesson's first objective
  * label. Moved out of `lib/lesson.ts` (2026-10-01) so the skill map can use the
  * same names without importing the lesson module's server dependencies.
+ *
+ * Feature 003: the table itself now lives on the course registry
+ * (`lib/courses.ts` `PREP3_MATH_LESSON_TITLES`, the Prep-3 maths entry's
+ * `tutor.lessonTitles`) — one copy, so the lesson prompt, the catalogue and the
+ * map can never name a lesson two ways. This stays the pure, import-light
+ * Prep-3 lookup the map and the Ask prompt already use; a lesson of a course
+ * whose titles come from the book-section store (Grade 10) is added to the
+ * map's `lessonTitles` by `spineDataOn` (`lib/queries.ts`).
  */
-export const LESSON_TITLES: Record<string, string> = {
-  "u1-1": "Cartesian product",
-  "u1-2": "Relations",
-  "u1-3": "Functions",
-  "u1-4": "Polynomial functions",
-  "u2-1": "Ratio",
-  "u2-2": "Proportion",
-  "u2-3": "Direct and inverse variation",
-  "u3-1": "Collecting data and samples",
-  "u3-2": "Dispersion and standard deviation",
-  "u4-1": "Trigonometric ratios",
-  "u4-2": "Special angles and applications",
-  "u5-1": "The distance between two points",
-  "u5-2": "The midpoint of a segment",
-  "u5-3": "The slope of a straight line",
-  "u5-4": "The equation of a straight line",
-  "geo1-1": "The circle: definitions and chords",
-  "geo1-2": "Point, line and circle positions — tangents",
-  "geo1-3": "The circumcircle",
-  "geo1-4": "Chords and distance from the center",
-};
+export { PREP3_MATH_LESSON_TITLES as LESSON_TITLES } from "./courses.ts";

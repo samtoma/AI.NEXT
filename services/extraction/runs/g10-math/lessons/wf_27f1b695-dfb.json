@@ -1,0 +1,2058 @@
+{
+ "stage": "S2-S4,S8",
+ "workflow": "lesson",
+ "prompts_version": "lesson-v8",
+ "collect_version": "collect-6",
+ "book": "g10-math",
+ "embedded": {
+  "source": "runbook/lesson.workflow.js",
+  "source_sha256": "a4df6336258cfde8275ef865541baa15d403cc530c79af13f51f2e89145abaab",
+  "args_sha256": "1947e0729eb55a1728071258763fe0954ae41ae49835db76324d4edf7a4b28eb",
+  "generated_sha256": "513d05decbb6c45310ee83987b458f1bb92dd9387d7b44240196b80b4a762fde",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "lessons": [
+  {
+   "lesson": "g10m14s7-1",
+   "claims": [
+    {
+     "lo": "lo:g10m14s7-1-1",
+     "type": "definition",
+     "text": "The complement of a set A is a new set that contains all of the elements that are not in A.",
+     "anchor": "b04469",
+     "printed_page": 486,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "The complement of a set, $A$ , is a new set that contains all of the elements that are not in $A$ .",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m14s7-1-1",
+     "type": "convention",
+     "text": "The complement of A is written A', or sometimes not(A).",
+     "anchor": "b04469",
+     "printed_page": 486,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "We write the complement of $A$ as $A'$ , or sometimes $\\text{not }\\left(A\\right)$ .",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m14s7-1-2",
+     "type": "rule",
+     "text": "Since every element in A is not in A', complementary events are mutually exclusive.",
+     "anchor": "b04470",
+     "printed_page": 486,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "Since every element in $A$ is not in $A'$ , we know that complementary events are mutually exclusive.",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m14s7-1-2",
+     "type": "rule",
+     "text": "The intersection of an event A and its complement A' is the empty set: A ∩ A' = ∅.",
+     "anchor": "b04471",
+     "printed_page": 486,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "$A\\capA'=\\varnothing$",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m14s7-1-1",
+     "type": "rule",
+     "text": "Since every element in the sample space is either in A or in A', the union of complementary events covers the sample space.",
+     "anchor": "b04472",
+     "printed_page": 486,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "Since every element in the sample space is either in $A$ or in $A'$ , the union of complementary events covers the sample space.",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m14s7-1-1",
+     "type": "rule",
+     "text": "The union of an event A and its complement A' is the sample space: A ∪ A' = S.",
+     "anchor": "b04473",
+     "printed_page": 486,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "$A\\cupA'=S$",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m14s7-1-3",
+     "type": "rule",
+     "text": "From A ∩ A' = ∅ and A ∪ A' = S, the probabilities of complementary events sum to 1.",
+     "anchor": "b04474",
+     "printed_page": 486,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "the probabilities of complementary events sum to $\\text{1}$",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m14s7-1-3",
+     "type": "rule",
+     "text": "P(A) + P(A') = P(A ∪ A') = P(S) = 1.",
+     "anchor": "b04475",
+     "printed_page": 486,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "$P\\left(A\\right)+P\\left(A'\\right)=P\\left(A\\cup A'\\right)=P\\left(S\\right)=1$",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m14s7-1-4",
+     "type": "method",
+     "text": "To reason with a Venn diagram, first summarise the sizes of the sample space, the event sets, their union and their intersection.",
+     "anchor": "WE8",
+     "printed_page": 486,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "Summarise the sizes of the sample space, the event sets, their union and their intersection",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m14s7-1-4",
+     "type": "convention",
+     "text": "The size of the sample space is written n(S), and it equals the number of people questioned in the survey (n(S) = 70 in the example).",
+     "anchor": "WE8",
+     "printed_page": 486,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "We are told that $\\text{70}$ people were questioned, so the size of the sample space is $n\\left(S\\right)=70$",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m14s7-1-4",
+     "type": "method",
+     "text": "The number of elements in the union of the two events is the size of the sample space minus the number in neither event: 70 - 15 = 55 people use at least one product, so n(A ∪ B) = 55.",
+     "anchor": "WE8",
+     "printed_page": 486,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "This means that $70-15=55$ people use at least one of the two products, so $n\\left(A\\cupB\\right)=55$",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m14s7-1-4",
+     "type": "method",
+     "text": "When the size of the intersection of the two events is not given, work out n(A ∩ B) by using the identity for the union of two events.",
+     "anchor": "WE8",
+     "printed_page": 486,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "We are not told how many people use both products, so we have to work out the size of the intersection, $A\\capB$ , by using the identity for the union of two events",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m14s7-1-4",
+     "type": "rule",
+     "text": "The identity for the union of two events: P(A ∪ B) = P(A) + P(B) - P(A ∩ B).",
+     "anchor": "WE8",
+     "printed_page": 486,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "P\\left(A\\cupB\\right)&=P\\left(A\\right)+P\\left(B\\right)-P\\left(A\\capB\\right)",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m14s7-1-4",
+     "type": "method",
+     "text": "Rewrite the union identity in terms of numbers of elements by writing each probability as the number of elements in the event divided by n(S): n(A ∪ B)/n(S) = n(A)/n(S) + n(B)/n(S) - n(A ∩ B)/n(S).",
+     "anchor": "WE8",
+     "printed_page": 486,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "\\frac{n\\left(A\\cupB\\right)}{n\\left(S\\right)}&=\\frac{n\\left(A\\right)}{n\\left(S\\right)}+\\frac{n\\left(B\\right)}{n\\left(S\\right)}-\\frac{n\\left(A\\capB\\right)}{n\\left(S\\right)}",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m14s7-1-4",
+     "type": "method",
+     "text": "Substitute the known counts and solve for the intersection: n(A ∩ B) = 25 + 35 - 55 = 5.",
+     "anchor": "WE8",
+     "printed_page": 486,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "\\thereforen\\left(A\\capB\\right)&=25+35-55",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m14s7-1-2",
+     "type": "method",
+     "text": "To decide whether two events are mutually exclusive, look at their intersection: if the intersection A ∩ B is not empty, the events are not mutually exclusive.",
+     "anchor": "WE8",
+     "printed_page": 486,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "Since the intersection of the events, $A\\capB$ , is not empty, the events are not mutually exclusive.",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m14s7-1-4",
+     "type": "method",
+     "text": "Events that are not mutually exclusive have circles that overlap in the Venn diagram.",
+     "anchor": "WE8",
+     "printed_page": 486,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "This means that their circles should overlap in the Venn diagram.",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m14s7-1-4",
+     "type": "method",
+     "text": "Draw the Venn diagram and fill in the numbers.",
+     "anchor": "WE8",
+     "printed_page": 486,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "Draw the Venn diagram and fill in the numbers",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m14s7-1-4",
+     "type": "method",
+     "text": "Read off the answers from the Venn diagram: the number who use A only, B only, and both (20, 30 and 5 in the example).",
+     "anchor": "WE8",
+     "printed_page": 486,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "Read off the answers",
+     "provenance": "containment"
+    }
+   ],
+   "claims_dropped": [],
+   "items": [
+    {
+     "ref": "WE8",
+     "kind": "worked_example",
+     "lo": "lo:g10m14s7-1-4",
+     "stem": "In a survey $\\text{70}$ people were questioned about which product they use: A or B or both. The report of the survey shows that $\\text{25}$ people use product A, $\\text{35}$ people use product B and $\\text{15}$ people use neither. Use a Venn diagram to work out how many people: use product A only use product B only use both product A and product B",
+     "answer_type": "not_markable",
+     "answer": null,
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "Summarise the sizes of the sample space, the event sets, their union and their intersection: We are told that $\\text{70}$ people were questioned, so the size of the sample space is $n\\left(S\\right)=70$ . We are told that $\\text{25}$ people use product A, so $n\\left(A\\right)=25$ . We are told that $\\text{35}$ people use product B, so $n\\left(B\\right)=35$ . We are told that $\\text{15}$ people use neither product. This means that $70-15=55$ people use at least one of the two products, so $n\\left(A\\cupB\\right)=55$ . We are not told how many people use both products, so we have to work out the size of the intersection, $A\\capB$ , by using the identity for the union of two events: $\\begin{align*}P\\left(A\\cupB\\right)&=P\\left(A\\right)+P\\left(B\\right)-P\\left(A\\capB\\right)\\\\\\frac{n\\left(A\\cupB\\right)}{n\\left(S\\right)}&=\\frac{n\\left(A\\right)}{n\\left(S\\right)}+\\frac{n\\left(B\\right)}{n\\left(S\\right)}-\\frac{n\\left(A\\capB\\right)}{n\\left(S\\right)}\\\\\\frac{55}{70}&=\\frac{25}{70}+\\frac{35}{70}-\\frac{n\\left(A\\capB\\right)}{70}\\\\\\thereforen\\left(A\\capB\\right)&=25+35-55\\\\&=5\\end{align*}$",
+      "Determine whether the events are mutually exclusive: Since the intersection of the events, $A\\capB$ , is not empty, the events are not mutually exclusive. This means that their circles should overlap in the Venn diagram.",
+      "Draw the Venn diagram and fill in the numbers: [figure]",
+      "Read off the answers: $\\text{20}$ people use product A only. $\\text{30}$ people use product B only. $\\text{5}$ people use both products."
+     ],
+     "solution_provenance": "book_worked",
+     "printed_answer": null,
+     "epub_final_answer": null,
+     "blind_answer": "A only: $20$; B only: $30$; both A and B: $5$",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 486,
+     "shortcode": null,
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "WE8|blind~book",
+        "route": "not_markable",
+        "verdict": "equivalent",
+        "reason": "typed not markable: nothing is marked, so the book's final is not compared"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": "worked example with multiple intermediate results shown",
+     "tier_source": "typing",
+     "printed_answer_scope": null,
+     "figures": [
+      "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__c92d5bf72271985ca080999d00ed8eca.png"
+     ],
+     "figures_missing": [],
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex14-7:1",
+     "kind": "exercise",
+     "lo": "lo:g10m14s7-1-1",
+     "stem": "A group of learners are given the following Venn diagram: [figure] The sample space can be described as $\\{n:n\\epsilon\\mathbb{Z},1\\leq n\\leq15\\}$ . They are asked to identify the complementary event set of $B$ , also known as $B'$ . They get stuck, and you offer to help them find it. Which of the following sets best describes the event set of $B'$ ? $\\{1;5;13;14\\}$ $\\{2;3;4;6;10;11;12\\}$ $\\{3;4;6;11;12\\}$",
+     "answer_type": "choice",
+     "answer": null,
+     "choices": [
+      {
+       "key": "A",
+       "text": "{1;5;13;14}"
+      },
+      {
+       "key": "B",
+       "text": "{2;3;4;6;10;11;12}"
+      },
+      {
+       "key": "C",
+       "text": "{3;4;6;11;12}"
+      }
+     ],
+     "marker": null,
+     "solution": [
+      "The event set $B$ can be shaded as follows: [figure] The complementary event set $B'$ can be shaded as follows: [figure] Therefore the event set $\\{2;3;4;6;10;11;12\\}$ best describes the complementary event set of $B$ , also known as $B'$ ."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "{2; 3; 4; 6; 10; 11; 12}",
+     "epub_final_answer": "Therefore the event set $\\{2;3;4;6;10;11;12\\}$ best describes the complementary event set of $B$ , also known as $B'$ .",
+     "blind_answer": "$\\{2;3;4;6;10;11;12\\}$",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 488,
+     "shortcode": "2GWW",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex14-7:1|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex14-7:1|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same set {2;3;4;6;10;11;12}; the book answer only adds explanatory wording."
+       },
+       {
+        "pair_id": "Ex14-7:1|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same set {2;3;4;6;10;11;12}; only wording and notation differ."
+       }
+      ]
+     },
+     "typing_problems": [
+      "a choice needs 2–5 options with the key among them",
+      "options said to be the stem's are not all in the stem"
+     ],
+     "unit": null,
+     "options_source": "stem",
+     "not_markable_reason": null,
+     "tier_source": "tier check",
+     "printed_answer_scope": "item",
+     "figures": [
+      "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__d6e298b745eb7fb6130c1af3b8ccd1e9.png"
+     ],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": true
+    },
+    {
+     "ref": "Ex14-7:2",
+     "kind": "exercise",
+     "lo": "lo:g10m14s7-1-1",
+     "stem": "A group of learners are given the following Venn diagram: [figure] The sample space can be described as $\\{n:n\\epsilon\\mathbb{Z},1\\leq n\\leq15\\}$ . They are asked to identify the complementary event set of $(A\\cupB)$ , also known as $(A\\cupB)'$ . They get stuck, and you offer to help them find it. Which of the following sets best describes the event set of $(A\\cupB)'$ ? $\\{2;4;9;11;13;15\\}$ $\\{1;3;5;6;7;8;10;12;14\\}$ $\\{6;8;12\\}$",
+     "answer_type": "choice",
+     "answer": null,
+     "choices": [
+      {
+       "key": "A",
+       "text": "{2;4;9;11;13;15}"
+      },
+      {
+       "key": "B",
+       "text": "{1;3;5;6;7;8;10;12;14}"
+      },
+      {
+       "key": "C",
+       "text": "{6;8;12}"
+      }
+     ],
+     "marker": null,
+     "solution": [
+      "The event set $(A\\cupB)$ can be shaded as follows: [figure] The complementary event set $(A\\cupB)'$ can be shaded as follows: [figure] Therefore the event set $\\{2;4;9;11;13;15\\}$ best describes the complementary event set of $(A\\cupB)$ , also known as $(A\\cupB)'$ ."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "{2; 4; 9; 11; 13; 15}",
+     "epub_final_answer": "Therefore the event set $\\{2;4;9;11;13;15\\}$ best describes the complementary event set of $(A\\cupB)$ , also known as $(A\\cupB)'$ .",
+     "blind_answer": "$\\{2;4;9;11;13;15\\}$",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 488,
+     "shortcode": "2GWX",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex14-7:2|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex14-7:2|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same set {2;4;9;11;13;15}; book adds a sentence."
+       },
+       {
+        "pair_id": "Ex14-7:2|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same set {2;4;9;11;13;15}."
+       }
+      ]
+     },
+     "typing_problems": [
+      "a choice needs 2–5 options with the key among them",
+      "options said to be the stem's are not all in the stem"
+     ],
+     "unit": null,
+     "options_source": "stem",
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [
+      "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__452084009251e108e19919001d1293da.png"
+     ],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": true
+    },
+    {
+     "ref": "Ex14-7:3",
+     "kind": "exercise",
+     "lo": "lo:g10m14s7-1-2",
+     "stem": "Given the following Venn diagram: [figure] The sample space can be described as $\\{n:n\\epsilon\\mathbb{Z},1\\leq n\\leq15\\}$ . Are $(A\\cupB)'$ and $A\\cupB$ mutually exclusive?",
+     "answer_type": "choice",
+     "answer": "A",
+     "choices": [
+      {
+       "key": "A",
+       "text": "yes"
+      },
+      {
+       "key": "B",
+       "text": "no"
+      }
+     ],
+     "marker": null,
+     "solution": [
+      "We recall the definition of the term “mutually exclusive”: Two events are called mutually exclusive if they cannot occur at the same time. The event set for $(A\\cupB)'$ is: $\\{3;4;10;12;13\\}$ The event set for $A\\cupB$ is: $\\{1;2;5;6;7;8;9;11;14;15\\}$ The question we must ask: Can they occur at the same time? By observing both sets, we can identify the following overlapping event set: $\\{\\}\\text{ or }\\varnothing$ . Therefore, yes, the event sets $(A\\cupB)'$ and $A\\cupB$ are mutually exclusive in this example."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "yes",
+     "epub_final_answer": "Therefore, yes, the event sets $(A\\cupB)'$ and $A\\cupB$ are mutually exclusive in this example.",
+     "blind_answer": "Yes",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 489,
+     "shortcode": "2GWY",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex14-7:3|blind~printed",
+        "route": "options",
+        "verdict": "equivalent",
+        "reason": "both name only \"yes\""
+       },
+       {
+        "pair_id": "Ex14-7:3|blind~book",
+        "route": "options",
+        "verdict": "equivalent",
+        "reason": "both name only \"yes\""
+       },
+       {
+        "pair_id": "Ex14-7:3|book~printed",
+        "route": "options",
+        "verdict": "equivalent",
+        "reason": "both name only \"yes\""
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": "lesson",
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [
+      "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__f5909f28ff000f01a92837309c854074.png"
+     ],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": true
+    },
+    {
+     "ref": "Ex14-7:4",
+     "kind": "exercise",
+     "lo": "lo:g10m14s7-1-2",
+     "stem": "Given the following Venn diagram: [figure] The sample space can be described as $\\{n:n\\epsilon\\mathbb{Z},1\\leq n\\leq15\\}$ . Are $A'$ and $B'$ mutually exclusive?",
+     "answer_type": "choice",
+     "answer": "B",
+     "choices": [
+      {
+       "key": "A",
+       "text": "yes"
+      },
+      {
+       "key": "B",
+       "text": "no"
+      }
+     ],
+     "marker": null,
+     "solution": [
+      "We recall the definition of the term “mutually exclusive”: Two events are called mutually exclusive if they cannot occur at the same time. The event set for $A'$ is: $\\{2\\}$ The event set for $B'$ is: $\\{2;4;5;7;9;12;13;15\\}$ The question we must ask: Can they occur at the same time? By observing both sets, we can identify the following overlapping event set: $\\{2\\}$ Therefore, no, the event sets $A'$ and $B'$ are not mutually exclusive in this example."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "no",
+     "epub_final_answer": "Therefore, no, the event sets $A'$ and $B'$ are not mutually exclusive in this example.",
+     "blind_answer": "No",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 489,
+     "shortcode": "2GWZ",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex14-7:4|blind~printed",
+        "route": "options",
+        "verdict": "equivalent",
+        "reason": "both name only \"no\""
+       },
+       {
+        "pair_id": "Ex14-7:4|blind~book",
+        "route": "options",
+        "verdict": "equivalent",
+        "reason": "both name only \"no\""
+       },
+       {
+        "pair_id": "Ex14-7:4|book~printed",
+        "route": "options",
+        "verdict": "equivalent",
+        "reason": "both name only \"no\""
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": "lesson",
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [
+      "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__e2635db721cca32fd90bd0a8f4fa2f34.png"
+     ],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": true
+    },
+    {
+     "ref": "Ex14-8:4",
+     "kind": "exercise",
+     "lo": "lo:g10m14s7-1-2",
+     "stem": "Given the following Venn diagram: [figure] The sample space can be described as $\\{n:n\\epsilon\\mathbb{Z},1\\leq n\\leq15\\}$ . Are $A\\cupB$ and $(A\\cupB)'$ mutually exclusive?",
+     "answer_type": "choice",
+     "answer": "A",
+     "choices": [
+      {
+       "key": "A",
+       "text": "yes"
+      },
+      {
+       "key": "B",
+       "text": "no"
+      }
+     ],
+     "marker": null,
+     "solution": [
+      "We recall the definition of the term “mutually exclusive”: Two events are called mutually exclusive if they cannot occur at the same time. The event set for $A\\cupB$ is: $\\{4;7;8;11;14;15\\}$ . The event set for $(A\\cupB)'$ is: $\\{1;2;3;5;6;9;10;12;13\\}$ . The question we must ask: Can they occur at the same time? By observing both sets, we can identify the following overlapping event set: $\\{\\}$ Therefore, yes, the event sets $A\\cupB$ and $(A\\cupB)'$ are mutually exclusive in this example."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "yes",
+     "epub_final_answer": "Therefore, yes, the event sets $A\\cupB$ and $(A\\cupB)'$ are mutually exclusive in this example.",
+     "blind_answer": "Yes",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 491,
+     "shortcode": "2GX6",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex14-8:4|blind~printed",
+        "route": "options",
+        "verdict": "equivalent",
+        "reason": "both name only \"yes\""
+       },
+       {
+        "pair_id": "Ex14-8:4|blind~book",
+        "route": "options",
+        "verdict": "equivalent",
+        "reason": "both name only \"yes\""
+       },
+       {
+        "pair_id": "Ex14-8:4|book~printed",
+        "route": "options",
+        "verdict": "equivalent",
+        "reason": "both name only \"yes\""
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": "lesson",
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [
+      "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__14ddfd64915f5b575313ed92ec944c34.png"
+     ],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": true
+    },
+    {
+     "ref": "Ex14-8:5",
+     "kind": "exercise",
+     "lo": "lo:g10m14s7-1-1",
+     "stem": "A group of learners are given the following Venn diagram: [figure] The sample space can be described as $\\{n:n\\epsilon\\mathbb{Z},1\\leq n\\leq15\\}$ . They are asked to identify the complementary event set of $(A\\capB)$ , also known as $(A\\capB)'$ . They get stuck, and you offer to help them find it. Write down the set that best describes the event set of $(A\\capB)'$ .",
+     "answer_type": "expression",
+     "answer": "1; 3; 6; 12; 14; 15",
+     "choices": null,
+     "marker": {
+      "kind": "values",
+      "key": "1; 3; 6; 12; 14; 15",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "solution": [
+      "The event set $(A\\capB)$ can be shaded as follows: [figure] The complementary event set $(A\\capB)'$ can be shaded as follows: [figure] Therefore the event set $\\{1;3;6;12;14;15\\}$ best describes the complementary event set of $(A\\capB)$ , also known as $(A\\capB)'$ ."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "{1; 3; 6; 12; 14; 15}",
+     "epub_final_answer": "Therefore the event set $\\{1;3;6;12;14;15\\}$ best describes the complementary event set of $(A\\capB)$ , also known as $(A\\capB)'$ .",
+     "blind_answer": "$\\{1;3;6;12;14;15\\}$",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 492,
+     "shortcode": "2GX7",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex14-8:5|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex14-8:5|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same set {1;3;6;12;14;15}; book adds a sentence."
+       },
+       {
+        "pair_id": "Ex14-8:5|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same set {1;3;6;12;14;15}."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [
+      "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__b7b8fc907a1750b3dc5f23f0d2131f1b.png"
+     ],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": true
+    },
+    {
+     "ref": "Ex14-8:10b",
+     "kind": "exercise",
+     "lo": "lo:g10m14s7-1-4",
+     "stem": "In a group of $\\text{42}$ learners, all but $\\text{3}$ had a packet of chips or a cooldrink or both. If $\\text{23}$ had a packet of chips and $\\text{7}$ of these also had a cooldrink, what is the probability that one learner chosen at random has: only cooldrink",
+     "answer_type": "expression",
+     "answer": "\\frac{8}{21}",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "\\frac{8}{21}",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "solution": [
+      "Since $42-3=39$ learners had at least one, and $\\text{23}$ learners had a packet of chips, then $39-23=16$ learners only had a cooldrink. $\\frac{16}{42}=\\frac{8}{21}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "8 21",
+     "epub_final_answer": "$\\frac{16}{42}=\\frac{8}{21}$",
+     "blind_answer": "$\\frac{8}{21}$",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 492,
+     "shortcode": "2GXD",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex14-8:10b|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex14-8:10b|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "16/42 = 8/21, so both give 8/21."
+       },
+       {
+        "pair_id": "Ex14-8:10b|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Book's 16/42 = 8/21 and printed '8 21' is 8/21."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex14-8:11d",
+     "kind": "exercise",
+     "lo": "lo:g10m14s7-1-3",
+     "stem": "A box contains coloured blocks. The number of each colour is given in the following table. Colour Purple Orange White Pink Number of blocks 24 32 41 19 A block is selected randomly. What is the probability that the block will be: not orange",
+     "answer_type": "numeric",
+     "answer": "0,72",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "We first work out the probability that a block is orange:",
+      "$\\begin{align*}P(\\text{orange})&=\\frac{32}{116}\\\\&=\\text{0,28}\\end{align*}$",
+      "The probability that a block is not orange is:",
+      "$\\begin{align*}P(\\text{notorange})&=1-\\text{0,28}\\\\&=\\text{0,72}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "0,72",
+     "epub_final_answer": "$P(\\text{notorange})=1-\\text{0,28}=\\text{0,72}$",
+     "blind_answer": "$\\frac{21}{29}$",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 492,
+     "shortcode": "2GXF",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex14-8:11d|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Total 116, not orange 84, so 84/116 = 21/29 = 0.7241...; 0,72 is its 2 d.p. rounding, and the problem states no exact form or rounding."
+       },
+       {
+        "pair_id": "Ex14-8:11d|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "The book's 0,72 is the 2 d.p. rounding of 21/29 (0.7241); no form or rounding is required by the problem."
+       },
+       {
+        "pair_id": "Ex14-8:11d|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex14-8:12e",
+     "kind": "exercise",
+     "lo": "lo:g10m14s7-1-3",
+     "stem": "A small nursery school has a class with children of various ages. The table gives the number of children of each age in the class. 3 years old 4 years old 5 years old Male $\\text{2}$ $\\text{7}$ $\\text{6}$ Female $\\text{6}$ $\\text{5}$ $\\text{4}$ If a child is selected at random what is the probability that the child will be: not $\\text{5}$",
+     "answer_type": "numeric",
+     "answer": "0,67",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "This is the same as a randomly selected child being either $\\text{3}$ or $\\text{4}$ and so is $\\text{0,67}$ ."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "0,67",
+     "epub_final_answer": "This is the same as a randomly selected child being either $\\text{3}$ or $\\text{4}$ and so is $\\text{0,67}$ .",
+     "blind_answer": "$\\frac{2}{3}$",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 493,
+     "shortcode": "2GXG",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex14-8:12e|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "20/30 = 2/3 = 0.666...; 0,67 is its 2 d.p. rounding, and no exact form or rounding is required."
+       },
+       {
+        "pair_id": "Ex14-8:12e|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "The book's 0,67 is the rounded value of 2/3; no exact form or rounding is required."
+       },
+       {
+        "pair_id": "Ex14-8:12e|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both give 0,67."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex14-8:13e",
+     "kind": "exercise",
+     "lo": "lo:g10m14s7-1-3",
+     "stem": "Fiona has $\\text{85}$ labelled discs, which are numbered from $\\text{1}$ to $\\text{85}$ . If a disc is selected at random what is the probability that the disc number: is not a multiple of $\\text{5}$",
+     "answer_type": "numeric",
+     "answer": "0,80",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "The set of all discs that are a multiple of $\\text{5}$ is: $\\{5;10;15;20;25;30;35;40;45;50;55;60;65;70;75;80;85\\}$ . This set contains $\\text{17}$ elements. Therefore the number of discs that are not multiples of $\\text{5}$ is: $85-17=68$ . The probability of drawing a disc that is not a multiple of $\\text{5}$ is: $P(\\text{not multiple of }5)=\\frac{68}{85}=\\text{0,80}$ ."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "0,80",
+     "epub_final_answer": "$P(\\text{not multiple of }5)=\\frac{68}{85}=\\text{0,80}$ .",
+     "blind_answer": "$\\frac{4}{5}$",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 493,
+     "shortcode": "2GXH",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex14-8:13e|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "4/5 = 0.80 exactly."
+       },
+       {
+        "pair_id": "Ex14-8:13e|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "68/85 = 4/5 = 0.80, matching 4/5."
+       },
+       {
+        "pair_id": "Ex14-8:13e|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex14-8:14b",
+     "kind": "exercise",
+     "lo": "lo:g10m14s7-1-4",
+     "stem": "Use a Venn diagram to work out the following probabilities for a die being rolled: a number that is neither a multiple of $\\text{5}$ nor an odd number",
+     "answer_type": "expression",
+     "answer": "\\frac{1}{2}",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "\\frac{1}{2}",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "solution": [
+      "There is only one multiple of 5 in the sample space, this is an odd number. Therefore the set of numbers that are neither a multiple of 5 nor an odd number is: $\\{2;4;6\\}$ . Therefore the probability is: $\\frac{3}{6}=\\frac{1}{2}$ ."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "1 2",
+     "epub_final_answer": "Therefore the probability is: $\\frac{3}{6}=\\frac{1}{2}$ .",
+     "blind_answer": "$\\frac{1}{2}$",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 493,
+     "shortcode": "2GXJ",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex14-8:14b|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex14-8:14b|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "3/6 = 1/2."
+       },
+       {
+        "pair_id": "Ex14-8:14b|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Book 3/6 = 1/2 and printed '1 2' is 1/2."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex14-8:14c",
+     "kind": "exercise",
+     "lo": "lo:g10m14s7-1-4",
+     "stem": "Use a Venn diagram to work out the following probabilities for a die being rolled: a number which is not a multiple of $\\text{5}$ , but is odd",
+     "answer_type": "expression",
+     "answer": "\\frac{1}{3}",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "\\frac{1}{3}",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "solution": [
+      "There is only one multiple of 5 in the sample space, this is an odd number. Therefore the set of numbers that are not a multiple of 5 but is an odd number is: $\\{1;3\\}$ . Therefore the probability is: $\\frac{2}{6}=\\frac{1}{3}$ ."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "1 3",
+     "epub_final_answer": "Therefore the probability is: $\\frac{2}{6}=\\frac{1}{3}$ .",
+     "blind_answer": "$\\frac{1}{3}$",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 493,
+     "shortcode": "2GXJ",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex14-8:14c|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex14-8:14c|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "2/6 = 1/3."
+       },
+       {
+        "pair_id": "Ex14-8:14c|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Book 2/6 = 1/3 and printed '1 3' is 1/3."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex14-8:15",
+     "kind": "exercise",
+     "lo": "lo:g10m14s7-1-3",
+     "stem": "A packet has yellow sweets and pink sweets. The probability of taking out a pink sweet is $\\frac{7}{12}$ . What is the probability of taking out a yellow sweet?",
+     "answer_type": "expression",
+     "answer": "\\frac{5}{12}",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "\\frac{5}{12}",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "solution": [
+      "$1-\\frac{7}{12}=\\frac{5}{12}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "5 12",
+     "epub_final_answer": "$1-\\frac{7}{12}=\\frac{5}{12}$",
+     "blind_answer": "$\\frac{5}{12}$",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 493,
+     "shortcode": "2GXK",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex14-8:15|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex14-8:15|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "1 - 7/12 = 5/12."
+       },
+       {
+        "pair_id": "Ex14-8:15|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both 5/12."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex14-8:16b",
+     "kind": "exercise",
+     "lo": "lo:g10m14s7-1-3",
+     "stem": "In a car park with $\\text{300}$ cars, there are $\\text{190}$ Opels. What is the probability that the first car to leave the car park is: not an Opel",
+     "answer_type": "expression",
+     "answer": "\\frac{11}{30}",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "\\frac{11}{30}",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "solution": [
+      "$1-\\frac{19}{30}=\\frac{11}{30}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "11 30",
+     "epub_final_answer": "$1-\\frac{19}{30}=\\frac{11}{30}$",
+     "blind_answer": "$\\frac{11}{30}$",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 493,
+     "shortcode": "2GXM",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex14-8:16b|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex14-8:16b|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "1 - 19/30 = 11/30."
+       },
+       {
+        "pair_id": "Ex14-8:16b|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both 11/30."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex14-8:17b",
+     "kind": "exercise",
+     "lo": "lo:g10m14s7-1-3",
+     "stem": "Nezi has $\\text{18}$ loose socks in a drawer. Eight of these are plain orange and two are plain pink. The remaining socks are neither orange nor pink. Calculate the probability that the first sock taken out at random is: not orange",
+     "answer_type": "expression",
+     "answer": "\\frac{5}{9}",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "\\frac{5}{9}",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "solution": [
+      "$1-\\frac{4}{9}=\\frac{5}{9}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "5 9",
+     "epub_final_answer": "$1-\\frac{4}{9}=\\frac{5}{9}$",
+     "blind_answer": "$\\frac{5}{9}$",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 493,
+     "shortcode": "2GXN",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex14-8:17b|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex14-8:17b|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "1 - 4/9 = 5/9."
+       },
+       {
+        "pair_id": "Ex14-8:17b|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both 5/9."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex14-8:17d",
+     "kind": "exercise",
+     "lo": "lo:g10m14s7-1-3",
+     "stem": "Nezi has $\\text{18}$ loose socks in a drawer. Eight of these are plain orange and two are plain pink. The remaining socks are neither orange nor pink. Calculate the probability that the first sock taken out at random is: not pink",
+     "answer_type": "expression",
+     "answer": "\\frac{8}{9}",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "\\frac{8}{9}",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "solution": [
+      "$1-\\frac{1}{9}=\\frac{8}{9}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "8 9",
+     "epub_final_answer": "$1-\\frac{1}{9}=\\frac{8}{9}$",
+     "blind_answer": "\\frac{8}{9}",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 493,
+     "shortcode": "2GXN",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex14-8:17d|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex14-8:17d|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "1 - 1/9 = 8/9."
+       },
+       {
+        "pair_id": "Ex14-8:17d|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both 8/9."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex14-8:17f",
+     "kind": "exercise",
+     "lo": "lo:g10m14s7-1-3",
+     "stem": "Nezi has $\\text{18}$ loose socks in a drawer. Eight of these are plain orange and two are plain pink. The remaining socks are neither orange nor pink. Calculate the probability that the first sock taken out at random is: neither orange nor pink",
+     "answer_type": "expression",
+     "answer": "\\frac{4}{9}",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "\\frac{4}{9}",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "solution": [
+      "$1-\\frac{5}{9}=\\frac{4}{9}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "4 9",
+     "epub_final_answer": "$1-\\frac{5}{9}=\\frac{4}{9}$",
+     "blind_answer": "\\frac{4}{9}",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 493,
+     "shortcode": "2GXN",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex14-8:17f|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex14-8:17f|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "1 - 5/9 = 4/9."
+       },
+       {
+        "pair_id": "Ex14-8:17f|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both 4/9."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "tier check",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex14-8:18b",
+     "kind": "exercise",
+     "lo": "lo:g10m14s7-1-3",
+     "stem": "A plate contains $\\text{9}$ shortbread cookies, $\\text{4}$ ginger biscuits, $\\text{11}$ chocolate chip cookies and $\\text{18}$ Jambos. If a biscuit is selected at random, what is the probability that: it is not a shortbread cookie",
+     "answer_type": "expression",
+     "answer": "\\frac{11}{14}",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "\\frac{11}{14}",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "solution": [
+      "$\\begin{align*}1-\\frac{9}{42}&=1-\\frac{3}{14}\\\\&=\\frac{11}{14}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "11 14",
+     "epub_final_answer": "$1-\\frac{9}{42}=1-\\frac{3}{14}=\\frac{11}{14}$",
+     "blind_answer": "\\frac{11}{14}",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 493,
+     "shortcode": "2GXP",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex14-8:18b|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex14-8:18b|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex14-8:18b|book~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex14-8:19b",
+     "kind": "exercise",
+     "lo": "lo:g10m14s7-1-3",
+     "stem": "$\\text{280}$ tickets were sold at a raffle. Jabulile bought $\\text{15}$ tickets. What is the probability that Jabulile: does not win the prize",
+     "answer_type": "expression",
+     "answer": "\\frac{53}{56}",
+     "choices": null,
+     "marker": {
+      "kind": "expression",
+      "key": "\\frac{53}{56}",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "solution": [
+      "$1-\\frac{3}{56}=\\frac{53}{56}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "53 56",
+     "epub_final_answer": "$1-\\frac{3}{56}=\\frac{53}{56}$",
+     "blind_answer": "\\frac{53}{56}",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 494,
+     "shortcode": "2GXQ",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex14-8:19b|blind~printed",
+        "route": "signature",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex14-8:19b|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "1 - 3/56 = 53/56."
+       },
+       {
+        "pair_id": "Ex14-8:19b|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both 53/56."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex14-8:21a",
+     "kind": "exercise",
+     "lo": "lo:g10m14s7-1-3",
+     "stem": "A jar has purple sweets, blue sweets and green sweets in it. The probability that a sweet chosen at random will be purple is $\\frac{1}{7}$ and the probability that it will be green is $\\frac{3}{5}$ . If I choose a sweet at random what is the probability that it will be: purple or blue green purple",
+     "answer_type": "not_markable",
+     "answer": null,
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "Same as not green: $1-\\frac{3}{5}=\\frac{2}{5}$ $\\frac{3}{5}$ $\\frac{1}{7}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": null,
+     "epub_final_answer": null,
+     "blind_answer": "P(\\text{purple or blue}) = \\frac{2}{5};\\ P(\\text{green}) = \\frac{3}{5};\\ P(\\text{purple}) = \\frac{1}{7}\\ (\\text{also } P(\\text{blue}) = \\frac{9}{35},\\ P(\\text{green or purple}) = \\frac{26}{35})",
+     "verification": "no_printed_answer",
+     "tier": "standard",
+     "printed_page": 494,
+     "shortcode": "2GXS",
+     "verify": {
+      "agreed_with_book_solution": true,
+      "pairs": [
+       {
+        "pair_id": "Ex14-8:21a|blind~book",
+        "route": "not_markable",
+        "verdict": "equivalent",
+        "reason": "typed not markable: nothing is marked, so the book's final is not compared"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": "three-part answer",
+     "tier_source": "typing",
+     "printed_answer_scope": null,
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex14-8:25b",
+     "kind": "exercise",
+     "lo": "lo:g10m14s7-1-1",
+     "stem": "For each of the following, draw a Venn diagram to represent the situation and find an example to illustrate the situation. a sample space in which there are two events that are complementary",
+     "answer_type": "not_markable",
+     "answer": null,
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "[figure] An example is rolling a die. The event of rolling an even number is complementary to the event of rolling an odd number."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": null,
+     "epub_final_answer": null,
+     "blind_answer": null,
+     "verification": "no_printed_answer",
+     "tier": "standard",
+     "printed_page": 495,
+     "shortcode": "2GXY",
+     "verify": {
+      "agreed_with_book_solution": true,
+      "pairs": [
+       {
+        "pair_id": "Ex14-8:25b|blind~book",
+        "route": "not_markable",
+        "verdict": "equivalent",
+        "reason": "typing and the blind solver agree it has no answer to mark"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": "drawing requested",
+     "tier_source": "typing",
+     "printed_answer_scope": null,
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex14-8:28b",
+     "kind": "exercise",
+     "lo": "lo:g10m14s7-1-4",
+     "stem": "A survey was conducted at Mutende Primary School to establish how many of the $\\text{650}$ learners buy vetkoek and how many buy sweets during break. The following was found: $\\text{50}$ learners bought nothing $\\text{400}$ learners bought vetkoek $\\text{300}$ learners bought sweets If a learner is chosen randomly, calculate the probability that this learner buys: sweets only vetkoek only neither vetkoek nor sweets vetkoek and sweets vetkoek or sweets",
+     "answer_type": "not_markable",
+     "answer": null,
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "$\\frac{200}{650}=\\text{30,8}\\%$ $\\frac{300}{650}=\\text{46,2}\\%$ $\\frac{50}{650}=\\text{7,7}\\%$ $\\frac{100}{650}=\\text{15,4}\\%$ $\\frac{600}{650}=\\text{92,3}\\%$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": null,
+     "epub_final_answer": null,
+     "blind_answer": "\\text{sweets only } \\frac{4}{13};\\ \\text{vetkoek only } \\frac{6}{13};\\ \\text{neither } \\frac{1}{13};\\ \\text{both } \\frac{2}{13};\\ \\text{vetkoek or sweets } \\frac{12}{13}",
+     "verification": "no_printed_answer",
+     "tier": "standard",
+     "printed_page": 495,
+     "shortcode": "2GY3",
+     "verify": {
+      "agreed_with_book_solution": true,
+      "pairs": [
+       {
+        "pair_id": "Ex14-8:28b|blind~book",
+        "route": "not_markable",
+        "verdict": "equivalent",
+        "reason": "typed not markable: nothing is marked, so the book's final is not compared"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": "five-part question",
+     "tier_source": "typing",
+     "printed_answer_scope": null,
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex14-8:30",
+     "kind": "exercise",
+     "lo": "lo:g10m14s7-1-4",
+     "stem": "In a class there are 8 learners who play football and hockey 7 learners who do not play football or hockey 13 learners who play hockey 19 learners who play football How many learners are there in the class?",
+     "answer_type": "numeric",
+     "answer": "31",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "Let $H$ and $F$ be the learners who play hockey and football respectively. [figure]"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "31",
+     "epub_final_answer": null,
+     "blind_answer": "31",
+     "verification": "disputed",
+     "tier": "advanced",
+     "printed_page": 495,
+     "shortcode": "2GY5",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex14-8:30|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex14-8:30|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex14-8:30|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ],
+      "unchecked": [
+       "book_final is not in the book solution"
+      ]
+     },
+     "typing_problems": [
+      "book_final is not in the book solution"
+     ],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex14-8:31c",
+     "kind": "exercise",
+     "lo": "lo:g10m14s7-1-4",
+     "stem": "Of $\\text{36}$ people, $\\text{17}$ have an interest in reading magazines and $\\text{12}$ have an interest in reading books, $\\text{6}$ have an interest in reading both magazines and books. If a person is chosen at random from the group, find the probability that the person will: have an interest in reading magazines and books. have an interest in reading books only. not have any interest in reading books.",
+     "answer_type": "not_markable",
+     "answer": null,
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "$\\begin{align*}P&=\\frac{n(E)}{n(S)}\\\\P&=\\frac{6}{36}\\\\P&=\\frac{1}{6}\\end{align*}$",
+      "$\\begin{align*}P&=\\frac{n(E)}{n(S)}\\\\P&=\\frac{6}{36}\\\\P&=\\frac{1}{6}\\end{align*}$",
+      "$\\begin{align*}P&=\\frac{n(E)}{n(S)}\\\\P&=\\frac{36-12}{36}\\\\P&=\\frac{24}{36}\\\\&=\\frac{2}{3}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(i)P = 1 6 ; (ii)P = 1 6 ; (iii)P = 2 3",
+     "epub_final_answer": null,
+     "blind_answer": "\\frac{1}{6};\\ \\frac{1}{6};\\ \\frac{2}{3}",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 496,
+     "shortcode": "2GY6",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex14-8:31c|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same three values 1/6; 1/6; 2/3, only the flattened print and (i)(ii)(iii) labels differ."
+       },
+       {
+        "pair_id": "Ex14-8:31c|blind~book",
+        "route": "not_markable",
+        "verdict": "equivalent",
+        "reason": "typed not markable: nothing is marked, so the book's final is not compared"
+       },
+       {
+        "pair_id": "Ex14-8:31c|book~printed",
+        "route": "not_markable",
+        "verdict": "equivalent",
+        "reason": "typed not markable: nothing is marked, so the book's final is not compared"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": "three-part answer",
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex14-8:32b",
+     "kind": "exercise",
+     "lo": "lo:g10m14s7-1-4",
+     "stem": "$\\text{30}$ learners were surveyed and the following information was revealed from this group: $\\text{18}$ learners take Geography $\\text{10}$ learners take French $\\text{6}$ learners take History, but take neither Geography nor French. In addition the following Venn Diagram has been filled in below: Let $G$ be the event that a learner takes Geography. Let $F$ be the event that a learner takes French. Let $H$ be the event that a learner takes History. [figure] Determine the probability that a learner chosen at random from this group: takes only Geography. takes French and History, but not Geography.",
+     "answer_type": "not_markable",
+     "answer": null,
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "$\\begin{align*}P&=\\frac{n(E)}{n(S)}\\\\&=\\frac{8}{30}\\\\&=\\frac{4}{15}\\end{align*}$",
+      "$\\begin{align*}P&=\\frac{n(E)}{n(S)}\\\\&=\\frac{3}{30}\\\\&=\\frac{1}{10}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "(i)P = 4 15 ; (ii)P = 1 10",
+     "epub_final_answer": null,
+     "blind_answer": "\\frac{4}{15};\\ \\frac{1}{10}",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 496,
+     "shortcode": "2GY7",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex14-8:32b|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Same two values 4/15 and 1/10, only the flattened print and labels differ."
+       },
+       {
+        "pair_id": "Ex14-8:32b|blind~book",
+        "route": "not_markable",
+        "verdict": "equivalent",
+        "reason": "typed not markable: nothing is marked, so the book's final is not compared"
+       },
+       {
+        "pair_id": "Ex14-8:32b|book~printed",
+        "route": "not_markable",
+        "verdict": "equivalent",
+        "reason": "typed not markable: nothing is marked, so the book's final is not compared"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": "two-part answer",
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [
+      "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__f6dbb9b431c22b6dcf1db6af2ae8013b.png"
+     ],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    }
+   ],
+   "visuals": [],
+   "viz_gaps": [
+    {
+     "figure_id": "b04476:1",
+     "src": "tikzpicture/c92d5bf72271985ca080999d00ed8eca.png",
+     "ref": "WE8",
+     "printed_page": 486,
+     "reason": "Worked-example figure: two overlapping circles A and B inside a sample-space rectangle S, with the counts 20 (A only), 5 (overlap), 30 (B only) and 15 (outside both) written in their regions. None of the eight kinds is a Venn diagram. geo_scene could only fake it with two circles, four segments for the rectangle and loose number labels, with no notion of which region is which, so the app could not highlight regions or tie the counts to n(A only), n(A and B), n(B only), n(neither).",
+     "needed_kind": "venn_diagram: two overlapping circles A and B inside a labelled sample-space rectangle S, with a count or element list in each of the four regions (A only, A and B, B only, outside both), regions highlightable one at a time"
+    },
+    {
+     "figure_id": "b04477:2",
+     "src": "tikzpicture/d6e298b745eb7fb6130c1af3b8ccd1e9.png",
+     "ref": "Ex14-7:1",
+     "printed_page": 488,
+     "reason": "Exercise figure: a Venn diagram of the integers 1 to 15 in a grey sample-space rectangle S, with A-only shaded yellow, A and B shaded green, B-only shaded blue, and elements listed inside each of the four regions plus the outside region labelled (A union B)'. No existing kind draws a Venn diagram, shaded overlapping regions or elements placed inside regions. Nothing in the figure is a withheld unknown; the question's answer is derived by reading the regions.",
+     "needed_kind": "venn_diagram: two overlapping circles A and B inside a sample-space rectangle S, region shading, and an element list in each of the four regions (A only, A and B, B only, outside both)"
+    },
+    {
+     "figure_id": "b04478:3",
+     "src": "tikzpicture/452084009251e108e19919001d1293da.png",
+     "ref": "Ex14-7:2",
+     "printed_page": 488,
+     "reason": "Exercise figure: a Venn diagram of the integers 1 to 15 in a grey sample-space rectangle S, with yellow A-only, green A-and-B, blue B-only and a labelled outside region (A union B)', with elements listed in every region. No existing kind draws a Venn diagram, shaded overlapping regions or elements placed inside regions.",
+     "needed_kind": "venn_diagram: two overlapping circles A and B inside a sample-space rectangle S, region shading, and an element list in each of the four regions (A only, A and B, B only, outside both)"
+    },
+    {
+     "figure_id": "b04479:4",
+     "src": "tikzpicture/f5909f28ff000f01a92837309c854074.png",
+     "ref": "Ex14-7:3",
+     "printed_page": 489,
+     "reason": "Exercise figure: a Venn diagram of the integers 1 to 15 in a grey sample-space rectangle S, with yellow A-only, green A-and-B, blue B-only and a labelled outside region (A union B)', elements listed in every region. No existing kind draws a Venn diagram, shaded overlapping regions or elements placed inside regions.",
+     "needed_kind": "venn_diagram: two overlapping circles A and B inside a sample-space rectangle S, region shading, and an element list in each of the four regions (A only, A and B, B only, outside both)"
+    },
+    {
+     "figure_id": "b04480:5",
+     "src": "tikzpicture/e2635db721cca32fd90bd0a8f4fa2f34.png",
+     "ref": "Ex14-7:4",
+     "printed_page": 489,
+     "reason": "Exercise figure: a Venn diagram of the integers 1 to 15 in a grey sample-space rectangle S in which the blue B-only region is empty (B sits wholly inside A), with elements listed in the yellow A-only, green A-and-B and outside regions. No existing kind draws a Venn diagram, shaded overlapping regions, an empty region or elements placed inside regions.",
+     "needed_kind": "venn_diagram: two overlapping circles A and B inside a sample-space rectangle S, region shading, and an element list in each of the four regions (A only, A and B, B only, outside both), with any region allowed to be empty"
+    },
+    {
+     "figure_id": "b04507:6",
+     "src": "tikzpicture/14ddfd64915f5b575313ed92ec944c34.png",
+     "ref": "Ex14-8:4",
+     "printed_page": 491,
+     "reason": "Exercise figure: a Venn diagram of the integers 1 to 15 in a grey sample-space rectangle S, with yellow A-only, green A-and-B, an empty blue B-only region, and a large labelled outside region (A union B)' holding most of the elements. No existing kind draws a Venn diagram, shaded overlapping regions, an empty region or elements placed inside regions.",
+     "needed_kind": "venn_diagram: two overlapping circles A and B inside a sample-space rectangle S, region shading, and an element list in each of the four regions (A only, A and B, B only, outside both), with any region allowed to be empty"
+    },
+    {
+     "figure_id": "b04508:7",
+     "src": "tikzpicture/b7b8fc907a1750b3dc5f23f0d2131f1b.png",
+     "ref": "Ex14-8:5",
+     "printed_page": 492,
+     "reason": "Exercise figure: a Venn diagram of the integers 1 to 15 in a grey sample-space rectangle S, with yellow A-only, a large green A-and-B region, blue B-only, and an empty outside region (A union B)', with elements listed in the three occupied regions. No existing kind draws a Venn diagram, shaded overlapping regions, an empty region or elements placed inside regions.",
+     "needed_kind": "venn_diagram: two overlapping circles A and B inside a sample-space rectangle S, region shading, and an element list in each of the four regions (A only, A and B, B only, outside both), with any region allowed to be empty"
+    }
+   ],
+   "teacher_only": {
+    "seen": 0,
+    "dropped": 0,
+    "reached_claim": 0,
+    "caught_in_claims": 0
+   },
+   "verify": {
+    "disagreements": [
+     {
+      "ref": "Ex14-8:30",
+      "printed": "31",
+      "book": null,
+      "blind": "31",
+      "pairs": [
+       {
+        "pair_id": "Ex14-8:30|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex14-8:30|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex14-8:30|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ],
+      "typing_problems": [
+       "book_final is not in the book solution"
+      ],
+      "unchecked": [
+       "book_final is not in the book solution"
+      ]
+     }
+    ],
+    "unchecked": [
+     {
+      "ref": "Ex14-8:30",
+      "missing": [
+       "book_final is not in the book solution"
+      ]
+     }
+    ],
+    "off_task": [],
+    "no_printed_answer": [
+     {
+      "ref": "Ex14-8:21a",
+      "book": null,
+      "blind": "P(\\text{purple or blue}) = \\frac{2}{5};\\ P(\\text{green}) = \\frac{3}{5};\\ P(\\text{purple}) = \\frac{1}{7}\\ (\\text{also } P(\\text{blue}) = \\frac{9}{35},\\ P(\\text{green or purple}) = \\frac{26}{35})",
+      "agreed_with_book_solution": true,
+      "answer_type": "not_markable"
+     },
+     {
+      "ref": "Ex14-8:25b",
+      "book": null,
+      "blind": null,
+      "agreed_with_book_solution": true,
+      "answer_type": "not_markable"
+     },
+     {
+      "ref": "Ex14-8:28b",
+      "book": null,
+      "blind": "\\text{sweets only } \\frac{4}{13};\\ \\text{vetkoek only } \\frac{6}{13};\\ \\text{neither } \\frac{1}{13};\\ \\text{both } \\frac{2}{13};\\ \\text{vetkoek or sweets } \\frac{12}{13}",
+      "agreed_with_book_solution": true,
+      "answer_type": "not_markable"
+     }
+    ],
+    "typing_problems": [
+     {
+      "ref": "Ex14-7:1",
+      "problems": [
+       "a choice needs 2–5 options with the key among them",
+       "options said to be the stem's are not all in the stem"
+      ]
+     },
+     {
+      "ref": "Ex14-7:2",
+      "problems": [
+       "a choice needs 2–5 options with the key among them",
+       "options said to be the stem's are not all in the stem"
+      ]
+     },
+     {
+      "ref": "Ex14-8:30",
+      "problems": [
+       "book_final is not in the book solution"
+      ]
+     }
+    ],
+    "printed_not_in_asked_form": [],
+    "forms_from_book_rules": [],
+    "forms_the_marker_cannot_check": [],
+    "retyped": [],
+    "tier_checks": [
+     {
+      "ref": "Ex14-7:1",
+      "typing": "standard",
+      "check": "basic"
+     },
+     {
+      "ref": "Ex14-8:13e",
+      "typing": "standard",
+      "check": "standard"
+     },
+     {
+      "ref": "Ex14-8:16b",
+      "typing": "basic",
+      "check": "basic"
+     },
+     {
+      "ref": "Ex14-8:17f",
+      "typing": "basic",
+      "check": "standard"
+     },
+     {
+      "ref": "Ex14-8:30",
+      "typing": "advanced",
+      "check": "advanced"
+     }
+    ]
+   },
+   "figure_blocked": [
+    "Ex14-7:1",
+    "Ex14-7:2",
+    "Ex14-7:3",
+    "Ex14-7:4",
+    "Ex14-8:4",
+    "Ex14-8:5"
+   ],
+   "oracle": {
+    "tally": {
+     "claims": 19,
+     "questions": 20,
+     "worked_examples_kept_as_teaching": 6,
+     "by_objective": [
+      {
+       "lo": "lo:g10m14s7-1-1",
+       "claims": 4,
+       "items": 4
+      },
+      {
+       "lo": "lo:g10m14s7-1-2",
+       "claims": 3,
+       "items": 3
+      },
+      {
+       "lo": "lo:g10m14s7-1-3",
+       "claims": 2,
+       "items": 11
+      },
+      {
+       "lo": "lo:g10m14s7-1-4",
+       "claims": 10,
+       "items": 8
+      }
+     ]
+    },
+    "verdict": "GREEN",
+    "subheadings": [
+     {
+      "anchor": "EMA84",
+      "status": "covered",
+      "missing_items": []
+     }
+    ]
+   },
+   "counts": {
+    "claims": 19,
+    "claims_dropped": 0,
+    "items": 26,
+    "worked_examples": 1,
+    "exercises": 25,
+    "by_answer_type": {
+     "not_markable": 6,
+     "choice": 5,
+     "expression": 11,
+     "numeric": 4
+    },
+    "by_solution_provenance": {
+     "book_worked": 1,
+     "book_worked_epub": 25
+    },
+    "by_verification": {
+     "agreed": 22,
+     "no_printed_answer": 3,
+     "disputed": 1
+    },
+    "visuals": 0,
+    "viz_gaps": 7,
+    "figure_blocked": 6,
+    "unmapped_worked_examples": 0
+   },
+   "failed": {
+    "s2": false,
+    "s3": false
+   }
+  }
+ ],
+ "failed_lessons": [],
+ "calls": {
+  "by_phase": {
+   "S2 Claims": 1,
+   "S3 Typing": 1,
+   "S3 Blind re-solve": 2,
+   "S3 Tier check": 1,
+   "S3 Judge": 1,
+   "S4 Visuals": 1,
+   "S8 Oracle": 1
+  },
+  "per_lesson": {
+   "g10m14s7-1": 8
+  },
+  "total": 8
+ },
+ "meter": {
+  "stage": "S2-S4,S8",
+  "record": "uv run meter_run.py record --book g10-math --stage S2-S4,S8 --run <runId>",
+  "by_stage": "uv run meter_run.py summary --book g10-math --by phase",
+  "by_lesson": "uv run meter_run.py summary --book g10-math --by lesson",
+  "note": "Phase titles start with their stage (S2, S3, S4, S8), so `--by phase` is the per-stage cost; every label carries the lesson slug (S3:blind:<slug>:1), so `--by lesson` is the per-lesson cost."
+ }
+}

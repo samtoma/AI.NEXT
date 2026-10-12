@@ -1,0 +1,64 @@
+{
+ "mode": "verify",
+ "book": "g10-math",
+ "prompts_version": "s7-v7",
+ "by_ref": {
+  "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/s7-verify-ch11",
+  "stage": "S7 verify",
+  "shards_sha256": "2c2320a795eef350cd2e7ac82560143dd2bdedfa31abaf7140f4546048b810c5",
+  "files": 2
+ },
+ "embedded": {
+  "source": "runbook/widgets.workflow.js",
+  "source_sha256": "ed230f08ec96811f4eaa45379aabb16441ac259c0b6b19e018a7b0cfb19de1cf",
+  "args_sha256": "93a90a1364b7cae127ee87172cd0eea0bd2dd59c507592d7ed01ea3e3ae29e54",
+  "generated_sha256": "81df49419fef0e03636db6c9e4d71d2b256c2a193d43a6c5740cb3b25602b08f",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "question_id": "q:g10m11s1-1-2:w001",
+   "template_sha": "ec59de5c76dfc751e5a69235b2a2c4e412a08f67ed184cc7c9a9fe8fda131f62",
+   "reading": {
+    "ask": "sin",
+    "target": 0.6
+   },
+   "construction": "The ladder is the hypotenuse (25 m) and the 15 m foot-to-wall distance is the side opposite the angle between ladder and wall (the angle at the top of the ladder). The wall height is 20 m by Pythagoras. So sin theta = 15/25 = 0.6 (cos 0.8, tan 0.75). On the instrument, drag the leg opposite the marked angle theta to 3 and the leg adjacent to theta to 4. The hypotenuse is then 5 and sin = 3/5 = 0.6. Opposite 6 and adjacent 8, or opposite 15 and adjacent 20, also work because grading is on the ratio. The target is above 0 and below 1, so every limit is satisfied.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "used-cosine",
+     "matches": true,
+     "why": "The predicate fires when the built triangle has cos theta = 0.6, so adjacent is about 3 and opposite about 4 (hypotenuse 5, sin 0.8). That is the triangle a student builds by taking theta at the ground, with the 15 m side adjacent to it and the 20 m wall height opposite. This is exactly the wrong-angle labelling in the claimed misconception. The ground angle has cos = 15/25 = 0.6, so it fires for this reason."
+    },
+    {
+     "predicate": "used-tangent",
+     "matches": false,
+     "why": "This predicate fires when tan of the built angle is 0.6, for example opposite 3 and adjacent 5. A student who writes sine as opposite over adjacent and finds the sides correctly would take opposite 15 and adjacent 20, and tan = 0.75. That is the correct 3-4-5 triangle, with sin 0.6, so it would be graded correct and would not fire. The tan = 0.6 build mostly comes from a different slip: using the ladder length 25 as a leg beside the 15 foot distance. That is a hypotenuse-versus-leg error, not sine-as-opposite-over-adjacent, so the diagnosis would refute a mistake the student did not make."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m11s1-1-3:w001",
+   "template_sha": "0fb63b0369cec9814cb42603adbe1aaf47c1e6208fca84a63bb69ee3608ba097",
+   "reading": {
+    "ask": "tan",
+    "target": 0.75
+   },
+   "construction": "The angle of depression is measured down from the horizontal at the cliff top, so by alternate angles it equals the angle of elevation at the boat. In the right triangle (cliff vertical, sea level horizontal, right angle at the foot of the cliff) that angle sits at the boat. The side opposite it is the cliff, 30 m. The side adjacent to it is the 40 m distance along the sea. So tan θ = 30/40 = 0.75. The question gives only the two legs, so tan is the ratio asked for. On the instrument I put the marked angle θ at the end of the horizontal leg, set the horizontal leg to 4 and the vertical leg to 3 (or 8 and 6, or 40 and 30 if the scale allows), and the live readout shows tan = 0.75. Sin reads 0.6 and cos reads 0.8, which is consistent. Every similar triangle is accepted.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "ratio-inverted",
+     "matches": true,
+     "why": "ratio-inverted is listed for tan. It fires when the built triangle has tan = 4/3 (legs 4 and 3 with the marked angle at the other vertex), the reciprocal of 0.75. For this question that is the typical result of treating the angle of depression as the interior angle at the cliff top. That angle's opposite side is the 40 m distance and its adjacent side is the 30 m cliff, so the two legs trade places and the ratio belongs to the other acute angle. That is the claimed misconception (sides sorted from the other angle). A student who simply remembers tan as adjacent over opposite would also fire it, but the angle-of-depression setup makes the other-angle swap the main cause."
+    },
+    {
+     "predicate": "used-sine",
+     "matches": false,
+     "why": "used-sine is listed for tan, so it can fire. It fires when the student builds sin = 0.75 (hypotenuse 4, leg 3, tan about 1.13) in place of tan = 0.75. The claimed cause is calling a side that forms θ the hypotenuse. Here the cliff and the sea are plainly perpendicular and the two given lengths are the legs, so a student has little reason to treat 40 as the hypotenuse. A sin = 0.75 build here would mostly come from reaching for the wrong ratio (confusing SOH with TOA, or reading 30/40 as 'opposite over the longer side'). It would not come from misidentifying the hypotenuse, so the diagnosis would mostly be wrong."
+    }
+   ]
+  }
+ ]
+}

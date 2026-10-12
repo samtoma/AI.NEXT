@@ -1,0 +1,429 @@
+{
+ "mode": "verify",
+ "book": "g10-math",
+ "prompts_version": "s7-v7",
+ "by_ref": {
+  "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/s7-verify-ch01",
+  "stage": "S7 verify",
+  "shards_sha256": "b91337c18e2b1f3ab1f6772f1dea02bd476928a722ec33efc84a4a6c09796d0a",
+  "files": 6
+ },
+ "embedded": {
+  "source": "runbook/widgets.workflow.js",
+  "source_sha256": "ed230f08ec96811f4eaa45379aabb16441ac259c0b6b19e018a7b0cfb19de1cf",
+  "args_sha256": "07fb4e171905b0e2a911be706aaa2c15da3dd65f6d97f91e93e3eae0e63c2d2a",
+  "generated_sha256": "3dbd0eccd6d2f3beede3ba6558412fda3a30fab3c5bc65c20a398aad6b42e600",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "question_id": "q:g10m1s3-1-1:w001",
+   "template_sha": "d8aecee70591729a07018a858e709dca2939e064c69bba9005a4f4b760da787c",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     0,
+     1,
+     2,
+     3
+    ]
+   },
+   "construction": "Points mode on range [-6,6] (any range containing -3..3 works). -sqrt(n) is real exactly when n >= 0, because the radicand n must be non-negative and the outer minus sign does not change that. So tap the integers 0, 1, 2 and 3 and leave -3, -2 and -1 unmarked. That is 4 targets, which is within the 1-4 limit, and all four are whole numbers inside the range. For n = 0, -sqrt(0) = 0 is real, so 0 is included.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "sign-flipped",
+     "matches": true,
+     "why": "Mode is points and the ask is a set of n values, so sign-flipped is in the can_emit table for points. A student who reads the minus outside the root as a minus under it turns -sqrt(n) into sqrt(-n), which is real exactly when n <= 0. She leaves 1, 2 and 3 unmarked as non-real and marks -3, -2, -1 and 0, which is {-3,-2,-1,0}. That is the negation of the target set {0,1,2,3}, so each of 1, 2 and 3 appears as its negative and the predicate fires. The pattern comes from this misconception, not from random sign slips. The one doubt is that a student could instead call every -sqrt non-real and mark almost nothing, which would be missed-values; the literal rewriting rule gives the negated set."
+    },
+    {
+     "predicate": "extra-values",
+     "matches": true,
+     "why": "Mode is points, so extra-values is in the can_emit table. A student who treats the square root of a negative number as real sees -sqrt(n) as real for every n in -3..3 and marks all seven integers. The values -3, -2 and -1 are not in the answer set, so extra-values fires. This is exactly what 'negative under root called real' predicts, because the negative n values are the only ones that put a negative under the root."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m1s3-1-1:w002",
+   "template_sha": "bd755c519d1e1de2e032e5b4dd3c4a9f2f1b1f4584fe9e3c08f94a1bf079e307",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     0
+    ]
+   },
+   "construction": "Instrument set to {\"mode\":\"points\",\"range\":[-3,3],\"targets\":[0]} (or [-6,6], where 0 is still a whole number inside the range). (n-2)/n is undefined only where the denominator n is 0, and 0 is one of the integers from -3 to 3. Tap the value 0 and nothing else. The answer set {0} has one target, within the 1-4 limit, and is graded as a set. The other integers (-3, -2, -1, 1, 2, 3) give a nonzero denominator, so they stay unmarked. For example n=2 gives 0/2 = 0, which is defined.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "missed-values",
+     "matches": true,
+     "why": "Fires when the student leaves 0 unmarked, for example by tapping only 2 or tapping nothing. A student who judges the fraction by its top sees n=0 give a top of -2, which looks fine, and so skips the zero denominator. That is the 'misses a zero denominator because the top looks fine' branch of the misconception. The usual unmarked-0 answer, {2}, is exactly what this student builds. The only other likely source is an empty or random submission, which is rare next to the numerator-zero error. missed-values is in can_emit for points mode."
+    },
+    {
+     "predicate": "extra-values",
+     "matches": true,
+     "why": "Fires when the student marks a value outside {0}. The salient extra value is n=2, where the top n-2 equals 0. A student who tests the top treats that zero as division by zero and taps 2, either alone ({2}) or alongside the correct 0 ({0,2}). That is the 'treats a zero on top as if it were division by zero' branch. Marking 2 is not a random slip. n=2 is the one integer where the numerator vanishes, so it is the natural extra mark for this misconception. extra-values is in can_emit for points mode."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m1s5-1-3:w001",
+   "template_sha": "0b5d846b0ff42aaed0ae63558dad544c231d674eb08b876a1aad41e5c6ca8b7d",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     -4,
+     -3,
+     -2
+    ]
+   },
+   "construction": "Range [-6,6], mode points. sqrt(20) is about 4.47 (4^2=16 < 20 < 25=5^2) and sqrt(9/4) = 3/2 = 1.5, so n lies strictly between -4.47 and -1.5. Tap -4, -3, -2 (3 targets, all inside the range, within the 1-4 limit). -5 is excluded because -5 < -4.47; -1 is excluded because -1 > -1.5.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "sign-flipped",
+     "matches": false,
+     "why": "The predicate fires on the response {2,3,4}, the negatives of the correct set. A student who ranks -sqrt20 against -sqrt(9/4) by size, ignoring the sign, still believes she is working with negative numbers; her mistake is which of the two endpoints is further left. She would still tap integers in the negative region, so the set is unchanged and the ranking error leaves no sign-flipped trace in a points answer. A {2,3,4} response is far more likely a student who dropped the minus sign on n or misread the line, which is a different mistake, and the ranking refutation would be addressed to a mistake she did not make."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m1s5-1-3:w002",
+   "template_sha": "0b5d846b0ff42aaed0ae63558dad544c231d674eb08b876a1aad41e5c6ca8b7d",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     -5,
+     -4
+    ]
+   },
+   "construction": "Range [-6,6], mode points. sqrt(30) is about 5.48 (5^2=25 < 30 < 36=6^2) and sqrt(10) is about 3.16 (3^2=9 < 10 < 16), so n lies strictly between -5.48 and -3.16. Tap -5 and -4 (2 targets, inside the range). -6 is excluded (below -5.48) and -3 is excluded (above -3.16).",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "sign-flipped",
+     "matches": false,
+     "why": "The predicate fires on {4,5}. The claimed misconception is an error in ordering two negative surds, not an error in the sign of the integers the student marks. A student who ranks by size ignoring sign still places the answers among negative numbers, and the ordering error does not change which negative integers lie between the two endpoints. Marking {4,5} would come from dropping the minus on n, a different mistake, so the diagnosis would mostly misfire."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m1s5-1-3:w003",
+   "template_sha": "0b5d846b0ff42aaed0ae63558dad544c231d674eb08b876a1aad41e5c6ca8b7d",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     -3,
+     -2
+    ]
+   },
+   "construction": "Range [-6,6], mode points. sqrt(14) is about 3.74 (3^2=9 < 14 < 16) and sqrt(3) is about 1.73, so n lies strictly between -3.74 and -1.73. Tap -3 and -2 (2 targets). -4 is excluded (below -3.74) and -1 is excluded (above -1.73).",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "sign-flipped",
+     "matches": false,
+     "why": "The predicate fires on {2,3}, the negatives of the correct set. The claimed misconception, putting -sqrt(big) to the right of -sqrt(small), is a mistake about the order of the endpoints on the negative side. It does not by itself move the student's taps to the positive side. A {2,3} response comes from reading n as positive or dropping all minus signs, which is a different cause, so this diagnosis would refute a mistake she did not make."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m1s5-1-3:w004",
+   "template_sha": "0b5d846b0ff42aaed0ae63558dad544c231d674eb08b876a1aad41e5c6ca8b7d",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     -4,
+     -3,
+     -2,
+     -1
+    ]
+   },
+   "construction": "Range [-6,6], mode points. sqrt(20) is about 4.47, and the upper bound is 0 with a strict inequality, so n lies strictly between -4.47 and 0. Tap -4, -3, -2, -1 (4 targets, the maximum allowed, all inside the range). Do not tap 0 (excluded by n < 0) or -5 (below -4.47).",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "sign-flipped",
+     "matches": false,
+     "why": "The predicate fires on {1,2,3,4}. This question compares one negative surd with 0, not two negative surds, so the claimed misconception (ranking two negative surds by size ignoring the sign) has nothing to act on. Nothing in it would send the student to the positive integers; that response would come from dropping the minus signs altogether, so the diagnosis would not be what a student holding this misconception builds."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m1s5-1-3:w005",
+   "template_sha": "0b5d846b0ff42aaed0ae63558dad544c231d674eb08b876a1aad41e5c6ca8b7d",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     -3,
+     -2
+    ]
+   },
+   "construction": "Range [-6,6], mode points. The cube root of 30 is about 3.11 (3^3=27 < 30 < 64=4^3) and sqrt(2) is about 1.41, so n lies strictly between -3.11 and -1.41. Tap -3 and -2 (2 targets). -4 is excluded (below -3.11) and -1 is excluded (above -1.41).",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "sign-flipped",
+     "matches": false,
+     "why": "The predicate fires on {2,3}. The claimed misconception is about ordering two negative surds, and here one of them is a cube root, which the misconception text never describes. Even for the intended case, the ordering error does not move the student's taps to the positive side. A {2,3} response is a different slip, dropping the sign of n or of both endpoints, so the diagnosis would mostly fire for another reason."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m1s6-1-2:w001",
+   "template_sha": "4e8b66aa915bbef7d364593074866b50f27364b70aee7deecad321c6a2371ea8",
+   "reading": {
+    "a": 1,
+    "b": -4
+   },
+   "construction": "Target (x+1)(x-4) = x^2 - 3x - 4. Anchor one x^2 tile. Top run: 1 plain (positive) x-tile, the +1 side. Left run: 4 hatched, minus-marked x-tiles, the -4 side. The 1-by-4 block those runs bound takes 4 hatched, minus-marked unit tiles, because ab = -4 is negative. In total: x^2, one +x, four -x (net -3x), four -1. |a| = 1 and |b| = 4 are within the limit of 4, and the block is 1x4, so every tile fits. Reachable.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "middle-term-sign",
+     "matches": false,
+     "why": "This predicate fires when the constant -4 is right and the net x-term is not, e.g. 1 hatched tile on top, 4 plain tiles on the left and a 4-tile hatched block, which is (x-1)(x+4) = x^2 + 3x - 4. That build comes from putting the minus on the wrong edge or swapping which number carries it. The claimed misconception is a symbolic slip while collecting like terms, kx - 4x written as (4-k)x. Here the sides x+1 and x-4 are given and the student places each run's tiles by sign. There is no combining step, and the tile picture itself shows 1 plain x-tile against 4 hatched ones leaving 3 hatched. A student holding this misconception would still build the sides as stated and would not fire the predicate. The students who do fire it mostly made an edge or sign-placement slip, so the refutation 'you turned k - 4 round the wrong way' would be aimed at a mistake they did not make. The question also has no k or b."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m1s6-1-2:w002",
+   "template_sha": "4e8b66aa915bbef7d364593074866b50f27364b70aee7deecad321c6a2371ea8",
+   "reading": {
+    "a": 2,
+    "b": -4
+   },
+   "construction": "Target (x+2)(x-4) = x^2 - 2x - 8. Anchor one x^2 tile. Top run: 2 plain x-tiles. Left run: 4 hatched, minus-marked x-tiles. The 2-by-4 block takes 8 hatched, minus-marked unit tiles (ab = -8). In total: x^2, two +x, four -x (net -2x), eight -1. All within |a|,|b| <= 4. Reachable.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "middle-term-sign",
+     "matches": false,
+     "why": "A build that fires it keeps the constant -8 but nets +2x, e.g. 2 hatched tiles on top, 4 plain on the left and 8 hatched units, which is (x-2)(x+4). Alternatively the numbers are swapped between edges as (x+4)(x-2). Either way the cause is a sign or edge-assignment slip. The claimed misconception is a symbolic subtraction-order slip, k - 4 read as 4 - k, with no combining step on this instrument. The sides are given in the question and the plain-against-hatched tiles visibly cancel to a negative net. A holder of the misconception would build x+2 and x-4 correctly, so the predicate would mostly fire for a different reason."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m1s6-1-2:w003",
+   "template_sha": "4e8b66aa915bbef7d364593074866b50f27364b70aee7deecad321c6a2371ea8",
+   "reading": {
+    "a": 3,
+    "b": -4
+   },
+   "construction": "Target (x+3)(x-4) = x^2 - x - 12. Anchor one x^2 tile. Top run: 3 plain x-tiles. Left run: 4 hatched, minus-marked x-tiles. The 3-by-4 block takes 12 hatched, minus-marked unit tiles (ab = -12). In total: x^2, three +x, four -x (net -1x), twelve -1. All within |a|,|b| <= 4. Reachable.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "middle-term-sign",
+     "matches": false,
+     "why": "A build that fires it keeps the constant -12 but nets +1x, e.g. 3 hatched tiles on top, 4 plain on the left and 12 hatched units, which is (x-3)(x+4) = x^2 + x - 12, or the numbers swapped as (x+4)(x-3). That is a sign or edge-placement error. The claimed misconception, reading kx - 4x as (4-k)x when collecting terms, has nothing to act on here. The sides are fixed by the question, the tiles are placed per side, and 3 plain against 4 hatched visibly leaves 1 hatched. A student holding the misconception would still build the correct rectangle, and the predicate would mostly fire for a different slip. Matching is false."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m1s7-2-1:w001",
+   "template_sha": "e0fde866eecd84f4af61f8758f31a901c6caff6204cd5d6df28341317d9fb70d",
+   "reading": {
+    "a": 2,
+    "b": 3
+   },
+   "construction": "Anchor the x² tile. Run 2 positive x-tiles along one edge and 3 positive x-tiles along the other (a=2, b=3). Fill the 2-by-3 block they bound with 6 positive unit tiles. Area = x² + 3x + 2x + 6 = x² + 5x + 6, so the factors read off are (x+2)(x+3). It fits the grid (|a|,|b| ≤ 4) and every cell is filled, so it is a true rectangle.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "middle-term-sign",
+     "matches": false,
+     "why": "The predicate fires when the constant is right (6) and the linear term is not. The factor pairs of 6 are (1,6), (2,3) and their negatives. (1,6) is the pair an untested-factor-pair student would reach for, but 6 exceeds |b| ≤ 4, so it cannot be built. The only buildable way to fire is the all-negative pair (−2,−3), giving x²−5x+6. That is a sign slip by a student who already had the right numbers, not an untested factor pair. The misconception cannot show up on this instrument, so false."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m1s7-2-1:w002",
+   "template_sha": "e0fde866eecd84f4af61f8758f31a901c6caff6204cd5d6df28341317d9fb70d",
+   "reading": {
+    "a": 3,
+    "b": 4
+   },
+   "construction": "Anchor the x² tile. Run 3 positive x-tiles along one edge and 4 positive x-tiles along the other (a=3, b=4). Fill the 3-by-4 block with 12 positive unit tiles. Area = x² + 7x + 12, factors (x+3)(x+4). Both runs are within the limit of 4, so it is reachable.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "middle-term-sign",
+     "matches": false,
+     "why": "The factor pairs of 12 are (1,12), (2,6) and (3,4). The two wrong positive pairs, (1,12) and (2,6), need runs of 12 and 6, past the grid limit of 4, so the student cannot build them. The only buildable way to get constant 12 with a wrong linear term is (−3,−4) or (−4,−3), giving −7x. That is a sign error, not the untested-factor-pair misconception, so false."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m1s7-2-1:w003",
+   "template_sha": "e0fde866eecd84f4af61f8758f31a901c6caff6204cd5d6df28341317d9fb70d",
+   "reading": {
+    "a": 2,
+    "b": 4
+   },
+   "construction": "Anchor the x² tile. Run 2 positive x-tiles along one edge and 4 positive x-tiles along the other (a=2, b=4). Fill the 2-by-4 block with 8 positive unit tiles. Area = x² + 6x + 8, factors (x+2)(x+4). Both runs are within the limit of 4, so it is reachable.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "middle-term-sign",
+     "matches": false,
+     "why": "The factor pairs of 8 are (1,8) and (2,4). The wrong pair (1,8) needs a run of 8, past the grid limit of 4, so it cannot be built. The only buildable way to fire is the negative pair (−2,−4) or (−4,−2), giving −6x. That is a sign slip, not an untested pair, so false."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m1s7-2-1:w004",
+   "template_sha": "e0fde866eecd84f4af61f8758f31a901c6caff6204cd5d6df28341317d9fb70d",
+   "reading": {
+    "a": 1,
+    "b": 4
+   },
+   "construction": "Anchor the x² tile. Run 1 positive x-tile along one edge and 4 positive x-tiles along the other (a=1, b=4). Fill the 1-by-4 block with 4 positive unit tiles. Area = x² + 4x + x + 4 = x² + 5x + 4, factors (x+1)(x+4). It fits the grid.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "middle-term-sign",
+     "matches": true,
+     "why": "Construction that fires it: runs of 2 and 2 positive x-tiles with a 2-by-2 block of 4 positive unit tiles. This gives x² + 4x + 4, so the constant 4 is right and the linear term is 4x, not 5x. It is exactly what a student does when she takes 2×2=4 as a factor pair of 4, writes (x+2)(x+2) and never multiplies out to check the middle term. The pair is buildable. The negative pair (−1,−4) also fires but is a minor route. The main route to the predicate here is the untested-pair misconception, so true."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m1s7-2-1:w005",
+   "template_sha": "e0fde866eecd84f4af61f8758f31a901c6caff6204cd5d6df28341317d9fb70d",
+   "reading": {
+    "a": 2,
+    "b": 2
+   },
+   "construction": "Anchor the x² tile. Run 2 positive x-tiles along one edge and 2 positive x-tiles along the other (a=2, b=2). Fill the 2-by-2 block with 4 positive unit tiles. Area = x² + 4x + 4, factors (x+2)(x+2). It fits the grid.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "middle-term-sign",
+     "matches": true,
+     "why": "Construction that fires it: a run of 1 x-tile and a run of 4 x-tiles with a 1-by-4 block of 4 positive unit tiles. This gives x² + 5x + 4, so the constant 4 is right and the linear term is 5x, not 4x. It is the untested factor pair of c=4, namely 1×4, written as (x+1)(x+4) without checking the middle term. The run of 4 is within the grid limit, so the student can build it. The all-negative (−2,−2) also fires but is secondary. The main route is the untested-pair misconception, so true."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m1s7-2-1:w006",
+   "template_sha": "530fb66593623cb3c226c7114f8535d340886ff8c2a7b62d593257c579c59eb6",
+   "reading": {
+    "a": -2,
+    "b": -3
+   },
+   "construction": "x^2-5x+6=(x-2)(x-3), so a=-2, b=-3 (both within |.|<=4). Anchor the x^2 tile; run 2 hatched, minus-marked x-tiles along one edge and 3 along the other; fill the 2-by-3 block with 6 positive unit tiles (negative times negative is positive). The rectangle has sides (x-2) and (x-3), 5 negative x-tiles and 6 positive units.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "middle-term-sign",
+     "matches": true,
+     "why": "Fires on a build whose constant is 6 but whose x-term is not -5x. A student who takes a factor pair of 6 without testing the middle term picks the positive pair 2 and 3, builds (x+2)(x+3): 6 positive units (constant right) with +5x instead of -5x. That is the constant-right, middle-sign-wrong build, so it is exactly this misconception."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m1s7-2-1:w007",
+   "template_sha": "530fb66593623cb3c226c7114f8535d340886ff8c2a7b62d593257c579c59eb6",
+   "reading": {
+    "a": -3,
+    "b": -4
+   },
+   "construction": "x^2-7x+12=(x-3)(x-4), so a=-3, b=-4 (within the |.|<=4 limit). Anchor x^2; run 3 negative x-tiles along one edge and 4 along the other; fill the 3-by-4 block with 12 positive unit tiles. Total 7 negative x-tiles, 12 positive units.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "middle-term-sign",
+     "matches": true,
+     "why": "Fires on a build with constant +12 and an x-term other than -7x. The student who picks a factor pair of 12 without testing the middle term takes the positive pair 3 and 4 (the only pair of 12 that fits the |.|<=4 grid besides the correct negative one), builds (x+3)(x+4): 12 units right, +7x instead of -7x. That is a middle-term sign error produced by this misconception."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m1s7-2-1:w008",
+   "template_sha": "530fb66593623cb3c226c7114f8535d340886ff8c2a7b62d593257c579c59eb6",
+   "reading": {
+    "a": -3,
+    "b": 2
+   },
+   "construction": "x^2-x-6=(x-3)(x+2), so a=-3, b=2. Anchor x^2; run 3 hatched negative x-tiles along one edge and 2 positive x-tiles along the other; the 3-by-2 block takes 6 hatched negative unit tiles (negative times positive). Net x-term is 2-3=-1, constant -6.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "middle-term-sign",
+     "matches": true,
+     "why": "Fires on a build with constant -6 but x-term not -x. A student who writes a factor pair of -6 without testing the middle term can pick 3 and -2 instead of -3 and 2, building (x+3)(x-2): constant -6 right, linear +x instead of -x. A sign-flipped middle term from an untested pair is the misconception described."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m1s7-2-1:w009",
+   "template_sha": "530fb66593623cb3c226c7114f8535d340886ff8c2a7b62d593257c579c59eb6",
+   "reading": {
+    "a": -4,
+    "b": 2
+   },
+   "construction": "x^2-2x-8=(x-4)(x+2), so a=-4, b=2. Anchor x^2; run 4 negative hatched x-tiles along one edge and 2 positive x-tiles along the other; fill the 4-by-2 block with 8 hatched negative unit tiles. Net x-term 2-4=-2, constant -8.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "middle-term-sign",
+     "matches": true,
+     "why": "Fires on a build with constant -8 and wrong x-term. The student who takes a factor pair of -8 without checking the middle term can swap the signs, building (x+4)(x-2): constant -8 right, +2x instead of -2x. That is the constant-right, middle-sign-wrong build this misconception produces (pairs like 1 and 8 do not fit the grid, so the sign swap is the reachable form)."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m1s7-2-1:w010",
+   "template_sha": "530fb66593623cb3c226c7114f8535d340886ff8c2a7b62d593257c579c59eb6",
+   "reading": {
+    "a": 4,
+    "b": -3
+   },
+   "construction": "x^2+x-12=(x+4)(x-3), so a=4, b=-3 (|a|=4 is at the limit). Anchor x^2; run 4 positive x-tiles along one edge and 3 hatched negative x-tiles along the other; fill the 4-by-3 block with 12 hatched negative unit tiles. Net x-term 4-3=+1, constant -12.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "middle-term-sign",
+     "matches": true,
+     "why": "Fires on a build with constant -12 and x-term not +x. A student who picks a factor pair of -12 without testing the middle term takes -4 and 3 instead of 4 and -3, building (x-4)(x+3): constant -12 right, -x instead of +x. That is the untested-pair sign error."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m1s7-2-1:w011",
+   "template_sha": "530fb66593623cb3c226c7114f8535d340886ff8c2a7b62d593257c579c59eb6",
+   "reading": {
+    "a": -4,
+    "b": 1
+   },
+   "construction": "x^2-3x-4=(x-4)(x+1), so a=-4, b=1. Anchor x^2; run 4 hatched negative x-tiles along one edge and 1 positive x-tile along the other; the 4-by-1 block takes 4 hatched negative unit tiles. Net x-term 1-4=-3, constant -4.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "middle-term-sign",
+     "matches": true,
+     "why": "Fires on a build with constant -4 and wrong x-term. A student who writes a factor pair of -4 without testing the middle term can take 4 and -1 (building (x+4)(x-1): +3x instead of -3x), or 2 and -2 (x-term vanishes). Each keeps the constant -4 and gets the linear term wrong, which is the behaviour of an untested factor pair."
+    }
+   ]
+  },
+  {
+   "question_id": "q:g10m1s7-2-1:w012",
+   "template_sha": "530fb66593623cb3c226c7114f8535d340886ff8c2a7b62d593257c579c59eb6",
+   "reading": {
+    "a": 3,
+    "b": -1
+   },
+   "construction": "x^2+2x-3=(x+3)(x-1), so a=3, b=-1. Anchor x^2; run 3 positive x-tiles along one edge and 1 hatched negative x-tile along the other; the 3-by-1 block takes 3 hatched negative unit tiles. Net x-term 3-1=+2, constant -3.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "middle-term-sign",
+     "matches": true,
+     "why": "Fires on a build with constant -3 and x-term not +2x. The student who takes a factor pair of -3 without testing the middle term can pick -3 and 1 instead of 3 and -1, building (x-3)(x+1): constant -3 right, -2x instead of +2x. That is the sign-wrong middle term from an untested factor pair."
+    }
+   ]
+  }
+ ]
+}

@@ -29,6 +29,8 @@ const META: Record<string, KindMeta> = {
   harakat_reveal: { glyph: "⁘", chip: "border-arabic-line bg-arabic-wash text-arabic" },
   case_table: { glyph: "▦", chip: "border-rust/35 bg-rust-wash text-rust" },
   irab_tree: { glyph: "⑂", chip: "border-accent/35 bg-accent-wash text-accent-deep" },
+  // answer 37d — the book's own picture, a stand-in until a native kind draws it
+  book_image: { glyph: "▣", chip: "border-line text-ink-soft bg-card" },
 };
 
 export function kindMeta(kind: string): KindMeta {

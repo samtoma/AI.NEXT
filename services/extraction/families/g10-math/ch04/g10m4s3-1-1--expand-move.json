@@ -1,0 +1,90 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m4s3-1-1:expand-move",
+ "kind": "family",
+ "lo_id": "lo:g10m4s3-1-1",
+ "parent_question_id": "q:g10m4s3-1-1:ex4-2-1a",
+ "source_page": 80,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    2,
+    7
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    2,
+    7
+   ]
+  },
+  {
+   "name": "k",
+   "randint": [
+    1,
+    15
+   ]
+  },
+  {
+   "name": "b",
+   "let": "p + q"
+  },
+  {
+   "name": "pq",
+   "let": "p * q"
+  },
+  {
+   "name": "c",
+   "let": "pq - k"
+  },
+  {
+   "require": "c != 0",
+   "why": "a zero constant term would drop a term from the answer, and the entry-level question should show all three terms of ax^2 + bx + c"
+  },
+  {
+   "name": "cs",
+   "let": "'+' if c > 0 else '-'"
+  },
+  {
+   "name": "cm",
+   "let": "abs(c)"
+  }
+ ],
+ "constraints": [
+  "c != 0"
+ ],
+ "stem": "Write $(x+{=p})(x+{=q})={=k}$ in standard form $ax^{2}+bx+c=0$.",
+ "solution": [
+  "Expand the brackets on the left-hand side by multiplying each term in the first bracket by each term in the second: $(x+{=p})(x+{=q}) = x^{2}+{=q}x+{=p}x+{=pq}$.",
+  "Add the like terms ${=q}x+{=p}x={=b}x$, so the equation becomes $x^{2}+{=b}x+{=pq}={=k}$.",
+  "Standard form has $0$ on the right-hand side, so subtract ${=k}$ from both sides: $x^{2}+{=b}x+{=pq}-{=k}=0$.",
+  "Work out the constant term: ${=pq}-{=k}={=c}$. The equation in standard form is $x^{2} + {=b}x {=cs} {=cm} = 0$."
+ ],
+ "marker": {
+  "kind": "equation",
+  "answer": "x^2 + {=b}*x {=cs} {=cm} = 0",
+  "form": null,
+  "variables": [
+   "x"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m4s3-1-1:cross-terms-dropped",
+   "label": "Multiplies only the first and last terms of the two brackets",
+   "description": "Expands (x + p)(x + q) as x^2 + pq, so the middle term (p + q)x never appears in the standard form."
+  },
+  {
+   "id": "mc:g10m4s3-1-1:no-sign-change-across",
+   "label": "Moves a term across the equals sign without changing its sign",
+   "description": "Writes x^2 + (p + q)x + pq + k = 0 instead of subtracting k, so the constant term is pq + k rather than pq - k."
+  }
+ ],
+ "notes": "Entry point of the skill: a monic product (leading coefficient 1) equal to a positive constant, so the only moves are expand, collect the two x terms, and subtract the constant. It is the book's ex4-2-1 method at its smallest. The answer is unique: it is the left-hand side minus the right-hand side with a = 1, so nothing can be rescaled or sign-flipped. p and q are 2..7 so no coefficient of 1 has to be hidden; c = pq - k is never 0 and may be negative (the sign of the constant is the one place an instance can go wrong). The variable is x in every instance (the book uses r and d). Checked by simulation: 600 draws, all steps and the marker answer agree with an independent expansion."
+}

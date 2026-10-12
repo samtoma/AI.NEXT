@@ -1,0 +1,60 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m5s6-1-2:scaled",
+ "kind": "family",
+ "lo_id": "lo:g10m5s6-1-2",
+ "parent_question_id": "q:g10m5s6-1-2:ex5-3-3",
+ "source_page": 119,
+ "tier": "standard",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "i",
+   "randint": [
+    0,
+    5
+   ]
+  },
+  {
+   "name": "a",
+   "let": "[1, 2, 1, 3, 2, 5][i]"
+  },
+  {
+   "name": "m",
+   "let": "[3, 5, 15, 7, 21, 11][i]"
+  },
+  {
+   "name": "c",
+   "let": "[2, 3, 4, 4, 5, 6][i]"
+  },
+  {
+   "name": "k",
+   "randint": [
+    2,
+    9
+   ]
+  },
+  {
+   "require": "a * a + m == c * c",
+   "why": "(a, root m, c) must be a right-angled triple"
+  }
+ ],
+ "constraints": [
+  "a * a + m == c * c"
+ ],
+ "stem": "In the right-angled triangle $ABC$ the right angle is at $B$, $AB = {=k}\\sqrt{{=m}}$, $BC = {=k * a}$ and $AC = {=k * c}$. Let $\\theta$ be the angle at $A$. Solve for $\\tan{\\theta}$ in surd form.",
+ "marker": {
+  "kind": "surd",
+  "answer": "{=a}/sqrt({=m})",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "solution": [
+  "For the angle $\\theta$ at $A$, the opposite side is $BC = {=k * a}$ and the adjacent side is $AB = {=k}\\sqrt{{=m}}$. The hypotenuse $AC$ is not needed for $\\tan{\\theta}$.",
+  "$\\tan{\\theta}=\\frac{\\text{opposite}}{\\text{adjacent}}=\\frac{BC}{AB}=\\frac{{=k * a}}{{=k}\\sqrt{{=m}}}$",
+  "Cancel the common factor ${=k}$ in the numerator and the denominator: $\\tan{\\theta}=\\frac{{=a}}{\\sqrt{{=m}}}$"
+ ],
+ "notes": "Standard tier, the book's typical exercise (ex5-3-3 and ex5-8-7 pattern): all three sides are given as the same multiple k of a base triple (a, root m, c), so the ratio needs a common factor cancelled. Base triples satisfy a^2 + m = c^2 with m squarefree: (1,3,2) (the book's own), (2,5,3), (1,15,4), (3,7,4), (2,21,5), (5,11,6). k runs 2..9 so the surd leg never prints as '1 sqrt(m)'. The hypotenuse is given but unused for tan, as in the book. Answer a/sqrt(m) (denominator not rationalised, as the book prints it); marker form null so the rationalised form is also accepted. 6 x 8 = 48 distinct stems. Figure replaced by a verbal description, theta at A, right angle at B."
+}

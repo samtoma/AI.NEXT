@@ -1,0 +1,823 @@
+{
+ "objectives_version": 1,
+ "book": "g10-math",
+ "chapter": 3,
+ "module": "module:g10m-c03",
+ "lesson": "g10m3s2-1",
+ "title": "Describing sequences",
+ "provenance": {
+  "sections": [
+   {
+    "number": "3.2",
+    "title": "Describing sequences"
+   }
+  ],
+  "part": null,
+  "chapter_intro": false
+ },
+ "status": "approved",
+ "g1": {
+  "approved_by": "auto-pass G1 (AI recommendation)",
+  "approved_at": "2026-10-01T10:52:00+00:00",
+  "verdicts": {
+   "auto": true,
+   "by": "auto-pass G1 (AI recommendation)",
+   "terminology": {
+    "sequence": "keep",
+    "pattern": "keep",
+    "common difference": "keep",
+    "linear sequence": "keep",
+    "t_n": "keep",
+    "general term": "keep",
+    "nth term": "keep",
+    "general formula": "keep",
+    "position n": "keep"
+   },
+   "move_items": {
+    "Ex3-2:1": "lo:g10m3s2-1-3",
+    "Ex3-2:21": "lo:g10m3s2-1-3",
+    "Ex3-2:23": "lo:g10m3s2-1-3"
+   },
+   "links": {},
+   "acknowledged": [],
+   "objectives": {},
+   "outside_items": {}
+  }
+ },
+ "source_run": {
+  "file": "runs/g10-math/objectives/ch03-wf_af4ff113-3d3.json",
+  "sha256": "30148503f1091a7e502004f7ff1f8e29beaabd40ec07998ae54892b4d3ff75fa",
+  "prompts_version": "s1-v5",
+  "packet_sha256": "ecdd8be032994593dab12c53725cf5bb61821458a2de546210461ffa661550c2"
+ },
+ "objectives": [
+  {
+   "id": "lo:g10m3s2-1-1",
+   "provisional_id": "lo:g10m3s2-1-1",
+   "n": 1,
+   "statement": "Determine the common difference of a sequence by subtracting successive terms, and use it to write down the next terms of a linear sequence, including the next picture in a figure pattern.",
+   "label": "Continue linear sequences",
+   "evidence": [
+    {
+     "kind": "intro",
+     "anchor": "b01053",
+     "printed_page": 61,
+     "quote": "The pattern is continued by adding $\\text{3}$ to the previous term.",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "worked_example",
+     "anchor": "WE1",
+     "printed_page": 61,
+     "quote": "So the pattern formed is $4;6;8;10;\\ldots$",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "definition",
+     "anchor": "b01076",
+     "printed_page": 62,
+     "quote": "The common difference is the difference between any term and the term before it.",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex3-1:4a",
+     "printed_page": 66,
+     "quote": "determine the common difference",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex3-1:5a",
+     "printed_page": 66,
+     "quote": "Write down the next three terms in each of the following sequences:",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex3-1:12a",
+     "printed_page": 67,
+     "quote": "Write down the next $\\text{3}$ terms.",
+     "contained": true,
+     "present": true,
+     "supports": true
+    }
+   ],
+   "evidence_dropped": [],
+   "exercise_items": [
+    "Ex3-1:4a",
+    "Ex3-1:4b",
+    "Ex3-1:4c",
+    "Ex3-1:4d",
+    "Ex3-1:5a",
+    "Ex3-1:5b",
+    "Ex3-1:5c",
+    "Ex3-1:5d",
+    "Ex3-1:5e",
+    "Ex3-1:5f",
+    "Ex3-1:5g",
+    "Ex3-1:11a",
+    "Ex3-1:12a",
+    "Ex3-1:13a",
+    "Ex3-2:2",
+    "Ex3-2:3",
+    "Ex3-2:5a",
+    "Ex3-2:5b",
+    "Ex3-2:8a",
+    "Ex3-2:8b",
+    "Ex3-2:8c",
+    "Ex3-2:12a",
+    "Ex3-2:16a",
+    "Ex3-2:17b",
+    "Ex3-2:22a"
+   ],
+   "worked_examples": [
+    "WE1"
+   ],
+   "confidence": "merged",
+   "from": {
+    "a": [
+     "A1",
+     "A3"
+    ],
+    "b": [
+     "B1"
+    ]
+   },
+   "derivation": "derived",
+   "terms": [
+    "sequence",
+    "term",
+    "pattern",
+    "common difference",
+    "linear sequence"
+   ],
+   "edited_at_g1": false,
+   "order_in_parent": 1,
+   "node": {
+    "id": "lo:g10m3s2-1-1",
+    "kind": "learning_objective",
+    "label": "Continue linear sequences",
+    "description": "Determine the common difference of a sequence by subtracting successive terms, and use it to write down the next terms of a linear sequence, including the next picture in a figure pattern.",
+    "source_page": 61,
+    "syllabus_ref": "3.2",
+    "order_in_parent": 1
+   }
+  },
+  {
+   "id": "lo:g10m3s2-1-2",
+   "provisional_id": "lo:g10m3s2-1-2",
+   "n": 2,
+   "statement": "Use the T_n notation to identify the term at a given position (such as T_6, T_{n-1} or the first three terms), distinguishing the position n from the value T_n, including for a repeating pattern of letters.",
+   "label": "Identify terms using T_n",
+   "evidence": [
+    {
+     "kind": "intro",
+     "anchor": "b01059",
+     "printed_page": 62,
+     "quote": "The tenth term of a sequence is ${T}_{10}$",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "intro",
+     "anchor": "b01060",
+     "printed_page": 62,
+     "quote": "The general term is often expressed as the $n^{\\text{th}}$ term",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "intro",
+     "anchor": "b01087",
+     "printed_page": 64,
+     "quote": "the difference between $n$ and ${T}_{n}$",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "summary",
+     "anchor": "b01145",
+     "printed_page": 68,
+     "quote": "is written as ${T}_{n}$",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex3-1:3",
+     "printed_page": 66,
+     "quote": "what is the value of $T_{n-4}$",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex3-1:6",
+     "printed_page": 66,
+     "quote": "determine the values of $T_{6}$ and $T_{9}$",
+     "contained": true,
+     "present": true,
+     "supports": true
+    }
+   ],
+   "evidence_dropped": [],
+   "exercise_items": [
+    "Ex3-1:2",
+    "Ex3-1:3",
+    "Ex3-1:6",
+    "Ex3-1:7",
+    "Ex3-1:8",
+    "Ex3-1:18",
+    "Ex3-2:4",
+    "Ex3-2:6",
+    "Ex3-2:7",
+    "Ex3-2:13",
+    "Ex3-2:14",
+    "Ex3-2:17a",
+    "Ex3-2:24a",
+    "Ex3-2:24b",
+    "Ex3-2:24c"
+   ],
+   "worked_examples": [],
+   "confidence": "agreed",
+   "from": {
+    "a": [
+     "A2"
+    ],
+    "b": [
+     "B2"
+    ]
+   },
+   "derivation": "derived",
+   "terms": [
+    "term",
+    "position",
+    "T_n",
+    "general term",
+    "nth term"
+   ],
+   "edited_at_g1": false,
+   "order_in_parent": 2,
+   "node": {
+    "id": "lo:g10m3s2-1-2",
+    "kind": "learning_objective",
+    "label": "Identify terms using T_n",
+    "description": "Use the T_n notation to identify the term at a given position (such as T_6, T_{n-1} or the first three terms), distinguishing the position n from the value T_n, including for a repeating pattern of letters.",
+    "source_page": 62,
+    "syllabus_ref": "3.2",
+    "order_in_parent": 2
+   }
+  },
+  {
+   "id": "lo:g10m3s2-1-3",
+   "provisional_id": "lo:g10m3s2-1-3",
+   "n": 3,
+   "statement": "Find the general formula T_n = dn + c for a linear sequence from a table, a list of terms or a picture pattern.",
+   "label": "Find the general formula",
+   "evidence": [
+    {
+     "kind": "intro",
+     "anchor": "b01074",
+     "printed_page": 62,
+     "quote": "the general formula will always be of the form: $T_{n}=dn+c$",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "worked_example",
+     "anchor": "WE2",
+     "printed_page": 63,
+     "quote": "The number of people seated at $n$ tables is ${T}_{n}=4+2\\left(n-1\\right)$",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "summary",
+     "anchor": "b01147",
+     "printed_page": 68,
+     "quote": "We can work out a general formula for each number pattern",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex3-1:10a",
+     "printed_page": 66,
+     "quote": "Find the general formula for the following sequences",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex3-1:12b",
+     "printed_page": 67,
+     "quote": "Find the general formula for the sequence",
+     "contained": true,
+     "present": true,
+     "supports": true
+    }
+   ],
+   "evidence_dropped": [],
+   "exercise_items": [
+    "Ex3-1:1",
+    "Ex3-1:10a",
+    "Ex3-1:10b",
+    "Ex3-1:10c",
+    "Ex3-1:11b",
+    "Ex3-1:12b",
+    "Ex3-1:13b",
+    "Ex3-2:1",
+    "Ex3-2:9a",
+    "Ex3-2:9b",
+    "Ex3-2:11a",
+    "Ex3-2:11b",
+    "Ex3-2:11c",
+    "Ex3-2:11d",
+    "Ex3-2:12b",
+    "Ex3-2:16b",
+    "Ex3-2:17c",
+    "Ex3-2:21",
+    "Ex3-2:22b",
+    "Ex3-2:23"
+   ],
+   "worked_examples": [
+    "WE2"
+   ],
+   "confidence": "agreed",
+   "from": {
+    "a": [
+     "A4"
+    ],
+    "b": [
+     "B3"
+    ]
+   },
+   "derivation": "derived",
+   "terms": [
+    "general formula",
+    "T_n",
+    "common difference",
+    "linear sequence"
+   ],
+   "edited_at_g1": false,
+   "order_in_parent": 3,
+   "node": {
+    "id": "lo:g10m3s2-1-3",
+    "kind": "learning_objective",
+    "label": "Find the general formula",
+    "description": "Find the general formula T_n = dn + c for a linear sequence from a table, a list of terms or a picture pattern.",
+    "source_page": 62,
+    "syllabus_ref": "3.2",
+    "order_in_parent": 3
+   }
+  },
+  {
+   "id": "lo:g10m3s2-1-4",
+   "provisional_id": "lo:g10m3s2-1-4",
+   "n": 4,
+   "statement": "Use the general formula T_n to calculate a required term (such as the missing terms or T_25) and to solve for n when the value of a term is given.",
+   "label": "Use the general formula",
+   "evidence": [
+    {
+     "kind": "worked_example",
+     "anchor": "WE3",
+     "printed_page": 64,
+     "quote": "This question requires us to determine the value of the $30^{\\text{th}}$ term",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "worked_example",
+     "anchor": "WE3",
+     "printed_page": 64,
+     "quote": "Solving for $n$ , we get:",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "summary",
+     "anchor": "b01147",
+     "printed_page": 68,
+     "quote": "use it to determine any term in the pattern",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex3-1:9a",
+     "printed_page": 66,
+     "quote": "Calculate the missing terms",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex3-1:11c",
+     "printed_page": 67,
+     "quote": "Use the formula to find how many triangles are in the $25^{\\text{th}}$ picture",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex3-1:12c",
+     "printed_page": 67,
+     "quote": "Find the value of $n$ if $T_n$ is $\\text{191}$",
+     "contained": true,
+     "present": true,
+     "supports": true
+    }
+   ],
+   "evidence_dropped": [],
+   "exercise_items": [
+    "Ex3-1:9a",
+    "Ex3-1:9b",
+    "Ex3-1:9c",
+    "Ex3-1:9d",
+    "Ex3-1:9e",
+    "Ex3-1:11c",
+    "Ex3-1:12c",
+    "Ex3-1:13c",
+    "Ex3-2:10a",
+    "Ex3-2:10b",
+    "Ex3-2:10c",
+    "Ex3-2:12c",
+    "Ex3-2:15",
+    "Ex3-2:16c",
+    "Ex3-2:17d",
+    "Ex3-2:18",
+    "Ex3-2:22c",
+    "Ex3-2:25"
+   ],
+   "worked_examples": [
+    "WE3"
+   ],
+   "confidence": "merged",
+   "from": {
+    "a": [
+     "A5"
+    ],
+    "b": [
+     "B4",
+     "B2"
+    ]
+   },
+   "derivation": "derived",
+   "terms": [
+    "general formula",
+    "term",
+    "T_n",
+    "position n"
+   ],
+   "edited_at_g1": false,
+   "order_in_parent": 4,
+   "node": {
+    "id": "lo:g10m3s2-1-4",
+    "kind": "learning_objective",
+    "label": "Use the general formula",
+    "description": "Use the general formula T_n to calculate a required term (such as the missing terms or T_25) and to solve for n when the value of a term is given.",
+    "source_page": 64,
+    "syllabus_ref": "3.2",
+    "order_in_parent": 4
+   }
+  },
+  {
+   "id": "lo:g10m3s2-1-5",
+   "provisional_id": "lo:g10m3s2-1-5",
+   "n": 5,
+   "statement": "Determine the common difference of a sequence whose terms contain an unknown, find the value of the unknown that makes the terms a linear sequence, and evaluate the terms.",
+   "label": "Unknowns in linear sequences",
+   "evidence": [
+    {
+     "kind": "intro",
+     "anchor": "b01083",
+     "printed_page": 63,
+     "quote": "We see that $d$ is constant.",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "definition",
+     "anchor": "b01084",
+     "printed_page": 63,
+     "quote": "In general, $d=T_{n}-T_{n-1}$",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex3-1:14a",
+     "printed_page": 67,
+     "quote": "Find the common difference for the terms of the list",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex3-1:16a",
+     "printed_page": 67,
+     "quote": "If the following terms make a linear sequence",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex3-2:20a",
+     "printed_page": 70,
+     "quote": "If the following terms make a linear sequence",
+     "contained": true,
+     "present": true,
+     "supports": true
+    }
+   ],
+   "evidence_dropped": [],
+   "exercise_items": [
+    "Ex3-1:14a",
+    "Ex3-1:14b",
+    "Ex3-1:15a",
+    "Ex3-1:15b",
+    "Ex3-1:16a",
+    "Ex3-1:16b",
+    "Ex3-1:17a",
+    "Ex3-1:17b",
+    "Ex3-2:19a",
+    "Ex3-2:19b",
+    "Ex3-2:20a",
+    "Ex3-2:20b"
+   ],
+   "worked_examples": [],
+   "confidence": "merged",
+   "from": {
+    "a": [
+     "A3",
+     "A2"
+    ],
+    "b": [
+     "B5"
+    ]
+   },
+   "derivation": "derived",
+   "terms": [
+    "common difference",
+    "linear sequence",
+    "unknown",
+    "term"
+   ],
+   "edited_at_g1": false,
+   "order_in_parent": 5,
+   "node": {
+    "id": "lo:g10m3s2-1-5",
+    "kind": "learning_objective",
+    "label": "Unknowns in linear sequences",
+    "description": "Determine the common difference of a sequence whose terms contain an unknown, find the value of the unknown that makes the terms a linear sequence, and evaluate the terms.",
+    "source_page": 63,
+    "syllabus_ref": "3.2",
+    "order_in_parent": 5
+   }
+  }
+ ],
+ "pool_items": [
+  "Ex3-2:1",
+  "Ex3-2:10a",
+  "Ex3-2:10b",
+  "Ex3-2:10c",
+  "Ex3-2:11a",
+  "Ex3-2:11b",
+  "Ex3-2:11c",
+  "Ex3-2:11d",
+  "Ex3-2:12a",
+  "Ex3-2:12b",
+  "Ex3-2:12c",
+  "Ex3-2:13",
+  "Ex3-2:14",
+  "Ex3-2:15",
+  "Ex3-2:16a",
+  "Ex3-2:16b",
+  "Ex3-2:16c",
+  "Ex3-2:17a",
+  "Ex3-2:17b",
+  "Ex3-2:17c",
+  "Ex3-2:17d",
+  "Ex3-2:18",
+  "Ex3-2:19a",
+  "Ex3-2:19b",
+  "Ex3-2:2",
+  "Ex3-2:20a",
+  "Ex3-2:20b",
+  "Ex3-2:21",
+  "Ex3-2:22a",
+  "Ex3-2:22b",
+  "Ex3-2:22c",
+  "Ex3-2:23",
+  "Ex3-2:24a",
+  "Ex3-2:24b",
+  "Ex3-2:24c",
+  "Ex3-2:25",
+  "Ex3-2:3",
+  "Ex3-2:4",
+  "Ex3-2:5a",
+  "Ex3-2:5b",
+  "Ex3-2:6",
+  "Ex3-2:7",
+  "Ex3-2:8a",
+  "Ex3-2:8b",
+  "Ex3-2:8c",
+  "Ex3-2:9a",
+  "Ex3-2:9b"
+ ],
+ "prerequisites": [
+  {
+   "src": "lo:g10m3s2-1-3",
+   "dst": "lo:g10m3s2-1-4",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "worked_example",
+     "anchor": "WE2",
+     "printed_page": 63,
+     "quote": "Use the general formula to determine how many people can sit around"
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex3-1:10a",
+     "printed_page": 66,
+     "quote": "Find the general formula for the following sequences and then find"
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex3-1:12c",
+     "printed_page": 67,
+     "quote": "Find the value of $n$ if $T_n$ is"
+    }
+   ],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "WE2 first finds T_n = 4+2(n-1), then uses it for T_12 and to solve 20 = 4+2(n-1); Ex3-1:10a asks to find the general formula and then compute T_10, T_50 and T_100. Finding the formula comes first, and calculating terms relies on it."
+   },
+   "backward": false
+  },
+  {
+   "src": "lo:g10m3s2-1-1",
+   "dst": "lo:g10m3s2-1-3",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "text",
+     "anchor": "b01074",
+     "printed_page": 62,
+     "quote": "for sequences with a common difference, the general formula will always be of the form"
+    },
+    {
+     "kind": "worked_example",
+     "anchor": "WE3",
+     "printed_page": 64,
+     "quote": "$120+(1)(15)=135$"
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex3-1:12b",
+     "printed_page": 67,
+     "quote": "Find the general formula for the sequence"
+    }
+   ],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "The text says that for sequences with a common difference the general formula is T_n = dn + c, with d the difference between terms. WE3 builds its pattern by adding the common difference 15 each time. The formula rests on the common difference."
+   },
+   "backward": false
+  },
+  {
+   "src": "lo:g10m3s2-1-1",
+   "dst": "lo:g10m3s2-1-5",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "exercise",
+     "anchor": "Ex3-1:14a",
+     "printed_page": 67,
+     "quote": "Find the common difference for the terms of the list"
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex3-1:16a",
+     "printed_page": 67,
+     "quote": "If the following terms make a linear sequence"
+    }
+   ],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "Ex14a asks for the common difference of terms containing z. Ex16a says the terms make a linear sequence and asks for k, which means the differences between successive terms must be equal. Both extend the subtract-successive-terms idea to terms with an unknown. The text never states this method, so it is inferred."
+   },
+   "backward": false
+  },
+  {
+   "src": "lo:g10m1s6-1-1",
+   "dst": "lo:g10m3s2-1-4",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "worked_example",
+     "anchor": "WE2",
+     "printed_page": 63,
+     "quote": "20&=4+2n-2"
+    },
+    {
+     "kind": "worked_example",
+     "anchor": "WE3",
+     "printed_page": 64,
+     "quote": "520&=120+15n-15"
+    }
+   ],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "Both quotes are in the anchored text. The step 20=4+2n-2 expands 2(n-1), and 520=120+15n-15 expands 15(n-1). A constant times a binomial is distributed as a step in solving for n, which is the multiplication skill in g10m1s6-1-1."
+   },
+   "backward": false
+  },
+  {
+   "src": "lo:g10m3s2-1-2",
+   "dst": "lo:g10m3s2-1-4",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "worked_example",
+     "anchor": "WE3",
+     "printed_page": 64,
+     "quote": "This question requires us to determine the value of the $30^{\\text{th}}$ term"
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex3-1:12c",
+     "printed_page": 67,
+     "quote": "Find the value of $n$ if $T_n$ is"
+    }
+   ],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "WE3 reads the 30th term as 'find T_n if n=30', which separates position n from value T_n. Ex3-1:12c gives T_n = 191 and asks for n, which again uses that distinction. Solving for n or evaluating a term depends on the T_n notation."
+   },
+   "backward": false
+  },
+  {
+   "src": "lo:g10m3s2-1-1",
+   "dst": "lo:g10m3s2-1-2",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "exercise",
+     "anchor": "Ex3-1:6",
+     "printed_page": 66,
+     "quote": "determine the values of $T_{6}$ and $T_{9}$"
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex3-1:8",
+     "printed_page": 66,
+     "quote": "determine the values of $T_{5}$ and $T_{8}$"
+    }
+   ],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "Ex6 and Ex8 give the start of a pattern (3;8;13;18 and 7;11;15;19) and ask for T_6, T_9 and T_5, T_8. To reach those positions the student must find the common difference and extend the sequence, which is the 1-1 skill. The exercises do not name the common difference, so this is inferred from the task; it is the weakest of the six."
+   },
+   "backward": false
+  }
+ ],
+ "checks": {
+  "ok": true,
+  "failures": [],
+  "warnings": [
+   "g10m3s2-1: objectives are not numbered in the order the book practises them (rule 6)"
+  ]
+ },
+ "outside_items": []
+}

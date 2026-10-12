@@ -11,7 +11,7 @@ this file says how they relate.
 | **Requirements** | Stable ids, amended in place | `specs/*/spec.md` + `traceability.md` | An FR id is permanent. Changing its meaning is an *amendment* stamped with the date and the ADR that caused it. Dropping one marks it DROPPED with a reason — ids are never reused. |
 | **Solution release** | SemVer, per branch | `app/package.json` + `CHANGELOG.md` | MAJOR = a student-visible contract breaks · MINOR = a requirement moves to VERIFIED · PATCH = fixes with no requirement change. Each solution branch versions independently — they are separate products (ADR-0010). |
 | **Content** | Digest, not a number | `parity_check.py` | The book set is identified by `source sha256` and its counts. A drift is a failure, not a version bump. |
-| **Content bundles** | The database is the source of truth | `export_generated_content.py` → `seed/generated/` | Bundles are *exports* of state that was generated and reviewed, so **the review stamps travel with them**. This is why `--restore` exists and why it is forbidden on a freshly generated bundle: provenance is not something a generator gets to assert about itself. |
+| **Content bundles** | The database is the source of truth | `export_generated_content.py` → `seed/generated/` | Bundles are *exports* of state that was generated and reviewed, so **the review stamps travel with them**. This is why `--restore` exists and why it is forbidden on a freshly generated bundle: provenance is not something a generator gets to assert about itself. A `--course` export also writes `export-record.json` (course, book, source fingerprint, each file's sha256); "Load a course"'s `restore` mode replays only an export that matches its record (T430). |
 
 ## Why requirements are not SemVer
 

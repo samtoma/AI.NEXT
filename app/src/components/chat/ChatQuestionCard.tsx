@@ -1,14 +1,20 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { mcqChoices, stepText } from "@/lib/types";
+import { markerInputOf } from "@/lib/answer-marker";
+import { MathAnswerInput } from "./MathAnswerInput";
+import { ReentryNote } from "./ReentryNote";
 import type { AttemptResult, SpineQuestion, WidgetQuestionSpec } from "@/lib/types";
 import { MathWidget } from "@/components/student/widgets/render-math-widget";
 import type { WidgetOutcome } from "@/lib/widget-predicates";
 import { TeX } from "@/components/TeX";
+import { QuestionFigures } from "@/components/viz/QuestionFigures";
+import { displayStem } from "@/lib/question-figures";
 import { pct } from "@/lib/mastery";
 import { track } from "@/lib/ga";
-import { submitAttempt } from "@/lib/attempts-client";
+import { AttemptRetryError, submitAttempt } from "@/lib/attempts-client";
+import { ANSWER_ONLY_CARD_NOTE, isAnswerOnly } from "@/lib/question-flags";
 import {
   BUTTON_PRIMARY,
   BUTTON_TERTIARY,
@@ -96,6 +102,18 @@ export function ChatQuestionCard({
     q.questionType === "widget" && q.choices && !Array.isArray(q.choices)
       ? (q.choices as WidgetQuestionSpec)
       : null;
+  // A typed maths question (FR-4320): its `choices` carry a marker spec, and
+  // it is answered in the maths input. Every other question is untouched.
+  const markerInput = useMemo(
+    () => markerInputOf({ questionType: q.questionType, choices: q.choices }),
+    [q.questionType, q.choices]
+  );
+  // The marker's message when the server sent the answer back unrecorded.
+  const [reentry, setReentry] = useState<string | null>(null);
+  // `answer_only` (the book prints no working): no steps on this card (A6).
+  // The server says so on the result; the question's own flag covers a card
+  // shown before any result.
+  const answerOnly = result?.answerOnly === true || isAnswerOnly(q.choices);
 
   const submit = async (widget?: WidgetOutcome) => {
     const given = widget
@@ -123,10 +141,13 @@ export function ChatQuestionCard({
         ...(widget ? { predicate: widget.predicate } : {}),
         ...(retryOfAttemptId != null ? { retryOfAttemptId } : {}),
       });
+      setReentry(null);
       setResult(r);
       onResult(r, q);
     } catch (e) {
-      setError(e instanceof Error ? e.message : "request failed");
+      // Re-entry (T416): nothing was recorded; ask again with the marker's words.
+      if (e instanceof AttemptRetryError) setReentry(e.retry.message);
+      else setError(e instanceof Error ? e.message : "request failed");
     } finally {
       setBusy(false);
     }
@@ -180,8 +201,10 @@ export function ChatQuestionCard({
 
       <div className="px-3.5 py-3">
         <p className="tex-block text-[1rem] text-ink">
-          <TeX text={q.stem} />
+          <TeX text={displayStem(q.stem)} />
         </p>
+        {/* the question's own figure (A3) — never the "[figure]" placeholder */}
+        <QuestionFigures ids={q.figures} />
 
         {!result && (
           <div className="mt-3">
@@ -244,7 +267,18 @@ export function ChatQuestionCard({
                     <TeX text={c.text} />
                   </button>
                 ))}
+                {/* a true but less precise option: asked again, nothing recorded */}
+                <ReentryNote message={reentry} />
               </div>
+            ) : markerInput ? (
+              <MathAnswerInput
+                input={markerInput}
+                value={numeric}
+                onChange={setNumeric}
+                onSubmit={() => void submit()}
+                disabled={busy}
+                reentry={reentry}
+              />
             ) : (
               <input
                 type="text"
@@ -258,6 +292,9 @@ export function ChatQuestionCard({
                   "min-h-[var(--noor-touch-min)] w-full rounded-[var(--play-radius-sm)] bg-card px-4 font-mono text-[1rem] text-ink outline-none placeholder:text-ink-faint sticker-shadow-sm"
                 )}
               />
+            )}
+            {!markerInput && q.questionType !== "mcq" && q.questionType !== "widget" && (
+              <ReentryNote message={reentry} />
             )}
             {/* A widget question has nothing to submit: the construction IS
                 the answer and posts itself the moment the student commits to
@@ -326,7 +363,10 @@ export function ChatQuestionCard({
                       : `Not quite — answer: ${result.correctAnswer}`
                     : lang === "ar"
                       ? "مش مظبوطة — تعالى نشوفها مع بعض"
-                      : "Not quite — let's look at it together"}
+                      : answerOnly
+                        ? // no working to look at together (A6)
+                          "Not quite"
+                        : "Not quite — let's look at it together"}
               </span>
               {debug && (
                 <span className="font-mono text-[0.72rem]">
@@ -346,6 +386,10 @@ export function ChatQuestionCard({
               !result.isCorrect &&
               q.questionType !== "widget" &&
               !cardWithholdsAnswer(probing, revealAnswer) && (
+              <>
+              {/* ANSWER ONLY (A6): the book prints no working, so the card
+                  shows no steps — the answer, and where the method is. */}
+              {answerOnly && <p className="mt-1.5 text-[0.85rem]">{ANSWER_ONLY_CARD_NOTE}</p>}
               <p
                 dir={lang === "ar" ? "rtl" : "ltr"}
                 className="mt-1.5 text-[0.85rem]"
@@ -357,7 +401,21 @@ export function ChatQuestionCard({
                     </>
                   ) : (
                     <>
-                      Correct answer: <strong>{result.correctAnswer}</strong>
+                      Correct answer:{" "}
+                      <strong dir={markerInput ? "ltr" : undefined}>
+                        {/* a typed maths answer's key is maths: typeset it, left to right */}
+                        {markerInput ? (
+                          <TeX
+                            text={
+                              result.correctAnswer.includes("$")
+                                ? result.correctAnswer
+                                : `$${result.correctAnswer}$`
+                            }
+                          />
+                        ) : (
+                          result.correctAnswer
+                        )}
+                      </strong>
                     </>
                   )
                 ) : (
@@ -369,7 +427,9 @@ export function ChatQuestionCard({
                   </button>
                 )}
               </p>
+              </>
             )}
+
             {/* THE REFUTATION — the entry authored for the error this student
                 actually made, not the question's generic solution. Before
                 ADR-0009 this was looked up, logged to analytics and then
@@ -401,7 +461,7 @@ export function ChatQuestionCard({
               </div>
             ) : (
               <>
-                {result.refutation && !result.isCorrect && (
+                {result.refutation && !result.isCorrect && !answerOnly && (
                   <div
                     className={cx(STROKE_SM, "mt-2 rounded-[var(--play-radius-sm)] bg-card px-3 py-2.5 text-ink")}
                   >
@@ -430,7 +490,7 @@ export function ChatQuestionCard({
                     guessing at one of the LO's OTHER misconceptions — which used
                     to repeat the same borrowed explanation across unrelated
                     questions on the same objective. */}
-                {!result.refutation && !result.isCorrect && result.solution.length > 0 && (
+                {!result.refutation && !result.isCorrect && !answerOnly && result.solution.length > 0 && (
                   <div
                     className={cx(STROKE_SM, "mt-2 rounded-[var(--play-radius-sm)] bg-card px-3 py-2.5 text-ink")}
                   >

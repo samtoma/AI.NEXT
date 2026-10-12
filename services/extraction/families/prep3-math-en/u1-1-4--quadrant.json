@@ -1,0 +1,84 @@
+{
+  "format": "ainext.family/1",
+  "id": "tpl:u1-1-4:quadrant",
+  "kind": "family",
+  "lo_id": "lo:u1-1-4",
+  "parent_question_id": "q:u1-1-4:001",
+  "source_page": 11,
+  "tier": "basic",
+  "answer_type": "mcq",
+  "context": null,
+  "params": [
+    {
+      "name": "sx",
+      "choice": [
+        -1,
+        1
+      ]
+    },
+    {
+      "name": "mx",
+      "randint": [
+        1,
+        9
+      ]
+    },
+    {
+      "name": "x",
+      "let": "sx * mx"
+    },
+    {
+      "name": "sy",
+      "choice": [
+        -1,
+        1
+      ]
+    },
+    {
+      "name": "my",
+      "randint": [
+        1,
+        9
+      ]
+    },
+    {
+      "name": "y",
+      "let": "sy * my"
+    },
+    {
+      "name": "qd",
+      "let": "1 if (x > 0 and y > 0) else 2 if (x < 0 and y > 0) else 3 if (x < 0 and y < 0) else 4"
+    },
+    {
+      "name": "names",
+      "let": "{1: 'the first quadrant', 2: 'the second quadrant', 3: 'the third quadrant', 4: 'the fourth quadrant'}"
+    },
+    {
+      "name": "wrong",
+      "let": "[k for k in [1, 2, 3, 4] if k != qd]"
+    }
+  ],
+  "stem": "The point ${=pair(x, y)}$ lies in…",
+  "solution": [
+    "The first coordinate is {='positive' if x > 0 else 'negative'} and the second is {='positive' if y > 0 else 'negative'}.",
+    "Both signs together name the quadrant: this is {=names[qd]}."
+  ],
+  "choices": {
+    "correct": "{=names[qd]}",
+    "distractors": [
+      {
+        "text": "{=names[wrong[0]]}",
+        "misconception_id": "mc:u1-1-4:quadrant-from-x-alone"
+      },
+      {
+        "text": "{=names[wrong[1]]}",
+        "misconception_id": "mc:u1-1-4:quadrant-from-x-alone"
+      },
+      {
+        "text": "{=names[wrong[2]]}",
+        "misconception_id": "mc:u1-1-4:quadrant-from-x-alone"
+      }
+    ]
+  },
+  "notes": "Reproduces the hand-written family tpl:u1-1-4:quadrant in generate_questions.py, item for item (decision 16 proof, tests/test_family_reproduction.py). Misconception ids are the catalogue's (seed/generated/misconceptions.json), which the live bank carries. Not loaded by anything: the live Prep-3 bank is the committed export."
+}

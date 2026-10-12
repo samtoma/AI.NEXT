@@ -1,0 +1,65 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m1s5-1-1:count-integers",
+ "kind": "family",
+ "lo_id": "lo:g10m1s5-1-1",
+ "parent_question_id": "q:g10m1s5-1-1:ex1-11-20f",
+ "source_page": 38,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "c",
+   "randint": [
+    3,
+    7
+   ]
+  },
+  {
+   "name": "q",
+   "let": "p + c"
+  },
+  {
+   "name": "r1",
+   "randint": [
+    1,
+    "3 * p ** 2 + 3 * p"
+   ]
+  },
+  {
+   "name": "a",
+   "let": "p ** 3 + r1"
+  },
+  {
+   "name": "r2",
+   "randint": [
+    1,
+    "2 * q"
+   ]
+  },
+  {
+   "name": "b",
+   "let": "q ** 2 + r2"
+  }
+ ],
+ "stem": "Without using a calculator, determine how many integers lie between $\\sqrt[3]{{=a}}$ and $\\sqrt{{=b}}$.",
+ "answer": "q - p",
+ "solution": [
+  "Locate the cube root with perfect cubes: ${=p}^{3} = {=p ** 3}$ and ${=p + 1}^{3} = {=(p + 1) ** 3}$, and ${=p ** 3} < {=a} < {=(p + 1) ** 3}$, so ${=p} < \\sqrt[3]{{=a}} < {=p + 1}$.",
+  "The smallest integer above $\\sqrt[3]{{=a}}$ is therefore ${=p + 1}$.",
+  "Locate the square root with perfect squares: ${=q}^{2} = {=q ** 2}$ and ${=q + 1}^{2} = {=(q + 1) ** 2}$, and ${=q ** 2} < {=b} < {=(q + 1) ** 2}$, so ${=q} < \\sqrt{{=b}} < {=q + 1}$.",
+  "The largest integer below $\\sqrt{{=b}}$ is therefore ${=q}$.",
+  "The integers between the two surds run from ${=p + 1}$ up to ${=q}$, and there are ${=q} - {=p + 1} + 1 = {=q - p}$ of them.",
+  "So ${=q - p}$ integers lie between $\\sqrt[3]{{=a}}$ and $\\sqrt{{=b}}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced: two surds of different kinds (a cube root and a square root) are each located with the book's own method, and the two locations are then read together to count the integers strictly between them. This goes one step past the book's printed questions (which only ask for the two bounding integers of one surd) but uses no new technique: only perfect cubes, perfect squares and counting a run of integers. Parameters: cube root lies between p and p+1 (p 2 to 5), square root lies between q and q+1 with q = p + c, c 3 to 7 (q at most 12, so b at most 168). Neither radicand is a perfect power, so neither surd is an integer, so 'between' is unambiguous. The integers strictly between are p+1, ..., q, so the answer is q - p, always 3 to 7."
+}

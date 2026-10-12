@@ -1,0 +1,26 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m7s3-1-5:build-kite",
+ "lo_id": "lo:g10m7s3-1-5",
+ "parent_question_id": "q:g10m7s3-1-5:ex7-6-4",
+ "tier": "standard",
+ "kind": "polygon_builder",
+ "spec": {
+  "mode": "construct",
+  "shape": "kite"
+ },
+ "stem": "Drag the corners to make a kite. Any kite counts: any size, anywhere on the grid, tilted or not.",
+ "solution": [
+  "A kite has two pairs of equal sides, and the equal sides in each pair are next to each other: $AB = AD$ and $CB = CD$.",
+  "Choose the two corners where the pairs meet: $A(0, 4)$ and $C(0, -1)$, one above the other.",
+  "Put $B(-2, 1)$ and $D(2, 1)$ on either side, level with each other. Then $AB = AD = \\sqrt{2^2 + 3^2} = \\sqrt{13}$ and $CB = CD = \\sqrt{2^2 + 2^2} = \\sqrt{8}$.",
+  "The two pairs are different lengths, so this kite is not a rhombus. A parallelogram with unequal sides fails the test, because its equal sides are opposite each other, not next to each other."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "sides-not-equal",
+   "misconception_id": "mc:g10m7s3-1-5:names-trapezium-or-kite-by-look"
+  }
+ ],
+ "notes": "Anchor ex7-6-4 is a kite drawn to scale (answer: kite, quadrilateral). Building one forces the check the misconception skips: two pairs of equal ADJACENT sides. sides-not-equal is mapped to names-trapezium-or-kite-by-look: the likeliest failing build is an arrowhead or parallelogram that merely looks kite-like with the sides never compared. Left unmapped: not-the-shape (fires for degenerate or self-crossing figures, no single error). In this book a rhombus and a square are also kites (ex7-6-5's answer lists kite), and the kite predicate tests only for adjacent equal pairs, so a rhombus should be accepted; the stem does not rely on it. A student who builds a kite with the equal pairs opposite is making the opposite-versus-adjacent slip; it is not named by any listed misconception, so it gets the plain not-quite."
+}

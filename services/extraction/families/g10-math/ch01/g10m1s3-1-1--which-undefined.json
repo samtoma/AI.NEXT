@@ -1,0 +1,70 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m1s3-1-1:which-undefined",
+ "kind": "family",
+ "lo_id": "lo:g10m1s3-1-1",
+ "parent_question_id": "q:g10m1s3-1-1:ex1-1-3d",
+ "source_page": 11,
+ "tier": "advanced",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "roots",
+   "sample": {
+    "from": "[v for v in range(2, 31) if not is_square(v)]",
+    "k": 3
+   }
+  },
+  {
+   "name": "c",
+   "let": "roots[0]"
+  },
+  {
+   "name": "n",
+   "let": "roots[1]"
+  },
+  {
+   "name": "q",
+   "let": "roots[2]"
+  },
+  {
+   "name": "m",
+   "randint": [
+    1,
+    30
+   ],
+   "resample_while": "m == roots[0] or m == roots[1] or m == roots[2]"
+  }
+ ],
+ "constraints": [],
+ "stem": "Exactly one of the following numbers is undefined. Which one?",
+ "choices": {
+  "correct": "$\\frac{-\\sqrt{{=c}}}{0}$",
+  "distractors": [
+   {
+    "text": "$-\\sqrt{{=n}}$",
+    "misconception_id": "mc:g10m1s3-1-1:minus-outside-root-read-as-inside"
+   },
+   {
+    "text": "$\\sqrt{-{=m}}$",
+    "misconception_id": "mc:g10m1s3-1-1:non-real-undefined-swapped"
+   },
+   {
+    "text": "$\\frac{0}{\\sqrt{{=q}}}$",
+    "misconception_id": "mc:g10m1s3-1-1:fraction-judged-by-top"
+   }
+  ]
+ },
+ "solution": [
+  "A number is undefined when it contains a division by zero. A number is non-real when it has a minus sign under a square root. Check each of the four numbers for these two things.",
+  "$-\\sqrt{{=n}}$ has its minus sign outside the root, not under it, and nothing is divided by zero, so it is real.",
+  "$\\sqrt{-{=m}}$ has a minus sign under the square root, so it is non-real. It is not undefined, because nothing is divided by zero.",
+  "$\\frac{0}{\\sqrt{{=q}}}$ has the zero on top, and its denominator $\\sqrt{{=q}}$ is not zero, so nothing is divided by zero. It is equal to $0$, so it is real.",
+  "$\\frac{-\\sqrt{{=c}}}{0}$ has $0$ in the denominator, so it has division by zero and it is undefined, whatever is on top.",
+  "The undefined number is $\\frac{-\\sqrt{{=c}}}{0}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Each option is a different trap from the book's own real/non-real/undefined exercise (ex1-1-3): the correct option copies the book's root-over-zero form (ex1-1-3d, ex1-11-5e); distractor 1 is the book's minus-outside-the-root case (the catalogue description says such a student calls it non-real 'or undefined'); distractor 2 is the book's negative-under-root case, picked by a student who treats non-real and undefined as one idea; distractor 3 is the book's zero-on-top case (ex1-1-3b), picked by a student who reads the zero on top as division by zero. All radicands c, n, q are non-squares chosen without repeats, and the radicand m of the non-real option is different from them, so no two options share a radicand. Exactly one option is undefined, one is non-real and two are real, for every instance. Options are expected to be shuffled by the engine.\n\nPIPELINE NORMALISATION (not an author edit): distinct-by-choices: the stem has no {=…} hole, so it is the same sentence in every instance and only the options differ; the duplicate filter now reads stem plus options, so the family is not collapsed to one item.",
+ "distinct_by_choices": true
+}

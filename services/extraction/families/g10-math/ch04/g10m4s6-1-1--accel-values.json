@@ -1,0 +1,58 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m4s6-1-1:accel-values",
+ "kind": "family",
+ "lo_id": "lo:g10m4s6-1-1",
+ "parent_question_id": "q:g10m4s6-1-1:ex4-5-2",
+ "source_page": 95,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    2,
+    9
+   ]
+  },
+  {
+   "name": "t",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "u",
+   "randint": [
+    1,
+    10
+   ]
+  },
+  {
+   "require": "(a * t * t) % 2 == 0",
+   "why": "keeps s a whole number: the term a t^2 / 2 must be whole"
+  },
+  {
+   "name": "s",
+   "let": "u * t + a * t * t // 2"
+  }
+ ],
+ "constraints": [
+  "a * t * t == 2 * (s - u * t)",
+  "s > u * t",
+  "t != 0"
+ ],
+ "stem": "Solve for $a$ in $s=ut+\\frac{1}{2}at^{2}$ if $s={=s}$, $u={=u}$ and $t={=t}$.",
+ "answer": "a",
+ "solution": [
+  "Ask what $a$ is joined to. In $s=ut+\\frac{1}{2}at^{2}$ the term with $a$ is added to $ut$, so subtract $ut$ from both sides: $s-ut=\\frac{1}{2}at^{2}$.",
+  "Now $a$ is multiplied by $\\frac{1}{2}$ and by $t^{2}$. Multiply both sides by $2$ to clear the fraction: $2(s-ut)=at^{2}$.",
+  "Divide both sides by $t^{2}$ (here $t\\ne0$): $a=\\frac{2(s-ut)}{t^{2}}$.",
+  "Substitute $s={=s}$, $u={=u}$ and $t={=t}$: $a=\\frac{2({=s}-{=u}({=t}))}{({=t})^{2}}$.",
+  "Calculate: $a=\\frac{2({=s-u*t})}{{=t*t}}=\\frac{{=2*(s-u*t)}}{{=t*t}}={=a}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced: combines the book's ex4-5-2 rearrangement (three opposite operations: subtract ut, multiply by 2, divide by t^2, with the book's note t != 0) with the book's ex4-5-18 twist of substituting given values. The instance values are built backwards from a, t and u so s is always a whole number and the answer a is always a whole number between 2 and 9; s - ut is always positive. No decimals or rounding. Typical errors a reviewer may see in wrong answers: dividing ut-term-less s by t^2 without subtracting ut, multiplying by 1/2 instead of 2, or dividing by t instead of t^2. No misconceptions were catalogued for this objective, so none are referenced."
+}

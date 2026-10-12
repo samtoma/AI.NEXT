@@ -1,0 +1,509 @@
+{
+  "format": "ainext.widget-gaps/1",
+  "book": "g10-math",
+  "course_id": "course:us-g10-math-en",
+  "rule": "FR-4306 / FR-1201: every chapter has at least one widget question, or a gap a human has signed. A new kind is built only after Samuel approves it (decision 11, T356).",
+  "chapters": [
+    {
+      "module": "module:g10m-c01",
+      "label": "Chapter 1 — Algebraic expressions",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c02",
+      "label": "Chapter 2 — Exponents",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c03",
+      "label": "Chapter 3 — Number patterns",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c04",
+      "label": "Chapter 4 — Equations and inequalities",
+      "status": "covered",
+      "widgets": 20,
+      "kinds": [
+        "number_line_marker"
+      ],
+      "objectives_with_widgets": [
+        "lo:g10m4s5-1-3",
+        "lo:g10m4s6-1-3",
+        "lo:g10m4s7-1-3"
+      ],
+      "gaps": 22
+    },
+    {
+      "module": "module:g10m-c08",
+      "label": "Chapter 8 — Analytical geometry",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    }
+  ],
+  "uncovered_chapters": [
+    "module:g10m-c01",
+    "module:g10m-c02",
+    "module:g10m-c03",
+    "module:g10m-c08"
+  ],
+  "proposed_kinds": {
+    "equation_balance": {
+      "modules": [
+        "module:g10m-c04"
+      ],
+      "objectives": [
+        "lo:g10m4s2-1-1"
+      ],
+      "why": [
+        "No existing kind constructs a sequence of algebraic steps. number_line_marker (points) would only take the final value, so it is an answer box with a ruler, and most anchor answers are not on it: 9/10, -50/13, -17/13 and -19 are not usable whole numbers in range, and a tap of 15 or 5 teaches nothing. Its sign-flipped, missed-values and extra-values predicates cannot report 'operated on one side only', so that diagnosis would be false. ratio_balance is a beam balance, but it models one direct or inverse proportion with a fourth term, not the general move-both-sides rule. area_model is for x-squared algebra tiles and cannot show a linear equation with two sides. The objective's own misconception, one-sided-operation, is exactly what a balance that tips would reveal, so this is a real gap and not a stretch."
+      ]
+    },
+    "rational_equation_stepper": {
+      "modules": [
+        "module:g10m-c04"
+      ],
+      "objectives": [
+        "lo:g10m4s2-1-2"
+      ],
+      "why": [
+        "number_line_marker (points) is the nearest kind and is a stretch. It takes whole-number targets only, and 'which value is excluded' is a one-line calculation, so it is an answer box with a ruler. It cannot reach the restriction in ex4-1-7j (z not equal to 6/5). It never connects the restriction to why it matters, the solution that lands on a hole. It also has no way to show which terms were multiplied. Its predicates (sign-flipped, missed-values, extra-values) match neither of this objective's two misconceptions, so any diagnostics block would map to ids that do not fit. The sign-flipped predicate would catch the common b + 5 = 0 read as b = 5 error. That error is not in this objective's misconception list, so the extraction would need to add it before the kind could use it. ratio_balance covers only the one-fraction-equals-one-fraction case (ex4-1-15) and its predicates name direct versus inverse variation, which are not this objective's misconceptions."
+      ]
+    },
+    "fraction_clearer": {
+      "modules": [
+        "module:g10m-c04"
+      ],
+      "objectives": [
+        "lo:g10m4s2-1-3"
+      ],
+      "why": [
+        "This objective's misconception list in the lesson file is empty. Even a built kind could not map its predicates to an id until misconceptions are authored, because FR-1215 refuses ids not on the objective's own list. Suggested ids: whole-number-term-left-unmultiplied and bracket-sign-dropped. No existing kind fits. number_line_marker would only take the final answer, which is an answer box in disguise. It also cannot reach the anchors: 24, -22/6, -17/13 and -19 are outside the whole-number range of at most +/-20 or are not whole numbers, which is the FR-1207 case of a target nobody can answer. area_model is for polynomial tiles and cannot show a fraction being multiplied away. ratio_balance models a single proportion, not an equation with several fraction terms."
+      ]
+    },
+    "equation_rearranger": {
+      "modules": [
+        "module:g10m-c04"
+      ],
+      "objectives": [
+        "lo:g10m4s3-1-1"
+      ],
+      "why": [
+        "area_model is monic only ((x+a)(x+b), |a|,|b| <= 4) and has no equals sign, so it can only retest the earlier expansion skill (g10m1s6) on easier numbers. It never touches the rearrangement, which is half the objective and the source of most errors in anchors 1a-1c, all of which have a leading coefficient other than 1 and a non-zero right-hand side. Any other kind would be an answer box for the final expression."
+      ]
+    },
+    "zero_product_slider": {
+      "modules": [
+        "module:g10m-c04"
+      ],
+      "objectives": [
+        "lo:g10m4s3-1-2"
+      ],
+      "why": [
+        "area_model covers the factorising only. The solving step, where this objective's own misconception lives, has no construction of its own. number_line_marker (points mode) could grade the solution set, but the student would solve on paper and just tap the result, so it is an answer box in disguise, and it has no way to show why a perfect square has one solution. Note the sign-flip error ('x+3 = 0 read as x = 3') is an existing predicate on number_line_marker, but no misconception on this objective's list names it, so there is nothing to map it to."
+      ]
+    },
+    "restriction_filter": {
+      "modules": [
+        "module:g10m-c04"
+      ],
+      "objectives": [
+        "lo:g10m4s3-1-3"
+      ],
+      "why": [
+        "number_line_marker could show a solution set but cannot display a restriction, and the student would do the clearing of denominators and the factorising off-screen and tap only the final set, so it is an answer box. area_model, curve_sketcher and product_builder have nothing to do with clearing denominators or accepting or rejecting a root. The anchors' own restrictions (y != 0, z != 0, x != 0) mostly do not exclude a root, so a lesson-3 widget has to supply equations where one root IS excluded to teach the check."
+      ]
+    },
+    "line_pair_intersector": {
+      "modules": [
+        "module:g10m-c04"
+      ],
+      "objectives": [
+        "lo:g10m4s4-1-3"
+      ],
+      "why": [
+        "The mathematics of this objective is that the solution of the pair is the point common to both graphs, and no existing kind holds two lines at once. line_drawer grades one line's equation and never sees where two meet; pair_plotter would take the finished (x, y) with no lines on screen, which is an answer box in disguise (the student would solve algebraically and merely tap the result); curve_sketcher is freehand and single-curve. The single-line line_drawer template filed above covers the drawing step only."
+      ]
+    },
+    "equation_row_combiner": {
+      "modules": [
+        "module:g10m-c04"
+      ],
+      "objectives": [
+        "lo:g10m4s4-1-2"
+      ],
+      "why": [
+        "Elimination is arithmetic on the rows of a system. None of the existing kinds can show two equations column-aligned or accept a row operation: number_line_marker takes a one-variable answer set, pair_plotter and line_drawer work on the graph rather than on the equations, and area_model is quadratic-only. A numeric answer box would hide the very step (subtracting a whole row) where the book's own misconception lives."
+      ]
+    },
+    "substitution_stepper": {
+      "modules": [
+        "module:g10m-c04"
+      ],
+      "objectives": [
+        "lo:g10m4s4-1-1",
+        "lo:g10m4s5-1-2"
+      ],
+      "why": [
+        "Substitution is symbolic: a two-variable system turns into a one-variable equation by replacing a variable with an expression. number_line_marker can only take a finished one-variable answer; pair_plotter or line_drawer would only take the finished pair, or draw it, which is graphical solving (the third objective), not substitution; area_model and polygon_builder are about geometry and quadratics. An answer box would grade the final (x, y) and learn nothing about where the substitution went wrong.",
+        "line_drawer draws one line per question, has no intersection and no substitution, and would change the objective from solving by substitution to reading a graph, which is stretching. number_line_marker has one variable and area_model has no equations at all. The objective's whole method is the substitution step and the two-quantity answer in context, and no existing instrument constructs either."
+      ]
+    },
+    "equation_builder": {
+      "modules": [
+        "module:g10m-c04"
+      ],
+      "objectives": [
+        "lo:g10m4s5-1-1",
+        "lo:g10m4s5-1-3"
+      ],
+      "why": [
+        "Every error this objective names happens while translating the story into an equation or after solving it, and no existing kind builds an equation. number_line_marker would only take the final numeric answer, which is an answer box with a number line drawn round it and cannot tell equal-distances-for-meeting or minutes-with-hourly-speeds from any other wrong number. ratio_balance and line_drawer model proportion and graphs, not a one-unknown story.",
+        "The two number_line_marker templates in this lesson grade only the last step, selecting the solutions the story allows, as a set. Setting up the equation from the text is the first clause of the objective and has no instrument. Large roots (ex4-4-5 gives 28 and -12, the chocolate problem 20 and -30) also fall outside number_line_marker's range limit (within +-20, at most 24 wide), so several anchor questions cannot use even the partial fit."
+      ]
+    },
+    "inverse_operation_balance": {
+      "modules": [
+        "module:g10m-c04"
+      ],
+      "objectives": [
+        "lo:g10m4s6-1-1"
+      ],
+      "why": [
+        "The objective is the algebraic act of undoing operations on both sides, and no existing kind builds an algebraic step. ratio_balance is a beam for the fourth term of a proportion; line_drawer, area_model and number_line_marker are other mathematics. Making a numeric substitution to fit one of them would turn this into an answer box, so it is recorded as a gap rather than forced."
+      ]
+    },
+    "common_factor_extractor": {
+      "modules": [
+        "module:g10m-c04"
+      ],
+      "objectives": [
+        "lo:g10m4s6-1-2"
+      ],
+      "why": [
+        "area_model's factor mode builds (x+a)(x+b) from whole-number a and b and is graded by sign errors on the x and constant tiles. It does not take a letter out of the terms of a formula, and none of its predicates can be mapped to this objective's one misconception, so any template would be a forced fit."
+      ]
+    },
+    "lcd_multiplier": {
+      "modules": [
+        "module:g10m-c04"
+      ],
+      "objectives": [
+        "lo:g10m4s6-1-4"
+      ],
+      "why": [
+        "The only near neighbour is ratio_balance, which handles a/b = c/d with a whole-number fourth term. The anchors here are sums of fractions (1/V = 1/U + 1/W) or have a binomial denominator (f' = f·v/(v − u)), where the unknown is not a fourth proportional and the answers are not whole numbers, so ratio_balance would be a stretch."
+      ]
+    },
+    "number_line_marker ray mode, with a test-point probe": {
+      "modules": [
+        "module:g10m-c04"
+      ],
+      "objectives": [
+        "lo:g10m4s7-1-1"
+      ],
+      "why": [
+        "Every anchor answer is an unbounded ray, for example $(-\\infty, -2)$ and $[-3, \\infty)$, one is the whole real line, and most endpoints are not whole numbers. number_line_marker interval mode needs both ends inside a range and on whole numbers, so a ray drawn with it would be a different, wrong bounded interval. Its points mode takes at most four whole values. No other kind draws a solution set."
+      ]
+    },
+    "interval_notation_builder (number-line picture to interval notation, with a stated number set)": {
+      "modules": [
+        "module:g10m-c04"
+      ],
+      "objectives": [
+        "lo:g10m4s7-1-2"
+      ],
+      "why": [
+        "The objective is the translation between an inequality, a number line and interval notation. number_line_marker cannot draw rays or two-piece sets, and its points mode caps a set at four values, so an infinite integer set like $b > 1$ cannot be shown. No kind builds notation at all, and a bounded-only version (for example marking $3 < x < 6$) just copies the endpoints and diagnoses nothing on this objective's misconception list. The book's figures also cannot be quoted in a widget stem, so the picture has to come from the instrument."
+      ]
+    },
+    "number_line_marker union-of-rays mode (the \"or\" half of compound inequalities)": {
+      "modules": [
+        "module:g10m-c04"
+      ],
+      "objectives": [
+        "lo:g10m4s7-1-3"
+      ],
+      "why": [
+        "The three templates above cover only the double-inequality half of this objective, because a double inequality is one bounded interval. An \"or\" compound gives unbounded rays, which interval mode cannot draw, and or-as-between can never fire on it. Points mode takes at most four whole values."
+      ]
+    }
+  },
+  "gaps": [
+    {
+      "module": "module:g10m-c04",
+      "lo_id": "lo:g10m4s2-1-1",
+      "need_kind": "equation_balance",
+      "description": "A balance-scale equation solver. The equation is shown as two pans of tiles (for example 5x = 2x + 45, or 6x + 3x = 4 - 5(2x - 3) after the brackets are opened). The student builds the solution as a sequence of moves chosen from a menu (add or subtract a term, multiply or divide by a number) and says which side each move acts on. The widget applies the move and redraws both pans. The graded property is that every move keeps the two sides equal and that the last line is x = k. At the end, k is substituted into the ORIGINAL equation and both sides are shown as numbers. A move applied to one side only tips the beam at once and is flagged. Any valid route to x = k is accepted (FR-1205), whether the student moves the x-terms left or right, or divides early or late. Diagnoses: the listed one-sided-operation misconception, which fires when an operation is applied to one pan only. With extra misconceptions authored it would also catch the wrong inverse operation (adding where subtracting was needed), dividing only one term, and a sign slip when a term crosses the equals sign.",
+      "why": "No existing kind constructs a sequence of algebraic steps. number_line_marker (points) would only take the final value, so it is an answer box with a ruler, and most anchor answers are not on it: 9/10, -50/13, -17/13 and -19 are not usable whole numbers in range, and a tap of 15 or 5 teaches nothing. Its sign-flipped, missed-values and extra-values predicates cannot report 'operated on one side only', so that diagnosis would be false. ratio_balance is a beam balance, but it models one direct or inverse proportion with a fourth term, not the general move-both-sides rule. area_model is for x-squared algebra tiles and cannot show a linear equation with two sides. The objective's own misconception, one-sided-operation, is exactly what a balance that tips would reveal, so this is a real gap and not a stretch.",
+      "source": "author-merged-ch04.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c04",
+      "lo_id": "lo:g10m4s2-1-2",
+      "need_kind": "rational_equation_stepper",
+      "description": "A construction for equations with the variable in a denominator, such as 5 - 7/b = 2(b + 4)/b or 2 - 4/(b + 5) = 3b/(b + 5). The student does three things. (1) They place a hole marker at each value that makes a denominator zero. Rational values such as 6/5, from 1/2 = (4z + 1)/(5z - 6), are allowed, and the widget shows the denominator evaluating live as the marker moves. (2) They tap the terms of the equation that get multiplied by the denominator, and the widget shows the cleared equation. Every term, including the lone 5 in 5 - 7/b, must be chosen. (3) They drag their solution onto the line; if it lands on a hole it is shown as rejected, and if not, it is substituted back into the original equation. Diagnoses: multiplies-only-the-fractions fires when a term with no denominator is left unmultiplied. restriction-seen-as-optional fires when the student submits a solution without placing the hole, or still accepts a value that lands on one. Any construction with the right property is accepted.",
+      "why": "number_line_marker (points) is the nearest kind and is a stretch. It takes whole-number targets only, and 'which value is excluded' is a one-line calculation, so it is an answer box with a ruler. It cannot reach the restriction in ex4-1-7j (z not equal to 6/5). It never connects the restriction to why it matters, the solution that lands on a hole. It also has no way to show which terms were multiplied. Its predicates (sign-flipped, missed-values, extra-values) match neither of this objective's two misconceptions, so any diagnostics block would map to ids that do not fit. The sign-flipped predicate would catch the common b + 5 = 0 read as b = 5 error. That error is not in this objective's misconception list, so the extraction would need to add it before the kind could use it. ratio_balance covers only the one-fraction-equals-one-fraction case (ex4-1-15) and its predicates name direct versus inverse variation, which are not this objective's misconceptions.",
+      "source": "author-merged-ch04.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c04",
+      "lo_id": "lo:g10m4s2-1-3",
+      "need_kind": "fraction_clearer",
+      "description": "A common-denominator multiplier for equations with numeric fractions, such as (x + 2)/4 - (x - 6)/3 = 1/2 or 3 - (y - 2)/4 = 4. The student turns a dial to a whole number to multiply BOTH sides. Every term is drawn as a tile, so the student sees each denominator cancel, or fail to cancel, as the number changes. The graded property is that the chosen multiplier clears every denominator and is applied to every term, including whole-number terms and the right-hand side. Any common multiple is accepted, and the LCD is shown as the shortest route (FR-1205). After the clearing step, the widget shows the resulting equation with brackets kept, so the student can see that subtracting (x - 6)/3 means subtracting the whole bracket. Diagnoses: a whole-number term left unmultiplied, a bracket sign dropped when a fraction is subtracted, and a multiplier that clears only some denominators.",
+      "why": "This objective's misconception list in the lesson file is empty. Even a built kind could not map its predicates to an id until misconceptions are authored, because FR-1215 refuses ids not on the objective's own list. Suggested ids: whole-number-term-left-unmultiplied and bracket-sign-dropped. No existing kind fits. number_line_marker would only take the final answer, which is an answer box in disguise. It also cannot reach the anchors: 24, -22/6, -17/13 and -19 are outside the whole-number range of at most +/-20 or are not whole numbers, which is the FR-1207 case of a target nobody can answer. area_model is for polynomial tiles and cannot show a fraction being multiplied away. ratio_balance models a single proportion, not an equation with several fraction terms.",
+      "source": "author-merged-ch04.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c04",
+      "lo_id": "lo:g10m4s3-1-1",
+      "need_kind": "equation_rearranger",
+      "description": "A builder for 'write in standard form'. The student is given a quadratic equation as a product with a non-unit leading coefficient, or with terms on both sides, for example $(3r-8)(2r-3)=-15$ or $(r+4)(5r-4)=-16$. Step one is an area model that allows any whole-number coefficients (a $3r \\times 2r$ block gives a $6r^2$ tile, and the four partial products are placed one by one). Step two is moving every remaining term across the equals sign with a visible sign flip until one side reads 0. The final line is graded as the polynomial $ax^2+bx+c=0$ with $a>0$, as the property rather than a keystroke sequence. Errors it would diagnose: the cross terms combined wrongly or skipped (counting only $kx$ as the x term), a term moved across with its sign unchanged, the constant on the right-hand side forgotten (so it never reaches the constant of the standard form), and expanding only the first factor.",
+      "why": "area_model is monic only ((x+a)(x+b), |a|,|b| <= 4) and has no equals sign, so it can only retest the earlier expansion skill (g10m1s6) on easier numbers. It never touches the rearrangement, which is half the objective and the source of most errors in anchors 1a-1c, all of which have a leading coefficient other than 1 and a non-zero right-hand side. Any other kind would be an answer box for the final expression.",
+      "source": "author-merged-ch04.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c04",
+      "lo_id": "lo:g10m4s3-1-2",
+      "need_kind": "zero_product_slider",
+      "description": "A widget for the step after factorising: reading the solutions from the factors. The factored equation is shown, for example $(x+3)(x-2)=0$ or $(x-3)(x-3)=0$, with each factor drawn as a bar whose length changes as the student drags a value of $x$ along a number line. The student parks markers where the product is zero and the marked set is graded as a set (all and only). A perfect square has both bars collapsing at the same point, so a second marker has nowhere to go. Errors it would diagnose: roots read with the wrong sign (taking $x=3$ from $(x+3)$), only one root found, a second root forced where the quadratic is a perfect square (mc:g10m4s3-1-2:always-expects-two-solutions), and the same value written twice.",
+      "why": "area_model covers the factorising only. The solving step, where this objective's own misconception lives, has no construction of its own. number_line_marker (points mode) could grade the solution set, but the student would solve on paper and just tap the result, so it is an answer box in disguise, and it has no way to show why a perfect square has one solution. Note the sign-flip error ('x+3 = 0 read as x = 3') is an existing predicate on number_line_marker, but no misconception on this objective's list names it, so there is nothing to map it to.",
+      "source": "author-merged-ch04.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c04",
+      "lo_id": "lo:g10m4s3-1-3",
+      "need_kind": "restriction_filter",
+      "description": "A two-stage builder for equations that reduce to a quadratic. Stage one: the student multiplies every term, including whole-number terms and terms with no denominator, by the lowest common denominator, shown as chips that each get multiplied, and the resulting quadratic is checked (for example $\\frac{10z}{3}=1-\\frac{1}{3z}$ gives $10z^2=3z-1$, then $10z^2-3z+1$ is not the target but the correct line is $10z^2-3z+1=0$ in standard form). Stage two: the solved roots appear as candidates on a number line where the restricted value is drawn as a hole ($z \\neq 0$); the student accepts or rejects each root and the kept set is graded. Errors it would diagnose: multiplying only the fraction terms, keeping a root the restriction forbids (mc:g10m4s3-1-3:keeps-a-root-the-restriction-forbids), rejecting a valid root, and a sign slip while rearranging.",
+      "why": "number_line_marker could show a solution set but cannot display a restriction, and the student would do the clearing of denominators and the factorising off-screen and tap only the final set, so it is an answer box. area_model, curve_sketcher and product_builder have nothing to do with clearing denominators or accepting or rejecting a root. The anchors' own restrictions (y != 0, z != 0, x != 0) mostly do not exclude a root, so a lesson-3 widget has to supply equations where one root IS excluded to teach the check.",
+      "source": "author-merged-ch04.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c04",
+      "lo_id": "lo:g10m4s4-1-3",
+      "need_kind": "line_pair_intersector",
+      "description": "A single grid on which the student draws BOTH lines of the pair, each by dragging two lattice points (as line_drawer does today), with the point where the two lines cross marked and its coordinates shown live as soon as both are placed. The student then reads off x and y, and the instrument substitutes that pair into each ORIGINAL equation and shows left side and right side side by side, so a graph reading that fails the check is visible on the page and the student is asked which line to redraw instead of keeping two 'answers'. Equations would be given in the book's own forms (y = 2x + 1, y + 2x = 0, 2x + y = 5), with lines that meet at lattice points. Errors it would diagnose: a line drawn from a mis-rearranged equation (sign slipped when moving a term, the same slip as in the partial line_drawer template); the y-intercept of a line reported as the solution; the pair read back as (y, x); the intersection read to the nearest tick rather than checked; and, as the objective's own misconception, graph and algebra answers treated as two separate results that are allowed to disagree. It also opens parallel lines (no solution) and coincident lines (infinitely many) later, for the same price.",
+      "why": "The mathematics of this objective is that the solution of the pair is the point common to both graphs, and no existing kind holds two lines at once. line_drawer grades one line's equation and never sees where two meet; pair_plotter would take the finished (x, y) with no lines on screen, which is an answer box in disguise (the student would solve algebraically and merely tap the result); curve_sketcher is freehand and single-curve. The single-line line_drawer template filed above covers the drawing step only.",
+      "source": "author-merged-ch04.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c04",
+      "lo_id": "lo:g10m4s4-1-2",
+      "need_kind": "equation_row_combiner",
+      "description": "Two equations laid out as rows of coefficient tiles aligned in columns, for example '5x  -4y  |  69' over '2x  +3y  |  23'. The student chooses a multiplier for each row so that one variable's coefficients match (or are opposites), chooses add or subtract, and the instrument builds the combined row column by column in front of them, including the right-hand side, so a column that did not cancel is plainly still there. They then finish with the one-variable equation and substitute back. Any valid choice is accepted (multiply to eliminate x or to eliminate y, subtract or add after negating), graded on the property that one coefficient column reads zero and the resulting row is a true consequence of both. Errors it would diagnose: the objective's own subtract-only-some-signs (the first term of the second row is flipped and the rest copied, so a column is added where it should be subtracted); multiplying a row's coefficients but not its right-hand side; adding when the matching coefficients have the same sign, which doubles the variable instead of removing it; and multiplying only one of the two rows when both are needed (e.g. 5x and 2x).",
+      "why": "Elimination is arithmetic on the rows of a system. None of the existing kinds can show two equations column-aligned or accept a row operation: number_line_marker takes a one-variable answer set, pair_plotter and line_drawer work on the graph rather than on the equations, and area_model is quadratic-only. A numeric answer box would hide the very step (subtracting a whole row) where the book's own misconception lives.",
+      "source": "author-merged-ch04.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c04",
+      "lo_id": "lo:g10m4s4-1-1",
+      "need_kind": "substitution_stepper",
+      "description": "The student is given two linear equations as movable tiles. They pick the equation and variable to isolate and set it as y = (expression) or x = (expression), which becomes a bracketed tile; they drop that tile into every place the variable appears in the OTHER equation, and the instrument shows the resulting one-variable equation with the brackets intact. They then solve it with balance steps where each operation is entered for both sides and applied to both sides on screen, and finally substitute the value back into the isolated expression to get the second variable. Graded on the property of each step (the substituted equation is equivalent to the original, no variable left over, each balance step equal on both sides), so any sensible route is accepted. Errors it would diagnose: substituting back into the same equation it came from (a circular 0 = 0 or identity); dropping the brackets or not distributing a coefficient or minus sign over a substituted expression (x + 2·2x + 1 + 3 instead of x + 2(2x + 1) + 3); isolating with a sign error; and an operation applied to one side only, which is the one-sided-operation misconception listed for this lesson and for the prerequisite lesson. The same balance mechanic would serve every linear-equation lesson in the chapter.",
+      "why": "Substitution is symbolic: a two-variable system turns into a one-variable equation by replacing a variable with an expression. number_line_marker can only take a finished one-variable answer; pair_plotter or line_drawer would only take the finished pair, or draw it, which is graphical solving (the third objective), not substitution; area_model and polygon_builder are about geometry and quadratics. An answer box would grade the final (x, y) and learn nothing about where the substitution went wrong.",
+      "source": "author-merged-ch04.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c04",
+      "lo_id": "lo:g10m4s5-1-1",
+      "need_kind": "equation_builder",
+      "description": "A story-to-equation assembler. The student sees a word problem and builds the equation from tiles: quantities from the story (each carrying its unit), operators and the unknown. For the jets problem (1200 km apart, 250 and 350 km/h, same departure) she builds 250t + 350t = 1200; for ex4-4-8 she builds x + 2x = 90. Grading is by property, not position: any equation equivalent to the story with consistent units is accepted. A second step asks which quantity the question wants, and the unknown has to be mapped onto it (x is the smaller angle; the answer needs 30 and 60). The construction would diagnose: setting the two distances equal (250t = 350t, or 'each goes half of 1200') for a meeting problem; a time in minutes placed in an equation built from km/h (unit-mismatch tile flagged); and stopping at the value of x when the unknown is not the quantity asked for.",
+      "why": "Every error this objective names happens while translating the story into an equation or after solving it, and no existing kind builds an equation. number_line_marker would only take the final numeric answer, which is an answer box with a number line drawn round it and cannot tell equal-distances-for-meeting or minutes-with-hourly-speeds from any other wrong number. ratio_balance and line_drawer model proportion and graphs, not a one-unknown story.",
+      "source": "author-merged-ch04.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c04",
+      "lo_id": "lo:g10m4s5-1-2",
+      "need_kind": "substitution_stepper",
+      "description": "A guided substitution tool for a two-equation story. From the word problem the student writes both equations (for ex4-4-11: l = w + 2 and 2l + 2w = 20), then drags the expression for one unknown into the other equation. The tool shows the resulting one-variable equation, the student solves it, and then back-substitutes and states both answers in the context of the problem (length 6 cm and width 4 cm). Each move is applied to both sides, and the tool shows what changes, so doing an operation on one side only is visible. It would diagnose: substituting an expression back into the equation it came from (which gives a trivially true statement and no progress), solving for one unknown and reporting only that one, and the one-sided operation already on the objective's prerequisite list.",
+      "why": "line_drawer draws one line per question, has no intersection and no substitution, and would change the objective from solving by substitution to reading a graph, which is stretching. number_line_marker has one variable and area_model has no equations at all. The objective's whole method is the substitution step and the two-quantity answer in context, and no existing instrument constructs either.",
+      "source": "author-merged-ch04.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c04",
+      "lo_id": "lo:g10m4s5-1-3",
+      "need_kind": "equation_builder",
+      "description": "The same equation_builder proposed for the linear objective, in its quadratic form. The student assembles the quadratic from the story (for ex4-4-5 the Pythagoras relation w^2 + (w+17)^2 = (w+25)^2, for the chocolate problem 300/p - 300/(p+10) = 5), rearranges it to zero, and checks each root against the stated conditions before keeping it. Grading is by equivalence of the equation built, so any correct arrangement is accepted.",
+      "why": "The two number_line_marker templates in this lesson grade only the last step, selecting the solutions the story allows, as a set. Setting up the equation from the text is the first clause of the objective and has no instrument. Large roots (ex4-4-5 gives 28 and -12, the chocolate problem 20 and -30) also fall outside number_line_marker's range limit (within +-20, at most 24 wide), so several anchor questions cannot use even the partial fit.",
+      "source": "author-merged-ch04.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c04",
+      "lo_id": "lo:g10m4s6-1-1",
+      "need_kind": "inverse_operation_balance",
+      "description": "A two-sided balance (or an operation chain around the target letter) in which the formula is shown as two pans. The student builds the rearrangement one step at a time by choosing an inverse operation from a palette (add or subtract a term, multiply or divide by a term; the same palette extended with square and square root would serve the symbolic half of the 'powers and roots' objective). The widget applies the chosen operation to every term on both sides and redraws the formula, and the student succeeds when the named letter stands alone. Errors it would diagnose: an operation applied to one side only (the untouched pan tips the balance, which is mc:g10m4s2-1-1:one-sided-operation), operations taken in the wrong order (dividing by 2 before moving 4y leaves x still joined), an operation applied to only one term of a side (x = 1 − 4y from 2x = 2 − 4y), and the wrong inverse (adding where subtracting was needed).",
+      "why": "The objective is the algebraic act of undoing operations on both sides, and no existing kind builds an algebraic step. ratio_balance is a beam for the fourth term of a proportion; line_drawer, area_model and number_line_marker are other mathematics. Making a numeric substitution to fit one of them would turn this into an answer box, so it is recorded as a gap rather than forced.",
+      "source": "author-merged-ch04.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c04",
+      "lo_id": "lo:g10m4s6-1-2",
+      "need_kind": "common_factor_extractor",
+      "description": "The equation is shown with each term as a row of letter tiles. The student selects the target letter and drags it out of EVERY term into a bracket; the widget shows what is left inside the bracket for each term (including the 1 that remains when the whole term was the factor), and the last step is dividing both sides by the bracket. For equations such as ax² − 4a + bx² − 4b = 0 there is a second stage: before dividing by a common factor, the student must say whether that factor could be 0, which splits the work into the two cases (factor = 0, or the rest = 0). Errors it would diagnose: the letter taken out of only some terms, a term left as 0 instead of 1 inside the bracket, and dividing through by a letter that might be 0 with no check (mc:g10m4s6-1-2:divide-by-unchecked-common-factor).",
+      "why": "area_model's factor mode builds (x+a)(x+b) from whole-number a and b and is graded by sign errors on the x and constant tiles. It does not take a letter out of the terms of a formula, and none of its predicates can be mapped to this objective's one misconception, so any template would be a forced fit.",
+      "source": "author-merged-ch04.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c04",
+      "lo_id": "lo:g10m4s6-1-4",
+      "need_kind": "lcd_multiplier",
+      "description": "Each term of the equation is shown as a block carrying its own denominator (a term with no denominator, such as a whole number or a right-hand side, is a block with denominator 1). The student chooses a lowest common denominator from a few candidates and then drags it onto every block on both sides, watching each denominator cancel to 1; the cleared equation is redrawn and solving continues. A final prompt asks which values of the variable would make a denominator 0. Errors it would diagnose: the multiplier applied to the fraction terms only (mc:g10m4s2-1-2:multiplies-only-the-fractions), a candidate that is not a multiple of every denominator so one denominator survives, and the restriction treated as optional (mc:g10m4s2-1-2:restriction-seen-as-optional).",
+      "why": "The only near neighbour is ratio_balance, which handles a/b = c/d with a whole-number fourth term. The anchors here are sums of fractions (1/V = 1/U + 1/W) or have a binomial denominator (f' = f·v/(v − u)), where the unknown is not a fourth proportional and the answers are not whole numbers, so ratio_balance would be a stretch.",
+      "source": "author-merged-ch04.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c04",
+      "lo_id": "lo:g10m4s7-1-1",
+      "need_kind": "number_line_marker ray mode, with a test-point probe",
+      "description": "The student is given a one-variable inequality such as $-2x > 4$ or $3x + 4 > 5x + 8$ and a number line carrying a draggable test value. As she drags it, the widget marks whether the ORIGINAL inequality is true or false at that value. She then constructs the solution set as one unbounded ray: she places the endpoint, makes it hollow or filled, and chooses which way the arrow runs. The endpoint must be allowed to sit on a half or quarter step, because the book's own answers include $\\frac{2}{5}$, $-\\frac{5}{4}$ and $-\\frac{29}{2}$. Errors it would diagnose: a ray pointing the wrong way after a division by a negative number (mc:g10m4s7-1-1:keeps-sign-after-negative), which the test point exposes at once because her ray covers values the original inequality rejects; and hollow versus filled against the strict or non-strict sign. Multiplying or dividing by the variable (mc:g10m4s7-1-1:multiplies-divides-by-variable) shows nowhere on a number line and would stay undiagnosed.",
+      "why": "Every anchor answer is an unbounded ray, for example $(-\\infty, -2)$ and $[-3, \\infty)$, one is the whole real line, and most endpoints are not whole numbers. number_line_marker interval mode needs both ends inside a range and on whole numbers, so a ray drawn with it would be a different, wrong bounded interval. Its points mode takes at most four whole values. No other kind draws a solution set.",
+      "source": "author-merged-ch04.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c04",
+      "lo_id": "lo:g10m4s7-1-2",
+      "need_kind": "interval_notation_builder (number-line picture to interval notation, with a stated number set)",
+      "description": "The student is shown, or has just built, a set on a number line: one ray, a bounded interval, two separate rays, or the whole line with two points removed, which are the four pictures in the book's first exercise. She also gets a stated number set, $\\mathbb{R}$ or $\\mathbb{Z}$. She assembles the notation from tiles: a round or square bracket at each end, an endpoint number, an infinity tile that accepts only a round bracket, and a union sign for two pieces. When the set is $\\mathbb{Z}$, interval tiles are not offered and she has to list or dot the members instead. Errors it would diagnose: an interval written for an integer or natural-number set (mc:g10m4s7-1-2:interval-notation-for-integer-set), a picture or notation that points the wrong way after a division by a negative number (mc:g10m4s7-1-2:symbol-not-flipped-negative) when the inequality is given first and the student must solve and then render it, and a square bracket on infinity or a bracket that disagrees with the hollow or filled circle.",
+      "why": "The objective is the translation between an inequality, a number line and interval notation. number_line_marker cannot draw rays or two-piece sets, and its points mode caps a set at four values, so an infinite integer set like $b > 1$ cannot be shown. No kind builds notation at all, and a bounded-only version (for example marking $3 < x < 6$) just copies the endpoints and diagnoses nothing on this objective's misconception list. The book's figures also cannot be quoted in a widget stem, so the picture has to come from the instrument.",
+      "source": "author-merged-ch04.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c04",
+      "lo_id": "lo:g10m4s7-1-3",
+      "need_kind": "number_line_marker union-of-rays mode (the \"or\" half of compound inequalities)",
+      "description": "For a question such as $4x + 3 < -3$ or $4x + 3 > 5$, the student solves each branch and places two separate rays on one number line. Each ray has an endpoint, hollow or filled, and a direction. Errors it would diagnose: the two answers squeezed into one stretch between the end values (mc:g10m4s7-1-3:or-as-between), which would show as a single bounded interval shaded between the two endpoints instead of two pieces shaded outside them, and a ray pointing the wrong way after dividing by a negative number (mc:g10m4s7-1-3:negative-no-reverse). The same ray-capable number line would serve the gap on objective 1, so one extension covers both.",
+      "why": "The three templates above cover only the double-inequality half of this objective, because a double inequality is one bounded interval. An \"or\" compound gives unbounded rays, which interval mode cannot draw, and or-as-between can never fire on it. Points mode takes at most four whole values.",
+      "source": "author-merged-ch04.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c04",
+      "lo_id": "lo:g10m4s4-1-3",
+      "need_kind": "no-diagnostic",
+      "description": "template wt:g10m4s4-1-3:draw-line-from-standard-form (1 widget question(s)) was not shipped: it could not say why a wrong answer is wrong",
+      "why": "every misconception its mappings name was refused by S5's fail-closed verifier (mc:g10m4s2-1-1:one-sided-operation, mc:g10m4s2-1-1:one-sided-operation); a widget with no diagnostic could mark an answer wrong and never say why (ADR-0009). Re-author it against a misconception S5 kept, or accept the lesson without it",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c01",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c02",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c03",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c08",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c04",
+      "lo_id": "lo:g10m4s3-1-2",
+      "need_kind": "no-diagnostic",
+      "description": "template wt:g10m4s3-1-2:factor-tiles (5 widget question(s)) was not shipped: it could not say why a wrong answer is wrong",
+      "why": "every misconception its mappings name was refused by S5's fail-closed verifier (mc:g10m1s7-2-1:factor-pair-middle-term-untested); a widget with no diagnostic could mark an answer wrong and never say why (ADR-0009). Re-author it against a misconception S5 kept, or accept the lesson without it",
+      "source": "assemble_misconceptions.py",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c04",
+      "lo_id": "lo:g10m4s3-1-2",
+      "need_kind": "no-diagnostic",
+      "description": "template wt:g10m4s3-1-2:perfect-square-tiles (4 widget question(s)) was not shipped: it could not say why a wrong answer is wrong",
+      "why": "every misconception its mappings name was refused by S5's fail-closed verifier (mc:g10m1s7-2-1:factor-pair-middle-term-untested); a widget with no diagnostic could mark an answer wrong and never say why (ADR-0009). Re-author it against a misconception S5 kept, or accept the lesson without it",
+      "source": "assemble_misconceptions.py",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c04",
+      "lo_id": "lo:g10m4s7-1-3",
+      "need_kind": "no-diagnostic",
+      "description": "template wt:g10m4s7-1-3:double-inequality-negative (4 widget question(s)) was not shipped: it could not say why a wrong answer is wrong",
+      "why": "every misconception its mappings name was refused by S5's fail-closed verifier (mc:g10m4s7-1-3:operate-on-middle-only); a widget with no diagnostic could mark an answer wrong and never say why (ADR-0009). Re-author it against a misconception S5 kept, or accept the lesson without it",
+      "source": "assemble_misconceptions.py",
+      "signed_off": null,
+      "scope": "lesson"
+    }
+  ]
+}

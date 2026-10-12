@@ -1,0 +1,732 @@
+{
+ "summary": "Step-level working checker (answer 30, backlog 78; sw-v2): one blind Sonnet agent per BATCH of canonical solutions reads each question, its options, the key and the numbered working, and flags every step that does not follow — never corrects",
+ "agentCount": 11,
+ "logs": [
+  "chapter 8: 51 solution(s) in 11 batch(es) of up to 5, one checking agent each (sw-v2, sonnet, effort high); packet by reference: 51 shard(s) in /Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/wcheck-ch08-cal-b5h",
+  "36 consistent, 15 flagged (16 step(s)), 0 unclear, 0 unchecked. Save this return value as runs/g10-math/working-check/ch08-<runId>.json, then working_check.py collect."
+ ],
+ "result": {
+  "stage": "SW",
+  "workflow": "working-check",
+  "prompts_version": "sw-v2",
+  "book": "g10-math",
+  "chapter": 8,
+  "part": 1,
+  "parts": 1,
+  "batch": 5,
+  "agents": 11,
+  "effort": "high",
+  "model": "sonnet",
+  "fig_cap": 3,
+  "by_ref": {
+   "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/wcheck-ch08-cal-b5h",
+   "stage": "SW",
+   "shards_sha256": "71c95457a5c2f0efb4ac1803bcf9f95e3f175e91ea5697843b593a8c5ad2f087",
+   "files": 51
+  },
+  "embedded": {
+   "source": "runbook/working-check.workflow.js",
+   "source_sha256": "d7fb9d68c54c43f3e2a4807d7e5ee2d0aa53cfe41dc02143a3963ed0b46ef521",
+   "args_sha256": "2a435aa03d0eb72bb8dd9151e472874a2843d2d7d45c9d16d45e6737023ca373",
+   "generated_sha256": "8acd50ece568e0ab676452ece7bf3f2272b871b59b1edfd8c56c1ca6e904787f",
+   "generator": "services/extraction/embed_workflow.py v1"
+  },
+  "results": [
+   {
+    "solution_id": "q:g10m8s1-1-2:ex8-1-1",
+    "verdict": "consistent",
+    "flags": [],
+    "note": ""
+   },
+   {
+    "solution_id": "q:g10m8s1-1-2:ex8-1-3",
+    "verdict": "consistent",
+    "flags": [],
+    "note": ""
+   },
+   {
+    "solution_id": "q:g10m8s1-1-2:ex8-1-4",
+    "verdict": "consistent",
+    "flags": [],
+    "note": ""
+   },
+   {
+    "solution_id": "q:g10m8s1-1-3:ex8-1-5",
+    "verdict": "consistent",
+    "flags": [],
+    "note": ""
+   },
+   {
+    "solution_id": "q:g10m8s1-1-3:ex8-1-6",
+    "verdict": "consistent",
+    "flags": [],
+    "note": ""
+   },
+   {
+    "solution_id": "q:g10m8s1-1-2:ex8-6-2",
+    "verdict": "consistent",
+    "flags": [],
+    "note": ""
+   },
+   {
+    "solution_id": "q:g10m8s1-1-3:ex8-6-3",
+    "verdict": "consistent",
+    "flags": [],
+    "note": ""
+   },
+   {
+    "solution_id": "q:g10m8s2-1-1:we01",
+    "verdict": "flagged",
+    "flags": [
+     {
+      "step": 2,
+      "quote": "the coordinates of $T$ be",
+      "kind": "label",
+      "where": "question",
+      "expected": "Q",
+      "why": "The question names the second point Q, but the working calls it T from step 2 on."
+     }
+    ],
+    "note": ""
+   },
+   {
+    "solution_id": "q:g10m8s2-1-2:ex8-6-6",
+    "verdict": "consistent",
+    "flags": [],
+    "note": ""
+   },
+   {
+    "solution_id": "q:g10m8s2-1-1:ex8-6-24a",
+    "verdict": "flagged",
+    "flags": [
+     {
+      "step": 1,
+      "quote": "First draw a sketch of the quadrilateral:",
+      "kind": "final_answer",
+      "where": "working",
+      "expected": "\\sqrt{34}",
+      "why": "The working only sketches and never calculates or states the length of QR, so it does not reach the final answer."
+     }
+    ],
+    "note": ""
+   },
+   {
+    "solution_id": "q:g10m8s2-1-1:ex8-6-39a",
+    "verdict": "consistent",
+    "flags": [],
+    "note": ""
+   },
+   {
+    "solution_id": "q:g10m8s2-1-1:ex8-6-42a",
+    "verdict": "flagged",
+    "flags": [
+     {
+      "step": 1,
+      "quote": "\\sqrt{5^2(-1)^2}",
+      "kind": "arithmetic",
+      "where": "working",
+      "expected": "\\sqrt{5^2+(-1)^2}",
+      "why": "The terms are multiplied, not added; the next line adds 25+1, so this line does not equal the next."
+     }
+    ],
+    "note": ""
+   },
+   {
+    "solution_id": "q:g10m8s3-1-1:we03",
+    "verdict": "consistent",
+    "flags": [],
+    "note": ""
+   },
+   {
+    "solution_id": "q:g10m8s3-1-2:ex8-6-9",
+    "verdict": "consistent",
+    "flags": [],
+    "note": ""
+   },
+   {
+    "solution_id": "q:g10m8s3-2-2:we07",
+    "verdict": "consistent",
+    "flags": [],
+    "note": ""
+   },
+   {
+    "solution_id": "q:g10m8s3-2-2:ex8-4-1a",
+    "verdict": "consistent",
+    "flags": [],
+    "note": ""
+   },
+   {
+    "solution_id": "q:g10m8s3-2-2:ex8-4-1b",
+    "verdict": "flagged",
+    "flags": [
+     {
+      "step": 5,
+      "quote": "$m_{AB}\\times\\frac{1}{m_{CD}}\\ne-1$",
+      "kind": "arithmetic",
+      "where": "working",
+      "expected": "m_AB x m_CD = -9, not -1",
+      "why": "With m_AB=3 and m_CD=-3, 3 times 1/(-3) equals -1, so the stated inequality is false; the perpendicular test should use m_AB times m_CD."
+     }
+    ],
+    "note": ""
+   },
+   {
+    "solution_id": "q:g10m8s3-2-3:ex8-4-2a",
+    "verdict": "consistent",
+    "flags": [],
+    "note": ""
+   },
+   {
+    "solution_id": "q:g10m8s3-2-3:ex8-4-2b",
+    "verdict": "consistent",
+    "flags": [],
+    "note": ""
+   },
+   {
+    "solution_id": "q:g10m8s3-2-3:ex8-4-2c",
+    "verdict": "consistent",
+    "flags": [],
+    "note": ""
+   },
+   {
+    "solution_id": "q:g10m8s3-2-3:ex8-4-5",
+    "verdict": "flagged",
+    "flags": [
+     {
+      "step": 5,
+      "quote": "m_{PR}=m_{QR}=-\\frac{1}{2}",
+      "kind": "label",
+      "where": "working",
+      "expected": "m_{PQ}=m_{QR}",
+      "why": "Step 1 equates the gradients of PQ and QR, and -1/2 is the gradient of PQ, but this step writes PR."
+     }
+    ],
+    "note": ""
+   },
+   {
+    "solution_id": "q:g10m8s3-2-2:ex8-4-10",
+    "verdict": "flagged",
+    "flags": [
+     {
+      "step": 3,
+      "quote": "to solve for $x$",
+      "kind": "label",
+      "where": "working",
+      "expected": "solve for y",
+      "why": "B(2, y) has x = 2 given, and the next step solves for y, not x."
+     }
+    ],
+    "note": ""
+   },
+   {
+    "solution_id": "q:g10m8s3-2-3:ex8-4-18",
+    "verdict": "consistent",
+    "flags": [],
+    "note": ""
+   },
+   {
+    "solution_id": "q:g10m8s3-2-2:ex8-4-19b",
+    "verdict": "consistent",
+    "flags": [],
+    "note": ""
+   },
+   {
+    "solution_id": "q:g10m8s3-2-2:ex8-6-19b",
+    "verdict": "consistent",
+    "flags": [],
+    "note": ""
+   },
+   {
+    "solution_id": "q:g10m8s3-2-2:ex8-6-19d",
+    "verdict": "consistent",
+    "flags": [],
+    "note": ""
+   },
+   {
+    "solution_id": "q:g10m8s3-2-2:ex8-6-21c",
+    "verdict": "consistent",
+    "flags": [],
+    "note": ""
+   },
+   {
+    "solution_id": "q:g10m8s3-2-2:ex8-6-22e",
+    "verdict": "consistent",
+    "flags": [],
+    "note": ""
+   },
+   {
+    "solution_id": "q:g10m8s3-2-1:ex8-6-30d",
+    "verdict": "consistent",
+    "flags": [],
+    "note": ""
+   },
+   {
+    "solution_id": "q:g10m8s3-2-2:ex8-6-33a",
+    "verdict": "consistent",
+    "flags": [],
+    "note": ""
+   },
+   {
+    "solution_id": "q:g10m8s3-2-2:ex8-6-36b",
+    "verdict": "consistent",
+    "flags": [],
+    "note": ""
+   },
+   {
+    "solution_id": "q:g10m8s3-2-1:ex8-6-40e",
+    "verdict": "consistent",
+    "flags": [],
+    "note": ""
+   },
+   {
+    "solution_id": "q:g10m8s3-2-2:ex8-6-42e",
+    "verdict": "flagged",
+    "flags": [
+     {
+      "step": 1,
+      "quote": "Since the diagonals are equal in length we know that the quadrilateral must be a square",
+      "kind": "other",
+      "where": "working",
+      "expected": "",
+      "why": "Equal diagonals do not imply a square (a rectangle also has them); the conclusion is unsupported until the sides and right angles are shown."
+     }
+    ],
+    "note": ""
+   },
+   {
+    "solution_id": "q:g10m8s3-2-2:ex8-6-44d",
+    "verdict": "flagged",
+    "flags": [
+     {
+      "step": 2,
+      "quote": "-\\frac{3}{2}&=(3)(\\frac{1}{2})+c",
+      "kind": "sign",
+      "where": "working",
+      "expected": "gradient m = -3 substituted",
+      "why": "The gradient found is -3, but 3 is substituted; the next line's c = -3/2 + 3/2 then follows from the wrong sign."
+     }
+    ],
+    "note": ""
+   },
+   {
+    "solution_id": "q:g10m8s4-1-1:we10",
+    "verdict": "flagged",
+    "flags": [
+     {
+      "step": 2,
+      "quote": "x_{1}=2",
+      "kind": "label",
+      "where": "working",
+      "expected": "x_2 = 2",
+      "why": "x_1 is already assigned -2; the second x-value 2 should be labelled x_2, as step 4 uses."
+     }
+    ],
+    "note": ""
+   },
+   {
+    "solution_id": "q:g10m8s4-1-3:we13",
+    "verdict": "consistent",
+    "flags": [],
+    "note": ""
+   },
+   {
+    "solution_id": "q:g10m8s4-1-1:ex8-6-17",
+    "verdict": "flagged",
+    "flags": [
+     {
+      "step": 1,
+      "quote": "\\frac{-2-2}{2}",
+      "kind": "sign",
+      "where": "working",
+      "expected": "x-values -2 and 2 added: (-2+2)/2",
+      "why": "The x-coordinates -2 and 2 are subtracted, giving -2, not 0 as the line equates."
+     }
+    ],
+    "note": ""
+   },
+   {
+    "solution_id": "q:g10m8s4-1-1:ex8-6-19c",
+    "verdict": "consistent",
+    "flags": [],
+    "note": ""
+   },
+   {
+    "solution_id": "q:g10m8s4-1-1:ex8-6-24c",
+    "verdict": "flagged",
+    "flags": [
+     {
+      "step": 1,
+      "quote": "M_{QR}",
+      "kind": "label",
+      "where": "working",
+      "expected": "M_{PR}",
+      "why": "The question asks for the mid-point of PR, and the substituted coordinates are those of P and R, not Q and R."
+     }
+    ],
+    "note": ""
+   },
+   {
+    "solution_id": "q:g10m8s4-1-3:ex8-6-31e",
+    "verdict": "consistent",
+    "flags": [],
+    "note": ""
+   },
+   {
+    "solution_id": "q:g10m8s4-1-3:ex8-6-46e",
+    "verdict": "consistent",
+    "flags": [],
+    "note": ""
+   },
+   {
+    "solution_id": "expl:g10m8s2-1-1:ex8-6-22a",
+    "verdict": "consistent",
+    "flags": [],
+    "note": ""
+   },
+   {
+    "solution_id": "expl:g10m8s2-1-1:ex8-6-36c",
+    "verdict": "flagged",
+    "flags": [
+     {
+      "step": 3,
+      "quote": "Therefore $LMNP$ is a square, all the sides are equal in length.",
+      "kind": "other",
+      "where": "working",
+      "expected": "",
+      "why": "Four equal sides only shows a rhombus; a right angle or equal diagonals is needed to conclude a square."
+     }
+    ],
+    "note": ""
+   },
+   {
+    "solution_id": "expl:g10m8s3-2-2:ex8-6-26",
+    "verdict": "flagged",
+    "flags": [
+     {
+      "step": 4,
+      "quote": "m_{PR}\\times m_{QR}&=-\\frac{1}{7}\\times\\frac{7}{1}",
+      "kind": "label",
+      "where": "working",
+      "expected": "m_PQ × m_QR",
+      "why": "The value -1/7 is m_PQ, not m_PR (which is -4/3), so the product should be m_PQ times m_QR."
+     },
+     {
+      "step": 5,
+      "quote": "$PR\\perp QR$",
+      "kind": "label",
+      "where": "working",
+      "expected": "PQ ⊥ QR",
+      "why": "The perpendicular sides shown by the product are PQ and QR, consistent with the stated right angle at Q."
+     }
+    ],
+    "note": ""
+   },
+   {
+    "solution_id": "expl:g10m8s3-2-2:ex8-6-30e",
+    "verdict": "consistent",
+    "flags": [],
+    "note": ""
+   },
+   {
+    "solution_id": "expl:g10m8s3-2-2:ex8-6-38d",
+    "verdict": "flagged",
+    "flags": [
+     {
+      "step": 1,
+      "quote": "\\frac{-2-1}{1-4}",
+      "kind": "wrong_value",
+      "where": "working",
+      "expected": "R has x = 5, so denominator 1-5",
+      "why": "The denominator uses 4 instead of the x-coordinate 5 of R; 1-4 does not give the stated gradient 3/4."
+     }
+    ],
+    "note": ""
+   },
+   {
+    "solution_id": "expl:g10m8s3-2-2:ex8-6-39d",
+    "verdict": "consistent",
+    "flags": [],
+    "note": ""
+   },
+   {
+    "solution_id": "expl:g10m8s3-2-3:ex8-6-42d",
+    "verdict": "flagged",
+    "flags": [
+     {
+      "step": 1,
+      "quote": "\\frac{-5-(-\\text{4.5})}{-2-(-\\text{0.5})}",
+      "kind": "sign",
+      "where": "working",
+      "expected": "C has x = 2, so 2-(-0.5)",
+      "why": "The x-coordinate of C is 2, not -2; the denominator is then given as 2.5, which does not follow."
+     }
+    ],
+    "note": ""
+   },
+   {
+    "solution_id": "expl:g10m8s3-2-2:ex8-6-46c",
+    "verdict": "consistent",
+    "flags": [],
+    "note": ""
+   },
+   {
+    "solution_id": "expl:g10m8s4-1-1:ex8-6-27",
+    "verdict": "consistent",
+    "flags": [],
+    "note": ""
+   },
+   {
+    "solution_id": "expl:g10m8s4-1-3:ex8-6-44b",
+    "verdict": "consistent",
+    "flags": [],
+    "note": ""
+   }
+  ],
+  "problems": [],
+  "meter": {
+   "stage": "SW",
+   "record": "uv run meter_run.py record --book g10-math --stage SW --run <runId>"
+  }
+ },
+ "workflowProgress": [
+  {
+   "type": "workflow_phase",
+   "index": 1,
+   "title": "SW Check"
+  },
+  {
+   "type": "workflow_agent",
+   "index": 1,
+   "label": "SW:check:b001:q:g10m8s1-1-2:ex8-1-1+4",
+   "phaseIndex": 1,
+   "phaseTitle": "SW Check",
+   "agentId": "af619193e7f01a748",
+   "model": "claude-sonnet-5-5",
+   "state": "done",
+   "startedAt": 1790843665595,
+   "queuedAt": 1790843665585,
+   "attempt": 1,
+   "lastToolName": "StructuredOutput",
+   "promptPreview": "You check 5 worked solutions from a mathematics textbook, one at a time, step by step. Students are taught exactly this working, so a step that does not follow would teach them something wrong.\n\nSolution 1: [[file: /Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/wcheck-ch08-cal-b5h/s/0001.txt]]\nSo…",
+   "promptFramed": true,
+   "lastProgressAt": 1790843678391,
+   "tokens": 67834,
+   "toolCalls": 9,
+   "durationMs": 12792,
+   "resultPreview": "{\"results\":[{\"solution_id\":\"q:g10m8s1-1-2:ex8-1-1\",\"verdict\":\"consistent\"},{\"solution_id\":\"q:g10m8s1-1-2:ex8-1-3\",\"verdict\":\"consistent\"},{\"solution_id\":\"q:g10m8s1-1-2:ex8-1-4\",\"verdict\":\"consistent\"},{\"solution_id\":\"q:g10m8s1-1-3:ex8-1-5\",\"verdict\":\"consistent\"},{\"solution_id\":\"q:g10m8s1-1-3:ex8-1-6\",\"verdict\":\"consistent\"}]}"
+  },
+  {
+   "type": "workflow_agent",
+   "index": 2,
+   "label": "SW:check:b002:q:g10m8s1-1-2:ex8-6-2+4",
+   "phaseIndex": 1,
+   "phaseTitle": "SW Check",
+   "agentId": "a0a46c8eb769bfc9f",
+   "model": "claude-sonnet-5-5",
+   "state": "done",
+   "startedAt": 1790843665595,
+   "queuedAt": 1790843665585,
+   "attempt": 1,
+   "lastToolName": "StructuredOutput",
+   "promptPreview": "You check 5 worked solutions from a mathematics textbook, one at a time, step by step. Students are taught exactly this working, so a step that does not follow would teach them something wrong.\n\nSolution 1: [[file: /Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/wcheck-ch08-cal-b5h/s/0006.txt]]\nSo…",
+   "promptFramed": true,
+   "lastProgressAt": 1790843688880,
+   "tokens": 67716,
+   "toolCalls": 8,
+   "durationMs": 22014,
+   "resultPreview": "{\"results\":[{\"solution_id\":\"q:g10m8s1-1-2:ex8-6-2\",\"verdict\":\"consistent\"},{\"solution_id\":\"q:g10m8s1-1-3:ex8-6-3\",\"verdict\":\"consistent\"},{\"solution_id\":\"q:g10m8s2-1-1:we01\",\"verdict\":\"flagged\",\"flags\":[{\"step\":2,\"quote\":\"the coordinates of $T$ be\",\"kind\":\"label\",\"where\":\"question\",\"why\":\"The question names the second point Q, but the working calls it T from step 2 on.\",\"expected\":\"Q\"}]},{\"solutio…"
+  },
+  {
+   "type": "workflow_agent",
+   "index": 3,
+   "label": "SW:check:b003:q:g10m8s2-1-1:ex8-6-39a+4",
+   "phaseIndex": 1,
+   "phaseTitle": "SW Check",
+   "agentId": "a8905ca0710e50659",
+   "model": "claude-sonnet-5-5",
+   "state": "done",
+   "startedAt": 1790843665596,
+   "queuedAt": 1790843665585,
+   "attempt": 1,
+   "lastToolName": "StructuredOutput",
+   "promptPreview": "You check 5 worked solutions from a mathematics textbook, one at a time, step by step. Students are taught exactly this working, so a step that does not follow would teach them something wrong.\n\nSolution 1: [[file: /Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/wcheck-ch08-cal-b5h/s/0011.txt]]\nSo…",
+   "promptFramed": true,
+   "lastProgressAt": 1790843685209,
+   "tokens": 67102,
+   "toolCalls": 7,
+   "durationMs": 18341,
+   "resultPreview": "{\"results\":[{\"solution_id\":\"q:g10m8s2-1-1:ex8-6-39a\",\"verdict\":\"consistent\"},{\"solution_id\":\"q:g10m8s2-1-1:ex8-6-42a\",\"verdict\":\"flagged\",\"flags\":[{\"step\":1,\"quote\":\"\\\\sqrt{5^2(-1)^2}\",\"kind\":\"arithmetic\",\"where\":\"working\",\"why\":\"The terms are multiplied, not added; the next line adds 25+1, so this line does not equal the next.\",\"expected\":\"\\\\sqrt{5^2+(-1)^2}\"}]},{\"solution_id\":\"q:g10m8s3-1-1:we03…"
+  },
+  {
+   "type": "workflow_agent",
+   "index": 4,
+   "label": "SW:check:b004:q:g10m8s3-2-2:ex8-4-1a+4",
+   "phaseIndex": 1,
+   "phaseTitle": "SW Check",
+   "agentId": "afc58b6de87b1d4fa",
+   "model": "claude-sonnet-5-5",
+   "state": "done",
+   "startedAt": 1790843665596,
+   "queuedAt": 1790843665585,
+   "attempt": 1,
+   "lastToolName": "StructuredOutput",
+   "promptPreview": "You check 5 worked solutions from a mathematics textbook, one at a time, step by step. Students are taught exactly this working, so a step that does not follow would teach them something wrong.\n\nSolution 1: [[file: /Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/wcheck-ch08-cal-b5h/s/0016.txt]]\nSo…",
+   "promptFramed": true,
+   "lastProgressAt": 1790843677799,
+   "tokens": 66348,
+   "toolCalls": 6,
+   "durationMs": 10931,
+   "resultPreview": "{\"results\":[{\"solution_id\":\"q:g10m8s3-2-2:ex8-4-1a\",\"verdict\":\"consistent\"},{\"solution_id\":\"q:g10m8s3-2-2:ex8-4-1b\",\"verdict\":\"flagged\",\"flags\":[{\"step\":5,\"quote\":\"$m_{AB}\\\\times\\\\frac{1}{m_{CD}}\\\\ne-1$\",\"kind\":\"arithmetic\",\"where\":\"working\",\"why\":\"With m_AB=3 and m_CD=-3, 3 times 1/(-3) equals -1, so the stated inequality is false; the perpendicular test should use m_AB times m_CD.\",\"expected\":\"m…"
+  },
+  {
+   "type": "workflow_agent",
+   "index": 5,
+   "label": "SW:check:b005:q:g10m8s3-2-3:ex8-4-5+4",
+   "phaseIndex": 1,
+   "phaseTitle": "SW Check",
+   "agentId": "a1b5b57bdb405204c",
+   "model": "claude-sonnet-5-5",
+   "state": "done",
+   "startedAt": 1790843665597,
+   "queuedAt": 1790843665585,
+   "attempt": 1,
+   "lastToolName": "StructuredOutput",
+   "promptPreview": "You check 5 worked solutions from a mathematics textbook, one at a time, step by step. Students are taught exactly this working, so a step that does not follow would teach them something wrong.\n\nSolution 1: [[file: /Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/wcheck-ch08-cal-b5h/s/0021.txt]]\nSo…",
+   "promptFramed": true,
+   "lastProgressAt": 1790843682691,
+   "tokens": 66669,
+   "toolCalls": 6,
+   "durationMs": 15823,
+   "resultPreview": "{\"results\":[{\"solution_id\":\"q:g10m8s3-2-3:ex8-4-5\",\"verdict\":\"flagged\",\"flags\":[{\"step\":5,\"quote\":\"m_{PR}=m_{QR}=-\\\\frac{1}{2}\",\"kind\":\"label\",\"where\":\"working\",\"expected\":\"m_{PQ}=m_{QR}\",\"why\":\"Step 1 equates the gradients of PQ and QR, and -1/2 is the gradient of PQ, but this step writes PR.\"}]},{\"solution_id\":\"q:g10m8s3-2-2:ex8-4-10\",\"verdict\":\"flagged\",\"flags\":[{\"step\":3,\"quote\":\"to solve for …"
+  },
+  {
+   "type": "workflow_agent",
+   "index": 6,
+   "label": "SW:check:b006:q:g10m8s3-2-2:ex8-6-19d+4",
+   "phaseIndex": 1,
+   "phaseTitle": "SW Check",
+   "agentId": "ac06ecbeaa9090631",
+   "model": "claude-sonnet-5-5",
+   "state": "done",
+   "startedAt": 1790843665597,
+   "queuedAt": 1790843665585,
+   "attempt": 1,
+   "lastToolName": "StructuredOutput",
+   "promptPreview": "You check 5 worked solutions from a mathematics textbook, one at a time, step by step. Students are taught exactly this working, so a step that does not follow would teach them something wrong.\n\nSolution 1: [[file: /Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/wcheck-ch08-cal-b5h/s/0026.txt]]\nSo…",
+   "promptFramed": true,
+   "lastProgressAt": 1790843682901,
+   "tokens": 65534,
+   "toolCalls": 6,
+   "durationMs": 16033,
+   "resultPreview": "{\"results\":[{\"solution_id\":\"q:g10m8s3-2-2:ex8-6-19d\",\"verdict\":\"consistent\"},{\"solution_id\":\"q:g10m8s3-2-2:ex8-6-21c\",\"verdict\":\"consistent\"},{\"solution_id\":\"q:g10m8s3-2-2:ex8-6-22e\",\"verdict\":\"consistent\"},{\"solution_id\":\"q:g10m8s3-2-1:ex8-6-30d\",\"verdict\":\"consistent\"},{\"solution_id\":\"q:g10m8s3-2-2:ex8-6-33a\",\"verdict\":\"consistent\"}]}"
+  },
+  {
+   "type": "workflow_agent",
+   "index": 7,
+   "label": "SW:check:b007:q:g10m8s3-2-2:ex8-6-36b+4",
+   "phaseIndex": 1,
+   "phaseTitle": "SW Check",
+   "agentId": "a501585694824ef3c",
+   "model": "claude-sonnet-5-5",
+   "state": "done",
+   "startedAt": 1790843665597,
+   "queuedAt": 1790843665586,
+   "attempt": 1,
+   "lastToolName": "StructuredOutput",
+   "promptPreview": "You check 5 worked solutions from a mathematics textbook, one at a time, step by step. Students are taught exactly this working, so a step that does not follow would teach them something wrong.\n\nSolution 1: [[file: /Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/wcheck-ch08-cal-b5h/s/0031.txt]]\nSo…",
+   "promptFramed": true,
+   "lastProgressAt": 1790843688448,
+   "tokens": 66056,
+   "toolCalls": 6,
+   "durationMs": 21579,
+   "resultPreview": "{\"results\":[{\"solution_id\":\"q:g10m8s3-2-2:ex8-6-36b\",\"verdict\":\"consistent\"},{\"solution_id\":\"q:g10m8s3-2-1:ex8-6-40e\",\"verdict\":\"consistent\"},{\"solution_id\":\"q:g10m8s3-2-2:ex8-6-42e\",\"verdict\":\"flagged\",\"flags\":[{\"step\":1,\"quote\":\"Since the diagonals are equal in length we know that the quadrilateral must be a square\",\"kind\":\"other\",\"where\":\"working\",\"expected\":\"\",\"why\":\"Equal diagonals do not imp…"
+  },
+  {
+   "type": "workflow_agent",
+   "index": 8,
+   "label": "SW:check:b008:q:g10m8s4-1-3:we13+4",
+   "phaseIndex": 1,
+   "phaseTitle": "SW Check",
+   "agentId": "aea88b71ae8431505",
+   "model": "claude-sonnet-5-5",
+   "state": "done",
+   "startedAt": 1790843665598,
+   "queuedAt": 1790843665586,
+   "attempt": 1,
+   "lastToolName": "StructuredOutput",
+   "promptPreview": "You check 5 worked solutions from a mathematics textbook, one at a time, step by step. Students are taught exactly this working, so a step that does not follow would teach them something wrong.\n\nSolution 1: [[file: /Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/wcheck-ch08-cal-b5h/s/0036.txt]]\nSo…",
+   "promptFramed": true,
+   "lastProgressAt": 1790843686710,
+   "tokens": 67531,
+   "toolCalls": 7,
+   "durationMs": 19841,
+   "resultPreview": "{\"results\":[{\"solution_id\":\"q:g10m8s4-1-3:we13\",\"verdict\":\"consistent\"},{\"solution_id\":\"q:g10m8s4-1-1:ex8-6-17\",\"verdict\":\"flagged\",\"flags\":[{\"step\":1,\"quote\":\"\\\\frac{-2-2}{2}\",\"kind\":\"sign\",\"where\":\"working\",\"expected\":\"x-values -2 and 2 added: (-2+2)/2\",\"why\":\"The x-coordinates -2 and 2 are subtracted, giving -2, not 0 as the line equates.\"}]},{\"solution_id\":\"q:g10m8s4-1-1:ex8-6-19c\",\"verdict\":\"…"
+  },
+  {
+   "type": "workflow_agent",
+   "index": 9,
+   "label": "SW:check:b009:q:g10m8s4-1-3:ex8-6-46e+4",
+   "phaseIndex": 1,
+   "phaseTitle": "SW Check",
+   "agentId": "a2672dd748f4bfaaa",
+   "model": "claude-sonnet-5-5",
+   "state": "done",
+   "startedAt": 1790843665598,
+   "queuedAt": 1790843665586,
+   "attempt": 1,
+   "lastToolName": "StructuredOutput",
+   "promptPreview": "You check 5 worked solutions from a mathematics textbook, one at a time, step by step. Students are taught exactly this working, so a step that does not follow would teach them something wrong.\n\nSolution 1: [[file: /Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/wcheck-ch08-cal-b5h/s/0041.txt]]\nSo…",
+   "promptFramed": true,
+   "lastProgressAt": 1790843689791,
+   "tokens": 67731,
+   "toolCalls": 7,
+   "durationMs": 22922,
+   "resultPreview": "{\"results\":[{\"solution_id\":\"q:g10m8s4-1-3:ex8-6-46e\",\"verdict\":\"consistent\"},{\"solution_id\":\"expl:g10m8s2-1-1:ex8-6-22a\",\"verdict\":\"consistent\"},{\"solution_id\":\"expl:g10m8s2-1-1:ex8-6-36c\",\"verdict\":\"flagged\",\"flags\":[{\"step\":3,\"quote\":\"Therefore $LMNP$ is a square, all the sides are equal in length.\",\"kind\":\"other\",\"where\":\"working\",\"why\":\"Four equal sides only shows a rhombus; a right angle or e…"
+  },
+  {
+   "type": "workflow_agent",
+   "index": 10,
+   "label": "SW:check:b010:expl:g10m8s3-2-2:ex8-6-38d+4",
+   "phaseIndex": 1,
+   "phaseTitle": "SW Check",
+   "agentId": "afb2b7720387779f9",
+   "model": "claude-sonnet-5-5",
+   "state": "done",
+   "startedAt": 1790843665599,
+   "queuedAt": 1790843665586,
+   "attempt": 1,
+   "lastToolName": "StructuredOutput",
+   "promptPreview": "You check 5 worked solutions from a mathematics textbook, one at a time, step by step. Students are taught exactly this working, so a step that does not follow would teach them something wrong.\n\nSolution 1: [[file: /Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/wcheck-ch08-cal-b5h/s/0046.txt]]\nSo…",
+   "promptFramed": true,
+   "lastProgressAt": 1790843687704,
+   "tokens": 67540,
+   "toolCalls": 7,
+   "durationMs": 20835,
+   "resultPreview": "{\"results\":[{\"solution_id\":\"expl:g10m8s3-2-2:ex8-6-38d\",\"verdict\":\"flagged\",\"flags\":[{\"step\":1,\"quote\":\"\\\\frac{-2-1}{1-4}\",\"kind\":\"wrong_value\",\"where\":\"working\",\"expected\":\"R has x = 5, so denominator 1-5\",\"why\":\"The denominator uses 4 instead of the x-coordinate 5 of R; 1-4 does not give the stated gradient 3/4.\"}]},{\"solution_id\":\"expl:g10m8s3-2-2:ex8-6-39d\",\"verdict\":\"consistent\"},{\"solution_i…"
+  },
+  {
+   "type": "workflow_agent",
+   "index": 11,
+   "label": "SW:check:b011:expl:g10m8s4-1-3:ex8-6-44b",
+   "phaseIndex": 1,
+   "phaseTitle": "SW Check",
+   "agentId": "af953481a17497200",
+   "model": "claude-sonnet-5-5",
+   "state": "done",
+   "startedAt": 1790843665599,
+   "queuedAt": 1790843665586,
+   "attempt": 1,
+   "lastToolName": "StructuredOutput",
+   "promptPreview": "You check 1 worked solution from a mathematics textbook, one at a time, step by step. Students are taught exactly this working, so a step that does not follow would teach them something wrong.\n\nSolution 1: [[file: /Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/wcheck-ch08-cal-b5h/s/0051.txt]]\n\nYO…",
+   "promptFramed": true,
+   "lastProgressAt": 1790843676271,
+   "tokens": 62772,
+   "toolCalls": 2,
+   "durationMs": 9402,
+   "resultPreview": "{\"results\":[{\"solution_id\":\"expl:g10m8s4-1-3:ex8-6-44b\",\"verdict\":\"consistent\"}]}"
+  }
+ ],
+ "totalTokens": 732833,
+ "totalToolCalls": 71,
+ "runId": "wf_72c2481f-301"
+}

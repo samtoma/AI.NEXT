@@ -1,0 +1,12 @@
+{
+  "generator": "tests: an S7 bundle",
+  "questions": [
+    {"id": "q:zz1s1-1-2:w001", "lo_id": "lo:zz1s1-1-2", "tier": "basic", "question_type": "widget",
+     "stem": "Build $(x^3)^2$ as a single power.", "correct_answer": "ok",
+     "choices": {"kind": "power_builder", "spec": {"base": "x", "inner": 3, "outer": 2},
+                 "diagnostics": [{"predicate": "exponents-added", "misconception_id": "mc:zz1s1-1-2:exponents-added"},
+                                 {"predicate": "base-changed", "misconception_id": "mc:zz1s1-1-2:exponents-added"}]},
+     "canonical_solution": [{"step": 1, "text_md": "$(x^3)^2 = x^6$."}], "source_note": "Generated from template family tpl:zz1s1-1-2:power-builder."}
+  ],
+  "misconceptions": []
+}

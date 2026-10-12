@@ -1,0 +1,3062 @@
+{
+ "mode": "author",
+ "book": "g10-math",
+ "prompts_version": "s6-v6",
+ "by_ref": {
+  "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/s6-author-ch14",
+  "stage": "S6 author",
+  "shards_sha256": "75ff92295368dfaad2bd9c870e1c8361d7a5416402d7e875d17eb5f9c6fffffe",
+  "files": 32
+ },
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "ce14b9a275551596540559352d6e1137fc366251ecc65d4b7d34aa4599cbc0b6",
+  "args_sha256": "9ffd14ff1597f25cf00bdb55c07f0282bf7314df9bcabd22c4f0a5e2c1f0ba1b",
+  "generated_sha256": "961f97cb2c41ddd491d684aa2ff7c3f431306b2d0ef76cd5d35d573a88b6f72e",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "records": [
+  {
+   "lo_id": "lo:g10m14s1-1-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m14s1-1-2:shifted-multiples",
+     "kind": "family",
+     "lo_id": "lo:g10m14s1-1-2",
+     "parent_question_id": "q:g10m14s1-1-2:ex14-8-13b",
+     "source_page": 493,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": "Fiona has labelled discs, one for each whole number in a range that does not start at 1, and selects one disc at random.",
+     "params": [
+      {
+       "name": "m",
+       "choice": [
+        4,
+        6,
+        7,
+        8,
+        9,
+        12
+       ]
+      },
+      {
+       "name": "lo",
+       "randint": [
+        11,
+        39
+       ]
+      },
+      {
+       "name": "span",
+       "randint": [
+        34,
+        60
+       ]
+      },
+      {
+       "name": "hi",
+       "let": "lo + span - 1"
+      },
+      {
+       "name": "k1",
+       "let": "(lo + m - 1) // m"
+      },
+      {
+       "name": "k2",
+       "let": "hi // m"
+      },
+      {
+       "name": "ne",
+       "let": "k2 - k1 + 1"
+      },
+      {
+       "name": "ns",
+       "let": "hi - lo + 1"
+      },
+      {
+       "name": "mults",
+       "let": "[m * k for k in range(k1, k2 + 1)]"
+      },
+      {
+       "name": "r",
+       "let": "(100 * ne) % ns"
+      },
+      {
+       "require": "ne >= 3 and r != 0 and (r * 10 < 4 * ns or r * 10 > 6 * ns)",
+       "why": "at least three discs qualify, the probability is not exact to 2 decimal places, and it is not within 0.4 to 0.6 of a hundredth from a rounding tie, so the 2 dp answer is unambiguous"
+      }
+     ],
+     "constraints": [
+      "ne < ns",
+      "ns == span"
+     ],
+     "stem": "Fiona has labelled discs, one for each whole number from {=lo} to {=hi}, including {=lo} and {=hi}. A disc is selected at random. What is the probability that the number on the disc is a multiple of {=m}? Write your answer as a decimal, correct to 2 decimal places.",
+     "answer": "fixed(ne / ns, 2)",
+     "solution": [
+      "The discs are numbered from ${=lo}$ to ${=hi}$, one disc for each whole number, so the number of possible outcomes in the sample space is: $n(S)={=hi}-{=lo}+1={=ns}$ .",
+      "The smallest multiple of ${=m}$ that is at least ${=lo}$ is ${=m * k1}$ (${=m} \\times {=k1}$) and the largest multiple of ${=m}$ that is at most ${=hi}$ is ${=m * k2}$ (${=m} \\times {=k2}$). The set of all discs that are multiples of ${=m}$ is: ${=setof(mults)}$ .",
+      "This set has ${=ne}$ elements, so $n(E)={=ne}$ .",
+      "Finally, we can find the probability: $\\begin{aligned}P(E)&=\\frac{n(E)}{n(S)}\\\\&=\\frac{{=ne}}{{=ns}}\\\\&\\approx{=fixed(ne / ns, 2)}\\end{aligned}$",
+      "Therefore, the probability that the number on the disc is a multiple of ${=m}$ is ${=fixed(ne / ns, 2)}$ , correct to 2 decimal places."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Advanced twist on book ex14-8-13b: the discs do not start at 1, so n(S) is hi - lo + 1 (not hi) and the multiples must be counted from the first one at or above lo, not from the multiplier 1. Same method as the book (list the set, count its elements, divide). Parameter guard: ne>=3; the exact value is never a whole number of hundredths and never within 0.4-0.6 of a hundredth from a rounding tie, so blind solvers who round slightly early still agree. At most 15 multiples are listed (m >= 4, at most 60 discs). The solution uses setof(mults) for the listed set; if setof prints without braces the set reads as a plain list, which is still correct. Verified offline: about 70% of random draws are accepted, 3000+ distinct (m, lo, hi) instances."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m14s1-1-2:nursery-older",
+     "kind": "family",
+     "lo_id": "lo:g10m14s1-1-2",
+     "parent_question_id": "q:g10m14s1-1-2:ex14-8-12a",
+     "source_page": 492,
+     "tier": "advanced",
+     "answer_type": "expression",
+     "context": "A small nursery school has one class of children aged 3, 4 and 5; the numbers of children and of boys at each age are given, and one child is selected at random.",
+     "params": [
+      {
+       "name": "t3",
+       "randint": [
+        6,
+        12
+       ]
+      },
+      {
+       "name": "t4",
+       "randint": [
+        6,
+        12
+       ]
+      },
+      {
+       "name": "t5",
+       "randint": [
+        6,
+        12
+       ]
+      },
+      {
+       "name": "b3",
+       "randint": [
+        2,
+        "t3 - 2"
+       ]
+      },
+      {
+       "name": "b4",
+       "randint": [
+        2,
+        "t4 - 2"
+       ]
+      },
+      {
+       "name": "b5",
+       "randint": [
+        2,
+        "t5 - 2"
+       ]
+      },
+      {
+       "name": "g4",
+       "let": "t4 - b4"
+      },
+      {
+       "name": "g5",
+       "let": "t5 - b5"
+      },
+      {
+       "name": "ev",
+       "let": "g4 + g5"
+      },
+      {
+       "name": "tot",
+       "let": "t3 + t4 + t5"
+      },
+      {
+       "name": "p",
+       "let": "ev / tot"
+      },
+      {
+       "require": "gcd(ev, tot) > 1",
+       "why": "the fraction must need simplifying, so the simplest-form step is part of every instance"
+      }
+     ],
+     "constraints": [
+      "ev < tot",
+      "ev > 0"
+     ],
+     "stem": "A small nursery school has one class of children aged 3, 4 and 5. There are {=t3} children aged 3, {=t4} children aged 4 and {=t5} children aged 5. Of the 3-year-olds, {=b3} are boys and the rest are girls. Of the 4-year-olds, {=b4} are boys and the rest are girls. Of the 5-year-olds, {=b5} are boys and the rest are girls. A child from the class is selected at random. What is the probability that the child is a girl who is at least 4 years old? Write your answer as a fraction in its simplest form.",
+     "solution": [
+      "The number of possible outcomes is the number of children in the class: $n(S)={=t3}+{=t4}+{=t5}={=tot}$ .",
+      "The rest of the children at each age are girls. The number of girls aged 4 is ${=t4}-{=b4}={=g4}$ and the number of girls aged 5 is ${=t5}-{=b5}={=g5}$ .",
+      "A girl who is at least 4 years old is a girl aged 4 or a girl aged 5, so $n(E)={=g4}+{=g5}={=ev}$ .",
+      "Finally, we can find the probability: $\\begin{aligned}P(E)&=\\frac{n(E)}{n(S)}\\\\&=\\frac{{=ev}}{{=tot}}\\end{aligned}$",
+      "Both ${=ev}$ and ${=tot}$ can be divided by ${=gcd(ev, tot)}$ , so in simplest form $P(E)=\\frac{{=numerator(p)}}{{=denominator(p)}}$ .",
+      "Therefore, the probability that the child is a girl who is at least 4 years old is $\\frac{{=numerator(p)}}{{=denominator(p)}}$ ."
+     ],
+     "marker": {
+      "kind": "expression",
+      "answer": "{=numerator(p)}/{=denominator(p)}",
+      "form": "simplest",
+      "variables": [],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Advanced twist on book ex14-8-12a (the nursery class): the number of girls at each age is not given, only the totals and the boys, so the student first finds the girls by subtraction, then adds the two cells that make up the event, then finds n(S) from all three age groups (the 3-year-olds are needed for n(S) although they are not in the event), then simplifies. Method is the book's (n(E)/n(S)); the answer is asked as a simplified fraction because the learning objective names that form. gcd(ev, tot) > 1 is required so every instance has a genuine simplification step; ev < tot always holds because every age group has at least 2 boys. Verified offline: about 39% of random draws are accepted, 6000+ distinct instances."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m14s1-1-2:colour-fraction",
+     "kind": "family",
+     "lo_id": "lo:g10m14s1-1-2",
+     "parent_question_id": "q:g10m14s1-1-2:ex14-8-11a",
+     "source_page": 492,
+     "tier": "standard",
+     "answer_type": "mcq",
+     "context": "A box contains purple, orange, white and pink coloured blocks, and one block is selected at random.",
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        12,
+        40
+       ]
+      },
+      {
+       "name": "b",
+       "randint": [
+        12,
+        40
+       ]
+      },
+      {
+       "name": "c",
+       "randint": [
+        12,
+        40
+       ]
+      },
+      {
+       "name": "d",
+       "randint": [
+        12,
+        40
+       ]
+      },
+      {
+       "name": "tot",
+       "let": "a + b + c + d"
+      },
+      {
+       "require": "gcd(a, tot) == 1",
+       "why": "the correct fraction is already in simplest form, and so are the two distractors built from it, so no option is given away by being reducible"
+      },
+      {
+       "require": "a * tot != (tot - a) * (tot - a)",
+       "why": "the part-to-rest distractor and the opposite-event distractor must be different values"
+      }
+     ],
+     "constraints": [
+      "tot > a"
+     ],
+     "stem": "A box contains coloured blocks: {=a} purple, {=b} orange, {=c} white and {=d} pink. A block is selected at random. Which of the following is the probability that the block is purple?",
+     "solution": [
+      "First we work out how many blocks there are in total. This gives us the sample space: $n(S)={=a}+{=b}+{=c}+{=d}={=tot}$ .",
+      "The event is that the block is purple. There are ${=a}$ purple blocks, so $n(E)={=a}$ .",
+      "Every block is equally likely to be selected, so: $\\begin{aligned}P(\\text{purple})&=\\frac{n(E)}{n(S)}\\\\&=\\frac{{=a}}{{=tot}}\\end{aligned}$ This fraction is already in simplest form.",
+      "The four colours are not equally likely, because there are different numbers of blocks of each colour, so the answer is not $\\frac{1}{4}$ . The total ${=tot}$ counts all the blocks, not only the ones that are not purple, and the numerator counts the purple blocks, not the others."
+     ],
+     "choices": {
+      "correct": "$\\frac{{=a}}{{=tot}}$",
+      "distractors": [
+       {
+        "text": "$\\frac{1}{4}$",
+        "misconception_id": "mc:g10m14s1-1-2:unequal-outcomes-counted-as-equal"
+       },
+       {
+        "text": "$\\frac{{=a}}{{=tot - a}}$",
+        "misconception_id": "mc:g10m14s1-1-2:event-over-the-rest"
+       },
+       {
+        "text": "$\\frac{{=tot - a}}{{=tot}}$",
+        "misconception_id": "mc:g10m14s1-1-2:opposite-event-counted"
+       }
+      ]
+     },
+     "proposed_misconceptions": [
+      {
+       "id": "mc:g10m14s1-1-2:event-over-the-rest",
+       "label": "Divides by the outcomes outside the event",
+       "description": "The student writes n(E) over the number of outcomes that are not in the event (a part-to-rest comparison) instead of over n(S), the total number of outcomes in the sample space."
+      },
+      {
+       "id": "mc:g10m14s1-1-2:opposite-event-counted",
+       "label": "Counts the outcomes that are not in the event",
+       "description": "The student counts the outcomes that are not in the event instead of the ones that are, so n(E) is the wrong set, and writes that count over n(S)."
+      }
+     ],
+     "notes": "Standard-tier diagnostic multiple choice on book ex14-8-11a (coloured blocks). It gives the catalogued misconception unequal-outcomes-counted-as-equal a home (the 1/4 option: four colours, so one in four) and declares two further named errors of n(E)/n(S). Constraint gcd(a, tot) = 1 makes the correct fraction irreducible, and gcd(a, tot - a) = gcd(tot - a, tot) = gcd(a, tot) = 1 makes both built distractors irreducible too, so reducibility never identifies the correct option. The four values are always distinct (1/4 is excluded by a >= 12 with gcd 1, and the last require separates the two built distractors). The stem carries the variation, so distinct_by_choices is not set. Verified offline: about 59% of random draws are accepted, 11000+ distinct instances."
+    }
+   ],
+   "infeasible": [],
+   "notes": "The listed gap (advanced) is filled by two families with different skeletons: shifted-multiples (numeric, 2 dp decimal; discs numbered from lo to hi with lo not 1, so n(S) and the count of multiples both need care) and nursery-older (expression, simplified fraction; derive the girls from totals and boys, add two cells, find n(S) from all three age groups, simplify). A third family, colour-fraction (standard mcq), is extra to the gap: it gives the catalogued misconception unequal-outcomes-counted-as-equal a distractor, plus two newly declared misconceptions. No percentage-form family was written because a numeric answer with a percent sign could not be marked reliably without seeing the engine. Slug prefixes (shifte, nurser, colour) are distinct. I could not run the real family engine, so I checked the parameter logic, the instance counts and the rounding and distinctness guards with a standalone Python simulation of the same expressions. The open assumptions are how the engine's setof(...) prints a list and that fixed(x, 2) rounds the exact Fraction; both are covered in the reviewer notes. No other repo file was opened beyond the two packet files."
+  },
+  {
+   "lo_id": "lo:g10m14s2-1-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m14s2-1-1:scores-not-lose",
+     "kind": "family",
+     "lo_id": "lo:g10m14s2-1-1",
+     "parent_question_id": "q:g10m14s2-1-1:we03",
+     "source_page": 476,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": "Team 1 plays Team 2 in 10 football matches. Each match is one trial, and the final score of each match is recorded.",
+     "params": [
+      {
+       "name": "x1",
+       "randint": [
+        0,
+        4
+       ]
+      },
+      {
+       "name": "x2",
+       "randint": [
+        0,
+        4
+       ]
+      },
+      {
+       "name": "x3",
+       "randint": [
+        0,
+        4
+       ]
+      },
+      {
+       "name": "x4",
+       "randint": [
+        0,
+        4
+       ]
+      },
+      {
+       "name": "x5",
+       "randint": [
+        0,
+        4
+       ]
+      },
+      {
+       "name": "x6",
+       "randint": [
+        0,
+        4
+       ]
+      },
+      {
+       "name": "x7",
+       "randint": [
+        0,
+        4
+       ]
+      },
+      {
+       "name": "x8",
+       "randint": [
+        0,
+        4
+       ]
+      },
+      {
+       "name": "x9",
+       "randint": [
+        0,
+        4
+       ]
+      },
+      {
+       "name": "x10",
+       "randint": [
+        0,
+        4
+       ]
+      },
+      {
+       "name": "y1",
+       "randint": [
+        0,
+        4
+       ]
+      },
+      {
+       "name": "y2",
+       "randint": [
+        0,
+        4
+       ]
+      },
+      {
+       "name": "y3",
+       "randint": [
+        0,
+        4
+       ]
+      },
+      {
+       "name": "y4",
+       "randint": [
+        0,
+        4
+       ]
+      },
+      {
+       "name": "y5",
+       "randint": [
+        0,
+        4
+       ]
+      },
+      {
+       "name": "y6",
+       "randint": [
+        0,
+        4
+       ]
+      },
+      {
+       "name": "y7",
+       "randint": [
+        0,
+        4
+       ]
+      },
+      {
+       "name": "y8",
+       "randint": [
+        0,
+        4
+       ]
+      },
+      {
+       "name": "y9",
+       "randint": [
+        0,
+        4
+       ]
+      },
+      {
+       "name": "y10",
+       "randint": [
+        0,
+        4
+       ]
+      },
+      {
+       "name": "xs",
+       "let": "[x1, x2, x3, x4, x5, x6, x7, x8, x9, x10]"
+      },
+      {
+       "name": "ys",
+       "let": "[y1, y2, y3, y4, y5, y6, y7, y8, y9, y10]"
+      },
+      {
+       "name": "ds",
+       "let": "[xs[i] - ys[i] for i in range(10)]"
+      },
+      {
+       "name": "nw",
+       "let": "len([i for i in range(10) if xs[i] > ys[i]])"
+      },
+      {
+       "name": "nd",
+       "let": "len([i for i in range(10) if xs[i] == ys[i]])"
+      },
+      {
+       "name": "nl",
+       "let": "len([i for i in range(10) if xs[i] < ys[i]])"
+      },
+      {
+       "name": "nok",
+       "let": "nw + nd"
+      },
+      {
+       "require": "nw >= 2 and nl >= 2 and nd >= 1",
+       "why": "Each outcome (win, draw, loss) must really occur, so the event is neither empty nor the whole experiment and the count needs both a win count and a draw count. This also keeps the answer between 0.3 and 0.8."
+      }
+     ],
+     "constraints": [
+      "nw + nd + nl == 10"
+     ],
+     "stem": "Team 1 and Team 2 play 10 football matches against each other. Each match is one trial. The final scores, written as Team 1 – Team 2, in matches 1 to 10 were: {=x1}–{=y1}, {=x2}–{=y2}, {=x3}–{=y3}, {=x4}–{=y4}, {=x5}–{=y5}, {=x6}–{=y6}, {=x7}–{=y7}, {=x8}–{=y8}, {=x9}–{=y9} and {=x10}–{=y10}. What is the relative frequency of Team 1 not losing a match, that is, of Team 1 either winning or drawing? Give your answer as a decimal.",
+     "answer": "fixed(nok / 10, 1)",
+     "solution": [
+      "Recall the formula for relative frequency: $f=\\frac{p}{t}$, where $p$ is the number of positive trials (trials in which the event occurs) and $t$ is the total number of trials.",
+      "Each match is one trial, so the total number of trials is $t=10$. The event is that Team 1 does not lose, so a positive trial is a match that Team 1 wins or that ends in a draw.",
+      "For each match, subtract Team 2's goals from Team 1's goals. In matches 1 to 10 the differences are $ {=ds[0]}, {=ds[1]}, {=ds[2]}, {=ds[3]}, {=ds[4]}, {=ds[5]}, {=ds[6]}, {=ds[7]}, {=ds[8]}, {=ds[9]} $. A positive difference is a win for Team 1, a difference of $0$ is a draw, and a negative difference is a loss for Team 1.",
+      "Count the positive trials: Team 1 won $ {=nw} $ matches and drew $ {=nd} $ matches, so $p={=nw}+{=nd}={=nok}$.",
+      "Calculate the relative frequency: $f=\\frac{p}{t}=\\frac{{=nok}}{10}={=fixed(nok / 10, 1)}$",
+      "Therefore, the relative frequency of Team 1 not losing a match is ${=fixed(nok / 10, 1)}$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Advanced gap, modelled on book worked example we03 (p. 476: ten soccer matches, event deduced from the pair of scores, then p/t). The twist the book itself uses is that the event is not listed in the data: each match must be classified by comparing the two scores. This family adds one step beyond we03: the event 'Team 1 does not lose' is a union of two outcomes (win + draw), so the student must count wins and draws separately and add them before dividing by the total of 10 trials. The total is always 10, so the answer is always an exact tenth (0.3 to 0.8): no rounding ambiguity, and fixed(nok / 10, 1) prints it as a plain decimal. The stem asks for a decimal; the book's own we03 answer is also a one-place decimal. Scores are drawn from 0 to 4 goals; the require clause keeps at least 2 wins, 2 losses and 1 draw so every instance exercises all three classifications (acceptance rate is roughly 75-80 per cent, so resampling is cheap). Scores are written as scorelines (Team 1 - Team 2) rather than two parallel lists so that no student has to line up positions across two rows. The worked solution gives the per-match differences (numbers only, no string-valued holes) and then the counts, all computed from the same twenty draws. No mcq is used: every plausible wrong answer here (counting only wins, counting draws as losses, dividing by something other than 10) is a counting slip rather than one of the catalogued misconceptions, and mc:g10m14s2-1-1:expects-a-fixed-value does not apply to a numeric item."
+    }
+   ],
+   "infeasible": [],
+   "notes": "Only the advanced tier was a listed gap, and one family fills it honestly: tpl:g10m14s2-1-1:scores-not-lose (kind family, numeric, parent q:g10m14s2-1-1:we03, p. 476). It keeps the book's own soccer context and its method (classify each trial from the data, count positive trials, divide by total trials) and adds the union-of-two-outcomes step. Answers are exact tenths, so no rounding. I did not write a second advanced family: the other candidate skeletons (pooled trial totals, a frequency table with an unstated total, inverse problems) go beyond the book's questions and method for this objective."
+  },
+  {
+   "lo_id": "lo:g10m14s2-1-2",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "The book-questions file for this objective contains an empty list ([]), so there is no book question to cite as parent_question_id, no printed page for source_page, and no canonical solution to model the method on. The spec requires the parent to be a book question OF THIS objective from the list given, so any id I wrote would be invented. The misconceptions file is also empty, so no catalogued misconception ids are available for distractors. I cannot see how the book tabulates trial outcomes, whether it uses cumulative relative frequency columns, or how it words the comparison with theoretical probability. Writing a family would mean guessing the book's method and notation, which the rules forbid."
+    },
+    {
+     "tier": "standard",
+     "reason": "Same blocker: the book-questions list is empty, so there is no typical book exercise to model, no valid parent_question_id and no source_page. Calculating relative frequency after each trial from a table and comparing it with the theoretical probability is the right skill, but without the book's table layout, rounding convention and wording for how the frequency approaches the theoretical value, any family would be unsupported by the source."
+    },
+    {
+     "tier": "advanced",
+     "reason": "Same blocker: no book questions were supplied, so there is no harder book exercise (multi-step or with a twist) to model and no parent_question_id to cite. I will not invent a twist the book does not use or fabricate a parent id."
+    }
+   ],
+   "notes": "Both input files, g10m14s2-1-2.book-questions.txt and g10m14s2-1-2.misconceptions.txt, hold only \"[]\" (checked in one parallel read, as instructed). The prompt says these are the only files I may open, so I did not search the repo for the book text. I returned no families rather than fabricate provenance. To fill these gaps, re-run the packet with this objective's book questions attached. Once they are there, three families fit the objective: basic, relative frequency after each trial from a short table; standard, compare the final relative frequency with the theoretical probability; advanced, a multi-step table or a twist the book uses."
+  },
+  {
+   "lo_id": "lo:g10m14s3-1-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m14s3-1-1:factors-count",
+     "kind": "family",
+     "lo_id": "lo:g10m14s3-1-1",
+     "parent_question_id": "q:g10m14s3-1-1:ex14-3-3b",
+     "source_page": 480,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": "Pieces of paper labelled with the whole numbers from 1 up to a given number are placed in a box and the box is shaken. One piece of paper is taken out and then replaced. The event A is taking a piece of paper labelled with a factor of that largest number.",
+     "params": [
+      {
+       "name": "n",
+       "randint": [
+        10,
+        40
+       ]
+      },
+      {
+       "name": "fs",
+       "let": "[d for d in range(1, n + 1) if n % d == 0]"
+      },
+      {
+       "require": "len(fs) >= 4",
+       "why": "a prime, or the square of a prime, has only two or three factors, which makes too thin a set to write down and count"
+      }
+     ],
+     "constraints": [
+      "len(fs) >= 4"
+     ],
+     "stem": "Pieces of paper labelled with the numbers $1$ to ${=n}$ are placed in a box and the box is shaken. One piece of paper is taken out and then replaced. The event $A$ is taking a piece of paper labelled with a factor of ${=n}$. Write down the set $A$ and use it to find $n(A)$, the number of elements in $A$.",
+     "answer": "len(fs)",
+     "solution": [
+      "The sample space $S$ is all the numbers that can be on the piece of paper: the whole numbers from $1$ to ${=n}$, so $n(S) = {=n}$.",
+      "The event $A$ contains the numbers in $S$ that are factors of ${=n}$, that is, the numbers that divide ${=n}$ exactly with no remainder.",
+      "Checking the numbers from $1$ to ${=n}$ one by one gives $A = {=setof(fs)}$. Notice that $1$ and ${=n}$ are both factors of ${=n}$, so both belong in $A$.",
+      "Counting the elements of $A$ gives $n(A) = {=len(fs)}$."
+     ],
+     "notes": "Mirrors ex14-3-3b (S = 1 to 12, A = factors of 12) with the top number varied from 10 to 40; 22 non-prime, non-prime-square values give 22 distinct stems. The book asks the student to write the set A; a set cannot be marked reliably as a typed answer, so the family asks for n(A), and the worked solution writes the set out. Uses setof(list) from the function list to print the set, so the reviewer should confirm it renders as {1, 2, 3, ...} with proper braces. Every instance was checked by brute force outside the engine. Blind-solve risk is low: the only judgement is that 1 and the number itself count as factors, which the book's own solution to ex14-3-3b does too. No distractors, so no misconception ids are used."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m14s3-1-1:neither-region",
+     "kind": "family",
+     "lo_id": "lo:g10m14s3-1-1",
+     "parent_question_id": "q:g10m14s3-1-1:ex14-8-14a",
+     "source_page": 493,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": "Pieces of paper labelled with the whole numbers from 1 up to a given number are placed in a box and the box is shaken. One piece of paper is taken out. Event A is taking a multiple of one number and event B is taking a multiple of another number. The events are shown in a Venn diagram with a rectangle for the sample space S and two overlapping circles for A and B.",
+     "params": [
+      {
+       "name": "n",
+       "randint": [
+        30,
+        50
+       ]
+      },
+      {
+       "name": "a",
+       "choice": [
+        3,
+        4,
+        5,
+        6,
+        7
+       ]
+      },
+      {
+       "name": "b",
+       "choice": [
+        3,
+        4,
+        5,
+        6,
+        7
+       ],
+       "resample_while": "b == a"
+      },
+      {
+       "require": "a % b != 0 and b % a != 0",
+       "why": "if one number divides the other, one circle sits wholly inside the other and the picture is a different shape"
+      },
+      {
+       "name": "m",
+       "let": "lcm(a, b)"
+      },
+      {
+       "require": "m <= n",
+       "why": "the circles must overlap, so at least one number must be a multiple of both"
+      },
+      {
+       "name": "sa",
+       "let": "[x for x in range(1, n + 1) if x % a == 0]"
+      },
+      {
+       "name": "sb",
+       "let": "[x for x in range(1, n + 1) if x % b == 0]"
+      },
+      {
+       "name": "sc",
+       "let": "[x for x in range(1, n + 1) if x % a == 0 and x % b == 0]"
+      },
+      {
+       "name": "na",
+       "let": "len(sa)"
+      },
+      {
+       "name": "nb",
+       "let": "len(sb)"
+      },
+      {
+       "name": "nc",
+       "let": "len(sc)"
+      },
+      {
+       "name": "oa",
+       "let": "na - nc"
+      },
+      {
+       "name": "ob",
+       "let": "nb - nc"
+      },
+      {
+       "name": "tot",
+       "let": "oa + nc + ob"
+      },
+      {
+       "name": "out",
+       "let": "n - tot"
+      }
+     ],
+     "constraints": [
+      "a != b",
+      "lcm(a, b) <= n",
+      "out > 0"
+     ],
+     "stem": "Pieces of paper labelled with the numbers $1$ to ${=n}$ are placed in a box and the box is shaken. One piece of paper is taken out. The event $A$ is taking a piece of paper labelled with a multiple of ${=a}$ and the event $B$ is taking a piece of paper labelled with a multiple of ${=b}$. The events are shown in a Venn diagram, with a rectangle for the sample space $S$ and two overlapping circles for $A$ and $B$. How many of the numbers lie inside the rectangle but outside both circles?",
+     "answer": "out",
+     "solution": [
+      "The sample space $S$ is the whole numbers from $1$ to ${=n}$, so $n(S) = {=n}$. This is the total number of elements inside the rectangle.",
+      "The event $A$ is the multiples of ${=a}$ in $S$: $A = {=setof(sa)}$, so $n(A) = {=na}$.",
+      "The event $B$ is the multiples of ${=b}$ in $S$: $B = {=setof(sb)}$, so $n(B) = {=nb}$.",
+      "The numbers that appear in both $A$ and $B$ are ${=setof(sc)}$. That is ${=nc}$ numbers, and they go in the overlap of the two circles. Fill in the overlap first, because these numbers must not be counted twice.",
+      "Inside circle $A$ only there are ${=na} - {=nc} = {=oa}$ numbers, and inside circle $B$ only there are ${=nb} - {=nc} = {=ob}$ numbers.",
+      "Together the two circles hold ${=oa} + {=nc} + {=ob} = {=tot}$ numbers.",
+      "The numbers outside both circles are the rest of the rectangle: ${=n} - {=tot} = {=out}$."
+     ],
+     "notes": "Advanced twist modelled on ex14-8-14a (an 'and' event, which is the overlap of the two circles): the student must find the overlap first, subtract it from each circle, and only then read off the region outside both circles. The usual wrong answer is n - n(A) - n(B), which forgets that the overlap was counted twice. Parameters: n 30 to 50; a and b from 3 to 7, distinct, with neither dividing the other (rules out only 3 and 6), and lcm(a, b) <= n so the overlap is never empty. Brute-force check outside the engine over all 344 admissible (n, a, b) triples: the answer equals a direct count of numbers divisible by neither a nor b, and circle A only, circle B only, overlap and outside are all at least 1. Largest printed set has 16 elements. Uses setof(list) to print sets; the reviewer should confirm it renders with proper braces. The Venn diagram is described in words because the spec has no figure field, so the student works the regions out rather than drawing them. Numeric answer, so no distractors and no misconception ids."
+    }
+   ],
+   "infeasible": [],
+   "notes": "Two families, one for each gap (basic and advanced). Both are numeric. The book's basic items ask the student to write down a set, but a set has no documented plain-maths marker syntax, so I did not make a set a typed answer. The basic family asks for n(A) and writes the set out in the worked solution. The Venn diagram cannot be drawn, because the spec has no figure field, so the advanced family describes it in words and asks for the count in the region outside both circles. The misconception catalogue for this objective is empty and neither family has distractors, so no misconception ids are used and nothing is proposed. Both families print sets with setof(list), assuming it takes a list and renders it with braces. Neither family needs the marker block."
+  },
+  {
+   "lo_id": "lo:g10m14s3-1-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m14s3-1-2:inside-circle",
+     "kind": "family",
+     "lo_id": "lo:g10m14s3-1-2",
+     "parent_question_id": "q:g10m14s3-1-2:ex14-3-2",
+     "source_page": 480,
+     "tier": "basic",
+     "answer_type": "mcq",
+     "context": null,
+     "params": [
+      {
+       "name": "na",
+       "randint": [
+        2,
+        3
+       ]
+      },
+      {
+       "name": "nab",
+       "randint": [
+        1,
+        3
+       ]
+      },
+      {
+       "name": "nb",
+       "randint": [
+        1,
+        3
+       ]
+      },
+      {
+       "name": "nn",
+       "randint": [
+        1,
+        2
+       ]
+      },
+      {
+       "name": "total",
+       "let": "na + nab + nb + nn"
+      },
+      {
+       "require": "total >= 7 and total <= 10",
+       "why": "keep the sample space small for the entry-point tier"
+      },
+      {
+       "name": "U",
+       "let": "list(range(1, total + 1))"
+      },
+      {
+       "name": "P",
+       "shuffle": "U"
+      },
+      {
+       "name": "onlyA",
+       "let": "sorted([P[i] for i in range(0, total) if i < na])"
+      },
+      {
+       "name": "both",
+       "let": "sorted([P[i] for i in range(0, total) if i >= na and i < na + nab])"
+      },
+      {
+       "name": "onlyB",
+       "let": "sorted([P[i] for i in range(0, total) if i >= na + nab and i < na + nab + nb])"
+      },
+      {
+       "name": "neither",
+       "let": "sorted([P[i] for i in range(0, total) if i >= na + nab + nb])"
+      },
+      {
+       "name": "evA",
+       "let": "sorted([P[i] for i in range(0, total) if i < na + nab])"
+      },
+      {
+       "name": "evB",
+       "let": "sorted([P[i] for i in range(0, total) if i >= na and i < na + nab + nb])"
+      },
+      {
+       "name": "outA",
+       "let": "sorted([P[i] for i in range(0, total) if i >= na + nab])"
+      }
+     ],
+     "constraints": [
+      "len(onlyA) > 0 and len(both) > 0 and len(onlyB) > 0 and len(neither) > 0"
+     ],
+     "stem": "A Venn diagram shows the sample space $S = \\{n : n \\in \\mathbb{Z}, 1 \\leq n \\leq {=total}\\}$. Two circles, one for the event $A$ and one for the event $B$, overlap inside the rectangle $S$. The numbers of $S$ are placed in the diagram as follows. Inside circle $A$ only: ${=setof(onlyA)}$. Inside both circles, in the overlap: ${=setof(both)}$. Inside circle $B$ only: ${=setof(onlyB)}$. Outside both circles: ${=setof(neither)}$. Which of the following sets is the event set of $A$?",
+     "solution": [
+      "The event set of $A$ is made of every number that lies inside circle $A$. Circle $A$ includes the part where it overlaps circle $B$, because the numbers there are inside both circles.",
+      "Inside circle $A$ only: ${=setof(onlyA)}$. In the overlap, which is also inside circle $A$: ${=setof(both)}$.",
+      "Put the two parts together: the event set of $A$ is ${=setof(evA)}$.",
+      "The other sets each read the diagram wrongly: ${=setof(both)}$ is only the overlap, ${=setof(evB)}$ is everything inside circle $B$, and ${=setof(outA)}$ is the numbers outside circle $A$."
+     ],
+     "choices": {
+      "correct": "${=setof(evA)}$",
+      "distractors": [
+       {
+        "text": "${=setof(both)}$",
+        "misconception_id": "mc:g10m14s3-1-2:reads-only-the-overlap"
+       },
+       {
+        "text": "${=setof(evB)}$",
+        "misconception_id": "mc:g10m14s3-1-2:reads-the-other-circle"
+       },
+       {
+        "text": "${=setof(outA)}$",
+        "misconception_id": "mc:g10m14s3-1-2:reads-outside-the-circle"
+       }
+      ]
+     },
+     "proposed_misconceptions": [],
+     "notes": "Entry-point version of the book's ex14-3-2: a small sample space (7 to 10 numbers) and always the event A. Families carry no image, so the Venn diagram is given as its four regions in words (inside A only, in the overlap, inside B only, outside both); the skill kept is reading the circle of A as its own region PLUS the shared overlap. Numbers are shuffled into the four regions by position in a shuffled list, so the regions are disjoint and together cover 1..total. All four regions are non-empty (constraint), which makes the four options provably distinct: correct = A-only plus overlap; distractors = overlap only (mc reads-only-the-overlap), the circle of B (mc reads-the-other-circle), and everything outside circle A = B-only plus neither (mc reads-outside-the-circle, matching the book's {3, 8, 12} distractor). Sets are passed to setof already sorted; if setof does not return bare LaTeX braces, the three {=setof(...)} holes in each template need the reviewer's attention. Simulated 20000 draws offline: options always distinct, correct set always equals A-only union overlap."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m14s3-1-2:paired-sets",
+     "kind": "family",
+     "lo_id": "lo:g10m14s3-1-2",
+     "parent_question_id": "q:g10m14s3-1-2:ex14-8-2",
+     "source_page": 491,
+     "tier": "advanced",
+     "answer_type": "mcq",
+     "context": null,
+     "params": [
+      {
+       "name": "na",
+       "randint": [
+        3,
+        5
+       ]
+      },
+      {
+       "name": "nab",
+       "randint": [
+        2,
+        4
+       ]
+      },
+      {
+       "name": "nb",
+       "randint": [
+        2,
+        4
+       ]
+      },
+      {
+       "name": "nn",
+       "randint": [
+        1,
+        3
+       ]
+      },
+      {
+       "name": "total",
+       "let": "na + nab + nb + nn"
+      },
+      {
+       "require": "total >= 11 and total <= 15",
+       "why": "a sample space as large as the book's 15 numbers, but never more"
+      },
+      {
+       "name": "U",
+       "let": "list(range(1, total + 1))"
+      },
+      {
+       "name": "P",
+       "shuffle": "U"
+      },
+      {
+       "name": "onlyA",
+       "let": "sorted([P[i] for i in range(0, total) if i < na])"
+      },
+      {
+       "name": "both",
+       "let": "sorted([P[i] for i in range(0, total) if i >= na and i < na + nab])"
+      },
+      {
+       "name": "onlyB",
+       "let": "sorted([P[i] for i in range(0, total) if i >= na + nab and i < na + nab + nb])"
+      },
+      {
+       "name": "neither",
+       "let": "sorted([P[i] for i in range(0, total) if i >= na + nab + nb])"
+      },
+      {
+       "name": "evA",
+       "let": "sorted([P[i] for i in range(0, total) if i < na + nab])"
+      },
+      {
+       "name": "evB",
+       "let": "sorted([P[i] for i in range(0, total) if i >= na and i < na + nab + nb])"
+      },
+      {
+       "name": "outA",
+       "let": "sorted([P[i] for i in range(0, total) if i >= na + nab])"
+      },
+      {
+       "name": "outB",
+       "let": "sorted([P[i] for i in range(0, total) if i < na or i >= na + nab + nb])"
+      }
+     ],
+     "constraints": [
+      "len(onlyA) > 0 and len(both) > 0 and len(onlyB) > 0 and len(neither) > 0"
+     ],
+     "stem": "A Venn diagram shows the sample space $S = \\{n : n \\in \\mathbb{Z}, 1 \\leq n \\leq {=total}\\}$ with two overlapping circles, one for the event $A$ and one for the event $B$. Reading the diagram, the overlap of the two circles holds ${=setof(both)}$. The part of circle $B$ that is outside circle $A$ holds ${=setof(onlyB)}$. The part of circle $A$ that is outside circle $B$ holds ${=setof(onlyA)}$. The numbers outside both circles are ${=setof(neither)}$. Which of the following gives the event set of $A$ and the event set of $B$?",
+     "solution": [
+      "An event set is every number that lies inside the circle of that event. The overlap lies inside both circles, so it belongs to both event sets.",
+      "Circle $A$ holds ${=setof(onlyA)}$ on its own and the overlap ${=setof(both)}$, so the event set of $A$ is ${=setof(evA)}$.",
+      "Circle $B$ holds ${=setof(onlyB)}$ on its own and the overlap ${=setof(both)}$, so the event set of $B$ is ${=setof(evB)}$.",
+      "The numbers outside both circles, ${=setof(neither)}$, belong to neither event set.",
+      "The other options go wrong in one way each: one swaps the two circles, one leaves the overlap out of both circles, and one lists the numbers outside each circle instead of inside it."
+     ],
+     "choices": {
+      "correct": "$A = {=setof(evA)}$ and $B = {=setof(evB)}$",
+      "distractors": [
+       {
+        "text": "$A = {=setof(evB)}$ and $B = {=setof(evA)}$",
+        "misconception_id": "mc:g10m14s3-1-2:reads-the-other-circle"
+       },
+       {
+        "text": "$A = {=setof(onlyA)}$ and $B = {=setof(onlyB)}$",
+        "misconception_id": "mc:g10m14s3-1-2:omits-the-overlap"
+       },
+       {
+        "text": "$A = {=setof(outA)}$ and $B = {=setof(outB)}$",
+        "misconception_id": "mc:g10m14s3-1-2:reads-outside-the-circle"
+       }
+      ]
+     },
+     "proposed_misconceptions": [
+      {
+       "id": "mc:g10m14s3-1-2:omits-the-overlap",
+       "label": "Leaves the overlap out of each circle",
+       "description": "The student reads each circle as only the numbers that sit in that circle on their own, so the numbers in the overlap are left out of both event sets, instead of being counted inside each circle they lie in."
+      }
+     ],
+     "notes": "Advanced version, built on the book's ex14-8-2 (read B from the diagram): the student reads BOTH circles from the same diagram and picks the pair, so the overlap must be counted twice and each circle's own part read correctly (several steps, 11 to 15 numbers, regions listed in a mixed order). Families carry no image, so the diagram is given as its four regions in words. All four regions are non-empty (constraint), so the four options are provably distinct in both the A-part and the B-part. Distractors: the two circles swapped (mc reads-the-other-circle, catalogued), each circle without the overlap (new mc omits-the-overlap, declared here: the opposite error to reads-only-the-overlap), and the numbers outside each circle (mc reads-outside-the-circle, catalogued). No distractor uses reads-only-the-overlap, because a pair giving the same set for A and B is not a plausible reading. Sets are passed to setof already sorted. Simulated 20000 draws offline: options always distinct, correct pair always equals (A-only union overlap, B-only union overlap). The standard tier is not a gap (the two book questions cover it), so no standard family is written."
+    }
+   ],
+   "infeasible": [],
+   "notes": "Two families written, one per listed gap (basic, advanced); standard is covered by the book's two questions and was not a listed gap. Both families are mcq because every distractor is a catalogued or declared, diagnosable error (reads only the overlap, reads the other circle, reads the outside, omits the overlap), matching the book's own mcq format. The book's two Venn figures were viewed (S = 1..15; A = {1,2,4,5,6,7,9,10,11,13,14,15}, B = {1,2,3,4,5,7,8,9,10,11,12,14,15}). Because a family has no image channel, the diagram is rendered as a region listing (inside A only / overlap / inside B only / outside both), which keeps the skill of counting the overlap as part of each circle; the reviewer should confirm this is acceptable for this objective. I could not run the engine, so I assumed setof(list) returns bare LaTeX braces for a list (used inside $...$), and that mcq choice text takes $...$ like the stem. I checked the sampling logic offline with a Python mirror (20000 draws per family): regions disjoint and covering 1..total, option sets always distinct, correct option always equal to the union of the circle's own region and the overlap."
+  },
+  {
+   "lo_id": "lo:g10m14s4-1-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m14s4-1-1:unionpick",
+     "kind": "family",
+     "lo_id": "lo:g10m14s4-1-1",
+     "parent_question_id": "q:g10m14s4-1-1:ex14-4-2",
+     "source_page": 482,
+     "tier": "basic",
+     "answer_type": "mcq",
+     "context": null,
+     "params": [
+      {
+       "name": "N",
+       "choice": [
+        9,
+        10,
+        11,
+        12
+       ]
+      },
+      {
+       "name": "na",
+       "randint": [
+        2,
+        3
+       ]
+      },
+      {
+       "name": "nab",
+       "randint": [
+        1,
+        2
+       ]
+      },
+      {
+       "name": "nb",
+       "randint": [
+        2,
+        3
+       ]
+      },
+      {
+       "name": "nout",
+       "let": "N - na - nab - nb"
+      },
+      {
+       "require": "nout >= 1 and nout <= 3",
+       "why": "every element of S is drawn in exactly one place, and one to three of them lie outside both circles, as in the book's diagram"
+      },
+      {
+       "name": "pool",
+       "let": "list(range(1, N + 1))"
+      },
+      {
+       "name": "w",
+       "shuffle": "pool"
+      },
+      {
+       "name": "aonly",
+       "let": "sorted([w[i] for i in range(na)])"
+      },
+      {
+       "name": "both",
+       "let": "sorted([w[i] for i in range(na, na + nab)])"
+      },
+      {
+       "name": "bonly",
+       "let": "sorted([w[i] for i in range(na + nab, na + nab + nb)])"
+      },
+      {
+       "name": "outs",
+       "let": "sorted([w[i] for i in range(na + nab + nb, N)])"
+      },
+      {
+       "name": "uni",
+       "let": "sorted([w[i] for i in range(na + nab + nb)])"
+      }
+     ],
+     "stem": "A group of learners are given a Venn diagram. The sample space is $S=\\{n : n\\in\\mathbb{Z}, 1\\leq n\\leq {=N}\\}$. The diagram shows two overlapping circles, the event sets $A$ and $B$, and every element of $S$ is written in exactly one place. Inside circle $A$ only: ${=setof(aonly)}$. In the overlap $A\\cap B$, inside both circles: ${=setof(both)}$. Inside circle $B$ only: ${=setof(bonly)}$. Outside both circles: ${=setof(outs)}$. They are asked to identify the union of event set $A$ and event set $B$, also written as $A\\cup B$. They get stuck, and you offer to help them find it. Which set best describes the event set of $A\\cup B$?",
+     "choices": {
+      "correct": "${=setof(uni)}$",
+      "distractors": [
+       {
+        "text": "${=setof(aonly)}$",
+        "misconception_id": "mc:g10m14s4-1-1:union-as-a-only-part"
+       },
+       {
+        "text": "${=setof(both)}$",
+        "misconception_id": "mc:g10m14s4-1-1:union-as-overlap-only"
+       },
+       {
+        "text": "${=setof(outs)}$",
+        "misconception_id": "mc:g10m14s4-1-1:union-as-outside-both-circles"
+       }
+      ]
+     },
+     "solution": [
+      "The union $A\\cup B$ is the set of every element that is in $A$ or in $B$ (or in both). So we need every element that lies inside at least one of the two circles.",
+      "Circle $A$ holds the elements in $A$ only, ${=setof(aonly)}$, together with the overlap, ${=setof(both)}$.",
+      "Circle $B$ holds the overlap, ${=setof(both)}$, together with the elements in $B$ only, ${=setof(bonly)}$.",
+      "The elements outside both circles, ${=setof(outs)}$, are in neither $A$ nor $B$, so they are left out.",
+      "Write every element inside the circles once (the overlap counts once, not twice), in ascending order: $A\\cup B={=setof(uni)}$."
+     ],
+     "notes": "Basic entry point, modelled on the book's ex14-4-2 (a four-option choice of sets for A union B). The family engine cannot draw the Venn diagram, so the stem gives the diagram as its four regions in words (A only, overlap, B only, outside both), every element of S in exactly one region, exactly as the book's figure does. The sample space, the region sizes and which numbers sit where are all sampled. The three distractors are the book's own three wrong options, each tied to the catalogued misconception: only the A-only part, only the overlap, only the element(s) outside both circles. All four options are always distinct because the regions are disjoint and non-empty. Please check that setof() prints the sets with escaped braces inside the $...$ and that the four options come out as sets."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m14s4-1-1:bigdiagram",
+     "kind": "family",
+     "lo_id": "lo:g10m14s4-1-1",
+     "parent_question_id": "q:g10m14s4-1-1:ex14-8-3",
+     "source_page": 491,
+     "tier": "advanced",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "N",
+       "choice": [
+        14,
+        15,
+        16,
+        17,
+        18
+       ]
+      },
+      {
+       "name": "nu",
+       "let": "12"
+      },
+      {
+       "name": "na",
+       "randint": [
+        3,
+        5
+       ]
+      },
+      {
+       "name": "nab",
+       "randint": [
+        3,
+        5
+       ]
+      },
+      {
+       "name": "nb",
+       "let": "nu - na - nab"
+      },
+      {
+       "require": "nb >= 3",
+       "why": "each of the two crescents must hold at least three elements so the diagram is not lopsided"
+      },
+      {
+       "name": "pool",
+       "let": "list(range(1, N + 1))"
+      },
+      {
+       "name": "w",
+       "shuffle": "pool"
+      },
+      {
+       "name": "aonly",
+       "let": "sorted([w[i] for i in range(na)])"
+      },
+      {
+       "name": "both",
+       "let": "sorted([w[i] for i in range(na, na + nab)])"
+      },
+      {
+       "name": "bonly",
+       "let": "sorted([w[i] for i in range(na + nab, nu)])"
+      },
+      {
+       "name": "outs",
+       "let": "sorted([w[i] for i in range(nu, N)])"
+      },
+      {
+       "name": "uni",
+       "let": "sorted([w[i] for i in range(nu)])"
+      }
+     ],
+     "stem": "A group of learners are given a Venn diagram. The sample space is $S=\\{n : n\\in\\mathbb{Z}, 1\\leq n\\leq {=N}\\}$. The diagram shows two overlapping circles, the event sets $A$ and $B$, and every element of $S$ is written in exactly one place. Inside circle $A$ only: ${=setof(aonly)}$. In the overlap $A\\cap B$, inside both circles: ${=setof(both)}$. Inside circle $B$ only: ${=setof(bonly)}$. Outside both circles: ${=setof(outs)}$. They are asked to identify the union of event set $A$ and event set $B$, also written as $A\\cup B$. They get stuck, and you offer to help them find it. Write down the event set that best describes $A\\cup B$, with its elements in ascending order, in the form $\\{a, b, c, \\ldots\\}$.",
+     "solution": [
+      "The union $A\\cup B$ is the set of every element that is in $A$ or in $B$ (or in both). So we need every element that lies inside at least one of the two circles.",
+      "Circle $A$ holds the elements in $A$ only, ${=setof(aonly)}$, together with the overlap, ${=setof(both)}$. Circle $B$ holds the same overlap, ${=setof(both)}$, together with the elements in $B$ only, ${=setof(bonly)}$.",
+      "The overlap lies inside both circles, so its {=nab} elements are written once, not twice. The three regions inside the circles hold {=na} + {=nab} + {=nb} = {=nu} elements in all.",
+      "The elements outside both circles, ${=setof(outs)}$, are in neither $A$ nor $B$, so they are left out.",
+      "Collect the elements of the three regions inside the circles and put them in ascending order: $A\\cup B={=setof(uni)}$."
+     ],
+     "marker": {
+      "kind": "values",
+      "answer": "[{=uni[0]}, {=uni[1]}, {=uni[2]}, {=uni[3]}, {=uni[4]}, {=uni[5]}, {=uni[6]}, {=uni[7]}, {=uni[8]}, {=uni[9]}, {=uni[10]}, {=uni[11]}]",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "notes": "Advanced, modelled on the book's ex14-8-3 (a typed event set for A union B read from a 15-element diagram, with an element left outside both circles). The harder demands are an open response with no options to pick from, a bigger diagram (sample space up to 18, twelve elements to collect from three regions), and two to six elements outside both circles that must be left out while the overlap is written once. The book's own union questions are both classed standard, so this family is harder by size and by being a typed set, not by a new technique. The family engine cannot draw the diagram, so the stem gives it as its four regions in words. The union always has exactly twelve elements so the plain marker answer can be written with twelve fixed holes (no join function exists). The stem asks for ascending order so an order-sensitive marker agrees with the key. Please check that setof() prints the sets with escaped braces inside the $...$."
+    }
+   ],
+   "infeasible": [],
+   "notes": "Two families, one per listed gap (basic, advanced); standard was not listed as a gap, the book's two questions cover it. Both read the Venn diagram as text: I opened both book figures (a 15-element diagram with A only, overlap, B only and outside regions), and since the family engine cannot draw one, each stem lists the four regions in words, with every element of the sample space in exactly one region, as the book's figure shows it. The basic family is a four-option mcq whose three distractors are the three catalogued misconceptions (A-only part, overlap only, outside both circles). The advanced family is a typed set read from a larger diagram, with a fixed union size of 12 so the plain marker answer needs no join function. I could not run the engine, so I relied on setof(list) printing a LaTeX set with escaped braces and no surrounding dollar signs, on shuffle accepting a list-valued param name, and on indexing inside holes (all in the stated expression language); the reviewer should confirm those renderings."
+  },
+  {
+   "lo_id": "lo:g10m14s4-1-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m14s4-1-2:overlap-pick",
+     "kind": "family",
+     "lo_id": "lo:g10m14s4-1-2",
+     "parent_question_id": "q:g10m14s4-1-2:ex14-4-1",
+     "source_page": 482,
+     "tier": "standard",
+     "answer_type": "mcq",
+     "context": null,
+     "params": [
+      {
+       "name": "nn",
+       "choice": [
+        14,
+        15,
+        16,
+        18,
+        20
+       ]
+      },
+      {
+       "name": "pool",
+       "sample": {
+        "from": "range(1, nn + 1)",
+        "k": 7
+       }
+      },
+      {
+       "name": "araw",
+       "let": "[pool[j] for j in range(0, 6)]"
+      },
+      {
+       "name": "braw",
+       "let": "[pool[0], pool[1], pool[6]]"
+      },
+      {
+       "name": "ash",
+       "shuffle": "araw"
+      },
+      {
+       "name": "bsh",
+       "shuffle": "braw"
+      },
+      {
+       "name": "inter",
+       "let": "sorted([pool[0], pool[1]])"
+      },
+      {
+       "name": "aset",
+       "let": "sorted([pool[j] for j in range(0, 6)])"
+      },
+      {
+       "name": "bset",
+       "let": "sorted([pool[0], pool[1], pool[6]])"
+      },
+      {
+       "name": "uset",
+       "let": "sorted([pool[j] for j in range(0, 7)])"
+      },
+      {
+       "name": "bonly",
+       "let": "pool[6]"
+      }
+     ],
+     "constraints": [],
+     "stem": "A group of learners are given a Venn diagram of the sample space $S=\\{n:n\\in\\mathbb{Z},1\\leq n\\leq {=nn}\\}$. The diagram has two overlapping circles, one for event set $A$ and one for event set $B$. The numbers written inside circle $A$ are {=ash[0]}, {=ash[1]}, {=ash[2]}, {=ash[3]}, {=ash[4]} and {=ash[5]}. The numbers written inside circle $B$ are {=bsh[0]}, {=bsh[1]} and {=bsh[2]}. A number in the overlap of the two circles is inside both circles, so it is written in both lists, and every other number of $S$ lies outside both circles. The learners are asked to identify the event set of the intersection of $A$ and $B$, also written $A\\cap B$. Which set best describes the event set of $A\\cap B$?",
+     "choices": {
+      "correct": "$\\{{=inter[0]}, {=inter[1]}\\}$",
+      "distractors": [
+       {
+        "text": "$\\{{=bset[0]}, {=bset[1]}, {=bset[2]}\\}$",
+        "misconception_id": "mc:g10m14s4-1-2:whole-set-not-intersection"
+       },
+       {
+        "text": "$\\{{=aset[0]}, {=aset[1]}, {=aset[2]}, {=aset[3]}, {=aset[4]}, {=aset[5]}\\}$",
+        "misconception_id": "mc:g10m14s4-1-2:whole-set-not-intersection"
+       },
+       {
+        "text": "$\\{{=uset[0]}, {=uset[1]}, {=uset[2]}, {=uset[3]}, {=uset[4]}, {=uset[5]}, {=uset[6]}\\}$",
+        "misconception_id": "mc:g10m14s4-1-2:either-set-not-both"
+       }
+      ]
+     },
+     "solution": [
+      "The intersection $A\\cap B$ is the set of numbers that are in circle $A$ and in circle $B$ at the same time. It can only contain numbers that are written inside circle $B$ as well as inside circle $A$.",
+      "Check the numbers of circle $B$, which are {=bset[0]}, {=bset[1]} and {=bset[2]}, against circle $A$. The numbers {=inter[0]} and {=inter[1]} are inside circle $A$ too, but {=bonly} is only in circle $B$, so it is left out.",
+      "Write down only the numbers that are in both circles: $A\\cap B=\\{{=inter[0]}, {=inter[1]}\\}$.",
+      "The other sets are not the intersection: $\\{{=bset[0]}, {=bset[1]}, {=bset[2]}\\}$ is the whole of $B$, $\\{{=aset[0]}, {=aset[1]}, {=aset[2]}, {=aset[3]}, {=aset[4]}, {=aset[5]}\\}$ is the whole of $A$, and $\\{{=uset[0]}, {=uset[1]}, {=uset[2]}, {=uset[3]}, {=uset[4]}, {=uset[5]}, {=uset[6]}\\}$ collects the numbers of both circles. The intersection keeps only the shared numbers."
+     ],
+     "notes": "Models the book question ex14-4-1 (p. 482). I read its figure: the book draws two overlapping circles with A holding many numbers, B holding {7, 10, 11}, the overlap {7, 10} and one number (8) outside both. Stems carry no figure, so the Venn diagram is described in words: each circle's contents are listed, an overlap number appears in both lists (the stem says so), and the numbers of S that are in neither circle are not listed. Each instance has A with 6 numbers, B with 3 and exactly 2 shared, like the book's 2-element answer. The lists are shuffled so the shared numbers do not sit in the same position every time. Distractors are the book's own error types: all of B (whole-set), all of A (whole-set), and the union of both circles (either-set). Sizes 2, 3, 6 and 7 make the four options always distinct. Reviewer check: pool entries 0-1 are shared, 2-5 are in A only, 6 is in B only, so A and B overlap in exactly the two numbers shown as the key."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m14s4-1-2:shared-typed",
+     "kind": "family",
+     "lo_id": "lo:g10m14s4-1-2",
+     "parent_question_id": "q:g10m14s4-1-2:ex14-4-1",
+     "source_page": 482,
+     "tier": "advanced",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "nn",
+       "choice": [
+        24,
+        25,
+        28,
+        30,
+        32
+       ]
+      },
+      {
+       "name": "pool",
+       "sample": {
+        "from": "range(1, nn + 1)",
+        "k": 12
+       }
+      },
+      {
+       "name": "araw",
+       "let": "[pool[j] for j in range(0, 9)]"
+      },
+      {
+       "name": "braw",
+       "let": "[pool[j] for j in [0, 1, 2, 3, 9, 10, 11]]"
+      },
+      {
+       "name": "ash",
+       "shuffle": "araw"
+      },
+      {
+       "name": "bsh",
+       "shuffle": "braw"
+      },
+      {
+       "name": "inter",
+       "let": "sorted([pool[j] for j in range(0, 4)])"
+      },
+      {
+       "name": "bset",
+       "let": "sorted([pool[j] for j in [0, 1, 2, 3, 9, 10, 11]])"
+      },
+      {
+       "name": "bonly",
+       "let": "sorted([pool[j] for j in range(9, 12)])"
+      }
+     ],
+     "constraints": [],
+     "stem": "The sample space is $S=\\{n:n\\in\\mathbb{Z},1\\leq n\\leq {=nn}\\}$. A Venn diagram shows two overlapping circles, one for event set $A$ and one for event set $B$. The numbers written inside circle $A$ are {=ash[0]}, {=ash[1]}, {=ash[2]}, {=ash[3]}, {=ash[4]}, {=ash[5]}, {=ash[6]}, {=ash[7]} and {=ash[8]}. The numbers written inside circle $B$ are {=bsh[0]}, {=bsh[1]}, {=bsh[2]}, {=bsh[3]}, {=bsh[4]}, {=bsh[5]} and {=bsh[6]}. A number in the overlap of the two circles is written in both lists, and every other number of $S$ lies outside both circles. Determine the event set of the intersection $A\\cap B$. Give its elements from smallest to largest, separated by commas, without brackets.",
+     "solution": [
+      "The intersection $A\\cap B$ contains only the numbers that lie in circle $A$ and in circle $B$ at the same time, so a number that is in just one of the circles does not belong in it.",
+      "Take the numbers of circle $B$, which are {=bset[0]}, {=bset[1]}, {=bset[2]}, {=bset[3]}, {=bset[4]}, {=bset[5]} and {=bset[6]}, one at a time and look for each one in circle $A$. The numbers {=inter[0]}, {=inter[1]}, {=inter[2]} and {=inter[3]} are inside circle $A$ as well.",
+      "The numbers {=bonly[0]}, {=bonly[1]} and {=bonly[2]} are in circle $B$ only, so they are left out.",
+      "Write down only the shared numbers, from smallest to largest: $A\\cap B=\\{{=inter[0]}, {=inter[1]}, {=inter[2]}, {=inter[3]}\\}$, so the answer is {=inter[0]}, {=inter[1]}, {=inter[2]}, {=inter[3]}."
+     ],
+     "marker": {
+      "kind": "values",
+      "answer": "[{=inter[0]}, {=inter[1]}, {=inter[2]}, {=inter[3]}]",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "notes": "Advanced tier for ex14-4-1 (p. 482), the book's only question here, so this is the same skill at a harder level, not a new technique. It differs from the standard family in three ways: the answer is typed instead of picked from options, the circles are larger (A has 9 numbers, B has 7, 4 are shared), and the sample space reaches 24 to 32 so the numbers are mostly two-digit and the student has to check every number of the smaller circle against the other. As in the standard family, the Venn diagram is described in words and the lists are shuffled, so shared numbers are not in fixed positions. Pool entries 0-3 are shared, 4-8 are in A only, 9-11 are in B only. The stem asks for plain comma-separated numbers without brackets so the values marker can compare a typed answer reliably. A student who types braces may need the marker to tolerate them; please check this when sampling. Typical wrong answers to expect from the catalogue are all of one circle (whole-set-not-intersection) and the numbers of both circles (either-set-not-both). Not padded: it adds typed production and larger sets, but if the reviewer thinks that is too small a step beyond standard, drop it."
+    }
+   ],
+   "infeasible": [],
+   "notes": "Both families rest on the book's only question for this objective, ex14-4-1 (p. 482). I read its figure: two overlapping circles, A large, B = {7, 10, 11}, overlap {7, 10}, 8 outside both. Stems cannot carry a figure, so each family describes the diagram in words, listing each circle's contents with shared numbers appearing in both lists. The basic tier was not a listed gap, so I wrote none. Only the two catalogued misconception ids are used; no new misconceptions are proposed. Nothing was run against the engine, so please check that `setof` is unneeded, that `shuffle` returns a copy, and that the template parser accepts `\\{{=x}` and `{=x}\\}` as plain LaTeX braces next to holes."
+  },
+  {
+   "lo_id": "lo:g10m14s5-1-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m14s5-1-1:counts",
+     "kind": "family",
+     "lo_id": "lo:g10m14s5-1-1",
+     "parent_question_id": "q:g10m14s5-1-1:ex14-5-1",
+     "source_page": 484,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "nS",
+       "choice": [
+        10,
+        20,
+        25,
+        50
+       ]
+      },
+      {
+       "name": "nAB",
+       "randint": [
+        1,
+        3
+       ]
+      },
+      {
+       "name": "nA",
+       "randint": [
+        "nAB + 1",
+        "nS // 2"
+       ]
+      },
+      {
+       "name": "nB",
+       "randint": [
+        "nAB + 1",
+        "nS // 2"
+       ],
+       "resample_while": "nB == nA"
+      },
+      {
+       "name": "nU",
+       "let": "nA + nB - nAB"
+      },
+      {
+       "name": "pa",
+       "let": "fixed(nA / nS, 2)"
+      },
+      {
+       "name": "pb",
+       "let": "fixed(nB / nS, 2)"
+      },
+      {
+       "name": "pab",
+       "let": "fixed(nAB / nS, 2)"
+      },
+      {
+       "name": "pu",
+       "let": "fixed(nU / nS, 2)"
+      }
+     ],
+     "constraints": [
+      "nU < nS"
+     ],
+     "stem": "A sample space $S$ has {=nS} equally likely outcomes, so $n(S)={=nS}$. For two events $A$ and $B$, $n(A)={=nA}$, $n(B)={=nB}$ and $n(A\\cap B)={=nAB}$. Calculate $P(A\\cup B)$. Give your answer as a decimal number, rounded to two decimal places.",
+     "answer": "fixed(nU / nS, 2)",
+     "solution": [
+      "Use the identity $P(A\\cup B)=P(A)+P(B)-P(A\\cap B)$. Subtracting $P(A\\cap B)$ stops the outcomes that lie in both events from being counted twice.",
+      "Find each probability using $P(X)=\\frac{n(X)}{n(S)}$:",
+      "$\\begin{aligned}P(A)&=\\frac{{=nA}}{{=nS}}={=pa}\\\\P(B)&=\\frac{{=nB}}{{=nS}}={=pb}\\\\P(A\\cap B)&=\\frac{{=nAB}}{{=nS}}={=pab}\\end{aligned}$",
+      "Calculate $P(A\\cup B)$:",
+      "$\\begin{aligned}P(A\\cup B)&=P(A)+P(B)-P(A\\cap B)\\\\&=({=pa})+({=pb})-({=pab})\\\\&={=pu}\\end{aligned}$",
+      "Therefore, the value of $P(A\\cup B)$ is ${=pu}$."
+     ],
+     "notes": "Entry point: the book's identity applied to counts n(S), n(A), n(B), n(A and B), with no set to read. n(S) is always 10, 20, 25 or 50 so that every P(X) is an exact two-decimal number; the worked sum is therefore exact and no intermediate rounding can change the final answer (the book's own worked solution rounds 5/6 stages, 0.17+0.67, and still prints 0.83; these instances avoid that). n(A and B) is always at least 1 so the subtraction really changes the answer (the book's own question has an empty intersection, which is covered by the book question itself). The catalogued error mc:g10m14s5-1-1:adds-without-subtracting-shared-outcomes gives P(A)+P(B) here; it cannot be attached to a numeric family, so no distractor carries it."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m14s5-1-1:listed",
+     "kind": "family",
+     "lo_id": "lo:g10m14s5-1-1",
+     "parent_question_id": "q:g10m14s5-1-1:ex14-5-1",
+     "source_page": 484,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "nS",
+       "choice": [
+        20,
+        25,
+        50,
+        100
+       ]
+      },
+      {
+       "name": "v",
+       "sample": {
+        "from": "range(1, nS + 1)",
+        "k": 7
+       }
+      },
+      {
+       "name": "w",
+       "shuffle": "v"
+      },
+      {
+       "name": "sa",
+       "let": "sorted([w[0], w[1], w[2], w[3], w[4]])"
+      },
+      {
+       "name": "sb",
+       "let": "sorted([w[0], w[1], w[5], w[6]])"
+      },
+      {
+       "name": "sc",
+       "let": "sorted([w[0], w[1]])"
+      },
+      {
+       "name": "nU",
+       "let": "len(sa) + len(sb) - len(sc)"
+      },
+      {
+       "name": "pa",
+       "let": "fixed(len(sa) / nS, 2)"
+      },
+      {
+       "name": "pb",
+       "let": "fixed(len(sb) / nS, 2)"
+      },
+      {
+       "name": "pc",
+       "let": "fixed(len(sc) / nS, 2)"
+      },
+      {
+       "name": "pu",
+       "let": "fixed(nU / nS, 2)"
+      }
+     ],
+     "constraints": [],
+     "stem": "The sample space is $S=\\{n : n \\in \\mathbb{Z}, 1 \\leq n \\leq {=nS}\\}$ and every outcome is equally likely. Two events are given by the event sets $A=\\{{=sa[0]}, {=sa[1]}, {=sa[2]}, {=sa[3]}, {=sa[4]}\\}$ and $B=\\{{=sb[0]}, {=sb[1]}, {=sb[2]}, {=sb[3]}\\}$. Calculate $P(A\\cup B)$. Give your answer as a decimal number, rounded to two decimal places.",
+     "answer": "fixed(nU / nS, 2)",
+     "solution": [
+      "Use the identity $P(A\\cup B)=P(A)+P(B)-P(A\\cap B)$.",
+      "The sample space is the integers from 1 to {=nS}, so $n(S)={=nS}$.",
+      "Count the elements of each event set: $n(A)={=len(sa)}$ and $n(B)={=len(sb)}$.",
+      "The numbers that appear in both event sets are {=sc[0]} and {=sc[1]}, so $A\\cap B=\\{{=sc[0]}, {=sc[1]}\\}$ and $n(A\\cap B)={=len(sc)}$.",
+      "Find each probability using $P(X)=\\frac{n(X)}{n(S)}$:",
+      "$\\begin{aligned}P(A)&=\\frac{{=len(sa)}}{{=nS}}={=pa}\\\\P(B)&=\\frac{{=len(sb)}}{{=nS}}={=pb}\\\\P(A\\cap B)&=\\frac{{=len(sc)}}{{=nS}}={=pc}\\end{aligned}$",
+      "Calculate $P(A\\cup B)$:",
+      "$\\begin{aligned}P(A\\cup B)&=P(A)+P(B)-P(A\\cap B)\\\\&=({=pa})+({=pb})-({=pc})\\\\&={=pu}\\end{aligned}$",
+      "Therefore, the value of $P(A\\cup B)$ is ${=pu}$."
+     ],
+     "notes": "Harder than the book question in two ways, both inside the book's own notation and method: the sample space is only given in the book's set-builder form {n : n in Z, 1 <= n <= N}, and the event sets are listed but the intersection is NOT supplied, so the student must find A and B overlap (always exactly two shared numbers; A has 5 elements, B has 4, so n(A or B) is always 7) before applying the identity. The shape is fixed because a stem cannot list a variable number of elements; only N and the elements change, and the shuffle means the shared numbers are not systematically the smallest. N is 20, 25, 50 or 100 so every P(X) is an exact two-decimal number and no intermediate rounding can alter the final answer. Answers are 0.35, 0.28, 0.14 or 0.07. The book has no exercise harder than its single standard one, so this tier is an extension of that exercise, not a copy of a harder printed one."
+    }
+   ],
+   "infeasible": [],
+   "notes": "Two families written, one per listed gap (basic, advanced). No standard family was written because the listed gaps were basic and advanced and the book's single exercise (ex14-5-1, intersection supplied and empty) already occupies the standard tier. Templates build set lists with fixed element slots (\\{{=sa[0]}, ...\\}) rather than setof(), whose signature is not given in the spec, so the advanced family has a fixed shape (|A|=5, |B|=4, |A and B|=2). All sample-space sizes (10/20/25/50 in the basic family, 20/25/50/100 in the advanced) are divisors of 100 so every P(X) is an exact two-decimal number and no intermediate rounding can make a blind solver disagree; the book's own printed solution rounds P(A) and P(B) and gets 0.84 where it prints 0.83, which these families avoid."
+  },
+  {
+   "lo_id": "lo:g10m14s5-1-2",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "The book-questions file for lo:g10m14s5-1-2 contains an empty list ([]), so there is no book question to name as parent_question_id, no printed page for source_page, and no canonical solution to model. The spec requires the parent to be a book question of this objective from the list given, and the rules forbid teaching any technique the book's solutions do not use. Inventing a parent id would put a false citation on every instance, so I have written no family."
+    },
+    {
+     "tier": "standard",
+     "reason": "Same cause: the book-questions list for this objective is empty. The standard tier is defined as the book's typical exercise, and no exercise or worked solution was supplied to anchor it. I will not guess the book's notation or method for the union identity, and I will not fabricate a parent question."
+    },
+    {
+     "tier": "advanced",
+     "reason": "Same cause: the book-questions list for this objective is empty. The advanced tier is defined as the book's harder exercises (several steps, or a twist the book itself uses), and none were supplied. The misconceptions file is also an empty list, so no catalogued mc: ids exist for distractors. This tier needs a parent question and solution, which are missing."
+    }
+   ],
+   "notes": "Both input files were read and both are empty JSON lists: .../s6-author-ch14/o/g10m14s5-1-2.book-questions.txt and .../g10m14s5-1-2.misconceptions.txt each contain only []. Those were the only files I was allowed to open. This looks like an upstream packet problem (the objective's questions and misconceptions were not attached), not a property of the objective itself. Re-running with a populated book-questions file should make all three tiers feasible. The objective is a natural fit for sampled-parameter numeric families: count a Venn diagram, compute P(A), P(B), P(A∩B), and P(A∪B) from the counts, then check P(A) + P(B) - P(A∩B). I did not write families against an invented parent, since that would put a false citation on every instance and go beyond the book's own method."
+  },
+  {
+   "lo_id": "lo:g10m14s5-1-3",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m14s5-1-3:counts",
+     "kind": "family",
+     "lo_id": "lo:g10m14s5-1-3",
+     "parent_question_id": "q:g10m14s5-1-3:ex14-8-24",
+     "source_page": 494,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "nS",
+       "choice": [
+        20,
+        25,
+        50,
+        100
+       ]
+      },
+      {
+       "name": "nA",
+       "randint": [
+        3,
+        10
+       ]
+      },
+      {
+       "name": "nB",
+       "randint": [
+        3,
+        10
+       ]
+      },
+      {
+       "name": "nI",
+       "randint": [
+        1,
+        "min(nA, nB) - 1"
+       ]
+      },
+      {
+       "name": "nU",
+       "let": "nA + nB - nI"
+      },
+      {
+       "require": "nU <= nS",
+       "why": "the union cannot have more outcomes than the sample space"
+      },
+      {
+       "name": "pA",
+       "let": "fixed(nA / nS, 2)"
+      },
+      {
+       "name": "pB",
+       "let": "fixed(nB / nS, 2)"
+      },
+      {
+       "name": "pU",
+       "let": "fixed(nU / nS, 2)"
+      },
+      {
+       "name": "ans",
+       "let": "fixed(nI / nS, 2)"
+      }
+     ],
+     "constraints": [
+      "nU > nA",
+      "nU > nB",
+      "nU <= nS"
+     ],
+     "stem": "In a probability experiment the sample space $S$ has $n(S)={=nS}$ equally likely outcomes. For two events $A$ and $B$ it is known that $n(A)={=nA}$, $n(B)={=nB}$ and $n(A\\cup B)={=nU}$. Calculate the value of $P(A\\cap B)$. Give your answer as a decimal number.",
+     "answer": "ans",
+     "solution": [
+      "The probability of a union is $P(A\\cup B)=P(A)+P(B)-P(A\\cap B)$.",
+      "Make $P(A\\cap B)$ the subject, and we get: $P(A\\cap B)=P(A)+P(B)-P(A\\cup B)$.",
+      "The probability of an event $X$ is $P(X)=\\frac{n(X)}{n(S)}$, and here $n(S)={=nS}$.",
+      "$P(A)=\\frac{{=nA}}{{=nS}}={=pA}$",
+      "$P(B)=\\frac{{=nB}}{{=nS}}={=pB}$",
+      "$P(A\\cup B)=\\frac{{=nU}}{{=nS}}={=pU}$",
+      "Calculate $P(A\\cap B)$: $P(A\\cap B)=P(A)+P(B)-P(A\\cup B)={=pA}+{=pB}-{=pU}={=ans}$.",
+      "Therefore, the value of $P(A\\cap B)$ is ${=ans}$."
+     ],
+     "proposed_misconceptions": [
+      {
+       "id": "mc:g10m14s5-1-3:sum-as-intersection",
+       "label": "Adds P(A) and P(B) and stops",
+       "description": "Gives P(A) + P(B) as the answer and never subtracts P(A∪B), so the overlap is not isolated; the formula P(A∪B) = P(A) + P(B) − P(A∩B) is not rearranged."
+      },
+      {
+       "id": "mc:g10m14s5-1-3:union-as-sample-space",
+       "label": "Divides by n(A∪B) instead of n(S)",
+       "description": "Uses the size of the union as the denominator when turning counts into probabilities, instead of the size of the whole sample space."
+      }
+     ],
+     "notes": "Entry-point skill: the book's own rearrangement P(A∩B) = P(A) + P(B) − P(A∪B) (parent ex14-8-24), with the counts n(A), n(B), n(A∪B), n(S) given directly so the learner does not also have to read the event-set tables. n(S) is drawn from 20, 25, 50, 100 so every probability and the answer is an exact two-decimal number: no rounded-intermediate disagreement (the book's own 0.33 + 0.5 - 0.67 = 0.16 versus its stated 0.17 is exactly that trap). n(A) and n(B) are 3 to 10, the overlap is at least 1 and strictly smaller than both sets, so neither event sits inside the other and n(A∪B) ≤ 19 ≤ n(S). The key prints as two decimals (e.g. 0.40); the stem says only 'decimal number'. Checked by brute force over all 1072 parameter combinations: pA + pB - pU equals nI/nS exactly in every one."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m14s5-1-3:multiples",
+     "kind": "family",
+     "lo_id": "lo:g10m14s5-1-3",
+     "parent_question_id": "q:g10m14s5-1-3:ex14-8-13g",
+     "source_page": 493,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": "Fiona has a collection of discs labelled with the consecutive whole numbers from 1 up to the total number of discs. One disc is selected at random, and we want the probability that its number is a multiple of two given numbers at once.",
+     "params": [
+      {
+       "name": "b",
+       "choice": [
+        4,
+        6,
+        8,
+        9,
+        10,
+        12,
+        15
+       ]
+      },
+      {
+       "name": "a",
+       "choice": "[d for d in range(2, b) if b % d == 0]"
+      },
+      {
+       "name": "total",
+       "randint": [
+        60,
+        120
+       ]
+      },
+      {
+       "name": "cnt",
+       "let": "total // b"
+      },
+      {
+       "name": "rem",
+       "let": "(100 * cnt) % total"
+      },
+      {
+       "require": "(rem != 0 and rem * 10 < 4 * total) or rem * 10 > 6 * total",
+       "why": "the exact probability is never an exact two-decimal value and never close to a rounding boundary, so rounding is unambiguous"
+      },
+      {
+       "name": "ans",
+       "let": "fixed(cnt / total, 2)"
+      }
+     ],
+     "constraints": [
+      "cnt >= 3",
+      "b % a == 0",
+      "a < b"
+     ],
+     "stem": "Fiona has ${=total}$ labelled discs, which are numbered from $1$ to ${=total}$. If a disc is selected at random, what is the probability that the disc number is a multiple of both ${=a}$ and ${=b}$? Give your answer as a decimal number, rounded to two decimal places.",
+     "answer": "ans",
+     "solution": [
+      "A disc that is a multiple of ${=a}$ and of ${=b}$ lies in both events. Let $A$ be the event 'a multiple of ${=a}$' and $B$ the event 'a multiple of ${=b}$'. We need $P(A\\cap B)$.",
+      "Since ${=b}={=a}\\times{=b // a}$, every multiple of ${=b}$ is also a multiple of ${=a}$.",
+      "So the set of discs that are multiples of both ${=a}$ and ${=b}$ is the same as the set of multiples of ${=b}$: ${=b}$, ${=2 * b}$, ${=3 * b}$, $\\ldots$",
+      "The largest multiple of ${=b}$ that is not more than ${=total}$ is ${=cnt}\\times{=b}={=cnt * b}$ (the next one, ${=(cnt + 1) * b}$, is more than ${=total}$), so $n(A\\cap B)={=cnt}$.",
+      "The sample space has $n(S)={=total}$ discs, so $P(A\\cap B)=\\frac{n(A\\cap B)}{n(S)}=\\frac{{=cnt}}{{=total}}$.",
+      "Rounded to two decimal places, $\\frac{{=cnt}}{{=total}}\\approx{=ans}$.",
+      "Therefore, the probability that the disc number is a multiple of both ${=a}$ and ${=b}$ is ${=ans}$."
+     ],
+     "proposed_misconceptions": [
+      {
+       "id": "mc:g10m14s5-1-3:multiple-of-product",
+       "label": "Uses the product of the two numbers",
+       "description": "Treats 'a multiple of a and of b' as 'a multiple of a×b' and counts multiples of that product, even though b is already a multiple of a so the multiples of b are exactly the discs wanted."
+      },
+      {
+       "id": "mc:g10m14s5-1-3:multiples-of-smaller",
+       "label": "Counts the multiples of the smaller number only",
+       "description": "Counts the discs that are multiples of a (the smaller number) and treats them as the intersection, forgetting that the disc must also be a multiple of b."
+      }
+     ],
+     "notes": "Advanced: the book's own twist from ex14-8-13g (page 493): when a divides b, 'a multiple of a and of b' is just 'a multiple of b', so the learner must see the intersection without being given the event sets, count it, divide by n(S) and round. b is composite (4, 6, 8, 9, 10, 12, 15) and a is a divisor of b strictly between 1 and b (the lcm is never needed, which the book does not use). Sample space 60 to 120 discs so there are always at least 3 multiples of b (k >= 4 in practice). The require makes the exact value a non-terminating-at-2dp number whose fractional part at the hundredths place lies in (0, 0.4) or (0.6, 1), so '\\approx' is always honest and a solver rounding a 4-decimal intermediate gets the same answer. Checked by brute force: for all 639 admissible (a, b, total) combinations the count of discs divisible by both equals total // b, and the two-decimal answer is the same whether rounded from the exact fraction or from a four-decimal value."
+    }
+   ],
+   "infeasible": [],
+   "notes": "Two families written, one per listed gap (basic, advanced). The standard tier is the book's own three questions. The catalogue of misconceptions for this objective was empty, so no id could be attached to a distractor; both families are numeric (no distractors), and the plausible errors are declared in proposed_misconceptions for the reviewer. Basic uses counts n(A), n(B), n(A union B), n(S) given directly (the book's own notation and rearranged formula) so the entry point isolates the formula step. Advanced is the book's own disc twist (a divides b). The sample space sizes and the rounding guard were chosen so every instance has an unambiguous key; arithmetic and counts were verified by brute force over all parameter combinations in a scratch script (the engine itself was not available to run the templates, so the template syntax follows the spec's examples exactly)."
+  },
+  {
+   "lo_id": "lo:g10m14s6-1-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m14s6-1-1:deck-pair",
+     "kind": "family",
+     "lo_id": "lo:g10m14s6-1-1",
+     "parent_question_id": "q:g10m14s6-1-1:ex14-6-3",
+     "source_page": 486,
+     "tier": "standard",
+     "answer_type": "mcq",
+     "context": "One card is chosen at random from a standard deck of 52 playing cards (hearts and diamonds red, spades and clubs black; each suit has an ace, 2 to 10, jack, queen and king; the jack, queen and king are the picture cards).",
+     "params": [
+      {
+       "name": "EXC",
+       "let": "[['a heart', 'a spade', 'a card has only one suit'], ['a club', 'a diamond', 'a card has only one suit'], ['a spade', 'a heart', 'a card has only one suit'], ['a diamond', 'a club', 'a card has only one suit'], ['a red card', 'a black card', 'a card has only one colour'], ['a black card', 'a red card', 'a card has only one colour'], ['a heart', 'a black card', 'every heart is red, so no heart is black'], ['a red card', 'a spade', 'every spade is black, so no spade is red'], ['a diamond', 'a black card', 'every diamond is red, so no diamond is black'], ['a club', 'a red card', 'every club is black, so no club is red'], ['a king', 'a queen', 'each card is only one of ace, 2 to 10, jack, queen or king'], ['an ace', 'a jack', 'each card is only one of ace, 2 to 10, jack, queen or king'], ['a queen', 'a king', 'each card is only one of ace, 2 to 10, jack, queen or king'], ['a king', 'an ace', 'each card is only one of ace, 2 to 10, jack, queen or king'], ['an ace', 'a picture card', 'an ace is not a jack, a queen or a king, so it is not a picture card'], ['a picture card', 'an ace', 'an ace is not a jack, a queen or a king, so it is not a picture card']]"
+      },
+      {
+       "name": "DIF",
+       "let": "[['a heart', 'a king', 'the king of hearts'], ['a spade', 'a queen', 'the queen of spades'], ['a red card', 'a picture card', 'the jack of hearts'], ['a black card', 'an ace', 'the ace of clubs'], ['a diamond', 'a jack', 'the jack of diamonds'], ['a club', 'a picture card', 'the king of clubs'], ['a king', 'a black card', 'the king of spades'], ['an ace', 'a heart', 'the ace of hearts'], ['a queen', 'a red card', 'the queen of diamonds'], ['a picture card', 'a spade', 'the jack of spades'], ['a jack', 'a club', 'the jack of clubs'], ['a diamond', 'an ace', 'the ace of diamonds']]"
+      },
+      {
+       "name": "NES",
+       "let": "[['a heart', 'a red card', 'the ace of hearts'], ['a spade', 'a black card', 'the 2 of spades'], ['a king', 'a picture card', 'the king of diamonds'], ['a queen', 'a picture card', 'the queen of clubs'], ['a red card', 'a diamond', 'the 9 of diamonds'], ['a picture card', 'a jack', 'the jack of hearts'], ['a black card', 'a club', 'the 7 of clubs'], ['a diamond', 'a red card', 'the 10 of diamonds']]"
+      },
+      {
+       "name": "i",
+       "randint": [
+        0,
+        "len(EXC) - 1"
+       ]
+      },
+      {
+       "name": "j",
+       "sample": {
+        "from": "range(0, len(DIF))",
+        "k": 2
+       }
+      },
+      {
+       "name": "m",
+       "randint": [
+        0,
+        "len(NES) - 1"
+       ]
+      }
+     ],
+     "stem": "One card is chosen at random from a standard deck of 52 playing cards. The deck has four suits: hearts and diamonds are red, spades and clubs are black. Each suit has an ace, the numbers 2 to 10, a jack, a queen and a king. The jack, queen and king are the picture cards. Which one of the following pairs of events is mutually exclusive?",
+     "choices": {
+      "correct": "Event A: the card is {=EXC[i][0]}. Event B: the card is {=EXC[i][1]}.",
+      "distractors": [
+       {
+        "text": "Event A: the card is {=DIF[j[0]][0]}. Event B: the card is {=DIF[j[0]][1]}.",
+        "misconception_id": "mc:g10m14s6-1-1:different-features-so-exclusive"
+       },
+       {
+        "text": "Event A: the card is {=NES[m][0]}. Event B: the card is {=NES[m][1]}.",
+        "misconception_id": "mc:g10m14s6-1-1:inside-so-exclusive"
+       },
+       {
+        "text": "Event A: the card is {=DIF[j[1]][0]}. Event B: the card is {=DIF[j[1]][1]}.",
+        "misconception_id": "mc:g10m14s6-1-1:different-features-so-exclusive"
+       }
+      ]
+     },
+     "distinct_by_choices": true,
+     "solution": [
+      "Two events are mutually exclusive when they cannot happen at the same time. One card is chosen, so two events are mutually exclusive only if no card is in both events.",
+      "For Event A: the card is {=EXC[i][0]} and Event B: the card is {=EXC[i][1]}, {=EXC[i][2]}, so no card is in both events. These events are mutually exclusive.",
+      "For Event A: the card is {=DIF[j[0]][0]} and Event B: the card is {=DIF[j[0]][1]}, {=DIF[j[0]][2]} is in both events, so these events are not mutually exclusive.",
+      "For Event A: the card is {=NES[m][0]} and Event B: the card is {=NES[m][1]}, {=NES[m][2]} is in both events, so these events are not mutually exclusive.",
+      "For Event A: the card is {=DIF[j[1]][0]} and Event B: the card is {=DIF[j[1]][1]}, {=DIF[j[1]][2]} is in both events, so these events are not mutually exclusive.",
+      "The only pair of events with no card in common is Event A: the card is {=EXC[i][0]} and Event B: the card is {=EXC[i][1]}."
+     ],
+     "proposed_misconceptions": [
+      {
+       "id": "mc:g10m14s6-1-1:inside-so-exclusive",
+       "label": "Treats an event that sits inside another as a separate event",
+       "description": "The student reads two events such as 'a heart' and 'a red card', or 'a king' and 'a picture card', as two separate kinds of card, so that a card would be one or the other, and does not see that every card of the first event is also in the second. One card can be in both event sets, so the events are not mutually exclusive."
+      }
+     ],
+     "notes": "Standard tier: the book's typical exercise (ex14-6-1 to ex14-6-4, one pick, can it be in both events?) in a four-option form, because an mcq here needs at least three distractors. Exactly one option is a pair with no card in common. Slot 1 and slot 3 distractors are suit-or-colour against value pairs (always overlapping, a witness card is named); slot 2 is a nested pair of the same kind (a heart and a red card). The correct pair is always of the same kind (two suits, two colours, two values, or an ace against the picture cards), so a student cannot get it right by 'same kind means exclusive' alone; the nested distractor is there to catch that. The stem defines the picture cards (jack, queen, king; the ace is not one). Every table row was checked against a 52-card model: correct rows have no common card, distractor rows have a common card and the named witness belongs to both events. 3000 simulated instances: exactly one option is exclusive each time, all four options differ, and the (stem, option set) pair is almost always new."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m14s6-1-1:ticket-trio",
+     "kind": "family",
+     "lo_id": "lo:g10m14s6-1-1",
+     "parent_question_id": "q:g10m14s6-1-1:ex14-6-1",
+     "source_page": 486,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": "A ticket is chosen at random from tickets numbered 1 to N. Three events are described by the number on the ticket.",
+     "params": [
+      {
+       "name": "N",
+       "choice": [
+        36,
+        40
+       ]
+      },
+      {
+       "name": "a",
+       "randint": [
+        4,
+        9
+       ]
+      },
+      {
+       "name": "b",
+       "randint": [
+        4,
+        9
+       ],
+       "resample_while": "b == a"
+      },
+      {
+       "name": "c",
+       "randint": [
+        5,
+        9
+       ]
+      },
+      {
+       "name": "L",
+       "let": "lcm(a, b)"
+      },
+      {
+       "name": "mA",
+       "let": "(N // a) * a"
+      },
+      {
+       "name": "mB",
+       "let": "(N // b) * b"
+      },
+      {
+       "name": "SA",
+       "let": "[x for x in range(1, N + 1) if x % a == 0]"
+      },
+      {
+       "name": "SB",
+       "let": "[x for x in range(1, N + 1) if x % b == 0]"
+      },
+      {
+       "name": "SC",
+       "let": "[x for x in range(1, N + 1) if x < c]"
+      },
+      {
+       "name": "AB",
+       "let": "[x for x in SA if x % b == 0]"
+      },
+      {
+       "name": "AC",
+       "let": "[x for x in SA if x < c]"
+      },
+      {
+       "name": "BC",
+       "let": "[x for x in SB if x < c]"
+      },
+      {
+       "name": "eAB",
+       "let": "1 if len(AB) == 0 else 0"
+      },
+      {
+       "name": "eAC",
+       "let": "1 if len(AC) == 0 else 0"
+      },
+      {
+       "name": "eBC",
+       "let": "1 if len(BC) == 0 else 0"
+      },
+      {
+       "name": "n",
+       "let": "eAB + eAC + eBC"
+      },
+      {
+       "name": "relAB",
+       "let": "['is not more than', 'is more than'][eAB]"
+      },
+      {
+       "name": "relAC",
+       "let": "['is less than', 'is not less than'][eAC]"
+      },
+      {
+       "name": "relBC",
+       "let": "['is less than', 'is not less than'][eBC]"
+      },
+      {
+       "name": "vAB",
+       "let": "['So a ticket can be in both events, and A and B are not mutually exclusive.', 'So no ticket is in both events, and A and B are mutually exclusive.'][eAB]"
+      },
+      {
+       "name": "vAC",
+       "let": "['So a ticket can be in both events, and A and C are not mutually exclusive.', 'So no number of A is in C, and A and C are mutually exclusive.'][eAC]"
+      },
+      {
+       "name": "vBC",
+       "let": "['So a ticket can be in both events, and B and C are not mutually exclusive.', 'So no number of B is in C, and B and C are mutually exclusive.'][eBC]"
+      }
+     ],
+     "stem": "A ticket is chosen at random from tickets numbered 1 to {=N}. Event A: the number is a multiple of {=a}. Event B: the number is a multiple of {=b}. Event C: the number is less than {=c}. There are three pairs of events: A and B, A and C, B and C. How many of these three pairs are mutually exclusive?",
+     "answer": "n",
+     "solution": [
+      "Two events are mutually exclusive when they cannot happen together, that is, when no ticket number is in both event sets. Write the three event sets: $A = \\{ {=a}, {=2 * a}, {=3 * a}, \\ldots, {=mA} \\}$, $B = \\{ {=b}, {=2 * b}, {=3 * b}, \\ldots, {=mB} \\}$, and $C$ is every number from $1$ up to ${=c - 1}$.",
+      "A and B: a number in both is a multiple of {=a} and of {=b}. The smallest such number is the lowest common multiple, ${=L}$. The largest ticket number is ${=N}$, and ${=L}$ {=relAB} ${=N}$. {=vAB}",
+      "A and C: the smallest number in A is ${=a}$, and ${=a}$ {=relAC} ${=c}$. {=vAC}",
+      "B and C: the smallest number in B is ${=b}$, and ${=b}$ {=relBC} ${=c}$. {=vBC}",
+      "Count $1$ for each pair that is mutually exclusive and $0$ for each pair that is not: ${=eAB} + {=eAC} + {=eBC} = {=n}$."
+     ],
+     "notes": "Advanced tier: three events and three pairs to check, each by asking whether any ticket number is in both event sets. Pair A,B is decided by the lowest common multiple against the largest ticket number (the boundary lcm = N counts as overlapping: the ticket N itself is in both); pairs A,C and B,C by the smallest multiple against the strict bound c. A and B always have at least four members (a, b <= 9 <= N/4) and C is non-empty, so no event is empty. Checked against direct set intersection over 3000 simulated instances; the answer takes each of 0, 1, 2 and 3 (roughly 22%, 37%, 24%, 17%). Uses only holes with plain words and numbers (no set formatter, no string joins)."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m14s6-1-1:cricket-not",
+     "kind": "family",
+     "lo_id": "lo:g10m14s6-1-1",
+     "parent_question_id": "q:g10m14s6-1-1:ex14-6-4",
+     "source_page": 486,
+     "tier": "advanced",
+     "answer_type": "mcq",
+     "context": "A cricket team plays one game. The game ends in a win for the team, a loss for the team or a tie.",
+     "params": [
+      {
+       "name": "EV",
+       "let": "[['the team wins', 'a win'], ['the team loses', 'a loss'], ['the game is a tie', 'a tie'], ['the team does not lose', 'a win or a tie'], ['the team does not win', 'a loss or a tie'], ['the game is not a tie', 'a win or a loss']]"
+      },
+      {
+       "name": "OV",
+       "let": "[[0, 3, 'a win'], [4, 1, 'a loss'], [2, 3, 'a tie'], [4, 2, 'a tie'], [3, 4, 'a tie'], [3, 5, 'a win'], [5, 4, 'a loss'], [5, 0, 'a win'], [1, 5, 'a loss']]"
+      },
+      {
+       "name": "EX",
+       "let": "[[0, 4], [3, 1], [5, 2]]"
+      },
+      {
+       "name": "NE",
+       "let": "[[0, 1, 'a tie'], [2, 0, 'a loss'], [1, 2, 'a win']]"
+      },
+      {
+       "name": "o",
+       "randint": [
+        0,
+        "len(OV) - 1"
+       ]
+      },
+      {
+       "name": "x",
+       "randint": [
+        0,
+        "len(EX) - 1"
+       ]
+      },
+      {
+       "name": "y",
+       "sample": {
+        "from": "range(0, len(NE))",
+        "k": 2
+       }
+      }
+     ],
+     "stem": "A cricket team plays one game. The game ends in a win for the team, a loss for the team or a tie. A tie is neither a win nor a loss. Exactly one of the following pairs of events is not mutually exclusive. Which pair is it?",
+     "choices": {
+      "correct": "Event A: {=EV[OV[o][0]][0]}. Event B: {=EV[OV[o][1]][0]}.",
+      "distractors": [
+       {
+        "text": "Event A: {=EV[EX[x][0]][0]}. Event B: {=EV[EX[x][1]][0]}.",
+        "misconception_id": "mc:g10m14s6-1-1:both-possible-so-not-exclusive"
+       },
+       {
+        "text": "Event A: {=EV[NE[y[0]][0]][0]}. Event B: {=EV[NE[y[0]][1]][0]}.",
+        "misconception_id": "mc:g10m14s6-1-1:leftover-outcomes-so-not-exclusive"
+       },
+       {
+        "text": "Event A: {=EV[NE[y[1]][0]][0]}. Event B: {=EV[NE[y[1]][1]][0]}.",
+        "misconception_id": "mc:g10m14s6-1-1:leftover-outcomes-so-not-exclusive"
+       }
+      ]
+     },
+     "distinct_by_choices": true,
+     "solution": [
+      "The game ends in one of three results: a win, a loss or a tie. Two events are mutually exclusive when no result is in both of them. They are not mutually exclusive when some result is in both.",
+      "For Event A: {=EV[OV[o][0]][0]} and Event B: {=EV[OV[o][1]][0]}, event A covers {=EV[OV[o][0]][1]} and event B covers {=EV[OV[o][1]][1]}. Both events cover {=OV[o][2]}, so they can happen together and are not mutually exclusive.",
+      "For Event A: {=EV[EX[x][0]][0]} and Event B: {=EV[EX[x][1]][0]}, event A covers {=EV[EX[x][0]][1]} and event B covers {=EV[EX[x][1]][1]}. No result is in both, so these events are mutually exclusive. Each event can happen, but not both in the same game.",
+      "For Event A: {=EV[NE[y[0]][0]][0]} and Event B: {=EV[NE[y[0]][1]][0]}, event A covers {=EV[NE[y[0]][0]][1]} and event B covers {=EV[NE[y[0]][1]][1]}. No result is in both, so these events are mutually exclusive. The game could end in {=NE[y[0]][2]}, which is in neither event, but that does not matter.",
+      "For Event A: {=EV[NE[y[1]][0]][0]} and Event B: {=EV[NE[y[1]][1]][0]}, event A covers {=EV[NE[y[1]][0]][1]} and event B covers {=EV[NE[y[1]][1]][1]}. No result is in both, so these events are mutually exclusive. The game could end in {=NE[y[1]][2]}, which is in neither event, but that does not matter.",
+      "The only pair that is not mutually exclusive is Event A: {=EV[OV[o][0]][0]} and Event B: {=EV[OV[o][1]][0]}."
+     ],
+     "notes": "Advanced tier: the twist the book itself uses in ex14-6-4 (a tie is neither a win nor a loss, so two events can be mutually exclusive without using up every result), asked in the negative so that the leftover-outcome misconception has a place to show. The two leftover distractors are mutually exclusive pairs that leave one result out; the both-possible distractor is a mutually exclusive pair that covers all three results. Events are sets of results over win, loss and tie. Every OV row has exactly one result in both events, every EX and NE row has none, and each NE leftover result is the one in neither event (checked in code). Over 2000 simulated instances exactly one of the four options is not mutually exclusive, and the four options are always different pairs (no pair appears in both orders)."
+    }
+   ],
+   "infeasible": [],
+   "notes": "Three families for the two listed gaps: deck-pair (standard, mcq), ticket-trio (advanced, numeric) and cricket-not (advanced, mcq). The mcq families use a which-pair form (four options, one correct, three diagnosable distractors) because the book's two-option mutually exclusive or not items cannot meet the three-distractor minimum, and because a per-instance verdict would make the misconception ids on a distractor slot unstable. One new misconception is proposed (inside-so-exclusive, in deck-pair); the three catalogued ids are all used (different-features in deck-pair, both-possible and leftover-outcomes in cricket-not). Every table row, option set and numeric answer was checked in a Python simulation against independent models (a 52-card deck, a win/loss/tie result set, direct set intersection), and every hole expression was linted against the permitted function list. Not run through the real engine: it uses only plain-text holes, list/dict literals, indexing, comprehensions, conditional expressions and lcm/len/range, and it avoids setof, str, string concatenation and the in operator."
+  },
+  {
+   "lo_id": "lo:g10m14s6-1-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m14s6-1-2:block-box",
+     "kind": "family",
+     "lo_id": "lo:g10m14s6-1-2",
+     "parent_question_id": "q:g10m14s6-1-2:ex14-8-11b",
+     "source_page": 492,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": "A box of coloured blocks (purple, orange and white). The total number of blocks is stated, and one block is selected at random.",
+     "params": [
+      {
+       "name": "T",
+       "choice": [
+        10,
+        20,
+        25,
+        50
+       ]
+      },
+      {
+       "name": "r",
+       "randint": [
+        2,
+        "T // 3 + 1"
+       ]
+      },
+      {
+       "name": "o",
+       "randint": [
+        2,
+        "T // 3 + 1"
+       ]
+      },
+      {
+       "name": "g",
+       "let": "T - r - o"
+      },
+      {
+       "name": "s",
+       "let": "r + g"
+      },
+      {
+       "name": "p",
+       "let": "fixed(s / T, 2)"
+      }
+     ],
+     "constraints": [
+      "g >= 2",
+      "s < T"
+     ],
+     "stem": "A box contains {=T} coloured blocks: {=r} are purple, {=o} are orange and {=g} are white. A block is selected at random. What is the probability that the block is purple or white? Give your answer as a decimal.",
+     "answer": "p",
+     "solution": [
+      "The total is {=T} blocks, so $P(\\text{purple})=\\frac{{=r}}{{=T}}$ and $P(\\text{white})=\\frac{{=g}}{{=T}}$.",
+      "A block cannot be both purple and white, so the events are mutually exclusive: $P(\\text{purple and white})=0$ and $P(\\text{purple or white})=P(\\text{purple})+P(\\text{white})$.",
+      "$P(\\text{purple or white})=\\frac{{=r}}{{=T}}+\\frac{{=g}}{{=T}}=\\frac{{=s}}{{=T}}= {=p}$"
+     ],
+     "notes": "Entry-point skill: the total is given in the stem, so the student only reads off two single-colour probabilities and adds them (modelled on book 11b and 17e, which also start from a counted collection). T is limited to 10, 20, 25 or 50 so that s/T is an exact decimal of at most two places and no rounding rule is needed; the answer string is formatted by fixed(..., 2) (e.g. 0.60), so a numeric comparison should accept 0.6. Orange is the colour not asked for, and both asked colours are single-colour events that cannot occur together. Constraints are invariants of the draws (r and o are at most T//3+1, so g >= 2 and s <= T-2). No mcq is used, so no misconception ids are attached."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m14s6-1-2:sock-remainder",
+     "kind": "family",
+     "lo_id": "lo:g10m14s6-1-2",
+     "parent_question_id": "q:g10m14s6-1-2:ex14-8-17e",
+     "source_page": 493,
+     "tier": "advanced",
+     "answer_type": "expression",
+     "context": "Nezi's drawer of loose plain socks in four colours: orange, pink, white and black. The total is stated, the orange, pink and white counts are stated, and the remaining socks are black. One sock is taken out at random.",
+     "params": [
+      {
+       "name": "T",
+       "choice": [
+        20,
+        24,
+        30,
+        36,
+        40,
+        48,
+        60
+       ]
+      },
+      {
+       "name": "o",
+       "randint": [
+        2,
+        "T // 3 - 1"
+       ]
+      },
+      {
+       "name": "p",
+       "randint": [
+        2,
+        "T // 3 - 1"
+       ]
+      },
+      {
+       "name": "w",
+       "randint": [
+        2,
+        "T // 3 - 1"
+       ]
+      },
+      {
+       "name": "k",
+       "let": "T - o - p - w"
+      },
+      {
+       "name": "s",
+       "let": "p + k"
+      },
+      {
+       "require": "gcd(s, T) > 1",
+       "why": "the answer must need simplifying, because the stem asks for simplest form"
+      },
+      {
+       "name": "n",
+       "let": "numerator(s / T)"
+      },
+      {
+       "name": "d",
+       "let": "denominator(s / T)"
+      }
+     ],
+     "constraints": [
+      "k >= 3",
+      "s < T"
+     ],
+     "stem": "Nezi has {=T} loose socks in a drawer. {=o} of them are plain orange, {=p} are plain pink and {=w} are plain white. The remaining socks are plain black. A sock is taken out at random. Calculate the probability that it is pink or black. Give your answer as a fraction in simplest form.",
+     "solution": [
+      "The black socks are the ones that remain: ${=T}-{=o}-{=p}-{=w}= {=k}$ black socks.",
+      "$P(\\text{pink})=\\frac{{=p}}{{=T}}$ and $P(\\text{black})=\\frac{{=k}}{{=T}}$.",
+      "A sock cannot be both pink and black, so the events are mutually exclusive and $P(\\text{pink or black})=P(\\text{pink})+P(\\text{black})$.",
+      "$P(\\text{pink or black})=\\frac{{=p}}{{=T}}+\\frac{{=k}}{{=T}}=\\frac{{=s}}{{=T}}=\\frac{{=n}}{{=d}}$"
+     ],
+     "marker": {
+      "kind": "expression",
+      "answer": "{=n}/{=d}",
+      "form": "simplest",
+      "variables": [],
+      "tolerance": null
+     },
+     "notes": "Advanced twist taken from book 17e (the remaining socks are a group the stem never counts): the student first finds the black count by subtraction from the stated total, then adds two single-colour probabilities, then simplifies. The counts o, p, w are drawn at most T//3-1 each, so k = T-o-p-w is always at least 3. The require gcd(s, T) > 1 (equivalent to gcd(o+w, T) > 1) forces a genuine simplification step, so 'simplest form' in the stem is meaningful; every T offered is even, so the require is met in a large share of draws. The key is a plain fraction n/d in lowest terms. An alternative route (1 minus P(orange or white)) gives the same value, so blind solvers cannot legitimately disagree. No mcq is used, so no misconception ids are attached."
+    }
+   ],
+   "infeasible": [],
+   "notes": "Wrote the two listed gaps (basic and advanced); the standard tier was not listed as a gap and the book questions already model it, so no standard family was added. No mcq family was written: every natural mcq for this objective (is this pair of events exclusive, or is adding allowed) belongs to the neighbouring objectives on classifying events and on non-exclusive events, and the one catalogued misconception (mc:g10m14s6-1-2:adds-without-checking-exclusive) can only be diagnosed there without padding. Slugs differ in their first six letters (block- vs sock-r). I could not run the engine from this sandbox (only the two input files were readable), so the template syntax follows the spec text literally, including the \\\\frac{{=x}}{{=y}} brace pattern and the use of fixed(s / T, 2), numerator(s / T) and denominator(s / T)."
+  },
+  {
+   "lo_id": "lo:g10m14s7-1-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m14s7-1-1:notboth-complement",
+     "kind": "family",
+     "lo_id": "lo:g10m14s7-1-1",
+     "parent_question_id": "q:g10m14s7-1-1:ex14-8-5",
+     "source_page": 492,
+     "tier": "advanced",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "lo",
+       "randint": [
+        1,
+        5
+       ]
+      },
+      {
+       "name": "hi",
+       "let": "lo + 14"
+      },
+      {
+       "name": "pool",
+       "let": "list(range(lo, hi + 1))"
+      },
+      {
+       "name": "s",
+       "shuffle": "pool"
+      },
+      {
+       "name": "onlya",
+       "let": "sorted([s[i] for i in range(0, 3)])"
+      },
+      {
+       "name": "both",
+       "let": "sorted([s[i] for i in range(3, 8)])"
+      },
+      {
+       "name": "onlyb",
+       "let": "sorted([s[i] for i in range(8, 11)])"
+      },
+      {
+       "name": "neither",
+       "let": "sorted([s[i] for i in range(11, 15)])"
+      },
+      {
+       "name": "ea",
+       "let": "sorted([s[i] for i in range(0, 8)])"
+      },
+      {
+       "name": "eb",
+       "let": "sorted([s[i] for i in range(3, 11)])"
+      },
+      {
+       "name": "ans",
+       "let": "sorted([s[i] for i in range(0, 15) if i < 3 or i > 7])"
+      }
+     ],
+     "constraints": [],
+     "stem": "A group of learners work with the sample space $S = \\{n : n \\in \\mathbb{Z}, {=lo} \\leq n \\leq {=hi}\\}$. Two events in $S$ are $A = \\{{=ea[0]}, {=ea[1]}, {=ea[2]}, {=ea[3]}, {=ea[4]}, {=ea[5]}, {=ea[6]}, {=ea[7]}\\}$ and $B = \\{{=eb[0]}, {=eb[1]}, {=eb[2]}, {=eb[3]}, {=eb[4]}, {=eb[5]}, {=eb[6]}, {=eb[7]}\\}$. They are asked to identify the complementary event set of $(A \\cap B)$, also known as $(A \\cap B)'$. Write down the elements of $(A \\cap B)'$ in increasing order, separated by commas.",
+     "solution": [
+      "The sample space $S$ contains every integer from ${=lo}$ to ${=hi}$, so it has 15 elements.",
+      "$A \\cap B$ is the set of elements that are in both $A$ and $B$: $A \\cap B = \\{{=both[0]}, {=both[1]}, {=both[2]}, {=both[3]}, {=both[4]}\\}$.",
+      "The complementary event set $(A \\cap B)'$ is every element of $S$ that is not in $A \\cap B$. That includes the elements of $S$ that are in only one of the two events, and the elements that are in neither event.",
+      "The elements of $S$ in $A$ only are $\\{{=onlya[0]}, {=onlya[1]}, {=onlya[2]}\\}$, the elements in $B$ only are $\\{{=onlyb[0]}, {=onlyb[1]}, {=onlyb[2]}\\}$, and the elements in neither $A$ nor $B$ are $\\{{=neither[0]}, {=neither[1]}, {=neither[2]}, {=neither[3]}\\}$.",
+      "Together these are every element of $S$ that is not in $A \\cap B$, so $(A \\cap B)' = \\{{=ans[0]}, {=ans[1]}, {=ans[2]}, {=ans[3]}, {=ans[4]}, {=ans[5]}, {=ans[6]}, {=ans[7]}, {=ans[8]}, {=ans[9]}\\}$."
+     ],
+     "marker": {
+      "kind": "values",
+      "answer": "[{=ans[0]}, {=ans[1]}, {=ans[2]}, {=ans[3]}, {=ans[4]}, {=ans[5]}, {=ans[6]}, {=ans[7]}, {=ans[8]}, {=ans[9]}]",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "notes": "The book gives these sets as numbers placed in a Venn diagram (ex14-8-5 asks for (A and B)' on 1 to 15). A family cannot carry a figure, so the same data is given as the two event sets A and B written out (A = 'A only' plus 'both'; B = 'both' plus 'B only'). The numbers that lie outside both circles in the book's figure are not listed anywhere: the student has to find them in S. Region sizes are fixed (A only 3, both 5, B only 3, neither 4) so the answer always has exactly 10 elements and the marker key can be written with indexed holes; only which numbers fall in which region changes, and the lower bound of S runs from 1 to 5 (always 15 integers). Advanced because there is no diagram: the student first has to work out A and B (the overlap) from two lists, then take everything else in S, including the numbers in neither event. The catalogued error 'complement is only what lies outside every circle' would give just the 4 'neither' numbers; listing the overlap instead of the rest is the other likely slip. The answer is a set of integers, marked as values, and the stem asks for increasing order."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m14s7-1-1:unionset-complement",
+     "kind": "family",
+     "lo_id": "lo:g10m14s7-1-1",
+     "parent_question_id": "q:g10m14s7-1-1:ex14-7-2",
+     "source_page": 488,
+     "tier": "standard",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "pool",
+       "let": "list(range(1, 16))"
+      },
+      {
+       "name": "s",
+       "shuffle": "pool"
+      },
+      {
+       "name": "onlya",
+       "let": "sorted([s[i] for i in range(0, 2)])"
+      },
+      {
+       "name": "both",
+       "let": "sorted([s[i] for i in range(2, 6)])"
+      },
+      {
+       "name": "onlyb",
+       "let": "sorted([s[i] for i in range(6, 10)])"
+      },
+      {
+       "name": "ea",
+       "let": "sorted([s[i] for i in range(0, 6)])"
+      },
+      {
+       "name": "eb",
+       "let": "sorted([s[i] for i in range(2, 10)])"
+      },
+      {
+       "name": "uni",
+       "let": "sorted([s[i] for i in range(0, 10)])"
+      },
+      {
+       "name": "ans",
+       "let": "sorted([s[i] for i in range(10, 15)])"
+      }
+     ],
+     "constraints": [],
+     "stem": "A group of learners work with a sample space that can be described as $\\{n : n \\in \\mathbb{Z}, 1 \\leq n \\leq 15\\}$. Two events in this sample space are $A = \\{{=ea[0]}, {=ea[1]}, {=ea[2]}, {=ea[3]}, {=ea[4]}, {=ea[5]}\\}$ and $B = \\{{=eb[0]}, {=eb[1]}, {=eb[2]}, {=eb[3]}, {=eb[4]}, {=eb[5]}, {=eb[6]}, {=eb[7]}\\}$. They are asked to identify the complementary event set of $(A \\cup B)$, also known as $(A \\cup B)'$. Write down the elements of $(A \\cup B)'$ in increasing order, separated by commas.",
+     "solution": [
+      "$A \\cup B$ is the set of elements that are in $A$, in $B$, or in both: $A \\cup B = \\{{=uni[0]}, {=uni[1]}, {=uni[2]}, {=uni[3]}, {=uni[4]}, {=uni[5]}, {=uni[6]}, {=uni[7]}, {=uni[8]}, {=uni[9]}\\}$.",
+      "The complementary event set $(A \\cup B)'$ is every element of the sample space that is not in $A \\cup B$, that is, every element that is in neither $A$ nor $B$.",
+      "Checking each integer from 1 to 15 against $A \\cup B$, the integers that are not in it are $\\{{=ans[0]}, {=ans[1]}, {=ans[2]}, {=ans[3]}, {=ans[4]}\\}$, so $(A \\cup B)' = \\{{=ans[0]}, {=ans[1]}, {=ans[2]}, {=ans[3]}, {=ans[4]}\\}$."
+     ],
+     "marker": {
+      "kind": "values",
+      "answer": "[{=ans[0]}, {=ans[1]}, {=ans[2]}, {=ans[3]}, {=ans[4]}]",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "notes": "Book question ex14-7-2 shows A and B as circles in a Venn diagram on 1 to 15 and asks which listed set is (A union B)'. A family cannot carry a figure, so A and B are given as written-out sets (A = 'A only' plus 'both'; B = 'both' plus 'B only'); the numbers outside both circles in the book's figure are not listed anywhere and the student has to find them in S. Region sizes are fixed (A only 2, both 4, B only 4, neither 5, as in the book's figure) so the answer always has exactly 5 elements and the marker key can use indexed holes; only which numbers fall in which region changes. Typed answer in increasing order instead of the book's three-option choice. Worked solution computed from the same regions."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m14s7-1-1:single-complement",
+     "kind": "family",
+     "lo_id": "lo:g10m14s7-1-1",
+     "parent_question_id": "q:g10m14s7-1-1:ex14-7-1",
+     "source_page": 488,
+     "tier": "basic",
+     "answer_type": "mcq",
+     "context": null,
+     "params": [
+      {
+       "name": "pool",
+       "let": "list(range(1, 16))"
+      },
+      {
+       "name": "s",
+       "shuffle": "pool"
+      },
+      {
+       "name": "onlya",
+       "let": "sorted([s[i] for i in range(0, 3)])"
+      },
+      {
+       "name": "both",
+       "let": "sorted([s[i] for i in range(3, 6)])"
+      },
+      {
+       "name": "onlyb",
+       "let": "sorted([s[i] for i in range(6, 10)])"
+      },
+      {
+       "name": "neither",
+       "let": "sorted([s[i] for i in range(10, 15)])"
+      },
+      {
+       "name": "ea",
+       "let": "sorted([s[i] for i in range(0, 6)])"
+      },
+      {
+       "name": "eb",
+       "let": "sorted([s[i] for i in range(3, 10)])"
+      },
+      {
+       "name": "ans",
+       "let": "sorted([s[i] for i in range(0, 15) if i < 3 or i > 9])"
+      }
+     ],
+     "constraints": [],
+     "stem": "A group of learners work with a sample space that can be described as $\\{n : n \\in \\mathbb{Z}, 1 \\leq n \\leq 15\\}$. Two events in this sample space are $A = \\{{=ea[0]}, {=ea[1]}, {=ea[2]}, {=ea[3]}, {=ea[4]}, {=ea[5]}\\}$ and $B = \\{{=eb[0]}, {=eb[1]}, {=eb[2]}, {=eb[3]}, {=eb[4]}, {=eb[5]}, {=eb[6]}\\}$. They are asked to identify the complementary event set of $B$, also known as $B'$. Which of the following sets best describes the event set of $B'$?",
+     "solution": [
+      "The event set $B$ is $\\{{=eb[0]}, {=eb[1]}, {=eb[2]}, {=eb[3]}, {=eb[4]}, {=eb[5]}, {=eb[6]}\\}$. The complementary event set $B'$ is every element of the sample space that is not in $B$.",
+      "The elements of the sample space that are in $A$ but not in $B$ are $\\{{=onlya[0]}, {=onlya[1]}, {=onlya[2]}\\}$, and the elements that are in neither $A$ nor $B$ are $\\{{=neither[0]}, {=neither[1]}, {=neither[2]}, {=neither[3]}, {=neither[4]}\\}$. None of these is in $B$, so all of them belong to $B'$.",
+      "The elements that are in both events ($\\{{=both[0]}, {=both[1]}, {=both[2]}\\}$) and the elements in $B$ only ($\\{{=onlyb[0]}, {=onlyb[1]}, {=onlyb[2]}, {=onlyb[3]}\\}$) are in $B$, so they are left out.",
+      "Therefore $B' = \\{{=ans[0]}, {=ans[1]}, {=ans[2]}, {=ans[3]}, {=ans[4]}, {=ans[5]}, {=ans[6]}, {=ans[7]}\\}$."
+     ],
+     "choices": {
+      "correct": "$\\{{=ans[0]}, {=ans[1]}, {=ans[2]}, {=ans[3]}, {=ans[4]}, {=ans[5]}, {=ans[6]}, {=ans[7]}\\}$",
+      "distractors": [
+       {
+        "text": "$\\{{=neither[0]}, {=neither[1]}, {=neither[2]}, {=neither[3]}, {=neither[4]}\\}$",
+        "misconception_id": "mc:g10m14s7-1-1:complement-only-outside-all-circles"
+       },
+       {
+        "text": "$\\{{=eb[0]}, {=eb[1]}, {=eb[2]}, {=eb[3]}, {=eb[4]}, {=eb[5]}, {=eb[6]}\\}$",
+        "misconception_id": "mc:g10m14s7-1-1:lists-event-instead-of-complement"
+       },
+       {
+        "text": "$\\{{=ea[0]}, {=ea[1]}, {=ea[2]}, {=ea[3]}, {=ea[4]}, {=ea[5]}\\}$",
+        "misconception_id": "mc:g10m14s7-1-1:complement-is-other-event"
+       }
+      ]
+     },
+     "proposed_misconceptions": [
+      {
+       "id": "mc:g10m14s7-1-1:complement-is-other-event",
+       "label": "Takes the other event as the complement",
+       "description": "The student treats the complement of B as the other event A, as if 'not B' meant 'A', instead of every element of the sample space that is not in B. This leaves out the elements that lie in neither event, and wrongly includes the elements of A that are also in B."
+      }
+     ],
+     "notes": "Book question ex14-7-1 shows A and B as circles in a Venn diagram on 1 to 15 and asks for B'. A family cannot carry a figure, so A and B are given as written-out sets (A = 'A only' plus 'both'; B = 'both' plus 'B only'); the numbers outside both circles in the book's figure are not listed anywhere and the student has to find them in S. Region sizes are fixed (A only 3, both 3, B only 4, neither 5) so the correct set always has 8 elements and the three distractors always differ from it and from each other (5, 7 and 6 elements). Distractors: only the numbers outside both circles (catalogued), B itself (catalogued, lists the event instead of its complement), and A (new, takes the other event as the complement). The stem changes with the numbers, so no distinct_by_choices key."
+    }
+   ],
+   "infeasible": [],
+   "notes": "Three families for lo:g10m14s7-1-1, advanced listed first because it was the named gap; basic and standard were added as the objective has only three book items and no families. The book's three figures were read and checked against the book's keys. Every figure is a Venn diagram of the integers 1 to 15, and the keys are consistent with them: B' = {2,3,4,6,10,11,12}, (A union B)' = {2,4,9,11,13,15}, (A and B)' = {1,3,6,12,14,15}. A family cannot carry a figure, so each family gives the two events as written-out sets A and B. A is its 'A only' numbers plus the overlap, and B is the overlap plus its 'B only' numbers. The numbers that sit outside both circles in the book's figures are not listed. The student has to find them in the sample space, which is the point of this objective. Region sizes are fixed per family, so each answer has a fixed length and the marker key is written with indexed holes. I did not use setof or str(list), because I could not confirm how they render lists. Only which numbers fall in which region changes, drawn by a shuffle of the sample space. I re-implemented the parameter logic in Python and checked 39 draws per family: the keys equal S minus the right set, the stems are all distinct, and the three mcq distractors always differ from the correct option and from each other. Not checked against the real engine: the rendering of '\\{' followed immediately by a {=...} hole, shuffle on a let-list, and sorted over a list comprehension. The set answers use marker kind values, as the book's own short-answer item does, and the stems ask for increasing order. A new misconception is proposed on the basic mcq (complement-is-other-event), and the two catalogued ids are used on the other two distractors."
+  },
+  {
+   "lo_id": "lo:g10m14s7-1-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m14s7-1-2:disjoint-event",
+     "kind": "family",
+     "lo_id": "lo:g10m14s7-1-2",
+     "parent_question_id": "q:g10m14s7-1-2:ex14-7-3",
+     "source_page": 489,
+     "tier": "basic",
+     "answer_type": "mcq",
+     "context": null,
+     "params": [
+      {
+       "name": "pool",
+       "let": "list(range(1, 13))"
+      },
+      {
+       "name": "v",
+       "shuffle": "pool"
+      },
+      {
+       "name": "aset",
+       "let": "sorted([v[0], v[1], v[2], v[3]])"
+      },
+      {
+       "name": "cs",
+       "let": "sorted([v[4], v[5], v[6]])"
+      },
+      {
+       "name": "d1",
+       "let": "sorted([v[0], v[7], v[8]])"
+      },
+      {
+       "name": "d2",
+       "let": "sorted([v[1], v[2], v[9]])"
+      },
+      {
+       "name": "d3",
+       "let": "sorted([v[3], v[10], v[11]])"
+      },
+      {
+       "name": "sh2",
+       "let": "sorted([v[1], v[2]])"
+      },
+      {
+       "name": "a1",
+       "let": "aset[0]"
+      },
+      {
+       "name": "a2",
+       "let": "aset[1]"
+      },
+      {
+       "name": "a3",
+       "let": "aset[2]"
+      },
+      {
+       "name": "a4",
+       "let": "aset[3]"
+      },
+      {
+       "name": "c1",
+       "let": "cs[0]"
+      },
+      {
+       "name": "c2",
+       "let": "cs[1]"
+      },
+      {
+       "name": "c3",
+       "let": "cs[2]"
+      },
+      {
+       "name": "x1",
+       "let": "d1[0]"
+      },
+      {
+       "name": "x2",
+       "let": "d1[1]"
+      },
+      {
+       "name": "x3",
+       "let": "d1[2]"
+      },
+      {
+       "name": "y1",
+       "let": "d2[0]"
+      },
+      {
+       "name": "y2",
+       "let": "d2[1]"
+      },
+      {
+       "name": "y3",
+       "let": "d2[2]"
+      },
+      {
+       "name": "z1",
+       "let": "d3[0]"
+      },
+      {
+       "name": "z2",
+       "let": "d3[1]"
+      },
+      {
+       "name": "z3",
+       "let": "d3[2]"
+      },
+      {
+       "name": "s1",
+       "let": "v[0]"
+      },
+      {
+       "name": "s2a",
+       "let": "sh2[0]"
+      },
+      {
+       "name": "s2b",
+       "let": "sh2[1]"
+      },
+      {
+       "name": "s3",
+       "let": "v[3]"
+      }
+     ],
+     "constraints": [],
+     "stem": "A number is chosen from the sample space $S = \\{1, 2, 3, \\ldots, 12\\}$. Event $A = \\{ {=a1}, {=a2}, {=a3}, {=a4} \\}$. Which one of the following events is mutually exclusive with $A$?",
+     "solution": [
+      "Two events are mutually exclusive when they cannot occur at the same time. This means that no outcome is in both events: their intersection is empty.",
+      "Event $A = \\{ {=a1}, {=a2}, {=a3}, {=a4} \\}$. Check each option for an outcome that is also in $A$.",
+      "The option $\\{ {=x1}, {=x2}, {=x3} \\}$ has the outcome {=s1} in common with $A$. Both events occur if {=s1} is chosen, so they are not mutually exclusive.",
+      "The option $\\{ {=y1}, {=y2}, {=y3} \\}$ has the outcomes {=s2a} and {=s2b} in common with $A$, so they are not mutually exclusive.",
+      "The option $\\{ {=z1}, {=z2}, {=z3} \\}$ has the outcome {=s3} in common with $A$. Both events occur if {=s3} is chosen, so they are not mutually exclusive.",
+      "The option $\\{ {=c1}, {=c2}, {=c3} \\}$ has no outcome in common with $A$: none of {=c1}, {=c2} and {=c3} is in $A$. So $A \\cap \\{ {=c1}, {=c2}, {=c3} \\} = \\varnothing$.",
+      "Because the intersection is empty, the two events can never occur at the same time. The event that is mutually exclusive with $A$ is $\\{ {=c1}, {=c2}, {=c3} \\}$."
+     ],
+     "choices": {
+      "correct": "$\\{ {=c1}, {=c2}, {=c3} \\}$",
+      "distractors": [
+       {
+        "text": "$\\{ {=x1}, {=x2}, {=x3} \\}$",
+        "misconception_id": "mc:g10m14s7-1-2:one-shared-outcome-ignored"
+       },
+       {
+        "text": "$\\{ {=y1}, {=y2}, {=y3} \\}$",
+        "misconception_id": null
+       },
+       {
+        "text": "$\\{ {=z1}, {=z2}, {=z3} \\}$",
+        "misconception_id": "mc:g10m14s7-1-2:one-shared-outcome-ignored"
+       }
+      ]
+     },
+     "proposed_misconceptions": [
+      {
+       "id": "mc:g10m14s7-1-2:one-shared-outcome-ignored",
+       "label": "Treats events that share only one outcome as mutually exclusive",
+       "description": "The student sees that most outcomes of the two events differ and judges them 'almost' or 'mostly' exclusive. Mutually exclusive means that NO outcome is in both events, so a single shared outcome is enough to make them not mutually exclusive."
+      }
+     ],
+     "notes": "Entry-level version of the book's Venn-diagram questions (ex14-7-3, ex14-8-4): the figure is replaced by the sets written out, so the student only has to look for a shared outcome. Built from a shuffled 1..12 so by construction exactly one option (cs) is disjoint from A; the other three share 1, 2 and 1 outcomes with A (checked by brute force over 20000 draws). The two single-overlap options carry the one-shared-outcome-ignored error (new id, declared above); the two-overlap option is a plain wrong option. Sets are fixed-size (4 for A, 3 per option) so the solution needs no set-formatting helper. The catalogued misconceptions about complements and unions are exercised by the advanced family, not this one."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m14s7-1-2:pairs-count",
+     "kind": "family",
+     "lo_id": "lo:g10m14s7-1-2",
+     "parent_question_id": "q:g10m14s7-1-2:ex14-7-4",
+     "source_page": 489,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "ov",
+       "choice": [
+        0,
+        1
+       ]
+      },
+      {
+       "name": "gap",
+       "choice": [
+        0,
+        1
+       ]
+      },
+      {
+       "name": "n",
+       "let": "10 - ov + 2 * gap"
+      },
+      {
+       "name": "pool",
+       "let": "list(range(1, n + 1))"
+      },
+      {
+       "name": "v",
+       "shuffle": "pool"
+      },
+      {
+       "name": "aset",
+       "let": "sorted([v[0], v[1], v[2], v[3], v[4]])"
+      },
+      {
+       "name": "kb",
+       "let": "0 if ov == 1 else 9"
+      },
+      {
+       "name": "bset",
+       "let": "sorted([v[kb], v[5], v[6], v[7], v[8]])"
+      },
+      {
+       "name": "outs",
+       "let": "sorted([v[n - 2], v[n - 1]])"
+      },
+      {
+       "name": "a1",
+       "let": "aset[0]"
+      },
+      {
+       "name": "a2",
+       "let": "aset[1]"
+      },
+      {
+       "name": "a3",
+       "let": "aset[2]"
+      },
+      {
+       "name": "a4",
+       "let": "aset[3]"
+      },
+      {
+       "name": "a5",
+       "let": "aset[4]"
+      },
+      {
+       "name": "b1",
+       "let": "bset[0]"
+      },
+      {
+       "name": "b2",
+       "let": "bset[1]"
+      },
+      {
+       "name": "b3",
+       "let": "bset[2]"
+      },
+      {
+       "name": "b4",
+       "let": "bset[3]"
+      },
+      {
+       "name": "b5",
+       "let": "bset[4]"
+      },
+      {
+       "name": "cnt",
+       "let": "3 - ov - gap"
+      },
+      {
+       "name": "cm",
+       "let": "\"none\" if ov == 0 else str(v[0])"
+      },
+      {
+       "name": "e1",
+       "let": "\"empty\" if ov == 0 else \"not empty\""
+      },
+      {
+       "name": "m1",
+       "let": "\"are\" if ov == 0 else \"are not\""
+      },
+      {
+       "name": "oa",
+       "let": "\"none\" if gap == 0 else str(outs[0])"
+      },
+      {
+       "name": "osep",
+       "let": "\"\" if gap == 0 else \" and \""
+      },
+      {
+       "name": "ob",
+       "let": "\"\" if gap == 0 else str(outs[1])"
+      },
+      {
+       "name": "e2",
+       "let": "\"empty\" if gap == 0 else \"not empty\""
+      },
+      {
+       "name": "m2",
+       "let": "\"are\" if gap == 0 else \"are not\""
+      }
+     ],
+     "constraints": [],
+     "stem": "A number is chosen from the sample space $S = \\{1, 2, 3, \\ldots, {=n}\\}$. Two events are given: $A = \\{ {=a1}, {=a2}, {=a3}, {=a4}, {=a5} \\}$ and $B = \\{ {=b1}, {=b2}, {=b3}, {=b4}, {=b5} \\}$. The complement of an event $E$, written $E'$, contains every outcome of $S$ that is not in $E$. Consider these three pairs of events: (i) $A$ and $B$; (ii) $A'$ and $B'$; (iii) $A \\cup B$ and $(A \\cup B)'$. How many of these three pairs are mutually exclusive? Give your answer as a whole number.",
+     "answer": "cnt",
+     "solution": [
+      "Two events are mutually exclusive when they cannot occur at the same time, so their intersection must be empty. Check each of the three pairs.",
+      "(i) The outcomes in both $A$ and $B$: {=cm}. So $A \\cap B$ is {=e1}, and $A$ and $B$ {=m1} mutually exclusive.",
+      "(ii) An outcome is in both $A'$ and $B'$ exactly when it is in neither $A$ nor $B$. The outcomes of $S$ in neither $A$ nor $B$: {=oa}{=osep}{=ob}.",
+      "So $A' \\cap B'$ is {=e2}, and $A'$ and $B'$ {=m2} mutually exclusive.",
+      "(iii) $(A \\cup B)'$ contains exactly the outcomes of $S$ that are not in $A \\cup B$, so no outcome is in both $A \\cup B$ and $(A \\cup B)'$. An event and its complement can never occur together, so this pair is mutually exclusive, even though $A$ and $B$ may overlap.",
+      "Counting the pairs that are mutually exclusive gives {=cnt}."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Advanced: the book's twist questions (ex14-7-3, ex14-7-4, ex14-8-4) rolled into one count. Pair (iii) is always exclusive (an event and its complement); pair (i) is exclusive only when ov = 0 (A and B share no outcome); pair (ii) is exclusive only when gap = 0 (A union B is all of S, so A' and B' share nothing). So the answer is 3 - ov - gap, taking the values 1, 2, 2, 3 across the four cases (checked by brute force set arithmetic over 20000 draws, including that the stated shared and outside outcomes match). |A| = |B| = 5 and S has 9 to 12 outcomes, so every region has a fixed size and the solution lists outcomes without a set-formatting helper; string pieces are conditional text only. Numeric rather than mcq so there is no 50% guess and the correct pair does not repeat. The catalogued errors (reading the circle overlap instead of the named events; treating any two complements as exclusive) show up as wrong counts, so this family is numeric and carries no distractor ids. The book's figures are replaced by the sets written out in the stem. Note for the reviewer: the book's printed solution of ex14-7-3 lists 6 inside A union B although its figure places 6 outside both circles; the answer (yes) is unaffected and nothing here is copied from that list."
+    }
+   ],
+   "infeasible": [],
+   "notes": "Two families fill the two gaps (basic, advanced). The standard tier was not listed as a gap and the book's three standard questions already cover it, so no third family was written. Both families use only fixed-size index templates (no setof, no membership test, no string concatenation) so they depend on as little of the expression language as possible; both constructions were verified by brute-force set arithmetic over 20000 random draws each. The book's Venn figures cannot be carried by a family, so the sets are written out in the stem. Only the basic family is an mcq (three distractors, with one new misconception id declared); the advanced family is numeric (answer 1, 2 or 3) so it is not guessable."
+  },
+  {
+   "lo_id": "lo:g10m14s7-1-3",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m14s7-1-3:neither-colour",
+     "kind": "family",
+     "lo_id": "lo:g10m14s7-1-3",
+     "parent_question_id": "q:g10m14s7-1-3:ex14-8-17f",
+     "source_page": 493,
+     "tier": "advanced",
+     "answer_type": "expression",
+     "context": "A box contains coloured blocks of four colours: purple, orange, white and pink. One block is selected at random.",
+     "params": [
+      {
+       "name": "pu",
+       "randint": [
+        8,
+        40
+       ]
+      },
+      {
+       "name": "og",
+       "randint": [
+        8,
+        40
+       ]
+      },
+      {
+       "name": "wh",
+       "randint": [
+        8,
+        40
+       ]
+      },
+      {
+       "name": "pn",
+       "randint": [
+        8,
+        40
+       ]
+      },
+      {
+       "name": "n",
+       "let": "pu + og + wh + pn"
+      },
+      {
+       "name": "f",
+       "let": "(og + pn) / n"
+      }
+     ],
+     "constraints": [],
+     "stem": "A box contains coloured blocks: ${=pu}$ purple, ${=og}$ orange, ${=wh}$ white and ${=pn}$ pink. A block is selected at random. What is the probability that the block is neither purple nor white? Give your answer as a fraction in simplest form.",
+     "solution": [
+      "Count all the blocks in the box: ${=pu}+{=og}+{=wh}+{=pn}={=n}$ blocks.",
+      "A block that is neither purple nor white is the complement of a block that is purple or white. The number of purple or white blocks is ${=pu}+{=wh}={=pu + wh}$, so $P(\\text{purple or white})=\\frac{{=pu + wh}}{{=n}}$.",
+      "An event and its complement have probabilities that add up to $1$, so $P(\\text{neither purple nor white})=1-P(\\text{purple or white})=1-\\frac{{=pu + wh}}{{=n}}=\\frac{{=n - (pu + wh)}}{{=n}}$.",
+      "Check: the orange and pink blocks number ${=og}+{=pn}={=og + pn}$, which agrees. In simplest form, $P(\\text{neither purple nor white})=\\frac{{=numerator(f)}}{{=denominator(f)}}$."
+     ],
+     "marker": {
+      "kind": "expression",
+      "answer": "{=numerator(f)}/{=denominator(f)}",
+      "form": "simplest",
+      "variables": [],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Advanced twist taken from the book's ex14-8-17f (neither orange nor pink, answered as 1 minus the probability of 'orange or pink'), here with four colour counts so the student must total the blocks, add two colours and take the complement. The colours are fixed (purple/orange/white/pink, the box of blocks in ex14-8-11d); only the four counts vary (8 to 40 each, total at most 160). The answer is a proper fraction, asked in simplest form, so it is unambiguous and avoids the intermediate-rounding trap of the book's decimal answers. Step 4 always states the reduced fraction even when the fraction is already in lowest terms. No misconceptions are catalogued for this objective, so none are attached; the family has no distractors."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m14s7-1-3:remaining-colour",
+     "kind": "family",
+     "lo_id": "lo:g10m14s7-1-3",
+     "parent_question_id": "q:g10m14s7-1-3:ex14-8-15",
+     "source_page": 493,
+     "tier": "advanced",
+     "answer_type": "expression",
+     "context": "A bag contains only red, blue and green counters. One counter is taken out at random.",
+     "params": [
+      {
+       "name": "d",
+       "choice": [
+        8,
+        9,
+        10,
+        12,
+        14,
+        15,
+        16,
+        18,
+        20,
+        21,
+        24,
+        25
+       ]
+      },
+      {
+       "name": "r",
+       "randint": [
+        1,
+        "d - 2"
+       ]
+      },
+      {
+       "require": "gcd(r, d) == 1",
+       "why": "the given probability of red is shown as a fraction already in lowest terms"
+      },
+      {
+       "name": "b",
+       "randint": [
+        1,
+        "d - 1 - r"
+       ]
+      },
+      {
+       "require": "gcd(b, d) == 1",
+       "why": "the given probability of blue is shown as a fraction already in lowest terms"
+      },
+      {
+       "name": "g",
+       "let": "d - r - b"
+      },
+      {
+       "name": "f",
+       "let": "g / d"
+      }
+     ],
+     "constraints": [],
+     "stem": "A bag contains only red, blue and green counters. A counter is taken out at random. The probability that it is red is $\\frac{{=r}}{{=d}}$ and the probability that it is blue is $\\frac{{=b}}{{=d}}$. What is the probability that the counter is green? Give your answer as a fraction in simplest form.",
+     "solution": [
+      "The counters are only red, blue or green, so the three probabilities add up to $1$. First find the probability that the counter is red or blue: $P(\\text{red or blue})=\\frac{{=r}}{{=d}}+\\frac{{=b}}{{=d}}=\\frac{{=r + b}}{{=d}}$.",
+      "A green counter is the complement of a counter that is red or blue, so $P(\\text{green})=1-P(\\text{red or blue})=1-\\frac{{=r + b}}{{=d}}=\\frac{{=d - (r + b)}}{{=d}}$.",
+      "In simplest form, $P(\\text{green})=\\frac{{=numerator(f)}}{{=denominator(f)}}$."
+     ],
+     "marker": {
+      "kind": "expression",
+      "answer": "{=numerator(f)}/{=denominator(f)}",
+      "form": "simplest",
+      "variables": [],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Advanced extension of the book's ex14-8-15 (P(pink) given, find P(yellow) as 1 minus it): there are three outcomes and the probabilities of two are given, so the student takes the complement of 'red or blue' with no counts to help. Context fixed (red, blue, green counters). The denominator d is drawn from a list and r, b are drawn coprime to d so the given fractions are in lowest terms and r + b is always less than d (green probability at least 1/d, never 0). The answer is a proper fraction in simplest form. No misconceptions are catalogued for this objective, so none are attached; the family has no distractors."
+    }
+   ],
+   "infeasible": [],
+   "notes": "Only the advanced gap was listed, so two advanced families were written rather than padding other tiers. Both stay inside the book's method (1 minus the probability of the event, applied to a union of two outcomes) and both give the answer as a proper fraction in simplest form to avoid rounding ambiguity. The misconception list for this objective is empty, so the families are expression (typed) answers with no distractors and declare no new misconceptions. Slug prefixes \"neithe\" and \"remain\" differ. A third advanced family built on discs numbered 1 to N (the book's ex14-8-13e) was not written because the book rates that skeleton as standard, and a harder variant would need the overlap of two multiples, which the book does not teach here."
+  },
+  {
+   "lo_id": "lo:g10m14s7-1-4",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m14s7-1-4:union-count",
+     "kind": "family",
+     "lo_id": "lo:g10m14s7-1-4",
+     "parent_question_id": "q:g10m14s7-1-4:ex14-8-30",
+     "source_page": 495,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": "A class of learners in which some play football, some play hockey and some play both sports.",
+     "params": [
+      {
+       "name": "f",
+       "randint": [
+        10,
+        25
+       ]
+      },
+      {
+       "name": "h",
+       "randint": [
+        8,
+        22
+       ],
+       "resample_while": "h == f"
+      },
+      {
+       "name": "c",
+       "randint": [
+        3,
+        "min(f, h) - 3"
+       ]
+      },
+      {
+       "name": "u",
+       "let": "f + h - c"
+      }
+     ],
+     "constraints": [
+      "c < min(f, h)"
+     ],
+     "stem": "In a class, ${=f}$ learners play football and ${=h}$ learners play hockey. ${=c}$ learners play both sports. The numbers for football and for hockey each include the learners who play both. How many learners play football or hockey (or both)?",
+     "answer": "f + h - c",
+     "solution": [
+      "Draw a Venn diagram with two overlapping circles, $F$ for football and $H$ for hockey. The overlap holds the ${=c}$ learners who play both.",
+      "Football only: ${=f} - {=c} = {=f - c}$. Hockey only: ${=h} - {=c} = {=h - c}$.",
+      "Add the three regions: ${=f - c} + {=c} + {=h - c} = {=u}$, so ${=u}$ learners play football or hockey (or both).",
+      "The identity gives the same result: $n(F \\text{ or } H) = n(F) + n(H) - n(F \\text{ and } H) = {=f} + {=h} - {=c} = {=u}$."
+     ],
+     "notes": "Entry point of the skill (the book has no basic question here): one use of the union identity, checked against the Venn regions. The stem states that the football and hockey totals include those who play both, so a blind solver cannot read them as 'only' counts; the book leaves this implicit in ex14-8-30. The misconception catalogue for this objective is empty and this is a numeric family, so no distractors or misconception ids are used. Common slip a reviewer may want catalogued: adding f + h and forgetting to subtract the overlap (double counting). Instance range: f 10-25, h 8-22, c 3 to min(f, h) - 3, so every region is non-empty."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m14s7-1-4:only-cooldrink",
+     "kind": "family",
+     "lo_id": "lo:g10m14s7-1-4",
+     "parent_question_id": "q:g10m14s7-1-4:ex14-8-10b",
+     "source_page": 492,
+     "tier": "standard",
+     "answer_type": "numeric",
+     "context": "A group of learners in which some had a packet of chips, some had a cooldrink, some had both and a few had neither.",
+     "params": [
+      {
+       "name": "x",
+       "randint": [
+        2,
+        6
+       ]
+      },
+      {
+       "name": "a",
+       "randint": [
+        14,
+        28
+       ]
+      },
+      {
+       "name": "c",
+       "randint": [
+        3,
+        10
+       ]
+      },
+      {
+       "name": "d",
+       "randint": [
+        6,
+        24
+       ],
+       "resample_while": "d == a - c"
+      },
+      {
+       "name": "t",
+       "let": "x + a + d"
+      }
+     ],
+     "constraints": [
+      "c < a",
+      "t - x > a"
+     ],
+     "stem": "In a group of ${=t}$ learners, all but ${=x}$ had a packet of chips or a cooldrink or both. ${=a}$ had a packet of chips and ${=c}$ of these also had a cooldrink. How many learners had only a cooldrink?",
+     "answer": "t - x - a",
+     "solution": [
+      "All but ${=x}$ of the ${=t}$ learners had at least one of the two items, so ${=t} - {=x} = {=t - x}$ learners are inside the circles of the Venn diagram.",
+      "The overlap holds the ${=c}$ learners who had both. The ${=a}$ learners with chips include these, so only chips is ${=a} - {=c} = {=a - c}$.",
+      "Only cooldrink is what is left inside the circles: ${=t - x} - {=a - c} - {=c} = {=t - x - a}$.",
+      "The same answer comes directly from ${=t - x} - {=a} = {=t - x - a}$, because the ${=a}$ with chips already include the ${=c}$ in the overlap."
+     ],
+     "notes": "Count version of the book's ex14-8-10b (the book then converts to a probability; this family stops at the region count, which is what the objective asks for). As in the book, the 'both' figure is not needed for the final subtraction, but it is used when the Venn diagram is filled in, and 'of these' makes clear that the chips total includes the overlap. resample_while keeps only-chips and only-cooldrink from being equal so a mix-up of the two regions cannot give the right number by accident. No distractors (numeric)."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m14s7-1-4:neither-count",
+     "kind": "family",
+     "lo_id": "lo:g10m14s7-1-4",
+     "parent_question_id": "q:g10m14s7-1-4:ex14-8-30",
+     "source_page": 495,
+     "tier": "standard",
+     "answer_type": "numeric",
+     "context": "A class of learners in which some play football, some play hockey, some play both sports and some play neither.",
+     "params": [
+      {
+       "name": "f",
+       "randint": [
+        12,
+        25
+       ]
+      },
+      {
+       "name": "h",
+       "randint": [
+        8,
+        20
+       ],
+       "resample_while": "h == f"
+      },
+      {
+       "name": "c",
+       "randint": [
+        3,
+        "min(f, h) - 3"
+       ]
+      },
+      {
+       "name": "n",
+       "randint": [
+        3,
+        12
+       ]
+      },
+      {
+       "name": "u",
+       "let": "f + h - c"
+      },
+      {
+       "name": "t",
+       "let": "u + n"
+      }
+     ],
+     "constraints": [
+      "c < min(f, h)",
+      "t > f and t > h"
+     ],
+     "stem": "A class has ${=t}$ learners. ${=f}$ of them play football and ${=h}$ of them play hockey, and ${=c}$ play both football and hockey. The numbers for football and for hockey each include the learners who play both. How many learners play neither football nor hockey?",
+     "answer": "t - (f + h - c)",
+     "solution": [
+      "The overlap of the two circles holds the ${=c}$ learners who play both. Football only is ${=f} - {=c} = {=f - c}$ and hockey only is ${=h} - {=c} = {=h - c}$.",
+      "Learners who play football or hockey (or both): ${=f - c} + {=c} + {=h - c} = {=u}$. The identity agrees: $n(F \\text{ or } H) = {=f} + {=h} - {=c} = {=u}$.",
+      "The rest of the ${=t}$ learners lie outside both circles: ${=t} - {=u} = {=n}$ learners play neither."
+     ],
+     "notes": "Uses the book's ex14-8-30 situation (football and hockey) but asks for the 'neither' region with the class total given, the other half of that question's Venn diagram. Two steps: union by the identity, then subtract from the total. The inclusive reading of the football and hockey totals is stated in the stem to avoid a blind-solver disagreement. No distractors (numeric)."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m14s7-1-4:both-count",
+     "kind": "family",
+     "lo_id": "lo:g10m14s7-1-4",
+     "parent_question_id": "q:g10m14s7-1-4:ex14-8-30",
+     "source_page": 495,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": "A class of learners in which some play football, some play hockey, some play both sports and some play neither.",
+     "params": [
+      {
+       "name": "f",
+       "randint": [
+        12,
+        25
+       ]
+      },
+      {
+       "name": "h",
+       "randint": [
+        8,
+        20
+       ],
+       "resample_while": "h == f"
+      },
+      {
+       "name": "c",
+       "randint": [
+        3,
+        "min(f, h) - 3"
+       ]
+      },
+      {
+       "name": "n",
+       "randint": [
+        3,
+        12
+       ]
+      },
+      {
+       "name": "u",
+       "let": "f + h - c"
+      },
+      {
+       "name": "t",
+       "let": "u + n"
+      }
+     ],
+     "constraints": [
+      "c < min(f, h)",
+      "t > f and t > h"
+     ],
+     "stem": "A class has ${=t}$ learners. ${=f}$ of them play football and ${=h}$ of them play hockey, and ${=n}$ play neither football nor hockey. The numbers for football and for hockey each include the learners who play both. How many learners play both football and hockey?",
+     "answer": "f + h - (t - n)",
+     "solution": [
+      "The ${=n}$ learners who play neither lie outside both circles, so the other ${=t} - {=n} = {=t - n}$ learners play football or hockey (or both): $n(F \\text{ or } H) = {=t - n}$.",
+      "Use the identity $n(F \\text{ or } H) = n(F) + n(H) - n(F \\text{ and } H)$: ${=t - n} = {=f} + {=h} - n(F \\text{ and } H)$.",
+      "So $n(F \\text{ and } H) = {=f} + {=h} - {=t - n} = {=f + h - (t - n)}$ learners play both.",
+      "Check on the Venn diagram: football only ${=f} - {=c} = {=f - c}$, both ${=c}$, hockey only ${=h} - {=c} = {=h - c}$, neither ${=n}$, and ${=f - c} + {=c} + {=h - c} + {=n} = {=t}$."
+     ],
+     "notes": "The twist on the book's ex14-8-30 (which gives the overlap and asks for the class total): here the total and the 'neither' count are given and the overlap is the unknown, so the union identity has to be rearranged. Three steps plus a check on the diagram. The inclusive reading of the football and hockey totals is stated in the stem. No distractors (numeric)."
+    }
+   ],
+   "infeasible": [],
+   "notes": "Four numeric families, one per region the objective names: union by the identity (basic, the filled gap, since the book has no basic question here), only-one-event (standard, from ex14-8-10b), neither (standard, from ex14-8-30) and both (advanced, the inverted ex14-8-30). The misconception catalogue for this objective is empty and every family is numeric, so no distractors or misconception ids are used. Slugs differ in their first six letters (union-, only-c, neithe, both-c). Football/hockey stems say that the sport totals include those who play both, because the book leaves that reading implicit and a blind solver could otherwise disagree. I did not open any other repository files, so the families are untested against the engine; the only constructs used are randint, let, resample_while, min, and arithmetic in holes."
+  }
+ ],
+ "revised": []
+}

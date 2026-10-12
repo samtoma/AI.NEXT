@@ -1,0 +1,110 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m14s3-1-1:neither-region",
+ "kind": "family",
+ "lo_id": "lo:g10m14s3-1-1",
+ "parent_question_id": "q:g10m14s3-1-1:ex14-8-14a",
+ "source_page": 493,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": "Pieces of paper labelled with the whole numbers from 1 up to a given number are placed in a box and the box is shaken. One piece of paper is taken out. Event A is taking a multiple of one number and event B is taking a multiple of another number. The events are shown in a Venn diagram with a rectangle for the sample space S and two overlapping circles for A and B.",
+ "params": [
+  {
+   "name": "n",
+   "randint": [
+    30,
+    50
+   ]
+  },
+  {
+   "name": "a",
+   "choice": [
+    3,
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  {
+   "name": "b",
+   "choice": [
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "resample_while": "b == a"
+  },
+  {
+   "require": "a % b != 0 and b % a != 0",
+   "why": "if one number divides the other, one circle sits wholly inside the other and the picture is a different shape"
+  },
+  {
+   "name": "m",
+   "let": "lcm(a, b)"
+  },
+  {
+   "require": "m <= n",
+   "why": "the circles must overlap, so at least one number must be a multiple of both"
+  },
+  {
+   "name": "sa",
+   "let": "[x for x in range(1, n + 1) if x % a == 0]"
+  },
+  {
+   "name": "sb",
+   "let": "[x for x in range(1, n + 1) if x % b == 0]"
+  },
+  {
+   "name": "sc",
+   "let": "[x for x in range(1, n + 1) if x % a == 0 and x % b == 0]"
+  },
+  {
+   "name": "na",
+   "let": "len(sa)"
+  },
+  {
+   "name": "nb",
+   "let": "len(sb)"
+  },
+  {
+   "name": "nc",
+   "let": "len(sc)"
+  },
+  {
+   "name": "oa",
+   "let": "na - nc"
+  },
+  {
+   "name": "ob",
+   "let": "nb - nc"
+  },
+  {
+   "name": "tot",
+   "let": "oa + nc + ob"
+  },
+  {
+   "name": "out",
+   "let": "n - tot"
+  }
+ ],
+ "constraints": [
+  "a != b",
+  "lcm(a, b) <= n",
+  "out > 0"
+ ],
+ "stem": "Pieces of paper labelled with the numbers $1$ to ${=n}$ are placed in a box and the box is shaken. One piece of paper is taken out. The event $A$ is taking a piece of paper labelled with a multiple of ${=a}$ and the event $B$ is taking a piece of paper labelled with a multiple of ${=b}$. The events are shown in a Venn diagram, with a rectangle for the sample space $S$ and two overlapping circles for $A$ and $B$. How many of the numbers lie inside the rectangle but outside both circles?",
+ "answer": "out",
+ "solution": [
+  "The sample space $S$ is the whole numbers from $1$ to ${=n}$, so $n(S) = {=n}$. This is the total number of elements inside the rectangle.",
+  "The event $A$ is the multiples of ${=a}$ in $S$: $A = {=setof(sa)}$, so $n(A) = {=na}$.",
+  "The event $B$ is the multiples of ${=b}$ in $S$: $B = {=setof(sb)}$, so $n(B) = {=nb}$.",
+  "The numbers that appear in both $A$ and $B$ are ${=setof(sc)}$. That is ${=nc}$ numbers, and they go in the overlap of the two circles. Fill in the overlap first, because these numbers must not be counted twice.",
+  "Inside circle $A$ only there are ${=na} - {=nc} = {=oa}$ numbers, and inside circle $B$ only there are ${=nb} - {=nc} = {=ob}$ numbers.",
+  "Together the two circles hold ${=oa} + {=nc} + {=ob} = {=tot}$ numbers.",
+  "The numbers outside both circles are the rest of the rectangle: ${=n} - {=tot} = {=out}$."
+ ],
+ "notes": "Advanced twist modelled on ex14-8-14a (an 'and' event, which is the overlap of the two circles): the student must find the overlap first, subtract it from each circle, and only then read off the region outside both circles. The usual wrong answer is n - n(A) - n(B), which forgets that the overlap was counted twice. Parameters: n 30 to 50; a and b from 3 to 7, distinct, with neither dividing the other (rules out only 3 and 6), and lcm(a, b) <= n so the overlap is never empty. Brute-force check outside the engine over all 344 admissible (n, a, b) triples: the answer equals a direct count of numbers divisible by neither a nor b, and circle A only, circle B only, overlap and outside are all at least 1. Largest printed set has 16 elements. Uses setof(list) to print sets; the reviewer should confirm it renders with proper braces. The Venn diagram is described in words because the spec has no figure field, so the student works the regions out rather than drawing them. Numeric answer, so no distractors and no misconception ids."
+}

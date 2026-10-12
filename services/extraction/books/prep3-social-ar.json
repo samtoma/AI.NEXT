@@ -1,0 +1,63 @@
+{
+  "config_version": 1,
+  "book": "prep3-social-ar",
+  "title": "الدراسات الاجتماعية — كتاب الطالب، الصف الثالث الإعدادي، الفصل الدراسي الأول",
+  "course_id": "course:prep3-social-ar",
+  "curriculum": "eg-national-en",
+  "subject": "social",
+  "grade": "prep-3",
+  "language": "ar",
+  "direction": "rtl",
+  "id_prefixes": ["soc"],
+  "load_order": 20,
+  "sources": {
+    "pdf": "docs/Source/Social_prp3_T1_2.pdf",
+    "epub": null,
+    "teacher_pdf": null
+  },
+  "page_offsets": [
+    {
+      "label": "First Term Student's Book",
+      "pdf_from": 1,
+      "pdf_to": null,
+      "pdf_minus_printed": 7,
+      "verified_at": [[3, 10], [8, 15], [15, 22]],
+      "note": "manifest/social-prep3-t1.json page_map"
+    }
+  ],
+  "objectives_mode": "printed",
+  "sacred_content": false,
+  "bundles": [
+    "services/extraction/seed/social-t1.json"
+  ],
+  "superseded_bundles": {
+    "services/extraction/seed/social-skeleton.json": "services/extraction/seed/social-t1.json"
+  },
+  "content_files": [
+    "services/extraction/seed/content/soc1-1.json",
+    "services/extraction/seed/content/soc1-2.json",
+    "services/extraction/seed/content/soc1-3.json",
+    "services/extraction/seed/content/soc2-1.json",
+    "services/extraction/seed/content/soc2-2.json",
+    "services/extraction/seed/content/soc2-3.json",
+    "services/extraction/seed/content/soc3-1.json",
+    "services/extraction/seed/content/soc3-2.json",
+    "services/extraction/seed/content/soc3-3.json",
+    "services/extraction/seed/content/soc3-4.json",
+    "services/extraction/seed/content/soc4-1.json",
+    "services/extraction/seed/content/soc4-2.json",
+    "services/extraction/seed/content/soc4-3.json",
+    "services/extraction/seed/content/soc4-4.json"
+  ],
+  "manifest": "services/extraction/manifest/social-prep3-t1.json",
+  "generated": null,
+  "parity": {
+    "modules": 4,
+    "learning_objectives": 84,
+    "prerequisite_edges": 70,
+    "questions_total": 762,
+    "visuals": 34,
+    "require_all_live": false,
+    "note": "Counted from social-t1.json, the bundle that supersedes the skeleton. Social questions are not promoted on noor, so live < total is expected and disclosed, not RED."
+  }
+}

@@ -1,0 +1,63 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m1s3-1-5:single-digit",
+ "kind": "family",
+ "lo_id": "lo:g10m1s3-1-5",
+ "parent_question_id": "q:g10m1s3-1-5:ex1-1-12a",
+ "source_page": 12,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "choice": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ]
+  },
+  {
+   "name": "rep",
+   "let": "a * 111"
+  },
+  {
+   "name": "g",
+   "let": "gcd(a, 9)"
+  },
+  {
+   "name": "ans_n",
+   "let": "a // g"
+  },
+  {
+   "name": "ans_d",
+   "let": "9 // g"
+  }
+ ],
+ "constraints": [
+  "a % 9 != 0",
+  "gcd(ans_n, ans_d) == 1"
+ ],
+ "stem": "Write the recurring decimal $0.\\dot{{=a}}$ as a fraction in simplest form. (The dot marks the digit that repeats for ever.)",
+ "solution": [
+  "Write the decimal out as an equation: $x = 0.{=rep}\\ldots$",
+  "One digit repeats, so multiply both sides by $10$. This moves the decimal point one place to the right and keeps the same recurring digits after it: $10x = {=a}.{=rep}\\ldots$",
+  "Subtract the first equation from the second so that the recurring digits cancel: $10x - x = ({=a}.{=rep}\\ldots) - (0.{=rep}\\ldots)$, which gives $9x = {=a}$.",
+  "Divide both sides by $9$: $x = \\frac{{=a}}{9}$.",
+  "Simplify: the highest common factor of ${=a}$ and $9$ is ${=g}$, so $x = \\frac{{=ans_n}}{{=ans_d}}$. That is, $0.\\dot{{=a}} = \\frac{{=ans_n}}{{=ans_d}}$."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "{=ans_n}/{=ans_d}",
+  "form": "simplest",
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Entry point of the skill: ONE recurring digit straight after the decimal point (book 12a and 12c: 0.5 recurring, 0.4 recurring), so only one multiplication (by 10) and 9x = a. Digits 1 to 8 give 8 instances; 9 is excluded because 0.9 recurring = 1 is a separate idea the book does not raise here; a = 3 and a = 6 reduce (1/3, 2/3) so the simplify step is real for them and a no-op ('highest common factor is 1') for the rest. Answer is typed as a fraction (expression marker, form simplest), exactly as the book's own marker; no top-level 'answer' string is given because an expression-type answer lives in marker.answer. No mcq: the catalogued misconception mc:g10m1s3-1-5:recurring-read-as-stopping (a/10) would only be a distractor on a multiple-choice item, and a choice is not natural here. Verified by script: every instance's 10x - x = a and the fraction equals the decimal to 50 places."
+}

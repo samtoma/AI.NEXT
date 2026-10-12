@@ -1,0 +1,66 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s6-2-2:findavalue",
+ "kind": "family",
+ "lo_id": "lo:g10m6s6-2-2",
+ "parent_question_id": "q:g10m6s6-2-2:ex6-8-35c",
+ "source_page": 223,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "amp",
+   "randint": [
+    1,
+    6
+   ]
+  },
+  {
+   "name": "sgn",
+   "choice": [
+    1,
+    -1
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    -5,
+    5
+   ],
+   "resample_while": "q == 0"
+  },
+  {
+   "name": "a",
+   "let": "sgn * amp"
+  },
+  {
+   "name": "top",
+   "let": "q + amp"
+  },
+  {
+   "name": "bot",
+   "let": "q - amp"
+  },
+  {
+   "name": "k",
+   "let": "a + q"
+  }
+ ],
+ "constraints": [
+  "q != 0",
+  "a != 0"
+ ],
+ "stem": "The graph of $y = a\\cos\\theta + q$ is sketched for $\\theta \\in [0^\\circ, 360^\\circ]$. On this interval the greatest value of $y$ is ${=top}$ and the least value of $y$ is ${=bot}$, and the graph passes through the point $(0^\\circ, {=k})$. Find the value of $a$.",
+ "answer": "a",
+ "solution": [
+  "The graph oscillates between its least value ${=bot}$ and its greatest value ${=top}$, so its midline $y = q$ is halfway between them: $q = ({=top} + {=paren(bot)}) \\div 2 = {=q}$.",
+  "The amplitude is the distance from the midline to the greatest value: $|a| = {=top} - {=paren(q)} = {=amp}$.",
+  "At $\\theta = 0^\\circ$, $\\cos\\theta = 1$, so $y = a + q$ there. The graph passes through $(0^\\circ, {=k})$, so $a + {=paren(q)} = {=k}$.",
+  "So $a = {=k} - {=paren(q)} = {=a}$. This agrees with $|a| = {=amp}$, and its sign shows the reflection: $a$ is positive when the graph starts at its greatest value and negative when it starts at its least value.",
+  "$a = {=a}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced: the book's own inverse problem (read a and q off the features of a graph, here given in words because the stem cannot carry a diagram) with the twist that the sign of a must be decided from where the graph starts. Half the instances have a > 0 (the point at 0 degrees is the greatest value), half a < 0 (it is the least value); a is a whole number from -6 to 6, never 0, and q is a whole number, never 0. Checked numerically over the whole parameter space: greatest and least values of the sampled curve equal q + |a| and q - |a|, midline (top+bot)/2 = q, amplitude top - q = |a|, and k - q = a. The data are consistent and determine a uniquely."
+}

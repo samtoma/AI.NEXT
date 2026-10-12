@@ -1,0 +1,76 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s7-1-2:hyperbola-line",
+ "kind": "family",
+ "lo_id": "lo:g10m6s7-1-2",
+ "parent_question_id": "q:g10m6s7-1-2:ex6-8-53c",
+ "source_page": 231,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "version": 1,
+ "params": [
+  {
+   "name": "tab",
+   "let": "[[3,4,5],[4,3,5],[5,12,13],[12,5,13],[8,15,17],[15,8,17]]"
+  },
+  {
+   "name": "i",
+   "randint": [
+    0,
+    5
+   ]
+  },
+  {
+   "name": "u",
+   "let": "tab[i][0]"
+  },
+  {
+   "name": "v",
+   "let": "tab[i][1]"
+  },
+  {
+   "name": "w",
+   "let": "tab[i][2]"
+  },
+  {
+   "name": "s",
+   "randint": [
+    1,
+    2
+   ]
+  },
+  {
+   "name": "k",
+   "let": "u*v*s**2"
+  },
+  {
+   "name": "xa",
+   "let": "v*s"
+  },
+  {
+   "name": "ya",
+   "let": "u*s"
+  },
+  {
+   "name": "d",
+   "let": "s*w"
+  }
+ ],
+ "constraints": [
+  "gcd(u, v) == 1",
+  "xa * ya == k",
+  "xa**2 + ya**2 == d**2"
+ ],
+ "stem": "The graphs of $y=\\frac{{=u}}{{=v}}x$ and $y=\\frac{{=k}}{x}$ intersect at two points: $A$ in the first quadrant and $B$ in the third quadrant. Calculate the length of $AB$ in units.",
+ "answer": "2*d",
+ "solution": [
+  "At a point where the graphs meet, the two expressions for $y$ are equal: $\\frac{{=u}}{{=v}}x=\\frac{{=k}}{x}$.",
+  "Multiply both sides by ${=v}x$: ${=u}x^{2}={=k*v}$. So $x^{2}={=xa**2}$ and $x=\\pm{=xa}$.",
+  "Substitute into $y=\\frac{{=u}}{{=v}}x$: $x={=xa}$ gives $y={=ya}$ and $x=-{=xa}$ gives $y=-{=ya}$. So $A({=xa}, {=ya})$ and $B(-{=xa}, -{=ya})$.",
+  "Let $D$ be the point on the $x$-axis directly below $A$. Then $OD={=xa}$ and $AD={=ya}$, so by Pythagoras $OA^{2}={=xa}^{2}+{=ya}^{2}={=xa**2+ya**2}$ and $OA={=d}$ units.",
+  "The line passes through the origin, so $O$ lies between $A$ and $B$, and by the same working $OB={=d}$ units. Therefore $AB=OA+OB={=d}+{=d}={=2*d}$ units."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Model: book ex6-8-53c (y = x and y = 8/x, AB by Pythagoras through the origin). This family keeps the book's method but raises the demand: the line has a fractional gradient u/v, so the student must equate the two expressions themselves (the book hands over the points), solve x^2 = k*v/u, find both y-values, and add OA and OB. The gradient and k are built from primitive Pythagorean triples (u, v, w) so that A = (v*s, u*s), B = (-v*s, -u*s), OA = s*w and AB = 2*s*w are whole numbers in every instance (12 distinct instances: 6 triples x 2 scales). The stem names the quadrants so A and B are unambiguous without a figure. A blind solver using the distance formula reaches the same number."
+}

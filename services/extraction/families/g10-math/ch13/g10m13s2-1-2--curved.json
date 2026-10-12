@@ -1,0 +1,49 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m13s2-1-2:curved",
+ "kind": "family",
+ "lo_id": "lo:g10m13s2-1-2",
+ "parent_question_id": "q:g10m13s2-1-2:ex13-7-5",
+ "source_page": 458,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "r",
+   "randint": [
+    2,
+    12
+   ]
+  },
+  {
+   "name": "h",
+   "randint": [
+    3,
+    20
+   ]
+  },
+  {
+   "name": "tenths",
+   "let": "2*pi*r*h*10"
+  },
+  {
+   "name": "fp",
+   "let": "tenths - floor(tenths)"
+  },
+  {
+   "require": "abs(fp - 0.5) > 0.1",
+   "why": "keeps the 1-decimal-place answer well away from a rounding boundary, so a calculator's pi and a slightly rounded pi cannot give different printed answers"
+  }
+ ],
+ "constraints": [],
+ "stem": "A cylinder has a radius of ${=r}$ $\\text{cm}$ and a height of ${=h}$ $\\text{cm}$. Its curved surface unfolds into a rectangle: one side of the rectangle is the height of the cylinder and the other side is the circumference of the base. Find the area of the curved surface only (not the two circular ends). Use the $\\pi$ button on your calculator and round your answer to 1 decimal place, in $\\text{cm}^{2}$.",
+ "answer": "fixed(2*pi*r*h, 1)",
+ "solution": [
+  "When the curved surface is unrolled it forms a rectangle. One side is the height of the cylinder, ${=h}$ $\\text{cm}$. The other side went once round the base, so its length is the circumference of the base circle.",
+  "Circumference of the base: $2\\pi r=2\\pi({=r})={=2*r}\\pi$ $\\text{cm}$.",
+  "Area of the curved surface = length $\\times$ height: $A=({=2*r}\\pi)\\times({=h})={=2*r*h}\\pi$ $\\text{cm}^{2}$.",
+  "Use the $\\pi$ button on your calculator and round to 1 decimal place: ${=2*r*h}\\pi\\approx{=fixed(2*pi*r*h, 1)}$ $\\text{cm}^{2}$."
+ ],
+ "notes": "Entry point of the skill: the curved surface alone, i.e. the book's rectangle step (rectangle length = circumference of the base, width = height), with no circles to add yet. Same step as the 'b(2*pi*r)' line of ex13-7-5 and the 'area of larger rectangle' line of we04. Radius is always given, never the diameter. The solution keeps everything in terms of pi until the last line, so no intermediate rounding appears in any step. Rounding guard: the tenths fraction is kept more than 0.1 away from 0.5, so a solver using pi to 4 decimals (3.1416) still prints the same 1 d.p. value; 160 of the 198 (r,h) pairs pass. Spot-check against the book: r=6,h=11 gives 132*pi = 414.7, consistent with the book's ex13-7-5 total of 204*pi = 640.88 once the two circles (72*pi) are added. No distractors, so no misconception ids are used."
+}

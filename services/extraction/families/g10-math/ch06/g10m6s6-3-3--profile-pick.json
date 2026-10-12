@@ -1,0 +1,127 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s6-3-3:profile-pick",
+ "kind": "family",
+ "lo_id": "lo:g10m6s6-3-3",
+ "parent_question_id": "q:g10m6s6-3-3:ex6-8-55a",
+ "source_page": 232,
+ "tier": "standard",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "choice": [
+    -4,
+    -3,
+    -2,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "q",
+   "choice": [
+    -4,
+    -3,
+    -2,
+    -1,
+    1,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "require": "a + q != 0",
+   "why": "keeps the (0, a + q) distractor different from the (0, 0) distractor"
+  },
+  {
+   "name": "sq",
+   "let": "'+' if q > 0 else '-'"
+  },
+  {
+   "name": "qa",
+   "let": "abs(q)"
+  },
+  {
+   "name": "sm",
+   "let": "a + q"
+  },
+  {
+   "name": "L",
+   "choice": [
+    -180,
+    0
+   ]
+  },
+  {
+   "name": "R",
+   "let": "L + 360"
+  },
+  {
+   "name": "m",
+   "let": "L + 180"
+  },
+  {
+   "name": "ea",
+   "let": "L + 90"
+  },
+  {
+   "name": "eb",
+   "let": "L + 270"
+  }
+ ],
+ "stem": "The graph of $f(\\theta)={=a}\\tan\\theta {=sq} {=qa}$ is drawn for ${=L}^{\\circ}\\le\\theta\\le{=R}^{\\circ}$. Which one of the following correctly gives the period, the $y$-intercept and the asymptotes of the graph?",
+ "choices": {
+  "correct": "Period $180^{\\circ}$; $y$-intercept $(0^{\\circ}, {=q})$; asymptotes $\\theta={=ea}^{\\circ}$ and $\\theta={=eb}^{\\circ}$",
+  "distractors": [
+   {
+    "text": "Period $360^{\\circ}$; $y$-intercept $(0^{\\circ}, {=q})$; asymptotes $\\theta={=ea}^{\\circ}$ and $\\theta={=eb}^{\\circ}$",
+    "misconception_id": "mc:g10m6s6-3-3:period-360"
+   },
+   {
+    "text": "Period $180^{\\circ}$; $y$-intercept $(0^{\\circ}, 0)$; asymptotes $\\theta={=ea}^{\\circ}$ and $\\theta={=eb}^{\\circ}$",
+    "misconception_id": "mc:g10m6s6-3-3:ignores-q-intercept"
+   },
+   {
+    "text": "Period $180^{\\circ}$; $y$-intercept $(0^{\\circ}, {=sm})$; asymptotes $\\theta={=ea}^{\\circ}$ and $\\theta={=eb}^{\\circ}$",
+    "misconception_id": "mc:g10m6s6-3-3:tan0-is-one"
+   },
+   {
+    "text": "Period $180^{\\circ}$; $y$-intercept $(0^{\\circ}, {=q})$; asymptotes $\\theta={=L}^{\\circ}$, $\\theta={=m}^{\\circ}$ and $\\theta={=R}^{\\circ}$",
+    "misconception_id": "mc:g10m6s6-3-3:asymptote-at-zeros"
+   }
+  ]
+ },
+ "solution": [
+  "Period: the tangent graph repeats every $180^{\\circ}$. Here $a={=a}$ only stretches the graph vertically and $q={=q}$ only shifts it up or down, so the period stays $180^{\\circ}$.",
+  "$y$-intercept: put $\\theta=0^{\\circ}$. Since $\\tan 0^{\\circ}=0$, we get $f(0^{\\circ})=({=a})(0) {=sq} {=qa}={=q}$, so the $y$-intercept is $(0^{\\circ}, {=q})$.",
+  "Asymptotes: a tangent graph has an asymptote at $\\theta=90^{\\circ}$ and another one every $180^{\\circ}$, in both directions. Shifting the graph up or down does not move them, so in this interval they are at $\\theta={=ea}^{\\circ}$ and $\\theta={=eb}^{\\circ}$.",
+  "The correct option is: period $180^{\\circ}$; $y$-intercept $(0^{\\circ}, {=q})$; asymptotes $\\theta={=ea}^{\\circ}$ and $\\theta={=eb}^{\\circ}$."
+ ],
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m6s6-3-3:period-360",
+   "label": "Thinks the tangent graph repeats every 360 degrees",
+   "description": "Uses the period of sine and cosine for the tangent graph, so gives a period of 360 degrees, or finds only one asymptote in a 360 degree interval instead of two."
+  },
+  {
+   "id": "mc:g10m6s6-3-3:ignores-q-intercept",
+   "label": "Thinks the tangent graph always passes through the origin",
+   "description": "Gives the y-intercept as (0, 0) because tan 0 = 0, forgetting that q shifts the whole graph so the y-intercept is (0, q)."
+  },
+  {
+   "id": "mc:g10m6s6-3-3:tan0-is-one",
+   "label": "Takes tan 0 degrees to be 1",
+   "description": "Substitutes tan 0 degrees = 1 into a tan(theta) + q and gives the y-intercept as (0, a + q) instead of (0, q)."
+  },
+  {
+   "id": "mc:g10m6s6-3-3:asymptote-at-zeros",
+   "label": "Puts the asymptotes where the graph crosses the axis",
+   "description": "Takes the asymptotes to be at the x-intercepts (0 degrees, 180 degrees, 360 degrees ...) instead of at 90 degrees and 270 degrees."
+  }
+ ],
+ "notes": "Standard tier: reading the period, y-intercept and asymptotes off the equation y = a tan(theta) + q, which is the point of the objective once q is present (q moves the intercept but not the period or the asymptotes). Each distractor changes exactly one of the three statements and names one error. Window is 360 degrees long, starts at -180 or 0 so theta = 0 lies inside it and the y-intercept is on the drawn graph; two asymptotes, none at an end value. q is never 0 and a + q is never 0, so (0, q), (0, 0) and (0, a + q) are always three different options. The sign of q is printed through a string let ('+' / '-'). x-intercepts for q different from 0 are deliberately not asked: they need solving a tan(theta) + q = 0, which the book does not model for this objective."
+}

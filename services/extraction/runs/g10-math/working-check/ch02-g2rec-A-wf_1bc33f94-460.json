@@ -1,0 +1,140 @@
+{
+ "stage": "SW",
+ "workflow": "working-check",
+ "prompts_version": "sw-v3",
+ "book": "g10-math",
+ "chapter": 2,
+ "part": 1,
+ "parts": 1,
+ "batch": 5,
+ "agents": 4,
+ "effort": "high",
+ "model": "sonnet",
+ "pass_id": "A",
+ "order": "bundle",
+ "by_ref": {
+  "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/wcheck-ch02-g2rec-A",
+  "stage": "SW",
+  "shards_sha256": "518a0fd1333425e7e9776438218c9d6c78f3316fb18162adb60d22204944f0b3",
+  "files": 16
+ },
+ "embedded": {
+  "source": "runbook/working-check.workflow.js",
+  "source_sha256": "352a846920d85b4c224df7fb36d3f9a8ea598155cc2b4ee4ba9ef7e4791b6385",
+  "args_sha256": "bc7d49042beee041882bba813281dd373f9032209a2387de7964b1dc3e76bd60",
+  "generated_sha256": "92b244842d775d8e9339d3abad9a4b5e96886c4b64fa5b76fdcbc35946340317",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "solution_id": "q:g10m2s2-1-3:we05",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m2s2-1-2:ex2-4-1m",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m2s2-1-2:ex2-4-1q",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m2s2-1-2:ex2-4-1r",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m2s2-1-2:ex2-4-1s",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m2s2-1-1:ex2-4-1z",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m2s2-1-2:ex2-4-2a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m2s2-1-2:ex2-4-2b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m2s2-1-2:ex2-4-2l",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m2s2-1-1:ex2-4-7",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m2s4-1-4:ex2-3-4",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m2s4-1-1:ex2-4-3d",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m2s4-1-1:ex2-4-3g",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m2s4-1-3:ex2-4-3n",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m2s4-1-4:ex2-4-4",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m2s4-1-4:ex2-4-5",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "3^{\\text{3.1}}&=\\text{30.014}",
+     "kind": "arithmetic",
+     "where": "working",
+     "expected": "3^3.1 ≈ 30.135",
+     "why": "3^3.1 is about 30.135, not 30.014; the printed value does not equal the power."
+    }
+   ],
+   "note": ""
+  }
+ ],
+ "problems": [],
+ "meter": {
+  "stage": "SW",
+  "record": "uv run meter_run.py record --book g10-math --stage SW --run <runId>"
+ }
+}

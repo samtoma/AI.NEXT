@@ -1,0 +1,1127 @@
+{
+ "stage": "SW",
+ "workflow": "working-check",
+ "prompts_version": "sw-v3",
+ "book": "g10-math",
+ "chapter": 8,
+ "part": 1,
+ "parts": 1,
+ "batch": 5,
+ "agents": 19,
+ "effort": "high",
+ "model": "sonnet",
+ "pass_id": "A",
+ "order": "bundle",
+ "by_ref": {
+  "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/wcheck-ch08-cal2-A",
+  "stage": "SW",
+  "shards_sha256": "5633409a8b3e054df23456b7bff692b9806db6073137d2b6d9063fbef0779795",
+  "files": 91
+ },
+ "embedded": {
+  "source": "runbook/working-check.workflow.js",
+  "source_sha256": "352a846920d85b4c224df7fb36d3f9a8ea598155cc2b4ee4ba9ef7e4791b6385",
+  "args_sha256": "885a4442a51e6a5f03cfb3e09a2e5909800742b8241ed37db51a4d44191df7e7",
+  "generated_sha256": "5fbe4fe607b48de89de9208e89c0872895ae82d342f20606e176a345593cb9ac",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-9-120",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "(4)=(1)(-2)+c",
+     "kind": "sign",
+     "where": "working",
+     "expected": "y = -4 from A(-2, -4)",
+     "why": "Point A has y-coordinate -4, but the substitution uses 4, and 4 = -2 + c would not give c = -2."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s2-1-2:ex8-9-119",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "(1-(3))^{2}",
+     "kind": "sign",
+     "where": "working",
+     "expected": "x_B = -3 from the figure",
+     "why": "The figure gives B(-3; -2.5), so the sign of 3 is lost; 1-(3) is -2, yet the next line uses 1+3."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s4-1-3:ex8-9-139",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 2,
+     "quote": "M(1, 2)=S\\left(\\frac{x+1}{2}, \\frac{y-2}{2}\\right)",
+     "kind": "label",
+     "where": "question",
+     "expected": "T(x, y), the question's unknown vertex",
+     "why": "The question names the unknown vertex T(x, y) and asks for S, but the working writes the midpoint of Q and (x, y) as S."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-4-10",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 3,
+     "quote": "to solve for $x$",
+     "kind": "label",
+     "where": "working",
+     "expected": "solve for y",
+     "why": "B is (2, y), so the substitution finds y, not x."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-3:ex8-9-105",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "\\frac{b+1}{3-7}",
+     "kind": "wrong_value",
+     "where": "question",
+     "expected": "x_Q = 8, so 3-8",
+     "why": "The question gives Q(8, -1), so the denominator is 3-8, and m_PQ would be -5/11, not -1/2."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-6-33a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-9-112",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 3,
+     "quote": "m_{AC}=\\frac{-1}{2}",
+     "kind": "label",
+     "where": "working",
+     "expected": "m_{AB}=-1/2",
+     "why": "The gradient used for CD must be m_AB, which is -1/2; m_AC is 3/4, so the label is wrong."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s2-1-1:ex8-6-42a",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "\\sqrt{5^2(-1)^2}",
+     "kind": "arithmetic",
+     "where": "working",
+     "expected": "\\sqrt{5^2+(-1)^2}",
+     "why": "The sum sign is missing: 5^2(-1)^2 equals 25, not the 25+1 on the next line."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-1-2:ex8-6-9",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s4-1-1:ex8-6-17",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "\\frac{-2-2}{2}",
+     "kind": "sign",
+     "where": "working",
+     "expected": "(-2+2)/2",
+     "why": "x-coordinates are -2 and 2, so the numerator is -2+2; -2-2 would give -2, not the 0 stated."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-9-117",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 4,
+     "quote": "(4)=(1)(-2)+c",
+     "kind": "sign",
+     "where": "working",
+     "expected": "m = -1 from step 2",
+     "why": "The gradient substituted is 1, but step 2 gives m = -1; with 1 the line gives c = 6, not 2."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s2-1-1:we01",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 2,
+     "quote": "the coordinates of $T$ be",
+     "kind": "label",
+     "where": "question",
+     "expected": "Q(7, -2)",
+     "why": "The question names the second point Q, but the working calls it T throughout."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s4-1-1:ex8-9-104",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 2,
+     "quote": "$x_{1}=6",
+     "kind": "wrong_value",
+     "where": "unsure",
+     "expected": "A(7, 2), so x1 = 7",
+     "why": "The question gives A(7, 2), but the working uses x1 = 6, which changes the midpoint x-coordinate."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-4-19b",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 2,
+     "quote": "d&=\\sqrt{(-5-2)^{2}+(2+4)^{2}}",
+     "kind": "label",
+     "where": "working",
+     "expected": "B(2,-4), C(8,3) for BC",
+     "why": "The step is introduced as the length of BC but uses the coordinates of A and B."
+    },
+    {
+     "step": 4,
+     "quote": "d&=\\sqrt{(8-2)^{2}+(3+4)^{2}}",
+     "kind": "label",
+     "where": "working",
+     "expected": "A(-5,2), B(2,-4) for AB",
+     "why": "The step is introduced as the length of AB but uses the coordinates of B and C."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s4-1-3:ex8-6-31e",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-3:ex8-4-18",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-6-44d",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 2,
+     "quote": "-\\frac{3}{2}&=(3)(\\frac{1}{2})+c",
+     "kind": "sign",
+     "where": "working",
+     "expected": "m = -3, so (-3)(1/2)",
+     "why": "The gradient just found is -3, but the substitution uses +3, which would give c = -3, not 0."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-1:ex8-9-116",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "M_{GF}&=(-4, 0)",
+     "kind": "label",
+     "where": "working",
+     "expected": "M_{GH}",
+     "why": "The mid-point just calculated is of GH, but it is relabelled M_GF."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s2-1-1:ex8-9-106",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s1-1-2:ex8-1-1",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s4-1-1:ex8-6-19c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s2-1-1:ex8-9-125",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 2,
+     "quote": "=3",
+     "kind": "final_answer",
+     "where": "unsure",
+     "expected": "4",
+     "why": "The working correctly gives QR = 3 from Q(2,3) and R(5,3), but the key states 4."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s4-1-3:we13",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-4-1b",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 5,
+     "quote": "m_{AB}\\times\\frac{1}{m_{CD}}\\ne-1",
+     "kind": "other",
+     "where": "working",
+     "expected": "",
+     "why": "With m_AB=3 and m_CD=-3, 3 times 1/(-3) equals -1, so the stated inequality is false, and the perpendicular test is misstated."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-4-1a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-6-36b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s1-1-3:ex8-6-3",
+   "verdict": null,
+   "flags": [],
+   "note": "no answer"
+  },
+  {
+   "solution_id": "q:g10m8s3-2-3:ex8-9-103",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 2,
+     "quote": "\\frac{-4-2}{6-8}",
+     "kind": "wrong_value",
+     "where": "working",
+     "expected": "x of A is 7",
+     "why": "The x-coordinate of A is 7, not 6, so the gradient denominator is wrong."
+    },
+    {
+     "step": 4,
+     "quote": "-4&=3(6)+c",
+     "kind": "wrong_value",
+     "where": "working",
+     "expected": "3(7)",
+     "why": "Substituting A(7, -4) requires x = 7, not 6."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-1:ex8-9-124",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "\\frac{0-(7)}{q-(-1)}",
+     "kind": "sign",
+     "where": "working",
+     "expected": "0-(-7)",
+     "why": "P has y-coordinate -7, so the numerator should be 0-(-7); the minus sign is lost."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s4-1-1:ex8-9-131",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 5,
+     "quote": "M\\left(-\\text{0.5}, -\\text{1.25}\\right)",
+     "kind": "final_answer",
+     "where": "unsure",
+     "expected": "(-0.5, -1.26)",
+     "why": "The working correctly gives y = -1.25, but the stated key is -1.26, so the conclusion does not match the key."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-9-135",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "point $A$ is at $(-3, 1)$",
+     "kind": "label",
+     "where": "question",
+     "expected": "T(-3, 1)",
+     "why": "The question gives (-3, 1) as point T and never gives coordinates for A, yet the working calls it A."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-6-22e",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s1-1-3:ex8-1-6",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s2-1-2:ex8-9-134",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 2,
+     "quote": "the coordinates of $S$ be $\\left({x}_{2}, {y}_{2}\\right)$",
+     "kind": "label",
+     "where": "question",
+     "expected": "T(8, y)",
+     "why": "The question names the point T(8, y), but the working treats the point (8, y) as S throughout."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-9-110",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 2,
+     "quote": "\\frac{-1}{m_{CA}}",
+     "kind": "label",
+     "where": "working",
+     "expected": "m_{CD}",
+     "why": "The perpendicular gradient formula in step 1 uses m_CD, but this line writes m_CA, which is a different line."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-6-42e",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "Since the diagonals are equal in length we know that the quadrilateral must be a square",
+     "kind": "other",
+     "where": "working",
+     "expected": "",
+     "why": "Equal diagonals alone do not make a square (a rectangle also has them); the conclusion is not supported by the step."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-3:ex8-4-2b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s4-1-3:ex8-6-46e",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 2,
+     "quote": "(8, 12)&=\\left(\\frac{x_p}{2}, \\frac{y_p}{2}\\right)",
+     "kind": "arithmetic",
+     "where": "working",
+     "expected": "(8, 12) = (x_p, y_p)",
+     "why": "Multiplying (4, 6) = (x_p/2, y_p/2) by 2 gives (8, 12) = (x_p, y_p), not (x_p/2, y_p/2)."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s4-1-1:ex8-9-138",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "\\frac{x_{A}+x_{B}}{2}",
+     "kind": "label",
+     "where": "working",
+     "expected": "points T and B",
+     "why": "The question names the points T and B, but the formula uses subscripts A and B for them."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-3:ex8-4-2a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-1:ex8-9-123",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 2,
+     "quote": "(4)&=-\\frac{1}{2}(3)+c",
+     "kind": "sign",
+     "where": "working",
+     "expected": "x = -3 from P(-3, 4)",
+     "why": "P has x = -3, so substituting 3 loses the minus sign; with 3 the line would give c = 11/2, not 5/2."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s1-1-3:ex8-1-5",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-3:ex8-4-5",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 5,
+     "quote": "m_{PR}=m_{QR}",
+     "kind": "label",
+     "where": "working",
+     "expected": "m_{PQ}=m_{QR}",
+     "why": "Step 1 and the computed gradient are for PQ, but this line names PR instead of PQ."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-6-21c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:we07",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-9-136",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 5,
+     "quote": "Therefore point $B$ is at $(2, 3)$",
+     "kind": "label",
+     "where": "question",
+     "expected": "T(2, 3)",
+     "why": "The question asks for the missing coordinate of point T(x, 3), but the working names the point B."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-1-1:ex8-9-130",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "=-\\frac{1}{3}",
+     "kind": "final_answer",
+     "where": "unsure",
+     "expected": "-2/3",
+     "why": "The working ends at -1/3, but the key given is -2/3."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s2-1-1:ex8-9-126",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 2,
+     "quote": "=\\sqrt{10}",
+     "kind": "final_answer",
+     "where": "unsure",
+     "expected": "\\sqrt{11}",
+     "why": "The working ends at the square root of 10, but the key given is the square root of 11."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-9-113",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 2,
+     "quote": "\\frac{-1}{m_{CA}}",
+     "kind": "label",
+     "where": "working",
+     "expected": "m_{CD}",
+     "why": "The perpendicular gradient formula uses m_{CD} in step 1, but this line writes m_{CA}."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s4-1-1:ex8-9-122",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "4+(2)",
+     "kind": "sign",
+     "where": "working",
+     "expected": "4+(-2)",
+     "why": "B's x-coordinate is -2, so the sum should be 4+(-2); the written 4+(2) would give 3, not 1."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s2-1-1:ex8-6-24a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s1-1-2:ex8-6-2",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s4-1-3:ex8-9-127",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 3,
+     "quote": "Therefore $N(3, 5)$",
+     "kind": "final_answer",
+     "where": "unsure",
+     "expected": "(3, 6)",
+     "why": "The working concludes N(3, 5), but the key given is (3, 6)."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s1-1-2:ex8-1-3",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s1-1-2:ex8-1-4",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s4-1-2:ex8-9-132",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "D(b, c)&=(10, 8)",
+     "kind": "final_answer",
+     "where": "question",
+     "expected": "(10, 9)",
+     "why": "The working concludes D = (10, 8), but the key states (10, 9); the working's own arithmetic gives c = 8."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s4-1-1:we10",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 2,
+     "quote": "x_{1}=2y_{1}=1",
+     "kind": "label",
+     "where": "working",
+     "expected": "x_2=2",
+     "why": "The values for G(-2, -2) are x_1, y_1 and for E(2, 1) should be x_2, y_2; the working labels the second x as x_1 again."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-1-2:ex8-9-133",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 2,
+     "quote": "the coordinates of $H$ be",
+     "kind": "label",
+     "where": "question",
+     "expected": "H(x, 0)",
+     "why": "The question names the point T(x, 0) but the working and the figure call it H(x; 0)."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-1:ex8-9-118",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "4&=-\\frac{1}{3}(1)+c",
+     "kind": "wrong_value",
+     "where": "working",
+     "expected": "x = -1 from M(-1; 4)",
+     "why": "M is (-1, 4) in the figure, so the x-value substituted should be -1, not 1."
+    },
+    {
+     "step": 1,
+     "quote": "c&=4-\\frac{1}{3}",
+     "kind": "arithmetic",
+     "where": "working",
+     "expected": "",
+     "why": "From 4 = -1/3(1) + c, c would be 4 + 1/3, not 4 - 1/3."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s4-1-2:ex8-9-129",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "\\therefore B(x, y)&=(1, -5)",
+     "kind": "final_answer",
+     "where": "question",
+     "expected": "(1, -6)",
+     "why": "The working concludes B = (1, -5) with y_B = -5, but the key states (1, -6)."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-6-19b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-1:ex8-9-121",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "\\frac{(\\text{1.5})-(1)}{(4)-(-1)}",
+     "kind": "wrong_value",
+     "where": "working",
+     "expected": "y_A = -1",
+     "why": "y_A is -1 in the figure, not 1; with 1 the quotient would be 0.1, not the 0.5 stated."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-1:ex8-6-30d",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s4-1-1:ex8-6-24c",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "M_{QR}",
+     "kind": "label",
+     "where": "working",
+     "expected": "M_{PR}",
+     "why": "The question asks for the mid-point of PR, and the coordinates used are those of P and R, not Q and R."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-1:ex8-6-40e",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-1:ex8-9-137",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 5,
+     "quote": "Substitute $A(-1, 7)$",
+     "kind": "label",
+     "where": "question",
+     "expected": "T(-1, 7) as named in the question",
+     "why": "The question names the vertex T(-1, 7) but asks for the line from A; the working uses A with T's coordinates."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-6-19d",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-1-1:ex8-9-140",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "\\frac{(2.5)-(-3.5)}{(2)-(-1)}",
+     "kind": "label",
+     "where": "question",
+     "expected": "T(-1, -3.5) as named in the question",
+     "why": "The question names the point T(-1, -3.5) but asks for line AB; the working uses A with T's coordinates."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s2-1-2:ex8-6-6",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-1-1:ex8-9-108",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 2,
+     "quote": "y_{2}=y+4",
+     "kind": "wrong_value",
+     "where": "question",
+     "expected": "y_2 = y+5 as given for B",
+     "why": "The question gives B(x, y+5) but the working uses y+4, giving 4/3 rather than 5/3."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-2-3:ex8-4-2c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s2-1-1:ex8-9-128",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "=\\text{4.1}",
+     "kind": "final_answer",
+     "where": "working",
+     "expected": "4.2",
+     "why": "√17 ≈ 4.12 rounds to 4.1, but the key states the final answer as 4.2."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-1-1:ex8-9-107",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "\\frac{-1-4}{7+3}",
+     "kind": "wrong_value",
+     "where": "working",
+     "expected": "x of Q is 8",
+     "why": "Q has x-coordinate 8, so the denominator should be 8+3=11, not 7+3."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s2-1-1:ex8-6-39a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s2-1-1:ex8-9-102",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "x-(x+4)",
+     "kind": "wrong_value",
+     "where": "question",
+     "expected": "x+5",
+     "why": "The question gives B(x+5, y-1), but the working uses x+4, giving (-4)^2 instead of (-5)^2."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m8s3-1-1:we03",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m8s3-2-2:ex8-6-38d",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "\\frac{-2-1}{1-4}",
+     "kind": "wrong_value",
+     "where": "working",
+     "expected": "R(5, 1): denominator 5 - 1 = 4",
+     "why": "R has x = 5, so the denominator should use 5 - 1; as written (1-4) gives 1, not the 3/4 stated."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m8s4-1-1:ex8-9-115",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 3,
+     "quote": "M_{AB}\\ne M_{BD}",
+     "kind": "label",
+     "where": "working",
+     "expected": "M_{AC}",
+     "why": "The midpoint compared with M_{BD} is that of AC computed in step 2, not AB."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m8s3-2-2:ex8-9-111",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 2,
+     "quote": "m_{AC}\\times m_{BC}",
+     "kind": "label",
+     "where": "working",
+     "expected": "m_{AB}\\times m_{BC}",
+     "why": "The perpendicularity test and the factor -1/3 concern m_{AB}, not m_{AC}; the line names the wrong gradient."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m8s3-2-3:ex8-9-114",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 2,
+     "quote": "therefore m_{AB}=m_{AP}",
+     "kind": "label",
+     "where": "working",
+     "expected": "m_{AC}=m_{AP}",
+     "why": "The gradient quoted from the previous question is m_{AC}, so the conclusion should equate m_{AC} with m_{AP}; m_{AB} is not -2/3."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m8s3-2-3:ex8-9-109",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 2,
+     "quote": "m_{AC}&=m_{BD}=m_{AD}",
+     "kind": "label",
+     "where": "working",
+     "expected": "m_{AB}",
+     "why": "The line should compare the gradient of AB with BD and AD; AC is not part of this question's working."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m8s3-2-3:ex8-6-42d",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "-2-(-\\text{0.5})",
+     "kind": "sign",
+     "where": "working",
+     "expected": "2-(-0.5)",
+     "why": "C has x-coordinate 2, so the difference is 2-(-0.5)=2.5; writing -2 contradicts both C and the 2.5 that follows."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m8s3-2-2:ex8-6-30e",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m8s4-1-3:ex8-6-44b",
+   "verdict": "unclear",
+   "flags": [],
+   "note": "E is not defined in the question and no figure is given, so the claim that the midpoint equals E cannot be checked."
+  },
+  {
+   "solution_id": "expl:g10m8s4-1-1:ex8-6-27",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 2,
+     "quote": "N&=\\left(\\frac{-3+3}{2}, \\frac{4-2}{2}\\right)",
+     "kind": "wrong_value",
+     "where": "working",
+     "expected": "N=(-1,-2) from B(3,-2) and C(-5,-2)",
+     "why": "N is the midpoint of BC, with B(3,-2) and C(-5,-2); the working uses A and B's coordinates instead, giving (0,1)."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m8s3-2-2:ex8-6-26",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 4,
+     "quote": "m_{PR}\\times m_{QR}&=-\\frac{1}{7}\\times\\frac{7}{1}",
+     "kind": "label",
+     "where": "working",
+     "expected": "m_{PQ}\\times m_{QR}",
+     "why": "-1/7 is the gradient of PQ, not PR (m_PR = -4/3), so the product is mislabelled."
+    },
+    {
+     "step": 5,
+     "quote": "$PR\\perp QR$",
+     "kind": "label",
+     "where": "working",
+     "expected": "PQ ⊥ QR",
+     "why": "The perpendicular sides found are PQ and QR (right angle at Q), not PR and QR."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m8s3-2-2:ex8-6-46c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m8s3-2-2:ex8-6-39d",
+   "verdict": "unclear",
+   "flags": [],
+   "note": "The gradient of ST comes from an earlier part that is not visible, so the parallel conclusion cannot be judged."
+  },
+  {
+   "solution_id": "expl:g10m8s4-1-1:ex8-9-101",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 4,
+     "quote": "\\frac{2-5}{3-(-2)}",
+     "kind": "wrong_value",
+     "where": "working",
+     "expected": "Q has y-coordinate 6",
+     "why": "Q is (-2, 6), so the numerator should use 6, not 5."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m8s2-1-1:ex8-6-22a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m8s2-1-1:ex8-6-36c",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 2,
+     "quote": "(-2-3)^{2}+(4-5)^{2}",
+     "kind": "wrong_value",
+     "where": "question",
+     "expected": "N(x, y) as the question gives it",
+     "why": "The working uses N(3, 5), but the question gives N as (x, y); the coordinates 3 and 5 appear in no given or earlier step."
+    },
+    {
+     "step": 3,
+     "quote": "Therefore $LMNP$ is a square, all the sides are equal in length.",
+     "kind": "other",
+     "expected": "",
+     "why": "Four equal sides only show a rhombus; a square also needs a right angle or equal diagonals, which the steps never show."
+    }
+   ],
+   "note": ""
+  }
+ ],
+ "problems": [
+  "batch 6: an answer names \"q:g10m8s1-1-3:ex8-9-3\", which is not in this batch (ignored)",
+  "q:g10m8s1-1-3:ex8-6-3: the checking agent gave no verdict for it (unchecked: re-run it)"
+ ],
+ "meter": {
+  "stage": "SW",
+  "record": "uv run meter_run.py record --book g10-math --stage SW --run <runId>"
+ }
+}

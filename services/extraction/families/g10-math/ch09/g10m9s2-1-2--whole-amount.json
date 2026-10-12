@@ -1,0 +1,69 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m9s2-1-2:whole-amount",
+ "kind": "family",
+ "lo_id": "lo:g10m9s2-1-2",
+ "parent_question_id": "q:g10m9s2-1-2:ex9-1-6",
+ "source_page": 334,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": "A bank savings account pays simple interest at a whole-number percentage per annum. The amount wanted after a whole number of years is given in rand, and the amount to invest now is asked for.",
+ "params": [
+  {
+   "name": "r",
+   "choice": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ]
+  },
+  {
+   "name": "n",
+   "choice": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "m",
+   "randint": [
+    5,
+    80
+   ]
+  },
+  {
+   "name": "P",
+   "let": "100 * m"
+  },
+  {
+   "name": "d",
+   "let": "100 + r * n"
+  },
+  {
+   "name": "A",
+   "let": "m * d"
+  },
+  {
+   "name": "ds",
+   "let": "fixed(d / 100, 2) if d % 10 != 0 else fixed(d / 100, 1)"
+  }
+ ],
+ "constraints": [],
+ "stem": "A bank offers a savings account which pays simple interest at a rate of ${=r}$ % per annum. If you want to accumulate $\\text{R{=A}}$ in ${=n}$ years, how much should you invest now?",
+ "answer": "P",
+ "solution": [
+  "Read the question carefully and write down the given information: $\\begin{aligned}A&=\\text{R{=A}}\\\\P&=?\\\\i&=\\frac{{=r}}{100}=0.0{=r}\\\\n&={=n}\\end{aligned}$",
+  "Write down the simple interest formula: $A=P(1+in)$",
+  "Substitute the given values and work out the bracket: $\\begin{aligned}\\text{R{=A}}&=P\\left(1+0.0{=r}\\times{=n}\\right)\\\\\\text{R{=A}}&=P\\times{=ds}\\end{aligned}$",
+  "Divide both sides by ${=ds}$ to find $P$: $\\begin{aligned}P&=\\frac{\\text{R{=A}}}{{=ds}}\\\\&=\\text{R{=P}}\\end{aligned}$",
+  "You should invest $\\text{R{=P}}$ now."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Entry point of the skill: same skeleton as the book's ex9-1-6 (A = P(1 + in), then divide), but the numbers are built backwards from P = 100m so that A is a whole number of rand and the principal is an exact whole number, with no rounding step. Rate is a single-digit whole percent so i prints as 0.0r. The denominator 1 + in is printed the book's way with trailing zeros dropped (1.3, not 1.30). Numeric family, so no distractors and no misconception ids are needed; none are catalogued for this objective."
+}

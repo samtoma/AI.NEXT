@@ -1,0 +1,32 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m6s2-1-2:rearranged-moved-term",
+ "lo_id": "lo:g10m6s2-1-2",
+ "parent_question_id": "q:g10m6s2-1-2:ex6-2-5c",
+ "tier": "basic",
+ "kind": "line_drawer",
+ "spec": {
+  "mode": "equation",
+  "m": 2,
+  "b": -3
+ },
+ "stem": "Draw the straight line $y + 3 = 2x$. Any two points on the line will do; the equation under the graph updates as you drag.",
+ "solution": [
+  "Get $y$ on its own: subtract $3$ from both sides, so $y = 2x - 3$. The $3$ changes sign when it crosses the equals sign.",
+  "Read $y = mx + c$: the gradient is $m = 2$ and the $y$-intercept is $c = -3$.",
+  "Drag the first point onto the $y$-intercept, $(0, -3)$.",
+  "Use the gradient: $m = 2$ means up 2 for every 1 across, so the second point is $(1, -1)$.",
+  "Check the live equation reads $y = 2x - 3$, which is the same line as $y + 3 = 2x$."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "intercept-wrong",
+   "misconception_id": "mc:g10m6s2-1-2:moved-term-keeps-its-sign"
+  },
+  {
+   "predicate": "off-target",
+   "misconception_id": "mc:g10m6s2-1-2:gradient-and-intercept-swapped"
+  }
+ ],
+ "notes": "Draws the book's ex6-2-5 theme in reverse (equation to graph). Reading the printed '+3' as the intercept gives y = 2x + 3: slope right, intercept wrong, so intercept-wrong is a clean signature of the moved-term sign error. Off-target is mapped to the swap (y = 3x + 2 or y = -3x + 2) because the other named errors fire intercept-wrong here; off-target is a residual predicate, so this mapping is the weakest of the three. The slope is 2, an integer within the |m| <= 5 limit, and the intercept -3 is within -5..5."
+}

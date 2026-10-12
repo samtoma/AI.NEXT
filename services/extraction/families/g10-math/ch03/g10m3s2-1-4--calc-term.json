@@ -1,0 +1,59 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m3s2-1-4:calc-term",
+ "kind": "family",
+ "lo_id": "lo:g10m3s2-1-4",
+ "parent_question_id": "q:g10m3s2-1-4:ex3-1-9b",
+ "source_page": 66,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "choice": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    -2,
+    -3,
+    -4,
+    -5
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    1,
+    12
+   ]
+  },
+  {
+   "name": "k",
+   "randint": [
+    6,
+    20
+   ]
+  },
+  {
+   "name": "t",
+   "let": "a * k + b"
+  }
+ ],
+ "constraints": [],
+ "stem": "The general term of a sequence is given by $T_n = {=a}n + {=b}$. Use the formula to calculate $T_{{=k}}$.",
+ "answer": "t",
+ "solution": [
+  "Substitute $n = {=k}$ into the general term: $T_{{=k}} = {=a}({=k}) + {=b}$.",
+  "Multiply first: ${=a}({=k}) = {=a*k}$.",
+  "Then add the constant term: ${=a*k} + {=b} = {=t}$.",
+  "Therefore $T_{{=k}} = {=t}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Entry skill: substitute a given position into a linear general term, as in ex3-1-9b (T_n = -n + 4). The coefficient a takes both signs (the book's -n + 4 and -4n + 6) but never +-1, so the formula always prints cleanly; the constant b is positive so the template never has to print '+ -3'. The book's 'missing term in a printed sequence' layout is not used on purpose: with neighbours shown the term can be guessed from the pattern without the formula, and k >= 6 forces the formula. No catalogued misconceptions exist for this objective, so there are no distractors (numeric answer)."
+}

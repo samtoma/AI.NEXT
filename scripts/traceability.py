@@ -40,6 +40,12 @@ BLOCKED by construction, because spec and traceability are written before any
 code lands (`docs/BRANCHING.md`'s `req/` branch discipline) — and it is
 checked here for exactly the same reason the other two are: a requirement
 with no row is a requirement nobody has to answer for.
+
+A FOURTH, added 2026-09-25: curriculum tracks and the Grade 10 American
+mathematics course (`003-curriculum-tracks`, gated). Like 002 at the start,
+its matrix is pre-implementation, so every row is OPEN by construction. Its
+tasks are numbered T301 and up, because task ids are read into one set
+across every spec's tasks.md and 001 already uses T001-T143.
 """
 
 from __future__ import annotations
@@ -64,6 +70,8 @@ SPECS = [
      ROOT / "specs/001-student-mvp1-delta/traceability.md", True),
     ("identity-admin", ROOT / "specs/002-identity-and-admin-console/spec.md",
      ROOT / "specs/002-identity-and-admin-console/traceability.md", True),
+    ("curriculum-tracks", ROOT / "specs/003-curriculum-tracks/spec.md",
+     ROOT / "specs/003-curriculum-tracks/traceability.md", True),
 ]
 # Each spec's tasks.md lives beside its own matrix (same directory) and is
 # looked up from there — see `scan()`. A spec written before /speckit-tasks

@@ -1,0 +1,104 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s6-1-2:amplitude-range",
+ "kind": "family",
+ "lo_id": "lo:g10m6s6-1-2",
+ "parent_question_id": "q:g10m6s6-1-2:ex6-6-7d",
+ "source_page": 202,
+ "tier": "standard",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "choice": [
+    -5,
+    -4,
+    -3,
+    -2
+   ]
+  },
+  {
+   "name": "q",
+   "choice": [
+    -4,
+    -3,
+    -2,
+    -1,
+    1,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "qs",
+   "let": "'+' if q > 0 else '-'"
+  },
+  {
+   "name": "qa",
+   "let": "abs(q)"
+  },
+  {
+   "name": "dir",
+   "let": "'up' if q > 0 else 'down'"
+  },
+  {
+   "name": "b",
+   "let": "abs(a)"
+  },
+  {
+   "name": "lo",
+   "let": "q - b"
+  },
+  {
+   "name": "hi",
+   "let": "q + b"
+  },
+  {
+   "name": "s",
+   "let": "a * q"
+  },
+  {
+   "name": "slo",
+   "let": "s - b"
+  },
+  {
+   "name": "shi",
+   "let": "s + b"
+  }
+ ],
+ "constraints": [],
+ "stem": "Consider the graph of $y = {=a}\\sin\\theta {=qs} {=qa}$ for $0^\\circ \\le \\theta \\le 360^\\circ$. Which option correctly gives its amplitude and its range?",
+ "choices": {
+  "correct": "Amplitude ${=b}$; range ${=lo} \\le y \\le {=hi}$",
+  "distractors": [
+   {
+    "text": "Amplitude ${=a}$; range ${=lo} \\le y \\le {=hi}$",
+    "misconception_id": "mc:g10m6s6-1-2:negative-amplitude"
+   },
+   {
+    "text": "Amplitude ${=b}$; range ${=slo} \\le y \\le {=shi}$",
+    "misconception_id": "mc:g10m6s6-1-2:stretch-applied-to-shift"
+   },
+   {
+    "text": "Amplitude ${=b}$; range ${=-b} \\le y \\le {=b}$",
+    "misconception_id": "mc:g10m6s6-1-2:shift-ignored"
+   }
+  ]
+ },
+ "solution": [
+  "The basic graph $y = \\sin\\theta$ has amplitude $1$ and range $-1 \\le y \\le 1$.",
+  "Here $a = {=a}$ is negative, so the graph is reflected in the $x$-axis and stretched vertically by a factor of ${=b}$. An amplitude is a distance, so it is ${=b}$, not ${=a}$. The graph of $y = {=a}\\sin\\theta$ runs from ${=-b}$ to ${=b}$.",
+  "The shift $q = {=q}$ moves every point {=dir} ${=qa}$ units. It is added after the stretch, so it is not multiplied by $a$. The lowest value is ${=-b} {=qs} {=qa} = {=lo}$ and the highest value is ${=b} {=qs} {=qa} = {=hi}$.",
+  "The amplitude is ${=b}$ and the range is ${=lo} \\le y \\le {=hi}$."
+ ],
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m6s6-1-2:shift-ignored",
+   "label": "Leaves the vertical shift out of the range",
+   "description": "The student finds the range of a sin θ correctly, from -|a| to |a|, but forgets that q moves the highest and lowest values, so the range is left centred on the x-axis."
+  }
+ ],
+ "notes": "Standard: describe the effect of a and q on y = a sin θ + q. a is always negative so the reflection is always present and the catalogued negative-amplitude error is a genuine, distinguishable option. Each option is an (amplitude, range) pair, all four are distinct for every instance (q is never 0 and |a| >= 2, so the stretch-applied-to-shift range a*q ± |a| differs from both the correct range and the unshifted one). Range is over a full period, 0° to 360°. The stem has {=...} holes so instances differ by their numbers; distinct_by_choices is not needed. Let-strings contain no backslashes."
+}

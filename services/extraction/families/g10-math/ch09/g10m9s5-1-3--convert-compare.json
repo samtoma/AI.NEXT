@@ -1,0 +1,80 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m9s5-1-3:convert-compare",
+ "kind": "family",
+ "lo_id": "lo:g10m9s5-1-3",
+ "parent_question_id": "q:g10m9s5-1-3:ex9-7-37",
+ "source_page": 352,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": "A student is buying the same textbook online. One shop in the UK prices it in pounds and one shop in the USA prices it in dollars. Shipping is ignored. The two exchange rates (rand per pound and rand per dollar) are given, and the student converts both prices to rand to find the cheaper offer.",
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    12,
+    30
+   ]
+  },
+  {
+   "name": "r",
+   "randint": [
+    1350,
+    1850
+   ]
+  },
+  {
+   "name": "s",
+   "randint": [
+    1000,
+    1300
+   ]
+  },
+  {
+   "name": "k",
+   "choice": [
+    -2,
+    -1,
+    1,
+    2
+   ]
+  },
+  {
+   "name": "d",
+   "let": "(p * r) // s + k"
+  },
+  {
+   "name": "uk",
+   "let": "p * r / 100"
+  },
+  {
+   "name": "us",
+   "let": "d * s / 100"
+  },
+  {
+   "name": "lo",
+   "let": "min(uk, us)"
+  },
+  {
+   "name": "hi",
+   "let": "max(uk, us)"
+  },
+  {
+   "require": "hi - lo >= 2 and hi - lo <= 25",
+   "why": "The two rand amounts must be close enough that the comparison needs the conversion, but never a tie and never wildly apart."
+  }
+ ],
+ "constraints": [
+  "hi != lo"
+ ],
+ "stem": "Lerato wants to buy a textbook online. A shop in the UK sells it for $\\text{£}{=p}$ and a shop in the USA sells it for $\\text{\\textdollar}{=d}$. Ignore shipping costs. Use the exchange rates $\\text{£}1=\\text{R}{=fixed(r / 100, 2)}$ and $\\text{\\textdollar}1=\\text{R}{=fixed(s / 100, 2)}$. Convert each price to rand and decide which shop is cheaper. What is the cost, in rand, of the cheaper offer? Give your answer to the nearest cent.",
+ "answer": "fixed(lo, 2)",
+ "solution": [
+  "To compare prices quoted in different currencies, convert each price to rand first. Cost in rand = cost in the foreign currency $\\times$ exchange rate.",
+  "UK shop: $\\text{£}{=p}\\times\\text{R}{=fixed(r / 100, 2)}=\\text{R}{=fixed(uk, 2)}$.",
+  "USA shop: $\\text{\\textdollar}{=d}\\times\\text{R}{=fixed(s / 100, 2)}=\\text{R}{=fixed(us, 2)}$.",
+  "Compare the two amounts in rand: $\\text{R}{=fixed(lo, 2)}$ is less than $\\text{R}{=fixed(hi, 2)}$, so the shop whose price converts to $\\text{R}{=fixed(lo, 2)}$ is the cheaper one.",
+  "The cheaper offer costs $\\text{R}{=fixed(lo, 2)}$."
+ ],
+ "notes": "Basic entry point of the objective: two prices, two rates given in the stem, no shipping fee, whole-number foreign prices so each conversion is an exact two-decimal rand amount (no rounding ambiguity). Skeleton follows ex9-7-37 (and the same method as ex9-6-4b and ex9-6-5) without their decimal prices or shipping twist. Numeric rather than mcq on purpose: a two-option comparison is a coin flip and cannot carry three diagnosable distractors, while asking for the rand cost of the cheaper offer still forces the student to convert both prices and decide; a student who compares the printed numbers (mc:g10m9s5-1-3:compare-without-converting) or who picks the dearer offer (mc:g10m9s5-1-3:converts-then-picks-largest) reports the wrong rand figure. The pound rate is always above the dollar rate and the prices are built so the two rand amounts are within R2 to R25 of each other, so in roughly half the instances the larger printed number is the cheaper offer. The solution never names the shop (the expression language is not assumed to have string literals); it identifies the cheaper offer by its rand amount. Worked check: p=17, r=1689, s=1243, k=1 gives d=24, UK R287.13, USA R298.32, answer 287.13. Note for the reviewer: the printed solution of ex9-6-4b uses R14.31 for the pound where the table says R14.13 (the figure R84.78 is consistent with 14.13), so that is a typo in the book, not a rate to copy."
+}

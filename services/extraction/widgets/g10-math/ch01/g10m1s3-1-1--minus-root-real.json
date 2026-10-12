@@ -1,0 +1,39 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m1s3-1-1:minus-root-real",
+ "lo_id": "lo:g10m1s3-1-1",
+ "parent_question_id": "q:g10m1s3-1-1:ex1-1-3a",
+ "tier": "basic",
+ "kind": "number_line_marker",
+ "spec": {
+  "mode": "points",
+  "range": [
+   -3,
+   3
+  ],
+  "targets": [
+   0,
+   1,
+   2,
+   3
+  ]
+ },
+ "stem": "On the number line, mark every integer $n$ from $-3$ to $3$ for which $-\\sqrt{n}$ is a real number. Leave the other integers unmarked.",
+ "solution": [
+  "A square root is a real number exactly when the number under the root sign is zero or positive. Only the number under the root sign decides this: a minus sign written in front of the root sits outside it.",
+  "Test the integers that are not negative: $-\\sqrt{0} = 0$, $-\\sqrt{1} = -1$, and $-\\sqrt{2}$ and $-\\sqrt{3}$ are real numbers too (irrational, but still real). Mark $0$, $1$, $2$ and $3$.",
+  "Test the negative integers: $-\\sqrt{-1}$, $-\\sqrt{-2}$ and $-\\sqrt{-3}$ each need the square root of a negative number, which is non-real, and a minus sign in front cannot turn a non-real number into a real one. Leave $-3$, $-2$ and $-1$ unmarked.",
+  "The marked set is $\\{0, 1, 2, 3\\}$, which is every integer $n \\geq 0$."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "sign-flipped",
+   "misconception_id": "mc:g10m1s3-1-1:minus-outside-root-read-as-inside"
+  },
+  {
+   "predicate": "extra-values",
+   "misconception_id": "mc:g10m1s3-1-1:negative-under-root-called-real"
+  }
+ ],
+ "notes": "Fit: the student classifies seven numbers ($-\\sqrt{-3}$ to $-\\sqrt{3}$) as real or non-real by tapping, and the number line shows the dividing point at 0 directly. Honest caveat: the book's items classify one number at a time; this is the same test applied to a family of integers, because the line holds whole numbers only. Range [-3, 3] puts 0 in the middle and uses the four-target cap. sign-flipped is the designed trap: a student who reads $-\\sqrt{n}$ as $\\sqrt{-n}$ marks exactly {-3, -2, -1, 0}, the negation of the answer set. extra-values is mapped to negative-under-root-called-real (negatives marked as if the root were fine); if the widget reports extra-values for the {-3..0} marking too, the lesson that follows is the same (the sign under the root decides). missed-values is deliberately NOT mapped: leaving out 0 (is $\\sqrt{0}$ real?) or stopping early is not any listed misconception, and a student who thinks a minus sign makes the root non-real would also produce it, so no one error dominates. non-real-undefined-swapped cannot be seen on this instrument, since it only asks real versus not real. Single fixed question, no instances: the answer set is fixed by the range, so varying the expression would need a different range and spec per row."
+}

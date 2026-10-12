@@ -1,0 +1,73 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m1s3-1-5:two-digit-block",
+ "kind": "family",
+ "lo_id": "lo:g10m1s3-1-5",
+ "parent_question_id": "q:g10m1s3-1-5:ex1-1-12d",
+ "source_page": 12,
+ "tier": "standard",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "n",
+   "randint": [
+    1,
+    9
+   ]
+  },
+  {
+   "name": "p",
+   "randint": [
+    10,
+    98
+   ],
+   "resample_while": "p % 11 == 0"
+  },
+  {
+   "name": "rep",
+   "let": "p * 10101"
+  },
+  {
+   "name": "big",
+   "let": "100 * n + p"
+  },
+  {
+   "name": "top",
+   "let": "99 * n + p"
+  },
+  {
+   "name": "g",
+   "let": "gcd(top, 99)"
+  },
+  {
+   "name": "ans_n",
+   "let": "top // g"
+  },
+  {
+   "name": "ans_d",
+   "let": "99 // g"
+  }
+ ],
+ "constraints": [
+  "p % 11 != 0",
+  "gcd(ans_n, ans_d) == 1"
+ ],
+ "stem": "Write the recurring decimal ${=n}.\\overline{{=p}}$ as a single fraction in simplest form (not a mixed number). The bar marks the two digits that repeat for ever.",
+ "solution": [
+  "Write the decimal out as an equation: $x = {=n}.{=rep}\\ldots$",
+  "Two digits repeat, so multiply both sides by $100$. This moves the decimal point two places to the right and keeps the same recurring digits after it: $100x = {=big}.{=rep}\\ldots$",
+  "Subtract the first equation from the second so that the recurring digits cancel: $100x - x = ({=big}.{=rep}\\ldots) - ({=n}.{=rep}\\ldots)$, which gives $99x = {=top}$.",
+  "Divide both sides by $99$: $x = \\frac{{=top}}{99}$.",
+  "Simplify: the highest common factor of ${=top}$ and $99$ is ${=g}$, so in simplest form $x = \\frac{{=ans_n}}{{=ans_d}}$."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "{=ans_n}/{=ans_d}",
+  "form": "simplest",
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "The book's typical exercise: whole-number part plus a two-digit recurring block under a bar (12d 5.31 recurring, 12e and 12f 4.93 / 3.93 recurring, 11-6c 4.14 recurring). One multiplication (by 100), 99x = 99n + p. Blocks that are multiples of 11 (11, 22, ... 99) are excluded because they are really a single repeating digit and would be a different skeleton. Because gcd(99n + p, 99) = gcd(p, 99), about a third of instances reduce (to over 33 or over 11) and the rest stay over 99, mirroring the book's mix of 526/99 and 163/33; the last step is worded ('the highest common factor ... is g, so in simplest form') so it is true whether g is 1 or more. Stem asks for an improper fraction, as the book prints (526/99, 163/33). 729 instances; all checked by script (fraction equals the decimal to 50 places). Note on the book: its solution to 12b (0.6 then 3 recurring) prints '99x = 57' where the working gives 90x = 57; the final 57/90 is right, and this family does not copy that slip (it is not used here)."
+}

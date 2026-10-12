@@ -1,0 +1,167 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m1s3-1-1:count-in-set",
+ "kind": "family",
+ "lo_id": "lo:g10m1s3-1-1",
+ "parent_question_id": "q:g10m1s3-1-1:ex1-1-7a",
+ "source_page": 11,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "k",
+   "choice": [
+    0,
+    1,
+    2
+   ]
+  },
+  {
+   "name": "mags",
+   "sample": {
+    "from": "range(1, 26)",
+    "k": 4
+   }
+  },
+  {
+   "name": "fracs",
+   "sample": {
+    "from": "[1/2, 3/2, 5/2, 7/2, 1/3, 2/3, 4/3, 5/3, 7/3, 1/4, 3/4, 5/4, 7/4, 2/5, 3/5, 4/5, 6/5, 7/5, 9/4, 22/7, -1/2, -3/2, -5/2, -1/3, -2/3, -4/3, -5/4, -7/3, -3/5, -9/4]",
+    "k": 4
+   }
+  },
+  {
+   "name": "c1",
+   "choice": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "name": "c2",
+   "choice": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "name": "c3",
+   "choice": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "name": "c4",
+   "choice": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "name": "cs",
+   "let": "[c1, c2, c3, c4]"
+  },
+  {
+   "require": "len([t for t in cs if t == 1]) <= 1",
+   "why": "zero may appear at most once in the list, so no number is printed twice"
+  },
+  {
+   "name": "x1",
+   "let": "[mags[0], 0, -mags[0], fracs[0]][c1]"
+  },
+  {
+   "name": "x2",
+   "let": "[mags[1], 0, -mags[1], fracs[1]][c2]"
+  },
+  {
+   "name": "x3",
+   "let": "[mags[2], 0, -mags[2], fracs[2]][c3]"
+  },
+  {
+   "name": "x4",
+   "let": "[mags[3], 0, -mags[3], fracs[3]][c4]"
+  },
+  {
+   "name": "cnt",
+   "let": "len([t for t in cs if t <= k])"
+  },
+  {
+   "require": "cnt >= 1 and cnt <= 3",
+   "why": "the answer is never 0 and never all four of the variable numbers"
+  },
+  {
+   "name": "m",
+   "randint": [
+    1,
+    30
+   ]
+  },
+  {
+   "name": "s",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "e",
+   "randint": [
+    1,
+    "2 * s"
+   ]
+  },
+  {
+   "name": "n",
+   "let": "s * s + e"
+  },
+  {
+   "name": "d",
+   "randint": [
+    1,
+    30
+   ]
+  },
+  {
+   "name": "setnames",
+   "let": "['natural numbers', 'whole numbers', 'integers']"
+  },
+  {
+   "name": "setname",
+   "let": "setnames[k]"
+  },
+  {
+   "name": "desc",
+   "let": "['a positive integer, so it is a natural number (and therefore also a whole number and an integer)', 'zero, so it is a whole number (and an integer), but it is not a natural number', 'a negative integer, so it is an integer, but it is neither a whole number nor a natural number', 'a fraction that is not a whole value, so it is real but not an integer, and it is in none of the three sets']"
+  },
+  {
+   "name": "rule",
+   "let": "['the positive integers, because the set starts at 1', 'zero together with the positive integers, because the set starts at 0', 'every whole value: negative, zero or positive']"
+  }
+ ],
+ "constraints": [],
+ "stem": "Consider the following list of numbers: ${=x1}\\;;\\;\\sqrt{-{=m}}\\;;\\;{=x2}\\;;\\;-\\sqrt{{=n}}\\;;\\;{=x3}\\;;\\;\\frac{{=d}}{0}\\;;\\;{=x4}\\;;\\;\\pi$ The special sets are the natural numbers $\\mathbb{N} = \\{1, 2, 3, \\ldots\\}$, the whole numbers $\\mathbb{N}_0 = \\{0, 1, 2, 3, \\ldots\\}$ and the integers $\\mathbb{Z} = \\{\\ldots, -2, -1, 0, 1, 2, \\ldots\\}$. How many of the numbers in the list are {=setname}?",
+ "answer": "cnt",
+ "solution": [
+  "Recall the three special sets: the natural numbers $\\mathbb{N} = \\{1, 2, 3, \\ldots\\}$, the whole numbers $\\mathbb{N}_0 = \\{0, 1, 2, 3, \\ldots\\}$ and the integers $\\mathbb{Z} = \\{\\ldots, -2, -1, 0, 1, 2, \\ldots\\}$. All three contain only real numbers, and only whole values with no fraction part.",
+  "$\\sqrt{-{=m}}$ has a minus sign under the square root, so it is non-real. $\\frac{{=d}}{0}$ is divided by zero, so it is undefined. Neither of them can be in any of the three sets.",
+  "$-\\sqrt{{=n}}$ has its minus sign outside the root, so it is real, but it lies between $-{=s + 1}$ and $-{=s}$, so it is not an integer. The number $\\pi$ is real and lies between $3$ and $4$, so it is not an integer either. Neither of them is in any of the three sets.",
+  "${=x1}$ is {=desc[c1]}.",
+  "${=x2}$ is {=desc[c2]}.",
+  "${=x3}$ is {=desc[c3]}.",
+  "${=x4}$ is {=desc[c4]}.",
+  "The {=setname} are {=rule[k]}.",
+  "Counting the numbers in the list that are {=setname} gives {=cnt}."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Fixed skeleton: four variable slots (x1..x4) plus four fixed non-members (non-real, undefined, minus-outside-root surd, pi). Each variable slot is drawn from four categories: natural number, zero, negative integer, non-integer fraction (positive or negative). The set asked (N, N0 or Z) is also drawn, so the answer varies across all three membership rules. Definitions of the three sets are printed in the stem (as the book does in its own solution for ex1-1-7a) so that the 0-in-N0-but-not-N convention cannot be ambiguous. Count is always 1 to 3; zero appears at most once; magnitudes and fractions are drawn without repeats so no printed number is duplicated. No simplification of roots or fractions is needed: every integer in the list is printed as an integer, and -sqrt(n) uses a non-square n lying strictly between s^2 and (s+1)^2, so its position between two integers is stated in the solution. I could not run the family engine; I simulated the parameter logic separately and checked the count against an independent membership test over 3000 draws (acceptance after the require filters is about 55 percent per attempt)."
+}
