@@ -85,7 +85,9 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator, model_valida
 
 HERE = Path(__file__).resolve().parent            # services/extraction
 REPO_ROOT = HERE.parents[1]
-BOOKS_DIR = HERE / "books"
+# AINEXT_BOOKS_DIR: a test seam only (tests/test_load_course_restore.py points the real
+# load-course.sh at a fixture's own copy of the configs). Unset everywhere else.
+BOOKS_DIR = Path(os.environ["AINEXT_BOOKS_DIR"]) if os.environ.get("AINEXT_BOOKS_DIR") else HERE / "books"
 
 COURSE_RE = re.compile(r"^course:[a-z0-9-]+$")
 CURRICULUM_RE = re.compile(r"^[a-z]{2}-[a-z0-9]+-[a-z]{2}$")

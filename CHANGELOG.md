@@ -36,6 +36,11 @@ the console's Courses page (Samuel's answer 49, decision 70).
   wrong (ADR-0009). Neither was ever served or attempted. The pilot database was backed up first.
 - **One more question is held on a fresh load than on the pilot:** Ex6-6:17, whose key has a degree sign
   inside an inequality the marker cannot read (open decision 8a). Held is the safe side.
+- **Tests that used a part of the Grade 10 book as their fixture now say so.** The "Load a course" restore
+  test runs on its own copy of the book configs (Grade 10 without the whole-book constant, as before; the new
+  `AINEXT_BOOKS_DIR` is a test seam only, unset everywhere else) and reads the export where the config now
+  points (`export/`); the chapter dry run loads every OTHER course first and leaves this book's whole-book
+  constant out of its one-chapter drift line (it checks the chapter against the chapter's own constant).
 
 
 ### Fixed — a lesson stopped halfway can be picked up again (FR-204)

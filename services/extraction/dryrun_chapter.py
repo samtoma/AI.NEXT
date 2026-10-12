@@ -509,7 +509,9 @@ def load(line: Line, bundles: list[Path]) -> None:
     line.create_db()
     line.note(f"scratch database {line.dbname} (dropped at the end unless --keep-db)")
     for b in book_config.all_books():
-        if b.status == "loadable":
+        # every OTHER loadable course; the book under dry run is loaded below, one chapter only
+        # (it became loadable itself in v0.12.1, T364)
+        if b.status == "loadable" and b.book != book.book:
             line.uv("load_seed.py", "--all", "--course", b.course_id, db=True)
     # the rule scripts/local-dev.sh applies after a fresh load: Prep-3 maths' book questions live, as
     # ADR-0019 has them in production (scoped to that course, never scripture or generated rows). Since
@@ -707,11 +709,15 @@ def coverage(line: Line) -> dict:
         for f in c["failures"][:3]:
             line.note(f"{c['id']}: {f['scope']}: {f['detail'][:160]}")
 
-    line.stage("Drift", "parity for every course (the per-solution drift guard)")
+    line.stage("Drift", "parity for every other course (the per-solution drift guard)")
     r = line.uv("parity_check.py", "--candidate", line.dsn, "--all-courses", ok=(0, 1))
-    line.count(parity=[l.strip() for l in r.stdout.splitlines() if re.match(r"^\s+(GREEN|RED)\s", l)])
-    # The new course has no constant until T364 (the approved bundles define it). What the constant
-    # WOULD be for this chapter, from the bundles, against what the database holds for the course:
+    # This book's committed constant is the WHOLE book's (T364, v0.12.1); the dry run loads one
+    # chapter, so its line is left out here and the course is checked just below, against the
+    # constant this chapter's own bundles define.
+    line.count(parity=[l.strip() for l in r.stdout.splitlines()
+                       if re.match(r"^\s+(GREEN|RED)\s", l) and book.course_id not in l],
+               parity_excluded=book.course_id)
+    # What the constant is for this chapter, from the bundles, against what the database holds:
     import parity_check
     cfg = book_config.load_book(line.p("books", f"{book.book}.json"))
     want = book_config.expected_from_bundles(cfg)
