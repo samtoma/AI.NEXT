@@ -221,6 +221,18 @@ jobs:
           sudo /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y
           sudo apt-get install -y postgresql-client-17
           pg_dump --version
+      # The restore test assembles the Grade 10 fixture, and assembly's KaTeX check
+      # runs the APP's own KaTeX and math-text.ts (services/extraction/katex_check.mjs),
+      # so this job needs the app's packages and a Node that strips TypeScript types
+      # (22.18+). Same setup as the build job.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+      - name: The app's packages (for the assembly's KaTeX check)
+        working-directory: app
+        run: npm ci
       - name: Load a course — restore keeps students' progress, rollback unchanged (T430, FR-4208/4210)
         working-directory: services/extraction
         env:

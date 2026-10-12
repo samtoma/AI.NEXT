@@ -499,6 +499,11 @@ and is now passed. These are the remaining build items that round adds.
   migrations job. Runbook: `deploy/DEPLOY-MVP1.md` → "Restoring a course from its export".
   **Not yet run on the box**, and no committed export carries a record yet: the first restore point
   of each course is its next `--course` export.
+  *2026-10-02, CI:* the first CI run of this test since 2026-09-26 (every snapshot carried `[skip ci]`)
+  failed in the migrations job (runs 37040827439, 37041053613): the Grade 10 fixture's assembly runs
+  the app's own KaTeX (`katex_check.mjs` and the re-spacing pass, added 2026-09-27, after CI was last
+  run), and that job had no app packages. The job now installs them (`actions/setup-node` 22 + `npm ci` in
+  `app/`, as the build job does) before the restore test.
 - [x] T431 [US1] (WP-E) **The per-course "Arabic touches" setting** (decision 30; FR-4205 amended): add
   an `arabicTouches` (or similarly named) flag to `CourseDef`, `true` for every National course
   (unchanged) and `false` for G10. Where G10's prompts are built, no Egyptian-Arabic phrase or
