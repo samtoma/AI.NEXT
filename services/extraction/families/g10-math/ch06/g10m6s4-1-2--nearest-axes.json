@@ -1,0 +1,152 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s4-1-2:nearest-axes",
+ "kind": "family",
+ "lo_id": "lo:g10m6s4-1-2",
+ "parent_question_id": "q:g10m6s4-1-2:ex6-8-20a",
+ "source_page": 219,
+ "tier": "advanced",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "far",
+   "choice": [
+    1,
+    0
+   ]
+  },
+  {
+   "name": "nums",
+   "let": "[1, 1, 1, 1, 2, 3, 4, 5, 6, 7, 8, 9]"
+  },
+  {
+   "name": "dens",
+   "let": "[4, 3, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1]"
+  },
+  {
+   "name": "raw",
+   "sample": {
+    "from": "range(0, 12)",
+    "k": 4
+   }
+  },
+  {
+   "name": "ix",
+   "let": "sorted(raw)"
+  },
+  {
+   "name": "mag",
+   "let": "[nums[i] / dens[i] for i in ix]"
+  },
+  {
+   "name": "s0",
+   "choice": [
+    1,
+    -1
+   ]
+  },
+  {
+   "name": "s1",
+   "choice": [
+    1,
+    -1
+   ]
+  },
+  {
+   "name": "s2",
+   "choice": [
+    1,
+    -1
+   ]
+  },
+  {
+   "name": "s3",
+   "choice": [
+    1,
+    -1
+   ]
+  },
+  {
+   "name": "sv",
+   "let": "[s0, s1, s2, s3]"
+  },
+  {
+   "name": "sd",
+   "let": "[sv[j] * mag[j] for j in range(4)]"
+  },
+  {
+   "name": "tg",
+   "let": "[j for j in range(4) if sd[j] == (max(sd) if far == 1 else min(sd))][0]"
+  },
+  {
+   "require": "tg == 1 or tg == 2",
+   "why": "the option a student gets by ranking the signed values of a must be neither the right answer nor the option with the opposite size, so that the four options carry four different reasons"
+  },
+  {
+   "name": "pc",
+   "let": "3 if far == 1 else 0"
+  },
+  {
+   "name": "pb",
+   "let": "0 if far == 1 else 3"
+  },
+  {
+   "name": "po",
+   "let": "3 - tg"
+  },
+  {
+   "name": "sgl",
+   "let": "['-' if v < 0 else '' for v in sv]"
+  },
+  {
+   "name": "nml",
+   "let": "[nums[i] for i in ix]"
+  },
+  {
+   "name": "dnl",
+   "let": "['' if dens[i] == 1 else str(dens[i]) for i in ix]"
+  },
+  {
+   "name": "word",
+   "let": "'largest' if far == 1 else 'smallest'"
+  },
+  {
+   "name": "where",
+   "let": "'furthest from' if far == 1 else 'closest to'"
+  }
+ ],
+ "constraints": [],
+ "stem": "Four hyperbolas of the form $y=\\frac{a}{x}$ are drawn on the same set of axes. Which one lies {=where} the axes?",
+ "choices": {
+  "correct": "$y={=sgl[pc]}\\frac{{=nml[pc]}}{{=dnl[pc]}x}$",
+  "distractors": [
+   {
+    "text": "$y={=sgl[pb]}\\frac{{=nml[pb]}}{{=dnl[pb]}x}$",
+    "misconception_id": "mc:g10m6s4-1-2:bigger-a-closer-to-axes"
+   },
+   {
+    "text": "$y={=sgl[tg]}\\frac{{=nml[tg]}}{{=dnl[tg]}x}$",
+    "misconception_id": "mc:g10m6s4-1-2:negative-a-taken-as-small"
+   },
+   {
+    "text": "$y={=sgl[po]}\\frac{{=nml[po]}}{{=dnl[po]}x}$",
+    "misconception_id": null
+   }
+  ]
+ },
+ "distinct_by_choices": true,
+ "solution": [
+  "Only the size $|a|$ decides how far a hyperbola lies from the axes: the bigger $|a|$ is, the further the graph lies from the axes. The sign of $a$ only decides which quadrants the graph lies in.",
+  "Ignoring the signs, the sizes of $a$ in the four equations are ${=mag[0]}$, ${=mag[1]}$, ${=mag[2]}$ and ${=mag[3]}$.",
+  "The {=word} size is ${=mag[pc]}$, so the graph that lies {=where} the axes is $y={=sgl[pc]}\\frac{{=nml[pc]}}{{=dnl[pc]}x}$. A negative $a$ is not a small $a$: it only puts the graph in the second and fourth quadrants."
+ ],
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m6s4-1-2:negative-a-taken-as-small",
+   "label": "A negative a is treated as a small a",
+   "description": "The student compares the values of a with their signs, so a negative a (for example -6) is taken as smaller than a positive a (for example 2), instead of comparing the sizes |a| to decide how far the graph lies from the axes."
+  }
+ ],
+ "notes": "The twist the book uses in exercise 6.8 question 20: a negative a and an a written as a unit fraction, y = -1/(2x). Four equations, written as a/x or as 1/(kx) with k = 2, 3 or 4, with mixed signs; the student must rank by |a|. Magnitudes are four distinct values drawn from 1/4, 1/3, 1/2, 1, 2, 3, ..., 9, so the four options always differ. Each option has its own reason: the right size; the opposite size (bigger-a-closer-to-axes); the one a student gets by ranking signed values (negative-a-taken-as-small), which the require keeps different from the other two; and a plain fourth. The stem only changes between closest and furthest, so distinct_by_choices is set."
+}

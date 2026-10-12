@@ -1,0 +1,78 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s1-1-4:journey-left",
+ "kind": "family",
+ "lo_id": "lo:g10m6s1-1-4",
+ "parent_question_id": "q:g10m6s1-1-4:ex6-8-11a",
+ "source_page": 216,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "T",
+   "choice": [
+    90,
+    120,
+    150,
+    180
+   ]
+  },
+  {
+   "name": "v",
+   "choice": [
+    30,
+    36,
+    40,
+    48,
+    50,
+    60
+   ]
+  },
+  {
+   "name": "h",
+   "choice": [
+    1,
+    2
+   ]
+  },
+  {
+   "require": "60 * h < T",
+   "why": "the car is still driving after h hours, so the time is inside the domain and some of the journey is left"
+  },
+  {
+   "require": "(v * T) % 60 == 0",
+   "why": "the total distance D = v*T/60 is a whole number of kilometres"
+  },
+  {
+   "name": "D",
+   "let": "v * T // 60"
+  },
+  {
+   "name": "t0",
+   "let": "60 * h"
+  },
+  {
+   "name": "sv",
+   "let": "D * t0 // T"
+  },
+  {
+   "name": "ans",
+   "let": "D - sv"
+  },
+  {
+   "name": "hword",
+   "let": "'hour' if h == 1 else 'hours'"
+  }
+ ],
+ "constraints": [],
+ "stem": "The graph of $s(t)$ shows the distance, in $\\text{km}$, that a car has travelled $t$ minutes after it set off. The graph is a straight line that starts at the origin and ends at a closed dot at the point $({=T}, {=D})$. How many kilometres of the journey does the car still have to travel after {=h} {=hword}?",
+ "answer": "ans",
+ "solution": [
+  "The closed dot shows where the journey ends. The domain is $0 \\le t \\le {=T}$ minutes and the range is $0 \\le s \\le {=D}$ km, so the whole journey is ${=D}$ km.",
+  "The time $t$ is measured in minutes, so {=h} {=hword} is $t = {=t0}$ minutes. This is inside the domain.",
+  "The graph is a straight line from the origin, so the distance travelled is proportional to the time: $s({=t0}) = \\frac{{=D}}{{=T}} \\times {=t0} = {=sv}$ km.",
+  "The distance still to travel is the whole journey minus the distance already travelled: ${=D} - {=sv} = {=ans}$ km."
+ ],
+ "notes": "Builds on the book's car graph (ex6-8-11a: 'What distance did the car travel in an hour?' with t in minutes, the line from the origin to the closed dot at (120, 100)). It chains the book's own unit twist (an hour is t = 60) with what the range represents (the total distance is the top of the range) and a subtraction. The graph is described in words because the engine has no figure support; the straight-line reading is done by proportion, which is what a student reads off the gridlines in the book's figure (s(60) = 50). D = v*T/60 so the speed is a whole number of km/h and s(60h) = v*h is always a whole number; remaining distance is always positive. 36 instances.\n\nPIPELINE NORMALISATION (not an author edit): context-null: the spec set \"context\" (a fixed word problem's situation, in words) to \"A car travels along a straight road. The graph of s(t) shows the distance, in km, that the car has travelled t minutes after it set off. The graph is a straight line from the origin to a closed dot at the point (T, D), where the journey ends.\" and the stem also varies a word, {=hword}, which is 'hour' when h is 1 and 'hours' when h is 2. A family with a fixed context may vary only numbers (families/spec.py _stem_holes_are_numbers; extraction-pipeline §3.9), so every attempt was refused ('the stem hole {=hword} produced 'hour'' / 'hours') and the family produced no item. A family whose wording is drawn from a table is written with \"context\": null (the contract's representation, as ch10's counts-reason, measure-reason, variables-tally and wholenumbers-measure are), and its stems are still judged one by one by the blind grader; the singular/plural of one noun is the only wording that varies. The former context text is kept above; the stem, params, answer and worked solution are unchanged."
+}

@@ -1,0 +1,106 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m4s4-1-2:add-opposites",
+ "kind": "family",
+ "lo_id": "lo:g10m4s4-1-2",
+ "parent_question_id": "q:g10m4s4-1-2:ex4-7-6a",
+ "source_page": 103,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "x",
+   "randint": [
+    -6,
+    6
+   ],
+   "resample_while": "x == 0"
+  },
+  {
+   "name": "y",
+   "randint": [
+    -6,
+    6
+   ],
+   "resample_while": "y == 0"
+  },
+  {
+   "name": "p",
+   "randint": [
+    2,
+    7
+   ]
+  },
+  {
+   "name": "r",
+   "randint": [
+    2,
+    7
+   ],
+   "resample_while": "r == p"
+  },
+  {
+   "name": "q",
+   "randint": [
+    2,
+    9
+   ]
+  },
+  {
+   "name": "k1",
+   "let": "p * x + q * y"
+  },
+  {
+   "name": "k2",
+   "let": "r * x - q * y"
+  },
+  {
+   "require": "k1 != 0 and k2 != 0",
+   "why": "keep both right-hand sides non-zero so neither equation looks degenerate"
+  },
+  {
+   "name": "tot",
+   "let": "p + r"
+  },
+  {
+   "name": "rhs",
+   "let": "k1 + k2"
+  },
+  {
+   "name": "px",
+   "let": "p * x"
+  },
+  {
+   "name": "rem",
+   "let": "k1 - p * x"
+  }
+ ],
+ "constraints": [
+  "p != r",
+  "rhs == tot * x",
+  "rem == q * y"
+ ],
+ "stem": "Use elimination to solve for $x$ and $y$ : ${=p}x+{=q}y={=k1}$ and ${=r}x-{=q}y={=k2}$",
+ "solution": [
+  "The coefficients of $y$ are ${=q}$ and $-{=q}$. They are opposites, so adding the two equations eliminates $y$.",
+  "Add the equations, left side to left side and right side to right side:",
+  "$\\begin{aligned}\\begin{array}{cccc}&{=p}x+{=q}y&=&{=k1}\\\\ +&({=r}x-{=q}y&=&{=k2})\\\\ \\hline&{=tot}x&=&{=rhs}\\end{array}\\end{aligned}$",
+  "Solve for $x$ :",
+  "$\\begin{aligned} {=tot}x&= {=rhs}\\\\ x&=\\frac{{=rhs}}{{=tot}}\\\\ &= {=x}\\end{aligned}$",
+  "Substitute $x={=x}$ into the first equation and solve for $y$ :",
+  "$\\begin{aligned} {=p}x+{=q}y&= {=k1}\\\\ {=p}({=x})+{=q}y&= {=k1}\\\\ {=px}+{=q}y&= {=k1}\\\\ {=q}y&= {=rem}\\\\ y&=\\frac{{=rem}}{{=q}}\\\\ &= {=y}\\end{aligned}$",
+  "Therefore $x={=x}$ and $y={=y}$ ."
+ ],
+ "marker": {
+  "kind": "values",
+  "answer": "[{=x}, {=y}]",
+  "form": null,
+  "variables": [
+   "x",
+   "y"
+  ],
+  "tolerance": null
+ },
+ "notes": "Entry point, modelled on book ex4-7-6a. The y-coefficients are already opposite (+q and -q) so one addition eliminates y; no multiplying is needed. Sign pattern is fixed in the template (+ in the first equation, - in the second), so all coefficients in the holes are positive and 2 or more (no printed '1x'). r != p keeps adding as the only direct route (if the x-coefficients were equal, subtracting would also work). x and y are non-zero integers in [-6, 6], so answers are whole numbers and may be negative; the determinant -q(p+r) is never zero, so the solution is unique. I checked all about 33,000 admissible parameter sets: x*(p+r) equals the added right-hand sides and q*y equals k1 - p*x in every one. Right-hand sides may be negative, as in the book question."
+}

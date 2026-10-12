@@ -1,0 +1,72 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m4s6-1-3:both-roots-single-square",
+ "lo_id": "lo:g10m4s6-1-3",
+ "parent_question_id": "q:g10m4s6-1-3:ex4-5-20",
+ "tier": "basic",
+ "kind": "number_line_marker",
+ "instances": [
+  {
+   "b": 18,
+   "I": 54,
+   "t": [
+    -6,
+    6
+   ]
+  },
+  {
+   "b": 6,
+   "I": 8,
+   "t": [
+    -4,
+    4
+   ]
+  },
+  {
+   "b": 24,
+   "I": 18,
+   "t": [
+    -3,
+    3
+   ]
+  },
+  {
+   "b": 18,
+   "I": 96,
+   "t": [
+    -8,
+    8
+   ]
+  },
+  {
+   "b": 15,
+   "I": 20,
+   "t": [
+    -4,
+    4
+   ]
+  }
+ ],
+ "spec": {
+  "mode": "points",
+  "range": [
+   -10,
+   10
+  ],
+  "targets": "{=t}"
+ },
+ "stem": "In the formula $I=\\dfrac{bh^2}{12}$, $b={=b}$ and $I={=I}$. Mark on the number line every value of $h$ that makes the formula true.",
+ "solution": [
+  "Put the two given numbers into $I=\\dfrac{bh^2}{12}$, so that $h$ is the only letter left.",
+  "Do the same to both sides to undo what is joined to $h^2$: multiply by 12, then divide by the number that multiplies $h^2$, until $h^2$ stands alone and equals a positive number.",
+  "Ask which numbers square to that value. Taking the square root of both sides gives two answers, the positive root and its negative, because a negative number squared is also positive.",
+  "Tap the positive root on the number line, then tap the negative root: two points the same distance from 0, one on each side."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "missed-values",
+   "misconception_id": "mc:g10m4s6-1-3:only-positive-root"
+  }
+ ],
+ "notes": "Numeric-substitution instances of objective 3 only; the symbolic rearrangement (r = ±√(V/(πh))) is NOT exercised and is a gap. The anchor's own numbers (I=384, b=18, h=±16) are unreachable: range may be at most 24 wide (FR-1207), so the rows are scaled to roots of 3 to 8. Graded as a SET, so the stem says what is asked (every value that makes the formula true) and any order of tapping is correct (FR-1205). Not mapped: extra-values (no listed misconception names it; a stray extra point has no single dominant cause) and sign-flipped (the target set is symmetric, so a negated set is the correct set and it cannot fire). missed-values also fires if the student marked only the NEGATIVE root; the feedback text should therefore say 'there is a second value' without assuming which one was marked. Targets are given as a whole-array placeholder ('{=t}') so only a typed whole-value substitution is needed; if the substituter is scalar-only, emit each row as a literal spec instead."
+}

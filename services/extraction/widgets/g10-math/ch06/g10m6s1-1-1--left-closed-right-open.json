@@ -1,0 +1,56 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m6s1-1-1:left-closed-right-open",
+ "lo_id": "lo:g10m6s1-1-1",
+ "parent_question_id": "q:g10m6s1-1-1:ex6-1-1b",
+ "tier": "basic",
+ "kind": "number_line_marker",
+ "instances": [
+  {
+   "from_v": -4,
+   "to": 3
+  },
+  {
+   "from_v": 1,
+   "to": 8
+  },
+  {
+   "from_v": -8,
+   "to": -2
+  },
+  {
+   "from_v": -1,
+   "to": 6
+  },
+  {
+   "from_v": 2,
+   "to": 9
+  }
+ ],
+ "spec": {
+  "mode": "interval",
+  "range": [
+   -10,
+   10
+  ],
+  "from": "{=from_v}",
+  "to": "{=to}",
+  "openFrom": false,
+  "openTo": true
+ },
+ "stem": "Mark the interval $[{=from_v}, {=to})$ on the number line. Put a filled circle on an end number that belongs to the interval and a hollow circle on one that does not.",
+ "solution": [
+  "Read each end bracket on its own: a square bracket keeps its end number in the interval, a round bracket leaves its end number out.",
+  "The left bracket is square, so the left end number belongs to the interval: set the left end to a filled circle.",
+  "The right bracket is round, so the right end number does not belong to the interval: set the right end to a hollow circle.",
+  "Every real number between the two ends is in the interval, so the stretch from the left end to the right end is the interval.",
+  "In set notation the filled end is written with $\\le$ and the hollow end with $<$: $\\{x : x \\in \\mathbb{R}, \\text{left end} \\le x < \\text{right end}\\}$."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "endpoint-inclusion-wrong",
+   "misconception_id": "mc:g10m6s1-1-1:brackets-swapped-for-signs"
+  }
+ ],
+ "notes": "Interval mode, the one number_line_marker mode that can carry this objective. The stem gives INTERVAL notation on purpose: with a bracket on the page, a right-ends-wrong-circles answer is the bracket paired with the wrong inclusion, which is brackets-swapped-for-signs (a stem in set notation would test the < versus hollow link instead). Left-closed and right-open is the form of the anchor ex6-1-1b. Mixed ends are deliberate: a student who fills both circles, or hollows both, is caught as well as one who swaps them, and all of these fire the same predicate. interval-wrong (wrong end numbers, e.g. a sign slip on -4) is left unmapped: no listed misconception on this objective describes it. interval-notation-for-non-real-set cannot be fired by any construction here, because a shaded stretch always means every real number in it. The solution is token-free on purpose so it reads the same for every row. Endpoints stay off the range ends so both circles are easy to tap. What this builds is the MEANING of the bracket; the book's written conversion to set notation stays with the anchor question. PIPELINE NORMALISATION (main session, 2026-10-02): the instance field `from` is a reserved word in the template expression language, so it was renamed `from_v` (instances and every {=from} hole, 2 holes); nothing else changed. Same fix as the chapter 4 double-inequality templates."
+}

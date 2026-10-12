@@ -1,0 +1,89 @@
+{
+ "mode": "author",
+ "book": "g10-math",
+ "prompts_version": "s7-v7",
+ "by_ref": {
+  "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/s7-author-ch03",
+  "stage": "S7 author",
+  "shards_sha256": "e887d7a81768b62b76ce3019a94f280e6c09db6fce7e9b182d1fbd8311be278c",
+  "files": 2
+ },
+ "embedded": {
+  "source": "runbook/widgets.workflow.js",
+  "source_sha256": "ed230f08ec96811f4eaa45379aabb16441ac259c0b6b19e018a7b0cfb19de1cf",
+  "args_sha256": "f03a3adae2086792185165f8b81240790b374d7430a1750e0710fab9702dee69",
+  "generated_sha256": "dc2174ecb5690e55e290c921daa535ab35f5281fcec8970fcc03b57159238628",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "records": [
+  {
+   "lesson": "g10m3s2-1",
+   "templates": [],
+   "gaps": [
+    {
+     "lo_id": "lo:g10m3s2-1-1",
+     "need_kind": "sequence_strip",
+     "description": "A strip of numbered cells holding the first four or five terms. The student taps or drags a hop between each pair of neighbouring cells and the strip writes the difference above it, later minus earlier. She then either extends the strip by that step for as many cells as asked, or declares \"no common difference\" when the hops disagree. Non-linear sequences are first-class items, because the book's own checks (9;-7;-8;-25;-34 and 2.93;1.99;1.14;0.35) are exactly where the hops visibly differ. Predicates to emit: step-sign-reversed (hops built as earlier minus later, so the strip runs the other way; maps to mc:g10m3s2-1-1:subtracts-earlier-minus-later), declared-linear-from-first-pair (a common difference declared or the strip extended while a later hop disagrees; maps to mc:g10m3s2-1-1:common-difference-without-checking), and missing-terms / extra-terms for the extension.",
+     "why": "No existing kind shows consecutive differences. number_line_marker could only take the finished next terms as an unordered set, which is the book's answer box; its sign-flipped predicate would fire for the earlier-minus-later error only if the last given term is 0, and then the mirrored answer is indistinguishable from re-marking the given terms. It cannot test the non-linear 'no common difference' items at all, which are half of the book's anchor questions for this objective."
+    },
+    {
+     "lo_id": "lo:g10m3s2-1-2",
+     "need_kind": "sequence_strip",
+     "description": "The same strip with the position row (1, 2, 3, ...) and the value row kept visibly apart, including a letter strip for the repeating C;D;E;F pattern. The question names one term by position or by value (T_6; or T_n = 2, then T_{n-1}), and the student moves a position pointer along the strip, reading the value under it and stating it. Predicates to emit: value-minus-subscript (the stated value equals the given T_n minus the number in the subscript, which is the error in mc:g10m3s2-1-2:subtracts-from-value-not-position, and the pointer is shown to have stayed put while the number changed), pointer-moved-wrong-way (T_{n-1} read as T_{n+1}; no listed misconception, so unmapped until Samuel adds one), and position-read-as-value (n answered in place of T_n). The student sees on the strip that n-1 moves one cell and the value moves by d, not by 1.",
+     "why": "The error is a confusion between a position and a value, and no kind has a position axis separate from a value axis. pair_plotter's swapped-coordinates would catch reversal of (n, T_n) but not value-minus-subscript, and it moves the question into graphing, which the objective does not mention. number_line_marker would see only a wrong single value (missed-values and extra-values both fire for any slip), so it cannot name this error."
+    },
+    {
+     "lo_id": "lo:g10m3s2-1-3",
+     "need_kind": "sequence_formula_builder",
+     "description": "The student builds T_n = dn + c with two steppers (or tiles) for d and c, beside a live table n | given term | dn + c in which each row turns green when it matches. A second mode draws the pictures itself (the book's triangle pattern 5; 7; 9; 11 and the matchstick squares 4; 7; 10; 13 are the anchor questions) and lets the student group the items by dragging into 'the part that grows with each picture' and 'the part that stays the same', from which the kind reads d and c. It is graded on the function: any formula that matches every term is correct, so 2(n+1)+1 is accepted as readily as 2n+3 and is shown matching, which is the answer to mc:g10m3s2-1-3:different-looking-formula-must-be-wrong. Predicates to emit: d-sign-reversed (maps to mc:g10m3s2-1-1:subtracts-earlier-minus-later), constant-taken-as-first-term (c set to T_1 instead of T_1 - d; the most common error here, and no misconception for it is listed on this objective, so Samuel may want to add one), d-from-wrong-pair, and equivalent-form-accepted as a confirmation rather than an error.",
+     "why": "line_drawer and curve_sketcher (linear) would turn the task into graphing the sequence, which is outside the book's vocabulary for this chapter. In equation mode the live equation also hands the formula to the student, and the only predicate that maps to a listed misconception is slope-sign-flipped; intercept-wrong has no misconception on this objective to map to. Neither can draw a picture pattern, and a widget question cannot point at the book's [figure]."
+    },
+    {
+     "lo_id": "lo:g10m3s2-1-4",
+     "need_kind": "sequence_formula_builder",
+     "description": "Lower priority. The same formula builder with a position slider: given T_n = 8n + 7 the student slides n along the positions and reads T_n, either to land on a requested position (T_25) or to find the n whose term equals a stated value (T_n = 191). Predicates to emit: term-given-for-position (answered 191 where n = 23 was asked, or the reverse), solved-by-subtracting-only (191 - 7 = 184 stated as n), and slider-parked-at-nearest-value. The first of these is a close cousin of mc:g10m3s2-1-2:subtracts-from-value-not-position, which is on the list as non-own for this objective.",
+     "why": "Evaluating T_25 is plain substitution and an answer box serves it well, so this is a want rather than a need. The solving-for-n half would benefit from seeing position and value as two different axes, which no existing kind provides; any use of an existing kind would be a numeric answer disguised as a tap."
+    },
+    {
+     "lo_id": "lo:g10m3s2-1-5",
+     "need_kind": "difference_balance",
+     "description": "Two pans, each holding the difference between a pair of neighbouring terms written with an unknown (for -z-5; -4z-5; -6z-2 the pans hold T_2 - T_1 and T_3 - T_2). The student builds each difference from z-tiles and unit tiles, with negative tiles hatched and marked, then adjusts z until the pans level, which is the value that makes the terms a linear sequence; a second step substitutes z and evaluates the terms. Predicates to emit: difference-taken-earlier-minus-later or bracket-sign-slip (the second term's signs are not all reversed when subtracting; maps to mc:g10m3s2-1-1:subtracts-earlier-minus-later), only-one-difference-formed (the student takes T_2 - T_1 as 'the common difference' and never equates it to T_3 - T_2; maps to mc:g10m3s2-1-1:common-difference-without-checking), and pans-levelled-but-substitution-wrong for the second step.",
+     "why": "The construction is solving a linear equation in one unknown, with the two differences as the sides. ratio_balance balances a proportion with a whole-number fourth term and cannot carry an unknown in each term; area_model builds (x+a)(x+b) and has no equation to level. Nothing else offers a way to set two algebraic expressions equal, so any existing kind here would be an answer box."
+    }
+   ],
+   "notes": "No template is returned for this lesson, deliberately. The 17 kinds are built around geometry, statistics, coordinates and algebra tiles; none shows a list of numbered terms with a constant step, and each way of borrowing one changes what the student does. Considered and rejected, so the choice need not be revisited. (1) number_line_marker, points mode, 'tap the next three terms' for LO1: this is the book's 'write down the next 3 terms' with a different input. The given terms are not drawn, and the answer is graded as an unordered set. Its sign-flipped predicate would fire for the earlier-minus-later error only if the last given term is 0, so every question would have to be of the form '-9;-6;-3;0' (answer 3, 6, 9), and the wrong answer -3, -6, -9 then also equals a student re-marking the earlier terms. That is a contrived family with an ambiguous diagnosis. The book's own range limits (the anchor sequences run to 63, 136 and beyond ±20) would also force new numbers rather than the anchor items. (2) line_drawer (equation mode) or curve_sketcher (linear) for LO3: the student would graph the sequence with n on the x-axis, which the book's chapter does not do. The live equation would display the formula T_n = dn + c, so the student reads the answer off rather than building it, and only slope-sign-flipped maps to a listed misconception (to subtracts-earlier-minus-later). The intercept error that matters most, c taken as T_1, has no misconception to map to. (3) pair_plotter for LO2 or LO4: swapped-coordinates is a related but different error from subtracting the subscript from the value, so mapping it would be a forced diagnosis. The figures read for this lesson are the triangle pattern (5, 7, 9, 11 triangles; formula 2n+3) and the matchstick squares (4, 7, 10, ...; formula 3n+1); a widget cannot point at them, so any kind for LO3 has to draw its own pictures. The chapter still needs a widget, so the most valuable single piece of work is a sequence_strip kind, which would serve LO1, LO2 and, with a position pointer, LO4, with sequence_formula_builder as the second and difference_balance as the third. If only one is built, build sequence_strip: its extension and 'no common difference' modes cover the book's anchor items for LO1 directly, and its position mode is the only route to the most specific misconception listed on LO2."
+  }
+ ],
+ "gaps": [
+  {
+   "lo_id": "lo:g10m3s2-1-1",
+   "need_kind": "sequence_strip",
+   "description": "A strip of numbered cells holding the first four or five terms. The student taps or drags a hop between each pair of neighbouring cells and the strip writes the difference above it, later minus earlier. She then either extends the strip by that step for as many cells as asked, or declares \"no common difference\" when the hops disagree. Non-linear sequences are first-class items, because the book's own checks (9;-7;-8;-25;-34 and 2.93;1.99;1.14;0.35) are exactly where the hops visibly differ. Predicates to emit: step-sign-reversed (hops built as earlier minus later, so the strip runs the other way; maps to mc:g10m3s2-1-1:subtracts-earlier-minus-later), declared-linear-from-first-pair (a common difference declared or the strip extended while a later hop disagrees; maps to mc:g10m3s2-1-1:common-difference-without-checking), and missing-terms / extra-terms for the extension.",
+   "why": "No existing kind shows consecutive differences. number_line_marker could only take the finished next terms as an unordered set, which is the book's answer box; its sign-flipped predicate would fire for the earlier-minus-later error only if the last given term is 0, and then the mirrored answer is indistinguishable from re-marking the given terms. It cannot test the non-linear 'no common difference' items at all, which are half of the book's anchor questions for this objective."
+  },
+  {
+   "lo_id": "lo:g10m3s2-1-2",
+   "need_kind": "sequence_strip",
+   "description": "The same strip with the position row (1, 2, 3, ...) and the value row kept visibly apart, including a letter strip for the repeating C;D;E;F pattern. The question names one term by position or by value (T_6; or T_n = 2, then T_{n-1}), and the student moves a position pointer along the strip, reading the value under it and stating it. Predicates to emit: value-minus-subscript (the stated value equals the given T_n minus the number in the subscript, which is the error in mc:g10m3s2-1-2:subtracts-from-value-not-position, and the pointer is shown to have stayed put while the number changed), pointer-moved-wrong-way (T_{n-1} read as T_{n+1}; no listed misconception, so unmapped until Samuel adds one), and position-read-as-value (n answered in place of T_n). The student sees on the strip that n-1 moves one cell and the value moves by d, not by 1.",
+   "why": "The error is a confusion between a position and a value, and no kind has a position axis separate from a value axis. pair_plotter's swapped-coordinates would catch reversal of (n, T_n) but not value-minus-subscript, and it moves the question into graphing, which the objective does not mention. number_line_marker would see only a wrong single value (missed-values and extra-values both fire for any slip), so it cannot name this error."
+  },
+  {
+   "lo_id": "lo:g10m3s2-1-3",
+   "need_kind": "sequence_formula_builder",
+   "description": "The student builds T_n = dn + c with two steppers (or tiles) for d and c, beside a live table n | given term | dn + c in which each row turns green when it matches. A second mode draws the pictures itself (the book's triangle pattern 5; 7; 9; 11 and the matchstick squares 4; 7; 10; 13 are the anchor questions) and lets the student group the items by dragging into 'the part that grows with each picture' and 'the part that stays the same', from which the kind reads d and c. It is graded on the function: any formula that matches every term is correct, so 2(n+1)+1 is accepted as readily as 2n+3 and is shown matching, which is the answer to mc:g10m3s2-1-3:different-looking-formula-must-be-wrong. Predicates to emit: d-sign-reversed (maps to mc:g10m3s2-1-1:subtracts-earlier-minus-later), constant-taken-as-first-term (c set to T_1 instead of T_1 - d; the most common error here, and no misconception for it is listed on this objective, so Samuel may want to add one), d-from-wrong-pair, and equivalent-form-accepted as a confirmation rather than an error.",
+   "why": "line_drawer and curve_sketcher (linear) would turn the task into graphing the sequence, which is outside the book's vocabulary for this chapter. In equation mode the live equation also hands the formula to the student, and the only predicate that maps to a listed misconception is slope-sign-flipped; intercept-wrong has no misconception on this objective to map to. Neither can draw a picture pattern, and a widget question cannot point at the book's [figure]."
+  },
+  {
+   "lo_id": "lo:g10m3s2-1-4",
+   "need_kind": "sequence_formula_builder",
+   "description": "Lower priority. The same formula builder with a position slider: given T_n = 8n + 7 the student slides n along the positions and reads T_n, either to land on a requested position (T_25) or to find the n whose term equals a stated value (T_n = 191). Predicates to emit: term-given-for-position (answered 191 where n = 23 was asked, or the reverse), solved-by-subtracting-only (191 - 7 = 184 stated as n), and slider-parked-at-nearest-value. The first of these is a close cousin of mc:g10m3s2-1-2:subtracts-from-value-not-position, which is on the list as non-own for this objective.",
+   "why": "Evaluating T_25 is plain substitution and an answer box serves it well, so this is a want rather than a need. The solving-for-n half would benefit from seeing position and value as two different axes, which no existing kind provides; any use of an existing kind would be a numeric answer disguised as a tap."
+  },
+  {
+   "lo_id": "lo:g10m3s2-1-5",
+   "need_kind": "difference_balance",
+   "description": "Two pans, each holding the difference between a pair of neighbouring terms written with an unknown (for -z-5; -4z-5; -6z-2 the pans hold T_2 - T_1 and T_3 - T_2). The student builds each difference from z-tiles and unit tiles, with negative tiles hatched and marked, then adjusts z until the pans level, which is the value that makes the terms a linear sequence; a second step substitutes z and evaluates the terms. Predicates to emit: difference-taken-earlier-minus-later or bracket-sign-slip (the second term's signs are not all reversed when subtracting; maps to mc:g10m3s2-1-1:subtracts-earlier-minus-later), only-one-difference-formed (the student takes T_2 - T_1 as 'the common difference' and never equates it to T_3 - T_2; maps to mc:g10m3s2-1-1:common-difference-without-checking), and pans-levelled-but-substitution-wrong for the second step.",
+   "why": "The construction is solving a linear equation in one unknown, with the two differences as the sides. ratio_balance balances a proportion with a whole-number fourth term and cannot carry an unknown in each term; area_model builds (x+a)(x+b) and has no equation to level. Nothing else offers a way to set two algebraic expressions equal, so any existing kind here would be an answer box."
+  }
+ ]
+}

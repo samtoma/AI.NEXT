@@ -1,0 +1,1491 @@
+{
+ "book": "g10-math",
+ "stage": "final",
+ "prompts_version": "s5-v5",
+ "by_ref": {
+  "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/s5-final-ch04",
+  "stage": "S5 final",
+  "shards_sha256": "b0931e44c83feac1be702d7a74f81e0ba1f58d4c212ac8c7fd6a37bdc3951446",
+  "files": 26
+ },
+ "embedded": {
+  "source": "runbook/misconceptions.workflow.js",
+  "source_sha256": "8a48496f9fb571481f131c340cefa1ee28d2d1a96b8ab5a348e2adf4166e0a0a",
+  "args_sha256": "87ec02ba3ba57721accf293d5bce7d08ba01886552df13c80fea26ad2aec1811",
+  "generated_sha256": "1486251b3aeeabccb3b4856a0da4aa0b598a77cd70410c657c1cf114c810effc",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "max_per_objective": 4,
+ "records": [
+  {
+   "lo": "lo:g10m4s2-1-1",
+   "entries": [],
+   "dropped": [
+    {
+     "id": "mc:g10m4s2-1-1:one-sided-operation",
+     "lo_id": "lo:g10m4s2-1-1",
+     "label": "Changes only one side of the equation",
+     "aliases": [],
+     "verdict": "UNSUPPORTED",
+     "reason": "The error is real and book-supported: caution b01227 says whatever you do to the left-hand side you must also do to the right-hand side. The maths in steps 3-5 is correct. Adding 3 to the left only gives 2y=7 and y=7/2. Substituting gives 4, not 7. Adding 3 to both sides gives 2y=10 and y=5, which matches the canonical answer for 2y-3=7. The substitution check is also the book's own method (worked example we01 step 3). The entry still cannot be confirmed, for two reasons. First, step 1 is tied to one equation. It tells the student that 'get rid of the -3 so the y term is on its own' is what they were trying, but the entry covers any one-sided operation (add, subtract, multiply, divide) in any equation and has no signal or attached option that pins it to 2y-3=7. For a student working 5a-7=-2 or 4b+5=-7, step 1 names a term and a variable that are not in their work. That claim about the student's intent is not supported by the evidence. Second, the closing advice to narrate every line as 'what I did to the left-hand side' is a study habit the book does not teach. Only the balance rule and the substitution check come from the book. Because a wrong or misfiring refutation would teach the error it is meant to fix, I am not confirming."
+    }
+   ],
+   "stripped": [],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m4s2-1-2",
+   "entries": [
+    {
+     "id": "mc:g10m4s2-1-2:multiplies-only-the-fractions",
+     "lo_id": "lo:g10m4s2-1-2",
+     "label": "Multiplies only the fraction terms",
+     "description": "The student multiplies both sides by the denominator but only the fraction terms get multiplied, so a term with no denominator, such as the 5 in $5-\\frac{7}{b}$, is left as it was.",
+     "signal": "A wrong answer in an equation with a term on its own beside the fractions, for example $b=-5$ for $5-\\frac{7}{b}=\\frac{2(b+4)}{b}$ (correct: $b=5$), $b=-\\frac{2}{3}$ for $2-\\frac{4}{b+5}=\\frac{3b}{b+5}$ (correct: $b=6$), or $m=-5$ for $5-\\frac{2(m+4)}{m}=\\frac{7}{m}$ (correct: $m=5$).",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You had the right idea: multiplying both sides by the denominator removes it from the fractions. The slip is that the denominator only reached the fraction terms, so $5-\\frac{7}{b}$ became $5-7$ and the $5$ on its own was left out."
+      },
+      {
+       "step": 2,
+       "text_md": "Multiplying both sides of an equation by $b$ means multiplying everything on each side by $b$. On the left side, $b\\left(5-\\frac{7}{b}\\right)=5b-7$: the $5$ becomes $5b$ and the $\\frac{7}{b}$ becomes $7$. On the right side, $b\\cdot\\frac{2(b+4)}{b}=2(b+4)$."
+      },
+      {
+       "step": 3,
+       "text_md": "See what leaving the $5$ out does. $5-7=2(b+4)$ gives $-2=2b+8$, so $b=-5$. Now substitute $b=-5$ into the original equation. The left side is $5-\\frac{7}{-5}=\\frac{32}{5}$ and the right side is $\\frac{2(-5+4)}{-5}=\\frac{2}{5}$. They are not equal, so $b=-5$ is not a solution."
+      },
+      {
+       "step": 4,
+       "text_md": "The move that works: multiply every term on both sides by the denominator. Here that gives $5b-7=2(b+4)$, so $5b-7=2b+8$, then $3b=15$ and $b=5$. Then substitute back into the original equation to check: both sides equal $\\frac{18}{5}$."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m4s2-1-2:ex4-1-23"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m4s2-1-2:ex4-1-27"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m4s2-1-2:ex4-7-1l"
+      }
+     ],
+     "covers": [],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "I re-derived every number. Leaving the lone term unmultiplied gives 5-7=2(b+4), so -2=2b+8 and b=-5. Substituting b=-5 gives 32/5 on the left and 2/5 on the right, which are not equal. The three signal values (b=-5, b=-2/3, m=-5) are each exactly what this slip produces. Their correct answers (5, 6, 5) match the canonical answers. The correct path in step 4 reaches 5b-7=2b+8, 3b=15, b=5, which is the book's own intermediate equation. The check gives 18/5 on both sides. The refutation multiplies every term by the denominator, which the LO states and the book's solution to 5-2(m+4)/m=7/m uses. It argues against this specific slip by showing its consequence, not just restating the method. No question ids, pages, figures or review history appear in the text the student reads. The signal's opening clause (\"a wrong answer\") is broad, but the examples are exact and sound, so I treat the signal as acceptable."
+     }
+    }
+   ],
+   "dropped": [
+    {
+     "id": "mc:g10m4s2-1-2:restriction-seen-as-optional",
+     "lo_id": "lo:g10m4s2-1-2",
+     "label": "Sees no need to state the restriction",
+     "aliases": [],
+     "verdict": "UNSUPPORTED",
+     "reason": "The arithmetic is right: 3(-1/3)+1=0, x=0 and the check gives 2. But the entry is an attitude (\"why must I state it?\"), not a wrong-answer error. The only evidence is the book's remark that a restriction is required, which does not show students think it optional. The refutation does not refute the student's reason, \"the answer already works\". It concedes that substitution checks the answer, then shows an example where the answer works and the restriction played no role. It never shows a case where skipping the restriction goes wrong, such as a candidate root equal to the excluded value. So the argument that the restriction \"does a different job\" is unconvincing, and the closing step mostly restates the method (restriction, solve, check). The claim that the restriction is \"the only place that remembers\" the exclusion is also an explanation beyond the book, and it is overstated, because checking in the original equation would also catch it."
+    }
+   ],
+   "stripped": [],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m4s2-1-3",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No evidence was supplied for this objective: no caution box, no worked-example remark, no re-solve wrong turn, no wrong option or widget predicate, and no existing entries. Nothing here supports a diagnosable error, so no entry was written. The runtime falls back to the canonical solutions, which is the correct outcome."
+    },
+    {
+     "kind": "evidence",
+     "text": "The distractor list is empty, so there are no assignments to make."
+    },
+    {
+     "kind": "evidence",
+     "text": "Common errors for this topic that were deliberately not written up, because nothing supplied supports them: not multiplying the whole-number terms by the common denominator, and not distributing a minus sign over a binomial numerator (for example $3(x+2)-4(x-6)$). The book's own solutions show the correct handling but print no caution about either. If a later pass supplies a caution, a remark, a wrong option or a re-solve wrong turn, these are the two the evidence would most likely support."
+    },
+    {
+     "kind": "other",
+     "text": "The canonical answer to one exercise is printed as $-\\frac{22}{6}$, which is not in lowest terms. A student who answers $-\\frac{11}{3}$ is correct. The answer checker should treat equivalent fractions as matching rather than letting a refutation imply the reduced form is wrong."
+    },
+    {
+     "kind": "other",
+     "text": "In the canonical solution of the worked example, step 3 reads 'Divide both sides by:' with the divisor missing (it should be $-8$). The text is extraction damage, not the book's wording. It is not used in any student-facing text here."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m4s3-1-1",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No evidence was supplied for this objective: no caution boxes, no worked-example remarks, no re-solve wrong turns, no existing entries and no wrong options or widget predicates. With nothing to support an error, no entry is written and the runtime falls back to the canonical solutions. Two errors are plausible from the questions alone (the sign of the constant when it is moved across the equals sign, and a sign slip in the product of the two brackets). Neither is backed by the book or by a wrong option, so neither was written up."
+    },
+    {
+     "kind": "other",
+     "text": "In the canonical solution for the first question (the one with (r+4)(5r-4)), the expanded line is printed twice in a row. The same duplicated line appears in the other two solutions, so it looks like an extraction artefact rather than working the book shows. The final answers were not affected and no catalogue text rests on this."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m4s3-1-2",
+   "entries": [
+    {
+     "id": "mc:g10m4s3-1-2:always-expects-two-solutions",
+     "lo_id": "lo:g10m4s3-1-2",
+     "label": "Expects two different solutions every time",
+     "description": "The student assumes a quadratic must always give two different solutions, so they write the same value twice, go hunting for a second value, or force answers where the book says there are none.",
+     "signal": "Writes the same value twice (such as $x=2$ or $x=2$) for a quadratic whose two factors are the same, or offers numbers as solutions for $x^2+1=0$.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You are expecting every quadratic to give two different solutions, because most of the ones you factorise do: one from each factor. Setting each factor equal to $0$ is exactly the right move. The only surprise is that it does not always produce two different values, and sometimes it produces none."
+      },
+      {
+       "step": 2,
+       "text_md": "Take $x^2-4x=-4$. Rearrange to $x^2-4x+4=0$, then factorise: $(x-2)(x-2)=0$. Both factors are the same, so setting each one equal to $0$ gives $x-2=0$ both times, and $x=2$ both times."
+      },
+      {
+       "step": 3,
+       "text_md": "Writing $x=2$ or $x=2$ only repeats one solution, and there is no second value still to be found. The book calls this a special situation: the quadratic is a perfect square, and it has only one solution because both factors are the same."
+      },
+      {
+       "step": 4,
+       "text_md": "The other special situation goes the opposite way. For $x^2+1=0$ you get $x^2=-1$, so $x=\\sqrt{-1}$, and $\\sqrt{-1}$ is not a real number. So there is no solution at all, and no pair of answers to find."
+      },
+      {
+       "step": 5,
+       "text_md": "So do not count on getting two answers. Factorise, set each factor equal to $0$ and solve. If both factors are the same, write the single solution, as in $x=2$. If a square root of a negative number turns up, write that there is no solution, because it is not a real number."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "b01270"
+      },
+      {
+       "type": "remark",
+       "ref": "q:g10m4s3-1-2:we05"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m4s3-1-2:ex4-2-2o"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "expl:g10m4s3-1-2:ex4-7-12x"
+      }
+     ],
+     "covers": [],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The error is real and rests on the book's caution that a quadratic can have one solution or none. I worked it through myself. x^2-4x=-4 rearranges to x^2-4x+4=0 and factorises to (x-2)(x-2)=0, giving x=2 only, which matches the canonical solution. x^2+1=0 gives x^2=-1, and sqrt(-1) is not real, so there is no solution, which matches the canonical teaching item. The perfect-square wording matches the canonical remark, and the final instruction (write the single solution, or say there is no solution) matches the book's treatment. The refutation argues against the false expectation rather than restating the method. No step names a question id, page, figure or review history; the generic 'the book calls this a special situation' is acceptable. One wrinkle: the label says 'different' while the signal includes writing the same value twice, but a student who does this is still told something true, so I do not count it as a misdiagnosis."
+     }
+    }
+   ],
+   "dropped": [
+    {
+     "id": "mc:g10m4s3-1-2:constant-matched-x-term-unchecked",
+     "lo_id": "lo:g10m4s3-1-2",
+     "label": "Matches the constant, but not the x term",
+     "aliases": [],
+     "verdict": "UNSUPPORTED",
+     "reason": "The arithmetic checks out. (x+3)(x-5) expands to x^2-2x-15 and (x-3)(x+5) to x^2+2x-15. The roots -5 and 3 and the perfect-square case with root 2 match the canonical answers. The entry is still not safe to keep, for two reasons. First, the signal would misdiagnose students. 'Each solution has the right size but the opposite sign' fires equally for a student who factorised correctly, as (x-3)(x+5), and then read each root off its bracket with the wrong sign (taking x-3=0 as x=-3). That is a very common separate error with an identical final answer. The refutation would tell that student their brackets are wrong when they were right, and it would leave the real slip uncorrected. Second, the evidence for the error is only two widget predicate tags that currently belong to a different objective's misconception, plus canonical solutions that show correct factorisations. The book's own caution is about one or no solutions. The central instruction, expand the brackets and compare every term, appears in none of the canonical solutions or the evidence, so it teaches beyond what the book supports here."
+    }
+   ],
+   "stripped": [
+    {
+     "lo": "lo:g10m4s3-1-2",
+     "origin": "S7",
+     "ref": "wt:g10m4s3-1-2:factor-tiles#middle-term-sign",
+     "question_id": "q:g10m4s3-1-2:w005",
+     "text": "The constant term is right and the linear (x) term is not — usually its sign",
+     "tagged": "mc:g10m1s7-2-1:factor-pair-middle-term-untested",
+     "reason": "its entry mc:g10m4s3-1-2:constant-matched-x-term-unchecked was dropped (UNSUPPORTED)"
+    },
+    {
+     "lo": "lo:g10m4s3-1-2",
+     "origin": "S7",
+     "ref": "wt:g10m4s3-1-2:perfect-square-tiles#middle-term-sign",
+     "question_id": "q:g10m4s3-1-2:w008",
+     "text": "The constant term is right and the linear (x) term is not — usually its sign",
+     "tagged": "mc:g10m1s7-2-1:factor-pair-middle-term-untested",
+     "reason": "its entry mc:g10m4s3-1-2:constant-matched-x-term-unchecked was dropped (UNSUPPORTED)"
+    }
+   ],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "The evidence file holds one caution (some quadratics have one solution or none), and the existing entry already covers it. No remark or re-solve wrong turn was supplied. The one new entry rests only on the two widget predicates (wrong options someone deliberately wrote) and on no caution the book prints. Please review it before it reaches students. I added nothing for forgetting to rearrange to zero or for dropping a common factor, because nothing supplied supports those errors."
+    },
+    {
+     "kind": "terminology",
+     "text": "The entry says the 'constant' and the '$x$ term'. The canonical solutions never name these terms. The widget predicate says 'constant term' and 'linear (x) term', and the old tag says 'middle term'. I avoided 'linear' and 'middle term' for the student. Please confirm 'constant' and '$x$ term' match the book's wording."
+    },
+    {
+     "kind": "other",
+     "text": "The refutation tells the student to multiply the brackets back out to check a factorisation. This objective's canonical solutions never print that check. The book does expand brackets in one solution (the one with $(x+1)^2=(x+1)(2x+3)$). Please confirm the check fits the book's method."
+    },
+    {
+     "kind": "other",
+     "text": "The wrong answers named in the refutation ($x=-3$ or $x=5$, and $x=-2$) are what the error produces, not solutions the book prints. They are shown only as wrong answers. The correct factorisations and answers used for contrast are taken from the canonical solutions to $x^2+2x-15=0$ and $x^2-4x=-4$."
+    },
+    {
+     "kind": "other",
+     "text": "The signal (right sizes, opposite signs) could also come from a different slip, solving $x+3=0$ as $x=3$. A classifier should read the working as well as the final answer before using this entry."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m4s3-1-3",
+   "entries": [
+    {
+     "id": "mc:g10m4s3-1-3:keeps-a-root-the-restriction-forbids",
+     "lo_id": "lo:g10m4s3-1-3",
+     "label": "Keeps a root the restriction rules out",
+     "description": "After solving the quadratic, the student lists every root as a solution, including one that equals a value the variable was not allowed to take because it would make a denominator zero.",
+     "signal": "The final answer includes the very value the restriction forbids, for example $x=2$ together with $x=4$ when $x\\neq2$ was noted at the start, or a single answer such as $x=4$ where that value is the forbidden one and the correct result is no solution.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You solved the quadratic and kept every root it gave you as an answer. Finding both roots is the right work. The catch is that the quadratic is only a stepping stone: the equation you started with had a restriction, and a root that breaks it is not a solution of that equation."
+      },
+      {
+       "step": 2,
+       "text_md": "Take $x+2=\\dfrac{6x-12}{x-2}$. The working starts by noting $x\\neq2$, because $x-2$ is a denominator and a denominator cannot be zero. Clearing the fraction and rearranging gives $x^2-6x+8=0$, so $(x-2)(x-4)=0$, and the quadratic has two roots, $x=2$ and $x=4$."
+      },
+      {
+       "step": 3,
+       "text_md": "Now put $x=2$ back into the equation you started with. The denominator $x-2$ becomes $0$, so the right-hand side has no value and $x=2$ cannot be a solution. The quadratic knows nothing about the restriction, which is why it can hand you a root the original equation does not accept."
+      },
+      {
+       "step": 4,
+       "text_md": "That leaves $x=4$, so the answer is $x=4$ on its own. Writing \"$x=2$ or $x=4$\" would claim a value that the first line of the working had already ruled out."
+      },
+      {
+       "step": 5,
+       "text_md": "It matters even more when the excluded value is the only root. In $\\dfrac{2x-5}{(x+2)(x-4)}=\\dfrac{1}{2(x-4)}$ the restrictions are $x\\neq4$ and $x\\neq-2$. Clearing the fractions gives $4x-10=x+2$, so $x=4$. That is the forbidden value, so the correct conclusion is that there is no solution, not \"$x=4$\"."
+      },
+      {
+       "step": 6,
+       "text_md": "The move that works: before anything else, write down every value that would make a denominator zero. Solve the quadratic, then check each root against that list. Cross out any root that is on it, and if every root is crossed out, write that there is no solution."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "remark",
+       "ref": "expl:g10m4s3-1-3:ex4-7-12w"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m4s3-1-3:ex4-2-3l"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m4s3-1-3:ex4-2-3m"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m4s3-1-3:ex4-2-3k"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m4s3-1-3:ex4-7-12j"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m4s3-1-3:ex4-7-12k"
+      }
+     ],
+     "covers": [],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The error is real for this objective. In the canonical solutions the restriction is noted first, and a root that breaks it is discarded: x=2 is dropped for x+2=(6x-12)/(x-2) leaving x=4; a=-1/3 is dropped leaving a=-2; b=-5 is dropped leaving b=4; a=-7 is dropped leaving a=1; x=-1 is dropped leaving x=3. The teaching item gives x=4 with x≠4 and concludes no solution. I re-worked every step of the refutation. (x+2)(x-2)=6x-12 gives x^2-6x+8=0, which factorises as (x-2)(x-4), so the roots are 2 and 4. At x=2 the denominator is zero, so only x=4 remains, which matches the canonical answer. In the second example, multiplying through by 2(x+2)(x-4) gives 4x-10=x+2, so x=4, which is excluded, so there is no solution. This matches the canonical result and the teaching item. The method (note restrictions first, solve, check each root against them, cross out forbidden roots, and conclude no solution if none remain) is the book's own. The refutation argues against the specific mistake of keeping a forbidden root rather than just restating the method. The student-facing text has no question ids, page numbers, figures, review history or outside material. The 'Evidence cited' line carries the ids, but that is metadata and not part of the label, description, signal or refutation steps. The 'numerator' typo in the book's remark is correctly written as 'denominator' in the refutation."
+     }
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m4s4-1-1",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No evidence was supplied for this objective: no caution boxes, no worked-example remarks, no wrong turns from an independent re-solve, and no wrong options or widget predicates (no distractors D0, D1, ... exist). Every candidate error I could name from general knowledge of substitution (for example not distributing a negative or a multiplier over the bracket, stopping after finding one variable, substituting back into the same equation that was rearranged) would be an unsupported guess rather than an error the evidence shows, so I wrote no entries. The runtime will fall back to the canonical solutions, which is the correct outcome here."
+    },
+    {
+     "kind": "other",
+     "text": "The first canonical solution (the worked example with x - y = 1 and 3 = y - 2x) prints its steps without the equation numbers or variable names, for example 'Use equation to express in terms of:' and 'Substitute into equation and solve for:'. This looks like lost inline maths in extraction. It does not change the working or the answers (x = -4, y = -5), but a human should check the source text before any tutor reply quotes those step headings."
+    },
+    {
+     "kind": "other",
+     "text": "In the canonical solution for 7x - 41 = 3y and 17 = 3x - y, step 1 says 'Make y the subject of the first equation' but the working rearranges the second equation (17 = 3x - y). The working and the answer (x = 5, y = -2) are correct. Worth a human look before any entry or hint repeats the step wording."
+    },
+    {
+     "kind": "other",
+     "text": "Terminology: the book words 'express one variable in terms of another' in several ways: 'Use equation to express in terms of', 'Write x in terms of y', 'Make x the subject of the first equation' and 'Write the first equation in terms of x'. Since no entry was written, no term needed to be chosen, but a human should confirm which phrasing the book treats as standard if entries are added later."
+    },
+    {
+     "kind": "other",
+     "text": "The last question (the pair of fractions (x+1)/y = 7 and x/(y+1) = 6) adds the restrictions y not equal to 0 and y not equal to -1 and compares two expressions for x. That goes slightly beyond the objective description (one equation, then substitute into the other), so I did not build any entry on it."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m4s4-1-2",
+   "entries": [],
+   "dropped": [
+    {
+     "id": "mc:g10m4s4-1-2:subtract-only-some-signs",
+     "lo_id": "lo:g10m4s4-1-2",
+     "label": "Changes the sign of only some terms when subtracting equations",
+     "aliases": [],
+     "verdict": "UNCLEAR",
+     "reason": "The error is real and the arithmetic checks out against the book's method. With 6a-9b=15 and 6a-4b=40, subtracting gives -5b=-25 and b=5, which matches the canonical working. The refutation names no question id, page number, figure or review history. Its closing advice (bracket with a minus in front, change every term on both sides, combine columns, substitute back) is the book's own method. The evidence is thin, though: it is only the general caution to be careful of the signs when subtracting. The refutation also contradicts itself about which error it argues against. Steps 1 and 2 describe a student who applied the minus to the first term only and left the other terms as they were, and the entry's description says the same. The worked counter-example in step 4 does not match that. It leaves only -4b unflipped and still computes the right-hand side as 15-40=-25, so the 40 has been flipped. A student who left the rest as written would get -9b+(-4b)=-13b and 15+40=55, so b=-55/13, not 25/13. The demonstration therefore shows a different slip from the one diagnosed, and a student making the described error would not recognise their own answer. The mismatch is subtle, and in doubt this is not confirmed."
+    }
+   ],
+   "stripped": [],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m4s4-1-3",
+   "entries": [
+    {
+     "id": "mc:g10m4s4-1-3:graph-and-algebra-answers-differ",
+     "lo_id": "lo:g10m4s4-1-3",
+     "label": "Treats the graph and the algebra as two separate answers",
+     "description": "The student treats the point read from the graph and the answer from the algebraic check as two separate results that can disagree, so when they do not match they keep one without finding the slip.",
+     "signal": null,
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "It can feel as if drawing the lines and solving with algebra are two different jobs that might give two different answers. You are right that they are two different methods, but they answer the same question, so they must give the same pair $(x, y)$."
+      },
+      {
+       "step": 2,
+       "text_md": "Each line is all the points that make its own equation true. The point where the lines cross is on both lines, so its $x$ and $y$ make both equations true at once, which is what solving simultaneously asks for."
+      },
+      {
+       "step": 3,
+       "text_md": "The algebraic check finds that same pair. Write each equation as $y=\\dots$, set the two expressions for $y$ equal, solve for $x$, then substitute back to find $y$."
+      },
+      {
+       "step": 4,
+       "text_md": "Take $2x+y=5$ and $3x-2y=4$. In the form $y=\\dots$ they are $y=-2x+5$ and $y=\\frac{3}{2}x-2$. The graphs cross at $(2, 1)$. Algebraically, $-2x+5=\\frac{3}{2}x-2$ gives $-4x+10=3x-4$, so $7x=14$ and $x=2$. Then $y=-2(2)+5=1$. The graph and the algebra give the same $x=2$ and $y=1$."
+      },
+      {
+       "step": 5,
+       "text_md": "So if your graph reading and your algebra do not match, do not just pick one. One of them has a slip, so find it: check each equation was rearranged correctly into $y=\\dots$, re-read the crossing point from your axes, and redo the substitution. Once both methods give the same $x$ and $y$, write the answer as $x=\\dots$ and $y=\\dots$."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "b01349"
+      }
+     ],
+     "covers": [],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The error is the direct negation of the book's caution that the graphical and algebraic methods give the same solution. The refutation is mathematically correct. The intersection point lies on both lines, so its (x, y) satisfies both equations, and the algebraic check finds that same pair. The worked example (2x+y=5 and 3x-2y=4) matches the canonical solution step for step: y=-2x+5 and y=(3/2)x-2, then -4x+10=3x-4, 7x=14, x=2, y=1, with the crossing at (2, 1). Substituting x=2 and y=1 into both original equations gives 5=5 and 4=4. The method it describes (rearrange to y=..., equate, solve for x, substitute back, write x=... and y=...) is the book's own. It argues against the belief that the two results can disagree rather than only restating the method. It names no question id, page, numbered figure or review history. The advice to find the slip when the two disagree (recheck the rearrangement, re-read the crossing point, redo the substitution) only reuses the book's own steps and adds no new content. The entry has no signal and no attached options, so signal_ok is true and there are no distractors."
+     }
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m4s5-1-1",
+   "entries": [
+    {
+     "id": "mc:g10m4s5-1-1:minutes-with-hourly-speeds",
+     "lo_id": "lo:g10m4s5-1-1",
+     "label": "Puts minutes into an equation whose speeds are per hour",
+     "description": "The student writes a time given in minutes straight into an equation built from speeds in kilometres per hour, so the units in the equation do not match.",
+     "signal": "A distance far too big for the story, for example $\\frac{100}{3}\\approx 33.3\\text{ km}$ for a man who runs to the bus stop and back in $15$ minutes at $5$ and $4\\text{ km}\\cdot\\text{h}^{-1}$.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "Writing the two times as $\\frac{D}{5}$ and $\\frac{D}{4}$ and adding them is the right plan. The slip is putting $15$ on the other side of the equation: $15$ is a number of **minutes**, but the speeds are in kilometres per hour."
+      },
+      {
+       "step": 2,
+       "text_md": "The two sides of an equation must be counted in the same unit. Because the speeds are per hour, $\\frac{D}{5}$ and $\\frac{D}{4}$ are times in **hours**, so the total on the right-hand side has to be in hours too."
+      },
+      {
+       "step": 3,
+       "text_md": "Using $15$ gives $\\frac{D}{5}+\\frac{D}{4}=15$, so $9D=300$ and $D=\\frac{100}{3}\\approx 33.3\\text{ km}$. That is more than six times the distance he could cover in a whole hour at $5\\text{ km}\\cdot\\text{h}^{-1}$, and the story says he ran there and back in only $15$ minutes. An answer that cannot fit the story tells you to check the units."
+      },
+      {
+       "step": 4,
+       "text_md": "Convert first: $15$ minutes is $\\frac{15}{60}=0.25$ hours, so write $\\frac{D}{5}+\\frac{D}{4}=0.25$. Multiply through by $20$: $4D+5D=0.25(20)$, so $9D=5$ and $D=\\frac{5}{9}\\approx 0.56\\text{ km}$. Whenever a question gives minutes and speeds per hour, convert the time to hours before you write the equation."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m4s5-1-1:ex4-7-7e"
+      }
+     ],
+     "covers": [],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The error is real and the evidence (the bus-stop problem) supports it. D/5 + D/4 = 15 gives 9D = 300 and D = 100/3 ≈ 33.3 km, which is correct. 33.3 km is more than six times 5 km, so the plausibility argument holds. The fix converts 15 min to 0.25 h, multiplies by 20 to get 4D + 5D = 5, so D = 5/9 ≈ 0.56 km. This matches the canonical method and answer. The refutation argues against this specific slip, not just the method. It cites no question ids, pages or review history, and teaches nothing beyond the book. The signal (an implausibly large distance, 100/3 km) fits a student making exactly this error."
+     }
+    },
+    {
+     "id": "mc:g10m4s5-1-1:equal-distances-for-meeting",
+     "lo_id": "lo:g10m4s5-1-1",
+     "label": "Gives both travellers the same distance when they meet",
+     "description": "In a problem where two travellers move towards each other at different speeds, the student treats \"meeting\" as each having gone half the distance apart, setting their distances equal instead of making their times equal or adding their distances to the total.",
+     "signal": "The distance one traveller covers is exactly half the starting distance, for example Piet skating $10\\text{ km}$ when the skaters start $20\\text{ km}$ apart.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You have part of it right: the two distances together make up the whole distance apart. The slip is deciding that the two distances are equal. That would only happen if both travellers had the same speed."
+      },
+      {
+       "step": 2,
+       "text_md": "What is the same for both travellers is the **time**: they set off together and stop at the same moment, when they meet."
+      },
+      {
+       "step": 3,
+       "text_md": "Test the equal-distance idea on two skaters who start $20\\text{ km}$ apart, Zanele at $15\\text{ km}\\cdot\\text{h}^{-1}$ and Piet at $10\\text{ km}\\cdot\\text{h}^{-1}$. Equal distances means $x=20-x$, so each skates $10\\text{ km}$. Then Zanele's time is $\\frac{10}{15}$ hour and Piet's time is $\\frac{10}{10}=1$ hour. These times are different, so they would not reach the meeting point together."
+      },
+      {
+       "step": 4,
+       "text_md": "In the same time, the faster traveller covers more of the distance apart, so the distances cannot be equal. Zanele is faster, so she must cover more than half."
+      },
+      {
+       "step": 5,
+       "text_md": "Make the times equal. Let Zanele's distance be $x$ and Piet's be $20-x$, using time $=\\frac{\\text{distance}}{\\text{speed}}$: $\\frac{x}{15}=\\frac{20-x}{10}$. This gives $10x=300-15x$, so $x=12$ and Piet skates $20-12=8\\text{ km}$. You can also give both travellers the same time $t$, write each distance as speed $\\times\\ t$, and add the two distances to make the total distance."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m4s5-1-1:ex4-4-1"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m4s5-1-1:ex4-4-2"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m4s5-1-1:ex4-7-7f"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m4s5-1-1:ex4-7-7g"
+      }
+     ],
+     "covers": [],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The error is real and plausible, and the cited meeting problems all use equal times or distances summing to the total. Every step of the refutation checks out. Equal distances would mean 10 km each, giving times of 10/15 h and 1 h, which differ. Equal distances can only occur with equal speeds. The faster skater must cover more than half. The equal-time equation x/15 = (20-x)/10 gives 10x = 300 - 15x, so x = 12 and Piet skates 8 km, matching the canonical answer. The alternative (same time t, distances added to the total) matches the book's boats and trucks method. The refutation argues against this specific slip, not just the method. It contains no question ids, page numbers or review language, and teaches nothing beyond the book. The signal (a traveller covering exactly half the starting distance, e.g. Piet 10 km) fits the error, and none of the book's meeting problems has equal speeds, so it would not misfire on a correct answer."
+     }
+    }
+   ],
+   "dropped": [
+    {
+     "id": "mc:g10m4s5-1-1:stops-at-the-unknown",
+     "lo_id": "lo:g10m4s5-1-1",
+     "label": "Reports the value of the unknown instead of the quantity asked for",
+     "aliases": [],
+     "verdict": "UNSUPPORTED",
+     "reason": "The error is real and the refutation arithmetic matches the canonical solutions: x = 12 km is Zanele's distance and Piet skated 8 km, x = 1.38 L is the new volume and the water added is 19/50 L, x = 700 km leads to 700/350 = 2 h. The problem is the signal. It says the unit of the reported value 'does not fit the question', but two of its own three examples contradict that. 12 km is a distance and the question asks how far Piet skated, so the unit fits. 1.38 litres is a volume and the question asks for the water to add, so the unit fits. Only the 700 km for a time question has a mismatched unit. Refutation step 4 ('Units are a quick check') also applies to the jets case only. A student who answers 12 km or 1.38 L would not trigger the signal as written, so it misdiagnoses. Dropped."
+    }
+   ],
+   "stripped": [],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m4s5-1-2",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No evidence was supplied for this objective: no book caution box or worked-example remark, no wrong turn from an independent re-solve, no wrong multiple-choice option and no widget predicate. The brief allows an entry only where one of these supports it, so no entry is authored. The runtime will fall back to the canonical solutions, which is the stated correct behaviour when nothing honest can be written. There are no distractors (D0, D1, ...) to assign."
+    },
+    {
+     "kind": "other",
+     "text": "Not used as evidence, but worth a human look. In question ex4-4-13 the canonical solution says 'Substitute into first equation' while its working (11 - y = 2) comes from the second equation, x - y = 2. The same solution also solves by adding the two equations, not by substitution, which is the method this objective's description names. A student could be confused by the 'first equation' wording."
+    },
+    {
+     "kind": "other",
+     "text": "Not used as evidence. Several exercise solutions (ex4-4-4, ex4-4-11, ex4-4-15, ex4-4-16) put the second unknown in terms of the first at the set-up stage and solve one equation in one unknown, instead of writing two equations and then substituting as the objective's description says. The ex4-4-4 working also has a stray '=' in the line 50x+800-40x=980, and ex4-7-7i does not say which variable is Science and which is Mathematics (x = 33 is the Science count). These are source-text quirks, not errors a student makes, so they are not catalogued."
+    },
+    {
+     "kind": "terminology",
+     "text": "The book's own terms in these solutions are: 'system of equations', 'assign variables to the unknown quantities', 'substitute ... into', 'rearrange and solve for', 'substitute the value back into', and 'write the final answer'. If entries are written later, keep to these. The brief's phrase 'state the answer in the context of the problem' matches the book's final-answer sentences (for example 'There are 5 tricycles and 2 bicycles')."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m4s5-1-3",
+   "entries": [
+    {
+     "id": "mc:g10m4s5-1-3:keeps-solution-the-problem-rules-out",
+     "lo_id": "lo:g10m4s5-1-3",
+     "label": "Keeps a solution the problem rules out",
+     "description": "The student factorises correctly and finds both solutions of the equation, then gives both (or the wrong one) as the answer without checking each against the conditions the problem states about the unknown.",
+     "signal": "Gives both solutions of the quadratic as the answer, or accepts a negative length, width or price, for example a width of $-12$ cm alongside $28$ cm.",
+     "kind": "generated_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You factorised and solved correctly, and both solutions really do solve the equation. The step still missing is the one back to the story: the equation was built from a word problem, and what the problem says about the unknown can rule a solution out."
+      },
+      {
+       "step": 2,
+       "text_md": "Take a rectangle whose diagonal is $25$ cm more than its width and whose length is $17$ cm more than its width. The equation factorises to $(w+12)(w-28)=0$, so $w=-12$ or $w=28$. A width is a length, so it must be positive. A width of $-12$ cm describes no rectangle, so only $w=28$ stays."
+      },
+      {
+       "step": 3,
+       "text_md": "The same thing happens with two consecutive negative integers whose product is $1122$. The equation factorises to $(n+34)(n-33)=0$, so $n=-34$ or $n=33$. The problem says both integers must be negative, so $n=33$ is out. That leaves $n=-34$, and the next integer is $-34+1=-33$."
+      },
+      {
+       "step": 4,
+       "text_md": "After factorising, write down each solution and ask: does this one fit what the problem says about this quantity? Cross out any that do not. Then use the solution that is left to find every quantity the question asks for."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m4s5-1-3:we14"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m4s5-1-3:ex4-4-5"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m4s5-1-3:ex4-4-9"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m4s5-1-3:ex4-7-7h"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "S7",
+       "ref": "wt:g10m4s5-1-3:rule-out-the-negative-breadth#extra-values",
+       "question_id": "q:g10m4s5-1-3:w002",
+       "text": "Marked values that the answer set does not contain",
+       "tagged": "mc:g10m4s5-1-3:keeps-solution-the-problem-rules-out"
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The error is real and canonical: the book rules out w=-12 (width must be positive), n=33 (both integers must be negative) and x=-30 (price must be positive). I re-derived both examples and they check out. The rectangle's equation w^2-16w-336=0 factorises as (w+12)(w-28), and 34*33=1122 gives (n+34)(n-33). The final answers match the canonical ones (w=28; n=-34 and -33). The refutation names no question id, page, figure or review history. It argues against skipping the check back to the problem, not just the factorising method, and it teaches only what the book teaches. The signal's first clause is unqualified, but the label and description confine it to problems that rule a solution out."
+     }
+    },
+    {
+     "id": "mc:g10m4s5-1-3:discards-negative-solution-by-reflex",
+     "lo_id": "lo:g10m4s5-1-3",
+     "label": "Throws away a negative solution without checking",
+     "description": "The student drops the negative solution every time, as a habit, even when the problem puts no sign condition on the unknown.",
+     "signal": "Gives only the positive solution where the problem sets no sign on the unknown, for example $7$ alone for a number whose sign is not stated.",
+     "kind": "generated_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "Checking each solution against the problem is the right habit, and in many word problems a negative solution does have to go, such as a width or a price. But the reason to discard a solution is something the problem says about the unknown, not the minus sign by itself."
+      },
+      {
+       "step": 2,
+       "text_md": "Take this problem: $4$ times a number, increased by $6$, gives a result $15$ less than the square of the number. The equation is $4x+6=x^{2}-15$, which factorises to $(x-7)(x+3)=0$, so $x=7$ or $x=-3$. The problem does not say the number is positive or negative, so nothing rules a solution out."
+      },
+      {
+       "step": 3,
+       "text_md": "Put $x=-3$ back into the equation. The left side is $4(-3)+6=-6$ and the right side is $(-3)^{2}-15=-6$. Both sides agree, so $-3$ is as good an answer as $7$. Keeping only $7$ leaves the problem half answered: the number is $7$ or $-3$."
+      },
+      {
+       "step": 4,
+       "text_md": "After factorising, reread the problem and look for a condition on the unknown, such as a length, a price, or being told it is positive or negative. If you find one, drop the solutions that break it. If the problem names no such condition, keep every solution and give them all."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m4s5-1-3:ex4-4-10"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m4s5-1-3:ex4-4-18"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "S7",
+       "ref": "wt:g10m4s5-1-3:keep-every-solution-that-fits#missed-values",
+       "question_id": "q:g10m4s5-1-3:w001",
+       "text": "Part of the answer set was not marked",
+       "tagged": "mc:g10m4s5-1-3:discards-negative-solution-by-reflex"
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The book's own answer for the number problem is x=7 or x=-3 (\"We are not told if the number is positive or negative\"), and the same holds for the x=2 or x=-3 problem. So reflexively dropping a negative solution is a real error for this objective. I checked the refutation's maths: x^2-4x-21=(x-7)(x+3), and for x=-3 both sides equal -6. It matches the canonical answer, names no ids or review history, argues against the reflex itself, and its closing rule (drop only solutions that break a stated condition, otherwise keep all) is consistent with the book. The signal is qualified to problems that set no sign on the unknown."
+     }
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m4s6-1-1",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No evidence was supplied for this objective: no caution box, no worked-example remark, no re-solve wrong turn, and no wrong option or widget predicate (the distractor list is empty). The questions and canonical solutions alone show the correct method, not a documented wrong turn, so I wrote no entries rather than invent errors from general experience of how students mishandle rearranging. Restating the book's method would not be a refutation, so the runtime falling back to the canonical solution is the honest outcome for this objective."
+    },
+    {
+     "kind": "other",
+     "text": "Possible transcription slip in the canonical solution for the question on making a the subject of s = ut + (1/2)at^2: its first line prints the right-hand side as ut + (1/2)a^2 (the t is missing from the last term), while the following lines and the printed answer use at^2. Final answer a = 2(s - ut)/t^2 is consistent with the question, but the solution text should be checked by a human before any step is quoted to a student."
+    },
+    {
+     "kind": "terminology",
+     "text": "The objective and questions mix 'make ... the subject', 'solve for', 'isolate the required variable' and 'literal equations'. All appear in the book, but I could not tell which one the book treats as its preferred term, so none was committed to in refutation text (no entries were written)."
+    },
+    {
+     "kind": "other",
+     "text": "The Fahrenheit question's text spells 'Celcius' (sic) while its own formulas use C and the solution says 'Celsius'. This is a typo in the question, not a mathematical issue."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m4s6-1-2",
+   "entries": [],
+   "dropped": [
+    {
+     "id": "mc:g10m4s6-1-2:divide-by-unchecked-common-factor",
+     "lo_id": "lo:g10m4s6-1-2",
+     "label": "Dividing through by a letter that might be 0",
+     "aliases": [],
+     "verdict": "UNCLEAR",
+     "reason": "The error is real and the book's own note supports it (you cannot simply divide through by a, since a may be 0). But step 4 says the factor 3x-8 gives x=3/8, and that is arithmetically false: 3x-8=0 gives x=8/3. Substituting x=8/3 into 3ax+2a-ax=5ax-6a gives 22a/3 on both sides, so 8/3 is right and 3/8 is wrong. The refutation copies the canonical solution's final answer (3/8), which looks like an error in the book's own working, since the canonical line a(3x-8)=0 itself leads to 8/3. It cannot be confirmed as mathematically correct, and a child would be taught a wrong value. Secondary weaknesses: step 3 says 'a(3x-8)=0 is true whatever a is', but that is an equation to solve, not an identity, so the wording is wrong. It also omits the book's a=0 case (x can be any real number). The refutation relies on one specific equation that the student may not be looking at. The wrong value alone is enough to drop the entry, so the canonical solution should be used instead. The book's 3/8 should be flagged upstream."
+    }
+   ],
+   "stripped": [],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m4s6-1-3",
+   "entries": [
+    {
+     "id": "mc:g10m4s6-1-3:only-positive-root",
+     "lo_id": "lo:g10m4s6-1-3",
+     "label": "Writes only the positive root",
+     "description": "After isolating the squared variable, the student takes the square root of both sides but writes only the positive value, so one of the two answers is lost.",
+     "signal": "The final answer shows a bare square root with no plus-or-minus sign in front (for example $r=\\sqrt{\\frac{V}{\\pi h}}$), or, with numbers given, a single positive value where the answer has two (for example $h=16$ with no $h=-16$).",
+     "kind": "generated_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You did the hard part correctly: you got the squared variable on its own and then took the square root of both sides. The slip is stopping at the positive root, as if squaring only ever came from a positive number."
+      },
+      {
+       "step": 2,
+       "text_md": "Try it on a real case. Take $I=\\dfrac{bh^2}{12}$ with $b=18$ and $I=384$. The working reaches $h^2=\\dfrac{12(384)}{18}=256$."
+      },
+      {
+       "step": 3,
+       "text_md": "Now ask which numbers square to give $256$. Both $16^2=256$ and $(-16)^2=256$, so $h=16$ and $h=-16$ both make the equation true. Writing only $h=16$ leaves out a second answer that works just as well."
+      },
+      {
+       "step": 4,
+       "text_md": "The same thing happens in a formula with letters. From $r^2=\\dfrac{V}{\\pi h}$, both a positive and a negative $r$ square to the same thing, so the answer is $r=\\pm\\sqrt{\\dfrac{V}{\\pi h}}$, not $r=\\sqrt{\\dfrac{V}{\\pi h}}$."
+      },
+      {
+       "step": 5,
+       "text_md": "The move to use: the moment you take the square root of both sides, put $\\pm$ in front of the root. If you are given numbers, finish by writing both values, like $h=16$ or $h=-16$."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "b01408 p.94"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "S6",
+       "ref": "tpl:g10m4s6-1-3:pickroot#mc:g10m4s6-1-3:only-positive-root",
+       "question_id": "q:g10m4s6-1-3:g001-pickro",
+       "text": "$r = \\sqrt{\\dfrac{V}{10h}}$",
+       "tagged": "mc:g10m4s6-1-3:only-positive-root"
+      },
+      {
+       "origin": "S7",
+       "ref": "wt:g10m4s6-1-3:both-roots-single-square#missed-values",
+       "question_id": "q:g10m4s6-1-3:w005",
+       "text": "Part of the answer set was not marked",
+       "tagged": "mc:g10m4s6-1-3:only-positive-root"
+      },
+      {
+       "origin": "S7",
+       "ref": "wt:g10m4s6-1-3:both-roots-sum-of-squares#missed-values",
+       "question_id": "q:g10m4s6-1-3:w010",
+       "text": "Part of the answer set was not marked",
+       "tagged": "mc:g10m4s6-1-3:only-positive-root"
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The book's caution says a square root of both sides gives a positive and a negative answer, and every canonical solution ends in a plus-or-minus root or a pair of values (r=±√(V/(πh)), h=±16, b=±8). The refutation's arithmetic checks out: 12(384)/18=256, 16²=(-16)²=256, and I=18(256)/12=384 holds for both h=16 and h=-16. It argues against this error by showing -16 also satisfies the equation, then states the book's own move of putting ± in front of the root. It names no question id, page or review history. The signal (bare root with no ±, or a single positive value where there are two) matches the error."
+     }
+    },
+    {
+     "id": "mc:g10m4s6-1-3:root-of-part",
+     "lo_id": "lo:g10m4s6-1-3",
+     "label": "Roots only the top of the fraction",
+     "description": "The student takes the square root of the top of the fraction only and leaves the bottom outside the square root.",
+     "signal": "The final answer has the square root over the top of the fraction only, with the bottom written outside it.",
+     "kind": "generated_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You got the squared variable on its own and you took a square root with $\\pm$ in front, which is right. The slip is that only the top of the fraction went under the square root, and the bottom was left outside it."
+      },
+      {
+       "step": 2,
+       "text_md": "The book takes the square root of both sides. The right-hand side is one fraction, top and bottom together, so the square root has to cover all of it: if $r^2=\\dfrac{\\text{top}}{\\text{bottom}}$, then $r=\\pm\\sqrt{\\dfrac{\\text{top}}{\\text{bottom}}}$."
+      },
+      {
+       "step": 3,
+       "text_md": "Try it on the book's example where $h^2=\\dfrac{12I}{b}$ with $I=384$ and $b=18$. With the whole fraction under the square root, $h=\\pm\\sqrt{\\dfrac{12(384)}{18}}=\\pm\\sqrt{256}=\\pm16$. With only the top under it you would get $\\dfrac{\\sqrt{12(384)}}{18}=\\dfrac{\\sqrt{4608}}{18}$, which is a number smaller than 4, nowhere near 16."
+      },
+      {
+       "step": 4,
+       "text_md": "So once you have written $r^2=\\dots$, take the square root of both sides with $\\pm$ in front, and before you finish check that everything that was on the right-hand side, top and bottom, sits under the one square root."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "distractor",
+       "ref": "D0"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m4s6-1-3:ex4-5-5"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m4s6-1-3:ex4-5-20"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "S6",
+       "ref": "tpl:g10m4s6-1-3:pickroot#mc:g10m4s6-1-3:root-of-part",
+       "question_id": "q:g10m4s6-1-3:g001-pickro",
+       "text": "$r = \\pm\\dfrac{\\sqrt{V}}{10h}$",
+       "tagged": "mc:g10m4s6-1-3:root-of-part"
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The error is a real deviation from the canonical step. Both ex4-5-5 and ex4-5-20 put the whole fraction under one root, e.g. ±√(12I/b). The refutation is mathematically correct: with only the top rooted, √4608/18 is about 3.77, versus ±√256=±16 for the whole fraction. Its closing check, that everything on the right-hand side sits under the one root, also holds for the other canonical answers (ex4-5-13, ex4-7-8i). It argues against this error with a concrete numerical contradiction, uses only the book's method, and names no id, page or review history. 'The book's example' carries no identifier and gives the numbers in full. The signal is specific to this error."
+     }
+    },
+    {
+     "id": "mc:g10m4s6-1-3:no-root-taken",
+     "lo_id": "lo:g10m4s6-1-3",
+     "label": "Stops at the squared variable",
+     "description": "After getting the squared variable on its own, the student writes the quotient as if it were the variable itself, with a plus-or-minus in front, and never takes the square root.",
+     "signal": "The final answer has no square root in it at all: it is the quotient from the line before, written as if it were the variable.",
+     "kind": "generated_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You got the squared variable on its own and you remembered that there is a positive and a negative answer. What is missing is the last move: the quotient you wrote is the value of $r^2$, not of $r$, so it still needs its square root."
+      },
+      {
+       "step": 2,
+       "text_md": "Each of the book's solutions has a line that ends in $r^2$ (or $h^2$, or $b^2$) and then one more line that takes the square root of both sides. That is the line where $\\pm\\sqrt{\\ }$ appears. If you skip it, the variable is still squared."
+      },
+      {
+       "step": 3,
+       "text_md": "See it in the book's example where $h^2=\\dfrac{12I}{b}$ with $I=384$ and $b=18$. The quotient works out to $256$, and that is $h^2$. Writing $h=\\pm256$ is wrong. The square root gives $h=\\pm\\sqrt{256}=\\pm16$, because $16^2=256$ and $(-16)^2=256$."
+      },
+      {
+       "step": 4,
+       "text_md": "So after you have the squared variable on its own, write one more line: take the square root of both sides, put $\\pm$ in front, and let the square root cover the whole right-hand side. Then the left-hand side is $r$ alone, not $r^2$."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "distractor",
+       "ref": "D1"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m4s6-1-3:ex4-5-20"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m4s6-1-3:ex4-5-5"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "S6",
+       "ref": "tpl:g10m4s6-1-3:pickroot#mc:g10m4s6-1-3:no-root-taken",
+       "question_id": "q:g10m4s6-1-3:g001-pickro",
+       "text": "$r = \\pm\\dfrac{V}{10h}$",
+       "tagged": "mc:g10m4s6-1-3:no-root-taken"
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The error is real. The canonical solutions each have a line isolating the squared variable followed by a separate line that takes the root with ±. This entry's student skips that last line while keeping the ±. The refutation is correct and specific: the quotient 256 is h², so h=±256 is wrong because the root gives ±16, and 16²=(-16)²=256. It does not merely restate the method. The wording 'a line that ends in r²' is loose, since in ex4-5-20 and ex4-7-8i the squared variable starts the line. It is not a mathematical error and does not name any id or page. The signal's qualifier (the quotient from the line before, written as if it were the variable) keeps it from firing on correct numeric answers like ±16."
+     }
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "terminology",
+     "text": "The distractor authors' readings used numerator and denominator. I wrote the top and the bottom of the fraction instead, because I could not confirm which of these terms the book uses; swap them in if the book's wording is numerator and denominator."
+    },
+    {
+     "kind": "terminology",
+     "text": "I used the phrases the squared variable and square root of both sides. The second is the book's own caution wording; the first is borrowed from the existing live entry and is not confirmed as the book's term."
+    },
+    {
+     "kind": "evidence",
+     "text": "The only printed evidence supplied is one caution about the positive and negative answer, which the existing only-positive-root entry already covers. Both new entries rest on the wrong options someone deliberately wrote plus the canonical solutions, not on a book caution or a re-solve's wrong turn. No re-solve wrong turns or worked-example remarks were included in the sources."
+    },
+    {
+     "kind": "other",
+     "text": "In the root-of-part refutation I say the number $\\sqrt{4608}/18$ is smaller than 4. It is the result of the error, not something the book solves, so a reviewer may want to confirm they are happy with that comparison. The book's own figures used are $12(384)/18=256$ and $\\sqrt{256}=16$."
+    },
+    {
+     "kind": "other",
+     "text": "The wrong options were given to me only as the answer text, not with their question stems. The refutations are therefore written in general terms (top and bottom, the squared variable) and anchored on the book's own worked example with $h$, so they should read correctly whatever numbers the generated family uses."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m4s6-1-4",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No evidence was supplied for this objective: no caution boxes, worked-example remarks, independent re-solve wrong turns, wrong options or widget predicates, and no existing entries. Under the rules (an entry must rest on a printed caution, a remark, a re-solve wrong turn or a deliberately written wrong option) no error is supported, so zero entries are returned and the runtime falls back to the canonical solutions. Common errors for this objective, such as inverting each fraction separately (1/V = 1/U + 1/W turned into V = U + W) or multiplying only the fraction terms by the LCD and leaving the other side unmultiplied, were deliberately NOT written up, because nothing here evidences them. If a reviewer or a re-solve later supplies one, it can be added then."
+    },
+    {
+     "kind": "evidence",
+     "text": "The canonical solution for the question about solving for r in S = a/(1 - r) has a transcription defect in its second line: it reads \"1-r&\\frac{a}{S}\" with the equals sign missing. The step also does not show the multiplication by the denominator that the objective describes. Not used as evidence for any entry; human review suggested."
+    },
+    {
+     "kind": "terminology",
+     "text": "The objective's description uses the term \"lowest common denominator (LCD)\", but the canonical solutions mostly say nothing explicit about it: they use a common denominator such as UVW or bx, and the book's own word for the side conditions is \"restriction\". Had any entry been written, the wording \"LCD\" would need checking against the book's text."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:g10m4s7-1-1",
+   "entries": [
+    {
+     "id": "mc:g10m4s7-1-1:keeps-sign-after-negative",
+     "lo_id": "lo:g10m4s7-1-1",
+     "label": "Keeps the inequality sign after multiplying or dividing by a negative number",
+     "description": "The student multiplies or divides both sides by a negative number (for example dividing $-r>-4$ by $-1$, or $-2x>4$ by $-2$) and leaves the inequality sign pointing the same way, as if solving an equation.",
+     "signal": null,
+     "kind": "generated_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You rearranged $6-r>2$ to $-r>-4$ and then removed the minus sign, writing $r>4$. The rearranging is right, and so is the idea that you must get $r$ on its own. What is missing is that with an inequality, multiplying or dividing both sides by a negative number also means you reverse the inequality sign."
+      },
+      {
+       "step": 2,
+       "text_md": "Here is why, on the number line. $-r>-4$ says that $-r$ lies to the right of $-4$. Multiplying by $-1$ swaps the two sides of zero, so what was on the right is now on the left: $r$ lies to the left of $4$. That is $r<4$."
+      },
+      {
+       "step": 3,
+       "text_md": "Test both answers in $6-r>2$. Try $r=5$, which $r>4$ allows: $6-5=1$, and $1>2$ is false, so $r=5$ is not a solution. Try $r=0$, which $r<4$ allows: $6-0=6$, and $6>2$ is true."
+      },
+      {
+       "step": 4,
+       "text_md": "Next time, when you reach a line like $-r>-4$ or $-2x>4$, ask whether the number you are multiplying or dividing by is negative. If it is, reverse the sign: $-r>-4$ becomes $r<4$, which in interval notation is $(-\\infty, 4)$, and $-2x>4$ becomes $x<-2$. If it is positive, leave the sign as it is."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m4s7-1-1:we17"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m4s7-1-1:ex4-6-2a"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m4s7-1-1:ex4-6-3a"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "S6",
+       "ref": "tpl:g10m4s7-1-1:divneg#mc:g10m4s7-1-1:keeps-sign-after-negative",
+       "question_id": "q:g10m4s7-1-1:g001-divneg",
+       "text": "$x < 7$",
+       "tagged": "mc:g10m4s7-1-1:keeps-sign-after-negative"
+      },
+      {
+       "origin": "S6",
+       "ref": "tpl:g10m4s7-1-1:divneg#untagged",
+       "question_id": "q:g10m4s7-1-1:g004-divneg",
+       "text": "$x < 7$",
+       "tagged": null
+      },
+      {
+       "origin": "S6",
+       "ref": "tpl:g10m4s7-1-1:divneg#untagged",
+       "question_id": "q:g10m4s7-1-1:g010-divneg",
+       "text": "$x < 1$",
+       "tagged": null
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The error is real and shown by the book's working: -r>-4 must become r<4, and -2x>4 must become x<-2. I re-derived each step of the refutation and found no slip. 6-5=1 is not >2, 6-0=6 is >2, and (-inf,4) matches the canonical answer and the number-line figure. Dividing directly by a negative number is also how the book itself works. It argues against this specific slip (removing the minus without reversing) rather than restating the method. The number-line reflection and substitution check are standard justifications, not new content. No question ids, page numbers, figure numbers or review history appear in the label, description, signal or steps. The signal is too loose, though: it only says the sign points the same way as before. A student who ignores the minus sign (x<-7 for -2x<-14) also satisfies it, so it does not separate this error from the ignores-negative-coefficient one. The signal should add that the number in the answer is right."
+     }
+    },
+    {
+     "id": "mc:g10m4s7-1-1:ignores-negative-coefficient",
+     "lo_id": "lo:g10m4s7-1-1",
+     "label": "Ignores the minus sign in front of the $x$ term",
+     "description": "The student sees a term such as $-2x$ and divides both sides by the positive number $2$, as if the minus sign were not there, so the inequality sign is not reversed and the answer comes out with the wrong sign and the wrong direction.",
+     "signal": "The answer has the opposite direction and the opposite sign of the number from the correct one, for example $x>2$ where the correct answer is $x<-2$.",
+     "kind": "generated_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You had the right idea: divide both sides by the number in front of $x$. The slip is that the minus sign in front of that number was dropped, so $-2x>4$ was read as $2x>4$, which gives $x>2$."
+      },
+      {
+       "step": 2,
+       "text_md": "But $-2x$ and $2x$ are different numbers: when $x=3$, $-2x$ is $-6$ and $2x$ is $6$. The minus sign is part of the number that multiplies $x$, so it cannot be skipped."
+      },
+      {
+       "step": 3,
+       "text_md": "Take $3x+4>5x+8$. Collecting the $x$ terms gives $-2x>4$. The book then multiplies both sides by $-1$ and reverses the inequality sign: $2x<-4$, so $x<-2$. That points the opposite way from $x>2$."
+      },
+      {
+       "step": 4,
+       "text_md": "Check with numbers. $x=3$ is allowed by $x>2$, but $3(3)+4=13$ is not greater than $5(3)+8=23$. And $x=-3$ is ruled out by $x>2$, yet $3(-3)+4=-5$ is greater than $5(-3)+8=-7$."
+      },
+      {
+       "step": 5,
+       "text_md": "Next time, when the $x$ term has a minus sign, keep the minus sign with the number: multiply or divide both sides by that negative number, and reverse the inequality sign."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "distractor",
+       "ref": "D1"
+      },
+      {
+       "type": "distractor",
+       "ref": "D7"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m4s7-1-1:ex4-6-2a"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "S6",
+       "ref": "tpl:g10m4s7-1-1:divneg#mc:g10m4s7-1-1:ignores-negative-coefficient",
+       "question_id": "q:g10m4s7-1-1:g001-divneg",
+       "text": "$x < -7$",
+       "tagged": "mc:g10m4s7-1-1:ignores-negative-coefficient"
+      },
+      {
+       "origin": "S6",
+       "ref": "tpl:g10m4s7-1-1:divneg#untagged",
+       "question_id": "q:g10m4s7-1-1:g009-divneg",
+       "text": "$x < -8$",
+       "tagged": null
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The error is real: -2x>4 read as 2x>4 gives x>2 instead of x<-2. All arithmetic checks out. At x=3, -2x is -6 and 2x is 6. 3x+4>5x+8 collects to -2x>4, then 2x<-4, then x<-2, which is the book's own working. The substitution check holds: x=3 gives 13 vs 23, which fails, and x=-3 gives -5 vs -7, which holds. It argues against this specific slip (dropping the minus), not just the method. It uses nothing outside the book beyond a substitution check, and it names no question ids or review history. The signal (opposite direction and opposite sign of the number) is precise: it fits only this error among the three sibling errors in this family."
+     }
+    },
+    {
+     "id": "mc:g10m4s7-1-1:keeps-old-sign-on-other-side",
+     "lo_id": "lo:g10m4s7-1-1",
+     "label": "Reverses the inequality sign but leaves the number on the other side with its old sign",
+     "description": "The student reverses the inequality sign correctly after multiplying or dividing by a negative number, but writes the number on the other side with its original sign, for example turning $-r>-4$ into $r<-4$ instead of $r<4$.",
+     "signal": "The inequality sign is reversed correctly, but the number in the answer has the opposite sign from the correct one, for example $r<-4$ where the correct answer is $r<4$.",
+     "kind": "generated_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You remembered to reverse the inequality sign, which is the step many students forget. The slip is on the other side: the number there kept its old sign, so $-r>-4$ became $r<-4$."
+      },
+      {
+       "step": 2,
+       "text_md": "Multiplying or dividing by a negative number acts on both sides. For $6-r>2$ the book gets $-r>-4$, then multiplies both sides by $-1$: $-r$ becomes $r$, $-4$ becomes $4$, and the inequality sign is reversed. The answer is $r<4$."
+      },
+      {
+       "step": 3,
+       "text_md": "Dividing works the same way. For $-3x\\le-6$, dividing both sides by $-3$ gives $x\\ge2$, because $-6$ divided by $-3$ is $2$, not $-2$."
+      },
+      {
+       "step": 4,
+       "text_md": "Check: $r=0$ makes $6-r>2$ true, since $6>2$. But $r<-4$ would rule $0$ out, while $r<4$ keeps it."
+      },
+      {
+       "step": 5,
+       "text_md": "Next time, after you multiply or divide by a negative number, change the sign of the number on the other side as well, and reverse the inequality sign."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "distractor",
+       "ref": "D0"
+      },
+      {
+       "type": "distractor",
+       "ref": "D2"
+      },
+      {
+       "type": "distractor",
+       "ref": "D3"
+      },
+      {
+       "type": "distractor",
+       "ref": "D5"
+      },
+      {
+       "type": "distractor",
+       "ref": "D6"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m4s7-1-1:we17"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m4s7-1-1:ex4-7-12l"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "S6",
+       "ref": "tpl:g10m4s7-1-1:divneg#untagged",
+       "question_id": "q:g10m4s7-1-1:g001-divneg",
+       "text": "$x > -7$",
+       "tagged": null
+      },
+      {
+       "origin": "S6",
+       "ref": "tpl:g10m4s7-1-1:divneg#untagged",
+       "question_id": "q:g10m4s7-1-1:g002-divneg",
+       "text": "$x > -3$",
+       "tagged": null
+      },
+      {
+       "origin": "S6",
+       "ref": "tpl:g10m4s7-1-1:divneg#untagged",
+       "question_id": "q:g10m4s7-1-1:g003-divneg",
+       "text": "$x > -9$",
+       "tagged": null
+      },
+      {
+       "origin": "S6",
+       "ref": "tpl:g10m4s7-1-1:divneg#untagged",
+       "question_id": "q:g10m4s7-1-1:g005-divneg",
+       "text": "$x > -1$",
+       "tagged": null
+      },
+      {
+       "origin": "S6",
+       "ref": "tpl:g10m4s7-1-1:divneg#untagged",
+       "question_id": "q:g10m4s7-1-1:g008-divneg",
+       "text": "$x > -6$",
+       "tagged": null
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The error is real: the sign is reversed correctly but the number keeps its old sign, so r<-4 instead of r<4. Every step checks out. -r>-4 times -1 gives r<4. -3x<=-6 divided by -3 gives x>=2, and -6/-3 is 2 not -2. r=0 is a true solution of 6-r>2 that r<-4 excludes. Both examples are the book's own working. It argues against this specific slip rather than restating the method, and it carries no ids or review history. The closing line 'change the sign of the number on the other side' is a shorthand (the number is also divided), but step 3 shows the division explicitly. The signal (sign reversed correctly, number's sign wrong) is precise."
+     }
+    }
+   ],
+   "dropped": [
+    {
+     "id": "mc:g10m4s7-1-1:multiplies-divides-by-variable",
+     "lo_id": "lo:g10m4s7-1-1",
+     "label": "Multiplies or divides both sides by the variable",
+     "aliases": [],
+     "verdict": "UNCLEAR",
+     "reason": "The caution (cannot multiply or divide an inequality by a variable) does support the error, and the closing method (-2x>4, so x<-2) matches the canonical answer. I still cannot confirm the refutation. Step 3 states flatly that dividing by x gives 3+4/x>5+8/x, which is only true for x>0 and sits badly with step 2's point that the sign of x is unknown. The line 'Moving terms from one side to the other does not change the sign' is ambiguous: the next line shows 5x becoming -5x. The example brings in x-in-the-denominator expressions the book never uses here. The description's 'to clear a fraction' has no basis, since every fraction in this objective has a numeric denominator and is cleared by a number. The 'why' in step 2 is the standard reason, but the book's evidence states only the caution. None of this is harmful, but I am not certain enough to confirm."
+    }
+   ],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "The stems and correct answers of the generated family tpl:g10m4s7-1-1:divneg were not in the packet. I assigned the nine options by their form: they all fit a stem like -ax < -ak with correct answer x > k, giving three wrong forms x > -k, x < k and x < -k. Three of them (x > -7, x < -7, x < 7) are exactly that triple for k = 7, and D1's author tag fits the x < -k form. Please confirm against the family template that every variant has that shape before these assignments ship; if a variant has a different shape (for example correct answer x < -k), the assignments of D0, D2, D3, D5, D6 and D8 would be wrong."
+    },
+    {
+     "kind": "evidence",
+     "text": "The only printed caution (do not divide or multiply an inequality by a variable) is already covered by mc:g10m4s7-1-1:multiplies-divides-by-variable. No distractor encodes it, so nothing is assigned to it. No book remark or independent re-solve wrong turn was supplied, so the two new entries rest on wrong options alone."
+    },
+    {
+     "kind": "evidence",
+     "text": "The new entry keeps-old-sign-on-other-side rests on five untagged generated options with no author reading. It is a signed-arithmetic slip (the number on the other side keeps its sign, or -6 divided by -3 written as -2) rather than a printed caution; drop it if a reviewer thinks that is too thin, and the five options fall back to the canonical solution."
+    },
+    {
+     "kind": "other",
+     "text": "Both refutations use a substitution check (trying a number in the original inequality). The book's worked solutions stop at the interval and never show this. The numbers used are for questions the book solved (3x+4>5x+8 and 6-r>2) and the arithmetic is checked, but a reviewer should confirm the technique is acceptable for this objective."
+    },
+    {
+     "kind": "terminology",
+     "text": "The book's worked solution for 6-r>2 reads 'Multiply by and reverse inequality sign' with the multiplier missing from the extraction. I wrote 'multiplies both sides by -1', which is what the working shows (-r > -4 becomes r < 4). I also avoided the words 'coefficient' and 'boundary' in student text because I could not confirm the book uses them; 'reverse the inequality sign' is the book's own wording. The slug ignores-negative-coefficient is kept only to match D1's existing tag."
+    },
+    {
+     "kind": "other",
+     "text": "Step 3 of the keeps-old-sign-on-other-side refutation states that -6 divided by -3 is 2. That is a prerequisite fact the book's own working relies on (-3x <= -6 gives x >= 2) rather than something this objective teaches."
+    }
+   ],
+   "notes": [
+    "mc:g10m4s7-1-1:keeps-sign-after-negative: signal removed — the verifier could not confirm it"
+   ]
+  },
+  {
+   "lo": "lo:g10m4s7-1-2",
+   "entries": [
+    {
+     "id": "mc:g10m4s7-1-2:interval-notation-for-integer-set",
+     "lo_id": "lo:g10m4s7-1-2",
+     "label": "Interval notation for an integer or natural-number set",
+     "description": "The student solves the inequality correctly but writes the answer in interval notation, such as $(1,\\infty)$, even though the question states that the variable is in $\\mathbb{Z}$ or $\\mathbb{N}$.",
+     "signal": "The answer is an interval such as $(1,\\infty)$ or $(-\\infty,4)$ for an inequality whose stated set is $\\mathbb{Z}$ or $\\mathbb{N}$.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "Writing the answer as an interval is a natural move, and solving to get $b>1$ is the right first step. The slip is that the question names the set, $b\\in\\mathbb{Z}$, and an interval answer quietly ignores it."
+      },
+      {
+       "step": 2,
+       "text_md": "An interval like $(1,\\infty)$ means every real number greater than 1, including $1.5$ and $2.7$. But with $b\\in\\mathbb{Z}$ only integers are allowed, so $1.5$ is not a solution and the interval claims more than the question does."
+      },
+      {
+       "step": 3,
+       "text_md": "That is why the book cautions that interval notation is only for an interval of real numbers. Integers are separate points with gaps between them, not a continuous stretch of the number line, so no interval can describe them."
+      },
+      {
+       "step": 4,
+       "text_md": "Keep the set the question gives you. For $b\\in\\mathbb{Z}$ or $x\\in\\mathbb{N}$, write the inequality together with its set, such as $b>1;b\\in\\mathbb{Z}$, and show it on a number line. Use interval notation when the answer is over the real numbers."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "b01452"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m4s7-1-2:ex4-6-4a"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m4s7-1-2:ex4-7-11a"
+      }
+     ],
+     "covers": [],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The error is real for this objective, which asks for the stated number set. The book's caution says interval notation is only for an interval of real numbers. The canonical answers keep the set: b>1; b in Z, and x<4; x in N, each with a number line. The refutation is mathematically correct: (1,infinity) includes 1.5, which is not an integer, and the integers greater than 1 are not an interval. Its fix matches the canonical form of the inequality plus its set. It argues against this error rather than restating the method. Neither the label, the description, the signal nor any refutation step names a question id, page, figure or review history. The signal is clear: an interval answer where the stated set is Z or N."
+     }
+    },
+    {
+     "id": "mc:g10m4s7-1-2:symbol-not-flipped-negative",
+     "lo_id": "lo:g10m4s7-1-2",
+     "label": "Inequality symbol not flipped when dividing by a negative",
+     "description": "The student divides both sides of an inequality by a negative number but keeps the same inequality symbol, so the number line or interval points the wrong way.",
+     "signal": null,
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You treated the inequality like an equation: do the same thing to both sides and leave the symbol alone. That works for adding, subtracting, and for multiplying or dividing by a positive number. The one step that changes is multiplying or dividing by a negative number."
+      },
+      {
+       "step": 2,
+       "text_md": "The book's reminder is to flip the inequality symbol whenever you multiply or divide both sides by a negative."
+      },
+      {
+       "step": 3,
+       "text_md": "Take $-4x+1>-2(x-15)$. It reduces to $-2x>29$. Dividing both sides by $-2$ gives $x<\\frac{-29}{2}$, not $x>\\frac{-29}{2}$. Keeping the $>$ would give the interval $\\left(\\frac{-29}{2},\\infty\\right)$, which runs the opposite way to the correct $\\left(-\\infty,\\frac{-29}{2}\\right)$. In the same way, $-9x>0$ gives $x<0$, so the shading goes to the left of $0$, not the right."
+      },
+      {
+       "step": 4,
+       "text_md": "The move that works: in the line where you divide or multiply by a negative, flip the symbol right then. Only after that, draw the number line or write the interval from the flipped inequality. A $<$ or $\\leq$ gives an interval that starts at $-\\infty$, and a $>$ or $\\geq$ gives one that ends at $\\infty$."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "remark",
+       "ref": "q:g10m4s7-1-2:ex4-7-10b"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m4s7-1-2:ex4-7-10a"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m4s7-1-2:ex4-7-11c"
+      }
+     ],
+     "covers": [],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The error is real and supported by the book's reminder to flip the symbol when multiplying or dividing by a negative. The worked numbers all check against the canonical solutions. -4x+1>-2x+30 gives -2x>29, so x<-29/2 and the interval is (-infinity,-29/2). 1-5x>4x+1 gives -9x>0, so x<0. The closing rule is also right: less-than forms start at -infinity and greater-than forms end at infinity. The refutation names no question id, page or review history, and it argues against this specific slip. Caveat: the signal is only a symptom, 'runs the opposite way', with no condition that the question actually divides or multiplies by a negative. It would also fire on a student who wrongly flips when dividing by a positive, as in the canonical solution that divides by 10, or on one who misreads the shading. That student would be told they failed to flip when they did not. So signal_ok is false, and the signal should be tied to questions that require a negative divide."
+     }
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": [
+    "mc:g10m4s7-1-2:symbol-not-flipped-negative: signal removed — the verifier could not confirm it"
+   ]
+  },
+  {
+   "lo": "lo:g10m4s7-1-3",
+   "entries": [
+    {
+     "id": "mc:g10m4s7-1-3:operate-on-middle-only",
+     "lo_id": "lo:g10m4s7-1-3",
+     "label": "Changing only the middle part of a double inequality",
+     "description": "The student removes the number added to or taken from the middle part of a double inequality but leaves the numbers at the two ends unchanged.",
+     "signal": "An answer whose end numbers are exactly the numbers printed at the two ends of the question, such as $[5, 8)$ for $5\\le x+3<8$.",
+     "kind": "generated_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "Taking the $+3$ off the middle is the right idea. What was missed is that a double inequality is two inequalities in one, so whatever you do to the middle you must also do to the numbers at both ends."
+      },
+      {
+       "step": 2,
+       "text_md": "Take $5\\le x+3<8$. Subtracting $3$ from the middle only gives $5\\le x<8$, which says $x$ can be $5$. Check: if $x=5$ then $x+3=8$, and $8<8$ is false. So $x=5$ does not belong in the answer."
+      },
+      {
+       "step": 3,
+       "text_md": "It also throws away real solutions. Try $x=2$: $x+3=5$, and $5\\le 5<8$ is true, yet $5\\le x<8$ would leave $2$ out."
+      },
+      {
+       "step": 4,
+       "text_md": "Subtract $3$ from all the parts: $5-3\\le x+3-3<8-3$, which gives $2\\le x<5$. All three parts move down by the same amount, so they stay in the same order."
+      },
+      {
+       "step": 5,
+       "text_md": "The move that works: write the operation under every part before you simplify, so no part is left out. Here that gives $2\\le x<5$, and $[2, 5)$ in interval notation."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m4s7-1-3:we19"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "S7",
+       "ref": "wt:g10m4s7-1-3:double-inequality-shift#interval-wrong",
+       "question_id": "q:g10m4s7-1-3:w012",
+       "text": "The interval does not run between the right endpoints",
+       "tagged": "mc:g10m4s7-1-3:operate-on-middle-only"
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The error is real and supported by we19, whose method is to subtract from all the parts. The refutation is correct: 5<=x<8 wrongly admits x=5, since 5+3=8 and 8<8 is false, and wrongly excludes x=2, since 5<=5<8 is true. The correct answer 2<=x<5, written [2, 5), matches the canonical solution and its number-line figure, which has a filled circle at 2 and an open circle at 5. It argues against the slip rather than just restating the method. It names no question ids, figures or review history and teaches nothing beyond the book. The signal, answer ends equal to the printed ends, is specific, since no correct answer in this objective has both ends equal to the printed ones, so it would not misdiagnose a student. Predicate 21 fits and predicate 20 does not."
+     }
+    },
+    {
+     "id": "mc:g10m4s7-1-3:or-as-between",
+     "lo_id": "lo:g10m4s7-1-3",
+     "label": "Treating \"or\" as \"between\" the two answers",
+     "description": "With two inequalities joined by \"or\", the student squeezes the two answers into one stretch between the two end values instead of keeping them as two separate pieces.",
+     "signal": "A single interval between the two end values, such as $\\left(-\\frac{3}{2}, \\frac{1}{2}\\right)$, or a double inequality such as $-\\frac{3}{2}<x<\\frac{1}{2}$, for $4x+3<-3$ or $4x+3>5$.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "Solving each inequality on its own is exactly the right start: $4x+3<-3$ gives $x<-\\frac{3}{2}$, and $4x+3>5$ gives $x>\\frac{1}{2}$. The slip is in joining them, because \"or\" does not ask for the numbers between the two values."
+      },
+      {
+       "step": 2,
+       "text_md": "Try a number between them, such as $x=0$. Then $4x+3=3$. Is $3<-3$? No. Is $3>5$? No. So $x=0$ fits neither inequality and cannot be in the answer. That rules out any answer that runs between $-\\frac{3}{2}$ and $\\frac{1}{2}$."
+      },
+      {
+       "step": 3,
+       "text_md": "Now try numbers outside. $x=-2$ gives $4x+3=-5$, and $-5<-3$ is true. $x=1$ gives $4x+3=7$, and $7>5$ is true. The numbers that work lie beyond the two values: one group to the left of $-\\frac{3}{2}$ and one group to the right of $\\frac{1}{2}$."
+      },
+      {
+       "step": 4,
+       "text_md": "With \"or\", a number only has to satisfy one of the two inequalities. So the answer is the two pieces kept side by side, not squeezed into one double inequality."
+      },
+      {
+       "step": 5,
+       "text_md": "The move that works: solve each inequality separately, then keep both answers. In interval notation, write each piece and join them with $\\cup$: $\\left(-\\infty, -\\frac{3}{2}\\right)\\cup\\left(\\frac{1}{2}, \\infty\\right)$."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m4s7-1-3:ex4-6-3g"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:g10m4s7-1-3:ex4-7-10d"
+      }
+     ],
+     "covers": [],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The error is real and supported by ex4-6-3g and ex4-7-10d, both of which are 'or' questions whose canonical answers are two outward pieces joined by union. The refutation is correct. 4x+3<-3 gives x<-3/2 and 4x+3>5 gives x>1/2. x=0 gives 3, which fails both inequalities. x=-2 gives -5 and x=1 gives 7, which work. The final answer (-inf, -3/2) U (1/2, inf) matches the canonical solution. It argues against the squeeze-into-one-interval slip rather than restating the method. It names no question ids or review history and teaches nothing beyond the book. The signal, a single interval or double inequality between the two end values, is specific to this slip. There are no attached options or predicates."
+     }
+    }
+   ],
+   "dropped": [
+    {
+     "id": "mc:g10m4s7-1-3:negative-no-reverse",
+     "lo_id": "lo:g10m4s7-1-3",
+     "label": "Dividing by a negative without turning the signs around",
+     "aliases": [],
+     "verdict": "UNCLEAR",
+     "reason": "The error is real and the refutation is mathematically correct and matches the canonical working for 1<=1-2y<9. 0<=-2y<8 divided by -2 gives 0>=y>-4, then -4<y<=0 and (-4, 0]. The y=-1 check is right. No question ids or review history appear in the student text. I cannot confirm the entry because its signal would misdiagnose students. First, 'a double inequality whose left number is bigger than its right number' also describes the correct line 0>=y>-4, which is the book's own step, so a correct answer written in that form would be flagged as the error. Second, '[0, -4)' is what a student gets by copying the ends in reading order after correctly turning the signs, so it cannot tell that student from one who left the signs alone. The refutation then wrongly tells that student they kept both signs. The signal needs to say that the signs still point as 'less than' while the numbers run from larger to smaller. The cited evidence also names ex4-6-2h, which is not among the canonical solutions provided; 2l and 2m do support the error. Attached predicate 19 does not fit."
+    }
+   ],
+   "stripped": [
+    {
+     "lo": "lo:g10m4s7-1-3",
+     "origin": "S7",
+     "ref": "wt:g10m4s7-1-3:double-inequality-negative#endpoint-inclusion-wrong",
+     "question_id": "q:g10m4s7-1-3:w004",
+     "text": "Right endpoints, wrong circles — hollow excludes (< >), filled includes (<= >=)",
+     "tagged": "mc:g10m4s7-1-3:negative-no-reverse",
+     "reason": "its entry mc:g10m4s7-1-3:negative-no-reverse was dropped (UNCLEAR)"
+    },
+    {
+     "lo": "lo:g10m4s7-1-3",
+     "origin": "S7",
+     "ref": "wt:g10m4s7-1-3:double-inequality-negative#interval-wrong",
+     "question_id": "q:g10m4s7-1-3:w004",
+     "text": "The interval does not run between the right endpoints",
+     "tagged": "mc:g10m4s7-1-3:operate-on-middle-only",
+     "reason": "does not encode mc:g10m4s7-1-3:operate-on-middle-only: This is the negative-division widget, and a wrong interval there is a catch-all that is more characteristically produced by mishandling the division by a negative, so it cannot be tied to the middle-only slip. A student who leaves the signs unturned also lands on a wrong interval. This is therefore not a predicate that only this error triggers."
+    }
+   ],
+   "flags": [],
+   "notes": []
+  }
+ ],
+ "totals": {
+  "objectives": 19,
+  "entries": 18,
+  "dropped": 8,
+  "stripped": 4,
+  "skipped": 0,
+  "flags": 39
+ }
+}

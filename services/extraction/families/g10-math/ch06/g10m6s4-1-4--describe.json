@@ -1,0 +1,110 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s4-1-4:describe",
+ "kind": "family",
+ "lo_id": "lo:g10m6s4-1-4",
+ "parent_question_id": "q:g10m6s4-1-4:ex6-8-57b",
+ "source_page": 233,
+ "tier": "advanced",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "q",
+   "choice": [
+    -4,
+    -3,
+    -2,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "a",
+   "choice": [
+    -9,
+    -8,
+    -7,
+    -6,
+    -5,
+    -4,
+    -3,
+    -2,
+    -1,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ]
+  },
+  {
+   "require": "abs(a) != abs(q) and abs(a) != q * q",
+   "why": "keeps the correct asymptote, the numerator a, its opposite -q and the x-intercept all different from one another, so the four distractors are distinct from the correct option and from each other"
+  },
+  {
+   "name": "x0",
+   "let": "-a / q"
+  },
+  {
+   "name": "sg",
+   "let": "'+' if q > 0 else '-'"
+  },
+  {
+   "name": "br",
+   "let": "'top-right and bottom-left' if a > 0 else 'top-left and bottom-right'"
+  },
+  {
+   "name": "brx",
+   "let": "'top-left and bottom-right' if a > 0 else 'top-right and bottom-left'"
+  },
+  {
+   "name": "sgw",
+   "let": "'positive' if a > 0 else 'negative'"
+  }
+ ],
+ "constraints": [],
+ "stem": "A student is asked to sketch the hyperbola $xy = {=a} {=sg} {=abs(q)}x$. Which description of the sketch is correct?",
+ "choices": {
+  "correct": "The branches lie in the {=br} regions formed by the asymptotes; the asymptotes are $x = 0$ and $y = {=q}$; the $x$-intercept is $({=x0}, 0)$.",
+  "distractors": [
+   {
+    "text": "The branches lie in the {=br} regions formed by the asymptotes; the asymptotes are $x = 0$ and $y = {=a}$; the $x$-intercept is $({=x0}, 0)$.",
+    "misconception_id": "mc:g10m6s4-1-4:numerator-a-as-asymptote"
+   },
+   {
+    "text": "The branches lie in the {=br} regions formed by the asymptotes; the asymptotes are $x = 0$ and $y = {=-q}$; the $x$-intercept is $({=x0}, 0)$.",
+    "misconception_id": "mc:g10m6s4-1-4:asymptote-sign-flipped"
+   },
+   {
+    "text": "The branches lie in the {=brx} regions formed by the asymptotes; the asymptotes are $x = 0$ and $y = {=q}$; the $x$-intercept is $({=x0}, 0)$.",
+    "misconception_id": "mc:g10m6s4-1-4:branches-sign-swapped"
+   },
+   {
+    "text": "The branches lie in the {=br} regions formed by the asymptotes; the asymptotes are $x = 0$ and $y = {=x0}$; the $x$-intercept is $({=x0}, 0)$.",
+    "misconception_id": "mc:g10m6s4-1-4:intercept-as-asymptote"
+   }
+  ]
+ },
+ "solution": [
+  "Divide both sides by $x$ to reach the standard form $y = \\frac{a}{x} + q$: $y = \\frac{{=a}}{x} {=sg} {=abs(q)}$, so $a = {=a}$ and $q = {=q}$.",
+  "The sign of $a$ decides where the branches lie. Here $a$ is {=sgw}, so the branches lie in the {=br} regions formed by the asymptotes.",
+  "The vertical asymptote is $x = 0$ and the horizontal asymptote is $y = q$, that is $y = {=q}$.",
+  "For the $x$-intercept put $y = 0$: $\\frac{{=a}}{x} = {=-q}$.",
+  "Multiply both sides by $x$ and divide by ${=-q}$: $x = {=a} \\div ({=-q}) = {=x0}$, so the $x$-intercept is $({=x0}, 0)$. There is no $y$-intercept.",
+  "The correct description therefore has the branches in the {=br} regions, asymptotes $x = 0$ and $y = {=q}$, and $x$-intercept $({=x0}, 0)$."
+ ],
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m6s4-1-4:branches-sign-swapped",
+   "label": "Puts the branches in the wrong pair of regions for the sign of a",
+   "description": "The student reads the sign of a wrongly, often through a slip when rewriting xy = a + qx as y = a/x + q, and so places the branches in the pair of regions that belongs to the opposite sign of a, even though the asymptotes and intercept are right."
+  }
+ ],
+ "notes": "Advanced tier: the book's own twist (the equation arrives as xy = ..., not y = a/x + q, as in ex6-8-57b) combined with the whole sketch method: sign of a, asymptotes, intercept. Each distractor changes exactly one component of the correct description and carries one named error; the require line makes the four wrong values differ from each other and from the correct one, so exactly one option is correct in every instance. The branch convention is the book's first/third versus second/fourth quadrant rule, restated relative to the point where the asymptotes cross (top-right and bottom-left for a > 0, top-left and bottom-right for a < 0); this was checked by x > 0 gives y > q when a > 0. |q| is at least 2 so the term q x never prints as 1x. x-intercept is x = -a/q and may be a fraction (rendered with \\frac inside $...$, which is fine in an option); a is never 0. One proposed misconception is new (branches-sign-swapped); the other three ids are from the catalogue. The stem varies with a and q, so distinct_by_choices is not needed."
+}

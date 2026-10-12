@@ -1,0 +1,80 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m14s5-1-1:listed",
+ "kind": "family",
+ "lo_id": "lo:g10m14s5-1-1",
+ "parent_question_id": "q:g10m14s5-1-1:ex14-5-1",
+ "source_page": 484,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "nS",
+   "choice": [
+    20,
+    25,
+    50,
+    100
+   ]
+  },
+  {
+   "name": "v",
+   "sample": {
+    "from": "range(1, nS + 1)",
+    "k": 7
+   }
+  },
+  {
+   "name": "w",
+   "shuffle": "v"
+  },
+  {
+   "name": "sa",
+   "let": "sorted([w[0], w[1], w[2], w[3], w[4]])"
+  },
+  {
+   "name": "sb",
+   "let": "sorted([w[0], w[1], w[5], w[6]])"
+  },
+  {
+   "name": "sc",
+   "let": "sorted([w[0], w[1]])"
+  },
+  {
+   "name": "nU",
+   "let": "len(sa) + len(sb) - len(sc)"
+  },
+  {
+   "name": "pa",
+   "let": "fixed(len(sa) / nS, 2)"
+  },
+  {
+   "name": "pb",
+   "let": "fixed(len(sb) / nS, 2)"
+  },
+  {
+   "name": "pc",
+   "let": "fixed(len(sc) / nS, 2)"
+  },
+  {
+   "name": "pu",
+   "let": "fixed(nU / nS, 2)"
+  }
+ ],
+ "constraints": [],
+ "stem": "The sample space is $S=\\{n : n \\in \\mathbb{Z}, 1 \\leq n \\leq {=nS}\\}$ and every outcome is equally likely. Two events are given by the event sets $A=\\{{=sa[0]}, {=sa[1]}, {=sa[2]}, {=sa[3]}, {=sa[4]}\\}$ and $B=\\{{=sb[0]}, {=sb[1]}, {=sb[2]}, {=sb[3]}\\}$. Calculate $P(A\\cup B)$. Give your answer as a decimal number, rounded to two decimal places.",
+ "answer": "fixed(nU / nS, 2)",
+ "solution": [
+  "Use the identity $P(A\\cup B)=P(A)+P(B)-P(A\\cap B)$.",
+  "The sample space is the integers from 1 to {=nS}, so $n(S)={=nS}$.",
+  "Count the elements of each event set: $n(A)={=len(sa)}$ and $n(B)={=len(sb)}$.",
+  "The numbers that appear in both event sets are {=sc[0]} and {=sc[1]}, so $A\\cap B=\\{{=sc[0]}, {=sc[1]}\\}$ and $n(A\\cap B)={=len(sc)}$.",
+  "Find each probability using $P(X)=\\frac{n(X)}{n(S)}$:",
+  "$\\begin{aligned}P(A)&=\\frac{{=len(sa)}}{{=nS}}={=pa}\\\\P(B)&=\\frac{{=len(sb)}}{{=nS}}={=pb}\\\\P(A\\cap B)&=\\frac{{=len(sc)}}{{=nS}}={=pc}\\end{aligned}$",
+  "Calculate $P(A\\cup B)$:",
+  "$\\begin{aligned}P(A\\cup B)&=P(A)+P(B)-P(A\\cap B)\\\\&=({=pa})+({=pb})-({=pc})\\\\&={=pu}\\end{aligned}$",
+  "Therefore, the value of $P(A\\cup B)$ is ${=pu}$."
+ ],
+ "notes": "Harder than the book question in two ways, both inside the book's own notation and method: the sample space is only given in the book's set-builder form {n : n in Z, 1 <= n <= N}, and the event sets are listed but the intersection is NOT supplied, so the student must find A and B overlap (always exactly two shared numbers; A has 5 elements, B has 4, so n(A or B) is always 7) before applying the identity. The shape is fixed because a stem cannot list a variable number of elements; only N and the elements change, and the shuffle means the shared numbers are not systematically the smallest. N is 20, 25, 50 or 100 so every P(X) is an exact two-decimal number and no intermediate rounding can alter the final answer. Answers are 0.35, 0.28, 0.14 or 0.07. The book has no exercise harder than its single standard one, so this tier is an extension of that exercise, not a copy of a harder printed one."
+}

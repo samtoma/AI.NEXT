@@ -1,0 +1,60 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s6-3-4:positive-q",
+ "kind": "family",
+ "lo_id": "lo:g10m6s6-3-4",
+ "parent_question_id": "q:g10m6s6-3-4:ex6-6-6",
+ "source_page": 202,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    1,
+    6
+   ],
+   "resample_while": "q == a"
+  },
+  {
+   "name": "yb",
+   "let": "a + q"
+  }
+ ],
+ "constraints": [
+  "a != q"
+ ],
+ "stem": "A tangent curve has an equation of the form $y=a\\tan\\theta+q$. Point $A$ is at $\\left(0^{\\circ}, {=q}\\right)$ and point $B$ is at $\\left(45^{\\circ}, {=yb}\\right)$; both points lie on the curve. Determine the values of $a$ and $q$.",
+ "solution": [
+  "The constant $q$ shifts the graph up or down. For an unshifted tangent graph, point $A$ would be at $\\left(0^{\\circ}, 0\\right)$. Here $A$ is at $\\left(0^{\\circ}, {=q}\\right)$, so the graph has been shifted upwards by ${=q}$. Therefore $q={=q}$.",
+  "To find $a$, substitute $q={=q}$ and point $B$, $\\left(45^{\\circ}, {=yb}\\right)$, into the equation. Remember that $\\tan 45^{\\circ}=1$.",
+  "$\\begin{aligned}y&=a\\tan\\theta+{=q}\\\\{=yb}&=a\\tan45^{\\circ}+{=q}\\\\{=yb}&=a(1)+{=q}\\\\{=yb}-{=q}&=a\\\\{=a}&=a\\end{aligned}$",
+  "The complete equation is $y={=a}\\tan\\theta+{=q}$. Therefore $a={=a}$ and $q={=q}$."
+ ],
+ "marker": {
+  "kind": "values",
+  "answer": "[{=a}, {=q}]",
+  "form": null,
+  "variables": [
+   "a",
+   "q"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m6s6-3-4:a-is-yb",
+   "label": "Takes the y-value of B as a",
+   "description": "Reads a straight off the y-coordinate of point B (a = y_B) because tan 45 degrees is 1, forgetting that the graph is shifted by q, so a = y_B is given instead of a = y_B - q."
+  }
+ ],
+ "notes": "Entry point of the skill: both a and q positive integers, second point at 45 degrees where tan = 1, so y_B = a + q. Models ex6-6-6 and the upward-shift half of ex6-6-5. The book's figure is not reproduced (the family format carries no image): both labelled points are given in words as coordinates, exactly as the book's stems state them. a starts at 2 so the stated equation never reads 1tan. a != q so the two values are never confusable in the answer."
+}

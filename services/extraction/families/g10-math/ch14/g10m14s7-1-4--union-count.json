@@ -1,0 +1,51 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m14s7-1-4:union-count",
+ "kind": "family",
+ "lo_id": "lo:g10m14s7-1-4",
+ "parent_question_id": "q:g10m14s7-1-4:ex14-8-30",
+ "source_page": 495,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": "A class of learners in which some play football, some play hockey and some play both sports.",
+ "params": [
+  {
+   "name": "f",
+   "randint": [
+    10,
+    25
+   ]
+  },
+  {
+   "name": "h",
+   "randint": [
+    8,
+    22
+   ],
+   "resample_while": "h == f"
+  },
+  {
+   "name": "c",
+   "randint": [
+    3,
+    "min(f, h) - 3"
+   ]
+  },
+  {
+   "name": "u",
+   "let": "f + h - c"
+  }
+ ],
+ "constraints": [
+  "c < min(f, h)"
+ ],
+ "stem": "In a class, ${=f}$ learners play football and ${=h}$ learners play hockey. ${=c}$ learners play both sports. The numbers for football and for hockey each include the learners who play both. How many learners play football or hockey (or both)?",
+ "answer": "f + h - c",
+ "solution": [
+  "Draw a Venn diagram with two overlapping circles, $F$ for football and $H$ for hockey. The overlap holds the ${=c}$ learners who play both.",
+  "Football only: ${=f} - {=c} = {=f - c}$. Hockey only: ${=h} - {=c} = {=h - c}$.",
+  "Add the three regions: ${=f - c} + {=c} + {=h - c} = {=u}$, so ${=u}$ learners play football or hockey (or both).",
+  "The identity gives the same result: $n(F \\text{ or } H) = n(F) + n(H) - n(F \\text{ and } H) = {=f} + {=h} - {=c} = {=u}$."
+ ],
+ "notes": "Entry point of the skill (the book has no basic question here): one use of the union identity, checked against the Venn regions. The stem states that the football and hockey totals include those who play both, so a blind solver cannot read them as 'only' counts; the book leaves this implicit in ex14-8-30. The misconception catalogue for this objective is empty and this is a numeric family, so no distractors or misconception ids are used. Common slip a reviewer may want catalogued: adding f + h and forgetting to subtract the overlap (double counting). Instance range: f 10-25, h 8-22, c 3 to min(f, h) - 3, so every region is non-empty."
+}

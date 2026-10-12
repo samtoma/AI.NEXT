@@ -1,0 +1,91 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s5-1-3:twographs",
+ "kind": "family",
+ "lo_id": "lo:g10m6s5-1-3",
+ "parent_question_id": "q:g10m6s5-1-3:ex6-8-48e",
+ "source_page": 230,
+ "tier": "standard",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "b",
+   "choice": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "a",
+   "choice": [
+    2,
+    3,
+    4,
+    5
+   ],
+   "resample_while": "a == b"
+  },
+  {
+   "name": "q",
+   "randint": [
+    -6,
+    6
+   ],
+   "resample_while": "q == 0"
+  }
+ ],
+ "stem": "Consider $f(x) = {=a}\\cdot {=b}^x{=signed(q)}$ and $g(x) = -{=a}\\cdot {=b}^x{=signed(q)}$. Which of the following gives the range of $f$ and the range of $g$?",
+ "choices": {
+  "correct": "$f$: $y \\in ({=q}, \\infty)$; $g$: $y \\in (-\\infty, {=q})$",
+  "distractors": [
+   {
+    "text": "$f$: $y \\in (-\\infty, {=q})$; $g$: $y \\in ({=q}, \\infty)$",
+    "misconception_id": "mc:g10m6s5-1-3:direction-reversed"
+   },
+   {
+    "text": "$f$: $y \\in (0, \\infty)$; $g$: $y \\in (-\\infty, 0)$",
+    "misconception_id": "mc:g10m6s5-1-3:range-from-zero"
+   },
+   {
+    "text": "$f$: $y \\in ({=q}, \\infty)$; $g$: $y \\in ({=q}, \\infty)$",
+    "misconception_id": "mc:g10m6s5-1-3:sign-of-a-ignored"
+   },
+   {
+    "text": "$f$: $y \\in [{=q}, \\infty)$; $g$: $y \\in (-\\infty, {=q}]$",
+    "misconception_id": "mc:g10m6s5-1-3:endpoint-included"
+   }
+  ]
+ },
+ "solution": [
+  "For $f(x) = {=a}\\cdot {=b}^x{=signed(q)}$ read off $a = {=a}$, which is positive, and $q = {=q}$.",
+  "Since $a > 0$, ${=a}\\cdot {=b}^x$ is positive for every $x$, so $f(x) > {=q}$. The graph never reaches $y = {=q}$, so the range of $f$ is $y \\in ({=q}, \\infty)$.",
+  "For $g(x) = -{=a}\\cdot {=b}^x{=signed(q)}$ read off $a = -{=a}$, which is negative, and $q = {=q}$.",
+  "Since $a < 0$, $-{=a}\\cdot {=b}^x$ is negative for every $x$, so $g(x) < {=q}$. The graph never reaches $y = {=q}$, so the range of $g$ is $y \\in (-\\infty, {=q})$."
+ ],
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m6s5-1-3:direction-reversed",
+   "label": "Puts the range on the wrong side of y = q",
+   "description": "The student gives (-infinity, q) when a is positive, or (q, infinity) when a is negative, instead of using the sign of a to decide whether the graph lies above or below y = q."
+  },
+  {
+   "id": "mc:g10m6s5-1-3:range-from-zero",
+   "label": "Ignores q: takes y = 0 as the boundary of the range",
+   "description": "The student states the range of y = ab^x + q as (0, infinity) or (-infinity, 0), forgetting that q moves the boundary line from y = 0 to y = q."
+  },
+  {
+   "id": "mc:g10m6s5-1-3:sign-of-a-ignored",
+   "label": "Ignores the sign of a",
+   "description": "The student uses q correctly but gives y = -ab^x + q the same range as y = ab^x + q, so the graph with a negative a is wrongly placed above y = q."
+  },
+  {
+   "id": "mc:g10m6s5-1-3:endpoint-included",
+   "label": "Includes y = q in the range",
+   "description": "The student writes a square bracket, [q, infinity) or (-infinity, q], as if the graph reached the line y = q. It only gets closer and closer, so the bracket must be round."
+  }
+ ],
+ "notes": "Standard tier, modelled on the book's 'give the range of both graphs' for y = 2^x and y = -2^x, with the same vertical shift q added to both and a coefficient a >= 2 so the sign of a is visible. One static skeleton covers both signs of a: f always has a > 0 and g always has a < 0. a != b only to avoid awkward products such as 3 * 3^x. q is never 0 so the 'range from zero' option is always wrong. Range only is asked, as in the book questions; the domain is R for both."
+}

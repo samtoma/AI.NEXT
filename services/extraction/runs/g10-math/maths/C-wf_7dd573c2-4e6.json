@@ -1,0 +1,117 @@
+{
+ "stage": "S0b",
+ "book": "g10-math",
+ "pass": "C",
+ "model": "sonnet",
+ "batch": 50,
+ "images": 12,
+ "batch_files": [
+  "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/s0b-g3/C-b0001.json"
+ ],
+ "embedded": {
+  "source": "runbook/transcribe-maths.workflow.js",
+  "source_sha256": "c8d1e4967b62fb89c2a764f89766346479a155bbb3c37bfa44d402bba076629e",
+  "args_sha256": "fb2a698361161cbdb0767e1355988f33a9753f53bfe18867e1e0e7203aa57833",
+  "generated_sha256": "2db7abef60baff685a114a38536d2c8c9d4670c3683bc101eb7c4e99adcb23e5",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "md5": "334923c8b5d44cc151626de8dc6a8a8d",
+   "pass": "C",
+   "latex": "\\left[\\frac{80}{31};\\infty\\right)",
+   "status": "transcribed",
+   "hash_match_claimed": true,
+   "note": null
+  },
+  {
+   "md5": "d67c8cf22da6813d50a735b78e289821",
+   "pass": "C",
+   "latex": "\\begin{align*}\\begin{array}{ccccc}-2&\\le&x-1&<&3\\\\-1&\\le&x&<&4\\end{array}\\end{align*}",
+   "status": "transcribed",
+   "hash_match_claimed": false,
+   "note": "Reading is clear; no candidate variant matched the file-name hash (tried array/align environments, le/leq, < variants, text-wrapped numbers)."
+  },
+  {
+   "md5": "c3055ed2456d9ab1fdd0855641ec035a",
+   "pass": "C",
+   "latex": "\\begin{align*}\\begin{array}{ccccc}5-3&\\le&x+3-3&<&8-3\\\\2&\\le&x&<&5\\end{array}\\end{align*}",
+   "status": "transcribed",
+   "hash_match_claimed": false,
+   "note": "Reading is clear; hash not matched with the same style as the matched inequality image."
+  },
+  {
+   "md5": "5f502f1e3c04d8a6e188ba3ca9c0f669",
+   "pass": "C",
+   "latex": "\\begin{align*}\\begin{array}{ccccc}-5&\\le&2k+1&<&5\\\\-6&\\le&2k&<&4\\\\-3&\\le&k&<&2\\end{array}\\end{align*}",
+   "status": "transcribed",
+   "hash_match_claimed": false,
+   "note": "Reading is clear; hash not matched."
+  },
+  {
+   "md5": "9660a6c446c4b514956a8d9ca568603a",
+   "pass": "C",
+   "latex": "\\begin{align*}\\begin{array}{ccccc}3&\\le&4-x&\\le&16\\\\-1&\\le&-x&\\le&12\\\\1&\\ge&x&\\ge&-12\\end{array}\\end{align*}",
+   "status": "transcribed",
+   "hash_match_claimed": true,
+   "note": null
+  },
+  {
+   "md5": "1cda1b5914b34ad30279929b44294026",
+   "pass": "C",
+   "latex": "\\begin{align*}\\left(x-1\\right)\\left(x-1\\right)&=0\\\\{\\left(x-1\\right)}^{2}&=0\\end{align*}",
+   "status": "transcribed",
+   "hash_match_claimed": true,
+   "note": null
+  },
+  {
+   "md5": "1555e56c02afe696862ef765b8c62ed8",
+   "pass": "C",
+   "latex": "\\begin{align*}t&=\\frac{700\\text{ km}}{350\\text{ km}\\cdot\\text{h}^{-1}}\\\\&=2\\text{ h}\\end{align*}",
+   "status": "transcribed",
+   "hash_match_claimed": false,
+   "note": "Reading is clear (t = 700 km / (350 km . h^-1) = 2 h). No candidate matched the hash; exact unit/space/dot markup in the book source is uncertain."
+  },
+  {
+   "md5": "d1672ee2b6acdb656ca3fa896d2ea519",
+   "pass": "C",
+   "latex": "\\begin{align*}2{x}^{2}+2x&=1\\\\3{x}^{2}+2x-1&=0\\\\0&=-2{x}^{2}+4x-2\\end{align*}",
+   "status": "transcribed",
+   "hash_match_claimed": true,
+   "note": null
+  },
+  {
+   "md5": "12a7aba3b890781f09fee71a2b773e0a",
+   "pass": "C",
+   "latex": "\\begin{align*}h\\left(R+{r}^{2}\\right)&=R\\times H\\\\hR+h{r}^{2}&=HR\\\\h{r}^{2}&=HR-hR\\\\h{r}^{2}&=R\\left(H-h\\right)\\\\\\therefore R&=\\frac{h{r}^{2}}{H-h}\\end{align*}",
+   "status": "transcribed",
+   "hash_match_claimed": true,
+   "note": null
+  },
+  {
+   "md5": "ed18dc6ae0618c20001f9bebe9bc21c5",
+   "pass": "C",
+   "latex": "\\begin{align*}d^{2}&=l^{2}+w^{2}\\\\\\therefore w^{2}&=d^{2}-l^{2}\\\\&=(w+25)^{2}-(w+17)^{2}\\\\&=w^{2}+50w+625-w^{2}-34w-289\\\\\\therefore w^{2}-16w-336&=0\\\\(w+12)(w-28)&=0\\\\w=-12&\\text{ or }w=28\\end{align*}",
+   "status": "transcribed",
+   "hash_match_claimed": false,
+   "note": "Reading is clear. In the printed image every minus except the unary one is typeset without surrounding space (unusual encoding, probably a non-standard minus), and no candidate matched the hash, so the exact book markup for the minus signs is unknown; the last row is split at & so it sits left of the = column."
+  },
+  {
+   "md5": "86f0bd2803c6762d2ae5e46db4e68cca",
+   "pass": "C",
+   "latex": "\\begin{align*}\\frac{x}{x+1}+\\frac{x+1}{x}&=\\frac{5}{2}\\\\2x^{2}+2(x+1)^{2}&=5x(x+1)\\\\2x^{2}+2(x^{2}+2x+1)&=5x^{2}+5x\\\\2x^{2}+2x^{2}+4x+2&=5x^{2}+5x\\\\x^{2}+x-2&=0\\\\(x-1)(x+2)&=0\\\\x=1&\\text{ of }x=-2\\end{align*}",
+   "status": "transcribed",
+   "hash_match_claimed": false,
+   "note": "Reading is clear (word 'of' is printed, Afrikaans for 'or'). The minus signs in x^2+x-2 and (x-1) are typeset without spacing, and no candidate matched the hash, so the exact markup for those minus signs is unknown."
+  },
+  {
+   "md5": "f06cf79bfc4995b2d1aa13fd8e91f2a9",
+   "pass": "C",
+   "latex": "\\begin{align*}4y^{2}-9&=0\\\\(2y-3)(2y+3)&=0\\\\2y-3&=0\\\\y&=\\frac{3}{2}\\\\\\text{or}&\\\\2y+3&=0\\\\y&=-\\frac{3}{2}\\\\\\therefore y=\\frac{3}{2}&\\text{or}y=-\\frac{3}{2}\\end{align*}",
+   "status": "transcribed",
+   "hash_match_claimed": true,
+   "note": null
+  }
+ ],
+ "problems": []
+}

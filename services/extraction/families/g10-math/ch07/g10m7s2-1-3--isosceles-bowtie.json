@@ -1,0 +1,83 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m7s2-1-3:isosceles-bowtie",
+ "kind": "family",
+ "lo_id": "lo:g10m7s2-1-3",
+ "parent_question_id": "q:g10m7s2-1-3:ex7-8-14",
+ "source_page": 276,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    3,
+    6
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    1,
+    "p - 1"
+   ]
+  },
+  {
+   "require": "gcd(p, q) == 1",
+   "why": "keep the ratio of the two leg lengths in lowest terms"
+  },
+  {
+   "name": "k",
+   "randint": [
+    2,
+    3
+   ]
+  },
+  {
+   "name": "j",
+   "randint": [
+    1,
+    "2 * k - 1"
+   ],
+   "resample_while": "j == k"
+  },
+  {
+   "name": "a",
+   "let": "p * k"
+  },
+  {
+   "name": "b",
+   "let": "p * j"
+  },
+  {
+   "name": "c",
+   "let": "q * k"
+  },
+  {
+   "name": "st",
+   "let": "q * j"
+  },
+  {
+   "require": "b != c and st >= 2",
+   "why": "no coincidences between the given lengths, and no tiny answer"
+  }
+ ],
+ "constraints": [
+  "b * c == a * st",
+  "b < 2 * a",
+  "st < 2 * c",
+  "a != c",
+  "a != b"
+ ],
+ "stem": "Straight lines $PT$ and $QS$ cross at $R$, so that $R$ lies between $P$ and $T$ and between $Q$ and $S$. In $\\triangle PQR$, $PR = QR = {=a}$ cm and $PQ = {=b}$ cm. In $\\triangle TSR$, $RT = RS = {=c}$ cm. Calculate the length of $ST$ in cm.",
+ "answer": "st",
+ "solution": [
+  "Let $ST = x$. The two triangles share the vertically opposite angles at $R$: $\\angle PRQ = \\angle TRS$ (vertically opposite angles, as $PT$ and $QS$ are straight lines).",
+  "$PR = QR$, so $\\hat{P} = \\hat{Q}$ (angles opposite equal sides). $RT = RS$, so $\\hat{T} = \\hat{S}$ (angles opposite equal sides). In each triangle the angles add up to $180^{\\circ}$, so $\\hat{P} + \\hat{Q} = 180^{\\circ} - \\angle PRQ$ and $\\hat{T} + \\hat{S} = 180^{\\circ} - \\angle TRS$. These are equal, so $2\\hat{P} = 2\\hat{T}$. Therefore $\\hat{P} = \\hat{T}$ and $\\hat{Q} = \\hat{S}$.",
+  "All three pairs of corresponding angles are equal, so $\\triangle PQR|||\\triangle TSR$ (AAA).",
+  "Corresponding sides are in proportion. $PQ$ corresponds to $TS$ and $PR$ corresponds to $TR$ (each pair is opposite equal angles): $\\frac{PQ}{TS} = \\frac{PR}{TR}$, so $\\frac{{=b}}{x} = \\frac{{=a}}{{=c}}$.",
+  "$x = \\frac{{=b} \\times {=c}}{{=a}} = {=st}$, so $ST = {=st}$ cm."
+ ],
+ "notes": "Parent ex7-8-14 (bow-tie of two isosceles triangles meeting at R; the book's twist is that the similarity has to be argued from vertically opposite angles plus isosceles base angles before the proportion can be used). Families carry no figure, so the stem describes the book's diagram in words, with R between P and T and between Q and S so the vertical-angle fact is unambiguous. Deliberate departures from the book item: (1) the apex angle is NOT given, and neither is y. The book's own figure (PR = QR = 6.1, PQ = 4.8, apex 30 degrees) over-determines the triangle and is not geometrically consistent (b = 2a sin(theta/2) would give about 3.16, not 4.8), so a family that printed all of them would pose impossible figures. With only a, b, c given every instance is realisable: b < 2a and st < 2c are enforced, and I checked numerically that the apex angle from triangle PQR reproduces ST = st in triangle TSR for every parameter draw. (2) Only x (ST) is asked, as the single numeric answer; the 'explain why similar' part of the book question lives in the worked solution (steps 1 to 3) and the student has to find it themselves because the stem never says the triangles are similar. Lengths are whole numbers: a = p*k, c = q*k, b = p*j, st = q*j with gcd(p, q) = 1, j != k, and a, b, c pairwise different so a wrongly paired ratio (for example a*b/c or a*c/b) can never coincide with the correct answer. Numbers: a up to 18, b up to 30, answer up to 25, about 50 distinct draws."
+}

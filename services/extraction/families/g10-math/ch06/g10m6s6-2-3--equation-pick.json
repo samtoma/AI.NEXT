@@ -1,0 +1,81 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s6-2-3:equation-pick",
+ "kind": "family",
+ "lo_id": "lo:g10m6s6-2-3",
+ "parent_question_id": "q:g10m6s6-2-3:ex6-6-3",
+ "source_page": 201,
+ "tier": "standard",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    2,
+    7
+   ],
+   "resample_while": "q == a"
+  },
+  {
+   "name": "top",
+   "let": "a + q"
+  },
+  {
+   "name": "bot",
+   "let": "q - a"
+  }
+ ],
+ "constraints": [
+  "q != a"
+ ],
+ "stem": "For $0^{\\circ}\\le\\theta\\le360^{\\circ}$, the graph of $y=a\\cos\\theta+q$ has its highest point at $(0^{\\circ}, {=top})$ and its lowest point at $(180^{\\circ}, {=bot})$. Which of the following is the equation of the graph?",
+ "solution": [
+  "The highest point is $(0^{\\circ}, {=top})$ and the lowest point is $(180^{\\circ}, {=bot})$. The distance from the bottom of the graph to the top is ${=top}-{=paren(bot)}={=top - bot}$.",
+  "This distance is twice the amplitude, so $a=\\frac{{=top - bot}}{2}={=a}$.",
+  "An unshifted graph $y={=a}\\cos\\theta$ has its highest point at $(0^{\\circ}, {=a})$. Ours is at $(0^{\\circ}, {=top})$, so the shift is $q={=top}-{=a}={=q}$.",
+  "The equation is $y={=a}\\cos\\theta+{=q}$."
+ ],
+ "choices": {
+  "correct": "$y={=a}\\cos\\theta+{=q}$",
+  "distractors": [
+   {
+    "text": "$y={=top - bot}\\cos\\theta+{=q}$",
+    "misconception_id": "mc:g10m6s6-2-3:amplitude-not-halved"
+   },
+   {
+    "text": "$y={=a}\\cos\\theta+{=top}$",
+    "misconception_id": "mc:g10m6s6-2-3:q-as-highest-value"
+   },
+   {
+    "text": "$y={=q}\\cos\\theta+{=a}$",
+    "misconception_id": "mc:g10m6s6-2-3:a-q-swapped"
+   }
+  ]
+ },
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m6s6-2-3:amplitude-not-halved",
+   "label": "Takes the full height of the graph as a",
+   "description": "Uses the whole distance from the lowest point to the highest point as the amplitude a, instead of half of it. The amplitude is measured from the middle line to the top (or bottom), not from the bottom to the top."
+  },
+  {
+   "id": "mc:g10m6s6-2-3:q-as-highest-value",
+   "label": "Takes the highest y-value as the vertical shift q",
+   "description": "Reads q straight off the y-value of the highest point (the y-intercept), forgetting that this value is a + q and already contains the amplitude."
+  },
+  {
+   "id": "mc:g10m6s6-2-3:a-q-swapped",
+   "label": "Swaps a and q",
+   "description": "Finds the right two numbers but puts the shift in front of cos and the amplitude at the end, confusing which of a and q stretches the graph and which moves it up or down."
+  }
+ ],
+ "notes": "Multiple-choice form of the same skill, kept because the catalogue of misconceptions for this objective was empty and each distractor here is a specific, diagnosable slip (not halving; reading q off the top; swapping a and q). The three declared misconception ids are new proposals. Parameters are chosen so every option is a different equation and no coefficient is 1 (a 2..5, q 2..7, q != a, so the options never read '1cos'), and q is positive so every option has a plus sign. The stem differs in every instance (it carries the two points), so distinct_by_choices is not set. 20 distinct instances."
+}

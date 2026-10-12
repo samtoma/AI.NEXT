@@ -1,0 +1,49 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m4s6-1-4:single-denominator",
+ "kind": "family",
+ "lo_id": "lo:g10m4s6-1-4",
+ "parent_question_id": "q:g10m4s6-1-4:ex4-5-8",
+ "source_page": 95,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "f",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "t",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "L",
+   "randint": [
+    2,
+    8
+   ]
+  },
+  {
+   "name": "D",
+   "let": "t * f * L"
+  }
+ ],
+ "constraints": [],
+ "stem": "Solve for $\\lambda$ in $t=\\frac{D}{f\\lambda}$ if $D={=D}$, $f={=f}$ and $t={=t}$.",
+ "answer": "L",
+ "solution": [
+  "The variable $\\lambda$ is in a denominator. In $t=\\frac{D}{f\\lambda}$ the only denominator is $f\\lambda$, so it is the LCD.",
+  "Multiply both sides by the LCD, $f\\lambda$: $t\\times f\\lambda=D$, that is $tf\\lambda=D$.",
+  "Divide both sides by $tf$: $\\lambda=\\frac{D}{tf}$.",
+  "Substitute $D={=D}$, $f={=f}$ and $t={=t}$: $\\lambda=\\frac{{=D}}{{=t}\\times{=f}}=\\frac{{=D}}{{=t*f}}$.",
+  "So $\\lambda={=L}$."
+ ],
+ "notes": "Entry point of the skill: one fraction, one denominator (f*lambda), numbers substituted at the end exactly as the book's ex4-5-21 and ex4-5-19 do. Built backwards from the answer L so D = t*f*L and lambda is always a whole number from 2 to 8. 112 distinct (f, t, L) triples. The book's ex4-5-8 asks for the symbolic form lambda = D/(tf); this is its numeric counterpart, which is why it is tagged basic."
+}

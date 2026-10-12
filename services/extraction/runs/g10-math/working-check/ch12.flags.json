@@ -1,0 +1,194 @@
+{
+ "format": "ainext.working-check/1",
+ "book": "g10-math",
+ "chapter": 12,
+ "prompts_version": "sw-v3",
+ "rule": "Each flag is a backlog item for a human (answer 30; answer 37c). Nothing here was corrected: the content stays as the book and G2 have it until a human decides.",
+ "passes": [
+  "A",
+  "B"
+ ],
+ "single_pass_ids": [],
+ "solutions": 39,
+ "skipped": [
+  {
+   "id": "expl:g10m12s1-1-1:ex12-1-8",
+   "why": "no working to check (the solution is a drawing)"
+  }
+ ],
+ "verdicts": {
+  "consistent": 29,
+  "flagged": 6,
+  "unclear": 4
+ },
+ "flags": [
+  {
+   "solution_id": "expl:g10m12s1-1-1:ex12-2-1",
+   "lo": "lo:g10m12s1-1-1",
+   "step": 1,
+   "kind": "label",
+   "where": "working",
+   "quote": "AM=MO=ON=NO",
+   "expected": "AM=MO=ON=NA",
+   "why": "The chain ends with NO, which is the same side as ON, so it never reaches the fourth side AN needed for a rhombus.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m12s1-1-1:ex12-2-12b",
+   "lo": "lo:g10m12s1-1-1",
+   "step": 2,
+   "kind": "label",
+   "where": "working",
+   "quote": "But $AE$ and $DF$ are diagonals of $ADCF$",
+   "expected": "AC and DF",
+   "why": "The diagonals of ADCF are AC and DF; AE is only part of AC, and step 1 gave CE = EA.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m12s1-1-2:ex12-2-13",
+   "lo": "lo:g10m12s1-1-2",
+   "step": 1,
+   "kind": "label",
+   "where": "working",
+   "quote": "\\therefore EF&=ED",
+   "expected": "EF = AD",
+   "why": "BC = EF and BC = AD give EF = AD, not ED; the later AD + DE = AE step needs AD.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m12s1-1-2:ex12-2-2b",
+   "lo": "lo:g10m12s1-1-2",
+   "step": 1,
+   "kind": "other",
+   "where": "working",
+   "quote": "DF\\parallel HB\\quad\\text{(corresp }\\angle\\text{s equal)}",
+   "expected": "alternate angles equal",
+   "why": "F2 and H2 lie on opposite sides of FH, so they are alternate angles, not corresponding angles.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m12s1-1-2:ex12-2-5b",
+   "lo": "lo:g10m12s1-1-2",
+   "step": 1,
+   "kind": "label",
+   "where": "working",
+   "quote": "$AN=NC$ (given)",
+   "expected": "AN=ND",
+   "why": "The question gives N as the mid-point of AD, so the given is AN=ND; NC is not given and the next step needs AN=ND.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m12s1-1-2:ex12-2-7c",
+   "lo": "lo:g10m12s1-1-2",
+   "step": 1,
+   "kind": "arithmetic",
+   "where": "unsure",
+   "quote": "180^{\\circ}-63^{\\circ}-79^{\\circ}=79^{\\circ}",
+   "expected": "180-63-79 = 38",
+   "why": "180 minus 63 minus 79 equals 38, not 79, so the line does not equal the value it is set equal to.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  }
+ ],
+ "flagged_solutions": 6,
+ "unclear": [
+  {
+   "id": "q:g10m12s1-1-2:ex12-1-6c",
+   "why": "The question has no figure text, so whether the 41 degree angle is the working's R-hat-T-S or the angle used at T and R cannot be judged."
+  },
+  {
+   "id": "q:g10m12s1-1-2:ex12-1-7b",
+   "why": "The value of y comes from a figure or earlier part not given, so the step y=36 cannot be checked."
+  },
+  {
+   "id": "q:g10m12s1-1-2:ex12-2-7b",
+   "why": "The value of y and the angle measure of the opposite angle come from a diagram or earlier part not provided, so 63 cannot be checked."
+  },
+  {
+   "id": "expl:g10m12s1-1-2:ex12-2-12c",
+   "why": "The only step cites 'proved above', a result from an earlier part of the exercise that cannot be seen."
+  }
+ ],
+ "unchecked": [],
+ "problems": [],
+ "checked_ids": [
+  "expl:g10m12s1-1-1:ex12-1-1a",
+  "expl:g10m12s1-1-1:ex12-1-1b",
+  "expl:g10m12s1-1-1:ex12-1-4",
+  "expl:g10m12s1-1-1:ex12-1-5",
+  "expl:g10m12s1-1-1:ex12-1-6a",
+  "expl:g10m12s1-1-1:ex12-1-7a",
+  "expl:g10m12s1-1-1:ex12-1-9",
+  "expl:g10m12s1-1-1:ex12-2-1",
+  "expl:g10m12s1-1-1:ex12-2-10",
+  "expl:g10m12s1-1-1:ex12-2-11",
+  "expl:g10m12s1-1-1:ex12-2-12a",
+  "expl:g10m12s1-1-1:ex12-2-12b",
+  "expl:g10m12s1-1-1:ex12-2-2c",
+  "expl:g10m12s1-1-1:ex12-2-3b",
+  "expl:g10m12s1-1-1:ex12-2-5a",
+  "expl:g10m12s1-1-1:ex12-2-7a",
+  "expl:g10m12s1-1-1:ex12-2-8",
+  "expl:g10m12s1-1-1:ex12-2-9",
+  "expl:g10m12s1-1-1:we01",
+  "expl:g10m12s1-1-2:ex12-1-10",
+  "expl:g10m12s1-1-2:ex12-1-2",
+  "expl:g10m12s1-1-2:ex12-1-3",
+  "expl:g10m12s1-1-2:ex12-2-12c",
+  "expl:g10m12s1-1-2:ex12-2-13",
+  "expl:g10m12s1-1-2:ex12-2-14",
+  "expl:g10m12s1-1-2:ex12-2-2a",
+  "expl:g10m12s1-1-2:ex12-2-2b",
+  "expl:g10m12s1-1-2:ex12-2-3a",
+  "expl:g10m12s1-1-2:ex12-2-4a",
+  "expl:g10m12s1-1-2:ex12-2-4b",
+  "expl:g10m12s1-1-2:ex12-2-5b",
+  "expl:g10m12s1-1-2:ex12-2-6a",
+  "expl:g10m12s1-1-2:ex12-2-6c",
+  "q:g10m12s1-1-2:ex12-1-6b",
+  "q:g10m12s1-1-2:ex12-1-6c",
+  "q:g10m12s1-1-2:ex12-1-7b",
+  "q:g10m12s1-1-2:ex12-2-6b",
+  "q:g10m12s1-1-2:ex12-2-7b",
+  "q:g10m12s1-1-2:ex12-2-7c"
+ ],
+ "runs": [
+  "1d1994a3e16beb77825663696458632449c9ccc60a978712ddd97c48c56ef8cb",
+  "7726567c44a498020262a286bcc9faf28d4444f04897043033eaf63c9c4556cc"
+ ]
+}

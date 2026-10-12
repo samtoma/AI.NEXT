@@ -1,0 +1,172 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m10s4-1-1:outlier-effect",
+ "kind": "family",
+ "lo_id": "lo:g10m10s4-1-1",
+ "parent_question_id": "q:g10m10s4-1-1:we10",
+ "source_page": 372,
+ "tier": "advanced",
+ "answer_type": "mcq",
+ "context": "Eight learners each count the number of sweets they have; the first count listed is far from all the others.",
+ "params": [
+  {
+   "name": "base",
+   "randint": [
+    16,
+    30
+   ]
+  },
+  {
+   "name": "v1",
+   "randint": [
+    "base",
+    "base + 8"
+   ]
+  },
+  {
+   "name": "v2",
+   "randint": [
+    "base",
+    "base + 8"
+   ]
+  },
+  {
+   "name": "v3",
+   "randint": [
+    "base",
+    "base + 8"
+   ]
+  },
+  {
+   "name": "v4",
+   "randint": [
+    "base",
+    "base + 8"
+   ]
+  },
+  {
+   "name": "v5",
+   "randint": [
+    "base",
+    "base + 8"
+   ]
+  },
+  {
+   "name": "v6",
+   "randint": [
+    "base",
+    "base + 8"
+   ]
+  },
+  {
+   "name": "v7",
+   "randint": [
+    "base",
+    "base + 8"
+   ]
+  },
+  {
+   "name": "core",
+   "let": "[v1, v2, v3, v4, v5, v6, v7]"
+  },
+  {
+   "name": "cs",
+   "let": "sorted(core)"
+  },
+  {
+   "name": "cmin",
+   "let": "cs[0]"
+  },
+  {
+   "name": "cmax",
+   "let": "cs[6]"
+  },
+  {
+   "require": "cmax - cmin >= 5",
+   "why": "the typical values must be spread enough that the new range is clearly different from the one with the outlier"
+  },
+  {
+   "name": "side",
+   "choice": [
+    0,
+    1
+   ]
+  },
+  {
+   "name": "gap",
+   "randint": [
+    11,
+    15
+   ]
+  },
+  {
+   "name": "out",
+   "let": "(cmin - gap) if side == 0 else (cmax + gap)"
+  },
+  {
+   "name": "s",
+   "shuffle": "core"
+  },
+  {
+   "name": "full",
+   "let": "[out, v1, v2, v3, v4, v5, v6, v7]"
+  },
+  {
+   "name": "fs",
+   "let": "sorted(full)"
+  },
+  {
+   "name": "mx",
+   "let": "fs[7]"
+  },
+  {
+   "name": "mn",
+   "let": "fs[0]"
+  },
+  {
+   "name": "rng1",
+   "let": "mx - mn"
+  },
+  {
+   "name": "rng2",
+   "let": "cmax - cmin"
+  }
+ ],
+ "constraints": [
+  "out >= 1",
+  "rng1 - rng2 == gap"
+ ],
+ "stem": "A group of $8$ learners count the number of sweets they each have. This is the data they collect: $\\left\\{ {=out}, {=s[0]}, {=s[1]}, {=s[2]}, {=s[3]}, {=s[4]}, {=s[5]}, {=s[6]} \\right\\}$ The first value, ${=out}$, is not typical of the other values. What happens to the range of the data set if the first value is removed?",
+ "solution": [
+  "Put the data set in order, from the smallest value to the largest: $\\left\\{ {=fs[0]}, {=fs[1]}, {=fs[2]}, {=fs[3]}, {=fs[4]}, {=fs[5]}, {=fs[6]}, {=fs[7]} \\right\\}$",
+  "The maximum value is ${=mx}$ and the minimum value is ${=mn}$, so the range is ${=mx} - {=mn} = {=rng1}$.",
+  "Remove the first value, ${=out}$. The data set that is left, in order, is $\\left\\{ {=cs[0]}, {=cs[1]}, {=cs[2]}, {=cs[3]}, {=cs[4]}, {=cs[5]}, {=cs[6]} \\right\\}$",
+  "The new maximum value is ${=cmax}$ and the new minimum value is ${=cmin}$, so the new range is ${=cmax} - {=cmin} = {=rng2}$.",
+  "The range decreases from ${=rng1}$ to ${=rng2}$. The value ${=out}$ is not typical of the other values: it is an outlier, and it has a big influence on the range because the range depends only on the largest and the smallest value."
+ ],
+ "choices": {
+  "correct": "The range decreases from ${=rng1}$ to ${=rng2}$.",
+  "distractors": [
+   {
+    "text": "The range stays at ${=rng1}$, because only one of the values is removed.",
+    "misconception_id": "mc:g10m10s4-1-1:range-ignores-outlier-effect"
+   },
+   {
+    "text": "The range decreases from ${=rng1 + 1}$ to ${=rng2 + 1}$.",
+    "misconception_id": "mc:g10m10s4-1-1:range-counts-inclusive"
+   },
+   {
+    "text": "The range decreases by $1$, from ${=rng1}$ to ${=rng1 - 1}$.",
+    "misconception_id": null
+   }
+  ]
+ },
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m10s4-1-1:range-counts-inclusive",
+   "label": "Adds 1 to the difference when finding the range",
+   "description": "Finds the range as maximum - minimum + 1, counting the whole numbers from the smallest value to the largest (both ends included) instead of subtracting the minimum from the maximum."
+  }
+ ],
+ "notes": "Mirrors the book's we10 exactly in shape: the FIRST value listed is the outlier and the question is what happens to the range when it is removed. Here the answer is chosen from statements, which is a natural classification of the effect (unchanged or decreases, and to what). The outlier is the unique extreme (core values lie in a window of width 8, outlier is 11 to 15 beyond the nearest core extreme), low or high by 'side'. Distractor 1 is the catalogued misconception (range unchanged). Distractor 2 is the inclusive-counting slip applied consistently to both ranges (R+1, R2+1), so a student who adds 1 finds their own answer listed. Distractor 3 (decreases by 1) has no named error, so it carries null; it is always false because gap >= 11. The four option texts are always distinct and only the correct one states both true ranges. Sweets cannot be negative: base >= 16 and gap <= 15 keep a low outlier at 1 or more. Stem has holes that differ per instance, so distinct_by_choices is not set."
+}

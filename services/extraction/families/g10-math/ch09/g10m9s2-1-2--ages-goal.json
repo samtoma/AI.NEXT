@@ -1,0 +1,93 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m9s2-1-2:ages-goal",
+ "kind": "family",
+ "lo_id": "lo:g10m9s2-1-2",
+ "parent_question_id": "q:g10m9s2-1-2:ex9-7-3",
+ "source_page": 350,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": "Adam opens a savings account when he is a certain age and wants a given amount of rand by the time he reaches a later age. The account pays simple interest at a rate that is a whole percent plus one half, per annum.",
+ "params": [
+  {
+   "name": "a1",
+   "choice": [
+    12,
+    13,
+    14
+   ]
+  },
+  {
+   "name": "g",
+   "choice": [
+    3,
+    4,
+    5,
+    6
+   ]
+  },
+  {
+   "name": "a2",
+   "let": "a1 + g"
+  },
+  {
+   "name": "w",
+   "choice": [
+    5,
+    6,
+    7,
+    8,
+    9
+   ]
+  },
+  {
+   "name": "k",
+   "randint": [
+    20,
+    90
+   ]
+  },
+  {
+   "name": "A",
+   "let": "1000 * k"
+  },
+  {
+   "name": "t",
+   "let": "g * (2 * w + 1)"
+  },
+  {
+   "name": "th",
+   "let": "1000 + 5 * t"
+  },
+  {
+   "name": "P",
+   "let": "A * 1000 / th"
+  },
+  {
+   "name": "ds",
+   "let": "fixed(th / 1000, 3) if th % 10 != 0 else (fixed(th / 1000, 2) if th % 100 != 0 else fixed(th / 1000, 1))"
+  },
+  {
+   "require": "(1000 * A) % th != 0",
+   "why": "the principal is not already a whole number of rand, so the rounding step is real"
+  },
+  {
+   "require": "(200000 * A) % th != 0 or ((200000 * A) // th) % 2 == 0",
+   "why": "the principal never lies exactly half a cent from a cent, so the rounding is unambiguous"
+  }
+ ],
+ "constraints": [],
+ "stem": "Adam opens a savings account when he is ${=a1}$ years old. He would like to have $\\text{R{=A}}$ by the time he is ${=a2}$ years old. If the savings account offers simple interest at a rate of ${=w}.5$ % per annum, how much money should he invest now to reach his goal? Give your answer in rand, correct to two decimal places.",
+ "answer": "fixed(P, 2)",
+ "solution": [
+  "Work out how many years the money is invested: $n={=a2}-{=a1}={=g}$ years.",
+  "Write down the given information: $\\begin{aligned}A&=\\text{R{=A}}\\\\P&=?\\\\i&=\\frac{{=w}.5}{100}=0.0{=w}5\\\\n&={=g}\\end{aligned}$",
+  "Write down the simple interest formula: $A=P(1+in)$",
+  "Substitute the given values and work out the bracket: $\\begin{aligned}\\text{R{=A}}&=P\\left(1+0.0{=w}5\\times{=g}\\right)\\\\\\text{R{=A}}&=P\\times{=ds}\\end{aligned}$",
+  "Divide both sides by ${=ds}$ to find $P$: $P=\\frac{\\text{R{=A}}}{{=ds}}$",
+  "Calculate and round to two decimal places: $P=\\text{R{=fixed(P, 2)}}$",
+  "Adam should invest $\\text{R{=fixed(P, 2)}}$ now."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Harder variant built on the two twists of ex9-7-3 (R50000, 8.5 %, ages 13 to 18 gives R35087.72 when w = 8, a1 = 13, g = 5, k = 50): the number of years is not given and must be found from two ages, and the rate has a half-percent so i has three decimal places and the divisor 1 + in is a three-decimal number. The rate is always x.5 % so i prints exactly as 0.0w5. Ages stay at most 20. The requires keep P a non-integer and away from an exact half-cent tie (a tie occurs only when 200000A/th is an odd integer). Numeric family, so no distractors and no misconception ids."
+}

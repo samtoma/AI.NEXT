@@ -1,0 +1,382 @@
+{
+ "format": "ainext.working-check/1",
+ "book": "g10-math",
+ "chapter": 10,
+ "prompts_version": "sw-v3",
+ "rule": "Each flag is a backlog item for a human (answer 30; answer 37c). Nothing here was corrected: the content stays as the book and G2 have it until a human decides.",
+ "passes": [
+  "A",
+  "B"
+ ],
+ "single_pass_ids": [],
+ "solutions": 104,
+ "skipped": [
+  {
+   "id": "expl:g10m10s3-1-1:ex10-3-9b",
+   "why": "no working to check (the solution is a drawing)"
+  }
+ ],
+ "verdicts": {
+  "consistent": 93,
+  "flagged": 11,
+  "unclear": 0
+ },
+ "flags": [
+  {
+   "solution_id": "expl:g10m10s2-1-1:ex10-7-20b",
+   "lo": "lo:g10m10s2-1-1",
+   "step": 2,
+   "kind": "arithmetic",
+   "where": "working",
+   "quote": "&=\\text{1.0}\\end{aligned}",
+   "expected": "0.98",
+   "why": "Bike 2 values sum to 3.6+4.0+2.2=9.8, so the mean is 0.98, not 1.0.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m10s2-1-1:ex10-7-20b",
+   "lo": "lo:g10m10s2-1-1",
+   "step": 3,
+   "kind": "copy",
+   "where": "working",
+   "quote": "For bike 2 the mean is $\\text{1.0}$ $\\text{s}$",
+   "expected": "0.98",
+   "why": "Repeats the incorrect bike 2 mean; the sum 9.8 over 10 gives 0.98 s.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m10s2-1-2:ex10-7-20c",
+   "lo": "lo:g10m10s2-1-2",
+   "step": 1,
+   "kind": "wrong_value",
+   "where": "working",
+   "quote": "bike 1 appears to do better than bike 2 from the mean",
+   "expected": "bike 2 appears better from the mean",
+   "why": "Bike 1's mean is 1.017 s and bike 2's is 0.98 s, so the lower mean makes bike 2 look better, not bike 1.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "A",
+    "B",
+    "B"
+   ],
+   "also_kinds": [
+    "arithmetic",
+    "other"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m10s2-1-2:we07",
+   "lo": "lo:g10m10s2-1-2",
+   "step": 3,
+   "kind": "wrong_value",
+   "where": "working",
+   "quote": "802.3};\\text{802.3}",
+   "expected": "802.4, 802.4",
+   "why": "Sorted Monday list is miscopied: the data give 802.4 twice (not 802.3), 796.8 (not 796.7) and 808.8 (not 808.7).",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m10s2-1-4:ex10-2-10",
+   "lo": "lo:g10m10s2-1-4",
+   "step": 1,
+   "kind": "other",
+   "where": "working",
+   "quote": "five different ages",
+   "expected": "",
+   "why": "The ages cannot be all different, since the working later sets x_1=x_2=2 so that the mode is 2.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m10s2-1-4:ex10-2-10",
+   "lo": "lo:g10m10s2-1-4",
+   "step": 5,
+   "kind": "other",
+   "where": "working",
+   "quote": "$\\text{3}$ and $\\text{15}$",
+   "expected": "",
+   "why": "Taking x_4=3 gives two 3s as well as two 2s, so the mode is no longer only 2, contradicting the stated condition.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m10s3-1-2:ex10-7-21b",
+   "lo": "lo:g10m10s3-1-2",
+   "step": 1,
+   "kind": "arithmetic",
+   "where": "working",
+   "quote": "$\\frac{18}{50}\\times100=38\\%$",
+   "expected": "36%",
+   "why": "The first three groups total 4+5+9=18, and 18/50 times 100 is 36%, not 38%.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "A",
+    "B",
+    "B"
+   ],
+   "also_kinds": [
+    "wrong_value"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m10s3-1-3:ex10-4-1",
+   "lo": "lo:g10m10s3-1-3",
+   "step": 3,
+   "kind": "final_answer",
+   "where": "working",
+   "quote": "Mean: $\\text{52}$",
+   "expected": "53",
+   "why": "Step 2 computes the mean as 53, but the concluding line states 52.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ],
+   "also_kinds": [
+    "wrong_value"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m10s3-1-3:ex10-4-2",
+   "lo": "lo:g10m10s3-1-3",
+   "step": 3,
+   "kind": "final_answer",
+   "where": "working",
+   "quote": "Mean: $\\text{70.66}$",
+   "expected": "71.66",
+   "why": "Step 2 computes the mean as 71.66, but the concluding line states 70.66.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ],
+   "also_kinds": [
+    "copy"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m10s4-1-3:we13",
+   "lo": "lo:g10m10s4-1-3",
+   "step": 2,
+   "kind": "arithmetic",
+   "where": "working",
+   "quote": "r_{25}&=\\frac{25}{100}(100-1)+1\\\\&=\\text{24.75}",
+   "expected": "25.75",
+   "why": "0.25 times 99 plus 1 equals 25.75, not 24.75.",
+   "sources": [
+    "agent",
+    "numeric"
+   ],
+   "passes": [
+    "A"
+   ],
+   "numeric": {
+    "left": "\\frac{25}{100}(100-1)+1",
+    "relation": "=",
+    "right": "\\text{24.75}",
+    "why": "\\frac{25}{100}(100-1)+1 = \\text{24.75} does not hold (25.75 vs 24.75)"
+   }
+  },
+  {
+   "solution_id": "q:g10m10s2-1-1:ex10-7-10",
+   "lo": "lo:g10m10s2-1-1",
+   "step": 1,
+   "kind": "other",
+   "where": "question",
+   "quote": "\\frac{p+1+p+2+p+9}{3}",
+   "expected": "three data values",
+   "why": "The question says five data values but lists only three, and the working divides by 3, so the stated count conflicts with the working.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m10s2-1-1:ex10-7-6",
+   "lo": "lo:g10m10s2-1-1",
+   "step": 1,
+   "kind": "copy",
+   "where": "working",
+   "quote": "\\{4, 4, 5, 5, 6, 6, 6, 7, 7\\}",
+   "expected": "four 6s, ten values in total",
+   "why": "The sorted set has 9 values; the question's data has 10 values, including four 6s, so one 6 is missing.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m10s4-1-2:ex10-5-6d",
+   "lo": "lo:g10m10s4-1-2",
+   "step": 1,
+   "kind": "label",
+   "where": "working",
+   "quote": "the lower quartile lies between the fifth and sixth values",
+   "expected": "upper quartile",
+   "why": "The step computes the 75th percentile rank, so it should name the upper quartile, not the lower quartile.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  }
+ ],
+ "flagged_solutions": 11,
+ "unclear": [],
+ "unchecked": [],
+ "problems": [],
+ "checked_ids": [
+  "expl:g10m10s2-1-1:ex10-7-20b",
+  "expl:g10m10s2-1-2:ex10-7-20a",
+  "expl:g10m10s2-1-2:ex10-7-20c",
+  "expl:g10m10s2-1-2:we07",
+  "expl:g10m10s2-1-3:ex10-7-23d",
+  "expl:g10m10s2-1-3:we08",
+  "expl:g10m10s2-1-4:ex10-2-10",
+  "expl:g10m10s2-1-4:ex10-7-28b",
+  "expl:g10m10s3-1-1:ex10-3-9a",
+  "expl:g10m10s3-1-1:ex10-7-21c",
+  "expl:g10m10s3-1-1:we09",
+  "expl:g10m10s3-1-2:ex10-7-21b",
+  "expl:g10m10s3-1-3:ex10-4-1",
+  "expl:g10m10s3-1-3:ex10-4-2",
+  "expl:g10m10s4-1-1:ex10-7-29a",
+  "expl:g10m10s4-1-3:we13",
+  "expl:g10m10s4-1-4:ex10-5-5",
+  "expl:g10m10s4-1-4:ex10-7-22c",
+  "expl:g10m10s5-1-1:we14",
+  "expl:g10m10s5-1-2:ex10-6-1",
+  "expl:g10m10s5-1-2:ex10-6-2",
+  "expl:g10m10s5-1-2:ex10-7-22d",
+  "expl:g10m10s5-1-2:ex10-7-24b",
+  "expl:g10m10s5-1-3:ex10-7-29d",
+  "q:g10m10s1-1-1:ex10-1-2",
+  "q:g10m10s1-1-1:ex10-1-3",
+  "q:g10m10s1-1-1:ex10-7-1",
+  "q:g10m10s1-1-1:we01",
+  "q:g10m10s1-1-2:ex10-1-1",
+  "q:g10m10s1-1-2:ex10-7-2",
+  "q:g10m10s1-1-2:we02",
+  "q:g10m10s2-1-1:ex10-2-1",
+  "q:g10m10s2-1-1:ex10-2-2",
+  "q:g10m10s2-1-1:ex10-2-3",
+  "q:g10m10s2-1-1:ex10-2-4a",
+  "q:g10m10s2-1-1:ex10-2-4b",
+  "q:g10m10s2-1-1:ex10-2-4c",
+  "q:g10m10s2-1-1:ex10-2-5",
+  "q:g10m10s2-1-1:ex10-7-10",
+  "q:g10m10s2-1-1:ex10-7-23a",
+  "q:g10m10s2-1-1:ex10-7-23b",
+  "q:g10m10s2-1-1:ex10-7-23c",
+  "q:g10m10s2-1-1:ex10-7-24a",
+  "q:g10m10s2-1-1:ex10-7-27a",
+  "q:g10m10s2-1-1:ex10-7-3",
+  "q:g10m10s2-1-1:ex10-7-4",
+  "q:g10m10s2-1-1:ex10-7-5",
+  "q:g10m10s2-1-1:ex10-7-6",
+  "q:g10m10s2-1-1:we03",
+  "q:g10m10s2-1-1:we04",
+  "q:g10m10s2-1-1:we05",
+  "q:g10m10s2-1-1:we06",
+  "q:g10m10s2-1-4:ex10-2-11",
+  "q:g10m10s2-1-4:ex10-2-6",
+  "q:g10m10s2-1-4:ex10-2-7",
+  "q:g10m10s2-1-4:ex10-2-8",
+  "q:g10m10s2-1-4:ex10-2-9a",
+  "q:g10m10s2-1-4:ex10-2-9b",
+  "q:g10m10s2-1-4:ex10-7-25c",
+  "q:g10m10s2-1-4:ex10-7-25d",
+  "q:g10m10s2-1-4:ex10-7-27b",
+  "q:g10m10s2-1-4:ex10-7-7",
+  "q:g10m10s2-1-4:ex10-7-8",
+  "q:g10m10s2-1-4:ex10-7-9",
+  "q:g10m10s3-1-1:ex10-3-3",
+  "q:g10m10s3-1-1:ex10-3-4",
+  "q:g10m10s3-1-1:ex10-7-12",
+  "q:g10m10s3-1-1:ex10-7-13",
+  "q:g10m10s3-1-2:ex10-3-1",
+  "q:g10m10s3-1-2:ex10-3-2",
+  "q:g10m10s3-1-2:ex10-3-5",
+  "q:g10m10s3-1-2:ex10-3-6",
+  "q:g10m10s3-1-2:ex10-3-7",
+  "q:g10m10s3-1-2:ex10-3-8",
+  "q:g10m10s3-1-2:ex10-7-11",
+  "q:g10m10s3-1-2:ex10-7-14",
+  "q:g10m10s3-1-2:ex10-7-15",
+  "q:g10m10s3-1-2:ex10-7-16",
+  "q:g10m10s3-1-2:ex10-7-17",
+  "q:g10m10s3-1-3:ex10-4-3a",
+  "q:g10m10s3-1-3:ex10-4-3b",
+  "q:g10m10s3-1-3:ex10-4-3c",
+  "q:g10m10s3-1-3:ex10-4-3d",
+  "q:g10m10s3-1-3:ex10-4-3e",
+  "q:g10m10s4-1-1:ex10-5-1",
+  "q:g10m10s4-1-1:ex10-5-2",
+  "q:g10m10s4-1-1:ex10-5-3",
+  "q:g10m10s4-1-1:ex10-5-6a",
+  "q:g10m10s4-1-1:ex10-7-18",
+  "q:g10m10s4-1-1:ex10-7-19",
+  "q:g10m10s4-1-1:we10",
+  "q:g10m10s4-1-2:ex10-5-4",
+  "q:g10m10s4-1-2:ex10-5-6c",
+  "q:g10m10s4-1-2:ex10-5-6d",
+  "q:g10m10s4-1-2:ex10-7-22a",
+  "q:g10m10s4-1-2:we11",
+  "q:g10m10s4-1-4:ex10-5-6e",
+  "q:g10m10s4-1-4:ex10-5-6f",
+  "q:g10m10s4-1-4:ex10-7-22b",
+  "q:g10m10s4-1-4:ex10-7-29c",
+  "q:g10m10s5-1-1:ex10-6-3",
+  "q:g10m10s5-1-3:ex10-6-4a",
+  "q:g10m10s5-1-3:ex10-6-4b",
+  "q:g10m10s5-1-3:ex10-7-29b"
+ ],
+ "runs": [
+  "e664cb7fe1e474ec9e167aab97c59b6c3743a30cd54a1be195f1f56050691be1",
+  "91b03180cded88bcdc9d23d882431276f32fcc9714a4670ed8e55c5a06239a61"
+ ]
+}

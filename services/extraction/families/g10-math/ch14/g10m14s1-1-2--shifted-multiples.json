@@ -1,0 +1,85 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m14s1-1-2:shifted-multiples",
+ "kind": "family",
+ "lo_id": "lo:g10m14s1-1-2",
+ "parent_question_id": "q:g10m14s1-1-2:ex14-8-13b",
+ "source_page": 493,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": "Fiona has labelled discs, one for each whole number in a range that does not start at 1, and selects one disc at random.",
+ "params": [
+  {
+   "name": "m",
+   "choice": [
+    4,
+    6,
+    7,
+    8,
+    9,
+    12
+   ]
+  },
+  {
+   "name": "lo",
+   "randint": [
+    11,
+    39
+   ]
+  },
+  {
+   "name": "span",
+   "randint": [
+    34,
+    60
+   ]
+  },
+  {
+   "name": "hi",
+   "let": "lo + span - 1"
+  },
+  {
+   "name": "k1",
+   "let": "(lo + m - 1) // m"
+  },
+  {
+   "name": "k2",
+   "let": "hi // m"
+  },
+  {
+   "name": "ne",
+   "let": "k2 - k1 + 1"
+  },
+  {
+   "name": "ns",
+   "let": "hi - lo + 1"
+  },
+  {
+   "name": "mults",
+   "let": "[m * k for k in range(k1, k2 + 1)]"
+  },
+  {
+   "name": "r",
+   "let": "(100 * ne) % ns"
+  },
+  {
+   "require": "ne >= 3 and r != 0 and (r * 10 < 4 * ns or r * 10 > 6 * ns)",
+   "why": "at least three discs qualify, the probability is not exact to 2 decimal places, and it is not within 0.4 to 0.6 of a hundredth from a rounding tie, so the 2 dp answer is unambiguous"
+  }
+ ],
+ "constraints": [
+  "ne < ns",
+  "ns == span"
+ ],
+ "stem": "Fiona has labelled discs, one for each whole number from {=lo} to {=hi}, including {=lo} and {=hi}. A disc is selected at random. What is the probability that the number on the disc is a multiple of {=m}? Write your answer as a decimal, correct to 2 decimal places.",
+ "answer": "fixed(ne / ns, 2)",
+ "solution": [
+  "The discs are numbered from ${=lo}$ to ${=hi}$, one disc for each whole number, so the number of possible outcomes in the sample space is: $n(S)={=hi}-{=lo}+1={=ns}$ .",
+  "The smallest multiple of ${=m}$ that is at least ${=lo}$ is ${=m * k1}$ (${=m} \\times {=k1}$) and the largest multiple of ${=m}$ that is at most ${=hi}$ is ${=m * k2}$ (${=m} \\times {=k2}$). The set of all discs that are multiples of ${=m}$ is: ${=setof(mults)}$ .",
+  "This set has ${=ne}$ elements, so $n(E)={=ne}$ .",
+  "Finally, we can find the probability: $\\begin{aligned}P(E)&=\\frac{n(E)}{n(S)}\\\\&=\\frac{{=ne}}{{=ns}}\\\\&\\approx{=fixed(ne / ns, 2)}\\end{aligned}$",
+  "Therefore, the probability that the number on the disc is a multiple of ${=m}$ is ${=fixed(ne / ns, 2)}$ , correct to 2 decimal places."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced twist on book ex14-8-13b: the discs do not start at 1, so n(S) is hi - lo + 1 (not hi) and the multiples must be counted from the first one at or above lo, not from the multiplier 1. Same method as the book (list the set, count its elements, divide). Parameter guard: ne>=3; the exact value is never a whole number of hundredths and never within 0.4-0.6 of a hundredth from a rounding tie, so blind solvers who round slightly early still agree. At most 15 multiples are listed (m >= 4, at most 60 discs). The solution uses setof(mults) for the listed set; if setof prints without braces the set reads as a plain list, which is still correct. Verified offline: about 70% of random draws are accepted, 3000+ distinct (m, lo, hi) instances."
+}

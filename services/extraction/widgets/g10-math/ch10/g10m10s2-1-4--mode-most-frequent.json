@@ -1,0 +1,45 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m10s2-1-4:mode-most-frequent",
+ "lo_id": "lo:g10m10s2-1-4",
+ "parent_question_id": "q:g10m10s2-1-4:ex10-2-11",
+ "tier": "basic",
+ "kind": "bar_builder",
+ "instances": [
+  {
+   "n": 5,
+   "t": 4
+  },
+  {
+   "n": 6,
+   "t": 7
+  },
+  {
+   "n": 7,
+   "t": 2
+  }
+ ],
+ "spec": {
+  "ask": "mode",
+  "target": "{=t}",
+  "n": "{=n}"
+ },
+ "stem": "Use the bars to build a data set of ${=n}$ values whose mode is ${=t}$. Any data set with that mode counts.",
+ "solution": [
+  "The mode is the value that occurs most often, so the target value has to appear more times than any other value. Being in the set is not enough.",
+  "Raise two of the bars to the target value, so it occurs twice.",
+  "Fill the remaining bars with values that are different from the target and different from each other, so that none of them occurs as often as the target.",
+  "Check the live readout: the mode shows the target on its own, with no tie."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "no-mode",
+   "misconception_id": "mc:g10m10s2-1-4:mode-not-most-frequent"
+  },
+  {
+   "predicate": "multi-modal",
+   "misconception_id": "mc:g10m10s2-1-4:mode-not-most-frequent"
+  }
+ ],
+ "notes": "Builds the part of this objective that the registered misconception is about: a data set made to fit a STATED mode. no-mode is the student who places the target once among all-different values; multi-modal is the student who lets other values repeat as often as the target. Both are the same registered error (mode-not-most-frequent), listed no-mode first as the likelier build. off-target is deliberately NOT mapped: for ask:mode it also fires when the target is absent altogether or when a different single value is the mode, which is a mixed bag. The other error that fires it (target present but outranked by another value) is also this misconception, so a later pass could add off-target if Samuel accepts that residual. Targets are 2-7 (never 0, where a zero-height bar looks like a missing bar); n 5-7 stays inside the instrument's 3-8. The anchor questions of this objective are all mean questions; none uses a mode, so the parent is the objective's simplest anchor (ex10-2-11)."
+}

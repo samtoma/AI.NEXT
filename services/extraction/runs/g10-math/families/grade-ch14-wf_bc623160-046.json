@@ -1,0 +1,210 @@
+{
+ "mode": "grade",
+ "book": "g10-math",
+ "prompts_version": "s6-v6",
+ "by_ref": {
+  "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/s6-grade-ch14",
+  "stage": "S6 grade",
+  "shards_sha256": "b6aaa23ba4eaf7e7e1cf712055ef970929ec14984a9c858e2a2c3896c33e6fd9",
+  "files": 128
+ },
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "ce14b9a275551596540559352d6e1137fc366251ecc65d4b7d34aa4599cbc0b6",
+  "args_sha256": "17d3034658ef577d05e21d05b91aa28ebd8535efb502b2e695a39a5a774251cf",
+  "generated_sha256": "bd34e9e8552d9e3cf2c2015838e886bbcea3b6c1ff6f178687dfaf91571577e4",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "family_id": "tpl:g10m14s7-1-3:remaining-colour",
+   "spec_sha": "d159047afe90ae6bfcb61528f05f7f444899d9275fd7bb346130073dd8b5eadd",
+   "answers": [
+    {
+     "instance_id": "q:g10m14s7-1-3:g003-remain",
+     "stem_sha": "1556336e3b0b9fa7",
+     "answer": {
+      "plain": "6/25"
+     },
+     "working": "P(green) = 1 - 2/25 - 17/25 = 25/25 - 19/25 = 6/25. 6 and 25 share no common factor, so it is already in simplest form."
+    },
+    {
+     "instance_id": "q:g10m14s7-1-3:g005-remain",
+     "stem_sha": "a54efb08ece60ac4",
+     "answer": {
+      "plain": "4/7"
+     },
+     "working": "P(green) = 1 - 1/14 - 5/14 = 14/14 - 6/14 = 8/14. Divide top and bottom by 2 to get 4/7."
+    },
+    {
+     "instance_id": "q:g10m14s7-1-3:g010-remain",
+     "stem_sha": "c1de62fa98186abe",
+     "answer": {
+      "plain": "2/7"
+     },
+     "working": "P(green) = 1 - 9/14 - 1/14 = 14/14 - 10/14 = 4/14. Divide top and bottom by 2 to get 2/7."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family has no options (typed expression answers), so distractors_ok is true with an empty list. I rechecked all three instances. g003: 2/25+17/25=19/25, 1-19/25=6/25, already in simplest form, which matches key and answer_check \"6/25\". g005: 1/14+5/14=6/14, 1-6/14=8/14, simplest form 4/7, which matches key and answer_check \"4/7\". g010: 9/14+1/14=10/14, 1-10/14=4/14, simplest form 2/7, which matches key and answer_check \"2/7\". Each key is in the asked form (a fraction in simplest form) and each LaTeX key is the same value as its answer_check. The method is the book's: the three probabilities sum to 1, so P(green) is the complement of P(red or blue). Both steps are valid because the colours are mutually exclusive, and the intermediate unsimplified fractions are fine because step 3 reduces them. The context is a plain bag-of-counters problem with realistic numbers, and the stem matches the fixed context. The only weakness is pedagogical rather than a correctness defect: this is a very easy question for an advanced tier."
+   }
+  },
+  {
+   "family_id": "tpl:g10m14s7-1-4:both-count",
+   "spec_sha": "d3c5dae329ac4d66a2c9e267defcba2fc79a3134bbe3d4a37adb9efe52fba4ac",
+   "answers": [
+    {
+     "instance_id": "q:g10m14s7-1-4:g001-both-c",
+     "stem_sha": "eaece4a2f50b5105",
+     "answer": {
+      "value": "8"
+     },
+     "working": "Learners who play at least one sport = 28 - 5 = 23. Inclusion-exclusion: 18 + 13 - both = 23, so both = 31 - 23 = 8."
+    },
+    {
+     "instance_id": "q:g10m14s7-1-4:g005-both-c",
+     "stem_sha": "152698bcae97879b",
+     "answer": {
+      "value": "7"
+     },
+     "working": "Learners who play at least one sport = 36 - 11 = 25. Inclusion-exclusion: 19 + 13 - both = 25, so both = 32 - 25 = 7."
+    },
+    {
+     "instance_id": "q:g10m14s7-1-4:g009-both-c",
+     "stem_sha": "38ee173018b9ce5d",
+     "answer": {
+      "value": "9"
+     },
+     "working": "Learners who play at least one sport = 29 - 9 = 20. Inclusion-exclusion: 13 + 16 - both = 20, so both = 29 - 20 = 9. Check: football only 4, hockey only 7, both 9, neither 9 = 29."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family is numeric with no options, so there are no wrong options to judge and distractors_ok is true by default. I recomputed all three instances independently.\n\ng001 (28 total, F=18, H=13, neither 5): 28-5=23 and 18+13-23=8. The key is 8. The check 10+8+5+5=28 holds.\n\ng005 (36 total, F=19, H=13, neither 11): 36-11=25 and 19+13-25=7. The key is 7. The check 12+7+6+11=36 holds.\n\ng009 (29 total, F=13, H=16, neither 9): 29-9=20 and 13+16-20=9. The key is 9. The check 4+9+7+9=29 holds.\n\nIn every instance the overlap is at most min(F,H), so no region is negative. Each key is a single integer and answers \"how many play both\". The stem states that the football and hockey counts include those who play both, which removes the usual ambiguity. The worked solutions follow the book's method: remove the neither group, apply n(F or H) = n(F) + n(H) - n(F and H), solve for the overlap, then check on the Venn diagram.\n\nTwo small points, neither enough to reject:\n- Step 1 uses the symbols F and H without saying they stand for football and hockey. The stem makes this obvious.\n- The solution talks about \"circles\" and a \"Venn diagram\" although the stem shows no diagram. A Grade 10 learner will read this as the standard Venn model.\n\nI did not see an answer_check expression in the file. The plain integer keys leave no LaTeX/answer_check mismatch to find."
+   }
+  },
+  {
+   "family_id": "tpl:g10m14s7-1-4:neither-count",
+   "spec_sha": "ebb9136c66d8b28e25dca3a109d2d50eaaf72b4c02cb6dc0e70fdd23a10533ed",
+   "answers": [
+    {
+     "instance_id": "q:g10m14s7-1-4:g004-neithe",
+     "stem_sha": "fa0031f3b84258d3",
+     "answer": {
+      "value": "4"
+     },
+     "working": "Union = football + hockey - both = 22 + 10 - 6 = 26 (the 6 who play both are counted in each total, so they are subtracted once). Neither = 30 - 26 = 4."
+    },
+    {
+     "instance_id": "q:g10m14s7-1-4:g005-neithe",
+     "stem_sha": "0f4a874063c12563",
+     "answer": {
+      "value": "6"
+     },
+     "working": "Union = 23 + 19 - 10 = 32. Neither = 38 - 32 = 6."
+    },
+    {
+     "instance_id": "q:g10m14s7-1-4:g007-neithe",
+     "stem_sha": "ecf424219b97fd22",
+     "answer": {
+      "value": "6"
+     },
+     "working": "Union = 19 + 11 - 3 = 27. Neither = 33 - 27 = 6."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family is numeric with no options and no misconception_ids, so there are no distractors to judge. I recomputed all three instances and the keys are correct.\n\n- g004: 22-6=16 football only, 10-6=4 hockey only, 16+6+4=26, and 30-26=4. The key \"4\" is correct.\n- g005: 23-10=13 and 19-10=9, 13+10+9=32, and 38-32=6. The key \"6\" is correct.\n- g007: 19-3=16 and 11-3=8, 16+3+8=27, and 33-27=6. The key \"6\" is correct.\n\nEach key is a single whole number and answers the stem's \"how many play neither\".\n\nThe stem says the football and hockey counts each include those who play both. That removes the main ambiguity (whether 22 means football only), and the \"both\" count never exceeds either sport's total. The class sizes are realistic.\n\nThe three-step solutions are consistent. They use the two-circle Venn method (only, both, union, then the total minus the union) and cross-check it with n(F or H) = n(F)+n(H)-n(F and H). That is the book's Venn and inclusion-exclusion method.\n\nMinor point, not a defect: in g004 the key (4) equals the hockey-only count (4), so a student who stopped after step 1 could land on the right number for the wrong reason. It is not wrong, but a rewrite could change the numbers if you want to avoid it."
+   }
+  },
+  {
+   "family_id": "tpl:g10m14s7-1-4:only-cooldrink",
+   "spec_sha": "7b81e436cf622e91a9c6d0d8bcde3473282ffb94174747f6ce045b6ccb6b10cf",
+   "answers": [
+    {
+     "instance_id": "q:g10m14s7-1-4:g002-only-c",
+     "stem_sha": "02760ebea164e44c",
+     "answer": {
+      "value": "10"
+     },
+     "working": "Learners with chips or cooldrink or both = 31 - 5 = 26. Chips total = 16 (this includes the 7 who also had a cooldrink). Only cooldrink = 26 - 16 = 10."
+    },
+    {
+     "instance_id": "q:g10m14s7-1-4:g007-only-c",
+     "stem_sha": "272e4d9239a4ba4e",
+     "answer": {
+      "value": "23"
+     },
+     "working": "Learners with chips or cooldrink or both = 51 - 4 = 47. Chips total = 24 (includes the 10 who also had a cooldrink). Only cooldrink = 47 - 24 = 23."
+    },
+    {
+     "instance_id": "q:g10m14s7-1-4:g008-only-c",
+     "stem_sha": "c7fbacc94478b255",
+     "answer": {
+      "value": "20"
+     },
+     "working": "Learners with chips or cooldrink or both = 41 - 6 = 35. Chips total = 15 (includes the 9 who also had a cooldrink). Only cooldrink = 35 - 15 = 20."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The judge file shows no answer options and no misconception_ids; the answer type is numeric. There are no distractors to judge, so distractors_ok is true by default. I checked all three instances by hand.\n\ng002: 31 - 5 = 26 inside the circles. Chips is 16, which includes the 7 who had both. Only cooldrink = 26 - 16 = 10. Key \"10\" is correct. The solution steps are correct: only chips is 9, and 26 - 9 - 7 = 10.\n\ng007: 51 - 4 = 47 inside. Chips is 24 and both is 10. Only cooldrink = 47 - 24 = 23. Key \"23\" is correct. The steps are correct: only chips is 14, and 47 - 14 - 10 = 23.\n\ng008: 41 - 6 = 35 inside. Chips is 15 and both is 9. Only cooldrink = 35 - 15 = 20. Key \"20\" is correct. The steps are correct: only chips is 6, and 35 - 6 - 9 = 20.\n\nKey form: each key is a single integer count, which is what \"How many learners had only a cooldrink?\" asks for. The key file shows no separate answer_check or LaTeX form to compare, so I could not check that.\n\nContext: the stem is unambiguous. \"16 had a packet of chips and 7 of these also had a cooldrink\" makes 16 the whole chips circle, not chips-only. \"All but N\" corresponds to the \"a few had neither\" in the fixed context, with N of 4 to 6. The numbers are realistic and consistent, with no negative regions. In every instance the only-chips region is non-negative.\n\nSolution method: Venn-diagram regions, finding the overlap, then only-chips, then only-cooldrink by subtraction. Step 4 is a redundant but correct shortcut and states why it works. It is fine as a cross-check."
+   }
+  },
+  {
+   "family_id": "tpl:g10m14s7-1-4:union-count",
+   "spec_sha": "3df3fcd3dbe280b9ee30e66289616b07a56129985d88253c47a55345fd3136e1",
+   "answers": [
+    {
+     "instance_id": "q:g10m14s7-1-4:g005-union-",
+     "stem_sha": "719223c7c031d704",
+     "answer": {
+      "value": "22"
+     },
+     "working": "Football or hockey = football + hockey - both = 17 + 11 - 6 = 22 (subtract the overlap once because it was counted in both totals)."
+    },
+    {
+     "instance_id": "q:g10m14s7-1-4:g006-union-",
+     "stem_sha": "2db123e1c8e9faa0",
+     "answer": {
+      "value": "29"
+     },
+     "working": "Football or hockey = 18 + 14 - 3 = 29 (subtract the overlap once because it was counted in both totals)."
+    },
+    {
+     "instance_id": "q:g10m14s7-1-4:g008-union-",
+     "stem_sha": "998d4f80f34064db",
+     "answer": {
+      "value": "30"
+     },
+     "working": "Football or hockey = 25 + 11 - 6 = 30 (subtract the overlap once because it was counted in both totals)."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family is numeric and typed. There are no options and no misconception_ids, so there are no distractors to check. I recomputed all three instances.\n- g005 (17, 11, 6): 17+11-6 = 22. Venn regions are 11 only football, 6 both, 5 only hockey, and 11+6+5 = 22. Key \"22\" matches.\n- g006 (18, 14, 3): 18+14-3 = 29. Regions are 15, 3, 11, and 15+3+11 = 29. Key \"29\" matches.\n- g008 (25, 11, 6): 25+11-6 = 30. Regions are 19, 6, 5, and 19+6+5 = 30. Key \"30\" matches.\nEach key is a single integer, which is what \"how many ... or both\" asks for. The stem states that the football and hockey counts each include the learners who play both, so there is no sum-without-subtraction ambiguity. \"Or (or both)\" reads as inclusive. All numbers give a plausible class size, and the both-count is smaller than each single-sport count in every instance.\nEach solution follows the same Venn-then-identity method. It finds the \"only\" regions by subtracting the overlap, adds the three regions, then confirms with n(F or H) = n(F)+n(H)-n(F and H). The arithmetic is correct at every step and both routes agree with the key. No answer_check LaTeX is shown, so I could not compare it with the key; the keys are plain integers."
+   }
+  }
+ ]
+}

@@ -1,0 +1,546 @@
+{
+ "stage": "G2R",
+ "workflow": "g2-recommend",
+ "prompts_version": "g2rec-v1",
+ "book": "g10-math",
+ "chapter": 14,
+ "part": 1,
+ "parts": 1,
+ "batch": 8,
+ "verify_batch": 8,
+ "model": "sonnet",
+ "effort": "high",
+ "items_sha256": "4d9dbcb54e3cc882118616d8010b7990845f055273115a960cebd78d6c47c716",
+ "keys": [
+  "g10m14s1-1:Ex14-1:1",
+  "g10m14s1-1:Ex14-1:7e",
+  "g10m14s1-1:Ex14-8:1",
+  "g10m14s1-1:Ex14-8:27a",
+  "g10m14s1-1:Ex14-8:27b",
+  "g10m14s1-1:Ex14-8:27c",
+  "g10m14s3-1:Ex14-3:1",
+  "g10m14s3-1:Ex14-3:2",
+  "g10m14s3-1:Ex14-3:3a",
+  "g10m14s3-1:Ex14-3:3e",
+  "g10m14s3-1:Ex14-8:2",
+  "g10m14s3-1:Ex14-8:9",
+  "g10m14s5-1:Ex14-5:1",
+  "g10m14s5-1:Ex14-5:2",
+  "g10m14s5-1:Ex14-8:12f",
+  "g10m14s5-1:Ex14-8:13f",
+  "g10m14s5-1:Ex14-8:24",
+  "g10m14s6-1:Ex14-8:27e",
+  "g10m14s7-1:Ex14-7:1",
+  "g10m14s7-1:Ex14-7:2",
+  "g10m14s7-1:Ex14-8:30"
+ ],
+ "agents": {
+  "recommend": 3,
+  "verify": 3
+ },
+ "embedded": {
+  "source": "runbook/g2-recommend.workflow.js",
+  "source_sha256": "5c0a9ef82f1f0643ac9935f6a60e6623730012cf2bd415344941c4a6a5e1b361",
+  "args_sha256": "6b71a079789ea3aefc14bc8dea094789d67fa728588021897e5ed4d3da8d958e",
+  "generated_sha256": "12107be61532c7c5bc6f19c227ec9fb5cbcfd7e5d308853ea8b5509500a7404e",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "key": "g10m14s1-1:Ex14-1:1",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m14s1-1:Ex14-1:1",
+    "verdict": "fix",
+    "class": "check too strict",
+    "confidence": "low",
+    "why_low": "The book's answer is right and the typing is right in substance; the only question is whether to accept as typed or re-type the options verbatim from the stem (with \\left/\\right) so the options-in-stem check passes.",
+    "note": "Total 8 on two dice: (2;6),(3;5),(4;4),(5;3),(6;2); an event is the set of all outcomes of interest, so the 5-element set. Key matches book. Check failed only on \\left/\\right and the 'event set =' prefix; options re-typed verbatim from the stem.",
+    "own_value": "event set = {(2;6);(3;5);(4;4);(5;3);(6;2)}",
+    "book_quote": "the most appropriate example of the term “event” is event set $=\\left\\{(2;6);(3;5);(4;4);(5;3);(6;2)\\right\\}$",
+    "fix": {
+     "answer_type": "choice",
+     "key": "\\left\\{(2;6);(3;5);(4;4);(5;3);(6;2)\\right\\}",
+     "options": [
+      "\\left\\{(4;4)\\right\\}",
+      "\\left\\{(2;6);(3;5);(4;4);(5;3);(6;2)\\right\\}",
+      "\\left\\{(2;6);(6;2)\\right\\}"
+     ],
+     "options_source": "stem"
+    }
+   },
+   "ver": {
+    "key": "g10m14s1-1:Ex14-1:1",
+    "own_answer": "{(2;6);(3;5);(4;4);(5;3);(6;2)}",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "All ordered pairs of two dice summing to 8 form the event; options A and C are only subsets, so B is the only correct choice."
+   }
+  },
+  {
+   "key": "g10m14s1-1:Ex14-1:7e",
+   "state": "held",
+   "rec": {
+    "key": "g10m14s1-1:Ex14-1:7e",
+    "verdict": "exclude",
+    "class": "item wording",
+    "confidence": "low",
+    "note": "Book working counts A, 2, 3 per suit: 12 of 52, so 3/13, and printed and EPUB agree. But the stem says only 'a number less than 4', and an ace is not normally a number card. Read that way the count is 8 and the answer 2/13, as the blind solver found. A student could be marked wrong.",
+    "own_value": "3/13 if the ace counts as 1 (the book's reading); 2/13 if only number cards count",
+    "defect": "The stem does not say the ace counts as 1. The book's key 3/13 depends on counting the ace as a number less than 4. Under the usual reading that an ace is not a number card, the answer is 2/13, and a student giving it would be marked wrong.",
+    "why_low": "The book is internally consistent: its working states the ace is counted and the key matches. Whether to keep it with a stem note ('treat the ace as 1') or drop it is a content decision for a person. I did not add words to the stem on my own.",
+    "book_quote": "there are $\\text{3}$ cards less than $\\text{4}$ : A, $\\text{2}$ and $\\text{3}$ ."
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m14s1-1:Ex14-8:1",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m14s1-1:Ex14-8:1",
+    "verdict": "fix",
+    "class": "check too strict",
+    "confidence": "high",
+    "note": "A die landing on 5 is a single result, which is the book's definition of an outcome; the other two are not results of the die roll. Key was lost only because of capital letter and full stop. Options re-typed as the stem's own alternatives.",
+    "own_value": "The die lands on the number 5",
+    "book_quote": "the most appropriate example of the term “outcome” is: the die lands on the number 5",
+    "fix": {
+     "answer_type": "choice",
+     "key": "The die lands on the number 5",
+     "options": [
+      "A teacher walks into the class room",
+      "The die lands on the number 5",
+      "The clock strikes 3 pm"
+     ],
+     "options_source": "stem"
+    }
+   },
+   "ver": {
+    "key": "g10m14s1-1:Ex14-8:1",
+    "own_answer": "The die lands on the number 5",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "A single result of rolling a die is an outcome; the other two options are unrelated to the experiment."
+   }
+  },
+  {
+   "key": "g10m14s1-1:Ex14-8:27a",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m14s1-1:Ex14-8:27a",
+    "verdict": "fix",
+    "class": "printed answer misaligned",
+    "confidence": "low",
+    "why_low": "Content decision: the answer is a verbal description of a set (the 39-card deck without clubs), which cannot be marked automatically, so it is kept as a teaching example only.",
+    "note": "Without the clubs, 39 cards remain, so the book's sample space is right (blind agrees: 39 cards of hearts, diamonds, spades). The printed answer is stray text from another question; re-typed from the EPUB. Descriptive set, not markable.",
+    "own_value": "the 39 cards: A to K of hearts, diamonds and spades",
+    "book_quote": "$\\{\\text{deck without clubs}\\}$",
+    "fix": {
+     "answer_type": "not_markable",
+     "not_markable_reason": "The book's answer is a verbal description of a set (the deck without clubs), which the marker cannot compare.",
+     "printed_answer": "\\{\\text{deck without clubs}\\}"
+    }
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m14s1-1:Ex14-8:27b",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m14s1-1:Ex14-8:27b",
+    "verdict": "fix",
+    "class": "printed answer misaligned",
+    "confidence": "low",
+    "why_low": "Content decision: the answer is a set described in words (J, Q, K of three suits), kept as a teaching example only.",
+    "note": "Picture cards are J, Q, K; with clubs removed, 3 suits, 9 cards. Book and blind agree. The printed answer is stray text from another question; re-typed from the EPUB. Verbal set, not markable.",
+    "own_value": "P = {J;Q;K of hearts, diamonds or spades} (9 cards)",
+    "book_quote": "$P=\\{J;Q;K\\text{ of hearts, diamonds or spades}\\}$",
+    "fix": {
+     "answer_type": "not_markable",
+     "not_markable_reason": "The book's answer is a set described in words (J, Q, K of three suits), which the marker cannot compare.",
+     "printed_answer": "P=\\{J;Q;K\\text{ of hearts, diamonds or spades}\\}"
+    }
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m14s1-1:Ex14-8:27c",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m14s1-1:Ex14-8:27c",
+    "verdict": "fix",
+    "class": "printed answer misaligned",
+    "confidence": "low",
+    "why_low": "Content decision: the book counts the ace as a numbered card (30 cards), the blind solver did not (27). The book is consistent with 14-1 q7e, but a person should confirm the ace convention before students see it. Kept as teaching only.",
+    "note": "Book set includes A with 2 to 10 in three suits (30 cards), consistent with its treatment of the ace as 1 elsewhere (q7e). Blind left the ace out. Printed answer is stray text; re-typed from the EPUB. Verbal set, not markable.",
+    "own_value": "N = {A;2;3;4;5;6;7;8;9;10 of hearts, diamonds or spades} (30 cards, ace as 1)",
+    "book_quote": "$N=\\{A;2;3;4;5;6;7;8;9;10\\text{ of hearts, diamonds or spades}\\}$",
+    "fix": {
+     "answer_type": "not_markable",
+     "not_markable_reason": "The book's answer is a set described in words (A and 2 to 10 of three suits), which the marker cannot compare.",
+     "printed_answer": "N=\\{A;2;3;4;5;6;7;8;9;10\\text{ of hearts, diamonds or spades}\\}"
+    }
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m14s3-1:Ex14-3:1",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m14s3-1:Ex14-3:1",
+    "verdict": "exclude",
+    "class": "stem damaged",
+    "confidence": "low",
+    "why_low": "Could be repaired by adding 13 to the second option (the book's working shows the intended set), but nothing in the book proves the option was meant to read that way; a person should decide.",
+    "defect": "The book's answer {1;2;3;4;5;7;8;9;10;11;12;13;14;15} is not among the stem's options: the second option reads {1;2;3;4;5;7;8;9;10;11;12;14;15} and lacks 13. Either an element was lost from the option or the book misprints it.",
+    "note": "Figure: A∩B holds 2,3,4,5,8,9,10,11,12,13,14,15; B-only holds 1,7; 6 is outside. So B = {1;2;3;4;5;7;8;9;10;11;12;13;14;15}, matching the book's answer but no option as shown. A student cannot select the right set.",
+    "own_value": "{1;2;3;4;5;7;8;9;10;11;12;13;14;15}",
+    "correct_answer": "{1;2;3;4;5;7;8;9;10;11;12;13;14;15}"
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m14s3-1:Ex14-3:2",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m14s3-1:Ex14-3:2",
+    "verdict": "fix",
+    "class": "selected from a list",
+    "confidence": "high",
+    "note": "Figure: A-only 1,2,5,6,9,11,13; A∩B 4,7,10,14,15; so A = {1;2;4;5;6;7;9;10;11;13;14;15}. This equals the fourth option and the book's answer. Key was lost only because the book's answer is a sentence. Typed as a choice over the stem's five own options.",
+    "own_value": "{1;2;4;5;6;7;9;10;11;13;14;15}",
+    "book_quote": "Therefore the event set $\\{1;2;4;5;6;7;9;10;11;13;14;15\\}$ best describes the event set of $A$ .",
+    "fix": {
+     "answer_type": "choice",
+     "key": "\\{1;2;4;5;6;7;9;10;11;13;14;15\\}",
+     "options": [
+      "\\{1;2;3;4;5;6;7;8;9;10;11;12;14;15\\}",
+      "\\{3;8;12\\}",
+      "\\{3;4;7;10;14;15\\}",
+      "\\{1;2;4;5;6;7;9;10;11;13;14;15\\}",
+      "\\{4;7;10;14;15\\}"
+     ],
+     "options_source": "stem"
+    }
+   },
+   "ver": {
+    "key": "g10m14s3-1:Ex14-3:2",
+    "own_answer": "{1;2;4;5;6;7;9;10;11;13;14;15}",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "In the figure A holds 11,5,1,9,2,13,6 plus the overlap 10,4,15,14,7; B-only is 3 and 12, 8 lie outside, so A is the key set and no other option matches."
+   }
+  },
+  {
+   "key": "g10m14s3-1:Ex14-3:3a",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m14s3-1:Ex14-3:3a",
+    "verdict": "accept",
+    "class": "check too strict",
+    "confidence": "low",
+    "why_low": "The key writes the set with an ellipsis, so a student who lists all twelve numbers, or gives the set-builder form the book also allows, may be marked wrong by the marker. A person should decide whether that is acceptable.",
+    "own_value": "S={1;2;...;12}, i.e. {n: n integer, 1<=n<=12}",
+    "book_quote": "$S=\\{n:n\\epsilon\\mathbb{Z},1\\leq n\\leq12\\}$ or $S=\\{1;2;\\ldots;12\\}$ .",
+    "correct_answer": "{1;2;...;12}",
+    "defect": "",
+    "note": "The sample space of slips numbered 1 to 12 is $\\{1;2;\\ldots;12\\}$. The key matches the book's second form and the printed answer. The complaint is only that the typed LaTeX differs from the flattened printed text."
+   },
+   "ver": {
+    "key": "g10m14s3-1:Ex14-3:3a",
+    "own_answer": "S = {1; 2; 3; ...; 12}",
+    "verdict": "confirmed",
+    "other_correct_answers": true,
+    "note": "The key is the correct sample space; the set-builder form {n : n in Z, 1 <= n <= 12} is also correct and a by-value marker may not accept it."
+   }
+  },
+  {
+   "key": "g10m14s3-1:Ex14-3:3e",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m14s3-1:Ex14-3:3e",
+    "verdict": "exclude",
+    "class": "stem damaged",
+    "confidence": "high",
+    "own_value": "n(S)=12 only. n(A) and n(B) cannot be derived because A and B are not defined in the stem.",
+    "correct_answer": "",
+    "defect": "The stem asks for n(A) and n(B), but events A and B are defined in an earlier part of the question and were not copied into this item. The book's 12, 6, 5 cannot be checked from what the student sees. The book working has no steps to restore A and B from.",
+    "note": "$n(S)=12$ checks out for slips 1 to 12. A and B are never defined in the stem, so $n(A)=6$ and $n(B)=5$ cannot be derived or checked. A student could not answer it as shown, and the book's working gives no way to repair it."
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m14s3-1:Ex14-8:2",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m14s3-1:Ex14-8:2",
+    "verdict": "fix",
+    "class": "typing error",
+    "confidence": "low",
+    "why_low": "The options must be re-typed in the stem's own LaTeX form (with backslash braces) so the stem-membership check passes. A person should check that the option text renders cleanly.",
+    "own_value": "The figure shows B holds 1,3,5,7,10 in the overlap and 2,4,8,9,11,12,14,15 in the blue-only region. 6 and 13 are outside both circles. So B = {1;2;3;4;5;7;8;9;10;11;12;14;15}, option D.",
+    "book_quote": "Therefore the event set {1;2;3;4;5;7;8;9;10;11;12;14;15} best describes the event set of B.",
+    "correct_answer": "{1;2;3;4;5;7;8;9;10;11;12;14;15}",
+    "defect": "",
+    "note": "I read the figure. B is the blue circle including the overlap: 1,3,5,7,10 and 2,4,8,9,11,12,14,15. 6 and 13 lie outside both circles. This is option D, the book's key. The pipeline typed no key and options that did not match the stem text, so the typing is rebuilt with the stem's own options.",
+    "fix": {
+     "answer_type": "choice",
+     "key": "\\{1;2;3;4;5;7;8;9;10;11;12;14;15\\}",
+     "options": [
+      "\\{6;13\\}",
+      "\\{1;3;5;7;10\\}",
+      "\\{2;4;6;8;9;11;12;13;14;15\\}",
+      "\\{1;2;3;4;5;7;8;9;10;11;12;14;15\\}"
+     ],
+     "options_source": "stem"
+    }
+   },
+   "ver": {
+    "key": "g10m14s3-1:Ex14-8:2",
+    "own_answer": "{1;2;3;4;5;7;8;9;10;11;12;14;15}",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "The B circle (blue plus the green overlap) holds 7,10,1,3,5 and 14,12,11,4,9,2,15,8, which is option D; 6 and 13 are outside both circles, so A, B and C are wrong."
+   }
+  },
+  {
+   "key": "g10m14s3-1:Ex14-8:9",
+   "state": "held",
+   "rec": {
+    "key": "g10m14s3-1:Ex14-8:9",
+    "verdict": "fix",
+    "class": "typing error",
+    "confidence": "low",
+    "why_low": "The book prints the exact fraction and its 2 d.p. rounding, but the stem asks for no rounding. Typing the key as 8/45 means a student who enters 0,18 may be marked wrong. A person should decide whether the rounded form must also be accepted.",
+    "own_value": "45-6-31=8 eat only Strawberry Pops, so P=8/45, about 0.178",
+    "book_quote": "$\\frac{8}{45}=\\text{0,18}$",
+    "correct_answer": "8/45",
+    "defect": "",
+    "note": "$45-6-31=8$, so $P=\\frac{8}{45}\\approx0{,}178$. The book's 0,18 is a rounding of that fraction. The stem does not ask for rounding, so a numeric key of 0,18 would mark the exact answer wrong. I retyped the key as the book's own fraction $\\frac{8}{45}$.",
+    "fix": {
+     "answer_type": "expression",
+     "key": "\\frac{8}{45}",
+     "marker_kind": "expression",
+     "form": "",
+     "variables": []
+    }
+   },
+   "ver": {
+    "key": "g10m14s3-1:Ex14-8:9",
+    "own_answer": "8/45",
+    "verdict": "confirmed",
+    "other_correct_answers": true,
+    "note": "45 - 6 - 31 = 8 eat only Strawberry Pops, so 8/45; the book prints 0,18 (about 0.178), so a student who types the rounded decimal may be marked wrong by a by-value marker."
+   }
+  },
+  {
+   "key": "g10m14s5-1:Ex14-5:1",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m14s5-1:Ex14-5:1",
+    "verdict": "accept",
+    "class": "check too strict",
+    "confidence": "low",
+    "why_low": "The stem prints \\cupB with no space, a damaged control sequence that may render as an error. The key itself is right. A person should check how the stem displays.",
+    "own_value": "n(S)=6, A has 4 elements, B has 1, no overlap. P(A\\cup B)=5/6=0.8333, i.e. 0.83",
+    "book_quote": "Therefore, the value of $P(A\\cupB)$ is $\\text{0,83}$ .",
+    "correct_answer": "0,83",
+    "defect": "",
+    "note": "$P(A\\cup B)=\\frac{4}{6}+\\frac{1}{6}-0=\\frac{5}{6}=0{,}83$ to 2 d.p. The book's last line gives 0,83, so the complaint that the final answer is not in the working is wrong. The rounded intermediates 0,67+0,17 would give 0,84, but the book's stated result is correct."
+   },
+   "ver": {
+    "key": "g10m14s5-1:Ex14-5:1",
+    "own_answer": "0,83",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "A union B = {1,2,3,5,6} has 5 elements out of 6, giving 5/6 = 0.8333, which rounds to 0.83."
+   }
+  },
+  {
+   "key": "g10m14s5-1:Ex14-5:2",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m14s5-1:Ex14-5:2",
+    "verdict": "accept",
+    "class": "check too strict",
+    "confidence": "low",
+    "why_low": "The book's first working line has a typo (P(A\\cup B) at the end where P(A\\cap B) belongs), and the stem says 'two decimal value'. The key is right. A person should decide whether the tutor may show that working.",
+    "own_value": "A∩B={1}, n(S)=6, so P=1/6=0.1667, i.e. 0.17",
+    "book_quote": "Therefore, the value of $P(A\\capB)$ is $\\text{0,17}$ .",
+    "correct_answer": "0,17",
+    "defect": "",
+    "note": "$A\\cap B=\\{1\\}$, so $P=\\frac{1}{6}=0{,}17$ to 2 d.p. The book's last line states 0,17, so the complaint that the final answer is not in the working is wrong. The first working line has a typo (the last term should be $A\\cap B$). The rounded intermediates sum to 0,16, but the result stands."
+   },
+   "ver": {
+    "key": "g10m14s5-1:Ex14-5:2",
+    "own_answer": "0,17",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "A intersect B = {1}, so P = 1/6 = 0.1667, which rounds to 0.17."
+   }
+  },
+  {
+   "key": "g10m14s5-1:Ex14-8:12f",
+   "state": "held",
+   "rec": {
+    "key": "g10m14s5-1:Ex14-8:12f",
+    "verdict": "exclude",
+    "class": "book error",
+    "confidence": "high",
+    "own_value": "Total 30. Age 3 has 8, female 15, age 3 and female 6. P=(8+15-6)/30=17/30=0.5667, i.e. 0,57 to 2 d.p.",
+    "correct_answer": "17/30 (0,57 to 2 d.p.)",
+    "defect": "The book's own working reaches 17/30 = 0,5667 but prints 0,56 (truncated). The correct rounding is 0,57, so the printed key is wrong.",
+    "note": "From the table, 8 are aged 3, 15 are female and 6 are both. $P=\\frac{8+15-6}{30}=\\frac{17}{30}=0{,}5667$. The book prints 0,56, which is truncated, not rounded. The key is wrong by the book's own working."
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m14s5-1:Ex14-8:13f",
+   "state": "held",
+   "rec": {
+    "key": "g10m14s5-1:Ex14-8:13f",
+    "verdict": "exclude",
+    "class": "book error",
+    "confidence": "high",
+    "own_value": "Multiples of 3 up to 85: 28. Multiples of 4: 21. Multiples of 12: 7. P=(28+21-7)/85=42/85=0.494, i.e. 0,49",
+    "correct_answer": "42/85 (0,49 to 2 d.p.)",
+    "defect": "The book lists 21 multiples of 4 but says 28, and then subtracts the product P(3)*P(4) as if the events were independent. The correct overlap is the multiples of 12, 7 of them. The printed 0,55 is wrong.",
+    "note": "$\\frac{28}{85}+\\frac{21}{85}-\\frac{7}{85}=\\frac{42}{85}\\approx0{,}49$. The book lists 21 multiples of 4 but writes 28. It also subtracts $\\frac13\\cdot\\frac{28}{85}$ instead of the multiples of 12. Its 0,55 is wrong."
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m14s5-1:Ex14-8:24",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m14s5-1:Ex14-8:24",
+    "verdict": "accept",
+    "class": "check too strict",
+    "confidence": "high",
+    "note": "$A=\\{3,4\\}$, $B=\\{2,4,5\\}$, $S$ has 6 elements. $P(A\\cap B)=\\frac{2}{6}+\\frac{3}{6}-\\frac{4}{6}=\\frac16\\approx0,17$; also $A\\cap B=\\{4\\}$ gives $\\frac16$. Working's last line states 0,17. The complaint is only a text comparison (EPUB has no final line). Stem writes \\capB without a space, a rendering matter only.",
+    "own_value": "0,17",
+    "book_quote": "Therefore, the value of $P(A\\capB)$ is $\\text{0,17}$ ."
+   },
+   "ver": {
+    "key": "g10m14s5-1:Ex14-8:24",
+    "own_answer": "0.17 (P(A∩B) = 1/6, since A∩B = {4} and n(S) = 6)",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "A∩B = {4}, so P = 1/6 ≈ 0.17; the key 0,17 is correct, with the book's comma as the decimal mark, and the book's working mislabels n(A) as 2 but still reaches the right value."
+   }
+  },
+  {
+   "key": "g10m14s6-1:Ex14-8:27e",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m14s6-1:Ex14-8:27e",
+    "verdict": "exclude",
+    "class": "stem damaged",
+    "confidence": "low",
+    "note": "The stem asks about sets $P$ and $N$ but never defines them (the lead-in naming $P$ and $N$ was not copied), so it cannot be answered as it reads. The book's 'Mutually exclusive and complementary' cannot be checked, and the four options are invented combinations, not the book's own words.",
+    "why_low": "The page image may show the definitions of P and N; a person could restore the stem and re-type the answer as not markable or a retyped choice.",
+    "own_value": "cannot be derived: sets P and N are not in the stem",
+    "defect": "Sets P and N are not defined in the stem; the typed options are invented combinations of categories. The book's own answer is 'Mutually exclusive and complementary' (not verifiable here)."
+   },
+   "ver": null
+  },
+  {
+   "key": "g10m14s7-1:Ex14-7:1",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m14s7-1:Ex14-7:1",
+    "verdict": "fix",
+    "class": "selected from a list",
+    "confidence": "low",
+    "note": "From the figure: $B=\\{1,5,7,8,9,13,14,15\\}$, so $B'=\\{2,3,4,6,10,11,12\\}$, matching the book. The three sets are in the stem; the typing took the book's sentence as key. Re-type as a choice over the stem's own sets, key the second.",
+    "why_low": "Retyping a list-in-stem item as a choice with LaTeX-delimited options is a content decision; the options must match the stem text exactly.",
+    "own_value": "\\{2;3;4;6;10;11;12\\}",
+    "book_quote": "Therefore the event set $\\{2;3;4;6;10;11;12\\}$ best describes the complementary event set of $B$ , also known as $B'$ .",
+    "fix": {
+     "answer_type": "choice",
+     "key": "$\\{2;3;4;6;10;11;12\\}$",
+     "options": [
+      "$\\{1;5;13;14\\}$",
+      "$\\{2;3;4;6;10;11;12\\}$",
+      "$\\{3;4;6;11;12\\}$"
+     ],
+     "options_source": "stem",
+     "less_specific": []
+    }
+   },
+   "ver": {
+    "key": "g10m14s7-1:Ex14-7:1",
+    "own_answer": "{2;3;4;6;10;11;12}",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "B = {13,14,1,5,8,9,15,7}, so B' within 1 to 15 is {2,3,4,6,10,11,12}, which is option B; option C is (A∪B)' only."
+   }
+  },
+  {
+   "key": "g10m14s7-1:Ex14-7:2",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m14s7-1:Ex14-7:2",
+    "verdict": "fix",
+    "class": "selected from a list",
+    "confidence": "low",
+    "note": "From the figure: outside both circles are 2, 4, 9, 11, 13, 15, so $(A\\cup B)'=\\{2,4,9,11,13,15\\}$, matching the book. The three sets are in the stem; the typing took the book's sentence as key. Re-type as a choice over the stem's own sets.",
+    "why_low": "Retyping a list-in-stem item as a choice with LaTeX-delimited options is a content decision; the options must match the stem text exactly.",
+    "own_value": "\\{2;4;9;11;13;15\\}",
+    "book_quote": "Therefore the event set $\\{2;4;9;11;13;15\\}$ best describes the complementary event set of $(A\\cupB)$ , also known as $(A\\cupB)'$ .",
+    "fix": {
+     "answer_type": "choice",
+     "key": "$\\{2;4;9;11;13;15\\}$",
+     "options": [
+      "$\\{2;4;9;11;13;15\\}$",
+      "$\\{1;3;5;6;7;8;10;12;14\\}$",
+      "$\\{6;8;12\\}$"
+     ],
+     "options_source": "stem",
+     "less_specific": []
+    }
+   },
+   "ver": {
+    "key": "g10m14s7-1:Ex14-7:2",
+    "own_answer": "{2;4;9;11;13;15}",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "A∪B = {8,12,14,3,1,7,5,10,6} (9 elements), so its complement is the 6 elements outside both circles, {2,4,9,11,13,15}, which is option A."
+   }
+  },
+  {
+   "key": "g10m14s7-1:Ex14-8:30",
+   "state": "excluded",
+   "rec": {
+    "key": "g10m14s7-1:Ex14-8:30",
+    "verdict": "accept",
+    "class": "check too strict",
+    "confidence": "low",
+    "note": "Reading $n(F)=19$, $n(H)=13$ as totals, $n(F\\cap H)=8$, neither 7: $19+13-8+7=31$, equal to the printed answer and the blind answer. The complaint is a text comparison, since the working has no final line.",
+    "why_low": "The stem's list punctuation was lost, and the working's Venn figure is not shown; if the counts meant 'only', the total would differ. A person should confirm the inclusive reading against the page.",
+    "own_value": "31",
+    "book_quote": "31"
+   },
+   "ver": {
+    "key": "g10m14s7-1:Ex14-8:30",
+    "own_answer": "31",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "Taking 19 and 13 as the totals who play football and hockey, the class is 19+13-8+7 = 31, matching the key and the book's answer."
+   }
+  }
+ ],
+ "tally": {
+  "fix/confirmed": 7,
+  "exclude": 6,
+  "fix": 3,
+  "accept/confirmed": 5
+ },
+ "problems": [
+  "batch 1: an answer names \"g10m14s1-1:Ex14-3:7e\", which is not an item of this batch (ignored)"
+ ],
+ "meter": {
+  "stage": "G2R",
+  "record": "uv run meter_run.py record --book g10-math --stage G2R --run <runId>"
+ }
+}

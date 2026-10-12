@@ -1,0 +1,104 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s4-1-5:fraction-point",
+ "kind": "family",
+ "lo_id": "lo:g10m6s4-1-5",
+ "parent_question_id": "q:g10m6s4-1-5:ex6-4-1",
+ "source_page": 175,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "x0",
+   "choice": [
+    -5,
+    -4,
+    -3,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "a",
+   "choice": [
+    -9,
+    -8,
+    -7,
+    -6,
+    -5,
+    -4,
+    -3,
+    -2,
+    -1,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ]
+  },
+  {
+   "name": "q",
+   "choice": [
+    -6,
+    -5,
+    -4,
+    -3,
+    -2,
+    -1,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ]
+  },
+  {
+   "require": "a % x0 != 0",
+   "why": "a is not a multiple of x, so the y-coordinate of A is a true fraction and the denominator has to be cleared"
+  },
+  {
+   "name": "qx",
+   "let": "q * x0"
+  },
+  {
+   "name": "xy",
+   "let": "qx + a"
+  },
+  {
+   "name": "y0",
+   "let": "q + a / x0"
+  }
+ ],
+ "constraints": [
+  "a != 0",
+  "q != 0",
+  "xy == x0 * y0"
+ ],
+ "stem": "The graph of a hyperbolic function of the form $y=\\dfrac{a}{x}+q$ has the horizontal asymptote $y={=q}$. Point A on the graph is at $\\left({=x0}, {=y0}\\right)$. Calculate the values of $a$ and $q$.",
+ "solution": [
+  "The horizontal asymptote of $y=\\frac{a}{x}+q$ is the line $y=q$. Here the asymptote is $y={=q}$, so $q={=q}$.",
+  "Substitute $q={=q}$ and the coordinates of A, $x={=x0}$ and $y={=y0}$, into $y=\\frac{a}{x}+q$: ${=y0}=\\frac{a}{{=x0}}{=signed(q)}$.",
+  "Multiply both sides by ${=x0}$ to clear the fraction: $\\left({=x0}\\right)\\times\\left({=y0}\\right)=\\left[\\frac{a}{{=x0}}{=signed(q)}\\right]\\times\\left({=x0}\\right)$, so ${=xy}=a{=signed(qx)}$.",
+  "Solve for $a$: $a={=xy}{=signed(-qx)}={=a}$.",
+  "Therefore $a={=a}$ and $q={=q}$."
+ ],
+ "marker": {
+  "kind": "values",
+  "answer": "[{=a}, {=q}]",
+  "form": null,
+  "variables": [
+   "a",
+   "q"
+  ],
+  "tolerance": null
+ },
+ "notes": "Same skeleton as the standard family, at the book's harder end: A has a true fractional y-coordinate, the twist ex6-4-1 uses with A(-2, 5/2), but with x in {+-3, +-4, +-5} so the denominator to clear is 2, 3, 4 or 5, the multiplier is often negative, and a runs to 9 and q to 6 with either sign, so the product and the final subtraction carry signs. The book has no harder skeleton for this objective (all three of its questions use one asymptote and one point), so this is a step up in arithmetic, not in method. Answers a and q are whole numbers.\n\nPIPELINE NORMALISATION (not an author edit): marker-values-plain-form: the marker answer was 'a = {=a}; q = {=q}', the book's printed form 'a = -1; q = 2'. The key is read by families/evaluator.py parse_plain, which splits an answer at ONE top-level '=' (a ';' reads as a ','), so 'a = 3, q = 2' has two and every attempt failed to evaluate ('more than one '='') instead of producing a key. The plain form for kind \"values\" with several variables is a list of the values, '[a, q]' (runbook/families.workflow.js: '[a, b] for several values'; the blind answer's names are stripped to that form by generate_questions.blind_plain, and the siblings tan-135, positive-q, negative-q already write it). The marker is now '[{=a}, {=q}]': the same two numbers, the same order, the same variables list. The stem (which still asks the student to write a=... and q=...), the answer values and the worked solution are unchanged."
+}

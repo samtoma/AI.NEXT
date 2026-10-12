@@ -1,0 +1,61 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s5-1-1:mirror",
+ "kind": "family",
+ "lo_id": "lo:g10m6s5-1-1",
+ "parent_question_id": "q:g10m6s5-1-1:ex6-8-48d",
+ "source_page": 230,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "b",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "nmax",
+   "let": "5 if b == 2 else (4 if b == 3 else 3)"
+  },
+  {
+   "name": "n",
+   "randint": [
+    2,
+    "nmax"
+   ]
+  },
+  {
+   "name": "sg",
+   "choice": [
+    1,
+    -1
+   ]
+  },
+  {
+   "name": "e",
+   "let": "sg * n"
+  },
+  {
+   "name": "p",
+   "let": "b ** n"
+  },
+  {
+   "name": "v",
+   "let": "p if sg == 1 else 1 / p"
+  }
+ ],
+ "constraints": [],
+ "stem": "The graphs of $y={=b}^{x}$ and $y=\\left(\\frac{1}{{=b}}\\right)^{x}$ are drawn on the same system of axes. The point $P$ lies on the graph of $y={=b}^{x}$ and the point $Q$ lies on the graph of $y=\\left(\\frac{1}{{=b}}\\right)^{x}$. Both points have $y$-coordinate ${=v}$. Calculate the length of $PQ$.",
+ "answer": "2 * n",
+ "solution": [
+  "Find the $x$-coordinate of $P$. Since ${=b}^{{=e}}={=v}$, the point $P$ is $({=e}, {=v})$.",
+  "The graph of $y=\\left(\\frac{1}{{=b}}\\right)^{x}$ is the reflection of the graph of $y={=b}^{x}$ in the $y$-axis. So the point on it with the same $y$-coordinate is the reflection of $P$: $Q=({=-e}, {=v})$.",
+  "Check: $\\left(\\frac{1}{{=b}}\\right)^{{=-e}}={=b}^{{=e}}={=v}$.",
+  "$P$ and $Q$ have the same $y$-coordinate, so $PQ$ is horizontal and its length is the difference between the $x$-coordinates: $PQ={=n}-(-{=n})={=2 * n}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced: uses the objective's key comparison (y = (1/b)^x is the reflection of y = b^x in the y-axis) in several steps: read x from a y-value using the powers of b (a table-of-values step, including negative exponents when v < 1), reflect, then find a horizontal distance. b is drawn from 2..5 with exponent size n capped so that v stays a small clean power (at most 125) or its reciprocal; the sign of the exponent is random, so v is either a whole number or a unit fraction (rendered as \\frac). There are 22 distinct stems. The answer is always 2n, a whole number. Because y = b^x is one-to-one, P and Q are unique. No figure is needed; the book figure for the parent (ex6-8-48d) shows y = 2^x and y = -2^x, which this family does not use."
+}

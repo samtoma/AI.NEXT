@@ -1,0 +1,38 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m13s4-1-3:enlarged-area",
+ "kind": "family",
+ "lo_id": "lo:g10m13s4-1-3",
+ "parent_question_id": "q:g10m13s4-1-3:ex13-7-16",
+ "source_page": 461,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "k",
+   "choice": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "A",
+   "randint": [
+    4,
+    40
+   ]
+  }
+ ],
+ "constraints": [],
+ "stem": "The area of a rectangle is ${=A}\\ \\text{cm}^{2}$. Both its length and its width are multiplied by ${=k}$. What is the area of the new rectangle, in $\\text{cm}^{2}$?",
+ "answer": "A * k ** 2",
+ "solution": [
+  "Both dimensions of the rectangle are multiplied by the scale factor $k = {=k}$.",
+  "When every length is multiplied by $k$, the area is multiplied by $k^{2}$. So $k^{2} = {=k}^{2} = {=k ** 2}$.",
+  "$A_{\\text{new}} = k^{2} \\times A = {=k ** 2} \\times {=A} = {=A * k ** 2}\\ \\text{cm}^{2}$."
+ ],
+ "notes": "Basic entry point: one rule (area scales by k squared), whole-number enlargement, original area given, new area asked. Modelled on ex13-7-16 (square, area scales by k^2) but with a concrete area so the student applies A_new = k^2 A. Both length and width are scaled, so the rectangle is similar to the original and the k^2 rule applies. Whole-number answer always (A * k^2, at most 1000). Typical wrong answers are the catalogued errors: A * k (scale factor applied once, mc:g10m13s4-1-3:scale-factor-applied-once) and A * k^3 (wrong power, mc:g10m13s4-1-3:wrong-power-for-measure). Numeric family, so no distractor options carry those ids."
+}

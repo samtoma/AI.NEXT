@@ -1,0 +1,104 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s1-1-4:hiking-range",
+ "kind": "family",
+ "lo_id": "lo:g10m6s1-1-4",
+ "parent_question_id": "q:g10m6s1-1-4:ex6-8-11c",
+ "source_page": 216,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": "A hiker leaves a camp and walks along a trail. The graph of h(t) shows the hiker's height, in metres above sea level, t hours after leaving the camp. The graph is made of straight line segments that join four given points in order.",
+ "params": [
+  {
+   "name": "h0",
+   "choice": [
+    200,
+    250,
+    300,
+    350,
+    400
+   ]
+  },
+  {
+   "name": "d1",
+   "choice": [
+    50,
+    100,
+    150
+   ]
+  },
+  {
+   "name": "d2",
+   "choice": [
+    150,
+    200,
+    250,
+    300
+   ]
+  },
+  {
+   "name": "h1",
+   "let": "h0 - d1"
+  },
+  {
+   "name": "h2",
+   "let": "h0 + d2"
+  },
+  {
+   "name": "h3",
+   "choice": "[h1 + 50 * j for j in range(1, (h2 - h1) // 50) if h1 + 50 * j != h0]"
+  },
+  {
+   "name": "t1",
+   "choice": [
+    1,
+    2
+   ]
+  },
+  {
+   "name": "g2",
+   "choice": [
+    2,
+    3
+   ]
+  },
+  {
+   "name": "g3",
+   "choice": [
+    1,
+    2
+   ]
+  },
+  {
+   "name": "t2",
+   "let": "t1 + g2"
+  },
+  {
+   "name": "t3",
+   "let": "t2 + g3"
+  }
+ ],
+ "constraints": [
+  "h1 < h3",
+  "h3 < h2",
+  "h3 != h0"
+ ],
+ "stem": "A hiker leaves a camp and walks along a trail. The graph of $h(t)$ shows the hiker's height, in metres above sea level, $t$ hours after leaving the camp. The graph is made of straight line segments that join the points $(0, {=h0})$, $({=t1}, {=h1})$, $({=t2}, {=h2})$ and $({=t3}, {=h3})$ in that order. Write the range of the function as an inequality in $h$, leaving out the units.",
+ "solution": [
+  "The range is the set of output values of the function, here the heights $h$ that the graph reaches, so we read it from the vertical axis.",
+  "The graph passes through the heights ${=h0}$, ${=h1}$, ${=h2}$ and ${=h3}$ m. Between these points it is made of straight line segments, so it never goes higher or lower than one of these points.",
+  "The lowest point is ${=h1}$ m (at $t = {=t1}$) and the highest point is ${=h2}$ m (at $t = {=t2}$).",
+  "The range is not simply from the starting height (${=h0}$ m) to the finishing height (${=h3}$ m), because the graph goes below both of them and above both of them.",
+  "So the range is ${=h1} \\le h \\le {=h2}$."
+ ],
+ "marker": {
+  "kind": "interval",
+  "answer": "interval({=h1}, {=h2}, 1, 1)",
+  "form": null,
+  "variables": [
+   "h"
+  ],
+  "tolerance": null
+ },
+ "notes": "Range of a graph that falls, rises and falls again, so the range runs from the lowest to the highest point and not from the first to the last height (the book's range questions ex6-8-11c and ex6-1-8b read the range off a monotone graph, where first-to-last happens to be right; this is the twist). The graph is given as the four vertices of a polyline because the engine has no figure support. h0, d1, d2 and h3 are multiples of 50, with h1 < h3 < h2 and h3 != h0 enforced both in the drawing of h3 and in the constraints, so the minimum and maximum are always the two inner vertices, the answer differs from first-to-last in every instance, and h1 > 0. The marker writes both closed flags of interval(...) as 1 (both end points included, as the book's 0 <= s <= 100 does); check that the engine reads 1 as closed. At least 270 distinct height sets, times 8 time sets."
+}

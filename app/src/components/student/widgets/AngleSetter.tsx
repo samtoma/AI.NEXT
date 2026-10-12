@@ -30,6 +30,7 @@ import { BUTTON_SECONDARY } from "@/components/sticker";
 import { Handle, WidgetShell, type Verdict, WIDGET_ACTIONS, WIDGET_WELL } from "./WidgetShell";
 import { tidy, useDragSurface, useKeyNudge, type Pt } from "./drag";
 import { OK, type WidgetOutcome } from "@/lib/widget-predicates";
+import { angleReadings, angleSetterStart } from "./angle-setter-start";
 
 const RAD = 5;
 const LIM = 6.4;
@@ -64,8 +65,10 @@ export function AngleSetter({
   const who = studentName?.trim() || "the student";
   const p = useMemo(() => makePlane([-LIM, LIM], [-LIM, LIM], W, H, 18), []);
   const svgRef = useRef<SVGSVGElement>(null);
-  // A parked left, B and C placed so nothing starts on the answer.
-  const [deg, setDeg] = useState({ A: 180, B: 250, C: 60 });
+  // A parked left, B and C placed so nothing starts on the answer — chosen for
+  // THIS question: the opening that used to be fixed was itself the answer to
+  // an inscribed-35° question (angle-setter-start.ts).
+  const [deg, setDeg] = useState(() => angleSetterStart(ask, target));
   const [active, setActive] = useState<"A" | "B" | "C">("B");
   const held = useRef<"A" | "B" | "C" | null>(null);
   const [verdict, setVerdict] = useState<Verdict>(null);
@@ -74,12 +77,8 @@ export function AngleSetter({
 
   const geom = useMemo(() => {
     const { A, B, C } = deg;
-    const ccw = norm(B - A); // arc A→B counter-clockwise
-    const offC = norm(C - A);
-    const cOnCcw = offC < ccw;
     // The arc AB that C looks ACROSS at — the one it does not stand on.
-    const facing = cOnCcw ? 360 - ccw : ccw;
-    const inscribed = facing / 2;
+    const { facing, inscribed, cOnCcw } = angleReadings(deg);
     return {
       facing: tidy(facing, 1),
       inscribed: tidy(inscribed, 1),

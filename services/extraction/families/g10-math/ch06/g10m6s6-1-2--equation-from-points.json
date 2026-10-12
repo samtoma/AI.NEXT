@@ -1,0 +1,120 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s6-1-2:equation-from-points",
+ "kind": "family",
+ "lo_id": "lo:g10m6s6-1-2",
+ "parent_question_id": "q:g10m6s6-1-2:ex6-6-7a",
+ "source_page": 202,
+ "tier": "advanced",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "choice": [
+    -4,
+    -3,
+    -2,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "q",
+   "choice": [
+    -3,
+    -2,
+    -1,
+    1,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "qs",
+   "let": "'+' if q > 0 else '-'"
+  },
+  {
+   "name": "qs2",
+   "let": "'-' if q > 0 else '+'"
+  },
+  {
+   "name": "qa",
+   "let": "abs(q)"
+  },
+  {
+   "name": "b",
+   "let": "abs(a)"
+  },
+  {
+   "name": "p",
+   "let": "a + q"
+  },
+  {
+   "name": "r",
+   "let": "q - a"
+  },
+  {
+   "name": "mx",
+   "let": "max(p, r)"
+  },
+  {
+   "name": "mn",
+   "let": "min(p, r)"
+  },
+  {
+   "name": "rel",
+   "let": "'greater' if p > r else 'smaller'"
+  },
+  {
+   "name": "sgn",
+   "let": "'positive, so the graph is not reflected' if a > 0 else 'negative, so the graph is reflected in the $x$-axis'"
+  }
+ ],
+ "constraints": [],
+ "stem": "The graph of $y = a\\sin\\theta + q$ is sketched for $0^\\circ \\le \\theta \\le 360^\\circ$. Its two turning points are $(90^\\circ, {=p})$ and $(270^\\circ, {=r})$. Which equation does the graph have?",
+ "choices": {
+  "correct": "$y = {=a}\\sin\\theta {=qs} {=qa}$",
+  "distractors": [
+   {
+    "text": "$y = {=-a}\\sin\\theta {=qs} {=qa}$",
+    "misconception_id": "mc:g10m6s6-1-2:reflection-reversed"
+   },
+   {
+    "text": "$y = {=2 * a}\\sin\\theta {=qs} {=qa}$",
+    "misconception_id": "mc:g10m6s6-1-2:height-as-amplitude"
+   },
+   {
+    "text": "$y = {=a}\\sin\\theta {=qs2} {=qa}$",
+    "misconception_id": "mc:g10m6s6-1-2:shift-direction-reversed"
+   }
+  ]
+ },
+ "solution": [
+  "The turning points give the greatest and least values of $y$: $y_{\\max} = {=mx}$ and $y_{\\min} = {=mn}$.",
+  "The amplitude is half the distance between them: $|a| = \\frac{{=mx} - ({=mn})}{2} = {=b}$.",
+  "The middle line of the graph lies halfway between the greatest and least values, and that height is the vertical shift: $q = \\frac{{=mx} + ({=mn})}{2} = {=q}$.",
+  "At $\\theta = 90^\\circ$ the basic sine graph is at its highest point. Here the value ${=p}$ at $\\theta = 90^\\circ$ is {=rel} than the value ${=r}$ at $\\theta = 270^\\circ$, so $a$ is {=sgn}. Therefore $a = {=a}$.",
+  "The equation is $y = {=a}\\sin\\theta {=qs} {=qa}$. Check: at $\\theta = 90^\\circ$, $y = {=a} \\times 1 {=qs} {=qa} = {=p}$."
+ ],
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m6s6-1-2:reflection-reversed",
+   "label": "Gets the sign of a (the reflection) the wrong way round",
+   "description": "The student finds |a| and q correctly but decides which turning point is the maximum the wrong way, so they write a positive a for a graph that is reflected in the x-axis, or a negative a for one that is not."
+  },
+  {
+   "id": "mc:g10m6s6-1-2:height-as-amplitude",
+   "label": "Takes the distance between the turning points as a",
+   "description": "The student subtracts the lowest value from the highest value and uses the whole height, 2|a|, as the stretch factor instead of halving it to get the amplitude."
+  },
+  {
+   "id": "mc:g10m6s6-1-2:shift-direction-reversed",
+   "label": "Gets the direction of the vertical shift wrong",
+   "description": "The student finds the size of the shift but writes the opposite sign for q, so a graph shifted up is written as shifted down and the other way round."
+  }
+ ],
+ "notes": "Advanced: match an equation to a graph described by its two turning points (no figure is needed). Turning points are always (90°, a+q) and (270°, q-a), so p > r exactly when a > 0. a mixes signs so the reflection step is tested. |a| >= 2, q != 0 and the three distractors are each a single error (sign of a, size of a, sign of q), so all four options are distinct for every instance; the correct option is never equal to a distractor. Stem holes (p, r) make instances differ. Let-strings contain no backslashes."
+}

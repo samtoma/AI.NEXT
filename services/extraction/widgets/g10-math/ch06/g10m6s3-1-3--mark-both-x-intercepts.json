@@ -1,0 +1,33 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m6s3-1-3:mark-both-x-intercepts",
+ "lo_id": "lo:g10m6s3-1-3",
+ "parent_question_id": "q:g10m6s3-1-3:ex6-3-3b",
+ "tier": "standard",
+ "kind": "number_line_marker",
+ "spec": {
+  "mode": "points",
+  "range": [
+   -6,
+   6
+  ],
+  "targets": [
+   -3,
+   3
+  ]
+ },
+ "stem": "The parabola $y = 2x^2 - 18$ meets the $x$-axis at its $x$-intercepts. Work them out, then mark the $x$-coordinate of every $x$-intercept on the number line.",
+ "solution": [
+  "Every point on the $x$-axis has $y = 0$, so put $y = 0$: $2x^2 - 18 = 0$.",
+  "Add 18 to both sides: $2x^2 = 18$. Divide both sides by 2: $x^2 = 9$.",
+  "Take the square root of both sides. A number and its negative both give 9 when squared, so $x = 3$ or $x = -3$.",
+  "The parabola crosses the $x$-axis at $(-3, 0)$ and $(3, 0)$, on either side of the $y$-axis. Mark both $-3$ and $3$."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "missed-values",
+   "misconception_id": "mc:g10m4s6-1-3:only-positive-root"
+  }
+ ],
+ "notes": "Covers only a slice of the objective: x-intercepts that are whole numbers. The book's own answers are irrational to 2 d.p. and the objective includes recognising 'no x-intercepts' (an empty set); number_line_marker takes 1-4 whole-number targets, so neither can be asked, and the y-intercept is not on this instrument at all (see the gap for lo:g10m6s3-1-3). What the number line does honestly show is that the answer is a SET of two values symmetric about 0, and marking only one is visibly incomplete. The answer is symmetric, so sign-flipped cannot fire and is not mapped. The range [-6, 6] is chosen on purpose: the quotient x^2 = 9 and the constant 18 are off the line, so the error of writing x = +-9 (no-root-taken) cannot be tapped in. If it could be, the same answer would fire missed-values and extra-values and the instrument does not say which one is reported, so a missed-values mapping to only-positive-root could wrongly refute a student who made the no-root-taken slip. extra-values is left unmapped: no single error dominates it here. Honest weakness: the student does the working on paper and taps the result, so this is the closest this lesson gets to an answer box, kept because the missing-negative-root error is real and the grading is on a set."
+}

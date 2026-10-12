@@ -1,0 +1,105 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m5s8-1-2:sec-choice",
+ "kind": "family",
+ "lo_id": "lo:g10m5s8-1-2",
+ "parent_question_id": "q:g10m5s8-1-2:ex5-7-1c",
+ "source_page": 136,
+ "tier": "standard",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    2,
+    9
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    1,
+    9
+   ],
+   "resample_while": "b == a"
+  },
+  {
+   "name": "s1",
+   "choice": [
+    -1,
+    1
+   ]
+  },
+  {
+   "name": "s2",
+   "choice": [
+    -1,
+    1
+   ]
+  },
+  {
+   "require": "s1 < 0 or s2 < 0",
+   "why": "the point is not in the first quadrant, so a negative r (the slip in the second distractor) differs from the correct sign"
+  },
+  {
+   "name": "x",
+   "let": "s1 * a"
+  },
+  {
+   "name": "y",
+   "let": "s2 * b"
+  },
+  {
+   "name": "r2",
+   "let": "x * x + y * y"
+  },
+  {
+   "name": "q",
+   "let": "1 if s1 > 0 and s2 > 0 else (2 if s1 < 0 and s2 > 0 else (3 if s1 < 0 and s2 < 0 else 4))"
+  },
+  {
+   "name": "sqf",
+   "let": "sum([1 for d in range(2, 14) if r2 % (d * d) == 0])"
+  },
+  {
+   "require": "not is_square(r2) and sqf == 0",
+   "why": "r is a surd in lowest terms"
+  }
+ ],
+ "constraints": [
+  "abs(x) != abs(y)",
+  "not is_square(x * x + y * y)"
+ ],
+ "stem": "$P$ is a point with co-ordinates $({=x}, {=y})$ on a Cartesian plane, and $O$ is the origin. $OP$ forms an angle, $\\theta$, measured anticlockwise from the positive $x$-axis. Without using a calculator, which of the following is $\\sec\\theta$?",
+ "solution": [
+  "Read off the co-ordinates of $P$ and keep their signs: $x={=x}$ and $y={=y}$. The point lies in quadrant {=q}.",
+  "We find $r=OP$ with the theorem of Pythagoras. $r$ is a length, so it is positive in every quadrant: $\\begin{aligned}r^{2}&=x^{2}+y^{2}\\\\&=({=x})^{2}+({=y})^{2}\\\\&={=r2}\\\\r&=\\sqrt{{=r2}}\\end{aligned}$",
+  "$\\sec\\theta$ is the reciprocal of $\\cos\\theta=\\frac{x}{r}$, so it is $r$ over $x$ (not $r$ over $y$): $\\begin{aligned}\\sec\\theta&=\\frac{r}{x}\\\\&=\\frac{\\sqrt{{=r2}}}{{=x}}\\end{aligned}$"
+ ],
+ "choices": {
+  "correct": "$\\frac{\\sqrt{{=r2}}}{{=x}}$",
+  "distractors": [
+   {
+    "text": "$\\frac{\\sqrt{{=r2}}}{{=y}}$",
+    "misconception_id": "mc:g10m5s8-1-2:reciprocal-named-by-letters"
+   },
+   {
+    "text": "$\\frac{-\\sqrt{{=r2}}}{{=x}}$",
+    "misconception_id": "mc:g10m5s8-1-2:r-takes-sign-of-point"
+   },
+   {
+    "text": "$\\frac{{=x}}{\\sqrt{{=r2}}}$",
+    "misconception_id": "mc:g10m5s8-1-2:ratio-not-turned-over"
+   }
+  ]
+ },
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m5s8-1-2:ratio-not-turned-over",
+   "label": "Gives the ratio itself instead of its reciprocal",
+   "description": "The student finds x over r correctly but writes it as sec, the value of cos, instead of turning the fraction over to get r over x."
+  }
+ ],
+ "notes": "Standard tier, a choice question because every distractor is one named slip. Correct: r/x. D1 pairs sec with y (catalogued mc reciprocal-named-by-letters: sec taken as r over y). D2 gives r a negative sign (catalogued mc r-takes-sign-of-point); the point is kept out of quadrant I so that this slip changes the value. D3 is cos (x over r), a new misconception declared here. Constraints keep all four options distinct in value: |x| != |y| (so r/y is neither r/x nor -r/x), r2 neither a square nor divisible by a square. |x| >= 2 avoids a denominator of 1 or -1 in the key. The stem carries the coordinates, so no distinct_by_choices is needed. Instances: 129 distinct points."
+}

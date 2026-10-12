@@ -1,0 +1,1150 @@
+{
+ "format": "ainext.working-check/1",
+ "book": "g10-math",
+ "chapter": 6,
+ "prompts_version": "sw-v3",
+ "rule": "Each flag is a backlog item for a human (answer 30; answer 37c). Nothing here was corrected: the content stays as the book and G2 have it until a human decides.",
+ "passes": [
+  "A",
+  "B"
+ ],
+ "single_pass_ids": [
+  "q:g10m6s1-1-2:ex6-1-6f",
+  "q:g10m6s1-1-4:ex6-8-11a"
+ ],
+ "solutions": 350,
+ "skipped": [
+  {
+   "id": "expl:g10m6s1-1-3:ex6-1-4b",
+   "why": "no working to check (the solution is a drawing)"
+  },
+  {
+   "id": "expl:g10m6s1-1-3:ex6-8-2a",
+   "why": "no working to check (the solution is a drawing)"
+  },
+  {
+   "id": "expl:g10m6s1-1-3:ex6-8-2b",
+   "why": "no working to check (the solution is a drawing)"
+  },
+  {
+   "id": "expl:g10m6s6-1-2:ex6-8-38",
+   "why": "no working to check (the solution is a drawing)"
+  },
+  {
+   "id": "expl:g10m6s6-3-2:ex6-8-37",
+   "why": "no working to check (the solution is a drawing)"
+  }
+ ],
+ "verdicts": {
+  "consistent": 309,
+  "flagged": 38,
+  "unclear": 3
+ },
+ "flags": [
+  {
+   "solution_id": "expl:g10m6s2-1-3:ex6-2-4c",
+   "lo": "lo:g10m6s2-1-3",
+   "step": 1,
+   "kind": "sign",
+   "where": "working",
+   "quote": "$(0, -1)$ and $\\left(\\frac{1}{2}, 0\\right)$",
+   "expected": "(0, 1) and (-1/2, 0) for h(x)=2x+1",
+   "why": "Setting x=0 gives y=1, and y=0 gives x=-1/2; both intercepts have the wrong sign.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m6s2-1-3:ex6-2-4f",
+   "lo": "lo:g10m6s2-1-3",
+   "step": 1,
+   "kind": "sign",
+   "where": "working",
+   "quote": "This gives the point $(0, 3)$",
+   "expected": "(0, -3)",
+   "why": "For k(x) = -3, setting x = 0 gives y = -3, so the y-intercept is (0, -3), not (0, 3).",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m6s2-1-4:we03",
+   "lo": "lo:g10m6s2-1-4",
+   "step": 2,
+   "kind": "wrong_value",
+   "where": "question",
+   "quote": "This gives the second point $(2, -2)$",
+   "expected": "figure prints (2;2) for this point",
+   "why": "The figure labels the point (2;2), while the working gives (2,-2); the label in the figure conflicts with the working.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ],
+   "also_kinds": [
+    "label"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m6s3-1-2:ex6-3-8",
+   "lo": "lo:g10m6s3-1-2",
+   "step": 1,
+   "kind": "other",
+   "where": "working",
+   "quote": "And so $f(x)\\leq$",
+   "expected": "f(x) ≤ q",
+   "why": "The concluding inequality is left without its right-hand side, although the previous line gives ax^2+q ≤ q.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m6s3-1-4:ex6-8-51a",
+   "lo": "lo:g10m6s3-1-4",
+   "step": 1,
+   "kind": "wrong_value",
+   "where": "working",
+   "quote": "For $h(x)$ the $y$ -intercept is at $(0, 4)$",
+   "expected": "(0, -4)",
+   "why": "h(0)=0^2-4=-4, so h's y-intercept is (0,-4), not (0,4).",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "A",
+    "B",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m6s3-1-4:we04",
+   "lo": "lo:g10m6s3-1-4",
+   "step": 1,
+   "kind": "wrong_value",
+   "where": "working",
+   "quote": "$\\text{0}$ $\\text{0}$ $\\text{4}$",
+   "expected": "f(1) = 1",
+   "why": "The table gives 0 for f(1), but the line above computes f(1) = (1)^2 = 1.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ],
+   "also_kinds": [
+    "copy"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m6s4-1-2:ex6-8-22c",
+   "lo": "lo:g10m6s4-1-2",
+   "step": 1,
+   "kind": "arithmetic",
+   "where": "working",
+   "quote": "y=\\frac{3x+3}{x}=\\frac{3}{x}+1",
+   "expected": "3x/x + 3/x = 3 + 3/x",
+   "why": "(3x+3)/x equals 3/x + 3, not 3/x + 1; the later asymptote y=1 and x-intercept (-1,0) then disagree with the stated translation by 3.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "A",
+    "B",
+    "B",
+    "B"
+   ],
+   "also_kinds": [
+    "other",
+    "copy"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m6s4-1-2:ex6-8-22d",
+   "lo": "lo:g10m6s4-1-2",
+   "step": 1,
+   "kind": "other",
+   "where": "working",
+   "quote": "The asymptote is $y=0$ .",
+   "expected": "asymptotes x=0 and y=0",
+   "why": "The question asks for all asymptotes; a hyperbola y=a/x has two, x=0 and y=0, but only y=0 is stated.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "B"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m6s5-1-1:ex6-5-6a",
+   "lo": "lo:g10m6s5-1-1",
+   "step": 1,
+   "kind": "wrong_value",
+   "where": "working",
+   "quote": "The asymptote is the line $x=0$",
+   "expected": "y=0",
+   "why": "For both y=2^x and y=(1/2)^x the horizontal asymptote is y=0, not x=0.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m6s5-1-5:ex6-8-24a",
+   "lo": "lo:g10m6s5-1-5",
+   "step": 1,
+   "kind": "arithmetic",
+   "where": "working",
+   "quote": "The $y$ -intercept is $(0, 2)$",
+   "expected": "(0, 3)",
+   "why": "At x=0, y=3^0+2=3, so the y-intercept is (0,3), not (0,2).",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m6s5-1-5:ex6-8-24b",
+   "lo": "lo:g10m6s5-1-5",
+   "step": 1,
+   "kind": "label",
+   "where": "working",
+   "quote": "$a<1$ therefore the graph curves downwards",
+   "expected": "a<0",
+   "why": "Here a=-4, and the downward curve follows from a<0, so the stated condition a<1 does not give it.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ],
+   "also_kinds": [
+    "other"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m6s5-1-5:ex6-8-24c",
+   "lo": "lo:g10m6s5-1-5",
+   "step": 1,
+   "kind": "arithmetic",
+   "where": "working",
+   "quote": "The $y$ -intercept is $(0, -2)$",
+   "expected": "(0, -1)",
+   "why": "At x=0, y=(1/3)^0-2=-1, so the y-intercept is (0,-1), not (0,-2).",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "A",
+    "B",
+    "B"
+   ],
+   "also_kinds": [
+    "sign"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m6s6-2-1:ex6-6-10",
+   "lo": "lo:g10m6s6-2-1",
+   "step": 1,
+   "kind": "wrong_value",
+   "where": "question",
+   "quote": "we plot each of these points",
+   "expected": "3",
+   "why": "The table's cos θ + 4 entry at 180° is 2, but cos 180° + 4 = 3, so plotting the given points is wrong.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m6s6-2-1:we18",
+   "lo": "lo:g10m6s6-2-1",
+   "step": 2,
+   "kind": "label",
+   "where": "unsure",
+   "quote": "Plot the points and join with a smooth curve",
+   "expected": "240°",
+   "why": "The figure's axis labels 220° where the table and working use 240°, and omits 240°.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "B"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m6s6-3-1:we20",
+   "lo": "lo:g10m6s6-3-1",
+   "step": 1,
+   "kind": "wrong_value",
+   "where": "question",
+   "quote": "$235^{\\circ}$ $240^{\\circ}$ $270^{\\circ}$ $300^{\\circ}$ $315^{\\circ}$ $330^{\\circ}$ $360^{\\circ}$ $\\tan\\theta$ $\\text{0.58}$ $\\text{1}$",
+   "expected": "tan 235° is about 1.43",
+   "why": "The table gives 235°, but the entry 1 is tan 225°; tan 235° is about 1.43, so the question's 235° conflicts with the working.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ],
+   "also_kinds": [
+    "label"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m6s7-1-2:ex6-7-1c",
+   "lo": "lo:g10m6s7-1-2",
+   "step": 3,
+   "kind": "sign",
+   "where": "working",
+   "quote": "\\left(-\\sqrt{3}, -6\\right)",
+   "expected": "(-\\sqrt{3}, 6)",
+   "why": "Step 2 gives y = 6 for both intersection points, so the second point's y-coordinate should be 6, not -6.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m6s7-1-2:ex6-8-29c",
+   "lo": "lo:g10m6s7-1-2",
+   "step": 2,
+   "kind": "sign",
+   "where": "working",
+   "quote": "x\\in(-\\infty, \\sqrt{3})\\cup(\\sqrt{3}, \\infty)",
+   "expected": "(-\\infty, -\\sqrt{3}) \\cup (\\sqrt{3}, \\infty)",
+   "why": "Step 1 gives roots x = ±√3, but the first interval ends at +√3 instead of −√3, losing the minus sign.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m6s1-1-1:ex6-1-2d",
+   "lo": "lo:g10m6s1-1-1",
+   "step": 1,
+   "kind": "label",
+   "where": "question",
+   "quote": "[21, 41)",
+   "expected": "inequality in z (or set variable x)",
+   "why": "The set is defined with variable z but the inequality is written in x, so the question's labels conflict, although the interval itself matches.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A"
+   ]
+  },
+  {
+   "solution_id": "q:g10m6s1-1-2:ex6-1-7d",
+   "lo": "lo:g10m6s1-1-2",
+   "step": 1,
+   "kind": "label",
+   "where": "question",
+   "quote": "D(V)&=275",
+   "expected": "question should say diesel",
+   "why": "The question asks about petrol (P), but the working and the key use diesel D, 12.46V.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m6s1-1-2:ex6-8-10c",
+   "lo": "lo:g10m6s1-1-2",
+   "step": 1,
+   "kind": "copy",
+   "where": "working",
+   "quote": "V(t)&=2000t",
+   "expected": "2000 = 60t",
+   "why": "The given function is V = 60t; the working replaces 60 with 2000, which does not give t = 2000/60.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m6s1-1-2:ex6-8-27a",
+   "lo": "lo:g10m6s1-1-2",
+   "step": 1,
+   "kind": "label",
+   "where": "working",
+   "quote": "f(1)&=3-(7)",
+   "expected": "f(7)",
+   "why": "The question asks for f(7), but the working names the value f(1) while substituting 7.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m6s1-1-2:ex6-8-30",
+   "lo": "lo:g10m6s1-1-2",
+   "step": 2,
+   "kind": "arithmetic",
+   "where": "working",
+   "quote": "=5(\\text{0.38})",
+   "expected": "1024/3125 ≈ 0.33",
+   "why": "1024/3125 is about 0.33 (0.32768), not 0.38, and 5(0.38)=1.9, which does not equal 1.6.",
+   "sources": [
+    "agent",
+    "numeric"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ],
+   "numeric": {
+    "left": "5\\left(\\frac{1024}{3125}\\right)",
+    "relation": "=",
+    "right": "5(\\text{0.38})",
+    "why": "5\\left(\\frac{1024}{3125}\\right) = 5(\\text{0.38}) does not hold (1.6384 vs 1.9)"
+   }
+  },
+  {
+   "solution_id": "q:g10m6s1-1-2:ex6-8-47d",
+   "lo": "lo:g10m6s1-1-2",
+   "step": 1,
+   "kind": "label",
+   "where": "working",
+   "quote": "f(180^{\\circ})-g(180^{\\circ})&=4-2",
+   "expected": "g(180)-f(180)=4-2",
+   "why": "The question asks g(180)-f(180); the working writes f minus g and assigns 4 to f, but the figure gives f(180)=2 and g(180)=4.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m6s1-1-4:ex6-8-11b",
+   "lo": "lo:g10m6s1-1-4",
+   "step": 1,
+   "kind": "copy",
+   "where": "working",
+   "quote": "0\\let\\le120",
+   "expected": "0 \\le t \\le 120",
+   "why": "The variable t is missing and the inequality is garbled; it should read 0 ≤ t ≤ 120 as in the key.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m6s2-1-2:ex6-2-3",
+   "lo": "lo:g10m6s2-1-2",
+   "step": 1,
+   "kind": "wrong_value",
+   "where": "working",
+   "quote": "point $B$ which are $(1, 2)$",
+   "expected": "B = (1, 0)",
+   "why": "The figure shows B at (1, 0), not (1, 2); step 2 substitutes y=0, which contradicts the stated coordinates.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m6s2-1-2:ex6-2-5a",
+   "lo": "lo:g10m6s2-1-2",
+   "step": 2,
+   "kind": "arithmetic",
+   "where": "working",
+   "quote": "y&=\\frac{3}{2}x-12",
+   "expected": "y=\\frac{3}{2}x-\\frac{1}{2}",
+   "why": "Dividing 2y=3x-1 by 2 gives a constant term of -1/2, not -12.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m6s2-1-2:ex6-2-6b",
+   "lo": "lo:g10m6s2-1-2",
+   "step": 1,
+   "kind": "sign",
+   "where": "working",
+   "quote": "y=&-3x+5",
+   "expected": "y=3x-5",
+   "why": "Multiplying -y=5-3x by -1 gives y=3x-5, so the signs of both terms were flipped incorrectly.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m6s3-1-1:ex6-3-7b",
+   "lo": "lo:g10m6s3-1-1",
+   "step": 2,
+   "kind": "copy",
+   "where": "working",
+   "quote": "y&=bx^{2}=23",
+   "expected": "y = bx^2 + 23",
+   "why": "The equation of h is y = bx^2 + q with q = 23, but the working writes '= 23' instead of '+ 23', and the next line then uses +23.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m6s3-1-3:ex6-3-4b",
+   "lo": "lo:g10m6s3-1-3",
+   "step": 1,
+   "kind": "other",
+   "where": "working",
+   "quote": "x=-\\text{0.71}&\\text{and}x",
+   "expected": "x = 0.71",
+   "why": "The final line is cut off: the positive root value 0.71 is missing after 'and x', so the line is incomplete.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m6s3-1-3:ex6-8-17c",
+   "lo": "lo:g10m6s3-1-3",
+   "step": 1,
+   "kind": "arithmetic",
+   "where": "working",
+   "quote": "\\frac{3}{2}{x}^{2}-6&=0",
+   "expected": "x^2-9=0 from multiplying by -3/2",
+   "why": "From 0=-2/3x^2+6 this line is wrong, and as written it gives x^2=4, not the next line x^2-9=0.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m6s5-1-5:ex6-8-26b",
+   "lo": "lo:g10m6s5-1-5",
+   "step": 1,
+   "kind": "final_answer",
+   "where": "question",
+   "quote": "f(x)",
+   "expected": "g(x) if y=3.2^x is read literally",
+   "why": "Read as 3.2 to the power x, the equation has y-intercept 1, which is g(x) in the figure, not f(x), so question and key disagree.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m6s6-1-4:ex6-6-2",
+   "lo": "lo:g10m6s6-1-4",
+   "step": 1,
+   "kind": "sign",
+   "where": "working",
+   "quote": "Therefore $q=2$",
+   "expected": "q=-2",
+   "why": "The point was shifted down by 2, so q is -2, as the equation y=4sinθ-2 and the final answer state.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m6s6-2-3:ex6-6-3",
+   "lo": "lo:g10m6s6-2-3",
+   "step": 1,
+   "kind": "sign",
+   "where": "working",
+   "quote": "Therefore $q=1$",
+   "expected": "q = -1 (shifted down by 1)",
+   "why": "The graph is shifted down by 1, so q is -1, not 1; this contradicts the later q=-1 and the key.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m6s6-2-3:ex6-6-4",
+   "lo": "lo:g10m6s6-2-3",
+   "step": 1,
+   "kind": "label",
+   "where": "working",
+   "quote": "point $B$ would be at $(0^{\\circ}, \\text{0})$",
+   "expected": "point A at (90°, 0)",
+   "why": "The working just used point A at (90°, 0) but now names B at (0°, 0); B is at (180°, -0.5) and cos 0 gives 1/2.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B",
+    "B"
+   ],
+   "also_kinds": [
+    "wrong_value"
+   ]
+  },
+  {
+   "solution_id": "q:g10m6s6-2-4:ex6-6-20a",
+   "lo": "lo:g10m6s6-2-4",
+   "step": 1,
+   "kind": "sign",
+   "where": "working",
+   "quote": "B=(90^{\\circ}, 2)",
+   "expected": "B = (90°, -2)",
+   "why": "The figure shows B at y = -2, so the minus sign is lost.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "A",
+    "B",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m6s6-3-4:ex6-8-34",
+   "lo": "lo:g10m6s6-3-4",
+   "step": 2,
+   "kind": "wrong_value",
+   "where": "working",
+   "quote": "-2&=a(-1)-3",
+   "expected": "a(1)",
+   "why": "tan 45° equals 1, not -1, so the substitution of tan 45° is wrong.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "A",
+    "B",
+    "B"
+   ],
+   "also_kinds": [
+    "arithmetic"
+   ]
+  },
+  {
+   "solution_id": "q:g10m6s7-1-2:ex6-8-53b",
+   "lo": "lo:g10m6s7-1-2",
+   "step": 1,
+   "kind": "label",
+   "where": "working",
+   "quote": "$C$ has the same $x$ value as $A$ and $D$ has the same $x$ value as $B$",
+   "expected": "D has A's x value; C has B's x value",
+   "why": "In the figure D lies below A and C below B, so the labels are swapped and contradict C(-√8,0), D(√8,0).",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A"
+   ]
+  },
+  {
+   "solution_id": "q:g10m6s7-1-2:ex6-8-53d",
+   "lo": "lo:g10m6s7-1-2",
+   "step": 1,
+   "kind": "arithmetic",
+   "where": "working",
+   "quote": "EF=2+4=2",
+   "expected": "4-2=2",
+   "why": "With F(-2,-2) and E(-2,-4) the length is 4-2=2, but the line writes 2+4 and sets it equal to 2.",
+   "sources": [
+    "agent",
+    "numeric"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ],
+   "numeric": {
+    "left": "2+4",
+    "relation": "=",
+    "right": "2",
+    "why": "2+4 = 2 does not hold (6 vs 2)"
+   }
+  }
+ ],
+ "flagged_solutions": 38,
+ "unclear": [
+  {
+   "id": "q:g10m6s5-1-3:ex6-5-7c",
+   "why": "The definition of h(x) comes from an earlier part of the exercise that is not visible, so the range cannot be judged."
+  },
+  {
+   "id": "q:g10m6s5-1-3:ex6-8-50f",
+   "why": "The range of g(x) = -4x^2 + q depends on the value of q, which is not given in the question text and comes from an earlier part or the figure."
+  },
+  {
+   "id": "q:g10m6s4-1-4:ex6-8-57b",
+   "why": "The only step is an empty expression followed by '(ii)', so it is unreadable and shows no working toward the key B (1)."
+  }
+ ],
+ "unchecked": [],
+ "problems": [],
+ "checked_ids": [
+  "expl:g10m6s1-1-3:ex6-1-3a",
+  "expl:g10m6s1-1-3:ex6-1-3b",
+  "expl:g10m6s1-1-3:ex6-1-3c",
+  "expl:g10m6s1-1-3:ex6-1-4a",
+  "expl:g10m6s1-1-3:ex6-1-5a",
+  "expl:g10m6s1-1-3:ex6-1-5b",
+  "expl:g10m6s1-1-3:ex6-8-3a",
+  "expl:g10m6s1-1-3:ex6-8-3b",
+  "expl:g10m6s2-1-1:we01",
+  "expl:g10m6s2-1-3:ex6-2-4a",
+  "expl:g10m6s2-1-3:ex6-2-4b",
+  "expl:g10m6s2-1-3:ex6-2-4c",
+  "expl:g10m6s2-1-3:ex6-2-4d",
+  "expl:g10m6s2-1-3:ex6-2-4e",
+  "expl:g10m6s2-1-3:ex6-2-4f",
+  "expl:g10m6s2-1-3:ex6-2-4g",
+  "expl:g10m6s2-1-3:ex6-2-4h",
+  "expl:g10m6s2-1-3:ex6-2-9",
+  "expl:g10m6s2-1-3:ex6-8-58c",
+  "expl:g10m6s2-1-3:ex6-8-9a",
+  "expl:g10m6s2-1-3:ex6-8-9c",
+  "expl:g10m6s2-1-3:we02",
+  "expl:g10m6s2-1-4:ex6-2-10",
+  "expl:g10m6s2-1-4:ex6-8-9b",
+  "expl:g10m6s2-1-4:we03",
+  "expl:g10m6s3-1-1:ex6-8-51b",
+  "expl:g10m6s3-1-2:ex6-3-8",
+  "expl:g10m6s3-1-2:we05",
+  "expl:g10m6s3-1-4:ex6-3-9",
+  "expl:g10m6s3-1-4:ex6-8-16a",
+  "expl:g10m6s3-1-4:ex6-8-16b",
+  "expl:g10m6s3-1-4:ex6-8-16c",
+  "expl:g10m6s3-1-4:ex6-8-51a",
+  "expl:g10m6s3-1-4:we04",
+  "expl:g10m6s3-1-4:we06",
+  "expl:g10m6s3-1-4:we07",
+  "expl:g10m6s4-1-1:ex6-4-6a",
+  "expl:g10m6s4-1-1:ex6-4-6d",
+  "expl:g10m6s4-1-1:ex6-4-7a",
+  "expl:g10m6s4-1-1:we08",
+  "expl:g10m6s4-1-2:ex6-4-7b",
+  "expl:g10m6s4-1-2:ex6-4-8a",
+  "expl:g10m6s4-1-2:ex6-4-8b",
+  "expl:g10m6s4-1-2:ex6-4-8c",
+  "expl:g10m6s4-1-2:ex6-4-8d",
+  "expl:g10m6s4-1-2:ex6-8-22a",
+  "expl:g10m6s4-1-2:ex6-8-22b",
+  "expl:g10m6s4-1-2:ex6-8-22c",
+  "expl:g10m6s4-1-2:ex6-8-22d",
+  "expl:g10m6s4-1-3:we09",
+  "expl:g10m6s4-1-4:ex6-4-7c",
+  "expl:g10m6s4-1-4:ex6-8-21a",
+  "expl:g10m6s4-1-4:ex6-8-21b",
+  "expl:g10m6s4-1-4:ex6-8-21c",
+  "expl:g10m6s4-1-4:ex6-8-58b",
+  "expl:g10m6s4-1-4:we10",
+  "expl:g10m6s4-1-4:we11",
+  "expl:g10m6s5-1-1:ex6-5-6a",
+  "expl:g10m6s5-1-1:we12",
+  "expl:g10m6s5-1-3:we13",
+  "expl:g10m6s5-1-5:ex6-8-24a",
+  "expl:g10m6s5-1-5:ex6-8-24b",
+  "expl:g10m6s5-1-5:ex6-8-24c",
+  "expl:g10m6s5-1-5:ex6-8-58a",
+  "expl:g10m6s5-1-5:we14",
+  "expl:g10m6s5-1-5:we15",
+  "expl:g10m6s6-1-1:we16",
+  "expl:g10m6s6-1-2:ex6-6-13a",
+  "expl:g10m6s6-1-2:ex6-6-13d",
+  "expl:g10m6s6-1-2:ex6-8-39b",
+  "expl:g10m6s6-1-2:ex6-8-39c",
+  "expl:g10m6s6-1-2:ex6-8-52",
+  "expl:g10m6s6-1-2:we17",
+  "expl:g10m6s6-1-3:ex6-6-11a",
+  "expl:g10m6s6-1-3:ex6-6-11b",
+  "expl:g10m6s6-1-3:ex6-6-11c",
+  "expl:g10m6s6-1-3:ex6-6-11d",
+  "expl:g10m6s6-1-3:ex6-8-40a",
+  "expl:g10m6s6-1-3:ex6-8-55c",
+  "expl:g10m6s6-2-1:ex6-6-10",
+  "expl:g10m6s6-2-1:ex6-8-40b",
+  "expl:g10m6s6-2-1:we18",
+  "expl:g10m6s6-2-2:ex6-6-13b",
+  "expl:g10m6s6-2-2:ex6-6-13c",
+  "expl:g10m6s6-2-2:ex6-6-13f",
+  "expl:g10m6s6-2-2:ex6-8-39a",
+  "expl:g10m6s6-2-2:ex6-8-39e",
+  "expl:g10m6s6-2-2:we19",
+  "expl:g10m6s6-3-1:we20",
+  "expl:g10m6s6-3-2:ex6-6-13e",
+  "expl:g10m6s6-3-2:ex6-6-9",
+  "expl:g10m6s6-3-2:ex6-8-39d",
+  "expl:g10m6s6-3-2:we21",
+  "expl:g10m6s6-3-3:ex6-6-12",
+  "expl:g10m6s6-3-3:ex6-8-41",
+  "expl:g10m6s7-1-2:ex6-7-1a",
+  "expl:g10m6s7-1-2:ex6-7-1b",
+  "expl:g10m6s7-1-2:ex6-7-1c",
+  "expl:g10m6s7-1-2:ex6-7-1d",
+  "expl:g10m6s7-1-2:ex6-8-29a",
+  "expl:g10m6s7-1-2:ex6-8-29c",
+  "expl:g10m6s7-1-2:ex6-8-31b",
+  "expl:g10m6s7-1-2:ex6-8-49a",
+  "expl:g10m6s7-1-2:ex6-8-49b",
+  "expl:g10m6s7-1-2:ex6-8-54b",
+  "expl:g10m6s7-1-2:we24",
+  "q:g10m6s1-1-1:ex6-1-1a",
+  "q:g10m6s1-1-1:ex6-1-1b",
+  "q:g10m6s1-1-1:ex6-1-1c",
+  "q:g10m6s1-1-1:ex6-1-1d",
+  "q:g10m6s1-1-1:ex6-1-1e",
+  "q:g10m6s1-1-1:ex6-1-1f",
+  "q:g10m6s1-1-1:ex6-1-2a",
+  "q:g10m6s1-1-1:ex6-1-2b",
+  "q:g10m6s1-1-1:ex6-1-2c",
+  "q:g10m6s1-1-1:ex6-1-2d",
+  "q:g10m6s1-1-2:ex6-1-6a",
+  "q:g10m6s1-1-2:ex6-1-6b",
+  "q:g10m6s1-1-2:ex6-1-6c",
+  "q:g10m6s1-1-2:ex6-1-6d",
+  "q:g10m6s1-1-2:ex6-1-6e",
+  "q:g10m6s1-1-2:ex6-1-6f",
+  "q:g10m6s1-1-2:ex6-1-6g",
+  "q:g10m6s1-1-2:ex6-1-6h",
+  "q:g10m6s1-1-2:ex6-1-7a",
+  "q:g10m6s1-1-2:ex6-1-7b",
+  "q:g10m6s1-1-2:ex6-1-7c",
+  "q:g10m6s1-1-2:ex6-1-7d",
+  "q:g10m6s1-1-2:ex6-1-7e",
+  "q:g10m6s1-1-2:ex6-1-9a",
+  "q:g10m6s1-1-2:ex6-1-9b",
+  "q:g10m6s1-1-2:ex6-1-9c",
+  "q:g10m6s1-1-2:ex6-8-10a",
+  "q:g10m6s1-1-2:ex6-8-10b",
+  "q:g10m6s1-1-2:ex6-8-10c",
+  "q:g10m6s1-1-2:ex6-8-10d",
+  "q:g10m6s1-1-2:ex6-8-27a",
+  "q:g10m6s1-1-2:ex6-8-27b",
+  "q:g10m6s1-1-2:ex6-8-27c",
+  "q:g10m6s1-1-2:ex6-8-27d",
+  "q:g10m6s1-1-2:ex6-8-27e",
+  "q:g10m6s1-1-2:ex6-8-27f",
+  "q:g10m6s1-1-2:ex6-8-27g",
+  "q:g10m6s1-1-2:ex6-8-30",
+  "q:g10m6s1-1-2:ex6-8-46d",
+  "q:g10m6s1-1-2:ex6-8-47d",
+  "q:g10m6s1-1-3:ex6-8-1a",
+  "q:g10m6s1-1-3:ex6-8-1b",
+  "q:g10m6s1-1-4:ex6-1-8a",
+  "q:g10m6s1-1-4:ex6-1-8b",
+  "q:g10m6s1-1-4:ex6-1-8c",
+  "q:g10m6s1-1-4:ex6-8-11a",
+  "q:g10m6s1-1-4:ex6-8-11b",
+  "q:g10m6s1-1-4:ex6-8-11c",
+  "q:g10m6s2-1-2:ex6-2-2",
+  "q:g10m6s2-1-2:ex6-2-3",
+  "q:g10m6s2-1-2:ex6-2-5a",
+  "q:g10m6s2-1-2:ex6-2-5b",
+  "q:g10m6s2-1-2:ex6-2-5c",
+  "q:g10m6s2-1-2:ex6-2-5d",
+  "q:g10m6s2-1-2:ex6-2-5e",
+  "q:g10m6s2-1-2:ex6-2-6a",
+  "q:g10m6s2-1-2:ex6-2-6b",
+  "q:g10m6s2-1-2:ex6-2-6c",
+  "q:g10m6s2-1-2:ex6-2-6d",
+  "q:g10m6s2-1-2:ex6-2-8a",
+  "q:g10m6s2-1-2:ex6-2-8b",
+  "q:g10m6s2-1-2:ex6-2-8c",
+  "q:g10m6s2-1-2:ex6-2-8d",
+  "q:g10m6s2-1-2:ex6-8-28c",
+  "q:g10m6s2-1-2:ex6-8-31a",
+  "q:g10m6s2-1-2:ex6-8-5",
+  "q:g10m6s2-1-2:ex6-8-54d",
+  "q:g10m6s2-1-2:ex6-8-57a",
+  "q:g10m6s2-1-2:ex6-8-7a",
+  "q:g10m6s2-1-2:ex6-8-7b",
+  "q:g10m6s2-1-2:ex6-8-7c",
+  "q:g10m6s2-1-2:ex6-8-8a",
+  "q:g10m6s2-1-2:ex6-8-8b",
+  "q:g10m6s2-1-3:ex6-2-1a",
+  "q:g10m6s2-1-3:ex6-2-1b",
+  "q:g10m6s2-1-3:ex6-2-1c",
+  "q:g10m6s2-1-3:ex6-8-28f",
+  "q:g10m6s2-1-3:ex6-8-4a",
+  "q:g10m6s2-1-3:ex6-8-4b",
+  "q:g10m6s3-1-1:ex6-3-1",
+  "q:g10m6s3-1-1:ex6-3-2",
+  "q:g10m6s3-1-1:ex6-3-5a",
+  "q:g10m6s3-1-1:ex6-3-5b",
+  "q:g10m6s3-1-1:ex6-3-5c",
+  "q:g10m6s3-1-1:ex6-3-5d",
+  "q:g10m6s3-1-1:ex6-3-6a",
+  "q:g10m6s3-1-1:ex6-3-6b",
+  "q:g10m6s3-1-1:ex6-3-6c",
+  "q:g10m6s3-1-1:ex6-3-7a",
+  "q:g10m6s3-1-1:ex6-3-7b",
+  "q:g10m6s3-1-1:ex6-8-12",
+  "q:g10m6s3-1-1:ex6-8-14a",
+  "q:g10m6s3-1-1:ex6-8-14b",
+  "q:g10m6s3-1-1:ex6-8-14c",
+  "q:g10m6s3-1-1:ex6-8-14d",
+  "q:g10m6s3-1-1:ex6-8-15a",
+  "q:g10m6s3-1-1:ex6-8-15b",
+  "q:g10m6s3-1-1:ex6-8-15c",
+  "q:g10m6s3-1-1:ex6-8-29d",
+  "q:g10m6s3-1-1:ex6-8-51c",
+  "q:g10m6s3-1-2:ex6-3-7c",
+  "q:g10m6s3-1-2:ex6-3-7d",
+  "q:g10m6s3-1-2:ex6-8-51d",
+  "q:g10m6s3-1-3:ex6-3-3a",
+  "q:g10m6s3-1-3:ex6-3-3b",
+  "q:g10m6s3-1-3:ex6-3-4a",
+  "q:g10m6s3-1-3:ex6-3-4b",
+  "q:g10m6s3-1-3:ex6-8-13a",
+  "q:g10m6s3-1-3:ex6-8-13b",
+  "q:g10m6s3-1-3:ex6-8-17a",
+  "q:g10m6s3-1-3:ex6-8-17b",
+  "q:g10m6s3-1-3:ex6-8-17c",
+  "q:g10m6s3-1-3:ex6-8-17d",
+  "q:g10m6s4-1-1:ex6-4-6b",
+  "q:g10m6s4-1-1:ex6-4-6c",
+  "q:g10m6s4-1-1:ex6-4-6e",
+  "q:g10m6s4-1-1:ex6-4-6f",
+  "q:g10m6s4-1-1:ex6-8-28b",
+  "q:g10m6s4-1-1:ex6-8-28e",
+  "q:g10m6s4-1-2:ex6-4-5a",
+  "q:g10m6s4-1-2:ex6-4-5b",
+  "q:g10m6s4-1-2:ex6-4-5c",
+  "q:g10m6s4-1-2:ex6-4-5d",
+  "q:g10m6s4-1-2:ex6-8-20a",
+  "q:g10m6s4-1-2:ex6-8-20b",
+  "q:g10m6s4-1-2:ex6-8-20c",
+  "q:g10m6s4-1-2:ex6-8-20d",
+  "q:g10m6s4-1-2:ex6-8-28d",
+  "q:g10m6s4-1-3:ex6-4-3a",
+  "q:g10m6s4-1-3:ex6-4-3b",
+  "q:g10m6s4-1-3:ex6-4-4a",
+  "q:g10m6s4-1-3:ex6-4-4b",
+  "q:g10m6s4-1-3:ex6-8-19a",
+  "q:g10m6s4-1-3:ex6-8-19b",
+  "q:g10m6s4-1-4:ex6-8-57b",
+  "q:g10m6s4-1-5:ex6-4-1",
+  "q:g10m6s4-1-5:ex6-4-2",
+  "q:g10m6s4-1-5:ex6-8-18",
+  "q:g10m6s5-1-1:ex6-5-6b",
+  "q:g10m6s5-1-1:ex6-5-6c",
+  "q:g10m6s5-1-1:ex6-5-6d",
+  "q:g10m6s5-1-1:ex6-8-48d",
+  "q:g10m6s5-1-1:ex6-8-50e",
+  "q:g10m6s5-1-2:ex6-5-2",
+  "q:g10m6s5-1-2:ex6-5-3",
+  "q:g10m6s5-1-2:ex6-5-7a",
+  "q:g10m6s5-1-2:ex6-5-7b",
+  "q:g10m6s5-1-2:ex6-5-7d",
+  "q:g10m6s5-1-2:ex6-5-7e",
+  "q:g10m6s5-1-2:ex6-5-7f",
+  "q:g10m6s5-1-2:ex6-8-25",
+  "q:g10m6s5-1-2:ex6-8-50c",
+  "q:g10m6s5-1-2:ex6-8-50d",
+  "q:g10m6s5-1-3:ex6-5-7c",
+  "q:g10m6s5-1-3:ex6-8-48e",
+  "q:g10m6s5-1-3:ex6-8-50f",
+  "q:g10m6s5-1-4:ex6-5-1a",
+  "q:g10m6s5-1-4:ex6-5-1b",
+  "q:g10m6s5-1-4:ex6-5-4a",
+  "q:g10m6s5-1-4:ex6-5-4b",
+  "q:g10m6s5-1-4:ex6-8-23a",
+  "q:g10m6s5-1-4:ex6-8-23b",
+  "q:g10m6s5-1-4:ex6-8-48a",
+  "q:g10m6s5-1-5:ex6-5-5a",
+  "q:g10m6s5-1-5:ex6-5-5b",
+  "q:g10m6s5-1-5:ex6-5-5c",
+  "q:g10m6s5-1-5:ex6-5-5d",
+  "q:g10m6s5-1-5:ex6-8-26a",
+  "q:g10m6s5-1-5:ex6-8-26b",
+  "q:g10m6s5-1-5:ex6-8-26c",
+  "q:g10m6s5-1-5:ex6-8-26d",
+  "q:g10m6s6-1-2:ex6-6-7a",
+  "q:g10m6s6-1-2:ex6-6-7b",
+  "q:g10m6s6-1-2:ex6-6-7c",
+  "q:g10m6s6-1-2:ex6-6-7d",
+  "q:g10m6s6-1-3:ex6-6-17",
+  "q:g10m6s6-1-3:ex6-8-42",
+  "q:g10m6s6-1-3:ex6-8-43",
+  "q:g10m6s6-1-3:ex6-8-44",
+  "q:g10m6s6-1-3:ex6-8-46c",
+  "q:g10m6s6-1-3:ex6-8-55b",
+  "q:g10m6s6-1-4:ex6-6-1",
+  "q:g10m6s6-1-4:ex6-6-14a",
+  "q:g10m6s6-1-4:ex6-6-2",
+  "q:g10m6s6-1-4:ex6-6-8",
+  "q:g10m6s6-1-4:ex6-8-32",
+  "q:g10m6s6-2-1:ex6-6-18c",
+  "q:g10m6s6-2-1:ex6-6-19c",
+  "q:g10m6s6-2-1:ex6-6-20c",
+  "q:g10m6s6-2-1:ex6-8-47c",
+  "q:g10m6s6-2-2:ex6-8-35a",
+  "q:g10m6s6-2-2:ex6-8-35b",
+  "q:g10m6s6-2-2:ex6-8-35c",
+  "q:g10m6s6-2-2:ex6-8-35d",
+  "q:g10m6s6-2-3:ex6-6-14b",
+  "q:g10m6s6-2-3:ex6-6-3",
+  "q:g10m6s6-2-3:ex6-6-4",
+  "q:g10m6s6-2-3:ex6-8-33",
+  "q:g10m6s6-2-4:ex6-6-18b",
+  "q:g10m6s6-2-4:ex6-6-18d",
+  "q:g10m6s6-2-4:ex6-6-19b",
+  "q:g10m6s6-2-4:ex6-6-19d",
+  "q:g10m6s6-2-4:ex6-6-20a",
+  "q:g10m6s6-2-4:ex6-6-20b",
+  "q:g10m6s6-2-4:ex6-6-20d",
+  "q:g10m6s6-3-3:ex6-8-55a",
+  "q:g10m6s6-3-4:ex6-6-5",
+  "q:g10m6s6-3-4:ex6-6-6",
+  "q:g10m6s6-3-4:ex6-8-34",
+  "q:g10m6s7-1-1:ex6-7-2a",
+  "q:g10m6s7-1-1:ex6-7-2b",
+  "q:g10m6s7-1-1:ex6-7-3d",
+  "q:g10m6s7-1-1:ex6-8-36",
+  "q:g10m6s7-1-1:ex6-8-45a",
+  "q:g10m6s7-1-1:ex6-8-45b",
+  "q:g10m6s7-1-1:ex6-8-45c",
+  "q:g10m6s7-1-1:ex6-8-45d",
+  "q:g10m6s7-1-1:ex6-8-45e",
+  "q:g10m6s7-1-1:ex6-8-45f",
+  "q:g10m6s7-1-1:ex6-8-45g",
+  "q:g10m6s7-1-1:ex6-8-50a",
+  "q:g10m6s7-1-1:ex6-8-56a",
+  "q:g10m6s7-1-1:ex6-8-56b",
+  "q:g10m6s7-1-1:we22",
+  "q:g10m6s7-1-1:we23",
+  "q:g10m6s7-1-1:we25",
+  "q:g10m6s7-1-2:ex6-7-3c",
+  "q:g10m6s7-1-2:ex6-8-29b",
+  "q:g10m6s7-1-2:ex6-8-31c",
+  "q:g10m6s7-1-2:ex6-8-46a",
+  "q:g10m6s7-1-2:ex6-8-46b",
+  "q:g10m6s7-1-2:ex6-8-47a",
+  "q:g10m6s7-1-2:ex6-8-47b",
+  "q:g10m6s7-1-2:ex6-8-48b",
+  "q:g10m6s7-1-2:ex6-8-48c",
+  "q:g10m6s7-1-2:ex6-8-50b",
+  "q:g10m6s7-1-2:ex6-8-53a",
+  "q:g10m6s7-1-2:ex6-8-53b",
+  "q:g10m6s7-1-2:ex6-8-53c",
+  "q:g10m6s7-1-2:ex6-8-53d",
+  "q:g10m6s7-1-2:ex6-8-54a",
+  "q:g10m6s7-1-2:ex6-8-54c",
+  "q:g10m6s7-1-3:ex6-7-3a",
+  "q:g10m6s7-1-3:ex6-7-3b"
+ ],
+ "runs": [
+  "413362e59dca0135310a4214cffdd7a252539e862622bab772e4115ce31cf9aa",
+  "daf6d1cb0720658c85dc2ba217871c2768576d614c86b1095401154c5fc4ad18",
+  "10d1f49c043a7903fbcb71905f3d1bc942ab98138f7699e12af05d28cd626e93",
+  "fe289fdcb0766ed13f23b5833577aef09925d78732f58ffefa858e783095bea4",
+  "71c3f11b3b1469a80d150e9baf4b195ee9fa422c00c7de9217e6e51ee76f8687",
+  "d846de7555fd5a34bf331c73e259960ef0e52fdd534fe2a764a0488eeccce127"
+ ],
+ "delta_runs": [
+  {
+   "file": "ch06.g2rec.flags.json",
+   "runs": [
+    "71c3f11b3b1469a80d150e9baf4b195ee9fa422c00c7de9217e6e51ee76f8687",
+    "d846de7555fd5a34bf331c73e259960ef0e52fdd534fe2a764a0488eeccce127"
+   ],
+   "prompts_version": "sw-v3",
+   "passes": [
+    "A",
+    "B"
+   ],
+   "solutions": 19,
+   "flagged_solutions": 1,
+   "solution_ids": [
+    "q:g10m6s1-1-2:ex6-8-27a",
+    "q:g10m6s2-1-2:ex6-8-57a",
+    "q:g10m6s4-1-1:ex6-4-6b",
+    "q:g10m6s4-1-3:ex6-4-3a",
+    "q:g10m6s4-1-3:ex6-4-4a",
+    "q:g10m6s4-1-3:ex6-8-19a",
+    "q:g10m6s4-1-4:ex6-8-57b",
+    "q:g10m6s6-1-4:ex6-6-14a",
+    "q:g10m6s6-2-1:ex6-6-18c",
+    "q:g10m6s6-2-1:ex6-6-19c",
+    "q:g10m6s6-2-3:ex6-6-14b",
+    "q:g10m6s6-2-4:ex6-6-18d",
+    "q:g10m6s6-2-4:ex6-6-19b",
+    "q:g10m6s6-2-4:ex6-6-19d",
+    "q:g10m6s7-1-1:ex6-7-3d",
+    "q:g10m6s7-1-2:ex6-7-3c",
+    "q:g10m6s7-1-2:ex6-8-31c",
+    "q:g10m6s7-1-3:ex6-7-3a",
+    "q:g10m6s7-1-3:ex6-7-3b"
+   ]
+  }
+ ]
+}

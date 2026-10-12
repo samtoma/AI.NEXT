@@ -1,0 +1,53 @@
+{
+  "format": "ainext.family/1",
+  "id": "tpl:g10m9s2-1-1:interest",
+  "kind": "family",
+  "lo_id": "lo:g10m9s2-1-1",
+  "parent_question_id": "q:g10m9s2-1-1:ex9-1-2",
+  "source_page": 318,
+  "tier": "standard",
+  "answer_type": "numeric",
+  "context": "Thabo invests money in a savings account that pays simple interest.",
+  "params": [
+    {
+      "name": "P",
+      "choice": [
+        500,
+        800,
+        1000,
+        1200,
+        2000,
+        2500
+      ]
+    },
+    {
+      "name": "r",
+      "choice": [
+        4,
+        5,
+        6,
+        8,
+        10
+      ]
+    },
+    {
+      "name": "n",
+      "randint": [
+        2,
+        6
+      ]
+    },
+    {
+      "require": "(P * r * n) % 100 == 0",
+      "why": "the interest is a whole number of Rand"
+    }
+  ],
+  "stem": "Thabo invests R{=P} in a savings account that pays simple interest at {=r}% per year. How much interest, in Rand, has he earned after {=n} years?",
+  "answer": "P * r * n // 100",
+  "solution": [
+    "Simple interest is $I = Pin$, with $P = {=P}$, $i = {=r}\\% = {=fixed(r / 100, 2)}$ and $n = {=n}$.",
+    "$I = {=P} \\times {=fixed(r / 100, 2)} \\times {=n} = {=P * r * n // 100}$.",
+    "Thabo earns R{=P * r * n // 100} in interest."
+  ],
+  "notes": "Fixture: a fixed context, only numbers vary (tests only)."
+}

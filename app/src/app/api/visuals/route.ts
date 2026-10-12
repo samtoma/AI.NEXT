@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { AuthError, requireStudent } from "@/lib/auth/principal";
+import { resolveStudentGraphScope } from "@/lib/catalog-queries";
 import { getVisualById, getVisualsForLo } from "@/lib/visuals";
 
 export const dynamic = "force-dynamic";
@@ -9,15 +10,22 @@ export const dynamic = "force-dynamic";
  * GET /api/visuals?id=v:geo1-1:001 → one stored visual ({{widget:viz_ref:…}}).
  *
  * `visuals` is CONTENT — curriculum, not student data — so it carries no
- * policy and this route opens no unit of work. It still refuses anonymous
- * callers: the figure library is the reviewed output of the extraction
- * pipeline, and there is no reason for it to be readable by anyone who has not
- * signed in. RLS would not have caught that, which is exactly why it is stated
- * here rather than assumed.
+ * policy. It still refuses anonymous callers: the figure library is the
+ * reviewed output of the extraction pipeline, and there is no reason for it to
+ * be readable by anyone who has not signed in. RLS would not have caught that,
+ * which is exactly why it is stated here rather than assumed.
+ *
+ * THE COURSE GATE (003; privacy review §5 item 4). It also used to serve ANY
+ * figure to any signed-in student — a hidden course's diagrams, or another
+ * curriculum's, by id. A figure is served now only when its objective belongs
+ * to a course this student may see (the student scope, `lib/catalog-queries.ts`).
+ * A refused figure answers exactly as one that does not exist: 404 for `?id=`,
+ * an empty list for `?lo=` (FR-2706 — hidden and absent are one answer).
  */
 export async function GET(req: Request) {
+  let me;
   try {
-    await requireStudent();
+    me = await requireStudent();
   } catch (err) {
     if (err instanceof AuthError) {
       return NextResponse.json({ error: err.code }, { status: err.status });
@@ -35,7 +43,8 @@ export async function GET(req: Request) {
     }
     try {
       const visual = await getVisualById(id);
-      if (!visual) {
+      const scope = visual ? await resolveStudentGraphScope(me.studentId) : null;
+      if (!visual || !scope?.lo(visual.loId)) {
         return NextResponse.json({ error: "not_found" }, { status: 404 });
       }
       return NextResponse.json({ visual });
@@ -51,7 +60,8 @@ export async function GET(req: Request) {
     );
   }
   try {
-    const visuals = await getVisualsForLo(lo);
+    const scope = await resolveStudentGraphScope(me.studentId);
+    const visuals = scope.lo(lo) ? await getVisualsForLo(lo) : [];
     return NextResponse.json({ visuals });
   } catch {
     return NextResponse.json({ error: "query failed" }, { status: 500 });

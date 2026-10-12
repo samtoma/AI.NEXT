@@ -1,0 +1,52 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m3s2-1-3:list-formula",
+ "kind": "family",
+ "lo_id": "lo:g10m3s2-1-3",
+ "parent_question_id": "q:g10m3s2-1-3:ex3-1-12b",
+ "source_page": 67,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "d",
+   "randint": [
+    2,
+    9
+   ]
+  },
+  {
+   "name": "c",
+   "randint": [
+    1,
+    9
+   ]
+  },
+  {
+   "name": "a",
+   "let": "d + c"
+  }
+ ],
+ "constraints": [],
+ "stem": "Study the following sequence: ${=a}\\;;\\;{=a + d}\\;;\\;{=a + 2 * d}\\;;\\;{=a + 3 * d}\\;;\\;\\ldots$ Find the general formula $T_n$ for the sequence. Give your answer as an expression in $n$, in the form $dn + c$.",
+ "solution": [
+  "The first term is $a = T_1 = {=a}$.",
+  "Find the common difference: $d = T_2 - T_1 = {=a + d} - {=a} = {=d}$. The next terms go up by the same amount: ${=a + 2 * d} - {=a + d} = {=d}$.",
+  "Each term is the one before it plus $d$, so $T_n = T_1 + d(n - 1)$. Substitute $T_1 = {=a}$ and $d = {=d}$: $T_n = {=a} + {=d}(n - 1)$.",
+  "Expand and simplify: $T_n = {=a} + {=d}n - {=d} = {=d}n + {=c}$.",
+  "Check with $n = 3$: $T_3 = {=d}(3) + {=c} = {=3 * d + c}$, which is the third term of the sequence.",
+  "The general formula is $T_n = {=d}n + {=c}$."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "{=d}*n + {=c}",
+  "form": "expanded",
+  "variables": [
+   "n"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Entry-point version of the book's ex3-2-11 / ex3-1-12 skeleton (list of four terms, T_n = T_1 + d(n-1)). Basic tier means: d from 2 to 9 (never 1, so the formula never prints '1n'), c from 1 to 9 (so the constant is always positive and the answer never prints '+ -'), T_1 = d + c, every term positive and small. The negative-start and negative-constant sequences the book uses (ex3-2-11b, ex3-1-13b) are left to the standard tier. 72 distinct (d, c) pairs. The stem fixes the answer shape (an expression in n of the form dn + c, not 'T_n = ...') so the marker and a blind solver compare like with like. No distractors, so no misconception ids are used; the one catalogued misconception (different-looking formula must be wrong) belongs to picture patterns."
+}

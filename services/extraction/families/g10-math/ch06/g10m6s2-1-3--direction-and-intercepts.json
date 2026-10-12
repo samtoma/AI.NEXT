@@ -1,0 +1,128 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s2-1-3:direction-and-intercepts",
+ "kind": "family",
+ "lo_id": "lo:g10m6s2-1-3",
+ "parent_question_id": "q:g10m6s2-1-3:ex6-2-1a",
+ "source_page": 156,
+ "tier": "advanced",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "choice": [
+    -6,
+    -5,
+    -4,
+    -3,
+    -2,
+    2,
+    3,
+    4,
+    5,
+    6
+   ]
+  },
+  {
+   "name": "b",
+   "choice": [
+    2,
+    3,
+    4,
+    5,
+    6
+   ]
+  },
+  {
+   "name": "k",
+   "choice": [
+    -3,
+    -2,
+    -1,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "name": "c",
+   "let": "abs(a) * b // gcd(abs(a), b) * k"
+  },
+  {
+   "name": "X",
+   "let": "c // a"
+  },
+  {
+   "name": "Y",
+   "let": "c // b"
+  },
+  {
+   "require": "X != Y and X != -Y",
+   "why": "keeps the swapped-intercept option and the sign-flipped option different from each other and from the correct option"
+  },
+  {
+   "require": "abs(X) <= 12 and abs(Y) <= 12",
+   "why": "intercepts small enough to sketch on an ordinary set of axes"
+  },
+  {
+   "name": "m",
+   "let": "(-a) / b"
+  },
+  {
+   "name": "trend",
+   "let": "'increasing' if a < 0 else 'decreasing'"
+  },
+  {
+   "name": "wrong_trend",
+   "let": "'decreasing' if a < 0 else 'increasing'"
+  },
+  {
+   "name": "msign",
+   "let": "'positive' if a < 0 else 'negative'"
+  }
+ ],
+ "constraints": [],
+ "stem": "The straight line ${=a}x + {=b}y = {=c}$ is to be sketched using the dual intercept method. Which one of the following correctly gives the $x$-intercept, the $y$-intercept and whether the graph is increasing or decreasing?",
+ "solution": [
+  "Find the $y$-intercept by letting $x=0$: ${=b}y = {=c}$, so $y = {=Y}$. The $y$-intercept is ${=Y}$.",
+  "Find the $x$-intercept by letting $y=0$: ${=a}x = {=c}$, so $x = {=X}$. The $x$-intercept is ${=X}$.",
+  "To decide whether the graph is increasing or decreasing, write the equation in the form $y=mx+c$. Move the $x$-term to the other side of the equals sign (it changes sign) and divide every term by ${=b}$. This gives $m = {=m}$ and $c = {=Y}$, which agrees with the $y$-intercept found above.",
+  "The gradient $m = {=m}$ is {=msign}, so the graph is {=trend}. The sign in front of $x$ in the given equation is not the sign of $m$, because the $x$-term had to change sides.",
+  "The line passes through $({=X}, 0)$ and $(0, {=Y})$, so plot those two points and join them. Answer: $x$-intercept $= {=X}$, $y$-intercept $= {=Y}$; the graph is {=trend}."
+ ],
+ "choices": {
+  "correct": "$x$-intercept $= {=X}$, $y$-intercept $= {=Y}$; the graph is {=trend}",
+  "distractors": [
+   {
+    "text": "$x$-intercept $= {=Y}$, $y$-intercept $= {=X}$; the graph is {=trend}",
+    "misconception_id": "mc:g10m6s2-1-3:y-intercept-from-y-zero"
+   },
+   {
+    "text": "$x$-intercept $= {=X}$, $y$-intercept $= {=Y}$; the graph is {=wrong_trend}",
+    "misconception_id": "mc:g10m6s2-1-3:direction-from-unrearranged-sign"
+   },
+   {
+    "text": "$x$-intercept $= {=X}$, $y$-intercept $= {=c}$; the graph is {=trend}",
+    "misconception_id": "mc:g10m6s2-1-3:constant-is-y-intercept"
+   },
+   {
+    "text": "$x$-intercept $= {=-X}$, $y$-intercept $= {=-Y}$; the graph is {=trend}",
+    "misconception_id": "mc:g10m6s2-1-3:sign-flips-when-dividing"
+   }
+  ]
+ },
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m6s2-1-3:constant-is-y-intercept",
+   "label": "Takes the number on the right of the equation as the $y$-intercept",
+   "description": "Treats the constant in $ax+by=c$ as the $y$-intercept, as it would be in $y=mx+c$, instead of letting $x=0$ and solving $by=c$, so the division by the coefficient of $y$ is skipped."
+  },
+  {
+   "id": "mc:g10m6s2-1-3:sign-flips-when-dividing",
+   "label": "Changes the sign of an intercept when solving for it",
+   "description": "After letting one variable be zero, treats dividing by the coefficient like moving a term across the equals sign and changes the sign of the answer, for example $3x=12$ giving $x=-4$."
+  }
+ ],
+ "notes": "Advanced twist the book's two misconceptions point at: the equation is given as ax + by = c, not as y = mx + c, so the direction can only be read after rearranging. b is always positive, so the sign in front of x in the given equation is always the OPPOSITE of the sign of m; that is what makes the direction distractor a live error in every instance (it is exactly what a learner who reads the sign beside x as written would choose). Hand-checked: a=3, b=2, c=12 gives X=4, Y=6, m=-3/2, decreasing; a=-4, b=6, c=-12 gives X=3, Y=-2, m=2/3, increasing (checks: -4(3)+6(0)=-12 and -4(0)+6(-2)=-12). c = lcm(|a|, b)*k makes both intercepts whole numbers. Requires keep all five options distinct: X != Y (swap option), X != -Y (sign-flip option vs swap option); c is never equal to Y because b >= 2 and Y != 0. mcq is natural here: the answer joins two numbers with a classification (increasing or decreasing), and every distractor is one named, single error. Two new misconceptions are declared; the other two ids are from the catalogue. Uses only: let x = 0, let y = 0, then y = mx + c for direction, all the book's own method. Stem has holes, so distinct_by_choices is not needed."
+}

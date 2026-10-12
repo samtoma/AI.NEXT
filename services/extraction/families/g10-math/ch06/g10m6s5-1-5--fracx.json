@@ -1,0 +1,81 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s5-1-5:fracx",
+ "kind": "family",
+ "lo_id": "lo:g10m6s5-1-5",
+ "parent_question_id": "q:g10m6s5-1-5:ex6-8-26a",
+ "source_page": 221,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "m",
+   "choice": [
+    2,
+    3
+   ]
+  },
+  {
+   "name": "k",
+   "choice": [
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "name": "t",
+   "choice": [
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "name": "s",
+   "choice": [
+    -1,
+    1
+   ]
+  },
+  {
+   "name": "a",
+   "let": "s * t * m ** k"
+  },
+  {
+   "require": "abs(a) <= 40",
+   "why": "the number in front stays small enough to print"
+  },
+  {
+   "name": "q",
+   "let": "-s * t"
+  },
+  {
+   "name": "c",
+   "let": "-q / a"
+  },
+  {
+   "name": "qs",
+   "let": "'+' if q > 0 else '-'"
+  },
+  {
+   "name": "qa",
+   "let": "abs(q)"
+  }
+ ],
+ "constraints": [
+  "a * q < 0",
+  "c == 1 / m ** k"
+ ],
+ "stem": "The graph of $y = {=a}\\left(\\frac{1}{{=m}}\\right)^x {=qs} {=qa}$ cuts the $x$-axis at exactly one point. What is the $x$-coordinate of that point?",
+ "answer": "k",
+ "solution": [
+  "On the $x$-axis $y=0$, so ${=a}\\left(\\frac{1}{{=m}}\\right)^x {=qs} {=qa} = 0$.",
+  "Move the constant to the right-hand side: ${=a}\\left(\\frac{1}{{=m}}\\right)^x = {=-q}$.",
+  "Divide both sides by ${=a}$: $\\left(\\frac{1}{{=m}}\\right)^x = {=c}$.",
+  "Write ${=c}$ as a power of $\\frac{1}{{=m}}$: ${=c} = \\left(\\frac{1}{{=m}}\\right)^{{=k}}$.",
+  "The bases are equal, so the exponents are equal: $x = {=k}$. The graph cuts the $x$-axis at $({=k}, 0)$."
+ ],
+ "notes": "The standard family xcross with a base between 0 and 1: the right-hand side after dividing is a fraction (1 over a power of m), so the student must see the fraction as a power of the fractional base, not of m. a = s*t*m^k and q = -s*t, so a and q have opposite signs and the graph cuts the x-axis exactly once, at x = k, to the right of the y-axis. Answers are always 1, 2 or 3. Every valid instance was substituted back into the equation: y is 0 at the stated x."
+}

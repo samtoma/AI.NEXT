@@ -1,0 +1,90 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s1-1-1:which-is-interval",
+ "kind": "family",
+ "lo_id": "lo:g10m6s1-1-1",
+ "parent_question_id": "q:g10m6s1-1-1:ex6-1-2b",
+ "source_page": 148,
+ "tier": "advanced",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    1,
+    9
+   ]
+  },
+  {
+   "name": "d",
+   "randint": [
+    3,
+    9
+   ]
+  },
+  {
+   "name": "b",
+   "let": "a + d"
+  },
+  {
+   "name": "lc",
+   "choice": [
+    0,
+    1
+   ]
+  },
+  {
+   "name": "hc",
+   "choice": [
+    0,
+    1
+   ]
+  },
+  {
+   "name": "ls",
+   "let": "['<', '≤'][lc]"
+  },
+  {
+   "name": "hs",
+   "let": "['<', '≤'][hc]"
+  },
+  {
+   "name": "lb",
+   "let": "['(', '['][lc]"
+  },
+  {
+   "name": "rb",
+   "let": "[')', ']'][hc]"
+  }
+ ],
+ "constraints": [
+  "b - a >= 3"
+ ],
+ "stem": "Exactly one of the following sets can be written in interval notation. Which one?",
+ "solution": [
+  "Interval notation such as ${=lb}{=a}, {=b}{=rb}$ stands for every real number between its two ends, with none left out.",
+  "A set over $\\mathbb{Z}$, $\\mathbb{N}$ or $\\mathbb{Q}$ holds only some of the numbers between ${=a}$ and ${=b}$ (the integers, the counting numbers or the rational numbers), so it cannot be written as an interval.",
+  "Only the set over $\\mathbb{R}$ holds all the numbers between ${=a}$ and ${=b}$, so it is the one that can be written in interval notation, as ${=lb}{=a}, {=b}{=rb}$."
+ ],
+ "choices": {
+  "correct": "$\\{x:x\\in\\mathbb{R},{=a}{=ls}x{=hs}{=b}\\}$",
+  "distractors": [
+   {
+    "text": "$\\{x:x\\in\\mathbb{Z},{=a}{=ls}x{=hs}{=b}\\}$",
+    "misconception_id": "mc:g10m6s1-1-1:interval-notation-for-non-real-set"
+   },
+   {
+    "text": "$\\{x:x\\in\\mathbb{N},{=a}{=ls}x{=hs}{=b}\\}$",
+    "misconception_id": "mc:g10m6s1-1-1:interval-notation-for-non-real-set"
+   },
+   {
+    "text": "$\\{x:x\\in\\mathbb{Q},{=a}{=ls}x{=hs}{=b}\\}$",
+    "misconception_id": "mc:g10m6s1-1-1:interval-notation-for-non-real-set"
+   }
+  ]
+ },
+ "distinct_by_choices": true,
+ "proposed_misconceptions": [],
+ "notes": "Advanced: classification twist. All four options share the same inequality; only the number system differs, so the one thing being tested is that an interval means every real number between the ends. Ends are positive (a from 1) so the set over N is never an empty or odd case, and b - a >= 3 keeps each non-real set non-empty. The stem is the same every time, so distinct_by_choices is true; a, d and the two signs give hundreds of different option sets. Uses the catalogued non-real-set misconception on all three distractors."
+}

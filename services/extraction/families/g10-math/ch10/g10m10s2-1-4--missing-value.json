@@ -1,0 +1,87 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m10s2-1-4:missing-value",
+ "kind": "family",
+ "lo_id": "lo:g10m10s2-1-4",
+ "parent_question_id": "q:g10m10s2-1-4:ex10-7-25d",
+ "source_page": 387,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    1,
+    15
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    1,
+    15
+   ]
+  },
+  {
+   "name": "c",
+   "randint": [
+    1,
+    15
+   ]
+  },
+  {
+   "name": "d",
+   "randint": [
+    1,
+    15
+   ]
+  },
+  {
+   "name": "e",
+   "randint": [
+    1,
+    15
+   ]
+  },
+  {
+   "name": "known",
+   "let": "a + b + c + d + e"
+  },
+  {
+   "name": "m",
+   "randint": [
+    "(known + 6) // 6",
+    "(known + 20) // 6"
+   ]
+  },
+  {
+   "name": "total",
+   "let": "6 * m"
+  },
+  {
+   "name": "u",
+   "let": "total - known"
+  },
+  {
+   "require": "u >= 1 and u <= 20",
+   "why": "the missing value must be a clean whole number between 1 and 20, in the same range as the book's data"
+  }
+ ],
+ "constraints": [
+  "u >= 1",
+  "u <= 20",
+  "total == known + u"
+ ],
+ "stem": "The following is a list of data: ${=a}; {=b}; {=c}; {=d}; {=e}; x$. Determine the value of $x$ if the mean of all six values is ${=m}$.",
+ "answer": "u",
+ "solution": [
+  "The mean is the sum of the values divided by how many values there are. This list has 6 values, counting $x$.",
+  "Add the values we know: ${=a}+{=b}+{=c}+{=d}+{=e}={=known}$. The sum of all six values is therefore $x+{=known}$.",
+  "Put this into the mean: $\\begin{aligned}{=m}&=\\frac{x+{=known}}{6}\\\\x+{=known}&={=m}\\times 6\\\\x+{=known}&={=total}\\end{aligned}$",
+  "Subtract ${=known}$ from both sides: $\\begin{aligned}x&={=total}-{=known}\\\\x&={=u}\\end{aligned}$",
+  "Check: $\\frac{{=known}+{=u}}{6}=\\frac{{=total}}{6}={=m}$, so $x={=u}$ gives the mean ${=m}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Basic-tier entry point of the skill, modelled on book question ex10-7-25d (list of data with an unknown x, mean given, page 387; book answer 10 from x + 38 = 48). Skeleton: five known values drawn from 1 to 15 (repeats allowed, as in the book's 8; 8), one unknown x placed last, a stated mean of all six values. Working: total = mean x 6, then x = total - sum of known values. The mean m is drawn AFTER the five values from the range that forces x between 1 and 20, so there is no rejection sampling and every instance has a whole-number answer; the require is a safety net only. The stem says 'mean of all six values' so the count is unambiguous. Numeric answer, so no distractors and no catalogued misconception is attached: the two catalogued misconceptions (mode not the most frequent value, median found without ordering) belong to the mode and median parts of this objective, which a mean-only basic item does not touch. The standard tier (book's remove-friends-and-find-the-total questions ex10-2-6 to ex10-2-11, the missing jar) and the advanced tier (mean plus median or mode, ex10-7-25c) are outside the gap list given and are not written here."
+}

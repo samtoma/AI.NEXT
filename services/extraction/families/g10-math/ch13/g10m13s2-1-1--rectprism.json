@@ -1,0 +1,65 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m13s2-1-1:rectprism",
+ "kind": "family",
+ "lo_id": "lo:g10m13s2-1-1",
+ "parent_question_id": "q:g10m13s2-1-1:ex13-7-4",
+ "source_page": 458,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "l",
+   "randint": [
+    6,
+    12
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    3,
+    8
+   ],
+   "resample_while": "b == l"
+  },
+  {
+   "name": "h",
+   "randint": [
+    2,
+    9
+   ],
+   "resample_while": "h == l or h == b"
+  },
+  {
+   "name": "top",
+   "let": "l * b"
+  },
+  {
+   "name": "front",
+   "let": "l * h"
+  },
+  {
+   "name": "side",
+   "let": "b * h"
+  },
+  {
+   "name": "total",
+   "let": "2 * (top + front + side)"
+  }
+ ],
+ "constraints": [
+  "l != b and b != h and l != h"
+ ],
+ "stem": "A rectangular prism has length {=l} cm, breadth {=b} cm and height {=h} cm. Calculate its total surface area, that is, the area of all six faces. Give your answer in cm$^2$.",
+ "answer": "total",
+ "solution": [
+  "A rectangular prism has six rectangular faces. Its net is made up of three pairs of equal rectangles: the top and bottom, the front and back, and the two sides. Find the area of each face and add them together.",
+  "Top and bottom: each face is {=l} cm by {=b} cm, so their total area is $2 \\times ({=l} \\times {=b}) = 2 \\times {=top} = {=2 * top}$ cm$^2$.",
+  "Front and back: each face is {=l} cm by {=h} cm, so their total area is $2 \\times ({=l} \\times {=h}) = 2 \\times {=front} = {=2 * front}$ cm$^2$.",
+  "Two sides: each face is {=b} cm by {=h} cm, so their total area is $2 \\times ({=b} \\times {=h}) = 2 \\times {=side} = {=2 * side}$ cm$^2$.",
+  "Add the areas of all six faces: ${=2 * top} + {=2 * front} + {=2 * side} = {=total}$ cm$^2$. The surface area is {=total} cm$^2$."
+ ],
+ "notes": "Basic entry point of the objective: a plain rectangular prism with all three dimensions given in the stem (no figure needed, so the stem stands alone). Modelled on book question ex13-7-4 (p. 458), which also gives the dimensions in words and finds the area of each face and adds; this family keeps the three dimensions different so the net really has three different pairs of rectangles, and the solution shows each pair separately. The stem says 'total surface area, all six faces' so a blind solver cannot read it as an open box. Dimensions are whole cm, bounded 6-12, 3-8 and 2-9, so the answer is a whole number of cm^2 between 2*(18+12+6)=72ish and 552; no rounding is involved. No distractors, so no misconception ids are used (none are catalogued for this objective). The standard and advanced tiers already exist in the bank from the book questions and were not asked for here."
+}

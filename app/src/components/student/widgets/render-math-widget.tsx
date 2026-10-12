@@ -32,6 +32,11 @@ import { NumberLineMarker } from "./NumberLineMarker";
 import { RatioBalance } from "./RatioBalance";
 import { SampleSpace } from "./SampleSpace";
 import { CurveSketcher } from "./CurveSketcher";
+import { PolygonBuilder } from "./PolygonBuilder";
+import { SolidScaler } from "./SolidScaler";
+import { BoxPlotBuilder } from "./BoxPlotBuilder";
+import { VennBuilder } from "./VennBuilder";
+import { AreaModel } from "./AreaModel";
 
 export { MATH_WIDGETS } from "@/lib/widget-payloads";
 
@@ -161,6 +166,61 @@ export function renderMathWidget(
       return (
         <CurveSketcher
           prompt={w.prompt} fn={w.fn} coefs={w.coefs}
+          studentName={studentName} onResult={onOutcome}
+        />
+      );
+
+    case "polygon_builder":
+      return w.mode === "construct" ? (
+        <PolygonBuilder
+          mode="construct" prompt={w.prompt} shape={w.shape}
+          studentName={studentName} onResult={onOutcome}
+        />
+      ) : w.mode === "midsegment" ? (
+        <PolygonBuilder
+          mode="midsegment" prompt={w.prompt} triangle={w.triangle} apex={w.apex}
+          studentName={studentName} onResult={onOutcome}
+        />
+      ) : (
+        <PolygonBuilder
+          mode="area" prompt={w.prompt} shape={w.shape} target={w.target}
+          studentName={studentName} onResult={onOutcome}
+        />
+      );
+
+    case "solid_scaler":
+      return (
+        <SolidScaler
+          prompt={w.prompt} solid={w.solid} dims={w.dims} ask={w.ask} ratio={w.ratio}
+          studentName={studentName} onResult={onOutcome}
+        />
+      );
+
+    case "box_plot_builder":
+      return (
+        <BoxPlotBuilder
+          prompt={w.prompt} data={w.data} studentName={studentName} onResult={onOutcome}
+        />
+      );
+
+    case "venn_builder":
+      return w.mode === "shade" ? (
+        <VennBuilder
+          mode="shade" prompt={w.prompt} sets={w.sets} labels={w.labels} target={w.target}
+          studentName={studentName} onResult={onOutcome}
+        />
+      ) : (
+        <VennBuilder
+          mode="counts" prompt={w.prompt} sets={w.sets} labels={w.labels}
+          total={w.total} regions={w.regions} clues={w.clues}
+          studentName={studentName} onResult={onOutcome}
+        />
+      );
+
+    case "area_model":
+      return (
+        <AreaModel
+          prompt={w.prompt} mode={w.mode} a={w.a} b={w.b}
           studentName={studentName} onResult={onOutcome}
         />
       );

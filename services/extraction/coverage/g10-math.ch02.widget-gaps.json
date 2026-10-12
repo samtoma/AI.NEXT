@@ -1,0 +1,298 @@
+{
+  "format": "ainext.widget-gaps/1",
+  "book": "g10-math",
+  "course_id": "course:us-g10-math-en",
+  "rule": "FR-4306 / FR-1201: every chapter has at least one widget question, or a gap a human has signed. A new kind is built only after Samuel approves it (decision 11, T356).",
+  "chapters": [
+    {
+      "module": "module:g10m-c01",
+      "label": "Chapter 1 — Algebraic expressions",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c02",
+      "label": "Chapter 2 — Exponents",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 9
+    },
+    {
+      "module": "module:g10m-c08",
+      "label": "Chapter 8 — Analytical geometry",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    }
+  ],
+  "uncovered_chapters": [
+    "module:g10m-c01",
+    "module:g10m-c02",
+    "module:g10m-c08"
+  ],
+  "proposed_kinds": {
+    "exponent_expander (factor-chip exponent builder)": {
+      "modules": [
+        "module:g10m-c02"
+      ],
+      "objectives": [
+        "lo:g10m2s2-1-1"
+      ],
+      "why": [
+        "No existing kind builds an exponent or an exponent-law step. The nearest, area_model, expands $(x+a)(x+b)$ in a plain variable. It could show that $(x+3)^2\\ne x^2+9$ through its missing-cross-term predicate. But the student would be doing Chapter 3 binomial expansion, and none of this objective's six anchor questions looks like that, so the parent link would be forced. curve_sketcher's exponential family draws $y=a\\cdot b^x+q$, which belongs to exponential functions rather than to simplifying with the laws. Its predicates (wrong-intercept, asymptote-crossed) match neither of this objective's own misconceptions, power-skips-coefficient and power-through-a-sum. A forced fit here would send a student to the wrong skill, so it goes to Samuel as a gap."
+      ]
+    },
+    "base_reducer (prime-column base decomposer)": {
+      "modules": [
+        "module:g10m-c02"
+      ],
+      "objectives": [
+        "lo:g10m2s2-1-2"
+      ],
+      "why": [
+        "No existing kind lets a student take a base apart or hold several exponent columns side by side. product_builder, area_model and venn_builder do other jobs: ordered pairs, polynomial tiles and set regions. number_line_marker and ratio_balance grade a position or a fourth term, not an expression rewritten across a common base. Anything we put here would be an answer box dressed up as a widget."
+      ]
+    },
+    "common_factor_extractor (factor-out-and-cancel builder)": {
+      "modules": [
+        "module:g10m-c02"
+      ],
+      "objectives": [
+        "lo:g10m2s2-1-3"
+      ],
+      "why": [
+        "area_model in factor mode was considered. It factorises $x^2+(a+b)x+ab$ into $(x+a)(x+b)$ in a plain variable, and with $b=-a$ it can show a difference of squares. It cannot take a common exponential factor such as $13^{c}$ out of terms with different exponents, and the student never meets the fractions that the anchor questions are about. It would be a quadratic-factoring exercise attached to this objective by name only. The objective's own misconception, powers-outside-algebra (the belief that factorising and cancelling do not apply to powers), has no predicate in any existing kind, so nothing could diagnose it."
+      ]
+    },
+    "exponent_law_builder": {
+      "modules": [
+        "module:g10m-c02"
+      ],
+      "objectives": [
+        "lo:g10m2s3-1-1"
+      ],
+      "why": [
+        "No existing kind carries exponent laws. area_model tiles are for (x+a)(x+b), not powers; solid_scaler teaches k, k² and k³ for lengths, areas and volumes but has no coefficient, letter or fractional-exponent structure; curve_sketcher and pair_plotter would only check a graph or a lattice point, not the simplification. number_line_marker would reduce this to an answer box, because the answer is an expression and not a set of whole-number points. A forced fit would send a student a widget whose 'not quite' fires for reasons unrelated to rational exponents, so this is recorded as a gap for Samuel."
+      ]
+    },
+    "rational_power_evaluator": {
+      "modules": [
+        "module:g10m-c02"
+      ],
+      "objectives": [
+        "lo:g10m2s3-1-2"
+      ],
+      "why": [
+        "None of the existing kinds can ask for or grade the value of a rational power. solid_scaler comes closest, since its scale factor k is the cube root of the volume ratio, but it covers only positive roots on the slider's half-steps. It has no negative exponent, no decimal base and no prime-power rewrite, and none of its predicates (volume-scaled-by-k, area-scaled-by-k) match any misconception listed for this objective. number_line_marker takes whole-number targets only, and most anchor answers are fractions ($\\frac{1}{2}$, $\\frac{1}{3}$, $\\frac{9}{10}$, $\\frac{1}{5}$). pair_plotter is limited to whole-number points in -5..5, and curve_sketcher is a freehand sketch scored within about one grid square, so neither can grade an exact value. The objective's own misconception list holds only the two prerequisite entries (power-skips-coefficient, power-through-a-sum), which no construction here reveals. Any widget for it would first need misconceptions registered on this objective, and a gap is the honest record."
+      ]
+    },
+    "base_matcher": {
+      "modules": [
+        "module:g10m-c02"
+      ],
+      "objectives": [
+        "lo:g10m2s4-1-1"
+      ],
+      "why": [
+        "No existing kind constructs a rewriting of a number as a power. number_line_marker (points) would only take the final value of x, which is an answer box in disguise. It also cannot reach the book's answers $-\\frac{5}{2}$ and $\\frac{5}{9}$, because its targets must be whole numbers. And none of its predicates (missed-values, extra-values, sign-flipped) can name the base-1 misconception, the only own misconception of this objective."
+      ]
+    },
+    "common_factor_builder": {
+      "modules": [
+        "module:g10m-c02"
+      ],
+      "objectives": [
+        "lo:g10m2s4-1-2"
+      ],
+      "why": [
+        "area_model's factor mode builds $(x+a)(x+b)$ from x² and x tiles, so it has no tile for a power $b^t$ and no step that splits a power with the exponent law. number_line_marker would only record the final t, again an answer box in disguise, and none of its predicates map to the misconceptions on this objective."
+      ]
+    },
+    "exponential_factoriser": {
+      "modules": [
+        "module:g10m-c02"
+      ],
+      "objectives": [
+        "lo:g10m2s4-1-3"
+      ],
+      "why": [
+        "number_line_marker (points) can take the final roots as a set, but I rejected it. Rejecting a factor shows up only as a missing mark, which is indistinguishable from not having attempted that factor, so a student can earn full credit without showing the key idea. Its extra-values predicate also fires for any stray mark, not specifically for the negative-factor error. The fractional-power case has a root of 1296, outside its ±20 range. And in this form the widget is an answer box in disguise, since the factorising is the mathematics of the objective."
+      ]
+    },
+    "trial_and_error_solver": {
+      "modules": [
+        "module:g10m-c02"
+      ],
+      "objectives": [
+        "lo:g10m2s4-1-4"
+      ],
+      "why": [
+        "No existing kind lets the student evaluate $b^x$ for a chosen x and narrow in on a target. number_line_marker only accepts whole-number targets inside ±20, so 2.81 cannot be marked. curve_sketcher draws an exponential freehand but neither evaluates nor solves, so it does not model trial and error."
+      ]
+    }
+  },
+  "gaps": [
+    {
+      "module": "module:g10m-c02",
+      "lo_id": "lo:g10m2s2-1-1",
+      "need_kind": "exponent_expander (factor-chip exponent builder)",
+      "description": "The student is shown an expression such as $(3x^4y^2)^3$, $\\dfrac{a^2}{a^{-1}}$ or $16^0$ as a row of factor chips (the numeral, then each letter with its exponent). They set the exponent on each chip and the numeral's value, as the law requires. A live expanded view shows the repeated factors collapsing: $a\\cdot a\\cdot a\\cdot a\\cdot a$ cancels against $a\\cdot a$. Grading is on the property: each base carries the right net exponent, and a numeral under a power is evaluated, so any chip order is accepted. A second mode shows $(a+b)^2$ as a sum chip. The widget expands it live to $a^2+2ab+b^2$ so the student sees that the outer power does not go through a sum. Predicates it would need: coefficient-not-raised (the numeral chip is left as 3 where 27 was required), power-through-sum (the sum chip was split into two powers), and a net-exponent mismatch.",
+      "why": "No existing kind builds an exponent or an exponent-law step. The nearest, area_model, expands $(x+a)(x+b)$ in a plain variable. It could show that $(x+3)^2\\ne x^2+9$ through its missing-cross-term predicate. But the student would be doing Chapter 3 binomial expansion, and none of this objective's six anchor questions looks like that, so the parent link would be forced. curve_sketcher's exponential family draws $y=a\\cdot b^x+q$, which belongs to exponential functions rather than to simplifying with the laws. Its predicates (wrong-intercept, asymptote-crossed) match neither of this objective's own misconceptions, power-skips-coefficient and power-through-a-sum. A forced fit here would send a student to the wrong skill, so it goes to Samuel as a gap.",
+      "source": "author-merged-ch02.json",
+      "signed_off": {
+        "by": "auto-pass G3 (AI recommendation)",
+        "auto": true,
+        "at": "2026-10-01T17:24:22Z",
+        "note": "auto-pass G3 (AI recommendation): S7's author found no existing widget kind that fits this objective, so the chapter ships without a widget question for now; no new kind is approved by this (decision 11)"
+      },
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c02",
+      "lo_id": "lo:g10m2s2-1-2",
+      "need_kind": "base_reducer (prime-column base decomposer)",
+      "description": "The student gets a mixed-base expression such as $\\dfrac{3^{n}9^{n-3}}{27^{n-1}}$ or $\\dfrac{6^4\\times12^3\\times4^5}{30^3\\times3^6}$. Each composite base is dragged onto a factor tree, which turns $9^{n-3}$ into $(3^2)^{n-3}$ and then $3^{2n-6}$. The exponents are then entered under one column per prime (2, 3, 5, ...) as a numerator column and a denominator column, so like primes line up. Grading is on the property: every base is prime and the net exponent in each column is right, and any route through the factor trees is accepted. A live substitution strip evaluates the student's current line and the original expression at a test value, for example $n=2$. A line such as $2\\cdot3^{x}\\to6^{x}$ then visibly disagrees with the original, which is what refutes merges-factor-into-base without a lecture. Predicates it would need: factor-merged-into-base, composite-base-left, prime-column-sign-slip (a denominator exponent added instead of subtracted), and off-target.",
+      "why": "No existing kind lets a student take a base apart or hold several exponent columns side by side. product_builder, area_model and venn_builder do other jobs: ordered pairs, polynomial tiles and set regions. number_line_marker and ratio_balance grade a position or a fourth term, not an expression rewritten across a common base. Anything we put here would be an answer box dressed up as a widget.",
+      "source": "author-merged-ch02.json",
+      "signed_off": {
+        "by": "auto-pass G3 (AI recommendation)",
+        "auto": true,
+        "at": "2026-10-01T17:24:22Z",
+        "note": "auto-pass G3 (AI recommendation): S7's author found no existing widget kind that fits this objective, so the chapter ships without a widget question for now; no new kind is approved by this (decision 11)"
+      },
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c02",
+      "lo_id": "lo:g10m2s2-1-3",
+      "need_kind": "common_factor_extractor (factor-out-and-cancel builder)",
+      "description": "The student sees a fraction of exponential terms such as $\\dfrac{13^{c}+13^{c+2}}{3\\times13^{c}-13^{c}}$, $\\dfrac{3^{t+3}+3^{t}}{2\\times3^{t}}$ or $\\dfrac{16^{x}-144^{b}}{4^{x}-12^{b}}$. They drag the common factor, for example $13^{c}$, out of every term. Each term re-expresses itself as the factor times a remainder, so $13^{c+2}$ becomes $13^{c}\\times13^{2}$ and the 1 left behind by $13^{c}$ stays visible. They then drag matching factored blocks in the numerator and denominator to cancel. A difference-of-squares mode shows $16^{x}-144^{b}$ as $(4^{x})^2-(12^{b})^2$, with two square blocks. The student builds the sum-and-difference pair. Grading is on the property: the extracted factor really divides every term, and the cancelled result equals the original at test values, so any valid common factor is accepted. Predicates it would need: no-factor-taken-out (the expression is left alone, or the student says it cannot be simplified), unit-lost-when-factoring (the 1 dropped, $13^{c}+13^{c+2}\\to13^{c}\\cdot13^{2}$), power-split-across-sum, and cancelled-across-a-sum.",
+      "why": "area_model in factor mode was considered. It factorises $x^2+(a+b)x+ab$ into $(x+a)(x+b)$ in a plain variable, and with $b=-a$ it can show a difference of squares. It cannot take a common exponential factor such as $13^{c}$ out of terms with different exponents, and the student never meets the fractions that the anchor questions are about. It would be a quadratic-factoring exercise attached to this objective by name only. The objective's own misconception, powers-outside-algebra (the belief that factorising and cancelling do not apply to powers), has no predicate in any existing kind, so nothing could diagnose it.",
+      "source": "author-merged-ch02.json",
+      "signed_off": {
+        "by": "auto-pass G3 (AI recommendation)",
+        "auto": true,
+        "at": "2026-10-01T17:24:22Z",
+        "note": "auto-pass G3 (AI recommendation): S7's author found no existing widget kind that fits this objective, so the chapter ships without a widget question for now; no new kind is approved by this (decision 11)"
+      },
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c02",
+      "lo_id": "lo:g10m2s3-1-1",
+      "need_kind": "exponent_law_builder",
+      "description": "The student BUILDS the simplified form of an expression such as $t^{\\frac{1}{4}}\\times 3t^{\\frac{7}{4}}$, $\\dfrac{16x^{2}}{(4x^{2})^{\\frac{1}{2}}}$ or $(a^{-2}b^{6})^{\\frac{1}{2}}$, rather than typing it. The instrument shows the expression as tiles: one slot for the coefficient and, for each letter, a fraction dial for its exponent (numerator over denominator, negatives allowed). A step control applies one law at a time (add exponents when multiplying, subtract when dividing, multiply exponents for a power of a power, raise the coefficient as well as the letters for a power of a product), and each step shows the product or quotient written out as repeated factors. The final construction is graded on equivalence of the expression, so $3t^{2}$ and $3t^{\\frac{8}{4}}$ are both accepted, and the task is stated as a property of the result: no brackets, one power per letter, a positive-exponent form where the stem asks for it. Errors it would diagnose: the outer power not applied to the numeric coefficient, which is $(3x^4y^2)^3$ giving $3x^{12}y^6$ (maps to mc:g10m2s2-1-1:power-skips-coefficient); a power split across a sum (mc:g10m2s2-1-1:power-through-a-sum); a factor moved from the denominator with its exponent left positive (mc:g10m2s3-1-1:exponent-sign-kept-when-power-moves-up); the minus sign of a negative exponent carried onto the base (mc:g10m2s3-1-1:minus-sign-moves-onto-base); and, as new predicates, exponents multiplied where they should be added (and the reverse), and a fractional exponent added as numerators and denominators separately ($\\frac{1}{4}+\\frac{7}{4}$ read as $\\frac{8}{8}$).",
+      "why": "No existing kind carries exponent laws. area_model tiles are for (x+a)(x+b), not powers; solid_scaler teaches k, k² and k³ for lengths, areas and volumes but has no coefficient, letter or fractional-exponent structure; curve_sketcher and pair_plotter would only check a graph or a lattice point, not the simplification. number_line_marker would reduce this to an answer box, because the answer is an expression and not a set of whole-number points. A forced fit would send a student a widget whose 'not quite' fires for reasons unrelated to rational exponents, so this is recorded as a gap for Samuel.",
+      "source": "author-merged-ch02.json",
+      "signed_off": {
+        "by": "auto-pass G3 (AI recommendation)",
+        "auto": true,
+        "at": "2026-10-01T17:24:22Z",
+        "note": "auto-pass G3 (AI recommendation): S7's author found no existing widget kind that fits this objective, so the chapter ships without a widget question for now; no new kind is approved by this (decision 11)"
+      },
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c02",
+      "lo_id": "lo:g10m2s3-1-2",
+      "need_kind": "rational_power_evaluator",
+      "description": "The student evaluates a numeric rational power such as $(0.25)^{\\frac{1}{2}}$, $27^{-\\frac{1}{3}}$, $(0.008)^{\\frac{1}{3}}$ or $(0.81)^{\\frac{1}{2}}$ by building the evaluation. First the base is rewritten, with a decimal-to-fraction control (0.25 becomes $\\frac{25}{100}$ becomes $\\frac{1}{4}$) and a factor tree to a prime power (27 becomes $3^3$). Then the exponent is read through a root-and-power dial: the denominator sets the root index and the numerator sets the power, and a visible grouping shows $27^{\\frac{1}{3}}$ as 'the number that, used three times as a factor, gives 27'. A flip control turns a negative exponent into a reciprocal and then removes the sign. The result is graded on the value, so any valid route (root first or power first, a fraction or a prime-power base) is accepted. Errors it would diagnose: reading $x^{\\frac{1}{n}}$ as $x$ divided by $n$ (27 ÷ 3); root index and power swapped; a negative exponent read as a negative answer ($-\\frac{1}{3}$ instead of $\\frac{1}{3}$); a decimal base not converted, so the root is taken digit by digit; and the reciprocal applied to the exponent instead of the base.",
+      "why": "None of the existing kinds can ask for or grade the value of a rational power. solid_scaler comes closest, since its scale factor k is the cube root of the volume ratio, but it covers only positive roots on the slider's half-steps. It has no negative exponent, no decimal base and no prime-power rewrite, and none of its predicates (volume-scaled-by-k, area-scaled-by-k) match any misconception listed for this objective. number_line_marker takes whole-number targets only, and most anchor answers are fractions ($\\frac{1}{2}$, $\\frac{1}{3}$, $\\frac{9}{10}$, $\\frac{1}{5}$). pair_plotter is limited to whole-number points in -5..5, and curve_sketcher is a freehand sketch scored within about one grid square, so neither can grade an exact value. The objective's own misconception list holds only the two prerequisite entries (power-skips-coefficient, power-through-a-sum), which no construction here reveals. Any widget for it would first need misconceptions registered on this objective, and a gap is the honest record.",
+      "source": "author-merged-ch02.json",
+      "signed_off": {
+        "by": "auto-pass G3 (AI recommendation)",
+        "auto": true,
+        "at": "2026-10-01T17:24:22Z",
+        "note": "auto-pass G3 (AI recommendation): S7's author found no existing widget kind that fits this objective, so the chapter ships without a widget question for now; no new kind is approved by this (decision 11)"
+      },
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c02",
+      "lo_id": "lo:g10m2s4-1-1",
+      "need_kind": "base_matcher",
+      "description": "The student is given an equation such as $64^{y+1}=16^{2y+5}$ or $5^{2x+2}=\\frac{1}{125}$. They rewrite each side as ONE power of a common base by choosing a base tile and an exponent expression for each side (64 as $2^6$, 16 as $2^4$, $\\frac{1}{125}$ as $5^{-3}$). The widget shows live whether both sides now share a base. Only then do the two exponent expressions line up as a linear equation, which the student solves. The answer is checked by substituting back into both original sides. Errors it would diagnose: two different bases left in place while the exponents are equated anyway (64 as $4^3$ against 16 as $2^4$); the exponent not distributed ($6y+1$ for $6(y+1)$); a reciprocal that loses its minus sign ($\\frac{1}{125}$ as $5^{3}$); a side left as a bare number when it should be $a^0$; and the base-1 trap, where a side that is a power of 1 shows both sides equal for every exponent, so equating exponents is refused. That last one is mc:g10m2s4-1-1:equates-exponents-base-one.",
+      "why": "No existing kind constructs a rewriting of a number as a power. number_line_marker (points) would only take the final value of x, which is an answer box in disguise. It also cannot reach the book's answers $-\\frac{5}{2}$ and $\\frac{5}{9}$, because its targets must be whole numbers. And none of its predicates (missed-values, extra-values, sign-flipped) can name the base-1 misconception, the only own misconception of this objective.",
+      "source": "author-merged-ch02.json",
+      "signed_off": {
+        "by": "auto-pass G3 (AI recommendation)",
+        "auto": true,
+        "at": "2026-10-01T17:24:22Z",
+        "note": "auto-pass G3 (AI recommendation): S7's author found no existing widget kind that fits this objective, so the chapter ships without a widget question for now; no new kind is approved by this (decision 11)"
+      },
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c02",
+      "lo_id": "lo:g10m2s4-1-2",
+      "need_kind": "common_factor_builder",
+      "description": "For an equation such as $2^t+2^{t+2}=40$ or $5^t+3\\cdot5^{t+1}=400$, the student first splits each power tile with $a^{m+n}=a^m\\cdot a^n$ ($2^{t+2}$ becomes $2^t\\cdot2^2$). They then drag the shared power ($2^t$) out in front as a common factor. The bracket is assembled live from what is left behind ($1+4$ for the first equation, $1+15$ for the second). The equation reduces to $5\\cdot2^t=40$, then $2^t=8$, then $t=3$. Errors it would diagnose: the 1 left behind is forgotten, so $2^t$ is dragged out and the bracket shows only $2^2$; the exponents are added across a sum ($2^t+2^{t+2}$ as $2^{2t+2}$), which is mc:g10m2s2-1-1:power-through-a-sum; a coefficient is merged into the base ($3\\cdot5^{t+1}$ as $15^{t+1}$), which is mc:g10m2s2-1-2:merges-factor-into-base; and the common factor is divided out of one term only.",
+      "why": "area_model's factor mode builds $(x+a)(x+b)$ from x² and x tiles, so it has no tile for a power $b^t$ and no step that splits a power with the exponent law. number_line_marker would only record the final t, again an answer box in disguise, and none of its predicates map to the misconceptions on this objective.",
+      "source": "author-merged-ch02.json",
+      "signed_off": {
+        "by": "auto-pass G3 (AI recommendation)",
+        "auto": true,
+        "at": "2026-10-01T17:24:22Z",
+        "note": "auto-pass G3 (AI recommendation): S7's author found no existing widget kind that fits this objective, so the chapter ships without a widget question for now; no new kind is approved by this (decision 11)"
+      },
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c02",
+      "lo_id": "lo:g10m2s4-1-3",
+      "need_kind": "exponential_factoriser",
+      "description": "The student is given an equation such as $(3^x+1)(2^x-8)=0$, $9^m+3^{3-2m}=28$ or $(7^x-49)(3^x-27)=0$. For the trinomial cases they set a stand-in letter (k = $3^x$) and build the factors of the resulting quadratic. Each factor then goes through a check, 'can this ever be zero?'. A live curve of $3^x$ shows that a power with a positive base never reaches 0 or any negative number. A factor like $3^x+1$ must therefore be placed in a 'no solution' slot by the student, and only the satisfiable factors are solved for x. For the fractional-power case ($x^{\\frac14}+6=0$) the student has to put any candidate back into the ORIGINAL equation before it is kept. Errors it would diagnose: rearranging $3^x+1=0$ to $3^x=-1$ and hunting for an x (mc:g10m2s4-1-3:solves-exponential-equal-to-negative); keeping a number obtained by raising both sides to a power without substituting back (mc:g10m2s4-1-3:skips-check-after-raising-to-power); stopping after the first factor; and reading $(x-a)=0$ as $x=-a$.",
+      "why": "number_line_marker (points) can take the final roots as a set, but I rejected it. Rejecting a factor shows up only as a missing mark, which is indistinguishable from not having attempted that factor, so a student can earn full credit without showing the key idea. Its extra-values predicate also fires for any stray mark, not specifically for the negative-factor error. The fractional-power case has a root of 1296, outside its ±20 range. And in this form the widget is an answer box in disguise, since the factorising is the mathematics of the objective.",
+      "source": "author-merged-ch02.json",
+      "signed_off": {
+        "by": "auto-pass G3 (AI recommendation)",
+        "auto": true,
+        "at": "2026-10-01T17:24:22Z",
+        "note": "auto-pass G3 (AI recommendation): S7's author found no existing widget kind that fits this objective, so the chapter ships without a widget question for now; no new kind is approved by this (decision 11)"
+      },
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c02",
+      "lo_id": "lo:g10m2s4-1-4",
+      "need_kind": "trial_and_error_solver",
+      "description": "For an equation such as $2^x=7$ the student moves a value of x (stepping to 2 decimal places) and the widget shows $2^x$ live beside the target 7. A number line brackets the answer between two values: 'too low' on one side, 'too high' on the other. The bracket tightens as the student narrows in: x between 2 and 3, then between 2.8 and 2.9, then the correct 2.81, where the readout is nearest 7 among the two-decimal values. It is graded on the property (the readout of the stated value is closest to the target at 2 d.p., so x = 2.81), not on a typed number. Errors it would diagnose: stopping at the integer bracket (x = 3 because $2^3=8$ looks close enough); treating the power as multiplication ($7\\div2=3.5$); stopping one decimal early at 2.8; and picking the neighbouring two-decimal value whose power is farther from 7. The lesson file lists no misconceptions for this objective, so these would need authoring before a diagnostic could cite them.",
+      "why": "No existing kind lets the student evaluate $b^x$ for a chosen x and narrow in on a target. number_line_marker only accepts whole-number targets inside ±20, so 2.81 cannot be marked. curve_sketcher draws an exponential freehand but neither evaluates nor solves, so it does not model trial and error.",
+      "source": "author-merged-ch02.json",
+      "signed_off": {
+        "by": "auto-pass G3 (AI recommendation)",
+        "auto": true,
+        "at": "2026-10-01T17:24:22Z",
+        "note": "auto-pass G3 (AI recommendation): S7's author found no existing widget kind that fits this objective, so the chapter ships without a widget question for now; no new kind is approved by this (decision 11)"
+      },
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c01",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c08",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    }
+  ]
+}

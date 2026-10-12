@@ -1,0 +1,497 @@
+{
+  "lessonId": "g10m10s4-1",
+  "title": "Measures of dispersion",
+  "language": "en",
+  "direction": "ltr",
+  "provenance": {
+    "sections": [
+      {
+        "number": "10.4",
+        "title": "Measures of dispersion",
+        "code": null
+      }
+    ],
+    "part": null,
+    "chapter_intro": false
+  },
+  "subtopics": [
+    {
+      "key": "lo:g10m10s4-1-1",
+      "title": "Calculate the range",
+      "exposition": "Dispersion is a general term for different statistics that describe how values are distributed around the centre. The range of a data set is the difference between the maximum and minimum values in the set. The full data range is the difference between the 100th and the 0th percentile, that is, between the maximum and minimum values in the data set. The range tells us how far apart the largest and smallest values in a data set are, and it is the most straightforward measure of dispersion. To find the range, identify the smallest and the largest value in the data set and subtract the smallest from the largest; for {1;4;5;8;6;7;5;6;7;4;10;9;10} the smallest is 1 and the largest is 10, so the range is 10 - 1 = 9. If the first value, 1, is removed from that set, the minimum becomes 4, so the range changes to 10 - 4 = 6."
+    },
+    {
+      "key": "lo:g10m10s4-1-2",
+      "title": "Percentiles and quartiles",
+      "exposition": "The pth percentile is the value, v, that divides a data set into two parts, such that p percent of the values in the data set are less than v and 100 - p percent of the values are greater than v. The value of a datum is what we measured and recorded during an experiment or survey. The rank of a datum is its position in the sorted data set (for example, first, second, third, and so on). The percentile at which a particular datum is tells us what percentage of the values in the full data set are less than this datum. The percentile formula gives the rank, r, of the pth percentile. The median is defined as the value halfway in a sorted data set. The quartiles are the three data values that divide an ordered data set into four groups, where each group contains an equal number of data values. The deciles are the nine data values that divide an ordered data set into ten groups, where each group contains an equal number of data values. Percentiles can lie in the range 0 <= p <= 100. In an ordered data set with n values, the rank r of the pth percentile is given by the formula r = (p/100)(n - 1) + 1. When the rank is not an integer, the percentile lies between two values in the data set. The median is the 50th percentile, the minimum is the 0th percentile and the maximum is the 100th percentile. In the data set {14.2; 13.9; 19.8; 10.3; 13.0; 11.1}, 13.0 is at the 40th percentile because 2 values are less than 13.0 and 3 values are greater than 13.0, giving 2/(2+3) = 0.4 = 40%. To find the value of the pth percentile, count from the first value in the ordered data set up to the rth value. Before using the rank to find values in a data set, always order the values from the smallest to the largest. For the sorted set {7;8;14;17;19;20;30;36;45} with n = 9, the 0th percentile has rank r = (0/100)(9 - 1) + 1 = 1, so the minimum is the first value in the ordered data set, namely 7. For the same set with p = 100 and n = 9, the rank is r = (100/100)(9 - 1) + 1 = 9, so the maximum is the last (the ninth) value in the list, namely 45. For the same set with p = 50 and n = 9, the rank is r = (50/100)(9 - 1) + 1 = 5, so the median is in the middle (at the fifth position) of the ordered data set, and its value is 19. To find the quartiles of a sorted data set, use the percentile formula with p = 25, 50 and 75; for the 12 sorted values {3;6;7;7;9;11;12;16;31;35;40;45} with n = 12 the ranks are 3.75, 6.5 and 9.25. The rank 3.75 lies between the third and fourth values; since both are equal to 7, the 25th percentile (lower quartile) is 7. The rank 6.5 lies halfway between the sixth and seventh values, which are 11 and 12, so the median is (11 + 12)/2 = 11.5. The rank 9.25 lies between the ninth and tenth values, 31 and 35, so the 75th percentile (upper quartile) is (31 + 35)/2 = 33. When the rank is not an integer, the convention is to take the value halfway between the two values indicated by the rank. The median (50th percentile) is the second quartile, Q2. The 25th percentile is also called the first or lower quartile, Q1. The 75th percentile is also called the third or upper quartile, Q3."
+    },
+    {
+      "key": "lo:g10m10s4-1-3",
+      "title": "Percentiles for grouped data",
+      "exposition": "In grouped data, the percentiles lie somewhere inside a range (interval), rather than at a specific value. Grouped data have already been sorted by the grouping, so the percentile formula can be used on the rank directly. To find the range in which a percentile of grouped data lies, use the percentile formula to determine the rank of the percentile and then find the range within which that rank is. For grouped data with n = 100 learners, the percentile formula gives the ranks of the quartiles as r25 = (25/100)(100 - 1) + 1 = 24.75, r50 = (50/100)(100 - 1) + 1 = 50.5 and r75 = (75/100)(100 - 1) + 1 = 75.25. To locate a rank among the ranges, add up the number of learners in the first ranges to get cumulative counts: 2 + 5 = 7 learners in the first two ranges combined and 2 + 5 + 18 = 25 in the first three ranges combined, then compare the rank with these counts. Since 7 < r25 < 25, the lower quartile lies somewhere in the third range, 30 <= x < 40. Since 47 < r50 < 65 (47 learners in the first four ranges combined), the median lies somewhere in the fifth range, 50 <= x < 60. Since 65 < r75 < 78 (65 learners in the first five ranges combined and 78 in the first six), the upper quartile lies somewhere in the sixth range, 60 <= x < 70. For the 30th percentile of the same grouped data, the rank is r = (30/100)(100 - 1) + 1 = 30.7, using the same method as for the quartiles. Since there are 25 learners in the first 3 ranges combined and 47 in the first 4 ranges combined, the rank 30.7 means the 30th percentile lies in the fourth range, 40 <= x < 50."
+    },
+    {
+      "key": "lo:g10m10s4-1-4",
+      "title": "Interquartile and semi interquartile range",
+      "exposition": "The interquartile range is a measure of dispersion, calculated by subtracting the first quartile (Q1) from the third quartile (Q3). The semi interquartile range is half of the interquartile range. The interquartile range gives the range of the middle half of the data set. Data ranges are defined in terms of percentiles."
+    }
+  ],
+  "key_terms": [],
+  "enrichment": [],
+  "misconceptions": [],
+  "interactives": [],
+  "passages": [],
+  "out_of_scope": [],
+  "qadaya": [],
+  "claims": [
+    {
+      "lo": "lo:g10m10s4-1-1",
+      "claim_type": "caution",
+      "claim": "The central tendency is not the only interesting or useful information about a data set.",
+      "anchor": "b03807",
+      "evidence_page": 372,
+      "evidence_kind": "box",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m10s4-1-1",
+      "claim_type": "definition",
+      "claim": "Dispersion is a general term for different statistics that describe how values are distributed around the centre.",
+      "anchor": "b03809",
+      "evidence_page": 372,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m10s4-1-1",
+      "claim_type": "definition",
+      "claim": "The range of a data set is the difference between the maximum and minimum values in the set.",
+      "anchor": "b03811",
+      "evidence_page": 372,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m10s4-1-1",
+      "claim_type": "rule",
+      "claim": "The range tells us how far apart the largest and smallest values in a data set are, and it is the most straightforward measure of dispersion.",
+      "anchor": "b03812",
+      "evidence_page": 372,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m10s4-1-1",
+      "claim_type": "caution",
+      "claim": "The range is very sensitive to outliers.",
+      "anchor": "b03812",
+      "evidence_page": 372,
+      "evidence_kind": "box",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m10s4-1-1",
+      "claim_type": "method",
+      "claim": "To find the range, identify the smallest and the largest value in the data set and subtract the smallest from the largest; for {1;4;5;8;6;7;5;6;7;4;10;9;10} the smallest is 1 and the largest is 10, so the range is 10 - 1 = 9.",
+      "anchor": "WE10",
+      "evidence_page": 372,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m10s4-1-1",
+      "claim_type": "method",
+      "claim": "If the first value, 1, is removed from that set, the minimum becomes 4, so the range changes to 10 - 4 = 6.",
+      "anchor": "WE10",
+      "evidence_page": 372,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m10s4-1-1",
+      "claim_type": "caution",
+      "claim": "A value that is not typical of the other values, such as 1 in this data set, is an outlier and has a big influence on the range.",
+      "anchor": "WE10",
+      "evidence_page": 372,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m10s4-1-1",
+      "claim_type": "definition",
+      "claim": "The full data range is the difference between the 100th and the 0th percentile, that is, between the maximum and minimum values in the data set.",
+      "anchor": "b03841",
+      "evidence_page": 377,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m10s4-1-2",
+      "claim_type": "definition",
+      "claim": "The pth percentile is the value, v, that divides a data set into two parts, such that p percent of the values in the data set are less than v and 100 - p percent of the values are greater than v.",
+      "anchor": "b03815",
+      "evidence_page": 373,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m10s4-1-2",
+      "claim_type": "rule",
+      "claim": "Percentiles can lie in the range 0 <= p <= 100.",
+      "anchor": "b03815",
+      "evidence_page": 373,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m10s4-1-2",
+      "claim_type": "definition",
+      "claim": "The value of a datum is what we measured and recorded during an experiment or survey.",
+      "anchor": "b03817",
+      "evidence_page": 373,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m10s4-1-2",
+      "claim_type": "definition",
+      "claim": "The rank of a datum is its position in the sorted data set (for example, first, second, third, and so on).",
+      "anchor": "b03817",
+      "evidence_page": 373,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m10s4-1-2",
+      "claim_type": "definition",
+      "claim": "The percentile at which a particular datum is tells us what percentage of the values in the full data set are less than this datum.",
+      "anchor": "b03817",
+      "evidence_page": 373,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m10s4-1-2",
+      "claim_type": "method",
+      "claim": "In the data set {14.2; 13.9; 19.8; 10.3; 13.0; 11.1}, 13.0 is at the 40th percentile because 2 values are less than 13.0 and 3 values are greater than 13.0, giving 2/(2+3) = 0.4 = 40%.",
+      "anchor": "b03821",
+      "evidence_page": 373,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m10s4-1-2",
+      "claim_type": "rule",
+      "claim": "In an ordered data set with n values, the rank r of the pth percentile is given by the formula r = (p/100)(n - 1) + 1.",
+      "anchor": "b03824",
+      "evidence_page": 373,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m10s4-1-2",
+      "claim_type": "definition",
+      "claim": "The percentile formula gives the rank, r, of the pth percentile.",
+      "anchor": "b03825",
+      "evidence_page": 373,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m10s4-1-2",
+      "claim_type": "method",
+      "claim": "To find the value of the pth percentile, count from the first value in the ordered data set up to the rth value.",
+      "anchor": "b03825",
+      "evidence_page": 373,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m10s4-1-2",
+      "claim_type": "method",
+      "claim": "Before using the rank to find values in a data set, always order the values from the smallest to the largest.",
+      "anchor": "WE11",
+      "evidence_page": 374,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m10s4-1-2",
+      "claim_type": "rule",
+      "claim": "When the rank is not an integer, the percentile lies between two values in the data set.",
+      "anchor": "b03826",
+      "evidence_page": 373,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m10s4-1-2",
+      "claim_type": "convention",
+      "claim": "When the rank is not an integer, the convention is to take the value halfway between the two values indicated by the rank.",
+      "anchor": "b03826",
+      "evidence_page": 373,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m10s4-1-2",
+      "claim_type": "rule",
+      "claim": "The median is the 50th percentile, the minimum is the 0th percentile and the maximum is the 100th percentile.",
+      "anchor": "b03827",
+      "evidence_page": 373,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m10s4-1-2",
+      "claim_type": "definition",
+      "claim": "The median is defined as the value halfway in a sorted data set.",
+      "anchor": "b03827",
+      "evidence_page": 373,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m10s4-1-2",
+      "claim_type": "method",
+      "claim": "For the sorted set {7;8;14;17;19;20;30;36;45} with n = 9, the 0th percentile has rank r = (0/100)(9 - 1) + 1 = 1, so the minimum is the first value in the ordered data set, namely 7.",
+      "anchor": "WE11",
+      "evidence_page": 374,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m10s4-1-2",
+      "claim_type": "method",
+      "claim": "For the same set with p = 100 and n = 9, the rank is r = (100/100)(9 - 1) + 1 = 9, so the maximum is the last (the ninth) value in the list, namely 45.",
+      "anchor": "WE11",
+      "evidence_page": 374,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m10s4-1-2",
+      "claim_type": "method",
+      "claim": "For the same set with p = 50 and n = 9, the rank is r = (50/100)(9 - 1) + 1 = 5, so the median is in the middle (at the fifth position) of the ordered data set, and its value is 19.",
+      "anchor": "WE11",
+      "evidence_page": 374,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m10s4-1-2",
+      "claim_type": "definition",
+      "claim": "The quartiles are the three data values that divide an ordered data set into four groups, where each group contains an equal number of data values.",
+      "anchor": "b03830",
+      "evidence_page": 375,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m10s4-1-2",
+      "claim_type": "convention",
+      "claim": "The median (50th percentile) is the second quartile, Q2.",
+      "anchor": "b03830",
+      "evidence_page": 375,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m10s4-1-2",
+      "claim_type": "convention",
+      "claim": "The 25th percentile is also called the first or lower quartile, Q1.",
+      "anchor": "b03830",
+      "evidence_page": 375,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m10s4-1-2",
+      "claim_type": "convention",
+      "claim": "The 75th percentile is also called the third or upper quartile, Q3.",
+      "anchor": "b03830",
+      "evidence_page": 375,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m10s4-1-2",
+      "claim_type": "definition",
+      "claim": "The deciles are the nine data values that divide an ordered data set into ten groups, where each group contains an equal number of data values.",
+      "anchor": "b03833",
+      "evidence_page": 376,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m10s4-1-2",
+      "claim_type": "method",
+      "claim": "To find the quartiles of a sorted data set, use the percentile formula with p = 25, 50 and 75; for the 12 sorted values {3;6;7;7;9;11;12;16;31;35;40;45} with n = 12 the ranks are 3.75, 6.5 and 9.25.",
+      "anchor": "WE12",
+      "evidence_page": 375,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m10s4-1-2",
+      "claim_type": "method",
+      "claim": "The rank 3.75 lies between the third and fourth values; since both are equal to 7, the 25th percentile (lower quartile) is 7.",
+      "anchor": "WE12",
+      "evidence_page": 375,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m10s4-1-2",
+      "claim_type": "method",
+      "claim": "The rank 6.5 lies halfway between the sixth and seventh values, which are 11 and 12, so the median is (11 + 12)/2 = 11.5.",
+      "anchor": "WE12",
+      "evidence_page": 375,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m10s4-1-2",
+      "claim_type": "method",
+      "claim": "The rank 9.25 lies between the ninth and tenth values, 31 and 35, so the 75th percentile (upper quartile) is (31 + 35)/2 = 33.",
+      "anchor": "WE12",
+      "evidence_page": 375,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m10s4-1-3",
+      "claim_type": "rule",
+      "claim": "In grouped data, the percentiles lie somewhere inside a range (interval), rather than at a specific value.",
+      "anchor": "b03838",
+      "evidence_page": 376,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m10s4-1-3",
+      "claim_type": "method",
+      "claim": "To find the range in which a percentile of grouped data lies, use the percentile formula to determine the rank of the percentile and then find the range within which that rank is.",
+      "anchor": "b03838",
+      "evidence_page": 376,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m10s4-1-3",
+      "claim_type": "rule",
+      "claim": "Grouped data have already been sorted by the grouping, so the percentile formula can be used on the rank directly.",
+      "anchor": "WE13",
+      "evidence_page": 376,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m10s4-1-3",
+      "claim_type": "method",
+      "claim": "For grouped data with n = 100 learners, the percentile formula gives the ranks of the quartiles as r25 = (25/100)(100 - 1) + 1 = 24.75, r50 = (50/100)(100 - 1) + 1 = 50.5 and r75 = (75/100)(100 - 1) + 1 = 75.25.",
+      "anchor": "WE13",
+      "evidence_page": 376,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m10s4-1-3",
+      "claim_type": "method",
+      "claim": "To locate a rank among the ranges, add up the number of learners in the first ranges to get cumulative counts: 2 + 5 = 7 learners in the first two ranges combined and 2 + 5 + 18 = 25 in the first three ranges combined, then compare the rank with these counts.",
+      "anchor": "WE13",
+      "evidence_page": 376,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m10s4-1-3",
+      "claim_type": "method",
+      "claim": "Since 7 < r25 < 25, the lower quartile lies somewhere in the third range, 30 <= x < 40.",
+      "anchor": "WE13",
+      "evidence_page": 376,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m10s4-1-3",
+      "claim_type": "method",
+      "claim": "Since 47 < r50 < 65 (47 learners in the first four ranges combined), the median lies somewhere in the fifth range, 50 <= x < 60.",
+      "anchor": "WE13",
+      "evidence_page": 376,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m10s4-1-3",
+      "claim_type": "method",
+      "claim": "Since 65 < r75 < 78 (65 learners in the first five ranges combined and 78 in the first six), the upper quartile lies somewhere in the sixth range, 60 <= x < 70.",
+      "anchor": "WE13",
+      "evidence_page": 376,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m10s4-1-3",
+      "claim_type": "method",
+      "claim": "For the 30th percentile of the same grouped data, the rank is r = (30/100)(100 - 1) + 1 = 30.7, using the same method as for the quartiles.",
+      "anchor": "WE13",
+      "evidence_page": 376,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m10s4-1-3",
+      "claim_type": "method",
+      "claim": "Since there are 25 learners in the first 3 ranges combined and 47 in the first 4 ranges combined, the rank 30.7 means the 30th percentile lies in the fourth range, 40 <= x < 50.",
+      "anchor": "WE13",
+      "evidence_page": 376,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m10s4-1-4",
+      "claim_type": "convention",
+      "claim": "Data ranges are defined in terms of percentiles.",
+      "anchor": "b03841",
+      "evidence_page": 377,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m10s4-1-4",
+      "claim_type": "definition",
+      "claim": "The interquartile range is a measure of dispersion, calculated by subtracting the first quartile (Q1) from the third quartile (Q3).",
+      "anchor": "b03842",
+      "evidence_page": 377,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m10s4-1-4",
+      "claim_type": "rule",
+      "claim": "The interquartile range gives the range of the middle half of the data set.",
+      "anchor": "b03842",
+      "evidence_page": 377,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m10s4-1-4",
+      "claim_type": "definition",
+      "claim": "The semi interquartile range is half of the interquartile range.",
+      "anchor": "b03843",
+      "evidence_page": 377,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    }
+  ],
+  "source": {
+    "book": "g10-math",
+    "assembled_by": "extraction line v2 (assemble_lesson_bundle.py) b8-1",
+    "assembled_from": {
+      "objectives/g10m10s4-1.json": "7f1f4df0044a5d69b62f2ac71bf79e75cc93e645342e4c147c2625aea0ffb4e8",
+      "runs/lesson/g10m10s4-1.json": "f5f52123ad9b167dde2df887613a67c2e52125b8f45a16a48872f6bfa6018792"
+    }
+  }
+}

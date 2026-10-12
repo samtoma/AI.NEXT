@@ -1,0 +1,1471 @@
+{
+  "generator": "services/extraction/generate_widget_questions.py (ADR-0009) --templates",
+  "question_type": "widget",
+  "book": "work/g10-math/fanout/books/ch06/g10-math.json",
+  "course_id": "course:us-g10-math-en",
+  "templates": {
+    "wt:g10m6s2-1-2:divide-by-the-y-coefficient": "f7ff6e41c5d8295aeb5f440b9e4db560e33fec1a77d591dc0d7f962254f63c67",
+    "wt:g10m6s2-1-2:rearranged-moved-term": "17ae9600771a8f3f7f782ac008f9ca87ab3e48b080050397b2fceb2b01a341bb",
+    "wt:g10m6s2-1-3:intercepts-and-direction": "b6768a18863aefab5bd127a666e0eea7615761e1306400234dfa93bb9a084552",
+    "wt:g10m6s3-1-1:sketch-down-parabola-shifted-up": "442f48fa873948b2769f9dcc2864da355a83d7fb318f907099b2e1e39e14f5b1",
+    "wt:g10m6s3-1-1:sketch-narrow-parabola-shifted-down": "a575bc33771075717869f5231a0a38d46ee1dd5baf686207a10386faa0161450",
+    "wt:g10m6s3-1-1:sketch-wide-down-parabola-shifted-up": "052144e1b7519d9fa7b4d220de99dfa8d6c000482828973cb2be86cf53ac7584",
+    "wt:g10m6s4-1-1:sketch-xy-negative-k": "bf5639183e42e9449e1bfc57704bc13e6e1bc6a60a7bea17d9533422be1b650e",
+    "wt:g10m6s4-1-2:sketch-y-a-over-x-sign-and-size": "7be402f37230fd9d81a8b6f1fbfb8fc3130ac3f3c3a8fb4e3358c72d4ac9db3e",
+    "wt:g10m6s4-1-4:sketch-xy-equals-a-plus-x": "04a9b5988a3811202d9e20404352a4148c4f3a3bd218c799021d70d4a3203879",
+    "wt:g10m6s5-1-1:sketch-two-to-the-x": "5206de67becf4fe08092080b2993b3c8d5761b7fe0f8c9e80500eeec14c72587",
+    "wt:g10m6s5-1-5:sketch-negative-shifted": "b603f0e20cd27683139646ba35de2f1f47664ed4e8a38add45f9fec002c846cd",
+    "wt:g10m6s6-1-2:flip-then-drop": "511a383719c01540383f77bad734d3a8d709c158cb072c188c6991b182da433d",
+    "wt:g10m6s6-1-2:stretch-then-lift": "0b4eadf557f7c4591c2e392de601b97844b6fa43b6d3bc3fb5c85b92a1d6ce3f",
+    "wt:g10m6s7-1-3:range-cosine-lowered": "35990df9d4100f5be7bfb73c6592c614e1a2b886b91f34d2f25ddfd0491b8a0c",
+    "wt:g10m6s7-1-3:range-sine-shifted": "1983fc66decc4f20f923c036b95f1587e17bf616be0b8be53ed132caa1b24a80"
+  },
+  "rejected_templates": {
+    "wt:g10m6s6-2-2:reflected-cosine": [
+      "not shipped: every mapping names a misconception S5 did not keep (mc:g10m6s6-2-2:negative-amplitude), so no widget of it could say why an answer is wrong"
+    ],
+    "wt:g10m6s6-2-2:reflected-shifted-cosine": [
+      "not shipped: every mapping names a misconception S5 did not keep (mc:g10m6s6-2-2:negative-amplitude), so no widget of it could say why an answer is wrong"
+    ],
+    "wt:g10m6s1-1-1:left-closed-right-open": [
+      "not shipped: S5's verifier refused every mapping of it (endpoint-inclusion-wrong → mc:g10m6s1-1-1:brackets-swapped-for-signs), so no widget of it could say why an answer is wrong"
+    ],
+    "wt:g10m6s1-1-1:left-open-right-closed": [
+      "not shipped: S5's verifier refused every mapping of it (endpoint-inclusion-wrong → mc:g10m6s1-1-1:brackets-swapped-for-signs), so no widget of it could say why an answer is wrong"
+    ],
+    "wt:g10m6s3-1-3:mark-both-x-intercepts": [
+      "not shipped: S5's verifier refused every mapping of it (missed-values → mc:g10m4s6-1-3:only-positive-root), so no widget of it could say why an answer is wrong"
+    ],
+    "wt:g10m6s5-1-2:reflect-in-the-y-axis": [
+      "not shipped: S5's verifier refused every mapping of it (wrong-intercept → mc:g10m6s5-1-2:reflection-axes-swapped), so no widget of it could say why an answer is wrong"
+    ]
+  },
+  "questions": [
+    {
+      "id": "q:g10m6s2-1-2:w001",
+      "lo_id": "lo:g10m6s2-1-2",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "Draw the straight line $2y = x - 4$. Any two points on the line will do; the equation under the graph updates as you drag.",
+      "choices": {
+        "kind": "line_drawer",
+        "spec": {
+          "mode": "equation",
+          "m": 0.5,
+          "b": -2
+        },
+        "diagnostics": [],
+        "pending_review": [
+          {
+            "predicate": "intercept-wrong",
+            "misconception_id": "mc:g10m6s2-1-2:read-m-before-y-is-alone",
+            "why": "This predicate fires on a line with slope 1/2 and an intercept other than -2, such as y = x/2 - 4 through (0,-4) and (4,-2). A student with this misconception reads the gradient straight off the x-term of 2y = x - 4 and gets m = 1, not 1/2, so her slope is wrong as well. Her line y = x - 4 has both slope and intercept wrong. Keeping the right slope while botching only the constant would mean dividing the x-term by 2 but not the constant, which is a different, partial-division error. So intercept-wrong would mostly fire for that other mistake and not for this one.",
+            "verifier_runs": [
+              "verify-ch06-wf_1c283220-f9a"
+            ]
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "The equation is not yet in the form $y = mx + c$: $y$ has a $2$ in front of it."
+        },
+        {
+          "step": 2,
+          "text_md": "Divide every term by $2$: $y = \\frac{1}{2}x - 2$."
+        },
+        {
+          "step": 3,
+          "text_md": "Read the gradient $m = \\frac{1}{2}$ and the $y$-intercept $c = -2$."
+        },
+        {
+          "step": 4,
+          "text_md": "Drag the first point onto the $y$-intercept, $(0, -2)$."
+        },
+        {
+          "step": 5,
+          "text_md": "Use the gradient: up 1 for every 2 across, so the second point is $(2, -1)$."
+        },
+        {
+          "step": 6,
+          "text_md": "Check the live equation reads $y = \\frac{1}{2}x - 2$."
+        }
+      ],
+      "parent_question_id": "q:g10m6s2-1-2:ex6-2-5a",
+      "source_note": "Generated from template family wt:g10m6s2-1-2:divide-by-the-y-coefficient.",
+      "family": "wt:g10m6s2-1-2:divide-by-the-y-coefficient",
+      "template_sha": "f7ff6e41c5d8295aeb5f440b9e4db560e33fec1a77d591dc0d7f962254f63c67"
+    },
+    {
+      "id": "q:g10m6s2-1-2:w002",
+      "lo_id": "lo:g10m6s2-1-2",
+      "tier": "basic",
+      "question_type": "widget",
+      "stem": "Draw the straight line $y + 3 = 2x$. Any two points on the line will do; the equation under the graph updates as you drag.",
+      "choices": {
+        "kind": "line_drawer",
+        "spec": {
+          "mode": "equation",
+          "m": 2,
+          "b": -3
+        },
+        "diagnostics": [
+          {
+            "predicate": "intercept-wrong",
+            "misconception_id": "mc:g10m6s2-1-2:moved-term-keeps-its-sign"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Get $y$ on its own: subtract $3$ from both sides, so $y = 2x - 3$. The $3$ changes sign when it crosses the equals sign."
+        },
+        {
+          "step": 2,
+          "text_md": "Read $y = mx + c$: the gradient is $m = 2$ and the $y$-intercept is $c = -3$."
+        },
+        {
+          "step": 3,
+          "text_md": "Drag the first point onto the $y$-intercept, $(0, -3)$."
+        },
+        {
+          "step": 4,
+          "text_md": "Use the gradient: $m = 2$ means up 2 for every 1 across, so the second point is $(1, -1)$."
+        },
+        {
+          "step": 5,
+          "text_md": "Check the live equation reads $y = 2x - 3$, which is the same line as $y + 3 = 2x$."
+        }
+      ],
+      "parent_question_id": "q:g10m6s2-1-2:ex6-2-5c",
+      "source_note": "Generated from template family wt:g10m6s2-1-2:rearranged-moved-term.",
+      "family": "wt:g10m6s2-1-2:rearranged-moved-term",
+      "template_sha": "17ae9600771a8f3f7f782ac008f9ca87ab3e48b080050397b2fceb2b01a341bb"
+    },
+    {
+      "id": "q:g10m6s2-1-3:w001",
+      "lo_id": "lo:g10m6s2-1-3",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "Draw the straight line $y + 2x = 4$. Find where it crosses each axis first. Any two points on the line will do.",
+      "choices": {
+        "kind": "line_drawer",
+        "spec": {
+          "mode": "equation",
+          "m": -2,
+          "b": 4
+        },
+        "diagnostics": [
+          {
+            "predicate": "slope-sign-flipped",
+            "misconception_id": "mc:g10m6s2-1-3:direction-from-unrearranged-sign"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Find the $y$-intercept by letting $x = 0$: $y = 4$, so the line passes through $(0, 4)$."
+        },
+        {
+          "step": 2,
+          "text_md": "Find the $x$-intercept by letting $y = 0$: $2x = 4$, so $x = 2$ and the line passes through $(2, 0)$."
+        },
+        {
+          "step": 3,
+          "text_md": "Drag one point onto $(0, 4)$ and the other onto $(2, 0)$; the line through them is the graph."
+        },
+        {
+          "step": 4,
+          "text_md": "Check the direction: $y = -2x + 4$ has $m = -2$, which is negative, so the graph is decreasing and falls from left to right, as drawn."
+        },
+        {
+          "step": 5,
+          "text_md": "Check the live equation reads $y = -2x + 4$."
+        }
+      ],
+      "parent_question_id": "q:g10m6s2-1-3:ex6-8-4b",
+      "source_note": "Generated from template family wt:g10m6s2-1-3:intercepts-and-direction.",
+      "family": "wt:g10m6s2-1-3:intercepts-and-direction",
+      "template_sha": "b6768a18863aefab5bd127a666e0eea7615761e1306400234dfa93bb9a084552"
+    },
+    {
+      "id": "q:g10m6s3-1-1:w001",
+      "lo_id": "lo:g10m6s3-1-1",
+      "tier": "basic",
+      "question_type": "widget",
+      "stem": "Sketch the graph of $y = -x^2 + 3$ with your finger, as one smooth curve that runs right across the grid.",
+      "choices": {
+        "kind": "curve_sketcher",
+        "spec": {
+          "fn": "quadratic",
+          "coefs": [
+            -1,
+            0,
+            3
+          ]
+        },
+        "diagnostics": [
+          {
+            "predicate": "opens-wrong-way",
+            "misconception_id": "mc:g10m6s3-1-1:sign-of-a-ignored"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "The number in front of $x^2$ is $a = -1$. It is negative, so the parabola opens downward, like $y = -x^2$ in the book's graph."
+        },
+        {
+          "step": 2,
+          "text_md": "The number added at the end is $q = 3$. It lifts every point of $y = -x^2$ up by 3, so the turning point moves from $(0, 0)$ up to $(0, 3)$."
+        },
+        {
+          "step": 3,
+          "text_md": "Check two points on each side of the $y$-axis: $x = \\pm 1$ gives $y = -1 + 3 = 2$ and $x = \\pm 2$ gives $y = -4 + 3 = -1$."
+        },
+        {
+          "step": 4,
+          "text_md": "Draw one smooth curve through $(-2, -1)$, $(-1, 2)$, $(0, 3)$, $(1, 2)$ and $(2, -1)$, opening downward and symmetric about the $y$-axis."
+        }
+      ],
+      "parent_question_id": "q:g10m6s3-1-1:ex6-3-5d",
+      "source_note": "Generated from template family wt:g10m6s3-1-1:sketch-down-parabola-shifted-up.",
+      "family": "wt:g10m6s3-1-1:sketch-down-parabola-shifted-up",
+      "template_sha": "442f48fa873948b2769f9dcc2864da355a83d7fb318f907099b2e1e39e14f5b1"
+    },
+    {
+      "id": "q:g10m6s3-1-1:w002",
+      "lo_id": "lo:g10m6s3-1-1",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "Sketch the graph of $y = 2x^2 - 4$ with your finger, as one smooth curve that runs right across the grid.",
+      "choices": {
+        "kind": "curve_sketcher",
+        "spec": {
+          "fn": "quadratic",
+          "coefs": [
+            2,
+            0,
+            -4
+          ]
+        },
+        "diagnostics": [
+          {
+            "predicate": "opens-wrong-way",
+            "misconception_id": "mc:g10m6s3-1-1:sign-of-a-ignored"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "The number in front of $x^2$ is $a = 2$. It is positive, so the parabola opens upward."
+        },
+        {
+          "step": 2,
+          "text_md": "Its size is bigger than 1, so the curve is narrower than $y = x^2$: at $x = 1$ it is already 2 high, not 1."
+        },
+        {
+          "step": 3,
+          "text_md": "The number added at the end is $q = -4$. It lowers every point of $y = 2x^2$ by 4, so the turning point is $(0, -4)$."
+        },
+        {
+          "step": 4,
+          "text_md": "Check points on each side of the $y$-axis: $x = \\pm 1$ gives $y = 2 - 4 = -2$, $x = \\pm 1.5$ gives $y = 0.5$ and $x = \\pm 2$ gives $y = 8 - 4 = 4$."
+        },
+        {
+          "step": 5,
+          "text_md": "Draw one smooth curve through $(0, -4)$, $(\\pm 1, -2)$, $(\\pm 1.5, 0.5)$ and $(\\pm 2, 4)$, opening upward and symmetric about the $y$-axis."
+        }
+      ],
+      "parent_question_id": "q:g10m6s3-1-1:ex6-3-2",
+      "source_note": "Generated from template family wt:g10m6s3-1-1:sketch-narrow-parabola-shifted-down.",
+      "family": "wt:g10m6s3-1-1:sketch-narrow-parabola-shifted-down",
+      "template_sha": "a575bc33771075717869f5231a0a38d46ee1dd5baf686207a10386faa0161450"
+    },
+    {
+      "id": "q:g10m6s3-1-1:w003",
+      "lo_id": "lo:g10m6s3-1-1",
+      "tier": "advanced",
+      "question_type": "widget",
+      "stem": "Sketch the graph of $y = -0.5x^2 + 4$ with your finger, as one smooth curve that runs right across the grid.",
+      "choices": {
+        "kind": "curve_sketcher",
+        "spec": {
+          "fn": "quadratic",
+          "coefs": [
+            -0.5,
+            0,
+            4
+          ]
+        },
+        "diagnostics": [
+          {
+            "predicate": "opens-wrong-way",
+            "misconception_id": "mc:g10m6s3-1-1:sign-of-a-ignored"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "The number in front of $x^2$ is $a = -0.5$. It is negative, so the parabola opens downward."
+        },
+        {
+          "step": 2,
+          "text_md": "Its size is less than 1, so the curve is wider than $y = -x^2$: at $x = 2$ it has dropped only 2 below the turning point, not 4."
+        },
+        {
+          "step": 3,
+          "text_md": "The number added at the end is $q = 4$. It lifts every point of $y = -0.5x^2$ up by 4, so the turning point is $(0, 4)$."
+        },
+        {
+          "step": 4,
+          "text_md": "Check points: $x = \\pm 2$ gives $y = -2 + 4 = 2$ and $x = \\pm 4$ gives $y = -8 + 4 = -4$. The curve crosses the $x$-axis where $0.5x^2 = 4$, so at about $x = \\pm 2.83$."
+        },
+        {
+          "step": 5,
+          "text_md": "Draw one smooth curve through $(0, 4)$, $(\\pm 2, 2)$ and $(\\pm 4, -4)$, opening downward and symmetric about the $y$-axis."
+        }
+      ],
+      "parent_question_id": "q:g10m6s3-1-1:ex6-3-1",
+      "source_note": "Generated from template family wt:g10m6s3-1-1:sketch-wide-down-parabola-shifted-up.",
+      "family": "wt:g10m6s3-1-1:sketch-wide-down-parabola-shifted-up",
+      "template_sha": "052144e1b7519d9fa7b4d220de99dfa8d6c000482828973cb2be86cf53ac7584"
+    },
+    {
+      "id": "q:g10m6s4-1-1:w001",
+      "lo_id": "lo:g10m6s4-1-1",
+      "tier": "basic",
+      "question_type": "widget",
+      "stem": "Sketch the graph of $xy=-6$. It has two branches: draw one, lift your finger, then draw the other. Show how each branch behaves near the two axes.",
+      "choices": {
+        "kind": "curve_sketcher",
+        "spec": {
+          "fn": "hyperbola",
+          "coefs": [
+            -6,
+            0
+          ]
+        },
+        "diagnostics": [],
+        "pending_review": [
+          {
+            "predicate": "wrong-quadrants",
+            "misconception_id": "mc:g10m6s4-1-1:sign-lost-testing-point",
+            "why": "Fired by drawing the branches in quadrants I and III, the shape of xy=+6, instead of II and IV. sign-lost-testing-point is a point-membership checking error, where (-2,3) gives 6 instead of -6 and the student rejects a point that is on the graph. It never produces a sketch. It does not explain putting the whole curve in I and III, where the product is positive and the equation says -6 anyway. A quadrant swap would mostly come from ignoring the minus in -6 or confusing the sign of a. This pairing would refute a mistake the student did not make.",
+            "verifier_runs": [
+              "verify-ch06-wf_1c283220-f9a"
+            ]
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Write $xy=k$ as $y=\\dfrac{k}{x}$. The number on the right of $xy=$ is $a$, and it is negative here."
+        },
+        {
+          "step": 2,
+          "text_md": "Because $a<0$, $x$ and $y$ always have opposite signs, so one branch lies in quadrant II ($x<0$, $y>0$) and the other in quadrant IV ($x>0$, $y<0$)."
+        },
+        {
+          "step": 3,
+          "text_md": "Complete a short table, for example $x=\\pm1,\\pm2,\\pm3$ (and any other value that divides $a$ exactly), and plot each pair. Check that $x$ and $y$ have opposite signs in every row."
+        },
+        {
+          "step": 4,
+          "text_md": "$x=0$ gives no $y$-value (division by $0$) and $y=0$ is never produced (a fraction with a non-zero top is never $0$), so the graph has no point on either axis."
+        },
+        {
+          "step": 5,
+          "text_md": "Join the points in each quadrant with a smooth curve. Each branch gets closer and closer to the axes but never touches or crosses them, so the axes ($x=0$ and $y=0$) are the asymptotes."
+        }
+      ],
+      "parent_question_id": "q:g10m6s4-1-1:ex6-4-6e",
+      "source_note": "Generated from template family wt:g10m6s4-1-1:sketch-xy-negative-k.",
+      "family": "wt:g10m6s4-1-1:sketch-xy-negative-k",
+      "template_sha": "bf5639183e42e9449e1bfc57704bc13e6e1bc6a60a7bea17d9533422be1b650e"
+    },
+    {
+      "id": "q:g10m6s4-1-1:w002",
+      "lo_id": "lo:g10m6s4-1-1",
+      "tier": "basic",
+      "question_type": "widget",
+      "stem": "Sketch the graph of $xy=-4$. It has two branches: draw one, lift your finger, then draw the other. Show how each branch behaves near the two axes.",
+      "choices": {
+        "kind": "curve_sketcher",
+        "spec": {
+          "fn": "hyperbola",
+          "coefs": [
+            -4,
+            0
+          ]
+        },
+        "diagnostics": [],
+        "pending_review": [
+          {
+            "predicate": "wrong-quadrants",
+            "misconception_id": "mc:g10m6s4-1-1:sign-lost-testing-point",
+            "why": "Fired by branches in quadrants I and III, the shape of xy=+4. sign-lost-testing-point is an arithmetic slip when testing a point, a negative times a positive being read as positive, so the student wrongly rejects a point on the graph. It does not lead her to draw the curve in the wrong pair of quadrants. That error would mostly come from dropping the negative in -4 or misreading the sign of a, so the diagnosis would mostly fire for a different reason. The misconception text also quotes xy=-6, not this question's xy=-4.",
+            "verifier_runs": [
+              "verify-ch06-wf_1c283220-f9a"
+            ]
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Write $xy=k$ as $y=\\dfrac{k}{x}$. The number on the right of $xy=$ is $a$, and it is negative here."
+        },
+        {
+          "step": 2,
+          "text_md": "Because $a<0$, $x$ and $y$ always have opposite signs, so one branch lies in quadrant II ($x<0$, $y>0$) and the other in quadrant IV ($x>0$, $y<0$)."
+        },
+        {
+          "step": 3,
+          "text_md": "Complete a short table, for example $x=\\pm1,\\pm2,\\pm3$ (and any other value that divides $a$ exactly), and plot each pair. Check that $x$ and $y$ have opposite signs in every row."
+        },
+        {
+          "step": 4,
+          "text_md": "$x=0$ gives no $y$-value (division by $0$) and $y=0$ is never produced (a fraction with a non-zero top is never $0$), so the graph has no point on either axis."
+        },
+        {
+          "step": 5,
+          "text_md": "Join the points in each quadrant with a smooth curve. Each branch gets closer and closer to the axes but never touches or crosses them, so the axes ($x=0$ and $y=0$) are the asymptotes."
+        }
+      ],
+      "parent_question_id": "q:g10m6s4-1-1:ex6-4-6e",
+      "source_note": "Generated from template family wt:g10m6s4-1-1:sketch-xy-negative-k.",
+      "family": "wt:g10m6s4-1-1:sketch-xy-negative-k",
+      "template_sha": "bf5639183e42e9449e1bfc57704bc13e6e1bc6a60a7bea17d9533422be1b650e"
+    },
+    {
+      "id": "q:g10m6s4-1-1:w003",
+      "lo_id": "lo:g10m6s4-1-1",
+      "tier": "basic",
+      "question_type": "widget",
+      "stem": "Sketch the graph of $xy=-3$. It has two branches: draw one, lift your finger, then draw the other. Show how each branch behaves near the two axes.",
+      "choices": {
+        "kind": "curve_sketcher",
+        "spec": {
+          "fn": "hyperbola",
+          "coefs": [
+            -3,
+            0
+          ]
+        },
+        "diagnostics": [],
+        "pending_review": [
+          {
+            "predicate": "wrong-quadrants",
+            "misconception_id": "mc:g10m6s4-1-1:sign-lost-testing-point",
+            "why": "Fired by branches in quadrants I and III, the xy=+3 shape. sign-lost-testing-point is an error in checking whether a point is on the graph (the sign of -2 times 3 is lost) and does not generate a sketch. The student who loses a sign when testing a point does not thereby choose quadrants I and III for the curve. A swap like that would mostly come from ignoring the minus sign in -3 or misreading the sign of a. The misconception text also quotes xy=-6, not this question's xy=-3.",
+            "verifier_runs": [
+              "verify-ch06-wf_1c283220-f9a"
+            ]
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Write $xy=k$ as $y=\\dfrac{k}{x}$. The number on the right of $xy=$ is $a$, and it is negative here."
+        },
+        {
+          "step": 2,
+          "text_md": "Because $a<0$, $x$ and $y$ always have opposite signs, so one branch lies in quadrant II ($x<0$, $y>0$) and the other in quadrant IV ($x>0$, $y<0$)."
+        },
+        {
+          "step": 3,
+          "text_md": "Complete a short table, for example $x=\\pm1,\\pm2,\\pm3$ (and any other value that divides $a$ exactly), and plot each pair. Check that $x$ and $y$ have opposite signs in every row."
+        },
+        {
+          "step": 4,
+          "text_md": "$x=0$ gives no $y$-value (division by $0$) and $y=0$ is never produced (a fraction with a non-zero top is never $0$), so the graph has no point on either axis."
+        },
+        {
+          "step": 5,
+          "text_md": "Join the points in each quadrant with a smooth curve. Each branch gets closer and closer to the axes but never touches or crosses them, so the axes ($x=0$ and $y=0$) are the asymptotes."
+        }
+      ],
+      "parent_question_id": "q:g10m6s4-1-1:ex6-4-6e",
+      "source_note": "Generated from template family wt:g10m6s4-1-1:sketch-xy-negative-k.",
+      "family": "wt:g10m6s4-1-1:sketch-xy-negative-k",
+      "template_sha": "bf5639183e42e9449e1bfc57704bc13e6e1bc6a60a7bea17d9533422be1b650e"
+    },
+    {
+      "id": "q:g10m6s4-1-2:w001",
+      "lo_id": "lo:g10m6s4-1-2",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "Sketch the graph of $y=\\dfrac{a}{x}$ when $a=4$. Draw each branch separately: lift your finger between them. Place the branches in the right quadrants and at the right distance from the axes.",
+      "choices": {
+        "kind": "curve_sketcher",
+        "spec": {
+          "fn": "hyperbola",
+          "coefs": [
+            4,
+            0
+          ]
+        },
+        "diagnostics": [
+          {
+            "predicate": "wrong-quadrants",
+            "misconception_id": "mc:g10m6s4-1-2:sign-of-a-ignored"
+          }
+        ],
+        "pending_review": [
+          {
+            "predicate": "off-target",
+            "misconception_id": "mc:g10m6s4-1-2:bigger-a-closer-to-axes",
+            "why": "off-target is a direction-blind catch-all, 'the sketch does not follow the curve'. The firing construction is right quadrants, hyperbola shape, but displaced more than about one grid square, for example hugging the axes through (1,1) instead of (2,2). A bigger-a-closer-to-axes student would build that, but so would a student who ignores a and draws y=1/x, a student who draws the branches too far from the axes, and any loose freehand sketch. Too-far curves are the opposite of this misconception, and the predicate cannot tell the two directions apart. It would mostly fire for other reasons and could serve the refutation of a mistake the student did not make. It is in the hyperbola can_emit list, but the match is not specific enough.",
+            "verifier_runs": [
+              "verify-ch06-wf_1c283220-f9a"
+            ]
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "The sign of $a$ decides the quadrants. Here $a>0$, so $x$ and $y$ always have the same sign and the branches lie in quadrants I and III."
+        },
+        {
+          "step": 2,
+          "text_md": "The size of $a$ decides how far the branches sit from the axes. At $x=1$ the curve is at $y=a$, at $x=2$ it is at $y=\\dfrac{a}{2}$, at $x=3$ it is at $y=\\dfrac{a}{3}$: a larger $a$ gives a larger $y$ at every $x$, so the curve lies further from the axes, not closer."
+        },
+        {
+          "step": 3,
+          "text_md": "Plot a few pairs such as $(2, \\tfrac{a}{2})$ and $(3, \\tfrac{a}{3})$, together with their mirror images through the origin, $(-2, -\\tfrac{a}{2})$ and $(-3, -\\tfrac{a}{3})$."
+        },
+        {
+          "step": 4,
+          "text_md": "Draw one smooth branch through the points in quadrant I, lift your finger, and draw the other through the points in quadrant III. Neither branch may touch or cross the axes, which are the asymptotes."
+        }
+      ],
+      "parent_question_id": "q:g10m6s4-1-2:ex6-4-5b",
+      "source_note": "Generated from template family wt:g10m6s4-1-2:sketch-y-a-over-x-sign-and-size.",
+      "family": "wt:g10m6s4-1-2:sketch-y-a-over-x-sign-and-size",
+      "template_sha": "7be402f37230fd9d81a8b6f1fbfb8fc3130ac3f3c3a8fb4e3358c72d4ac9db3e"
+    },
+    {
+      "id": "q:g10m6s4-1-2:w002",
+      "lo_id": "lo:g10m6s4-1-2",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "Sketch the graph of $y=\\dfrac{a}{x}$ when $a=6$. Draw each branch separately: lift your finger between them. Place the branches in the right quadrants and at the right distance from the axes.",
+      "choices": {
+        "kind": "curve_sketcher",
+        "spec": {
+          "fn": "hyperbola",
+          "coefs": [
+            6,
+            0
+          ]
+        },
+        "diagnostics": [
+          {
+            "predicate": "wrong-quadrants",
+            "misconception_id": "mc:g10m6s4-1-2:sign-of-a-ignored"
+          }
+        ],
+        "pending_review": [
+          {
+            "predicate": "off-target",
+            "misconception_id": "mc:g10m6s4-1-2:bigger-a-closer-to-axes",
+            "why": "This is the same direction-blind catch-all, 'the sketch does not follow the curve'. A curve hugging the axes (diagonal point near (1.2,1.2) instead of about (2.45,2.45)) fires it, and that is what the bigger-a-closer student would draw. But so would the y=1/x drawn by a student who ignores a, a curve drawn too far out (the opposite of the misconception), or plain freehand imprecision. It would mostly fire for other reasons and could serve the refutation of a mistake the student did not make, so the match is false.",
+            "verifier_runs": [
+              "verify-ch06-wf_1c283220-f9a"
+            ]
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "The sign of $a$ decides the quadrants. Here $a>0$, so $x$ and $y$ always have the same sign and the branches lie in quadrants I and III."
+        },
+        {
+          "step": 2,
+          "text_md": "The size of $a$ decides how far the branches sit from the axes. At $x=1$ the curve is at $y=a$, at $x=2$ it is at $y=\\dfrac{a}{2}$, at $x=3$ it is at $y=\\dfrac{a}{3}$: a larger $a$ gives a larger $y$ at every $x$, so the curve lies further from the axes, not closer."
+        },
+        {
+          "step": 3,
+          "text_md": "Plot a few pairs such as $(2, \\tfrac{a}{2})$ and $(3, \\tfrac{a}{3})$, together with their mirror images through the origin, $(-2, -\\tfrac{a}{2})$ and $(-3, -\\tfrac{a}{3})$."
+        },
+        {
+          "step": 4,
+          "text_md": "Draw one smooth branch through the points in quadrant I, lift your finger, and draw the other through the points in quadrant III. Neither branch may touch or cross the axes, which are the asymptotes."
+        }
+      ],
+      "parent_question_id": "q:g10m6s4-1-2:ex6-4-5b",
+      "source_note": "Generated from template family wt:g10m6s4-1-2:sketch-y-a-over-x-sign-and-size.",
+      "family": "wt:g10m6s4-1-2:sketch-y-a-over-x-sign-and-size",
+      "template_sha": "7be402f37230fd9d81a8b6f1fbfb8fc3130ac3f3c3a8fb4e3358c72d4ac9db3e"
+    },
+    {
+      "id": "q:g10m6s4-1-2:w003",
+      "lo_id": "lo:g10m6s4-1-2",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "Sketch the graph of $y=\\dfrac{a}{x}$ when $a=5$. Draw each branch separately: lift your finger between them. Place the branches in the right quadrants and at the right distance from the axes.",
+      "choices": {
+        "kind": "curve_sketcher",
+        "spec": {
+          "fn": "hyperbola",
+          "coefs": [
+            5,
+            0
+          ]
+        },
+        "diagnostics": [
+          {
+            "predicate": "wrong-quadrants",
+            "misconception_id": "mc:g10m6s4-1-2:sign-of-a-ignored"
+          }
+        ],
+        "pending_review": [
+          {
+            "predicate": "off-target",
+            "misconception_id": "mc:g10m6s4-1-2:bigger-a-closer-to-axes",
+            "why": "off-target is a catch-all, 'the sketch does not follow the curve', and it does not know the direction of the error. A curve hugging the axes (through about (1,1) instead of (2.24,2.24)) fires it, and the bigger-a-closer-to-axes student would draw that. So would a student who ignores a and draws y=1/x, a student who draws the branches too far out (the opposite of this misconception), and any sloppy or imprecise sketch. Most firings would come from other causes, and a student told she read the size of a backwards would be given a mistake she did not make. The match is false.",
+            "verifier_runs": [
+              "verify-ch06-wf_1c283220-f9a"
+            ]
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "The sign of $a$ decides the quadrants. Here $a>0$, so $x$ and $y$ always have the same sign and the branches lie in quadrants I and III."
+        },
+        {
+          "step": 2,
+          "text_md": "The size of $a$ decides how far the branches sit from the axes. At $x=1$ the curve is at $y=a$, at $x=2$ it is at $y=\\dfrac{a}{2}$, at $x=3$ it is at $y=\\dfrac{a}{3}$: a larger $a$ gives a larger $y$ at every $x$, so the curve lies further from the axes, not closer."
+        },
+        {
+          "step": 3,
+          "text_md": "Plot a few pairs such as $(2, \\tfrac{a}{2})$ and $(3, \\tfrac{a}{3})$, together with their mirror images through the origin, $(-2, -\\tfrac{a}{2})$ and $(-3, -\\tfrac{a}{3})$."
+        },
+        {
+          "step": 4,
+          "text_md": "Draw one smooth branch through the points in quadrant I, lift your finger, and draw the other through the points in quadrant III. Neither branch may touch or cross the axes, which are the asymptotes."
+        }
+      ],
+      "parent_question_id": "q:g10m6s4-1-2:ex6-4-5b",
+      "source_note": "Generated from template family wt:g10m6s4-1-2:sketch-y-a-over-x-sign-and-size.",
+      "family": "wt:g10m6s4-1-2:sketch-y-a-over-x-sign-and-size",
+      "template_sha": "7be402f37230fd9d81a8b6f1fbfb8fc3130ac3f3c3a8fb4e3358c72d4ac9db3e"
+    },
+    {
+      "id": "q:g10m6s4-1-4:w001",
+      "lo_id": "lo:g10m6s4-1-4",
+      "tier": "advanced",
+      "question_type": "widget",
+      "stem": "Sketch the graph of $xy=3+x$. It has two branches: draw one, lift your finger, then draw the other. Your sketch must sit where the graph really is relative to both asymptotes.",
+      "choices": {
+        "kind": "curve_sketcher",
+        "spec": {
+          "fn": "hyperbola",
+          "coefs": [
+            3,
+            1
+          ]
+        },
+        "diagnostics": [
+          {
+            "predicate": "wrong-quadrants",
+            "misconception_id": "mc:g10m6s4-1-2:sign-of-a-ignored"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Get $y$ on its own: divide every term by $x$, so $xy=a+x$ becomes $y=\\dfrac{a}{x}+1$, where $a$ is the number written in the equation. Compare with $y=\\dfrac{a}{x}+q$: the number added on the end, with its sign, is $q=1$. The number on top is $a$, and it is not the asymptote."
+        },
+        {
+          "step": 2,
+          "text_md": "The asymptotes are the vertical line $x=0$ and the horizontal line $y=q$, here $y=1$. Think of both as dashed lines that the curve approaches and never meets."
+        },
+        {
+          "step": 3,
+          "text_md": "The sign of $a$ decides which two regions the branches fill, measured from where the asymptotes cross, at $(0, 1)$: for $a>0$ they lie above-right and below-left of $(0, 1)$; for $a<0$ they lie above-left and below-right."
+        },
+        {
+          "step": 4,
+          "text_md": "There is no $y$-intercept, because $x=0$ is not allowed. For the $x$-intercept put $y=0$: $0=\\dfrac{a}{x}+1$ gives $x=-a$. Mark the point $(-a, 0)$."
+        },
+        {
+          "step": 5,
+          "text_md": "Add one or two more points to guide each branch, then draw one smooth branch through the $x$-intercept, lift your finger, and draw the other. Neither branch crosses $x=0$ or the line $y=1$."
+        }
+      ],
+      "parent_question_id": "q:g10m6s4-1-4:ex6-8-57b",
+      "source_note": "Generated from template family wt:g10m6s4-1-4:sketch-xy-equals-a-plus-x.",
+      "family": "wt:g10m6s4-1-4:sketch-xy-equals-a-plus-x",
+      "template_sha": "04a9b5988a3811202d9e20404352a4148c4f3a3bd218c799021d70d4a3203879"
+    },
+    {
+      "id": "q:g10m6s4-1-4:w002",
+      "lo_id": "lo:g10m6s4-1-4",
+      "tier": "advanced",
+      "question_type": "widget",
+      "stem": "Sketch the graph of $xy=4+x$. It has two branches: draw one, lift your finger, then draw the other. Your sketch must sit where the graph really is relative to both asymptotes.",
+      "choices": {
+        "kind": "curve_sketcher",
+        "spec": {
+          "fn": "hyperbola",
+          "coefs": [
+            4,
+            1
+          ]
+        },
+        "diagnostics": [
+          {
+            "predicate": "wrong-quadrants",
+            "misconception_id": "mc:g10m6s4-1-2:sign-of-a-ignored"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Get $y$ on its own: divide every term by $x$, so $xy=a+x$ becomes $y=\\dfrac{a}{x}+1$, where $a$ is the number written in the equation. Compare with $y=\\dfrac{a}{x}+q$: the number added on the end, with its sign, is $q=1$. The number on top is $a$, and it is not the asymptote."
+        },
+        {
+          "step": 2,
+          "text_md": "The asymptotes are the vertical line $x=0$ and the horizontal line $y=q$, here $y=1$. Think of both as dashed lines that the curve approaches and never meets."
+        },
+        {
+          "step": 3,
+          "text_md": "The sign of $a$ decides which two regions the branches fill, measured from where the asymptotes cross, at $(0, 1)$: for $a>0$ they lie above-right and below-left of $(0, 1)$; for $a<0$ they lie above-left and below-right."
+        },
+        {
+          "step": 4,
+          "text_md": "There is no $y$-intercept, because $x=0$ is not allowed. For the $x$-intercept put $y=0$: $0=\\dfrac{a}{x}+1$ gives $x=-a$. Mark the point $(-a, 0)$."
+        },
+        {
+          "step": 5,
+          "text_md": "Add one or two more points to guide each branch, then draw one smooth branch through the $x$-intercept, lift your finger, and draw the other. Neither branch crosses $x=0$ or the line $y=1$."
+        }
+      ],
+      "parent_question_id": "q:g10m6s4-1-4:ex6-8-57b",
+      "source_note": "Generated from template family wt:g10m6s4-1-4:sketch-xy-equals-a-plus-x.",
+      "family": "wt:g10m6s4-1-4:sketch-xy-equals-a-plus-x",
+      "template_sha": "04a9b5988a3811202d9e20404352a4148c4f3a3bd218c799021d70d4a3203879"
+    },
+    {
+      "id": "q:g10m6s4-1-4:w003",
+      "lo_id": "lo:g10m6s4-1-4",
+      "tier": "advanced",
+      "question_type": "widget",
+      "stem": "Sketch the graph of $xy=-3+x$. It has two branches: draw one, lift your finger, then draw the other. Your sketch must sit where the graph really is relative to both asymptotes.",
+      "choices": {
+        "kind": "curve_sketcher",
+        "spec": {
+          "fn": "hyperbola",
+          "coefs": [
+            -3,
+            1
+          ]
+        },
+        "diagnostics": [
+          {
+            "predicate": "wrong-quadrants",
+            "misconception_id": "mc:g10m6s4-1-2:sign-of-a-ignored"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Get $y$ on its own: divide every term by $x$, so $xy=a+x$ becomes $y=\\dfrac{a}{x}+1$, where $a$ is the number written in the equation. Compare with $y=\\dfrac{a}{x}+q$: the number added on the end, with its sign, is $q=1$. The number on top is $a$, and it is not the asymptote."
+        },
+        {
+          "step": 2,
+          "text_md": "The asymptotes are the vertical line $x=0$ and the horizontal line $y=q$, here $y=1$. Think of both as dashed lines that the curve approaches and never meets."
+        },
+        {
+          "step": 3,
+          "text_md": "The sign of $a$ decides which two regions the branches fill, measured from where the asymptotes cross, at $(0, 1)$: for $a>0$ they lie above-right and below-left of $(0, 1)$; for $a<0$ they lie above-left and below-right."
+        },
+        {
+          "step": 4,
+          "text_md": "There is no $y$-intercept, because $x=0$ is not allowed. For the $x$-intercept put $y=0$: $0=\\dfrac{a}{x}+1$ gives $x=-a$. Mark the point $(-a, 0)$."
+        },
+        {
+          "step": 5,
+          "text_md": "Add one or two more points to guide each branch, then draw one smooth branch through the $x$-intercept, lift your finger, and draw the other. Neither branch crosses $x=0$ or the line $y=1$."
+        }
+      ],
+      "parent_question_id": "q:g10m6s4-1-4:ex6-8-57b",
+      "source_note": "Generated from template family wt:g10m6s4-1-4:sketch-xy-equals-a-plus-x.",
+      "family": "wt:g10m6s4-1-4:sketch-xy-equals-a-plus-x",
+      "template_sha": "04a9b5988a3811202d9e20404352a4148c4f3a3bd218c799021d70d4a3203879"
+    },
+    {
+      "id": "q:g10m6s5-1-1:w001",
+      "lo_id": "lo:g10m6s5-1-1",
+      "tier": "basic",
+      "question_type": "widget",
+      "stem": "Sketch the graph of $y = 2^{x}$ in one smooth stroke across the whole grid.",
+      "choices": {
+        "kind": "curve_sketcher",
+        "spec": {
+          "fn": "exponential",
+          "coefs": [
+            1,
+            2,
+            0
+          ]
+        },
+        "diagnostics": [],
+        "pending_review": [
+          {
+            "predicate": "asymptote-crossed",
+            "misconception_id": "mc:g10m6s5-1-1:asymptote-read-as-axis-of-symmetry",
+            "why": "For an exponential, asymptote-crossed fires when the stroke dips below or crosses the horizontal asymptote y = q, here the x-axis. It is in the can_emit list for exponential, so it can fire. The claimed misconception is different: the student sees the graphs of y = 2^x and y = 2^-x or y = -2^x as reflections that both hug the x-axis, and so calls the x-axis an axis of symmetry. That is a mislabelling of the axis. It does not produce a single stroke that runs through y = 0. A student who really believed the x-axis was a mirror line would draw the mirror image below it, as a second curve or a doubled-back stroke. That would fail the vertical line test or partial-coverage, not asymptote-crossed. A stroke that crosses the axis comes from thinking the curve can reach zero and carry on into negative y, as a polynomial would, or from drawing carelessly. That is a different reason, so the diagnosis would serve the refutation of a mistake the student did not make.",
+            "verifier_runs": [
+              "verify-ch06-wf_1c283220-f9a"
+            ]
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Choose some values of $x$ and work out $y = 2^{x}$: $x=-2$ gives $\\frac{1}{4}$, $x=-1$ gives $\\frac{1}{2}$, $x=0$ gives $1$, $x=1$ gives $2$ and $x=2$ gives $4$."
+        },
+        {
+          "step": 2,
+          "text_md": "Plot $(-2, 0.25)$, $(-1, 0.5)$, $(0, 1)$, $(1, 2)$ and $(2, 4)$. The point $(0, 1)$ lies on every graph $y = b^{x}$, because $b^{0} = 1$."
+        },
+        {
+          "step": 3,
+          "text_md": "Join the points with one smooth curve that rises from left to right and gets steeper: every step of $1$ to the right doubles the height."
+        },
+        {
+          "step": 4,
+          "text_md": "Look at the left-hand end. $2^{x}$ is never $0$ and never negative, so the curve creeps closer and closer to the $x$-axis without touching or crossing it. The line $y = 0$ is an asymptote of this curve, the line it approaches and never reaches. It is not a mirror line for the curve: nothing of the graph lies below it."
+        }
+      ],
+      "parent_question_id": "q:g10m6s5-1-1:ex6-5-6b",
+      "source_note": "Generated from template family wt:g10m6s5-1-1:sketch-two-to-the-x.",
+      "family": "wt:g10m6s5-1-1:sketch-two-to-the-x",
+      "template_sha": "5206de67becf4fe08092080b2993b3c8d5761b7fe0f8c9e80500eeec14c72587"
+    },
+    {
+      "id": "q:g10m6s5-1-5:w001",
+      "lo_id": "lo:g10m6s5-1-5",
+      "tier": "advanced",
+      "question_type": "widget",
+      "stem": "Sketch the graph of $y = -2^{x} + 3$ in one smooth stroke across the whole grid.",
+      "choices": {
+        "kind": "curve_sketcher",
+        "spec": {
+          "fn": "exponential",
+          "coefs": [
+            -1,
+            2,
+            3
+          ]
+        },
+        "diagnostics": [],
+        "pending_review": [
+          {
+            "predicate": "asymptote-crossed",
+            "misconception_id": "mc:g10m6s5-1-5:leaves-out-a",
+            "why": "The predicate fires when the stroke passes through the asymptote y = 3, with points on both sides of it. A student who leaves out a and draws 2^x + 3 has a curve that lies wholly above y = 3 and never crosses it. They have chosen the wrong side of the asymptote, which is a different thing from crossing it. A stroke that does cross y = 3 comes from a student who forgot the shift q (plain 2^x passes y = 3 near x = 1.6), who ignored the asymptote, or who wobbled across it. None of those is this misconception, so the predicate would mostly fire for a different reason.",
+            "verifier_runs": [
+              "verify-ch06-wf_1c283220-f9a"
+            ]
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Read off the pieces of $y = a\\cdot b^{x} + q$: $a = -1$ (the minus sign in front of $2^{x}$), $b = 2$ and $q = 3$."
+        },
+        {
+          "step": 2,
+          "text_md": "The horizontal asymptote is $y = q$, so $y = 3$. The curve will get closer to this line and never cross it."
+        },
+        {
+          "step": 3,
+          "text_md": "Because $a < 0$, the curve lies below the asymptote everywhere, and it falls as $x$ increases."
+        },
+        {
+          "step": 4,
+          "text_md": "Find the $y$-intercept by letting $x = 0$: $y = -2^{0} + 3 = -1 + 3 = 2$, so the curve cuts the $y$-axis at $(0, 2)$. Note that $q = 3$ is the height of the asymptote, not the point where the curve cuts the $y$-axis."
+        },
+        {
+          "step": 5,
+          "text_md": "Check two more points: $x = 1$ gives $y = -2 + 3 = 1$ and $x = 2$ gives $y = -4 + 3 = -1$. The curve therefore crosses the $x$-axis between $x = 1$ and $x = 2$."
+        },
+        {
+          "step": 6,
+          "text_md": "Draw one smooth curve: just under $y = 3$ on the far left, through $(0, 2)$, $(1, 1)$ and $(2, -1)$, and dropping steeply on the right."
+        }
+      ],
+      "parent_question_id": "q:g10m6s5-1-5:ex6-5-5b",
+      "source_note": "Generated from template family wt:g10m6s5-1-5:sketch-negative-shifted.",
+      "family": "wt:g10m6s5-1-5:sketch-negative-shifted",
+      "template_sha": "b603f0e20cd27683139646ba35de2f1f47664ed4e8a38add45f9fec002c846cd"
+    },
+    {
+      "id": "q:g10m6s6-1-2:w001",
+      "lo_id": "lo:g10m6s6-1-2",
+      "tier": "advanced",
+      "question_type": "widget",
+      "stem": "Sketch the graph of $y = -2\\sin\\theta - 1$ for $0^{\\circ} \\le \\theta \\le 360^{\\circ}$. Draw it in one smooth stroke from left to right.",
+      "choices": {
+        "kind": "curve_sketcher",
+        "spec": {
+          "fn": "sine",
+          "coefs": [
+            -2,
+            -1
+          ]
+        },
+        "diagnostics": [
+          {
+            "predicate": "vertical-shift-wrong",
+            "misconception_id": "mc:g10m6s6-1-2:stretch-applied-to-shift"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Start from the basic graph $y = \\sin\\theta$ on $0^{\\circ} \\le \\theta \\le 360^{\\circ}$: it crosses the θ-axis at $0^{\\circ}$, $180^{\\circ}$ and $360^{\\circ}$, peaks at $(90^{\\circ}, 1)$ and bottoms out at $(270^{\\circ}, -1)$."
+        },
+        {
+          "step": 2,
+          "text_md": "Multiply every height by $a$. Because $a$ is negative, the graph also flips over the θ-axis and falls first: the trough is at $(90^{\\circ}, a)$ and the peak at $(270^{\\circ}, -a)$. The amplitude is the distance $|a|$ from the midline to a peak, so it is never negative."
+        },
+        {
+          "step": 3,
+          "text_md": "Now add $q$ to every height, where $q$ is the negative number written as '$- p$' in the equation. This slides the whole flipped graph down by $|q|$ units. The shift is $q$ itself and not $a \\times q$: the midline moves from the θ-axis to $y = q$."
+        },
+        {
+          "step": 4,
+          "text_md": "Mark the five key points: $(0^{\\circ}, q)$, $(90^{\\circ}, q + a)$, $(180^{\\circ}, q)$, $(270^{\\circ}, q - a)$ and $(360^{\\circ}, q)$."
+        },
+        {
+          "step": 5,
+          "text_md": "Join them in one smooth curve that falls first, because $a$ is negative."
+        }
+      ],
+      "parent_question_id": "q:g10m6s6-1-2:ex6-6-7d",
+      "source_note": "Generated from template family wt:g10m6s6-1-2:flip-then-drop.",
+      "family": "wt:g10m6s6-1-2:flip-then-drop",
+      "template_sha": "511a383719c01540383f77bad734d3a8d709c158cb072c188c6991b182da433d"
+    },
+    {
+      "id": "q:g10m6s6-1-2:w002",
+      "lo_id": "lo:g10m6s6-1-2",
+      "tier": "advanced",
+      "question_type": "widget",
+      "stem": "Sketch the graph of $y = -3\\sin\\theta - 1$ for $0^{\\circ} \\le \\theta \\le 360^{\\circ}$. Draw it in one smooth stroke from left to right.",
+      "choices": {
+        "kind": "curve_sketcher",
+        "spec": {
+          "fn": "sine",
+          "coefs": [
+            -3,
+            -1
+          ]
+        },
+        "diagnostics": [
+          {
+            "predicate": "vertical-shift-wrong",
+            "misconception_id": "mc:g10m6s6-1-2:stretch-applied-to-shift"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Start from the basic graph $y = \\sin\\theta$ on $0^{\\circ} \\le \\theta \\le 360^{\\circ}$: it crosses the θ-axis at $0^{\\circ}$, $180^{\\circ}$ and $360^{\\circ}$, peaks at $(90^{\\circ}, 1)$ and bottoms out at $(270^{\\circ}, -1)$."
+        },
+        {
+          "step": 2,
+          "text_md": "Multiply every height by $a$. Because $a$ is negative, the graph also flips over the θ-axis and falls first: the trough is at $(90^{\\circ}, a)$ and the peak at $(270^{\\circ}, -a)$. The amplitude is the distance $|a|$ from the midline to a peak, so it is never negative."
+        },
+        {
+          "step": 3,
+          "text_md": "Now add $q$ to every height, where $q$ is the negative number written as '$- p$' in the equation. This slides the whole flipped graph down by $|q|$ units. The shift is $q$ itself and not $a \\times q$: the midline moves from the θ-axis to $y = q$."
+        },
+        {
+          "step": 4,
+          "text_md": "Mark the five key points: $(0^{\\circ}, q)$, $(90^{\\circ}, q + a)$, $(180^{\\circ}, q)$, $(270^{\\circ}, q - a)$ and $(360^{\\circ}, q)$."
+        },
+        {
+          "step": 5,
+          "text_md": "Join them in one smooth curve that falls first, because $a$ is negative."
+        }
+      ],
+      "parent_question_id": "q:g10m6s6-1-2:ex6-6-7d",
+      "source_note": "Generated from template family wt:g10m6s6-1-2:flip-then-drop.",
+      "family": "wt:g10m6s6-1-2:flip-then-drop",
+      "template_sha": "511a383719c01540383f77bad734d3a8d709c158cb072c188c6991b182da433d"
+    },
+    {
+      "id": "q:g10m6s6-1-2:w003",
+      "lo_id": "lo:g10m6s6-1-2",
+      "tier": "advanced",
+      "question_type": "widget",
+      "stem": "Sketch the graph of $y = -1\\sin\\theta - 2$ for $0^{\\circ} \\le \\theta \\le 360^{\\circ}$. Draw it in one smooth stroke from left to right.",
+      "choices": {
+        "kind": "curve_sketcher",
+        "spec": {
+          "fn": "sine",
+          "coefs": [
+            -1,
+            -2
+          ]
+        },
+        "diagnostics": [],
+        "pending_review": [
+          {
+            "predicate": "vertical-shift-wrong",
+            "misconception_id": "mc:g10m6s6-1-2:stretch-applied-to-shift",
+            "why": "Here a = -1, so a·q = +2 is exactly -q. The midline-at-+2 sketch (-sin θ + 2) fires the predicate, but it is the same sketch a student produces from a plain sign slip on the shift. It is also what she draws by reflecting the whole shifted graph in the x-axis. With |a| = 1 there is no stretch for the shift to be multiplied by, so the sketch cannot show the stretch-applied-to-shift reasoning and would mostly fire for a different reason. Serving 'you multiplied the shift by a' to a student who made a sign slip would refute a mistake she did not make.",
+            "verifier_runs": [
+              "verify-ch06-wf_1c283220-f9a"
+            ]
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Start from the basic graph $y = \\sin\\theta$ on $0^{\\circ} \\le \\theta \\le 360^{\\circ}$: it crosses the θ-axis at $0^{\\circ}$, $180^{\\circ}$ and $360^{\\circ}$, peaks at $(90^{\\circ}, 1)$ and bottoms out at $(270^{\\circ}, -1)$."
+        },
+        {
+          "step": 2,
+          "text_md": "Multiply every height by $a$. Because $a$ is negative, the graph also flips over the θ-axis and falls first: the trough is at $(90^{\\circ}, a)$ and the peak at $(270^{\\circ}, -a)$. The amplitude is the distance $|a|$ from the midline to a peak, so it is never negative."
+        },
+        {
+          "step": 3,
+          "text_md": "Now add $q$ to every height, where $q$ is the negative number written as '$- p$' in the equation. This slides the whole flipped graph down by $|q|$ units. The shift is $q$ itself and not $a \\times q$: the midline moves from the θ-axis to $y = q$."
+        },
+        {
+          "step": 4,
+          "text_md": "Mark the five key points: $(0^{\\circ}, q)$, $(90^{\\circ}, q + a)$, $(180^{\\circ}, q)$, $(270^{\\circ}, q - a)$ and $(360^{\\circ}, q)$."
+        },
+        {
+          "step": 5,
+          "text_md": "Join them in one smooth curve that falls first, because $a$ is negative."
+        }
+      ],
+      "parent_question_id": "q:g10m6s6-1-2:ex6-6-7d",
+      "source_note": "Generated from template family wt:g10m6s6-1-2:flip-then-drop.",
+      "family": "wt:g10m6s6-1-2:flip-then-drop",
+      "template_sha": "511a383719c01540383f77bad734d3a8d709c158cb072c188c6991b182da433d"
+    },
+    {
+      "id": "q:g10m6s6-1-2:w004",
+      "lo_id": "lo:g10m6s6-1-2",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "Sketch the graph of $y = 3\\sin\\theta + 1$ for $0^{\\circ} \\le \\theta \\le 360^{\\circ}$. Draw it in one smooth stroke from left to right.",
+      "choices": {
+        "kind": "curve_sketcher",
+        "spec": {
+          "fn": "sine",
+          "coefs": [
+            3,
+            1
+          ]
+        },
+        "diagnostics": [
+          {
+            "predicate": "vertical-shift-wrong",
+            "misconception_id": "mc:g10m6s6-1-2:stretch-applied-to-shift"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Start from the basic graph $y = \\sin\\theta$ on $0^{\\circ} \\le \\theta \\le 360^{\\circ}$: it crosses the θ-axis at $0^{\\circ}$, $180^{\\circ}$ and $360^{\\circ}$, peaks at $(90^{\\circ}, 1)$ and bottoms out at $(270^{\\circ}, -1)$."
+        },
+        {
+          "step": 2,
+          "text_md": "Multiply every height by $a$ to get $y = a\\sin\\theta$: the peak moves to $(90^{\\circ}, a)$ and the trough to $(270^{\\circ}, -a)$, while the crossings at $0^{\\circ}$, $180^{\\circ}$ and $360^{\\circ}$ stay where they are. The amplitude is $a$."
+        },
+        {
+          "step": 3,
+          "text_md": "Now add $q$ to every height, which slides the whole stretched graph up by $q$ units. Only $q$ is added, so the shift is $q$ and not $a \\times q$: the line the curve oscillates about moves from the θ-axis to $y = q$."
+        },
+        {
+          "step": 4,
+          "text_md": "Mark the five key points: $(0^{\\circ}, q)$, $(90^{\\circ}, a + q)$, $(180^{\\circ}, q)$, $(270^{\\circ}, q - a)$ and $(360^{\\circ}, q)$."
+        },
+        {
+          "step": 5,
+          "text_md": "Join them in one smooth curve that rises first, because $a$ is positive."
+        }
+      ],
+      "parent_question_id": "q:g10m6s6-1-2:ex6-6-7c",
+      "source_note": "Generated from template family wt:g10m6s6-1-2:stretch-then-lift.",
+      "family": "wt:g10m6s6-1-2:stretch-then-lift",
+      "template_sha": "0b4eadf557f7c4591c2e392de601b97844b6fa43b6d3bc3fb5c85b92a1d6ce3f"
+    },
+    {
+      "id": "q:g10m6s6-1-2:w005",
+      "lo_id": "lo:g10m6s6-1-2",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "Sketch the graph of $y = 2\\sin\\theta + 2$ for $0^{\\circ} \\le \\theta \\le 360^{\\circ}$. Draw it in one smooth stroke from left to right.",
+      "choices": {
+        "kind": "curve_sketcher",
+        "spec": {
+          "fn": "sine",
+          "coefs": [
+            2,
+            2
+          ]
+        },
+        "diagnostics": [
+          {
+            "predicate": "vertical-shift-wrong",
+            "misconception_id": "mc:g10m6s6-1-2:stretch-applied-to-shift"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Start from the basic graph $y = \\sin\\theta$ on $0^{\\circ} \\le \\theta \\le 360^{\\circ}$: it crosses the θ-axis at $0^{\\circ}$, $180^{\\circ}$ and $360^{\\circ}$, peaks at $(90^{\\circ}, 1)$ and bottoms out at $(270^{\\circ}, -1)$."
+        },
+        {
+          "step": 2,
+          "text_md": "Multiply every height by $a$ to get $y = a\\sin\\theta$: the peak moves to $(90^{\\circ}, a)$ and the trough to $(270^{\\circ}, -a)$, while the crossings at $0^{\\circ}$, $180^{\\circ}$ and $360^{\\circ}$ stay where they are. The amplitude is $a$."
+        },
+        {
+          "step": 3,
+          "text_md": "Now add $q$ to every height, which slides the whole stretched graph up by $q$ units. Only $q$ is added, so the shift is $q$ and not $a \\times q$: the line the curve oscillates about moves from the θ-axis to $y = q$."
+        },
+        {
+          "step": 4,
+          "text_md": "Mark the five key points: $(0^{\\circ}, q)$, $(90^{\\circ}, a + q)$, $(180^{\\circ}, q)$, $(270^{\\circ}, q - a)$ and $(360^{\\circ}, q)$."
+        },
+        {
+          "step": 5,
+          "text_md": "Join them in one smooth curve that rises first, because $a$ is positive."
+        }
+      ],
+      "parent_question_id": "q:g10m6s6-1-2:ex6-6-7c",
+      "source_note": "Generated from template family wt:g10m6s6-1-2:stretch-then-lift.",
+      "family": "wt:g10m6s6-1-2:stretch-then-lift",
+      "template_sha": "0b4eadf557f7c4591c2e392de601b97844b6fa43b6d3bc3fb5c85b92a1d6ce3f"
+    },
+    {
+      "id": "q:g10m6s7-1-3:w001",
+      "lo_id": "lo:g10m6s7-1-3",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "Mark the range of $y = 2\\cos\\theta - 3$ on the $y$-number line: every $y$-value its graph reaches, from the lowest to the highest. Make an end filled if $y$ reaches that value and hollow if it only gets close.",
+      "choices": {
+        "kind": "number_line_marker",
+        "spec": {
+          "mode": "interval",
+          "range": [
+            -6,
+            6
+          ],
+          "from": -5,
+          "to": -1,
+          "openFrom": false,
+          "openTo": false
+        },
+        "diagnostics": [],
+        "pending_review": [
+          {
+            "predicate": "interval-wrong",
+            "misconception_id": "mc:g10m6s7-1-3:ignores-added-number",
+            "why": "This is an interval-mode predicate and it does fire for the claimed misconception's build. A student who finds the range of 2cos(theta) alone and never adds q builds [-2, 2], which is on the lattice and has endpoints other than -5 and -1. But the predicate is a catch-all ('endpoints are not the right ones'). It fires equally for [1, 5] (q added with the wrong sign), [-4, -2] (the factor 2 forgotten) and [-1, 1] (neither a nor q used). Those are equally plausible wrong builds for this equation, so most firings would come from other errors. Those students would be shown the refutation 'you left out the added number', which is wrong for them: the [1, 5] student did add q, and the [-4, -2] student did not forget q. Because the predicate cannot separate the claimed misconception from the other ways to get the endpoints wrong, I mark it false.",
+            "verifier_runs": [
+              "verify-ch06-wf_1c283220-f9a"
+            ]
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "The cosine never goes below $-1$ and never above $1$, and it reaches both: $-1 \\le \\cos\\theta \\le 1$."
+        },
+        {
+          "step": 2,
+          "text_md": "Multiply every part by $2$ (positive, so the inequality signs keep their direction): $-2 \\le 2\\cos\\theta \\le 2$."
+        },
+        {
+          "step": 3,
+          "text_md": "Subtract $3$ from every part, because $q = -3$ lowers the whole graph: $-5 \\le 2\\cos\\theta - 3 \\le -1$."
+        },
+        {
+          "step": 4,
+          "text_md": "So the range is $-5 \\le y \\le -1$. Mark $-5$ and $-1$ with filled circles, since $y$ reaches both values, and shade between them."
+        }
+      ],
+      "parent_question_id": "q:g10m6s7-1-3:ex6-7-3b",
+      "source_note": "Generated from template family wt:g10m6s7-1-3:range-cosine-lowered.",
+      "family": "wt:g10m6s7-1-3:range-cosine-lowered",
+      "template_sha": "35990df9d4100f5be7bfb73c6592c614e1a2b886b91f34d2f25ddfd0491b8a0c"
+    },
+    {
+      "id": "q:g10m6s7-1-3:w002",
+      "lo_id": "lo:g10m6s7-1-3",
+      "tier": "basic",
+      "question_type": "widget",
+      "stem": "The range of a function is the set of $y$-values its graph reaches. Mark the range of $y = 3\\sin\\theta + 2$ on the $y$-number line, from its lowest value to its highest. Make an end filled if $y$ reaches that value and hollow if it only gets close.",
+      "choices": {
+        "kind": "number_line_marker",
+        "spec": {
+          "mode": "interval",
+          "range": [
+            -6,
+            6
+          ],
+          "from": -1,
+          "to": 5,
+          "openFrom": false,
+          "openTo": false
+        },
+        "diagnostics": [],
+        "pending_review": [
+          {
+            "predicate": "interval-wrong",
+            "misconception_id": "mc:g10m6s7-1-3:ignores-added-number",
+            "why": "The predicate is listed for interval mode and would fire on this question for any interval whose endpoints are not -1 and 5. A student who ignores q builds [-3, 3] (from -a to a), which does fire it. But the predicate is a catch-all with nothing in it that is specific to leaving out q. It fires just as readily for [-5, 1] (adds q with the wrong sign), [1, 3] (adds q but forgets to multiply by the amplitude 3), [0, 6] and others. Those students would be told they left out the added number when they did not. Since a wrong diagnosis hands a student the refutation of a mistake she did not make, this does not reliably map to mc:g10m6s7-1-3:ignores-added-number.",
+            "verifier_runs": [
+              "verify-ch06-wf_1c283220-f9a"
+            ]
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "The sine never goes below $-1$ and never above $1$, and it reaches both: $-1 \\le \\sin\\theta \\le 1$."
+        },
+        {
+          "step": 2,
+          "text_md": "Multiply every part by $3$ (positive, so the inequality signs keep their direction): $-3 \\le 3\\sin\\theta \\le 3$."
+        },
+        {
+          "step": 3,
+          "text_md": "Add $2$ to every part, because $q = 2$ lifts the whole graph: $-1 \\le 3\\sin\\theta + 2 \\le 5$."
+        },
+        {
+          "step": 4,
+          "text_md": "So the range is $-1 \\le y \\le 5$. Mark $-1$ and $5$ with filled circles, since $y$ reaches both values, and shade between them."
+        }
+      ],
+      "parent_question_id": "q:g10m6s7-1-3:ex6-7-3a",
+      "source_note": "Generated from template family wt:g10m6s7-1-3:range-sine-shifted.",
+      "family": "wt:g10m6s7-1-3:range-sine-shifted",
+      "template_sha": "1983fc66decc4f20f923c036b95f1587e17bf616be0b8be53ed132caa1b24a80"
+    }
+  ],
+  "misconceptions": [
+    {
+      "id": "mc:g10m6s2-1-2:moved-term-keeps-its-sign",
+      "lo_id": "lo:g10m6s2-1-2",
+      "label": "Reads the $y$-intercept off a number beside $y$ without changing its sign",
+      "description": "In an equation like $y+5=x$ the student takes the $5$ beside $y$ as the $y$-intercept, forgetting that moving it across the equals sign changes its sign."
+    },
+    {
+      "id": "mc:g10m6s2-1-3:direction-from-unrearranged-sign",
+      "lo_id": "lo:g10m6s2-1-3",
+      "label": "Reads increasing or decreasing from the sign beside $x$ as written",
+      "description": "Decides whether the graph is increasing or decreasing from the sign of the number beside $x$ in the equation as it is given, rather than from the sign of $m$ once the equation is written in standard form $y=mx+c$."
+    },
+    {
+      "id": "mc:g10m6s3-1-1:sign-of-a-ignored",
+      "lo_id": "lo:g10m6s3-1-1",
+      "label": "Picks a curve that opens the wrong way",
+      "description": "The student chooses a parabola that opens upward when $a$ is negative, or downward when $a$ is positive, so the sign of $a$ is ignored or read the wrong way round."
+    },
+    {
+      "id": "mc:g10m6s4-1-2:sign-of-a-ignored",
+      "lo_id": "lo:g10m6s4-1-2",
+      "label": "The sign of a does not decide the quadrants",
+      "description": "The student picks a graph in the wrong pair of quadrants for the sign of $a$: a graph in the second and fourth quadrants for a positive $a$, or a graph in the first and third quadrants for a negative $a$."
+    },
+    {
+      "id": "mc:g10m6s6-1-2:stretch-applied-to-shift",
+      "lo_id": "lo:g10m6s6-1-2",
+      "label": "Multiplies the shift by a, reading a sin θ + q as a(sin θ + q)",
+      "description": "The student shifts the basic sine graph first and then stretches the shifted graph, so the shift ends up multiplied by $a$ and moves the graph by $a\\times q$ units instead of $q$."
+    }
+  ],
+  "mapping_review": {
+    "rule": "decision 47",
+    "verifier_runs": [
+      "verify-ch06-wf_1c283220-f9a"
+    ],
+    "counts": {
+      "active": 41,
+      "held": 12,
+      "kept_by_review": 0,
+      "dropped_by_review": 0
+    },
+    "reviews": []
+  },
+  "s5_reconciled": {
+    "runs": [
+      "final-ch06-wf_6d5dc0b6-915.json"
+    ],
+    "catalogue": "g10-math-misconceptions",
+    "refused_attachments_stripped": [
+      [
+        "lo:g10m6s1-1-1",
+        "S7",
+        "wt:g10m6s1-1-1:left-closed-right-open#endpoint-inclusion-wrong",
+        "mc:g10m6s1-1-1:brackets-swapped-for-signs",
+        "Right endpoints, wrong circles — hollow excludes (< >), filled includes (<= >=)"
+      ],
+      [
+        "lo:g10m6s1-1-1",
+        "S7",
+        "wt:g10m6s1-1-1:left-open-right-closed#endpoint-inclusion-wrong",
+        "mc:g10m6s1-1-1:brackets-swapped-for-signs",
+        "Right endpoints, wrong circles — hollow excludes (< >), filled includes (<= >=)"
+      ],
+      [
+        "lo:g10m6s2-1-2",
+        "S7",
+        "wt:g10m6s2-1-2:divide-by-the-y-coefficient#off-target",
+        "mc:g10m6s2-1-2:read-m-before-y-is-alone",
+        "Neither the slope nor the intercept matches"
+      ],
+      [
+        "lo:g10m6s2-1-2",
+        "S7",
+        "wt:g10m6s2-1-2:rearranged-moved-term#off-target",
+        "mc:g10m6s2-1-2:gradient-and-intercept-swapped",
+        "Neither the slope nor the intercept matches"
+      ],
+      [
+        "lo:g10m6s2-1-3",
+        "S7",
+        "wt:g10m6s2-1-3:intercepts-and-direction#slope-inverted",
+        "mc:g10m6s2-1-3:y-intercept-from-y-zero",
+        "Slope taken as run over rise instead of rise over run"
+      ],
+      [
+        "lo:g10m6s3-1-1",
+        "S7",
+        "wt:g10m6s3-1-1:sketch-down-parabola-shifted-up#vertically-displaced",
+        "mc:g10m6s3-1-1:q-ignored",
+        "Right shape, sitting consistently above or below the true curve"
+      ],
+      [
+        "lo:g10m6s3-1-1",
+        "S7",
+        "wt:g10m6s3-1-1:sketch-narrow-parabola-shifted-down#off-target",
+        "mc:g10m6s3-1-1:steepness-of-a-misjudged",
+        "The sketch does not follow the curve"
+      ],
+      [
+        "lo:g10m6s3-1-1",
+        "S7",
+        "wt:g10m6s3-1-1:sketch-narrow-parabola-shifted-down#vertically-displaced",
+        "mc:g10m6s3-1-1:q-ignored",
+        "Right shape, sitting consistently above or below the true curve"
+      ],
+      [
+        "lo:g10m6s3-1-1",
+        "S7",
+        "wt:g10m6s3-1-1:sketch-wide-down-parabola-shifted-up#off-target",
+        "mc:g10m6s3-1-1:steepness-of-a-misjudged",
+        "The sketch does not follow the curve"
+      ],
+      [
+        "lo:g10m6s3-1-1",
+        "S7",
+        "wt:g10m6s3-1-1:sketch-wide-down-parabola-shifted-up#vertically-displaced",
+        "mc:g10m6s3-1-1:q-ignored",
+        "Right shape, sitting consistently above or below the true curve"
+      ],
+      [
+        "lo:g10m6s4-1-1",
+        "S7",
+        "wt:g10m6s4-1-1:sketch-xy-negative-k#asymptote-crossed",
+        "mc:g10m6s4-1-1:asymptote-is-met",
+        "The stroke runs straight through where the curve is undefined, as if it were continuous there"
+      ],
+      [
+        "lo:g10m6s4-1-4",
+        "S7",
+        "wt:g10m6s4-1-4:sketch-xy-equals-a-plus-x#asymptote-crossed",
+        "mc:g10m6s4-1-1:asymptote-is-met",
+        "The stroke runs straight through where the curve is undefined, as if it were continuous there"
+      ],
+      [
+        "lo:g10m6s5-1-2",
+        "S7",
+        "wt:g10m6s5-1-2:reflect-in-the-y-axis#wrong-intercept",
+        "mc:g10m6s5-1-2:reflection-axes-swapped",
+        "The curve does not pass through its true y-intercept"
+      ],
+      [
+        "lo:g10m6s5-1-5",
+        "S7",
+        "wt:g10m6s5-1-5:sketch-negative-shifted#wrong-intercept",
+        "mc:g10m6s5-1-5:leaves-out-a",
+        "The curve does not pass through its true y-intercept"
+      ]
+    ],
+    "widgets_left_out": [
+      "q:g10m6s1-1-1:w001",
+      "q:g10m6s1-1-1:w002",
+      "q:g10m6s1-1-1:w003",
+      "q:g10m6s1-1-1:w004",
+      "q:g10m6s1-1-1:w005",
+      "q:g10m6s1-1-1:w006",
+      "q:g10m6s1-1-1:w007",
+      "q:g10m6s1-1-1:w008",
+      "q:g10m6s1-1-1:w009",
+      "q:g10m6s3-1-3:w001",
+      "q:g10m6s5-1-2:w001"
+    ]
+  }
+}

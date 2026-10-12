@@ -1,0 +1,169 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m7s2-1-2:statement",
+ "kind": "family",
+ "lo_id": "lo:g10m7s2-1-2",
+ "parent_question_id": "q:g10m7s2-1-2:ex7-2-6c",
+ "source_page": 250,
+ "tier": "basic",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "t",
+   "randint": [
+    0,
+    3
+   ]
+  },
+  {
+   "name": "r",
+   "randint": [
+    0,
+    3
+   ]
+  },
+  {
+   "name": "m",
+   "randint": [
+    0,
+    5
+   ]
+  },
+  {
+   "name": "g",
+   "randint": [
+    0,
+    1
+   ]
+  },
+  {
+   "name": "p",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    1,
+    5
+   ],
+   "resample_while": "q == p"
+  },
+  {
+   "name": "perms",
+   "let": "[[0, 1, 2], [0, 2, 1], [1, 0, 2], [1, 2, 0], [2, 0, 1], [2, 1, 0]]"
+  },
+  {
+   "name": "si",
+   "let": "[[0, 0, 2], [0, 1, 1], [2, 1, 2]]"
+  },
+  {
+   "name": "ta",
+   "let": "[['A', 'B', 'C'], ['D', 'E', 'F'], ['G', 'H', 'J'], ['P', 'Q', 'R']][t]"
+  },
+  {
+   "name": "nb",
+   "let": "[['P', 'Q', 'R'], ['K', 'L', 'M'], ['X', 'Y', 'Z'], ['S', 'T', 'U']][t]"
+  },
+  {
+   "name": "u",
+   "let": "perms[m][0]"
+  },
+  {
+   "name": "v",
+   "let": "perms[m][1]"
+  },
+  {
+   "name": "w",
+   "let": "perms[m][2]"
+  },
+  {
+   "name": "tb",
+   "let": "[nb[perms[p][0]], nb[perms[p][1]], nb[perms[p][2]]]"
+  },
+  {
+   "name": "tc",
+   "let": "[nb[perms[q][0]], nb[perms[q][1]], nb[perms[q][2]]]"
+  },
+  {
+   "name": "sf",
+   "let": "[['side', ta[0], ta[1], tb[0], tb[1], ''], ['side', ta[1], ta[2], tb[1], tb[2], ''], ['side', ta[0], ta[2], tb[0], tb[2], '']]"
+  },
+  {
+   "name": "sh",
+   "let": "[['side', ta[0], ta[1], tb[0], tb[1], ' (the hypotenuses)'], ['side', ta[1], ta[2], tb[1], tb[2], ' (the hypotenuses)'], ['side', ta[0], ta[2], tb[0], tb[2], ' (the hypotenuses)']]"
+  },
+  {
+   "name": "af",
+   "let": "[['angle', ta[0], '', tb[0], '', ''], ['angle', ta[1], '', tb[1], '', ''], ['angle', ta[2], '', tb[2], '', '']]"
+  },
+  {
+   "name": "ar",
+   "let": "[['angle', ta[0], '', tb[0], '', ' = 90°'], ['angle', ta[1], '', tb[1], '', ' = 90°'], ['angle', ta[2], '', tb[2], '', ' = 90°']]"
+  },
+  {
+   "name": "facts",
+   "let": "[[sf[0], sf[1], sf[2]], [sf[si[u][v]], sf[si[v][w]], af[v]], [af[u], af[v], (sf[si[v][w]] if g == 0 else sf[si[u][w]])], [ar[v], sh[si[u][w]], (sf[si[u][v]] if g == 0 else sf[si[v][w]])]][r]"
+  },
+  {
+   "name": "f1",
+   "let": "facts[0]"
+  },
+  {
+   "name": "f2",
+   "let": "facts[1]"
+  },
+  {
+   "name": "f3",
+   "let": "facts[2]"
+  },
+  {
+   "name": "rn",
+   "let": "['SSS', 'SAS', 'AAS', 'RHS'][r]"
+  },
+  {
+   "name": "wn",
+   "let": "['SAS', 'AAS', 'SAS', 'SAS'][r]"
+  },
+  {
+   "name": "why",
+   "let": "['all three pairs of sides are equal', 'two pairs of sides and the angle between them (the included angle) are equal', 'two pairs of angles and a side that is not between those angles are equal', 'a right angle, the hypotenuse and one other side are equal'][r]"
+  }
+ ],
+ "constraints": [],
+ "stem": "In $\\triangle {=ta[0]}{=ta[1]}{=ta[2]}$ and $\\triangle {=nb[0]}{=nb[1]}{=nb[2]}$ the following parts are equal: {=f1[0]} ${=f1[1]}{=f1[2]}$ = {=f1[0]} ${=f1[3]}{=f1[4]}${=f1[5]}; {=f2[0]} ${=f2[1]}{=f2[2]}$ = {=f2[0]} ${=f2[3]}{=f2[4]}${=f2[5]}; {=f3[0]} ${=f3[1]}{=f3[2]}$ = {=f3[0]} ${=f3[3]}{=f3[4]}${=f3[5]}. Which one of the following correctly states that the two triangles are congruent, with the rule that proves it?",
+ "solution": [
+  "The parts given as equal are: {=f1[0]} ${=f1[1]}{=f1[2]}$ = {=f1[0]} ${=f1[3]}{=f1[4]}${=f1[5]}; {=f2[0]} ${=f2[1]}{=f2[2]}$ = {=f2[0]} ${=f2[3]}{=f2[4]}${=f2[5]}; {=f3[0]} ${=f3[1]}{=f3[2]}$ = {=f3[0]} ${=f3[3]}{=f3[4]}${=f3[5]}. In these two triangles {=why}, so the rule is {=rn}.",
+  "The equal parts pair up the corners of the two triangles: {=ta[0]} matches {=tb[0]}, {=ta[1]} matches {=tb[1]} and {=ta[2]} matches {=tb[2]}.",
+  "In a congruence statement the corners must be written in matching order. Writing the first triangle as ${=ta[0]}{=ta[1]}{=ta[2]}$, the second triangle is written with the matching corners in the same positions: ${=tb[0]}{=tb[1]}{=tb[2]}$.",
+  "So $\\triangle {=ta[0]}{=ta[1]}{=ta[2]} \\equiv \\triangle {=tb[0]}{=tb[1]}{=tb[2]}$ ({=rn}). Writing the second triangle in alphabetical order, ${=nb[0]}{=nb[1]}{=nb[2]}$, would not match the corners correctly."
+ ],
+ "choices": {
+  "correct": "$\\triangle {=ta[0]}{=ta[1]}{=ta[2]} \\equiv \\triangle {=tb[0]}{=tb[1]}{=tb[2]}$ ({=rn})",
+  "distractors": [
+   {
+    "text": "$\\triangle {=ta[0]}{=ta[1]}{=ta[2]} \\equiv \\triangle {=nb[0]}{=nb[1]}{=nb[2]}$ ({=rn})",
+    "misconception_id": "mc:g10m7s2-1-2:congruence-letters-in-wrong-order"
+   },
+   {
+    "text": "$\\triangle {=ta[0]}{=ta[1]}{=ta[2]} \\equiv \\triangle {=tc[0]}{=tc[1]}{=tc[2]}$ ({=rn})",
+    "misconception_id": "mc:g10m7s2-1-2:congruence-letters-in-wrong-order"
+   },
+   {
+    "text": "$\\triangle {=ta[0]}{=ta[1]}{=ta[2]} \\equiv \\triangle {=tb[0]}{=tb[1]}{=tb[2]}$ ({=wn})",
+    "misconception_id": "mc:g10m7s2-1-2:rule-named-from-wrong-parts"
+   }
+  ]
+ },
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m7s2-1-2:rule-named-from-wrong-parts",
+   "label": "Naming a congruence rule that the equal parts given do not match",
+   "description": "The student finds the right pair of triangles and the right order of letters but names a rule that does not fit the equal parts given, for example calling two sides and a right angle that is not between them SAS, or two sides and the angle between them AAS."
+  }
+ ],
+ "notes": "Text-only rewrite of the book's decide-and-justify skill: the equal parts are listed in words (the book shows them as tick marks), the rule is one of the four the objective names, and the student must also write the congruence with the letters of the second triangle in matching order. The second triangle is never in alphabetical order (p is 1..5), so the natural alphabetical statement is always a wrong-order distractor. The facts fix the correspondence uniquely (checked by brute force over all six letter orders), so no other order is also correct. The facts are written in corresponding order (AB = QR means A matches Q, B matches R). wn is always a rule the facts do not satisfy: SSS gives SAS, SAS gives AAS, AAS gives SAS, RHS gives SAS (the right angle is not between the hypotenuse and the leg). Each fact is built from six pieces (word, two letters, two letters, suffix) so no string concatenation is needed."
+}

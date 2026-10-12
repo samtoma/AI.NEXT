@@ -1,0 +1,148 @@
+#!/usr/bin/env python3
+"""A stand-in for `docker`, so deploy/load-course.sh can be run END TO END in a test.
+
+TESTS ONLY (tests/test_load_course_restore.py puts this directory first on PATH). It answers
+exactly the docker / docker compose calls deploy/ops-lib.sh and deploy/load-course.sh make, and
+runs them against a LOCAL scratch Postgres instead of the box's containers:
+
+  compose exec -T db <cmd…>        <cmd> runs here, with pgbin/ first on PATH (psql, pg_dump and
+                                   pg_restore wrappers that drop `-U ainext` and map the database)
+  compose run … --entrypoint python loader <args…>
+                                   FAKE_PYTHON <args…> in services/extraction; the loader DSN is
+                                   rewritten to the scratch server; `-v host:/x:ro` mounts become
+                                   path rewrites (/x/... -> host/...)
+  compose run … migrate, ps, build, stop, start, up; info; inspect; image inspect
+                                   answered as a healthy stack would, touching nothing
+
+THE DATABASE MAP IS THE SAFETY. The stack's database name (`ainext_mvp1`) is always mapped to
+FAKE_DB, which must be an `ainext_test_*` database; a rehearsal's own `ainext_rehearse_*`
+databases pass through (the script creates and drops them). Any other name is refused, so a
+machine with a real local `ainext_mvp1` can never be touched by a test.
+
+Environment: FAKE_PG ("host=127.0.0.1 port=5432"), FAKE_DB, FAKE_PYTHON, FAKE_EX (the
+services/extraction directory), FAKE_REPO (what /repo maps to), FAKE_LOG (a file to append
+every call to).
+"""
+
+from __future__ import annotations
+
+import os
+import shlex
+import subprocess
+import sys
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+
+
+def log(*parts: str) -> None:
+    if os.environ.get("FAKE_LOG"):
+        with open(os.environ["FAKE_LOG"], "a") as f:
+            f.write(" ".join(shlex.quote(p) for p in parts) + "\n")
+
+
+def map_db(name: str) -> str:
+    fake = os.environ["FAKE_DB"]
+    assert fake.startswith("ainext_test_"), fake
+    if name == "ainext_mvp1":
+        return fake
+    if name.startswith(("ainext_rehearse_", "ainext_test_")) or name == "postgres":
+        return name
+    sys.exit(f"fake docker: refusing database {name!r} (only ainext_mvp1 -> {fake}, "
+             "ainext_rehearse_* and ainext_test_*)")
+
+
+def pg_env() -> dict:
+    env = dict(os.environ)
+    for kv in os.environ["FAKE_PG"].split():
+        k, _, v = kv.partition("=")
+        if k == "host":
+            env["PGHOST"] = v
+        elif k == "port":
+            env["PGPORT"] = v
+    env["POSTGRES_PASSWORD"] = os.environ.get("PGPASSWORD", "")
+    env["PATH"] = f"{HERE / 'pgbin'}{os.pathsep}{env['PATH']}"
+    return env
+
+
+def run(cmd: list[str], env: dict, cwd: str | None = None) -> int:
+    return subprocess.run(cmd, env=env, cwd=cwd).returncode
+
+
+def compose(args: list[str]) -> int:
+    while args and args[0] in ("-p", "-f", "--profile"):
+        args = args[2:]
+    sub, rest = args[0], args[1:]
+    if sub == "ps":
+        svc = [a for a in rest if not a.startswith("-")]
+        print(f"fake-{svc[0]}" if svc else "")
+        return 0
+    if sub in ("build", "stop", "start", "up", "down", "logs"):
+        return 0
+    if sub == "exec":
+        while rest and rest[0].startswith("-"):
+            rest = rest[1:]
+        svc, cmd = rest[0], rest[1:]
+        if svc != "db":
+            return 1   # the app container: nothing to exec into here
+        return run(cmd, pg_env())
+    if sub == "run":
+        mounts: dict[str, str] = {}
+        env = dict(os.environ)
+        entry = None
+        while rest and rest[0].startswith("-"):
+            flag = rest[0]
+            if flag in ("-v", "-e", "--entrypoint"):
+                val, rest = rest[1], rest[2:]
+                if flag == "-v":
+                    host, inside = val.split(":")[:2]
+                    mounts[inside] = host
+                elif flag == "-e":
+                    k, _, v = val.partition("=")
+                    env[k] = v
+                else:
+                    entry = val
+            else:
+                rest = rest[1:]
+        svc, argv = rest[0], rest[1:]
+        if svc == "migrate":
+            print("(fake) migrate: nothing to apply")
+            return 0
+        if svc != "loader" or entry != "python":
+            sys.exit(f"fake docker: unexpected compose run {svc} {entry}")
+        mounts["/repo"] = os.environ["FAKE_REPO"]
+
+        def path(a: str) -> str:
+            for inside, host in mounts.items():
+                if a == inside or a.startswith(inside + "/"):
+                    return host + a[len(inside):]
+            return a
+        argv = [path(a) for a in argv]
+        dsn = env.get("AINEXT_DB_DSN")
+        if dsn and "host=db" in dsn:
+            db = next(kv.split("=", 1)[1] for kv in dsn.split() if kv.startswith("dbname="))
+            env["AINEXT_DB_DSN"] = f"{os.environ['FAKE_PG']} dbname={map_db(db)}"
+        return run([os.environ["FAKE_PYTHON"], *argv], env, cwd=os.environ["FAKE_EX"])
+    sys.exit(f"fake docker: unexpected compose {sub}")
+
+
+def main(argv: list[str]) -> int:
+    log("docker", *argv)
+    if not argv:
+        return 1
+    if argv[0] == "info":
+        return 0
+    if argv[0] == "compose":
+        return compose(argv[1:])
+    if argv[0] == "inspect":
+        fmt = argv[argv.index("-f") + 1] if "-f" in argv else ""
+        print("true" if "Running" in fmt else "sha256:fake")
+        return 0
+    if argv[:2] == ["image", "inspect"]:
+        print("curriculum-scope")
+        return 0
+    sys.exit(f"fake docker: unexpected {argv[:3]}")
+
+
+if __name__ == "__main__":
+    raise SystemExit(main(sys.argv[1:]))

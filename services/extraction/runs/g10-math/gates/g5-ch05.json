@@ -1,0 +1,254 @@
+{
+ "format": "ainext.gate-decision/1",
+ "gate": "G5",
+ "book": "g10-math",
+ "id": "g5-ch05",
+ "chapter": 5,
+ "decided_at": "2026-10-02T07:06:17Z",
+ "by": "auto-pass G5 (AI recommendation)",
+ "auto": true,
+ "outcome": "pass_with_holds",
+ "summary": "GO for the fan-out on the dev/pilot database (deploys and promotes nothing); coverage RED, 2 completeness finding(s) for Samuel",
+ "decisions": [
+  {
+   "key": "go/no-go",
+   "decision": "go",
+   "basis": "parity GREEN for every course and no coverage safety check failing"
+  },
+  {
+   "key": "objective_evidence lo:g10m5s3-1-3",
+   "decision": "completeness finding — for Samuel, not fixed",
+   "detail": "no book question",
+   "basis": "coverage objective_evidence 13/18: a completeness check lists the gap and does not block (answer 37c); the content stays as loaded"
+  },
+  {
+   "key": "objective_evidence lo:g10m5s5-1-4",
+   "decision": "completeness finding — for Samuel, not fixed",
+   "detail": "no claim; no book question",
+   "basis": "coverage objective_evidence 13/18: a completeness check lists the gap and does not block (answer 37c); the content stays as loaded"
+  },
+  {
+   "key": "objective_evidence lo:g10m5s6-1-3",
+   "decision": "completeness finding — for Samuel, not fixed",
+   "detail": "no claim; no book question",
+   "basis": "coverage objective_evidence 13/18: a completeness check lists the gap and does not block (answer 37c); the content stays as loaded"
+  },
+  {
+   "key": "objective_evidence lo:g10m5s6-1-4",
+   "decision": "completeness finding — for Samuel, not fixed",
+   "detail": "no claim; no book question",
+   "basis": "coverage objective_evidence 13/18: a completeness check lists the gap and does not block (answer 37c); the content stays as loaded"
+  },
+  {
+   "key": "objective_evidence lo:g10m5s8-1-4",
+   "decision": "completeness finding — for Samuel, not fixed",
+   "detail": "no book question",
+   "basis": "coverage objective_evidence 13/18: a completeness check lists the gap and does not block (answer 37c); the content stays as loaded"
+  },
+  {
+   "key": "tier_floor lo:g10m5s3-1-3",
+   "decision": "completeness finding — for Samuel, not fixed",
+   "detail": "no live item at tier(s) basic, standard, advanced",
+   "basis": "coverage tier_floor 39/54: a completeness check lists the gap and does not block (answer 37c); the content stays as loaded"
+  },
+  {
+   "key": "tier_floor lo:g10m5s5-1-4",
+   "decision": "completeness finding — for Samuel, not fixed",
+   "detail": "no live item at tier(s) basic, standard, advanced",
+   "basis": "coverage tier_floor 39/54: a completeness check lists the gap and does not block (answer 37c); the content stays as loaded"
+  },
+  {
+   "key": "tier_floor lo:g10m5s6-1-3",
+   "decision": "completeness finding — for Samuel, not fixed",
+   "detail": "no live item at tier(s) basic, standard, advanced",
+   "basis": "coverage tier_floor 39/54: a completeness check lists the gap and does not block (answer 37c); the content stays as loaded"
+  },
+  {
+   "key": "tier_floor lo:g10m5s6-1-4",
+   "decision": "completeness finding — for Samuel, not fixed",
+   "detail": "no live item at tier(s) basic, standard, advanced",
+   "basis": "coverage tier_floor 39/54: a completeness check lists the gap and does not block (answer 37c); the content stays as loaded"
+  },
+  {
+   "key": "tier_floor lo:g10m5s8-1-4",
+   "decision": "completeness finding — for Samuel, not fixed",
+   "detail": "no live item at tier(s) basic, standard, advanced",
+   "basis": "coverage tier_floor 39/54: a completeness check lists the gap and does not block (answer 37c); the content stays as loaded"
+  }
+ ],
+ "checks": [
+  {
+   "name": "drift guard course:prep3-math-en",
+   "state": "green"
+  },
+  {
+   "name": "drift guard course:prep3-social-ar",
+   "state": "green"
+  },
+  {
+   "name": "drift guard course:prep3-arabic-ar",
+   "state": "green"
+  },
+  {
+   "name": "drift guard course:us-g10-math-en",
+   "state": "green",
+   "detail": "matches its bundles: {'modules': 10, 'learning_objectives': 127, 'prerequisite_edges': 159, 'questions_total': 1613, 'visuals': 362}"
+  },
+  {
+   "name": "coverage pages",
+   "state": "green",
+   "detail": "38/38"
+  },
+  {
+   "name": "coverage worked_examples",
+   "state": "green",
+   "detail": "12/12"
+  },
+  {
+   "name": "coverage items_mapped_once",
+   "state": "green",
+   "detail": "240/240"
+  },
+  {
+   "name": "coverage mapped_items_accounted",
+   "state": "green",
+   "detail": "240/240"
+  },
+  {
+   "name": "coverage objective_evidence",
+   "state": "red",
+   "detail": "13/18 — lo:g10m5s3-1-3: no book question; lo:g10m5s5-1-4: no claim; no book question; lo:g10m5s6-1-3: no claim; no book question"
+  },
+  {
+   "name": "coverage tier_floor",
+   "state": "red",
+   "detail": "39/54 — lo:g10m5s3-1-3: no live item at tier(s) basic, standard, advanced; lo:g10m5s5-1-4: no live item at tier(s) basic, standard, advanced; lo:g10m5s6-1-3: no live item at tier(s) basic, standard, advanced"
+  },
+  {
+   "name": "coverage module_widgets",
+   "state": "green",
+   "detail": "1/1"
+  },
+  {
+   "name": "coverage distractor_refutations (safety)",
+   "state": "green",
+   "detail": "154/154"
+  },
+  {
+   "name": "coverage misconception_refutations",
+   "state": "green",
+   "detail": "23/23"
+  },
+  {
+   "name": "coverage s5_catalogue (safety)",
+   "state": "green",
+   "detail": "23/23"
+  },
+  {
+   "name": "coverage figures",
+   "state": "green",
+   "detail": "71/71"
+  },
+  {
+   "name": "coverage maths_images",
+   "state": "green",
+   "detail": "840/840"
+  },
+  {
+   "name": "coverage items_typed_once",
+   "state": "green",
+   "detail": "240/240"
+  },
+  {
+   "name": "coverage solution_sources (safety)",
+   "state": "green",
+   "detail": "218/218"
+  },
+  {
+   "name": "coverage lesson_provenance",
+   "state": "green",
+   "detail": "5/5"
+  },
+  {
+   "name": "coverage teacher_only (safety)",
+   "state": "green",
+   "detail": "1/1"
+  },
+  {
+   "name": "coverage notation (safety)",
+   "state": "green",
+   "detail": "0/0"
+  },
+  {
+   "name": "coverage katex (safety)",
+   "state": "green",
+   "detail": "0/0"
+  },
+  {
+   "name": "coverage book_pictures (safety)",
+   "state": "green",
+   "detail": "0/0"
+  },
+  {
+   "name": "coverage captions (safety)",
+   "state": "green",
+   "detail": "0/0"
+  },
+  {
+   "name": "coverage answer_text (safety)",
+   "state": "green",
+   "detail": "0/0"
+  },
+  {
+   "name": "coverage asked_forms (safety)",
+   "state": "green",
+   "detail": "0/0"
+  },
+  {
+   "name": "coverage claims_served",
+   "state": "green",
+   "detail": "187/187"
+  },
+  {
+   "name": "cost ledger",
+   "state": "recorded",
+   "detail": "$773.58 metered for the book, $45.23 on this chapter's lessons"
+  }
+ ],
+ "evidence": [
+  {
+   "label": "coverage",
+   "path": "services/extraction/coverage/g10-math.ch05.json"
+  },
+  {
+   "label": "cost ledger",
+   "path": "services/extraction/runs/g10-math/cost.jsonl"
+  },
+  {
+   "label": "book config the drift guard compared the database with",
+   "path": "services/extraction/runs/g10-math/fanout/loaded/g10-math.json"
+  },
+  {
+   "label": "G1 record",
+   "path": "services/extraction/runs/g10-math/gates/g1-ch05.json"
+  },
+  {
+   "label": "G2 record",
+   "path": "services/extraction/runs/g10-math/gates/g2-ch05.json"
+  },
+  {
+   "label": "G3 record",
+   "path": "services/extraction/runs/g10-math/gates/g3-ch05.json"
+  },
+  {
+   "label": "G4 record",
+   "path": "services/extraction/runs/g10-math/gates/g4-ch05.json"
+  }
+ ],
+ "blocked": [],
+ "course_id": "course:us-g10-math-en",
+ "for_review": [
+  "coverage check objective_evidence fails (13/18): lo:g10m5s3-1-3: no book question; lo:g10m5s5-1-4: no claim; no book question; lo:g10m5s6-1-3: no claim; no book question",
+  "coverage check tier_floor fails (39/54): lo:g10m5s3-1-3: no live item at tier(s) basic, standard, advanced; lo:g10m5s5-1-4: no live item at tier(s) basic, standard, advanced; lo:g10m5s6-1-3: no live item at tier(s) basic, standard, advanced"
+ ]
+}

@@ -1,0 +1,50 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m8s1-1-2:plot-the-point",
+ "lo_id": "lo:g10m8s1-1-2",
+ "parent_question_id": "q:g10m8s1-1-2:ex8-1-3",
+ "tier": "basic",
+ "kind": "pair_plotter",
+ "instances": [
+  {
+   "x": 5,
+   "y": -4
+  },
+  {
+   "x": -4,
+   "y": -3
+  },
+  {
+   "x": 3,
+   "y": -5
+  },
+  {
+   "x": 3,
+   "y": 3
+  }
+ ],
+ "spec": {
+  "target": [
+   "{=x}",
+   "{=y}"
+  ]
+ },
+ "stem": "Plot the point with coordinates $({=x}, {=y})$.",
+ "solution": [
+  "Start at the origin $(0, 0)$.",
+  "Move {=x} units along the horizontal axis — right if {=x} is positive, left if negative — to the vertical line $x = {=x}$.",
+  "From there, move {=y} units parallel to the vertical axis — up if {=y} is positive, down if negative.",
+  "Mark the point where the two moves end: this is $({=x}, {=y})$."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "swapped-coordinates",
+   "misconception_id": "mc:g10m8s1-1-2:swaps-x-and-y-values"
+  },
+  {
+   "predicate": "wrong-quadrant",
+   "misconception_id": "mc:g10m8s1-1-2:flips-a-coordinate-sign"
+  }
+ ],
+ "notes": "pair_plotter tests the 'given coordinates, locate the point' half of this LO — the same direction as the three MCQ anchors (ex8-1-3, ex8-1-4, ex8-6-2), which all ask 'which point lies at (x, y)'. The fourth anchor (ex8-1-1, 'find the coordinates of point D') runs the opposite direction — reading coordinates off a plotted, lettered point in a diagram — and no existing kind can pose that: every kind here grades a construction the student builds from a stated target, not a reading-off of a figure the student never sees (per the no-figure-in-stem rule, we can't even show the diagram). That reading-direction half of the LO is therefore left untested by this widget; instances still use its answer, (3, 3), since it is a valid lattice target for the placing direction."
+}

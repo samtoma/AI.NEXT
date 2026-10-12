@@ -1,6 +1,8 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { mathWidgetDocs, mathWidgetsFor, unitOf, WIDGET_UNITS } from "./widget-docs.ts";
+import {
+  documentedMathWidgets, mathWidgetDocs, mathWidgetsFor, unitOf, WIDGET_UNITS,
+} from "./widget-docs.ts";
 import { MATH_WIDGETS, parseMathWidget } from "./widget-payloads.ts";
 
 /**
@@ -32,11 +34,40 @@ test("the mapping covers all ten units and adds none that do not exist", () => {
   assert.deepEqual([...WIDGET_UNITS].sort(), [...UNITS].sort());
 });
 
-test("every built widget is documented to at least one unit", () => {
+/**
+ * Kinds that belong to a course with its OWN widget list (feature 003,
+ * `ownUnitWidgets` in `lib/lesson.ts`) and are therefore never added to the
+ * National BY_UNIT map below — they are documented in DOCS and reach a
+ * lesson through `mathWidgetDocsNamed` instead (see the next test). A widget
+ * agent adding a new G10-only kind adds its name here alongside its DOCS
+ * entry, so this test keeps checking the National mapping only.
+ */
+const NON_NATIONAL_WIDGETS = [
+  "polygon_builder", "solid_scaler", "box_plot_builder",
+  "venn_builder", "area_model",
+];
+
+test("every built National widget is documented to at least one unit", () => {
   const documented = new Set(UNITS.flatMap((u) => mathWidgetsFor(`${u}-1`)));
   for (const name of MATH_WIDGETS) {
+    if (NON_NATIONAL_WIDGETS.includes(name)) continue;
     assert.ok(documented.has(name), `${name} is built but no lesson is ever told about it`);
   }
+});
+
+test("every built widget is documented SOMEWHERE it can reach a lesson", () => {
+  // Not necessarily the National unit map above: a course with its own widget
+  // kinds (feature 003, `ownUnitWidgets` in `lib/lesson.ts`) reads this file's
+  // DOCS directly by name (`mathWidgetDocsNamed`) rather than through
+  // BY_UNIT, so a G10-only kind is fully documented without ever appearing in
+  // `UNITS`. What every kind MUST have, on either path, is a DOCS entry —
+  // without one, no course could ever be told about it (FR-1209).
+  const documented = documentedMathWidgets(MATH_WIDGETS as unknown as string[]);
+  assert.deepEqual(
+    [...documented].sort(),
+    [...MATH_WIDGETS].sort(),
+    "a widget is built but has no entry in widget-docs.ts's DOCS, so no course can ever be told about it"
+  );
 });
 
 test("no unit is handed more than four widgets", () => {
@@ -112,7 +143,11 @@ test("every example payload in the docs actually validates", () => {
       }
     }
   }
-  assert.ok(seen.size >= MATH_WIDGETS.length - 2, "most widgets should carry a full example");
+  // Scoped to the NATIONAL mapping this loop actually walks — a course that
+  // reads `mathWidgetDocsNamed` with its own list (feature 003) is not walked
+  // here at all, so its kinds' examples are not expected to turn up in `seen`.
+  const nationalWidgets = new Set(UNITS.flatMap((u) => mathWidgetsFor(`${u}-1`)));
+  assert.ok(seen.size >= nationalWidgets.size - 2, "most National widgets should carry a full example");
 });
 
 /** Pull `{{widget:name:{…}}}` directives out of a doc line, counting braces so

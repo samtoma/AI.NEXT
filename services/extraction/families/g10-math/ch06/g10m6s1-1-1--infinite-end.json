@@ -1,0 +1,164 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s1-1-1:infinite-end",
+ "kind": "family",
+ "lo_id": "lo:g10m6s1-1-1",
+ "parent_question_id": "q:g10m6s1-1-1:ex6-1-2a",
+ "source_page": 148,
+ "tier": "advanced",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "side",
+   "choice": [
+    0,
+    1
+   ]
+  },
+  {
+   "name": "cl",
+   "choice": [
+    0,
+    1
+   ]
+  },
+  {
+   "name": "c",
+   "randint": [
+    -12,
+    12
+   ]
+  },
+  {
+   "name": "sg",
+   "let": "[['<', '≤'], ['>', '≥']][side][cl]"
+  },
+  {
+   "name": "fl",
+   "let": "['(', '['][cl]"
+  },
+  {
+   "name": "fr",
+   "let": "[')', ']'][cl]"
+  },
+  {
+   "name": "gl",
+   "let": "['[', '('][cl]"
+  },
+  {
+   "name": "gr",
+   "let": "[']', ')'][cl]"
+  },
+  {
+   "name": "lbc",
+   "let": "['(', fl][side]"
+  },
+  {
+   "name": "rbc",
+   "let": "[fr, ')'][side]"
+  },
+  {
+   "name": "loc",
+   "let": "['-∞', c][side]"
+  },
+  {
+   "name": "hic",
+   "let": "[c, '∞'][side]"
+  },
+  {
+   "name": "lb1",
+   "let": "['(', gl][side]"
+  },
+  {
+   "name": "rb1",
+   "let": "[gr, ')'][side]"
+  },
+  {
+   "name": "lb2",
+   "let": "['[', fl][side]"
+  },
+  {
+   "name": "rb2",
+   "let": "[fr, ']'][side]"
+  },
+  {
+   "name": "lb3",
+   "let": "[fl, '('][side]"
+  },
+  {
+   "name": "rb3",
+   "let": "[')', fr][side]"
+  },
+  {
+   "name": "lo3",
+   "let": "[c, '-∞'][side]"
+  },
+  {
+   "name": "hi3",
+   "let": "['∞', c][side]"
+  },
+  {
+   "name": "dirw",
+   "let": "['less than', 'greater than'][side]"
+  },
+  {
+   "name": "eqw",
+   "let": "['', ' or equal to'][cl]"
+  },
+  {
+   "name": "way",
+   "let": "['to the left', 'to the right'][side]"
+  },
+  {
+   "name": "infw",
+   "let": "['-∞', '∞'][side]"
+  },
+  {
+   "name": "cin",
+   "let": "['is not in', 'is in'][cl]"
+  },
+  {
+   "name": "cbn",
+   "let": "['round', 'square'][cl]"
+  }
+ ],
+ "constraints": [],
+ "stem": "Which of the following is the interval notation for the set $\\{x:x\\in\\mathbb{R},x{=sg}{=c}\\}$?",
+ "solution": [
+  "The set holds every real number that is {=dirw}{=eqw} ${=c}$, so it runs on without end {=way}. One end of the interval is therefore ${=infw}$.",
+  "Infinity is not a number and can never be reached or included, so the bracket next to it is always round.",
+  "The sign ${=sg}$ at ${=c}$ means ${=c}$ {=cin} the set, so the bracket next to ${=c}$ is {=cbn}.",
+  "Write the end on the left first: ${=lbc}{=loc}, {=hic}{=rbc}$."
+ ],
+ "choices": {
+  "correct": "${=lbc}{=loc}, {=hic}{=rbc}$",
+  "distractors": [
+   {
+    "text": "${=lb1}{=loc}, {=hic}{=rb1}$",
+    "misconception_id": "mc:g10m6s1-1-1:brackets-swapped-for-signs"
+   },
+   {
+    "text": "${=lb2}{=loc}, {=hic}{=rb2}$",
+    "misconception_id": "mc:g10m6s1-1-1:square-bracket-at-infinity"
+   },
+   {
+    "text": "${=lb3}{=lo3}, {=hi3}{=rb3}$",
+    "misconception_id": "mc:g10m6s1-1-1:half-line-direction-reversed"
+   }
+  ]
+ },
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m6s1-1-1:square-bracket-at-infinity",
+   "label": "Square bracket written next to infinity",
+   "description": "The student treats infinity like an end number that can be included, so writes a square bracket next to it, as in $[-\\infty, 5]$ or $[5, \\infty]$. Infinity is not a number and always takes a round bracket."
+  },
+  {
+   "id": "mc:g10m6s1-1-1:half-line-direction-reversed",
+   "label": "Half-line written running the wrong way",
+   "description": "The student writes the interval that starts at the end number and runs the opposite way along the number line, for example $[5, \\infty)$ for $x \\le 5$ or $(-\\infty, 5]$ for $x \\ge 5$, matching the bracket to the sign but mixing up which side of the number the set lies on."
+  }
+ ],
+ "notes": "Advanced: the twist the book itself uses, one end at infinity (ex6-1-1a/c/f, ex6-1-2a). The side param picks x less than c or x greater than c. Three single-error distractors, always distinct from the correct option and from each other: the finite end's bracket flipped (existing id), a square bracket at infinity (proposed), the half-line reversed with the finite bracket kept (proposed). Unicode infinity and sign characters are used inside computed strings so no backslash sits in an expression string literal; please confirm the renderer shows them inside $...$. Option pieces are mixed string/number lists indexed by side; if the engine rejects mixed lists, the fix is mechanical."
+}

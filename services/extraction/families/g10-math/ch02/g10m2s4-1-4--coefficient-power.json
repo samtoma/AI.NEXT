@@ -1,0 +1,153 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m2s4-1-4:coefficient-power",
+ "kind": "family",
+ "lo_id": "lo:g10m2s4-1-4",
+ "parent_question_id": "q:g10m2s4-1-4:ex2-3-3",
+ "source_page": 56,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "table",
+   "let": "[[3, 2, 19, 266, 0, 18189, 19494, 18961, 19093, 19027], [3, 2, 87, 485, 1, 83573, 89571, 86520, 87122, 86820], [5, 2, 69, 378, 1, 64980, 69644, 68685, 69163, 68924], [5, 2, 132, 472, 0, 129960, 139288, 131775, 132691, 132232], [6, 2, 107, 415, 1, 102890, 110275, 106519, 107260, 106888], [6, 2, 137, 451, 0, 135765, 145509, 136709, 137660, 137183], [4, 3, 193, 352, 1, 187061, 208784, 191217, 193329, 192270], [4, 3, 196, 354, 0, 187061, 208784, 195465, 197624, 196542], [5, 3, 53, 214, 1, 50226, 56058, 52482, 53062, 52771], [5, 3, 165, 318, 0, 150677, 168174, 164519, 166336, 165425], [6, 3, 195, 316, 1, 180812, 201808, 193132, 195266, 194196], [6, 3, 196, 317, 0, 180812, 201808, 195266, 197423, 196341], [2, 5, 84, 232, 0, 81033, 95183, 83684, 85041, 84360], [2, 5, 209, 288, 1, 181195, 212835, 206093, 209437, 207758], [3, 5, 149, 242, 1, 142774, 167705, 147445, 149837, 148636], [3, 5, 211, 264, 0, 196990, 231388, 210088, 213497, 211786], [4, 5, 141, 221, 0, 137973, 162066, 140212, 142486, 141344], [4, 5, 199, 242, 1, 190365, 223607, 196593, 199782, 198181], [2, 7, 132, 215, 0, 119052, 144626, 131217, 133796, 132500], [3, 7, 74, 164, 1, 67496, 81995, 72960, 74393, 73673], [4, 7, 113, 171, 1, 109327, 132812, 111475, 113665, 112565], [4, 7, 147, 185, 0, 132812, 161342, 146383, 149260, 147814], [5, 7, 180, 184, 0, 166015, 201677, 179453, 182979, 181207], [6, 7, 219, 184, 1, 199218, 242012, 215343, 219575, 217449]]"
+  },
+  {
+   "name": "i",
+   "randint": [
+    0,
+    "len(table) - 1"
+   ]
+  },
+  {
+   "name": "row",
+   "let": "table[i]"
+  },
+  {
+   "name": "k",
+   "let": "row[0]"
+  },
+  {
+   "name": "a",
+   "let": "row[1]"
+  },
+  {
+   "name": "m",
+   "let": "row[2]"
+  },
+  {
+   "name": "h",
+   "let": "row[3]"
+  },
+  {
+   "name": "up",
+   "let": "row[4]"
+  },
+  {
+   "name": "vtl",
+   "let": "row[5]"
+  },
+  {
+   "name": "vth",
+   "let": "row[6]"
+  },
+  {
+   "name": "vhl",
+   "let": "row[7]"
+  },
+  {
+   "name": "vhh",
+   "let": "row[8]"
+  },
+  {
+   "name": "vm",
+   "let": "row[9]"
+  },
+  {
+   "name": "n",
+   "let": "h // 100"
+  },
+  {
+   "name": "t",
+   "let": "h // 10"
+  },
+  {
+   "name": "tl",
+   "let": "fixed(t / 10, 1)"
+  },
+  {
+   "name": "th",
+   "let": "fixed((t + 1) / 10, 1)"
+  },
+  {
+   "name": "hl",
+   "let": "fixed(h / 100, 2)"
+  },
+  {
+   "name": "hh",
+   "let": "fixed((h + 1) / 100, 2)"
+  },
+  {
+   "name": "mid",
+   "let": "fixed((2 * h + 1) / 200, 3)"
+  },
+  {
+   "name": "ans",
+   "let": "fixed((h + up) / 100, 2)"
+  },
+  {
+   "name": "v1",
+   "let": "fixed(vtl / 1000, 3)"
+  },
+  {
+   "name": "v2",
+   "let": "fixed(vth / 1000, 3)"
+  },
+  {
+   "name": "v3",
+   "let": "fixed(vhl / 1000, 3)"
+  },
+  {
+   "name": "v4",
+   "let": "fixed(vhh / 1000, 3)"
+  },
+  {
+   "name": "v5",
+   "let": "fixed(vm / 1000, 3)"
+  },
+  {
+   "name": "than",
+   "let": "'less than' if up == 1 else 'greater than'"
+  },
+  {
+   "name": "rel",
+   "let": "'greater' if up == 1 else 'less'"
+  },
+  {
+   "name": "way",
+   "let": "'up' if up == 1 else 'down'"
+  },
+  {
+   "require": "k * a ** n < m and m < k * a ** (n + 1) and n >= 1",
+   "why": "the whole-number trials must really bracket the target"
+  },
+  {
+   "require": "vtl < m * 1000 and m * 1000 < vth and vhl < m * 1000 and m * 1000 < vhh and ((up == 1 and vm < m * 1000) or (up == 0 and vm > m * 1000))",
+   "why": "every tabulated trial value must sit on the correct side of the target, and the midpoint test must agree with the direction of rounding"
+  }
+ ],
+ "constraints": [
+  "k * a ** n < m and m < k * a ** (n + 1)"
+ ],
+ "stem": "Use trial and error to find the value of $x$ correct to 2 decimal places: ${=k} \\times {=a}^x = {=m}$",
+ "answer": "fixed((h + up) / 100, 2)",
+ "solution": [
+  "First find the two whole numbers $x$ lies between. ${=k} \\times {=a}^{{=n}} = {=k * a ** n}$ and ${=k} \\times {=a}^{{=n + 1}} = {=k * a ** (n + 1)}$. Since ${=k * a ** n} < {=m} < {=k * a ** (n + 1)}$, we know ${=n} < x < {=n + 1}$.",
+  "Now try values of $x$ in steps of 0.1. ${=k} \\times {=a}^{{=tl}} = {=v1}$, which is less than ${=m}$, and ${=k} \\times {=a}^{{=th}} = {=v2}$, which is greater than ${=m}$. So ${=tl} < x < {=th}$.",
+  "Now try steps of 0.01. ${=k} \\times {=a}^{{=hl}} = {=v3}$, which is less than ${=m}$, and ${=k} \\times {=a}^{{=hh}} = {=v4}$, which is greater than ${=m}$. So ${=hl} < x < {=hh}$.",
+  "To decide how to round, test the midpoint ${=mid}$. ${=k} \\times {=a}^{{=mid}} = {=v5}$, which is {=than} ${=m}$. So $x$ is {=rel} than ${=mid}$, and it rounds {=way}.",
+  "Therefore $x \\approx {=ans}$ correct to 2 decimal places."
+ ],
+ "notes": "Advanced tier: the same trial-and-error method with no hint and a coefficient on the power, so every trial is k times a power of the base compared with the right-hand side, and the whole-number bracket is found by the student. The book has only one question for this objective (the standard 2^x = 7), so this is an extension of its method, not a technique it lacks: the student still tests values of x directly and compares with the target, exactly as in the book's solution; no isolating of the power is taught (a student who divides both sides by k first reaches the same x). Reviewer, please confirm the coefficient form is in scope for the objective. As in the basic family, there is no logarithm in the expression language, so each instance is a table row (k, base, target, floor(100x), a rounding flag, five trial values in thousandths) computed offline with 60-digit decimal arithmetic. Row filters: k is not a power of the base (so k * a^x is not just a shifted exponent) and target / k is not a power of the base (x irrational, no common base); the tenths digit of x is neither 0 nor 9 and the hundredths digit of floor(100x) is neither 0 nor 9 (no repeated trials); the 2 dp answer never ends in 0; 100x is at least 0.15 from a rounding boundary (x at least 0.0015 from the point where the answer flips); every displayed 3 dp value is on the correct side of the target; whole-number bracket n between 1 and 4, target at most 220. Two require clauses re-check the bracketing and every tabulated side at draw time. Rounding direction is balanced (12 of 24 round up). The family is numeric, so it has no distractors and declares no misconceptions."
+}

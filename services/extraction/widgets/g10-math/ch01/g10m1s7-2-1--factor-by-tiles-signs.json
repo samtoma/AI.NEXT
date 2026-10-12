@@ -1,0 +1,65 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m1s7-2-1:factor-by-tiles-signs",
+ "lo_id": "lo:g10m1s7-2-1",
+ "parent_question_id": "q:g10m1s7-2-1:ex1-8-10",
+ "tier": "standard",
+ "kind": "area_model",
+ "instances": [
+  {
+   "a": -2,
+   "b": -3,
+   "t": "x^2 - 5x + 6"
+  },
+  {
+   "a": -3,
+   "b": -4,
+   "t": "x^2 - 7x + 12"
+  },
+  {
+   "a": -3,
+   "b": 2,
+   "t": "x^2 - x - 6"
+  },
+  {
+   "a": -4,
+   "b": 2,
+   "t": "x^2 - 2x - 8"
+  },
+  {
+   "a": 4,
+   "b": -3,
+   "t": "x^2 + x - 12"
+  },
+  {
+   "a": -4,
+   "b": 1,
+   "t": "x^2 - 3x - 4"
+  },
+  {
+   "a": 3,
+   "b": -1,
+   "t": "x^2 + 2x - 3"
+  }
+ ],
+ "spec": {
+  "mode": "factor",
+  "a": "{=a}",
+  "b": "{=b}"
+ },
+ "stem": "Factorise ${=t}$ by building it from algebra tiles. Some of your tiles will be negative (hatched and marked −). The two sides of your rectangle are the factors.",
+ "solution": [
+  "Look at the sign of the constant term. If it is positive, the two numbers have the same sign, and that sign is the sign of the middle term. If it is negative, the two numbers have opposite signs. List the factor pairs of the constant term with the signs this allows.",
+  "Lay the $x^2$ tile and build one pair: the first number as a run of $x$ tiles along the top edge, the second along the left edge, negative tiles for a negative number. The unit block between the runs holds the product of the pair, so the constant term comes out right.",
+  "Count the $x$ tiles net: a negative tile cancels a positive one. The net must equal the middle coefficient. If it does not, the pair multiplies to the right constant but is still wrong; the signs, or the pair itself, must change.",
+  "Swap the signs or the pair until the net $x$ tiles and the constant term both match.",
+  "Read off the sides, $(x + p)$ and $(x + q)$ with their signs, and check by multiplying out."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "middle-term-sign",
+   "misconception_id": "mc:g10m1s7-2-1:factor-pair-middle-term-untested"
+  }
+ ],
+ "notes": "Same instrument and same single mapping as the basic template, now where the signs matter. Every row is monic with |a|, |b| at most 4. Each has a wrong-sign construction with the right constant and the wrong x term: for x^2-x-6, the student builds (x+3)(x-2) and gets +1 where -1 was needed. That is the exact failure of writing a factor pair of c into the brackets without testing the middle term, so middle-term-sign is reachable on every row. The rows cover both-negative (c > 0, b < 0) and opposite-sign (c < 0) cases. The book's own parents (x^2-x-20 and similar) need a 5, so they cannot be instances. NOT mapped: constant-sign (right sum, wrong product, e.g. (x-4)(x+3) built for x^2-x-6, the mirror error) has no matching misconception on the list; missing-cross-term, not-a-rectangle and off-target diagnose nothing specific. The prerequisite mc:g10m1s6-1-2:x-term-from-k-alone would fire the same predicate if one x-run were counted alone; it is left to the likelier error. t is a pre-rendered trinomial string in each row, as in the basic template."
+}

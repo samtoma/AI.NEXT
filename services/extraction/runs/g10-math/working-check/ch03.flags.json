@@ -1,0 +1,299 @@
+{
+ "format": "ainext.working-check/1",
+ "book": "g10-math",
+ "chapter": 3,
+ "prompts_version": "sw-v3",
+ "rule": "Each flag is a backlog item for a human (answer 30; answer 37c). Nothing here was corrected: the content stays as the book and G2 have it until a human decides.",
+ "passes": [
+  "A",
+  "B"
+ ],
+ "single_pass_ids": [],
+ "solutions": 89,
+ "skipped": [],
+ "verdicts": {
+  "consistent": 82,
+  "flagged": 7,
+  "unclear": 0
+ },
+ "flags": [
+  {
+   "solution_id": "expl:g10m3s2-1-4:we03",
+   "lo": "lo:g10m3s2-1-4",
+   "step": 4,
+   "kind": "arithmetic",
+   "where": "working",
+   "quote": "405&=15n",
+   "expected": "520-105 = 415",
+   "why": "520 minus 105 is 415, not 405, so 415=15n and n=27 does not follow.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ],
+   "also_kinds": [
+    "other"
+   ]
+  },
+  {
+   "solution_id": "q:g10m3s2-1-1:ex3-1-5e",
+   "lo": "lo:g10m3s2-1-1",
+   "step": 1,
+   "kind": "final_answer",
+   "where": "unsure",
+   "quote": "T_5&=-49x",
+   "expected": "-39x, -49x, -59x",
+   "why": "The key is written as 'x = -39x or x = -49x ...', which is not the three terms the working gives as T4, T5, T6.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A"
+   ]
+  },
+  {
+   "solution_id": "q:g10m3s2-1-1:ex3-2-8b",
+   "lo": "lo:g10m3s2-1-1",
+   "step": 4,
+   "kind": "arithmetic",
+   "where": "working",
+   "quote": "&=7-3n",
+   "expected": "8-3n",
+   "why": "5+(-3)(n-1) simplifies to 8-3n, not 7-3n; the later formula and T_6 inherit the error.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m3s2-1-2:ex3-2-24a",
+   "lo": "lo:g10m3s2-1-2",
+   "step": 1,
+   "kind": "arithmetic",
+   "where": "working",
+   "quote": "33^5 = 2433^9",
+   "expected": "",
+   "why": "33^5 = 2433^9 does not hold (3.91354e+07 vs 2.9873e+30)",
+   "sources": [
+    "numeric"
+   ],
+   "passes": [],
+   "numeric": {
+    "left": "33^5",
+    "relation": "=",
+    "right": "2433^9",
+    "why": "33^5 = 2433^9 does not hold (3.91354e+07 vs 2.9873e+30)"
+   }
+  },
+  {
+   "solution_id": "q:g10m3s2-1-2:ex3-2-24b",
+   "lo": "lo:g10m3s2-1-2",
+   "step": 1,
+   "kind": "wrong_value",
+   "where": "working",
+   "quote": "7^8=576801",
+   "expected": "7^8 = 5764801",
+   "why": "7^8 is 5764801; the table shows 576801, a digit dropped.",
+   "sources": [
+    "agent",
+    "numeric"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ],
+   "also_kinds": [
+    "arithmetic"
+   ],
+   "numeric": {
+    "left": "077^5",
+    "relation": "=",
+    "right": "168077^9",
+    "why": "077^5 = 168077^9 does not hold (2.70678e+09 vs 1.07047e+47)"
+   }
+  },
+  {
+   "solution_id": "q:g10m3s2-1-2:ex3-2-24c",
+   "lo": "lo:g10m3s2-1-2",
+   "step": 2,
+   "kind": "arithmetic",
+   "where": "working",
+   "quote": "\\frac{250}{4}=62\\text{r}0",
+   "expected": "250 divided by 4 is 62 remainder 2",
+   "why": "250 = 4×62 + 2, so the remainder is 2, not 0; the second-row conclusion needs remainder 2.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "A",
+    "B",
+    "B"
+   ],
+   "also_kinds": [
+    "label"
+   ]
+  },
+  {
+   "solution_id": "q:g10m3s2-1-3:ex3-1-11b",
+   "lo": "lo:g10m3s2-1-3",
+   "step": 2,
+   "kind": "copy",
+   "where": "working",
+   "quote": "T_{1}+d=5+(2)(n-1)",
+   "expected": "T_1+d(n-1)",
+   "why": "The general-term formula is copied as T_1+d, losing the factor (n-1); T_1+d does not equal 5+2(n-1).",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ],
+   "also_kinds": [
+    "other"
+   ]
+  },
+  {
+   "solution_id": "q:g10m3s2-1-4:ex3-1-9a",
+   "lo": "lo:g10m3s2-1-4",
+   "step": 5,
+   "kind": "copy",
+   "where": "working",
+   "quote": "0\\;;\\;8\\;;\\;15\\;;\\;24",
+   "expected": "0; 3; 8; 15; 24",
+   "why": "The full sequence drops the given second term 3, so it does not match the question's sequence..",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "B"
+   ]
+  }
+ ],
+ "flagged_solutions": 8,
+ "unclear": [],
+ "unchecked": [],
+ "problems": [],
+ "checked_ids": [
+  "expl:g10m3s2-1-1:we01",
+  "expl:g10m3s2-1-2:ex3-2-13",
+  "expl:g10m3s2-1-2:ex3-2-14",
+  "expl:g10m3s2-1-3:ex3-1-1",
+  "expl:g10m3s2-1-3:ex3-1-10a",
+  "expl:g10m3s2-1-3:ex3-1-10b",
+  "expl:g10m3s2-1-3:ex3-1-10c",
+  "expl:g10m3s2-1-3:ex3-2-1",
+  "expl:g10m3s2-1-3:we02",
+  "expl:g10m3s2-1-4:ex3-2-25",
+  "expl:g10m3s2-1-4:we03",
+  "q:g10m3s2-1-1:ex3-1-11a",
+  "q:g10m3s2-1-1:ex3-1-12a",
+  "q:g10m3s2-1-1:ex3-1-13a",
+  "q:g10m3s2-1-1:ex3-1-4a",
+  "q:g10m3s2-1-1:ex3-1-4b",
+  "q:g10m3s2-1-1:ex3-1-4c",
+  "q:g10m3s2-1-1:ex3-1-4d",
+  "q:g10m3s2-1-1:ex3-1-5a",
+  "q:g10m3s2-1-1:ex3-1-5b",
+  "q:g10m3s2-1-1:ex3-1-5c",
+  "q:g10m3s2-1-1:ex3-1-5d",
+  "q:g10m3s2-1-1:ex3-1-5e",
+  "q:g10m3s2-1-1:ex3-1-5f",
+  "q:g10m3s2-1-1:ex3-1-5g",
+  "q:g10m3s2-1-1:ex3-2-16a",
+  "q:g10m3s2-1-1:ex3-2-17b",
+  "q:g10m3s2-1-1:ex3-2-2",
+  "q:g10m3s2-1-1:ex3-2-22a",
+  "q:g10m3s2-1-1:ex3-2-5a",
+  "q:g10m3s2-1-1:ex3-2-5b",
+  "q:g10m3s2-1-1:ex3-2-8a",
+  "q:g10m3s2-1-1:ex3-2-8b",
+  "q:g10m3s2-1-1:ex3-2-8c",
+  "q:g10m3s2-1-2:ex3-1-2",
+  "q:g10m3s2-1-2:ex3-1-3",
+  "q:g10m3s2-1-2:ex3-1-6",
+  "q:g10m3s2-1-2:ex3-1-7",
+  "q:g10m3s2-1-2:ex3-1-8",
+  "q:g10m3s2-1-2:ex3-2-17a",
+  "q:g10m3s2-1-2:ex3-2-24a",
+  "q:g10m3s2-1-2:ex3-2-24b",
+  "q:g10m3s2-1-2:ex3-2-24c",
+  "q:g10m3s2-1-2:ex3-2-4",
+  "q:g10m3s2-1-2:ex3-2-6",
+  "q:g10m3s2-1-2:ex3-2-7",
+  "q:g10m3s2-1-3:ex3-1-11b",
+  "q:g10m3s2-1-3:ex3-1-12b",
+  "q:g10m3s2-1-3:ex3-1-13b",
+  "q:g10m3s2-1-3:ex3-2-11a",
+  "q:g10m3s2-1-3:ex3-2-11b",
+  "q:g10m3s2-1-3:ex3-2-11c",
+  "q:g10m3s2-1-3:ex3-2-11d",
+  "q:g10m3s2-1-3:ex3-2-12b",
+  "q:g10m3s2-1-3:ex3-2-16b",
+  "q:g10m3s2-1-3:ex3-2-17c",
+  "q:g10m3s2-1-3:ex3-2-21",
+  "q:g10m3s2-1-3:ex3-2-22b",
+  "q:g10m3s2-1-3:ex3-2-23",
+  "q:g10m3s2-1-3:ex3-2-9a",
+  "q:g10m3s2-1-3:ex3-2-9b",
+  "q:g10m3s2-1-4:ex3-1-11c",
+  "q:g10m3s2-1-4:ex3-1-12c",
+  "q:g10m3s2-1-4:ex3-1-13c",
+  "q:g10m3s2-1-4:ex3-1-9a",
+  "q:g10m3s2-1-4:ex3-1-9b",
+  "q:g10m3s2-1-4:ex3-1-9c",
+  "q:g10m3s2-1-4:ex3-1-9d",
+  "q:g10m3s2-1-4:ex3-1-9e",
+  "q:g10m3s2-1-4:ex3-2-10a",
+  "q:g10m3s2-1-4:ex3-2-10b",
+  "q:g10m3s2-1-4:ex3-2-10c",
+  "q:g10m3s2-1-4:ex3-2-12c",
+  "q:g10m3s2-1-4:ex3-2-15",
+  "q:g10m3s2-1-4:ex3-2-16c",
+  "q:g10m3s2-1-4:ex3-2-17d",
+  "q:g10m3s2-1-4:ex3-2-18",
+  "q:g10m3s2-1-4:ex3-2-22c",
+  "q:g10m3s2-1-5:ex3-1-14b",
+  "q:g10m3s2-1-5:ex3-1-15a",
+  "q:g10m3s2-1-5:ex3-1-15b",
+  "q:g10m3s2-1-5:ex3-1-16a",
+  "q:g10m3s2-1-5:ex3-1-16b",
+  "q:g10m3s2-1-5:ex3-1-17a",
+  "q:g10m3s2-1-5:ex3-1-17b",
+  "q:g10m3s2-1-5:ex3-2-19a",
+  "q:g10m3s2-1-5:ex3-2-19b",
+  "q:g10m3s2-1-5:ex3-2-20a",
+  "q:g10m3s2-1-5:ex3-2-20b"
+ ],
+ "runs": [
+  "3e89c739d3b5b24881efef2cd3e4108d47ff5ea52d8fecb32f7b5f2ec810bf0a",
+  "4336fd36ce3768c8ee88638e2edb485009adb3716a9d3442b4876ba1d4b8e523",
+  "bcb106662610d99e22e83c8de7cc45e74de15bf606acd6ac2d41942f9256abb1",
+  "a73efc168aef1ca951570b13e1563172153eb1d903bbbf738e3ade2f64c35712"
+ ],
+ "delta_runs": [
+  {
+   "file": "ch03.g2rec.flags.json",
+   "runs": [
+    "bcb106662610d99e22e83c8de7cc45e74de15bf606acd6ac2d41942f9256abb1",
+    "a73efc168aef1ca951570b13e1563172153eb1d903bbbf738e3ade2f64c35712"
+   ],
+   "prompts_version": "sw-v3",
+   "passes": [
+    "A",
+    "B"
+   ],
+   "solutions": 1,
+   "flagged_solutions": 0,
+   "solution_ids": [
+    "q:g10m3s2-1-2:ex3-1-3"
+   ]
+  }
+ ]
+}

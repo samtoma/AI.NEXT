@@ -1,0 +1,78 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m14s6-1-1:cricket-not",
+ "kind": "family",
+ "lo_id": "lo:g10m14s6-1-1",
+ "parent_question_id": "q:g10m14s6-1-1:ex14-6-4",
+ "source_page": 486,
+ "tier": "advanced",
+ "answer_type": "mcq",
+ "context": "A cricket team plays one game. The game ends in a win for the team, a loss for the team or a tie.",
+ "params": [
+  {
+   "name": "EV",
+   "let": "[['the team wins', 'a win'], ['the team loses', 'a loss'], ['the game is a tie', 'a tie'], ['the team does not lose', 'a win or a tie'], ['the team does not win', 'a loss or a tie'], ['the game is not a tie', 'a win or a loss']]"
+  },
+  {
+   "name": "OV",
+   "let": "[[0, 3, 'a win'], [4, 1, 'a loss'], [2, 3, 'a tie'], [4, 2, 'a tie'], [3, 4, 'a tie'], [3, 5, 'a win'], [5, 4, 'a loss'], [5, 0, 'a win'], [1, 5, 'a loss']]"
+  },
+  {
+   "name": "EX",
+   "let": "[[0, 4], [3, 1], [5, 2]]"
+  },
+  {
+   "name": "NE",
+   "let": "[[0, 1, 'a tie'], [2, 0, 'a loss'], [1, 2, 'a win']]"
+  },
+  {
+   "name": "o",
+   "randint": [
+    0,
+    "len(OV) - 1"
+   ]
+  },
+  {
+   "name": "x",
+   "randint": [
+    0,
+    "len(EX) - 1"
+   ]
+  },
+  {
+   "name": "y",
+   "sample": {
+    "from": "range(0, len(NE))",
+    "k": 2
+   }
+  }
+ ],
+ "stem": "A cricket team plays one game. The game ends in a win for the team, a loss for the team or a tie. A tie is neither a win nor a loss. Exactly one of the following pairs of events is not mutually exclusive. Which pair is it?",
+ "choices": {
+  "correct": "Event A: {=EV[OV[o][0]][0]}. Event B: {=EV[OV[o][1]][0]}.",
+  "distractors": [
+   {
+    "text": "Event A: {=EV[EX[x][0]][0]}. Event B: {=EV[EX[x][1]][0]}.",
+    "misconception_id": "mc:g10m14s6-1-1:both-possible-so-not-exclusive"
+   },
+   {
+    "text": "Event A: {=EV[NE[y[0]][0]][0]}. Event B: {=EV[NE[y[0]][1]][0]}.",
+    "misconception_id": "mc:g10m14s6-1-1:leftover-outcomes-so-not-exclusive"
+   },
+   {
+    "text": "Event A: {=EV[NE[y[1]][0]][0]}. Event B: {=EV[NE[y[1]][1]][0]}.",
+    "misconception_id": "mc:g10m14s6-1-1:leftover-outcomes-so-not-exclusive"
+   }
+  ]
+ },
+ "distinct_by_choices": true,
+ "solution": [
+  "The game ends in one of three results: a win, a loss or a tie. Two events are mutually exclusive when no result is in both of them. They are not mutually exclusive when some result is in both.",
+  "For Event A: {=EV[OV[o][0]][0]} and Event B: {=EV[OV[o][1]][0]}, event A covers {=EV[OV[o][0]][1]} and event B covers {=EV[OV[o][1]][1]}. Both events cover {=OV[o][2]}, so they can happen together and are not mutually exclusive.",
+  "For Event A: {=EV[EX[x][0]][0]} and Event B: {=EV[EX[x][1]][0]}, event A covers {=EV[EX[x][0]][1]} and event B covers {=EV[EX[x][1]][1]}. No result is in both, so these events are mutually exclusive. Each event can happen, but not both in the same game.",
+  "For Event A: {=EV[NE[y[0]][0]][0]} and Event B: {=EV[NE[y[0]][1]][0]}, event A covers {=EV[NE[y[0]][0]][1]} and event B covers {=EV[NE[y[0]][1]][1]}. No result is in both, so these events are mutually exclusive. The game could end in {=NE[y[0]][2]}, which is in neither event, but that does not matter.",
+  "For Event A: {=EV[NE[y[1]][0]][0]} and Event B: {=EV[NE[y[1]][1]][0]}, event A covers {=EV[NE[y[1]][0]][1]} and event B covers {=EV[NE[y[1]][1]][1]}. No result is in both, so these events are mutually exclusive. The game could end in {=NE[y[1]][2]}, which is in neither event, but that does not matter.",
+  "The only pair that is not mutually exclusive is Event A: {=EV[OV[o][0]][0]} and Event B: {=EV[OV[o][1]][0]}."
+ ],
+ "notes": "Advanced tier: the twist the book itself uses in ex14-6-4 (a tie is neither a win nor a loss, so two events can be mutually exclusive without using up every result), asked in the negative so that the leftover-outcome misconception has a place to show. The two leftover distractors are mutually exclusive pairs that leave one result out; the both-possible distractor is a mutually exclusive pair that covers all three results. Events are sets of results over win, loss and tie. Every OV row has exactly one result in both events, every EX and NE row has none, and each NE leftover result is the one in neither event (checked in code). Over 2000 simulated instances exactly one of the four options is not mutually exclusive, and the four options are always different pairs (no pair appears in both orders)."
+}

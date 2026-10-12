@@ -1,0 +1,40 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m7s3-1-1:diagonals-bisect",
+ "kind": "family",
+ "lo_id": "lo:g10m7s3-1-1",
+ "parent_question_id": "q:g10m7s3-1-1:ex7-8-2b",
+ "source_page": 270,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "b",
+   "randint": [
+    3,
+    15
+   ]
+  },
+  {
+   "name": "a",
+   "randint": [
+    3,
+    15
+   ],
+   "resample_while": "a == b"
+  }
+ ],
+ "constraints": [
+  "a != b"
+ ],
+ "stem": "The diagonals $AC$ and $BD$ of parallelogram $ABCD$ intersect at $M$. $AM={=a}$ cm and $BM={=b}$ cm. Calculate the length of $BD$ in cm.",
+ "answer": "2 * b",
+ "solution": [
+  "The diagonals of a parallelogram bisect each other, so $M$ is the mid-point of $BD$ and $MD=BM={=b}$ cm.",
+  "$BD=BM+MD={=b}+{=b}={=2 * b}$ cm.",
+  "The length $AM$ is not needed for $BD$: it belongs to the other diagonal, $AC=2\\times{=a}={=2 * a}$ cm."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Basic: the entry-level use of the property the book's true/false item ex7-8-2b (page 270) tests, 'both diagonals of a parallelogram bisect each other', turned into a number. AM is given as well as BM, and AM is not equal to BM, so the student must pick the right half-diagonal. A student who reads 'bisect each other' as 'the diagonals are equal' (mc:g10m7s3-1-1:bisect-read-as-equal-diagonals) would answer 2a, which is why a is kept different from b. Numeric families carry no distractors, so no misconception id is attached."
+}

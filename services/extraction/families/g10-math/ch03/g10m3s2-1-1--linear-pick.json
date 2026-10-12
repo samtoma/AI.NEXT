@@ -1,0 +1,223 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m3s2-1-1:linear-pick",
+ "kind": "family",
+ "lo_id": "lo:g10m3s2-1-1",
+ "parent_question_id": "q:g10m3s2-1-1:ex3-1-4b",
+ "source_page": 66,
+ "tier": "advanced",
+ "answer_type": "mcq",
+ "context": null,
+ "distinct_by_choices": true,
+ "params": [
+  {
+   "name": "a1",
+   "randint": [
+    -8,
+    25
+   ]
+  },
+  {
+   "name": "d1",
+   "choice": [
+    -9,
+    -8,
+    -7,
+    -6,
+    -5,
+    -4,
+    -3,
+    -2,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ]
+  },
+  {
+   "name": "a2",
+   "randint": [
+    -8,
+    25
+   ],
+   "resample_while": "a2 == a1"
+  },
+  {
+   "name": "e2",
+   "choice": [
+    -9,
+    -8,
+    -7,
+    -6,
+    -5,
+    -4,
+    -3,
+    -2,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ]
+  },
+  {
+   "name": "s2",
+   "choice": [
+    -3,
+    -2,
+    -1,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "name": "a3",
+   "randint": [
+    -8,
+    25
+   ],
+   "resample_while": "a3 == a1 or a3 == a2"
+  },
+  {
+   "name": "e3",
+   "choice": [
+    -9,
+    -8,
+    -7,
+    -6,
+    -5,
+    -4,
+    -3,
+    -2,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ]
+  },
+  {
+   "name": "s3",
+   "choice": [
+    -3,
+    -2,
+    -1,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "name": "a4",
+   "randint": [
+    -8,
+    25
+   ],
+   "resample_while": "a4 == a1 or a4 == a2 or a4 == a3"
+  },
+  {
+   "name": "e4",
+   "choice": [
+    -9,
+    -8,
+    -7,
+    -6,
+    -5,
+    -4,
+    -3,
+    -2,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ]
+  },
+  {
+   "name": "s4",
+   "choice": [
+    -3,
+    -2,
+    -1,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "name": "L1",
+   "let": "[a1, a1 + d1, a1 + 2 * d1, a1 + 3 * d1, a1 + 4 * d1]"
+  },
+  {
+   "name": "L2",
+   "let": "[a2, a2 + e2, a2 + 2 * e2, a2 + 3 * e2, a2 + 4 * e2 + s2]"
+  },
+  {
+   "name": "L3",
+   "let": "[a3, a3 + e3, a3 + 2 * e3, a3 + 3 * e3 + s3, a3 + 4 * e3 + s3]"
+  },
+  {
+   "name": "L4",
+   "let": "[a4, a4 + e4, a4 + 2 * e4 + s4, a4 + 3 * e4 + s4, a4 + 4 * e4 + s4]"
+  },
+  {
+   "name": "g1",
+   "let": "[L1[1] - L1[0], L1[2] - L1[1], L1[3] - L1[2], L1[4] - L1[3]]"
+  },
+  {
+   "name": "g2",
+   "let": "[L2[1] - L2[0], L2[2] - L2[1], L2[3] - L2[2], L2[4] - L2[3]]"
+  },
+  {
+   "name": "g3",
+   "let": "[L3[1] - L3[0], L3[2] - L3[1], L3[3] - L3[2], L3[4] - L3[3]]"
+  },
+  {
+   "name": "g4",
+   "let": "[L4[1] - L4[0], L4[2] - L4[1], L4[3] - L4[2], L4[4] - L4[3]]"
+  }
+ ],
+ "constraints": [],
+ "stem": "Exactly one of the following lists of numbers has a common difference, that is, the difference between every pair of neighbouring numbers is the same. Which one?",
+ "solution": [
+  "A list has a common difference only when subtracting each number from the one after it gives the same result every time, so every difference in each list has to be checked, not just the first one.",
+  "The list ${=L1[0]}\\;;\\;{=L1[1]}\\;;\\;{=L1[2]}\\;;\\;{=L1[3]}\\;;\\;{=L1[4]}$ gives the differences ${=g1[0]}\\;;\\;{=g1[1]}\\;;\\;{=g1[2]}\\;;\\;{=g1[3]}$, which are all the same.",
+  "The list ${=L2[0]}\\;;\\;{=L2[1]}\\;;\\;{=L2[2]}\\;;\\;{=L2[3]}\\;;\\;{=L2[4]}$ gives the differences ${=g2[0]}\\;;\\;{=g2[1]}\\;;\\;{=g2[2]}\\;;\\;{=g2[3]}$. The last difference is not the same as the others, so this list has no common difference.",
+  "The list ${=L3[0]}\\;;\\;{=L3[1]}\\;;\\;{=L3[2]}\\;;\\;{=L3[3]}\\;;\\;{=L3[4]}$ gives the differences ${=g3[0]}\\;;\\;{=g3[1]}\\;;\\;{=g3[2]}\\;;\\;{=g3[3]}$. The third difference is not the same as the others, so this list has no common difference.",
+  "The list ${=L4[0]}\\;;\\;{=L4[1]}\\;;\\;{=L4[2]}\\;;\\;{=L4[3]}\\;;\\;{=L4[4]}$ gives the differences ${=g4[0]}\\;;\\;{=g4[1]}\\;;\\;{=g4[2]}\\;;\\;{=g4[3]}$. The second difference is not the same as the others, so this list has no common difference.",
+  "Only the list ${=L1[0]}\\;;\\;{=L1[1]}\\;;\\;{=L1[2]}\\;;\\;{=L1[3]}\\;;\\;{=L1[4]}$ has the same difference every time, so it is the answer. Its common difference is $d={=d1}$."
+ ],
+ "choices": {
+  "correct": "${=L1[0]}\\;;\\;{=L1[1]}\\;;\\;{=L1[2]}\\;;\\;{=L1[3]}\\;;\\;{=L1[4]}$",
+  "distractors": [
+   {
+    "text": "${=L2[0]}\\;;\\;{=L2[1]}\\;;\\;{=L2[2]}\\;;\\;{=L2[3]}\\;;\\;{=L2[4]}$",
+    "misconception_id": "mc:g10m3s2-1-1:common-difference-without-checking"
+   },
+   {
+    "text": "${=L3[0]}\\;;\\;{=L3[1]}\\;;\\;{=L3[2]}\\;;\\;{=L3[3]}\\;;\\;{=L3[4]}$",
+    "misconception_id": "mc:g10m3s2-1-1:common-difference-without-checking"
+   },
+   {
+    "text": "${=L4[0]}\\;;\\;{=L4[1]}\\;;\\;{=L4[2]}\\;;\\;{=L4[3]}\\;;\\;{=L4[4]}$",
+    "misconception_id": "mc:g10m3s2-1-1:common-difference-without-checking"
+   }
+  ]
+ },
+ "proposed_misconceptions": [],
+ "notes": "Twist the book itself uses in Exercise 3.1 Q4: 'If the sequence is not linear, write no common difference', turned into a choice. The stem never changes, so distinct_by_choices is set; the four lists are drawn with four different first numbers, so option sets differ between instances. Each distractor breaks the pattern in exactly one place (last, third, or second difference, s is never 0) so a student who checks only the first difference, or only the first two or three, picks it; all three carry mc:g10m3s2-1-1:common-difference-without-checking. Verified by simulation over 2000 draws: exactly one list is linear, the other three never are, and no two option sets coincide. The solution names lists by their numbers, never by position, because the engine shuffles the options."
+}

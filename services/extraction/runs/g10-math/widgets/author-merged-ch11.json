@@ -1,0 +1,118 @@
+{
+  "mode": "author",
+  "book": "g10-math",
+  "merged_from": [
+    {
+      "file": "author-ch11-wf_cbece5ff-f12.json",
+      "run_id": null,
+      "prompts_version": "s7-v7",
+      "lessons": [
+        "g10m11s1-1"
+      ]
+    }
+  ],
+  "rule": "oldest first; a lesson's record in a later run replaces its earlier one whole",
+  "records": [
+    {
+      "lesson": "g10m11s1-1",
+      "templates": [
+        {
+          "format": "ainext.widget-template/1",
+          "id": "wt:g10m11s1-1-2:ladder-angle-with-the-wall",
+          "lo_id": "lo:g10m11s1-1-2",
+          "parent_question_id": "q:g10m11s1-1-2:ex11-2-1",
+          "tier": "basic",
+          "kind": "triangle_ratio",
+          "spec": {
+            "ask": "sin",
+            "target": 0.6
+          },
+          "stem": "A $\\text{25}$ $\\text{m}$ ladder rests against a vertical wall with its foot $\\text{15}$ $\\text{m}$ from the wall. Build a right triangle, of any size, whose marked angle $\\theta$ equals the angle between the ladder and the wall.",
+          "solution": [
+            "Picture the ladder, the wall and the ground as a right triangle. The ladder is the hypotenuse (25 m), the side opposite the right angle and the longest side.",
+            "The angle $\\theta$ the question wants is the one between the ladder and the WALL, at the top of the ladder. It is not the angle at the foot of the ladder.",
+            "Read the sides from that angle: the foot's distance from the wall (15 m) lies across from $\\theta$, so it is the opposite side. The wall itself touches $\\theta$, so it is the adjacent side.",
+            "The two sides we know are the opposite side and the hypotenuse, so the ratio is the sine: $\\sin\\theta = \\frac{15}{25} = 0.6$.",
+            "Triangles with the same angle have the same ratio, whatever their size. Drag the legs until the sine reads 0.6: legs 3 and 4 (hypotenuse 5), legs 6 and 8, or the ladder's own 15 and 20 all work.",
+            "Check against the book's method: $\\theta = \\sin^{-1}(0.6) \\approx 36.87^\\circ$, the angle between the ladder and the wall."
+          ],
+          "diagnostics": [
+            {
+              "predicate": "used-cosine",
+              "misconception_id": "mc:g10m11s1-1-2:names-sides-from-wrong-angle"
+            },
+            {
+              "predicate": "used-tangent",
+              "misconception_id": "mc:g10m5s3-1-2:sine-as-opposite-over-adjacent"
+            }
+          ],
+          "notes": "Why it fits LO2: the two given sides (foot distance = opposite, ladder = hypotenuse) fix a ratio, and the ratio fixes the angle. 'Any size of triangle, same angle' is exactly why the angle can be recovered from two sides. The stem never names sine: choosing which of the three live readouts to match is the 'choose the appropriate ratio' step, and the grading property is 'the angle between ladder and wall', which any similar triangle satisfies. The trap is the book's own (ex11-2-1): a student who pictures the angle at the foot, where the ladder meets the ground, sets cos = 0.6 and fires used-cosine, which is this objective's own misconception. used-tangent is mapped to the sine-as-opposite-over-adjacent error (a sine built from the two legs); a student who instead treats the ladder as a leg would fire the same predicate, and that cause is not separately named. off-target is left unmapped because it fires for many unrelated reasons. The question relies only on 'opposite' and 'next to' the marked angle, never on where the angle sits on screen. 15:25 is 3:5, so sin = 0.6 sits inside the instrument's limits (sin target below 1). NOT covered by this template: the inverse-key and rounding steps (misconceptions ratio-key-instead-of-inverse and rounds-angle-too-coarsely). Those are calculator moves with no construction in them, so they stay with the numeric book questions."
+        },
+        {
+          "format": "ainext.widget-template/1",
+          "id": "wt:g10m11s1-1-3:depression-from-the-cliff",
+          "lo_id": "lo:g10m11s1-1-3",
+          "parent_question_id": "q:g10m11s1-1-3:we04",
+          "tier": "standard",
+          "kind": "triangle_ratio",
+          "spec": {
+            "ask": "tan",
+            "target": 0.75
+          },
+          "stem": "From the top of a $\\text{30}$ $\\text{m}$ cliff, a boat on the level sea is seen at an angle of depression $\\theta$. The boat is $\\text{40}$ $\\text{m}$ from the foot of the cliff. Build a right triangle, of any size, whose marked angle $\\theta$ equals this angle of depression.",
+          "solution": [
+            "Draw the cliff as a vertical line 30 m tall and the sea as a horizontal line. The boat is 40 m from the foot of the cliff, along the sea.",
+            "The angle of depression is measured DOWN from the horizontal line through the observer's eye (the cliff top) to the line of sight. It is not measured from the cliff face.",
+            "The horizontal line at the top of the cliff is parallel to the sea, so the angle of depression equals the angle of elevation of the cliff top as seen from the boat (alternate angles). So $\\theta$ is the angle at the boat.",
+            "Read the sides from $\\theta$ at the boat: the cliff's height (30 m) is opposite, the 40 m along the sea is adjacent, and the line of sight is the hypotenuse.",
+            "The two sides we know are both legs, so the ratio is the tangent: $\\tan\\theta = \\frac{30}{40} = 0.75$.",
+            "Triangles with the same angle have the same tangent, so drag the legs until the tangent reads 0.75: legs 3 and 4, 6 and 8, or the cliff's own 30 and 40 all work.",
+            "Check: $\\theta = \\tan^{-1}(0.75) \\approx 36.87^\\circ$. The angle at the top of the cliff, between the cliff face and the line of sight, is the other acute angle, $90^\\circ - \\theta \\approx 53.13^\\circ$."
+          ],
+          "diagnostics": [
+            {
+              "predicate": "ratio-inverted",
+              "misconception_id": "mc:g10m5s3-1-2:reads-sides-from-other-angle"
+            },
+            {
+              "predicate": "used-sine",
+              "misconception_id": "mc:g10m5s3-1-1:hypotenuse-not-opposite-right-angle"
+            }
+          ],
+          "notes": "Why it fits LO3, and how far: identifying the angle of depression is the objective's own skill. The student must see that the depression is measured from the horizontal at the observer and equals the triangle's angle at the boat (the book's we04 figure draws exactly this, with a dashed horizontal at B and 62 degrees below it), and then use it with the tangent. The classic slip is to take the angle at the cliff top, between the cliff face and the sight line. That is the other acute angle, so the two legs trade places and the tangent comes out upside down: ratio-inverted, mapped to reads-sides-from-other-angle, the nearest listed record for 'the angle is read from the other vertex'. used-sine is mapped to hypotenuse-not-opposite-right-angle: a student who takes the 40 m, which touches the angle, as the longest side has built sin = 0.75 instead of tan. A student who reads 'distance from the foot' as the line-of-sight distance fires the same predicate, and that cause is not separately named. used-cosine can only be reached by combining both errors and is left unmapped, as is off-target. This lesson's own misconception (trusting-the-sketch) cannot be tested by a construction that is generated rather than drawn to scale. The sketch-versus-data check lives in the gap below. Only 'opposite' and 'next to' the marked angle are used, never a screen position. tan 0.75 (3:4) is inside the validator's limits. NOT covered: the two-angle composition of we04 and ex11-2-20 (elevation to the top plus depression to the base from one eye), and distinguishing depression from elevation by direction. See the LO3 gap."
+        }
+      ],
+      "gaps": [
+        {
+          "lo_id": "lo:g10m11s1-1-1",
+          "need_kind": "trig_setup",
+          "description": "A right triangle drawn inside a real scene (ladder against a wall, building with a line of sight, kite string), with one angle marked exactly where the problem puts it (for the ladder, at the TOP against the wall), one side labelled with a length and one side marked x. The student builds the setup in two moves. First, tap each side and tag it opposite, adjacent or hypotenuse for the MARKED angle. Second, assemble the equation by dragging the known side and x into a ratio and choosing sin, cos or tan. Any equivalent equation is accepted (x = 25 sin 37 degrees, or x/25 = sin 37 degrees), and a readout then computes x and runs the sense check that a leg must be shorter than the hypotenuse. It would diagnose: the tags exchanged because the angle was pictured at the ground end (this objective's own sides-labelled-from-wrong-angle, cosine used where sine is needed), the hypotenuse picked as 'the slanted side from the angle', the equation inverted (x = 25 divided by sin 37 degrees, multiplying versus dividing), and a computed leg longer than the hypotenuse.",
+          "why": "The objective is: given an angle and one side, find another side. triangle_ratio only grades the ratio of a triangle's SHAPE. It never takes an angle size or a length, no unknown side appears in it, nothing is computed, and its marked angle sits in a fixed place, so the ladder's angle-at-the-wall slip cannot be posed for this objective. Any use of it here would only restate the ratio definition (the prerequisite g10m5s3-1-2) or become a number-matching box in disguise. The errors this objective lives on are all in the SETUP (which angle, which sides, which ratio, which way up), and no existing kind builds a setup."
+        },
+        {
+          "lo_id": "lo:g10m11s1-1-3",
+          "need_kind": "sight_line_scene",
+          "description": "A scene with an observer, a target and a horizontal reference line always drawn through the observer's eye. The student drags the sight line, or an angle arc swung from the horizontal, to build an angle of elevation or of depression of a stated size, and the widget shows the right triangle that results, with the alternate angle at the other end when the viewpoint is swapped. For two-viewpoint tasks (we04, ex11-2-20), the student builds the elevation to the top and the depression to the base from the same eye, as two right triangles sharing one horizontal side, so that the height is the sum of two tangent terms. It would diagnose: the angle measured from the vertical (depression read as the interior angle at the observer's end, which is 90 degrees minus the true value), depression and elevation swapped (up versus down), the depression angle placed at the wrong end without the alternate-angles step, and trusting-the-sketch (this objective's own misconception) through scenes drawn deliberately not to scale, where the picture disagrees with the stated angle and only the stated data is right. The first and third errors have no record in this lesson's misconception list. A record such as 'angle-of-depression-measured-from-the-vertical' would need to be added before the widget could name them.",
+          "why": "The wording template wt:g10m11s1-1-3:depression-from-the-cliff covers only the last step of the objective, using a depression through its alternate angle with the tangent. No existing kind has an observer, a horizontal reference line or an up-versus-down sense, so none can ask the student to IDENTIFY an elevation or a depression, which is the objective's first clause. None can compose two triangles that share a side. triangle_ratio sees only one anonymous right triangle, and angle_setter is circle-only (arcs and inscribed angles)."
+        }
+      ],
+      "notes": "Lesson g10m11s1-1 (Chapter 11, Trigonometry). I read the contract, the lesson file and the figures for the parents I designed around (we04) and for ex11-1-1 and ex11-2-3. triangle_ratio is the only existing kind that touches this lesson, and it genuinely fits only where the construction is the SETUP of a ratio: which sides, from which angle, which ratio, any triangle of the same angle. Two templates are offered on that basis. One is for LO2 (ladder, angle between ladder and wall, sin 0.6; this objective's own wrong-angle trap). The other is for LO3 (angle of depression from a cliff, tan 0.75, through alternate angles). Neither stem points at a figure. Neither names the ratio, so reading the right sides and choosing the right readout stays with the student. LO1 (angle plus one side gives an unknown side) is recorded as a gap: nothing in the instrument takes a given angle or length or yields an unknown side, so a template there would be forced. The LO3 gap records what the template does not reach. Left out on purpose: the calculator steps of LO2 (the inverse key and rounding the angle), which have no construction in them. triangle_ratio's marked angle position is never relied on. Every stem uses only 'opposite' and 'next to' the marked angle. If the widget's drawing differs, only the checks 'does the picture show a vertical leg' remain open. Template ids use the objective tail as the contract asks. No instances are given: each target (0.6, 0.75) is tied to the stem's own numbers and to which predicates can fire, so varying it by rows would change the diagnostics.",
+      "source": "author-ch11-wf_cbece5ff-f12.json",
+      "run_id": null
+    }
+  ],
+  "gaps": [
+    {
+      "lo_id": "lo:g10m11s1-1-1",
+      "need_kind": "trig_setup",
+      "description": "A right triangle drawn inside a real scene (ladder against a wall, building with a line of sight, kite string), with one angle marked exactly where the problem puts it (for the ladder, at the TOP against the wall), one side labelled with a length and one side marked x. The student builds the setup in two moves. First, tap each side and tag it opposite, adjacent or hypotenuse for the MARKED angle. Second, assemble the equation by dragging the known side and x into a ratio and choosing sin, cos or tan. Any equivalent equation is accepted (x = 25 sin 37 degrees, or x/25 = sin 37 degrees), and a readout then computes x and runs the sense check that a leg must be shorter than the hypotenuse. It would diagnose: the tags exchanged because the angle was pictured at the ground end (this objective's own sides-labelled-from-wrong-angle, cosine used where sine is needed), the hypotenuse picked as 'the slanted side from the angle', the equation inverted (x = 25 divided by sin 37 degrees, multiplying versus dividing), and a computed leg longer than the hypotenuse.",
+      "why": "The objective is: given an angle and one side, find another side. triangle_ratio only grades the ratio of a triangle's SHAPE. It never takes an angle size or a length, no unknown side appears in it, nothing is computed, and its marked angle sits in a fixed place, so the ladder's angle-at-the-wall slip cannot be posed for this objective. Any use of it here would only restate the ratio definition (the prerequisite g10m5s3-1-2) or become a number-matching box in disguise. The errors this objective lives on are all in the SETUP (which angle, which sides, which ratio, which way up), and no existing kind builds a setup."
+    },
+    {
+      "lo_id": "lo:g10m11s1-1-3",
+      "need_kind": "sight_line_scene",
+      "description": "A scene with an observer, a target and a horizontal reference line always drawn through the observer's eye. The student drags the sight line, or an angle arc swung from the horizontal, to build an angle of elevation or of depression of a stated size, and the widget shows the right triangle that results, with the alternate angle at the other end when the viewpoint is swapped. For two-viewpoint tasks (we04, ex11-2-20), the student builds the elevation to the top and the depression to the base from the same eye, as two right triangles sharing one horizontal side, so that the height is the sum of two tangent terms. It would diagnose: the angle measured from the vertical (depression read as the interior angle at the observer's end, which is 90 degrees minus the true value), depression and elevation swapped (up versus down), the depression angle placed at the wrong end without the alternate-angles step, and trusting-the-sketch (this objective's own misconception) through scenes drawn deliberately not to scale, where the picture disagrees with the stated angle and only the stated data is right. The first and third errors have no record in this lesson's misconception list. A record such as 'angle-of-depression-measured-from-the-vertical' would need to be added before the widget could name them.",
+      "why": "The wording template wt:g10m11s1-1-3:depression-from-the-cliff covers only the last step of the objective, using a depression through its alternate angle with the tangent. No existing kind has an observer, a horizontal reference line or an up-versus-down sense, so none can ask the student to IDENTIFY an elevation or a depression, which is the objective's first clause. None can compose two triangles that share a side. triangle_ratio sees only one anonymous right triangle, and angle_setter is circle-only (arcs and inscribed angles)."
+    }
+  ]
+}

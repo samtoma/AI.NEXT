@@ -1,0 +1,39 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m7s3-1-1:opposite-angles",
+ "kind": "family",
+ "lo_id": "lo:g10m7s3-1-1",
+ "parent_question_id": "q:g10m7s3-1-1:ex7-3-1c",
+ "source_page": 254,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "t",
+   "randint": [
+    12,
+    38
+   ]
+  },
+  {
+   "name": "z",
+   "let": "180 - 2 * t"
+  }
+ ],
+ "constraints": [
+  "z > 90",
+  "t < 45"
+ ],
+ "stem": "$PQRS$ is a parallelogram, with its vertices named in order round it. $O$ is a point on the side $PQ$ such that $PS=OS$ and $QO=QR$. $P\\hat{S}R={=z}^{\\circ}$. Calculate the size of $S\\hat{O}R$ in degrees.",
+ "answer": "180 - 3 * t",
+ "solution": [
+  "Opposite angles of a parallelogram are equal, so $\\hat{Q}=P\\hat{S}R={=z}^{\\circ}$.",
+  "Since $QO=QR$, $Q\\hat{O}R=Q\\hat{R}O$ ($\\angle$s opp equal sides). Let $Q\\hat{O}R=x^{\\circ}$. In $\\triangle QOR$: $x^{\\circ}+x^{\\circ}+{=z}^{\\circ}=180^{\\circ}$ (sum of $\\angle$s in a $\\triangle$), so $x={=t}$.",
+  "$\\hat{P}+P\\hat{S}R=180^{\\circ}$ (co-int $\\angle$s; $PQ\\parallel SR$), so $\\hat{P}=180^{\\circ}-{=z}^{\\circ}={=180 - z}^{\\circ}$.",
+  "Since $PS=OS$, $S\\hat{O}P=\\hat{P}={=180 - z}^{\\circ}$ ($\\angle$s opp equal sides).",
+  "$P$, $O$ and $Q$ lie on a straight line, so $S\\hat{O}R=180^{\\circ}-S\\hat{O}P-Q\\hat{O}R$ (sum of $\\angle$s on a str line) $=180^{\\circ}-{=180 - z}^{\\circ}-{=t}^{\\circ}={=180 - 3 * t}^{\\circ}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced: the book's own configuration (ex7-3-1c, page 254: O on PQ, PS=OS, QO=QR) run in the harder direction. The student is given the angle at S (not the angle SOR) and must chain: opposite angles of a parallelogram, isosceles triangle QOR, co-interior angles at P and S, isosceles triangle POS, angles on a straight line. That is five reasons against the book's three. The book diagram is replaced by wording ('O is a point on the side PQ', vertices in order), so no figure is needed. Geometry verified by coordinates for t = 12, 20, 28, 30, 38: with PS=OS=QO=QR=a the configuration exists for every P=2t<90, and SOR=180-3t, QOR=t, PSR=180-2t each time. The book instance (t=28, PSR=124, SOR=96) is a member of the family. Range t 12..38 keeps P acute (24 to 76 degrees) and PSR obtuse (104 to 156 degrees), as in the book's figure. ex7-8-33c (mid-point theorem) was not used: it needs the mid-point theorem, which is another objective's method."
+}

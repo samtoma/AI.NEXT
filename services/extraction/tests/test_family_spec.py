@@ -1,0 +1,646 @@
+"""Declarative family specs: checking, instantiating, blind grading, the bundle (B12, §3.9).
+
+@covers FR-4304, FR-4305
+
+FR-4304: families are declarative specs, regenerated deterministically, keys computed
+with the stem, each item naming its parent, distractors naming a misconception of the
+same objective, validation before load. FR-4305: the tier floor is measured over book
+and generated items together. The blind-grading rule (one disagreement rejects the
+family) and the fail-closed bundle are the stage's own gates (§3.9).
+
+    uv run --with pytest python -m pytest -q tests/test_family_spec.py
+"""
+
+from __future__ import annotations
+
+import contextlib
+import copy
+import io
+import json
+import random
+import re
+import shutil
+import subprocess
+import tempfile
+import unittest
+from pathlib import Path
+
+import _scratchdb  # noqa: F401
+import book_config
+import generate_questions as G
+import load_generated_questions as L
+from families import spec as FS
+
+HERE = Path(__file__).resolve().parent
+FIX = HERE / "fixtures" / "families"
+SPECS = FIX / "g10-specs"
+CATALOGUE = FIX / "g10-catalogue.json"
+SEED = 20260925
+NODE = shutil.which("node")
+APP_MARKER = HERE.parents[2] / "app" / "src" / "lib" / "answer-marker.ts"
+
+
+def load(name: str) -> dict:
+    return json.loads((SPECS / name).read_text())
+
+
+def run(specs, n=4):
+    return G.run_specs(specs, n, SEED)
+
+
+def quiet(fn, *a):
+    with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()) as err:
+        rc = fn(*a)
+    return rc, err.getvalue()
+
+
+def good_grades(specs, questions, grading_set, spoil: dict | None = None) -> dict:
+    """What an honest blind grader returns, with answers optionally spoiled per family."""
+    by_id = {q["id"]: q for q in questions}
+    results = []
+    for fam in grading_set["families"]:
+        answers = []
+        for i, inst in enumerate(fam["instances"]):
+            q = by_id[inst["instance_id"]]
+            if q["question_type"] == "mcq":
+                text = next(c["text"] for c in q["choices"] if c["key"] == q["correct_answer"])
+                ans = {"choice": q["correct_answer"], "choice_text": text}
+            elif q["question_type"] == "short":
+                ans = {"plain": q["answer_check"]}
+            else:
+                ans = {"value": q["correct_answer"]}
+            if spoil and fam["family_id"] in spoil and i == 0:
+                ans = spoil[fam["family_id"]]
+            answers.append({"instance_id": inst["instance_id"], "stem_sha": inst["blind"]["stem_sha"],
+                            "answer": ans, "working": "…"})
+        results.append({"family_id": fam["family_id"], "spec_sha": fam["spec_sha"], "answers": answers,
+                        "judge": {"distractors_ok": True, "key_form_ok": True, "context_ok": True,
+                                  "solution_ok": True, "notes": ""}})
+    return {"mode": "grade", "book": "fixture", "results": results}
+
+
+class TheFixtureSpecs(unittest.TestCase):
+    def test_all_six_load_and_instantiate(self):
+        specs, problems = FS.load_dir(SPECS)
+        self.assertEqual(problems, [])
+        self.assertEqual(len(specs), 6)
+        qs, rejected, counts = run(specs)
+        self.assertEqual(rejected, [])
+        self.assertEqual(counts["tpl:g10m9s5-1-1:rand-dollar"], 1, "an authored one-off is one item")
+        self.assertTrue(all(v >= 1 for v in counts.values()))
+        for q in qs:
+            self.assertTrue(q["parent_question_id"].startswith(q["lo_id"].replace("lo:", "q:") + ":"))
+            self.assertIn("family_spec_sha", q)
+        self.assertTrue(any(q.get("authored") for q in qs))
+        self.assertEqual({q["family"] for q in qs if not q.get("authored")},
+                         {s.id for s in specs if s.kind == "family"}, "the family is a FIELD (§3.9)")
+
+    def test_regeneration_is_byte_identical(self):
+        specs, _ = FS.load_dir(SPECS)
+        a, b = run(specs), run(specs)
+        self.assertEqual(json.dumps(a), json.dumps(b))
+
+    def test_typed_answers_carry_the_marker_spec(self):
+        specs, _ = FS.load_dir(SPECS)
+        qs, _, _ = run(specs)
+        short = [q for q in qs if q["question_type"] == "short"]
+        self.assertTrue(short)
+        for q in short:
+            m = q["choices"]["marker"]
+            self.assertEqual(set(q["choices"]), {"marker"})
+            self.assertEqual(set(m), {"kind", "key", "form", "variables", "tolerance"})
+            self.assertEqual(m["key"], q["correct_answer"])
+            self.assertNotIn("$", m["key"])
+        tri = next(q for q in short if q["family"] == "tpl:g10m1s7-2-1:trinomial")
+        self.assertEqual(tri["choices"]["marker"]["form"], "factorised")
+        self.assertRegex(tri["correct_answer"], r"^\(x [+-] \d\)\(x [+-] \d\)$")
+
+    def test_a_fixed_context_varies_only_numbers(self):
+        specs, _ = FS.load_dir(SPECS)
+        qs, _, _ = run([s for s in specs if s.id == "tpl:g10m9s2-1-1:interest"], 6)
+        words = {"".join(ch for ch in q["stem"] if not ch.isdigit()) for q in qs}
+        self.assertEqual(len(words), 1, "only the numbers may change between instances")
+
+
+class RefusedSpecs(unittest.TestCase):
+    def problems(self, mutate) -> list[str]:
+        raw = load("g10m14s4-1-1--union.json")
+        mutate(raw)
+        return FS.check_spec(raw)
+
+    def test_each_rule(self):
+        cases = {
+            "unknown key": lambda r: r.update(distracters=[]),
+            "does not name its objective": lambda r: r.update(id="tpl:g10m4s2-1-1:union"),
+            "not a question of": lambda r: r.update(parent_question_id="q:g10m4s2-1-1:ex4-1-1a"),
+            "belongs to another objective": lambda r: r["choices"]["distractors"][0].update(
+                misconception_id="mc:g10m4s2-1-1:sign-lost-transposing"),
+            "at least three distractors": lambda r: r["choices"].update(distractors=r["choices"]["distractors"][:2]),
+            "tier must be": lambda r: r.update(tier="core"),
+            "unknown function": lambda r: r.update(stem="${=shell('ls')}$"),
+            "has no 'answer'": lambda r: r.update(answer="1"),
+            "exactly one of": lambda r: r["params"].append({"name": "z", "randint": [1, 2], "let": "3"}),
+            "hide a built-in": lambda r: r["params"].append({"name": "num", "let": "1"}),
+        }
+        for expect, mutate in cases.items():
+            ps = self.problems(mutate)
+            self.assertTrue(any(expect in p for p in ps), f"{expect!r} not in {ps}")
+
+    def test_an_authored_one_off_samples_nothing(self):
+        raw = load("g10m9s5-1-1--rand-dollar.json")
+        raw["params"] = [{"name": "usd", "randint": [10, 50]}]
+        self.assertTrue(any("samples nothing" in p for p in FS.check_spec(raw)))
+
+    def test_a_marker_is_checked(self):
+        raw = load("g10m1s7-2-1--trinomial.json")
+        raw["marker"]["kind"] = "polynomial"
+        raw["marker"]["form"] = {"subject": "y"}
+        ps = FS.check_spec(raw)
+        self.assertTrue(any("marker.kind" in p for p in ps))
+        self.assertTrue(any("form.subject" in p for p in ps))
+
+    def test_a_word_in_a_fixed_context_hole_is_an_evaluation_error(self):
+        raw = load("g10m9s2-1-1--interest.json")
+        raw["params"].insert(0, {"name": "who", "choice": ["Thabo", "Lerato"]})
+        raw["stem"] = raw["stem"].replace("Thabo", "{=who}")
+        qs, rejected, counts = run([FS.load_spec(raw)])
+        self.assertEqual(counts[raw["id"]], 0)
+        self.assertTrue(rejected and all("evaluation error" in r and "may vary only numbers" in r for r in rejected))
+
+    def test_an_unformatted_non_whole_answer_is_refused(self):
+        raw = load("g10m4s2-1-1--balance.json")
+        raw["answer"] = "x / 11"  # never whole for 0 < |x| <= 9
+        qs, rejected, _ = run([FS.load_spec(raw)], 2)
+        self.assertEqual(qs, [])
+        self.assertTrue(any("format a non-whole answer" in r for r in rejected))
+
+    def test_two_families_minting_the_same_item_ids_are_refused(self):
+        with tempfile.TemporaryDirectory() as d:
+            a = load("g10m4s2-1-1--balance.json")
+            b = copy.deepcopy(a)
+            b["id"] = "tpl:g10m4s2-1-1:balanced"
+            Path(d, "a.json").write_text(json.dumps(a))
+            Path(d, "b.json").write_text(json.dumps(b))
+            _, problems = FS.load_dir(Path(d))
+        self.assertTrue(any("would collide" in p for p in problems))
+
+    def test_duplicate_stems_are_dropped_and_exhaustion_stops_a_family(self):
+        raw = load("g10m4s2-1-1--balance.json")
+        raw["params"] = [{"name": "x", "choice": [2, 3]}, {"name": "a", "let": "2"}, {"name": "b", "let": "1"},
+                         {"name": "c", "let": "a * x + b"}]
+        qs, _, counts = run([FS.load_spec(raw)], 10)
+        self.assertEqual(counts[raw["id"]], 2, "two stems exist; the family stops there, never repeats")
+        self.assertEqual(len({q["stem"] for q in qs}), 2)
+
+
+class KeysAreRebalanced(unittest.TestCase):
+    def test_correct_answers_spread_over_the_letters(self):
+        specs, _ = FS.load_dir(SPECS)
+        union = [s for s in specs if s.answer_type == "mcq"]
+        qs, _, _ = run(union, 12)
+        G.rebalance_keys(qs, random.Random(SEED))
+        keys = [q["correct_answer"] for q in qs]
+        self.assertLessEqual(max(keys.count(k) for k in "ABCD") - min(keys.count(k) for k in "ABCD"), 1)
+
+
+class BlindGrading(unittest.TestCase):
+    def setUp(self):
+        self.specs, _ = FS.load_dir(SPECS)
+        self.qs, _, _ = run(self.specs, 5)
+        G.rebalance_keys(self.qs, random.Random(SEED))
+        self.gs = G.grading_set(self.specs, self.qs, SEED)
+
+    def test_the_blind_block_carries_no_key(self):
+        for fam in self.gs["families"]:
+            self.assertLessEqual(len(fam["instances"]), 3)
+            for inst in fam["instances"]:
+                blind = json.dumps(inst["blind"])
+                sealed = inst["sealed"]
+                for step in sealed["canonical_solution"]:
+                    self.assertNotIn(json.dumps(step["text_md"])[1:-1], blind)
+                self.assertNotIn("misconception_id", blind)
+                self.assertNotIn("correct_answer", blind)
+                self.assertNotIn("answer_check", blind)
+
+    def test_the_sample_is_reproducible(self):
+        self.assertEqual(self.gs, G.grading_set(self.specs, self.qs, SEED))
+
+    def apply(self, grades):
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d, "grade.json")
+            p.write_text(json.dumps(grades))
+            return G.apply_grades(self.specs, self.qs, [p])
+
+    def test_clean_grades_accept_every_family(self):
+        acc, rej = self.apply(good_grades(self.specs, self.qs, self.gs))
+        self.assertEqual(rej, {})
+        self.assertEqual(set(acc), {s.id for s in self.specs})
+
+    def test_one_disagreement_rejects_the_family_and_only_it(self):
+        spoil = {"tpl:g10m4s2-1-1:balance": {"value": "99999"},
+                 "tpl:g10m1s7-2-1:trinomial": {"plain": "(x+1)*(x+1)"},
+                 "tpl:g10m14s4-1-1:union": {"choice": "A", "choice_text": "not the key"}}
+        acc, rej = self.apply(good_grades(self.specs, self.qs, self.gs, spoil))
+        self.assertEqual(set(rej), set(spoil))
+        self.assertTrue(all(any("disagrees" in r for r in rs) for rs in rej.values()))
+        self.assertIn("tpl:g10m9s2-1-1:interest", acc)
+
+    def test_an_equivalent_typed_answer_agrees(self):
+        tri = next(q for q in self.qs if q["family"] == "tpl:g10m1s7-2-1:trinomial")
+        ok, _ = G.answer_agrees(tri, {"plain": tri["answer_check"].replace("*", "").replace("+ -", "-")})
+        self.assertTrue(ok)
+
+    def test_mcq_answers_compare_by_text_so_rebalancing_cannot_break_them(self):
+        grades = good_grades(self.specs, self.qs, self.gs)
+        for q in self.qs:  # re-shuffle every option after grading
+            if q["question_type"] == "mcq":
+                q["choices"] = list(reversed(q["choices"]))
+        acc, rej = self.apply(grades)
+        self.assertNotIn("tpl:g10m14s4-1-1:union", rej)
+
+    def test_a_grade_of_an_older_spec_does_not_count(self):
+        grades = good_grades(self.specs, self.qs, self.gs)
+        grades["results"][0]["spec_sha"] = "0" * 64
+        _, rej = self.apply(grades)
+        self.assertIn("older version", " ".join(rej[grades["results"][0]["family_id"]]))
+
+    def test_silence_is_not_approval(self):
+        grades = good_grades(self.specs, self.qs, self.gs)
+        grades["results"] = grades["results"][1:]
+        grades["results"][0]["judge"]["distractors_ok"] = None
+        _, rej = self.apply(grades)
+        self.assertEqual(rej[self.gs["families"][0]["family_id"]], ["not graded"])
+        self.assertTrue(any("distractors_ok" in r for r in rej[grades["results"][0]["family_id"]]))
+
+
+class TheBundle(unittest.TestCase):
+    """The CLI end to end, in a temporary directory: fail closed, then a loadable bundle."""
+
+    def test_out_is_refused_without_grades_or_catalogue(self):
+        with tempfile.TemporaryDirectory() as d:
+            rc, err = quiet(G.main_families, ["--families", str(SPECS), "--out", str(Path(d, "b.json"))])
+            self.assertEqual(rc, 1)
+            self.assertIn("without --grades", err)
+
+    def test_grading_set_then_grades_then_bundle(self):
+        with tempfile.TemporaryDirectory() as d:
+            gs_path, out = Path(d, "gs.json"), Path(d, "bundle.json")
+            rc, _ = quiet(G.main_families, ["--families", str(SPECS), "--per-family", "5",
+                                            "--grading-set", str(gs_path), "--check"])
+            self.assertEqual(rc, 0)
+            specs, _ = FS.load_dir(SPECS)
+            qs, _, _ = run(specs, 5)
+            G.rebalance_keys(qs, random.Random(SEED))
+            grades = good_grades(specs, qs, json.loads(gs_path.read_text()),
+                                 {"tpl:g10m4s7-1-1:interval": {"plain": "interval(-inf, 0, false, true)"}})
+            Path(d, "grade.json").write_text(json.dumps(grades))
+            rc, err = quiet(G.main_families, ["--families", str(SPECS), "--per-family", "5",
+                                              "--catalogue", str(CATALOGUE), "--grades", str(Path(d, "grade.json")),
+                                              "--out", str(out)])
+            self.assertEqual(rc, 0, err)
+            b = json.loads(out.read_text())
+        self.assertIn("tpl:g10m4s7-1-1:interval", b["rejected_families"])
+        self.assertNotIn("tpl:g10m4s7-1-1:interval", b["family_specs"])
+        self.assertFalse(any(q["family"] == "tpl:g10m4s7-1-1:interval" for q in b["questions"]))
+        # the proposed misconception S5 has not written loses its tag; the rest resolve (FR-1112)
+        self.assertTrue(any("product-rule-misused" in u for u in b["untagged_distractors"]))
+        tags = {c.get("misconception_id") for q in b["questions"] for c in (q.get("choices") or [])
+                if isinstance(q.get("choices"), list)}
+        self.assertLessEqual(tags - {None}, {m["id"] for m in b["misconceptions"]})
+        # the loader accepts the whole bundle: numeric, mcq and typed answers (short + choices.marker,
+        # integration backlog 2), each with its family as a field
+        self.assertIn("short", {q["question_type"] for q in b["questions"]})
+        problems, _ = L.validate(b)
+        self.assertEqual(problems, [])
+        self.assertTrue(all(L.family_of(q) == q["family"] for q in b["questions"] if q.get("family")))
+
+    def test_with_grades_s5_is_told_only_about_the_families_that_passed(self):
+        with tempfile.TemporaryDirectory() as d:
+            gs_path = Path(d, "gs.json")
+            quiet(G.main_families, ["--families", str(SPECS), "--per-family", "5", "--grading-set", str(gs_path), "--check"])
+            specs, _ = FS.load_dir(SPECS)
+            qs, _, _ = run(specs, 5)
+            G.rebalance_keys(qs, random.Random(SEED))
+            mcq = next(s.id for s in specs if s.raw["answer_type"] == "mcq")
+            wrong = next(c for q in qs if q["family"] == mcq for c in q["choices"] if c["key"] != q["correct_answer"])
+            grades = good_grades(specs, qs, json.loads(gs_path.read_text()),
+                                 {mcq: {"choice": wrong["key"], "choice_text": wrong["text"]}})
+            Path(d, "grade.json").write_text(json.dumps(grades))
+            every, graded = Path(d, "all.json"), Path(d, "graded.json")
+            quiet(G.main_families, ["--families", str(SPECS), "--per-family", "5", "--s5-distractors", str(every), "--check"])
+            rc, err = quiet(G.main_families, ["--families", str(SPECS), "--per-family", "5", "--grades",
+                                              str(Path(d, "grade.json")), "--s5-distractors", str(graded), "--check"])
+            self.assertEqual(rc, 0, err)
+            refs = lambda p: {x["ref"].split("#")[0] for x in json.loads(p.read_text())["distractors"]}  # noqa: E731
+            self.assertIn(mcq, refs(every))
+            self.assertNotIn(mcq, refs(graded), "a family the blind grade refused tells S5 nothing")
+            self.assertEqual(refs(graded), refs(every) - {mcq})
+
+    def test_a_sacred_book_gets_no_families(self):
+        raw = json.loads((book_config.BOOKS_DIR / "prep3-math-en.json").read_text())
+        raw.update(book="sacred-fixture", sacred_content=True, bundles=[], generated=None, parity=None)
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d, "sacred-fixture.json")
+            p.write_text(json.dumps(raw))
+            rc, err = quiet(G.main_families, ["--families", str(SPECS), "--book", str(p), "--check"])
+        self.assertEqual(rc, 2)
+        self.assertIn("sacred", err)
+
+
+class TierFloorAndHandoffs(unittest.TestCase):
+    def book(self):
+        raw = json.loads((book_config.BOOKS_DIR / "g10-math.json").read_text())
+        raw["bundles"] = ["services/extraction/tests/fixtures/families/g10-bundle.json"]
+        return book_config.Book.model_validate(raw)
+
+    def test_the_floor_counts_book_and_generated_together(self):
+        objs = G.book_objectives(self.book())
+        self.assertEqual(len(objs), 6)
+        before = G.tier_floor(objs, [])
+        self.assertEqual(before["cells"], 18)
+        specs, _ = FS.load_dir(SPECS)
+        qs, _, _ = run(specs)
+        after = G.tier_floor(objs, qs)
+        self.assertGreater(after["cells_filled"], before["cells_filled"])
+        below = {b["lo_id"]: b["missing"] for b in after["below_floor"]}
+        self.assertNotIn("standard", below.get("lo:g10m1s7-2-1", []))
+        self.assertEqual(after["by_objective"]["lo:g10m4s2-1-1"]["standard"], {"book": 1, "generated": 0})
+
+    def test_author_args_list_the_gaps_with_their_evidence(self):
+        entries, _ = G.load_catalogue(CATALOGUE)
+        a = G.author_args(self.book(), [], G.book_objectives(self.book()), entries, False, [])
+        self.assertEqual(a["mode"], "author")
+        self.assertEqual(a["book"]["book"], "g10-math")
+        o = next(o for o in a["objectives"] if o["lo_id"] == "lo:g10m4s2-1-1")
+        self.assertEqual(o["tier_gaps"], ["basic"])
+        self.assertEqual([m["id"] for m in o["misconceptions"]], ["mc:g10m4s2-1-1:sign-lost-transposing"])
+        self.assertEqual(len(o["book_questions"]), 2)
+
+    def test_s5_receives_every_distractor_with_an_example(self):
+        specs, _ = FS.load_dir(SPECS)
+        qs, _, _ = run(specs)
+        ds = G.s5_distractors(specs, qs)
+        self.assertTrue(ds)
+        for d in ds:
+            self.assertEqual(d["origin"], "S6")
+            self.assertEqual(set(d) - {"proposed"}, {"lo", "origin", "ref", "question_id", "text", "misconception_id"})
+        prop = [d for d in ds if d.get("proposed")]
+        self.assertEqual([d["misconception_id"] for d in prop], ["mc:g10m14s4-1-1:product-rule-misused"])
+
+    def test_tags_resolve_through_aliases_and_foreign_tags_fail(self):
+        entries, alias = G.load_catalogue(CATALOGUE)
+        q = {"id": "q:g10m14s4-1-1:g001-union", "lo_id": "lo:g10m14s4-1-1", "correct_answer": "A", "choices": [
+            {"key": "A", "text": "1"}, {"key": "B", "text": "2", "misconception_id": "mc:g10m14s4-1-1:and-or-swapped"},
+            {"key": "C", "text": "3", "misconception_id": "mc:g10m14s4-1-1:nowhere"},
+            {"key": "D", "text": "4", "misconception_id": "mc:g10m4s2-1-1:sign-lost-transposing"}]}
+        problems, untagged, used = G.resolve_tags([q], entries, alias)
+        self.assertEqual(q["choices"][1]["misconception_id"], "mc:g10m14s4-1-1:and-for-or")
+        self.assertNotIn("misconception_id", q["choices"][2])
+        self.assertEqual(len(untagged), 1)
+        self.assertEqual(len(problems), 1)
+        self.assertEqual(used, {"mc:g10m14s4-1-1:and-for-or"})
+
+
+class ChapterOneEngineFixes(unittest.TestCase):
+    """What Chapter 1's S6 families needed of the engine, each pinned so it cannot quietly come back.
+
+    A recurring-decimal answer in the book's notation reads (and prints in the notation the stem asks for), a
+    number formatted in a ``let`` is still a number in a fixed-context stem, a multiple-choice family whose stem
+    is one sentence can say its options tell its instances apart, and a typed key is one the app's marker reads.
+    """
+
+    def mcq(self, stem, params, flag=None):
+        raw = {"format": "ainext.family/1", "id": "tpl:g10m1s3-1-2:pick-largest", "kind": "family",
+               "lo_id": "lo:g10m1s3-1-2", "parent_question_id": "q:g10m1s3-1-2:ex1-1-4a", "source_page": 9,
+               "tier": "basic", "answer_type": "mcq", "context": None, "params": params, "stem": stem,
+               "solution": ["The largest is ${=a + 40}$."],
+               "choices": {"correct": "${=a + 40}$", "distractors": [
+                   {"text": "${=a}$", "misconception_id": None}, {"text": "${=a + 1}$", "misconception_id": None},
+                   {"text": "${=a + 2}$", "misconception_id": None}]},
+               "notes": "Fixture: tests only."}
+        if flag is not None:
+            raw["distinct_by_choices"] = flag
+        return raw
+
+    def count(self, raw, n=10):
+        _, rejected, counts = run([FS.load_spec(raw)], n)
+        self.assertEqual(rejected, [])
+        return counts[raw["id"]]
+
+    def test_a_one_sentence_stem_is_one_item_unless_the_family_says_its_options_differ(self):
+        params = [{"name": "a", "randint": [2, 90]}]
+        stem = "Which of the following is the largest number?"
+        self.assertEqual(self.count(self.mcq(stem, params)), 1)
+        self.assertEqual(self.count(self.mcq(stem, params, False)), 1)
+        self.assertEqual(self.count(self.mcq(stem, params, True)), 10)
+
+    def test_a_reshuffle_of_the_same_options_is_still_a_duplicate(self):
+        raw = self.mcq("Which of the following is the largest number?", [{"name": "a", "choice": [3, 5]}], True)
+        self.assertEqual(self.count(raw), 2, "two option SETS, however the shuffle orders them")
+
+    def test_without_the_flag_a_family_keeps_the_items_and_ids_it_always_had(self):
+        # the stem names a (two values) but the options also draw r: filtered on the stem alone, two items;
+        # relaxing that for every family would shift the item ids of every shipped bank
+        params = [{"name": "a", "choice": [3, 5]}, {"name": "r", "randint": [1, 30]}]
+        raw = self.mcq("Which is the largest, counting from {=a}?", params)
+        raw["choices"]["distractors"][0]["text"] = "${=a + r}$"
+        self.assertEqual(self.count(raw), 2)
+        raw["distinct_by_choices"] = True
+        self.assertEqual(self.count(raw), 10)
+
+    def test_the_flag_belongs_to_an_mcq_family_and_is_a_boolean(self):
+        raw = load("g10m4s2-1-1--balance.json")
+        self.assertTrue(any("applies to an mcq family" in p for p in FS.check_spec(dict(raw, distinct_by_choices=True))))
+        self.assertEqual(FS.check_spec(dict(raw, distinct_by_choices=False)), [])
+        mcq = self.mcq("Which is largest?", [{"name": "a", "randint": [2, 9]}], "yes")
+        self.assertTrue(any("true or false" in p for p in FS.check_spec(mcq)))
+
+    def test_a_formatted_number_held_in_a_let_is_still_a_number_in_a_fixed_context(self):
+        raw = load("g10m9s2-1-1--interest.json")
+        raw["params"].insert(3, {"name": "price", "let": "fixed(P, 2)"})        # after P is drawn: "500.00"
+        raw["stem"] = raw["stem"].replace("R{=P}", "R{=price}")
+        qs, rejected, counts = run([FS.load_spec(raw)])
+        self.assertEqual(rejected, [])
+        self.assertEqual(counts[raw["id"]], 4)
+        # a word in a let is not: the existing guard still refuses it
+        word = load("g10m9s2-1-1--interest.json")
+        word["params"].insert(3, {"name": "who", "let": "'Lerato'"})
+        word["stem"] = word["stem"].replace("Thabo", "{=who}")
+        _, rejected, counts = run([FS.load_spec(word)])
+        self.assertEqual(counts[word["id"]], 0)
+        self.assertTrue(rejected and all("may vary only numbers" in r for r in rejected))
+
+    def test_a_recurring_marker_prints_its_key_in_the_notation_the_author_wrote(self):
+        self.assertEqual(FS.marker_key("recurring", r"9.2\dot{8}\dot{7}", []), r"9.2\dot{8}\dot{7}")
+        self.assertEqual(FS.marker_key("recurring", r"0.7\overline{592}", []), r"0.7\overline{592}")
+        self.assertEqual(FS.marker_key("recurring", "613/66", []), r"9.2\dot{8}\dot{7}")      # a fraction: dots
+        self.assertEqual(FS.marker_key("recurring", r"0.\overline{592}", []), r"0.\overline{592}")
+        self.assertEqual(FS.marker_key("recurring", "9 + 19/66", []), r"9.2\dot{8}\dot{7}")
+        with self.assertRaises(FS.E.EvalError):
+            FS.marker_key("recurring", "0.75", [])                                             # it stops: not recurring
+
+    def test_a_recurring_family_that_asks_for_a_decimal_carries_the_decimal_form(self):
+        raw = {"format": "ainext.family/1", "id": "tpl:g10m1s3-1-3:thirds", "kind": "family", "lo_id": "lo:g10m1s3-1-3",
+               "parent_question_id": "q:g10m1s3-1-3:ex1-1-11", "source_page": 12, "tier": "basic",
+               "answer_type": "expression", "context": None,
+               "params": [{"name": "a", "randint": [1, 8]}],
+               "stem": "Write $\\frac{{=a}}{9}$ in decimal form, using dot notation.",
+               "solution": ["Divide ${=a}$ by $9$: the digit ${=a}$ repeats."],
+               "marker": {"kind": "recurring", "answer": "0.\\dot{{=a}}", "form": "decimal", "variables": [],
+                          "tolerance": None},
+               "notes": "Fixture: tests only."}
+        qs, rejected, counts = run([FS.load_spec(raw)])
+        self.assertEqual(rejected, [], "the pipeline's own verifier knows the form the app and the schema know")
+        self.assertEqual(counts[raw["id"]], 4)
+        self.assertTrue(all(q["choices"]["marker"]["form"] == "decimal" for q in qs))
+        self.assertTrue(all(q["correct_answer"].startswith("0.\\dot{") for q in qs))
+        # the blind grader may write the book's dots, a bar, a fraction or an ellipsis: all the same number, and
+        # an unreadable answer would otherwise reject the family for notation, not for maths
+        for q in qs:
+            d = q["correct_answer"][-2]
+            for said in (q["correct_answer"], "0.\\overline{%s}" % d, "%s/9" % d, "0.%s%s%s..." % (d, d, d)):
+                self.assertTrue(G.answer_agrees(q, {"plain": said})[0], (q["stem"], said))
+            for said in ("0.%s" % d, "0.%s%s" % (d, d), "%s/10" % d):
+                self.assertFalse(G.answer_agrees(q, {"plain": said})[0], (q["stem"], said))
+
+    def test_the_values_key_is_a_plain_comma_the_apps_marker_reads(self):
+        self.assertEqual(FS.marker_key("values", "[7, 8]", []), "7, 8")
+        self.assertEqual(FS.marker_key("values", "[2, -3]", ["x"]), "x = 2 \\text{ or } x = -3")
+
+
+if __name__ == "__main__":
+    unittest.main()
+
+
+class TierFloorCountsOnlyLiveBookQuestions(unittest.TestCase):
+    """S6's gap list and S8's tier floor count the same thing: a book question held at G2 fills no
+    cell, so S6 authors for that tier (found by the Chapter 8 dry run)."""
+
+    def test_a_held_book_question_leaves_its_tier_a_gap(self):
+        objs = {"lo:zz1s1-1-1": {"questions": [{"tier": "basic", "verified": True},
+                                               {"tier": "advanced", "verified": False}]}}
+        floor = G.tier_floor(objs, [])
+        self.assertEqual(floor["below_floor"], [{"lo_id": "lo:zz1s1-1-1", "missing": ["standard", "advanced"]}])
+
+
+def app_marks(cases: dict[str, tuple[str, ...]], kind: str = "interval", variables=()) -> dict[str, dict[str, str]]:
+    """THE APP'S OWN marker (answer-marker.ts, run in node): for each key, how it marks each typed answer, and
+    whether the key can mark itself at all ({"key": {"<typed>": "correct"|"incorrect"|..., "": key_problem}})."""
+    js = (f"const M = await import({json.dumps(APP_MARKER.as_uri())});\n"
+          "const cases = JSON.parse(process.argv[2]); const out = {};\n"
+          "for (const [key, tries] of Object.entries(cases)) {\n"
+          f"  const spec = {{ kind: {json.dumps(kind)}, key, form: null, variables: {json.dumps(list(variables))}, tolerance: null }};\n"
+          "  out[key] = { '': M.validateKey(spec) };\n"
+          "  for (const a of tries) out[key][a] = M.mark(a, spec).result;\n"
+          "}\nconsole.log(JSON.stringify(out));\n")
+    with tempfile.TemporaryDirectory() as d:
+        f = Path(d, "m.mjs")
+        f.write_text(js)
+        proc = subprocess.run([NODE, "--no-warnings", str(f), json.dumps(cases)], capture_output=True, text=True)
+    assert proc.returncode == 0, proc.stderr
+    return json.loads(proc.stdout)
+
+
+def flip_brackets(key: str) -> str:
+    """The same two ends with the opposite bracket on each side: "[-9, 2)" -> "(-9, 2]"."""
+    return {"[": "(", "(": "["}[key[0]] + key[1:-1] + {"]": ")", ")": "]"}[key[-1]]
+
+
+def key_as_plain(key: str) -> str:
+    """A displayed interval key "[-9, 2)" read back as the plain interval(lo, hi, closed_lo, closed_hi) a blind grader writes."""
+    m = re.fullmatch(r"([\[(])\s*(-?\d+)\s*,\s*(-?\d+)\s*([\])])", key)
+    assert m, key
+    return f"interval({m[2]}, {m[3]}, {'true' if m[1] == '[' else 'false'}, {'true' if m[4] == ']' else 'false'})"
+
+
+class IntervalKeysShowTheirBrackets(unittest.TestCase):
+    """G10 chapter 6, tpl:g10m6s1-1-1:bounded-to-interval: the S6 blind judge rejected the family because every
+    displayed key ("(-9, 2)" for -9 <= t < 2) had round brackets, whatever the flags in the marker said
+    (``interval({=a}, {=b}, {=lc}, {=hc})``, 1 = square bracket). The correct_answer and marker.key a student reads
+    must carry the brackets the flags and the stem's signs call for; that key must be one the app's marker reads, and
+    the same interval as the answer_check the blind grader is compared against."""
+
+    SIGNS = re.compile(r"(-?\d+)(<|\u2264)([a-z])(<|\u2264)(-?\d+)")
+
+    def setUp(self):
+        self.spec = FS.load_spec(json.loads((FIX / "interval-specs" / "g10m6s1-1-1--bounded-to-interval.json").read_text()))
+        self.qs, self.rejected, _ = run([self.spec], 60)
+
+    def expected_key(self, q):
+        m = self.SIGNS.search(q["stem"])
+        assert m, q["stem"]
+        lo, ls, _, hs, hi = m.groups()
+        return ("[" if ls == "\u2264" else "(") + f"{lo}, {hi}" + ("]" if hs == "\u2264" else ")")
+
+    def test_the_key_follows_the_stems_signs_for_all_four_patterns(self):
+        self.assertEqual(self.rejected, [])
+        self.assertGreaterEqual(len(self.qs), 40)
+        seen = set()
+        for q in self.qs:
+            want = self.expected_key(q)
+            self.assertEqual(q["correct_answer"], want, q["stem"])
+            self.assertEqual(q["choices"]["marker"]["key"], want, q["stem"])
+            self.assertEqual(q["choices"]["marker"]["kind"], "interval")
+            self.assertIn(f"${want}$", q["canonical_solution"][-1]["text_md"], "the solution ends on the key it shows")
+            seen.add(want[0] + want[-1])
+        self.assertEqual(seen, {"[]", "[)", "(]", "()"}, "all four bracket patterns are exercised")
+
+    def test_the_key_is_the_same_interval_as_the_answer_check_whichever_way_the_flags_are_spelled(self):
+        for q in self.qs:
+            self.assertRegex(q["answer_check"], r"^interval\(-?\d+, -?\d+, [01], [01]\)$")     # the family's 1/0
+            read_back = key_as_plain(q["correct_answer"])                                         # true/false, as a grader writes
+            self.assertTrue(G.answer_agrees(q, {"plain": read_back})[0], (q["answer_check"], read_back))
+            self.assertTrue(G.answer_agrees(q, {"plain": q["answer_check"]})[0])
+            flipped = key_as_plain(flip_brackets(q["correct_answer"]))
+            self.assertFalse(G.answer_agrees(q, {"plain": flipped})[0], (q["answer_check"], flipped))
+
+    def test_a_blind_solver_who_writes_true_false_agrees_with_a_family_that_wrote_1_0(self):
+        qs = self.qs[:8]
+        gs = G.grading_set([self.spec], qs, SEED)
+        grades = good_grades([self.spec], qs, gs)
+        by_id = {q["id"]: q for q in qs}
+        for r in grades["results"]:                       # the blind solver wrote true/false, the spec says 1/0
+            for a in r["answers"]:
+                a["answer"] = {"plain": key_as_plain(by_id[a["instance_id"]]["correct_answer"])}
+        with tempfile.TemporaryDirectory() as d:
+            gp = Path(d, "grade.json")
+            gp.write_text(json.dumps(grades))
+            accepted, rejected = G.apply_grades([self.spec], qs, [gp])
+        self.assertEqual(rejected, {})
+        self.assertEqual(set(accepted), {self.spec.id})
+
+    @unittest.skipUnless(NODE and APP_MARKER.exists(), "node runs the app's own marker")
+    def test_the_apps_marker_reads_every_key_and_marks_the_flipped_brackets_wrong(self):
+        keys = sorted({q["correct_answer"] for q in self.qs})
+        cases = {k: (k, k.replace(", ", "; "), flip_brackets(k)) for k in keys}   # the book's own "; " is read too
+        out = app_marks(cases)
+        for k in keys:
+            self.assertIsNone(out[k][""], f"the app's marker cannot read the key {k!r}: {out[k]['']}")
+            self.assertEqual(out[k][k], "correct", k)
+            self.assertEqual(out[k][k.replace(", ", "; ")], "correct", k)
+            self.assertEqual(out[k][flip_brackets(k)], "incorrect", k)
+
+    def test_a_key_prints_its_flags_not_its_spelling_and_an_infinite_end_is_round(self):
+        mk = lambda plain: FS.marker_key("interval", plain, [])  # noqa: E731
+        self.assertEqual(mk("interval(-9, 2, 1, 0)"), "[-9, 2)")
+        self.assertEqual(mk("interval(-9, 2, true, false)"), "[-9, 2)")
+        self.assertEqual(mk("interval(6, 16, 1, 1)"), "[6, 16]")
+        self.assertEqual(mk("interval(-4, 0, 0, 1)"), "(-4, 0]")
+        self.assertEqual(mk("interval(1, 5, 0, 0)"), "(1, 5)")
+        self.assertEqual(mk("interval(-inf, 4, 1, 0)"), r"(-\infty, 4)")
+        self.assertEqual(mk("interval(-inf, 4, 1, 1)"), r"(-\infty, 4]")
+        self.assertEqual(mk("interval(3, inf, 1, 1)"), r"[3, \infty)")
+        self.assertEqual(mk("interval(-inf, inf, 1, 1)"), r"(-\infty, \infty)")
+
+    @unittest.skipUnless(NODE and APP_MARKER.exists(), "node runs the app's own marker")
+    def test_the_apps_marker_reads_an_infinite_end_key_and_the_blind_answers_spelling_of_it(self):
+        out = app_marks({r"(-\infty, 4)": (r"(-\infty, 4)", "(-inf, 4)", r"(-\infty, 4]", r"(-\infty, 5)"),
+                         r"[3, \infty)": (r"[3, \infty)", "[3, inf)", r"(3, \infty)"),
+                         r"(-\infty, 4]": (r"(-\infty, 4]", r"(-\infty, 4)")})
+        for k, o in out.items():
+            self.assertIsNone(o[""], k)
+        self.assertEqual([out[r"(-\infty, 4)"][t] for t in (r"(-\infty, 4)", "(-inf, 4)", r"(-\infty, 4]", r"(-\infty, 5)")],
+                         ["correct", "correct", "incorrect", "incorrect"])
+        self.assertEqual([out[r"[3, \infty)"][t] for t in (r"[3, \infty)", "[3, inf)", r"(3, \infty)")],
+                         ["correct", "correct", "incorrect"])
+        self.assertEqual([out[r"(-\infty, 4]"][t] for t in (r"(-\infty, 4]", r"(-\infty, 4)")], ["correct", "incorrect"])

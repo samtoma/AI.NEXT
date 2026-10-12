@@ -1,0 +1,32 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m6s2-1-3:intercepts-and-direction",
+ "lo_id": "lo:g10m6s2-1-3",
+ "parent_question_id": "q:g10m6s2-1-3:ex6-8-4b",
+ "tier": "standard",
+ "kind": "line_drawer",
+ "spec": {
+  "mode": "equation",
+  "m": -2,
+  "b": 4
+ },
+ "stem": "Draw the straight line $y + 2x = 4$. Find where it crosses each axis first. Any two points on the line will do.",
+ "solution": [
+  "Find the $y$-intercept by letting $x = 0$: $y = 4$, so the line passes through $(0, 4)$.",
+  "Find the $x$-intercept by letting $y = 0$: $2x = 4$, so $x = 2$ and the line passes through $(2, 0)$.",
+  "Drag one point onto $(0, 4)$ and the other onto $(2, 0)$; the line through them is the graph.",
+  "Check the direction: $y = -2x + 4$ has $m = -2$, which is negative, so the graph is decreasing and falls from left to right, as drawn.",
+  "Check the live equation reads $y = -2x + 4$."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "slope-sign-flipped",
+   "misconception_id": "mc:g10m6s2-1-3:direction-from-unrearranged-sign"
+  },
+  {
+   "predicate": "slope-inverted",
+   "misconception_id": "mc:g10m6s2-1-3:y-intercept-from-y-zero"
+  }
+ ],
+ "notes": "Parent is ex6-8-4b (y = 2x + 4); this is a close variant (same y-intercept 4, both intercepts on the lattice) written with the x-term on the left so the direction trap exists. Slope-sign-flipped: reading '+2x' as rising gives y = 2x + 4, which has the right intercept and the line leaning the wrong way. Slope-inverted: a student who swaps the two intercept rules reads the y-intercept as the x-value (2) and the x-intercept as the y-value (4), so plots (0, 2) and (4, 0), whose slope is -1/2, the reciprocal of -2; swapping the intercept rules reflects the line in y = x, so the slope always inverts for |m| not equal to 1. That is why m = -2 and not -1 (for m = -1 the swap draws the same line and is undetectable). The slope-inverted diagnostic assumes the grader reports slope-inverted from the slope alone; if it also requires the intercept to match, that diagnostic would never fire and the student gets a plain 'not quite'. Reading the gradient as printed (the -2 objective's read-m-before-y-is-alone error) fires the same predicate as the direction error, so slope-sign-flipped is mapped to the -3 objective's own direction error, the likelier of the two here. The stem's 'find where it crosses each axis first' is a cue only: grading accepts any two points on the line."
+}

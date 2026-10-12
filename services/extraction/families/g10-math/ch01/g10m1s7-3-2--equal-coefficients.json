@@ -1,0 +1,76 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m1s7-3-2:equal-coefficients",
+ "version": 1,
+ "kind": "family",
+ "lo_id": "lo:g10m1s7-3-2",
+ "parent_question_id": "q:g10m1s7-3-2:ex1-9-6",
+ "source_page": 30,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "c",
+   "choice": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    9,
+    10
+   ]
+  },
+  {
+   "name": "s",
+   "choice": [
+    0,
+    1
+   ]
+  },
+  {
+   "name": "op",
+   "let": "['+', '-'][s]"
+  },
+  {
+   "name": "op2",
+   "let": "['-', '+'][s]"
+  },
+  {
+   "name": "kind",
+   "let": "['sum', 'difference'][s]"
+  }
+ ],
+ "constraints": [],
+ "stem": "Factorise: ${=c}x^{3} {=op} {=c}y^{3}$",
+ "solution": [
+  "Both terms have the same number in front of the cube, so take out the common factor ${=c}$ first: ${=c}x^{3} {=op} {=c}y^{3} = {=c}(x^{3} {=op} y^{3})$",
+  "The bracket is a {=kind} of two cubes, because $x^{3} = (x)^{3}$ and $y^{3} = (y)^{3}$. The cube roots are $x$ and $y$, and $x^{3} {=op} y^{3} = (x {=op} y)(x^{2} {=op2} xy + y^{2})$",
+  "Put the common factor back in front of the factorised bracket: ${=c}(x^{3} {=op} y^{3}) = {=c}(x {=op} y)(x^{2} {=op2} xy + y^{2})$"
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "{=c}*(x {=op} y)*(x^2 {=op2} x*y + y^2)",
+  "form": "factorised",
+  "variables": [
+   "x",
+   "y"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m1s7-3-2:drops-common-factor",
+   "label": "Drops the common factor",
+   "description": "Takes the common factor out and factorises the bracket, but leaves the factor out of the final answer."
+  },
+  {
+   "id": "mc:g10m1s7-3-2:wrong-trinomial-sign",
+   "label": "Wrong signs in the trinomial",
+   "description": "Uses the sign pattern of the other identity: writes x^2 - xy + y^2 for a difference of cubes, or x^2 + xy + y^2 for a sum of cubes."
+  }
+ ],
+ "notes": "x and y stay fixed so the marker variables are fixed. Coefficient c is never 1 and never 8 (a perfect cube would let a solver also write it inside the brackets, e.g. (2x+2y)(4x^2-4xy+4y^2), which is a different shape of the same polynomial). Instances: 8 coefficients times sum or difference = 16. The solution is the book's we16 method on the simplest cubes (ex1-9-6)."
+}

@@ -79,12 +79,33 @@ function devOrigins(): string[] {
  */
 const DEV_ONLY_CONSOLE = process.env.NODE_ENV === "production" ? [] : ["dev.console.ts"];
 
+/**
+ * LOCAL DEV ONLY: a second dev server of a surface, in its own directory.
+ *
+ * Next 16 takes its dev lock at `<distDir>/dev/lock`, so a second `next dev` of
+ * the same surface in this checkout is refused while the first runs — and a
+ * `next build` in the same checkout rewrites the directory under a running dev
+ * server. `AINEXT_DIST_DIR` (`.next-<name>`, e.g. `.next-pilot` for the
+ * Chapter 8 preview on :3010/:3011 in `.claude/launch.json`) gives a dev server
+ * its own. Ignored by `next build` (NODE_ENV=production), so every production
+ * artefact lands where `next start` and `check-surface-manifest.mts` look.
+ */
+function distDir(): string {
+  const base = SURFACE === "admin" ? ".next-admin" : ".next";
+  const override = (process.env.AINEXT_DIST_DIR ?? "").trim();
+  if (!override || process.env.NODE_ENV === "production") return base;
+  if (!/^\.next-[a-z0-9-]+$/.test(override)) {
+    throw new Error(`AINEXT_DIST_DIR="${override}" must look like .next-<name> (lowercase, digits, hyphens).`);
+  }
+  return override;
+}
+
 const nextConfig: NextConfig = {
   pageExtensions:
     SURFACE === "admin"
       ? ["console.tsx", "console.ts", ...DEV_ONLY_CONSOLE, "tsx", "ts"]
       : ["student.tsx", "tsx", "ts"],
-  distDir: SURFACE === "admin" ? ".next-admin" : ".next",
+  distDir: distDir(),
   allowedDevOrigins: devOrigins(),
 };
 

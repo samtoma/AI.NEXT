@@ -1,5 +1,13 @@
 #!/usr/bin/env python3
-"""Assemble the generated explanation / refutation library into a SeedBundle.
+"""RETIRED (extraction-pipeline.md B18): the assembler of the retired refutation.workflow.js.
+
+It refuses to run unless --allow-retired is passed. Its output is a SeedBundle of
+`misc:` misconceptions that load_seed.py would load beside the shipped `mc:`
+catalogue — two ids for one error (FR-1115). Its replacement is the S5 stage's
+assemble_misconceptions.py (B11), which writes the load_misconceptions.py shape.
+The workflow never produced output, so nothing depends on this file.
+
+Assemble the generated explanation / refutation library into a SeedBundle.
 
 Input:  the refutation workflow's output JSON (runbook/refutation.workflow.js),
         one record per learning objective.
@@ -30,11 +38,13 @@ import re
 import sys
 from collections import Counter
 
+import book_config
 from schemas import SeedBundle
 
 SEED = os.path.join(os.path.dirname(__file__), "seed")
-SOURCE_FILE = "docs/Source/Math_En_Prp3_Tr1_2.pdf"
-COURSE = "course:prep3-math-en"
+_BOOK = book_config.load_book("prep3-math-en")
+SOURCE_FILE = _BOOK.sources.pdf
+COURSE = _BOOK.course_id
 
 ENTRY_TYPES = {"worked_example", "faded", "contrasting_case", "refutation"}
 SLUG_RE = re.compile(r"[^a-z0-9]+")
@@ -131,7 +141,13 @@ def main() -> int:
         default="refutation.workflow.js (pipeline-generated, UNREVIEWED)",
         help="attribution stamped on every row",
     )
+    ap.add_argument("--allow-retired", action="store_true",
+                    help="run this retired assembler anyway (reference only; see the docstring)")
     args = ap.parse_args()
+    if not args.allow_retired:
+        print("REFUSING: assemble_refutations.py is RETIRED (B18). Its misc: ids would duplicate "
+              "the shipped mc: catalogue. Use the S5 misconceptions stage (B11).", file=sys.stderr)
+        return 2
 
     raw = json.load(open(args.input, encoding="utf-8"))
     records = raw["records"] if isinstance(raw, dict) and "records" in raw else raw

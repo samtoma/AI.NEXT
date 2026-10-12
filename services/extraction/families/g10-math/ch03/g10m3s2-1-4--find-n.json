@@ -1,0 +1,81 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m3s2-1-4:find-n",
+ "kind": "family",
+ "lo_id": "lo:g10m3s2-1-4",
+ "parent_question_id": "q:g10m3s2-1-4:ex3-1-12c",
+ "source_page": 67,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "choice": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    12,
+    15,
+    -2,
+    -3,
+    -4,
+    -5,
+    -6,
+    -7,
+    -8,
+    -9
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    1,
+    20
+   ]
+  },
+  {
+   "name": "m",
+   "randint": [
+    8,
+    60
+   ]
+  },
+  {
+   "name": "t1",
+   "let": "a + b"
+  },
+  {
+   "name": "t2",
+   "let": "2 * a + b"
+  },
+  {
+   "name": "t3",
+   "let": "3 * a + b"
+  },
+  {
+   "name": "t4",
+   "let": "4 * a + b"
+  },
+  {
+   "name": "V",
+   "let": "a * m + b"
+  }
+ ],
+ "constraints": [],
+ "stem": "Study the following sequence: ${=t1}\\;;\\;{=t2}\\;;\\;{=t3}\\;;\\;{=t4}\\;;\\;\\ldots$ The general term of the sequence is $T_n = {=a}n + {=b}$. Find the value of $n$ if $T_n$ is ${=V}$.",
+ "answer": "m",
+ "solution": [
+  "Substitute the value of $T_n$ into the general term: ${=V} = {=a}n + {=b}$.",
+  "Subtract ${=b}$ from both sides: ${=V - b} = {=a}n$.",
+  "Divide both sides by ${=a}$: $n = {=m}$.",
+  "Check: $T_{{=m}} = {=a}({=m}) + {=b} = {=V}$, so $n = {=m}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "The book's solve-for-n exercise (ex3-1-12c, ex3-1-13c, ex3-2-12c): the sequence is printed and the general term is stated in the stem, so the family stays inside this objective and does not ask the student to derive the formula (that is another objective). Printed terms and formula are computed from the same a and b, so they always agree. a takes both signs as in ex3-2-12c (answer there is 66); b is kept positive so the formula prints as 'an + b' without a signed-constant helper. m >= 8 so the asked term is never one of the four printed terms; V is always a term of the sequence, so n is a whole number."
+}

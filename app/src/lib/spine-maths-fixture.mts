@@ -20,7 +20,7 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 import { computeLayers } from "./spine-layout.ts";
-import { SUBJECTS, SUBJECT_IDS } from "./subjects.ts";
+import { COURSE_IDS } from "./courses.ts";
 
 /** Load order is irrelevant; listed in catalogue order for the reader. */
 export const MATHS_SEED_FILES = [
@@ -186,10 +186,10 @@ export interface CatalogueLo {
  * is the ten maths bundles; `"all"` adds Social Studies and Arabic (the
  * bundles the loader loads for them; `social-t1` supersedes the skeleton).
  *
- * Ordered by the registry position of the course (`SUBJECT_RANK`, from
- * `SUBJECT_IDS` in lib/subjects.ts), then `catalogueCompare` (`MODULE_ORDER`):
+ * Ordered by the registry position of the course (`COURSE_RANK`, from
+ * `COURSE_IDS` in lib/courses.ts), then `catalogueCompare` (`MODULE_ORDER`):
  * the statement `catalogue-order-db.test.mts` holds the SQL to on a real
- * database. Modules come back in the same split order (`SUBJECT_RANK`, then
+ * database. Modules come back in the same split order (`COURSE_RANK`, then
  * `MODULE_RANK`), and prerequisite edges carry ids in seed order.
  */
 export function loadCatalogueFixture(which: "maths" | "all"): {
@@ -209,7 +209,7 @@ export function loadCatalogueFixture(which: "maths" | "all"): {
   }
   const moduleOf = new Map(seedEdges.filter((e) => e.type === "teaches").map((e) => [e.dst, e.src]));
   const courseOf = new Map(seedEdges.filter((e) => e.type === "part_of").map((e) => [e.src, e.dst]));
-  const courses = SUBJECT_IDS.map((id) => SUBJECTS[id].courseId as string);
+  const courses: readonly string[] = COURSE_IDS;
   const subjectRank = (c: string | null | undefined) =>
     c && courses.includes(c) ? courses.indexOf(c) : courses.length;
   const position = (id: string | null) => (id ? (nodes.get(id)?.order_in_parent ?? null) : null);

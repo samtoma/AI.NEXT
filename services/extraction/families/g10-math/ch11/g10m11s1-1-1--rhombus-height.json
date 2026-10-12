@@ -1,0 +1,63 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m11s1-1-1:rhombus-height",
+ "kind": "family",
+ "lo_id": "lo:g10m11s1-1-1",
+ "parent_question_id": "q:g10m11s1-1-1:ex11-2-14",
+ "source_page": 400,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "s",
+   "randint": [
+    4,
+    12
+   ]
+  },
+  {
+   "name": "t",
+   "randint": [
+    25,
+    75
+   ]
+  },
+  {
+   "name": "tab",
+   "let": "[0, 174524064, 348994967, 523359562, 697564737, 871557427, 1045284633, 1218693434, 1391731010, 1564344650, 1736481777, 1908089954, 2079116908, 2249510543, 2419218956, 2588190451, 2756373558, 2923717047, 3090169944, 3255681545, 3420201433, 3583679495, 3746065934, 3907311285, 4067366431, 4226182617, 4383711468, 4539904997, 4694715628, 4848096202, 5000000000, 5150380749, 5299192642, 5446390350, 5591929035, 5735764364, 5877852523, 6018150232, 6156614753, 6293203910, 6427876097, 6560590290, 6691306064, 6819983601, 6946583705, 7071067812, 7193398003, 7313537016, 7431448255, 7547095802, 7660444431, 7771459615, 7880107536, 7986355100, 8090169944, 8191520443, 8290375726, 8386705679, 8480480962, 8571673007, 8660254038, 8746197071, 8829475929, 8910065242, 8987940463, 9063077870, 9135454576, 9205048535, 9271838546, 9335804265, 9396926208, 9455185756, 9510565163, 9563047560, 9612616959, 9659258263, 9702957263, 9743700648, 9781476007, 9816271834, 9848077530, 9876883406, 9902680687, 9925461516, 9945218954, 9961946981, 9975640503, 9986295348, 9993908270, 9998476952, 10000000000]"
+  },
+  {
+   "name": "h",
+   "let": "s * tab[t] / 10000000000"
+  },
+  {
+   "name": "fr",
+   "let": "h * 10 - floor(h * 10)"
+  },
+  {
+   "require": "abs(fr - 1/2) > 1/4",
+   "why": "keep the exact answer away from a rounding boundary, so a solver who keeps three decimals in the sine still lands on the same one-decimal answer"
+  },
+  {
+   "name": "w",
+   "let": "s * tab[90 - t] / 10000000000"
+  },
+  {
+   "require": "abs(w - h) >= 1/2",
+   "why": "using cosine instead of sine must not give the same answer"
+  }
+ ],
+ "constraints": [],
+ "stem": "One of the angles of a rhombus with perimeter ${=4 * s}$ cm is ${=t}^\\circ$. Calculate the perpendicular distance between two opposite sides of the rhombus, correct to one decimal place. Do not round off before your final answer.",
+ "answer": "fixed(h, 1)",
+ "solution": [
+  "All four sides of a rhombus are equal, so each side is $\\frac{{=4 * s}}{4} = {=s}$ cm.",
+  "Call the rhombus $ABCD$ with $\\hat{A} = {=t}^\\circ$. Draw the perpendicular $DE$ from $D$ to the side $AB$. Then $DE = h$ is the perpendicular distance between the opposite sides $AB$ and $DC$, and triangle $ADE$ is right-angled at $E$ with hypotenuse $AD = {=s}$ cm.",
+  "$h$ is opposite the angle ${=t}^\\circ$ and we know the hypotenuse, so we use sine: $\\sin {=t}^\\circ = \\frac{h}{{=s}}$.",
+  "$h = {=s}\\sin {=t}^\\circ \\approx {=fixed(h, 1)}$ cm.",
+  "The perpendicular distance between two opposite sides of the rhombus is about ${=fixed(h, 1)}$ cm."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced: perimeter -> side (all sides equal), then the book's parallelogram-height step (ex11-2-14: h = side * sin of the angle), the same two ideas as ex11-2-15a and ex11-2-14 chained. The angle is acute (25 to 75), so the foot of the perpendicular falls on the side AB itself; every altitude of a rhombus has the same length, so it does not matter which pair of opposite sides the solver picks. Answer = (P/4) * sin t, to one decimal place. The sine table is sin(n degrees) * 10^10 as whole numbers, list index = degrees (0 to 90); cos t is read as sin(90 - t) for the 'wrong ratio' require. Requires keep the exact answer at least 0.025 from a rounding boundary and make using cosine instead of sine give a different answer. Numeric family, no distractors."
+}

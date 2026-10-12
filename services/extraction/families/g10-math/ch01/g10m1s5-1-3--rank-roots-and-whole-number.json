@@ -1,0 +1,151 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m1s5-1-3:rank-roots-and-whole-number",
+ "kind": "family",
+ "lo_id": "lo:g10m1s5-1-3",
+ "parent_question_id": "q:g10m1s5-1-3:ex1-11-5b",
+ "source_page": 37,
+ "tier": "basic",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "w",
+   "randint": [
+    4,
+    9
+   ]
+  },
+  {
+   "name": "g",
+   "randint": [
+    3,
+    9
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    "g*g + 1",
+    "g*g + 2*g"
+   ]
+  },
+  {
+   "name": "c",
+   "randint": [
+    "g*g + 1",
+    "g*g + 2*g"
+   ],
+   "resample_while": "c == b"
+  },
+  {
+   "name": "a",
+   "randint": [
+    10,
+    99
+   ],
+   "resample_while": "is_square(a) or a == b or a == c"
+  },
+  {
+   "name": "rad",
+   "let": "[a, b, c]"
+  },
+  {
+   "name": "s",
+   "shuffle": "rad"
+  },
+  {
+   "name": "key",
+   "let": "[s[0], w*w, s[1], s[2]]"
+  },
+  {
+   "name": "r",
+   "let": "sorted(key)"
+  },
+  {
+   "name": "o",
+   "let": "[x % 10 for x in sorted([key[0]*10 + 1, key[1]*10 + 2, key[2]*10 + 3, key[3]*10 + 4])]"
+  },
+  {
+   "name": "o2",
+   "let": "[x % 10 for x in sorted([key[0]*10 + 1, w*10 + 2, key[2]*10 + 3, key[3]*10 + 4])]"
+  },
+  {
+   "name": "o3",
+   "let": "[x % 10 for x in sorted([isqrt(key[0])*100 + 11, w*100 + 2, isqrt(key[2])*100 + 13, isqrt(key[3])*100 + 14])]"
+  },
+  {
+   "name": "n0",
+   "let": "o[0]*1000 + o[1]*100 + o[2]*10 + o[3]"
+  },
+  {
+   "name": "n1",
+   "let": "o[3]*1000 + o[2]*100 + o[1]*10 + o[0]"
+  },
+  {
+   "name": "n2",
+   "let": "o2[0]*1000 + o2[1]*100 + o2[2]*10 + o2[3]"
+  },
+  {
+   "name": "n3",
+   "let": "o3[0]*1000 + o3[1]*100 + o3[2]*10 + o3[3]"
+  },
+  {
+   "require": "n2 != n0 and n3 != n0",
+   "why": "the two error options must differ from the correct order, so that each error really changes the answer"
+  },
+  {
+   "require": "n1 != n2 and n1 != n3 and n2 != n3",
+   "why": "the three wrong options must be three different lists"
+  }
+ ],
+ "constraints": [
+  "b != c",
+  "a != b",
+  "a != c",
+  "w * w != a"
+ ],
+ "stem": "Without using a calculator, rank the following numbers in ascending order (smallest first): (1) $\\sqrt{{=s[0]}}$, (2) ${=w}$, (3) $\\sqrt{{=s[1]}}$, (4) $\\sqrt{{=s[2]}}$. Which option lists the numbers in ascending order?",
+ "solution": [
+  "The four numbers are (1) $\\sqrt{{=s[0]}}$, (2) ${=w}$, (3) $\\sqrt{{=s[1]}}$ and (4) $\\sqrt{{=s[2]}}$. To compare a whole number with a square root, write the whole number as a square root: ${=w} = \\sqrt{{=w*w}}$, because ${=w}^2 = {=w*w}$.",
+  "Now every number is the square root of a whole number: (1) $\\sqrt{{=s[0]}}$, (2) $\\sqrt{{=w*w}}$, (3) $\\sqrt{{=s[1]}}$, (4) $\\sqrt{{=s[2]}}$. A smaller positive whole number has a smaller square root, so the numbers rank in the same order as the numbers under the root signs.",
+  "Put the numbers under the root signs in ascending order: ${=r[0]} < {=r[1]} < {=r[2]} < {=r[3]}$.",
+  "Notice that $\\sqrt{{=b}}$ and $\\sqrt{{=c}}$ both lie between {=g} and {=g+1}, because {=g*g} < {=b} < {=(g+1)*(g+1)} and {=g*g} < {=c} < {=(g+1)*(g+1)}. Whole numbers alone cannot separate them, but the rule can: ${=min(b, c)} < {=max(b, c)}$, so $\\sqrt{{=min(b, c)}} < \\sqrt{{=max(b, c)}}$.",
+  "Match each number under a root sign back to its label, remembering that {=w*w} stands for the whole number {=w}. The ascending order is ({=o[0]}), ({=o[1]}), ({=o[2]}), ({=o[3]})."
+ ],
+ "choices": {
+  "correct": "({=o[0]}), ({=o[1]}), ({=o[2]}), ({=o[3]})",
+  "distractors": [
+   {
+    "text": "({=o[3]}), ({=o[2]}), ({=o[1]}), ({=o[0]})",
+    "misconception_id": "mc:g10m1s5-1-3:descending-instead-of-ascending"
+   },
+   {
+    "text": "({=o2[0]}), ({=o2[1]}), ({=o2[2]}), ({=o2[3]})",
+    "misconception_id": "mc:g10m1s5-1-3:whole-number-compared-with-radicand"
+   },
+   {
+    "text": "({=o3[0]}), ({=o3[1]}), ({=o3[2]}), ({=o3[3]})",
+    "misconception_id": "mc:g10m1s5-1-3:same-bracket-surds-left-in-order-given"
+   }
+  ]
+ },
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m1s5-1-3:descending-instead-of-ascending",
+   "label": "Listing the numbers from largest to smallest",
+   "description": "The student ranks the numbers correctly but writes them from the largest to the smallest, so the list is in descending order when the question asked for ascending order."
+  },
+  {
+   "id": "mc:g10m1s5-1-3:whole-number-compared-with-radicand",
+   "label": "Comparing a whole number with the number under the root sign",
+   "description": "The student compares the whole number with the radicand instead of with the root. For example, 7 is judged smaller than $\\sqrt{40}$ because 7 < 40, although $\\sqrt{40}$ is less than 7. The whole number is then always listed first."
+  },
+  {
+   "id": "mc:g10m1s5-1-3:same-bracket-surds-left-in-order-given",
+   "label": "Leaving two surds in the order given when they lie between the same whole numbers",
+   "description": "The student places each surd between two whole numbers, but when two surds lie between the same pair of whole numbers they do not compare the numbers under the root signs, so they leave those two surds in the order they were listed."
+  }
+ ],
+ "notes": "Ranking is an mcq of LABEL ORDERS: the numbers are numbered (1) to (4) in the stem and each option is an order of those labels. Reason: the kinds of number in this objective (surds, whole numbers, fractions, decimals, pi multiples) cannot be printed in sorted order from one template, and a typed list would need an order-sensitive marker. The numbers sit in fixed slots; the values change and the answer is computed by sorting integer keys (key*10 + label, then % 10 to read the label back), so no square root is ever evaluated. The wrong options are produced by re-sorting with a deliberately wrong key: descending; the whole number compared by its value with the radicands (so it always comes first, since every radicand is at least 10); and surds ordered only by the whole number they lie above, ties left in the order listed. The two requires reject any instance where an error option would coincide with the right answer or with another wrong option (about 3 attempts per instance in my simulation). Two of the three surds (b and c) are always between the same pair of whole numbers, so the rule 'smaller whole number, smaller root' is always needed. Radicands are 10 to 99 and never perfect squares; the whole number is 4 to 9. The solution writes the whole number as the root of its square, then orders the radicands; step 4 also uses the book's own device of placing surds between whole numbers. The model parent is ex1-11-5b (surds against a whole number); its own solution has an error (it says the cube root of 26 lies between 2 and 8), which is not reproduced here."
+}

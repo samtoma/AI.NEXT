@@ -1,0 +1,61 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s6-2-4:rewrite-shift",
+ "kind": "family",
+ "lo_id": "lo:g10m6s6-2-4",
+ "parent_question_id": "q:g10m6s6-2-4:ex6-6-18d",
+ "source_page": 206,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "p",
+   "choice": [
+    20,
+    30,
+    40,
+    50,
+    60,
+    70,
+    110,
+    120,
+    130,
+    140,
+    150,
+    160
+   ]
+  },
+  {
+   "name": "h",
+   "let": "90 - p"
+  }
+ ],
+ "constraints": [
+  "p != 90",
+  "h != 0"
+ ],
+ "stem": "The function $f(x) = {=a}\\cos(x - {=p}^\\circ) + {=q}$ can also be written in the form $f(x) = {=a}\\sin(x + h^\\circ) + {=q}$, where $-180 < h \\le 180$. Find the value of $h$.",
+ "answer": "h",
+ "solution": [
+  "Use the shift rule for the two graphs: $\\cos\\theta = \\sin(\\theta + 90^\\circ)$, so the cosine graph is the sine graph shifted $90^\\circ$ to the left.",
+  "Here the angle is $\\theta = x - {=p}^\\circ$, so $\\cos(x - {=p}^\\circ) = \\sin(x - {=p}^\\circ + 90^\\circ)$. The amplitude ${=a}$ and the vertical shift ${=q}$ do not change.",
+  "Combine the two angles: $-{=p}^\\circ + 90^\\circ = {=h}^\\circ$, so $f(x) = {=a}\\sin(x + h^\\circ) + {=q}$ with $h = {=h}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "No figure. The book's questions read two sine/cosine graphs from a diagram; this advanced family works on the stated objective sentence instead (cos θ = sin(θ + 90°)) and adds the twist that the angle is x - p rather than plain θ, so the learner must substitute into the book's identity and combine the shifts. Answer is h = 90 - p, checked numerically for all 12 values of p (p = 90 excluded because h would be 0); h ranges over -70..70, always inside the stated window -180 < h <= 180, so it is unique and no mod-360 ambiguity arises. Negative h (p > 90) is deliberate: it tests the sign of the shift. Only the book's own identity and its meaning as a horizontal shift are used; no reduction formulas or negative-angle identities."
+}

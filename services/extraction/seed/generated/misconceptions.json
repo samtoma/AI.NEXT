@@ -1,4 +1,8 @@
 {
+  "catalogue": "prep3-math-misconceptions",
+  "course_id": "course:prep3-math-en",
+  "source_of_truth": "This file is the single source of the Prep-3 maths misconception catalogue (FR-4409, decision 22). Edit it here. Never rename a live id: changed wording keeps its id, and a duplicate becomes an alias (FR-1115). Loaded on every deploy by load_misconceptions.py.",
+  "reviewed": false,
   "generator": "exported from the live comparison database — services/extraction/export_generated_content.py",
   "misconceptions": [
     {
@@ -147,7 +151,7 @@
       "label": "Inside and outside reversed",
       "description": "Compares the distance from the centre with the radius the wrong way round.",
       "signal": "A point with MA > r is called inside, or the reverse.",
-      "kind": "conceptual",
+      "kind": "generated_distractor",
       "refutation": [
         {
           "step": 1,
@@ -163,7 +167,9 @@
         }
       ],
       "maps": [],
-      "aliases": []
+      "aliases": [
+        "mc:point-position-reversed"
+      ]
     },
     {
       "id": "mc:geo1-2-2:tangent-cuts-circle",
@@ -227,7 +233,7 @@
       "label": "Inscribed angle doubled instead of halved",
       "description": "Takes the inscribed angle to equal its arc, or twice it, rather than half.",
       "signal": "The answer equals the arc measure or twice it.",
-      "kind": "conceptual",
+      "kind": "generated_distractor",
       "refutation": [
         {
           "step": 1,
@@ -247,7 +253,9 @@
         }
       ],
       "maps": [],
-      "aliases": []
+      "aliases": [
+        "mc:inscribed-doubled"
+      ]
     },
     {
       "id": "mc:geo2-5-1:cyclic-angles-equal",
@@ -255,7 +263,7 @@
       "label": "Opposite angles of a cyclic quadrilateral taken as equal",
       "description": "Applies the parallelogram property to a cyclic quadrilateral.",
       "signal": "The answer repeats the given angle instead of its supplement.",
-      "kind": "conceptual",
+      "kind": "generated_distractor",
       "refutation": [
         {
           "step": 1,
@@ -275,7 +283,9 @@
         }
       ],
       "maps": [],
-      "aliases": []
+      "aliases": [
+        "mc:cyclic-angles-equal"
+      ]
     },
     {
       "id": "mc:t2u1-2-1:touch-means-two-roots",
@@ -283,7 +293,7 @@
       "label": "A touching curve read as having two distinct roots",
       "description": "Treats a curve that meets the x-axis at one point as having two different solutions.",
       "signal": "The solution set given has two elements where the curve only touches.",
-      "kind": "conceptual",
+      "kind": "generated_distractor",
       "refutation": [
         {
           "step": 1,
@@ -299,7 +309,9 @@
         }
       ],
       "maps": [],
-      "aliases": []
+      "aliases": [
+        "mc:touch-means-two-roots"
+      ]
     },
     {
       "id": "mc:t2u1-2-2:discriminant-sign",
@@ -307,7 +319,7 @@
       "label": "Sign of the discriminant misread",
       "description": "Reports real roots when b² − 4ac < 0, or no roots when it is positive.",
       "signal": "The stated number of roots contradicts the sign of the discriminant.",
-      "kind": "conceptual",
+      "kind": "generated_distractor",
       "refutation": [
         {
           "step": 1,
@@ -323,7 +335,10 @@
         }
       ],
       "maps": [],
-      "aliases": []
+      "aliases": [
+        "mc:discriminant-misread",
+        "mc:discriminant-sign"
+      ]
     },
     {
       "id": "mc:t2u2-2-1:domain-from-numerator",
@@ -331,7 +346,7 @@
       "label": "Domain excluded using the numerator",
       "description": "Solves the numerator equal to zero when finding which values are excluded.",
       "signal": "The excluded value is the zero of the numerator instead of the denominator.",
-      "kind": "conceptual",
+      "kind": "generated_distractor",
       "refutation": [
         {
           "step": 1,
@@ -347,7 +362,9 @@
         }
       ],
       "maps": [],
-      "aliases": []
+      "aliases": [
+        "mc:domain-from-numerator"
+      ]
     },
     {
       "id": "mc:t2u2-2-1:excluded-values-incomplete",
@@ -411,7 +428,7 @@
       "label": "Divided by the wrong total",
       "description": "Puts n(S) on top, or divides by the outcomes NOT in A.",
       "signal": "The answer is greater than 1, or uses n(S) − n(A) as the denominator.",
-      "kind": "conceptual",
+      "kind": "generated_distractor",
       "refutation": [
         {
           "step": 1,
@@ -427,6 +444,210 @@
         }
       ],
       "maps": [],
+      "aliases": [
+        "mc:probability-denominator"
+      ]
+    },
+    {
+      "id": "mc:t2u3-1-2:assumed-mutually-exclusive",
+      "lo_id": "lo:t2u3-1-2",
+      "label": "Answers zero because the two events sound unrelated",
+      "description": "Concludes the intersection is empty from the wording of the two events, without listing outcomes to check for a shared one.",
+      "signal": "Answers $0$ when a shared outcome does exist.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Answering $0$ is exactly right when nothing can be in both — so the instinct to check for that is a good one."
+        },
+        {
+          "step": 2,
+          "text_md": "The check has to be done on the outcomes, though, not on how the two events sound."
+        },
+        {
+          "step": 3,
+          "text_md": "Cards 1 to 10, A even and B prime: 2 is even AND prime, so $A \\cap B = \\{2\\}$ and $P = \\frac{1}{10}$, not $0$."
+        },
+        {
+          "step": 4,
+          "text_md": "Make it a habit: write out both lists and look for a number in both. Only an empty overlap earns a $0$."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:t2u3-1-2:003",
+          "choice_text": "$0$"
+        },
+        {
+          "question_id": "q:t2u3-1-2:006",
+          "choice_text": "$0$"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:t2u3-1-2:exclusive-confused-with-exhaustive",
+      "lo_id": "lo:t2u3-1-2",
+      "label": "Mutually exclusive confused with covering the whole sample space",
+      "description": "Defines mutually exclusive by the union filling S rather than by the intersection being empty.",
+      "signal": "Chooses $A \\cup B = S$ as the definition of mutually exclusive.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You are reaching for a condition on how A and B sit inside S, which is the right kind of answer."
+        },
+        {
+          "step": 2,
+          "text_md": "Mutually exclusive means they cannot happen together: $A \\cap B = \\phi$, so $P(A \\cap B) = 0$."
+        },
+        {
+          "step": 3,
+          "text_md": "$A \\cup B = S$ says something else — that between them they cover every outcome. Two events can do that and still overlap."
+        },
+        {
+          "step": 4,
+          "text_md": "Rolling a die: 'greater than 2' and 'less than 5' cover everything between them, yet 3 and 4 are in both. Covering is not the same as excluding."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:t2u3-1-2:002",
+          "choice_text": "$A \\cup B = S$"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:t2u3-1-2:gave-single-event-probability",
+      "lo_id": "lo:t2u3-1-2",
+      "label": "Reports the probability of one event instead of the intersection",
+      "description": "Computes P(A) correctly and stops, without intersecting with B.",
+      "signal": "The answer equals P(A) or P(B) rather than P(A ∩ B).",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Your value for the single event is right, so the counting is not the problem."
+        },
+        {
+          "step": 2,
+          "text_md": "The question asks for A and B TOGETHER, which needs the outcomes shared by both."
+        },
+        {
+          "step": 3,
+          "text_md": "A die, A even and B odd: no number is both, so $A \\cap B = \\phi$ and $P(A \\cap B) = 0$ — even though $P(A) = \\frac{1}{2}$."
+        },
+        {
+          "step": 4,
+          "text_md": "Before answering, read the last line again and ask which event it names: A, B, or both at once."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:t2u3-1-2:005",
+          "choice_text": "$\\frac{1}{2}$"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:t2u3-1-2:intersection-as-a-only",
+      "lo_id": "lo:t2u3-1-2",
+      "label": "A and B read as 'A happens and B does not'",
+      "description": "Reads the intersection as one event occurring in place of the other rather than alongside it.",
+      "signal": "Chooses 'the occurrence of A only'.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You are right that $A \\cap B$ is stricter than 'either one' — it does narrow things down."
+        },
+        {
+          "step": 2,
+          "text_md": "But it narrows to outcomes where A and B happen TOGETHER, not to A by itself."
+        },
+        {
+          "step": 3,
+          "text_md": "'A only' is the part of A outside B, which is a different region of the Venn diagram and has its own notation."
+        },
+        {
+          "step": 4,
+          "text_md": "Check yourself with one outcome: if it is in both lists, it belongs to $A \\cap B$."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:t2u3-1-2:001",
+          "choice_text": "the occurrence of A only"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:t2u3-1-2:intersection-read-as-union",
+      "lo_id": "lo:t2u3-1-2",
+      "label": "A and B read as 'at least one of them' instead of 'both'",
+      "description": "Treats the intersection as the union: takes any outcome in either event rather than only the shared ones.",
+      "signal": "Chooses 'at least one of the two events', or computes a probability matching the union.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You have the right idea that two events are being combined — that is what the question is about."
+        },
+        {
+          "step": 2,
+          "text_md": "$A \\cap B$ is the event that BOTH happen at the same time. 'At least one of them' is $A \\cup B$, the union."
+        },
+        {
+          "step": 3,
+          "text_md": "The symbols are worth separating once: $\\cap$ is the overlap in the Venn diagram — the part inside both circles — and $\\cup$ is everything inside either circle."
+        },
+        {
+          "step": 4,
+          "text_md": "A phrase to keep: $\\cap$ means AND, $\\cup$ means OR."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:t2u3-1-2:001",
+          "choice_text": "the occurrence of at least one of the two events"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:t2u3-1-2:union-counted-by-adding",
+      "lo_id": "lo:t2u3-1-2",
+      "label": "Counts 'together' by adding the two event sizes",
+      "description": "Adds n(A) and n(B) instead of counting the outcomes common to both.",
+      "signal": "The numerator equals n(A) + n(B).",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You counted both events correctly — that part is done."
+        },
+        {
+          "step": 2,
+          "text_md": "Adding them answers a different question. For 'A and B together' you want only the outcomes appearing in BOTH lists."
+        },
+        {
+          "step": 3,
+          "text_md": "Cards 1 to 12, A divisible by 3 is $\\{3, 6, 9, 12\\}$ and B divisible by 4 is $\\{4, 8, 12\\}$. Only $12$ is in both, so $n(A \\cap B) = 1$ and $P = \\frac{1}{12}$."
+        },
+        {
+          "step": 4,
+          "text_md": "Adding the sizes is a move for the union, and even there it double-counts the overlap."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:t2u3-1-2:006",
+          "choice_text": "$\\frac{7}{12}$"
+        }
+      ],
       "aliases": []
     },
     {
@@ -459,7 +680,7 @@
       "label": "Complement not subtracted from 1",
       "description": "Reports P(A) itself, or inverts it, instead of 1 − P(A).",
       "signal": "The answer and P(A) do not sum to 1.",
-      "kind": "conceptual",
+      "kind": "generated_distractor",
       "refutation": [
         {
           "step": 1,
@@ -475,7 +696,9 @@
         }
       ],
       "maps": [],
-      "aliases": []
+      "aliases": [
+        "mc:complement-not-one-minus"
+      ]
     },
     {
       "id": "mc:u1-1-1:components-subtracted",
@@ -595,7 +818,9 @@
           "choice_text": "$(2, 4)$"
         }
       ],
-      "aliases": []
+      "aliases": [
+        "mc:pair-components-swapped"
+      ]
     },
     {
       "id": "mc:u1-1-1:transposition-sign",
@@ -603,7 +828,7 @@
       "label": "Sign lost when moving a term across the equals sign",
       "description": "Solves x − 4 = 9 as x = 9 − 4, or y + 2 = 7 as y = 7 + 2.",
       "signal": "The answer differs from the correct one by twice the transposed term.",
-      "kind": "conceptual",
+      "kind": "generated_distractor",
       "refutation": [
         {
           "step": 1,
@@ -623,7 +848,9 @@
         }
       ],
       "maps": [],
-      "aliases": []
+      "aliases": [
+        "mc:transposition-sign"
+      ]
     },
     {
       "id": "mc:u1-1-2:product-commutes",
@@ -722,7 +949,7 @@
       "label": "Total points read as the number of columns",
       "description": "Reports the whole point count of a net diagram where a column count is asked.",
       "signal": "The answer equals n(X) x n(Y) rather than one of the factors.",
-      "kind": "conceptual",
+      "kind": "generated_distractor",
       "refutation": [
         {
           "step": 1,
@@ -738,7 +965,9 @@
         }
       ],
       "maps": [],
-      "aliases": []
+      "aliases": [
+        "mc:points-vs-columns"
+      ]
     },
     {
       "id": "mc:u1-1-3:product-commutes",
@@ -746,7 +975,7 @@
       "label": "Diagram of X × Y assumed to serve for Y × X",
       "description": "Treats the Cartesian product as commutative, so the shape of the diagram is assumed unchanged when the factors swap.",
       "signal": "The answer for Y x X repeats the count or shape belonging to X x Y.",
-      "kind": "conceptual",
+      "kind": "generated_distractor",
       "refutation": [
         {
           "step": 1,
@@ -762,7 +991,9 @@
         }
       ],
       "maps": [],
-      "aliases": []
+      "aliases": [
+        "mc:cartesian-commutes"
+      ]
     },
     {
       "id": "mc:u1-1-3:product-is-sum",
@@ -770,7 +1001,7 @@
       "label": "Cardinalities added instead of multiplied",
       "description": "Computes n(X) + n(Y) where n(X) x n(Y) is required.",
       "signal": "The answer is the sum of the two set sizes.",
-      "kind": "conceptual",
+      "kind": "generated_distractor",
       "refutation": [
         {
           "step": 1,
@@ -786,7 +1017,9 @@
         }
       ],
       "maps": [],
-      "aliases": []
+      "aliases": [
+        "mc:product-is-sum"
+      ]
     },
     {
       "id": "mc:u1-1-4:axis-point-given-a-quadrant",
@@ -854,7 +1087,10 @@
           "choice_text": "third quadrant"
         }
       ],
-      "aliases": []
+      "aliases": [
+        "mc:quadrant-from-x-only",
+        "mc:quadrant-sign-order"
+      ]
     },
     {
       "id": "mc:u1-2-1:relation-subset-of-one-set",
@@ -956,7 +1192,7 @@
       "label": "A relation on X taken to be a subset of X",
       "description": "Treats a relation on a set as a set of elements rather than of ordered pairs.",
       "signal": "The answer names X, or a set of single elements.",
-      "kind": "conceptual",
+      "kind": "generated_distractor",
       "refutation": [
         {
           "step": 1,
@@ -972,7 +1208,9 @@
         }
       ],
       "maps": [],
-      "aliases": []
+      "aliases": [
+        "mc:relation-subset-of-x"
+      ]
     },
     {
       "id": "mc:u1-2-2:self-pairs-dropped",
@@ -1153,7 +1391,9 @@
           "choice_text": "$\\{2, 3, 5, 7\\}$"
         }
       ],
-      "aliases": []
+      "aliases": [
+        "mc:range-is-codomain"
+      ]
     },
     {
       "id": "mc:u1-3-2:range-is-domain",
@@ -1289,7 +1529,7 @@
       "label": "Constant function taken to mean the function is zero",
       "description": "Reads 'constant' as 'equal to zero' rather than 'unchanging'.",
       "signal": "The answer sets the whole function, rather than the coefficient of x, to zero.",
-      "kind": "conceptual",
+      "kind": "generated_distractor",
       "refutation": [
         {
           "step": 1,
@@ -1305,7 +1545,9 @@
         }
       ],
       "maps": [],
-      "aliases": []
+      "aliases": [
+        "mc:constant-means-zero"
+      ]
     },
     {
       "id": "mc:u1-4-2:gradient-sign-misread",
@@ -1341,7 +1583,7 @@
       "label": "Slope and y-intercept exchanged",
       "description": "Reads b as the slope and a as the intercept in f(x) = ax + b.",
       "signal": "The two values appear in each other's roles.",
-      "kind": "conceptual",
+      "kind": "generated_distractor",
       "refutation": [
         {
           "step": 1,
@@ -1357,7 +1599,9 @@
         }
       ],
       "maps": [],
-      "aliases": []
+      "aliases": [
+        "mc:intercept-is-slope"
+      ]
     },
     {
       "id": "mc:u1-4-2:line-through-0-a",
@@ -1662,7 +1906,9 @@
           "choice_text": "$6 : 8$"
         }
       ],
-      "aliases": []
+      "aliases": [
+        "mc:ratio-not-reduced"
+      ]
     },
     {
       "id": "mc:u2-1-1:ratio-terms-added",
@@ -2066,7 +2312,7 @@
       "label": "Range confused with the mean",
       "description": "Averages the values instead of subtracting the smallest from the largest.",
       "signal": "The answer is the mean of the set.",
-      "kind": "conceptual",
+      "kind": "generated_distractor",
       "refutation": [
         {
           "step": 1,
@@ -2082,7 +2328,9 @@
         }
       ],
       "maps": [],
-      "aliases": []
+      "aliases": [
+        "mc:range-is-mean"
+      ]
     },
     {
       "id": "mc:u3-2-1:range-thought-to-use-all-values",
@@ -2521,7 +2769,7 @@
       "label": "Opposite and adjacent exchanged when computing a ratio",
       "description": "Labels the sides relative to the wrong acute angle, or swaps opposite with adjacent.",
       "signal": "The answer is the ratio of the other acute angle, or the reciprocal.",
-      "kind": "conceptual",
+      "kind": "generated_distractor",
       "refutation": [
         {
           "step": 1,
@@ -2541,7 +2789,9 @@
         }
       ],
       "maps": [],
-      "aliases": []
+      "aliases": [
+        "mc:sin-cos-swapped"
+      ]
     },
     {
       "id": "mc:u5-1-1:coordinates-added",
@@ -2570,7 +2820,9 @@
           "choice_text": "8"
         }
       ],
-      "aliases": []
+      "aliases": [
+        "mc:distance-coords-added"
+      ]
     },
     {
       "id": "mc:u5-1-1:legs-added-before-squaring",
@@ -2665,7 +2917,9 @@
           "choice_text": "100"
         }
       ],
-      "aliases": []
+      "aliases": [
+        "mc:distance-root-dropped"
+      ]
     },
     {
       "id": "mc:u5-1-2:collinear-read-as-triangle",
@@ -2760,7 +3014,9 @@
           "choice_text": "$(6, 6)$"
         }
       ],
-      "aliases": []
+      "aliases": [
+        "mc:midpoint-uses-difference"
+      ]
     },
     {
       "id": "mc:u5-3-1:slope-inverted",
@@ -2768,7 +3024,7 @@
       "label": "Run divided by rise",
       "description": "Computes Δx/Δy instead of Δy/Δx.",
       "signal": "The answer is the reciprocal of the correct slope.",
-      "kind": "conceptual",
+      "kind": "generated_distractor",
       "refutation": [
         {
           "step": 1,
@@ -2784,7 +3040,9 @@
         }
       ],
       "maps": [],
-      "aliases": []
+      "aliases": [
+        "mc:slope-inverted"
+      ]
     },
     {
       "id": "mc:u5-3-1:slope-sign-flipped",
@@ -2820,7 +3078,7 @@
       "label": "Sign flipped without taking the reciprocal",
       "description": "Uses −m for a perpendicular slope instead of −1/m.",
       "signal": "The answer is the negative of the original slope.",
-      "kind": "conceptual",
+      "kind": "generated_distractor",
       "refutation": [
         {
           "step": 1,
@@ -2836,7 +3094,9 @@
         }
       ],
       "maps": [],
-      "aliases": []
+      "aliases": [
+        "mc:perpendicular-not-reciprocal"
+      ]
     },
     {
       "id": "mc:t2u1-2-1:no-meeting-read-as-every-x",

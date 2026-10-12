@@ -1,0 +1,184 @@
+{
+ "format": "ainext.gate-decision/1",
+ "gate": "G2",
+ "book": "g10-math",
+ "id": "g2-ch09",
+ "chapter": 9,
+ "run": "wf_01c5d565-1e7, wf_5c562c74-ff8, wf_135d3e56-885, wf_03b53047-dc9",
+ "decided_at": "2026-10-02T06:57:50Z",
+ "by": "auto-pass G2 (AI recommendation)",
+ "auto": true,
+ "outcome": "pass_with_holds",
+ "summary": "16 book item(s) decided on the AI recommendation (16 from the recommendation file, 0 by the checks' own rule); 0 held for a person; 0 already decided by a person; 7 recommended with low confidence (your call); 3 typed not markable (teaching only, no verdict owed)",
+ "decisions": [
+  {
+   "key": "g10m9s2-1:Ex9-1:7",
+   "decision": "exclude",
+   "detail": "$n=(2500/1000-1)/0.082=1.5/0.082\\approx18.29$. The book's own working gives 18,3 then states 19 years; the stem never asks for whole years or rounding up, so a correct 18,3 would be marked wrong. Right answer by the agent's own derivation: n = 18,3 (18,29) years by the book's working; the book states 19.",
+   "basis": "book error · confidence low"
+  },
+  {
+   "key": "g10m9s2-1:Ex9-7:16a",
+   "decision": "exclude",
+   "detail": "Interest earned $=500\\times0.0685\\times1=34,25$. The book's working and printed answer give the accumulated amount $A=\\text{R534,25}$, which is not what 'how much you will earn' asks for. Right answer by the agent's own derivation: R34,25 (interest); the book prints R534,25 (accumulated amount).",
+   "basis": "book error · confidence low"
+  },
+  {
+   "key": "g10m9s2-1:WE1",
+   "decision": "accept",
+   "detail": "$A=1000(1+0.07\\times3)=1000\\times1.21=1210$. Key 1210 matches the book's sentence answer R1210; the complaint is only a text comparison against a sentence. Blind agrees. Verified independently: the verifier's own answer matches the key.",
+   "basis": "check too strict · confidence high"
+  },
+  {
+   "key": "g10m9s2-1:WE2",
+   "decision": "accept",
+   "detail": "$A=5000(1+0.125\\times2)=5000\\times1.25=6250$. Key 6250 matches the book's sentence answer R6250; the complaint is a text comparison against a sentence. Blind agrees. Verified independently: the verifier's own answer matches the key.",
+   "basis": "check too strict · confidence high"
+  },
+  {
+   "key": "g10m9s2-1:WE3",
+   "decision": "fix",
+   "detail": "$45000/30000-1=0.5$, $n=0.5/0.075=6\\frac23$ years = 6 years 8 months. Book's working gives $n=6\\frac23$, so the key is right but a mixed number is typed as 'values'; retype as expression. The book's final sentence says 6 years 8 months, which the marker cannot read. Verified independently: the verifier's own answer matches the key.",
+   "basis": "compound answer · confidence low"
+  },
+  {
+   "key": "g10m9s3-1:Ex9-2:4",
+   "decision": "exclude",
+   "detail": "$P=100000/1.11^5=100000/1.68506\\approx59345{,}13$. The stem asks for the nearest rand, so the answer is 59 345; the book's 59 345,13 is not in the asked form, and a marker checking the form would mark the right answer wrong. Right answer by the agent's own derivation: R 59 345 (nearest rand).",
+   "basis": "book error · confidence high"
+  },
+  {
+   "key": "g10m9s3-1:Ex9-2:8",
+   "decision": "exclude",
+   "detail": "NOT RECOMMENDED LIVE (the app's own marker finds the typed key NOT equal to the answer the book states (its EPUB answer, the quoted span, the last line of its working): a key the typing agent corrected is not the book's, and correcting a book's answer is Samuel's to approve). The agent's reading: $(2613{,}40/1790)^{1/9}-1=1{,}46^{1/9}-1\\approx0{,}0430$, so 4,3% to one decimal place. The printed answer and working both give 4,3%; the EPUB has no final line, so the complaint is only a missing-text comparison. Key 4,3 is right.",
+   "basis": "not grounded · confidence low"
+  },
+  {
+   "key": "g10m9s3-1:Ex9-2:9",
+   "decision": "exclude",
+   "detail": "NOT RECOMMENDED LIVE (the app's own marker finds the typed key NOT equal to the answer the book states (its EPUB answer, the quoted span, the last line of its working): a key the typing agent corrected is not the book's, and correcting a book's answer is Samuel's to approve). The agent's reading: $(6904{,}30/6110)^{1/7}-1=1{,}13^{1/7}-1\\approx0{,}0176$, so 1,8% to one decimal place. Printed answer and working agree; the EPUB has no final line, so the complaint is only a missing-text comparison. Key 1,8 is right.",
+   "basis": "not grounded · confidence low"
+  },
+  {
+   "key": "g10m9s3-1:Ex9-7:14",
+   "decision": "accept",
+   "detail": "$1642{,}80/1110=1{,}48$; $1{,}48^{1/12}\\approx1{,}0332$, so $i\\approx3{,}3\\%$. Book working ends at 3,3% per annum, so the complaint (book_final not in solution) is a text comparison. Numeric key 3,3 is one number, unit left out. Verified independently: the verifier's own answer matches the key.",
+   "basis": "check too strict · confidence high"
+  },
+  {
+   "key": "g10m9s3-1:Ex9-7:15",
+   "decision": "accept",
+   "detail": "$6496/4480=1{,}45$; $1{,}45^{1/7}\\approx1{,}0545$, so $i\\approx5{,}5\\%$. Working's last line is 5,5% per annum; the typing complaint is only a text comparison. Numeric key 5,5 is right. Verified independently: the verifier's own answer matches the key.",
+   "basis": "check too strict · confidence high"
+  },
+  {
+   "key": "g10m9s3-1:Ex9-7:16b",
+   "decision": "exclude",
+   "detail": "The stem asks how much you will earn. $A=500(1{,}04)=R520$ is the accumulated amount; the earning is $R520-R500=R20$. The book's key answers a different quantity than the stem as worded. Right answer by the agent's own derivation: R20 (interest earned); the book prints R520, the total amount.",
+   "basis": "book error · confidence low"
+  },
+  {
+   "key": "g10m9s3-1:Ex9-7:19",
+   "decision": "no verdict needed — teaching only (typed not markable)",
+   "basis": "the answer is not marked; the book's solution is shown as the book has it"
+  },
+  {
+   "key": "g10m9s3-1:Ex9-7:20a",
+   "decision": "no verdict needed — teaching only (typed not markable)",
+   "basis": "the answer is not marked; the book's solution is shown as the book has it"
+  },
+  {
+   "key": "g10m9s3-1:Ex9-7:20b",
+   "decision": "no verdict needed — teaching only (typed not markable)",
+   "basis": "the answer is not marked; the book's solution is shown as the book has it"
+  },
+  {
+   "key": "g10m9s3-1:Ex9-7:31b",
+   "decision": "exclude",
+   "detail": "$(67/57)^{1/10}=1{,}01629$ (the book's own line), so $i=1{,}629\\approx1{,}6$. The book then writes 0,016 and $i=1{,}69\\approx1{,}7$, which does not follow. The key 1,7 is wrong. Right answer by the agent's own derivation: 1,6 (about 1,63%).",
+   "basis": "book error · confidence high"
+  },
+  {
+   "key": "g10m9s4-1:Ex9-3:9",
+   "decision": "exclude",
+   "detail": "$n=30/12=2{,}5$, $A=4250(1+0{,}095\\times2{,}5)=5259{,}38$. Over 30 months the monthly payment is $5259{,}38/30=175{,}31$, plus 10,75 gives 186,06. The book divides by 36, which does not follow from 30 months. Right answer by the agent's own derivation: R186,06.",
+   "basis": "book error · confidence high"
+  },
+  {
+   "key": "g10m9s5-1:Ex9-6:5",
+   "decision": "fix",
+   "detail": "$7{,}19\\times17{,}36=124{,}82$; $(8{,}49+2)\\times11{,}48=120{,}43$, so New York is cheaper. Book answer is right. Options 'London publisher'/'New York publisher' are not verbatim in the stem; the stem's own words are 'London' and 'New York'. Verified independently: the verifier's own answer matches the key.",
+   "basis": "typing error · confidence high"
+  },
+  {
+   "key": "g10m9s5-1:Ex9-7:37",
+   "decision": "fix",
+   "detail": "$16{,}99\\times16{,}89=286{,}96$; $23{,}50\\times12{,}43=292{,}11$, so UK is cheaper. Book answer is right. Options must be the stem's own words 'UK' and 'USA', not 'UK publisher'. Verified independently: the verifier's own answer matches the key.",
+   "basis": "typing error · confidence high"
+  },
+  {
+   "key": "g10m9s5-1:Ex9-7:39",
+   "decision": "exclude",
+   "detail": "$1\\text{ AUD}=5{,}11/0{,}0623=82{,}02$ yen, so the book's 82,02 is right. But the stem gives no direction and the book accepts both '1 Yen = 0,012 AUD' and '1 AUD = 82,02 Yen'; one key would mark the other form wrong. Right answer by the agent's own derivation: 1 AUD = 82,02 Yen, or equivalently 1 Yen = 0,012 AUD.",
+   "basis": "several accepted answers · confidence low"
+  }
+ ],
+ "checks": [
+  {
+   "name": "S3 three-way answer check (printed, EPUB solution, blind re-solve)",
+   "state": "done"
+  },
+  {
+   "name": "S3 answer typing check",
+   "state": "done"
+  },
+  {
+   "name": "G2 recommendation run: recommender + independent verifier (g2_recommend.py)",
+   "state": "done"
+  },
+  {
+   "name": "the app's marker on every typed key (assembly)",
+   "state": "on load"
+  }
+ ],
+ "evidence": [
+  {
+   "label": "G2 verdicts",
+   "path": "services/extraction/runs/g10-math/g2-ch09.json"
+  },
+  {
+   "label": "recommendation",
+   "path": "services/extraction/runs/g10-math/g2-ch09.recommended.json"
+  },
+  {
+   "label": "S2–S4 run wf_01c5d565-1e7",
+   "path": "services/extraction/runs/g10-math/lessons/wf_01c5d565-1e7.json"
+  },
+  {
+   "label": "S2–S4 run wf_5c562c74-ff8",
+   "path": "services/extraction/runs/g10-math/lessons/wf_5c562c74-ff8.json"
+  },
+  {
+   "label": "S2–S4 run wf_135d3e56-885",
+   "path": "services/extraction/runs/g10-math/lessons/wf_135d3e56-885.json"
+  },
+  {
+   "label": "S2–S4 run wf_03b53047-dc9",
+   "path": "services/extraction/runs/g10-math/lessons/wf_03b53047-dc9.json"
+  }
+ ],
+ "blocked": [],
+ "course_id": "course:us-g10-math-en",
+ "for_review": [
+  "g10m9s2-1:Ex9-1:7",
+  "g10m9s2-1:Ex9-7:16a",
+  "g10m9s3-1:Ex9-2:4",
+  "g10m9s3-1:Ex9-2:8",
+  "g10m9s3-1:Ex9-2:9",
+  "g10m9s3-1:Ex9-7:16b",
+  "g10m9s3-1:Ex9-7:31b",
+  "g10m9s4-1:Ex9-3:9",
+  "g10m9s5-1:Ex9-7:39",
+  "g10m9s2-1:WE3"
+ ]
+}

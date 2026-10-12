@@ -1,0 +1,199 @@
+{
+ "format": "ainext.gate-decision/1",
+ "gate": "G5",
+ "book": "g10-math",
+ "id": "g5-ch04",
+ "chapter": 4,
+ "decided_at": "2026-10-01T18:07:11Z",
+ "by": "auto-pass G5 (AI recommendation)",
+ "auto": true,
+ "outcome": "pass_with_holds",
+ "summary": "GO for the fan-out on the dev/pilot database (deploys and promotes nothing); coverage RED, 1 completeness finding(s) for Samuel",
+ "decisions": [
+  {
+   "key": "go/no-go",
+   "decision": "go",
+   "basis": "parity GREEN for every course and no coverage safety check failing"
+  },
+  {
+   "key": "objective_evidence lo:g10m4s3-1-3",
+   "decision": "completeness finding — for Samuel, not fixed",
+   "detail": "no claim",
+   "basis": "coverage objective_evidence 18/19: a completeness check lists the gap and does not block (answer 37c); the content stays as loaded"
+  }
+ ],
+ "checks": [
+  {
+   "name": "drift guard course:prep3-math-en",
+   "state": "green"
+  },
+  {
+   "name": "drift guard course:prep3-social-ar",
+   "state": "green"
+  },
+  {
+   "name": "drift guard course:prep3-arabic-ar",
+   "state": "green"
+  },
+  {
+   "name": "drift guard course:us-g10-math-en",
+   "state": "green",
+   "detail": "matches its bundles: {'modules': 5, 'learning_objectives': 75, 'prerequisite_edges': 82, 'questions_total': 1173, 'visuals': 120}"
+  },
+  {
+   "name": "coverage pages",
+   "state": "green",
+   "detail": "33/33"
+  },
+  {
+   "name": "coverage worked_examples",
+   "state": "green",
+   "detail": "19/19"
+  },
+  {
+   "name": "coverage items_mapped_once",
+   "state": "excepted",
+   "detail": "269/270 — item Ex4-7:6q: Ex4-7:6q: ruled outside this chapter's objectives at G1 by auto-pass G1 (AI recommendation) on 2026-10-01T16:54:21+00:00: auto-pass G1 (AI recommendation): both blind mappers placed it nowhere, so no objective of this chapter practises it"
+  },
+  {
+   "name": "coverage mapped_items_accounted",
+   "state": "green",
+   "detail": "269/269"
+  },
+  {
+   "name": "coverage objective_evidence",
+   "state": "red",
+   "detail": "18/19 — lo:g10m4s3-1-3: no claim"
+  },
+  {
+   "name": "coverage tier_floor",
+   "state": "green",
+   "detail": "57/57"
+  },
+  {
+   "name": "coverage module_widgets",
+   "state": "green",
+   "detail": "1/1"
+  },
+  {
+   "name": "coverage distractor_refutations (safety)",
+   "state": "green",
+   "detail": "66/66"
+  },
+  {
+   "name": "coverage misconception_refutations",
+   "state": "green",
+   "detail": "18/18"
+  },
+  {
+   "name": "coverage s5_catalogue (safety)",
+   "state": "green",
+   "detail": "18/18"
+  },
+  {
+   "name": "coverage figures",
+   "state": "green",
+   "detail": "20/20"
+  },
+  {
+   "name": "coverage maths_images",
+   "state": "green",
+   "detail": "1059/1059"
+  },
+  {
+   "name": "coverage items_typed_once",
+   "state": "green",
+   "detail": "269/269"
+  },
+  {
+   "name": "coverage solution_sources (safety)",
+   "state": "green",
+   "detail": "266/266"
+  },
+  {
+   "name": "coverage lesson_provenance",
+   "state": "green",
+   "detail": "6/6"
+  },
+  {
+   "name": "coverage teacher_only (safety)",
+   "state": "green",
+   "detail": "1/1"
+  },
+  {
+   "name": "coverage notation (safety)",
+   "state": "green",
+   "detail": "0/0"
+  },
+  {
+   "name": "coverage katex (safety)",
+   "state": "green",
+   "detail": "0/0"
+  },
+  {
+   "name": "coverage book_pictures (safety)",
+   "state": "green",
+   "detail": "0/0"
+  },
+  {
+   "name": "coverage captions (safety)",
+   "state": "green",
+   "detail": "0/0"
+  },
+  {
+   "name": "coverage answer_text (safety)",
+   "state": "green",
+   "detail": "0/0"
+  },
+  {
+   "name": "coverage asked_forms (safety)",
+   "state": "green",
+   "detail": "0/0"
+  },
+  {
+   "name": "coverage claims_served",
+   "state": "green",
+   "detail": "184/184"
+  },
+  {
+   "name": "cost ledger",
+   "state": "recorded",
+   "detail": "$617.39 metered for the book, $44.03 on this chapter's lessons"
+  }
+ ],
+ "evidence": [
+  {
+   "label": "coverage",
+   "path": "services/extraction/coverage/g10-math.ch04.json"
+  },
+  {
+   "label": "cost ledger",
+   "path": "services/extraction/runs/g10-math/cost.jsonl"
+  },
+  {
+   "label": "book config the drift guard compared the database with",
+   "path": "services/extraction/runs/g10-math/fanout/loaded/g10-math.json"
+  },
+  {
+   "label": "G1 record",
+   "path": "services/extraction/runs/g10-math/gates/g1-ch04.json"
+  },
+  {
+   "label": "G2 record",
+   "path": "services/extraction/runs/g10-math/gates/g2-ch04.json"
+  },
+  {
+   "label": "G3 record",
+   "path": "services/extraction/runs/g10-math/gates/g3-ch04.json"
+  },
+  {
+   "label": "G4 record",
+   "path": "services/extraction/runs/g10-math/gates/g4-ch04.json"
+  }
+ ],
+ "blocked": [],
+ "course_id": "course:us-g10-math-en",
+ "for_review": [
+  "coverage check objective_evidence fails (18/19): lo:g10m4s3-1-3: no claim"
+ ]
+}

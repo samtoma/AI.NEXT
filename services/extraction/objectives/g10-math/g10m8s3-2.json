@@ -1,0 +1,550 @@
+{
+ "objectives_version": 1,
+ "book": "g10-math",
+ "chapter": 8,
+ "module": "module:g10m-c08",
+ "lesson": "g10m8s3-2",
+ "title": "Straight lines: parallel, perpendicular, horizontal and vertical lines, and points on a line",
+ "provenance": {
+  "sections": [
+   {
+    "number": "8.3",
+    "title": "Gradient of a line"
+   }
+  ],
+  "part": {
+   "n": 2,
+   "of": 2
+  },
+  "chapter_intro": false
+ },
+ "status": "approved",
+ "g1": {
+  "approved_by": "Samuel Toma",
+  "approved_at": "2026-09-26T07:19:34+00:00",
+  "verdicts": {
+   "move_items": {
+    "Ex8-6:19d": "lo:g10m8s3-2-2",
+    "Ex8-6:21c": "lo:g10m8s3-2-2",
+    "Ex8-6:22e": "lo:g10m8s3-2-2",
+    "Ex8-6:42e": "lo:g10m8s3-2-2",
+    "Ex8-6:24d": "lo:g10m8s4-1-1",
+    "Ex8-6:28b": "lo:g10m8s4-1-1",
+    "Ex8-6:26": "lo:g10m8s3-2-2",
+    "Ex8-6:29b": "lo:g10m8s3-2-1",
+    "Ex8-6:29c": "lo:g10m8s4-1-2",
+    "Ex8-6:37d": "lo:g10m8s3-2-2",
+    "Ex8-6:40a": "lo:g10m8s3-2-1"
+   },
+   "outside_items": {
+    "Ex8-6:28a": {
+     "why": "Pure recall of parallelogram properties from earlier geometry; this chapter teaches no such objective."
+    },
+    "Ex8-6:32e": {
+     "why": "Area of a triangle from coordinates is not taught in this chapter."
+    },
+    "Ex8-6:46d": {
+     "why": "Ratio of triangle areas via the mid-point theorem / similar triangles is not taught in this chapter."
+    }
+   },
+   "terminology": {
+    "Cartesian plane": "keep",
+    "ordered pair": "keep",
+    "vertices": "keep",
+    "distance formula": "keep",
+    "surd form": "keep",
+    "gradient": "keep",
+    "standard form": "keep",
+    "negative inverse": "keep",
+    "gradient method": "keep",
+    "mid-point": "keep",
+    "end point": "keep"
+   }
+  }
+ },
+ "source_run": {
+  "file": "runs/g10-math/objectives/ch08-wf_a70b525d-f44.json",
+  "sha256": "eee6ed9cd090e2a5546bee783714255cf2853e2751a7ef3480936242c1363aca",
+  "prompts_version": "s1-v5",
+  "packet_sha256": "d5edd2cc963ee59333c27b0a27d97322a423f2ba98ab509376fb0fc1cd7940a9"
+ },
+ "objectives": [
+  {
+   "id": "lo:g10m8s3-2-1",
+   "provisional_id": "lo:g10m8s3-2-1",
+   "n": 1,
+   "statement": "Determine the equation of a straight line through two given points, using the gradient relationship and the standard form y = mx + c, and use it to find an unknown coordinate of a point known to lie on the line.",
+   "label": "Equation of a straight line",
+   "evidence": [
+    {
+     "kind": "heading",
+     "anchor": "EMA6C",
+     "printed_page": 298,
+     "quote": "Straight lines",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "intro",
+     "anchor": "b03199",
+     "printed_page": 298,
+     "quote": "The standard form of the straight line equation is $y=mx+c$",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "intro",
+     "anchor": "b03197",
+     "printed_page": 298,
+     "quote": "The general formula for finding the equation of a straight line is $\\dfrac{y-y_1}{x-x_1}=\\dfrac{y_2-y_1}{x_2-x_1}$",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "worked_example",
+     "anchor": "WE5",
+     "printed_page": 298,
+     "quote": "Find the equation of the straight line through $P\\left(-1;-5\\right)$ and $Q\\left(5;4\\right)$ .",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex8-4:3",
+     "printed_page": 305,
+     "quote": "Calculate the equation of the line $AB$ .",
+     "contained": true,
+     "present": true,
+     "supports": true
+    }
+   ],
+   "evidence_dropped": [],
+   "exercise_items": [
+    "Ex8-4:3",
+    "Ex8-4:4",
+    "Ex8-4:6",
+    "Ex8-4:15",
+    "Ex8-4:16",
+    "Ex8-6:10a",
+    "Ex8-6:15",
+    "Ex8-6:18a",
+    "Ex8-6:18c",
+    "Ex8-6:29b",
+    "Ex8-6:30d",
+    "Ex8-6:32d",
+    "Ex8-6:34c",
+    "Ex8-6:37e",
+    "Ex8-6:40a",
+    "Ex8-6:40c",
+    "Ex8-6:40d",
+    "Ex8-6:40e",
+    "Ex8-6:41b",
+    "Ex8-6:43c",
+    "Ex8-6:44c",
+    "Ex8-6:45a",
+    "Ex8-6:46b"
+   ],
+   "worked_examples": [
+    "WE5"
+   ],
+   "confidence": "agreed",
+   "from": {
+    "a": [
+     "A1"
+    ],
+    "b": [
+     "B1"
+    ]
+   },
+   "derivation": "derived",
+   "terms": [
+    "gradient",
+    "standard form",
+    "coordinates"
+   ],
+   "edited_at_g1": false,
+   "order_in_parent": 8,
+   "node": {
+    "id": "lo:g10m8s3-2-1",
+    "kind": "learning_objective",
+    "label": "Equation of a straight line",
+    "description": "Determine the equation of a straight line through two given points, using the gradient relationship and the standard form y = mx + c, and use it to find an unknown coordinate of a point known to lie on the line.",
+    "source_page": 298,
+    "syllabus_ref": "8.3",
+    "order_in_parent": 8
+   }
+  },
+  {
+   "id": "lo:g10m8s3-2-2",
+   "provisional_id": "lo:g10m8s3-2-2",
+   "n": 2,
+   "statement": "Determine whether two lines are parallel, perpendicular or neither by comparing their gradients, and use that relationship to find an unknown coordinate or the equation of a line.",
+   "label": "Parallel and perpendicular lines",
+   "evidence": [
+    {
+     "kind": "heading",
+     "anchor": "EMA6D",
+     "printed_page": 300,
+     "quote": "Parallel and perpendicular lines",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "intro",
+     "anchor": "b03204",
+     "printed_page": 300,
+     "quote": "the product of their gradients is equal to $-\\text{1}$",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "intro",
+     "anchor": "b03205",
+     "printed_page": 300,
+     "quote": "Perpendicular lines have gradients that are the negative inverses of each other.",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "worked_example",
+     "anchor": "WE6",
+     "printed_page": 300,
+     "quote": "Prove that line $AB$ with $A\\left(0;2\\right)$ and $B\\left(2;6\\right)$ is parallel to line $CD$ with equation $2x-y=2$ .",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "worked_example",
+     "anchor": "WE7",
+     "printed_page": 301,
+     "quote": "Line $AB$ is perpendicular to line $CD$ . Find $y$ given $A\\left(2;-3\\right)$ , $B\\left(-2;6\\right)$ , $C\\left(4;3\\right)$ and $D\\left(7;y\\right)$ .",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex8-4:1a",
+     "printed_page": 304,
+     "quote": "Determine whether $AB$ and $CD$ are parallel, perpendicular or neither",
+     "contained": true,
+     "present": true,
+     "supports": true
+    }
+   ],
+   "evidence_dropped": [],
+   "exercise_items": [
+    "Ex8-4:1a",
+    "Ex8-4:1b",
+    "Ex8-4:1c",
+    "Ex8-4:7",
+    "Ex8-4:8",
+    "Ex8-4:9",
+    "Ex8-4:10",
+    "Ex8-4:11",
+    "Ex8-4:12",
+    "Ex8-4:13",
+    "Ex8-4:14",
+    "Ex8-4:17",
+    "Ex8-4:19a",
+    "Ex8-4:19b",
+    "Ex8-4:20a",
+    "Ex8-4:20b",
+    "Ex8-4:20c",
+    "Ex8-6:11",
+    "Ex8-6:12",
+    "Ex8-6:13",
+    "Ex8-6:14",
+    "Ex8-6:18b",
+    "Ex8-6:19b",
+    "Ex8-6:19d",
+    "Ex8-6:21b",
+    "Ex8-6:21c",
+    "Ex8-6:22b",
+    "Ex8-6:22e",
+    "Ex8-6:26",
+    "Ex8-6:29a",
+    "Ex8-6:30e",
+    "Ex8-6:31b",
+    "Ex8-6:32b",
+    "Ex8-6:33a",
+    "Ex8-6:35c",
+    "Ex8-6:35d",
+    "Ex8-6:35e",
+    "Ex8-6:36b",
+    "Ex8-6:37d",
+    "Ex8-6:38d",
+    "Ex8-6:39d",
+    "Ex8-6:40b",
+    "Ex8-6:42c",
+    "Ex8-6:42e",
+    "Ex8-6:43d",
+    "Ex8-6:44d",
+    "Ex8-6:45b",
+    "Ex8-6:46c"
+   ],
+   "worked_examples": [
+    "WE6",
+    "WE7"
+   ],
+   "confidence": "agreed",
+   "from": {
+    "a": [
+     "A2"
+    ],
+    "b": [
+     "B2"
+    ]
+   },
+   "derivation": "derived",
+   "terms": [
+    "gradient",
+    "parallel",
+    "perpendicular",
+    "negative inverse"
+   ],
+   "edited_at_g1": false,
+   "order_in_parent": 9,
+   "node": {
+    "id": "lo:g10m8s3-2-2",
+    "kind": "learning_objective",
+    "label": "Parallel and perpendicular lines",
+    "description": "Determine whether two lines are parallel, perpendicular or neither by comparing their gradients, and use that relationship to find an unknown coordinate or the equation of a line.",
+    "source_page": 300,
+    "syllabus_ref": "8.3",
+    "order_in_parent": 9
+   }
+  },
+  {
+   "id": "lo:g10m8s3-2-3",
+   "provisional_id": "lo:g10m8s3-2-3",
+   "n": 3,
+   "statement": "Determine whether points are collinear (lie on the same straight line), using the gradient method or the distance formula.",
+   "label": "Points on a line",
+   "evidence": [
+    {
+     "kind": "heading",
+     "anchor": "EMA6G",
+     "printed_page": 302,
+     "quote": "Points on a line",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "intro",
+     "anchor": "b03215",
+     "printed_page": 302,
+     "quote": "There are two methods to prove that points lie on the same line: the gradient method and a method using the distance formula.",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "definition",
+     "anchor": "b03216",
+     "printed_page": 302,
+     "quote": "If two points lie on the same line then the two points are said to be collinear.",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "worked_example",
+     "anchor": "WE8",
+     "printed_page": 303,
+     "quote": "Prove that $A\\left(-3;3\\right)$ , $B\\left(0;5\\right)$ and $C\\left(3;7\\right)$ are on a straight line.",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "worked_example",
+     "anchor": "WE9",
+     "printed_page": 304,
+     "quote": "Find the sum of the two shorter distances",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex8-4:2a",
+     "printed_page": 305,
+     "quote": "Determine whether the following points lie on the same straight line",
+     "contained": true,
+     "present": true,
+     "supports": true
+    }
+   ],
+   "evidence_dropped": [],
+   "exercise_items": [
+    "Ex8-4:2a",
+    "Ex8-4:2b",
+    "Ex8-4:2c",
+    "Ex8-4:5",
+    "Ex8-4:18",
+    "Ex8-6:25e",
+    "Ex8-6:30c",
+    "Ex8-6:34d",
+    "Ex8-6:41a",
+    "Ex8-6:42d",
+    "Ex8-6:45c",
+    "Ex8-6:47a"
+   ],
+   "worked_examples": [
+    "WE8",
+    "WE9"
+   ],
+   "confidence": "agreed",
+   "from": {
+    "a": [
+     "A3"
+    ],
+    "b": [
+     "B3"
+    ]
+   },
+   "derivation": "derived",
+   "terms": [
+    "collinear",
+    "gradient method",
+    "distance formula"
+   ],
+   "edited_at_g1": false,
+   "order_in_parent": 10,
+   "node": {
+    "id": "lo:g10m8s3-2-3",
+    "kind": "learning_objective",
+    "label": "Points on a line",
+    "description": "Determine whether points are collinear (lie on the same straight line), using the gradient method or the distance formula.",
+    "source_page": 302,
+    "syllabus_ref": "8.3",
+    "order_in_parent": 10
+   }
+  }
+ ],
+ "pool_items": [
+  "Ex8-6:10a",
+  "Ex8-6:11",
+  "Ex8-6:12",
+  "Ex8-6:13",
+  "Ex8-6:14",
+  "Ex8-6:15",
+  "Ex8-6:18a",
+  "Ex8-6:18b",
+  "Ex8-6:18c",
+  "Ex8-6:19b",
+  "Ex8-6:19d",
+  "Ex8-6:21b",
+  "Ex8-6:21c",
+  "Ex8-6:22b",
+  "Ex8-6:22e",
+  "Ex8-6:25e",
+  "Ex8-6:26",
+  "Ex8-6:29a",
+  "Ex8-6:29b",
+  "Ex8-6:30c",
+  "Ex8-6:30d",
+  "Ex8-6:30e",
+  "Ex8-6:31b",
+  "Ex8-6:32b",
+  "Ex8-6:32d",
+  "Ex8-6:33a",
+  "Ex8-6:34c",
+  "Ex8-6:34d",
+  "Ex8-6:35c",
+  "Ex8-6:35d",
+  "Ex8-6:35e",
+  "Ex8-6:36b",
+  "Ex8-6:37d",
+  "Ex8-6:37e",
+  "Ex8-6:38d",
+  "Ex8-6:39d",
+  "Ex8-6:40a",
+  "Ex8-6:40b",
+  "Ex8-6:40c",
+  "Ex8-6:40d",
+  "Ex8-6:40e",
+  "Ex8-6:41a",
+  "Ex8-6:41b",
+  "Ex8-6:42c",
+  "Ex8-6:42d",
+  "Ex8-6:42e",
+  "Ex8-6:43c",
+  "Ex8-6:43d",
+  "Ex8-6:44c",
+  "Ex8-6:44d",
+  "Ex8-6:45a",
+  "Ex8-6:45b",
+  "Ex8-6:45c",
+  "Ex8-6:46b",
+  "Ex8-6:46c",
+  "Ex8-6:47a"
+ ],
+ "prerequisites": [
+  {
+   "src": "lo:g10m8s2-1-1",
+   "dst": "lo:g10m8s3-2-3",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "text",
+     "anchor": "b03215",
+     "printed_page": 302,
+     "quote": "a method using the distance formula"
+    },
+    {
+     "kind": "text",
+     "anchor": "b03218",
+     "printed_page": 303,
+     "quote": "using the distance formula"
+    },
+    {
+     "kind": "worked_example",
+     "anchor": "WE9",
+     "printed_page": 304,
+     "quote": "Calculate the three distances"
+    }
+   ],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "a0101 names 'a method using the distance formula' as one of the two ways to prove collinearity; a0103 spells out the step explicitly: to prove collinearity 'using the distance formula, we must calculate the distances between each pair of points' and compare sums; a0108 (WE9) then executes exactly that step, computing d_AB, d_BC, d_AC via the distance formula (leaving results as surds, e.g. sqrt(13), sqrt(52)) and using those distances to conclude collinearity. All three quotes are present verbatim in the anchored text, and together they show the dst objective (determine collinearity via distance method) using the src objective's method (distance formula, surd form) as a direct computational step, not just a shared topic word."
+   },
+   "backward": false
+  }
+ ],
+ "checks": {
+  "ok": true,
+  "failures": [],
+  "warnings": []
+ },
+ "outside_items": [
+  {
+   "item": "Ex8-6:28a",
+   "why": "Pure recall of parallelogram properties from earlier geometry; this chapter teaches no such objective.",
+   "by": "Samuel Toma",
+   "at": "2026-09-26T07:19:34+00:00"
+  },
+  {
+   "item": "Ex8-6:32e",
+   "why": "Area of a triangle from coordinates is not taught in this chapter.",
+   "by": "Samuel Toma",
+   "at": "2026-09-26T07:19:34+00:00"
+  },
+  {
+   "item": "Ex8-6:46d",
+   "why": "Ratio of triangle areas via the mid-point theorem / similar triangles is not taught in this chapter.",
+   "by": "Samuel Toma",
+   "at": "2026-09-26T07:19:34+00:00"
+  }
+ ]
+}

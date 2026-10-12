@@ -1,0 +1,70 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s4-1-5:asymptote-a",
+ "kind": "family",
+ "lo_id": "lo:g10m6s4-1-5",
+ "parent_question_id": "q:g10m6s4-1-5:ex6-4-2",
+ "source_page": 175,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "x0",
+   "choice": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "k",
+   "choice": [
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "name": "q",
+   "choice": [
+    1,
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "a",
+   "let": "k * x0"
+  },
+  {
+   "name": "y0",
+   "let": "k + q"
+  },
+  {
+   "name": "xy",
+   "let": "x0 * y0"
+  },
+  {
+   "name": "qx",
+   "let": "q * x0"
+  }
+ ],
+ "constraints": [
+  "a > 0",
+  "y0 > q",
+  "xy - qx == a"
+ ],
+ "stem": "The graph of a hyperbolic function of the form $y=\\dfrac{a}{x}+q$ has the horizontal asymptote $y={=q}$. Point A on the graph is at $\\left({=x0}, {=y0}\\right)$. Calculate the value of $a$.",
+ "answer": "a",
+ "solution": [
+  "The horizontal asymptote of $y=\\frac{a}{x}+q$ is the line $y=q$. Here the asymptote is $y={=q}$, so $q={=q}$.",
+  "Substitute $q={=q}$ and the coordinates of A, $x={=x0}$ and $y={=y0}$, into $y=\\frac{a}{x}+q$: ${=y0}=\\frac{a}{{=x0}}+{=q}$.",
+  "Multiply both sides by ${=x0}$ to clear the fraction: ${=x0}\\times{=y0}=\\left[\\frac{a}{{=x0}}+{=q}\\right]\\times{=x0}$, so ${=xy}=a+{=qx}$.",
+  "Subtract ${=qx}$ from both sides: $a={=xy}-{=qx}={=a}$."
+ ],
+ "notes": "Model: ex6-4-2 (A at (-1, 5), q = 3 from the dashed asymptote). The book's figure is replaced by a sentence naming the asymptote, which is exactly what the student reads off the dashed line; no figure is generated. Entry point of the skill: everything positive (a > 0, q > 0, x > 0), the point has whole-number coordinates, and only a is asked, q being read straight from the asymptote. x is never 1 so that 'multiply both sides by x' is never a vacuous step. a = k*x so y is always a whole number; a <= 15."
+}

@@ -1,0 +1,52 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s6-2-3:midline-bottom",
+ "kind": "family",
+ "lo_id": "lo:g10m6s6-2-3",
+ "parent_question_id": "q:g10m6s6-2-3:ex6-8-33",
+ "source_page": 222,
+ "tier": "standard",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    -4,
+    4
+   ]
+  },
+  {
+   "name": "bot",
+   "let": "q - a"
+  }
+ ],
+ "constraints": [],
+ "stem": "For $0^{\\circ}\\le\\theta\\le360^{\\circ}$, the graph of $y=a\\cos\\theta+q$ passes through the point $A(90^{\\circ}, {=q})$ and has its lowest point at $B(180^{\\circ}, {=bot})$. Calculate the values of $a$ (the amplitude of the graph) and $q$ (the vertical shift of the graph). Write your answer as $a=\\ldots$ and $q=\\ldots$.",
+ "solution": [
+  "For an unshifted cosine graph $y=a\\cos\\theta$, the point at $\\theta=90^{\\circ}$ has $y=0$, because $\\cos 90^{\\circ}=0$.",
+  "Point $A$ is at $(90^{\\circ}, {=q})$, where an unshifted graph would have $y=0$. So the vertical shift is $q={=q}$.",
+  "The line $y={=q}$ is therefore the middle of the graph. The lowest point $B$ is at $y={=bot}$.",
+  "The distance from the middle of the graph to its bottom is the amplitude: $a={=q}-{=paren(bot)}={=a}$.",
+  "Therefore $a={=a}$ and $q={=q}$."
+ ],
+ "marker": {
+  "kind": "values",
+  "answer": "[{=a}, {=q}]",
+  "form": null,
+  "variables": [
+   "a",
+   "q"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Generalises book ex6-8-33 (and ex6-6-4): the point at 90 degrees gives q because cos 90 degrees = 0, and the distance from that middle line to the lowest point at 180 degrees gives a. The book only prints q = 0; here q runs from -4 to 4 (0 included, which reproduces the book case). 'Lowest point at 180 degrees' fixes a > 0, so 'amplitude' is correct wording. The stem does not say that A lies on the middle line: the student is meant to see that from cos 90 degrees = 0, as the book's solution does. Whole numbers only; lowest value ranges from -9 to 3.\n\nPIPELINE NORMALISATION (not an author edit): marker-values-plain-form: the marker answer was 'a = {=a}; q = {=q}', the book's printed form 'a = -1; q = 2'. The key is read by families/evaluator.py parse_plain, which splits an answer at ONE top-level '=' (a ';' reads as a ','), so 'a = 3, q = 2' has two and every attempt failed to evaluate ('more than one '='') instead of producing a key. The plain form for kind \"values\" with several variables is a list of the values, '[a, q]' (runbook/families.workflow.js: '[a, b] for several values'; the blind answer's names are stripped to that form by generate_questions.blind_plain, and the siblings tan-135, positive-q, negative-q already write it). The marker is now '[{=a}, {=q}]': the same two numbers, the same order, the same variables list. The stem (which still asks the student to write a=... and q=...), the answer values and the worked solution are unchanged."
+}

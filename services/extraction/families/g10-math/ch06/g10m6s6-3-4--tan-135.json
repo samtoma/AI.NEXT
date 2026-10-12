@@ -1,0 +1,69 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m6s6-3-4:tan-135",
+ "kind": "family",
+ "lo_id": "lo:g10m6s6-3-4",
+ "parent_question_id": "q:g10m6s6-3-4:ex6-6-5",
+ "source_page": 201,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "k",
+   "choice": [
+    -9,
+    -7,
+    -5,
+    -3,
+    -1,
+    1,
+    3,
+    5,
+    7,
+    9
+   ]
+  },
+  {
+   "name": "q",
+   "let": "k / 2"
+  },
+  {
+   "name": "yb",
+   "let": "q - a"
+  }
+ ],
+ "constraints": [],
+ "stem": "A tangent curve has an equation of the form $y=a\\tan\\theta+q$. Point $A$ is at $\\left(0^{\\circ}, {=q}\\right)$ and point $B$ is at $\\left(135^{\\circ}, {=yb}\\right)$; both points lie on the curve. Determine the values of $a$ and $q$.",
+ "solution": [
+  "Point $A$ is the $y$-intercept: at $\\theta=0^{\\circ}$ we have $\\tan 0^{\\circ}=0$, so $y=a(0)+q=q$. The $y$-coordinate of $A$ is ${=q}$, therefore $q={=q}$.",
+  "To find $a$, substitute $q={=q}$ and point $B$, $\\left(135^{\\circ}, {=yb}\\right)$, into the equation. Using a calculator, $\\tan 135^{\\circ}=-1$, so the tangent is negative at point $B$.",
+  "$\\begin{aligned}y&=a\\tan\\theta+q\\\\{=yb}&=a\\tan135^{\\circ}+\\left({=q}\\right)\\\\{=yb}&=a(-1)+\\left({=q}\\right)\\\\a&=\\left({=q}\\right)-\\left({=yb}\\right)\\\\&={=a}\\end{aligned}$",
+  "Therefore $a={=a}$ and $q={=q}$."
+ ],
+ "marker": {
+  "kind": "values",
+  "answer": "[{=a}, {=numerator(q)}/{=denominator(q)}]",
+  "form": null,
+  "variables": [
+   "a",
+   "q"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m6s6-3-4:tan135-positive",
+   "label": "Uses tan 135 degrees = 1",
+   "description": "Substitutes a point at 135 degrees using tan 135 degrees = 1 (the value of tan 45 degrees), so a = y_B - q is found instead of a = q - y_B and a comes out with the wrong sign."
+  }
+ ],
+ "notes": "Advanced: fractional coordinates (the book's own twist in ex6-6-5, here halves) and the second point read at 135 degrees, where tan is -1, so y_B = q - a and the second point lies on the other branch of the curve. 135 degrees is a labelled value on the book's own theta-axis (0 to 180); the method is unchanged (q from the y-intercept, substitute B, solve for a), but note for the reviewer that the book's three exercises all place B at 45 degrees, so the 135 degree point is the one step beyond them. q is a half-integer (k odd), a is a whole number from 2 to 6, so a and y_B can never be whole numbers by accident and a is unique. The marker answer is written with numerator()/denominator() holes so no LaTeX fraction reaches the plain answer. Figure not reproduced; both points are given as coordinates in the stem."
+}

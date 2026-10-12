@@ -1,0 +1,138 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m10s4-1-4:twelve-values",
+ "kind": "family",
+ "lo_id": "lo:g10m10s4-1-4",
+ "parent_question_id": "q:g10m10s4-1-4:ex10-5-6f",
+ "source_page": 378,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "q",
+   "randint": [
+    20,
+    60
+   ]
+  },
+  {
+   "name": "s",
+   "randint": [
+    3,
+    9
+   ]
+  },
+  {
+   "name": "p",
+   "randint": [
+    0,
+    2
+   ]
+  },
+  {
+   "name": "r",
+   "randint": [
+    0,
+    2
+   ]
+  },
+  {
+   "name": "a",
+   "randint": [
+    0,
+    4
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    0,
+    4
+   ]
+  },
+  {
+   "name": "e",
+   "randint": [
+    0,
+    3
+   ]
+  },
+  {
+   "name": "f",
+   "randint": [
+    0,
+    4
+   ]
+  },
+  {
+   "name": "m1",
+   "randint": [
+    "q + p",
+    "q + 2*s - r"
+   ]
+  },
+  {
+   "name": "m2",
+   "randint": [
+    "q + p",
+    "q + 2*s - r"
+   ]
+  },
+  {
+   "name": "m3",
+   "randint": [
+    "q + p",
+    "q + 2*s - r"
+   ]
+  },
+  {
+   "name": "m4",
+   "randint": [
+    "q + p",
+    "q + 2*s - r"
+   ]
+  },
+  {
+   "name": "srt",
+   "let": "sorted([q - p - a - b, q - p - a, q - p, q + p, m1, m2, m3, m4, q + 2*s - r, q + 2*s + r, q + 2*s + r + e, q + 2*s + r + e + f])"
+  },
+  {
+   "name": "data",
+   "shuffle": "srt"
+  },
+  {
+   "name": "q1",
+   "let": "(srt[2] + srt[3]) // 2"
+  },
+  {
+   "name": "q3",
+   "let": "(srt[8] + srt[9]) // 2"
+  },
+  {
+   "name": "iqr",
+   "let": "q3 - q1"
+  },
+  {
+   "name": "siqr",
+   "let": "iqr // 2"
+  },
+  {
+   "require": "(srt[2] + srt[3]) % 2 == 0 and (srt[8] + srt[9]) % 2 == 0 and iqr % 2 == 0",
+   "why": "both quartiles and the interquartile range are whole numbers"
+  }
+ ],
+ "constraints": [
+  "len(srt) == 12",
+  "q1 < q3"
+ ],
+ "stem": "The 12 values below are in no particular order. ${=data[0]}, {=data[1]}, {=data[2]}, {=data[3]}, {=data[4]}, {=data[5]}, {=data[6]}, {=data[7]}, {=data[8]}, {=data[9]}, {=data[10]}, {=data[11]}$ Take the lower quartile as the median of the lower half of the ordered data and the upper quartile as the median of the upper half. Calculate the semi-interquartile range of the data.",
+ "answer": "siqr",
+ "solution": [
+  "Arrange the values in ascending order: ${=srt[0]}, {=srt[1]}, {=srt[2]}, {=srt[3]}, {=srt[4]}, {=srt[5]}, {=srt[6]}, {=srt[7]}, {=srt[8]}, {=srt[9]}, {=srt[10]}, {=srt[11]}$.",
+  "There are 12 values, so each half has 6 values. The lower quartile is the median of the first 6 values, the average of the 3rd and 4th: $Q_1=\\frac{{=srt[2]}+{=srt[3]}}{2}={=q1}$. The upper quartile is the median of the last 6 values, the average of the 9th and 10th: $Q_3=\\frac{{=srt[8]}+{=srt[9]}}{2}={=q3}$.",
+  "The interquartile range is the upper quartile minus the lower quartile: $Q_3-Q_1={=q3}-{=q1}={=iqr}$.",
+  "The semi-interquartile range is half the interquartile range: $\\frac{{=iqr}}{2}={=siqr}$."
+ ],
+ "notes": "Models ex10-5-6f (find the quartiles, subtract for the interquartile range, halve for the semi-interquartile range). Differences from the book's sorted set of 7: the 12 values arrive unordered, and because n is even each half has 6 values and no median-in-both-halves rule is needed. The stem states the quartile rule so the answer is unique. Each instance is built outwards from its quartiles so the quartiles, the IQR and the SIQR are whole numbers; the data list is shuffled. Tiered standard (the book's typical exercise, one step longer than ex10-5-6f), not advanced; the advanced gap is filled by tpl:g10m10s4-1-4:trained-comparison. Checked against an independent quartile routine over 20000 simulated instances: no disagreement, 20000 distinct stems, answers 3 to 9."
+}

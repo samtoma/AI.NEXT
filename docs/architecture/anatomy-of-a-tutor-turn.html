@@ -1,0 +1,697 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>body { margin: 0; }</style>
+</head>
+<body>
+<title>Anatomy of a Tutor Turn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column; a lane legend that colours every step by where it runs (browser, server, database, model). */
+:root {
+  --bg: #f6f7f9;
+  --surface: #ffffff;
+  --ink: #17202b;
+  --ink-soft: #4a5666;
+  --ink-faint: #7a8594;
+  --rule: #dde2e8;
+  --code-bg: #eef1f5;
+  --accent: #2f5bd3;
+  --lane-browser: #2f6fd6;
+  --lane-browser-wash: #e7effc;
+  --lane-server: #b8660b;
+  --lane-server-wash: #fbf0e2;
+  --lane-db: #1f8a5b;
+  --lane-db-wash: #e3f4ec;
+  --lane-llm: #7a4fc9;
+  --lane-llm-wash: #f0eafb;
+  --warn: #a8471d;
+  --warn-wash: #fbebe3;
+  --f-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --f-body: "Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #11151b; --surface: #181e26; --ink: #e6eaf0; --ink-soft: #b2bbc7; --ink-faint: #838e9c;
+    --rule: #2a323d; --code-bg: #1f2630; --accent: #7fa2ff;
+    --lane-browser: #7aa9ff; --lane-browser-wash: #1a2740;
+    --lane-server: #f0a453; --lane-server-wash: #33261a;
+    --lane-db: #5fcf98; --lane-db-wash: #16302a;
+    --lane-llm: #b99aff; --lane-llm-wash: #29213d;
+    --warn: #ff9b6e; --warn-wash: #3a2219;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #11151b; --surface: #181e26; --ink: #e6eaf0; --ink-soft: #b2bbc7; --ink-faint: #838e9c;
+  --rule: #2a323d; --code-bg: #1f2630; --accent: #7fa2ff;
+  --lane-browser: #7aa9ff; --lane-browser-wash: #1a2740;
+  --lane-server: #f0a453; --lane-server-wash: #33261a;
+  --lane-db: #5fcf98; --lane-db-wash: #16302a;
+  --lane-llm: #b99aff; --lane-llm-wash: #29213d;
+  --warn: #ff9b6e; --warn-wash: #3a2219;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 15.5px; line-height: 1.6; padding: 0 16px; }
+.wrap { max-width: 980px; margin: 0 auto; padding-block: 40px 80px; }
+h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; line-height: 1.2; margin: 0; }
+h1 { font-size: clamp(2rem, 5vw, 2.9rem); font-weight: 700; letter-spacing: -0.01em; }
+h2 { font-size: 1.6rem; font-weight: 600; margin-top: 56px; }
+h3 { font-size: 1.12rem; font-weight: 600; }
+p { margin: 0; max-width: 72ch; }
+.eyebrow { font-family: var(--f-mono); font-size: 0.74rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-faint); }
+.lede { font-size: 1.08rem; color: var(--ink-soft); margin-top: 14px; }
+.stack { display: grid; gap: 14px; }
+.section-intro { margin-top: 10px; color: var(--ink-soft); }
+code, .mono { font-family: var(--f-mono); font-size: 0.86em; }
+code { background: var(--code-bg); padding: 1px 5px; border-radius: 4px; overflow-wrap: anywhere; }
+pre { font-family: var(--f-mono); font-size: 0.8rem; line-height: 1.55; background: var(--code-bg); border-radius: 8px; padding: 14px 16px; overflow-x: auto; margin: 0; white-space: pre; color: var(--ink); }
+a { color: var(--accent); }
+
+/* legend */
+.legend { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 22px; }
+.legend span { display: inline-flex; align-items: center; gap: 8px; font-size: 0.88rem; color: var(--ink-soft); }
+.dot { width: 11px; height: 11px; border-radius: 3px; flex: none; }
+.l-browser { --lane: var(--lane-browser); --wash: var(--lane-browser-wash); }
+.l-server { --lane: var(--lane-server); --wash: var(--lane-server-wash); }
+.l-db { --lane: var(--lane-db); --wash: var(--lane-db-wash); }
+.l-llm { --lane: var(--lane-llm); --wash: var(--lane-llm-wash); }
+.dot { background: var(--lane); }
+
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; margin-top: 26px; }
+.facts div { background: var(--surface); padding: 14px 16px; min-width: 0; }
+.facts b { display: block; font-size: 1.05rem; font-variant-numeric: tabular-nums; }
+.facts small { color: var(--ink-faint); font-size: 0.8rem; }
+
+.diagram { background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; padding: 18px; margin-top: 18px; overflow-x: auto; }
+.diagram pre.mermaid { background: transparent; padding: 0; text-align: center; }
+
+/* phases + steps */
+.phase { margin-top: 34px; }
+.phase-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; border-bottom: 1px solid var(--rule); padding-bottom: 8px; }
+.phase-head .eyebrow { color: var(--accent); }
+ol.steps { list-style: none; margin: 0; padding: 0; counter-reset: step var(--start, 0); display: grid; gap: 0; }
+ol.steps > li { counter-increment: step; display: grid; grid-template-columns: 44px 1fr; gap: 0 14px; padding: 16px 0; border-bottom: 1px dashed var(--rule); }
+ol.steps > li::before { content: counter(step); grid-row: 1 / span 4; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-family: var(--f-mono); font-size: 0.82rem; font-weight: 500; color: var(--lane); background: var(--wash); border: 1.5px solid var(--lane); font-variant-numeric: tabular-nums; }
+.step-body { min-width: 0; display: grid; gap: 6px; }
+.step-title { font-weight: 600; display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: baseline; }
+.where { font-family: var(--f-mono); font-size: 0.74rem; color: var(--ink-faint); overflow-wrap: anywhere; }
+.tag { font-family: var(--f-mono); font-size: 0.68rem; letter-spacing: 0.05em; text-transform: uppercase; padding: 1px 7px; border-radius: 999px; color: var(--lane); background: var(--wash); white-space: nowrap; }
+.check { font-size: 0.88rem; color: var(--ink-soft); border-left: 2px solid var(--lane); padding-left: 10px; }
+.check b { color: var(--ink); font-weight: 600; }
+.step-body p { color: var(--ink-soft); }
+.step-body pre { margin-top: 4px; }
+
+/* prompt anatomy */
+.prompt-stack { display: grid; gap: 0; border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; margin-top: 18px; background: var(--surface); }
+.prompt-stack > div { display: grid; grid-template-columns: minmax(140px, 220px) 1fr; gap: 14px; padding: 12px 16px; border-top: 1px solid var(--rule); }
+.prompt-stack > div:first-child { border-top: 0; }
+.prompt-stack .k { font-weight: 600; font-size: 0.92rem; }
+.prompt-stack .v { color: var(--ink-soft); font-size: 0.9rem; min-width: 0; }
+.prompt-stack .band { background: var(--lane-llm-wash); color: var(--lane-llm); font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; padding: 6px 16px; display: block; }
+
+/* reply mockup */
+.duo { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-top: 18px; }
+.duo > div { min-width: 0; display: grid; gap: 8px; align-content: start; }
+.chat { background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; padding: 16px; display: grid; gap: 10px; }
+.bubble { font-size: 0.95rem; line-height: 1.5; }
+.who { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--lane-llm); }
+.chip { display: inline-block; font-size: 0.72rem; padding: 0 7px; border-radius: 999px; border: 1px solid var(--rule); color: var(--ink-soft); vertical-align: 1px; margin-left: 2px; }
+.math { font-family: "Times New Roman", Georgia, serif; font-style: italic; }
+.qcard { border: 1.5px solid var(--lane-browser); border-radius: 10px; padding: 12px; background: var(--lane-browser-wash); display: grid; gap: 8px; }
+.qcard .opts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+.qcard .opts span { background: var(--surface); border: 1px solid var(--rule); border-radius: 7px; padding: 5px 9px; font-size: 0.88rem; }
+.pills { display: flex; flex-wrap: wrap; gap: 6px; }
+.pills span { font-size: 0.8rem; border: 1px solid var(--rule); background: var(--surface); padding: 4px 10px; border-radius: 999px; color: var(--ink-soft); }
+.caption { font-size: 0.82rem; color: var(--ink-faint); }
+
+/* tables */
+.tbl { overflow-x: auto; margin-top: 16px; border: 1px solid var(--rule); border-radius: 10px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 0.88rem; }
+th, td { text-align: left; padding: 10px 14px; border-top: 1px solid var(--rule); vertical-align: top; }
+thead th { border-top: 0; font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-faint); font-weight: 600; background: var(--code-bg); }
+td code { white-space: nowrap; }
+td:first-child { font-weight: 600; }
+
+.note { background: var(--warn-wash); border-left: 3px solid var(--warn); border-radius: 0 8px 8px 0; padding: 12px 16px; margin-top: 18px; font-size: 0.92rem; }
+.note b { color: var(--warn); }
+ul.plain { margin: 0; padding-left: 20px; display: grid; gap: 6px; color: var(--ink-soft); max-width: 75ch; }
+.toc { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 22px; font-size: 0.88rem; }
+.toc a { text-decoration: none; border-bottom: 1px solid var(--rule); color: var(--ink-soft); }
+.toc a:hover, .toc a:focus-visible { color: var(--accent); border-color: var(--accent); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+@media (max-width: 560px) {
+  ol.steps > li { grid-template-columns: 34px 1fr; gap: 0 10px; }
+  ol.steps > li::before { width: 28px; height: 28px; font-size: 0.74rem; }
+  .prompt-stack > div { grid-template-columns: 1fr; gap: 4px; }
+}
+</style>
+
+<div class="wrap">
+  <header class="stack">
+    <div class="eyebrow">AI.Next · Noor · maths lesson, learn mode · traced from the source at v0.11.0</div>
+    <h1>Anatomy of a Tutor Turn</h1>
+    <p class="lede">What happens, in order, from the moment a signed-in student opens a maths lesson to the moment the tutor answers the first question they type. Every step names the file that runs it and what to look at when it goes wrong.</p>
+    <div class="legend" aria-label="Where each step runs">
+      <span class="l-browser"><i class="dot"></i>Browser (the student's iPad)</span>
+      <span class="l-server"><i class="dot"></i>Next.js server</span>
+      <span class="l-db"><i class="dot"></i>Postgres (row-level security)</span>
+      <span class="l-llm"><i class="dot"></i>Claude CLI · Sonnet 5</span>
+    </div>
+    <div class="facts">
+      <div><b>1 model</b><small><code>claude-sonnet-5</code>, via the <code>claude</code> CLI</small></div>
+      <div><b>1 turn, no tools</b><small><code>--max-turns 1</code>, <code>--disallowedTools "*"</code></small></div>
+      <div><b>90 s</b><small>hard timeout, then the process is killed</small></div>
+      <div><b>1,024</b><small>thinking tokens per reply (default)</small></div>
+      <div><b>2 transactions</b><small>none held open while the model writes</small></div>
+    </div>
+    <nav class="toc" aria-label="Contents">
+      <a href="#map">The whole flow</a>
+      <a href="#spine">Where the content comes from</a>
+      <a href="#steps">Step by step</a>
+      <a href="#prompt">What the model is told</a>
+      <a href="#reply">How it replies</a>
+      <a href="#wire">Wire formats</a>
+      <a href="#debug">Debugging guide</a>
+      <a href="#knobs">Knobs</a>
+    </nav>
+  </header>
+
+  <section id="map">
+    <h2>The whole flow</h2>
+    <p class="section-intro">Four actors. The tutor speaks first: the browser sends a hidden "start the lesson" message as soon as the lesson opens, so the student's typed question is really the second call to <code>/api/ask</code>.</p>
+    <div class="diagram">
+<pre class="mermaid">
+sequenceDiagram
+  autonumber
+  actor S as Student
+  participant B as Browser
+  participant N as Next.js server
+  participant DB as Postgres
+  participant C as Claude CLI
+  S->>B: Taps "Walk me through it, step by step"
+  B->>N: GET /student?mode=learn&amp;lesson=u1-1
+  N->>DB: Course gate, objectives, mastery, live questions, figures
+  N-->>B: Lesson page with the lesson data
+  B->>B: Look for a saved lesson in localStorage
+  B->>N: POST /api/ask with the hidden "Start now" line
+  N->>N: Verify the ainext_at cookie and email
+  N->>DB: Transaction 1 - turn count, session, profile, misconceptions, attempts
+  N->>N: Build system prompt and LESSON DATA, cached 3 h
+  N->>C: Spawn claude -p with the prompt, transcript on stdin
+  N-->>B: SSE frame "session"
+  C-->>N: Streamed text deltas
+  N-->>B: SSE "delta" frames
+  B->>B: Parse markers, paced reveal, fill the step bar
+  C-->>N: Final result with tokens, cost and duration
+  N->>DB: Transaction 2 - INSERT ai_interactions
+  N-->>B: SSE frame "done" with cost and tokens
+  S->>B: Types their first question
+  B->>N: POST /api/ask with the full transcript
+  Note over N,C: Same path. The prompt prefix is replayed from cache.
+  S->>B: Answers a question card
+  B->>N: POST /api/attempts
+  N->>DB: Grade, update BKT mastery, maybe move the lesson pointer
+  B->>N: POST /api/ask with a hidden "Continue." and the result note
+</pre>
+    </div>
+  </section>
+
+  <section id="spine">
+    <h2>Where the content comes from</h2>
+    <p class="section-intro">Nothing the tutor teaches is invented at request time. The book was digested earlier into JSON, loaded into Postgres, and read back into the prompt on every lesson.</p>
+    <div class="diagram">
+<pre class="mermaid">
+flowchart LR
+  PDF["Ministry PDF&lt;br/&gt;docs/Source/*.pdf"] --> EX["Extraction workflows&lt;br/&gt;services/extraction/runbook"]
+  EX --> SEED["seed/unit1.json ...&lt;br/&gt;objectives, questions,&lt;br/&gt;canonical solutions, figures"]
+  SEED --> LOAD["load_seed.py"]
+  GEN["seed/generated/&lt;br/&gt;generated-questions.json"] --> LG["load_generated_questions.py"]
+  MIS["seed/misconceptions-math.json"] --> LM["load_misconceptions.py"]
+  LOAD --> PG[("Postgres&lt;br/&gt;graph_nodes, graph_edges,&lt;br/&gt;questions, visuals,&lt;br/&gt;misconceptions,&lt;br/&gt;explanation_library")]
+  LG --> PG
+  LM --> PG
+  PG --> LD["lib/lesson.ts&lt;br/&gt;getLessonData&lt;br/&gt;buildLessonContext"]
+  LD --> PR["System prompt +&lt;br/&gt;LESSON DATA block"]
+  PR --> M["Sonnet 5"]
+</pre>
+    </div>
+    <ul class="plain" style="margin-top:14px">
+      <li>Book questions load as <code>live</code>. Generated variants load as <code>review</code> unless the loader is run with <code>--promote</code>, so only promoted variants reach the prompt.</li>
+      <li>Only <code>questions.status = 'live'</code> rows are read. Each carries its human-reviewed canonical solution, which the tutor must follow step for step.</li>
+      <li>Maths lessons have no teaching script and no content bundle. Those exist for Arabic and Social Studies only (<code>seed/content/*.json</code>).</li>
+    </ul>
+  </section>
+
+  <section id="steps">
+    <h2>Step by step</h2>
+    <p class="section-intro">Read it like a debugger stepping through. The numbering is the real execution order; the colour says where the step runs.</p>
+
+    <div class="phase">
+      <div class="phase-head"><span class="eyebrow">Phase A</span><h3>Already signed in</h3></div>
+      <ol class="steps" style="--start:0">
+        <li class="l-browser"><div class="step-body">
+          <div class="step-title">The browser holds two cookies <span class="tag">browser</span></div>
+          <p><code>ainext_at</code> is the access token: a signed JWT, HttpOnly, valid for 15 minutes, sent with every request. <code>ainext_rt</code> is the refresh token, sent only to <code>/api/auth/*</code>. Page code can read neither.</p>
+          <div class="where">lib/auth/cookies.ts:73-104 · lib/auth/tokens.ts:42</div>
+          <div class="check"><b>Check:</b> DevTools → Application → Cookies. No <code>ainext_at</code> means every page redirects to <code>/signin</code>.</div>
+        </div></li>
+        <li class="l-browser"><div class="step-body">
+          <div class="step-title">The session renews itself <span class="tag">browser</span></div>
+          <p>Every request goes through <code>authFetch</code>. On a 401 it calls <code>POST /api/auth/refresh</code> once and retries. A keep-alive also renews every 10 minutes while the page is visible and the student is active. Only one tab renews at a time, because reusing a refresh token is treated as theft and revokes every session.</p>
+          <div class="where">lib/auth/client-session.ts:101-198 · components/auth/SessionKeepAlive.tsx</div>
+        </div></li>
+      </ol>
+    </div>
+
+    <div class="phase">
+      <div class="phase-head"><span class="eyebrow">Phase B</span><h3>Opening the lesson</h3></div>
+      <ol class="steps" style="--start:2">
+        <li class="l-browser"><div class="step-body">
+          <div class="step-title">Student taps "Walk me through it, step by step" <span class="tag">browser</span></div>
+          <p>A client-side navigation to <code>/student?mode=learn&amp;lesson=&lt;slug&gt;</code>, for example <code>u1-1</code>.</p>
+          <div class="where">components/student/LessonCheckIn.tsx:393-398</div>
+        </div></li>
+        <li class="l-server"><div class="step-body">
+          <div class="step-title">The page loads the lesson <span class="tag">server</span></div>
+          <p>The server component resolves the student, then calls <code>getLessonData</code> and renders <code>&lt;LessonSession mode="learn"&gt;</code>.</p>
+          <div class="where">app/(student)/student/page.tsx:96-111</div>
+        </div></li>
+        <li class="l-db"><div class="step-body">
+          <div class="step-title">Lesson data is read, course gate first <span class="tag">database</span></div>
+          <p>One student-scoped connection, in order:</p>
+          <ul class="plain">
+            <li><b>Objectives:</b> <code>graph_nodes</code> / <code>graph_edges</code>, ids like <code>lo:u1-1-%</code>, in teaching order.</li>
+            <li><b>Course gate:</b> if this student's grade can't see the course, the page is a 404 and nothing else is read.</li>
+            <li><b>Mastery:</b> <code>mastery</code>, the current BKT score per objective.</li>
+            <li><b>Questions:</b> <code>questions WHERE status='live'</code>, including answers and canonical solutions.</li>
+            <li><b>Figures:</b> <code>visuals</code>.</li>
+          </ul>
+          <div class="where">lib/lesson.ts:327-501 · lib/catalog-queries.ts:84-93</div>
+          <div class="check"><b>Check:</b> a 404 here, or later <code>{"error":"not_found"}</code> from <code>/api/ask</code>, means the course gate refused (migration 023, <code>course_availability</code>, <code>student_course_access</code>).</div>
+        </div></li>
+      </ol>
+    </div>
+
+    <div class="phase">
+      <div class="phase-head"><span class="eyebrow">Phase C</span><h3>The lesson screen mounts</h3></div>
+      <ol class="steps" style="--start:5">
+        <li class="l-browser"><div class="step-body">
+          <div class="step-title">Resume check <span class="tag">browser</span></div>
+          <p>Reads <code>ainext-lesson:learn:&lt;slug&gt;:s&lt;studentId&gt;</code>. A valid save shows "Continue the lesson?". Otherwise the lesson starts fresh with a new session id from <code>crypto.randomUUID()</code>. On <code>main</code> the save lives in <code>sessionStorage</code>. On the <code>fix/FR-204-finish-keeps-place</code> branch it moves to <code>localStorage</code> with a 7-day limit.</p>
+          <div class="where">components/student/LessonSession.tsx:352-388</div>
+        </div></li>
+        <li class="l-browser"><div class="step-body">
+          <div class="step-title">The hidden first message is chosen <span class="tag">browser</span></div>
+          <p>The student's mastery decides the opening. At stage 0 (nothing mastered yet) the browser will send, as if the student had typed it:</p>
+          <pre>Start now. This is a brand-new lesson for me — I haven't seen it before. Let's dive in!</pre>
+          <p>The student sees only the local line "Let's go 💪 setting up today's lesson… ✏️".</p>
+          <div class="where">lib/checkin.ts:154-165 · LessonSession.tsx:145-149</div>
+        </div></li>
+        <li class="l-browser"><div class="step-body">
+          <div class="step-title">ChatCore sends it to <code>/api/ask</code> <span class="tag">browser</span></div>
+          <p>A GA event <code>question_asked</code> fires for every send, hidden ones included. The request body:</p>
+<pre>{
+  "surface": "lesson_learn",
+  "chatSession": "3f2c…-uuid",
+  "lesson": "u1-1",
+  "messages": [
+    { "role": "user", "text": "Start now. This is a brand-new lesson for me…" }
+  ]
+}</pre>
+          <div class="where">components/chat/ChatCore.tsx:617-800</div>
+        </div></li>
+      </ol>
+    </div>
+
+    <div class="phase">
+      <div class="phase-head"><span class="eyebrow">Phase D</span><h3>The server prepares the call</h3></div>
+      <ol class="steps" style="--start:8">
+        <li class="l-server"><div class="step-body">
+          <div class="step-title">Validate the body <span class="tag">server</span></div>
+          <p>Bad JSON → 400. The surface is whitelisted. Only the last 24 messages are kept. No <code>chatSession</code> or no user message → 400. There are no turn caps (ADR-0023): the route never refuses a reply for count.</p>
+          <div class="where">app/api/ask/route.ts:151-190</div>
+        </div></li>
+        <li class="l-server"><div class="step-body">
+          <div class="step-title">Who is asking <span class="tag">server</span></div>
+          <p>Verifies the <code>ainext_at</code> JWT, then one query checks that the session isn't revoked or expired and the account isn't disabled. Not a student → <code>401 unauthenticated</code>. Email not confirmed → <code>403 email_unverified</code>.</p>
+          <div class="where">lib/auth/principal.ts:71-149 · route.ts:195-206</div>
+        </div></li>
+        <li class="l-db"><div class="step-body">
+          <div class="step-title">Transaction 1 opens under the student's identity <span class="tag">database</span></div>
+          <p><code>BEGIN</code>, then <code>set_config('app.student_id', …)</code>. From here row-level security means every query sees this student's rows only.</p>
+          <div class="where">lib/db.ts:116-141 · route.ts:218</div>
+        </div></li>
+        <li class="l-db"><div class="step-body">
+          <div class="step-title">Count earlier turns <span class="tag">database</span></div>
+<pre>SELECT count(*) FROM ai_interactions
+ WHERE surface = 'lesson_learn' AND grounding-&gt;&gt;'chat_session' = $2 AND student_id = $3</pre>
+          <p>The answer plus one becomes this turn's <code>turn_index</code>.</p>
+          <div class="where">route.ts:223-229</div>
+        </div></li>
+        <li class="l-db"><div class="step-body">
+          <div class="step-title">Open or reuse the learning session <span class="tag">database</span></div>
+          <p>One open session per student. A session idle for 30 minutes is closed as <code>inactivity</code>, a different kind is closed as <code>superseded</code>, otherwise it is reused. A new session stores the release tag and whether Socratic probing is on. Probing applies only to English maths in learn mode, and only for marked test accounts while "Everyone" is locked.</p>
+          <div class="where">lib/sessions.ts:350-469 · lib/session-rules.ts:72-83 · lib/socratic-probing.ts:155-165</div>
+          <div class="check"><b>Check:</b> console → Students → Sessions shows each sitting and why it ended. If this step errors, the turn still goes ahead with <code>session_id = NULL</code>.</div>
+        </div></li>
+        <li class="l-db"><div class="step-body">
+          <div class="step-title">Read the student profile <span class="tag">database</span></div>
+          <p>Name, grade, interests, language, gender. Read fresh on every turn, never cached.</p>
+          <div class="where">lib/student-context.ts:196-225</div>
+        </div></li>
+        <li class="l-server"><div class="step-body">
+          <div class="step-title">Prompt cache lookup <span class="tag">server</span></div>
+          <p>The key is session + student + lesson + upload + how the student is addressed (+ probing). On a hit the exact same prompt bytes are replayed, so the model provider's prompt cache stays warm. It lives in server memory: 3 hours, 200 sessions, and it is lost on restart.</p>
+          <div class="where">lib/session-cache.ts:56-124 · route.ts:275-310</div>
+        </div></li>
+        <li class="l-db"><div class="step-body">
+          <div class="step-title">On a miss: build the lesson context <span class="tag">database</span></div>
+          <p>Re-reads the lesson data (step 5), then the extras that shape teaching:</p>
+          <ul class="plain">
+            <li><code>misconceptions</code> and <code>explanation_library</code> for these objectives.</li>
+            <li>Nearest skills: these objectives and their prerequisites, weakest first, top 5.</li>
+            <li>The last 12 attempts, which set the engagement stance.</li>
+            <li>The parsed text of an uploaded photo, if one is attached (capped at 4,000 characters).</li>
+          </ul>
+          <div class="where">lib/lesson.ts:1173-1275 · lib/retrieval.ts:153-319</div>
+        </div></li>
+        <li class="l-server"><div class="step-body">
+          <div class="step-title">Assemble the prompt <span class="tag">server</span></div>
+          <p>System prompt = tutoring rules + the LESSON DATA block (both stable, so they can be cached). The user message = the transcript. Details in <a href="#prompt">What the model is told</a>.</p>
+          <div class="where">lib/lesson.ts:1021-1066, 541-585 · route.ts:354-382</div>
+        </div></li>
+        <li class="l-db"><div class="step-body">
+          <div class="step-title">Transaction 1 commits <span class="tag">database</span></div>
+          <p>No database connection is held while the model writes, which can take tens of seconds. If anything above threw, the reply is <code>500 internal error</code> and nothing is streamed.</p>
+          <div class="where">route.ts:318-337</div>
+        </div></li>
+      </ol>
+    </div>
+
+    <div class="phase">
+      <div class="phase-head"><span class="eyebrow">Phase E</span><h3>The model call</h3></div>
+      <ol class="steps" style="--start:18">
+        <li class="l-server"><div class="step-body">
+          <div class="step-title">First stream frame goes out <span class="tag">server</span></div>
+          <p>The response is Server-Sent Events. The first frame tells the browser whether this sitting probes: <code>data: {"type":"session","probing":false}</code></p>
+          <div class="where">route.ts:413</div>
+        </div></li>
+        <li class="l-llm"><div class="step-body">
+          <div class="step-title">The CLI is spawned <span class="tag">model</span></div>
+<pre>claude -p --output-format stream-json --include-partial-messages --verbose \
+  --model claude-sonnet-5 --system-prompt "&lt;rules + LESSON DATA&gt;" \
+  --disallowedTools "*" --max-turns 1
+# env: MAX_THINKING_TOKENS=1024   cwd: $TMPDIR   stdin: the transcript</pre>
+          <p>Signed in with the subscription login in <code>CLAUDE_CONFIG_DIR</code>, not an API key. The working directory is the temp folder so no project instructions leak into the tutor.</p>
+          <div class="where">route.ts:415-467 · lib/claude-cli.ts:63-104</div>
+          <div class="check"><b>Check:</b> <code>docker exec &lt;app&gt; claude -p "hi"</code>. If that fails, every tutor turn fails.</div>
+        </div></li>
+        <li class="l-llm"><div class="step-body">
+          <div class="step-title">Text streams back <span class="tag">model</span></div>
+          <p>Each <code>text_delta</code> line from the CLI is forwarded at once as <code>data: {"type":"delta","t":"…"}</code>. Token usage is collected as it arrives. After 90 seconds, or if the student leaves the page, the process is killed.</p>
+          <div class="where">route.ts:499-611</div>
+        </div></li>
+        <li class="l-server"><div class="step-body">
+          <div class="step-title">The sacred-text guard watches <span class="tag">server</span></div>
+          <p>Every reply is checked against the sealed Quran and Hadith passages, 4 words at a time. When that content exists, the last 96 characters are held back until the end. It matters for Arabic lessons; on a maths reply it only adds a short delay at the very end.</p>
+          <div class="where">lib/sacred-guard.ts:21-26 · route.ts:348-350, 550-603</div>
+        </div></li>
+      </ol>
+    </div>
+
+    <div class="phase">
+      <div class="phase-head"><span class="eyebrow">Phase F</span><h3>The browser renders the reply</h3></div>
+      <ol class="steps" style="--start:22">
+        <li class="l-browser"><div class="step-body">
+          <div class="step-title">Read the stream <span class="tag">browser</span></div>
+          <p>Splits on blank lines, parses each <code>data:</code> line and appends <code>delta</code> text to the tutor's bubble.</p>
+          <div class="where">ChatCore.tsx:810-866</div>
+        </div></li>
+        <li class="l-browser"><div class="step-body">
+          <div class="step-title">Parse the markers <span class="tag">browser</span></div>
+          <p><code>[[lo:…]]</code>, <code>[[q:…]]</code> and <code>[[page:N]]</code> become small citation chips. <code>{{beat}}</code> becomes a pause. <code>{{show_question:…}}</code> becomes a question card, <code>{{widget:…}}</code> an interactive widget. Half-written markers and unclosed <code>$…$</code> maths are hidden until complete.</p>
+          <div class="where">lib/chat-parse.ts:80-461 · components/chat/message-blocks.tsx:184-254</div>
+        </div></li>
+        <li class="l-browser"><div class="step-body">
+          <div class="step-title">Paced "writing" reveal <span class="tag">browser</span></div>
+          <p>About 3 words every 850 ms (≈200 words a minute), 1.15 s pause after a sentence, 1.7 s at a <code>{{beat}}</code>, 1.5 s after a card or widget. Directives appear whole. Turned off for students who prefer reduced motion.</p>
+          <div class="where">ChatCore.tsx:245-254, 688-763</div>
+        </div></li>
+        <li class="l-browser"><div class="step-body">
+          <div class="step-title">The step bar fills <span class="tag">browser</span></div>
+          <p>The first time the tutor cites <code>[[lo:X]]</code> for one of this lesson's objectives, that objective counts as covered and the "2 of 4" bar moves.</p>
+          <div class="where">ChatCore.tsx:566-615 · LessonSession.tsx:1020-1027</div>
+        </div></li>
+      </ol>
+    </div>
+
+    <div class="phase">
+      <div class="phase-head"><span class="eyebrow">Phase G</span><h3>After the reply</h3></div>
+      <ol class="steps" style="--start:26">
+        <li class="l-db"><div class="step-body">
+          <div class="step-title">Transaction 2: the ledger row <span class="tag">database</span></div>
+          <p>Every turn writes one <code>ai_interactions</code> row, including failures. It holds tokens (uncached input, output, cache reads and writes), cost at list price, latency, the objectives and questions in the prompt (<code>grounding</code>), the citations the reply used, environment, session and release tag, and the outcome: <code>ok</code>, <code>error</code>, <code>timeout</code> or <code>redacted</code>.</p>
+          <div class="where">route.ts:634-810 · lib/pricing.ts:213-226</div>
+        </div></li>
+        <li class="l-server"><div class="step-body">
+          <div class="step-title">The last frame <span class="tag">server</span></div>
+<pre>data: {"type":"done","meta":{"costUsd":0.0112,"inputTokens":412,"outputTokens":186,
+  "cacheReadTokens":7930,"cacheCreationTokens":0,"latencyMs":6400,
+  "model":"claude-sonnet-5","interactionId":5531,"turnIndex":1}}</pre>
+          <p>The numbers above are illustrative. On failure the last frame is instead <code>{"type":"error","message":"AI backend unavailable — please try again"}</code>.</p>
+          <div class="where">route.ts:796-809</div>
+        </div></li>
+        <li class="l-browser"><div class="step-body">
+          <div class="step-title">The transcript is saved <span class="tag">browser</span></div>
+          <p>At most once every 900 ms, so a reload can offer "Continue where I left off".</p>
+          <div class="where">LessonSession.tsx:465-509</div>
+        </div></li>
+      </ol>
+    </div>
+
+    <div class="phase">
+      <div class="phase-head"><span class="eyebrow">Phase H</span><h3>The student types their first question</h3></div>
+      <ol class="steps" style="--start:29">
+        <li class="l-browser"><div class="step-body">
+          <div class="step-title">Same path, longer transcript <span class="tag">browser</span></div>
+          <p>The bubble appears, then <code>POST /api/ask</code> with the same <code>chatSession</code>. <code>messages</code> now holds the hidden start line, the tutor's first reply, any result notes, and the new question. Steps 9 to 29 repeat. The difference is that step 15 is a cache hit: the system prompt is replayed byte for byte, so most input tokens are cache reads.</p>
+          <div class="where">ChatCore.tsx:1321-1333</div>
+        </div></li>
+        <li class="l-llm"><div class="step-body">
+          <div class="step-title">What the model actually receives <span class="tag">model</span></div>
+<pre>CONVERSATION SO FAR:
+User: Start now. This is a brand-new lesson for me — I haven't seen it before. Let's dive in!
+
+Tutor: Salma! New topic today — ordered pairs 🚀 …
+
+User: why does the order matter?
+
+Reply as the Tutor to the last user message. Output only the reply text
+(with citation markers and, if fitting, one action directive).</pre>
+          <div class="where">route.ts:354-382</div>
+        </div></li>
+      </ol>
+    </div>
+
+    <div class="phase">
+      <div class="phase-head"><span class="eyebrow">Phase I</span><h3>If they answer a question card</h3></div>
+      <ol class="steps" style="--start:31">
+        <li class="l-browser"><div class="step-body">
+          <div class="step-title">Submit the attempt <span class="tag">browser</span></div>
+<pre>POST /api/attempts
+{ "questionId": "q:u1-1-1:001", "givenAnswer": "D", "timeMs": 14200 }</pre>
+          <div class="where">components/chat/ChatQuestionCard.tsx:100-133 · lib/attempts-client.ts:11-39</div>
+        </div></li>
+        <li class="l-db"><div class="step-body">
+          <div class="step-title">Grade and update mastery <span class="tag">database</span></div>
+          <p>The server grades the answer, runs a BKT (Bayesian Knowledge Tracing) update on that objective's mastery, can diagnose a known misconception, and moves the lesson pointer if the objective is now mastered. It returns <code>isCorrect</code>, <code>correctAnswer</code>, the solution steps, old and new scores, and any diagnosis.</p>
+          <div class="where">app/api/attempts/route.ts:369-450, 599-630</div>
+        </div></li>
+        <li class="l-browser"><div class="step-body">
+          <div class="step-title">The tutor is told, invisibly <span class="tag">browser</span></div>
+          <p>The browser adds a hidden note and, 700 ms later, sends a hidden "Continue." so the tutor reacts:</p>
+          <pre>[live event] ✗ the student answered q:u1-1-1:001 incorrectly (correct answer: A) — still not started → still not started (for you only: never say the band…)</pre>
+          <p>Mastery reaches the model only as a word band, never a number.</p>
+          <div class="where">ChatCore.tsx:1001-1102, 974-987</div>
+        </div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="prompt">
+    <h2>What the model is told</h2>
+    <p class="section-intro">The system prompt for an English maths lesson in learn mode, in order. The rules section alone is about 13,000 characters. With the lesson data it is roughly 20,000 characters (≈6k tokens) when only book questions are live, and can approach 100,000 if all generated variants are promoted. Those sizes are estimates from the seed files, not a capture.</p>
+    <div class="prompt-stack">
+      <span class="band">Tutoring rules · lib/lesson.ts:1021-1066</span>
+      <div><span class="k">Identity and premise</span><span class="v">"You are Salma's personal AI tutor at Noor. She is an Egyptian grade-9 (prep-3) student who just came home from school. Today's lesson is 1-1 — Cartesian product…" The premise changes with mastery stage: brand-new, round two, more depth, or go deeper.</span></div>
+      <div><span class="k">Tone</span><span class="v">Upbeat, playful and curious, never clinical.</span></div>
+      <div><span class="k">Hard grounding rules</span><span class="v">Teach only this lesson's objectives, in order. Every mathematical claim must follow from the objective descriptions and canonical solutions. Follow a canonical solution's steps exactly and never change a final answer.</span></div>
+      <div><span class="k">Language and voice</span><span class="v">English throughout, even if the student writes in Arabic. Warm private tutor, never lecturing. Never say "LO" to the student.</span></div>
+      <div><span class="k">Lesson arc</span><span class="v">One-line greeting, then each objective in 2–3 messages (the last in 1–2), then a final recall question from memory, then a recap with <code>{{finish_lesson}}</code>.</span></div>
+      <div><span class="k">Citations</span><span class="v"><code>[[lo:…]]</code>, <code>[[q:…]]</code>, <code>[[page:N]]</code> after substantive claims, ids only from the lesson data, never inside maths.</span></div>
+      <div><span class="k">Message rhythm</span><span class="v">2–4 beats per message, each at most 2 short sentences (≤25 words). The last beat is always an ask. Never state a step before asking the student to try it. Ask for the working at least once per objective. Wrong answer: re-explain that exact point another way, grounded in the canonical steps, without leading with the correct letter.</span></div>
+      <div><span class="k">Socratic probing</span><span class="v">Only when probing is on: guide with one question instead of revealing; grade a typed answer with <code>{{answer_submitted:X}}</code>; reveal only after the second wrong attempt.</span></div>
+      <div><span class="k">Interactive directives</span><span class="v">At most one per message, always last: a question card, one of this unit's widgets, a figure, or <code>{{finish_lesson}}</code>.</span></div>
+      <div><span class="k">Cross-subject and format</span><span class="v">A history or geography question gets one line and a hand-off card, never an answer from memory. Plain short paragraphs, maths in <code>$…$</code>, no headings or walls of text.</span></div>
+      <span class="band">LESSON DATA · lib/lesson.ts:541-585 + lib/retrieval.ts:229-319</span>
+      <div><span class="k">Header</span><span class="v">"LESSON DATA — your ONLY source of truth (school 1-1: Cartesian product — Unit 1, Egyptian ministry textbook)"</span></div>
+      <div><span class="k">Objectives</span><span class="v"><code>- lo:u1-1-1 | "Ordered pairs and their equality" | book p.7 | still developing</code> plus the description. Bands only, never percentages.</span></div>
+      <div><span class="k">Question bank</span><span class="v">Each live question: id, tier, type, page, stem, choices, correct answer, and "CANONICAL SOLUTION (v1, human-reviewed): Step 1. … | Step 2. …".</span></div>
+      <div><span class="k">Figure library</span><span class="v"><code>- v:u1-1:001 | coordinate_plot | lo:u1-1-1 | p.7 | "caption"</code></span></div>
+      <div><span class="k">How to address the student</span><span class="v">Name and pronouns (she/her, he/him, or singular they when unknown — never masculine by default). Changes sentence form only, never content.</span></div>
+      <div><span class="k">Student model</span><span class="v">Grade, language, interests. "If no interest is listed, do NOT frame explanations around an invented interest."</span></div>
+      <div><span class="k">Engagement and nearest skills</span><span class="v">A stance from the last 12 attempts, and the 5 weakest related skills as bands.</span></div>
+      <div><span class="k">Misconceptions and library</span><span class="v">Known mistakes for these objectives and their authored refutations: "teach FROM these — never improvise a refutation".</span></div>
+      <div><span class="k">Uploaded work</span><span class="v">The parsed text of the student's photo or PDF, if attached, up to 4,000 characters.</span></div>
+    </div>
+    <p class="caption" style="margin-top:10px">To see a real rendered prompt from a live database: <code>npm run capture:prompts -- &lt;outDir&gt;</code> in <code>app/</code>. Rendered reference prompts for a small test lesson are in <code>app/src/lib/probing-prompts.golden.json</code>.</p>
+  </section>
+
+  <section id="reply">
+    <h2>How it replies</h2>
+    <p class="section-intro">Short, paced, and always ending on something for the student to do. The first reply is not a lecture with a worked example: the rhythm rules forbid showing a step before asking the student to try it.</p>
+    <div class="duo">
+      <div>
+        <div class="eyebrow">What the model writes</div>
+<pre>Exactly — swap the order and you get a
+different pair [[lo:u1-1-1]].
+{{beat}}
+So two pairs are equal only when BOTH
+slots match. Try this one 👇
+{{beat}}
+{{show_question:q:u1-1-1:001}}</pre>
+        <p class="caption">An illustrative reply that follows the rules, built from real ids in <code>seed/unit1.json</code>.</p>
+      </div>
+      <div>
+        <div class="eyebrow">What the student sees</div>
+        <div class="chat" aria-label="Rendered reply mockup">
+          <div class="who">Nour</div>
+          <div class="bubble">Exactly — swap the order and you get a different pair <span class="chip">Ordered pairs</span></div>
+          <div class="bubble">So two pairs are equal only when <b>both</b> slots match. Try this one 👇</div>
+          <div class="qcard">
+            <div class="bubble">If <span class="math">(a, 5) = (3, b)</span>, then <span class="math">a + b</span> = ?</div>
+            <div class="opts"><span>A · 8</span><span>B · 15</span><span>C · 2</span><span>D · 35</span></div>
+          </div>
+          <div class="pills"><span>I don't get it — say it another way</span><span>Got it — next ✓</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="tbl">
+      <table>
+        <thead><tr><th>Marker</th><th>What the student gets</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><code>[[lo:…]]</code> <code>[[q:…]]</code> <code>[[page:N]]</code></td><td>A small citation chip</td><td>Also fills the step bar (lo only) and is logged to <code>ai_interactions.citations</code></td></tr>
+          <tr><td><code>{{beat}}</code></td><td>A 1.7 s writing pause</td><td>Prints nothing</td></tr>
+          <tr><td><code>{{show_question:q:…}}</code></td><td>A question card</td><td>Graded on the server by <code>/api/attempts</code>, updates mastery</td></tr>
+          <tr><td><code>{{widget:name:{…}}}</code></td><td>A hands-on maths widget</td><td>Only this unit's widgets. Graded on the device, result sent back as a live event</td></tr>
+          <tr><td><code>{{widget:viz_ref:v:…}}</code></td><td>A stored, curated figure</td><td>Fetched from <code>/api/visuals</code></td></tr>
+          <tr><td><code>{{finish_lesson}}</code></td><td>Finish button lights up, plus a chip</td><td>Does not end the chat; tapping Finish starts the report</td></tr>
+          <tr><td><code>{{answer_submitted:X}}</code></td><td>Nothing visible</td><td>Probing only: grades the student's typed answer on the open card</td></tr>
+          <tr><td><code>{{switch_subject:social}}</code></td><td>A hand-off card</td><td>For a question from the other subject</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="caption" style="margin-top:10px">The two chips under the chat are fixed in the app, not written by the model.</p>
+  </section>
+
+  <section id="wire">
+    <h2>Wire formats</h2>
+    <div class="duo">
+      <div>
+        <div class="eyebrow">Stream frames, in order (text/event-stream)</div>
+<pre>data: {"type":"session","probing":false}
+
+data: {"type":"delta","t":"Salma! New topic "}
+
+data: {"type":"delta","t":"today — ordered pairs"}
+
+…
+
+data: {"type":"done","meta":{…}}</pre>
+      </div>
+      <div>
+        <div class="eyebrow">Plain JSON errors, before any streaming</div>
+        <div class="tbl" style="margin-top:0">
+          <table>
+            <thead><tr><th>Status</th><th>Body</th><th>Meaning</th></tr></thead>
+            <tbody>
+              <tr><td>400</td><td><code>invalid JSON</code></td><td>Malformed body or no user message</td></tr>
+              <tr><td>401</td><td><code>unauthenticated</code></td><td>No valid cookie after one refresh</td></tr>
+              <tr><td>403</td><td><code>email_unverified</code></td><td>Email not confirmed</td></tr>
+              <tr><td>404</td><td><code>not_found</code></td><td>Course gate refused this lesson</td></tr>
+              <tr><td>500</td><td><code>internal error</code></td><td>Transaction 1 threw</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="debug">
+    <h2>Debugging guide</h2>
+    <p class="section-intro">Start from what the student saw, then follow the row.</p>
+    <div class="tbl">
+      <table>
+        <thead><tr><th>Symptom</th><th>Look at</th><th>Likely cause</th></tr></thead>
+        <tbody>
+          <tr><td>"You have been signed out"</td><td>DevTools → Network: <code>/api/ask</code> 401, then <code>/api/auth/refresh</code></td><td>Refresh token expired or revoked; sign in again</td></tr>
+          <tr><td>"AI backend unavailable — please try again"</td><td>App logs; the newest <code>ai_interactions</code> row: <code>outcome</code> and <code>assistant_message</code></td><td><code>[no answer — …: not_signed_in]</code> means the CLI login is gone; <code>timed_out</code> is the 90 s limit; <code>cli_missing</code> means <code>claude</code> isn't on PATH</td></tr>
+          <tr><td>Thinking dots forever</td><td>Network → <code>/api/ask</code> → EventStream tab</td><td>No <code>delta</code> frames: the CLI hasn't produced text yet, or a proxy is buffering the stream</td></tr>
+          <tr><td>Lesson shows 404</td><td><code>course_availability</code>, <code>student_course_access</code></td><td>The course isn't visible for this student's grade</td></tr>
+          <tr><td>Tutor teaches the wrong thing</td><td><code>ai_interactions.grounding</code> (which objectives and questions it was given), <code>citations</code> (what it used)</td><td>Wrong or missing live questions for the lesson; check <code>questions.status</code></td></tr>
+          <tr><td>Reply shows raw <code>{{…}}</code></td><td><code>lib/chat-parse.ts</code></td><td>A malformed directive (bad JSON in a widget) the parser could not match</td></tr>
+          <tr><td>Want to see cost and tokens</td><td>Triple-tap the lesson header</td><td>Turns on debug mode: per-message cost, tokens, and the hidden live-event notes</td></tr>
+          <tr><td>Want the whole sitting</td><td>Console → Students → a student → Sessions</td><td>Every turn with its reply, grounding and cost</td></tr>
+        </tbody>
+      </table>
+    </div>
+<pre style="margin-top:16px">-- the last 5 tutor turns for one student
+SELECT id, created_at, turn_index, outcome, latency_ms, cost_usd,
+       input_tokens, cache_read_tokens, output_tokens,
+       grounding-&gt;&gt;'chat_session' AS chat, citations, left(assistant_message, 120)
+  FROM ai_interactions
+ WHERE student_id = 7 AND surface = 'lesson_learn'
+ ORDER BY id DESC LIMIT 5;</pre>
+  </section>
+
+  <section id="knobs">
+    <h2>Knobs</h2>
+    <div class="tbl">
+      <table>
+        <thead><tr><th>Setting</th><th>Value</th><th>Where</th></tr></thead>
+        <tbody>
+          <tr><td>Model</td><td><code>claude-sonnet-5</code></td><td>app/api/ask/route.ts:107</td></tr>
+          <tr><td>Timeout</td><td>90 s, then killed</td><td>route.ts:108</td></tr>
+          <tr><td>Thinking budget</td><td>1,024 tokens; <code>0</code> or <code>off</code> disables</td><td><code>AINEXT_THINKING_BUDGET</code></td></tr>
+          <tr><td>Conversation window</td><td>last 24 messages</td><td>route.ts:183</td></tr>
+          <tr><td>Prompt cache</td><td>3 h, 200 sessions, in memory</td><td>lib/session-cache.ts</td></tr>
+          <tr><td>Session idle close</td><td>30 min</td><td>lib/session-rules.ts:28</td></tr>
+          <tr><td>Upload text in prompt</td><td>4,000 characters</td><td>lib/retrieval.ts:307</td></tr>
+          <tr><td>Reveal speed</td><td>3 words / 850 ms</td><td>ChatCore.tsx:245-254</td></tr>
+          <tr><td>Socratic probing</td><td>Off / Test accounts / Everyone (locked)</td><td>Console → Teaching</td></tr>
+          <tr><td>Database pool</td><td>20 connections</td><td>lib/db.ts:86</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note"><b>Cost is imputed, not billed.</b> The tutor runs on a Claude subscription login, so <code>cost_usd</code> is the list price the tokens would have cost (Sonnet 5: $2 per million input, $10 per million output, $0.20 per million cache reads). It is for watching spend per student, not an invoice.</div>
+    <div class="note"><b>Not verified live.</b> This page is traced from the source code, not from a running system. The prompt sizes are estimates, and whether the CLI's prompt caching actually hits is inferred from the stored cache-token columns. One real <code>ai_interactions</code> row and one <code>capture:prompts</code> run would confirm both.</div>
+  </section>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ startOnLoad: true,
+      theme: matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "default" });
+  }
+</script>
+</body>
+</html>

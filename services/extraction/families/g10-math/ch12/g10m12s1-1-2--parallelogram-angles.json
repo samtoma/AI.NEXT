@@ -1,0 +1,76 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m12s1-1-2:parallelogram-angles",
+ "kind": "family",
+ "lo_id": "lo:g10m12s1-1-2",
+ "parent_question_id": "q:g10m12s1-1-2:ex12-1-6c",
+ "source_page": 407,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    4,
+    6
+   ]
+  },
+  {
+   "name": "r",
+   "randint": [
+    2,
+    "p - 2"
+   ]
+  },
+  {
+   "name": "xv",
+   "randint": [
+    10,
+    30
+   ]
+  },
+  {
+   "name": "tot",
+   "let": "(p - r) * xv"
+  },
+  {
+   "name": "q",
+   "randint": [
+    5,
+    "tot - 5"
+   ]
+  },
+  {
+   "name": "s",
+   "let": "tot - q"
+  },
+  {
+   "name": "alpha",
+   "let": "p * xv - q"
+  },
+  {
+   "require": "alpha >= 30 and alpha <= 150 and alpha != 90",
+   "why": "keeps angle A between 30 and 150 degrees and avoids the rectangle case, so B is a sensible angle that differs from the rectangle"
+  },
+  {
+   "name": "B",
+   "let": "180 - alpha"
+  }
+ ],
+ "constraints": [
+  "r * xv + s == alpha",
+  "p - r >= 2"
+ ],
+ "stem": "$ABCD$ is a parallelogram with $\\hat{A} = ({=p}x - {=q})^{\\circ}$ and $\\hat{C} = ({=r}x + {=s})^{\\circ}$. Calculate the size of $\\hat{B}$ in degrees.",
+ "answer": "180 - alpha",
+ "solution": [
+  "$ABCD$ is a parallelogram, so $\\hat{A} = \\hat{C}$ and $\\hat{B} = \\hat{D}$ (opp $\\angle$s of $\\parallel$m).",
+  "Equate the two expressions: ${=p}x - {=q} = {=r}x + {=s}$, so ${=p - r}x = {=q + s}$ and $x = {=xv}$.",
+  "$\\hat{A} = {=p}({=xv}) - {=q} = {=alpha}^{\\circ}$, and so $\\hat{C} = {=alpha}^{\\circ}$ too.",
+  "Sum of $\\angle$s in a quad: $\\hat{A} + \\hat{B} + \\hat{C} + \\hat{D} = 360^{\\circ}$. With $\\hat{C} = \\hat{A}$ and $\\hat{D} = \\hat{B}$ this gives ${=2 * alpha}^{\\circ} + 2\\hat{B} = 360^{\\circ}$.",
+  "$2\\hat{B} = {=360 - 2 * alpha}^{\\circ}$, so $\\hat{B} = {=B}^{\\circ}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Builds on book ex12-1-6c (p. 407), Option 2: opposite angles of a parallelogram are equal, then the angle sum of a quadrilateral is 360 degrees. Here the twist is that the opposite angles A and C are given as linear expressions in x, so the student must first use 'opposite angles are equal' to form and solve an equation, then use the quadrilateral angle sum (with C = A and D = B) to reach the adjacent angle B. No technique outside the book's solutions is needed; a solver who uses co-interior angles (A + B = 180) gets the same answer. Parameters are built backwards from the solution: x = xv, A = C = alpha = p*xv - q, with s = (p - r)*xv - q chosen so the two expressions agree, so every instance has a positive integer x, positive constants, and angles A and B strictly between 0 and 180 (A in 30..150, not 90). p-r >= 2 and r >= 2 so no coefficient of 1 is ever printed. About 5300 distinct stems. No figure is needed."
+}

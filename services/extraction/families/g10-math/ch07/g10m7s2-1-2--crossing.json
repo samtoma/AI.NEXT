@@ -1,0 +1,82 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m7s2-1-2:crossing",
+ "kind": "family",
+ "lo_id": "lo:g10m7s2-1-2",
+ "parent_question_id": "q:g10m7s2-1-2:ex7-2-6c",
+ "source_page": 250,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "t",
+   "randint": [
+    0,
+    2
+   ]
+  },
+  {
+   "name": "al",
+   "randint": [
+    25,
+    70
+   ]
+  },
+  {
+   "name": "ga",
+   "randint": [
+    35,
+    100
+   ]
+  },
+  {
+   "require": "al + ga <= 150",
+   "why": "keeps the third angle of the triangle at least 30 degrees"
+  },
+  {
+   "require": "180 - al - ga != al and 180 - al - ga != ga",
+   "why": "the answer differs from both given angles"
+  },
+  {
+   "name": "be",
+   "let": "180 - al - ga"
+  },
+  {
+   "name": "s",
+   "let": "[['A', 'B', 'C', 'D', 'E'], ['P', 'Q', 'R', 'S', 'T'], ['F', 'G', 'H', 'J', 'K']][t]"
+  },
+  {
+   "name": "pa",
+   "let": "s[0]"
+  },
+  {
+   "name": "pb",
+   "let": "s[1]"
+  },
+  {
+   "name": "pc",
+   "let": "s[2]"
+  },
+  {
+   "name": "pd",
+   "let": "s[3]"
+  },
+  {
+   "name": "pe",
+   "let": "s[4]"
+  }
+ ],
+ "constraints": [],
+ "stem": "The straight lines ${=pa}{=pd}$ and ${=pb}{=pe}$ cross at ${=pc}$. ${=pa}{=pc} = {=pd}{=pc}$ and ${=pb}{=pc} = {=pe}{=pc}$. Also $\\angle {=pc}{=pa}{=pb} = {=al}^\\circ$ and $\\angle {=pa}{=pc}{=pb} = {=ga}^\\circ$. Find the size of $\\angle {=pd}{=pe}{=pc}$ in degrees.",
+ "answer": "be",
+ "solution": [
+  "${=pa}{=pd}$ and ${=pb}{=pe}$ are straight lines that cross at ${=pc}$, so $\\angle {=pa}{=pc}{=pb}$ and $\\angle {=pd}{=pc}{=pe}$ are vertically opposite angles: $\\angle {=pd}{=pc}{=pe} = \\angle {=pa}{=pc}{=pb} = {=ga}^\\circ$.",
+  "In $\\triangle {=pa}{=pb}{=pc}$ and $\\triangle {=pd}{=pe}{=pc}$: ${=pa}{=pc} = {=pd}{=pc}$ (given), ${=pb}{=pc} = {=pe}{=pc}$ (given) and $\\angle {=pa}{=pc}{=pb} = \\angle {=pd}{=pc}{=pe}$ (vertically opposite). So $\\triangle {=pa}{=pb}{=pc} \\equiv \\triangle {=pd}{=pe}{=pc}$ (SAS).",
+  "The letters are in matching order, so ${=pa}$ matches ${=pd}$ and ${=pb}$ matches ${=pe}$. Therefore $\\angle {=pd}{=pe}{=pc} = \\angle {=pa}{=pb}{=pc}$.",
+  "In $\\triangle {=pa}{=pb}{=pc}$ the angles add up to $180^\\circ$, so $\\angle {=pa}{=pb}{=pc} = 180^\\circ - {=al}^\\circ - {=ga}^\\circ = {=be}^\\circ$.",
+  "So $\\angle {=pd}{=pe}{=pc} = {=be}^\\circ$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced because three ideas are chained: the angle between the equal sides is not given but follows from vertically opposite angles (the book's own twist in 6c, here with the straight lines stated), the congruence must be written in matching order to read off the corresponding angle, and a third angle needs the angle sum. No side lengths are given as numbers because a length pair plus two angles would over-determine the triangle. The answer is also reached by noting that ABDE (diagonals bisecting each other) is a parallelogram, so it does not depend on the congruence route. Answer is 180 - al - ga, which differs from al and from ga."
+}

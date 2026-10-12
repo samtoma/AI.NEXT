@@ -1,0 +1,36 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m6s5-1-5:sketch-negative-shifted",
+ "lo_id": "lo:g10m6s5-1-5",
+ "parent_question_id": "q:g10m6s5-1-5:ex6-5-5b",
+ "tier": "advanced",
+ "kind": "curve_sketcher",
+ "spec": {
+  "fn": "exponential",
+  "coefs": [
+   -1,
+   2,
+   3
+  ]
+ },
+ "stem": "Sketch the graph of $y = -2^{x} + 3$ in one smooth stroke across the whole grid.",
+ "solution": [
+  "Read off the pieces of $y = a\\cdot b^{x} + q$: $a = -1$ (the minus sign in front of $2^{x}$), $b = 2$ and $q = 3$.",
+  "The horizontal asymptote is $y = q$, so $y = 3$. The curve will get closer to this line and never cross it.",
+  "Because $a < 0$, the curve lies below the asymptote everywhere, and it falls as $x$ increases.",
+  "Find the $y$-intercept by letting $x = 0$: $y = -2^{0} + 3 = -1 + 3 = 2$, so the curve cuts the $y$-axis at $(0, 2)$. Note that $q = 3$ is the height of the asymptote, not the point where the curve cuts the $y$-axis.",
+  "Check two more points: $x = 1$ gives $y = -2 + 3 = 1$ and $x = 2$ gives $y = -4 + 3 = -1$. The curve therefore crosses the $x$-axis between $x = 1$ and $x = 2$.",
+  "Draw one smooth curve: just under $y = 3$ on the far left, through $(0, 2)$, $(1, 1)$ and $(2, -1)$, and dropping steeply on the right."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "wrong-intercept",
+   "misconception_id": "mc:g10m6s5-1-5:leaves-out-a"
+  },
+  {
+   "predicate": "asymptote-crossed",
+   "misconception_id": "mc:g10m6s5-1-5:leaves-out-a"
+  }
+ ],
+ "notes": "Genuine fit: sketching y = ab^x + q from the sign of a, the value of q, the intercepts and the asymptote is the objective, and it needs both a < 0 and q != 0. The figure behind the parent (ex6-5-5, curves f, g, h, k) is not referred to; the instrument is all the student sees. Both mapped predicates are the footprint of leaves-out-a, which picks the curve from the 2^x part alone: a rising curve through (0, 1) runs up through y = 3 (asymptote-crossed), and 2^x + 3 (a ignored, q used) lands on (0, 4), two squares above the true (0, 2) (wrong-intercept). The two predicates are different, so neither is listed twice. Assumption to check against the grader: asymptote-crossed on the exponential family means the stroke crosses y = q. A falling curve that starts above y = 3 would also fire it and is the lo1 error (asymptote-read-as-axis-of-symmetry), but the rising curve is the likelier cause here. NOT mapped: vertically-displaced, which fires when q is forgotten (y = -2^x, three squares low); the objective's list has no misconception for leaving q out, and one should be added. intercept-from-the-number cannot be told apart here: reading q = 3 as the intercept gives (0, 3), within a square of the true (0, 2). looks-for-axis-of-symmetry and rising-falling-mixed-up have no predicate on the exponential family (a left-right copy of the curve and a mirror-direction curve both come back as off-target, which diagnoses nothing specific), so this widget cannot name them. Spec: a = -1, b = 2, q = 3, inside |a| <= 3, |q| <= 3. The curve stays on the grid up to x = 3 (y = -5)."
+}
