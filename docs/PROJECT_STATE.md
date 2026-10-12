@@ -46,7 +46,7 @@ a message's top when a widget grows after the student answers it (found in revie
 Safari run of any of it. *(The tag `v0.10.0` exists on GitHub, on `8d1f2b1d`; checked 2026-10-02 — this line used to say "the tag
 needs a human".)*
 
-## 🧭 Feature 003 — curriculum tracks and the Grade 10 American maths course (pipeline finished on a local database; one squashed commit on top of `main` at v0.11.0, tagged `g10-progress-map` and pushed 2026-10-02; not reviewed, not merged, not deployed; release to be `v0.12.0`, answer 47)
+## 🧭 Feature 003 — curriculum tracks and the Grade 10 American maths course (pipeline finished on a local database; one squashed commit, tagged `g10-progress-map` 2026-10-02, rebased onto `v0.11.1` and merged into `main` 2026-10-12, answer 48; not reviewed, not released, not deployed; release to be `v0.12.0`, answer 47)
 
 **State on 2026-10-02 (dev database only).** The full-book fan-out (approved 2026-10-01, decision 58e) ran 2026-10-01 to 2026-10-02 and
 every one of the 14 chapters has a G5 record, in the local pilot database `ainext_pilot_g10_ch08`. Course `course:us-g10-math-en` there holds

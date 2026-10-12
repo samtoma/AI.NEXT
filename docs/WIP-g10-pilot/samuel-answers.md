@@ -173,3 +173,9 @@ Consistency-review decisions (2026-09-27), one at a time (decisions.md decisions
     fixes, 2026-10-01) and v0.11.0 (the Your Progress Map, 2026-10-02), and `tasks.md` T390 still planned v0.10.0 → "T390 should be
     v0.12.0": the bump, the release notes (`docs/releases/v0.12.0.html`) and the changelog entry for feature 003 are v0.12.0.
     (decisions.md decision 68.)
+48. (2026-10-12, decision 69) After checking that Grade 10 was not on production (it was not: production is `v0.11.1`, built from
+    `main`, which did not contain feature 003) → "ok, can you rebase the main, and just merge the g10 american now?": the branch is
+    rebased onto `main` at `v0.11.1` (one conflict, `docs/PROJECT_STATE.md`'s header), the CI fix for the migrations job goes with it, and
+    it is merged into `main` by pull request once CI passes. Merging is not releasing or deploying: the deploy job runs only on a manual
+    dispatch on `main`, the release is still `v0.12.0` (answer 47), and T424 is owed before that deploy.
+    (decisions.md decision 69.)

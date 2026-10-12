@@ -8,7 +8,7 @@ this first, then `docs/PROJECT_STATE.md`,
 `specs/003-curriculum-tracks/` (spec, plan, tasks, traceability, decisions) and the files beside
 this one:
 
-- `samuel-answers.md` — Samuel's answers 1–47 for this feature, in his words (44–47 added 2026-10-02). **Answer N is decision
+- `samuel-answers.md` — Samuel's answers 1–48 for this feature, in his words (44–47 added 2026-10-02, 48 on 2026-10-12). **Answer N is decision
   N + 21** in `specs/003-curriculum-tracks/decisions.md` (answer 2 → decision 23 … answer 24 → decision
   45; answer 25 extends decision 45, so decision 46 is unused; answer 26 → decision 47; answer 46, the move onto `main`,
   → decision 67; answer 47, the release number v0.12.0, → decision 68). Answer 1, the
@@ -48,7 +48,8 @@ Objective ids are written without the `lo:g10m` prefix (`5s6-1-3` is `lo:g10m5s6
 ### Where it stands
 
 - All 14 chapters of Siyavula *Everything Maths* Grade 10 have been through the pipeline and each has a G5 record. The result exists only in the
-  **local pilot database `ainext_pilot_g10_ch08`** (course `course:us-g10-math-en`). **Nothing is deployed and nothing is on `main`.** The branch is not
+  **local pilot database `ainext_pilot_g10_ch08`** (course `course:us-g10-math-en`). **Nothing is deployed.** *(2026-10-12: the branch was rebased onto `main` at
+  v0.11.1 and merged into `main`, Samuel's answer 48 / decision 69; not released, not deployed; T424 is owed before the deploy.)* Before that it was not
   merged. *(Rewritten 2026-10-02.)* Since 2026-10-02 it is exactly `origin/main` at v0.11.0 plus **one** squashed commit, tagged `g10-progress-map` and
   pushed (Samuel, answer 46): one commit ahead of `origin/main` and none behind. The 678-commit history it replaced, almost
   all 30-second auto-snapshots forked from `main` at v0.9.3, is kept whole under the tag `g10-old-graph-view` (commit `ca855eba`, also on GitHub); the snapshot job was stopped for the rewrite.

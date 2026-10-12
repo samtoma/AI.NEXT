@@ -3,7 +3,8 @@
 **Status date**: 2026-10-02 (rev. 9, with the 2026-10-02 notes on the rows the merge touched; rev. 3 was the last full re-read of the rows) · **Branch**:
 `feat/003-curriculum-tracks-g10-american-math`, since 2026-10-02 `origin/main` at `v0.11.0` plus one squashed commit
 (tag `g10-progress-map`, pushed; originally cut from `main` at `v0.9.2` and brought up to `v0.9.3`, with its old history
-of snapshot commits kept under the tag `g10-old-graph-view`; decision 67) — not reviewed, not merged, release to be `v0.12.0`
+of snapshot commits kept under the tag `g10-old-graph-view`; decision 67), rebased onto `v0.11.1` and merged into `main` on 2026-10-12
+(decision 69) — not reviewed, not released, not deployed; release to be `v0.12.0`
 **Authority**: [spec.md](./spec.md) rev. 4 with its 2026-09-26/27 amendments · [decisions.md](./decisions.md)
 (Samuel, 2026-09-25 and 2026-09-26, decisions 1–47) ·
 constitution [v3.4.0](../../.specify/memory/constitution.md) (amended 2026-09-25 —

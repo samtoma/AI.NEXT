@@ -2,7 +2,8 @@
 
 **Feature Branch**: `feat/003-curriculum-tracks-g10-american-math` (cut from `main` at `v0.9.2` and brought up
 to `v0.9.3` on 2026-09-25; **since 2026-10-02 it is `origin/main` at `v0.11.0` plus one squashed commit**,
-tagged `g10-progress-map`, with the old history under the tag `g10-old-graph-view`; its release is to be `v0.12.0`)
+tagged `g10-progress-map`, with the old history under the tag `g10-old-graph-view`; rebased onto `v0.11.1` and **merged into `main`
+on 2026-10-12** (decision 69), not yet released or deployed; its release is to be `v0.12.0`)
 **Created**: 2026-09-25
 **Status**: Approved in substance, planned, being built. **Rev. 2 (2026-09-25)**: every
 `[NEEDS CLARIFICATION]` is resolved by Samuel's decisions of the same day
