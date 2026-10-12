@@ -10,6 +10,24 @@ requirement names it.
 
 ## [Unreleased]
 
+## [v0.12.4] — 2026-10-13
+
+### Fixed — the tutor answers in every Grade 10 lesson ("AI backend unavailable")
+- **The tutor's instructions now reach the model in a private temporary file, not on the command line.**
+  The tutor started the `claude` CLI with its whole system prompt (lesson data included) as one command-line
+  argument, and Linux refuses any single argument over 131,072 bytes. Every Prep-3 lesson fits (the largest
+  is 99 KB); 8 of the Grade 10 book's 65 lessons do not (the largest, lesson 6.5, is 211 KB), and the first
+  lesson a Grade 10 student opens, 1.3, is one of them. On the box each of those turns failed with
+  `spawn E2BIG` and the student read "AI backend unavailable", while the CLI itself was signed in and
+  healthy. The prompt now travels with `--system-prompt-file`: the file is private to the app (0600 in a
+  0700 directory), lives for one call, and is removed when it ends. The same change covers the
+  understanding checks. Diagnosed on the box (the app log's `spawn E2BIG`; the CLI refusing a 200 KB argument
+  and accepting a 164 KB file), and reproduced locally by building all 65 Grade 10 prompts.
+- **A tutor that cannot be started now says so** instead of leaving the chat hanging: a synchronous spawn
+  failure is answered like any other failed turn.
+- A test pins it: no code that starts the CLI may pass its system prompt inline again.
+
+
 ## [v0.12.3] — 2026-10-12
 
 ### Fixed — a course switched off in the console no longer blocks "Load a course"

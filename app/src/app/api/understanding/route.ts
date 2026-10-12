@@ -1,5 +1,6 @@
-import { spawn } from "node:child_process";
+import { spawn, type ChildProcessWithoutNullStreams } from "node:child_process";
 import { NextResponse } from "next/server";
+import { systemPromptFile } from "@/lib/claude-prompt-file";
 import { withPrincipal } from "@/lib/db";
 import { AuthError, requireStudent } from "@/lib/auth/principal";
 import { mapRlsError } from "@/lib/rls-errors";
@@ -103,30 +104,51 @@ function runClaudeJson(
   return new Promise((resolve) => {
     const started = Date.now();
     let timedOut = false;
-    const child = spawn(
-      CLAUDE_BIN,
-      [
-        "-p",
-        "--output-format",
-        "json",
-        "--model",
-        MODEL,
-        "--system-prompt",
-        systemPrompt,
-        "--disallowedTools",
-        "*",
-        "--max-turns",
-        "1",
-      ],
-      {
-        // One builder for all four call sites, `lib/claude-cli.ts` — see the
-        // note in `api/ask/route.ts`. The health probe uses the same two
-        // functions, which is what makes its verdict a claim about this path.
-        cwd: claudeCwd(),
-        env: claudeEnv(),
-        stdio: ["pipe", "pipe", "pipe"],
-      }
-    );
+    // The system prompt in a FILE, never on the command line: one exec argument
+    // over 131,072 bytes is refused with E2BIG (lib/claude-prompt-file.ts).
+    const promptFile = systemPromptFile(systemPrompt);
+    let child: ChildProcessWithoutNullStreams;
+    try {
+      child = spawn(
+        CLAUDE_BIN,
+        [
+          "-p",
+          "--output-format",
+          "json",
+          "--model",
+          MODEL,
+          "--system-prompt-file",
+          promptFile.path,
+          "--disallowedTools",
+          "*",
+          "--max-turns",
+          "1",
+        ],
+        {
+          // One builder for all four call sites, `lib/claude-cli.ts` — see the
+          // note in `api/ask/route.ts`. The health probe uses the same two
+          // functions, which is what makes its verdict a claim about this path.
+          cwd: claudeCwd(),
+          env: claudeEnv(),
+          stdio: ["pipe", "pipe", "pipe"],
+        }
+      );
+    } catch (err) {
+      // A synchronous spawn failure (E2BIG was one) is the same answer as an
+      // asynchronous one: the process never started, nothing was spent.
+      promptFile.dispose();
+      const e = err as NodeJS.ErrnoException;
+      resolve({
+        ok: false,
+        outcome: "error",
+        tokens: ZERO_TOKENS,
+        latencyMs: Date.now() - started,
+        code: classifyCliFailure({ spawnError: { code: e.code, message: e.message } }),
+      });
+      return;
+    }
+    child.on("close", promptFile.dispose);
+    child.on("error", promptFile.dispose);
     const timeout = setTimeout(() => {
       timedOut = true;
       child.kill("SIGKILL");
