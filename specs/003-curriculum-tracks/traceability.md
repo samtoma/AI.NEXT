@@ -437,7 +437,7 @@ shows how each was closed.
 | — blocked | 0 |
 | — deferred | 0 |
 | Requirements a test declares | **52** |
-| Tasks complete / total | **101 / 143** |
+| Tasks complete / total | **102 / 143** |
 
 **Of 6 requirements marked VERIFIED, 6 have an automated test declaring them.** The remaining 0 were verified by running the product — a browser session, a query against a loaded database — which is real evidence and is not re-checked on any later commit. That gap is the honest measure of this build's regression risk, and it is the number to drive down.
 

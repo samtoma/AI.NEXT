@@ -1,7 +1,8 @@
 # Project State — AI Tutor MVP
 
 > Living document. Read at session start; update when progress or decisions land.
-> Last updated: 2026-10-12 (`main` at the feature 003 merge, `482a6aca`; **the `v0.12.0` release commit is prepared on
+> Last updated: 2026-10-12 (`v0.12.0` **deployed 2026-10-12** from `main` at `606be3e1`, with the FR-204 fix; **`v0.12.1`** makes the whole Grade 10 book
+> loadable (T364, decision 70) — then deploy, **Load a course** dry-run → rehearse → load, and open the course for Grade 10 · American).
 > `release/v0.12.0` and the tag is pending**; production runs `v0.11.1`, deployed 2026-10-08, and `v0.11.0` was deployed 2026-10-02).
 > **Feature 003 (curriculum tracks and the Grade 10 American maths course) is merged into `main` on 2026-10-12** (Samuel: "merge the g10
 > american now"; answer 48). Its branch `feat/003-curriculum-tracks-g10-american-math` had been rebuilt on 2026-10-02 as ONE squashed

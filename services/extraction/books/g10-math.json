@@ -10,7 +10,7 @@
   "direction": "ltr",
   "id_prefixes": ["g10m"],
   "load_order": 40,
-  "status": "ingest",
+  "status": "loadable",
   "sources": {
     "pdf": "docs/Source/Gr10_Mathematics_Learner_Eng_v11.pdf",
     "epub": "docs/Source/Gr10_Mathematics_Learner_Eng_CC-BY.epub",
@@ -117,8 +117,20 @@
   ],
   "manifest": "services/extraction/manifest/g10-math-american.json",
   "program": { "id": "program:us-american-en", "label": "American" },
-  "generated": null,
-  "parity": null,
+  "generated": {
+    "misconceptions": "services/extraction/seed/generated/g10-math/export/misconceptions.json",
+    "questions": ["services/extraction/seed/generated/g10-math/export/generated-questions.json", "services/extraction/seed/generated/g10-math/export/widget-questions.json"],
+    "note": "The whole book, exported from the pilot database (export_generated_content.py --course course:us-g10-math-en, 2026-10-12): every generated and widget question and the 300-entry catalogue, each row with its own status and review stamp."
+  },
+  "parity": {
+    "modules": 14,
+    "learning_objectives": 211,
+    "prerequisite_edges": 294,
+    "questions_total": 2154,
+    "visuals": 616,
+    "require_all_live": false,
+    "note": "The whole Grade 10 book (2026-10-12): servable book questions = 2,154 (the pilot: 2,090 live + 64 held; a fresh load holds one more, Ex6-6:17, whose key the marker cannot read: 2,089 + 65); the 41 rejected rows and the visuals only they use are not counted (answer 45). Not all live, so require_all_live is false."
+  },
   "answer_rules": {
     "source": "specs/003-curriculum-tracks/marker-evaluation.md §5 (2026-09-25); integration backlog items 30 and 31",
     "multiplication_dot": true,
