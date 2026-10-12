@@ -241,6 +241,9 @@ database" step also depends on T318.
   variants of the two G2-rejected questions and the 4 retired Chapter 8 widgets (CHANGELOG v0.12.1). Released in `v0.12.1`.
 - [ ] T365 [US1] (WP-Q) Load locally with `scripts/local-dev.sh` after T318 and T328. Walk US1 scenarios 1–5 with a test account holding an exception.
 - [ ] T366 [US1] ⛔ HUMAN GATE — Samuel deploys the release that carries phases 2–3. A deploy loads no course. Then he runs **Actions → Load a course** in `dry-run` mode, and then as a **rehearsal on a copy of production** (FR-4209). Record it in `specs/003-curriculum-tracks/decisions.md` → *Gate record*.
+  *2026-10-12:* v0.12.1 deployed; the first `dry-run` (run 38300706508) REFUSED at step 1 — the loader image had no node for
+  the KaTeX check — with every other precondition holding and nothing written. Fixed in v0.12.2 (`deploy/Dockerfile.loader`,
+  plus a CI step that validates the whole book in that image). Still a human gate: not ticked by an agent.
 - [ ] T367 [US1] ⛔ HUMAN GATE — Samuel runs **Actions → Load a course** in `load` mode (confirm = the course id). Check the post-flight: every course's drift check passes, **0** visibility rows, and the console shows the course's completeness (US1 scenarios 6–7). Record it in `specs/003-curriculum-tracks/decisions.md` → *Gate record*.
 
 **Checkpoint**: the course is in production, complete and hidden. No student can see or name it.
