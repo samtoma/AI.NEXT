@@ -222,7 +222,7 @@ nothing.
 |---|---|---|
 | `the course is complete` | the course node, every catalogue entry and every generated question are in | a load step failed — see below |
 | `objectives / questions … / visuals / misconceptions / explanations` | what students would get once a rule allows it; `held` = at `review` | information only |
-| `visibility rows … 0 rules, 0 exceptions` | nobody can see it yet | somebody wrote a rule meanwhile — remove it or roll back |
+| `visibility … no live rule, no live exception` | nobody can see it yet (a rule switched off is saved as `hidden`, which is fine) | somebody switched it on meanwhile — switch it off in the console, or roll back |
 | `PARITY: GREEN — <course>` (one per loaded course) | the drift guard, every course | the loaded course's counts differ from its book config: roll back, tell Samuel |
 | `every other course's content is byte-identical` | nothing outside this course changed | **roll back** — the log shows which course changed |
 | `every student table is byte-identical` (rehearse only) | no student row moved | roll back is not needed (it was a copy) — do not run `load`; tell Samuel |

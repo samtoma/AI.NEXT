@@ -44,8 +44,13 @@ jobs:
 2. **Preconditions**, each a failure with a named reason:
    - the book config and its bundles exist in the checkout (`services/extraction/books/<book>.json`,
      `seed/<book>/`, `seed/generated/<book>/`);
-   - no `course_availability` row exists for the course. A row would mean someone pre-wrote
-     visibility, so refuse.
+   - no **live** `course_availability` rule and no **live** `student_course_access` exception exists
+     for the course. A live row would mean someone pre-wrote visibility, so refuse. *(Amended
+     2026-10-12, v0.12.3: a row in state `hidden` keeps the course hidden and is reported, not
+     refused. The console has no way to delete a rule: switching a course off on `/courses` saves it
+     as `hidden`, so "no row at all" could never be met again once anyone had touched the switch.
+     It stopped the first production load of Grade 10 for exactly that reason. The post-flight's
+     check is the same: no live rule, no live exception.)*
    - the running app container carries the image label `org.ainext.features=curriculum-scope`,
      read with `docker inspect`. `deploy/Dockerfile` sets the label in the same release that scopes
      the readers (T319). **Without it the load refuses**, because loading into a stack whose Ask
