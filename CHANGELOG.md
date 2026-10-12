@@ -10,6 +10,19 @@ requirement names it.
 
 ## [Unreleased]
 
+## [v0.12.5] — 2026-10-13
+
+### Fixed — the general and map chats send the relevant part of the graph, not the whole book
+- **Ask Noor (the map chat) and the general chat now retrieve misconceptions and authored explanations for the
+  focus objectives only**, as the detailed question bank and the figure library in the same prompt already did,
+  and as `docs/architecture/anatomy-of-a-tutor-turn.md` describes ("known mistakes for these objectives").
+  They were retrieving for every objective in the student's course: for a Grade 10 student that put the whole
+  book's explanation library into every turn, 897 KB of a 903 KB prompt, about 442,000 tokens measured
+  ($1.81 a first turn at list price). Now 168 KB for Grade 10 and 106 KB for Prep-3 (was 160 KB). Lessons
+  were already scoped. A test keeps it so. Retrieval of the right part of the graph by meaning (GraphRAG,
+  data-spine thesis) stays on the roadmap.
+
+
 ## [v0.12.4] — 2026-10-13
 
 ### Fixed — the tutor answers in every Grade 10 lesson ("AI backend unavailable")

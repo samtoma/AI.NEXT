@@ -605,7 +605,13 @@ ${focusBlock}`;
   // Retrieval layer (FR-303) — the student-model half of grounding. Renders to
   // "" when nothing is retrieved, so prompts stay byte-identical for a student
   // with no profile and no library entries.
-  const retrieved = await retrieve(studentId, grounding.lo_ids, {
+  // Scoped to the FOCUS objectives, like the detailed bank and the figure
+  // library above — not to every objective in the compact index. Given the
+  // whole course, the misconceptions and the authored explanation library came
+  // back for every objective in it: 900 KB (~440k tokens) a turn for the
+  // Grade 10 book, 2026-10-13. docs/architecture/anatomy-of-a-tutor-turn.md:
+  // "Known mistakes for these objectives and their authored refutations".
+  const retrieved = await retrieve(studentId, [...focusLos], {
     uploadId,
     client: db,
   });
