@@ -185,3 +185,7 @@ Consistency-review decisions (2026-09-27), one at a time (decisions.md decisions
     rehearse, load) and open the course for Grade 10 · American. The content goes live as the AI line left it (every gate but Chapter
     8's G1/G2 an AI auto-pass; ADR-0019 lets the maths bank be served unreviewed); the human review stays the next job.
     (decisions.md decision 70.)
+50. (2026-10-13, decision 71) Tutor prompts are far bigger than designed (Grade 10 lesson 6.5 ~100k tokens; 152 of its 183 questions are
+    generated variants, loaded `live`), asked whether to cap variants in the tutor's prompt (a) or leave it (b) → "(b) Leave it. It works,
+    it's just slower and heavier per turn — but add in the project known issues and backlog this issue of big prompts, our target should
+    always be below 20K tokens; that is for later, let's make the production work for now." (#75; decisions.md decision 71.)
