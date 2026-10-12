@@ -1,19 +1,26 @@
 # Project State — AI Tutor MVP
 
 > Living document. Read at session start; update when progress or decisions land.
-> Last updated: 2026-10-12 (`v0.12.0` **deployed 2026-10-12** from `main` at `606be3e1`, with the FR-204 fix; **`v0.12.1`** makes the whole Grade 10 book
-> loadable (T364, decision 70) — then deploy, **Load a course** dry-run → rehearse → load, and open the course for Grade 10 · American).
-> `release/v0.12.0` and the tag is pending**; production runs `v0.11.1`, deployed 2026-10-08, and `v0.11.0` was deployed 2026-10-02).
-> **Feature 003 (curriculum tracks and the Grade 10 American maths course) is merged into `main` on 2026-10-12** (Samuel: "merge the g10
-> american now"; answer 48). Its branch `feat/003-curriculum-tracks-g10-american-math` had been rebuilt on 2026-10-02 as ONE squashed
-> commit on `v0.11.0` (answer 46, tag `g10-progress-map`; the old 678-commit history is kept under the tag `g10-old-graph-view`), then
-> rebased onto `v0.11.1` with a CI fix and merged by pull request #67. With it `main`'s constitution is **v3.4.0**. **Merged and
-> released are not deployed, and deploying is not loading:** production stays on `v0.11.1` until a deploy is run by hand (the deploy job
-> runs only on a manual dispatch on `main`); a deploy loads no course; and **T424** (rehearse the misconception-catalogue change against
-> the Prep-3 bank) is owed before that deploy. The Grade 10
-> content exists in a LOCAL pilot database only: the pipeline has run to the end of the book (all 14 chapters have a G5 record), and every
-> gate decision except Chapter 8's G1 and G2 was an AI auto-pass that no person has read. The full-book record and its open-decisions
-> list are in [`docs/WIP-g10-pilot/README.md`](WIP-g10-pilot/README.md), "Full book complete — 2026-10-02".
+> Last updated: 2026-10-13. **Production runs `v0.12.5`** (deployed by hand from `main`). **The whole Grade 10 American maths book is
+> on production**: loaded 2026-10-12 with "Load a course" (run 38304478801; backup `load-us-g10-math-en-20261012T202912Z.dump` on the
+> box) — 211 objectives, 2,089 book questions live and 65 held, 3,216 generated and widget questions live, drift guard GREEN for all four
+> courses — and opened by Samuel for Grade 10 · American on the console's Courses page. No person has yet read the Grade 10 content (every
+> gate but Chapter 8's G1/G2 was an AI auto-pass; ADR-0019 serves the maths bank unreviewed); the review backlog is the next job.
+> Getting there took four fixes on 2026-10-12/13: `v0.12.2` the loader image runs the app's KaTeX check, `v0.12.3` "Load a course" refuses a
+> live rule but not a hidden one, `v0.12.4` the tutor's system prompt travels in a file (Linux refused one argument over 131,072 bytes —
+> `spawn E2BIG`, "AI backend unavailable" on 8 Grade 10 lessons and every map/general chat), `v0.12.5` the map and general chats retrieve
+> for the focus objectives only (Grade 10: 903 KB → 168 KB a turn).
+
+## ⚠️ Known issues
+
+- **Tutor prompts are far above the target of 20k tokens** ([#75](https://github.com/samtoma/AI.NEXT/issues/75); Samuel, answer 50 /
+  decision 71: "our target should always be below 20K tokens, that is for later — let's make production work for now"). Measured
+  2026-10-13 at about 2 bytes a token: the largest Grade 10 lesson (6.5) ~100k tokens, Grade 10 map/general chat ~80k, Prep-3 map/general
+  chat ~55k, the largest Prep-3 lesson ~50k. Grade 10 lessons carry every generated variant (152 of lesson 6.5's 183 questions) because
+  the export loaded them `live`; Samuel chose to leave that for now (option b). Options and the done-when are on #75; GraphRAG stays on the
+  roadmap.
+- **The `claude` CLI in the app image is not version-pinned** (`deploy/Dockerfile`: `npm i -g @anthropic-ai/claude-code`), so every
+  image rebuild takes the newest CLI. Nothing broke from it on 2026-10-12/13, but a CLI change would reach production unannounced.
 
 ## 🏷️ v0.12.0 — curriculum tracks and the Grade 10 machinery (release commit prepared 2026-10-12; tag and deploy pending)
 
