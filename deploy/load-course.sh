@@ -239,10 +239,16 @@ print_presence() {
   else info "generated questions     none configured for this book"; fi
 }
 
-visibility_rows() {  # <database> -> "<rules> <exceptions>"
+# "<live rules> <hidden rules> <live exceptions> <hidden exceptions>" for this course.
+# A rule or exception in state 'hidden' keeps the course hidden, and the console has no
+# way to delete one (switching a course off on /courses saves it as 'hidden'), so only a
+# LIVE row can make a load visible before its post-flight (2026-10-12, v0.12.3).
+visibility_rows() {  # <database>
   sql_on "$1" -v c="$COURSE" <<'SQL'
-SELECT (SELECT count(*) FROM course_availability   WHERE course_id = :'c')
-       || ' ' || (SELECT count(*) FROM student_course_access WHERE course_id = :'c');
+SELECT (SELECT count(*) FROM course_availability   WHERE course_id = :'c' AND state = 'live')
+       || ' ' || (SELECT count(*) FROM course_availability   WHERE course_id = :'c' AND state <> 'live')
+       || ' ' || (SELECT count(*) FROM student_course_access WHERE course_id = :'c' AND state = 'live')
+       || ' ' || (SELECT count(*) FROM student_course_access WHERE course_id = :'c' AND state <> 'live');
 SQL
 }
 
@@ -367,9 +373,11 @@ postflight() {  # <database> <digest-before> <student-digest-before or "">
   if complete; then ok "the course is complete"; else warn "the course is NOT complete"; failed=1; fi
   info "what students would get once a rule allows it:"
   course_summary "$db"
-  vis="$(visibility_rows "$db")"
-  if [ "$vis" = "0 0" ]; then ok "visibility rows for $COURSE: 0 rules, 0 exceptions — hidden from every student"
-  else warn "visibility rows for $COURSE: $vis (rules exceptions) — expected 0 0"; failed=1; fi
+  local lr hr le he
+  read -r lr hr le he <<<"$(visibility_rows "$db")"
+  if [ "$lr" = 0 ] && [ "$le" = 0 ]; then
+    ok "visibility for $COURSE: no live rule, no live exception — hidden from every student ($hr hidden rule(s), $he hidden exception(s))"
+  else warn "visibility for $COURSE: $lr LIVE rule(s), $le LIVE exception(s) — expected none"; failed=1; fi
   info "drift guard, every loaded course:"
   if drift_guard "$db"; then ok "drift guard GREEN for every loaded course"
   else warn "drift guard RED (see above)"; failed=1; fi
@@ -628,8 +636,8 @@ print_presence
 if complete; then
   say "$COURSE is already loaded — nothing to do"
   course_summary "$OPS_DB"
-  read -r RULES EXC <<<"$(visibility_rows "$OPS_DB")"
-  info "visibility: $RULES rule(s), $EXC exception(s) — set in the console's /courses and Student 360"
+  read -r LR HR LE HE <<<"$(visibility_rows "$OPS_DB")"
+  info "visibility: $LR live and $HR hidden rule(s), $LE live and $HE hidden exception(s) — set in the console's /courses and Student 360"
   info "drift guard for this course:"
   rc=0; out="$(loader_run "$OPS_DB" parity_check.py --course "$COURSE" 2>&1)" || rc=$?
   printf '%s\n' "$out" | sed 's/^/     /'
@@ -642,11 +650,12 @@ if node_done; then warn "the course node is present but the course is incomplete
 
 say "3. Preconditions"
 refusals=()
-read -r RULES EXC <<<"$(visibility_rows "$OPS_DB")"
-if [ "$RULES" = 0 ] && [ "$EXC" = 0 ]; then ok "no visibility rule or exception names $COURSE"
+read -r LR HR LE HE <<<"$(visibility_rows "$OPS_DB")"
+if [ "$LR" = 0 ] && [ "$LE" = 0 ]; then
+  ok "no live visibility rule or exception for $COURSE — it will land hidden ($HR hidden rule(s), $HE hidden exception(s))"
 else
-  warn "$RULES course_availability rule(s) and $EXC student exception(s) already name $COURSE"
-  refusals+=("visibility was written before the course was loaded — remove those rows in the console (/courses, Student 360) or ask Samuel; a load must land hidden")
+  warn "$LR LIVE course_availability rule(s) and $LE LIVE student exception(s) already name $COURSE"
+  refusals+=("a live rule or exception would show the course before it is loaded — switch it off in the console (/courses, Student 360; 'hidden' is fine), then run again; a load must land hidden")
 fi
 
 for svc in app console; do

@@ -10,6 +10,19 @@ requirement names it.
 
 ## [Unreleased]
 
+## [v0.12.3] — 2026-10-12
+
+### Fixed — a course switched off in the console no longer blocks "Load a course"
+- **"Load a course" refuses only a LIVE rule or exception, not a hidden one.** It refused any
+  `course_availability` row naming the course, but the console cannot delete a rule: switching a course off
+  on `/courses` saves it as `hidden`. So once anyone had touched a course's switch, it could never be loaded.
+  That is what stopped the Grade 10 load on production (2026-10-12): Grade 10 · American had been switched
+  on and then back off. A hidden rule keeps the course hidden, which is what the rule protects (FR-4202:
+  nothing may make the course visible before an operator switches it on). The precondition and the
+  post-flight now both require "no live rule, no live exception" and report hidden rows. Contract
+  `load-course.md` amended; the runbook's table row updated.
+
+
 ## [v0.12.2] — 2026-10-12
 
 ### Fixed — "Load a course" can check the book's maths on the box
