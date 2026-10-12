@@ -522,7 +522,9 @@ test("/api/ask serves every request, and declares its answer on the first frame,
   assert.doesNotMatch(ask, /type: "cap"/, "no refused-turn frame");
   assert.doesNotMatch(ask, /peekSessionProbing/, "no out-of-sitting read");
   const declared = ask.indexOf('send({ type: "session", probing })');
-  const spawned = ask.indexOf("const child = spawn(");
+  // `child = spawn(` — an assignment inside a try since 2026-10-12, so a synchronous spawn failure
+  // (E2BIG) is answered instead of escaping the stream (lib/claude-prompt-file.ts)
+  const spawned = ask.indexOf("child = spawn(");
   assert.ok(declared > 0 && spawned > declared, "the session frame goes out before the model is spawned");
   // the encoder socratic-probing.test.mts parses with is this one
   assert.match(ask, /const sse = \(obj: unknown\) => `data: \$\{JSON\.stringify\(obj\)\}\\n\\n`;/);

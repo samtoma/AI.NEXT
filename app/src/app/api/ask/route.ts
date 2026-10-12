@@ -1,5 +1,6 @@
-import { spawn } from "node:child_process";
+import { spawn, type ChildProcessWithoutNullStreams } from "node:child_process";
 import { withPrincipal } from "@/lib/db";
+import { systemPromptFile } from "@/lib/claude-prompt-file";
 import { AuthError, requireStudent } from "@/lib/auth/principal";
 import { ENVIRONMENT, RELEASE_TAG } from "@/lib/env";
 import { buildAskContext, mapFocusNote, type AskSurface } from "@/lib/ask";
@@ -461,36 +462,53 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
           ? {}
           : { MAX_THINKING_TOKENS: rawBudget };
 
-      const child = spawn(
-        CLAUDE_BIN,
-        [
-          "-p",
-          "--output-format",
-          "stream-json",
-          "--include-partial-messages",
-          "--verbose",
-          "--model",
-          MODEL,
-          "--system-prompt",
-          systemPrompt,
-          "--disallowedTools",
-          "*",
-          "--max-turns",
-          "1",
-        ],
-        {
-          // The binary, the directory and the environment all come from
-          // `lib/claude-cli.ts`, which is the ONLY builder of them in this
-          // repository. Authentication is decided by what is in that
-          // environment, so the health probe
-          // (`app/scripts/probe-runtime.mts`) calling the same two functions
-          // is what makes its verdict a statement about THIS code path rather
-          // than about a program nothing serves students from.
-          cwd: claudeCwd(),
-          env: claudeEnv(thinkEnv),
-          stdio: ["pipe", "pipe", "pipe"],
-        }
-      );
+      // The system prompt goes in a FILE, never on the command line: one exec
+      // argument over 131,072 bytes is refused with E2BIG and the CLI never
+      // starts — 8 of the Grade 10 lessons are larger (lib/claude-prompt-file.ts).
+      const promptFile = systemPromptFile(systemPrompt);
+      let child: ChildProcessWithoutNullStreams;
+      try {
+        child = spawn(
+          CLAUDE_BIN,
+          [
+            "-p",
+            "--output-format",
+            "stream-json",
+            "--include-partial-messages",
+            "--verbose",
+            "--model",
+            MODEL,
+            "--system-prompt-file",
+            promptFile.path,
+            "--disallowedTools",
+            "*",
+            "--max-turns",
+            "1",
+          ],
+          {
+            // The binary, the directory and the environment all come from
+            // `lib/claude-cli.ts`, which is the ONLY builder of them in this
+            // repository. Authentication is decided by what is in that
+            // environment, so the health probe
+            // (`app/scripts/probe-runtime.mts`) calling the same two functions
+            // is what makes its verdict a statement about THIS code path rather
+            // than about a program nothing serves students from.
+            cwd: claudeCwd(),
+            env: claudeEnv(thinkEnv),
+            stdio: ["pipe", "pipe", "pipe"],
+          }
+        );
+      } catch (err) {
+        // A spawn that throws synchronously (E2BIG was one) escaped this stream
+        // and left the student's chat hanging; it is an answerable failure.
+        promptFile.dispose();
+        console.error("ask: the tutor could not be started:", err);
+        send({ type: "error", message: "AI backend unavailable" });
+        finish();
+        return;
+      }
+      child.on("close", promptFile.dispose);
+      child.on("error", promptFile.dispose);
 
       let timedOut = false;
       const timeout = setTimeout(() => {
