@@ -96,7 +96,11 @@ export interface ChatCoreHandle {
  * "Finish lesson" chip, which must act exactly like the header button and
  * never round-trip through the model).
  */
-export type ChatSuggestion = string | { label: string; onSelect: () => void };
+export type ChatSuggestion =
+  | string
+  | { label: string; onSelect: () => void }
+  /** shown as `label`, sent as `message` (a short link label for a longer student turn) */
+  | { label: string; message: string };
 
 export interface ChatCoreProps {
   surface: "spine_chat" | "student_chat" | "lesson_learn" | "lesson_review";
@@ -247,6 +251,13 @@ export interface ChatCoreProps {
    * from that message, the question cards it pushed, then `context` (e.g. the lesson's question stems).
    */
   mathKeys?: { context?: readonly string[] };
+  /**
+   * The lesson chat handoff (prototype, `feat/proto-math-symbol-keys`): one shadow layer, Nour's
+   * avatar beside each bubble, sources as plain text under the bubble instead of mid-sentence
+   * chips, and the suggestions as plain links under the latest tutor message instead of chips
+   * above the composer. Visual only — what is sent and when is unchanged.
+   */
+  lessonChrome?: boolean;
 }
 
 /* ---------------- paced reveal tuning ---------------- */
@@ -315,6 +326,7 @@ export function ChatCore({
   onMessagesChange,
   inputAccessory,
   mathKeys,
+  lessonChrome = false,
 }: ChatCoreProps) {
   const lessonSurface = surface === "lesson_learn" || surface === "lesson_review";
   /**
@@ -352,11 +364,14 @@ export function ChatCore({
   // ({{expects_math}}; absent means hidden), its lesson keys read from that message first.
   const lastTutorText = [...messages].reverse().find((m) => m.role === "assistant" && !m.streaming)?.text ?? "";
   const showPicker = !!mathKeys && hasExpectsMath(lastTutorText);
-  const pickerLessonKeys = useMemo(() => {
-    if (!mathKeys) return [];
-    const pushed = [...lastTutorText.matchAll(/\{\{show_question:(q:[^}]+)\}\}/g)].map((m) => lookupQuestion?.(m[1])?.stem);
-    return lessonKeyIds([lastTutorText, ...pushed, ...(mathKeys.context ?? [])]);
-  }, [mathKeys, lastTutorText, lookupQuestion]);
+  // (the React Compiler memoizes this; a manual useMemo here could not be preserved)
+  const pickerLessonKeys = mathKeys
+    ? lessonKeyIds([
+        lastTutorText,
+        ...[...lastTutorText.matchAll(/\{\{show_question:(q:[^}]+)\}\}/g)].map((m) => lookupQuestion?.(m[1])?.stem),
+        ...(mathKeys.context ?? []),
+      ])
+    : [];
   // the student's two most recent keys lead the picker; per chat session (a new session remounts)
   const [pickerRecents, setPickerRecents] = useState<string[]>([]);
   /**
@@ -1203,6 +1218,22 @@ export function ChatCore({
     [onCiteClick]
   );
 
+  const selectSuggestion = (s: ChatSuggestion) =>
+    typeof s === "string" ? send(s) : "message" in s ? send(s.message) : s.onSelect();
+  // Lesson chat: the suggestions become plain links under the latest tutor message, once it has
+  // settled (they were chips above the composer that could not be used mid-stream either).
+  const lastTutorIndex = messages.reduce(
+    (last, m, k) => (m.role === "assistant" && !m.hidden ? k : last),
+    -1
+  );
+  const lessonLinks =
+    lessonChrome && !streaming
+      ? suggestions.map((s) => ({
+          label: typeof s === "string" ? s : s.label,
+          onSelect: () => selectSuggestion(s),
+        }))
+      : undefined;
+
   const paced = !prefersReducedMotion();
 
   return (
@@ -1232,7 +1263,11 @@ export function ChatCore({
           touchedSinceArrival.current = true;
         }}
         // `relative` so `offsetTop` chains end here (lib/chat-scroll.ts)
-        className="thin-scroll relative min-h-0 flex-1 space-y-3 overflow-y-auto px-4 py-4"
+        className={cx(
+          "thin-scroll relative min-h-0 flex-1 overflow-y-auto",
+          // lesson chat: 22px between turns, and extra room on the right so no shadow is clipped
+          lessonChrome ? "space-y-[22px] pb-3.5 pe-[26px] ps-[22px] pt-[22px]" : "space-y-3 px-4 py-4"
+        )}
       >
         {leading}
         {messages.length === 0 && !streaming && emptyState}
@@ -1243,6 +1278,8 @@ export function ChatCore({
             msg={m}
             questionCards={questionCards}
             symbols={!!mathKeys}
+            lesson={lessonChrome}
+            lessonLinks={i === lastTutorIndex ? lessonLinks : undefined}
             tutorAvatar={tutorAvatar}
             debug={debug}
             arabicUi={arabicUi}
@@ -1271,7 +1308,8 @@ export function ChatCore({
 
       {/* suggestion chips — stay clickable after every stream, unless the
           surface retires them once the conversation is under way */}
-      {suggestions.length > 0 &&
+      {!lessonChrome &&
+        suggestions.length > 0 &&
         (suggestionsUntil == null ||
           messages.filter((m) => !m.hidden && (m.role === "user" || m.role === "assistant")).length <
             suggestionsUntil) && (
@@ -1293,7 +1331,7 @@ export function ChatCore({
           )}
           {suggestions.map((s) => {
             const label = typeof s === "string" ? s : s.label;
-            const onSelect = () => (typeof s === "string" ? send(s) : s.onSelect());
+            const onSelect = () => selectSuggestion(s);
             if (suggestionLayout === "stacked") {
               /* A suggestion, not a control-shaped primary: no outline, no
                  shadow, no amber — the composer's send keeps the one amber.
@@ -1354,9 +1392,14 @@ export function ChatCore({
 
       {/* input */}
       <div
-        className={`flex items-center gap-2 px-4 pb-3.5 ${
-          suggestions.length > 0 ? "pt-1.5" : "border-t border-line-soft pt-3"
-        }`}
+        className={
+          lessonChrome
+            ? // lesson chat handoff: 10px 24px 20px 20px, 12px between attach, input and send
+              "flex items-center gap-3 pb-5 pe-6 ps-5 pt-2.5"
+            : `flex items-center gap-2 px-4 pb-3.5 ${
+                suggestions.length > 0 ? "pt-1.5" : "border-t border-line-soft pt-3"
+              }`
+        }
       >
         {/* Deliberately NOT disabled while a parse runs: sending a photograph
             is not an AI turn. */}
@@ -1431,6 +1474,8 @@ const MessageRow = memo(function MessageRow({
   msg: m,
   questionCards,
   symbols,
+  lesson,
+  lessonLinks,
   tutorAvatar,
   debug,
   arabicUi,
@@ -1459,6 +1504,10 @@ const MessageRow = memo(function MessageRow({
   questionCards: boolean;
   /** a maths surface: typed question cards get the "∑ Symbols" pill (see ChatCoreProps.mathKeys) */
   symbols: boolean;
+  /** the lesson chat handoff's chrome (see ChatCoreProps.lessonChrome) */
+  lesson: boolean;
+  /** the latest tutor message only: the lesson's links, as plain text beside its source */
+  lessonLinks?: { label: string; onSelect: () => void }[];
   /** see ChatCoreProps.tutorAvatar */
   tutorAvatar: boolean;
   debug: boolean;
@@ -1496,11 +1545,22 @@ const MessageRow = memo(function MessageRow({
   };
 
   if (m.role === "user") {
-    return <StudentBubble>{m.text}</StudentBubble>;
+    return <StudentBubble lesson={lesson}>{m.text}</StudentBubble>;
   }
 
   if (m.role === "note") {
     // student-facing tutor line (latency theater / scripted opener)
+    if (m.kind === "say" && lesson) {
+      // the lesson chat's opener wears the same bubble and avatar as Nour's turns
+      return (
+        <div className="flex items-start gap-2.5" style={dimStyle}>
+          <NoorMark aria-hidden className="mt-0.5 size-[34px] shrink-0" />
+          <TutorBubble lesson>
+            <span className="text-ink-soft">{m.text}</span>
+          </TutorBubble>
+        </div>
+      );
+    }
     if (m.kind === "say") {
       return (
         <div className="anim-pop flex justify-start" style={dimStyle}>
@@ -1532,7 +1592,7 @@ const MessageRow = memo(function MessageRow({
   const blocks = parseMessage(visibleText, !!m.streaming);
 
   const bubble = (
-    <TutorBubble error={!!m.error} style={dimStyle}>
+    <TutorBubble error={!!m.error} style={dimStyle} lesson={lesson}>
         {m.streaming && visibleText.length === 0 && (
           <Thinking writing={writing} arabicUi={arabicUi} />
         )}
@@ -1545,6 +1605,7 @@ const MessageRow = memo(function MessageRow({
             import them. */}
         {renderChatBlocks(blocks, {
           debug,
+          lesson,
           arabicUi,
           resolveCite,
           onCiteClick,
@@ -1688,6 +1749,48 @@ const MessageRow = memo(function MessageRow({
     </TutorBubble>
   );
 
+  if (lesson) {
+    // Nour beside her words, then the source and (latest message only) the lesson's links as one
+    // plain line under the bubble — never a chip, never mid-sentence (lesson chat handoff §3).
+    const sources = m.streaming ? [] : lessonSources(m.text, resolveCite);
+    const links = lessonLinks ?? [];
+    return (
+      <div className="flex items-start gap-2.5">
+        <NoorMark aria-hidden className="mt-0.5 size-[34px] shrink-0" />
+        <div className="flex min-w-0 flex-col gap-2">
+          {bubble}
+          {(sources.length > 0 || links.length > 0) && (
+            <div className="flex flex-wrap items-center gap-x-2.5 ps-1" dir={arabicUi ? "rtl" : undefined}>
+              {sources.map(({ cite, label }, k) => (
+                <span key={`s${k}`} className="flex items-center gap-2.5">
+                  {k > 0 && <LinkDot />}
+                  <button
+                    type="button"
+                    onClick={() => onCiteClick?.(cite)}
+                    className="min-h-11 bg-transparent text-start font-display text-[0.82rem] font-bold leading-none text-[color:var(--play-text-dim)]"
+                  >
+                    {label}
+                  </button>
+                </span>
+              ))}
+              {links.map((l, k) => (
+                <span key={`l${k}`} className="flex items-center gap-2.5">
+                  {(sources.length > 0 || k > 0) && <LinkDot />}
+                  <button
+                    type="button"
+                    onClick={l.onSelect}
+                    className="min-h-11 bg-transparent font-display text-[0.9rem] font-bold leading-none text-[color:var(--play-text-link)] underline decoration-[color:var(--play-disabled-border)] underline-offset-[5px]"
+                  >
+                    {l.label}
+                  </button>
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
   if (!tutorAvatar) return bubble;
   // Noor beside her own words (the Your Progress Map chat). The avatar
   // wiggles while she is thinking — before the first word arrives.
@@ -1919,4 +2022,34 @@ function Thinking({
       </span>
     </span>
   );
+}
+
+/** The "·" between the source and the lesson links. */
+function LinkDot() {
+  return (
+    <span aria-hidden className="text-[color:var(--play-disabled-border)]">
+      ·
+    </span>
+  );
+}
+
+/**
+ * A lesson message's sources, as the plain line under its bubble: the learning objectives it cites
+ * by name, or, when it cites none, the book pages. Questions and term flags are not sources.
+ */
+function lessonSources(
+  text: string,
+  resolveCite?: (c: Cite) => CiteInfo | null
+): { cite: Cite; label: string }[] {
+  const cites = extractCites(text);
+  const out: { cite: Cite; label: string }[] = [];
+  const seen = new Set<string>();
+  const add = (cite: Cite, label: string | undefined) => {
+    if (!label || seen.has(label)) return;
+    seen.add(label);
+    out.push({ cite, label });
+  };
+  for (const c of cites) if (c.kind === "lo") add(c, resolveCite?.(c)?.title);
+  if (out.length === 0) for (const c of cites) if (c.kind === "page") add(c, `Book p.${c.id}`);
+  return out;
 }

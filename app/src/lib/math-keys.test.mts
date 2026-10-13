@@ -68,7 +68,7 @@ test("lessonKeyIds: most relevant text first", () => {
 
 test("the default view: exactly twelve, topped up from the fallback list; none found is the fallback", () => {
   assert.deepEqual(pickerKeyIds([], []), [...FALLBACK_KEYS]);
-  assert.deepEqual(pickerKeyIds([], ["inter", "union"]).slice(0, 4), ["inter", "union", "plus", "minus"]);
+  assert.deepEqual(pickerKeyIds([], ["inter", "union"]).slice(0, 4), ["inter", "union", "sqrt", "sq"]);
   assert.equal(pickerKeyIds([], ["inter", "union"]).length, PICKER_SIZE);
   assert.equal(pickerKeyIds([], MATH_KEYS.map((k) => k.id)).length, PICKER_SIZE);
 });

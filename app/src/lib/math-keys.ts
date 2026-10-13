@@ -111,8 +111,8 @@ export const MATH_KEY_GROUPS: readonly { id: string; label: string; keys: readon
 export const PICKER_SIZE = 12;
 /** How many recently used keys lead the default view. */
 export const RECENTS = 2;
-/** A lesson whose maths asks for nothing gets these (handoff §6). */
-export const FALLBACK_KEYS = ["plus", "minus", "times", "div", "eq", "neq", "le", "ge", "paren", "sq", "sqrt", "frac"] as const;
+/** A lesson whose maths asks for nothing gets these: the lesson chat handoff's default keys (§4). */
+export const FALLBACK_KEYS = ["sqrt", "sq", "times", "brace", "plus", "minus", "div", "eq", "neq", "le", "ge", "paren"] as const;
 
 /** A LaTeX command (without its backslash) → the key that types it. */
 export const LATEX_TO_KEY: Readonly<Record<string, string>> = {
