@@ -32,6 +32,7 @@ import {
   stripIncompleteTail,
   type Cite,
 } from "@/lib/chat-parse";
+import { FIGURE_DIRECTIVE_RE, gateAtBoundary } from "@/lib/chunking";
 import { submitAttempt } from "@/lib/attempts-client";
 import {
   cardRevealUnlocked,
@@ -268,6 +269,8 @@ const TICK_MS = 850;
 const SENTENCE_MS = 1150;
 const BEAT_MS = 1700;
 const DIRECTIVE_MS = 1500;
+/** `advance()`'s answer when the reveal stops at a beat for Next (FR-3501) */
+const GATED = -1;
 /** waiting for more stream when reveal caught up */
 const STARVED_MS = 110;
 /** once the stream is done, the remaining reveal never exceeds this */
@@ -511,6 +514,13 @@ export function ChatCore({
   const scheduleContinueRef = useRef<() => void>(() => {});
   // cancel hook for the active paced reveal (unmount safety)
   const revealCancelRef = useRef<() => void>(() => {});
+  // FR-3501: resumes a reveal stopped at a beat — the Continue chip's handler
+  const gateResumeRef = useRef<() => void>(() => {});
+  // FR-3501: ends a paused reply where it stands — "Say it another way"
+  const gateStopRef = useRef<() => void>(() => {});
+  // a turn the student asked for while the reply was still open; sent the
+  // moment it closes (send() refuses while a stream is open)
+  const queuedSendRef = useRef<string | null>(null);
   // sticky auto-scroll: cleared when the user scrolls away from the bottom.
   // A surface with `leading` content (the sealed passage cards) starts a FRESH
   // session unstuck and scrolled to the top, so the student actually sees the
@@ -694,7 +704,11 @@ export function ChatCore({
       streamingRef.current = true;
       citedKeys.current = new Set();
 
+      // Reduced motion drops the reading cadence, not the beats: the engine
+      // still runs, at zero delay, so a long reply still stops for Next
+      // (FR-3501) — it just arrives a beat at a time instead of a word at one.
       const paced = !prefersReducedMotion();
+      const dwell = (ms: number) => (paced ? ms : 0);
 
       const transcript: ChatMsg[] = [
         ...messagesRef.current,
@@ -706,7 +720,7 @@ export function ChatCore({
           role: "assistant",
           text: "",
           streaming: true,
-          ...(paced ? { reveal: 0 } : {}),
+          reveal: 0,
         },
       ]);
 
@@ -729,24 +743,34 @@ export function ChatCore({
       let acc = "";
       let cursor = 0;
       let streamEnded = false;
-      let revealFinished = !paced;
+      let revealFinished = false;
       let revealTimer: ReturnType<typeof setTimeout> | null = null;
       let revealResolve: () => void = () => {};
-      const revealDone: Promise<void> = paced
-        ? new Promise<void>((r) => {
-            revealResolve = r;
-          })
-        : Promise.resolve();
+      const revealDone: Promise<void> = new Promise<void>((r) => {
+        revealResolve = r;
+      });
+      // FR-3501/FR-3505 gate state: what has been shown since the last stop
+      let revealedSinceGate = false;
+      let figureSinceGate = false;
+      let beatsShown = 1;
+      /** a boundary already stopped at — resuming must step past it */
+      let openedGateAt = -1;
+      /** "Say it another way" at a pause: the reply ends where the student
+       *  stopped reading, and the transcript keeps only what was shown */
+      let stoppedAt: number | null = null;
 
       const cancelReveal = () => {
         if (revealFinished) return;
         revealFinished = true;
         if (revealTimer) clearTimeout(revealTimer);
+        gateResumeRef.current = () => {};
+        gateStopRef.current = () => {};
         revealResolve();
       };
       revealCancelRef.current = cancelReveal;
 
-      /** Advance the cursor ≤ WORDS_PER_TICK words; returns the dwell. */
+      /** Advance the cursor ≤ WORDS_PER_TICK words; returns the dwell, or
+       *  GATED when the reveal stops at a beat for the student's Next. */
       const advance = (): number => {
         let words = 0;
         while (cursor < acc.length && words < WORDS_PER_TICK) {
@@ -759,8 +783,33 @@ export function ChatCore({
               if (!streamEnded) return STARVED_MS;
             } else if (typeof d === "number") {
               const isBeat = acc.startsWith("{{beat}}", cursor);
+              const isAsk = acc.startsWith("{{ask}}", cursor);
+              // FR-3501: a beat boundary (or the ask's own marker) may stop
+              // the reveal for Next. The stop happens BEFORE the marker, so an
+              // ask's tinted block never appears ahead of its tap.
+              if ((isBeat || isAsk) && cursor !== openedGateAt) {
+                const g = gateAtBoundary({
+                  text: acc,
+                  boundaryEnd: d,
+                  streamEnded,
+                  revealedSinceGate,
+                  figureSinceGate,
+                });
+                if (g === "wait") return STARVED_MS;
+                if (g === "gate") return GATED;
+              }
+              if (!isBeat && !isAsk) {
+                revealedSinceGate = true;
+                if (FIGURE_DIRECTIVE_RE.test(acc.slice(cursor, cursor + 24))) {
+                  figureSinceGate = true;
+                }
+              }
+              const resumed = cursor === openedGateAt;
               cursor = d;
-              return isBeat ? BEAT_MS : DIRECTIVE_MS; // reveal atomically, dwell
+              // reveal atomically, dwell — but never make a student who just
+              // tapped Next wait out a pause as well
+              if (resumed) return 60;
+              return dwell(isBeat ? BEAT_MS : isAsk ? TICK_MS : DIRECTIVE_MS);
             }
             // plain "{{" text — fall through as an ordinary word
           }
@@ -768,10 +817,36 @@ export function ChatCore({
           while (cursor < acc.length && !/\s/.test(acc[cursor])) cursor++;
           if (cursor > start) {
             words++;
-            if (/[.!?؟…]$/.test(acc.slice(start, cursor))) return SENTENCE_MS;
+            revealedSinceGate = true;
+            if (/[.!?؟…]$/.test(acc.slice(start, cursor))) return dwell(SENTENCE_MS);
           }
         }
-        return TICK_MS;
+        return dwell(TICK_MS);
+      };
+
+      /** FR-3501: the student asked for it another way at a pause — what
+       *  they have not read is dropped, from the screen and from the
+       *  transcript the model sees next, so the re-explanation answers what
+       *  they actually saw. */
+      const stopAtGate = () => {
+        if (revealFinished) return;
+        stoppedAt = cursor;
+        recordChunkAction("chunk_another", surface, beatsShown);
+        cancelReveal();
+      };
+
+      /** FR-3501: the student tapped Continue — step past the boundary. */
+      const resumeFromGate = () => {
+        if (revealFinished) return;
+        gateResumeRef.current = () => {};
+        gateStopRef.current = () => {};
+        openedGateAt = cursor;
+        revealedSinceGate = false;
+        figureSinceGate = false;
+        beatsShown++;
+        patchLast({ gated: false });
+        recordChunkAction("chunk_next", surface, beatsShown);
+        revealTimer = setTimeout(tick, 0);
       };
 
       const tick = () => {
@@ -785,6 +860,13 @@ export function ChatCore({
           return;
         }
         let delay = advance();
+        if (delay === GATED) {
+          patchLast({ reveal: cursor, gated: true });
+          emitNewCites(acc.slice(0, cursor));
+          gateResumeRef.current = resumeFromGate;
+          gateStopRef.current = stopAtGate;
+          return; // no timer: the Continue chip resumes the reveal
+        }
         patchLast({ reveal: cursor });
         emitNewCites(acc.slice(0, cursor));
         if (streamEnded) {
@@ -793,11 +875,11 @@ export function ChatCore({
             1,
             Math.ceil((acc.length - cursor) / (WORDS_PER_TICK * 6))
           );
-          delay = Math.min(delay, Math.max(50, CATCHUP_BUDGET_MS / ticksLeft));
+          delay = Math.min(delay, Math.max(paced ? 50 : 0, CATCHUP_BUDGET_MS / ticksLeft));
         }
         revealTimer = setTimeout(tick, delay);
       };
-      if (paced) revealTimer = setTimeout(tick, 60);
+      revealTimer = setTimeout(tick, paced ? 60 : 0);
 
       let metaBuf: TurnMeta | null = null;
 
@@ -884,7 +966,6 @@ export function ChatCore({
             } else if (j.type === "delta" && j.t) {
               acc += j.t;
               patchLast({ text: acc });
-              if (!paced) emitNewCites(acc);
             } else if (j.type === "done" && j.meta) {
               metaBuf = j.meta;
               done = true;
@@ -905,8 +986,15 @@ export function ChatCore({
         streamEnded = true;
 
         if (metaBuf) {
-          await revealDone; // resolves immediately when not paced
-          patchLast({ streaming: false, meta: metaBuf, reveal: undefined });
+          await revealDone; // also waits out any Continue not yet tapped
+          if (stoppedAt != null) acc = acc.slice(0, stoppedAt).trimEnd();
+          patchLast({
+            streaming: false,
+            meta: metaBuf,
+            reveal: undefined,
+            gated: undefined,
+            ...(stoppedAt != null ? { text: acc } : {}),
+          });
           emitNewCites(acc);
           onAssistantDone?.(acc);
           if (acc.includes("{{finish_lesson}}")) onFinishDirective?.();
@@ -962,6 +1050,8 @@ export function ChatCore({
           next[i] = {
             ...next[i],
             streaming: false,
+            reveal: undefined,
+            gated: undefined,
             error: !next[i].text,
             text: next[i].text || "AI backend unavailable — please try again.",
           };
@@ -978,8 +1068,15 @@ export function ChatCore({
         cancelReveal();
         streamingRef.current = false;
         setStreaming(false);
+        // the student asked for something while the reply was paused
+        const queued = queuedSendRef.current;
+        if (queued) {
+          queuedSendRef.current = null;
+          pendingContinue.current = false;
+          setTimeout(() => sendRef.current(queued), 0);
+        }
         // an auto-continue was blocked by this open stream — fire it now
-        if (pendingContinue.current) {
+        else if (pendingContinue.current) {
           pendingContinue.current = false;
           scheduleContinueRef.current();
         }
@@ -1124,7 +1221,7 @@ export function ChatCore({
                 text: r.isCorrect
                   ? arabicUi
                     ? "برافو ✓ — شايف إجابتك…"
-                    : "Nice ✓ — check your answer…"
+                    : nextCheckingLine()
                   : arabicUi
                     ? "ولا يهمك — بص هنا…"
                     : "No worries — look here…",
@@ -1157,7 +1254,7 @@ export function ChatCore({
                 localOnly: true,
                 text: arabicUi
                   ? "✓ شايف إجابتك… ثانية واحدة"
-                  : "✓ check your answer… one second",
+                  : nextCheckingLine(),
               } satisfies ChatMsg,
             ]
           : []),
@@ -1209,6 +1306,13 @@ export function ChatCore({
           onSelect: () => selectSuggestion(s),
         }))
       : undefined;
+  // FR-3501: the paused reply's two chips
+  const handleContinue = useCallback(() => gateResumeRef.current(), []);
+  const handleSayAnotherWay = useCallback(() => {
+    queuedSendRef.current = arabicUi ? SAY_ANOTHER_WAY_AR : SAY_ANOTHER_WAY_EN;
+    gateStopRef.current();
+  }, [arabicUi]);
+  const gatedNow = messages.some((m) => m.streaming && m.gated);
 
   const paced = !prefersReducedMotion();
 
@@ -1282,9 +1386,20 @@ export function ChatCore({
         ))}
       </div>
 
+      {/* FR-3501: a reply paused at a beat puts its two moves where the
+          student's thumb already is — the bubble itself gains nothing */}
+      {gatedNow && (
+        <GateChips
+          onContinue={handleContinue}
+          onSayAnotherWay={handleSayAnotherWay}
+          arabicUi={arabicUi}
+        />
+      )}
+
       {/* suggestion chips — stay clickable after every stream, unless the
           surface retires them once the conversation is under way */}
       {!lessonChrome &&
+        !gatedNow &&
         suggestions.length > 0 &&
         (suggestionsUntil == null ||
           messages.filter((m) => !m.hidden && (m.role === "user" || m.role === "assistant")).length <
@@ -1705,7 +1820,7 @@ const MessageRow = memo(function MessageRow({
           },
         })}
 
-        {m.streaming && visibleText.length > 0 && (
+        {m.streaming && !m.gated && visibleText.length > 0 && (
           <span className="ms-0.5 inline-block h-3.5 w-[7px] translate-y-[2px] animate-pulse rounded-full bg-accent" />
         )}
 
@@ -1909,6 +2024,77 @@ function BoardChip({
  * another explanation is the product working as intended.
  */
 const CHECK_IN_PICKED = "bg-card-warm! border-solid! border-ink! text-ink!";
+
+/** FR-3508: one move at a paused reply, to the first-party record — which
+ *  move, the surface and the beat reached, nothing the student wrote.
+ *  Fire-and-forget. */
+function recordChunkAction(name: "chunk_next" | "chunk_another", surface: string, beat: number) {
+  void authFetch("/api/analytics", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      event: "button_click",
+      properties: { name, surface, beat },
+    }),
+    keepalive: true,
+  }).catch(() => {});
+}
+
+const SAY_ANOTHER_WAY_EN = "Say it another way";
+
+/** The line shown while an answer is being checked — two phrasings, taken in
+ *  turn so the same words don't repeat on every answer (Tamer, 2026-10-09). */
+const CHECKING_LINES = ["Checking your answer. One second…", "Let me check your answer ⏳"];
+let checkingTurn = 0;
+function nextCheckingLine(): string {
+  return CHECKING_LINES[checkingTurn++ % CHECKING_LINES.length];
+}
+const SAY_ANOTHER_WAY_AR = "لسه مش فاهم — اشرحها بطريقة تانية";
+
+/**
+ * FR-3501: the reply has stopped at a beat. Its two moves take the chip row
+ * above the composer: "Say it another way" ends the reply where the student
+ * stopped and asks again; Continue — the screen's one amber while the
+ * composer's send is idle — shows the next beat. Continue takes focus when it
+ * appears, so Enter or a switch lands on it.
+ */
+function GateChips({
+  onContinue,
+  onSayAnotherWay,
+  arabicUi,
+}: {
+  onContinue: () => void;
+  onSayAnotherWay: () => void;
+  arabicUi: boolean;
+}) {
+  const ref = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    ref.current?.focus({ preventScroll: true });
+  }, []);
+  return (
+    <div
+      dir={arabicUi ? "rtl" : "ltr"}
+      className="flex flex-wrap gap-2 border-t border-line-soft px-4 pb-2 pt-3"
+    >
+      <button type="button" onClick={onSayAnotherWay} data-chunk-another="" className={CHIP_CONTROL}>
+        {arabicUi ? "اشرحها بطريقة تانية" : "Say it another way"}
+      </button>
+      <button
+        ref={ref}
+        type="button"
+        onClick={onContinue}
+        data-chunk-next=""
+        className={cx(
+          CHIP_CONTROL,
+          "anim-pop bg-[var(--noor-action)]! text-[color:var(--noor-on-action)]!"
+        )}
+      >
+        {arabicUi ? "كمّل" : "Continue"}
+        <span aria-hidden>↓</span>
+      </button>
+    </div>
+  );
+}
 
 /** {{check_in}} — two-big-buttons card. */
 function CheckInCard({

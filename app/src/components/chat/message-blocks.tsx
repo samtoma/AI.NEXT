@@ -250,6 +250,26 @@ export function renderChatBlocks(blocks: Block[], o: BlockRenderOptions = {}): R
       );
       return;
     }
+    if (b.t === "ask") {
+      // FR-3502: the closing question, a Honey fill with its paired ink inside
+      // the same bubble — never a second bubble, never a box with its own
+      // border (one container level). 16px above it separates it from the
+      // explanation.
+      out.push(
+        <div
+          key={i}
+          data-chunk-ask=""
+          className="mt-4 mb-0.5 rounded-[var(--play-radius-sm)] bg-card-warm px-3 py-2.5 text-ink"
+        >
+          {b.paras.map((inlines, k) => (
+            <p key={k} dir="auto" className="tex-block my-1 first:mt-0 last:mb-0" style={{ textAlign: "start" }}>
+              {renderInlines(inlines, o)}
+            </p>
+          ))}
+        </div>
+      );
+      return;
+    }
     if (b.t === "list") {
       out.push(
         <ul key={i} className="my-1.5 space-y-1 ps-1">

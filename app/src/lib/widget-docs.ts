@@ -33,7 +33,7 @@ interface WidgetDoc {
 const DOCS: Record<string, WidgetDoc> = {
   pair_plotter: {
     name: "pair_plotter",
-    line: `{{widget:pair_plotter:{"prompt":"Plot the point (3,2)","target":[3,2]}}} — a coordinate grid (−5..5); the student taps one lattice point. Target coordinates must be whole numbers in −5..5.`,
+    line: `{{widget:pair_plotter:{"prompt":"Plot the point (3,2)","target":[3,2]}}} — a coordinate grid (−5..5); the student taps one lattice point. Target coordinates must be whole numbers in −5..5. It grades ONE exact point, so the prompt MUST name that point ("Plot the point (3,-4)") — never describe a family of points ("a point with a positive first number…"): the student would plot a right point and be marked wrong.`,
   },
   product_builder: {
     name: "product_builder",

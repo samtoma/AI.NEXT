@@ -81,6 +81,13 @@ const RULE_KINDS = ["sum", "diff", "product", "same", "first", "second"] as cons
 const RULE_OPS = ["eq", "ne", "lt", "le", "gt", "ge"] as const;
 const CURVE_FNS = ["linear", "quadratic"] as const;
 
+/** Does the prompt name this exact point? Spaces and the typographic minus
+ *  are ignored: "(3, −4)" names (3,-4). */
+export function namesPoint(prompt: string, [x, y]: [number, number]): boolean {
+  const flat = prompt.replace(/\s+/g, "").replace(/[−–]/g, "-");
+  return flat.includes(`(${x},${y})`);
+}
+
 export function parseMathWidget(
   name: string,
   props: Record<string, unknown>
@@ -89,7 +96,17 @@ export function parseMathWidget(
     case "pair_plotter": {
       const target = intPair(props.target, 5);
       if (!target) return null;
-      return { name, prompt: str(props.prompt, "Plot the point"), target };
+      // The widget grades ONE exact point. A prompt that does not name it
+      // ("a point with a positive first number and a negative second") asks a
+      // question the grader cannot answer: the student plots a right point
+      // and is marked wrong. Such a prompt is replaced by the one the grader
+      // actually checks — a narrower question, but never a false "wrong".
+      const prompt = str(props.prompt, "Plot the point");
+      return {
+        name,
+        prompt: namesPoint(prompt, target) ? prompt : `Plot the point (${target[0]},${target[1]})`,
+        target,
+      };
     }
 
     case "product_builder": {
