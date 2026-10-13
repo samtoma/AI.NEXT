@@ -240,3 +240,15 @@ show it.
 - **Staging's Claude login consumes the same subscription** as production's. Whether two concurrent
   CLI logins under one subscription are supported is not documented anywhere we control; if it
   turns out they are not, the fallback is an API key for staging alone.
+
+## Amendment — 2026-10-13: staging sends real mail
+
+**Decision (Samuel, 2026-10-13):** "I want the staging to really send mails, it will be a real env similar
+to the prod, yet for demos and trials." Staging's `AINEXT_MAIL_TRANSPORT` goes from a hard-set `console`
+to production's `${AINEXT_MAIL_TRANSPORT:-smtp}` on the app and the console, and the deploy writes `smtp`
+and the same `AINEXT_MAIL_FROM` secret as production. Mail relays through Mailu on the shared network,
+exactly as production's does, and every link in it names a staging hostname. This replaces the rule above
+that staging sends no mail ("Staging sends no mail and reports no analytics"); analytics and alert e-mail
+stay off (`AINEXT_GA_MEASUREMENT_ID` and `AINEXT_ALERT_EMAIL` empty). **Consequence to watch:** staging's
+database is still destroyed and rebuilt on every staging deploy, so a demo or trial account made there
+does not survive the next deploy — open with Samuel.
