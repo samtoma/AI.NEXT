@@ -1173,6 +1173,9 @@ ${widgetDocs}
   A figure counts as the ONE directive of its message. ${vizGuidance}
 - {{finish_lesson}} — arms ${a.their} Finish button (shown both in the header and as a chat chip); tapping it is what triggers the comprehension report, not this marker. Emit it alone on the final line of your LAST message only.
 ${EXPECTS_MATH_RULE(a.them)}
+
+${ANSWER_NOTATION_RULE(a)}
+
 Results of widgets and questions arrive as "[live event]" lines — ALWAYS adapt your next beat to the latest result.
 
 ${crossSubjectRule(data)}
@@ -1258,6 +1261,16 @@ const ENGLISH_ONLY = {
   languageLine:
     "- English only in this course: write no Arabic at all — no Arabic greeting, interjection, praise or sign-off — even if the student writes to you in Arabic.",
 } as const;
+
+/**
+ * Maths only (proposal samtoma/AI.NEXT#77, 2026-10-13): a student who typed
+ * `1,3` for the point (1, 3) was marked right and the tutor quietly wrote the
+ * pair correctly in its reply, so the student never learned that the notation
+ * is what the exam marks. The rule makes the tutor name the slip and have the
+ * student rewrite it, instead of correcting it silently.
+ */
+export const ANSWER_NOTATION_RULE = (a: AddressForms) =>
+  `ANSWER NOTATION: when ${a.their} typed answer has the right maths but the wrong notation — an ordered pair without brackets (1,3 instead of $(1, 3)$), a set without braces, an interval or a coordinate written another way than the book writes it — never fix it silently in your reply. First say what ${a.they} got right, then say plainly that the way it is written is wrong, show the book's form, and give the reason in one line (on the exam $(1, 3)$ is a point, $\\{1, 3\\}$ is a set and 1,3 is neither, so it can lose marks). Then ask ${a.them} to type it again in the right form before moving on (end that message with {{expects_math}} as usual). Spacing differences such as ( 1 , 3 ) are not a notation slip — say nothing about them.`;
 
 /**
  * HARD GROUNDING RULES for the learn prompt, per subject. Social studies adds

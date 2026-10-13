@@ -211,3 +211,12 @@ test("the address block reaches every surface through one retrieval bundle", () 
   assert.match(anon, /never fall back to the masculine/);
   assert.equal(MASCULINE.test(anon), false);
 });
+
+test("the maths lesson tells the tutor to flag a right answer in the wrong notation (#77)", () => {
+  for (const gender of ["female", "male", "unspecified"] as const) {
+    const learn = learnPrompt(lessonFor(gender), false);
+    assert.ok(learn.includes("ANSWER NOTATION:"), `no notation rule for ${gender}`);
+    assert.ok(learn.includes("never fix it silently"));
+    assert.ok(reviewPrompt(lessonFor(gender)).includes("ANSWER NOTATION:"));
+  }
+});
