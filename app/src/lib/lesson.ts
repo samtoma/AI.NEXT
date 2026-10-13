@@ -1174,6 +1174,8 @@ ${widgetDocs}
 - {{finish_lesson}} — arms ${a.their} Finish button (shown both in the header and as a chat chip); tapping it is what triggers the comprehension report, not this marker. Emit it alone on the final line of your LAST message only.
 ${EXPECTS_MATH_RULE(a.them)}
 
+${AMBIGUOUS_ANSWER_RULE(a)}
+
 ${ANSWER_NOTATION_RULE(a)}
 
 Results of widgets and questions arrive as "[live event]" lines — ALWAYS adapt your next beat to the latest result.
@@ -1261,6 +1263,23 @@ const ENGLISH_ONLY = {
   languageLine:
     "- English only in this course: write no Arabic at all — no Arabic greeting, interjection, praise or sign-off — even if the student writes to you in Arabic.",
 } as const;
+
+/**
+ * Maths only (proposal samtoma/AI.NEXT#77, 2026-10-13): a short typed answer
+ * can be read two ways, one right and one wrong, and the tutor picked one —
+ * usually the right one, crediting what may have been a slip. The rule has it
+ * ask one neutral question instead, and the hard part is in the wording:
+ * a clarifying question that names the right reading, praises first or says
+ * "are you sure" gives the answer away. The ambiguity test is deliberately
+ * narrow (a right AND a wrong plausible reading) so the tutor does not
+ * interrogate every one-word answer. Precedes ANSWER_NOTATION_RULE: when the
+ * notation makes the value itself unclear (x2), clarify first.
+ * Checked against the live model by `scripts/eval-answer-rules.mts`.
+ */
+export const AMBIGUOUS_ANSWER_RULE = (a: AddressForms) =>
+  `AMBIGUOUS ANSWERS: before you react to ${a.their} typed answer, decide silently whether it is ambiguous — it has at least two readings a Prep 3 student could plausibly have meant, one correct and one wrong. If every reading is right, accept it; if every reading is wrong, it is wrong; a correct answer that might be a guess is not ambiguous (ask for the working instead); a clear answer in the wrong notation is not ambiguous (see ANSWER NOTATION). In maths the usual causes are: an expression typed flat (x2, 1/2x, -3^2), two values with no names (2, 0 for a and b), a pointer ("the first one", "it") with two possible targets, and a bare number or a comma list where two different objects fit the question.
+HALF ANSWERS: when the question asks for two things — an answer AND a reason, or two values — and ${a.they} gave only one, it is not yet correct. Give no verdict on the part ${a.they} gave — no "right", "correct", "exactly" or "yes" — supply none of the missing part, and ask only for it. Example: to "Is (2, 3) = (3, 2)? Say yes or no, and why." the answer "no" gets "And why?" and nothing that says whether "no" is right. When you cannot tell which of the two things ${a.they} answered (a bare 6 to "how many elements, and how many pairs?"), that is an ambiguous answer: ask ${a.them} to say which is which.
+When it is ambiguous, neither credit it nor correct it. Ask ONE neutral question that makes ${a.them} commit, in this order of preference: a frame to fill in ("Write it out for me: a = ?, b = ?"); a request to write the expression with × or brackets so you read it exactly as ${a.they} mean${a.s} it; "how did you get that?". Name the readings only if none of these can work — the reading as typed first, never the correct one first — and ask ${a.them} to pick one and say why. Never say "are you sure", never praise or hint before it is settled, never let your wording favour one reading, never state or compute the correct value, and keep the same tone whichever reading you expect. Never show the readings you considered. If ${a.their} reply is still ambiguous, treat the point as not yet shown: re-teach it and check with a card or widget. Never count an ambiguous answer as correct.`;
 
 /**
  * Maths only (proposal samtoma/AI.NEXT#77, 2026-10-13): a student who typed

@@ -106,6 +106,10 @@ test("the files that spawn the CLI are the five we think they are", () => {
     (f) => f.path
   );
   assert.deepEqual(claudeSpawners.sort(), [
+    // Hand-run model evaluation of the maths answer rules (#77). Serves no
+    // student and needs no probe: it goes through CLAUDE_BIN / claudeEnv /
+    // claudeCwd, so it authenticates exactly as the tutor does.
+    "scripts/eval-answer-rules.mts",
     "scripts/probe-runtime.mts",
     "src/app/api/ask/route.ts",
     "src/app/api/understanding/route.ts",

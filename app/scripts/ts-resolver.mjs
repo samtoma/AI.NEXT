@@ -59,6 +59,9 @@ const STUBS = {
       // G2 answer 22). Same `lib/lesson.ts` -> `auth/principal.ts` import; no
       // student, so no principal.
       "answer-only-prompts.test.mts",
+      // builds the real maths learn prompt to send to the live model (#77);
+      // the student id is a parameter, so no principal is ever resolved
+      "eval-answer-rules.mts",
       // renders the same prompt builders for each address register, and
       // reaches `lib/lesson.ts` -> `auth/principal.ts` to do it (P6)
       "prompt-address.test.mts",

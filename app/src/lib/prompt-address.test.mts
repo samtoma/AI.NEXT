@@ -220,3 +220,15 @@ test("the maths lesson tells the tutor to flag a right answer in the wrong notat
     assert.ok(reviewPrompt(lessonFor(gender)).includes("ANSWER NOTATION:"));
   }
 });
+
+test("the maths lesson tells the tutor to clarify an ambiguous answer without giving it away (#77)", () => {
+  for (const gender of ["female", "male", "unspecified"] as const) {
+    for (const prompt of [learnPrompt(lessonFor(gender), false), reviewPrompt(lessonFor(gender))]) {
+      const at = prompt.indexOf("AMBIGUOUS ANSWERS:");
+      assert.ok(at >= 0, `no ambiguity rule for ${gender}`);
+      assert.ok(prompt.includes('Never say "are you sure"'));
+      // clarify first, then the notation rule — `x2` is unclear before it is mis-written
+      assert.ok(at < prompt.indexOf("ANSWER NOTATION:"));
+    }
+  }
+});
