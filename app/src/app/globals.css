@@ -1377,3 +1377,45 @@ body[data-focus="lesson"] > footer {
 @media (prefers-reduced-motion: reduce) {
   .math-picker-in { animation: none; }
 }
+
+/* The lesson chat handoff (prototype, feat/proto-math-symbol-keys): one shadow
+   layer. The outer bubbles, input, popover and Send carry the shared 3px
+   offset; anything nested inside a bubble is flat — no outline, no shadow, a
+   Honey fill — so an outlined card is never nested in an outlined bubble. */
+:is([data-ds="play"], [data-ds="noor"]) .lesson-chat .noor-bubble-student {
+  border-width: var(--play-stroke);
+}
+:is([data-ds="play"], [data-ds="noor"]) .lesson-bubble [data-chat-interactive] > * {
+  border-width: 0;
+  box-shadow: none;
+  background-color: var(--card-warm);
+}
+/* the card's own header band loses its rule line with its frame */
+:is([data-ds="play"], [data-ds="noor"]) .lesson-bubble [data-chat-interactive] > * > :first-child {
+  border-bottom-width: 0;
+}
+/* nested controls keep their outline (a field must read as a field) but never
+   a shadow, and the card's own action is not a second amber — Send is the one */
+:is([data-ds="play"], [data-ds="noor"]) .lesson-bubble [data-chat-interactive] :is(.sticker-shadow, .sticker-shadow-sm) {
+  box-shadow: none;
+}
+:is([data-ds="play"], [data-ds="noor"]) .lesson-bubble [data-chat-interactive] button[class*="noor-action"]:not(:disabled) {
+  background-color: var(--card);
+}
+/* no mono uppercase strip in the panel: a nested card's header reads as a label */
+:is([data-ds="play"], [data-ds="noor"]) .lesson-bubble [data-chat-interactive] > * > :first-child .font-mono {
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: normal;
+  text-transform: none;
+}
+/* equations never break across lines */
+.lesson-chat .katex {
+  white-space: nowrap;
+}
+/* maths glyphs on the symbol keys: the math serifs the handoff names, then the
+   KaTeX face the app already loads for equations — no new font is fetched */
+.math-glyph {
+  font-family: "Cambria Math", "STIX Two Math", KaTeX_Main, Georgia, serif;
+}

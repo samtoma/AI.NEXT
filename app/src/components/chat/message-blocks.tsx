@@ -37,7 +37,7 @@
 import type { ReactNode } from "react";
 
 import { TeX } from "@/components/TeX";
-import { STROKE_SM, STROKE_WIDTH_SM, VERDICT_INK, cx } from "@/components/sticker";
+import { STROKE, STROKE_SM, STROKE_WIDTH_SM, VERDICT_INK, cx } from "@/components/sticker";
 import type { Block, Cite, Inline } from "@/lib/chat-parse";
 
 import { CitationChip, type CiteInfo } from "./CitationChip";
@@ -88,13 +88,15 @@ export const TUTOR_BUBBLE_FILL = "border-ink bg-card sticker-shadow-sm noor-bubb
  * `MessageRow` renders — including `anim-pop`, which is part of how the
  * message arrived and therefore part of what is being reconstructed.
  */
-export function StudentBubble({ children }: { children: ReactNode }) {
+export function StudentBubble({ children, lesson = false }: { children: ReactNode; lesson?: boolean }) {
   return (
     <div className="anim-pop flex justify-end">
       <div
         className={cx(
-          STROKE_SM,
-          "max-w-[85%] rounded-[var(--play-radius)] rounded-es-[var(--play-radius-notch)]",
+          lesson
+            ? // lesson chat handoff: the full 3px outline, the notch toward the student, 60ch wide
+              cx(STROKE, "max-w-[60ch] rounded-[var(--play-radius-sm)] rounded-ee-[var(--play-radius-notch)]")
+            : cx(STROKE_SM, "max-w-[85%] rounded-[var(--play-radius)] rounded-es-[var(--play-radius-notch)]"),
           BUBBLE_SHAPE,
           // the student's own turn is the sky playmate with its paired ink —
           // never ink: their own words are not the darkest thing on screen
@@ -113,17 +115,27 @@ export function TutorBubble({
   children,
   error = false,
   style,
+  lesson = false,
 }: {
   children: ReactNode;
   error?: boolean;
   style?: React.CSSProperties;
+  /**
+   * The lesson chat handoff's bubble: the full 3px outline, 14px 16px padding, 60ch wide, and
+   * `lesson-bubble`, under which anything nested goes flat (globals.css: one shadow layer).
+   */
+  lesson?: boolean;
 }) {
   return (
-    <div className="anim-pop flex justify-start" style={style}>
+    <div className={cx("anim-pop flex justify-start", lesson && "min-w-0")} style={style}>
       <div
         className={cx(
-          "max-w-[94%]",
-          TUTOR_BUBBLE_FRAME,
+          lesson
+            ? cx(
+                STROKE,
+                "lesson-bubble max-w-[60ch] min-w-0 rounded-[var(--play-radius)] rounded-ss-[var(--play-radius-notch)] px-4 py-3.5 font-read text-[1rem]"
+              )
+            : cx("max-w-[94%]", TUTOR_BUBBLE_FRAME),
           // A failed turn greys out like a wrong answer does — the inactive
           // fill and border, muted AA text, no shadow — and is never red.
           error ? VERDICT_INK.wrong : cx(TUTOR_BUBBLE_FILL, "text-ink")
@@ -149,6 +161,11 @@ export type BlockSlots = {
 export type BlockRenderOptions = {
   /** Raw ids on citation chips instead of friendly labels. */
   debug?: boolean;
+  /**
+   * The lesson chat handoff: citations are not drawn mid-sentence (the surface prints them as a
+   * plain source line under the bubble), and a closing question gets the flat Honey block.
+   */
+  lesson?: boolean;
   /** RTL/Arabic-script subject — friendly citation labels render in Arabic. */
   arabicUi?: boolean;
   resolveCite?: (c: Cite) => CiteInfo | null;
@@ -161,7 +178,7 @@ export function renderInlines(inlines: Inline[], o: BlockRenderOptions): ReactNo
   return inlines.map((seg, s) =>
     seg.t === "text" ? (
       <TeX key={s} text={seg.v} />
-    ) : (
+    ) : o.lesson ? null : (
       <CitationChip
         key={s}
         cite={seg}
@@ -183,6 +200,10 @@ export function renderInlines(inlines: Inline[], o: BlockRenderOptions): ReactNo
  */
 export function renderChatBlocks(blocks: Block[], o: BlockRenderOptions = {}): ReactNode[] {
   const out: ReactNode[] = [];
+  // the last block that draws anything, if it is a paragraph — a candidate closing question
+  const drawn = blocks.map((b, k) => [b, k] as const).filter(([b]) => !["highlight", "finish", "beat", "answer_submitted", "reveal_answer"].includes(b.t));
+  const lastDrawn = drawn[drawn.length - 1];
+  const lastPara = lastDrawn && lastDrawn[0].t === "para" ? lastDrawn[1] : -1;
   blocks.forEach((b, i) => {
     if (b.t === "highlight" || b.t === "finish" || b.t === "beat") return;
     // Socratic-probing directives (`507bb31`): never rendered — a replay
@@ -244,13 +265,35 @@ export function renderChatBlocks(blocks: Block[], o: BlockRenderOptions = {}): R
       );
       return;
     }
+    // Lesson chat: the turn's closing question sits in the flat Honey block (handoff §3). Read
+    // from the text — a final paragraph that ends in "?" — not marked by the tutor.
+    const closingQuestion = o.lesson && i === lastPara && endsInQuestion(b.inlines);
     out.push(
-      <p key={i} dir="auto" className="tex-block my-1.5 first:mt-0 last:mb-0" style={{ textAlign: "start" }}>
+      <p
+        key={i}
+        dir="auto"
+        className={cx(
+          "tex-block",
+          o.lesson ? "my-3 first:mt-0 last:mb-0" : "my-1.5 first:mt-0 last:mb-0",
+          closingQuestion && "rounded-[var(--play-radius-sm)] bg-card-warm px-4 py-[13px]"
+        )}
+        style={{ textAlign: "start" }}
+      >
         {renderInlines(b.inlines, o)}
       </p>
     );
   });
   return out;
+}
+
+/** The text of a paragraph's inlines ends in a question mark (citations aside). */
+function endsInQuestion(inlines: Inline[]): boolean {
+  const text = inlines
+    .filter((x): x is Extract<Inline, { t: "text" }> => x.t === "text")
+    .map((x) => x.v)
+    .join("")
+    .trim();
+  return /[?؟]$/.test(text);
 }
 
 /**

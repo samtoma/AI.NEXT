@@ -57,7 +57,7 @@ export function MathSymbolPicker({
   const [open, setOpen] = useState(false);
   const [all, setAll] = useState(false);
   /** the name of the key under the pointer, focus or finger */
-  const [hint, setHint] = useState("");
+  const [hint, setHint] = useState(NO_HINT);
   const pill = useRef<HTMLButtonElement>(null);
   const card = useRef<HTMLDivElement>(null);
   /** where the card sits: fixed to the viewport, so no `overflow: hidden` frame (a question card,
@@ -108,7 +108,7 @@ export function MathSymbolPicker({
   const toggle = () => {
     setOpen((o) => !o);
     setAll(false); // reopening always starts on the default view
-    setHint("");
+    setHint(NO_HINT);
   };
 
   /** Insert at the caret (replacing a selection), then put the caret `back` steps before the end. */
@@ -141,12 +141,13 @@ export function MathSymbolPicker({
       // the name shows on hover and focus, and on press-and-hold where there is no hover (iPad)
       onPointerEnter={() => setHint(k.name)}
       onPointerDown={() => setHint(k.name)}
-      onPointerLeave={(e) => e.pointerType === "mouse" && setHint("")}
+      onPointerLeave={(e) => e.pointerType === "mouse" && setHint(NO_HINT)}
       onFocus={() => setHint(k.name)}
       className={cx(
         height,
-        "min-w-10 rounded-[var(--play-radius-sm)] bg-transparent font-mono text-[1.25rem] font-medium leading-none text-ink",
-        "hover:bg-card-warm active:bg-card-warm disabled:text-[color:var(--play-disabled-text)]",
+        // lesson chat handoff §4: flat Honey keys inside the popover, no outline, in a math serif
+        "math-glyph min-w-10 rounded-[var(--play-radius-sm)] bg-card-warm text-[1.15rem] font-bold leading-none text-ink",
+        "disabled:text-[color:var(--play-disabled-text)]",
       )}
     >
       {k.t}
@@ -164,21 +165,13 @@ export function MathSymbolPicker({
         onClick={toggle}
         className={cx(
           // Honey at rest, so the one new control in the answer row is findable
-          "absolute end-2 top-1/2 flex h-10 -translate-y-1/2 items-center gap-1.5 rounded-[var(--play-radius-pill)] bg-card-warm ps-2.5 pe-3 text-ink",
+          "absolute end-2 top-1/2 flex h-10 -translate-y-1/2 items-center gap-1.5 rounded-[var(--play-radius-pill)] bg-card-warm px-3.5 font-display text-[0.9rem] font-bold leading-none text-ink",
         )}
       >
-        <span
-          aria-hidden="true"
-          className="font-mono text-[1.25rem] font-semibold leading-none"
-        >
+        <span aria-hidden="true" className="text-[1.05rem]">
           ∑
         </span>
-        <span
-          aria-hidden="true"
-          className="font-display text-[0.86rem] font-bold leading-none"
-        >
-          Symbols
-        </span>
+        <span aria-hidden="true">Symbols</span>
       </button>
 
       {open &&
@@ -193,8 +186,9 @@ export function MathSymbolPicker({
             className={cx(
               STROKE,
               // above the chat, below a modal (QuestionModal is z-50)
-              "math-picker-in fixed z-40 flex w-[372px] max-w-[calc(100vw-32px)] flex-col gap-1",
-              "rounded-[var(--play-radius)] bg-card px-2.5 pb-2 pt-2.5 shadow-[var(--play-shadow)]",
+              // lesson chat handoff §4: 340px, 12px padding, the panel's one shared 3px shadow
+              "math-picker-in fixed z-40 flex w-[340px] max-w-[calc(100vw-32px)] flex-col gap-2.5",
+              "rounded-[var(--play-radius)] bg-card p-3 shadow-[var(--play-shadow-sm)]",
             )}
           >
             {all ? (
@@ -210,7 +204,7 @@ export function MathSymbolPicker({
                       <div className="pb-1 font-mono text-[0.64rem] font-medium uppercase tracking-[0.1em] text-[color:var(--play-text-dim)]">
                         {g.label}
                       </div>
-                      <div className="grid grid-cols-6 gap-0.5">
+                      <div className="grid grid-cols-6 gap-1.5">
                         {g.keys
                           .map((id) => mathKey(id))
                           .filter((k): k is MathKey => !!k)
@@ -225,9 +219,9 @@ export function MathSymbolPicker({
                 <div
                   role="group"
                   aria-label="Symbols for this lesson"
-                  className="grid grid-cols-6 gap-0.5"
+                  className="grid grid-cols-6 gap-1.5"
                 >
-                  {twelve.map((k) => key(k, "h-[46px]"))}
+                  {twelve.map((k) => key(k, "h-12"))}
                 </div>
                 <Footer
                   action="All symbols ›"
@@ -242,6 +236,9 @@ export function MathSymbolPicker({
     </>
   );
 }
+
+/** What the footer says until a key is pointed at or tapped (lesson chat handoff §4). */
+const NO_HINT = "Tap a symbol";
 
 /** Never take focus from the input: the iPad keyboard stays open and the selection survives. */
 const keepFocus = (e: React.MouseEvent) => e.preventDefault();
@@ -262,13 +259,13 @@ function Footer({
         type="button"
         onMouseDown={keepFocus}
         onClick={onAction}
-        className="h-10 bg-transparent font-display text-[0.86rem] font-bold leading-none text-[color:var(--play-text-link)]"
+        className="h-10 bg-transparent font-display text-[0.88rem] font-bold leading-none text-[color:var(--play-text-link)] underline decoration-[color:var(--play-disabled-border)] underline-offset-[5px]"
       >
         {action}
       </button>
       <span
         aria-hidden="true"
-        className="truncate font-display text-[0.8rem] font-semibold text-[color:var(--play-text-dim)]"
+        className="truncate font-display text-[0.85rem] font-semibold text-[color:var(--play-text-dim)]"
       >
         {hint}
       </span>

@@ -23,7 +23,8 @@ import { addressForms } from "@/lib/address";
 import { track } from "@/lib/ga";
 import { deriveMasteryStage, learnAutoStartLine } from "@/lib/checkin";
 import type { Cite } from "@/lib/chat-parse";
-import { ChatCore, type ChatCoreHandle } from "@/components/chat/ChatCore";
+import { ChatCore, type ChatCoreHandle, type ChatSuggestion } from "@/components/chat/ChatCore";
+import { NoorMark } from "@/components/NoorMark";
 import { renderMathWidget } from "@/components/student/widgets/render-math-widget";
 import { inlineWidgetLo } from "@/lib/widget-payloads";
 import { hashOf } from "@/components/student/widgets/util";
@@ -165,7 +166,11 @@ const AR_MODE_COPY: Record<
 };
 
 const AR_SUGGESTIONS = ["لسه مش فاهم — اشرحها بطريقة تانية", "فهمت — كمّل ✓"];
-const EN_SUGGESTIONS = ["I don't get it — say it another way", "Got it — next ✓"];
+/** Shown as the lesson chat handoff's short links; sent as the same student turns as before. */
+const EN_SUGGESTIONS: ChatSuggestion[] = [
+  { label: "Say it another way", message: "I don't get it — say it another way" },
+  "Got it — next ✓",
+];
 
 /**
  * {{show_passage:…}} renders as a REFOCUS CHIP, not a second copy of the text.
@@ -1325,31 +1330,36 @@ export function LessonSession({
           )}
 
           {/* lesson stream */}
-          <section className={cx(STICKER_CARD, "flex min-h-0 flex-1 flex-col overflow-hidden md:order-1")}>
-            <div className={cx(HONEY_BAND, "flex flex-wrap items-center justify-between gap-2 px-4 py-2")}>
-              {rtl ? (
-                <span dir="rtl" className="text-[0.85rem] font-bold text-ink">
-                  {arCopy.strip} · {lesson.lessonRef}
+          {/* The lesson chat handoff: the panel is the stage — the 3px outline and no shadow; the
+              shadow layer is the bubbles, input and Send inside it (globals.css, .lesson-chat). */}
+          <section
+            className={cx(
+              STROKE,
+              "lesson-chat flex min-h-0 flex-1 flex-col overflow-hidden rounded-[var(--play-radius)] bg-card text-ink md:order-1"
+            )}
+          >
+            <div className={cx(HONEY_BAND, "flex items-center gap-3 px-5 py-3.5")}>
+              <span
+                aria-hidden
+                className={cx(
+                  STROKE,
+                  "anim-bob flex size-11 shrink-0 items-center justify-center rounded-[var(--play-radius-pill)] bg-card"
+                )}
+              >
+                <NoorMark className="size-7" />
+              </span>
+              <span className="flex min-w-0 flex-1 flex-col gap-px" dir={rtl ? "rtl" : undefined}>
+                <span className="font-display text-[1.3rem] font-extrabold leading-[1.1] text-ink">Ask Noor</span>
+                <span className="font-display text-[0.85rem] font-semibold leading-[1.2] text-[color:var(--play-text-dim)]">
+                  {lesson.lessonRef} · {lesson.title}
                 </span>
-              ) : (
-                <span className="font-mono text-[0.72rem] uppercase tracking-[0.16em] text-accent-deep">
-                  ✦ grounded in the lesson · {lesson.lessonRef} only
-                </span>
-              )}
-              {debug ? (
+              </span>
+              {debug && (
                 <span className="font-mono text-[0.72rem] text-ink-faint">
                   {mode === "review"
                     ? `turn ${Math.min(turns, REVIEW_FINISH_NUDGE_AT)}/${REVIEW_FINISH_NUDGE_AT} · `
                     : ""}
                   ${totalUsd.toFixed(3)} session spend
-                </span>
-              ) : rtl ? (
-                <span dir="rtl" className="text-[0.85rem] text-ink-faint">
-                  {mode === "review" ? "٣ دقايق وخلصنا ⏱" : "خطوة خطوة مع بعض ✏️"}
-                </span>
-              ) : (
-                <span className="text-[0.85rem] text-ink-faint">
-                  {mode === "review" ? "3 minutes and done ⏱" : "step by step, together ✏️"}
                 </span>
               )}
             </div>
@@ -1448,6 +1458,7 @@ export function LessonSession({
               onMessagesChange={onMessagesChange}
               onSwitchSubject={(subj) => router.push(`/student?subject=${subj}`)}
               mathKeys={lessonMathKeys}
+              lessonChrome
               inputAccessory={
                 VOICE_UI_ENABLED && sttOK
                   ? (api) => <MicButton setInput={api.setInput} />
@@ -1471,14 +1482,13 @@ export function LessonSession({
           </Link>
         </p>
       ) : (
-        <p className="mt-2 shrink-0 text-center font-mono text-[0.72rem] uppercase tracking-[0.14em] text-ink-faint">
-          every beat grounded in worked solutions · session ends with an
-          honest comprehension score ·{" "}
+        // the mono strip is gone (lesson chat handoff §2); its way back stays, as a plain link
+        <p className="mt-2 shrink-0 text-center">
           <Link
             href="/student"
-            className="font-bold text-[color:var(--play-text-link)] underline decoration-dotted underline-offset-2"
+            className="font-display text-[0.9rem] font-bold text-[color:var(--play-text-link)] underline decoration-[color:var(--play-disabled-border)] underline-offset-[5px]"
           >
-            back to check-in
+            Back to check-in
           </Link>
         </p>
       )}
