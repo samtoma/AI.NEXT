@@ -98,8 +98,8 @@ const SPAWNERS = FILES.filter(
 
 /* ------------------------------------------------------------- the scan */
 
-test("the files that spawn the CLI are the five we think they are", () => {
-  // Enumerated so that a FIFTH one arriving is a visible event rather than a
+test("the files that spawn the CLI are the six we think they are", () => {
+  // Enumerated so that a SEVENTH one arriving is a visible event rather than a
   // silent one. A new spawner is not a failure — it is a decision, and the
   // decision is "does this need the health probe to speak for it?".
   const claudeSpawners = SPAWNERS.filter((f) => code(f.source).includes("CLAUDE_BIN")).map(
