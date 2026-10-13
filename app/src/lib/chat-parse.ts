@@ -136,6 +136,8 @@ const SWITCH_RE = new RegExp(
 );
 const FINISH = "{{finish_lesson}}";
 const EXPECTS_MATH = "{{expects_math}}";
+/** The homework surface's end-of-walkthrough signal (spec 004, FR-3611). */
+export const QUESTION_DONE = "{{question_done}}";
 const BEAT = "{{beat}}";
 const ASK = "{{ask}}";
 const CHECK_IN = "{{check_in}}";
@@ -234,6 +236,10 @@ function parseActionAt(s: string, i: number): Action | null {
     // a signal to the composer, never anything a student reads
     return { start: i, end: i + EXPECTS_MATH.length, block: null };
   }
+  if (head.startsWith(QUESTION_DONE)) {
+    // a signal to the homework page, never anything a student reads
+    return { start: i, end: i + QUESTION_DONE.length, block: null };
+  }
   if (head.startsWith(FINISH)) {
     return { start: i, end: i + FINISH.length, block: { t: "finish" } };
   }
@@ -326,6 +332,7 @@ const DIRECTIVE_KEYWORDS = [
   "highlight:",
   "widget:",
   "finish_lesson}}",
+  "question_done}}",
   "expects_math}}",
   "beat}}",
   "ask}}",

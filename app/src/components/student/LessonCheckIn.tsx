@@ -8,6 +8,8 @@ import {
   pct,
 } from "@/lib/mastery";
 import { MasteryFill } from "@/components/MasteryFill";
+import { HomeAskCard } from "@/components/student/HomeAskCard";
+import { UpNextFooter } from "@/components/student/UpNextFooter";
 import { NoorMark } from "@/components/NoorMark";
 import { MathText } from "@/components/MathText";
 import { courseDef } from "@/lib/courses";
@@ -207,8 +209,11 @@ function PlayCheckIn({
       and bare lesson numbers cannot answer it. The dots and the
       ramp read off the SAME banding the card above uses, so the
       picker can never disagree with the topic it opens. */}
+  const bookOpen = bookOpenByDefault(lesson.courseId, outline ?? []);
   const bookPanel = (
-    <div className={cx(STICKER_PANEL, "mt-3 w-full overflow-clip")}>
+    // Open on the page it is its own sticker panel; inside Up next's footer it
+    // is flat, the card's own content under the strip.
+    <div className={bookOpen ? cx(STICKER_PANEL, "mt-3 w-full overflow-clip") : "w-full overflow-clip bg-card"}>
       <div className={cx(HONEY_BAND, "flex flex-wrap items-center gap-x-3 gap-y-1 px-4 py-2.5")}>
         <span className="font-display text-[0.9rem] font-bold leading-none text-[var(--play-text-amber-warm)]">
           Everything in the book
@@ -401,7 +406,6 @@ function PlayCheckIn({
       </div>
     </div>
   );
-  const bookOpen = bookOpenByDefault(lesson.courseId, outline ?? []);
 
   return (
     <div className="flex min-h-full flex-col bg-paper">
@@ -428,7 +432,7 @@ function PlayCheckIn({
         )}
       </div>
 
-      <main className="mx-auto flex w-full flex-1 flex-col gap-5 px-4 py-6 min-[900px]:px-8 min-[900px]:py-7 min-[1280px]:max-w-[860px]">
+      <main className="group/home mx-auto flex w-full flex-1 flex-col gap-5 px-4 py-6 min-[900px]:px-8 min-[900px]:py-7 min-[1280px]:max-w-[860px]">
         <div className="flex items-center gap-3.5">
           {/* The companion is present, and carried by motion alone — bob is
               idle and the only infinite loop the system permits. 44px, the
@@ -441,6 +445,11 @@ function PlayCheckIn({
             What do you want to work on today?
           </h1>
         </div>
+
+        {/* Ask first (spec 004, FR-3601): homework help is what students say
+            they come for, so the question box is the first thing under the
+            heading and the recommendation sits one step below it. */}
+        <HomeAskCard />
 
         {/* The lesson just finished — collapsed, still reachable.
 
@@ -541,7 +550,9 @@ function PlayCheckIn({
             overflow:hidden + border-radius loses the clip on relayout — the
             "corner went square after I resized" symptom, on a hard device
             target. */}
-        <section className={cx(STICKER_CARD, "shrink-0 overflow-clip")}>
+        {/* No shadow on the card itself (handoff home_ask §9): only the
+            controls inside it carry one. */}
+        <section className={cx(STROKE, "shrink-0 overflow-clip rounded-[var(--play-radius-lg)] bg-card text-ink")}>
           <div className={cx(HONEY_BAND, "flex flex-wrap items-center gap-3 px-5 py-3")}>
             {/* "Continue Factorisation" once a part of a split section has
                 been attempted (FR-4313): the recommendation is named by the
@@ -737,20 +748,15 @@ function PlayCheckIn({
               </>
             )}
           </div>
+          {/* The change-of-mind doors, as the card's own footer (handoff home_ask
+              §3, "Option B"): a flat honey strip split in two. "Pick something
+              else" opens the whole-book picker INSIDE the card, under the strip,
+              so it reads as leaving this unit rather than as a link beside it.
+              A course whose book is open on the page (below) has no picker to
+              open, so it keeps only "Just practise". */}
+          {!bookOpen && <UpNextFooter picker={bookPanel} />}
         </section>
 
-        {/* Change-of-mind controls, pinned to the bottom of the column.
-            Bordered secondary buttons rather than the quiet text links they
-            were: "Pick something else" is how a student who is NOT on their
-            school's pace navigates the whole product, and a dotted underline
-            at the bottom of the page was too small a door for that. Still a
-            clear tier below the two rows above: the thin 2.5px stroke
-            against their 3px, the small 3px sticker shadow against their
-            5px, and never the amber fill. They wear the Revisit row's
-            anatomy (`sticker-shadow-sm play-pressable`), not `checkin-press`
-            — that class carries the rows' own 5px shadow, which is what
-            made the old "smaller shadow" here untrue, and it outranked the
-            amber focus ring. */}
         {/* The whole book, open on the page (a course with an outline only):
             no trigger to find it behind. Labelled for a screen reader by what
             its band already says. */}
@@ -760,37 +766,17 @@ function PlayCheckIn({
           </section>
         )}
 
-        <div className="mt-auto flex flex-wrap items-start gap-3 pt-1.5">
-          {/* `w-fit` closed so the trigger stays a button beside its
-              neighbour; `open:w-full` so the panel underneath gets the whole
-              column rather than being squeezed into the trigger's width.
-              Without the pair, opening the picker stretched the trigger to
-              full width and shoved "Just practise" onto its own line for no
-              reason. */}
-          {!bookOpen && (
-          <details className="group w-fit open:w-full">
-            <summary className={cx(STROKE_SM, "play-pressable play-pressable-sm sticker-shadow-sm flex min-h-[var(--noor-touch-min)] w-fit cursor-pointer list-none items-center gap-2 rounded-[var(--play-radius-sm)] bg-card px-4 font-display text-[0.92rem] font-bold text-ink [&::-webkit-details-marker]:hidden")}>
-              Pick something else
-              <span
-                aria-hidden
-                className="text-[0.7rem] transition-transform duration-200 group-open:rotate-180"
-              >
-                ▾
-              </span>
-            </summary>
-
-            {bookPanel}
-          </details>
-          )}
-
-          <Link
-            href="/student?mode=practice"
-            prefetch={false}
-            className={cx(STROKE_SM, "play-pressable play-pressable-sm sticker-shadow-sm flex min-h-[var(--noor-touch-min)] items-center rounded-[var(--play-radius-sm)] bg-card px-4 font-display text-[0.92rem] font-bold text-ink")}
-          >
-            Just practise — today&apos;s plan
-          </Link>
-        </div>
+        {bookOpen && (
+          <div className="mt-auto flex flex-wrap items-start gap-3 pt-1.5">
+            <Link
+              href="/student?mode=practice"
+              prefetch={false}
+              className={cx(STROKE_SM, "play-pressable play-pressable-sm sticker-shadow-sm flex min-h-[var(--noor-touch-min)] items-center rounded-[var(--play-radius-sm)] bg-card px-4 font-display text-[0.92rem] font-bold text-ink")}
+            >
+              Just practise — today&apos;s plan
+            </Link>
+          </div>
+        )}
       </main>
     </div>
   );
@@ -836,7 +822,12 @@ function ActionRow({
       className={cx(
         STROKE,
         "checkin-press flex min-h-[60px] items-center gap-3.5 rounded-[var(--play-radius)] px-5 py-3 text-start",
-        active ? "bg-[var(--noor-action)] text-[color:var(--noor-on-action)]" : "bg-card text-ink"
+        // One amber (FR-3602): once the ask card has text or a file, Send
+        // takes the amber and this row drops to plain. Read through the
+        // page's `group/home`, so no state crosses the server boundary.
+        active
+          ? "bg-[var(--noor-action)] text-[color:var(--noor-on-action)] group-has-[[data-ask-ready=true]]/home:bg-card group-has-[[data-ask-ready=true]]/home:text-ink"
+          : "bg-card text-ink"
       )}
     >
       <span className="flex-1 font-display text-[1.1rem] font-extrabold leading-[1.3] text-ink min-[900px]:text-[1.2rem]">

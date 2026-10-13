@@ -65,9 +65,13 @@ ALTER TABLE sessions
   -- (constitution Principle XI). Migration 012 owns the wider environment work.
   ADD COLUMN IF NOT EXISTS environment  TEXT NOT NULL DEFAULT 'baseline';
 
+-- 'homework' is migration 040's (spec 004). It is listed HERE as well because
+-- every migration re-runs on every deploy (deploy/apply-migrations.sh): a list
+-- without it would be re-added by this file before 040 runs, and fail on the
+-- first database holding a homework session.
 ALTER TABLE sessions DROP CONSTRAINT IF EXISTS sessions_kind_check;
 ALTER TABLE sessions ADD CONSTRAINT sessions_kind_check
-  CHECK (kind IN ('lesson_learn','lesson_review','practice','student_chat','spine_chat'));
+  CHECK (kind IN ('lesson_learn','lesson_review','practice','student_chat','spine_chat','homework'));
 
 -- close_reason and closed_at are one fact in two columns: a session is open
 -- with neither, or closed with both. A closed session with no reason would make

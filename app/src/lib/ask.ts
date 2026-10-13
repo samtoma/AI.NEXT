@@ -69,6 +69,9 @@ export interface Grounding {
   wrong_answer?: string;
   /** lesson slug for the lesson surfaces (e.g. "geo1-2") */
   lesson?: string;
+  /** the homework surface's question and its ask (spec 004) */
+  homework_item?: number;
+  homework_ask?: number;
 }
 
 export interface AskContext {

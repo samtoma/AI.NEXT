@@ -89,6 +89,8 @@ export interface ChatCoreHandle {
   attemptResult(r: AttemptResult, q: SpineQuestion): void;
   /** a board-hosted widget reported an outcome note */
   widgetNote(note: string): void;
+  /** send a turn as if the student typed it (the homework page's links) */
+  send(text: string): void;
 }
 
 /**
@@ -104,7 +106,9 @@ export type ChatSuggestion =
   | { label: string; message: string };
 
 export interface ChatCoreProps {
-  surface: "spine_chat" | "student_chat" | "lesson_learn" | "lesson_review";
+  surface: "spine_chat" | "student_chat" | "lesson_learn" | "lesson_review" | "homework";
+  /** the homework surface's one question (spec 004); sent with every turn */
+  homeworkItemId?: number;
   suggestions?: ChatSuggestion[];
   /**
    * How the starter prompts sit above the composer (Tamer's skill map,
@@ -293,6 +297,7 @@ export function ChatCore({
   questionId,
   wrongAnswer,
   lessonSlug,
+  homeworkItemId,
   sessionId,
   initialMessages,
   autoStart,
@@ -902,6 +907,7 @@ export function ChatCore({
             questionId,
             wrongAnswer,
             lesson: lessonSlug,
+            homeworkItemId,
             // The worksheet this turn is about, when there is one. It stays
             // attached across turns on purpose: a student who photographs a
             // page asks two or three questions about it, and making them
@@ -1103,6 +1109,7 @@ export function ChatCore({
       questionId,
       wrongAnswer,
       lessonSlug,
+      homeworkItemId,
       // Recreating `send` when a parse settles is cheap and honest: this
       // callback already depends on `streaming`, so it was never stable
       // across a turn, and mirroring the id through a ref to avoid a
@@ -1300,6 +1307,7 @@ export function ChatCore({
     handleRef.current = {
       attemptResult: handleAttempt,
       widgetNote: handleWidgetNote,
+      send: (text: string) => sendRef.current(text),
     };
     return () => {
       handleRef.current = null;

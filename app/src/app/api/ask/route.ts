@@ -22,6 +22,8 @@ import { scopeFingerprint, snapshotContext, snapshotKey } from "@/lib/session-ca
 import { makeHandoffFilter, stripClosedHandoffs } from "@/lib/handoff-filter";
 import { SPINE_SUBJECT_KEYS } from "@/lib/subjects";
 import { coerceUploadId } from "@/lib/upload-contract";
+import { buildHomeworkContext } from "@/lib/homework";
+import { coerceId } from "@/lib/homework-rules";
 import { getStudentProfile } from "@/lib/student-context";
 import { resolveStudentScope } from "@/lib/catalog-queries";
 import { currentSessionSnapshot } from "@/lib/sessions";
@@ -114,7 +116,7 @@ export const dynamic = "force-dynamic";
 const MODEL = "claude-sonnet-5";
 const TIMEOUT_MS = 90_000;
 
-type Surface = AskSurface | "lesson_learn" | "lesson_review";
+type Surface = AskSurface | "lesson_learn" | "lesson_review" | "homework";
 
 interface InMsg {
   role: "user" | "assistant" | "note";
@@ -154,6 +156,8 @@ export async function POST(req: Request) {
     uploadId?: unknown;
     /** what is selected on the Your Progress Map (FR-3224) — kind + id only */
     mapFocus?: unknown;
+    /** the homework surface's one question (spec 004) — validated under RLS */
+    homeworkItemId?: unknown;
   };
   try {
     body = await req.json();
@@ -165,7 +169,8 @@ export async function POST(req: Request) {
   const surface: Surface =
     body.surface === "student_chat" ||
     body.surface === "lesson_learn" ||
-    body.surface === "lesson_review"
+    body.surface === "lesson_review" ||
+    body.surface === "homework"
       ? body.surface
       : "spine_chat";
   const chatSession = String(body.chatSession ?? "").slice(0, 64);
@@ -317,7 +322,18 @@ export async function POST(req: Request) {
         probing: session.probing,
         scope: scopeFingerprint(scope),
       });
-      const built = await snapshotContext(key, () =>
+      // HOMEWORK (spec 004, ADR-0025 — Proposed). Not snapshotted: its
+      // prompt is built from the student's own question, which they can
+      // edit or fill a gap in between turns, and it is two small reads. The
+      // prompt is byte-stable while the question is, so the prefix stays
+      // cache-hot all the same. `null` (not theirs, not maths, no mode, a
+      // gap still open) is the same 404 as the course gate below.
+      const built = surface === "homework"
+        ? await (() => {
+            const itemId = coerceId(body.homeworkItemId);
+            return itemId ? buildHomeworkContext(itemId, chatSession, studentId, client, uploadId) : null;
+          })()
+        : await snapshotContext(key, () =>
         surface === "lesson_learn" || surface === "lesson_review"
           ? buildLessonContext(
               surface === "lesson_learn" ? "learn" : "review",
@@ -460,10 +476,16 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
       const rawBudget = (process.env.AINEXT_THINKING_BUDGET ?? "1024")
         .trim()
         .toLowerCase();
+      // Homework is the one surface with NO stored solution (ADR-0025): the
+      // model works the question itself and must check it before it leads,
+      // so it gets a larger budget of its own than the paraphrasing surfaces.
+      const homeworkBudget = (process.env.AINEXT_HOMEWORK_THINKING_BUDGET ?? "4096").trim();
       const thinkEnv: Record<string, string> =
-        rawBudget === "0" || rawBudget === "off"
-          ? {}
-          : { MAX_THINKING_TOKENS: rawBudget };
+        surface === "homework"
+          ? { MAX_THINKING_TOKENS: homeworkBudget }
+          : rawBudget === "0" || rawBudget === "off"
+            ? {}
+            : { MAX_THINKING_TOKENS: rawBudget };
 
       // The system prompt goes in a FILE, never on the command line: one exec
       // argument over 131,072 bytes is refused with E2BIG and the CLI never

@@ -98,7 +98,7 @@ const SPAWNERS = FILES.filter(
 
 /* ------------------------------------------------------------- the scan */
 
-test("the files that spawn the CLI are the four we think they are", () => {
+test("the files that spawn the CLI are the five we think they are", () => {
   // Enumerated so that a FIFTH one arriving is a visible event rather than a
   // silent one. A new spawner is not a failure — it is a decision, and the
   // decision is "does this need the health probe to speak for it?".
@@ -109,6 +109,9 @@ test("the files that spawn the CLI are the four we think they are", () => {
     "scripts/probe-runtime.mts",
     "src/app/api/ask/route.ts",
     "src/app/api/understanding/route.ts",
+    // spec 004: the homework split. Built from claudeCwd()/claudeEnv(), so
+    // the health probe speaks for it like it does for the other three.
+    "src/lib/homework.ts",
     "src/lib/uploads.ts",
   ]);
 });

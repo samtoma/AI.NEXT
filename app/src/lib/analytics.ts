@@ -45,6 +45,10 @@ export type AnalyticsEvent =
   | "retrieval_attempt_started"
   | "retrieval_attempt_submitted"
   | "upload_submitted"
+  // homework ask (spec 004) — source and counts only, never the question
+  | "homework_asked"
+  | "homework_question_done"
+  | "homework_flagged"
   // surfaces
   | "dashboard_viewed"
   | "parent_view_opened"

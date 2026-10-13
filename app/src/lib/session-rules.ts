@@ -15,7 +15,8 @@ export type SessionKind =
   | "lesson_review"
   | "practice"
   | "student_chat"
-  | "spine_chat";
+  | "spine_chat"
+  | "homework";
 
 export type CloseReason = "completed" | "inactivity" | "superseded" | "abandoned";
 
