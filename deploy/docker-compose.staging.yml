@@ -255,13 +255,13 @@ services:
       # that let deploy/.env decide is not a risk worth taking here. Links are
       # printed to the container log instead (`docker logs`).
       #
-      # Switching to `smtp` IS a deliberate one-line change — set this back to
-      # `${AINEXT_MAIL_TRANSPORT:-smtp}` (production's form) the day a mail
-      # flow actually needs testing against Mailu. That is exactly why the
-      # `mailu` network attachment below and the AINEXT_SMTP_URL/
-      # AINEXT_MAIL_FROM plumbing stay intact even though nothing uses them
-      # while this is hard-set to `console`.
-      AINEXT_MAIL_TRANSPORT: "console"
+      # SENDS REAL MAIL since 2026-10-13 (Samuel: "I want the staging to really
+      # send mails, it will be a real env similar to the prod, yet for demos and
+      # trials"). Production's form: Mailu over the shared network, the sender
+      # from the same AINEXT_MAIL_FROM secret. Links point at the staging
+      # hostnames (AINEXT_PUBLIC_URL / AINEXT_CONSOLE_URL above), so a staging
+      # mail can never send anyone to production.
+      AINEXT_MAIL_TRANSPORT: ${AINEXT_MAIL_TRANSPORT:-smtp}
       # No user, no password, no :587. `smtp` is Mailu's postfix on the shared
       # network; `permit_mynetworks` is the authorisation. The mailbox
       # admin@noor.reletix.com and its password still exist and are what READS
@@ -458,12 +458,9 @@ services:
       # relay trusts that network, so sending needs no credential and there is
       # nothing to misconfigure into silence. `console` — links printed to the
       # container log — is now the deliberate fallback, not the default.
-      # HARD-SET ON STAGING, exactly as on the app service above: a console
-      # operator-reset mail must land in a container log, never in somebody's
-      # inbox. Left as production's `${AINEXT_MAIL_TRANSPORT:-smtp}` this stack
-      # would relay through Mailu to a real address the first time anybody
-      # pressed "reset password".
-      AINEXT_MAIL_TRANSPORT: "console"
+      # SENDS REAL MAIL since 2026-10-13, exactly as on the app service above
+      # (Samuel: staging is a real environment for demos and trials).
+      AINEXT_MAIL_TRANSPORT: ${AINEXT_MAIL_TRANSPORT:-smtp}
       # No user, no password, no :587. `smtp` is Mailu's postfix on the shared
       # network; `permit_mynetworks` is the authorisation. The mailbox
       # admin@noor.reletix.com and its password still exist and are what READS

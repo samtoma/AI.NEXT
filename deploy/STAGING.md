@@ -202,8 +202,8 @@ verified Access assertion.
 
 Without the AUD, Access sign-in degrades to **off** (not to "open": `resolveCfAccessConfig` returns
 `off`/`misconfigured` and the JWT path is never consulted), the console falls back to a password
-form, and the password can only be set through a reset mail — which on staging is written to the
-container log rather than sent, because `AINEXT_MAIL_TRANSPORT=console`:
+form, and the password can only be set through a reset mail — sent for real since 2026-10-13
+(`AINEXT_MAIL_TRANSPORT=smtp`); before that it was written to the container log, which you can still read:
 
 ```bash
 docker compose -p ainext-staging -f deploy/docker-compose.staging.yml logs console | grep -i reset
@@ -296,9 +296,10 @@ with the eventual fix being a single parameterised file):
 5. ports `127.0.0.1:3201` / `127.0.0.1:3202`
 6. `AINEXT_ENVIRONMENT: "staging"` on migrate, app, console and loader
 7. `AINEXT_PUBLIC_URL` / `AINEXT_CONSOLE_URL` → the staging hostnames
-8. `AINEXT_MAIL_TRANSPORT: "console"` hard-set on **both** app and console — staging must never mail
-   a real family. Switching to `smtp` is a deliberate one-line change; the `mailu` network
-   attachment is kept so it stays possible
+8. `AINEXT_MAIL_TRANSPORT: smtp` on **both** app and console, from the same `AINEXT_MAIL_FROM` secret as
+   production, through Mailu on the shared network — **staging sends real mail since 2026-10-13**
+   (Samuel: "a real env similar to the prod, yet for demos and trials"). Every link in it points at
+   the staging hostnames. Until then this was `console`, mail written to the container log
 9. `AINEXT_GA_MEASUREMENT_ID: ""` and `AINEXT_ALERT_EMAIL: ""` hard-set on both — staging traffic
    enters no dashboard and pages nobody
 10. volumes `staging_pg` / `staging_uploads` (disposable), and `claude_cfg` declared

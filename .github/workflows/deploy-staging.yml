@@ -220,6 +220,8 @@ jobs:
         env:
           AINEXT_CF_ACCESS_TEAM_DOMAIN: ${{ vars.AINEXT_CF_ACCESS_TEAM_DOMAIN || 'https://reletix.cloudflareaccess.com' }}
           AINEXT_CF_ACCESS_AUD: ${{ vars.AINEXT_STAGING_CF_ACCESS_AUD }}
+          # staging sends real mail since 2026-10-13, as production does, from the same sender
+          AINEXT_MAIL_FROM: ${{ secrets.AINEXT_MAIL_FROM }}
         run: |
           set -euo pipefail
           umask 077   # the file is 0600 from the moment it exists, not after a later chmod
@@ -287,7 +289,8 @@ jobs:
             printf "AINEXT_CONSOLE_URL='%s'\n"           "https://admin-staging-noor.reletix.com"
             printf "AINEXT_ENVIRONMENT='%s'\n"           "staging"
             printf "AINEXT_COURSE_GATING='%s'\n"         "on"
-            printf "AINEXT_MAIL_TRANSPORT='%s'\n"        "console"
+            printf "AINEXT_MAIL_TRANSPORT='%s'\n"        "smtp"
+            printf "AINEXT_MAIL_FROM='%s'\n"             "$AINEXT_MAIL_FROM"
             printf "AINEXT_CF_ACCESS_TEAM_DOMAIN='%s'\n" "$AINEXT_CF_ACCESS_TEAM_DOMAIN"
             printf "AINEXT_CF_ACCESS_AUD='%s'\n"         "$AINEXT_CF_ACCESS_AUD"
             printf "AINEXT_GA_MEASUREMENT_ID='%s'\n"     ""
