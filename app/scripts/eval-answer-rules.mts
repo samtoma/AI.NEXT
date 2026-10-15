@@ -19,6 +19,7 @@
  */
 import { spawn } from "node:child_process";
 import { CLAUDE_BIN, claudeCwd, claudeEnv } from "../src/lib/claude-cli.ts";
+import { systemPromptFile } from "../src/lib/claude-prompt-file.ts";
 import { getLessonData, learnPrompt, lessonDataBlock } from "../src/lib/lesson.ts";
 import { pool } from "../src/lib/db.ts";
 
@@ -111,17 +112,23 @@ const CASES: Case[] = [
 /** One `claude -p` call, the way `/api/ask` makes it, minus the streaming. */
 function callModel(system: string, user: string, thinking = true): Promise<string> {
   return new Promise((resolve, reject) => {
+    // In a file, as /api/ask passes it: a Grade 10 lesson's prompt exceeds Linux's per-argument limit.
+    const promptFile = systemPromptFile(system);
     const child = spawn(
       CLAUDE_BIN,
-      ["-p", "--output-format", "json", "--model", MODEL, "--system-prompt", system, "--disallowedTools", "*", "--max-turns", "1"],
+      ["-p", "--output-format", "json", "--model", MODEL, "--system-prompt-file", promptFile.path, "--disallowedTools", "*", "--max-turns", "1"],
       { cwd: claudeCwd(), env: claudeEnv(thinking ? { MAX_THINKING_TOKENS: "1024" } : {}), stdio: ["pipe", "pipe", "pipe"] }
     );
     let out = "";
     let err = "";
     child.stdout.on("data", (c: Buffer) => (out += c.toString("utf8")));
     child.stderr.on("data", (c: Buffer) => (err += c.toString("utf8")));
-    child.on("error", reject);
+    child.on("error", (e) => {
+      promptFile.dispose();
+      reject(e);
+    });
     child.on("close", (code) => {
+      promptFile.dispose();
       try {
         const j = JSON.parse(out) as { result?: string; is_error?: boolean };
         if (code !== 0 || j.is_error || typeof j.result !== "string") throw new Error(j.result ?? err);
