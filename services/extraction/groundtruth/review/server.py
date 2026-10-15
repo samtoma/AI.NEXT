@@ -14,7 +14,9 @@ Tasks (docs/design/review-console.md, built here as a local tool):
   Generated content every generated question, widget question, widget mapping and misconception the book
                     configs name, each beside the book item it was made from; decisions are appended to
                     reviews/<book>/generated-content.json (generated.py).
-  Generated answers: not built yet.
+  Generated answers every answer answer_gen.py wrote for a book prompt the book leaves unanswered
+                    (teaching/<book>/answers/), beside the book's question; decisions are appended to
+                    reviews/<book>/generated-answers.json (answers.py).
 
 Everything is a file in the repository, so a review is committed like any other change. Serves on 127.0.0.1
 only. The book PDFs are not in git (docs/Source/*.pdf is ignored); the server looks for each in docs/Source/,
@@ -31,6 +33,7 @@ from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+import answers  # noqa: E402
 import generated  # noqa: E402
 
 HERE = Path(__file__).resolve().parent
@@ -347,6 +350,12 @@ class Handler(BaseHTTPRequestHandler):
                 return self.send_json(lessons())
             if u.path == "/api/misprints":
                 return self.send_json(misprints())
+            if u.path == "/api/answers/books":
+                return self.send_json(answers.books())
+            if u.path == "/api/answers":
+                return self.send_json(answers.summary(q["book"]))
+            if u.path == "/api/answers/item":
+                return self.send_json(answers.detail(q["book"], q["ref"]))
             if u.path == "/api/generated/books":
                 return self.send_json(generated.books())
             if u.path == "/api/generated":
@@ -381,6 +390,8 @@ class Handler(BaseHTTPRequestHandler):
                 return self.send_json({"ok": True, "path": create_ground_truth(q["book"], q["slug"], body)})
             if u.path == "/api/misprint-decision":
                 return self.send_json({"ok": True, "decision": decide_misprint(body)})
+            if u.path == "/api/answers/decision":
+                return self.send_json({"ok": True, "decision": answers.decide(body)})
             if u.path == "/api/generated/decision":
                 return self.send_json({"ok": True, "decision": generated.decide(body)})
         except (FileNotFoundError, KeyError, ValueError, StopIteration) as e:

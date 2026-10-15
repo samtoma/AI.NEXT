@@ -178,7 +178,7 @@ Type your initials at the top. The home page has four tasks; pick one and you se
 |---|---|---|---|
 | **Label extraction** | built | Check each extracted record against the page: confirm, correct, flag, mark a misprint, or label it not in the book. Partial is fine. | Labelled records go into this folder's ground truth (`<book>/…`, created on the first label) |
 | **Misprints** | built | Decide every mistake the book prints: misprint confirmed, a different correction, or not a misprint | `<book>/misprint-decisions.json`, append-only (a changed mind is a new entry) |
-| Generated answers | not built | Review every generated answer | — |
+| **Generated answers** | built | Review every answer `answer_gen.py` wrote for a prompt the book leaves unanswered: approve, "re-solve is right", needs fix (with the right answer), or reject | `services/extraction/reviews/<book>/generated-answers.json`, append-only |
 | **Generated content** | built | Review every generated question, widget question, widget mapping and misconception, each beside the book item it was made from: approve, needs fix (with a note and a correction), or reject | `services/extraction/reviews/<book>/generated-content.json`, append-only |
 
 **Label extraction.** A lesson's records come from the pipeline's book record
@@ -216,6 +216,27 @@ page is shown beside it.
 - Each decision records the item's fingerprint, so an item the pipeline changes after you decided comes back as
   "changed since it was decided".
 - Nothing changes for students until a pipeline step reads the decisions. The admin console is not touched.
+
+**Generated answers.** `services/extraction/answer_gen.py` answers every exercise, activity, open prompt or
+worked-example part a lesson's book record leaves unanswered:
+1. One model call writes the answer and steps, using only the lesson's own definitions, rules and worked
+   examples.
+2. A second call solves blind.
+3. Checks with no model compare the two answers and evaluate every numeric step.
+
+Parts that need the printed figure get the page image. The answers go into the teaching layer
+(`services/extraction/teaching/<book>/answers/<slug>.json`), never into the book record. Run it from
+`services/extraction/`:
+
+    uv run --with pymupdf answer_gen.py plan groundtruth/prep3-math-en/unit1/lesson-1-1.json
+    uv run --with pymupdf answer_gen.py run  groundtruth/prep3-math-en/unit1/lesson-1-1.json --cap 5
+
+`--cap` stops the run before it spends more than that many dollars. Lesson 1-1's 29 parts cost $0.57 in all.
+
+In the task, "Needs attention first" lists what the checks could not settle: readings that disagree, a numeric
+step that fails, a part the model could not answer. Drawings and explanations have no machine check and are
+marked `?`. An answer is taught only once approved, and only when a pipeline step loads it; none does yet,
+pending Samuel's ruling on project rule 3.
 
 Refresh the Grade 10 candidates after a new G2 run (from `services/extraction/`):
 
