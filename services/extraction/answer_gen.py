@@ -49,10 +49,10 @@ sys.path.insert(0, str(HERE))
 import working_check as WC  # noqa: E402  (the free numeric pre-check; standard library only)
 
 FORMAT = "ainext.generated-answers/1"
-PROMPT_VERSION = "ans-v1"
+PROMPT_VERSION = "ans-v2"
 PROMPTS = ("exercise", "activity", "open_prompt", "worked_example")
 STATEMENTS = ("definition", "rule", "caution", "convention", "method")
-NEEDS_PAGE = re.compile(r"\b(figure|net|graph|diagram|grid|shown|opposite|picture)\b", re.I)
+NEEDS_PAGE = re.compile(r"\b(figures?|nets?|graphs?|diagrams?|grids?|tables?|shown|opposite|pictures?|previous|following|above|below)\b", re.I)
 
 ANSWER_RULES = """Answer format (both of you use it, so answers can be compared):
 - numbers plainly: 7, -4, 3/2;
@@ -117,6 +117,19 @@ def with_intended(rec: dict) -> dict:
     return r
 
 
+def page_context(doc: dict, page, own_id: str) -> list[str]:
+    """What else the book records on the same page: the figures, tables and prompts a question may refer to."""
+    out = []
+    for r in doc.get("items") or []:
+        if r["id"] == own_id or r.get("source_page") != page or r.get("type") not in ("figure", "table", "activity", "exercise", "linking_text", "worked_example"):
+            continue
+        body = r.get("caption") or r.get("text") or r.get("stem") or ""
+        if r.get("rows"):
+            body += " | table: " + " / ".join(", ".join(row) for row in [r.get("header") or []] + r["rows"])
+        out.append(f"[{r['id'].split(':', 1)[1]}] ({r['type']}) {body[:400]}")
+    return out
+
+
 def units(doc: dict) -> list[dict]:
     """One unit per unanswered part (or per unanswered prompt with no parts)."""
     out = []
@@ -140,6 +153,7 @@ def units(doc: dict) -> list[dict]:
                 "page": r.get("source_page"), "text": text, "stem": stem, "notes": notes,
                 "notation": r.get("notation"), "belongs_to": r.get("belongs_to"),
                 "objective": f"{lo['label']}: {lo['description']}" if lo else None,
+                "context": page_context(doc, r.get("source_page"), r["id"]),
                 "needs_page": bool(NEEDS_PAGE.search(" ".join([text, stem, notes]))),
             })
     # a figure one part needs is the whole item's figure: every part of that item gets the page
@@ -195,6 +209,9 @@ def unit_block(us: list[dict], page_files: dict[int, Path]) -> str:
             lines.append(f"  notation: {u['notation'].get('printed')} means {u['notation'].get('normalised')}")
         if u["notes"]:
             lines.append(f"  note: {u['notes']}")
+        if u.get("context"):
+            lines.append("  also on this page (what 'previous', 'following' or 'the diagrams' may mean):")
+            lines += [f"    {c}" for c in u["context"]]
         if u["needs_page"] and u["page"] in page_files:
             lines.append(f"  the printed page: {page_files[u['page']]} (read it with the Read tool before answering)")
     lines.append("\nAnswer every part above, using its [ref] exactly.")

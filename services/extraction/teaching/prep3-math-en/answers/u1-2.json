@@ -1,0 +1,325 @@
+{
+  "format": "ainext.generated-answers/1",
+  "book": "prep3-math-en",
+  "lesson": "u1-2",
+  "source": "book-records/prep3-math-en/u1-2.json",
+  "made_by": "answer_gen.py",
+  "runs": [
+    {
+      "at": "2026-10-15",
+      "model": "sonnet",
+      "prompts": "ans-v1",
+      "parts": 7,
+      "cost_usd": 0.2996,
+      "calls": [
+        {
+          "call": "author (text, 2 parts)",
+          "cost_usd": 0.0166,
+          "model": "sonnet",
+          "turns": 2,
+          "error": null
+        },
+        {
+          "call": "re-solve (text, 2 parts)",
+          "cost_usd": 0.0126,
+          "model": "sonnet",
+          "turns": 2,
+          "error": null
+        },
+        {
+          "call": "author (page, 5 parts)",
+          "cost_usd": 0.2019,
+          "model": "sonnet",
+          "turns": 4,
+          "error": null
+        },
+        {
+          "call": "re-solve (page, 5 parts)",
+          "cost_usd": 0.0685,
+          "model": "sonnet",
+          "turns": 4,
+          "error": null
+        }
+      ]
+    }
+  ],
+  "answers": [
+    {
+      "ref": "u1-2:think-and-discuss-2",
+      "record_id": "u1-2:think-and-discuss-2",
+      "part": null,
+      "type": "activity",
+      "page": 13,
+      "question": {
+        "text": "Write the previous statements in the form of ordered pairs from X to Y.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "ee72cc82ab7b343a29a5f7b8b2f84db1",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: the previous statements and the sets X and Y are not given, so they cannot be written as ordered pairs.",
+      "solution": [
+        "The question refers to statements printed earlier on the page.",
+        "Those statements and the sets X and Y are not in the material given.",
+        "Without them the ordered pairs cannot be found, and no data may be invented."
+      ],
+      "grounded_in": [
+        "u1-2:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "CANNOT ANSWER: the previous statements and the sets X and Y are not given in the text provided (they appear only on the page image, which is not available).",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-15T15:43:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v1"
+      }
+    },
+    {
+      "ref": "u1-2:think-and-discuss-3",
+      "record_id": "u1-2:think-and-discuss-3",
+      "part": null,
+      "type": "activity",
+      "page": 13,
+      "question": {
+        "text": "Represent a set of the ordered pairs in the form of an arrow diagram.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "7e25ac2a0cad71e4cd5926ac392765d4",
+      "kind": "drawing",
+      "answer": "Arrow diagram with X = {a, b, c, d, e} on the left, Y = {science, literature, culture, history} on the right, and arrows a→science, a→culture, b→history, c→literature, e→history; d has no arrow.",
+      "solution": [
+        "Write the relation as ordered pairs: R = {(a, science), (a, culture), (b, history), (c, literature), (e, history)}.",
+        "Draw two ovals. Put X = {a, b, c, d, e} in the left oval and Y = {science, literature, culture, history} in the right oval.",
+        "Draw an arrow from a to science and another from a to culture.",
+        "Draw an arrow from b to history.",
+        "Draw an arrow from c to literature.",
+        "Draw an arrow from e to history.",
+        "Draw no arrow from d, because d read no book.",
+        "The diagram has 5 arrows, one for each ordered pair of R."
+      ],
+      "grounded_in": [
+        "u1-2:rule-1",
+        "u1-2:objective-2",
+        "u1-2:example-1"
+      ],
+      "checks": {
+        "resolve_answer": "Arrow diagram from X={a,b,c,d,e} to Y={Science, Literature, Culture, History}: a→Science, a→Culture, b→History, c→Literature, e→History; d has no arrow. This represents {(a,Science),(a,Culture),(b,History),(c,Literature),(e,History)}.",
+        "resolve_kind": "drawing",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-15T15:43:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v1"
+      }
+    },
+    {
+      "ref": "u1-2:think-1",
+      "record_id": "u1-2:think-1",
+      "part": null,
+      "type": "open_prompt",
+      "page": 13,
+      "question": {
+        "text": "Is R a subset from the cartesian product X × Y?",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "14f0f4fa91034ec54c81358e9260c367",
+      "kind": "explanation",
+      "answer": "Yes, R is a subset of X × Y.",
+      "solution": [
+        "R is a relation from X to Y.",
+        "Each ordered pair in R has its first projection in X and its second projection in Y.",
+        "X × Y is the set of all such ordered pairs.",
+        "So every element of R is in X × Y, which means $R\\subset X\\times Y$.",
+        "Yes, R is a subset of X × Y."
+      ],
+      "grounded_in": [
+        "u1-2:rule-1",
+        "u1-2:rule-2",
+        "u1-2:rule-3"
+      ],
+      "checks": {
+        "resolve_answer": "Yes. A relation R from X to Y is a set of ordered pairs whose first element is in X and second in Y, so $R\\subset X\\times Y$.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-15T15:43:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v1"
+      }
+    },
+    {
+      "ref": "u1-2:drill-1:First",
+      "record_id": "u1-2:drill-1",
+      "part": "First",
+      "type": "exercise",
+      "page": 15,
+      "question": {
+        "text": "If $X=\\{1,2,3\\}$, $Y=\\{12,21,47,52\\}$, and $R$ is the relation from $X$ to $Y$ where $a\\,R\\,b$ means: (a is a digit from the digits of b), for each $a\\in X$, $b\\in Y$.",
+        "stem": "Write $R$ and represent it by an arrow diagram and also, by a cartasian diagram.",
+        "notes": "The Second instruction is shared by the three items 1 R 52, 2 R 21, 3 R 47, which are printed in a row. 'cartasian' is printed as spelled. The page does not continue the previous page's figure."
+      },
+      "needs_page": true,
+      "question_fingerprint": "3526bd0dc75a9476b57e744a56d3234c",
+      "kind": "drawing",
+      "answer": "R = {(1,12),(1,21),(2,12),(2,21),(2,52)}; arrow diagram with arrows 1→12, 1→21, 2→12, 2→21, 2→52 (3 has none); cartesian diagram with points at those 5 pairs.",
+      "solution": [
+        "For each a in X, find the b in Y that has a as one of its digits.",
+        "1 is a digit of 12 and of 21. So (1,12) and (1,21) are in R.",
+        "2 is a digit of 12, 21 and 52. So (2,12), (2,21) and (2,52) are in R.",
+        "3 is a digit of none of 12, 21, 47, 52. So 3 has no pair.",
+        "R = {(1,12),(1,21),(2,12),(2,21),(2,52)}.",
+        "Arrow diagram: draw X = {1,2,3} in the left oval and Y = {12,21,47,52} in the right oval. Draw the arrows 1→12, 1→21, 2→12, 2→21, 2→52. Draw no arrow from 3 and none to 47.",
+        "Cartesian diagram: draw a horizontal axis with the values of X (1, 2, 3) and a vertical axis with the values of Y (12, 21, 47, 52).",
+        "Mark the five points (1,12), (1,21), (2,12), (2,21), (2,52). Do not mark any point for 3 or for 47."
+      ],
+      "grounded_in": [
+        "u1-2:example-1",
+        "u1-2:example-2",
+        "u1-2:rule-3",
+        "u1-2:objective-2"
+      ],
+      "checks": {
+        "resolve_answer": "R = {(1,12),(1,21),(2,12),(2,21),(2,52)}. Arrow diagram from X to Y: 1→12, 1→21, 2→12, 2→21, 2→52; 3 has no arrow, and 47 receives none. Cartesian diagram: points plotted at (1,12),(1,21),(2,12),(2,21),(2,52), with X on the horizontal axis and Y on the vertical axis.",
+        "resolve_kind": "drawing",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-15T15:43:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v1"
+      }
+    },
+    {
+      "ref": "u1-2:drill-1:Second 1",
+      "record_id": "u1-2:drill-1",
+      "part": "Second 1",
+      "type": "exercise",
+      "page": 15,
+      "question": {
+        "text": "If $X=\\{1,2,3\\}$, $Y=\\{12,21,47,52\\}$, and $R$ is the relation from $X$ to $Y$ where $a\\,R\\,b$ means: (a is a digit from the digits of b), for each $a\\in X$, $b\\in Y$.",
+        "stem": "Show which of the following relations are correct and why? $1\\,R\\,52$",
+        "notes": "The Second instruction is shared by the three items 1 R 52, 2 R 21, 3 R 47, which are printed in a row. 'cartasian' is printed as spelled. The page does not continue the previous page's figure."
+      },
+      "needs_page": true,
+      "question_fingerprint": "4537f8806be1d3ff69fdec6785f5149b",
+      "kind": "explanation",
+      "answer": "Incorrect: 1 is not a digit of 52, so (1,52) is not in R.",
+      "solution": [
+        "The relation means a is a digit of b.",
+        "The digits of 52 are 5 and 2.",
+        "1 is not one of them.",
+        "So 1 R 52 is not correct."
+      ],
+      "grounded_in": [
+        "u1-2:rule-1",
+        "u1-2:rule-3"
+      ],
+      "checks": {
+        "resolve_answer": "Not correct (No): 1 is not a digit of 52, since the digits of 52 are 5 and 2, so (1,52) ∉ R.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-15T15:43:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v1"
+      }
+    },
+    {
+      "ref": "u1-2:drill-1:Second 2",
+      "record_id": "u1-2:drill-1",
+      "part": "Second 2",
+      "type": "exercise",
+      "page": 15,
+      "question": {
+        "text": "If $X=\\{1,2,3\\}$, $Y=\\{12,21,47,52\\}$, and $R$ is the relation from $X$ to $Y$ where $a\\,R\\,b$ means: (a is a digit from the digits of b), for each $a\\in X$, $b\\in Y$.",
+        "stem": "Show which of the following relations are correct and why? $2\\,R\\,21$",
+        "notes": "The Second instruction is shared by the three items 1 R 52, 2 R 21, 3 R 47, which are printed in a row. 'cartasian' is printed as spelled. The page does not continue the previous page's figure."
+      },
+      "needs_page": true,
+      "question_fingerprint": "7454a7f8909837003fad64ec81d62695",
+      "kind": "explanation",
+      "answer": "Correct: 2 is a digit of 21, so (2,21) is in R.",
+      "solution": [
+        "The relation means a is a digit of b.",
+        "The digits of 21 are 2 and 1.",
+        "2 is one of them.",
+        "So 2 R 21 is correct."
+      ],
+      "grounded_in": [
+        "u1-2:rule-1",
+        "u1-2:rule-3"
+      ],
+      "checks": {
+        "resolve_answer": "Correct (Yes): 2 is a digit of 21, so (2,21) ∈ R.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-15T15:43:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v1"
+      }
+    },
+    {
+      "ref": "u1-2:drill-1:Second 3",
+      "record_id": "u1-2:drill-1",
+      "part": "Second 3",
+      "type": "exercise",
+      "page": 15,
+      "question": {
+        "text": "If $X=\\{1,2,3\\}$, $Y=\\{12,21,47,52\\}$, and $R$ is the relation from $X$ to $Y$ where $a\\,R\\,b$ means: (a is a digit from the digits of b), for each $a\\in X$, $b\\in Y$.",
+        "stem": "Show which of the following relations are correct and why? $3\\,R\\,47$",
+        "notes": "The Second instruction is shared by the three items 1 R 52, 2 R 21, 3 R 47, which are printed in a row. 'cartasian' is printed as spelled. The page does not continue the previous page's figure."
+      },
+      "needs_page": true,
+      "question_fingerprint": "b761701c013dbacaacf539cef0b9038d",
+      "kind": "explanation",
+      "answer": "Incorrect: 3 is not a digit of 47, so (3,47) is not in R.",
+      "solution": [
+        "The relation means a is a digit of b.",
+        "The digits of 47 are 4 and 7.",
+        "3 is not one of them.",
+        "So 3 R 47 is not correct."
+      ],
+      "grounded_in": [
+        "u1-2:rule-1",
+        "u1-2:rule-3"
+      ],
+      "checks": {
+        "resolve_answer": "Not correct (No): 3 is not a digit of 47, since the digits of 47 are 4 and 7, so (3,47) ∉ R.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-15T15:43:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v1"
+      }
+    }
+  ]
+}
