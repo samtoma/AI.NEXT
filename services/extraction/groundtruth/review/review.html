@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ground-truth review</title>
+<title>Book-record review</title>
 <link rel="stylesheet" href="/tokens.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
@@ -106,14 +106,16 @@
 </head>
 <body>
 <header>
-  <h1>Ground-truth review</h1>
-  <select id="file" aria-label="Ground-truth file"></select>
+  <h1>Book-record review</h1>
+  <select id="file" aria-label="Book-record file"></select>
+  <span id="role" class="tag"></span>
   <label>Your initials <input id="me" size="4" maxlength="6" placeholder="e.g. SA"></label>
   <select id="filter" aria-label="Filter">
     <option value="all">All records</option>
     <option value="todo">Not reviewed yet</option>
     <option value="flagged">Flagged</option>
     <option value="edited">Edited</option>
+    <option value="misprints">Has misprints</option>
   </select>
   <div class="progress"><div class="bar"><div id="barfill" style="width:0"></div></div><div id="ptext" class="muted"></div></div>
   <span class="grow"></span>
@@ -199,12 +201,15 @@ const SEC_TITLE = Object.fromEntries(SECTIONS.map(([t, p]) => [p, t]));
 /* ---------- review state (one reviewer) ---------- */
 const status = (r) => r.review?.status || null;
 const edited = (r) => (r.review?.edits || []).length > 0;
+const hasMisprints = (r) => (r.misprints || []).length > 0 || (r.parts || []).some((p) => (p.misprints || []).length > 0);
+const isExtraction = () => data?.role === "extraction";
 
 /* ---------- list ---------- */
 function visible() {
   const f = $("#filter").value;
   return records.map((x, i) => ({ ...x, i })).filter(({ r }) =>
-    f === "all" ? true : f === "todo" ? !status(r) : f === "flagged" ? status(r) === "flagged" : edited(r));
+    f === "all" ? true : f === "todo" ? !status(r) : f === "flagged" ? status(r) === "flagged"
+      : f === "misprints" ? hasMisprints(r) : edited(r));
 }
 function renderList() {
   const el = $("#list"); el.innerHTML = "";
@@ -266,7 +271,9 @@ function renderDetail() {
   el.innerHTML = `
     <div class="card">
       ${head}
-      ${r.quote ? `<div class="quote">“${esc(r.quote)}”</div><div class="muted">Find these words on the page, then check everything below against the book.</div>` : ""}
+      ${r.quote ? `<div class="quote">“${esc(r.quote)}”</div><div class="muted">Find these words on the page, then check everything below against the book.</div>`
+        : r.anchor ? `<div class="quote">Anchor ${esc(r.anchor)}</div><div class="muted">The extractor located this by its own reference, with no quote. Find it on the page, then check everything below against the book.</div>` : ""}
+      ${isExtraction() && hasMisprints(r) ? '<div class="muted">The extractor proposes the misprint(s) below. Confirming this record confirms them; if one is wrong, edit or flag the record.</div>' : ""}
       <dl style="margin-top:12px">${fields.map(([k, x]) => `<dt>${esc(k)}</dt><dd>${value(k, x, ids)}</dd>`).join("")}${r.rows ? `<dt>table</dt><dd>${tableBlock(r)}</dd>` : ""}</dl>
       ${misprintBlock(r.misprints)}
       <div class="who">
@@ -601,6 +608,7 @@ async function openFile(p) {
   const po = data.source_document?.page_offset;
   const m = typeof po === "string" ? /printed_page\s*([+-])\s*(\d+)/.exec(po) : null;
   offset = Number.isInteger(po) ? po : m ? (m[1] === "-" ? -1 : 1) * Number(m[2]) : 0;
+  $("#role").textContent = data.role === "extraction" ? "extraction output" : "ground truth";
   build(); page = data.lesson?.pages?.[0] || 1;
   select(0); loadPdf();
 }
@@ -610,7 +618,7 @@ async function openFile(p) {
   $("#me").oninput = () => { store.set("gt-me", meNow()); renderAll(); };
   $("#filter").onchange = () => { $("#filter").blur(); renderList(); };
   const files = await (await fetch("/api/files")).json();
-  $("#file").innerHTML = files.map((f) => `<option value="${esc(f.path)}">${esc(f.path)} · ${esc(f.title)} (${esc(f.status)})</option>`).join("");
+  $("#file").innerHTML = files.map((f) => `<option value="${esc(f.path)}">[${esc(f.root)}] ${esc(f.path.replace(/^\d+\//, ""))} · ${esc(f.title)} (${esc(f.status)})</option>`).join("");
   const last = store.get("gt-file");
   if (last && files.some((f) => f.path === last)) $("#file").value = last;
   $("#file").onchange = () => { $("#file").blur(); openFile($("#file").value); };

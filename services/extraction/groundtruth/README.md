@@ -170,7 +170,11 @@ Run the review tool from a terminal, then open http://127.0.0.1:3020:
 
     python3 services/extraction/groundtruth/review/server.py
 
-It shows each record next to the book page it comes from. Type your initials, then for each record:
+It opens the ground truth here and the pipeline's own book records (`services/extraction/book-records/`,
+listed as `[extraction]`; add other folders with `--records DIR`). The badge beside the file says which
+one you are reviewing. It shows each record next to the book page it comes from; an extracted record
+with no quote shows its `anchor` instead, and the **Has misprints** filter lists every record carrying
+a misprint. Type your initials, then for each record:
 
 - **Confirm** (`c`) when it matches the book.
 - **Edit** (`e`) to correct any field, add or remove fields, or change the record's type, for example

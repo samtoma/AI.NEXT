@@ -1,9 +1,11 @@
-"""Ground-truth review tool: a local page for confirming or disputing each record against the book.
+"""Book-record review tool: a local page for confirming or disputing each record against the book.
 
-    python3 services/extraction/groundtruth/review/server.py [--port 3020] [--pdf-dir DIR ...]
+    python3 services/extraction/groundtruth/review/server.py [--port 3020] [--pdf-dir DIR ...] [--records DIR ...]
 
-Serves on 127.0.0.1 only. Every confirm/dispute is written straight back to the ground-truth JSON file,
-so a review is committed like any other change. The book PDFs are not in git (docs/Source/*.pdf is
+Opens every book record (`"schema": "book-record"`) in two places: the ground truth (groundtruth/) and the
+extraction pipeline's output (book-records/, role "extraction"), plus any --records folder. Serves on
+127.0.0.1 only. Every confirm/dispute is written straight back to the JSON file, so a review is committed
+like any other change. The book PDFs are not in git (docs/Source/*.pdf is
 ignored); the server looks for each file in docs/Source/, then in every --pdf-dir, then in ~/Downloads.
 Standard library only.
 """
@@ -24,28 +26,41 @@ SKIP = {"TEMPLATE.json", "book-record.schema.json"}
 SKIP_PREFIX = ("EXAMPLE",)
 
 PDF_DIRS: list[Path] = []
+# Where book records live: (name shown in the file list, folder). A file is named to the page as
+# "<root index>/<path inside that root>", so the page can never name a file outside these folders.
+ROOTS: list[tuple[str, Path]] = [("ground truth", GT_DIR), ("extraction", GT_DIR.parent / "book-records")]
 
 
 def gt_files():
     out = []
-    for p in sorted(GT_DIR.rglob("*.json")):
-        if p.name in SKIP or p.name.startswith(SKIP_PREFIX) or "review" in p.parts:
+    for i, (name, root) in enumerate(ROOTS):
+        if not root.is_dir():
             continue
-        rel = p.relative_to(GT_DIR).as_posix()
-        try:
-            d = json.loads(p.read_text())
-            title = f"{d['lesson'].get('syllabus_ref', '')} · {d['lesson'].get('title', '')}"
-            status = d.get("review", {}).get("status", "?")
-        except Exception as e:  # a broken file is listed, not hidden
-            title, status = f"unreadable: {e}", "error"
-        out.append({"path": rel, "title": title, "status": status})
+        for p in sorted(root.rglob("*.json")):
+            if p.name in SKIP or p.name.startswith(SKIP_PREFIX) or "review" in p.relative_to(root).parts:
+                continue
+            key = f"{i}/{p.relative_to(root).as_posix()}"
+            try:
+                d = json.loads(p.read_text())
+                if d.get("schema") != "book-record":
+                    continue
+                title = f"{d['lesson'].get('syllabus_ref', '')} · {d['lesson'].get('title', '')}"
+                status = d.get("review", {}).get("status", "?")
+                role = d.get("role", name)
+            except Exception as e:  # a broken file is listed, not hidden
+                title, status, role = f"unreadable: {e}", "error", name
+            out.append({"path": key, "title": title, "status": status, "role": role, "root": name})
     return out
 
 
-def resolve_gt(rel: str) -> Path:
-    p = (GT_DIR / rel).resolve()
-    if GT_DIR not in p.parents or p.suffix != ".json" or not p.exists():
-        raise FileNotFoundError(rel)
+def resolve_gt(key: str) -> Path:
+    idx, _, rel = key.partition("/")
+    if not idx.isdigit() or int(idx) >= len(ROOTS):
+        raise FileNotFoundError(key)
+    root = ROOTS[int(idx)][1].resolve()
+    p = (root / rel).resolve()
+    if root not in p.parents or p.suffix != ".json" or not p.exists():
+        raise FileNotFoundError(key)
     return p
 
 
@@ -152,8 +167,8 @@ class Handler(BaseHTTPRequestHandler):
         try:
             p = resolve_gt(q["path"])
             data = json.loads(self.rfile.read(int(self.headers["Content-Length"])))
-            if not isinstance(data, dict) or "items" not in data:
-                raise ValueError("not a ground-truth file")
+            if not isinstance(data, dict) or "items" not in data or data.get("schema") != "book-record":
+                raise ValueError("not a book record")
             tmp = p.with_suffix(".json.tmp")
             tmp.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n")
             os.replace(tmp, p)
@@ -166,10 +181,14 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--port", type=int, default=3020)
     ap.add_argument("--pdf-dir", action="append", default=[], help="extra folder to look for book PDFs in")
+    ap.add_argument("--records", action="append", default=[], help="extra folder of book records to open")
     a = ap.parse_args()
     PDF_DIRS.extend(Path(x).expanduser() for x in a.pdf_dir)
+    ROOTS.extend((Path(x).name, Path(x).expanduser().resolve()) for x in a.records)
     srv = ThreadingHTTPServer(("127.0.0.1", a.port), Handler)
-    print(f"Ground-truth review: http://127.0.0.1:{a.port}  (Ctrl+C to stop)")
+    print(f"Book-record review: http://127.0.0.1:{a.port}  (Ctrl+C to stop)")
+    for name, root in ROOTS:
+        print(f"  {name}: {root}{'' if root.is_dir() else '  (not there yet)'}")
     try:
         srv.serve_forever()
     except KeyboardInterrupt:
