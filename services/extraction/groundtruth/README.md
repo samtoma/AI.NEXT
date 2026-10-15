@@ -33,9 +33,9 @@ book records of the same lesson, record by record, with no translation.
 
 ```json
 {
-  "id": "g9-1-1:example-2",
+  "id": "u1-1:example-2",
   "type": "worked_example",
-  "lo": "g9-1-1:objective-2",
+  "lo": "u1-1:objective-2",
   "source_page": 8,
   "quote": "If X = {a , b}, Y = { -1 , 0 , 3) then find",
   "stem": "Example 2: X = {a, b}, Y = {-1, 0, 3}; find X × Y and Y × X. What do you notice?",
@@ -101,6 +101,12 @@ Field names follow the extraction data wherever they mean the same thing (`sourc
 
 An id is `<lesson slug>:<local id>`, lower case. The teaching layer and student data will point at
 these ids, so they must mean the same thing in every file and must not change.
+
+**The lesson slug is the extraction pipeline's**, from the book's manifest or book config
+(`services/extraction/manifest/`, `services/extraction/books/`): `u1-1` for Prep-3 Lesson 1-1,
+`g10m1s3-1` for Grade 10 sections 1.2–1.3. An extracted book record and its ground truth then share
+the slug, so scoring compares them by id with no translation, and the lesson's pages match the
+manifest's `printed_pages`.
 
 1. **Printed label and number → use them**, in kebab case: Example 2 → `example-2`, Worked example 3
    → `worked-example-3`, question 4 of Exercise 1-1 → `exercise-1-1-q4`. Use the printed number only
