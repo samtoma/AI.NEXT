@@ -519,6 +519,9 @@ export const ENTRIES: Readonly<Record<string, Entry>> = {
   "src/app/api/homework/route.ts": { reads: ["createAsk", "readAsk"] },
   "src/app/api/homework/[id]/route.ts": { reads: ["getAsk"] },
   "src/app/api/homework/items/[id]/route.ts": { reads: ["getAsk"] },
+  "src/app/api/homework/items/[id]/flag/route.ts": {
+    none: "checks the item is hers (homework_items, under RLS) and writes her own homework_flags row",
+  },
   "src/app/api/attempts/route.ts": {
     reads: ["visibleCoursesFor", "getLibraryEntries", "flagAuthoringGap", "advanceIfMastered"],
   },
@@ -704,6 +707,11 @@ export const READERS: Readonly<Record<string, Gate>> = {
   recordFeedback: {
     noContent: "writes her own feedback row",
     file: "src/lib/feedback-queries.ts",
+  },
+  createAsk: {
+    noContent:
+      "checks an attached upload is hers (uploads, under RLS) and writes her own homework_asks row; no curriculum",
+    file: "src/lib/homework.ts",
   },
   dismissFeedback: {
     noContent: "records that she dismissed the feedback prompt",
