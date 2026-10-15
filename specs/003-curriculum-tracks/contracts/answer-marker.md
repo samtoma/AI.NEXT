@@ -47,7 +47,11 @@ In the question's existing `choices` JSON, the way widgets carry theirs (ADR-000
      equivalence at several random points in the variables' domain, with a fixed seed, so the result
      is deterministic.
    - `equation`: equivalent solution sets, or proportional equations where that is what is asked.
-   - `values`: the same multiset, in any order ("x = 2 or x = −3", "4 and 5").
+   - `values`: the same multiset, in any order ("x = 2 or x = −3", "4 and 5"). A set is a `values` key
+     (`\{(1, 2), (1, 3)\}`): its braces are dropped and its elements, pairs included, matched in any order.
+     Where the decimal-comma reading gives the wrong shape for the key ("{(1,3),(1,2)}" read as single values,
+     "3,1,2" as the wrong count), the comma-as-separator reading is taken (Tamer, 2026-10-16, for the Prep-3
+     book records; an answer the decimal reading already marks correct is never re-read).
    - `interval`: the same set, whether written in inequality, interval or set notation, with endpoint
      inclusion checked.
    - `coordinates`: ordered-pair equality, component by component.

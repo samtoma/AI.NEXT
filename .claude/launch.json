@@ -108,6 +108,32 @@
         "3020"
       ],
       "port": 3020
+    },
+    {
+      "name": "bookrecord-trial",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "dev",
+        "--",
+        "-p",
+        "3013"
+      ],
+      "cwd": "app",
+      "port": 3013,
+      "env": {
+        "DATABASE_URL": "postgres://ainext_app:ainext_app@127.0.0.1:5432/ainext_bookrecord_trial",
+        "DATABASE_URL_OPERATOR": "postgres://ainext_operator:ainext_operator@127.0.0.1:5432/ainext_bookrecord_trial",
+        "DATABASE_URL_MAINT": "postgres://ainext_maint:ainext_maint@127.0.0.1:5432/ainext_bookrecord_trial",
+        "AINEXT_ENVIRONMENT": "mvp1",
+        "AINEXT_COURSE_GATING": "on",
+        "AINEXT_PUBLIC_URL": "http://localhost:3013",
+        "AINEXT_CONSOLE_URL": "http://localhost:3014",
+        "AINEXT_MAIL_TRANSPORT": "console",
+        "NEXT_TELEMETRY_DISABLED": "1",
+        "PORT": "3013",
+        "AINEXT_DIST_DIR": ".next-bookrecord"
+      }
     }
   ]
 }

@@ -21,6 +21,19 @@ A lesson already extracted is skipped unless `--force`. Each run is logged in `<
 Score a lesson against its ground truth with `../groundtruth/score_book_record.py <extraction> <ground truth>`;
 Lesson 1-1 (ext-v3): 98% of the ground truth's records found, 100% of the confirmed ones, 3 of its 4 misprints.
 
+**From book records to the tutor:** `../compile_book_records.py` compiles lessons into the bundles the app
+already loads (`compiled/<book>/`). For a compiled lesson only the new content is used: the book record's
+objectives (`u1-1:objective-3` becomes `lo:u1-1-3`) and the book's own exercises and worked examples, with answers
+printed or generated (approved, or agreed by both readings). Today's questions, figures, generated questions,
+widgets, misconceptions and links for that lesson are left out; every other lesson is unchanged. Marking uses
+what the app has: numbers by its number check, values, points and sets by its marker, names and yes/no by its
+plain check. What could not become a question is listed in `compiled/<book>/compile-report.json`. How Noor teaches
+does not change; the book's statements are not used yet. A trial database with Unit 1 compiled:
+
+    uv run compile_book_records.py prep3-math-en u1-1 u1-2 u1-3 u1-4
+    # then load compiled/prep3-math-en/unit1.json with the book's other bundles, and the compiled generated
+    # files, into a separate database; run Noor with the `bookrecord-trial` launch entry (port 3013)
+
 A book that has an EPUB and a text layer (Grade 10) is meant to get its book records from the extraction line
 instead: a deterministic writer after S1–S3 that turns `blocks.jsonl`, the claims, the book questions and the
 objectives into book records, and folds the G2 findings about the book (`book error`, `printed answer

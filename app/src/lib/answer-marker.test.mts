@@ -495,3 +495,25 @@ test("previewLatex never passes typed text to KaTeX: its output is built from th
     assert.ok(!/<img|javascript:|href=/i.test(html), `${hostile} -> ${html}`);
   }
 });
+
+test("a set is marked as a set: its elements in any order, pairs typed with or without spaces (Prep-3 book records)", () => {
+  // Prep-3 Lesson 1-1's printed answers are sets of ordered pairs; the `values` kind already drops a set's braces
+  // and matches elements as a multiset. A pair typed with no space, "(1,3)", reads first as the decimal 1,3;
+  // when that reading has the wrong shape for the key (single values where the key has pairs, or the wrong
+  // count), the comma-as-separator reading is taken instead. Only an answer the decimal reading marks wrong is
+  // re-read, so decision 15's decimal comma is unchanged.
+  const set = (key: string, variables: string[] = []) => ({ kind: "values" as const, key, variables });
+  const product = set("\\{(1, 2), (1, 3)\\}");
+  assert.equal(mark("{(1,3),(1,2)}", product).result, "correct");
+  assert.equal(mark("(1, 2), (1, 3)", product).result, "correct");
+  assert.equal(mark("{(1;3);(1;2)}", product).result, "correct");
+  assert.equal(mark("{(1,2)}", product).result, "incorrect"); // a pair missing
+  assert.equal(mark("{(1,2),(3,1)}", product).result, "incorrect"); // a pair reversed: order inside a pair matters
+  assert.equal(mark("{(-1,0),(2,4),(-1,4),(2,0)}", set("\\{(2, 4), (2, 0), (-1, 4), (-1, 0)\\}")).result, "correct");
+  const letters = set("\\{(a, -1), (a, 0), (a, 3), (b, -1), (b, 0), (b, 3)\\}", ["a", "b"]);
+  assert.equal(mark("{(b,3),(a,-1),(a,0),(a,3),(b,-1),(b,0)}", letters).result, "correct");
+  assert.equal(mark("{(-1,a),(a,0),(a,3),(b,-1),(b,0),(b,3)}", letters).result, "incorrect");
+  assert.equal(mark("{3,1,2}", set("\\{1, 2, 3\\}")).result, "correct");
+  // the decimal comma still reads as a decimal where the key is one value
+  assert.equal(mark("2,5", set("x = 2.5", ["x"])).result, "correct");
+});

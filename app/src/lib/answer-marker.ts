@@ -1513,10 +1513,13 @@ function markValues(answer: string, spec: MarkerSpec, engine: MarkerEngine): Mar
   const key = parseElements(spec.key, vars);
   let ans = parseElements(answer, vars);
   // decimal comma ambiguity: "2,3" with no ';' is one decimal or two values; take the reading whose shape
-  // matches the key (the comma-as-separator reading is tried when the decimal reading has the wrong count)
-  if (ans.length !== key.length && !/;/.test(answer) && /\d,\d/.test(answer)) {
-    const alt = parseElements(answer.replace(/(\d),(\d)/g, "$1, $2"), vars);
-    if (alt.length === key.length) ans = alt;
+  // matches the key. The comma-as-separator reading is tried when the decimal reading has the wrong SHAPE:
+  // the wrong count ("3,1,2" for {1, 2, 3}) or the wrong arity ("{(1,3),(1,2)}" read as the single values
+  // 1.3 and 1.2 where the key is a set of pairs). Only an answer the decimal reading marks wrong is re-read.
+  const shape = (es: Elem[]) => es.map((e) => e.v.length).sort().join(",");
+  if ((ans.length !== key.length || shape(ans) !== shape(key)) && !/;/.test(answer) && /\d,\d/.test(answer)) {
+    const alt = parseElements(answer.replace(/(\d),(?=\d)/g, "$1, "), vars);
+    if (alt.length === key.length && shape(alt) === shape(key)) ans = alt;
   }
   const keyNames = new Set(key.map((e) => e.name).filter(Boolean));
   const pairs = (same: (x: Expr, y: Expr) => boolean): [Expr, Expr][] | null => {
