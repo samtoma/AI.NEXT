@@ -756,16 +756,30 @@ async function openLabel() {
   $("#lesson").onchange = () => { $("#lesson").blur(); openLesson(lessonList[Number($("#lesson").value)]); };
   if (lessonList.length) openLesson(lessonList[i]);
 }
-// an extraction file with the ground truth's labelled copies laid over it, so the reviewer sees each record's latest state
-function overlay(ext, gt) {
+// an extraction file with the ground truth laid over it, so the reviewer sees each record once, in its latest state.
+// `match` pairs an extracted id with the ground-truth id of the same printed thing when they differ (the scorer's
+// content match): the ground truth's record and its frozen id win. An unmatched extracted record whose id the ground
+// truth already uses for something else gets the next free id of its type, so nothing is overwritten.
+function overlay(ext, gt, match = {}) {
   const d = structuredClone(ext);
   const g = Object.fromEntries([...(gt?.items || []), ...(gt?.learning_objectives || [])].map((r) => [r.id, r]));
   notInBook = structuredClone(gt?.not_in_book || []);
   const gone = new Set(notInBook.map((n) => n.id));
+  const used = new Set([...Object.keys(g), ...[...(d.items || []), ...(d.learning_objectives || [])].map((r) => r.id)]);
+  const fresh = (r) => {
+    const base = `${r.id.split(":")[0]}:${String(r.type || "objective").replace(/_/g, "-")}`;
+    let n = 1; while (used.has(`${base}-${n}`)) n++;
+    used.add(`${base}-${n}`); return `${base}-${n}`;
+  };
   for (const sec of ["items", "learning_objectives"]) {
-    const have = new Set((d[sec] || []).map((r) => r.id));
-    d[sec] = (d[sec] || []).filter((r) => !gone.has(r.id)).map((r) => (g[r.id] ? structuredClone(g[r.id]) : r));
-    for (const r of gt?.[sec] || []) if (!have.has(r.id)) d[sec].push(structuredClone(r)); // added by a reviewer
+    const shown = new Set();
+    d[sec] = (d[sec] || []).filter((r) => !gone.has(r.id)).map((r) => {
+      const gid = match[r.id] || r.id;
+      if (g[gid] && !shown.has(gid)) { shown.add(gid); return structuredClone(g[gid]); }
+      if (g[r.id] || shown.has(r.id)) return { ...r, id: fresh(r) }; // the id is the ground truth's for another record
+      return r;
+    });
+    for (const r of gt?.[sec] || []) if (!shown.has(r.id) && !gone.has(r.id)) d[sec].push(structuredClone(r)); // only the ground truth has it
   }
   if (gt?.lesson?.review) d.lesson.review = gt.lesson.review;
   return d;
@@ -774,7 +788,11 @@ async function openLesson(row) {
   lessonRow = row; store.set("rv-lesson", `${row.book}|${row.slug}`);
   gtDoc = row.gt ? await getJSON(`/api/file?path=${encodeURIComponent(row.gt)}`) : null;
   extMode = !!row.ext; notInBook = [];
-  if (extMode) { data = overlay(await getJSON(`/api/file?path=${encodeURIComponent(row.ext)}`), gtDoc); path = row.ext; }
+  if (extMode) {
+    const match = row.gt ? await getJSON(`/api/lesson-match?ext=${encodeURIComponent(row.ext)}&gt=${encodeURIComponent(row.gt)}`) : {};
+    data = overlay(await getJSON(`/api/file?path=${encodeURIComponent(row.ext)}`), gtDoc, match);
+    path = row.ext;
+  }
   else { data = gtDoc; path = row.gt; }
   $("#role").textContent = extMode ? "extraction → ground truth" : "ground truth (no extraction yet)";
   $("#role").title = extMode ? "Records come from the pipeline's book record; what you label is written into the ground truth."

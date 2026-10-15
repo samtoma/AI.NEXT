@@ -246,10 +246,12 @@ Everything is a file in the repository, so a review is committed like any other 
 not in git: put the PDFs in `docs/Source/` (or start the tool with `--pdf-dir`). macOS may block the tool
 from reading `~/Downloads`.
 
-## Scoring (to build)
+## Scoring
 
-A script that compares an extracted book record with the reviewed one for the same lesson and
-reports, per item type: found, missing, invented, wrong objective, and field differences (answers,
-solution steps, notation, table cells). Where a reviewed record lists a misprint, either the printed
-or the intended reading counts as found, and the report says which the extractor gave. It should run
-in CI against reviewed files only.
+`score_book_record.py <extraction> <ground truth> [--json OUT]` compares an extracted book record with the ground truth
+of the same lesson. It matches records by id, then by type, page and the closest quote. It reports per item type:
+found, missing, invented, a different type, different parts, a different printed answer (ignoring spacing). It also
+reports which of the ground truth's misprints the extraction proposed. Records confirmed by a person are reported
+separately, since a draft ground truth is a weaker yardstick. Records listed in `not_in_book` count as invented.
+The review tool uses the same matching to show a lesson with both an extraction and ground truth record by record,
+once each: the ground truth's version and its frozen id win.

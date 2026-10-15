@@ -34,6 +34,8 @@ from urllib.parse import parse_qs, urlparse
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import answers  # noqa: E402
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+import score_book_record  # noqa: E402
 import generated  # noqa: E402
 
 HERE = Path(__file__).resolve().parent
@@ -98,6 +100,10 @@ def lessons():
         status = {r["id"]: (r.get("review") or {}).get("status") for r in (gt or {}).get("items", []) + (gt or {}).get("learning_objectives", [])}
         gone = {n["id"] for n in (gt or {}).get("not_in_book", [])}
         ids = all_ids(source)
+        if ext and gt:  # extracted ids that are the ground truth's records under another id count as those records
+            pairs, _m, _i = score_book_record.match(ext.get("items") or [], gt.get("items") or [])
+            alias = {e["id"]: g["id"] for g, e, _how in pairs}
+            ids = [alias.get(i, i) for i in ids]
         row["total"] = len(ids)
         row["labelled"] = sum(1 for i in ids if status.get(i) in ("confirmed", "flagged") or i in gone)
         row["flagged"] = sum(1 for i in ids if status.get(i) == "flagged")
@@ -348,6 +354,12 @@ class Handler(BaseHTTPRequestHandler):
                 return self.send_file(TOKENS_CSS, "text/css; charset=utf-8")
             if u.path == "/api/lessons":
                 return self.send_json(lessons())
+            if u.path == "/api/lesson-match":
+                # which extracted record is which ground-truth record, when their ids differ (content match, the scorer's)
+                ext = json.loads(resolve_key(q["ext"]).read_text())
+                gt = json.loads(resolve_key(q["gt"]).read_text())
+                pairs, _missing, _invented = score_book_record.match(ext.get("items") or [], gt.get("items") or [])
+                return self.send_json({e["id"]: g["id"] for g, e, _how in pairs if e["id"] != g["id"]})
             if u.path == "/api/misprints":
                 return self.send_json(misprints())
             if u.path == "/api/answers/books":

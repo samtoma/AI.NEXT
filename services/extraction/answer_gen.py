@@ -295,6 +295,9 @@ def same_answer(a: str, b: str) -> bool:
     rhs = lambda s: s.replace("$", "").split("=")[-1]  # "n(X × Z) = 6" says 6
     if ("=" in a) != ("=" in b) and _same_value(rhs(a), rhs(b)):
         return True
+    sentence = lambda s: _norm(re.split(r"(?<=[.;])\s", str(s).replace("$", ""), maxsplit=1)[0])
+    if sentence(a) and sentence(a) == sentence(b):  # "Only diagram (2)." and "Only diagram (2). Each x…" say the same
+        return True
     first = lambda s: _norm(s.split(",")[0].split(".")[0])
     if re.match(r"^(yes|no)\b", _norm(a)) and re.match(r"^(yes|no)\b", _norm(b)):
         return _norm(a)[:2] == _norm(b)[:2] or first(a) == first(b)
@@ -334,9 +337,9 @@ def render_pages(doc: dict, pages: set[int], book: str) -> dict[int, Path]:
     d = pymupdf.open(pdf)
     files = {}
     for printed in sorted(pages):
-        f = out_dir / f"p{printed:03d}.png"
+        f = out_dir / f"p{printed:03d}-200dpi.png"  # small printed diagrams need the resolution
         if not f.exists():
-            d[printed + src["page_offset"] - 1].get_pixmap(dpi=110).save(f)
+            d[printed + src["page_offset"] - 1].get_pixmap(dpi=200).save(f)
         files[printed] = f
     return files
 

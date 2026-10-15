@@ -41,6 +41,80 @@
           "error": null
         }
       ]
+    },
+    {
+      "at": "2026-10-15",
+      "model": "sonnet",
+      "prompts": "ans-v2",
+      "parts": 5,
+      "cost_usd": 0.1741,
+      "calls": [
+        {
+          "call": "author (text, 1 parts)",
+          "cost_usd": 0.0159,
+          "model": "sonnet",
+          "turns": 2,
+          "error": null
+        },
+        {
+          "call": "re-solve (text, 1 parts)",
+          "cost_usd": 0.0144,
+          "model": "sonnet",
+          "turns": 2,
+          "error": null
+        },
+        {
+          "call": "author (page, 4 parts)",
+          "cost_usd": 0.0786,
+          "model": "sonnet",
+          "turns": 4,
+          "error": null
+        },
+        {
+          "call": "re-solve (page, 4 parts)",
+          "cost_usd": 0.0653,
+          "model": "sonnet",
+          "turns": 4,
+          "error": null
+        }
+      ]
+    },
+    {
+      "at": "2026-10-15",
+      "model": "sonnet",
+      "prompts": "ans-v2",
+      "parts": 5,
+      "cost_usd": 0.3552,
+      "calls": [
+        {
+          "call": "author (text, 1 parts)",
+          "cost_usd": 0.0068,
+          "model": "sonnet",
+          "turns": 2,
+          "error": null
+        },
+        {
+          "call": "re-solve (text, 1 parts)",
+          "cost_usd": 0.154,
+          "model": "sonnet",
+          "turns": 2,
+          "error": null
+        },
+        {
+          "call": "author (page, 4 parts)",
+          "cost_usd": 0.0924,
+          "model": "sonnet",
+          "turns": 6,
+          "error": null
+        },
+        {
+          "call": "re-solve (page, 4 parts)",
+          "cost_usd": 0.102,
+          "model": "sonnet",
+          "turns": 6,
+          "error": null
+        }
+      ]
     }
   ],
   "answers": [
@@ -58,28 +132,27 @@
       "needs_page": true,
       "question_fingerprint": "671dea4450860686026f6dc434c064c4",
       "kind": "explanation",
-      "answer": "CANNOT ANSWER: the arrows in the three small arrow diagrams on the page are too small and crossed to read reliably, so the ordered pairs can't be written without guessing.",
+      "answer": "CANNOT ANSWER: the arrows in the three small diagrams on page 16 are too small to read reliably, so the relations cannot be written without guessing.",
       "solution": [
-        "The sets can be read from the page: X = {2, 3, 5, 7} and Y = {1, 4, 6, 8, 9}.",
-        "The ordered pairs of each relation depend on which element of Y each arrow ends at. Those arrow endings can't be read clearly in the printed image.",
-        "Method once the arrows are read: write each arrow from x to y as the ordered pair (x, y) to get the relation.",
-        "Then draw a cartesian diagram. Put X on the horizontal axis and Y on the vertical axis, and mark a point at (x, y) for every ordered pair."
+        "Each relation is written as a set of ordered pairs (x, y), one for every arrow from X to Y.",
+        "The arrows in diagrams (1), (2) and (3) cannot be read with certainty, so the pairs cannot be given.",
+        "Method once the pairs are known: draw X = {2, 3, 5, 7} on the horizontal axis and Y = {1, 4, 6, 8, 9} on the vertical axis, and put a dot at each pair, as in the cartesian diagram of Example 1."
       ],
       "grounded_in": [
-        "u1-3:definition-1",
+        "u1-3:objective-3",
         "u1-3:example-1"
       ],
       "checks": {
-        "resolve_answer": "CANNOT ANSWER: The page image is too small and blurry for me to read which arrows join each element of X = {2, 3, 5, 7} to Y = {1, 4, 6, 8, 9} in the three arrow diagrams. I can't write the three relations reliably, so I can't draw their cartesian diagrams either. Method: for each arrow from x to y, write the pair (x, y) in the relation. Then plot each pair as a point, with X on the horizontal axis and Y on the vertical axis.",
+        "resolve_answer": "CANNOT ANSWER: the arrows in the three small diagrams are too small to read reliably, so I can't write the relations or plot their cartesian diagrams. The method is to write each arrow as an ordered pair (x, y) and plot those points, with X on the horizontal axis and Y on the vertical axis.",
         "resolve_kind": "drawing",
         "numeric_flags": [],
         "agree": null
       },
       "status": "cannot_answer",
       "made": {
-        "at": "2026-10-15T15:43:35+00:00",
+        "at": "2026-10-15T19:42:41+00:00",
         "model": "sonnet",
-        "prompts": "ans-v1"
+        "prompts": "ans-v2"
       }
     },
     {
@@ -93,29 +166,30 @@
         "stem": "",
         "notes": null
       },
-      "needs_page": false,
+      "needs_page": true,
       "question_fingerprint": "c590c6b48ffccffef4786cd0d6e1fa66",
       "kind": "explanation",
-      "answer": "CANNOT ANSWER: the diagrams of the relations are not given, so we cannot tell which ones connect each element of X to only one element of Y.",
+      "answer": "CANNOT ANSWER: the arrows in the three diagrams are too small to read reliably, so it cannot be decided which ones join each element of X to only one element of Y.",
       "solution": [
-        "The question refers to diagrams that are not included in the text.",
-        "The test is: each element of X has exactly one arrow going out to Y.",
-        "Without the diagrams we cannot check this."
+        "The condition means each element of X has exactly one arrow leaving it, which is the definition of a function.",
+        "To check, count the arrows leaving 2, 3, 5 and 7 in each diagram.",
+        "The arrows cannot be read with certainty, so no diagram can be named without guessing."
       ],
       "grounded_in": [
-        "u1-3:definition-1"
+        "u1-3:definition-1",
+        "u1-3:objective-1"
       ],
       "checks": {
-        "resolve_answer": "CANNOT ANSWER: the diagrams of the relations are not given in the question text, so I can't tell which ones connect each element of X to only one element of Y. (Rule: pick those where every element of X has exactly one arrow.)",
-        "resolve_kind": "explanation",
+        "resolve_answer": "Relations (2) and (3). This is a best reading of small diagrams, and I'm not certain of it. Relation (1) is not a function because its elements of X have more than one arrow.",
+        "resolve_kind": "value",
         "numeric_flags": [],
         "agree": null
       },
       "status": "cannot_answer",
       "made": {
-        "at": "2026-10-15T15:43:35+00:00",
+        "at": "2026-10-15T19:42:41+00:00",
         "model": "sonnet",
-        "prompts": "ans-v1"
+        "prompts": "ans-v2"
       }
     },
     {
@@ -129,30 +203,31 @@
         "stem": "",
         "notes": null
       },
-      "needs_page": false,
+      "needs_page": true,
       "question_fingerprint": "ef8e812e78cf0389125b5808de8860bd",
       "kind": "explanation",
-      "answer": "CANNOT ANSWER: the arrow diagrams are not given, so we cannot say which ones represent a function on X.",
+      "answer": "CANNOT ANSWER: the arrows in the three diagrams on X = {1, 2, 3, 4} are too tangled to read reliably, so it cannot be decided which diagrams are functions.",
       "solution": [
-        "The question refers to arrow diagrams that are not included.",
-        "A diagram is a function on X if each of 1, 2, 3, 4 has exactly one arrow out, and all arrows end in X.",
-        "Without the diagrams we cannot check this."
+        "A diagram is a function on X if each of 1, 2, 3 and 4 has exactly one arrow leaving it.",
+        "The arrow directions in diagrams (1), (2) and (3) cannot be read with certainty.",
+        "So the diagrams cannot be classified without guessing."
       ],
       "grounded_in": [
         "u1-3:definition-1",
-        "u1-3:convention-2"
+        "u1-3:convention-2",
+        "u1-3:example-2"
       ],
       "checks": {
-        "resolve_answer": "CANNOT ANSWER: the arrow diagrams are not provided. A diagram is a function on X only if each of 1, 2, 3, 4 has exactly one arrow going out to an element of X.",
-        "resolve_kind": "explanation",
+        "resolve_answer": "Diagrams (2) and (3). This is a best reading of small, hard-to-read arrows, and I'm not certain of it. Diagram (1) is not a function because an element of X has two arrows leaving it and another has none.",
+        "resolve_kind": "value",
         "numeric_flags": [],
         "agree": null
       },
       "status": "cannot_answer",
       "made": {
-        "at": "2026-10-15T15:43:35+00:00",
+        "at": "2026-10-15T19:42:41+00:00",
         "model": "sonnet",
-        "prompts": "ans-v1"
+        "prompts": "ans-v2"
       }
     },
     {
@@ -166,29 +241,32 @@
         "stem": "",
         "notes": null
       },
-      "needs_page": false,
+      "needs_page": true,
       "question_fingerprint": "d9d8e9b9299cf8f6e3e3b68ed357f729",
-      "kind": "explanation",
-      "answer": "CANNOT ANSWER: the cartesian diagrams are not given, so we cannot say which ones represent a function from X to X.",
+      "kind": "value",
+      "answer": "(2)",
       "solution": [
-        "The question refers to cartesian diagrams that are not included.",
-        "A cartesian diagram is a function if each element of X has exactly one point above it.",
-        "Without the diagrams we cannot check this."
+        "X = {1, 2, 3, 4, 5}. For a function from X to X, each x-value from 1 to 5 must have exactly one dot above it.",
+        "Diagram (1): the dots are (1, 2), (2, 3), (3, 5), (3, 2), (4, 4). The value 3 appears twice and 5 does not appear, so it is not a function.",
+        "Diagram (2): the dots are (1, 3), (2, 3), (3, 3), (4, 3), (5, 3). Each x-value appears exactly once, so it is a function.",
+        "Diagram (3): the dots are (1, 1), (2, 2), (4, 4), (5, 5). The value 3 does not appear, so it is not a function.",
+        "Only diagram (2) represents a function from X to X."
       ],
       "grounded_in": [
-        "u1-3:definition-1"
+        "u1-3:definition-1",
+        "u1-3:objective-1"
       ],
       "checks": {
-        "resolve_answer": "CANNOT ANSWER: the cartesian diagrams are not provided. A diagram is a function only if each element of X has exactly one point above it (one first projection appears once).",
-        "resolve_kind": "explanation",
+        "resolve_answer": "Only diagram (2). It has exactly one point for each x from 1 to 5, all at y = 3. Diagram (1) has two points at x = 3 and none at x = 5. Diagram (3) has no point at x = 3.",
+        "resolve_kind": "value",
         "numeric_flags": [],
-        "agree": null
+        "agree": false
       },
-      "status": "cannot_answer",
+      "status": "disagreed",
       "made": {
-        "at": "2026-10-15T15:43:35+00:00",
+        "at": "2026-10-15T19:42:41+00:00",
         "model": "sonnet",
-        "prompts": "ans-v1"
+        "prompts": "ans-v2"
       }
     },
     {
@@ -207,28 +285,28 @@
       "kind": "explanation",
       "answer": "No, not every relation is a function; a relation is a function only if each element of X appears exactly once as a first projection.",
       "solution": [
-        "A function needs every element of X to appear only once as a first projection.",
-        "A relation can break this if an element of X appears twice as a first projection.",
-        "Example: X = {1, 2}, Y = {3, 4}, R = {(1, 3), (1, 4), (2, 3)}. The element 1 has two images, so R is not a function.",
-        "A relation can also break this if an element of X does not appear at all.",
-        "Example: X = {1, 2}, Y = {3, 4}, R = {(1, 3)}. The element 2 has no arrow, so R is not a function.",
-        "Example of a function: X = {1, 2}, Y = {3, 4}, f = {(1, 3), (2, 3)}. Each element of X appears once.",
-        "So not every relation is a function."
+        "A relation from X to Y is a function only if each element of X appears only once as a first projection.",
+        "So a relation fails if an element of X appears twice, or an element of X does not appear at all.",
+        "Example of a function: $X=\\{1,2,3\\}$, $R=\\{(1,4),(2,5),(3,4)\\}$. Each element of X appears once as a first projection, so R is a function.",
+        "Example of a non-function: $X=\\{1,2,3\\}$, $R=\\{(1,4),(1,5),(2,6),(3,4)\\}$. The element 1 appears twice (two arrows leave 1), so R is not a function.",
+        "Another non-function: $X=\\{1,2,3\\}$, $R=\\{(1,4),(2,5)\\}$. The element 3 has no arrow, so R is not a function.",
+        "Therefore not every relation is a function."
       ],
       "grounded_in": [
-        "u1-3:definition-1"
+        "u1-3:definition-1",
+        "u1-3:objective-1"
       ],
       "checks": {
-        "resolve_answer": "No. A relation is a function only if each element of X appears exactly once as a first projection. Example: $\\{(1,2),(1,3),(2,4)\\}$ is not a function because 1 has two images, and $\\{(1,2),(2,3)\\}$ on X = {1,2,3} is not a function because 3 has no image. But $\\{(1,2),(2,2),(3,4)\\}$ is a function.",
+        "resolve_answer": "No. A relation is a function only if every element of X appears exactly once as a first projection. A relation fails if some element of X has no arrow or has two or more arrows. Example of a function: with X = {1, 2, 3}, R = {(1, 2), (2, 3), (3, 3)} is a function. Examples that are not functions: R = {(1, 2), (1, 3), (2, 3), (3, 3)}, because 1 appears twice, and R = {(1, 2), (2, 3)}, because 3 has no image.",
         "resolve_kind": "explanation",
         "numeric_flags": [],
         "agree": null
       },
       "status": "needs_person",
       "made": {
-        "at": "2026-10-15T15:43:35+00:00",
+        "at": "2026-10-15T19:42:41+00:00",
         "model": "sonnet",
-        "prompts": "ans-v1"
+        "prompts": "ans-v2"
       }
     }
   ]
