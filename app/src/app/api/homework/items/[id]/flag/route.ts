@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { withPrincipal } from "@/lib/db";
 import { emit } from "@/lib/analytics";
 import { ENVIRONMENT } from "@/lib/env";
+import { currentPrincipal, onboardingRefusal } from "@/lib/auth/principal";
 import { homeworkStudent } from "@/lib/homework-auth";
 import { coerceId } from "@/lib/homework-rules";
 
@@ -16,7 +17,11 @@ import { coerceId } from "@/lib/homework-rules";
 export const dynamic = "force-dynamic";
 
 export async function POST(req: Request, { params }: { params: Promise<{ id: string }> }) {
-  const who = await homeworkStudent();
+  const me = await currentPrincipal();
+  // FR-4014: no homework help while the first-Google-sign-in step is owed.
+  const pending = onboardingRefusal(me);
+  if (pending) return pending;
+  const who = homeworkStudent(me);
   if (who instanceof NextResponse) return who;
   const itemId = coerceId((await params).id);
   if (!itemId) return NextResponse.json({ error: "bad id" }, { status: 400 });

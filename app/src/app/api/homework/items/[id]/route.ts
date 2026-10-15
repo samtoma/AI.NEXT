@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { withPrincipal } from "@/lib/db";
 import { emit } from "@/lib/analytics";
 import { getAsk } from "@/lib/homework";
+import { currentPrincipal, onboardingRefusal } from "@/lib/auth/principal";
 import { homeworkStudent } from "@/lib/homework-auth";
 import {
   applyGapAnswers,
@@ -28,7 +29,11 @@ import {
 export const dynamic = "force-dynamic";
 
 export async function PATCH(req: Request, { params }: { params: Promise<{ id: string }> }) {
-  const who = await homeworkStudent();
+  const me = await currentPrincipal();
+  // FR-4014: no homework help while the first-Google-sign-in step is owed.
+  const pending = onboardingRefusal(me);
+  if (pending) return pending;
+  const who = homeworkStudent(me);
   if (who instanceof NextResponse) return who;
   const studentId = who;
   const itemId = coerceId((await params).id);
