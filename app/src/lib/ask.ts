@@ -780,7 +780,14 @@ interface AskPromptKit {
   solutionHeading: (solutionVersion: number) => string;
   /** student_chat: the re-explanation mode block appended to the base prompt */
   reExplainMode: (student: string, a: AddressForms) => string;
+  /** chunked tutor turns (FR-3501…FR-3508): one ask marked {{ask}}, plain wording — maths only for now */
+  chunkedTurns: boolean;
 }
+
+/** The Ask FORMAT's chunked-turn lines (FR-3501…FR-3508), for a kit with `chunkedTurns`. */
+const ASK_CHUNKED_RULES = `
+- At most ONE question for the student per message, and only as the last thing in it. When you end with an open question, write {{ask}} alone on its own line right before it — everything after {{ask}} is that question, shown in its own highlighted block, with the part to answer in **bold**.
+- Plain, literal wording a second-language reader follows: no idioms or wordplay. Emphasis is **bold** — never CAPITALS, never italics.`;
 
 const ASK_PROMPTS: Record<Subject, AskPromptKit | null> = {
   "math-en": {
@@ -790,6 +797,7 @@ const ASK_PROMPTS: Record<Subject, AskPromptKit | null> = {
     solutionHeading: (v) =>
       `HUMAN-REVIEWED CANONICAL SOLUTION (v${v}) — the ONLY permitted mathematical path for explaining this question:`,
     reExplainMode: (student, a) => MATH_RE_EXPLAIN(student, a),
+    chunkedTurns: true,
   },
   "social-ar": {
     voiceLine: SOCIAL_VOICE_LINE,
@@ -798,6 +806,7 @@ const ASK_PROMPTS: Record<Subject, AskPromptKit | null> = {
     solutionHeading: (v) =>
       `HUMAN-REVIEWED MODEL ANSWER WITH EVIDENCE (الإجابة النموذجية — v${v}) — the ONLY permitted factual path for explaining this question:`,
     reExplainMode: (student, a) => SOCIAL_RE_EXPLAIN(student, a),
+    chunkedTurns: false,
   },
   "arabic-ar": {
     voiceLine: `Voice: a warm, precise Egyptian tutor. Concise. ARABIC — Egyptian-flavored Modern Standard Arabic (صياغة فصيحة مبسّطة بروح مصرية); this is an Arabic-language class, so flawless فصحى and correct تشكيل in every شاهد are part of the teaching itself. Ministry grammar/rhetoric terminology verbatim from the data (منادى مضاف، نكرة غير مقصودة، علامة نائبة — flag any missing term with [[term?:المصطلح]]), Arabic-Indic numerals in prose; Latin characters ONLY inside [[…]] citations and {{…}} directives.`,
@@ -810,6 +819,7 @@ const ASK_PROMPTS: Record<Subject, AskPromptKit | null> = {
     solutionHeading: (v) =>
       `HUMAN-REVIEWED MODEL ANSWER (الإجابة النموذجية — v${v}) — the ONLY permitted answer path for explaining this question:`,
     reExplainMode: (student, a) => ARABIC_RE_EXPLAIN(student, a),
+    chunkedTurns: false,
   },
 };
 
@@ -905,9 +915,7 @@ ${surface === "spine_chat" ? "" : `- {{show_question:${ex.showQuestion}}} — pu
 FORMAT:
 - Plain paragraphs and "- " bullets only. No headings. **bold** sparingly.
 - Inline math in $...$ (LaTeX), e.g. $f(x) = 3x^2 - 5$.
-- 60–120 words in 2–3 beats. Separate beats with {{beat}} alone on its own line — it renders as a natural pause, never as text. One beat = 1–2 short sentences (no sentence over 20 words), or one figure, or one interactive directive; if the message has an interactive directive it is the LAST beat, with nothing after it. Answer first, then evidence.
-- At most ONE question for the student per message, and only as the last thing in it. When you end with an open question, write {{ask}} alone on its own line right before it — everything after {{ask}} is that question, shown in its own highlighted block, with the part to answer in **bold**.
-- Plain, literal wording a second-language reader follows: no idioms or wordplay. Emphasis is **bold** — never CAPITALS, never italics.`;
+- 60–120 words in 2–3 beats. Separate beats with {{beat}} alone on its own line — it renders as a natural pause, never as text. One beat = 1–2 short sentences${kit.chunkedTurns ? " (no sentence over 20 words)" : ""}, or one figure, or one interactive directive; if the message has an interactive directive it is the LAST beat, with nothing after it. Answer first, then evidence.${kit.chunkedTurns ? ASK_CHUNKED_RULES : ""}`;
 
   if (surface === "student_chat") {
     return `${base}

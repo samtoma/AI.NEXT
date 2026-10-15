@@ -262,7 +262,7 @@ const LESSON: LessonData = {
   gender: "female",
 };
 
-test("FR-3504, FR-3506: the lesson prompt states the chunking rules and drops the playful tone", () => {
+test("FR-3504, FR-3506: the maths lesson prompt states the chunking rules, playful in energy and plain in words", () => {
   for (const probing of [false, true]) {
     const p = learnPrompt(LESSON, probing);
     assert.match(p, /\{\{ask\}\} alone on its own line/);
@@ -270,7 +270,8 @@ test("FR-3504, FR-3506: the lesson prompt states the chunking rules and drops th
     assert.match(p, /A FIGURE IS A BEAT OF ITS OWN/);
     assert.match(p, /never CAPITALS for emphasis, never italics/);
     assert.match(p, /no sentence over 20 words/);
-    assert.doesNotMatch(p, /playful/);
+    assert.match(p, /TONE: upbeat, playful and curious/);
+    assert.match(p, /Playful in energy, plain in words/);
     assert.match(p, /Never use \{\{check_in\}\}/);
   }
 });

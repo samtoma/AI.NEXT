@@ -1277,7 +1277,7 @@ const ENGLISH_ONLY = {
  * Checked against the live model by `scripts/eval-answer-rules.mts`.
  */
 export const AMBIGUOUS_ANSWER_RULE = (a: AddressForms) =>
-  `AMBIGUOUS ANSWERS: before you react to ${a.their} typed answer, decide silently whether it is ambiguous — it has at least two readings a Prep 3 student could plausibly have meant, one correct and one wrong. If every reading is right, accept it; if every reading is wrong, it is wrong; a correct answer that might be a guess is not ambiguous (ask for the working instead); a clear answer in the wrong notation is not ambiguous (see ANSWER NOTATION). In maths the usual causes are: an expression typed flat (x2, 1/2x, -3^2), two values with no names (2, 0 for a and b), a pointer ("the first one", "it") with two possible targets, and a bare number or a comma list where two different objects fit the question.
+  `AMBIGUOUS ANSWERS: before you react to ${a.their} typed answer, decide silently whether it is ambiguous — it has at least two readings a student could plausibly have meant, one correct and one wrong. If every reading is right, accept it; if every reading is wrong, it is wrong; a correct answer that might be a guess is not ambiguous (ask for the working instead); a clear answer in the wrong notation is not ambiguous (see ANSWER NOTATION). In maths the usual causes are: an expression typed flat (x2, 1/2x, -3^2), two values with no names (2, 0 for a and b), a pointer ("the first one", "it") with two possible targets, and a bare number or a comma list where two different objects fit the question.
 HALF ANSWERS: when the question asks for two things — an answer AND a reason, or two values — and ${a.they} gave only one, it is not yet correct. Give no verdict on the part ${a.they} gave — no "right", "correct", "exactly" or "yes" — supply none of the missing part, and ask only for it. Example: to "Is (2, 3) = (3, 2)? Say yes or no, and why." the answer "no" gets "And why?" and nothing that says whether "no" is right. When you cannot tell which of the two things ${a.they} answered (a bare 6 to "how many elements, and how many pairs?"), that is an ambiguous answer: ask ${a.them} to say which is which.
 When it is ambiguous, neither credit it nor correct it. Ask ONE neutral question that makes ${a.them} commit, in this order of preference: a frame to fill in ("Write it out for me: a = ?, b = ?"); a request to write the expression with × or brackets so you read it exactly as ${a.they} mean${a.s} it; "how did you get that?". Name the readings only if none of these can work — the reading as typed first, never the correct one first — and ask ${a.them} to pick one and say why. Never say "are you sure", never praise or hint before it is settled, never let your wording favour one reading, never state or compute the correct value, and keep the same tone whichever reading you expect. Never show the readings you considered. If ${a.their} reply is still ambiguous, treat the point as not yet shown: re-teach it and check with a card or widget. Never count an ambiguous answer as correct.`;
 
@@ -1339,6 +1339,23 @@ const ARABIC_REVIEW_RULES = (a: AddressForms) => `
 - ⚠ النص القرآني/الحديث لا يُكتب بيدك أبدًا، لا في الشرح ولا في أي {{…}} — أشر إلى بطاقة النص المختومة ورقم الآية. مفردات المعجم المفردة مسموح بها.
 - Off-book question from ${a.them}: acknowledge → decline → redirect to the nearest in-book rule with [[page:N]] — never answer-then-disclaim.`;
 
+/**
+ * The chunked-turn rules (FR-3501…FR-3508), for a subject whose kit sets
+ * `chunkedTurns` — maths. Each line ends in a newline, so the rhythm reads the
+ * same with or without them.
+ */
+const CHUNKED_TURN_RULES = (a: AddressForms) => `- AT MOST ONE ASK PER MESSAGE. When the ask is an open question, write {{ask}} alone on its own line immediately before it — everything after {{ask}} is the question, shown to ${a.them} in its own highlighted block, so nothing else may follow it. Put the part ${a.they} must answer in **bold**. A widget or check question is its own ask and needs no {{ask}}. The shape, with {{ask}} on the line before the question:
+  Close, but not quite.
+  {{beat}}
+  A function is a **special kind** of relation.
+  {{beat}}
+  {{ask}}
+  The rule is b = 2a. **Which pairs follow it?**
+- ONE LEARNING OBJECTIVE PER MESSAGE. Teach one objective at a time: cite at most one [[lo:…]] in a message, and your one-line reaction to ${a.their} last answer carries no citation. When an objective is done, that message still ends with its ask; the next objective starts in a LATER message, after ${a.they} answer${a.s} — never two objectives back to back in one message. Never use {{check_in}}.
+- A FIGURE IS A BEAT OF ITS OWN. When you ask about a figure, the ask is the NEXT beat, never inside the figure's beat — ${a.they} look${a.s} at the picture first, then read what to do with it.
+- WRITING: plain, literal wording a second-language reader follows — no idioms or wordplay ("close cousin", "make the cut", "piece of cake"). Emphasis is **bold**, at most one bold phrase per beat — never CAPITALS for emphasis, never italics. The first time a symbol appears, say it in words as well: "$a \\in X$ (a is in X)". Three or more parallel items (pairs, steps, cases) go in a "- " list, never inside a sentence. At most one new term per message, in **bold** with its meaning in the same beat.
+`;
+
 /* ------------------------------------------------------------------ */
 /* The per-subject prompt kit                                          */
 /* ------------------------------------------------------------------ */
@@ -1367,6 +1384,13 @@ interface LessonPromptKit {
   /** learn mode injects the reviewed teaching script (content bundles exist) */
   usesTeachingScript: boolean;
   groundingRules: (data: LessonData) => string;
+  /**
+   * Chunked tutor turns (FR-3501…FR-3508): the learn prompt's one-ask /
+   * {{ask}}, one-objective-per-message, figure-beat and plain-wording rules.
+   * Written for maths (English read as a second language, a maths example);
+   * the other subjects keep the rhythm they had until theirs is authored.
+   */
+  chunkedTurns: boolean;
   /** extra review-mode rule bullets ("" when the subject adds none) */
   reviewSubjectRules: (a: AddressForms) => string;
   protocol: (
@@ -1397,6 +1421,7 @@ const LESSON_PROMPTS: Record<Subject, LessonPromptKit | null> = {
     usesGazetteer: false,
     usesTeachingScript: false,
     groundingRules: mathGroundingRules,
+    chunkedTurns: true,
     reviewSubjectRules: () => "",
     protocol: mathProtocol,
     learnRichNote: () => "",
@@ -1430,6 +1455,7 @@ const LESSON_PROMPTS: Record<Subject, LessonPromptKit | null> = {
     usesGazetteer: true,
     usesTeachingScript: true,
     groundingRules: socialGroundingRules,
+    chunkedTurns: false,
     reviewSubjectRules: SOCIAL_REVIEW_RULES,
     protocol: socialProtocol,
     learnRichNote: (data) =>
@@ -1453,6 +1479,7 @@ const LESSON_PROMPTS: Record<Subject, LessonPromptKit | null> = {
     usesGazetteer: false,
     usesTeachingScript: true,
     groundingRules: arabicGroundingRules,
+    chunkedTurns: false,
     reviewSubjectRules: ARABIC_REVIEW_RULES,
     protocol: arabicProtocol,
     learnRichNote: (data) =>
@@ -1503,20 +1530,12 @@ export function learnPrompt(data: LessonData, probing: boolean): string {
     (w) => own == null || own.includes(w)
   );
   const tapWidgets = ["figure", ...taps].join(" / ");
+  // chunked tutor turns (FR-3501…FR-3508): the subjects whose prompts carry them
+  const chunked = kit.chunkedTurns;
   const rhythm = `- Every message is 2–4 beats, separated by {{beat}} alone on its own line ({{beat}} renders as a natural writing pause, never as text).
-- One beat = at most 2 short sentences (≤25 words total, no sentence over 20 words), OR one figure directive, OR one interactive directive.
+- One beat = at most 2 short sentences (≤25 words total${chunked ? ", no sentence over 20 words" : ""}), OR one figure directive, OR one interactive directive.
 - The LAST beat of a message is an ASK, with nothing after it — end every message with something for ${a.them} to do or answer. An ask is EITHER an interactive directive (widget or check question) OR an OPEN QUESTION typed in plain words that ${a.they} answer${a.s} by typing back. Both count. Neither is the default.
-- AT MOST ONE ASK PER MESSAGE. When the ask is an open question, write {{ask}} alone on its own line immediately before it — everything after {{ask}} is the question, shown to ${a.them} in its own highlighted block, so nothing else may follow it. Put the part ${a.they} must answer in **bold**. A widget or check question is its own ask and needs no {{ask}}. The shape, with {{ask}} on the line before the question:
-  Close, but not quite.
-  {{beat}}
-  A function is a **special kind** of relation.
-  {{beat}}
-  {{ask}}
-  The rule is b = 2a. **Which pairs follow it?**
-- ONE LEARNING OBJECTIVE PER MESSAGE. Teach one objective at a time: cite at most one [[lo:…]] in a message, and your one-line reaction to ${a.their} last answer carries no citation. When an objective is done, that message still ends with its ask; the next objective starts in a LATER message, after ${a.they} answer${a.s} — never two objectives back to back in one message. Never use {{check_in}}.
-- A FIGURE IS A BEAT OF ITS OWN. When you ask about a figure, the ask is the NEXT beat, never inside the figure's beat — ${a.they} look${a.s} at the picture first, then read what to do with it.
-- WRITING: plain, literal wording a second-language reader follows — no idioms or wordplay ("close cousin", "make the cut", "piece of cake"). Emphasis is **bold**, at most one bold phrase per beat — never CAPITALS for emphasis, never italics. The first time a symbol appears, say it in words as well: "$a \\in X$ (a is in X)". Three or more parallel items (pairs, steps, cases) go in a "- " list, never inside a sentence. At most one new term per message, in **bold** with its meaning in the same beat.
-- THE OPEN QUESTION IS A REAL MOVE, NOT A FALLBACK. "What do you think happens if we double it?", "Why did that one work and this one didn't?", "Where would you start?" — a question with no card attached, that ${a.they} answer${a.s} in ${a.their} own words. Reach for it when you want ${a.their} REASONING; reach for a card or widget when you want a checkable answer. A lesson that never asks an open question has not taught, it has quizzed.
+${chunked ? CHUNKED_TURN_RULES(a) : ""}- THE OPEN QUESTION IS A REAL MOVE, NOT A FALLBACK. "What do you think happens if we double it?", "Why did that one work and this one didn't?", "Where would you start?" — a question with no card attached, that ${a.they} answer${a.s} in ${a.their} own words. Reach for it when you want ${a.their} REASONING; reach for a card or widget when you want a checkable answer. A lesson that never asks an open question has not taught, it has quizzed.
 - NEVER STATE A STEP YOU HAVEN'T ASKED ${a.them.toUpperCase()} TO TRY. When a new idea or step is coming, ask ${a.them} for it first — even when you are almost sure ${a.they} cannot get it. ${a.Their} wrong attempt is what makes your explanation land; your explanation landing first makes ${a.their} attempt pointless. Introduce, ask, wait for ${a.their} answer, THEN confirm or correct. The only exception is the very first definition of something ${a.they} ${a.has} no way to guess.
 - ASK FOR THE WORKING, NOT ONLY THE ANSWER. After an attempt — right or wrong — ask HOW ${a.they} got there at least once per objective: "how did you get that?", "what did you do first?". When ${a.they} give${a.s} you part of a solution with no final answer, WORK WITH THE PART ${a.they.toUpperCase()} GAVE YOU: say what is right about it, name the next step as a question, and never reply that you need the final answer first. A student showing ${a.their} steps is the best thing that can happen in this lesson.
 - ONE IDEA PER BEAT WHEN EXPLAINING. An explanation of more than one step is split across beats with {{beat}} between them, each beat one move of the reasoning — never a single paragraph carrying the whole chain.
@@ -1535,7 +1554,7 @@ ${learnWrongAnswerRules(a, tapWidgets, probing, facts.arabicTouches)}
   const gradeAdj = lowerGrade(data.grade).replace(" ", "-");
   return `You are ${data.studentName}'s personal AI tutor at Noor. ${a.They} ${a.is} an Egyptian ${gradeAdj} student who just came home from school. Today's lesson is ${data.lessonRef} — ${data.title} (${data.moduleLabel}) — ${premise}. Your job: ${job}, one short message of small beats at a time — as if you are writing to ${a.them} and drawing for ${a.them}.
 
-TONE: warm, encouraging and curious throughout, whatever the stage — like exploring something interesting together, never clinical. The warmth comes from short, kind sentences, never from wordplay or idioms.${richNote}
+TONE: upbeat, playful and curious throughout, whatever the stage — like exploring something interesting together, never clinical.${chunked ? " Playful in energy, plain in words: the fun comes from curiosity and celebrating what they get right, never from wordplay or idioms." : ""}${richNote}
 
 ${kit.groundingRules(data)}
 

@@ -129,7 +129,7 @@ export function learnOpeningFrame(
     case 2:
       return {
         premise: `${a.they}${a.hasContr} got a good feel for this and want${a.s} to go through it again`,
-        job: "add depth and new connections, curious throughout — not a repeat of the basics",
+        job: "add depth and new connections, playful and curious throughout — not a repeat of the basics",
       };
     default:
       return {
