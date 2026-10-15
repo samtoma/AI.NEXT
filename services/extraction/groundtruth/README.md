@@ -166,6 +166,9 @@ Check every file (schema and the rules above) with:
 
 ## Reviewing
 
+**Stopgap.** The console is to become the one review tool, with labelling extraction as one of its
+four tasks (`docs/design/review-console.md`); this local page is used until that exists.
+
 Run the review tool from a terminal, then open http://127.0.0.1:3020:
 
     python3 services/extraction/groundtruth/review/server.py

@@ -25,5 +25,6 @@ block reference) instead of a quote. Misprints the pipeline proposes show on the
 "Has misprints" filter lists them. Confirming a record confirms its misprints; a wrong one is edited
 or flagged. Check a file with `uv run --with jsonschema python ../groundtruth/validate.py <file>`.
 
-The console's review backlog is where misprint decisions of record are meant to be made once it
-reads book records: see `docs/design/book-misprint-backlog.md`.
+The local tool is a stopgap. The plan is for the console to be the one review tool, where labelling
+these files (task 1) and reviewing their misprints (task 2) sit beside the review of generated
+content: see `docs/design/review-console.md`.
