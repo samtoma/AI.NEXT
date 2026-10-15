@@ -110,6 +110,9 @@ export async function getAsk(
       [askId]
     );
     if (a.rowCount === 0) return null;
+    // An item's objective was chosen from her gated set when the ask was read;
+    // a course hidden since then drops it rather than naming it (the course gate).
+    const gate = await visibleGraphFor(db, studentId);
     const items = await db.query(
       `SELECT i.id, i.position, i.label, i.text, i.gaps, i.subject, i.status, i.mode,
               i.edited, i.lo_id, lo.label AS lo_label, m.label AS unit_label,
@@ -140,7 +143,7 @@ export async function getAsk(
         status: r.status,
         mode: r.mode ?? null,
         edited: r.edited === true,
-        objective: r.lo_id
+        objective: r.lo_id && gate.lo(r.lo_id)
           ? {
               id: r.lo_id,
               label: r.lo_label ?? r.lo_id,
@@ -369,6 +372,9 @@ export async function buildHomeworkContext(
   const row = r.rows[0];
   const gaps = (row.gaps ?? []) as Gap[];
   if (row.subject !== "maths" || !row.mode || !gapsComplete(gaps)) return null;
+  // The same gate as getAsk: an objective outside her scope is not taught from.
+  const gate = await visibleGraphFor(client, studentId);
+  if (row.lo_id && !gate.lo(row.lo_id)) row.lo_id = null;
 
   const profile = await getStudentProfile(studentId, client);
   const student = profile?.displayName?.split(" ")[0] || "the student";

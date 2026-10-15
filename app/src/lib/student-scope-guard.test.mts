@@ -153,6 +153,9 @@ export const MODULES: Readonly<Record<string, ModuleKind>> = {
   // to be "upstream", trusting a premise about the seeds instead.
   "src/lib/retrieval.ts": SCOPED,
   "src/app/api/attempts/route.ts": SCOPED,
+  // Ask Noor homework (spec 004): the split reads her visible maths objectives
+  // through the gate, and every read of an item's objective label is gated again.
+  "src/lib/homework.ts": SCOPED,
 
   "src/lib/visuals.ts": {
     kind: "upstream",
@@ -508,8 +511,14 @@ export const ENTRIES: Readonly<Record<string, Entry>> = {
       // the Your Progress chat's selection, resolved against the objectives
       // this same request's context already gated (FR-3224)
       "mapFocusNote",
+      // a homework item's turn: its objective only if her gate still admits it
+      "buildHomeworkContext",
     ],
   },
+  "src/app/(student)/student/ask/[id]/page.tsx": { reads: ["getAsk"] },
+  "src/app/api/homework/route.ts": { reads: ["createAsk", "readAsk"] },
+  "src/app/api/homework/[id]/route.ts": { reads: ["getAsk"] },
+  "src/app/api/homework/items/[id]/route.ts": { reads: ["getAsk"] },
   "src/app/api/attempts/route.ts": {
     reads: ["visibleCoursesFor", "getLibraryEntries", "flagAuthoringGap", "advanceIfMastered"],
   },
@@ -615,6 +624,9 @@ export const READERS: Readonly<Record<string, Gate>> = {
   buildLessonContext: { self: "src/lib/lesson.ts" },
   getSubjectSummaries: { self: "src/lib/subject-queries.ts", via: ["subjectSummariesOn"] },
   buildAskContext: { self: "src/lib/ask.ts", via: ["askContextOn"] },
+  getAsk: { self: "src/lib/homework.ts" },
+  readAsk: { self: "src/lib/homework.ts", via: ["visibleMathsObjectives"] },
+  buildHomeworkContext: { self: "src/lib/homework.ts" },
 
   getLessonContent: {
     caller: "the lesson's content bundle is opened only after getLessonData admitted that same lesson",
