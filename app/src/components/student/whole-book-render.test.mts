@@ -267,8 +267,8 @@ test("the Grade 10 card counts what is ready of the whole book; a card without a
 test("NATIONAL: the check-in renders the same bytes whatever outline is passed, and keeps its collapsed picker", () => {
   for (const base of [{}, { courseComplete: true }]) {
     const before = nationalCheckIn(base);
-    assert.match(before, /<details class="group w-fit open:w-full">/);
-    assert.match(before, /Pick something else/);
+    // the Up next footer's door (proto/homework), closed: the picker stays collapsed
+    assert.match(before, /aria-expanded="false"[^>]*>Pick something else/);
     assert.doesNotMatch(before, /aria-label="Everything in the book"/);
     assert.doesNotMatch(before, /Being prepared|being prepared/);
     for (const extra of [{ outline: [] }, { outline: OUTLINE }, { outline: OUTLINE, morePreparing: false }]) {
