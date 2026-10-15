@@ -164,35 +164,55 @@ Check every file (schema and the rules above) with:
 
     uv run --with jsonschema python services/extraction/groundtruth/validate.py
 
-## Reviewing
+## Reviewing: the Noor review tool
 
-**Stopgap.** The console is to become the one review tool, with labelling extraction as one of its
-four tasks (`docs/design/review-console.md`); this local page is used until that exists.
-
-Run the review tool from a terminal, then open http://127.0.0.1:3020:
+One local tool for every review task, one task at a time
+([docs/design/review-console.md](../../../docs/design/review-console.md); the admin console is left as it is).
+Run it from a terminal, then open http://127.0.0.1:3020:
 
     python3 services/extraction/groundtruth/review/server.py
 
-It opens the ground truth here and the pipeline's own book records (`services/extraction/book-records/`,
-listed as `[extraction]`; add other folders with `--records DIR`). The badge beside the file says which
-one you are reviewing. It shows each record next to the book page it comes from; an extracted record
-with no quote shows its `anchor` instead, and the **Has misprints** filter lists every record carrying
-a misprint. Type your initials, then for each record:
+Type your initials at the top. The home page has four tasks; pick one and you see only its items.
 
-- **Confirm** (`c`) when it matches the book.
-- **Edit** (`e`) to correct any field, add or remove fields, or change the record's type, for example
-  a rule that is really a learning objective. Changing to `learning_objective` moves the record to
-  that section, renames its main text field and updates links to it. "Save and confirm" does both
-  at once. Every edit is logged on the record.
-- **Misprint** (`m`) when the book prints a mistake: pick the field, copy what is printed, write what
-  is meant. The record's text is left as printed.
+| Task | Status | What you do | Where it is saved |
+|---|---|---|---|
+| **Label extraction** | built | Check each extracted record against the page: confirm, correct, flag, mark a misprint, or label it not in the book. Partial is fine. | Labelled records go into this folder's ground truth (`<book>/…`, created on the first label) |
+| **Misprints** | built | Decide every mistake the book prints: misprint confirmed, a different correction, or not a misprint | `<book>/misprint-decisions.json`, append-only (a changed mind is a new entry) |
+| Generated answers | not built | Review every generated answer | — |
+| Generated content | not built | Review every generated question, widget and misconception (the admin console's Review page meanwhile) | — |
+
+**Label extraction.** A lesson's records come from the pipeline's book record
+(`services/extraction/book-records/<book>/<slug>.json`) when there is one. What you label is written into
+the ground truth, and unlabelled records stay out of it. A lesson with no extraction yet (both lessons
+today) is labelled in its ground-truth file directly. The bar shows how much of the lesson is labelled.
+- **Confirm** (`c`) when it matches the book. Ground truth needs a quote, so an extracted item with only
+  an anchor opens the editor first.
+- **Edit** (`e`) to correct any field, or change the record's type. "Save and confirm" does both. Every
+  edit is logged on the record.
+- **Misprint** (`m`) when the book prints a mistake: pick the field, copy what is printed, write what is
+  meant. The text stays as printed; the misprint then waits in the Misprints task.
 - **Flag** (`f`) when it needs someone else's decision.
-- `j`/`k` move, `u` undoes the mark. Missing items are added from the "Whole file" card with an id
-  that follows the scheme above; records that are not in the book are deleted from the edit form.
+- **Not in the book** (in the edit form) when the extractor invented the record: it is listed in the
+  ground truth's `not_in_book`, never as an item.
+- `j`/`k` move, `u` undoes the mark. A missing record is added from the "Whole file" card.
 
-Every change is saved straight into the JSON file, so a review is committed like any other change.
-The books are not in git: put the PDFs in `docs/Source/` (or start the tool with `--pdf-dir`).
-macOS may block the tool from reading `~/Downloads`.
+**Misprints.** The list joins the pipeline's candidates (`book-records/<book>/misprint-candidates.json`,
+made by `export_misprint_candidates.py`) with every misprint on a book record. For each one the page
+shows what the book prints beside what it should be, and how we know.
+- **Misprint confirmed** (`c`): it is wrong as proposed.
+- **Different correction** (`d`): it is wrong, but it means something else, which you type in.
+- **Not a misprint** (`n`): the book is right.
+
+On a ground-truth record, a different correction or "not a misprint" also changes the record. What a
+confirmed misprint does to the question students see is waiting on Samuel.
+
+Refresh the Grade 10 candidates after a new G2 run (from `services/extraction/`):
+
+    uv run python groundtruth/export_misprint_candidates.py g10-math
+
+Everything is a file in the repository, so a review is committed like any other change. The books are
+not in git: put the PDFs in `docs/Source/` (or start the tool with `--pdf-dir`). macOS may block the tool
+from reading `~/Downloads`.
 
 ## Scoring (to build)
 

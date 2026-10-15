@@ -14,17 +14,19 @@ build. When it lands, it also turns the G2 recommendation runs' findings about t
 (classes `book error`, `printed answer misaligned`, `printed text damaged`) into `misprints` entries,
 so a misprint is kept as printed with what is meant, instead of the question being dropped.
 
-## Reviewing a file
+## What else lives here
 
-The review tool opens these files beside the ground truth:
+`<book>/misprint-candidates.json`: the pipeline's findings about mistakes the book itself prints, for the
+review tool's Misprints task. It is made by `../groundtruth/export_misprint_candidates.py` from the G2
+recommendation runs, and re-running it never touches decisions.
 
-    python3 services/extraction/groundtruth/review/server.py
+## Reviewing
 
-They are listed as `[extraction]`. An extracted record may be located by `anchor` (the pipeline's
-block reference) instead of a quote. Misprints the pipeline proposes show on their record; the
-"Has misprints" filter lists them. Confirming a record confirms its misprints; a wrong one is edited
-or flagged. Check a file with `uv run --with jsonschema python ../groundtruth/validate.py <file>`.
+The Noor review tool (`python3 services/extraction/groundtruth/review/server.py`) opens these files in
+two of its tasks:
+- **Label extraction:** labelling a lesson's records writes them into its ground truth.
+- **Misprints:** deciding misprints.
 
-The local tool is a stopgap. The plan is for the console to be the one review tool, where labelling
-these files (task 1) and reviewing their misprints (task 2) sit beside the review of generated
-content: see `docs/design/review-console.md`.
+See `../groundtruth/README.md`, "Reviewing". An extracted record may be located by `anchor` (the
+pipeline's block reference) instead of a quote; ground truth needs a quote, so the tool asks for one
+when you confirm it. Check a file with `uv run --with jsonschema python ../groundtruth/validate.py <file>`.

@@ -21,7 +21,22 @@
     "provenance": { "$ref": "#/$defs/provenance" },
     "review": { "$ref": "#/$defs/file_review" },
     "open_questions": { "type": "array", "items": { "type": "string" }, "description": "Questions about the book that a person must settle." },
-    "history": { "type": "array", "items": { "type": "string" }, "description": "Log of changes to the file, one line each." }
+    "history": { "type": "array", "items": { "type": "string" }, "description": "Log of changes to the file, one line each." },
+    "not_in_book": {
+      "type": "array",
+      "description": "Ground truth only: extracted records a reviewer labelled as not in the book (the extractor invented them). Scoring counts them as invented; they are never items here.",
+      "items": {
+        "type": "object",
+        "required": ["id", "by", "at"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "$ref": "#/$defs/record_id" },
+          "by": { "type": "string", "description": "Reviewer's initials." },
+          "at": { "type": "string", "format": "date" },
+          "reason": { "type": "string" }
+        }
+      }
+    }
   },
   "if": { "properties": { "role": { "const": "ground_truth" } }, "required": ["role"] },
   "then": { "properties": { "items": { "items": { "required": ["quote"] } } } },

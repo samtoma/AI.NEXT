@@ -8,7 +8,9 @@ run without it.
 
 Rules checked beyond the schema (README "Ids" and "Counting"):
 - ids are unique and start with the lesson slug;
-- lo, belongs_to, answer_figure and evidence point at records that exist and are of the right kind;
+- lo, belongs_to, answer_figure and evidence point at records that exist and are of the right kind (in ground truth
+  labelled from an extraction, a link may also point at a record of that extraction not labelled yet: labelling is
+  partial by design);
 - a misprint's field names a field that exists on its record or part.
 """
 import json
@@ -24,7 +26,17 @@ FIELD_PATH = re.compile(r"^([a-z_]+)((?:\[\d+\])*)$")
 
 
 def book_records():
-    return [p for p in sorted(GT_DIR.rglob("*.json")) if p.name not in SKIP and "review" not in p.relative_to(GT_DIR).parts]
+    out = []
+    for p in sorted(GT_DIR.rglob("*.json")):
+        if p.name in SKIP or "review" in p.relative_to(GT_DIR).parts:
+            continue
+        try:  # other files live beside the book records (misprint decisions): only book records are checked
+            if json.loads(p.read_text()).get("schema") != "book-record":
+                continue
+        except (OSError, json.JSONDecodeError):
+            pass  # an unreadable file is reported by main()
+        out.append(p)
+    return out
 
 
 def resolves(rec: dict, path: str) -> bool:
@@ -43,8 +55,23 @@ def ids_of(x):
     return [] if x is None else [x] if isinstance(x, str) else list(x)
 
 
+def extraction_for(d: dict) -> dict | None:
+    """The pipeline's book record of the same lesson, if there is one (book-records/<book>/<slug>.json)."""
+    slug = (d.get("lesson") or {}).get("slug")
+    for p in sorted((GT_DIR.parent / "book-records").glob(f"*/{slug}.json")):
+        try:
+            e = json.loads(p.read_text())
+        except (OSError, json.JSONDecodeError):
+            continue
+        if e.get("schema") == "book-record" and e.get("role") == "extraction":
+            return e
+    return None
+
+
 def rule_errors(d: dict) -> list[str]:
     errs = []
+    ext = extraction_for(d) if d.get("role") == "ground_truth" else None
+    pending = {r["id"]: r for r in (ext or {}).get("items", []) + (ext or {}).get("learning_objectives", []) if "id" in r}
     slug = d.get("lesson", {}).get("slug", "")
     items = d.get("items", [])
     objs = d.get("learning_objectives", [])
@@ -58,6 +85,12 @@ def rule_errors(d: dict) -> list[str]:
             errs.append(f"{rid}: id does not start with the lesson slug '{slug}:'")
     item_ids = {r["id"]: r for r in items if "id" in r}
     obj_ids = {r["id"] for r in objs if "id" in r}
+    # records of the extraction not labelled yet count as present for links
+    for rid, r in pending.items():
+        if "type" in r:
+            item_ids.setdefault(rid, r)
+        else:
+            obj_ids.add(rid)
 
     for r in items:
         rid = r.get("id", "?")
@@ -79,6 +112,9 @@ def rule_errors(d: dict) -> list[str]:
         if len(labels) != len(set(labels)):
             errs.append(f"{rid}: two parts share a label")
 
+    for n in d.get("not_in_book", []):
+        if n.get("id") in seen:
+            errs.append(f"{n.get('id')}: labelled not in the book, but it is also a record here")
     for o in objs:
         for e in o.get("evidence", []):
             if e not in item_ids:

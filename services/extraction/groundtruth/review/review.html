@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Book-record review</title>
+<title>Noor review</title>
 <link rel="stylesheet" href="/tokens.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
@@ -11,6 +11,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <style>
   * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
   html, body { margin: 0; height: 100%; }
   body {
     background: var(--paper); color: var(--ink);
@@ -42,7 +43,28 @@
   .progress { min-width: 200px; }
   .bar { height: 10px; background: var(--paper-deep); border: var(--play-stroke-sm) solid var(--line); border-radius: var(--play-radius-pill); overflow: hidden; }
   .bar > div { height: 100%; background: var(--noor-progress); }
-  main { display: grid; grid-template-columns: 300px minmax(0, 1fr) minmax(0, 1fr); height: calc(100% - 62px); }
+  main { display: grid; grid-template-columns: 300px minmax(0, 1fr) minmax(0, 1fr); height: calc(100% - 108px); }
+  header h1 { cursor: pointer; }
+  #tools { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; padding: 8px 16px; border-bottom: var(--play-stroke-sm) solid var(--line-soft); }
+  #tools:empty { display: none; }
+  .crumb { color: var(--ink-soft); }
+  .home { max-width: 1100px; margin: 24px auto; padding: 0 16px; }
+  .home h2 { margin: 0 0 4px; }
+  .group { margin-top: 22px; }
+  .group h3 { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-faint); margin: 0 0 8px; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+  .task { background: var(--card); border: var(--play-stroke) solid var(--line); border-radius: var(--play-radius); box-shadow: var(--play-shadow); padding: 16px; text-align: left; display: flex; flex-direction: column; gap: 8px; }
+  .task:not(:disabled):hover { background: var(--accent-wash); }
+  .task .n { font-size: 30px; font-weight: 800; }
+  .task .n small { font-size: 15px; font-weight: 400; color: var(--ink-soft); }
+  .task .t { font-size: 18px; font-weight: 700; }
+  .vs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 12px 0; }
+  .vs > div { border: var(--play-stroke-sm) solid var(--line); border-radius: var(--play-radius-sm); padding: 10px 12px; overflow-wrap: anywhere; }
+  .vs b { font-size: 18px; display: block; margin-top: 4px; }
+  .vs .printed { background: var(--gold-wash); }
+  .vs .meant { background: var(--accent-wash); }
+  .label { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-faint); }
+  .why { border-left: 4px solid var(--line); padding-left: 10px; margin: 8px 0; }
   .pane { overflow: auto; padding: 12px 16px; }
   #list { border-right: var(--play-stroke-sm) solid var(--line-soft); padding: 8px; }
   #list h3 { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-faint); margin: 14px 6px 4px; }
@@ -106,23 +128,15 @@
 </head>
 <body>
 <header>
-  <h1>Book-record review</h1>
-  <select id="file" aria-label="Book-record file"></select>
-  <span id="role" class="tag"></span>
-  <label>Your initials <input id="me" size="4" maxlength="6" placeholder="e.g. SA"></label>
-  <select id="filter" aria-label="Filter">
-    <option value="all">All records</option>
-    <option value="todo">Not reviewed yet</option>
-    <option value="flagged">Flagged</option>
-    <option value="edited">Edited</option>
-    <option value="misprints">Has misprints</option>
-  </select>
-  <div class="progress"><div class="bar"><div id="barfill" style="width:0"></div></div><div id="ptext" class="muted"></div></div>
+  <h1 id="homelink" title="All tasks">Noor review</h1>
+  <span id="crumb" class="crumb"></span>
   <span class="grow"></span>
   <span id="saved" class="muted"></span>
-  <span class="kbd muted">j/k move · c confirm · f flag · e edit · m misprint · u undo</span>
+  <label>Your initials <input id="me" size="4" maxlength="6" placeholder="e.g. TD"></label>
 </header>
-<main>
+<div id="tools"></div>
+<div id="home" class="home" hidden></div>
+<main id="work" hidden>
   <nav id="list" class="pane" aria-label="Records"></nav>
   <section id="detail" class="pane"></section>
   <section class="pane">
@@ -144,6 +158,10 @@ const store = { get(k) { try { return localStorage.getItem(k); } catch { return 
 const meNow = () => $("#me").value.trim();
 
 let path = null, data = null, records = [], idx = 0, offset = 0, pdf = null, pdfPath = null, page = 1, rendering = null, editing = false;
+// Label extraction: the lesson open, its ground truth (null until the first label), and whether the records come from an
+// extraction file (labels are then written into the ground truth) or from the ground truth itself (edited in place).
+let view = "home", lessonRow = null, gtDoc = null, extMode = false, notInBook = [];
+const getJSON = async (u) => { const r = await fetch(u); if (!r.ok) throw new Error(await r.text()); return r.json(); };
 
 /* ---------- sections and kinds ---------- */
 // [section title, path in the file, single object?]
@@ -430,6 +448,14 @@ function renameRefs(oldId, nid) {
   walk(data);
 }
 function deleteRecord(sec, r) {
+  if (extMode) {
+    if (!confirm(`Label ${r.id} as not in the book? The extractor invented it; it is kept out of the ground truth.`)) return;
+    const arr = getAt(sec); arr.splice(arr.indexOf(r), 1);
+    notInBook.push({ id: r.id, by: meNow(), at: today() });
+    editing = false; build(); idx = Math.min(idx, records.length - 1);
+    save(); renderAll();
+    return;
+  }
   if (!confirm(`Delete ${r.id || titleOf(sec, r)}? Links to it elsewhere in the file are left for you to fix.`)) return;
   const arr = getAt(sec); arr.splice(arr.indexOf(r), 1);
   (data.history ||= []).push(`${today()}: ${meNow()} deleted ${r.id || sec + " record"}: ${titleOf(sec, r)}`);
@@ -518,7 +544,11 @@ function openMisprint() { if (!meNow() || !$("#mform")) return; $("#mform").clas
 
 /* ---------- actions ---------- */
 function confirm_() {
-  const r = records[idx].r; if (!meNow()) return;
+  const { sec, r } = records[idx]; if (!meNow()) return;
+  if (extMode && sec === "items" && !r.quote) {
+    alert("Ground truth needs a quote on every item: a few exact words from the page. Add one, then save and confirm.");
+    return startEdit();
+  }
   const v = (r.review ||= {});
   Object.assign(v, { status: "confirmed", by: meNow(), at: today() }); delete v.reason;
   save(); move(1, true);
@@ -544,11 +574,43 @@ function rollup() {
   v.status = st.includes("flagged") ? "flagged" : st.every((s) => s === "confirmed") ? "reviewed" : st.some(Boolean) ? "in_review" : "draft";
   v.reviewed_at = v.status === "reviewed" ? today() : null;
 }
+// a record is ground truth once a reviewer has labelled it (confirmed or flagged), edited it, or added it
+const labelled = (r) => !!(r.review?.status || (r.review?.edits || []).length || /^reviewer /.test(r.provenance?.by || ""));
+function groundTruthFromLabels() {
+  const gt = gtDoc ? structuredClone(gtDoc) : {
+    schema: "book-record", schema_version: 2, role: "ground_truth",
+    source_document: structuredClone(data.source_document), lesson: null, items: [], learning_objectives: [],
+    provenance: { by: `labelled by reviewers from ${data.provenance?.by || "the extraction"}` },
+    review: {}, open_questions: [], history: [`${today()}: created by labelling ${lessonRow.ext}`],
+  };
+  gt.lesson = structuredClone(data.lesson);
+  // labelled records join the ground truth; what it already held is never dropped (only "not in the book" removes one)
+  const had = new Set([...(gtDoc?.items || []), ...(gtDoc?.learning_objectives || [])].map((r) => r.id));
+  const keep = (r) => labelled(r) || had.has(r.id);
+  gt.items = data.items.filter(keep).map((r) => structuredClone(r));
+  gt.learning_objectives = (data.learning_objectives || []).filter(keep).map((r) => structuredClone(r));
+  if (notInBook.length) gt.not_in_book = structuredClone(notInBook); else delete gt.not_in_book;
+  gt.review = structuredClone(data.review);
+  return gt;
+}
 async function save() {
   rollup();
   $("#saved").textContent = "Saving…";
-  const res = await fetch(`/api/file?path=${encodeURIComponent(path)}`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) });
+  let res;
+  if (!extMode) {
+    res = await fetch(`/api/file?path=${encodeURIComponent(path)}`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) });
+  } else {
+    const gt = groundTruthFromLabels();
+    if (lessonRow.gt) {
+      res = await fetch(`/api/file?path=${encodeURIComponent(lessonRow.gt)}`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(gt) });
+    } else {
+      res = await fetch(`/api/ground-truth?book=${encodeURIComponent(lessonRow.book)}&slug=${encodeURIComponent(lessonRow.slug)}`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(gt) });
+      if (res.ok) lessonRow.gt = (await res.clone().json()).path;
+    }
+    if (res.ok) gtDoc = gt;
+  }
   $("#saved").textContent = res.ok ? `Saved ${new Date().toLocaleTimeString()}` : "Save failed: " + (await res.text());
+  renderLabelProgress();
 }
 
 /* ---------- navigation ---------- */
@@ -570,12 +632,12 @@ function select(i) {
 function renderAll() { renderList(); renderDetail(); }
 
 /* ---------- PDF ---------- */
-async function loadPdf() {
-  if (pdfPath === path) return;
-  pdfPath = path; pdf = null;
+async function loadPdf(url) {
+  if (pdfPath === url) return showPage(page);
+  pdfPath = url; pdf = null;
   $("#pdfinfo").textContent = "Loading the book…";
   try {
-    pdf = await pdfjsLib.getDocument({ url: `/pdf?path=${encodeURIComponent(path)}`, disableAutoFetch: true, disableStream: true }).promise;
+    pdf = await pdfjsLib.getDocument({ url, disableAutoFetch: true, disableStream: true }).promise;
     $("#pdfinfo").textContent = "";
     showPage(page);
   } catch (e) {
@@ -600,33 +662,227 @@ $("#prev").onclick = () => showPage(page - 1);
 $("#next").onclick = () => showPage(page + 1);
 $("#pg").onchange = () => showPage(Number($("#pg").value));
 
-/* ---------- boot ---------- */
-async function openFile(p) {
-  path = p; store.set("gt-file", p);
-  data = await (await fetch(`/api/file?path=${encodeURIComponent(p)}`)).json();
+/* ---------- the tasks ---------- */
+const TASKS = { home: "", label: "› Label extraction", misprints: "› Misprints" };
+function show(v) {
+  view = v; editing = false;
+  $("#crumb").textContent = TASKS[v] ?? "";
+  $("#home").hidden = v !== "home"; $("#work").hidden = v === "home";
+  $("#tools").innerHTML = "";
+  if (location.hash.slice(1) !== v) history.replaceState(null, "", "#" + v);
+  return v === "home" ? renderHome() : v === "label" ? openLabel() : openMisprints();
+}
+$("#homelink").onclick = () => show("home");
+window.addEventListener("hashchange", () => { const v = location.hash.slice(1); if (v in TASKS && v !== view) show(v); });
+
+async function renderHome() {
+  const [ls, ms] = await Promise.all([getJSON("/api/lessons"), getJSON("/api/misprints")]);
+  const done = ls.reduce((n, l) => n + l.labelled, 0), all = ls.reduce((n, l) => n + l.total, 0);
+  const open = ms.filter((m) => !m.decision).length, books = [...new Set(ms.map((m) => m.book))];
+  $("#home").innerHTML = `
+    <h2>What do you want to work on?</h2>
+    <div class="muted">One task at a time. Each task has its own list, its own buttons and its own count.</div>
+    <div class="group"><h3>Book: check what the pipeline read</h3><div class="cards">
+      <button class="task" id="t-label">
+        <span class="t">Label extraction</span>
+        <span class="muted">Check extracted records against the page. What you confirm becomes ground truth. Label as much as you can; partial is fine.</span>
+        <span class="n">${done} <small>of ${all} labelled</small></span>
+        <div class="bar"><div style="width:${all ? (100 * done) / all : 0}%"></div></div>
+        <span class="muted">${ls.length} lesson(s) · ${ls.filter((l) => l.ext).length} with extraction output</span>
+      </button>
+      <button class="task" id="t-mis">
+        <span class="t">Misprints</span>
+        <span class="muted">Mistakes the book prints. Every one needs a decision, because it changes what students are taught.</span>
+        <span class="n">${open} <small>to decide</small></span>
+        <span class="muted">${books.map((b) => `${ms.filter((m) => m.book === b && !m.decision).length} ${esc(b)}`).join(" · ")} · ${ms.length - open} decided</span>
+      </button>
+    </div></div>
+    <div class="group"><h3>Generated: review everything the pipeline wrote</h3><div class="cards">
+      <button class="task" disabled><span class="t">Generated answers</span><span class="muted">Answers written for exercises the book leaves unanswered. Every one is reviewed.</span><span class="muted"><b>Not built yet:</b> the step that generates answers does not exist.</span></button>
+      <button class="task" disabled><span class="t">Generated content</span><span class="muted">Generated questions, widgets and misconceptions. Every one is reviewed.</span><span class="muted"><b>Not built yet.</b> Reviewed in the admin console's Review page meanwhile.</span></button>
+    </div></div>`;
+  $("#t-label").onclick = () => show("label");
+  $("#t-mis").onclick = () => show("misprints");
+}
+
+/* ---------- Label extraction ---------- */
+let lessonList = [];
+function renderLabelProgress() {
+  if (!lessonRow || view !== "label" || !$("#lprog")) return;
+  const rs = records.filter(({ sec }) => sec !== "lesson").map(({ r }) => r);
+  const n = rs.filter((r) => r.review?.status).length + notInBook.length, t = rs.length + notInBook.length;
+  $("#lprog").textContent = `${n} of ${t} labelled · ${rs.filter((r) => r.review?.status === "flagged").length} flagged${notInBook.length ? ` · ${notInBook.length} not in the book` : ""}`;
+  $("#lbar").style.width = `${t ? (100 * n) / t : 0}%`;
+}
+async function openLabel() {
+  lessonList = await getJSON("/api/lessons");
+  $("#tools").innerHTML = `
+    <label>Lesson <select id="lesson">${lessonList.map((l, i) => `<option value="${i}">${esc(l.book)} · ${esc(l.slug)} · ${esc(l.title)}</option>`).join("")}</select></label>
+    <span id="role" class="tag"></span>
+    <label>Show <select id="filter">
+      <option value="todo">Not labelled yet</option><option value="all">All records</option><option value="flagged">Flagged</option>
+      <option value="edited">Edited</option><option value="misprints">Has misprints</option></select></label>
+    <div class="progress"><div class="bar"><div id="lbar" style="width:0"></div></div><div id="lprog" class="muted"></div></div>
+    <span class="grow"></span>
+    <span class="kbd muted">j/k move · c confirm · f flag · e edit · m misprint · u undo</span>
+    <span id="barfill" hidden></span><span id="ptext" hidden></span>`;
+  $("#filter").value = store.get("rv-filter") || "todo";
+  $("#filter").onchange = () => { store.set("rv-filter", $("#filter").value); $("#filter").blur(); renderList(); };
+  const last = store.get("rv-lesson"), i = Math.max(0, lessonList.findIndex((l) => `${l.book}|${l.slug}` === last));
+  $("#lesson").value = String(i);
+  $("#lesson").onchange = () => { $("#lesson").blur(); openLesson(lessonList[Number($("#lesson").value)]); };
+  if (lessonList.length) openLesson(lessonList[i]);
+}
+// an extraction file with the ground truth's labelled copies laid over it, so the reviewer sees each record's latest state
+function overlay(ext, gt) {
+  const d = structuredClone(ext);
+  const g = Object.fromEntries([...(gt?.items || []), ...(gt?.learning_objectives || [])].map((r) => [r.id, r]));
+  notInBook = structuredClone(gt?.not_in_book || []);
+  const gone = new Set(notInBook.map((n) => n.id));
+  for (const sec of ["items", "learning_objectives"]) {
+    const have = new Set((d[sec] || []).map((r) => r.id));
+    d[sec] = (d[sec] || []).filter((r) => !gone.has(r.id)).map((r) => (g[r.id] ? structuredClone(g[r.id]) : r));
+    for (const r of gt?.[sec] || []) if (!have.has(r.id)) d[sec].push(structuredClone(r)); // added by a reviewer
+  }
+  if (gt?.lesson?.review) d.lesson.review = gt.lesson.review;
+  return d;
+}
+async function openLesson(row) {
+  lessonRow = row; store.set("rv-lesson", `${row.book}|${row.slug}`);
+  gtDoc = row.gt ? await getJSON(`/api/file?path=${encodeURIComponent(row.gt)}`) : null;
+  extMode = !!row.ext; notInBook = [];
+  if (extMode) { data = overlay(await getJSON(`/api/file?path=${encodeURIComponent(row.ext)}`), gtDoc); path = row.ext; }
+  else { data = gtDoc; path = row.gt; }
+  $("#role").textContent = extMode ? "extraction → ground truth" : "ground truth (no extraction yet)";
+  $("#role").title = extMode ? "Records come from the pipeline's book record; what you label is written into the ground truth."
+    : "This lesson has no extraction file yet, so its ground truth is labelled directly.";
   // book record v1 stores the offset as a number; older files had "pdf_page = printed_page + 1"
   const po = data.source_document?.page_offset;
   const m = typeof po === "string" ? /printed_page\s*([+-])\s*(\d+)/.exec(po) : null;
   offset = Number.isInteger(po) ? po : m ? (m[1] === "-" ? -1 : 1) * Number(m[2]) : 0;
-  $("#role").textContent = data.role === "extraction" ? "extraction output" : "ground truth";
   build(); page = data.lesson?.pages?.[0] || 1;
-  select(0); loadPdf();
+  select(visible()[0]?.i ?? 0); renderLabelProgress();
+  loadPdf(`/pdf?path=${encodeURIComponent(path)}`);
 }
 
-(async () => {
-  $("#me").value = store.get("gt-me") || "";
-  $("#me").oninput = () => { store.set("gt-me", meNow()); renderAll(); };
-  $("#filter").onchange = () => { $("#filter").blur(); renderList(); };
-  const files = await (await fetch("/api/files")).json();
-  $("#file").innerHTML = files.map((f) => `<option value="${esc(f.path)}">[${esc(f.root)}] ${esc(f.path.replace(/^\d+\//, ""))} · ${esc(f.title)} (${esc(f.status)})</option>`).join("");
-  const last = store.get("gt-file");
-  if (last && files.some((f) => f.path === last)) $("#file").value = last;
-  $("#file").onchange = () => { $("#file").blur(); openFile($("#file").value); };
-  if (files.length) openFile($("#file").value);
-})();
+/* ---------- Misprints ---------- */
+let mp = [], mi = 0;
+const DECISION_TEXT = { confirmed: "Misprint confirmed", corrected: "Misprint, different correction", not_a_misprint: "Not a misprint" };
+function mpVisible() {
+  const b = $("#mbook").value, w = $("#mshow").value, src = $("#msrc").value;
+  return mp.map((m, i) => ({ m, i })).filter(({ m }) => (b === "all" || m.book === b) && (src === "all" || m.source === src)
+    && (w === "all" || (w === "todo" ? !m.decision : !!m.decision)));
+}
+async function openMisprints() {
+  mp = await getJSON("/api/misprints");
+  const books = [...new Set(mp.map((m) => m.book))], srcs = [...new Set(mp.map((m) => m.source))];
+  $("#tools").innerHTML = `
+    <label>Book <select id="mbook"><option value="all">All books</option>${books.map((b) => `<option>${esc(b)}</option>`).join("")}</select></label>
+    <label>Show <select id="mshow"><option value="todo">To decide</option><option value="done">Decided</option><option value="all">All</option></select></label>
+    <label>Found by <select id="msrc"><option value="all">Anyone</option>${srcs.map((x) => `<option>${esc(x)}</option>`).join("")}</select></label>
+    <div class="progress"><div class="bar"><div id="mbar" style="width:0"></div></div><div id="mprog" class="muted"></div></div>
+    <span class="grow"></span>
+    <span class="kbd muted">j/k move · c confirmed · d different correction · n not a misprint</span>`;
+  for (const id of ["mbook", "mshow", "msrc"]) {
+    const saved = store.get("rv-" + id);
+    if (saved && [...$("#" + id).options].some((o) => o.value === saved)) $("#" + id).value = saved;
+    $("#" + id).onchange = () => { store.set("rv-" + id, $("#" + id).value); $("#" + id).blur(); mi = mpVisible()[0]?.i ?? 0; renderMp(true); };
+  }
+  mi = mpVisible()[0]?.i ?? 0;
+  renderMp(true);
+}
+function renderMp(movePage) {
+  const vis = mpVisible(), done = mp.filter((m) => m.decision).length;
+  $("#mbar").style.width = `${mp.length ? (100 * done) / mp.length : 0}%`;
+  $("#mprog").textContent = `${done} of ${mp.length} decided`;
+  const dot = (d) => !d ? '<span class="dot s-none">·</span>' : d.decision === "not_a_misprint" ? '<span class="dot s-disp" title="not a misprint">✗</span>'
+    : `<span class="dot s-done" title="${esc(DECISION_TEXT[d.decision])}">${d.decision === "corrected" ? "✎" : "✓"}</span>`;
+  let last = null, list = "";
+  for (const { m, i } of vis) {
+    const head = `${m.book} · ${m.lesson}`;
+    if (head !== last) { list += `<h3>${esc(head)}</h3>`; last = head; }
+    list += `<button class="rec${i === mi ? " sel" : ""}" data-i="${i}">${dot(m.decision)}<span class="t">${esc(m.where)} · ${esc(m.field)}</span></button>`;
+  }
+  $("#list").innerHTML = list || '<p class="muted" style="padding:8px">Nothing here. Change the filters above.</p>';
+  $("#list").querySelectorAll(".rec").forEach((b) => (b.onclick = () => { mi = Number(b.dataset.i); renderMp(true); }));
+  const m = mp[mi];
+  if (!m || !vis.some((x) => x.i === mi)) { $("#detail").innerHTML = '<div class="card"><h2>Nothing to show</h2><div class="muted">Every misprint in this view has a decision.</div></div>'; return; }
+  const d = m.decision, me = meNow();
+  const facts = [m.source, m.class !== "on a book record" ? m.class : "", m.confidence ? `confidence ${m.confidence}` : ""].filter(Boolean).join(" · ");
+  $("#detail").innerHTML = `<div class="card">
+    <div class="muted">${esc(m.book)} · ${esc(m.lesson)} · printed p.${esc(m.printed_page ?? "?")} · found by ${esc(facts)}</div>
+    <h2>${esc(m.where)}: ${esc(m.field)}</h2>
+    ${m.stem ? `<div class="quote">${esc(m.stem)}</div>` : ""}
+    <div class="vs">
+      <div class="printed"><span class="label">The book prints</span><b>${esc(m.printed || "—")}</b></div>
+      <div class="meant"><span class="label">It should be</span><b>${m.intended ? esc(m.intended) : '<span class="muted" style="font-size:14px;font-weight:400">No correction proposed: give one with “Different correction”.</span>'}</b></div>
+    </div>
+    ${m.why ? `<div class="why"><span class="label">How we know</span><br>${esc(m.why)}</div>` : ""}
+    ${m.in_bank ? `<dl><dt>question today</dt><dd>${esc(m.in_bank)}</dd></dl>` : ""}
+    <div class="who">${d ? `<b>${esc(DECISION_TEXT[d.decision])}</b> by ${esc(d.by)} on ${esc(d.at)}${d.decision === "corrected" ? `: meant <b>${esc(d.intended)}</b>` : ""}${d.note ? ` · ${esc(d.note)}` : ""}. Deciding again records a new decision.` : "Not decided yet"}</div>
+    <div class="actions">
+      <button class="confirm" id="mc" ${!me || !m.intended ? "disabled" : ""}>Misprint confirmed (c)</button>
+      <button id="md" ${!me ? "disabled" : ""}>Different correction (d)</button>
+      <button class="dispute" id="mn" ${!me ? "disabled" : ""}>Not a misprint (n)</button>
+      <span class="grow"></span><button id="mprev">‹ Prev (k)</button><button id="mnext">Next (j) ›</button>
+    </div>
+    ${!me ? '<div class="muted" style="margin-top:8px">Type your initials at the top to decide.</div>' : ""}
+    <form class="flag-form" id="mdform">
+      <label>What the book means <input id="mdint" style="width:100%" value="${esc(m.intended || m.printed || "")}"></label>
+      <label>Note (optional) <input id="mdnote" style="width:100%"></label>
+      <div class="actions"><button class="confirm" type="submit">Record correction</button><button type="button" id="mdcancel">Cancel</button></div>
+    </form>
+    <div class="muted" style="margin-top:8px">Decisions are kept in groundtruth/${esc(m.book)}/misprint-decisions.json${m.source === "ground truth" ? "; on a ground-truth record, a correction or “not a misprint” also changes the record" : ""}. What a confirmed misprint does to the question students see is waiting on Samuel.</div>
+  </div>`;
+  renderMathInElement($("#detail"), { delimiters: [{ left: "$", right: "$", display: false }], throwOnError: false });
+  $("#mc").onclick = () => decide("confirmed");
+  $("#md").onclick = openCorrection;
+  $("#mn").onclick = () => decide("not_a_misprint");
+  $("#mprev").onclick = () => mpMove(-1); $("#mnext").onclick = () => mpMove(1);
+  $("#mdcancel").onclick = () => $("#mdform").classList.remove("open");
+  $("#mdform").onsubmit = (e) => { e.preventDefault(); decide("corrected", $("#mdint").value.trim(), $("#mdnote").value.trim()); };
+  $("#list .rec.sel")?.scrollIntoView({ block: "nearest" });
+  if (movePage && m.printed_page) {
+    offset = m.pdf_page && m.printed_page ? m.pdf_page - m.printed_page : 0;
+    page = m.printed_page; loadPdf(`/pdf?book=${encodeURIComponent(m.book)}`);
+  }
+}
+function openCorrection() { if (!meNow() || !$("#mdform")) return; $("#mdform").classList.add("open"); $("#mdint").focus(); $("#mdint").select(); }
+function mpMove(dir) {
+  const vis = mpVisible().map((x) => x.i); if (!vis.length) return;
+  let p = vis.indexOf(mi); p = p < 0 ? 0 : Math.min(Math.max(p + dir, 0), vis.length - 1);
+  mi = vis[p]; renderMp(true);
+}
+async function decide(decision, intended, note) {
+  const m = mp[mi]; if (!m || !meNow()) return;
+  $("#saved").textContent = "Saving…";
+  const res = await fetch("/api/misprint-decision", { method: "POST", headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ book: m.book, ref: m.ref, decision, intended, note, by: meNow() }) });
+  const out = await res.json().catch(() => ({}));
+  if (!res.ok) { $("#saved").textContent = "Save failed: " + (out.error || res.status); return; }
+  $("#saved").textContent = `Saved ${new Date().toLocaleTimeString()}`;
+  m.decision = out.decision;
+  if (decision === "corrected") m.intended = out.decision.intended;
+  const vis = mpVisible().map((x) => x.i);
+  mi = vis.find((i) => i > mi) ?? vis[0] ?? mi; // the next one in this view
+  renderMp(true);
+}
+
+/* ---------- boot ---------- */
+$("#me").value = store.get("gt-me") || "";
+$("#me").oninput = () => { store.set("gt-me", meNow()); if (view === "label") renderAll(); else if (view === "misprints") renderMp(false); };
+show(location.hash.slice(1) in TASKS ? location.hash.slice(1) : "home");
 
 document.addEventListener("keydown", (e) => {
   if (["INPUT", "TEXTAREA", "SELECT"].includes(e.target.tagName) || editing || e.metaKey || e.ctrlKey) return;
+  if (view === "misprints") {
+    if (e.key === "j") mpMove(1); else if (e.key === "k") mpMove(-1);
+    else if (e.key === "c" && !$("#mc")?.disabled) decide("confirmed");
+    else if (e.key === "d") { e.preventDefault(); openCorrection(); }
+    else if (e.key === "n" && meNow()) decide("not_a_misprint");
+    return;
+  }
+  if (view !== "label") return;
   if (e.key === "j") move(1); else if (e.key === "k") move(-1);
   else if (e.key === "c") confirm_(); else if (e.key === "f") { e.preventDefault(); openFlag(); }
   else if (e.key === "e") { e.preventDefault(); startEdit(); }
