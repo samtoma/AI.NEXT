@@ -179,7 +179,7 @@ Type your initials at the top. The home page has four tasks; pick one and you se
 | **Label extraction** | built | Check each extracted record against the page: confirm, correct, flag, mark a misprint, or label it not in the book. Partial is fine. | Labelled records go into this folder's ground truth (`<book>/…`, created on the first label) |
 | **Misprints** | built | Decide every mistake the book prints: misprint confirmed, a different correction, or not a misprint | `<book>/misprint-decisions.json`, append-only (a changed mind is a new entry) |
 | Generated answers | not built | Review every generated answer | — |
-| Generated content | not built | Review every generated question, widget and misconception (the admin console's Review page meanwhile) | — |
+| **Generated content** | built | Review every generated question, widget question, widget mapping and misconception, each beside the book item it was made from: approve, needs fix (with a note and a correction), or reject | `services/extraction/reviews/<book>/generated-content.json`, append-only |
 
 **Label extraction.** A lesson's records come from the pipeline's book record
 (`services/extraction/book-records/<book>/<slug>.json`) when there is one. What you label is written into
@@ -205,6 +205,17 @@ shows what the book prints beside what it should be, and how we know.
 
 On a ground-truth record, a different correction or "not a misprint" also changes the record. What a
 confirmed misprint does to the question students see is waiting on Samuel.
+
+**Generated content.** It reads the files each book config names under `generated` (`services/extraction/books/<book>.json`):
+the generated and widget question banks and the misconception catalogue. Each widget's "this pattern means that
+misconception" rules are reviewed one by one as **widget mappings**. Small tabs switch between the four kinds, and each
+shows how many are left. Above every item is what it was made from in the book: a question's parent book question,
+a misconception's book questions and what students answered on them, and the objective it teaches. The printed
+page is shown beside it.
+- **Approve** (`a`), **Needs fix** (`f`: say what, and optionally suggest the correction), **Reject** (`x`).
+- Each decision records the item's fingerprint, so an item the pipeline changes after you decided comes back as
+  "changed since it was decided".
+- Nothing changes for students until a pipeline step reads the decisions. The admin console is not touched.
 
 Refresh the Grade 10 candidates after a new G2 run (from `services/extraction/`):
 

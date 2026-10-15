@@ -65,6 +65,12 @@
   .vs .meant { background: var(--accent-wash); }
   .label { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-faint); }
   .why { border-left: 4px solid var(--line); padding-left: 10px; margin: 8px 0; }
+  .gen { border-left: 4px solid var(--noor-action); padding-left: 10px; margin: 12px 0 8px; }
+  .gen ol, .why ol { margin: 4px 0; padding-left: 20px; }
+  .subtabs { display: inline-flex; gap: 6px; flex-wrap: wrap; }
+  .subtabs button { font-size: 12px; padding: 2px 10px; border-radius: var(--play-radius-pill); box-shadow: none; }
+  .subtabs button.on { background: var(--ink); color: var(--paper); }
+  #list h3 { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-faint); margin: 14px 6px 4px; }
   .pane { overflow: auto; padding: 12px 16px; }
   #list { border-right: var(--play-stroke-sm) solid var(--line-soft); padding: 8px; }
   #list h3 { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-faint); margin: 14px 6px 4px; }
@@ -663,20 +669,23 @@ $("#next").onclick = () => showPage(page + 1);
 $("#pg").onchange = () => showPage(Number($("#pg").value));
 
 /* ---------- the tasks ---------- */
-const TASKS = { home: "", label: "› Label extraction", misprints: "› Misprints" };
+const TASKS = { home: "", label: "› Label extraction", misprints: "› Misprints", generated: "› Generated content" };
 function show(v) {
   view = v; editing = false;
   $("#crumb").textContent = TASKS[v] ?? "";
   $("#home").hidden = v !== "home"; $("#work").hidden = v === "home";
   $("#tools").innerHTML = "";
   if (location.hash.slice(1) !== v) history.replaceState(null, "", "#" + v);
-  return v === "home" ? renderHome() : v === "label" ? openLabel() : openMisprints();
+  return v === "home" ? renderHome() : v === "label" ? openLabel() : v === "misprints" ? openMisprints() : openGenerated();
 }
 $("#homelink").onclick = () => show("home");
 window.addEventListener("hashchange", () => { const v = location.hash.slice(1); if (v in TASKS && v !== view) show(v); });
 
 async function renderHome() {
-  const [ls, ms] = await Promise.all([getJSON("/api/lessons"), getJSON("/api/misprints")]);
+  const [ls, ms, gbooks] = await Promise.all([getJSON("/api/lessons"), getJSON("/api/misprints"), getJSON("/api/generated/books")]);
+  const gs = (await Promise.all(gbooks.map((b) => getJSON(`/api/generated?book=${encodeURIComponent(b)}`)))).flat();
+  const gOpen = gs.filter((g) => g.state === "open" || g.state === "changed");
+  const gCount = (k) => gOpen.filter((g) => g.kind === k).length;
   const done = ls.reduce((n, l) => n + l.labelled, 0), all = ls.reduce((n, l) => n + l.total, 0);
   const open = ms.filter((m) => !m.decision).length, books = [...new Set(ms.map((m) => m.book))];
   $("#home").innerHTML = `
@@ -699,10 +708,16 @@ async function renderHome() {
     </div></div>
     <div class="group"><h3>Generated: review everything the pipeline wrote</h3><div class="cards">
       <button class="task" disabled><span class="t">Generated answers</span><span class="muted">Answers written for exercises the book leaves unanswered. Every one is reviewed.</span><span class="muted"><b>Not built yet:</b> the step that generates answers does not exist.</span></button>
-      <button class="task" disabled><span class="t">Generated content</span><span class="muted">Generated questions, widgets and misconceptions. Every one is reviewed.</span><span class="muted"><b>Not built yet.</b> Reviewed in the admin console's Review page meanwhile.</span></button>
+      <button class="task" id="t-gen">
+        <span class="t">Generated content</span>
+        <span class="muted">Generated questions, widgets, widget mappings and misconceptions, each beside the book item it was made from. Every one is reviewed.</span>
+        <span class="n">${gOpen.length.toLocaleString()} <small>to review</small></span>
+        <span class="muted">${gCount("question").toLocaleString()} questions · ${gCount("widget")} widgets · ${gCount("mapping")} mappings · ${gCount("misconception")} misconceptions</span>
+      </button>
     </div></div>`;
   $("#t-label").onclick = () => show("label");
   $("#t-mis").onclick = () => show("misprints");
+  $("#t-gen").onclick = () => show("generated");
 }
 
 /* ---------- Label extraction ---------- */
@@ -868,9 +883,174 @@ async function decide(decision, intended, note) {
   renderMp(true);
 }
 
+/* ---------- Generated content ---------- */
+let gen = [], gi = -1, gDetail = null;
+const GKIND = { question: "Generated question", widget: "Widget question", mapping: "Widget mapping", misconception: "Misconception" };
+const GSTATE = { approve: "Approved", fix_requested: "Fix requested", reject: "Rejected", changed: "Changed since it was decided", open: "Not reviewed yet" };
+const md = (t) => esc(t ?? "").replace(/\*\*([^*]+)\*\*/g, "<b>$1</b>");
+const stepsOf = (arr) => (arr || []).map((s) => (typeof s === "string" ? s : s.text_md ?? s.text ?? JSON.stringify(s)));
+const olist = (arr) => (arr && arr.length ? `<ol>${stepsOf(arr).map((s) => `<li>${md(s)}</li>`).join("")}</ol>` : '<span class="muted">none</span>');
+function gVisible() {
+  const k = $("#gkind").dataset.kind, l = $("#glesson").value, w = $("#gshow").value;
+  return gen.map((g, i) => ({ g, i })).filter(({ g }) => g.kind === k && (l === "all" || g.lesson === l)
+    && (w === "all" || (w === "todo" ? g.state === "open" || g.state === "changed" : w === "fix" ? g.state === "fix_requested" : g.state !== "open")));
+}
+async function openGenerated() {
+  const books = await getJSON("/api/generated/books");
+  $("#tools").innerHTML = `
+    <label>Book <select id="gbook">${books.map((b) => `<option>${esc(b)}</option>`).join("")}</select></label>
+    <span id="gkind" class="subtabs"></span>
+    <label>Lesson <select id="glesson"></select></label>
+    <label>Show <select id="gshow"><option value="todo">To review</option><option value="fix">Fix requested</option><option value="done">Decided</option><option value="all">All</option></select></label>
+    <div class="progress"><div class="bar"><div id="gbar" style="width:0"></div></div><div id="gprog" class="muted"></div></div>
+    <span class="grow"></span>
+    <span class="kbd muted">j/k move · a approve · f needs fix · x reject</span>`;
+  const saved = store.get("rv-gbook"); if (saved && books.includes(saved)) $("#gbook").value = saved;
+  $("#gbook").onchange = () => { store.set("rv-gbook", $("#gbook").value); $("#gbook").blur(); loadGenerated(); };
+  $("#gshow").value = store.get("rv-gshow") || "todo";
+  $("#gshow").onchange = () => { store.set("rv-gshow", $("#gshow").value); $("#gshow").blur(); gi = -1; renderGen(); };
+  $("#glesson").onchange = () => { $("#glesson").blur(); gi = -1; renderGen(); };
+  $("#gkind").dataset.kind = store.get("rv-gkind") || "question";
+  await loadGenerated();
+}
+async function loadGenerated() {
+  $("#list").innerHTML = '<p class="muted" style="padding:8px">Loading…</p>';
+  gen = await getJSON(`/api/generated?book=${encodeURIComponent($("#gbook").value)}`);
+  const lessons = [...new Set(gen.map((g) => g.lesson))];
+  $("#glesson").innerHTML = `<option value="all">All lessons</option>${lessons.map((l) => `<option>${esc(l)}</option>`).join("")}`;
+  gi = -1; renderGen();
+}
+function renderGen() {
+  const kinds = Object.keys(GKIND), cur = $("#gkind").dataset.kind;
+  $("#gkind").innerHTML = kinds.map((k) => {
+    const all = gen.filter((g) => g.kind === k), open = all.filter((g) => g.state === "open" || g.state === "changed").length;
+    return `<button type="button" class="${k === cur ? "on" : ""}" data-k="${k}">${GKIND[k]}s · ${open}</button>`;
+  }).join("");
+  $("#gkind").querySelectorAll("button").forEach((b) => (b.onclick = () => { $("#gkind").dataset.kind = b.dataset.k; store.set("rv-gkind", b.dataset.k); gi = -1; renderGen(); }));
+  const ofKind = gen.filter((g) => g.kind === cur), done = ofKind.filter((g) => g.state !== "open" && g.state !== "changed").length;
+  $("#gbar").style.width = `${ofKind.length ? (100 * done) / ofKind.length : 0}%`;
+  $("#gprog").textContent = `${done} of ${ofKind.length} ${GKIND[cur].toLowerCase()}s reviewed`;
+  const vis = gVisible();
+  if (!vis.some((x) => x.i === gi)) gi = vis[0]?.i ?? -1;
+  const dot = (s) => s === "approve" ? '<span class="dot s-done">✓</span>' : s === "reject" ? '<span class="dot s-disp">✗</span>'
+    : s === "fix_requested" ? '<span class="dot s-one">✎</span>' : s === "changed" ? '<span class="dot s-one" title="changed since it was decided">!</span>' : '<span class="dot s-none">·</span>';
+  let last = null, html = "";
+  for (const { g, i } of vis.slice(0, 600)) {
+    if (g.lesson !== last) { html += `<h3>${esc(g.lesson)}</h3>`; last = g.lesson; }
+    html += `<button class="rec${i === gi ? " sel" : ""}" data-i="${i}">${dot(g.state)}<span class="t">${esc(g.title)}</span></button>`;
+  }
+  if (vis.length > 600) html += `<p class="muted" style="padding:8px">${vis.length - 600} more: pick a lesson to narrow the list.</p>`;
+  $("#list").innerHTML = html || '<p class="muted" style="padding:8px">Nothing here. Change the filters above.</p>';
+  $("#list").querySelectorAll(".rec").forEach((b) => (b.onclick = () => { gi = Number(b.dataset.i); renderGen(); }));
+  $("#list .rec.sel")?.scrollIntoView({ block: "nearest" });
+  if (gi < 0) { $("#detail").innerHTML = '<div class="card"><h2>Nothing to show</h2><div class="muted">Every item in this view has a decision.</div></div>'; return; }
+  showGenItem(gen[gi]);
+}
+function bookBlock(d) {
+  const obj = d.objective ? `<div class="muted" style="margin-bottom:6px">Objective <b>${esc(d.objective.label)}</b>${d.objective.description ? ` · ${md(d.objective.description)}` : ""}</div>` : "";
+  if (!d.book_items.length) return `<div class="why"><span class="label">Made from the book</span><br>${obj || '<span class="muted">No book item recorded for it.</span>'}</div>`;
+  return `<div class="why"><span class="label">Made from the book${d.book_items.length > 1 ? ` (${d.book_items.length} items)` : ""}</span>${obj}
+    ${d.book_items.map((b) => b.missing ? `<div class="muted">${esc(b.id)}: not in the book bundles</div>` : `
+      <div style="margin:6px 0 10px">
+        <div class="muted" style="font-size:12px">${esc(b.id.split(":").pop())} · printed p.${esc(b.source_page ?? "?")}${b.source === "seed" ? " · as printed" : b.source ? ` · ${esc(b.source)}` : ""}${b.solution_provenance ? ` · solution: ${esc(b.solution_provenance)}` : ""}</div>
+        <div>${md(b.stem)}</div>
+        ${b.choice_text ? `<div class="muted">Students who answer <b>${md(b.choice_text)}</b></div>` : `<div>Answer: <b>${md(b.answer)}</b></div>`}
+        ${b.solution && b.solution.length ? `<details><summary class="muted">Its solution</summary>${olist(b.solution)}</details>` : ""}
+      </div>`).join("")}</div>`;
+}
+function choicesBlock(it, d) {
+  const ch = it.choices;
+  if (Array.isArray(ch)) {
+    return `<div style="margin-top:6px">${ch.map((c) => `<div>${c.key === it.correct_answer ? "<b>✓</b>" : "&nbsp;&nbsp;"} <b>${esc(c.key)}</b> ${md(c.text)}${c.misconception_id ? ` <span class="tag" title="${esc(c.misconception_id)}">${esc(d.extra.misconceptions?.[c.misconception_id]?.label || c.misconception_id.split(":").pop())}</span>` : ""}</div>`).join("")}</div>`;
+  }
+  return "";
+}
+function generatedBlock(d) {
+  const it = d.item;
+  if (d.kind === "question") return `<div class="gen"><span class="label">Generated question</span> <span class="muted">${esc(it.tier || "")} · ${esc(it.question_type || "")}${it.family ? ` · family ${esc(it.family)}` : ""}</span>
+    <div style="margin-top:6px">${md(it.stem)}</div>${choicesBlock(it, d)}
+    <div style="margin-top:6px">Answer: <b>${md(it.correct_answer)}</b></div>${olist(it.canonical_solution)}
+    ${it.source_note ? `<div class="muted">${md(it.source_note)}</div>` : ""}</div>`;
+  if (d.kind === "widget") {
+    const c = it.choices || {};
+    return `<div class="gen"><span class="label">Widget question</span> <span class="muted">${esc(it.tier || "")} · ${esc(c.kind || "")}</span>
+      <div style="margin-top:6px">${md(it.stem)}</div>
+      <div class="muted" style="margin-top:6px">Set-up</div><pre class="kbd" style="white-space:pre-wrap">${esc(JSON.stringify(c.spec, null, 1))}</pre>
+      <div class="muted">When the student's construction shows…</div>
+      <ul>${(c.diagnostics || []).map((g) => `<li><b>${esc(g.predicate)}</b> → ${esc(d.extra.misconceptions?.[g.misconception_id]?.label || g.misconception_id)}</li>`).join("") || "<li class=muted>no diagnostics</li>"}</ul>
+      <div>Answer: <b>${md(it.correct_answer)}</b></div>${olist(it.canonical_solution)}</div>`;
+  }
+  if (d.kind === "mapping") {
+    const w = d.extra.widget || {}, m = d.extra.misconception || {};
+    return `<div class="gen"><span class="label">Widget mapping: one claim</span>
+      <div style="margin-top:6px">In the widget <span class="muted">(${esc(w.id || it.widget_id)})</span>: ${md(w.stem)}</div>
+      <div style="margin-top:8px">When the student's construction shows <b>${esc(it.predicate)}</b>, the tutor names the misconception
+        <b>${esc(m.label || it.misconception_id)}</b> and shows its refutation.</div>
+      ${m.description ? `<div class="muted" style="margin-top:6px">${md(m.description)}</div>` : ""}
+      ${m.refutation ? `<div class="muted" style="margin-top:6px">Refutation</div>${olist(m.refutation)}` : ""}</div>`;
+  }
+  return `<div class="gen"><span class="label">Misconception</span> <span class="muted">${esc(it.kind || "")}</span>
+    <h3 style="margin:6px 0">${md(it.label)}</h3><div>${md(it.description)}</div>
+    ${it.signal ? `<div style="margin-top:6px"><span class="muted">How it shows:</span> ${md(it.signal)}</div>` : ""}
+    <div class="muted" style="margin-top:6px">Refutation a student is shown</div>${olist(it.refutation)}
+    ${it.provenance?.verifier_reason ? `<div class="muted">Verifier: ${md(it.provenance.verifier_reason)}</div>` : ""}</div>`;
+}
+async function showGenItem(g) {
+  const book = $("#gbook").value;
+  gDetail = await getJSON(`/api/generated/item?book=${encodeURIComponent(book)}&kind=${g.kind}&ref=${encodeURIComponent(g.ref)}`);
+  const d = gDetail, dec = d.decision, me = meNow();
+  $("#detail").innerHTML = `<div class="card">
+    <div class="muted">${esc(GKIND[d.kind])} · ${esc(book)} · ${esc(g.lesson)} · <span style="font-family:var(--stack-mono),monospace;font-size:12px">${esc(d.ref)}</span>${d.item.status ? ` · ${esc(d.item.status)} for students` : ""}</div>
+    ${bookBlock(d)}
+    ${generatedBlock(d)}
+    <div class="who">${dec ? `<b>${esc(GSTATE[dec.decision])}</b> by ${esc(dec.by)} on ${esc(dec.at)}${dec.note ? `: ${md(dec.note)}` : ""}${d.changed ? ' · <b>it has changed since</b>, so it is back for review' : ""}` : "Not reviewed yet"}</div>
+    <div class="actions">
+      <button class="confirm" id="ga" ${!me ? "disabled" : ""}>Approve (a)</button>
+      <button id="gf" ${!me ? "disabled" : ""}>Needs fix (f)</button>
+      <button class="dispute" id="gx" ${!me ? "disabled" : ""}>Reject (x)</button>
+      <span class="grow"></span><button id="gprev">‹ Prev (k)</button><button id="gnext">Next (j) ›</button>
+    </div>
+    ${!me ? '<div class="muted" style="margin-top:8px">Type your initials at the top to review.</div>' : ""}
+    <form class="flag-form" id="gform">
+      <label>What needs fixing? <textarea id="gnote" rows="2" style="width:100%" required></textarea></label>
+      <label>Suggested correction (optional) <textarea id="gcorr" rows="2" style="width:100%"></textarea></label>
+      <div class="actions"><button class="confirm" type="submit">Record: needs fix</button><button type="button" id="gcancel">Cancel</button></div>
+    </form>
+    <div class="muted" style="margin-top:8px">Decisions are kept in services/extraction/reviews/${esc(book)}/generated-content.json. Nothing changes for students until the pipeline reads them; the admin console is not touched.</div>
+  </div>`;
+  renderMathInElement($("#detail"), { delimiters: [{ left: "$", right: "$", display: false }], throwOnError: false });
+  $("#ga").onclick = () => genDecide("approve"); $("#gx").onclick = () => genDecide("reject"); $("#gf").onclick = openGenFix;
+  $("#gprev").onclick = () => genMove(-1); $("#gnext").onclick = () => genMove(1);
+  $("#gcancel").onclick = () => $("#gform").classList.remove("open");
+  $("#gform").onsubmit = (e) => { e.preventDefault(); genDecide("fix_requested", $("#gnote").value.trim(), $("#gcorr").value.trim()); };
+  if (d.printed_page) {
+    offset = d.pdf_page ? d.pdf_page - d.printed_page : 0;
+    page = d.printed_page; loadPdf(`/pdf?book=${encodeURIComponent(book)}`);
+  }
+}
+function openGenFix() { if (!meNow() || !$("#gform")) return; $("#gform").classList.add("open"); $("#gnote").focus(); }
+function genMove(dir) {
+  const vis = gVisible().map((x) => x.i); if (!vis.length) return;
+  let p = vis.indexOf(gi); p = p < 0 ? 0 : Math.min(Math.max(p + dir, 0), vis.length - 1);
+  gi = vis[p]; renderGen();
+}
+async function genDecide(decision, note, correction) {
+  const g = gen[gi]; if (!g || !meNow()) return;
+  $("#saved").textContent = "Saving…";
+  const res = await fetch("/api/generated/decision", { method: "POST", headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ book: $("#gbook").value, kind: g.kind, ref: g.ref, decision, note, correction, by: meNow() }) });
+  const out = await res.json().catch(() => ({}));
+  if (!res.ok) { $("#saved").textContent = "Save failed: " + (out.error || res.status); return; }
+  $("#saved").textContent = `Saved ${new Date().toLocaleTimeString()}`;
+  g.state = decision;
+  const vis = gVisible().map((x) => x.i);
+  gi = vis.find((i) => i > gi) ?? vis[0] ?? -1; // the next one in this view
+  renderGen();
+}
+
 /* ---------- boot ---------- */
 $("#me").value = store.get("gt-me") || "";
-$("#me").oninput = () => { store.set("gt-me", meNow()); if (view === "label") renderAll(); else if (view === "misprints") renderMp(false); };
+$("#me").oninput = () => { store.set("gt-me", meNow()); if (view === "label") renderAll(); else if (view === "misprints") renderMp(false); else if (view === "generated" && gi >= 0) showGenItem(gen[gi]); };
 show(location.hash.slice(1) in TASKS ? location.hash.slice(1) : "home");
 
 document.addEventListener("keydown", (e) => {
@@ -880,6 +1060,13 @@ document.addEventListener("keydown", (e) => {
     else if (e.key === "c" && !$("#mc")?.disabled) decide("confirmed");
     else if (e.key === "d") { e.preventDefault(); openCorrection(); }
     else if (e.key === "n" && meNow()) decide("not_a_misprint");
+    return;
+  }
+  if (view === "generated") {
+    if (e.key === "j") genMove(1); else if (e.key === "k") genMove(-1);
+    else if (e.key === "a" && meNow()) genDecide("approve");
+    else if (e.key === "f") { e.preventDefault(); openGenFix(); }
+    else if (e.key === "x" && meNow()) genDecide("reject");
     return;
   }
   if (view !== "label") return;

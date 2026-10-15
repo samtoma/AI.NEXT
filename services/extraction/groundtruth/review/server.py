@@ -11,7 +11,10 @@ Tasks (docs/design/review-console.md, built here as a local tool):
   Misprints         decide every mistake the book prints: the pipeline's candidates
                     (book-records/<book>/misprint-candidates.json) and the misprints on book records.
                     Decisions are appended to groundtruth/<book>/misprint-decisions.json.
-  Generated answers, Generated content: not built yet.
+  Generated content every generated question, widget question, widget mapping and misconception the book
+                    configs name, each beside the book item it was made from; decisions are appended to
+                    reviews/<book>/generated-content.json (generated.py).
+  Generated answers: not built yet.
 
 Everything is a file in the repository, so a review is committed like any other change. Serves on 127.0.0.1
 only. The book PDFs are not in git (docs/Source/*.pdf is ignored); the server looks for each in docs/Source/,
@@ -26,6 +29,9 @@ from datetime import date
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import generated  # noqa: E402
 
 HERE = Path(__file__).resolve().parent
 GT_DIR = HERE.parent
@@ -341,6 +347,12 @@ class Handler(BaseHTTPRequestHandler):
                 return self.send_json(lessons())
             if u.path == "/api/misprints":
                 return self.send_json(misprints())
+            if u.path == "/api/generated/books":
+                return self.send_json(generated.books())
+            if u.path == "/api/generated":
+                return self.send_json(generated.summary(q["book"]))
+            if u.path == "/api/generated/item":
+                return self.send_json(generated.detail(q["book"], q["kind"], q["ref"]))
             if u.path == "/api/file":
                 return self.send_json(json.loads(resolve_key(q["path"]).read_text()))
             if u.path == "/pdf":
@@ -369,6 +381,8 @@ class Handler(BaseHTTPRequestHandler):
                 return self.send_json({"ok": True, "path": create_ground_truth(q["book"], q["slug"], body)})
             if u.path == "/api/misprint-decision":
                 return self.send_json({"ok": True, "decision": decide_misprint(body)})
+            if u.path == "/api/generated/decision":
+                return self.send_json({"ok": True, "decision": generated.decide(body)})
         except (FileNotFoundError, KeyError, ValueError, StopIteration) as e:
             return self.send_json({"error": str(e)}, 400)
         self.send_json({"error": "not found"}, 404)

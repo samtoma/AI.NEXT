@@ -1,6 +1,6 @@
 # Design: one review tool, four tasks
 
-**Status:** proposal (Tamer, 2026-10-15). **Update, same day:** Tamer chose a separate tool over the admin console, kept local for now, and left the console as it is. The four tasks below are being built into the local review tool (`services/extraction/groundtruth/review/`). Label extraction and Misprints are built; Generated answers and Generated content are not. Read "the console" below as "the review tool"; where this document says what changes in the console, nothing changes there yet. It replaces the earlier `book-misprint-backlog.md`.
+**Status:** proposal (Tamer, 2026-10-15). **Update, same day:** Tamer chose a separate tool over the admin console, kept local for now, and left the console as it is. The four tasks below are being built into the local review tool (`services/extraction/groundtruth/review/`). Label extraction, Misprints and Generated content are built; Generated answers is not (its generation step does not exist). Read "the console" below as "the review tool"; where this document says what changes in the console, nothing changes there yet. It replaces the earlier `book-misprint-backlog.md`.
 It is console work, so it needs requirements (beside FR-4501…FR-4509 in
 `specs/003-curriculum-tracks/spec.md`, through the `requirement` skill) and Samuel's answers to the
 questions at the end before any code is written.
