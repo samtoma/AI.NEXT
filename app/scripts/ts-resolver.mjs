@@ -54,6 +54,12 @@ const STUBS = {
     stub: pathToFileURL(path.join(HERE, "stubs", "next-headers.mjs")).href,
     entrypoints: [
       "capture-prompts.mts",
+      // builds every compiled lesson with the real `getLessonData` and
+      // `buildLessonContext` against a database, with no student in scope (the
+      // capture-prompts convention), to prove the tutor can teach it after a
+      // compiled load (services/extraction/compile_book_records.py). Same
+      // `lib/lesson.ts` -> `auth/principal.ts` import; no student, no principal.
+      "lesson-smoke.mts",
       // renders the REAL lesson and Ask builders over the fake pool to prove
       // an `answer_only` question's working never reaches the tutor (Samuel's
       // G2 answer 22). Same `lib/lesson.ts` -> `auth/principal.ts` import; no

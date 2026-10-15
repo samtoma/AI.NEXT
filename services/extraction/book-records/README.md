@@ -28,7 +28,25 @@ printed or generated (approved, or agreed by both readings). Today's questions, 
 widgets, misconceptions and links for that lesson are left out; every other lesson is unchanged. Marking uses
 what the app has: numbers by its number check, values, points and sets by its marker, names and yes/no by its
 plain check. What could not become a question is listed in `compiled/<book>/compile-report.json`. How Noor teaches
-does not change; the book's statements are not used yet. A trial database with Unit 1 compiled:
+does not change; the book's statements are not used yet.
+
+The compile step also does what the old assembly did on the way to the tutor, and refuses to write a bundle that
+fails:
+- **notation**, by the book's printed notation (`printed_notation.decimal` in the book config, default "point"):
+  list commas spaced, `(x; y)` → `(x, y)`, the Arabic separators read as commas, aligned maths made inline;
+- **KaTeX**: everything a student or the tutor reads, rendered with the app's own KaTeX. A question that fails is
+  held; an objective that fails stops the compile;
+- **guards**: every bundle validated against the app's bundle model, unknown fields or values refused, and no
+  misprint's printed text allowed into a question it was corrected for;
+- **identity**: lessons no existing bundle holds (a new curriculum) get their own program, course and module nodes.
+  The report warns when the course is not in the app's course registry or a lesson has no title.
+
+After loading, check that the app can teach every compiled lesson (from `app/`):
+
+    DATABASE_URL=postgres://ainext_app:ainext_app@127.0.0.1:5432/<database> \
+      node --import ./scripts/ts-resolver.mjs scripts/lesson-smoke.mts ../services/extraction/compiled/<book>/compile-report.json
+
+A trial database with Unit 1 compiled:
 
     uv run compile_book_records.py prep3-math-en u1-1 u1-2 u1-3 u1-4
     # then load compiled/prep3-math-en/unit1.json with the book's other bundles, and the compiled generated
