@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { useRouter } from "next/navigation";
 import { authFetch } from "@/lib/auth/client-session";
 import { track } from "@/lib/ga";
 import { HEADING, STROKE, STROKE_SM, STROKE_WIDTH, cx } from "@/components/sticker";
@@ -36,7 +35,6 @@ const EXAMPLE =
   "Q7. A rectangular garden is 3 m longer than it is wide. Its area is 40 m². Find its dimensions.";
 
 export function HomeAskCard() {
-  const router = useRouter();
   const [text, setText] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [busy, setBusy] = useState(false);
@@ -81,7 +79,9 @@ export function HomeAskCard() {
       });
       if (!res.ok) throw new Error(String(res.status));
       const { askId } = await res.json();
-      router.push(`/student/ask/${askId}`);
+      // A plain navigation, not useRouter: the card is server-rendered inside
+      // the check-in, which renders without an app router in its render test.
+      window.location.assign(`/student/ask/${askId}`);
     } catch {
       setError("Something went wrong sending that. Want to try again?");
       setBusy(false);
