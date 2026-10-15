@@ -1,6 +1,7 @@
 {
   "schema": "book-record",
-  "schema_version": 1,
+  "schema_version": 2,
+  "role": "ground_truth | extraction",
   "source_document": {
     "title": "<full title as printed>",
     "publisher": "<publisher>",
@@ -37,7 +38,7 @@
   },
   "items": [
     {
-      "id": "<prefix>:learn-1",
+      "id": "<prefix>:printed-objective-1",
       "type": "printed_objective",
       "source_page": 0,
       "quote": "<a few exact words that locate it>",
@@ -45,7 +46,7 @@
       "provenance": {
         "by": "<extractor and version, or person, and date>"
       },
-      "anchor": "<extractor's block reference, if any (quote or anchor required)>",
+      "anchor": "<extractor's block reference, if any. Ground truth: quote required. Extraction: quote or anchor>",
       "review": {
         "status": "confirmed | flagged",
         "by": "<initials>",
@@ -63,7 +64,7 @@
       }
     },
     {
-      "id": "<prefix>:term-1",
+      "id": "<prefix>:key-term-1",
       "type": "key_term",
       "source_page": 0,
       "quote": "<exact words>",
@@ -73,9 +74,9 @@
       }
     },
     {
-      "id": "<prefix>:def-1",
+      "id": "<prefix>:definition-1",
       "type": "definition | rule | caution | convention | method",
-      "lo": "<prefix>:obj-n",
+      "lo": "<prefix>:objective-n",
       "source_page": 0,
       "quote": "<exact words>",
       "claim": "<the statement, in your words>",
@@ -90,9 +91,10 @@
       }
     },
     {
-      "id": "<prefix>:prompt-1",
+      "id": "<prefix>:think-1",
       "type": "open_prompt",
-      "lo": "<prefix>:obj-n",
+      "lo": "<prefix>:objective-n",
+      "belongs_to": "<optional: the example whose frame it is printed in>",
       "source_page": 0,
       "quote": "<exact words, e.g. ..., Why?>",
       "text": "<the question; say that no answer is printed>",
@@ -107,9 +109,9 @@
       }
     },
     {
-      "id": "<prefix>:ex-1",
+      "id": "<prefix>:example-1",
       "type": "worked_example",
-      "lo": "<prefix>:obj-n",
+      "lo": "<prefix>:objective-n",
       "source_page": 0,
       "quote": "<exact words of the question>",
       "stem": "<Example n: the task, maths in $...$>",
@@ -121,18 +123,27 @@
       "solution_provenance": "book_worked",
       "provenance": {
         "by": "<extractor and version, or person, and date>"
-      }
+      },
+      "misprints": [
+        {
+          "field": "<e.g. solution[1], quote>",
+          "printed": "<exactly as printed>",
+          "intended": "<what the book means>",
+          "notes": "<how we know>"
+        }
+      ],
+      "answer_figure": "<optional: figure or table id(s) when the printed answer is a drawing>"
     },
     {
       "id": "<prefix>:drill-1",
       "type": "exercise | activity",
-      "lo": "<prefix>:obj-n",
+      "lo": "<prefix>:objective-n",
       "source_page": 0,
       "quote": "<exact words of the instruction>",
       "text": "<what the exercise asks>",
       "parts": [
         {
-          "label": "a",
+          "label": "<as printed; a nested label joined with a space, e.g. First A>",
           "stem": "<the part, maths in $...$>",
           "answer": "<only if the book prints it; otherwise leave answer and solution_provenance out>",
           "solution_provenance": "book_printed | book_worked | book_online",
@@ -144,9 +155,10 @@
       }
     },
     {
-      "id": "<prefix>:fig-1",
+      "id": "<prefix>:figure-1",
       "type": "figure",
-      "lo": "<prefix>:obj-n",
+      "lo": "<prefix>:objective-n",
+      "belongs_to": "<optional: the item it is printed as part of>",
       "source_page": 0,
       "quote": "<caption or label>",
       "caption": "<what the figure shows, with every value read from it>",
@@ -159,8 +171,32 @@
       }
     },
     {
-      "id": "<prefix>:link-1",
-      "type": "linking_text | prior_knowledge",
+      "id": "<prefix>:table-1",
+      "type": "table",
+      "lo": "<prefix>:objective-n",
+      "belongs_to": "<optional: the item it is printed as part of>",
+      "source_page": 0,
+      "quote": "<exact words near or in the table>",
+      "caption": "<what the table shows, including printed row and column titles>",
+      "header": [
+        "<corner cell>",
+        "<column heading>",
+        "..."
+      ],
+      "rows": [
+        [
+          "<row label>",
+          "<cell>",
+          "..."
+        ]
+      ],
+      "provenance": {
+        "by": "<extractor and version, or person, and date>"
+      }
+    },
+    {
+      "id": "<prefix>:linking-text-1",
+      "type": "heading | linking_text | prior_knowledge",
       "source_page": 0,
       "quote": "<exact words>",
       "text": "<what it does or assumes>",
@@ -171,7 +207,7 @@
   ],
   "learning_objectives": [
     {
-      "id": "<prefix>:obj-1",
+      "id": "<prefix>:objective-1",
       "provenance": {
         "by": "<extractor and version, or person, and date>"
       },
@@ -179,7 +215,7 @@
       "description": "<can do ...>",
       "order_in_parent": 1,
       "evidence": [
-        "<at least two inventory ids, of different types>"
+        "<item ids that teach it; at least two, of different types>"
       ]
     }
   ],

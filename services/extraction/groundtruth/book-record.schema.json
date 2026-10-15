@@ -1,15 +1,19 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://noor.reletix.com/schemas/book-record/1",
+  "$id": "https://noor.reletix.com/schemas/book-record/2",
   "title": "Book record",
-  "description": "PROPOSED, pending Samuel's review. What a textbook prints for one lesson, one record per printed thing. The same format for ground truth (records a person has confirmed) and for ingestion (records an extractor produced), so the two can be compared record by record. Only what the book prints belongs here; generated or expert content (worked-out answers, wrong answers, misconceptions, prerequisites, answer-checker settings) belongs to a separate teaching layer that references these ids.",
+  "description": "PROPOSED, pending Samuel's review. What a textbook prints for one lesson, one record per printed thing. The same format for ground truth (records a person has confirmed) and for ingestion (records an extractor produced), so the two can be compared record by record. Only what the book prints belongs here; generated or expert content (worked-out answers, wrong answers, misconceptions, prerequisites, answer-checker settings) belongs to a separate teaching layer that references these ids. Rules this schema cannot express (id scheme, counting, references that must resolve) are in README.md and checked by validate.py.",
   "type": "object",
-  "required": ["schema", "schema_version", "source_document", "lesson", "items", "learning_objectives", "provenance"],
+  "required": ["schema", "schema_version", "role", "source_document", "lesson", "items", "learning_objectives", "provenance"],
   "additionalProperties": false,
   "properties": {
     "_about": { "type": "string", "description": "Free-text note, used by example files only." },
     "schema": { "const": "book-record" },
-    "schema_version": { "const": 1 },
+    "schema_version": { "const": 2 },
+    "role": {
+      "enum": ["ground_truth", "extraction"],
+      "description": "ground_truth: built and checked by people against the book; every item must carry a quote. extraction: produced by an extractor; an anchor may stand in for the quote."
+    },
     "source_document": { "$ref": "#/$defs/source_document" },
     "lesson": { "$ref": "#/$defs/lesson" },
     "items": { "type": "array", "items": { "$ref": "#/$defs/item" } },
@@ -19,16 +23,24 @@
     "open_questions": { "type": "array", "items": { "type": "string" }, "description": "Questions about the book that a person must settle." },
     "history": { "type": "array", "items": { "type": "string" }, "description": "Log of changes to the file, one line each." }
   },
+  "if": { "properties": { "role": { "const": "ground_truth" } }, "required": ["role"] },
+  "then": { "properties": { "items": { "items": { "required": ["quote"] } } } },
 
   "$defs": {
     "text": {
       "type": "string",
-      "description": "Markdown with maths as $...$, in the book's printed form (a printed decimal comma stays a comma)."
+      "description": "Markdown with maths as $...$, in the book's printed form (a printed decimal comma stays a comma; a misprint stays as printed and is recorded in misprints)."
     },
     "record_id": {
       "type": "string",
       "pattern": "^[a-z0-9][a-z0-9.-]*:[a-z0-9][a-z0-9.-]*$",
-      "description": "<lesson slug>:<local id>. The local id follows the book's printed numbering where there is one (we-2, ex-1, drill-1); unnumbered items are numbered in page order."
+      "description": "<lesson slug>:<local id>. Local ids follow README 'Ids': the printed label and number (example-2, drill-3), or the type and a lesson-wide count (rule-4). Frozen once the record is reviewed."
+    },
+    "record_ids": {
+      "oneOf": [
+        { "$ref": "#/$defs/record_id" },
+        { "type": "array", "items": { "$ref": "#/$defs/record_id" }, "minItems": 1 }
+      ]
     },
     "page": { "type": "integer", "minimum": 1, "description": "Printed page number (PDF page = printed page + source_document.page_offset)." },
 
@@ -125,7 +137,7 @@
 
     "notation": {
       "type": "object",
-      "description": "Where a printed form needs reading: the form as printed and what it means.",
+      "description": "Where a printed form needs reading: the form as printed and what it means. Not for misprints.",
       "required": ["printed", "normalised"],
       "additionalProperties": false,
       "properties": {
@@ -135,21 +147,36 @@
       }
     },
 
+    "misprint": {
+      "type": "object",
+      "description": "A mistake the book prints, confirmed by a person. The record keeps the printed form; the scorer accepts either reading at this spot; the teaching layer uses the intended one. Spelling slips in prose that change no meaning are transcribed as printed and need no entry.",
+      "required": ["field", "printed", "intended"],
+      "additionalProperties": false,
+      "properties": {
+        "field": { "type": "string", "description": "Where in this record the misprint sits, e.g. 'quote', 'stem', 'solution[1]', 'caption', 'rows[2][1]'." },
+        "printed": { "type": "string", "description": "Exactly as printed." },
+        "intended": { "type": "string", "description": "What the book means." },
+        "notes": { "type": "string", "description": "How we know, e.g. 'the table beside it shows (3, a)'." }
+      }
+    },
+
     "part": {
       "type": "object",
-      "description": "One printed part of an exercise, activity, prompt or worked example. Identified by <item id>:<label>.",
+      "description": "One printed part of an exercise, activity, prompt or worked example. Identified by <item id>:<label>. Parts are flat: a nested printed label is joined with a space as printed ('First A').",
       "required": ["label"],
       "additionalProperties": false,
       "properties": {
-        "label": { "type": "string", "description": "As printed (a, b, A, 1, ...)." },
+        "label": { "type": "string", "description": "As printed (a, b, A, 1, ...); nested labels joined with a space ('First A')." },
         "stem": { "$ref": "#/$defs/text" },
         "answer": { "$ref": "#/$defs/text", "description": "Only when the book prints it." },
+        "answer_figure": { "$ref": "#/$defs/record_ids", "description": "Figure or table record(s) holding a printed answer that is a drawing." },
         "solution": { "type": "array", "items": { "$ref": "#/$defs/text" } },
         "solution_provenance": { "$ref": "#/$defs/solution_provenance" },
         "code": { "type": "string", "description": "Publisher's practice code printed instead of an answer (Siyavula)." },
+        "misprints": { "type": "array", "items": { "$ref": "#/$defs/misprint" }, "minItems": 1 },
         "notes": { "type": "string" }
       },
-      "dependentRequired": { "answer": ["solution_provenance"] }
+      "dependentRequired": { "answer": ["solution_provenance"], "answer_figure": ["solution_provenance"] }
     },
     "solution_provenance": {
       "enum": ["book_printed", "book_worked", "book_online"],
@@ -167,46 +194,52 @@
           "enum": ["definition", "rule", "caution", "convention", "method",
                    "exercise", "activity", "open_prompt",
                    "worked_example",
-                   "figure", "key_term", "printed_objective",
-                   "linking_text", "prior_knowledge"],
-          "description": "Statements (claim): definition, rule, caution, convention, method (a printed method box only). Prompts (text + parts): exercise, activity, open_prompt (a printed 'Why?'/'Think' with no printed answer). worked_example (stem + solution + answer). figure (caption), key_term (term), printed_objective (text). Structure (text): linking_text, prior_knowledge."
+                   "figure", "table", "key_term", "printed_objective",
+                   "heading", "linking_text", "prior_knowledge"],
+          "description": "Statements (claim): definition, rule, caution, convention, method (a printed method box only). Prompts (text + parts): exercise, activity, open_prompt (a printed 'Why?'/'Think' with no printed answer). worked_example (stem + solution + answer). figure (caption), table (caption + rows), key_term (term), printed_objective (text). Structure (text): heading (a printed section heading), linking_text (prose that leads between items), prior_knowledge."
         },
         "lo": { "$ref": "#/$defs/record_id", "description": "The learning objective this item teaches." },
+        "belongs_to": { "$ref": "#/$defs/record_id", "description": "The item this one is printed as part of: a figure or table inside an example, a labelled prompt inside an example's frame." },
         "source_page": { "$ref": "#/$defs/page" },
         "pages": { "type": "array", "items": { "$ref": "#/$defs/page" }, "minItems": 2, "maxItems": 2, "description": "When the item spans pages." },
-        "quote": { "type": "string", "minLength": 1, "description": "A few exact printed words that locate the item. The book's full text is not copied." },
+        "quote": { "type": "string", "minLength": 1, "description": "A few exact printed words that locate the item, misprints included. The book's full text is not copied. Required in ground-truth files." },
         "anchor": { "type": "string", "minLength": 1, "description": "The extractor's block reference (e.g. 'WE2', 'b00010')." },
         "claim": { "$ref": "#/$defs/text" },
         "term": { "$ref": "#/$defs/text" },
         "stem": { "$ref": "#/$defs/text" },
         "text": { "$ref": "#/$defs/text" },
         "caption": { "$ref": "#/$defs/text" },
+        "header": { "type": "array", "items": { "$ref": "#/$defs/text" }, "description": "Table only: the printed column headings, left to right, including the corner cell." },
+        "rows": { "type": "array", "items": { "type": "array", "items": { "$ref": "#/$defs/text" } }, "minItems": 1, "description": "Table only: each printed row, left to right, row label first. Cells as printed." },
         "formula": { "$ref": "#/$defs/text", "description": "A printed formula, as $...$." },
         "examples": { "type": "array", "items": { "$ref": "#/$defs/text" }, "description": "Examples the book lists with a statement." },
         "notation": { "$ref": "#/$defs/notation" },
         "parts": { "type": "array", "items": { "$ref": "#/$defs/part" } },
         "solution": { "type": "array", "items": { "$ref": "#/$defs/text" } },
         "answer": { "$ref": "#/$defs/text" },
+        "answer_figure": { "$ref": "#/$defs/record_ids", "description": "Figure or table record(s) holding a printed answer that is a drawing." },
         "solution_provenance": { "$ref": "#/$defs/solution_provenance" },
         "code": { "type": "string" },
+        "misprints": { "type": "array", "items": { "$ref": "#/$defs/misprint" }, "minItems": 1 },
         "notes": { "type": "string" },
         "provenance": { "$ref": "#/$defs/provenance" },
         "review": { "$ref": "#/$defs/review" }
       },
       "anyOf": [{ "required": ["quote"] }, { "required": ["anchor"] }],
-      "dependentRequired": { "answer": ["solution_provenance"] },
+      "dependentRequired": { "answer": ["solution_provenance"], "answer_figure": ["solution_provenance"] },
       "allOf": [
         { "if": { "properties": { "type": { "enum": ["definition", "rule", "caution", "convention", "method"] } } }, "then": { "required": ["claim"] } },
-        { "if": { "properties": { "type": { "enum": ["exercise", "activity", "open_prompt", "printed_objective", "linking_text", "prior_knowledge"] } } }, "then": { "required": ["text"] } },
+        { "if": { "properties": { "type": { "enum": ["exercise", "activity", "open_prompt", "printed_objective", "heading", "linking_text", "prior_knowledge"] } } }, "then": { "required": ["text"] } },
         { "if": { "properties": { "type": { "const": "worked_example" } } }, "then": { "required": ["stem"] } },
         { "if": { "properties": { "type": { "const": "figure" } } }, "then": { "required": ["caption"] } },
+        { "if": { "properties": { "type": { "const": "table" } } }, "then": { "required": ["caption", "rows"] }, "else": { "not": { "anyOf": [{ "required": ["header"] }, { "required": ["rows"] }] } } },
         { "if": { "properties": { "type": { "const": "key_term" } } }, "then": { "required": ["term"] } }
       ]
     },
 
     "learning_objective": {
       "type": "object",
-      "description": "A 'can do' objective the pages teach. Not printed as such (except printed_objective items), but kept here because extraction produces them and scoring needs them next to their evidence.",
+      "description": "A 'can do' objective the pages teach. Not printed as such (except printed_objective items), but kept here because extraction produces them and scoring needs them next to their evidence. Its pages are the pages of its evidence items; it has no page of its own.",
       "required": ["id", "label", "description", "order_in_parent", "evidence", "provenance"],
       "additionalProperties": false,
       "properties": {
@@ -214,7 +247,6 @@
         "label": { "type": "string", "description": "Short name a student would recognise." },
         "description": { "$ref": "#/$defs/text" },
         "order_in_parent": { "type": "integer", "minimum": 1, "description": "Position in the book's teaching order." },
-        "source_page": { "$ref": "#/$defs/page" },
         "evidence": { "type": "array", "items": { "$ref": "#/$defs/record_id" }, "minItems": 1, "description": "Ids of the items that teach it; review asks for at least two of different types." },
         "provenance": { "$ref": "#/$defs/provenance" },
         "review": { "$ref": "#/$defs/review" }

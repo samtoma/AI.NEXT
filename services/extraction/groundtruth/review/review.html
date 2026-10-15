@@ -94,6 +94,9 @@
   #pdfbar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 8px; }
   #pdfbar input { width: 70px; }
   #canvas { width: 100%; border: var(--play-stroke-sm) solid var(--line); border-radius: var(--play-radius-sm); background: var(--card); }
+  table.printed { width: auto; margin-top: 4px; }
+  table.printed th, table.printed td { border: var(--play-stroke-sm) solid var(--line-soft); }
+  table.printed th { background: var(--card-warm); }
   .kbd { font-family: var(--stack-mono), monospace; font-size: 12px; }
   @media (max-width: 900px) {
     main { grid-template-columns: 1fr; height: auto; }
@@ -115,7 +118,7 @@
   <div class="progress"><div class="bar"><div id="barfill" style="width:0"></div></div><div id="ptext" class="muted"></div></div>
   <span class="grow"></span>
   <span id="saved" class="muted"></span>
-  <span class="kbd muted">j/k move · c confirm · f flag · e edit · u undo</span>
+  <span class="kbd muted">j/k move · c confirm · f flag · e edit · m misprint · u undo</span>
 </header>
 <main>
   <nav id="list" class="pane" aria-label="Records"></nav>
@@ -148,11 +151,11 @@ const SECTIONS = [
   ["Learning objectives", "learning_objectives"],
 ];
 const ITEM_TYPES = ["printed_objective", "key_term", "definition", "rule", "caution", "convention", "method", "open_prompt",
-  "worked_example", "exercise", "activity", "figure", "linking_text", "prior_knowledge"];
+  "worked_example", "exercise", "activity", "figure", "table", "heading", "linking_text", "prior_knowledge"];
 const KINDS = [...ITEM_TYPES, "learning_objective"];
 const MOVABLE = new Set(["items", "learning_objectives"]);
 // the field that holds a record's main text, by kind (names follow the extraction data)
-const MAIN = (k) => ({ definition: "claim", rule: "claim", caution: "claim", convention: "claim", method: "claim", key_term: "term", figure: "caption",
+const MAIN = (k) => ({ definition: "claim", rule: "claim", caution: "claim", convention: "claim", method: "claim", key_term: "term", figure: "caption", table: "caption",
   worked_example: "stem", learning_objective: "description" }[k] || "text");
 const kindOf = (sec, r) => sec === "learning_objectives" ? "learning_objective" : r.type;
 const sectionOfKind = (k) => k === "learning_objective" ? "learning_objectives" : "items";
@@ -224,7 +227,13 @@ function renderList() {
 }
 
 /* ---------- read view ---------- */
-const HIDE = new Set(["review", "provenance", "id"]);
+const HIDE = new Set(["review", "provenance", "id", "header", "rows", "misprints"]);
+function tableBlock(r) {
+  if (!r.rows) return "";
+  const head = r.header ? `<tr>${r.header.map((h) => `<th>${esc(h)}</th>`).join("")}</tr>` : "";
+  return `<table class="printed">${head}${r.rows.map((row) => `<tr>${row.map((c, j) => j === 0 ? `<th>${esc(c)}</th>` : `<td>${esc(c)}</td>`).join("")}</tr>`).join("")}</table>`;
+}
+const misprintBlock = (ms, where) => (ms || []).map((m) => `<div class="warn"><b>Misprint</b>${where ? " in part " + esc(where) : ""}, ${esc(m.field)}: printed <b>${esc(m.printed)}</b>, meant <b>${esc(m.intended)}</b>${m.notes ? `<div>${esc(m.notes)}</div>` : ""}</div>`).join("");
 function value(k, v, ids) {
   if (v === null || v === undefined || v === "") return '<span class="muted">—</span>';
   if (typeof v === "string") return ids[v] ? `<a class="ref" data-id="${esc(v)}">${esc(v)}</a>` : esc(v);
@@ -236,11 +245,12 @@ function value(k, v, ids) {
 
 const prov = (x) => `<span class="tag">${esc(x)}</span>`;
 function partBlock(p, ids) {
-  const rest = Object.entries(p).filter(([k]) => !["label", "stem", "answer", "solution_provenance"].includes(k));
+  const rest = Object.entries(p).filter(([k]) => !["label", "stem", "answer", "solution_provenance", "misprints"].includes(k));
   return `<div class="part">
     <div><b>${esc(p.label ?? "")}</b> ${p.stem ? esc(p.stem) : ""}</div>
     ${p.answer != null ? `<div>Answer: <b>${esc(p.answer)}</b> ${p.solution_provenance ? prov(p.solution_provenance) : ""}</div>` : '<div class="muted">No answer printed</div>'}
     ${rest.map(([k, x]) => `<div class="muted">${esc(k)}: ${value(k, x, ids)}</div>`).join("")}
+    ${misprintBlock(p.misprints, p.label)}
   </div>`;
 }
 
@@ -257,7 +267,8 @@ function renderDetail() {
     <div class="card">
       ${head}
       ${r.quote ? `<div class="quote">“${esc(r.quote)}”</div><div class="muted">Find these words on the page, then check everything below against the book.</div>` : ""}
-      <dl style="margin-top:12px">${fields.map(([k, x]) => `<dt>${esc(k)}</dt><dd>${value(k, x, ids)}</dd>`).join("")}</dl>
+      <dl style="margin-top:12px">${fields.map(([k, x]) => `<dt>${esc(k)}</dt><dd>${value(k, x, ids)}</dd>`).join("")}${r.rows ? `<dt>table</dt><dd>${tableBlock(r)}</dd>` : ""}</dl>
+      ${misprintBlock(r.misprints)}
       <div class="who">
         ${r.provenance?.by ? `<div class="muted">Drafted by ${esc(r.provenance.by)}</div>` : ""}
         ${v.status === "confirmed" ? `<b>Confirmed</b> by ${esc(v.by)} on ${esc(v.at)}` : v.status === "flagged" ? `<div class="warn"><b>Flagged</b> by ${esc(v.by)} on ${esc(v.at)}: ${esc(v.reason || "")}</div>` : "Not reviewed yet"}
@@ -266,12 +277,14 @@ function renderDetail() {
       <div class="actions">
         <button class="confirm" id="bconfirm" ${!me || v.status === "confirmed" ? "disabled" : ""}>Confirm (c)</button>
         <button id="bedit" ${!me ? "disabled" : ""}>Edit (e)</button>
+        <button id="bmis" ${!me || !MOVABLE.has(sec) ? "disabled" : ""}>Misprint (m)</button>
         <button class="dispute" id="bflag" ${!me ? "disabled" : ""}>Flag (f)</button>
         <button id="bundo" ${!v.status ? "disabled" : ""}>Undo (u)</button>
         <span class="grow"></span>
         <button id="bprev">‹ Prev (k)</button><button id="bnext">Next (j) ›</button>
       </div>
       ${!me ? '<div class="muted" style="margin-top:8px">Type your initials at the top to review.</div>' : ""}
+      ${MOVABLE.has(sec) ? misprintForm(r) : ""}
       <form class="flag-form" id="fform">
         <label>What needs deciding, and by whom? <textarea id="freason" rows="2" required style="width:100%"></textarea></label>
         <div class="actions"><button class="dispute" type="submit">Flag it</button><button type="button" id="fcancel">Cancel</button></div>
@@ -280,6 +293,7 @@ function renderDetail() {
     ${renderFileCard()}`;
   renderMathInElement(el, { delimiters: [{ left: "$", right: "$", display: false }], throwOnError: false, ignoredClasses: ["noformat"] });
   el.querySelectorAll("a.ref").forEach((a) => (a.onclick = () => { const j = records.findIndex(({ r }) => r.id === a.dataset.id); if (j >= 0) select(j); }));
+  $("#bmis").onclick = openMisprint; bindMisprint(r);
   $("#bconfirm").onclick = confirm_; $("#bflag").onclick = openFlag; $("#bundo").onclick = undo; $("#bedit").onclick = startEdit;
   $("#bprev").onclick = () => move(-1); $("#bnext").onclick = () => move(1);
   $("#fcancel").onclick = () => $("#fform").classList.remove("open");
@@ -367,7 +381,13 @@ function changeKind(sec, r, to) {
   if (fromMain !== toMain && r[fromMain] !== undefined) { r[toMain] = r[fromMain]; delete r[fromMain]; }
   const toSec = sectionOfKind(to);
   if (toSec === "items") r.type = to; else delete r.type;
-  if (sec === toSec) return { sec, r };
+  if (sec === toSec) {
+    const local = short(r.id), was = from.replace(/_/g, "-");
+    if (!r.review?.status && new RegExp(`^${was}-\\d+$`).test(local)) {
+      const oldId = r.id; r.id = newId(sec, to); renameRefs(oldId, r.id);
+    }
+    return { sec, r };
+  }
   if (toSec === "learning_objectives") {
     r.label ??= String(r.description || "").slice(0, 60);
     r.order_in_parent ??= (data.learning_objectives || []).length + 1;
@@ -375,7 +395,7 @@ function changeKind(sec, r, to) {
     delete r.lo;
   }
   const arr = getAt(sec); arr.splice(arr.indexOf(r), 1);
-  const oldId = r.id, nid = newId(toSec);
+  const oldId = r.id, nid = newId(toSec, to);
   r.id = nid;
   const ordered = { id: nid, ...(r.type ? { type: r.type } : {}) };
   Object.entries(r).forEach(([k, v]) => { if (!(k in ordered)) ordered[k] = v; });
@@ -384,9 +404,14 @@ function changeKind(sec, r, to) {
   if (oldId) renameRefs(oldId, nid);
   return { sec: toSec, r };
 }
-function newId(sec) {
-  const slug = data.lesson?.slug || "gt", tag = sec === "learning_objectives" ? "obj" : "item";
-  const ids = new Set(Object.keys(byId()));
+// README "Ids": unlabelled records are <type>-N (objectives objective-N); a printed label can be typed instead
+function newId(sec, kind, wanted) {
+  const slug = data.lesson?.slug || "gt", ids = new Set(Object.keys(byId()));
+  if (wanted) {
+    const id = `${slug}:${wanted.trim().toLowerCase().replace(/[^a-z0-9.]+/g, "-").replace(/^-|-$/g, "")}`;
+    if (!ids.has(id)) return id;
+  }
+  const tag = sec === "learning_objectives" ? "objective" : String(kind || "item").replace(/_/g, "-");
   let n = 1; while (ids.has(`${slug}:${tag}-${n}`)) n++;
   return `${slug}:${tag}-${n}`;
 }
@@ -404,10 +429,11 @@ function deleteRecord(sec, r) {
   editing = false; build(); idx = Math.min(idx, records.length - 1);
   save(); renderAll();
 }
-function addRecord(kind, pageNo) {
-  const sec = sectionOfKind(kind), id = newId(sec);
+function addRecord(kind, pageNo, wanted) {
+  const sec = sectionOfKind(kind), id = newId(sec, kind, wanted);
   const base = sec === "learning_objectives" ? { id, label: "", description: "", order_in_parent: (data.learning_objectives || []).length + 1, evidence: [] }
-    : { id, type: kind, lo: "", source_page: pageNo || null, quote: "", [MAIN(kind)]: "" };
+    : { id, type: kind, ...(["heading", "linking_text", "key_term", "printed_objective"].includes(kind) ? {} : { lo: "" }), source_page: pageNo || null, quote: "", [MAIN(kind)]: "" };
+  if (kind === "table") Object.assign(base, { header: [""], rows: [[""]] });
   if (kind === "worked_example") Object.assign(base, { solution: [], answer: "", solution_provenance: "book_worked" });
   if (["exercise", "activity", "open_prompt"].includes(kind)) base.parts = [{ label: "a", stem: "" }];
   base.provenance = { by: `reviewer ${meNow()}, ${today()}` };
@@ -425,17 +451,63 @@ function renderFileCard() {
     <dl><dt>status</dt><dd>${esc(v.status || "")}</dd><dt>drafted by</dt><dd>${esc(data.provenance?.by || "")}</dd>
     <dt>reviewed by</dt><dd>${esc(v.reviewed_by || "—")}${v.reviewed_at ? ", " + esc(v.reviewed_at) : ""}</dd></dl>
     ${oq.length ? `<p><b>Open questions</b></p><ol>${oq.map((q) => `<li>${esc(q)}</li>`).join("")}</ol>` : ""}
-    <p><b>Something on these pages is missing?</b> Add it as a record.</p>
+    <p><b>Something on these pages is missing?</b> Add it as a record. Give its printed label (Example 7, Drill 2) if it has one; otherwise it is numbered by type (rule-10).</p>
     <form id="addform" class="actions">
       <select id="addkind">${KINDS.map((k) => `<option>${k}</option>`).join("")}</select>
       <input id="addpage" type="number" placeholder="printed page" style="width:130px">
+      <input id="addid" placeholder="printed label, e.g. Example 7 (optional)" style="width:240px">
       <button type="submit" ${me ? "" : "disabled"}>Add record</button>
     </form>
   </div>`;
 }
 function bindFileCard() {
-  const f = $("#addform"); if (f) f.onsubmit = (e) => { e.preventDefault(); addRecord($("#addkind").value, Number($("#addpage").value) || page); };
+  const f = $("#addform"); if (f) f.onsubmit = (e) => { e.preventDefault(); addRecord($("#addkind").value, Number($("#addpage").value) || page, $("#addid").value); };
 }
+
+/* ---------- misprints ---------- */
+// every text spot in a record or part that can hold a misprint: plain fields and list elements
+function textSpots(rec) {
+  const out = [];
+  for (const [k, v] of Object.entries(rec)) {
+    if (["id", "type", "lo", "belongs_to", "provenance", "review", "misprints", "parts", "answer_figure", "solution_provenance", "source_page", "pages", "label"].includes(k)) continue;
+    if (typeof v === "string") out.push([k, v]);
+    else if (Array.isArray(v)) v.forEach((x, i) => {
+      if (typeof x === "string") out.push([`${k}[${i}]`, x]);
+      else if (Array.isArray(x)) x.forEach((y, j) => typeof y === "string" && out.push([`${k}[${i}][${j}]`, y]));
+    });
+  }
+  return out;
+}
+function misprintForm(r) {
+  const targets = [["", "this record"], ...(r.parts || []).map((p, i) => [String(i), `part ${p.label}`])];
+  return `<form class="flag-form" id="mform">
+    <label>Where <select id="mtarget">${targets.map(([v, t]) => `<option value="${v}">${esc(t)}</option>`).join("")}</select>
+      <select id="mfield"></select></label>
+    <label>Printed (exactly as on the page) <input id="mprinted" required style="width:100%"></label>
+    <label>Meant <input id="mintended" required style="width:100%"></label>
+    <label>How do you know? <input id="mnotes" style="width:100%" placeholder="e.g. the table beside it shows (3, a)"></label>
+    <div class="muted">The record keeps the printed text. The scorer accepts either reading here; the tutor uses the meant one.</div>
+    <div class="actions"><button type="submit">Record misprint</button><button type="button" id="mcancel">Cancel</button></div>
+  </form>`;
+}
+function bindMisprint(r) {
+  const f = $("#mform"); if (!f) return;
+  const target = () => ($("#mtarget").value === "" ? r : r.parts[Number($("#mtarget").value)]);
+  const fill = () => { $("#mfield").innerHTML = textSpots(target()).map(([k, v]) => `<option value="${esc(k)}">${esc(k)}: ${esc(String(v).slice(0, 50))}</option>`).join(""); };
+  $("#mtarget").onchange = fill; fill();
+  $("#mcancel").onclick = () => f.classList.remove("open");
+  f.onsubmit = (e) => {
+    e.preventDefault();
+    const t = target(), m = { field: $("#mfield").value, printed: $("#mprinted").value.trim(), intended: $("#mintended").value.trim() };
+    if (!m.field || !m.printed || !m.intended) return;
+    const notes = $("#mnotes").value.trim(); if (notes) m.notes = notes;
+    (t.misprints ||= []).push(m);
+    const where = t === r ? "misprints" : `parts[${$("#mtarget").value}].misprints`;
+    ((r.review ||= {}).edits ||= []).push({ by: meNow(), at: today(), fields: [where] });
+    save(); renderAll();
+  };
+}
+function openMisprint() { if (!meNow() || !$("#mform")) return; $("#mform").classList.add("open"); $("#mprinted").focus(); }
 
 /* ---------- actions ---------- */
 function confirm_() {
@@ -551,6 +623,7 @@ document.addEventListener("keydown", (e) => {
   else if (e.key === "c") confirm_(); else if (e.key === "f") { e.preventDefault(); openFlag(); }
   else if (e.key === "e") { e.preventDefault(); startEdit(); }
   else if (e.key === "u") undo();
+  else if (e.key === "m") { e.preventDefault(); openMisprint(); }
 });
 </script>
 </body>
