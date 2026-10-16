@@ -24,6 +24,9 @@ Tasks (docs/design/review-console.md, built here as a local tool):
   Question tiers    where the two readings of a book question's tier disagree (tier_questions.py,
                     teaching/<book>/tiers/), a person chooses; decisions are appended to
                     reviews/<book>/question-tiers.json (tiers.py).
+  Maths reading     where the two readings of a page-image book's formula disagree (book_record_maths.py,
+                    book-records/<book>/maths-reading/), a person says what is printed; decisions are appended to
+                    reviews/<book>/maths-reading.json (maths_reading.py).
 
 Everything is a file in the repository, so a review is committed like any other change. Serves on 127.0.0.1
 only. The book PDFs are not in git (docs/Source/*.pdf is ignored); the server looks for each in docs/Source/,
@@ -43,6 +46,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import answers  # noqa: E402
 import tiers  # noqa: E402
 import objectives  # noqa: E402
+import maths_reading  # noqa: E402
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 import score_book_record  # noqa: E402
 import generated  # noqa: E402
@@ -383,6 +387,12 @@ class Handler(BaseHTTPRequestHandler):
                 return self.send_json(objectives.summary(q["book"]))
             if u.path == "/api/objectives/item":
                 return self.send_json(objectives.detail(q["book"], q["kind"], q["ref"]))
+            if u.path == "/api/maths/books":
+                return self.send_json(maths_reading.books())
+            if u.path == "/api/maths":
+                return self.send_json(maths_reading.summary(q["book"]))
+            if u.path == "/api/maths/item":
+                return self.send_json(maths_reading.detail(q["book"], q["ref"]))
             if u.path == "/api/tiers/books":
                 return self.send_json(tiers.books())
             if u.path == "/api/tiers":
@@ -429,6 +439,8 @@ class Handler(BaseHTTPRequestHandler):
                 return self.send_json({"ok": True, "decision": answers.decide(body)})
             if u.path == "/api/objectives/decision":
                 return self.send_json({"ok": True, "decision": objectives.decide(body)})
+            if u.path == "/api/maths/decision":
+                return self.send_json({"ok": True, "decision": maths_reading.decide(body)})
             if u.path == "/api/tiers/decision":
                 return self.send_json({"ok": True, "decision": tiers.decide(body)})
             if u.path == "/api/generated/decision":

@@ -227,10 +227,18 @@ def item_summary(r: dict) -> str:
     return f"[{r['_key']}] {r['type']}{' ' + r['label'] if r.get('label') else ''} (p.{r['source_page']}){inside}: {body[:240]}{' | parts: ' + parts[:200] if parts else ''}"
 
 
+def page_dir(book: str, lesson: dict) -> Path:
+    """Where a lesson's page images are cached. Images are named by printed page, so a lesson printed under its own
+    numbering (lessons.json `page_offset` on the lesson: a second term restarting at 1) gets its own folder."""
+    base = HERE / "work" / book / "page-images"
+    return base / f"offset{lesson['page_offset']}" if "page_offset" in lesson else base
+
+
 def lesson_args(book: str, cfg: dict, lesson: dict, offset: int) -> dict:
     """One lesson of the workflow's args: its pages rendered to images (work/<book>/page-images/)."""
     pdf = REPO / cfg["sources"]["pdf"]
-    img_dir = HERE / "work" / book / "page-images"
+    offset = lesson.get("page_offset", offset)
+    img_dir = page_dir(book, lesson)
     img_dir.mkdir(parents=True, exist_ok=True)
     first, last = lesson["pages"]
     images = {str(p): str(render(pdf, p, offset, img_dir).resolve()) for p in range(first, last + 1)}
@@ -245,6 +253,7 @@ def build_args(book: str, cfg: dict, lessons: list[dict], offset: int, model: st
 def accept_lesson(book: str, cfg: dict, lesson: dict, offset: int, run_lesson: dict, version: str, model: str) -> dict:
     """A lesson of a saved workflow return → its book record (ids, continuations, links, provisional filing)."""
     slug = lesson["slug"]
+    offset = lesson.get("page_offset", offset)
     pages = [(p["printed"], p["records"]) for p in run_lesson["pages"]]
     recs = merge_continuations(pages)
     assign_ids(slug, recs)

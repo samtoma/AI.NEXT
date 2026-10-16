@@ -282,6 +282,9 @@ def render_pages(doc: dict, pages: set[int], book: str) -> dict[int, Path]:
     if not pdf.exists():
         raise SystemExit(f"{pdf} not found (the book PDFs are not in git: put it in docs/Source/)")
     out_dir = HERE / "work" / book / "answer-pages"
+    lmap = HERE / "book-records" / book / "lessons.json"
+    if lmap.exists() and json.loads(lmap.read_text()).get("page_offset") not in (None, src["page_offset"]):
+        out_dir = out_dir / f"offset{src['page_offset']}"   # a lesson under its own numbering (extract_book_record.page_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
     d = pymupdf.open(pdf)
     files = {}

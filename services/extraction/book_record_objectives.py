@@ -2,7 +2,7 @@
 check) and his prerequisite links (a linker and an independent checker), run on a unit's book records.
 
     uv run book_record_objectives.py run   prep3-math-en 1 u1-1 u1-2 u1-3 u1-4 [--cap 8] [--args-only]
-    uv run book_record_objectives.py apply prep3-math-en runs/<book>/objectives/s1-ch01.<stamp>.json [--dry-run]
+    uv run book_record_objectives.py apply prep3-math-en 1 [--dry-run]   # after G1
 
 Run from services/extraction/. Decided by Tamer, 2026-10-16 (docs/design/maths-ingestion-pipeline.md): every book's
 objectives come from Grade 10's S1, not from a single reading.

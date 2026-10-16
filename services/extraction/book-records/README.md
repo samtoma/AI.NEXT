@@ -156,7 +156,14 @@ for a grade on the console (no availability row is hidden).
 A book that has an EPUB and a text layer (Grade 10) is meant to get its book records from the extraction line
 instead: a deterministic writer after S1–S3 that turns `blocks.jsonl`, the claims, the book questions and the
 objectives into book records, and folds the G2 findings about the book (`book error`, `printed answer
-misaligned`, `printed text damaged`) into `misprints`. That writer is still to build.
+misaligned`, `printed text damaged`) into `misprints`. **Built as `../epub_book_record.py`** (2026-10-16), in a
+simpler form: it runs before S1 (objectives come from S1 and G1, as for page-image books) and does not fold G2's
+findings yet. `../ingest.py plan g10-math 1` gives the order. Not run on the real EPUB, which is not on this machine.
+
+**Page-image books, before the page reader:** `../book_record_lessons.py` proposes `lessons.json` from the
+contents pages (`lessons.proposed.json`, approved with `approve`), and after it `../book_record_maths.py` reads
+every formula a second time, blind (`maths-reading/<lesson>.json`, decided in the review tool's Maths reading
+task, written back with `apply`).
 
 ## What else lives here
 

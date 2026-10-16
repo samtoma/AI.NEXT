@@ -205,13 +205,13 @@ BOOK = [""]   # the book being cropped, for the workflow's args (set by crop_les
 
 
 def crop_lesson(book: str, cfg: dict, slug: str, offset: int, model: str, budget: X.Budget, force: bool,
-                failed_only: bool = False) -> dict:
+                failed_only: bool = False, img_dir: Path | None = None) -> dict:
     BOOK[0] = book
     path = HERE / "book-records" / book / f"{slug}.json"
     doc = json.loads(path.read_text())
     pdf = X.REPO / cfg["sources"]["pdf"]
-    img_dir = HERE / "work" / book / "page-images"
-    grid_dir = HERE / "work" / book / "page-grids"
+    img_dir = img_dir or HERE / "work" / book / "page-images"
+    grid_dir = HERE / "work" / book / "page-grids" / img_dir.relative_to(HERE / "work" / book / "page-images")
     zoom_dir = HERE / "work" / book / "figure-closeups"
     out_dir = figures_dir(book)
     for d in (img_dir, grid_dir, zoom_dir, out_dir):
@@ -301,7 +301,9 @@ def main(argv: list[str]) -> int:
     reports = []
     try:
         for slug in slugs:
-            rep = crop_lesson(a.book, cfg, slug, lmap["page_offset"], a.model, budget, a.force, a.failed)
+            lesson = next((l for l in lmap["lessons"] if l["slug"] == slug), {})
+            rep = crop_lesson(a.book, cfg, slug, lesson.get("page_offset", lmap["page_offset"]), a.model, budget, a.force, a.failed,
+                              X.page_dir(a.book, lesson))
             reports.append(rep)
             print(f"{slug}: {len(rep['cropped'])} figure(s) cropped, {len(rep['unchecked'])} not passing the check, "
                   f"{len(rep['not_found'])} not found")
